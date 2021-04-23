@@ -8,6 +8,11 @@ datum/controller/process/critters
 		schedule_interval = 16 // 1.6 seconds
 
 		detailed_count = new
+
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/critters/old_critters = target
+		src.detailed_count = old_critters.detailed_count
+
 	doWork()
 		var/i
 		for(var/datum/c in by_cat[TR_CAT_CRITTERS])
@@ -29,7 +34,7 @@ datum/controller/process/critters
 			scheck(currentTick)*/
 
 	tickDetail()
-		if (detailed_count && detailed_count.len)
+		if (length(detailed_count))
 			var/stats = "<b>[name] ticks:</b>"
 			var/count
 			for (var/thing in detailed_count)

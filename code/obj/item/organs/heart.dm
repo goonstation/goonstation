@@ -36,11 +36,11 @@
 
 		if (src.robotic)
 			if (src.emagged)
-				src.donor.add_stam_mod_regen("heart", 15)
+				APPLY_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, "heart", 15)
 				src.donor.add_stam_mod_max("heart", 90)
 				src.donor.add_stun_resist_mod("heart", 30)
 			else
-				src.donor.add_stam_mod_regen("heart", 5)
+				APPLY_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, "heart", 5)
 				src.donor.add_stam_mod_max("heart", 40)
 				src.donor.add_stun_resist_mod("heart", 15)
 
@@ -65,7 +65,7 @@
 			src.blood_id = src.donor.blood_id //keep our owner's blood (for mutantraces etc)
 
 			if (src.robotic)
-				src.donor.remove_stam_mod_regen("heart")
+				REMOVE_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, "heart")
 				src.donor.remove_stam_mod_max("heart")
 				src.donor.remove_stun_resist_mod("heart")
 
@@ -113,6 +113,7 @@
 	//created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
 	mats = 8
 	made_from = "pharosium"
 	transplant_XP = 7
@@ -164,10 +165,9 @@
 
 /obj/item/organ/heart/flock/special_desc(dist, mob/user)
 	if(isflock(user))
-		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-		special_desc += "<br><span class='bold'>ID:</span> Resource repository"
-		special_desc += "<br><span class='bold'>Resources:</span> [src.resources]"
-		special_desc += "<br><span class='bold'>###=-</span></span>"
-		return special_desc
+		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Resource repository
+		<br><span class='bold'>Resources:</span> [src.resources]
+		<br><span class='bold'>###=-</span></span>"}
 	else
 		return null // give the standard description

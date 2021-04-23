@@ -39,16 +39,18 @@
 			out(G, "<span class='bold alert'>You are already #[position] in the ghostdrone queue!</span>")
 			return ..()
 
-		if (alert(G, "Add yourself to the ghostdrone queue?", "Confirmation", "Yes", "No") == "No")
-			return ..()
+		. = ..()
+		SPAWN_DBG(0)
+			if (alert(G, "Add yourself to the ghostdrone queue?", "Confirmation", "Yes", "No") == "No")
+				return
 
-		ghostdrone_candidates += M
-		position = ghostdrone_candidates.len
-		out(G, "<span class='bold notice'>You have been added to the ghostdrone queue. Now position #[position].</span>")
+			ghostdrone_candidates += M
+			position = length(ghostdrone_candidates)
+			out(G, "<span class='bold notice'>You have been added to the ghostdrone queue. Now position #[position].</span>")
 
 	process()
 		..()
-		if (available_ghostdrones.len && ghostdrone_candidates.len)
+		if (available_ghostdrones.len && length(ghostdrone_candidates))
 			src.icon_state = "ghostcatcher1"
 
 			SPAWN_DBG(0)
@@ -137,10 +139,10 @@ var/global/list/ghostdrone_candidates = list()
 
 	proc/update_conveyors()
 		if (src.conveyors.len)
-			for (var/obj/machinery/conveyor/C as() in src.conveyors)
+			for (var/obj/machinery/conveyor/C as anything in src.conveyors)
 				if (C.id != src.id)
 					src.conveyors -= C
-		for (var/obj/machinery/conveyor/C as() in machine_registry[MACHINES_CONVEYORS])
+		for (var/obj/machinery/conveyor/C as anything in machine_registry[MACHINES_CONVEYORS])
 			if (C.id == src.id)
 				if (C in src.conveyors)
 					continue
@@ -148,7 +150,7 @@ var/global/list/ghostdrone_candidates = list()
 
 	proc/update_rechargers()
 		if (src.factory_rechargers.len)
-			for (var/obj/machinery/drone_recharger/factory/C as() in src.factory_rechargers)
+			for (var/obj/machinery/drone_recharger/factory/C as anything in src.factory_rechargers)
 				if (C.id != src.id)
 					src.conveyors -= C
 		for (var/obj/machinery/drone_recharger/factory/C in machine_registry[MACHINES_DRONERECHARGERS])
@@ -218,7 +220,7 @@ var/global/list/ghostdrone_candidates = list()
 			if (!src.factory_rechargers.len)
 				return
 		var/emptySpot = 0
-		for (var/obj/machinery/drone_recharger/factory/C as() in src.factory_rechargers)
+		for (var/obj/machinery/drone_recharger/factory/C as anything in src.factory_rechargers)
 			if (!C.occupant)
 				emptySpot = 1
 				break
@@ -247,7 +249,7 @@ var/global/list/ghostdrone_candidates = list()
 			src.icon_state = "factory[src.factory_section]0"
 			return
 
-		for (var/obj/machinery/conveyor/C as() in src.conveyors)
+		for (var/obj/machinery/conveyor/C as anything in src.conveyors)
 			C.operating = 0
 			C.setdir()
 
@@ -264,7 +266,7 @@ var/global/list/ghostdrone_candidates = list()
 			src.visible_message("[src] ejects [src.current_assembly]!")
 			src.current_assembly = null
 
-		for (var/obj/machinery/conveyor/C as() in src.conveyors)
+		for (var/obj/machinery/conveyor/C as anything in src.conveyors)
 			C.operating = 1
 			C.setdir()
 
@@ -332,10 +334,10 @@ var/global/list/ghostdrone_candidates = list()
 
 	proc/update_conveyors()
 		if (src.conveyors.len)
-			for (var/obj/machinery/conveyor/C as() in src.conveyors)
+			for (var/obj/machinery/conveyor/C as anything in src.conveyors)
 				if (C.id != src.id_belt)
 					src.conveyors -= C
-		for (var/obj/machinery/conveyor/C as() in machine_registry[MACHINES_CONVEYORS])
+		for (var/obj/machinery/conveyor/C as anything in machine_registry[MACHINES_CONVEYORS])
 			if (C.id == src.id_belt)
 				if (C in src.conveyors)
 					continue
@@ -343,7 +345,7 @@ var/global/list/ghostdrone_candidates = list()
 
 	proc/update_rechargers()
 		if (src.factory_rechargers.len)
-			for (var/obj/machinery/drone_recharger/factory/C as() in src.factory_rechargers)
+			for (var/obj/machinery/drone_recharger/factory/C as anything in src.factory_rechargers)
 				if (C.id != src.id_recharger)
 					src.conveyors -= C
 		for (var/obj/machinery/drone_recharger/factory/C in machine_registry[MACHINES_DRONERECHARGERS])
@@ -365,7 +367,7 @@ var/global/list/ghostdrone_candidates = list()
 
 	proc/check_rechargers()
 		var/emptySpot = 0
-		for (var/obj/machinery/drone_recharger/factory/C as() in src.factory_rechargers)
+		for (var/obj/machinery/drone_recharger/factory/C as anything in src.factory_rechargers)
 			if (!C.occupant)
 				emptySpot = 1
 				break
@@ -373,7 +375,7 @@ var/global/list/ghostdrone_candidates = list()
 
 	proc/set_conveyors(var/set_active = 0)
 		src.conveyors_active = set_active
-		for (var/obj/machinery/conveyor/C as() in src.conveyors)
+		for (var/obj/machinery/conveyor/C as anything in src.conveyors)
 			C.operating = set_active
 			C.setdir()
 

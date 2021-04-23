@@ -54,7 +54,7 @@ change the direction of created objects.<br>
 			for (var/turf/Q in block(A,B))
 				//var/atom/sp = new objpath(Q)
 				//if (isobj(sp) || ismob(sp) || isturf(sp))
-					//sp.dir = holder.dir
+					//sp.set_dir(holder.dir)
 					//sp.onVarChanged("dir", 2, holder.dir)
 				switch(cinematic)
 					if("Telepad")
@@ -79,7 +79,7 @@ change the direction of created objects.<br>
 								A = new objpath(Q)
 
 							if (isobj(A) || ismob(A))
-								A.dir = holder.dir
+								A.set_dir(holder.dir)
 								A.onVarChanged("dir", SOUTH, A.dir)
 							sleep(0.5 SECONDS)
 							mtx.Reset()
@@ -113,7 +113,7 @@ change the direction of created objects.<br>
 								A = new objpath(Q)
 
 							if (isobj(A) || ismob(A))
-								A.dir = holder.dir
+								A.set_dir(holder.dir)
 								A.onVarChanged("dir", SOUTH, A.dir)
 							sleep(0.5 SECONDS)
 							mtx.Reset()
@@ -133,7 +133,7 @@ change the direction of created objects.<br>
 							A = new objpath(Q)
 
 						if (isobj(A) || ismob(A))
-							A.dir = holder.dir
+							A.set_dir(holder.dir)
 							A.onVarChanged("dir", SOUTH, A.dir)
 							blink(Q)
 					if("Supplydrop")
@@ -152,7 +152,7 @@ change the direction of created objects.<br>
 							A = new objpath(Q)
 
 						if (isobj(A) || ismob(A))
-							A.dir = holder.dir
+							A.set_dir(holder.dir)
 							A.onVarChanged("dir", SOUTH, A.dir)
 				cnt++
 				if (cnt > 499)

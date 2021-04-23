@@ -77,7 +77,7 @@
 	New(var/atom/spawnloc, var/spawndir, var/atom/sourcecar)
 		..()
 		src.set_loc(spawnloc)
-		src.dir = spawndir
+		src.set_dir(spawndir)
 		source_car = sourcecar
 		SPAWN_DBG(7.5 SECONDS)
 			playsound(src, "sound/mksounds/itemdestroy.ogg",45, 0)
@@ -109,7 +109,7 @@
 	New(var/atom/spawnloc, var/spawndir, var/atom/sourcecar)
 		..()
 		src.set_loc(spawnloc)
-		src.dir = spawndir
+		src.set_dir(spawndir)
 		source_car = sourcecar
 		SPAWN_DBG(7.5 SECONDS)
 			playsound(src, "sound/mksounds/itemdestroy.ogg",45, 0)
@@ -379,8 +379,7 @@
 		var/obj/powerup/P = new picked(src)
 		src.powerup = P
 
-		if(driver)
-			driver.client.screen += P
+		driver?.client.screen += P
 
 		return
 
@@ -438,7 +437,7 @@
 
 		SPAWN_DBG(0)
 			for(var/i=0, i<magnitude, i++)
-				src.dir = turn(src.dir, 90)
+				src.set_dir(turn(src.dir, 90))
 				sleep(0.1 SECONDS)
 		return
 
@@ -461,7 +460,7 @@
 //				R.overlays -= image('icons/mob/robots.dmi', "up-speed")
 
 	proc/drive(var/direction, var/speed)
-		dir = direction
+		set_dir(direction)
 		driving = 1
 		walk(src, dir, speed)
 
@@ -475,7 +474,7 @@
 		if(user != driver || cant_control) return
 
 		if(direction == turn(src.dir,180))
-			dir = direction
+			set_dir(direction)
 			stop()
 		else
 			drive(direction, speed)
@@ -484,7 +483,7 @@
 		if(super && istype(A,/obj/racing_clowncar))
 			var/obj/racing_clowncar/R = A
 			if(!R.super)
-				R.dir = pick(turn(src.dir,90),turn(src.dir,-90))
+				R.set_dir(pick(turn(src.dir,90),turn(src.dir,-90)))
 				step(R,R.dir)
 				R.spin(6)
 		return
@@ -567,7 +566,7 @@
 	proc/returntoline()
 		if(returnloc)
 			set_loc(returnloc)
-			dir = returndir
+			set_dir(returndir)
 
 /obj/racing_clowncar/kart/red
 

@@ -37,12 +37,12 @@
 					M.visible_message("<span class='notice'><b>[M]'s cloak is disrupted!</b></span>")
 
 		HH.set_loc(M.loc)
-		M.dir = get_dir(M, HH)
-		HH.dir = get_dir(HH, M)
+		M.set_dir(get_dir(M, HH))
+		HH.set_dir(get_dir(HH, M))
 
 		M.visible_message("<span class='alert'><B>[M] lifts [HH] up!</B></span>")
 
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			if (HH)
 				animate(HH, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
 				sleep (15)
@@ -54,8 +54,8 @@
 			if (M && HH)
 				M.pixel_y += 3
 				HH.pixel_y += 3
-				M.dir = turn(M.dir, 90)
-				HH.dir = turn(HH.dir, 90)
+				M.set_dir(turn(M.dir, 90))
+				HH.set_dir(turn(HH.dir, 90))
 
 				switch (M.dir)
 					if (NORTH)

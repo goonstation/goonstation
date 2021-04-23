@@ -30,7 +30,14 @@
 	#define VAR_PROTECTED var
 #endif
 
-/proc/enable_extools_debugger()
-	var/extools = world.GetConfig("env", "EXTOOLS_DLL") || (world.system_type == MS_WINDOWS ? "./byond-extools.dll" : "./libbyond-extools.so")
-	if(fexists(extools))
-		call(extools, "debug_initialize")()
+/proc/enable_auxtools_debugger()
+	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
+	if (debug_server)
+		call(debug_server, "auxtools_init")()
+		enable_debugging()
+
+/proc/auxtools_stack_trace(msg)
+	CRASH(msg)
+
+/proc/enable_debugging(mode, port)
+	CRASH("auxtools not loaded")

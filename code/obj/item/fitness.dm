@@ -62,11 +62,12 @@
 		else
 			in_use = 1
 			icon_state = "fitnesslifter2"
+			APPLY_MOB_PROPERTY(user, PROP_CANTMOVE, "fitness_machine")
 			user.transforming = 1
-			user.dir = SOUTH
+			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
-			usr.visible_message(text("<span class='alert'><B>[usr] is [bragmessage]!</B></span>"))
+			user.visible_message(text("<span class='alert'><B>[user] is [bragmessage]!</B></span>"))
 			var/lifts = 0
 			while (lifts++ < 6)
 				if (user.loc != src.loc)
@@ -81,6 +82,7 @@
 			playsound(user, 'sound/machines/click.ogg', 60, 1)
 			in_use = 0
 			user.transforming = 0
+			REMOVE_MOB_PROPERTY(user, PROP_CANTMOVE, "fitness_machine")
 			user.pixel_y = 0
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
@@ -109,7 +111,8 @@
 			in_use = 1
 			icon_state = "fitnessweight-c"
 			user.transforming = 1
-			user.dir = SOUTH
+			APPLY_MOB_PROPERTY(user, PROP_CANTMOVE, "fitness_machine")
+			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
 			var/obj/decal/W = new /obj/decal/
 			W.icon = 'icons/obj/stationobjs.dmi'
@@ -118,7 +121,7 @@
 			W.anchored = 1
 			W.layer = MOB_LAYER_BASE+1
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
-			usr.visible_message(text("<span class='alert'><B>[usr] is [bragmessage]!</B></span>"))
+			user.visible_message(text("<span class='alert'><B>[user] is [bragmessage]!</B></span>"))
 			var/reps = 0
 			user.pixel_y = 5
 			while (reps++ < 6)
@@ -137,6 +140,7 @@
 			playsound(user, 'sound/machines/click.ogg', 60, 1)
 			in_use = 0
 			user.transforming = 0
+			REMOVE_MOB_PROPERTY(user, PROP_CANTMOVE, "fitness_machine")
 			user.pixel_y = 0
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
@@ -155,7 +159,7 @@
 	icon_state = "rubber_duck"
 	item_state = "sponge"
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 15
 	var/spam_flag = 0

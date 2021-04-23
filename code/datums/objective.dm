@@ -1,5 +1,6 @@
 ABSTRACT_TYPE(/datum/objective)
 /datum/objective
+	var/enabled = TRUE
 	var/datum/mind/owner
 	var/explanation_text
 	var/medal_name = null // Called by ticker.mode.declare_completion().
@@ -59,7 +60,7 @@ ABSTRACT_TYPE(/datum/objective)
 		return target
 
 	check_completion()
-		if(target && target.current)
+		if(target?.current)
 			if(isdead(target.current) || !iscarbon(target.current) || inafterlife(target.current))
 				return 1
 			else
@@ -67,7 +68,7 @@ ABSTRACT_TYPE(/datum/objective)
 		else
 			return 1
 	proc/create_objective_string(var/datum/mind/target)
-		if(!(target && target.current))
+		if(!(target?.current))
 			explanation_text = "Be dastardly as heck!"
 			return
 		var/objective_text = "Assassinate [target.current.real_name], the [target.assigned_role == "MODE" ? target.special_role : target.assigned_role]"
@@ -78,7 +79,7 @@ ABSTRACT_TYPE(/datum/objective)
 
 /datum/objective/regular/assassinate/bodyguard //the INVERSE of an assassin
 	check_completion()
-		if(target && target.current)
+		if(target?.current)
 			if(isdead(target.current) || !iscarbon(target.current) || inafterlife(target.current))
 				if (in_centcom(target.current))
 					return 1
@@ -90,7 +91,7 @@ ABSTRACT_TYPE(/datum/objective)
 			return 0
 
 	create_objective_string(var/datum/mind/target)
-		if(!(target && target.current))
+		if(!(target?.current))
 			explanation_text = "Be dastardly as heck!"
 			return
 		var/objective_text = "Ensure that [target.current.real_name] the [target.assigned_role == "MODE" ? target.special_role : target.assigned_role] escapes on the shuttle dead or alive."
@@ -116,7 +117,7 @@ proc/create_fluff(var/datum/mind/target)
 
 	//Pick which flufftext we want to use
 	var/flufftext
-	if(general_fluff && special_fluff.len)
+	if(general_fluff && length(special_fluff))
 		flufftext = pick(prob(50) ? general_fluff : special_fluff)
 	else if (general_fluff)
 		flufftext = pick(general_fluff)
@@ -146,7 +147,7 @@ proc/create_fluff(var/datum/mind/target)
 		target_name = pick(items)
 		switch(target_name)
 			if("Head of Security\'s beret")
-				steal_target = /obj/item/clothing/head/helmet/HoS
+				steal_target = /obj/item/clothing/head/hos_hat
 			if("prisoner\'s beret")
 				steal_target = /obj/item/clothing/head/beret/prisoner
 			if("DetGadget hat")
@@ -164,7 +165,7 @@ proc/create_fluff(var/datum/mind/target)
 			if("aurora MKII utility belt")
 				steal_target = /obj/item/storage/belt/utility/prepared/ceshielded
 			if("Head of Security\'s war medal")
-				steal_target = /obj/item/hosmedal
+				steal_target = /obj/item/clothing/suit/hosmedal
 			if("Research Director\'s Diploma")
 				steal_target = /obj/item/rddiploma
 			if("Medical Director\'s Medical License")
@@ -173,15 +174,17 @@ proc/create_fluff(var/datum/mind/target)
 				steal_target = /obj/item/firstbill
 			if("much coveted Gooncode")
 				steal_target = /obj/item/toy/gooncode
+			if("horse mask")
+				steal_target = /obj/item/clothing/mask/horse_mask
 #else
 	set_up()
 		var/list/items = list("Head of Security\'s beret", "prisoner\'s beret", "DetGadget hat", "horse mask", "authentication disk",
-		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "much coveted Gooncode")
+		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "much coveted Gooncode", "golden crayon")
 
 		target_name = pick(items)
 		switch(target_name)
 			if("Head of Security\'s beret")
-				steal_target = /obj/item/clothing/head/helmet/HoS
+				steal_target = /obj/item/clothing/head/hos_hat
 			if("prisoner\'s beret")
 				steal_target = /obj/item/clothing/head/beret/prisoner
 			if("DetGadget hat")
@@ -200,6 +203,10 @@ proc/create_fluff(var/datum/mind/target)
 				steal_target = /obj/item/storage/belt/utility/prepared/ceshielded
 			if("much coveted Gooncode")
 				steal_target = /obj/item/toy/gooncode
+			if("horse mask")
+				steal_target = /obj/item/clothing/mask/horse_mask
+			if("golden crayon")
+				steal_target = /obj/item/pen/crayon/golden
 #endif
 
 		explanation_text = "Steal the [target_name]."
@@ -207,7 +214,7 @@ proc/create_fluff(var/datum/mind/target)
 
 	check_completion()
 		if(steal_target)
-			if(owner.current && owner.current.check_contents_for(steal_target, 1))
+			if(owner.current && owner.current.check_contents_for(steal_target, 1, 1))
 				return 1
 			else
 				return 0
@@ -376,6 +383,22 @@ proc/create_fluff(var/datum/mind/target)
 
 /datum/objective/regular/bonsaitree
 	// Brought this back as a very rare gimmick objective (Convair880).
+#ifdef MAP_OVERRIDE_MANTA
+	explanation_text = "Destroy the Captain's ship in a bottle."
+
+	check_completion()
+		var/area/cap_quarters = locate(/area/station/captain)
+		var/obj/captain_bottleship/cap_ship
+
+		for (var/obj/captain_bottleship/T in cap_quarters)
+			cap_ship = T
+		if (!cap_ship)
+			return 1  // Somebody deleted it somehow, I suppose?
+		else if (cap_ship?.destroyed == 1)
+			return 1
+		else
+			return 0
+#else
 	explanation_text = "Destroy the Captain's prized bonsai tree."
 
 	check_completion()
@@ -385,12 +408,12 @@ proc/create_fluff(var/datum/mind/target)
 		for (var/obj/shrub/captainshrub/T in cap_quarters)
 			our_tree = T
 		if (!our_tree)
-			return 1  // Somebody deleted it somehow, I suppose?
-		else if (our_tree && our_tree.destroyed == 1)
+			return 1
+		else if (our_tree?.destroyed == 1)
 			return 1
 		else
 			return 0
-
+#endif
 ///////////////////////////////////////////////////////////////
 // Regular objectives not currently used in current gameplay //
 ///////////////////////////////////////////////////////////////
@@ -403,13 +426,6 @@ proc/create_fluff(var/datum/mind/target)
 		if(round(((world.time / 10) / 60)) < time)
 			return 1
 		return 0
-
-/datum/objective/regular/destroy_outpost
-	explanation_text = "Activate the computer mainframe's self-destruct charge."
-
-	check_completion()
-		if (outpost_destroyed == 1) return 1
-		else return 0
 
 /datum/objective/regular/cash
 	var/target_cash
@@ -427,7 +443,7 @@ proc/create_fluff(var/datum/mind/target)
 
 		// Tweaked to make it more reliable (Convair880).
 		var/list/L = owner.current.get_all_items_on_mob()
-		if (L && L.len)
+		if (length(L))
 			for (var/obj/item/card/id/C in L)
 				current_cash += C.money
 			for (var/obj/item/device/pda2/PDA in L)
@@ -548,7 +564,7 @@ proc/create_fluff(var/datum/mind/target)
 	var/damage_threshold = 50 // 25 was way too strict for larger rooms, causing people to fail the objective most of the time.
 
 	set_up()
-		var/list/target_areas = list(/area/station/chemistry,
+		var/list/target_areas = list(/area/station/science/chemistry,
 		/area/station/science/artifact,
 		/area/station/science/lab,
 		/area/station/science/teleporter,
@@ -561,7 +577,7 @@ proc/create_fluff(var/datum/mind/target)
 		/area/station/security/main,
 		/area/station/crew_quarters/quarters,
 		/area/station/crew_quarters/cafeteria,
-		/area/station/chapel/main,
+		/area/station/chapel/sanctuary,
 		/area/station/hydroponics,
 		/area/station/quartermaster/office,
 		/area/station/engine/elect,
@@ -628,7 +644,7 @@ proc/create_fluff(var/datum/mind/target)
 	medal_name = "Manhattan Project"
 
 	check_completion()
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 			var/datum/game_mode/nuclear/N = ticker.mode
 			if (N && istype(N) && (N.finished == -1 || N.finished == -2))
 				return 1
@@ -649,7 +665,7 @@ proc/create_fluff(var/datum/mind/target)
 			if (mindCheck == owner)
 				continue
 
-			if (mindCheck && mindCheck.current && !isdead(mindCheck.current))
+			if (mindCheck?.current && !isdead(mindCheck.current))
 				return 0
 
 		return 1
@@ -754,7 +770,7 @@ proc/create_fluff(var/datum/mind/target)
 			if (mindCheck == owner)
 				continue
 
-			if (mindCheck && mindCheck.current && !isdead(mindCheck.current))
+			if (mindCheck?.current && !isdead(mindCheck.current))
 				return 0
 
 		return 1
@@ -834,7 +850,7 @@ proc/create_fluff(var/datum/mind/target)
 			target = pick(possible_targets)
 			target.current.mind.is_target = 1
 
-		if(target && target.current)
+		if(target?.current)
 			setText()
 		else
 			explanation_text = "Be dastardly as heck!"
@@ -847,7 +863,7 @@ proc/create_fluff(var/datum/mind/target)
 				target = possible_target
 				break
 
-		if(target && target.current)
+		if(target?.current)
 			setText()
 		else
 			explanation_text = "Be dastardly as heck!"
@@ -855,7 +871,7 @@ proc/create_fluff(var/datum/mind/target)
 		return target
 
 	check_completion()
-		if(target && target.current)
+		if(target?.current)
 			if(isdead(target.current) || !iscarbon(target.current))
 				if (isobserver(target.current))
 					if (!(target.current:corpse))
@@ -980,6 +996,9 @@ proc/create_fluff(var/datum/mind/target)
 
 /datum/objective/escape/hijack
 	explanation_text = "Hijack the emergency shuttle by escaping alone."
+#ifdef RP_MODE
+	enabled = FALSE
+#endif
 
 	check_completion()
 		if(emergency_shuttle.location<SHUTTLE_LOC_RETURNED)
@@ -1055,7 +1074,7 @@ proc/create_fluff(var/datum/mind/target)
 		if(possible_targets.len > 0)
 			target = pick(possible_targets)
 
-		if(!(target && target.current))
+		if(!(target?.current))
 			explanation_text = "Be dastardly as heck!"
 			return
 
@@ -1063,7 +1082,7 @@ proc/create_fluff(var/datum/mind/target)
 		targetname = target.current.real_name
 
 	check_completion()
-		if(target && target.current && !isdead(target.current) && ishuman(target.current) && in_centcom(target.current))
+		if(target?.current && !isdead(target.current) && ishuman(target.current) && in_centcom(target.current))
 			return 1
 		return 0
 
@@ -1267,7 +1286,16 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 		for(var/X in objective_list)
 			if (!ispath(X))
 				continue
+			var/datum/objective/objective = X
+			if(!initial(objective.enabled))
+				src.objective_list -= X
+				continue
 			ticker.mode.bestow_objective(enemy,X)
+
+		for(var/X in escape_choices)
+			var/datum/objective/objective = X
+			if(!initial(objective.enabled))
+				src.escape_choices -= X
 
 		if (escape_choices.len > 0)
 			var/escape_path = pick(escape_choices)

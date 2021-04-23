@@ -124,7 +124,7 @@
 				$("#manipHelp").html("This determines how many stages your pathogen can go through. This largely depends on the microbody, though rarely a pathogen can mutate to have less or more stages. This ranges from 1-5. At higher stages a pathogen's symptoms will generally have stronger effects. Different microbody types also trigger their symptoms at different rates depending on the stage.");
 				break;
 			case "helpSymptomaticity":
-				$("#manipHelp").html("If this is 0 your pathogen will not trigger its symptoms. Pathogens start out with this as 1, but it can sometimes mutate to become 0. If this happens, you may be able to get it back to 1 by making your pathogen mutate some more.");
+				$("#manipHelp").html("If this is 0 your pathogen will not trigger its symptoms.");
 				break;
 			case "helpSupCode":
 				$("#manipHelp").html("This code determines what the pathogen is supressed by. If you see two pathogens with the same code, you know that they will have the same suppressant.");

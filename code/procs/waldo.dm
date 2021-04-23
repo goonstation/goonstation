@@ -57,7 +57,7 @@
 	var/list/theareas = new/list()
 	for(var/area/AR in world)
 		LAGCHECK(LAG_LOW)
-		if(theareas.Find(AR.name)) continue
+		if(AR.name in theareas) continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
 		if (picked.z == usr.z)
 			theareas += AR.name

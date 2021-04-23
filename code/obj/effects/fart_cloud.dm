@@ -35,7 +35,7 @@
 	return
 
 /obj/effects/fart_cloud/Move()
-	..()
+	. = ..()
 	for(var/mob/living/carbon/human/R in get_turf(src))
 		if (R.internal != null && R.wear_mask && (R.wear_mask.c_flags & MASKINTERNALS))
 			continue

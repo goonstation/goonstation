@@ -777,7 +777,7 @@
 	upperfluc = 100
 	lowerfluc = -100
 
-/datum/commodity/drugs/lsd_bee
+/datum/commodity/drug/lsd_bee
 	comname = "LSBee (1x patch)"
 	comtype = /obj/item/reagent_containers/patch/lsd_bee
 	desc = "A highly potent hallucinogenic substance. It smells like honey."
@@ -868,6 +868,15 @@
 	upperfluc = 5000
 	lowerfluc = -3000
 
+/datum/commodity/relics/bootlegfirework
+	comname = "Bootleg Firework (1x rocket)"
+	comtype = /obj/item/firework/bootleg
+	desc = "Bootleg fireworks, found deep in the back of an old warehouse."
+	price = 60
+	baseprice = 60
+	upperfluc = 10
+	lowerfluc = -10
+
 ////////////////////////////////
 ///// syndicate trader /////////
 ////////////////////////////////
@@ -914,7 +923,7 @@
 
 /datum/commodity/contraband/hosberet
 	comname = "Head of Security Beret"
-	comtype = /obj/item/clothing/head/helmet/HoS
+	comtype = /obj/item/clothing/head/hos_hat
 	desc = "The beloved beret of an NT HoS."
 	price = 10000
 	baseprice = 10000
@@ -1242,6 +1251,15 @@
 	baseprice = 150
 	upperfluc = 50
 	lowerfluc = -50
+
+/datum/commodity/junk/pie_launcher
+	comname = "Pie Tool Module"
+	comtype = /obj/item/device/guardbot_tool/pie_launcher
+	desc = "A tool module compatible with guardbuddies. Are tool modules supposed to have cream on them?"
+	price = PAY_DOCTORATE/2
+	baseprice = PAY_DOCTORATE/2
+	upperfluc = PAY_DOCTORATE/6
+	lowerfluc = -PAY_DOCTORATE/6
 
 /datum/commodity/junk/laughbox
 	comname = "Box of Laughs"
@@ -2137,6 +2155,20 @@
 	upperfluc = 150
 	lowerfluc = -100
 
+/datum/commodity/costume/mime
+	comname = "Mime Clothes"
+	comtype = /obj/item/storage/box/costume/mime
+	desc = "No words can describe this. Only intricate gesticulation."
+	price = 100 //exactly what the clown spawns with in their account, three mimes on mondays.
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
+/datum/commodity/costume/mime/alt
+	comname = "Alternate Mime Clothes."
+	comtype = /obj/item/storage/box/costume/mime/alt
+	desc = "This stuff will give you an edge in charades."
+
 /datum/commodity/balloons //no it ain't a costume kit but it's going in Geoff's wares so idgaf tOt fite me
 	comname = "box of balloons"
 	comtype = /obj/item/storage/box/balloonbox
@@ -2157,7 +2189,7 @@
 	upperfluc = 100
 	lowerfluc = -20
 
-#if ASS_JAM
+/*
 /datum/commodity/screamshoes
 	comname = "scream shoes"
 	comtype = /obj/item/clothing/shoes/scream
@@ -2177,7 +2209,7 @@
 	baseprice = 100
 	upperfluc = 150
 	lowerfluc = -20
-#endif
+*/
 
 /// pathology
 /datum/commodity/synthmodule
@@ -2716,3 +2748,12 @@
 	baseprice = 2000
 	upperfluc = 1700
 	lowerfluc = -1700
+
+/datum/commodity/expensive_card
+	comname = "Incredibly Expensive Card"
+	desc = "Wow...people really pay a lot for these cards..."
+	comtype = /obj/item/playing_card/expensive
+	onmarket = 1
+	price = 21000
+	upperfluc = 20000
+	lowerfluc = -28500

@@ -15,7 +15,7 @@
 #define PLANE_HUD 30
 #define PLANE_SCREEN_OVERLAYS 40
 
-/obj/screen/plane_parent
+/atom/movable/screen/plane_parent
 	name = ""
 	icon = null
 	screen_loc = "1,1"
@@ -46,10 +46,10 @@
 		src.filters += filter(type="drop_shadow", x=2, y=-2, color=rgb(4, 8, 16, 150), size=4, offset=1)
 
 
-/obj/screen/plane_display
+/atom/movable/screen/plane_display
 	plane = PLANE_MASTER_GAME
 
-	New(obj/screen/plane_parent/pl)
+	New(atom/movable/screen/plane_parent/pl)
 		if(pl)
 			src.name = pl.name
 			src.render_source = pl.render_target
@@ -58,7 +58,7 @@
 			src.mouse_opacity = pl.mouse_opacity
 		..()
 
-/obj/screen/plane_display/master
+/atom/movable/screen/plane_display/master
 	screen_loc = "NORTH-0,1"
 	var/keep_together_requests = 0
 
@@ -74,37 +74,37 @@
 client
 	var/list/plane_parents = list()
 	var/list/plane_displays = list()
-	var/obj/screen/plane_display/master/game_display
+	var/atom/movable/screen/plane_display/master/game_display
 
 	New()
 		Z_LOG_DEBUG("Cient/New", "[src.ckey] - Adding plane_parents")
-		plane_parents += new /obj/screen/plane_parent(PLANE_UNDERFLOOR, name = "underfloor_plane")
-		plane_parents += new /obj/screen/plane_parent(PLANE_SPACE, name = "space_plane")
-		plane_parents += new /obj/screen/plane_parent(PLANE_FLOOR, name = "floor_plane")
-		plane_parents += new /obj/screen/plane_parent(PLANE_WALL, name = "wall_plane")
-		plane_parents += new /obj/screen/plane_parent(PLANE_NOSHADOW_BELOW, name = "noshadow_below_plane")
-		plane_parents += new /obj/screen/plane_parent(PLANE_DEFAULT, name = "game_plane")
-		plane_parents += new /obj/screen/plane_parent(PLANE_NOSHADOW_ABOVE, name = "noshadow_above_plane")
-		plane_parents += new /obj/screen/plane_parent(PLANE_LIGHTING, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_MULTIPLY, mouse_opacity = 0, name = "lighting_plane")
-		plane_parents += new /obj/screen/plane_parent(PLANE_SELFILLUM, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_ADD, mouse_opacity = 0, name = "selfillum_plane")
-		plane_parents += new /obj/screen/plane_parent(PLANE_BLACKNESS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "blackness_plane")
-		plane_parents += new /obj/screen/plane_parent(PLANE_FLOCKVISION, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_OVERLAY, mouse_opacity = 0, name = "flockvision_plane")
-		plane_parents += new /obj/screen/plane_parent(PLANE_OVERLAY_EFFECTS, mouse_opacity = 0, name = "overlay_effects_plane", is_screen = 1)
-		plane_parents += new /obj/screen/plane_parent(PLANE_HUD, appearance_flags = NO_CLIENT_COLOR, name = "hud_plane", is_screen = 1)
-		plane_parents += new /obj/screen/plane_parent(PLANE_SCREEN_OVERLAYS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "screen_overlays_plane", is_screen = 1)
+		plane_parents += new /atom/movable/screen/plane_parent(PLANE_UNDERFLOOR, name = "underfloor_plane")
+		plane_parents += new /atom/movable/screen/plane_parent(PLANE_SPACE, name = "space_plane")
+		plane_parents += new /atom/movable/screen/plane_parent(PLANE_FLOOR, name = "floor_plane")
+		plane_parents += new /atom/movable/screen/plane_parent(PLANE_WALL, name = "wall_plane")
+		plane_parents += new /atom/movable/screen/plane_parent(PLANE_NOSHADOW_BELOW, name = "noshadow_below_plane")
+		plane_parents += new /atom/movable/screen/plane_parent(PLANE_DEFAULT, name = "game_plane")
+		plane_parents += new /atom/movable/screen/plane_parent(PLANE_NOSHADOW_ABOVE, name = "noshadow_above_plane")
+		plane_parents += new /atom/movable/screen/plane_parent(PLANE_LIGHTING, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_MULTIPLY, mouse_opacity = 0, name = "lighting_plane")
+		plane_parents += new /atom/movable/screen/plane_parent(PLANE_SELFILLUM, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_ADD, mouse_opacity = 0, name = "selfillum_plane")
+		plane_parents += new /atom/movable/screen/plane_parent(PLANE_BLACKNESS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "blackness_plane")
+		plane_parents += new /atom/movable/screen/plane_parent(PLANE_FLOCKVISION, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_OVERLAY, mouse_opacity = 0, name = "flockvision_plane")
+		plane_parents += new /atom/movable/screen/plane_parent(PLANE_OVERLAY_EFFECTS, mouse_opacity = 0, name = "overlay_effects_plane", is_screen = 1)
+		plane_parents += new /atom/movable/screen/plane_parent(PLANE_HUD, appearance_flags = NO_CLIENT_COLOR, name = "hud_plane", is_screen = 1)
+		plane_parents += new /atom/movable/screen/plane_parent(PLANE_SCREEN_OVERLAYS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "screen_overlays_plane", is_screen = 1)
 
 #ifdef COOL_PLANE_STUFF
 		game_display = new
 		src.screen += game_display
 
-		for(var/obj/screen/plane_parent/pl as() in src.plane_parents)
-			var/obj/screen/plane_display/display = new(pl)
+		for(var/atom/movable/screen/plane_parent/pl as anything in src.plane_parents)
+			var/atom/movable/screen/plane_display/display = new(pl)
 			plane_displays += display
 			if(!pl.is_screen)
 				game_display.vis_contents += display
 #endif
 
-		var/obj/screen/plane_parent/P = new /obj/screen/plane_parent(PLANE_HIDDENGAME, name = "hidden_game_plane")
+		var/atom/movable/screen/plane_parent/P = new /atom/movable/screen/plane_parent(PLANE_HIDDENGAME, name = "hidden_game_plane")
 		plane_parents += P
 
 		SPAWN_DBG(5 SECONDS) //Because everything needs to wait!
@@ -113,7 +113,7 @@ client
 
 	proc/apply_depth_filter()
 		var/shadows_checked = winget( src, "menu.set_shadow", "is-checked" ) == "true"
-		for (var/obj/screen/plane_parent/P in plane_parents)
+		for (var/atom/movable/screen/plane_parent/P in plane_parents)
 			if (P.name == "game_plane" || P.name == "wall_plane")
 				if (shadows_checked)
 					P.add_depth_shadow()
@@ -121,9 +121,9 @@ client
 					P.filters = null
 
 	proc/setup_special_screens()
-		for (var/atom/A as() in plane_parents)
+		for (var/atom/A as anything in plane_parents)
 			screen += A
 
 	proc/get_plane(var/plane)
-		for (var/atom/A as() in plane_parents)
+		for (var/atom/A as anything in plane_parents)
 			if(A.plane == plane) return A

@@ -1,7 +1,6 @@
 /obj/item/clothing/head/fruithat
 	name = "fruit basket hat"
 	desc = "Where do these things even come from? It reeks of welch, and it's not the grapes."
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "fruithat"
 	var/bites = 8
 	var/list/youarebad = list("You're a liar.", "You're a cheat.","You're a fraud.") // h e h
@@ -19,8 +18,6 @@
 				M.nutrition += 20
 				playsound(M.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
 				if (!src.bites)
-					M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					"<span class='alert'>You finish eating [src].</span>")
 					user.u_equip(src)
 					qdel(src)
 				sleep(rand(10,50))
@@ -32,7 +29,7 @@
 			user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
 			user, "<span class='alert'>You try to feed [M] [src]!</span>",\
 			M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
-			if (!do_after(user, 10))
+			if (!do_after(user, 1 SECONDS))
 				boutput(user, "<span class='alert'>You were interrupted!</span>")
 				return ..()
 			else
@@ -43,8 +40,6 @@
 				M.nutrition += 20
 				playsound(M.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
 				if (!src.amount)
-					M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					"<span class='alert'>You finish eating [src].</span>")
 					user.u_equip(src)
 					qdel(src)
 				sleep(rand(10,50))
@@ -78,7 +73,7 @@
 				boutput(user, "You don't have enough cable to add to \the [src.name]")
 			else
 				boutput(user, "<span class='notice'>You begin adding \the [C.name] to \the [src.name].</span>")
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return ..()
 				else

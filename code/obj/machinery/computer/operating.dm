@@ -6,6 +6,7 @@
 	icon_state = "operating"
 	desc = "Shows information on a patient laying on an operating table."
 	power_usage = 500
+	can_reconnect = 1
 
 	var/mob/living/carbon/human/victim = null
 
@@ -15,7 +16,10 @@
 /obj/machinery/computer/operating/New()
 	..()
 	SPAWN_DBG(0.5 SECONDS)
-		src.table = locate(/obj/machinery/optable, orange(2,src))
+		connection_scan()
+
+/obj/machinery/computer/operating/connection_scan()
+	src.table = locate(/obj/machinery/optable, orange(2,src))
 
 /obj/machinery/computer/operating/attack_ai(mob/user)
 	add_fingerprint(user)
@@ -32,7 +36,7 @@
 /obj/machinery/computer/operating/attackby(obj/item/I as obj, user as mob)
 	if (isscrewingtool(I))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, 2 SECONDS))
 			if (src.status & BROKEN)
 				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
@@ -60,15 +64,14 @@
 				A.anchored = 1
 				qdel(src)
 	else
-		src.attack_hand(user)
+		..()
 	return
 
 /obj/machinery/computer/operating/proc/interacted(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
-		if (!issilicon(user) && !isAI(user))
-			src.remove_dialog(user)
-			user.Browse(null, "window=op")
-			return
+	if (!in_interact_range(src,user) || (status & (BROKEN|NOPOWER)) )
+		src.remove_dialog(user)
+		user.Browse(null, "window=op")
+		return
 
 	src.add_dialog(user)
 	var/dat = "<HEAD><TITLE>Operating Computer</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"
@@ -102,7 +105,7 @@
 /obj/machinery/computer/operating/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 //		if (href_list["update"])
 //			src.interacted(usr)

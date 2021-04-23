@@ -8,7 +8,7 @@
 	human_only = 0
 	pointCost = 4
 	can_use_in_container = 1
-	dont_lock_holder = 1
+	dont_lock_holder = 0
 
 	incapacitationCheck()
 		return 0
@@ -110,7 +110,7 @@
 	human_only = 0
 	pointCost = 0 // free for now, given you have to lose a fuckin' EYE
 	can_use_in_container = 1
-	dont_lock_holder = 1
+	dont_lock_holder = 0
 
 	incapacitationCheck()
 		return 0
@@ -203,7 +203,7 @@
 	human_only = 0
 	pointCost = 6
 	can_use_in_container = 1
-	dont_lock_holder = 1
+	dont_lock_holder = 0
 
 	incapacitationCheck()
 		return 0
@@ -295,7 +295,7 @@
 	human_only = 0
 	pointCost = 1
 	can_use_in_container = 1
-	dont_lock_holder = 1
+	dont_lock_holder = 0
 
 	incapacitationCheck()
 		return 0

@@ -7,12 +7,12 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	var/obj/item/voice_changer/vchange = 0
 	body_parts_covered = HEAD
-	compatible_species = list("human", "monkey", "werewolf")
+	compatible_species = list("human", "cow", "werewolf")
 	var/is_muzzle = 0
 	var/use_bloodoverlay = 1
-	var/acid_proof = 0	//Is this mask immune to flouroacid?
 	var/stapled = 0
 	var/allow_staple = 1
+	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 
 	New()
 		..()
@@ -36,7 +36,7 @@
 			return
 		else if (!src.see_face && !src.vchange)
 			user.show_text("You begin installing [W] into [src].", "blue")
-			if (!do_after(user, 20))
+			if (!do_after(user, 2 SECONDS))
 				user.show_text("You were interrupted!", "red")
 				return
 			user.show_text("You install [W] into [src].", "green")
@@ -47,7 +47,7 @@
 	else if (issnippingtool(W))
 		if (src.vchange)
 			user.show_text("You begin removing [src.vchange] from [src].", "blue")
-			if (!do_after(user, 20))
+			if (!do_after(user, 2 SECONDS))
 				user.show_text("You were interrupted!", "red")
 				return
 			user.show_text("You remove [src.vchange] from [src].", "green")
@@ -101,13 +101,14 @@
 	desc = "A close-fitting mask that can filter some environmental toxins or be connected to an air supply."
 	icon_state = "gas_mask"
 	c_flags = SPACEWEAR | COVERSMOUTH | COVERSEYES | MASKINTERNALS | BLOCKSMOKE
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	see_face = 0.0
 	item_state = "gas_mask"
 	permeability_coefficient = 0.01
 	color_r = 0.8 // green tint
 	color_g = 1
 	color_b = 0.8
+	path_prot = 0
 
 	setupProperties()
 		..()
@@ -134,7 +135,7 @@
 	icon_state = "moustache"
 	item_state = "moustache"
 	see_face = 0.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	is_syndicate = 1
 	mats = 2
 
@@ -156,9 +157,13 @@
 	item_state = "gas_alt"
 
 /obj/item/clothing/mask/gas/swat
-	name = "SWAT Mask"
+	name = "SWAT mask"
 	desc = "A close-fitting tactical mask that can filter some environmental toxins or be connected to an air supply."
 	icon_state = "swat"
+	item_state = "swat"
+	color_r = 1
+	color_g = 0.8
+	color_b = 0.8
 
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"
@@ -180,13 +185,26 @@
 	is_syndicate = 1
 	mats = 6
 
+/obj/item/clothing/mask/monkey_translator
+	name = "vocal translator"
+	desc = "Nanotechnology and questionable science combine to make a face-hugging translator, capable of making monkeys speak human lanauge. Or whoever wears this."
+	icon = 'icons/obj/items/items.dmi'
+	wear_image_icon = 'icons/mob/mask.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
+	icon_state = "voicechanger"
+	item_state = "muzzle"			// @TODO new sprite ok
+	mats = 12	// 2x voice changer cost. It's complicated ok
+	w_class = W_CLASS_SMALL
+	c_flags = COVERSMOUTH	// NOT usable for internals.
+	var/new_language = "english"	// idk maybe you can varedit one so that humans speak monkey instead. who knows
+
 /obj/item/clothing/mask/breath
 	desc = "A close-fitting mask that can be connected to an air supply but does not work very well in hard vacuum without a helmet."
-	name = "Breath Mask"
+	name = "breath mask"
 	icon_state = "breath"
 	item_state = "breath"
 	c_flags = COVERSMOUTH | MASKINTERNALS
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	permeability_coefficient = 0.50
 
 
@@ -225,7 +243,7 @@
 		setProperty("heatprot", 5)
 
 /obj/item/clothing/mask/gas/death_commando
-	name = "Death Commando Mask"
+	name = "Death Commando mask"
 	icon_state = "death_commando_mask"
 	item_state = "death_commando_mask"
 	setupProperties()
@@ -250,8 +268,7 @@
 		if (!spam_flag)
 			spam_flag = 1
 			src.add_fingerprint(user)
-			if(user)
-				user.visible_message("<B>[user]</B> honks the nose on [his_or_her(user)] [src.name]!")
+			user?.visible_message("<B>[user]</B> honks the nose on [his_or_her(user)] [src.name]!")
 			playsound(get_turf(src), islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
 			SPAWN_DBG(src.spam_timer)
 				spam_flag = 0
@@ -263,12 +280,12 @@
 	desc = "I AM THE ONE WHO HONKS."
 	icon_state = "clown"
 	item_state = "clown_hat"
-	acid_proof = 1
+	item_function_flags = IMMUNE_TO_ACID
 	burn_possible = 0
 	color_r = 1.0
 	color_g = 1.0
 	color_b = 1.0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/mob/living/carbon/human/victim
 
 	equipped(var/mob/user, var/slot)
@@ -291,27 +308,27 @@
 
 	unequipped(mob/user)
 		. = ..()
-		if ( src.victim )
+		if (src.victim)
 			src.victim.change_misstep_chance(-25)
 			src.victim = null
 			processing_items -= src
 
 	process()
-		if ( src.victim )
+		if (src.victim)
 			if ( src.victim.health <= 0 )
 				return
-			if ( prob(45) )
+			if (prob(45))
 				boutput (src.victim, __red("[src] burns your face!"))
-				if ( prob(25) )
+				if (prob(25))
 					src.victim.emote("scream")
 				src.victim.TakeDamage("head",0,3,0,DAMAGE_BURN)
-			if ( prob(20) )
+			if (prob(20))
 				src.victim.take_brain_damage(3)
-			if ( prob(10) )
+			if (prob(10))
 				src.victim.changeStatus("stunned", 2 SECONDS)
-			if ( prob(10) )
+			if (prob(10))
 				src.victim.changeStatus("slowed", 4 SECONDS)
-			if ( prob(60) )
+			if (prob(60))
 				src.victim.emote("laugh")
 
 	afterattack(atom/target, mob/user, reach, params)
@@ -331,7 +348,7 @@
 	icon_state = "medical"
 	item_state = "medical"
 	c_flags = COVERSMOUTH | MASKINTERNALS
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	protective_temperature = 420
 
 /obj/item/clothing/mask/muzzle
@@ -339,7 +356,7 @@
 	icon_state = "muzzle"
 	item_state = "muzzle"
 	c_flags = COVERSMOUTH
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	desc = "You'd probably say something like 'Hello Clarice.' if you could talk while wearing this."
 	is_muzzle = 1
 
@@ -348,16 +365,21 @@
 	desc = "Helps protect from viruses and bacteria."
 	icon_state = "sterile"
 	item_state = "s_mask"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	c_flags = COVERSMOUTH
 	permeability_coefficient = 0.05
+	path_prot = 0
+
+	setupProperties()
+		..()
+		setProperty("viralprot", 50) // fashion reasons, they're *space* masks, ok?
 
 /obj/item/clothing/mask/surgical_shield
 	name = "surgical face shield"
 	desc = "For those really, <i>really</i> messy surgeries."
 	icon_state = "surgicalshield"
 	item_state = "surgicalshield"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH | COVERSEYES
 	permeability_coefficient = 0.50
 
@@ -435,7 +457,7 @@
 				src.color = P.font_color
 
 /obj/item/clothing/mask/melons
-	name = "Flimsy 'George Melons' Mask"
+	name = "flimsy 'George Melons' mask"
 	desc = "Haven't seen that fellow in a while."
 	icon_state = "melons"
 	item_state = "melons"
@@ -475,6 +497,7 @@
 	color_r = 0.95 // darken just a little
 	color_g = 0.95
 	color_b = 0.95
+	path_prot = 0
 
 /obj/item/clothing/mask/chicken
 	name = "chicken mask"

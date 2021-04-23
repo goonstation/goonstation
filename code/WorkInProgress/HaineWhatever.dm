@@ -182,8 +182,8 @@
 				src.spam_flag = src.spam_timer
 				if (src.reagents && src.reagents.total_volume)
 					src.reagents.reaction(src.chewer, INGEST, chew_size)
-					SPAWN_DBG (0)
-						if (src && src.reagents && src.chewer && src.chewer.reagents)
+					SPAWN_DBG(0)
+						if (src?.reagents && src.chewer?.reagents)
 							src.reagents.trans_to(src.chewer, min(reagents.total_volume, chew_size))
 			else if (src.spam_flag)
 				src.spam_flag--
@@ -204,12 +204,16 @@
 	name = "feather"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "feather"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	p_class = 1
 	burn_point = 220
 	burn_output = 300
 	burn_possible = 1
 	rand_pos = 1
+
+	attack(mob/M as mob, mob/user as mob)
+		src.add_fingerprint(user)
+		M.emote("sneeze")
 
 var/list/parrot_species = list("eclectus" = /datum/species_info/parrot/eclectus,
 	"eclectusf" = /datum/species_info/parrot/eclectus/female,
@@ -523,7 +527,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	throwforce = 2.0
 	throw_speed = 1
 	throw_range = 8
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	max_stack = 20
 
@@ -873,7 +877,8 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			var/my_mutation = pick("accent_elvis", "stutter", "accent_chav", "accent_swedish", "accent_tommy", "unintelligable", "slurring")
 			src.bioHolder.AddEffect(my_mutation)
 
-	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		src.protect_from(M, null, weapon)
 
 	proc/protect_from(var/mob/M as mob, var/mob/customer as mob, var/obj/item/weapon as obj)
@@ -927,7 +932,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			"I hope you don't like how your face looks, [target_name], cause it's about to get rearranged!",\
 			"I told you to [pick("stop that shit", "cut that shit out")], and you [pick("ain't", "didn't", "didn't listen")]! [pick("So now", "It's time", "And now", "Ypu best not be suprised that")] you're gunna [pick("reap what you sewed", "get it", "get what's yours", "get what's comin' to you")]!")
 			src.target = M
-			src.ai_state = 2
+			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 			src.im_mad = 0
@@ -999,7 +1004,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	ai_action()
 		src.ai_check_grabs()
-		if (src.ai_state == 2 && src.done_with_you(src.ai_target))
+		if (src.ai_state == AI_ATTACKING && src.done_with_you(src.ai_target))
 			return
 		else
 			return ..()
@@ -1134,7 +1139,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	desc = "A little golden brooch that makes you feel compelled to yell silly things."
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "moonbrooch"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/activated = 0
 
 	verb/moon_prism_power()
@@ -1149,7 +1154,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			usagi.say("MOON PRISM POWER, MAKE UP!")
 			src.activated = 1
 			for (var/i = 0, i < 4, i++)
-				usagi.dir = turn(usagi.dir, -90)
+				usagi.set_dir(turn(usagi.dir, -90))
 				sleep(0.2 SECONDS)
 			usagi.sailormoon_reshape()
 			var/obj/critter/cat/luna = new /obj/critter/cat (usagi.loc)
@@ -1170,7 +1175,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	item_state = "moonstick"
 	flags = FPRINT | TABLEPASS | ONBELT
 	force = 2.0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throwforce = 2.0
 	throw_speed = 3
 	throw_range = 5
@@ -1242,8 +1247,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	if (src.bioHolder)
 		src.bioHolder.mobAppearance = AH
-	SPAWN_DBG(1 SECOND)
-		src.bioHolder.mobAppearance.UpdateMob()
+		src.update_colorful_parts()
 
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-+MISCSTUFF+-=-=-=-=-=-=-=-=-=-=-=-=-*/
@@ -1261,7 +1265,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 3.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -1274,7 +1278,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		BLOCK_SETUP(BLOCK_KNIFE)
 
 	attack(mob/living/carbon/M as mob, mob/user as mob)
-		if (!ismob(M) || !M.contents.len)
+		if (!ismob(M) || !length(M.contents))
 			return ..()
 		var/atom/movable/AM = pick(M.contents)
 		if (!AM)
@@ -1387,7 +1391,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	icon_state = "spacelipstick0"
 	color = null
 	font_color = "#FF0000"
-	font = "Dancing Script, cursive"
+	font = "'Dancing Script', cursive"
 	webfont = "Dancing Script"
 	uses_handwriting = 1
 	var/open = 0
@@ -1495,7 +1499,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 //wrongend's bang! gun
 /obj/item/bang_gun
@@ -1514,8 +1518,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			..()
 		else
 			src.bangfired = 1
-			if(user)
-				user.visible_message("<span class='alert'><span class='alert'>[user] fires [src][target ? " at [target]" : null]! [description]</span>")
+			user?.visible_message("<span class='alert'><span class='alert'>[user] fires [src][target ? " at [target]" : null]! [description]</span>")
 			playsound(get_turf(user), "sound/musical_instruments/Trombone_Failiure.ogg", 50, 1)
 			icon_state = "bangflag[icon_state]"
 			return
@@ -1573,7 +1576,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	desc = "How can you tell it's blessed? Well, just look at it! It's so obvious!"
 	icon = 'icons/misc/HaineSpriteDump.dmi'
 	icon_state = "ballbearing"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	force = 7
 	throwforce = 5
 	stamina_damage = 25
@@ -1611,7 +1614,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "thing"
 	flags = FPRINT | CONDUCT | TABLEPASS
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	force = 10
 	throwforce = 7
 	mats = 50
@@ -1625,7 +1628,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	desc = "A little model of the NSS Destiny. How spiffy!"
 	icon = 'icons/misc/HaineSpriteDump.dmi'
 	icon_state = "destiny"
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 /obj/test_knife_switch_switch
 	name = "knife switch switch"
@@ -1762,8 +1765,8 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 							H.set_clothing_icon_dirty()
 						H.transforming = 1
 						src.transforming = 1
-						src.dir = get_dir(src, H)
-						H.dir = get_dir(H, src)
+						src.set_dir(get_dir(src, H))
+						H.set_dir(get_dir(H, src))
 						src.visible_message("<span class='alert'><B>[src] menacingly grabs [H] by the neck!</B></span>")
 						src.say("Shakthi Degi Kali Ma.")
 						var/dir_offset = get_dir(src, H)
@@ -1917,7 +1920,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 	on_add()
 		if(ismob(holder?.my_atom))
 			var/mob/M = holder.my_atom
-			M.add_stam_mod_regen("r_cocaine", 200)
+			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_cocaine", 200)
 			M.addOverlayComposition(/datum/overlayComposition/cocaine)
 		return
 
@@ -1925,7 +1928,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		if(ismob(holder?.my_atom))
 			var/mob/M = holder.my_atom
 			if (remove_buff)
-				M.remove_stam_mod_regen("r_cocaine")
+				REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_cocaine")
 			M.removeOverlayComposition(/datum/overlayComposition/cocaine)
 			M.removeOverlayComposition(/datum/overlayComposition/cocaine_minor_od)
 			M.removeOverlayComposition(/datum/overlayComposition/cocaine_major_od)

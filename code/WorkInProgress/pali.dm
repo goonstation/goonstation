@@ -1,10 +1,19 @@
 // im pali
 
+//bonk
+
+
+// Pill of sheltestgrog for my office
+
 /obj/item/reagent_containers/pill/sheltestgrog
 	name = "pill"
 	New()
 		. = ..()
 		src.reagents.add_reagent("sheltestgrog", 100)
+
+
+
+// Gun that shoots Securitrons
 
 /obj/item/ammo/bullets/beepsky
 	sname = "Beepsky"
@@ -19,7 +28,6 @@
 	icon_dynamic = 1
 	icon_short = "lmg_ammo"
 	icon_empty = "lmg_ammo-0"
-
 
 /obj/item/gun/kinetic/beepsky
 	name = "\improper Loose Cannon"
@@ -40,11 +48,11 @@
 	slowdown_time = 15
 
 	two_handed = 1
-	w_class = 4
+	w_class = W_CLASS_BULKY
 
 	New()
 		ammo = new/obj/item/ammo/bullets/beepsky
-		current_projectile = new/datum/projectile/special/spawner/beepsky
+		set_current_projectile(new/datum/projectile/special/spawner/beepsky)
 		..()
 
 	setupProperties()
@@ -71,6 +79,9 @@
 
 
 
+
+
+// Untitled Goose Game memes
 
 /datum/limb/thief
 	harm(atom/target, var/mob/living/user)
@@ -143,7 +154,10 @@
 	Move(atom/NewLoc, direct)
 		. = ..()
 		if(src.pulling)
-			src.dir = turn(get_dir(src, src.pulling), 180)
+			src.set_dir(turn(get_dir(src, src.pulling), 180))
+
+
+// For when you want a turf to have maptext attached on it in a dmm
 
 /obj/maptext_spawner
 	var/loc_maptext = ""
@@ -216,6 +230,9 @@
 		var/f = src.filters[length(src.filters)]
 		animate(f, offset=f:offset + 100, time=5 MINUTES, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=-1)
 
+
+// A candle with fancy animated spooky lighting
+
 /obj/item/strange_candle
 	name = "strange candle"
 	desc = "It's a strange candle."
@@ -247,6 +264,9 @@
 		src.vis_contents -= light
 		light.dispose()
 		..()
+
+
+// Katamari mob critter
 
 /mob/living/critter/katamari
 	name = "space thing"
@@ -292,18 +312,18 @@
 			targets += T
 		var/list/atom/movable/to_densify = list()
 		for(var/atom/movable/AM in src)
-			if(istype(AM, /obj/screen))
+			if(istype(AM, /atom/movable/screen))
 				continue
 			AM.transform = null
 			AM.set_loc(get_turf(src))
 			if(AM.density)
 				to_densify += AM
-			AM.density = 0
+			AM.set_density(0)
 			AM.throw_at(pick(targets), rand(1, 10), rand(1, 15), allow_anchored=TRUE)
 		. = ..()
 		SPAWN_DBG(1 SECOND)
 			for(var/atom/movable/AM in to_densify)
-				AM.density = TRUE
+				AM.set_density(TRUE)
 			src.transforming = 1
 			src.canmove = 0
 			src.icon = null
@@ -359,3 +379,91 @@
 
 	setup_healths()
 		add_hh_robot(-150, 150, 1.15)
+
+
+// A belt which gives you big muscles (visual only)
+
+/obj/item/storage/belt/muscly
+	name = "muscly belt"
+	desc = "Probably made out of steroids or something."
+	icon_state = "machobelt"
+	item_state = "machobelt"
+	var/muscliness_factor = 7
+	var/filter
+
+	equipped(var/mob/user)
+		..()
+		user.filters += filter(type="displace", icon=icon('icons/effects/distort.dmi', "muscly"), size=0)
+		src.filter = user.filters[length(user.filters)]
+		animate(filter, size=src.muscliness_factor, time=1 SECOND, easing=SINE_EASING)
+
+	unequipped(var/mob/user)
+		..()
+		animate(filter, size=0, time=1 SECOND, easing=SINE_EASING)
+		SPAWN_DBG(1 SECOND)
+			user.filters -= filter
+			filter = null
+
+
+// Among Us memery
+
+/obj/spawner/amongus_clothing
+	var/cursed = FALSE
+
+	New()
+		. = ..()
+		var/h = rand(360)
+		var/s = rand() * 0.2 + 0.8
+		var/v = rand() * 0.5 + 0.5
+		var/suit_color = hsv2rgb(h, s, v)
+		var/boots_color = hsv2rgb(h + rand(-30, 30), s, v * 0.8)
+		var/col = color_mapping_matrix(
+			list("#296C3F", "#CDCDD6", "#BC9800"),
+			list("#5ea2a8", suit_color, boots_color)
+		)
+		var/obj/item/clothing/suit/bio_suit/suit = new(src.loc)
+		var/obj/item/clothing/head/bio_hood/hood = new(src.loc)
+		suit.color = col
+		hood.color = col
+		var/datum/color/base_color_datum = new
+		base_color_datum.from_hex(suit_color)
+		var/nearest_color_text = get_nearest_color(base_color_datum)
+		suit.name = "[nearest_color_text] suit"
+		hood.name = "[nearest_color_text] hood"
+		suit.desc = "There's 1 impostor among us."
+		hood.desc = "There's 1 impostor among us."
+		if(src.cursed)
+			suit.cant_other_remove = TRUE
+			suit.cant_self_remove = TRUE
+			hood.cant_other_remove = TRUE
+			hood.cant_self_remove = TRUE
+		var/mob/living/carbon/human/H = locate() in src.loc
+		if(H)
+			if(H.wear_suit)
+				var/obj/item/old_suit = H.wear_suit
+				H.u_equip(old_suit)
+				old_suit.dropped(H)
+				old_suit.set_loc(H.loc)
+			if(H.head)
+				var/obj/item/old_hat = H.head
+				H.u_equip(old_hat)
+				old_hat.dropped(H)
+				old_hat.set_loc(H.loc)
+			H.force_equip(suit, SLOT_WEAR_SUIT)
+			H.force_equip(hood, SLOT_HEAD)
+			boutput(H, "<span class='alert'>There's 1 impostor among us.</alert>")
+		qdel(src)
+
+/obj/spawner/amongus_clothing/cursed
+	cursed = TRUE
+
+
+
+/proc/populate_station(chance=100)
+	for(var/job_name in job_start_locations)
+		if(job_name == "AI")
+			continue
+		for(var/turf/T in job_start_locations[job_name])
+			if(prob(chance))
+				var/mob/living/carbon/human/normal/H = new(T)
+				H.JobEquipSpawned(job_name)

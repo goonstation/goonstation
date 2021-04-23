@@ -110,6 +110,8 @@
 	Entered(var/mob/M)
 		if (istype(M,/mob/dead) || istype(M,/mob/wraith) || istype(M,/mob/living/intangible) || istype(M, /obj/lattice))
 			return
+		if(!ismob(M))
+			return
 		return_if_overlay_or_effect(M)
 
 
@@ -887,9 +889,12 @@
 	flags = FPRINT | TABLEPASS
 	anchored = 2
 
+/obj/juggleplaque/manta
+	name = "dedication plaque"
+	desc = "Dedicated to Lieutenant Emily Claire for her brave sacrifice aboard NSS Manta - \"May their sacrifice not paint a grim picture of things to come. - Space Commodore J. Ledger\""
+	pixel_y = 25
 
-
-/obj/holosigntest
+/obj/abzuholo
 	desc = "... is that Absu..?"
 	name = "... is that Absu..?"
 	icon = 'icons/effects/96x96.dmi'
@@ -899,7 +904,7 @@
 	anchored = 2
 	layer = EFFECTS_LAYER_BASE
 	var/datum/light/light
-	var/obj/holoparticles/particles
+	var/obj/holoparticles/holoparticles
 
 	New(var/_loc)
 		set_loc(_loc)
@@ -916,14 +921,14 @@
 			animate(src, pixel_y=10, time=15, flags=ANIMATION_PARALLEL, easing=SINE_EASING, loop=-1)
 			animate(pixel_y=16, easing=SINE_EASING, time=15)
 
-		particles = new/obj/holoparticles(src.loc)
-		attached_objs = list(particles)
+		holoparticles = new/obj/holoparticles(src.loc)
+		attached_objs = list(holoparticles)
 		..(_loc)
 
 	disposing()
-		if(particles)
-			particles.invisibility = 101
-			qdel(particles)
+		if(holoparticles)
+			holoparticles.invisibility = 101
+			qdel(holoparticles)
 		..()
 
 /obj/holoparticles
@@ -1134,7 +1139,7 @@
 		else
 			if(ishuman(hit_atom))
 				var/mob/living/carbon/human/user = usr
-				var/hos = (istype(user.head, /obj/item/clothing/head/hosberet) || istype(user.head, /obj/item/clothing/head/helmet/HoS))
+				var/hos = (istype(user.head, /obj/item/clothing/head/hosberet) || istype(user.head, /obj/item/clothing/head/hos_hat))
 				if(hos)
 					var/mob/living/carbon/human/H = hit_atom
 					H.changeStatus("stunned", 90)
@@ -1165,7 +1170,7 @@
 
 	Bumped(mob/user as mob)
 		if(busy) return
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		src.add_dialog(user)
 		busy = 1
 		showswirl(user.loc)
@@ -1252,7 +1257,7 @@
 	desc = "A device for teleporting crated goods. There is something really, really shady about this.."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "syndicargotele"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	flags = ONBELT
 	mats = 4
 
@@ -1310,21 +1315,3 @@
 		message_admins("One of the NT supply crates has been succesfully teleported!")
 		boutput(owner, "<span class='notice'>You have successfully teleported one of the supply crates to the Syndicate.</span>")
 		playsound(get_turf(thecrate), "sound/machines/click.ogg", 60, 1)
-
-
-/obj/decal/fakeobjects/unfinished
-	name = "never-to-be-finished robot"
-	desc = "There was always enormous passion for things. But sadly sometimes those passions clash in such a way where conflict and painful resolutions are in order. For some, that becomes too much."
-	icon = 'icons/obj/decoration.dmi'
-	icon_state = "unfinished"
-	anchored = 1
-	density = 1
-
-/obj/decal/fakeobjects/trophy
-	name = "dusty meaningless trophy"
-	desc = "A fleeting reminder of times of old when a dumb number was the biggest worry in the world. Those times are now long gone."
-	icon = 'icons/obj/decoration.dmi'
-	icon_state = "trophyfucked"
-	anchored = 1
-	density = 1
-	pixel_y = 14

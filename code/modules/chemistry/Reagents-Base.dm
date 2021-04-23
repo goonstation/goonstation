@@ -53,7 +53,6 @@ datum
 			transparency = 255
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if(!istype(T, /turf/space))
 					if(volume >= 5)
 						if(!locate(/obj/decal/cleanable/dirt) in T)
@@ -156,27 +155,29 @@ datum
 					var/mob/living/H = M
 					if(H?.reagents.has_reagent("moonshine"))
 						mult *= 3
+					var/ethanol_amt = holder.get_reagent_amount(src.id)
 					var/liver_damage = 0
 					if (!isalcoholresistant(H) || H?.reagents.has_reagent("moonshine"))
-						if (holder.get_reagent_amount(src.id) >= 15)
+						if (ethanol_amt >= 15)
 							if(probmult(10)) H.emote(pick("hiccup", "burp", "mumble", "grumble"))
 							H.stuttering += 1
 							if (H.canmove && isturf(H.loc) && probmult(10))
 								step(H, pick(cardinal))
 							if (prob(20)) H.make_dizzy(rand(3,5) * mult)
-						if (holder.get_reagent_amount(src.id) >= 25)
+						if (ethanol_amt >= 25)
+							//Though this var is set when ethanol_amt >= 25, that damage is not dealt until ethanol_amt > 40 (which is checked at the end of the proc)
 							liver_damage = 0.25
 							if(probmult(10)) H.emote(pick("hiccup", "burp"))
 							if (probmult(10)) H.stuttering += rand(1,10)
-						if (holder.get_reagent_amount(src.id) >= 45)
+						if (ethanol_amt >= 45)
 							if(probmult(10))
 								H.emote(pick("hiccup", "burp"))
 							if (probmult(15))
 								H.stuttering += rand(1,10)
 							if (H.canmove && isturf(H.loc) && probmult(8))
 								step(H, pick(cardinal))
-						if (holder.get_reagent_amount(src.id) >= 55)
-							liver_damage = 0.5
+						if (ethanol_amt >= 55)
+							liver_damage = 0.4
 							if(probmult(10))
 								H.emote(pick("hiccup", "fart", "mumble", "grumble"))
 							H.stuttering += 1
@@ -191,7 +192,7 @@ datum
 								H.vomit()
 							if(prob(15))
 								H.make_dizzy(5 * mult)
-						if (holder.get_reagent_amount(src.id) >= 60)
+						if (ethanol_amt >= 60)
 							H.change_eye_blurry(10 , 50)
 							if(probmult(6)) H.drowsyness += 5
 							if(prob(5)) H.take_toxin_damage(rand(1,2) * mult)
@@ -201,8 +202,12 @@ datum
 						if (HH.organHolder && HH.organHolder.liver)			//Hax here, lazy. currently only organ is liver. fix when adding others. -kyle
 							if (HH.organHolder.liver.robotic)
 								M.take_toxin_damage(-liver_damage * 3 * mult)
+								HH.organHolder.heal_organ(liver_damage *mult, liver_damage *mult, liver_damage *mult, "liver")
 							else
-								HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
+								if (ethanol_amt < 40 && HH.organHolder.liver.get_damage() < 10)
+									HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
+								else if (ethanol_amt >= 40 && prob(ethanol_amt/2))
+									HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
 					..()
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
@@ -214,12 +219,12 @@ datum
 					if (prob(50))
 						if (H.organHolder)
 							var/damage = rand(1,3)
-							if (H.organHolder.left_kidney && prob(30))
-								H.organHolder.damage_organ(0,0,damage * mult * (!H.organHolder.left_kidney.robotic), "left_kidney")
-							if (H.organHolder.right_kidney && prob(30))
-								H.organHolder.damage_organ(0,0,damage * mult * (!H.organHolder.right_kidney.robotic), "right_kidney")
-							if (H.organHolder.liver && prob(30))
+							if (H.organHolder.liver && prob(10))
 								H.organHolder.damage_organ(0,0,damage * mult * (!H.organHolder.liver.robotic), "liver")
+							if (H.organHolder.left_kidney && prob(15))
+								H.organHolder.damage_organ(0,0,damage * mult * (!H.organHolder.left_kidney.robotic), "left_kidney")
+							if (H.organHolder.right_kidney && prob(35))
+								H.organHolder.damage_organ(0,0,damage * mult * (!H.organHolder.right_kidney.robotic), "right_kidney")
 
 					if (prob(1))
 						H.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
@@ -305,7 +310,6 @@ datum
 			transparency = 255
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if (volume >= 10)
 					if (!locate(/obj/decal/cleanable/magnesiumpile) in T)
 						make_cleanable(/obj/decal/cleanable/magnesiumpile,T)
@@ -402,7 +406,8 @@ datum
 						var/list/covered = holder.covered_turf()
 						for(var/turf/t in covered)
 							SPAWN_DBG(1 DECI SECOND) fireflash(t, min(max(0,((volume/covered.len)/15)),6))
-						holder.del_reagent(id)
+				if(holder)
+					holder.del_reagent(id)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -413,7 +418,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				src = null
+				. = ..()
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
@@ -421,11 +426,9 @@ datum
 				return 1
 
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				return 1
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				return 1 //changed return value to 1 for fluids. remove if this was a bad idea
 
 			on_plant_life(var/obj/machinery/plantpot/P)
@@ -523,24 +526,18 @@ datum
 			thirst_value = -0.098
 			pathogen_nutrition = list("sugar")
 			taste = "sweet"
-			var/remove_buff = 0
 			stun_resist = 6
-
-			pooled()
-				..()
-				remove_buff = 0
 
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					remove_buff = M.add_stam_mod_regen("r_sugar", 2)
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_sugar", 2)
 				..()
 
 			on_remove()
-				if(remove_buff)
-					if(ismob(holder?.my_atom))
-						var/mob/M = holder.my_atom
-						M.remove_stam_mod_regen("r_sugar")
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_sugar")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -656,10 +653,8 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				src = null
-
 				var/spawncleanable = 1
-				if(covered.len > 5 && (volume/covered.len) < 1)
+				if(covered.len > 5 && (length(volume/covered) < 1))
 					spawncleanable = prob((volume/covered.len) * 10)
 
 
@@ -735,8 +730,7 @@ datum
 				if(exposed_temperature < T0C)
 					var/prev_vol = volume
 					volume = 0
-					if(holder)
-						holder.add_reagent("ice", prev_vol, null, (T0C - 1))
+					holder?.add_reagent("ice", prev_vol, null, (T0C - 1))
 					if(holder)
 						holder.del_reagent(id)
 				else if (exposed_temperature > T0C && exposed_temperature <= T0C + 100 )
@@ -775,10 +769,9 @@ datum
 				return 1//fluid is better. remove this later probably
 
 			reaction_obj(var/obj/item/O, var/volume)
-				src = null
 				if(istype(O))
 					if(O.burning && prob(80))
-						O.burning = 0
+						O.combust_ended()
 					else if(istype(O, /obj/item/toy/sponge_capsule))
 						var/obj/item/toy/sponge_capsule/S = O
 						S.add_water()
@@ -786,7 +779,6 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				..()
-				src = null
 				if(!volume)
 					volume = 10
 				if(method == TOUCH)
@@ -809,7 +801,7 @@ datum
 				var/reacted = 0
 				var/mob/living/M = target
 				if(istype(M))
-					if(by_type[/obj/machinery/playerzoldorf] && by_type[/obj/machinery/playerzoldorf].len)
+					if(by_type[/obj/machinery/playerzoldorf] && length(by_type[/obj/machinery/playerzoldorf]))
 						var/obj/machinery/playerzoldorf/pz = by_type[/obj/machinery/playerzoldorf][1]
 						if(M in pz.brandlist)
 							pz.brandlist -= M
@@ -909,17 +901,14 @@ datum
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/prev_vol = volume
 				volume = 0
-				if(holder)
-					holder.add_reagent("water", prev_vol, null, T0C + 1)
+				holder?.add_reagent("water", prev_vol, null, T0C + 1)
 				if(holder)
 					holder.del_reagent(id)
 
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				return
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if (volume >= 5 && !(locate(/obj/item/raw_material/ice) in T))
 					var/obj/item/raw_material/ice/I = unpool(/obj/item/raw_material/ice)
 					I.set_loc(T)

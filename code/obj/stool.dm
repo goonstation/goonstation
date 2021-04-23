@@ -125,7 +125,7 @@
 		qdel(src)
 		return
 
-	Move()
+	Move(atom/target)
 		. = ..()
 		if (. && islist(scoot_sounds) && scoot_sounds.len && prob(75))
 			playsound( get_turf(src), pick( scoot_sounds ), 50, 1 )
@@ -284,6 +284,8 @@
 		scoot_sounds = list( 'sound/misc/chair/office/scoot1.ogg', 'sound/misc/chair/office/scoot2.ogg', 'sound/misc/chair/office/scoot3.ogg', 'sound/misc/chair/office/scoot4.ogg', 'sound/misc/chair/office/scoot5.ogg' )
 
 	Move()
+		if(src.buckled_guy.loc != src.loc)
+			src.unbuckle()
 		. = ..()
 		if (. && src.buckled_guy)
 			var/mob/living/carbon/C = src.buckled_guy
@@ -330,7 +332,7 @@
 		if (get_dist(src, user) > 1)
 			user.show_text("[src] is too far away!", "red")
 			return 0
-		if ((!(iscarbon(C)) || C.loc != src.loc || user.restrained() || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") ))
+		if ((!(iscarbon(C)) || C.loc != src.loc || user.restrained() || is_incapacitated(user) ))
 			return 0
 
 		return 1
@@ -404,7 +406,7 @@
 				somebody = src.buckled_guy
 			else
 				somebody = locate(/mob/living/carbon) in get_turf(src)
-			if (somebody && somebody.lying)
+			if (somebody?.lying)
 				user.tri_message("<span class='notice'><b>[user]</b> tucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] into bed.</span>",\
 				user, "<span class='notice'>You tuck [somebody == user ? "yourself" : "[somebody]"] into bed.</span>",\
 				somebody, "<span class='notice'>[somebody == user ? "You tuck yourself" : "<b>[user]</b> tucks you"] into bed.</span>")
@@ -427,7 +429,7 @@
 				somebody = src.buckled_guy
 			else
 				somebody = locate(/mob/living/carbon) in get_turf(src)
-			if (somebody && somebody.lying)
+			if (somebody?.lying)
 				user.tri_message("<span class='notice'><b>[user]</b> untucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] from bed.</span>",\
 				user, "<span class='notice'>You untuck [somebody == user ? "yourself" : "[somebody]"] from bed.</span>",\
 				somebody, "<span class='notice'>[somebody == user ? "You untuck yourself" : "<b>[user]</b> untucks you"] from bed.</span>")
@@ -443,9 +445,9 @@
 		return
 
 	MouseDrop_T(atom/A as mob|obj, mob/user as mob)
-		..()
-
-		if (istype(A, /obj/item/clothing/suit/bedsheet))
+		if (get_dist(src, user) > 1 || A.loc != src.loc || user.restrained() || !isalive(user))
+			..()
+		else if (istype(A, /obj/item/clothing/suit/bedsheet))
 			if ((!src.Sheet || (src.Sheet && src.Sheet.loc != src.loc)) && A.loc == src.loc)
 				src.tuck_sheet(A, user)
 				return
@@ -456,7 +458,7 @@
 		else if (ismob(A))
 			src.buckle_in(A, user)
 			var/mob/M = A
-			if (isdead(M) && M != user && emergency_shuttle && emergency_shuttle.location == SHUTTLE_LOC_STATION) // 1 should be SHUTTLE_LOC_STATION
+			if (isdead(M) && M != user && emergency_shuttle?.location == SHUTTLE_LOC_STATION) // 1 should be SHUTTLE_LOC_STATION
 				var/area/shuttle/escape/station/area = get_area(M)
 				if (istype(area))
 					user.unlock_medal("Leave no man behind!", 1)
@@ -513,6 +515,8 @@
 	var/foldable = 1
 	var/climbable = 1
 	var/buckle_move_delay = 6 // this should have been a var somepotato WHY WASN'T IT A VAR
+	var/obj/item/clothing/head/butt/has_butt = null // time for mature humour
+	var/image/butt_img
 	securable = 1
 	anchored = 1
 	scoot_sounds = list( 'sound/misc/chair/normal/scoot1.ogg', 'sound/misc/chair/normal/scoot2.ogg', 'sound/misc/chair/normal/scoot3.ogg', 'sound/misc/chair/normal/scoot4.ogg', 'sound/misc/chair/normal/scoot5.ogg' )
@@ -524,6 +528,8 @@
 	New()
 		if (src.dir == NORTH)
 			src.layer = FLY_LAYER+1
+		butt_img = image('icons/obj/furniture/chairs.dmi')
+		butt_img.layer = OBJ_LAYER + 0.5 //In between OBJ_LAYER and MOB_LAYER
 		..()
 		return
 
@@ -554,18 +560,31 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if (ispryingtool(W) && has_butt)
+			user.put_in_hand_or_drop(has_butt)
+			boutput(user, "<span class='notice'>You pry [has_butt.name] from [name].</span>")
+			has_butt = null
+			UpdateOverlays(null, "chairbutt")
+			return
+		if (istype(W, /obj/item/clothing/head/butt) && !has_butt)
+			has_butt = W
+			user.u_equip(has_butt)
+			has_butt.set_loc(src)
+			boutput(user, "<span class='notice'>You place [has_butt.name] on [name].</span>")
+			butt_img.icon_state = "chair_[has_butt.icon_state]"
+			UpdateOverlays(butt_img, "chairbutt")
+			return
 		if (istype(W, /obj/item/assembly/shock_kit))
 			var/obj/stool/chair/e_chair/E = new /obj/stool/chair/e_chair(src.loc)
 			if (src.material)
 				E.setMaterial(src.material)
 			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-			E.dir = src.dir
+			E.set_dir(src.dir)
 			E.part1 = W
 			W.set_loc(E)
 			W.master = E
 			user.u_equip(W)
 			W.layer = initial(W.layer)
-			//SN src = null
 			qdel(src)
 			return
 		else
@@ -630,8 +649,8 @@
 
 	MouseDrop_T(mob/M as mob, mob/user as mob)
 		..()
-		if (M == usr)
-			if (usr.a_intent == INTENT_GRAB)
+		if (M == user)
+			if (user.a_intent == INTENT_GRAB)
 				if(climbable)
 					buckle_in(M, user, 1)
 				else
@@ -640,7 +659,7 @@
 				buckle_in(M,user)
 		else
 			buckle_in(M,user)
-			if (isdead(M) && M != user && emergency_shuttle && emergency_shuttle.location == SHUTTLE_LOC_STATION) // 1 should be SHUTTLE_LOC_STATION
+			if (isdead(M) && M != user && emergency_shuttle?.location == SHUTTLE_LOC_STATION) // 1 should be SHUTTLE_LOC_STATION
 				var/area/shuttle/escape/station/A = get_area(M)
 				if (istype(A))
 					user.unlock_medal("Leave no man behind!", 1)
@@ -655,7 +674,7 @@
 		if (!ticker)
 			boutput(user, "You can't buckle anyone in before the game starts.")
 			return 0
-		if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat))
+		if (!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || !isalive(user))
 			return 0
 		if(src.buckled_guy && src.buckled_guy.buckled == src && src.buckled_guy != M)
 			user.show_text("There's already someone buckled in [src]!", "red")
@@ -685,7 +704,7 @@
 				to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 				H.start_chair_flip_targeting()
 		else
-			if (to_buckle == usr)
+			if (to_buckle == user)
 				user.visible_message("<span class='notice'><b>[to_buckle]</b> buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
 			else
 				user.visible_message("<span class='notice'><b>[to_buckle]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [to_buckle].</span>")
@@ -697,7 +716,10 @@
 			to_buckle.set_loc(src.loc)
 			src.buckledIn = 1
 			to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
-		playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
+		if (has_butt)
+			playsound(get_turf(src), (has_butt.sound_fart ? has_butt.sound_fart : 'sound/voice/farts/fart1.ogg'), 50, 1)
+		else
+			playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
 
 
 	unbuckle()
@@ -715,7 +737,7 @@
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
-			SPAWN_DBG (5)
+			SPAWN_DBG(0.5 SECONDS)
 				H.on_chair = 0
 				src.buckledIn = 0
 		else if ((M.buckled))
@@ -723,7 +745,7 @@
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
-			SPAWN_DBG (5)
+			SPAWN_DBG(0.5 SECONDS)
 				src.buckledIn = 0
 
 		playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
@@ -760,8 +782,18 @@
 			if (M.buckled == src)
 				M.buckled = null
 				src.buckled_guy = null
+		if (has_butt)
+			has_butt.set_loc(loc)
+		has_butt = null
 		..()
 		return
+
+	Move(atom/target)
+		if(src.buckled_guy?.loc != src.loc)
+			src.unbuckle()
+		. = ..()
+		if(src.buckled_guy?.loc != src.loc)
+			src.unbuckle()
 
 	Click(location,control,params)
 		var/lpm = params2list(params)
@@ -778,9 +810,9 @@
 	proc/rotate(var/face_dir = 0)
 		if (rotatable)
 			if (!face_dir)
-				src.dir = turn(src.dir, 90)
+				src.set_dir(turn(src.dir, 90))
 			else
-				src.dir = face_dir
+				src.set_dir(face_dir)
 
 			if (src.dir == NORTH)
 				src.layer = FLY_LAYER+1
@@ -788,7 +820,7 @@
 				src.layer = OBJ_LAYER
 			if (buckled_guy)
 				var/mob/living/carbon/C = src.buckled_guy
-				C.dir = dir
+				C.set_dir(dir)
 		return
 
 	blue
@@ -828,7 +860,7 @@
 	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "folded_chair"
 	item_state = "folded_chair"
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	throwforce = 10
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 5
@@ -852,19 +884,14 @@
 			C.setMaterial(src.material)
 		if (src.c_color)
 			C.icon_state = src.c_color
-		C.dir = user.dir
+		C.set_dir(user.dir)
 		boutput(user, "You unfold [C].")
 		user.drop_item()
 		qdel(src)
 		return
 
 /obj/item/chair/folded/attack(atom/target, mob/user as mob)
-	var/mob/living/carbon/human/H = user
-	var/mob/living/M = target
 	if (ishuman(target))
-		if (iswrestler(H))
-			M.changeStatus("stunned", 4 SECONDS)
-			H.emote("scream")
 		//M.TakeDamage("chest", 5, 0) //what???? we have 'force' var
 		playsound(src.loc, pick(sounds_punch), 100, 1)
 	..()
@@ -895,19 +922,20 @@
 		src.overl.layer = 6// TODO Layer wtf
 		src.overl.name = "chair arm"
 		src.overl.master = src
-		src.overl.dir = src.dir
+		src.overl.set_dir(src.dir)
 */
 	rotate()
 		set src in oview(1)
 		set category = "Local"
 
-		src.dir = turn(src.dir, 90)
-//		src.overl.dir = src.dir
+		src.set_dir(turn(src.dir, 90))
+//		src.overl.set_dir(src.dir)
 		src.update_icon()
 		if (buckled_guy)
 			var/mob/living/carbon/C = src.buckled_guy
-			C.dir = dir
+			C.set_dir(dir)
 		return
+
 
 	proc/update_icon()
 		if (src.dir == NORTH)
@@ -1048,7 +1076,8 @@
 			APPLY_MOVEMENT_MODIFIER(to_buckle, /datum/movement_modifier/wheelchair, src.type)
 
 	unbuckle()
-		REMOVE_MOVEMENT_MODIFIER(src.buckled_guy, /datum/movement_modifier/wheelchair, src.type)
+		if(src.buckled_guy)
+			REMOVE_MOVEMENT_MODIFIER(src.buckled_guy, /datum/movement_modifier/wheelchair, src.type)
 		return ..()
 
 /* ======================================================= */
@@ -1076,7 +1105,7 @@
 	rotatable = 0
 	foldable = 0
 	comfort_value = 2
-	deconstructable = 0
+	deconstructable = TRUE
 	securable = 0
 	parts_type = /obj/item/furniture_parts/bench/pew
 	var/image/arm_image = null
@@ -1138,6 +1167,12 @@
 	var/time_between_uses = 400 // The default time between uses.
 	var/list/items = list (/obj/item/device/light/zippo,
 	/obj/item/wrench,
+	/obj/item/device/multitool,
+	/obj/item/toy/plush/small/buddy,
+	/obj/item/toy/plush/small/stress_ball,
+	/obj/item/paper/lunchbox_note,
+	/obj/item/plant/herb/cannabis/spawnable,
+	/obj/item/reagent_containers/food/snacks/candy/candyheart,
 	/obj/item/bananapeel,
 	/obj/item/reagent_containers/food/snacks/lollipop/random_medical,
 	/obj/item/spacecash/random/small,
@@ -1192,6 +1227,9 @@
 				last_use = world.time
 				max_uses--
 
+		else if (max_uses <= 0)
+			user.visible_message("<span class='notice'><b>[user.name]</b> rummages through the seams and behind the cushions of [src] and pulls out absolutely nothing!</span>",\
+			"<span class='notice'>You rummage through the seams and behind the cushions of [src] and pull out absolutely nothing!</span>")
 		else
 			user.visible_message("<span class='notice'><b>[user.name]</b> rummages through the seams and behind the cushions of [src]!</span>",\
 			"<span class='notice'>You rummage through the seams and behind the cushions of [src]!</span>")
@@ -1282,7 +1320,7 @@
 
 	New()
 		..()
-		SPAWN_DBG (20)
+		SPAWN_DBG(2 SECONDS)
 			if (src)
 				if (!(src.part1 && istype(src.part1)))
 					src.part1 = new /obj/item/assembly/shock_kit(src)
@@ -1296,7 +1334,7 @@
 			if (src.material)
 				C.setMaterial(src.material)
 			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-			C.dir = src.dir
+			C.set_dir(src.dir)
 			if (src.part1)
 				src.part1.set_loc(get_turf(src))
 				src.part1.master = null
@@ -1327,12 +1365,12 @@
 
 			user.Browse("<TITLE>Electric Chair</TITLE><b>Electric Chair</b><BR>[dat]", "window=e_chair;size=180x180")
 
-			onclose(usr, "e_chair")
+			onclose(user, "e_chair")
 		return
 
 	Topic(href, href_list)
 		if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat || usr.restrained()) return
-		if (!in_range(src, usr)) return
+		if (!in_interact_range(src, usr)) return
 
 		if (href_list["on"])
 			toggle_active()
@@ -1428,7 +1466,7 @@
 				H.shock(src, 2500, "chest", 1, 1)
 				H.changeStatus("stunned", 10 SECONDS)
 
-			if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
+			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				if ((H.mind in ticker.mode:revolutionaries) && !(H.mind in ticker.mode:head_revolutionaries) && prob(66))
 					ticker.mode:remove_revolutionary(H.mind)
 

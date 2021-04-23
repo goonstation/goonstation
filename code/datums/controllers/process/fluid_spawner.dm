@@ -47,6 +47,10 @@ datum/controller/process/fluid_turfs
 
 			handle_light_generating_turfs(90)
 
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/fluid_turfs/old_fluid_turfs = target
+		src.processing_fluid_turfs = old_fluid_turfs.processing_fluid_turfs
+
 	doWork()
 		var/adjacent_space = 0
 		var/adjacent_block = 0

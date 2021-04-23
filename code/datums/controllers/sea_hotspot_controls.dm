@@ -315,9 +315,6 @@
 				if (H && H.closest_hotspot == src)
 					dowsers += H
 
-
-				LAGCHECK(LAG_HIGH)
-
 			for (var/thing in dowsers)
 				var/obj/item/heat_dowsing/H = thing
 				if (H.deployed)
@@ -356,7 +353,6 @@
 				phenomena_flags |= PH_FIRE
 
 		var/found = 0
-		LAGCHECK(LAG_REALTIME)
 		for (var/mob/living/M in range(6, C))
 			found = 1
 			if (phenomena_flags & PH_QUAKE_WEAK)
@@ -368,8 +364,6 @@
 				random_brute_damage(M, 3)
 				M.changeStatus("weakened", 1 SECOND)
 				M.show_text("<span class='alert'><b>The ground quakes and rumbles violently!</b></span>")
-
-			LAGCHECK(LAG_HIGH)
 
 		if (phenomena_flags & PH_FIRE_WEAK)
 			fireflash(phenomena_point,0)
@@ -467,7 +461,7 @@
 	desc = "Stick this rod into the sea floor to poll for underground heat. Distance readings may fluctuate based on the frequency of vibrational waves.<br>If the mass of heat moves via drift, this rod will follow its movements." //doppler effect lol i'm science
 	plane = PLANE_LIGHTING + 1
 	throwforce = 6
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	force = 6
 	throw_speed = 4
 	throw_range = 5
@@ -711,6 +705,8 @@
 			user.show_text("You need to dig a hole first!", "blue")
 
 	proc/finish_build(var/turf/T)
+		if(!isturf(src.loc) || T != src.loc)
+			return
 		var/obj/machinery/power/vent_capture/V = new /obj/machinery/power/vent_capture(src.loc)
 		V.built = 1
 		//V.built = 0
@@ -732,6 +728,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		if (istype(src.loc,/turf/space/fluid))
 			var/turf/space/fluid/T = src.loc
 			T.captured = 1
@@ -745,6 +742,7 @@
 
 	disposing()
 		..()
+		STOP_TRACKING
 		if (istype(src.loc,/turf/space/fluid))
 			var/turf/space/fluid/T = src.loc
 			T.captured = 0
@@ -874,12 +872,12 @@
 		src.add_fingerprint(user)
 
 		if(open)
-			if(cell && !usr.equipped())
-				usr.put_in_hand_or_drop(cell)
+			if(cell && !user.equipped())
+				user.put_in_hand_or_drop(cell)
 				cell.updateicon()
 				cell = null
 
-				usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
+				user.visible_message("<span class='notice'>[user] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
 		else
 			activate()
 
@@ -921,12 +919,12 @@
 					return
 				else
 					// insert cell
-					var/obj/item/cell/C = usr.equipped()
+					var/obj/item/cell/C = user.equipped()
 					if(istype(C))
 						user.drop_item()
 						cell = C
 						C.set_loc(src)
-						C.add_fingerprint(usr)
+						C.add_fingerprint(user)
 
 						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 			else
@@ -958,7 +956,7 @@
 		flick("stomper2",src)
 
 		if (hotspot_controller.stomp_turf(get_turf(src))) //we didn't stomped center, do an additional SFX
-			SPAWN_DBG (4)
+			SPAWN_DBG(0.4 SECONDS)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 99, 1, 0.1, 0.7)
 
 		for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
@@ -1011,19 +1009,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null)
+		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null)
+		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null)
+		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(owner && V && T)
@@ -1113,7 +1111,7 @@
 	icon = 'icons/obj/decals/posters.dmi'
 	icon_state = "wall_poster_trench"
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 15
 	layer = OBJ_LAYER+1
@@ -1139,8 +1137,8 @@
 		if (!src.anchored)
 			return ..()
 		if (user.a_intent != INTENT_HARM)
-			if (usr.client && hotspot_controller)
-				hotspot_controller.show_map(usr.client)
+			if (user.client && hotspot_controller)
+				hotspot_controller.show_map(user.client)
 			return
 		var/turf/T = src.loc
 		user.visible_message("<span class='alert'><b>[user]</b> rips down [src] from [T]!</span>",\

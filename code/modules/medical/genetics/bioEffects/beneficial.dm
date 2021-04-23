@@ -88,7 +88,7 @@
 
 	OnAdd()
 		if (ishuman(owner))
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "elec[owner.bioHolder?.HasEffect("fat") ? "fat" :""]", layer = MOB_EFFECT_LAYER)
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "elec", layer = MOB_EFFECT_LAYER)
 		..()
 		if (istype(owner, /mob/living) && owner:organHolder && owner:organHolder:heart && owner:organHolder:heart:robotic)
 			owner:organHolder:heart:broken = 1
@@ -105,6 +105,18 @@
 	stability_loss = 15
 	degrade_to = "radioactive"
 	icon_state  = "rad_res"
+
+	OnAdd()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, 100)
+
+	OnRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			REMOVE_MOB_PROPERTY(M, PROP_RADPROT, src)
 
 /datum/bioEffect/alcres
 	name = "Alcohol Resistance"
@@ -255,6 +267,31 @@
 	heal_per_tick = 7 // decrease to 5 if extreme narcolepsy doesn't counterbalance this enough
 	regrow_prob = 50 //increase to 100 if not counterbalanced
 
+/datum/bioEffect/regenerator/wolf
+	name = "Lupine Regeneration"
+	desc = "Subject's cells are programmed to reshape itself into a canine form."
+	id = "regenerator_wolf"
+	occur_in_genepools = 0
+	probability = 0
+	scanner_visibility = 0
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	can_reclaim = 0
+	can_scramble = 0
+	curable_by_mutadone = 0
+	stability_loss = 0
+	msgGain = "You feel oddly feral."
+	msgLose = "You feel more comfortable in your own skin."
+	heal_per_tick = 2
+	regrow_prob = 50
+
+	OnAdd()
+		. = ..()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if(!istype(H.mutantrace, /datum/mutantrace/werewolf))
+				H.contract_disease(/datum/ailment/disease/lycanthropy,null,null,0) // awoo
 
 /datum/bioEffect/detox
 	name = "Natural Anti-Toxins"
@@ -408,7 +445,7 @@ var/list/radio_brains = list()
 	lockedChars = list("G","C","A","T")
 	lockedTries = 8
 	stability_loss = 25
-	degrade_to = "fat"
+	degrade_to = "strong"
 	icon_state  = "hulk"
 
 	OnAdd()
@@ -418,10 +455,10 @@ var/list/radio_brains = list()
 			APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
 			if(H?.bioHolder?.mobAppearance)
 				var/datum/appearanceHolder/HAH = H.bioHolder.mobAppearance
-				HAH.customization_first_color_carry = HAH.customization_first_color
-				HAH.customization_second_color_carry = HAH.customization_second_color
-				HAH.customization_third_color_carry = HAH.customization_third_color
-				HAH.s_tone_carry = HAH.s_tone
+				HAH.customization_first_color_original = HAH.customization_first_color
+				HAH.customization_second_color_original = HAH.customization_second_color
+				HAH.customization_third_color_original = HAH.customization_third_color
+				HAH.s_tone_original = HAH.s_tone
 				var/hulk_skin = "#4CBB17" // a striking kelly green
 				if(prob(1)) // just the classics
 					var/gray_af = rand(60, 150) // as consistent as the classics too
@@ -430,6 +467,7 @@ var/list/radio_brains = list()
 				HAH.customization_second_color = "#3F704D" // a bold hunter green
 				HAH.customization_third_color = "#0B6623" // a vibrant forest green
 				HAH.s_tone = hulk_skin
+			H.update_colorful_parts()
 			H.set_body_icon_dirty()
 		..()
 
@@ -438,10 +476,15 @@ var/list/radio_brains = list()
 			var/mob/living/carbon/human/H = owner
 			if(H?.bioHolder?.mobAppearance) // colorize, but backwards
 				var/datum/appearanceHolder/HAH = H.bioHolder.mobAppearance
-				HAH.customization_first_color = HAH.customization_first_color_carry
-				HAH.customization_second_color = HAH.customization_second_color_carry
-				HAH.customization_third_color = HAH.customization_third_color_carry
-				HAH.s_tone = HAH.s_tone_carry
+				HAH.customization_first_color = HAH.customization_first_color_original
+				HAH.customization_second_color = HAH.customization_second_color_original
+				HAH.customization_third_color = HAH.customization_third_color_original
+				HAH.s_tone = HAH.s_tone_original
+				if(HAH.mob_appearance_flags & FIX_COLORS) // human -> hulk -> lizard -> nothulk is *bright*
+					HAH.customization_first_color = fix_colors(HAH.customization_first_color)
+					HAH.customization_second_color = fix_colors(HAH.customization_second_color)
+					HAH.customization_third_color = fix_colors(HAH.customization_third_color)
+			H.update_colorful_parts()
 			H.set_body_icon_dirty()
 			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
 
@@ -531,11 +574,11 @@ var/list/radio_brains = list()
 	icon_state  = "strong"
 
 	OnAdd()
-		src.owner.add_stam_mod_regen("g-fitness-buff", 2)
+		APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff", 2)
 		src.owner.add_stam_mod_max("g-fitness-buff", 30)
 
 	OnRemove()
-		src.owner.remove_stam_mod_regen("g-fitness-buff")
+		REMOVE_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff")
 		src.owner.remove_stam_mod_max("g-fitness-buff")
 
 /datum/bioEffect/blood_overdrive
@@ -584,7 +627,7 @@ var/list/radio_brains = list()
 
 	OnAdd()
 		if (ishuman(owner))
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "telekinesishead[owner.bioHolder?.HasEffect("fat") ? "fat" :""]", layer = MOB_LAYER)
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "telekinesishead", layer = MOB_LAYER)
 		..()
 
 /datum/bioEffect/uncontrollable_cloak

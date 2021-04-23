@@ -5,7 +5,7 @@
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "mousetrap"
 	item_state = "mousetrap"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	force = null
 	throwforce = null
 	var/armed = 0
@@ -161,7 +161,7 @@
 			else if (!src.arm)
 				user.show_text("You can't quite seem to get [C] to stay on [src]. Seems like it needs something to hold it in place.", "red")
 				return
-			else if (C.w_class > 1) // Transfer valve bomb pies are a thing. Shouldn't fit in a backpack, much less a box.
+			else if (C.w_class > W_CLASS_TINY) // Transfer valve bomb pies are a thing. Shouldn't fit in a backpack, much less a box.
 				user.show_text("[C] is way too large. You can't find any way to balance it on the arm.", "red")
 				return
 			user.u_equip(C)
@@ -298,7 +298,10 @@
 			src.overlays -= image(src.pie.icon, src.pie.icon_state)
 			src.pie.layer = initial(src.pie.layer)
 			src.pie.set_loc(get_turf(target))
-			src.pie.throw_impact(target)
+			var/datum/thrown_thing/thr = new
+			thr.user = usr // ew gross
+			thr.thing = src.pie
+			src.pie.throw_impact(target, thr)
 			src.pie = null
 
 		return
@@ -310,7 +313,7 @@
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "mousetrap_roller"
 	item_state = "mousetrap"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/armed = 0
 	var/obj/item/mousetrap/mousetrap = null
 	var/obj/item/pipebomb/frame/frame = null
@@ -397,7 +400,7 @@
 		user.u_equip(src)
 
 		src.layer = initial(src.layer)
-		src.dir = user.dir
+		src.set_dir(user.dir)
 		walk(src, src.dir, 3)
 
 	Bump(atom/movable/AM as mob|obj)

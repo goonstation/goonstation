@@ -23,7 +23,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "id_mod"
 	item_state = "electronic"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/obj/machinery/computer3/host
 	var/id = null
 	var/func_tag = "GENERIC" //What kind of peripheral is this, huh??
@@ -41,8 +41,7 @@
 
 	/* new disposing() pattern should handle this. -singh
 	disposing()
-		if(host)
-			host.peripherals.Remove(src)
+		host?.peripherals.Remove(src)
 		..()
 	*/
 
@@ -59,7 +58,7 @@
 			if((source != host) || !(src in host))
 				return 1
 
-			if(!command || (signal && signal.encryption && signal.encryption != src.id))
+			if(!command || (signal?.encryption && signal.encryption != src.id))
 				return 1
 
 			return 0
@@ -104,7 +103,7 @@
 		if(usr.stat || usr.restrained())
 			return 1
 
-		if ((!usr.contents.Find(src.host) && (!in_range(src.host, usr) || !istype(src.host.loc, /turf))) && (!issilicon(usr)))
+		if ((!usr.contents.Find(src.host) && (!in_interact_range(src.host, usr) || !istype(src.host.loc, /turf))) && (!issilicon(usr)))
 			return 1
 
 		if(src.host.status & (NOPOWER|BROKEN))
@@ -139,6 +138,7 @@
 
 		pda
 			frequency = 1149 //Standard PDA comm frequency.
+			range = 0
 			/*net_mode = 1
 			func_tag = "NET_ADAPTER"*/
 
@@ -473,7 +473,7 @@
 		if((source != host) || !(src in host))
 			return 1
 
-		if(!command || (signal && signal.encryption && signal.encryption != src.id))
+		if(!command || (signal?.encryption && signal.encryption != src.id))
 			return 1
 
 		if(!src.check_connection())
@@ -531,7 +531,6 @@
 						P.name = "paper- '[print_title]'"
 
 					src.printing = 0
-					return 0
 
 			if("help")
 				return "Valid commands: transmit, print, or subnet# to set subnet."
@@ -605,7 +604,7 @@
 		if((source != host) || !(src in host))
 			return 1
 
-		if(!command || (signal && signal.encryption && signal.encryption != src.id))
+		if(!command || (signal?.encryption && signal.encryption != src.id))
 			return 1
 
 		command = lowertext(command)
@@ -679,7 +678,6 @@
 						P.name = "paper- '[print_title]'"
 
 					src.printing = 0
-					return 0
 
 			if("help")
 				return "Valid commands: transmit, mode_net, mode_free, mode_wire, print, ping, subnet# to set subnet, or 1000-1500 to set frequency in wireless modes."
@@ -880,7 +878,6 @@
 					P.name = "paper- '[print_title]'"
 
 				src.printing = 0
-				return 0
 		else if (command == "help")
 			return "Valid command: print, accompanied by a file to print."
 
@@ -930,7 +927,7 @@
 
 	proc/vend_prize()
 		var/obj/item/prize
-		var/prizeselect = rand(1,4)
+		var/prizeselect = rand(1,7)
 		var/turf/prize_location = null
 
 		if(src.host)
@@ -1158,8 +1155,7 @@
 			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
-		if(src.host)
-			src.host.add_dialog(usr)
+		src.host?.add_dialog(usr)
 
 		if(href_list["card"])
 			if(!isnull(src.authid))
@@ -1245,8 +1241,7 @@
 		return dat
 
 	uninstalled()
-		if(src.disk)
-			src.disk.set_loc(src)
+		src.disk?.set_loc(src)
 
 		return 0
 
@@ -1278,8 +1273,7 @@
 			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
-		if(src.host)
-			src.host.add_dialog(usr)
+		src.host?.add_dialog(usr)
 
 		if(href_list["disk"])
 			if(!isnull(src.disk))

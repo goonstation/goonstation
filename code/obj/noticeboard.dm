@@ -35,7 +35,7 @@
 /obj/noticeboard/Topic(href, href_list)
 	if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 		return
-	if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+	if (is_incapacitated(usr) || usr.restrained())
 		return
 
 	..()

@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/space)
 "ab" = (
 /turf/unsimulated/grass{
 	density = 1;
@@ -2793,7 +2793,7 @@
 	icon_state = "TheSingMain";
 	name = "v-space"
 	},
-/area)
+/area/space)
 "hF" = (
 /turf/unsimulated/wall/setpieces/hospital/cavern,
 /area/hospital/underground)
@@ -3726,29 +3726,29 @@
 	icon_state = "TheSingMain";
 	name = "Wall"
 	},
-/area/station/test_area)
+/area/sim/test_area)
 "jE" = (
 /turf/unsimulated/wall{
 	icon = 'icons/obj/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "Wall"
 	},
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
 "jF" = (
 /turf/unsimulated/bombvr,
-/area/station/test_area)
+/area/sim/test_area)
 "jG" = (
 /turf/unsimulated/bombvr,
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
 "jH" = (
 /turf/unsimulated/wall/bombvr,
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
@@ -3757,7 +3757,7 @@
 	name = "bombtest-bomb"
 	},
 /turf/unsimulated/bombvr,
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
@@ -3767,7 +3767,7 @@
 	pixel_y = -24
 	},
 /turf/unsimulated/bombvr,
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
@@ -3776,20 +3776,20 @@
 	name = "bombtest"
 	},
 /turf/unsimulated/bombvr,
-/area/station/test_area{
+/area/sim/test_area{
 	name = "VR Test Area";
 	requires_power = 0
 	})
 "jL" = (
 /turf/unsimulated/wall,
-/area)
+/area/space)
 "jM" = (
 /obj/landmark/start,
 /obj/landmark/start{
 	name = "shit"
 	},
 /turf/space,
-/area)
+/area/space)
 "jN" = (
 /turf/simulated/wall,
 /area/station/crew_quarters/kitchen)
@@ -3801,7 +3801,7 @@
 	name = "Space Station 13";
 	tag = "the_ss13_screen"
 	},
-/area)
+/area/space)
 "jP" = (
 /turf/space,
 /area/shuttle/escape/station)
@@ -3853,7 +3853,7 @@
 /area/station/crew_quarters/kitchen)
 "jX" = (
 /turf/simulated/wall,
-/area)
+/area/space)
 "jY" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -4855,7 +4855,7 @@
 /area/station/crew_quarters/kitchen)
 "ms" = (
 /turf/simulated/wall,
-/area/sim)
+/area/sim/area1)
 "mt" = (
 /turf/simulated/floor{
 	icon_state = "carpetSW"
@@ -4958,15 +4958,15 @@
 "mE" = (
 /obj/table/auto,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "mF" = (
 /obj/submachine/ice_cream_dispenser,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "mG" = (
 /obj/submachine/chef_sink,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "mH" = (
 /obj/submachine/chef_oven,
 /obj/machinery/light{
@@ -4974,18 +4974,18 @@
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "mI" = (
 /obj/submachine/foodprocessor,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "mJ" = (
 /obj/machinery/deep_fryer,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "mK" = (
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "mL" = (
 /obj/machinery/vending/kitchen,
 /obj/machinery/light{
@@ -4993,21 +4993,21 @@
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "mM" = (
 /obj/storage/secure/closet/fridge{
 	icon_state = "fridge";
 	locked = 0
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "mN" = (
 /obj/machinery/door/airlock,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "mO" = (
 /turf/simulated/floor/plating,
-/area)
+/area/space)
 "mP" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -5033,11 +5033,11 @@
 /obj/item/reagent_containers/food/snacks/breadslice/banana,
 /obj/item/reagent_containers/food/snacks/breadslice/banana,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "mS" = (
 /obj/stool,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "mT" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -5109,7 +5109,7 @@
 /obj/table/auto,
 /obj/machinery/computer/tour_console,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "nd" = (
 /obj/machinery/guardbot_dock{
 	autoeject = 0;
@@ -5123,7 +5123,7 @@
 	req_access_txt = ""
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "ne" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
@@ -5132,7 +5132,7 @@
 	name = "Test Kitchen"
 	},
 /turf/simulated/floor/plating,
-/area/sim)
+/area/sim/area1)
 "nf" = (
 /obj/disposalpipe/trunk,
 /obj/machinery/disposal,
@@ -5151,7 +5151,7 @@
 /obj/table/auto,
 /obj/submachine/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "ni" = (
 /obj/machinery/navbeacon{
 	codes_txt = "tour;next_tour=tour0;desc=Test! ";
@@ -5160,14 +5160,14 @@
 	name = "station tour beacon"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "nj" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol";
 	location = "bar"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "nk" = (
 /obj/machinery/navbeacon{
 	codes_txt = "tour;next_tour=tour1;desc=Hello! Welcome to to the Nanotrasen C-Class Orbital Facility Tour! I will be your tourguide today on this adventure! Let's get started!";
@@ -5176,14 +5176,14 @@
 	name = "tour beacon - start"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "nl" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "nm" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -5287,7 +5287,7 @@
 "nx" = (
 /obj/machinery/plantpot,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "ny" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -5316,43 +5316,43 @@
 /obj/table/auto,
 /obj/item/kitchen/utensil/fork,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "nC" = (
 /obj/table/auto,
 /obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "nD" = (
 /obj/table/auto,
 /obj/item/kitchen/utensil/spoon,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "nE" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/wonton_wrapper,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "nF" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/cereal_box,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "nG" = (
 /obj/table/auto,
 /obj/item/clothing/head/void_crown,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "nH" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/bowl,
 /obj/item/clothing/suit/armor/ancient,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "nI" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/bowl,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "nJ" = (
 /obj/item/reagent_containers/food/snacks/burrito,
 /obj/item/reagent_containers/food/snacks/burrito,
@@ -5361,7 +5361,7 @@
 /obj/item/reagent_containers/food/snacks/burrito,
 /obj/table/auto,
 /turf/simulated/floor/specialroom/cafeteria,
-/area/sim)
+/area/sim/area1)
 "nK" = (
 /turf/space,
 /turf/unsimulated/floor/void/channel{
@@ -8211,10 +8211,7 @@
 /area/hospital/samostrel)
 "sI" = (
 /obj/rack,
-/obj/item/clothing/head/helmet/space{
-	desc = "Korolyov's pride.";
-	name = "cosmonaut helmet"
-	},
+/obj/item/clothing/head/helmet/space/soviet,
 /turf/unsimulated/floor{
 	name = "plating"
 	},

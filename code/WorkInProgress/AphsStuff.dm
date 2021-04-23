@@ -12,9 +12,9 @@
 		user.lastattacked = src
 		src.visible_message("<B>[src]</B> screams!",1)
 		if (narrator_mode)
-			playsound(get_turf(src), 'sound/vox/scream.ogg', 10, 1, -1)
+			playsound(get_turf(src), 'sound/vox/scream.ogg', 10, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
 		else
-			playsound(get_turf(src), 'sound/voice/screams/monkey_scream.ogg', 10, 1, -1)
+			playsound(get_turf(src), 'sound/voice/screams/monkey_scream.ogg', 10, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
 		..()
 		return
 
@@ -26,7 +26,7 @@
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "satanai_tape"
 	var/tape_no = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 3
 
 /obj/item/aiboss_tape/first

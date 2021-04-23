@@ -60,8 +60,6 @@
 
 	var/ground_zero_range = round(strength / 387)
 	explosion(src, ground_zero, ground_zero_range, ground_zero_range*2, ground_zero_range*3, ground_zero_range*4)
-
-	//SN src = null
 	qdel(src)
 	return
 

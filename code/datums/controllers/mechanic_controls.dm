@@ -25,7 +25,8 @@ var/datum/mechanic_controller/mechanic_controls
 	proc
 		create_partslist(var/mats_number = 10)
 			if (!isnum(mats_number))
-				mats_number = 10
+				item_mats = null
+				return
 			item_mats = list(/obj/item/electronics/battery=0,/obj/item/electronics/fuse=0,/obj/item/electronics/switc=0,/obj/item/electronics/capacitor=0,/obj/item/electronics/resistor=0,/obj/item/electronics/bulb=0,/obj/item/electronics/relay=0,/obj/item/electronics/board=0,/obj/item/electronics/keypad=0,/obj/item/electronics/screen=0,/obj/item/electronics/buzzer=0)
 			var/number_of_parts = mats_number
 			var/advanced_chance = 20
@@ -51,6 +52,15 @@ var/datum/mechanic_controller/mechanic_controls
 				return
 			if (get_schematic_from_name_in_custom(src.name))
 				return
+			var/mats_types = null // null = keep default
+			if(islist(mats_number))
+				mats_types = mats_number
+				mats_number = 0
+				for(var/mat in mats_types)
+					var/amt = mats_types[mat]
+					if(isnull(amt))
+						amt = 1
+					mats_number += amt
 			if (!isnum(mats_number))
 				mats_number = 10
 
@@ -64,7 +74,17 @@ var/datum/mechanic_controller/mechanic_controls
 				mats_number -= 3
 				// to cover the base materials
 
-			if (mats_number > 0)
+			if (!isnull(mats_types))
+				M.item_paths.Cut()
+				M.item_names = null // auto-generate
+				M.item_amounts.Cut()
+				for(var/mat in mats_types)
+					M.item_paths += mat
+					var/amt = mats_types[mat]
+					if(isnull(amt))
+						amt = 1
+					M.item_amounts += amt
+			else if (mats_number > 0)
 				for(var/tracker = 1, tracker <= mats_number, tracker ++)
 					M.item_amounts[rand(1,3)] += 1
 

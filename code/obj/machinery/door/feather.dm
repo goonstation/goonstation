@@ -12,12 +12,12 @@
 
 /obj/machinery/door/feather/special_desc(dist, mob/user)
 	if(isflock(user))
-		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-		special_desc += "<br><span class='bold'>ID:</span> Solid Seal Aperture"
-		special_desc += "<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%"
+		var/special_desc = {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Solid Seal Aperture
+		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%"}
 		if(broken)
-			special_desc += "<br><span class='bold'>FUNCTION CRITICALLY IMPAIRED, REPAIRS REQUIRED</span> "
-			special_desc += "<br><span class='bold'>###=-</span></span>"
+			special_desc += {"<br><span class='bold'>FUNCTION CRITICALLY IMPAIRED, REPAIRS REQUIRED</span>
+			<br><span class='bold'>###=-</span></span>"}
 		return special_desc
 	else
 		return null // give the standard description

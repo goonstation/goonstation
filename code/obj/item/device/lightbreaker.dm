@@ -9,7 +9,7 @@
 	throwforce = 5.0
 	throw_speed = 2
 	throw_range = 10
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	is_syndicate = 1
 	mats = 15
 	stamina_cost = 10
@@ -31,7 +31,7 @@
 			ammo--
 		else
 			playsound(src.loc, "sound/machines/click.ogg", 100, 1)
-			boutput(usr, "<span class='alert'>The tape is worn out!</span>")
+			boutput(user, "<span class='alert'>The tape is worn out!</span>")
 		return
 
 	proc/activate(mob/user as mob)

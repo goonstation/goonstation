@@ -50,6 +50,6 @@
 
 /// the whole rest of the command (only supported as the last argument for obvious reasons)
 /datum/command_argument/the_rest
-	regex = new(@{".*"})
+	regex = new(@{"(?:.|\n)*"})
 	format_help(name)
 		return "[name]..."

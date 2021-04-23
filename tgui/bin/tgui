@@ -1,4 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
+## Copyright (c) 2020 Aleksej Komarov
+## SPDX-License-Identifier: MIT
+
 set -e
 shopt -s globstar
 shopt -s expand_aliases
@@ -26,11 +29,18 @@ base_dir="$(tgui-realpath "${base_dir}")"
 root_dir="$(dirname "$(tgui-realpath "${0}")")/../.."
 root_dir="$(tgui-realpath "${root_dir}")"
 ## Find a canonical path to build target folder
-target_dir="$(dirname "$(tgui-realpath "${0}")")/../../browserassets/tgui"
+target_dir_name="tgui"
+target_dir="$(dirname "$(tgui-realpath "${0}")")/../../browserassets/${target_dir_name}"
 target_dir="$(tgui-realpath "${target_dir}")"
 
-## Add locally installed node programs to path
-PATH="${PATH}:node_modules/.bin"
+## Fall back to running Yarn from the repo
+if ! hash yarn 2>/dev/null; then
+  yarn_releases=("${base_dir}"/.yarn/releases/yarn-*.cjs)
+  yarn_release="${yarn_releases[0]}"
+  yarn() {
+    node "${yarn_release}" "${@}"
+  }
+fi
 
 
 ## Functions
@@ -44,36 +54,55 @@ task-install() {
 
 ## Runs webpack
 task-webpack() {
-  cd "${base_dir}/packages/tgui"
-  webpack "${@}"
+  cd "${base_dir}"
+  yarn run webpack-cli "${@}"
 }
 
 ## Runs a development server
 task-dev-server() {
-  cd "${base_dir}/packages/tgui-dev-server"
-  exec node --experimental-modules index.js "${@}"
+  cd "${base_dir}"
+  yarn node packages/tgui-dev-server/index.esm.js "${@}"
 }
 
 ## Run a linter through all packages
-task-eslint() {
+task-lint() {
   cd "${base_dir}"
-  eslint ./packages "${@}"
+  yarn run tsc
+  echo "tgui: type check passed"
+  yarn run eslint packages --ext .js,.cjs,.ts,.tsx "${@}"
   echo "tgui: eslint check passed"
+}
+
+task-test() {
+  cd "${base_dir}"
+  yarn run jest
 }
 
 ## Mr. Proper
 task-clean() {
   cd "${base_dir}"
+  ## Yarn artifacts
+  rm -rf .yarn/cache
+  rm -rf .yarn/unplugged
+  rm -rf .yarn/webpack
+  rm -f .yarn/build-state.yml
+  rm -f .yarn/install-state.gz
+  rm -f .yarn/install-target
+  rm -f .pnp.js
+  ## NPM artifacts
   rm -rf **/node_modules
+  rm -f **/package-lock.json
+
+  ## Build artifacts
   cd "${target_dir}"
   rm -rf .tmp
 }
 
 ## Validates current build against the build stored in git
 task-validate-build() {
-  cd "${root_dir}"
+  cd "${target_dir}/.."
   local diff
-  diff="$(git diff browserassets/tgui/tgui.bundle.*)"
+  diff="$(git diff ${target_dir_name}/*)"
   if [[ -n ${diff} ]]; then
     echo "Error: our build differs from the build committed into git."
     echo "Please rebuild tgui."
@@ -124,16 +153,6 @@ if [[ ${1} == "--install-git-hooks" ]]; then
   exit 0
 fi
 
-## Continuous integration scenario
-if [[ ${1} == "--ci" ]]; then
-  task-clean
-  task-install
-  task-eslint
-  task-webpack --mode=production
-  task-validate-build
-  exit 0
-fi
-
 if [[ ${1} == "--clean" ]]; then
   task-clean
   exit 0
@@ -149,21 +168,28 @@ fi
 if [[ ${1} == '--lint' ]]; then
   shift 1
   task-install
-  task-eslint "${@}"
+  task-lint "${@}"
   exit 0
 fi
 
 if [[ ${1} == '--lint-harder' ]]; then
   shift 1
   task-install
-  task-eslint -c .eslintrc-harder.yml "${@}"
+  task-lint -c .eslintrc-harder.yml "${@}"
   exit 0
 fi
 
 if [[ ${1} == '--fix' ]]; then
   shift 1
   task-install
-  task-eslint --fix "${@}"
+  task-lint --fix "${@}"
+  exit 0
+fi
+
+if [[ ${1} == '--test' ]]; then
+  shift 1
+  task-install
+  task-test "${@}"
   exit 0
 fi
 
@@ -175,9 +201,16 @@ if [[ ${1} == '--analyze' ]]; then
 fi
 
 ## Make a production webpack build
+if [[ ${1} == '--build' ]]; then
+  task-install
+  task-webpack --mode=production
+  exit 0
+fi
+
+## Make a production webpack build + Run eslint
 if [[ -z ${1} ]]; then
   task-install
-  task-eslint
+  task-lint --fix
   task-webpack --mode=production
   exit 0
 fi

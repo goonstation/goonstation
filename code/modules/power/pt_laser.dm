@@ -33,6 +33,7 @@
 	var/output_multi = 1e6
 	var/emagged = FALSE
 	var/lifetime_earnings = 0
+	var/undistributed_earnings = 0
 	var/excess = null //for tgui readout
 	var/is_charging = FALSE //for tgui readout
 
@@ -48,7 +49,7 @@
 			for(var/d in cardinal)
 				var/turf/T = get_step(origin, d)
 				for(var/obj/machinery/power/terminal/term in T)
-					if(term && term.dir == turn(d, 180))
+					if(term?.dir == turn(d, 180))
 						terminal = term
 						break dir_loop
 
@@ -108,7 +109,7 @@
 		return 0
 	return min(round((charge/abs(output))*6),6) //how close it is to firing power, not to capacity.
 
-/obj/machinery/power/pt_laser/process()
+/obj/machinery/power/pt_laser/process(mult)
 	if(status & BROKEN)
 		return
 	//store machine state to see if we need to update the icon overlays
@@ -117,12 +118,13 @@
 	var/last_llt = load_last_tick
 	var/last_firing = firing
 	var/dont_update = 0
+	var/adj_output = abs(output)
 
 	if(terminal)
 		src.excess = (terminal.surplus() + load_last_tick) //otherwise the charge used by this machine last tick is counted against the charge available to it this tick aaaaaaaaaaaaaa
 		if(charging && src.excess >= src.chargelevel)		// if there's power available, try to charge
 			var/load = min(capacity-charge, chargelevel)		// charge at set rate, limited to spare capacity
-			charge += load		// increase the charge
+			charge += load * mult		// increase the charge
 			add_load(load)		// add the load to the terminal side network
 			load_last_tick = load
 			if (!src.is_charging) src.is_charging = TRUE
@@ -130,22 +132,25 @@
 			load_last_tick = 0
 			if (src.is_charging) src.is_charging = FALSE
 
+	if( charge > adj_output*mult)
+		adj_output *= mult
+
 	if(online) // if it's switched on
 		if(!firing) //not firing
-			if(charge >= abs(output) && (abs(output) >= PTLMINOUTPUT)) //have power to fire
+			if(charge >= adj_output && (adj_output >= PTLMINOUTPUT)) //have power to fire
 				if(laser_parts.len == 0)
 					start_firing() //creates all the laser objects then activates the right ones
 				else
 					restart_firing() //if the laser was created already, just activate the existing objects
 				dont_update = 1 //so the firing animation runs
-				charge -= abs(output)
+				charge -= adj_output
 				if(selling)
-					power_sold()
-		else if(charge < abs(output) && (abs(src.output) >= PTLMINOUTPUT)) //firing but not enough charge to sustain
+					power_sold(adj_output)
+		else if(charge < adj_output && (adj_output >= PTLMINOUTPUT)) //firing but not enough charge to sustain
 			stop_firing()
 		else //firing and have enough power to carry on
 			for(var/mob/living/L in affecting_mobs) //has to happen every tick
-				if(burn_living(L,abs(output)*PTLEFFICIENCY)) //returns 1 if they are gibbed, 0 otherwise
+				if(burn_living(L,adj_output*PTLEFFICIENCY)) //returns 1 if they are gibbed, 0 otherwise
 					affecting_mobs -= L
 
 			if(laser_process_counter > 9)
@@ -154,9 +159,10 @@
 			else
 				laser_process_counter ++
 
-			charge -= abs(output)
+			charge -= adj_output
+
 			if(selling)
-				power_sold()
+				power_sold(adj_output)
 			else if(blocking_objects.len > 0)
 				melt_blocking_objects()
 
@@ -166,24 +172,28 @@
 	if(dont_update == 0 && (last_firing != firing || last_disp != chargedisplay() || last_onln != online || ((last_llt > 0 && load_last_tick == 0) || (last_llt == 0 && load_last_tick > 0))))
 		updateicon()
 
-/obj/machinery/power/pt_laser/proc/power_sold()
-	if (round(output) == 0)
+/obj/machinery/power/pt_laser/proc/power_sold(adjusted_output)
+	if (round(adjusted_output) == 0)
 		return FALSE
 
-	var/output_mw = output / 1e6
+	var/output_mw = adjusted_output / 1e6
 
-	#define BUX_PER_SEC_CAP 5000 //at inf power, generate 5000$/tick, also max amt to drain/tick
+	#define LOW_CAP (20) //provide a nice scalar for deminishing returns instead of a slow steady climb
+	#define BUX_PER_WORK_CAP (5000-LOW_CAP) //at inf power, generate 5000$/tick, also max amt to drain/tick
 	#define ACCEL_FACTOR 69 //our acceleration factor towards cap
 	#define STEAL_FACTOR 4 //Adjusts the curve of the stealing EQ (2nd deriv/concavity)
 
-	//For equation + explaination, https://www.desmos.com/calculator/62w5igbqwo
+	//For equation + explanation, https://www.desmos.com/calculator/r8bsyz5gf9
 	//Adjusted to give a decent amt. of cash/tick @ 50GW (said to be average hellburn)
-	var/generated_moolah =   (2*output_mw*BUX_PER_SEC_CAP)/(2*output_mw + BUX_PER_SEC_CAP*ACCEL_FACTOR) //used if output_mw > 0
+	var/generated_moolah = (2*output_mw*BUX_PER_WORK_CAP)/(2*output_mw+BUX_PER_WORK_CAP*ACCEL_FACTOR) //used if output_mw > 0
+	generated_moolah += (4*output_mw*LOW_CAP)/(4*output_mw + LOW_CAP)
 
 	if (output_mw < 0) //steals money since you emagged it
-		generated_moolah = (-2*output_mw*BUX_PER_SEC_CAP)/(2*STEAL_FACTOR*output_mw - BUX_PER_SEC_CAP*STEAL_FACTOR*ACCEL_FACTOR)
+		generated_moolah = (-2*output_mw*BUX_PER_WORK_CAP)/(2*STEAL_FACTOR*output_mw - BUX_PER_WORK_CAP*STEAL_FACTOR*ACCEL_FACTOR)
 
 	lifetime_earnings += generated_moolah
+	generated_moolah += undistributed_earnings
+	undistributed_earnings = 0
 
 	var/list/accounts = list()
 	for(var/datum/data/record/t in data_core.bank)
@@ -199,10 +209,13 @@
 
 		for(var/datum/data/record/t in accounts)
 			t.fields["current_money"] += round(generated_moolah/accounts.len)
+		undistributed_earnings += generated_moolah-(round(generated_moolah/accounts.len) * (length(accounts)))
+	else
+		undistributed_earnings += generated_moolah
 
 	#undef STEAL_FACTOR
 	#undef ACCEL_FACTOR
-	#undef BUX_PER_SEC_CAP
+	#undef BUX_PER_WORK_CAP
 
 /obj/machinery/power/pt_laser/proc/get_barrel_turf()
 	var/x_off = 0
@@ -257,7 +270,7 @@
 		T = get_step(T, dir)
 		if(!T) break //edge of the map
 		var/obj/lpt_laser/laser = new/obj/lpt_laser(T)
-		laser.dir = dir
+		laser.set_dir(dir)
 		laser.power = round(abs(output)*PTLEFFICIENCY)
 		laser.source = src
 		laser.active = 0
@@ -306,7 +319,7 @@
 	for(var/obj/lpt_laser/L in laser_parts)
 		if(counter <= active_num)
 			L.invisibility = 0 //make it visible
-			L.alpha = max(50,min(255,L.power/39e7)) //255 (max) alpha at 1e11 power, the point at which the laser's most deadly effect happens
+			L.alpha = clamp(((log(10, L.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 			L.active = 1
 			L.light.enable()
 			L.burn_all_living_contents()
@@ -328,7 +341,7 @@
 			qdel(O)
 
 /obj/machinery/power/pt_laser/add_load(var/amount)
-	if(terminal && terminal.powernet)
+	if(terminal?.powernet)
 		terminal.powernet.newload += amount
 
 /obj/machinery/power/pt_laser/proc/update_laser_power()
@@ -338,17 +351,7 @@
 
 	for(var/obj/lpt_laser/L in laser_parts)
 		L.power = round(abs(src.output)*PTLEFFICIENCY)
-		L.alpha = max(50,min(255,L.power/39e7)) //255 (max) alpha at 1e11 power, the point at which the laser's most deadly effect happens
-
-/obj/machinery/power/pt_laser/ui_state(mob/user)
-	return tgui_default_state
-
-/obj/machinery/power/pt_laser/ui_status(mob/user, datum/ui_state/state)
-	return min(
-		state.can_use_topic(src, user),
-		tgui_broken_state.can_use_topic(src, user),
-		tgui_not_incapacitated_state.can_use_topic(src, user)
-	)
+		L.alpha = clamp(((log(10, L.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 
 /obj/machinery/power/pt_laser/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -357,29 +360,30 @@
 		ui.open()
 
 /obj/machinery/power/pt_laser/ui_data(mob/user)
-	var/list/data = list()
-	data["capacity"] = src.capacity
-	data["charge"] = src.charge
-	data["isEmagged"] = src.emagged
-	data["isChargingEnabled"] = src.charging
-	data["excessPower"] = src.excess
-	data["gridLoad"] = src.terminal?.powernet.load
-	data["inputLevel"] = src.chargelevel
-	data["inputMultiplier"] = src.input_multi
-	data["inputNumber"] = src.input_number
-	data["isCharging"] = src.is_charging
-	data["isFiring"] = src.firing
-	data["isLaserEnabled"] = src.online
-	data["lifetimeEarnings"] = src.lifetime_earnings
-	data["name"] = src.name
-	data["outputLevel"] = src.output
-	data["outputMultiplier"] = src.output_multi
-	data["outputNumber"] = src.output_number
-	data["totalGridPower"] = src.terminal?.powernet.avail
-	return data
+	. = list(
+		"capacity" = src.capacity,
+		"charge" = src.charge,
+		"isEmagged" = src.emagged,
+		"isChargingEnabled" = src.charging,
+		"excessPower" = src.excess,
+		"gridLoad" = src.terminal?.powernet.load,
+		"inputLevel" = src.chargelevel,
+		"inputMultiplier" = src.input_multi,
+		"inputNumber" = src.input_number,
+		"isCharging" = src.is_charging,
+		"isFiring" = src.firing,
+		"isLaserEnabled" = src.online,
+		"lifetimeEarnings" = src.lifetime_earnings,
+		"name" = src.name,
+		"outputLevel" = src.output,
+		"outputMultiplier" = src.output_multi,
+		"outputNumber" = src.output_number,
+		"totalGridPower" = src.terminal?.powernet.avail,
+	)
 
 /obj/machinery/power/pt_laser/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 	switch(action)
 		//Input controls
@@ -492,7 +496,7 @@
 	light.enable()
 
 	SPAWN_DBG(0)
-		alpha = max(50,min(255,power/39e7)) //255 (max) alpha at 1e11 power, the point at which the laser's most deadly effect happens
+		alpha = clamp(((log(10, src.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 		if(active)
 			if(istype(src.loc, /turf) && power > 5e7)
 				src.loc:hotspot_expose(power/1e5,5) //1000K at 100MW
@@ -503,8 +507,7 @@
 				if (isintangible(L))
 					continue
 				if (!burn_living(L,power) && source) //burn_living() returns 1 if they are gibbed, 0 otherwise
-					if (!source.affecting_mobs.Find(L))
-						source.affecting_mobs.Add(L)
+					source.affecting_mobs |= L
 
 	..()
 
@@ -514,8 +517,7 @@
 /obj/lpt_laser/HasEntered(var/atom/movable/AM)
 	if (src.active && isliving(AM) && !isintangible(AM))
 		if (!burn_living(AM,power) && source) //burn_living() returns 1 if they are gibbed, 0 otherwise
-			if (!source.affecting_mobs.Find(AM))
-				source.affecting_mobs.Add(AM)
+			source.affecting_mobs |= AM
 
 /obj/lpt_laser/Uncrossed(var/atom/movable/AM)
 	if(isliving(AM) && source)

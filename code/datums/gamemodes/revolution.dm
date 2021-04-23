@@ -42,7 +42,7 @@
 	if(revs_possible.len >= 3)
 		rev_number = 3
 	else
-		rev_number = revs_possible.len
+		rev_number = length(revs_possible)
 
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)
@@ -150,7 +150,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(head_revolutionaries))
 /*
-	for (var/obj/machinery/computer/communications/comm as() in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/comm as anything in machine_registry[MACHINES_COMMSCONSOLES])
 		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
 			intercept.name = "paper- 'Cent. Com. Status Summary'"
@@ -336,7 +336,7 @@
 				ucs += player.mind
 			else
 				var/role = player.mind.assigned_role
-				if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Head Surgeon", "Head of Mining", "Security Officer", "Vice Officer", "Detective", "AI", "Cyborg", "Nanotrasen Special Operative", "Nanotrasen Security Operative","Communications Officer"))
+				if(role in list("Captain", "Head of Security", "Security Assistant", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Head Surgeon", "Head of Mining", "Security Officer", "Security Assistant", "Vice Officer", "Part-time Vice Officer", "Detective", "AI", "Cyborg", "Nanotrasen Special Operative", "Nanotrasen Security Operative","Communications Officer"))
 					ucs += player.mind
 	//for(var/mob/living/carbon/human/player in mobs)
 
@@ -351,7 +351,7 @@
 	// Run through all the heads
 	for(var/datum/mind/head_mind in head_check)
 		// If they exist, have a mob and aren't dead
-		if(head_mind && head_mind.current && !isdead(head_mind.current))
+		if(head_mind?.current && !isdead(head_mind.current))
 
 			// Check to see if they're a robot
 			if(issilicon(head_mind.current))
@@ -386,11 +386,15 @@
 		return 0
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
-		if(rev_mind && rev_mind.current && !isdead(rev_mind.current))
+		if(rev_mind?.current && !isdead(rev_mind.current))
 
 			// Check to see if they're a robot
 			if(issilicon(rev_mind.current))
 				// If they're a robot don't count them
+				continue
+
+			var/area/area = get_area(rev_mind.current)
+			if(istype(area, /area/afterlife))
 				continue
 
 			if(isghostcritter(rev_mind.current) || isVRghost(rev_mind.current))
@@ -506,7 +510,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "revsign"
 
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	throwforce = 8
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = EQUIPPED_WHILE_HELD

@@ -28,10 +28,12 @@
 		src.icon_state = "wrap_paper-[src.style]"
 
 /obj/item/wrapping_paper/attackby(obj/item/W as obj, mob/user as mob)
+	if(W.cant_drop || W.cant_self_remove)
+		return
 	if (!( locate(/obj/table, src.loc) ))
 		boutput(user, "<span class='notice'>You MUST put the paper on a table!</span>")
 		return
-	if (W.w_class < 4)
+	if (W.w_class < W_CLASS_BULKY)
 		if ((istool(user.l_hand, TOOL_CUTTING | TOOL_SNIPPING) && user.l_hand != W) || (istool(user.r_hand, TOOL_CUTTING | TOOL_SNIPPING) && user.r_hand != W))
 			var/a_used = 2 ** (src.w_class - 1)
 			if (src.amount < a_used)
@@ -93,7 +95,7 @@
 	item_state = "gift"
 	var/size = 3.0
 	var/obj/item/gift = null
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
@@ -144,27 +146,34 @@
 	festive
 		icon_state = "gift2-g"
 		attack_self(mob/M as mob)
-			if (!islist(giftpaths) || !giftpaths.len)
+			if (!islist(giftpaths) || !length(giftpaths))
 				src.giftpaths = generic_gift_paths + xmas_gift_paths
 			..()
+
+		ephemeral //Disappears except on xmas
+#ifndef XMAS
+			New()
+				qdel(src)
+				..()
+#endif
 
 	easter
 		name = "easter egg"
 		icon_state = "easter_egg"
 		random_icons = 0
 		attack_self(mob/M as mob)
-			if (!islist(giftpaths) || !giftpaths.len)
+			if (!islist(giftpaths) || !length(giftpaths))
 				src.giftpaths = generic_gift_paths
 			..()
 
 	easter/dangerous
 		attack_self(mob/M as mob)
-			if (!islist(giftpaths) || !giftpaths.len)
+			if (!islist(giftpaths) || !length(giftpaths))
 				src.giftpaths = generic_gift_paths + questionable_generic_gift_paths
 			..()
 
 /obj/item/a_gift/attack_self(mob/M as mob)
-	if (!islist(giftpaths) || !giftpaths.len)
+	if (!islist(giftpaths) || !length(giftpaths))
 		boutput(M, "<span class='notice'>[src] was empty!</span>")
 		qdel(src)
 		return
@@ -275,7 +284,7 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/storage/firstaid/regular,
 	/obj/item/storage/pill_bottle/cyberpunk,
 	/obj/item/toy/sword,
-	/obj/item/card_box/trading,
+	/obj/item/stg_box,
 	/obj/item/clothing/suit/jacket/plastic/random_color)
 
 var/global/list/questionable_generic_gift_paths = list(/obj/item/relic,

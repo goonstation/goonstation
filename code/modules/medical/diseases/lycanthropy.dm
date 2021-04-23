@@ -46,7 +46,7 @@
 
 						SPAWN_DBG (rand(100, 300))
 							if (H && D)
-								H.werewolf_transform(1, 0) // Less code duplication and stuff. See werewolf.dm (Convair880).
+								H.werewolf_transform() // Less code duplication and stuff. See werewolf.dm (Convair880).
 								D.stage_prob = 0
 								D.stage = 1
 							src.triggered_transformation = 0 // Necessary. Disease datums seem to be pooled or something, dunno.

@@ -30,7 +30,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	tool_flags = TOOL_SNIPPING
 	force = 8.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	throwforce = 5.0
@@ -74,7 +74,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_CUTTING
 	force = 7.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	throwforce = 5.0
@@ -298,9 +298,7 @@
 				src.uses_left = 0
 				src.icon_state= "dye-e"
 
-		M.set_face_icon_dirty()
-		M.set_body_icon_dirty()
-		M.update_clothing()
+		M.update_colorful_parts()
 	return 1
 
 //////////////////////////////
@@ -325,12 +323,10 @@
 	ex_act(severity)
 		switch(severity)
 			if(1.0)
-				//SN src = null
 				qdel(src)
 				return
 			if(2.0)
 				if (prob(50))
-					//SN src = null
 					qdel(src)
 					return
 			else

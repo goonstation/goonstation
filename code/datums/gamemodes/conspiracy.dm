@@ -5,6 +5,7 @@
 	latejoin_only_if_all_antags_dead = 1 // No hunters until the conspiracy is dead, thanks
 
 	var/maxConspirators = 6
+	var/agent_radiofreq = 1401
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -44,6 +45,8 @@
 		conspirator.special_role = "conspirator"
 		potentialAntags.Remove(conspirator)
 
+	agent_radiofreq = random_radio_frequency()
+
 	return 1
 
 /datum/game_mode/conspiracy/post_setup()
@@ -62,14 +65,15 @@
 		for(var/datum/objective/objective in conspirator.objectives)
 			boutput(conspirator.current, "<B>Objective</B>: [objective.explanation_text]")
 
-		SHOW_CONSPIRACY_TIPS(conspirator.current)
+		equip_conspirator(conspirator.current)
+
 		boutput(conspirator.current, conspiratorList)
 		boutput(conspirator.current, meetingPoint)
 
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()
 
-/datum/game_mode/conspiracy/proc/getPotentialAntags(minimum_traitors=1)
+/datum/game_mode/conspiracy/proc/getPotentialAntags(minimum_conspirators=2)
 	var/list/candidates = list()
 
 	for(var/client/C)
@@ -78,11 +82,11 @@
 
 		if (ishellbanned(player)) continue //No treason for you
 		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_traitor)
+			if(player.client.preferences.be_conspirator)
 				candidates += player.mind
 
-	if(candidates.len < minimum_traitors)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_traitor set to yes were ready. We need [minimum_traitors] traitors so including players who don't want to be traitors in the pool.")
+	if(candidates.len < minimum_conspirators)
+		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_conspirator set to yes were ready. We need [minimum_conspirators] conspirators so including players who don't want to be traitors in the pool.")
 		for(var/client/C)
 			var/mob/new_player/player = C.mob
 			if (!istype(player)) continue
@@ -91,13 +95,21 @@
 			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
 				candidates += player.mind
 
-				if ((minimum_traitors > 1) && (candidates.len >= minimum_traitors))
+				if ((minimum_conspirators > 1) && (candidates.len >= minimum_conspirators))
 					break
 
 	if(candidates.len < 1)
 		return list()
 	else
 		return candidates
+
+/datum/game_mode/conspiracy/proc/random_radio_frequency()
+	var/list/blacklisted = list(0, 1451, 1457)
+	blacklisted.Add(R_FREQ_BLACKLIST)
+
+	do
+		. = rand(1352, 1439)
+	while (blacklisted.Find(.))
 
 /datum/game_mode/traitor/send_intercept()
 	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"

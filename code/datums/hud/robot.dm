@@ -1,7 +1,4 @@
-#define COLOR_MATRIX_IDENTITY list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1)
-#define COLOR_MATRIX_GRAYSCALE list(0.2126,0.2126,0.2126,0, 0.7152,0.7152,0.7152,0, 0.0722,0.0722,0.0722,0, 0,0,0,1)
-
-/obj/screen/hud/robotstorage
+/atom/movable/screen/hud/robotstorage
 	MouseEntered(location, control, params)
 		if (src.name)
 			src.maptext_x = 34
@@ -11,7 +8,7 @@
 		src.maptext = null
 
 /datum/hud/robot
-	var/obj/screen/hud
+	var/atom/movable/screen/hud
 		mod1
 		mod2
 		mod3
@@ -34,8 +31,8 @@
 
 	var/list/screen_tools = list()
 
-	var/list/obj/screen/hud/upgrade_bg = list()
-	var/list/obj/screen/hud/upgrade_slots = list()
+	var/list/atom/movable/screen/hud/upgrade_bg = list()
+	var/list/atom/movable/screen/hud/upgrade_slots = list()
 	var/show_upgrades = 1
 
 	var/items_screen = 1
@@ -52,9 +49,9 @@
 	var/image/storage_bg
 
 
-	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(obj/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
+	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(atom/movable/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
 
-	var/obj/screen/hud
+	var/atom/movable/screen/hud
 
 	clear_master()
 		master = null
@@ -130,7 +127,7 @@
 				if (i > master.module.tools.len)
 					break
 				var/obj/item/I = master.module.tools[i]
-				var/obj/screen/hud/S = screen_tools[sid]
+				var/atom/movable/screen/hud/S = screen_tools[sid]
 
 				if (!I) // if the item has been deleted, just show an empty slot.
 					S.name = null
@@ -218,7 +215,7 @@
 		src.close = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", "1, 1", HUD_LAYER+1)
 		remove_screen(close)
 		for (var/i = 1, i <= 7, i++)
-			var/S = create_screen("object[i]", "object", null, null, "1, [10 - i]", HUD_LAYER + 1, customType = /obj/screen/hud/robotstorage)
+			var/S = create_screen("object[i]", "object", null, null, "1, [10 - i]", HUD_LAYER + 1, customType = /atom/movable/screen/hud/robotstorage)
 			remove_screen(S)
 			screen_tools += S
 
@@ -271,8 +268,8 @@
 		mainframe.underlays += "block"
 
 
-	scrolled(id, dx, dy, loc, parms, obj/screen/hud/scr)
-		if(!master) return
+	scrolled(id, dx, dy, user, parms, atom/movable/screen/hud/scr)
+		if(!master || user != master) return
 		switch(id)
 			if("object1", "object2", "object3", "object4", "object5", "object6", "object7", "next", "nextbg", "prev", "prevbg", "boxes")
 				if(dy < 0) items_screen++
@@ -384,11 +381,11 @@
 				master.return_mainframe()
 
 	proc/update_status_effects()
-		for(var/obj/screen/statusEffect/G in src.objects)
+		for(var/atom/movable/screen/statusEffect/G in src.objects)
 			remove_screen(G)
 
-		for(var/datum/statusEffect/S in src.statusUiElements) //Remove stray effects.
-			if(!master.statusEffects || !(S in master.statusEffects) || !S.visible)
+		for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
+			if(!master.statusEffects || !(S in master.statusEffects))
 				pool(statusUiElements[S])
 				src.statusUiElements.Remove(S)
 				qdel(S)
@@ -397,10 +394,10 @@
 		var/pos_x = spacing - 0.2 - 1
 
 		if(master.statusEffects)
-			for(var/datum/statusEffect/S in master.statusEffects) //Add new ones, update old ones.
+			for(var/datum/statusEffect/S as anything in master.statusEffects) //Add new ones, update old ones.
 				if(!S.visible) continue
 				if((S in statusUiElements) && statusUiElements[S])
-					var/obj/screen/statusEffect/U = statusUiElements[S]
+					var/atom/movable/screen/statusEffect/U = statusUiElements[S]
 					U.icon = icon_hud
 					U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH-2.7"
 					U.update_value()
@@ -408,7 +405,7 @@
 					pos_x -= spacing
 				else
 					if(S.visible)
-						var/obj/screen/statusEffect/U = unpool(/obj/screen/statusEffect)
+						var/atom/movable/screen/statusEffect/U = unpool(/atom/movable/screen/statusEffect)
 						U.init(master,S)
 						U.icon = icon_hud
 						statusUiElements.Add(S)
@@ -431,16 +428,16 @@
 				return
 			show_upgrades = show
 			if (show)
-				for (var/obj/screen/hud/H in upgrade_bg)
+				for (var/atom/movable/screen/hud/H in upgrade_bg)
 					add_screen(H)
-				for (var/obj/screen/hud/H in upgrade_slots)
+				for (var/atom/movable/screen/hud/H in upgrade_slots)
 					add_screen(H)
 				for (var/obj/item/roboupgrade/upgrade in last_upgrades)
 					add_object(upgrade, HUD_LAYER+2)
 			else
-				for (var/obj/screen/hud/H in upgrade_bg)
+				for (var/atom/movable/screen/hud/H in upgrade_bg)
 					remove_screen(H)
-				for (var/obj/screen/hud/H in upgrade_slots)
+				for (var/atom/movable/screen/hud/H in upgrade_slots)
 					remove_screen(H)
 				for (var/obj/item/roboupgrade/upgrade in last_upgrades)
 					remove_object(upgrade)
@@ -577,9 +574,9 @@
 		update_upgrades()
 			var/startx = 5 - master.max_upgrades
 			if (master.max_upgrades != upgrade_slots.len)
-				for (var/obj/screen/hud/H in upgrade_bg)
+				for (var/atom/movable/screen/hud/H in upgrade_bg)
 					remove_screen(H)
-				for (var/obj/screen/hud/H in upgrade_slots)
+				for (var/atom/movable/screen/hud/H in upgrade_slots)
 					remove_screen(H)
 
 				upgrade_bg.len = 0
@@ -595,9 +592,9 @@
 					upgrade_slots += create_screen("upgrade[i+1]", "Upgrade [i+1]", icon_hud, "upgrade0", "CENTER+[startx+i]:24, SOUTH+1:4", HUD_LAYER+1)
 
 				if (!show_upgrades) // this is dumb
-					for (var/obj/screen/hud/H in upgrade_bg)
+					for (var/atom/movable/screen/hud/H in upgrade_bg)
 						remove_screen(H)
-					for (var/obj/screen/hud/H in upgrade_slots)
+					for (var/atom/movable/screen/hud/H in upgrade_slots)
 						remove_screen(H)
 
 			for (var/obj/item/roboupgrade/upgrade in last_upgrades)
@@ -607,7 +604,7 @@
 				if (i >= upgrade_slots.len)
 					break
 
-				var/obj/screen/hud/slot = upgrade_slots[i+1]
+				var/atom/movable/screen/hud/slot = upgrade_slots[i+1]
 				slot.icon_state = "upgrade[upgrade.activated]"
 				if (show_upgrades)
 					add_object(upgrade, HUD_LAYER+2, "CENTER+[startx+i]:24, SOUTH+1:4")

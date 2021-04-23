@@ -9,7 +9,7 @@
 		..()
 		SPAWN_DBG(1 SECOND)
 			var/obj/term = new /obj/machinery/power/terminal(get_step(get_turf(src), dir))
-			term.dir = get_dir(get_turf(term), src)
+			term.set_dir(get_dir(get_turf(term), src))
 			new /obj/machinery/power/smes(get_turf(src))
 			qdel(src)
 
@@ -89,7 +89,7 @@
 					power_usage = 750
 				else
 					var/target = pick(targets)
-					src.dir = get_dir(src, target)
+					src.set_dir(get_dir(src, target))
 					if (src.enabled)
 						power_usage = 750
 						src.shootAt(target)
@@ -112,17 +112,16 @@
 				T.control = src
 
 	attack_hand(var/mob/user as mob)
-		if ( (get_dist(src, user) > 1 ))
-			if (!issilicon(user))
-				boutput(user, text("Too far away."))
-				src.remove_dialog(user)
-				user.Browse(null, "window=turretid")
-				return
+		if (!in_interact_range(src,user))
+			boutput(user, text("Too far away."))
+			src.remove_dialog(user)
+			user.Browse(null, "window=turretid")
+			return
 
 		src.add_dialog(user)
 		var/t = "<TT><B>Turret Control Panel</B><BR><B>Controlled turrets:</B> [turrets.len] (<A href='?src=\ref[src];rescan=1'>Rescan</a>)<HR>"
 
-		if(src.locked && (!issilicon(user)))
+		if(src.locked && !can_access_remotely(user))
 			t += "<I>(Swipe ID card to unlock control panel.)</I><BR>"
 		else
 			t += text("Turrets [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br><br>", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
@@ -135,7 +134,7 @@
 
 	Topic(href, href_list)
 		if (src.locked)
-			if (!issilicon(usr))
+			if (!can_access_remotely(usr))
 				boutput(usr, "Control panel is locked!")
 				return
 		if (href_list["rescan"])
@@ -174,15 +173,16 @@
 	icon = 'icons/obj/construction.dmi'
 	icon_state = "room"
 	item_state = "gun"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 	mats = 6
 	var/using = 0
 	var/datum/progress/designated = null
 
 	attack_self(var/mob/user)
-		if (!(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/construction)))
+		if (!(ticker?.mode && istype(ticker.mode, /datum/game_mode/construction)))
 			boutput(user, "<span class='alert'>You can only use this tool in construction mode.</span>")
+			return
 		var/datum/game_mode/construction/C = ticker.mode
 		var/list/pickable = list()
 		for (var/datum/progress/P in C.milestones)
@@ -236,7 +236,7 @@
 	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings. Load metal sheets before using."
 	icon_state = "bio-white"
 	flags = FPRINT | TABLEPASS | EXTRADELAY
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	click_delay = 1
 	prefix = "bio"
 	metal_ammo = 20
@@ -262,7 +262,7 @@
 
 	var/processing = 0
 
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 	var/sound/sound_process = sound('sound/effects/pop.ogg')
 	var/sound/sound_grump = sound('sound/machines/buzz-two.ogg')
@@ -275,11 +275,11 @@
 			var/be_glass = 0
 			if (!metal)
 				be_metal = 1
-			else if (metal.mat_id == DM.mat_id)
+			else if (isSameMaterial(metal, DM))
 				be_metal = 1
 			if (!glass)
 				be_glass = 1
-			else if (glass.mat_id == DM.mat_id)
+			else if (isSameMaterial(glass, DM))
 				be_glass = 1
 			if (be_metal && be_glass)
 				which = input("Use [D] as?", "Pick", null) in list("metal", "glass")
@@ -294,7 +294,7 @@
 		else if (DM.material_flags & MATERIAL_METAL)
 			if (!metal)
 				which = "metal"
-			else if (metal.mat_id == DM.mat_id)
+			else if (isSameMaterial(metal, DM))
 				which = "metal"
 			else
 				playsound(src.loc, sound_grump, 40, 1)
@@ -303,7 +303,7 @@
 		else if (DM.material_flags & MATERIAL_CRYSTAL)
 			if (!glass)
 				which = "glass"
-			else if (glass.mat_id == DM.mat_id)
+			else if (isSameMaterial(glass, DM))
 				which = "glass"
 			else
 				playsound(src.loc, sound_grump, 40, 1)
@@ -428,7 +428,7 @@
 				var/datum/material/MT = M.material
 				if (!MT)
 					continue
-				if (MT.mat_id == DM.mat_id)
+				if (isSameMaterial(MT, DM))
 					playsound(src.loc, sound_process, 40, 1)
 					if (which == "metal")
 						metal_count += 10
@@ -446,12 +446,12 @@
 	item_state = "gun"
 	flags = FPRINT | TABLEPASS | EXTRADELAY
 	mats = 6
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	click_delay = 1
 
 	var/selecting = 0
 	var/mode = "floors"
-	var/icons = list("floors" = 'icons/turf/construction_floors.dmi', "walls" = 'icons/turf/construction_walls.dmi')
+	var/icons = list("floors" = 'icons/turf/construction_floors.dmi', "walls" = 'icons/turf/construction_walls.dmi', "restore original")
 	var/marker_class = list("floors" = /obj/plan_marker/floor, "walls" = /obj/plan_marker/wall)
 	var/selected = "floor"
 	// var/pod_turf = 0
@@ -459,7 +459,7 @@
 
 	attack_self(mob/user as mob)
 		// This seems to not actually stop anything from working so just axing it.
-		//if (!(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/construction)))
+		//if (!(ticker?.mode && istype(ticker.mode, /datum/game_mode/construction)))
 		//	boutput(user, "<span class='alert'>You can only use this tool in construction mode.</span>")
 
 		if (selecting)
@@ -469,6 +469,10 @@
 		mode = input("What to mark?", "Marking", mode) in icons
 		selected = null
 		var/states = list()
+		if (mode == "restore original")
+			boutput(user, "<span class='notice'>Now set for restoring appearance.</span>")
+			selecting = 0
+			return
 		if (mode == "walls")
 			states += "* AUTO *"
 		states += icon_states(icons[mode])
@@ -491,6 +495,22 @@
 		if (!T)
 			return 0
 
+		if (mode == "restore original") //For those who want to undo the carnage
+			if (istype(T, /turf/simulated/floor))
+				if (!T.intact)
+					return
+				var/turf/simulated/floor/F = T
+				F.icon = initial(F.icon)
+				F.icon_state = F.roundstart_icon_state
+				F.set_dir(F.roundstart_dir)
+			else if (istype(T, /turf/simulated/wall))
+				T.icon = initial(T.icon)
+				//T.icon_state = initial(T.icon_state)
+				if (istype(T, /turf/simulated/wall/auto))
+					var/turf/simulated/wall/auto/W = T
+					W.update_icon()
+					W.update_neighbors()
+			return
 		var/obj/plan_marker/old = null
 		for (var/obj/plan_marker/K in T)
 			if (istype(K, /obj/plan_marker/floor) || istype(K, /obj/plan_marker/wall))
@@ -501,7 +521,7 @@
 		else
 			var/class = marker_class[mode]
 			old = new class(T, selected)
-			old.dir = get_dir(user, T)
+			old.set_dir(get_dir(user, T))
 			// if (pod_turf)
 			// 	old:allows_vehicles = 1
 			old.turf_op = turf_op
@@ -676,22 +696,22 @@
 		var/mask = bmask
 		if (mask & 1)
 			var/obj/window/reinforced/W = new /obj/window/reinforced(L)
-			W.dir = 1
+			W.set_dir(1)
 			W.setMaterial(glass)
 
 		if (mask & 2)
 			var/obj/window/reinforced/W = new /obj/window/reinforced(L)
-			W.dir = 2
+			W.set_dir(2)
 			W.setMaterial(glass)
 
 		if (mask & 4)
 			var/obj/window/reinforced/W = new /obj/window/reinforced(L)
-			W.dir = 4
+			W.set_dir(4)
 			W.setMaterial(glass)
 
 		if (mask & 8)
 			var/obj/window/reinforced/W = new /obj/window/reinforced(L)
-			W.dir = 8
+			W.set_dir(8)
 			W.setMaterial(glass)
 		qdel(src)
 
@@ -747,13 +767,13 @@
 			if (src.icon_state != "* AUTO *")
 				T.icon = src.icon
 				T.icon_state = src.icon_state
-				T.dir = src.dir
+				T.set_dir(src.dir)
 				T:allows_vehicles = src.allows_vehicles
 			else if (istype(T, /turf/simulated/wall/auto))
 				var/turf/simulated/wall/auto/AT = T
 				AT.icon = initial(AT.icon)
 				AT.icon_state = initial(AT.icon_state)
-				AT.dir = initial(AT.dir)
+				AT.set_dir(initial(AT.dir))
 				AT:allows_vehicles = initial(AT.allows_vehicles)
 				AT.update_icon()
 				AT.update_neighbors()
@@ -766,11 +786,11 @@
 
 	proc/check()
 		var/turf/T = get_turf(src)
-		if (istype(T, /turf/simulated/floor))
+		if (istype(T, /turf/simulated/floor) && T.intact)
 			// Same deal as above, only checked for that specific type of floor
 			// so the various alternate designs weren't able to be converted
 			T.icon = src.icon
 			T.icon_state = src.icon_state
-			T.dir = src.dir
+			T.set_dir(src.dir)
 			// T:allows_vehicles = src.allows_vehicles
-			qdel(src)
+		qdel(src)

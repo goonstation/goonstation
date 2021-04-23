@@ -1,25 +1,26 @@
-//////////////////TABLE OF CONTENTS//////////////////
+//----------------TABLE OF CONTENTS--------------------//
 
-///MANTA RELATED LISTS AND GLOBAL VARIABLES///
-///MANTA RELATED OBJECTS///
-///MANTA RELATED TURFS///
-///MANTA RELATED DATUMS (Mainly related to fixing propellers.)///
-///MANTA RELATED AREAS///
-///MANTA SECRET STUFF///
+//MANTA RELATED LISTS AND GLOBAL VARIABLES//
+//MANTA RELATED OBJECTS//
+//MANTA RELATED TURFS//
+//MANTA RELATED DATUMS (Mainly related to fixing propellers.)//
+//MANTA RELATED AREAS//
+//MANTA SECRET STUFF//
 
-//******************************************** MANTA COMPATIBLE LISTS HERE ********************************************
+//-------------------------------------------- MANTA COMPATIBLE LISTS HERE --------------------------------------------
 
 var/list/mantaPushList = list()
 var/mantaMoving = 1
 var/MagneticTether = 1
 var/obj/manta_speed_lever/mantaLever = null
 
-//******************************************** MANTA COMPATIBLE OBJECTS HERE ********************************************
+//-------------------------------------------- MANTA COMPATIBLE OBJECTS HERE --------------------------------------------
 
 /obj/decal/mantaBubbles
 	density = 0
-	anchored = 1
+	anchored = 2
 	layer =  EFFECTS_LAYER_4
+	event_handler_flags = IMMUNE_MANTA_PUSH | USE_FLUID_ENTER
 	name = ""
 	mouse_opacity = 0
 
@@ -161,7 +162,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	if(doShake)
 		for(var/client/C in clients)
 			var/mob/M = C.mob
-			if(M && M.z == 1) shake_camera(M, 5, 32, 0.2)
+			if(M?.z == 1) shake_camera(M, 5, 32, 0.2)
 
 	for_by_tcl(T, /turf/space/fluid/manta)
 		T.setScroll(moving)
@@ -443,7 +444,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		return ..()
 
 	attack_hand(mob/user as mob)
-		if (isAI(usr))
+		if (isAI(user))
 			boutput(user, "<span class='alert'>You'd touch the door, if only you had hands.</span>")
 			return
 		if (broken == 1)
@@ -660,12 +661,6 @@ var/obj/manta_speed_lever/mantaLever = null
 			world << 'sound/effects/manta_alarm.ogg'
 			command_alert("The Magnetic tether has suffered critical damage aboard NSS Manta. Jetpacks equipped with magnetic attachments are now offline, please do not venture out into the ocean until the tether has been repaired.", "Magnetic Tether Damaged")
 
-/obj/landmark
-	name = "bigboom"
-	icon = 'icons/mob/screen1.dmi'
-	icon_state = "x"
-	anchored = 1.0
-
 /obj/miningteleporter
 	name = "Experimental long-range mining teleporter"
 	desc = "Well this looks somewhat unsafe."
@@ -695,7 +690,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	attack_hand(mob/user as mob)
 		if(busy) return
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		src.add_dialog(user)
 		add_fingerprint(user)
 		busy = 1
@@ -720,18 +715,6 @@ var/obj/manta_speed_lever/mantaLever = null
 						S.recharging = 0
 						src.recharging = 0
 				return
-
-/obj/item/hosmedal
-	name = "war medal"
-	icon = 'icons/obj/items/items.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-	icon_state = "hosmedal"
-	item_state = "hosmedal"
-
-	New()
-		..()
-		BLOCK_SETUP(BLOCK_BOOK)
-
 /obj/item/rddiploma
 	name = "RD's diploma"
 	icon = 'icons/obj/items/items.dmi'
@@ -777,7 +760,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	throwforce = 3.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS
 	stamina_damage = 15
 	stamina_cost = 8
@@ -912,12 +895,12 @@ var/obj/manta_speed_lever/mantaLever = null
 	database_id = "sea_plant_tubesponge-small"
 
 
-//******************************************** MANTA COMPATIBLE TURFS HERE ********************************************
+//-------------------------------------------- MANTA COMPATIBLE TURFS HERE --------------------------------------------
 
 /turf/space/fluid/manta
 	var/stateOn = ""
 	var/stateOff = ""
-	var/on = 1
+	var/on = TRUE
 	var/list/L = list()
 
 	New()
@@ -926,12 +909,11 @@ var/obj/manta_speed_lever/mantaLever = null
 		stateOff = "manta_sand"
 		stateOn = "[stateOff]_scroll"
 		icon_state = stateOn
-		on = 1
-		return .
+		on = TRUE
 
 	Del()
 		STOP_TRACKING
-		return ..()
+		. = ..()
 
 	ex_act(severity)
 		return
@@ -943,9 +925,10 @@ var/obj/manta_speed_lever/mantaLever = null
 		else
 			icon_state = stateOff
 			on = newOn
-		return
 
 	Entered(atom/movable/Obj,atom/OldLoc)
+		if(isnull(OldLoc)) // hack, remove later pls thx
+			return ..(Obj, OldLoc)
 		if(y <= 3 || y >= world.maxy - 3 || x <= 3 || x >= world.maxx - 3)
 			if (!L || L.len == 0)
 				for(var/turf/T in get_area_turfs(/area/trench_landing))
@@ -956,7 +939,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 			return_if_overlay_or_effect(Obj)
 
-			if (L && L.len && !istype(Obj,/obj/overlay) && !istype(Obj,/obj/torpedo_targeter))
+			if (length(L) && !istype(Obj,/obj/overlay) && !istype(Obj,/obj/torpedo_targeter))
 				Obj.set_loc(pick(L))
 		..(Obj,OldLoc)
 
@@ -964,7 +947,7 @@ var/obj/manta_speed_lever/mantaLever = null
 /turf/space/fluid/manta/nospawn
 	spawningFlags = null
 
-//******************************************** MANTA COMPATIBLE DATUMS HERE ********************************************
+//-------------------------------------------- MANTA COMPATIBLE DATUMS HERE --------------------------------------------
 //REPAIRING:  wrench > screwdriver > crowbar > wires > welder > wrench > screwdriver > sheet > welder
 
 /datum/action/bar/icon/propeller_fix
@@ -1336,7 +1319,7 @@ var/obj/manta_speed_lever/mantaLever = null
 #endif
 
 
-//******************************************** MANTA COMPATIBLE AREAS HERE ********************************************
+//-------------------------------------------- MANTA COMPATIBLE AREAS HERE --------------------------------------------
 //Also ugh, duplicate code.
 
 /area/mantaSpace
@@ -1359,7 +1342,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		return
 	proc/addManta(atom/movable/Obj)
 		if(!istype(Obj, /obj/overlay) && !istype(Obj, /obj/machinery/light_area_manager) && istype(Obj, /atom/movable))
-			if(!(Obj.temp_flags & MANTA_PUSHING))
+			if(!(Obj.temp_flags & MANTA_PUSHING) && !(Obj.event_handler_flags & IMMUNE_MANTA_PUSH) && !Obj.anchored)
 				mantaPushList.Add(Obj)
 				Obj.temp_flags |= MANTA_PUSHING
 		return
@@ -1541,29 +1524,6 @@ var/obj/manta_speed_lever/mantaLever = null
 	else
 		boutput(user, "<span class='alert'>The door has already been opened. It looks like the mechanism has jammed for good.</span>")
 
-/obj/machinery/reliquaryscout
-	name = "????"
-	desc = "What the fuck is that!?"
-	icon = null
-	icon_state = "scoutbot"
-	var/datum/light/light
-
-	New()
-		..()
-		light = new /datum/light/point
-		light.set_brightness(1)
-		light.set_color(0.2, 0.7, 0.2)
-		light.attach(src)
-		light.enable()
-
-	process()
-		for(var/mob/living/carbon/human/H in oview(11,src))
-			src.visible_message("<span class='alert'>[src] spots [H], and rapidly speeds off into the trench.</span>")
-			playsound(src.loc, "sound/misc/ancientbot_beep1.ogg", 80, 1)
-			SPAWN_DBG(2 SECONDS)
-				flick("scoutbot_teleport", src)
-				qdel(src)
-
 
 /obj/item/storage/secure/ssafe/polaris
 	name = "captain's lockbox"
@@ -1579,10 +1539,12 @@ var/obj/manta_speed_lever/mantaLever = null
 	registered = "Sgt. Wilkins"
 	assignment = "Sergeant"
 	access = list(access_polariscargo,access_heads)
+	keep_icon = TRUE
 
 /obj/item/card/id/blank_polaris
 	name = "blank Nanotrasen ID"
 	icon_state = "polaris"
+	keep_icon = TRUE
 
 /obj/item/broken_egun
 	name = "broken energy gun"
@@ -1609,6 +1571,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon_state = "pit"
 	fullbright = 0
 	pathable = 0
+	var/spot_to_fall_to = LANDMARK_FALL_POLARIS
 	// this is the code for falling from abyss into ice caves
 	// could maybe use an animation, or better text. perhaps a slide whistle ogg?
 	Entered(atom/A as mob|obj)
@@ -1619,7 +1582,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			if(AM.anchored)
 				return ..()
 
-		var/turf/T = pick_landmark(LANDMARK_FALL_POLARIS)
+		var/turf/T = pick_landmark(spot_to_fall_to)
 		if(T)
 			fall_to(T, A)
 			return
@@ -1628,7 +1591,15 @@ var/obj/manta_speed_lever/mantaLever = null
 	polarispitwall
 		icon_state = "pit_wall"
 
-//******************************************** NSS MANTA SECRET VAULT********************************************
+	marj
+		name = "dank abyss"
+		desc = "The smell rising from it somehow permeates the surrounding water."
+		spot_to_fall_to = LANDMARK_FALL_MARJ
+
+		pitwall
+			icon_state = "pit_wall"
+
+//-------------------------------------------- NSS MANTA SECRET VAULT --------------------------------------------
 
 /obj/vaultdoor
 	name = "vault door"
@@ -1677,5 +1648,3 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/ladder/vaultladder
 	id = "vault"
-
-//RANDOM PROCS//

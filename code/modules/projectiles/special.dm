@@ -52,7 +52,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 /datum/projectile/special/acidspit
 	name = "acid splash"
-	icon_state = "cbbolt"
+	icon_state = "acidspit"
 	power = 0.8
 	dissipation_rate = 20
 	dissipation_delay = 10
@@ -61,6 +61,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	hit_mob_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 	hit_object_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 	shot_sound = null
+
+	on_launch(var/obj/projectile/projectile)
+		projectile.Scale(0.5, 0.5)
 
 	on_hit(atom/hit, direction, var/obj/projectile/projectile)
 		..()
@@ -133,7 +136,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/spread_projectile_type = /datum/projectile/bullet/flak_chunk
 	var/split_type = 0
 	var/pellet_shot_volume = 100
-	nomsg = 1
+	silentshot = 1
 	// 0 = on spawn
 	// 1 = on impact
 
@@ -276,7 +279,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				if (!T.density)
 					sfloors += T
 			var/shocks = rand(min_arcs_per_tick, max_arcs_per_tick)
-			while (shocks > 0 && sfloors.len)
+			while (shocks > 0 && length(sfloors))
 				shocks--
 				var/turf/Q = pick(sfloors)
 				arcFlashTurf(P, Q, wattage)
@@ -289,7 +292,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			if (!T.density)
 				sfloors += T
 		var/arcs = arcs_on_hit
-		while (arcs > 0 && sfloors.len)
+		while (arcs > 0 && length(sfloors))
 			arcs--
 			var/turf/Q = pick(sfloors)
 			arcFlashTurf(A, Q, wattage)
@@ -303,7 +306,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				for (var/mob/M in view(shock_range, P))
 					smobs += M
 				var/shocks = rand(min_arcs_per_tick, max_arcs_per_tick)
-				while (shocks > 0 && smobs.len)
+				while (shocks > 0 && length(smobs))
 					shocks--
 					var/mob/Q = pick(smobs)
 					arcFlash(P, Q, wattage)
@@ -330,7 +333,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_hit(var/atom/A)
 		playsound(A, "sound/effects/ExplosionFirey.ogg", 100, 1)
 		fireflash_sm(get_turf(A), blast_size, temperature)
-
 
 /datum/projectile/special/howitzer
 	name = "plasma howitzer"
@@ -502,6 +504,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/easemult = 0.1
 
 	var/auto_find_targets = 1
+	var/homing_active = 1
 
 	var/desired_x = 0
 	var/desired_y = 0
@@ -547,7 +550,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			.= 1
 
 	tick(var/obj/projectile/P)
-		if (!P)
+		if (!P || !src.homing_active)
 			return
 
 		desired_x = 0
@@ -659,7 +662,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	tick(var/obj/projectile/P)
 		..()
 
-		if (!(P.targets && P.targets.len && P.targets[1]))
+		if (!(P.targets && P.targets.len && P.targets[1] && !(P.targets[1]:disposed)))
 			P.die()
 
 	on_end(var/obj/projectile/P)
@@ -673,6 +676,83 @@ ABSTRACT_TYPE(/datum/projectile/special)
 					dropme.set_loc(get_turf(P))
 					boutput(dropme, __red("Your coffin was lost or destroyed! Oh no!!!"))
 		..()
+
+/datum/projectile/special/homing/magicmissile
+	name = "magic missile"
+	sname = "magic missile"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "magicm"
+	shot_sound = null
+	power = 15
+	cost = 1
+	damage_type = D_KINETIC
+	dissipation_delay = 0
+	dissipation_rate = 0
+	ks_ratio = 1
+	brightness = 2
+	projectile_speed = 1.5
+	is_magical = 1 // It passes right through them, but just for consistency
+	auto_find_targets = 0
+	min_speed = 2
+	max_speed = 2
+	goes_through_walls = 0 // It'll stop homing when it hits something, then go bouncy
+	var/max_bounce_count = 3 // putting the I in ICEE BEEYEM
+	var/weaken_length = 5 SECONDS
+	var/slam_text = "The magic missile SLAMS into you!"
+	var/hit_sound = 'sound/effects/mag_magmisimpact_bounce.ogg'
+	var/cat_sound = 'sound/voice/animal/cat.ogg'
+	var/last_sound_time = 0
+
+	on_pre_hit(var/atom/hit, var/angle, var/obj/projectile/O)
+		if(istype(O) && !(hit in O.hitlist))
+			if(ismob(hit))
+				var/mob/M = hit
+				if(iswizard(M) || M.traitHolder?.hasTrait("training_chaplain"))
+					boutput(M, "The magic missile passes right through you!")
+					. = TRUE
+
+			if(isobj(hit) || (isturf(hit) && !hit.density))
+				. = TRUE
+
+			if(.)
+				O.hitlist += hit
+
+			// Missiles home into their targets until they hit a wall. Then they forget their target and just bounce around
+			else if(length(O.targets) && isturf(hit) && hit?.density)
+				O.targets = list()
+
+	on_hit(atom/A, direction, var/obj/projectile/projectile)
+		. = ..()
+		if(isliving(A)) // pre_hit should filter out any spacemagic people
+			var/mob/living/M = A
+			M.changeStatus("weakened", src.weaken_length)
+			M.force_laydown_standup()
+			boutput(M, text("<span class='notice'>[slam_text]</span>"))
+			playsound(M.loc, 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
+			M.lastattacker = src.master?.shooter
+			M.lastattackertime = TIME
+		else if(projectile.reflectcount < src.max_bounce_count)
+			shoot_reflected_bounce(projectile, A, src.max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)
+			var/turf/T = get_turf(A)
+			if(TIME >= last_sound_time + 1 DECI SECOND)
+				last_sound_time = TIME
+				if(prob(1))
+					playsound(T, src.cat_sound, 60, 1)
+				else
+					playsound(T, src.hit_sound, 60, 1)
+		else
+			playsound(get_turf(A), 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
+
+/datum/projectile/special/homing/magicmissile/weak
+	name = "magic minimissile"
+	sname = "magic minimissile"
+	power = 10
+	projectile_speed = 1
+	min_speed = 2
+	max_speed = 2
+	max_bounce_count = 2 // putting the Y in ICEE BEEYEM
+	weaken_length = 3 SECONDS
+	slam_text = "The magic missile bumps into you!"
 
 /datum/projectile/special/homing/orbiter
 	icon_state = "bloodproj"
@@ -795,10 +875,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/spread_angle = 10
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
-	var/initial_angle_offset_mult = 0
+	var/initial_angle_offset_mult = 0.5
 
 	on_launch(var/obj/projectile/P)
-		angle_adjust_per_pellet = ((spread_angle *3) / pellets_to_fire)
+		angle_adjust_per_pellet = ((spread_angle * 2) / pellets_to_fire)
 		current_angle = (0 - spread_angle) + (angle_adjust_per_pellet * initial_angle_offset_mult)
 		..()
 
@@ -846,16 +926,21 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spawner //shoot stuff
 	name = "dimensional pocket"
 	power = 1
+	dissipation_rate = 0
+	max_range = 10
 	cost = 1
-	shot_sound = 'sound/weapons/rocket.ogg'
+	shot_sound = "sound/weapons/rocket.ogg"
 	icon_state = "bullet"
 	implanted= null
 	casing = null
 	icon_turf_hit = null
 	var/typetospawn = null
 	var/hasspawned = null
+	var/hit_sound = null
 
 	on_hit(atom/hit, direction, projectile)
+		if(src.hit_sound)
+			playsound(hit, src.hit_sound, 50, 1)
 		if(ismob(hit) && typetospawn)
 			hasspawned = 1
 			. = new typetospawn(get_turf(hit))
@@ -944,6 +1029,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spawner/battlecrate
 	name = "Battlecrate"
 	power = 100
+	max_range = 30
 	cost = 0
 	shot_sound = 'sound/weapons/rocket.ogg'
 	icon = 'icons/obj/large_storage.dmi'
@@ -954,3 +1040,112 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_hit(atom/hit, direction, projectile)
 		explosion_new(projectile, get_turf(hit), explosion_power, 1)
 		..()
+
+/datum/projectile/special/shotchem // how do i shot chem
+	name = "chemical bolt"
+	sname = "chembolt"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "extinguish"
+	shot_sound = "sound/effects/spray2.ogg"
+	power = 0
+	cost = 1
+	damage_type = D_SPECIAL
+	shot_delay = 1 DECI SECOND
+	dissipation_rate = 0
+	dissipation_delay = 0
+	ks_ratio = 0
+	hit_ground_chance = 0 // burn right over em
+	max_range = 10
+	silentshot = 1 // Mr. Muggles is hit by the chemical bolt x99999
+	fullauto_valid = 0
+
+
+	/// Releases some of the projectile's gas into the turf
+	proc/emit_gas(turf/T, all_of_it = 0)
+		if(!src.master || !src.master.special_data)
+			return
+		var/datum/gas_mixture/airgas = src.master.special_data["airgas"]
+		T?.assume_air(airgas.remove_ratio(all_of_it ? 1 : src.master.special_data["chem_pct_app_tile"]))
+
+	/// Sprays some of the chems in the projectile onto everything on hit's turf
+	/// Try not to pass it something with an organholder, acid-throwers will disintigrate all their organs
+	proc/emit_chems(atom/hit, obj/projectile/O, angle)
+		if(!O.special_data || !length(O.special_data) || !istype(hit) || !O.reagents)
+			return
+
+		var/turf/T = get_turf(hit)
+		var/datum/reagents/chemR = O.reagents
+		var/chem_amt = chemR.total_volume
+		if(chem_amt <= 0)
+			return
+		/// If there's just a little bit left, use the rest of it
+		var/amt_to_emit = (chem_amt <= 0.1) ? chem_amt : (chemR.maximum_volume * O.special_data["chem_pct_app_tile"])
+
+		var/datum/reagents/copied = new/datum/reagents(amt_to_emit)
+		copied = chemR.copy_to(copied, amt_to_emit/chemR.total_volume, copy_temperature = 1)
+
+		if(!T.reagents) // first get the turf
+			T.create_reagents(100)
+		copied.copy_to(T.reagents, 1, copy_temperature = 1)
+		copied.reaction(T, TOUCH, 0, 0)
+		if(O.special_data["IS_LIT"]) // Heat if needed
+			T.reagents?.set_reagent_temp(O.special_data["burn_temp"], TRUE)
+		for(var/atom/A in T.contents) // then all the stuff in the turf
+			if(istype(A, /obj/overlay) || istype(A, /obj/projectile))
+				continue
+			copied.reaction(A, TOUCH, 0, 0)
+		if(O.special_data["IS_LIT"]) // Reduce the temperature per turf crossed
+			O.special_data["burn_temp"] -= O.special_data["burn_temp"] * O.special_data["temp_pct_loss_atom"]
+			O.special_data["burn_temp"] = max(O.special_data["burn_temp"], T0C)
+		chemR.remove_any(amt_to_emit)
+
+	post_setup(obj/projectile/P)
+		var/list/cross2 = list()
+		for(var/turf/T in P.crossing)
+			cross2[T] = P.crossing[T]
+		P.special_data["projcross"] = cross2
+
+	on_launch(obj/projectile/O)
+		if(length(O.special_data))
+			O.internal_speed = src.projectile_speed * O.special_data["speed_mult"]
+			src.color_icon = O.special_data["proj_color"]
+		O.AddComponent(/datum/component/pierce_non_opaque) // Pierce anything that doesn't block LoS - if you can see it you can burn it
+
+	on_hit(atom/hit, angle, var/obj/projectile/O)
+		var/turf/T = get_turf(hit)
+		var/list/cross2 = O.special_data["projcross"]
+		if(T in cross2)
+			cross2 -= T
+			src.emit_chems(T, O)
+			src.emit_gas(T, 1)
+
+	tick(var/obj/projectile/O)
+		var/list/cross2 = O.special_data["projcross"]
+		for (var/i = 1, i < cross2.len, i++)
+			var/turf/T = cross2[i]
+			if (cross2[T] < O.curr_t)
+				src.emit_chems(T, O)
+				src.emit_gas(T, 0)
+				if(O.reagents?.total_volume < 0.01)
+					O.die()
+				cross2.Cut(1,2)
+				i--
+			else
+				break
+
+	on_pointblank(var/obj/projectile/O, var/mob/target)
+		var/turf/T = get_turf(O)
+		src.emit_chems(target, O)
+		src.emit_gas(T, 1)
+	on_end(var/obj/projectile/O)
+		if(O.reagents?.total_volume < 0.01)
+			return
+		var/turf/T = get_turf(O)
+		src.emit_chems(T, O)
+		src.emit_gas(T, 1)
+	on_max_range_die(obj/projectile/O)
+		if(O.reagents?.total_volume < 0.01)
+			return
+		var/turf/T = get_turf(O)
+		src.emit_chems(T, O)
+		src.emit_gas(T, 1)

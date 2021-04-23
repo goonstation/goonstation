@@ -13,7 +13,7 @@
 	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "IV"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | OPENCONTAINER
 	rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
 	amount_per_transfer_from_this = 5
@@ -82,7 +82,7 @@
 				user.show_text("[src] is already being used by someone else!", "red")
 				return
 			else if (src.patient == H)
-				H.tri_message("<span class='notice'><b>[user]</b> removes [src]'s needle from [H == user ? "[H.gender == "male" ? "his" : "her"]" : "[H]'s"] arm.</span>",\
+				H.tri_message("<span class='notice'><b>[user]</b> removes [src]'s needle from [H == user ? "[his_or_her(H)]" : "[H]'s"] arm.</span>",\
 				user, "<span class='notice'>You remove [src]'s needle from [H == user ? "your" : "[H]'s"] arm.</span>",\
 				H, "<span class='notice'>[H == user ? "You remove" : "<b>[user]</b> removes"] [src]'s needle from your arm.</span>")
 				src.stop_transfusion()
@@ -106,7 +106,7 @@
 					user.show_text("[H] doesn't have anything left to give!", "red")
 					return
 
-			H.tri_message("<span class='notice'><b>[user]</b> begins inserting [src]'s needle into [H == user ? "[H.gender == "male" ? "his" : "her"]" : "[H]'s"] arm.</span>",\
+			H.tri_message("<span class='notice'><b>[user]</b> begins inserting [src]'s needle into [H == user ? "[his_or_her(H)]" : "[H]'s"] arm.</span>",\
 			user, "<span class='notice'>You begin inserting [src]'s needle into [H == user ? "your" : "[H]'s"] arm.</span>",\
 			H, "<span class='notice'>[H == user ? "You begin" : "<b>[user]</b> begins"] inserting [src]'s needle into your arm.</span>")
 			logTheThing("combat", user, H, "tries to hook up an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
@@ -115,12 +115,12 @@
 				if (!do_mob(user, H, 50))
 					user.show_text("You were interrupted!", "red")
 					return
-			else if (!do_after(H, 15))
+			else if (!do_after(H, 1.5 SECONDS))
 				H.show_text("You were interrupted!", "red")
 				return
 
 			src.patient = H
-			H.tri_message("<span class='notice'><b>[user]</b> inserts [src]'s needle into [H == user ? "[H.gender == "male" ? "his" : "her"]" : "[H]'s"] arm.</span>",\
+			H.tri_message("<span class='notice'><b>[user]</b> inserts [src]'s needle into [H == user ? "[his_or_her(H)]" : "[H]'s"] arm.</span>",\
 			user, "<span class='notice'>You insert [src]'s needle into [H == user ? "your" : "[H]'s"] arm.</span>",\
 			H, "<span class='notice'>[H == user ? "You insert" : "<b>[user]</b> inserts"] [src]'s needle into your arm.</span>")
 			logTheThing("combat", user, H, "connects an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
@@ -232,11 +232,10 @@
 			return examine_list.Join("\n")
 
 	proc/update_icon()
-		src.overlays = null
 		if (!src.IV)
 			src.icon_state = "IVstand"
 			src.name = "\improper IV stand"
-			return
+			src.UpdateOverlays(null, "fluid")
 		else
 			src.icon_state = "IVstand1"
 			src.name = "\improper IV stand ([src.IV])"
@@ -246,8 +245,9 @@
 				src.fluid_image.icon_state = "IVstand1-fluid"
 				var/datum/color/average = src.IV.reagents.get_average_color()
 				src.fluid_image.color = average.to_rgba()
-				src.overlays += src.fluid_image
-			return
+				src.UpdateOverlays(src.fluid_image, "fluid")
+			else
+				src.UpdateOverlays(null, "fluid")
 
 	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W))
@@ -287,7 +287,7 @@
 
 	MouseDrop(atom/over_object as mob|obj)
 		var/atom/movable/A = over_object
-		if (usr && !usr.restrained() && !usr.stat && in_range(src, usr) && in_range(over_object, usr) && istype(A))
+		if (usr && !usr.restrained() && !usr.stat && in_interact_range(src, usr) && in_interact_range(over_object, usr) && istype(A))
 			if (src.IV && ishuman(over_object))
 				src.IV.attack(over_object, usr)
 				return

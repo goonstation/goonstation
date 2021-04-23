@@ -45,6 +45,8 @@
 
 // ---- global signals ----
 #define COMSIG_GLOBAL_REBOOT "global_reboot"
+//When a drone dies. Y'know, the critter ones.
+#define COMSIG_GLOBAL_DRONE_DEATH "global_drone_death"
 
 //  ---- datum signals ----
 
@@ -55,12 +57,23 @@
 /// just before a datum's disposing()
 #define COMSIG_PARENT_PRE_DISPOSING "parent_pre_disposing"
 
+// ---- atom signals ----
+
+/// when an atom changes dir (olddir, newdir)
+#define COMSIG_ATOM_DIR_CHANGED "atom_dir_changed"
+/// when an atom is collided by a projectile (/obj/projectile)
+#define COMSIG_ATOM_HITBY_PROJ "atom_hitby_proj"
+/// when an atom is hit by a thrown thing (thrown_atom, /datum/thrown_thing)
+#define COMSIG_ATOM_HITBY_THROWN "atom_hitby_thrown"
 
 // ---- atom/movable signals ----
 
-/// when an AM moves (user, previous_loc, direction)
+/// when an AM moves (thing, previous_loc, direction)
 #define COMSIG_MOVABLE_MOVED "mov_moved"
-
+/// when an AM moves (thing, previous_loc)
+#define COMSIG_MOVABLE_SET_LOC "mov_set_loc"
+/// when an AM ends throw (thing, /datum/thrown_thing)
+#define COMSIG_MOVABLE_THROW_END "mov_throw_end"
 
 // ---- item signals ----
 
@@ -78,10 +91,27 @@
 #define COMSIG_ITEM_CONSUMED_PRE "itm_atk_consumed_pre"
 /// When an item is eaten
 #define COMSIG_ITEM_CONSUMED "itm_atk_consumed"
+/// After an item's been eaten, but there's still some left
+#define COMSIG_ITEM_CONSUMED_PARTIAL "itm_atk_consumed_partial"
+/// After we've consumed an item
+#define COMSIG_ITEM_CONSUMED_ALL "itm_atk_consumed_all"
 /// When an item is used to attack a mob before it actually hurts the mob
 #define COMSIG_ITEM_ATTACK_PRE "itm_atk_pre"
 /// When an item is used in-hand
 #define COMSIG_ITEM_ATTACK_SELF "itm_atk_self"
+/// When an item is swapped to [does not include being picked up/taken out of bags/etc] (user)
+#define COMSIG_ITEM_SWAP_TO "itm_swap_to"
+/// When an item is swapped away from [does not include being picked up/taken out of bags/etc] (user)
+#define COMSIG_ITEM_SWAP_AWAY "itm_swap_away"
+/// After an item's itemspecial is used (user)
+#define COMSIG_ITEM_SPECIAL_POST "itm_special_post"
+
+
+// ---- implant signals ----
+/// When implanted
+#define COMSIG_IMPLANT_IMPLANTED "implant_implanted"
+/// When removed
+#define COMSIG_IMPLANT_REMOVED "implant_removed"
 
 // ---- tooltip signals ----
 
@@ -98,11 +128,9 @@
 #define COMSIG_UNARMED_BLOCK_BEGIN "unarmed_block_begin"
 /// When an item block is created
 #define COMSIG_UNARMED_BLOCK_END "unarmed_block_end"
-
+/// When a block blocks damage at all
+#define COMSIG_BLOCK_BLOCKED "blockblock"
 // ---- human signals ----
-
-/// When a human Life tick occurs
-#define COMSIG_HUMAN_LIFE_TICK "human_life_tick"
 
 // ---- mob signals ----
 
@@ -115,11 +143,13 @@
 
 #define COMSIG_MOB_DROPPED "mob_drop"
 
-#define COMSIG_MOB_CLICK "mob_click"
-
+/// sent when radiation status ticks on mob (stage)
+#define COMSIG_MOB_GEIGER_TICK "mob_geiger"
+/// on mouseup
+#define COMSIG_MOUSEUP "mouseup"
 // ---- mob/living signals ----
-
-#define COMSIG_LIVING_SPRINT_START "living_sprint_start"
+/// When a Life tick occurs
+#define COMSIG_LIVING_LIFE_TICK "human_life_tick"
 
 // ---- attack_X signals ----
 
@@ -182,12 +212,7 @@
 // When an obj/critter dies
 #define COMSIG_OBJ_CRITTER_DEATH "obj_critter_death"
 
-/// general return values //
-// it is a mystery
-
-/// ---- signal specific return values ----
-
-// COMSIG_LIVING_SPRINT_START
-#define RETURN_SPRINT_OVERRIDDEN 0x001000
-// COMSIG_MOB_CLICK
-#define RETURN_CANCEL_CLICK 0x001000
+// ---- fullauto UI thingy signals ----
+#define COMSIG_FULLAUTO_MOUSEDOWN "fullauto_mousedown"
+#define COMSIG_FULLAUTO_MOUSEDRAG "fullauto_mousedrag"
+#define COMSIG_GUN_PROJECTILE_CHANGED "gun_proj_changed"

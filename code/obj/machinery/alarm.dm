@@ -99,7 +99,7 @@
 
 	var/tgmoles = 0
 	if(length(environment.trace_gases))
-		for(var/datum/gas/trace_gas in environment.trace_gases)
+		for(var/datum/gas/trace_gas as anything in environment.trace_gases)
 			tgmoles += trace_gas.moles
 
 	if(tgmoles > 1)
@@ -119,9 +119,6 @@
 	return
 
 /obj/machinery/alarm/proc/post_alert(alert_level)
-
-	LAGCHECK(LAG_LOW)
-
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(alarm_frequency)
 
 	if(!frequency) return
@@ -255,7 +252,7 @@
 
 		var/tgmoles = 0
 		if(length(environment.trace_gases))
-			for(var/datum/gas/trace_gas in environment.trace_gases)
+			for(var/datum/gas/trace_gas as anything in environment.trace_gases)
 				tgmoles += trace_gas.moles
 
 		if(tgmoles > 1)

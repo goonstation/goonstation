@@ -50,8 +50,17 @@ mob/new_player
 		src.set_loc(pick_landmark(LANDMARK_NEW_PLAYER, locate(1,1,1)))
 		src.sight |= SEE_TURFS
 
+
+		// byond members get a special join message :]
+		if (src.client?.IsByondMember())
+			var/list/msgs_which_are_gifs = list(8, 9, 10) //not all of these are normal jpgs
+			var/num = rand(1,16)
+			var/resource = resource("images/member_msgs/byond_member_msg_[num].[(msgs_which_are_gifs.Find(num)) ? "gif" : "jpg"]")
+			boutput(src, "<img src='[resource]' style='margin: auto; display: block; max-width: 100%;'>")
+
+
 		if (src.ckey && !adminspawned)
-			if (spawned_in_keys.Find("[src.ckey]"))
+			if ("[src.ckey]" in spawned_in_keys)
 				if (!(client && client.holder) && !abandon_allowed)
 					 //They have already been alive this round!!
 					var/mob/dead/observer/observer = new()
@@ -67,7 +76,7 @@ mob/new_player
 						observer.set_loc(locate(1, 1, 1))
 					observer.key = key
 
-					if (client && client.preferences)
+					if (client?.preferences)
 						if (client.preferences.be_random_name)
 							client.preferences.randomize_name()
 
@@ -121,7 +130,7 @@ mob/new_player
 			winset(src, "joinmenu.button_cancel", "is-disabled=true;is-visible=false")
 		if(client)
 			winshow(src, "joinmenu", 1)
-		if(client && client.antag_tokens > 0 && (!ticker || current_state <= GAME_STATE_PREGAME))
+		if(client?.antag_tokens > 0 && (!ticker || current_state <= GAME_STATE_PREGAME))
 			winset(src, "joinmenu.button_ready_antag", "is-disabled=false;is-visible=true")
 			winset(src, "joinmenu", "size=240x256")
 			winset(src, "joinmenu.observe", "pos=18,192")
@@ -230,7 +239,7 @@ mob/new_player
 				boutput(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 				return
 
-			if (ticker && ticker.mode)
+			if (ticker?.mode)
 				var/mob/living/silicon/S = locate(href_list["SelectedJob"]) in mobs
 				if (S)
 					var/obj/item/organ/brain/latejoin/latejoin = IsSiliconAvailableForLateJoin(S)
@@ -267,8 +276,10 @@ mob/new_player
 			return 0
 		if (!JOB.no_jobban_from_this_job && jobban_isbanned(src,JOB.name))
 			return 0
+		if (JOB.requires_supervisor_job && countJob(JOB.requires_supervisor_job) <= 0)
+			return 0
 		if (JOB.requires_whitelist)
-			if (!NT.Find(src.ckey))
+			if (!(src.ckey in NT))
 				return 0
 		if (JOB.needs_college && !src.has_medal("Unlike the director, I went to college"))
 			return 0
@@ -318,7 +329,7 @@ mob/new_player
 			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner) || istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/mail_order))
 				// Location is set in bank_purchaseable Create()
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived through an alternative mode of travel! Good luck!</h3>")
-			else if (map_settings && map_settings.arrivals_type == MAP_SPAWN_CRYO)
+			else if (map_settings?.arrivals_type == MAP_SPAWN_CRYO)
 				var/obj/cryotron/starting_loc = null
 				if (ishuman(character) && by_type[/obj/cryotron])
 					starting_loc = pick(by_type[/obj/cryotron])
@@ -328,7 +339,7 @@ mob/new_player
 				else
 					starting_loc = pick_landmark(LANDMARK_LATEJOIN, locate(1, 1, 1))
 					character.set_loc(starting_loc)
-			else if (map_settings && map_settings.arrivals_type == MAP_SPAWN_MISSILE)
+			else if (map_settings?.arrivals_type == MAP_SPAWN_MISSILE)
 				var/obj/arrival_missile/M = unpool(/obj/arrival_missile)
 				var/turf/T = pick_landmark(LANDMARK_LATEJOIN_MISSILE)
 				var/missile_dir = landmarks[LANDMARK_LATEJOIN_MISSILE][T]
@@ -358,11 +369,9 @@ mob/new_player
 
 			var/miscreant = 0
 #ifdef MISCREANTS
-#ifndef RP_MODE
 			if (ticker && character.mind && !character.client.using_antag_token && JOB.allow_traitors != 0 && prob(10))
 				ticker.generate_miscreant_objectives(character.mind)
 				miscreant = 1
-#endif
 #endif
 
 #ifdef CREW_OBJECTIVES
@@ -385,7 +394,7 @@ mob/new_player
 				//if they have a ckey, joined before a certain threshold and the shuttle wasnt already on its way
 				if (character.mind.ckey && (ticker.round_elapsed_ticks <= MAX_PARTICIPATE_TIME) && !emergency_shuttle.online)
 					participationRecorder.record(character.mind.ckey)
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				qdel(src)
 
 		else
@@ -609,17 +618,20 @@ a.latejoin-card:hover {
 
 		var/mob/new_character = null
 		if (J)
-			new_character = new J.mob_type(src.loc)
+			new_character = new J.mob_type(src.loc, client.preferences.AH)
 		else
-			new_character = new /mob/living/carbon/human(src.loc) // fallback
+			new_character = new /mob/living/carbon/human(src.loc, client.preferences.AH) // fallback
 
 		close_spawn_windows()
 
 		client.preferences.copy_to(new_character,src)
+		if(ishuman(new_character))
+			var/mob/living/carbon/human/H = new_character
+			H.update_colorful_parts()
 		var/client/C = client
 		mind.transfer_to(new_character)
 
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/assday))
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/assday))
 			var/bad_type = "traitor"
 			makebad(new_character, bad_type)
 			new_character.mind.late_special_role = 1
@@ -639,7 +651,7 @@ a.latejoin-card:hover {
 							break
 
 					var/bad_type = null
-					if (islist(ticker.mode.latejoin_antag_roles) && ticker.mode.latejoin_antag_roles.len)
+					if (islist(ticker.mode.latejoin_antag_roles) && length(ticker.mode.latejoin_antag_roles))
 						bad_type = pick(ticker.mode.latejoin_antag_roles)
 					else
 						bad_type = "traitor"
@@ -653,14 +665,10 @@ a.latejoin-card:hover {
 
 
 
-		if(new_character && new_character.client)
+		if(new_character?.client)
 			new_character.client.loadResources()
 
-#if ASS_JAM
-			if(ass_mutation)
-				new_character.bioHolder.AddEffect(ass_mutation)
-				boutput(new_character.mind.current,"<span class='alert'>A radiation anomaly is currently affecting [the_station_name] and everyone - including you - is afflicted with a certain mutation.</h3>")
-#endif
+
 
 		new_character.temporary_attack_alert(1200) //Messages admins if this new character attacks someone within 2 minutes of signing up. Might help detect grief, who knows?
 		new_character.temporary_suicide_alert(1500) //Messages admins if this new character commits suicide within 2 1/2 minutes. probably a bit much but whatever
@@ -762,7 +770,7 @@ a.latejoin-card:hover {
 		if(!(!ticker || current_state <= GAME_STATE_PREGAME))
 			src.show_text("Round has already started. You can't redeem tokens now. (You have [src.client.antag_tokens].)", "red")
 		else if(src.client.antag_tokens > 0)
-			if(master_mode in list("secret","traitor","nuclear","blob","wizard","changeling","mixed","mixed_rp","vampire"))
+			if(master_mode in list("secret","traitor","nuclear","blob","wizard","changeling","mixed","mixed_rp","vampire","intrigue"))
 				src.client.using_antag_token = 1
 			src.show_text("Token redeemed, if mode supports redemption your new total will be [src.client.antag_tokens - 1].", "red")
 		else
@@ -849,7 +857,7 @@ a.latejoin-card:hover {
 			src.mind.joined_observer=1
 			src.mind.transfer_to(observer)
 			observer.real_name = observer.name
-			if(observer && observer.client)
+			if(observer?.client)
 				observer.client.loadResources()
 
 			qdel(src)

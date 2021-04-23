@@ -3,13 +3,13 @@
 
 /* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 
-/mob/proc/make_vampire(var/shitty = 0)
+/mob/proc/make_vampire(shitty = FALSE, nonantag = FALSE)
+	var/datum/abilityHolder/vampire/vampholder = src.get_ability_holder(/datum/abilityHolder/vampire)
+	if (vampholder && istype(vampholder))
+		return
+
 	if (ishuman(src) || ismobcritter(src))
 		if (ishuman(src))
-			var/datum/abilityHolder/vampire/A = src.get_ability_holder(/datum/abilityHolder/vampire)
-			if (A && istype(A))
-				return
-
 			var/datum/abilityHolder/vampire/V = src.add_ability_holder(/datum/abilityHolder/vampire)
 
 			if(shitty) // Infernal vampire.
@@ -22,7 +22,7 @@
 				V.addAbility(/datum/targetable/vampire/glare)
 				V.addAbility(/datum/targetable/vampire/hypnotize)
 
-			SPAWN_DBG (25) // Don't remove.
+			SPAWN_DBG(2.5 SECONDS) // Don't remove.
 				if (src) src.assign_gimmick_skull()
 
 		else if (ismobcritter(src)) // For testing. Just give them all abilities that are compatible.
@@ -50,6 +50,9 @@
 				boutput(src, "<span class='notice'>Oh shit, your fangs just broke off! Looks like you'll have to get blood the HARD way.</span>")
 
 			SHOW_VAMPIRE_TIPS(src)
+
+		if(shitty || nonantag)
+			boutput(src, "<span class='alert'><h2>You've been turned into a vampire!</h2> Your vampireness was achieved by in-game means, you are <i>not</i> an antagonist unless you already were one.</span>")
 
 	else return
 
@@ -146,7 +149,7 @@
 
 ////////////////////////////////////////////////// Ability holder /////////////////////////////////////////////
 
-/obj/screen/ability/topBar/vampire
+/atom/movable/screen/ability/topBar/vampire
 	clicked(params)
 		var/datum/targetable/vampire/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
@@ -213,7 +216,8 @@
 	var/list/ghouls = list()
 	var/turf/coffin_turf = 0
 
-	var/traveling_to_coffin = 0 //shitty projectile hacky fix
+	//contains the reference to the coffin if we're currently travelling to it, otherwise null
+	var/obj/storage/closet/coffin/vampire/the_coffin = null
 	//theres a bug where projectiles get unpooled and moved elsewhere before theyre done with their currnent firing
 	//badly affects 'travel' projectile. band aid.
 
@@ -226,11 +230,11 @@
 
 	onLife(var/mult = 1)
 		..()
-		if (traveling_to_coffin && isturf(owner.loc) && istype(traveling_to_coffin,/obj/storage/closet/coffin))
-			owner.set_loc(traveling_to_coffin)
+		if (!(the_coffin?.disposed) && isturf(owner.loc) && istype(the_coffin,/obj/storage/closet/coffin))
+			owner.set_loc(the_coffin)
 
 		if (istype(owner.loc,/obj/storage/closet/coffin))
-			traveling_to_coffin = 0
+			the_coffin = null
 			if (isdead(owner))
 				owner.full_heal()
 			else
@@ -239,7 +243,7 @@
 	set_loc_callback(newloc)
 		if (istype(newloc,/obj/storage/closet/coffin))
 			//var/obj/storage/closet/coffin/C = newloc
-			traveling_to_coffin = 0
+			the_coffin = null
 
 	proc/blood_tracking_output(var/deduct = 0)
 		if (!src.owner || !ismob(src.owner))
@@ -277,6 +281,7 @@
 			src.last_power = 2
 
 			src.has_thermal = 1
+			APPLY_MOB_PROPERTY(src.owner, PROP_THERMALSIGHT_MK2, src)
 			boutput(src.owner, __blue("<h3>Your vampiric vision has improved (thermal)!</h3>"))
 
 			src.addAbility(/datum/targetable/vampire/mark_coffin)
@@ -435,7 +440,7 @@
 	var/unlock_message = null
 
 	New()
-		var/obj/screen/ability/topBar/vampire/B = new /obj/screen/ability/topBar/vampire(null)
+		var/atom/movable/screen/ability/topBar/vampire/B = new /atom/movable/screen/ability/topBar/vampire(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -453,7 +458,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/vampire()
+			src.object = new /atom/movable/screen/ability/topBar/vampire()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)

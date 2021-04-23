@@ -8,6 +8,7 @@
 	density = 1
 	layer = FLOOR_EQUIP_LAYER1
 	mats = 20
+	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	var/atom/output_location = null
@@ -87,6 +88,10 @@
 			S.satchel_updateicon()
 			return
 
+		if (W.cant_drop) //For borg held items
+			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
+			return ..()
+
 		if(W.material)
 			boutput(user, "<span class='notice'>You put \the [W] into \the [src].</span>")
 			user.u_equip(W)
@@ -161,7 +166,7 @@
 		return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || isAI(user))
+		if (get_dist(user, src) > 1 || get_dist(user, O) > 1 || is_incapacitated(user) || isAI(user))
 			return
 
 		if (istype(O, /obj/storage/crate/) || istype(O, /obj/storage/cart/))
@@ -358,6 +363,7 @@
 						addMaterial(piece, usr)
 					else
 						piece.set_loc(get_turf(src))
+					RE?.apply_to_obj(piece)
 					first_part = null
 					second_part = null
 					boutput(usr, "<span class='notice'>You make [amt] [piece].</span>")
@@ -653,7 +659,7 @@
 	name = "Material analyzer"
 	desc = "This piece of equipment can detect and analyze materials."
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(get_dist(src, target) <= world.view)
@@ -683,7 +689,7 @@
 	icon_state = "shovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shovel"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	flags = ONBELT
 	force = 7 // 15 puts it significantly above most other weapons
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'

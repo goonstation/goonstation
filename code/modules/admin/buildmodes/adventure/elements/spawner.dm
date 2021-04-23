@@ -23,9 +23,9 @@
 		boutput(usr, "<span class='notice'>NOTE: Set critter data BEFORE placing the spawn locations!</span>")
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/turf/T = get_turf(object)
-			if (pa.Find("ctrl"))
+			if ("ctrl" in pa)
 				finished = 1
 				return
 			if (T)
@@ -37,7 +37,7 @@
 				spawnloc.is_on = initial_state
 				for (var/vname in cvars)
 					spawnloc.critter_vars[vname] = cvars[vname]
-		else if (pa.Find("right"))
+		else if ("right" in pa)
 			var/vname = input("Which variable?", "Which variable?", "health") in list("aggressive", "atkcarbon", "atksilicon", "health", "opensdoors", "wanderer")
 			var/vvalue = input("Set [vname] to ", "Setting variable", 0) as num
 			if (!(vname in cvars))
@@ -136,7 +136,7 @@
 		F["[path].spawn_delay"] << spawn_delay
 		F["[path].spawn_count"] << spawn_count
 
-		F["[path].critter_vars.COUNT"] << critter_vars.len
+		F["[path].critter_vars.COUNT"] << length(critter_vars)
 		for (var/i = 1, i <= critter_vars.len, i++)
 			var/varname = critter_vars[i]
 			var/varvalue = critter_vars[varname]

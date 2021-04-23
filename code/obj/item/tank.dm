@@ -18,6 +18,7 @@ Contains:
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
+	var/compatible_with_TTV = 1
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | TGUI_INTERACTIVE
 
 	pressure_resistance = ONE_ATMOSPHERE*5
@@ -194,7 +195,7 @@ Contains:
 			var/obj/item/icon = src
 			. = list()
 			icon = src.loc
-			if (!in_range(src, usr))
+			if (!in_interact_range(src, usr))
 				if (icon == src)
 					. += "<span class='notice'>It's a [bicon(icon)]! If you want any more information you'll need to get closer.</span>"
 				return
@@ -233,18 +234,22 @@ Contains:
 		ui = new(user, src, "GasTank", name)
 		ui.open()
 
-/obj/item/tank/ui_data(mob/user)
-	var/list/data = list()
-	data["pressure"] = MIXTURE_PRESSURE(air_contents)
-	data["maxPressure"] = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE
-	data["valveIsOpen"] = using_internal()
-	data["releasePressure"] = distribute_pressure
-	data["maxRelease"] = TANK_MAX_RELEASE_PRESSURE
+/obj/item/tank/ui_static_data(mob/user)
+	. = list(
+		"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
+		"maxRelease" = TANK_MAX_RELEASE_PRESSURE
+	)
 
-	return data
+/obj/item/tank/ui_data(mob/user)
+	. = list(
+		"pressure" = MIXTURE_PRESSURE(air_contents),
+		"valveIsOpen" = using_internal(),
+		"releasePressure" = distribute_pressure,
+	)
 
 /obj/item/tank/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 	switch(action)
 		if("toggle-valve")
@@ -277,11 +282,8 @@ Contains:
 	New()
 		..()
 		src.air_contents.oxygen = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
-		var/datum/gas/sleeping_agent/trace_gas = new()
+		var/datum/gas/sleeping_agent/trace_gas = src.air_contents.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
 		trace_gas.moles = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
-		if(!src.air_contents.trace_gases)
-			src.air_contents.trace_gases = list()
-		src.air_contents.trace_gases += trace_gas
 		return
 
 ////////////////////////////////////////////////////////////
@@ -292,7 +294,7 @@ Contains:
 	icon_state = "jetpack_mag0"
 	uses_multiple_icon_states = 1
 	var/on = 0.0
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	item_state = "jetpack_mag"
 	mats = 16
 	force = 8
@@ -350,13 +352,14 @@ Contains:
 	icon_state = "jetpack0"
 	uses_multiple_icon_states = 1
 	var/on = 0.0
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	item_state = "jetpack"
 	mats = 16
 	force = 8
 	desc = "A jetpack that can be toggled on, letting the user use the gas inside as a propellant. Can also be hooked up to a compatible mask to allow you to breathe the gas inside. This is labelled to contain oxygen."
 	module_research = list("atmospherics" = 4)
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
+	compatible_with_TTV = 0
 
 	New()
 		..()
@@ -419,7 +422,7 @@ Contains:
 	name = "emergency oxygentank"
 	icon_state = "em_oxtank"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	force = 3.0
 	stamina_damage = 30
 	stamina_cost = 16
@@ -459,6 +462,7 @@ Contains:
 /obj/item/tank/plasma
 	name = "Gas Tank (BIOHAZARD)"
 	icon_state = "plasma"
+	item_state = "plasma"
 	desc = "This is a tank that can be hooked up to a compatible recepticle. When a mask is worn and the release valve on the tank is open, the user will breathe the gas inside the tank. This is labelled to contain deadly plasma."
 	module_research = list("atmospherics" = 2)
 
@@ -597,7 +601,7 @@ Contains:
 	name = "Super Soaker"
 	icon_state = "jetpack0"
 	var/on = 0.0
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	item_state = "jetpack"*/
 
 
@@ -606,7 +610,7 @@ Contains:
 	icon_state = "jetpack_mk2_0"
 	uses_multiple_icon_states = 1
 	on = 0.0
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	item_state = "jetpack_mk2_0"
 	mats = 16
 	force = 8

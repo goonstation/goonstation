@@ -6,7 +6,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "mainboard"
 	item_state = "electronic"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/created_name = null //If defined, result computer will have this name.
 	var/integrated_floppy = 1 //Does the resulting computer have a built-in disk drive?
 	mats = 8
@@ -72,13 +72,13 @@
 		if(0)
 			if (iswrenchingtool(P))
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 2 SECONDS))
 					boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
 					src.anchored = 1
 					src.state = 1
 			if(isweldingtool(P))
 				playsound(src.loc, "sound/items/Welder.ogg", 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 2 SECONDS))
 					boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
 					var/obj/item/sheet/A = new /obj/item/sheet( src.loc )
 					if(src.material)
@@ -91,7 +91,7 @@
 		if(1)
 			if (iswrenchingtool(P))
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-				if(do_after(user, 20))
+				if(do_after(user, 2 SECONDS))
 					boutput(user, "<span class='notice'>You unfasten the frame.</span>")
 					src.anchored = 0
 					src.state = 0
@@ -133,7 +133,7 @@
 				else
 					boutput(user, "<span class='alert'>There is no more room for peripheral cards.</span>")
 
-			if (ispryingtool(P) && src.peripherals.len)
+			if (ispryingtool(P) && length(src.peripherals))
 				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
 				boutput(user, "<span class='notice'>You remove the peripheral boards.</span>")
 				for(var/obj/item/peripheral/W in src.peripherals)
@@ -141,14 +141,11 @@
 					src.peripherals.Remove(W)
 					W.uninstalled()
 
-			if (istype(P, /obj/item/cable_coil))
-				if(P:amount >= 5)
+			var/obj/item/cable_coil/C = P
+			if (istype(C))
+				if (C.amount >= 5)
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-					if(do_after(user, 20))
-						if (!P) //Wire: Fix for Cannot read null.amount
-							return
-						P:amount -= 5
-						if(!P:amount) qdel(P)
+					if (do_after(user, 2 SECONDS) && C?.use(5))
 						boutput(user, "<span class='notice'>You add cables to the frame.</span>")
 						src.state = 3
 						src.icon_state = "3"
@@ -181,10 +178,7 @@
 				if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
 					if (S.amount >= src.glass_needed)
 						playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-						if(do_after(user, 20) && S)
-							S.amount -= src.glass_needed
-							if(S.amount < 1)
-								qdel(S)
+						if(do_after(user, 2 SECONDS) && S?.change_stack_amount(-src.glass_needed))
 							boutput(user, "<span class='notice'>You put in the glass panel.</span>")
 							src.state = 4
 							src.icon_state = "4"

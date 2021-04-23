@@ -1,6 +1,8 @@
 
 /datum/lifeprocess/breath
 	var/breathtimer = 0
+	var/breathtimerstage = 0
+	var/breathtimernotifredundant = 0
 	var/breathstate = 0
 
 	//consider these temporary...hopefully
@@ -22,26 +24,42 @@
 
 		//special (read: stupid) manual breathing stuff. weird numbers are so that messages don't pop up at the same time as manual blinking ones every time
 		if (manualbreathing && human_owner)
-			breathtimer++
+			breathtimer += get_multiplier()
+
 			switch(breathtimer)
 				if (0 to 15)
 					breathe(environment)
-				if (34)
-					boutput(owner, "<span class='alert'>You need to breathe!</span>")
-				if (35 to 51)
+					breathtimerstage = 0
+					breathtimernotifredundant = 0
+				if (15 to 34)
+					// this statement is intentionally left blank
+				if (34 to 51)
 					if (prob(5)) owner.emote("gasp")
-				if (52)
-					boutput(owner, "<span class='alert'>Your lungs start to hurt. You really need to breathe!</span>")
-				if (53 to 61)
+					if (!breathtimernotifredundant)
+						breathtimerstage = 1
+				if (52 to 61)
 					update_oxy(1)
 					owner.take_oxygen_deprivation(breathtimer/12)
-				if (62)
-					update_oxy(1)
-					boutput(owner, "<span class='alert'>Your lungs are burning and the need to take a breath is almost unbearable!</span>")
-					owner.take_oxygen_deprivation(10)
-				if (63 to INFINITY)
+					if (breathtimernotifredundant < 2)
+						breathtimerstage = 2
+				if (62 to INFINITY)
 					update_oxy(1)
 					owner.take_oxygen_deprivation(breathtimer/6)
+					if (breathtimernotifredundant < 3)
+						breathtimerstage = 3
+			switch(breathtimerstage)
+				if (0)
+					// this statement is intentionally left blank
+				if (1)
+					boutput(owner, "<span class='alert'>You need to breathe!</span>")
+					breathtimernotifredundant = 1
+				if (2)
+					boutput(owner, "<span class='alert'>Your lungs start to hurt. You really need to breathe!</span>")
+					breathtimernotifredundant = 2
+				if (3)
+					boutput(owner, "<span class='alert'>Your lungs are burning and the need to take a breath is almost unbearable!</span>")
+					breathtimernotifredundant = 3
+			breathtimerstage = 0
 		else // plain old automatic breathing
 			breathe(environment)
 
@@ -61,7 +79,7 @@
 			else if (T.active_liquid)
 				var/obj/fluid/F = T.active_liquid
 
-				var/depth_to_breathe_from = depth_levels.len
+				var/depth_to_breathe_from = length(depth_levels)
 				if (owner.lying)
 					depth_to_breathe_from = depth_levels.len-1
 
@@ -107,6 +125,8 @@
 		if (underwater)
 			if (human_owner?.mutantrace && human_owner?.mutantrace.aquatic)
 				return
+			if(human_owner?.hasStatus("aquabreath"))
+				return
 			if (prob(25) && owner.losebreath > 0)
 				boutput(owner, "<span class='alert'>You are drowning!</span>")
 
@@ -116,7 +136,7 @@
 		if (breathtimer > 15)
 			owner.losebreath += (0.7 * mult)
 
-		if (owner.grabbed_by && owner.grabbed_by.len)
+		if (owner.grabbed_by && length(owner.grabbed_by))
 			breath = get_breath_grabbed_by(BREATH_VOLUME)
 
 		if (!breath)
@@ -160,15 +180,15 @@
 
 
 	proc/get_breath_grabbed_by(volume_needed)
-		.= null
+		. = null
 		for(var/obj/item/grab/force_mask/G in owner.grabbed_by)
-			.= G.get_breath(volume_needed)
+			. = G.get_breath(volume_needed)
 			if (.)
 				break
 
 	proc/get_breath_from_internal(volume_needed)
 		if (human_owner?.internal)
-			if (!owner.contents.Find(human_owner.internal))
+			if (!(human_owner.internal in owner.contents))
 				human_owner?.internal = null
 			if (!human_owner?.wear_mask || !(human_owner?.wear_mask.c_flags & MASKINTERNALS) )
 				human_owner?.internal = null
@@ -187,7 +207,7 @@
 	proc/handle_breath(datum/gas_mixture/breath, var/atom/underwater = 0, var/mult = 1) //'underwater' really applies for any reagent that gets deep enough. but what ever
 		if (owner.nodamage) return
 		var/area/A = get_area(owner)
-		if( A && A.sanctuary )
+		if( A?.sanctuary )
 			return
 		// Looks like we're in space
 		// or with recent atmos changes, in a room that's had a hole in it for any amount of time, so now we check src.loc
@@ -272,7 +292,7 @@
 				owner.take_oxygen_deprivation(1.8 * mult) // Lets hurt em a little, let them know we mean business
 				if (world.time - owner.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 					owner.take_oxygen_deprivation(7 * mult)
-			if (prob(20)) // Lets give them some chance to know somethings not right though I guess.
+			if (prob(percentmult(20, mult))) // Lets give them some chance to know somethings not right though I guess.
 				owner.emote("cough")
 		else
 			owner.co2overloadtime = 0
@@ -285,14 +305,15 @@
 			update_toxy(0)
 
 		if (length(breath.trace_gases))	// If there's some other shit in the air lets deal with it here.
-			for (var/datum/gas/sleeping_agent/SA in breath.trace_gases)
+			var/datum/gas/sleeping_agent/SA = breath.get_trace_gas_by_type(/datum/gas/sleeping_agent)
+			if(SA)
 				var/SA_pp = (SA.moles/TOTAL_MOLES(breath))*breath_pressure
 				if (SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 					owner.changeStatus("paralysis", 5 SECONDS)
 					if (SA_pp > SA_sleep_min) // Enough to make us sleep as well
 						owner.sleeping = max(owner.sleeping, 2)
 				else if (SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-					if (prob(20))
+					if (prob(percentmult(20, mult)))
 						owner.emote(pick("giggle", "laugh"))
 
 		var/FARD_pp = (breath.farts/TOTAL_MOLES(breath))*breath_pressure
@@ -311,10 +332,11 @@
 
 			//cyber lungs beat radiation. Is there anything they can't do?
 			if (!has_cyberlungs)
-				for (var/datum/gas/rad_particles/RV in breath.trace_gases)
+				var/datum/gas/rad_particles/RV = breath.get_trace_gas_by_type(/datum/gas/rad_particles)
+				if (RV)
 					owner.changeStatus("radiation", RV.moles, 2 SECONDS)
 
-		if (human_owner)
+		if (human_owner?.organHolder)
 			if (breath.temperature > min(human_owner.organHolder.left_lung ? human_owner.organHolder.left_lung.temp_tolerance : INFINITY, human_owner.organHolder.right_lung ? human_owner.organHolder.right_lung.temp_tolerance : INFINITY) && !human_owner.is_heat_resistant()) // Hot air hurts :(
 				//checks the temperature threshold for each lung, ignoring missing ones. the case of having no lungs is handled in handle_breath.
 				var/lung_burn_left = min(max(breath.temperature - human_owner.organHolder.left_lung?.temp_tolerance, 0) / 3, 10)

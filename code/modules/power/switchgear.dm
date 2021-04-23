@@ -62,11 +62,10 @@
 
 /obj/machinery/power/switchgear/proc/interacted(mob/user)
 
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
-		if (!issilicon(user))
-			src.remove_dialog(user)
-			user.Browse(null, "window=switchgear")
-			return
+	if ( (!in_interact_range(src, user)) || (status & (BROKEN|NOPOWER)) )
+		src.remove_dialog(user)
+		user.Browse(null, "window=switchgear")
+		return
 
 
 	src.add_dialog(user)

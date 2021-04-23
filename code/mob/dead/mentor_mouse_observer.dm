@@ -7,6 +7,8 @@
 	var/mob/living/critter/small_animal/mouse/weak/mentor/my_mouse
 	var/is_admin = 0
 
+	var/leave_popup_open = FALSE
+
 	New(atom/L, is_admin)
 		..()
 		src.is_admin = is_admin
@@ -23,8 +25,11 @@
 		src.ping.plane = PLANE_HUD
 
 	process_move(keys)
-		if(alert(src, "Are you sure you want to leave?", "Hop out of the pocket", "Yes", "No") == "Yes")
-			..()
+		if(keys && src.move_dir && !src.leave_popup_open)
+			src.leave_popup_open = TRUE
+			if(alert(src, "Are you sure you want to leave?", "Hop out of the pocket", "Yes", "No") == "Yes")
+				src.stop_observing()
+			src.leave_popup_open = FALSE
 
 	click(atom/target, params) // TODO spam delay
 		if (!islist(params))
@@ -60,6 +65,11 @@
 			sleep(0.3 SECOND)
 			if(my_id == src.ping_id)
 				src.ping.loc = null
+
+	examine_verb(atom/A)
+		. = ..()
+		if(istype(A, /obj/machinery/computer3))
+			A.attack_hand(src)
 
 	say_understands(var/other)
 		return 1
@@ -121,8 +131,7 @@
 			src.removeOverlaysClient(src.client)
 		if(src.my_mouse)
 			src.my_mouse.set_loc(get_turf(src))
-			if(src.mind)
-				src.mind.transfer_to(src.my_mouse)
+			src.mind?.transfer_to(src.my_mouse)
 			if(!get_turf(src))
 				src.my_mouse.gib()
 		src.the_guy = null
@@ -132,8 +141,7 @@
 	proc/boot()
 		if(!src.my_mouse)
 			src.my_mouse = new
-		if(src.target)
-			src.target.visible_message("\The [src.my_mouse] jumps out of [src.target]'s pocket.")
+		src.target?.visible_message("\The [src.my_mouse] jumps out of [src.target]'s pocket.")
 		if(src.client)
 			src.removeOverlaysClient(src.client)
 		src.my_mouse.set_loc(get_turf(src))

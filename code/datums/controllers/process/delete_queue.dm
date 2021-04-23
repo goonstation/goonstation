@@ -174,7 +174,7 @@ datum/controller/process/delete_queue
 
 	tickDetail()
 		#ifdef DELETE_QUEUE_DEBUG
-		if (detailed_delete_count && detailed_delete_count.len)
+		if (length(detailed_delete_count))
 			var/stats = "<b>Delete Stats:</b><br>"
 			var/count
 			for (var/thing in detailed_delete_count)

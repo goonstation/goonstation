@@ -1,4 +1,4 @@
-#define ADMIN_BEES_ONLY if(!src.non_admin_bee_allowed && src.client && !src.client.holder) return src.make_critter(/mob/living/critter/small_animal/wasp)
+#define ADMIN_BEES_ONLY if(!src.non_admin_bee_allowed && src.client && !src.client.holder) {src.make_critter(/mob/living/critter/small_animal/wasp); return}
 
 /* ============================================= */
 /* -------------------- Bee -------------------- */
@@ -141,8 +141,7 @@
 		if (!gibbed)
 			animate(src)
 		for (var/obj/critter/domestic_bee/fellow_bee in view(7,src)) // once mobcritters have AI we can change this to the mob version of bees, but for now we do this
-			LAGCHECK(LAG_HIGH)
-			if (fellow_bee && fellow_bee.alive)
+			if (fellow_bee?.alive)
 				fellow_bee.aggressive = 1
 				SPAWN_DBG(0.7 SECONDS)
 					fellow_bee.aggressive = 0
@@ -378,9 +377,9 @@
 			if (nectarTransferAmt <= 0)
 				return
 
-			if (planter.current.assoc_reagents.len || (planter.plantgenes && planter.plantgenes.mutation && planter.plantgenes.mutation.assoc_reagents.len))
+			if (planter.current.assoc_reagents.len || (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents)))
 				var/list/additional_reagents = planter.current.assoc_reagents
-				if (planter.plantgenes && planter.plantgenes.mutation && planter.plantgenes.mutation.assoc_reagents.len)
+				if (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents))
 					additional_reagents = additional_reagents | planter.plantgenes.mutation.assoc_reagents
 
 				planter.reagents.remove_reagent("nectar", nectarTransferAmt*0.75)
@@ -577,6 +576,7 @@
 	cooldown = 300
 	targeted = 1
 	target_anything = 1
+	var/do_buzz = 1
 
 	var/datum/projectile/slam/proj = new
 
@@ -597,7 +597,8 @@
 			boutput(holder.owner, __red("That is too far away to teleport away."))
 			return 1
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner]</b> stares at [MT]!</span>")
-		playsound(get_turf(holder.owner), 'sound/voice/animal/buzz.ogg', 100, 1)
+		if(do_buzz)
+			playsound(get_turf(holder.owner), 'sound/voice/animal/buzz.ogg', 100, 1)
 		boutput(MT, "<span class='combat'>You feel a horrible pain in your head!</span>")
 		MT.changeStatus("stunned", 2 SECONDS)
 		SPAWN_DBG(2.5 SECONDS)
@@ -723,6 +724,18 @@
 	icon_state_dead = "madbee-dead"
 	icon_state_sleep = "madbee-sleep"
 	icon_body = "madbee"
+
+/mob/living/critter/small_animal/bee/moth
+	name = "moth"
+	desc = "It appears to be a hybrid of a domestic space-bee and a moth. How cute!"
+	icon_state = "moth-wings"
+	icon_state_dead = "moth-dead"
+	icon_state_sleep = "moth-sleep"
+	icon_body = "moth"
+	honey_color = rgb(207, 207, 207)
+	speechverb_say = "flutters"
+	speechverb_exclaim = "squeaks"
+	speechverb_ask = "flutters"
 
 /mob/living/critter/small_animal/bee/zombee
 	name = "zombee"

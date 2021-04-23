@@ -15,6 +15,7 @@
 	if (affected_mob.get_burn_damage() >= 80 && prob(60))
 		affected_mob.cure_disease(D)
 		return
+	affected_mob.is_zombie = 1
 	switch(D.stage)
 		if(1)
 			if (prob(5))
@@ -48,7 +49,8 @@
 				affected_mob.say(pick("Hungry...", "Must... kill...", "Brains..."))
 		if(4)
 			boutput(affected_mob, "<span class='alert'>Your heart seems to have stopped...</span>")
-			affected_mob.set_mutantrace(zombie_mutantrace)
+			if (zombie_mutantrace)
+				affected_mob.set_mutantrace(zombie_mutantrace)
 			if (ishuman(affected_mob))
 				affected_mob:update_face()
 				affected_mob:update_body()

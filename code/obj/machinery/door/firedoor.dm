@@ -17,7 +17,7 @@
 	proc/setup()
 		for (var/obj/machinery/door/D in src.loc)
 			var/obj/machinery/door/firedoor/pyro/P = new/obj/machinery/door/firedoor/pyro(src.loc)
-			P.dir = D.dir
+			P.set_dir(D.dir)
 			P.layer = D.layer + 0.01
 			break
 
@@ -53,7 +53,7 @@
 	..()
 	if(!zone)
 		var/area/A = get_area(loc)
-		if (A && A.name)
+		if (A?.name)
 			zone = A.name
 	SPAWN_DBG(0.5 SECONDS)
 		if (radio_controller)
@@ -62,7 +62,7 @@
 		if (!zone2) //MBC : Hey, this is pretty shitty! But I want to be able to handle firelocks that are bordering 2 areas... without reworking the whole dang thing
 			for (var/d in cardinal)
 				var/area/A = get_area(get_step(src,d))
-				if (A && A.name && A.name != zone)
+				if (A?.name && A.name != zone)
 					zone2 = A.name
 					break
 
@@ -113,17 +113,6 @@
 
 /obj/machinery/door/firedoor/attackby(obj/item/C as obj, mob/user as mob)
 	src.add_fingerprint(user)
-	if ((isweldingtool(C) && !( src.operating ) && src.density))
-		if(!C:try_weld(user, 1))
-			return
-		if (!( src.blocked ))
-			src.blocked = 1
-		else
-			src.blocked = 0
-		src.heal_damage()
-		update_icon()
-
-		return
 	if (!ispryingtool(C))
 		if (src.density && !src.operating)
 			user.lastattacked = src

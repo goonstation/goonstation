@@ -93,7 +93,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			boutput(user, "It's dirty!")
 			return
 	else if (O.cant_drop) //For borg held items, if the microwave is clean and functioning
-		user.show_text("You can't put that in [src] when it's attached to you!", "red")
+		boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 	else if(istype(O,/obj/item/dice))
 		var/obj/item/dice/die = O
 		if(die.dicePals.len)
@@ -106,7 +106,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 			die.dropped(user)
 			src.visible_message("<span class='notice'>[user] adds [die] to the microwave.</span>")
 	else if (isghostdrone(user))
-		boutput(usr, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+		boutput(user, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 		return
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/ingredient/egg)) // If an egg is used, add it
 		if(src.egg_amount < 5)
@@ -160,7 +160,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 /obj/machinery/microwave/attack_hand(mob/user as mob) // The microwave Menu
 	if (isghostdrone(user))
-		boutput(usr, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+		boutput(user, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 		return
 	var/dat
 	if(src.broken > 0)

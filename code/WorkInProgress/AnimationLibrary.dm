@@ -227,9 +227,9 @@
 
 	animate(M.attack_particle, transform = t_size, time = 6, easing = BOUNCE_EASING)
 	animate(pixel_x = diff_x*32, pixel_y = diff_y*32, time = 2, easing = BOUNCE_EASING,  flags = ANIMATION_PARALLEL)
-	SPAWN_DBG(5)
+	SPAWN_DBG(0.5 SECONDS)
 		//animate(M.attack_particle, alpha = 0, time = 2, flags = ANIMATION_PARALLEL)
-		M.attack_particle.alpha = 0
+		M.attack_particle?.alpha = 0
 
 /mob/var/last_interact_particle = 0
 
@@ -411,7 +411,7 @@
 	var/matrix/t_size = matrix()
 
 	animate(M.attack_particle, transform = t_size, time = 2, easing = BOUNCE_EASING)
-	SPAWN_DBG(5)
+	SPAWN_DBG(0.5 SECONDS)
 		M.attack_particle.alpha = 0
 
 /proc/block_spark(var/mob/M, armor = 0)
@@ -437,11 +437,11 @@
 
 	M.attack_particle.transform.Turn(rand(0,360))
 
-	SPAWN_DBG(10)
+	SPAWN_DBG(1 SECOND)
 		M.attack_particle.alpha = 0
 
 proc/fuckup_attack_particle(var/mob/M)
-	SPAWN_DBG(1)
+	SPAWN_DBG(0.1 SECONDS)
 		if (!M || !M.attack_particle) return
 		var/r = rand(0,360)
 		var/x = cos(r)
@@ -509,13 +509,13 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	else
 		M.sprint_particle.loc = M.loc
 
-	M.sprint_particle.dir = null
+	M.sprint_particle.set_dir(null)
 	if (M.sprint_particle.icon_state == "sprint_cloud")
 		flick("sprint_cloud",M.sprint_particle)
 	M.sprint_particle.icon_state = "sprint_cloud"
 
 
-	SPAWN_DBG(6)
+	SPAWN_DBG(0.6 SECONDS)
 		if (M.sprint_particle.loc == T)
 			M.sprint_particle.loc = null
 
@@ -526,13 +526,13 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	else
 		M.sprint_particle.loc = M.loc
 
-	M.sprint_particle.dir = direct
+	M.sprint_particle.set_dir(direct)
 	if (M.sprint_particle.icon_state == "sprint_cloud_small")
 		flick("sprint_cloud_small",M.sprint_particle)
 	M.sprint_particle.icon_state = "sprint_cloud_small"
 
-	SPAWN_DBG(4)
-		if (M.sprint_particle.loc == T)
+	SPAWN_DBG(0.4 SECONDS)
+		if (M.sprint_particle?.loc == T)
 			M.sprint_particle.loc = null
 
 /proc/sprint_particle_tiny(var/mob/M, var/turf/T = null, var/direct = null)
@@ -542,12 +542,12 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	else
 		M.sprint_particle.loc = M.loc
 
-	M.sprint_particle.dir = direct
+	M.sprint_particle.set_dir(direct)
 	if (M.sprint_particle.icon_state == "sprint_cloud_tiny")
 		flick("sprint_cloud_tiny",M.sprint_particle)
 	M.sprint_particle.icon_state = "sprint_cloud_tiny"
 
-	SPAWN_DBG(3)
+	SPAWN_DBG(0.3 SECONDS)
 		if (M.sprint_particle.loc == T)
 			M.sprint_particle.loc = null
 
@@ -730,7 +730,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	SPAWN_DBG(rand(1,10))
 		if (A)
 			var/initial_y = A.pixel_y
-			animate(A, pixel_y = initial_y + 4, transform = matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE), time = floatspeed, loop = loopnum, easing = SINE_EASING)
+			animate(A, pixel_y = initial_y + 4, transform = matrix(floatdegrees * (side == 1 ? 1:-1), MATRIX_ROTATE), time = floatspeed, loop = loopnum, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
 			animate(pixel_y = initial_y, transform = null, time = floatspeed, loop = loopnum, easing = SINE_EASING)
 	return
 
@@ -902,7 +902,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if (dir == "R")
 		turn = 90
 
-	animate(A, transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
+	animate(A, transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping, flags=ANIMATION_PARALLEL)
 	animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
 	animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
 	animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
@@ -946,12 +946,12 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/matrix/turned
 
 	if (isnum(dir) && dir > 0)
-		A.dir = WEST
+		A.set_dir(WEST)
 		turndir = 90
 		turned = matrix(A.transform, 90, MATRIX_ROTATE)
 
 	else
-		A.dir = EAST
+		A.set_dir(EAST)
 		turndir = -90
 		turned = matrix(A.transform, -90, MATRIX_ROTATE)
 
@@ -1101,6 +1101,49 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			pool(e)
 	return
 
+/proc/leavepurge(var/atom/target, var/current_increment, var/sword_direction)
+	if (!target)
+		return
+	var/turf/target_turf = get_turf(target)
+	if (!target_turf)
+		return
+	var/obj/decal/e
+	if(current_increment == 9)
+		if (locate(/obj/decal/purge_beam_end) in target_turf)
+			return
+		e = unpool(/obj/decal/purge_beam_end)
+	else
+		if (locate(/obj/decal/purge_beam) in target_turf)
+			return
+		e = unpool(/obj/decal/purge_beam)
+	e.set_loc(target_turf)
+	e.dir = sword_direction
+	SPAWN_DBG(7)
+		if (e)
+			pool(e)
+	return
+
+/proc/leavescan(var/atom/target, var/scan_type)
+	if (!target)
+		return
+	var/turf/target_turf = get_turf(target)
+	if (!target_turf)
+		return
+	var/obj/decal/e
+	if(scan_type == 0)
+		if (locate(/obj/decal/syndicate_destruction_scan_center) in target_turf)
+			return
+		e = unpool(/obj/decal/syndicate_destruction_scan_center)
+	else
+		if (locate(/obj/decal/syndicate_destruction_scan_side) in target_turf)
+			return
+		e = unpool(/obj/decal/syndicate_destruction_scan_side)
+	e.set_loc(target_turf)
+	SPAWN_DBG(7)
+		if (e)
+			pool(e)
+	return
+
 /proc/sponge_size(var/atom/A, var/size = 1)
 	var/matrix/M2 = matrix()
 	M2.Scale(size,size)
@@ -1145,7 +1188,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(time = 10, pixel_y = 512, easing = CUBIC_EASING)
 	sleep(1.5 SECONDS)
 
-/proc/heavenly_spawn(var/obj/A)
+/proc/heavenly_spawn(var/atom/movable/A)
 	var/obj/heavenly_light/lightbeam = new /obj/heavenly_light
 	lightbeam.set_loc(A.loc)
 	var/was_anchored = A.anchored
@@ -1155,23 +1198,100 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	A.alpha = 0
 	A.pixel_y = 176
 	lightbeam.alpha = 0
+	if (ismob(A))
+		var/mob/M = A
+		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 	playsound(A.loc,"sound/voice/heavenly3.ogg",50,0)
 	animate(lightbeam, alpha=255, time=45)
 	animate(A,alpha=255,time=45)
-	SPAWN_DBG(45)
-		animate(A, pixel_y = 0, time = 120, easing = SINE_EASING)
-		sleep(12 SECONDS)
-		A.anchored = was_anchored
-		A.layer = oldlayer
-		animate(lightbeam,alpha = 0, time=15)
-		sleep(1.5 SECONDS)
-		qdel(lightbeam)
+	sleep(4.5 SECONDS)
+	animate(A, pixel_y = 0, time = 120, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+	sleep(12 SECONDS)
+	A.anchored = was_anchored
+	A.layer = oldlayer
+	animate(lightbeam,alpha = 0, time=15)
+	sleep(1.5 SECONDS)
+	qdel(lightbeam)
+	if (ismob(A))
+		var/mob/M = A
+		REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 
 /obj/heavenly_light
 	icon = 'icons/obj/32x192.dmi'
 	icon_state = "heavenlight"
 	layer = EFFECTS_LAYER
 	blend_mode = BLEND_ADD
+
+/proc/demonic_spawn(var/atom/movable/A, var/size = 1, var/play_sound = TRUE)
+	if (!A) return
+	var/was_anchored = A.anchored
+	var/original_plane = A.plane
+	var/original_density = A.density
+	var/matrix/M1 = matrix()
+	A.transform = M1.Scale(0,0)
+	var/turf/center = get_turf(A)
+	if (!center) return
+
+	A.plane = PLANE_UNDERFLOOR
+	A.anchored = TRUE
+	A.density = FALSE
+	if (ismob(A))
+		var/mob/M = A
+		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
+	if (play_sound)
+		playsound(center,"sound/effects/darkspawn.ogg",50,0)
+	SPAWN_DBG(5 SECONDS)
+		var/turf/TA = locate(A.x - size, A.y - size, A.z)
+		var/turf/TB = locate(A.x + size, A.y + size, A.z)
+		if (!TA || !TB) return
+
+		var/list/fake_hells = list()
+		for (var/turf/T in block(TA, TB))
+			fake_hells += new /obj/fake_hell(T)
+			var/x_modifier = (T.x - center.x)
+			var/y_modifier = (T.y - center.y)
+			if (x_modifier || y_modifier)
+				animate(T, pixel_x = ((32 * (x_modifier / max(1, abs(x_modifier)))) * (size - abs(x_modifier) + 1)), pixel_y = ((32 * (y_modifier / max(1, abs(y_modifier)))) * (size - abs(y_modifier) + 1)), 7.5 SECONDS, easing = SINE_EASING)
+			else // center tile
+				animate(T, transform = M1.Scale(0,0), 5 SECONDS, easing = SINE_EASING)
+		sleep(7.5 SECONDS)
+		animate(A, transform = null, time=20, easing = SINE_EASING)
+		A.plane = original_plane
+		A.anchored = was_anchored
+		A.density = original_density
+		if (ismob(A))
+			var/mob/M = A
+			REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
+		for (var/turf/T in block(TA, TB))
+			animate(T, transform = null, pixel_x = 0, pixel_y = 0, 7.5 SECONDS, easing = SINE_EASING)
+		sleep(7.5 SECONDS)
+		for (var/obj/fake_hell/O in fake_hells)
+			qdel(O)
+
+/obj/fake_hell //for use with /proc/demonic_spawn
+	name = "???"
+	desc = "just standing next to it burns your very soul."
+	icon = 'icons/misc/AzungarAdventure.dmi'
+	icon_state = "lava_floor"
+	anchored = TRUE
+	event_handler_flags = USE_HASENTERED
+
+	New()
+		. = ..()
+		src.plane = PLANE_UNDERFLOOR - 1
+		src.icon_state = pick("lava_floor", "lava_floor_bubbling", "lava_floor_bubbling2")
+
+	HasEntered(atom/movable/AM, atom/OldLoc)
+		. = ..()
+		if (isliving(AM))
+			var/mob/living/M = AM
+			M.update_burning(10)
+
+	meteorhit()
+		return
+
+	ex_act()
+		return
 
 var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_scanning(var/atom/target, var/color, var/time=18, var/alpha_hex="96")
@@ -1186,19 +1306,16 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	SPAWN_DBG(time)
 		target.filters -= filter
 
-/proc/animate_storage_thump(var/atom/A)
+/proc/animate_storage_thump(var/atom/A, wiggle=6)
 	if(!istype(A))
 		return
 	playsound(get_turf(A), "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
-	var/wiggle = 6
-	SPAWN_DBG(-1)
-		while(wiggle > 0)
-			wiggle--
-			A.pixel_x = rand(-3,3)
-			A.pixel_y = rand(-3,3)
-			sleep(0.1 SECONDS)
-		A.pixel_x = 0
-		A.pixel_y = 0
+	var/orig_x = A.pixel_x
+	var/orig_y = A.pixel_y
+	animate(A, pixel_x=orig_x, pixel_y=orig_y, flags=ANIMATION_PARALLEL, time=0)
+	for(var/i in 1 to wiggle)
+		animate(pixel_x=orig_x + rand(-3, 3), pixel_y=orig_y + rand(-3, 3), flags=ANIMATION_PARALLEL, easing=JUMP_EASING, time=0.1 SECONDS)
+	animate(pixel_x=orig_x, pixel_y=orig_y, flags=ANIMATION_PARALLEL)
 
 /obj/overlay/tile_effect/fake_fullbright
 	icon = 'icons/effects/white.dmi'
@@ -1212,7 +1329,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		. = ..()
 		src.icon = T.icon
 		src.icon_state = T.icon_state
-		src.dir = T.dir
+		src.set_dir(T.dir)
 		src.color = T.color
 		src.layer = T.layer - 1
 		src.plane = T.plane

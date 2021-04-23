@@ -6,6 +6,10 @@ datum/controller/process/telescope
 		name = "Telescope"
 		schedule_interval = 100
 
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/telescope/old_telescope = target
+		src.manager = old_telescope.manager
+
 	doWork()
 		if(tele_man)
 			if(!manager) manager = tele_man

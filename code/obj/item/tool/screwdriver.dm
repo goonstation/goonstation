@@ -7,7 +7,7 @@
 
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_SCREWING
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	force = 5.0
 	throwforce = 5.0
@@ -38,3 +38,8 @@
 /obj/item/screwdriver/vr
 	icon_state = "screwdriver-vr"
 	item_state = "screwdriver"
+
+/obj/item/screwdriver/yellow
+	desc = "A tool used to turn slotted screws and other slotted objects. This one has a nice lemon color."
+	icon_state = "screwdriver-yellow"
+	item_state = "screwdriver-yellow"

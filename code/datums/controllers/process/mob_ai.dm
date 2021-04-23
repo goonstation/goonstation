@@ -8,6 +8,8 @@ datum/controller/process/mob_ai
 		for(var/X in ai_mobs)
 			var/mob/M = X
 
+			last_object = X
+
 			if (!M)
 				continue
 

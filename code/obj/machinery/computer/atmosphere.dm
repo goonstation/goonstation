@@ -7,9 +7,9 @@ Atmos alert computer
 /obj/machinery/computer/atmosphere
 	name = "atmos"
 
-	lr = 0.85
-	lg = 0.86
-	lb = 1
+	light_r =0.85
+	light_g = 0.86
+	light_b = 1
 
 /obj/machinery/computer/atmosphere/alerts
 	name = "Alert Computer"
@@ -49,7 +49,7 @@ Atmos alert computer
 /obj/machinery/computer/atmosphere/alerts/attackby(var/obj/item/I as obj, user as mob)
 	if (isscrewingtool(I))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, 2 SECONDS))
 			if (src.status & BROKEN)
 				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )
@@ -82,7 +82,7 @@ Atmos alert computer
 
 
 /obj/machinery/computer/atmosphere/alerts/proc/interacted(mob/user)
-	src.add_dialog(usr)
+	src.add_dialog(user)
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"
 	dat += "<A HREF='?action=mach_close&window=alerts'>Close</A><br><br>"
 	for (var/cat in src.alarms)

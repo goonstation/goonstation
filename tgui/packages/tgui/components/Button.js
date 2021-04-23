@@ -4,11 +4,12 @@
  * @license MIT
  */
 
+import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from 'common/keycodes';
 import { classes, pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
-import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from '../hotkeys';
 import { createLogger } from '../logging';
 import { Box } from './Box';
+import { ColorBox } from './ColorBox';
 import { Icon } from './Icon';
 import { Tooltip } from './Tooltip';
 
@@ -283,3 +284,16 @@ export class ButtonInput extends Component {
 }
 
 Button.Input = ButtonInput;
+
+export const ButtonColor = (props) => {
+  const { color, ...rest } = props;
+
+  return (
+    <Button {...rest}>
+      <ColorBox color={color} mr="5px" />
+      <Box as="code">{color}</Box>
+    </Button>
+  );
+};
+
+Button.Color = ButtonColor;

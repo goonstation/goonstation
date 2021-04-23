@@ -95,7 +95,6 @@ var/datum/particleMaster/particleMaster = new
 					particleSystems -= system
 				else
 					count++
-			LAGCHECK(LAG_MED)
 
 		if (count <= 0)
 			location?.temp_flags &= ~HAS_PARTICLESYSTEM
@@ -862,7 +861,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 
 	Apply(var/obj/particle/par)
 		if(..())
-			par.dir = src.star_direction
+			par.set_dir(src.star_direction)
 			if (prob(40))
 				par.icon_state = "starlarge"
 
@@ -1412,7 +1411,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 /datum/particleSystem/chemSmoke
 	var/datum/reagents/copied
 	var/list/affected
-	var/list/banned_reagents = list("smokepowder", "thalmerite", "fluorosurfactant", "stimulants", "salt", "poor_concrete", "okay_concrete", "good_concrete", "perfect_concrete")
+	var/list/banned_reagents = list("smokepowder", "propellant", "thalmerite", "fluorosurfactant", "salt", "poor_concrete", "okay_concrete", "good_concrete", "perfect_concrete")
 	var/smoke_size = 3
 
 	New(var/atom/location = null, var/datum/reagents/source, var/duration = 20, var/size = 3)
@@ -1467,17 +1466,15 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				continue
 			if(A in affected) continue
 			affected += A
-			if(!can_line(location, A, 4)) continue
-
+			if(!can_line(location, A, smoke_size)) continue
 			if(!istype(A,/obj/particle) && !istype(A,/obj/effects/foam))
 				copied.reaction(A, TOUCH, 0, 0)
-
 			if(isliving(A))
 				var/mob/living/L = A
 				if(!issmokeimmune(L))
 					logTheThing("combat", A, null, "is hit by chemical smoke [log_reagents(copied)] at [log_loc(A)].")
 					if(L.reagents)
-						copied.copy_to(L.reagents, 1)
+						copied.copy_to(L.reagents, 1 / max((get_dist(A, location)+1)/2, 1)**2) //applies an adjusted inverse-square falloff to amount inhaled - 100% at center and adjacent tiles, then 44%, 25%, 16%, 11%, etc.
 
 /datum/particleSystem/chemspray
 	var/datum/reagents/copied = null

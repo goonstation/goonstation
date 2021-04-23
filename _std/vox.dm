@@ -130,7 +130,7 @@ proc/vox_help(var/mob/user)
 
 		voxhelp_cache += "</body></html>"
 
-	usr.Browse(voxhelp_cache, "window=voxhelp;size=300x600")
+	user.Browse(voxhelp_cache, "window=voxhelp;size=300x600")
 
 /client/proc/cmd_admin_intercom_announce()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -221,7 +221,7 @@ proc/vox_play(var/input, var/user, var/pitch = 1)
 				pitch = max(pitch,-98)
 			else if (t in voxtokens)
 				var/list/l = voxsounds_flag_sorted[t]
-				if (l && l.len)
+				if (length(l))
 					vx = pick(l)
 		else
 			vx = voxsounds[t]
@@ -2582,7 +2582,7 @@ proc/init_vox()
 "zulu" = new/datum/VOXsound("zulu", "sound/vox/zulu.ogg", LETTER | NOUN)
 )
 
-	SPAWN_DBG(1)
+	SPAWN_DBG(0.1 SECONDS)
 		for(var/id in voxsounds)
 			var/datum/VOXsound/vox = voxsounds[id]
 			vox.ogg = file(vox.ogg)

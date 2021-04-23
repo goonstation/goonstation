@@ -43,6 +43,13 @@
 		if (new_mode)
 			src.change_mode(new_mode, user)
 
+	attack(mob/living/carbon/M as mob, mob/user as mob)
+		if (src.omni_mode == "prying")
+			if (!pry_surgery(M, user))
+				return ..()
+		else
+			..()
+
 	get_desc(var/dist)
 		if (dist < 3)
 			. = "<span class='notice'>It is currently set to [src.omni_mode] mode.</span>"
@@ -208,13 +215,13 @@
 				safety = 1
 		switch (safety)
 			if (1)
-				boutput(usr, "<span class='alert'>Your eyes sting a little.</span>")
+				boutput(user, "<span class='alert'>Your eyes sting a little.</span>")
 				user.take_eye_damage(rand(1, 2))
 			if (0)
-				boutput(usr, "<span class='alert'>Your eyes burn.</span>")
+				boutput(user, "<span class='alert'>Your eyes burn.</span>")
 				user.take_eye_damage(rand(2, 4))
 			if (-1)
-				boutput(usr, "<span class='alert'><b>Your goggles intensify the welder's glow. Your eyes itch and burn severely.</b></span>")
+				boutput(user, "<span class='alert'><b>Your goggles intensify the welder's glow. Your eyes itch and burn severely.</b></span>")
 				user.change_eye_blurry(rand(12, 20))
 				user.take_eye_damage(rand(12, 16))
 

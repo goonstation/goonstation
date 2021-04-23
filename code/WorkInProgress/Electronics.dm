@@ -6,7 +6,7 @@
 	force = 5
 	hit_type = DAMAGE_BLUNT
 	throwforce = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	pressure_resistance = 10
 	item_state = "electronic"
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -136,7 +136,9 @@
 
 
 	disposing()
-		deconstructed_thing = null
+		if(deconstructed_thing)
+			deconstructed_thing.dispose()
+			deconstructed_thing = null
 		store_type = null
 		..()
 
@@ -181,7 +183,7 @@
 
 	if (ispryingtool(W))
 		if (!anchored)
-			src.dir = turn(src.dir, 90)
+			src.set_dir(turn(src.dir, 90))
 			return
 	else if (iswrenchingtool(W))
 		boutput(user, "<span class='alert'>You deconstruct [src] into its base materials!</span>")
@@ -242,13 +244,13 @@
 				var/dirr = input("Select A Direction!", "UDLR", null, null) in list("Up","Down","Left","Right")
 				switch(dirr)
 					if("Up")
-						src.dir = 1
+						src.set_dir(1)
 					if("Down")
-						src.dir = 2
+						src.set_dir(2)
 					if("Left")
-						src.dir = 8
+						src.set_dir(8)
 					if("Right")
-						src.dir = 4
+						src.set_dir(4)
 			boutput(user, "Ready to deploy!")
 			switch(alert("Ready to deploy?",,"Yes","No"))
 				if("Yes")
@@ -264,7 +266,7 @@
 /obj/item/electronics/frame/Topic(href, href_list)
 	if (usr.stat)
 		return
-	if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_range(src, usr) && istype(src.loc, /turf)))
+	if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_interact_range(src, usr) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 
 		switch(href_list["tp"])
@@ -291,12 +293,12 @@
 	if (deconstructed_thing)
 		O = deconstructed_thing
 		O.set_loc(T)
-		O.dir = src.dir
+		O.set_dir(src.dir)
 		O.was_built_from_frame(user, 0)
 		deconstructed_thing = null
 	else
 		O = new store_type(T)
-		O.dir = src.dir
+		O.set_dir(src.dir)
 		O.was_built_from_frame(user, 1)
 	//O.mats = "Built"
 	O.deconstruct_flags |= DECON_BUILT
@@ -385,7 +387,7 @@
 	force = 10
 	hit_type = DAMAGE_BURN
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	pressure_resistance = 40
 	module_research = list("electronics" = 3, "engineering" = 1)
 
@@ -415,7 +417,7 @@
 	force = 2
 	hit_type = DAMAGE_BLUNT
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	pressure_resistance = 50
 	var/list/scanned = list()
 	var/viewstat = 0
@@ -479,8 +481,7 @@
 			mechanic_controls.rkit_addresses += src.net_id
 
 /obj/machinery/rkit/disposing()
-	if(radio_controller)
-		radio_controller.remove_object(src, "[frequency]")
+	radio_controller?.remove_object(src, "[frequency]")
 	radio_connection = null
 
 	if (src.net_id)
@@ -529,8 +530,8 @@
 				newsignal.data["command"] = "text_message"
 				newsignal.data["sender_name"] = "RKIT-MAILBOT"
 				newsignal.data["message"] = "Notice: Item already in database."
-
 				newsignal.data["address_1"] = target
+				newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
 				newsignal.data["sender"] = src.net_id
 
 				radio_connection.post_signal(src, newsignal)
@@ -545,8 +546,8 @@
 		newsignal.data["command"] = "text_message"
 		newsignal.data["sender_name"] = "RKIT-MAILBOT"
 		newsignal.data["message"] = "Notice: Item entered into database."
-
 		newsignal.data["address_1"] = target
+		newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
 		newsignal.data["sender"] = src.net_id
 
 		radio_connection.post_signal(src, newsignal)
@@ -607,7 +608,7 @@
 /obj/machinery/rkit/Topic(href, href_list)
 	if (usr.stat)
 		return
-	if ((in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
+	if ((in_interact_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 		switch(href_list["tp"])
@@ -632,7 +633,7 @@
 							var/datum/manufacture/mechanics/M = O.blueprint
 							playsound(src.loc, 'sound/machines/printer_thermal.ogg', 25, 1)
 							src.no_print_spam = world.time
-							SPAWN_DBG (25)
+							SPAWN_DBG(2.5 SECONDS)
 								if (src)
 									new /obj/item/paper/manufacturer_blueprint(src.loc, M)
 
@@ -654,7 +655,7 @@
 	hitsound = 'sound/machines/chainsaw_green.ogg'
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_SAWING
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	module_research = list("electronics" = 3, "engineering" = 1)
 
 	proc/finish_decon(atom/target,mob/user)
@@ -673,7 +674,7 @@
 		F.viewstat = 2
 		F.secured = 2
 		F.icon_state = "dbox_big"
-		F.w_class = 4
+		F.w_class = W_CLASS_BULKY
 
 		elecflash(src,power=2)
 
@@ -699,6 +700,10 @@
 
 		if ((!O.allowed(user) || O.is_syndicate) && !(O.deconstruct_flags & DECON_BUILT))
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] without sufficient access to operate it.</span>")
+			return
+
+		if(locate(/mob/living) in O)
+			boutput(user, "<span class='alert'>You cannot deconstruct [target] while someone is inside it!</span>")
 			return
 
 		if (isrestrictedz(O.z) && !isitem(target))
@@ -762,7 +767,7 @@
 			var/datum/contextAction/deconstruction/pulse/newcon = new
 			decon_contexts += newcon
 
-		.+= decon_contexts.len
+		.+= length(decon_contexts)
 
 
 /datum/action/bar/icon/deconstruct_obj
@@ -817,5 +822,5 @@
 	throwforce = 0
 	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	hit_type = DAMAGE_BLUNT
-	tool_flags = null
-	w_class = 3.0
+	tool_flags = 0
+	w_class = W_CLASS_NORMAL

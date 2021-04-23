@@ -27,6 +27,7 @@
 		G.affecting.unequip_all()
 		qdel(G.affecting)
 		qdel(G)
+		JOB_XP(user, "Chef", 2)
 
 	else
 		boutput(user, "<span class='alert'>The spike already has a monkey on it, finish collecting his meat first!</span>")
@@ -38,10 +39,10 @@
 		if(src.meat > 1)
 			src.meat--
 			new /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat( src.loc )
-			boutput(usr, "You remove some meat from the monkey.")
+			boutput(user, "You remove some meat from the monkey.")
 		else if(src.meat == 1)
 			src.meat--
 			new /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat(src.loc)
-			boutput(usr, "You remove the last piece of meat from the monkey!")
+			boutput(user, "You remove the last piece of meat from the monkey!")
 			src.icon_state = "spike"
 			src.occupied = 0

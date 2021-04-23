@@ -23,18 +23,6 @@ var/list/chessboard = list()
 var/chess_enpassant = 0
 var/chess_in_progress = 0
 
-turf/simulated/floor/chess
-
-	var/obj/item/chesspiece/enpassant = null
-
-	New()
-		..()
-		chessboard += src
-
-	Del()
-		chessboard -= src
-		..()
-
 turf/unsimulated/floor/chess
 
 	var/obj/item/chesspiece/enpassant = null
@@ -62,7 +50,7 @@ obj/chessbutton
 			logTheThing("admin", user, null, "has reset the chessboard. Hope nobody was playing chess.")
 			logTheThing("diary", user, null, "has reset the chessboard. Hope nobody was playing chess.", "admin")
 
-			for(var/turf/simulated/floor/chess/T in chessboard)
+			for(var/turf/unsimulated/floor/chess/T in chessboard)
 				T.enpassant = null // almost forgot this, gotte get that sweet GC
 				for(var/obj/item/O in T)
 					qdel(O)
@@ -128,7 +116,7 @@ obj/item/chesspiece
 		if(!Tb | !Ta)
 			return
 		else
-			if(istype(Tb,/turf/simulated/floor/chess) && validmove(Ta,Tb))
+			if(istype(Tb,/turf/unsimulated/floor/chess) && validmove(Ta,Tb))
 				chessmove(Tb,user)
 			else
 				src.visible_message("<span class='alert'>Invalid move dorkus.</span>") // seems USER here is not actually the mob, but the click proc itself, so im regressing to a visible message for now
@@ -156,7 +144,7 @@ obj/item/chesspiece
 		src.visible_message("<span class='notice'>The [chess_color ? "black" : "white" ] commander has moved [src].</span>")
 		src.set_loc(T)
 		if(chess_enpassant)
-			for(var/turf/simulated/floor/chess/CB in chessboard)
+			for(var/turf/unsimulated/floor/chess/CB in chessboard)
 				CB.enpassant = null
 				chess_enpassant = 0
 
@@ -177,7 +165,7 @@ obj/item/chesspiece/pawn
 	var/movdir = 0
 	var/opened = 0
 	var/promoteX = 0
-	var/turf/simulated/floor/chess/EP = null
+	var/turf/unsimulated/floor/chess/EP = null
 
 	black
 		chess_color = 1
@@ -199,7 +187,7 @@ obj/item/chesspiece/pawn
 			if((abs(start_pos.y - end_pos.y) == 1) && (end_pos.x - start_pos.x) == movdir )
 				for(var/obj/item/chesspiece/C in end_pos)
 					return 1
-				var/turf/simulated/floor/chess/Tep = end_pos
+				var/turf/unsimulated/floor/chess/Tep = end_pos
 				if(Tep.enpassant)
 					qdel(Tep.enpassant)
 					src.visible_message("<span class='notice'>[src] has made a capture en passant.</span>")
@@ -272,7 +260,7 @@ obj/item/chesspiece/king
 		else // i guess it should work?
 			castling = 0 // in theory
 			if(chess_enpassant)
-				for(var/turf/simulated/floor/chess/CB in chessboard)
+				for(var/turf/unsimulated/floor/chess/CB in chessboard)
 					CB.enpassant = null
 					chess_enpassant = 0
 

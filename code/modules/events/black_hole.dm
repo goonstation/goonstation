@@ -133,7 +133,7 @@
 			if (X == src)
 				continue
 			var/area/A = get_area(X)
-			if(A && A.sanctuary) continue
+			if(A?.sanctuary) continue
 			if(isobj(X))
 				var/obj/O = X
 				if(O.anchored == 2) continue

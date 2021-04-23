@@ -32,6 +32,12 @@
 	var/oldx = 0
 	var/oldy = 0
 
+	ranch
+		name = "autoname"
+		network = "ranch"
+		color = "#AAFF99"
+		c_tag = "autotag"
+
 /obj/machinery/camera/process()
 	.=..()
 	if(!isturf(src.loc)) //This will end up removing coverage if camera is inside a thing.
@@ -82,7 +88,7 @@
 	duration = 150
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "cameraSecure"
-	icon = 'icons/obj/items/items.dmi'
+	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	var/obj/machinery/camera/television/cam
 	var/secstate
@@ -174,7 +180,7 @@
 	if (c_west)
 		c_west.referrers -= src
 
-	for(var/obj/machinery/camera/C as() in referrers)
+	for(var/obj/machinery/camera/C as anything in referrers)
 		if (C.c_north == src)
 			C.c_north = null
 		if (C.c_east == src)
@@ -205,6 +211,7 @@
 
 /obj/machinery/camera/emp_act()
 	..()
+	if(!src.network) return //avoid stacking emp
 	if(!istype(src, /obj/machinery/camera/television)) //tv cams were getting messed up
 		src.icon_state = "cameraemp"
 	src.network = null                   //Not the best way but it will do. I think.
@@ -321,7 +328,7 @@
 	.= 0
 	if (isturf(M.loc))
 		var/turf/T = M.loc
-		.= (T.cameras && T.cameras.len)
+		.= (T.cameras && length(T.cameras))
 
 
 /obj/machinery/camera/motion
@@ -399,7 +406,7 @@
 /proc/name_autoname_cameras()
 	var/list/counts_by_area = list()
 	var/list/obj/machinery/camera/first_cam_by_area = list()
-	for(var/obj/machinery/camera/C as() in by_type[/obj/machinery/camera])
+	for(var/obj/machinery/camera/C as anything in by_type[/obj/machinery/camera])
 		if(!istype(C)) continue
 		if (dd_hasprefix(C.name, "autoname"))
 			var/area/where = get_area(C)
@@ -419,7 +426,9 @@
 
 /proc/build_camera_network()
 	name_autoname_cameras()
-	connect_camera_list(by_type[/obj/machinery/camera])
+	var/list/cameras = by_type[/obj/machinery/camera]
+	if (!isnull(cameras))
+		connect_camera_list(by_type[/obj/machinery/camera])
 
 /proc/rebuild_camera_network()
 	if(defer_camnet_rebuild || !camnet_needs_rebuild) return
@@ -437,12 +446,12 @@
 		C.referrers.Cut()
 
 /proc/connect_camera_list(var/list/obj/machinery/camera/camlist, var/force_connection=0)
-	if( camlist.len < 1)  return 1
+	if(!length(camlist))  return 1
 
 	logTheThing("debug", null, null, "<B>SpyGuy/Camnet:</B> Starting to connect cameras")
 	var/count = 0
-	for(var/obj/machinery/camera/C as() in camlist)
-		if(!isturf(C.loc) || C.disposed || C.qdeled) //This is one of those weird internal cameras, or it's been deleted and hasn't had the decency to go away yet
+	for(var/obj/machinery/camera/C as anything in camlist)
+		if(QDELETED(C) || !isturf(C.loc)) //This is one of those weird internal cameras, or it's been deleted and hasn't had the decency to go away yet
 			continue
 
 

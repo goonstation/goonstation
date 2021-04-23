@@ -78,6 +78,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if (method == TOUCH)
 					if (volume > 25)
 						if (ishuman(M))
@@ -111,11 +112,15 @@ datum
 				if (istype(O,/obj/item/clothing/head/chemhood || /obj/item/clothing/suit/chemsuit))
 					return 1
 				if (isitem(O) && prob(40))
-					var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,O.loc)
-					I.desc = "Looks like this was \an [O] some time ago."
-					for(var/mob/M in AIviewers(5, O))
-						boutput(M, "<span class='alert'>\the [O] melts.</span>")
-					qdel(O)
+					var/obj/item/toMelt
+					if (!(toMelt.item_function_flags & IMMUNE_TO_ACID))
+						var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,O.loc)
+						I.desc = "Looks like this was \an [O] some time ago."
+						for(var/mob/M in AIviewers(5, O))
+							boutput(M, "<span class='alert'>\the [O] melts.</span>")
+						qdel(O)
+					else
+						O.visible_message("The acidic substance slides off \the [O] harmlessly.")
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("acid",5)
@@ -124,7 +129,7 @@ datum
 			reaction_blob(var/obj/blob/B, var/volume)
 				if (!blob_damage)
 					return
-				B.take_damage(blob_damage, volume, "mixed")
+				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
 
 		harmful/acid/clacid
 			name = "hydrochloric acid"
@@ -156,6 +161,7 @@ datum
 			blob_damage = 0.2
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if (method == TOUCH)
 					if (volume >= 50 && prob(75))
 						M.TakeDamage("head", 5, 15, 0, DAMAGE_BURN)
@@ -177,7 +183,7 @@ datum
 			reaction_blob(var/obj/blob/B, var/volume)
 				if (!blob_damage)
 					return
-				B.take_damage(blob_damage, volume, "mixed")
+				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
 
 		harmful/amanitin
 			name = "amanitin"
@@ -379,10 +385,6 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 
-				// Used to do exactly this back in 2012 or so (Convair880).
-				if (probmult(10) && M.bioHolder && M.bioHolder.HasEffect("fat"))
-					M.bioHolder.RemoveEffect("fat")
-
 				if (!M.nutrition)
 					switch(rand(1,3))
 						if (1)
@@ -411,23 +413,17 @@ datum
 			fluid_g = 16
 			fluid_b = 192
 			transparency = 255
-			var/remove_buff = 0
-
-			pooled()
-				..()
-				remove_buff = 0
 
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					remove_buff = M.add_stam_mod_regen("r_initropidril", 33)
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_initropidril", 33)
 				return
 
 			on_remove()
-				if (remove_buff)
-					if(ismob(holder?.my_atom))
-						var/mob/M = holder.my_atom
-						M.remove_stam_mod_regen("r_initropidril")
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_initropidril")
 				return
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
@@ -567,7 +563,7 @@ datum
 
 								if (H.organHolder.heart.robotic)
 									B = new/obj/critter/domestic_bee/buddy(H.loc)
-									H.remove_stam_mod_regen("heart")
+									REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "heart")
 									H.remove_stam_mod_max("heart")
 
 								else
@@ -786,6 +782,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if (method == TOUCH && volume >= 10)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -798,49 +795,59 @@ datum
 							H.unlock_medal("Red Hood", 1)
 							return
 						else
-							if (H.wear_mask)
-								var/obj/item/clothing/mask/K = H.wear_mask
-								if ( !K.acid_proof )
-									boutput(M, "<span class='alert'>Your [H.wear_mask] melts away!</span>")
-									K.dropped(H)
-									H.u_equip(K)
-									qdel(K)
-								else
-									boutput(M, "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
-								melted = 1
 							if (H.head)
-								boutput(M, "<span class='alert'>Your [H.head] melts into uselessness!</span>")
 								var/obj/item/clothing/head/D = H.head
-								D.dropped(H)
-								H.u_equip(D)
-								qdel(D)
+								if (!(D.item_function_flags & IMMUNE_TO_ACID))
+									boutput(M, "<span class='alert'>Your [H.head] melts into uselessness!</span>")
+									D.dropped(H)
+									H.u_equip(D)
+									qdel(D)
+								else
+									H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
 								melted = 1
+							if (!(H?.head.c_flags & SPACEWEAR))
+								if (H.wear_mask)
+									var/obj/item/clothing/mask/K = H.wear_mask
+									if (!(K.item_function_flags & IMMUNE_TO_ACID))
+										boutput(M, "<span class='alert'>Your [H.wear_mask] melts away!</span>")
+										K.dropped(H)
+										H.u_equip(K)
+										qdel(K)
+									else
+										H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [K] harmlessly.</span>", "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
+									melted = 1
+
 							if (melted)
 								return
 					else
 						random_brute_damage(M, min(15,volume))
-				else if (method == TOUCH && volume <= 0 && prob(20))
+				else if (method == TOUCH && volume <= 10 && prob(20))
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
 						var/melted = 0
-						if (H.wear_mask && H.head)
-							if (H.wear_mask)
-								var/obj/item/clothing/mask/K = H.wear_mask
-								if ( !K.acid_proof )
-									boutput(M, "<span class='alert'>Your [H.wear_mask] melts away!</span>")
-									K.dropped(H)
-									H.u_equip(K)
-									qdel(K)
-								else
-									boutput(M, "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
-								melted = 1
+						if (H.wear_mask || H.head)
 							if (H.head)
-								boutput(M, "<span class='alert'>Your [H.head] melts into uselessness!</span>")
 								var/obj/item/clothing/head/D = H.head
-								D.dropped(H)
-								H.u_equip(D)
-								qdel(D)
+								if (!(D.item_function_flags & IMMUNE_TO_ACID))
+									boutput(M, "<span class='alert'>Your [H.head] melts into uselessness!</span>")
+									D.dropped(H)
+									H.u_equip(D)
+									qdel(D)
+								else
+									H.visible_message("<span class='alert>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
 								melted = 1
+							if (!(H?.head.c_flags & SPACEWEAR))
+								if (H.wear_mask)
+									var/obj/item/clothing/mask/K = H.wear_mask
+									if (!(K.item_function_flags & IMMUNE_TO_ACID))
+										boutput(M, "<span class='alert'>Your [H.wear_mask] melts away!</span>")
+										K.dropped(H)
+										H.u_equip(K)
+										qdel(K)
+									else
+										H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [K] harmlessly.</span>", "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
+									melted = 1
+
 							if (melted)
 								return
 				else if (volume >= 5)
@@ -858,11 +865,15 @@ datum
 				if (istype(O,/obj/fluid))
 					return 1
 				if (isitem(O) && volume > O:w_class)
-					var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,O.loc)
-					I.desc = "Looks like this was \an [O] some time ago."
-					for(var/mob/M in AIviewers(5, O))
-						boutput(M, "<span class='alert'>\the [O] melts.</span>")
-					qdel(O)
+					var/obj/item/toMelt = O
+					if (!(toMelt.item_function_flags & IMMUNE_TO_ACID))
+						var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,O.loc)
+						I.desc = "Looks like this was \an [O] some time ago."
+						for(var/mob/M in AIviewers(5, O))
+							boutput(M, "<span class='alert'>\the [O] melts.</span>")
+						qdel(O)
+					else
+						O.visible_message("The blueish acidic substance slides off \the [O] harmlessly.")
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("acid",10)
@@ -871,7 +882,7 @@ datum
 			reaction_blob(var/obj/blob/B, var/volume)
 				if (!blob_damage)
 					return
-				B.take_damage(blob_damage, volume, "mixed")
+				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
 
 		harmful/pancuronium
 			name = "pancuronium"
@@ -1087,6 +1098,8 @@ datum
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
 				M.jitteriness = max(M.jitteriness-30,0)
+				if(M.hasStatus("stimulants"))
+					M.changeStatus("stimulants", -10 SECONDS * mult)
 
 				switch(counter+= (1 * mult))
 					if (1 to 10)
@@ -1227,7 +1240,7 @@ datum
 			value = 3 // 1 1 1
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				src = null
+				. = ..()
 				if ( (method==TOUCH && prob((3 * volume) + 2)) || method==INGEST)
 					M.bioHolder.RandomEffect("bad")
 				return
@@ -1263,7 +1276,7 @@ datum
 			transparency = 255
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				src = null
+				. = ..()
 				if ( (method==TOUCH && prob((5 * volume) + 1)) || method==INGEST)
 					M.bioHolder.RandomEffect("bad")
 				return
@@ -1398,11 +1411,12 @@ datum
 
 				// Hyperallergic
 				if(M.traitHolder.hasTrait("allergic"))
-					holder.add_reagent(src.id, min(2 + src.volume/10, 120-holder.get_reagent_amount(src.id)) * mult)
+					holder.add_reagent(src.id, min(2 + src.volume/20, 120-holder.get_reagent_amount(src.id)) * mult)
 				..()
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				if (method == TOUCH)
 					M.reagents.add_reagent("histamine", min(10,volume * 2))
 					M.make_jittery(10)
@@ -1568,8 +1582,11 @@ datum
 					if (progress_timer > 10)
 						M.real_name = M.bioHolder.ownerName
 						if (M.bioHolder?.mobAppearance?.mutant_race)
-							M.set_mutantrace(M.bioHolder.mobAppearance.mutant_race)
+							M.set_mutantrace(M.bioHolder.mobAppearance.mutant_race.type)
 						M.UpdateName()
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						H.update_colorful_parts()
 
 				..()
 				return
@@ -1697,7 +1714,7 @@ datum
 					//POWER UP!!
 				if (t7 && data >= t7)
 					t6 = 0
-					H.add_stam_mod_regen(src.id, 100) //Buff
+					APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, src.id, 100) //Buff
 					H.show_text("You feel very buff!", "red")
 
 				if (t8 && data >= t8)
@@ -1749,7 +1766,7 @@ datum
 
 				..()
 			on_remove()
-				if (holder && holder.my_atom && ishuman(holder.my_atom))
+				if (holder?.my_atom && ishuman(holder.my_atom))
 					var/mob/living/carbon/human/H = holder.my_atom
 					// moving the 'turn off the ai' part here because it failed
 					// to actually deactivate, leaving it on forever
@@ -1759,7 +1776,7 @@ datum
 					H.ai_calm_down = initial(H.ai_calm_down)
 					H.ai_suicidal = 0
 					if (data >= 30)
-						H.remove_stam_mod_regen(src.id) //Not so buff
+						REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, src.id) //Not so buff
 						logTheThing("combat", H, null, "has their AI disabled by [src.id]")
 						H.show_text("It's okay... it's okay... breathe... calm... it's okay...", "blue")
 				..()
@@ -1793,7 +1810,7 @@ datum
 					if(25)
 						H.remove_stam_mod_max(src.id)
 						H.add_stam_mod_max(src.id, -50)
-						H.add_stam_mod_regen(src.id, -2)
+						APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, src.id, -2)
 					if(26 to 35)
 						if(prob(30)) do_stuff(2, H, mult)
 					if(36 to INFINITY)
@@ -1807,7 +1824,7 @@ datum
 				var/mob/living/carbon/human/H = holder.my_atom
 				if (!istype(H)) return
 				H.remove_stam_mod_max(src.id)
-				H.remove_stam_mod_regen(src.id)
+				REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, src.id)
 
 
 			proc/do_stuff(var/severity, var/mob/living/carbon/human/H, var/mult = 1)

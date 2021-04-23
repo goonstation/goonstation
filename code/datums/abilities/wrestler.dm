@@ -97,7 +97,7 @@
 
 /* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
 
-/obj/screen/ability/topBar/wrestler
+/atom/movable/screen/ability/topBar/wrestler
 	clicked(params)
 		var/datum/targetable/wrestler/spell = owner
 		if (!istype(spell))
@@ -134,6 +134,12 @@
 	var/is_inherent = 0 // Are we a wrestler as opposed to somebody with a wrestling belt?
 	var/fake = 0
 
+	deepCopy()
+		. = ..()
+		var/datum/abilityHolder/wrestler/copy = .
+		if(istype(copy) && src.is_inherent == TRUE)
+			copy.is_inherent = TRUE
+
 /datum/abilityHolder/wrestler/fake
 	fake = 1
 /////////////////////////////////////////////// Wrestler spell parent ////////////////////////////
@@ -151,7 +157,7 @@
 	var/fake = 0
 
 	New()
-		var/obj/screen/ability/topBar/wrestler/B = new /obj/screen/ability/topBar/wrestler(null)
+		var/atom/movable/screen/ability/topBar/wrestler/B = new /atom/movable/screen/ability/topBar/wrestler(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -163,7 +169,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/wrestler()
+			src.object = new /atom/movable/screen/ability/topBar/wrestler()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)
@@ -220,6 +226,10 @@
 				HH.make_wrestler(0, 1, 1)
 				return 0
 
+		if (fake && !istype(get_turf(M), /turf/simulated/floor/specialroom/gym))
+			boutput(M, __red("You cannot use your \"powers\" outside of The Ring!"))
+			return 0
+
 		if (!(ishuman(M) || ismobcritter(M))) // Not all critters have arms to grab people with, but whatever.
 			boutput(M, __red("You cannot use any powers in your current form."))
 			return 0
@@ -254,7 +264,7 @@
 
 		var/CD = src.cooldown
 		var/ST_mod_max = M.get_stam_mod_max()
-		var/ST_mod_regen = M.get_stam_mod_regen()
+		var/ST_mod_regen = GET_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS)
 
 		// Balanced for 200/12 and 200/13 drugs (e.g. epinephrine or meth), so stamina regeneration
 		// buffs are prioritized over total stamina modifiers.

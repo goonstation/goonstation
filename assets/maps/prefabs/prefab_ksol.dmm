@@ -1,4 +1,4 @@
-"aa" = (/turf/space,/area)
+"aa" = (/turf/space,/area/space)
 "ab" = (/turf/space,/area/noGenerate)
 "ac" = (/obj/structure/woodwall,/turf/space,/area/noGenerate)
 "ad" = (/turf/space,/obj/grille/catwalk,/obj/decal/fakeobjects{name = "power conduit"; desc = "Like conventional cables, but more burly."; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; dir = 9; layer = 2.5; anchored = 1},/turf/simulated/floor/airless/plating/catwalk,/area/noGenerate)

@@ -35,8 +35,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	// Spawned uplinks for which setup() wasn't called manually only get the standard (generic) items.
 	New()
 		..()
-		SPAWN_DBG (10)
-			if (src && istype(src) && (!src.items_general.len && !src.items_job.len && !src.items_objective.len))
+		SPAWN_DBG(1 SECOND)
+			if (src && istype(src) && (!src.items_general.len && !src.items_job.len && !length(src.items_objective)))
 				src.setup()
 
 	proc/generate_code()
@@ -70,14 +70,14 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			else
 				var/blocked = 0
-				if (ticker && ticker.mode)
-					if (S.blockedmode && islist(S.blockedmode) && S.blockedmode.len)
+				if (ticker?.mode)
+					if (S.blockedmode && islist(S.blockedmode) && length(S.blockedmode))
 						for (var/V in S.blockedmode)
 							if (ispath(V) && istype(ticker.mode, V)) // No meta by checking VR uplinks.
 								blocked = 1
 								continue
 
-					if (S.exclusivemode && islist(S.exclusivemode) && S.exclusivemode.len)
+					if (S.exclusivemode && islist(S.exclusivemode) && length(S.exclusivemode))
 						for (var/V in S.exclusivemode)
 							if (ispath(V) && !istype(ticker.mode, V)) // No meta by checking VR uplinks.
 								blocked = 1
@@ -204,12 +204,12 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if (src.use_default_GUI == 0)
 			return
 
-		var/dat
+		var/list/dat = list()
 		if (src.selfdestruct)
-			dat = "Self Destructing..."
+			dat += "Self Destructing..."
 
 		else if (src.locked && !isnull(src.lock_code))
-			dat = "The uplink is locked. <A href='byond://?src=\ref[src];unlock=1'>Enter password</A>.<BR>"
+			dat += "The uplink is locked. <A href='byond://?src=\ref[src];unlock=1'>Enter password</A>.<BR>"
 
 		else if (reading_about)
 			var/item_about = "<b>Error:</b> We're sorry, but there is no current entry for this item!<br>For full information on Syndicate Tools, call 1-555-SYN-DKIT."
@@ -218,30 +218,30 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		else
 			if (src.temp)
-				dat = "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
+				dat += "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
 			else
 				if (src.is_VR_uplink)
-					dat = "<B><U>Syndicate Simulator 2053!</U></B><BR>"
+					dat += "<B><U>Syndicate Simulator 2053!</U></B><BR>"
 					dat += "Buy the Cat Armor DLC today! Only 250 Credits!"
 					dat += "<HR>"
 					dat += "<B>Sandbox mode - Spawn item:</B><BR><table cellspacing=5>"
 				else
-					dat = "<B>Syndicate Uplink Console:</B><BR>"
+					dat += "<B>Syndicate Uplink Console:</B><BR>"
 					dat += "[syndicate_currency] left: [src.uses]<BR>"
 					dat += "<HR>"
 					dat += "<B>Request item:</B><BR>"
 					dat += "<I>Each item costs a number of [syndicate_currency] as indicated by the number following their name.</I><BR><table cellspacing=5>"
-				if (src.items_objective && islist(src.items_objective) && src.items_objective.len)
+				if (src.items_objective && islist(src.items_objective) && length(src.items_objective))
 					dat += "</table><B>Objective specific:</B><BR><table cellspacing=5>"
 					for (var/O in src.items_objective)
 						var/datum/syndicate_buylist/I3 = src.items_objective[O]
 						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_objective[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_objective[O]]'>About</A></td>"
-				if (src.items_job && islist(src.items_job) && src.items_job.len)
+				if (src.items_job && islist(src.items_job) && length(src.items_job))
 					dat += "</table><B>Job specific:</B><BR><table cellspacing=5>"
 					for (var/J in src.items_job)
 						var/datum/syndicate_buylist/I2 = src.items_job[J]
 						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_job[J]]'>[I2.name]</A> ([I2.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_job[J]]'>About</A></td>"
-				if (src.items_general && islist(src.items_general) && src.items_general.len)
+				if (src.items_general && islist(src.items_general) && length(src.items_general))
 					dat += "</table><B>Standard Equipment:</B><BR><table cellspacing=5>"
 					for (var/G in src.items_general)
 						var/datum/syndicate_buylist/I1 = src.items_general[G]
@@ -261,7 +261,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				if (src.can_selfdestruct == 1)
 					dat += "[do_divider == 1 ? "<HR>" : ""]<A href='byond://?src=\ref[src];selfdestruct=1'>Self-Destruct</A>"
 
-		usr.Browse(dat, "window=radio")
+		usr.Browse(jointext(dat, ""), "window=radio")
 		onclose(usr, "radio")
 		return
 
@@ -284,7 +284,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		return 0
 
 #define CHECK1 (get_dist(src, usr) > 1 || !usr.contents.Find(src) || !isliving(usr) || iswraith(usr) || isintangible(usr))
-#define CHECK2 (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+#define CHECK2 (is_incapacitated(usr) || usr.restrained())
 	Topic(href, href_list)
 		..()
 		if (src.uses < 0)
@@ -350,6 +350,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				src.uses = max(0, src.uses - I.cost)
 				if (usr.mind)
 					usr.mind.purchased_traitor_items += I
+				logTheThing("debug", usr, null, "bought this from uplink: [I.name]")
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src))
@@ -369,7 +370,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		else if (href_list["selfdestruct"] && src.can_selfdestruct == 1)
 			src.selfdestruct = 1
-			SPAWN_DBG (100)
+			SPAWN_DBG(10 SECONDS)
 				if (src)
 					src.explode()
 
@@ -388,7 +389,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "radio"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "radio"
 	throw_speed = 4
 	throw_range = 20
@@ -499,16 +500,16 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		src.menu_message += "<B>Request item:</B><BR>"
 		src.menu_message += "<I>Each item costs a number of [syndicate_currency] as indicated by the number following their name.</I><BR><table cellspacing=5>"
 
-		if (src.items_general && islist(src.items_general) && src.items_general.len)
+		if (src.items_general && islist(src.items_general) && length(src.items_general))
 			for (var/G in src.items_general)
 				var/datum/syndicate_buylist/I1 = src.items_general[G]
 				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_general[G]]'>[I1.name]</A> ([I1.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_general[G]]'>About</A></td>"
-		if (src.items_job && islist(src.items_job) && src.items_job.len)
+		if (src.items_job && islist(src.items_job) && length(src.items_job))
 			src.menu_message += "</table><B>Job specific:</B><BR><table cellspacing=5>"
 			for (var/J in src.items_job)
 				var/datum/syndicate_buylist/I2 = src.items_job[J]
 				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_job[J]]'>[I2.name]</A> ([I2.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_job[J]]'>About</A></td>"
-		if (src.items_objective && islist(src.items_objective) && src.items_objective.len)
+		if (src.items_objective && islist(src.items_objective) && length(src.items_objective))
 			src.menu_message += "</table><B>Objective specific:</B><BR><table cellspacing=5>"
 			for (var/O in src.items_objective)
 				var/datum/syndicate_buylist/I3 = src.items_objective[O]
@@ -524,7 +525,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			return
 		if (get_dist(src.hostpda, usr) > 1 || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+		if (is_incapacitated(usr) || usr.restrained())
 			return
 		if (src.vr_check(usr) != 1)
 			usr.show_text("This uplink only works in virtual reality.", "red")
@@ -548,6 +549,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				src.uses = max(0, src.uses - I.cost)
 				if (usr.mind)
 					usr.mind.purchased_traitor_items += I
+				logTheThing("debug", usr, null, "bought this from uplink: [I.name]")
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src.hostpda))
@@ -623,6 +625,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/max_loops = 8
 	var/bounty_tally = 0 //during loop, need more bountieas for rewards to fill
 
+	/// for use with photo printer cooldown
+	var/last_photo_print = 0
+
 	var/datum/game_mode/spy_theft/game
 
 	disposing()
@@ -632,7 +637,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 	setup(var/datum/mind/ownermind, var/obj/item/device/master)
 		..()
-		if (ticker && ticker.mode)
+		if (ticker?.mode)
 			if (istype(ticker.mode, /datum/game_mode/spy_theft))
 				src.game = ticker.mode
 			else //The gamemode is NOT spy, but we've got one on our hands! Set this badboy up.
@@ -694,15 +699,20 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			if ( (B.path && istype(delivery,B.path)) || B.item && delivery == B.item || (B.photo_containing && istype(delivery,/obj/item/photo) && findtext(delivery.name, B.photo_containing)) )
 				if (B.delivery_area && B.delivery_area != get_area(src.hostpda))
 					user.show_text("You must stand in the designated delivery zone to send this item!", "red")
+					if (istype(B.delivery_area, /area/diner))
+						user.show_text("It can be found at the nearby space diner!", "red")
+					var/turf/end = B.delivery_area.spyturf
+					user.gpsToTurf(end, doText = 0, heuristic = /turf/proc/AllDirsTurfsWithAllAccess) // spy thieves probably need to break in anyway, so screw access check
 					return 0
+				user.removeGpsPath(doText = 0)
 				B.claimed = 1
 				for (var/mob/M in delivery.contents) //make sure we dont delete mobs inside the stolen item
 					M.set_loc(get_turf(delivery))
 				if (istype(delivery.loc, /mob))
 					var/mob/M = delivery.loc
-					if (istype(delivery,/obj/item/parts/human_parts) && ishuman(M))
+					if (istype(delivery,/obj/item/parts) && ishuman(M))
 						var/mob/living/carbon/human/H = M
-						var/obj/item/parts/human_parts/HP = delivery
+						var/obj/item/parts/HP = delivery
 					//	var/limb_name = HP.holder.real_name + "'s " + HP.name
 						if(HP == B.item) //Uhh idk if this will work
 							HP.remove()
@@ -764,8 +774,68 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if(src.active)
 			src.print_to_host(src.menu_message)
 
+	/// Prints a photo of the spy theif's target item or mob owner
+	proc/print_photo(datum/bounty_item/B, mob/user)
+		if (!B) return
+		if (!user) return
+		if (TIME <= src.last_photo_print + 5 SECONDS)
+			boutput(user, "<span class='alert'>The photo printer is recharging!</span>")
+			return
 
+		var/title = null
+		var/detail = null
+		var/image/photo_image
+		var/icon/photo_icon
+		var/atom/A = null
+		if (B.organ && B.item)
+			var/obj/item/parts/O = B.item
+			if (O.holder)
+				A = O.holder
+			else
+				A = O // loose limb
+		else if (B.item)
+			A = B.item
 
+		if (ismob(A))
+			var/mob/M = A
+			var/list/trackable_mobs = get_mobs_trackable_by_AI()
+			if (!(((M.name in trackable_mobs) && (trackable_mobs[M.name] == M)) || (M == user)))
+				boutput(user, "<span class='alert'>Unable to locate target within the station camera network!</span>")
+				return
+			photo_image = image(A.icon, null, A.icon_state, null, SOUTH)
+			photo_image.overlays = A.overlays
+			photo_image.underlays = A.underlays
+			photo_icon = M.build_flat_icon(SOUTH)
+
+			title = "photo of [M]"
+			var/holding = null
+			if (M.l_hand || M.r_hand)
+				var/they_are = M.gender == "male" ? "He's" : M.gender == "female" ? "She's" : "They're"
+				if (M.l_hand)
+					holding = "[they_are] holding \a [M.l_hand]"
+				if (M.r_hand)
+					if (holding)
+						holding += " and \a [M.r_hand]."
+					else
+						holding = "[they_are] holding \a [M.r_hand]."
+				else if (holding)
+					holding += "."
+
+			var/they_look = M.gender == "male" ? "he looks" : M.gender == "female" ? "she looks" : "they look"
+			var/health_info = M.health < 75 ? " - [they_look][M.health < 25 ? " really" : null] hurt" : null
+			if (!detail)
+				detail = "In the photo, you can see [M][M.lying ? " lying on [get_turf(M)]" : null][health_info][holding ? ". [holding]" : "."]"
+
+		else
+			photo_image = build_composite_icon(A)
+			photo_icon = getFlatIcon(A)
+			title = "photo of \a [A]"
+			detail = "You can see \a [A]."
+
+		var/obj/item/photo/P = new(src, photo_image, photo_icon, title, detail)
+		user.put_in_hand_or_drop(P)
+		playsound(get_turf(src), "sound/machines/scan.ogg", 10, 1)
+		last_photo_print = TIME
 
 	generate_menu()
 		src.menu_message = "<B>Spy Console:</B> Current location: [get_area(src)]<BR>"
@@ -800,7 +870,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						else
 							rtext = "<br><b>Reward</b> : Not available. Deliver [req_bounties()] more bounties."
 
-					src.menu_message += "<small><br><br><tr><td><b>[B.name]</b>[rtext][atext]<br> [(B.claimed) ? "(<b>CLAIMED</b>)" : "(Deliver : <b>[B.delivery_area ? B.delivery_area : "Anywhere"]</b>)"]</td></tr></small>"
+					src.menu_message += "<small><br><br><tr><td><b>[B.name]</b>[rtext][atext]<br>[(B.claimed) ? "(<b>CLAIMED</b>)" : "(Deliver : <b>[B.delivery_area ? B.delivery_area : "Anywhere"]</b>) [B.photo_containing ? "" : "<a href='?src=\ref[src];action=print;bounty=\ref[B]'>Print</a>"]"]</td></tr></small>"
 
 		src.menu_message += "<HR>"
 
@@ -815,8 +885,12 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			return
 		if (get_dist(src.hostpda, usr) > 1 || !usr.contents.Find(src.hostpda) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+		if (is_incapacitated(usr) || usr.restrained())
 			return
+		if (href_list["action"])
+			if (href_list["action"] == "print" && href_list["bounty"])
+				//print photo of item or mob owner
+				src.print_photo(locate(href_list["bounty"]) , usr)
 
 		src.generate_menu()
 		src.print_to_host(src.menu_message)
@@ -839,7 +913,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/list/spells = list()
 	flags = FPRINT | ONBELT | TABLEPASS
 	throwforce = 5
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 100
@@ -883,10 +957,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			user.abilityHolder.addAbility(src.assoc_spell)
 			user.abilityHolder.updateButtons()
 		if (src.assoc_item)
-			var/obj/item/I = new src.assoc_item(usr.loc)
-			if (istype(I, /obj/item/staff) && usr.mind)
+			var/obj/item/I = new src.assoc_item(user.loc)
+			if (istype(I, /obj/item/staff) && user.mind)
 				var/obj/item/staff/S = I
-				S.wizard_key = usr.mind.key
+				S.wizard_key = user.mind.key
 		book.uses -= src.cost
 
 /datum/SWFuplinkspell/soulguard
@@ -962,7 +1036,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 /datum/SWFuplinkspell/clownsrevenge
 	name = "Clown's Revenge"
 	eqtype = "Offensive"
-	desc = "This spell turns an adjacent target into an obese, idiotic, horrible, and useless clown."
+	desc = "This spell turns an adjacent target into an idiotic, horrible, and useless clown."
 	assoc_spell = /datum/targetable/spell/cluwne
 
 /datum/SWFuplinkspell/balefulpolymorph
@@ -1060,13 +1134,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	vr_allowed = 0
 	assoc_spell = /datum/targetable/spell/pandemonium
 
-#if ASS_JAM
-/datum/SWFuplinkspell/timestop
-	name = "Time Stop"
-	eqtype = "Utility"
-	desc = "This spell contains the power to rend time itself. Use sparingly and with caution, lest you cause a runtime!"
-	assoc_spell = /datum/targetable/spell/timestop
-#endif
+
 
 /obj/item/SWF_uplink/proc/explode()
 	var/turf/location = get_turf(src.loc)
@@ -1185,7 +1253,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/mob/living/carbon/human/H = usr
 	if (!( ishuman(H)))
 		return 1
-	if ((usr.contents.Find(src) || (in_range(src,usr) && istype(src.loc, /turf))))
+	if ((usr.contents.Find(src) || (in_interact_range(src,usr) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 
 		if (href_list["buyspell"])
@@ -1226,7 +1294,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		else if (href_list["selfdestruct2"])
 			src.selfdestruct = 1
-			SPAWN_DBG (100)
+			SPAWN_DBG(10 SECONDS)
 				explode()
 				return
 		else

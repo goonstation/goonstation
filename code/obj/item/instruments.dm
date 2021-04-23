@@ -10,7 +10,7 @@
 	icon_state = "bike_horn"
 	inhand_image_icon = 'icons/mob/inhand/hand_instruments.dmi'
 	item_state = "bike_horn"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	p_class = 1
 	force = 2
 	throw_speed = 3
@@ -42,7 +42,7 @@
 
 			//src.contextActions = childrentypesof(/datum/contextAction/vehicle)
 
-			for(var/datum/contextAction/C in src.contextActions)
+			for(var/datum/contextAction/C as anything in src.contextActions)
 				C.dispose()
 			src.contextActions = list()
 
@@ -82,9 +82,9 @@
 		.= 1
 
 	proc/play(var/mob/user)
-		if (pick_random_note && sounds_instrument && sounds_instrument.len)
+		if (pick_random_note && length(sounds_instrument))
 			play_note(rand(1,sounds_instrument.len),user)
-		if(contextActions?.len)
+		if(length(contextActions))
 			user.showContextActions(contextActions, src)
 
 	proc/show_play_message(mob/user as mob)
@@ -102,7 +102,7 @@
 /* -------------------- Large Instruments -------------------- */
 
 /obj/item/instrument/large
-	w_class = 6
+	w_class = W_CLASS_GIGANTIC
 	p_class = 2 // if they're anchored you can't move them anyway so this should default to making them easy to move
 	throwforce = 40
 	density = 1
@@ -239,6 +239,27 @@
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
 
+/* -------------------- Guitar -------------------- */
+
+/obj/item/instrument/guitar
+	name = "guitar"
+	desc = "This machine kills syndicates."
+	icon_state = "guitar"
+	item_state = "guitar"
+	two_handed = 1
+	force = 10.0
+	note_time = 0.18 SECONDS
+	sounds_instrument = null
+	randomized_pitch = 0
+
+	New()
+		if (sounds_instrument == null)
+			sounds_instrument = list()
+			for (var/i in 1 to 12)
+				sounds_instrument += "sound/musical_instruments/guitar/guitar_[i].ogg"
+		..()
+
+
 /* -------------------- Bike Horn -------------------- */
 
 /obj/item/instrument/bikehorn
@@ -246,7 +267,7 @@
 	desc = "A horn off of a bicycle."
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 3
 	stamina_damage = 5
 	stamina_cost = 5
@@ -342,7 +363,7 @@
 	desc = "A cheap pocket instrument, good for helping time to pass."
 	icon_state = "harmonica"
 	item_state = "r_shoes"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	force = 1
 	throwforce = 3
 	stamina_damage = 2
@@ -359,7 +380,7 @@
 	desc = "A whistle. Good for getting attention."
 	icon_state = "whistle"
 	item_state = "r_shoes"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	force = 1
 	throwforce = 3
 	stamina_damage = 2
@@ -564,7 +585,7 @@
 			ghost_to_toss.set_loc(soul_stuff)
 
 		soul_stuff.throw_at(T, 10, 1)
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (soul_stuff && ghost_to_toss)
 				ghost_to_toss.set_loc(soul_stuff.loc)
 

@@ -27,7 +27,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 		..()
 		if(slot == SLOT_BELT)
 			owner = user
-			if (container && container.reagents.total_volume && condition)
+			if (container?.reagents.total_volume && condition)
 				active = 1
 				check()
 				user.show_text("[src]: Injector system initialized.", "blue")
@@ -123,7 +123,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 		if(!is_equipped()) return
 		if(!active) return
 
-		if(condition && container && container.reagents.total_volume)
+		if(condition && container?.reagents.total_volume)
 			if(condition.check_trigger(owner) && can_trigger)
 
 				can_trigger = 0
@@ -175,7 +175,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 		..()
 		if(slot == SLOT_WEAR_MASK)
 			owner = user
-			if (container && container.reagents.total_volume && condition)
+			if (container?.reagents.total_volume && condition)
 				active = 1
 				check()
 				user.show_text("[src]: Injector system initialized.", "blue")
@@ -275,7 +275,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 		if(!is_equipped()) return
 		if(!active) return
 
-		if(condition && container && container.reagents.total_volume)
+		if(condition && container?.reagents.total_volume)
 			if(condition.check_trigger(owner) && can_trigger)
 
 				can_trigger = 0

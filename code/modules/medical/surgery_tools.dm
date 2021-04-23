@@ -30,7 +30,7 @@ CONTAINS:
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -102,7 +102,7 @@ CONTAINS:
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/circsaw.ogg'
 	force = 8
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 3.0
 	throw_speed = 3
 	throw_range = 5
@@ -171,7 +171,7 @@ CONTAINS:
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	force = 5.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -230,7 +230,7 @@ CONTAINS:
 	desc = "A medical staple gun for securely reattaching limbs."
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "staplegun"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 20
 	force = 5
@@ -317,9 +317,7 @@ CONTAINS:
 
 	attackby(obj/item/W, mob/user)
 		..()
-		#if ASS_JAM
-			//DISABLE ZIPGUN DURING ASSJAM
-		#else
+
 		if (istype(W,/obj/item/pipebomb/frame))
 			var/obj/item/pipebomb/frame/F = W
 			if (F.state < 2)
@@ -337,7 +335,7 @@ CONTAINS:
 			else
 				user.show_text("You can't seem to combine these two items this way.")
 		return
-		#endif
+
 
 // a mostly decorative thing from z2 areas I want to add to office closets
 /obj/item/staple_gun/red
@@ -618,7 +616,7 @@ CONTAINS:
 
 /obj/item/robodefibrillator/mounted
 	var/obj/machinery/defib_mount/parent = null	//temp set while not attached
-	w_class = 4
+	w_class = W_CLASS_BULKY
 
 	move_callback(var/mob/living/M, var/turf/source, var/turf/target)
 		if (parent)
@@ -717,7 +715,7 @@ CONTAINS:
 	flags = FPRINT | TABLEPASS | CONDUCT
 	hit_type = DAMAGE_STAB
 	object_flags = NO_ARM_ATTACH
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	force = 1
 	throwforce = 1.0
 	throw_speed = 4
@@ -777,7 +775,7 @@ CONTAINS:
 	item_state = "bandage"
 	flags = FPRINT | TABLEPASS
 	object_flags = NO_ARM_ATTACH
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	force = 0
 	throwforce = 1.0
 	throw_speed = 4
@@ -955,7 +953,7 @@ CONTAINS:
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "bloodbag"
 	flags = FPRINT | TABLEPASS
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	force = 0
 	throwforce = 1.0
 	throw_speed = 4
@@ -990,7 +988,7 @@ CONTAINS:
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.blood_volume < 500)
-				H.tri_message("<span class='notice'><b>[user]</b> attaches [src]'s needle to [H == user ? </span>"[H.gender == "male" ? "his" : "her"]" : "[H]'s"] arm and begins transferring blood.",\
+				H.tri_message("<span class='notice'><b>[user]</b> attaches [src]'s needle to [H == user ? </span>"[his_or_her(H)]" : "[H]'s"] arm and begins transferring blood.",\
 				user, "<span class='notice'>You attach [src]'s needle to [H == user ? </span>"your" : "[H]'s"] arm and begin transferring blood.",\
 				H, "<span class='notice'>[H == user ? </span>"You attach" : "<b>[user]</b> attaches"] [src]'s needle to your arm and begin transferring blood.")
 				src.in_use = 1
@@ -1083,7 +1081,7 @@ CONTAINS:
 	icon_state = "bodybag"
 	uses_multiple_icon_states = 1
 	flags = FPRINT | TABLEPASS
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	force = 0
 	throwforce = 1.0
 	throw_speed = 4
@@ -1108,21 +1106,21 @@ CONTAINS:
 		if (src.open && src.open_image)
 			src.overlays += src.open_image
 			src.icon_state = "bodybag-open"
-			src.w_class = 4.0
+			src.w_class = W_CLASS_BULKY
 		else if (!src.open)
 			src.overlays -= src.open_image
-			if (src.contents && src.contents.len)
+			if (src.contents && length(src.contents))
 				src.icon_state = "bodybag-closed1"
 			else
 				src.icon_state = "bodybag-closed0"
-			src.w_class = 4.0
+			src.w_class = W_CLASS_BULKY
 		else
 			src.overlays -= src.open_image
 			src.icon_state = "bodybag"
-			src.w_class = 1.0
+			src.w_class = W_CLASS_TINY
 
 	attack_self(mob/user as mob)
-		if (src.icon_state == "bodybag" && src.w_class == 1.0)
+		if (src.icon_state == "bodybag" && src.w_class == W_CLASS_TINY)
 			user.visible_message("<b>[user]</b> unfolds [src].",\
 			"You unfold [src].")
 			user.drop_item()
@@ -1134,7 +1132,7 @@ CONTAINS:
 
 	attack_hand(mob/user as mob)
 		add_fingerprint(user)
-		if (src.icon_state == "bodybag" && src.w_class == 1.0)
+		if (src.icon_state == "bodybag" && src.w_class == W_CLASS_TINY)
 			return ..()
 		else
 			if (src.open)
@@ -1159,7 +1157,7 @@ CONTAINS:
 		if(isturf(over_object))
 			..() //Lets it do the turf-to-turf slide
 			return
-		else if (istype(over_object, /obj/screen/hud))
+		else if (istype(over_object, /atom/movable/screen/hud))
 			over_object = usr //Try to fold & pick up the bag with your mob instead
 		else if (!(over_object == usr))
 			return
@@ -1170,7 +1168,7 @@ CONTAINS:
 				"You fold up [src].")
 			src.overlays -= src.open_image
 			src.icon_state = "bodybag"
-			src.w_class = 1.0
+			src.w_class = W_CLASS_TINY
 			src.attack_hand(usr)
 
 	proc/open()
@@ -1212,7 +1210,7 @@ CONTAINS:
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	force = 1.5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 3.0
 	throw_speed = 3
 	throw_range = 6
@@ -1264,7 +1262,7 @@ CONTAINS:
 	// todo: give people's limbs the ol' tappa tappa
 	// also make sure intent, force and armor matter
 	if (!def_zone)
-		def_zone = (user && user.zone_sel && user.zone_sel.selecting) ? user.zone_sel.selecting : "chest" // may as well default to head idk
+		def_zone = (user?.zone_sel?.selecting) ? user.zone_sel.selecting : "chest" // may as well default to head idk
 
 	var/my_damage = src.force
 	var/my_sound = "sound/impact_sounds/Generic_Stab_1.ogg"
@@ -1349,7 +1347,7 @@ CONTAINS:
 	item_state = "pen"
 	icon_on = "penlight1"
 	icon_off = "penlight0"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 0
 	throw_speed = 7
 	throw_range = 15
@@ -1365,7 +1363,7 @@ CONTAINS:
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		// todo: check zone, make sure people are shining the light 1) at a human 2) in the eyes, clauses for whatever else
-		if (!def_zone && user && user.zone_sel && user.zone_sel.selecting)
+		if (!def_zone && user?.zone_sel?.selecting)
 			def_zone = user.zone_sel.selecting
 		else if (!def_zone)
 			return ..()
@@ -1447,7 +1445,7 @@ CONTAINS:
 					// irl these things can affect either side of the brain but this will help differentiate them in a video game context I think
 					// (also: injuries to the brain show up as issues on the opposite side of the body, so a left injury affects the right eye, etc)
 					var/datum/ailment_data/malady/AD = H.find_ailment_by_type(/datum/ailment/malady/bloodclot)
-					if (AD && AD.state == "Active" && AD.affected_area == "head") // having a stroke!!
+					if (AD?.state == "Active" && AD.affected_area == "head") // having a stroke!!
 						if (leye)
 							lmove = "[His_Her] left eye doesn't follow the light at all!"
 							lpreact = "doesn't react to the light at all!"
@@ -1526,7 +1524,7 @@ keeping this here because I want to make something else with it eventually
 		if (.)
 			if (prob(75))
 				playsound(get_turf(src), "sound/misc/chair/office/scoot[rand(1,5)].ogg", 40, 1)
-			if (islist(bring_this_stuff) && bring_this_stuff.len)
+			if (islist(bring_this_stuff) && length(bring_this_stuff))
 				var/stuff_moved = 0
 				for (var/obj/item/I in bring_this_stuff)
 					LAGCHECK(LAG_HIGH)
@@ -1614,6 +1612,13 @@ keeping this here because I want to make something else with it eventually
 		src.attached_objs.Remove(I)
 		UnregisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING))
 
+	attack_hand(mob/user as mob)
+		if (!anchored)
+			boutput(user, "You apply \the [name]'s brake.")
+		else
+			boutput(user, "You release \the [name]'s brake.")
+		anchored = !anchored
+
 /* ---------- Surgery Tray Parts ---------- */
 /obj/item/furniture_parts/surgery_tray
 	name = "tray parts"
@@ -1646,7 +1651,7 @@ keeping this here because I want to make something else with it eventually
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 35
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 
@@ -1679,3 +1684,9 @@ keeping this here because I want to make something else with it eventually
 	move_trigger(var/mob/M, kindof)
 		if (..() && reagents)
 			reagents.move_trigger(M, kindof)
+
+	bloody
+		New()
+			. = ..()
+			SPAWN_DBG(1 DECI SECOND) //sync with the organs spawn
+				make_cleanable(/obj/decal/cleanable/blood/gibs, src.loc)

@@ -28,37 +28,37 @@
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/turf/T = get_turf(object)
-			if (pa.Find("ctrl"))
+			if ("ctrl" in pa)
 				finished = 1
 				clear_selections()
 				return
 			if (T)
 				var/obj/adventurepuzzle/triggerer/button/button = new /obj/adventurepuzzle/triggerer/button(T)
 				button.name = button_name
-				button.dir = holder.dir
+				button.set_dir(holder.dir)
 				button.icon_state = "button_[button_type]_unpressed"
 				button.button_type = button_type
 				button.set_density(button.density)
 				button.triggered = selected_triggerable.Copy()
 				SPAWN_DBG(1 SECOND)
 					button.color = color_rgb
-		else if (pa.Find("right"))
+		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerable))
 				if (object in selected_triggerable)
 					object.overlays -= selection
 					selected_triggerable -= object
 				else
 					var/list/actions = object:trigger_actions()
-					if (islist(actions) && actions.len)
+					if (islist(actions) && length(actions))
 						var/act_name = input("Do what?", "Do what?", actions[1]) in actions
 						var/act = actions[act_name]
 						object.overlays += selection
 						selected_triggerable += object
 						selected_triggerable[object] = act
 					else
-						boutput(usr, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
+						boutput(user, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
 
 /obj/adventurepuzzle/triggerer/button
 	icon = 'icons/obj/randompuzzles.dmi'
@@ -118,18 +118,18 @@
 	New(var/L)
 		..()
 		effect_overlay = new/obj/overlay/tile_effect/secondary/bookcase(loc)
-		set_dir(dir)
+		update_dir(dir)
 
 	onVarChanged(var/varname, var/oldvalue, var/newvalue)
 		if (varname == "dir")
-			set_dir(newvalue)
+			update_dir(newvalue)
 
-	proc/set_dir(var/D)
-		dir = D
+	proc/update_dir(var/D)
+		src.set_dir(D)
 		if (!(dir & 2))
-			dir = 2
+			src.set_dir(2)
 		pixel_y = 28
-		effect_overlay.dir = dir
+		effect_overlay.set_dir(src.dir)
 
 	attack_hand(var/mob/user)
 		if (user.y != src.y || user.x < src.x - 1 || user.x > src.x + 1)

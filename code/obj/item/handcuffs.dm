@@ -4,12 +4,15 @@
 	icon_state = "handcuff"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 2
 	throw_range = 5
 	m_amt = 500
 	var/strength = 2
 	var/delete_on_last_use = 0 // Delete src when it's used up (e.g. tape roll)?
+	var/apply_multiplier = 1
+	var/remove_self_multiplier = 1
+	var/remove_other_multiplier = 1
 	desc = "Adjustable metal rings joined by cable, made to be applied to a person in such a way that they are unable to use their hands. Difficult to remove from oneself."
 	custom_suicide = 1
 
@@ -75,7 +78,7 @@
 	return 1
 
 /obj/item/handcuffs/attack(mob/M as mob, mob/user as mob)
-	if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))//!usr.bioHolder.HasEffect("lost_left_arm") && !usr.bioHolder.HasEffect("lost_right_arm"))
+	if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))//!user.bioHolder.HasEffect("lost_left_arm") && !user.bioHolder.HasEffect("lost_right_arm"))
 		boutput(user, "<span class='alert'>Uh ... how do those things work?!</span>")
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -144,7 +147,13 @@
 	flags = FPRINT | TABLEPASS | ONBELT
 	m_amt = 200
 	amount = 10
-	delete_on_last_use = 1
+	delete_on_last_use = TRUE
+
+/obj/item/handcuffs/tape_roll/crappy
+	name = "masking tape"
+	delete_on_last_use = FALSE
+	apply_multiplier = 2
+	remove_self_multiplier = 0.125
 
 /obj/item/handcuffs/tape
 	desc = "These seem to be made of tape"

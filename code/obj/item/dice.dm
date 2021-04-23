@@ -8,7 +8,7 @@ var/list/rollList = list()
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "d6_6"
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	stamina_damage = 0
 	stamina_cost = 0
 	var/sides = 6
@@ -38,7 +38,7 @@ var/list/rollList = list()
 			initialDesc = desc
 
 	get_desc()
-		if (src.last_roll && !src.dicePals.len)
+		if (src.last_roll && !length(src.dicePals))
 			if (isnum(src.last_roll))
 				. += "<br>[src] currently shows [get_english_num(src.last_roll)]."
 			else
@@ -63,13 +63,13 @@ var/list/rollList = list()
 		if (src.sound_roll)
 			playsound(get_turf(src), src.sound_roll, 100, 1)
 
-		src.set_loc(get_turf(src))
-		src.pixel_y = rand(-8,8)
-		src.pixel_x = rand(-8,8)
+		if (!src.cant_drop)
+			src.set_loc(get_turf(src))
+			src.pixel_y = rand(-8,8)
+			src.pixel_x = rand(-8,8)
 
-		src.name = initialName//initial(src.name)
-		src.desc = initialDesc//initial(src.desc)
-		//src.overlays = null
+		src.name = initialName
+		src.desc = initialDesc
 		if(src.colorcache)
 			src.color = src.colorcache
 			src.colorcache = null
@@ -110,7 +110,8 @@ var/list/rollList = list()
 		if (src.dicePals.len)
 			shuffle_list(src.dicePals) // so they don't all roll in the same order they went into the pile
 			for (var/obj/item/dice/D in src.dicePals)
-				D.set_loc(get_turf(src))
+				if (!D.cant_drop)
+					D.set_loc(get_turf(src))
 				if (prob(75))
 					step_rand(D)
 				roll_total += D.roll_dat_thang()
@@ -145,6 +146,8 @@ var/list/rollList = list()
 
 	proc/addPal(var/obj/item/dice/Pal, var/mob/user as mob)
 		if (!Pal || Pal == src || !istype(Pal, /obj/item/dice) || (src.dicePals.len + Pal.dicePals.len) >= MAX_DICE_GROUP)
+			return 0
+		if (!src.can_have_pals || !Pal.can_have_pals)
 			return 0
 		if (istype(Pal.loc, /obj/item/storage))
 			return 0
@@ -193,7 +196,7 @@ var/list/rollList = list()
 		if(Pal.dicePals.len)
 			src.dicePals |= Pal.dicePals // |= adds things to lists that aren't already present
 
-			var/startoverlay = src.overlays.len
+			var/startoverlay = length(src.overlays)
 			var/endoverlay = (src.overlays.len-1)+(Pal.overlays.len-1)
 
 			for(var/i=startoverlay, i<=endoverlay, i++) //src.overlays.len will return dice position + 1 as the decoy overlay will be registered
@@ -265,7 +268,8 @@ var/list/rollList = list()
 			return ..()
 
 	attack_self(mob/user as mob)
-		user.u_equip(src)
+		if (!src.cant_drop)
+			user.u_equip(src)
 		src.roll_dat_thang()
 		diceInChat()
 		rollList = list()
@@ -438,13 +442,13 @@ var/list/rollList = list()
 		if (src.sound_roll)
 			playsound(get_turf(src), src.sound_roll, 100, 1)
 
-		src.set_loc(get_turf(src))
-		src.pixel_y = rand(-8,8)
-		src.pixel_x = rand(-8,8)
+		if (!src.cant_drop)
+			src.set_loc(get_turf(src))
+			src.pixel_y = rand(-8,8)
+			src.pixel_x = rand(-8,8)
 
-		src.name = initialName//initial(src.name)
-		src.desc = initialDesc//initial(src.desc)
-		//src.overlays = null
+		src.name = initialName
+		src.desc = initialDesc
 
 		if (src.sides && isnum(src.sides))
 			src.last_roll = rand(1, src.sides)
@@ -474,7 +478,8 @@ var/list/rollList = list()
 		if (src.dicePals.len)
 			shuffle_list(src.dicePals) // so they don't all roll in the same order they went into the pile
 			for (var/obj/item/dice/D in src.dicePals)
-				D.set_loc(get_turf(src))
+				if (!D.cant_drop)
+					D.set_loc(get_turf(src))
 				if (prob(75))
 					step_rand(D)
 				roll_total += D.roll_dat_thang()
@@ -494,46 +499,87 @@ var/list/rollList = list()
 	name = "D6"
 	color = "#A3A3A3"
 
-/obj/item/dice_bot
+/obj/item/dice/robot
 	name = "Probability Cube"
 	desc = "A device for the calculation of random probabilities. Especially ones between one and six."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "d6_6"
-	w_class = 1.0
-	var/sides = 6
-	var/last_roll = null
+	w_class = W_CLASS_TINY
+	sides = 6
+	can_have_pals = FALSE
+	flags = SUPPRESSATTACK
 
 	New()
 		..()
 		name = "[initial(name)] (d[sides])"
+		desc = "A device for the calculation of random probabilities. Especially ones between one and [get_english_num(sides)]."
 
-	proc/roll_dat_thang()
-		playsound(get_turf(src), "sound/items/dicedrop.ogg", 100, 1)
-		if (src.sides && isnum(src.sides))
-			src.last_roll = get_english_num(rand(1, src.sides))
-			//src.visible_message("[src] shows [src.last_roll].")
-		else
-			src.last_roll = null
-			src.visible_message("[src] shows... um. This isn't a number. It hurts to look at. [pick("What the fuck?", "You should probably find the chaplain.")]")
+	attack_self(mob/user)
+		var/old_name = src.name
+		switch (src.sides)
+			if (4)
+				src.name = "Probability Cube (d6)"
+				src.sides = 6
+				src.icon_state = "d6_6"
+			if (6)
+				src.name = "Probability Pentagonal Trapezohedron (d10)" // yes, it's actually called that
+				src.sides = 10
+				src.icon_state = "d20"
+			if (10)
+				src.name = "Probability Dodecahedron (d12)"
+				src.sides = 12
+				src.icon_state = "d20"
+			if (12)
+				src.name = "Probability Icosahedron (d20)"
+				src.sides = 20
+				src.icon_state = "d20"
+			if (20)
+				src.name = "Probability Zocchihedron (d100)"
+				src.sides = 100
+				src.icon_state = "d100"
+			else
+				src.name = "Probability Tetrahedron (d4)"
+				src.sides = 4
+				src.icon_state = "d4"
+
+		src.desc = "A device for the calculation of random probabilities. Especially ones between one and [get_english_num(src.sides)]."
+		src.initialName = src.name
+		src.initialDesc = src.desc
+		src.last_roll = null
 		tooltip_rebuild = 1
-	attack_self(var/mob/user as mob)
-		src.roll_dat_thang()
+
+		user.show_text("You reconfigure the [old_name] into a [name].")
+		return
+
+	afterattack(atom/target, mob/user, inrange)
+		if (!src.cant_drop)
+			user.u_equip(src)
+		var/total = roll_dat_thang()
+		user.visible_message("[src] shows [get_english_num(total)].")
+		rollList = list()
+		return
 
 	d4
-		icon_state = "d4"
+		name = "Probability Tetrahedron"
 		sides = 4
+		icon_state = "d4"
 	d10
-		icon_state = "d20"
+		name = "Probability Pentagonal Trapezohedron" // yes, it's still actually called that
 		sides = 10
+		icon_state = "d20"
 	d12
-		icon_state = "d20"
+		name = "Probability Dodecahedron"
 		sides = 12
-	d20
 		icon_state = "d20"
+	d20
+		name = "Probability Icosahedron"
 		sides = 20
+		icon_state = "d20"
 	d100
-		icon_state = "d100"
+		name = "Probability Zocchihedron"
 		sides = 100
+		icon_state = "d100"
+
 /obj/item/diceholder
 	name = "holder of dice (not an actual item)"
 	desc = "Parent item of various dice holders"
@@ -549,7 +595,7 @@ var/list/rollList = list()
 	var/diceinchatstring
 
 	proc/addDice(var/obj/item/dice/D as obj, var/baseoverlay, mob/living/user as mob) //takes a dice object, a base overlay (dicecup, diceboxt), and a user must be passed to the proc
-		var/looplength = D.dicePals.len
+		var/looplength = length(D.dicePals)
 		for(var/i=1,i<=looplength,i++)
 			if((istype(D.dicePals[i], /obj/item/dice/coin)) || (istype(D.dicePals[i], /obj/item/dice/magic8ball)))
 				user.put_in_hand_or_drop(D.contents[i])
@@ -638,7 +684,7 @@ var/list/rollList = list()
 		src.dicelist = list()
 
 	proc/pourout(atom/target,mob/living/user as mob) //requires the target and user to be passed to the proc
-		if((src.dicelist.len)&&(istype(target, /turf/simulated/floor)) || (src.dicelist.len)&&(istype(target, /turf/unsimulated/floor)))
+		if((src.dicelist.len)&&(istype(target, /turf/simulated/floor)) || length(src.dicelist) && (istype(target, /turf/unsimulated/floor)))
 			hiddenroll()
 			src.ClearAllOverlays()
 			src.diceinchatstring = src.dicelist[1].diceInChat(1,src.localRollList)
@@ -740,7 +786,7 @@ var/list/rollList = list()
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "dicepouch"
 	max_wclass = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/setcolor
 	can_hold=list(/obj/item/dice)
 	spawn_contents = list(/obj/item/dice/d4,/obj/item/dice,/obj/item/dice/d8,/obj/item/dice/d10,/obj/item/dice/d12,/obj/item/dice/d20,/obj/item/dice/d100)

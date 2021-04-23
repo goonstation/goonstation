@@ -1,3 +1,58 @@
+(t)mon apr 19 21
+(u)Sovexe
+(*)Added a new verb, Special-Shuttle. Allows you to replace the escape shuttle with one of the available prefabs.
+(t)sun apr 11 21
+(u)Sovexe
+(*)Added a new verb, trenchify. Turns the station Z level into a trench. Hostile mobs are optional.
+(t)tue mar 09 21
+(u)BatElite
+(*)Added revert turf visuals buildmode tool, which undoes floor and wall planner replacements.
+(t)mon mar 08 21
+(u)kyle
+(*)Change to Show Rules to Player verb. Now lets you choose between playing a pleasant ping sound and the loud klaxon.
+(t)mon feb 01 21
+(u)pali
+(*)Build mode now has a numberic keybind bar! Middle-clicking current mode or pressing shift+number will add a copy of the current mode to the hotbar. Middleclicking the hotbar removes a mode. Pressing the number key on your keyboard switches to the mode. You can even have multiple copies of the same mode, each with different settings.
+(t)wed jan 27 21
+(u)pali
+(*)The admin interact menu (~ + click) now has a Copy Here option which makes a deep copy of the object or mob on your tile. This is experimental and there might be bugs. Build mode tool coming soon™.
+(*)The copy paste thing is now also in Build Mode. It can also give a copy of a thing to every living player.
+(t)tue jan 26 21
+(u)pali
+(*)You can now ban people from praying in the Chat Bans menu.
+(t)tue jan 19 21
+(u)Sovexe
+(*)New admin verb, Disco Lights. Sets every light on the station to a random color.
+(t)tue jan 10 21
+(u)Sovexe
+(*)Add new buildmode tool, maze. Spawns in a maze of your desired turfs and lighting. Works best in larger areas.
+(t)sat jan 09 21
+(u)pali
+(*)New verb give-player-pets which is like give-pets but only for living mobs which have connected clients. Also both of the verbs now accept the path as an argument in the command bar.
+(*)Moved "Force Say" in the player panel to the Common category. Now available for NPCs. (Very useful for shenanigans.)
+(u)Flourish
+(*)New verb beepsay which makes Beepsky say stuff. Also in general you can call the "speak" proc on any bot with a text argument to make them say the text.
+(t)wed dec 09 20
+(u)Flourish
+(*)Adds a new verb, whodead. Gives you a list of everyone who's dead so you don't have to manually go through the player panel.
+(t)sun dec 06 20
+(u)Sovexe
+(*)Adds a new verb, Summon Office. Summons your fully interactable office to you through visual mirror magic. Objects placed on tables will be warped away when you dismiss the office. Use with caution if your office has dangerous stuff.
+(t)fri dec 04 20
+(u)Mordent
+(*)Removed "Emergency Restart" verb from the Server panel, still available on the command line if you need it for some reason.
+(t)tue nov 24 20
+(u)Sovexe
+(*)Added a new buildmode tool, Location. Let's you easily warp around mobs and objects, and easily put things inside of other things.
+(t)mon nov 11 20
+(u)pali
+(*)Verbs "VPN Whitelist Add" and "VPN Whitelist Remove" now exist. Supply them with a ckey to remove / add them to the VPN whitelist.
+(t)sat nov 07 20
+(u)Sovexe
+(*)New buildmode mode, Appearance. Allows you to copy the appearance of any mob/obj/turf and apply it to any other mob/obj/turf.
+(t)tue oct 27 20
+(u)Sovexe
+(*)New verb, Spawn-Demonically.
 (t)wed oct 07 20
 (u)Sovexe
 (+)Oceanify no longer overwrites trench hole turfs.

@@ -58,7 +58,7 @@
 				break
 		sent.set_loc(src)
 		if(d)
-			src.set_dir(d)
+			src.update_dir(d)
 		if(passenger)
 			passenger << 'sound/effects/bamf.ogg'
 		sleep(0.1 SECONDS)
@@ -67,9 +67,9 @@
 		ion_trail.start()
 		move_self()
 
-	proc/set_dir(d)
+	proc/update_dir(d)
 		move_dir = d
-		dir = d
+		src.set_dir(d)
 		src.transform = null
 		if(d & (WEST | EAST))
 			var/matrix/tr = src.transform.Turn(dir2angle(d))
@@ -147,7 +147,7 @@
 	proc/reset_to_aim_at(turf/target, new_dir=null)
 		if(!new_dir)
 			new_dir = pick(cardinal)
-		src.set_dir(new_dir)
+		src.update_dir(new_dir)
 		var/turf/start = get_step(get_edge_target_turf(target, turn(dir, 180)), dir)
 		src.loc = start
 

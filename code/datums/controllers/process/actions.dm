@@ -8,16 +8,9 @@ datum/controller/process/actions
 
 		action_controller = actions
 
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/actions/old_actions = target
+		src.action_controller = old_actions.action_controller
+
 	doWork()
 		actions.process()
-
-
-
-// handles timed player actions
-datum/controller/process/randomevents
-	setup()
-		name = "Random Events"
-		schedule_interval = 2.5 MINUTES
-
-	doWork()
-		random_events.process()

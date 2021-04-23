@@ -10,7 +10,7 @@
 	var/active = 0		//probably should
 	var/atom/tracking_target = null		//unafilliated with allowtrack, which essentially just lets your gps appear on other gps lists
 	flags = FPRINT | TABLEPASS | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	m_amt = 50
 	g_amt = 100
 	mats = 2
@@ -121,7 +121,7 @@
 		HTML += "<hr>"
 
 		HTML += "<div class='gps group'><b>Beacons</b></div>"
-		for (var/obj/machinery/beacon/B as() in machine_registry[MACHINES_BEACONS])
+		for (var/obj/machinery/beacon/B as anything in machine_registry[MACHINES_BEACONS])
 			if (B.enabled == 1)
 				var/turf/T = get_turf(B.loc)
 				HTML += "<div class='gps'><span><b>[B.sname]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></div>"
@@ -142,7 +142,7 @@
 		..()
 		if (usr.stat || usr.restrained() || usr.lying)
 			return
-		if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_range(src, usr)))
+		if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_interact_range(src, usr)))
 			src.add_dialog(usr)
 			var/turf/T = get_turf(usr)
 			if(href_list["getcords"])
@@ -263,7 +263,7 @@
 			icon_state = "gps-off"
 			return
 
-		src.dir = get_dir(src,tracking_target)
+		src.set_dir(get_dir(src,tracking_target))
 		if (get_dist(src,tracking_target) == 0)
 			icon_state = "gps-direct"
 		else
@@ -281,6 +281,8 @@
 		if(!signal || signal.encryption)
 			return
 
+		var/sender = signal.data["sender"]
+
 		if (lowertext(signal.data["distress_alert"]))
 			var/senderName = signal.data["identifier"]
 			if (!senderName)
@@ -290,40 +292,48 @@
 			else if (lowertext(signal.data["distress_alert"] == "clear"))
 				src.visible_message("<b>[bicon(src)] [src]</b> beeps, \"NOTICE: Distress signal cleared by GPS [senderName].\".")
 			return
-
+		else if (!signal.data["sender"])
+			return
 		else if (signal.data["address_1"] == src.net_id && src.allowtrack)
+			var/datum/signal/reply = get_free_signal()
+			reply.source = src
+			reply.data["sender"] = src.net_id
+			reply.data["address_1"] = sender
 			switch (lowertext(signal.data["command"]))
+				if ("help")
+					if (!signal.data["topic"])
+						reply.data["description"] = "GPS unit - Provides space-coordinates and transmits distress signals"
+						reply.data["topics"] = "status"
+					else
+						reply.data["topic"] = signal.data["topic"]
+						switch (lowertext(signal.data["topic"]))
+							if ("status")
+								reply.data["description"] = "Returns the status of the GPS unit, including identifier, coords, location, and distress status. Does not require any arguments"
+							else
+								reply.data["topic"] = signal.data["topic"]
+								reply.data["description"] = "ERROR: UNKNOWN TOPIC"
 				if ("status")
-					var/sender = signal.data["sender"]
-					if (!sender)
-						return
-
 					var/turf/T = get_turf(src)
-					var/datum/signal/reply = get_free_signal()
-					reply.source = src
-					reply.data["sender"] = src.net_id
-					reply.data["address_1"] = sender
 					reply.data["identifier"] = "[src.serial]-[src.identifier]"
 					reply.data["coords"] = "[T.x],[T.y]"
 					reply.data["location"] = "[src.get_z_info(T)]"
 					reply.data["distress"] = "[src.distress]"
-
-					radio_control.post_signal(src, reply)
-					return
+				else
+					return //COMMAND NOT RECOGNIZED
+			radio_control.post_signal(src, reply)
 
 		else if (lowertext(signal.data["address_1"]) == "ping" && src.allowtrack)
 			var/datum/signal/pingsignal = get_free_signal()
 			pingsignal.source = src
 			pingsignal.data["device"] = "WNET_GPS"
 			pingsignal.data["netid"] = src.net_id
-			pingsignal.data["address_1"] = signal.data["sender"]
+			pingsignal.data["address_1"] = sender
 			pingsignal.data["command"] = "ping_reply"
 			pingsignal.data["data"] = "[src.serial]-[src.identifier]"
 			pingsignal.data["distress"] = "[src.distress]"
 			pingsignal.transmission_method = TRANSMISSION_RADIO
 
 			radio_control.post_signal(src, pingsignal)
-			return
 
 // coordinate beacons. pretty useless but whatever you never know
 

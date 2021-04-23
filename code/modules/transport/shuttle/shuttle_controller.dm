@@ -20,6 +20,9 @@ datum/shuttle_controller
 	// if not called before, set the endtime to T+600 seconds
 	// otherwise if outgoing, switch to incoming
 	proc/incall()
+		if (!online || direction != 1)
+			world << csound("sound/misc/shuttle_enroute.ogg")
+
 		if (online)
 			if(direction == -1)
 				setdirection(1)
@@ -27,10 +30,11 @@ datum/shuttle_controller
 			settimeleft(SHUTTLEARRIVETIME)
 			online = 1
 
-		ircbot.event("shuttlecall", src.timeleft())
+		INVOKE_ASYNC(ircbot, /datum/ircbot.proc/event, "shuttlecall", src.timeleft())
 
 	proc/recall()
 		if (online && direction == 1)
+			world << csound("sound/misc/shuttle_recalled.ogg")
 			setdirection(-1)
 			ircbot.event("shuttlerecall", src.timeleft())
 
@@ -89,7 +93,7 @@ datum/shuttle_controller
 
 					else if (timeleft <= 0)
 						location = SHUTTLE_LOC_STATION
-						if (ticker && ticker.mode)
+						if (ticker?.mode)
 							if (ticker.mode.shuttle_available == 0)
 								command_alert("CentCom has received reports of unusual activity on the station. The shuttle has been returned to base as a precaution, and will not be usable.");
 								online = 0
@@ -130,7 +134,7 @@ datum/shuttle_controller
 							if (T.x > eastBound) eastBound = T.x
 
 						// hey you, get out of the way!
-						var/shuttle_dir = map_settings ? map_settings.escape_dir : EAST // default to cog2 direction because EH
+						var/shuttle_dir = map_settings ? map_settings.escape_dir : SOUTH
 						for (var/turf/T in dstturfs)
 							// find the turf to move things to
 							var/turf/D = locate(shuttle_dir == EAST ? eastBound + 1 : T.x, // X
@@ -149,10 +153,14 @@ datum/shuttle_controller
 									return
 								*/
 
-						start_location.move_contents_to(end_location, centcom_turf)
+						var/filler_turf = text2path(start_location.filler_turf)
+						if (!filler_turf)
+							filler_turf = centcom_turf
+						start_location.move_contents_to(end_location, filler_turf)
 						for (var/turf/P in end_location)
-							if (istype(P, centcom_turf))
-								P.ReplaceWith(map_turf, force=1)
+							if (istype(P, filler_turf))
+								P.ReplaceWith(map_turf, keep_old_material = 0, force=1)
+
 
 						settimeleft(SHUTTLELEAVETIME)
 
@@ -231,7 +239,7 @@ datum/shuttle_controller
 									var/bonus_stun = 0
 									if (ishuman(M))
 										var/mob/living/carbon/human/H = M
-										bonus_stun = (H && H.buckled && H.on_chair)
+										bonus_stun = (H?.buckled && H.on_chair)
 										//DEBUG_MESSAGE("[M] is human and bonus_stun is [bonus_stun]")
 									if (!M.buckled || bonus_stun)
 										M.changeStatus("stunned", 2 SECONDS)
@@ -254,16 +262,16 @@ datum/shuttle_controller
 						if (particle_spawn)
 							particle_spawn.start_particles()
 
-						var/shuttle_dir = map_settings ? map_settings.escape_dir : EAST // default to cog2 direction because EH
+						var/escape_def = map_settings ? map_settings.escape_def : SHUTTLE_NODEF
 						for (var/turf/T in landmarks[LANDMARK_ESCAPE_POD_SUCCESS])
-							if (landmarks[LANDMARK_ESCAPE_POD_SUCCESS][T] != shuttle_dir)
-								landmarks[LANDMARK_ESCAPE_POD_SUCCESS] -= T //leave behind only landmarks that match our dir
+							if (landmarks[LANDMARK_ESCAPE_POD_SUCCESS][T] != escape_def)
+								landmarks[LANDMARK_ESCAPE_POD_SUCCESS] -= T //leave behind only landmarks for the map's escape shuttle
 
 						DEBUG_MESSAGE("Now moving shuttle!")
 						start_location.move_contents_to(end_location, map_turf)
 						for (var/turf/O in end_location)
 							if (istype(O, map_turf))
-								O.ReplaceWith(transit_turf, force=1)
+								O.ReplaceWith(transit_turf, keep_old_material = 0, force=1)
 						DEBUG_MESSAGE("Done moving shuttle!")
 						settimeleft(SHUTTLETRANSITTIME)
 						boutput(world, "<B>The Emergency Shuttle has left for CentCom! It will arrive in [timeleft()/60] minute[s_es(timeleft()/60)]!</B>")
@@ -290,10 +298,13 @@ datum/shuttle_controller
 								D.locked = 0
 								D.update_icon()
 
+						var/filler_turf = text2path(end_location.filler_turf)
+						if (!filler_turf)
+							filler_turf = centcom_turf
 						start_location.move_contents_to(end_location, transit_turf)
 						for (var/turf/G in end_location)
 							if (istype(G, transit_turf))
-								G.ReplaceWith(centcom_turf, force=1)
+								G.ReplaceWith(filler_turf, keep_old_material = 0, force=1)
 						boutput(world, "<B>The Emergency Shuttle has arrived at CentCom!")
 						world << csound("sound/misc/shuttle_centcom.ogg")
 						logTheThing("station", null, null, "The emergency shuttle has arrived at Centcom.")
@@ -316,7 +327,7 @@ datum/shuttle_controller
 						start_location.move_contents_to(end_location, map_turf)
 						for (var/turf/O in end_location)
 							if (istype(O, transit_turf))
-								O.ReplaceWith(centcom_turf, force=1)
+								O.ReplaceWith(centcom_turf, keep_old_material = 0, force=1)
 						boutput(world, "<B>The Emergency Shuttle has arrived at CentCom!")
 						logTheThing("station", null, null, "The emergency shuttle has arrived at Centcom.")
 						online = 0

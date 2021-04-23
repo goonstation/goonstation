@@ -6,7 +6,7 @@
 	var/time = null
 	flags = FPRINT | TABLEPASS| CONDUCT
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	m_amt = 300
 	mats = 2
@@ -90,7 +90,7 @@
 	user.u_equip(src)
 	src.set_loc(R)
 	R.part2 = src
-	R.dir = src.dir
+	R.set_dir(src.dir)
 	src.add_fingerprint(user)
 	return
 
@@ -172,6 +172,6 @@
 	return
 
 /obj/item/device/prox_sensor/Move()
-	..()
+	. = ..()
 	src.sense()
 	return

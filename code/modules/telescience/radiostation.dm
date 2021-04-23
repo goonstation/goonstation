@@ -61,13 +61,13 @@
 
 // Audio log players
 /obj/item/device/audio_log/radioship/large
-	name = "Audio log"
+	name = "audio log"
 	desc = "A bulky recording device."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "audiolog_newLarge"
 
 /obj/item/device/audio_log/radioship/small
-	name = "Audio log"
+	name = "audio log"
 	desc = "A handheld recording device."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "audiolog_newSmall"
@@ -130,59 +130,107 @@
 	icon_state = "mixtable-2"
 	anchored = 1.0
 	density = 1
-	var/state = 0
-	var/state_name = "OFF"
-	var/voice = 0
-	var/last_voice = ""
+	flags = TGUI_INTERACTIVE
+	var/static/list/accents
+	var/list/voices
+	var/selected_voice = 0
+	var/const/max_voices = 9
+	var/say_popup = FALSE
 
-/obj/submachine/mixing_desk/attack_hand(mob/user as mob)
+/obj/submachine/mixing_desk/New()
+	. = ..()
+	src.voices = list()
+	if(!src.accents)
+		src.accents = list()
+		for(var/bio_type in concrete_typesof(/datum/bioEffect/speech, FALSE))
+			var/datum/bioEffect/speech/effect = new bio_type()
+			if(!effect.acceptable_in_mutini || !effect.occur_in_genepools)
+				continue
+			var/name = effect.id
+			if(length(name) >= 7 && copytext(name, 1, 8) == "accent_")
+				name = copytext(name, 8)
+			name = replacetext(name, "_", " ")
+			accents[name] = effect
+
+/obj/submachine/mixing_desk/ui_status(mob/user, datum/ui_state/state)
+	return min(
+		state.can_use_topic(src, user),
+		tgui_not_incapacitated_state.can_use_topic(src, user)
+	)
+
+/obj/submachine/mixing_desk/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "MixingDesk", "[src]")
+		ui.open()
+
+/obj/submachine/mixing_desk/ui_data(mob/user)
+	. = list(
+		"voices" = src.voices,
+		"selected_voice" = src.selected_voice,
+		"say_popup" = src.say_popup
+	)
+
+/obj/submachine/mixing_desk/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
 		return
-	src.add_dialog(user)
-	var/dat = "<a href='byond://?src=\ref[src];state=1'>[src.state_name]</a>"
-	if(state)
-		dat += "<center><h4>Mixing Desk</h4></center>"
-		if(voice)
-			dat += "<br><center><h3>Voice synthesized: [src.voice]</h3></center>"
-		else
-			dat += "<br><center><h3>Error: no voice</h3></center>"
-		dat += "<center><b><a href='byond://?src=\ref[src];voice=1'>Voice</a> | "
-		dat += "<a href='byond://?src=\ref[src];say=1'>Say</a>"
-
-	user.Browse(dat, "window=mixing_desk")
-	onclose(user, "mixing_desk")
-	return
-
-/obj/submachine/mixing_desk/Topic(href, href_list)
-	if(..()) return
-	if(usr.stat || usr.restrained()) return
-	if(!in_range(src, usr)) return
-
-	if (href_list["state"])
-		if(state)
-			state = 0
-			state_name = "OFF"
-		else
-			state = 1
-			state_name = "ON"
-
-	else if (href_list["voice"])
-		voice = html_encode(input("Choose a voice to synthesize:","Voice",last_voice) as null|text)
-		last_voice = voice
-
-	else if (href_list["say"])
-		if (!voice)
-			return
-		var/message = html_encode(input("Choose something to say:","Message","") as null|text)
-		logTheThing("say", usr, voice, "SAY: [message] (Synthesizing the voice of <b>([constructTarget(voice,"say")])</b>)")
-		var/original_name = usr.real_name
-		usr.real_name = copytext(voice, 1, MOB_NAME_MAX_LENGTH)
-		usr.say(message)
-		usr.real_name = original_name
-
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
-	return
+	switch(action)
+		if("add_voice")
+			if(length(src.voices) >= src.max_voices)
+				return FALSE
+			var/name = input("Enter voice name:", "Voice name")
+			if(!name)
+				return FALSE
+			phrase_log.log_phrase("voice-radiostation", name, no_duplicates=TRUE)
+			if(length(name) > FULLNAME_MAX)
+				name = copytext(name, 1, FULLNAME_MAX)
+			var/accent = input("Pick an accent:", "Accent") as null|anything in list("none") + src.accents
+			if(accent == "none")
+				accent = null
+			src.voices += list(list("name"=name, "accent"=accent))
+			. = TRUE
+		if("remove_voice")
+			var/id = params["id"]
+			if(id <= 0 || id > length(voices))
+				return FALSE
+			if(id == src.selected_voice)
+				src.selected_voice = 0
+			else if(id < src.selected_voice)
+				src.selected_voice--
+			src.voices.Cut(id, id + 1)
+			. = TRUE
+		if("switch_voice")
+			var/id = params["id"]
+			if(id <= 0 || id > length(voices))
+				src.selected_voice = 0
+			else
+				src.selected_voice = id
+			. = TRUE
+		if("say_popup")
+			if("id" in params)
+				src.selected_voice = params["id"]
+			src.say_popup = TRUE
+			. = TRUE
+		if("cancel_say")
+			src.say_popup = FALSE
+			. = TRUE
+		if("say")
+			src.say_popup = FALSE
+			var/message = html_encode(params["message"])
+			if(src.selected_voice <= 0 || src.selected_voice > length(voices))
+				usr.say(message)
+				return TRUE
+			var/name = voices[src.selected_voice]["name"]
+			var/accent_id = voices[src.selected_voice]["accent"]
+			if(!isnull(accent_id))
+				var/datum/bioEffect/speech/accent = src.accents[accent_id]
+				message = accent.OnSpeak(message)
+			logTheThing("say", usr, name, "SAY: [message] (Synthesizing the voice of <b>([constructTarget(name,"say")])</b> with accent [accent_id])")
+			var/original_name = usr.real_name
+			usr.real_name = copytext(name, 1, MOB_NAME_MAX_LENGTH)
+			usr.say(message)
+			usr.real_name = original_name
+			. = TRUE
 
 // Record player
 /obj/submachine/record_player
@@ -207,25 +255,27 @@
 			W.set_loc(src)
 			src.record_inside = W
 			src.has_record = 1
-			src.is_playing = 1
 			var/R = html_encode(input("What is the name of this record?","Record Name") as null|text)
+			if(R)
+				phrase_log.log_phrase("record", R)
 			if (!R)
 				R = record_inside.record_name ? record_inside.record_name : pick("rad tunes","hip jams","cool music","neat sounds","magnificent melodies","fantastic farts")
 			user.client.play_music_radio(record_inside.song, R)
 			/// PDA message ///
 			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 			var/datum/signal/pdaSignal = get_free_signal()
-			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [R].")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [R].", "group" = MGA_RADIO)
 			pdaSignal.transmission_method = TRANSMISSION_RADIO
 			if(transmit_connection != null)
 				transmit_connection.post_signal(src, pdaSignal)
 			//////
+			src.is_playing = 1
 #ifdef UNDERWATER_MAP
-				sleep(5000) // mbc : underwater map has the radio on-station instead of in space. so it gets played a lot more often + is breaking my immersion
+			sleep(5000) // mbc : underwater map has the radio on-station instead of in space. so it gets played a lot more often + is breaking my immersion
 #else
-				sleep(3000)
+			sleep(3000)
 #endif
-			is_playing = 0
+			src.is_playing = 0
 	else
 		..()
 
@@ -249,7 +299,7 @@
 	var/song = ""
 	var/record_name = ""
 	var/add_overlay = 1
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throwforce = 3.0
 	throw_speed = 3
 	throw_range = 8
@@ -280,6 +330,13 @@
 	else
 		M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
 		logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
+
+ABSTRACT_TYPE(/obj/item/record/random)
+
+/obj/item/record/random/dance_on_a_space_volcano
+	name = "record - \"Dance On A Space Volcano\""
+	record_name = "Dance On A Space Volcano"
+	song = "sound/radio_station/dance_on_a_space_volcano.ogg"
 
 /obj/item/record/random/adventure_1
 	name = "record - \"adventure track #1\""
@@ -393,6 +450,42 @@
 	add_overlay = 0
 	icon_state = "record_red"
 
+ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
+/obj/item/record/random/chronoquest
+	New()
+		. = ..()
+		src.desc += {" Created by <a href="https://soundcloud.com/wizardofthewestside">Chronoquest</a>."}
+
+/obj/item/record/random/chronoquest/waystations
+	record_name = "Waystations"
+	name = "record - \"Waystations\""
+	song = "sound/radio_station/waystations.ogg"
+
+/obj/item/record/random/chronoquest/planets
+	record_name = "Planets"
+	name = "record - \"Planets\""
+	song = "sound/radio_station/planets.ogg"
+
+/obj/item/record/random/chronoquest/oh_no_evil_star
+	record_name = "Oh No Evil Star"
+	name = "record - \"Oh No Evil Star\""
+	song = "sound/radio_station/oh_no_evil_star.ogg"
+
+/obj/item/record/random/chronoquest/cloudskymanguy
+	record_name = "Cloudskymanguy"
+	name = "record - \"Cloudskymanguy\""
+	song = "sound/radio_station/cloudskymanguy.ogg"
+
+/obj/item/record/random/chronoquest/black_wing_interface
+	record_name = "Black Wing Interface"
+	name = "record - \"Black Wing Interface\""
+	song = "sound/radio_station/black_wing_interface.ogg"
+
+/obj/item/record/random/chronoquest/riverdancer
+	name = "record - \"Riverdancer\""
+	record_name = "Riverdancer"
+	song = "sound/radio_station/riverdancer.ogg"
+
 /obj/item/record/random/key_lime
 	name = "record - \"key_lime #1\""
 	record_name = "key lime #1"
@@ -405,14 +498,13 @@
 
 /obj/item/record/spacebux/New()
 	..()
-	var/pick_song = rand(1,3)
-	switch(pick_song)
-		if(1)
-			src.song = "sound/radio_station/buttris.ogg"
-		if(2)
-			src.song = "sound/radio_station/fart_elise.ogg"
-		if(3)
-			src.song = "sound/radio_station/we_are_number_two.ogg" // poo, more like, hah.
+	var/obj/item/record/record_type = pick(concrete_typesof(/obj/item/record/random))
+	src.name = initial(record_type.name)
+	src.record_name = initial(record_type.record_name)
+	src.name = initial(record_type.name)
+	src.song = initial(record_type.song)
+	if(src.record_name)
+		src.desc = "A fairly large record. There's a sticker on it that says \"[record_name]\"."
 
 /obj/item/record/poo
 	desc = "A fairly large record. It has a scratch on one side."
@@ -513,12 +605,24 @@
 	/obj/item/record/november,
 	/obj/item/record/december)
 
+/obj/item/storage/box/record/radio/chronoquest
+	name = "\improper Chronoquest record sleeve"
+	desc = {"A sturdy record sleeve, designed to hold multiple records made by <a href="https://soundcloud.com/wizardofthewestside">Chronoquest</a>."}
+	spawn_contents = list(
+		/obj/item/record/random/chronoquest/waystations,
+		/obj/item/record/random/chronoquest/planets,
+		/obj/item/record/random/chronoquest/oh_no_evil_star,
+		/obj/item/record/random/chronoquest/cloudskymanguy,
+		/obj/item/record/random/chronoquest/black_wing_interface,
+		/obj/item/record/random/chronoquest/riverdancer)
+
 /obj/item/storage/box/record/radio/host
 	desc = "A sleeve of exclusive radio station songs."
 
 /obj/item/storage/box/record/radio/host/New()
 	..()
-	var/list/possibilities = childrentypesof(/obj/item/record/random)
+	var/list/possibilities = concrete_typesof(/obj/item/record/random, cache=FALSE)
+	possibilities = possibilities.Copy() // so we don't modify the cached version if someone else cached it I guess
 	for (var/i = 1, i < 8, i++)
 		var/obj/item/record/R = pick(possibilities)
 		new R(src)
@@ -552,7 +656,7 @@
 			/// PDA message ///
 			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 			var/datum/signal/pdaSignal = get_free_signal()
-			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [src.tape_inside.audio_type] for [src.tape_inside.name_of_thing].")
+			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [src.tape_inside.audio_type] for [src.tape_inside.name_of_thing].", "group" = MGA_RADIO)
 			pdaSignal.transmission_method = TRANSMISSION_RADIO
 			if(transmit_connection != null)
 				transmit_connection.post_signal(src, pdaSignal)
@@ -577,7 +681,7 @@
 	desc = "A small audio tape. Though, it looks too big to fit in an audio log."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "tape"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/audio = null
 	var/audio_type = "Test"
 	var/name_of_thing = "Beep boop"

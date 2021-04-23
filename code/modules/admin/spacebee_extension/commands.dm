@@ -49,6 +49,45 @@
 		ircmsg["msg"] = "Added a note for [ckey]: [note]"
 		ircbot.export("admin", ircmsg)
 
+/datum/spacebee_extension_command/ban
+	name = "ban"
+	server_targeting = COMMAND_TARGETING_MAIN_SERVER
+	help_message = "Bans a given ckey. Arguments in the order of ckey, length (number of minutes, or put \"hour\", \"day\", \"week\", or \"perma\"), and ban reason. Make sure you specify the server that the person is on. Also keep in mind that this bans them from all servers. e.g. ban1 flourish perma Lol rip."
+	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/string="length",
+	/datum/command_argument/the_rest="reason")
+	execute(user, ckey, length, reason)
+		if (!(ckey && length && reason))
+			system.reply("Insufficient arguments.", user)
+			return
+		var/data[] = new()
+		data["ckey"] = ckey
+		var/mob/M = whois_ckey_to_mob_reference(ckey)
+		if (M)
+			data["compID"] = M.computer_id
+			data["ip"] = M.lastKnownIP
+		data["reason"] = reason
+		if (length == "hour")
+			length = 60
+		else if (length == "day")
+			length = 1440
+		else if (length == "week")
+			length = 10080
+		else if (length == "perma")
+			length = 0
+		else
+			length = text2num(length)
+		if (!isnum(length))
+			system.reply("Ban length invalid.", user)
+			return
+		data["mins"] = length
+		data["akey"] = ckey(user) + " (Discord)"
+		addBan(data) // logging, messaging, and noting are all taken care of by this proc
+
+		var/ircmsg[] = new()
+		ircmsg["name"] = user
+		ircmsg["msg"] = "Banned [ckey] from all servers for [length] minutes, reason: [reason]"
+		ircbot.export("admin", ircmsg)
+
 /datum/spacebee_extension_command/announce
 	name = "announce"
 	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
@@ -244,5 +283,47 @@
 		var/ircmsg[] = new()
 		ircmsg["key"] = "Loggo"
 		ircmsg["name"] = "Lazy Admin Logs"
-		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
+		// ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
+		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html"
 		ircbot.export("help", ircmsg)
+
+/datum/spacebee_extension_command/state_based/confirmation/mob_targeting/rename
+	name = "rename"
+	help_message = "Rename a given ckey's mob."
+	action_name = "rename"
+	argument_types = list(/datum/command_argument/string="ckey", /datum/command_argument/the_rest="new_name")
+	var/new_name = null
+
+	prepare(user, ckey, new_name)
+		. = ..()
+		src.new_name = new_name
+
+	perform_action(user, mob/target)
+		if(isnull(src.new_name))
+			return FALSE
+		message_admins("<span class='alert'>Admin [user] (Discord) renamed [key_name(target)] to [src.new_name]!</span>")
+		logTheThing("admin", "[user] (Discord)", target, "renamed [constructTarget(target,"admin")] to [src.new_name]!")
+		logTheThing("diary", "[user] (Discord)", target, "renamed [constructTarget(target,"diary")] to [src.new_name]!", "admin")
+		target.real_name = src.new_name
+		target.name = src.new_name
+		target.choose_name(1, null, target.real_name, force_instead=TRUE)
+		return TRUE
+
+
+/datum/spacebee_extension_command/vpn_whitelist
+	name = "vpnwhitelist"
+	help_message = "Whitelists a given ckey from the VPN checker."
+	argument_types = list(/datum/command_argument/string/ckey="ckey")
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+
+	execute(user, ckey)
+		try
+			apiHandler.queryAPI("vpncheck-whitelist/add", list("ckey" = ckey, "akey" = user + " (Discord)"))
+		catch(var/exception/e)
+			system.reply("Error while adding ckey [ckey] to the VPN whitelist: [e.name]")
+			return FALSE
+		global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
+		message_admins("Ckey [ckey] added to the VPN whitelist by [user] (Discord).")
+		logTheThing("admin", "[user] (Discord)", null, "Ckey [ckey] added to the VPN whitelist.")
+		system.reply("[ckey] added to the VPN whitelist.")
+		return TRUE

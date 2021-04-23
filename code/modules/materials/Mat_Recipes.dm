@@ -22,6 +22,10 @@
 	proc/apply_to(var/datum/material/M)
 		return M
 
+	/// called with the resultant item from the recipe as argument. Use this if you want to say, print a message when a recipe is made.
+	proc/apply_to_obj(var/obj/O)
+		return
+
 /datum/material_recipe/spacelag
 	name = "spacelag"
 	result_id = "spacelag"
@@ -143,6 +147,36 @@
 		for(var/datum/material/CM in M.parent_materials)
 			if(CM.mat_id == "plasmastone") one = 1
 			if(CM.mat_id == "glass") two = 1
+
+		if(one && two) return 1
+		else return 0
+
+/datum/material_recipe/synthleather
+	name = "synthleather"
+	result_id = "synthleather"
+
+	validate(var/datum/material/M)
+		var/one = 0
+		var/two = 0
+
+		for(var/datum/material/CM in M.parent_materials)
+			if(CM.mat_id == "latex") one = 1
+			if(CM.mat_id == "cotton") two = 1
+
+		if(one && two) return 1
+		else return 0
+
+/datum/material_recipe/synthblubber
+	name = "synthblubber"
+	result_id = "synthblubber"
+
+	validate(var/datum/material/M)
+		var/one = 0
+		var/two = 0
+
+		for(var/datum/material/CM in M.parent_materials)
+			if(CM.mat_id == "coral") one = 1
+			if(CM.mat_id == "synthrubber") two = 1
 
 		if(one && two) return 1
 		else return 0

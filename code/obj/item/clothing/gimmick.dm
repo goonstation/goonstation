@@ -3,7 +3,6 @@
 /obj/item/clothing/under/virtual
 	name = "virtual jumpsuit"
 	desc = "These clothes are unreal."
-	wear_image_fat = "virtual"
 	icon_state = "virtual"
 	item_state = "virtual"
 
@@ -21,21 +20,32 @@
 	item_state = "helmet"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
 	see_face = 0
+	item_function_flags = IMMUNE_TO_ACID
 
 	New()
 		..()
 		src.vchange = new(src) // Built-in voice changer (Convair880).
+
+	equipped(mob/user)
+		. = ..()
+		APPLY_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+
+	unequipped(mob/user)
+		REMOVE_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+		. = ..()
 
 /obj/item/clothing/under/gimmick/hunter
 	name = "Hunter Suit"
 	desc = "Fishnets, bandoliers and plating? What the hell?"
 	icon_state = "hunter"
 	item_state = "hunter"
+	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/clothing/shoes/cowboy/hunter
 	name = "Space Cowboy Boots"
 	desc = "Fashionable alien footwear. The sole appears to be rubberized,  preventing slipping on wet surfaces."
 	c_flags = NOSLIP // Don't slip on gibs all the time, d'oh (Convair880).
+	item_function_flags = IMMUNE_TO_ACID
 // --------------------------------------------------
 
 /obj/item/clothing/head/helmet/space/santahat
@@ -90,7 +100,6 @@
 	desc = "Twoooo!"
 	icon_state = "owl"
 	item_state = "owl"
-	compatible_species = list("human", "monkey")
 
 	equipped(var/mob/user)
 		..()
@@ -331,6 +340,7 @@
 	//undo if bug
 	cant_self_remove = 0
 	cant_other_remove = 0
+	var/infectious = 0
 
 /obj/item/clothing/mask/cursedclown_hat/equipped(var/mob/user, var/slot)
 	..()
@@ -343,6 +353,8 @@
 		user.job = "Cluwne"
 		src.cant_self_remove = 1
 		src.cant_other_remove = 1
+		if(src.infectious && user.reagents)
+			user.reagents.add_reagent("painbow fluid",10)
 	return
 
 /obj/item/clothing/mask/cursedclown_hat/custom_suicide = 1
@@ -366,6 +378,7 @@
 	icon_state = "cursedclown"
 	item_state = "cclown_shoes"
 	step_sound = "cluwnestep"
+	compatible_species = list("human", "cow")
 	cant_self_remove = 1
 	cant_other_remove = 1
 	step_lots = 1
@@ -531,7 +544,7 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	item_state = "vshield"
 	throwforce = 7.0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 
 	turn_off()
 		if(user)
@@ -765,8 +778,7 @@
 			H.bioHolder.mobAppearance.customization_second_color = "#412819"
 			H.bioHolder.mobAppearance.s_tone = "#FAD7D0"
 			H.bioHolder.AddEffect("clumsy")
-			H.set_face_icon_dirty()
-			H.set_body_icon_dirty()
+			H.update_colorful_parts()
 
 /obj/item/clothing/under/gimmick/chav
 	name = "blue tracksuit"
@@ -792,12 +804,14 @@
 	desc = "'ello gents! Cracking time to hunt an elephant!"
 	icon_state = "safari"
 	item_state = "safari"
+	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/clothing/head/safari
 	name = "safari hat"
 	desc = "Keeps you cool in the hot savannah."
 	icon_state = "safari"
 	item_state = "caphat"
+	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/clothing/mask/skull
 	name = "skull mask"
@@ -1035,6 +1049,7 @@
 	item_state = "weddress"
 	c_flags = SLEEVELESS
 
+ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 /obj/item/clothing/gloves/ring
 	name = "ring"
 	desc = "A little ring, worn on the ring finger. You absolutely can't wear rings on any other fingers. It's just not possible."
@@ -1062,16 +1077,15 @@
 			if (user.zone_sel.selecting == "l_arm" || user.zone_sel.selecting == "r_arm") // the ring always ends up on the left hand because I cba to let people dynamically choose the hand it goes on. yet. later, maybe.
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
-					var/fat = H.bioHolder && H.bioHolder.HasEffect("fat") // also honk
 					if (H.gloves)
 						boutput(user, "<span class='alert'>You can't put [src] on [H]'s finger while they're wearing [H.gloves], you oaf!</span>")
 						return
 					if (user == H) // is this some form of masturbation?? giving yourself a wedding ring???? or are you too lazy to just equip it like a normal person????????
-						user.visible_message("<b>[user]</b> [fat ? "squeezes" : "slips"] [src] onto [his_or_her(user)] own finger. Legally, [he_or_she(user)] is now married to [him_or_her(user)]self. Congrats.",\
-						"You [fat ? "squeeze" : "slip"] [src] onto your own finger. Legally, you are now married to yourself. Congrats.")
+						user.visible_message("<b>[user]</b> slips [src] onto [his_or_her(user)] own finger. Legally, [he_or_she(user)] is now married to [him_or_her(user)]self. Congrats.",\
+						"You slip [src] onto your own finger. Legally, you are now married to yourself. Congrats.")
 					else
-						user.visible_message("<b>[user]</b> [fat ? "squeezes" : "slips"] [src] onto [H]'s finger.",\
-						"You [fat ? "squeeze" : "slip"] [src] onto [H]'s finger.")
+						user.visible_message("<b>[user]</b> slips [src] onto [H]'s finger.",\
+						"You slip [src] onto [H]'s finger.")
 					user.u_equip(src)
 					H.force_equip(src, H.slot_gloves)
 					return
@@ -1315,8 +1329,6 @@
 	desc = "A jumpsuit with a cute frog pattern on it. Get it? <i>Jump</i>suit? Ribbit!"
 	icon_state = "frogsuit"
 	item_state = "lightgreen"
-	c_flags = ONESIZEFITSALL // Fix to stop frog suit + obese infinite looping. RemoveEffect would loop through the obesity code back to unequipped over 5 procs total.
-													 //	(The loop goes unequipped->RemoveEffect->UpdateMob->update_clothing->u_equip->unequipped if you're courageous enough to fix it properly. I think that's not be the only way it could loop either.) -BatElite
 	equipped(var/mob/user, var/slot)
 		if (slot == SLOT_W_UNIFORM && user.bioHolder)
 			user.bioHolder.AddEffect("jumpy_suit", 0, 0, 0, 1) // id, variant, time left, do stability, magical
@@ -1335,6 +1347,16 @@
 				if (H.hud)
 					H.hud.update_ability_hotbar()
 		..()
+
+/obj/item/clothing/under/gimmick/pajamas
+	name = "pajamas"
+#ifdef UNDERWATER_MAP //gimmick jumpsuit descriptions are serious business
+	desc = "Going outside when in an ocean is kinda wet, so why bother getting dressed?"
+#else
+	desc = "Going outside when in space is kinda dangerous, so why bother getting dressed?"
+#endif
+	icon_state = "pajamas"
+	item_state = "pajamas"
 
 /obj/item/clothing/under/gimmick/shirtnjeans
 	name = "shirt and jeans"
@@ -1402,6 +1424,11 @@
 /obj/item/clothing/head/werewolf/odd
 	name = "odd werewolf mask"
 	desc = "The mask of a peculiarly tinted wolfman getup with an outrageous price tag."
+	icon_state = "gwmask"
+
+/obj/item/clothing/head/werewolf/taxidermy
+	name = "werewolf mask"
+	desc = "The pelt of a flayed werewolf's head formed into a wearable taxidermy mask. Wonderful."
 	icon_state = "gwmask"
 
 /obj/item/clothing/suit/gimmick/abomination
@@ -1484,6 +1511,7 @@
 	name = "rollerskates"
 	desc = "A pair of rollerskates, invented when experimental teleportation technology fused a pair of tacky boots and a shopping cart."
 	c_flags = NOSLIP
+	icon_state = "rollerskates"
 
 /obj/item/clothing/under/gimmick/itsyourcousin
 	name = "tacky shirt and slacks"

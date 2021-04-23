@@ -4,7 +4,8 @@
 
 /datum/artifact/borgifier
 	associated_object = /obj/artifact/borgifier
-	rarity_class = 3
+	type_name = "Cyborg converter"
+	rarity_weight = 200
 	validtypes = list("ancient")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch)

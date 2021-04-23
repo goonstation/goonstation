@@ -118,7 +118,7 @@
 		if (!src.open)
 			src.visible_message("[user] tries to put [W] into [src], but [src]'s door is closed, so [he_or_she(user)] just smooshes [W] against the door.[prob(40) ? " What a doofus!" : null]")
 			return
-		else if (!istype(W, /obj/item/clothing) && W.w_class > 5)
+		else if (!istype(W, /obj/item/clothing) && W.w_class > W_CLASS_HUGE)
 			src.visible_message("[user] tries [his_or_her(user)] best to put [W] into [src], but [W] is too big to fit!")
 			return
 		else if (src.contents.len >= src.load_max)
@@ -163,7 +163,7 @@
 
 /obj/submachine/laundry_machine/MouseDrop(over_object,src_location,over_location)
 	var/mob/user = usr
-	if (!user || !over_object || get_dist(user, src) > 1 || get_dist(user, over_object) > 1 || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || (issilicon(user) && get_dist(src,user) > 1))
+	if (!user || !over_object || get_dist(user, src) > 1 || get_dist(user, over_object) > 1 || is_incapacitated(user) || (issilicon(user) && get_dist(src,user) > 1))
 		return
 	if (src.on)
 		src.visible_message("[user] tries to open [src]'s door, but [src] is running and the door is locked!")

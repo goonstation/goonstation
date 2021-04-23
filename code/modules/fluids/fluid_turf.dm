@@ -36,7 +36,7 @@
 
 	special_volume_override = 0.62
 
-	turf_flags = CAN_BE_SPACE_SAMPLE | FLUID_MOVE
+	turf_flags = FLUID_MOVE
 
 	var/datum/light/point/light = 0
 	var/light_r = 0.16
@@ -61,13 +61,13 @@
 			switch(rand(1,3))
 				if(1)
 					icon_state = "sand_other_texture"
-					src.dir = pick(alldirs)
+					src.set_dir(pick(alldirs))
 				if(2)
 					icon_state = "sand_other_texture2"
-					src.dir = pick(alldirs)
+					src.set_dir(pick(alldirs))
 				if(3)
 					icon_state = "sand_other_texture3"
-					src.dir = pick(cardinal)
+					src.set_dir(pick(cardinal))
 
 		if (spawningFlags && current_state <= GAME_STATE_WORLD_INIT)
 			//worldgenCandidates[src] = 1 //Adding self to possible worldgen turfs
@@ -120,9 +120,11 @@
 
 
 		sleep(0.1 SECONDS)
+		/*
 		for(var/obj/overlay/tile_effect/lighting/L in src)
 			src.icon = getFlatIcon(L)
 			qdel(L)
+		*/
 
 	proc/update_light()
 		if (light)
@@ -262,7 +264,7 @@
 
 	proc/blow_hole()
 		if (src.z != 5)
-			new /turf/space/fluid/warp_z5/realwarp(src)
+			src.ReplaceWith(/turf/space/fluid/warp_z5/realwarp, FALSE, TRUE, FALSE, TRUE)
 
 //////////////////////duh look below
 /turf/space/fluid/warp_z5
@@ -287,7 +289,7 @@
 				L+=T
 
 	Entered(var/atom/movable/AM)
-		if (istype(AM,/mob/dead) || istype(AM,/mob/wraith) || istype(AM,/mob/living/intangible) || istype(AM, /obj/lattice) || istype(AM, /obj/cable/reinforced) || istype(AM,/obj/torpedo_targeter) || istype(AM,/obj/overlay) || istype (AM, /obj/arrival_missile))
+		if (istype(AM,/mob/dead) || istype(AM,/mob/wraith) || istype(AM,/mob/living/intangible) || istype(AM, /obj/lattice) || istype(AM, /obj/cable/reinforced) || istype(AM,/obj/torpedo_targeter) || istype(AM,/obj/overlay) || istype (AM, /obj/arrival_missile) || istype(AM, /obj/sea_ladder_deployed))
 			return
 		if (locate(/obj/lattice) in src)
 			return
@@ -295,7 +297,7 @@
 
 		try_build_turf_list()
 
-		if (L && L.len)
+		if (length(L))
 			SPAWN_DBG(0.3 SECONDS)//you can 'jump' over a hole by running real fast or being thrown!!
 				if (istype(AM.loc, /turf/space/fluid/warp_z5))
 					visible_message("<span class='alert'>[AM] falls down [src]!</span>")
@@ -366,7 +368,7 @@
 
 	New()
 		..()
-		src.dir = pick(NORTH,SOUTH)
+		src.set_dir(pick(NORTH,SOUTH))
 
 
 	ex_act(severity)
@@ -391,46 +393,41 @@
 	name = "elevator shaft"
 	desc = "It looks like it goes down a long ways."
 	icon_state = "moon_shaft"
+	var/const/area_type = /area/shuttle/sea_elevator/upper
 
 	New()
 		..()
 
-		var/turf/n = 0
-		var/turf/e = 0
-		var/turf/w = 0
-		var/turf/s = 0
+		var/turf/n = get_step(src,NORTH)
+		var/turf/e = get_step(src,EAST)
+		var/turf/w = get_step(src,WEST)
+		var/turf/s = get_step(src,SOUTH)
 
-		n = get_step(src,NORTH)
-		if (!istype(e,/turf/simulated/floor/specialroom/sea_elevator_shaft))
-			n = 0
-		e = get_step(src,EAST)
-		if (!istype(e,/turf/simulated/floor/specialroom/sea_elevator_shaft))
-			e = 0
-		w = get_step(src,WEST)
-		if (!istype(e,/turf/simulated/floor/specialroom/sea_elevator_shaft))
-			w = 0
-		s = get_step(src,SOUTH)
-		if (!istype(e,/turf/simulated/floor/specialroom/sea_elevator_shaft))
-			s = 0
+		if (!istype(get_area(n),area_type))
+			n = null
+		if (!istype(get_area(e),area_type))
+			e = null
+		if (!istype(get_area(w),area_type))
+			w = null
+		if (!istype(get_area(s),area_type))
+			s = null
 
-		//have fun reading this! also fuck youu!
 		if (e && s)
-			dir = SOUTH
-			e.dir = NORTH
-			s.dir = WEST
+			set_dir(SOUTH)
+			e.set_dir(NORTH)
+			s.set_dir(WEST)
 		else if (e && n)
-			dir = WEST
-			e.dir = EAST
-			n.dir = SOUTH
+			set_dir(WEST)
+			e.set_dir(EAST)
+			n.set_dir(SOUTH)
 		else if (w && s)
-			dir = NORTH
-			w.dir = SOUTH
-			s.dir = EAST
+			set_dir(NORTH)
+			w.set_dir(SOUTH)
+			s.set_dir(EAST)
 		else if (w && n)
-			dir = EAST
-			w.dir = WEST
-			n.dir = NORTH
-
+			set_dir(EAST)
+			w.set_dir(WEST)
+			n.set_dir(NORTH)
 
 	ex_act(severity)
 		return
@@ -480,7 +477,7 @@
 /obj/machinery/computer/sea_elevator/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if (((src in usr.contents) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 		if (href_list["send"])

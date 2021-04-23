@@ -256,6 +256,15 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	urs
 		ckey = "ursulamajor"
 		name = "Office of UrsulaMajor"
+	varshie
+		ckey = "varshie"
+		name = "Office of Varshie"
+	virvatuli
+		ckey = "virvatuli"
+		name = "Office of Virvatuli"
+		New()
+			..()
+			overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "snowverlay", layer = EFFECTS_LAYER_BASE)
 	wire
 		ckey = "wirewraith"
 		name = "Office of Wire"
@@ -283,6 +292,62 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	icon_state = "green"
 	blocked = 1
 
+/area/centcom/datacenter
+	name = "NT Data Center"
+	icon_state = "pink"
+
+/area/centcom/reconstitutioncenter
+	name = "NT Reconstitution Center"
+	icon_state = "purple"
+
+/area/retentioncenter
+	name = "NT Retention Center"
+	icon_state = "dk_yellow"
+
+/area/retentioncenter/depot
+	name = "NT Retention Center (depot)"
+	icon_state = "green"
+
+/area/retentioncenter/blue
+	name = "NT Retention Center (BLU)"
+	icon_state = "blue"
+
+/area/retentioncenter/green
+	name = "NT Retention Center (GRN)"
+	icon_state = "green"
+
+/area/retentioncenter/yellow
+	name = "NT Retention Center (YLW)"
+	icon_state = "yellow"
+
+/area/retentioncenter/orange
+	name = "NT Retention Center (ORG)"
+	icon_state = "orange"
+
+/area/retentioncenter/red
+	name = "NT Retention Center (RED)"
+	icon_state = "red"
+
+/area/retentioncenter/black
+	name = "NT Retention Center (BLK)"
+	icon_state = "purple"
+
+/area/retentioncenter/restricted
+	name = "NT Retention Center (Restricted)"
+	icon_state = "death"
+
+/area/retentioncenter/disposals
+	name = "NT Retention Center (disposals)"
+	icon_state = "red"
+
+/area/retentioncenter/substation
+	name = "NT Retention Center (substation)"
+	icon_state = "pink"
+
+/area/retentioncenter/office
+	name = "NT Retention Center (office)"
+	icon_state = "orange"
+
 ////////////////////////////
 
 /turf/unsimulated/outdoors
@@ -292,13 +357,13 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 		name = "snow"
 		New()
 			..()
-			dir = pick(cardinal)
+			set_dir(pick(cardinal))
 		icon_state = "grass_snow"
 	grass
 		name = "grass"
 		New()
 			..()
-			dir = pick(cardinal)
+			set_dir(pick(cardinal))
 		icon_state = "grass"
 		dense
 			name = "dense grass"
@@ -474,3 +539,23 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 			src.rejected_mobs.Add(user)
 		src.cant_self_remove = true
 		src.cant_other_remove = false
+
+
+/area/centcom/offices/enakai
+	Entered(atom/movable/Obj,atom/OldLoc)
+		if (isliving(Obj))
+			var/mob/living/L = Obj
+			if (L.ckey == "enakai" || L.ckey == "rodneydick")		//The aussies are immune due to constant exposure
+				return
+			var/matrix/M = L.transform
+			animate(L, transform = matrix(M, 90, MATRIX_ROTATE | MATRIX_MODIFY), time = 3)
+			animate( transform = matrix(M, 90, MATRIX_ROTATE | MATRIX_MODIFY), time = 3)
+
+	Exited(atom/movable/Obj, atom/newloc)
+		if (isliving(Obj))
+			var/mob/living/L = Obj
+			if (L.ckey == "enakai" || L.ckey == "rodneydick")
+				return
+			var/matrix/M = L.transform
+			animate(L, transform = matrix(M, -90, MATRIX_ROTATE | MATRIX_MODIFY), time = 3)
+			animate( transform = matrix(M, -90, MATRIX_ROTATE | MATRIX_MODIFY), time = 3)

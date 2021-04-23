@@ -27,7 +27,7 @@
 			var/turf/T = get_turf(src.loc)
 			if(istype(T,/turf/simulated/floor/plating))
 				var/obj/machinery/atmos/pipe/P = new/obj/machinery/atmos/pipe(T)
-				P.set_dir(up,down,left,right)
+				P.update_dir(up,down,left,right)
 				SPAWN_DBG(1 DECI SECOND)
 					qdel(src)//This might need to be changed to have them drop it first
 			else
@@ -35,7 +35,7 @@
 		else
 			..()//Add ID swipe
 
-	proc/set_dir(var/u, var/d, var/l, var/r)//For the moment just going to have the pipe machine call this
+	proc/update_dir(var/u, var/d, var/l, var/r)//For the moment just going to have the pipe machine call this
 		up = u
 		down = d
 		left = l
@@ -94,7 +94,7 @@
 		if (!iswrenchingtool(W))
 			..()//Add ID swipe
 
-	proc/set_dir(var/u, var/d, var/l, var/r)
+	proc/update_dir(var/u, var/d, var/l, var/r)
 		up = u
 		down = d
 		left = l

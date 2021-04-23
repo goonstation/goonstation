@@ -102,7 +102,7 @@
 		if(!src.randomized) return
 		src.generate_edges()
 		if(prob(30))
-			src.dir = pick(NORTH,SOUTH,EAST,WEST)
+			src.set_dir(pick(NORTH,SOUTH,EAST,WEST))
 		if(prob(1))
 			new /obj/shrub/redweed(src)
 	t1
@@ -344,7 +344,7 @@
 						name = "malfunctioning robot"
 						src.speak("Lev##LLl 7 SEV-s-E infraAAAAAaction @leRT??!")
 						src.visible_message("The <b>[src]</b> points at [C.name]!")
-						playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1)
+						playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 						startup = 0
 						wanderer = 1
 					src.visible_message("<span class='alert'>The <b>[src]</b> charges at [C:name]!</span>")
@@ -370,7 +370,7 @@
 
 
 	Move()
-		..()
+		. = ..()
 		playsound(src.loc, 'sound/effects/airbridge_dpl.ogg', 30, 10, -2)
 
 
@@ -388,7 +388,7 @@
 	CritterDeath()
 		if (!src.alive) return
 		..()
-		playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1)
+		playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 		speak("aaaaaaalkaAAAA##AAAAAAAAAAAAAAAAA'ERRAAAAAAAA!!!")
 
 /obj/mars_roverpuzzle
@@ -429,7 +429,7 @@
 			qdel(P)
 			if((wheel)&&(oxy)&&(battery)&&(glass)&&(motherboard))
 				var/obj/vehicle/marsrover/R = new /obj/vehicle/marsrover(loc)
-				R.dir = WEST
+				R.set_dir(WEST)
 				playsound(src.loc, 'sound/machines/rev_engine.ogg', 50, 1)
 				boutput(user, "<span class='notice'>The rover has been completed!</span>")
 				qdel(src)
@@ -486,7 +486,8 @@
 		icon_state = "marsrover"
 
 /obj/vehicle/marsrover/eject_rider(var/crashed, var/selfdismount)
-	rider.set_loc(src.loc)
+	var/mob/rider = src.rider
+	..()
 	rider.pixel_y = 0
 	walk(src, 0)
 
@@ -521,18 +522,11 @@
 	update()
 	return
 
-/obj/vehicle/marsrover/relaymove(mob/user as mob, dir)
-	if(rider)
-		if(istype(src.loc, /turf/space))
-			return
-		icon_state = "marsrover2"
-		walk(src, dir, 2)
-	else
-		for(var/mob/M in src.contents)
-			M.set_loc(src.loc)
+/obj/vehicle/marsrover/do_special_on_relay(mob/user as mob, dir)
+	icon_state = "marsrover2"
 
 /obj/vehicle/marsrover/MouseDrop_T(mob/living/carbon/human/target, mob/user)
-	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || isAI(user))
+	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || is_incapacitated(user) || isAI(user))
 		return
 
 	var/msg
@@ -568,7 +562,7 @@
 	if(usr != rider)
 		..()
 		return
-	if(!(usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat))
+	if(!is_incapacitated(usr))
 		eject_rider(0, 1)
 	return
 
@@ -586,18 +580,6 @@
 			else
 				playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, -1)
 				src.visible_message("<span class='combat'><B>[M] has attempted to shove [rider] off of the [src]!</B></span>")
-	return
-
-/obj/vehicle/marsrover/bullet_act(flag, A as obj)
-	if(rider)
-		eject_rider()
-		rider.bullet_act(flag, A)
-	return
-
-/obj/vehicle/marsrover/meteorhit()
-	if(rider)
-		eject_rider()
-		rider.meteorhit()
 	return
 
 /obj/vehicle/marsrover/disposing()

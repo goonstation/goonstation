@@ -16,6 +16,8 @@
 
 	var/points_per_crate = 10
 
+	var/artifact_resupply_amount = 0 // amount of artifacts in next resupply crate
+
 	New()
 		..()
 
@@ -120,6 +122,61 @@
 				removed_count--
 				src.active_traders += new /datum/trader/generic(src)
 
+	proc/sell_artifact(obj/sell_art, var/datum/artifact/sell_art_datum)
+		var/price = 0
+		var/modifier = sell_art_datum.get_rarity_modifier()
+
+		// calculate price
+		price = modifier*modifier * 10000
+		var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in sell_art.vis_contents
+		if(pap?.lastAnalysis)
+			price *= pap.lastAnalysis
+		price += rand(-50,50)
+		price = round(price, 5)
+
+		// track score
+		if(pap)
+			score_tracker.artifacts_analyzed++
+		if(pap?.lastAnalysis >= 3)
+			score_tracker.artifacts_correctly_analyzed++
+
+		// send artifact resupply
+		if(prob(modifier*40*pap?.lastAnalysis)) // range from 0% to ~78% for fully researched t4 artifact
+			if(!src.artifact_resupply_amount)
+				SPAWN_DBG(rand(3,8) MINUTES)
+					// message
+					var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
+					var/datum/signal/pdaSignal = get_free_signal()
+					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE), "sender"="00000000", "message"="Notification: Incoming artifact resupply crate. ([artifact_resupply_amount] objects)")
+					pdaSignal.transmission_method = TRANSMISSION_RADIO
+					if(transmit_connection != null)
+						transmit_connection.post_signal(null, pdaSignal)
+					// actual shipment
+					var/obj/storage/crate/artcrate = new /obj/storage/crate()
+					artcrate.name = "Artifact Resupply Crate"
+					for(var/i = 0 to artifact_resupply_amount)
+						new /obj/artifact_type_spawner/vurdalak(artcrate)
+					artifact_resupply_amount = 0
+					shippingmarket.receive_crate(artcrate)
+			src.artifact_resupply_amount++
+
+		// sell
+		wagesystem.shipping_budget += price
+		qdel(sell_art)
+
+		// give PDA group messages
+		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
+		var/datum/signal/pdaSignal = get_free_signal()
+		var/message = "Notification: [price] credits earned from outgoing artifact \'[sell_art.name]\'. "
+		if(pap)
+			message += "Analysis was [(pap.lastAnalysis/3)*100]% correct."
+		else
+			message += "Artifact was not analyzed."
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE, MGA_SALES), "sender"="00000000", "message"=message)
+		pdaSignal.transmission_method = TRANSMISSION_RADIO
+		if(transmit_connection != null)
+			transmit_connection.post_signal(null, pdaSignal)
+
 	proc/sell_crate(obj/storage/crate/sell_crate, var/list/commodities_list)
 		var/obj/item/card/id/scan = sell_crate.scan
 		var/datum/data/record/account = sell_crate.account
@@ -143,7 +200,7 @@
 						duckets += add
 						break
 					else if (istype(O, /obj/item/spacecash))
-						duckets += O:amount
+						duckets += 0.9 * O:amount
 						pool(O)
 		else // Please excuse this duplicate code, I'm gonna change trader commodity lists into associative ones later I swear
 			for(var/obj/O in sell_crate.contents)
@@ -162,6 +219,11 @@
 					else if (istype(O, /obj/item/spacecash))
 						duckets += O:amount
 						pool(O)
+
+		#ifdef SECRETS_ENABLED
+		send_to_brazil(sell_crate)
+		#endif
+
 		qdel(sell_crate)
 
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
@@ -169,10 +231,10 @@
 		if(scan && account)
 			wagesystem.shipping_budget += duckets / 2
 			account.fields["current_money"] += duckets / 2
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment. Splitting half of profits with [scan.registered].")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment. Splitting half of profits with [scan.registered].")
 		else
 			wagesystem.shipping_budget += duckets
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment.")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from last outgoing shipment.")
 
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		if(transmit_connection != null)
@@ -202,27 +264,17 @@
 
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [S.name].")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [S.name].")
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		transmit_connection.post_signal(null, pdaSignal)
 
 
-#if ASS_JAM
-		if(prob(5))
-			var/list/turf/viable_turfs = get_area_turfs(/area/station/quartermaster/cargobay)
-			if(!viable_turfs.len)
-				viable_turfs = get_area_turfs(/area/station/quartermaster)
-			if(viable_turfs.len)
-				var/turf/ass_spawn = pick(viable_turfs)
-				S.set_loc(ass_spawn)
-				heavenly_spawn(S)
-				return
-#endif
+
 		for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 			if (P.id == "qm_dock")
 				playsound(P.loc, "sound/machines/bellalert.ogg", 50, 0)
 				SPAWN_DBG(SUPPLY_OPEN_TIME)
-					if (P && P.density)
+					if (P?.density)
 						P.open()
 				SPAWN_DBG(SUPPLY_CLOSE_TIME)
 					if (P && !P.density)

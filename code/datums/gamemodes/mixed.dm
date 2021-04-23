@@ -243,9 +243,10 @@
 				else
 					randomname = pick_string_autokey("names/wizard_male.txt")
 
-				SPAWN_DBG (0)
+				SPAWN_DBG(0)
 					var/newname = input(traitor.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname)
-
+					if(newname && newname != randomname)
+						phrase_log.log_phrase("name-wizard", randomname, no_duplicates=TRUE)
 					if (length(ckey(newname)) == 0)
 						newname = randomname
 
@@ -274,10 +275,11 @@
 
 			if ("blob")
 				objective_set_path = /datum/objective_set/blob
-				SPAWN_DBG (0)
+				SPAWN_DBG(0)
 					var/newname = input(traitor.current, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
 
 					if (newname)
+						phrase_log.log_phrase("name-blob", newname, no_duplicates=TRUE)
 						if (length(newname) >= 26) newname = copytext(newname, 1, 26)
 						newname = strip_html(newname) + " the Blob"
 						traitor.current.real_name = newname
@@ -375,7 +377,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(traitors))
 /*
-	for (var/obj/machinery/computer/communications/comm as() in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/comm as anything in machine_registry[MACHINES_COMMSCONSOLES])
 		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
 			intercept.name = "paper- 'Cent. Com. Status Summary'"

@@ -11,7 +11,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "butt-nc"
 	force = 1.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 1.0
 	throw_speed = 3
 	throw_range = 5
@@ -32,7 +32,7 @@
 	var/made_from = "butt"
 
 	disposing()
-		if (donor && donor.organs)
+		if (donor?.organs)
 			donor.organs -= src
 		if (holder)
 			holder.butt = null
@@ -96,7 +96,7 @@
 		var/fluff2 = pick("hole", "gaping hole", "incision", "wound")
 
 		if (H.butt_op_stage == 4.0)
-			H.tri_message("<span class='alert'><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[H.gender == "male" ? "his" : "her"]" : "[H]'s"] butt used to be!</span>",\
+			H.tri_message("<span class='alert'><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[his_or_her(H)]" : "[H]'s"] butt used to be!</span>",\
 			user, "<span class='alert'>You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be!</span>",\
 			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be!</span>")
 
@@ -106,7 +106,7 @@
 			H.butt_op_stage = 3.0
 			return 1
 		else if (H.butt_op_stage == 5.0)
-			H.tri_message("<span class='alert'><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[H.gender == "male" ? "his" : "her"]" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
+			H.tri_message("<span class='alert'><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[his_or_her(H)]" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
 			user, "<span class='alert'>You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>",\
 			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>")
 			if (user.find_in_hand(src))
@@ -159,17 +159,15 @@
 			qdel(W)
 			qdel(src)
 		else if (istype(W, /obj/item/parts/robot_parts/arm))
-			var/obj/machinery/bot/buttbot/B = new /obj/machinery/bot/buttbot
-			if (src.toned)
-				B.toned = 1
-				B.s_tone = src.s_tone
-
+			var/obj/machinery/bot/buttbot/B = new /obj/machinery/bot/buttbot(src, W)
 			if (src.donor || src.donor_name)
 				B.name = "[src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"] buttbot"
 			user.show_text("You add [W] to [src]. Fantastic.", "blue")
-			B.set_loc(get_turf(user))
-			qdel(W)
-			qdel(src)
+			B.set_loc(get_turf(src))
+			src.set_loc(B)
+			user.u_equip(src)
+			W.set_loc(B)
+			user.u_equip(W)
 
 		else if (istype(W, /obj/item/spacecash) && W.type != /obj/item/spacecash/buttcoin)
 			user.u_equip(W)
@@ -201,12 +199,15 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/parts/robot_parts/arm))
-			var/obj/machinery/bot/buttbot/cyber/B = new /obj/machinery/bot/buttbot/cyber(get_turf(user))
+			var/obj/machinery/bot/buttbot/cyber/B = new /obj/machinery/bot/buttbot/cyber(src, W)
 			if (src.donor || src.donor_name)
 				B.name = "[src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"] robuttbot"
 			user.show_text("You add [W] to [src]. Fantastic.", "blue")
-			qdel(W)
-			qdel(src)
+			B.set_loc(get_turf(src))
+			src.set_loc(B)
+			user.u_equip(src)
+			W.set_loc(B)
+			user.u_equip(W)
 		else
 			return ..()
 

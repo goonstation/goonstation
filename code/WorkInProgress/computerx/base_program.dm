@@ -43,8 +43,7 @@
 			src.metadata += params2list(meta_params)
 
 	disposing()
-		if(master)
-			master.processing_programs.Remove(src)
+		master?.processing_programs.Remove(src)
 		..()
 
 	Topic(href, href_list)
@@ -57,7 +56,7 @@
 		if(master.status & (NOPOWER|BROKEN))
 			return 1
 
-		if ((!usr.contents.Find(src.master) && (!in_range(src.master, usr) || !istype(src.master.loc, /turf))) && (!issilicon(usr)))
+		if ((!usr.contents.Find(src.master) && (!in_interact_range(src.master, usr) || !istype(src.master.loc, /turf))) && (!issilicon(usr)))
 			return 1
 
 		if(!(holder in src.master.contents) && !(holder.loc in src.master.contents))
@@ -81,8 +80,7 @@
 			return 0
 
 		quit()
-			if(src.master)
-				src.master.unload_program(src)
+			src.master?.unload_program(src)
 			return
 
 		input_text(var/text, source=0)

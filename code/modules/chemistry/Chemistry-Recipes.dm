@@ -476,7 +476,7 @@ datum
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = 0
-				if (holder.my_atom)
+				if (holder?.my_atom)
 					location = get_turf(holder.my_atom)
 					tfireflash(location, 1, 7000)
 				else
@@ -542,29 +542,7 @@ datum
 			instant = 1
 			mix_phrase = "The mixture explodes with a big bang."
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				var/atom/source = get_turf(holder.my_atom)
-				new/obj/decal/shockwave(source)
-				playsound(source, 'sound/weapons/flashbang.ogg', 25, 1)
-				if (holder.my_atom)
-					for(var/atom/movable/M in view(2+ (created_volume > 30 ? 1:0), source))
-						if(M.anchored || M == source || M.throwing) continue
-						M.throw_at(get_edge_cheap(source, get_dir(source, M)),  20 + round(created_volume * 2), 1 + round(created_volume / 10))
-						LAGCHECK(LAG_MED)
-				else
-					var/limit_count = 0
-					var/turf/location = 0
-					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
-					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
-						location = pick(holder.covered_cache)
-						holder.covered_cache -= location
-						limit_count = 0
-						for(var/atom/movable/M in location)
-							if(M.anchored || M == source || M.throwing) continue
-							limit_count++
-							M.throw_at(get_edge_cheap(location, pick(cardinal)),  (20 + round(created_volume * 2)/holder.covered_cache.len), (1 + round(created_volume / 10))/holder.covered_cache.len)
-							if (limit_count > 5) break
-							LAGCHECK(LAG_MED)
-
+				sorium_reaction(holder, created_volume, id)
 				return
 
 		ldmatter
@@ -2392,33 +2370,12 @@ datum
 			mix_sound = 'sound/weapons/flashbang.ogg'
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				var/turf/location = 0
-				if (holder.my_atom)
-					location = get_turf(holder.my_atom)
-					elecflash(location)
-
-					for (var/mob/living/M in all_viewers(5, location))
-						if (isintangible(M))
-							continue
-
-						var/dist = get_dist(M, location)
-						if (issilicon(M))
-							M.apply_flash(30, max(2 * (3 - dist), 0), max(2 * (5 - dist), 0))
-						else
-							M.apply_flash(60, 0, (3 - dist), 0, ((5 - dist) * 2), (2 - dist))
+				if (holder?.my_atom)
+					flashpowder_reaction(get_turf(holder.my_atom), created_volume)
 				else
 					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
-						location = pick(holder.covered_cache)
-						holder.covered_cache -= location
-						for (var/mob/living/M in location)
-							if (isintangible(M))
-								continue
-							var/dist = get_dist(M, location)
-							if (issilicon(M))
-								M.apply_flash(30, max(2 * (3 - dist), 0), max(2 * (5 - dist), 0))
-							else
-								M.apply_flash(60, 0, (3 - dist), 0, ((5 - dist) * 2), (2 - dist))
+						flashpowder_reaction(get_turf(pick(holder.covered_cache)), created_volume)
 
 
 
@@ -2446,7 +2403,7 @@ datum
 				var/hootmode = prob(5)
 				var/turf/location = 0
 
-				if (holder.my_atom)
+				if (holder?.my_atom)
 					location = get_turf(holder.my_atom)
 					if (hootmode)
 						playsound(location, 'sound/voice/animal/hoot.ogg', 100, 1)
@@ -2463,14 +2420,15 @@ datum
 
 						var/checkdist = get_dist(M, location)
 						var/weak = max(0, 2 * (3 - checkdist))
-						var/misstep = 40
+						var/misstep = clamp(10 + 6 * (5 - checkdist), 0, 40)
 						var/ear_damage = max(0, 2 * (3 - checkdist))
 						var/ear_tempdeaf = max(0, 2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
+						var/stamina = clamp(50 + 10 * (7 - checkdist), 0, 120)
 
 						if (issilicon(M))
 							M.apply_sonic_stun(weak, 0)
 						else
-							M.apply_sonic_stun(weak, 0, misstep, 0, 0, ear_damage, ear_tempdeaf)
+							M.apply_sonic_stun(weak, 0, misstep, 0, 0, ear_damage, ear_tempdeaf, stamina)
 				else
 					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 					var/sound_plays = 4
@@ -2493,14 +2451,15 @@ datum
 
 							var/checkdist = get_dist(M, location)
 							var/weak = max(0, 2 * (3 - checkdist))
-							var/misstep = 40
+							var/misstep = clamp(10 + 6 * (5 - checkdist), 0, 40)
 							var/ear_damage = max(0, 2 * (3 - checkdist))
 							var/ear_tempdeaf = max(0, 2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
+							var/stamina = clamp(50 + 10 * (7 - checkdist), 0, 120)
 
 							if (issilicon(M))
 								M.apply_sonic_stun(weak, 0)
 							else
-								M.apply_sonic_stun(weak, 0, misstep, 0, 0, ear_damage, ear_tempdeaf)
+								M.apply_sonic_stun(weak, 0, misstep, 0, 0, ear_damage, ear_tempdeaf, stamina)
 
 		chlorine_azide  // death 2 chemists
 			name = "Chlorine Azide"
@@ -2610,7 +2569,7 @@ datum
 			mix_phrase = "The substance erupts into wild flames."
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = 0
-				if (holder.my_atom)
+				if (holder?.my_atom)
 					location = get_turf(holder.my_atom)
 					fireflash(location, min(max(2,round(created_volume/10)),8)) // This reaction didn't have an upper cap, uh-oh (Convair880).
 				else
@@ -2653,8 +2612,9 @@ datum
 #endif
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
+				..()
 				var/turf/location = 0
-				if (holder.my_atom)
+				if (holder?.my_atom)
 					location = get_turf(holder.my_atom)
 					for(var/mob/M in AIviewers(5, location))
 						boutput(M, "<span class='alert'>You feel the air around you spark with electricity!</span>")
@@ -2690,7 +2650,7 @@ datum
 				if(holder)
 					holder.del_reagent("potassium")
 					holder.del_reagent("sugar")
-					holder.del_reagent("phsophorus")
+					holder.del_reagent("phosphorus")
 
 		smoke
 			name = "Smoke"
@@ -2710,44 +2670,7 @@ datum
 					holder.smoke_start(created_volume)
 					holder.del_reagent("potassium")
 					holder.del_reagent("sugar")
-					holder.del_reagent("phsophorus")
-
-		propellant
-			name = "Aeresol Propellant"
-			id = "propellant"
-			result = "propellant"
-			required_reagents = list("chlorine" = 1, "sugar" = 1, "hydrogen" = 1, "platinum" = 1, "stabiliser" = 1)
-			result_amount = 3
-			mix_phrase = "The mixture becomes volatile and airborne."
-#ifdef CHEM_REACTION_PRIORITY
-			priority = 9
-#endif
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-				if(holder)
-					holder.del_reagent("chlorine")
-					holder.del_reagent("sugar")
-					holder.del_reagent("hydrogen")
-					holder.del_reagent("platinum")
-
-		unstable_propellant
-			name = "unstable propellant"
-			id = "unstable_propellant"
-			required_reagents = list("chlorine" = 1, "sugar" = 1, "hydrogen" = 1, "platinum" = 1)
-			inhibitors = list("stabiliser")
-			instant = 1
-			special_log_handling = 1
-			consume_all = 1
-			mix_phrase = "The mixture violently sprays everywhere!"
-#ifdef CHEM_REACTION_PRIORITY
-			priority = 9
-#endif
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-				if(holder)
-					holder.del_reagent("chlorine")
-					holder.del_reagent("sugar")
-					holder.del_reagent("hydrogen")
-					holder.del_reagent("platinum")
-					holder.smoke_start(created_volume, classic = 1) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
+					holder.del_reagent("phosphorus")
 
 		blackpowder // oh no
 			name = "Black Powder"
@@ -3018,8 +2941,8 @@ datum
 			name = "Foam surfactant"
 			id = "foam surfactant"
 			result = "fluorosurfactant"
-			required_reagents = list("fluorine" = 2, "carbon" = 2, "acid" = 1)
-			result_amount = 5
+			required_reagents = list("fluorine" = 1, "oil" = 1, "acid" = 1)
+			result_amount = 3
 			mix_phrase = "A head of foam results from the mixture's constant fizzing."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
@@ -3108,7 +3031,7 @@ datum
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = 0
-				if (holder.my_atom)
+				if (holder?.my_atom)
 					location = get_turf(holder.my_atom)
 					for(var/mob/M in AIviewers(5, location))
 						boutput(M, "<span class='alert'>The solution spews out a metalic foam!</span>")
@@ -3511,7 +3434,7 @@ datum
 				if (!istype(target))
 					return
 
-				if (holder.my_atom)
+				if (holder?.my_atom)
 					arcFlash(holder.my_atom, target, 500000)
 				else
 					arcFlash(pick(holder.covered_cache), target, 500000)
@@ -3544,7 +3467,7 @@ datum
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				CRITTER_REACTION_CHECK(reaction_count)
-				if (holder.my_atom)
+				if (holder?.my_atom)
 					new /obj/critter/fermid(get_turf(holder.my_atom))
 				else
 					new /obj/critter/fermid(pick(holder.covered_cache))
@@ -3644,12 +3567,8 @@ datum
 			mix_phrase = "The substance bubbles and gives off an almost lupine howl."
 			var/static/list/full_moon_days_2053 = list("Jan 04", "Feb 03", "Mar 04", "Apr 03", "May 02", "Jun 01", "Jul 01", "Jul 30", "Aug 29", "Sep 27", "Oct 27", "Nov 25", "Dec 25")
 
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-
-				if (!(time2text(world.realtime, "MMM DD") in full_moon_days_2053))
-					holder.my_atom.visible_message("<span class='alert'>The solution bubbles even more rapidly and dissipates into nothing!</span>")
-					holder.remove_reagent("werewolf_serum",created_volume + 1)
-				return
+			does_react(var/datum/reagents/holder)
+				return time2text(world.realtime, "MMM DD") in full_moon_days_2053 //just doesn't react unless it's a full moon
 
 		 vampire_serum
 		 	name = "Vampire Serum Omega"
@@ -3914,8 +3833,8 @@ datum
 			result_amount = 3
 			mix_phrase = "Irregardless and for all intense and purposes, the coffee becomes stupider."
 
-		king_readsterium
-			name = "King Readsterium"
+		mimicillium
+			name = "Mimicillium"
 			id = "badmanjuice"
 			result = "badmanjuice"
 			required_reagents = list("transparium" = 1, "glitter" = 1, "port" = 1, "cholesterol" = 1 )

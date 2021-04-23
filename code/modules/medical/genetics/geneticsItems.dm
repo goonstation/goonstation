@@ -7,7 +7,7 @@
 	icon_state = "injector_1"
 	force = 3
 	throwforce = 3
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/uses = 1
 
 	attack(mob/M as mob, mob/user as mob)
@@ -80,7 +80,7 @@
 			for(var/X in target.bioHolder.effectPool)
 				BE = target.bioHolder.effectPool[X]
 				if (BE && BE.id == gene_to_activate)
-					if (target.bioHolder.ActivatePoolEffect(BE,overrideDNA = 1,grant_research = 0) && !ismonkey(target) && target.client)
+					if (target.bioHolder.ActivatePoolEffect(BE,overrideDNA = 1,grant_research = 0) && !isnpcmonkey(target) && target.client)
 						src.expended_properly = 1
 					break
 			src.uses--
@@ -141,11 +141,11 @@
 /obj/item/speed_injector
 	name = "screwdriver"
 	desc = "A hollow tool used to turn slotted screws and other slotted objects."
-	icon = 'icons/obj/items/items.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	icon = 'icons/obj/items/tools/screwdriver.dmi'
+	inhand_image_icon = 'icons/mob/inhand/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	flags = FPRINT | TABLEPASS | CONDUCT
-	w_class = 1
+	w_class = W_CLASS_TINY
 	hide_attack = 1
 	var/obj/item/genetics_injector/dna_injector/payload = null
 

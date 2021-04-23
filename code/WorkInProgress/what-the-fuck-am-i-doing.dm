@@ -110,7 +110,7 @@
 			if (L.pulling == H)
 				L.pulling = null
 
-			src.add_fingerprint(usr)
+			src.add_fingerprint(user)
 			src.accept_occupant(H)
 			src.update_icon()
 			qdel(G)
@@ -138,8 +138,7 @@
 		if(!src.occupant)
 			src.occupant = M
 
-			if(M.bioHolder)
-				M.bioHolder.AddEffect("stinky")
+			M.bioHolder?.AddEffect("stinky")
 
 			for(var/obj/O in src)
 				O.set_loc(get_turf(src))

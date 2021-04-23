@@ -49,75 +49,88 @@
 		if (!src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
 			src.emote("collapse")
 		W.addAbility(/datum/targetable/werewolf/werewolf_transform)
-		src.werewolf_transform(0, 0) // Not really a fan of this. I wish werewolves all suffered from lycanthropy and that should be how you pass it on, but w/e
+		src.werewolf_transform() // Not really a fan of this. I wish werewolves all suffered from lycanthropy and that should be how you pass it on, but w/e
 
 ////////////////////////////////////////////// Helper procs //////////////////////////////
 
 // Avoids C&P code for that werewolf disease.
-/mob/proc/werewolf_transform(var/source_is_lycanthrophy = 0, var/message_type = 0)
+/mob/proc/werewolf_transform()
 	if (ishuman(src))
 		var/mob/living/carbon/human/M = src
 		var/which_way = 0
 
-		if ((!M.mutantrace || istype(M.mutantrace, /datum/mutantrace/virtual))|| source_is_lycanthrophy == 1)//the istype fixes you needing to transform twice in vr
+		// not a werewolf? Go become one!
+		if (!istype(M.mutantrace, /datum/mutantrace/werewolf))
+			/// Werewolf is typically a "temporary" MR, as few people start the round as a wolf. Or TF into a wolf while being a wolf
+			if(istype(M.coreMR, /datum/mutantrace/werewolf)) // so if this somehow happens, uh. human?
+				M.coreMR = null
+			M.coreMR = M.mutantrace
 			M.jitteriness = 0
 			M.delStatus("stunned")
 			M.delStatus("weakened")
 			M.delStatus("paralysis")
 			M.delStatus("slowed")
 			M.delStatus("disorient")
+			M.delStatus("radiation")
+			M.delStatus("n_radiation")
+			M.delStatus("burning")
+			M.delStatus("staggered")
 			M.change_misstep_chance(-INFINITY)
 			M.stuttering = 0
 			M.drowsyness = 0
+			M.add_stun_resist_mod("wolf_stun_resist", 10)
 
+			//wolfing removes all the implants in you
+			for(var/obj/item/implant/I in M)
+				boutput(M, "<span class='alert'>\an [I] falls out of your abdomen.</span>")
+				I.on_remove(M)
+				M.implant.Remove(I)
+				I.set_loc(M.loc)
+				continue
+
+			M.set_mutantrace(/datum/mutantrace/werewolf)
 
 			playsound(M.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1, -1)
-			SPAWN_DBG (5)
-				if (M && M.mutantrace && istype(M.mutantrace, /datum/mutantrace/werewolf))
+			SPAWN_DBG(0.5 SECONDS)
+				if (M?.mutantrace && istype(M.mutantrace, /datum/mutantrace/werewolf))
 					M.emote("howl")
 
 			M.visible_message("<span class='alert'><B>[M] [pick("metamorphizes", "transforms", "changes")] into a werewolf! Holy shit!</B></span>")
-			if (message_type == 0)
-				boutput(M, __blue("<h3>You are now a werewolf.</h3>"))
+			if (M.find_ailment_by_type(/datum/ailment/disease/lycanthropy))
+				boutput(M, "<span class='alert'><h2>You've been turned into a werewolf!</h2> Your transformation was achieved by in-game means, you are <i>not</i> an antagonist unless you already were one.</span>")
 			else
-				boutput(M, __blue("<h3>You are now a werewolf. You can remain in this form indefinitely or change back at any time.</h3>"))
+				boutput(M, "<span class='notice'><h3>You are now a werewolf. You can remain in this form indefinitely or change back at any time.</span></h3>")
 
-			if (source_is_lycanthrophy == 1 && M.mutantrace)
-				qdel(M.mutantrace)
-
-			M.set_mutantrace(/datum/mutantrace/werewolf) //this proc handles body updates etc
-
-			//when in werewolf form, get more max health or regenerate
-			// M.maxhealth = 200
-			// M.health =
 			if (src.bioHolder)
-				src.bioHolder.AddEffect("regenerator")
+				src.bioHolder.AddEffect("regenerator_wolf")
 				boutput(src, "<span class='alert'>You will now heal over time!</span>")
 
 			if (M.hasStatus("handcuffed"))
 				if (M.handcuffs.werewolf_cant_rip())
-					boutput(M, __red("You can't seem to break free from these silver handcuffs."))
+					boutput(M, "<span class='alert'>You can't seem to break free from these silver handcuffs.</span>")
 				else
 					M.visible_message("<span class='alert'><B>[M] rips apart the [M.handcuffs] with pure brute strength!</b></span>")
 					M.handcuffs.destroy_handcuffs(M)
 
 			which_way = 0
 
+		// iswolf?
 		else
-			if (source_is_lycanthrophy == 1) // Werewolf disease is human -> WW only.
+			if (M.find_ailment_by_type(/datum/ailment/disease/lycanthropy)) // Wolfdisease? Whoops, you're a wolf forever!
+				boutput(src, "<span class='alert'>Your body refuses to change!</span>")
 				return
 
-			boutput(M, __blue("<h3>You transform back into your human form.</h3>"))
-
-			M.set_mutantrace(null) //this proc handles body updates etc
-
+			M.remove_stun_resist_mod("wolf_stun_resist")
 			if (src.bioHolder)
 				src.bioHolder.RemoveEffect("regenerator")
 				boutput(src, "<span class='alert'>You will no longer heal over time!</span>")
 
+			boutput(M, "<span class='notice'><h3>You transform back into your original form.</span></h3>")
+
+			M.set_mutantrace(M.coreMR) // return to monke/bove/herpe/etc
+
 			//Changing back removes all the implants in you, wolves should have a non-surgery way to remove bullets. considering silver is so harmful
 			for(var/obj/item/implant/I in M)
-				// if (istype(I, /obj/item/implant/projectile))
 				boutput(M, "<span class='alert'>\an [I] falls out of your abdomen.</span>")
 				I.on_remove(M)
 				M.implant.Remove(I)
@@ -181,7 +194,7 @@
 
 				M.visible_message("<span class='alert'><B>[M] [pick("chomps on", "chews off a chunk of", "gnaws on")] [HH]'s [pick("right arm", "left arm", "head", "right leg", "left leg")]!</B></span>")
 
-			if (ismonkey(HH) || HH.bioHolder && HH.bioHolder.HasEffect("monkey"))
+			if (isnpcmonkey(HH))
 				boutput(M, __red("Monkey flesh just isn't the real deal..."))
 				healing /= 2
 			else if (isdead(HH))
@@ -198,7 +211,7 @@
 				else if (iswerewolf(HH) || ishunter(HH) || isabomination(HH))
 					boutput(M, __blue("That tasted fantastic!"))
 					healing *= 2
-				else if (HH.nutrition > 100 || HH.bioHolder && HH.bioHolder.HasEffect("fat"))
+				else if (HH.nutrition > 100)
 					boutput(M, __blue("That tasted amazing!"))
 					M.unlock_medal("Space Ham", 1)
 					healing *= 2
@@ -207,6 +220,7 @@
 					M.unlock_medal("That tasted funny", 1)
 				else
 					boutput(M, __blue("That tasted good!"))
+					M.unlock_medal("Space Ham", 1) //new way to acquire
 
 			HH.add_fingerprint(M) // Just put 'em on the mob itself, like pulling does. Simplifies forensic analysis a bit.
 			M.werewolf_audio_effects(HH, "feast")
@@ -287,7 +301,7 @@
 	switch (type)
 		if ("disarm")
 			playsound(src.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-			SPAWN_DBG (1)
+			SPAWN_DBG(0.1 SECONDS)
 				if (src) playsound(src.loc, "swing_hit", 50, 1)
 
 		if ("swipe")
@@ -296,21 +310,36 @@
 			else
 				playsound(src.loc, pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
 
-			SPAWN_DBG (1)
+			SPAWN_DBG(0.1 SECONDS)
 				if (src) playsound(src.loc, "sound/impact_sounds/Flesh_Tear_3.ogg", 40, 1, -1)
 
 		if ("feast")
 			if (sound_playing == 0) // It's a long audio clip.
 				playsound(src.loc, "sound/voice/animal/wendigo_maul.ogg", 80, 1)
 				sound_playing = 1
-				SPAWN_DBG (60)
+				SPAWN_DBG(6 SECONDS)
 					sound_playing = 0
 
 			playsound(src.loc, pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
 			playsound(src.loc, "sound/items/eatfood.ogg", 50, 1, -1)
 			if (prob(40))
 				playsound(target.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
-			SPAWN_DBG (10)
+			if (prob(60) && ishuman(target))
+				var/mob/living/carbon/human/H = target
+				//These are the non-essential organs. no brain, skull heart. I guess liver is kinda essential, but idk.
+				var/list/choosable_organs = list("left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
+				var/obj/item/organ/organ = null
+				var/count = 0
+				//Do this search 5 times or until you find an organ.
+				while (!organ && count <= 5)
+					count++
+					var/organ_name = pick(choosable_organs)
+					organ = H.organHolder.get_organ(organ_name)
+
+				if (organ)
+					H.organHolder.drop_and_throw_organ(organ, src.loc, get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5)), rand(1,4), 1, 0)
+
+			SPAWN_DBG(1 SECOND)
 				if (src && ishuman(src) && prob(50))
 					src.emote("burp")
 
@@ -318,7 +347,7 @@
 
 //////////////////////////////////////////// Ability holder /////////////////////////////////////////
 
-/obj/screen/ability/topBar/werewolf
+/atom/movable/screen/ability/topBar/werewolf
 	clicked(params)
 		var/datum/targetable/werewolf/spell = owner
 		if (!istype(spell))
@@ -348,13 +377,13 @@
 	tabName = "Werewolf"
 	notEnoughPointsMessage = "<span class='alert'>You aren't strong enough to use this ability.</span>"
 	var/datum/objective/specialist/werewolf/feed/feed_objective = null
-	var/datum/reagents/tainted_saliva_reservior = null
+	var/datum/reagents/tainted_saliva_reservoir = null
 	var/awaken_time //don't really need this here, but admins might want to know when the werewolf's awaken time is.
 
 	New()
 		..()
 		awaken_time = rand(5, 10)*100
-		src.tainted_saliva_reservior = new/datum/reagents(500)
+		src.tainted_saliva_reservoir = new/datum/reagents(500)
 
 	onAbilityStat() // In the 'Werewolf' tab.
 		..()
@@ -388,7 +417,7 @@
 
 	New()
 		..()
-		var/obj/screen/ability/topBar/werewolf/B = new /obj/screen/ability/topBar/werewolf(null)
+		var/atom/movable/screen/ability/topBar/werewolf/B = new /atom/movable/screen/ability/topBar/werewolf(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -400,7 +429,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/werewolf()
+			src.object = new /atom/movable/screen/ability/topBar/werewolf()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)

@@ -54,7 +54,7 @@
 		return
 
 	if(charging)
-		if(iscarbon(usr))
+		if(iscarbon(user))
 			user.put_in_hand_or_drop(charging)
 		else
 			charging.set_loc(src.loc)
@@ -65,7 +65,7 @@
 		chargelevel = -1
 		updateicon()
 
-/obj/machinery/cell_charger/process()
+/obj/machinery/cell_charger/process(mult)
 	if (status & BROKEN)
 		return
 	if (charging)
@@ -75,14 +75,14 @@
 	..()
 	//boutput(world, "ccpt [charging] [stat]")
 	if(status & NOPOWER)
-		if(src.overlays && src.overlays.len)
+		if(src.overlays && length(src.overlays))
 			src.updateicon()
 		return
 	if(!charging)
 		src.updateicon()
 		return
 
-	var/added = charging.give(src.chargerate)
+	var/added = charging.give(src.chargerate * mult)
 	use_power(added / CELLRATE)
 
 	src.updateicon()

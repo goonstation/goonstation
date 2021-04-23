@@ -46,17 +46,17 @@ client/proc/open_dj_panel()
 		ui.open()
 
 /datum/dj_panel/ui_data(mob/user)
-	var/list/data = list()
-	data["adminChannel"] = admin_sound_channel
-	data["loadedSound"] = "[loaded_sound]"
-	data["volume"] = sound_volume
-	data["frequency"] = sound_frequency
-	data["announceMode"] = user.client?.djmode
-
-	return data
+	. = list(
+		"adminChannel" = admin_sound_channel,
+		"loadedSound" = "[loaded_sound]",
+		"volume" = sound_volume,
+		"frequency" = sound_frequency,
+		"announceMode" = user.client?.djmode,
+	)
 
 /datum/dj_panel/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 
 	if (!config.allow_admin_sounds)

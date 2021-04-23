@@ -12,7 +12,7 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 7
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	max_wclass = 3
 
 	//cogwerks - burn vars
@@ -41,11 +41,11 @@
 				user.suiciding = 0
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
 			for (var/obj/item/I in S.get_contents())
-				if (..(I, user, null, S) == 0)
+				if (..(I, user, S) == 0)
 					break
 			return
 		else
@@ -82,6 +82,14 @@
 		/obj/item/reagent_containers/food/snacks/plant/banana,\
 		/obj/item/reagent_containers/food/drinks/milk)
 
+	yellow_tools
+		spawn_contents = list(/obj/item/screwdriver/yellow,\
+		/obj/item/wrench/yellow,\
+		/obj/item/weldingtool,\
+		/obj/item/crowbar/yellow,\
+		/obj/item/wirecutters/yellow,\
+		/obj/item/device/analyzer/atmospheric)
+
 /obj/item/storage/toolbox/electrical
 	name = "electrical toolbox"
 	icon_state = "yellow"
@@ -90,15 +98,30 @@
 	spawn_contents = list(/obj/item/screwdriver,\
 	/obj/item/wirecutters,\
 	/obj/item/device/t_scanner,\
-	/obj/item/crowbar,\
-	/obj/item/cable_coil = 3)
+	/obj/item/crowbar)
+
+	make_my_stuff()
+		var/picked = pick(/obj/item/cable_coil,\
+		/obj/item/cable_coil/yellow,\
+		/obj/item/cable_coil/orange,\
+		/obj/item/cable_coil/blue,\
+		/obj/item/cable_coil/green,\
+		/obj/item/cable_coil/purple,\
+		/obj/item/cable_coil/black,\
+		/obj/item/cable_coil/hotpink,\
+		/obj/item/cable_coil/brown,\
+		/obj/item/cable_coil/white)
+		spawn_contents.Add(picked)
+		if (!istype(src, /obj/item/storage/toolbox/electrical/mechanic_spawn))
+			spawn_contents.Add(picked,picked)
+		. = ..()
+
 
 	// The extra items (scanner and soldering iron) take up precious space in the backpack.
 	mechanic_spawn
 		spawn_contents = list(/obj/item/electronics/scanner,\
 		/obj/item/electronics/soldering,\
 		/obj/item/device/t_scanner,\
-		/obj/item/cable_coil,\
 		/obj/item/reagent_containers/food/snacks/sandwich/cheese,\
 		/obj/item/reagent_containers/food/snacks/chips,\
 		/obj/item/reagent_containers/food/drinks/coffee)
@@ -108,7 +131,7 @@
 	desc = "A metal container designed to hold various tools. This variety holds art supplies."
 	icon_state = "green"
 	item_state = "toolbox-green"
-	spawn_contents = list(/obj/item/paint_can/random = 7)
+	spawn_contents = list(/obj/item/paint_can/random = 6, /obj/item/item_box/crayon = 1)
 
 /* -------------------- Memetic Toolbox -------------------- */
 
@@ -153,7 +176,7 @@
 			return
 		if (src.contents.len >= 7)
 			return
-		if (((istype(W, /obj/item/storage) && W.w_class > 2) || src.loc == W))
+		if (((istype(W, /obj/item/storage) && W.w_class > W_CLASS_SMALL) || src.loc == W))
 			return
 		if(istype(W, /obj/item/grab))	// It will devour people! It's an evil thing!
 			var/obj/item/grab/G = W

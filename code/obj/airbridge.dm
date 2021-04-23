@@ -52,7 +52,6 @@
 
 	proc/get_link()
 		for_by_tcl(C, /obj/airbridge_controller)
-			LAGCHECK(LAG_LOW)
 			if(C.z == src.z && C.id == src.id && C != src)
 				linked = C
 				break
@@ -91,7 +90,7 @@
 				T.air.oxygen = MOLES_O2STANDARD
 				T.air.nitrogen = MOLES_N2STANDARD
 				T.air.fuel_burnt = 0
-				T.air.trace_gases = null
+				T.air.remove_trace_gas()
 				T.air.temperature = T20C
 				LAGCHECK(LAG_LOW)
 
@@ -169,7 +168,7 @@
 					else // floor
 						curr = get_steps(T, turn(dir, 90),i)
 						animate_turf_slideout(curr, src.floor_turf, dir, slide_delay)
-					curr.dir = dir
+					curr.set_dir(dir)
 					maintaining_turfs.Add(curr)
 				playsound(T, "sound/effects/airbridge_dpl.ogg", 50, 1)
 				sleep(slide_delay)
@@ -281,7 +280,7 @@
 	initialize()
 		..()
 		update_status()
-		if (starts_established && links.len)
+		if (starts_established && length(links))
 			SPAWN_DBG(1 SECOND)
 				do_initial_extend()
 
@@ -303,7 +302,7 @@
 	process()
 		..()
 		update_status()
-		if (starts_established && links.len)
+		if (starts_established && length(links))
 			SPAWN_DBG(1 SECOND)
 				do_initial_extend()
 		return
@@ -481,6 +480,6 @@
 
 	attack_hand(mob/user as mob)
 		for(var/obj/airbridge_controller/C in range(3, src))
-			boutput(usr, "<span class='notice'>[C.toggle_bridge()]</span>")
+			boutput(user, "<span class='notice'>[C.toggle_bridge()]</span>")
 			break
 		return

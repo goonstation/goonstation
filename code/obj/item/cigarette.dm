@@ -14,7 +14,7 @@
 	hit_type = DAMAGE_BLUNT
 	throw_speed = 0.5
 	c_flags = EQUIPPED_WHILE_HELD
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/on = 0
 	var/exploding = 0 //Does it blow up when it goes out?
 	var/flavor = null
@@ -42,6 +42,7 @@
 
 		if (src.on) //if we spawned lit, do something about it!
 			src.on = 0
+			src.firesource = FALSE
 			src.light()
 
 		if (src.exploding)
@@ -59,15 +60,25 @@
 			reagents.add_reagent(src.flavor, 40)
 			return
 
-	afterattack(atom/target, mob/user, flag) // copied from the propuffs
-		if (istype(target, /obj/item/reagent_containers/))
-			user.visible_message("<span class='notice'><b>[user]</b> crushes up [src] in the [target].</span>",\
-			"<span class='notice'>You crush up the [src] in the [target].</span>")
-
-			if (src.reagents) //Wire: Fix for: Cannot execute null.trans to()
-				src.reagents.trans_to(target, 5)
-
+	afterattack(atom/target , mob/user, flag) // copied from the propuffs
+		if (istype(target, /obj/item/reagent_containers/food/snacks/)) // you dont crush cigs INTO food, you crush them ONTO food!
+			var/obj/item/reagent_containers/food/snacks/T = target // typecasting because atom/target was causing some STINKY problems
+			user.visible_message("<span class='notice'><b>[user]</b> crushes up [src] and sprinkles it onto [target], gross.</span>",\
+			"<span class='notice'>You crush up [src] and sprinkle it onto [target].</span>")
+			if (!(T.has_cigs))
+				T.desc = "[T.desc]<br>Are those crushed cigarettes on top? That's disgusting!"
+				T.has_cigs = 1
+			if (src.reagents) // copied wirefix
+				src.reagents.trans_to(T, 5)
 			qdel (src)
+			return
+		else if (istype(target, /obj/item/reagent_containers/)) // crushing cigs into actual containers remains the same
+			user.visible_message("<span class='notice'><b>[user]</b> crushes up [src] into [target].</span>",\
+			"<span class='notice'>You crush up [src] into [target].</span>")
+			if (src.reagents) // copied wirefix
+				src.reagents.trans_to(target, 5)
+			qdel (src)
+			return
 		else if (istype(target, /obj/item/match) && src.on)
 			target:light(user, "<span class='alert'><b>[user]</b> lights [target] with [src].</span>")
 		else if (src.on == 0 && isitem(target) && target:burning)
@@ -88,6 +99,7 @@
 	proc/light(var/mob/user as mob, var/message as text)
 		if (src.on == 0)
 			src.on = 1
+			src.firesource = TRUE
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
 			src.icon_state = litstate
@@ -97,7 +109,7 @@
 			if (ismob(src.loc))
 				var/mob/M = src.loc
 				M.set_clothing_icon_dirty()
-			if(src && src.reagents)
+			if(src?.reagents)
 				puffrate = src.reagents.total_volume / numpuffs //40 active cycles (200 total, about 10 minutes)
 			processing_items |= src
 
@@ -106,6 +118,7 @@
 	proc/put_out(var/mob/user as mob, var/message as text)
 		if (src.on == 1)
 			src.on = -1
+			src.firesource = FALSE
 			src.hit_type = DAMAGE_BLUNT
 			src.force = 0
 			src.icon_state = buttstate
@@ -156,6 +169,10 @@
 				return
 			else if (W.burning)
 				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+				return
+			else if (W.firesource)
+				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W].</span>")
+				W.firesource_interact()
 				return
 			else
 				return ..()
@@ -258,6 +275,8 @@
 					if(H.traitHolder && H.traitHolder.hasTrait("smoker") || !((src in H.get_equipped_items()) || ((H.l_store==src||H.r_store==src) && !(H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal))))))
 						src.reagents.remove_any(puffrate)
 					else
+						if(H.bodytemperature < H.base_body_temp)
+							H.bodytemperature += 1
 						if (prob(1))
 							H.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
 						src.reagents.trans_to(M, puffrate)
@@ -273,7 +292,7 @@
 				else
 					src.reagents.trans_to(M, puffrate)
 					src.reagents.reaction(M, INGEST, puffrate)
-			else if (src && src.reagents) //ZeWaka: Copied Wire's fix for null.remove_any() below
+			else if (src?.reagents) //ZeWaka: Copied Wire's fix for null.remove_any() below
 				src.reagents.remove_any(puffrate)
 
 		if (!src.reagents || src.reagents.total_volume <= 0) //ZeWaka: fix for null.total_volume (syndie cigs)
@@ -346,7 +365,7 @@
 
 	New()
 		if (all_functional_reagent_ids.len > 0)
-			var/list/chem_choices = all_functional_reagent_ids - list("big_bang_precursor", "big_bang", "nitrotri_parent", "nitrotri_wet", "nitrotri_dry", "rat_venom")
+			var/list/chem_choices = all_functional_reagent_ids
 			src.flavor = pick(chem_choices)
 		else
 			src.flavor = "nicotine"
@@ -386,7 +405,7 @@
 	force = 0
 	hit_type = DAMAGE_BLUNT
 	throw_speed = 0.5
-	w_class = 1
+	w_class = W_CLASS_TINY
 	rand_pos = 1
 	var/flavor = null
 
@@ -445,18 +464,18 @@
 		"something","honey_tea","tea","coffee","chocolate","guacamole","juice_pickle","vanilla","enriched_msg","egg","aranesp",
 		"paper","bread","green_goop","black_goop", "mint_tea", "juice_peach", "ageinium")
 		..()
-		if (src && src.reagents) //Warc: copied ZeWaka's copy of Wire's fix for null.remove_any() way above
+		if (src?.reagents) //Warc: copied ZeWaka's copy of Wire's fix for null.remove_any() way above
 			src.reagents.remove_any(15)
 			src.reagents.add_reagent(pick("CBD","mucus","ethanol","glitter","methamphetamine","uranium","pepperoni","poo","quebon","jenkem","cryoxadone","kerosene","cryostylane","ectoplasm","gravy","cheese","paper","carpet","ants","enriched_msg","THC","THC","THC","bee","coffee","fuel","salbutamol","milk","grog"),5)
 			src.reagents.add_reagent(pick("CBD","mucus","ethanol","glitter","methamphetamine","uranium","pepperoni","poo","quebon","jenkem","cryoxadone","kerosene","cryostylane","ectoplasm","gravy","cheese","paper","carpet","ants","enriched_msg","THC","THC","THC","bee","coffee","fuel","salbutamol","milk","grog"),5)
 			if(prob(5))
 				src.reagents.add_reagent("triplemeth",5)
 
-#if ASS_JAM
+
 /obj/item/clothing/mask/cigarette/cigarillo/juicer/exploding // Wow! What an example!
 	buttdesc = "Ain't twice the 'Rillo it used to be."
 	exploding = 1
-#endif
+
 
 /obj/item/clothing/mask/cigarette/propuffs
 	desc = "Pro Puffs - a new taste thrill in every cigarette."
@@ -499,7 +518,7 @@
 	icon_state = "cigpacket"
 	uses_multiple_icon_states = 1
 	item_state = "cigpacket"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 2
 	var/cigcount = 6
 	var/cigtype = /obj/item/clothing/mask/cigarette
@@ -590,7 +609,7 @@
 	desc = "A manky old cigarette butt."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "cigbutt"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 1
 	stamina_damage = 0
 	stamina_cost = 0
@@ -603,7 +622,7 @@
 	icon_state = "cigarbox"
 	uses_multiple_icon_states = 1
 	item_state = "cigarbox"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 2
 	var/cigcount = 5
 	var/cigtype = /obj/item/clothing/mask/cigarette/cigar
@@ -667,7 +686,7 @@
 	icon_state = "cigarbox"
 	uses_multiple_icon_states = 1
 	item_state = "cigarbox"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 2
 	cigcount = 5
 	cigtype = /obj/item/clothing/mask/cigarette/cigar/gold
@@ -751,7 +770,7 @@
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "matchbook"
 	uses_multiple_icon_states = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	stamina_damage = 0
@@ -830,7 +849,7 @@
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "match"
 	uses_multiple_icon_states = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	stamina_damage = 0
@@ -851,6 +870,8 @@
 
 	New()
 		..()
+		src.create_reagents(1)
+		reagents.add_reagent("phosphorus", 1)
 		light = new /datum/light/point
 		light.set_brightness(0.4)
 		light.set_color(0.94, 0.69, 0.27)
@@ -894,6 +915,7 @@
 
 	proc/light(var/mob/user as mob)
 		src.on = 1
+		src.firesource = TRUE
 		src.icon_state = "match-lit"
 
 		playsound(get_turf(user), "sound/items/matchstick_light.ogg", 50, 1)
@@ -903,6 +925,7 @@
 
 	proc/put_out(var/mob/user as mob, var/break_it = 0)
 		src.on = -1
+		src.firesource = FALSE
 		src.life_timer = 0
 		if (break_it)
 			src.icon_state = "match-broken"
@@ -971,6 +994,20 @@
 				"You light [src] with the flame from [target].")
 				src.light(user)
 				return
+			else if (istype(target, /obj/item/reagent_containers/food/snacks/)) // RE-copied from cigarettes
+				user.visible_message("<span class='notice'><b>[user]</b> crushes up [src] and sprinkles it onto [target], what the fuck?.</span>",\
+				"<span class='notice'>You crush up [src] and sprinkle it onto [target].</span>")
+				if (src.reagents) // copied wirefix
+					src.reagents.trans_to(target, 5)
+				qdel (src)
+				return
+			else if (istype(target, /obj/item/reagent_containers/)) // crushing cigs into actual containers remains the same
+				user.visible_message("<span class='notice'><b>[user]</b> crushes up [src] into [target].</span>",\
+				"<span class='notice'>You crush up [src] into [target].</span>")
+				if (src.reagents) // copied wirefix
+					src.reagents.trans_to(target, 5)
+				qdel (src)
+				return
 			else
 				if (prob(10))
 					user.visible_message("<b>[user]</b> strikes [src] on [target]. A small flame sparks into life from the tip.[prob(50) ? " [pick("Damn", "Fuck", "Shit", "Wow")][pick("!", " that was cool!", " that was smooth!")]" : null]",\
@@ -1028,9 +1065,10 @@
 	icon_state = "zippo"
 	item_state = "zippo"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 4
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
+	click_delay = 0.7 SECONDS
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 5
@@ -1059,6 +1097,7 @@
 					user.show_text("Out of fuel.", "red")
 					return
 				src.on = 1
+				src.firesource = TRUE
 				set_icon_state(src.icon_on)
 				src.item_state = "zippoon"
 				user.visible_message("<span class='alert'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
@@ -1068,6 +1107,7 @@
 				processing_items |= src
 			else
 				src.on = 0
+				src.firesource = FALSE
 				set_icon_state(src.icon_off)
 				src.item_state = "zippo"
 				user.visible_message("<span class='alert'>You hear a quiet click, as [user] shuts off [src] without even looking what they're doing. Wow.</span>")
@@ -1173,6 +1213,10 @@
 		if (exposed_temperature > 1000)
 			return ..()
 		return
+
+	firesource_interact()
+		if (!infinite_fuel && reagents.get_reagent_amount("fuel"))
+			reagents.remove_reagent("fuel", 1)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)

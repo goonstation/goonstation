@@ -13,7 +13,8 @@
 	list(/mob/living/critter/small_animal/dog/pug/weak,/mob/living/critter/small_animal/dog/corgi/weak,/mob/living/critter/small_animal/dog/shiba/weak),\
 	list(/mob/living/critter/changeling/eyespider,/mob/living/critter/changeling/buttcrab),\
 	list(/mob/living/critter/small_animal/frog/weak),\
-	list(/mob/living/critter/small_animal/cockroach/robo/weak),)
+	list(/mob/living/critter/small_animal/cockroach/robo/weak),\
+	list(/mob/living/critter/bot/cleanbot),)
 
 	admin_call(var/source)
 		if (..())
@@ -82,15 +83,18 @@
 			if (src.num_pests) //customized
 				src.num_pests = min(src.num_pests, candidates.len)
 			else
-				src.num_pests = candidates.len
+				src.num_pests = length(candidates)
 
 			for (var/i in 1 to src.num_pests)
-				if (!candidates || !candidates.len)
+				if (!candidates || !length(candidates))
 					break
 
 				var/datum/mind/M = pick(candidates)
 				if (M.current)
 					M.current.make_ghost_critter(pestlandmark,select)
+					var/obj/item/implant/access/infinite/assistant/O = new /obj/item/implant/access/infinite/assistant(M.current)
+					O.owner = M.current
+					O.implanted = 1
 				candidates -= M
 
 			pestlandmark.visible_message("A group of pests emerge from their hidey-hole!")

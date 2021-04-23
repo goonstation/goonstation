@@ -1,56 +1,57 @@
+// if you're looking for something like find_in_active_hand(), you'll want /mob/proc/equipped()
 /mob/proc/find_in_hand(var/obj/item/I, var/this_hand) // for when you need to find a SPECIFIC THING and not just a type
 	if (!I) // did we not get passed a thing to look for?
-		return 0 // fuck you
+		return // fuck you
 	if (!src.r_hand && !src.l_hand) // is there nothing in either hand?
-		return 0
+		return
 
 	if (this_hand) // were we asked to find a thing in a specific hand?
 		if (this_hand == "right")
 			if (src.r_hand && src.r_hand == I) // is there something in the right hand and is it the thing?
 				return src.r_hand // say where we found it
 			else
-				return 0
+				return
 		else if (this_hand == "left")
 			if (src.l_hand && src.l_hand == I) // is there something in the left hand and is it the thing?
 				return src.l_hand // say where we found it
 			else
-				return 0
+				return
 		else
-			return 0
+			return
 
 	if (src.r_hand && src.r_hand == I) // is there something in the right hand and is it the thing?
 		return src.r_hand // say where we found it
 	else if (src.l_hand && src.l_hand == I) // is there something in the left hand and is it the thing?
 		return src.l_hand // say where we found it
 	else
-		return 0 // vOv
+		return // vOv
 
 /mob/proc/find_type_in_hand(var/obj/item/I, var/this_hand) // for finding a thing of a type but not a specific instance
 	if (!I)
-		return 0
+		return
 	if (!src.r_hand && !src.l_hand)
-		return 0
+		return
 
 	if (this_hand)
 		if (this_hand == "right")
 			if (src.r_hand && istype(src.r_hand, I))
 				return src.r_hand
 			else
-				return 0
+				return
 		else if (this_hand == "left")
 			if (src.l_hand && istype(src.l_hand, I))
 				return src.l_hand
 			else
-				return 0
+				return
 		else
-			return 0
+			return
 
 	if (src.r_hand && istype(src.r_hand, I))
 		return src.r_hand
 	else if (src.l_hand && istype(src.l_hand, I))
 		return src.l_hand
 	else
-		return 0 // vOv
+		return // vOv
 
 /**
 	* Given a tool flag, returns the src mob's tool in hand that matches the flag, or null
@@ -250,7 +251,7 @@
 			mod_animation = 20
 			if (hulk == 0)
 				mod_weak = rand(1, 2)
-			mod_eyeblurry = rand(4, 6)
+			mod_eyeblurry = rand(6, 8)
 			mod_eyedamage = rand(2, 3)
 		else if (istype(H.glasses, /obj/item/clothing/glasses/nightvision) || H.eye_istype(/obj/item/organ/eye/cyber/nightvision))
 			H.show_text("<b>Your night vision goggles intensify the bright flash of light.</b>", "red")
@@ -258,8 +259,10 @@
 			mod_animation = 30
 			if (hulk == 0)
 				mod_weak = rand(3, 4)
-			mod_eyeblurry = rand(6, 8)
+			mod_eyeblurry = rand(8, 10)
 			mod_eyedamage = rand(3, 5)
+		else
+			mod_eyeblurry = rand(4, 6)
 
 	// No negative values.
 	animation_duration = max(0, animation_duration + mod_animation)
@@ -279,7 +282,7 @@
 
 	// Stun target mob.
 	if (safety == 0)
-		src.flash(animation_duration)
+		//src.flash(animation_duration)
 #ifdef USE_STAMINA_DISORIENT
 		src.do_disorient(stamina_damage, weakened = weak*20, stunned = stun*20, disorient = disorient_time, remove_stamina_below_zero = 0, target_type = DISORIENT_EYE)
 #else
@@ -317,7 +320,9 @@
 				D.disrupt(src)
 				src.visible_message("<span class='notice'><b>[src]'s disguiser is disrupted!</b></span>")
 
-	return
+	if (safety)
+		return 0
+	return 1
 
 /mob/proc/hearing_check(var/consciousness_check = 0)
 	return 1
@@ -523,7 +528,7 @@
 	return 0
 
 /mob/living/carbon/human/get_explosion_resistance()
-	return GET_MOB_PROPERTY(src, PROP_EXPLOPROT)/100
+	return min(GET_MOB_PROPERTY(src, PROP_EXPLOPROT), 100) / 100
 
 /mob/proc/spread_blood_clothes(mob/whose)
 	return
@@ -589,9 +594,9 @@
 	return null
 
 /mob/living/carbon/human/equipped_limb()
-	if (!hand && limbs && limbs.r_arm)
+	if (!hand && limbs?.r_arm)
 		return limbs.r_arm.limb_data
-	else if (hand && limbs && limbs.l_arm)
+	else if (hand && limbs?.l_arm)
 		return limbs.l_arm.limb_data
 	return null
 
@@ -602,7 +607,7 @@
 	if (!old || !newbody || !ishuman(old) || !ishuman(newbody))
 		return
 
-	SPAWN_DBG (20) // OrganHolders etc need time to initialize. Transferring inventory doesn't.
+	SPAWN_DBG(2 SECONDS) // OrganHolders etc need time to initialize. Transferring inventory doesn't.
 		if (copy_organs && old && newbody && old.organHolder && newbody.organHolder)
 			if (old.organHolder.skull && (old.organHolder.skull.type != newbody.organHolder.skull.type))
 				var/obj/item/organ/NO = new old.organHolder.skull.type(newbody)
@@ -760,7 +765,7 @@
 			old.u_equip(CI15)
 			newbody.equip_if_possible(CI15, slot_r_hand)
 
-	SPAWN_DBG (20) // Necessary.
+	SPAWN_DBG(2 SECONDS) // Necessary.
 		if (newbody)
 			newbody.set_face_icon_dirty()
 			newbody.set_body_icon_dirty()
@@ -772,7 +777,7 @@
 /mob/proc/antagonist_overlay_refresh(var/bypass_cooldown = 0, var/remove = 0)
 	if (!bypass_cooldown && (src.last_overlay_refresh && world.time < src.last_overlay_refresh + 1200))
 		return
-	if (!(ticker && ticker.mode && current_state >= GAME_STATE_PLAYING))
+	if (!(ticker?.mode && current_state >= GAME_STATE_PLAYING))
 		return
 	if (!ismob(src) || !src.client || !src.mind)
 		return
@@ -1032,7 +1037,7 @@
 	if (!src || !ismob(src) || !target || !isobj(target))
 		return 0
 
-	if (!islist(can_smash) || !can_smash.len)
+	if (!islist(can_smash) || !length(can_smash))
 		return 0
 
 	for (var/S in can_smash)

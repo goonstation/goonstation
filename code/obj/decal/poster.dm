@@ -522,7 +522,7 @@
 			icon_state = "ptoe"
 
 		poster_y4nt
-			name = "\improper NanoTrasen poster"
+			name = "\improper NanoTrasen recruitment poster"
 			desc = "A huge poster that reads 'I want YOU for NT!'"
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "you_4_nt"
@@ -632,29 +632,95 @@
 
 		teaparty
 			name = "Weird poster"
-			desc = "Huh."
+			desc = "Seems to be a poster of some sort."
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "teaparty"
 
 			New()
 				..()
-				var/which = rand(1, 4)
+
+				var/which = pick(
+					// old contest winners
+					10;"tea1",
+					10;"tea2",
+					10;"tea3",
+					// the fuck II poster
+					30;"fuckII",
+					// new contest winners
+					50;"contest1",
+					50;"contest2",
+					50;"contest3",
+					50;"contest4",
+					50;"contest5",
+					// new contest not-winners but cool nonetheless
+					5 ;"contest-other1",
+					5 ;"contest-other2",
+					5 ;"contest-other3",
+					5 ;"contest-other4",
+					5 ;"contest-other5",
+					5 ;"contest-other6",
+					5 ;"contest-other7"
+					)
 				switch(which)
-					if(1)
+					if("tea1")
 						src.name = "Tea Hell and Back"
 						src.desc = "<i>Starring Camryn Stern, Edgar Palmer, Ryan Yeets, Jebediah Hawkins, and Frederick Cooper.</i>"
-					if(2)
+					if("tea2")
 						src.icon_state = "teaparty2"
 						src.name = "It Came from the Void"
 						src.desc = "<i>Starring William Carr, Bruce Isaman, and Julio Hayhurst.</i>"
-					if(3)
+					if("tea3")
 						src.icon_state = "teaparty3"
 						src.name = "Afterlife Activity"
 						src.desc = "<i>Starring Marmalade Addison, Lily White, cockroach, and Darcey Paynter.</i>"
-					if (4)
+					if("fuckII")
 						src.name = "\proper fuck II"
 						src.desc = "A poster for \"<em>fuck II: Plumb Fuckled.\"</em>"
 						src.icon_state = "fuckII"
+					if("contest1")
+						src.name = "Explore the Trench"
+						src.icon_state = "explore_the_trench"
+					if("contest2")
+						src.name = "🐟"
+						src.icon_state = "fish_hook"
+					if("contest3")
+						src.name = "Bird Up!"
+						src.icon_state = "bird_up"
+					if("contest4")
+						src.name = "A New You"
+						src.icon_state = "a_new_you"
+					if("contest5")
+						src.name = "Work! Ranch"
+						src.icon_state = "work_ranch"
+					if("contest-other1")
+						src.name = "Pack Smart"
+						src.icon_state = "pack_smart"
+					if("contest-other2")
+						src.name = "Mindslaver Device Poster"
+						src.icon_state = "mindslaver"
+					if("contest-other3")
+						src.name = "Edit Wiki"
+						src.icon_state = "edit_wiki"
+					if("contest-other4")
+						src.name = "Join Us For Boom"
+						src.icon_state = "join_us_for_boom"
+					if("contest-other5")
+						src.name = "Grow Food Not Weed"
+						src.icon_state = "grow_food_not_weed"
+					if("contest-other6")
+						src.name = "More Laser Power"
+						src.icon_state = "more_laser_power"
+					if("contest-other7")
+						src.name = "Code"
+						src.icon_state = "code"
+
+			attack_hand(mob/user)
+				. = ..()
+				switch(src.icon_state)
+					if("code")
+						user << link("https://github.com/goonstation/goonstation")
+					if("edit_wiki")
+						user << link("https://wiki.ss13.co/")
 
 		fuck1 //do not add this to the random sign rotation, fuck I is a long-lost relic overshadowed entirely by its successor
 			name = "\proper fuck"
@@ -742,7 +808,7 @@
 
 					if (1)
 						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						var/obj/item/hosmedal/M = new /obj/item/hosmedal()
+						var/obj/item/clothing/suit/hosmedal/M = new /obj/item/clothing/suit/hosmedal()
 						M.desc = src.desc
 						user.put_in_hand_or_drop(M)
 						user.visible_message("[user] takes the medal from the frame.", "You take the medal out of the frame.")
@@ -762,7 +828,7 @@
 					qdel(W)
 
 				if (src.usageState == 2)
-					if (istype(W, /obj/item/hosmedal))
+					if (istype(W, /obj/item/clothing/suit/hosmedal))
 						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
 						user.u_equip(W)
 						qdel(W)
@@ -783,10 +849,10 @@
 
 			proc/get_award_text(var/datum/mind/M)
 				var/hosname = "Anonymous"
-				if(M && M.current && M.current.client && M.current.client.preferences && M.current.client.preferences.name_last)
+				if(M?.current?.client?.preferences?.name_last)
 					hosname = M.current.client.preferences.name_last
 				var/hosage = 50
-				if(M && M.current && M.current.bioHolder && M.current.bioHolder.age)
+				if(M?.current?.bioHolder?.age)
 					hosage = M.current.bioHolder.age
 				. = "Awarded to [pick("Pvt.","Sgt","Cpl.","Maj.","Cpt.","Col.","Gen.")] "
 				. += "[hosname] for [pick("Outstanding","Astounding","Incredible")] "
@@ -864,7 +930,7 @@
 
 			proc/get_award_text_hop(var/datum/mind/M)
 				var/hopname = "Anonymous"
-				if(M && M.current && M.current.client && M.current.client.preferences && M.current.client.preferences.name_last)
+				if(M?.current?.client?.preferences?.name_last)
 					hopname = M.current.client.preferences.name_last
 				. = "The first [pick("Space","NT", "Golden","Silver")] "
 				. += "[pick("Dollar","Doubloon","Buck","Peso","Credit")] earned by [hopname]"
@@ -944,7 +1010,7 @@
 
 			proc/get_award_text_rd(var/datum/mind/M)
 				var/rdname = "Anonymous"
-				if(M && M.current && M.current.client && M.current.client.preferences && M.current.client.preferences.name_last)
+				if(M?.current?.client?.preferences?.name_last)
 					rdname = M.current.client.preferences.name_last
 				. += "It says \ [rdname] has been awarded the degree of [pick("Associate", "Bachelor")] of [pick("arts","science")]"
 				. += "Master of [pick("arts","science")],"
@@ -1004,3 +1070,19 @@
 							user.visible_message("[user] places glass back in the frame.", "You place the glass back in the frame.")
 							src.usageState = 0
 							src.icon_state = "mdlicense"
+
+/obj/decal/poster/wallsign/pod_build
+	name = "poster"
+	icon = 'icons/obj/decals/posters_64x32.dmi'
+	icon_state = "nt-pod-poster"
+	popup_win = 1
+
+	show_popup_win(var/client/C)
+		if (!C || !src.popup_win)
+			return
+		C.Browse(grabResource("html/how_to_build_a_pod.html"),"window=how_to_build_a_pod;size=[imgw]x[imgh];title=How to Build a Space Pod")
+
+/obj/decal/poster/wallsign/pod_build/nt
+	icon_state = "nt-pod-poster"
+/obj/decal/poster/wallsign/pod_build/sy
+	icon_state = "sy-pod-poster"

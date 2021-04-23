@@ -34,8 +34,7 @@ datum/controller/radio
 			frequency.frequency = new_frequency
 			frequencies[new_frequency] = frequency
 
-		if( !frequency.devices.Find(device) )
-			frequency.devices += device
+		frequency.devices |= device
 		return frequency
 
 	proc/remove_object(obj/device, old_frequency)
@@ -51,7 +50,7 @@ datum/controller/radio
 		return 1
 
 	proc/return_frequency(frequency)
-		return frequencies[frequency]
+		. = frequencies[frequency]
 
 /*
 mob/verb/listfreq()
@@ -66,9 +65,10 @@ mob/verb/listfreq()
 
 
 var/global/list/datum/signal/reusable_signals = list()
+
 proc/get_free_signal()
-	if (reusable_signals && reusable_signals.len)
-		while (. == null && reusable_signals.len)
+	if (length(reusable_signals))
+		while (. == null && length(reusable_signals))
 			. = reusable_signals[reusable_signals.len]
 			reusable_signals.len--
 		if (. == null)
@@ -80,7 +80,7 @@ datum/radio_frequency
 	var/frequency
 	var/list/obj/devices = list()
 
-	//MBC : check_for_jammer proc was being called thousands of times per second. 
+	//MBC : check_for_jammer proc was being called thousands of times per second.
 	//Do its initial check in a define instead, because proc call overhead. Then call check_for_jammer_bare
 	#define can_check_jammer (radio_controller.active_jammers.len)
 
@@ -94,7 +94,7 @@ datum/radio_frequency
 			if(range)
 				start_point = get_turf(source)
 				if(!start_point)
-					if (reusable_signals && reusable_signals.len && !(signal in reusable_signals))
+					if (length(reusable_signals) && !(signal in reusable_signals))
 						signal.dispose()
 					else if (signal)
 						signal.wipe()
@@ -125,14 +125,11 @@ datum/radio_frequency
 					else
 						device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
 
-				LAGCHECK(LAG_REALTIME)
-
 			if (!reusable_signals || reusable_signals.len > 10)
 				signal.dispose()
 			else if (signal)
 				signal.wipe()
 				reusable_signals |= signal
-			LAGCHECK(LAG_MED)
 
 		//assumes that list radio_controller.active_jammers is not null or empty.
 		check_for_jammer(obj/source)
@@ -176,8 +173,7 @@ datum/signal
 		return
 
 	disposing()
-		if(src.data_file)
-			src.data_file.dispose()
+		src.data_file?.dispose()
 
 		if (reusable_signals)
 			reusable_signals -= null

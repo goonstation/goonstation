@@ -67,13 +67,13 @@ Important Procedures
 			return 0
 
 		if (src.checkingcanpass > 0)
-			for(var/obj/obstacle as() in src)
-				if(!obstacle.CanPass(mover, target, height, air_group))
+			for(var/obj/obstacle as anything in src)
+				if((obstacle.event_handler_flags & USE_CANPASS) && !obstacle.CanPass(mover, target, height, air_group))
 					return 0
 
-		if (target && target.checkingcanpass > 0)
-			for(var/obj/obstacle as() in target)
-				if(!obstacle.CanPass(mover, src, height, air_group))
+		if (target?.checkingcanpass > 0)
+			for(var/obj/obstacle as anything in target)
+				if((obstacle.event_handler_flags & USE_CANPASS) && !obstacle.CanPass(mover, src, height, air_group))
 					return 0
 
 		return 1
@@ -94,8 +94,10 @@ datum/controller/air_system
 	//Geometry updates lists
 	var/list/turf/tiles_to_update = list()
 	var/list/datum/air_group/groups_to_rebuild = list()
+	var/list/turf/tiles_to_space = list()
 
 	var/current_cycle = 0
+	var/is_busy = FALSE
 	var/datum/controller/process/air_system/parent_controller = null
 
 	var/turf/space/space_sample = 0 //instead of repeatedly using locate() to find space, we should just cache a space tile ok
@@ -128,6 +130,10 @@ datum/controller/air_system
 		//Used by process()
 		//Warning: Do not call this
 
+	proc/process_tiles_to_space()
+		//Used by process()
+		//Warning: Do not call this
+
 	proc/process_update_tiles()
 		//Used by process()
 		//Warning: Do not call this
@@ -142,10 +148,7 @@ datum/controller/air_system
 
 	proc/update_space_sample()
 		if (!space_sample || !(space_sample.turf_flags & CAN_BE_SPACE_SAMPLE))
-			if (map_currently_underwater)
-				space_sample = locate(/turf/space/fluid)
-			else
-				space_sample = locate(/turf/space)
+			space_sample = locate(/turf/space)
 		return space_sample
 
 	setup(datum/controller/process/air_system/controller)
@@ -176,21 +179,22 @@ datum/controller/air_system
 		var/possible_space_length = 0
 
 		while(possible_members.len > 0) //Keep expanding, looking for new members
-			for(var/turf/simulated/test as() in possible_members)
+			for(var/turf/simulated/test as anything in possible_members)
 				test.length_space_border = 0
 				for(var/direction in cardinal)
 					var/turf/T = get_step(test,direction)
-					if(T && !members.Find(T) && test.CanPass(null, T, null,1))
-						if(istype(T,/turf/simulated) && !T:parent)
-							possible_members += T
-							members += T
-						else if(istype(T, /turf/space))
+					if(T && !(T in members) && test.CanPass(null, T, null,1))
+						if(istype(T,/turf/simulated))
+							if(!T:parent)
+								possible_members += T
+								members += T
+							else
+								LAZYLISTINIT(possible_borders)
+								possible_borders |= test
+						else if(istype(T, /turf/space) && !istype(T, /turf/space/fluid))
 							LAZYLISTINIT(possible_space_borders)
 							possible_space_borders |= test
 							test.length_space_border++
-						else
-							LAZYLISTINIT(possible_borders)
-							possible_borders |= test
 
 				if(test.length_space_border > 0)
 					possible_space_length += test.length_space_border
@@ -204,7 +208,7 @@ datum/controller/air_system
 				group.space_borders = possible_space_borders
 				group.length_space_border = possible_space_length
 
-			for(var/turf/simulated/test as() in members)
+			for(var/turf/simulated/test as anything in members)
 				test.parent = group
 				test.processing = 0
 				active_singletons -= test
@@ -220,6 +224,8 @@ datum/controller/air_system
 					if ((test.dist_to_space == null) || (dist < test.dist_to_space))
 						test.dist_to_space = dist
 
+			// Allow groups to determine if group processing is applicable after FEA setup
+			if(current_cycle) group.group_processing = FALSE
 			group.members = members
 			air_groups += group
 
@@ -236,32 +242,44 @@ datum/controller/air_system
 
 	process()
 		current_cycle++
-		if(groups_to_rebuild.len > 0)
-			process_rebuild_select_groups()
-		LAGCHECK(LAG_HIGH)
 
-		if(tiles_to_update.len > 0)
-			process_update_tiles()
-		LAGCHECK(LAG_HIGH)
+		process_tiles_to_space()
+		is_busy = TRUE
+
+		if(!explosions.exploding)
+			if(groups_to_rebuild.len > 0)
+				process_rebuild_select_groups()
+			LAGCHECK(LAG_REALTIME)
+
+			if(tiles_to_update.len > 0)
+				process_update_tiles()
+			LAGCHECK(LAG_REALTIME)
 
 		process_groups()
-		LAGCHECK(LAG_HIGH)
+		LAGCHECK(LAG_REALTIME)
 
 		process_singletons()
-		LAGCHECK(LAG_HIGH)
+		LAGCHECK(LAG_REALTIME)
 
 		process_super_conductivity()
-		LAGCHECK(LAG_HIGH)
+		LAGCHECK(LAG_REALTIME)
 
 		process_high_pressure_delta()
-		LAGCHECK(LAG_HIGH)
+		LAGCHECK(LAG_REALTIME)
 
 		if(current_cycle % 7 == 0) //Check for groups of tiles to resume group processing every 7 cycles
-			for(var/datum/air_group/AG as() in air_groups)
+			for(var/datum/air_group/AG as anything in air_groups)
 				AG.check_regroup()
-				LAGCHECK(LAG_HIGH)
+				LAGCHECK(LAG_REALTIME)
 
+		is_busy = FALSE
 		return 1
+
+	process_tiles_to_space()
+		if(length(tiles_to_space))
+			for(var/turf/T as anything in tiles_to_space)
+				T.ReplaceWithSpace()
+			tiles_to_space.len = 0
 
 	process_update_tiles()
 		for(var/turf/simulated/T in tiles_to_update) // ZEWAKA-ATMOS SPACE + SPACE FLUID LEAKAGE
@@ -272,42 +290,44 @@ datum/controller/air_system
 		var/list/turf/turf_list = list()
 
 		for(var/datum/air_group/turf_AG in groups_to_rebuild) // Deconstruct groups, gathering their old members
-			for(var/turf/simulated/T as() in turf_AG.members)
+			if(turf_AG.group_processing)	// Ensure correct air is used for reconstruction, otherwise parent is destroyed
+				turf_AG.suspend_group_processing()
+			for(var/turf/simulated/T as anything in turf_AG.members)
 				T.parent = null
 				turf_list += T
 			air_master.air_groups -= turf_AG
 			turf_AG.members.len = 0
-		LAGCHECK(LAG_HIGH)
+		LAGCHECK(LAG_REALTIME)
 
-		for(var/turf/simulated/S as() in turf_list) // Have old members try to form new groups
+		for(var/turf/simulated/S as anything in turf_list) // Have old members try to form new groups
 			if(!S.parent)
 				assemble_group_turf(S)
-		LAGCHECK(LAG_HIGH)
+		LAGCHECK(LAG_REALTIME)
 
-		for(var/turf/simulated/S as() in turf_list)
+		for(var/turf/simulated/S as anything in turf_list)
 			S.update_air_properties()
-		LAGCHECK(LAG_HIGH)
+		LAGCHECK(LAG_REALTIME)
 
 		groups_to_rebuild.len = 0
 
 	process_groups()
-		for(var/datum/air_group/AG as() in air_groups)
+		for(var/datum/air_group/AG as anything in air_groups)
 			AG?.process_group(parent_controller)
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(LAG_REALTIME)
 
 	process_singletons()
-		for(var/item in active_singletons)
-			item:process_cell()
-			LAGCHECK(LAG_HIGH)
+		for(var/turf/simulated/loner as anything in active_singletons)
+			loner.process_cell()
+			LAGCHECK(LAG_REALTIME)
 
 	process_super_conductivity()
-		for(var/turf/simulated/hot_potato in active_super_conductivity) //gets space tiles in here somehow -ZEWAKA/ATMOS
+		for(var/turf/simulated/hot_potato as anything in active_super_conductivity)
 			hot_potato.super_conduct()
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(LAG_REALTIME)
 
 	process_high_pressure_delta()
-		for(var/turf/simulated/pressurized as() in high_pressure_delta)
+		for(var/turf/simulated/pressurized as anything in high_pressure_delta)
 			pressurized.high_pressure_movements()
-			LAGCHECK(LAG_HIGH)
+			LAGCHECK(LAG_REALTIME)
 
 		high_pressure_delta.len = 0

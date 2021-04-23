@@ -86,21 +86,13 @@
 
 
 	src.visible_message("<span class='game deadsay'><span class='prefix'>DEAD:</span><b>[src]</b> points to [target].</span>")
-	var/obj/decal/point/P = new(get_turf(target))
-	P.pixel_x = target.pixel_x
-	P.pixel_y = target.pixel_y
-	P.color = "#5c00e6"
-
+	var/point_invisibility = src.invisibility
 #ifdef HALLOWEEN
-	//ghost points have a 20% chance to be seen by the living.
-	P.invisibility = prob(80) ? src.invisibility : 0
-#else
-	P.invisibility = src.invisibility
+	if(prob(20))
+		point_invisibility = 0
 #endif
-	src = null // required to make sure its deleted
-	SPAWN_DBG (20)
-		P.invisibility = 101
-		qdel(P)
+	make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color="#5c00e6", invisibility=point_invisibility)
+
 
 #define GHOST_LUM	1		// ghost luminosity
 
@@ -156,7 +148,7 @@
 /mob/dead/observer/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if (src.icon_state != "doubleghost" && istype(mover, /obj/projectile))
 		var/obj/projectile/proj = mover
-		if (proj.proj_data.hits_ghosts)
+		if (proj.proj_data?.hits_ghosts)
 			return 0
 #ifdef HALLOWEEN
 	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
@@ -307,8 +299,7 @@
 		// so, fuck that, you're dead, shithead. get over it.
 		setdead(O)
 
-		if(src.mind)
-			src.mind.transfer_to(O)
+		src.mind?.transfer_to(O)
 		src.ghost = O
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)
@@ -403,7 +394,7 @@
 	client.images.Remove(health_mon_icons)
 	if (!health_shown)
 		health_shown = 1
-		if(client && client.images)
+		if(client?.images)
 			for(var/image/I in health_mon_icons)
 				if (I && src && I.loc != src.loc)
 					client.images.Add(I)
@@ -415,7 +406,7 @@
 	set name = "Toggle Arrest Status"
 	if (!arrest_shown)
 		arrest_shown = 1
-		if(client && client.images)
+		if(client?.images)
 			for(var/image/I in arrestIconsAll)
 				if(I && src && I.loc != src.loc)
 					client.images.Add(I)
@@ -478,12 +469,12 @@
 	if (!isturf(src.loc))
 		src.set_loc(get_turf(src))
 	if (NewLoc)
-		dir = get_dir(loc, NewLoc)
+		set_dir(get_dir(loc, NewLoc))
 		src.set_loc(NewLoc)
 		OnMove()
 		return
 
-	dir = direct
+	set_dir(direct)
 	if((direct & NORTH) && src.y < world.maxy)
 		src.y++
 	if((direct & SOUTH) && src.y > 1)
@@ -548,7 +539,7 @@
 			continue
 		L+=T
 
-	if (L && L.len) //ZeWaka: Fix for pick() from empty list
+	if (length(L)) //ZeWaka: Fix for pick() from empty list
 		usr.set_loc(pick(L))
 		OnMove()
 	else
@@ -671,7 +662,7 @@
 
 	// Same thing you could do with the old auth disk. The bomb is equally important
 	// and should appear at the top of any unsorted list  (Convair880).
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 		var/datum/game_mode/nuclear/N = ticker.mode
 		if (N.the_bomb && istype(N.the_bomb, /obj/machinery/nuclearbomb/))
 			var/name = "Nuclear bomb"
@@ -684,7 +675,7 @@
 			creatures[name] = N.the_bomb
 
 
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
 		var/datum/game_mode/football/F = ticker.mode
 		if (F.the_football && istype(F.the_football, /obj/item/football/the_big_one))
 			var/name = "THE FOOTBALL"
@@ -806,7 +797,7 @@ mob/dead/observer/proc/insert_observer(var/atom/target)
 	newobs.my_ghost = src
 	delete_on_logout_reset = delete_on_logout
 	delete_on_logout = 0
-	if (target && target.invisibility)
+	if (target?.invisibility)
 		newobs.see_invisible = target.invisibility
 	if (src.corpse)
 		corpse.ghost = newobs

@@ -2,9 +2,8 @@
 /obj/item/mine
 	name = "land mine (parent)"
 	desc = "You shouldn't be able to see this!"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	density = 0
-	anchored = 1
 	layer = OBJ_LAYER
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "mine"
@@ -29,14 +28,14 @@
 
 	examine()
 		. = ..()
-		if (src.suppress_flavourtext != 1)
+		if (!src.suppress_flavourtext)
 			. += "It appears to be [src.armed == 1 ? "armed" : "disarmed"]."
 
 	attack_hand(mob/user as mob)
 		src.add_fingerprint(user)
 
-		if (prob(50) && src.armed && src.used_up != 1)
-			if (src.suppress_flavourtext != 1)
+		if (prob(50) && src.armed && !src.used_up)
+			if (!src.suppress_flavourtext)
 				src.visible_message("<font color='red'><b>[user] fumbles with the [src.name], accidentally setting it off!</b></span>")
 			src.triggered(user)
 			return
@@ -45,9 +44,19 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (prob(50) && src.armed && src.used_up != 1)
-			if (src.suppress_flavourtext != 1)
+		if (prob(50) && src.armed && !src.used_up)
+			if (!src.suppress_flavourtext)
 				src.visible_message("<font color='red'><b>[user] fumbles with the [src.name], accidentally setting it off!</b></span>")
+			src.triggered(user)
+			return
+
+		..()
+		return
+
+	pull(mob/user as mob)
+		if (src.armed && !src.used_up)
+			if (!src.suppress_flavourtext)
+				src.visible_message("<font color='red'><b>[user] tries to pull the [src.name], triggering the anti-tamper mechanism!</b></span>")
 			src.triggered(user)
 			return
 
@@ -88,7 +97,7 @@
 	ex_act(severity)
 		if (src.used_up != 0 || !src.armed)
 			return
-		if (src.suppress_flavourtext != 1)
+		if (!src.suppress_flavourtext)
 			src.visible_message("<font color='red'><b>The explosion sets off the [src.name]!</b></span>")
 		src.triggered()
 		return
@@ -96,7 +105,7 @@
 	emp_act()
 		if (src.used_up != 0 || !src.armed)
 			return
-		if (src.suppress_flavourtext != 1)
+		if (!src.suppress_flavourtext)
 			src.visible_message("<font color='red'><b>The electromagnetic pulse sets off the [src.name]!</b></span>")
 		src.triggered()
 		return
@@ -104,7 +113,7 @@
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (src.used_up != 0 || !src.armed)
 			return 0
-		if (src.suppress_flavourtext != 1)
+		if (!src.suppress_flavourtext)
 			src.visible_message("<font color='red'><b>The electric charge sets off the [src.name]!</b></span>")
 		src.triggered(user)
 		return 1
@@ -119,7 +128,7 @@
 		if (!src.armed)
 			return
 
-		if (src.suppress_flavourtext != 1)
+		if (!src.suppress_flavourtext)
 			src.visible_message("<font color='red'><b>[AM] triggers the [src.name]!</b></span>")
 		src.triggered(AM)
 		return

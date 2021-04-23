@@ -62,7 +62,7 @@
 		src.real_name = "AI Shell [copytext("\ref[src]", 6, 11)]"
 		src.name = src.real_name
 
-	src.radio = new /obj/item/device/radio(src)
+	src.radio = new /obj/item/device/radio/headset/command/ai(src)
 	src.ears = src.radio
 
 	SPAWN_DBG(1 SECOND)
@@ -100,8 +100,7 @@
 			sleep(recently_time)
 			recently_dead -= key
 */
-	if(src.mind)
-		src.mind.register_death()
+	src.mind?.register_death()
 
 	return ..(gibbed)
 
@@ -285,14 +284,14 @@
 		if ("birdwell", "burp")
 			if (src.emote_check(voluntary, 50))
 				message = "<B>[src]</B> birdwells."
-				playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1)
+				playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 		if ("scream")
 			if (src.emote_check(voluntary, 50))
 				if (narrator_mode)
-					playsound(src.loc, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch())
+					playsound(src.loc, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 				else
-					playsound(get_turf(src), src.sound_scream, 80, 0, 0, src.get_age_pitch())
+					playsound(get_turf(src), src.sound_scream, 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 				message = "<b>[src]</b> screams!"
 
 		if ("johnny")
@@ -308,9 +307,9 @@
 		if ("flip")
 			if (src.emote_check(voluntary, 50))
 				if (narrator_mode)
-					playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1)
+					playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				else
-					playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1)
+					playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				message = "<B>[src]</B> does a flip!"
 				if (prob(50))
 					animate_spin(src, "R", 1, 0)
@@ -376,9 +375,9 @@
 						if (39) message = "<B>[src]</B> farts so hard the AI feels it."
 						if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
 				if (narrator_mode)
-					playsound(src.loc, 'sound/vox/fart.ogg', 50, 1)
+					playsound(src.loc, 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				else
-					playsound(src.loc, src.sound_fart, 50, 1)
+					playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 #ifdef DATALOGGER
 				game_stats.Increment("farts")
 #endif
@@ -487,18 +486,6 @@
 	SPAWN_DBG( 0 )
 		if ((!( yes ) || src.now_pushing))
 			return
-		src.now_pushing = 1
-		if(ismob(AM))
-			var/mob/tmob = AM
-			if(ishuman(tmob) && tmob.bioHolder.HasEffect("fat"))
-				if(prob(20))
-					src.visible_message("<span class='alert'><B>[src] fails to push [tmob]'s fat ass out of the way.</B></span>")
-					src.now_pushing = 0
-					src.unlock_medal("That's no moon, that's a GOURMAND!", 1)
-					return
-		src.now_pushing = 0
-
-
 		if (!istype(AM, /atom/movable))
 			return
 		if (!src.now_pushing)
@@ -558,7 +545,8 @@
 /mob/living/silicon/hivebot/attack_hand(mob/user)
 	user.lastattacked = src
 	if(!user.stat)
-		actions.interrupt(src, INTERRUPT_ATTACKED)
+		if (user.a_intent != INTENT_HELP)
+			actions.interrupt(src, INTERRUPT_ATTACKED)
 		switch(user.a_intent)
 			if(INTENT_HELP) //Friend person
 				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -2)
@@ -965,7 +953,7 @@ Frequency:
 		SPAWN_DBG(0.5 SECONDS)
 			if (src.module)
 				qdel(src.module)
-			if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/construction))
+			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/construction))
 				src.module = new /obj/item/robot_module/construction_ai( src )
 			else
 				src.module = new /obj/item/robot_module( src )
@@ -1068,7 +1056,7 @@ Frequency:
 	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "ai-interface"
 	item_state = "ai-interface"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 //obj/item/cell/shell_cell moved to cells.dm
 
@@ -1078,7 +1066,7 @@ Frequency:
 	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "shell-frame"
 	item_state = "shell-frame"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/build_step = 0
 	var/obj/item/cell/cell = null
 	var/has_radio = 0
@@ -1088,15 +1076,11 @@ Frequency:
 	if (istype(W, /obj/item/sheet))
 		if (src.build_step < 1)
 			var/obj/item/sheet/M = W
-			if (M.amount >= 1)
+			if (M.change_stack_amount(-1))
 				src.build_step++
 				boutput(user, "You add the plating to [src]!")
 				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 				src.icon_state = "shell-plate"
-				M.amount -= 1
-				if (M.amount < 1)
-					user.drop_item()
-					qdel(M)
 				return
 			else
 				boutput(user, "You need at least one metal sheet to add plating! How are you even seeing this message?! How do you have a metal sheet that has no metal sheets in it?!?!")

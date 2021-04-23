@@ -14,7 +14,7 @@
 	var/max_wclass = 3
 	var/on = 0
 	var/datum/light/light
-	var/datum/particleSystem/barrelSmoke/particles
+	var/datum/particleSystem/barrelSmoke/smoke_part
 
 	New()
 		..()
@@ -31,7 +31,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isghostdrone(user) || isAI(user))
-			boutput(usr, "<span class='alert'>The [src] refuses to interface with you, as you are not a bus driver!</span>")
+			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a bus driver!</span>")
 			return
 		if (src.grillitem)
 			boutput(user, "<span class='alert'>There is already something on the grill!</span>")
@@ -134,7 +134,7 @@
 
 	attack_hand(mob/user as mob)
 		if (isghostdrone(user))
-			boutput(usr, "<span class='alert'>The [src] refuses to interface with you, as you are not a bus driver!</span>")
+			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a bus driver!</span>")
 			return
 
 		if (!src.grillitem)
@@ -178,11 +178,11 @@
 				UnsubscribeProcess()
 
 		if (src.grilltemp >= 200 + T0C)
-			if (!particles)
-				particles = particleMaster.SpawnSystem(new /datum/particleSystem/barrelSmoke(src))
+			if (!smoke_part)
+				smoke_part = particleMaster.SpawnSystem(new /datum/particleSystem/barrelSmoke(src))
 		else
 			particleMaster.RemoveSystem(/datum/particleSystem/barrelSmoke, src)
-			particles = null
+			smoke_part = null
 
 		if (src.grilltemp >= src.reagents.total_temperature)
 			src.reagents.set_reagent_temp(src.reagents.total_temperature + 5)

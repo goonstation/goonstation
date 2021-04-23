@@ -24,8 +24,8 @@
 
 
 /obj/item/device/speechtotext
-	name = "dumb microphone"
-	desc = "This is really stupid."
+	name = "prototype flying chat device"
+	desc = "This is a microphone that was a prototype of the floating chat that pali added. It doesn't work that great, but hey."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "mic"
 	item_state = "mic"
@@ -82,7 +82,7 @@
 	New(var/change = 0)
 		..()
 		if (abs(change) < 1)
-			del(src)
+			qdel(src)
 			return
 
 		var/hcol = (change > 0) ? "#88ff88" : "#ff6666"
@@ -100,8 +100,9 @@
 			animate(maptext_y = 52, alpha = 0, time = 4, easing = EASE_OUT | CUBIC_EASING)
 
 		// ptoato said to just call del directly so blame them
+		// pali: potato was wrong
 		SPAWN_DBG(4 SECONDS)
-			del(src)
+			qdel(src)
 
 
 /obj/maptext_junk/speech
@@ -153,16 +154,16 @@
 	var/list/affecting = list()
 
 	attack_hand(mob/user as mob)
-		boutput(usr, "rotating mirror...")
+		boutput(user, "rotating mirror...")
 		facing = 1 - facing
 		for (var/obj/machinery/power/pt_laser/PTL in affecting)
 			//
-			boutput(usr, "[PTL] would be notified")
+			boutput(user, "[PTL] would be notified")
 
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (iswrenchingtool(W))
-			boutput(usr, "this would deconstruct it.")
+			boutput(user, "this would deconstruct it.")
 			return
 
 		..()
@@ -211,6 +212,11 @@
 		Z_LOG_DEBUG("shit", "Doing teleport")
 		do_the_teleport(AM)
 
+	ex_act(severity)
+		return
+
+	meteorhit(obj/meteor)
+		return
 
 	proc/do_the_teleport(atom/movable/AM as mob|obj)
 		Z_LOG_DEBUG("shit", "Teleporting [AM]")
@@ -244,6 +250,7 @@
 	icon = 'icons/obj/32x64.dmi'
 	icon_state = "voting_box"
 	density = 1
+	event_handler_flags = NO_MOUSEDROP_QOL
 	flags = FPRINT
 	anchored = 1
 	desc = "Funds further renovations for the afterlife. You can put the fruits / vegetables / minerals / bombs you grew into this (click this with them or click-drag them onto it)."
@@ -512,7 +519,7 @@
 	uses_multiple_icon_states = 1
 	flags = FPRINT | TABLEPASS | ONBELT
 	force = 0
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 1
 	throw_speed = 3
 	throw_range = 8
@@ -528,7 +535,7 @@
 			src.desc = "Hoeeeh!? This is only useful if you're decked out."
 			src.icon_state = "clowwand"
 			src.item_state = "clowwand"
-			src.w_class = 4
+			src.w_class = W_CLASS_BULKY
 		else
 			src.name = initial(src.name)
 			src.desc = initial(src.desc)
@@ -581,7 +588,7 @@
 
 		Entered(atom/movable/O)
 			..()
-			if (isobserver(O) || !istype(ticker.mode, /datum/game_mode/football))
+			if (isobserver(O) || !istype(ticker?.mode, /datum/game_mode/football))
 				return
 			var/datum/game_mode/football/F = ticker.mode
 			if (ismob(O))
@@ -789,13 +796,13 @@
 				if (src.ding_on_change)
 					playsound(src, src.ding_sound, 33, 0)
 		catch(var/exception/e)
-			src.maptext = "(Err: [e])"
+			src.maptext = "<span class='c pixel sh'>(Err: [e])</span>"
 
 
 	proc/get_value()
 		if (src.monitored_list && !src.monitored_var)
 			var/list/monlist = monitored.vars[src.monitored_list]
-			. = monlist.len
+			. = length(monlist)
 		else if (src.monitored_list)
 			. = monitored.vars[src.monitored_list][src.monitored_var]
 		else
@@ -851,10 +858,34 @@
 			maptext_prefix = "<span class='c pixel sh'>Deaths:\n<span class='vga'>"
 			ding_sound = "sound/misc/lose.ogg"
 
+			players
+				monitored_var = "playerdeaths"
+				maptext_prefix = "<span class='c pixel sh'>Deaths:\n<span class='vga'>"
+				ding_sound = "sound/misc/lose.ogg"
+
 		adminhelps
 			monitored_var = "adminhelps"
 			maptext_prefix = "<span class='c pixel sh'>Adminhelps:\n<span class='vga'>"
 			ding_sound = "sound/voice/screams/mascream6.ogg"
+
+		mentorhelps
+			monitored_var = "mentorhelps"
+			maptext_prefix = "<span class='c pixel sh'>Mentorhelps:\n<span class='vga'>"
+			ding_sound = "sound/voice/animal/mouse_squeak.ogg"
+
+		prayers
+			monitored_var = "prayers"
+			maptext_prefix = "<span class='c pixel sh'>Prayers:\n<span class='vga'>"
+			ding_sound = "sound/voice/heavenly.ogg"
+
+		violence
+			monitored_var = "violence"
+			maptext_prefix = "<span class='c pixel sh'>Acts of violence:\n<span class='vga'>"
+			update_delay = 1 SECOND
+
+		clones
+			monitored_var = "clones"
+			maptext_prefix = "<span class='c pixel sh'>Clones:\n<span class='vga'>"
 
 	budget
 		New()
@@ -882,6 +913,49 @@
 		get_value()
 			. = total_clients()
 
+	players
+		maptext_prefix = "<span class='c pixel sh'>Players:\n<span class='vga'>"
+		var/what_group = "total"
+		validate_monitored()
+			return 1
+		get_value()
+			. = get_crew_stats()[what_group]
+
+		alive
+			maptext_prefix = "<span class='c pixel sh'>Living players:\n<span class='vga'>"
+			what_group = "alive"
+		dead
+			maptext_prefix = "<span class='c pixel sh'>Dead players:\n<span class='vga'>"
+			what_group = "dead"
+		observers
+			maptext_prefix = "<span class='c pixel sh'>Observers:\n<span class='vga'>"
+			what_group = "observer"
+
+
+
+		// shamefully stolen from get_dead_crew_percentage()
+		proc/get_crew_stats()
+			var/list/results = list()
+			results["total"] = 0
+			results["alive"] = 0
+			results["dead"] = 0
+			results["observer"] = 0
+
+			for(var/client/C)
+				var/mob/M = C.mob
+				if(!M || isnewplayer(M)) continue
+				if (isdead(M) && !isliving(M))
+					if (M.mind?.joined_observer)
+						results["observer"]++
+					else
+						results["dead"]++
+				else
+					results["alive"]++
+				results["total"]++
+
+			return results
+
+
 	load
 		maptext_prefix = "<span class='c pixel sh'>Server Load:\n<span class='vga'>"
 		update_delay = 1 SECOND
@@ -900,7 +974,7 @@
 				if (0.8 to INFINITY)
 					lagc = "#ff0000; -dm-text-outline: 1px #000000 solid"
 
-			. = "<span style='color: [lagc];'>[world.cpu]% @ [world.tick_lag]s</span>"
+			. = "<span style='color: [lagc];'>[round(world.cpu)]% @ [world.tick_lag / 10]s</span>"
 
 
 /obj/overlay/zamujasa/football_wave_timer
@@ -942,53 +1016,43 @@ Read the rules, don't grief, and have fun!</div>"}
 
 
 /obj/overlay/zamujasa/round_start_countdown
+	var/maptext_area = "status"
+
 	New()
 		..()
-		if (lobby_titlecard)
-			src.x = lobby_titlecard.x + 13
-			src.y = lobby_titlecard.y + 0
-			src.z = lobby_titlecard.z
-			src.layer = lobby_titlecard.layer + 1
-		else
-			// oops
-			src.x = 7
-			src.y = 2
-			src.z = 1
-			src.layer = 1
+		if (length(landmarks[LANDMARK_LOBBY_STATUS]))
+			src.set_loc(landmarks[LANDMARK_LOBBY_STATUS][1])
+		src.layer = HUD_LAYER
 
-		src.maptext = ""
 		src.maptext_width = 320
 		src.maptext_x = -(320 / 2) + 16
 		src.maptext_height = 48
 		src.plane = 100
+		src.set_text("")
 
+	disposing()
+		lobby_titlecard.set_maptext(maptext_area, "")
+		..()
 
-	proc/update_status(var/message)
+	proc/set_text(text)
+		src.maptext = text
+		lobby_titlecard.set_maptext(maptext_area, text)
+
+	proc/update_status(message)
 		if (message)
-			src.maptext = "<span class='c ol vga vt'>Setting up game...\n<span style='color: #aaaaaa;'>[message]</span></span>"
+			src.set_text("<span class='c ol vga vt'>Setting up game...\n<span style='color: #aaaaaa;'>[message]</span></span>")
 		else
-			src.maptext = ""
+			src.set_text("")
 
 	timer
+		maptext_area = "timer"
+
 		New()
 			..()
-			if (lobby_titlecard)
-				src.x = lobby_titlecard.x + 13
-				src.y = lobby_titlecard.y + 1
-				src.z = lobby_titlecard.z
-				src.layer = lobby_titlecard.layer + 1
-			else
-				// oops
-				src.x = 7
-				src.y = 1
-				src.z = 1
-				src.layer = 1
+			if (length(landmarks[LANDMARK_LOBBY_TIMER]))
+				src.set_loc(landmarks[LANDMARK_LOBBY_TIMER][1])
 
-			src.maptext = ""
-			src.maptext_width = 320
-			src.maptext_x = -(320 / 2) + 16
 			src.maptext_height = 96
-			src.plane = 100
 
 		proc/update_time(var/time)
 			if (time >= 0)
@@ -1002,9 +1066,41 @@ Read the rules, don't grief, and have fun!</div>"}
 						timeLeftColor = "#ffb400"
 					if (0 to 30)
 						timeLeftColor = "#ff6666"
-				src.maptext = "<span class='c ol vga vt'>Round begins in<br><span style='color: [timeLeftColor]; font-size: 36px;'>[time]</span></span>"
+				src.set_text("<span class='c ol vga vt'>Round begins in<br><span style='color: [timeLeftColor]; font-size: 3em;'>[time]</span></span>")
 			else
-				src.maptext = "<span class='c ol vga vt'>Round begins<br><span style='color: #aaaaaa; font-size: 36px;'>soon</span></span>"
+				src.set_text("<span class='c ol vga vt'>Round begins<br><span style='color: #aaaaaa; font-size: 3em;'>soon</span></span>")
+
+	encourage
+		maptext_area = "leftside"
+
+		New()
+			..()
+			if (length(landmarks[LANDMARK_LOBBY_LEFTSIDE]))
+				src.set_loc(landmarks[LANDMARK_LOBBY_LEFTSIDE][1])
+
+			// This is gross. I'm sorry.
+			var/list/servers = list()
+			servers["main1"] = "1 Classic: Heisenbee"
+			servers["main2"] = "2 Classic: Bombini"
+			servers["main3"] = "3 Roleplay: Morty"
+			servers["main4"] = "4 Roleplay: Sylvester"
+
+			var/serverList = ""
+			for (var/serverId in servers)
+				if (serverId == config.server_id)
+					continue
+				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[serverId]'>Goonstation [servers[serverId]]</a>"}
+
+			src.maptext_x = 0
+			src.maptext_width = 600
+			src.maptext_height = 400
+			src.set_text({"<span class='ol vga'>
+Welcome to Goonstation!
+New? <a style='color: #88f;' href="https://mini.xkeeper.net/ss13/tutorial/">Check the tutorial</a>!
+Have questions? Ask mentors with \[F3]!
+Need an admin? Message us with \[F1].
+
+Other Goonstation servers:[serverList]</span>"})
 
 
 
@@ -1058,6 +1154,65 @@ Read the rules, don't grief, and have fun!</div>"}
 
 
 
+
+/obj/item/rcd/construction/safe/admin_crimes
+	// do not put this anywhere anyone can get it. it is for crime.
+	name = "ultra hyper super rapid construction device 2 turbo: championship edition hd remix now with NEW funky mode"
+	desc = "Also known as the ultimate in grief technology, this is capable of rapidly (de)constructing walls, flooring, windows, and doors. This admin crime edition features no cooldowns and extremely reduced matter costs. Does not, in fact, have a funky mode."
+
+	matter = 999999
+	max_matter = 999999
+
+	// lol
+	matter_create_floor = 1
+	time_create_floor = 0
+
+	matter_create_wall = 1
+	time_create_wall = 0
+
+	matter_reinforce_wall = 1
+	time_reinforce_wall = 0
+
+	matter_create_wall_girder = 1
+	time_create_wall_girder = 0
+
+	matter_create_door = 1
+	time_create_door = 0
+
+	matter_create_window = 1
+	time_create_window = 0
+
+	matter_create_light_fixture = 1
+	time_create_light_fixture = 0
+
+	matter_remove_door = 1
+	time_remove_door = 0
+
+	matter_remove_floor = 1
+	time_remove_floor = 0
+
+	matter_remove_lattice = 1
+	time_remove_lattice = 0
+
+	matter_remove_wall = 1
+	time_remove_wall = 0
+
+	matter_unreinforce_wall = 1
+	time_unreinforce_wall = 0
+
+	matter_remove_girder = 1
+	time_remove_girder = 0
+
+	matter_remove_window = 1
+	time_remove_window = 0
+
+	matter_remove_light_fixture = 1
+	time_remove_light_fixture = 0
+
+
+
+
+
 /mob/living/critter/small_animal/bee/zombee/zambee
 	name = "zambee"
 	real_name = "zambee"
@@ -1078,3 +1233,17 @@ Read the rules, don't grief, and have fun!</div>"}
 	amt1 = 15
 	venom2 = "omnizine"
 	amt2 = 5
+
+
+
+
+// i am not sorry for this
+/obj/machinery/shower/cowbrush
+	name = "\improper PLEASEDMOO cattle cleaner"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "cowbrush"
+	desc = "A huge rotary brush attached to a wall. Supposedly, cows love it."
+
+	attack_hand(mob/user as mob)
+		..()
+		src.icon_state = "cowbrush[src.on ? "_on" : ""]"

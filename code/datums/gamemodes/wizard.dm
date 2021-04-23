@@ -87,7 +87,8 @@
 		else randomname = pick_string_autokey("names/wizard_male.txt")
 		SPAWN_DBG(0)
 			var/newname = adminscrub(input(wizard.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname) as text)
-
+			if(newname && newname != randomname)
+				phrase_log.log_phrase("name-wizard", newname, no_duplicates=TRUE)
 			if (length(ckey(newname)) == 0)
 				newname = randomname
 
@@ -148,7 +149,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(src.traitors))
 /*
-	for (var/obj/machinery/computer/communications/comm as() in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/comm as anything in machine_registry[MACHINES_COMMSCONSOLES])
 		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
 			intercept.name = "paper- 'Cent. Com. Status Summary'"

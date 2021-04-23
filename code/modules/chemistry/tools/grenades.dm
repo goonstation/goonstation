@@ -9,7 +9,7 @@
 	icon = 'icons/obj/items/grenade.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "flashbang"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	force = 2.0
 	var/stage = 0
 	var/state = 0
@@ -189,7 +189,7 @@
 			var/min_dispersal = src.reagents.get_dispersal()
 			for (var/atom/A in range(min_dispersal, get_turf(src.loc)))
 				if ( A == src ) continue
-				if (src && src.reagents) // Erik: fix for cannot execute null.grenade effects()
+				if (src?.reagents) // Erik: fix for cannot execute null.grenade effects()
 					src.reagents.grenade_effects(src, A)
 					src.reagents.reaction(A, 1, 10, 0)
 
@@ -206,7 +206,7 @@
 	icon_state = "grenade-fuse"
 	item_state = "pen"
 	force = 0
-	w_class = 1
+	w_class = W_CLASS_TINY
 	m_amt = 100
 
 /* =================================================== */
@@ -326,7 +326,7 @@
 
 	revolution //convertssss
 		explode()
-			if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution))
+			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				var/datum/game_mode/revolution/R = ticker.mode
 				var/min_dispersal = src.reagents.get_dispersal()
 				for (var/mob/M in range(max(min_dispersal,6), get_turf(src.loc)))

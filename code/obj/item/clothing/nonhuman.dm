@@ -19,7 +19,6 @@
 	compatible_species = list("monkey")
 	cant_self_remove = 1
 	cant_other_remove = 1
-	monkey_clothes = 1
 
 	dropped(mob/user as mob)
 		..()
@@ -55,7 +54,6 @@
 	item_state = "space"
 	cant_self_remove = 1
 	cant_other_remove = 1
-	monkey_clothes = 1
 
 	dropped(mob/user as mob)
 		..()
@@ -76,7 +74,6 @@
 	item_state = "mutant"
 	cant_self_remove = 1
 	cant_other_remove = 1
-	monkey_clothes = 1
 	c_flags = SPACEWEAR | COVERSMOUTH | COVERSEYES
 
 	dropped(mob/user as mob)
@@ -93,7 +90,6 @@
 	item_state = "tanhony"
 	cant_self_remove = 1
 	cant_other_remove = 1
-	monkey_clothes = 1
 	c_flags = SPACEWEAR
 
 	dropped(mob/user as mob)

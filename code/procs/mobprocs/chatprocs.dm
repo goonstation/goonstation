@@ -1,8 +1,12 @@
 /mob/proc/say()
 	return
 
-/mob/verb/whisper()
+/mob/proc/whisper(message, forced=FALSE)
 	return
+
+/mob/verb/whisper_verb(message as text)
+	set name = "whisper"
+	return src.whisper(message)
 
 /mob/verb/say_verb(message as text)
 	set name = "say"
@@ -10,7 +14,7 @@
 
 	if (!message)
 		return
-	if (src.client && url_regex && url_regex.Find(message) && !client.holder)
+	if (src.client && url_regex?.Find(message) && !client.holder)
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
 		return
@@ -43,7 +47,7 @@
 				choices += channel_name
 				channels[channel_name] = ":[i]"
 
-			if (istype(R.secure_frequencies) && R.secure_frequencies.len)
+			if (istype(R.secure_frequencies) && length(R.secure_frequencies))
 				for (var/sayToken in R.secure_frequencies)
 					channel_name = "[format_frequency(R.secure_frequencies[sayToken])] - " + (headset_channel_lookup["[R.secure_frequencies[sayToken]]"] ? headset_channel_lookup["[R.secure_frequencies[sayToken]]"] : "(Unknown)")
 
@@ -80,7 +84,7 @@
 		var/list/choices = list()
 		choices += "[ headset_channel_lookup["[R.frequency]"] ? headset_channel_lookup["[R.frequency]"] : "???" ]: \[[format_frequency(R.frequency)]]"
 
-		if (istype(R.secure_frequencies) && R.secure_frequencies.len)
+		if (istype(R.secure_frequencies) && length(R.secure_frequencies))
 			for (var/sayToken in R.secure_frequencies)
 				choices += "[ headset_channel_lookup["[R.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[R.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(R.secure_frequencies["[sayToken]"])]]"
 
@@ -123,7 +127,7 @@
 /mob/verb/me_verb(message as text)
 	set name = "me"
 
-	if (src.client && !src.client.holder && url_regex && url_regex.Find(message))
+	if (src.client && !src.client.holder && url_regex?.Find(message))
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
 		return
@@ -134,7 +138,7 @@
 	set name = "me_hotkey"
 	set hidden = 1
 
-	if (src.client && !src.client.holder && url_regex && url_regex.Find(message)) //we still do this check just in case they access the hidden emote
+	if (src.client && !src.client.holder && url_regex?.Find(message)) //we still do this check just in case they access the hidden emote
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
 		return
@@ -168,6 +172,9 @@
 
 	else if (isobserver(src))
 		name = "Ghost"
+		alt_name = " ([src.real_name])"
+	else if (ispoltergeist(src))
+		name = "Poltergeist"
 		alt_name = " ([src.real_name])"
 	else if (iswraith(src))
 		name = "Wraith"
@@ -395,6 +402,8 @@
 	var/loudness = 0
 	var/font_accent = null
 	var/style = ""
+	var/first_quote = " \""
+	var/second_quote = "\""
 
 	if (ending == "?")
 		speechverb = speechverb_ask
@@ -426,6 +435,57 @@
 	if (src.get_brain_damage() >= 60)
 		speechverb = pick("says","stutters","mumbles","slurs")
 
+	if (src.speech_void)
+		text = voidSpeak(text)
+
+	if (src.singing || (src.bioHolder && src.bioHolder.HasEffect("accent_elvis")))
+		// use note icons instead of normal quotes
+		var/note_type = src.singing & BAD_SINGING ? "notebad" : "note"
+		var/note_img = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[note_type].png")]\">"
+		if (src.singing & LOUD_SINGING)
+			first_quote = "[note_img][note_img]"
+			second_quote = first_quote
+		else
+			first_quote = note_img
+			second_quote = note_img
+		// select singing adverb
+		var/adverb = ""
+		if (src.singing & BAD_SINGING)
+			adverb = pick("dissonantly", "flatly", "unmelodically", "tunelessly")
+		else if (src.traitHolder?.hasTrait("nervous"))
+			adverb = pick("nervously", "tremblingly", "falteringly")
+		else if (src.singing & LOUD_SINGING && !src.traitHolder?.hasTrait("smoker"))
+			adverb = pick("loudly", "deafeningly", "noisily")
+		else if (src.singing & SOFT_SINGING)
+			adverb = pick("softly", "gently")
+		else if (src.mind?.assigned_role == "Musician")
+			adverb = pick("beautifully", "tunefully", "sweetly")
+		else if (src.bioHolder?.HasEffect("accent_scots"))
+			adverb = pick("sorrowfully", "sadly", "tearfully")
+		// select singing verb
+		if (src.traitHolder?.hasTrait("smoker"))
+			speechverb = "rasps"
+			if ((singing & LOUD_SINGING))
+				speechverb = "sings Tom Waits style"
+		else if (src.traitHolder?.hasTrait("french") && rand(2) < 1)
+			speechverb = "sings [pick("Charles Trenet", "Serge Gainsborough", "Edith Piaf")] style"
+		else if (src.bioHolder?.HasEffect("accent_swedish"))
+			speechverb = "sings disco style"
+		else if (src.bioHolder?.HasEffect("accent_scots"))
+			speechverb = pick("laments", "sings", "croons", "intones", "sobs", "bemoans")
+		else if (src.bioHolder?.HasEffect("accent_chav"))
+			speechverb = "raps"
+		else if (src.singing & SOFT_SINGING)
+			speechverb = pick("hums", "lullabies")
+		else
+			speechverb = pick("sings", pick("croons", "intones", "warbles"))
+		if (adverb != "")
+		// combine adverb and verb
+			speechverb = "[adverb] [speechverb]"
+		// add style for singing
+		text = "<i>[text]</i>"
+		style = "color:thistle;"
+
 	if (special)
 		if (special == "gasp_whisper")
 			speechverb = speechverb_gasp
@@ -444,17 +504,14 @@
 	if (text == "" || !text)
 		return speechverb
 
-	if (src.speech_void)
-		text = voidSpeak(text)
-
 	if(style)
 		style = " style=\"[style]\""
 	if (loudness > 0)
-		return "[speechverb], \"[font_accent ? "<font face='[font_accent]'[style]>" : null]<big><strong><b>[text]</b></strong></big>[font_accent ? "</font>" : null]\""
+		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<big><strong><b [style? style : ""]>[text]</b></strong></big>[font_accent ? "</font>" : null][second_quote]"
 	else if (loudness < 0)
-		return "[speechverb], \"[font_accent ? "<font face='[font_accent]'[style]>" : null]<small>[text]</small>[font_accent ? "</font>" : null]\""
+		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<small [style? style : ""]>[text]</small>[font_accent ? "</font>" : null][second_quote]"
 	else
-		return "[speechverb], \"[font_accent ? "<font face='[font_accent]'[style]>" : null][text][font_accent ? "</font>" : null]\""
+		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<span [style? style : ""]>[text]</span>[font_accent ? "</font>" : null][second_quote]"
 
 /mob/proc/emote(var/act, var/voluntary = 0)
 	return
@@ -622,7 +679,7 @@
 		if (!C.mob) continue
 		var/mob/M = C.mob
 
-		if (recipients.Find(M.client))
+		if (M.client in recipients)
 			continue
 		if (M.client.holder && !M.client.only_local_looc && !M.client.player_mode)
 			recipients += M.client
@@ -706,7 +763,7 @@
 		return 1
 	if (langname == "english" || !langname)
 		return 1
-	if (langname == "monkey" && (monkeysspeakhuman || (bioHolder && bioHolder.HasEffect("monkey_speak"))))
+	if (langname == "monkey" && (monkeysspeakhuman || (bioHolder?.HasEffect("monkey_speak"))))
 		return 1
 	return 0
 
@@ -726,7 +783,7 @@
 	return null
 
 /mob/proc/see(message)
-	if (!src.is_active())
+	if (!isalive(src))
 		return 0
 	boutput(src, message)
 	return 1
@@ -745,15 +802,27 @@
 	usr.client.preferences.auto_capitalization = !usr.client.preferences.auto_capitalization
 	boutput(usr, "<span class='notice'>[usr.client.preferences.auto_capitalization ? "Now": "No Longer"] auto capitalizing messages.</span>")
 
-/mob/verb/togglelocaldeadchat()
+/mob/dead/verb/togglelocaldeadchat()
 	set desc = "Toggle whether you can hear all chat while dead or just local chat"
 	set name = "Toggle Deadchat Range"
+	set category = "Ghost"
 
 	if (!usr.client) //How could this even happen?
 		return
 
-	usr.client.local_deadchat = !usr.client.local_deadchat
-	boutput(usr, "<span class='notice'>[usr.client.local_deadchat ? "Now" : "No longer"] hearing local chat only.</span>")
+	usr.client.preferences.local_deadchat = !usr.client.preferences.local_deadchat
+	boutput(usr, "<span class='notice'>[usr.client.preferences.local_deadchat ? "Now" : "No longer"] hearing local chat only.</span>")
+
+/mob/dead/verb/toggle_ghost_radio()
+	set desc = "Toggle whether you can hear radio chatter while dead"
+	set name = "Toggle Ghost Radio"
+	set category = "Ghost"
+
+	if (!usr.client) //How could this even happen?
+		return
+
+	usr.client.mute_ghost_radio = !usr.client.mute_ghost_radio
+	boutput(usr, "<span class='notice'>[usr.client.mute_ghost_radio ? "No longer" : "Now"] hearing radio as a ghost.</span>")
 
 /mob/verb/toggleflyingchat()
 	set desc = "Toggle seeing what people say over their heads"
@@ -765,19 +834,22 @@
 	usr.client.preferences.flying_chat_hidden = !usr.client.preferences.flying_chat_hidden
 	boutput(usr, "<span class='notice'>[usr.client.preferences.flying_chat_hidden ? "No longer": "Now"] seeing flying chat.</span>")
 
-/mob/proc/show_message(msg, type, alt, alt_type, group = "", var/image/chat_maptext/assoc_maptext = null)
+/mob/proc/show_message(msg, type, alt, alt_type, group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
 	if (!src.client)
 		return
 
 	// We have procs to check for this stuff, you know. Ripped out a bunch of duplicate code, which also fixed earmuffs (Convair880).
+	var/check_failed = FALSE
 	if (type)
 		if ((type & 1) && !src.sight_check(1))
+			check_failed = TRUE
 			if (!alt)
 				return
 			else
 				msg = alt
 				type = alt_type
 		if ((type & 2) && !src.hearing_check(1))
+			check_failed = TRUE
 			if (!alt)
 				return
 			else
@@ -786,26 +858,30 @@
 			if ((type & 1) && !src.sight_check(1))
 				return
 
-	if (isunconscious(src) || src.sleeping || src.getStatusDuration("paralysis"))
+	if (!just_maptext && (isunconscious(src) || src.sleeping || src.getStatusDuration("paralysis")))
 		if (prob(20))
 			boutput(src, "<I>... You can almost hear something ...</I>")
 			if (isliving(src))
 				for (var/mob/dead/target_observer/observer in src:observers)
 					boutput(observer, "<I>... You can almost hear something ...</I>")
 	else
-		boutput(src, msg, group)
-		if(assoc_maptext && src.client && !src.client.preferences?.flying_chat_hidden)
-			assoc_maptext.show_to(src.client)
+		if(!just_maptext)
+			boutput(src, msg, group)
 
 		var/psychic_link = src.get_psychic_link()
 		if (ismob(psychic_link))
 			boutput(psychic_link, msg, group)
 
-		if (isliving(src))
-			for (var/mob/dead/target_observer/observer in src:observers)
-				boutput(observer, msg, group)
-				if(assoc_maptext && observer.client && !observer.client.preferences.flying_chat_hidden)
-					assoc_maptext.show_to(observer.client)
+		if(!check_failed)
+			if(assoc_maptext && src.client && !src.client.preferences?.flying_chat_hidden)
+				assoc_maptext.show_to(src.client)
+
+			if (isliving(src))
+				for (var/mob/dead/target_observer/observer in src:observers)
+					if(!just_maptext)
+						boutput(observer, msg, group)
+					if(assoc_maptext && observer.client && !observer.client.preferences.flying_chat_hidden)
+						assoc_maptext.show_to(observer.client)
 
 // Show a message to all mobs in sight of this one
 // This would be for visible actions by the src mob
@@ -851,20 +927,20 @@
 		//DEBUG_MESSAGE("<b>[M] recieves message: &quot;[msg]&quot;</b>")
 
 // it was about time we had this instead of just visible_message()
-/atom/proc/audible_message(var/message)
+/atom/proc/audible_message(var/message, var/alt, var/alt_type, var/group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
 	for (var/mob/M in all_hearers(null, src))
 		if (!M.client)
 			continue
-		M.show_message(message, 2)
+		M.show_message(message, 2, alt, alt_type, group, just_maptext, assoc_maptext)
 
-/mob/audible_message(var/message, var/self_message)
+/mob/audible_message(var/message, var/self_message, var/alt, var/alt_type, var/group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
 	for (var/mob/M in all_hearers(null, src))
 		if (!M.client)
 			continue
 		var/msg = message
 		if (self_message && M==src)
 			msg = self_message
-		M.show_message(msg, 2)
+		M.show_message(msg, 2, alt, alt_type, group, just_maptext, assoc_maptext)
 
 
 // FLOCKSAY
@@ -903,6 +979,7 @@
 
 	var/rendered = ""
 	var/flockmindRendered = ""
+	var/siliconrendered = ""
 	var/class = "flocksay"
 	if(is_flockmind)
 		class = "flocksay flockmindsay"
@@ -912,7 +989,7 @@
 		class = "flocksay bold italics"
 		name = "\[SYSTEM\]"
 
-	if(C && C.holder && speak_as_admin) // for admin verb flocksay
+	if(C?.holder && speak_as_admin) // for admin verb flocksay
 		// admin mode go
 		var/show_other_key = 0
 		if (C.stealth || C.alt_key)
@@ -922,6 +999,7 @@
 	else
 		rendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name' [speaker ? "data-ctx='\ref[speaker.mind]'" : ""]>[name]</span> <span class='message'>[message]</span></span>"
 		flockmindRendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name'>[flock ? "<a href='?src=\ref[flock.flockmind];origin=\ref[speaker]'>[name]</a>" : "[name]"]</span> <span class='message'>[message]</span></span>"
+		siliconrendered = "<span class='game [class]'><span class='bold'>\[[flock ? flockBasedGarbleText(flock.name, -30, flock) : "--.--"]\] </span><span class='name' [speaker ? "data-ctx='\ref[speaker.mind]'" : ""]>[flockBasedGarbleText(name, -20, flock)]</span> <span class='message'>[flockBasedGarbleText(message, 0, flock)]</span></span>"
 
 	for (var/client/CC)
 		if (!CC.mob) continue
@@ -933,9 +1011,11 @@
 
 		if((isflock(M)) || (M.client.holder && !M.client.player_mode) || (isobserver(M) && !(istype(M, /mob/dead/target_observer/hivemind_observer))))
 			thisR = rendered
+		if(flock?.snooping && M.client && M.robot_talk_understand)
+			thisR = siliconrendered
 		if(istype(M, /mob/living/intangible/flock/flockmind) && !(istype(speaker, /mob/living/intangible/flock/flockmind)) && M:flock == flock)
 			thisR = flockmindRendered
-		if ((istype(M, /mob/dead/observer)||M.client.holder) && speaker && speaker.mind)
+		if ((istype(M, /mob/dead/observer)||M.client.holder) && speaker?.mind)
 			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[thisR]</span>"
 		if(thisR != "")
 			M.show_message(thisR, 2)

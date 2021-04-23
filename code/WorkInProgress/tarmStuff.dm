@@ -18,7 +18,7 @@
 	var/datum/projectile/bullet/g11/small/smallproj = new
 
 	New()
-		current_projectile = new/datum/projectile/bullet/g11
+		set_current_projectile(new/datum/projectile/bullet/g11)
 		ammo = new/obj/item/ammo/bullets/g11
 		. = ..()
 
@@ -78,6 +78,7 @@
 		shot_sound = 'sound/weapons/9x19NATO.ogg'
 		shot_volume = 50
 		power = 15
+		hit_ground_chance = 33
 
 	void
 		power = 30
@@ -86,7 +87,7 @@
 			new/obj/decal/implo(T)
 			playsound(T, 'sound/effects/suck.ogg', 100, 1)
 			var/spamcheck = 0
-			for(var/atom/movable/AM in view(2, T))
+			for(var/atom/movable/AM in oview(2, T))
 				if(AM.anchored || AM == hit || AM.throwing) continue
 				if(spamcheck++ > 20) break
 				AM.throw_at(T, 20, 1)
@@ -99,67 +100,6 @@
 		on_hit(atom/hit, angle, obj/projectile/O)
 			explosion_new(O, get_turf(hit), 2)
 
-/mob/living/proc/betterdir()
-	return ((src.dir in ordinal) || (src.last_move_dir in cardinal)) ? src.dir : src.last_move_dir
-
-/datum/component/holdertargeting/fullauto
-	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	signals = list(COMSIG_LIVING_SPRINT_START)
-	mobtype = /mob/living
-	proctype = .proc/begin_shootloop
-	var/turf/target
-	var/shooting
-	var/delaystart
-	var/delaymin
-	var/rampfactor
-	var/obj/item/gun/G
-
-	Initialize(_delaystart = 4 DECI SECONDS, _delaymin=1 DECI SECOND, _rampfactor=0.9)
-		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))
-			return COMPONENT_INCOMPATIBLE
-		else
-			G = parent
-			src.delaystart = _delaystart
-			src.delaymin = _delaymin
-			src.rampfactor = _rampfactor
-	on_dropped(datum/source, mob/user)
-		. = ..()
-		src.shooting = 0
-
-/datum/component/holdertargeting/fullauto/proc/begin_shootloop(mob/living/user)
-	if(!shooting)
-		shooting = 1
-		target = null
-		G.current_projectile.shot_number = 1
-		G.current_projectile.cost = 1
-		G.current_projectile.shot_delay = 1.5
-		APPLY_MOB_PROPERTY(user, PROP_CANTSPRINT, G)
-		RegisterSignal(user, COMSIG_MOB_CLICK, .proc/retarget)
-		SPAWN_DBG(0)
-			src.shootloop(user)
-
-/datum/component/holdertargeting/fullauto/proc/retarget(mob/M, atom/target, params)
-	if(istype(target))
-		src.target = get_turf(target)
-		G.suppress_fire_msg = 0
-		return RETURN_CANCEL_CLICK
-
-/datum/component/holdertargeting/fullauto/proc/shootloop(mob/living/L)
-	var/delay = delaystart
-	while(shooting && G.canshoot() && L?.client.check_key(KEY_RUN))
-		G.shoot(target ? target : get_step(L, L.betterdir()), get_turf(L), L)
-		G.suppress_fire_msg = 1
-		sleep(max(delay*=rampfactor, delaymin))
-	//loop ended - reset values
-	shooting = 0
-	REMOVE_MOB_PROPERTY(L, PROP_CANTSPRINT, G)
-	G.current_projectile.shot_number = initial(G.current_projectile.shot_number)
-	G.current_projectile.cost = initial(G.current_projectile.cost)
-	G.current_projectile.shot_delay = initial(G.current_projectile.shot_delay)
-	G.suppress_fire_msg = 0
-	UnregisterSignal(L, COMSIG_MOB_CLICK)
-
-
 
 /obj/item/gun/kinetic/pistol/autoaim
 	name = "\improper Catoblepas pistol"
@@ -171,6 +111,8 @@
 			return
 		..()
 
+//TODO fix this to be better
+/*
 /obj/item/gun/kinetic/pistol/smart
 	name = "\improper Hydra smart pistol"
 	desc = "A silenced pistol capable of locking onto multiple targets and firing on them in rapid sequence. \"Anderson Para-Munitions\" is engraved on the slide."
@@ -259,6 +201,7 @@
 		var/obj/item/gun/energy/E = G
 		return round(E.cell.charge * E.current_projectile.cost)
 	else return G.canshoot() * INFINITY //idk, just let it happen
+*/
 
 /obj/item/gun/kinetic/gyrojet
 	name = "Amaethon gyrojet pistol"
@@ -271,7 +214,7 @@
 
 	New()
 		ammo = new/obj/item/ammo/bullets/gyrojet
-		current_projectile = new/datum/projectile/bullet/gyrojet
+		set_current_projectile(new/datum/projectile/bullet/gyrojet)
 		. = ..()
 
 /obj/item/ammo/bullets/gyrojet
@@ -311,24 +254,27 @@
 	desc = "The heaviest handgun you've ever seen. The grip is stamped \"Anderson Para-Munitions\""
 	icon_state = "deag"
 	item_state = "deag"
-	force = 18.0 //mmm, pistol whip
-	throwforce = 50 //HEAVY pistol
+	force = 10.0 //mmm, pistol whip
+	throwforce = 20 //HEAVY pistol
 	auto_eject = 1
 	max_ammo_capacity = 7
-	caliber = list(0.50, 0.41, 0.357, 0.38) //the omnihandgun
+	caliber = list(0.50, 0.41, 0.357, 0.38, 0.355, 0.22) //the omnihandgun
 	has_empty_state = 1
 	gildable = 1
+	fire_animation = TRUE
 
 	New()
-		current_projectile = new/datum/projectile/bullet/deagle50cal
+		set_current_projectile(new/datum/projectile/bullet/deagle50cal)
 		ammo = new/obj/item/ammo/bullets/deagle50cal
 		. = ..()
 
 	//gimmick deagle that decapitates
 	decapitation
+		force = 18.0 //mmm, pistol whip
+		throwforce = 50 //HEAVY pistol
 		New()
 			. = ..()
-			current_projectile = new/datum/projectile/bullet/deagle50cal/decapitation
+			set_current_projectile(new/datum/projectile/bullet/deagle50cal/decapitation)
 			ammo = new/obj/item/ammo/bullets/deagle50cal/decapitation
 
 //.50AE deagle ammo
@@ -366,7 +312,7 @@
 				var/obj/item/organ/head/head = H.drop_organ("head", get_turf(H))
 				if(head)
 					head.throw_at(get_edge_target_turf(head, get_dir(O, H) ? get_dir(O, H) : H.dir),2,1)
-				H.visible_message("<span class='alert'>[H]'s head get's blown right off! Holy shit!</span>", "<span class='alert'>Your head gets blown clean off! Holy shit!</span>")
+					H.visible_message("<span class='alert'>[H]'s head get's blown right off! Holy shit!</span>", "<span class='alert'>Your head gets blown clean off! Holy shit!</span>")
 
 //magical crap
 /obj/item/enchantment_scroll
@@ -374,7 +320,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll_seal"
 	flags = FPRINT | TABLEPASS
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	throw_speed = 4
@@ -384,53 +330,46 @@
 	afterattack(atom/target, mob/user, reach, params)
 		if(istype(target, /obj/item))
 			var/obj/item/I = target
-			var/currentench = 0
-			var/success = 0
-			var/incr = 0
-			if(istype(I, /obj/item/clothing))
-				currentench = I.getProperty("enchantarmor")
-				if(currentench <= 2 || !rand(0, currentench))
-					incr = (currentench <= 2) ? rand(1, 3) : 1
-					I.setProperty("enchantarmor", currentench+incr)
-					success = 1
+			var/incr = rand(1,3)
+			var/msg = text("As [user] slaps the [src] onto the [target], the [target]")
+			var/currentench = I.enchant(incr)
+			var/turf/T = get_turf(target)
+			playsound(T, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
+			if(currentench-incr <= 2 || !rand(0, currentench))
+				user.visible_message("<span class='notice'>[msg] glows with a faint light[(currentench >= 3) ? " and vibrates violently!" : "."]</span>")
 			else
-				currentench = I.getProperty("enchantweapon")
-				if(currentench <= 2 || !rand(0, currentench))
-					incr = (currentench <= 2) ? rand(1, 3) : 1
-					I.setProperty("enchantweapon", currentench+incr)
-					success = 1
-			if(success)
-				var/turf/T = get_turf(target)
-				playsound(T, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
-				user.visible_message("<span class='notice'>As [user] slaps \the [src] onto \the [target], \the [target] glows with a faint light[(currentench+incr >= 3) ? " and vibrates violently!" : "."]</span>")
-				I.remove_prefixes("+[currentench]")
-				I.name_prefix("+[currentench+incr]")
-				I.rarity = max(I.rarity, round((currentench+incr+1)/2) + 2)
-				I.tooltip_rebuild = 1
-				I.UpdateName()
-			else
-				user.visible_message("<span class='notice'>As [user] brings \the [src] towards \the [target], \the [target] shudders violently and turns to dust!</span>")
+				user.visible_message("<span class='alert'>[msg] shudders violently and turns to dust!</span>")
 				qdel(I)
 			qdel(src)
 		else
 			return ..()
-
-/obj/item/proc/enchant(incr)
+/**
+ * Enchants an item (minor armor boost for clothing, otherwise increases melee damage)
+ *
+ * incr - value to enchant by
+ * setTo - when true, sets enchantment to incr, otherwise will add incr to existing enchantment (positive or negative)
+ */
+/obj/item/proc/enchant(incr, setTo = 0)
 	var/currentench = 0
+	var/prop = ""
 	if(istype(src, /obj/item/clothing))
-		currentench = src.getProperty("enchantarmor")
-		src.setProperty("enchantarmor", currentench+incr)
+		prop = "enchantarmor"
 	else
-		currentench = src.getProperty("enchantweapon")
-		src.setProperty("enchantweapon", currentench+incr)
+		prop = "enchantweapon"
+
+	currentench = src.getProperty(prop)
+	if(setTo)
+		incr -= currentench
+	src.setProperty(prop, currentench+incr)
 	src.remove_prefixes("[currentench>0?"+":""][currentench]")
 	if(currentench+incr)
-		src.name_prefix("[(currentench+incr)>0?"+":""][currentench+incr]")
+		src.name_prefix("[(currentench+incr)>0?"+":""][currentench+incr]", prepend = 1)
 		src.rarity = max(src.rarity, round((currentench+incr+1)/2) + 2)
 	else
 		src.rarity = initial(src.rarity)
 	src.tooltip_rebuild = 1
 	src.UpdateName()
+	return currentench + incr
 
 ///Office stuff
 //Suggestion box
@@ -485,7 +424,7 @@ obj/item/gun/reagent/syringe/lovefilled
 	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,\
 	/obj/item/reagent_containers/food/snacks/cake/cream,\
 	/obj/item/reagent_containers/food/snacks/cake/cream,\
-	/obj/item/reagent_containers/food/snacks/cake/chocolate,\
+	/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,\
 	/obj/item/reagent_containers/food/snacks/cake,\
 )
 
@@ -499,11 +438,11 @@ obj/item/gun/reagent/syringe/lovefilled
 
 /obj/machinery/door/unpowered/wood/lily/open()
 	if(src.locked) return
-	playsound(src.loc, "sound/voice/screams/fescream3.ogg", 50, 1)
+	playsound(src.loc, "sound/voice/screams/fescream3.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 	. = ..()
 
 /obj/machinery/door/unpowered/wood/lily/close()
-	playsound(src.loc, "sound/voice/screams/robot_scream.ogg", 50, 1)
+	playsound(src.loc, "sound/voice/screams/robot_scream.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 	. = ..()
 
 
@@ -520,3 +459,51 @@ obj/item/gun/reagent/syringe/lovefilled
 		boutput(M, "<span class='notice'>You feel loved</span>")
 		loved += M
 
+//misc stuffs
+/obj/item/device/geiger
+	name = "geiger counter"
+	desc = "A device used to passively measure raditation."
+	icon_state = "geiger-0"
+	item_state = "geiger"
+	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	throwforce = 3
+	w_class = W_CLASS_TINY
+	throw_speed = 5
+	throw_range = 10
+	mats = 5
+
+	New()
+		. = ..()
+		AddComponent(/datum/component/holdertargeting/geiger)
+		RegisterSignal(src, COMSIG_MOB_GEIGER_TICK, .proc/change_icon_state)
+
+	proc/change_icon_state(source, stage)
+		switch(stage)
+			if(1 to 2)
+				flick("geiger-1", src)
+			if(3 to 4)
+				flick("geiger-2", src)
+			if(5)
+				flick("geiger-3", src)
+
+
+/obj/decal/fireplace  //for Jan's chrismas event
+	name = "fireplace"
+	desc = "Looks pretty toasty."
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "1"
+	color = "#b74909"
+
+	New()
+		. = ..()
+		processing_items += src
+
+	disposing()
+		processing_items -= src
+		. = ..()
+
+	proc/process()
+		if(!ON_COOLDOWN(src, "process", 30 SECONDS))
+			for (var/mob/living/M in view(src, 5))
+				if (M.bioHolder)
+					M.bioHolder.AddEffect("cold_resist", 0, 45)

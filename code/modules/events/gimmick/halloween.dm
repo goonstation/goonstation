@@ -9,7 +9,7 @@
 		..()
 		if(halloween_mode)
 			return
-		if(emergency_shuttle && emergency_shuttle.location) //it's too late!
+		if(emergency_shuttle?.location) //it's too late!
 			return
 		halloween_mode = 1
 

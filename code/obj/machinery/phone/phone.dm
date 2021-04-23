@@ -40,7 +40,7 @@
 			src.color = "#00aa00"
 		else if(istype(src.location, /area/station/engine) || istype(src.location, /area/station/quartermaster) || istype(src.location, /area/station/mining))
 			src.color = "#aaaa00"
-		else if(istype(src.location, /area/station/science) || istype(src.location, /area/station/chemistry))
+		else if(istype(src.location, /area/station/science))
 			src.color = "#9933ff"
 		else if(istype(src.location, /area/station/medical))
 			src.color = "#0000ff"
@@ -210,8 +210,7 @@
 	proc/call_other(var/obj/machinery/phone/target)
 		// Dial the number
 		src.dialing = 1
-		if(src.handset.holder)
-			src.handset.holder.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
+		src.handset.holder?.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
 		SPAWN_DBG(4 SECONDS)
 			// Is it busy?
 			if(!target.can_be_called())
@@ -312,7 +311,7 @@
 			return
 		var/processed = "<span class='game say'><span class='bold'>[M.name] \[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phone_id]</span>\] says, </span> <span class='message'>\"[text[1]]\"</span></span>"
 		var/mob/T = src.parent.linked.handset.holder
-		if(T && T.client)
+		if(T?.client)
 			T.show_message(processed, 2)
 			M.show_message(processed, 2)
 
@@ -322,8 +321,7 @@
 	call_other(var/obj/machinery/phone/target)
 		// Dial the number
 		src.dialing = 1
-		if(src.handset.holder)
-			src.handset.holder.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
+		src.handset.holder?.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
 		SPAWN_DBG(4 SECONDS)
 			// Is it busy?
 			if(!target.can_be_called())

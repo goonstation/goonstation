@@ -2,22 +2,43 @@
 	name = "Portable Air Pump"
 
 	icon = 'icons/obj/atmospherics/atmos.dmi'
-	icon_state = "psiphon:0"
+	icon_state = "psiphon-off"
+	dir = NORTH //so it spawns with the fan side showing
 	density = 1
 	mats = 12
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
 	var/on = 0
 	var/direction_out = 0 //0 = siphoning, 1 = releasing
 	var/target_pressure = 100
+	var/image/tank_hatch
+
+
 	desc = "A device which can siphon or release gasses."
+	custom_suicide = 1
 
 	volume = 750
 
+	New()
+		..()
+		tank_hatch = image('icons/obj/atmospherics/atmos.dmi', "")
+
 /obj/machinery/portable_atmospherics/pump/update_icon()
 	if(on)
-		icon_state = "psiphon:1"
+		icon_state = "psiphon-on"
+
+		animate(src, pixel_x = 2, easing = SINE_EASING, loop=-1, time = 0.5 SECONDS)
+		animate(pixel_x = -2, easing = SINE_EASING, loop=-1, time = 0.5 SECONDS)
 	else
-		icon_state = "psiphon:0"
+		icon_state = "psiphon-off"
+		animate(src)
+		pixel_x = 0
+
+	if (holding)
+		tank_hatch.icon_state = "psiphon-T-overlay"
+	else
+		tank_hatch.icon_state = ""
+	src.UpdateOverlays(tank_hatch, "tankhatch")
+
 
 /obj/machinery/portable_atmospherics/pump/process()
 	..()
@@ -160,3 +181,33 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 		usr.Browse(null, "window=pump")
 		return
 	return
+
+
+/obj/machinery/portable_atmospherics/pump/suicide(var/mob/living/carbon/human/user)
+	if (!istype(user) || !src.user_can_suicide(user))
+		return 0
+
+	if (!on) //Can't chop your head off if the fan's not spinning
+		on = 1
+		update_icon()
+
+	user.visible_message("<span class='alert'><b>[user] forces [his_or_her(user)] head into [src]'s unprotected fan, mangling it in a horrific and violent display!</b></span>")
+	var/obj/head = user.organHolder.drop_organ("head")
+	qdel(head)
+	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
+	var/turf/T = get_turf(user.loc)
+	if (user.blood_id)
+		T.fluid_react_single(user.blood_id, 20, airborne = 1)
+	else
+		T.fluid_react_single("blood", 20, airborne = 1)
+
+	for (var/mob/living/carbon/human/V in oviewers(user, null))
+		if (prob(33))
+			V.show_message("<span class='alert'>Oh fuck, that's going to leave a mark on your psyche.</span>", 1)
+			V.vomit()
+	if (user) //ZeWaka: Fix for null.loc
+		health_update_queue |= user
+	SPAWN_DBG(50 SECONDS)
+		if (user && !isdead(user))
+			user.suiciding = 0
+	return 1

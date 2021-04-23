@@ -101,8 +101,7 @@ var/datum/respawn_controls/respawn_controller
 
 
 	disposing()
-		if(the_client)
-			the_client.verbs -= /client/proc/respawn_via_controller
+		the_client?.verbs -= /client/proc/respawn_via_controller
 		master = null
 		..()
 

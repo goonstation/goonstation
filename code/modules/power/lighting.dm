@@ -53,9 +53,9 @@
 //MBC : moving lights to consume power inside as an area-wide process() instead of each individual light processing its own shit
 /obj/machinery/light_area_manager
 	#define LIGHTING_POWER_FACTOR 40
-	event_handler_flags = IMMUNE_SINGULARITY
+	event_handler_flags = IMMUNE_SINGULARITY | USE_FLUID_ENTER
 	invisibility = 100
-	var/area/my_area = 0
+	var/area/my_area = null
 	var/list/lights = list()
 	var/brightness_placeholder = 1	//hey, maybe later use this in a way that is more optimized than iterating through each individual light
 
@@ -63,7 +63,7 @@
 	return
 
 /obj/machinery/light_area_manager/process()
-	if(my_area && my_area.power_light && my_area.lightswitch)
+	if(my_area?.power_light && my_area.lightswitch)
 		..()
 		var/thepower = src.brightness_placeholder * LIGHTING_POWER_FACTOR
 		use_power(thepower * lights.len, LIGHT)
@@ -139,7 +139,7 @@
 						var/is_jen_wall = 0 // jen walls' ceilings are narrower, so let's move the lights a bit further inward!
 						if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
 							is_jen_wall = 1
-						src.dir = dir
+						src.set_dir(dir)
 						if (dir == EAST)
 							if (is_jen_wall)
 								src.pixel_x = 12
@@ -161,8 +161,8 @@
 
 
 //big standing lamps
-/obj/machinery/light/blamp
-	name = "big lamp"
+/obj/machinery/light/flamp
+	name = "floor lamp"
 	icon = 'icons/obj/lighting.dmi'
 	desc = "A tall and thin lamp that rests comfortably on the floor."
 	anchored = 1
@@ -171,7 +171,8 @@
 	fitting = "bulb"
 	brightness = 1.4
 	var/state
-	icon_state = "blamp1-off"
+	base_state = "flamp"
+	icon_state = "flamp1"
 	wallmounted = 0
 
 //regular light bulbs
@@ -196,6 +197,9 @@
 	purpleish
 		name = "purpleish fluorescent light bulb"
 		light_type = /obj/item/light/bulb/purpleish
+	frostedred
+		name = "frosted red fluorescent light bulb"
+		light_type = /obj/item/light/bulb/emergency
 
 	warm
 		name = "fluorescent light bulb"
@@ -242,6 +246,9 @@
 		purpleish
 			name = "purpleish fluorescent light bulb"
 			light_type = /obj/item/light/bulb/purpleish
+		frostedred
+			name = "frosted red fluorescent light bulb"
+			light_type = /obj/item/light/bulb/emergency
 
 		warm
 			name = "fluorescent light bulb"
@@ -289,6 +296,10 @@
 	purpleish
 		name = "purpleish fluorescent light fixture"
 		light_type = /obj/item/light/bulb/purpleish
+	frostedred
+		name = "frosted red fluorescent light fixture"
+		light_type = /obj/item/light/bulb/emergency
+
 
 	warm
 		name = "fluorescent light fixture"
@@ -326,6 +337,18 @@
 		name = "illuminated exit sign"
 		desc = "This sign points the way to the escape shuttle."
 		brightness = 1.3
+
+/obj/machinery/light/emergencyflashing
+	icon_state = "ebulb1"
+	base_state = "ebulb"
+	fitting = "bulb"
+	name = "warning light"
+	brightness = 1.3
+	desc = "This foreboding light warns of danger."
+	light_type = /obj/item/light/bulb/emergency
+	allowed_type = /obj/item/light/bulb/emergency
+	on = 1
+	removable_bulb = 0
 
 /obj/machinery/light/runway_light
 	name = "runway light"
@@ -586,6 +609,7 @@
 	current_lamp = inserted_lamp
 	current_lamp.set_loc(null)
 	light.set_color(current_lamp.color_r, current_lamp.color_g, current_lamp.color_b)
+	brightness = initial(brightness)
 	on = has_power()
 	update()
 
@@ -622,10 +646,10 @@
 		else
 			L = new M.dispensing_bulb()
 		if(inserted_lamp)
-			if (current_lamp.light_status == LIGHT_OK && current_lamp.name == L.name) //name because I want this to be able to replace working lights with different colours
+			if (current_lamp.light_status == LIGHT_OK && current_lamp.name == L.name && brightness == initial(brightness) && current_lamp.color_r == L.color_r && current_lamp.color_g == L.color_g && current_lamp.color_b == L.color_b && on == has_power())
 				boutput(user, "This fitting already has an identical lamp.")
 				qdel(L)
-				return //Stop borgs from making more sparks than necessary
+				return // Stop borgs from making more sparks than necessary.
 
 		insert(user, L)
 		if (!isghostdrone(user)) // Same as ghostdrone RCDs, no sparks
@@ -668,7 +692,7 @@
 			if (candismantle)
 				boutput(user, "You begin to unscrew the fixture from the wall...")
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-				if (!do_after(user, 20))
+				if (!do_after(user, 2 SECONDS))
 					return
 				boutput(user, "You unscrew the fixture from the wall.")
 				var/obj/item/light_parts/parts = new /obj/item/light_parts(get_turf(src))
@@ -916,7 +940,7 @@
 	flags = FPRINT | TABLEPASS
 	force = 2
 	throwforce = 5
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/light_status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/breakprob = 0	// number of times switched

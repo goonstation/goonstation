@@ -26,7 +26,7 @@
 	on_transplant(var/mob/M as mob)
 		..()
 		if (src.robotic)
-			src.donor.add_stam_mod_regen(icon_state, 2)
+			APPLY_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, icon_state, 2)
 			src.donor.add_stam_mod_max(icon_state, 10)
 		return
 
@@ -34,7 +34,7 @@
 		..()
 		if (donor)
 			if (src.robotic)
-				src.donor.remove_stam_mod_regen(icon_state)
+				REMOVE_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, icon_state)
 				src.donor.remove_stam_mod_max(icon_state)
 		return
 
@@ -124,6 +124,7 @@
 	icon_state = "cyber-lungs_L"
 	made_from = "pharosium"
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	mats = 6
 	temp_tolerance = T0C+500

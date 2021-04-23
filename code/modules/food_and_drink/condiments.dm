@@ -127,7 +127,7 @@
 	icon = 'icons/obj/foodNdrink/food.dmi'
 	icon_state = "shaker"
 	flags = FPRINT | TABLEPASS | ONBELT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	g_amt = 10
 	var/stuff = null
 	var/shakes = 0

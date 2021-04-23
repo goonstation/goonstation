@@ -43,19 +43,31 @@
 		P.change_stack_amount(toRemove - P.amount)
 		return P
 
-	attackby(var/obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/material_piece) && W.material)
+	attack_hand(mob/user as mob)
+		if(user.is_in_hands(src) && src.amount > 1)
+			var/splitnum = round(input("How many material pieces do you want to take from the stack?","Stack of [src.amount]",1) as num)
+			if (splitnum >= amount || splitnum < 1)
+				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
+				return
+			var/obj/item/material_piece/new_stack = split_stack(splitnum)
+			user.put_in_hand_or_drop(new_stack)
+			new_stack.add_fingerprint(user)
+		else
+			..(user)
 
-			if(src.stack_item(W))
-				boutput(usr, "<span class='notice'>You stack \the [W]!</span>")
-		return
+	attackby(obj/item/W, mob/user)
+		if(W.type == src.type)
+			stack_item(W)
+			if(!user.is_in_hands(src))
+				user.put_in_hand(src)
+			boutput(user, "<span class='notice'>You add the material to the stack. It now has [src.amount] pieces.</span>")
 
 	MouseDrop(over_object, src_location, over_location) //src dragged onto over_object
 		if (isobserver(usr))
 			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
 			return
 
-		if(!istype(over_object, /obj/screen/hud))
+		if(!istype(over_object, /atom/movable/screen/hud))
 			if (get_dist(usr,src) > 1)
 				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
@@ -65,8 +77,8 @@
 
 		if (istype(over_object,/obj/item/material_piece)) //piece to piece, doesnt matter if in hand or not.
 			var/obj/item/targetObject = over_object
-			targetObject.stack_item(src)
-			usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
+			if(targetObject.stack_item(src))
+				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
 		else if(isturf(over_object)) //piece to turf. piece loc doesnt matter.
 			if(src.amount > 1) //split stack.
 				usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
@@ -84,8 +96,8 @@
 						continue
 					src.stack_item(I)
 				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
-		else if(istype(over_object, /obj/screen/hud))
-			var/obj/screen/hud/H = over_object
+		else if(istype(over_object, /atom/movable/screen/hud))
+			var/atom/movable/screen/hud/H = over_object
 			var/mob/living/carbon/human/dude = usr
 			switch(H.id)
 				if("lhand")
@@ -95,7 +107,7 @@
 							var/obj/item/material_piece/DP = dude.l_hand
 							DP.stack_item(src)
 							usr.visible_message("<span class='notice'>[usr.name] stacks \the [DP]!</span>")
-					else
+					else if(amount > 1)
 						var/toSplit = round(amount / 2)
 						var/atom/movable/splitStack = split_stack(toSplit)
 						if(splitStack)
@@ -109,7 +121,7 @@
 							var/obj/item/material_piece/DP = dude.r_hand
 							DP.stack_item(src)
 							usr.visible_message("<span class='notice'>[usr.name] stacks \the [DP]!</span>")
-					else
+					else if(amount > 1)
 						var/toSplit = round(amount / 2)
 						var/atom/movable/splitStack = split_stack(toSplit)
 						if(splitStack)
@@ -174,10 +186,47 @@
 		src.setMaterial(getMaterial("frozenfart"), appearance = 0, setname = 0)
 		..()
 
+/obj/item/material_piece/steel
+	desc = "A processed bar of Steel, a common metal."
+	default_material = "steel"
+	icon_state = "bar"
+
+	setup_material()
+		src.setMaterial(getMaterial("steel"), appearance = 1, setname = 1)
+		..()
+
+/obj/item/material_piece/hamburgris
+	name = "clump"
+	desc = "A big clump of petrified mince, with a horriffic smell."
+	default_material = "hamburgris"
+	icon_state = "slag"
+
+	setup_material()
+		src.setMaterial(getMaterial("hamburgris"), appearance = 0, setname = 0)
+		..()
+
+/obj/item/material_piece/glass
+	desc = "A cut block of glass, a common crystalline substance."
+	default_material = "glass"
+	icon_state = "block"
+
+	setup_material()
+		src.setMaterial(getMaterial("glass"), appearance = 1, setname = 1)
+		..()
+
+/obj/item/material_piece/copper
+	desc = "A processed bar of copper, a conductive metal."
+	default_material = "copper"
+	icon_state = "bar"
+
+	setup_material()
+		src.setMaterial(getMaterial("copper"), appearance = 1, setname = 1)
+		..()
+
 /obj/item/material_piece/iridiumalloy
 	icon_state = "iridium"
-	name = "iridium-alloy plate"
-	desc = "A chunk of some sort of iridium-alloy plating."
+	name = "iridium alloy plate"
+	desc = "A chunk of some sort of iridium alloy plating."
 	amount = 5
 	setup_material()
 		src.setMaterial(getMaterial("iridiumalloy"), appearance = 0, setname = 0)
@@ -220,10 +269,15 @@
 		..()
 	attackby(obj/item/W as obj, mob/user as mob)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
-			user.visible_message("[user] cuts [src] into a plank.", "You cut the [src] into a plank.")
+			user.visible_message("[user] cuts a plank from the [src].", "You cut a plank from the [src].")
 			var/obj/item/plankobj = new /obj/item/plank(user.loc)
 			plankobj.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
-			qdel (src)
+			if (src.amount > 1)
+				change_stack_amount(-1)
+			else
+				qdel (src)
+		else
+			..()
 
 /obj/item/material_piece/organic/bamboo
 	name = "bamboo stalk"
@@ -233,10 +287,15 @@
 		src.setMaterial(getMaterial("bamboo"), appearance = 0, setname = 0)
 		..()
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
+		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
 			user.visible_message("[user] carefully extracts a shoot from [src].", "You carefully cut a shoot from [src].")
 			new /obj/item/reagent_containers/food/snacks/plant/bamboo/(user.loc)
-			qdel (src)
+			if (src.amount > 1)
+				change_stack_amount(-1)
+			else
+				qdel (src)
+		else
+			..()
 
 /obj/item/material_piece/cloth/spidersilk
 	name = "space spider silk"

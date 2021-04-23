@@ -26,7 +26,6 @@
 	uses_multiple_icon_states = 1
 	item_state = "armorvest"
 	body_parts_covered = TORSO
-	c_flags = ONESIZEFITSALL
 	bloodoverlayimage = SUITBLOOD_ARMOR
 
 	New()
@@ -77,7 +76,6 @@
 	uses_multiple_icon_states = 1
 	item_state = "armorvest"
 	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
-	c_flags = ONESIZEFITSALL
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
 
@@ -92,7 +90,7 @@
 
 	New()
 		..()
-		SPAWN_DBG (5)
+		SPAWN_DBG(0.5 SECONDS)
 			if (src && !src.part_vest)
 				src.part_vest = new /obj/item/clothing/suit/armor/vest(src)
 			if (src && !src.part_igniter)
@@ -271,6 +269,7 @@
 		setProperty("meleeprot", 4)
 		setProperty("rangedprot", 0.8)
 		setProperty("movespeed", 0.5)
+		setProperty("disorient_resist", 20)
 
 /obj/item/clothing/suit/armor/captain
 	name = "captain's armor"
@@ -282,16 +281,17 @@
 		setProperty("meleeprot", 7)
 		setProperty("rangedprot", 1.5)
 
-	attack_self(mob/user as mob) //Azungar was here and added some of his own styles to this thing.
-		user.show_text("You change the armor's style.")
-		if (src.icon_state == "caparmor")
-			src.icon_state = "caparmor-alt"
-			src.item_state = "caparmor-alt"
-
-		else
-			src.icon_state = "caparmor"
-			src.item_state = "caparmor"
-
+/obj/item/clothing/suit/armor/capcoat //old alt armour for the captain
+	name = "captain's coat"
+	desc = "A luxorious formal coat made for the station's captain. It seems to be made out of some thermally resistant material."
+	icon_state = "capcoat"
+	item_state = "capcoat"
+	setupProperties()
+		..()
+		setProperty("coldprot", 35)
+		setProperty("heatprot", 35)
+		setProperty("meleeprot", 4)
+		setProperty("rangedprot", 0.9)
 
 /obj/item/clothing/suit/armor/hopcoat
 	name = "Head of Personnel's naval coat"
@@ -301,8 +301,9 @@
 
 	setupProperties()
 		..()
-		setProperty("meleeprot", 6)
-		setProperty("rangedprot", 1.5)
+		setProperty("coldprot", 35)
+		setProperty("meleeprot", 3)
+		setProperty("rangedprot", 0.5)
 
 /obj/item/clothing/suit/armor/centcomm
 	name = "administrator's armor"
@@ -317,6 +318,22 @@
 	red
 		icon_state = "centcom-red"
 		item_state = "centcom-red"
+
+/obj/item/clothing/suit/armor/centcommcoat //coat version of the centcom armour
+	name = "administator's coat"
+	desc = "A luxorious formal coat. It is specifically made for Nanotrasen commanders. It seems to be made out of some thermally resistant material."
+	icon_state = "centcoat"
+	item_state = "centcoat"
+	setupProperties()
+		..()
+		setProperty("coldprot", 35)
+		setProperty("heatprot", 35)
+		setProperty("meleeprot", 4)
+		setProperty("rangedprot", 0.9)
+
+	red //for the red reward
+		icon_state = "centcoat-red"
+		item_state = "centcoat-red"
 
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"
@@ -380,7 +397,6 @@
 	icon_state = "ntarmor"
 	item_state = "ntarmor"
 	body_parts_covered = TORSO
-	c_flags = ONESIZEFITSALL
 
 /obj/item/clothing/suit/armor/NT_alt
 	name = "NT-SO armor"
@@ -388,7 +404,6 @@
 	icon_state = "nt2armor"
 	item_state = "nt2armor"
 	body_parts_covered = TORSO
-	c_flags = ONESIZEFITSALL
 	setupProperties()
 		..()
 		setProperty("meleeprot", 8)
@@ -399,7 +414,7 @@
 	desc = "A suit designed to absorb explosive force; very bulky and unwieldy to maneuver in."
 	icon_state = "eod"
 	item_state = "eod"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	setupProperties()
 		..()
 		setProperty("meleeprot", 9)

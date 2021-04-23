@@ -91,7 +91,7 @@
 		var/list/subcommands = list()
 		var/list/piped_list = command2list(text, "^", scriptvars, subcommands)//scripting ? scriptvars : null)
 		piped_list.len = min(piped_list.len, setup_max_piped_commands)
-		piping = piped_list.len
+		piping = length(piped_list)
 		pipetemp = ""
 		var/script_counter = 0
 		//script_iteration = 0//reset stack each time someone types stuff
@@ -132,7 +132,7 @@
 			var/list/command_list = parse_string(text, src.scriptvars)
 			var/command = lowertext(command_list[1])
 			command_list.Cut(1,2) //Remove the command that we are now processing.
-			while (!command && command_list.len)
+			while (!command && length(command_list))
 				command = command_list[1]
 				command_list.Cut(1,2)
 
@@ -345,7 +345,7 @@
 								var/elsePosition = piped_list.Find("else")
 								if (elsePosition)
 									piped_list.Cut(elsePosition)
-									piping = piped_list.len
+									piping = length(piped_list)
 								continue //Continue processing any piped commands following this.
 							if (0)
 								scriptstat &= ~SCRIPT_IF_TRUE
@@ -353,7 +353,7 @@
 								var/elsePosition = piped_list.Find("else")
 								if (elsePosition)
 									piped_list.Cut(1,elsePosition+1)
-									piping = piped_list.len
+									piping = length(piped_list)
 									pipetemp = null
 									continue
 
@@ -394,6 +394,15 @@
 							continue
 
 						sleep(clamp(., 0, 30) SECONDS)
+						continue
+
+					if ("unset")
+						if (!length(command_list))
+							scriptvars = list()
+							continue
+						for (var/V in command_list)
+							if (lowertext(ckeyEx(V)) in scriptvars)
+								scriptvars -= lowertext(ckeyEx(V))
 						continue
 
 					if ("help", "man")
@@ -498,7 +507,7 @@
 					. += "[. ? " " : null][command_list[i]]"
 
 				scriptvarsToPass["*"] = .
-				scriptvarsToPass["argc"] = command_list.len
+				scriptvarsToPass["argc"] = length(command_list)
 
 				var/list/childScript = script_format( exec.fields.Copy() )
 				//boutput(world, "bloop script loaded, pip")
@@ -586,7 +595,7 @@
 		script_evaluate2(var/list/command_stream, return_bool)
 
 			stack.len = 0
-			while (command_stream && command_stream.len)
+			while (length(command_stream))
 				var/current_command = command_stream[1]
 				//boutput(world, "current_command = \[[current_command]]")
 				command_stream.Cut(1,2)
@@ -606,7 +615,7 @@
 							return ERR_STACK_UNDER
 
 						if (script_isNumResult(stack[stack.len], stack[stack.len-1]))
-							result = stack[stack.len] + stack[stack.len-1]
+							result = text2num(stack[stack.len]) + text2num(stack[stack.len-1])
 							stack[--stack.len] = script_clampvalue( result )
 
 						else

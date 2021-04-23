@@ -1,4 +1,4 @@
-"a" = (/turf/space,/area)
+"a" = (/turf/space,/area/space)
 "b" = (/turf/unsimulated/wall{icon = 'icons/obj/singularity.dmi'; icon_state = "TheSingMain"; name = "outer forcefield"},/area/prison/cell_block/wards{name = "Penalty Box"})
 "c" = (/turf/unsimulated/wall{icon = 'icons/obj/singularity.dmi'; icon_state = "TheSingMain"; name = "forcefield"; opacity = 0},/area/prison/cell_block/wards{name = "Penalty Box"})
 "d" = (/obj/landmark{name = "prisonwarp"},/obj/map/light/white,/turf/unsimulated/floor/specialroom/chapel,/area/prison/cell_block/wards{name = "Penalty Box"})

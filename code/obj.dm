@@ -1,5 +1,4 @@
 /obj
-	//var/datum/module/mod		//not used
 	var/real_name = null
 	var/real_desc = null
 	var/m_amt = 0	// metal
@@ -9,7 +8,7 @@
 	var/adaptable = 0
 
 	var/is_syndicate = 0
-	var/list/mats = 0
+	var/list/mats = 0 // either a number or a list of the form list("MET-1"=5, "erebite"=3)
 	var/deconstruct_flags = DECON_NONE
 
 	var/mechanics_type_override = null //Fix for children of scannable items being reproduced in mechanics
@@ -17,33 +16,25 @@
 	var/move_triggered = 0
 	var/object_flags = 0
 
-	proc/move_trigger(var/mob/M, var/kindof)
-		var/atom/movable/x = loc
-		while (x && !isarea(x) && x != M)
-			x = x.loc
-		if (!x || isarea(x))
-			return 0
-		return 1
-
 	animate_movement = 2
 //	desc = "<span class='alert'>HI THIS OBJECT DOESN'T HAVE A DESCRIPTION MAYBE IT SHOULD???</span>"
 //heh no not really
 
 	var/_health = 100
 	var/_max_health = 100
+
 	proc/setHealth(var/value)
 		var/prevHealth = _health
 		_health = min(value, _max_health)
 		updateHealth(prevHealth)
-		return
+
 	proc/changeHealth(var/change = 0)
 		var/prevHealth = _health
 		_health += change
 		_health = min(_health, _max_health)
 		updateHealth(prevHealth)
-		return
-	proc/updateHealth(var/prevHealth)
 
+	proc/updateHealth(var/prevHealth)
 		if(_health <= 0)
 			onDestroy()
 /*		else
@@ -56,6 +47,18 @@
 			else if((_health <= 25) && !(prevHealth <= 25))
 				//setTexture("damage3", BLEND_MULTIPLY, "damage")
 		return*/
+
+	UpdateName()
+		src.name = "[name_prefix(null, 1)][src.real_name ? src.real_name : initial(src.name)][name_suffix(null, 1)]"
+
+	proc/move_trigger(var/mob/M, var/kindof)
+		var/atom/movable/x = loc
+		while (x && !isarea(x) && x != M)
+			x = x.loc
+		if (!x || isarea(x))
+			return 0
+		return 1
+
 	proc/onDestroy()
 		qdel(src)
 		return
@@ -65,8 +68,7 @@
 		. = ..()
 
 	ex_act(severity)
-		if(src.material)
-			src.material.triggerExp(src, severity)
+		src.material?.triggerExp(src, severity)
 		switch(severity)
 			if(1.0)
 				changeHealth(-100)
@@ -78,8 +80,6 @@
 				changeHealth(-40)
 				return
 			else
-		return
-
 
 	onMaterialChanged()
 		..()
@@ -92,14 +92,36 @@
 				RL_SetOpacity(0)
 			else if(initial(src.opacity) && !src.opacity && src.material.alpha > MATERIAL_ALPHA_OPACITY)
 				RL_SetOpacity(1)
-		return
 
 	disposing()
+		for(var/mob/M in src.contents)
+			M.set_loc(src.loc)
+		tag = null
 		mats = null
 		if (artifact && !isnum(artifact))
 			artifact:holder = null
 		remove_dialogs()
 		..()
+
+	proc/can_access_remotely(mob/user)
+		. = FALSE
+
+	/**
+	* Determines whether or not the user can remote access devices.
+	* This is typically limited to Borgs and AI things that have
+	* inherent packet abilities.
+	*/
+	proc/can_access_remotely_default(mob/user)
+		if(isAI(user))
+			. = TRUE
+		else if(issilicon(user))
+			if (ishivebot(user) || isrobot(user))
+				var/mob/living/silicon/robot/R = user
+				return !R.module_active
+			else if(isghostdrone(user))
+				var/mob/living/silicon/ghostdrone/G = user
+				return !G.active_tool
+			. = TRUE
 
 	proc/client_login(var/mob/user)
 		return
@@ -110,7 +132,7 @@
 		O.quality = quality
 		O.icon = icon
 		O.icon_state = icon_state
-		O.dir = dir
+		O.set_dir(src.dir)
 		O.desc = desc
 		O.pixel_x = pixel_x
 		O.pixel_y = pixel_y
@@ -181,7 +203,10 @@
 			if(!src.anchored && isitem(src))
 				src.throw_at(over_object, 7, 1)
 				logTheThing("combat", usr, null, "throws [src] with wtk.")
-
+		else if (ismegakrampus(usr))
+			if(!src.anchored && isitem(src))
+				src.throw_at(over_object, 7, 1)
+				logTheThing("combat", usr, null, "throws [src] with k_tk.")
 		else if(usr.bioHolder && usr.bioHolder.HasEffect("telekinesis_drag") && istype(src, /obj) && isturf(src.loc) && isalive(usr)  && usr.canmove && get_dist(src,usr) <= 7 )
 			var/datum/bioEffect/TK = usr.bioHolder.GetEffect("telekinesis_drag")
 
@@ -193,10 +218,10 @@
 		else if (istype(usr, /mob/dead/observer))	//ghost
 			if(!src.anchored && isitem(src))
 				var/obj/item/I = src
-				if (I.w_class > 3)
+				if (I.w_class > W_CLASS_NORMAL)
 					return
 				if (istype(usr:abilityHolder, /datum/abilityHolder/ghost_observer))
-					var/datum/abilityHolder/ghost_observer/GH = usr:abilityHolder		
+					var/datum/abilityHolder/ghost_observer/GH = usr:abilityHolder
 					if (GH.spooking)
 						src.throw_at(over_object, 7-I.w_class, 1)
 						logTheThing("combat", usr, null, "throws [src] with g_tk.")
@@ -314,8 +339,7 @@
 			return
 
 	ex_act(severity)
-		if(src.material)
-			src.material.triggerExp(src, severity)
+		src.material?.triggerExp(src, severity)
 		switch(severity)
 			if(1.0)
 				qdel(src)
@@ -326,7 +350,6 @@
 			if(3.0)
 				return
 			else
-		return
 
 	attackby(obj/item/C as obj, mob/user as mob)
 
@@ -337,10 +360,6 @@
 				playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 				T.add_fingerprint(user)
 				qdel(src)
-
-			if (T.amount < 1 && !issilicon(user))
-				user.u_equip(T)
-				qdel(T)
 			return
 		if (isweldingtool(C) && C:try_weld(user,0))
 			boutput(user, "<span class='notice'>Slicing lattice joints ...</span>")
@@ -348,13 +367,9 @@
 			qdel(src)
 		if (istype(C, /obj/item/rods))
 			var/obj/item/rods/R = C
-			if (R.amount >= 2)
-				R.amount -= 2
+			if (R.change_stack_amount(-2))
 				boutput(user, "<span class='notice'>You assemble a barricade from the lattice and rods.</span>")
 				new /obj/lattice/barricade(src.loc)
-				if (R.amount < 1)
-					user.u_equip(C)
-					qdel(C)
 				qdel(src)
 		return
 
@@ -388,20 +403,18 @@
 			if (difference <= 0)
 				boutput(user, "<span class='alert'>This barricade is already fully reinforced.</span>")
 				return
-			if (R.amount > difference)
-				R.amount -= difference
+			if (R.amount >= difference)
+				R.change_stack_amount(-difference)
 				src.strength = 5
 				boutput(user, "<span class='notice'>You reinforce the barricade.</span>")
 				boutput(user, "<span class='notice'>The barricade is now fully reinforced!</span>") // seperate line for consistency's sake i guess
 				return
 			else if (R.amount <= difference)
-				R.amount -= difference
-				src.strength = 5
+				src.strength += R.amount
 				boutput(user, "<span class='notice'>You use up the last of your rods to reinforce the barricade.</span>")
 				if (src.strength >= 5) boutput(user, "<span class='notice'>The barricade is now fully reinforced!</span>")
-				if (R.amount < 1)
-					user.u_equip(W)
-					qdel(W)
+				user.u_equip(W)
+				qdel(W)
 				return
 		else
 			if (W.force > 8)
@@ -427,9 +440,11 @@
 
 /obj/overlay
 	name = "overlay"
+	anchored = TRUE
 	mat_changename = 0
 	mat_changedesc = 0
 	event_handler_flags = IMMUNE_MANTA_PUSH
+	density = 0
 
 	updateHealth()
 		return
@@ -492,31 +507,24 @@
 		replica.layer = O.layer - 0.05
 		replica.pixel_x = O.pixel_x
 		replica.pixel_y = O.pixel_y
-		replica.dir = O.dir
+		replica.set_dir(O.dir)
 		qdel(O)
 
-
-/obj/disposing()
-	for(var/mob/M in src.contents)
-		M.set_loc(src.loc)
-	tag = null
-	..()
-
 /obj/proc/place_on(obj/item/W as obj, mob/user as mob, params)
+	. = 0
 	if (W && !issilicon(user)) // no ghost drones should not be able to do this either, not just borgs
 		if (user && !(W.cant_drop))
 			var/dirbuffer //*hmmpf* it's not like im a hacky coder or anything... (＃￣^￣)
 			dirbuffer = W.dir //though actually this will preserve item rotation when placed on tables so they don't rotate when placed. (this is a niche bug with silverware, but I thought I might as well stop it from happening with other things <3)
 			user.drop_item()
 			if(W.dir != dirbuffer)
-				W.dir = dirbuffer
-			if (W && W.loc)
+				W.set_dir(dirbuffer)
+			if (W?.loc)
 				W.set_loc(src.loc)
 				if (islist(params) && params["icon-y"] && params["icon-x"])
 					W.pixel_x = text2num(params["icon-x"]) - 16
 					W.pixel_y = text2num(params["icon-y"]) - 16
-				return 1
-	return 0
+				. = 1
 
 /obj/proc/receive_silicon_hotkey(var/mob/user)
 	//A wee stub to handle other objects implementing the AI keys
@@ -537,6 +545,7 @@
 		. = 'sound/impact_sounds/Generic_Stab_1.ogg'
 	if(!src.anchored)
 		step(src, AM.dir)
+	src.ArtifactStimulus("force", AM.throwforce)
 	if(AM.throwforce >= 40)
 		if(!src.anchored && !src.throwing)
 			src.throw_at(get_edge_target_turf(src,get_dir(AM, src)), 10, 1)

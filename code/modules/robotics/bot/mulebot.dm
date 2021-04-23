@@ -27,7 +27,6 @@
 	var/destination = ""		// destination description
 	var/home_destination = "" 	// tag of home beacon
 	req_access = list(access_cargo)
-	var/list/path = null
 
 	var/mode = 0		//0 = idle/ready
 						//1 = loading/unloading
@@ -278,7 +277,7 @@
 			return
 		if (usr.stat)
 			return
-		if ((in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
+		if ((in_interact_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
 			src.add_dialog(usr)
 
 			switch(href_list["op"])
@@ -411,7 +410,7 @@
 
 	// returns true if the bot has power
 	proc/has_power()
-		return !open && cell && cell.charge>0 && (wires & wire_power1) && (wires & wire_power2)
+		return !open && cell?.charge>0 && (wires & wire_power1) && (wires & wire_power2)
 
 	// mousedrop a crate to load the bot
 	MouseDrop_T(var/atom/movable/C, mob/user)
@@ -429,7 +428,7 @@
 
 	// called to load a crate
 	proc/load(var/atom/movable/C)
-		if (istype(C, /obj/screen) || C.anchored)
+		if (istype(C, /atom/movable/screen) || C.anchored)
 			return
 
 		if(get_dist(C, src) > 1 || load || !on)
@@ -494,6 +493,7 @@
 	var/last_process_time
 
 	process()
+		. = ..()
 		var/time_since_last = TIME - last_process_time
 		last_process_time = TIME
 		if(!has_power())
@@ -526,7 +526,7 @@
 					at_target()
 					return
 
-				else if(path && path.len > 0 && target) // valid path
+				else if(length(path) && target) // valid path
 					var/turf/next = path[1]
 					reached_target = 0
 					if(next == loc)
@@ -540,14 +540,14 @@
 							var/obj/decal/cleanable/blood/tracks/B = make_cleanable(/obj/decal/cleanable/blood/tracks, loc)
 							var/newdir = get_dir(next, loc)
 							if(newdir == dir)
-								B.dir = newdir
+								B.set_dir(newdir)
 							else
 								newdir = newdir | dir
 								if(newdir == 3)
 									newdir = 1
 								else if(newdir == 12)
 									newdir = 4
-								B.dir = newdir
+								B.set_dir(newdir)
 							bloodiness--
 
 						step_towards(src, next)	// attempt to move

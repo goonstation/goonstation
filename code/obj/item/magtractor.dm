@@ -13,7 +13,7 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	m_amt = 50000
 	mats = 12
 	stamina_damage = 15
@@ -64,7 +64,7 @@
 			out(user, "<span class='alert'>\The [src] is already holding \the [src.holding]!</span>")
 			return 0
 
-		if (W.anchored || W.w_class >= 4) //too bulky for backpacks, too bulky for this
+		if (W.anchored || W.w_class >= W_CLASS_BULKY) //too bulky for backpacks, too bulky for this
 			out(user, "<span class='notice'>\The [src] can't possibly hold that heavy an item!</span>")
 			return 0
 
@@ -98,7 +98,7 @@
 				return 0
 			var/obj/item/target = A
 
-			if (target.anchored || target.w_class == 4) //too bulky for backpacks, too bulky for this
+			if (target.anchored || target.w_class == W_CLASS_BULKY) //too bulky for backpacks, too bulky for this
 				out(user, "<span class='notice'>\The [src] can't possibly hold that heavy an item!</span>")
 				return 0
 
@@ -109,7 +109,7 @@
 			actions.start(new/datum/action/bar/private/icon/magPicker(target, src), user)
 
 		else if ((src.holding && src.holding.loc != src) || src.holding.disposed) // it's gone!!
-			actions.stopId("magpickerhold", usr)
+			actions.stopId("magpickerhold", user)
 
 		return 1
 
@@ -121,9 +121,9 @@
 
 	dropped(mob/user as mob)
 		..()
-		actions.stopId("magpicker", usr)
+		actions.stopId("magpicker", user)
 		if (src.holding)
-			actions.stopId("magpickerhold", usr)
+			actions.stopId("magpickerhold", user)
 
 	examine()
 		. = ..()
@@ -169,9 +169,10 @@
 	proc/updateHeldOverlay(obj/item/W as obj)
 		if (W && !W.disposed)
 			var/image/heldItem = GetOverlayImage("heldItem")
-			if (!heldItem) heldItem = image(W.icon, W.icon_state)
+			if (!heldItem)
+				heldItem = image(W.icon, W.icon_state)
+				heldItem.transform *= 0.85
 			heldItem.color = W.color
-			heldItem.transform *= 0.85
 			heldItem.pixel_y = 1
 			heldItem.layer = -1
 			src.UpdateOverlays(heldItem, "heldItem")
@@ -196,7 +197,7 @@
 
 		src.holding = W
 		src.processHeld = 1
-		src.w_class = 4.0 //bulky
+		src.w_class = W_CLASS_BULKY //bulky
 		src.useInnerItem = 1
 		src.icon_state = "magtractor-active"
 
@@ -231,7 +232,7 @@
 		if (isitem(src.holding) && usr)
 			src.holding.dropped(usr)
 		src.working = 1
-		src.w_class = 3.0 //normal
+		src.w_class = W_CLASS_NORMAL //normal
 		src.useInnerItem = 0
 		var/turf/T = get_turf(src)
 

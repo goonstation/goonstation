@@ -31,8 +31,8 @@ Contents:
 				var/mob/M = A
 				if(!M.stat && ishuman(M))
 					var/mob/living/carbon/human/H = M
-					if(H.gender == MALE) playsound(H.loc, "sound/voice/screams/male_scream.ogg", 100, 0, 0, H.get_age_pitch())
-					else playsound(H.loc, "sound/voice/screams/female_scream.ogg", 100, 0, 0, H.get_age_pitch())
+					if(H.gender == MALE) playsound(H.loc, "sound/voice/screams/male_scream.ogg", 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					else playsound(H.loc, "sound/voice/screams/female_scream.ogg", 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 				random_brute_damage(M, 33)
 				M.changeStatus("stunned", 10 SECONDS)
 			A.set_loc(T)
@@ -52,7 +52,7 @@ Contents:
 
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 //okay these are getting messy as hell, i need to consolidate this shit later
 /turf/unsimulated/floor/arctic/snow/ice
@@ -99,9 +99,13 @@ Contents:
 
 	// this is the code for falling from abyss into ice caves
 	// could maybe use an animation, or better text. perhaps a slide whistle ogg?
-	Entered(atom/A as mob|obj)
+	Entered(atom/A as mob|obj, atom/old_loc)
 		if (isobserver(A) || isintangible(A))
 			return ..()
+		if(isobj(A))
+			var/obj/O = A
+			if(isnull(old_loc) || O.anchored)
+				return ..()
 
 		var/turf/T = pick_landmark(LANDMARK_FALL_ICE)
 		if(T)

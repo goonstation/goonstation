@@ -6,6 +6,7 @@
 	density = 1
 	anchored = 1.0
 	mats = 10
+	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	allow_stunned_dragndrop = 1
 	var/chargerate = 400
@@ -27,7 +28,14 @@
 	reagents.add_reagent("fuel", 250)
 	src.build_icon()
 
-/obj/machinery/recharge_station/process()
+/obj/machinery/recharge_station/disposing()
+	if(occupant)
+		occupant.set_loc(get_turf(src.loc))
+		occupant = null
+	..()
+
+
+/obj/machinery/recharge_station/process(mult)
 	if (!(src.status & BROKEN))
 		// todo / at some point id like to fix the disparity between cells and 'normal power'
 		if (src.occupant)
@@ -43,7 +51,7 @@
 		return
 
 	if (src.occupant)
-		src.process_occupant()
+		src.process_occupant(mult)
 	return 1
 
 /obj/machinery/recharge_station/allow_drop()
@@ -61,10 +69,10 @@
 
 /obj/machinery/recharge_station/attack_hand(mob/user)
 	if (src.status & BROKEN)
-		boutput(usr, "<span class='alert'>[src] is broken and cannot be used.</span>")
+		boutput(user, "<span class='alert'>[src] is broken and cannot be used.</span>")
 		return
 	if (src.status & NOPOWER)
-		boutput(usr, "<span class='alert'>[src] is out of power and cannot be used.</span>")
+		boutput(user, "<span class='alert'>[src] is out of power and cannot be used.</span>")
 		return
 	if (!src.anchored)
 		user.show_text("You must attach [src]'s floor bolts before the machine will work.", "red")
@@ -270,7 +278,7 @@
 		usr.show_text("You must attach [src]'s floor bolts before the machine will work.", "red")
 		return
 
-	if ((usr.contents.Find(src) || src.contents.Find(usr) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))))
+	if ((usr.contents.Find(src) || src.contents.Find(usr) || can_access_remotely(usr) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 
 		if (href_list["refresh"])
@@ -307,10 +315,12 @@
 			var/newname = copytext(strip_html(sanitize(input(usr, "What do you want to rename [R]?", "Cyborg Maintenance", R.name) as null|text)), 1, 64)
 			if ((!issilicon(usr) && (get_dist(usr, src) > 1)) || usr.stat || !newname)
 				return
-			if (url_regex && url_regex.Find(newname))
+			if (url_regex?.Find(newname))
 				boutput(usr, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 				boutput(usr, "<span class='alert'>&emsp;<b>\"[newname]</b>\"</span>")
 				return
+			if(newname && newname != R.name)
+				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 			logTheThing("combat", usr, R, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
 			R.name = newname
 			if (R.internal_pda)
@@ -735,17 +745,20 @@
 				src.build_icon()
 
 /obj/machinery/recharge_station/proc/build_icon()
-	src.overlays = null
+	if (src.occupant)
+		src.UpdateOverlays(image('icons/obj/robot_parts.dmi', "station-occu"), "occupant")
+	else
+		src.UpdateOverlays(null, "occupant")
 	if (src.status & BROKEN)
 		src.icon_state = "station-broke"
+		src.UpdateOverlays(null, "power")
 		return
 	if (src.status & NOPOWER)
+		src.UpdateOverlays(null, "power")
 		return
-	src.overlays += image('icons/obj/robot_parts.dmi', "station-pow")
-	if (src.occupant)
-		src.overlays += image('icons/obj/robot_parts.dmi', "station-occu")
+	src.UpdateOverlays(image('icons/obj/robot_parts.dmi', "station-pow"), "power")
 
-/obj/machinery/recharge_station/proc/process_occupant()
+/obj/machinery/recharge_station/proc/process_occupant(mult)
 	if (src.occupant)
 		if (src.occupant.loc != src)
 			src.go_out()
@@ -755,11 +768,11 @@
 			var/mob/living/silicon/robot/R = src.occupant
 			if (!R.cell)
 				return
-			else if (R.cell.charge >= R.cell.maxcharge)
+			else if (R.cell.charge * mult >= R.cell.maxcharge)
 				R.cell.charge = R.cell.maxcharge
 				return
 			else
-				R.cell.charge += src.chargerate
+				R.cell.charge += src.chargerate * mult
 				src.use_power(50)
 				return
 
@@ -768,11 +781,11 @@
 
 			if (!H.cell)
 				return
-			else if (H.cell.charge >= H.cell.maxcharge)
+			else if (H.cell.charge * mult >= H.cell.maxcharge)
 				H.cell.charge = H.cell.maxcharge
 				return
 			else
-				H.cell.charge += src.chargerate
+				H.cell.charge += src.chargerate * mult
 				src.use_power(50)
 				return
 
@@ -787,9 +800,9 @@
 						playsound(src.loc, pick('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Slimy_Hit_3.ogg','sound/impact_sounds/Slimy_Hit_4.ogg','sound/impact_sounds/Flesh_Break_1.ogg','sound/impact_sounds/Flesh_Tear_1.ogg','sound/impact_sounds/Generic_Snap_1.ogg','sound/impact_sounds/Generic_Hit_1.ogg'), 100, 1)
 					SPAWN_DBG(0.6 SECONDS)
 						if (H.gender == "female")
-							playsound(src.loc, "sound/voice/screams/female_scream.ogg", 30, 1)
+							playsound(src.loc, "sound/voice/screams/female_scream.ogg", 30, 1, channel=VOLUME_CHANNEL_EMOTE)
 						else
-							playsound(src.loc, "sound/voice/screams/male_scream.ogg", 30, 1)
+							playsound(src.loc, "sound/voice/screams/male_scream.ogg", 30, 1, channel=VOLUME_CHANNEL_EMOTE)
 						src.visible_message("<span class='alert'>A muffled scream comes from within [src]!</span>")
 
 			if (H.health <= 2)

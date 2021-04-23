@@ -23,11 +23,11 @@
 		..()
 	else
 		if (get_dist(src, target) > 0)
-			dir = get_dir(src, target)
+			src.set_dir(get_dir(src, target))
 		src.examine_verb(target)
 
 /mob/dead/process_move(keys)
-	if (!istype(src.loc,/turf)) //Pop observers and Follow-Thingers out!!
+	if(keys && src.move_dir && !src.use_movement_controller && !istype(src.loc, /turf)) //Pop observers and Follow-Thingers out!!
 		var/mob/dead/O = src
 		O.set_loc(get_turf(src))
 	. = ..()
@@ -53,6 +53,7 @@
 	if(src?.client?.preferences.auto_capitalization)
 		message = capitalize(message)
 
+	phrase_log.log_phrase("deadsay", message)
 	. = src.say_dead(message)
 
 	for (var/mob/M in hearers(null, null))
@@ -83,7 +84,7 @@
 				var/fluff = pick("spooky", "eerie", "ectoplasmic", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")
 				var/fart_on_other = 0
 				for (var/obj/item/storage/bible/B in src.loc)
-					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 7, 0, 0, src.get_age_pitch() * 0.4)
+					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 7, 0, 0, src.get_age_pitch() * 0.4, channel=VOLUME_CHANNEL_EMOTE)
 					break
 				for (var/mob/living/M in src.loc)
 					message = "<B>[src]</B> lets out \an [fluff] fart in [M]'s face!"
@@ -168,10 +169,19 @@
 
 #endif
 		logTheThing("say", src, null, "EMOTE: [html_encode(message)]")
-		/*for (var/mob/dead/O in viewers(src, null))
-			O.show_*/src.visible_message("<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='message'>[message]</span></span>",group = "[src]_[lowertext(act)]")
+		src.visible_message("<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='message'>[message]</span></span>",group = "[src]_[lowertext(act)]")
 		return 1
 	return 0
+
+/mob/dead/visible_message(var/message, var/self_message, var/blind_message, var/group = "")
+	for (var/mob/M in viewers(src))
+		if (!M.client)
+			continue
+		var/msg = message
+		if (self_message && M == src)
+			M.show_message(self_message, 1, self_message, 2, group)
+		else
+			M.show_message(msg, 1, blind_message, 2, group)
 
 #ifdef HALLOWEEN
 /mob/dead/proc/animate_surroundings(var/type="fart", var/range = 2)

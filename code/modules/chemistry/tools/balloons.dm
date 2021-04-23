@@ -19,10 +19,10 @@
 
 	New()
 		..()
-		if (prob(1) && islist(rare_colors) && rare_colors.len)
+		if (prob(1) && islist(rare_colors) && length(rare_colors))
 			balloon_color = pick(rare_colors)
 			update_icon()
-		else if (islist(available_colors) && available_colors.len)
+		else if (islist(available_colors) && length(available_colors))
 			balloon_color = pick(available_colors)
 			update_icon()
 
@@ -212,7 +212,7 @@
 	icon_state = "animal-bee"
 	inhand_image_icon = 'icons/mob/inhand/hand_balloon.dmi'
 	item_state = "balloon"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 /obj/item/balloon_animal/random
 	New()
@@ -222,3 +222,6 @@
 		src.desc = "A little [animal], made out of a balloon! How spiffy!"
 		src.icon_state = "animal-[animal]"
 		src.color = random_saturated_hex_color()
+
+/obj/item/reagent_containers/balloon/naturally_grown
+	desc = "Water balloon fights are a classic way to have fun in the summer. I don't know that chlorine trifluoride balloon fights hold the same appeal for most people. These balloons appear to have been grown naturally."

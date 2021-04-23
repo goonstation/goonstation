@@ -1,13 +1,12 @@
 name: "Post Labeled PRs to the Forum"
 on:
   pull_request_target:
-    types:
-      - labeled
+    types: [labeled, closed, edited, reopened]
 
 jobs:
   post-to-forums:
     runs-on: ubuntu-latest
-    if: ${{ github.repository == 'goonstation/goonstation' && github.event.label.name == 'input wanted' }}
+    if: ${{ github.repository == 'goonstation/goonstation' && (github.event.action == 'labeled' && github.event.label.name == 'input wanted' || github.event.action != 'labeled' && contains(github.event.pull_request.labels.*.name, 'input wanted')) }}
     steps:
     - name: Get The Script
       run: |
@@ -33,8 +32,14 @@ jobs:
         FORUM_USERNAME: "github_bot"
         SUBFORUM_ID: 8 # Ideas & Suggestions
         POST_ICON: 11 # ℹ
+        POST_ICON_CLOSED: 18 # 👎
+        POST_ICON_MERGED: 19 # 👍
         SUBJECT_PREFIX: "[PR] "
+        SUBJECT_PREFIX_CLOSED: "[CLOSED PR] "
+        SUBJECT_PREFIX_MERGED: "[MERGED PR] "
         PR_TITLE: ${{ github.event.pull_request.title }}
         PR_BODY: ${{ github.event.pull_request.body }}
         PR_URL: ${{ github.event.pull_request.html_url }}
         PR_NUM: ${{ github.event.pull_request.number }}
+        PR_STATE: ${{ github.event.pull_request.state }}
+        PR_MERGED: ${{ github.event.pull_request.merged }}

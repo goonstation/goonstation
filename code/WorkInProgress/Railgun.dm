@@ -34,10 +34,10 @@
 	icon_state = "railgun"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(target == usr) return
+		if(target == user) return
 
 		var/atom/target_r = target
 
@@ -227,7 +227,7 @@ proc/DrawLine(atom/Start,atom/End,LineType,Icon,Whole_Icon_State = "",CenterOfIc
 	var/Nullspace = round(tan(90-Angle)*32)
 	var/ReturnedDir = line_ReturnDir(Start,Angle,End,startpx,startpy,endpx,endpy)
 	if(ReturnedDir == EAST||ReturnedDir == WEST)
-		Nullspace = round(tanR(90-Angle)*32)
+		Nullspace = round(cot(90-Angle)*32)
 	if(Angle == 180)
 		Nullspace = 0  //Small bug workaround
 	var/CoorCounter = Nullspace
@@ -284,7 +284,7 @@ proc/DrawLine(atom/Start,atom/End,LineType,Icon,Whole_Icon_State = "",CenterOfIc
 		NewLineEnd.set_loc(CurrentLoc)
 		line_PixelOffset(NewLineEnd,ReturnedDir,Angle,CoorCounter,startpx2,startpy2)
 		LineList.Add(NewLineEnd)
-	var/EndCount = LineList.len
+	var/EndCount = length(LineList)
 	for(var/obj/L in LineList)
 		if(LineList.Find(L) > EndCount)
 			break

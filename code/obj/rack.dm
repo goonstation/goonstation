@@ -57,13 +57,13 @@
 		return 0
 
 /obj/rack/MouseDrop_T(obj/O as obj, mob/user as mob)
-	if (!isitem(O) || !in_range(user, src) || !in_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+	if (!isitem(O) || !in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 		return
 	var/obj/item/I = O
 	if (istype(I,/obj/item/satchel))
 		var/obj/item/satchel/S = I
 		if (S.contents.len < 1)
-			boutput(usr, "<span class='alert'>There's nothing in [S]!</span>")
+			boutput(user, "<span class='alert'>There's nothing in [S]!</span>")
 		else
 			user.visible_message("<span class='notice'>[user] dumps out [S]'s contents onto [src]!</span>")
 			for (var/obj/item/thing in S.contents)
@@ -133,7 +133,7 @@
 			duration = duration_i
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter"))
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
 	onUpdate()

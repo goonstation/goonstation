@@ -25,7 +25,7 @@ var/list/stinkExclamations = list("Ugh","Good lord","Good grief","Christ","Fuck"
 var/list/stinkThings = list("garbage can","trash heap","cesspool","toilet","pile of poo",
 	"butt","skunk","outhouse","corpse","fart","devil")
 var/list/stinkVerbs = list("took a shit","died","farted","threw up","wiped its ass")
-var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","Readster")
+var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","administrator")
 
 /proc/stinkString()
 	// i am five - ISN
@@ -81,7 +81,6 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 /proc/get_area_name(N) //get area by it's name
 
 	for(var/area/A in world)
-		LAGCHECK(LAG_LOW)
 		if(A.name == N)
 			return A
 	return 0
@@ -97,11 +96,13 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 
 	return null
 
-/proc/in_range(atom/source, atom/user)
-	if(bounds_dist(source, user) == 0 || get_dist(source, user) <= 1) // fucking byond
-		return 1
+/// For interacting with stuff.
+/proc/in_interact_range(atom/source, atom/user)
+	. = FALSE
+	if(bounds_dist(source, user) == 0 || IN_RANGE(source, user, 1)) // fucking byond
+		return TRUE
 	else if (source in bible_contents && locate(/obj/item/storage/bible) in range(1, user)) // whoever added the global bibles, fuck you
-		return 1
+		return TRUE
 	else
 		if (iscarbon(user))
 			var/mob/living/carbon/C = user
@@ -119,18 +120,25 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 					O.anchored = 1
 					O.set_density(0)
 					O.layer = FLY_LAYER
-					O.dir = pick(cardinal)
+					O.set_dir(pick(cardinal))
 					O.icon = 'icons/effects/effects.dmi'
 					O.icon_state = "nothing"
 					flick("empdisable",O)
 					sleep(0.5 SECONDS)
 					qdel(O)
 
-				return 1
-		else if (istype(source, /obj/machinery) && isAI(user))
-			return 1
+				return TRUE
 
-	return 0 //not in range and not telekinetic
+		else if (isobj(source))
+			var/obj/SO = source
+			if(SO.can_access_remotely(user))
+				return TRUE
+
+	if (mirrored_physical_zone_created) //checking for vistargets if true
+		var/turf/T = get_turf(source)
+		if (T.vistarget)
+			if(bounds_dist(T.vistarget, user) == 0 || get_dist(T.vistarget, user) <= 1)
+				return TRUE
 
 
 var/obj/item/dummy/click_dummy = new
@@ -161,7 +169,7 @@ var/obj/item/dummy/click_dummy = new
 		if (C && target != C)
 			return 0
 	if (isturf(user.loc))
-		if (!in_range(target, user))
+		if (!in_interact_range(target, user))
 			return 0
 		var/T1 = get_turf(user)
 		var/T2 = get_turf(target)
@@ -215,12 +223,9 @@ var/obj/item/dummy/click_dummy = new
 	for_by_tcl(theAI, /mob/living/silicon/ai)
 		if (theAI.deployed_to_eyecam)
 			var/mob/dead/aieye/AIeye = theAI.eyecam
-//			if (AIeye in view(center, distance))
-			if(IN_RANGE(center, AIeye, distance) && T.cameras && T.cameras.len)
+			if(IN_RANGE(center, AIeye, distance) && T.cameras && length(T.cameras))
 				. += AIeye
 				. += theAI
-		//if (istype(theAI.current) && (theAI.current in view(center, distance)) )
-		//	. += theAI
 
 //Kinda sorta like viewers but includes observers. In theory.
 /proc/observersviewers(var/Dist=world.view, var/Center=usr)
@@ -239,7 +244,11 @@ var/obj/item/dummy/click_dummy = new
 		Center = Depth
 		Depth = newDepth
 
-	return viewers(Depth, Center) + get_viewing_AIs(Center, 7)
+	. = viewers(Depth, Center) + get_viewing_AIs(Center, 7)
+	if(length(by_cat[TR_CAT_OMNIPRESENT_MOBS]))
+		for(var/mob/M as anything in by_cat[TR_CAT_OMNIPRESENT_MOBS])
+			if(get_step(M, 0)?.z == get_step(Center, 0)?.z)
+				. |= M
 
 //A unique network ID for devices that could use one
 /proc/format_net_id(var/refstring)
@@ -254,15 +263,6 @@ var/obj/item/dummy/click_dummy = new
 	if(!the_atom) return
 	. = format_net_id("\ref[the_atom]")
 
-/proc/can_act(var/mob/M, var/include_cuffs = 1)
-	if(!M) return 0 //Please pass the M, I need a sprinkle of it on my potatoes.
-	if(include_cuffs && M.hasStatus("handcuffed")) return 0
-	if(M.getStatusDuration("stunned")) return 0
-	if(M.getStatusDuration("weakened")) return 0
-	if(M.getStatusDuration("paralysis")) return 0
-	if(M.stat) return 0
-	return 1
-
 #define CLUWNE_NOISE_DELAY 50
 
 /proc/process_accents(var/mob/living/carbon/human/H, var/message)
@@ -276,7 +276,7 @@ var/obj/item/dummy/click_dummy = new
 			if (istype(S,/datum/bioEffect/speech/))
 				message = S.OnSpeak(message)
 
-	if (H.grabbed_by && H.grabbed_by.len)
+	if (H.grabbed_by && length(H.grabbed_by))
 		for (var/obj/item/grab/rag_muffle/RM in H.grabbed_by)
 			if (RM.state > 0)
 				message = mufflespeech(message)
@@ -429,7 +429,6 @@ var/obj/item/dummy/click_dummy = new
 	. = new/list()
 
 	for(var/area/R in world)
-		LAGCHECK(LAG_LOW)
 		if(istype(R, areatype))
 			. += R
 
@@ -451,6 +450,28 @@ var/obj/item/dummy/click_dummy = new
 			for (var/turf/T in R)
 				. += R
 				break
+
+/proc/get_areas_with_unblocked_turfs(var/areatype)
+	//Takes: Area type as text string or as typepath OR an instance of the area.
+	//Returns: A list of all areas of that type in the world that have at least one unblocked turf.
+	//Also sets an unblocked turf for each area for the spy thief mode.
+	//Notes: Simple!
+	if(!areatype) return null
+	if(istext(areatype)) areatype = text2path(areatype)
+	if(isarea(areatype))
+		var/area/areatemp = areatype
+		areatype = areatemp.type
+
+	. = list()
+
+	for(var/area/R in world)
+		LAGCHECK(LAG_LOW)
+		if(istype(R, areatype))
+			for (var/turf/T in R)
+				if(!is_blocked_turf(T))
+					R.spyturf = T
+					. += R
+					break
 
 /proc/get_area_turfs(var/areatype, var/floors_only)
 	//Takes: Area type as text string or as typepath OR an instance of the area.
@@ -539,7 +560,7 @@ var/obj/item/dummy/click_dummy = new
 
 	var/src_min_x = 0
 	var/src_min_y = 0
-	for (var/turf/T as() in turfs_src)
+	for (var/turf/T as anything in turfs_src)
 		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
 		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
 	DEBUG_MESSAGE("src_min_x = [src_min_x], src_min_y = [src_min_y]")
@@ -547,7 +568,7 @@ var/obj/item/dummy/click_dummy = new
 	var/trg_min_x = 0
 	var/trg_min_y = 0
 	var/trg_z = 0
-	for (var/turf/T as() in turfs_trg)
+	for (var/turf/T as anything in turfs_trg)
 		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
 		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
 		trg_z = T.z
@@ -555,20 +576,20 @@ var/obj/item/dummy/click_dummy = new
 
 	for (var/turf/S in turfs_src)
 		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
-		if(T.loc != A) continue
-		T.ReplaceWith(S.type, force=1)
+		if(T?.loc != A) continue
+		T.ReplaceWith(S.type, keep_old_material = 0, force=1)
 		T.appearance = S.appearance
-		T.density = S.density
-		T.dir = S.dir
+		T.set_density(S.density)
+		T.set_dir(S.dir)
 
 	for (var/turf/S in turfs_src)
 		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
-		for (var/atom/movable/AM as() in S)
+		for (var/atom/movable/AM as anything in S)
 			if (istype(AM, /obj/forcefield) || istype(AM, /obj/overlay/tile_effect)) continue
 			if (!ignore_fluid && istype(AM, /obj/fluid)) continue
 			AM.set_loc(T)
 		if(turftoleave)
-			S.ReplaceWith(turftoleave, force=1)
+			S.ReplaceWith(turftoleave, keep_old_material = 0, force=1)
 		else
 			S.ReplaceWithSpaceForce()
 
@@ -618,3 +639,45 @@ proc/get_opaqueness(var/trans)	// 0=transparent, 255=fully opaque
 
 proc/LoadSavefile(name)
 	. = new/savefile(name)
+
+/// Returns a turf at the edge of a squared circle of specified radius around a thing
+proc/GetRandomPerimeterTurf(var/atom/A, var/dist = 10, var/dir)
+	var/turf/T = get_turf(A)
+	if(!isturf(T))
+		return
+	var/T_x = T.x
+	var/T_y = T.y
+	var/T_z = T.z
+	var/out_x
+	var/out_y
+	var/x_or_y = pick("x", "y") // Which edge of the squircle isn't randomized
+	if(dir)
+		if(dir == NORTH || dir == SOUTH)
+			x_or_y = "y"
+		else
+			x_or_y = "x"
+	if(x_or_y == "x")
+		if(dir)
+			if(dir == EAST)
+				out_x = clamp(T_x + dist, 1, world.maxx)
+			else if (dir == WEST)
+				out_x = clamp(T_x - dist, 1, world.maxx)
+		else
+			out_x = clamp(pick((T_x + dist), (T_x - dist)), 1, world.maxx)
+		out_y = clamp(rand(T_y - dist, T_y + dist), 1, world.maxy)
+	else
+		if(dir)
+			if(dir == NORTH)
+				out_y = clamp(T_y + dist, 1, world.maxy)
+			else if (dir == SOUTH)
+				out_y = clamp(T_y - dist, 1, world.maxy)
+		out_x = clamp(rand(T_x - dist, T_x + dist), 1, world.maxx)
+		out_y = clamp(pick((T_y + dist), (T_y - dist)), 1, world.maxy)
+	T = locate(out_x, out_y, T_z)
+	if(isturf(T))
+		return T
+
+proc/ThrowRandom(var/atom/movable/A, var/dist = 10, var/speed = 1, var/list/params, var/thrown_from, var/throw_type, var/allow_anchored, var/bonus_throwforce, var/end_throw_callback)
+	if(istype(A))
+		var/turf/Y = GetRandomPerimeterTurf(A, dist)
+		A.throw_at(Y, dist, speed, params, thrown_from, throw_type, allow_anchored, bonus_throwforce, end_throw_callback)

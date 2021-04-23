@@ -160,7 +160,7 @@
 	icon_state = "precursor-1" // temp
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "precursor" // temp
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	force = 1
 	throwforce = 5
 	var/spam_flag = 0
@@ -278,7 +278,7 @@
 				src.overlays += icon('icons/obj/artifacts/artifacts.dmi',"precursor-1fx")*/
 		if (isrobot(user)) return
 		user.drop_item()
-		if(W && W.loc)	W.set_loc(src.loc)
+		if(W?.loc)	W.set_loc(src.loc)
 		return
 
 /obj/item/chilly_orb // borb
@@ -701,8 +701,7 @@
 
 	proc
 		update_controller()
-			if(src.linked_controller)
-				src.linked_controller.update()
+			src.linked_controller?.update()
 			return
 
 
@@ -980,7 +979,7 @@
 /obj/portrait_sneaky
 	name = "crooked portrait"
 	anchored = 1
-	icon = 'icons/obj/decals/misc.dmi'
+	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "portrait"
 	desc = "A portrait of a man wearing a ridiculous merchant hat. That must be Discount Dan."
 
@@ -1142,7 +1141,7 @@
 			animating = 1
 			animate(src, alpha = 64, time = 10, easing = SINE_EASING)
 			animate(alpha = 192, time = 10, easing = SINE_EASING)
-			SPAWN_DBG (25)
+			SPAWN_DBG(2.5 SECONDS)
 				animating = 0
 
 	CritterDeath()
@@ -1182,7 +1181,7 @@
 		..()
 
 		range += rand(-1,2)
-		SPAWN_DBG (0)
+		SPAWN_DBG(0)
 			summon()
 
 
@@ -1419,7 +1418,7 @@
 /obj/item/device/dongle
 	name = "syndicate security dongle"
 	desc = "A form of secure, electronic identification with a round port connector and a funny name."
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	icon_state = "rfid"
 
 var/global/list/scarysounds = list('sound/machines/engine_alert3.ogg',

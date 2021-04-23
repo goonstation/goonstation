@@ -18,7 +18,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	item_state = "card-id"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	//DNA machine vars
 	var/data = ""
 	var/ue = 0
@@ -112,7 +112,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (ispulsingtool(W))
 			user.visible_message("<span class='alert'><b>[user] begins to clear the [src]!</b></span>","You begin to clear the [src].")
-			if(do_after(user, 30))
+			if(do_after(user, 3 SECONDS))
 				user.visible_message("<span class='alert'><b>[user] clears the [src]!</b></span>","You clear the [src].")
 				//qdel(src.root)
 				if (src.root)
@@ -140,7 +140,7 @@
 		if (istype(W, /obj/item/pen))
 			var/t = input(user, "Enter new tape label", src.name, null) as text
 			t = copytext(strip_html(t), 1, 36)
-			if (!in_range(src, usr) && src.loc != usr)
+			if (!in_interact_range(src, user) && src.loc != user)
 				return
 			if (!t)
 				src.name = "ThinkTape"
@@ -271,14 +271,14 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "nucleardisk"
 	item_state = "card-id"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	mats = 15
 	random_color = 0
 	file_amount = 32.0
 
 	New()
 		. = ..()
-		SPAWN_DBG (10) //Give time to actually generate network passes I guess.
+		SPAWN_DBG(1 SECOND) //Give time to actually generate network passes I guess.
 			if (!root) return
 			var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "GENAUTH";} (src)
 			authrec.fields = list("HEADS"="[netpass_heads]",
