@@ -92,6 +92,15 @@
 	UpdateOverlays(I_actv, "active", 0, 1)
 
 
+//updates only the charge overlay, used when charge is depleted by interdiction
+/obj/machinery/interdictor/proc/updatecharge()
+	var/ratio = max(0, src.intcap.charge / src.intcap.maxcharge)
+	ratio = round(ratio, 0.33) * 100
+	var/image/I_chrg = SafeGetOverlayImage("charge", 'icons/obj/machines/interdictor.dmi', "idx-charge-[ratio]")
+	I_chrg.plane = PLANE_OVERLAY_EFFECTS
+	UpdateOverlays(I_chrg, "charge", 0, 1)
+
+
 /obj/machinery/interdictor/process(mult)
 	var/doupdateicon = 1 //avoids repeating icon updates, might be goofy
 	if (status & BROKEN)
@@ -136,6 +145,7 @@
 		return 0
 	else
 		intcap.use(stopcost)
+		src.updatecharge()
 		return 1
 
 
@@ -170,5 +180,5 @@
 	icon_state = "interdict-edge"
 	anchored = 1
 	density = 0
-	alpha = 128
+	alpha = 64
 	plane = PLANE_OVERLAY_EFFECTS

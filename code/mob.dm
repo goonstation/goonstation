@@ -575,6 +575,7 @@
 					for (var/obj/machinery/interdictor/IX in orange(INTERDICT_RANGE, src))
 						if (IX.expend_interdict(100))
 							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
+							var/atom/source = get_turf(tmob)
 							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
 							return
 					// like repels - bump them away from each other
@@ -617,6 +618,7 @@
 					for (var/obj/machinery/interdictor/IX in orange(INTERDICT_RANGE, src))
 						if (IX.expend_interdict(200))
 							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
+							var/atom/source = get_turf(tmob)
 							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
 							return
 					// opposite attracts - fling everything nearby at these dumbasses

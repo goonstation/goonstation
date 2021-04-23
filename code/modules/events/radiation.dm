@@ -114,6 +114,12 @@
 	proc/irradiate_turf(var/turf/T)
 		if (!isturf(T))
 			return
+		//spatial interdictor: nullify radiation pulses
+		//consumes 50 units of charge per tile protected
+		for (var/obj/machinery/interdictor/IX in orange(INTERDICT_RANGE, src))
+			if (IX.expend_interdict(50))
+				animate_flash_color_fill_inherit(T,"#EEDD00",1,5)
+				return
 		animate_flash_color_fill_inherit(T,"#0084ff",1,5)
 		for (var/atom/A in T.contents)
 			A.changeStatus("n_radiation", (rad_strength)*10, 3)
