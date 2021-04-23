@@ -1,4 +1,9 @@
 
+(t)fri apr 23 21
+(u)Chickenish
+(p)3984
+(e)⚖🐛|balance, bug
+(*)Mutations are now lag adjusted.
 (t)thu apr 22 21
 (u)BatElite & ZeWaka
 (p)4086
