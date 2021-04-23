@@ -1687,3 +1687,9 @@
     item_state = "racing_jump_prp"
     icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+
+/obj/item/clothing/head/monke
+	name = "Ook's Bag of Wisdom"
+	desc = "There doesn't appear to be anything inside, how strange..."
+	icon_state = "ook"
+	item_state = "ook"
