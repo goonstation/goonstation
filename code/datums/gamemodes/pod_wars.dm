@@ -500,13 +500,6 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	boutput(world, "[active_players] active players/[length(pw_team.members)] total players")
 	boutput(world, "")	//L.something
 
-//this is global so admins can run this proc to spawn the crates if they like, idk why they'd really want to but might as well be safe.
-proc/setup_pw_crate_lists()
-	pw_rewards_tier1 = list()
-	pw_rewards_tier2 = list()
-	pw_rewards_tier3 = list()
-
-
 /datum/pod_wars_team
 	var/name = "NanoTrasen"
 	var/comms_frequency = 0		//used in datum/job/pod_wars/proc/setup_headset (in Jobs.dm) to tune the radio as it's first equipped
@@ -979,8 +972,9 @@ proc/setup_pw_crate_lists()
 	// 	..()
 
 	spawn_turret(var/direct)
-		var/obj/deployable_turret/turret = new turret_path(src.loc,direction=direct)
+		var/obj/deployable_turret/pod_wars/turret = new turret_path(src.loc,direction=direct)
 		turret.health = src.health
+		turret.reconstruction_time = 0		//can't reconstruct itself
 		//turret.emagged = src.emagged
 		turret.damage_words = src.damage_words
 		turret.quick_deploy_fuel = src.quick_deploy_fuel
@@ -1014,12 +1008,15 @@ proc/setup_pw_crate_lists()
 			new /obj/decal/cleanable/robot_debris(src.loc)
 			src.alpha = 30
 			src.opacity = 0
-			sleep(reconstruction_time)
-			src.opacity = 1
-			src.alpha = 255
-			health = initial(health)
-			destroyed = 0
-			active = 1
+			if (reconstruction_time)
+				sleep(reconstruction_time)
+				src.opacity = 1
+				src.alpha = 255
+				health = initial(health)
+				destroyed = 0
+				active = 1
+			else 
+				..()
 
 	spawn_deployer()
 		var/obj/item/turret_deployer/deployer = new deployer_path(src.loc)
@@ -1419,7 +1416,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	name = "Plasma Cutter System"
 	item_paths = list("MET-2","CON-2")
 	item_amounts = list(50,50)
-	item_outputs = list(/obj/item/shipcomponent/mainweapon/bad_mining)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/mining)
 	time = 5 SECONDS
 	create = 1
 	category = "Tool"
@@ -1566,7 +1563,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	name = "Deployable Barricade"
 	item_paths = list("MET-2")
 	item_amounts = list(5)
-	item_outputs = list(/obj/item/shipcomponent/secondary_system/lock/pw_id)
+	item_outputs = list(/obj/barricade)
 	time = 1 SECONDS
 	create = 1
 	category = "Miscellaneous"
@@ -2241,14 +2238,14 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	var/list/item_rewards = list()		//assoc list of item name -> amount
 	var/list/crate_list = list()			//assoc list of crate tier -> amount
 
-	proc/add_item_reward(var/string, var/team_num)
+	proc/add_item_reward(var/string, var/team_num, var/amt = 1)
 		switch(team_num)
 			if (TEAM_NANOTRASEN)
 				string = "NT,[string]"
 			if (TEAM_SYNDICATE)
 				string = "SY,[string]"
 
-		item_rewards[string] ++
+		item_rewards[string] += amt
 
 	proc/add_crate(var/string, var/team_num)
 		switch(team_num)
@@ -2577,15 +2574,45 @@ Player Stats
 		var/points = 0
 		while (points < max_points)
 			var/selected = pick(possible_rewards)
+			var/amt_to_spawn = possible_rewards[selected]			//if null or 1 we spawn 1, if some other number, we spawn that many
+			var/total_spawned = 1				//cause we always spawn at least 1, which we do on the line below
 			var/obj/item/I = new selected(src)
+
+			//create extra items for this spawn. (If this path maps to a number value which indicates the amount of items that should be spawned)
+			if (isnum(amt_to_spawn))
+				total_spawned += amt_to_spawn - 1
+
+				//loops to value-1 cause we'll always spawn at least 1, and have already spawned it above. 
+				for (var/i = 0; i < amt_to_spawn - 1; i++)
+					new selected(src)
+
 			message_admins("[I.name] = [possible_rewards[selected]]pts")
-			points += possible_rewards[selected] ? possible_rewards[selected] : 1			//just in case
-			//assuming we have the coorect mode, that is the pod wars mode. These shouldn't really be spawning anyway if it isn't that mode...
+			
+			points += total_spawned
+
+			//assuming we have the corect mode, that is the pod wars mode. These shouldn't really be spawning anyway if it isn't that mode...
 #ifdef MAP_OVERRIDE_POD_WARS
-			mode?.stats_manager.add_item_reward(I.name, team_num)
+			mode?.stats_manager.add_item_reward(I.name, team_num, total_spawned)
 		mode?.stats_manager.add_crate(src.name, team_num)
 #endif
 		return 1
+
+//this is global so admins can run this proc to spawn the crates if they like, idk why they'd really want to but might as well be safe.
+proc/setup_pw_crate_lists()
+	pw_rewards_tier1 = list(/obj/item/storage/firstaid/regular, /obj/item/reagent_containers/mender/both, 	///obj/item/tank/plasma
+		/obj/item/tank/oxygen, /obj/item/old_grenade/energy_frag = 3, /obj/item/old_grenade/energy_concussion = 3, /obj/item/device/flash, /obj/barricade = 4,
+		/obj/item/shipcomponent/mainweapon/taser, /obj/item/shipcomponent/mainweapon/laser/short, /obj/item/shipcomponent/mainweapon/foamer,
+		/obj/item/material_piece/steel = 10, /obj/item/material_piece/copper = 10, /obj/item/material_piece/glass = 10 )
+	
+	pw_rewards_tier2 = list(/obj/item/tank/jetpack, /obj/item/old_grenade/smoke = 3,/obj/item/chem_grenade/flashbang = 3, /obj/item/barrier,
+		/obj/item/old_grenade/emp, /obj/item/sword/discount, /obj/item/storage/firstaid/crit, /obj/item/wrench/battle, /obj/item/dagger/syndicate/specialist,
+		/obj/item/shipcomponent/mainweapon/mining, /obj/item/shipcomponent/mainweapon/laser, /obj/item/shipcomponent/mainweapon/disruptor_light,
+		/obj/item/material_piece/cerenkite = 5, /obj/item/material_piece/claretine = 10, /obj/item/material_piece/bohrum = 10, /obj/item/material_piece/plasmastone = 10, /obj/item/material_piece/uqill = 10)
+	
+	pw_rewards_tier3 = list(/obj/item/sword, /obj/item/gun/energy/crossbow, /obj/item/cloak_gen, /obj/item/device/chameleon, 
+		/obj/item/gun/energy/vuvuzela_gun, /obj/item/gun/flamethrower/backtank,
+		/obj/item/shipcomponent/mainweapon/russian, /obj/item/shipcomponent/mainweapon/disruptor, /obj/item/shipcomponent/mainweapon/laser_ass, /obj/item/shipcomponent/mainweapon/rockdrills,
+		/obj/item/material_piece/iridiumalloy = 4, /obj/item/material_piece/erebite = 10, /obj/item/material_piece/telecrystal = 10, /obj/item/raw_material/starstone = 2, /obj/item/raw_material/miracle = 10)
 
 
 // var/list/item_tier_low = list(/obj/item/storage/firstaid/regular, /obj/item/storage/firstaid/crit, /obj/item/reagent_containers/mender/both, 	///obj/item/tank/plasma
