@@ -14,7 +14,7 @@
 	density = 1
 	anchored = 0
 	var/obj/item/cell/intcap = null //short for internal capacitor.
-	var/chargerate = 800 // internal cell charge rate, per tick
+	var/chargerate = 500 // internal cell charge rate, per tick
 	var/connected = 0 //whether this is tied into a wire
 
 	var/canInterdict = 0 // indication of operability
@@ -139,7 +139,7 @@
 
 //initalizes interdiction, including visual depiction of range
 /obj/machinery/interdictor/proc/start_interdicting()
-	for(var/turf/space/T in orange(INTERDICT_RANGE,src))
+	for(var/turf/T in orange(INTERDICT_RANGE,src))
 		if (get_dist(T,src) != INTERDICT_RANGE)
 			continue
 		var/obj/interdict_edge/YEE = new /obj/interdict_edge(T)
@@ -168,4 +168,5 @@
 	icon_state = "interdict-edge"
 	anchored = 1
 	density = 0
+	alpha = 100
 	plane = PLANE_OVERLAY_EFFECTS
