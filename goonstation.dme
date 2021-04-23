@@ -1491,6 +1491,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\machinery\hologram.dm"
 #include "code\obj\machinery\igniter.dm"
 #include "code\obj\machinery\implantchair.dm"
+#include "code\obj\machinery\interdictor.dm"
 #include "code\obj\machinery\launcherloader.dm"
 #include "code\obj\machinery\launcherloader_kondaru.dm"
 #include "code\obj\machinery\launcherloader_ozy.dm"
