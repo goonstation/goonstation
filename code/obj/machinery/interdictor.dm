@@ -145,6 +145,7 @@
 		return 0
 	else
 		intcap.use(stopcost)
+		src.hasInterdicted = 1
 		src.updatecharge()
 		return 1
 
