@@ -8,12 +8,12 @@
 	desc = "A sophisticated device that lessens or nullifies the effects of assorted stellar phenomena."
 	icon = 'icons/obj/machines/interdictor.dmi'
 	icon_state = "interdictor"
-	power_usage = 0 //draws only based on cell charge
+	power_usage = 1250 //drawn only while interdiction field is active, not while charging
 	density = 1
 	anchored = 0
 	req_access = list(access_engineering)
 	var/obj/item/cell/intcap = null //short for internal capacitor.
-	var/chargerate = 500 // internal cell charge rate, per tick
+	var/chargerate = 700 // internal cell charge rate, per tick
 	var/connected = 0 //whether this is tied into a wire
 	var/maglock_cooldown = 3 SECONDS
 
@@ -61,8 +61,8 @@
 			else
 				var/obj/cable/C = locate() in get_turf(src)
 				if(C)
-					src.connected = 1
 					src.anchored = 1
+					src.connected = 1
 					boutput(user, "You activate the interdictor's magnetic lock.")
 					playsound(src.loc, src.sound_togglebolts, 50, 0)
 					if(intcap.charge == intcap.maxcharge && !src.canInterdict)
@@ -125,6 +125,8 @@
 		if(intcap.charge == intcap.maxcharge && !src.canInterdict)
 			doupdateicon = 0
 			src.start_interdicting()
+		if(src.canInterdict)
+			use_power(src.power_usage)
 	else
 		if(src.canInterdict)
 			doupdateicon = 0
