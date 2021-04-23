@@ -1,8 +1,6 @@
 //device for engineers to construct that counteracts the effects of random events in its radius,
 //if it has been set up a sufficient time in advance
 
-//power cell is intended as a buffer more than a primary means of operation
-
 //all references to range should use INTERDICT_RANGE (defined in _std\defines\construction.dm)
 
 /obj/machinery/interdictor
@@ -16,6 +14,7 @@
 	var/obj/item/cell/intcap = null //short for internal capacitor.
 	var/chargerate = 500 // internal cell charge rate, per tick
 	var/connected = 0 //whether this is tied into a wire
+	var/maglock_cooldown = 3 SECONDS
 
 	var/canInterdict = 0 // indication of operability
 	//if 0, whether from depletion or new installation, battery charge must reach 100% to set to 1 and activate interdiction
@@ -47,24 +46,27 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if(anchored)
-			if(src.canInterdict)
-				src.stop_interdicting()
-			src.anchored = 0
-			src.connected = 0
-			boutput(user, "You deactivate the interdictor's magnetic lock.")
-			playsound(src.loc, src.sound_togglebolts, 50, 0)
-		else
-			var/obj/cable/C = locate() in get_turf(src)
-			if(C)
-				src.connected = 1
-				src.anchored = 1
-				boutput(user, "You activate the interdictor's magnetic lock.")
+		if(!ON_COOLDOWN(src, "maglocks", src.maglock_cooldown))
+			if(anchored)
+				if(src.canInterdict)
+					src.stop_interdicting()
+				src.anchored = 0
+				src.connected = 0
+				boutput(user, "You deactivate the interdictor's magnetic lock.")
 				playsound(src.loc, src.sound_togglebolts, 50, 0)
-				if(intcap.charge == intcap.maxcharge && !src.canInterdict)
-					src.start_interdicting()
 			else
-				boutput(user, "<span class='alert'>The interdictor must be installed onto an electrical cable.</span>")
+				var/obj/cable/C = locate() in get_turf(src)
+				if(C)
+					src.connected = 1
+					src.anchored = 1
+					boutput(user, "You activate the interdictor's magnetic lock.")
+					playsound(src.loc, src.sound_togglebolts, 50, 0)
+					if(intcap.charge == intcap.maxcharge && !src.canInterdict)
+						src.start_interdicting()
+				else
+					boutput(user, "<span class='alert'>The interdictor must be installed onto an electrical cable.</span>")
+		else
+			boutput(user, "<span class='alert'>The interdictor's magnetic locks have just toggled, and can't currently be toggled again.</span>")
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(ispulsingtool(W))
@@ -168,5 +170,5 @@
 	icon_state = "interdict-edge"
 	anchored = 1
 	density = 0
-	alpha = 100
+	alpha = 128
 	plane = PLANE_OVERLAY_EFFECTS
