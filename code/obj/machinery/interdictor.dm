@@ -11,6 +11,7 @@
 	power_usage = 0 //draws only based on cell charge
 	density = 1
 	anchored = 0
+	req_access = list(access_engineering)
 	var/obj/item/cell/intcap = null //short for internal capacitor.
 	var/chargerate = 500 // internal cell charge rate, per tick
 	var/connected = 0 //whether this is tied into a wire
@@ -46,6 +47,9 @@
 		..()
 
 	attack_hand(mob/user as mob)
+		if(!src.allowed(user))
+			boutput(user, "<span class='alert'>Engineering clearance is required to operate the interdictor's locks.</span>")
+			return
 		if(!ON_COOLDOWN(src, "maglocks", src.maglock_cooldown))
 			if(anchored)
 				if(src.canInterdict)
@@ -127,7 +131,8 @@
 			src.stop_interdicting()
 	if(src.hasInterdicted)
 		src.hasInterdicted = 0
-		playsound(src.loc, src.sound_interdict_run, 50, 0)
+		if(src.canInterdict)
+			playsound(src.loc, src.sound_interdict_run, 50, 0)
 
 	if(doupdateicon)
 		src.updateicon()
@@ -159,7 +164,7 @@
 		src.deployed_fields += YEE
 
 	src.canInterdict = 1
-	playsound(src.loc, src.sound_interdict_on, 50, 1)
+	playsound(src.loc, src.sound_interdict_on, 50, 0)
 	src.updateicon()
 
 
