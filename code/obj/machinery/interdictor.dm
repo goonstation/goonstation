@@ -1,10 +1,13 @@
 //device for engineers to construct that counteracts the effects of random events in its radius,
 //if it has been set up a sufficient time in advance
 
+//power cell is intended as a buffer more than a primary means of operation
+
 //todo: ensure interdictor only operates/charges/shows grid tie indicator while anchored in position
 //check for full battery in the anchor/unanchor proc (use ternary to swap between functions)
 
 //todo: add visual field that indicates the interdictor's range of protection
+//all references to range should use INTERDICT_RANGE (defined in _std\defines\construction.dm)
 
 /obj/machinery/interdictor
 	name = "spatial interdictor"

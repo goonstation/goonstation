@@ -42,11 +42,10 @@
 			var/area/A = owner.loc.loc
 			if (A.irradiated)
 				//spatial interdictor: mitigate effect of radiation
-				//consumes 100 units of charge per person per tick
+				//consumes 150 units of charge per person per life tick
 				var/interdictor_influence = 0
-				for (var/obj/machinery/interdictor/IX in orange(7, T))
-					if (IX.expend_interdict(100))
-						owner.changeStatus("radiation", (A.irradiated * 10 * mult) SECONDS)
+				for (var/obj/machinery/interdictor/IX in orange(INTERDICT_RANGE, owner))
+					if (IX.expend_interdict(150))
 						interdictor_influence = 1
 						break
 				if(!interdictor_influence)
