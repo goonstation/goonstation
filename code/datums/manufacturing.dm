@@ -2578,8 +2578,8 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 /datum/manufacture/interdictor_rod
 	name = "Interdictor Phase-Control Rod"
-	item_paths = list("MET-2","CON-2","INS-1","POW-1","CRY-1")
-	item_amounts = list(20,30,10,10,10)
+	item_paths = list("MET-2","CON-2","INS-1","POW-1")
+	item_amounts = list(10,25,10,5)
 	item_outputs = list(/obj/item/interdictor_rod)
 	time = 20 SECONDS
 	create = 1

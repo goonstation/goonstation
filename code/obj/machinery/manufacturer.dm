@@ -1952,7 +1952,7 @@
 /obj/item/paper/manufacturer_blueprint/interdictor_rod
 	name = "Interdictor Rod Blueprint"
 	icon = 'icons/obj/writing.dmi'
-	icon_state = "blueprint"
+	icon_state = "artifact_form"
 	blueprint = /datum/manufacture/interdictor_rod
 
 // Fabricator Defines

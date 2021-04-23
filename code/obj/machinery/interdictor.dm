@@ -239,12 +239,12 @@
 				if (istype(I, /obj/item/interdictor_board))
 					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 2 SECONDS), user)
 				else
-					boutput(user, "<span style=\"color:red\">The control box is missing a mainboard.</span>")
+					..()
 			if(2)
 				if (istype(I, /obj/item/interdictor_rod))
 					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 2 SECONDS), user)
 				else
-					boutput(user, "<span style=\"color:red\">The pillar section seems to require some sort of tall rod.</span>")
+					..()
 			if(3)
 				if (istype(I, /obj/item/cell))
 					src.state = 4
@@ -259,7 +259,7 @@
 					src.desc = "A semi-complete frame for a spatial interdictor. Its components haven't been wired together."
 					return
 				else
-					boutput(user, "<span style=\"color:red\">A small compartment with electrical contacts is sitting empty.</span>")
+					..()
 			if(4)
 				if (istype(I, /obj/item/cable_coil))
 					if (I.amount < 4)
@@ -267,20 +267,20 @@
 					else
 						actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 4 SECONDS), user)
 				else
-					boutput(user, "<span style=\"color:red\">All the components seem to be installed, but there's no wiring.</span>")
+					..()
 			if(5)
 				if (istype(I, /obj/item/electronics/soldering))
 					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 2 SECONDS), user)
 				else
-					boutput(user, "<span style=\"color:red\">The wiring hasn't been soldered into place.</span>")
+					..()
 			if(6)
 				if (istype(I, /obj/item/sheet/steel))
 					if (I.amount < 4)
 						boutput(user, "<span style=\"color:red\">You don't have enough metal to install the outer covers (4 required).</span>")
 					else
-						actions.start(new /datum/action/bar/icon/warp_beacon_assembly(src, I, 2 SECONDS), user)
+						actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 2 SECONDS), user)
 				else
-					boutput(user, "<span style=\"color:red\">The interdictor's systems appear complete and ready to accept a metal casing.</span>")
+					..()
 
 
 //this is to be used with the following transitions:
@@ -404,6 +404,7 @@
 				the_tool.inventory_counter.update_number(the_tool.amount)
 
 			var/turf/T = get_turf(itdr)
-			new /obj/machinery/interdictor(T,itdr.intcap)
+			var/llama = new /obj/machinery/interdictor(T,itdr.intcap)
+			itdr.intcap.set_loc(llama) //this may not be necessary but I feel like it'll stop something from randomly breaking due to timing
 			qdel(itdr)
 			return
