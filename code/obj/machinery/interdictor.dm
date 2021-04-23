@@ -249,7 +249,7 @@
 				if (istype(I, /obj/item/cell))
 					src.state = 4
 					src.icon_state = "interframe-4"
-					boutput(user, "<span class='notice'>You install.</span>")
+					boutput(user, "<span class='notice'>You install \the [I] into the interdictor's cell compartment.</span>")
 					playsound(get_turf(src), "sound/items/Deconstruct.ogg", 40, 1)
 
 					user.u_equip(I)
@@ -265,7 +265,7 @@
 					if (I.amount < 4)
 						boutput(user, "<span style=\"color:red\">You don't have enough cable to connect the components (4 required).</span>")
 					else
-						actions.start(new /datum/action/bar/icon/warp_beacon_assembly(src, I, 4 SECONDS), user)
+						actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 4 SECONDS), user)
 				else
 					boutput(user, "<span style=\"color:red\">All the components seem to be installed, but there's no wiring.</span>")
 			if(5)
@@ -347,7 +347,7 @@
 		if (itdr.state == 1) //no components > mainboard
 			itdr.state = 2
 			itdr.icon_state = "interframe-2"
-			boutput(owner, "<span class='notice'>You successfully install the interdictor mainboard.</span>")
+			boutput(owner, "<span class='notice'>You install the interdictor mainboard.</span>")
 			playsound(get_turf(itdr), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 
 			var/mob/source = owner
@@ -359,14 +359,14 @@
 		if (itdr.state == 2) //mainboard > mainboard and rod
 			itdr.state = 3
 			itdr.icon_state = "interframe-3"
-			boutput(owner, "<span class='notice'>You finish wiring together the itdr's electronics.</span>")
+			boutput(owner, "<span class='notice'>You install the phase-control rod.</span>")
 			playsound(get_turf(itdr), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 
 			var/mob/source = owner
 			source.u_equip(the_tool)
 			qdel(the_tool)
 
-			itdr.desc = "A semi-complete frame for a spatial interdictor. Its battery compartment is empty."
+			itdr.desc = "A semi-complete frame for a spatial interdictor. Its power cell compartment is empty."
 			return
 		if (itdr.state == 4) //all components > all components and wired
 			itdr.state = 5
