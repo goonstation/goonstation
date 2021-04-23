@@ -10,11 +10,11 @@
 	desc = "A sophisticated device that lessens or nullifies the effects of assorted stellar phenomena."
 	icon = 'icons/obj/machines/interdictor.dmi'
 	icon_state = "interdictor"
-	power_usage = 120
+	power_usage = 0 //draws only based on cell charge
 	density = 1
 	anchored = 0
 	var/obj/item/cell/intcap = null //short for internal capacitor.
-	var/chargerate = 400 // internal cell charge rate, per tick
+	var/chargerate = 800 // internal cell charge rate, per tick
 	var/connected = 0 //whether this is tied into a wire
 
 	var/canInterdict = 0 // indication of operability
@@ -168,4 +168,4 @@
 	icon_state = "interdict-edge"
 	anchored = 1
 	density = 0
-	plane = PLANE_LIGHTING
+	plane = PLANE_OVERLAY_EFFECTS

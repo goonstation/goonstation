@@ -37,12 +37,17 @@
 
 	New(var/loc,var/duration)
 		..()
+
+		//testing ofc
+		duration = duration + 1000
+
 		//spatial interdictor: mitigate spatial tears
 		//consumes 800 units of charge per tear segment weakened
 		//weakened tears can be traversed, but inflict minor brute damage
-		for (var/obj/machinery/interdictor/IX in orange(INTERDICT_RANGE, owner))
+		for (var/obj/machinery/interdictor/IX in orange(INTERDICT_RANGE, src))
 			if (IX.expend_interdict(800))
 				src.alpha = 150
+				src.opacity = 0
 				src.stabilized = 1
 				src.name = "Stabilized Spatial Tear"
 				desc = "A breach in the spatial fabric, partially stabilized by an interdictor. Difficult to pass."
@@ -108,10 +113,8 @@
 		sendOwner()
 
 	proc/do_bunp()
-		var/bunp //the name of the thing we have bunp'd into when trying to push through
-		var/list/bunp_whitelist = list(/obj/decal/stage_edge) // things that we cannot bunp into
+		var/list/bunp_whitelist = list(/obj/forcefield/event,/obj/decal/stage_edge) // things that we cannot bunp into
 		if (jump_target.density)
-			bunp = jump_target.name
 			no_no_zone = 1
 		else
 			for (var/obj/o in jump_target.contents)
@@ -127,7 +130,6 @@
 
 					// otherwise, if it's a dense thing...
 					else if (o.density)
-						bunp = o.name
 						no_no_zone = 1
 						break
 
@@ -136,10 +138,10 @@
 			if (istype(ownerMob, /mob/living))
 				if (!ownerMob.hasStatus("weakened"))
 					ownerMob.changeStatus("weakened", 4 SECONDS)
-				ownerMob.TakeDamage("All", rand(8,12), 0, 0, DAMAGE_BLUNT)
+				ownerMob.TakeDamage("All", rand(24,30), 0, 0, DAMAGE_BLUNT)
 				playsound(spatialtear, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1, -1)
 				for(var/mob/O in AIviewers(ownerMob))
-					O.show_text("[ownerMob] shreds [himself_or_herself(ownerMob)] trying to phase into a solid object![prob(30) ? pick(" That's gotta hurt.", " <b>Holy shit!</b>", " Maybe that wasn't the wisest idea...", " Don't do that!") : null]", "red")
+					O.show_text("<b>[ownerMob] shreds [himself_or_herself(ownerMob)] trying to phase into a solid object!</b>[prob(30) ? pick(" That's gotta hurt.", " <b>Holy shit!</b>", " Maybe that wasn't the wisest idea...", " Don't do that!") : null]", "red")
 			return TRUE
 		return FALSE
 
