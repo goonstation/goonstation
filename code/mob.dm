@@ -570,7 +570,14 @@
 					src_effect.update_charge(-1)
 					tmob_effect.deactivate(10)
 					tmob_effect.update_charge(-1)
-					// like repels - bimp them away from each other
+					//spatial interdictor: mitigate biomagnetic discharges
+					//consumes 100 units of charge to interdict a repulsion, permitting safe discharge of the fields
+					for (var/obj/machinery/interdictor/IX in orange(INTERDICT_RANGE, src))
+						if (IX.expend_interdict(100))
+							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
+							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
+							return
+					// like repels - bump them away from each other
 					src.now_pushing = 0
 					var/atom/source = get_turf(tmob)
 					src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s identical magnetic fields repel each other!</span>")
@@ -605,6 +612,13 @@
 					src_effect.update_charge(-src_effect.charge)
 					tmob_effect.deactivate(10)
 					tmob_effect.update_charge(-tmob_effect.charge)
+					//spatial interdictor: mitigate biomagnetic discharges
+					//consumes 200 units of charge to interdict an attraction, permitting safe discharge of the fields
+					for (var/obj/machinery/interdictor/IX in orange(INTERDICT_RANGE, src))
+						if (IX.expend_interdict(200))
+							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
+							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
+							return
 					// opposite attracts - fling everything nearby at these dumbasses
 					src.now_pushing = 1
 					tmob.now_pushing = 1
