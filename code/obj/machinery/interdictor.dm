@@ -3,9 +3,6 @@
 
 //power cell is intended as a buffer more than a primary means of operation
 
-//todo: ensure interdictor only operates/charges/shows grid tie indicator while anchored in position
-//check for full battery in the anchor/unanchor proc (use ternary to swap between functions?)
-
 //all references to range should use INTERDICT_RANGE (defined in _std\defines\construction.dm)
 
 /obj/machinery/interdictor
@@ -57,7 +54,7 @@
 			src.connected = 0
 			boutput(user, "You deactivate the interdictor's magnetic lock.")
 			playsound(src.loc, src.sound_togglebolts, 50, 0)
-		if(!anchored)
+		else
 			var/obj/cable/C = locate() in get_turf(src)
 			if(C)
 				src.connected = 1
@@ -67,7 +64,13 @@
 				if(intcap.charge == intcap.maxcharge && !src.canInterdict)
 					src.start_interdicting()
 			else
-				boutput(user, "The interdictor must be installed onto an electrical cable.")
+				boutput(user, "<span class='alert'>The interdictor must be installed onto an electrical cable.</span>")
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(ispulsingtool(W))
+			boutput(user, "<span class='notice'>The interdictor's internal capacitor is currently at [src.intcap.charge] of [src.intcap.maxcharge] units.</span>")
+		else
+			..()
 
 
 /obj/machinery/interdictor/proc/updateicon()
@@ -101,6 +104,8 @@
 		if(intcap.charge < intcap.maxcharge && powered())
 			var/added = intcap.give(src.chargerate * mult)
 			//boutput(world, "yep [added / CELLRATE]")
+			if(!src.canInterdict)
+				playsound(src.loc, src.sound_interdict_run, 5, 0, 0, 0.8)
 			use_power(added / CELLRATE)
 		if(intcap.charge == intcap.maxcharge && !src.canInterdict)
 			doupdateicon = 0
