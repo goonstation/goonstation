@@ -1,4 +1,66 @@
 
+(t)fri apr 23 21
+(u)Chickenish
+(p)3984
+(e)⚖🐛|balance, bug
+(*)Mutations are now lag adjusted.
+(t)thu apr 22 21
+(u)BatElite & ZeWaka
+(p)4086
+(e)🎨|sprites
+(*)Material sheets, rods and tiles look a lot better now. They also show roughly the amount that's on a stack.
+(u)Mordent
+(p)4405
+(e)📄|tgui
+(+)Pressing arrow keys when you have a tgui window focused will no longer attempt to move your character.
+(t)wed apr 21 21
+(u)Flaborized
+(p)4410
+(e)🎨|sprites
+(+)Updated the cow sprite a bit more.
+(u)Flappybat
+(p)4120
+(e)⚖|balance
+(*)Removed some spy delivery locations: Asylum, AI core, singularity core and combustion chamber.
+(u)Luxizzle
+(p)4331
+(e)📄|tgui
+(*)Converted weapon vendor to tgui.
+(u)Tarmunora
+(e)⚖|balance
+(+)Limit acid splash damage against blobs to 10u worth (per acid)
+(+)Un-nerf fire damage against blobs somewhat
+(u)Tarmunora
+(e)⛔⚖|removal, balance
+(*)Removed recipe for aerosol propellant.
+(+)Changed recipe of one secret chem (think of what chem might *propel* something unanchored)
+(u)DimWhat
+(p)4348
+(e)🗺|mapping
+(+)Added medical clothing lockers to Atlas, Cog 1, Cog 2, Clarion, Destiny, Horizon, and Oshan.
+(+)Added medical winter coats to medical clothing lockers and increased their amount of clothing.
+(t)tue apr 20 21
+(u)Flaborized
+(p)4400
+(e)🆕🔄🎨|feature, rework, sprites
+(*)The Human Resprite has finally been completed, humans have been resprited! Huge thanks to everyone who helped make this impossibly large project a reality, see a full list in minor changelog.
+(+)For Human Resprite: Huge thanks to Erinexx, Gannets, Supernorn, Jan-antilles, Flourish, Batelite, Skeletonman0, Matheus, Schwick, Virvatuli, Retrino and Walpvrgis for contributing sprites, and to Mordent, Zewaka and Pali6 for coding help and other technical stuff.
+(u)Luxizzle
+(p)4326
+(e)📄|tgui
+(*)Converted brig timers to tgui.
+(u)Gannets
+(p)4375
+(e)🆕🗺|feature, mapping
+(*)Added a syndicate weapons vendor to the VR Sim/Murderbox. You can now practice with nuke ops gear without the pressure of letting your team down!
+(u)Azrun
+(p)4229
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Chief Engineer now has a pet!
+(u)Luxizzle
+(p)4261
+(e)🆕🔄📄|feature, rework, tgui
+(*)The Character Setup screen has been tgui-fied!
 (t)mon apr 19 21
 (u)Kubius
 (p)4362

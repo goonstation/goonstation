@@ -2193,7 +2193,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Clothing"
 
 /datum/manufacture/scrubs_blue
-	name = "Blue Scrubs"
+	name = "Navy Scrubs"
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/scrub/blue)
@@ -2202,7 +2202,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Clothing"
 
 /datum/manufacture/scrubs_purple
-	name = "Purple Scrubs"
+	name = "Violet Scrubs"
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/scrub/purple)
@@ -2220,7 +2220,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Clothing"
 
 /datum/manufacture/scrubs_pink
-	name = "Pink Scrubs"
+	name = "Hot Pink Scrubs"
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/scrub/pink)
@@ -2289,6 +2289,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	item_outputs = list(/obj/item/clothing/shoes/hermes)
 	time = 120 //suspense
 	create = 3 //because a shoe god has to have acolytes
+	category = "Clothing"
+
+/datum/manufacture/monke
+	name = "Ook's Bag of Wisdom"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/head/monke)
+	time = 5 SECONDS
+	create = 1
 	category = "Clothing"
 
 /////// pod construction components

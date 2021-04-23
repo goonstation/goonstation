@@ -6,7 +6,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "mainboard"
 	item_state = "electronic"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/created_name = null //If defined, result computer will have this name.
 	var/integrated_floppy = 1 //Does the resulting computer have a built-in disk drive?
 	mats = 8
@@ -178,7 +178,7 @@
 				if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
 					if (S.amount >= src.glass_needed)
 						playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-						if(do_after(user, 2 SECONDS) && S?.consume_sheets(src.glass_needed))
+						if(do_after(user, 2 SECONDS) && S?.change_stack_amount(-src.glass_needed))
 							boutput(user, "<span class='notice'>You put in the glass panel.</span>")
 							src.state = 4
 							src.icon_state = "4"

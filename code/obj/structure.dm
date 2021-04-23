@@ -236,7 +236,7 @@ obj/structure/ex_act(severity)
 					var/datum/material/M = getMaterial("steel")
 					WALL.setMaterial(M)
 				WALL.inherit_area()
-				S?.consume_sheets(2)
+				S?.change_stack_amount(-2)
 
 				qdel(the_girder)
 		owner.visible_message("<span class='notice'>[owner] [verbens] [the_girder].</span>")
@@ -291,7 +291,7 @@ obj/structure/ex_act(severity)
 
 		FW.setFloorUnderlay(FloorIcon, FloorState, FloorIntact, 0, FloorBurnt, FloorName)
 		FW.known_by += user
-		S.consume_sheets(1)
+		S.change_stack_amount(-1)
 		boutput(user, "You finish building the false wall.")
 		logTheThing("station", user, null, "builds a False Wall in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
 		qdel(src)

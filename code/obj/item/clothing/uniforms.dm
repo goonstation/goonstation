@@ -1114,11 +1114,11 @@
 		item_state = "darkred"
 
 	blue
-		icon_state = "scrub-b"
+		icon_state = "scrub-n"
 		item_state = "darkblue"
 
 	purple
-		icon_state = "scrub-p"
+		icon_state = "scrub-v"
 		item_state = "lightpurple"
 
 		New()
@@ -1161,7 +1161,7 @@
 	item_state = "towel"
 	layer = MOB_LAYER
 	throwforce = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throw_speed = 2
 	throw_range = 10
 	body_parts_covered = TORSO
@@ -1687,3 +1687,9 @@
     item_state = "racing_jump_prp"
     icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
     wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+
+/obj/item/clothing/head/monke
+	name = "Ook's Bag of Wisdom"
+	desc = "There doesn't appear to be anything inside, how strange..."
+	icon_state = "ook"
+	item_state = "ook"

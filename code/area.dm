@@ -992,6 +992,9 @@ ABSTRACT_TYPE(/area/adventure)
 /area/martian_trader
 	name ="Martian Trade Outpost"
 	sound_environment = 8
+#ifdef MAP_OVERRIDE_OSHAN
+	requires_power = FALSE
+#endif
 
 /area/abandonedmedicalship
 	name = "Abandoned Medical ship"
@@ -1005,20 +1008,33 @@ ABSTRACT_TYPE(/area/adventure)
 	name ="Robot Trade Outpost"
 	icon_state ="green"
 	sound_environment = 3
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
+
 /area/bee_trader
 	name ="Bombini's Ship"
 	icon_state ="green"
 	sound_environment = 2
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
 
 /area/flock_trader
 	name = "Flocktrader Ship"
 	icon_state = "green"
 	sound_environment = 2
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
 
 /area/skeleton_trader
 	name = "Skeleton Trade Outpost"
 	icon_state = "green"
 	sound_environment = 2
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
 
 /area/fermid_hive
 	name = "Fermid Hive"
@@ -1031,6 +1047,14 @@ ABSTRACT_TYPE(/area/adventure)
 #ifdef SUBMARINE_MAP
 	force_fullbright = 1
 #endif
+#ifdef MAP_OVERRIDE_OSHAN
+	requires_power = FALSE
+#endif
+
+/area/spacehabitat/pool
+	name = "Pool Room"
+	icon_state = "yellow"
+	requires_power = FALSE
 
 /area/abandonedship
 	name = "Abandoned ship"
@@ -1061,6 +1085,9 @@ ABSTRACT_TYPE(/area/adventure)
 ABSTRACT_TYPE(/area/diner)
 /area/diner
 	sound_environment = 12
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
 
 /area/diner/hangar
 	name = "Space Diner Parking"
@@ -1855,6 +1882,11 @@ ABSTRACT_TYPE(/area/station/mining)
 	sound_loop = 'sound/ambience/station/underwater/sub_bridge_ambi1.ogg'
 #endif
 
+/area/station/bridge/united_command //currently only on atlas - ET
+    name = "United Command"
+    icon_state ="bridge"
+    sound_environment = 4
+
 /area/station/seaturtlebridge
 	name = "Sea Turtle Bridge"
 	icon_state = "bridge"
@@ -2052,6 +2084,9 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	name = "Clown Hole"
 	icon_state = "storage"
 	do_not_irradiate = 1
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
 
 /area/station/crew_quarters/catering
 	name = "Catering Storage"

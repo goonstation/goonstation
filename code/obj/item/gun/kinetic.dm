@@ -243,7 +243,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "A spent casing from a bullet of some sort."
 	icon = 'icons/obj/items/casings.dmi'
 	icon_state = "medium"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/forensic_ID = null
 
 	small
@@ -318,14 +318,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	cannon
 		icon_state = "rifle"
 		desc = "A cannon shell."
-		w_class = 2
+		w_class = W_CLASS_SMALL
 		New()
 			..()
 			SPAWN_DBG(rand(2, 4))
 				playsound(src.loc, "sound/weapons/casings/casing-large-0[rand(1,4)].ogg", 35, 0.1, 0, 0.8)
 
 	grenade
-		w_class = 2
+		w_class = W_CLASS_SMALL
 		icon_state = "40mm"
 		desc = "A 40mm grenade round casing. Huh."
 		New()
@@ -361,7 +361,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	slowdown_time = 15
 
 	two_handed = 1
-	w_class = 4
+	w_class = W_CLASS_BULKY
 
 	New()
 		ammo = new/obj/item/ammo/bullets/minigun
@@ -396,7 +396,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = MELEE_DMG_PISTOL
 	caliber = 0.41
 	max_ammo_capacity = 2
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	muzzle_flash = null
 
 	afterattack(obj/O as obj, mob/user as mob)
@@ -428,7 +428,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	caliber = 0.22
 	max_ammo_capacity = 4
 	auto_eject = 1
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	muzzle_flash = null
 	has_empty_state = 1
 
@@ -443,7 +443,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "A snubnosed police-issue revolver developed by Cormorant Precision Arms. Uses .38-Special rounds."
 	icon_state = "detective"
 	item_state = "detective"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_REVOLVER
 	caliber = 0.38
 	max_ammo_capacity = 7
@@ -459,7 +459,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "A nearly adequate replica of a nearly ancient single action revolver. Used by war reenactors for the last hundred years or so."
 	icon_state = "colt_saa"
 	item_state = "colt_saa"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = MELEE_DMG_REVOLVER
 	caliber = 0.45
 	spread_angle = 1
@@ -469,7 +469,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	detective
 		name = "Peacemaker"
 		desc = "A barely adequate replica of a nearly ancient single action revolver. Used by war reenactors for the last hundred years or so. Its calibur is obviously the wrong size though."
-		w_class = 2.0
+		w_class = W_CLASS_SMALL
 		force = MELEE_DMG_REVOLVER
 		caliber = 0.38
 		New()
@@ -510,7 +510,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "glock"
 	item_state = "glock"
 	shoot_delay = 2
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
 	caliber = 0.355
 	max_ammo_capacity = 18
@@ -815,7 +815,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Orion silenced pistol"
 	desc = "A small pistol with an integrated flash and noise suppressor, developed by Specter Tactical Laboratory. Uses .22 rounds."
 	icon_state = "silenced"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	silenced = 1
 	force = MELEE_DMG_PISTOL
 	contraband = 4
@@ -911,7 +911,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "rpg7"
 	wear_image_icon = 'icons/mob/back.dmi'
 	flags = ONBACK
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 4
 	force = MELEE_DMG_LARGE
@@ -980,7 +980,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "submachine gun"
 	desc = "An automatic submachine gun"
 	icon_state = "walthery1"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_SMG
 	contraband = 4
 	caliber = 0.355
@@ -1002,7 +1002,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Branwen pistol"
 	desc = "A semi-automatic, 9mm caliber service pistol, developed by Mabinogi Firearms Company."
 	icon_state = "9mm_pistol"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	force = MELEE_DMG_PISTOL
 	contraband = 4
 	caliber = 0.355
@@ -1027,7 +1027,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "A semi-automatic, 9mm submachine gun, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/48x32.dmi'
 	icon_state = "mp52"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_SMG
 	contraband = 4
 	caliber = 0.355
@@ -1053,7 +1053,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "A silenced 9mm tranquilizer pistol, developed by Mabinogi Firearms Company."
 	icon_state = "tranq_pistol"
 	item_state = "tranq_pistol"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
 	contraband = 4
 	caliber = 0.355
@@ -1162,7 +1162,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	can_dual_wield = 0
 
 	two_handed = 1
-	w_class = 4
+	w_class = W_CLASS_BULKY
 
 	New()
 		ammo = new/obj/item/ammo/bullets/lmg
@@ -1198,7 +1198,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	slowdown_time = 15
 
 	two_handed = 1
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	muzzle_flash = "muzzle_flash_launch"
 
 
@@ -1266,7 +1266,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	can_dual_wield = 0
 	two_handed = 1
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 
 	New()
@@ -1277,7 +1277,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	attack_self(mob/user as mob)
 		if (src.icon_state == "slamgun-ready")
-			w_class = 3
+			w_class = W_CLASS_NORMAL
 			if (src.ammo.amount_left > 0 || src.casings_to_eject > 0)
 				src.icon_state = "slamgun-open-loaded"
 			else
@@ -1287,7 +1287,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			user.updateTwoHanded(src, 0)
 			user.update_inhands()
 		else
-			w_class = 4
+			w_class = W_CLASS_BULKY
 			src.icon_state = "slamgun-ready"
 			update_icon()
 			two_handed = 1
@@ -1395,7 +1395,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	can_dual_wield = 0
 	two_handed = 1
-	w_class = 4
+	w_class = W_CLASS_BULKY
 
 	var/datum/movement_controller/snipermove = null
 
@@ -1493,7 +1493,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	slowdown_time = 10
 
 	two_handed = 1
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	muzzle_flash = "muzzle_flash_launch"
 
 
@@ -1544,7 +1544,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/64x32.dmi'
 	icon_state = "ntlauncher"
 	item_state = "ntlauncher"
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 4
 	force = MELEE_DMG_LARGE
@@ -1570,7 +1570,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "A gun that shoots... something. It looks like a modified grenade launcher."
 	icon_state = "gungun"
 	item_state = "gungun"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	caliber = 3//fuck if i know lol, derringers are about 3 inches in size so ill just set this to 3
 	max_ammo_capacity = 6 //6 guns
 	force = MELEE_DMG_SMG
@@ -1597,7 +1597,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	slowdown = 0
 	slowdown_time = 0
 	two_handed = 1
-	w_class = 4
+	w_class = W_CLASS_BULKY
 
 	New()
 		ammo = new/obj/item/ammo/bullets/meowitzer

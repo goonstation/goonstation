@@ -2840,5 +2840,8 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 		if(T && loaded)
 			var/dmm_suite/D = new/dmm_suite()
 			D.read_map(loaded,T.x,T.y,T.z,shuttle.prefab_path, DMM_OVERWRITE_OBJS)
+			logTheThing("admin", src, null, "replaced the shuttle with [shuttle].")
+			logTheThing("diary", src, null, "replaced the shuttle with [shuttle].", "admin")
+			message_admins("[key_name(src)] replaced the shuttle with [shuttle].")
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")

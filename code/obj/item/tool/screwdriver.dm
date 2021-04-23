@@ -7,7 +7,7 @@
 
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_SCREWING
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	force = 5.0
 	throwforce = 5.0
