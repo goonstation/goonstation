@@ -269,7 +269,7 @@
 				else
 					boutput(user, "<span style=\"color:red\">All the components seem to be installed, but there's no wiring.</span>")
 			if(5)
-				if (istype(I, /obj/item/soldering_iron))
+				if (istype(I, /obj/item/electronics/soldering))
 					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 2 SECONDS), user)
 				else
 					boutput(user, "<span style=\"color:red\">The wiring hasn't been soldered into place.</span>")
@@ -404,6 +404,6 @@
 				the_tool.inventory_counter.update_number(the_tool.amount)
 
 			var/turf/T = get_turf(itdr)
-			var/obj/llama = new /obj/machinery/interdictor(T,itdr.intcap)
+			new /obj/machinery/interdictor(T,itdr.intcap)
 			qdel(itdr)
 			return
