@@ -37,10 +37,6 @@
 
 	New(var/loc,var/duration)
 		..()
-
-		//testing ofc
-		duration = duration + 1000
-
 		//spatial interdictor: mitigate spatial tears
 		//consumes 800 units of charge per tear segment weakened
 		//weakened tears can be traversed, but inflict minor brute damage

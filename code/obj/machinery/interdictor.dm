@@ -8,7 +8,7 @@
 	desc = "A sophisticated device that lessens or nullifies the effects of assorted stellar phenomena."
 	icon = 'icons/obj/machines/interdictor.dmi'
 	icon_state = "interdictor"
-	power_usage = 1250 //drawn only while interdiction field is active, not while charging
+	power_usage = 1250 //drawn only while interdiction field is active; charging is a separate usage value
 	density = 1
 	anchored = 0
 	req_access = list(access_engineering)
