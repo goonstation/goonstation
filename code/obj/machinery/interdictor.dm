@@ -1,4 +1,4 @@
-//device for engineers to construct that counteracts the effects of random events in its radius,
+//device for engineers to construct that counteracts the effects of random events in its zone,
 //if it has been set up a sufficient time in advance
 
 //all references to range should use INTERDICT_RANGE (defined in _std\defines\construction.dm)
@@ -8,7 +8,7 @@
 	desc = "A sophisticated device that lessens or nullifies the effects of assorted stellar phenomena."
 	icon = 'icons/obj/machines/interdictor.dmi'
 	icon_state = "interdictor"
-	power_usage = 1250 //drawn only while interdiction field is active; charging is a separate usage value
+	power_usage = 1250 //drawn while interdiction field is active; charging is a separate usage value that can be concurrent
 	density = 1
 	anchored = 0
 	req_access = list(access_engineering)
@@ -244,7 +244,9 @@
 	<br>
 	Stellar radiation events, both minor and major
 	<br>
-	Some electromagnetic anomalies (see Advanced Edition for full enumeration)
+	Localized electromagnetic anomalies
+	<br>
+	<i>(see Advanced Edition for full enumeration)</i>
 	<br>
 	<br>
 	In just a few short steps, worrying about the myriad hazards of space will be a thing of the past!*

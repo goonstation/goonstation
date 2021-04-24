@@ -6,9 +6,21 @@
 		..()
 		var/signal_loss_current = rand(66,100)
 		var/headline_estimate = min(signal_loss_current + rand(-10,10),100)
+		var/flare_start_time = rand(50,100)
+		//spatial interdictor: mitigate signal loss
+		//consumes 4,000 units of charge to activate interdiction
+		for(var/obj/machinery/interdictor/IX in world)
+			if(IX.z == 1 && IX.expend_interdict(800))
+				signal_loss_current = max(0,signal_loss_current - rand(8,12))
+				SPAWN_DBG(flare_start_time)
+					if(IX && IX.canInterdict) //just in case
+						playsound(get_turf(IX),'sound/machines/firealarm.ogg',50,0,5,0.6)
+						var/adjusted_est = max(signal_loss_current + rand(-5,5),0)
+						IX.visible_message("<span class='alert'>[IX] detects a radio-frequency disturbance. Estimated strength post-interdiction: [adjusted_est]%.</span>")
+
 		if (random_events.announce_events)
 			command_alert("A solar flare has been detected near the [station_or_ship()]. We estimate a signal interference rate of [headline_estimate]% lasting anywhere between three to five minutes.", "Solar Flare")
-		SPAWN_DBG(rand(50,100))
+		SPAWN_DBG(flare_start_time)
 			signal_loss += signal_loss_current
 
 	#ifndef UNDERWATER_MAP
