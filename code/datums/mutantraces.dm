@@ -1416,7 +1416,7 @@
 	mutant_folder = 'icons/mob/monkey.dmi'
 	icon_state = "monkey"
 	head_offset = -6
-	eye_offset = -8 // jeepers creepers their peepers are a pixel higher than human peepers
+	eye_offset = -6
 	hand_offset = -2
 	body_offset = -7
 	leg_offset = -4
