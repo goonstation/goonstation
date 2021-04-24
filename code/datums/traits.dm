@@ -271,12 +271,12 @@
 	isPositive = 1
 
 /obj/trait/deaf
-	name = "Deaf (+1) \[Body\]"
+	name = "Deaf (0) \[Body\]"
 	cleanName = "Deaf"
 	desc = "Spawn with permanent deafness and an auditory headset."
 	id = "deaf"
 	category = "body"
-	points = 1
+	points = 0
 	isPositive = 0
 
 	onAdd(var/mob/owner)
