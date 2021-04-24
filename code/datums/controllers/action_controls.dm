@@ -1319,7 +1319,7 @@ var/datum/action_controller/actions
 	onUpdate()
 		..()
 		if (M?.hasStatus("resting") && !M.stat && M.getStatusDuration("burning"))
-			M.update_burning(-1.2)
+			M.update_burning(-1.5)
 
 			M.set_dir(turn(M.dir,up ? -90 : 90))
 			pixely += up ? 1 : -1
