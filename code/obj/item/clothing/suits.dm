@@ -240,7 +240,7 @@
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
-		setProperty("rangedprot", 1.5)
+		setProperty("rangedprot", 1)
 
 /obj/item/clothing/suit/bio_suit/armored/nt
 	name = "\improper NT bio suit"
@@ -250,7 +250,7 @@
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
-		setProperty("rangedprot", 1.5)
+		setProperty("rangedprot", 1)
 
 /obj/item/clothing/suit/bio_suit/paramedic/armored
 	name = "armored paramedic suit"
@@ -260,7 +260,7 @@
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
-		setProperty("rangedprot", 1.9)
+		setProperty("rangedprot", 1)
 
 
 	para_troop
@@ -852,7 +852,7 @@
 	setupProperties()
 		..()
 		setProperty("meleeprot", 6)
-		setProperty("rangedprot", 1.5)
+		setProperty("rangedprot", 1)
 
 /obj/item/clothing/suit/fire/attackby(obj/item/W, mob/user)
 	var/turf/T = user.loc
