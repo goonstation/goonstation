@@ -79,6 +79,30 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(ispulsingtool(W))
 			boutput(user, "<span class='notice'>The interdictor's internal capacitor is currently at [src.intcap.charge] of [src.intcap.maxcharge] units.</span>")
+			return
+		else if(istype(W, /obj/item/card/id)
+			if(!src.allowed(W))
+				boutput(user, "<span class='alert'>Engineering clearance is required to operate the interdictor's locks.</span>")
+				return
+			else if(!ON_COOLDOWN(src, "maglocks", src.maglock_cooldown))
+				if(anchored)
+					if(src.canInterdict)
+						src.stop_interdicting()
+					src.anchored = 0
+					src.connected = 0
+					boutput(user, "You deactivate the interdictor's magnetic lock.")
+					playsound(src.loc, src.sound_togglebolts, 50, 0)
+				else
+					var/obj/cable/C = locate() in get_turf(src)
+					if(C)
+						src.anchored = 1
+						src.connected = 1
+						boutput(user, "You activate the interdictor's magnetic lock.")
+						playsound(src.loc, src.sound_togglebolts, 50, 0)
+						if(intcap.charge == intcap.maxcharge && !src.canInterdict)
+							src.start_interdicting()
+					else
+						boutput(user, "<span class='alert'>The interdictor must be installed onto an electrical cable.</span>")
 		else
 			..()
 
@@ -198,6 +222,92 @@
 
 //assembly zone
 
+//interdictor guide: how to make it and use it
+//engineering should start with one of these
+//adjacent to the rod/frame blueprint and the mainboards
+
+/obj/item/paper/book/interdictor
+	name = "Spatial Interdictor Assembly and Use, 3rd Edition"
+	icon_state = "engiguide"
+	info = {"<h1>SPATIAL INTERDICTOR ASSEMBLY AND USE</h1>
+	<p><i>3rd Edition - Compiled for Nanotrasen by Servin Underwriting, LTD - (C) 2049 All Rights Reserved</i></p>
+	<h2>PLEASE READ CAREFULLY</h2>
+	<br>
+	Congratulations on your recent acquisition or allocation of cutting-edge interdiction technology!
+	<br>
+	<br>
+	Using the power of yottahertz-range electromagnetic counter-interference, the Spatial Interdictor provides robust protection against a vast array of stellar phenomena, including:
+	<br>
+	<br>
+	Planar space-time continuum disruptions
+	<br>
+	Stellar radiation events, both minor and major
+	<br>
+	Some electromagnetic anomalies (see Advanced Edition for full enumeration)
+	<br>
+	<br>
+	In just a few short steps, worrying about this
+	<br>
+	<br>
+	<i>Please be aware that no liability is assumed for failure to interdict any events absent from or present within the aforementioned list.</i>
+	<br>
+	<br>
+	<hr>
+	<h3>ASSEMBLING THE DEVICE</h3>
+	<br>
+	(I) Assemble the frame and phase-control rod at any manufacturer using the blueprints included with your Spatial Interdictor Starter Kit. Materials not provided.
+	<br>
+	<br>
+	(II) Gather the following equipment before assembly:
+	<br>
+	- Interdictor frame
+	<br>
+	- Interdictor mainboard
+	<br>
+	- Interdictor phase-control rod
+	<br>
+	- Industry-compliant power cell (high-capacity heavily recommended)
+	<br>
+	- Four lengths of industry-compliant electrical cable
+	<br>
+	- Soldering iron
+	<br>
+	- Four sheets of industry-compliant steel
+	<br>
+	<br>
+	(III) Assemble objects in the sequence they are listed in the enumeration.
+	<br>
+	<br>
+	<hr>
+	<h3>USING THE DEVICE</h3>
+	<br>
+	Due to the advanced technologies incorporated into the Spatial Interdictor's mainboard, it will automatically begin operating when conditions are suitable.
+	<br>
+	<br>
+	Suitable conditions are: Adequate internal cell charge, direct link to an electrical grid cable, active magnetic anchoring.
+	<br>
+	<br>
+	To activate magnetic anchoring, simply touch the control pad located on the front side of the rectangular regulator unit.
+	<br>
+	<br>
+	For safety purposes, activating or deactivating magnetic anchoring requires the user to possess an identification card with at least base-level Engineering access.
+	<br>
+	<br>
+	The Spatial Interdictor is equipped with three distinct indicators, each representing a different aspect of its functionality:
+	<br>
+	<br>
+	- The charge meter, located on the side of the interdiction pillar. This represents the current capacity of the buffer cell, and <b>must be full for interdiction to begin.</b>
+	<br>
+	<br>
+	- The interdiction emitter, located on the top of the interdiction pillar. While illuminated, the Interdictor is currently active and protecting its surroundings.
+	<br>
+	<br>
+	- The grid-tie indicator, located on the front of the regulator unit. Illumination means the Interdictor is correctly installed, and able to charge, or activate if charged.
+	<br>
+	<hr>
+	<p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base. Thank you for your service to Nanotrasen.</i></p>
+	"}
+
 //interdictor rod: the doohickey that lets the interdictor do its thing
 //the blueprint to create this should be in engineering along with guide, frame blueprint and mainboards
 //these are the primary factor for scarcity as they require several materials to manufacture
@@ -211,7 +321,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "electronic"
 	force = 3
-	throwforce = 5
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -235,6 +345,7 @@
 
 //interdictor frame: main framework for assembling the interdictor (lo and behold)
 //the blueprint to create this should be in engineering along with guide, rod blueprint and mainboards
+//blueprint path is /obj/item/paper/manufacturer_blueprint/interdictor_frame
 
 /obj/interdictor_frame
 	name = "spatial interdictor frame"
