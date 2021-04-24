@@ -11,7 +11,7 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	health = 100
 	//var/emagged = 0 removing all emag stuff because it's a bad idea in retrospect
 	var/damage_words = "fully operational!"
@@ -539,7 +539,7 @@
 	name = "N.A.R.C.S. Deployer"
 	desc = "A Nanotrasen Automatic Riot Control System Deployer. Use it in your hand to deploy."
 	icon_state = "st_deployer"
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	health = 125
 	icon_tag = "nt"
 	quick_deploy_fuel = 0

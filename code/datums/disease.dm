@@ -295,7 +295,7 @@
 		var/mob/living/carbon/human/H = src
 		resist_prob = H.get_disease_protection(ailment_path, ailment_name)
 	else
-		for (var/obj/item/C as() in src.get_equipped_items())
+		for (var/obj/item/C as anything in src.get_equipped_items())
 			resist_prob += C.getProperty("viralprot")
 
 	if (ispath(ailment_path) || istext(ailment_name))
@@ -465,7 +465,7 @@
 	if (!src || !target || !istext(spread_type))
 		return
 
-	if (!src.ailments || !src.ailments.len)
+	if (!src.ailments || !length(src.ailments))
 		return
 
 	for (var/datum/ailment_data/disease/AD in src.ailments)
@@ -542,10 +542,10 @@
 	var/numMid = round((1 * shockInput) / 10)
 	var/numLow = round((1 * shockInput) / 20)
 	if (src.organHolder.heart && src.organHolder.heart.robotic && src.organHolder.heart.emagged && !src.organHolder.heart.broken)
-		src.add_stam_mod_regen("heart_shock", 5)
+		APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "heart_shock", 5)
 		src.add_stam_mod_max("heart_shock", 20)
 		SPAWN_DBG(9000)
-			src.remove_stam_mod_regen("heart_shock")
+			REMOVE_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "heart_shock")
 			src.remove_stam_mod_max("heart_shock")
 		if (prob(numHigh))
 			boutput(src, "<span class='alert'>Your cyberheart spasms violently!</span>")
@@ -564,10 +564,10 @@
 			src.organHolder.heart.breakme()
 			src.contract_disease(/datum/ailment/malady/flatline, null, null, 1)
 	else if (src.organHolder.heart && src.organHolder.heart.robotic && !src.organHolder.heart.emagged && !src.organHolder.heart.broken)
-		src.add_stam_mod_regen("heart_shock", 1)
+		APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "heart_shock", 1)
 		src.add_stam_mod_max("heart_shock", 10)
 		SPAWN_DBG(9000)
-			src.remove_stam_mod_regen("heart_shock")
+			REMOVE_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "heart_shock")
 			src.remove_stam_mod_max("heart_shock")
 		if (prob(numMid))
 			boutput(src, "<span class='alert'>Your cyberheart spasms violently!</span>")

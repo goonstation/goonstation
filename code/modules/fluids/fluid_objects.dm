@@ -421,7 +421,7 @@
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "ladder_off"
 	item_state = "folded_chair"
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	throwforce = 10
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 9
@@ -475,34 +475,13 @@
 
 	var/boom_str = 26
 
-	var/datum/light/point/light = 0
-	var/init = 0
-
 	New()
 		..()
 		animate_bumble(src)
-		if (current_state == GAME_STATE_PLAYING)
-			initialize()
-
-	disposing()
-		light = 0
-		..()
-
-	initialize()
-		..()
-		if (!init)
-			init = 1
-			if (!light)
-				light = new
-				light.attach(src)
-			light.set_brightness(1)
-			light.set_color(1, 0.4, 0.4)
-			light.set_height(3)
-			light.enable()
+		add_simple_light("naval_mine", list(255, 102, 102, 40))
 
 	get_desc()
 		. += "It is [active ? "armed" : "disarmed"]."
-
 
 	ex_act(severity)
 		return //nah

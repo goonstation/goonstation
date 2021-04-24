@@ -22,7 +22,7 @@
 	icon_state = "pen"
 	flags = FPRINT | ONBELT | TABLEPASS
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60
@@ -40,6 +40,7 @@
 	var/spam_flag_message = 0 // one message appears for every five times you click the pen if you're just sitting there jamming on it
 	var/spam_timer = 20
 	var/symbol_setting = null
+	var/material_uses = 10
 	var/static/list/c_default = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
 	"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Exclamation Point", "Question Mark", "Period", "Comma", "Colon", "Semicolon", "Ampersand", "Left Parenthesis", "Right Parenthesis",
 	"Left Bracket", "Right Bracket", "Percent", "Plus", "Minus", "Times", "Divided", "Equals", "Less Than", "Greater Than")
@@ -83,6 +84,16 @@
 				if (src)
 					src.spam_flag_sound = 0
 
+	proc/apply_material_to_drawing(obj/decal/cleanable/writing/drawing, mob/user)
+		if(src.material)
+			drawing.setMaterial(src.material)
+			src.material_uses--
+			if(src.material_uses <= 0)
+				boutput(user, "<span class='notify'>[src.material.name] rubs off of [src].</span>")
+				src.removeMaterial()
+			return TRUE
+		return FALSE
+
 	proc/write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
 		if (!T || !user || src.in_use || get_dist(T, user) > 1 || isghostdrone(user))
 			return
@@ -94,6 +105,7 @@
 		if (!t || get_dist(T, user) > 1)
 			src.in_use = 0
 			return
+		phrase_log.log_phrase("floorpen", t)
 		var/obj/decal/cleanable/writing/G = make_cleanable( /obj/decal/cleanable/writing,T)
 		G.artist = user.key
 
@@ -101,8 +113,8 @@
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
-		if (src.material)
-			G.setMaterial(src.material)
+		if(apply_material_to_drawing(G, user))
+			;
 		/* not used because it doesn't work (yet?)
 		if (src.uses_handwriting && user?.mind?.handwriting)
 			G.font = user.mind.handwriting
@@ -126,6 +138,8 @@
 		if (src.color != src.font_color)
 			src.font_color = src.color
 			src.color_name = hex2color_name(src.color)
+		if(src.material)
+			src.material_uses = initial(src.material_uses)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -144,7 +158,7 @@
 	desc = "A pretty swag pen."
 	icon_state = "pen_fancy"
 	font_color = "blue"
-	font = "Dancing Script, cursive"
+	font = "'Dancing Script', cursive"
 	webfont = "Dancing Script"
 	uses_handwriting = 1
 
@@ -164,7 +178,7 @@
 	desc = "The core is graphite, not lead, don't worry!"
 	icon_state = "pencil-y"
 	font_color = "#808080"
-	font = "Dancing Script, cursive"
+	font = "'Dancing Script', cursive"
 	webfont = "Dancing Script"
 	uses_handwriting = 1
 	clicknoise = 0
@@ -181,7 +195,7 @@
 	desc = "Try not to sniff it too much. Weirdo."
 	icon_state = "marker"
 	color = "#333333"
-	font = "Permanent Marker, cursive"
+	font = "'Permanent Marker', cursive"
 	webfont = "Permanent Marker"
 	clicknoise = 0
 
@@ -297,6 +311,19 @@
 		color = "#FF00FF"
 		font_color = "#FF00FF"
 		color_name = "pink"
+
+	golden // HoP's crayon
+		name = "golden crayon"
+		desc = "The result of years of bribes and extreme bureaucracy."
+		color = "#D4AF37"
+		font_color = "#D4AF37"
+		mat_changename = 0
+		color_name = "golden"
+		material_uses = 123456 // it's not plated. its solid gold-wax alloy!
+
+		New()
+			..()
+			src.setMaterial(getMaterial("gold"))
 
 	random
 		New()
@@ -493,8 +520,7 @@
 			G.color_name = src.color_name
 			G.real_name = t
 			G.UpdateName()
-		if (src.material)
-			G.setMaterial(src.material)
+		apply_material_to_drawing(G, user)
 		G.words = t
 		if (islist(params) && params["icon-y"] && params["icon-x"])
 			G.pixel_x = text2num(params["icon-x"]) - size / 2
@@ -622,8 +648,8 @@
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
-		if (src.material)
-			G.setMaterial(src.material)
+		if(apply_material_to_drawing(G, user))
+			;
 		/*if (src.uses_handwriting && user?.mind?.handwriting)
 			G.font = user.mind.handwriting
 			G.webfont = 1
@@ -692,21 +718,23 @@
 			return
 		tooltip_rebuild = 1
 		var/holder = src.loc
-		var/str = copytext(html_encode(input(usr,"Label text?","Set label","") as null|text), 1, 32)
+		var/str = copytext(html_encode(input(user,"Label text?","Set label","") as null|text), 1, 32)
+		if(str)
+			phrase_log.log_phrase("label", str, no_duplicates=TRUE)
 		if (src.loc != holder)
 			return
 		if(url_regex?.Find(str))
 			str = null
 		if (!str || !length(str))
-			boutput(usr, "<span class='notice'>Label text cleared.</span>")
+			boutput(user, "<span class='notice'>Label text cleared.</span>")
 			src.label = null
 			return
 		if (length(str) > 30)
-			boutput(usr, "<span class='alert'>Text too long.</span>")
+			boutput(user, "<span class='alert'>Text too long.</span>")
 			return
 		src.label = "[str]"
-		boutput(usr, "<span class='notice'>You set the text to '[str]'.</span>")
-		logTheThing("combat", usr, null, "sets a hand labeler label to \"[str]\".")
+		boutput(user, "<span class='notice'>You set the text to '[str]'.</span>")
+		logTheThing("combat", user, null, "sets a hand labeler label to \"[str]\".")
 
 	proc/RemoveLabel(var/atom/A, var/mob/user, var/no_message = 0)
 		if(!islist(A.name_suffixes))
@@ -770,7 +798,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "clipboard0"
 	throwforce = 1
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 10
 	desc = "You can put paper on it. Ah, technology!"
@@ -916,9 +944,9 @@
 	icon_state = "folder" //futureproofed icons baby
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "folder"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throwforce = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 10
 	tooltip_flags = REBUILD_DIST
@@ -978,7 +1006,7 @@
 	burn_output = 900
 	burn_possible = 1
 	health = 10
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	var/offset = 1
 
@@ -1034,7 +1062,7 @@
 
 		user.Browse("<HTML><HEAD><TITLE>[src.name] - [cur_page.name]</TITLE>[font_junk]</HEAD><BODY>Page [page] of [pages.len]<BR><a href='byond://?src=\ref[src];action=first_page'>First Page</a> <a href='byond://?src=\ref[src];action=title_book'>Title Book</a> <a href='byond://?src=\ref[src];action=last_page'>Last Page</a><BR>[prev_page]<a href='byond://?src=\ref[src];action=write;page=[page]'>Write</a> <a href='byond://?src=\ref[src];action=title_page;page=[page]'>Title</a> [next_page]<HR><TT>[.]</TT></BODY></HTML>", "window=[src.name]")
 
-		onclose(usr, "[src.name]")
+		onclose(user, "[src.name]")
 		return null
 
 	attack_self(var/mob/user)
@@ -1086,7 +1114,7 @@
 				src.visible_message("[user] staples [P] at the back of [src].")
 				playsound(user,'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			else
-				boutput(usr, "<span class='alert'>You need a loaded stapler in hand to add this paper to the booklet.</span>")
+				boutput(user, "<span class='alert'>You need a loaded stapler in hand to add this paper to the booklet.</span>")
 		else
 			..()
 		return
@@ -1094,13 +1122,13 @@
 /* =============== STICKY NOTES =============== */
 
 /obj/item/postit_stack
-	name = "stack of crappy old sticky notes"
-	desc = "A little stack of notepaper that you can stick to things. These are the old ones that suck a lot."
+	name = "SHOULDN'T BE SEEING THIS"
+	desc = "OLD AND BAD"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "postit_stack"
-	force = 1
+	/* force = 1
 	throwforce = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 	amount = 10
 	burn_point = 220
 	burn_output = 200
@@ -1140,3 +1168,4 @@
 		if (src.amount < 0)
 			qdel(src)
 			return
+*/

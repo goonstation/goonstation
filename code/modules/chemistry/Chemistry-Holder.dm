@@ -351,7 +351,7 @@ datum
 
 		//multiplier is used to handle realtime metabolizations over byond time
 		proc/metabolize(var/mob/target, var/multiplier = 1)
-			if (islist(src.addiction_tally) && src.addiction_tally.len) // if we got some addictions to process
+			if (islist(src.addiction_tally) && length(src.addiction_tally)) // if we got some addictions to process
 				//DEBUG_MESSAGE("metabolize([target]) addiction_tally processing")
 				for (var/rid in src.addiction_tally) // look at each addiction tally
 					if (src.reagent_list.Find(rid)) // if we find that we've got that reagent in us right now
@@ -566,9 +566,10 @@ datum
 			for(var/current_id in reagent_list)
 				var/datum/reagent/current_reagent = reagent_list[current_id]
 				if(current_reagent)
-					if(current_reagent.volume <= 0)
+					if(current_reagent.volume <= 0.001)
 						del_reagent(current_id)
 					else
+						current_reagent.volume = max(round(current_reagent.volume, 0.001), 0.001)
 						total_volume += current_reagent.volume
 			if(isitem(my_atom))
 				var/obj/item/I = my_atom
@@ -721,15 +722,16 @@ datum
 				fluid_turf.fluid_react(temp_fluid_reagents, temp_fluid_reagents.total_volume)
 
 		proc/add_reagent(var/reagent, var/amount, var/sdata, var/temp_new=T20C, var/donotreact = 0, var/donotupdate = 0)
-			if(!isnum(amount) || amount <= 0)
+			if(!isnum(amount) || amount <= 0 || src.disposed)
 				return 1
 			var/added_new = 0
 			if (!donotupdate)
 				update_total()
+			amount = round(amount, CHEM_EPSILON)
+			if(amount < CHEM_EPSILON)
+				return 0
 			if(total_volume + amount > maximum_volume)
 				amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
-			if(amount <= CHEM_EPSILON)
-				return 0
 
 			var/datum/reagent/current_reagent = reagent_list[reagent]
 

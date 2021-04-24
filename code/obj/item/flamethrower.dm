@@ -21,6 +21,8 @@ A Flamethrower in various states of assembly
 #define FLAMER_MODE_SINGLE 3
 #define FLAMER_MODE_BACKTANK 4
 
+#define MODE_TO_STRING(mode) mode == FLAMER_MODE_AUTO ? "auto" : mode == FLAMER_MODE_BURST ? "burst" :  mode == FLAMER_MODE_SINGLE ? "single" :  mode == FLAMER_MODE_BACKTANK ? "backtank" : "error"
+
 /obj/item/gun/flamethrower/
 	name = "flamethrower"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -33,7 +35,7 @@ A Flamethrower in various states of assembly
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	var/mode = FLAMER_MODE_SINGLE
 	var/processing = 0
 	var/lit = 0	//on or off
@@ -63,7 +65,6 @@ A Flamethrower in various states of assembly
 	stamina_cost = 15
 	stamina_crit_chance = 1
 	move_triggered = 1
-	suppress_fire_msg = 1 // you fire Flamethrower at the steel floor x99999
 	spread_angle = 0
 	shoot_delay = 1 SECOND
 
@@ -78,6 +79,22 @@ A Flamethrower in various states of assembly
 	canshoot()
 		if(istype(src.gastank) && src.gastank.air_contents && istype(src.fueltank) && src.fueltank.reagents)
 			return TRUE
+
+	log_shoot(mob/user, turf/T, obj/projectile/P)
+		logTheThing("combat", user, null, "fires \a [src] ([lit ? "lit, " : ""][MODE_TO_STRING(mode)]) from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, T))]</I>, reagents: [log_reagents(src.fueltank)] with chamber volume [amt_chem]")
+
+	/// allow refilling the fuel tank by simply clicking the reagent dispensers
+	afterattack(atom/target, mob/user, flag)
+		if(istype(target, /obj/reagent_dispensers) && in_interact_range(src,target))
+			if(src.fueltank?.reagents)
+				var/obj/tank = target
+				tank.reagents.trans_to(src.fueltank, (src.fueltank.reagents.maximum_volume - (src.fueltank.reagents.total_volume)))
+				inventory_counter.update_percent(src.fueltank.reagents.total_volume, src.fueltank.reagents.maximum_volume)
+				boutput(user, "<span class='notice'>You refill the flamethrower's fuel tank.</span>")
+				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+				user.lastattacked = target
+			else
+				boutput(user, "<span class='notice'>Load the fuel tank first!</span>")
 
 	/// check for tank, pressure in tank, fuelltank, fuel in tank, and... then dump the stuff into it!
 	process_ammo(var/mob/user)
@@ -167,7 +184,7 @@ A Flamethrower in various states of assembly
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	var/obj/item/weldingtool/welder = null
 	var/obj/item/rods/rod = null
 	var/obj/item/device/igniter/igniter = null
@@ -299,7 +316,7 @@ A Flamethrower in various states of assembly
 /obj/item/gun/flamethrower/backtank/napalm
 	New()
 		..()
-		gastank.reagents.add_reagent("napalm_goo", 4000)
+		gastank.reagents.add_reagent("syndicate_napalm", 4000)
 
 /obj/item/gun/flamethrower/assembled/New()
 	..()
@@ -350,7 +367,7 @@ A Flamethrower in various states of assembly
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 /obj/item/assembly/weld_rod/New()
 	..()
@@ -371,7 +388,7 @@ A Flamethrower in various states of assembly
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 /obj/item/assembly/w_r_ignite/New()
 	..()

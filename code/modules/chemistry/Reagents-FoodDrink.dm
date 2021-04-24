@@ -767,7 +767,7 @@ datum
 					return
 				if (!ishuman(M))
 					return
-				if (!islist(mutini_effects) || !mutini_effects.len)
+				if (!islist(mutini_effects) || !length(mutini_effects))
 					return ..()
 				var/power_granted = pick(mutini_effects)
 				var/power_time = rand(1,10)
@@ -779,7 +779,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
-				if (!islist(mutini_effects) || !mutini_effects.len)
+				if (!islist(mutini_effects) || !length(mutini_effects))
 					return ..()
 				var/power_granted = pick(mutini_effects)
 				var/power_time = rand(1,10)
@@ -1051,7 +1051,7 @@ datum
 
 
 				var/do_stunny = 1
-				var/list/covered = holder?.covered_turf()
+				var/list/covered = holder.covered_turf()
 				if (length(covered) > 1)
 					do_stunny = prob(100/length(covered))
 
@@ -2001,26 +2001,22 @@ datum
 			addiction_prob2 = 20
 			addiction_min = 10
 			max_addiction_severity = "LOW"
-			var/remove_buff = 0
 			thirst_value = 0.3
 			bladder_value = -0.1
 			energy_value = 0.3
 			stun_resist = 7
 
-			pooled()
-				..()
-				remove_buff = 0
-
 			on_add()
-				if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-					remove_buff = holder.my_atom:add_stam_mod_regen("consumable_good", 2)
-				..()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "consumable_good", 2)
+				. = ..()
 
 			on_remove()
-				if(remove_buff)
-					if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-						holder.my_atom:remove_stam_mod_regen("consumable_good")
-				..()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "consumable_good")
+				. = ..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
@@ -2052,14 +2048,16 @@ datum
 			stun_resist = 10
 
 			on_add()
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen")) //gotta get hyped
-					holder.my_atom:add_stam_mod_regen("caffeine rush", src.caffeine_rush)
-				..()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "caffeine rush", src.caffeine_rush)
+				. = ..()
 
 			on_remove()
-				if (istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-					holder.my_atom:remove_stam_mod_regen("caffeine rush")
-				..()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "caffeine rush")
+				. = ..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
@@ -3222,16 +3220,11 @@ datum
 			thirst_value = -2
 			bladder_value = -2
 			stun_resist = 100
-			var/remove_buff = 0
-
-			pooled()
-				..()
-				remove_buff = 0
 
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					remove_buff = M.add_stam_mod_regen("tripletriple", 3333)
+					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "tripletriple", 3333)
 
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
@@ -3256,7 +3249,7 @@ datum
 
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					remove_buff = M.remove_stam_mod_regen("tripletriple")
+					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "tripletriple")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)

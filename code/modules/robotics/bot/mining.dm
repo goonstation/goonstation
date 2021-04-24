@@ -16,7 +16,6 @@
 	var/turf/target
 	var/turf/oldtarget
 	var/oldloc = null
-	var/list/path = null
 	var/list/digbottargets = list()
 	var/lumlevel = 0.2
 	var/use_medium_light = 1
@@ -64,17 +63,19 @@
 
 /obj/machinery/bot/mining/proc/setEffectOverlays()
 	src.icon_state = "digbot[on]"
-	src.overlays = null
 	if(src.on)
-		src.overlays += display_hover
+		src.UpdateOverlays(display_hover, "hover")
 		pixel_y = 0
 	else
+		src.UpdateOverlays(null, "hover")
 		var/const/volume = 50
 		var/const/vary = 1
 		playsound(src.loc, "sound/impact_sounds/Metal_Clang_3.ogg", volume, vary)
 		pixel_y = -base_sprite_pixels_from_floor
-	if(src.digging) src.overlays += display_tool_animated
-	else src.overlays += display_tool_idle
+	if(src.digging)
+		src.UpdateOverlays(display_tool_animated, "tool")
+	else
+		src.UpdateOverlays(display_tool_idle, "tool")
 
 /obj/machinery/bot/mining/attack_hand(user as mob)
 	src.add_fingerprint(user)
@@ -111,7 +112,7 @@
 			src.oldtarget = null
 		return
 
-	if(src.target && (!src.path || !src.path.len))
+	if(src.target && (!src.path || !length(src.path)))
 		src.buildPath()
 
 	if(src.path && src.path.len && src.target)
@@ -307,7 +308,7 @@
 	desc = "You need to add a robot arm next."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "digbot assembly 1"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	var/build_step = 0
 
 	attackby(var/obj/item/T, mob/user as mob)

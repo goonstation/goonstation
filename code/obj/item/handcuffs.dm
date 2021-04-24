@@ -4,7 +4,7 @@
 	icon_state = "handcuff"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 2
 	throw_range = 5
 	m_amt = 500
@@ -78,7 +78,7 @@
 	return 1
 
 /obj/item/handcuffs/attack(mob/M as mob, mob/user as mob)
-	if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))//!usr.bioHolder.HasEffect("lost_left_arm") && !usr.bioHolder.HasEffect("lost_right_arm"))
+	if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))//!user.bioHolder.HasEffect("lost_left_arm") && !user.bioHolder.HasEffect("lost_right_arm"))
 		boutput(user, "<span class='alert'>Uh ... how do those things work?!</span>")
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user

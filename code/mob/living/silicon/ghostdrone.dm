@@ -130,8 +130,6 @@
 		setdead(src)
 		if (src.mind)
 			src.mind.dnr = 0
-		if (src.client)
-			src.client.images.Remove(mob_static_icons)
 
 			var/mob/dead/observer/ghost = src.ghostize()
 			ghost.icon = 'icons/mob/ghost_drone.dmi'
@@ -497,7 +495,7 @@
 				return
 			var/obj/item/cable_coil/C = W
 			if (get_fraction_of_percentage_and_whole(src.health,src.max_health) >= 33)
-				boutput(usr, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
+				boutput(user, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
 				return
 			C.use(1)
 			src.health = max(1,min(src.health + 5,src.max_health))
@@ -1257,7 +1255,7 @@
 		theMind = M.mind
 
 	var/mob/living/silicon/ghostdrone/G
-	if (pickNew && islist(available_ghostdrones) && available_ghostdrones.len)
+	if (pickNew && islist(available_ghostdrones) && length(available_ghostdrones))
 		for (var/mob/living/silicon/ghostdrone/T in available_ghostdrones)
 			if (T.newDrone)
 				G = T

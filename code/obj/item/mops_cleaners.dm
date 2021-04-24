@@ -16,7 +16,7 @@ WET FLOOR SIGN
 	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|EXTRADELAY|SUPPRESSATTACK
 	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	throwforce = 3
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 2
 	throw_range = 10
 	tooltip_flags = REBUILD_DIST | REBUILD_SPECTRO
@@ -262,7 +262,7 @@ WET FLOOR SIGN
 	throwforce = 10.0
 	throw_speed = 5
 	throw_range = 10
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS
 	stamina_damage = 40
 	stamina_cost = 15
@@ -443,7 +443,7 @@ WET FLOOR SIGN
 	item_state = "sponge"
 	force = 0
 	throwforce = 0
-	w_class = 2 // gross why would you put a sponge in your pocket
+	w_class = W_CLASS_SMALL // gross why would you put a sponge in your pocket
 
 	var/hit_face_prob = 30 // MODULAR SPONGES
 	var/spam_flag = 0 // people spammed snapping their fucking fingers, so this is probably necessary
@@ -641,7 +641,7 @@ WET FLOOR SIGN
 	throwforce = 3.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS
 	stamina_damage = 15
 	stamina_cost = 4
@@ -706,7 +706,7 @@ WET FLOOR SIGN
 	throwforce = 3.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS
 	throw_pixel = 0
 	throw_spin = 0
@@ -824,7 +824,7 @@ WET FLOOR SIGN
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "handvac"
 	mats = list("bamboo"=3, "MET-1"=10)
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	item_function_flags = USE_SPECIALS_ON_ALL_INTENTS
 	var/obj/item/reagent_containers/glass/bucket/bucket
@@ -921,6 +921,8 @@ WET FLOOR SIGN
 		if(ON_COOLDOWN(src, "suck", 0.3 SECONDS))
 			return
 		var/turf/T = get_turf(target)
+		if(isnull(T)) // fluids getting disposed or something????
+			return
 		new/obj/effect/suck(T, get_dir(T, user))
 		if(src.suck(T, user))
 			playsound(T, "sound/effects/suck.ogg", 20, TRUE, 0, 1.5)
@@ -962,7 +964,7 @@ WET FLOOR SIGN
 
 		var/list/obj/item/items_to_suck = list()
 		for(var/obj/item/I in T)
-			if((I.w_class <= 1 || istype(I, /obj/item/raw_material/shard)) && !I.anchored)
+			if((I.w_class <= W_CLASS_TINY || istype(I, /obj/item/raw_material/shard)) && !I.anchored)
 				items_to_suck += I
 		if(length(items_to_suck))
 			var/item_desc = length(items_to_suck) > 1 ? "some items" : "\the [items_to_suck[1]]"
@@ -973,11 +975,11 @@ WET FLOOR SIGN
 				boutput(user, "<span class='alert'>\The [src] tries to suck up [item_desc] but its [src.trashbag] is full!</span>")
 				. = FALSE
 			else
-				for(var/obj/item/I as() in items_to_suck)
+				for(var/obj/item/I as anything in items_to_suck)
 					I.set_loc(get_turf(user))
 				success = TRUE
 				SPAWN_DBG(0.5 SECONDS)
-					for(var/obj/item/I as() in items_to_suck) // yes, this can go over capacity of the bag, that's intended
+					for(var/obj/item/I as anything in items_to_suck) // yes, this can go over capacity of the bag, that's intended
 						I.set_loc(src.trashbag)
 					src.trashbag.calc_w_class(null)
 					if(src.trashbag.current_stuff >= src.trashbag.max_stuff)
@@ -1088,6 +1090,8 @@ WET FLOOR SIGN
 							A.throw_at(T == turf_list[1] ? get_turf(master) : turf_list[1], src.throw_range, src.throw_speed)
 							if(ismob(A))
 								var/mob/M = A
+								M.changeStatus("weakened", 0.9 SECONDS)
+								M.force_laydown_standup()
 								boutput(M, "<span class='alert'>You are pulled by the force of [user]'s [master].</span>")
 						else
 							var/mob/M = A

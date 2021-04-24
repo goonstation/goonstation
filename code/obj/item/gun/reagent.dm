@@ -104,7 +104,7 @@
 	name = "syringe gun"
 	icon_state = "syringegun"
 	item_state = "syringegun"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
 	force = 4.0
@@ -142,7 +142,7 @@
 
 	New()
 		..()
-		if (src.safe && islist(global.chem_whitelist) && global.chem_whitelist.len)
+		if (src.safe && islist(global.chem_whitelist) && length(global.chem_whitelist))
 			src.ammo_reagents = global.chem_whitelist
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)

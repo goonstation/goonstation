@@ -74,18 +74,22 @@
 		handler.vis_contents = contentBlock
 
 /client/var/list/viewports = list()
+
 /client/proc/getViewportsByType(var/kind)
 	.=list()
 	for(var/datum/viewport/vp in viewports)
 		if(vp.kind == kind)
 			. += vp
+
 /client/proc/getViewportById(var/id)
 	for(var/datum/viewport/vp in viewports)
 		if(vp.getID() == id) return vp
+
 /client/proc/clearViewportsByType(var/kind)
 	for(var/datum/viewport/vp in getViewportsByType(kind))
 		if(vp.kind == kind)
 			qdel(vp)
+
 /client/Del()
 	for(var/datum/viewport/vp in viewports)
 		qdel(vp)//circular reference, gotta trash it manually

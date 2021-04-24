@@ -12,7 +12,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	m_amt = 2000
 	force = 10.0
 	throwforce = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 4
 	throw_range = 6
 	contraband = 4
@@ -48,6 +48,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/shoot_delay = 4
 
 	var/muzzle_flash = null //set to a different icon state name if you want a different muzzle flash when fired, flash anims located in icons/mob/mob.dmi
+
+	var/fire_animation = FALSE //Used for guns that have animations when firing
 
 	buildTooltipContent()
 		. = ..()
@@ -148,7 +150,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if(src.projectiles && src.projectiles.len > 1)
 		src.current_projectile_num = ((src.current_projectile_num) % src.projectiles.len) + 1
 		src.set_current_projectile(src.projectiles[src.current_projectile_num])
-		boutput(user, "<span class='notice'>you set the output to [src.current_projectile.sname].</span>")
+		boutput(user, "<span class='notice'>You set the output to [src.current_projectile.sname].</span>")
 	return
 
 /datum/action/bar/icon/guncharge
@@ -295,7 +297,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			if (O.client)
 				O.show_message("<span class='alert'><B>[user] shoots [user == M ? "[him_or_her(user)]self" : M] point-blank with [src]!</B></span>")
 	else
-		boutput(user, "<span class='alert'>You silently shoot [user == M ? "yourself" : M] point-blank with [src]!</span>") // Was non-functional (Convair880).
+		boutput(user, "<span class='alert'>You silently shoot [user == M ? "yourself" : M] point-blank with [src]!</span>")
 
 	if (!process_ammo(user))
 		return FALSE
@@ -377,6 +379,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			var/turf/origin = user.loc
 			muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
 
+
 	if (ismob(user))
 		var/mob/M = user
 		if (M.mob_flags & AT_GUNPOINT)
@@ -414,7 +417,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				user.show_text("<span class='alert'>You silently fire the [src] at [target]!</span>") // Some user feedback for silenced guns would be nice (Convair880).
 
 		var/turf/T = target
-		logTheThing("combat", user, null, "fires \a [src] from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, target))]</I>, projectile: <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", [P.proj_data.type]" : null]")
+		src.log_shoot(user, T, P)
 
 	if (ismob(user))
 		var/mob/M = user
@@ -423,9 +426,13 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			H.gunshot_residue = 1
 
 	src.update_icon()
+	return TRUE
 
 /obj/item/gun/proc/canshoot()
 	return 0
+
+/obj/item/gun/proc/log_shoot(mob/user, turf/T, obj/projectile/P)
+	logTheThing("combat", user, null, "fires \a [src] from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, T))]</I>, projectile: <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", [P.proj_data.type]" : null]")
 
 /obj/item/gun/examine()
 	if (src.artifact)

@@ -26,7 +26,6 @@
 	hub_password = "kMZy3U5jJHSiBQjr"
 	name = "Goonstation 13"
 
-
 //Let's clarify something. I don't know if it needs clarifying, but here I go anyways.
 
 //The UNDERWATER_MAP define is for things that should only be changed if the map is an underwater one.
@@ -117,8 +116,10 @@ var/global/mob/twitch_mob = 0
 				admins[m_key] = a_lev
 				logDiary("ADMIN: [m_key] = [a_lev]")
 
-/world/proc/load_whitelist(fileName = "strings/whitelist.txt")
+/world/proc/load_whitelist(fileName = null)
 	set background = 1
+	if(isnull(fileName))
+		fileName = config.whitelist_path
 	var/text = file2text(fileName)
 	if (!text)
 		return
@@ -209,7 +210,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_PREGAME))
 #warn Profiler enabled at start of init
-		world.Profile(PROFILE_START)
+		world.Profile(PROFILE_START, "sendmaps", "json")
 #endif
 		server_start_time = world.timeofday
 
@@ -218,11 +219,13 @@ var/f_color_selector_handler/F_Color_Selector
 #endif
 		Z_LOG_DEBUG("Preload", "Map preload running.")
 
+#ifndef RUNTIME_CHECKING
 		world.log << ""
 		world.log << "========================================"
 		world.log << "\[[time2text(world.timeofday,"hh:mm:ss")]] Starting new round"
 		world.log << "========================================"
 		world.log << ""
+#endif
 
 		Z_LOG_DEBUG("Preload", "Loading config...")
 		config = new /datum/configuration()
@@ -394,6 +397,11 @@ var/f_color_selector_handler/F_Color_Selector
 	tick_lag = MIN_TICKLAG//0.4//0.25
 //	loop_checks = 0
 
+	// Load in the current commit SHA from TGS if avail, by MCterra10
+	if(TgsAvailable())
+		var/datum/tgs_revision_information/rev = TgsRevision()
+		vcs_revision = rev.commit
+
 	if(world.load_intra_round_value("heisenbee_tier") >= 15 && prob(50) || prob(3))
 		lobby_titlecard = new /datum/titlecard/heisenbee()
 	else
@@ -532,7 +540,9 @@ var/f_color_selector_handler/F_Color_Selector
 
 	Z_LOG_DEBUG("World/Init", "Notifying Discord of new round")
 	ircbot.event("serverstart", list("map" = getMapNameFromID(map_setting), "gamemode" = (ticker?.hide_mode) ? "secret" : master_mode))
+#ifndef RUNTIME_CHECKING
 	world.log << "Map: [getMapNameFromID(map_setting)]"
+#endif
 
 	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
 	round_start_data() //Tell the hub site a round is starting
@@ -583,6 +593,15 @@ var/f_color_selector_handler/F_Color_Selector
 	makeMiningLevel()
 	#endif
 
+	UPDATE_TITLE_STATUS("Initializing biomes")
+	Z_LOG_DEBUG("World/Init", "Setting up biomes...")
+	initialize_biomes()
+
+	UPDATE_TITLE_STATUS("Generating terrain")
+	Z_LOG_DEBUG("World/Init", "Setting perlin noise terrain...")
+	for (var/area/map_gen/A in by_type[/area/map_gen])
+		A.generate_perlin_noise_terrain()
+
 	UPDATE_TITLE_STATUS("Calculating cameras")
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")
 	aiDirty = 2
@@ -602,6 +621,10 @@ var/f_color_selector_handler/F_Color_Selector
 
 	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
 	map_settings.init()
+
+	Z_LOG_DEBUG("World/Init", "Initialize prefab shuttle datums...")
+	var/datum/prefab_shuttle/D = new
+	D.inialize_prefabs()
 
 	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME
@@ -630,6 +653,7 @@ var/f_color_selector_handler/F_Color_Selector
 	placeAllPrefabs()
 #endif
 #ifdef RUNTIME_CHECKING
+	populate_station()
 	SPAWN_DBG(10 SECONDS)
 		Reboot_server()
 #endif
@@ -663,16 +687,17 @@ var/f_color_selector_handler/F_Color_Selector
 #warn Profiler enabled at end of game (full)
 	var/profile_out = file("data/profile/[time2text(world.realtime, "YYYY-MM-DD hh-mm-ss")]-full.log")
 #endif
-	profile_out << world.Profile(PROFILE_START, "json")
+	profile_out << world.Profile(PROFILE_START, "sendmaps", "json")
 	world.log << "Dumped profiler data."
 	// not gonna need this again
-	world.Profile(PROFILE_STOP)
+	world.Profile(PROFILE_STOP, "sendmaps", "json")
 #endif
 
 	lagcheck_enabled = 0
 	processScheduler.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
+	global.phrase_log.save()
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
@@ -683,9 +708,7 @@ var/f_color_selector_handler/F_Color_Selector
 	logTheThing("diary", null, "Shutting down after testing for runtimes.", "admin")
 	if (isnull(runtimeDetails))
 		world.log << "Runtime checking failed due to missing runtimeDetails global list"
-	else if (length(runtimeDetails) == 0)
-		text2file("No runtimes generated!", "no_runtimes.txt")
-	else
+	else if (length(runtimeDetails) > 0)
 		world.log << "[length(runtimeDetails)] runtimes generated:"
 		for (var/idx in runtimeDetails)
 			var/list/details = runtimeDetails[idx]
@@ -694,13 +717,16 @@ var/f_color_selector_handler/F_Color_Selector
 			var/line = details["line"]
 			var/name = details["name"]
 			world.log << "\[[timestamp]\] [file],[line]: [name]"
+#ifndef PREFAB_CHECKING
+	text2file(debug_map_apc_count("\n", zlim=Z_LEVEL_STATION), "no_runtimes.txt")
+#endif
 	shutdown()
 #endif
 	SPAWN_DBG(world.tick_lag)
 		for (var/client/C)
 			if (C.mob)
 				if (prob(40))
-					C.mob << sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/TimeForANewRound.ogg'))
+					C.mob << sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/NewRound4.ogg', 'sound/misc/TimeForANewRound.ogg'))
 				else
 					C.mob << sound('sound/misc/NewRound.ogg')
 
@@ -1326,6 +1352,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 				if (M?.client)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[ckey(nick)]\">[nick]</a> (Discord)</b>: <span class='message'>[game_msg]</span></span>")
+					M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
 					logTheThing("diary", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")
 					for (var/client/C)
@@ -1488,7 +1515,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msgText = file2text(msgFile)
 
 				//Prints to every networked printer in the world
-				for (var/obj/machinery/networked/printer/P as() in machine_registry[MACHINES_PRINTERS])
+				for (var/obj/machinery/networked/printer/P as anything in machine_registry[MACHINES_PRINTERS])
 					P.print_buffer += "[msgTitle]&title;[msgText]"
 					P.print()
 

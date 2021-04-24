@@ -59,7 +59,7 @@
 
 	Del()
 		if (length(cameras))
-			for (var/obj/machinery/camera/C as() in by_type[/obj/machinery/camera])
+			for (var/obj/machinery/camera/C as anything in by_type[/obj/machinery/camera])
 				if(C.coveredTiles)
 					C.coveredTiles -= src
 		cameras = null
@@ -507,8 +507,6 @@
 
 	var/rlapplygen = RL_ApplyGeneration
 	var/rlupdategen = RL_UpdateGeneration
-	var/rlmuloverlay = RL_MulOverlay
-	var/rladdoverlay = RL_AddOverlay
 	var/rllumr = RL_LumR
 	var/rllumg = RL_LumG
 	var/rllumb = RL_LumB
@@ -574,12 +572,6 @@
 
 	new_turf.RL_ApplyGeneration = rlapplygen
 	new_turf.RL_UpdateGeneration = rlupdategen
-	if(new_turf.RL_MulOverlay)
-		pool(new_turf.RL_MulOverlay)
-	if(new_turf.RL_AddOverlay)
-		pool(new_turf.RL_AddOverlay)
-	new_turf.RL_MulOverlay = rlmuloverlay
-	new_turf.RL_AddOverlay = rladdoverlay
 
 	new_turf.RL_LumR = rllumr
 	new_turf.RL_LumG = rllumg
@@ -969,10 +961,10 @@
 /turf/space/attackby(obj/item/C as obj, mob/user as mob)
 	var/area/A = get_area (user)
 	if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
-		boutput(usr, "<span class='alert'>You can't build here.</span>")
+		boutput(user, "<span class='alert'>You can't build here.</span>")
 		return
 	var/obj/item/rods/R = C
-	if (istype(R) && R.consume_rods(1))
+	if (istype(R) && R.change_stack_amount(-1))
 		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
 		playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 		ReplaceWithLattice()
@@ -1007,7 +999,7 @@
 		return
 
 	if (A.z == 1 && zlevel != A.z)
-		if (!(isitem(A) && A:w_class <= 2))
+		if (!(isitem(A) && A:w_class <= W_CLASS_SMALL))
 			for_by_tcl(C, /obj/machinery/communications_dish)
 				C.add_cargo_logs(A)
 
@@ -1166,3 +1158,27 @@
 	name = "concrete floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "concrete"
+
+/turf/unsimulated/wall/griffening
+	icon = 'icons/misc/griffening/area_wall.dmi'
+	icon_state = null
+	density = 1
+	opacity = 0
+	name = "wall"
+	desc = "A holographic projector wall."
+
+/turf/unsimulated/floor/griffening
+	icon = 'icons/misc/griffening/area_floor.dmi'
+	icon_state = null
+	opacity = 0
+	name = "floor"
+	desc = "A holographic projector floor."
+
+/turf/unsimulated/null_hole
+	name = "expedition chute"
+	icon = 'icons/obj/delivery.dmi'
+	icon_state = "floorflush_o"
+
+	Enter(atom/movable/mover, atom/forget)
+		. = ..()
+		mover.set_loc(null)

@@ -15,7 +15,7 @@ MATERIAL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "rods"
 	flags = FPRINT | TABLEPASS| CONDUCT
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 9.0
 	throwforce = 15.0
 	throw_speed = 5
@@ -43,9 +43,9 @@ MATERIAL
 			if (splitnum >= amount || splitnum < 1)
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			boutput(usr, "<span class='notice'>You take [splitnum] rods from the stack, leaving [diff] rods behind.</span>")
+			boutput(user, "<span class='notice'>You take [splitnum] rods from the stack, leaving [diff] rods behind.</span>")
 			src.amount = diff
-			var/obj/item/rods/new_stack = new src.type(usr.loc, diff)
+			var/obj/item/rods/new_stack = new src.type(user.loc, diff)
 			if(src.material) new_stack.setMaterial(src.material)
 			new_stack.amount = splitnum
 			new_stack.attack_hand(user)
@@ -74,7 +74,7 @@ MATERIAL
 				weldinput = input("How many sheets of metal do you want to make?","Welding",1) as num
 				if (weldinput < 1) return
 				if (weldinput > makemetal) weldinput = makemetal
-			var/obj/item/sheet/metal/M = new /obj/item/sheet/metal(usr.loc)
+			var/obj/item/sheet/metal/M = new /obj/item/sheet/metal(user.loc)
 			if(src.material) M.setMaterial(src.material)
 			M.amount = weldinput
 			src.consume_rods(weldinput * 2)
@@ -103,8 +103,8 @@ MATERIAL
 	attack_self(mob/user as mob)
 		if (user.weakened | user.getStatusDuration("stunned"))
 			return
-		if (locate(/obj/grille, usr.loc))
-			for(var/obj/grille/G in usr.loc)
+		if (locate(/obj/grille, user.loc))
+			for(var/obj/grille/G in user.loc)
 				if (G.destroyed)
 					G.health = G.health_max
 					G.set_density(1)
@@ -122,13 +122,13 @@ MATERIAL
 				boutput(user, "<span class='alert'>You need at least two rods to build a grille.</span>")
 				return
 			user.visible_message("<span class='notice'><b>[user]</b> begins building a grille.</span>")
-			var/turf/T = usr.loc
+			var/turf/T = user.loc
 			SPAWN_DBG(1.5 SECONDS)
-				if (T == usr.loc && !usr.weakened && !usr.getStatusDuration("stunned"))
+				if (T == user.loc && !user.weakened && !user.getStatusDuration("stunned"))
 					src.amount -= 2
-					var/atom/G = new /obj/grille(usr.loc)
+					var/atom/G = new /obj/grille(user.loc)
 					G.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Grille in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "builds a Grille in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
 		if (src.amount < 1)
 			qdel(src)
 			return
@@ -151,7 +151,7 @@ MATERIAL
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | CONDUCT
 	desc = "A collection of thick metal, from which one can construct a multitude of objects."
 		//cogwerks - burn vars
@@ -178,9 +178,9 @@ MATERIAL
 			if (splitnum >= amount || splitnum < 1)
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			boutput(usr, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
+			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
 			src.amount = diff
-			var/obj/item/sheet/metal/new_stack = new src.type(usr.loc, diff)
+			var/obj/item/sheet/metal/new_stack = new src.type(user.loc, diff)
 			if(src.material) new_stack.setMaterial(src.material)
 			new_stack.amount = splitnum
 			new_stack.attack_hand(user)
@@ -404,7 +404,7 @@ MATERIAL
 	throwforce = 15.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | CONDUCT
 	desc = "A collection of reinforced metal, used for making thicker walls and stronger metal objects."
 		//cogwerks - burn vars
@@ -438,9 +438,9 @@ MATERIAL
 			if (splitnum >= amount || splitnum < 1)
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			boutput(usr, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
+			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
 			src.amount = diff
-			var/obj/item/sheet/r_metal/new_stack = new src.type(usr.loc, diff)
+			var/obj/item/sheet/r_metal/new_stack = new src.type(user.loc, diff)
 			if(src.material) new_stack.setMaterial(src.material)
 			new_stack.amount = splitnum
 			new_stack.attack_hand(user)

@@ -479,6 +479,7 @@
 	crop = /obj/item/reagent_containers/food/snacks/plant/lashberry/
 	chance = 20
 
+
 // Radweed Mutations
 
 /datum/plantmutation/radweed/safeweed

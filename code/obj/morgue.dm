@@ -89,7 +89,7 @@
 			return
 		if (user.equipped() != P)
 			return
-		if ((!in_interact_range(src, usr) && src.loc != user))
+		if ((!in_interact_range(src, user) && src.loc != user))
 			return
 		t = copytext(adminscrub(t),1,128)
 		if (t)
@@ -277,7 +277,7 @@
 			return
 		if (user.equipped() != P)
 			return
-		if ((!in_interact_range(src, usr) > 1 && src.loc != user))
+		if ((!in_interact_range(src, user) > 1 && src.loc != user))
 			return
 		t = copytext(adminscrub(t),1,128)
 		if (t)
@@ -313,7 +313,7 @@
 		return
 	if (src.cremating)
 		return //don't let you cremate something twice or w/e
-	if (!src.contents || !src.contents.len)
+	if (!src.contents || !length(src.contents))
 		src.visible_message("<span class='alert'>You hear a hollow crackle, but nothing else happens.</span>")
 		return
 
@@ -440,7 +440,7 @@
 				if (C.id == src.id)
 					src.crematoriums.Add(C)
 					C.igniter = src
-		for (var/obj/crematorium/C as() in src.crematoriums)
+		for (var/obj/crematorium/C as anything in src.crematoriums)
 			if (!C.cremating)
 				C.cremate(user)
 	else
@@ -488,7 +488,7 @@
 
 	attack_hand(mob/user as mob)
 		if (cremating)
-			boutput(usr, "<span class='alert'>It's locked.</span>")
+			boutput(user, "<span class='alert'>It's locked.</span>")
 			return
 		if ((src.connected && src.connected.loc != src) && (src.locked == 0))
 			for(var/atom/movable/A as mob|obj in src.connected.loc)
@@ -524,7 +524,7 @@
 				return
 			if (user.equipped() != P)
 				return
-			if ((!in_interact_range(src, usr) > 1 && src.loc != user))
+			if ((!in_interact_range(src, user) > 1 && src.loc != user))
 				return
 			t = copytext(adminscrub(t),1,128)
 			if (t)
@@ -559,7 +559,7 @@
 			return
 		if (src.cremating)
 			return //don't let you cremate something twice or w/e
-		if (!src.contents || !src.contents.len)
+		if (!src.contents || !length(src.contents))
 			src.visible_message("<span class='alert'>You hear the lights turn on for a second, then turn off.</span>")
 			return
 
@@ -659,9 +659,9 @@
 
 	attackby(var/obj/item/P as obj, mob/user as mob)
 		..()
-		if (istype(P, /obj/item/light/tube) && !src.contents.len)
+		if (istype(P, /obj/item/light/tube) && !length(src.contents))
 			var/obj/item/light/tube/G = P
-			boutput(usr, "<span class='notice'>You put \the [G.name] into \the [src.name].</span>")
+			boutput(user, "<span class='notice'>You put \the [G.name] into \the [src.name].</span>")
 			user.drop_item()
 			G.set_loc(src)
 			src.tanningtube = G
@@ -672,8 +672,8 @@
 				light.set_color(tanningtube.color_r, tanningtube.color_g, tanningtube.color_b)
 				light.set_brightness(0.5)
 
-		if (ispryingtool(P) && src.contents.len) //pry out the tube with a crowbar
-			boutput(usr, "<span class='notice'>You pry out \the [src.tanningtube.name] from \the [src.name].</span>")
+		if (ispryingtool(P) && length(src.contents)) //pry out the tube with a crowbar
+			boutput(user, "<span class='notice'>You pry out \the [src.tanningtube.name] from \the [src.name].</span>")
 			src.tanningtube.set_loc(src.loc)
 			src.tanningtube = null
 			generate_overlay_icon() //nulling overlay

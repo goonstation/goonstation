@@ -741,10 +741,32 @@
 	rewardActivate(var/mob/activator)
 		if (isAI(activator))
 			var/mob/living/silicon/ai/A = activator
+			if (isAIeye(activator))
+				var/mob/dead/aieye/AE = activator
+				A = AE.mainframe
 			A.custom_emotions = ai_emotions | list("ROGUE(reward)" = "ai-red")
 			A.faceEmotion = "ai-red"
 			A.set_color("#EE0000")
 			//A.icon_state = "ai-malf"
+			return 1
+		else
+			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+
+/datum/achievementReward/ai_tetris
+	title = "(AI Skin) Tetris"
+	desc = "Turns you into a tetris-playing machine!"
+	required_medal = "Block Stacker"
+
+	rewardActivate(var/mob/activator)
+		if (isAI(activator))
+			var/mob/living/silicon/ai/A = activator
+			if (isAIeye(activator))
+				var/mob/dead/aieye/AE = activator
+				A = AE.mainframe
+			A.custom_emotions = ai_emotions | list("Tetris (reward)" = "ai-tetris")
+			A.faceEmotion = "ai-tetris"
+			A.set_color("#111111")
+			A.update_appearance()
 			return 1
 		else
 			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
@@ -812,6 +834,7 @@
 			gunmod.name = "Golden [gunmod.name]"
 			gunmod.icon_state = "[initial(gunmod.icon_state)]-golden"
 			gunmod.item_state = "[initial(gunmod.item_state)]-golden"
+			gunmod.gilded = TRUE
 			gunmod.update_icon()
 			H.update_inhands()
 			return 1

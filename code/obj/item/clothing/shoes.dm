@@ -334,27 +334,13 @@
 	equipped(var/mob/user, var/slot)
 		..()
 		user.visible_message("<b>[user]</b> starts hopping around!","You start hopping around.")
-		src.moonloop(user)
-		return
+		animate(user, pixel_y=3, time=0.1 SECONDS, loop=-1, flags=ANIMATION_PARALLEL | ANIMATION_RELATIVE)
+		animate(pixel_y=-6, time=0.2 SECONDS, flags=ANIMATION_RELATIVE)
+		animate(pixel_y=3, time=0.1 SECONDS, flags=ANIMATION_RELATIVE)
 
 	unequipped(var/mob/user)
-		user.pixel_y = 0
+		animate(user)
 		..()
-		return
-
-	proc/moonloop(var/mob/user)
-		SPAWN_DBG(0)
-			while(user && !user.stat && user:shoes == src)
-				if(user.pixel_y < 12)
-					user.pixel_y += 3
-					sleep(0.1 SECONDS)
-				else
-					user.pixel_y -= 6
-					sleep(0.1 SECONDS)
-
-			if(user)
-				user.pixel_y = 0
-		return
 
 /obj/item/clothing/shoes/cowboy
 	name = "Cowboy boots"
@@ -367,6 +353,7 @@
 	color = "#FF0000"
 	step_sound = "explosion"
 	contraband = 10
+	step_priority = 999
 	is_syndicate = 1
 
 /obj/item/clothing/shoes/ziggy
@@ -460,6 +447,13 @@
 			. = "Looks like some big shoes to fill!"
 		. = ..()
 
+/obj/item/clothing/shoes/swat/knight // so heavy you can't get shoved!
+	name = "combat sabatons"
+	desc = "Massive, armored footwear for syndicate super-heavies."
+	icon_state = "swatheavy"
+	magnetic = 1
+	c_flags = NOSLIP
+
 /obj/item/clothing/shoes/fuzzy //not boolean slippers
 	name = "fuzzy slippers"
 	desc = "A pair of cute little pink rabbit slippers."
@@ -540,11 +534,11 @@
 		switch (action)
 			if ("Toggle")
 				src.on = !(src.on)
-				boutput(usr, "<span class='notice'>The jet boots are now [src.on ? "on" : "off"].</span>")
+				boutput(user, "<span class='notice'>The jet boots are now [src.on ? "on" : "off"].</span>")
 				return
 			if ("Remove Tank")
-				boutput(usr, "<span class='notice'>You eject [src.tank] from [src].</span>")
-				usr.put_in_hand_or_drop(src.tank)
+				boutput(user, "<span class='notice'>You eject [src.tank] from [src].</span>")
+				user.put_in_hand_or_drop(src.tank)
 				src.tank = null
 				return
 		..()
@@ -624,3 +618,48 @@
 			else
 				kick_bonus = 0
 		return
+
+/obj/item/clothing/shoes/bootsblk
+	name = "Black Boots"
+	icon_state = "bootsblk"
+	desc = "Fashionable, synthleather black boots."
+
+/obj/item/clothing/shoes/bootswht
+	name = "White Boots"
+	icon_state = "bootswht"
+	desc = "Fashionable, synthleather white boots."
+
+/obj/item/clothing/shoes/bootsbrn
+	name = "Brown Boots"
+	icon_state = "bootsbrn"
+	desc = "Fashionable, synthleather brown boots."
+
+/obj/item/clothing/shoes/bootsblu
+	name = "Blue Boots"
+	icon_state = "bootsblu"
+	desc = "Fashionable, synthleather blue boots."
+
+/obj/item/clothing/shoes/flatsblk
+	name = "Black Flats"
+	icon_state = "flatsblk"
+	desc = "Simple black flats. Goes with anything!"
+
+/obj/item/clothing/shoes/flatswht
+	name = "White Flats"
+	icon_state = "flatswht"
+	desc = "Simple white flats. Minimal."
+
+/obj/item/clothing/shoes/flatsbrn
+	name = "Brown Flats"
+	icon_state = "flatsbrn"
+	desc = "Simple brown flats. Would look great with tweed."
+
+/obj/item/clothing/shoes/flatsblu
+	name = "Blue Flats"
+	icon_state = "flatsblu"
+	desc = "Simple blue flats. Reminds you of the ocean."
+
+/obj/item/clothing/shoes/flatspnk
+	name = "Pink Flats"
+	icon_state = "flatspnk"
+	desc = "Simple pink flats. So bright they almost glow! Almost."

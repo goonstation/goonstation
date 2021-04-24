@@ -10,11 +10,11 @@ Fibre wire
 */
 
 
-//////////////////////////////
+//--------------------------//
 //The pretty darn mean skull
 //That's nice to ghosts
 //		Yay
-////////////////////////////
+//-------------------------//
 /obj/item/soulskull
 	name = "ominous skull"
 	desc = "This skull gives you the heebie-jeebies."
@@ -59,7 +59,7 @@ Fibre wire
 					possible_targets.Add(O)
 
 
-		if(!priority_targets.len && !possible_targets.len) return //Gotta have a ghostie
+		if(!priority_targets.len && !length(possible_targets)) return //Gotta have a ghostie
 
 		being_mean = 1
 		H.canmove = 0
@@ -166,9 +166,9 @@ proc/Create_Tommyname()
 		src.bioHolder.AddEffect("accent_tommy")
 	src.update_colorful_parts()
 
-//////////////////////////////
+//------------------------//
 //Tommy gun
-////////////////////////////
+//------------------------//
 
 /datum/projectile/tommy
 	name = "space-tommy disruption"
@@ -854,7 +854,7 @@ proc/Create_Tommyname()
 /obj/item/garrote
 	name = "fibre wire"
 	desc = "A sturdy wire between two handles. Could be used with both hands to really ruin someone's day."
-	w_class = 1
+	w_class = W_CLASS_TINY
 	c_flags = EQUIPPED_WHILE_HELD
 
 	icon = 'icons/obj/items/items.dmi'
@@ -885,10 +885,10 @@ proc/Create_Tommyname()
 
 	if(wire_readied)
 		playsound(usr, 'sound/items/garrote_twang.ogg', 25,5)
-		w_class = 4
+		w_class = W_CLASS_BULKY
 	else
 		drop_grab()
-		w_class = 1
+		w_class = W_CLASS_TINY
 
 	update_state()
 

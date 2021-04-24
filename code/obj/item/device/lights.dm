@@ -45,7 +45,7 @@
 	item_state = "flight"
 	icon_on = "flight1"
 	icon_off = "flight0"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
 	m_amt = 50
 	g_amt = 20
@@ -71,7 +71,7 @@
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged)
 			if (user)
-				usr.show_text("You short out the voltage regulator in the lighting circuit.", "blue")
+				user.show_text("You short out the voltage regulator in the lighting circuit.", "blue")
 			src.emagged = 1
 		else
 			if (user)
@@ -126,7 +126,7 @@
 	var/base_state = "glowstick-green"
 	name = "emergency glowstick"
 	desc = "For emergency use only. Not for use in illegal lightswitch raves."
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	flags = ONBELT | TABLEPASS
 	var/heated = 0
 	col_r = 0.0
@@ -438,7 +438,7 @@
 	icon_state = "lava_lamp0"
 	icon_on = "lava_lamp1"
 	icon_off = "lava_lamp0"
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	desc = "An ancient relic from a simpler, more funky time."
 	col_r = 0.85
 	col_g = 0.45

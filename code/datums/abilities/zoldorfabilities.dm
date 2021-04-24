@@ -338,7 +338,7 @@
 		if(istype(user.loc,/obj/machinery/playerzoldorf))
 			var/obj/machinery/playerzoldorf/pz = user.loc
 			user.homebooth = pz
-			var/staticiterations = pz.brandlist.len
+			var/staticiterations = length(pz.brandlist)
 			for(var/i=1,i<=staticiterations,i++)
 				if(pz.brandlist[i]==null)
 					pz.brandlist -= pz.brandlist[i]

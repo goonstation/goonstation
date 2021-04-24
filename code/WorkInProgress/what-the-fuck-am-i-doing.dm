@@ -110,7 +110,7 @@
 			if (L.pulling == H)
 				L.pulling = null
 
-			src.add_fingerprint(usr)
+			src.add_fingerprint(user)
 			src.accept_occupant(H)
 			src.update_icon()
 			qdel(G)

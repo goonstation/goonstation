@@ -247,6 +247,8 @@
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
 	mob_properties = list()
+	src.chat_text = new
+	START_TRACKING
 
 /// do you want your mob to have custom hairstyles and stuff? don't use spawns but set all of those properties here
 /mob/proc/initializeBioholder()
@@ -297,6 +299,7 @@
 		G.affecting.glide_size = src.glide_size
 
 /mob/disposing()
+	STOP_TRACKING
 	for(var/mob/dead/target_observer/TO in observers)
 		observers -= TO
 		TO.ghostize()
@@ -615,7 +618,7 @@
 						if (!T.density)
 							sfloors += T
 					var/arcs = 8
-					while (arcs > 0 && sfloors.len)
+					while (arcs > 0 && length(sfloors))
 						arcs--
 						var/turf/Q = pick(sfloors)
 						arcFlashTurf(src, Q, 3000)
@@ -771,6 +774,8 @@
 		C.eye = src.eye
 		C.pixel_x = src.eye_pixel_x
 		C.pixel_y = src.eye_pixel_y
+	else if(!isturf(src.loc))
+		C.eye = src.loc
 	else
 		C.eye = src
 		C.pixel_x = src.loc_pixel_x
@@ -1561,7 +1566,7 @@
 
 /// Removes whichever matrix is associated with the label. Must be a string!
 /mob/proc/remove_color_matrix(var/label)
-	if (!label || !src.color_matrices.len)
+	if (!label || !length(src.color_matrices))
 		return
 
 	if(label == "all")
@@ -2654,20 +2659,25 @@
 				continue
 			else
 				if (force_instead || alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
-					var/datum/data/record/B = FindBankAccountByName(src.real_name)
-					if (B?.fields["name"])
-						B.fields["name"] = newname
-					for (var/obj/item/card/id/ID in src.contents)
-						ID.registered = newname
-						ID.update_name()
-					for (var/obj/item/device/pda2/PDA in src.contents)
-						PDA.registered = newname
-						PDA.owner = newname
-						PDA.name = "PDA-[newname]"
-						if(PDA.ID_card)
-							var/obj/item/card/id/ID = PDA.ID_card
+					if(!src.traitHolder.hasTrait("immigrant"))// stowaway entertainers shouldn't be on the manifest
+						for (var/L in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
+							if (L)
+								var/datum/data/record/R = FindRecordByFieldValue(L, "name", src.real_name)
+								if (R)
+									R.fields["name"] = newname
+									if (R.fields["full_name"])
+										R.fields["full_name"] = newname
+						for (var/obj/item/card/id/ID in src.contents)
 							ID.registered = newname
 							ID.update_name()
+						for (var/obj/item/device/pda2/PDA in src.contents)
+							PDA.registered = newname
+							PDA.owner = newname
+							PDA.name = "PDA-[newname]"
+							if(PDA.ID_card)
+								var/obj/item/card/id/ID = PDA.ID_card
+								ID.registered = newname
+								ID.update_name()
 					src.real_name = newname
 					src.name = newname
 					return 1
@@ -2873,6 +2883,9 @@
 /mob/proc/handle_stamina_updates()
 	.= 0
 
+/mob/proc/update_canmove()
+	return
+
 /*/mob/proc/glove_weaponcheck()
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -2883,6 +2896,8 @@
 
 /mob/proc/sell_soul(var/amount, var/reduce_health=1, var/allow_overflow=0)
 	if(!src.mind)
+		return 0
+	if(isnpc(src))
 		return 0
 	if(allow_overflow)
 		amount = max(1, min(src.mind.soul, amount)) // can't sell less than 1
@@ -2902,9 +2917,7 @@
 	src.mind.soul -= amount
 
 	if(src.mind.soul <= 0)
-		total_souls_sold++
-		total_souls_value++
-
+		souladjust(1)
 	return 1
 
 /mob/proc/get_id()
@@ -2966,7 +2979,7 @@
 		if (I.loc == get_turf(I))
 			items += I
 	if (items.len)
-		var/atom/A = input(usr, "What do you want to pick up?") as() in items
+		var/atom/A = input(usr, "What do you want to pick up?") as anything in items
 		A.interact(src)
 
 /mob/proc/can_eat(var/atom/A)

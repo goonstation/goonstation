@@ -24,10 +24,10 @@
 				A.effect_click_tile(src,user,U)
 			else
 				boutput(user, "<b>[src]</b> [A.error_phrase]")
-			src.ArtifactFaultUsed(user)
 
 /datum/artifact/telewand
 	associated_object = /obj/item/artifact/teleport_wand
+	type_name = "Teleportation Wand"
 	rarity_weight = 200
 	validtypes = list("wizard","eldritch","precursor")
 	react_xray = list(10,75,90,11,"ANOMALOUS")
@@ -71,6 +71,7 @@
 		var/turf/start_loc = get_turf(user)
 		playsound(start_loc, wand_sound, 50, 1, -1)
 		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(T,particle_sprite,particle_color))
+		O.ArtifactFaultUsed(user)
 		return
 
 	proc/can_teleport_here(var/turf/T)

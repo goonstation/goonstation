@@ -91,10 +91,12 @@ proc/check_compid_list(var/client/C)
 							del(C) //RIP
 					message_admins("[key_name(C)][msg]")
 					logTheThing("admin", C, null, msg)
+					logTheThing("diary", C, null, msg, "admin")
 
 				else
 					message_admins("[key_name(C)][msg]")
 					logTheThing("admin", C, null, "[key_name(C)][msg]")
+					logTheThing("diary", C, null, "[key_name(C)][msg]", "admin")
 
 				ircmsg["msg"] = "(IP: [C.address]) [msg]"
 				ircbot.export("admin", ircmsg)
@@ -129,6 +131,7 @@ proc/do_computerid_test(var/client/C)
 	ircbot.export("admin", ircmsg)
 	message_admins("[key_name(C)][msg]")
 	logTheThing("admin", C, null, msg)
+	logTheThing("diary", C, null, msg, "admin")
 	if(is_fucker)
 		//message_admins("[key_name(C)] was automatically banned for using the CID DLL.")
 		var/banData[] = new()
@@ -158,7 +161,7 @@ proc/view_client_compid_list(mob/user, var/C)
 			user.show_text("Could not find the ckey [C]!", "red")
 			return
 	else
-		message_coders("[key_name(usr)] gave the compid thing [C]; that's neither text nor a client. What a jerk.")
+		message_coders("[key_name(user)] gave the compid thing [C]; that's neither text nor a client. What a jerk.")
 		return
 
 	var/dat = {"<html>

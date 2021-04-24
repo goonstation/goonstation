@@ -59,7 +59,8 @@
 		var/ircmsg[] = new()
 		ircmsg["key"] = "Loggo"
 		ircmsg["name"] = "First Adminhelp Notice"
-		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
+		// ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
+		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html"
 		ircbot.export("help", ircmsg)
 
 	var/ircmsg[] = new()
@@ -132,6 +133,9 @@
 	boutput(client.mob, "<span class='mhelp'><b>MENTORHELP: You</b>: [msg]</span>")
 	logTheThing("mentor_help", client.mob, null, "MENTORHELP: [msg]")
 	logTheThing("diary", client.mob, null, "MENTORHELP: [msg]", "mhelp")
+#ifdef DATALOGGER
+	game_stats.Increment("mentorhelps")
+#endif
 	var/dead = isdead(client.mob) ? "Dead" : ""
 	var/ircmsg[] = new()
 	ircmsg["key"] = client.key
@@ -167,6 +171,9 @@
 	if(!msg)
 		msg = input("Please enter your prayer to any gods that may be listening - be careful what you wish for as the gods may be the vengeful sort!") as null|text
 
+	if(msg)
+		phrase_log.log_phrase("prayer", msg)
+
 	msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN)
 
 	if (!msg)
@@ -179,7 +186,9 @@
 	if (client.mob.mind)
 		src.add_karma(-1)
 
-	if (client.mob.traitHolder?.hasTrait("atheist"))
+	var/is_atheist = client.mob.traitHolder?.hasTrait("atheist")
+
+	if (is_atheist)
 		boutput(client.mob, "You feel ridiculous doing it, but manage to get through a silent prayer,</B> <I>\"[msg]\"</I>")
 		client.mob.take_oxygen_deprivation(10)
 		logTheThing("admin_help", client.mob, null, "PRAYER (atheist): [msg]")
@@ -188,6 +197,11 @@
 		boutput(client.mob, "<B>You whisper a silent prayer,</B> <I>\"[msg]\"</I>")
 		logTheThing("admin_help", client.mob, null, "PRAYER: [msg]")
 		logTheThing("diary", client.mob, null, "PRAYER: [msg]", "ahelp")
+
+#ifdef DATALOGGER
+	game_stats.Increment("prayers")
+#endif
+
 	var/audio
 
 	for (var/client/C)
@@ -197,7 +211,7 @@
 			if (!M.client.holder.hear_prayers || (M.client.player_mode == 1 && M.client.player_mode_ahelp == 0)) //XOR for admin prayer setting and player mode w/ no ahelps
 				continue
 			else
-				boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.5em'":""]><B>PRAYER: </B><a href='?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.ckey]'>[client.key]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'>: <I>[msg]</I></span>")
+				boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.5em'":""]><B>PRAYER: [is_atheist ? "(ATHEIST)" : ""]</B><a href='?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.ckey]'>[client.key]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'>: <I>[msg]</I></span>")
 				if(M.client.holder.audible_prayers == 1)
 					M << sound("sound/misc/boing/[rand(1,6)].ogg", volume=50, wait=0)
 				else if(M.client.holder.audible_prayers == 2) // this is a terrible idea

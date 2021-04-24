@@ -22,6 +22,7 @@ export const ResearchTab = (props, context) => {
     availableResearch,
     finishedResearch,
     savedMutations,
+    research,
   } = data;
 
   const {
@@ -66,12 +67,11 @@ export const ResearchTab = (props, context) => {
         {availableResearch.map((ar, tier) => (
           <Section
             key={tier}
-            level={2}
             title={"Tier " + (tier + 1)}>
             {ar.length ? ar.map(r => (
               <Section
                 key={r.ref}
-                title={r.name}
+                title={research[r.ref].name}
                 buttons={
                   <Button
                     icon="flask"
@@ -81,7 +81,7 @@ export const ResearchTab = (props, context) => {
                     {"Research (" + r.cost + " mat, " + r.time + "s)"}
                   </Button>
                 }>
-                <Description text={r.desc} />
+                <Description text={research[r.ref].desc} />
               </Section>
             )) : "No research is currently available at this tier."}
           </Section>
@@ -91,13 +91,12 @@ export const ResearchTab = (props, context) => {
         {finishedResearch.map((fr, tier) => (
           <Section
             key={tier}
-            level={2}
             title={"Tier " + (tier + 1)}>
             {fr.length ? fr.map(r => (
               <Section
-                key={r.name}
-                title={r.name}>
-                <Description text={r.desc} />
+                key={research[r.ref].name}
+                title={research[r.ref].name}>
+                <Description text={research[r.ref].desc} />
               </Section>
             )) : "No research has been completed at this tier."}
           </Section>

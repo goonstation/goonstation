@@ -560,11 +560,15 @@
 					for(var/obj/item/O in src.contents)
 						if (O.material && O.material.mat_id == mat_id)
 							if (!ejectamt)
-								ejectamt = input(usr,"How many units do you want to eject?","Eject Materials") as num
-								if (ejectamt > O.amount || ejectamt <= 0 || src.mode != "ready" || get_dist(src, usr) > 1)
+								ejectamt = input(usr,"How many material pieces (10 units per) do you want to eject?","Eject Materials") as num
+								if (ejectamt <= 0 || src.mode != "ready" || get_dist(src, usr) > 1)
 									break
 							if (!ejectturf)
 								break
+							if (ejectamt > O.amount)
+								playsound(src.loc, src.sound_grump, 50, 1)
+								boutput(usr, "<span class='alert'>There's not that much material in [name]. It has ejected what it could.</span>")
+								ejectamt = O.amount
 							src.update_resource_amount(mat_id, -ejectamt * 10) // ejectamt will always be <= actual amount
 							if (ejectamt == O.amount)
 								O.set_loc(get_output_location(O,1))
@@ -799,7 +803,7 @@
 							//any non-divisible amounts go to the shipping budget
 							var/leftovers = 0
 							if(accounts.len)
-								leftovers = subtotal%accounts.len
+								leftovers = length(subtotal%accounts)
 								var/divisible_amount = subtotal - leftovers
 								if(divisible_amount)
 									var/amount_per_account = divisible_amount/length(accounts)
@@ -1762,9 +1766,8 @@
 			playsound(src.loc, src.sound_damaged, 50, 2)
 			if (src.health == 0)
 				src.visible_message("<span class='alert'><b>[src.name] is destroyed!</b></span>")
-				SPAWN_DBG(0)
-					robogibs(src.loc,null)
 				playsound(src.loc, src.sound_destroyed, 50, 2)
+				robogibs(src.loc, null)
 				qdel(src)
 				return
 			if (src.health <= 70 && !src.malfunction && prob(33))
@@ -1893,9 +1896,9 @@
 	desc = "An old manilla folder covered in stains. It looks like it'll fall apart at the slightest touch."
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "folder"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throwforce = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 10
 
@@ -1920,6 +1923,13 @@
 
 /obj/item/paper/manufacturer_blueprint/loafer
 	blueprint = /datum/manufacture/mechanics/loafer
+
+
+
+/******************** AI Display Blueprints (should be temporary but we know how that goes in coding) *******************/
+
+/obj/item/paper/manufacturer_blueprint/ai_status_display
+	blueprint = /datum/manufacture/mechanics/ai_status_display
 
 
 /******************** Alastor Pattern Thruster Blueprints *******************/
@@ -1989,6 +1999,7 @@
 		/datum/manufacture/fluidcanister,
 		/datum/manufacture/patch)
 	hidden = list(/datum/manufacture/RCDammo,
+		/datum/manufacture/RCDammomedium,
 		/datum/manufacture/RCDammolarge,
 		/datum/manufacture/bottle,
 		/datum/manufacture/vuvuzela,
@@ -2137,6 +2148,7 @@
 		/datum/manufacture/scrubs_orange,
 		/datum/manufacture/scrubs_pink,
 		/datum/manufacture/patient_gown,
+		/datum/manufacture/eyepatch,
 		/datum/manufacture/blindfold,
 		/datum/manufacture/muzzle,
 		/datum/manufacture/body_bag,
@@ -2210,7 +2222,9 @@
 
 	hidden = list(/datum/manufacture/RCD,
 	/datum/manufacture/RCDammo,
-	/datum/manufacture/RCDammolarge)
+	/datum/manufacture/RCDammomedium,
+	/datum/manufacture/RCDammolarge,
+	/datum/manufacture/sds)
 
 /obj/machinery/manufacturer/hangar
 	name = "Ship Component Fabricator"
@@ -2245,6 +2259,10 @@
 		/datum/manufacture/pod/lock,
 		/datum/manufacture/beaconkit
 	)
+	hidden = list(
+		/datum/manufacture/pod/sps,
+		/datum/manufacture/pod/srs
+		)
 
 /obj/machinery/manufacturer/uniform // add more stuff to this as needed, but it should be for regular uniforms the HoP might hand out, not tons of gimmicks. -cogwerks
 	name = "Uniform Manufacturer"
@@ -2267,6 +2285,7 @@
 	/datum/manufacture/jumpsuit_brown,
 	/datum/manufacture/jumpsuit_black,
 	/datum/manufacture/jumpsuit_orange,
+	/datum/manufacture/pride_lgbt,
 	/datum/manufacture/pride_ace,
 	/datum/manufacture/pride_aro,
 	/datum/manufacture/pride_bi,
@@ -2292,7 +2311,8 @@
 
 	hidden = list(/datum/manufacture/breathmask,
 	/datum/manufacture/patch,
-	/datum/manufacture/hat_ltophat)
+	/datum/manufacture/hat_ltophat,
+	/datum/manufacture/monke)
 	///datum/manufacture/hermes) //all hail the shoe lord - needs adjusting for the new movement system which I cba to do right now
 
 /// cogwerks - a gas extractor for the engine
@@ -2364,6 +2384,7 @@
 	/datum/manufacture/jumpsuit_brown,
 	/datum/manufacture/jumpsuit_black,
 	/datum/manufacture/jumpsuit_orange,
+	/datum/manufacture/pride_lgbt,
 	/datum/manufacture/pride_ace,
 	/datum/manufacture/pride_aro,
 	/datum/manufacture/pride_bi,
@@ -2500,7 +2521,7 @@
 	onDelete()
 		..()
 		MA.action_bar = null
-		if (src.completed && MA.queue.len)
+		if (src.completed && length(MA.queue))
 			SPAWN_DBG(0.1 SECONDS)
 				MA.begin_work(1)
 
@@ -2508,7 +2529,7 @@
 
 /proc/build_manufacturer_icons()
 	// pre-build all the icons for shit manufacturers make
-	for (var/datum/manufacture/P as() in typesof(/datum/manufacture))
+	for (var/datum/manufacture/P as anything in typesof(/datum/manufacture))
 		if (ispath(P, /datum/manufacture/mechanics))
 			var/datum/manufacture/mechanics/M = P
 			if (!initial(M.frame_path))

@@ -448,7 +448,7 @@ proc/get_angle(atom/a, atom/b)
 	* Given a list, returns a text string representation of the list's contents.
 	*/
 /proc/english_list(var/list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "," )
-	var/total = input.len
+	var/total = length(input)
 	if (!total)
 		return "[nothing_text]"
 	else if (total == 1)
@@ -901,7 +901,7 @@ proc/get_angle(atom/a, atom/b)
 
 // extends pick() to associated lists
 /proc/alist_pick(var/list/L)
-	if(!L || !L.len)
+	if(!L || !length(L))
 		return null
 	return L[pick(L)]
 
@@ -1195,7 +1195,7 @@ proc/get_angle(atom/a, atom/b)
 
 /proc/all_hearers(var/range,var/centre)
 	. = list()
-	for(var/atom/A as() in (view(range,centre) | hearers(range, centre))) //Why was this view(). Oh no, the invisible man hears naught 'cause the sound can't find his ears.
+	for(var/atom/A as anything in (view(range,centre) | hearers(range, centre))) //Why was this view(). Oh no, the invisible man hears naught 'cause the sound can't find his ears.
 		if (ismob(A))
 			. += A
 		if (isobj(A) || ismob(A))
@@ -1212,7 +1212,7 @@ proc/get_angle(atom/a, atom/b)
 				if (can_hear)
 					. += M
 	if(length(by_cat[TR_CAT_OMNIPRESENT_MOBS]))
-		for(var/mob/M as() in by_cat[TR_CAT_OMNIPRESENT_MOBS])
+		for(var/mob/M as anything in by_cat[TR_CAT_OMNIPRESENT_MOBS])
 			if(get_step(M, 0)?.z == get_step(centre, 0)?.z)
 				. |= M
 
@@ -1220,20 +1220,20 @@ proc/get_angle(atom/a, atom/b)
 
 /proc/all_viewers(var/range,var/centre)
 	. = list()
-	for (var/atom/A as() in viewers(range,centre))
+	for (var/atom/A as anything in viewers(range,centre))
 		if (ismob(A))
 			. += A
 		else if (isobj(A))
 			for(var/mob/M in A.contents)
 				. += M
 	if(length(by_cat[TR_CAT_OMNIPRESENT_MOBS]))
-		for(var/mob/M as() in by_cat[TR_CAT_OMNIPRESENT_MOBS])
+		for(var/mob/M as anything in by_cat[TR_CAT_OMNIPRESENT_MOBS])
 			if(get_step(M, 0)?.z == get_step(centre, 0)?.z)
 				. |= M
 
 /proc/all_range(var/range,var/centre) //above two are blocked by opaque objects
 	. = list()
-	for (var/atom/A as() in range(range,centre))
+	for (var/atom/A as anything in range(range,centre))
 		if (ismob(A))
 			. += A
 		else if (isobj(A))
@@ -1421,7 +1421,7 @@ var/list/hex_chars = list("0","1","2","3","4","5","6","7","8","9","A","B","C","D
 var/list/all_functional_reagent_ids = list()
 
 proc/get_all_functional_reagent_ids()
-	for (var/datum/reagent/R as() in filtered_concrete_typesof(/datum/reagent, /proc/filter_blacklisted_chem))
+	for (var/datum/reagent/R as anything in filtered_concrete_typesof(/datum/reagent, /proc/filter_blacklisted_chem))
 		all_functional_reagent_ids += initial(R.id)
 
 
@@ -1430,7 +1430,7 @@ proc/filter_blacklisted_chem(type)
 	return !initial(fakeInstance.random_chem_blacklisted)
 
 proc/reagent_id_to_name(var/reagent_id)
-	if (!reagent_id || !reagents_cache.len)
+	if (!reagent_id || !length(reagents_cache))
 		return
 	var/datum/reagent/R = reagents_cache[reagent_id]
 	if (!R)
@@ -1448,7 +1448,7 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 
 	var/picker = rand(1,scalemax)
 	picker += mod
-	var/list_counter = category_boundaries.len
+	var/list_counter = length(category_boundaries)
 
 	for (var/X in category_boundaries)
 		if (!isnum(X))
@@ -1589,7 +1589,7 @@ var/list/english_num = list("0" = "zero", "1" = "one", "2" = "two", "3" = "three
 "20" = "twenty", "30" = "thirty", "40" = "forty", "50" = "fifty", "60" = "sixty", "70" = "seventy", "80" = "eighty", "90" = "ninety")
 
 /proc/get_english_num(var/num, var/sep) // can only do up to 999,999 because of scientific notation kicking in after 6 digits
-	if (!num || !english_num.len)
+	if (!num || !length(english_num))
 		return
 
 	DEBUG_MESSAGE("<b>get_english_num recieves num \"[num]\"</b>")
@@ -2118,7 +2118,7 @@ var/global/list/allowed_restricted_z_areas
 	if (!center || !isnum(range) || range <= 0)
 		return 0
 
-	if (!islist(smash) || !smash.len)
+	if (!islist(smash) || !length(smash))
 		return 0
 
 	var/turf/CT
@@ -2456,7 +2456,7 @@ proc/angle_to_vector(ang)
   * * TA: Target Atom. The thing that the user is adding the reagent to
   */
 proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/custom_message = "")
-	if (!whitelist || (!TA || !TA.reagents) || (islist(whitelist) && !whitelist.len))
+	if (!whitelist || (!TA || !TA.reagents) || (islist(whitelist) && !length(whitelist)))
 		return
 	if (!custom_message)
 		custom_message = "<span class='alert'>[TA] identifies and removes a harmful substance.</span>"
@@ -2472,9 +2472,9 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 		else if (ismob(TA.loc))
 			var/mob/M = TA.loc
 			boutput(M, "[custom_message]")
-		else if(ismob(usr))
+		else if(ismob(user))
 			 // some procs don't know user, for instance because they are in on_reagent_change
-			boutput(usr, "[custom_message]")
+			boutput(user, "[custom_message]")
 		else
 			TA.visible_message("[custom_message]")
 
@@ -2621,6 +2621,12 @@ proc/keep_truthy(some_list)
 		if(x)
 			. += x
 
+//TODO: refactor the below two into one proc
+
+/// Returns true if not incapicitated and unhandcuffed (by default)
+proc/can_act(var/mob/M, var/include_cuffs = 1)
+	return !((include_cuffs && M.hasStatus("handcuffed")) || is_incapacitated(M))
+
 /// Returns true if the given mob is incapacitated
 proc/is_incapacitated(mob/M)
 	return (\
@@ -2628,3 +2634,11 @@ proc/is_incapacitated(mob/M)
 		M.hasStatus("weakened") || \
 		M.hasStatus("paralysis") || \
 		M.stat)
+
+/// sets up the list of ringtones players can select through character setup
+proc/get_all_character_setup_ringtones()
+	if(!length(selectable_ringtones))
+		for (var/datum/ringtone/R as anything in filtered_concrete_typesof(/datum/ringtone, /proc/filter_is_character_setup_ringtone))
+			var/datum/ringtone/R_prime = new R
+			selectable_ringtones[R_prime.name] = R_prime
+	return selectable_ringtones

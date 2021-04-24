@@ -41,14 +41,21 @@
  */
 
 /obj/tombstone
-	name = "Tombstone"
-	desc = "Here lies Tango N. Vectif, killed by a circus bear.  RIP."
+	name = "tombstone"
+	//desc = "Here lies Tango N. Vectif, killed by a circus bear.  RIP." // changing for spawnability
+	desc = "Rest in peace."
 	icon = 'icons/misc/halloween.dmi'
 	icon_state = "tombstone"
 	anchored = 1
 	density = 1
 	var/robbed = 0
 	var/special = null //The path of whatever special loot is robbed from this grave.
+
+	memorial
+		name = "memorial marker"
+		desc = "Rest in peace."
+		icon = 'icons/misc/halloween.dmi'
+		icon_state = "memorial"
 
 /*
  *	Some sort of bizarre mind gizmo!
@@ -337,7 +344,7 @@
 					stoneman.layer = MOB_LAYER
 
 					var/icon/composite = icon(M.icon, M.icon_state, M.dir, 1)
-					for (var/image/I as() in M.overlays)
+					for (var/image/I as anything in M.overlays)
 						composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 					composite.ColorTone( rgb(188,188,188) )
 					stoneman.icon = composite
@@ -495,7 +502,7 @@
 			stoneman.layer = MOB_LAYER
 
 			var/icon/composite = icon(M.icon, M.icon_state, M.dir, 1)
-			for (var/image/I as() in M.overlays)
+			for (var/image/I as anything in M.overlays)
 				composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 			composite.ColorTone( rgb(188,188,188) )
 			stoneman.icon = composite

@@ -3,7 +3,7 @@
 	desc = "<b><span class='alert'>WARNING:</span> CHOKING HAZARD</b> - Small parts. Not for children under 3 years."
 	icon = 'icons/obj/items/figures.dmi'
 	icon_state = "fig-"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 1
 	throw_speed = 4
 	throw_range = 7
@@ -36,7 +36,7 @@
 			var/potential_donator_ckey = usr?.mind.ckey
 			var/donator_figtype = null
 			if (potential_donator_ckey) // check if the player has a figurine (therefore a donator)
-				for (var/datum/figure_info/patreon/fig as() in concrete_typesof(/datum/figure_info/patreon))
+				for (var/datum/figure_info/patreon/fig as anything in concrete_typesof(/datum/figure_info/patreon))
 					if (initial(fig.ckey) == potential_donator_ckey)
 						donator_figtype = fig
 						src.patreon_prob *= 2	// x2 chance of getting patreon figure
@@ -695,6 +695,16 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Neo Xzilon"
 		icon_state = "neoxzilon"
 		ckey = "retrino"
+
+	hazel
+		name = "\improper Hazel Adenine"
+		icon_state = "hazel"
+		ckey = "hazelmaecry"
+
+	vicky
+		name = "\improper Vicky Hudson"
+		icon_state = "vicky"
+		ckey = "mrprogamer96"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"

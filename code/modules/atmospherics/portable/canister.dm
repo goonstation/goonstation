@@ -346,7 +346,7 @@
 				overlay_state = "overlay_safety_on"
 				src.det = Det
 				src.det.attachedTo = src
-				src.det.builtBy = usr
+				src.det.builtBy = user
 				logTheThing("bombing", user, null, "builds a canister bomb [log_atmos(src)] at [log_loc(src)].")
 				message_admins("[key_name(user)] builds a canister bomb at [log_loc(src)]. See bombing logs for atmos readout.")
 				tgui_process.update_uis(src)
@@ -428,7 +428,7 @@
 	)
 	if(src?.det?.attachments)
 		var/list/attach_names = list()
-		for(var/obj/item/I as() in src.det.attachments)
+		for(var/obj/item/I as anything in src.det.attachments)
 			attach_names += I.name
 		. += list("detonatorAttachments" = attach_names)
 
@@ -522,7 +522,7 @@
 
 	if(tool == TOOL_SNIPPING)
 		if(!user.find_tool_in_hand(tool))
-			usr.show_message("<span class='alert'>You need to have a snipping tool equipped for this.</span>")
+			user.show_message("<span class='alert'>You need to have a snipping tool equipped for this.</span>")
 		else
 			if(src.det.shocked)
 				var/mob/living/carbon/human/H = user
@@ -582,17 +582,17 @@
 
 				src.det.WireStatus[which_wire] = 0
 	else if(tool == TOOL_PULSING)
-		if (!usr.find_tool_in_hand(TOOL_PULSING))
-			usr.show_message("<span class='alert'>You need to have a multitool or similar equipped for this.</span>")
+		if (!user.find_tool_in_hand(TOOL_PULSING))
+			user.show_message("<span class='alert'>You need to have a multitool or similar equipped for this.</span>")
 		else
 			if (src.det.shocked)
-				var/mob/living/carbon/human/H = usr
+				var/mob/living/carbon/human/H = user
 				H.show_message("<span class='alert'>You tried to pulse a wire on the bomb, but got burned by it.</span>")
 				H.TakeDamage("chest", 0, 30)
 				H.changeStatus("stunned", 150)
 				H.UpdateDamageIcon()
 			else
-				src.visible_message("<b><font color=#B7410E>[usr.name] pulses the [src.det.WireNames[which_wire]] on the detonator.</font></b>")
+				src.visible_message("<b><font color=#B7410E>[user.name] pulses the [src.det.WireNames[which_wire]] on the detonator.</font></b>")
 				switch (src.det.WireFunctions[which_wire])
 					if ("detonate")
 						if (src.det.part_fs.timing)

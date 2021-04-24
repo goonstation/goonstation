@@ -16,7 +16,7 @@ THROWING DARTS
 	name = "implant"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "implant-g"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/implanted = null
 	var/impcolor = "g"
 	var/mob/owner = null
@@ -30,7 +30,7 @@ THROWING DARTS
 
 	//For PDA/signal alert stuff on implants
 	var/uses_radio = 0
-	var/list/mailgroups = null 
+	var/list/mailgroups = null
 	var/net_id = null
 	var/pda_alert_frequency = 1149
 	var/datum/radio_frequency/radio_connection
@@ -157,7 +157,7 @@ THROWING DARTS
 					return
 				if (user.equipped() != I)
 					return
-				if ((!in_interact_range(src, usr) && src.loc != user))
+				if ((!in_interact_range(src, user) && src.loc != user))
 					return
 				t = copytext(adminscrub(t),1,128)
 				if (t)
@@ -967,7 +967,7 @@ THROWING DARTS
 	item_state = "syringe_0"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	hide_attack = 2
 	var/sneaky = 0
 	tooltip_flags = REBUILD_DIST
@@ -1178,7 +1178,7 @@ THROWING DARTS
 	item_state = "implantcase"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/implant_type = /obj/item/implant/tracking
 	tooltip_flags = REBUILD_DIST
 	//Whether this is the paper type that goes away when emptied
@@ -1295,7 +1295,7 @@ THROWING DARTS
 		var/t = input(user, "What would you like the label to be?", null, "[src.name]") as null|text
 		if (user.equipped() != I)
 			return
-		if ((!in_interact_range(src, usr) && src.loc != user))
+		if ((!in_interact_range(src, user) && src.loc != user))
 			return
 		t = copytext(adminscrub(t),1,128)
 		if (t)
@@ -1352,7 +1352,7 @@ THROWING DARTS
 	item_state = "electronic"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	mats = 5
 	desc = "A small device for analyzing implants."
 
@@ -1672,7 +1672,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 /obj/item/implant/projectile/bardart
 	name = "dart"
 	desc = "An object of d'art."
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "dart"
 	throw_spin = 0
@@ -1696,7 +1696,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 /obj/item/implant/projectile/lawndart
 	name = "lawn dart"
 	desc = "An oversized plastic dart with a metal spike at the tip. Fun for the whole family!"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "lawndart"
 	throw_spin = 0
@@ -1708,7 +1708,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			var/mob/living/carbon/human/H = M
 			H.implant.Add(src)
 			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
-			playsound(src.loc, "sound/weapons/slashcut.ogg", 100, 1)
+			playsound(src.loc, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
 			H.changeStatus("weakened", 2 SECONDS)
 			random_brute_damage(M, 20)//if it can get in you, it probably doesn't give a damn about your armor
 			take_bleeding_damage(M, null, 10, DAMAGE_CUT)

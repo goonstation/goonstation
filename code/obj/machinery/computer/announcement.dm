@@ -60,7 +60,7 @@
 			if (src.ID)
 				src.ID.set_loc(src.loc)
 				boutput(user, "<span class='notice'>[src.ID] is ejected from the ID scanner.</span>")
-			usr.drop_item()
+			user.drop_item()
 			W.set_loc(src)
 			src.ID = W
 			src.unlocked = check_access(ID, 1)

@@ -81,9 +81,12 @@
 
 	if(!operable)
 		operating = 0
-	if(!operating)
-		for(var/atom/A in loc.contents)
+	if(!operating || (status & NOPOWER))
+		for(var/atom/movable/A in loc.contents)
 			walk(A, 0)
+	else
+		for(var/atom/movable/A in loc.contents)
+			move_thing(A)
 
 	icon_state = "conveyor[(operating != 0) && !(status & NOPOWER)]"
 
@@ -100,7 +103,7 @@
 
 	..()
 
-	for(var/atom/A in loc.contents)
+	for(var/atom/movable/A in loc.contents)
 		move_thing(A)
 
 /obj/machinery/conveyor/proc/move_thing(var/atom/movable/A)
@@ -421,7 +424,7 @@
 
 	SPAWN_DBG(0.5 SECONDS)		// allow map load
 		conveyors = list()
-		for(var/obj/machinery/conveyor/C as() in machine_registry[MACHINES_CONVEYORS])
+		for(var/obj/machinery/conveyor/C as anything in machine_registry[MACHINES_CONVEYORS])
 			if(C.id == id)
 				conveyors += C
 				C.owner = src

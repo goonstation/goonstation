@@ -15,7 +15,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0_lowmeat"
 	object_flags = CAN_REPROGRAM_ACCESS
-	mats = 45
+	mats = list("MET-1"=35, "beeswax"=5)
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 	var/mob/living/occupant
 	var/heal_level = 10 //The clone is released once its health^W damage (maxHP - HP) reaches this level.
@@ -32,12 +32,9 @@
 
 	var/cloneslave = 0 //Is a traitor enslaving the clones?
 	var/mob/implant_master = null // Who controls the clones?
-	var/datum/bioEffect/BE = null // Any bioeffects to add upon cloning (used with the geneclone module)
-	var/mindwipe = 0 // Are we wiping people's minds?
 	var/is_speedy = 0 // Speed module installed?
 	var/is_efficient = 0 // Efficiency module installed?
 
-	var/gen_analysis = 0 //Are we analysing the genes while reassembling the duder? (read: Do we work faster or do we give a material bonus?)
 	var/gen_bonus = 1 //Normal generation speed
 	var/speed_bonus = DEFAULT_SPEED_BONUS // Multiplier that can be modified by modules
 	var/auto_mode = 1
@@ -90,7 +87,7 @@
 		mailgroups.len = 0
 		radio_controller.remove_object(src, "[pdafrequency]")
 		genResearch?.clonepods?.Remove(src) //Bye bye
-		connected?.pod1 = null
+		connected?.linked_pods -= src
 		if(connected?.scanner?.pods)
 			connected?.scanner?.pods -= src
 		connected = null
@@ -98,9 +95,24 @@
 		occupant = null
 		..()
 
+	was_deconstructed_to_frame(mob/user)
+		. = ..()
+		connected?.linked_pods -= src
+		if(connected?.scanner?.pods)
+			connected?.scanner?.pods -= src
+		connected = null
+
 	was_built_from_frame(mob/user, newly_built)
 		. = ..()
 		meat_level = 0 // no meat for those built from frames
+
+		for (var/obj/machinery/computer/cloning/C in orange(4, src))
+			if (C.linked_pods.len < C.max_pods)
+				C.linked_pods += src
+				if(C.scanner?.pods)
+					C.scanner?.pods += src
+				src.connected = C
+				break
 
 	proc/send_pda_message(var/msg)
 		if (!msg && src.message)
@@ -152,7 +164,7 @@
 		if (src.mess)
 			src.icon_state = "pod_g"
 		else
-			src.icon_state = "pod_[src.occupant ? "1" : "0"][src.meat_level ? "" : "_lowmeat"][src.cloneslave ? "_mindslave" : "" ][src.mindwipe ? "_mindwipe" : ""]"
+			src.icon_state = "pod_[src.occupant ? "1" : "0"][src.meat_level ? "" : "_lowmeat"][src.cloneslave ? "_mindslave" : "" ][src.connected?.mindwipe ? "_mindwipe" : ""]"
 
 
 	proc/start_clone(force = 0)
@@ -220,9 +232,13 @@
 
 		src.eject_wait = 10 SECONDS
 
+#ifdef DATALOGGER
+		game_stats.Increment("clones")
+#endif
+
 		if (istype(oldholder))
 			oldholder.clone_generation++
-			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = gen_analysis)
+			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = connected?.gen_analysis)
 			src.occupant?.set_mutantrace(oldholder?.mobAppearance?.mutant_race?.type)
 			if(ishuman(src.occupant))
 				var/mob/living/carbon/human/H = src.occupant
@@ -331,7 +347,7 @@
 				SHOW_MINDSLAVE_TIPS(src.occupant)
 		// Someone is having their brain zapped. 75% chance of them being de-antagged if they were one
 		//MBC todo : logging. This shouldn't be an issue thoug because the mindwipe doesn't even appear ingame (yet?)
-		if(mindwipe)
+		if(src.connected?.mindwipe)
 			if(prob(75))
 				SHOW_MINDWIPE_TIPS(src.occupant)
 				boutput(src.occupant, "<h2><span class='alert'>You have awakened with a new outlook on life!</span></h2>")
@@ -339,8 +355,8 @@
 			else
 				boutput(src.occupant, "<span class='alert'>You feel your memories fading away, but you manage to hang on to them!</span>")
 		// Lucky person - they get a power on cloning!
-		if (src.BE)
-			src.occupant.bioHolder.AddEffectInstance(BE,1)
+		if (src.connected?.BE)
+			src.occupant.bioHolder.AddEffectInstance(src.connected.BE,1)
 
 		src.occupant.changeStatus("paralysis", 10 SECONDS)
 		previous_heal = src.occupant.health
@@ -587,6 +603,7 @@
 			speed_bonus = DEFAULT_SPEED_BONUS
 			meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 			light.enable()
+			src.update_icon()
 			user.drop_item()
 			qdel(W)
 			return
@@ -597,13 +614,14 @@
 				return
 			boutput(user, "<span class='notice'>You begin detatching the mindslave cloning module...</span>")
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if(do_after(user,50))
+			if (do_after(user, 50) && cloneslave)
 				new /obj/item/cloneModule/mindslave_module( src.loc )
 				cloneslave = 0
 				implant_master = null
 				boutput(user,"<span class='alert'>The mindslave cloning module falls to the floor with a dull thunk!</span>")
 				playsound(src.loc, "sound/effects/thunk.ogg", 50, 0)
 				light.disable()
+				src.update_icon()
 			else
 				boutput(user,"<span class='alert'>You were interrupted!</span>")
 			return
@@ -723,7 +741,7 @@
 		return
 
 	proc/operating_nominally()
-		return operating && src.meat_level && gen_analysis //Only operate nominally for non-shit cloners
+		return operating && src.meat_level && connected?.gen_analysis //Only operate nominally for non-shit cloners
 
 	proc/healing_multiplier()
 		// effectively "speed_bonus" (cash-4-clones is never on)
@@ -816,7 +834,7 @@
 		if (!islist(src.pods))
 			src.pods = list()
 		if (!isnull(src.id) && genResearch && islist(genResearch.clonepods) && length(genResearch.clonepods))
-			for (var/obj/machinery/clonepod/pod as() in genResearch.clonepods)
+			for (var/obj/machinery/clonepod/pod as anything in genResearch.clonepods)
 				if (pod.id == src.id && !src.pods.Find(pod))
 					src.pods += pod
 					DEBUG_MESSAGE("[src] adds pod [log_loc(pod)] (ID [src.id]) in genResearch.clonepods")
@@ -863,7 +881,7 @@
 			if (prob(2))
 				src.reagents.add_reagent("beff", 1 * process_per_tick)
 
-		if (src.reagents.total_volume && islist(src.pods) && pods.len)
+		if (src.reagents.total_volume && islist(src.pods) && length(pods))
 			// Distribute reagents to cloning pods nearby
 			// Changed from before to distribute while grinding rather than all at once
 			// give an equal amount of reagents to each pod that happens to be around

@@ -27,15 +27,15 @@
 		boutput(user, "The door has no power - you can't electrify it.")
 		return
 	if (src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
-		boutput(usr, text("<span class='alert'>The electrification wire has been cut.<br><br></span>"))
+		boutput(user, text("<span class='alert'>The electrification wire has been cut.<br><br></span>"))
 	else if (src.secondsElectrified==-1)
-		boutput(usr, text("<span class='alert'>The door is already indefinitely electrified. You'd have to un-electrify it before you can re-electrify it with a non-forever duration.<br><br></span>"))
+		boutput(user, text("<span class='alert'>The door is already indefinitely electrified. You'd have to un-electrify it before you can re-electrify it with a non-forever duration.<br><br></span>"))
 	else if (src.secondsElectrified!=0)
-		boutput(usr, text("<span class='alert'>The door is already electrified. You can't re-electrify it while it's already electrified.<br><br></span>"))
+		boutput(user, text("<span class='alert'>The door is already electrified. You can't re-electrify it while it's already electrified.<br><br></span>"))
 	else
 		src.secondsElectrified = 30
-		logTheThing("combat", usr, null, "electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
-		message_admins("[key_name(usr)] electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
+		logTheThing("combat", user, null, "electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
+		message_admins("[key_name(user)] electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
 		SPAWN_DBG(1 SECOND)
 			while (src.secondsElectrified>0)
 				src.secondsElectrified-=1
@@ -45,7 +45,7 @@
 
 /obj/machinery/door/airlock/proc/toggle_bolt(mob/user)
 	if (src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-		boutput(usr, "<span class='alert'>You can't drop the door bolts - The door bolt dropping wire has been cut.</span>")
+		boutput(user, "<span class='alert'>You can't drop the door bolts - The door bolt dropping wire has been cut.</span>")
 		return
 	if(!src.arePowerSystemsOn() || (status & NOPOWER))
 		boutput(user, "<span class='alert'>The door has no power - you can't raise/lower the door bolts.</span>")
@@ -64,14 +64,14 @@
 		return
 	//electrify door indefinitely
 	if (src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
-		boutput(usr, text("<span class='alert'>The electrification wire has been cut.<br><br></span>"))
+		boutput(user, text("<span class='alert'>The electrification wire has been cut.<br><br></span>"))
 	else if (src.secondsElectrified==-1)
-		boutput(usr, text("<span class='alert'>The door is already indefinitely electrified.<br><br></span>"))
+		boutput(user, text("<span class='alert'>The door is already indefinitely electrified.<br><br></span>"))
 	else if (src.secondsElectrified!=0)
-		boutput(usr, text("<span class='alert'>The door is already electrified. You can't re-electrify it while it's already electrified.<br><br></span>"))
+		boutput(user, text("<span class='alert'>The door is already electrified. You can't re-electrify it while it's already electrified.<br><br></span>"))
 	else
-		logTheThing("combat", usr, null, "electrified airlock ([src]) at [log_loc(src)] indefinitely.")
-		message_admins("[key_name(usr)] electrified airlock ([src]) at [log_loc(src)] indefinitely.")
+		logTheThing("combat", user, null, "electrified airlock ([src]) at [log_loc(src)] indefinitely.")
+		message_admins("[key_name(user)] electrified airlock ([src]) at [log_loc(src)] indefinitely.")
 		src.secondsElectrified = -1
 
 /obj/machinery/door/airlock/proc/shock_restore(mob/user)
@@ -80,11 +80,11 @@
 		boutput(user, "The door has no power - you can't electrify it.")
 		return
 	if (src.isWireCut(AIRLOCK_WIRE_ELECTRIFY))
-		boutput(usr, text("<span class='alert'>Can't un-electrify the airlock - The electrification wire is cut.<br><br></span>"))
+		boutput(user, text("<span class='alert'>Can't un-electrify the airlock - The electrification wire is cut.<br><br></span>"))
 	else if (src.secondsElectrified!=0)
 		src.secondsElectrified = 0
 		logTheThing("combat", usr, null, "de-electrified airlock ([src]) at [log_loc(src)].")
-		message_admins("[key_name(usr)] de-electrified airlock ([src]) at [log_loc(src)].")
+		message_admins("[key_name(user)] de-electrified airlock ([src]) at [log_loc(src)].")
 
 
 /obj/machinery/door/airlock/proc/idscantoggle(mob/user)
@@ -93,7 +93,7 @@
 		return
 	//enable/disable ID scanner
 	if (src.isWireCut(AIRLOCK_WIRE_IDSCAN))
-		boutput(usr, "The IdScan wire has been cut - So, you can't disable it, but it is already disabled anyways.")
+		boutput(user, "The IdScan wire has been cut - So, you can't disable it, but it is already disabled anyways.")
 	else
 		aiDisabledIdScanner = !aiDisabledIdScanner
 
@@ -105,9 +105,9 @@
 		boutput(user, "<span class='alert'>The door has no power - you can't open/close it.</span>")
 		return
 	if(welded)
-		boutput(usr, text("<span class='alert'>The airlock has been welded shut!</span>"))
+		boutput(user, text("<span class='alert'>The airlock has been welded shut!</span>"))
 	else if(locked)
-		boutput(usr, text("<span class='alert'>The door bolts are down!</span>"))
+		boutput(user, text("<span class='alert'>The door bolts are down!</span>"))
 	else if(!density)
 		close()
 	else
@@ -1319,10 +1319,10 @@ About the new airlock wires panel:
 			if(status & NOPOWER)
 				boutput(usr, "<span class='alert'>[bicon(C)] No electrical response received from access panel.</span>")
 			else
-				boutput(usr, "<span class='notice'>[bicon(C)] Regular electrical response received from access panel.</span>")
+				boutput(user, "<span class='notice'>[bicon(C)] Regular electrical response received from access panel.</span>")
 		return
 
-	if (!issilicon(usr))
+	if (!issilicon(user))
 		if (src.isElectrified())
 			if(src.shock(user, 75))
 				return
@@ -1344,16 +1344,16 @@ About the new airlock wires panel:
 
 		if (src.health < src.health_max)
 			src.heal_damage()
-			boutput(usr, "<span class='notice'>Your repair the damage to [src].</span>")
+			boutput(user, "<span class='notice'>Your repair the damage to [src].</span>")
 
 		src.update_icon()
 		return
 	else if (isscrewingtool(C))
 		if (src.hardened == 1)
-			boutput(usr, "<span class='alert'>Your tool can't pierce this airlock! Huh.</span>")
+			boutput(user, "<span class='alert'>Your tool can't pierce this airlock! Huh.</span>")
 			return
 		if (!src.has_panel)
-			boutput(usr, "<span class='alert'>[src] does not have a panel for you to unscrew!</span>")
+			boutput(user, "<span class='alert'>[src] does not have a panel for you to unscrew!</span>")
 			return
 		src.p_open = !(src.p_open)
 		tgui_process.update_uis(src)

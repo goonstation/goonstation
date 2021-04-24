@@ -19,7 +19,8 @@ var/global/list/FrozenAccounts = list()
 
 
 /proc/plotBarGraph(list/points, base_text, width = 400, height = 400)
-	var/output = "<table style='border:1px solid black; border-collapse: collapse; width: [width]px; height: [height]px'>"
+	var/list/output = list()
+	output += "<table style='border:1px solid black; border-collapse: collapse; width: [width]px; height: [height]px'>"
 	if (points.len && height > 20 && width > 20)
 		var/min = points[1]
 		var/max = points[1]
@@ -60,5 +61,5 @@ var/global/list/FrozenAccounts = list()
 		output += "<tr><td style='width:[width]px; height:[height]px; background: black'></td></tr>"
 		output += "<tr><td style='font-size:10px; background:black; color:green; text-align:center'>[base_text]</td></tr>"
 
-	return "[output]</table>"
+	return "[jointext(output, "")]</table>"
 

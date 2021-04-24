@@ -4,11 +4,13 @@
 
 /datum/artifact/power_giver
 	associated_object = /obj/artifact/power_giver
+	type_name = "Mutator"
 	rarity_weight = 200
 	validtypes = list("martian","wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,
 	/datum/artifact_trigger/cold)
+	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activ_text = "begins glowing with an eerie light!"
 	deact_text = "falls dark and quiet."
 	react_xray = list(10,90,80,10,"NONE")
@@ -38,6 +40,7 @@
 			var/turf/T = get_turf(O)
 			T.visible_message("<b>[O]</b> envelops [user] in a strange light!")
 			user.bioHolder.AddEffect(power_granted,0,power_time)
+			O.ArtifactFaultUsed(user)
 			if (recharge_time > 0)
 				ready = 0
 				SPAWN_DBG(recharge_time)

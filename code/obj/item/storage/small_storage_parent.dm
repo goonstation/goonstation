@@ -18,7 +18,7 @@
 	var/list/spawn_contents = list()
 	move_triggered = 1
 	flags = FPRINT | TABLEPASS | NOSPLASH
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 
 		//cogwerks - burn vars
 	burn_point = 2500
@@ -65,7 +65,7 @@
 		return
 
 	proc/make_my_stuff() // use this rather than overriding the container's New()
-		if (!islist(src.spawn_contents) || !src.spawn_contents.len)
+		if (!islist(src.spawn_contents) || !length(src.spawn_contents))
 			return 0
 		var/total_amt = 0
 		for (var/thing in src.spawn_contents)
@@ -103,7 +103,7 @@
 		.= 1
 		if (W.cant_drop)
 			return -1
-		if (islist(src.can_hold) && src.can_hold.len)
+		if (islist(src.can_hold) && length(src.can_hold))
 			var/ok = 0
 			if (src.in_list_or_max && W.w_class <= src.max_wclass)
 				ok = 1
@@ -152,7 +152,7 @@
 		else
 			src.add_contents(W)
 			user.u_equip(W)
-		hud.add_item(W)
+		hud.add_item(W, user)
 		update_icon()
 		add_fingerprint(user)
 		animate_storage_rustle(src)
@@ -163,7 +163,7 @@
 
 	dropped(mob/user as mob)
 		if (hud)
-			hud.update()
+			hud.update(user)
 		..()
 
 	proc/mousetrap_check(mob/user)
@@ -205,7 +205,7 @@
 			if (src.mousetrap_check(usr))
 				return
 			usr.s_active = src.hud
-			hud.update()
+			hud.update(usr)
 			usr.attach_hud(src.hud)
 			return
 		if (usr.is_in_hands(src))
@@ -250,16 +250,16 @@
 			if (src.mousetrap_check(user))
 				return
 			user.s_active = src.hud
-			hud.update()
+			hud.update(user)
 			user.attach_hud(src.hud)
 			src.add_fingerprint(user)
 			animate_storage_rustle(src)
 		else
 			..()
-			for (var/mob/M as() in hud.mobs)
+			for (var/mob/M as anything in hud.mobs)
 				if (M != user)
 					M.detach_hud(hud)
-			hud.update()
+			hud.update(user)
 
 	attack_self(mob/user as mob)
 		..()
@@ -268,7 +268,7 @@
 	proc/get_contents()
 		RETURN_TYPE(/list)
 		. = src.contents.Copy()
-		for(var/atom/A as() in .)
+		for(var/atom/A as anything in .)
 			if(!istype(A, /obj/item) || istype(A, /obj/item/grab))
 				. -= A
 
@@ -319,7 +319,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	item_state = "contsolid"
 	can_hold = list(/obj/item/reagent_containers/pill)
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	max_wclass = 1
 	desc = "A small bottle designed to carry pills. Does not come with a child-proof lock, as that was determined to be too difficult for the crew to open."
 
@@ -332,7 +332,7 @@
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	max_wclass = 3
 	desc = "A fancy synthetic leather-bound briefcase, capable of holding a number of small objects, with style."
 	stamina_damage = 40
@@ -346,13 +346,22 @@
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
 
+/obj/item/storage/briefcase/toxins
+	name = "toxins research briefcase"
+	icon_state = "briefcase_rd"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	item_state = "rd-case"
+	max_wclass = 4 // parity with secure briefcase
+	desc = "A large briefcase for experimental toxins research."
+	spawn_contents = list(/obj/item/raw_material/molitz_beta = 6, /obj/item/paper/hellburn)
+
 /obj/item/storage/desk_drawer
 	name = "desk drawer"
 	desc = "This fits into a desk and you can store stuff in it! Wow, amazing!!"
 	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "desk_drawer"
 	flags = FPRINT | TABLEPASS
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	max_wclass = 2
 	slots = 13 // these can't move (in theory) and they can only hold w_class 2 things so we may as well let them hold a bunch
 	mechanics_type_override = /obj/item/storage/desk_drawer
@@ -385,7 +394,7 @@
 	icon_state = "rockit"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	max_wclass = 3
 
 	New()

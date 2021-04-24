@@ -214,7 +214,7 @@
 		else if (istype(W, /obj/item/sheet) && src.d_state)
 			var/obj/item/sheet/S = W
 			boutput(user, "<span class='notice'>Repairing wall.</span>")
-			if (do_after(user, 2.5 SECONDS) && S.consume_sheets(1))
+			if (do_after(user, 2.5 SECONDS) && S.change_stack_amount(-1))
 				src.d_state = 0
 				src.icon_state = initial(src.icon_state)
 				if (S.material)

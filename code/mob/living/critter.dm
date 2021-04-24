@@ -78,7 +78,7 @@
 	var/last_life_process = 0
 	var/use_stunned_icon = 1
 
-	var/pull_w_class = 2
+	var/pull_w_class = W_CLASS_SMALL
 
 	blood_id = "blood"
 
@@ -126,7 +126,7 @@
 		health_update_queue |= src
 
 		src.abilityHolder = new /datum/abilityHolder/critter(src)
-		if (islist(src.add_abilities) && src.add_abilities.len)
+		if (islist(src.add_abilities) && length(src.add_abilities))
 			for (var/abil in src.add_abilities)
 				if (ispath(abil))
 					abilityHolder.addAbility(abil)
@@ -415,13 +415,13 @@
 		if (!src.ghost_spawned) //if its an admin or wizard made critter, just let them pull everythang
 			return 1
 		if (ismob(A))
-			return (src.pull_w_class >= 3)
+			return (src.pull_w_class >= W_CLASS_NORMAL)
 		else if (isobj(A))
 			if (istype(A,/obj/item))
 				var/obj/item/I = A
 				return (pull_w_class >= I.w_class)
 			else
-				return (src.pull_w_class >= 4)
+				return (src.pull_w_class >= W_CLASS_BULKY)
 		return 0
 
 	click(atom/target, list/params)
@@ -630,6 +630,7 @@
 		var/pmsg = islist(src.pet_text) ? pick(src.pet_text) : src.pet_text
 		src.visible_message("<span class='notice'><b>[user] [pmsg] [src]!</b></span>",\
 		"<span class='notice'><b>[user] [pmsg] you!</b></span>")
+		user.add_karma(0.5)
 		return
 
 	proc/get_active_hand()
@@ -752,7 +753,7 @@
 		empty_hands()
 		if (do_drop_equipment)
 			drop_equipment()
-		hud.update_health()
+		hud?.update_health()
 		update_stunned_icon(canmove=1)//force it to go away
 		return ..(gibbed)
 

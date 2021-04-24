@@ -476,7 +476,7 @@
 
 		if (isweldingtool(W))
 			if (src.health < 50)
-				boutput(usr, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
+				boutput(user, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
 				return
 			if(W:try_weld(user, 1))
 				src.damage(-10)
@@ -488,7 +488,7 @@
 		else if (istype(W,/obj/item/cable_coil/))
 			var/obj/item/cable_coil/C = W
 			if (src.health > 50)
-				boutput(usr, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
+				boutput(user, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
 				return
 			C.use(1)
 			src.damage(-10)
@@ -688,8 +688,8 @@
 			override_text = "Disable Cooldown Override"
 		dat += "<A href='?src=\ref[src];override_cooldown=1'>[override_text]</A><BR>"
 		dat += "<BR><A href='?action=mach_close&window=computer'>Close</A>"
-		usr.Browse(dat, "window=computer;size=300x400")
-		onclose(usr, "computer")
+		user.Browse(dat, "window=computer;size=300x400")
+		onclose(user, "computer")
 		return null
 
 	Topic(href, href_list)
@@ -955,6 +955,7 @@
 
 	dark
 		fullbright = 0
+		luminosity = 1
 
 	lighted
 		fullbright = 1
@@ -1471,7 +1472,7 @@
 	icon_state = "pickaxe"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "pick"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	flags = ONBELT
 	force = 7
 	var/dig_strength = 1
@@ -1563,6 +1564,7 @@ obj/item/clothing/gloves/concussive
 		T.dig_strength = 4
 		T.hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 		T.hitsound_uncharged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
+		AddComponent(/datum/component/wearertargeting/unarmedblock/concussive, list(SLOT_GLOVES))
 
 /obj/item/mining_tool/power_pick
 	name = "power pick"
@@ -1766,7 +1768,7 @@ obj/item/clothing/gloves/concussive
 	name = "concussive charge"
 	desc = "It is set to detonate in 5 seconds."
 	flags = ONBELT
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/emagged = 0
 	var/hacked = 0
 	expl_devas = 0
@@ -1897,7 +1899,7 @@ obj/item/clothing/gloves/concussive
 	var/maximum_charges = 8
 	var/robocharge = 250
 	var/target = null
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	flags = ONBELT
 	mats = 4
 
@@ -2042,7 +2044,7 @@ obj/item/clothing/gloves/concussive
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "minanal"
 	flags = ONBELT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
 		mining_scan(get_turf(user), user, 6)
@@ -2106,7 +2108,7 @@ obj/item/clothing/gloves/concussive
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "minanal"
 	flags = ONBELT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
 		boutput(user, "The screen is clearly painted on. When you press Scan, a short metal spike extends from the top and sparks brightly before retracting again.")
@@ -2142,16 +2144,16 @@ obj/item/clothing/gloves/concussive
 
 				src.cell = null
 			else if (action == "Change the destination")
-				if (!cargopads.len) boutput(usr, "<span class='alert'>No receivers available.</span>")
+				if (!cargopads.len) boutput(user, "<span class='alert'>No receivers available.</span>")
 				else
 					var/selection = input("Select Cargo Pad Location:", "Cargo Pads", null, null) as null|anything in cargopads
 					if(!selection)
 						return
 					var/turf/T = get_turf(selection)
 					if (!T)
-						boutput(usr, "<span class='alert'>Target not set!</span>")
+						boutput(user, "<span class='alert'>Target not set!</span>")
 						return
-					boutput(usr, "Target set to [T.loc].")
+					boutput(user, "Target set to [T.loc].")
 					src.target = T
 			else if (action == "Flip the power switch")
 				if (!src.active)
@@ -2314,7 +2316,7 @@ var/global/list/cargopads = list()
 	icon_state = "scoop"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "buildpipe"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	mats = 6
 	var/obj/item/satchel/mining/satchel = null
 
@@ -2373,7 +2375,7 @@ var/global/list/cargopads = list()
 	icon_state = "ancient"
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		boutput(usr, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
+		boutput(user, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
 		return
 
 	ex_act(severity)
@@ -2393,7 +2395,7 @@ var/global/list/cargopads = list()
 	step_priority = STEP_PRIORITY_MED
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		boutput(usr, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
+		boutput(user, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
 		return
 
 	ex_act(severity)
@@ -2407,7 +2409,7 @@ var/global/list/cargopads = list()
 	step_priority = STEP_PRIORITY_MED
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		boutput(usr, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
+		boutput(user, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
 		return
 
 	ex_act(severity)

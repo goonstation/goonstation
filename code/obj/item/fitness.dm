@@ -67,7 +67,7 @@
 			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
-			usr.visible_message(text("<span class='alert'><B>[usr] is [bragmessage]!</B></span>"))
+			user.visible_message(text("<span class='alert'><B>[user] is [bragmessage]!</B></span>"))
 			var/lifts = 0
 			while (lifts++ < 6)
 				if (user.loc != src.loc)
@@ -121,7 +121,7 @@
 			W.anchored = 1
 			W.layer = MOB_LAYER_BASE+1
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
-			usr.visible_message(text("<span class='alert'><B>[usr] is [bragmessage]!</B></span>"))
+			user.visible_message(text("<span class='alert'><B>[user] is [bragmessage]!</B></span>"))
 			var/reps = 0
 			user.pixel_y = 5
 			while (reps++ < 6)
@@ -159,7 +159,7 @@
 	icon_state = "rubber_duck"
 	item_state = "sponge"
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 15
 	var/spam_flag = 0

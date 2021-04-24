@@ -78,16 +78,11 @@ var/global/list/playersSeen = list()
 	//We only care about the latest match for this (so far)
 	var/list/row = data[data[1]]
 
-	/*
-	for (var/e = 1, e <= data.len, e++) //each ban
-		var/id = data[e]
-		var/list/details = data[id]
-		for (var/i = 1, i <= details.len, i++) //each item for this ban
-	*/
+	var/expired = text2num(row["timestamp"]) > 0 && !getExpiry(row["timestamp"])
 
 	//Are any of the details...different? This is to catch out ban evading jerks who change their ckey but forget to mask their IP or whatever
 	var/timeAdded = 0
-	if (row["ckey"] != ckey || row["ip"] != ip || row["compID"] != compID) //Insert a new ban for this JERK
+	if (!expired && (row["ckey"] != ckey || row["ip"] != ip || row["compID"] != compID)) //Insert a new ban for this JERK
 		var/newChain = 0
 		if (text2num(row["previous"]) > 0) //if we matched a previous auto-added ban
 			if (text2num(row["chain"]) > 0)
@@ -120,7 +115,7 @@ var/global/list/playersSeen = list()
 
 	var/oakey = (row["oakey"] == "N/A" ? row["akey"] : row["oakey"])
 	if (text2num(row["timestamp"]) > 0) //Temp ban found, determine if it should expire or not
-		if (!getExpiry(row["timestamp"])) //It expired! Go you!
+		if (expired) //It expired! Go you!
 			var/deleteData[] = new()
 			deleteData["id"] = row["id"]
 			deleteData["ckey"] = row["ckey"]
@@ -188,7 +183,7 @@ var/global/list/playersSeen = list()
 		var/expiry = getExpiry(row["timestamp"])
 		var/serverLogSnippet = row["server"] ? "from [row["server"]]" : "from all servers"
 
-		if (expiry == 0)
+		if (text2num(row["timestamp"]) == 0)
 			if (targetC) boutput(targetC, "<span class='alert'>This is a permanent ban.</span>")
 			logTheThing("admin", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"admin")]" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This is a permanent ban.")
 			logTheThing("diary", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"diary")]" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This is a permanent ban.", "admin")
@@ -432,17 +427,17 @@ var/global/list/playersSeen = list()
 			return
 		data["reason"] = reason
 
-		var/server_nice = input(usr, "What server does the ban apply to?", "Ban") as null|anything in list("All", "Roleplay", "Main")
+		var/server_nice = input(usr, "What server does the ban apply to?", "Ban") as null|anything in list("All", "1 Classic: Heisenbee", "2 Classic: Bombini", "3 Roleplay: Morty", "4 Roleplay: Sylvester")
 		var/server = null
 		switch (server_nice)
-			if ("Roleplay")
-				server = "rp"
-			if ("Main")
-				server = "main"
-			if ("Roleplay Overflow")
+			if ("1 Classic: Heisenbee")
+				server = "main1"
+			if ("2 Classic: Bombini")
 				server = "main2"
-			if ("Main Overflow")
+			if ("3 Roleplay: Morty")
 				server = "main3"
+			if ("4 Roleplay: Sylvester")
+				server = "main4"
 		data["server"] = server
 
 		var/ban_time = input(usr,"How long will the ban be? (select Custom to alter existing duration)","Ban") as null|anything in list("Half-hour","One Hour","Six Hours","One Day","Half a Week","One Week","One Month","Permanent","Custom")

@@ -134,7 +134,7 @@
 		..()
 
 	process()
-		if (world.time - create_time >= 1 MINUTES)
+		if (world.time - create_time >= 3 MINUTES)
 			create_time = world.time
 			if (!src.pooled && isturf(src.loc) && !on_table())
 				if (prob(50))
@@ -473,6 +473,17 @@
 			boutput(user, "<span class='alert'>Nothing left in [src], oh no!</span>")
 			return 0
 
+		if (user.a_intent == INTENT_HARM)
+			src.reagents.physical_shock(14)
+			if (src.splash_all_contents)
+				boutput(user, "<span class='notice'>You splash all of the solution onto [M].</span>")
+				M.visible_message("<span class='alert'><b>[user.name]</b> splashes the [src.name]'s contents onto [M.name]!</span>")
+			else
+				boutput(user, "<span class='notice'>You apply [src.amount_per_transfer_from_this] units of the solution to [M].</span>")
+				M.visible_message("<span class='alert'><b>[user.name]</b> applies some of the [src.name]'s contents to [M.name].</span>")
+			logTheThing("combat", user, M, "splashes [src] onto [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(M)].")
+			return
+
 		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
 				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>")
@@ -657,7 +668,6 @@
 	var/image/fluid_image = null
 
 	on_reagent_change()
-		//src.overlays = null
 		if (reagents.total_volume)
 			ENSURE_IMAGE(src.fluid_image, src.icon, "fluid")
 			//if (!src.fluid_image)
@@ -665,7 +675,6 @@
 			var/datum/color/average = reagents.get_average_color()
 			fluid_image.color = average.to_rgba()
 			src.UpdateOverlays(src.fluid_image, "fluid")
-			//src.overlays += src.fluid_image
 		else
 			src.UpdateOverlays(null, "fluid")
 
@@ -715,7 +724,7 @@
 			S.pixel_x = src.pixel_x
 			S.pixel_y = src.pixel_y
 			L.my_soup = null
-			L.overlays = null
+			L.UpdateOverlays(null, "fluid")
 
 			user.visible_message("<b>[user]</b> pours [L] into [src].", "You pour [L] into [src].")
 
@@ -827,10 +836,12 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/pen) && !src.labeled)
 			var/t = input(user, "Enter label", "Label", src.name) as null|text
+			if(t && t != src.name)
+				phrase_log.log_phrase("bottle", t, no_duplicates=TRUE)
 			t = copytext(strip_html(t), 1, 24)
 			if (isnull(t) || !length(t) || t == " ")
 				return
-			if (!in_interact_range(src, usr) && src.loc != usr)
+			if (!in_interact_range(src, user) && src.loc != user)
 				return
 
 			src.name = t
@@ -844,7 +855,7 @@
 			force = 5.0
 			throwforce = 10.0
 			throw_range = 5
-			w_class = 2.0
+			w_class = W_CLASS_SMALL
 			stamina_damage = 15
 			stamina_cost = 15
 			stamina_crit_chance = 50
@@ -933,7 +944,8 @@
 	desc = "Caution - fragile."
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	icon_state = "glass-drink"
-	item_state = "drink_glass"
+	item_state = "glass-drink"
+	var/icon_style = "drink"
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 30
 	var/glass_style = "drink"
@@ -963,21 +975,22 @@
 		..()
 
 	on_reagent_change()
-		..()
 		src.update_icon()
 
 	proc/update_icon()
-		if (src.reagents.total_volume <= 0)
-			icon_state = "glass-[glass_style]"
-			src.UpdateOverlays(null, "fluid")
-		else
-			icon_state = "glass-[glass_style]1"
-
-			var/datum/color/average = reagents.get_average_color()
+		src.underlays = null
+		if (reagents.total_volume)
+			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 3 + 1), 1, 3))
 			if (!src.fluid_image)
-				src.fluid_image = image(src.icon, "fluid-[glass_style]", layer = FLOAT_LAYER + 0.3)
+				src.fluid_image = image(src.icon, "fluid-[src.glass_style][fluid_state]", -1)
+			else
+				src.fluid_image.icon_state = "fluid-[src.glass_style][fluid_state]"
+			src.icon_state = "glass-[src.glass_style][fluid_state]"
+			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
-			src.UpdateOverlays(src.fluid_image, "fluid")
+			src.underlays += src.fluid_image
+		else
+			src.icon_state = "glass-[src.glass_style]"
 
 		if (src.salted)
 			if (!src.image_salt)
@@ -1029,7 +1042,7 @@
 					user.visible_message("[user] adds [W] to [src].<br><span class='alert'>[src] is too full and spills!</span>",\
 					"You add [W] to [src].<br><span class='alert'>[src] is too full and spills!</span>")
 					src.reagents.reaction(get_turf(user), TOUCH, src.reagents.total_volume / 2)
-					src.reagents.add_reagent("ice", 5, null, (T0C - 1))
+					src.reagents.add_reagent("ice", 10, null, (T0C - 50))
 					JOB_XP(user, "Clown", 1)
 					pool(W)
 					return
@@ -1039,9 +1052,9 @@
 			else
 				user.visible_message("[user] adds [W] to [src].",\
 				"You add [W] to [src].")
-				src.reagents.add_reagent("ice", 5, null, (T0C - 1))
+				src.reagents.add_reagent("ice", 10, null, (T0C - 50))
 				pool(W)
-				if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+				if ((user.mind.assigned_role == "Bartender") && (prob(40)))
 					JOB_XP(user, "Bartender", 1)
 				return
 
@@ -1055,7 +1068,7 @@
 			W.set_loc(src)
 			src.wedge = W
 			src.update_icon()
-			if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+			if ((user.mind.assigned_role == "Bartender") && (prob(40)))
 				JOB_XP(user, "Bartender", 1)
 			return
 
@@ -1101,7 +1114,7 @@
 				W.reagents.remove_reagent("salt", 5)
 				src.salted = 1
 				src.update_icon()
-				if ((user.mind.assigned_role == "Bartender") && (prob(20)))
+				if ((user.mind.assigned_role == "Bartender") && (prob(40)))
 					JOB_XP(user, "Bartender", 1)
 				return
 			else
@@ -1394,6 +1407,7 @@
 	icon_state = "icing_tube"
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
+	can_recycle = FALSE
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	var/image/chem = new /image('icons/obj/foodNdrink/food.dmi',"icing_tube_chem")
 
@@ -1527,6 +1541,7 @@
 	icon_state = "duo"
 	item_state = "duo"
 	initial_volume = 30
+	can_recycle = FALSE
 	var/image/fluid_image
 
 	New()
@@ -1538,7 +1553,6 @@
 		src.update_icon()
 
 	proc/update_icon()
-		src.overlays = null
 		if (src.reagents.total_volume == 0)
 			icon_state = "duo"
 		if (src.reagents.total_volume > 0)
@@ -1546,7 +1560,9 @@
 			if (!fluid_image)
 				fluid_image = image(src.icon, "fluid-duo")
 			fluid_image.color = average.to_rgba()
-			src.overlays += src.fluid_image
+			src.UpdateOverlays(src.fluid_image, "fluid")
+		else
+			src.UpdateOverlays(null, "fluid")
 
 /* ============================================== */
 /* -------------------- Misc -------------------- */
@@ -1558,6 +1574,7 @@
 	icon_state = "skullchalice"
 	item_state = "skullchalice"
 	rc_flags = RC_SPECTRO
+	can_recycle = FALSE
 
 /obj/item/reagent_containers/food/drinks/mug
 	name = "mug"
@@ -1627,14 +1644,13 @@
 		src.update_icon()
 
 	proc/update_icon() //updates icon based on fluids inside
-		src.overlays = null
 		icon_state = "[glass_style]"
 
 		var/datum/color/average = reagents.get_average_color()
 		if (!src.fluid_image)
 			src.fluid_image = image('icons/obj/foodNdrink/drinks.dmi', "fluid-[glass_style]", -1)
 		src.fluid_image.color = average.to_rgba()
-		src.overlays += src.fluid_image
+		src.UpdateOverlays(src.fluid_image, "fluid")
 
 /obj/item/reagent_containers/food/drinks/carafe
 	name = "coffee carafe"
@@ -1733,6 +1749,7 @@
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 30
 	initial_volume = 50
+	can_recycle = FALSE
 	initial_reagents = list("coconut_milk"=20)
 
 /obj/item/reagent_containers/food/drinks/energyshake
@@ -1758,6 +1775,7 @@
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 5
 	initial_volume = 40
+	can_recycle = FALSE
 	initial_reagents = list("bojack"=40)
 
 /obj/item/reagent_containers/food/drinks/cocktailshaker

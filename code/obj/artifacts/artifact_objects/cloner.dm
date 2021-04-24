@@ -1,14 +1,15 @@
-
 /obj/artifact/cloner
 	name = "artifact cloner"
 	associated_datum = /datum/artifact/cloner
 
 /datum/artifact/cloner
 	associated_object = /obj/artifact/cloner
+	type_name = "Cloner"
 	rarity_weight = 90
 	min_triggers = 2
 	max_triggers = 2
 	validtriggers = list(/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
+	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	react_xray = list(15,90,90,11,"HOLLOW")
 	validtypes = list("wizard","eldritch")
 	touch_descriptors = list("You seem to have a little difficulty taking your hand off its surface.")
@@ -45,7 +46,7 @@
 			if(deep_count > 0 && prob(5))
 				deep_count--
 				clone = semi_deep_copy(H, O, copy_flags=COPY_SKIP_EXPLOITABLE) // admins made me do it
-				var/lastFilterIndex = clone.filters.len
+				var/lastFilterIndex = length(clone.filters)
 				if(lastFilterIndex)
 					clone.filters -= clone.filters[lastFilterIndex]
 			else
@@ -58,7 +59,7 @@
 					clone.abilityHolder = H.abilityHolder.deepCopy()
 					clone.abilityHolder.transferOwnership(clone)
 					clone.abilityHolder.remove_unlocks()
-				if(H.traitHolder && H.traitHolder.traits.len)
+				if(H.traitHolder && length(H.traitHolder.traits))
 					clone.traitHolder.traits = H.traitHolder.traits.Copy()
 				clone.real_name = user.real_name
 				clone.UpdateName()
@@ -69,6 +70,8 @@
 			if(swapSouls && H.mind)
 				H.mind.transfer_to(clone)
 			clone.changeStatus("paralysis", imprison_time) // so they don't ruin the surprise
+			O.ArtifactFaultUsed(H)
+			O.ArtifactFaultUsed(clone)
 
 			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && ((clone.mind in ticker.mode:revolutionaries) || (clone.mind in ticker.mode:head_revolutionaries)))
 				ticker.mode:update_all_rev_icons() //So the icon actually appears
@@ -108,7 +111,7 @@
 			return
 		for(var/obj/I in O.contents)
 			I.set_loc(get_turf(O))
-		if (clone.loc == O)
+		if (clone?.loc == O)
 			clone.set_loc(get_turf(O))
 			O.visible_message("<span class='alert'><b>[O]</b> releases [clone.name] and shuts down!</span>")
 		else

@@ -4,10 +4,12 @@
 
 /datum/artifact/wish_granter
 	associated_object = /obj/artifact/wish_granter
+	type_name = "Wishgranter"
 	rarity_weight = 90
 	validtypes = list("wizard","eldritch")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/cold)
+	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activ_text = "begins glowing with an enticing light!"
 	deact_text = "falls dark and quiet."
 	react_xray = list(666,666,666,11,"NONE")
@@ -43,6 +45,7 @@
 		boutput(user, "<b>[O]</b> resonates, \"<big>SO BE IT...</big>\"")
 		playsound(O, "sound/musical_instruments/Gong_Rumbling.ogg", 40, 1)
 		O.visible_message("<span class='alert'><b>[O]</b> begins to charge up...</span>")
+		O.ArtifactFaultUsed(user)
 		sleep(3 SECONDS)
 		if (prob(2))
 			evil = !evil

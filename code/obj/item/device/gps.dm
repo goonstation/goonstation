@@ -10,7 +10,7 @@
 	var/active = 0		//probably should
 	var/atom/tracking_target = null		//unafilliated with allowtrack, which essentially just lets your gps appear on other gps lists
 	flags = FPRINT | TABLEPASS | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	m_amt = 50
 	g_amt = 100
 	mats = 2
@@ -121,7 +121,7 @@
 		HTML += "<hr>"
 
 		HTML += "<div class='gps group'><b>Beacons</b></div>"
-		for (var/obj/machinery/beacon/B as() in machine_registry[MACHINES_BEACONS])
+		for (var/obj/machinery/beacon/B as anything in machine_registry[MACHINES_BEACONS])
 			if (B.enabled == 1)
 				var/turf/T = get_turf(B.loc)
 				HTML += "<div class='gps'><span><b>[B.sname]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></div>"

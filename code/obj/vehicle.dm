@@ -1,6 +1,6 @@
 /*
 Contains:
-
+-Vehicle defines
 -Vehicle parent
 -Segway
 -Floor buffer
@@ -10,26 +10,92 @@ Contains:
 -Forklift
 */
 
-//////////////////////////////// Vehicle parent ///////////////////////////////////////
+//------------------ Vehicle Defines --------------------///
+#define MINIMUM_EFFECTIVE_DELAY 0.001 //absolute maximum speed for vehicles (lower is faster), do not set to 0 or division by 0 will happen
 
+/**
+	* This macro handles the code that USED to be defined individually in each vehicle's relaymove() proc
+	* all non-machinery vehicles except forklifts and skateboards use this now
+	*	the params passed through are the same as are passed to relaymove()
+	* src should always be the vehicle that's moving
+	* user is the mob that initiated the relaymove() call. Note that this does NOT have to be the same as the vehicles "rider"
+	* this is an important distinction to make because some vehicles can have multiple OCCUPANTS but none of them can have multiple RIDERS
+	* dir is the direction we're going to travel in
+	* we reset the overlays to null in case the relaymove() call was initiated by a passenger rather than the driver (we shouldn't have a rider overlay if there is no rider!)
+	* Then, we check to see what mob initiated the relaymove()
+	* if it wasn't the rider, we jump to a bit of code that ensures no weirdness with unusual passenger ejections
+	* if it WAS initiated by the rider, we got ahead and cap the speed (td) to MINIMUM_EFFECTIVE_DELAY and then apply the rider overlay if needed
+	* Then, we check to make sure we aren't riding in space without a booster upgrade
+	* Next, we do some simple math to adjust the vehicle's glide_size based on its speed and to compensate for lag
+	* IMPORTANTLY: we also set the glide_size for all occupants of the vehicle to the same value that we used for the vehicle itself
+	* and set the occupant's animate_movement to SYNC_STEPS
+	* This helps to SIGNIFICANTLY smooth the apparent motion of the camera at higher speeds (almost buttery at default speed of 2)
+	* Unfortunately, there is still some stuttering at higher speeds, but it has been lessened quite a bit.
+	* Then, we finally actually walk the src vehicle in the dir direction with td delay between steps
+	* The vehicle will keep moving in this direction until stopped or the direction is changed
+	* Next, we.... uhhhhhh... well, we do the glide_size and animation adjustments AGAIN.
+	* I really have no idea why we do this, but it was present in pod movement code, and I asked mbc about it and we were both too scared to change it
+	* So, if you want to optimize this some more, I'd start by looking into removing that bit of code
+	* LASTLY, we call do_special_on_relay() to handle any special behaviors we want the vehicle to perform each time relaymove() is called
+	* NOTE:
+	* this means that do_special_on_relay() will only get called when the rider is performing a direction input
+	* and NOT whenever the vehicle actually MOVES.
+	* For that, you'll want to override the vehicles Move() proc with the custom behavior you want.
+	*/
+#define V_DO_MOVE(src, user, dir) do { \
+	src.overlays = null ; \
+	if(src.rider && user == src.rider) { \
+		var/td = max(src.delay, MINIMUM_EFFECTIVE_DELAY); \
+		if(src.rider_visible) {src.overlays += src.rider};\
+		if (!src.booster_upgrade) { \
+			var/turf/T = get_turf(src) ;\
+			if(T.throw_unlimited && istype(T, /turf/space)) { break };}\
+		src.glide_size = (32 / td) * world.tick_lag ;\
+		for(var/mob/M in src){\
+			M.glide_size = src.glide_size ;\
+			M.animate_movement = SYNC_STEPS;}\
+		if(src.booster_upgrade) {src.overlays += booster_image };\
+		walk(src, dir, td) ;\
+		src.glide_size = (32 / td) * world.tick_lag ;\
+		for(var/mob/M in src){\
+			M.glide_size = src.glide_size;\
+			M.animate_movement = SYNC_STEPS;}\
+		src.do_special_on_relay(user, dir);\
+	} else {\
+		for (var/mob in src.contents) { var/mob/M = mob; M.set_loc(src.loc); }} ; \
+	} while(false)
+//////////////////////////////// Vehicle parent ///////////////////////////////////////
+ABSTRACT_TYPE(/obj/vehicle)
 /obj/vehicle
 	name = "vehicle"
 	icon = 'icons/obj/vehicles.dmi'
 	density = 1
-	var/mob/living/rider = null
-	var/in_bump = 0
-	var/sealed_cabin = 0
-	var/rider_visible =	1
-	var/list/ability_buttons = null//new/list()
+	var/mob/living/rider = null //rider is basically the "driver" of the vehicle
+	var/in_bump = 0 //sanity variable to prevent the vehicle from crashing multiple times due to a single collision
+	var/sealed_cabin = 0 //does the vehicle have air conditioning? (check /datum/lifeprocess/bodytemp in bodytemp.dm for details)
+	var/rider_visible =	1 //can we see the driver from outside of the vehicle? (used for overlays)
+	var/list/ability_buttons = null //storage for the ability buttons after initialization
+	var/list/ability_buttons_to_initialize = null //list of types of ability buttons to be initialized
 	var/throw_dropped_items_overboard = 0 // See /mob/proc/drop_item() in mob.dm.
-	var/attacks_fast_eject = 1
+	var/attacks_fast_eject = 1 //whether any attack with an item that has a force vallue will immediately eject the rider (only works if rider_visible is true)
 	layer = MOB_LAYER
+	var/delay = 2 //speed, lower is faster, minimum of MINIMUM_EFFECTIVE_DELAY
+	var/booster_upgrade = 0 //do we go through space?
+	var/booster_image = null //what overlay icon do we use for the booster upgrade? (we have to initialize this in new)
+
 
 	New()
 		. = ..()
 		START_TRACKING
+		booster_image = image('icons/mob/robots.dmi', "up-speed") //default booster_image is the same as used for speed boost upgrade on cyborgs
+		if(length(ability_buttons_to_initialize))
+			src.setup_ability_buttons()
+
 
 	disposing()
+		if(rider)
+			boutput(rider, "<span class='alert'><B>Your [src] is destroyed!</B></span>")
+			eject_rider()
 		. = ..()
 		STOP_TRACKING
 
@@ -40,28 +106,26 @@ Contains:
 		return src.loc.return_air()
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(rider && rider_visible && W.force)
-			W.attack(rider, user)
+		if(src.rider && src.rider_visible && W.force)
+			W.attack(src.rider, user)
 			user.lastattacked = src
 			if (attacks_fast_eject || rider.hasStatus(list("weakened", "paralysis", "stunned")))
 				eject_rider()
-			W.visible_message("<span class='alert'>[user] swings at [rider] with [W]!</span>")
+			W.visible_message("<span class='alert'>[user] swings at [src.rider] with [W]!</span>")
 		return
 
-	Exited(atom/movable/thing, atom/newloc)
-		. = ..()
-		if(thing == src.rider)
+	bullet_act(flag, A as obj)
+		if(src.rider)
+			rider.bullet_act(flag, A)
+			eject_rider()
+		else
+			..()
+
+	meteorhit()
+		if (src.rider && ismob(src.rider))
+			src.rider.meteorhit()
 			src.eject_rider()
-
-	proc/eject_other_stuff() // override if there's some stuff integral to the vehicle that should not be ejected
-		for(var/atom/movable/AM in src)
-			AM.set_loc(src.loc)
-
-	proc/eject_rider(var/crashed, var/selfdismount)
-		if(rider?.loc == src)
-			rider.set_loc(src.loc)
-			rider = null
-		src.eject_other_stuff()
+		return
 
 	ex_act(severity)
 		switch(severity)
@@ -69,29 +133,81 @@ Contains:
 				for(var/atom/movable/A as mob|obj in src)
 					A.set_loc(src.loc)
 					A.ex_act(severity)
-					//Foreach goto(35)
 				qdel(src)
-				return
+
 			if(2.0)
 				if (prob(50))
 					for(var/atom/movable/A as mob|obj in src)
 						A.set_loc(src.loc)
 						A.ex_act(severity)
-						//Foreach goto(108)
 					qdel(src)
-					return
+
 			if(3.0)
 				if (prob(25))
 					for(var/atom/movable/A as mob|obj in src)
 						A.set_loc(src.loc)
 						A.ex_act(severity)
-						//Foreach goto(181)
 					qdel(src)
-					return
-			else
+
+	Exited(atom/movable/thing, atom/newloc)
+		. = ..()
+		if(thing == src.rider)
+			src.eject_rider(0, 1, 0)
+
+	proc/eject_other_stuff() // override if there's some stuff integral to the vehicle that should not be ejected
+		for(var/atom/movable/AM in src)
+			AM.set_loc(src.loc)
+
+	/// kick out the rider
+	proc/eject_rider(var/crashed, var/selfdismount, var/ejectall = 1)
+		if(src.rider)
+			if(src.rider.loc == src)
+				src.rider.set_loc(src.loc)
+			ClearSpecificOverlays("rider")
+			ClearSpecificOverlays("booster_image")
+			handle_button_removal()
+			src.rider = null
+		if (ejectall)
+			src.eject_other_stuff()
+
+	/// remove the ability buttons from the rider
+	proc/handle_button_removal()
+		if (length(src.ability_buttons))
+			for(var/obj/ability_button/B in src.ability_buttons)
+				src.rider.client?.screen -= B
+
+	/// add the ability buttons to the rider
+	proc/handle_button_addition()
+		if(!src.rider?.loc == src || !(length(src.ability_buttons)))
+			return
+		if(ishuman(src.rider))
+			var/mob/living/carbon/human/H = rider
+			H.hud?.update_ability_hotbar() //automatically adds the vehicle ability buttons
+		else if (src.rider) //fix for cannot read null.client
+			for(var/obj/ability_button/B in ability_buttons)
+				B.the_mob = src.rider
+				rider.client?.screen += B //don't have to worry about location since that should already have been handled by initialization
+
+	/// initializes the ability buttons (if we have any)
+	proc/setup_ability_buttons()
+		if (!islist(src.ability_buttons))
+			src.ability_buttons = list()
+		var/x_btt =1
+		for (var/button in src.ability_buttons_to_initialize)
+			var/obj/ability_button/NB = new button()
+			src.ability_buttons += NB
+			NB.screen_loc = "NORTH-2,[x_btt]"
+			x_btt++
+
+	relaymove(mob/user as mob, dir)
+		V_DO_MOVE(src, user, dir)
+
+	proc/do_special_on_relay(mob/user as mob, dir) //empty placeholder for when we successfully have the rider relay a move
 		return
 
+
 	proc/Stopped()
+		ClearSpecificOverlays("booster_image") //so we don't see thrusters firing on a parked vehicle
 		return
 
 	proc/stop()
@@ -100,6 +216,12 @@ Contains:
 
 	blob_act(var/power)
 		qdel(src)
+
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		..()
+		// Simulate hotspot Crossed/Process so turfs engulfed in flames aren't simply ignored in vehicles
+		if (src.rider_visible && !src.sealed_cabin && ismob(src.rider) && exposed_volume > (CELL_VOLUME * 0.8) && exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD)
+			src.rider.update_burning(clamp(exposed_temperature / 60, 0, 10))
 
 //////////////////////////////////////////////////////////// Segway ///////////////////////////////////////////
 
@@ -117,15 +239,11 @@ Contains:
 	soundproofing = 0
 	throw_dropped_items_overboard = 1
 	var/datum/light/light
+	ability_buttons_to_initialize = list(/obj/ability_button/weeoo)
 	var/obj/item/joustingTool = null // When jousting will be reference to lance being used
 
 /obj/vehicle/segway/New()
 	..()
-	if (!islist(src.ability_buttons))
-		ability_buttons = list()
-	var/obj/ability_button/weeoo/NB = new
-	NB.screen_loc = "NORTH-2,1"
-	ability_buttons += NB
 	light = new /datum/light/point
 	light.set_brightness(0.7)
 	light.attach(src)
@@ -234,7 +352,7 @@ Contains:
 		in_bump = 0
 
 	if(isitem(AM))
-		if(AM:w_class >= 4.0)
+		if(AM:w_class >= W_CLASS_BULKY)
 			boutput(rider, "<span class='alert'><B>You crash into [AM]!</B></span>")
 			for (var/mob/C in AIviewers(src))
 				if(C == rider)
@@ -264,7 +382,7 @@ Contains:
 	in_bump = 0
 	return
 
-/obj/vehicle/segway/eject_rider(var/crashed, var/selfdismount)
+/obj/vehicle/segway/eject_rider(var/crashed, var/selfdismount, var/ejectall = 1)
 	if (!src.rider)
 		return
 
@@ -272,9 +390,6 @@ Contains:
 	..()
 	rider.pixel_y = 0
 	walk(src, 0)
-	if (rider.client)
-		for(var/obj/ability_button/B in ability_buttons)
-			rider.client.screen -= B
 	if(crashed)
 		if(crashed == 2)
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
@@ -289,7 +404,6 @@ Contains:
 		rider.throw_at(target, 5, 1)
 		rider.buckled = null
 		rider = null
-		//overlays = null
 		update()
 		return
 	if(selfdismount)
@@ -300,7 +414,6 @@ Contains:
 			C.show_message("<B>[rider]</B> dismounts from \the [src].", 1)
 	rider.buckled = null
 	rider = null
-	//overlays = null
 	update()
 	return
 
@@ -406,17 +519,6 @@ Contains:
 		if (ishuman(S.rider))
 			. += S
 
-/obj/vehicle/segway/relaymove(mob/user as mob, dir)
-	if(rider)
-		var/turf/T = get_turf(src)
-		if(T.throw_unlimited && istype(T, /turf/space))
-			return
-		//icon_state = "segway2"
-		walk(src, dir, 2)
-	else
-		for(var/mob/M in src.contents)
-			M.set_loc(src.loc)
-
 /obj/vehicle/segway/MouseDrop_T(mob/living/target, mob/user)
 	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
 		return
@@ -431,23 +533,13 @@ Contains:
 		boutput(user, "<span class='notice'>You help [target.name] onto \the [src]!</span>")
 	else
 		return
-
-	if (target.client)
-		for(var/obj/ability_button/B in ability_buttons)
-			B.the_mob = target
-
-		var/x_btt = 1
-		for(var/obj/ability_button/B in ability_buttons)
-			B.screen_loc = "NORTH-2,[x_btt]"
-			target.client.screen += B
-			x_btt++
-
 	target.set_loc(src)
 	rider = target
+	if (rider.client)
+		handle_button_addition()
 	rider.pixel_x = 0
 	rider.pixel_y = 5
 	src.UpdateOverlays(rider, "rider")
-	//overlays += rider
 	if(rider.restrained() || rider.stat)
 		rider.buckled = src
 
@@ -486,18 +578,6 @@ Contains:
 				src.visible_message("<span class='alert'><B>[M] has attempted to shove [rider] off of the [src]!</B></span>")
 	return
 
-/obj/vehicle/segway/bullet_act(flag, A as obj)
-	if(rider)
-		rider.bullet_act(flag, A)
-		eject_rider()
-	return
-
-/obj/vehicle/segway/meteorhit()
-	if(rider)
-		eject_rider()
-		rider.meteorhit()
-	return
-
 /obj/vehicle/segway/disposing()
 	if(rider)
 		boutput(rider, "<span class='alert'><B>Your segway is destroyed!</B></span>")
@@ -531,13 +611,13 @@ Contains:
 	is_syndicate = 1
 	mats = 8
 	var/low_reagents_warning = 0
-	var/booster_upgrade = 0 // TODO: replace with wire hacking ala MULE
 	var/zamboni = 0
 	var/sprayer_active = 0
 	var/image/image_under = null
 	var/icon_base = "floorbuffer"
 	var/rider_state = 1
-	var/speed = 4
+	delay = 4
+	ability_buttons_to_initialize = list(/obj/ability_button/fbuffer_toggle, /obj/ability_button/fbuffer_status)
 	soundproofing = 0
 	throw_dropped_items_overboard = 1
 
@@ -549,11 +629,6 @@ Contains:
 		else
 			reagents.add_reagent("water", 1000)
 			//reagents.add_reagent("cleaner", 250) //don't even need this now that we have fluid, probably. If you want it, add it yer self
-
-		if (!islist(src.ability_buttons))
-			ability_buttons = list()
-		ability_buttons += new /obj/ability_button/fbuffer_toggle
-		ability_buttons += new /obj/ability_button/fbuffer_status
 /*
 /obj/ability_button/toggle_buffer
 	name = "Toggle Buff-R-Matic Sprayer"
@@ -716,14 +791,11 @@ Contains:
 	in_bump = 0
 	return
 
-/obj/vehicle/floorbuffer/eject_rider(var/crashed, var/selfdismount)
+/obj/vehicle/floorbuffer/eject_rider(var/crashed, var/selfdismount, var/ejectall = 1)
 	var/mob/living/rider = src.rider
 	..()
 	rider.pixel_y = 0
 	walk(src, 0)
-	if (rider.client)
-		for(var/obj/ability_button/B in ability_buttons)
-			rider.client.screen -= B
 	src.log_rider(rider, 1)
 	if(crashed)
 		if(crashed == 2)
@@ -739,7 +811,6 @@ Contains:
 		rider.throw_at(target, 5, 1)
 		rider.buckled = null
 		rider = null
-		//overlays = null
 		update()
 		return
 	if(selfdismount)
@@ -750,32 +821,8 @@ Contains:
 			C.show_message("<B>[rider]</B> dismounts from \the [src].", 1)
 	rider.buckled = null
 	rider = null
-	//overlays = null
 	update()
 	return
-
-/obj/vehicle/floorbuffer/relaymove(mob/user as mob, dir)
-	src.overlays = null
-	if(rider)
-		src.overlays += rider
-		if (!src.booster_upgrade)
-			var/turf/T = get_turf(src)
-			if(T.throw_unlimited && istype(T, /turf/space))
-				return
-		src.glide_size = (32 / speed) * world.tick_lag
-		for(var/mob/M in src)
-			M.glide_size = src.glide_size
-			M.animate_movement = SYNC_STEPS
-		if(src.booster_upgrade)
-			src.overlays += image('icons/mob/robots.dmi', "up-speed")
-		walk(src, dir, speed)
-		src.glide_size = (32 / speed) * world.tick_lag
-		for(var/mob/M in src)
-			M.glide_size = src.glide_size
-			M.animate_movement = SYNC_STEPS
-	else
-		for(var/mob/M in src.contents)
-			M.set_loc(src.loc)
 
 /obj/vehicle/floorbuffer/MouseDrop_T(mob/living/target, mob/user)
 	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
@@ -794,19 +841,12 @@ Contains:
 	else
 		return
 
-	if (target.client)
-		//var/x_btt = 1
-		for (var/obj/ability_button/B in ability_buttons)
-			B.the_mob = target
-			//B.screen_loc = "NORTH-2,[x_btt]"
-			target.client.screen += B
-			//x_btt++
-
 	target.set_loc(src)
 	rider = target
+	if (target.client)
+		handle_button_addition()
 	rider.pixel_x = 0
 	rider.pixel_y = 10
-	//overlays += rider
 	src.UpdateOverlays(rider, "rider")
 	if(rider.restrained() || rider.stat)
 		rider.buckled = src
@@ -843,18 +883,6 @@ Contains:
 			else
 				playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 25, 1, -1)
 				src.visible_message("<span class='alert'><B>[M] has attempted to yank [rider] off of \the [src]!</B></span>")
-	return
-
-/obj/vehicle/floorbuffer/bullet_act(flag, A as obj)
-	if (src.rider && ismob(src.rider))
-		src.rider.bullet_act(flag, A)
-		src.eject_rider()
-	return
-
-/obj/vehicle/floorbuffer/meteorhit()
-	if (src.rider && ismob(src.rider))
-		src.rider.meteorhit()
-		src.eject_rider()
 	return
 
 /obj/vehicle/floorbuffer/disposing()
@@ -920,36 +948,31 @@ Contains:
 	rider_visible = 0
 	is_syndicate = 1
 	mats = 15
+	ability_buttons_to_initialize = list(/obj/ability_button/loudhorn/clowncar, /obj/ability_button/stopthebus/clowncar)
 	soundproofing = 5
+	var/second_icon = "clowncar2" //animated jiggling for the clowncar
 
-/obj/vehicle/clowncar/relaymove(mob/user as mob, dir)
-	if(rider && user == rider)
-		var/turf/T = get_turf(src)
-		if(T.throw_unlimited && istype(T, /turf/space))
-			return
-		for (var/mob/living/carbon/human/H in src)
-			if (H.sims)
-				H.sims.affectMotive("fun", 1)
-				H.sims.affectMotive("Hunger", 1)
-				H.sims.affectMotive("Thirst", 1)
-		icon_state = "clowncar2"
-		walk(src, dir, 2)
-		moving = 1
-		if(!(world.timeofday - src.antispam <= 60))
-			src.antispam = world.timeofday
-			playsound(src, "sound/machines/rev_engine.ogg", 50, 1)
-			playsound(src.loc, "sound/machines/rev_engine.ogg", 50, 1)
-			//play engine sound
-	else
-		..()
-		return
+/obj/vehicle/clowncar/do_special_on_relay(mob/user as mob, dir)
+	for (var/mob/living/carbon/human/H in src)
+		if (H.sims)
+			H.sims.affectMotive("fun", 1)
+			H.sims.affectMotive("Hunger", 1)
+			H.sims.affectMotive("Thirst", 1)
+	icon_state = second_icon
+	moving = 1
+	if(!(world.timeofday - src.antispam <= 60))
+		src.antispam = world.timeofday
+		playsound(src, "sound/machines/rev_engine.ogg", 50, 1)
+		playsound(src.loc, "sound/machines/rev_engine.ogg", 50, 1)
+		//play engine sound
+	return
 
 /obj/vehicle/clowncar/Click()
 	if(usr != rider)
 		..()
 		return
 	if(!(usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat))
-		eject_rider(0, 1)
+		eject_rider(0, 1, 0)
 	return
 
 /obj/vehicle/clowncar/attack_hand(mob/living/carbon/human/M as mob)
@@ -1005,7 +1028,7 @@ Contains:
 			if (!rider.hasStatus("weakened"))
 				rider.changeStatus("weakened", 2 SECONDS)
 				rider.force_laydown_standup()
-			eject_rider()
+			eject_rider(0, 0, 0)
 		else
 			if(src.contents.len)
 				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1, -1)
@@ -1049,18 +1072,19 @@ Contains:
 	if(target == user && !user.stat)	// if drop self, then climbed in
 		if(rider)
 			return
+		target.set_loc(src)
 		rider = target
+		handle_button_addition()
 		src.log_me(src.rider, null, "rider_enter")
 		msg = "[user.name] climbs into the driver's seat of the [src]."
 		boutput(user, "<span class='notice'>You climb into the driver's seat of the [src].</span>")
 	else if(target != user && !user.restrained() && target.lying)
+		target.set_loc(src)
 		src.log_me(user, target, "pax_enter", 1)
 		msg = "[user.name] stuffs [target.name] into the back of the [src]!"
 		boutput(user, "<span class='notice'>You stuff [target.name] into the back of the [src]!</span>")
 	else
 		return
-
-	target.set_loc(src)
 	for (var/mob/C in AIviewers(src))
 		if(C == user)
 			continue
@@ -1151,7 +1175,7 @@ Contains:
 	..()
 	return
 
-/obj/vehicle/clowncar/eject_rider(var/crashed, var/selfdismount)
+/obj/vehicle/clowncar/eject_rider(var/crashed, var/selfdismount, var/ejectall = 1)
 	if (!src.rider || !ismob(src.rider))
 		return
 	var/mob/living/rider = src.rider
@@ -1175,7 +1199,7 @@ Contains:
 		rider.buckled = null
 		rider = null
 		icon_state = "clowncar"
-		if(prob(40) && src.contents.len)
+		if(prob(40) && length(src.contents))
 			for(var/mob/O in AIviewers(src, null))
 				O.show_message(text("<span class='alert'><B>Everything in the [] flies out!</B></span>", src), 1)
 			for(var/atom/A in src.contents)
@@ -1250,6 +1274,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	name = "cluwne car"
 	desc = "A hideous-looking piece of shit on wheels. You probably shouldn't drive this."
 	icon_state = "cluwnecar"
+	second_icon = "cluwnecar2"
 
 /obj/vehicle/clowncar/cluwne/Move()
 	if(..())
@@ -1262,17 +1287,12 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			pixel_y = rand(-2, 2)
 		return TRUE
 
-/obj/vehicle/clowncar/cluwne/relaymove(mob/user as mob, dir)
-	..(user, dir)
-	if(rider && user == rider)
-		icon_state = "cluwnecar2"
-
 /obj/vehicle/clowncar/cluwne/attackby(var/obj/item/W, var/mob/user)
 	eject_rider()
 	W.attack(rider, user)
 	user.lastattacked = src
 
-/obj/vehicle/clowncar/cluwne/eject_rider(var/crashed, var/selfdismount)
+/obj/vehicle/clowncar/cluwne/eject_rider(var/crashed, var/selfdismount, var/ejectall = 1)
 	..(crashed, selfdismount)
 	icon_state = "cluwnecar"
 	pixel_x = 0
@@ -1375,7 +1395,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		in_bump = 0
 		return
 	if(isitem(AM))
-		if(AM:w_class >= 4.0)
+		if(AM:w_class >= W_CLASS_BULKY)
 			boutput(rider, "<span class='alert'><B>You run into [AM]!</B></span>")
 			for (var/mob/C in AIviewers(src))
 				if(C == rider)
@@ -1404,7 +1424,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	in_bump = 0
 	return
 
-/obj/vehicle/cat/eject_rider(var/crashed, var/selfdismount)
+/obj/vehicle/cat/eject_rider(var/crashed, var/selfdismount, var/ejectall = 1)
 	var/mob/living/rider = src.rider
 	..()
 	rider.pixel_y = 0
@@ -1423,7 +1443,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		rider.throw_at(target, 5, 1)
 		rider.buckled = null
 		rider = null
-		overlays = null
+		ClearSpecificOverlays("rider")
 		return
 	if(selfdismount)
 		boutput(rider, "<span class='notice'>You dismount from the [src].</span>")
@@ -1433,23 +1453,16 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			C.show_message("<B>[rider]</B> dismounts from the [src].", 1)
 	rider.buckled = null
 	rider = null
-	overlays = null
+	ClearSpecificOverlays("rider")
 	return
 
-/obj/vehicle/cat/relaymove(mob/user as mob, dir)
-	if(rider)
-		var/turf/T = get_turf(src)
-		if(T.throw_unlimited && istype(T, /turf/space))
-			return
-		switch(dir)
-			if(NORTH,SOUTH)
-				layer = MOB_LAYER+1// TODO Layer wtf
-			if(EAST,WEST)
-				layer = 3
-		walk(src, dir, 2)
-	else
-		for(var/mob/M in src.contents)
-			M.set_loc(src.loc)
+/obj/vehicle/cat/do_special_on_relay(mob/user as mob, dir)
+	switch(dir)
+		if(NORTH,SOUTH)
+			layer = MOB_LAYER+1// TODO Layer wtf
+		if(EAST,WEST)
+			layer = 3
+	return
 
 /obj/vehicle/cat/MouseDrop_T(mob/living/carbon/human/target, mob/user)
 	if (rider || !istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.hasStatus(list("weakened", "paralysis", "stunned")) || user.stat || isAI(user))
@@ -1470,7 +1483,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	rider = target
 	rider.pixel_x = 0
 	rider.pixel_y = 5
-	overlays += rider
+	src.UpdateOverlays(rider, "rider")
 	if(rider.restrained() || rider.stat)
 		rider.buckled = src
 
@@ -1507,17 +1520,6 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 				src.visible_message("<span class='alert'><B>[M] has attempted to shove [rider] off of the [src]!</B></span>")
 	return
 
-/obj/vehicle/cat/bullet_act(flag, A as obj)
-	if(rider)
-		eject_rider()
-		rider.bullet_act(flag, A)
-	return
-
-/obj/vehicle/cat/meteorhit()
-	if(rider)
-		eject_rider()
-		rider.meteorhit()
-	return
 
 /obj/vehicle/cat/disposing()
 	if(rider)
@@ -1543,24 +1545,13 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	mats = 15
 	sealed_cabin = 1
 	rider_visible = 0
+	ability_buttons_to_initialize = list(/obj/ability_button/loudhorn, /obj/ability_button/stopthebus, /obj/ability_button/togglespook)
 	var/gib_onhit = 0
 	var/is_badmin_bus = FALSE
 	var/darkness = FALSE
+	booster_upgrade =1
+	delay = 1
 	soundproofing = 5
-
-/obj/vehicle/adminbus/New()
-	..()
-	if (!islist(src.ability_buttons))
-		ability_buttons = list()
-	var/obj/ability_button/loudhorn/NB = new
-	NB.screen_loc = "NORTH-2"
-	ability_buttons += NB
-	var/obj/ability_button/stopthebus/SB = new
-	SB.screen_loc = "NORTH-2"
-	ability_buttons += SB
-	var/obj/ability_button/togglespook/togglespook = new
-	togglespook.screen_loc = "NORTH-2"
-	ability_buttons += togglespook
 
 /obj/vehicle/adminbus/Move()
 	if(src.darkness)
@@ -1573,6 +1564,9 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	name = "Loudhorn"
 	icon = 'icons/misc/abilities.dmi'
 	icon_state = "noise"
+	var/mysound = 'sound/musical_instruments/Vuvuzela_1.ogg'
+	var/mydelay = 1 SECOND
+	var/myvolume = 50
 	var/active = 0
 
 	Click(location, control, params)
@@ -1585,25 +1579,45 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		var/mob/my_mob = the_mob
 
 		if(!isturf(my_mob.loc))
-			playsound(my_mob.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 50, 1)
-		playsound(the_turf, "sound/musical_instruments/Vuvuzela_1.ogg", 50, 1)
+			playsound(my_mob.loc, src.mysound, src.myvolume, 1)
+		playsound(the_turf, src.mysound, src.myvolume, 1)
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN_DBG(src.mydelay)
 			active = 0
+
+/obj/ability_button/loudhorn/clowncar
+	name = "Clown Car Horn"
+	icon = 'icons/misc/abilities.dmi'
+	icon_state = "noise"
+	mysound = 'sound/musical_instruments/Carhorn_1.ogg'
+	mydelay = 10 SECONDS
+	myvolume = 75
 
 /obj/ability_button/stopthebus
 	name = "Stop The Bus"
 	icon = 'icons/misc/ManuUI.dmi'
 	icon_state = "cancel"
 	var/active = 0
+	var/mydelay = 0 SECONDS
 
 	Click(location, control, params)
 		. = ..()
 		if(!the_mob) return
+		if(active)
+			boutput( the_mob, "<span class='alert'>The brake is on cooldown!</span>" )
+			return
 		var/mob/my_mob = the_mob
 		if(!istype(my_mob.loc, /obj/vehicle)) return
+		active = 1
 		var/obj/vehicle/v = my_mob.loc
 		v.stop()
+
+		SPAWN_DBG(src.mydelay)
+			active = 0
+
+	clowncar
+		name = "Stop The Car"
+		mydelay = 2 SECONDS
 
 /obj/ability_button/togglespook
 	name = "Toggle Spook"
@@ -1614,8 +1628,8 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		. = ..()
 		if (!the_mob)
 			return
-		if(istype(the_mob.loc, /obj/vehicle/adminbus/battlebus))
-			var/obj/vehicle/adminbus/battlebus/bus = usr.loc
+		if(istype(the_mob.loc, /obj/vehicle/adminbus/))
+			var/obj/vehicle/adminbus/bus = usr.loc
 			bus.darkness = !bus.darkness
 			if (bus.darkness)
 				boutput( the_mob, "<span class='alert'>The air grows heavy and nearby lights begin to flicker and dim!</span>" )
@@ -1626,20 +1640,13 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	..()
 	icon_state = nonmoving_state
 
-/obj/vehicle/adminbus/relaymove(mob/user as mob, dir)
-	src.overlays = null
-	if(rider && user == rider)
-		if(istype(src.loc, /turf/space))
-			src.overlays += image('icons/mob/robots.dmi', "up-speed")
-		icon_state = moving_state
-		walk(src, dir, 1)
-		if(!(world.timeofday - src.antispam <= 60))
-			src.antispam = world.timeofday
-			playsound(src, "sound/machines/rev_engine.ogg", 50, 1)
-			playsound(src.loc, "sound/machines/rev_engine.ogg", 50, 1)
-			//play engine sound
-	else
-		..()
+/obj/vehicle/adminbus/do_special_on_relay(mob/user as mob, dir)
+	icon_state = moving_state
+	if(!(world.timeofday - src.antispam <= 60))
+		src.antispam = world.timeofday
+		playsound(src, "sound/machines/rev_engine.ogg", 50, 1)
+		playsound(src.loc, "sound/machines/rev_engine.ogg", 50, 1)
+		//play engine sound
 		return
 
 // the adminbus has a pressurized cabin!
@@ -1667,7 +1674,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		..()
 		return
 	if(!(usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat))
-		eject_rider(0, 1)
+		eject_rider(0, 1, 0)
 	return
 
 /obj/vehicle/adminbus/attack_hand(mob/living/carbon/human/M as mob)
@@ -1713,7 +1720,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1, -1)
 			src.visible_message("<span class='alert'><B>[M] has pulled [rider] out of the [src]!</B></span>", 1)
 			rider.changeStatus("weakened", 2 SECONDS)
-			eject_rider()
+			eject_rider(0,0,0)
 		else
 			if(src.contents.len)
 				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1, -1)
@@ -1742,6 +1749,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		return
 
 	if(target == user && !user.stat)	// if drop self, then climbed in
+		target.set_loc(src)
 		if(rider)
 			msg = "[user.name] climbs into the front of the [src]."
 			boutput(user, "<span class='notice'>You climb into the front of the [src].</span>")
@@ -1751,20 +1759,13 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			boutput(user, "<span class='notice'>You climb into the driver's seat of the [src].</span>")
 			rider.add_adminbus_powers()
 			sleep(1 SECOND)
-			for(var/obj/ability_button/B in ability_buttons)
-				B.the_mob = rider
-
-			var/x_btt = 1
-			for(var/obj/ability_button/B in ability_buttons)
-				B.screen_loc = "NORTH-2,[x_btt]"
-				rider.client.screen += B
-				x_btt++
+			handle_button_addition()
 	else if(target != user && !user.restrained())
+		target.set_loc(src)
 		msg = "[user.name] stuffs [target.name] into the back of the [src]!"
 		boutput(user, "<span class='notice'>You stuff [target.name] into the back of the [src]!</span>")
 	else
 		return
-	target.set_loc(src)
 	for (var/mob/C in AIviewers(src))
 		if(C == user)
 			continue
@@ -1860,12 +1861,10 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 /obj/vehicle/adminbus/ex_act(severity)
 	return
 
-/obj/vehicle/adminbus/eject_rider(var/crashed, var/selfdismount)
+/obj/vehicle/adminbus/eject_rider(var/crashed, var/selfdismount, var/ejectall = 1)
 	var/mob/living/rider = src.rider
 	..()
 	rider.remove_adminbus_powers()
-	for(var/obj/ability_button/B in src.ability_buttons)
-		rider.client.screen -= B
 	walk(src, 0)
 	if(crashed)
 		if(crashed == 2)
@@ -1880,7 +1879,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			C.show_message("<span class='alert'><B>[rider] is flung through the [src]'s windshield!</B></span>", 1)
 		var/turf/target = get_edge_target_turf(src, src.dir)
 		rider.throw_at(target, 5, 1)
-		if(prob(40) && src.contents.len)
+		if(prob(40) && length(src.contents))
 			src.visible_message("<span class='alert'><B>Everything in the [src] flies out!</B></span>")
 			for(var/atom/A in src.contents)
 				if(ismob(A))
@@ -2004,13 +2003,13 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 /mob/proc/add_adminbus_powers()
 	if(src.client.holder && src.client.holder.rank && src.client.holder.level >= LEVEL_PA)
-		src.verbs += /client/proc/toggle_gib_onhit
-		src.verbs += /client/proc/toggle_badminbus
+		src.client.verbs += /client/proc/toggle_gib_onhit
+		src.client.verbs += /client/proc/toggle_badminbus
 	return
 
 /mob/proc/remove_adminbus_powers()
-	src.verbs -= /client/proc/toggle_gib_onhit
-	src.verbs -= /client/proc/toggle_badminbus
+	src.client.verbs -= /client/proc/toggle_gib_onhit
+	src.client.verbs -= /client/proc/toggle_badminbus
 	return
 
 //////////////////////////////////////////////////////////////// Battle Bus //////////////////////////
@@ -2020,12 +2019,13 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	desc = "A bus made for war."
 	icon = 'icons/obj/battlebus.dmi'
 	icon_state = "adminbus"
-	moving_state = "adminbus"
-	nonmoving_state = "adminbus2"
-	badmin_moving_state = "adminbus"
-	badmin_nonmoving_state = "adminbus2"
+	moving_state = "adminbus2"
+	nonmoving_state = "adminbus"
+	badmin_moving_state = "adminbus2"
+	badmin_nonmoving_state = "adminbus"
 	badmin_name = "Baddler Bus"
 	badmin_desc = "An unstoppable bus made for war."
+	ability_buttons_to_initialize = list(/obj/ability_button/loudhorn, /obj/ability_button/stopthebus, /obj/ability_button/togglespook, /obj/ability_button/battlecannon, /obj/ability_button/omnicannon, /obj/ability_button/bombchute, /obj/ability_button/hotwheels, /obj/ability_button/staticcharge)
 	var/datum/projectile/P = new/datum/projectile/special/spawner/battlecrate
 	var/datum/projectile/special/spreader/uniform_burst/circle/P2 = new
 	var/power_hotwheels = FALSE
@@ -2041,22 +2041,15 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		P2.pellets_to_fire = 10
 		P2.pellet_shot_volume = 75 / P2.pellets_to_fire //anti-ear destruction
 
-		if (!islist(src.ability_buttons))
-			ability_buttons = list()
-		ability_buttons += new/obj/ability_button/battlecannon
-		ability_buttons += new/obj/ability_button/omnicannon
-		ability_buttons += new/obj/ability_button/bombchute
-		ability_buttons += new/obj/ability_button/hotwheels
-		ability_buttons += new/obj/ability_button/staticcharge
-
-	relaymove(mob/user, dir)
+	do_special_on_relay(mob/user, dir) //this should probably actually be inside an overriden Move() proc, but I've preserved the original behavior here instead.
+		icon_state = moving_state
 		if(src.power_hotwheels)
 			tfireflash(get_turf(src), 0, 100)
 		if(src.power_staticcharge)
 			elecflash(get_turf(src),radius=0, power=2, exclude_center = 0)
 		if(src.power_bomberbus && prob(power_bomberbus_chance))
 			new src.power_bomberbus_type(get_turf(src))
-		. = ..()
+		return
 
 
 /obj/ability_button/battlecannon
@@ -2157,6 +2150,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	var/image/image_crate = null
 	var/image/image_under = null
 	attacks_fast_eject = 0
+	delay = 2.5
 
 /obj/vehicle/forklift/New()
 	..()
@@ -2255,6 +2249,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 	src.update_overlays()
 
+//We, unfortunately, can't use V_DO_MOVE() here because the forklift has some special behaviors with overlays and underlays that produce weird behaviors (ghost riders, phantom crates) when combined with V_DO_MOVE()
 /obj/vehicle/forklift/relaymove(mob/user as mob, direction)
 
 	if (user.stat)
@@ -2264,15 +2259,29 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		return
 
 	var/turf/T = get_turf(src)
-	if(T.throw_unlimited && istype(T, /turf/space))
+	if(T.throw_unlimited && istype(T, /turf/space) && !src.booster_upgrade)
 		return
 
-	//forklift movement
-	if (direction == 1 || direction == 2 || direction == 4 || direction == 8)
-		if(src.dir != direction)
-			src.set_dir(direction)
-		walk(src, dir, 2.5)
-	return
+	//forklift
+	if(src.rider && user == src.rider)
+		var/td = max(src.delay, MINIMUM_EFFECTIVE_DELAY)
+		if (!src.booster_upgrade)
+			if(T.throw_unlimited && istype(T, /turf/space))
+				return
+		src.glide_size = (32 / td) * world.tick_lag
+		for(var/mob/M in src)
+			M.glide_size = src.glide_size
+			M.animate_movement = SYNC_STEPS
+		if(src.booster_upgrade)
+			src.UpdateOverlays(booster_image, "booster_image")
+		walk(src, direction, td)
+		src.glide_size = (32 / td) * world.tick_lag
+		for(var/mob/M in src)
+			M.glide_size = src.glide_size
+			M.animate_movement = SYNC_STEPS
+	else
+		for(var/mob/M in src.contents)
+			M.set_loc(src.loc)
 
 /obj/vehicle/forklift/verb/toggle_lights()
 	set category = "Forklift"
@@ -2298,15 +2307,15 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 /obj/vehicle/forklift/MouseDrop_T(atom/movable/A as obj|mob, mob/user as mob)
 
-	if (usr.stat)
+	if (user.stat)
 		return
 
 	//pick up crates with forklift
-	if((istype(A, /obj/storage/crate) || istype(A, /obj/storage/cart)) && get_dist(A, src) <= 1 && src.rider == usr && helditems.len != helditems_maximum && !broken)
+	if((istype(A, /obj/storage/crate) || istype(A, /obj/storage/cart)) && get_dist(A, src) <= 1 && src.rider == user && helditems.len != helditems_maximum && !broken)
 		A.set_loc(src)
 		helditems.Add(A)
 		update_overlays()
-		boutput(usr, "<span class='notice'><B>You pick up the [A.name].</B></span>")
+		boutput(user, "<span class='notice'><B>You pick up the [A.name].</B></span>")
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
@@ -2318,8 +2327,8 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		boutput(user, "You don't think [src] has enough utensil strength to pick this up.")
 		return
 
-	if(ishuman(A) && get_dist(usr, src) <= 1  && get_dist(A, usr) <= 1 && !rider)
-		if (A == usr)
+	if(ishuman(A) && get_dist(user, src) <= 1  && get_dist(A, user) <= 1 && !rider)
+		if (A == user)
 			boutput(user, "You get into [src].")
 		else
 			boutput(user, "<span class='notice'>You help [A] onto [src]!</span>")
@@ -2383,20 +2392,20 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 	if (isscrewingtool(I))
 		if (!openpanel)
 			openpanel = 1
-			boutput(usr, "You unlock [src]'s panel with [I].")
+			boutput(user, "You unlock [src]'s panel with [I].")
 			update_overlays()
 			return
 
 		if (openpanel)
 			openpanel = 0
-			boutput(usr, "You lock [src]'s panel with [I].")
+			boutput(user, "You lock [src]'s panel with [I].")
 			update_overlays()
 			return
 
 	//Breaking the forklift
 	if (issnippingtool(I))
 		if (openpanel && !broken)
-			boutput(usr, "<span class='notice'>You cut [src]'s wires!<span>")
+			boutput(user, "<span class='notice'>You cut [src]'s wires!<span>")
 			new /obj/item/cable_coil/cut/small( src.loc )
 			break_forklift()
 		return
@@ -2406,7 +2415,7 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 		if (openpanel && broken)
 			var/obj/item/cable_coil/coil = I
 			coil.use(5)
-			boutput(usr, "<span class='notice'>You replace [src]'s wires!</span>")
+			boutput(user, "<span class='notice'>You replace [src]'s wires!</span>")
 			broken = 0
 			if (helditems_maximum < 4)
 				helditems_maximum = 4
@@ -2465,5 +2474,6 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 /obj/vehicle/forklift/bullet_act(flag, A as obj)
 	if(rider && rider_visible)
 		rider.bullet_act(flag, A)
+		//do not eject!
 	else
 		..()

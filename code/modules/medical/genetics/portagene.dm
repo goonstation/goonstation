@@ -120,6 +120,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isscrewingtool(W) && (src.status & BROKEN))
+			src.icon_state = "PAG_broken"
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			if(do_after(user, 2 SECONDS))
 				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
@@ -158,7 +159,7 @@
 				return
 
 			if (src.locked)
-				boutput(usr, "<span class='alert'><B>You need to unlock the scanner first.</B></span>")
+				boutput(user, "<span class='alert'><B>You need to unlock the scanner first.</B></span>")
 				return
 
 			if(!iscarbon(G.affecting))
@@ -298,7 +299,7 @@
 		var/mob/living/carbon/human/H = src.occupant
 		if (istype(H))
 			if (src.occupant_preview)
-				src.occupant_preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace)
+				src.occupant_preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace, name=H.real_name)
 		else
 			qdel(src.occupant_preview)
 			src.occupant_preview = null

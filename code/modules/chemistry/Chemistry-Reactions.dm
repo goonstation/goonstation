@@ -1,7 +1,7 @@
 /proc/ldmatter_reaction(var/datum/reagents/holder, var/created_volume, var/id)
 	var/in_container = 0
 	var/atom/psource = holder.my_atom
-	if(created_volume < 5)
+	if(created_volume < 3)
 		return
 
 	while (psource)
@@ -11,14 +11,14 @@
 			break
 
 	var/list/covered = holder.covered_turf()
-	if (!covered || !covered.len)
+	if (!covered || !length(covered))
 		covered = list(get_turf(holder.my_atom))
 
-	var/howmany = max(1,covered.len / 2.2)
+	var/howmany = clamp(covered.len / 2.2, 1, 15)
 	for(var/i = 0, i < howmany, i++)
 		var/atom/source = pick(covered)
-		if(ON_COOLDOWN(source, "ldm_reaction_ratelimit", 0.1 SECONDS))
-			return
+		if(ON_COOLDOWN(source, "ldm_reaction_ratelimit", 0.2 SECONDS))
+			continue
 		new/obj/decal/implo(source)
 		playsound(source, 'sound/effects/suck.ogg', 100, 1)
 
@@ -35,13 +35,39 @@
 				psource:visible_message("<span class='alert'>[psource] implodes!</span>")
 				qdel(psource)
 				return
-
-		for(var/atom/movable/M in view(clamp(2+round(created_volume/15), 0, 4), source))
-			if(M.anchored || M == source || M.throwing) continue
-			M.throw_at(source, 20 + round(created_volume * 2), 1 + round(created_volume / 10))
-			LAGCHECK(LAG_MED)
+		SPAWN_DBG(0)
+			for(var/atom/movable/M in view(clamp(2+round(created_volume/15), 0, 4), source))
+				if(M.anchored || M == source || M.throwing) continue
+				M.throw_at(source, 20 + round(created_volume * 2), 1 + round(created_volume / 10))
+				LAGCHECK(LAG_MED)
 	if (holder)
 		holder.del_reagent(id)
+
+/proc/sorium_reaction(var/datum/reagents/holder, var/created_volume, var/id)
+	. = 1
+	if(created_volume < 3)
+		return 0
+
+	var/list/covered = holder.covered_turf()
+	if (!covered || !length(covered))
+		covered = list(get_turf(holder.my_atom))
+
+	var/howmany = clamp(covered.len / 2.2, 1, 15)
+	for(var/i = 0, i < howmany, i++)
+		var/atom/source = pick(covered)
+		if(ON_COOLDOWN(source, "sorium_reaction_ratelimit", 0.2 SECONDS))
+			continue
+		new/obj/decal/shockwave(source)
+		playsound(source, "sound/weapons/flashbang.ogg", 25, 1)
+		SPAWN_DBG(0)
+			for(var/atom/movable/M in view(clamp(2+round(created_volume/15), 0, 4), source))
+				if(M.anchored || M == source || M.throwing) continue
+				M.throw_at(get_edge_cheap(source, get_dir(source, M)),  20 + round(created_volume * 2), 1 + round(created_volume / 10))
+				LAGCHECK(LAG_MED)
+
+	if (holder)
+		holder.del_reagent(id)
+
 
 /proc/smoke_reaction(var/datum/reagents/holder, var/smoke_size, var/turf/location, var/vox_smoke = 0, var/do_sfx = 1)
 	var/block = 0
@@ -59,7 +85,7 @@
 	var/og_smoke_size = smoke_size
 
 	var/list/covered = holder.covered_turf()
-	if (!covered || !covered.len)
+	if (!covered || !length(covered))
 		covered = list(get_turf(holder.my_atom))
 
 	var/howmany = max(1,covered.len / 4)
@@ -93,7 +119,7 @@
 				react_amount = react_amount / (1 + ((FG.contained_amt - diminishing_returns_thingymabob) * 0.1))//MBC MAGIC NUMBERS :)
 				//boutput(world,"[react_amount]")
 
-		var/divisor = covered.len
+		var/divisor = length(covered)
 		if (covered.len > 4)
 			divisor += 0.2
 		source.fluid_react(holder, react_amount/divisor, airborne = 1)
@@ -127,7 +153,7 @@
 		playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
 
 	var/list/covered = holder.covered_turf()
-	if (!covered || !covered.len)
+	if (!covered || !length(covered))
 		covered = list(get_turf(holder.my_atom))
 
 	var/howmany = max(1,covered.len / 5)

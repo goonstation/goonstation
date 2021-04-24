@@ -60,8 +60,9 @@
 /datum/ore/molitz
 	name = "molitz"
 	output = /obj/item/raw_material/molitz
-	events = list(/datum/ore/event/gem,/datum/ore/event/gem/molitz_b)
+	events = list(/datum/ore/event/gem,/datum/ore/event/gem/molitz_b,/datum/ore/event/gem/molitz_b)
 	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/uqill,/obj/item/raw_material/fibrilith)
+	event_chance = 12
 	hardness_mod = 1
 	mining_health = 160
 

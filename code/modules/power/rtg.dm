@@ -39,7 +39,7 @@
 				fuel_pellet = I
 				updateicon()
 			else
-				boutput(usr, "<span class='notice'>A fuel pellet has already been inserted.</span>")
+				boutput(user, "<span class='notice'>A fuel pellet has already been inserted.</span>")
 
 	Topic(href, href_list)
 		if (..())
@@ -73,17 +73,18 @@
 		onclose(user, "rtg")
 
 	proc/updateicon()
-		overlays = null
 		if (fuel_pellet)
 			if(status & BROKEN || !lastgen)
 				icon_state = "rtg_off"
+				src.UpdateOverlays(null, "rtg")
 				return
 			else
 				icon_state = "rtg_on"
 		else
 			icon_state = "rtg_empty"
+			src.UpdateOverlays(null, "rtg")
 			return
-		overlays += image('icons/obj/power.dmi', "rtg-f[min(1 + ceil(fuel_pellet.material.getProperty("radioactive") / 2), 5)]")
+		src.UpdateOverlays(image('icons/obj/power.dmi', "rtg-f[min(1 + ceil(fuel_pellet.material.getProperty("radioactive") / 2), 5)]"), "rtg")
 
 /obj/item/fuel_pellet
 	name = "fuel pellet"
@@ -91,7 +92,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "fuelpellet"
 	throwforce = 5
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 	cerenkite
 		New()

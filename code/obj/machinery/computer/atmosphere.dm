@@ -82,7 +82,7 @@ Atmos alert computer
 
 
 /obj/machinery/computer/atmosphere/alerts/proc/interacted(mob/user)
-	src.add_dialog(usr)
+	src.add_dialog(user)
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"
 	dat += "<A HREF='?action=mach_close&window=alerts'>Close</A><br><br>"
 	for (var/cat in src.alarms)

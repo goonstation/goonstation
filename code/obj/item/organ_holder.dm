@@ -350,11 +350,11 @@
 	proc/get_organ(var/organ)
 		RETURN_TYPE(/obj/item)
 		if (!organ)
-			return 0
+			return null
 		var/obj/item/return_organ = organ_list[organ]
 		if (istype(return_organ))
 			return return_organ
-		return 0
+		return null
 
 	proc/drop_organ(var/organ, var/location)
 		if (!src.donor || !organ)
@@ -557,7 +557,7 @@
 				var/obj/item/organ/heart/myHeart = src.heart
 				//Commented this out for some reason I forget. I'm sure I'll remember what it is one day. -kyle
 				// if (src.heart.robotic)
-				// 	src.donor.remove_stam_mod_regen("heart")
+				// 	REMOVE_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, "heart")
 				// 	src.donor.remove_stam_mod_max("heart")
 				myHeart.set_loc(location)
 				myHeart.on_removal()
@@ -926,10 +926,10 @@
 						src.donor.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 					//Like above, I commented this out for a reason I cannot remember. might just be because I changed how that stamina modifier works, I dunno.
 					// if (newHeart.emagged)
-					// 	src.donor.add_stam_mod_regen("heart", 20)
+					// 	APPLY_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, "heart", 20)
 					// 	src.donor.add_stam_mod_max("heart", 100)
 					// else
-					// 	src.donor.add_stam_mod_regen("heart", 10)
+					// 	APPLY_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, "heart", 10)
 					// 	src.donor.add_stam_mod_max("heart", 50)
 				newHeart.op_stage = op_stage
 				src.heart = newHeart
@@ -1149,9 +1149,9 @@
 		switch (working_lungs)
 			if (0)
 				if (working_lungs != lungs_changed)
-					donor.remove_stam_mod_regen("single_lung_removal")
+					REMOVE_MOB_PROPERTY(donor, PROP_STAMINA_REGEN_BONUS, "single_lung_removal")
 					donor.remove_stam_mod_max("single_lung_removal")
-					donor.add_stam_mod_regen("double_lung_removal", -6)
+					APPLY_MOB_PROPERTY(donor, PROP_STAMINA_REGEN_BONUS, "double_lung_removal", -6)
 					donor.add_stam_mod_max("double_lung_removal", -150)
 					lungs_changed = 0
 
@@ -1159,9 +1159,9 @@
 				donor.losebreath+=rand(1,5) * mult
 			if (1)
 				if (working_lungs != lungs_changed)
-					donor.remove_stam_mod_regen("double_lung_removal")
+					REMOVE_MOB_PROPERTY(donor, PROP_STAMINA_REGEN_BONUS, "double_lung_removal")
 					donor.remove_stam_mod_max("double_lung_removal")
-					donor.add_stam_mod_regen("single_lung_removal", -3)
+					APPLY_MOB_PROPERTY(donor, PROP_STAMINA_REGEN_BONUS, "single_lung_removal", -3)
 					donor.add_stam_mod_max("single_lung_removal", -75)
 					lungs_changed = 1
 
@@ -1170,9 +1170,9 @@
 					donor.losebreath+=(1 * mult)
 			if (2)
 				if (working_lungs != lungs_changed)
-					donor.remove_stam_mod_regen("single_lung_removal")
+					REMOVE_MOB_PROPERTY(donor, PROP_STAMINA_REGEN_BONUS, "single_lung_removal")
 					donor.remove_stam_mod_max("single_lung_removal")
-					donor.remove_stam_mod_regen("double_lung_removal")
+					REMOVE_MOB_PROPERTY(donor, PROP_STAMINA_REGEN_BONUS, "double_lung_removal")
 					donor.remove_stam_mod_max("double_lung_removal")
 					lungs_changed = 2
 
@@ -1545,7 +1545,7 @@
 		linked_organ.take_damage(20, 20) //not safe
 		if(istype(holder.owner, /mob/living))
 			var/mob/living/L = holder.owner
-			if (L.stomach_process && L.stomach_process.len)
+			if (L.stomach_process && length(L.stomach_process))
 				boutput(L, "<span class='notice'>You force your cyberintestines to rapidly process the contents of your stomach.</span>")
 				for(var/obj/item/reagent_containers/food/snacks/bite/B in L.stomach_process)
 					B.process_stomach(L, (B.reagents.total_volume)) //all of the food!
@@ -1568,7 +1568,7 @@
 
 		if(istype(holder.owner, /mob/living))
 			var/mob/living/L = holder.owner
-			if (L.stomach_process && L.stomach_process.len)
+			if (L.stomach_process && length(L.stomach_process))
 				L.visible_message("<span class='alert'>[L] convulses and vomits right at [target]!</span>", "<span class='alert'>You upchuck some of your cyberstomach contents at [target]!</span>")
 				SPAWN_DBG(0)
 					for (var/i in 1 to 3)
@@ -1576,7 +1576,7 @@
 						O.throw_at(target, 8, 3, bonus_throwforce=5)
 						linked_organ.take_damage(3)
 						sleep(0.1 SECONDS)
-						if(linked_organ.broken || !L.stomach_process.len)
+						if(linked_organ.broken || !length(L.stomach_process))
 							break
 			else
 				boutput(L, "<span class='alert'>You try to vomit, but your cyberstomach has nothing left inside!</span>")

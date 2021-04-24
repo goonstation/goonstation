@@ -56,7 +56,7 @@
 	/*Inventory*/
 	/*‾‾‾‾‾‾‾‾‾*/
 	var/pickup_sfx = 0 //if null, we auto-pick from a list based on w_class
-	var/w_class = 3.0 // how big they are, determines if they can fit in backpacks and pockets and the like
+	var/w_class = W_CLASS_NORMAL // how big they are, determines if they can fit in backpacks and pockets and the like
 	p_class = 1.5 // how hard they are to pull around, determines how much something slows you down while pulling it
 
 	var/cant_self_remove = 0 // Can't remove from non-hand slots
@@ -150,16 +150,29 @@
 			. += "<div><img src='[resource("images/tooltips/stamina.png")]' alt='' class='icon' /><span>Stamina: [src.stamina_damage ? src.stamina_damage : "0"] dmg, [stamina_cost] consumed per swing</span></div>"
 
 		//standard object properties
-		if(src.properties && src.properties.len)
+		if(src.properties && length(src.properties))
 			for(var/datum/objectProperty/P in src.properties)
 				if(!P.hidden)
 					. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
 
-		//Blocking section
+		//unarmed block
+		if(istype(src, /obj/item/grab/block))
+			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: "
+			//inline-blocking-based properties (disorient resist and damage-type blocks)
+			for(var/datum/objectProperty/P in src.properties)
+				if(P.inline)
+					. += "<img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> "
+			//blocking-based properties
+			for(var/datum/objectProperty/P in src.properties)
+				if(!P.hidden)
+					. += "<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/[P.tooltipImg]")]\" width=\"12\" height=\"12\" /> [P.name]: [P.getTooltipDesc(src, src.properties[P])]"
+			SEND_SIGNAL(src, COMSIG_TOOLTIP_BLOCKING_APPEND, .)
+
+		//Item block section
 		if(src.c_flags & HAS_GRAB_EQUIP)
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/prot.png")]\" width=\"12\" height=\"12\" /> Block+: "
 			for(var/obj/item/grab/block/B in src)
-				if(B.properties && B.properties.len)
+				if(B.properties && length(B.properties))
 					//inline-blocking-based properties (disorient resist and damage-type blocks)
 					for(var/datum/objectProperty/P in B.properties)
 						if(P.inline)
@@ -243,7 +256,7 @@
 	onMaterialChanged()
 		..()
 		if (istype(src.material))
-			force = material.hasProperty("hard") ? force + round(material.getProperty("hard") / 20) : force
+			force = material.hasProperty("hard") ? initial(force) + round(material.getProperty("hard") / 20) : initial(force)
 			burn_possible = src.material.getProperty("flammable") > 50 ? 1 : 0
 			if (src.material.material_flags & MATERIAL_METAL || src.material.material_flags & MATERIAL_CRYSTAL || src.material.material_flags & MATERIAL_RUBBER)
 				burn_type = 1
@@ -258,7 +271,7 @@
 				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 
 	removeMaterial()
-		if (src.material && src.material.triggersOnLife.len)
+		if (src.material && length(src.material.triggersOnLife))
 			var/datum/component/C = src.GetComponent(/datum/component/loctargeting/mat_triggersonlife)
 			if (C)
 				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
@@ -463,7 +476,8 @@
 /obj/item/proc/combust() // cogwerks- flammable items project
 	if(processing_items.Find(src)) //processing items cant be lit on fire to avoid weird bugs
 		return
-	if(!src.burning)
+	if (!src.burning)
+		START_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 		src.visible_message("<span class='alert'>[src] catches on fire!</span>")
 		src.burning = 1
 		src.firesource = TRUE
@@ -480,7 +494,7 @@
 	ClearSpecificOverlays("burn_overlay")
 	name = "[pick("charred","burned","scorched")] [name]"
 
-		/*if (src.reagents && src.reagents.reagent_list && src.reagents.reagent_list.len)
+		/*if (src.reagents && src.reagents.reagent_list && length(src.reagents.reagent_list))
 
 			//boutput(world, "<span class='alert'><b>[src] is releasing chemsmoke!</b></span>")
 			//cogwerks note for drsingh: this was causing infinite server-killing problems
@@ -530,6 +544,8 @@
 	return
 
 /obj/item/proc/change_stack_amount(var/diff)
+	if ((amount + diff) < 0)
+		return 0
 	amount += diff
 	if (!inventory_counter)
 		create_inventory_counter()
@@ -541,6 +557,7 @@
 			var/mob/holding_mob = src.loc
 			holding_mob.u_equip(src)
 		pool(src)
+	return 1
 
 /obj/item/proc/stack_item(obj/item/other)
 	var/added = 0
@@ -715,6 +732,9 @@
 /obj/item/proc/try_put_hand_mousedrop(mob/user)
 	var/oldloc = src.loc
 
+	if(src.equipped_in_slot && src.cant_self_remove)
+		return 0
+
 	if (!src.anchored)
 		if (!user.r_hand || !user.l_hand || (user.r_hand == src) || (user.l_hand == src))
 			if (!user.hand) //big messy ugly bad if() chunk here because we want to prefer active hand
@@ -800,6 +820,7 @@
 				src.health -= 2
 
 		if (src.health <= 0)
+			STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 			if (burn_type == 1)
 				make_cleanable( /obj/decal/cleanable/molten_item,get_turf(src))
 			else
@@ -823,7 +844,7 @@
 			else
 				src.overlays -= image('icons/effects/fire.dmi', "1old")
 			return
-
+		STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 		processing_items.Remove(src)
 
 	burning_last_process = src.burning
@@ -935,8 +956,7 @@
 /obj/item/blob_act(var/power)
 	if (src.artifact)
 		if (!src.ArtifactSanityCheck()) return
-		src.ArtifactStimulus("force", power)
-		src.ArtifactStimulus("carbtouch", 1)
+		src.Artifact_blob_act(power)
 	return
 
 //nah
@@ -1007,11 +1027,11 @@
 /obj/item/get_desc()
 	var/t
 	switch(src.w_class)
-		if (-INFINITY to 1.0) t = "tiny"
-		if (2.0) t = "small"
-		if (3.0) t = "normal-sized"
-		if (4.0) t = "bulky"
-		if (5.0 to INFINITY) t = "huge"
+		if (-INFINITY to W_CLASS_TINY) t = "tiny"
+		if (W_CLASS_SMALL) t = "small"
+		if (W_CLASS_NORMAL) t = "normal-sized"
+		if (W_CLASS_BULKY) t = "bulky"
+		if (W_CLASS_HUGE to INFINITY) t = "huge"
 		else
 	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50)) t = "funny-looking"
 	return "It is \an [t] item."
@@ -1165,7 +1185,7 @@
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_PRE, M, user) & ATTACK_PRE_DONT_ATTACK)
 		return
 	var/stam_crit_pow = src.stamina_crit_chance
-	if (prob(stam_crit_pow))
+	if (prob(stam_crit_pow) && !M.check_block()?.can_block(src.hit_type, 0))
 		msgs.stamina_crit = 1
 		msgs.played_sound = pick(sounds_punch)
 		//moved to item_attack_message

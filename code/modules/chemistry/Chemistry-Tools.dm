@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	desc = "..."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = null
-	w_class = 1
+	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	var/rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
 	tooltip_flags = REBUILD_SPECTRO | REBUILD_DIST
@@ -59,9 +59,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		if (!src.reagents)
 			src.initial_reagents = null // don't need you no mo
 			return
-		if ((islist(new_reagents) && new_reagents.len) || istext(new_reagents))
+		if ((islist(new_reagents) && length(new_reagents)) || istext(new_reagents))
 			src.initial_reagents = new_reagents
-		if (islist(src.initial_reagents) && src.initial_reagents.len)
+		if (islist(src.initial_reagents) && length(src.initial_reagents))
 			for (var/current_id in src.initial_reagents)
 				if (!istext(current_id)) // we can't do shit hereeee
 					continue
@@ -139,6 +139,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	icon_state = "null"
 	item_state = "null"
 	amount_per_transfer_from_this = 10
+	var/can_recycle = TRUE //can this be put in a glass recycler?
 	var/splash_all_contents = 1
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 
@@ -385,6 +386,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 						boutput(user, "<span class='alert'>The [src.name] is full.</span>")
 				else
 					boutput(user, "The [W.name] is empty.")
+			else
+				boutput(user, "You need to slice open the [W.name] first!")
 
 			return
 		else
@@ -433,6 +436,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	initial_volume = 50
 	flags = FPRINT | OPENCONTAINER | SUPPRESSATTACK
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	can_recycle = FALSE
 	var/helmet_bucket_type = /obj/item/clothing/head/helmet/bucket
 	var/hat_bucket_type = /obj/item/clothing/head/helmet/bucket/hat
 	var/bucket_sensor_type = /obj/item/bucket_sensor

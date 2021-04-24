@@ -19,7 +19,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	item_state = "electronic"
 	density = 0
 	anchored = 0
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	mats = 4
 	var/list/machinerylist = list()
 	var/machinery_name = "" // For user prompt stuff.
@@ -378,7 +378,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		return 0
 
 	relaymove(mob/user as mob)
-		if(!usr || !isalive(usr) || usr.getStatusDuration("stunned") != 0)
+		if(!user || !isalive(user) || user.getStatusDuration("stunned") != 0)
 			return
 		src.go_out()
 		return
@@ -387,7 +387,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if (istype(W, /obj/item/card/id))
-			if (src.allowed(usr))
+			if (src.allowed(user))
 				src.locked = !src.locked
 				boutput(user, "You [ src.locked ? "lock" : "unlock"] the [src].")
 				if (src.occupant)

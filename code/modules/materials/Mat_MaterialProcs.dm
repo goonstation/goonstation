@@ -18,6 +18,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	var/max_generations = 2
 	/// Optional simple sentence that describes how the traits appears on the material. i.e. "It is shiny."
 	var/desc = ""
+	/// The material that owns this trigger
+	var/datum/material/owner = null
 
 	proc/execute()
 		return
@@ -316,7 +318,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(prob(50) && owner && isturf(owner) && !isrestrictedz(T.z))
 			. = get_offset_target_turf(get_turf(entering), rand(-2, 2), rand(-2, 2))
 			entering.visible_message("<span class='alert'>[entering] is warped away!</span>")
-			boutput(entering, "<span class='alert'>You suddenly teleport ...</span>")
+			playsound(owner.loc, "warp", 50)
+			boutput(entering, "<span class='alert'>You suddenly teleport...</span>")
 			entering.set_loc(.)
 		return
 
@@ -324,11 +327,18 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/telecrystal_onattack
 	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
 		var/turf/T = get_turf(attacked)
-		if(prob(50))
+		if(prob(33))
 			if(istype(attacked) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
 				. = get_offset_target_turf(get_turf(attacked), rand(-8, 8), rand(-8, 8))
+				var/fail_msg = ""
+				if (prob(25) && attacker == attacked)
+					fail_msg = " but you lose [owner]!"
+					attacker.drop_item(owner)
+					playsound(attacker.loc, "sound/effects/poof.ogg", 90)
+				else
+					playsound(attacker.loc, "warp", 50)
 				attacked.visible_message("<span class='alert'>[attacked] is warped away!</span>")
-				boutput(attacked, "<span class='alert'>You suddenly teleport ...</span>")
+				boutput(attacked, "<span class='alert'>You suddenly teleport... [fail_msg]</span>")
 				attacked.set_loc(.)
 		return
 
@@ -338,12 +348,23 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(prob(percentmult(5, mult)) && M && !isrestrictedz(T.z))
 			. = get_offset_target_turf(get_turf(M), rand(-8, 8), rand(-8, 8))
 			M.visible_message("<span class='alert'>[M] is warped away!</span>")
-			boutput(M, "<span class='alert'>You suddenly teleport ...</span>")
+			playsound(M.loc, "warp", 50)
+			boutput(M, "<span class='alert'>You suddenly teleport...</span>")
 			M.set_loc(.)
 		return
 
 /datum/materialProc/plasmastone
+	var/total_plasma = 500
+
 	execute(var/location) //exp and temp both have the location as first argument so i can use this for both.
+		var/turf/T = get_turf(location)
+		if(T.density)
+			return
+		if(total_plasma <= 0)
+			if(prob(2) && src.owner.owner)
+				src.owner.owner.visible_message("<span class='alert>[src.owner.owner] dissipates.</span>")
+				qdel(src.owner.owner)
+			return
 		for (var/turf/simulated/floor/target in range(1,location))
 			if(ON_COOLDOWN(target, "plasmastone_plasma_generate", 10 SECONDS)) continue
 			if(!target.blocks_air && target.air)
@@ -352,6 +373,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 				var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
 				payload.toxins = 25
+				total_plasma -= payload.toxins
 				payload.temperature = T20C
 				payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 				target.air.merge(payload)
@@ -373,11 +395,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 
 		if(agent_b && temp > 500 && air.toxins > MINIMUM_REACT_QUANTITY )
-			var/datum/gas/oxygen_agent_b/trace_gas = new
-
+			var/datum/gas/oxygen_agent_b/trace_gas = payload.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
 			payload.temperature = T0C // Greatly reduce temperature to simulate an endothermic reaction
-			payload.trace_gases = list()
-			payload.trace_gases += trace_gas
 
 			// Itr 1: 0.125 Agent B, 10 Oxy
 			// Itr 2: 0.0605 Agent B

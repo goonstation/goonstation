@@ -64,7 +64,7 @@
 	isfiring = 1
 	if(uses_ammunition)
 		if (remaining_ammunition < ship.AmmoPerShot())
-			boutput(usr, "[ship.ship_message("You need [ship.AmmoPerShot()] to fire the weapon. You currently have [remaining_ammunition] loaded.")]")
+			boutput(user, "[ship.ship_message("You need [ship.AmmoPerShot()] to fire the weapon. You currently have [remaining_ammunition] loaded.")]")
 			isfiring  = 0
 			return
 
@@ -74,7 +74,7 @@
 	//if (!istype(ship,/obj/machinery/vehicle/tank)) //Tanks are allowed to shoot diagonally!
 	//	if ((rdir - 1) & rdir)
 	//		rdir &= 12
-	logTheThing("combat", usr, null, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
+	logTheThing("combat", user, null, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
 	ship.ShootProjectiles(user, current_projectile, rdir)
 	remaining_ammunition -= ship.AmmoPerShot()
 	SPAWN_DBG (firerate)
@@ -299,7 +299,7 @@
 				playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
 
 				// Necessary, as the foamer doesn't use the global fire proc (Convair880).
-				logTheThing("combat", usr, null, "driving [ship.name] fires [src.name], creating metal foam at [log_loc(ship)].")
+				logTheThing("combat", user, null, "driving [ship.name] fires [src.name], creating metal foam at [log_loc(ship)].")
 
 				SPAWN_DBG(0)
 					step_towards(D, get_step(D, D.dir))
@@ -357,6 +357,123 @@
 		opencomputer(usr)
 		return
 
+/obj/item/shipcomponent/mainweapon/syndicate_purge_system
+	name = "Syndicate Purge System"
+	desc = "An unfinished pod weapon, the blueprints for which have been plundered from a raid on a now-destroyed Syndicate base. Requires a unique power source to function."
+	current_projectile = new/datum/projectile/laser/drill/cutter
+	firerate = 100
+	var/increment
+	var/pod_is_large = false
+	var/core_inserted = false
+	var/image/purge
+	icon = 'icons/misc/retribution/SWORD_loot.dmi'
+	icon_state= "SPS_empty"
+
+	Fire(var/mob/user,var/shot_dir_override = -1)
+		if(!core_inserted)
+			boutput(ship.pilot, "<span class='alert'><B>The weapon requires a unique power source to function!</B></span>")
+			return
+		if(isfiring) return
+		isfiring = 1
+		playsound(src.loc, "sound/weapons/heavyioncharge.ogg", 75, 1)
+		logTheThing("combat", usr, null, "driving [ship.name] fires [src.name] from [log_loc(ship)].")
+		if(ship.capacity != 1 && !istype(/obj/machinery/vehicle/miniputt, ship) && !istype(/obj/machinery/vehicle/recon, ship) && !istype(/obj/machinery/vehicle/cargo, ship))
+			pod_is_large = true
+			purge = image('icons/misc/retribution/320x320.dmi', "SPS_o_large", "layer" = EFFECTS_LAYER_4)
+			purge.pixel_x -= 128
+			purge.pixel_y -= 128
+		else
+			pod_is_large = false
+			purge = image('icons/misc/retribution/320x320.dmi', "SPS_o_small", "layer" = EFFECTS_LAYER_4)
+			purge.pixel_x -= 144
+			purge.pixel_y -= 144
+		purge.plane = PLANE_SELFILLUM
+		ship.UpdateOverlays(purge, "purge")
+
+		SPAWN_DBG(12)
+			var/destruction_point_x
+			var/destruction_point_y
+			SPAWN_DBG(8)
+				ship.UpdateOverlays(null, "purge")
+			playsound(ship.loc, "sound/weapons/laserultra.ogg", 100, 1)
+			switch (ship.dir)
+				if (1)	//N
+					for (increment in 1 to 4)
+						destruction_point_x = ship.loc.x
+						destruction_point_y = ship.loc.y + increment
+						if(pod_is_large)
+							destruction_point_y++
+							purge_sps(destruction_point_x, destruction_point_y)
+							destruction_point_x = ship.loc.x + 1
+						purge_sps(destruction_point_x, destruction_point_y)
+
+				if (4)	//E
+					for(increment in 1 to 4)
+						destruction_point_x = ship.loc.x + increment
+						destruction_point_y = ship.loc.y
+						if(pod_is_large)
+							destruction_point_x++
+							purge_sps(destruction_point_x, destruction_point_y)
+							destruction_point_y = ship.loc.y + 1
+						purge_sps(destruction_point_x, destruction_point_y)
+
+				if (2)	//S
+					for (increment in 1 to 4)
+						destruction_point_x = ship.loc.x
+						destruction_point_y = ship.loc.y - increment
+						if(pod_is_large)
+							purge_sps(destruction_point_x, destruction_point_y)
+							destruction_point_x = ship.loc.x + 1
+						purge_sps(destruction_point_x, destruction_point_y)
+
+				if (8)	//W
+					for (increment in 1 to 4)
+						destruction_point_x = ship.loc.x - increment
+						destruction_point_y = ship.loc.y
+						if(pod_is_large)
+							purge_sps(destruction_point_x, destruction_point_y)
+							destruction_point_y = ship.loc.y + 1
+						purge_sps(destruction_point_x, destruction_point_y)
+				
+				else boutput(ship.pilot, "<span class='alert'><B>Shooting diagonally is unsupported.</B></span>")
+
+
+			SPAWN_DBG(firerate)
+				isfiring = 0
+			return
+		return
+
+	attackby(obj/item/W, mob/user)
+		if (isscrewingtool(W) && core_inserted)
+			core_inserted = false
+			set_icon_state("SPS_empty")
+			user.put_in_hand_or_drop(new /obj/item/sword_core)
+			user.show_message("<span class='notice'>You remove the SWORD core from the Syndicate Purge System!</span>", 1)
+			desc = "After a delay, fires a destructive beam capable of penetrating walls. The core is missing."
+			tooltip_rebuild = 1
+			return
+		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
+			core_inserted = true
+			qdel(W)
+			set_icon_state("SPS")
+			user.show_message("<span class='notice'>You insert the SWORD core into the Syndicate Purge System!</span>", 1)
+			desc = "After a delay, fires a destructive beam capable of penetrating walls. The core is installed."
+			tooltip_rebuild = 1
+			return
+
+	proc/purge_sps(var/point_x, var/point_y)
+		for (var/mob/M in locate(point_x,point_y,ship.loc.z))
+			random_burn_damage(M, 60)
+			M.changeStatus("weakened", 2 SECOND)
+			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
+			playsound(M.loc, "sound/impact_sounds/burn_sizzle.ogg", 70, 1)
+		var/turf/simulated/T = locate(point_x,point_y,ship.loc.z)
+		if(T && prob(100 - (10 * increment)))
+			T.ex_act(1)
+		for (var/obj/S in locate(point_x,point_y,ship.loc.z))
+			if(prob(50 - (10 * increment)))
+				S.ex_act(1)
+		return
 
 /datum/projectile/laser/pod
 	dissipation_rate = 2

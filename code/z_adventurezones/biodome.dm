@@ -458,17 +458,17 @@ SYNDICATE DRONE FACTORY AREAS
 	icon_state = "whip"
 	item_state = "c_tube"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	New()
 		. = ..()
 		src.special = null
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(target == usr) return
+		if(target == user) return
 
-		if(get_dist(usr, target) > 5)
-			boutput(usr, "<span class='alert'>That is too far away!</span>")
+		if(get_dist(user, target) > 5)
+			boutput(user, "<span class='alert'>That is too far away!</span>")
 			return
 
 		var/atom/target_r = target
@@ -487,11 +487,11 @@ SYNDICATE DRONE FACTORY AREAS
 			var/turf/T = O.loc
 
 			if(locate(/obj/decal/stalagmite) in T)
-				boutput(usr, "<span class='alert'>You pull yourself to the stalagmite using the whip.</span>")
-				usr.set_loc(T)
+				boutput(user, "<span class='alert'>You pull yourself to the stalagmite using the whip.</span>")
+				user.set_loc(T)
 			else if(locate(/obj/decal/stalagtite) in T)
-				boutput(usr, "<span class='alert'>You pull yourself to the stalagtite using the whip.</span>")
-				usr.set_loc(T)
+				boutput(user, "<span class='alert'>You pull yourself to the stalagtite using the whip.</span>")
+				user.set_loc(T)
 
 			SPAWN_DBG(0.2 SECONDS) pool(O)
 
@@ -653,7 +653,7 @@ SYNDICATE DRONE FACTORY AREAS
 	protective_temperature = 1000
 	cant_self_remove = 1
 	cant_other_remove = 1
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	var/processing = 0
 
 	setupProperties()
@@ -661,6 +661,7 @@ SYNDICATE DRONE FACTORY AREAS
 		setProperty("coldprot", 80)
 		setProperty("heatprot", 80)
 		setProperty("movespeed", 2)
+		setProperty("disorient_resist", 35)
 
 // scare the everliving fuck out of the player when they equip it
 // what else should this thing do? idk yet. maybe some crazy hallucinations with an ancient blood reagent or something? something like the obsidian crown?
@@ -732,7 +733,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon_state = "shovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shovel"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	flags = ONBELT
 	force = 15
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
@@ -806,7 +807,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon_state = "pstone"
 	item_state = "injector"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/datum/light/light
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -835,10 +836,10 @@ SYNDICATE DRONE FACTORY AREAS
 	icon_state = "powder"
 	item_state = "injector"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(!in_interact_range(target, usr) && !istype(target, /obj/alchemy/circle))
+		if(!in_interact_range(target, user) && !istype(target, /obj/alchemy/circle))
 			return
 		if(target == loc) return
 		boutput(user, "<span class='notice'>Your sprinkle some powder on \the [target].</span>")
@@ -939,7 +940,7 @@ SYNDICATE DRONE FACTORY AREAS
 			symbol.set_loc(src.loc)
 			symbol = null
 			overlays.Cut()
-			boutput(usr, "<span class='notice'>You remove the Symbol.</span>")
+			boutput(user, "<span class='notice'>You remove the Symbol.</span>")
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -948,7 +949,7 @@ SYNDICATE DRONE FACTORY AREAS
 			symbol = W
 			symbol.set_loc(src)
 			overlays += symbol
-			boutput(usr, "<span class='notice'>You put the Symbol in the Circle.</span>")
+			boutput(user, "<span class='notice'>You put the Symbol in the Circle.</span>")
 		return
 
 /obj/alchemy/circle
@@ -1060,7 +1061,7 @@ SYNDICATE DRONE FACTORY AREAS
 	desc = "A hand-held device for communicating with some sort of satellite."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "satcom"
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 	attack_self(mob/user as mob)
 		if (..())

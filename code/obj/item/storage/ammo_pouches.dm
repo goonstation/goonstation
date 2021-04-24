@@ -7,7 +7,7 @@
 	name = "ammo pouch"
 	icon_state = "ammopouch"
 	desc = "A sturdy fabric pouch designed for carrying ammunition. Can be attatched to the webbing of a uniform to allow for quick access during combat."
-	w_class = 1.00
+	w_class = W_CLASS_TINY
 	max_wclass = 1
 	slots = 5
 	does_not_open_in_pocket = 0
@@ -29,6 +29,10 @@
 		small
 			name = "small pistol magazine pouch"
 			spawn_contents = list(/obj/item/ammo/bullets/bullet_9mm = 2)
+
+		smg
+			name = "smg magazine pouch"
+			spawn_contents = list(/obj/item/ammo/bullets/bullet_9mm/smg = 5)
 
 	tranq_pistol_dart
 		name = "tranq pistol dart pouch"
@@ -85,7 +89,7 @@
 	name = "grenade pouch"
 	icon_state = "ammopouch"
 	desc = "A sturdy fabric pouch used to carry several grenades."
-	w_class = 1.00
+	w_class = W_CLASS_TINY
 	slots = 6
 	can_hold = list(/obj/item/old_grenade, /obj/item/chem_grenade)
 	does_not_open_in_pocket = 0
@@ -126,7 +130,7 @@
 /obj/item/storage/medical_pouch
 	name = "trauma field kit"
 	icon_state = "ammopouch-medic"
-	w_class = 1.00
+	w_class = W_CLASS_TINY
 	slots = 4
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/reagent_containers/mender/brute/high_capacity,
@@ -136,7 +140,7 @@
 	name = "security pouch"
 	desc = "A small pouch containing some essential security supplies. Keep out of reach of the clown."
 	icon_state = "ammopouch-sec"
-	w_class = 2.00
+	w_class = W_CLASS_SMALL
 	slots = 6
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/handcuffs = 3,\
@@ -148,13 +152,13 @@
 	spawn_contents = list(/obj/item/handcuffs = 2,\
 	/obj/item/device/flash = 2,\
 	/obj/item/instrument/whistle,\
-	/obj/item/reagent_containers/food/snacks/donut/frosted)
+	/obj/item/reagent_containers/food/snacks/donut/custom/frosted)
 
 /obj/item/storage/ntso_pouch
 	name = "tacticool pouch"
 	desc = "A dump pouch for various security accessories, partially-loaded magazines, or maybe even a snack! Attaches to virtually any webbing system through an incredibly complex and very patented Nanotrasen design."
 	icon_state = "ammopouch-large"
-	w_class = 2.00
+	w_class = W_CLASS_SMALL
 	slots = 5
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/handcuffs/ = 1,

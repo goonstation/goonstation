@@ -17199,7 +17199,9 @@
 	},
 /area/crew_quarters/captain)
 "aGt" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /turf/simulated/floor{
 	icon_state = "snow"
 	},

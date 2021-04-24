@@ -244,6 +244,13 @@
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti/meatball
 
+/datum/cookingrecipe/lasagna
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	cookbonus = 16
+	output = /obj/item/reagent_containers/food/snacks/lasagna
+
 /datum/cookingrecipe/spaghetti_pg
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
@@ -1217,7 +1224,7 @@
 	item1 = /obj/item/reagent_containers/food/snacks/cake_batter
 	item2 = /obj/item/reagent_containers/food/snacks/candy
 	cookbonus = 14
-	output = /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau
+	output = /obj/item/reagent_containers/food/snacks/cake/chocolate
 
 /datum/cookingrecipe/cake_meat
 	item1 = /obj/item/reagent_containers/food/snacks/cake_batter

@@ -76,6 +76,7 @@
 //		jobs["Vice Officer"] = PAY_TRADESMAN
 		jobs["Detective"] = PAY_TRADESMAN
 		jobs["Geneticist"] = PAY_DOCTORATE
+		jobs["Pathologist"] = PAY_DOCTORATE
 		jobs["Scientist"] = PAY_DOCTORATE
 		jobs["Medical Doctor"] = PAY_DOCTORATE
 		jobs["Medical Director"] = PAY_IMPORTANT
@@ -95,10 +96,12 @@
 //		jobs["Chemist"] = PAY_DOCTORATE
 		jobs["Quartermaster"] = PAY_TRADESMAN
 		jobs["Botanist"] = PAY_TRADESMAN
+		jobs["Rancher"] = PAY_TRADESMAN
 //		jobs["Attorney at Space-Law"] = PAY_DOCTORATE
 		jobs["Staff Assistant"] = PAY_UNTRAINED
 		jobs["Medical Assistant"] = PAY_UNTRAINED
 		jobs["Technical Assistant"] = PAY_UNTRAINED
+		jobs["Security Assistant"] = PAY_UNTRAINED
 		jobs["Captain"] = PAY_EXECUTIVE
 
 		src.time_until_lotto = ( ticker ? ticker.round_elapsed_ticks : 0 ) + time_between_lotto
@@ -356,7 +359,7 @@
 			<strong>&mdash; [user.client.key] Spacebux Menu &mdash;</strong>
 			<br><em>(This menu is only here for <strong>you</strong>. Other players cannot access your Spacebux!)</em>
 			<br>
-			<br>Current balance: <strong>[usr.client.persistent_bank]</strong> Spacebux <!-- <a href='?src=\ref[src];operation=view_spacebux_balance'>Check Spacebux Balance</a> -->
+			<br>Current balance: <strong>[user.client.persistent_bank]</strong> Spacebux <!-- <a href='?src=\ref[src];operation=view_spacebux_balance'>Check Spacebux Balance</a> -->
 			<br><a href='?src=\ref[src];operation=withdraw_spacebux'>Withdraw Spacebux</a>
 			<br><a href='?src=\ref[src];operation=transfer_spacebux'>Securely Send Spacebux</a>
 			<br>Deposit Spacebux at any time by inserting a token. It will always go to <strong>your</strong> account!
@@ -469,7 +472,7 @@
 					boutput(usr, "<span class='alert'>No.</span>")
 					src.updateUsrDialog()
 					return
-				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as() in clients|null
+				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as anything in clients|null
 				if(alert("You are about to send [amount] to [C]. Are you sure?",,"Yes","No") == "Yes")
 					if(!usr.client.bank_can_afford(amount))
 						boutput(usr, "<span class='alert'>Insufficient Funds</span>")
@@ -846,7 +849,7 @@
 			<strong>&mdash; [user.client.key] Spacebux Menu &mdash;</strong>
 			<br><em>(This menu is only here for <strong>you</strong>. Other players cannot access your Spacebux!)</em>
 			<br>
-			<br>Current balance: <strong>[usr.client.persistent_bank]</strong> Spacebux <!-- <a href='?src=\ref[src];operation=view_spacebux_balance'>Check Spacebux Balance</a> -->
+			<br>Current balance: <strong>[user.client.persistent_bank]</strong> Spacebux <!-- <a href='?src=\ref[src];operation=view_spacebux_balance'>Check Spacebux Balance</a> -->
 			<br><a href='?src=\ref[src];operation=withdraw_spacebux'>Withdraw Spacebux</a>
 			<br><a href='?src=\ref[src];operation=transfer_spacebux'>Securely Send Spacebux</a>
 			<br>Deposit Spacebux at any time by inserting a token. It will always go to <strong>your</strong> account!
@@ -962,7 +965,7 @@
 					boutput(usr, "<span class='alert'>No.</span>")
 					src.updateUsrDialog()
 					return
-				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as() in clients|null
+				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as anything in clients|null
 				if(alert("You are about to send [amount] to [C]. Are you sure?",,"Yes","No") == "Yes")
 					if(!usr.client.bank_can_afford(amount))
 						boutput(usr, "<span class='alert'>Insufficient Funds</span>")
@@ -1030,7 +1033,7 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper"
 
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	// 4 numbers between 1 and 3 gives a one in 81 chance of winning. It's 3^4 possible combinations.
 	var/list/numbers = new/list(4)

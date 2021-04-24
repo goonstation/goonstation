@@ -83,6 +83,10 @@ var/global
 	list/random_pod_codes = list() // if /obj/random_pod_spawner exists on the map, this will be filled with refs to the pods they make, and people joining up will have a chance to start with the unlock code in their memory
 
 	list/spacePushList = list()
+	/// All the accessible areas on the station in one convenient place
+	list/station_areas = list()
+	/// The station_areas list is up to date. If something changes an area, make sure to set this to 0
+	area_list_is_up_to_date = 0
 
 	already_a_dominic = 0 // no just shut up right now, I don't care
 
@@ -376,6 +380,8 @@ var/global
 	"Yesteryear",
 	"Zeyada")
 
+	list/selectable_ringtones = list()
+
 	//april fools
 	manualbreathing = 0
 	manualblinking = 0
@@ -485,6 +491,7 @@ var/global
 	list/warned_keys = list()	// tracking warnings per round, i guess
 
 	datum/dj_panel/dj_panel = new()
+	datum/player_panel/player_panel = new()
 
 	list/prisonwarped = list()	//list of players already warped
 	list/wormholeturfs = list()

@@ -136,7 +136,7 @@
 		else if (istype(W,/obj/item/rods))
 			if(!src.is_reinforced)
 				var/obj/item/rods/R = W
-				if(R.consume_rods(1))
+				if(R.change_stack_amount(-1))
 					user.show_text("You reinforce [src] with the rods.", "blue")
 					src.is_reinforced = 1
 					src.icon_state = "railing-reinforced"
@@ -144,6 +144,15 @@
 				user.show_text("[src] is already reinforced!", "red")
 
 	attack_hand(mob/user)
+		src.try_vault(user)
+
+	Bumped(var/mob/AM as mob)
+		. = ..()
+		if(!istype(AM)) return
+		if(AM.client?.check_key(KEY_RUN))
+			src.try_vault(AM)
+
+	proc/try_vault(mob/user)
 		if (railing_is_broken(src))
 			user.show_text("[src] is broken! All you can really do is break it down...", "red")
 		else

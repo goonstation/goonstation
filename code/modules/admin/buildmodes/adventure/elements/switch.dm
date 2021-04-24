@@ -53,7 +53,7 @@
 					selected_triggerable_untrigger -= object
 				else
 					var/list/actions = object:trigger_actions()
-					if (islist(actions) && actions.len)
+					if (islist(actions) && length(actions))
 						var/act_name = input("Do what on press?", "Do what?", actions[1]) in actions
 						var/act = actions[act_name]
 						var/unact_name = input("Do what on unpress?", "Do what?", actions[1]) in actions
@@ -64,7 +64,7 @@
 						selected_triggerable_untrigger += object
 						selected_triggerable_untrigger[object] = unact
 					else
-						boutput(usr, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
+						boutput(user, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
 
 /obj/adventurepuzzle/triggerer/twostate/switch
 	icon = 'icons/obj/randompuzzles.dmi'

@@ -69,10 +69,10 @@
 
 /obj/machinery/recharge_station/attack_hand(mob/user)
 	if (src.status & BROKEN)
-		boutput(usr, "<span class='alert'>[src] is broken and cannot be used.</span>")
+		boutput(user, "<span class='alert'>[src] is broken and cannot be used.</span>")
 		return
 	if (src.status & NOPOWER)
-		boutput(usr, "<span class='alert'>[src] is out of power and cannot be used.</span>")
+		boutput(user, "<span class='alert'>[src] is out of power and cannot be used.</span>")
 		return
 	if (!src.anchored)
 		user.show_text("You must attach [src]'s floor bolts before the machine will work.", "red")
@@ -319,6 +319,8 @@
 				boutput(usr, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 				boutput(usr, "<span class='alert'>&emsp;<b>\"[newname]</b>\"</span>")
 				return
+			if(newname && newname != R.name)
+				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 			logTheThing("combat", usr, R, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
 			R.name = newname
 			if (R.internal_pda)
@@ -743,15 +745,18 @@
 				src.build_icon()
 
 /obj/machinery/recharge_station/proc/build_icon()
-	src.overlays = null
+	if (src.occupant)
+		src.UpdateOverlays(image('icons/obj/robot_parts.dmi', "station-occu"), "occupant")
+	else
+		src.UpdateOverlays(null, "occupant")
 	if (src.status & BROKEN)
 		src.icon_state = "station-broke"
+		src.UpdateOverlays(null, "power")
 		return
 	if (src.status & NOPOWER)
+		src.UpdateOverlays(null, "power")
 		return
-	src.overlays += image('icons/obj/robot_parts.dmi', "station-pow")
-	if (src.occupant)
-		src.overlays += image('icons/obj/robot_parts.dmi', "station-occu")
+	src.UpdateOverlays(image('icons/obj/robot_parts.dmi', "station-pow"), "power")
 
 /obj/machinery/recharge_station/proc/process_occupant(mult)
 	if (src.occupant)

@@ -115,7 +115,7 @@
 
 	attack_hand(mob/user as mob)
 		if (src.density)
-			usr.show_message("<span class='alert'>[src] won't open. Perhaps you need a key?</span>")
+			user.show_message("<span class='alert'>[src] won't open. Perhaps you need a key?</span>")
 		flick("door_[door_type]_deny", src)
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)

@@ -39,14 +39,14 @@
 					selected_triggerable -= object
 				else
 					var/list/actions = object:trigger_actions()
-					if (islist(actions) && actions.len)
+					if (islist(actions) && length(actions))
 						var/act_name = input("Do what?", "Do what?", actions[1]) in actions
 						var/act = actions[act_name]
 						object.overlays += selection
 						selected_triggerable += object
 						selected_triggerable[object] = act
 					else
-						boutput(usr, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
+						boutput(user, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
 
 /obj/adventurepuzzle/triggerer/trigger
 	name = "invisible trigger"

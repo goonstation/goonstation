@@ -166,7 +166,7 @@
 			return
 
 		var/obj/the_item = input("Which item do you want to eat?","Matter Eater") as null|obj in items
-		if (!the_item)
+		if (!the_item || (!istype(the_item, /obj/the_server_ingame_whoa) && the_item.anchored))
 			using = 0
 			return 1
 
@@ -594,6 +594,7 @@
 		var/msg = copytext( adminscrub(input(usr, "Message to [recipient.name]:","Telepathy") as text), 1, MAX_MESSAGE_LEN)
 		if (!msg)
 			return 1
+		phrase_log.log_phrase("telepathy", msg)
 
 		var/psyname = "A psychic voice"
 		if (recipient.bioHolder.HasOneOfTheseEffects("telepathy","empath"))
@@ -637,6 +638,7 @@
 		var/msg = copytext( adminscrub(input(usr, "Message to [recipient.name]:","Telepathy") as text), 1, MAX_MESSAGE_LEN)
 		if (!msg)
 			return 1
+		phrase_log.log_phrase("telepathy", msg)
 		msg = uppertext(msg)
 
 		owner.visible_message("<span class='alert'><b>[owner]</b> puts their fingers to their temples and stares at [target] really hard.</span>")
@@ -1848,7 +1850,7 @@
 		src.cloak_decloak(2)
 		return
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		if (isliving(owner))
 			var/mob/living/L = owner
@@ -1928,7 +1930,7 @@
 			src.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
 		return
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		if(!src.active) return
 		if(isliving(owner))
@@ -2139,11 +2141,11 @@
 	var/datum/targetable/geneticsAbility/shoot_limb/AB = null
 	var/stun_mode = 0 // used by discount superhero
 
-	OnLife()
+	OnLife(var/mult)
 		..()
 
 		if (count < ticks_to_explode)
-			count++
+			count += mult
 			return
 		else
 			count = 0

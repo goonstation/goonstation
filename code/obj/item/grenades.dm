@@ -16,7 +16,7 @@ PIPE BOMBS + CONSTRUCTION
 	var/det_time = 30
 	var/org_det_time = 30
 	var/alt_det_time = 60
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	icon = 'icons/obj/items/grenade.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "banana"
@@ -885,7 +885,7 @@ PIPE BOMBS + CONSTRUCTION
 	throwforce = 1.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/det_time = 20
 	stamina_damage = 5
 	stamina_cost = 5
@@ -1051,7 +1051,7 @@ PIPE BOMBS + CONSTRUCTION
 	icon_state = "bcharge"
 	var/state = null
 	var/det_time = 50.0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "flashbang"
 	throw_speed = 4
 	throw_range = 20
@@ -1156,7 +1156,7 @@ PIPE BOMBS + CONSTRUCTION
 	name = "Thermite Breaching Charge"
 	desc = "When applied to a wall, causes a thermite reaction which totally destroys it."
 	flags = ONBELT
-	w_class = 1
+	w_class = W_CLASS_TINY
 	expl_range = 2
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)

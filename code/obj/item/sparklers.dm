@@ -9,7 +9,7 @@
 	item_state = "sparkler-off"
 	var/item_on = "sparkler-on"
 	var/item_off = "sparkler-off"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	density = 0
 	anchored = 0
 	opacity = 0
@@ -133,7 +133,7 @@
 				src.open = 1
 				src.icon_state = "sparkler_box-open"
 				playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 20, 1, -2)
-				boutput(usr, "<span class='notice'>You snap open the child-protective safety tape on [src].</span>")
+				boutput(user, "<span class='notice'>You snap open the child-protective safety tape on [src].</span>")
 		else
 			..()
 
@@ -144,7 +144,7 @@
 			src.open = 1
 			src.icon_state = "sparkler_box-open"
 			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 20, 1, -2)
-			boutput(usr, "<span class='notice'>You snap open the child-protective safety tape on [src].</span>")
+			boutput(user, "<span class='notice'>You snap open the child-protective safety tape on [src].</span>")
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		if(!src.open)

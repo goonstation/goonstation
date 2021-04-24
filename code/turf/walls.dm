@@ -47,7 +47,7 @@
 				w.tilenotify(src)
 
 	get_desc()
-		if (islist(src.proj_impacts) && src.proj_impacts.len)
+		if (islist(src.proj_impacts) && length(src.proj_impacts))
 			var/shots_taken = 0
 			for (var/i in src.proj_impacts)
 				shots_taken ++
@@ -85,7 +85,7 @@
 		make_cleanable( /obj/decal/cleanable/fungus,src)
 
 // Made this a proc to avoid duplicate code (Convair880).
-/turf/simulated/wall/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W)
+/turf/simulated/wall/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W, var/instantly)
 	if (!user || !istype(W, /obj/item/light_parts/) || istype(W, /obj/item/light_parts/floor))	//hack, no floor lights on walls
 		return
 
@@ -107,12 +107,13 @@
 	if (!dir)
 		return //..(parts, user)
 
-	playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
-	boutput(user, "You begin to attach the light fixture to [src]...")
+	if(!instantly)
+		playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
+		boutput(user, "You begin to attach the light fixture to [src]...")
 
-	if (!do_after(user, 4 SECONDS))
-		user.show_text("You were interrupted!", "red")
-		return
+		if (!do_after(user, 4 SECONDS))
+			user.show_text("You were interrupted!", "red")
+			return
 
 	if (!parts || parts.disposed) //ZeWaka: Fix for null.fixture_type
 		return
@@ -528,7 +529,7 @@
 	else if ((istype(W, /obj/item/sheet)) && (src.d_state))
 		var/obj/item/sheet/S = W
 		boutput(user, "<span class='notice'>Repairing wall.</span>")
-		if (do_after(user, 10 SECONDS) && S.consume_sheets(1))
+		if (do_after(user, 10 SECONDS) && S.change_stack_amount(-1))
 			src.d_state = 0
 			src.icon_state = initial(src.icon_state)
 			if(S.material)

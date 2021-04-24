@@ -21,7 +21,7 @@
 	desc = "A decent yellow cake that seems to be glowing a bit. Is this safe?"
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "yellowcake"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	amount = 1
 	heal_amt = 2
 	initial_volume = 5
@@ -38,7 +38,7 @@
 	use_bite_mask = 0
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	initial_volume = 100
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	var/list/cake_bases //stores the name of the base types of each layer of cake i.e. ("custom","gateau","meat")
 	var/sliced = FALSE
 	var/static/list/frostingstyles = list("classic","top swirls","bottom swirls","spirals","rose spirals")
@@ -94,11 +94,11 @@
 					return list(0,0)
 				else if(src.GetOverlayImage("[sliced_or_cake]-generic[2]"))
 					generic_number = 3
-				else 
+				else
 					generic_number = 2
 				tag = "cake[clayer]-generic[generic_number]"
 				overlay_color = F.food_color
-			
+
 			for(var/food_effect in F.food_effects)
 				src.food_effects |= food_effect
 
@@ -111,7 +111,7 @@
 			return
 		var/frostingtype
 		frostingtype = input("Which frosting style would you like?", "Frosting Style", null) as null|anything in frostingstyles
-		if(frostingtype && (get_dist(src, usr) <= 1))
+		if(frostingtype && (get_dist(src, user) <= 1))
 			var/tag
 			var/datum/color/average = tube.reagents.get_average_color()
 			switch(frostingtype)
@@ -133,6 +133,7 @@
 				frostingoverlay.alpha = 255
 				src.UpdateOverlays(frostingoverlay,tag)
 				tube.reagents.trans_to(src,25)
+				JOB_XP(user, "Chef", 1)
 
 	proc/overlay_number_convert(var/original_clayer,var/mode,var/singlecake) //original - original clayer value, mode - which math we're using
 		switch(mode)
@@ -200,7 +201,7 @@
 			schild.pixel_y = rand(-6, 6)
 			for(var/food_effect in src.food_effects)
 				schild.food_effects |= food_effect
-			schild.w_class = 1
+			schild.w_class = W_CLASS_TINY
 			schild.quality = src.quality
 			schild.name = "slice of [src.name]"
 			schild.desc = "a delicious slice of cake!"
@@ -212,7 +213,7 @@
 		qdel(s) //cleaning up the template slice
 		if(deletionqueue)
 			qdel(src)
-			
+
 
 
 	proc/stack_cake(var/obj/item/reagent_containers/food/snacks/cake/c,var/mob/user)
@@ -511,7 +512,7 @@
 			..()
 		else
 			return
-		
+
 
 	attack(mob/M as mob, mob/user as mob, def_zone) //nom nom nom
 		if(!src.sliced)
@@ -649,7 +650,7 @@
 	icon_state = "cake1-base_cream"
 
 /obj/item/cake_item/attack(target as mob, mob/user as mob)
-	var/iteminside = src.contents.len
+	var/iteminside = length(src.contents)
 	if(!iteminside)
 		user.show_text("The cake crumbles away!","red")
 		qdel(src)

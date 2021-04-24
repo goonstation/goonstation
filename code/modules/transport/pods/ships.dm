@@ -557,11 +557,11 @@ obj/machinery/vehicle/miniputt/pilot
 				var/obj/item/sheet/S = W
 				if (S.material && S.material.material_flags & MATERIAL_METAL)
 					if( S.amount < 3)
-						boutput(usr, text("<span class='alert'>You need at least three metal sheets to make internal plating for this pod.</span>"))
+						boutput(user, text("<span class='alert'>You need at least three metal sheets to make internal plating for this pod.</span>"))
 						return
 					boutput(user, "You begin to install the internal plating...")
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-					if (!do_after(user, 3 SECONDS) || !S.consume_sheets(3))
+					if (!do_after(user, 3 SECONDS) || !S.change_stack_amount(-3))
 						boutput(user, "<span class='alert'>You were interrupted!</span>")
 						return
 					boutput(user, "You construct internal covers over the circuitry systems.")
@@ -715,50 +715,50 @@ obj/machinery/vehicle/miniputt/pilot
 					return
 
 				if (S.amount < 3)
-					boutput(usr, text("<span class='alert'>You need at least three reinforced glass sheets to make the cockpit window and outer indicator surfaces for this pod.</span>"))
+					boutput(user, text("<span class='alert'>You need at least three reinforced glass sheets to make the cockpit window and outer indicator surfaces for this pod.</span>"))
 					return
 				boutput(user, "You begin to install the glass...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS) || !S.consume_sheets(3))
+				if (!do_after(user, 3 SECONDS) || !S.change_stack_amount(-3))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "With the cockpit and exterior indicators secured, the control system automatically starts up.")
 
 				if(armor_type == 1)
 					new /obj/machinery/vehicle/miniputt( src.loc )
-					logTheThing("station", usr, null, "finishes building a MiniPutt in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "finishes building a MiniPutt in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 					qdel(src)
 
 				else if (armor_type == 2)
 					new /obj/machinery/vehicle/miniputt/nanoputt( src.loc )
-					logTheThing("station", usr, null, "finishes building a NanoPutt in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "finishes building a NanoPutt in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 					qdel(src)
 
 				else if (armor_type == 3)
 					new /obj/machinery/vehicle/miniputt/black( src.loc )
-					logTheThing("station", usr, null, "finishes building a XeniPutt in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "finishes building a XeniPutt in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 					qdel(src)
 
 				else if (armor_type == 4)
 					new /obj/machinery/vehicle/miniputt/syndiputt( src.loc )
-					logTheThing("station", usr, null, "finishes building a SyndiPutt in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "finishes building a SyndiPutt in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 					qdel(src)
 
 				else if (armor_type == 5)
 					new /obj/machinery/vehicle/miniputt/indyputt( src.loc )
-					logTheThing("station", usr, null, "finishes building an IndyPutt in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "finishes building an IndyPutt in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 					qdel(src)
 
 				else if (armor_type == 6)
 					new /obj/machinery/vehicle/miniputt/gold( src.loc )
-					logTheThing("station", usr, null, "finishes building a PyriPutt in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "finishes building a PyriPutt in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 					qdel(src)
 
 				else if (armor_type == 7)
 					var/obj/machinery/vehicle/miniputt/A = new /obj/machinery/vehicle/miniputt( src.loc )
 					A.name = "MiniPutt"
 					A.setMaterial(src.material)
-					logTheThing("station", usr, null, "finishes building a custom armored MiniPutt in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "finishes building a custom armored MiniPutt in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 					qdel(src)
 			else
 				boutput(user, "You weren't thinking of flying around without a reinforced cockpit, were you? Put some reinforced glass on it! Three sheets will do.")
@@ -1496,11 +1496,11 @@ obj/machinery/vehicle/miniputt/pilot
 				var/obj/item/sheet/S = W
 				if (S.material && S.material.material_flags & MATERIAL_METAL)
 					if (S.amount < 5)
-						boutput(usr, text("<span class='alert'>You need at least five metal sheets to make internal plating for this pod.</span>"))
+						boutput(user, text("<span class='alert'>You need at least five metal sheets to make internal plating for this pod.</span>"))
 						return
 					boutput(user, "You begin to install the internal plating...")
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-					if (!do_after(user, 3 SECONDS) || !S.consume_sheets(5))
+					if (!do_after(user, 3 SECONDS) || !S.change_stack_amount(-5))
 						boutput(user, "<span class='alert'>You were interrupted!</span>")
 						return
 					boutput(user, "You construct internal covers over the circuitry systems.")
@@ -1654,50 +1654,50 @@ obj/machinery/vehicle/miniputt/pilot
 					return
 
 				if (S.amount < 5)
-					boutput(usr, text("<span class='alert'>You need at least five reinforced glass sheets to make the cockpit window and outer indicator surfaces for this pod.</span>"))
+					boutput(user, text("<span class='alert'>You need at least five reinforced glass sheets to make the cockpit window and outer indicator surfaces for this pod.</span>"))
 					return
 				boutput(user, "You begin to install the glass...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS) || !S.consume_sheets(5))
+				if (!do_after(user, 3 SECONDS) || !S.change_stack_amount(-5))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "With the cockpit and exterior indicators secured, the control system automatically starts up.")
 
 				if(armor_type == 1)
 					new /obj/machinery/vehicle/pod_smooth/light( src.loc )
-					logTheThing("station", usr, null, "finishes building a lightly armored pod in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "finishes building a lightly armored pod in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 					qdel(src)
 
 				else if (armor_type == 2)
 					new /obj/machinery/vehicle/pod_smooth/heavy( src.loc )
-					logTheThing("station", usr, null, "finishes building a heavily armored pod in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "finishes building a heavily armored pod in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 					qdel(src)
 
 				else if (armor_type == 3)
 					new /obj/machinery/vehicle/pod_smooth/black( src.loc )
-					logTheThing("station", usr, null, "finishes building an NT pod in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "finishes building an NT pod in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 					qdel(src)
 
 				else if (armor_type == 4)
 					new /obj/machinery/vehicle/pod_smooth/syndicate( src.loc )
-					logTheThing("station", usr, null, "finishes building a syndicate pod in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "finishes building a syndicate pod in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 					qdel(src)
 
 				else if (armor_type == 5)
 					new /obj/machinery/vehicle/pod_smooth/industrial( src.loc )
-					logTheThing("station", usr, null, "finishes building an industrial pod in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "finishes building an industrial pod in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 					qdel(src)
 
 				else if (armor_type == 6)
 					new /obj/machinery/vehicle/pod_smooth/gold( src.loc )
-					logTheThing("station", usr, null, "finishes building a gold pod in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "finishes building a gold pod in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 					qdel(src)
 
 				else if (armor_type == 7)
 					var/obj/machinery/vehicle/pod_smooth/light/A = new /obj/machinery/vehicle/pod_smooth/light( src.loc )
 					A.name = "Pod"
 					A.setMaterial(src.material)
-					logTheThing("station", usr, null, "finishes building a custom armored pod in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "finishes building a custom armored pod in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 					qdel(src)
 			else
 				boutput(user, "You weren't thinking of flying around without a reinforced cockpit, were you? Put some reinforced glass on it! Five sheets will do.")

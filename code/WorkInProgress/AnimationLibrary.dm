@@ -902,7 +902,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if (dir == "R")
 		turn = 90
 
-	animate(A, transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
+	animate(A, transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping, flags=ANIMATION_PARALLEL)
 	animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
 	animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
 	animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
@@ -1101,6 +1101,49 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			pool(e)
 	return
 
+/proc/leavepurge(var/atom/target, var/current_increment, var/sword_direction)
+	if (!target)
+		return
+	var/turf/target_turf = get_turf(target)
+	if (!target_turf)
+		return
+	var/obj/decal/e
+	if(current_increment == 9)
+		if (locate(/obj/decal/purge_beam_end) in target_turf)
+			return
+		e = unpool(/obj/decal/purge_beam_end)
+	else
+		if (locate(/obj/decal/purge_beam) in target_turf)
+			return
+		e = unpool(/obj/decal/purge_beam)
+	e.set_loc(target_turf)
+	e.dir = sword_direction
+	SPAWN_DBG(7)
+		if (e)
+			pool(e)
+	return
+
+/proc/leavescan(var/atom/target, var/scan_type)
+	if (!target)
+		return
+	var/turf/target_turf = get_turf(target)
+	if (!target_turf)
+		return
+	var/obj/decal/e
+	if(scan_type == 0)
+		if (locate(/obj/decal/syndicate_destruction_scan_center) in target_turf)
+			return
+		e = unpool(/obj/decal/syndicate_destruction_scan_center)
+	else
+		if (locate(/obj/decal/syndicate_destruction_scan_side) in target_turf)
+			return
+		e = unpool(/obj/decal/syndicate_destruction_scan_side)
+	e.set_loc(target_turf)
+	SPAWN_DBG(7)
+		if (e)
+			pool(e)
+	return
+
 /proc/sponge_size(var/atom/A, var/size = 1)
 	var/matrix/M2 = matrix()
 	M2.Scale(size,size)
@@ -1183,6 +1226,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if (!A) return
 	var/was_anchored = A.anchored
 	var/original_plane = A.plane
+	var/original_density = A.density
 	var/matrix/M1 = matrix()
 	A.transform = M1.Scale(0,0)
 	var/turf/center = get_turf(A)
@@ -1190,6 +1234,10 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 	A.plane = PLANE_UNDERFLOOR
 	A.anchored = TRUE
+	A.density = FALSE
+	if (ismob(A))
+		var/mob/M = A
+		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 	if (play_sound)
 		playsound(center,"sound/effects/darkspawn.ogg",50,0)
 	SPAWN_DBG(5 SECONDS)
@@ -1210,6 +1258,10 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		animate(A, transform = null, time=20, easing = SINE_EASING)
 		A.plane = original_plane
 		A.anchored = was_anchored
+		A.density = original_density
+		if (ismob(A))
+			var/mob/M = A
+			REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 		for (var/turf/T in block(TA, TB))
 			animate(T, transform = null, pixel_x = 0, pixel_y = 0, 7.5 SECONDS, easing = SINE_EASING)
 		sleep(7.5 SECONDS)

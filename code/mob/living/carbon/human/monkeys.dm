@@ -85,11 +85,21 @@
 	real_name = "Oppenheimer"
 	gender = "male"
 	ai_offhand_pickup_chance = 40 // went through training as a spy thief, skilled at snatch- wait, I'm getting a feeling of deja vu
+	ai_aggressive = TRUE
+	ai_calm_down = FALSE
+	ai_default_intent = INTENT_HARM
+	ai_aggression_timeout = 0
+
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, slot_wear_suit)
 			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, slot_head)
+
+	ai_is_valid_target(mob/M)
+		if(!isliving(M) || !isalive(M))
+			return FALSE
+		return !istype(M.get_id(), /obj/item/card/id/syndicate)
 
 /mob/living/carbon/human/npc/monkey/horse
 	name = "????"

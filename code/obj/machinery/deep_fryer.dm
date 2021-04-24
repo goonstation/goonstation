@@ -23,7 +23,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isghostdrone(user) || isAI(user))
-			boutput(usr, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
 		if (W.cant_drop) //For borg held items
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
@@ -102,7 +102,7 @@
 
 	attack_hand(mob/user as mob)
 		if (isghostdrone(user))
-			boutput(usr, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
 		if (!src.fryitem)
 			boutput(user, "<span class='alert'>There is nothing in the fryer.</span>")
@@ -200,7 +200,7 @@
 			fryholder.food_effects += thing:food_effects
 
 		var/icon/composite = new(thing.icon, thing.icon_state)
-		for(var/O in src.fryitem.underlays + thing.overlays)
+		for(var/O in thing.underlays + thing.overlays)
 			var/image/I = O
 			composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 

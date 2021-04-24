@@ -104,8 +104,7 @@ export const ListInput = (props, context) => {
     <Window
       title={title}
       width={325}
-      height={325}
-      resizable>
+      height={325}>
       {timeout !== undefined && <Loader value={timeout} />}
       <Window.Content>
         <Stack fill vertical>
@@ -174,20 +173,20 @@ export const ListInput = (props, context) => {
               <Stack.Item grow basis={0}>
                 <Button
                   fluid
-                  color="bad"
+                  color="good"
                   lineHeight={2}
-                  content="Cancel"
-                  onClick={() => act('cancel')}
+                  content="Confirm"
+                  disabled={selectedButton === null}
+                  onClick={() => act("choose", { choice: selectedButton })}
                 />
               </Stack.Item>
               <Stack.Item grow basis={0}>
                 <Button
                   fluid
-                  color="good"
+                  color="bad"
                   lineHeight={2}
-                  content="Confirm"
-                  disabled={selectedButton === null}
-                  onClick={() => act('choose', { choice: selectedButton })}
+                  content="Cancel"
+                  onClick={() => act("cancel")}
                 />
               </Stack.Item>
             </Stack>

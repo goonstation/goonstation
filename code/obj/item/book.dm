@@ -239,6 +239,11 @@
 	<br>The \"set rgb\" Input takes a Color in the HTML Color Code Format, for Example: #FF1200 .
 	<br>
 	<br>
+	<br><B>Letter Display Component:</B>
+	<br>Displays a single letter from the input signal.
+	<br>Set the letter index to choose which letter is displayed.  For example, if the letter index is 2, and an input signal of "Hello" arrives, "E" will be displayed.
+	<br>
+	<br>
 	<br><B>Microphone Component:</B>
 	<br>Forwards nearby speech as signal.
 	<br>The "Toggle Show-Source" option determines whether the component adds the source's name to the signal or not.
@@ -311,11 +316,6 @@
 	<br><B>Wifi Signal Splitter Component:</B>
 	<br>Returns the value of a field within a Radio signal. The components Trigger Field is the Field you want the Value of.
 	<br>For example: Set the Trigger Field to \"user_id\". When a Signal with \"user_id=captain\" arrives the Component forwards \"captain\"
-	<br>
-	<br>
-	<br><B>Letter Display Component:</B>
-	<br>Displays a single letter from the input signal.
-	<br>Set the letter index to choose which letter is displayed.  For example, if the letter index is 2, and an input signal of "Hello" arrives, "E" will be displayed.
 	<br>
 	<br>
 	"}
@@ -1120,7 +1120,7 @@ This ruleset is entirely based upon the Quick Quest system, with minor changes. 
 	examine(mob/user)
 		if (!issilicon(user))
 			. = list("What...what is this? It's written entirely in barcodes or something, cripes. You can't make out ANY of this.")
-			var/mob/living/carbon/jerk = usr
+			var/mob/living/carbon/jerk = user
 			if (!istype(jerk))
 				return
 
@@ -2966,7 +2966,7 @@ On that note, CentComm would like to remind trainees that they do not recieve cl
 		else
 			if(ishuman(hit_atom))
 				var/mob/living/carbon/human/user = usr
-				var/hos = (istype(user.head, /obj/item/clothing/head/hosberet) || istype(user.head, /obj/item/clothing/head/helmet/HoS))
+				var/hos = (istype(user.head, /obj/item/clothing/head/hosberet) || istype(user.head, /obj/item/clothing/head/hos_hat))
 				if(hos)
 					var/mob/living/carbon/human/H = hit_atom
 					H.changeStatus("stunned", 2 SECONDS)
@@ -3550,6 +3550,64 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 		if (voidMessage)
 			boutput(wearer, "[voidMessage]")
 		return
+
+/obj/item/paper/book/from_file
+	var/file_path = null
+
+	New()
+		..()
+		if(isnull(src.file_path))
+			CRASH("from_file book has no file path")
+		src.info = file2text(src.file_path)
+
+/obj/item/paper/from_file
+	var/file_path = null
+
+	New()
+		..()
+		if(isnull(src.file_path))
+			CRASH("from_file paper has no file path")
+		src.info = file2text(src.file_path)
+
+/obj/item/paper/book/from_file/ai_programming_101
+	name = "AI Programming 101"
+	icon_state = "cyanbook"
+	file_path = "strings/books/ai_programming_101.txt"
+
+/obj/item/paper/book/from_file/captaining_101
+	name = "Captaining 101"
+	icon_state = "greenbook"
+	file_path = "strings/books/captaining_101.txt"
+
+/obj/item/paper/book/from_file/commanders_diary
+	name = "Commander's Diary"
+	icon_state = "redbook"
+	file_path = "strings/books/commanders_diary.txt"
+
+/obj/item/paper/book/from_file/dealing_with_clonelieness
+	name = "Dealing With Clonelieness"
+	icon_state = "cyanbook"
+	file_path = "strings/books/dealing_with_clonelieness.txt"
+
+/obj/item/paper/book/from_file/elective_prosthetics_for_dummies
+	name = "Elective Prosthetics for Dummies"
+	icon_state = "whitebook"
+	file_path = "strings/books/elective_prosthetics_for_dummies.txt"
+
+/obj/item/paper/book/from_file/fun_facts_about_shelterfrogs
+	name = "Fun Facts About Shelterfrogs"
+	icon_state = "greenbook"
+	file_path = "strings/books/fun_facts_about_shelterfrogs.txt"
+
+/obj/item/paper/book/from_file/syndies_guide
+	name = "A SYNDIE'S GUIDE TO DOING YOUR FUCKING JOB"
+	icon_state = "redbook"
+	file_path = "strings/books/syndies_guide.txt"
+
+/obj/item/paper/book/from_file/teg_guide
+	name = "Thermo-electric Power Generation"
+	icon_state = "yelbook"
+	file_path = "strings/books/teg_guide.txt"
 
 /obj/item/paper/book/custom //custom book parent, just to avoid cluttering up normal books
 	var/custom_cover = 0 //if 1, goes thru with the build custom icon process

@@ -5,6 +5,7 @@
 	icon_state = "claw"
 	anchored = 1
 	density = 1
+	mats = list("MET-1"=5, "CON-1"=5, "CRY-1"=5, "FAB-1"=5)
 	deconstruct_flags = DECON_MULTITOOL | DECON_WRENCH | DECON_CROWBAR
 	var/busy = 0
 	var/list/prizes = list(/obj/item/toy/plush/small/bee,\
@@ -99,7 +100,7 @@
 	icon_state = "bear"
 	desc = "A cute and cuddly plush toy!"
 	throwforce = 3
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 3
 	rand_pos = 1
@@ -127,7 +128,7 @@
 /obj/item/toy/plush/small
 	name = "small plush toy"
 	desc = "You found a new friend!"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 5
 

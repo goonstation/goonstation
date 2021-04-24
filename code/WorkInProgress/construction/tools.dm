@@ -173,7 +173,7 @@
 	icon = 'icons/obj/construction.dmi'
 	icon_state = "room"
 	item_state = "gun"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 	mats = 6
 	var/using = 0
@@ -236,7 +236,7 @@
 	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings. Load metal sheets before using."
 	icon_state = "bio-white"
 	flags = FPRINT | TABLEPASS | EXTRADELAY
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	click_delay = 1
 	prefix = "bio"
 	metal_ammo = 20
@@ -262,7 +262,7 @@
 
 	var/processing = 0
 
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 	var/sound/sound_process = sound('sound/effects/pop.ogg')
 	var/sound/sound_grump = sound('sound/machines/buzz-two.ogg')
@@ -446,12 +446,12 @@
 	item_state = "gun"
 	flags = FPRINT | TABLEPASS | EXTRADELAY
 	mats = 6
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	click_delay = 1
 
 	var/selecting = 0
 	var/mode = "floors"
-	var/icons = list("floors" = 'icons/turf/construction_floors.dmi', "walls" = 'icons/turf/construction_walls.dmi')
+	var/icons = list("floors" = 'icons/turf/construction_floors.dmi', "walls" = 'icons/turf/construction_walls.dmi', "restore original")
 	var/marker_class = list("floors" = /obj/plan_marker/floor, "walls" = /obj/plan_marker/wall)
 	var/selected = "floor"
 	// var/pod_turf = 0
@@ -469,6 +469,10 @@
 		mode = input("What to mark?", "Marking", mode) in icons
 		selected = null
 		var/states = list()
+		if (mode == "restore original")
+			boutput(user, "<span class='notice'>Now set for restoring appearance.</span>")
+			selecting = 0
+			return
 		if (mode == "walls")
 			states += "* AUTO *"
 		states += icon_states(icons[mode])
@@ -491,6 +495,22 @@
 		if (!T)
 			return 0
 
+		if (mode == "restore original") //For those who want to undo the carnage
+			if (istype(T, /turf/simulated/floor))
+				if (!T.intact)
+					return
+				var/turf/simulated/floor/F = T
+				F.icon = initial(F.icon)
+				F.icon_state = F.roundstart_icon_state
+				F.set_dir(F.roundstart_dir)
+			else if (istype(T, /turf/simulated/wall))
+				T.icon = initial(T.icon)
+				//T.icon_state = initial(T.icon_state)
+				if (istype(T, /turf/simulated/wall/auto))
+					var/turf/simulated/wall/auto/W = T
+					W.update_icon()
+					W.update_neighbors()
+			return
 		var/obj/plan_marker/old = null
 		for (var/obj/plan_marker/K in T)
 			if (istype(K, /obj/plan_marker/floor) || istype(K, /obj/plan_marker/wall))
@@ -766,11 +786,11 @@
 
 	proc/check()
 		var/turf/T = get_turf(src)
-		if (istype(T, /turf/simulated/floor))
+		if (istype(T, /turf/simulated/floor) && T.intact)
 			// Same deal as above, only checked for that specific type of floor
 			// so the various alternate designs weren't able to be converted
 			T.icon = src.icon
 			T.icon_state = src.icon_state
 			T.set_dir(src.dir)
 			// T:allows_vehicles = src.allows_vehicles
-			qdel(src)
+		qdel(src)

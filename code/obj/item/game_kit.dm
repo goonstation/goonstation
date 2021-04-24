@@ -12,7 +12,7 @@ THAT STUPID GAME KIT
 	var/data = ""
 	//var/base_url = "http://svn.slurm.us/public/spacestation13/misc/game_kit"
 	item_state = "sheet-metal"
-	w_class = 5.0
+	w_class = W_CLASS_HUGE
 	desc = "Play chess or checkers. Or don't. Probably don't."
 	stamina_damage = 5
 	stamina_cost = 5
@@ -25,7 +25,7 @@ THAT STUPID GAME KIT
 	BLOCK_SETUP(BLOCK_BOOK)
 
 /obj/item/game_kit/MouseDrop(mob/user as mob)
-	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_interact_range(src, usr)))
+	if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
 		if (!user.put_in_hand(src))
 			return ..()
 

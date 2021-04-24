@@ -216,6 +216,18 @@
 	food_color = "#CCFFCC"
 	food_effects = list("food_space_farts")
 
+/obj/item/reagent_containers/food/snacks/plant/peas
+	name = "pea pod"
+	crop_suffix = " pod"
+	desc = "These peas are like peas in a pod. Yeah."
+	planttype = /datum/plant/crop/peas
+	icon_state = "peapod"
+	amount = 1
+	heal_amt = 1
+	throwforce = 0
+	force = 0
+	food_color = "#77AA77"
+
 /obj/item/reagent_containers/food/snacks/plant/soylent
 	name = "soylent chartreuse"
 	crop_suffix = " chartreuse"
@@ -278,7 +290,7 @@
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	initial_volume = 6
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	validforhat = 0
 
@@ -364,7 +376,7 @@
 	name = "grapefruit wedge"
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	initial_volume = 6
 
@@ -391,7 +403,7 @@
 	icon_state = "melon"
 	planttype = /datum/plant/fruit/melon
 	throwforce = 8
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	edible = 0
 	food_color = "#7FFF00"
 	validforhat = 1
@@ -427,7 +439,7 @@
 	icon_state = "melon-slice"
 	planttype = /datum/plant/fruit/melon
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	heal_amt = 2
 	food_color = "#7FFF00"
@@ -439,7 +451,7 @@
 	desc = "Sometime in the year 2472 these melons were required to have their name legally changed to protect the not-so-innocent. Also for tax evasion reasons."
 	icon_state = "george-melon"
 	throwforce = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	edible = 0
 	initial_volume = 60
 
@@ -490,7 +502,7 @@
 	desc = "A slice of a particularly special melon. Previously went by a different name but then it got married or something THIS IS HOW MELON NAMES WORK OKAY"
 	icon_state = "george-melon-slice"
 	throwforce = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	heal_amt = 2
 	plant_reagent = "george_melonium"
@@ -507,7 +519,7 @@
 	icon_state = "bowling-melon"
 	var/base_icon_state = "bowling-melon"
 	var/already_burst = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 5
 	throw_speed = 1
 
@@ -603,7 +615,7 @@
 	desc = "Caution: May or may not be red hot."
 	icon_state = "chili"
 	planttype = /datum/plant/fruit/chili
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	heal_amt = 2
 	plant_reagent = "capsaicin"
@@ -621,7 +633,7 @@
 	desc = "It's cold to the touch."
 	icon_state = "chilly"
 	//planttype = /datum/plant/fruit/chili
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	heal_amt = 2
 	food_color = "#00CED1"
@@ -645,7 +657,7 @@
 	desc = "Naga Jolokia, or Ghost Chili, is a chili pepper previously recognized by Guinness World Records as the hottest pepper in the world. This one, found in space, is even hotter."
 	icon_state = "ghost_chili"
 	//planttype = /datum/plant/fruit/chili
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	heal_amt = 1
 	food_color = "#FFFF00"
@@ -669,7 +681,7 @@
 	desc = "The go-to staple green vegetable in every good space diet, unlike Spinach."
 	icon_state = "lettuce-leaf"
 	planttype = /datum/plant/veg/lettuce
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	heal_amt = 1
 	food_color = "#008000"
@@ -679,7 +691,7 @@
 	desc = "A widely-cultivated gourd, often served on sandwiches or pickled.  Not actually known for saving any kingdoms."
 	icon_state = "cucumber"
 	planttype = /datum/plant/veg/cucumber
-	w_class = 1
+	w_class = W_CLASS_TINY
 	amount = 2
 	heal_amt = 1
 	food_color = "#008000"
@@ -881,7 +893,7 @@
 	desc = "Think of how many snowmen were mutilated to power the carrot industry."
 	icon_state = "carrot"
 	planttype = /datum/plant/veg/carrot
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 3
 	heal_amt = 1
 	food_color = "#FF9900"
@@ -969,7 +981,7 @@
 	name = "lime wedge"
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	initial_volume = 6
 	validforhat = 0
@@ -1013,7 +1025,7 @@
 	name = "lemon wedge"
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	initial_volume = 6
 	validforhat = 0
@@ -1190,10 +1202,11 @@
 	icon_state = "coconut"
 	planttype = /datum/plant/fruit/coconut
 	throwforce = 9
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	edible = 0
 	food_color = "#4D2600"
 	validforhat = 1
+	event_handler_flags = USE_FLUID_ENTER | USE_HASENTERED
 
 	make_reagents()
 		..()
@@ -1201,21 +1214,45 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (iscuttingtool(W))
-			var/turf/T = get_turf(src)
 			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
-			var/makeslices = 3
-			while (makeslices > 0)
-				var/obj/item/reagent_containers/food/snacks/plant/coconutmeat/P = new(T)
-				P.name = "[src.name] meat"
-				P.transform = src.transform
-				var/datum/plantgenes/DNA = src.plantgenes
-				var/datum/plantgenes/PDNA = P.plantgenes
-				if(DNA)
-					HYPpassplantgenes(DNA,PDNA)
-				makeslices -= 1
-			new /obj/item/reagent_containers/food/drinks/coconut(T)
-			pool (src)
+			src.split()
 		..()
+
+	proc/split()
+		var/turf/T = get_turf(src)
+		var/makeslices = 3
+		while (makeslices > 0)
+			var/obj/item/reagent_containers/food/snacks/plant/coconutmeat/P = new(T)
+			P.name = "[src.name] meat"
+			P.transform = src.transform
+			var/datum/plantgenes/DNA = src.plantgenes
+			var/datum/plantgenes/PDNA = P.plantgenes
+			if(DNA)
+				HYPpassplantgenes(DNA,PDNA)
+			makeslices -= 1
+		new /obj/item/reagent_containers/food/drinks/coconut(T)
+		pool(src)
+
+	proc/someone_landed_on_us(mob/living/L, datum/thrown_thing/thr)
+		src.UnregisterSignal(L, COMSIG_MOVABLE_THROW_END)
+		if(L.loc == src.loc)
+			L.visible_message("<span class='alert'>[L] lands on the [src] and breaks it!</span>", "<span class='alert'>You land on the [src] and break it!</span>")
+			playsound(src, "sound/impact_sounds/coconut_break.ogg", 70, vary=TRUE)
+			var/are_there_other_nuts = FALSE
+			for(var/obj/item/reagent_containers/food/snacks/plant/coconut/other_nut in src.loc)
+				if(other_nut != src)
+					are_there_other_nuts = TRUE
+					break
+			if(!are_there_other_nuts)
+				L.TakeDamage("chest", brute=12)
+			src.split()
+
+	HasEntered(atom/movable/AM, atom/OldLoc)
+		. = ..()
+		if(isliving(AM))
+			var/mob/living/L = AM
+			if(L.throwing)
+				src.RegisterSignal(L, COMSIG_MOVABLE_THROW_END, .proc/someone_landed_on_us)
 
 /obj/item/reagent_containers/food/snacks/plant/coconutmeat/
 	name = "coconut meat"
@@ -1237,7 +1274,7 @@
 	icon_state = "pineapple"
 	planttype = /datum/plant/fruit/pineapple
 	throwforce = 7
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	edible = 0
 	food_color = "#F8D016"
 	validforhat = 1

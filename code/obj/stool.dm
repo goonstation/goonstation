@@ -284,15 +284,14 @@
 		scoot_sounds = list( 'sound/misc/chair/office/scoot1.ogg', 'sound/misc/chair/office/scoot2.ogg', 'sound/misc/chair/office/scoot3.ogg', 'sound/misc/chair/office/scoot4.ogg', 'sound/misc/chair/office/scoot5.ogg' )
 
 	Move()
+		if(src.buckled_guy.loc != src.loc)
+			src.unbuckle()
 		. = ..()
 		if (. && src.buckled_guy)
 			var/mob/living/carbon/C = src.buckled_guy
-			if(src.buckled_guy.loc == src.loc)
-				C.buckled = null
-				C.Move(src.loc)
-				C.buckled = src
-			else
-				src.unbuckle()
+			C.buckled = null
+			C.Move(src.loc)
+			C.buckled = src
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/clothing/suit/bedsheet))
@@ -516,6 +515,8 @@
 	var/foldable = 1
 	var/climbable = 1
 	var/buckle_move_delay = 6 // this should have been a var somepotato WHY WASN'T IT A VAR
+	var/obj/item/clothing/head/butt/has_butt = null // time for mature humour
+	var/image/butt_img
 	securable = 1
 	anchored = 1
 	scoot_sounds = list( 'sound/misc/chair/normal/scoot1.ogg', 'sound/misc/chair/normal/scoot2.ogg', 'sound/misc/chair/normal/scoot3.ogg', 'sound/misc/chair/normal/scoot4.ogg', 'sound/misc/chair/normal/scoot5.ogg' )
@@ -527,6 +528,8 @@
 	New()
 		if (src.dir == NORTH)
 			src.layer = FLY_LAYER+1
+		butt_img = image('icons/obj/furniture/chairs.dmi')
+		butt_img.layer = OBJ_LAYER + 0.5 //In between OBJ_LAYER and MOB_LAYER
 		..()
 		return
 
@@ -557,6 +560,20 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if (ispryingtool(W) && has_butt)
+			user.put_in_hand_or_drop(has_butt)
+			boutput(user, "<span class='notice'>You pry [has_butt.name] from [name].</span>")
+			has_butt = null
+			UpdateOverlays(null, "chairbutt")
+			return
+		if (istype(W, /obj/item/clothing/head/butt) && !has_butt)
+			has_butt = W
+			user.u_equip(has_butt)
+			has_butt.set_loc(src)
+			boutput(user, "<span class='notice'>You place [has_butt.name] on [name].</span>")
+			butt_img.icon_state = "chair_[has_butt.icon_state]"
+			UpdateOverlays(butt_img, "chairbutt")
+			return
 		if (istype(W, /obj/item/assembly/shock_kit))
 			var/obj/stool/chair/e_chair/E = new /obj/stool/chair/e_chair(src.loc)
 			if (src.material)
@@ -632,8 +649,8 @@
 
 	MouseDrop_T(mob/M as mob, mob/user as mob)
 		..()
-		if (M == usr)
-			if (usr.a_intent == INTENT_GRAB)
+		if (M == user)
+			if (user.a_intent == INTENT_GRAB)
 				if(climbable)
 					buckle_in(M, user, 1)
 				else
@@ -687,7 +704,7 @@
 				to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 				H.start_chair_flip_targeting()
 		else
-			if (to_buckle == usr)
+			if (to_buckle == user)
 				user.visible_message("<span class='notice'><b>[to_buckle]</b> buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
 			else
 				user.visible_message("<span class='notice'><b>[to_buckle]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [to_buckle].</span>")
@@ -699,7 +716,10 @@
 			to_buckle.set_loc(src.loc)
 			src.buckledIn = 1
 			to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
-		playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
+		if (has_butt)
+			playsound(get_turf(src), (has_butt.sound_fart ? has_butt.sound_fart : 'sound/voice/farts/fart1.ogg'), 50, 1)
+		else
+			playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
 
 
 	unbuckle()
@@ -762,6 +782,9 @@
 			if (M.buckled == src)
 				M.buckled = null
 				src.buckled_guy = null
+		if (has_butt)
+			has_butt.set_loc(loc)
+		has_butt = null
 		..()
 		return
 
@@ -837,7 +860,7 @@
 	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "folded_chair"
 	item_state = "folded_chair"
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	throwforce = 10
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 5
@@ -912,6 +935,7 @@
 			var/mob/living/carbon/C = src.buckled_guy
 			C.set_dir(dir)
 		return
+
 
 	proc/update_icon()
 		if (src.dir == NORTH)
@@ -1081,7 +1105,7 @@
 	rotatable = 0
 	foldable = 0
 	comfort_value = 2
-	deconstructable = 0
+	deconstructable = TRUE
 	securable = 0
 	parts_type = /obj/item/furniture_parts/bench/pew
 	var/image/arm_image = null
@@ -1143,6 +1167,12 @@
 	var/time_between_uses = 400 // The default time between uses.
 	var/list/items = list (/obj/item/device/light/zippo,
 	/obj/item/wrench,
+	/obj/item/device/multitool,
+	/obj/item/toy/plush/small/buddy,
+	/obj/item/toy/plush/small/stress_ball,
+	/obj/item/paper/lunchbox_note,
+	/obj/item/plant/herb/cannabis/spawnable,
+	/obj/item/reagent_containers/food/snacks/candy/candyheart,
 	/obj/item/bananapeel,
 	/obj/item/reagent_containers/food/snacks/lollipop/random_medical,
 	/obj/item/spacecash/random/small,
@@ -1197,6 +1227,9 @@
 				last_use = world.time
 				max_uses--
 
+		else if (max_uses <= 0)
+			user.visible_message("<span class='notice'><b>[user.name]</b> rummages through the seams and behind the cushions of [src] and pulls out absolutely nothing!</span>",\
+			"<span class='notice'>You rummage through the seams and behind the cushions of [src] and pull out absolutely nothing!</span>")
 		else
 			user.visible_message("<span class='notice'><b>[user.name]</b> rummages through the seams and behind the cushions of [src]!</span>",\
 			"<span class='notice'>You rummage through the seams and behind the cushions of [src]!</span>")
@@ -1332,7 +1365,7 @@
 
 			user.Browse("<TITLE>Electric Chair</TITLE><b>Electric Chair</b><BR>[dat]", "window=e_chair;size=180x180")
 
-			onclose(usr, "e_chair")
+			onclose(user, "e_chair")
 		return
 
 	Topic(href, href_list)

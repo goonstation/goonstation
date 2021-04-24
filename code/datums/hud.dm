@@ -52,7 +52,7 @@
 			master.MouseDrop(src, over_object, src_location, over_location, over_control, params)
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
-		if (master && (!master.click_check || (usr in master.mobs)))
+		if (master && (!master.click_check || (user in master.mobs)))
 			master.MouseDrop_T(src, O, user)
 
 

@@ -94,6 +94,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		set_dir(pick(cardinal))
 		light = new /datum/light/point
 		light.set_brightness(0.5,queued_run = 1)
@@ -101,16 +102,19 @@
 		// note: light is left disabled until the color is set
 
 	disposing()
+		STOP_TRACKING
 		light.disable(queued_run = 1)
 		if (loc)
 			loc:active_hotspot = null
 		..()
 
 	pooled()
+		STOP_TRACKING
 		..()
 
 	unpooled()
 		..()
+		START_TRACKING
 		if (!light.attached_to)
 			light.attach(src)
 
@@ -153,14 +157,14 @@
 		//hello yes now it's ZeWaka with an even more hellcode implementation that makes no sense
 		//scientific reasoning provided by Mokrzycki, Wojciech & Tatol, Maciej. (2011).
 
-		var/R_sr = ((red + light.r*255) /2) //average value of R components in the two compared colors
+		var/red_mean = ((red + light.r*255) /2) // mean of R components in the two compared colors
 
-		var/deltaR2 = abs(red   - (light.r*255))**2
-		var/deltaG2 = abs(blue  - (light.b*255))**2
-		var/deltaB2 = abs(green - (light.g*255))**2
+		var/deltaR2 = (red   - (light.r*255))**2
+		var/deltaG2 = (blue  - (light.b*255))**2
+		var/deltaB2 = (green - (light.g*255))**2
 
 		//this is our weighted euclidean distance function, weights based on red component
-		var/color_delta =( (2+(R_sr/256))*deltaR2 + (4*deltaG2) + (2+((255-R_sr)/256))*deltaB2 )
+		var/color_delta = ( (((512+red_mean)*(deltaR2**2))>>8) + (4*(deltaG2**2)) + (((767-red_mean)*(deltaB2**2))>>8) )
 
 		//DEBUG_MESSAGE("[x],[y]:[temperature], d:[color_delta], [red]|[green]|[blue] vs [light.r*255]|[light.g*255]|[light.b*255]")
 
@@ -196,17 +200,19 @@
 			src.volume = affected.fuel_burnt*FIRE_GROWTH_RATE
 
 			//Inhibit hotspot use as turf heats up to resolve abuse of hotspots unless catalyst is present...
-			//Scale volume at 40% of PLASMA_UPPER_TEMPERATURE to allow for hotspot icon to transition to 2nd state
-			if(src.temperature > ( PLASMA_UPPER_TEMPERATURE * 0.4 ))
+			//Scale volume at 40% of HOTSPOT_MAX_TEMPERATURE to allow for hotspot icon to transition to 2nd state
+			if(src.temperature > ( HOTSPOT_MAX_NOCAT_TEMPERATURE * 0.4 ))
 				// Force volume as heat increases, scale to cell volume with tempurature to trigger hotspot bypass
-				if(!src.catalyst_active)
+				var/max_temp = HOTSPOT_MAX_NOCAT_TEMPERATURE
+				if(src.catalyst_active)
 					// Limit temperature based scaling to not exceed cell volume so spreading and exposure don't inappropriately scale
-					var/temperature_scaled_volume = clamp((src.temperature * CELL_VOLUME / PLASMA_UPPER_TEMPERATURE), 1, CELL_VOLUME)
-					src.volume = max(src.volume, temperature_scaled_volume)
+					max_temp = HOTSPOT_MAX_CAT_TEMPERATURE
+				var/temperature_scaled_volume = clamp((src.temperature * CELL_VOLUME /  max_temp), 1, CELL_VOLUME)
+				src.volume = max(src.volume, temperature_scaled_volume)
 
 			location.assume_air(affected)
 
-			for(var/obj/object as() in location)
+			for(var/obj/object as anything in location)
 				object.temperature_expose(null, temperature, src.volume)
 
 		set_real_color()

@@ -45,11 +45,12 @@
 
 		..()
 
-		src.overlays = null
 		if(reagents.total_volume)
 			var/datum/color/average = reagents.get_average_color()
 			fluid_icon.color = average.to_rgba()
-			src.overlays += fluid_icon
+			src.UpdateOverlays(src.fluid_icon, "fluid")
+		else
+			src.UpdateOverlays(null, "fluid")
 
 /obj/stove
 	name = "stove"
@@ -299,7 +300,7 @@
 	var/total_wclass = 0
 	var/max_reagents = 150
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
-	w_class = 5.0
+	w_class = W_CLASS_HUGE
 	var/image/fluid_icon
 	var/datum/custom_soup/my_soup
 	tooltip_flags = REBUILD_DIST
@@ -351,11 +352,12 @@
 	on_reagent_change()
 		if(my_soup)
 			return
-		src.overlays = null
 		if(reagents.total_volume)
 			var/datum/color/average = reagents.get_average_color()
 			fluid_icon.color = average.to_rgba()
-			src.overlays += fluid_icon
+			src.UpdateOverlays(src.fluid_icon, "fluid")
+		else
+			src.UpdateOverlays(null, "fluid")
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W) && !istype(W,/obj/item/ladle))
@@ -400,7 +402,7 @@
 					src.total_wclass++
 					tooltip_rebuild = 1
 					L.my_soup = null
-					L.overlays = null
+					L.UpdateOverlays(null, "fluid")
 					user.visible_message("[user] empties [L] into [src].", "You empty [L] into [src]")
 				else
 					boutput(user,"<span class='alert'><b>You can't mix soups! That'd be ridiculous!</span>")
@@ -479,4 +481,4 @@
 
 	proc/add_soup_overlay(var/new_color)
 		fluid_icon.color = new_color
-		src.overlays += fluid_icon
+		src.UpdateOverlays(fluid_icon, "fluid")

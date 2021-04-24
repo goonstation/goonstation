@@ -54,7 +54,6 @@
 		for (var/obj/machinery/power/solar_control/C in powernet.nodes)
 			if (!isnull(src.id) && src.id == C.id)
 				C.tracker_update(angle)
-			LAGCHECK(LAG_HIGH)
 
 	// override power change to do nothing since we don't care about area power
 	// (and it would be pointless anyway given that solar panels and the associated tracker are usually on a separate powernet)
@@ -139,14 +138,10 @@
 	return
 
 /obj/machinery/power/solar/proc/updateicon()
-	//overlays = null
 	if(status & BROKEN)
 		icon_state = "solar_panel-b"
-		//overlays += image('icons/obj/power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER)
 	else
-		//overlays += image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER)
 		src.icon_state = "solar_panel"
-		// src.set_dir(angle2dir(adir))
 		src.set_dir(NORTH)
 		animate(src, time=rand(0.1 SECONDS, 9 SECONDS))
 		animate(transform=matrix(adir, MATRIX_ROTATE), time=rand(1 SECOND, 4 SECONDS))
@@ -270,26 +265,16 @@
 			updateicon()
 
 /obj/machinery/power/solar_control/proc/updateicon()
-	if(status & BROKEN)
+	if(status & BROKEN && icon_state != "broken")
 		icon_state = "broken"
-		//overlays = null
 		return
-	if(status & NOPOWER)
+
+	if(status & NOPOWER && icon_state != "c_unpowered")
 		icon_state = "c_unpowered"
-		//overlays = null
 		return
 
-	icon_state = "solar"
-	/*
-	overlays = null
-	if(cdir > 0)
-		if (!solcon)
-			solcon = new /obj/overlay {icon='icons/obj/computer.dmi'; icon_state="solcon-o";} (src)
-
-		solcon.set_dir(angle2dir(cdir))
-		overlays += solcon
-	*/
-	return
+	if(icon_state != "solar")
+		icon_state = "solar"
 
 /obj/machinery/power/solar_control/attack_ai(mob/user)
 	add_fingerprint(user)
@@ -409,7 +394,6 @@
 		if(S.id != id) continue
 		S.control = src
 		S.ndir = cdir
-		LAGCHECK(LAG_HIGH)
 
 /obj/machinery/power/solar_control/power_change()
 	if(powered())

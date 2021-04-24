@@ -50,49 +50,10 @@
 		val += stamina_mods_max[x]
 
 	var/stam_mod_items = 0
-	for (var/obj/item/C as() in src.get_equipped_items())
+	for (var/obj/item/C as anything in src.get_equipped_items())
 		stam_mod_items += C.getProperty("stammax")
 
 	return (val + stam_mod_items)
-
-///Adds a stamina regen modifier with the given key. This uses unique keys to allow for "categories" of regen modifiers - so you can only have one food buff etc.
-///If you get a buff of a category you already have, nothing will happen.
-/mob/proc/add_stam_mod_regen(var/key, var/value)
-	. = 0
-
-/mob/living/add_stam_mod_regen(var/key, var/value)
-	if (!src.use_stamina) return
-	if(!isnum(value)) return
-	if(stamina_mods_regen.Find(key)) return 0
-	stamina_mods_regen.Add(key)
-	stamina_mods_regen[key] = value
-	. = 1
-
-///Removes a stamina regen modifier with the given key.
-/mob/proc/remove_stam_mod_regen(var/key)
-	. = 0
-
-/mob/living/remove_stam_mod_regen(var/key)
-	if (!src.use_stamina) return
-	if(!stamina_mods_regen.Find(key)) return 0
-	stamina_mods_regen.Remove(key)
-	. = 1
-
-///Returns the total modifier for stamina regen
-/mob/proc/get_stam_mod_regen()
-	. =  0
-
-/mob/living/get_stam_mod_regen()
-	if (!src.use_stamina) return
-	var/val = 0
-	for(var/x in stamina_mods_regen)
-		val += stamina_mods_regen[x]
-
-	var/stam_mod_items = 0
-	for (var/obj/item/C as() in src.get_equipped_items())
-		stam_mod_items += C.getProperty("stamregen")
-	return val
-
 
 /mob/proc/add_stun_resist_mod(var/key, var/value)
 	if(!isnum(value)) return
@@ -150,7 +111,7 @@
 			del(src.client)
 
 	var/stam_mod_items = 0
-	for (var/obj/item/C as() in src.get_equipped_items())
+	for (var/obj/item/C as anything in src.get_equipped_items())
 		stam_mod_items += C.getProperty("stamcost")
 
 	var/percReduction = 0
@@ -258,7 +219,7 @@
 	. = 0
 
 	var/res = 0
-	for (var/obj/item/C as() in src.get_equipped_items())
+	for (var/obj/item/C as anything in src.get_equipped_items())
 		if(C.hasProperty("disorient_resist"))
 			res = C.getProperty("disorient_resist")
 			if (res >= 100)
@@ -277,7 +238,7 @@
 	. = 0
 
 	var/res = 0
-	for (var/obj/item/C as() in src.get_equipped_items())
+	for (var/obj/item/C as anything in src.get_equipped_items())
 		if(C.hasProperty("disorient_resist_eye"))
 			res = C.getProperty("disorient_resist_eye")
 			if (res >= 100)
@@ -310,7 +271,7 @@
 	.= 0
 
 	var/res = 0
-	for (var/obj/item/C as() in src.get_equipped_items())
+	for (var/obj/item/C as anything in src.get_equipped_items())
 		if(C.hasProperty("disorient_resist_ear"))
 			res = C.getProperty("disorient_resist_ear")
 			if (res >= 100)

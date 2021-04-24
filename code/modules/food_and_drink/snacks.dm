@@ -67,7 +67,7 @@
 	icon_state = "pizza_p"
 	amount = 6
 	heal_amt = 3
-	var/topping_color = null
+	var/topping_color = "#ff0000"
 	var/sharpened = FALSE
 	var/sliced = FALSE
 	var/topping = FALSE
@@ -96,9 +96,12 @@
 				if (src.sharpened)
 					boutput(user, "<span class='alert'>This has already been sharpened.</span>")
 					return
-				boutput(user, "<span class='notice'>You sharpen? the pizza???</span>")
 				src.sharpened = TRUE
-				return
+				if(src.sliced)
+					boutput(user, "<span class='notice'>You sharpen the pizza slice. Somehow.</span>")
+					return
+				else
+					boutput(user, "<span class='notice'>You sharpen the pizza, and start slicing it.</span>")
 		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
 			if (src.sliced)
 				boutput(user, "<span class='alert'>This has already been sliced.</span>")
@@ -106,28 +109,37 @@
 			boutput(user, "<span class='notice'>You cut the pizza into slices.</span>")
 			if (src.name == "cheese keyzza")
 				boutput(user, "<i>You feel as though something of value has been lost...</i>")
-			var/makeslices = src.amount
-			while (makeslices > 0)
-				var/obj/item/reagent_containers/food/snacks/pizza/P = new src.type(get_turf(src))
-				P.topping_holder += src.topping_colors
-				P.overlays.len = 0
-				P.sharpened = src.sharpened
-				P.sliced = TRUE
-				P.amount = 1
-				P.icon_state = "pslice"
-				P.quality = src.quality
-				P.heal_amt += round((src.heal_amt/makeslices))
-				if(topping)
-					P.name = src.name
-					P.desc = src.desc
-					P.topping = TRUE
-					P.num = src.num
-					P.add_topping(num)
-				src.reagents.trans_to(P, src.reagents.total_volume/makeslices)
-				P.pixel_x = rand(-6, 6)
-				P.pixel_y = rand(-6, 6)
-				makeslices--
-			qdel (src)
+			src.make_slices()
+
+	proc/make_slices()
+		var/makeslices = src.amount
+		. = list()
+		while (makeslices > 0)
+			var/obj/item/reagent_containers/food/snacks/pizza/P = new src.type(get_turf(src))
+			P.topping_holder += src.topping_colors
+			P.overlays.len = 0
+			P.sharpened = src.sharpened
+			P.sliced = TRUE
+			P.amount = 1
+			P.icon_state = "pslice"
+			P.quality = src.quality
+			P.heal_amt += round((src.heal_amt/makeslices))
+			P.topping_color = src.topping_color
+			if(src.sharpened)
+				src.throw_spin = 0
+			if(topping)
+				P.name = src.name
+				P.desc = src.desc
+				P.topping = TRUE
+				P.num = src.num
+				P.add_topping(num)
+			src.reagents.trans_to(P, src.reagents.total_volume/makeslices)
+			P.pixel_x = rand(-6, 6)
+			P.pixel_y = rand(-6, 6)
+			. += P
+			makeslices--
+		qdel(src)
+
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (sharpened && prob(15))
@@ -176,15 +188,6 @@
 				src.transfer_all_reagents(M)
 			random_brute_damage(M, 11)
 			take_bleeding_damage(M, null, 25, DAMAGE_STAB)
-		else
-			playsound(src.loc, "sound/weapons/slashcut.ogg", 100, 1)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				H.changeStatus("weakened", 5 SECONDS)
-				H.TakeDamage("chest", 35, 0, 0, DAMAGE_CUT)
-			else
-				random_brute_damage(M, 35)
-			take_bleeding_damage(M, null, 25, DAMAGE_CUT)
 
 	proc/add_topping(var/num)
 		var/icon/I
@@ -425,7 +428,7 @@
 	needspoon = 1
 	amount = 6
 	heal_amt = 1
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	initial_volume = 100
 	food_effects = list("food_warm")
 	dropped_item = /obj/item/reagent_containers/food/drinks/bowl
@@ -625,7 +628,7 @@
 	icon_state = "cereal_box"
 	amount = 11
 	real_name = "cereal"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/prize = 10 //Chance of a rad prize inside!
 
 	New()
@@ -729,10 +732,6 @@
 			new /obj/item/razor_blade( get_turf(src) )
 		..()
 
-	disposing()
-		if (src.amount < 1)
-			new /obj/item/reagent_containers/food/drinks/bowl(get_turf(src))
-		..()
 
 	is_open_container()
 		return 1
@@ -780,7 +779,7 @@
 
 	proc/cooltime()
 		if (src.warm)
-			SPAWN_DBG( 4200 )
+			SPAWN_DBG( 420 SECONDS )
 				src.warm = 0
 				src.name = "donk-pocket"
 		return
@@ -822,7 +821,7 @@
 
 	cooltime()
 		if (src.warm)
-			SPAWN_DBG( 4200 )
+			SPAWN_DBG( 420 SECONDS )
 				src.warm = 0
 				src.name = "honk-pocket"
 		return
@@ -1154,6 +1153,18 @@
 		. = ..()
 		name = "[random_spaghetti_name()] and meatballs"
 
+/obj/item/reagent_containers/food/snacks/lasagna
+	name = "lasagna"
+	desc = "Layers of saucy, cheesy goodness."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "lasagna"
+	needfork = 1
+	heal_amt = 2
+	amount = 5
+	initial_volume = 10
+	initial_reagents = "omnizine"
+	food_effects = list("food_energized","food_hp_up","food_brute","food_burn")
+
 /obj/item/reagent_containers/food/snacks/spaghetti/pizzaghetti
 	name = "pizza-ghetti"
 	desc = "This is just- It's pizza and spaghetti on a plate? They're not even touching. What gives?"
@@ -1176,47 +1187,93 @@
 /obj/item/reagent_containers/food/snacks/donut
 	name = "donut"
 	desc = "Goes great with Robust Coffee."
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state = "donut1"
+	icon = 'icons/obj/foodNdrink/donuts.dmi'
+	icon_state = "base"
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	appearance_flags = KEEP_TOGETHER
 	heal_amt = 1
-	initial_volume = 20
-	initial_reagents = "sugar"
+	initial_volume = 50
+	initial_reagents = list("sugar" = 20)
 	food_effects = list("food_energized")
+	var/can_add_frosting = TRUE
+	var/list/styles = list("icing", "sprinkles")
+	var/style_step = 1
 
 	heal(var/mob/M)
-		if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective")))
+		if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective", "Nanotrasen Security Operative", "Security Assistant", "Part-time Vice Officer")))
 			src.heal_amt *= 2
 			..()
 			src.heal_amt /= 2
 		else
 			..()
 
-	frosted
-		name = "frosted donut"
-		icon_state = "donut2"
-		heal_amt = 2
+	proc/add_frosting(var/obj/item/reagent_containers/food/drinks/drinkingglass/icing/tube, var/mob/user)
+		if (!src.can_add_frosting)
+			user.show_text("You feel like adding your own frosting to [src] would ruin it somehow.", "red")
+			return
 
-	cinnamon
-		name = "cinnamon sugar donut"
-		desc = "One of Delectable Dan's seasonal bestsellers."
-		icon_state = "donut3"
-		heal_amt = 3
+		if (tube.reagents.total_volume < 15)
+			user.show_text("The [tube] isn't full enough to add frosting.", "red")
+			return
 
-	robust
-		name = "robust donut"
-		desc = "It's like an energy bar, but in donut form! Contains some chemicals known for partial stun time reduction and boosted stamina regeneration."
-		icon_state = "donut4"
-		amount = 6
-		initial_volume = 36
-		initial_reagents = list("sugar"=12,"synaptizine"=12,"epinephrine"=12)
+		if (src.style_step > length(src.styles))
+			user.show_text("You can't add anymore frosting.", "red")
+			return
 
-	random
-		New()
-			if(rand(1,3) == 1)
-				src.icon_state = "donut2"
-				src.name = "frosted donut"
-				src.heal_amt = 2
-			..()
+		// When a user also fills the donut with a syringe it can get a bit crowded in the donut.
+		if (src.reagents.is_full())
+			user.show_text("It feels like adding anything more to [src] would overfill it.", "red")
+			return
+
+		var/style = src.styles[src.style_step]
+
+		var/datum/color/average_color = tube.reagents.get_average_color()
+		var/image/overlay = new(src.icon, style)
+		overlay.color = average_color.to_rgba()
+		src.UpdateOverlays(overlay, style)
+		tube.reagents.trans_to(src, 15)
+		user.show_text("You add some [style] to [src]", "red")
+		src.style_step += 1
+
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/reagent_containers/food/drinks/drinkingglass/icing))
+			src.add_frosting(I, user)
+			return
+		else
+			. = ..()
+
+	custom
+		icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+		icon_state = "donut1"
+		can_add_frosting = FALSE
+		initial_volume = 20
+
+		frosted
+			name = "frosted donut"
+			icon_state = "donut2"
+			heal_amt = 2
+
+		cinnamon
+			name = "cinnamon sugar donut"
+			desc = "One of Delectable Dan's seasonal bestsellers."
+			icon_state = "donut3"
+			heal_amt = 3
+
+		robust
+			name = "robust donut"
+			desc = "It's like an energy bar, but in donut form! Contains some chemicals known for partial stun time reduction and boosted stamina regeneration."
+			icon_state = "donut4"
+			amount = 6
+			initial_volume = 36
+			initial_reagents = list("sugar"=12,"synaptizine"=12,"epinephrine"=12)
+
+		random
+			New()
+				if(rand(1,3) == 1)
+					src.icon_state = "donut2"
+					src.name = "frosted donut"
+					src.heal_amt = 2
+				..()
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -1820,6 +1877,9 @@
 		if(!syrup)
 			boutput(M, "<span class='alert'>[src] seem a bit dry.</span>")
 
+/obj/item/reagent_containers/food/snacks/pancake/classic
+	icon = 'icons/obj/foodNdrink/food_shitty.dmi'
+
 /obj/item/reagent_containers/food/snacks/mashedpotatoes
 	name ="mashed potatoes"
 	desc = "A classic dish."
@@ -1894,13 +1954,11 @@
 
 	on_reagent_change()
 		if (src.reagents && src.reagents.total_volume)
-			src.overlays = null
-			for(var/current_id in reagents.reagent_list)
-				var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
-				var/icon/I = icon('icons/obj/foodNdrink/food_snacks.dmi', "tortilla-chip-overlay")
-				I.Blend(rgb(current_reagent.fluid_r, current_reagent.fluid_g, current_reagent.fluid_b,current_reagent.transparency), ICON_ADD)
-				src.overlays += image("icon" = I, "layer" = FLOAT_LAYER)
-		return
+			var/image/dip = image('icons/obj/foodNdrink/food_snacks.dmi', "tortilla-chip-overlay")
+			dip.color = src.reagents.get_average_color().to_rgba()
+			src.UpdateOverlays(dip, "dip")
+		else
+			src.UpdateOverlays(null, "dip")
 
 /obj/item/reagent_containers/food/snacks/wonton_spawner
 	name = "wonton spawner"

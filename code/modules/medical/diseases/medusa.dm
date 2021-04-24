@@ -6,6 +6,7 @@
 	reagentcure = list("omnizine")
 	associated_reagent = "medusa"
 	affected_species = list("Human","Monkey")
+	cure = "Omnizine."
 
 /datum/ailment/disease/medusa/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
 	if (..())

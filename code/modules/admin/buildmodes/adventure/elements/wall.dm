@@ -76,4 +76,4 @@
 				return
 
 	attack_hand(mob/user as mob)
-		usr.show_message("<span class='alert'>[src] seems to be movable, but you cannot muster the strength to displace it.</span>")
+		user.show_message("<span class='alert'>[src] seems to be movable, but you cannot muster the strength to displace it.</span>")

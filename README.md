@@ -1,6 +1,6 @@
-### ![Goonstation](.github/assets/goonstation.png) Welcome to the code repository for the Goonstation branch of [Space Station 13](https://spacestation13.com/).
+### [![Goonstation](.github/assets/goonstation.png)](#) Welcome to the code repository for the Goonstation branch of [Space Station 13](https://spacestation13.com/).
 
-![contains technical debt](https://forthebadge.com/images/badges/contains-technical-debt.svg)![made with crayons](https://forthebadge.com/images/badges/made-with-crayons.svg)![made in byond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)
+[![contains technical debt](https://forthebadge.com/images/badges/contains-technical-debt.svg)](#)[![made with crayons](https://forthebadge.com/images/badges/made-with-crayons.svg)](#)[![made in byond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](#)
 
 # SETUP
 
@@ -39,16 +39,7 @@ To contribute sprites to the game, please follow our spriting guidelines! It det
 [<img src=".github/assets/maps.png" alt="Mapping Guidelines" width="150" align="left">](https://hackmd.io/@ZeWaka/goonmap)
 To contribute maps to the game, please follow our mapping guidelines! This details the **required** pieces for a map submission.
 
-## INFO
-
-<table>
-<tr><td align="right" >Master Status: </td>
-<td><img valign="sub" src="https://github.com/goonstation/goonstation/workflows/Beepsky/badge.svg?branch=master"/></td></tr>
-<tr><td align="right">Develop Status: </td>
-<td><img valign="sub" src="https://github.com/goonstation/goonstation/workflows/Beepsky/badge.svg?branch=develop"/></td></tr>
-</table>
-
-### FAQ (Frequently Asked Question)
+## FAQ (Frequently Asked Question)
 
 #### Q: I'm getting a compilation error like `unable to open +secret\__secret.dme`.
 

@@ -20,6 +20,7 @@
 	var/check_records = 1
 
 	var/last_perp = 0
+	var/added_to_records = FALSE
 	var/last_contraband = 0
 	//var/area/area = 0
 	var/emagged = 0
@@ -198,6 +199,15 @@
 			else
 				threatcount += 2
 
+		for (var/datum/data/record/R as anything in data_core.security)
+			if (R.fields["name"] != perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
+				if(!added_to_records)
+					threatcount += 5
+			else if ((R.fields["name"] == perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird")))
+				if(!added_to_records)
+					threatcount -= 5
+					added_to_records = TRUE
+
 		//if((isnull(perp:wear_id)) || (istype(perp:wear_id, /obj/item/card/id/syndicate)))
 		var/obj/item/card/id/perp_id = perp.equipped()
 		if (!istype(perp_id))
@@ -298,9 +308,9 @@
 
 			var/perpname = see_face ? perp.real_name : perp.name
 
-			for (var/datum/data/record/E as() in data_core.general)
+			for (var/datum/data/record/E as anything in data_core.general)
 				if (E.fields["name"] == perpname)
-					for (var/datum/data/record/R as() in data_core.security)
+					for (var/datum/data/record/R as anything in data_core.security)
 						if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
 							threatcount = max(4,threatcount)
 							break

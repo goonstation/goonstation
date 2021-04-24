@@ -894,6 +894,53 @@
 	desc = "Dedicated to Lieutenant Emily Claire for her brave sacrifice aboard NSS Manta - \"May their sacrifice not paint a grim picture of things to come. - Space Commodore J. Ledger\""
 	pixel_y = 25
 
+/obj/abzuholo
+	desc = "... is that Absu..?"
+	name = "... is that Absu..?"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "holoplanet"
+	alpha = 180
+	pixel_y = 16
+	anchored = 2
+	layer = EFFECTS_LAYER_BASE
+	var/datum/light/light
+	var/obj/holoparticles/holoparticles
+
+	New(var/_loc)
+		set_loc(_loc)
+
+		light = new /datum/light/point
+		light.attach(src)
+		light.set_color(0.50, 0.60, 0.94)
+		light.set_brightness(0.7)
+		light.enable()
+
+		SPAWN_DBG(1 DECI SECOND)
+			animate(src, alpha=130, color="#DDDDDD", time=7, loop=-1)
+			animate(alpha=180, color="#FFFFFF", time=1)
+			animate(src, pixel_y=10, time=15, flags=ANIMATION_PARALLEL, easing=SINE_EASING, loop=-1)
+			animate(pixel_y=16, easing=SINE_EASING, time=15)
+
+		holoparticles = new/obj/holoparticles(src.loc)
+		attached_objs = list(holoparticles)
+		..(_loc)
+
+	disposing()
+		if(holoparticles)
+			holoparticles.invisibility = 101
+			qdel(holoparticles)
+		..()
+
+/obj/holoparticles
+	desc = ""
+	name = ""
+	icon = 'icons/obj/janitor.dmi'
+	icon_state = "holoparticles"
+	anchored = 1
+	alpha= 230
+	pixel_y = 14
+	layer = EFFECTS_LAYER_BASE
+
 /obj/dispenser
 	name = "handcuff dispenser"
 	desc = "A handy dispenser for handcuffs."
@@ -1092,7 +1139,7 @@
 		else
 			if(ishuman(hit_atom))
 				var/mob/living/carbon/human/user = usr
-				var/hos = (istype(user.head, /obj/item/clothing/head/hosberet) || istype(user.head, /obj/item/clothing/head/helmet/HoS))
+				var/hos = (istype(user.head, /obj/item/clothing/head/hosberet) || istype(user.head, /obj/item/clothing/head/hos_hat))
 				if(hos)
 					var/mob/living/carbon/human/H = hit_atom
 					H.changeStatus("stunned", 90)
@@ -1123,7 +1170,7 @@
 
 	Bumped(mob/user as mob)
 		if(busy) return
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		src.add_dialog(user)
 		busy = 1
 		showswirl(user.loc)
@@ -1210,7 +1257,7 @@
 	desc = "A device for teleporting crated goods. There is something really, really shady about this.."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "syndicargotele"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	flags = ONBELT
 	mats = 4
 

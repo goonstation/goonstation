@@ -6,7 +6,7 @@
 	uses_multiple_icon_states = 1
 	var/paintcolor = "neutral"
 	item_state = "paintcan"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	desc = "A can of impossible to remove paint."
 
 /obj/item/paint/attack_self(mob/user as mob)
@@ -263,7 +263,7 @@ var/list/cached_colors = new/list()
 	var/paint_intensity = 0.5
 	var/add_orig = 0.0
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	attack_hand(mob/user as mob)
 		..()
@@ -317,7 +317,7 @@ var/list/cached_colors = new/list()
 			1 - paint_intensity + add_orig, 0, 0,
 			0, 1 - paint_intensity + add_orig, 0,
 			0, 0, 1 - paint_intensity + add_orig,
-			paint_intensity * color_list["r"]/255, paint_intensity * color_list["g"]/255, paint_intensity * color_list["b"]/255)
+			paint_intensity * color_list[1]/255, paint_intensity * color_list[2]/255, paint_intensity * color_list[3]/255)
 
 /obj/item/paint_can/random
 	name = "random paint can"

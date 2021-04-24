@@ -74,25 +74,25 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/wrench))
 			if (!packable)
-				boutput(usr,"This beacon's retraction hardware is locked into place and can't be altered.")
+				boutput(user,"This beacon's retraction hardware is locked into place and can't be altered.")
 				return
 			src.visible_message("<b>[user.name]</b> undeploys [src].")
 			playsound(get_turf(src), "sound/items/Ratchet.ogg", 40, 1)
 			src.startpack()
 		else if (istype(W, /obj/item/device/multitool))
 			if (!packable)
-				boutput(usr,"This beacon's designation circuits are hard-wired and can't be altered.")
+				boutput(user,"This beacon's designation circuits are hard-wired and can't be altered.")
 				return
-			var/str = input(usr,"Set designation","Re-Designate Buoy","") as null|text
+			var/str = input(user,"Set designation","Re-Designate Buoy","") as null|text
 			if (!str || !length(str))
-				boutput(usr, "<span style=\"color:red\">No valid input detected.</span>")
+				boutput(user, "<span style=\"color:red\">No valid input detected.</span>")
 				return
 			if (length(str) > 30)
-				boutput(usr, "<span style=\"color:red\">Text too long.</span>")
+				boutput(user, "<span style=\"color:red\">Text too long.</span>")
 				return
 			src.beaconid = "[str]"
 			src.name = "Buoy [beaconid]"
-			boutput(usr, "<span style=\"color:blue\">Designation updated to 'Buoy [str]'.</span>")
+			boutput(user, "<span style=\"color:blue\">Designation updated to 'Buoy [str]'.</span>")
 		else
 			..()
 
@@ -204,10 +204,10 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 		if (istype(W, /obj/item/wrench) && !src.deploying)
 			for (var/turf/T in range(2,src))
 				if (!T.allows_vehicles)
-					boutput(usr,"<span style=\"color:red\">The area surrounding the beacon isn't sufficiently navigable for vehicles.</span>")
+					boutput(user,"<span style=\"color:red\">The area surrounding the beacon isn't sufficiently navigable for vehicles.</span>")
 					return
 			if (isrestrictedz(src.z))
-				boutput(usr, "<span style=\"color:red\">The beacon can't connect to the warp network.</span>")
+				boutput(user, "<span style=\"color:red\">The beacon can't connect to the warp network.</span>")
 				return
 			src.visible_message("<b>[user.name]</b> deploys [src].")
 			playsound(get_turf(src), "sound/items/Ratchet.ogg", 40, 1)
@@ -215,16 +215,16 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 			src.deploybeacon()
 
 		else if (istype(W, /obj/item/device/multitool/) && !src.deploying)
-			var/str = input(usr,"Set designation","Re-Designate Buoy","") as null|text
+			var/str = input(user,"Set designation","Re-Designate Buoy","") as null|text
 			if (!str || !length(str))
-				boutput(usr, "<span style=\"color:red\">No valid input detected.</span>")
+				boutput(user, "<span style=\"color:red\">No valid input detected.</span>")
 				return
 			if (length(str) > 30)
-				boutput(usr, "<span style=\"color:red\">Text too long.</span>")
+				boutput(user, "<span style=\"color:red\">Text too long.</span>")
 				return
 			src.beaconid = "[str]"
 			src.name = "warp buoy unit [beaconid]"
-			boutput(usr, "<span style=\"color:blue\">Designation updated to 'Buoy [str]'.</span>")
+			boutput(user, "<span style=\"color:blue\">Designation updated to 'Buoy [str]'.</span>")
 		else
 			..()
 
@@ -237,6 +237,14 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 		depbeac.name = "Buoy [src.beaconid]"
 		depbeac.beaconid = src.beaconid
 		qdel(src)
+
+/obj/beacon_deployer/syndicate
+	name = "syndicate warp buoy unit"
+
+	New()
+		src.beaconid = rand(1000,9999)
+		src.name = "syndicate warp buoy unit [beaconid]"
+		..()
 
 /obj/beaconkit
 	name = "warp buoy frame"
@@ -314,13 +322,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 			boutput(owner, "<span class='notice'>You successfully install the framework rods.</span>")
 			playsound(get_turf(beacon), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 
-			the_tool.amount -= 4
-			if (the_tool.amount < 1)
-				var/mob/source = owner
-				source.u_equip(the_tool)
-				qdel(the_tool)
-			else if(the_tool.inventory_counter)
-				the_tool.inventory_counter.update_number(the_tool.amount)
+			the_tool.change_stack_amount(-4) //the_tool should be rods
 
 			beacon.desc = "A partially completed frame for a deployable warp buoy. It's missing its wiring."
 			return

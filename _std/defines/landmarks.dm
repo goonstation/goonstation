@@ -17,6 +17,15 @@
 #define LANDMARK_GPS_WAYPOINT "GPS Waypoint"
 #define LANDMARK_ARTIFACT_SPAWN "artifact spawner"
 
+// centcom shuttle landmarks
+#define LANDMARK_SHUTTLE_COG1 "shuttle-cog1"
+#define LANDMARK_SHUTTLE_COG2 "shuttle-cog2"
+#define LANDMARK_SHUTTLE_SEALAB "shuttle-sealab"
+#define LANDMARK_SHUTTLE_MANTA "shuttle-manta"
+#define LANDMARK_SHUTTLE_DONUT2 "shuttle-donut2"
+#define LANDMARK_SHUTTLE_DONUT3 "shuttle-donut3"
+#define LANDMARK_SHUTTLE_DESTINY "shuttle-destiny"
+
 // nukies
 
 #define LANDMARK_SYNDICATE "Syndicate-Spawn"
@@ -28,6 +37,7 @@
 #define LANDMARK_SYNDICATE_BREACHING_CHARGES "Breaching-Charges"
 
 // misc and unused
+#define LANDMARK_CHARACTER_PREVIEW_SPAWN "character preview"
 
 /// Twitch Plays Shitty Bill respawn points
 #define LANDMARK_TWITCHY_BILL_RESPAWN "shitty_bill_respawn"
@@ -59,6 +69,7 @@
 
 // falling down holes
 
+#define LANDMARK_FALL_DEBUG "pit_debug" // locations to fall if you fucked up the warptarget on a hole_xy
 #define LANDMARK_FALL_ICE "icefall" // locations for people to fall if they enter the deep abyss on the ice moon
 #define LANDMARK_FALL_POLARIS "polarisfall" // locations for people to fall if they enter the deep in the trench
 #define LANDMARK_FALL_MARJ "marjfall" // locations for people to fall if they enter the deep in the trench

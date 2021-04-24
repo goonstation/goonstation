@@ -542,29 +542,7 @@ datum
 			instant = 1
 			mix_phrase = "The mixture explodes with a big bang."
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				var/atom/source = get_turf(holder.my_atom)
-				new/obj/decal/shockwave(source)
-				playsound(source, 'sound/weapons/flashbang.ogg', 25, 1)
-				if (holder?.my_atom)
-					for(var/atom/movable/M in view(2+ (created_volume > 30 ? 1:0), source))
-						if(M.anchored || M == source || M.throwing) continue
-						M.throw_at(get_edge_cheap(source, get_dir(source, M)),  20 + round(created_volume * 2), 1 + round(created_volume / 10))
-						LAGCHECK(LAG_MED)
-				else
-					var/limit_count = 0
-					var/turf/location = 0
-					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
-					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
-						location = pick(holder.covered_cache)
-						holder.covered_cache -= location
-						limit_count = 0
-						for(var/atom/movable/M in location)
-							if(M.anchored || M == source || M.throwing) continue
-							limit_count++
-							M.throw_at(get_edge_cheap(location, pick(cardinal)),  (20 + round(created_volume * 2)/holder.covered_cache.len), (1 + round(created_volume / 10))/holder.covered_cache.len)
-							if (limit_count > 5) break
-							LAGCHECK(LAG_MED)
-
+				sorium_reaction(holder, created_volume, id)
 				return
 
 		ldmatter
@@ -2694,43 +2672,6 @@ datum
 					holder.del_reagent("sugar")
 					holder.del_reagent("phosphorus")
 
-		propellant
-			name = "Aeresol Propellant"
-			id = "propellant"
-			result = "propellant"
-			required_reagents = list("chlorine" = 1, "sugar" = 1, "hydrogen" = 1, "platinum" = 1, "stabiliser" = 1)
-			result_amount = 3
-			mix_phrase = "The mixture becomes volatile and airborne."
-#ifdef CHEM_REACTION_PRIORITY
-			priority = 9
-#endif
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-				if(holder)
-					holder.del_reagent("chlorine")
-					holder.del_reagent("sugar")
-					holder.del_reagent("hydrogen")
-					holder.del_reagent("platinum")
-
-		unstable_propellant
-			name = "unstable propellant"
-			id = "unstable_propellant"
-			required_reagents = list("chlorine" = 1, "sugar" = 1, "hydrogen" = 1, "platinum" = 1)
-			inhibitors = list("stabiliser")
-			instant = 1
-			special_log_handling = 1
-			consume_all = 1
-			mix_phrase = "The mixture violently sprays everywhere!"
-#ifdef CHEM_REACTION_PRIORITY
-			priority = 9
-#endif
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-				if(holder)
-					holder.del_reagent("chlorine")
-					holder.del_reagent("sugar")
-					holder.del_reagent("hydrogen")
-					holder.del_reagent("platinum")
-					holder.smoke_start(created_volume, classic = 1) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
-
 		blackpowder // oh no
 			name = "Black Powder"
 			id = "blackpowder"
@@ -3626,12 +3567,8 @@ datum
 			mix_phrase = "The substance bubbles and gives off an almost lupine howl."
 			var/static/list/full_moon_days_2053 = list("Jan 04", "Feb 03", "Mar 04", "Apr 03", "May 02", "Jun 01", "Jul 01", "Jul 30", "Aug 29", "Sep 27", "Oct 27", "Nov 25", "Dec 25")
 
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-
-				if (!(time2text(world.realtime, "MMM DD") in full_moon_days_2053))
-					holder.my_atom.visible_message("<span class='alert'>The solution bubbles even more rapidly and dissipates into nothing!</span>")
-					holder.remove_reagent("werewolf_serum",created_volume + 1)
-				return
+			does_react(var/datum/reagents/holder)
+				return time2text(world.realtime, "MMM DD") in full_moon_days_2053 //just doesn't react unless it's a full moon
 
 		 vampire_serum
 		 	name = "Vampire Serum Omega"

@@ -8,7 +8,7 @@
 	icon = 'icons/mob/hud_human_new.dmi'
 	icon_state = "reinforce"
 	name = "grab"
-	w_class = 5
+	w_class = W_CLASS_HUGE
 	anchored = 1
 	var/break_prob = 45
 	var/assailant_stam_drain = 30
@@ -20,6 +20,9 @@
 
 	New(atom/loc, mob/assailant = null, mob/affecting = null)
 		..()
+		if(!affecting || affecting.disposed)
+			qdel(src)
+			return
 
 		var/icon/hud_style = hud_style_selection[get_hud_style(src.assailant)]
 		if (isicon(hud_style))
@@ -426,6 +429,7 @@
 	id = "strangle_target"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "neck_over"
+	color_active = "#d37610"
 	var/mob/living/target
 	var/obj/item/grab/G
 
@@ -471,6 +475,7 @@
 	id = "pin_target"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "pin"
+	color_active = "#d37610"
 	var/mob/living/target
 	var/obj/item/grab/G
 	var/turf/T
@@ -736,7 +741,7 @@
 			var/obj/item/I = src.loc
 			I.c_flags |= HAS_GRAB_EQUIP
 			I.tooltip_rebuild = 1
-		setProperty("I_disorient_resist", 15)
+		setProperty("I_disorient_resist", 20)
 
 	disposing()
 		for(var/datum/objectProperty/equipment/P in src.properties)
@@ -784,16 +789,20 @@
 		if(istype(P))
 			P.removeFromMob(src, src.assailant, propVal)
 
-	proc/can_block(var/hit_type = null)
-		.= DEFAULT_BLOCK_PROTECTION_BONUS
+	proc/can_block(var/hit_type = null, real_hit = 1)
+		.= UNARMED_BLOCK_PROTECTION_BONUS
 		if (isitem(src.loc) && hit_type)
-			.= 0
 			var/obj/item/I = src.loc
 
 			var/prop = DAMAGE_TYPE_TO_STRING(hit_type)
-			if(prop == "burn" && I?.reagents)
+			if(real_hit && prop == "burn" && I?.reagents)
 				I.reagents.temperature_reagents(2000,10)
 			.= src.getProperty("I_block_[prop]")
+		if(real_hit)
+			SEND_SIGNAL(src, COMSIG_BLOCK_BLOCKED)
+			block_spark(src.assailant)
+			fuckup_attack_particle()
+
 
 	proc/play_block_sound(var/hit_type = DAMAGE_BLUNT)
 		switch(hit_type)

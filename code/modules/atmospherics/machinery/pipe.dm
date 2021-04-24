@@ -85,8 +85,9 @@ obj/machinery/atmospherics/pipe
 
 		var/fatigue_pressure = 150*ONE_ATMOSPHERE
 
-		var/can_rupture = 0 //currently only need red pipes (insulated) to rupture
+		var/can_rupture = FALSE //currently only need red pipes (insulated) to rupture
 		var/ruptured = 0 //oh no it broke and is leaking everywhere
+		var/destroyed = FALSE // it needs to be replaced!
 		var/initial_icon_state = null //what do i change back to when repaired???
 
 		level = 1
@@ -312,6 +313,10 @@ obj/machinery/atmospherics/pipe
 			var/datum/gas_mixture/hi_side = gas
 			var/datum/gas_mixture/lo_side = environment
 
+			if(destroyed)
+				parent.mingle_with_turf(loc, volume) // maintain network for simplicity but replicate behavior of it being disconnected
+				return
+
 			// vacuum
 			if( MIXTURE_PRESSURE(lo_side) > MIXTURE_PRESSURE(hi_side) )
 				hi_side = environment
@@ -337,22 +342,34 @@ obj/machinery/atmospherics/pipe
 				if(prob(rupture_prob))
 					rupture(pressure_difference)
 
-			return
-
-		proc/rupture(pressure)
-			if (pressure > 4*fatigue_pressure && prob(30)) ruptured = 3
-			else if (pressure > 2*fatigue_pressure && prob(60)) ruptured = 2
-			else ruptured = 1
+		proc/rupture(pressure, destroy=FALSE)
+			var/new_rupture
+			if (src.destroyed || destroy)
+				ruptured = 4
+				src.destroyed = TRUE
+				src.desc = "The remnants of a section of pipe that needs to be replaced.  Perhaps rods would be sufficient?"
+				parent?.mingle_with_turf(loc, volume)
+				node1?.disconnect(src)
+				node2?.disconnect(src)
+				update_icon()
+				return
+			else if ((pressure > (4*fatigue_pressure)) && prob(30)) new_rupture = 3
+			else if ((pressure > (2*fatigue_pressure)) && prob(60)) new_rupture = 2
+			else new_rupture = 1
+			ruptured = max(ruptured, new_rupture)
 			icon_state = "exposed"
-
+			src.desc = "A one meter section of ruptured pipe still looks salvageable through some careful welding."
 
 		ex_act(severity) // cogwerks - adding an override so pda bombs aren't quite so ruinous in the engine
 			switch(severity)
 				if(1.0)
-					qdel(src)
-				if(2.0)
-					if(prob(15))
+					if(prob(5))
 						qdel(src)
+					else
+						rupture(destroy=TRUE)
+				if(2.0)
+					if(prob(10))
+						rupture(destroy=TRUE)
 					else
 						rupture()
 				if(3.0)
@@ -366,6 +383,9 @@ obj/machinery/atmospherics/pipe
 
 				if(!ruptured)
 					boutput(user, "<span class='alert'>That isn't damaged!</span>")
+					return
+				else if(destroyed)
+					boutput(user, "<span class='alert'>This needs more than just a welder. We need to make a new pipe!</span>")
 					return
 
 				if(!W:try_weld(user, 1, noisy=2))
@@ -381,9 +401,34 @@ obj/machinery/atmospherics/pipe
 				if(!ruptured)
 					boutput(user, "You have fully repaired the [src.name].")
 					icon_state = initial_icon_state
+					desc = initial(desc)
 				else boutput(user, "You have partially repaired the [src.name].")
 				return
 
+			else if(destroyed && istype(W, /obj/item/rods))
+				var/duration = 15 SECONDS
+				if (user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer"))
+					duration = round(duration / 2)
+				var/obj/item/rods/S = W
+				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, duration, /obj/machinery/atmospherics/pipe/simple/proc/reconstruct_pipe,\
+				list(user, S), W.icon, W.icon_state, "[user] finishes working with \the [src].")
+				actions.start(action_bar, user)
+
+		proc/reconstruct_pipe(proc_args)
+			var/mob/M = proc_args[1]
+			var/obj/item/rods/R = proc_args[2]
+			if(istype(R) && istype(M))
+				R.change_stack_amount(-1)
+				src.setMaterial(R.material)
+				src.destroyed = FALSE
+				src.icon_state = "disco"
+				src.desc = "A one meter section of regular pipe has been placed but needs to be welded into place."
+				// create valid edges back to us and rebuild from here out to merge pipeline(s)
+				node1.dir = node1.initialize_directions
+				node1.initialize()
+				node2.dir = node2.initialize_directions
+				node2.initialize()
+				src.parent.build_pipeline(src)
 
 		disposing()
 			node1?.disconnect(src)
@@ -392,10 +437,14 @@ obj/machinery/atmospherics/pipe
 			..()
 
 		pipeline_expansion()
-			return list(node1, node2)
+			. = list(node1, node2)
+			if(destroyed)
+				. = list(null, null)
 
 		update_icon()
-			if(node1&&node2)
+			if(destroyed)
+				icon_state = "destroyed"
+			else if(node1 && node2)
 				icon_state = "intact"//[invisibility ? "-f" : "" ]"
 				alpha = invisibility ? 128 : 255
 
@@ -411,13 +460,14 @@ obj/machinery/atmospherics/pipe
 				alpha = invisibility ? 128 : 255
 
 				if(node1)
-					dir = get_dir(src,node1)
+					dir = get_dir(src, node1)
 
 				else if(node2)
-					dir = get_dir(src,node2)
+					dir = get_dir(src, node2)
 
-				else
-					qdel(src)
+				// Deletion should be added as part of constructable atmos
+				//else
+				//	qdel(src)
 
 		initialize()
 			var/connect_directions
@@ -579,7 +629,7 @@ obj/machinery/atmospherics/pipe
 			dir = NORTHWEST
 
 		update_icon()
-			if(node1&&node2)
+			if(node1 && node2)
 				icon_state = "intact"
 
 				var/node1_direction = get_dir(src, node1)
@@ -1014,7 +1064,7 @@ obj/machinery/atmospherics/pipe
 			..()
 
 		update_icon()
-			if(node1&&node2&&node3)
+			if(node1 && node2&& node3)
 				icon_state = "manifold"//[invisibility ? "-f" : ""]"
 				alpha = invisibility ? 128 : 255
 

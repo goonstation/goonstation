@@ -116,7 +116,7 @@
 					if ((src.metal_ammo + loadAmount) > src.max_ammo)
 						loadAmount = loadAmount + src.max_ammo - (src.metal_ammo + loadAmount)
 					src.metal_ammo += loadAmount
-					S.consume_sheets(loadAmount)
+					S.change_stack_amount(-loadAmount)
 					playsound(get_turf(src), "sound/machines/click.ogg", 25, 1)
 					src.inventory_counter.update_number(src.metal_ammo)
 					boutput(user, "You load the metal sheet into the lamp manufacturer.")
@@ -161,30 +161,39 @@
 			if("Remove Five Units") B.reagents.remove_reagent(the_reagent, 5)
 			if("Create Pill")
 				var/obj/item/reagent_containers/pill/P = new/obj/item/reagent_containers/pill(user.loc)
-				var/name = copytext(html_encode(input(usr,"Name:","Name your pill!",B.reagents.get_master_reagent_name())), 1, 32)
-				if(!name || name == " ") name = B.reagents.get_master_reagent_name()
+				var/default = B.reagents.get_master_reagent_name()
+				var/name = copytext(html_encode(input(user,"Name:","Name your pill!",default)), 1, 32)
+				if(!name || name == " ") name = default
+				if(name && name != default)
+					phrase_log.log_phrase("pill", name, no_duplicates=TRUE)
 				P.name = "[name] pill"
 				B.reagents.trans_to(P,B.reagents.total_volume)
 			if("Create Pill Bottle")
 				// copied from chem_master because fuck fixing everything at once jeez
-				var/pillname = copytext( html_encode( input( usr, "Name:", "Name the pill!", B.reagents.get_master_reagent_name() ) ), 1, 32)
+				var/default = B.reagents.get_master_reagent_name()
+				var/pillname = copytext( html_encode( input( user, "Name:", "Name the pill!", default ) ), 1, 32)
 				if(!pillname || pillname == " ")
-					pillname = B.reagents.get_master_reagent_name()
+					pillname = default
+				if(pillname && pillname != default)
+					phrase_log.log_phrase("pill", pillname, no_duplicates=TRUE)
 
-				var/pillvol = input( usr, "Volume:", "Volume of chemical per pill!", "5" ) as num
+				var/pillvol = input( user, "Volume:", "Volume of chemical per pill!", "5" ) as num
 				if( !pillvol || !isnum(pillvol) || pillvol < 5 )
 					pillvol = 5
 
 				var/pillcount = round( B.reagents.total_volume / pillvol ) // round with a single parameter is actually floor because byond
 				if(!pillcount)
-					boutput(usr, "[src] makes a weird grinding noise. That can't be good.")
+					boutput(user, "[src] makes a weird grinding noise. That can't be good.")
 				else
 					var/obj/item/chem_pill_bottle/pillbottle = new /obj/item/chem_pill_bottle(user.loc)
 					pillbottle.create_from_reagents(B.reagents, pillname, pillvol, pillcount)
 			if("Create Bottle")
 				var/obj/item/reagent_containers/glass/bottle/P = new/obj/item/reagent_containers/glass/bottle(user.loc)
-				var/name = copytext(html_encode(input(usr,"Name:","Name your bottle!",B.reagents.get_master_reagent_name())), 1, 32)
-				if(!name || name == " ") name = B.reagents.get_master_reagent_name()
+				var/default = B.reagents.get_master_reagent_name()
+				var/name = copytext(html_encode(input(user,"Name:","Name your bottle!",default)), 1, 32)
+				if(!name || name == " ") name = default
+				if(name && name != default)
+					phrase_log.log_phrase("bottle", name, no_duplicates=TRUE)
 				P.name = "[name] bottle"
 				B.reagents.trans_to(P,30)
 
@@ -268,7 +277,7 @@
 	icon_state = "oilcan"
 	amount_per_transfer_from_this = 15
 	splash_all_contents = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	rc_flags = RC_FULLNESS
 	initial_volume = 120
 
@@ -336,7 +345,7 @@ ported and crapped up by: haine
 
 	get_desc(dist)
 		if (dist <= 0)
-			if (src.reagents && src.reagents.reagent_list.len)
+			if (src.reagents && length(src.reagents.reagent_list))
 				. += "<br>It contains:"
 				for (var/datum/reagent/R in src.reagents.reagent_list)
 					. += "[R.volume] units of [R.name]"

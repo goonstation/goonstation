@@ -158,6 +158,7 @@
 /mob/living/carbon/human/proc/ai_process()
 	if(!ai_active) return
 	if(world.time < ai_lastaction + ai_actiondelay) return
+	usr = src
 
 	var/action_delay = 0
 	delStatus("resting")
@@ -220,6 +221,9 @@
 		ai_threatened = world.timeofday
 */
 
+/mob/living/carbon/human/proc/ai_is_valid_target(mob/M)
+	return TRUE
+
 /mob/living/carbon/human/proc/ai_findtarget_new()
 	//Priority-based target finding
 	var/mob/T
@@ -228,11 +232,12 @@
 		//Any reason we do not want to take this target into account AT ALL?
 		if((M == src && !ai_suicidal) || isdead(M) || (M.is_npc && !ai_attacknpc)) continue //Let's not fight ourselves (unless we're real crazy) or a dead person... or NPCs, unless we're allowed to.
 
+		if(!src.ai_is_valid_target(M))
+			continue
+
 		var/rating = 100 //Base rating
 
-
 		//Why do we WANT to go after this jerk?
-		//if(!T) rating += 10 //We don't have a target, this one will do
 		if(M.client) rating += 20 //We'd rather go after actual non-braindead players
 		if(src.lastattacker == M && M != src) rating += 10 //Hey, you're a jerk! (but I'm not a jerk)
 
@@ -264,7 +269,6 @@
 		ai_state = AI_PASSIVE
 
 /mob/living/carbon/human/proc/ai_action()
-	usr = src
 
 	src.ai_do_hand_stuff()
 
@@ -302,7 +306,7 @@
 				src.ai_frustration = 0
 				return
 
-			if(!ai_target || ai_target == src && !ai_suicidal || ai_target.z != src.z)
+			if(!ai_target || ai_target == src && !ai_suicidal || ai_target.z != src.z || !src.ai_is_valid_target(ai_target))
 				ai_frustration = 0
 				ai_target = null
 				ai_state = AI_PASSIVE
