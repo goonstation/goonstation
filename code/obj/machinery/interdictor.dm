@@ -239,7 +239,7 @@
 	Using the power of yottahertz-range electromagnetic counter-interference, the Spatial Interdictor provides robust protection against a vast array of stellar phenomena, including:
 	<br>
 	<br>
-	Planar space-time continuum disruptions
+	Space-time continuum disruptions
 	<br>
 	Stellar radiation events, both minor and major
 	<br>

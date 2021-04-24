@@ -102,6 +102,17 @@
 	density = 1
 	failchance = 0
 
+	Bumped(mob/M as mob|obj)
+		//spatial interdictor: when something would enter a wormhole, it doesn't
+		//consumes 400 units of charge per wormhole interdicted
+		for (var/obj/machinery/interdictor/IX in orange(INTERDICT_RANGE, src))
+			if (IX.expend_interdict(400))
+				icon = 'icons/effects/effects.dmi'
+				icon_state = "sparks_attack"
+				density = 0
+				return
+		..()
+
 /obj/portal/afterlife
 	desc = "Enter this to return to your ghostly form"
 

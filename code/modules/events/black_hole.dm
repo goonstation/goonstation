@@ -30,6 +30,13 @@
 	New(var/loc,var/lifespan = 2.5 MINUTES)
 		..()
 		feedings_required = rand(15,40)
+		//spatial interdictor: can't stop the black hole, but it can mitigate it
+		//interdiction consumes 8,000 units - requiring a large cell - and the interdictor makes a hell of a ruckus
+		for (var/obj/machinery/interdictor/IX in orange(INTERDICT_RANGE, src))
+			if (IX.expend_interdict(8000))
+				playsound(get_turf(IX),'sound/machines/alarm_a.ogg',50,0,5,1.5)
+				IX.visible_message("<span class='alert'><b>[IX] emits a gravitational anomaly warning!</b></span>")
+				feedings_required = rand(12,20)
 
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/bhole_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(src))
