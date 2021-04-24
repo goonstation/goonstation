@@ -30,7 +30,7 @@
 	var/sound/sound_interdict_run = "sound/machines/interdictor_operate.ogg"
 	var/sound/sound_togglebolts = "sound/machines/click.ogg"
 
-	New(var/obj/item/cell/altcap)
+	New(spawnlocation,var/obj/item/cell/altcap)
 		if(altcap)
 			altcap.set_loc(src)
 			src.intcap = altcap
@@ -81,7 +81,7 @@
 			boutput(user, "<span class='notice'>The interdictor's internal capacitor is currently at [src.intcap.charge] of [src.intcap.maxcharge] units.</span>")
 			return
 		else if(istype(W, /obj/item/card/id))
-			if(!src.allowed(W))
+			if(!src.check_access(W))
 				boutput(user, "<span class='alert'>Engineering clearance is required to operate the interdictor's locks.</span>")
 				return
 			else if(!ON_COOLDOWN(src, "maglocks", src.maglock_cooldown))
