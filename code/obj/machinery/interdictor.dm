@@ -360,7 +360,7 @@
 	var/obj/intcap = null
 
 	attack_hand(mob/user as mob)
-		if(state == 4) //permit removal of cell before you
+		if(state == 4) //permit removal of cell before you install wires
 			src.state = 3
 			src.icon_state = "interframe-3"
 			boutput(user, "<span class='notice'>You remove \the [intcap] from the interdictor's cell compartment.</span>")
