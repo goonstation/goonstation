@@ -13,6 +13,9 @@ import { formatFrequency } from "../../format";
 import { Window } from "../../layouts";
 import { RadioData, RadioWires } from "./type";
 
+const MIN_FREQ = 1441;
+const MAX_FREQ = 1489;
+
 export const Radio = (_props, context) => {
   const { data, act } = useBackend<RadioData>(context);
 
@@ -50,8 +53,9 @@ export const Radio = (_props, context) => {
                         <Knob
                           animated
                           value={data.frequency}
-                          minValue={1441}
-                          maxValue={1489}
+                          minValue={MIN_FREQ}
+                          maxValue={MAX_FREQ}
+                          stepPixelSize={2}
                           format={formatFrequency}
                           onDrag={(_e: any, value: number) =>
                             setFrequency(value, false)}
