@@ -29,7 +29,7 @@
 	desc = "For monkey business only."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "barrel_signaller"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/obj/storage/monkey_barrel/my_barrel = null
 	is_syndicate = 1
 

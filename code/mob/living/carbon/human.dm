@@ -2159,7 +2159,7 @@
 /mob/living/carbon/human/proc/can_equip(obj/item/I, slot)
 	switch (slot)
 		if (slot_l_store, slot_r_store)
-			if (I.w_class <= 2 && src.w_uniform)
+			if (I.w_class <= W_CLASS_SMALL && src.w_uniform)
 				return 1
 		if (slot_l_hand, slot_r_hand)
 			return 1
@@ -2226,12 +2226,12 @@
 		if (slot_in_backpack) // this slot is stupid
 			if (src.back && istype(src.back, /obj/item/storage))
 				var/obj/item/storage/S = src.back
-				if (S.contents.len < 7 && I.w_class <= 3)
+				if (S.contents.len < 7 && I.w_class <= W_CLASS_NORMAL)
 					return 1
 		if (slot_in_belt) // this slot is also stupid
 			if (src.belt && istype(src.belt, /obj/item/storage))
 				var/obj/item/storage/S = src.belt
-				if (S.contents.len < 7 && I.w_class <= 3)
+				if (S.contents.len < 7 && I.w_class <= W_CLASS_NORMAL)
 					return 1
 	return 0
 
@@ -3072,18 +3072,18 @@
 		if (istype(src.chest_item, /obj/item/))
 			// Determine ass and bleed damage based on item size
 			var/poopingDamage = 0
-			if (src.chest_item.w_class == 1 )
+			if (src.chest_item.w_class == W_CLASS_TINY )
 				poopingDamage = 5
 				src.show_text("<B>[src.chest_item]</B> plops out of your rear and onto the floor.")
-			else if (src.chest_item.w_class == 2 )
+			else if (src.chest_item.w_class == W_CLASS_SMALL )
 				poopingDamage = 10
 				src.show_text("You poop out <B>[src.chest_item]</B>! Your butt aches a bit.")
-			else if (src.chest_item.w_class == 3 )
+			else if (src.chest_item.w_class == W_CLASS_NORMAL )
 				poopingDamage = 20
 				src.show_text("<span class='alert'><B>[src.chest_item]</B> was shat out, that's got to hurt!</span>")
 				src.changeStatus("stunned", 2 SECONDS)
 				take_bleeding_damage(src, src, 5)
-			else if (src.chest_item.w_class == 4 || src.chest_item.w_class == 5)
+			else if (src.chest_item.w_class == W_CLASS_BULKY || src.chest_item.w_class == W_CLASS_HUGE)
 				poopingDamage = 50
 				src.show_text("<span class='alert'><B>[src.chest_item] explodes out of your ass, jesus christ!</B></span>")
 				src.changeStatus("stunned", 50)

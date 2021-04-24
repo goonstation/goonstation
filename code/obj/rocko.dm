@@ -4,7 +4,7 @@ obj/item/rocko
 	name = "Rocko"
 	icon = 'icons/obj/materials.dmi'
 	icon_state = "rock1"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	force = 10
 	throwforce = 15
 	throw_range = 3

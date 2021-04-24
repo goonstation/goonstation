@@ -414,7 +414,7 @@
 	desc = "A suit designed to absorb explosive force; very bulky and unwieldy to maneuver in."
 	icon_state = "eod"
 	item_state = "eod"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	setupProperties()
 		..()
 		setProperty("meleeprot", 9)

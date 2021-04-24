@@ -441,9 +441,6 @@ var/list/admin_verbs = list(
 #elif defined(ENABLE_SPAWN_DEBUG_2)
 		/client/proc/spawn_dbg,
 #endif
-#ifdef INCLUDE_BUGGY_LUA_SHIT
-		/client/proc/RunLuaString,
-#endif
 		),
 
 	8 = list(
