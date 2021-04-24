@@ -142,7 +142,7 @@ const SavesAndProfile = (_props: any, context: any) => {
                     <Button
                       onClick={() => act('save', { index: activeProfileIndex + 1 })}
                       icon={data.profileModified ? 'exclamation-triangle' : undefined}
-                      color={data.profileModified ? 'danger' : 'primary'}
+                      color={data.profileModified ? 'danger' : undefined}
                       tooltip={
                         data.profileModified
                           ? 'You may have unsaved changes! Any unsaved changes will take effect for this round only.'
