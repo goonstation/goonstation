@@ -1,4 +1,9 @@
 
+(t)sat apr 24 21
+(u)Jan.antilles
+(p)4445
+(e)🎨|sprites
+(+)Fixed the Pride Locker to not appear locked.
 (t)fri apr 23 21
 (u)Lythine
 (p)4426
