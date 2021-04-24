@@ -162,7 +162,7 @@
 	if(src.hasInterdicted)
 		src.hasInterdicted = 0
 		if(src.canInterdict)
-			playsound(src.loc, src.sound_interdict_run, 50, 0)
+			playsound(src.loc, src.sound_interdict_run, 30, 0)
 
 	if(doupdateicon)
 		src.updateicon()
@@ -195,7 +195,7 @@
 		src.deployed_fields += YEE
 
 	src.canInterdict = 1
-	playsound(src.loc, src.sound_interdict_on, 50, 0)
+	playsound(src.loc, src.sound_interdict_on, 40, 0)
 	src.updateicon()
 
 
@@ -206,7 +206,7 @@
 		qdel(YEE)
 
 	src.canInterdict = 0
-	playsound(src.loc, src.sound_interdict_off, 50, 1)
+	playsound(src.loc, src.sound_interdict_off, 40, 1)
 	src.updateicon()
 
 
