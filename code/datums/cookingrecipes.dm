@@ -507,7 +507,7 @@
 
 /datum/cookingrecipe/sandwich_bm
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
-	item2 = /obj/item/reagent_containers/food/snacks/breadloaf/honeywheat
+	item2 = /obj/item/reagent_containers/food/snacks/breadslice/honeywheat
 	item3 = /obj/item/reagent_containers/food/snacks/plant/carrot
 	item4 = /obj/item/reagent_containers/food/snacks/plant/cucumber
 	cookbonus = 12
