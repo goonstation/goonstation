@@ -252,7 +252,7 @@
 	In just a few short steps, worrying about the myriad hazards of space will be a thing of the past!*
 	<br>
 	<br>
-	<i>*Please be aware that no liability is assumed for failure to interdict any events absent from or present within the aforementioned list.</i>
+	<i>*Please be aware that no liability is assumed for failure to interdict any events absent from or present within the aforementioned list. Physical hazards such as meteor storms will not be interdicted.</i>
 	<br>
 	<br>
 	<hr>

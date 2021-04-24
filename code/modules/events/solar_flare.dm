@@ -16,7 +16,7 @@
 					if(IX && IX.canInterdict) //just in case
 						playsound(get_turf(IX),'sound/machines/firealarm.ogg',50,0,5,0.6)
 						var/adjusted_est = max(signal_loss_current + rand(-5,5),0)
-						IX.visible_message("<span class='alert'>[IX] detects a radio-frequency disturbance. Estimated strength post-interdiction: [adjusted_est]%.</span>")
+						IX.visible_message("<span class='alert'><b>[IX]</b> detects a radio-frequency disturbance. Estimated strength post-interdiction: [adjusted_est]%.</span>")
 
 		if (random_events.announce_events)
 			command_alert("A solar flare has been detected near the [station_or_ship()]. We estimate a signal interference rate of [headline_estimate]% lasting anywhere between three to five minutes.", "Solar Flare")
