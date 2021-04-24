@@ -716,7 +716,7 @@
 /obj/machinery/power/vent_capture
 	name = "vent capture unit"
 	desc = "A piece of machinery that converts vent output into electricity."
-	icon = 'icons/obj/32x48.dmi'
+	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "hydrovent_1"
 	density = 1
 	anchored = 1
@@ -825,7 +825,7 @@
 /obj/machinery/power/stomper
 	name = "stomper unit"
 	desc = "This machine is used to disturb the flow of underground magma and redirect it."
-	icon = 'icons/obj/32x48.dmi'
+	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "stomper0"
 	density = 1
 	anchored = 0

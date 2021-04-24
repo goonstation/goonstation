@@ -31,7 +31,7 @@
 
 		var/obj/overlay/B = new /obj/overlay(target.loc)
 		B.icon_state = "blspell"
-		B.icon = 'icons/obj/wizard.dmi'
+		B.icon = 'icons/obj/items/wizard.dmi'
 		B.name = "spell"
 		B.anchored = 1
 		B.set_density(0)

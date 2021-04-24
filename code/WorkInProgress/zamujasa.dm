@@ -247,7 +247,7 @@
 
 /obj/afterlife_donations
 	name = "afterlife thing"
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "voting_box"
 	density = 1
 	event_handler_flags = NO_MOUSEDROP_QOL
@@ -555,7 +555,7 @@
 	mouse_opacity = 0
 	density = 0
 	anchored = 1
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "num0"
 	layer = TURF_LAYER + 0.1 // it should basically be part of a turf
 	plane = PLANE_FLOOR // hence, they should be on the same plane!

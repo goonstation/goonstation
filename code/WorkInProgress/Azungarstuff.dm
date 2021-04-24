@@ -520,7 +520,7 @@
 /obj/decal/fakeobjects/biggerrock
 	name = "big rock"
 	desc = "Seriously big rocks."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "bigrock"
 	anchored = 1
 	density = 1
@@ -562,7 +562,7 @@
 /obj/decal/fakeobjects/cultiststatue
 	name = "statue of a hooded figure"
 	desc = "TEMP"
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "cultiststatue"
 	anchored = 1
 	density = 1
@@ -571,7 +571,7 @@
 /obj/decal/fakeobjects/crossinverted
 	name = "inverted cross"
 	desc = "TEMP"
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "cross"
 	anchored = 1
 	density = 1
@@ -1083,7 +1083,7 @@
 /obj/decal/fakeobjects/nuclearcomputertest
 		name = "TEMP"
 		desc = "TEMP"
-		icon = 'icons/obj/32x96.dmi'
+		icon = 'icons/obj/large/32x96.dmi'
 		icon_state = "nuclearcomputer"
 		anchored = 2
 		density = 1

@@ -830,7 +830,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 /obj/decal/fakeobjects/vacuumtape
 	name = "vacuum column tape drive"
 	desc = "A large 9 track magnetic tape storage unit."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "gannets_machine2"
 	bound_width = 32
 	bound_height = 64
@@ -840,7 +840,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 /obj/decal/fakeobjects/operatorconsole
 	name = "operator's console"
 	desc = "The computer operating console, covered in fancy toggle swtiches and register value lamps."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "gannets_machine1"
 	bound_width = 32
 	bound_height = 64

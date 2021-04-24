@@ -283,7 +283,7 @@ Contents:
 	anchored = 1
 	opacity = 0
 	layer = 5
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "lamp1"
 
 /obj/decal/fakeobjects/bridge_rail
@@ -299,7 +299,7 @@ Contents:
 /obj/decal/fakeobjects/furnace
 	name = "tatara"
 	desc = "A large, traditional, swordsmithing furnace. It is lit and the flame is roaring."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "furnace"
 	density = 1
 	anchored = 2

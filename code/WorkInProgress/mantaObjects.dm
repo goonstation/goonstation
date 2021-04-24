@@ -546,7 +546,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	iconclosed = "junctionbox2"
 
 /obj/machinery/communicationstower
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	name = "Communications Tower"
 	icon_state = "commstower"
 	density = 0
@@ -588,7 +588,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			random_events.force_event("Communications Malfunction")
 
 /obj/machinery/magneticbeacon
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	name = "Magnetic Tether"
 	icon_state = "magbeacon"
 	desc = "A rather delicate magnetic tether array. It allows people to safely explore the ocean around NSS Manta while carrying a magnetic attachment point."

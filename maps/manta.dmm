@@ -43196,6 +43196,11 @@
 /area/station/hangar/engine{
 	name = "Submarine Bay (Engineering)"
 	})
+"tgd" = (
+/turf/unsimulated/wall/setpieces/fakewindow{
+	dir = 6
+	},
+/area/listeningpost/syndicateassaultvessel)
 "tij" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
@@ -88099,8 +88104,8 @@ aaa
 akE
 akH
 akH
-akF
-akF
+tgd
+tgd
 akH
 akH
 aln
@@ -88700,7 +88705,7 @@ aaa
 aaa
 akW
 akZ
-akF
+tgd
 akN
 alc
 alD
@@ -89002,7 +89007,7 @@ aaa
 akU
 akX
 atw
-akF
+tgd
 akP
 alD
 alD
@@ -89304,7 +89309,7 @@ aaa
 aaa
 akY
 ala
-akF
+tgd
 akN
 ald
 alD
@@ -89911,8 +89916,8 @@ aaa
 akG
 akH
 akH
-akF
-akF
+tgd
+tgd
 akH
 akH
 als

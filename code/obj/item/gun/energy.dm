@@ -1194,7 +1194,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "alastor100"
 	item_state = "alastor"
-	icon = 'icons/obj/38x38.dmi'
+	icon = 'icons/obj/large/38x38.dmi'
 	uses_multiple_icon_states = 1
 	force = 7.0
 	can_dual_wield = 0

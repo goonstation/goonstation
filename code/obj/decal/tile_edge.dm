@@ -168,6 +168,6 @@
 	desc = "Follow the anchor to reach The Rising Tide bar!"
 	bound_height = 64
 	bound_width = 32
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "risingtide"
 
