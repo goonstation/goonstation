@@ -1,5 +1,7 @@
 
 (t)sat apr 24 21
+(u)pali
+(+)Verbs for (un)muting (L)OOC have been removed because people kept clicking them accidentally. Use the chat filters in the chat cogwheel menu instead.
 (u)Tarmunora
 (e)⚖|balance
 (+)Armored fire/bio/paramedic suits no longer are more bulletproof than the armor used to make them.
