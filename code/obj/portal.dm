@@ -109,6 +109,7 @@
 			if (IX.expend_interdict(400))
 				icon = 'icons/effects/effects.dmi'
 				icon_state = "sparks_attack"
+				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
 				density = 0
 				return
 		..()

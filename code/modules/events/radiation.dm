@@ -63,10 +63,10 @@
 		if (!isturf(T))
 			return
 		//spatial interdictor: nullify radiation pulses
-		//consumes 50 units of charge per tile protected
+		//consumes 100 units of charge per tile protected
 		for (var/obj/machinery/interdictor/IX in orange(INTERDICT_RANGE, T))
-			if (IX.expend_interdict(50))
-				animate_flash_color_fill_inherit(T,"#EEDD00",1,5)
+			if (IX.expend_interdict(100,1))
+				animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
 				return
 		animate_flash_color_fill_inherit(T,"#00FF00",1,5)
 		for (var/mob/living/carbon/M in T.contents)
@@ -115,10 +115,10 @@
 		if (!isturf(T))
 			return
 		//spatial interdictor: nullify radiation pulses
-		//consumes 50 units of charge per tile protected
+		//consumes 150 units of charge per tile protected
 		for (var/obj/machinery/interdictor/IX in orange(INTERDICT_RANGE, T))
-			if (IX.expend_interdict(50))
-				animate_flash_color_fill_inherit(T,"#EEDD00",1,5)
+			if (IX.expend_interdict(150,1))
+				animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
 				return
 		animate_flash_color_fill_inherit(T,"#0084ff",1,5)
 		for (var/atom/A in T.contents)

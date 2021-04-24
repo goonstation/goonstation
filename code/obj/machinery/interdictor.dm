@@ -172,7 +172,8 @@
 //call this from an event to determine if sufficient power is remaining to complete an interdiction,
 //passing an amount in cell charge that is required to interdict the event.
 //returns 1 if interdiction was successful, 0 if power was insufficient
-/obj/machinery/interdictor/proc/expend_interdict(var/stopcost)
+//second arg skips immediate visual update (use if potential for very high amounts of individual calls)
+/obj/machinery/interdictor/proc/expend_interdict(var/stopcost,var/skipanim)
 	if (status & BROKEN || !src.canInterdict)
 		return 0
 	if (!intcap || intcap.charge < stopcost)
@@ -181,7 +182,7 @@
 	else
 		intcap.use(stopcost)
 		src.hasInterdicted = 1
-		src.updatecharge()
+		if(!skipanim) src.updatecharge()
 		return 1
 
 
