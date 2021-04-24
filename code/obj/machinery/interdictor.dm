@@ -359,6 +359,19 @@
 	var/state = 1
 	var/obj/intcap = null
 
+	attack_hand(mob/user as mob)
+		if(state == 4) //permit removal of cell before you
+			src.state = 3
+			src.icon_state = "interframe-3"
+			boutput(user, "<span class='notice'>You remove \the [intcap] from the interdictor's cell compartment.</span>")
+			playsound(get_turf(src), "sound/items/Deconstruct.ogg", 40, 1)
+
+			user.put_in_hand_or_drop(src.intcap)
+			src.intcap = null
+			src.desc = "A semi-complete frame for a spatial interdictor. Its power cell compartment is empty."
+			return
+		..()
+
 	attackby(var/obj/item/I as obj, var/mob/user as mob)
 		switch(state)
 			if(1)
