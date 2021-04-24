@@ -2577,7 +2577,7 @@ Player Stats
 		var/points = 0
 		while (points < max_points)
 			var/selected = pick(possible_rewards)
-			if(points + possible_rewards[selected] > max_points) continue
+			if(points + possible_rewards[selected] > max_points + 5) continue
 			var/obj/item/I = new selected(src)
 			var/val = possible_rewards[selected]
 
