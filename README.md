@@ -39,16 +39,7 @@ To contribute sprites to the game, please follow our spriting guidelines! It det
 [<img src=".github/assets/maps.png" alt="Mapping Guidelines" width="150" align="left">](https://hackmd.io/@ZeWaka/goonmap)
 To contribute maps to the game, please follow our mapping guidelines! This details the **required** pieces for a map submission.
 
-## INFO
-
-<table>
-<tr><td align="right" >Master Status: </td>
-<td><img valign="sub" src="https://github.com/goonstation/goonstation/workflows/Beepsky/badge.svg?branch=master"/></td></tr>
-<tr><td align="right">Develop Status: </td>
-<td><img valign="sub" src="https://github.com/goonstation/goonstation/workflows/Beepsky/badge.svg?branch=develop"/></td></tr>
-</table>
-
-### FAQ (Frequently Asked Question)
+## FAQ (Frequently Asked Question)
 
 #### Q: I'm getting a compilation error like `unable to open +secret\__secret.dme`.
 

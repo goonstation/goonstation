@@ -544,14 +544,14 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		shuffle_list(effectPool)
 
-	proc/OnLife()
+	proc/OnLife(var/mult)
 		var/datum/bioEffect/BE
 		for(var/curr in effects)
 			BE = effects[curr]
 			if (BE)
-				BE.OnLife()
+				BE.OnLife(mult)
 				if(BE.timeLeft != -1)
-					BE.timeLeft--
+					BE.timeLeft -= 1*mult
 					if(BE.timeLeft <= 0)
 						RemoveEffect(BE.id)
 		return

@@ -131,13 +131,13 @@ For the _first case_, we can do some special optimization, in what we call a "ty
 
 The syntax looks like this:
 ```js
-for (var/obj/foo/bar as() in my_list)
+for (var/obj/foo/bar as anything in my_list)
 	bar.boogie()
 ```
 
 This ends up giving us a 50% increase in speed, as with a normal typed for-loop it performs an `istype(thing, obj/foo)` on the object every iteration.
 
-**Be warned:** If something in the list is not of the type provided, it will runtime!
+**Be warned:** If something in the list is not of the type provided, it will runtime! This includes if you try to access a value on a null.
 
 *Additional note*: If you are using `by_type[]`, there exists a macro to do this automagically:
 ```js

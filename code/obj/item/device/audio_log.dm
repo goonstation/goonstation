@@ -3,7 +3,7 @@
 	desc = "A small audio tape.  You could make some rad mix-tapes with this!"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "recordertape"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	mats = 3
 
 	var/log_line = 1 //Which line of the log it's on.
@@ -75,7 +75,7 @@
 	icon_state = "recorder"
 	uses_multiple_icon_states = 1
 	item_state = "electronic"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/obj/item/audio_tape/tape = null
 	var/mode = 0 //1 recording, 2 playing back
 	var/max_lines = 60

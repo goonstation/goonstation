@@ -9,7 +9,7 @@
 	var/const/min_time = 0
 	var/const/min_detonator_time = 90
 	flags = FPRINT | TABLEPASS| CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	m_amt = 100
 	mats = 2
 	desc = "A device that emits a signal when the time reaches 0."
