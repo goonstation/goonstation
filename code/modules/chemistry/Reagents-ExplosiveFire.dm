@@ -111,7 +111,7 @@ datum
 					var/mob/living/L = M
 					var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 					if(istype(L) && burn)
-						L.TakeDamage("All", 0, clamp(2 * volume * (burn.getStage()-1.5), 0, 30), 0, DAMAGE_BURN)
+						L.TakeDamage("All", 0, clamp(2 * volume * (burn.getStage()-1.25), 0, 35), 0, DAMAGE_BURN)
 						if(!M.stat && !ON_COOLDOWN(M, "napalm_scream", 1 SECOND))
 							M.emote("scream")
 					return 0
@@ -121,8 +121,8 @@ datum
 				var/mob/living/L = M
 				var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 				if(istype(L) && burn)
-					L.changeStatus("burning", 15 * src.volume)
-					burn.counter += 7 * src.volume
+					L.changeStatus("burning", 20 * src.volume)
+					burn.counter += 10 * src.volume
 					holder?.del_reagent(src.id)
 				..()
 				return
