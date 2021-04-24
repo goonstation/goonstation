@@ -534,7 +534,7 @@
 				the_tool.inventory_counter.update_number(the_tool.amount)
 
 			var/turf/T = get_turf(itdr)
-			var/llama = new /obj/machinery/interdictor(T,itdr.intcap)
+			var/obj/llama = new /obj/machinery/interdictor(T,itdr.intcap)
 			if(mat) llama.setMaterial(mat) //custom interdictor casing
 			itdr.intcap.set_loc(llama) //this may not be necessary but I feel like it'll stop something from randomly breaking due to timing
 			qdel(itdr)
