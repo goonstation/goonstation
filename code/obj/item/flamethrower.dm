@@ -316,7 +316,7 @@ A Flamethrower in various states of assembly
 /obj/item/gun/flamethrower/backtank/napalm
 	New()
 		..()
-		gastank.reagents.add_reagent("napalm_goo", 4000)
+		gastank.reagents.add_reagent("syndicate_napalm", 4000)
 
 /obj/item/gun/flamethrower/assembled/New()
 	..()

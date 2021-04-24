@@ -1248,8 +1248,9 @@ datum
 							silent = 1
 
 					if (!silent)
-						boutput(M, "<span class='notice'>The styptic powder stings like hell as it closes some of your wounds.</span>")
-						M.emote("scream")
+						if(!ON_COOLDOWN(M, "styptic screaming", 3 SECONDS))
+							boutput(M, "<span class='notice'>The styptic powder stings like hell as it closes some of your wounds.</span>")
+							M.emote("scream")
 					M.UpdateDamageIcon()
 				else if(method == INGEST)
 					boutput(M, "<span class='alert'>You feel gross!</span>")

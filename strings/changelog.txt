@@ -1,5 +1,47 @@
 
+(t)sat apr 24 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Armored fire/bio/paramedic suits no longer are more bulletproof than the armor used to make them.
+(u)Jan.antilles
+(p)4445
+(e)🎨|sprites
+(+)Fixed the Pride Locker to not appear locked.
+(t)fri apr 23 21
+(u)Lythine
+(p)4426
+(e)🆕🎨|feature, sprites
+(*)Adds skin tone customization and talk sounds to the roach mutantrace.
+(u)Chickenish
+(p)3984
+(e)⚖🐛|balance, bug
+(*)Mutations are now lag adjusted.
+(t)thu apr 22 21
+(u)BatElite & ZeWaka
+(p)4086
+(e)🎨|sprites
+(*)Material sheets, rods and tiles look a lot better now. They also show roughly the amount that's on a stack.
+(u)Mordent
+(p)4405
+(e)📄|tgui
+(+)Pressing arrow keys when you have a tgui window focused will no longer attempt to move your character.
 (t)wed apr 21 21
+(u)Flaborized
+(p)4410
+(e)🎨|sprites
+(+)Updated the cow sprite a bit more.
+(u)Flappybat
+(p)4120
+(e)⚖|balance
+(*)Removed some spy delivery locations: Asylum, AI core, singularity core and combustion chamber.
+(u)Luxizzle
+(p)4331
+(e)📄|tgui
+(*)Converted weapon vendor to tgui.
+(u)Tarmunora
+(e)⚖|balance
+(+)Limit acid splash damage against blobs to 10u worth (per acid)
+(+)Un-nerf fire damage against blobs somewhat
 (u)Tarmunora
 (e)⛔⚖|removal, balance
 (*)Removed recipe for aerosol propellant.

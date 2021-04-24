@@ -246,7 +246,7 @@
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
 			for(var/obj/item/clothing/W in restricted)
 				if (istype(W,/obj/item/clothing))
-					if(W.compatible_species.Find(src.name) || (src.human_compatible && W.compatible_species.Find("human")))
+					if(W.compatible_species.Find(src.name) || (src.uses_human_clothes && W.compatible_species.Find("human")))
 						continue
 					mob.u_equip(W)
 					boutput(mob, "<span class='alert'><B>You can no longer wear the [W.name] in your current state!</B></span>")
@@ -800,6 +800,7 @@
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/left
 	race_mutation = /datum/bioEffect/mutantrace // Most mutants are just another form of lizard, didn't you know?
+	clothing_icon_override = 'icons/mob/lizard_clothes.dmi'
 	color_channel_names = list("Episcutus", "Ventral Aberration", "Sagittal Crest")
 
 	New(var/mob/living/carbon/human/H)
@@ -1681,6 +1682,7 @@
 	name = "roach"
 	icon_state = "roach"
 	override_attack = 0
+	voice_override = "roach"
 	race_mutation = /datum/bioEffect/mutantrace/roach
 	mutant_organs = list("tail" = /obj/item/organ/tail/roach)
 	mutant_folder = 'icons/mob/roach.dmi'
@@ -1689,7 +1691,8 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/roach/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/roach/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/roach/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | FIX_COLORS | HAS_SPECIAL_HAIR | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS)
+	eye_state = "eyes_roach"
 	typevulns = list("blunt" = 1.66, "crush" = 1.66)
 
 	New(mob/living/carbon/human/M)
@@ -1966,7 +1969,7 @@
 /datum/mutantrace/cow
 	name = "cow"
 	icon_state = "cow"
-	human_compatible = FALSE
+	human_compatible = TRUE
 	uses_human_clothes = FALSE
 	override_attack = 0
 	voice_override = "cow"
@@ -1978,9 +1981,10 @@
 	special_hair_1_icon = 'icons/mob/cow.dmi'
 	special_hair_1_state = "head-detail1"
 	special_hair_1_color = CUST_1
-	detail_oversuit_1_icon = 'icons/mob/cow.dmi'
-	detail_oversuit_1_state = "cow_over_suit"
-	detail_oversuit_1_color = null
+	special_hair_2_icon = 'icons/mob/cow.dmi'
+	special_hair_2_state = "cow_over_suit"
+	special_hair_2_color = null
+	special_hair_2_layer = MOB_OVERMASK_LAYER
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/right

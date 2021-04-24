@@ -544,6 +544,8 @@
 	return
 
 /obj/item/proc/change_stack_amount(var/diff)
+	if ((amount + diff) < 0)
+		return 0
 	amount += diff
 	if (!inventory_counter)
 		create_inventory_counter()
@@ -555,6 +557,7 @@
 			var/mob/holding_mob = src.loc
 			holding_mob.u_equip(src)
 		pool(src)
+	return 1
 
 /obj/item/proc/stack_item(obj/item/other)
 	var/added = 0
