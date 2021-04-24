@@ -1,4 +1,4 @@
-import { useBackend, useSharedState } from '../../backend';
+import { useBackend } from '../../backend';
 import { Box, Chart, LabeledList, Stack, Table, Tooltip } from '../../components';
 import { formatPower } from '../../format';
 import { PowerMonitorApcData, PowerMonitorApcItemData } from './type';
@@ -102,13 +102,18 @@ export const PowerMonitorApcTableHeader = (_props, context) => {
   );
 };
 
-export const PowerMonitorApcTableRows = (_props, context) => {
+type PowerMonitorApcTableRowsProps = {
+  search: string;
+};
+
+export const PowerMonitorApcTableRows = (props: PowerMonitorApcTableRowsProps, context) => {
+  const { search } = props;
   const { data } = useBackend<PowerMonitorApcData>(context);
 
   return (
     <>
       {data.apcs.map((apc) => (
-        <PowerMonitorApcTableRow key={apc[0]} apc={apc} />
+        <PowerMonitorApcTableRow key={apc[0]} apc={apc} search={search} />
       ))}
     </>
   );
@@ -116,13 +121,14 @@ export const PowerMonitorApcTableRows = (_props, context) => {
 
 type PowerMonitorApcTableRowProps = {
   apc: PowerMonitorApcItemData;
+  search: string;
 };
 
 const PowerMonitorApcTableRow = (props: PowerMonitorApcTableRowProps, context) => {
-  const { apc } = props;
+  const { apc, search } = props;
+  // Indexed array to lower data transfer between byond and the window.
   const [ref, equipment, lighting, environment, load, cellCharge, cellCharging] = apc;
   const { data } = useBackend<PowerMonitorApcData>(context);
-  const [search] = useSharedState(context, 'search', '');
   const name = data.apcNames[ref] ?? 'N/A';
 
   if (search && !name.toLowerCase().includes(search.toLowerCase())) {

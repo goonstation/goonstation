@@ -34,10 +34,10 @@ export const PowerMonitor = (props, context) => {
             <Section fill scrollable>
               <Table>
                 <Table.Row header>{isDataForApc(data) && <PowerMonitorApcTableHeader />}</Table.Row>
-                {isDataForApc(data) && <PowerMonitorApcTableRows />}
+                {isDataForApc(data) && <PowerMonitorApcTableRows search={search} />}
 
                 <Table.Row header>{isDataForSmes(data) && <PowerMonitorSmesTableHeader />}</Table.Row>
-                {isDataForSmes(data) && <PowerMonitorSmesTableRows />}
+                {isDataForSmes(data) && <PowerMonitorSmesTableRows search={search} />}
               </Table>
             </Section>
           </Stack.Item>

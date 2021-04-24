@@ -18,6 +18,9 @@ export interface PowerMonitorApcData extends PowerMonitorData {
   history: [available: number, load: number][];
 }
 
+/**
+ * Indexed array to lower data transfer between byond and the window.
+ */
 export type PowerMonitorApcItemData = [
   ref: string,
   equipment: number,
@@ -37,6 +40,9 @@ export interface PowerMonitorSmesData extends PowerMonitorData {
   history: [available: number, load: number][];
 }
 
+/**
+ * Indexed array to lower data transfer between byond and the window.
+ */
 export type PowerMonitorSmesItemData = [
   ref: string,
   stored: number,

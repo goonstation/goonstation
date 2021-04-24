@@ -1,5 +1,5 @@
-import { useBackend, useSharedState } from '../../backend';
-import { Box, Chart, LabeledList, Stack, Table } from '../../components';
+import { useBackend } from '../../backend';
+import { Chart, LabeledList, Stack, Table } from '../../components';
 import { formatPower } from '../../format';
 import { PowerMonitorSmesData, PowerMonitorSmesItemData } from './type';
 
@@ -62,13 +62,18 @@ export const PowerMonitorSmesTableHeader = (props, context) => {
   );
 };
 
-export const PowerMonitorSmesTableRows = (props, context) => {
+type PowerMonitorSmesTableRowsProps = {
+  search: string;
+};
+
+export const PowerMonitorSmesTableRows = (props: PowerMonitorSmesTableRowsProps, context) => {
+  const { search } = props;
   const { data } = useBackend<PowerMonitorSmesData>(context);
 
   return (
     <>
       {data.units.map((unit) => (
-        <PowerMonitorSmesTableRow key={unit[0]} unit={unit} />
+        <PowerMonitorSmesTableRow key={unit[0]} unit={unit} search={search} />
       ))}
     </>
   );
@@ -76,13 +81,14 @@ export const PowerMonitorSmesTableRows = (props, context) => {
 
 type PowerMonitorSmesTableRowProps = {
   unit: PowerMonitorSmesItemData;
+  search: string;
 };
 
 const PowerMonitorSmesTableRow = (props: PowerMonitorSmesTableRowProps, context) => {
-  const { unit } = props;
+  const { unit, search } = props;
+  // Indexed array to lower data transfer between byond and the window.
   const [ref, stored, charging, input, output, online, load] = unit;
   const { data } = useBackend<PowerMonitorSmesData>(context);
-  const [search] = useSharedState(context, 'search', '');
   const name = data.unitNames[ref] ?? 'N/A';
 
   if (search && !name.toLowerCase().includes(search.toLowerCase())) {
