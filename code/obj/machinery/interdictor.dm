@@ -246,10 +246,10 @@
 	Some electromagnetic anomalies (see Advanced Edition for full enumeration)
 	<br>
 	<br>
-	In just a few short steps, worrying about this
+	In just a few short steps, worrying about the myriad hazards of space will be a thing of the past!*
 	<br>
 	<br>
-	<i>Please be aware that no liability is assumed for failure to interdict any events absent from or present within the aforementioned list.</i>
+	<i>*Please be aware that no liability is assumed for failure to interdict any events absent from or present within the aforementioned list.</i>
 	<br>
 	<br>
 	<hr>
@@ -397,8 +397,9 @@
 				else
 					..()
 			if(6)
-				if (istype(I, /obj/item/sheet/steel))
-					if (I.amount < 4)
+				if (istype(I, /obj/item/sheet))
+					var/obj/item/sheet/sheets = I
+					if (sheets.amount < 4 || !(sheets.material.material_flags & MATERIAL_METAL))
 						boutput(user, "<span style=\"color:red\">You don't have enough metal to install the outer covers (4 required).</span>")
 					else
 						actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 2 SECONDS), user)
@@ -518,6 +519,12 @@
 			boutput(owner, "<span class='notice'>You install a metal casing onto the interdictor, completing its construction.</span>")
 			playsound(get_turf(itdr), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 
+			//setting up for custom interdictor casing
+			var/obj/item/sheet/S = the_tool
+			var/datum/material/mat
+			if(!istype(the_tool, /obj/item/sheet/steel) && S.material)
+				mat = S.material
+
 			the_tool.amount -= 4
 			if (the_tool.amount < 1)
 				var/mob/source = owner
@@ -528,6 +535,7 @@
 
 			var/turf/T = get_turf(itdr)
 			var/llama = new /obj/machinery/interdictor(T,itdr.intcap)
+			if(mat) llama.setMaterial(mat) //custom interdictor casing
 			itdr.intcap.set_loc(llama) //this may not be necessary but I feel like it'll stop something from randomly breaking due to timing
 			qdel(itdr)
 			return
