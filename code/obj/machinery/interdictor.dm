@@ -216,7 +216,7 @@
 	icon_state = "interdict-edge"
 	anchored = 1
 	density = 0
-	alpha = 64
+	alpha = 80
 	plane = PLANE_OVERLAY_EFFECTS
 
 
@@ -266,7 +266,7 @@
 	<br>
 	- Interdictor phase-control rod
 	<br>
-	- Industry-compliant power cell (high-capacity heavily recommended)
+	- Industry-compliant power cell (high-capacity heavily recommended, as installation is permanent)
 	<br>
 	- Four lengths of industry-compliant electrical cable
 	<br>
