@@ -74,7 +74,7 @@
 				else
 					boutput(user, "<span class='alert'>The interdictor must be installed onto an electrical cable.</span>")
 		else
-			boutput(user, "<span class='alert'>The interdictor's magnetic locks have just toggled, and can't currently be toggled again.</span>")
+			boutput(user, "<span class='alert'>The interdictor's magnetic locks were just toggled and can't yet be toggled again.</span>")
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(ispulsingtool(W))
