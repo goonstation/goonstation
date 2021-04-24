@@ -130,6 +130,21 @@ datum
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison",1)
 
+			syndicate
+				name = "syndicate napalm"
+				id = "syndicate_napalm"
+				description = "Extra sticky, extra burny"
+
+				reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+					. = ..()
+					if(method == TOUCH)
+						var/mob/living/L = M
+						var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
+						L.changeStatus("slowed", 2 SECONDS, optional = 4)
+						if(istype(L) && burn) //double up on the extra burny, not blockable by biosuits/etc either
+							L.changeStatus("burning", 10 * src.volume)
+							burn.counter += 5 * src.volume
+
 		combustible/kerosene
 			name = "kerosene"
 			id = "kerosene"
