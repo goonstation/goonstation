@@ -1947,10 +1947,16 @@
 	blueprint = /datum/manufacture/alastor
 
 
-/******************** Spatial Interdictor Phase-Control Rod *******************/
+/******************** Spatial Interdictor *******************/
+
+/obj/item/paper/manufacturer_blueprint/interdictor_frame
+	name = "Interdictor Frame"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "artifact_form"
+	blueprint = /datum/manufacture/interdictor_frame
 
 /obj/item/paper/manufacturer_blueprint/interdictor_rod
-	name = "Interdictor Rod Blueprint"
+	name = "Interdictor Phase-Control Rod"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "artifact_form"
 	blueprint = /datum/manufacture/interdictor_rod

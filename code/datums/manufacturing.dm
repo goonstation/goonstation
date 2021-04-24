@@ -2574,10 +2574,19 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Tool"
 
-/************ INTERDICTOR ROD ************/
+/************ INTERDICTOR STUFF ************/
+
+/datum/manufacture/interdictor_frame
+	name = "Interdictor Frame"
+	item_paths = list("MET-2")
+	item_amounts = list(10)
+	item_outputs = list(/obj/item/interdictor_frame)
+	time = 10 SECONDS
+	create = 1
+	category = "Machinery"
 
 /datum/manufacture/interdictor_rod
-	name = "Interdictor Phase-Control Rod"
+	name = "Phase-Control Rod"
 	item_paths = list("MET-2","CON-2","INS-1","POW-1")
 	item_amounts = list(10,25,10,5)
 	item_outputs = list(/obj/item/interdictor_rod)

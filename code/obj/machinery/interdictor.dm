@@ -198,6 +198,11 @@
 
 //assembly zone
 
+//interdictor rod: the doohickey that lets the interdictor do its thing
+//the blueprint to create this should be in engineering along with guide, frame blueprint and mainboards
+//these are the primary factor for scarcity as they require several materials to manufacture
+//blueprint path is /obj/item/paper/manufacturer_blueprint/interdictor_rod
+
 /obj/item/interdictor_rod
 	name = "interdictor phase-control rod"
 	desc = "A large, narrow cylinder with a highly-conductive core and inbuilt control circuitry."
@@ -212,6 +217,11 @@
 	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | CONDUCT
 
+//interdictor board: power management circuitry and whatnot
+//engineering should start with about three of these,
+//adjacent to the rod/frame blueprint and the interdictor assembly and use guide.
+//mechanics can scan to reproduce
+
 /obj/item/interdictor_board
 	name = "spatial interdictor mainboard"
 	desc = "A custom-fabricated circuit board with a cutting-edge miniaturized retro-encabulator."
@@ -223,8 +233,10 @@
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS | CONDUCT
 
+//interdictor frame: main framework for assembling the interdictor (lo and behold)
+//the blueprint to create this should be in engineering along with guide, rod blueprint and mainboards
 
-/obj/interdictor_kit
+/obj/interdictor_frame
 	name = "spatial interdictor frame"
 	desc = "A frame for a spatial interdictor. It's missing its mainboard."
 	icon = 'icons/obj/machines/interdictor.dmi'
@@ -298,7 +310,7 @@
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 
-	var/obj/interdictor_kit/itdr
+	var/obj/interdictor_frame/itdr
 	var/obj/item/the_tool
 
 	New(var/obj/O, var/obj/item/tool, var/duration_i)
