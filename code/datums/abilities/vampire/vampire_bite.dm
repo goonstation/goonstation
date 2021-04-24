@@ -51,10 +51,6 @@
 		boutput(M, __red("You need to remove their headgear first."))
 		return 0
 
-	if (is_pointblank && target.wear_mask && target.wear_mask.c_flags & (BLOCKCHOKE))
-		boutput(M, __red("You need to remove their facemask first."))
-		return 0
-
 	if (check_target_immunity(target) == 1)
 		target.visible_message("<span class='alert'><B>[M] bites [target], but fails to even pierce their skin!</B></span>")
 		return 0
@@ -210,10 +206,6 @@
 
 	if (is_pointblank && target.head && target.head.c_flags & (BLOCKCHOKE))
 		boutput(M, __red("You need to remove their headgear first."))
-		return 0
-
-	if (is_pointblank && target.wear_mask && target.wear_mask.c_flags & (BLOCKCHOKE))
-		boutput(M, __red("You need to remove their facemask first."))
 		return 0
 
 	if (check_target_immunity(target) == 1)
