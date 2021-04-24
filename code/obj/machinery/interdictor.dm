@@ -80,7 +80,7 @@
 		if(ispulsingtool(W))
 			boutput(user, "<span class='notice'>The interdictor's internal capacitor is currently at [src.intcap.charge] of [src.intcap.maxcharge] units.</span>")
 			return
-		else if(istype(W, /obj/item/card/id)
+		else if(istype(W, /obj/item/card/id))
 			if(!src.allowed(W))
 				boutput(user, "<span class='alert'>Engineering clearance is required to operate the interdictor's locks.</span>")
 				return
