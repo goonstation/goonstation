@@ -942,60 +942,6 @@ toxic - poisons
 			explosion_new(null, T, 36, 0.45)
 		return
 
-/obj/smokeDummy
-	name = ""
-	desc = ""
-	invisibility = 101
-	anchored = 1
-	density = 0
-	opacity = 0
-	var/list/affected = list()
-
-	disposing()
-		remove()
-		return ..()
-
-	New(var/atom/sloc)
-		if(!sloc) return
-		src.set_loc(sloc)
-		for(var/mob/M in src.loc)
-			Crossed(M)
-		return ..()
-
-	proc/remove()
-		for(var/mob/M in affected)
-			M.removeOverlayComposition(/datum/overlayComposition/smoke)
-			M.updateOverlaysClient(M.client)
-		affected.Cut()
-		return
-
-	Crossed(atom/movable/O)
-		if(ishuman(O) && prob(30))
-			var/mob/living/carbon/human/H = O
-			if (H.internal != null && H.wear_mask && (H.wear_mask.c_flags & MASKINTERNALS))
-			else
-				H.emote("cough")
-				if (prob(20))	//remove this maybe. it shoudla been stunning, but has been broken since the status system updates.
-					H.setStatus("stunned",max(H.getStatusDuration("stunned"), 20))
-
-		if(ismob(O))
-			var/mob/M = O
-			if (M.client && !isobserver(M) && !iswraith(M) && !isintangible(M)) // fuck you stop affecting ghosts FUCK YOU
-				M.addOverlayComposition(/datum/overlayComposition/smoke)
-				M.updateOverlaysClient(M.client)
-				affected.Add(O)
-		return ..()
-
-	Uncrossed(atom/movable/O)
-		if(ismob(O))
-			var/mob/M = O
-			if (M.client && !isobserver(M) && !iswraith(M) && !isintangible(M)) // FUCK YOU
-				if(!(locate(/obj/smokeDummy) in M.loc))
-					M.removeOverlayComposition(/datum/overlayComposition/smoke)
-					M.updateOverlaysClient(M.client)
-					affected.Remove(M)
-		return ..()
-
 /datum/projectile/bullet/smoke
 	name = "smoke grenade"
 	sname = "smokeshot"

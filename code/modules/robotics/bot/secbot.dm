@@ -1453,7 +1453,7 @@
 
 	else if (istype(W, /obj/item/rods) && src.build_step == 3)
 		var/obj/item/rods/R = W
-		if (!R.consume_rods(1))
+		if (!R.change_stack_amount(-1))
 			boutput(user, "You need a non-zero amount of rods. How did you even do that?")
 		else
 			src.build_step++

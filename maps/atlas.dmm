@@ -12977,7 +12977,7 @@
 	},
 /area/station/medical/medbay)
 "FE" = (
-/obj/storage/secure/closet/medical/uniforms,
+/obj/storage/closet/medicalclothes,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},

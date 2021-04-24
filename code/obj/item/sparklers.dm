@@ -9,7 +9,7 @@
 	item_state = "sparkler-off"
 	var/item_on = "sparkler-on"
 	var/item_off = "sparkler-off"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	density = 0
 	anchored = 0
 	opacity = 0

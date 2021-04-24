@@ -20,7 +20,7 @@
 	flags = FPRINT | ONBELT | TABLEPASS
 	force = 10
 	throwforce = 7
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	mats = list("MET-3"=10, "CON-2"=10)
 	contraband = 4
 	stamina_damage = 15
@@ -524,7 +524,7 @@
 	item_off = "ntso-baton-c"
 	var/item_off_open = "ntso-baton-d"
 	flick_baton_active = "ntso-baton-a-1"
-	w_class = 2	//2 when closed, 4 when extended
+	w_class = W_CLASS_SMALL	//2 when closed, 4 when extended
 	can_swap_cell = 0
 	status = 0
 	// stamina_based_stun_amount = 110
@@ -564,7 +564,7 @@
 					boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
 					src.state = OPEN_AND_OFF
 					src.status = 0
-					src.w_class = 4
+					src.w_class = W_CLASS_BULKY
 					src.force = 7
 					playsound(get_turf(src), "sound/misc/lightswitch.ogg", 75, 1, -1)
 					boutput(user, "<span class='notice'>The [src.name] is now open and unpowered.</span>")
@@ -577,13 +577,13 @@
 				src.state = OPEN_AND_ON
 				src.status = 1
 				boutput(user, "<span class='notice'>The [src.name] is now open and on.</span>")
-				src.w_class = 4
+				src.w_class = W_CLASS_BULKY
 				src.force = 7
 				playsound(get_turf(src), "sparks", 75, 1, -1)
 			if (OPEN_AND_ON)		//move to open/off state
 				src.state = OPEN_AND_OFF
 				src.status = 0
-				src.w_class = 4
+				src.w_class = W_CLASS_BULKY
 				src.force = 7
 				playsound(get_turf(src), "sound/misc/lightswitch.ogg", 75, 1, -1)
 				boutput(user, "<span class='notice'>The [src.name] is now open and unpowered.</span>")
@@ -591,7 +591,7 @@
 			if (OPEN_AND_OFF)		//move to closed/off state
 				src.state = CLOSED_AND_OFF
 				src.status = 0
-				src.w_class = 2
+				src.w_class = W_CLASS_SMALL
 				src.force = 1
 				boutput(user, "<span class='notice'>The [src.name] is now closed.</span>")
 				playsound(get_turf(src), "sparks", 75, 1, -1)

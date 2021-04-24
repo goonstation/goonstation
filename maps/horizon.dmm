@@ -14860,7 +14860,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/stool/bed/moveable/hospital,
+/obj/storage/closet/medicalclothes,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -19302,6 +19302,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/mining/refinery)
 "aUI" = (
+/obj/stool/bed/moveable/hospital,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "aUJ" = (

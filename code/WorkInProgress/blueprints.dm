@@ -344,7 +344,7 @@
 	item_state = "gun"
 
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	var/prints_left = 5
 

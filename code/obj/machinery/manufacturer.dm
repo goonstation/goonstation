@@ -1896,9 +1896,9 @@
 	desc = "An old manilla folder covered in stains. It looks like it'll fall apart at the slightest touch."
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "folder"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throwforce = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 10
 
@@ -2311,7 +2311,8 @@
 
 	hidden = list(/datum/manufacture/breathmask,
 	/datum/manufacture/patch,
-	/datum/manufacture/hat_ltophat)
+	/datum/manufacture/hat_ltophat,
+	/datum/manufacture/monke)
 	///datum/manufacture/hermes) //all hail the shoe lord - needs adjusting for the new movement system which I cba to do right now
 
 /// cogwerks - a gas extractor for the engine

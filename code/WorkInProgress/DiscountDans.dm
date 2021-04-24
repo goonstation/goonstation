@@ -233,7 +233,7 @@
 	name = "ticket"
 	desc = "It's a ticket."
 	icon = 'icons/obj/discountdans.dmi'
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 /obj/item/ticket/golden
 	name = "golden ticket"
@@ -252,7 +252,7 @@
 	desc = "A magnifying glass made from solid oak, which is quite rare in space. It has a huge lens and the letters DD etched on the handle."
 	icon = 'icons/obj/discountdans.dmi'
 	icon_state = "magnifying_glass"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 /* Idea stuff here
 
