@@ -15,7 +15,10 @@ export const CharacterPreferences = (_props: any, context: any) => {
   const [menu, setMenu] = useLocalState(context, 'menu', CharacterPreferencesTabKeys.General);
 
   const handleKeyDown = (e) => {
-    if (e.keyCode === KEY_LEFT || e.keyCode === KEY_RIGHT) {
+    if (
+      (menu === CharacterPreferencesTabKeys.General || menu === CharacterPreferencesTabKeys.Character)
+      && (e.keyCode === KEY_LEFT || e.keyCode === KEY_RIGHT)
+    ) {
       e.preventDefault();
       if (nextRotateTime > performance.now()) {
         return;
@@ -33,7 +36,7 @@ export const CharacterPreferences = (_props: any, context: any) => {
 
   return (
     <Window width={600} height={750} title="Character Setup">
-      <Window.Content>
+      <Window.Content onKeyDown={handleKeyDown}>
         <Stack vertical fill>
           <Stack.Item>
             <SavesAndProfile />
@@ -66,7 +69,7 @@ export const CharacterPreferences = (_props: any, context: any) => {
           </Stack.Item>
           <Stack.Item grow="1">
             {menu === CharacterPreferencesTabKeys.General || menu === CharacterPreferencesTabKeys.Character ? (
-              <Stack fill onKeyDown={handleKeyDown}>
+              <Stack fill>
                 <Stack.Item grow="1">
                   <Section scrollable fill>
                     {menu === CharacterPreferencesTabKeys.General && <GeneralTab />}
