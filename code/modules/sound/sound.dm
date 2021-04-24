@@ -302,7 +302,69 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 					M << S
 
+/**
+	Plays a sound to some clients without caring about its source location and stuff.
+	`target` can be either a list of clients or a list of mobs or `world` or an area.
+*/
+/proc/playsound_global(target, soundin, vol as num, vary, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
+	// don't play if over the per-tick sound limit
+	if (!limiter || !limiter.canISpawn(/sound))
+		return
 
+	EARLY_RETURN_IF_QUIET(vol)
+
+	var/list/clients = null
+	if(islist(target))
+		if(!length(target))
+			return
+		if(isclient(target[1]))
+			clients = target
+		else if(ismob(target[1]))
+			clients = list()
+			for(var/mob/M as anything in target)
+				if(M.client)
+					clients += M.client
+		else
+			CRASH("Incorrect object in target list `[target[1]]` in playsound_global.")
+	else if(target == world)
+		clients = global.clients
+	else if(isarea(target))
+		clients = list()
+		for(var/mob/M in target)
+			if(M.client)
+				clients += M.client
+	else
+		CRASH("Incorrect argument `[target]` in playsound_global.")
+
+	var/source = null
+	if(isatom(target))
+		source = target
+	var/sound/S
+	var/ourvolume
+	var/storedVolume
+
+	for(var/client/C as anything in clients)
+		if (!C)
+			continue
+
+		if (CLIENT_IGNORES_SOUND(C))
+			continue
+
+		ourvolume = vol
+
+		storedVolume = ourvolume
+		ourvolume *= C.getVolume(channel) / 100
+
+		EARLY_CONTINUE_IF_QUIET(ourvolume)
+
+		if (!S) S = generate_sound(source, soundin, vol, vary, extrarange=0, pitch=pitch)
+		if (!S) CRASH("Did not manage to generate sound \"[soundin]\" with source [source].")
+		C.sound_playing[ S.channel ][1] = storedVolume
+		C.sound_playing[ S.channel ][2] = channel
+
+		S.volume = ourvolume
+
+		C << S
 
 /mob/living/silicon/ai/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
 	..()
@@ -539,6 +601,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
  		"skelly" = sound('sound/misc/talk/skelly.ogg'),	"skelly!" = sound('sound/misc/talk/skelly_exclaim.ogg'),"skelly?" = sound('sound/misc/talk/skelly_ask.ogg'), \
 		"blub" = sound('sound/misc/talk/blub.ogg'),	"blub!" = sound('sound/misc/talk/blub_exclaim.ogg'),"blub?" = sound('sound/misc/talk/blub_ask.ogg'), \
 		"cow" = sound('sound/misc/talk/cow.ogg'),	"cow!" = sound('sound/misc/talk/cow_exclaim.ogg'),"cow?" = sound('sound/misc/talk/cow_ask.ogg'), \
+		"roach" = sound('sound/misc/talk/roach.ogg'),	"roach!" = sound('sound/misc/talk/roach_exclaim.ogg'),"roach?" = sound('sound/misc/talk/roach_ask.ogg'), \
  		"radio" = sound('sound/misc/talk/radio.ogg')\
  		)
 

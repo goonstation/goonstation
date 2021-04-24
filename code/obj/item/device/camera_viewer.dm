@@ -3,7 +3,7 @@
 	desc = "A portable video monitor connected to a security camera network."
 	icon_state = "monitor"
 	item_state = "electronic"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
 	mats = 6

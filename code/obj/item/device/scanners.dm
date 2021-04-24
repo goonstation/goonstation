@@ -17,7 +17,7 @@ Contains:
 	icon_state = "t-ray0"
 	var/on = 0
 	flags = FPRINT|ONBELT|TABLEPASS
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	m_amt = 150
 	mats = 5
@@ -131,7 +131,7 @@ that cannot be itched
 	name = "forensic scanner"
 	desc = "Used to scan objects for DNA and fingerprints."
 	icon_state = "fs"
-	w_class = 2 // PDA fits in a pocket, so why not the dedicated scanner (Convair880)?
+	w_class = W_CLASS_SMALL // PDA fits in a pocket, so why not the dedicated scanner (Convair880)?
 	item_state = "electronic"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | SUPPRESSATTACK
 	mats = 3
@@ -235,7 +235,7 @@ that cannot be itched
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
 	throwforce = 3
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
 	m_amt = 200
@@ -317,26 +317,7 @@ that cannot be itched
 		"<span class='alert'>You have analyzed [M]'s vitals.</span>")
 		boutput(user, scan_health(M, src.reagent_scan, src.disease_detection, src.organ_scan, visible = 1))
 
-		// lord forgive me for this sin
-		// output a pop-up overhead thing to the client,
-		// if they want flying text
-		if (user.client && !user.client.preferences?.flying_chat_hidden)
-
-			var/image/chat_maptext/chat_text = null
-			var/h_pct = M.max_health ? round(100 * M.health / M.max_health) : M.health
-			var/oxy = round(M.get_oxygen_deprivation())
-			var/tox = round(M.get_toxin_damage())
-			var/burn = round(M.get_burn_damage())
-			var/brute = round(M.get_brute_damage())
-
-			var/popup_text = "<span class='ol c pixel'><span class='vga'>[h_pct]%</span>\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
-			chat_text = make_chat_maptext(M, popup_text, force = 1)
-			if(chat_text)
-				chat_text.measure(user.client)
-				for(var/image/chat_maptext/I in user.chat_text.lines)
-					if(I != chat_text)
-						I.bump_up(chat_text.measured_height)
-				chat_text.show_to(user.client)
+		scan_health_overhead(M, user)
 
 		update_medical_record(M)
 
@@ -378,7 +359,7 @@ that cannot be itched
 	icon_state = "health_upgr"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
 	mats = 2
@@ -389,7 +370,7 @@ that cannot be itched
 	icon_state = "organ_health_upgr"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
 	mats = 2
@@ -404,7 +385,7 @@ that cannot be itched
 	desc = "A hand-held device that scans and lists the chemicals inside the scanned subject."
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
 	throwforce = 3
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
 	m_amt = 200
@@ -456,10 +437,10 @@ that cannot be itched
 	name = "atmospheric analyzer"
 	icon_state = "atmos-no_up"
 	item_state = "analyzer"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	throwforce = 5
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20
 	mats = 3
@@ -530,7 +511,7 @@ that cannot be itched
 	icon_state = "atmos_upgr" // add this
 	flags = FPRINT | TABLEPASS | CONDUCT
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
 	mats = 2
@@ -589,7 +570,7 @@ that cannot be itched
 	var/mode = 1
 	var/datum/data/record/active1 = null
 	var/datum/data/record/active2 = null
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	item_state = "recordtrak"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | EXTRADELAY
 	mats = 3
@@ -692,7 +673,7 @@ that cannot be itched
 	desc = "A device used to issue tickets from the security department."
 	icon_state = "ticketwriter"
 	item_state = "electronic"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 

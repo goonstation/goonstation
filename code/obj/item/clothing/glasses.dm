@@ -6,7 +6,7 @@
 	wear_image_icon = 'icons/mob/eyes.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	item_state = "glasses"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	c_flags = COVERSEYES
 	var/allow_blind_sight = 0
 	block_vision = 0

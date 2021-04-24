@@ -349,7 +349,7 @@
 	station_bounties[/obj/item/clothing/head/merchant_hat] = 1
 	station_bounties[/obj/item/clothing/head/beret/prisoner] = 2
 	station_bounties[/obj/item/clothing/head/caphat] = 3
-	station_bounties[/obj/item/clothing/head/helmet/HoS] = 3
+	station_bounties[/obj/item/clothing/head/hos_hat] = 3
 
 	station_bounties[/obj/item/disk/data/floppy/read_only/communications] = 2
 	station_bounties[/obj/item/disk/data/floppy/read_only/authentication] = 3
@@ -721,9 +721,14 @@
 	possible_areas = get_areas_with_unblocked_turfs(/area/station)
 	possible_areas += get_areas_with_unblocked_turfs(/area/diner)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/diner/tug)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/medical/asylum)					// Donut 3 Asylum
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected/ai)			// AI core
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected/AIsat)	// AI satellite
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/maintenance)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/hallway)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/substation)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/singcore)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/combustion_chamber)
 	possible_areas -= /area/sim/test_area
 
 	for (var/area/A in possible_areas)
@@ -731,7 +736,7 @@
 		if (A.virtual)
 			possible_areas -= A
 			break
-		if (A.name == "AI Perimeter Defenses" || A.name == "VR Test Area") //I have no idea what this "AI Perimeter Defenses" is, can't find it in code! All I know is that it's an area that the game can choose that DOESNT HAVE ANY TURFS
+		if (A.name == "AI Perimeter Defenses" || A.name == "VR Test Area" || A.name == "Ocean") //I have no idea what "AI Perimeter Defenses" or "Ocean" is, can't find it in code! All I know is that it's an area that the game can choose that DOESNT HAVE ANY TURFS
 			possible_areas -= A
 			break
 

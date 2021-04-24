@@ -37,6 +37,8 @@
 			var/api_response = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M2.ckey), 1)
 			if(!length(api_response)) // API unavailable or something
 				return FALSE
+			if(!M2?.ckey)
+				return FALSE // new_player was disposed during api call
 			player.cached_jobbans = api_response[M2.ckey]
 		cache = player.cached_jobbans
 	else if(islist(M))

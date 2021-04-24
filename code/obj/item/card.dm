@@ -11,7 +11,7 @@ GAUNTLET CARDS
 	icon = 'icons/obj/items/card.dmi'
 	icon_state = "id"
 	wear_image_icon = 'icons/mob/mob.dmi'
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	burn_type = 1
 	stamina_damage = 0
 	stamina_cost = 0

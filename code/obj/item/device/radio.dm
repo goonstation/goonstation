@@ -29,7 +29,7 @@
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 	throw_speed = 2
 	throw_range = 9
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	mats = 3
 
 	var/icon_override = 0
@@ -582,7 +582,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	desc = "An illegal device used to jam radio signals, preventing broadcast or transmission."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shieldoff"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/active = 0
 	is_syndicate = 1
 	mats = 10
@@ -637,7 +637,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	frequency = 1451
 	throw_speed = 1
 	throw_range = 3
-	w_class = 5.0
+	w_class = W_CLASS_HUGE
 	flags = FPRINT | TABLEPASS | ONBACK | CONDUCT
 	item_state = "electropack"
 	desc = "A device that, when signaled on the correct frequency, causes a disabling electric shock to be sent to the animal (or human) wearing it."
@@ -782,7 +782,7 @@ Code:
 	icon_state = "signaller"
 	item_state = "signaler"
 	var/code = 30.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	frequency = 1457
 	var/delay = 0
 	var/airlock_wire = null
