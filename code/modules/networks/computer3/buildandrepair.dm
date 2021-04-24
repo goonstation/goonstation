@@ -178,7 +178,7 @@
 				if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
 					if (S.amount >= src.glass_needed)
 						playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-						if(do_after(user, 2 SECONDS) && S?.consume_sheets(src.glass_needed))
+						if(do_after(user, 2 SECONDS) && S?.change_stack_amount(-src.glass_needed))
 							boutput(user, "<span class='notice'>You put in the glass panel.</span>")
 							src.state = 4
 							src.icon_state = "4"

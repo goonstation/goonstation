@@ -488,9 +488,9 @@ var/datum/action_controller/actions
 			R.amount = amount
 			R.inventory_counter?.update_number(R.amount)
 		R.set_dir(owner.dir)
-		sheet.consume_sheets(cost)
+		sheet.change_stack_amount(-cost)
 		if (sheet2 && cost2)
-			sheet2.consume_sheets(cost2)
+			sheet2.change_stack_amount(-cost2)
 		logTheThing("station", owner, null, "builds [objname] (<b>Material:</b> [mat && istype(mat) && mat.mat_id ? "[mat.mat_id]" : "*UNKNOWN*"]) at [log_loc(owner)].")
 		if (callback)
 			call(callback)(src, R)
@@ -1319,7 +1319,7 @@ var/datum/action_controller/actions
 	onUpdate()
 		..()
 		if (M?.hasStatus("resting") && !M.stat && M.getStatusDuration("burning"))
-			M.update_burning(-1.2)
+			M.update_burning(-1.5)
 
 			M.set_dir(turn(M.dir,up ? -90 : 90))
 			pixely += up ? 1 : -1

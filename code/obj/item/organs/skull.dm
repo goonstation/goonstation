@@ -94,7 +94,7 @@
 			return
 
 		if (istype(W, /obj/item/rods) && W.amount > 0)
-			W:consume_rods(1)
+			W.change_stack_amount(-1)
 			user.visible_message("<b>[user]</b> jams a rod into the bottom of [src]. Welp.",\
 			"You jam a rod into the bottom of [src]. Welp.")
 			var/obj/item/reagent_containers/food/drinks/skull_chalice/C = new /obj/item/reagent_containers/food/drinks/skull_chalice(src.loc)

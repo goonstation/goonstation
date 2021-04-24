@@ -1,5 +1,26 @@
 
+(t)sat apr 24 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Armored fire/bio/paramedic suits no longer are more bulletproof than the armor used to make them.
+(u)Jan.antilles
+(p)4445
+(e)🎨|sprites
+(+)Fixed the Pride Locker to not appear locked.
+(t)fri apr 23 21
+(u)Lythine
+(p)4426
+(e)🆕🎨|feature, sprites
+(*)Adds skin tone customization and talk sounds to the roach mutantrace.
+(u)Chickenish
+(p)3984
+(e)⚖🐛|balance, bug
+(*)Mutations are now lag adjusted.
 (t)thu apr 22 21
+(u)BatElite & ZeWaka
+(p)4086
+(e)🎨|sprites
+(*)Material sheets, rods and tiles look a lot better now. They also show roughly the amount that's on a stack.
 (u)Mordent
 (p)4405
 (e)📄|tgui
