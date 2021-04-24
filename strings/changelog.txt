@@ -1,5 +1,9 @@
 
 (t)fri apr 23 21
+(u)Lythine
+(p)4426
+(e)🆕🎨|feature, sprites
+(*)Adds skin tone customization and talk sounds to the roach mutantrace.
 (u)Chickenish
 (p)3984
 (e)⚖🐛|balance, bug
