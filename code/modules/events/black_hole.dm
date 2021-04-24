@@ -34,12 +34,12 @@
 		//interdiction consumes several thousand units - requiring a large cell - and the interdictor makes a hell of a ruckus
 		for (var/obj/machinery/interdictor/IX in orange(INTERDICT_RANGE, src))
 			if (IX.expend_interdict(9001))
-				playsound(get_turf(IX),'sound/machines/alarm_a.ogg',50,0,5,1.5)
-				SPAWN_DBG(1 SECOND)
-					playsound(get_turf(IX),'sound/machines/alarm_a.ogg',50,0,5,1.5)
+				playsound(get_turf(IX),'sound/machines/alarm_a.ogg',50,1,5,1.5)
+				SPAWN_DBG(3 SECONDS)
+					if(IX) playsound(get_turf(IX),'sound/machines/alarm_a.ogg',50,1,5,1.5)
 				IX.visible_message("<span class='alert'><b>[IX] emits a gravitational anomaly warning!</b></span>")
 				feedings_required = rand(12,24)
-				lifespan = lifespan * 1.25
+				lifespan = lifespan * 1.2
 
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/bhole_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(src))
