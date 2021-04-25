@@ -498,6 +498,16 @@
 	icon = 'icons/turf/walls_destiny.dmi'
 	connects_to = list(/turf/simulated/wall/auto/reinforced/gannets, /turf/simulated/wall/false_wall/reinforced)
 
+
+
+
+
+
+
+
+
+
+
 /* ===================================================== */
 /* -------------------- UNSIMULATED -------------------- */
 /* ===================================================== */
@@ -515,6 +525,7 @@
 	var/list/connects_with_overlay_exceptions = null
 	var/image/connect_image = null
 	var/d_state = 0
+	var/connect_diagonal = 0 // 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
 
 	New()
 		..()
@@ -568,6 +579,29 @@
 								if (!M.anchored)
 									continue
 							overlaydir |= dir
+		if (connect_diagonal)
+			for (var/j = 1 to 4)
+				if (connect_diagonal < 2 && (builtdir & ordinal[j] != ordinal[j]))
+					continue
+				var/turf/T = get_step(src, ordinal[j])
+				var/dir = 8 << j
+				if (T && (istype(T, src.type)))
+					builtdir |= dir
+				else if (connects_to)
+					for (var/i=1, i <= connects_to.len, i++)
+						// if the turf appears in our connection list AND isn't in our exceptions...
+						if (istype(T, connects_to[i]) && !(T.type in connects_to_exceptions))
+							builtdir |= dir
+							break
+						// Search for non-turf atoms we can connect to
+						var/atom/A = locate(connects_to[i]) in T
+						if (!isnull(A))
+							if (istype(A, /atom/movable))
+								var/atom/movable/M = A
+								if (!M.anchored)
+									continue
+							builtdir |= dir
+							break
 
 		src.icon_state = "[mod][builtdir][src.d_state ? "C" : null]"
 		if (light_mod)
