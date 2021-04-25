@@ -11,7 +11,6 @@ ABSTRACT_TYPE(/datum/mail_order)
 	var/desc = "Be like the three-second elephant with heated value in space-bark."
 	var/list/order_items = list() // should not exceed 7 items, as mail order is sent in a box item
 	var/cost = PAY_UNTRAINED
-	var/category = "General Items"
 	var/list/order_perm = list() // optional access requirement to order a given item
 
 
@@ -23,28 +22,24 @@ ABSTRACT_TYPE(/datum/mail_order/medical/)
 		desc = "Order a health analyzer, and we'll throw in a bandage for free!"
 		order_items = list(/obj/item/device/analyzer/healthanalyzer,/obj/item/bandage)
 		cost = PAY_UNTRAINED / 2
-		category = "Equipment"
 
 	analyze_up
 		name = "Health Analyzer Deluxe Upgrade"
 		desc = "Top-of-the-line enhancements for any industry-standard health analyzer."
 		order_items = list(/obj/item/device/analyzer/healthanalyzer_upgrade,/obj/item/device/analyzer/healthanalyzer_organ_upgrade)
 		cost = PAY_TRADESMAN / 4
-		category = "Equipment"
 
 	auto_char
 		name = "Charcoal Auto-Injector"
 		desc = "A ready-to-use, sterile single-use injector containing ten units of charcoal."
 		order_items = list(/obj/item/reagent_containers/emergency_injector/charcoal)
 		cost = PAY_TRADESMAN / 4
-		category = "Medication"
 
 	auto_epi
 		name = "Epinephrine Auto-Injector"
 		desc = "A ready-to-use, sterile single-use injector containing ten units of epinephrine."
 		order_items = list(/obj/item/reagent_containers/emergency_injector/epinephrine)
 		cost = PAY_TRADESMAN / 4
-		category = "Medication"
 
 
 ABSTRACT_TYPE(/datum/mail_order/chem)

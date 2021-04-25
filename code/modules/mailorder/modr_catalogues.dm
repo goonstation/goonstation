@@ -39,13 +39,150 @@
 			src.read_only = 1
 
 
+#define MODE_LIST 0
+#define MODE_HELP 1
+#define MODE_CART 2
+
 /datum/computer/file/pda_program/catalogue
 	name = "The Omega Catalogue"
 	size = 32
 	var/entries_to_index = "/datum/mail_order"
+	var/list/cart = list() //mail order entries selected for purchase
+	var/cartsize = 0 // based on amount of items in selected entries, not amount of entries
+	var/cartcost = 0 // how much your selection costs
+	var/list/canbuy = list() //list of catalog entries
 
 	medical
 		entries_to_index = "/datum/mail_order/medical"
 
 	chem
 		entries_to_index = "/datum/mail_order/chem"
+
+	New()
+		..()
+		for(var/S in concrete_typesof(text2path(entries_to_index)))
+			src.canbuy += new S()
+
+	return_text()
+		. = src.return_text_header()
+		. += " | <a href='byond://?src=\ref[src];viewlist=1'>Catalogue</a>"
+		. += " | <a href='byond://?src=\ref[src];viewcart=1'>Cart</a>"
+		. += " | <a href='byond://?src=\ref[src];readme=1'>Help</a><br>"
+		. += "<h4>[src.name]</h4><hr>"
+
+		if(!src.master.host_program)
+			. += "ERROR 404: File not found."
+		switch(src.mode)
+			if(MODE_LIST)
+				. += "<h4>Catalogue</h4><br>"
+				if(length(src.canbuy) < 1)
+					. += "None!"
+				else
+					for(var/P in src.canbuy)
+						var/datum/mail_order/F = src.canbuy[P]
+						if(!istype(F, /datum/mail_order))
+							continue
+						. += {"<a href='byond://?src=\ref[src];add_to_cart=[P]'>[F.name] - $[F.cost]</a><br>
+						[F.desc]<br><hr>"}
+
+			if(MODE_HELP)
+				. += src.return_help_text()
+
+			if(MODE_CART)
+				. += "<h4>Shopping Cart</h4><br>"
+				if(length(src.cart) < 1)
+					. += "Empty - please use Catalogue."
+				else
+					var/entryct = length(src.cart)
+					. += "[entryct] Selections - [cartsize] Items - $[cartcost]"
+					. += "<a href='byond://?src=\ref[src];checkout'>[Check Out]</a> | <a href='byond://?src=\ref[src];clearcart'>[Clear Cart]</a>"
+					for(var/P in src.cart)
+						var/datum/mail_order/F = src.cart[P]
+						if(!istype(F, /datum/mail_order))
+							continue
+						var/itemct = length(F.order_items)
+						var/requiresid
+						if(length(F.order_perm))
+							requiresid = "Requires ID"
+						else
+							requiresid = ""
+						. += {"<table cellspacing=5>
+						<tr>
+						<td>[F.name]</td>
+						<td>[requiresid]</td></tr>
+						<tr>
+						<td>[itemct] Items</td>
+						<td>$[F.cost]</td>
+						</tr>
+						</table><hr>"}
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if (href_list["viewlist"])
+			if(src.mode == MODE_LIST)
+				src.mode = MODE_MAIN
+			else
+				src.mode = MODE_LIST
+
+		if (href_list["viewcart"])
+			if(src.mode == MODE_CART)
+				src.mode = MODE_MAIN
+			else
+				src.mode = MODE_CART
+
+		if (href_list["checkout"])
+			if(length(src.cart))
+				if(src.master.ID_card && src.master.ID_card.money >= src.cartcost)
+					var/destination = input(usr, "Select destination mail tag", src.name, null) as text
+					if (destination && isalive(usr))
+						src.shipcart()
+						var/alert_beep = null
+						if(!src.master.host_program.message_silent)
+							alert_beep = src.master.host_program.message_tone
+						src.master.display_alert(alert_beep)
+						var/displayMessage = "[bicon(master)] Thank your for your purchase! Delivery to '[giventag]' in progress."
+						src.master.display_message(displayMessage)
+				else
+					var/alert_beep = null
+					if(!src.master.host_program.message_silent)
+						alert_beep = src.master.host_program.message_tone
+					src.master.display_alert(alert_beep)
+					var/displayMessage = "[bicon(master)] Card error detected! Please insert a card with sufficient loaded credits."
+					src.master.display_message(displayMessage)
+
+		if (href_list["clearcart"])
+			if(length(src.cart))
+				src.cartsize = 0
+				src.cartcost = 0
+				src.cart.Cut()
+
+		if (href_list["add_to_cart"])
+			if(src.canbuy[href_list["add_to_cart"]])
+				var/datum/mail_order/F = src.canbuy(href_list["add_to_cart"])
+				if(length(F.order_items) + src.cartsize <= 7)
+					src.cartsize += length(F.order_items)
+					src.cartcost += F.cost
+					src.cart += F
+				else
+					var/alert_beep = null
+					if(!src.master.host_program.message_silent)
+						alert_beep = src.master.host_program.message_tone
+					src.master.display_alert(alert_beep)
+					var/displayMessage = "[bicon(master)] Your cart is full! Please place your order or remove an item."
+					src.master.display_message(displayMessage)
+
+		src.master.add_fingerprint(usr)
+		src.master.updateSelfDialog()
+		return
+
+	//charge cart cost, arrange for package construction/shipping
+	proc/shipcart(var/destination)
+		src.cartsize = 0
+		src.cartcost = 0
+		src.cart.Cut()
+
+#undef MODE_LIST
+#undef MODE_HELP
+#undef MODE_CART
