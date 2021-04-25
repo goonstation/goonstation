@@ -94,8 +94,8 @@
 					. += "Empty - please use Catalogue."
 				else
 					var/entryct = length(src.cart)
-					. += "[entryct] Selections - [cartsize] Items - $[cartcost]"
-					. += "<a href='byond://?src=\ref[src];checkout'>Check Out</a> | <a href='byond://?src=\ref[src];clearcart'>Clear Cart</a>"
+					. += "[entryct] Selections - [cartsize] Items - $[cartcost]<br>"
+					. += "<a href='byond://?src=\ref[src];checkout'>Check Out</a> | <a href='byond://?src=\ref[src];clearcart'>Clear Cart</a><br><hr>"
 					for(var/P in src.cart)
 						var/datum/mail_order/F = P
 						if(!istype(F, /datum/mail_order))
