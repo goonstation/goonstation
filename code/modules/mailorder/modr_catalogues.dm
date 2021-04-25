@@ -40,5 +40,12 @@
 
 
 /datum/computer/file/pda_program/catalogue
-	name = "Mail-Order Catalogue"
+	name = "The Omega Catalogue"
 	size = 32
+	var/entries_to_index = "/datum/mail_order"
+
+	medical
+		entries_to_index = "/datum/mail_order/medical"
+
+	chem
+		entries_to_index = "/datum/mail_order/chem"
