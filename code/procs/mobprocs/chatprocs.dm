@@ -534,7 +534,7 @@
 	else
 		return 0
 
-/mob/verb/listen_ooc()
+/mob/proc/listen_ooc()
 	set name = "(Un)Mute OOC"
 	set desc = "Mute or Unmute Out Of Character chat."
 
@@ -620,7 +620,7 @@
 
 	logTheThing("ooc", src, null, "OOC: [msg]")
 
-/mob/verb/listen_looc()
+/mob/proc/listen_looc()
 	set name = "(Un)Mute LOOC"
 	set desc = "Mute or Unmute Local Out Of Character chat."
 

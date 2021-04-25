@@ -14,6 +14,7 @@
 	var/list/connects_with_overlay_exceptions = list() // same as above comment
 	var/image/connect_image = null
 	var/tmp/connect_overlay_dir = 0
+	var/connect_diagonal = 0 // 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
 	var/d_state = 0
 
 	New()
@@ -76,6 +77,29 @@
 							if (!M.anchored)
 								continue
 						src.connect_overlay_dir |= dir
+		if (connect_diagonal)
+			for (var/j = 1 to 4)
+				if (connect_diagonal < 2 && (builtdir & ordinal[j] != ordinal[j]))
+					continue
+				var/turf/T = get_step(src, ordinal[j])
+				var/dir = 8 << j
+				if (T && (istype(T, src.type)))
+					builtdir |= dir
+				else if (connects_to)
+					for (var/i=1, i <= connects_to.len, i++)
+						// if the turf appears in our connection list AND isn't in our exceptions...
+						if (istype(T, connects_to[i]) && !(T.type in connects_to_exceptions))
+							builtdir |= dir
+							break
+						// Search for non-turf atoms we can connect to
+						var/atom/A = locate(connects_to[i]) in T
+						if (!isnull(A))
+							if (istype(A, /atom/movable))
+								var/atom/movable/M = A
+								if (!M.anchored)
+									continue
+							builtdir |= dir
+							break
 
 		var/the_state = "[mod][builtdir]"
 		if ( !(istype(src, /turf/simulated/wall/auto/jen)) && !(istype(src, /turf/simulated/wall/auto/reinforced/jen)) ) //please no more sprite, i drained my brain doing this

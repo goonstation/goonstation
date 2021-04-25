@@ -1,5 +1,16 @@
 
+(t)sun apr 25 21
+(u)Flaborized
+(p)4451
+(e)🎨|sprites
+(*)Added two new hairstyles: Mermaid: Faded and Longbeard: Faded. They can be combined with the originals to make an interesting gradient effect.
 (t)sat apr 24 21
+(u)DimWhat
+(p)4422
+(e)🎨|sprites
+(+)Several new sprites have been added for monkey clothing. Ook!
+(u)pali
+(+)Verbs for (un)muting (L)OOC have been removed because people kept clicking them accidentally. Use the chat filters in the chat cogwheel menu instead.
 (u)Tarmunora
 (e)⚖|balance
 (+)Armored fire/bio/paramedic suits no longer are more bulletproof than the armor used to make them.
