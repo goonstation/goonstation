@@ -2577,13 +2577,13 @@ Player Stats
 		var/points = 0
 		while (points < max_points)
 			var/selected = pick(possible_rewards)
-			if(points + possible_rewards[selected] > max_points + 5) continue
+			var/point_val = possible_rewards[selected]
+			if(points + point_val > max_points + 5) continue
 			var/obj/item/I = new selected(src)
-			var/val = possible_rewards[selected]
 
 			message_admins("[I.name] = [possible_rewards[selected]]pts")
 			//if possible_rewards[selected] is null or 0, we increment by 1 null or 1 we spawn 1, if some other number, we add that many points
-			points += possible_rewards[selected] ? possible_rewards[selected] : 1
+			points += point_val ? point_val : 1
 			// points += total_spawned
 
 			failsafe_counter++
@@ -2738,3 +2738,110 @@ proc/setup_pw_crate_lists()
 		else
 			qdel(src)
 		return
+
+///////////////////////////////////////PW Blasters
+/obj/item/gun/energy/blaster_pod_wars
+	name = "blaster pistol"
+	desc = "A dangerous-looking blaster pistol. It's self-charging by a radioactive power cell."
+	icon = 'icons/obj/items/gun.dmi'
+	icon_state = "pw_pistol"
+	w_class = 3.0
+	force = 8.0
+	mats = 0
+	var/image/indicator_display = null
+	var/display_color =	"#00FF00"
+	var/initial_proj = /datum/projectile/laser/blaster
+	var/team_num = 0	//1 is NT, 2 is Syndicate
+
+	shoot(var/target,var/start,var/mob/user)
+		if (canshoot())
+			if (team_num)
+				if (team_num == 1 && user?.mind?.special_role == "NanoTrasen")
+					return ..(target, start, user)
+				else if (team_num == 2 && user?.mind?.special_role == "Syndicate")
+					return ..(target, start, user)
+				else
+					boutput(user, "<span class='alert'>You don't have to right DNA to fire this weapon!</span><br>")
+					playsound(get_turf(user), "sound/machines/buzz-sigh.ogg", 20, 1)
+
+					return
+			else
+				return ..(target, start, user)
+
+	disposing()
+		indicator_display = null
+		..()
+
+
+	New()
+		var/obj/item/ammo/power_cell/self_charging/pod_wars_basic/PC = new/obj/item/ammo/power_cell/self_charging/pod_wars_basic()
+		cell = PC
+		current_projectile = new initial_proj
+		projectiles = list(current_projectile)
+		src.indicator_display = image('icons/obj/items/gun.dmi', "")
+
+		..()
+
+	update_icon()
+		..()
+		src.overlays = null
+
+		if (src.cell)
+			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
+			var/ratio = min(1, src.cell.charge / maxCharge)
+			ratio = round(ratio, 0.25) * 100
+			if (ratio == 0)
+				return
+			indicator_display.icon_state = "pw_pistol_power-[ratio]"
+			indicator_display.color = display_color
+			src.overlays += indicator_display
+
+	nanotrasen
+		muzzle_flash = "muzzle_flash_plaser"
+		display_color =	"#0a4882"
+		initial_proj = /datum/projectile/laser/blaster/pod_pilot/blue_NT
+		team_num = 1
+
+	syndicate
+		muzzle_flash = "muzzle_flash_laser"
+		display_color =	"#ff4043"
+		initial_proj = /datum/projectile/laser/blaster/pod_pilot/red_SY
+		team_num = 2
+
+/obj/item/ammo/power_cell/higher_power
+	name = "Power Cell - 500"
+	desc = "A power cell that holds a max of 500PU"
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "power_cell"
+	m_amt = 20000
+	g_amt = 45000
+	charge = 500.0
+	max_charge = 500.0
+
+
+/obj/item/ammo/power_cell/self_charging/pod_wars_basic
+	name = "Power Cell - Basic Radioisotope"
+	desc = "A power cell that contains a radioactive material and small capacitor that recharges at a modest rate. Holds 200PU."
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "recharger_cell"
+	charge = 200
+	max_charge = 200
+	recharge_rate = 10
+
+/obj/item/ammo/power_cell/self_charging/pod_wars_generic
+	name = "Power Cell - Generic Radioisotope"
+	desc = "A power cell that contains a radioactive material that recharges at a quick rate. Holds 300PU."
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "recharger_cell"
+	charge = 300
+	max_charge 300
+	recharge_rate = 15
+
+/obj/item/ammo/power_cell/self_charging/pod_wars_high
+	name = "Power Cell - Generic Radioisotope "
+	desc = "A power cell that contains a radioactive material and large capacitor that recharges at a modest rate. Holds 350PU."
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "recharger_cell"
+	charge = 350
+	max_charge 350
+	recharge_rate = 30
