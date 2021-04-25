@@ -596,24 +596,26 @@
 	connects_to = list(/turf/unsimulated/wall/auto/reinforced)
 
 /turf/unsimulated/wall/auto/supernorn
-	icon = 'icons/turf/walls_supernorn.dmi'
+	icon = 'icons/turf/walls_supernorn_smooth.dmi'
 	light_mod = "wall-"
+	mod = "norn-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 1
+	connect_diagonal = 1
 	connects_to = list(/turf/unsimulated/wall/auto/supernorn, /turf/unsimulated/wall/auto/reinforced/supernorn, /obj/machinery/door,
 	/obj/window)
-	connects_with_overlay = list(/turf/unsimulated/wall/auto/reinforced/supernorn, /obj/machinery/door,
-	/obj/window)
+	connects_with_overlay = list(/obj/machinery/door, /obj/window)
 
 /turf/unsimulated/wall/auto/reinforced/supernorn
-	icon = 'icons/turf/walls_supernorn.dmi'
+	icon = 'icons/turf/walls_supernorn_smooth.dmi'
 	light_mod = "wall-"
+	mod = "norn-R-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 1
+	connect_diagonal = 1
 	connects_to = list(/turf/unsimulated/wall/auto/supernorn, /turf/unsimulated/wall/auto/reinforced/supernorn, /obj/machinery/door,
 	/obj/window)
-	connects_with_overlay = list(/turf/unsimulated/wall/auto/supernorn, /obj/machinery/door,
-	/obj/window)
+	connects_with_overlay = list(/obj/machinery/door, /obj/window)
 
 /turf/unsimulated/wall/auto/gannets
 	icon = 'icons/turf/walls_destiny.dmi'
