@@ -3784,7 +3784,7 @@ datum
 		iron_oxide
 			name = "Iron Oxide"
 			id = "iron_oxide"
-			description = "Iron, artifically rusted under the effects of water, oxygen and a high temperature enviroment."
+			description = "Iron, artifically rusted under the effects of oxygen, acetic acid, salt and a high temperature enviroment."
 			fluid_r = 112
 			fluid_b = 40
 			fluid_g = 9
