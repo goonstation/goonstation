@@ -1,5 +1,9 @@
 
 (t)sat apr 24 21
+(u)DimWhat
+(p)4422
+(e)🎨|sprites
+(+)Several new sprites have been added for monkey clothing. Ook!
 (u)pali
 (+)Verbs for (un)muting (L)OOC have been removed because people kept clicking them accidentally. Use the chat filters in the chat cogwheel menu instead.
 (u)Tarmunora

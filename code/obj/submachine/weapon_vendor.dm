@@ -432,7 +432,7 @@
 		icon_state = "req-token"
 
 		vr
-			name = "NUKE_TKN.EXE"
+			name = "syndicoin requisition token"
 
 	security
 		desc = "An NT-provided token compatible with the Security Weapons Vendor."
