@@ -181,10 +181,10 @@
 				continue
 			for(var/loaditem in F.order_items)
 				boxstock += loaditem
-		var/obj/item/storage/package = new /obj/item/storage/box/mailorder(spawn_contents = boxstock)
+		//this should create the box in a mail order handler doohickey
+		var/obj/item/storage/package = new /obj/item/storage/box/mailorder(get_turf(src.master),spawn_contents = boxstock)
 		if(src.master.ID_card && src.master.ID_card.registered)
 			package.name = "mail-order box ([src.master.ID_card.registered])"
-		package.loc = get_turf(src.master) // put it in shipping location instead
 		src.cartsize = 0
 		src.cartcost = 0
 		src.cart.Cut()
