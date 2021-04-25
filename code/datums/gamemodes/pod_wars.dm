@@ -1550,6 +1550,54 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		hidden = list()
 		..()
 
+/datum/manufacture/pod_wars/cell_high
+	name = "Standard Large Weapon Cell"
+	item_paths = list("MET-1")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/ammo/power_cell/high_power)
+	time = 1 SECONDS
+	create = 1
+	category = "Ammo"
+
+/datum/manufacture/pod_wars/cell_higher
+	name = "Standard Bubs Weapon Cell"
+	item_paths = list("MET-1")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/ammo/power_cell/higher_power)
+	time = 1 SECONDS
+	create = 1
+	category = "Ammo"
+
+////////////////////////////
+
+/datum/manufacture/pod_wars/cell_pod_wars_basic
+	name = "Basic Self-Charging Weapon Cell"
+	item_paths = list("MET-1")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/ammo/power_cell/self_charging/pod_wars_basic)
+	time = 1 SECONDS
+	create = 1
+	category = "Ammo"
+
+/datum/manufacture/pod_wars/cell_pod_wars_standard
+	name = "Standard Self-Charging Weapon Cell"
+	item_paths = list("MET-1")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/ammo/power_cell/self_charging/pod_wars_standard)
+	time = 1 SECONDS
+	create = 1
+	category = "Ammo"
+
+/datum/manufacture/pod_wars/cell_pod_wars_high
+	name = "Robust Self-Charging Weapon Cell"
+	item_paths = list("MET-1")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/ammo/power_cell/self_charging/pod_wars_high)
+	time = 1 SECONDS
+	create = 1
+	category = "Ammo"
+
+
 
 //It's cheap, use it!
 /datum/manufacture/pod_wars/lock
@@ -2828,8 +2876,8 @@ proc/setup_pw_crate_lists()
 	max_charge = 200
 	recharge_rate = 10
 
-/obj/item/ammo/power_cell/self_charging/pod_wars_generic
-	name = "Power Cell - Generic Radioisotope"
+/obj/item/ammo/power_cell/self_charging/pod_wars_standard
+	name = "Power Cell - Standard Radioisotope"
 	desc = "A power cell that contains a radioactive material that recharges at a quick rate. Holds 300PU."
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "recharger_cell"
@@ -2838,7 +2886,7 @@ proc/setup_pw_crate_lists()
 	recharge_rate = 15
 
 /obj/item/ammo/power_cell/self_charging/pod_wars_high
-	name = "Power Cell - Generic Radioisotope "
+	name = "Power Cell - Robust Radioisotope "
 	desc = "A power cell that contains a radioactive material and large capacitor that recharges at a modest rate. Holds 350PU."
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "recharger_cell"
