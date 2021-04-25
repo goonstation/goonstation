@@ -24,8 +24,14 @@ const DEFAULT_SIZE = [400, 600];
 export class Window extends Component {
   componentDidMount() {
     const { suspended } = useBackend(this.context);
+    const { canClose } = this.props;
     if (suspended) {
       return;
+    }
+    if (!canClose) {
+      Byond.winset(window.__windowId__, {
+        'can-close': false,
+      });
     }
     logger.log('mounting');
     this.updateGeometry();
@@ -58,6 +64,7 @@ export class Window extends Component {
 
   render() {
     const {
+      canClose,
       theme,
       title,
       children,
@@ -88,7 +95,8 @@ export class Window extends Component {
           onClose={() => {
             logger.log('pressed close');
             dispatch(backendSuspendStart());
-          }} />
+          }}
+          canClose={canClose} />
         <div
           className={classes([
             'Window__rest',
@@ -156,6 +164,7 @@ const TitleBar = (props, context) => {
     className,
     title,
     status,
+    canClose,
     fancy,
     onDragStart,
     onClose,
@@ -194,7 +203,7 @@ const TitleBar = (props, context) => {
           <Icon name="bug" />
         </div>
       )}
-      {!!fancy && (
+      {!!fancy && canClose && (
         <div
           className="TitleBar__close TitleBar__clickable"
           // IE8: Synthetic onClick event doesn't work on IE8.
