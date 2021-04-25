@@ -62,7 +62,7 @@
 
 	New()
 		..()
-		for(var/S in concrete_typesof(entries_to_index))
+		for(var/datum/mail_order/S in concrete_typesof(entries_to_index))
 			src.canbuy[S.name] += new S()
 
 	return_text()
