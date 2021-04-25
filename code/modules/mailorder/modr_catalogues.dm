@@ -1,7 +1,7 @@
 /obj/item/disk/data/cartridge/catalogue
 	name = "\improper unprogrammed mail-order cartridge"
 	desc = "An electronic mail-order cartridge for PDAs with built-in payment handling."
-
+/*
 	nt
 		name = "\improper Nanotrasen mail-order cartridge"
 		icon_state = "cart-fancy"
@@ -19,7 +19,7 @@
 			src.root.add_file( new /datum/computer/file/pda_program/catalogue/takeout(src))
 			src.file_amount = src.file_used
 			src.read_only = 1
-
+*/
 	medical
 		name = "\improper Survival Mart mail-order cartridge"
 		icon_state = "cart-med"
@@ -39,3 +39,6 @@
 			src.read_only = 1
 
 
+/datum/computer/file/pda_program/catalogue
+	name = "Mail-Order Catalogue"
+	size = 32
