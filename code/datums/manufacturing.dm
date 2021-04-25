@@ -2291,15 +2291,6 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 3 //because a shoe god has to have acolytes
 	category = "Clothing"
 
-/datum/manufacture/monke
-	name = "Ook's Bag of Wisdom"
-	item_paths = list("FAB-1")
-	item_amounts = list(4)
-	item_outputs = list(/obj/item/clothing/head/monke)
-	time = 5 SECONDS
-	create = 1
-	category = "Clothing"
-
 /////// pod construction components
 
 /datum/manufacture/pod/parts

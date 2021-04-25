@@ -11,10 +11,9 @@
 	wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
 	icon_state = "ljacket"
 	item_state = "ljacket"
+	wear_layer = MOB_ARMOR_LAYER
 	var/fire_resist = T0C+100
 	var/over_hair = 0
-	var/over_all = 0 // shows up over all other clothes/hair/etc on people
-	var/over_back = 0
 	flags = FPRINT | TABLEPASS
 	w_class = W_CLASS_NORMAL
 	var/restrain_wearer = 0
@@ -545,7 +544,7 @@
 	body_parts_covered = TORSO|ARMS
 	see_face = 0
 	over_hair = 1
-	over_all = 1
+	wear_layer = MOB_OVERLAY_BASE
 	var/eyeholes = 0 //Did we remember to cut eyes in the thing?
 	var/cape = 0
 	var/obj/stool/bed/Bed = null
@@ -655,15 +654,13 @@
 			src.item_state = src.icon_state
 			see_face = 1
 			over_hair = 0
-			over_all = 0
-			over_back = 1
+			wear_layer = MOB_BACK_LAYER + 0.2
 		else
 			src.icon_state = "bedsheet[src.bcolor ? "-[bcolor]" : null][src.eyeholes ? "1" : null]"
 			src.item_state = src.icon_state
 			see_face = 0
 			over_hair = 1
-			over_all = 1
-			over_back = 0
+			wear_layer = MOB_OVERLAY_BASE
 
 	proc/cut_eyeholes()
 		if (src.cape || src.eyeholes)
@@ -763,7 +760,7 @@
 	icon_state = "bedcape"
 	item_state = "bedcape"
 	cape = 1
-	over_back = 1
+	wear_layer = MOB_BACK_LAYER + 0.2
 	block_vision = 0
 
 /obj/item/clothing/suit/bedsheet/cape/red
@@ -1321,7 +1318,7 @@
 		desc = "For those who have seen the yellow sign and answered its call.."
 		icon_state = "hasturcultist"
 		item_state = "hasturcultist"
-		over_all = 1
+		wear_layer = MOB_OVERLAY_BASE
 
 	nerd
 		name = "robes of dungeon mastery"
@@ -1340,7 +1337,7 @@
 	icon_state = "flockcultist"
 	item_state = "flockcultistt"
 	see_face = 0
-	over_all = 1
+	wear_layer = MOB_OVERLAY_BASE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.01
