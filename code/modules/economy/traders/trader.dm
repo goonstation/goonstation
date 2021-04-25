@@ -28,7 +28,7 @@
 	"Hey, got some new selection for you! Take a look.",
 	"Just finished getting everything set up! Come and browse my selection.",
 	"I've got some very impressive goods to sell today!",
-	"I finally got rid of those cargo holds. Buy some stuff, I need to make the money back.")
+	"I've finally gotten rid of the cargo holds. Please buy something, I need to make the money back.")
 	var/list/dialogue_leave = list("This is going nowhere. I'm outta here.",
 	"This is the best Nanotrasen has to offer? We're finished here, goodbye.",
 	"What a joke. I can't believe I bothered with you. Bye.",
