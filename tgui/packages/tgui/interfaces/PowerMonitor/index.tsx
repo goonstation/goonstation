@@ -10,7 +10,7 @@ export const PowerMonitor = (props, context) => {
   const [search, setSearch] = useSharedState(context, 'search', '');
 
   return (
-    <Window width={700} height={700}>
+    <Window width={700} height={700} theme="retro-dark">
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
