@@ -81,11 +81,11 @@
 					. += "None!"
 				else
 					for(var/P in src.canbuy)
-						var/datum/mail_order/F = P
+						var/datum/mail_order/F = src.canbuy[P]
 						if(!istype(F, /datum/mail_order))
 							continue
 						var/itemct = length(F.order_items)
-						. += {"<a href='byond://?src=\ref[src];add_to_cart=[P]'>[F.name]</a> - [itemct] Item(s) - $[F.cost]<br>
+						. += {"<a href='byond://?src=\ref[src];add_to_cart=[F.name]'>[F.name]</a> - [itemct] Item(s) - $[F.cost]<br>
 						[F.desc]<br><hr>"}
 
 			if(MODE_CART)

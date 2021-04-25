@@ -24,7 +24,7 @@ ABSTRACT_TYPE(/datum/mail_order/medical/)
 		cost = PAY_UNTRAINED / 2
 
 	analyze_up
-		name = "Health Analyzer Deluxe Upgrade"
+		name = "Analyzer Deluxe Upgrade"
 		desc = "Top-of-the-line enhancements for any industry-standard health analyzer."
 		order_items = list(/obj/item/device/analyzer/healthanalyzer_upgrade,/obj/item/device/analyzer/healthanalyzer_organ_upgrade)
 		cost = PAY_TRADESMAN / 4
