@@ -40,12 +40,12 @@
 
 
 #define MODE_LIST 0
-#define MODE_HELP 1
-#define MODE_CART 2
+#define MODE_CART 1
 
 /datum/computer/file/pda_program/catalogue
 	name = "The Omega Catalogue"
 	size = 32
+	var/mode = 0
 	var/entries_to_index = "/datum/mail_order"
 	var/list/cart = list() //mail order entries selected for purchase
 	var/cartsize = 0 // based on amount of items in selected entries, not amount of entries
@@ -67,7 +67,6 @@
 		. = src.return_text_header()
 		. += " | <a href='byond://?src=\ref[src];viewlist=1'>Catalogue</a>"
 		. += " | <a href='byond://?src=\ref[src];viewcart=1'>Cart</a>"
-		. += " | <a href='byond://?src=\ref[src];readme=1'>Help</a><br>"
 		. += "<h4>[src.name]</h4><hr>"
 
 		if(!src.master.host_program)
@@ -85,9 +84,6 @@
 						. += {"<a href='byond://?src=\ref[src];add_to_cart=[P]'>[F.name] - $[F.cost]</a><br>
 						[F.desc]<br><hr>"}
 
-			if(MODE_HELP)
-				. += src.return_help_text()
-
 			if(MODE_CART)
 				. += "<h4>Shopping Cart</h4><br>"
 				if(length(src.cart) < 1)
@@ -95,7 +91,7 @@
 				else
 					var/entryct = length(src.cart)
 					. += "[entryct] Selections - [cartsize] Items - $[cartcost]"
-					. += "<a href='byond://?src=\ref[src];checkout'>[Check Out]</a> | <a href='byond://?src=\ref[src];clearcart'>[Clear Cart]</a>"
+					. += "<a href='byond://?src=\ref[src];checkout'>Check Out</a> | <a href='byond://?src=\ref[src];clearcart'>Clear Cart</a>"
 					for(var/P in src.cart)
 						var/datum/mail_order/F = src.cart[P]
 						if(!istype(F, /datum/mail_order))
@@ -121,14 +117,11 @@
 			return
 
 		if (href_list["viewlist"])
-			if(src.mode == MODE_LIST)
-				src.mode = MODE_MAIN
-			else
-				src.mode = MODE_LIST
+			src.mode = MODE_LIST
 
 		if (href_list["viewcart"])
 			if(src.mode == MODE_CART)
-				src.mode = MODE_MAIN
+				src.mode = MODE_LIST
 			else
 				src.mode = MODE_CART
 
