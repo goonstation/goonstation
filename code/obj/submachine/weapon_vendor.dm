@@ -71,6 +71,7 @@
 					var/atom/A = new M.path(src.loc)
 					playsound(src.loc, sound_buy, 80, 1)
 					src.vended(A)
+					usr.put_in_hand_or_eject(A)
 					return TRUE
 
 	attackby(var/obj/item/I, var/mob/user)
