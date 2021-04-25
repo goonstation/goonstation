@@ -591,9 +591,6 @@ var/global
 	//Used for QM Ordering Categories
 	list/QM_CategoryList = list()
 
-	//mail-order datum instantiation whee
-	list/datum/recruitment_role/mail_order_entries = list()
-
 	//Okay, I guess this was getting constructed every time someone wanted something from it
 	list/datum/syndicate_buylist/syndi_buylist_cache = list()
 
