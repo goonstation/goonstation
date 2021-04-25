@@ -847,6 +847,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\localassets\localasset.dm"
 #include "code\modules\localassets\localassets_tgui.dm"
 #include "code\modules\mailorder\modr_catalogues.dm"
+#include "code\modules\mailorder\modr_entries.dm"
 #include "code\modules\mailorder\modr_handling.dm"
 #include "code\modules\materials\Mat_FabParts.dm"
 #include "code\modules\materials\Mat_FabRecipes.dm"
