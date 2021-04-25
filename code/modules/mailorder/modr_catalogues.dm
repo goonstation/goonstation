@@ -53,17 +53,17 @@
 	var/list/canbuy = list() //list of catalog entries
 
 	medical
-		name = "Survival Mart Catalogue"
+		name = "Survival Mart"
 		entries_to_index = /datum/mail_order/medical
 
 	chem
-		name = "Chems-r-Us Catalogue"
+		name = "Chems-r-Us"
 		entries_to_index = /datum/mail_order/chem
 
 	New()
 		..()
 		for(var/S in concrete_typesof(entries_to_index))
-			src.canbuy += new S()
+			src.canbuy[S.name] += new S()
 
 	return_text()
 		. = src.return_text_header()
@@ -83,7 +83,8 @@
 						var/datum/mail_order/F = P
 						if(!istype(F, /datum/mail_order))
 							continue
-						. += {"<a href='byond://?src=\ref[src];add_to_cart=[P]'>[F.name] - $[F.cost]</a><br>
+						var/itemct = length(F.order_items)
+						. += {"<a href='byond://?src=\ref[src];add_to_cart=[P]'>[F.name]</a> - [itemct] - $[F.cost]<br>
 						[F.desc]<br><hr>"}
 
 			if(MODE_CART)
@@ -151,8 +152,8 @@
 				src.cart.Cut()
 
 		if (href_list["add_to_cart"])
-			var/datum/mail_order/F = href_list["add_to_cart"]
-			if(!istype(F, /datum/mail_order))
+			var/datum/mail_order/F = src.canbuy[href_list["add_to_cart"]]
+			if(istype(F, /datum/mail_order))
 				if(length(F.order_items) + src.cartsize <= 7)
 					src.cartsize += length(F.order_items)
 					src.cartcost += F.cost
