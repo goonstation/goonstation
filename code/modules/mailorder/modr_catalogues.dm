@@ -62,8 +62,8 @@
 
 	New()
 		..()
-		for(var/datum/mail_order/S in concrete_typesof(entries_to_index))
-			var/mo_entry = new S()
+		for(var/S in concrete_typesof(entries_to_index))
+			var/datum/mail_order/mo_entry = new S()
 			src.canbuy[mo_entry.name] = mo_entry
 
 	return_text()
