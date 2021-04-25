@@ -314,10 +314,11 @@
 	containertype = /obj/storage/crate/medical
 	containername = "Medical Crate"
 
-/datum/supply_packs/glass_recycler
+/datum/supply_packs/complex/glass_recycler
 	name = "Glass Recycler"
 	desc = "x1 Kitchenware Recycler, a tabletop machine allowing you to recycle reclaimed glass into many different types of glassware"
 	category = "Civilian Department"
+	contains = list(/obj/item/electronics/soldering)
 	frames = list(/obj/machinery/glass_recycler)
 	cost = 3000
 	containertype =/obj/storage/crate
