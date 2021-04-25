@@ -1,5 +1,9 @@
 
 (t)sun apr 25 21
+(u)Luxizzle
+(p)4339
+(e)📄|tgui
+(*)Converted power monitors to tgui.
 (u)ZeWaka, BenLubar, & Rohesie
 (p)4468
 (e)🗺🎨|mapping, sprites
