@@ -127,10 +127,11 @@
 			src.mode = MODE_CART
 
 		if (href_list["checkout"])
-			if(length(src.cart))
+			if(length(src.cart) > 0)
 				if(src.master.ID_card && src.master.ID_card.money >= src.cartcost)
 					var/destination = input(usr, "Select destination mail tag", src.name, null) as text
 					if (destination && isalive(usr))
+						src.master.ID_card.money -= src.cartcost
 						src.shipcart()
 						var/alert_beep = null
 						if(!src.master.host_program.message_silent)
@@ -147,7 +148,7 @@
 					src.master.display_message(displayMessage)
 
 		if (href_list["clearcart"])
-			if(length(src.cart))
+			if(length(src.cart) > 0)
 				src.cartsize = 0
 				src.cartcost = 0
 				src.cart.Cut()
@@ -171,11 +172,27 @@
 		src.master.updateSelfDialog()
 		return
 
-	//charge cart cost, arrange for package construction/shipping
+	//arrange for package construction/shipping, then clear cart
 	proc/shipcart(var/destination)
+		var/list/boxstock = list()
+		for(var/P in src.cart)
+			var/datum/mail_order/F = P
+			if(!istype(F, /datum/mail_order))
+				continue
+			for(var/loaditem in F.order_items)
+				boxstock += loaditem
+		var/package = new /obj/item/storage/box/mailorder(spawn_contents = boxstock)
+		if(src.master.ID_card && src.master.ID_card.registered)
+			package.name = "mail-order box ([registered])"
+		package.loc = src.master.loc
 		src.cartsize = 0
 		src.cartcost = 0
 		src.cart.Cut()
 
 #undef MODE_LIST
 #undef MODE_CART
+
+/obj/item/storage/box/mailorder
+	name = "mail-order box"
+	icon_state = "evidence"
+	desc = "A box containing mail-ordered items."

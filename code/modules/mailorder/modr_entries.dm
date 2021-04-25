@@ -25,19 +25,19 @@ ABSTRACT_TYPE(/datum/mail_order/medical/)
 
 	analyze_up
 		name = "Analyzer Deluxe Upgrade"
-		desc = "Top-of-the-line enhancements for any industry-standard health analyzer."
+		desc = "Top-of-the-line enhancements for any standard health analyzer."
 		order_items = list(/obj/item/device/analyzer/healthanalyzer_upgrade,/obj/item/device/analyzer/healthanalyzer_organ_upgrade)
 		cost = PAY_TRADESMAN / 4
 
 	auto_char
 		name = "Charcoal Auto-Injector"
-		desc = "A ready-to-use, sterile single-use injector containing ten units of charcoal."
+		desc = "A rapid single-use injector containing ten units of charcoal."
 		order_items = list(/obj/item/reagent_containers/emergency_injector/charcoal)
 		cost = PAY_TRADESMAN / 4
 
 	auto_epi
 		name = "Epinephrine Auto-Injector"
-		desc = "A ready-to-use, sterile single-use injector containing ten units of epinephrine."
+		desc = "A rapid single-use injector containing ten units of epinephrine."
 		order_items = list(/obj/item/reagent_containers/emergency_injector/epinephrine)
 		cost = PAY_TRADESMAN / 4
 
@@ -48,18 +48,18 @@ ABSTRACT_TYPE(/datum/mail_order/chem)
 
 	acetone
 		name = "Acetone, 50u Bottle"
-		desc = "50 units of acetone, meeting our rigorous scientific standards for reagent purity."
+		desc = "50 units of acetone in a standard reagent bottle."
 		order_items = list(/obj/item/reagent_containers/glass/bottle/acetone)
 		cost = PAY_TRADESMAN / 4
 
 	ammonia
 		name = "Ammonia, 50u Bottle"
-		desc = "50 units of ammonia, meeting our rigorous scientific standards for reagent purity."
+		desc = "50 units of ammonia in a standard reagent bottle."
 		order_items = list(/obj/item/reagent_containers/glass/bottle/ammonia)
 		cost = PAY_TRADESMAN / 4
 
 	phenol
 		name = "Phenol, 50u Bottle"
-		desc = "50 units of phenol, meeting our rigorous scientific standards for reagent purity."
+		desc = "50 units of phenol in a standard reagent bottle."
 		order_items = list(/obj/item/reagent_containers/glass/bottle/phenol)
 		cost = PAY_TRADESMAN / 4
