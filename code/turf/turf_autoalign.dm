@@ -79,7 +79,7 @@
 						src.connect_overlay_dir |= dir
 		if (connect_diagonal)
 			for (var/j = 1 to 4)
-				if (connect_diagonal < 2 && (builtdir & ordinal[j] != ordinal[j]))
+				if (connect_diagonal < 2 && ((builtdir & ordinal[j]) != ordinal[j]))
 					continue
 				var/turf/T = get_step(src, ordinal[j])
 				var/dir = 8 << j
