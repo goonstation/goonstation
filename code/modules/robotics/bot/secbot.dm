@@ -93,10 +93,6 @@
 	var/auto_patrol = 0		// set to make bot automatically patrol
 	var/beacon_freq = 1445		// navigation beacon frequency
 	var/control_freq = 1447		// bot control frequency
-	var/tacticool = 0 // Do we shit up our report with useless lingo?
-	var/badge_number = null // what dumb thing are we calling ourself today?
-	var/badge_number_length = 2 // How long is that dumb thing supposed to be?
-	var/badge_number_length_forcemax = 0 // always make it that long
 
 	var/turf/patrol_target	// this is turf to navigate to (location of beacon)
 	var/new_destination		// pending new destination (waiting for beacon response)
@@ -131,6 +127,7 @@
 	/// Obey the threat threshold. Otherwise, just cuff em
 	var/warn_minor_crime = 0
 
+	var/added_to_records = FALSE
 	/// Set a bot to guard an area, and they'll go there and mill around
 	var/area/guard_area
 	/// Arrest anyone who arent security / heads if they're in this area?
@@ -170,7 +167,6 @@
 	idcheck = 1
 	auto_patrol = 1
 	report_arrests = 1
-	tacticool = 1
 	move_arrest_step_delay = ARREST_SPEED * 0.9 // beepsky has some experience chasing crimers
 	loot_baton_type = /obj/item/baton/beepsky
 	is_beepsky = IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON
@@ -246,10 +242,6 @@
 		src.icon_state = "secbot[src.on]"
 		if (!src.our_baton || !istype(src.our_baton))
 			src.our_baton = new our_baton_type(src)
-
-
-		if (src.tacticool || prob(20))
-			make_tacticool()
 
 		add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
 		chargepic = image('icons/effects/electile.dmi', "6c")
@@ -512,11 +504,7 @@
 			var/bot_location = get_area(src)
 			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency(FREQ_PDA)
 			var/datum/signal/pdaSignal = get_free_signal()
-			var/message2send
-			if (src.tacticool)
-				message2send = "Notification: Tactical law intervention agent [src] codename [src.badge_number] status KIA in [bot_location]!"
-			else
-				message2send = "Notification: [src] destroyed in [bot_location]! Officer down!"
+			var/message2send = "Notification: [src] destroyed in [bot_location]! Officer down!"
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT", "group"=list(MGD_SECURITY, MGA_DEATH), "sender"="00000000", "message"="[message2send]")
 			pdaSignal.transmission_method = TRANSMISSION_RADIO
 			if(transmit_connection != null)
@@ -555,31 +543,6 @@
 
 		elecflash(src, radius=1, power=3, exclude_center = 0)
 		qdel(src)
-
-	/// Makes the bot considerably dorkier. Gives them a dorky codename and makes them say dorky things on arrest
-	proc/make_tacticool()
-		src.tacticool = 1
-		src.badge_number = generate_dorkcode(src.badge_number_length, src.badge_number_length_forcemax)
-
-	/// Generates some kind of awful codename
-	proc/generate_dorkcode(var/num_of_em = 1, var/force_max = 0)
-		var/how_many_dorkcodes = force_max ? num_of_em : rand(1, num_of_em)
-		while(how_many_dorkcodes >= 1)
-			how_many_dorkcodes--
-			switch(pick(1,5))
-				if (1)
-					. += pick_string("agent_callsigns.txt", "nato")
-				if (2)
-					. += pick_string("agent_callsigns.txt", "birds")
-				if (3)
-					. += pick_string("agent_callsigns.txt", "mammals")
-				if (4)
-					. += pick_string("agent_callsigns.txt", "colors")
-				if (5)
-					. += pick_string("shittybill.txt", "nouns")
-			. += "-"
-		. += "[rand(1,99)]-"
-		. += "[rand(1,99)]"
 
 	/// Makes the bot able to baton people, then makes them unable to baton people after a while
 	proc/charge_baton()
@@ -714,10 +677,7 @@
 		if(get_area(get_turf(src)) == src.guard_area) // oh good we're here
 			if(src.mode == SECBOT_GUARD_START)
 				if(!src.guard_start_no_announce && !ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-guardarrived", src.chatspam_cooldown))
-					if(src.tacticool)
-						src.speak("UNIT [src.badge_number] ON THE SCENE. INITIATING 'CRIME SEEK AND DESTROY' SEQUENCE.")
-					else
-						src.speak("Destination reached. Patrolling area.", just_float = 1)
+					src.speak("Destination reached. Patrolling area.", just_float = 1)
 				src.mode = SECBOT_GUARD
 
 		if(!moving && !ON_COOLDOWN(src, SECBOT_GUARDMOVE_COOLDOWN, src.guard_mill_cooldown))
@@ -756,6 +716,12 @@
 		/// Tango never up to begin with? Or some kind of not-human? Eh whatever give up
 		if(!istype(src.target, /mob/living/carbon/human))
 			speak("???", just_float = 1)
+			src.KillPathAndGiveUp(kpagu)
+			return
+
+		// If the target is or goes invisible, give up, securitrons don't have thermal vision! :p
+		if((src.target.invisibility > 0)  && (!src.is_beepsky))
+			speak("?!", just_float = 1)
 			src.KillPathAndGiveUp(kpagu)
 			return
 
@@ -848,13 +814,7 @@
 			// HELPMEPLZ
 			var/datum/radio_frequency/frequency = radio_controller.return_frequency(FREQ_PDA)
 			if(frequency)
-				var/message2send
-				if (src.tacticool)
-					var/turf/LT_loc = get_turf(src)
-					message2send = "ALERT: Tactical law operation agent [src] [src.badge_number] under attack by [src.target]! Requesting backup in [get_area(src)] at grid reference [LT_loc.x][prob(50)?"-niner":""] mark [LT_loc.y][prob(50)?"-niner":""]!"
-					src.speak(message2send)
-				else
-					message2send ="ALERT: Unit under attack by [src.target] in [get_area(src)]. Requesting backup."
+				var/message2send ="ALERT: Unit under attack by [src.target] in [get_area(src)]. Requesting backup."
 
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
@@ -973,6 +933,15 @@
 
 		if(istype(perp.mutantrace, /datum/mutantrace/abomination))
 			threatcount += 5
+
+		for (var/datum/data/record/R as anything in data_core.security)
+			if (R.fields["name"] != perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
+				if(!added_to_records)
+					threatcount += 5
+			else if ((R.fields["name"] == perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird")))
+				if(!added_to_records)
+					threatcount -= 5
+					added_to_records = TRUE
 
 		//Agent cards lower threat level
 		if((istype(perp.wear_id, /obj/item/card/id/syndicate)))
@@ -1229,6 +1198,8 @@
 			)
 
 		var/say_thing = pick(voice_lines)
+		if(say_thing == 'sound/voice/binsultbeep.ogg' && prob(90))
+			say_thing = 'sound/voice/bsecureday.ogg'
 		switch(say_thing)
 			if('sound/voice/bgod.ogg')
 				src.speak("GOD MADE TOMORROW FOR THE CROOKS WE DON'T CATCH TO-DAY.")
@@ -1328,12 +1299,7 @@
 				var/datum/radio_frequency/frequency = radio_controller.return_frequency(FREQ_PDA)
 				if(!frequency) return FALSE
 
-				var/message2send
-				if (master.tacticool)
-					message2send = "Notification: Tactical law operation agent [master] [master.badge_number] reporting grandslam on tango [last_target] for suspected [rand(10,99)]-[rand(1,999)] \"[pick_string("shittybill.txt", "drugs")]-[pick_string("shittybill.txt", "insults")]\" \
-					in [bot_location] at grid reference [LT_loc.x][prob(50)?"-niner":""] mark [LT_loc.y][prob(50)?"-niner":""]. Unit requesting law enforcement personnel for further suspect prosecution. [master.badge_number] over and out."
-				else
-					message2send ="Notification: [last_target] detained by [master] in [bot_location] at coordinates [LT_loc.x], [LT_loc.y]."
+				var/message2send ="Notification: [last_target] detained by [master] in [bot_location] at coordinates [LT_loc.x], [LT_loc.y]."
 
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
@@ -1487,7 +1453,7 @@
 
 	else if (istype(W, /obj/item/rods) && src.build_step == 3)
 		var/obj/item/rods/R = W
-		if (!R.consume_rods(1))
+		if (!R.change_stack_amount(-1))
 			boutput(user, "You need a non-zero amount of rods. How did you even do that?")
 		else
 			src.build_step++

@@ -5,7 +5,7 @@ TOILET
 
 /obj/item/storage/toilet
 	name = "toilet"
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	anchored = 1.0
 	density = 0.0
 	mats = 5

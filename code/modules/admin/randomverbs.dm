@@ -2753,3 +2753,95 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
 #endif
+
+/client/proc/cmd_trenchify_station()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Trenchify"
+	set desc = "Generates trench caves on the station Z"
+	admin_only
+	if(src.holder.level >= LEVEL_ADMIN)
+		switch(alert("Generate a trench on the station Z level? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
+			if("Yes")
+				var/hostile_mob_toggle = FALSE
+				if(alert("Include hostile mobs?",,"Yes","No")=="Yes") hostile_mob_toggle = TRUE
+
+				boutput(src, "Now generating trench, pleast wait.")
+
+				var/turf/T1 = locate(1 + AST_MAPBORDER, 1 + AST_MAPBORDER, Z_LEVEL_STATION)
+				var/turf/T2 = locate(world.maxx - AST_MAPBORDER, world.maxy - AST_MAPBORDER, Z_LEVEL_STATION)
+
+				var/datum/mapGenerator/seaCaverns/seaCaverns = new()
+				seaCaverns.generate(block(T1, T2), Z_LEVEL_STATION, FALSE)
+
+				for(var/turf/space/space_turf in block(T1, T2))
+					if (istype(space_turf.loc, /area/shuttle)) continue
+					space_turf.ReplaceWith(/turf/space/fluid/trench)
+
+					if (prob(1))
+						new /obj/item/seashell(space_turf)
+
+					if (prob(8))
+						var/obj/plant = pick(childrentypesof(/obj/sea_plant))
+						var/obj/sea_plant/P = new plant(space_turf)
+						P.initialize()
+
+					if(hostile_mob_toggle)
+						if (prob(1) && prob(2))
+							new /obj/critter/gunbot/drone/buzzdrone/fish(space_turf)
+						else if (prob(1) && prob(4))
+							new /obj/critter/gunbot/drone/gunshark(space_turf)
+						else if (prob(1) && prob(20))
+							var/mob/fish = pick(childrentypesof(/mob/living/critter/aquatic/fish))
+							new fish(space_turf)
+						else if (prob(1) && prob(9) && prob(90))
+							var/obj/naval_mine/O = 0
+							if (prob(20))
+								if (prob(70))
+									O = new /obj/naval_mine/standard(space_turf)
+								else
+									O = new /obj/naval_mine/vandalized(space_turf)
+							else
+								O = new /obj/naval_mine/rusted(space_turf)
+							if (O)
+								O.initialize()
+
+						if (prob(2) && prob(25))
+							new /obj/overlay/tile_effect/cracks/spawner/trilobite(space_turf)
+						if (prob(2) && prob(25))
+							new /obj/overlay/tile_effect/cracks/spawner/pikaia(space_turf)
+
+						if (prob(1) && prob(16))
+							new /mob/living/critter/small_animal/hallucigenia/ai_controlled(space_turf)
+						else if (prob(1) && prob(18))
+							new /obj/overlay/tile_effect/cracks/spawner/pikaia(space_turf)
+
+					if (prob(1) && prob(9))
+						var/obj/storage/crate/trench_loot/C = pick(childrentypesof(/obj/storage/crate/trench_loot))
+						var/obj/storage/crate/trench_loot/created_loot = new C(space_turf)
+						created_loot.initialize()
+
+					LAGCHECK(LAG_MED)
+				logTheThing("admin", src, null, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")
+				logTheThing("diary", src, null, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].", "admin")
+				message_admins("[key_name(src)] generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+
+/client/proc/cmd_special_shuttle()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Special Shuttle"
+	set desc = "Spawn in a special escape shuttle"
+	admin_only
+	if(src.holder.level >= LEVEL_ADMIN)
+		var/datum/prefab_shuttle/shuttle = tgui_input_list(src, "Select a shuttle", "Special Shuttle", prefab_shuttles)
+		if (!shuttle) return
+		var/loaded = file2text(shuttle.prefab_path)
+		var/turf/T = landmarks[shuttle.landmark][1]
+		if(T && loaded)
+			var/dmm_suite/D = new/dmm_suite()
+			D.read_map(loaded,T.x,T.y,T.z,shuttle.prefab_path, DMM_OVERWRITE_OBJS)
+			logTheThing("admin", src, null, "replaced the shuttle with [shuttle].")
+			logTheThing("diary", src, null, "replaced the shuttle with [shuttle].", "admin")
+			message_admins("[key_name(src)] replaced the shuttle with [shuttle].")
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")

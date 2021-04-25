@@ -105,6 +105,7 @@
 #include "address.dm"
 #include "ass_jam.dm"
 #include "color.dm"
+#include "compatibility.dm"
 #include "copy.dm"
 #include "datum.dm"
 #include "machinery.dm"

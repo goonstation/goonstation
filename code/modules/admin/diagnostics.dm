@@ -11,26 +11,49 @@ proc/debug_color_of(var/thing)
 		color_caching[thing] = "#[copytext(md5(thing), 1, 7)]"
 	return color_caching[thing]
 
+proc/debug_map_apc_count(delim,zlim)
+	var/apc_count = 0
+	. = ""
+	var/list/apcs = new()
+	var/list/manual_apcs = new()
+	for(var/obj/machinery/power/apc/C in machine_registry[MACHINES_POWER])
+		if(zlim && C.z != zlim)
+			continue
+
+		if(C.areastring)
+			var/area/manual_area = get_area_name(C.areastring)
+			if(!manual_apcs[manual_area]) manual_apcs[manual_area] = list()
+			manual_apcs[manual_area] += C
+
+	for(var/area/area in world)
+		if (!area.requires_power)
+			continue
+
+		if(zlim)
+			var/turf/T = locate() in area
+			if(T?.z != zlim)
+				continue
+
+		for(var/obj/machinery/power/apc/current_apc in area)
+			if (!apcs.Find(current_apc) && !current_apc.areastring) apcs += current_apc
+		if(manual_apcs[area])
+			apcs += manual_apcs[area]
+
+		apc_count = length(apcs)
+		if (apc_count != 1)
+			. += "[area.name] [area.type] has [apc_count] APCs.[delim]"
+			if(apc_count)
+				for(var/obj/machinery/power/apc/duplicate_apc in apcs)
+					. += "  [duplicate_apc.name] ([duplicate_apc.x],[duplicate_apc.y],[duplicate_apc.z]) [duplicate_apc.area.area_apc == duplicate_apc ? "  !AREA APC" : ""][delim]"
+		apcs.len = 0
+		LAGCHECK(LAG_LOW)
+
 /client/proc
 	map_debug_panel()
 		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 		var/area_txt = "<B>APC LOCATION REPORT</B><HR>"
-		var/apc_count = 0
-		var/list/apcs = new()
-		for(var/area/area in world)
-			if (!area.requires_power)
-				continue
-
-			for(var/obj/machinery/power/apc/current_apc in area)
-				if (!apcs.Find(current_apc)) apcs += current_apc
-
-			apc_count = length(apcs)
-			if (apc_count != 1)
-				area_txt += "[area.name] [area.type] has [apc_count] APCs.<br>"
-			apcs.len = 0
-
-			LAGCHECK(LAG_LOW)
+		area_txt += debug_map_apc_count("<BR>")
 
 		usr.Browse(area_txt,"window=mapdebugpanel")
 

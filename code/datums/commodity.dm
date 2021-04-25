@@ -923,7 +923,7 @@
 
 /datum/commodity/contraband/hosberet
 	comname = "Head of Security Beret"
-	comtype = /obj/item/clothing/head/helmet/HoS
+	comtype = /obj/item/clothing/head/hos_hat
 	desc = "The beloved beret of an NT HoS."
 	price = 10000
 	baseprice = 10000

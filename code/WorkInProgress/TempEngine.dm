@@ -486,12 +486,8 @@
 			playsound(get_turf(circ), "sound/items/Deconstruct.ogg", 80, 1)
 			circ.repair_desc = "Lubrication system is nearly fixed, just have to weld a few pipes."
 			if (the_tool != null)
-				the_tool.amount -= 5
-				if(the_tool.amount <= 0)
-					qdel(the_tool)
-				else if(istype(the_tool, /obj/item/rods))
-					var/obj/item/rods/R = the_tool
-					R.update_icon()
+				var/obj/item/rods/R = the_tool
+				R.change_stack_amount(-5)
 			return
 
 		if (circ.repairstate == 4)

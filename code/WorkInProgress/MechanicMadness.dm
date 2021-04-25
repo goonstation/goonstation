@@ -221,7 +221,7 @@
 									 // thinks it's not a constant and refuses to work with it.
 		desc="A rather chunky cabinet for storing up to 23 active mechanic components\
 		 at once.<br>It can only be connected to external components when bolted to the floor.<br>"
-		w_class = 4.0 //all the weight
+		w_class = W_CLASS_BULKY //all the weight
 		num_f_icons=3
 		density=1
 		anchored=false
@@ -254,7 +254,7 @@
 		desc="A massively shrunken component cabinet fitted with a handle and an external\
 		 button. Due to the average mechanic's low arm strength, it only holds 6 components." // same as above
 		 												//if you change the capacity, remember to manually update this string
-		w_class = 3.0 // fits in backpacks but not pockets. no quickdraw honk boxess
+		w_class = W_CLASS_NORMAL // fits in backpacks but not pockets. no quickdraw honk boxess
 		density=0
 		anchored=0
 		num_f_icons=1
@@ -294,7 +294,7 @@
 	density = 1
 	anchored= 1
 	level=1
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
@@ -341,7 +341,7 @@
 	item_state = "swat_suit"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	plane = PLANE_NOSHADOW_BELOW
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	level = 2
 	/// whether or not this component is prevented from being anchored in cabinets
 	var/cabinet_banned = FALSE

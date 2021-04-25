@@ -32,7 +32,7 @@ datum
 			// rather explosive as a liquid (14 °C < T <= 50 °C)
 			// explodes instantly as a gas (50 °C < T)
 
-			proc/explode(var/list/covered_turf, expl_reason, del_holder=1)
+			proc/explode(var/list/covered_turf, expl_reason)
 				for (var/turf/T in covered_turf)
 					message_admins("Nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [showCoords(T.x, T.y, T.z)].")
 					var/context = "???"
@@ -45,12 +45,6 @@ datum
 					logTheThing("combat", usr, null, "is associated with a nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [showCoords(T.x, T.y, T.z)]. Context: [context].")
 					explosion_new(usr, T, (12.5 * min(volume/covered_turf.len, 1000))**(2/3), 0.4) // Because people were being shit // okay its back but harder to handle // okay sci can have a little radius, as a treat
 				holder.del_reagent("nitroglycerin")
-				if (del_holder)
-					if(ismob(holder.my_atom))
-						var/mob/M = holder.my_atom
-						M.gib()
-					else
-						qdel(holder.my_atom)
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if (exposed_temperature <= T0C + 14)
@@ -664,7 +658,7 @@ datum
 					if (istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", -300)
 						playsound(get_turf(L), "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
-					if (istype(L,/mob/living/critter/fire_elemental))
+					if (istype(L,/mob/living/critter/fire_elemental) && !ON_COOLDOWN(L, "fire_elemental_fffoam", 5 SECONDS))
 						L.changeStatus("weakened",0.5 SECONDS)
 						L.force_laydown_standup()
 						L.TakeDamage("All", volume * 1.5, 0, 0, DAMAGE_BLUNT)
@@ -2298,11 +2292,6 @@ datum
 				var/dir_temp = pick("L", "R")
 				var/speed_temp = text2num("[rand(0,10)].[rand(0,9)]")
 				animate_spin(O, dir_temp, speed_temp)
-
-			reaction_turf(var/turf/T) // oh god what am I doing this is such a bad idea
-				var/dir_temp = pick("L", "R")
-				var/speed_temp = text2num("[rand(0,10)].[rand(0,9)]")
-				animate_spin(T, dir_temp, speed_temp)
 
 			on_add()
 				if(ismob(holder?.my_atom))

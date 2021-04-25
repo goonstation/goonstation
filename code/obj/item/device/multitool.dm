@@ -3,7 +3,7 @@
 	icon_state = "multitool"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	force = 5.0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throwforce = 5.0
 	throw_range = 15
 	throw_speed = 3

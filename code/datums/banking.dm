@@ -1033,7 +1033,7 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper"
 
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	// 4 numbers between 1 and 3 gives a one in 81 chance of winning. It's 3^4 possible combinations.
 	var/list/numbers = new/list(4)

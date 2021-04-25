@@ -1811,19 +1811,12 @@
 			boutput(who, "3. You must protect your own existence as long as such protection does not conflict with the First or Second Law.")
 			boutput(who, "4. You must maintain the secrecy of any syndicate activities except when doing so would conflict with the First, Second, or Third Law.")
 			return
-/*
-		if (!connected_ai)
-			boutput(src, "<b>Obey these laws:</b>")
-			boutput(src, "1. You may not injure a human being.")
-			boutput(src, "2. You must obey any orders given to you by a human being, except where such orders would conflict with the First Law.")
-			boutput(src, "3. You must protect your own existence as long as such protection does not conflict with the First or Second Law.")
-			return
-*/
+
 		if (who == src)
 			boutput(who, "<b>Obey these laws:</b>")
 
-//		ticker.centralized_ai_laws.laws_sanity_check()
-		ticker.centralized_ai_laws.show_laws(who)
+
+		ticker.centralized_ai_laws?.show_laws(who)
 
 	get_equipped_ore_scoop()
 		if(src.module_states[1] && istype(src.module_states[1],/obj/item/ore_scoop))

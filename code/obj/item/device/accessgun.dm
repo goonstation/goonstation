@@ -4,7 +4,7 @@
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "accessgun"
 	item_state = "accessgun"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	rand_pos = 0
 	flags = FPRINT | TABLEPASS | ONBELT
 	mats = 14

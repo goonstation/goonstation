@@ -121,7 +121,7 @@
 		if ((user.loc == T && user.equipped() == W))
 			user.show_message("<span class='notice'>You fix the broken display case.</span>")
 			var/obj/item/sheet/glass/G = W
-			G.consume_sheets(1)
+			G.change_stack_amount(-1)
 			src.set_density(1)
 			src.destroyed = 0
 			src.health = 30

@@ -12,7 +12,7 @@ THAT STUPID GAME KIT
 	var/data = ""
 	//var/base_url = "http://svn.slurm.us/public/spacestation13/misc/game_kit"
 	item_state = "sheet-metal"
-	w_class = 5.0
+	w_class = W_CLASS_HUGE
 	desc = "Play chess or checkers. Or don't. Probably don't."
 	stamina_damage = 5
 	stamina_cost = 5

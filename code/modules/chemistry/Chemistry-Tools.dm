@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	desc = "..."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = null
-	w_class = 1
+	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	var/rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
 	tooltip_flags = REBUILD_SPECTRO | REBUILD_DIST

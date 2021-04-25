@@ -103,6 +103,7 @@
 			on_cooldown = TRUE
 			for (var/mob/living/carbon/human/H in get_turf(src))
 				data += "[scan_health(H, 1, 1, 1, 1)]"
+				scan_health_overhead(H, H)
 				if (alert && H.health < 0)
 					src.crit_alert(H)
 			playsound(src.loc, "sound/machines/scan2.ogg", 30, 0)

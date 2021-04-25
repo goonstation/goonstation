@@ -16,7 +16,7 @@
 	var/over_all = 0 // shows up over all other clothes/hair/etc on people
 	var/over_back = 0
 	flags = FPRINT | TABLEPASS
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	var/restrain_wearer = 0
 	var/bloodoverlayimage = 0
 
@@ -240,7 +240,7 @@
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
-		setProperty("rangedprot", 1.5)
+		setProperty("rangedprot", 1)
 
 /obj/item/clothing/suit/bio_suit/armored/nt
 	name = "\improper NT bio suit"
@@ -250,7 +250,7 @@
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
-		setProperty("rangedprot", 1.5)
+		setProperty("rangedprot", 1)
 
 /obj/item/clothing/suit/bio_suit/paramedic/armored
 	name = "armored paramedic suit"
@@ -260,7 +260,7 @@
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
-		setProperty("rangedprot", 1.9)
+		setProperty("rangedprot", 1)
 
 
 	para_troop
@@ -538,7 +538,7 @@
 	item_state = "bedsheet"
 	layer = MOB_LAYER
 	throwforce = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throw_speed = 2
 	throw_range = 10
 	c_flags = COVERSEYES | COVERSMOUTH
@@ -852,7 +852,7 @@
 	setupProperties()
 		..()
 		setProperty("meleeprot", 6)
-		setProperty("rangedprot", 1.5)
+		setProperty("rangedprot", 1)
 
 /obj/item/clothing/suit/fire/attackby(obj/item/W, mob/user)
 	var/turf/T = user.loc
@@ -1059,6 +1059,7 @@
 	item_state = "space_suit_syndicate"
 	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives."
 	contraband = 3
+	item_function_flags = IMMUNE_TO_ACID
 
 	setupProperties()
 		..()
@@ -1075,17 +1076,19 @@
 			setProperty("meleeprot", 6)
 			setProperty("rangedprot", 3)
 
-	heavy // nukie melee class armor
-		name = "citadel heavy combat armor"
-		desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
-		icon_state = "syndie_specialist-heavy"
-		item_state = "syndie_specialist-heavy"
+	knight // nukie melee class armor
+		name = "citadel heavy combat cuirass"
+		desc = "A syndicate issue super-heavy combat armor suit, pressurized for space travel and reinforced for superior staying-power in extended battle."
+		icon_state = "syndie_specialist-knight"
+		item_state = "syndie_specialist-knight"
 
 		setupProperties()
 			..()
-			setProperty("meleeprot", 8)
-			setProperty("rangedprot", 2)
-			setProperty("movespeed", 0.5)
+			setProperty("meleeprot", 6)
+			setProperty("rangedprot", 1)
+			setProperty("exploprot", 30)
+			setProperty("space_movespeed", 1.2)
+			setProperty("disorient_resist", 65)
 
 	specialist
 		name = "specialist operative combat dress"
@@ -1504,21 +1507,11 @@
 	permeability_coefficient = 0
 	over_hair = 1
 
-/obj/item/clothing/suit/nursedress
-	name = "nurse dress"
-	desc = "A traditional dress worn by a nurse."
-	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
-	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
-	icon_state = "nursedress"
-	item_state = "nursedress"
-	body_parts_covered = TORSO|LEGS|ARMS
-
 /obj/item/clothing/suit/security_badge
 	name = "Security Badge"
 	desc = "An official badge for a Nanotrasen Security Worker."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "security_badge"
@@ -1538,7 +1531,7 @@
 	name = "war medal"
 	desc = ""
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "hosmedal"
 	icon_state = "hosmedal"
