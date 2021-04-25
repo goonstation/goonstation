@@ -151,8 +151,8 @@
 				src.cart.Cut()
 
 		if (href_list["add_to_cart"])
-			if(src.canbuy[href_list["add_to_cart"]])
-				var/datum/mail_order/F = src.canbuy[href_list["add_to_cart"]]
+			var/datum/mail_order/F = href_list["add_to_cart"]
+			if(!istype(F, /datum/mail_order))
 				if(length(F.order_items) + src.cartsize <= 7)
 					src.cartsize += length(F.order_items)
 					src.cartcost += F.cost
