@@ -53,9 +53,11 @@
 	var/list/canbuy = list() //list of catalog entries
 
 	medical
+		name = "Survival Mart Catalogue"
 		entries_to_index = /datum/mail_order/medical
 
 	chem
+		name = "Chems-r-Us Catalogue"
 		entries_to_index = /datum/mail_order/chem
 
 	New()
@@ -78,7 +80,7 @@
 					. += "None!"
 				else
 					for(var/P in src.canbuy)
-						var/datum/mail_order/F = src.canbuy[P]
+						var/datum/mail_order/F = P
 						if(!istype(F, /datum/mail_order))
 							continue
 						. += {"<a href='byond://?src=\ref[src];add_to_cart=[P]'>[F.name] - $[F.cost]</a><br>
@@ -93,7 +95,7 @@
 					. += "[entryct] Selections - [cartsize] Items - $[cartcost]"
 					. += "<a href='byond://?src=\ref[src];checkout'>Check Out</a> | <a href='byond://?src=\ref[src];clearcart'>Clear Cart</a>"
 					for(var/P in src.cart)
-						var/datum/mail_order/F = src.cart[P]
+						var/datum/mail_order/F = P
 						if(!istype(F, /datum/mail_order))
 							continue
 						var/itemct = length(F.order_items)
@@ -120,10 +122,7 @@
 			src.mode = MODE_LIST
 
 		if (href_list["viewcart"])
-			if(src.mode == MODE_CART)
-				src.mode = MODE_LIST
-			else
-				src.mode = MODE_CART
+			src.mode = MODE_CART
 
 		if (href_list["checkout"])
 			if(length(src.cart))
@@ -135,7 +134,7 @@
 						if(!src.master.host_program.message_silent)
 							alert_beep = src.master.host_program.message_tone
 						src.master.display_alert(alert_beep)
-						var/displayMessage = "[bicon(master)] Thank your for your purchase! Delivery to '[giventag]' in progress."
+						var/displayMessage = "[bicon(master)] Thank your for your purchase! Delivery to '[destination]' in progress."
 						src.master.display_message(displayMessage)
 				else
 					var/alert_beep = null
@@ -153,7 +152,7 @@
 
 		if (href_list["add_to_cart"])
 			if(src.canbuy[href_list["add_to_cart"]])
-				var/datum/mail_order/F = src.canbuy(href_list["add_to_cart"])
+				var/datum/mail_order/F = src.canbuy[href_list["add_to_cart"]]
 				if(length(F.order_items) + src.cartsize <= 7)
 					src.cartsize += length(F.order_items)
 					src.cartcost += F.cost
@@ -177,5 +176,4 @@
 		src.cart.Cut()
 
 #undef MODE_LIST
-#undef MODE_HELP
 #undef MODE_CART
