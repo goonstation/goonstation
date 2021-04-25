@@ -172,7 +172,7 @@
 		src.master.updateSelfDialog()
 		return
 
-	//arrange for package construction/shipping, then clear cart
+	// arrange for package construction/shipping, then clear cart
 	proc/shipcart(var/destination)
 		var/list/boxstock = list()
 		for(var/P in src.cart)
@@ -181,10 +181,10 @@
 				continue
 			for(var/loaditem in F.order_items)
 				boxstock += loaditem
-		var/package = new /obj/item/storage/box/mailorder(spawn_contents = boxstock)
+		var/obj/item/storage/package = new /obj/item/storage/box/mailorder(spawn_contents = boxstock)
 		if(src.master.ID_card && src.master.ID_card.registered)
-			package.name = "mail-order box ([registered])"
-		package.loc = src.master.loc
+			package.name = "mail-order box ([src.master.ID_card.registered])"
+		package.loc = get_turf(src.master) // put it in shipping location instead
 		src.cartsize = 0
 		src.cartcost = 0
 		src.cart.Cut()
