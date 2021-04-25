@@ -63,7 +63,7 @@
 	New()
 		..()
 		for(var/datum/mail_order/S in concrete_typesof(entries_to_index))
-			src.canbuy[S.name] += new S()
+			src.canbuy[S.name] = new S()
 
 	return_text()
 		. = src.return_text_header()
@@ -84,7 +84,7 @@
 						if(!istype(F, /datum/mail_order))
 							continue
 						var/itemct = length(F.order_items)
-						. += {"<a href='byond://?src=\ref[src];add_to_cart=[P]'>[F.name]</a> - [itemct] - $[F.cost]<br>
+						. += {"<a href='byond://?src=\ref[src];add_to_cart=[P]'>[F.name]</a> - [itemct] Item(s) - $[F.cost]<br>
 						[F.desc]<br><hr>"}
 
 			if(MODE_CART)
