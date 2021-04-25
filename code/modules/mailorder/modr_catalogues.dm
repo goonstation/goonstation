@@ -46,21 +46,21 @@
 	name = "The Omega Catalogue"
 	size = 32
 	var/mode = 0
-	var/entries_to_index = "/datum/mail_order"
+	var/entries_to_index = /datum/mail_order
 	var/list/cart = list() //mail order entries selected for purchase
 	var/cartsize = 0 // based on amount of items in selected entries, not amount of entries
 	var/cartcost = 0 // how much your selection costs
 	var/list/canbuy = list() //list of catalog entries
 
 	medical
-		entries_to_index = "/datum/mail_order/medical"
+		entries_to_index = /datum/mail_order/medical
 
 	chem
-		entries_to_index = "/datum/mail_order/chem"
+		entries_to_index = /datum/mail_order/chem
 
 	New()
 		..()
-		for(var/S in concrete_typesof(text2path(entries_to_index)))
+		for(var/S in concrete_typesof(entries_to_index))
 			src.canbuy += new S()
 
 	return_text()
