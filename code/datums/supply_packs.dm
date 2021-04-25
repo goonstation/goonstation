@@ -314,6 +314,14 @@
 	containertype = /obj/storage/crate/medical
 	containername = "Medical Crate"
 
+/datum/supply_packs/glass_recycler
+	name = "Glass Recycler"
+	desc = "x1 Kitchenware Recycler, a tabletop machine allowing you to recycle reclaimed glass into many different types of glassware"
+	category = "civilian Department"
+	contains = list(/obj/machinery/glass_recycler)
+	cost = 3000
+	containertype =/obj/storage/crate
+	containername = "Recycling Initiative Crate"
 
 /datum/supply_packs/janitor
 	name = "Janitorial Supplies"
