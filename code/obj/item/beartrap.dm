@@ -5,7 +5,7 @@
 	icon_state = "bear_trap-close"
 	item_state = "bear_trap"
 	flags = FPRINT
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	force = 5
 	throwforce = 5
 	var/armed = FALSE

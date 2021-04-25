@@ -66,12 +66,12 @@ datum/controller/process/fMove
 						if (AA.stops_space_move && (!M.no_gravity || !isfloor(AA)))
 							if (!( tmob.l_hand ))
 								prob_slip -= 3
-							else if (tmob.l_hand.w_class <= 2)
+							else if (tmob.l_hand.w_class <= W_CLASS_SMALL)
 								prob_slip -= 1
 
 							if (!( tmob.r_hand ))
 								prob_slip -= 2
-							else if (tmob.r_hand.w_class <= 2)
+							else if (tmob.r_hand.w_class <= W_CLASS_SMALL)
 								prob_slip -= 1
 
 							break

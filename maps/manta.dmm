@@ -531,9 +531,6 @@
 	message = "1";
 	name = "mail chute-'Head of Security'"
 	},
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -5140,9 +5137,6 @@
 /obj/access_spawn/security,
 /obj/machinery/door/airlock/pyro/glass/security{
 	name = "Visitation"
-	},
-/obj/cable{
-	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor,
@@ -13036,7 +13030,6 @@
 	pixel_y = 26;
 	text = "NF"
 	},
-/obj/machinery/disposal/mail/small/autoname/research/telescience/north,
 /turf/simulated/floor/caution/south,
 /area/station/engine/elect)
 "aKD" = (
@@ -15260,9 +15253,6 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/disposalpipe/segment/ejection{
-	dir = 4
-	},
 /turf/simulated/floor,
 /area/station/security/brig/genpop)
 "aRx" = (
@@ -15275,6 +15265,9 @@
 /obj/machinery/floorflusher/genpop,
 /obj/disposalpipe/trunk/ejection{
 	dir = 1
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/security/brig/genpop)
@@ -16447,9 +16440,6 @@
 "aUL" = (
 /obj/machinery/door/airlock/pyro/security{
 	name = "Interrogation"
-	},
-/obj/cable{
-	icon_state = "2-8"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -18206,9 +18196,6 @@
 /area/station/security/secwing)
 "aZl" = (
 /obj/stool/chair/wooden,
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/cable,
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/wood,
@@ -23781,7 +23768,7 @@
 /obj/machinery/power/apc/autoname_west,
 /obj/cable,
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/treatment2)
@@ -25259,16 +25246,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay/lobby)
 "bqG" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor,
 /area/station/medical/medbay/lobby)
 "bqH" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
 	icon_state = "1-2"
@@ -26276,9 +26257,6 @@
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
 "btu" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -26440,12 +26418,14 @@
 /turf/simulated/floor/bot,
 /area/station/quartermaster/cargobay)
 "btR" = (
-/obj/wingrille_spawn/auto,
-/obj/disposalpipe/segment/mail{
-	dir = 4
+/obj/cable{
+	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating,
-/area/station/crewquarters/garbagegarbs)
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "btS" = (
 /obj/table/glass/auto,
 /turf/simulated/floor,
@@ -30826,9 +30806,6 @@
 /obj/machinery/computer/card/console_lower{
 	dir = 8
 	},
-/obj/cable{
-	icon_state = "2-8"
-	},
 /turf/simulated/floor,
 /area/station/seaturtlebridge)
 "bGC" = (
@@ -31744,7 +31721,6 @@
 /turf/simulated/floor/carpet,
 /area/station/science/restroom)
 "bJN" = (
-/obj/disposalpipe/segment,
 /obj/table/reinforced/auto,
 /obj/machinery/computer/security/wooden_tv/small{
 	pixel_y = 8
@@ -34774,6 +34750,9 @@
 	dir = 8;
 	layer = -1
 	},
+/obj/disposalpipe/trunk{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/construction)
 "bSj" = (
@@ -35869,15 +35848,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/centralhallway)
-"czS" = (
-/obj/disposalpipe/switch_junction/left/south{
-	mail_tag = "Mining"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/hallway/portlowerhallway)
 "cAp" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 4;
@@ -35987,9 +35957,6 @@
 /obj/item/reagent_containers/food/drinks/chickensoup{
 	pixel_x = 2;
 	pixel_y = 2
-	},
-/obj/cable{
-	icon_state = "0-4"
 	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/treatment1)
@@ -36438,10 +36405,11 @@
 /area/abandonedship)
 "dOI" = (
 /obj/machinery/computer3/generic/communications,
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/machinery/weapon_stand/rifle_rack/recharger,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "dPl" = (
@@ -36971,6 +36939,9 @@
 	},
 /obj/landmark/start{
 	name = "Captain"
+	},
+/obj/disposalpipe/segment{
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -38011,9 +37982,6 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen/therustykrab)
 "hco" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "0-4"
@@ -38135,9 +38103,6 @@
 /obj/stool/chair/red{
 	anchored = 0;
 	dir = 1
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /obj/machinery/light/incandescent/cool{
 	nostick = 1
@@ -38775,9 +38740,6 @@
 /area/station/engine/engineering/ce)
 "iIQ" = (
 /obj/submachine/slot_machine,
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/flasher/genpop/new_walls/west{
 	pixel_x = 24
 	},
@@ -39440,15 +39402,6 @@
 /area/station/hangar/engine{
 	name = "Submarine Bay (Engineering)"
 	})
-"knL" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/engine/elect)
 "kpZ" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
@@ -42323,9 +42276,6 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "qSq" = (
-/obj/disposalpipe/junction{
-	dir = 4
-	},
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
 	pixel_y = 20
@@ -42335,6 +42285,10 @@
 	},
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/special/submarinesdown,
 /area/station/hallway/portlowerhallway)
@@ -42371,9 +42325,6 @@
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/listeningpost/syndicateassaultvessel)
 "raw" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
 /obj/item/cell/supercell/charged,
@@ -43969,6 +43920,9 @@
 	dir = 1;
 	pixel_y = 20
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor,
 /area/station/hangar/starboard)
 "vfw" = (
@@ -44119,9 +44073,6 @@
 /turf/simulated/floor,
 /area/station/hallway/centralhallway)
 "vzA" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "0-2"
@@ -77802,7 +77753,7 @@ bmG
 bnN
 aJJ
 bgr
-knL
+box
 acV
 aHa
 aHj
@@ -78717,7 +78668,7 @@ acV
 ghs
 acT
 arU
-btR
+mnz
 mnz
 btU
 btW
@@ -79019,7 +78970,7 @@ bcj
 jnH
 byk
 bcj
-bjW
+bcj
 bcj
 mFN
 bcj
@@ -79321,7 +79272,7 @@ bta
 bta
 bym
 bta
-czS
+bta
 bta
 hlB
 bta
@@ -87132,7 +87083,7 @@ aFB
 aFB
 aqO
 dOI
-xVU
+btR
 azk
 atV
 sUk
@@ -89558,7 +89509,7 @@ aWz
 abR
 mrf
 aWn
-kIf
+qZI
 ono
 kIf
 wdi

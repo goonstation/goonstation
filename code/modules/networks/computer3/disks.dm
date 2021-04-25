@@ -18,7 +18,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	item_state = "card-id"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	//DNA machine vars
 	var/data = ""
 	var/ue = 0
@@ -271,7 +271,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "nucleardisk"
 	item_state = "card-id"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	mats = 15
 	random_color = 0
 	file_amount = 32.0

@@ -55204,7 +55204,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "cTR" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/engineering)
 "cUw" = (
@@ -55236,7 +55236,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/jazz)
 "cXA" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/central)
 "cYK" = (
@@ -55249,11 +55249,11 @@
 	},
 /area/station/medical/medbay)
 "cZU" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/market)
 "dbX" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/emergency)
 "dfr" = (
@@ -55447,7 +55447,7 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "dvg" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/arcade)
 "dwa" = (
@@ -55625,7 +55625,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "dKI" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/primary)
 "dLz" = (
@@ -55686,7 +55686,7 @@
 /area/station/engine/hotloop)
 "dSe" = (
 /obj/decal/poster/wallsign/fire,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
 "dSf" = (
@@ -55699,7 +55699,7 @@
 	},
 /area/station/security/main)
 "dTa" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/fitness)
 "dTC" = (
@@ -56009,7 +56009,7 @@
 	},
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights/ephemeral,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "eCA" = (
@@ -56104,7 +56104,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
 "eKj" = (
-/obj/decal/garland/ephemeral{
+/obj/decal/garland{
 	dir = 6;
 	layer = 4
 	},
@@ -56159,7 +56159,7 @@
 	dir = 4
 	},
 /obj/wingrille_spawn/auto,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/storage/eva)
 "ePs" = (
@@ -56365,7 +56365,7 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "fkS" = (
@@ -56536,7 +56536,7 @@
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
 "fvx" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
 "fyM" = (
@@ -56579,7 +56579,7 @@
 /obj/machinery/chem_master{
 	name = "Rusty CheMaster 3000"
 	},
-/obj/decal/xmas_lights/ephemeral{
+/obj/decal/xmas_lights{
 	pixel_y = 38
 	},
 /turf/simulated/floor/plating/damaged2,
@@ -57220,7 +57220,7 @@
 	},
 /area/station/science/lobby)
 "gSf" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
 "gTg" = (
@@ -57319,7 +57319,7 @@
 "hfH" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights/ephemeral,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "hgc" = (
@@ -57476,7 +57476,7 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/engine/power)
 "hqQ" = (
@@ -57513,7 +57513,7 @@
 /area/station/routing/eva)
 "hwB" = (
 /obj/wingrille_spawn/auto,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "hxr" = (
@@ -57721,7 +57721,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "hNI" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/info)
 "hOx" = (
@@ -57784,7 +57784,7 @@
 	opacity = 0
 	},
 /obj/wingrille_spawn/auto,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "hTu" = (
@@ -58396,7 +58396,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/core)
 "jin" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/office)
 "jiK" = (
@@ -58408,7 +58408,7 @@
 	},
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights/ephemeral,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "jiQ" = (
@@ -58440,7 +58440,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "jlC" = (
@@ -58798,7 +58798,7 @@
 	},
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/firedoor/pyro,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "jOP" = (
@@ -58869,7 +58869,7 @@
 /area/station/medical/research)
 "jUH" = (
 /obj/wingrille_spawn/auto,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "jUM" = (
@@ -59075,7 +59075,7 @@
 	name = "AI Core Shield";
 	pixel_x = -22
 	},
-/obj/decal/wreath{
+/obj/decal/wreath/ephemeral{
 	pixel_y = 32
 	},
 /turf/simulated/floor/circuit,
@@ -59122,7 +59122,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "kta" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/robotics)
 "ktP" = (
@@ -59135,7 +59135,7 @@
 "kuW" = (
 /obj/grille/steel,
 /obj/window/auto,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/cafeteria)
 "kvk" = (
@@ -59181,7 +59181,7 @@
 	},
 /area/station/medical/medbay)
 "kxr" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/entry)
 "kxI" = (
@@ -59235,7 +59235,7 @@
 	},
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights/ephemeral,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "kHq" = (
@@ -59293,7 +59293,7 @@
 	opacity = 0
 	},
 /obj/wingrille_spawn/auto,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "kRC" = (
@@ -59428,7 +59428,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "ldf" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/ptl)
 "lel" = (
@@ -59504,7 +59504,7 @@
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction)
 "lll" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/main)
 "lmb" = (
@@ -59547,7 +59547,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
 "lqa" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/bathroom)
 "lqj" = (
@@ -59639,7 +59639,7 @@
 	},
 /area/station/hallway/primary/east)
 "lCy" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/head)
 "lFa" = (
@@ -59684,7 +59684,7 @@
 "lTi" = (
 /obj/wingrille_spawn/auto,
 /obj/securearea,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "lUw" = (
@@ -59845,7 +59845,7 @@
 /turf/simulated/floor/bot,
 /area/station/engine/gas)
 "mlj" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/quarters)
 "mlE" = (
@@ -59916,7 +59916,7 @@
 	pixel_y = 13
 	},
 /obj/decal/xmas_lights/ephemeral,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
 "mqC" = (
@@ -60090,7 +60090,7 @@
 	dir = 4
 	},
 /obj/wingrille_spawn/auto,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "mNJ" = (
@@ -60127,7 +60127,7 @@
 	},
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights/ephemeral,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "mSv" = (
@@ -60227,6 +60227,12 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
+"nhf" = (
+/obj/storage/closet/medicalclothes,
+/turf/simulated/floor/arrival{
+	dir = 6
+	},
+/area/station/medical/medbay)
 "nhn" = (
 /obj/item/device/radio/beacon,
 /obj/machinery/light{
@@ -60318,7 +60324,7 @@
 /obj/cable,
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights/ephemeral,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
 "nsR" = (
@@ -60387,7 +60393,7 @@
 	},
 /area/station/security/main)
 "nAY" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/cafeteria)
 "nBe" = (
@@ -60465,7 +60471,7 @@
 "nKp" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights/ephemeral,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "nKv" = (
@@ -60811,7 +60817,7 @@
 "ovs" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights/ephemeral,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
 "ovM" = (
@@ -60874,7 +60880,7 @@
 	name = "crematorium pipe"
 	},
 /obj/wingrille_spawn/auto,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "oAq" = (
@@ -60931,7 +60937,7 @@
 "oIb" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights/ephemeral,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/stockex)
 "oIp" = (
@@ -60994,7 +61000,7 @@
 /turf/simulated/floor/bot,
 /area/station/quartermaster/office)
 "oJE" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/barber_shop)
 "oKf" = (
@@ -61125,7 +61131,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "paa" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/courtroom)
 "pgN" = (
@@ -61366,7 +61372,7 @@
 /obj/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/escape_right,
 /obj/decal/xmas_lights/ephemeral,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "pzs" = (
@@ -61622,7 +61628,7 @@
 /obj/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/escape_left,
 /obj/decal/xmas_lights/ephemeral,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "pXT" = (
@@ -61768,7 +61774,7 @@
 /area/station/crew_quarters/quarters)
 "qnh" = (
 /obj/wingrille_spawn/auto,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "qoa" = (
@@ -61778,7 +61784,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "qol" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/bay)
 "qtq" = (
@@ -62023,7 +62029,7 @@
 	},
 /area/station/ranch)
 "qUP" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/central)
 "qXd" = (
@@ -62567,7 +62573,7 @@
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/auto,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/routing/security)
 "rYf" = (
@@ -62585,7 +62591,7 @@
 	},
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights/ephemeral,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
 "sbd" = (
@@ -62764,11 +62770,11 @@
 "syt" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights/ephemeral,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/observatory)
 "sAo" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/pool)
 "sCc" = (
@@ -62785,7 +62791,7 @@
 	can_rupture = 0;
 	dir = 4
 	},
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/engineering/ce)
 "sDK" = (
@@ -62873,7 +62879,7 @@
 /area/station/hallway/primary/central)
 "sKU" = (
 /obj/wingrille_spawn/auto,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/engine/hotloop)
 "sLs" = (
@@ -63154,7 +63160,7 @@
 "tkj" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights/ephemeral,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "toJ" = (
@@ -63208,7 +63214,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "tqe" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn{
 	explosion_resistance = 15;
 	name = "very reinforced wall"
@@ -63315,7 +63321,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/cafeteria)
 "tDu" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/market)
 "tFl" = (
@@ -63412,7 +63418,7 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hangar/sec)
 "tMZ" = (
@@ -63472,7 +63478,7 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "uab" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/lobby)
 "uby" = (
@@ -64088,7 +64094,7 @@
 "vfK" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/wingrille_spawn/auto,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "vjb" = (
@@ -64206,7 +64212,7 @@
 	icon_state = "4-8"
 	},
 /obj/wingrille_spawn/auto,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "vwn" = (
@@ -64315,7 +64321,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "vHH" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/warehouse)
 "vHP" = (
@@ -64470,7 +64476,7 @@
 "vYE" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/wingrille_spawn/auto,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "wbe" = (
@@ -64780,7 +64786,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/decal/xmas_lights/ephemeral{
+/obj/decal/xmas_lights{
 	pixel_y = 38
 	},
 /turf/simulated/floor/grime,
@@ -64818,7 +64824,7 @@
 	icon_state = "0-8"
 	},
 /obj/wingrille_spawn/auto,
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "wVz" = (
@@ -64831,7 +64837,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "wZY" = (
-/obj/decal/wreath,
+/obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge)
 "xbi" = (
@@ -100599,7 +100605,7 @@ sMR
 cuf
 cuW
 nIv
-cvU
+nhf
 ckG
 fOM
 adC

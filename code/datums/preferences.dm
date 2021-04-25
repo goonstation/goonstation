@@ -119,6 +119,7 @@ datum/preferences
 	ui_data(mob/user)
 		if (isnull(src.preview))
 			src.preview = new(user.client, "preferences", "preferences_character_preview")
+			src.preview.add_background("#191919")
 			src.update_preview_icon()
 
 		var/client/client = ismob(user) ? user.client : user
@@ -1791,6 +1792,8 @@ var/global/list/facial_hair = list("None" = "none",
 var/global/list/hair_details = list("einstein" = "einalt",\
 	"80s" = "80sfade",\
 	"glammetal" = "glammetalO",\
+	"mermaid" = "mermaidfade",\
+	"longbeard" = "longbeardfade",\
 	"pomp" = "pompS",\
 	"mohawk" = list("mohawkFT", "mohawkFB", "mohawkS"),\
 	"emo" = "emoH",\

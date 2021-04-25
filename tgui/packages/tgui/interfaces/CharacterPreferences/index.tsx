@@ -1,5 +1,6 @@
+import { KEY_LEFT, KEY_RIGHT } from 'common/keycodes';
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, ByondUi, Divider, Icon, LabeledList, NoticeBox, Section, Stack, Tabs } from '../../components';
+import { Box, Button, ByondUi, LabeledList, Section, Stack, Tabs, Tooltip } from '../../components';
 import { Window } from '../../layouts';
 import { CharacterTab } from './CharacterTab';
 import { GameSettingsTab } from './GameSettingsTab';
@@ -7,13 +8,35 @@ import { GeneralTab } from './GeneralTab';
 import { SavesTab } from './SavesTab';
 import { CharacterPreferencesData, CharacterPreferencesProfile, CharacterPreferencesTabKeys } from './type';
 
+let nextRotateTime = 0;
+
 export const CharacterPreferences = (_props: any, context: any) => {
   const { act, data } = useBackend<CharacterPreferencesData>(context);
   const [menu, setMenu] = useLocalState(context, 'menu', CharacterPreferencesTabKeys.General);
 
+  const handleKeyDown = (e) => {
+    if (
+      (menu === CharacterPreferencesTabKeys.General || menu === CharacterPreferencesTabKeys.Character)
+      && (e.keyCode === KEY_LEFT || e.keyCode === KEY_RIGHT)
+    ) {
+      e.preventDefault();
+      if (nextRotateTime > performance.now()) {
+        return;
+      }
+      nextRotateTime = performance.now() + 125;
+
+      let direction = 'rotate-counter-clockwise';
+      if (e.keyCode === KEY_RIGHT) {
+        direction = 'rotate-clockwise';
+      }
+
+      act(direction);
+    }
+  };
+
   return (
     <Window width={600} height={750} title="Character Setup">
-      <Window.Content>
+      <Window.Content onKeyDown={handleKeyDown}>
         <Stack vertical fill>
           <Stack.Item>
             <SavesAndProfile />
@@ -61,13 +84,13 @@ export const CharacterPreferences = (_props: any, context: any) => {
                         type: 'map',
                       }}
                       style={{
-                        width: '80px',
-                        height: '80px',
+                        width: '64px',
+                        height: '128px',
                       }}
                     />
                     <Box textAlign="center" mt="5px">
-                      <Button icon="chevron-left" onClick={() => act('rotate-clockwise')} />
-                      <Button icon="chevron-right" onClick={() => act('rotate-counter-clockwise')} />
+                      <Button icon="chevron-left" onClick={() => act('rotate-counter-clockwise')} />
+                      <Button icon="chevron-right" onClick={() => act('rotate-clockwise')} />
                     </Box>
                   </Section>
                 </Stack.Item>
@@ -100,7 +123,7 @@ const SavesAndProfile = (_props: any, context: any) => {
       <Stack.Item>
         <Stack>
           {data.profiles.map((profile, index) => (
-            <Stack.Item key={index} ml={index === 0 ? '0' : '5px'} grow="1">
+            <Stack.Item key={index} ml={index === 0 ? '0' : '5px'} width={`${100 / data.profiles.length}%`}>
               <Profile profile={profile} index={index} />
             </Stack.Item>
           ))}
@@ -116,7 +139,18 @@ const SavesAndProfile = (_props: any, context: any) => {
                   <>
                     <Button onClick={() => act('load', { index: activeProfileIndex + 1 })}>Reload</Button>
                     {' - '}
-                    <Button onClick={() => act('save', { index: activeProfileIndex + 1 })}>Save</Button>
+                    <Button
+                      onClick={() => act('save', { index: activeProfileIndex + 1 })}
+                      icon={data.profileModified ? 'exclamation-triangle' : undefined}
+                      color={data.profileModified ? 'danger' : undefined}
+                      tooltip={
+                        data.profileModified
+                          ? 'You may have unsaved changes! Any unsaved changes will take effect for this round only.'
+                          : undefined
+                      }
+                      tooltipPosition="left">
+                      Save
+                    </Button>
                   </>
                 ) : null
               }>
@@ -125,22 +159,6 @@ const SavesAndProfile = (_props: any, context: any) => {
               </Button>
             </LabeledList.Item>
           </LabeledList>
-          {!!data.profileModified && (
-            <>
-              <Divider />
-              <NoticeBox danger>
-                <Stack>
-                  <Stack.Item align="center">
-                    <Icon name="exclamation-triangle" />
-                  </Stack.Item>
-                  <Stack.Item>
-                    <Box>You may have unsaved changes!</Box>
-                    <Box>Any unsaved changes will take effect for this round only.</Box>
-                  </Stack.Item>
-                </Stack>
-              </NoticeBox>
-            </>
-          )}
         </Section>
       </Stack.Item>
     </Stack>
@@ -148,36 +166,40 @@ const SavesAndProfile = (_props: any, context: any) => {
 };
 
 type ProfileProps = {
-  index: number,
-  profile: CharacterPreferencesProfile
-}
+  index: number;
+  profile: CharacterPreferencesProfile;
+};
 
 const Profile = (props: ProfileProps, context: any) => {
-  const {
-    index,
-    profile,
-  } = props;
+  const { index, profile } = props;
   const { act } = useBackend<CharacterPreferencesData>(context);
 
   return (
     <Section
       title={`Profile ${index + 1}`}
       textAlign="center"
-      backgroundColor={profile.active ? 'rgba(0, 0, 0, 0.10)' : null}>
-      <Box mb="5px">
-        {profile.name ? (
-          <Box>{profile.name}</Box>
-        ) : (
-          <Box italic color="label">
-            Empty
+      backgroundColor={profile.active ? 'rgba(0, 0, 0, 0.10)' : null}
+      fill>
+      <Stack vertical fill justify="space-between">
+        <Stack.Item>
+          <Box>
+            {profile.name ? (
+              <Box>{profile.name}</Box>
+            ) : (
+              <Box italic color="label">
+                Empty
+              </Box>
+            )}
           </Box>
-        )}
-      </Box>
-      <Button disabled={!profile.name} onClick={() => act('load', { index: index + 1 })}>
-        Load
-      </Button>
-      {' - '}
-      <Button onClick={() => act('save', { index: index + 1 })}>Save</Button>
+        </Stack.Item>
+        <Stack.Item>
+          <Button disabled={!profile.name} onClick={() => act('load', { index: index + 1 })}>
+            Load
+          </Button>
+          {' - '}
+          <Button onClick={() => act('save', { index: index + 1 })}>Save</Button>
+        </Stack.Item>
+      </Stack>
     </Section>
   );
 };

@@ -171,3 +171,11 @@
                        HAS_FLAG(x:kind_of_limb, LIMB_HEAVY) |\
                        HAS_FLAG(x:kind_of_limb, LIMB_HEAVIER) |\
                        HAS_FLAG(x:kind_of_limb, LIMB_TREADS))
+
+#define W_CLASS_TINY 1
+#define W_CLASS_SMALL 2
+#define W_CLASS_NORMAL 3
+#define W_CLASS_BULKY 4
+#define W_CLASS_HUGE 5
+#define W_CLASS_GIGANTIC 6
+#define W_CLASS_BUBSIAN 10

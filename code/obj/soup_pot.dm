@@ -300,7 +300,7 @@
 	var/total_wclass = 0
 	var/max_reagents = 150
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
-	w_class = 5.0
+	w_class = W_CLASS_HUGE
 	var/image/fluid_icon
 	var/datum/custom_soup/my_soup
 	tooltip_flags = REBUILD_DIST
