@@ -1048,7 +1048,7 @@ MATERIAL
 		if (!( istype(W, /obj/item/tile) ))
 			return
 		if (W.material && src.material && !isSameMaterial(W.material, src.material))
-			boutput(user, "<span class='alert'>You can't mix 2 stacks of different metals!</span>")
+			boutput(user, "<span class='alert'>You can't mix 2 stacks of different materials!</span>")
 			return
 		var/success = stack_item(W)
 		if (!success)
