@@ -1447,9 +1447,9 @@
 		for (var/mob/M in AIviewers(src, null))
 			M.show_message("<span class='alert'>The electric chair went off!</span>", 3)
 			if (lethal)
-				playsound(src.loc, "sound/effects/electric_shock.ogg", 100, 0)
+				playsound(src.loc, "sound/effects/electric_shock.ogg", 50, 0)
 			else
-				playsound(src.loc, "sound/effects/sparks4.ogg", 100, 0)
+				playsound(src.loc, "sound/effects/sparks4.ogg", 50, 0)
 
 		if (src.buckled_guy && ishuman(src.buckled_guy))
 			var/mob/living/carbon/human/H = src.buckled_guy
