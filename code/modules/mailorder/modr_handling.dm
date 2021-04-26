@@ -15,7 +15,7 @@
 		SPAWN_DBG(yeetdelay + 1 DECI SECOND)
 			var/gothere = pick_landmark(LANDMARK_MAILORDER_TARGET)
 			if(gothere)
-				src.throw_at(LANDMARK_MAILORDER_TARGET, 100, 1)
+				src.throw_at(gothere, 100, 1)
 
 /obj/machinery/floorflusher/industrial/mailorder
 	name = "external mail loading chute"
@@ -24,16 +24,17 @@
 
 	HasEntered(atom/movable/AM)
 		if(!istype(AM,/obj/item/storage/box/mailorder))
-			return
-		..()
+			..()
 
-	MouseDrop_T(mob/target, mob/user)
+	MouseDrop_T()
+		return
+
+	attack_hand()
 		return
 
 	attackby(var/obj/item/I, var/mob/user)
 		if(!istype(I,/obj/item/storage/box/mailorder))
-			return
-		..()
+			..()
 
 
 	flush()

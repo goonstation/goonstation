@@ -139,7 +139,7 @@
 						var/displayMessage = "[bicon(master)] Purchase unsuccessful due to lack of mail-order service to your area."
 						if(buy_success)
 							src.master.ID_card.money -= src.cartcost
-							displayMessage = "[bicon(master)] Thank your for your purchase! Delivery to '[destination]' in progress."
+							displayMessage = "[bicon(master)] Thank you for your purchase! Delivery to '[destination]' in progress."
 						src.master.display_message(displayMessage)
 				else
 					var/alert_beep = null
