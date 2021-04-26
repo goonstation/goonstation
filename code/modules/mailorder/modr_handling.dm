@@ -9,7 +9,7 @@
 		SPAWN_DBG(yeetdelay)
 			src.invisibility = 0
 			src.anchored = 0
-		SPAWN_DBG(yeetdelay + 1 DECISECOND)
+		SPAWN_DBG(yeetdelay + 1 DECI SECOND)
 			var/gothere = pick_landmark(LANDMARK_MAILORDER_TARGET)
 			if(gothere)
 				src.throw_at(LANDMARK_MAILORDER_TARGET, 100, 1)
@@ -17,6 +17,7 @@
 /obj/machinery/floorflusher/industrial/mail_order
 	name = "external mail loading chute"
 	desc = "A large chute that only accepts specially designed mail-order boxes."
+	var/destination_tag = null
 
 	HasEntered(atom/movable/AM)
 		if(!istype(AM,/obj/item/storage/box/mailorder))
@@ -27,7 +28,7 @@
 		return
 
 	attackby(var/obj/item/I, var/mob/user)
-		if(!istype(AM,/obj/item/storage/box/mailorder))
+		if(!istype(I,/obj/item/storage/box/mailorder))
 			return
 		..()
 
@@ -45,11 +46,12 @@
 		for(var/atom/movable/AM in src)
 			if(istype(AM,/obj/item/storage/box/mailorder))
 				var/obj/item/storage/box/mailorder/mobox = AM
-				if(AM.mail_dest)
-					src.destination_tag = AM.mail_dest
+				if(mobox.mail_dest)
+					src.destination_tag = mobox.mail_dest
 
 		if (!isnull(src.destination_tag))
 			H.mail_tag = src.destination_tag
+			src.destination_tag = null // dictated by package, not chute
 
 		air_contents.zero() // empty gas
 
