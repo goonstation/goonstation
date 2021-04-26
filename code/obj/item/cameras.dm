@@ -92,18 +92,17 @@
 	var/wait_cycle = 0
 
 	attack_self(mob/user)
-		if (user.mind.special_role == "spy_thief")
-			if (user.find_in_hand(src))
-				if (!src.flash_mode)
-					user.show_text("You use the secret switch to set the camera to flash mode.", "blue")
-					playsound(user, "sound/items/pickup_defib.ogg", 100, 1)
-					src.icon_state = "camera_flash"
-				else
-					user.show_text("You use the secret switch to set the camera to take photos.", "blue")
-					playsound(user, "sound/items/putback_defib.ogg", 100, 1)
-					src.icon_state = "camera"
-				src.flash_mode = !src.flash_mode
-				src.update_icon()
+		if (user.find_in_hand(src))
+			if (!src.flash_mode)
+				user.show_text("You use the secret switch to set the camera to flash mode.", "blue")
+				playsound(user, "sound/items/pickup_defib.ogg", 100, 1)
+				src.icon_state = "camera_flash"
+			else
+				user.show_text("You use the secret switch to set the camera to take photos.", "blue")
+				playsound(user, "sound/items/putback_defib.ogg", 100, 1)
+				src.icon_state = "camera"
+			src.flash_mode = !src.flash_mode
+			src.update_icon()
 
 	New()
 		if (!cell)
