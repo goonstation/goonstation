@@ -6,9 +6,10 @@
 	wear_image_icon = 'icons/mob/eyes.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	item_state = "glasses"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	c_flags = COVERSEYES
 	var/allow_blind_sight = 0
+	wear_layer = MOB_GLASSES_LAYER
 	block_vision = 0
 	var/block_eye = null // R or L
 	var/correct_bad_vision = 0
@@ -231,7 +232,7 @@
 	color_g = 0.8 // red tint
 	color_b = 0.8
 	/// For seeing through walls
-	var/upgraded = FALSE 
+	var/upgraded = FALSE
 
 	equipped(mob/user, slot)
 		. = ..()

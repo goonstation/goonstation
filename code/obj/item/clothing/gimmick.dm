@@ -20,6 +20,7 @@
 	item_state = "helmet"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
 	see_face = 0
+	item_function_flags = IMMUNE_TO_ACID
 
 	New()
 		..()
@@ -38,11 +39,13 @@
 	desc = "Fishnets, bandoliers and plating? What the hell?"
 	icon_state = "hunter"
 	item_state = "hunter"
+	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/clothing/shoes/cowboy/hunter
 	name = "Space Cowboy Boots"
 	desc = "Fashionable alien footwear. The sole appears to be rubberized,  preventing slipping on wet surfaces."
 	c_flags = NOSLIP // Don't slip on gibs all the time, d'oh (Convair880).
+	item_function_flags = IMMUNE_TO_ACID
 // --------------------------------------------------
 
 /obj/item/clothing/head/helmet/space/santahat
@@ -541,7 +544,7 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	item_state = "vshield"
 	throwforce = 7.0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 
 	turn_off()
 		if(user)
@@ -688,7 +691,7 @@
 	item_state = "adeptus"
 	permeability_coefficient = 0.50
 	body_parts_covered = TORSO|LEGS|ARMS
-	over_all = 1
+	wear_layer = MOB_OVERLAY_BASE
 
 //power armor
 
@@ -801,12 +804,14 @@
 	desc = "'ello gents! Cracking time to hunt an elephant!"
 	icon_state = "safari"
 	item_state = "safari"
+	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/clothing/head/safari
 	name = "safari hat"
 	desc = "Keeps you cool in the hot savannah."
 	icon_state = "safari"
 	item_state = "caphat"
+	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/clothing/mask/skull
 	name = "skull mask"
@@ -824,7 +829,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "robuddy"
 	item_state = "robuddy"
-	over_back = 1
+	wear_layer = MOB_BACK_LAYER + 0.2
 	body_parts_covered = TORSO|LEGS|ARMS
 
 /obj/item/clothing/suit/bee
@@ -835,7 +840,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "bee"
 	item_state = "bee"
-	over_back = 1
+	wear_layer = MOB_BACK_LAYER + 0.2
 	body_parts_covered = TORSO|ARMS
 
 /obj/item/clothing/suit/monkey
@@ -1303,7 +1308,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "joyful"
 	body_parts_covered = TORSO|LEGS|ARMS
-	over_all = 1
+	wear_layer = MOB_OVERLAY_BASE
 
 /obj/item/clothing/head/rando
 	name = "red skull mask and cowl"
@@ -1450,7 +1455,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	name = "hotdog suit"
 	desc = "On close inspection, you notice a small collection of bones caught in the fabric of the suit. Spooky."
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
-	over_all = 1
+	wear_layer = MOB_OVERLAY_BASE
 	icon_state = "hotdogsuit"
 
 /obj/item/clothing/under/gimmick/vampire

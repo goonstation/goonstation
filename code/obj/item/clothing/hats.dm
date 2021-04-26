@@ -8,6 +8,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	body_parts_covered = HEAD
 	compatible_species = list("human", "cow", "werewolf", "flubber")
+	wear_layer = MOB_HEAD_LAYER2
 	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
 	block_vision = 0
 	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
@@ -399,14 +400,12 @@
 /obj/item/clothing/head/that
 	name = "hat"
 	desc = "An stylish looking hat"
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "tophat"
 	item_state = "that"
 
 /obj/item/clothing/head/that/purple
 	name = "purple hat"
 	desc = "A purple tophat."
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "ptophat"
 	item_state = "pthat"
 	c_flags = SPACEWEAR
@@ -420,7 +419,6 @@
 /obj/item/clothing/head/that/gold
 	name = "golden hat"
 	desc = "A golden tophat."
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "gtophat"
 	item_state = "gthat"
 	c_flags = SPACEWEAR
@@ -440,7 +438,6 @@
 /obj/item/clothing/head/longtophat
 	name = "long tophat"
 	desc = "When you look at this hat you can only think of how many monkeys you could fit in it."
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "ltophat"
 	item_state = "lthat"
 
@@ -449,7 +446,6 @@
 	desc = "Your toque blanche, coloured as such so that your poor sanitation is obvious, and the blood shows up nice and crazy."
 	icon_state = "chef"
 	item_state = "chefhat"
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	c_flags = SPACEWEAR
 
 /obj/item/clothing/head/souschefhat
@@ -459,8 +455,7 @@
 	c_flags = SPACEWEAR
 
 /obj/item/clothing/head/dramachefhat
-	name = "Dramatic Chef's hat"
-	wear_image_icon = 'icons/mob/fruithat.dmi'
+	name = "Dramatic Chef's Hat"
 	icon_state = "drama"
 	item_state = "chefhat" //TODO: unique inhand sprite?
 	c_flags = SPACEWEAR
@@ -482,7 +477,6 @@
 /obj/item/clothing/head/plunger
 	name = "plunger"
 	desc = "get dat fukken clog"
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "plunger"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "plunger"
@@ -797,7 +791,6 @@
 /obj/item/clothing/head/bigtex
 	name = "75-gallon hat"
 	desc = "A recreation of the late Big Tex's hat, commisioned by Ol' Harner."
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "bigtex"
 	item_state = "bigtex"
 	setupProperties()
@@ -865,14 +858,14 @@
 	icon_state = "purplebutt"
 	c_flags = COVERSEYES
 
-// BIGHATS - taller than normal hats! Like fruithat.dmi but bigger! To a max icon size of 64px
+// BIGHATS - taller than normal hats! To a max icon size of 64px
 
 /obj/item/clothing/head/bighat
 	name = "large hat"
 	desc = "An unnaturally large piece of headwear"
 	wear_image_icon = 'icons/mob/bighat.dmi'
 	icon_state = "tophat"
-	w_class = 4
+	w_class = W_CLASS_BULKY
 
 /obj/item/clothing/head/bighat/syndicate
 	name = "syndicate hat"
@@ -884,6 +877,7 @@
 	contraband = 10 //let's set off some alarms, boys
 	is_syndicate = 1 //no easy replication thanks
 	cant_self_remove = 1
+	item_function_flags = IMMUNE_TO_ACID //shouldn't be able to just melt the Syndicate Hat.
 	var/datum/component/holdertargeting/sm_light/light_c
 	var/processing = 0
 
@@ -1173,7 +1167,7 @@
 	wear_image_icon = 'icons/mob/ears.dmi'
 	icon_state = "cat-gray"
 	item_state = "cat-gray"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 0
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1281,7 +1275,7 @@
 	wear_image_icon = 'icons/mob/bighat.dmi'
 	icon_state = "antlers"
 	item_state = "antlers"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 0
 
 /obj/item/clothing/head/pajama_cap
@@ -1293,14 +1287,15 @@
 /obj/item/clothing/head/that/white
 	name = "white hat"
 	desc = "A white tophat."
-	wear_image_icon = 'icons/mob/fruithat.dmi'
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "whtophat"
 	item_state = "whtophat"
 
 /obj/item/clothing/head/headsprout
 	name = "leaf hairclip"
 	desc = "A sign of a healthy, growing Staff Assistant."
-	wear_image_icon = 'icons/mob/fruithat.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "headsprout"
 	item_state = "headsprout"
 

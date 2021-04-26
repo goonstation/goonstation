@@ -5,7 +5,7 @@
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "mousetrap"
 	item_state = "mousetrap"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	force = null
 	throwforce = null
 	var/armed = 0
@@ -161,7 +161,7 @@
 			else if (!src.arm)
 				user.show_text("You can't quite seem to get [C] to stay on [src]. Seems like it needs something to hold it in place.", "red")
 				return
-			else if (C.w_class > 1) // Transfer valve bomb pies are a thing. Shouldn't fit in a backpack, much less a box.
+			else if (C.w_class > W_CLASS_TINY) // Transfer valve bomb pies are a thing. Shouldn't fit in a backpack, much less a box.
 				user.show_text("[C] is way too large. You can't find any way to balance it on the arm.", "red")
 				return
 			user.u_equip(C)
@@ -313,7 +313,7 @@
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "mousetrap_roller"
 	item_state = "mousetrap"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/armed = 0
 	var/obj/item/mousetrap/mousetrap = null
 	var/obj/item/pipebomb/frame/frame = null
