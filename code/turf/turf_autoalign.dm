@@ -658,6 +658,19 @@
 	/obj/window)
 	connects_with_overlay = list(/obj/machinery/door, /obj/window)
 
+/turf/unsimulated/wall/auto/reinforced/supernorn/yellow
+	icon = 'icons/turf/walls_manta.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "mapwall_r-Y"
+#endif
+	mod = "norn-Y-"
+	light_mod = "wall-"
+	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	connect_overlay = 1
+	connects_to = list(/turf/unsimulated/wall/auto/reinforced/supernorn/yellow, /obj/machinery/door, /obj/window)
+	connects_with_overlay = list(/obj/machinery/door, /obj/window)
+
+
 /turf/unsimulated/wall/auto/gannets
 	icon = 'icons/turf/walls_destiny.dmi'
 	connects_to = list(/turf/unsimulated/wall/auto/gannets)

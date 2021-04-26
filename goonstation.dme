@@ -998,6 +998,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\power\cablecolors.dm"
 #include "code\modules\power\cell.dm"
 #include "code\modules\power\engine.dm"
+#include "code\modules\power\explode_generator.dm"
 #include "code\modules\power\furnace.dm"
 #include "code\modules\power\lgenerator.dm"
 #include "code\modules\power\lighting.dm"

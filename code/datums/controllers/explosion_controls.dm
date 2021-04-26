@@ -106,11 +106,11 @@ var/datum/explosion_controller/explosions
 
 #else
 			if (p >= 6)
-				T.ex_act(1, last_touched)
+				T.ex_act(1, last_touched, p)
 			else if (p > 3)
-				T.ex_act(2, last_touched)
+				T.ex_act(2, last_touched, p)
 			else
-				T.ex_act(3, last_touched)
+				T.ex_act(3, last_touched, p)
 #endif
 		LAGCHECK(LAG_HIGH)
 

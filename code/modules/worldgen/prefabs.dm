@@ -187,6 +187,14 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 20
 		prefabSizeY = 20
 
+	war_engine // Explodey Engine Puzzle for eplodey things
+		required = 1 // TODO Azrun REMOVE YOU FOOL!
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_war_engine.dmm"
+		prefabSizeX = 20
+		prefabSizeY = 20
+
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit

@@ -1185,6 +1185,11 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/sequestered_cloner/puzzle
 	requires_power = TRUE
 
+/area/prefab/war_engine
+	name = "War Engine"
+	icon_state = "orange"
+	requires_power = TRUE
+
 /area/prefab/von_ricken
 	name ="Von Ricken"
 	icon_state = "blue"

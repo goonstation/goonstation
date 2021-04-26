@@ -468,6 +468,34 @@
 	else
 		boutput(user, "<span class='alert'>It's broken.</span>")
 
+/obj/machinery/door_control/puzzle
+	var/power_required = 25 KILO WATTS
+	var/sound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
+	var/loops = 3
+	attack_hand()
+		if(status & NOPOWER)
+			return
+
+		use_power(power_required)
+
+		for(var/i=1, i<src.loops, ++i)
+			if(!check_power())
+				return
+			playsound(src, sound, 20, 1)
+			sleep(1.5 SECONDS)
+
+		if(!check_power())
+			return
+		else
+			playsound(src, 'sound/machines/airlock_pry.ogg', 20, 1, pitch=0.5)
+			..()
+
+	proc/check_power()
+		. = TRUE
+		if(status & NOPOWER)
+			src.visible_message("<span class='alert'>[src] emits a sad beep.  Maybe more power is needed?</span>")
+			.= FALSE
+
 ////////////////////////////////////////////////////////
 //////////////Mass Driver Button	///////////////////
 ///////////////////////////////////////////////////////

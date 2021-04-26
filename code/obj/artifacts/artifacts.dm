@@ -312,3 +312,9 @@
 		/datum/artifact/watercan,
 		/datum/artifact/pitcher
 		)
+
+/obj/artifact_type_spawner/war_engine
+	types = list(/datum/artifact/bomb/explosive,
+		/datum/artifact/bomb/explosive/devastating,
+		/datum/artifact/power_gen
+		)

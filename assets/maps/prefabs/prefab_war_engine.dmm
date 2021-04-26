@@ -1,0 +1,1167 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"an" = (
+/obj/decal/poster/wallsign/hazard_danger{
+	pixel_x = 32;
+	pixel_y = 32
+	},
+/turf/simulated/floor/yellowblack/corner{
+	dir = 1
+	},
+/area/prefab/war_engine)
+"aH" = (
+/obj/item/pressure_crystal{
+	icon_state = "pressure_1";
+	pressure = 20.327;
+	rand_pos = 1
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/prefab/war_engine)
+"cZ" = (
+/obj/item/device/pressure_sensor,
+/obj/decal/cleanable/dirt/dirt5,
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"dc" = (
+/obj/reagent_dispensers/fueltank,
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"eC" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"eN" = (
+/obj/cable/reinforced{
+	icon_state = "1-8-thick"
+	},
+/turf/variableTurf/clear,
+/area/prefab/war_engine)
+"fa" = (
+/obj/lattice,
+/turf/variableTurf/clear,
+/area/prefab/war_engine)
+"fQ" = (
+/obj/machinery/light/incandescent/harsh/very{
+	dir = 1
+	},
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"gR" = (
+/obj/decal/fakeobjects/firealarm_broken,
+/turf/simulated/wall/auto/reinforced/supernorn/resonance,
+/area/prefab/war_engine)
+"hU" = (
+/obj/machinery/atmospherics/unary/furnace_connector{
+	dir = 8
+	},
+/obj/machinery/power/furnace/thermo,
+/turf/simulated/floor/yellowblack{
+	dir = 6
+	},
+/area/prefab/war_engine)
+"ia" = (
+/obj/item/cable_coil/purple/cut/small,
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"ig" = (
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 9;
+	pixel_y = 12
+	},
+/obj/item/cable_coil/brown,
+/obj/item/device/light/flashlight,
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"iu" = (
+/obj/item/pipebomb/bomb/engineering,
+/obj/item/pipebomb/bomb/engineering,
+/obj/item/pipebomb/bomb/engineering,
+/obj/storage/secure/crate/eng,
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"jx" = (
+/obj/storage/secure/closet/engineering/engineer{
+	locked = 0
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/prefab/war_engine)
+"jN" = (
+/obj/cable/reinforced{
+	icon_state = "1-2-thick"
+	},
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/explosive_shield_button{
+	pixel_x = -21;
+	pixel_y = -10
+	},
+/obj/decal/poster/wallsign/warning3{
+	pixel_x = -32
+	},
+/turf/variableTurf/clear,
+/area/prefab/war_engine)
+"ka" = (
+/obj/storage/crate,
+/obj/item/raw_material/erebite,
+/obj/item/raw_material/erebite,
+/obj/item/raw_material/erebite,
+/obj/item/raw_material/erebite,
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"ki" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 8
+	},
+/turf/simulated/floor/yellowblack,
+/area/prefab/war_engine)
+"kv" = (
+/obj/machinery/portable_atmospherics/canister/toxins{
+	filled = 0.2
+	},
+/turf/simulated/floor/black,
+/area/prefab/war_engine)
+"kA" = (
+/obj/machinery/dispenser{
+	o2tanks = 4;
+	pltanks = 5
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/prefab/war_engine)
+"kF" = (
+/obj/machinery/light/incandescent/harsh/very,
+/turf/simulated/floor/yellowblack,
+/area/prefab/war_engine)
+"kI" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Prototype Nuke Frame. How old is this?";
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "nuclearbomb";
+	name = "nuclear bomb frame"
+	},
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"kO" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = -4;
+	pixel_y = 16
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_y = 11
+	},
+/obj/item/weldingtool,
+/obj/item/weldingtool{
+	pixel_x = 7
+	},
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"lh" = (
+/obj/machinery/power/ktd_generator,
+/obj/cable/reinforced,
+/turf/simulated/floor/resonance,
+/area/prefab/war_engine)
+"lo" = (
+/obj/item/cable_coil/purple/cut/small,
+/obj/item/wirecutters,
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"lN" = (
+/obj/table/auto,
+/obj/item/clothing/suit/fire/heavy,
+/obj/item/clothing/head/helmet/firefighter,
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"mY" = (
+/obj/item/reagent_containers/pill/cyberpunk{
+	pixel_x = 8;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/item/pen,
+/obj/item/cable_coil/hotpink/cut/small,
+/turf/unsimulated/floor/plating/scorched,
+/area/prefab/war_engine)
+"oH" = (
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/plating/scorched,
+/area/prefab/war_engine)
+"oL" = (
+/obj/item/clothing/suit/space/industrial,
+/obj/item/clothing/head/helmet/space/industrial,
+/obj/item/clothing/shoes/industrial,
+/obj/item/clothing/head/helmet/space/industrial,
+/obj/item/clothing/head/helmet/space/industrial,
+/obj/storage/secure/crate/eng,
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"pN" = (
+/obj/machinery/power/ktd_generator,
+/obj/cable/reinforced{
+	icon_state = "0-2-thick"
+	},
+/turf/simulated/floor/resonance,
+/area/prefab/war_engine)
+"pU" = (
+/obj/machinery/light/incandescent/harsh/very{
+	dir = 4
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/prefab/war_engine)
+"qx" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 1
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/prefab/war_engine)
+"rR" = (
+/obj/cable/reinforced{
+	icon_state = "1-4-thick"
+	},
+/obj/cable/reinforced{
+	icon_state = "2-4-thick"
+	},
+/turf/simulated/floor/resonance,
+/area/prefab/war_engine)
+"tl" = (
+/obj/machinery/vending/standard{
+	profit = 0
+	},
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"tL" = (
+/obj/item/scrap{
+	rand_pos = 1
+	},
+/obj/machinery/light/emergency{
+	dir = 8
+	},
+/turf/unsimulated/floor/plating/damaged3,
+/area/prefab/war_engine)
+"ud" = (
+/obj/item/breaching_charge/mining,
+/obj/item/breaching_charge/mining,
+/obj/item/breaching_charge/mining,
+/obj/item/breaching_charge/mining,
+/obj/item/breaching_charge/NT,
+/obj/storage/secure/crate/eng,
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"ug" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 1
+	},
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"uS" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/war_engine)
+"uW" = (
+/obj/reagent_dispensers/still,
+/turf/unsimulated/floor/plating/damaged1,
+/area/prefab/war_engine)
+"vH" = (
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"vO" = (
+/obj/item/scrap{
+	rand_pos = 1
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"vV" = (
+/obj/machinery/door/poddoor/blast/puzzle{
+	explosion_resistance = 200;
+	icon_state = "bdoorleft1";
+	id = "blast_door"
+	},
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"wm" = (
+/obj/artifact_type_spawner/war_engine,
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"wS" = (
+/obj/machinery/light/small/floor/resonance,
+/obj/cable/reinforced{
+	icon_state = "4-8-thick"
+	},
+/turf/simulated/floor/resonance,
+/area/prefab/war_engine)
+"xm" = (
+/obj/item/sheet/steel/fullstack{
+	pixel_x = 7;
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"yL" = (
+/obj/machinery/atmospherics/portables_connector/east,
+/obj/machinery/light/incandescent/harsh/very,
+/turf/simulated/floor/yellowblack,
+/area/prefab/war_engine)
+"yV" = (
+/obj/machinery/door_control/puzzle{
+	id = "blast_door";
+	loops = 5;
+	pixel_x = -9;
+	pixel_y = 5
+	},
+/turf/unsimulated/wall/auto/reinforced/supernorn/yellow,
+/area/prefab/war_engine)
+"zq" = (
+/turf/simulated/floor/resonance,
+/area/prefab/war_engine)
+"zw" = (
+/obj/table/auto,
+/obj/item/rods/steel/fullstack{
+	pixel_x = 7
+	},
+/obj/item/rods/steel/fullstack{
+	pixel_x = -5
+	},
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"zB" = (
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor/black,
+/area/prefab/war_engine)
+"zU" = (
+/obj/machinery/door/poddoor/blast/puzzle{
+	explosion_resistance = 200;
+	id = "blast_door"
+	},
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"Bs" = (
+/obj/machinery/door/airlock/pyro/classic,
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"CM" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/yellowblack{
+	dir = 10
+	},
+/area/prefab/war_engine)
+"CY" = (
+/obj/item/pressure_crystal{
+	pixel_x = -10;
+	pixel_y = 8
+	},
+/obj/item/pressure_crystal{
+	pixel_x = 10;
+	pixel_y = 8
+	},
+/obj/item/pressure_crystal{
+	pixel_y = 8
+	},
+/obj/item/pressure_crystal{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/item/pressure_crystal{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/obj/item/pressure_crystal{
+	pixel_y = 10
+	},
+/obj/item/pressure_crystal{
+	pixel_x = -10
+	},
+/obj/item/pressure_crystal{
+	pixel_x = 10
+	},
+/obj/item/pressure_crystal,
+/obj/item/pressure_crystal{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/pressure_crystal{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/pressure_crystal{
+	pixel_y = 2
+	},
+/obj/item/pressure_crystal{
+	pixel_x = -10;
+	pixel_y = -9
+	},
+/obj/item/pressure_crystal{
+	pixel_x = 10;
+	pixel_y = -9
+	},
+/obj/item/pressure_crystal{
+	pixel_y = -9
+	},
+/obj/item/pressure_crystal{
+	pixel_x = -5;
+	pixel_y = -8
+	},
+/obj/item/pressure_crystal{
+	pixel_x = 5;
+	pixel_y = -8
+	},
+/obj/item/pressure_crystal{
+	pixel_y = -7
+	},
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"EJ" = (
+/obj/decal/poster/wallsign/hazard_danger{
+	pixel_x = -32;
+	pixel_y = 32
+	},
+/turf/simulated/floor/black,
+/area/prefab/war_engine)
+"ER" = (
+/obj/item/device/transfer_valve,
+/obj/item/device/transfer_valve,
+/obj/item/device/transfer_valve,
+/obj/item/device/timer,
+/obj/item/device/timer,
+/obj/item/device/timer,
+/obj/machinery/light/incandescent/harsh/very{
+	dir = 8
+	},
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"Fg" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/poster/wallsign/hazard_danger{
+	pixel_x = 32;
+	pixel_y = -32
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 9
+	},
+/area/prefab/war_engine)
+"Fh" = (
+/obj/decal/cleanable/generic,
+/obj/item/paper/proof_read_note{
+	pixel_x = -5;
+	pixel_y = -19;
+	plane = -106
+	},
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"Gh" = (
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/prefab/war_engine)
+"GD" = (
+/obj/item/crowbar/red,
+/obj/item/raw_material/scrap_metal{
+	rand_pos = 1
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Hd" = (
+/turf/variableTurf/clear,
+/area/prefab/war_engine)
+"HU" = (
+/turf/unsimulated/wall/auto/reinforced/supernorn/yellow,
+/area/prefab/war_engine)
+"IJ" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/east,
+/turf/simulated/floor/yellowblack,
+/area/prefab/war_engine)
+"IU" = (
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/prefab/war_engine)
+"Jz" = (
+/obj/decal/cleanable/machine_debris,
+/turf/simulated/floor/resonance,
+/area/prefab/war_engine)
+"JE" = (
+/obj/machinery/portable_atmospherics/canister/oxygen{
+	filled = 0.4
+	},
+/turf/simulated/floor/yellowblack,
+/area/prefab/war_engine)
+"Kg" = (
+/obj/machinery/power/smes{
+	charge = 2e+004
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 5
+	},
+/area/prefab/war_engine)
+"Kt" = (
+/obj/item/raw_material/scrap_metal{
+	rand_pos = 1
+	},
+/turf/unsimulated/floor/plating/damaged2,
+/area/prefab/war_engine)
+"KG" = (
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
+	name = "very reinforced wall"
+	},
+/area/prefab/war_engine)
+"KY" = (
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/prefab/war_engine)
+"La" = (
+/obj/item/pressure_crystal{
+	icon_state = "pressure_2";
+	pressure = 4.87632;
+	rand_pos = 1
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/black,
+/area/prefab/war_engine)
+"Ld" = (
+/turf/simulated/floor/black,
+/area/prefab/war_engine)
+"Ln" = (
+/obj/decal/poster/wallsign/warning3,
+/turf/simulated/wall/auto/reinforced/supernorn/yellow{
+	explosion_resistance = 150
+	},
+/area/prefab/war_engine)
+"MW" = (
+/obj/machinery/light/emergency{
+	dir = 8
+	},
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"Ns" = (
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/plating/damaged3,
+/area/prefab/war_engine)
+"OP" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Pw" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold/horizontal,
+/obj/machinery/light/incandescent/harsh/very,
+/turf/simulated/floor/yellowblack,
+/area/prefab/war_engine)
+"PD" = (
+/turf/simulated/wall/false_wall,
+/area/prefab/war_engine)
+"PE" = (
+/obj/machinery/door/airlock/pyro/engineering/alt/resonance{
+	dir = 4;
+	req_access = null
+	},
+/obj/cable/reinforced{
+	icon_state = "4-8-thick"
+	},
+/turf/simulated/floor/resonance,
+/area/prefab/war_engine)
+"Qg" = (
+/obj/cable/reinforced{
+	icon_state = "2-5-thick"
+	},
+/obj/item/raw_material/scrap_metal{
+	rand_pos = 1
+	},
+/obj/machinery/light/emergency{
+	dir = 8
+	},
+/turf/unsimulated/floor/plating/damaged3,
+/area/prefab/war_engine)
+"Qi" = (
+/obj/item/pressure_crystal{
+	rand_pos = 1
+	},
+/obj/cable/reinforced{
+	icon_state = "0-5-thick"
+	},
+/obj/machinery/power/apc/war_eng{
+	environ = 1;
+	equipment = 1;
+	lighting = 1;
+	locked = 0;
+	pixel_y = 24;
+	start_charge = 2
+	},
+/obj/decal/poster/wallsign/hazard_danger{
+	pixel_x = -32;
+	pixel_y = -32
+	},
+/turf/unsimulated/floor/damaged3,
+/area/prefab/war_engine)
+"Rv" = (
+/turf/simulated/floor/yellowblack/corner{
+	dir = 4
+	},
+/area/prefab/war_engine)
+"RA" = (
+/obj/item/pressure_crystal{
+	icon_state = "pressure_1";
+	pressure = 167.327;
+	rand_pos = 1
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/yellowblack{
+	dir = 10
+	},
+/area/prefab/war_engine)
+"Sb" = (
+/obj/machinery/vending/snack{
+	profit = 0
+	},
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"TD" = (
+/turf/simulated/wall/auto/supernorn,
+/area/prefab/war_engine)
+"Ub" = (
+/turf/simulated/floor/yellowblack,
+/area/prefab/war_engine)
+"Uh" = (
+/obj/storage/secure/closet/engineering{
+	locked = 0
+	},
+/obj/item/reagent_containers/food/snacks/burger/moldy,
+/obj/item/clothing/head/helmet/welding,
+/obj/item/paper/book/from_file/pocketguide/engineering,
+/obj/item/screwdriver/yellow,
+/turf/simulated/floor/yellowblack{
+	dir = 9
+	},
+/area/prefab/war_engine)
+"Uq" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/prefab/war_engine)
+"UL" = (
+/obj/item/scrap{
+	rand_pos = 1
+	},
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/decal/poster/wallsign/warning3{
+	pixel_x = -32
+	},
+/turf/variableTurf/clear,
+/area/prefab/war_engine)
+"Vk" = (
+/obj/cable/reinforced{
+	icon_state = "4-8-thick"
+	},
+/obj/cable/reinforced{
+	icon_state = "1-4-thick"
+	},
+/obj/cable/reinforced{
+	icon_state = "2-4-thick"
+	},
+/obj/decal/cleanable/blood/drip/low,
+/turf/simulated/floor/resonance,
+/area/prefab/war_engine)
+"Vs" = (
+/obj/machinery/atmospherics/portables_connector/west,
+/turf/simulated/floor/yellowblack,
+/area/prefab/war_engine)
+"VV" = (
+/obj/machinery/door/poddoor/blast/puzzle{
+	explosion_resistance = 200;
+	icon_state = "bdoorright1";
+	id = "blast_door"
+	},
+/turf/unsimulated/floor/grey,
+/area/prefab/war_engine)
+"We" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/cable/reinforced{
+	icon_state = "0-10-thick"
+	},
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/item/paper/book/resonance_draft,
+/obj/item/pen/marker/red,
+/obj/item/pen/marker/green,
+/obj/dialogueobj/engineerscorpse,
+/turf/unsimulated/floor/damaged3,
+/area/prefab/war_engine)
+"Wu" = (
+/turf/simulated/wall/auto/reinforced/supernorn/resonance,
+/area/prefab/war_engine)
+"Xi" = (
+/turf/simulated/floor/damaged2,
+/area/prefab/war_engine)
+"ZD" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+
+(1,1,1) = {"
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+OP
+OP
+OP
+OP
+ZD
+"}
+(2,1,1) = {"
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+OP
+OP
+ZD
+ZD
+"}
+(3,1,1) = {"
+ZD
+ZD
+ZD
+ZD
+ZD
+uS
+uS
+uS
+uS
+uS
+uS
+uS
+uS
+uS
+uS
+uS
+uS
+OP
+OP
+OP
+"}
+(4,1,1) = {"
+ZD
+ZD
+ZD
+ZD
+ZD
+uS
+Sb
+cZ
+ER
+TD
+uW
+TD
+Uh
+CM
+qx
+MW
+ug
+OP
+OP
+OP
+"}
+(5,1,1) = {"
+ZD
+ZD
+ZD
+ZD
+ZD
+uS
+tl
+CY
+Fh
+PD
+mY
+TD
+jx
+kF
+uS
+uS
+uS
+OP
+OP
+OP
+"}
+(6,1,1) = {"
+ZD
+ZD
+ZD
+ZD
+ZD
+uS
+TD
+TD
+eC
+TD
+TD
+TD
+kA
+Ub
+uS
+uS
+GD
+OP
+ZD
+ZD
+"}
+(7,1,1) = {"
+ZD
+ZD
+uS
+uS
+uS
+uS
+Fg
+IU
+IU
+IU
+pU
+IU
+an
+Rv
+RA
+uS
+OP
+ZD
+ZD
+ZD
+"}
+(8,1,1) = {"
+ZD
+ZD
+uS
+dc
+lN
+uS
+Gh
+Wu
+Wu
+Wu
+Wu
+Wu
+kv
+Ld
+IJ
+uS
+vO
+ZD
+ZD
+ZD
+"}
+(9,1,1) = {"
+ZD
+ZD
+uS
+fQ
+vH
+Bs
+Gh
+Wu
+pN
+rR
+lh
+Wu
+zB
+Ld
+Pw
+uS
+ZD
+ZD
+ZD
+ZD
+"}
+(10,1,1) = {"
+ZD
+ZD
+uS
+ig
+xm
+uS
+KY
+Wu
+Jz
+wS
+zq
+Wu
+Ld
+Ld
+Vs
+uS
+ZD
+ZD
+ZD
+ZD
+"}
+(11,1,1) = {"
+ZD
+ZD
+uS
+kO
+zw
+uS
+Gh
+Wu
+pN
+Vk
+lh
+gR
+La
+Ld
+JE
+uS
+ZD
+ZD
+ZD
+ZD
+"}
+(12,1,1) = {"
+ZD
+ZD
+uS
+uS
+uS
+uS
+Ns
+Wu
+Wu
+PE
+Wu
+Wu
+Xi
+Ld
+yL
+uS
+ZD
+ZD
+ZD
+ZD
+"}
+(13,1,1) = {"
+ZD
+ZD
+ZD
+ZD
+uS
+uS
+Qi
+Qg
+jN
+eN
+UL
+tL
+EJ
+Ld
+ki
+uS
+ZD
+ZD
+ZD
+ZD
+"}
+(14,1,1) = {"
+ZD
+ZD
+ZD
+ZD
+uS
+Kg
+We
+Uq
+Hd
+Hd
+fa
+Kt
+oH
+aH
+hU
+uS
+ZD
+ZD
+ZD
+ZD
+"}
+(15,1,1) = {"
+ZD
+ZD
+ZD
+ZD
+uS
+uS
+HU
+HU
+VV
+zU
+vV
+yV
+HU
+HU
+HU
+uS
+ZD
+ZD
+ZD
+ZD
+"}
+(16,1,1) = {"
+ZD
+ZD
+ZD
+ZD
+ZD
+uS
+HU
+ud
+vH
+vH
+vH
+Ln
+kI
+ia
+HU
+KG
+ZD
+ZD
+ZD
+ZD
+"}
+(17,1,1) = {"
+ZD
+ZD
+ZD
+ZD
+ZD
+KG
+HU
+ka
+oL
+iu
+vH
+vH
+lo
+wm
+HU
+KG
+ZD
+ZD
+ZD
+ZD
+"}
+(18,1,1) = {"
+ZD
+ZD
+ZD
+ZD
+ZD
+KG
+HU
+HU
+HU
+HU
+HU
+HU
+HU
+HU
+HU
+KG
+ZD
+ZD
+ZD
+ZD
+"}
+(19,1,1) = {"
+ZD
+ZD
+ZD
+ZD
+ZD
+KG
+KG
+KG
+KG
+KG
+KG
+KG
+KG
+KG
+KG
+KG
+ZD
+ZD
+ZD
+ZD
+"}
+(20,1,1) = {"
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+ZD
+"}
