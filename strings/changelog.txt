@@ -1,5 +1,9 @@
 
 (t)mon apr 26 21
+(u)TTerc
+(p)4364
+(e)⚖🐛|balance, bug
+(+)Vampire/thrall bite now only requires the player to take off victim's headgear, if the headgear has choking protection.
 (u)Luxizzle
 (p)4487
 (e)🐛|bug
