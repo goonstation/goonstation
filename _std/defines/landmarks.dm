@@ -16,7 +16,7 @@
 #define LANDMARK_BOXING_RING "boxing ring"
 #define LANDMARK_GPS_WAYPOINT "GPS Waypoint"
 #define LANDMARK_ARTIFACT_SPAWN "artifact spawner"
-#define LANDMARK_MAILORDER_SPAWN "mail order start"
+#define LANDMARK_MAILORDER_SPAWN "mail order spawn"
 #define LANDMARK_MAILORDER_TARGET "mail order target"
 
 // centcom shuttle landmarks

@@ -1,3 +1,6 @@
+//A landmark mailorder spawn and target are required for mail order to work
+//Mail order loading chute is recommended for any station with a mail loop
+
 /obj/item/storage/box/mailorder
 	name = "mail-order box"
 	icon_state = "evidence"
