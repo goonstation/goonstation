@@ -828,6 +828,8 @@
 			if ("togglelock")
 				if(!ON_COOLDOWN(src, "speak cooldown", 2 SECOND))
 					speak("Sorry, only people authorized by Thinktronic Data Systems may access my controls and accessories.")
+				else
+					user.show_text("You try to [src.locked ? "lock" : "unlock"] [src] but are too distracted. Try again in a sec.")
 					if (deceptioncheck_passed)
 						src.locked = !src.locked
 						SPAWN_DBG(2 SECONDS)
@@ -960,6 +962,8 @@
 						if(!DeceptionCheck(null, user, "togglelock")) // Let's try to unlock em
 							if(!ON_COOLDOWN(src, "speak cooldown", 5 SECOND))
 								speak("Well shoot, I'd love to hold that gun! But... I have a tool module installed, and the combined mass and power draw of both a tool module <I>and</I> a gun would definitely fry my drive train and void my warranty. ")
+							else
+								speak("You try to insert the item into [src] in but are too distracted. Try again in a sec.")
 								return	// welp
 					else	// Can't charm our way in if they're asleep
 						boutput(user, "You try to give [src] your [Q], but its tool module is in the way.")
