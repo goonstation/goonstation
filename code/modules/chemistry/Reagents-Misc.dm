@@ -2585,9 +2585,9 @@ datum
 				..()
 				return
 
-		glitter_harmless // doesn't do any damage
-			name = "glitter"
-			id = "glitter_harmless"
+		sparkles // doesn't do any damage
+			name = "sparkles"
+			id = "sparkles"
 			description = "Fabulous!"
 			reagent_state = SOLID
 			fluid_r = 230

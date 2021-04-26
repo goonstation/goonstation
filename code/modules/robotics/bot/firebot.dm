@@ -297,7 +297,7 @@
 		R.add_reagent("water", 2)
 		R.add_reagent("ff-foam", 8)
 		if (src.setup_party)	// heh
-			R.add_reagent("glitter_harmless", 5)
+			R.add_reagent("sparkles", 5)
 		W.spray_at(my_target, R, 1)
 
 	if (src.emagged && iscarbon(target))
