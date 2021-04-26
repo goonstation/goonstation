@@ -129,7 +129,7 @@
 		if (href_list["checkout"])
 			if(length(src.cart) > 0)
 				if(src.master.ID_card && src.master.ID_card.money >= src.cartcost)
-					var/destination = input(usr, "Select destination mail tag", src.name, null) as text
+					var/destination = input(usr, "Please enter mail tag without quotes", src.name, null) as text
 					if (destination && isalive(usr))
 						var/buy_success = src.shipcart()
 						var/alert_beep = null

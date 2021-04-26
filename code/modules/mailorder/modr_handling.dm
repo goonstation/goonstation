@@ -23,7 +23,7 @@
 	var/destination_tag = null
 
 	HasEntered(atom/movable/AM)
-		if(!istype(AM,/obj/item/storage/box/mailorder))
+		if(istype(AM,/obj/item/storage/box/mailorder))
 			..()
 
 	MouseDrop_T()
@@ -33,7 +33,7 @@
 		return
 
 	attackby(var/obj/item/I, var/mob/user)
-		if(!istype(I,/obj/item/storage/box/mailorder))
+		if(istype(I,/obj/item/storage/box/mailorder))
 			..()
 
 
