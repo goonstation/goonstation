@@ -183,8 +183,8 @@
 				continue
 			for(var/loaditem in F.order_items)
 				boxstock += loaditem
-		//this should create the box at a dedicated mail spawn point and launch it toward a target reception point
-		//no spawn means don't spawn it at all
+		//create the box at a dedicated mail spawn point, from which it will launch toward reception point
+		//no spawn means don't spawn it at all and fail without charging; maps without spawn shouldn't have these carts
 		if(!pick_landmark(LANDMARK_MAILORDER_SPAWN))
 			src.cartsize = 0
 			src.cartcost = 0
@@ -197,6 +197,7 @@
 		package.set_loc(pick_landmark(LANDMARK_MAILORDER_SPAWN))
 		package.invisibility = 101
 		package.anchored = 1
+		package.mail_dest = destination
 		package.yeetself()
 		src.cartsize = 0
 		src.cartcost = 0
@@ -205,17 +206,3 @@
 
 #undef MODE_LIST
 #undef MODE_CART
-
-/obj/item/storage/box/mailorder
-	name = "mail-order box"
-	icon_state = "evidence"
-	desc = "A box containing mail-ordered items."
-
-	proc/yeetself() //forbidden techniques
-		var/yeetdelay = rand(15 SECONDS,20 SECONDS)
-		SPAWN_DBG(yeetdelay)
-			src.invisibility = 0
-			src.anchored = 0
-			var/gothere = pick_landmark(LANDMARK_MAILORDER_TARGET)
-			if(gothere)
-				src.throw_at(LANDMARK_MAILORDER_TARGET, 100, 1)
