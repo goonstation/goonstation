@@ -1,4 +1,21 @@
 
+(t)sun apr 25 21
+(u)Luxizzle
+(p)4339
+(e)📄|tgui
+(*)Converted power monitors to tgui.
+(u)ZeWaka, BenLubar, & Rohesie
+(p)4468
+(e)🗺🎨|mapping, sprites
+(*)Added some wall smoothing to the game. Expect some walls to look a lot smoother soon, and potentially other things too in the future!
+(u)Luxizzle
+(p)4325
+(e)📄|tgui
+(*)Radio & Intercom UI's have been converted to tgui.
+(u)Flaborized
+(p)4451
+(e)🎨|sprites
+(*)Added two new hairstyles: Mermaid: Faded and Longbeard: Faded. They can be combined with the originals to make an interesting gradient effect.
 (t)sat apr 24 21
 (u)DimWhat
 (p)4422

@@ -9,6 +9,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	wear_image_icon = 'icons/mob/hands.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
 	protective_temperature = 400
+	wear_layer = MOB_HAND_LAYER2
 	var/uses = 0
 	var/max_uses = 0 // If can_be_charged == 1, how many charges can these gloves store?
 	var/stunready = 0
