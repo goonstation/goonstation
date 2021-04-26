@@ -609,6 +609,7 @@ var/list/headset_channel_lookup
 
 /obj/item/device/radio/electropack
 	name = "\improper Electropack"
+	wear_image_icon = 'icons/mob/back.dmi'
 	icon_state = "electropack0"
 	var/code = 2.0
 	var/on = 0.0

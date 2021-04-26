@@ -19782,8 +19782,8 @@
 	dir = 4
 	},
 /turf/simulated/wall/false_wall/reinforced{
-	icon = 'icons/turf/walls_supernorn.dmi';
-	icon_state = "R3"
+	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon_state = "norn-R-3"
 	},
 /area/station/engine/elect)
 "aVS" = (
@@ -33592,8 +33592,8 @@
 	dir = 4
 	},
 /turf/simulated/wall/false_wall/reinforced{
-	icon = 'icons/turf/walls_supernorn.dmi';
-	icon_state = "R3"
+	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon_state = "norn-R-3"
 	},
 /area/station/crew_quarters/fitness)
 "bDl" = (

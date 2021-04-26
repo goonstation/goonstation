@@ -1,5 +1,9 @@
 
 (t)sun apr 25 21
+(u)ZeWaka, BenLubar, & Rohesie
+(p)4468
+(e)🗺🎨|mapping, sprites
+(*)Added some wall smoothing to the game. Expect some walls to look a lot smoother soon, and potentially other things too in the future!
 (u)Luxizzle
 (p)4325
 (e)📄|tgui
