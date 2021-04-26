@@ -1,5 +1,9 @@
 
 (t)mon apr 26 21
+(u)Superlagg
+(p)4004
+(e)🆕|feature
+(+)The station's floorbots now start the shift off, having tired themselves out from immediately running around gathering up metal and boarding up space every morning.
 (u)TTerc
 (p)4361
 (e)🐛|bug
