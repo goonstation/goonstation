@@ -29110,12 +29110,15 @@
 	},
 /area/station/quartermaster/cargooffice)
 "bBy" = (
-/obj/vehicle/forklift,
+/obj/vehicle/forklift{
+	dir = 4
+	},
 /turf/simulated/floor/bot,
 /area/station/quartermaster/cargobay)
 "bBz" = (
-/obj/storage/crate/packing,
-/turf/simulated/floor/bot,
+/turf/simulated/floor/black/side{
+	dir = 4
+	},
 /area/station/quartermaster/cargobay)
 "bBA" = (
 /obj/machinery/conveyor_switch{
@@ -30105,23 +30108,22 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/port)
 "bEi" = (
-/obj/storage/cart,
 /obj/machinery/door_control/podbay/qm/new_walls/west{
 	id = "cargobaydoor";
 	name = "Cargo Bay door control"
 	},
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bEj" = (
-/obj/storage/crate/packing,
 /obj/machinery/light/incandescent/netural,
 /obj/machinery/light_switch/auto{
 	pixel_y = -24
 	},
-/turf/simulated/floor/bot,
+/turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bEk" = (
-/obj/decal/fakeobjects/mantacontainer/upwards/yellow,
+/obj/storage/cart,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bEl" = (
@@ -30440,14 +30442,12 @@
 	id = "cargobaydoor";
 	name = "Cargo Bay Door"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/black/side,
 /area/station/quartermaster/cargobay)
 "bFx" = (
-/obj/stool/chair/yellow,
-/obj/landmark/start{
-	name = "Quartermaster"
+/turf/simulated/floor/black/side{
+	dir = 8
 	},
-/turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bFy" = (
 /obj/decal/fakeobjects/mantacontainer,
@@ -33207,10 +33207,12 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "bNC" = (
-/obj/machinery/computer/supplycomp{
-	dir = 8
+/obj/cable{
+	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/black/side{
+	dir = 10
+	},
 /area/station/quartermaster/cargobay)
 "bND" = (
 /obj/decal/tile_edge/line/purple{
@@ -36030,8 +36032,9 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen/therustykrab)
 "cVW" = (
-/obj/machinery/portable_reclaimer,
-/turf/simulated/floor,
+/turf/simulated/floor/black/side{
+	dir = 1
+	},
 /area/station/quartermaster/cargobay)
 "cYe" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -36782,7 +36785,9 @@
 /turf/simulated/floor/grime,
 /area/skeleton_trader)
 "eLx" = (
-/obj/vehicle/forklift,
+/obj/vehicle/forklift{
+	dir = 4
+	},
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
 	pixel_x = -10
@@ -37359,6 +37364,14 @@
 /obj/machinery/phone,
 /turf/simulated/floor/grass/leafy,
 /area/station/crew_quarters/market)
+"fKR" = (
+/obj/machinery/computer/supplycomp{
+	dir = 8
+	},
+/turf/simulated/floor/black/side{
+	dir = 8
+	},
+/area/station/quartermaster/cargobay)
 "fLf" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
@@ -40501,6 +40514,12 @@
 	},
 /turf/space/fluid/manta,
 /area/diner/hangar)
+"mWx" = (
+/obj/storage/crate/packing,
+/turf/simulated/floor/black/side{
+	dir = 8
+	},
+/area/station/quartermaster/cargobay)
 "mXn" = (
 /obj/railing/orange/reinforced,
 /obj/submachine/chicken_feed_grinder,
@@ -41716,6 +41735,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
+"pvp" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black/side,
+/area/station/quartermaster/cargobay)
 "pwc" = (
 /obj/rack,
 /obj/item/rubberduck,
@@ -43465,6 +43490,14 @@
 	},
 /turf/simulated/floor/industrial,
 /area/station/mining/staff_room)
+"tYn" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black/side{
+	dir = 6
+	},
+/area/station/quartermaster/cargobay)
 "ucu" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 1;
@@ -71721,10 +71754,10 @@ bfr
 box
 aKs
 xod
-bvk
-bvk
-byy
-bvk
+bFx
+bFx
+bNC
+cVW
 bvk
 bvk
 bvk
@@ -72025,8 +72058,8 @@ aKs
 atQ
 atQ
 bwL
-byy
-bvk
+pvp
+cVW
 bvk
 bvk
 bvk
@@ -72327,10 +72360,10 @@ aKs
 atQ
 atQ
 bwM
-byy
+pvp
+cVW
 bvk
-bNC
-bBz
+bvk
 bEj
 bwP
 bGE
@@ -72629,10 +72662,10 @@ aKs
 atQ
 atQ
 bwL
-byy
+pvp
+cVW
 bvk
-bvk
-bvk
+bvn
 bEk
 bwP
 fKa
@@ -72931,11 +72964,11 @@ aKs
 atQ
 atQ
 bwN
-byy
-bvk
-bvk
-bvk
-bvk
+pvp
+cVW
+bFx
+fKR
+mWx
 bwP
 bwP
 bwP
@@ -73230,10 +73263,10 @@ aLJ
 bgr
 bpY
 aKs
-bvk
-bvk
-bvk
-byy
+bBz
+bBz
+bBz
+tYn
 bvk
 bBA
 bCY
@@ -73540,7 +73573,7 @@ bvk
 bvk
 bvk
 bvk
-bFx
+bvk
 bGO
 bwP
 bGx
