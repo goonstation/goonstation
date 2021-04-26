@@ -17,7 +17,7 @@
 			if(gothere)
 				src.throw_at(LANDMARK_MAILORDER_TARGET, 100, 1)
 
-/obj/machinery/floorflusher/industrial/mail_order
+/obj/machinery/floorflusher/industrial/mailorder
 	name = "external mail loading chute"
 	desc = "A large chute that only accepts specially designed mail-order boxes."
 	var/destination_tag = null
