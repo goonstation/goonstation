@@ -45,13 +45,13 @@
 		var/obj/disposalholder/H = unpool(/obj/disposalholder)	// virtual holder object which actually
 																// travels through the pipes.
 
-		H.init(src)	// copy the contents of disposer to holder
-
 		for(var/atom/movable/AM in src)
 			if(istype(AM,/obj/item/storage/box/mailorder))
 				var/obj/item/storage/box/mailorder/mobox = AM
 				if(mobox.mail_dest)
 					src.destination_tag = mobox.mail_dest
+
+		H.init(src)	// copy the contents of disposer to holder
 
 		if (!isnull(src.destination_tag))
 			H.mail_tag = src.destination_tag

@@ -38,6 +38,9 @@
 			src.file_amount = src.file_used
 			src.read_only = 1
 
+//todo:
+//tie into the communication systems so you can't order things with messaging off (maybe more sophisticated than that?)
+//consider category support if you can think of a way to make it not skullspiking
 
 #define MODE_LIST 0
 #define MODE_CART 1
@@ -69,7 +72,11 @@
 	return_text()
 		. = src.return_text_header()
 		. += " | <a href='byond://?src=\ref[src];viewlist=1'>Catalogue</a>"
-		. += " | <a href='byond://?src=\ref[src];viewcart=1'>Cart</a>"
+		if(length(src.cart) > 0)
+			var/cartlength = length(src.cart)
+			. += " | <a href='byond://?src=\ref[src];viewcart=1'>Cart ([cartlength])</a>"
+		else
+			. += " | <a href='byond://?src=\ref[src];viewcart=1'>Cart</a>"
 		. += "<h4>[src.name]</h4><hr>"
 
 		if(!src.master.host_program)
@@ -103,7 +110,7 @@
 						var/itemct = length(F.order_items)
 						var/requiresid
 						if(length(F.order_perm))
-							requiresid = "Requires ID"
+							requiresid = "| Requires ID"
 						else
 							requiresid = ""
 						. += {"<table cellspacing=5>
@@ -112,7 +119,7 @@
 						<td>[requiresid]</td></tr>
 						<tr>
 						<td>[itemct] Items</td>
-						<td>$[F.cost]</td>
+						<td>| $[F.cost]</td>
 						</tr>
 						</table><hr>"}
 
@@ -128,13 +135,33 @@
 
 		if (href_list["checkout"])
 			if(length(src.cart) > 0)
+				var/alert_beep = null
+				if(!src.master.host_program.message_silent)
+					alert_beep = src.master.host_program.message_tone
+
 				if(src.master.ID_card && src.master.ID_card.money >= src.cartcost)
 					var/destination = input(usr, "Please enter mail tag without quotes", src.name, null) as text
-					if (destination && isalive(usr))
+
+					var/purchase_authed = 1
+					for(var/P in src.cart)
+						var/datum/mail_order/F = P
+						if(!istype(F, /datum/mail_order))
+							continue
+						if(!length(F.order_perm))
+							continue
+						purchase_authed = 0
+						//for for
+						for(var/acval in F.order_perm)
+							if(acval in src.master.ID_card.access)
+								purchase_authed = 1
+								break
+					if(!purchase_authed)
+						src.master.display_alert(alert_beep)
+						var/displayMessage = "[bicon(master)] Purchase unsuccessful due to insufficient authorization on card."
+						src.master.display_message(displayMessage)
+
+					else if(destination && isalive(usr))
 						var/buy_success = src.shipcart(destination)
-						var/alert_beep = null
-						if(!src.master.host_program.message_silent)
-							alert_beep = src.master.host_program.message_tone
 						src.master.display_alert(alert_beep)
 						var/displayMessage = "[bicon(master)] Purchase unsuccessful due to lack of mail-order service to your area."
 						if(buy_success)
@@ -142,11 +169,8 @@
 							displayMessage = "[bicon(master)] Thank you for your purchase! Delivery to '[destination]' in progress."
 						src.master.display_message(displayMessage)
 				else
-					var/alert_beep = null
-					if(!src.master.host_program.message_silent)
-						alert_beep = src.master.host_program.message_tone
 					src.master.display_alert(alert_beep)
-					var/displayMessage = "[bicon(master)] Card error detected! Please insert a card with sufficient loaded credits."
+					var/displayMessage = "[bicon(master)] Card error - please insert a card with sufficient loaded credits."
 					src.master.display_message(displayMessage)
 
 		if (href_list["clearcart"])
