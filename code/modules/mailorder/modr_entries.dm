@@ -1,10 +1,3 @@
-/* //apparently is suck
-/proc/build_mail_order_cache()
-	mail_order_entries.Cut()
-	for(var/S in concrete_typesof(/datum/mail_order))
-		mail_order_entries += new S()
-*/
-
 ABSTRACT_TYPE(/datum/mail_order)
 /datum/mail_order
 	var/name = "Juicer Schweet's Spaghetti Western"

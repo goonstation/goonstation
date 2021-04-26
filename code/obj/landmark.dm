@@ -117,6 +117,14 @@ var/global/list/job_start_locations = list()
 	name = LANDMARK_MAGNET_SHIELD
 	icon_state = "x"
 
+/obj/landmark/mailorder_spawn
+	name = LANDMARK_MAILORDER_SPAWN
+	icon_state = "x"
+
+/obj/landmark/mailorder_target
+	name = LANDMARK_MAILORDER_TARGET
+	icon_state = "x"
+
 /obj/landmark/latejoin_missile
 	name = "missile latejoin spawn marker"
 	name_override = LANDMARK_LATEJOIN_MISSILE

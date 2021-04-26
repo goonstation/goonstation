@@ -95,7 +95,7 @@
 				else
 					var/entryct = length(src.cart)
 					. += "[entryct] Selections - [cartsize] Items - $[cartcost]<br>"
-					. += "<a href='byond://?src=\ref[src];checkout'>Check Out</a> | <a href='byond://?src=\ref[src];clearcart'>Clear Cart</a><br><hr>"
+					. += "<a href='byond://?src=\ref[src];checkout=1'>Check Out</a> | <a href='byond://?src=\ref[src];clearcart=1'>Clear Cart</a><br><hr>"
 					for(var/P in src.cart)
 						var/datum/mail_order/F = P
 						if(!istype(F, /datum/mail_order))
@@ -131,13 +131,15 @@
 				if(src.master.ID_card && src.master.ID_card.money >= src.cartcost)
 					var/destination = input(usr, "Select destination mail tag", src.name, null) as text
 					if (destination && isalive(usr))
-						src.master.ID_card.money -= src.cartcost
-						src.shipcart()
+						var/buy_success = src.shipcart()
 						var/alert_beep = null
 						if(!src.master.host_program.message_silent)
 							alert_beep = src.master.host_program.message_tone
 						src.master.display_alert(alert_beep)
-						var/displayMessage = "[bicon(master)] Thank your for your purchase! Delivery to '[destination]' in progress."
+						var/displayMessage = "[bicon(master)] Purchase unsuccessful due to lack of mail-order service to your area."
+						if(buy_success)
+							src.master.ID_card.money -= src.cartcost
+							displayMessage = "[bicon(master)] Thank your for your purchase! Delivery to '[destination]' in progress."
 						src.master.display_message(displayMessage)
 				else
 					var/alert_beep = null
@@ -181,13 +183,25 @@
 				continue
 			for(var/loaditem in F.order_items)
 				boxstock += loaditem
-		//this should create the box in a mail order handler doohickey
-		var/obj/item/storage/package = new /obj/item/storage/box/mailorder(get_turf(src.master),spawn_contents = boxstock)
+		//this should create the box at a dedicated mail spawn point and launch it toward a target reception point
+		//no spawn means don't spawn it at all
+		if(!pick_landmark(LANDMARK_MAILORDER_SPAWN))
+			src.cartsize = 0
+			src.cartcost = 0
+			src.cart.Cut()
+			return 0
+		var/obj/item/storage/box/mailorder/package = new /obj/item/storage/box/mailorder()
+		package.spawn_contents = boxstock
 		if(src.master.ID_card && src.master.ID_card.registered)
 			package.name = "mail-order box ([src.master.ID_card.registered])"
+		package.set_loc(pick_landmark(LANDMARK_MAILORDER_SPAWN))
+		package.invisibility = 101
+		package.anchored = 1
+		package.yeetself()
 		src.cartsize = 0
 		src.cartcost = 0
 		src.cart.Cut()
+		return 1
 
 #undef MODE_LIST
 #undef MODE_CART
@@ -196,3 +210,12 @@
 	name = "mail-order box"
 	icon_state = "evidence"
 	desc = "A box containing mail-ordered items."
+
+	proc/yeetself() //forbidden techniques
+		var/yeetdelay = rand(15 SECONDS,20 SECONDS)
+		SPAWN_DBG(yeetdelay)
+			src.invisibility = 0
+			src.anchored = 0
+			var/gothere = pick_landmark(LANDMARK_MAILORDER_TARGET)
+			if(gothere)
+				src.throw_at(LANDMARK_MAILORDER_TARGET, 100, 1)
