@@ -131,7 +131,7 @@
 				if(src.master.ID_card && src.master.ID_card.money >= src.cartcost)
 					var/destination = input(usr, "Please enter mail tag without quotes", src.name, null) as text
 					if (destination && isalive(usr))
-						var/buy_success = src.shipcart()
+						var/buy_success = src.shipcart(destination)
 						var/alert_beep = null
 						if(!src.master.host_program.message_silent)
 							alert_beep = src.master.host_program.message_tone
