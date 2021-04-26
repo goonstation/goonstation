@@ -195,6 +195,18 @@ var/list/headset_channel_lookup
 
 				return TRUE
 
+/obj/item/device/radio/Topic(href, href_list)
+	if (usr.stat)
+		return
+
+	if ((issilicon(usr) || isAI(usr)) || (src in usr) || (usr.loc == src.loc))
+		if (href_list["track"])
+			// wait is tracking here? really? what? ???? ????????????
+			var/mob/living/silicon/A = locate(href_list["track2"])
+			var/heard_name = href_list["track3"]
+			A.ai_name_track(heard_name)
+			return
+
 /obj/item/device/radio/attack_self(mob/user as mob)
 	src.ui_interact(user)
 
