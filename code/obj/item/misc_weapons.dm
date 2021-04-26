@@ -405,6 +405,7 @@
 	state_name = "d_sword"
 	icon_state = "d_sword0"
 	item_state = "d_sword0"
+	w_class = W_CLASS_NORMAL
 	off_w_class = W_CLASS_NORMAL
 	active_force = 18
 	inactive_force = 8
