@@ -4,10 +4,19 @@
 
 	audiovideo
 		name = "\improper Tanhony & Sons mail-order cartridge"
-		icon_state = "cart-fancy"
+		icon_state = "cart-records"
 		New()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/catalogue/audiovideo(src))
+			src.file_amount = src.file_used
+			src.read_only = 1
+
+	recreation
+		name = "\improper Henry's Recreation mail-order cartridge"
+		icon_state = "cart-fancy"
+		New()
+			..()
+			src.root.add_file( new /datum/computer/file/pda_program/catalogue/recreation(src))
 			src.file_amount = src.file_used
 			src.read_only = 1
 
@@ -28,7 +37,7 @@
 			src.root.add_file( new /datum/computer/file/pda_program/catalogue/survmart(src))
 			src.file_amount = src.file_used
 			src.read_only = 1
-/*
+
 	chem
 		name = "\improper Chems-R-Us mail-order cartridge"
 		icon_state = "cart-rd2"
@@ -37,7 +46,7 @@
 			src.root.add_file( new /datum/computer/file/pda_program/catalogue/chem(src))
 			src.file_amount = src.file_used
 			src.read_only = 1
-*/
+
 
 //todo:
 //LOTS of catalogue lineup stuff
@@ -61,6 +70,10 @@
 	audiovideo
 		name = "Tanhony & Sons"
 		entries_to_index = /datum/mail_order/audiovideo
+
+	recreation
+		name = "Henry's"
+		entries_to_index = /datum/mail_order/recreation
 
 	produce
 		name = "Farmer's Market"
