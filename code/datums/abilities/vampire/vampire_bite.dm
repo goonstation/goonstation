@@ -363,7 +363,7 @@
 
 	onUpdate()
 		..()
-		if(get_dist(M, HH) > 7 || M == null || HH == null)
+		if(get_dist(M, HH) > 7 || M == null || HH == null || HH.blood_volume <= 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -418,7 +418,7 @@
 
 	onInterrupt() //Called when the action fails / is interrupted.
 		if (state == ACTIONSTATE_RUNNING)
-			if (HH.blood_volume < 0)
+			if (HH.blood_volume <= 0)
 				boutput(M, __red("[HH] doesn't have enough blood left to drink."))
 			else if (!H.can_take_blood_from(H, HH))
 				boutput(M, __red("You have drank your fill [HH]'s blood. It tastes all bland and gross now."))
