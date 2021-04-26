@@ -20,12 +20,12 @@
 			src.file_amount = src.file_used
 			src.read_only = 1
 */
-	medical
+	survmart
 		name = "\improper Survival Mart mail-order cartridge"
 		icon_state = "cart-med"
 		New()
 			..()
-			src.root.add_file( new /datum/computer/file/pda_program/catalogue/medical(src))
+			src.root.add_file( new /datum/computer/file/pda_program/catalogue/survmart(src))
 			src.file_amount = src.file_used
 			src.read_only = 1
 
@@ -41,6 +41,7 @@
 //todo:
 //tie into the communication systems so you can't order things with messaging off (maybe more sophisticated than that?)
 //consider category support if you can think of a way to make it not skullspiking
+//also consider the idea of secure containers that are manually delivered
 
 #define MODE_LIST 0
 #define MODE_CART 1
@@ -55,9 +56,9 @@
 	var/cartcost = 0 // how much your selection costs
 	var/list/canbuy = list() //list of catalog entries
 
-	medical
+	survmart
 		name = "Survival Mart"
-		entries_to_index = /datum/mail_order/medical
+		entries_to_index = /datum/mail_order/survmart
 
 	chem
 		name = "Chems-r-Us"
@@ -110,18 +111,11 @@
 						var/itemct = length(F.order_items)
 						var/requiresid
 						if(length(F.order_perm))
-							requiresid = "| Requires ID"
+							requiresid = " | Requires ID"
 						else
 							requiresid = ""
-						. += {"<table cellspacing=5>
-						<tr>
-						<td>[F.name]</td>
-						<td>[requiresid]</td></tr>
-						<tr>
-						<td>[itemct] Items</td>
-						<td>| $[F.cost]</td>
-						</tr>
-						</table><hr>"}
+						. += {"[F.name]<br>
+						[itemct] Items | $[F.cost][requiresid]<br><hr>"}
 
 	Topic(href, href_list)
 		if(..())
