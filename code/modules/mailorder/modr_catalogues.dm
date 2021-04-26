@@ -1,25 +1,25 @@
 /obj/item/disk/data/cartridge/catalogue
 	name = "\improper unprogrammed mail-order cartridge"
 	desc = "An electronic mail-order cartridge for PDAs with built-in payment handling."
-/*
-	nt
-		name = "\improper Nanotrasen mail-order cartridge"
+
+	audiovideo
+		name = "\improper Tanhony & Sons mail-order cartridge"
 		icon_state = "cart-fancy"
 		New()
 			..()
-			src.root.add_file( new /datum/computer/file/pda_program/catalogue/nt(src))
+			src.root.add_file( new /datum/computer/file/pda_program/catalogue/audiovideo(src))
 			src.file_amount = src.file_used
 			src.read_only = 1
 
-	takeout
-		name = "\improper Golden Gannets mail-order cartridge"
-		icon_state = "cart-qm"
+	produce
+		name = "\improper Farmer Melons' Market Cart"
+		icon_state = "cart-hydro"
 		New()
 			..()
-			src.root.add_file( new /datum/computer/file/pda_program/catalogue/takeout(src))
+			src.root.add_file( new /datum/computer/file/pda_program/catalogue/produce(src))
 			src.file_amount = src.file_used
 			src.read_only = 1
-*/
+
 	survmart
 		name = "\improper Survival Mart mail-order cartridge"
 		icon_state = "cart-med"
@@ -28,7 +28,7 @@
 			src.root.add_file( new /datum/computer/file/pda_program/catalogue/survmart(src))
 			src.file_amount = src.file_used
 			src.read_only = 1
-
+/*
 	chem
 		name = "\improper Chems-R-Us mail-order cartridge"
 		icon_state = "cart-rd2"
@@ -37,8 +37,10 @@
 			src.root.add_file( new /datum/computer/file/pda_program/catalogue/chem(src))
 			src.file_amount = src.file_used
 			src.read_only = 1
+*/
 
 //todo:
+//LOTS of catalogue lineup stuff
 //tie into the communication systems so you can't order things with messaging off (maybe more sophisticated than that?)
 //consider category support if you can think of a way to make it not skullspiking
 //also consider the idea of secure containers that are manually delivered
@@ -55,6 +57,14 @@
 	var/cartsize = 0 // based on amount of items in selected entries, not amount of entries
 	var/cartcost = 0 // how much your selection costs
 	var/list/canbuy = list() //list of catalog entries
+
+	audiovideo
+		name = "Tanhony & Sons"
+		entries_to_index = /datum/mail_order/audiovideo
+
+	produce
+		name = "Farmer's Market"
+		entries_to_index = /datum/mail_order/produce
 
 	survmart
 		name = "Survival Mart"
@@ -94,7 +104,14 @@
 							continue
 						var/itemct = length(F.order_items)
 						. += {"<a href='byond://?src=\ref[src];add_to_cart=[F.name]'>[F.name]</a> - [itemct] Item(s) - $[F.cost]<br>
-						[F.desc]<br><hr>"}
+						[F.desc]<br>"}
+						if(length(F.order_perm))
+							. += "CAN PURCHASE"
+							for(var/acval in F.order_perm)
+								var/accessname = get_access_desc(acval)
+								. += " | [accessname]"
+							. += "<br>"
+						. += "<hr>"
 
 			if(MODE_CART)
 				. += "<h4>Shopping Cart</h4><br>"
