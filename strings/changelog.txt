@@ -1,4 +1,15 @@
 
+(t)mon apr 26 21
+(u)mopcat
+(p)4458
+(e)|
+(+)NanoTrasen Security Operatives now spawn with a barrier on their belt.
+(u)DimWhat
+(p)4465
+(e)🎨|sprites
+(+)Added even more monkey clothing sprites. Chimpers.
+(u)Flourish
+(+)Attacking someone with a drinking glass while on harm intent no longer splashes your drink onto them (it just tries to forcefeed them).
 (t)sun apr 25 21
 (u)Ludolf and DimWhat
 (p)4386
