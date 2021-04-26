@@ -120,11 +120,9 @@
 
 
 		sleep(0.1 SECONDS)
-		/*
 		for(var/obj/overlay/tile_effect/lighting/L in src)
 			src.icon = getFlatIcon(L)
 			qdel(L)
-		*/
 
 	proc/update_light()
 		if (light)

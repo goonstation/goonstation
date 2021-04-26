@@ -8,6 +8,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	body_parts_covered = HEAD
 	compatible_species = list("human", "cow", "werewolf", "flubber")
+	wear_layer = MOB_HEAD_LAYER2
 	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
 	block_vision = 0
 	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
@@ -644,13 +645,13 @@
 	desc = "A green hood, full of magic, wonder, cromulence, and maybe a spider or two."
 	icon_state = "wizardgreen"
 	item_state = "wizardgreen"
+	seal_hair = 1
 
 /obj/item/clothing/head/wizard/witch
 	name = "witch hat"
 	desc = "Broomstick and cat not included."
 	icon_state = "witch"
 	item_state = "wizardnec"
-	see_face = 0
 
 /obj/item/clothing/head/wizard/necro
 	name = "necromancer hood"
@@ -658,6 +659,7 @@
 	icon_state = "wizardnec"
 	item_state = "wizardnec"
 	see_face = 0
+	seal_hair = 1
 
 /obj/item/clothing/head/pinkwizard //no magic properties
 	name = "pink wizard hat"

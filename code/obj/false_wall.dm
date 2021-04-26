@@ -216,6 +216,8 @@
 						dirs |= dir
 					if (W.light_mod) //If the walls have a special light overlay, apply it.
 						src.RL_SetSprite("[W.light_mod][num2text(dirs)]")
+			var/turf/simulated/wall/auto/T = wall_path
+			mod = initial(T.mod)
 			src.icon_state = "[mod][num2text(dirs)]"
 		return src.icon_state
 

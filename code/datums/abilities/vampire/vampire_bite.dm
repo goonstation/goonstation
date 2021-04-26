@@ -47,12 +47,8 @@
 			boutput(M, __red("You are already draining someone's blood!"))
 			return 0
 
-	if (is_pointblank && target.head && target.head.body_parts_covered & HEAD)
+	if (is_pointblank && target.head && target.head.c_flags & (BLOCKCHOKE))
 		boutput(M, __red("You need to remove their headgear first."))
-		return 0
-
-	if (is_pointblank && target.wear_mask && target.wear_mask.body_parts_covered & HEAD)
-		boutput(M, __red("You need to remove their facemask first."))
 		return 0
 
 	if (check_target_immunity(target) == 1)
@@ -208,12 +204,8 @@
 			boutput(M, __red("You are already draining someone's blood!"))
 			return 0
 
-	if (is_pointblank && target.head && target.head.body_parts_covered & HEAD)
+	if (is_pointblank && target.head && target.head.c_flags & (BLOCKCHOKE))
 		boutput(M, __red("You need to remove their headgear first."))
-		return 0
-
-	if (is_pointblank && target.wear_mask && target.wear_mask.body_parts_covered & HEAD)
-		boutput(M, __red("You need to remove their facemask first."))
 		return 0
 
 	if (check_target_immunity(target) == 1)

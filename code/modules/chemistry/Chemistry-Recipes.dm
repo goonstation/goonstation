@@ -3692,10 +3692,10 @@ datum
 			result_amount = 4
 			mix_phrase = "The mixture becomes far more fabulous!"
 
-		glitter_harmless
+		sparkles
 			name = "harmless glitter"
-			id = "glitter_harmless"
-			result = "glitter_harmless"
+			id = "sparkles"
+			result = "sparkles"
 			required_reagents = list("colors" = 1, "paper" = 1, "platinum" = 1)
 			mix_phrase = "The mixture becomes far more fabulous- safely."
 

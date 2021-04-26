@@ -507,6 +507,8 @@
 
 	var/rlapplygen = RL_ApplyGeneration
 	var/rlupdategen = RL_UpdateGeneration
+	var/rlmuloverlay = RL_MulOverlay
+	var/rladdoverlay = RL_AddOverlay
 	var/rllumr = RL_LumR
 	var/rllumg = RL_LumG
 	var/rllumb = RL_LumB
@@ -572,6 +574,12 @@
 
 	new_turf.RL_ApplyGeneration = rlapplygen
 	new_turf.RL_UpdateGeneration = rlupdategen
+	if(new_turf.RL_MulOverlay)
+		pool(new_turf.RL_MulOverlay)
+	if(new_turf.RL_AddOverlay)
+		pool(new_turf.RL_AddOverlay)
+	new_turf.RL_MulOverlay = rlmuloverlay
+	new_turf.RL_AddOverlay = rladdoverlay
 
 	new_turf.RL_LumR = rllumr
 	new_turf.RL_LumG = rllumg

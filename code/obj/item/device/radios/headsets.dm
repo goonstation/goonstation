@@ -13,6 +13,7 @@
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew."
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	icon_override = "civ"
+	wear_layer = MOB_EARS_LAYER
 	var/haswiretap
 	hardened = 0
 

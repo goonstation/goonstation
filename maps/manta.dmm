@@ -45197,6 +45197,11 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
+"ycD" = (
+/turf/unsimulated/wall/setpieces/fakewindow{
+	dir = 6
+	},
+/area/listeningpost/syndicateassaultvessel)
 "yea" = (
 /obj/machinery/light/emergency{
 	dir = 8;
@@ -88099,8 +88104,8 @@ aaa
 akE
 akH
 akH
-akF
-akF
+ycD
+ycD
 akH
 akH
 aln
@@ -88700,7 +88705,7 @@ aaa
 aaa
 akW
 akZ
-akF
+ycD
 akN
 alc
 alD
@@ -89002,7 +89007,7 @@ aaa
 akU
 akX
 atw
-akF
+ycD
 akP
 alD
 alD
@@ -89304,7 +89309,7 @@ aaa
 aaa
 akY
 ala
-akF
+ycD
 akN
 ald
 alD
@@ -89911,8 +89916,8 @@ aaa
 akG
 akH
 akH
-akF
-akF
+ycD
+ycD
 akH
 akH
 als
