@@ -1679,7 +1679,7 @@ proc/HYPCheckCommut(var/datum/plantgenes/DNA,var/searchtype)
 			if(X.type == searchtype) return 1
 	return 0
 
-proc/HYPnewcommutcheck(var/datum/plant/P,var/datum/plantgenes/DNA, var/severity)
+proc/HYPnewcommutcheck(var/datum/plant/P,var/datum/plantgenes/DNA, var/severity = 1)
 	// This is the proc for checking if a new random gene strain will appear in the plant.
 	if(!P || !DNA) return
 	if(HYPCheckCommut(DNA,/datum/plant_gene_strain/stabilizer))
