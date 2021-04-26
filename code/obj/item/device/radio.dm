@@ -118,10 +118,13 @@ var/list/headset_channel_lookup
 	return tgui_physical_state
 
 /obj/item/device/radio/ui_status(mob/user, datum/ui_state/state)
-  return min(
-		state.can_use_topic(src, user),
-		tgui_not_incapacitated_state.can_use_topic(src, user)
-	)
+	if (isAI(user))
+		. = UI_INTERACTIVE
+	else
+		. = min(
+			state.can_use_topic(src, user),
+			tgui_not_incapacitated_state.can_use_topic(src, user)
+		)
 
 /obj/item/device/radio/ui_data(mob/user)
 
