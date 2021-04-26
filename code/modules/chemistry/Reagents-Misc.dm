@@ -2588,7 +2588,7 @@ datum
 		sparkles // doesn't do any damage
 			name = "sparkles"
 			id = "sparkles"
-			description = "Fabulous!"
+			description = "Fabulous! And harmless!"
 			reagent_state = SOLID
 			fluid_r = 230
 			fluid_g = 230
