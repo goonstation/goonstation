@@ -1,5 +1,10 @@
 
 (t)mon apr 26 21
+(u)Luxizzle
+(p)4487
+(e)🐛|bug
+(+)Fixed AIs not able to track players from chat.
+(+)Fixed AIs not able to interact with intercoms.
 (u)mopcat
 (p)4458
 (e)|
