@@ -95,17 +95,13 @@ var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/lef
 				var/target_limb = href_list["part"]
 
 				if(target_limb == "both_arms")
-					var/count = 0
-					if(limbs.replace_with("l_arm", pick(typesof(/obj/item/parts/human_parts/arm/left) - /obj/item/parts/human_parts/arm/left/item), usr)) count++
-					if(limbs.replace_with("r_arm", pick(typesof(/obj/item/parts/human_parts/arm/right) - /obj/item/parts/human_parts/arm/right/item), usr))  count++
+					var/count = limbs.randomize("both_arms",usr)
 
 					if(count > 0)
 						message_admins("[key_name(usr)] randomised [count > 1 ? "both" : "one"] of [key_name(limbs.holder)]'s arms. New arms: [limbs.l_arm.type], [limbs.r_arm.type]")
 
 				else if(target_limb == "both_legs")
-					var/count = 0
-					if(limbs.replace_with("l_leg", pick(typesof(/obj/item/parts/human_parts/leg/left)), usr)) count++
-					if(limbs.replace_with("r_leg", pick(typesof(/obj/item/parts/human_parts/leg/right)), usr)) count++
+					var/count = limbs.randomize("both_legs",usr)
 
 					if(count > 0)
 						message_admins("[key_name(usr)] randomised [count > 1 ? "both" : "one"] of [key_name(limbs.holder)]'s legs. New legs: [limbs.l_leg.type], [limbs.r_leg.type]")
@@ -115,14 +111,9 @@ var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/lef
 						boutput(usr, "Error: invalid target limb(s).")
 						return
 
-					var/targetPath = default_limb_paths[target_limb]
-
-					var/new_type = pick(typesof(targetPath) - text2path("[targetPath]/item"))
-					if (!new_type)
-						return
-
-					if (limbs.replace_with(target_limb, new_type, usr)) // returns 1 or greater when at least one limb is replaced
-						message_admins("[key_name(usr)] randomised [key_name(limbs.holder)]'s limb: [uppertext(target_limb)] (new type: [new_type])")
+					if (limbs.randomize(target_limb,usr)) // returns 1 or greater when at least one limb is replaced
+						var/obj/item/parts/new_limb = limbs.get_limb(target_limb)
+						message_admins("[key_name(usr)] randomised [key_name(limbs.holder)]'s limb: [uppertext(target_limb)] (new type: [new_limb.type])")
 				src.show_window(limbs.holder, usr)
 // randomise all limbs
 			if ("randomise_all_limbs")
@@ -131,11 +122,7 @@ var/list/default_limb_paths = list("l_arm" = /obj/item/parts/human_parts/arm/lef
 					boutput(usr, "Error: invalid target.")
 					return
 
-				var/count = 0
-				if(limbs.replace_with("l_arm", pick(typesof(/obj/item/parts/human_parts/arm/left) - /obj/item/parts/human_parts/arm/left/item), usr)) count++
-				if(limbs.replace_with("r_arm", pick(typesof(/obj/item/parts/human_parts/arm/right) - /obj/item/parts/human_parts/arm/right/item), usr))  count++
-				if(limbs.replace_with("l_leg", pick(typesof(/obj/item/parts/human_parts/leg/left)), usr)) count++
-				if(limbs.replace_with("r_leg", pick(typesof(/obj/item/parts/human_parts/leg/right)), usr)) count++
+				var/count = limbs.randomize("all", usr)
 
 				if(count > 0)
 					message_admins("[key_name(usr)] randomised [count] of [key_name(limbs.holder)]'s limbs. New limbs: [limbs.l_arm.type], [limbs.r_arm.type], [limbs.l_leg.type], [limbs.r_leg.type]")

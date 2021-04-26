@@ -148,7 +148,7 @@
 	two_handed = 1
 	slowdown = 5
 	slowdown_time = 5
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 
 	New()
@@ -314,7 +314,7 @@
 	desc = "A weapon favored by many of the syndicate's stealth specialists, which does damage over time using a slow-acting radioactive poison. Utilizes a self-recharging atomic power cell."
 	icon_state = "crossbow"
 	uses_multiple_icon_states = 1
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "crossbow"
 	force = 4.0
 	throw_speed = 3
@@ -489,7 +489,7 @@
 	icon_state = "crabgun"
 	item_state = "crabgun-world"
 	inhand_image_icon = 'icons/obj/crabgun.dmi'
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	force = 12.0
 	throw_speed = 8
 	throw_range = 12
@@ -619,7 +619,7 @@
 	desc = "A hacked together combination of a taser and a handheld teleportation unit."
 	icon_state = "teleport"
 	uses_multiple_icon_states = 1
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	item_state = "gun"
 	force = 10.0
 	throw_speed = 2
@@ -738,7 +738,7 @@
 	name = "ectoplasmic destabilizer"
 	desc = "If this had streams, it would be inadvisable to cross them. But no, it fires bolts instead.  Don't throw it into a stream, I guess?"
 	icon_state = "ghost"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	item_state = "gun"
 	force = 10.0
 	throw_speed = 2
@@ -759,7 +759,7 @@
 	desc = "A dangerous-looking blaster pistol. It's self-charging by a radioactive power cell."
 	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "pistol"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 5.0
 	mats = 0
 
@@ -832,7 +832,7 @@
 	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "smg"
 	can_dual_wield = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 7.0
 	mats = 0
 
@@ -863,7 +863,7 @@
 	item_state = "rifle"
 	can_dual_wield = 0
 	two_handed = 1
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	force = 15
 
 
@@ -1089,7 +1089,7 @@
 	name = "pickpocket grapple gun" // absurdly shitty name
 	desc = "A complicated, camoflaged claw device on a tether capable of complex and stealthy interactions. It steals shit."
 	icon_state = "pickpocket"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "pickpocket"
 	force = 4.0
 	throw_speed = 3
@@ -1318,7 +1318,7 @@
 					set_current_projectile(projectiles["detain"])
 					item_state = "lawg-detain"
 					playsound(M, "sound/vox/detain.ogg", 50)
-				if ("execute")
+				if ("execute", "exterminate")
 					set_current_projectile(projectiles["execute"])
 					current_projectile.cost = 30
 					item_state = "lawg-execute"
@@ -1328,7 +1328,7 @@
 					current_projectile.cost = 50
 					item_state = "lawg-smokeshot"
 					playsound(M, "sound/vox/smoke.ogg", 50)
-				if ("knockout")
+				if ("knockout", "sleepshot")
 					set_current_projectile(projectiles["knockout"])
 					current_projectile.cost = 60
 					item_state = "lawg-knockout"
@@ -1349,7 +1349,7 @@
 					set_current_projectile(projectiles["clownshot"])
 					item_state = "lawg-clownshot"
 					playsound(M, "sound/vox/clown.ogg", 30)
-				if ("pulse")
+				if ("pulse", "push")
 					set_current_projectile(projectiles["pulse"])
 					item_state = "lawg-pulse"
 					playsound(M, "sound/vox/push.ogg", 50)
@@ -1520,7 +1520,7 @@
 	name = "mini wasp-egg-crossbow"
 	desc = "A weapon favored by many of the syndicate's stealth apiarists, which does damage over time using swarms of angry wasps. Utilizes a self-recharging atomic power cell to synthesize more wasp eggs. Somehow."
 	icon_state = "crossbow" //placeholder, would prefer a custom wasp themed icon
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "crossbow" //ditto
 	force = 4.0
 	throw_speed = 3
@@ -1560,7 +1560,7 @@
 	name = "Signifer II"
 	desc = "It's a handgun? Or an smg? You can't tell."
 	icon_state = "signifer2"
-	w_class = 3		//for clarity
+	w_class = W_CLASS_NORMAL		//for clarity
 	force = 8
 	two_handed = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer
@@ -1585,7 +1585,7 @@
 				shoot_delay = 2
 				spread_angle = 0
 				force = 9
-				w_class = 3
+				w_class = W_CLASS_NORMAL
 			else //if (current_projectile.type == /datum/projectile/laser)
 				src.item_state = "signifer_2-smg"
 				src.icon_state = "signifer_2-smg"
@@ -1593,7 +1593,7 @@
 				spread_angle = 3
 				shoot_delay = 5
 				force = 12
-				w_class = 4
+				w_class = W_CLASS_BULKY
 
 	attack_self(var/mob/M)
 		if (!src.two_handed)

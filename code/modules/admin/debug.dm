@@ -524,7 +524,7 @@ var/global/debug_messages = 0
 		var/numdeleted = 0
 		for(var/atom/O in world)
 			if(istype(O, hsbitem))
-				del(O)
+				qdel(O)
 				numdeleted++
 				if(background == "Yes (Low)")
 					LAGCHECK(LAG_LOW)

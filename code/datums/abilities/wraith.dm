@@ -525,16 +525,11 @@
 			if (3)
 				boutput(holder.owner, "<span class='notice'>Smoke rises in the designated location.</span>")
 				var/turf/trgloc = get_turf(holder.owner)
-				var/list/affected = block(locate(trgloc.x - 3,trgloc.y - 3,trgloc.z), locate(trgloc.x + 3,trgloc.y + 3,trgloc.z))
-				if(!affected.len) return
-				var/list/centerview = view(4, trgloc)
-				for(var/atom/A in affected)
-					if(!(A in centerview)) continue
-					//if (A == holder.owner) continue
-					var/obj/smokeDummy/D = new(A)
-					SPAWN_DBG(15 SECONDS)
-						qdel(D)
-				particleMaster.SpawnSystem(new/datum/particleSystem/areaSmoke("#ffffff", 30, trgloc))
+				if (trgloc && isturf(trgloc))
+					var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread/(trgloc)
+					if (S)
+						S.set_up(15, 0, trgloc, null, "#000000")
+						S.start()
 				return 0
 			if (4)
 				boutput(holder.owner, "<span class='notice'>Matter from your realm appears near the designated location!</span>")

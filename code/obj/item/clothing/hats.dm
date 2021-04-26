@@ -8,6 +8,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	body_parts_covered = HEAD
 	compatible_species = list("human", "cow", "werewolf", "flubber")
+	wear_layer = MOB_HEAD_LAYER2
 	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
 	block_vision = 0
 	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
@@ -45,7 +46,7 @@
 	item_state = "ogloves"
 
 /obj/item/clothing/head/dolan
-	name = "Dolan's Hat"
+	name = "Dolan's hat"
 	desc = "A plsing hat."
 	icon_state = "dolan"
 	item_state = "dolan"
@@ -110,7 +111,7 @@
 		setProperty("meleeprot_head", 2)
 
 /obj/item/clothing/head/emerg
-	name = "Emergency Hood"
+	name = "emergency hood"
 	icon_state = "emerg"
 	item_state = "emerg"
 	permeability_coefficient = 0.25
@@ -125,7 +126,7 @@
 		setProperty("disorient_resist_ear", 5)
 
 /obj/item/clothing/head/rad_hood
-	name = "Class II Radiation Hood"
+	name = "Class II radiation hood"
 	icon_state = "radiation"
 	permeability_coefficient = 0.01
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
@@ -229,7 +230,7 @@
 	icon_state = "captain"
 	c_flags = SPACEWEAR
 	item_state = "caphat"
-	desc = "A symbol of the captain's rank, and the source of all his power."
+	desc = "A symbol of the captain's rank, and the source of all their power."
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 4)
@@ -256,7 +257,7 @@
 		desc = "Hat that is awarded to only the finest navy officers. And a few others."
 
 /obj/item/clothing/head/det_hat
-	name = "hat"
+	name = "Detective's hat"
 	desc = "Someone who wears this will look very smart."
 	icon_state = "detective"
 	item_state = "det_hat"
@@ -399,14 +400,12 @@
 /obj/item/clothing/head/that
 	name = "hat"
 	desc = "An stylish looking hat"
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "tophat"
 	item_state = "that"
 
 /obj/item/clothing/head/that/purple
 	name = "purple hat"
 	desc = "A purple tophat."
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "ptophat"
 	item_state = "pthat"
 	c_flags = SPACEWEAR
@@ -420,7 +419,6 @@
 /obj/item/clothing/head/that/gold
 	name = "golden hat"
 	desc = "A golden tophat."
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "gtophat"
 	item_state = "gthat"
 	c_flags = SPACEWEAR
@@ -438,9 +436,8 @@
 		src.setMaterial(getMaterial("gold"))
 
 /obj/item/clothing/head/longtophat
-	name = "Long tophat"
+	name = "long tophat"
 	desc = "When you look at this hat you can only think of how many monkeys you could fit in it."
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "ltophat"
 	item_state = "lthat"
 
@@ -449,7 +446,6 @@
 	desc = "Your toque blanche, coloured as such so that your poor sanitation is obvious, and the blood shows up nice and crazy."
 	icon_state = "chef"
 	item_state = "chefhat"
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	c_flags = SPACEWEAR
 
 /obj/item/clothing/head/souschefhat
@@ -460,20 +456,19 @@
 
 /obj/item/clothing/head/dramachefhat
 	name = "Dramatic Chef's Hat"
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "drama"
 	item_state = "chefhat" //TODO: unique inhand sprite?
 	c_flags = SPACEWEAR
 
 /obj/item/clothing/head/mailcap
-	name = "Mailman's Hat"
+	name = "Mailman's hat"
 	desc = "The hat of a mailman."
 	icon_state = "mailcap"
 	item_state = "mailcap"
 	c_flags = SPACEWEAR
 
 /obj/item/clothing/head/policecap
-	name = "Police Hat"
+	name = "Police hat"
 	desc = "An old surplus-issue police hat."
 	icon_state = "mailcap"
 	item_state = "mailcap"
@@ -482,7 +477,6 @@
 /obj/item/clothing/head/plunger
 	name = "plunger"
 	desc = "get dat fukken clog"
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "plunger"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "plunger"
@@ -501,28 +495,28 @@
 		setProperty("meleeprot_head", 3)
 
 /obj/item/clothing/head/NTberet
-	name = "Nanotrasen Beret"
+	name = "Nanotrasen beret"
 	desc = "For the inner dictator in you."
 	icon_state = "ntberet"
 	item_state = "ntberet"
 	c_flags = SPACEWEAR
 
 /obj/item/clothing/head/NTberet/commander
-	name = "Nanotrasen Beret"
+	name = "Nanotrasen beret"
 	desc = "For the inner space commander in you."
 	icon_state = "ntberet_commander"
 	item_state = "ntberet_commander"
 	c_flags = SPACEWEAR
 
 /obj/item/clothing/head/XComHair
-	name = "Rookie Scalp"
+	name = "rookie scalp"
 	desc = "Some unfortunate soldier's charred scalp. The hair is intact."
 	icon_state = "xcomhair"
 	item_state = "xcomhair"
 	c_flags = SPACEWEAR
 
 /obj/item/clothing/head/apprentice
-	name = "Apprentice's Cap"
+	name = "Apprentice's cap"
 	desc = "Legends tell about space sorcerors taking on apprentices. Such apprentices would wear a magical cap, and this is one such ite- hey! This is just a cardboard cone with wrapping paper on it!"
 	icon_state = "apprentice"
 	item_state = "apprentice"
@@ -535,7 +529,7 @@
 		item_state = "dan_apprentice"
 
 /obj/item/clothing/head/snake
-	name = "Dirty Rag"
+	name = "dirty rag"
 	desc = "A rag that looks like it was dragged through the jungle. Yuck."
 	icon_state = "snake"
 	item_state = "snake"
@@ -601,7 +595,7 @@
 	desc = "What do you mean this is hat isn't fancy?"
 
 /obj/item/clothing/head/fancy/captain
-	name = "captain's hat"
+	name = "Captain's hat"
 	icon_state = "captain-fancy"
 	c_flags = SPACEWEAR
 	setupProperties()
@@ -609,7 +603,7 @@
 		setProperty("meleeprot_head", 3)
 
 /obj/item/clothing/head/fancy/rank
-	name = "officer's hat"
+	name = "Officer's hat"
 	icon_state = "rank-fancy"
 	c_flags = SPACEWEAR
 	setupProperties()
@@ -651,13 +645,13 @@
 	desc = "A green hood, full of magic, wonder, cromulence, and maybe a spider or two."
 	icon_state = "wizardgreen"
 	item_state = "wizardgreen"
+	seal_hair = 1
 
 /obj/item/clothing/head/wizard/witch
 	name = "witch hat"
 	desc = "Broomstick and cat not included."
 	icon_state = "witch"
 	item_state = "wizardnec"
-	see_face = 0
 
 /obj/item/clothing/head/wizard/necro
 	name = "necromancer hood"
@@ -665,6 +659,7 @@
 	icon_state = "wizardnec"
 	item_state = "wizardnec"
 	see_face = 0
+	seal_hair = 1
 
 /obj/item/clothing/head/pinkwizard //no magic properties
 	name = "pink wizard hat"
@@ -797,7 +792,6 @@
 /obj/item/clothing/head/bigtex
 	name = "75-gallon hat"
 	desc = "A recreation of the late Big Tex's hat, commisioned by Ol' Harner."
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "bigtex"
 	item_state = "bigtex"
 	setupProperties()
@@ -865,14 +859,14 @@
 	icon_state = "purplebutt"
 	c_flags = COVERSEYES
 
-// BIGHATS - taller than normal hats! Like fruithat.dmi but bigger! To a max icon size of 64px
+// BIGHATS - taller than normal hats! To a max icon size of 64px
 
 /obj/item/clothing/head/bighat
 	name = "large hat"
 	desc = "An unnaturally large piece of headwear"
 	wear_image_icon = 'icons/mob/bighat.dmi'
 	icon_state = "tophat"
-	w_class = 4
+	w_class = W_CLASS_BULKY
 
 /obj/item/clothing/head/bighat/syndicate
 	name = "syndicate hat"
@@ -884,6 +878,7 @@
 	contraband = 10 //let's set off some alarms, boys
 	is_syndicate = 1 //no easy replication thanks
 	cant_self_remove = 1
+	item_function_flags = IMMUNE_TO_ACID //shouldn't be able to just melt the Syndicate Hat.
 	var/datum/component/holdertargeting/sm_light/light_c
 	var/processing = 0
 
@@ -1173,7 +1168,7 @@
 	wear_image_icon = 'icons/mob/ears.dmi'
 	icon_state = "cat-gray"
 	item_state = "cat-gray"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 0
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1281,7 +1276,7 @@
 	wear_image_icon = 'icons/mob/bighat.dmi'
 	icon_state = "antlers"
 	item_state = "antlers"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 0
 
 /obj/item/clothing/head/pajama_cap
@@ -1293,13 +1288,44 @@
 /obj/item/clothing/head/that/white
 	name = "white hat"
 	desc = "A white tophat."
-	wear_image_icon = 'icons/mob/fruithat.dmi'
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "whtophat"
 	item_state = "whtophat"
 
 /obj/item/clothing/head/headsprout
 	name = "leaf hairclip"
 	desc = "A sign of a healthy, growing Staff Assistant."
-	wear_image_icon = 'icons/mob/fruithat.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "headsprout"
 	item_state = "headsprout"
+
+
+/obj/item/clothing/head/hos_hat
+	name = "HoS Hat"
+	icon_state = "hoscap"
+	uses_multiple_icon_states = 1
+	item_state = "hoscap"
+	c_flags = SPACEWEAR
+	var/is_a_communist = 0
+	var/folds = 0
+	desc = "Actually, this hat is from a fast-food restaurant, that's why it folds like it was made of paper."
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 7)
+
+/obj/item/clothing/head/hos_hat/attack_self(mob/user as mob)
+	if(user.r_hand == src || user.l_hand == src)
+		if(!src.folds)
+			src.folds = 1
+			src.name = "HoS Beret"
+			src.icon_state = "hosberet"
+			src.item_state = "hosberet"
+			boutput(user, "<span class='notice'>You fold the hat into a beret.</span>")
+		else
+			src.folds = 0
+			src.name = "HoS Hat"
+			src.icon_state = "hoscap"
+			src.item_state = "hoscap"
+			boutput(user, "<span class='notice'>You unfold the beret back into a hat.</span>")
+		return

@@ -233,7 +233,7 @@
 							if (get_dist(src, user) > 1 || isAI(user))
 								user.show_text("You can not do that remotely.")
 								return
-							src.my_carafe.set_loc(src.loc)
+							user.put_in_hand_or_drop(src.my_carafe)
 							src.my_carafe = null
 							user.show_text("You have removed the [src.carafe_name] from the [src].")
 							src.update()

@@ -458,7 +458,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon_state = "whip"
 	item_state = "c_tube"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	New()
 		. = ..()
@@ -653,7 +653,7 @@ SYNDICATE DRONE FACTORY AREAS
 	protective_temperature = 1000
 	cant_self_remove = 1
 	cant_other_remove = 1
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	var/processing = 0
 
 	setupProperties()
@@ -733,7 +733,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon_state = "shovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shovel"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	flags = ONBELT
 	force = 15
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
@@ -807,7 +807,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon_state = "pstone"
 	item_state = "injector"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/datum/light/light
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -836,7 +836,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon_state = "powder"
 	item_state = "injector"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(!in_interact_range(target, user) && !istype(target, /obj/alchemy/circle))
@@ -1061,7 +1061,7 @@ SYNDICATE DRONE FACTORY AREAS
 	desc = "A hand-held device for communicating with some sort of satellite."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "satcom"
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 	attack_self(mob/user as mob)
 		if (..())

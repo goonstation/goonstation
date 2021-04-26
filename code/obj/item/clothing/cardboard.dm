@@ -8,7 +8,7 @@
 	density = 1
 	see_face = 0
 	over_hair = 1
-	over_all = 1
+	wear_layer = MOB_OVERLAY_BASE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
 	permeability_coefficient = 0.8

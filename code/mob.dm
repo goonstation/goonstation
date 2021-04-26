@@ -774,6 +774,8 @@
 		C.eye = src.eye
 		C.pixel_x = src.eye_pixel_x
 		C.pixel_y = src.eye_pixel_y
+	else if(!isturf(src.loc))
+		C.eye = src.loc
 	else
 		C.eye = src
 		C.pixel_x = src.loc_pixel_x
@@ -2658,9 +2660,13 @@
 			else
 				if (force_instead || alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 					if(!src.traitHolder.hasTrait("immigrant"))// stowaway entertainers shouldn't be on the manifest
-						var/datum/data/record/B = FindBankAccountByName(src.real_name)
-						if (B?.fields["name"])
-							B.fields["name"] = newname
+						for (var/L in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
+							if (L)
+								var/datum/data/record/R = FindRecordByFieldValue(L, "name", src.real_name)
+								if (R)
+									R.fields["name"] = newname
+									if (R.fields["full_name"])
+										R.fields["full_name"] = newname
 						for (var/obj/item/card/id/ID in src.contents)
 							ID.registered = newname
 							ID.update_name()

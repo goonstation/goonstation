@@ -6,11 +6,12 @@
 	icon = 'icons/obj/items/pda.dmi'
 	icon_state = "pda"
 	item_state = "pda"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	rand_pos = 0
 	flags = FPRINT | TABLEPASS | ONBELT
 	module_research = list("science" = 1, "miniaturization" = 5, "devices" = 5, "efficiency" = 3)
 	module_research_type = /obj/item/device/pda2
+	wear_layer = MOB_BELT_LAYER
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
 	var/registered = null // so we don't need to replace all the dang checks for ID cards
 	var/assignment = null
@@ -247,6 +248,12 @@
 		icon_state = "pda-e"
 		mailgroups = list(MGO_MINING,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
+
+	chiefengineer
+		icon_state = "pda-ce"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
+		mailgroups = list(MGO_ENGINEER,MGO_MECHANIC,MGO_MINING,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_SALES, MGA_CARGOREQUEST, MGA_SHIPPING, MGA_RKIT)
 
 	chef
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)

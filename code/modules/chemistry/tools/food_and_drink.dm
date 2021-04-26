@@ -134,7 +134,7 @@
 		..()
 
 	process()
-		if (world.time - create_time >= 1 MINUTES)
+		if (world.time - create_time >= 3 MINUTES)
 			create_time = world.time
 			if (!src.pooled && isturf(src.loc) && !on_table())
 				if (prob(50))
@@ -472,17 +472,6 @@
 		if (!src.reagents || !src.reagents.total_volume)
 			boutput(user, "<span class='alert'>Nothing left in [src], oh no!</span>")
 			return 0
-
-		if (user.a_intent == INTENT_HARM)
-			src.reagents.physical_shock(14)
-			if (src.splash_all_contents)
-				boutput(user, "<span class='notice'>You splash all of the solution onto [M].</span>")
-				M.visible_message("<span class='alert'><b>[user.name]</b> splashes the [src.name]'s contents onto [M.name]!</span>")
-			else
-				boutput(user, "<span class='notice'>You apply [src.amount_per_transfer_from_this] units of the solution to [M].</span>")
-				M.visible_message("<span class='alert'><b>[user.name]</b> applies some of the [src.name]'s contents to [M.name].</span>")
-			logTheThing("combat", user, M, "splashes [src] onto [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(M)].")
-			return
 
 		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
@@ -855,7 +844,7 @@
 			force = 5.0
 			throwforce = 10.0
 			throw_range = 5
-			w_class = 2.0
+			w_class = W_CLASS_SMALL
 			stamina_damage = 15
 			stamina_cost = 15
 			stamina_crit_chance = 50
@@ -1042,7 +1031,7 @@
 					user.visible_message("[user] adds [W] to [src].<br><span class='alert'>[src] is too full and spills!</span>",\
 					"You add [W] to [src].<br><span class='alert'>[src] is too full and spills!</span>")
 					src.reagents.reaction(get_turf(user), TOUCH, src.reagents.total_volume / 2)
-					src.reagents.add_reagent("ice", 5, null, (T0C - 1))
+					src.reagents.add_reagent("ice", 10, null, (T0C - 50))
 					JOB_XP(user, "Clown", 1)
 					pool(W)
 					return
@@ -1052,7 +1041,7 @@
 			else
 				user.visible_message("[user] adds [W] to [src].",\
 				"You add [W] to [src].")
-				src.reagents.add_reagent("ice", 5, null, (T0C - 1))
+				src.reagents.add_reagent("ice", 10, null, (T0C - 50))
 				pool(W)
 				if ((user.mind.assigned_role == "Bartender") && (prob(40)))
 					JOB_XP(user, "Bartender", 1)

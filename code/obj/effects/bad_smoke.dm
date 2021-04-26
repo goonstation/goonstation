@@ -20,7 +20,7 @@
 /obj/effects/bad_smoke/Move()
 	. = ..()
 	for(var/mob/living/carbon/M in get_turf(src))
-		if (M.internal != null && M.wear_mask && (M.wear_mask.c_flags & MASKINTERNALS))
+		if (issmokeimmune(M))
 		else
 			M.drop_item()
 			if (prob(25))
@@ -32,7 +32,7 @@
 /obj/effects/bad_smoke/HasEntered(mob/living/carbon/M as mob )
 	..()
 	if(iscarbon(M))
-		if (M.internal != null && M.wear_mask && (M.wear_mask.c_flags & MASKINTERNALS))
+		if (issmokeimmune(M))
 			return
 		else
 			M.drop_item()

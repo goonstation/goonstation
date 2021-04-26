@@ -136,7 +136,7 @@
 		else if (istype(W,/obj/item/rods))
 			if(!src.is_reinforced)
 				var/obj/item/rods/R = W
-				if(R.consume_rods(1))
+				if(R.change_stack_amount(-1))
 					user.show_text("You reinforce [src] with the rods.", "blue")
 					src.is_reinforced = 1
 					src.icon_state = "railing-reinforced"

@@ -195,6 +195,7 @@
 	html += " &middot; <a href='byond://?src=\ref[src];HardDelete=\ref[D]'>Hard Delete</a>"
 	if (A || istype(D, /image))
 		html += " &middot; <a href='byond://?src=\ref[src];Display=\ref[D]'>Display In Chat</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];DebugOverlays=\ref[D]'>Debug Overlays</a>"
 
 	if (isobj(D))
 		html += "<br><a href='byond://?src=\ref[src];CheckReactions=\ref[D]'>Check Possible Reactions</a>"
@@ -208,8 +209,8 @@
 			html += " &middot; <a href='byond://?src=\ref[src];GiveSpecial=\ref[D]'>Give Special</a>"
 	if (A)
 		html += "<br><a href='byond://?src=\ref[src];CreatePoster=\ref[D]'>Create Poster</a>"
-		html += "&middot; <a href='byond://?src=\ref[src];Vars=\ref[A];varToEdit=maptext'>Edit Maptext</a>"
-		html += "&middot; <a href='byond://?src=\ref[src];AdminInteract=\ref[D]'>Interact</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];Vars=\ref[A];varToEdit=maptext'>Edit Maptext</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];AdminInteract=\ref[D]'>Interact</a>"
 
 	if (istype(D,/obj/critter))
 		html += "<br> &middot; <a href='byond://?src=\ref[src];KillCritter=\ref[D]'>Kill Critter</a>"
@@ -430,6 +431,11 @@
 		var/atom/A = locate(href_list["GetThing"])
 		if (ismob(A) || isobj(A))
 			src.cmd_admin_get_mobject(A)
+		return
+	if (href_list["DebugOverlays"])
+		usr_admin_only
+		var/atom/A = locate(href_list["DebugOverlays"])
+		debug_overlays(A, src)
 		return
 	if (href_list["GetThing_Insert"])
 		usr_admin_only
@@ -1103,3 +1109,9 @@
 		if("Yes")
 			logTheThing("admin", usr, null, "deleted [A.name] at ([showCoords(A.x, A.y, A.z)])")
 			logTheThing("diary", usr, null, "deleted [A.name] at ([showCoords(A.x, A.y, A.z, 1)])", "admin")
+
+/proc/debug_overlays(target_thing, client/user, indent="")
+	for(var/ov in target_thing:overlays)
+		boutput(user, "[indent][ov:layer] [ov:icon] [ov:icon_state]")
+		if(length(ov:overlays))
+			debug_overlays(ov, user, "&nbsp;[indent]")

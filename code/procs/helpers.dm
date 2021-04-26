@@ -2621,6 +2621,12 @@ proc/keep_truthy(some_list)
 		if(x)
 			. += x
 
+//TODO: refactor the below two into one proc
+
+/// Returns true if not incapicitated and unhandcuffed (by default)
+proc/can_act(var/mob/M, var/include_cuffs = 1)
+	return !((include_cuffs && M.hasStatus("handcuffed")) || is_incapacitated(M))
+
 /// Returns true if the given mob is incapacitated
 proc/is_incapacitated(mob/M)
 	return (\

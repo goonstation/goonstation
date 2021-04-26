@@ -8070,6 +8070,17 @@
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor/shuttlebay,
 /area/tech_outpost)
+"avn" = (
+/obj/decal/cleanable/dirt,
+/obj/item/electronics/capacitor,
+/obj/item/light/tube/blacklight,
+/obj/item/card_group/stg,
+/obj/storage/crate{
+	name = "Dented Crate"
+	},
+/turf/space,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
 "avo" = (
 /obj/machinery/door_control{
 	id = "robot_factory";
@@ -16806,6 +16817,24 @@
 	tag = "icon-red2 (NORTHWEST)"
 	},
 /area/derelict_ai_sat)
+"aRD" = (
+/obj/table/wood/round/auto,
+/obj/item/storage/box/nerd_kit{
+	desc = "It's the famous carmine box starter set for Syndicates & Stations, Second Edition.";
+	name = "old tabletop gaming kit";
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/card_box/plain{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "red2";
+	tag = "icon-red2 (NORTHEAST)"
+	},
+/area/derelict_ai_sat)
 "aRE" = (
 /turf/simulated/wall/asteroid{
 	dir = 9
@@ -25259,34 +25288,12 @@
 /obj/item/reagent_containers/food/snacks/breakfast,
 /turf/simulated/floor/caution/west,
 /area/mining/quarters)
-"hjp" = (
-/obj/decal/cleanable/dirt,
-/obj/item/electronics/capacitor,
-/obj/item/light/tube/blacklight,
-/obj/item/card_group/stg,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
-/turf/space,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/abandonedship)
-"kxb" = (
-/obj/table/wood/round/auto,
-/obj/item/storage/box/nerd_kit{
-	desc = "It's the famous carmine box starter set for Syndicates & Stations, Second Edition.";
-	name = "old tabletop gaming kit";
-	pixel_x = 6;
+"lwM" = (
+/obj/table/auto,
+/obj/item/camera{
 	pixel_y = 6
 	},
-/obj/item/card_box/plain{
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "red2";
-	tag = "icon-red2 (NORTHEAST)"
-	},
+/turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
 "qBE" = (
 /obj/lattice{
@@ -25314,13 +25321,6 @@
 	stone_color = "#575A5E"
 	},
 /area/space)
-"uxS" = (
-/obj/table/auto,
-/obj/item/camera{
-	pixel_y = 6
-	},
-/turf/simulated/floor/white/grime,
-/area/derelict_ai_sat)
 "uGt" = (
 /obj/item/storage/secure/ssafe{
 	configure_mode = 0;
@@ -25333,6 +25333,12 @@
 	},
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
+"uIh" = (
+/turf/simulated/wall/asteroid{
+	name = "weak compacted stone";
+	stone_color = "#575A5E"
+	},
+/area/space)
 "vrI" = (
 /obj/stool/chair,
 /turf/simulated/floor/black,
@@ -61736,7 +61742,7 @@ aGv
 blg
 blo
 blq
-hjp
+avn
 aGv
 aGD
 aaa
@@ -65120,7 +65126,7 @@ aQK
 aQZ
 aRp
 aRo
-uxS
+lwM
 aSl
 aRo
 aTc
@@ -69347,7 +69353,7 @@ amR
 aQS
 aRk
 amR
-kxb
+aRD
 aRY
 aSx
 aRW
@@ -78090,8 +78096,8 @@ aac
 aac
 aac
 aac
-aHr
-aHr
+uIh
+uIh
 aaa
 aaa
 aaa

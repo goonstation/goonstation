@@ -6,7 +6,7 @@
 	force = 5
 	hit_type = DAMAGE_BLUNT
 	throwforce = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	pressure_resistance = 10
 	item_state = "electronic"
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -387,7 +387,7 @@
 	force = 10
 	hit_type = DAMAGE_BURN
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	pressure_resistance = 40
 	module_research = list("electronics" = 3, "engineering" = 1)
 
@@ -417,7 +417,7 @@
 	force = 2
 	hit_type = DAMAGE_BLUNT
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	pressure_resistance = 50
 	var/list/scanned = list()
 	var/viewstat = 0
@@ -655,7 +655,7 @@
 	hitsound = 'sound/machines/chainsaw_green.ogg'
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_SAWING
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	module_research = list("electronics" = 3, "engineering" = 1)
 
 	proc/finish_decon(atom/target,mob/user)
@@ -674,7 +674,7 @@
 		F.viewstat = 2
 		F.secured = 2
 		F.icon_state = "dbox_big"
-		F.w_class = 4
+		F.w_class = W_CLASS_BULKY
 
 		elecflash(src,power=2)
 
@@ -700,6 +700,10 @@
 
 		if ((!O.allowed(user) || O.is_syndicate) && !(O.deconstruct_flags & DECON_BUILT))
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] without sufficient access to operate it.</span>")
+			return
+
+		if(locate(/mob/living) in O)
+			boutput(user, "<span class='alert'>You cannot deconstruct [target] while someone is inside it!</span>")
 			return
 
 		if (isrestrictedz(O.z) && !isitem(target))
@@ -819,4 +823,4 @@
 	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	hit_type = DAMAGE_BLUNT
 	tool_flags = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL

@@ -389,7 +389,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "radio"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "radio"
 	throw_speed = 4
 	throw_range = 20
@@ -913,7 +913,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/list/spells = list()
 	flags = FPRINT | ONBELT | TABLEPASS
 	throwforce = 5
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 100

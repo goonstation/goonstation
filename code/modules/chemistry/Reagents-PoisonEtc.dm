@@ -112,11 +112,15 @@ datum
 				if (istype(O,/obj/item/clothing/head/chemhood || /obj/item/clothing/suit/chemsuit))
 					return 1
 				if (isitem(O) && prob(40))
-					var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,O.loc)
-					I.desc = "Looks like this was \an [O] some time ago."
-					for(var/mob/M in AIviewers(5, O))
-						boutput(M, "<span class='alert'>\the [O] melts.</span>")
-					qdel(O)
+					var/obj/item/toMelt
+					if (!(toMelt.item_function_flags & IMMUNE_TO_ACID))
+						var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,O.loc)
+						I.desc = "Looks like this was \an [O] some time ago."
+						for(var/mob/M in AIviewers(5, O))
+							boutput(M, "<span class='alert'>\the [O] melts.</span>")
+						qdel(O)
+					else
+						O.visible_message("The acidic substance slides off \the [O] harmlessly.")
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("acid",5)
@@ -125,7 +129,7 @@ datum
 			reaction_blob(var/obj/blob/B, var/volume)
 				if (!blob_damage)
 					return
-				B.take_damage(blob_damage, volume, "mixed")
+				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
 
 		harmful/acid/clacid
 			name = "hydrochloric acid"
@@ -179,7 +183,7 @@ datum
 			reaction_blob(var/obj/blob/B, var/volume)
 				if (!blob_damage)
 					return
-				B.take_damage(blob_damage, volume, "mixed")
+				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
 
 		harmful/amanitin
 			name = "amanitin"
@@ -791,23 +795,28 @@ datum
 							H.unlock_medal("Red Hood", 1)
 							return
 						else
-							if (H.wear_mask)
-								var/obj/item/clothing/mask/K = H.wear_mask
-								if ( !K.acid_proof )
-									boutput(M, "<span class='alert'>Your [H.wear_mask] melts away!</span>")
-									K.dropped(H)
-									H.u_equip(K)
-									qdel(K)
-								else
-									boutput(M, "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
-								melted = 1
 							if (H.head)
-								boutput(M, "<span class='alert'>Your [H.head] melts into uselessness!</span>")
 								var/obj/item/clothing/head/D = H.head
-								D.dropped(H)
-								H.u_equip(D)
-								qdel(D)
+								if (!(D.item_function_flags & IMMUNE_TO_ACID))
+									boutput(M, "<span class='alert'>Your [H.head] melts into uselessness!</span>")
+									D.dropped(H)
+									H.u_equip(D)
+									qdel(D)
+								else
+									H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
 								melted = 1
+							if (!(H?.head.c_flags & SPACEWEAR))
+								if (H.wear_mask)
+									var/obj/item/clothing/mask/K = H.wear_mask
+									if (!(K.item_function_flags & IMMUNE_TO_ACID))
+										boutput(M, "<span class='alert'>Your [H.wear_mask] melts away!</span>")
+										K.dropped(H)
+										H.u_equip(K)
+										qdel(K)
+									else
+										H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [K] harmlessly.</span>", "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
+									melted = 1
+
 							if (melted)
 								return
 					else
@@ -816,24 +825,29 @@ datum
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
 						var/melted = 0
-						if (H.wear_mask && H.head)
-							if (H.wear_mask)
-								var/obj/item/clothing/mask/K = H.wear_mask
-								if ( !K.acid_proof )
-									boutput(M, "<span class='alert'>Your [H.wear_mask] melts away!</span>")
-									K.dropped(H)
-									H.u_equip(K)
-									qdel(K)
-								else
-									boutput(M, "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
-								melted = 1
+						if (H.wear_mask || H.head)
 							if (H.head)
-								boutput(M, "<span class='alert'>Your [H.head] melts into uselessness!</span>")
 								var/obj/item/clothing/head/D = H.head
-								D.dropped(H)
-								H.u_equip(D)
-								qdel(D)
+								if (!(D.item_function_flags & IMMUNE_TO_ACID))
+									boutput(M, "<span class='alert'>Your [H.head] melts into uselessness!</span>")
+									D.dropped(H)
+									H.u_equip(D)
+									qdel(D)
+								else
+									H.visible_message("<span class='alert>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
 								melted = 1
+							if (!(H?.head.c_flags & SPACEWEAR))
+								if (H.wear_mask)
+									var/obj/item/clothing/mask/K = H.wear_mask
+									if (!(K.item_function_flags & IMMUNE_TO_ACID))
+										boutput(M, "<span class='alert'>Your [H.wear_mask] melts away!</span>")
+										K.dropped(H)
+										H.u_equip(K)
+										qdel(K)
+									else
+										H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [K] harmlessly.</span>", "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
+									melted = 1
+
 							if (melted)
 								return
 				else if (volume >= 5)
@@ -851,11 +865,15 @@ datum
 				if (istype(O,/obj/fluid))
 					return 1
 				if (isitem(O) && volume > O:w_class)
-					var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,O.loc)
-					I.desc = "Looks like this was \an [O] some time ago."
-					for(var/mob/M in AIviewers(5, O))
-						boutput(M, "<span class='alert'>\the [O] melts.</span>")
-					qdel(O)
+					var/obj/item/toMelt = O
+					if (!(toMelt.item_function_flags & IMMUNE_TO_ACID))
+						var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,O.loc)
+						I.desc = "Looks like this was \an [O] some time ago."
+						for(var/mob/M in AIviewers(5, O))
+							boutput(M, "<span class='alert'>\the [O] melts.</span>")
+						qdel(O)
+					else
+						O.visible_message("The blueish acidic substance slides off \the [O] harmlessly.")
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("acid",10)
@@ -864,7 +882,7 @@ datum
 			reaction_blob(var/obj/blob/B, var/volume)
 				if (!blob_damage)
 					return
-				B.take_damage(blob_damage, volume, "mixed")
+				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
 
 		harmful/pancuronium
 			name = "pancuronium"

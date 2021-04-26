@@ -15,12 +15,9 @@
 
 # Kyle
 /code/WorkInProgress/JobXpRewards.dm @Kyle2143
-/code/obj/item/organs/ @Kyle2143
-/code/obj/item/organ_holder.dm @Kyle2143
 /code/modules/events/gimmick/kudzu.dm @Kyle2143
 /code/datums/abilities/kudzumen.dm @Kyle2143
 /code/datums/gamemodes/gangwar.dm @Kyle2143
-/code/procs/jobprocs.dm @Kyle2143
 
 # Mordent (mordent-goonstation)
 /code/modules/robotics/ @mordent-goonstation
