@@ -2972,6 +2972,7 @@
 /area/mining/refinery)
 "aiF" = (
 /mob/living/critter/spider,
+/obj/item/storage/box/record/notaquario_mixtape1,
 /turf/simulated/floor/wood/two,
 /area/space)
 "aiG" = (
@@ -25343,6 +25344,14 @@
 /obj/stool/chair,
 /turf/simulated/floor/black,
 /area/mining/quarters)
+"vHH" = (
+/obj/table/wood/auto,
+/obj/item/storage/box/record/notaquario_mixtape2{
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/turf/simulated/floor,
+/area/buddyfactory)
 "xOl" = (
 /turf/simulated/floor/plating/airless/asteroid{
 	stone_color = "#D1E6FF"
@@ -27543,7 +27552,7 @@ atP
 atP
 ajC
 aug
-atP
+vHH
 atP
 ajC
 aqC

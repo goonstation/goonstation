@@ -564,6 +564,55 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	song = "sound/radio_station/core_of_poo.ogg"
 	color = "#DE9F47"
 
+/obj/item/record/notaquario_mixtape/beaches
+	record_name = "Beaches"
+	song = "sound/radio_station/beaches.ogg"
+
+/obj/item/record/notaquario_mixtape/bugdome
+	record_name = "Bug Quest 2"
+	song = "sound/radio_station/caves.ogg"
+
+/obj/item/record/notaquario_mixtape/bugquest
+	record_name = "Bug Quest"
+	song = "sound/radio_station/bugquest.ogg"
+
+/obj/item/record/notaquario_mixtape/caves
+	record_name = "Caves"
+	song = "sound/radio_station/bugdome.ogg"
+
+/obj/item/record/notaquario_mixtape/everything_breathes
+	record_name = "Everything Breathes"
+	song = "sound/radio_station/everything_breathes.ogg"
+
+/obj/item/record/notaquario_mixtape/graveyard
+	record_name = "Graveyard"
+	song = "sound/radio_station/graveyard.ogg"
+
+/obj/item/record/notaquario_mixtape/floaty
+	record_name = "I'm Floaty In Space But Thats Ok"
+	song = "sound/radio_station/im_floaty_in_space_but_thats_ok.ogg"
+
+/obj/item/record/notaquario_mixtape/komo
+	record_name = "Komo"
+	song = "sound/radio_station/komo.ogg"
+
+/obj/item/record/notaquario_mixtape/repose
+	record_name = "Repose"
+	song = "sound/radio_station/repose.ogg"
+
+/obj/item/record/notaquario_mixtape/restful
+	record_name = "Restful"
+	song = "sound/radio_station/restful.ogg"
+
+/obj/item/record/notaquario_mixtape/scarydome
+	record_name = "Bug Quest 3 - Biodome"
+	song = "sound/radio_station/scarydome.ogg"
+
+/obj/item/record/distant_star
+    desc = "A fairly worn and dusty record. It seems to be old"
+    record_name = "Distant Star"
+    song = "sound/radio_station/distant_star.ogg"
+
 // Record sets
 /obj/item/storage/box/record
 	name = "record sleeve"
@@ -581,6 +630,25 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	/obj/item/record/clown_collection/eggshell,
 	/obj/item/record/clown_collection/disco,
 	/obj/item/record/clown_collection/poo)
+	
+/obj/item/storage/box/record/notaquario_mixtape1
+	name = "Aquario and Not Tom's Mixtape Vol 1"
+	desc = "Woa, these are some old tunes! Made by Aquario and Not Tom way back in the early 2020s!"
+	spawn_contents = list(/obj/item/record/notaquario_mixtape/bugquest,
+	/obj/item/record/notaquario_mixtape/bugdome,
+	/obj/item/record/notaquario_mixtape/scarydome,
+	/obj/item/record/notaquario_mixtape/komo,
+	/obj/item/record/notaquario_mixtape/everything_breathes)
+
+/obj/item/storage/box/record/notaquario_mixtape2
+	name = "Aquario and Not Tom's Mixtape Vol 2"
+	desc = "Woa, the second volume of some old tunes! Made by Aquario and Not Tom way back in the early 2020s! "
+	spawn_contents = list(/obj/item/record/notaquario_mixtape/graveyard,
+	/obj/item/record/notaquario_mixtape/repose,
+	/obj/item/record/notaquario_mixtape/beaches,
+	/obj/item/record/notaquario_mixtape/caves,
+	/obj/item/record/notaquario_mixtape/floaty,
+	/obj/item/record/notaquario_mixtape/restful)
 
 /obj/item/storage/box/record/radio
 	desc = "A sturdy record sleeve, designed to hold multiple records. The art on the cover is very lovely."
