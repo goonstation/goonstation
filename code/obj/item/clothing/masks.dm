@@ -8,6 +8,7 @@
 	var/obj/item/voice_changer/vchange = 0
 	body_parts_covered = HEAD
 	compatible_species = list("human", "cow", "werewolf")
+	wear_layer = MOB_HEAD_LAYER1
 	var/is_muzzle = 0
 	var/use_bloodoverlay = 1
 	var/stapled = 0

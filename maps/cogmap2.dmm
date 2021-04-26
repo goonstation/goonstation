@@ -39385,6 +39385,16 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/table/reinforced/auto,
+/obj/item/storage/box/flashbang_kit,
+/obj/item/storage/box/flashbang_kit,
+/obj/item/storage/box/stinger_kit,
+/obj/item/storage/box/revimp_kit{
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/emergency_injector/atropine,
+/obj/item/reagent_containers/emergency_injector/atropine,
+/obj/item/reagent_containers/emergency_injector/atropine,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bIW" = (
@@ -41602,16 +41612,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/table/reinforced/auto,
-/obj/item/storage/box/flashbang_kit,
-/obj/item/storage/box/flashbang_kit,
-/obj/item/reagent_containers/emergency_injector/atropine,
-/obj/item/reagent_containers/emergency_injector/atropine,
-/obj/item/reagent_containers/emergency_injector/atropine,
-/obj/item/storage/box/stinger_kit,
-/obj/item/storage/box/revimp_kit{
-	pixel_x = 5
-	},
+/obj/machinery/weapon_stand/rifle_rack/recharger,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bMu" = (
