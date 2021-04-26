@@ -1338,7 +1338,6 @@
 			// Severity is basically a multiplier to odds and amounts.
 		var/datum/plant/growing = src.current
 		var/datum/plantgenes/DNA = src.plantgenes
-		boutput(world, "mutating")
 		if(!istype(growing) || !istype(DNA))
 			return
 
@@ -1650,7 +1649,6 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/machinery/plantpot/PP, var/severity = 1)
 	// The check to see if a new mutation will be generated. The criteria check for whether
 	// or not the mutation will actually appear is HYPmutationcheck_full.
-	DEBUG_MESSAGE("severity is "+num2text(severity))
 	if(!P || !DNA)
 		return
 	if(HYPCheckCommut(DNA,/datum/plant_gene_strain/stabilizer))
@@ -1686,7 +1684,6 @@ proc/HYPnewcommutcheck(var/datum/plant/P,var/datum/plantgenes/DNA, var/severity)
 	if(!P || !DNA) return
 	if(HYPCheckCommut(DNA,/datum/plant_gene_strain/stabilizer))
 		return
-	DEBUG_MESSAGE("severity is "+num2text(severity))
 	if(P.commuts.len > 0)
 		var/datum/plant_gene_strain/MUT = null
 		for (var/datum/plant_gene_strain/X in P.commuts)
