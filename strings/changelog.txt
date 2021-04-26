@@ -1,5 +1,9 @@
 
 (t)mon apr 26 21
+(u)mopcat
+(p)4458
+(e)|
+(+)NanoTrasen Security Operatives now spawn with a barrier on their belt.
 (u)DimWhat
 (p)4465
 (e)🎨|sprites
