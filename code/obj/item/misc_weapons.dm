@@ -65,6 +65,8 @@
 		var/r = 0
 		var/g = 0
 		var/b = 0
+		if(!src.active)
+			src.w_class = off_w_class
 		if (prob(1))
 			src.bladecolor = null
 		switch(src.bladecolor)
