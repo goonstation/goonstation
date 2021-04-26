@@ -1,4 +1,7 @@
 
+(t)mon apr 26 21
+(u)Flourish
+(+)Attacking someone with a drinking glass while on harm intent no longer splashes your drink onto them (it just tries to forcefeed them).
 (t)sun apr 25 21
 (u)Ludolf and DimWhat
 (p)4386
