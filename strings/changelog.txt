@@ -1,5 +1,9 @@
 
 (t)sun apr 25 21
+(u)Ludolf and DimWhat
+(p)4386
+(e)🎨|sprites
+(+)Adds unique eyeballs to cows, skeletons, and lizards.
 (u)Luxizzle
 (p)4339
 (e)📄|tgui
