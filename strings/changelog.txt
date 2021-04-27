@@ -1,5 +1,9 @@
 
 (t)mon apr 26 21
+(u)Azrun
+(p)3917
+(e)🆕|feature
+(*)Adds Haunted TEG Event. Spooky!
 (u)Superlagg
 (p)4004
 (e)🆕|feature
