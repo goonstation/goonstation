@@ -7,6 +7,7 @@ ABSTRACT_TYPE(/datum/mail_order)
 	var/cost = PAY_UNTRAINED
 	var/list/order_perm = list() // optional access requirement to order a given item
 
+//for some reason, these break if you use apostrophes in the name, so don't do that
 
 //Tanhony & Sons: journalistic equipment, primarily AV
 ABSTRACT_TYPE(/datum/mail_order/audiovideo)
@@ -209,11 +210,9 @@ ABSTRACT_TYPE(/datum/mail_order/produce)
 		cost = PAY_UNTRAINED / 4
 
 	cereal_bundle
-		name = "Munch 'Em All Bundle"
+		name = "Munch Em All Bundle"
 		desc = "Can't decide on a cereal? Buy them all and save!"
-		order_items = list(/obj/item/reagent_containers/food/snacks/cereal_box/honey,
-		/obj/item/reagent_containers/food/snacks/cereal_box/tanhony,
-		/obj/item/reagent_containers/food/snacks/cereal_box/roach)
+		order_items = list(/obj/item/reagent_containers/food/snacks/cereal_box/honey,/obj/item/reagent_containers/food/snacks/cereal_box/tanhony,/obj/item/reagent_containers/food/snacks/cereal_box/roach)
 		cost = PAY_UNTRAINED / 2
 
 
