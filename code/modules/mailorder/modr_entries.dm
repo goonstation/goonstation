@@ -75,6 +75,12 @@ ABSTRACT_TYPE(/datum/mail_order/audiovideo)
 ABSTRACT_TYPE(/datum/mail_order/recreation)
 /datum/mail_order/recreation
 
+	gifting
+		name = "Gift-Wrapping Bundle"
+		desc = "Wrap to impress! Includes wrapping paper and scissors."
+		order_items = list(/obj/item/wrapping_paper,/obj/item/scissors)
+		cost = PAY_TRADESMAN / 4
+
 	swimsuit
 		name = "Swim Suit"
 		desc = "One-size-fits-all swimsuit. Comes in a random color."
