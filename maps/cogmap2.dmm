@@ -32312,7 +32312,10 @@
 	dir = 4
 	},
 /obj/grille/steel,
-/turf/simulated/wall/auto/supernorn,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
 /area/station/security/main)
 "bvR" = (
 /obj/item/device/radio/intercom/security,
@@ -33407,17 +33410,21 @@
 /turf/simulated/floor/plating,
 /area/station/routing/security)
 "bxW" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/window/auto/reinforced,
 /obj/window_blinds/cog2{
 	dir = 4
 	},
 /obj/grille/steel,
-/turf/simulated/wall/auto/supernorn,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
 /area/station/security/main)
 "bxX" = (
 /obj/cable{
@@ -39385,6 +39392,16 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/table/reinforced/auto,
+/obj/item/storage/box/flashbang_kit,
+/obj/item/storage/box/flashbang_kit,
+/obj/item/storage/box/stinger_kit,
+/obj/item/storage/box/revimp_kit{
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/emergency_injector/atropine,
+/obj/item/reagent_containers/emergency_injector/atropine,
+/obj/item/reagent_containers/emergency_injector/atropine,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bIW" = (
@@ -41602,16 +41619,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/table/reinforced/auto,
-/obj/item/storage/box/flashbang_kit,
-/obj/item/storage/box/flashbang_kit,
-/obj/item/reagent_containers/emergency_injector/atropine,
-/obj/item/reagent_containers/emergency_injector/atropine,
-/obj/item/reagent_containers/emergency_injector/atropine,
-/obj/item/storage/box/stinger_kit,
-/obj/item/storage/box/revimp_kit{
-	pixel_x = 5
-	},
+/obj/machinery/weapon_stand/rifle_rack/recharger,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bMu" = (

@@ -1419,8 +1419,8 @@
 	icon = 'icons/mob/monkey.dmi'
 	mutant_folder = 'icons/mob/monkey.dmi'
 	icon_state = "monkey"
+	eye_state = "eyes_monkey"
 	head_offset = -6
-	eye_offset = -6
 	hand_offset = -2
 	body_offset = -7
 	leg_offset = -4
@@ -1433,7 +1433,7 @@
 	voice_name = "monkey"
 	override_language = "monkey"
 	understood_languages = list("english")
-	clothing_icon_override = 'icons/mob/monkey.dmi'
+	clothing_icon_override = 'icons/mob/monkey_clothes.dmi'
 	race_mutation = /datum/bioEffect/mutantrace/monkey
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/left

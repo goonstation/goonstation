@@ -62706,11 +62706,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
-"ssJ" = (
-/obj/wingrille_spawn/auto,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/hydroponics/bay)
 "stQ" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
@@ -64310,7 +64305,6 @@
 /area/station/crew_quarters/cafeteria)
 "vFU" = (
 /obj/submachine/seed_vendor,
-/obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -128584,7 +128578,7 @@ adC
 adC
 adC
 aag
-ssJ
+sZw
 axW
 aEX
 arn
@@ -128597,7 +128591,7 @@ arn
 arn
 aEX
 srq
-ssJ
+sZw
 aaG
 adC
 adC

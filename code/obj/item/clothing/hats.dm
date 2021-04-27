@@ -645,13 +645,13 @@
 	desc = "A green hood, full of magic, wonder, cromulence, and maybe a spider or two."
 	icon_state = "wizardgreen"
 	item_state = "wizardgreen"
+	seal_hair = 1
 
 /obj/item/clothing/head/wizard/witch
 	name = "witch hat"
 	desc = "Broomstick and cat not included."
 	icon_state = "witch"
 	item_state = "wizardnec"
-	see_face = 0
 
 /obj/item/clothing/head/wizard/necro
 	name = "necromancer hood"
@@ -659,6 +659,7 @@
 	icon_state = "wizardnec"
 	item_state = "wizardnec"
 	see_face = 0
+	seal_hair = 1
 
 /obj/item/clothing/head/pinkwizard //no magic properties
 	name = "pink wizard hat"
