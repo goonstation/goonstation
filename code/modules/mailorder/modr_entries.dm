@@ -1,3 +1,4 @@
+//category support eventually maybe.
 ABSTRACT_TYPE(/datum/mail_order)
 /datum/mail_order
 	var/name = "Juicer Schweet's Spaghetti Western"

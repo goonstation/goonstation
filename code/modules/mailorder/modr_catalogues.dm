@@ -48,12 +48,6 @@
 			src.read_only = 1
 
 
-//todo:
-//LOTS of catalogue lineup stuff
-//tie into the communication systems so you can't order things with messaging off (maybe more sophisticated than that?)
-//consider category support if you can think of a way to make it not skullspiking
-//also consider the idea of secure containers that are manually delivered
-
 #define DELIVERED_TO_MAIL 1
 #define DELIVERED_TO_QM 2
 #define MODE_LIST 0
@@ -165,7 +159,12 @@
 				if(!src.master.host_program.message_silent)
 					alert_beep = src.master.host_program.message_tone
 
-				if(src.master.ID_card && src.master.ID_card.money >= src.cartcost)
+				if (signal_loss >= 25)
+					src.master.display_alert(alert_beep)
+					var/displayMessage = "[bicon(master)] Unable to place order due to connection failure. Please try again later."
+					src.master.display_message(displayMessage)
+
+				else if(src.master.ID_card && src.master.ID_card.money >= src.cartcost)
 					var/destination = "SHIP_TO_QM"
 					if(pick_landmark(LANDMARK_MAILORDER_SPAWN)) //pick a destination if mail insertion is supported by map
 						destination = input(usr, "Enter mail tag without quotes, or SHIP_TO_QM for secure crate-based delivery", src.name, null) as text
