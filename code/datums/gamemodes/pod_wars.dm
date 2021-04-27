@@ -433,8 +433,16 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		P.do_item_delivery(P.owner_team)
 
 /datum/game_mode/pod_wars/declare_completion()
-	var/datum/pod_wars_team/winner = team_NT.points > team_SY.points ? team_NT : team_SY
-	var/datum/pod_wars_team/loser = team_NT.points < team_SY.points ? team_NT : team_SY
+	var/datum/pod_wars_team/winner
+	var/datum/pod_wars_team/loser
+
+	if (team_NT.points >= team_SY.points)		//Gotta have a winner for now... idk
+		winner = team_NT
+		loser = team_SY
+	else 
+		winner = team_SY
+		loser = team_NT
+
 	// var/text = ""
 	boutput(world, "<FONT size = 3><B>The winner was the [winner.name], commanded by [winner.commander?.current] ([winner.commander?.current?.ckey]):</B></FONT><br>")
 	output_team_members(winner)
@@ -2607,9 +2615,9 @@ Player Stats
 
 	//Selects the items that this crate spawns with based on its possible contents.
 	proc/spawn_items()		
-		var/tier1_max_points = 15
-		var/tier2_max_points = 10
-		var/tier3_max_points = 6
+		var/tier1_max_points = 25
+		var/tier2_max_points = 20
+		var/tier3_max_points = 15
 
 		//This feels really stupid, but idk how better to do it. -kly
 		switch (tier)
@@ -2656,7 +2664,7 @@ Player Stats
 			// points += total_spawned
 
 			failsafe_counter++
-			if (failsafe_counter > 50)
+			if (failsafe_counter > 100)
 				break
 
 
@@ -2670,20 +2678,20 @@ Player Stats
 //this is global so admins can run this proc to spawn the crates if they like, idk why they'd really want to but might as well be safe.
 //The list here is set up where the object path is the key, and the value is its point amount
 proc/setup_pw_crate_lists()
-	pw_rewards_tier1 = list(/obj/item/storage/firstaid/regular, /obj/item/reagent_containers/mender/both, 	///obj/item/tank/plasma
-		/obj/item/tank/oxygen, /obj/item/old_grenade/energy_frag = 3, /obj/item/old_grenade/energy_concussion = 3, /obj/item/device/flash, /obj/item/deployer/barricade = 4,
-		/obj/item/shipcomponent/mainweapon/taser, /obj/item/shipcomponent/mainweapon/laser/short, /obj/item/shipcomponent/mainweapon/foamer,/obj/item/ammo/power_cell/high_power,
-		/obj/item/material_piece/steel{amount=10}, /obj/item/material_piece/copper{amount=10}, /obj/item/material_piece/glass{amount=10} )
+	pw_rewards_tier1 = list(/obj/item/storage/firstaid/regular = 1, /obj/item/reagent_containers/mender/both = 1, 	///obj/item/tank/plasma = 2
+		/obj/item/tank/oxygen = 1, /obj/item/old_grenade/energy_frag = 2, /obj/item/old_grenade/energy_concussion = 2, /obj/item/device/flash = 2, /obj/item/deployer/barricade = 4,
+		/obj/item/shipcomponent/mainweapon/taser = 3, /obj/item/shipcomponent/mainweapon/laser/short = 3, /obj/item/shipcomponent/mainweapon/foamer = 2,/obj/item/ammo/power_cell/high_power = 5,
+		/obj/item/material_piece/steel{amount=10} = 1, /obj/item/material_piece/copper{amount=10} = 1, /obj/item/material_piece/glass{amount=10} = 1)
 	
-	pw_rewards_tier2 = list(/obj/item/tank/jetpack, /obj/item/old_grenade/smoke = 3,/obj/item/chem_grenade/flashbang = 3, /obj/item/barrier,
-		/obj/item/old_grenade/emp, /obj/item/sword/discount, /obj/item/storage/firstaid/crit, /obj/item/wrench/battle, /obj/item/dagger/syndicate/specialist,
-		/obj/item/shipcomponent/mainweapon/mining, /obj/item/shipcomponent/mainweapon/laser, /obj/item/shipcomponent/mainweapon/disruptor_light,/obj/item/ammo/power_cell/higher_power, /obj/item/ammo/power_cell/self_charging/pod_wars_standard,
-		/obj/item/material_piece/cerenkite{amount=5}, /obj/item/material_piece/claretine{amount=5}, /obj/item/material_piece/bohrum{amount=10}, /obj/item/material_piece/plasmastone{amount=10}, /obj/item/material_piece/uqill{amount=10})
+	pw_rewards_tier2 = list(/obj/item/tank/jetpack = 1, /obj/item/old_grenade/smoke = 2,/obj/item/chem_grenade/flashbang = 2, /obj/item/barrier = 1,
+		/obj/item/old_grenade/emp = 3, /obj/item/sword/discount = 4, /obj/item/storage/firstaid/crit = 1, /obj/item/wrench/battle = 1, /obj/item/dagger/syndicate/specialist = 2,
+		/obj/item/shipcomponent/mainweapon/mining = 2, /obj/item/shipcomponent/mainweapon/laser = 4, /obj/item/shipcomponent/mainweapon/disruptor_light = 4,/obj/item/ammo/power_cell/higher_power = 3, /obj/item/ammo/power_cell/self_charging/pod_wars_standard = 3,
+		/obj/item/material_piece/cerenkite{amount=5} = 1, /obj/item/material_piece/claretine{amount=5} = 1, /obj/item/material_piece/bohrum{amount=10} = 1, /obj/item/material_piece/plasmastone{amount=10} = 1, /obj/item/material_piece/uqill{amount=10} = 1, /obj/item/material_piece/telecrystal{amount=10})
 	
-	pw_rewards_tier3 = list(/obj/item/sword, /obj/item/gun/energy/crossbow, /obj/item/cloak_gen, /obj/item/device/chameleon, 
-		/obj/item/gun/energy/vuvuzela_gun, /obj/item/gun/flamethrower/backtank, /obj/item/ammo/power_cell/self_charging/pod_wars_high,
-		/obj/item/shipcomponent/mainweapon/russian, /obj/item/shipcomponent/mainweapon/disruptor, /obj/item/shipcomponent/mainweapon/laser_ass, /obj/item/shipcomponent/mainweapon/rockdrills,
-		/obj/item/material_piece/iridiumalloy = 4, /obj/item/material_piece/erebite = 10, /obj/item/material_piece/telecrystal = 10, /obj/item/raw_material/starstone = 2, /obj/item/raw_material/miracle = 10)
+	pw_rewards_tier3 = list(/obj/item/sword = 4, /obj/item/gun/energy/crossbow = 1, /obj/item/cloak_gen = 1, /obj/item/device/chameleon = 1, 
+		/obj/item/gun/flamethrower/backtank = 3, /obj/item/ammo/power_cell/self_charging/pod_wars_high = 2,
+		/obj/item/shipcomponent/mainweapon/russian = 3, /obj/item/shipcomponent/mainweapon/disruptor = 3, /obj/item/shipcomponent/mainweapon/laser_ass = 4, /obj/item/shipcomponent/mainweapon/rockdrills = 4,
+		/obj/item/material_piece/iridiumalloy{amount=4} = 1, /obj/item/material_piece/erebite{amount=10} = 1, /obj/item/raw_material/starstone{amount=2} = 1, /obj/item/raw_material/miracle{amount=10} = 1)
 
 
 // var/list/item_tier_low = list(/obj/item/storage/firstaid/regular, /obj/item/storage/firstaid/crit, /obj/item/reagent_containers/mender/both, 	///obj/item/tank/plasma
@@ -2903,7 +2911,7 @@ proc/setup_pw_crate_lists()
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "recharger_cell"
 	charge = 300
-	max_charge 300
+	max_charge = 300
 	recharge_rate = 15
 
 /obj/item/ammo/power_cell/self_charging/pod_wars_high
@@ -2912,7 +2920,7 @@ proc/setup_pw_crate_lists()
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "recharger_cell"
 	charge = 350
-	max_charge 350
+	max_charge = 350
 	recharge_rate = 30
 
 
