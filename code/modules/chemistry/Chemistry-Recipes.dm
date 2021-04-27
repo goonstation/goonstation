@@ -4006,3 +4006,12 @@ datum
 			mix_phrase = "The mixture comes together slowly. It doesn't seem like it wants to be here."
 			required_reagents = list("poor_cement" = 1, "silicon_dioxide" = 5, "water" = 1)
 			result_amount = 7
+
+		hemotoxin
+			name = "hemotoxin"
+			id = "hemotoxin"
+			result = "hemotoxin"
+			required_reagents = list("oil" = 1, "neurotoxin" = 1, "acid" = 1)
+			result_amount = 1
+			mix_phrase = "The mixture settles into a faint red."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
