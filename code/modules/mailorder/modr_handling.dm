@@ -1,21 +1,42 @@
-//A landmark mailorder spawn and target are required for mail order to work
-//Mail order loading chute is recommended for any station with a mail loop
+//A mail loading chute + landmark mailorder spawn and target are recommended for map addition
+//as they allow direct shipping of goods, instead of relying on QM distribution
 
 /obj/item/storage/box/mailorder
 	name = "mail-order box"
 	icon_state = "evidence"
 	desc = "A box containing mail-ordered items."
-	var/mail_dest = null
+	var/mail_dest = null //used if mail loop delivery
+	var/buyer_name = null //used if QM delivery, configures container
 
-	proc/yeetself() //forbidden techniques
+	proc/yeetself(gothere) //forbidden techniques
 		var/yeetdelay = rand(15 SECONDS,20 SECONDS)
 		SPAWN_DBG(yeetdelay)
 			src.invisibility = 0
 			src.anchored = 0
 		SPAWN_DBG(yeetdelay + 1 DECI SECOND)
-			var/gothere = pick_landmark(LANDMARK_MAILORDER_TARGET)
 			if(gothere)
 				src.throw_at(gothere, 100, 1)
+			else //how tho
+				message_admins("<span class='alert'>[src] failed to launch at intended destination, tell kubius</span>")
+
+#define SUPPLY_OPEN_TIME 1 SECOND
+#define SUPPLY_CLOSE_TIME 13 SECONDS
+
+/obj/storage/secure/crate/mailorder
+	name = "mail-order crate"
+	desc = "A crate that holds mail-ordered items."
+	personal = 1
+
+	New()
+		..()
+
+	proc/launch_procedure()
+		if(src.registered)
+			src.name = "[src.registered]'s mail-order crate"
+			src.desc = "A crate that holds mail-ordered items. It's registered to [src.registered]."
+
+#undef SUPPLY_OPEN_TIME
+#undef SUPPLY_CLOSE_TIME
 
 /obj/machinery/floorflusher/industrial/mailorder
 	name = "external mail loading chute"
