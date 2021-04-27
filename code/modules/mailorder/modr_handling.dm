@@ -1,12 +1,18 @@
-//A mail loading chute + landmark mailorder spawn and target are recommended for map addition
-//as they allow direct shipping of goods, instead of relying on QM distribution
+/////////////CONFIGURATION NOTES/////////////
+
+//A mail loading chute + landmark mailorder spawn and target are recommended for map addition.
+
+//The chute should accept mail from a point external on the station and place it into the mail loop
+//using a juncture that has a tag which doesn't match any mail chute.
+
+//Adding the chute will not prevent purchase of the mail-order via QM secure crate;
+//merely add the option for a less secure but more convenient box-based delivery
 
 /obj/item/storage/box/mailorder
 	name = "mail-order box"
 	icon_state = "evidence"
 	desc = "A box containing mail-ordered items."
 	var/mail_dest = null //used if mail loop delivery
-	var/buyer_name = null //used if QM delivery, configures container
 
 	proc/yeetself(gothere) //forbidden techniques
 		var/yeetdelay = rand(15 SECONDS,20 SECONDS)
