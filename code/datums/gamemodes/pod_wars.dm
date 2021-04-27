@@ -1350,9 +1350,9 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		/datum/manufacture/pod/control,
 		/datum/manufacture/pod/parts,
 		/datum/manufacture/pod/engine,
-		/datum/manufacture/pod/lock,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
+		/datum/manufacture/pod/lock,
 		/datum/manufacture/cargohold,
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
@@ -1369,6 +1369,11 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		/datum/manufacture/pod/weapon/disruptor/light,
 		/datum/manufacture/pod/weapon/shotgun,
 		/datum/manufacture/pod/weapon/ass_laser,
+		/datum/manufacture/pod_wars/cell_high,
+		/datum/manufacture/pod_wars/cell_higher,
+		/datum/manufacture/pod_wars/cell_pod_wars_basic,
+		/datum/manufacture/pod_wars/cell_pod_wars_standard,
+		/datum/manufacture/pod_wars/cell_pod_wars_high
 	)
 
 	New()
@@ -1552,8 +1557,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 /datum/manufacture/pod_wars/cell_high
 	name = "Standard Large Weapon Cell"
-	item_paths = list("MET-1")
-	item_amounts = list(1)
+	item_paths = list("MET-2", "CON-2", "POW-1")
+	item_amounts = list(5, 20, 30)
 	item_outputs = list(/obj/item/ammo/power_cell/high_power)
 	time = 1 SECONDS
 	create = 1
@@ -1561,8 +1566,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 /datum/manufacture/pod_wars/cell_higher
 	name = "Standard Bubs Weapon Cell"
-	item_paths = list("MET-1")
-	item_amounts = list(1)
+	item_paths = list("MET-3", "CON-2", "POW-2")
+	item_amounts = list(5, 20, 60)
 	item_outputs = list(/obj/item/ammo/power_cell/higher_power)
 	time = 1 SECONDS
 	create = 1
@@ -1572,8 +1577,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 /datum/manufacture/pod_wars/cell_pod_wars_basic
 	name = "Basic Self-Charging Weapon Cell"
-	item_paths = list("MET-1")
-	item_amounts = list(1)
+	item_paths = list("MET-2", "DEN-1", "CON-2", "POW-1")
+	item_amounts = list(10, 20, 30, 30)
 	item_outputs = list(/obj/item/ammo/power_cell/self_charging/pod_wars_basic)
 	time = 1 SECONDS
 	create = 1
@@ -1581,8 +1586,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 /datum/manufacture/pod_wars/cell_pod_wars_standard
 	name = "Standard Self-Charging Weapon Cell"
-	item_paths = list("MET-1")
-	item_amounts = list(1)
+	item_paths = list("DEN-2", "CON-2", "POW-2")
+	item_amounts = list(30, 60, 50)
 	item_outputs = list(/obj/item/ammo/power_cell/self_charging/pod_wars_standard)
 	time = 1 SECONDS
 	create = 1
@@ -1590,8 +1595,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 /datum/manufacture/pod_wars/cell_pod_wars_high
 	name = "Robust Self-Charging Weapon Cell"
-	item_paths = list("MET-1")
-	item_amounts = list(1)
+	item_paths = list("DEN-2", "CON-2", "POW-2", "REF-1")
+	item_amounts = list(30, 70, 80, 10)
 	item_outputs = list(/obj/item/ammo/power_cell/self_charging/pod_wars_high)
 	time = 1 SECONDS
 	create = 1
@@ -1784,6 +1789,20 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 //Mainly I did it to give them the icon_override vars. Don't spawn these unless you want to set their secure frequencies yourself, because that's what you'd have to do. -Kyle
 /obj/item/device/radio/headset/pod_wars
 	protected_radio = 1
+	var/team = 0
+
+	//You can only pick this up if you're on the correct team, otherwise it explodes.
+	//exactly the same as /obj/item/card/id/pod_wars. Copy paste bad, but these two things I don't want people stealing, would be real lame... Might get rid of in the future if this structure isn't required.
+	pickup(mob/user)
+		var/user_team = user?.mind?.special_role
+		if (user_team == "NanoTrasen" && team == 1)
+			..()
+		else if (user_team == "Syndicate" && team == 2)
+			..()
+		else
+			boutput(user, "<span class='alert'>The headset <b>explodes as you reach out to grab it!</b></span>")
+			make_fake_explosion(src)
+			qdel(src)
 
 /obj/item/device/radio/headset/pod_wars/nanotrasen
 	name = "Radio Headset"
@@ -1792,6 +1811,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	secure_frequencies = list("g" = R_FREQ_SYNDICATE)
 	secure_classes = list(RADIOCL_COMMAND)
 	icon_override = "nt"
+	team = TEAM_NANOTRASEN
 
 	commander
 		icon_override = "cap"	//get better thingy
@@ -1804,6 +1824,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	secure_classes = list(RADIOCL_SYNDICATE)
 	protected_radio = 1
 	icon_override = "syndie"
+	team = TEAM_SYNDICATE
 
 	commander
 		icon_override = "syndieboss"
@@ -2651,16 +2672,16 @@ Player Stats
 proc/setup_pw_crate_lists()
 	pw_rewards_tier1 = list(/obj/item/storage/firstaid/regular, /obj/item/reagent_containers/mender/both, 	///obj/item/tank/plasma
 		/obj/item/tank/oxygen, /obj/item/old_grenade/energy_frag = 3, /obj/item/old_grenade/energy_concussion = 3, /obj/item/device/flash, /obj/item/deployer/barricade = 4,
-		/obj/item/shipcomponent/mainweapon/taser, /obj/item/shipcomponent/mainweapon/laser/short, /obj/item/shipcomponent/mainweapon/foamer,
+		/obj/item/shipcomponent/mainweapon/taser, /obj/item/shipcomponent/mainweapon/laser/short, /obj/item/shipcomponent/mainweapon/foamer,/obj/item/ammo/power_cell/high_power,
 		/obj/item/material_piece/steel{amount=10}, /obj/item/material_piece/copper{amount=10}, /obj/item/material_piece/glass{amount=10} )
 	
 	pw_rewards_tier2 = list(/obj/item/tank/jetpack, /obj/item/old_grenade/smoke = 3,/obj/item/chem_grenade/flashbang = 3, /obj/item/barrier,
 		/obj/item/old_grenade/emp, /obj/item/sword/discount, /obj/item/storage/firstaid/crit, /obj/item/wrench/battle, /obj/item/dagger/syndicate/specialist,
-		/obj/item/shipcomponent/mainweapon/mining, /obj/item/shipcomponent/mainweapon/laser, /obj/item/shipcomponent/mainweapon/disruptor_light,
+		/obj/item/shipcomponent/mainweapon/mining, /obj/item/shipcomponent/mainweapon/laser, /obj/item/shipcomponent/mainweapon/disruptor_light,/obj/item/ammo/power_cell/higher_power, /obj/item/ammo/power_cell/self_charging/pod_wars_standard,
 		/obj/item/material_piece/cerenkite{amount=5}, /obj/item/material_piece/claretine{amount=5}, /obj/item/material_piece/bohrum{amount=10}, /obj/item/material_piece/plasmastone{amount=10}, /obj/item/material_piece/uqill{amount=10})
 	
 	pw_rewards_tier3 = list(/obj/item/sword, /obj/item/gun/energy/crossbow, /obj/item/cloak_gen, /obj/item/device/chameleon, 
-		/obj/item/gun/energy/vuvuzela_gun, /obj/item/gun/flamethrower/backtank,
+		/obj/item/gun/energy/vuvuzela_gun, /obj/item/gun/flamethrower/backtank, /obj/item/ammo/power_cell/self_charging/pod_wars_high,
 		/obj/item/shipcomponent/mainweapon/russian, /obj/item/shipcomponent/mainweapon/disruptor, /obj/item/shipcomponent/mainweapon/laser_ass, /obj/item/shipcomponent/mainweapon/rockdrills,
 		/obj/item/material_piece/iridiumalloy = 4, /obj/item/material_piece/erebite = 10, /obj/item/material_piece/telecrystal = 10, /obj/item/raw_material/starstone = 2, /obj/item/raw_material/miracle = 10)
 
@@ -2893,3 +2914,18 @@ proc/setup_pw_crate_lists()
 	charge = 350
 	max_charge 350
 	recharge_rate = 30
+
+
+#ifdef MAP_OVERRIDE_POD_WARS
+/proc/make_fake_explosion(var/atom/I)
+	var/obj/overlay/O = new/obj/overlay(get_turf(I))
+	O.anchored = 1
+	O.name = "Explosion"
+	O.layer = NOLIGHT_EFFECTS_LAYER_BASE
+	O.pixel_x = -92
+	O.pixel_y = -96
+	O.icon = 'icons/effects/214x246.dmi'
+	O.icon_state = "explosion"
+	SPAWN_DBG(3.5 SECONDS) 
+		qdel(O)
+#endif

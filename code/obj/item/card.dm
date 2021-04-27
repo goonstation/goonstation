@@ -170,17 +170,7 @@ GAUNTLET CARDS
 			var/flavor = pick("doesn't like you", "can tell you don't deserve it", "saw into your very soul and found you wanting", "hates you", "thinks you stink", "thinks you two should start seeing other people", "doesn't trust you", "finds your lack of faith disturbing", "is just not that into you", "gently weeps")
 			//stolen from Captain's Explosive Spare ID down below...
 			boutput(user, "<span class='alert'>The ID card [flavor] <b>and explodes!</b></span>")
-			user.transforming = 1
-			var/obj/overlay/O = new/obj/overlay(get_turf(user))
-			O.anchored = 1
-			O.name = "Explosion"
-			O.layer = NOLIGHT_EFFECTS_LAYER_BASE
-			O.pixel_x = -92
-			O.pixel_y = -96
-			O.icon = 'icons/effects/214x246.dmi'
-			O.icon_state = "explosion"
-			SPAWN_DBG(3.5 SECONDS) 
-				qdel(O)
+			make_fake_explosion(src)
 			qdel(src)
 #endif
 
