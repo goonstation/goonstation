@@ -1037,23 +1037,27 @@
 					if (!see_everything && isobserver(M.current)) continue
 					if (PWT_to_see == cur_team)//NANOTRASEN
 						if (cur_team == 1)
-							var/I = image(pod_wars_NT, loc = M.current)
+							var/image/I = image(pod_wars_NT, loc = M.current)
+							I.pixel_y = 4
 							can_see.Add(I)
 						if (cur_team == 2)
 					// else if (PWT_to_see == cur_team)//SYNDICATE
-							var/I = image(pod_wars_SY, loc = M.current)
+							var/image/I = image(pod_wars_SY, loc = M.current)
+							I.pixel_y = 4
 							can_see.Add(I)
 
 			//show commanders to everyone, can't hide.
 			//Alright, I'll confess. this draws the commander over the other one. idk how this shit works and it works anyway, I'm not in the mood to learn for real. -Kyle
 			if(mode.team_NT.commander && mode.team_NT.commander.current)
 				// if (PWT_to_see == mode.team_NT || see_everything)
-				var/I = image(pod_wars_NT_CMDR, loc = mode.team_NT.commander.current)
+				var/image/I = image(pod_wars_NT_CMDR, loc = mode.team_NT.commander.current)
+				I.pixel_y = 4
 				can_see.Add(I)
 
 			if(mode.team_SY.commander && mode.team_SY.commander.current)
 				// if (PWT_to_see == mode.team_SY || see_everything)
-				var/I = image(pod_wars_SY_CMDR, loc = mode.team_SY.commander.current)
+				var/image/I = image(pod_wars_SY_CMDR, loc = mode.team_SY.commander.current)
+				I.pixel_y = 4
 				can_see.Add(I)
 
 
