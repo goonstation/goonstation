@@ -197,6 +197,7 @@
 									displayMessage = "[bicon(master)] Thank you for your purchase! Delivery to '[destination]' in progress."
 								if(DELIVERED_TO_QM)
 									displayMessage = "[bicon(master)] Thank you for your purchase! Your items will be sent to the quartermaster's office."
+							src.mode = MODE_LIST
 						src.master.display_message(displayMessage)
 				else
 					src.master.display_alert(alert_beep)
