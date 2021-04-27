@@ -200,29 +200,35 @@ ABSTRACT_TYPE(/datum/mail_order/produce)
 		order_items = list(/obj/item/reagent_containers/food/snacks/plant/tomato)
 		cost = PAY_TRADESMAN / 4
 
+	cereal_pope
+		name = "Pope Crunch Cereal"
+		desc = "Made with only the highest-quality iron supplements."
+		order_items = list(/obj/item/reagent_containers/food/snacks/cereal_box)
+		cost = PAY_UNTRAINED / 3
+
 	cereal_wonks
 		name = "Honey Wonks Cereal"
 		desc = "Your sticky-sweet sugar rush, at a super special price."
 		order_items = list(/obj/item/reagent_containers/food/snacks/cereal_box/honey)
-		cost = PAY_UNTRAINED / 4
+		cost = PAY_UNTRAINED / 3
 
 	cereal_monki
 		name = "Tanh-O-Nys Cereal"
 		desc = "Does it taste like banana? Who knows! Buy some and find out."
 		order_items = list(/obj/item/reagent_containers/food/snacks/cereal_box/tanhony)
-		cost = PAY_UNTRAINED / 4
+		cost = PAY_UNTRAINED / 3
 
 	cereal_roach
 		name = "Roach Puffs Cereal"
 		desc = "Everybody's favorite chocolate-themed roach-themed treat."
 		order_items = list(/obj/item/reagent_containers/food/snacks/cereal_box/roach)
-		cost = PAY_UNTRAINED / 4
+		cost = PAY_UNTRAINED / 3
 
 	cereal_bundle
 		name = "Munch 'Em All Bundle"
 		desc = "Can't decide on a cereal? Buy them all and save!"
 		order_items = list(/obj/item/reagent_containers/food/snacks/cereal_box/honey,/obj/item/reagent_containers/food/snacks/cereal_box/tanhony,/obj/item/reagent_containers/food/snacks/cereal_box/roach)
-		cost = PAY_UNTRAINED / 2
+		cost = PAY_UNTRAINED
 
 
 //Survival Mart: primarily medical, but not exclusively
@@ -311,7 +317,7 @@ ABSTRACT_TYPE(/datum/mail_order/chem)
 		name = "Spectroscopic Goggles"
 		desc = "The latest in optically-mounted Raman spectroscopy tech."
 		order_items = list(/obj/item/clothing/glasses/spectro)
-		cost = PAY_IMPORTANT / 2
+		cost = PAY_IMPORTANT
 		order_perm = list(access_bar,access_chemistry,access_medical)
 
 	beaker
