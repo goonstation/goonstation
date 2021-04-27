@@ -170,35 +170,41 @@ ABSTRACT_TYPE(/datum/mail_order/produce)
 		order_items = list(/obj/item/reagent_containers/food/snacks/soup/oatmeal)
 		cost = PAY_TRADESMAN / 5
 
-	apple
-		name = "Apple"
-		desc = "A delicious fresh apple suitable for eating or baking."
-		order_items = list(/obj/item/reagent_containers/food/snacks/plant/apple)
-		cost = PAY_TRADESMAN / 4
-
-	banana
-		name = "Banana"
-		desc = "The renowned apple of paradise, delivered just to you!"
-		order_items = list(/obj/item/reagent_containers/food/snacks/plant/banana)
-		cost = PAY_TRADESMAN / 4
-
-	grapes
-		name = "Grapes"
-		desc = "Our finest table grapes, still on the vine."
-		order_items = list(/obj/item/reagent_containers/food/snacks/plant/grape)
-		cost = PAY_TRADESMAN / 4
-
-	peach
-		name = "Peach"
-		desc = "Genuine clingstone, chemically preserved at peak ripeness."
-		order_items = list(/obj/item/reagent_containers/food/snacks/plant/peach/)
+	coconut
+		name = "Coconut"
+		desc = "Delicious and versatile, bringing you a burst of coco-fun."
+		order_items = list(/obj/item/reagent_containers/food/snacks/plant/coconut)
 		cost = PAY_TRADESMAN / 3
 
-	tomato
-		name = "Tomato"
-		desc = "A top-quality tomato, certified free of blemishes and rot."
-		order_items = list(/obj/item/reagent_containers/food/snacks/plant/tomato)
+	cucumber
+		name = "Cucumber"
+		desc = "A delicate vegetable hand-picked for minimum bitterness."
+		order_items = list(/obj/item/reagent_containers/food/snacks/plant/cucumber)
 		cost = PAY_TRADESMAN / 4
+
+	pineapple
+		name = "Pineapple"
+		desc = "Rich tropical flavor in a spiky package, express-delivered."
+		order_items = list(/obj/item/reagent_containers/food/snacks/plant/pineapple)
+		cost = PAY_TRADESMAN / 3
+
+	pumpkin
+		name = "Pumpkin"
+		desc = "Shipped whole and intact - perfect for autumnal classics."
+		order_items = list(/obj/item/reagent_containers/food/snacks/plant/pumpkin)
+		cost = PAY_TRADESMAN / 4
+
+	catnip
+		name = "Catnip Sprig"
+		desc = "Pure nepeta cataria, perfect for your feline pals."
+		order_items = list(/obj/item/plant/herb/catnip)
+		cost = PAY_TRADESMAN / 5
+
+	mint
+		name = "Mint Sprig"
+		desc = "Effervescent mint, carefully preserved for peak flavor."
+		order_items = list(/obj/item/plant/herb/mint)
+		cost = PAY_TRADESMAN / 5
 
 	cereal_pope
 		name = "Pope Crunch Cereal"
