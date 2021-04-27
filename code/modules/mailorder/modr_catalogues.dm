@@ -90,7 +90,7 @@
 		..()
 		for(var/S in concrete_typesof(entries_to_index))
 			var/datum/mail_order/mo_entry = new S()
-			src.canbuy[mo_entry.name] = mo_entry
+			src.canbuy[mo_entry.cleanname] = mo_entry
 
 	return_text()
 		. = src.return_text_header()
@@ -115,7 +115,7 @@
 						if(!istype(F, /datum/mail_order))
 							continue
 						var/itemct = length(F.order_items)
-						. += {"<a href='byond://?src=\ref[src];add_to_cart=[F.name]'>[F.name]</a> - [itemct] Item(s) - $[F.cost]<br>
+						. += {"<a href='byond://?src=\ref[src];add_to_cart=[F.cleanname]'>[F.name]</a> - [itemct] Item(s) - $[F.cost]<br>
 						[F.desc]<br>"}
 						if(length(F.order_perm))
 							. += "Requires Access (1 or more of)"
