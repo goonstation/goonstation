@@ -203,11 +203,13 @@ var/datum/respawn_controls/respawn_controller
 		maptext = {"<span class='pixel c ol' style='font-size:16px;'><a style='color:#8f8;text-decoration:underline;' href='byond://winset?command=Respawn-As-New-Character'>Click here to respawn[rp?" as a <b>new</b> character":""]!</a></span>"}
 
 	proc/set_time_left(time)
-		var/time_text = "<span style='color:#f88;'>[time2text(time, "hh:mm:ss", 0)]</span>"
+		var/time_text
 		if(time <= 75 SECONDS)
 			time_text = "<span style='color:#f88;'>[ceil(time / (1 SECOND))]</span> seconds"
 		else if(time <= 60 MINUTES)
 			time_text = "<span style='color:#f88;'>[ceil(time / (1 MINUTE))]</span> minutes"
+		else
+			time_text = "<span style='color:#f88;'>[time2text(time, "hh:mm:ss", 0)]</span>"
 		maptext = {"<span class='pixel c ol' style='font-size:16px;'>Respawn in [time_text]</span>"}
 
 #undef RESPAWNEE_STATE_WAITING
