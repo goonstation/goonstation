@@ -233,7 +233,10 @@ ABSTRACT_TYPE(/datum/mail_order/produce)
 	cereal_bundle
 		name = "Munch 'Em All Bundle"
 		desc = "Can't decide on a cereal? Buy them all and save!"
-		order_items = list(/obj/item/reagent_containers/food/snacks/cereal_box/honey,/obj/item/reagent_containers/food/snacks/cereal_box/tanhony,/obj/item/reagent_containers/food/snacks/cereal_box/roach)
+		order_items = list(/obj/item/reagent_containers/food/snacks/cereal_box,
+		/obj/item/reagent_containers/food/snacks/cereal_box/honey,
+		/obj/item/reagent_containers/food/snacks/cereal_box/tanhony,
+		/obj/item/reagent_containers/food/snacks/cereal_box/roach)
 		cost = PAY_UNTRAINED
 
 
