@@ -678,9 +678,8 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/lead)
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 1
 	connect_diagonal = 1
-	connects_to = list(/turf/unsimulated/wall/auto/leadblue, /turf/unsimulated/wall/auto/leadgray,
-	/turf/unsimulated/wall/auto/leadwhite,
-	 /obj/machinery/door, /obj/window, /turf/unsimulated/wall/setpieces/)
+	connects_to = list(/turf/unsimulated/wall/auto/lead,
+	 /obj/machinery/door, /obj/window, /turf/unsimulated/wall/setpieces)
 	connects_with_overlay = list(/obj/machinery/door, /obj/window)
 
 /turf/unsimulated/wall/auto/lead/blue
