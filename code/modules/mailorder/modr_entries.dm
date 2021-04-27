@@ -23,10 +23,100 @@ ABSTRACT_TYPE(/datum/mail_order/audiovideo)
 		order_items = list(/obj/item/audio_tape)
 		cost = PAY_TRADESMAN / 3
 
+	laptop
+		name = "Personal Laptop"
+		desc = "The latest in micro-computing, right at your fingertips."
+		order_items = list(/obj/item/luggable_computer/personal)
+		cost = PAY_EXECUTIVE * 2
+
+	floppy
+		name = "Blank Computer Data Disk"
+		desc = "Removable data storage, often used in ThinkDOS computers."
+		order_items = list(/obj/item/disk/data/floppy)
+		cost = PAY_TRADESMAN / 3
+
+	photocam
+		name = "Handheld Photo Camera"
+		desc = "Captures high-fidelity images with insta-develop film."
+		order_items = list(/obj/item/camera_test)
+		cost = PAY_TRADESMAN
+
+	photofilm
+		name = "Photo Film Cartridge"
+		desc = "A replacement film cartridge for handheld photo cameras."
+		order_items = list(/obj/item/camera_film)
+		cost = PAY_TRADESMAN / 3
+
+	stickynotes
+		name = "Sticky Notes"
+		desc = "A pack of sticky notes with reclosable flap."
+		order_items = list(/obj/item/item_box/postit)
+		cost = PAY_TRADESMAN / 5
+
+	writebundle
+		name = "Notetaking Bundle"
+		desc = "Contains a clipboard, a pen, and two sheets of paper."
+		order_items = list(/obj/item/clipboard,/obj/item/pen,/obj/item/paper,/obj/item/paper)
+		cost = PAY_TRADESMAN / 5
+
+	paper
+		name = "Blank Paper"
+		desc = "Three sheets of standard-size unmarked white paper."
+		order_items = list(/obj/item/paper,/obj/item/paper,/obj/item/paper)
+		cost = PAY_UNTRAINED / 5
+
 
 //Henry's Recreation: activity supplies - sports, instruments, pool
 ABSTRACT_TYPE(/datum/mail_order/recreation)
 /datum/mail_order/recreation
+
+	swimsuit
+		name = "Swim Suit"
+		desc = "One-size-fits-all swimsuit. Comes in a random color."
+		order_items = list(/obj/item/clothing/under/swimsuit/random)
+		cost = PAY_UNTRAINED / 2
+
+	flippers
+		name = "Flippers"
+		desc = "Elastic-fit flippers suitable for most foot sizes."
+		order_items = list(/obj/item/clothing/shoes/flippers)
+		cost = PAY_UNTRAINED
+
+	poolfloats
+		name = "Pool Float Set"
+		desc = "For novice swimmers; water wings and our choice of inner tube."
+		order_items = list(/obj/item/inner_tube/random,/obj/item/clothing/gloves/water_wings)
+		cost = PAY_UNTRAINED / 2
+
+	bball
+		name = "Basketball"
+		desc = "A regulation basketball, pre-inflated and ready for play."
+		order_items = list(/obj/item/basketball)
+		cost = PAY_TRADESMAN / 2
+
+	bball_hoops
+		name = "Basketball Hoop Set"
+		desc = "Two collapsible basketball hoops, ready for installation."
+		order_items = list(/obj/item/bballbasket,/obj/item/bballbasket)
+		cost = PAY_TRADESMAN
+
+	bball_jersey
+		name = "Basketball Jersey"
+		desc = "One-size-fits-all jersey. Comes in a random color."
+		order_items = list(/obj/item/clothing/under/jersey/random)
+		cost = PAY_UNTRAINED / 2
+
+	football
+		name = "Football"
+		desc = "A regulation football, pre-inflated and ready for play."
+		order_items = list(/obj/item/football)
+		cost = PAY_TRADESMAN / 2
+
+	bagpipes
+		name = "Bagpipes"
+		desc = "Genuine handmade bagpipes imported from Space Scotland."
+		order_items = list(/obj/item/instrument/bagpipe)
+		cost = PAY_DOCTORATE
 
 	guitar
 		name = "Guitar"
@@ -34,11 +124,17 @@ ABSTRACT_TYPE(/datum/mail_order/recreation)
 		order_items = list(/obj/item/instrument/guitar)
 		cost = PAY_TRADESMAN
 
+	harmonica
+		name = "Harmonica"
+		desc = "Our cheapest instrument - great for hobby playing."
+		order_items = list(/obj/item/instrument/harmonica)
+		cost = PAY_TRADESMAN / 4
+
 	saxophone
 		name = "Saxophone"
 		desc = "The smoothest hunk of brass this side of the galaxy."
 		order_items = list(/obj/item/instrument/saxophone)
-		cost = PAY_TRADESMAN
+		cost = PAY_DOCTORATE
 
 
 //Farmer Melons' Market Cart: wildly expensive food, a la carte
@@ -56,6 +152,12 @@ ABSTRACT_TYPE(/datum/mail_order/produce)
 		desc = "Made from the finest avocadoes and laser-sterilized for quality."
 		order_items = list(/obj/item/reagent_containers/food/snacks/soup/guacamole)
 		cost = PAY_DOCTORATE
+
+	oatmeal
+		name = "Oatmeal Bowl"
+		desc = "Prepared with one of our signature flavors - try them all!"
+		order_items = list(/obj/item/reagent_containers/food/snacks/soup/oatmeal)
+		cost = PAY_TRADESMAN / 5
 
 	apple
 		name = "Apple"
@@ -91,25 +193,25 @@ ABSTRACT_TYPE(/datum/mail_order/produce)
 		name = "Honey Wonks Cereal"
 		desc = "Your sticky-sweet sugar rush, at a super special price."
 		order_items = list(/obj/item/reagent_containers/food/snacks/cereal_box/honey)
-		cost = PAY_TRADESMAN / 5
+		cost = PAY_UNTRAINED / 4
 
 	cereal_monki
 		name = "Tanh-O-Nys Cereal"
 		desc = "Does it taste like banana? Who knows! Buy some and find out."
 		order_items = list(/obj/item/reagent_containers/food/snacks/cereal_box/tanhony)
-		cost = PAY_TRADESMAN / 5
+		cost = PAY_UNTRAINED / 4
 
 	cereal_roach
 		name = "Roach Puffs Cereal"
 		desc = "Everybody's favorite chocolate-themed roach-themed treat."
 		order_items = list(/obj/item/reagent_containers/food/snacks/cereal_box/roach)
-		cost = PAY_TRADESMAN / 5
+		cost = PAY_UNTRAINED / 4
 
 	cereal_bundle
 		name = "Munch 'Em All Bundle"
 		desc = "Can't decide on a cereal? Buy them all and save!"
 		order_items = list(/obj/item/reagent_containers/food/snacks/cereal_box/roach)
-		cost = PAY_TRADESMAN / 2
+		cost = PAY_UNTRAINED / 2
 
 
 //Survival Mart: primarily medical, but not exclusively
@@ -184,7 +286,7 @@ ABSTRACT_TYPE(/datum/mail_order/survmart)
 		cost = PAY_UNTRAINED / 2
 
 
-//Chems-R-Us: pre-packaged chemicals
+//Chems-R-Us: chemicals and chemistry accessories
 ABSTRACT_TYPE(/datum/mail_order/chem)
 /datum/mail_order/chem
 	reagentscanner
