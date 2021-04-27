@@ -908,7 +908,7 @@
 //Pod wars friendly fire check
 #ifdef MAP_OVERRIDE_POD_WARS
 			var/friendly_fire = 0
-			if (owner != target && get_pod_wars_team(owner) == get_pod_wars_team(target))
+			if (owner != target && get_pod_wars_team_num(owner) == get_pod_wars_team_num(target))
 				friendly_fire = 1
 				if (istype(ticker.mode, /datum/game_mode/pod_wars))
 					var/datum/game_mode/pod_wars/mode = ticker.mode

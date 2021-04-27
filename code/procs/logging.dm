@@ -252,12 +252,12 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	var/friendly_fire = 0
 	if (shooter_data != SHOT)
 		//if you shoot a teammate
-		if (ismob(SHOT) && get_pod_wars_team(shooter_data) == get_pod_wars_team(SHOT))
+		if (ismob(SHOT) && get_pod_wars_team_num(shooter_data) == get_pod_wars_team_num(SHOT))
 			friendly_fire = 1
 		//if you shoot your crit system
 		if (istype(SHOT, /obj/pod_base_critical_system))
 			var/obj/pod_base_critical_system/CS = SHOT
-			if (get_pod_wars_team(shooter_data) == CS.team_num)
+			if (get_pod_wars_team_num(shooter_data) == CS.team_num)
 				friendly_fire = 1
 
 	if (friendly_fire)

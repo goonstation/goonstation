@@ -344,7 +344,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 /datum/game_mode/pod_wars/on_human_death(var/mob/M)
 	src.stats_manager?.inc_death(M)
 
-	switch(get_pod_wars_team(M))
+	switch(get_pod_wars_team_num(M))
 		if (TEAM_NANOTRASEN)
 			do_team_member_death(M, team_NT, team_SY)
 		if (TEAM_SYNDICATE)
@@ -738,7 +738,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 #ifdef MAP_OVERRIDE_POD_WARS
 		//Friendly fire check
 		var/friendly_fire = 0
-		if (get_pod_wars_team(user) == team_num)
+		if (get_pod_wars_team_num(user) == team_num)
 			friendly_fire = 1
 			message_admins("[user] just committed friendly fire against their team's [src]!")
 
@@ -811,7 +811,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 	CanPass(atom/A, turf/T)
 		if (ismob(A))
 			var/mob/M = A
-			if (team_num == get_pod_wars_team(M))
+			if (team_num == get_pod_wars_team_num(M))
 				return 1
 		return 0
 
@@ -1192,7 +1192,7 @@ ABSTRACT_TYPE(/obj/machinery/macrofab/pod_wars)
 
 #ifdef MAP_OVERRIDE_POD_WARS
 	attack_hand(var/mob/user as mob)
-		if (get_pod_wars_team(user) != team_num)
+		if (get_pod_wars_team_num(user) != team_num)
 			boutput(user, "<span class='alert'>This machine's design makes no sense to you, you can't figure out how to use it!</span>")
 			return
 
@@ -1385,7 +1385,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 #ifdef MAP_OVERRIDE_POD_WARS
 	attack_hand(var/mob/user as mob)
-		if (get_pod_wars_team(user) != src.team_num)
+		if (get_pod_wars_team_num(user) != src.team_num)
 			boutput(user, "<span class='alert'>This machine's design makes no sense to you, you can't figure out how to use it!</span>")
 			return
 
@@ -1864,14 +1864,14 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 	//called from the action bar completion in src.attack_hand()
 	proc/capture(var/mob/user)
-		var/team_num = get_pod_wars_team(user)
+		var/team_num = get_pod_wars_team_num(user)
 		owner_team = team_num
 		update_light_color()
 
 		ctrl_pt.capture(user, team_num)
 
 	attack_hand(mob/user as mob)
-		if (owner_team != get_pod_wars_team(user))
+		if (owner_team != get_pod_wars_team_num(user))
 			var/duration = is_commander(user) ? 10 SECONDS : 20 SECONDS
 			playsound(get_turf(src), "sound/machines/warning-buzzer.ogg", 150, 1)	//loud
 
@@ -2294,12 +2294,15 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 #ifdef MAP_OVERRIDE_POD_WARS
 //return 1 for NT, 2 for SY
-/proc/get_pod_wars_team(var/mob/user)
+/proc/get_pod_wars_team_num(var/mob/user)
 	var/user_team_string = user?.mind?.special_role
-	if (user_team_string == "NanoTrasen")
-		return TEAM_NANOTRASEN
-	else if (user_team_string == "Syndicate")
-		return TEAM_SYNDICATE
+	switch (user_team_string)
+		if ("NanoTrasen")
+			return TEAM_NANOTRASEN
+		if ("Syndicate")
+			return TEAM_SYNDICATE
+		else
+			return 0
 #endif
 
 ////////////////////////////player stats tracking datum//////////////////

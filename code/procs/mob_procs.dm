@@ -822,7 +822,7 @@
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
 			// var/datum/game_mode/pod_wars/PW = ticker.mode
 #ifdef MAP_OVERRIDE_POD_WARS
-			PWT_to_see = get_pod_wars_team(src)
+			PWT_to_see = get_pod_wars_team_num(src)
 #endif
 		if (issilicon(src)) // We need to look for borged antagonists too.
 			var/mob/living/silicon/S = src
@@ -1036,7 +1036,7 @@
 				if (M.current)
 					var/cur_team
 #ifdef MAP_OVERRIDE_POD_WARS
-					cur_team = get_pod_wars_team(M.current)
+					cur_team = get_pod_wars_team_num(M.current)
 #endif
 					if (!see_everything && isobserver(M.current)) continue
 					if (PWT_to_see == cur_team)//NANOTRASEN
