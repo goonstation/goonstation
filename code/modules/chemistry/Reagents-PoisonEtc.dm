@@ -260,13 +260,13 @@ datum
 			fluid_g = 120
 			fluid_b = 130
 			transparency = 130
-			depletion_rate = 0.6
+			depletion_rate = 0.8
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(0.5 * mult)
-				take_bleeding_damage(M, null, rand(8,10) * mult, DAMAGE_STAB)
-				if (probmult(33))
+				take_bleeding_damage(M, null, rand(6,8) * mult, DAMAGE_STAB)
+				if (probmult(25))
 					M.emote(pick("groan", "pale", "scream"))
 				if (probmult(25))
 					boutput(M, pick("<span class='alert'>You feel like your flesh is melting!</span>", "<span class='alert'>You feel a sharp pain in your chest!</span>"))

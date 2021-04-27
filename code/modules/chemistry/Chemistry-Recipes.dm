@@ -4013,5 +4013,5 @@ datum
 			result = "hemotoxin"
 			required_reagents = list("oil" = 1, "neurotoxin" = 1, "acid" = 1)
 			result_amount = 1
-			mix_phrase = "The mixture settles into a faint red."
+			mix_phrase = "The mixture settles into a faint red liquid."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
