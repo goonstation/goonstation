@@ -60227,6 +60227,12 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
+"nhf" = (
+/obj/storage/closet/medicalclothes,
+/turf/simulated/floor/arrival{
+	dir = 6
+	},
+/area/station/medical/medbay)
 "nhn" = (
 /obj/item/device/radio/beacon,
 /obj/machinery/light{
@@ -62700,11 +62706,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
-"ssJ" = (
-/obj/wingrille_spawn/auto,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/hydroponics/bay)
 "stQ" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
@@ -64304,7 +64305,6 @@
 /area/station/crew_quarters/cafeteria)
 "vFU" = (
 /obj/submachine/seed_vendor,
-/obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -100599,7 +100599,7 @@ sMR
 cuf
 cuW
 nIv
-cvU
+nhf
 ckG
 fOM
 adC
@@ -128578,7 +128578,7 @@ adC
 adC
 adC
 aag
-ssJ
+sZw
 axW
 aEX
 arn
@@ -128591,7 +128591,7 @@ arn
 arn
 aEX
 srq
-ssJ
+sZw
 aaG
 adC
 adC

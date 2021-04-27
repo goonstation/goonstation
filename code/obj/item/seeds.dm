@@ -5,7 +5,7 @@
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "seeds"
 	var/seedcolor = "#000000"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/auxillary_datum = null
 	var/datum/plant/planttype = null
 	var/datum/plantgenes/plantgenes = null

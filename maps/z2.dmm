@@ -25958,9 +25958,9 @@
 "bwD" = (
 /obj/storage/closet{
 	desc = "A fridge that is experiencing severe difficulty cooling things.";
-	icon_closed = "fridge1";
-	icon_opened = "fridgeopen";
-	icon_state = "fridge1";
+	icon_closed = "fridge";
+	icon_opened = "fridge-open";
+	icon_state = "fridge";
 	name = "broken fridge"
 	},
 /turf/unsimulated/floor/specialroom/cafeteria,
@@ -35772,9 +35772,9 @@
 "bVB" = (
 /obj/storage/closet{
 	desc = "A fridge that is experiencing severe difficulty cooling things.";
-	icon_closed = "fridge1";
-	icon_opened = "fridgeopen";
-	icon_state = "fridge1";
+	icon_closed = "fridge";
+	icon_opened = "fridge-open";
+	icon_state = "fridge";
 	name = "broken fridge"
 	},
 /obj/decal/cleanable/cobweb2,
@@ -42100,7 +42100,7 @@
 /area/sim/gunsim)
 "clQ" = (
 /obj/table/reinforced/auto,
-/obj/item/requisition_token/syndicate/vr,
+/obj/traitorifier/virtual/nuclear,
 /turf/unsimulated/floor/setpieces/gauntlet{
 	desc = "This place is going to be a fucking mess.";
 	name = "\proper the murderbox"

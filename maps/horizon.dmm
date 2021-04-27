@@ -14860,7 +14860,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/stool/bed/moveable/hospital,
+/obj/storage/closet/medicalclothes,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -19302,6 +19302,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/mining/refinery)
 "aUI" = (
+/obj/stool/bed/moveable/hospital,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "aUJ" = (
@@ -19781,8 +19782,8 @@
 	dir = 4
 	},
 /turf/simulated/wall/false_wall/reinforced{
-	icon = 'icons/turf/walls_supernorn.dmi';
-	icon_state = "R3"
+	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon_state = "norn-R-3"
 	},
 /area/station/engine/elect)
 "aVS" = (
@@ -33591,8 +33592,8 @@
 	dir = 4
 	},
 /turf/simulated/wall/false_wall/reinforced{
-	icon = 'icons/turf/walls_supernorn.dmi';
-	icon_state = "R3"
+	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon_state = "norn-R-3"
 	},
 /area/station/crew_quarters/fitness)
 "bDl" = (

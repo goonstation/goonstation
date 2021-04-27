@@ -352,7 +352,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		in_bump = 0
 
 	if(isitem(AM))
-		if(AM:w_class >= 4.0)
+		if(AM:w_class >= W_CLASS_BULKY)
 			boutput(rider, "<span class='alert'><B>You crash into [AM]!</B></span>")
 			for (var/mob/C in AIviewers(src))
 				if(C == rider)
@@ -1395,7 +1395,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		in_bump = 0
 		return
 	if(isitem(AM))
-		if(AM:w_class >= 4.0)
+		if(AM:w_class >= W_CLASS_BULKY)
 			boutput(rider, "<span class='alert'><B>You run into [AM]!</B></span>")
 			for (var/mob/C in AIviewers(src))
 				if(C == rider)

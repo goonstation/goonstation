@@ -180,7 +180,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			// If no item in chest, get surgeon's equipped item
 			var/obj/item/chest_item = surgeon.equipped()
 
-			if(chest_item.w_class > 3 && !(chest_item.type in chestitem_whitelist))
+			if(chest_item.w_class > W_CLASS_NORMAL && !(chest_item.type in chestitem_whitelist))
 				surgeon.show_text("<span class='alert'>[chest_item] is too big to fit into [patient]'s chest cavity.</span>")
 				return 1
 

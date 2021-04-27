@@ -89,18 +89,18 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #ifdef SERVER_SIDE_PROFILING_PREGAME
 #warn Profiler will output at pregame stage
 	var/profile_out = file("data/profile/[time2text(world.realtime, "YYYY-MM-DD hh-mm-ss")]-pregame.log")
-	profile_out << world.Profile(PROFILE_START, "json")
+	profile_out << world.Profile(PROFILE_START, "sendmaps", "json")
 	world.log << "Dumped profiler data."
 #endif
 
 #if defined(SERVER_SIDE_PROFILING_INGAME_ONLY)
 #warn Profiler reset for ingame stage
 	// We're in game now, so reset profiler data
-	world.Profile(PROFILE_RESTART)
+	world.Profile(PROFILE_RESTART, "sendmaps", "json")
 #elif !defined(SERVER_SIDE_PROFILING_FULL_ROUND)
 #warn Profiler disabled after init
 	// If we aren't doing ingame or full round then we're done with the profiler
-	world.Profile(PROFILE_STOP)
+	world.Profile(PROFILE_STOP, "sendmaps", "json")
 #endif
 #endif
 

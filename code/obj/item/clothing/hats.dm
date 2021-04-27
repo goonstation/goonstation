@@ -8,6 +8,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	body_parts_covered = HEAD
 	compatible_species = list("human", "cow", "werewolf", "flubber")
+	wear_layer = MOB_HEAD_LAYER2
 	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
 	block_vision = 0
 	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
@@ -644,13 +645,13 @@
 	desc = "A green hood, full of magic, wonder, cromulence, and maybe a spider or two."
 	icon_state = "wizardgreen"
 	item_state = "wizardgreen"
+	seal_hair = 1
 
 /obj/item/clothing/head/wizard/witch
 	name = "witch hat"
 	desc = "Broomstick and cat not included."
 	icon_state = "witch"
 	item_state = "wizardnec"
-	see_face = 0
 
 /obj/item/clothing/head/wizard/necro
 	name = "necromancer hood"
@@ -658,6 +659,7 @@
 	icon_state = "wizardnec"
 	item_state = "wizardnec"
 	see_face = 0
+	seal_hair = 1
 
 /obj/item/clothing/head/pinkwizard //no magic properties
 	name = "pink wizard hat"
@@ -864,7 +866,7 @@
 	desc = "An unnaturally large piece of headwear"
 	wear_image_icon = 'icons/mob/bighat.dmi'
 	icon_state = "tophat"
-	w_class = 4
+	w_class = W_CLASS_BULKY
 
 /obj/item/clothing/head/bighat/syndicate
 	name = "syndicate hat"
@@ -1166,7 +1168,7 @@
 	wear_image_icon = 'icons/mob/ears.dmi'
 	icon_state = "cat-gray"
 	item_state = "cat-gray"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 0
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1274,7 +1276,7 @@
 	wear_image_icon = 'icons/mob/bighat.dmi'
 	icon_state = "antlers"
 	item_state = "antlers"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 0
 
 /obj/item/clothing/head/pajama_cap

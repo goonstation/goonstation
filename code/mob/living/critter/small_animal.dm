@@ -222,7 +222,7 @@ todo: add more small animals!
 	icon_state_dead = "remy-dead"
 	health_brute = 33
 	health_burn = 33
-	pull_w_class = 3
+	pull_w_class = W_CLASS_NORMAL
 
 	setup_overlays()
 		return
@@ -444,7 +444,7 @@ todo: add more small animals!
 	var/dogtype = "pug"
 	var/sound/sound_bark = "sound/voice/animal/dogbark.ogg"
 	var/gabe = 0 //sniff. bark bork. brork.
-	pull_w_class = 4
+	pull_w_class = W_CLASS_BULKY
 
 	OnMove()
 		if(client?.player?.shamecubed)
@@ -731,7 +731,7 @@ todo: add more small animals!
 	var/good_grip = 1 // they can hold any sized item because they are stronk birbs, otherwise small_critter limb
 	health_brute = 15
 	health_burn = 15
-	pull_w_class = 4
+	pull_w_class = W_CLASS_BULKY
 
 	New(loc, nspecies)
 		..()
@@ -1392,7 +1392,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 10
 	icon_state = "robot_roach"
 	icon_state_dead = "robot_roach-dead"
-	pull_w_class = 3
+	pull_w_class = W_CLASS_NORMAL
 	meat_type = /obj/item/reagent_containers/food/snacks/burger/roburger
 
 	base_move_delay = 1.6
@@ -1890,7 +1890,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	skinresult = /obj/item/clothing/head/raccoon
 	max_skins = 1
 
-	pull_w_class = 4
+	pull_w_class = W_CLASS_BULKY
 
 	New()
 		..()
@@ -2223,7 +2223,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	hand_count = 2
 	health_brute = 20
 	health_burn = 20
-	pull_w_class = 4
+	pull_w_class = W_CLASS_BULKY
 
 	setup_hands()
 		..()

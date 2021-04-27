@@ -6,7 +6,7 @@
 	icon_state = "blank"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "electronic"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | CONDUCT
 	var/list/tools = list()
 	var/mod_hudicon = "unknown"

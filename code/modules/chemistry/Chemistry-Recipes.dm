@@ -2672,43 +2672,6 @@ datum
 					holder.del_reagent("sugar")
 					holder.del_reagent("phosphorus")
 
-		propellant
-			name = "Aeresol Propellant"
-			id = "propellant"
-			result = "propellant"
-			required_reagents = list("chlorine" = 1, "sugar" = 1, "hydrogen" = 1, "platinum" = 1, "stabiliser" = 1)
-			result_amount = 3
-			mix_phrase = "The mixture becomes volatile and airborne."
-#ifdef CHEM_REACTION_PRIORITY
-			priority = 9
-#endif
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-				if(holder)
-					holder.del_reagent("chlorine")
-					holder.del_reagent("sugar")
-					holder.del_reagent("hydrogen")
-					holder.del_reagent("platinum")
-
-		unstable_propellant
-			name = "unstable propellant"
-			id = "unstable_propellant"
-			required_reagents = list("chlorine" = 1, "sugar" = 1, "hydrogen" = 1, "platinum" = 1)
-			inhibitors = list("stabiliser")
-			instant = 1
-			special_log_handling = 1
-			consume_all = 1
-			mix_phrase = "The mixture violently sprays everywhere!"
-#ifdef CHEM_REACTION_PRIORITY
-			priority = 9
-#endif
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-				if(holder)
-					holder.del_reagent("chlorine")
-					holder.del_reagent("sugar")
-					holder.del_reagent("hydrogen")
-					holder.del_reagent("platinum")
-					holder.smoke_start(created_volume, classic = 1) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
-
 		blackpowder // oh no
 			name = "Black Powder"
 			id = "blackpowder"
@@ -3729,10 +3692,10 @@ datum
 			result_amount = 4
 			mix_phrase = "The mixture becomes far more fabulous!"
 
-		glitter_harmless
+		sparkles
 			name = "harmless glitter"
-			id = "glitter_harmless"
-			result = "glitter_harmless"
+			id = "sparkles"
+			result = "sparkles"
 			required_reagents = list("colors" = 1, "paper" = 1, "platinum" = 1)
 			mix_phrase = "The mixture becomes far more fabulous- safely."
 

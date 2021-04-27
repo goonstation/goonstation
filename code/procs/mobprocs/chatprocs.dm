@@ -296,10 +296,10 @@
 	if (!message)
 		return
 
-	if (istype(src, /mob/living/critter/changeling/handspider))
+	if (isvampire(src))
 		name = src.real_name
 		alt_name = " (VAMPIRE)"
-	else if (istype(src, /mob/living/critter/changeling/eyespider))
+	else if (isvampiriczombie(src))
 		name = src.real_name
 		alt_name = " (GHOUL)"
 
@@ -329,7 +329,7 @@
 			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
 		boutput(M, thisR)
 	//show to ghoul owner
-	if (!(owner.owner.client && owner.owner.client.holder && owner.owner.client.deadchat && !owner.owner.client.player_mode))
+	if (ismob(owner.owner) && !(owner.owner.client && owner.owner.client.holder && owner.owner.client.deadchat && !owner.owner.client.player_mode))
 		var/thisR = rendered
 		if (owner.owner.client && src.mind)
 			thisR = "<span class='adminHearing' data-ctx='[owner.owner.client.chatOutput.getContextFlags()]'>[rendered]</span>"
@@ -534,7 +534,7 @@
 	else
 		return 0
 
-/mob/verb/listen_ooc()
+/mob/proc/listen_ooc()
 	set name = "(Un)Mute OOC"
 	set desc = "Mute or Unmute Out Of Character chat."
 
@@ -620,7 +620,7 @@
 
 	logTheThing("ooc", src, null, "OOC: [msg]")
 
-/mob/verb/listen_looc()
+/mob/proc/listen_looc()
 	set name = "(Un)Mute LOOC"
 	set desc = "Mute or Unmute Local Out Of Character chat."
 

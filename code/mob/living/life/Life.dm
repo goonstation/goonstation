@@ -233,7 +233,7 @@
 		if(src.traitHolder)
 			for(var/T in src.traitHolder.traits)
 				var/obj/trait/O = getTraitById(T)
-				O.onLife(src)
+				O.onLife(src, life_mult)
 
 		update_icons_if_needed()
 

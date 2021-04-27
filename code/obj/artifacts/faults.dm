@@ -82,13 +82,13 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		if (!isitem(O))
 			return
 		var/obj/item/I = O
-		if(I.w_class > 6)
+		if(I.w_class > W_CLASS_GIGANTIC)
 			return
 
 		boutput(user, "<span class='alert'>The [I.name] grows in size!</span>")
 		I.transform = matrix(I.transform, 1.1, 1.1, MATRIX_SCALE)
 		I.w_class++
-		if (I.loc == user && I.w_class > 4)
+		if (I.loc == user && I.w_class > W_CLASS_BULKY)
 			boutput(user, "<span class='alert'>You can't maintain a grip due to its excessive girth!</span>")
 			user.u_equip(I)
 			I.set_loc(user.loc)
@@ -108,7 +108,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		boutput(user, "<span class='alert'>The [I.name] shrinks in size!</span>")
 		I.transform = matrix(I.transform, 0.9, 0.9, MATRIX_SCALE)
 		I.w_class--
-		if (I.w_class < 1)
+		if (I.w_class < W_CLASS_TINY)
 			boutput(user, "<span class='alert'>The artifact shrinks away into nothingness!</span>")
 			user.u_equip(I)
 			I.set_loc(user.loc)
@@ -130,7 +130,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 				I.dropped()
 		var/turf/T = get_turf(O)
 		T.visible_message("<span class='alert'><b>The [cosmeticSource.name] utterly annihilates [user.name]!</b></span>")
-		playsound(T, "sound/effects/elec_bigzap.ogg", 100, 1)
+		playsound(T, "sound/effects/elec_bigzap.ogg", 40, 1) // seriously 100 volume on this file? Are you trying to deafen players?
 		user.elecgib()
 
 /datum/artifact_fault/explode

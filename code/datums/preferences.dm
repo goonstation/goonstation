@@ -1817,6 +1817,8 @@ var/global/list/facial_hair = list("None" = "none",
 var/global/list/hair_details = list("einstein" = "einalt",\
 	"80s" = "80sfade",\
 	"glammetal" = "glammetalO",\
+	"mermaid" = "mermaidfade",\
+	"longbeard" = "longbeardfade",\
 	"pomp" = "pompS",\
 	"mohawk" = list("mohawkFT", "mohawkFB", "mohawkS"),\
 	"emo" = "emoH",\

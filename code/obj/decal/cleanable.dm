@@ -647,7 +647,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	stain = "sparkly"
 
 /obj/decal/cleanable/glitter/harmless //updated to not be lethal
-    sample_reagent = "glitter_harmless"
+    sample_reagent = "sparkles"
 
 
 /obj/decal/cleanable/ketchup //It's ketchup that looks like blood.

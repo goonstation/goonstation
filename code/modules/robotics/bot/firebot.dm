@@ -44,7 +44,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = TABLEPASS
 	var/extinguisher = 0 //Is the extinguisher added?
 	var/created_name = "Firebot"
@@ -297,7 +297,7 @@
 		R.add_reagent("water", 2)
 		R.add_reagent("ff-foam", 8)
 		if (src.setup_party)	// heh
-			R.add_reagent("glitter_harmless", 5)
+			R.add_reagent("sparkles", 5)
 		W.spray_at(my_target, R, 1)
 
 	if (src.emagged && iscarbon(target))

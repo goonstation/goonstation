@@ -247,26 +247,31 @@
 	src.emag_act()
 
 	/// Takes a turf and spits out string of coordinates
-/obj/machinery/bot/proc/turf2coordinates(var/turf/T)
+/obj/machinery/bot/proc/turf2coordinates(var/atom/A)
+	var/turf/T = get_turf(A)
 	if(isturf(T))
 		var/Tx = T.x
 		var/Ty = T.y
 		var/Tz = T.z
 		return jointext(list(Tx, Ty, Tz), ",")
+	else
+		return "some invalid thing, probably"
 
-
-/obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=600)
+/obj/machinery/bot/proc/get_pathable_turf(atom/the_target)
 	var/turf/target_turf = get_turf(the_target)
-	if(!checkTurfPassable(target_turf))
-		var/turf_is_impassable = 1
+	. = 0
+	if(checkTurfPassable(target_turf))
+		return target_turf
+	else
 		for(var/dir_look in alldirs)
 			var/turf/T = get_step(target_turf, dir_look)
 			if(checkTurfPassable(T))
-				target_turf = T
-				turf_is_impassable = 0
-				break
-		if(turf_is_impassable)
-			return
+				return T
+
+/obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=600)
+	var/target_turf = get_pathable_turf(the_target)
+	if(!target_turf)
+		return 0
 
 	src.KillPathAndGiveUp(0)
 	src.bot_mover = new /datum/robot_mover(newmaster = src, _move_delay = move_delay, _target_turf = target_turf, _current_movepath = current_movepath, _adjacent = adjacent, _scanrate = scanrate, _max_dist = max_dist)
