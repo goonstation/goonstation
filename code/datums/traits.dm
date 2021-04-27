@@ -872,6 +872,29 @@ obj/trait/pilot
 	points = 1
 	isPositive = 0
 
+/obj/trait/clown_disbelief
+	name = "Clown Disbelief (0)"
+	cleanName = "Clown Disbelief"
+	desc = "You refuse to acknowledge that clowns could exist on a space station."
+	id = "clown_disbelief"
+	icon_state = "clown_disbelief"
+	points = 0
+	isPositive = 0
+	category = "genetics"
+
+	onAdd(mob/owner)
+		OTHER_START_TRACKING_CAT(owner, TR_CAT_CLOWN_DISBELIEF_MOBS)
+		if(owner.client)
+			for(var/image/I as anything in global.clown_disbelief_images)
+				owner.client.images += I
+
+	onRemove(mob/owner)
+		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_CLOWN_DISBELIEF_MOBS)
+		if(owner.client)
+			for(var/image/I as anything in global.clown_disbelief_images)
+				owner.client.images -= I
+
+
 /obj/trait/unionized
 	name = "Unionized (-1)"
 	cleanName = "Unionized"
