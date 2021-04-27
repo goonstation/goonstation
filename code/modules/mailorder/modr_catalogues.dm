@@ -119,7 +119,7 @@
 						. += {"<a href='byond://?src=\ref[src];add_to_cart=[F.name]'>[F.name]</a> - [itemct] Item(s) - $[F.cost]<br>
 						[F.desc]<br>"}
 						if(length(F.order_perm))
-							. += "CAN PURCHASE"
+							. += "Requires Access (1 or more of)"
 							for(var/acval in F.order_perm)
 								var/accessname = get_access_desc(acval)
 								. += " | [accessname]"
