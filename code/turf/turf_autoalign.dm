@@ -670,45 +670,30 @@
 		setMaterial(getMaterial("coral"))
 
 // lead wall resprite by skeletonman0.... hooray for smoothwalls!
-/turf/unsimulated/wall/auto/leadblue
+ABSTRACT_TYPE(turf/unsimulated/wall/auto/lead)
+/turf/unsimulated/wall/auto/lead
 	name = "lead wall"
 	icon = 'icons/turf/walls_lead.dmi'
+	light_mod = "wall-"
+	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	connect_overlay = 1
+	connect_diagonal = 1
+	connects_to = list(/turf/unsimulated/wall/auto/leadblue, /turf/unsimulated/wall/auto/leadgray,
+	/turf/unsimulated/wall/auto/leadwhite,
+	 /obj/machinery/door, /obj/window, /turf/unsimulated/wall/setpieces/)
+	connects_with_overlay = list(/obj/machinery/door, /obj/window)
+
+/turf/unsimulated/wall/auto/lead/blue
 	icon_state = "mapiconb"
-	light_mod = "wall-"
 	mod = "leadb-"
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-	connect_overlay = 1
-	connect_diagonal = 1
-	connects_to = list(/turf/unsimulated/wall/auto/leadblue, /turf/unsimulated/wall/auto/leadgray,
-	/turf/unsimulated/wall/auto/leadwhite,
-	 /obj/machinery/door, /obj/window, /turf/unsimulated/wall/setpieces/)
-	connects_with_overlay = list(/obj/machinery/door, /obj/window)
-/turf/unsimulated/wall/auto/leadgray
-	name = "lead wall"
-	icon = 'icons/turf/walls_lead.dmi'
+
+/turf/unsimulated/wall/auto/lead/gray
 	icon_state = "mapicong"
-	light_mod = "wall-"
 	mod = "leadg-"
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-	connect_overlay = 1
-	connect_diagonal = 1
-	connects_to = list(/turf/unsimulated/wall/auto/leadblue, /turf/unsimulated/wall/auto/leadgray,
-	/turf/unsimulated/wall/auto/leadwhite,
-	 /obj/machinery/door, /obj/window, /turf/unsimulated/wall/setpieces/)
-	connects_with_overlay = list(/obj/machinery/door, /obj/window)
-/turf/unsimulated/wall/auto/leadwhite
-	name = "lead wall"
-	icon = 'icons/turf/walls_lead.dmi'
+
+/turf/unsimulated/wall/auto/lead/white
 	icon_state = "mapiconw"
-	light_mod = "wall-"
 	mod = "leadw-"
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-	connect_overlay = 1
-	connect_diagonal = 1
-	connects_to = list(/turf/unsimulated/wall/auto/leadblue, /turf/unsimulated/wall/auto/leadgray,
-	/turf/unsimulated/wall/auto/leadwhite,
-	 /obj/machinery/door, /obj/window, /turf/unsimulated/wall/setpieces/)
-	connects_with_overlay = list(/obj/machinery/door, /obj/window)
 
 /datum/action/bar/icon/wall_tool_interact
 	id = "wall_tool_interact"
