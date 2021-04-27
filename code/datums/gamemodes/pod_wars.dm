@@ -344,29 +344,21 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 /datum/game_mode/pod_wars/on_human_death(var/mob/M)
 	src.stats_manager?.inc_death(M)
 
-	//should probably just replace this based on Mind.special role, but idk.
-	var/nt = locate(M.mind) in team_NT.members
-	if (nt)
-		if (M.mind == team_NT.commander)
-			team_NT.change_points(-1)
-			if (!team_NT.first_commander_death)
-				team_NT.first_commander_death = 1
-				src.playsound_to_team(team_NT, "sound/voice/pod_wars_voices/{PWTN}Commander_Dies.ogg")
+	switch(get_pod_wars_team(M))
+		if (TEAM_NANOTRASEN)
+			do_team_member_death(M, team_NT, team_SY)
+		if (TEAM_SYNDICATE)
+			do_team_member_death(M, team_SY, team_NT)
+	
+	..()
 
-
-		team_SY.change_points(1)
-
-		return
-	var/sy = locate(M.mind) in team_SY.members
-	if (sy)
-		if (M.mind == team_SY.commander)
-			team_SY.change_points(-1)
-			if (!team_SY.first_commander_death)
-				team_SY.first_commander_death = 1
-				src.playsound_to_team(team_SY, "sound/voice/pod_wars_voices/{PWTN}Commander_Dies.ogg")
-		team_NT.change_points(1)
-		return
-
+datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars_team/our_team, var/datum/pod_wars_team/enemy_team)
+	if (M.mind == our_team.commander)
+		our_team.change_points(-1)
+		if (!our_team.first_commander_death)
+			our_team.first_commander_death = 1
+			src.playsound_to_team(our_team, "sound/voice/pod_wars_voices/{PWTN}Commander_Dies.ogg")
+	enemy_team.change_points(1)
 
 /datum/game_mode/pod_wars/proc/announce_critical_system_destruction(var/team_num, var/obj/pod_base_critical_system/CS)
 	var/datum/pod_wars_team/team
