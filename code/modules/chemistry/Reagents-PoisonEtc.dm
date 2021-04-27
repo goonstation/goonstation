@@ -260,7 +260,7 @@ datum
 			fluid_g = 120
 			fluid_b = 130
 			transparency = 130
-			depletion_rate = 0.8
+			depletion_rate = 0.6
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
