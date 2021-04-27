@@ -605,38 +605,15 @@
 	icon_state = "prisoner"
 	item_state = "prisoner"
 
-var/global/list/image/clown_disbelief_images
 /obj/item/clothing/under/misc/clown
 	name = "clown suit"
 	desc = "You are likely taking your life into your own hands by wearing this."
 	icon_state = "clown"
 	item_state = "clown"
-	var/image/disbelief_image
 
 	New()
 		..()
-		src.disbelief_image = image('icons/effects/effects.dmi', null, "nothing")
-		src.disbelief_image.name = "​" // this is actually a zero width space not an empty string
-		src.disbelief_image.override = 1
-		if(isnull(global.clown_disbelief_images))
-			global.clown_disbelief_images = list()
-		global.clown_disbelief_images += src.disbelief_image
-		for(var/mob/M as anything in by_cat[TR_CAT_CLOWN_DISBELIEF_MOBS])
-			M.client?.images += src.disbelief_image
-
-	disposing()
-		global.clown_disbelief_images -= src.disbelief_image
-		qdel(src.disbelief_image)
-		. = ..()
-
-	equipped(mob/user, slot)
-		. = ..()
-		src.disbelief_image.loc = user
-
-	unequipped(mob/user)
-		. = ..()
-		src.disbelief_image.loc = null
-
+		AddComponent(/datum/component/clown_disbelief_item)
 
 	fancy
 		icon_state = "clown-fancy"
