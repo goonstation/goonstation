@@ -299,7 +299,7 @@ ABSTRACT_TYPE(/datum/mail_order/chem)
 
 	spectrogoggles
 		name = "Spectroscopic Goggles"
-		desc = "The latest in optically-mounted Raman spectroscopy technology."
+		desc = "The latest in optically-mounted Raman spectroscopy tech."
 		order_items = list(/obj/item/clothing/glasses/spectro)
 		cost = PAY_IMPORTANT / 2
 		order_perm = list(access_bar,access_chemistry,access_medical)
