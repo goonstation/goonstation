@@ -576,14 +576,6 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	record_name = "Bug Quest"
 	song = "sound/radio_station/bugquest.ogg"
 
-/obj/item/record/notaquario_mixtape/caves
-	record_name = "Caves"
-	song = "sound/radio_station/bugdome.ogg"
-
-/obj/item/record/notaquario_mixtape/everything_breathes
-	record_name = "Everything Breathes"
-	song = "sound/radio_station/everything_breathes.ogg"
-
 /obj/item/record/notaquario_mixtape/graveyard
 	record_name = "Graveyard"
 	song = "sound/radio_station/graveyard.ogg"
@@ -630,21 +622,19 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	/obj/item/record/clown_collection/eggshell,
 	/obj/item/record/clown_collection/disco,
 	/obj/item/record/clown_collection/poo)
-	
+
 /obj/item/storage/box/record/notaquario_mixtape1
 	name = "Aquario and Not Tom's Mixtape Vol 1"
 	desc = "Woa, these are some old tunes! Made by Aquario and Not Tom way back in the early 2020s!"
 	spawn_contents = list(/obj/item/record/notaquario_mixtape/bugquest,
-	/obj/item/record/notaquario_mixtape/bugdome,
+	/obj/item/record/notaquario_mixtape/graveyard,
 	/obj/item/record/notaquario_mixtape/scarydome,
-	/obj/item/record/notaquario_mixtape/komo,
-	/obj/item/record/notaquario_mixtape/everything_breathes)
+	/obj/item/record/notaquario_mixtape/komo)
 
 /obj/item/storage/box/record/notaquario_mixtape2
 	name = "Aquario and Not Tom's Mixtape Vol 2"
 	desc = "Woa, the second volume of some old tunes! Made by Aquario and Not Tom way back in the early 2020s! "
-	spawn_contents = list(/obj/item/record/notaquario_mixtape/graveyard,
-	/obj/item/record/notaquario_mixtape/repose,
+	spawn_contents = list(/obj/item/record/notaquario_mixtape/repose,
 	/obj/item/record/notaquario_mixtape/beaches,
 	/obj/item/record/notaquario_mixtape/caves,
 	/obj/item/record/notaquario_mixtape/floaty,
