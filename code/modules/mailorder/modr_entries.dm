@@ -256,6 +256,12 @@ ABSTRACT_TYPE(/datum/mail_order/survmart)
 		order_items = list(/obj/item/clothing/suit/wintercoat)
 		cost = PAY_TRADESMAN / 2
 
+	cleangear
+		name = "Medical Wear Bundle"
+		desc = "Contains latex gloves and sterile mask."
+		order_items = list(/obj/item/clothing/gloves/latex,/obj/item/clothing/mask/surgical)
+		cost = PAY_UNTRAINED / 2
+
 	medbelt
 		name = "Medical Belt"
 		desc = "Top-quality belt for rapid medical equipment access."
@@ -304,12 +310,6 @@ ABSTRACT_TYPE(/datum/mail_order/survmart)
 		desc = "A soothing medical patch effective at treating burn injury."
 		order_items = list(/obj/item/reagent_containers/patch/mini/burn)
 		cost = PAY_TRADESMAN / 4
-
-	cleangear
-		name = "Medical Wear Bundle"
-		desc = "Contains latex gloves and sterile mask."
-		order_items = list(/obj/item/clothing/gloves/latex,/obj/item/clothing/mask/surgical)
-		cost = PAY_UNTRAINED / 2
 
 
 //Chems-R-Us: chemicals and chemistry accessories
