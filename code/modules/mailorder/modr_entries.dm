@@ -1,4 +1,4 @@
-//category support eventually maybe.
+//information for catalogue sale entries
 ABSTRACT_TYPE(/datum/mail_order)
 /datum/mail_order
 	var/name = "Juicer Schweet's Spaghetti Western"

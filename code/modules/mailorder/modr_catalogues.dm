@@ -1,3 +1,4 @@
+//catalogue cartridges: the main event
 /obj/item/disk/data/cartridge/catalogue
 	name = "\improper unprogrammed mail-order cartridge"
 	desc = "An electronic mail-order cartridge for PDAs with built-in payment handling."
@@ -47,6 +48,8 @@
 			src.file_amount = src.file_used
 			src.read_only = 1
 
+
+//catalogue program itself - handles purchase and initialization of shipment
 
 #define DELIVERED_TO_MAIL 1
 #define DELIVERED_TO_QM 2
@@ -176,7 +179,7 @@
 						if(!length(F.order_perm))
 							continue
 						purchase_authed = 0
-						//for for
+						//a loop inside a loop oh no
 						for(var/acval in F.order_perm)
 							if(acval in src.master.ID_card.access)
 								purchase_authed = 1
@@ -232,7 +235,7 @@
 	// arrange for package construction/shipping, then clear cart
 	proc/shipcart(var/destination)
 		var/list/boxstock = list()
-		var/success_style = null
+		var/success_style = null //feeds back via return to let purchase proc know what to tell the user
 		var/spawn_package_at = null //used for targeting in mail delivery, and just as an integrity check for qm delivery
 		var/fire_package_to = null //ditto
 
@@ -285,11 +288,12 @@
 				package.registered = src.master.ID_card.registered
 			package.launch_procedure()
 			shippingmarket.receive_crate(package)
-		else //how did we get here? don't know. something's broken. no pay
+		else //how did we fail here? not sure, but fail gracefully without paying.
 			src.cartsize = 0
 			src.cartcost = 0
 			src.cart.Cut()
 			return 0
+		//successful purchase, clear out the cart and let purchase proc know
 		src.cartsize = 0
 		src.cartcost = 0
 		src.cart.Cut()

@@ -1,6 +1,11 @@
+//boxes and loaders for transfer of ordered goods to purchaser
+
 /////////////CONFIGURATION NOTES/////////////
 
 //A mail loading chute + landmark mailorder spawn and target are recommended for map addition.
+//Mail order spawn landmark, located at edge of map
+//Mail order target landmark, placed at location on station that is chute location or will feed box into chute
+//Mail loading chute, located somewhere external, connected to the station's mail loop
 
 //The chute should accept mail from a point external on the station and place it into the mail loop
 //using a juncture that has a tag which doesn't match any mail chute.
@@ -8,6 +13,7 @@
 //Adding the chute will not prevent purchase of the mail-order via QM secure crate;
 //merely add the option for a less secure but more convenient box-based delivery
 
+//Box for mail-based delivery
 /obj/item/storage/box/mailorder
 	name = "mail-order box"
 	icon_state = "evidence"
@@ -25,6 +31,7 @@
 			else //how tho
 				message_admins("<span class='alert'>[src] failed to launch at intended destination, tell kubius</span>")
 
+//Box for QM-based delivery
 /obj/storage/secure/crate/mailorder
 	name = "mail-order crate"
 	desc = "A crate that holds mail-ordered items."
@@ -38,6 +45,7 @@
 			src.name = "[src.registered]'s mail-order crate"
 			src.desc = "A crate that holds mail-ordered items. It's registered to [src.registered]."
 
+//Auto chute that accepts boxes for mail-based delivery, and nothing else
 /obj/machinery/floorflusher/industrial/mailorder
 	name = "external mail loading chute"
 	desc = "A large chute that only accepts specially designed mail-order boxes."
