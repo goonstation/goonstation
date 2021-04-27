@@ -131,8 +131,6 @@ MATERIAL
 			..(user)
 
 	attackby(obj/item/W, mob/user as mob)
-		if(isrobot(user))
-			max_stack = 500
 		if (istype(W, /obj/item/sheet))
 			var/obj/item/sheet/S = W
 			if (S.material && src.material && !isSameMaterial(S.material, src.material))
@@ -166,7 +164,10 @@ MATERIAL
 			else
 				if(!user.is_in_hands(src))
 					user.put_in_hand(src)
-				boutput(user, "<span class='notice'>You add [S] to the stack. It now has [S.amount] sheets.</span>")
+				if(isrobot(user))
+					boutput(user, "<span class='notice'>You add [success] sheets to the stack. It now has [S.amount] sheets.</span>")
+				else
+					boutput(user, "<span class='notice'>You add [success] sheets to the stack. It now has [src.amount] sheets.</span>")
 			return
 
 		else if (istype(W,/obj/item/rods))
@@ -694,8 +695,6 @@ MATERIAL
 			..(user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(isrobot(user))
-			max_stack = 500
 		if (isweldingtool(W))
 			if(src.amount < 2)
 				boutput(user, "<span class='alert'>You need at least two rods to make a material sheet.</span>")
@@ -737,7 +736,10 @@ MATERIAL
 			else
 				if(!user.is_in_hands(src))
 					user.put_in_hand(src)
-				boutput(user, "<span class='notice'>You add [success] rods to the stack. It now has [src.amount] rods.</span>")
+				if(isrobot(user))
+					boutput(user, "<span class='notice'>You add [success] rods to the stack. It now has [W.amount] rods.</span>")
+				else
+					boutput(user, "<span class='notice'>You add [success] rods to the stack. It now has [src.amount] rods.</span>")
 			return
 
 		if (istype(W, /obj/item/organ/head))
@@ -1051,8 +1053,6 @@ MATERIAL
 
 		if (!( istype(W, /obj/item/tile) ))
 			return
-		if(isrobot(user))
-			max_stack = 500
 		if (W.material && src.material && !isSameMaterial(W.material, src.material))
 			boutput(user, "<span class='alert'>You can't mix 2 stacks of different materials!</span>")
 			return
@@ -1062,7 +1062,10 @@ MATERIAL
 			return
 		if(!user.is_in_hands(src))
 			user.put_in_hand(src)
-		boutput(user, "<span class='notice'>You add [success] tiles to the stack. It now has [src.amount] tiles.</span>")
+		if(isrobot(user))
+			boutput(user, "<span class='notice'>You add [success] tiles to the stack. It now has [W.amount] tiles.</span>")
+		else
+			boutput(user, "<span class='notice'>You add [success] tiles to the stack. It now has [src.amount] tiles.</span>")
 		tooltip_rebuild = 1
 		if (!W.pooled)
 			W.add_fingerprint(user)
