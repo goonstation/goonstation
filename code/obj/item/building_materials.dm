@@ -162,6 +162,8 @@ MATERIAL
 			if (!success)
 				boutput(user, "<span class='alert'>You can't put any more sheets in this stack!</span>")
 			else
+				if(!user.is_in_hands(src))
+					user.put_in_hand(src)
 				boutput(user, "<span class='notice'>You add [S] to the stack. It now has [S.amount] sheets.</span>")
 			return
 
@@ -729,6 +731,8 @@ MATERIAL
 			if (!success)
 				boutput(user, "<span class='alert'>You can't put any more rods in this stack!</span>")
 			else
+				if(!user.is_in_hands(src))
+					user.put_in_hand(src)
 				boutput(user, "<span class='notice'>You add [success] rods to the stack. It now has [src.amount] rods.</span>")
 			return
 
@@ -1043,10 +1047,16 @@ MATERIAL
 
 		if (!( istype(W, /obj/item/tile) ))
 			return
-		var/success = stack_item(W)
-		if(!success)
-			boutput(user, "<span class='alert'>You cannot combine [src] with [W] as they contain different materials!</span>")
+		if (W.material && src.material && !isSameMaterial(W.material, src.material))
+			boutput(user, "<span class='alert'>You can't mix 2 stacks of different materials!</span>")
 			return
+		var/success = stack_item(W)
+		if (!success)
+			boutput(user, "<span class='alert'>You can't put any more tiles in this stack!</span>")
+			return
+		if(!user.is_in_hands(src))
+			user.put_in_hand(src)
+		boutput(user, "<span class='notice'>You add [success] tiles to the stack. It now has [src.amount] tiles.</span>")
 		tooltip_rebuild = 1
 		if (!W.pooled)
 			W.add_fingerprint(user)
