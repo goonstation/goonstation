@@ -18,7 +18,7 @@ names@=
 	Cathara@,Pal With A Paw@,Meower@,Sir Catsalot@,A Cat Called Sharon@,Crimson@,Lion@,Meowsworth
 	Horse@,"Bob"@,"Bob" (incl the quotation marks)@,Ms. Meoworice@,Tiny Fuzzy Criminal@,Kat
 	Guppy@,Dog@,C.A.T.@,Catherine@,Kätt@,Help I'm Trapped In A Cat Name Factory
-	Purrito@,Trista@,Impawster@,cat_names.txt@,🐈@,🐱@,Dog@,Le Chat@,C@
+	Purrito@,Trista@,Impawster@,cat_names.txt@,🐈@,🐱@,Le Chat@,C@
 	Lil Bub@,Félicette@,Tuxedo Stan@,Paddles@,Catmando@,Hamish McHamish@,Puffins@,Hank the Cat
 	Smudge@,The Unsinkable Sam@,Tama@,Fred the Undercover Kitty@,Blackie the Talking Cat
-	Cheeto@,Snow
+	Cheeto@,Snow@,The Giant Cat That Makes All Of The Rules
