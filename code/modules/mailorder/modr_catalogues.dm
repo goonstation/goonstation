@@ -72,7 +72,7 @@
 		entries_to_index = /datum/mail_order/audiovideo
 
 	recreation
-		name = "Henry's"
+		name = "Henry's Recreation"
 		entries_to_index = /datum/mail_order/recreation
 
 	produce
