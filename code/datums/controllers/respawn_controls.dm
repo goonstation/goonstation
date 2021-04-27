@@ -205,9 +205,9 @@ var/datum/respawn_controls/respawn_controller
 	proc/set_time_left(time)
 		var/time_text = "<span style='color:#f88;'>[time2text(time, "hh:mm:ss", 0)]</span>"
 		if(time <= 75 SECONDS)
-			time_text = "<span style='color:#f88;'>[round(time / (1 SECOND))]</span> seconds"
+			time_text = "<span style='color:#f88;'>[ceil(time / (1 SECOND))]</span> seconds"
 		else if(time <= 60 MINUTES)
-			time_text = "<span style='color:#f88;'>[round(time / (1 MINUTE))]</span> minutes"
+			time_text = "<span style='color:#f88;'>[ceil(time / (1 MINUTE))]</span> minutes"
 		maptext = {"<span class='pixel c ol' style='font-size:16px;'>Respawn in [time_text]</span>"}
 
 #undef RESPAWNEE_STATE_WAITING
