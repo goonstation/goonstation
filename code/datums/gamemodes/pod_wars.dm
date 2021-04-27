@@ -735,7 +735,6 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		if (!user)
 			return	//don't log if damage isn't done by a user (like it's critters are turrets)
 
-#ifdef MAP_OVERRIDE_POD_WARS
 		//Friendly fire check
 		var/friendly_fire = 0
 		if (get_pod_wars_team_num(user) == team_num)
@@ -744,7 +743,6 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 
 		if (friendly_fire)
 			logTheThing("combat", user, "\[POD WARS\][user] attacks their own team's critical system [src].")
-#endif
 
 //////////////special clone pod///////////////
 
@@ -1190,14 +1188,12 @@ ABSTRACT_TYPE(/obj/machinery/macrofab/pod_wars)
 	itemName = "emergency pod"
 	var/team_num = 0
 
-#ifdef MAP_OVERRIDE_POD_WARS
 	attack_hand(var/mob/user as mob)
 		if (get_pod_wars_team_num(user) != team_num)
 			boutput(user, "<span class='alert'>This machine's design makes no sense to you, you can't figure out how to use it!</span>")
 			return
 
 		..()
-#endif
 
 	nanotrasen
 		createdObject = /obj/machinery/vehicle/pod_wars_dingy/nanotrasen
@@ -1383,14 +1379,12 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	proc/add_team_armor()
 		return
 
-#ifdef MAP_OVERRIDE_POD_WARS
 	attack_hand(var/mob/user as mob)
 		if (get_pod_wars_team_num(user) != src.team_num)
 			boutput(user, "<span class='alert'>This machine's design makes no sense to you, you can't figure out how to use it!</span>")
 			return
 
 		..()
-#endif
 
 /obj/machinery/manufacturer/pod_wars/nanotrasen
 	name = "NanoTrasen Ship Component Fabricator"
@@ -2292,7 +2286,6 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	"salicylic_acid", "blood", "synthflesh",\
 	"menthol", "antihistamine", "smelling_salt")
 
-#ifdef MAP_OVERRIDE_POD_WARS
 //return 1 for NT, 2 for SY
 /proc/get_pod_wars_team_num(var/mob/user)
 	var/user_team_string = user?.mind?.special_role
@@ -2303,7 +2296,6 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			return TEAM_SYNDICATE
 		else
 			return 0
-#endif
 
 ////////////////////////////player stats tracking datum//////////////////
 /datum/pw_stats_manager
