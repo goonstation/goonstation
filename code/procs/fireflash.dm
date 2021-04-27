@@ -175,7 +175,7 @@
 /proc/fireflash_sm(atom/center, radius, temp, falloff, capped = 1, bypass_RNG = 0)
 	var/list/affected = fireflash_s(center, radius, temp, falloff)
 	for (var/turf/T in affected)
-		if (istype(T, /turf/simulated) && !T.loc:sanctuary)
+		if (istype(T, /turf/simulated/wall) && !T.loc:sanctuary)
 			var/mytemp = affected[T]
 			var/melt = 1643.15 // default steel melting point
 			if (T.material && T.material.hasProperty("flammable") && ((T.material.material_flags & MATERIAL_METAL) || (T.material.material_flags & MATERIAL_CRYSTAL) || (T.material.material_flags & MATERIAL_RUBBER)))
