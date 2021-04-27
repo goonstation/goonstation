@@ -235,7 +235,7 @@
 	// arrange for package construction/shipping, then clear cart
 	proc/shipcart(var/destination)
 		var/list/boxstock = list()
-		var/success_style = null //feeds back via return to let purchase proc know what to tell the user
+		var/success_style = null //feeds back via return to let purchase process know what to tell the user
 		var/spawn_package_at = null //used for targeting in mail delivery, and just as an integrity check for qm delivery
 		var/fire_package_to = null //ditto
 
