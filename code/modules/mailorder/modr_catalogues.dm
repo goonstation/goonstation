@@ -12,7 +12,7 @@
 			src.read_only = 1
 
 	recreation
-		name = "\improper Henry's Recreation mail-order cartridge"
+		name = "\improper Henry's Recreational mail-order cartridge"
 		icon_state = "cart-fancy"
 		New()
 			..()
@@ -68,7 +68,7 @@
 		entries_to_index = /datum/mail_order/audiovideo
 
 	recreation
-		name = "Henry's Recreation"
+		name = "Henry's Recreational"
 		entries_to_index = /datum/mail_order/recreation
 
 	produce

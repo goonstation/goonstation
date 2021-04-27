@@ -292,6 +292,7 @@ ABSTRACT_TYPE(/datum/mail_order/survmart)
 //Chems-R-Us: chemicals and chemistry accessories
 ABSTRACT_TYPE(/datum/mail_order/chem)
 /datum/mail_order/chem
+
 	reagentscanner
 		name = "Reagent Scanner"
 		desc = "Handheld device capable of real-time reagent analysis."
