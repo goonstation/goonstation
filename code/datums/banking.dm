@@ -746,6 +746,7 @@
 		if(istype(I, /obj/item/card/id))
 			boutput(user, "<span class='notice'>You swipe your ID card in the ATM.</span>")
 			src.scan = I
+			attack_hand(user)
 			return
 		if(istype(I, /obj/item/spacecash/))
 			if (afterlife)
@@ -756,6 +757,7 @@
 				src.accessed_record.fields["current_money"] += I.amount
 				I.amount = 0
 				pool(I)
+				attack_hand(user)
 			else boutput(user, "<span class='alert'>You need to log in before depositing cash!</span>")
 			return
 		if(istype(I, /obj/item/lotteryTicket))
