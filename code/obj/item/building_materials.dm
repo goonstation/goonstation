@@ -131,6 +131,8 @@ MATERIAL
 			..(user)
 
 	attackby(obj/item/W, mob/user as mob)
+		if(isrobot(user))
+			max_stack = 500
 		if (istype(W, /obj/item/sheet))
 			var/obj/item/sheet/S = W
 			if (S.material && src.material && !isSameMaterial(S.material, src.material))
@@ -692,6 +694,8 @@ MATERIAL
 			..(user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if(isrobot(user))
+			max_stack = 500
 		if (isweldingtool(W))
 			if(src.amount < 2)
 				boutput(user, "<span class='alert'>You need at least two rods to make a material sheet.</span>")
@@ -974,9 +978,9 @@ MATERIAL
 		..()
 		src.pixel_x = rand(0, 14)
 		src.pixel_y = rand(0, 14)
-		src.inventory_counter.update_number(amount)
 		SPAWN_DBG(0)
 			update_stack_appearance()
+			src.inventory_counter.update_number(amount)
 		return
 
 	check_valid_stack(atom/movable/O as obj)
@@ -1047,6 +1051,8 @@ MATERIAL
 
 		if (!( istype(W, /obj/item/tile) ))
 			return
+		if(isrobot(user))
+			max_stack = 500
 		if (W.material && src.material && !isSameMaterial(W.material, src.material))
 			boutput(user, "<span class='alert'>You can't mix 2 stacks of different materials!</span>")
 			return
