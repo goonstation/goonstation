@@ -19,9 +19,6 @@
 			else //how tho
 				message_admins("<span class='alert'>[src] failed to launch at intended destination, tell kubius</span>")
 
-#define SUPPLY_OPEN_TIME 1 SECOND
-#define SUPPLY_CLOSE_TIME 13 SECONDS
-
 /obj/storage/secure/crate/mailorder
 	name = "mail-order crate"
 	desc = "A crate that holds mail-ordered items."
@@ -34,9 +31,6 @@
 		if(src.registered)
 			src.name = "[src.registered]'s mail-order crate"
 			src.desc = "A crate that holds mail-ordered items. It's registered to [src.registered]."
-
-#undef SUPPLY_OPEN_TIME
-#undef SUPPLY_CLOSE_TIME
 
 /obj/machinery/floorflusher/industrial/mailorder
 	name = "external mail loading chute"
