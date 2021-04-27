@@ -134,6 +134,10 @@
 
 // ---- mob signals ----
 
+/// When a client logs into a mob
+#define COMSIG_MOB_LOGIN "mob_login"
+/// When a client logs out of a mob
+#define COMSIG_MOB_LOGOUT "mob_logout"
 /// At the beginning of when an attackresults datum is being set up
 #define COMSIG_MOB_ATTACKED_PRE "attacked_pre"
 /// When a mob dies

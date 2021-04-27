@@ -503,13 +503,13 @@
 
 	src.client?.color = src.active_color_matrix
 
-	if(src.traitHolder?.hasTrait("clown_disbelief"))
-		for(var/image/I as anything in global.clown_disbelief_images)
-			client.images += I
+	SEND_SIGNAL(src, COMSIG_MOB_LOGIN)
 
 /mob/Logout()
 
 	//logTheThing("diary", src, null, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
+
+	SEND_SIGNAL(src, COMSIG_MOB_LOGOUT)
 
 	tgui_process?.on_logout(src)
 
@@ -517,9 +517,6 @@
 		for (var/datum/hud/hud in src.huds)
 			hud.remove_client(src.last_client)
 
-	if(src.traitHolder?.hasTrait("clown_disbelief"))
-		for(var/image/I as anything in global.clown_disbelief_images)
-			src.last_client.images -= I
 
 	..()
 

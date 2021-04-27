@@ -885,14 +885,24 @@ obj/trait/pilot
 	onAdd(mob/owner)
 		OTHER_START_TRACKING_CAT(owner, TR_CAT_CLOWN_DISBELIEF_MOBS)
 		if(owner.client)
-			for(var/image/I as anything in global.clown_disbelief_images)
-				owner.client.images += I
+			src.turnOn(owner)
+		src.RegisterSignal(owner, COMSIG_MOB_LOGIN, .proc/turnOn)
+		src.RegisterSignal(owner, COMSIG_MOB_LOGOUT, .proc/turnOff)
+
+	proc/turnOn(mob/owner)
+		for(var/image/I as anything in global.clown_disbelief_images)
+			owner.client.images += I
 
 	onRemove(mob/owner)
 		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_CLOWN_DISBELIEF_MOBS)
 		if(owner.client)
-			for(var/image/I as anything in global.clown_disbelief_images)
-				owner.client.images -= I
+			src.turnOff(owner)
+		src.UnregisterSignal(owner, COMSIG_MOB_LOGIN)
+		src.UnregisterSignal(owner, COMSIG_MOB_LOGOUT)
+
+	proc/turnOff(mob/owner)
+		for(var/image/I as anything in global.clown_disbelief_images)
+			owner.last_client.images -= I
 
 
 /obj/trait/unionized
