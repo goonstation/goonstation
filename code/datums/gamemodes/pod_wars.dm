@@ -421,7 +421,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 /datum/game_mode/pod_wars/proc/handle_control_point_rewards()
 
 	for (var/datum/control_point/P in src.control_points)
-		message_admins("[P.name]-owner=[P.owner_team]-tier=[P.crate_rewards_tier]")
+		// message_admins("[P.name]-owner=[P.owner_team]-tier=[P.crate_rewards_tier]")
 		P.do_item_delivery(P.owner_team)
 
 /datum/game_mode/pod_wars/declare_completion()
@@ -2645,7 +2645,7 @@ Player Stats
 			if(points + point_val > max_points + 5) continue
 			var/obj/item/I = new selected(src)
 
-			message_admins("[I.name] = [possible_rewards[selected]]pts")
+			// message_admins("[I.name] = [possible_rewards[selected]]pts")
 			//if possible_rewards[selected] is null or 0, we increment by 1 null or 1 we spawn 1, if some other number, we add that many points
 			points += point_val ? point_val : 1
 			// points += total_spawned
