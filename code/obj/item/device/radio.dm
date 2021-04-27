@@ -118,10 +118,13 @@ var/list/headset_channel_lookup
 	return tgui_physical_state
 
 /obj/item/device/radio/ui_status(mob/user, datum/ui_state/state)
-  return min(
-		state.can_use_topic(src, user),
-		tgui_not_incapacitated_state.can_use_topic(src, user)
-	)
+	if (isAI(user))
+		. = UI_INTERACTIVE
+	else
+		. = min(
+			state.can_use_topic(src, user),
+			tgui_not_incapacitated_state.can_use_topic(src, user)
+		)
 
 /obj/item/device/radio/ui_data(mob/user)
 
@@ -194,6 +197,18 @@ var/list/headset_channel_lookup
 				src.wires ^= wireflip
 
 				return TRUE
+
+/obj/item/device/radio/Topic(href, href_list)
+	if (usr.stat)
+		return
+
+	if ((issilicon(usr) || isAI(usr)) || (src in usr) || (usr.loc == src.loc))
+		if (href_list["track"])
+			// wait is tracking here? really? what? ???? ????????????
+			var/mob/living/silicon/A = locate(href_list["track2"])
+			var/heard_name = href_list["track3"]
+			A.ai_name_track(heard_name)
+			return
 
 /obj/item/device/radio/attack_self(mob/user as mob)
 	src.ui_interact(user)
@@ -609,6 +624,7 @@ var/list/headset_channel_lookup
 
 /obj/item/device/radio/electropack
 	name = "\improper Electropack"
+	wear_image_icon = 'icons/mob/back.dmi'
 	icon_state = "electropack0"
 	var/code = 2.0
 	var/on = 0.0

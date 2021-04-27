@@ -255,8 +255,8 @@ var/global/list/bible_contents = list()
 		if(src.contents.len > 0)
 			. += " It feels a bit heavier than it should."
 
-	attack_hand(var/mob/user as mob)
-		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
+	attack_hand(mob/user as mob)
+		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain") && user.is_in_hands(src))
 			var/obj/item/gun/kinetic/faith/F = locate() in src.contents
 			if(F)
 				user.put_in_hand_or_drop(F)

@@ -26,6 +26,7 @@
 #define MOB_HEAD_LAYER2		(MOB_OVERLAY_BASE-4) // helmets
 #define MOB_OVERMASK_LAYER (MOB_OVERLAY_BASE-4.8) // for mutant details that go over masks
 #define MOB_HEAD_LAYER1		(MOB_OVERLAY_BASE-5) // masks
+#define MOB_EARS_LAYER		(MOB_OVERLAY_BASE-5.5)
 #define MOB_HAIR_LAYER2		(MOB_OVERLAY_BASE-6)
 #define MOB_GLASSES_LAYER 	(MOB_OVERLAY_BASE-7)
 #define MOB_BACK_LAYER 		(MOB_OVERLAY_BASE-8)

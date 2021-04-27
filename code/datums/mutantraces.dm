@@ -787,7 +787,9 @@
 	special_head = HEAD_LIZARD
 	special_head_state = "head"
 	eye_state = "eyes_lizard"
-	mutant_organs = list("tail" = /obj/item/organ/tail/lizard)
+	mutant_organs = list("tail" = /obj/item/organ/tail/lizard,
+	"left_eye" = /obj/item/organ/eye/lizard,
+	"right_eye" = /obj/item/organ/eye/lizard)
 	mutant_folder = 'icons/mob/lizard.dmi'
 	special_hair_1_icon = 'icons/mob/lizard.dmi'
 	special_hair_1_state = "head-detail_1"
@@ -1095,7 +1097,9 @@
 	mutant_folder = 'icons/mob/skeleton.dmi'
 	icon_state = "skeleton"
 	voice_override = "skelly"
-	mutant_organs = list("tail" = /obj/item/organ/tail/bone)
+	mutant_organs = list("tail" = /obj/item/organ/tail/bone,
+	"left_eye" = /obj/item/organ/eye/skeleton,
+	"right_eye" = /obj/item/organ/eye/skeleton)
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/left
@@ -1415,8 +1419,8 @@
 	icon = 'icons/mob/monkey.dmi'
 	mutant_folder = 'icons/mob/monkey.dmi'
 	icon_state = "monkey"
+	eye_state = "eyes_monkey"
 	head_offset = -6
-	eye_offset = -6
 	hand_offset = -2
 	body_offset = -7
 	leg_offset = -4
@@ -1429,7 +1433,7 @@
 	voice_name = "monkey"
 	override_language = "monkey"
 	understood_languages = list("english")
-	clothing_icon_override = 'icons/mob/monkey.dmi'
+	clothing_icon_override = 'icons/mob/monkey_clothes.dmi'
 	race_mutation = /datum/bioEffect/mutantrace/monkey
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/left
@@ -1975,7 +1979,9 @@
 	voice_override = "cow"
 	step_override = "footstep"
 	race_mutation = /datum/bioEffect/mutantrace/cow
-	mutant_organs = list("tail" = /obj/item/organ/tail/cow)
+	mutant_organs = list("tail" = /obj/item/organ/tail/cow,
+	"left_eye" = /obj/item/organ/eye/cow,
+	"right_eye" = /obj/item/organ/eye/cow)
 	mutant_folder = 'icons/mob/cow.dmi'
 	special_head = HEAD_COW
 	special_hair_1_icon = 'icons/mob/cow.dmi'

@@ -696,7 +696,7 @@ PIPE BOMBS + CONSTRUCTION
 	var/sound_beep = 'sound/machines/twobeep.ogg'
 
 	proc/detonate()
-		playsound(src.loc, sound_explode, 100, 1)
+		playsound(src.loc, sound_explode, 45, 1)
 
 		var/obj/effects/explosion/E = new /obj/effects/explosion(src.loc)
 		E.fingerprintslast = src.fingerprintslast
@@ -726,7 +726,7 @@ PIPE BOMBS + CONSTRUCTION
 
 	proc/playbeep(var/atom/source, i as num, sound)
 		var/soundin = sound
-		var/vol = 100
+		var/vol = 40
 
 		var/sound/S = sound(soundin)
 		S.frequency = 32000 + ((10-i)*4000)

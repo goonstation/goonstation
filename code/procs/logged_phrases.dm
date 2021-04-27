@@ -56,8 +56,10 @@ var/global/datum/phrase_log/phrase_log = new
 			//
 			"overrides all",
 			"the shuttle",
+			"daddy",
 			"uwu",
-			"owo")
+			"owo",
+			"non.?human")
 		non_freeform_laws = regex(jointext(non_freeform_laws_list, "|"))
 
 	proc/load()

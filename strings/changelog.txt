@@ -1,5 +1,49 @@
 
+(t)mon apr 26 21
+(u)Azrun
+(p)3917
+(e)🆕|feature
+(*)Adds Haunted TEG Event. Spooky!
+(u)Superlagg
+(p)4004
+(e)🆕|feature
+(+)The station's floorbots now start the shift off, having tired themselves out from immediately running around gathering up metal and boarding up space every morning.
+(u)TTerc
+(p)4361
+(e)🐛|bug
+(*)Added actionbars for unwelding the wall plating and all the console/computer construction steps.
+(u)TTerc
+(p)4364
+(e)⚖🐛|balance, bug
+(+)Vampire/thrall bite now only requires the player to take off victim's headgear, if the headgear has choking protection.
+(u)Luxizzle
+(p)4487
+(e)🐛|bug
+(+)Fixed AIs not able to track players from chat.
+(+)Fixed AIs not able to interact with intercoms.
+(u)mopcat
+(p)4458
+(e)|
+(+)NanoTrasen Security Operatives now spawn with a barrier on their belt.
+(u)DimWhat
+(p)4465
+(e)🎨|sprites
+(+)Added even more monkey clothing sprites. Chimpers.
+(u)Flourish
+(+)Attacking someone with a drinking glass while on harm intent no longer splashes your drink onto them (it just tries to forcefeed them).
 (t)sun apr 25 21
+(u)Ludolf and DimWhat
+(p)4386
+(e)🎨|sprites
+(+)Adds unique eyeballs to cows, skeletons, and lizards.
+(u)Luxizzle
+(p)4339
+(e)📄|tgui
+(*)Converted power monitors to tgui.
+(u)ZeWaka, BenLubar, & Rohesie
+(p)4468
+(e)🗺🎨|mapping, sprites
+(*)Added some wall smoothing to the game. Expect some walls to look a lot smoother soon, and potentially other things too in the future!
 (u)Luxizzle
 (p)4325
 (e)📄|tgui

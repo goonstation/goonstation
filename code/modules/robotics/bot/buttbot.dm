@@ -136,7 +136,7 @@
 	if(src.emagged == 1)
 		var/message = src.buttifricky()
 		if(prob(2))
-			playsound(src.loc, "sound/misc/extreme_ass.ogg", 50, 1)
+			playsound(src.loc, "sound/misc/extreme_ass.ogg", 35, 1)
 		speak(message)
 		var/fartmessage = src.fart()
 		if(fartmessage)
@@ -155,7 +155,7 @@
 		if(user)
 			user.show_text("You short out the vocal emitter on [src].", "red")
 		src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
-		playsound(src.loc, "sound/misc/extreme_ass.ogg", 50, 1)
+		playsound(src.loc, "sound/misc/extreme_ass.ogg", 35, 1)
 		src.emagged = 1
 		return 1
 	return 0
@@ -332,13 +332,13 @@
 				var/amplitude = 5
 				if(prob(1))
 					src.robo_expel_fart_gas(1)
-					playsound(get_turf(src), pick(src.fartsounds), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(get_turf(src), pick(src.fartsounds), 35, 1, channel=VOLUME_CHANNEL_EMOTE)
 				pixel_x = old_x + rand(-amplitude, amplitude)
 				pixel_y = old_y + rand(-amplitude/3, amplitude/3)
 				sleep(0.1 SECONDS)
 			SPAWN_DBG(3 SECONDS)
 				src.visible_message("<span class='alert'><b>[src]</b>'s ass explodes!</span>")
-				playsound(src.loc, "sound/voice/farts/superfart.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, "sound/voice/farts/superfart.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.robo_expel_fart_gas(2)
 				var/turf/src_turf = get_turf(src)
 				if(src_turf)
@@ -385,7 +385,7 @@
 		if(narrator_mode)
 			playsound(get_turf(src), 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 		else
-			playsound(get_turf(src), pick(src.fartsounds), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(get_turf(src), pick(src.fartsounds), 35, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 	var/fart_on_other = 0
 	for (var/atom/A as anything in src.loc)
@@ -418,7 +418,7 @@
 				var/mob/M = V.cursed_dude
 				if(!M || !M.lying)
 					continue
-				playsound(get_turf(M), pick(src.fartsounds), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(get_turf(M), pick(src.fartsounds), 35, 1, channel=VOLUME_CHANNEL_EMOTE)
 				switch(rand(1, 7))
 					if(1) M.visible_message("<span class='emote'><b>[M]</b> suddenly radiates an unwelcoming odor.</span>")
 					if(2) M.visible_message("<span class='emote'><b>[M]</b> is visited by ethereal incontinence.</span>")

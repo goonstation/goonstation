@@ -388,7 +388,7 @@
 	atkcarbon = 0
 	atksilicon = 0
 	venom1 = "hugs"
-	venom2 = "glitter_harmless"
+	venom2 = "sparkles"
 
 /obj/critter/spider/ice/queen/nice
 	name = "queen nice spider"
@@ -399,7 +399,7 @@
 	atkcarbon = 0
 	atksilicon = 0
 	venom1 = "hugs"
-	venom2 = "glitter_harmless"
+	venom2 = "sparkles"
 
 /obj/critter/spider/spacerachnid // you get to be in here TOO
 	name = "spacerachnid"
