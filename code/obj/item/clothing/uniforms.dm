@@ -615,7 +615,7 @@ var/global/list/image/clown_disbelief_images
 
 	New()
 		..()
-		src.disbelief_image = image('icons/effects/effects.dmi', src, "nothing")
+		src.disbelief_image = image('icons/effects/effects.dmi', null, "nothing")
 		src.disbelief_image.name = "​" // this is actually a zero width space not an empty string
 		src.disbelief_image.override = 1
 		if(isnull(global.clown_disbelief_images))
