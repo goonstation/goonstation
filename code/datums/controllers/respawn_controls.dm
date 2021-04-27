@@ -118,6 +118,8 @@ var/datum/respawn_controls/respawn_controller
 		src.update_time_display()
 
 	proc/update_time_display()
+		if(!master.respawns_enabled)
+			return
 		if(isnull(the_client))
 			the_client = src.player?.client
 		var/time_left = master.respawn_time - (TIME - src.died_time)
