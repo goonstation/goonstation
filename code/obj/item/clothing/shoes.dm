@@ -663,3 +663,8 @@
 	name = "Pink Flats"
 	icon_state = "flatspnk"
 	desc = "Simple pink flats. So bright they almost glow! Almost."
+
+/obj/item/clothing/shoes/codersock
+	name = "Programming Socks"
+	icon_state = "codersock"
+	desc = "Striped socks that provide enhanced abilities to technicians"
