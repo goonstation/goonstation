@@ -265,33 +265,16 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(0.5 * mult)
-				take_bleeding_damage(M, null, rand(5,10) * mult, DAMAGE_STAB)
-				if (prob(33))
+				take_bleeding_damage(M, null, rand(8,10) * mult, DAMAGE_STAB)
+				if (probmult(33))
 					M.emote(pick("groan", "pale", "scream"))
-				if (prob(25))
+				if (probmult(25))
 					boutput(M, pick("<span class='alert'>You feel like your flesh is melting!</span>", "<span class='alert'>You feel a sharp pain in your chest!</span>"))
 
 				..()
 				return
 
-		harmful/hemotoxinplus
-			name = "hemotoxin plus"
-			id = "hemotoxin plus"
-			description = "A much stronger and quicker acting toxin than the normal hemotoxin.. how did you get this?"
-			reagent_state = LIQUID
-			fluid_r = 195
-			fluid_g = 10
-			fluid_b = 10
-			transparency = 180
-			depletion_rate = 1.5
 
-			on_mob_life(var/mob/M, var/mult = 1)
-				if (!M) M = holder.my_atom
-				take_bleeding_damage(M, null, 120 * mult, DAMAGE_STAB)
-				if (prob(50))
-					M.emote(pick("groan", "pale", "scream"))
-				..()
-				return
 
 		harmful/cyanide
 			name = "cyanide"
