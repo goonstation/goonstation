@@ -167,8 +167,10 @@
 		return make_critter(CT, get_turf(src))
 	return 0
 
-/mob/proc/make_critter(var/CT, var/turf/T)
+/mob/proc/make_critter(var/CT, var/turf/T, ghost_spawned=FALSE)
 	var/mob/living/critter/W = new CT()
+	if(ghost_spawned)
+		W.ghost_spawned = ghost_spawned
 	if (!(T && isturf(T)))
 		T = get_turf(src)
 	/*if (!(T && isturf(T)) || (isrestrictedz(T.z) && !(src.client && src.client.holder)))
@@ -655,14 +657,13 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		else
 			if (selfmob.mind && istype(selfmob.mind.purchased_bank_item, /datum/bank_purchaseable/critter_respawn))
 				var/datum/bank_purchaseable/critter_respawn/critter_respawn = selfmob.mind.purchased_bank_item
-				C = selfmob.make_critter(pick(critter_respawn.respawn_critter_types), spawnpoint)
+				C = selfmob.make_critter(pick(critter_respawn.respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
 			else
-				C = selfmob.make_critter(pick(respawn_critter_types), spawnpoint)
+				C = selfmob.make_critter(pick(respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
 
 	C.mind.assigned_role = "Animal"
 	C.say_language = "animal"
 	C.literate = 0
-	C.ghost_spawned = 1
 	C.original_name = selfmob.real_name
 
 	if (traitor)
@@ -737,12 +738,11 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 		var/mob/selfmob = src
 		src = null
-		var/mob/living/critter/C = selfmob.make_critter(/mob/living/critter/small_animal/mouse/weak/mentor, spawnpoint)
+		var/mob/living/critter/C = selfmob.make_critter(/mob/living/critter/small_animal/mouse/weak/mentor, spawnpoint, ghost_spawned=TRUE)
 
 		C.mind.assigned_role = "Animal"
 		C.say_language = "animal"
 		C.literate = 0
-		C.ghost_spawned = 1
 		C.original_name = selfmob.real_name
 
 		C.Browse(grabResource("html/ghostcritter_mentor.html"),"window=ghostcritter_mentor;size=600x400;title=Ghost Critter Help")
@@ -779,11 +779,10 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	var/mob/selfmob = src
 	src = null
-	var/mob/living/critter/C = selfmob.make_critter(/mob/living/critter/small_animal/mouse/weak/mentor/admin, spawnpoint)
+	var/mob/living/critter/C = selfmob.make_critter(/mob/living/critter/small_animal/mouse/weak/mentor/admin, spawnpoint, ghost_spawned=TRUE)
 	C.mind.assigned_role = "Animal"
 	// C.say_language = "animal"
 	C.literate = 1
-	C.ghost_spawned = 1
 	C.original_name = selfmob.real_name
 
 	//hacky fix : qdel brain to prevent reviving
