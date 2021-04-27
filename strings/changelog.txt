@@ -1,4 +1,7 @@
 
+(t)tue apr 27 21
+(u)pali
+(+)RP respawn timer now has a better visual indication. It also no longer gets reset by ghost respawn options like ghostcritters or ghosdrones or VR etc.
 (t)mon apr 26 21
 (u)Azrun
 (p)3917
