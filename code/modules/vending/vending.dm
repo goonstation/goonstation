@@ -1478,6 +1478,11 @@
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone_chimes, 5, cost=PAY_TRADESMAN/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone_beepy, 5, cost=PAY_TRADESMAN/3)
 		product_list += new/datum/data/vending_product(/obj/item/device/pda_module/flashlight/high_power, 10, cost=PAY_UNTRAINED/2)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/catalogue/audiovideo, 10, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/catalogue/chem, 10, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/catalogue/produce, 10, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/catalogue/recreation, 10, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/catalogue/survmart, 10, cost=PAY_UNTRAINED/3)
 
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/security, 1, cost=PAY_TRADESMAN/3, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/head, 1, cost=PAY_IMPORTANT/3, hidden=1)
