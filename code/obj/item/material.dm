@@ -894,7 +894,6 @@
 		if (W.cant_drop) //For borg held items
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return ..()
-
 		if (istype(W,/obj/item/storage/) || istype(W,/obj/item/satchel/))
 			var/obj/item/storage/S = W
 			var/obj/item/satchel/B = W
@@ -903,8 +902,8 @@
 					. = TRUE
 					if (istype(S))
 						S.hud.remove_object(O)
-					else if (istype(B))
-						B.satchel_updateicon()
+			if (istype(B) || .)
+				B.satchel_updateicon()
 			//Users loading individual items would make an annoying amount of messages
 			//But loading a container is more noticable and there should be less
 			if (.)
