@@ -2632,18 +2632,16 @@ Player Stats
 
 //Kinda cheesey here with the map defs, but I'm too lazy to care. makes a temp var for the mode, if it's not the right type (which idk why it wouldn't be)
 //then it is null so that the ?. will fail. So it still works regardless of mode, not that it would have the populated rewards lists if the mdoe was wrong...
-#ifdef MAP_OVERRIDE_POD_WARS
 		var/datum/game_mode/pod_wars/mode = ticker.mode
 		if (!istype(mode))
 			mode = null
-#endif
 		var/failsafe_counter = 0		//I'm paranoid okay... what if some admin accidentally fucks with the list, could hang the server.
 		var/points = 0
 		while (points < max_points)
 			var/selected = pick(possible_rewards)
 			var/point_val = possible_rewards[selected]
 			if(points + point_val > max_points + 5) continue
-			new selected(src)
+			var/obj/item/I = new selected(src)
 
 			// message_admins("[I.name] = [possible_rewards[selected]]pts")
 			//if possible_rewards[selected] is null or 0, we increment by 1 null or 1 we spawn 1, if some other number, we add that many points
@@ -2655,11 +2653,9 @@ Player Stats
 				break
 
 
-			//assuming we have the corect mode, that is the pod wars mode. These shouldn't really be spawning anyway if it isn't that mode...
-#ifdef MAP_OVERRIDE_POD_WARS
+			
 			mode?.stats_manager.add_item_reward(I.name, team_num)
 		mode?.stats_manager.add_crate(src.name, team_num)
-#endif
 		return 1
 
 //this is global so admins can run this proc to spawn the crates if they like, idk why they'd really want to but might as well be safe.
@@ -2911,6 +2907,7 @@ proc/setup_pw_crate_lists()
 	recharge_rate = 30
 
 
+#ifdef MAP_OVERRIDE_POD_WARS
 /proc/make_fake_explosion(var/atom/I)
 	var/obj/overlay/O = new/obj/overlay(get_turf(I))
 	O.anchored = 1
@@ -2922,3 +2919,4 @@ proc/setup_pw_crate_lists()
 	O.icon_state = "explosion"
 	SPAWN_DBG(3.5 SECONDS)
 		qdel(O)
+#endif
