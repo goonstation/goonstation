@@ -483,7 +483,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 
 	message_admins("filepath is now: [filepath]")
 	for (var/datum/mind/M in team.members)
-		M.current.playsound_local(M.current, filepath, 50, 0)
+		M.current.playsound_local(M.current, filepath, 100, 0, flags = SOUND_IGNORE_SPACE)
 
 	return 1
 
