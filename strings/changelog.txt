@@ -1,4 +1,10 @@
 
+(t)tue apr 27 21
+(u)pali
+(e)🆕|feature
+(*)A new trait, Mildly Mutated. It activates a random mutation in you when you spawn in!
+(+)RP respawn timer now has a better visual indication. It also no longer gets reset by ghost respawn options like ghostcritters or ghosdrones or VR etc.
+(+)Also the timer is now 15 minutes instead of 30!
 (t)mon apr 26 21
 (u)Azrun
 (p)3917
