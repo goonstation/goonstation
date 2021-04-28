@@ -676,6 +676,6 @@
 			boutput(user, "<span class='notice'>You'll now wear [src] under your clothes.</span>")
 
 /obj/item/clothing/shoes/socks/codersocks
-	name = "programming socks"
+	name = "pink and white socks"
 	icon_state = "codersock"
 	desc = "Striped socks that provide enhanced abilities to technicians."
