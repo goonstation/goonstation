@@ -5,7 +5,7 @@
 	desc = "An electronic device designed to intercept network transmissions."
 	icon_state = "sniffer0"
 	item_state = "electronic"
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	rand_pos = 0
 	var/mode = 0
 	var/obj/machinery/power/data_terminal/link = null

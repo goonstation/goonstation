@@ -180,7 +180,7 @@
 	proc/onRemove(var/mob/owner)
 		return
 
-	proc/onLife(var/mob/owner)
+	proc/onLife(var/mob/owner, var/mult)
 		return
 
 	proc/onMove(var/mob/owner)
@@ -474,6 +474,20 @@
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.genetic_stability = 120
+
+/obj/trait/mildly_mutated
+	name = "Mildly Mutated (0) \[Genetics\]"
+	cleanName = "Mildly Mutated"
+	desc = "A random mutation in your gene pool starts activated."
+	id = "mildly_mutated"
+	icon_state = "mildly_mutatedB"
+	points = 0
+	isPositive = 0
+	category = "genetics"
+
+	onAdd(var/mob/owner)
+		var/datum/bioHolder/B = owner.bioHolder
+		B.ActivatePoolEffect(B.effectPool[pick(B.effectPool)], 1, 0)
 
 /obj/trait/stablegenes
 	name = "Stable Genes (-2) \[Genetics\]"
@@ -822,8 +836,8 @@ obj/trait/pilot
 			selected_reagent = addicted_players[owner]
 			addAddiction(owner)
 
-	onLife(var/mob/owner) //Just to be safe.
-		if(isliving(owner) && prob(1))
+	onLife(var/mob/owner, var/mult) //Just to be safe.
+		if(isliving(owner) && probmult(1))
 			var/mob/living/M = owner
 			selected_reagent = addicted_players[owner]
 			for(var/datum/ailment_data/addiction/A in M.ailments)
@@ -959,8 +973,8 @@ obj/trait/pilot
 	points = 1
 	isPositive = 0
 
-	onLife(var/mob/owner)
-		if(!owner.stat && can_act(owner) && prob(9))
+	onLife(var/mob/owner, var/mult)
+		if(!owner.stat && can_act(owner) && probmult(9))
 			if(!owner.equipped())
 				for(var/obj/item/I in view(1, owner))
 					if(!I.anchored && isturf(I.loc))

@@ -365,7 +365,7 @@
 	desc = "A box containing a self-heating TV dinner."
 	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "tvdinnerc"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 2
 	var/full = 1
 	var/traytype = 0

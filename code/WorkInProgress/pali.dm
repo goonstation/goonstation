@@ -48,7 +48,7 @@
 	slowdown_time = 15
 
 	two_handed = 1
-	w_class = 4
+	w_class = W_CLASS_BULKY
 
 	New()
 		ammo = new/obj/item/ammo/bullets/beepsky
