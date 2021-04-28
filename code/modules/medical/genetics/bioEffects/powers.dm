@@ -998,7 +998,7 @@
 					step_away(V,get_turf(owner),throw_speed)
 
 			if(owner.bioHolder.HasEffect("toxic_farts"))
-				var/turf/fart_turf = get_turf(src)
+				var/turf/fart_turf = get_turf(owner)
 				fart_turf.fluid_react_single("toxic_fart",50,airborne = 1)
 
 			SF.farting = 0
