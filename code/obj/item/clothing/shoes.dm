@@ -670,10 +670,10 @@
 	attack_self(mob/user as mob)
 		if (wear_layer == MOB_UNDERWEAR_LAYER)
 			wear_layer = MOB_BELT_LAYER
-			boutput(user, "<span class='notice'>You'll now wear [src] over your clothes</span>")
+			boutput(user, "<span class='notice'>You'll now wear [src] over your clothes.</span>")
 		else
 			wear_layer = MOB_UNDERWEAR_LAYER
-			boutput(user, "<span class='notice'>You'll now wear [src] under your clothes</span>")
+			boutput(user, "<span class='notice'>You'll now wear [src] under your clothes.</span>")
 
 /obj/item/clothing/shoes/socks/codersocks
 	name = "programming socks"
