@@ -664,7 +664,18 @@
 	icon_state = "flatspnk"
 	desc = "Simple pink flats. So bright they almost glow! Almost."
 
-/obj/item/clothing/shoes/codersock
-	name = "Programming Socks"
+/obj/item/clothing/shoes/socks
+	wear_layer = MOB_UNDERWEAR_LAYER
+
+	attack_self(mob/user as mob)
+		if (wear_layer == MOB_UNDERWEAR_LAYER)
+			wear_layer = MOB_BELT_LAYER
+			boutput(user, "<span class='notice'>You'll now wear [src] over your clothes</span>")
+		else
+			wear_layer = MOB_UNDERWEAR_LAYER
+			boutput(user, "<span class='notice'>You'll now wear [src] under your clothes</span>")
+
+/obj/item/clothing/shoes/socks/codersocks
+	name = "programming socks"
 	icon_state = "codersock"
-	desc = "Striped socks that provide enhanced abilities to technicians"
+	desc = "Striped socks that provide enhanced abilities to technicians."
