@@ -12086,6 +12086,8 @@
 /obj/item/pinpointer/teg_semi,
 /obj/item/deconstructor,
 /obj/item/stamp/ce,
+/obj/item/rocko,
+/obj/item/rcd/construction/chiefEngineer,
 /turf/simulated/floor/yellow,
 /area/station/bridge/united_command)
 "Dx" = (
@@ -13346,6 +13348,14 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
+"Gx" = (
+/obj/machinery/door_control{
+	id = "qm_dock";
+	name = "Cargo Dock Door Control";
+	pixel_y = 28
+	},
+/turf/simulated/floor/plating/random,
+/area/station/quartermaster/office)
 "Gy" = (
 /obj/storage/crate/robotics_supplies,
 /obj/machinery/light/small/sticky,
@@ -19418,6 +19428,14 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"XK" = (
+/obj/machinery/door_control{
+	id = "qm_dock_out";
+	name = "Cargo Outgoing Dock Door Control";
+	pixel_y = 28
+	},
+/turf/simulated/floor/plating/random,
+/area/station/quartermaster/office)
 "XL" = (
 /obj/submachine/ATM,
 /obj/cable{
@@ -62844,7 +62862,7 @@ av
 PT
 PT
 cj
-bY
+XK
 bY
 bH
 bS
@@ -63448,7 +63466,7 @@ SZ
 PT
 PT
 cj
-bY
+Gx
 bY
 bH
 bW
