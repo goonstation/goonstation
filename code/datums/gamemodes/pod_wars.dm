@@ -1796,6 +1796,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		else
 			boutput(user, "<span class='alert'>The headset <b>explodes as you reach out to grab it!</b></span>")
 			make_fake_explosion(src)
+			user.u_equip(src)
 			qdel(src)
 
 /obj/item/device/radio/headset/pod_wars/nanotrasen

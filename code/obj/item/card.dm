@@ -172,6 +172,7 @@ GAUNTLET CARDS
 			//stolen from Captain's Explosive Spare ID down below...
 			boutput(user, "<span class='alert'>The ID card [flavor] <b>and explodes!</b></span>")
 			make_fake_explosion(src)
+			user.u_equip(src)
 			qdel(src)
 #endif
 
