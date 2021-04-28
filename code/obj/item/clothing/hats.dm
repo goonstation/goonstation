@@ -785,9 +785,6 @@
 
 	equipped(var/mob/user, var/slot)
 		..()
-		if (slot == SLOT_HEAD && ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.set_mutantrace(/datum/mutantrace/dwarf)
 
 /obj/item/clothing/head/bigtex
 	name = "75-gallon hat"
