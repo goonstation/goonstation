@@ -5176,7 +5176,6 @@ area/station/security/visitation
 
 */
 /// pod_wars Areas
-#ifdef MAP_OVERRIDE_POD_WARS
 /area/pod_wars/team1/hangar
 	name = "NSV Pytheas Hangar"
 	icon_state = "purple"
@@ -5384,7 +5383,6 @@ area/station/security/visitation
 /area/pod_wars/spacejunk/miningoutpost/crewquarters
 	name = "Abandoned Mining Outpost Crew Quarters"
 	icon_state = "green"
-#endif
 
 #define MAJOR_AST(num) area/pod_wars/asteroid/major/maj_##num/name = "" + "major asteroid " + #num
 

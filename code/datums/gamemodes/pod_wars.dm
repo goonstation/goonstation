@@ -339,7 +339,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 		animate(board.bar_SY, transform = M1, pixel_x = offset, time = 10)
 
 //check which team they are on and iff they are a commander for said team. Deduct/award points
-//Oh man, this is fucking bad. Before I had my "system" set up where I just check for the mind.special_role, 
+//Oh man, this is fucking bad. Before I had my "system" set up where I just check for the mind.special_role,
 //I should fix this soon, but it works good enough for now... -kyle 4/20/21
 /datum/game_mode/pod_wars/on_human_death(var/mob/M)
 	src.stats_manager?.inc_death(M)
@@ -349,7 +349,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 			do_team_member_death(M, team_NT, team_SY)
 		if (TEAM_SYNDICATE)
 			do_team_member_death(M, team_SY, team_NT)
-	
+
 	..()
 
 datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars_team/our_team, var/datum/pod_wars_team/enemy_team)
@@ -431,7 +431,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 	if (team_NT.points >= team_SY.points)		//Gotta have a winner for now... idk
 		winner = team_NT
 		loser = team_SY
-	else 
+	else
 		winner = team_SY
 		loser = team_NT
 
@@ -450,7 +450,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 	stats_manager?.display_HTML_to_clients()
 	..()
 
-//Plays a sound for a particular team. 
+//Plays a sound for a particular team.
 //pw_team can be the team datum or TEAM_NANOTRASEN|TEAM_SYNDICATE
 //filepath; sound file path as a string.
 /datum/game_mode/pod_wars/proc/playsound_to_team(var/pw_team, var/filepath)
@@ -458,11 +458,11 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		return 0
 
 	var/datum/pod_wars_team/team = null
-	//If pw_team is a num, make team a one of the pod_wars_team 
+	//If pw_team is a num, make team a one of the pod_wars_team
 	if (isnum(pw_team))
 		switch(team)
 			if (TEAM_NANOTRASEN)
-				team = team_NT 
+				team = team_NT
 			if (TEAM_SYNDICATE)
 				team = team_SY
 	//handle if we are given a datum of type /datum/pod_wars_team/team
@@ -480,7 +480,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 	//{PWTN} = PodWarsTeamName
 	if (findtext(filepath, "{PWTN}"))
 		filepath = replacetext(filepath, "{PWTN}", "[team.name]-")
-		
+
 	message_admins("filepath is now: [filepath]")
 	for (var/datum/mind/M in team.members)
 		M.current.playsound_local(M.current, filepath, 50, 0)
@@ -1013,7 +1013,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 				health = initial(health)
 				destroyed = 0
 				active = 1
-			else 
+			else
 				..()
 
 	spawn_deployer()
@@ -1985,7 +1985,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	var/capturing_team					//0 if not moving, either uncaptured or at max capture. 1=NT, 2=SY  	/////////UNUSED
 	var/owner_team = 0						//1=NT, 2=SY
 	var/true_name						//backend name, var/name is the user readable name
-	var/last_cap_time					//Time it was last captured. 
+	var/last_cap_time					//Time it was last captured.
 	var/crate_rewards_tier = 0			//var 0-3 none/low/med/high. Should correlate to holding the point for <5 min, <10 min, <15
 	var/datum/game_mode/pod_wars/mode
 
@@ -2485,7 +2485,7 @@ Player Stats
  }
 
 </style>"}
-	
+
 	//Assumes Lists are an assoc list in the format where the key starts with either "NT," or "SY," followed by the item/crate_tier name
 	//and the value stored is just an int for the amount.
 	//returns html text
@@ -2498,7 +2498,7 @@ Player Stats
 		var/cr_stats_SY = ""
 		for (var/stat in L)
 			if (!istext(stat) || length(stat) <= 4) continue
-			
+
 			if (copytext(1,3) == "NT")
 				cr_stats_NT = "<tr>[copytext(stat, 4)] = [L[stat]]</tr>"
 			else if (copytext(1,3) == "SY")
@@ -2601,7 +2601,7 @@ Player Stats
 			spawn_items()
 
 	//Selects the items that this crate spawns with based on its possible contents.
-	proc/spawn_items()		
+	proc/spawn_items()
 		var/tier1_max_points = 25
 		var/tier2_max_points = 20
 		var/tier3_max_points = 15
@@ -2625,7 +2625,7 @@ Player Stats
 				make_items_in_tier(pw_rewards_tier3, tier3_max_points)
 
 
-	//makes the items in the crate randomly picking from a rewards list, 
+	//makes the items in the crate randomly picking from a rewards list,
 	proc/make_items_in_tier(var/list/possible_rewards, var/max_points)
 		if (!islist(possible_rewards) || length(possible_rewards) == 0)
 			return 0
@@ -2643,7 +2643,7 @@ Player Stats
 			var/selected = pick(possible_rewards)
 			var/point_val = possible_rewards[selected]
 			if(points + point_val > max_points + 5) continue
-			var/obj/item/I = new selected(src)
+			new selected(src)
 
 			// message_admins("[I.name] = [possible_rewards[selected]]pts")
 			//if possible_rewards[selected] is null or 0, we increment by 1 null or 1 we spawn 1, if some other number, we add that many points
@@ -2669,13 +2669,13 @@ proc/setup_pw_crate_lists()
 		/obj/item/tank/oxygen = 1, /obj/item/old_grenade/energy_frag = 2, /obj/item/old_grenade/energy_concussion = 2, /obj/item/device/flash = 2, /obj/item/deployer/barricade = 4,
 		/obj/item/shipcomponent/mainweapon/taser = 3, /obj/item/shipcomponent/mainweapon/laser/short = 3, /obj/item/shipcomponent/mainweapon/foamer = 2,/obj/item/ammo/power_cell/high_power = 5,
 		/obj/item/material_piece/steel{amount=10} = 1, /obj/item/material_piece/copper{amount=10} = 1, /obj/item/material_piece/glass{amount=10} = 1)
-	
+
 	pw_rewards_tier2 = list(/obj/item/tank/jetpack = 1, /obj/item/old_grenade/smoke = 2,/obj/item/chem_grenade/flashbang = 2, /obj/item/barrier = 1,
 		/obj/item/old_grenade/emp = 3, /obj/item/sword/discount = 4, /obj/item/storage/firstaid/crit = 1, /obj/item/wrench/battle = 1, /obj/item/dagger/syndicate/specialist = 2,
 		/obj/item/shipcomponent/mainweapon/mining = 2, /obj/item/shipcomponent/mainweapon/laser = 4, /obj/item/shipcomponent/mainweapon/disruptor_light = 4,/obj/item/ammo/power_cell/higher_power = 3, /obj/item/ammo/power_cell/self_charging/pod_wars_standard = 3,
 		/obj/item/material_piece/cerenkite{amount=5} = 1, /obj/item/material_piece/claretine{amount=5} = 1, /obj/item/material_piece/bohrum{amount=10} = 1, /obj/item/material_piece/plasmastone{amount=10} = 1, /obj/item/material_piece/uqill{amount=10} = 1, /obj/item/material_piece/telecrystal{amount=10})
-	
-	pw_rewards_tier3 = list(/obj/item/sword = 4, /obj/item/gun/energy/crossbow = 1, /obj/item/cloak_gen = 1, /obj/item/device/chameleon = 1, 
+
+	pw_rewards_tier3 = list(/obj/item/sword = 4, /obj/item/gun/energy/crossbow = 1, /obj/item/cloak_gen = 1, /obj/item/device/chameleon = 1,
 		/obj/item/gun/flamethrower/backtank = 3, /obj/item/ammo/power_cell/self_charging/pod_wars_high = 2,
 		/obj/item/shipcomponent/mainweapon/russian = 3, /obj/item/shipcomponent/mainweapon/disruptor = 3, /obj/item/shipcomponent/mainweapon/laser_ass = 4, /obj/item/shipcomponent/mainweapon/rockdrills = 4,
 		/obj/item/material_piece/iridiumalloy{amount=4} = 1, /obj/item/material_piece/erebite{amount=10} = 1, /obj/item/raw_material/starstone{amount=2} = 1, /obj/item/raw_material/miracle{amount=10} = 1)
@@ -2688,7 +2688,7 @@ proc/setup_pw_crate_lists()
 
 // Low Tier: Blaster (team colored), EMP Grenade (mega situational, after all), flashbang, regular flash, pocket oxy tank
 // Medium Tier: dsaber, Revolver, Cloaking Field Projector, Radbow, pickpocket gun??, maybe other traitor or rare gear, jetpack
-// High tier: csaber Stims, Cloaker, Deployable team oriented turret (limited ammo and can be destroyed), 
+// High tier: csaber Stims, Cloaker, Deployable team oriented turret (limited ammo and can be destroyed),
 
 
 //This is dumb. I should really have these all be one object, but I figure we might wanna specifically admin spawn thse from time to time. -kyle
@@ -2911,7 +2911,6 @@ proc/setup_pw_crate_lists()
 	recharge_rate = 30
 
 
-#ifdef MAP_OVERRIDE_POD_WARS
 /proc/make_fake_explosion(var/atom/I)
 	var/obj/overlay/O = new/obj/overlay(get_turf(I))
 	O.anchored = 1
@@ -2921,6 +2920,5 @@ proc/setup_pw_crate_lists()
 	O.pixel_y = -96
 	O.icon = 'icons/effects/214x246.dmi'
 	O.icon_state = "explosion"
-	SPAWN_DBG(3.5 SECONDS) 
+	SPAWN_DBG(3.5 SECONDS)
 		qdel(O)
-#endif
