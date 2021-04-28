@@ -103,7 +103,6 @@
 			return FALSE
 		return !istype(M.get_id(), preferred_card_type)
 
-#ifdef MAP_OVERRIDE_POD_WARS
 /mob/living/carbon/human/npc/monkey/oppenheimer/pod_wars
 	preferred_card_type = /obj/item/card/id/pod_wars/syndicate
 
@@ -113,7 +112,7 @@
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_PW_PETS)
 		..()
-#endif
+		
 /mob/living/carbon/human/npc/monkey/horse
 	name = "????"
 	real_name = "????"
