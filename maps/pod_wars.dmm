@@ -3113,9 +3113,8 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/macrofab/pod_wars/syndicate{
-	dir = 4;
-	name = "Mini Pod Fabricator"
+/obj/machinery/macrofab/pod_wars/syndicate/mining{
+	dir = 4
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team2/hangar)
@@ -9957,9 +9956,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/macrofab/pod_wars/syndicate{
-	dir = 8;
-	name = "Mini Pod Fabricator"
+/obj/machinery/macrofab/pod_wars/syndicate/mining{
+	dir = 8
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team2/hangar)

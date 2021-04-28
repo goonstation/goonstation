@@ -483,7 +483,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 
 	message_admins("filepath is now: [filepath]")
 	for (var/datum/mind/M in team.members)
-		M.current.playsound_local(M.current, filepath, 50, 0)
+		M.current.playsound_local(M.current, filepath, 100, 0, flags = SOUND_IGNORE_SPACE)
 
 	return 1
 
@@ -1796,6 +1796,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		else
 			boutput(user, "<span class='alert'>The headset <b>explodes as you reach out to grab it!</b></span>")
 			make_fake_explosion(src)
+			user.u_equip(src)
 			qdel(src)
 
 /obj/item/device/radio/headset/pod_wars/nanotrasen
@@ -2632,11 +2633,9 @@ Player Stats
 
 //Kinda cheesey here with the map defs, but I'm too lazy to care. makes a temp var for the mode, if it's not the right type (which idk why it wouldn't be)
 //then it is null so that the ?. will fail. So it still works regardless of mode, not that it would have the populated rewards lists if the mdoe was wrong...
-#ifdef MAP_OVERRIDE_POD_WARS
 		var/datum/game_mode/pod_wars/mode = ticker.mode
 		if (!istype(mode))
 			mode = null
-#endif
 		var/failsafe_counter = 0		//I'm paranoid okay... what if some admin accidentally fucks with the list, could hang the server.
 		var/points = 0
 		while (points < max_points)
@@ -2654,12 +2653,8 @@ Player Stats
 			if (failsafe_counter > 100)
 				break
 
-
-			//assuming we have the corect mode, that is the pod wars mode. These shouldn't really be spawning anyway if it isn't that mode...
-#ifdef MAP_OVERRIDE_POD_WARS
 			mode?.stats_manager.add_item_reward(I.name, team_num)
 		mode?.stats_manager.add_crate(src.name, team_num)
-#endif
 		return 1
 
 //this is global so admins can run this proc to spawn the crates if they like, idk why they'd really want to but might as well be safe.
