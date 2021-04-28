@@ -113,7 +113,7 @@
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_PW_PETS)
 		..()
-
+#endif
 /mob/living/carbon/human/npc/monkey/horse
 	name = "????"
 	real_name = "????"

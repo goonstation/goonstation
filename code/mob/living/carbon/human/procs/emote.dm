@@ -275,9 +275,9 @@
 							src.put_in_hand_or_drop(F)
 							src.visible_message("<b>[src]</B> farts out a... wait is this viral marketing?")
 #ifdef MAP_OVERRIDE_POD_WARS
-					if (istype(ticker.mode, /datum/game_mode/pod_wars))
-						var/datum/game_mode/pod_wars/mode = ticker.mode
-						mode.stats_manager?.inc_farts(src)
+						if (istype(ticker.mode, /datum/game_mode/pod_wars))
+							var/datum/game_mode/pod_wars/mode = ticker.mode
+							mode.stats_manager?.inc_farts(src)
 #endif
 		#ifdef DATALOGGER
 						game_stats.Increment("farts")
