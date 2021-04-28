@@ -2652,8 +2652,6 @@ Player Stats
 			if (failsafe_counter > 100)
 				break
 
-
-			
 			mode?.stats_manager.add_item_reward(I.name, team_num)
 		mode?.stats_manager.add_crate(src.name, team_num)
 		return 1
@@ -2907,7 +2905,6 @@ proc/setup_pw_crate_lists()
 	recharge_rate = 30
 
 
-#ifdef MAP_OVERRIDE_POD_WARS
 /proc/make_fake_explosion(var/atom/I)
 	var/obj/overlay/O = new/obj/overlay(get_turf(I))
 	O.anchored = 1
@@ -2919,4 +2916,3 @@ proc/setup_pw_crate_lists()
 	O.icon_state = "explosion"
 	SPAWN_DBG(3.5 SECONDS)
 		qdel(O)
-#endif
