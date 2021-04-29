@@ -1,4 +1,9 @@
 
+(t)thu apr 29 21
+(u)DimWhat
+(p)4510
+(e)⚖|balance
+(*)The amount of time to break a loyalty implant with a revolutionary flash has been lowered to 4 seconds.
 (t)tue apr 27 21
 (u)pali
 (e)🆕|feature
