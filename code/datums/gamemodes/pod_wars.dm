@@ -353,8 +353,9 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 	..()
 
 datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars_team/our_team, var/datum/pod_wars_team/enemy_team)
+	our_team.change_points(-1)
 	if (M.mind == our_team.commander)
-		our_team.change_points(-1)
+		our_team.change_points(-2)
 		if (!our_team.first_commander_death)
 			our_team.first_commander_death = 1
 			src.playsound_to_team(our_team, "sound/voice/pod_wars_voices/{PWTN}Commander_Dies.ogg")
