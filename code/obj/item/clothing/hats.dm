@@ -783,8 +783,6 @@
 			return
 		return ..(hit_atom)
 
-	equipped(var/mob/user, var/slot)
-		..()
 
 /obj/item/clothing/head/bigtex
 	name = "75-gallon hat"
