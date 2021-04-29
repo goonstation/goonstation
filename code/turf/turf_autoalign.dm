@@ -679,7 +679,7 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/lead)
 	connect_overlay = 1
 	connect_diagonal = 1
 	connects_to = list(/turf/unsimulated/wall/auto/lead,
-	 /obj/machinery/door, /obj/window, /turf/unsimulated/wall/setpieces)
+	 /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/)
 	connects_with_overlay = list(/obj/machinery/door, /obj/window)
 
 /turf/unsimulated/wall/auto/lead/blue

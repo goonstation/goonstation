@@ -67879,11 +67879,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mordent)
-"dwM" = (
-/turf/simulated/wall/false_wall/centcom,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "dwN" = (
 /obj/item/clothing/gloves/fingerless,
 /turf/unsimulated/floor/wood/two,
@@ -75336,9 +75331,6 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/lobby)
-"dQe" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction_four,
 /area/centcom/lobby)
 "dQf" = (
 /obj/item/storage/toilet/random{
@@ -151365,7 +151357,7 @@ aat
 aat
 aat
 aat
-dvO
+aaz
 aaz
 dQx
 aaz
@@ -153475,7 +153467,7 @@ aat
 dPE
 aat
 aat
-dQe
+aat
 dQh
 aat
 aat
@@ -156211,27 +156203,27 @@ aaz
 aaz
 aaz
 aaz
-dvO
 aaz
 aaz
 aaz
-dvO
 aaz
 aaz
 aaz
-dvO
 aaz
 aaz
 aaz
-dvO
 aaz
 aaz
 aaz
-dvO
 aaz
 aaz
 aaz
-dvO
+aaz
+aaz
+aaz
+aaz
+aaz
+aaz
 aaz
 aaz
 aaz
@@ -160137,23 +160129,23 @@ aaz
 aaz
 aaz
 aaz
-dvO
 aaz
 aaz
 aaz
-dvO
 aaz
 aaz
 aaz
-dvO
 aaz
 aaz
 aaz
-dvO
 aaz
 aaz
 aaz
-dvO
+aaz
+aaz
+aaz
+aaz
+aaz
 aaz
 aaz
 aaz
@@ -164061,21 +164053,21 @@ dvy
 dRL
 aaz
 aaz
-dwM
-aaz
-dvO
 aaz
 aaz
 aaz
-dvO
 aaz
 aaz
 aaz
-dvO
 aaz
 aaz
 aaz
-dvO
+aaz
+aaz
+aaz
+aaz
+aaz
+aaz
 aaz
 aaz
 aaz
