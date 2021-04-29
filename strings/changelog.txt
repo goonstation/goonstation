@@ -1,5 +1,9 @@
 
 (t)thu apr 29 21
+(u)Kubius
+(p)4513
+(e)⚖|balance
+(*)Rathen's Secret nerfed - weaken duration reduced from 3 seconds to 0.1 seconds.
 (u)DimWhat
 (p)4510
 (e)⚖|balance
