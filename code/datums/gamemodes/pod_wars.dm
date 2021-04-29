@@ -643,8 +643,8 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 	bound_width = 64
 	bound_height = 64
 
-	var/health = 1000
-	var/health_max = 1000
+	var/health = 10000
+	var/health_max = 10000
 	var/team_num		//used for getting the team datum, this is set to 1 or 2 in the map editor. 1 = NT, 2 = Syndicate
 	var/suppress_damage_message = 0
 
