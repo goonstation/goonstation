@@ -7805,6 +7805,18 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"avk" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/testchamber)
 "avl" = (
 /obj/decal/boxingropeenter,
 /turf/simulated/floor/specialroom/gym,
@@ -31733,12 +31745,18 @@
 	},
 /area/station/turret_protected/Zeta)
 "bNY" = (
-/obj/forcefield/energyshield/perma{
-	desc = "A permanent force field that prevents gas from passing through it.";
-	name = "Permanent Atmospheric Forcefield";
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/engine/caution/northsouth,
+/obj/machinery/door/poddoor/pyro{
+	id = "kd_medsouth";
+	name = "Cargo Routing Door"
+	},
+/turf/simulated/floor/engine/caution/misc{
+	dir = 1
+	},
 /area/station/science/testchamber)
 "bNZ" = (
 /obj/wingrille_spawn/auto,
@@ -32257,12 +32275,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "bPt" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	id = "kd_scinorth"
-	},
+/obj/machinery/launcher_loader/west,
 /turf/simulated/floor/airless/plating,
-/area/station/maintenance/southwest)
+/area/space)
 "bPu" = (
 /turf/simulated/floor/white/grime,
 /area/station/hangar/science)
@@ -33643,9 +33658,13 @@
 /turf/space,
 /area/space)
 "bTE" = (
-/obj/machinery/launcher_loader/north,
 /obj/disposalpipe/segment/transport{
 	dir = 4
+	},
+/obj/machinery/conveyor{
+	dir = 1;
+	name = "cargo belt - north";
+	operating = 1
 	},
 /turf/simulated/floor/airless/grey,
 /area/station/maintenance/southwest)
@@ -38065,14 +38084,16 @@
 	},
 /area/station/science/testchamber)
 "cia" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/obj/access_spawn/research,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/specialroom/arcade,
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
+	name = "Test Chamber Access";
+	req_access = null
+	},
+/obj/access_spawn/research,
+/turf/simulated/floor/caution/westeast,
 /area/station/science/testchamber)
 "cib" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -38082,9 +38103,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/purplewhite{
-	dir = 8
-	},
+/turf/simulated/floor/caution/east,
 /area/station/hangar/science)
 "cic" = (
 /obj/machinery/mass_driver{
@@ -42160,6 +42179,20 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
+"dnJ" = (
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/machinery/door/poddoor/pyro{
+	id = "kd_scinorth";
+	name = "Cargo Routing Door"
+	},
+/turf/simulated/floor/engine/caution/misc{
+	dir = 1
+	},
+/area/station/science/testchamber)
 "dog" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Chef's Quarters"
@@ -45729,6 +45762,14 @@
 	dir = 1
 	},
 /area/station/mining/magnet)
+"gVp" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	name = "cargo belt - east";
+	operating = 1
+	},
+/turf/simulated/floor/airless/plating,
+/area/station/maintenance/west)
 "gVs" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/decal/tile_edge/floorguide/qm,
@@ -50496,6 +50537,13 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/redblack,
 /area/station/security/interrogation)
+"mpC" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	id = "kd_scinorth"
+	},
+/turf/simulated/floor/airless/plating,
+/area/station/maintenance/southwest)
 "mpY" = (
 /obj/machinery/light/small,
 /obj/machinery/chemicompiler_stationary,
@@ -51220,6 +51268,16 @@
 	dir = 8
 	},
 /area/station/hallway/primary/south)
+"ndT" = (
+/obj/wingrille_spawn/auto,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/testchamber)
 "nel" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/cargobay)
@@ -52829,6 +52887,12 @@
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
 	})
+"oTc" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/caution/westeast,
+/area/station/science/testchamber)
 "oTv" = (
 /obj/machinery/light{
 	dir = 4;
@@ -53516,6 +53580,14 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
+"pEk" = (
+/obj/wingrille_spawn/auto,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/testchamber)
 "pEP" = (
 /obj/item/storage/toilet{
 	dir = 4
@@ -53718,6 +53790,13 @@
 	},
 /turf/simulated/floor,
 /area/station/security/secwing)
+"pPY" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor,
+/area/station/science/testchamber)
 "pQd" = (
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -54662,6 +54741,16 @@
 /obj/access_spawn/mining,
 /turf/simulated/floor/grey,
 /area/station/mining/magnet)
+"qSW" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/access_spawn/research,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/caution/west,
+/area/station/science/testchamber)
 "qTA" = (
 /obj/stool/chair{
 	dir = 1
@@ -55146,6 +55235,18 @@
 "rtZ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/sauna)
+"ruJ" = (
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/machinery/door/poddoor/pyro{
+	id = "kd_medsouth";
+	name = "Cargo Routing Door"
+	},
+/turf/simulated/floor/engine/caution/misc,
+/area/station/science/testchamber)
 "rve" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -56056,6 +56157,9 @@
 /area/station/crew_quarters/showers)
 "sBH" = (
 /obj/wingrille_spawn/auto,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
 "sBO" = (
@@ -58562,6 +58666,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/cafeteria)
+"veo" = (
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/machinery/door/poddoor/pyro{
+	id = "kd_scinorth";
+	name = "Cargo Routing Door"
+	},
+/turf/simulated/floor/engine/caution/misc,
+/area/station/science/testchamber)
 "vew" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -59218,13 +59334,8 @@
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
 "vRn" = (
-/obj/forcefield/energyshield/perma{
-	desc = "A permanent force field that prevents gas from passing through it.";
-	name = "Permanent Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/obj/machinery/light/incandescent/greenish,
-/turf/simulated/floor/engine/caution/northsouth,
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
 /area/station/science/testchamber)
 "vRE" = (
 /obj/disposalpipe/segment/bent/east,
@@ -61047,18 +61158,6 @@
 "xEt" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
-"xEF" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4;
-	name = "Test Chamber Access";
-	req_access = null
-	},
-/obj/access_spawn/research,
-/turf/simulated/floor/specialroom/arcade,
-/area/station/science/testchamber)
 "xEO" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 8;
@@ -89824,7 +89923,7 @@ aaa
 ach
 chy
 chy
-xEF
+cia
 chy
 chy
 acO
@@ -90427,9 +90526,9 @@ aaa
 aaa
 aci
 aaa
-sBH
-mhc
-sBH
+ndT
+avk
+pEk
 aaa
 aci
 aaa
@@ -91333,9 +91432,9 @@ aaa
 aaa
 aci
 aaa
-sBH
-mhc
-sBH
+ndT
+avk
+pEk
 aaa
 ach
 xYr
@@ -91633,13 +91732,13 @@ aci
 aaa
 aaa
 aaa
-aci
-aaa
-sBH
-mhc
-sBH
-aaa
 ach
+abZ
+chy
+qSW
+chy
+abZ
+aaf
 bTC
 dCh
 cpp
@@ -91922,9 +92021,9 @@ aaa
 aaa
 acb
 paw
-afw
-aaa
-aaa
+aIX
+aMt
+gVp
 aaa
 aaa
 aaa
@@ -91935,13 +92034,13 @@ aaf
 chd
 aaa
 aaa
-ach
-abZ
-chy
-cia
-chy
-abZ
-aaf
+aci
+aaa
+dnJ
+oTc
+veo
+mpC
+mpC
 bTI
 fng
 bvo
@@ -92227,7 +92326,7 @@ uPl
 aMt
 dHS
 bvl
-bvl
+aaa
 aaa
 aaa
 aaa
@@ -92240,9 +92339,9 @@ aaa
 aci
 aaa
 vRn
-mhc
-bNY
-bPt
+pPY
+vRn
+aaa
 bPt
 bTE
 bUK
@@ -92542,8 +92641,8 @@ cpn
 aci
 aaa
 bNY
-mhc
-bNY
+oTc
+ruJ
 bVW
 cpq
 bTF
