@@ -31118,12 +31118,13 @@
 	},
 /area/station/hallway/secondary/exit)
 "bMA" = (
+/obj/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/construction{
 	desc = "A warning sign which reads 'CARGO HAZARD'.";
 	name = "CARGO HAZARD"
 	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/hangar/science)
+/turf/simulated/floor/plating,
+/area/station/science/testchamber)
 "bMB" = (
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine_caution_south"
@@ -92336,7 +92337,7 @@ aci
 aaa
 vRn
 pPY
-vRn
+bMA
 aaa
 dCh
 bTE
@@ -92938,7 +92939,7 @@ che
 bGc
 bKk
 bKk
-bMA
+bGc
 cib
 bGc
 bvo
