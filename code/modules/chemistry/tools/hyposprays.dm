@@ -4,7 +4,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 "salicylic_acid", "cryoxadone", "blood", "bloodc", "synthflesh",\
 "menthol", "cold_medicine", "antihistamine", "ipecac",\
 "booster_enzyme", "anti_fart", "goodnanites", "smelling_salt",\
-"hugs", "love")
+"hugs", "love", "milk")
 
 /* =================================================== */
 /* -------------------- Hypospray -------------------- */
