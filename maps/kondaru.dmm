@@ -32274,10 +32274,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"bPt" = (
-/obj/machinery/launcher_loader/west,
-/turf/simulated/floor/airless/plating,
-/area/space)
 "bPu" = (
 /turf/simulated/floor/white/grime,
 /area/station/hangar/science)
@@ -92021,7 +92017,7 @@ aaa
 aaa
 acb
 paw
-aIX
+aMt
 aMt
 gVp
 aaa
@@ -92342,7 +92338,7 @@ vRn
 pPY
 vRn
 aaa
-bPt
+dCh
 bTE
 bUK
 pwC
