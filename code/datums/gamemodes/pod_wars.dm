@@ -784,6 +784,10 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		..()
 		UnsubscribeProcess()
 
+	//make cloning faster, by a lot.
+	healing_multiplier()
+		return 10
+
 	proc/growclone_a_ghost()
 		var/list/to_search
 		if (istype(team))
@@ -2643,7 +2647,7 @@ Player Stats
 			var/selected = pick(possible_rewards)
 			var/point_val = possible_rewards[selected]
 			if(points + point_val > max_points + 5) continue
-			new selected(src)
+			var/obj/item/I = new selected(src)
 
 			// message_admins("[I.name] = [possible_rewards[selected]]pts")
 			//if possible_rewards[selected] is null or 0, we increment by 1 null or 1 we spawn 1, if some other number, we add that many points
