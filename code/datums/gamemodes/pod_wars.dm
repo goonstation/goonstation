@@ -31,7 +31,7 @@ var/list/pw_rewards_tier3 = null
 	var/datum/pod_wars_team/team_SY
 
 	var/atom/movable/screen/hud/score_board/board
-	var/round_limit = 40 MINUTES
+	var/round_limit = 80 MINUTES
 	var/force_end = 0
 	var/slow_delivery_process = 0			//number of ticks to skip the extra gang process loops
 
