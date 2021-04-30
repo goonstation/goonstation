@@ -1,5 +1,9 @@
 
 (t)fri apr 30 21
+(u)Walpvrgis
+(p)4505
+(e)🎨|sprites
+(*)Mimes now have a Fancy Mime Suit and Mime Dress to choose from as lvl 0 job rewards. Go forth and gesticulate wildly in style.
 (u)Carbadox
 (p)4333
 (e)⚖🆕|balance, feature
