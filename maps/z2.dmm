@@ -7211,7 +7211,7 @@
 /obj/item/gun/russianrevolver{
 	desc = "The cold-war classic!  Well, um, a model.  Probably?";
 	icon_state = "ak47";
-	name = "\improper AK-477 rifle"
+	name = "\improper JK-47 rifle"
 	},
 /turf/unsimulated/floor/escape{
 	dir = 1
