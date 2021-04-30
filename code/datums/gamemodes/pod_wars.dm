@@ -1325,7 +1325,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 /obj/table/wood/round/champagne
 	name = "champagne table"
 	desc = "It makes champagne. Who ever said spontanious generation was false?"
-	var/to_spawn = /obj/item/reagent_containers/food/drinks/bottle/champagne
+	var/to_spawn = /obj/item/reagent_containers/food/drinks/bottle/champagne/breakaway_glass
 	var/turf/T 		//the turf this obj spawns at.
 
 	New()
@@ -1333,8 +1333,9 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		T = get_turf(src)
 		while (T)
 			if (!locate(to_spawn) in T.contents)
-				var/obj/item/champers = new /obj/item/reagent_containers/food/drinks/bottle/champagne(T)
+				var/obj/item/champers = new /obj/item/reagent_containers/food/drinks/bottle/champagne/breakaway_glass(T)
 				champers.pixel_y = 10
+				champers.pixel_x = 1
 			sleep(8 SECONDS)
 
 	disposing()
@@ -2487,6 +2488,7 @@ Player Stats
     <th>Ctrl Pts</th>
   </tr>
 [p_stat_text]</table>
+<hr>
 <h2>Reward Stats</h2>
 <h3>Crates</h3>
 [build_rewards_text(src.crate_list)]
@@ -2531,9 +2533,9 @@ Player Stats
 			if (!istext(stat) || length(stat) <= 4) continue
 
 			if (copytext(stat, 1,3) == "NT")
-				cr_stats_NT += "<tr>[copytext(stat, 4)] = [L[stat]]</tr>"
+				cr_stats_NT += "<b>[copytext(stat, 4)]</b> = [L[stat]]<br>"
 			else if (copytext(stat, 1,3) == "SY")
-				cr_stats_SY += "<tr>[copytext(stat, 4)] = [L[stat]]</tr>"
+				cr_stats_SY += "<b>[copytext(stat, 4)]</b> = [L[stat]]<br>"
 
 		return {"
 
@@ -2551,7 +2553,7 @@ Player Stats
 		html_string = build_HTML()
 		for (var/client/C in clients)
 			C.Browse(html_string, "window=scores;size=700x500;title=Scores" )
-			boutput(C, "Use the command Display-Stats to view the stats screen if you missed it.")
+			boutput(C, "<strong style='color: #393;'>Use the command Display-Stats to view the stats screen if you missed it.</strong>")
 			C.mob.verbs += /client/proc/display_stats
 
 /client/proc/display_stats()
