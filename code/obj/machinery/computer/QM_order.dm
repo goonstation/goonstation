@@ -20,10 +20,10 @@
 		..()
 
 /obj/machinery/computer/ordercomp/console_upper
-	icon = 'icons/obj/computerpanel.dmi'
+	icon = 'icons/obj/machinery/computerpanel.dmi'
 	icon_state = "qmreq1"
 /obj/machinery/computer/ordercomp/console_lower
-	icon = 'icons/obj/computerpanel.dmi'
+	icon = 'icons/obj/machinery/computerpanel.dmi'
 	icon_state = "qmreq1"
 
 /obj/machinery/computer/ordercomp/attackby(I as obj, user as mob)

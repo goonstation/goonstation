@@ -709,10 +709,10 @@
 		return
 
 /obj/machinery/computer/bank_data/console_upper
-	icon = 'icons/obj/computerpanel.dmi'
+	icon = 'icons/obj/machinery/computerpanel.dmi'
 	icon_state = "bank1"
 /obj/machinery/computer/bank_data/console_lower
-	icon = 'icons/obj/computerpanel.dmi'
+	icon = 'icons/obj/machinery/computerpanel.dmi'
 	icon_state = "bank2"
 
 /obj/submachine/ATM

@@ -104,11 +104,11 @@
 	src.updateDialog()
 
 /obj/machinery/power/monitor/console_upper
-	icon = 'icons/obj/computerpanel.dmi'
+	icon = 'icons/obj/machinery/computerpanel.dmi'
 	icon_state = "power1"
 
 /obj/machinery/power/monitor/console_lower
-	icon = 'icons/obj/computerpanel.dmi'
+	icon = 'icons/obj/machinery/computerpanel.dmi'
 	icon_state = "power2"
 
 /obj/machinery/power/monitor/power_change()

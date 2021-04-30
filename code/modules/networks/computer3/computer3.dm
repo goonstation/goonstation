@@ -70,13 +70,13 @@
 
 
 			console_upper
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "medicalcomputer1"
 				base_icon_state = "azungarcomputer_upper"
 				setup_frame_type = /obj/computer3frame/azungarcomputer_upper
 
 			console_lower
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "medicalcomputer2"
 				base_icon_state = "azungarcomputer_lower"
 				setup_frame_type = /obj/computer3frame/azungarcomputer_lower
@@ -90,11 +90,11 @@
 			setup_starting_program = /datum/computer/file/terminal_program/secure_records
 
 			console_upper
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "securitycomputer1"
 				base_icon_state = "securitycomputer1"
 			console_lower
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "securitycomputer2"
 				base_icon_state = "securitycomputer2"
 
@@ -107,11 +107,11 @@
 			setup_drive_size = 80
 
 			console_upper
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "communications1"
 				base_icon_state = "communications1"
 			console_lower
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "communications2"
 				base_icon_state = "communications2"
 
@@ -160,11 +160,11 @@
 			setup_drive_size = 48
 
 			console_upper
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "engine1"
 				base_icon_state = "engine1"
 			console_lower
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "engine2"
 				base_icon_state = "engine2"
 			manta_computer
@@ -198,11 +198,11 @@
 		setup_starting_os = /datum/computer/file/terminal_program/os/terminal_os
 
 		console_upper
-			icon = 'icons/obj/computerpanel.dmi'
+			icon = 'icons/obj/machinery/computerpanel.dmi'
 			icon_state = "dwaine1"
 			base_icon_state = "dwaine1"
 		console_lower
-			icon = 'icons/obj/computerpanel.dmi'
+			icon = 'icons/obj/machinery/computerpanel.dmi'
 			icon_state = "dwaine2"
 			base_icon_state = "dwaine2"
 
@@ -212,11 +212,11 @@
 			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card/terminal
 
 			console_upper
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "dwaine1"
 				base_icon_state = "dwaine1"
 			console_lower
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "dwaine2"
 				base_icon_state = "dwaine2"
 
@@ -226,11 +226,11 @@
 			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card/terminal
 
 			console_upper
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "dwaine1"
 				base_icon_state = "dwaine1"
 			console_lower
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "dwaine2"
 				base_icon_state = "dwaine2"
 
