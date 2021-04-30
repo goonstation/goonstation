@@ -63,13 +63,13 @@
 /obj/item/device/audio_log/radioship/large
 	name = "audio log"
 	desc = "A bulky recording device."
-	icon = 'icons/obj/radiostation.dmi'
+	icon = 'icons/obj/items/radiostation.dmi'
 	icon_state = "audiolog_newLarge"
 
 /obj/item/device/audio_log/radioship/small
 	name = "audio log"
 	desc = "A handheld recording device."
-	icon = 'icons/obj/radiostation.dmi'
+	icon = 'icons/obj/items/radiostation.dmi'
 	icon_state = "audiolog_newSmall"
 
 /obj/item/device/audio_log/radioship/small/radioshow
@@ -126,7 +126,7 @@
 /obj/submachine/mixing_desk
 	name = "mixing desk"
 	desc = "A large and complicated audio mixing desk. Complete with fancy displays, dials, knobs and automated faders."
-	icon = 'icons/obj/radiostation.dmi'
+	icon = 'icons/obj/items/radiostation.dmi'
 	icon_state = "mixtable-2"
 	anchored = 1.0
 	density = 1
@@ -236,7 +236,7 @@
 /obj/submachine/record_player
 	name = "record player"
 	desc = "An old school vinyl record player sat on a set of drawers. Shame you don't have any records."
-	icon = 'icons/obj/radiostation.dmi'
+	icon = 'icons/obj/items/radiostation.dmi'
 	icon_state = "mixtable-3"
 	anchored = 1.0
 	density = 1
@@ -294,7 +294,7 @@
 /obj/item/record
 	name = "record"
 	desc = "A fairly large record. You imagine there are probably some rad songs on this."
-	icon = 'icons/obj/radiostation.dmi'
+	icon = 'icons/obj/items/radiostation.dmi'
 	icon_state = "record"
 	var/song = ""
 	var/record_name = ""
@@ -567,7 +567,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 // Record sets
 /obj/item/storage/box/record
 	name = "record sleeve"
-	icon = 'icons/obj/radiostation.dmi'
+	icon = 'icons/obj/items/radiostation.dmi'
 	icon_state = "sleeve_1"
 	desc = "A sturdy record sleeve, designed to hold multiple records."
 	max_wclass = 3
@@ -632,7 +632,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 /obj/submachine/tape_deck
 	name = "tape deck"
 	desc = "A large standalone reel-to-reel tape deck."
-	icon = 'icons/obj/radiostation.dmi'
+	icon = 'icons/obj/items/radiostation.dmi'
 	icon_state = "tapedeck"
 	anchored = 1.0
 	density = 1
@@ -679,7 +679,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 /obj/item/radio_tape
 	name = "compact tape"
 	desc = "A small audio tape. Though, it looks too big to fit in an audio log."
-	icon = 'icons/obj/radiostation.dmi'
+	icon = 'icons/obj/items/radiostation.dmi'
 	icon_state = "tape"
 	w_class = 2.0
 	var/audio = null

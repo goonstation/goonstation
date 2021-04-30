@@ -3849,7 +3849,7 @@
 "nVF" = (/obj/securearea,/turf/simulated/wall/auto/reinforced/supernorn,/area/listeningpost)
 "nVM" = (/obj/securearea,/turf/simulated/wall/auto/reinforced/supernorn,/area/station/maintenance/solar/west)
 "nVQ" = (/turf/simulated/floor/specialroom/gym,/area/station/medical/dome)
-"nVS" = (/obj/item/device/radio/intercom{desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show."; device_color = "#E52780"; icon = 'icons/obj/radiostation.dmi'; icon_state = "mixtable-1"; name = "broadcast radio"},/obj/table/wood/auto,/turf/simulated/floor/carpet/blue/standard/edge/north,/area/station/crew_quarters/radio/commentators_desk)
+"nVS" = (/obj/item/device/radio/intercom{desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show."; device_color = "#E52780"; icon = 'icons/obj/items/radiostation.dmi'; icon_state = "mixtable-1"; name = "broadcast radio"},/obj/table/wood/auto,/turf/simulated/floor/carpet/blue/standard/edge/north,/area/station/crew_quarters/radio/commentators_desk)
 "nWe" = (/obj/machinery/dispenser,/obj/decal/tile_edge/stripe{dir = 6; icon_state = "delivery2"},/turf/simulated/floor/orange/side{dir = 8},/area/station/engine/inner)
 "nWf" = (/obj/disposalpipe/segment/horizontal,/turf/simulated/wall/auto/reinforced/supernorn,/area/station/security/detectives_office)
 "nWt" = (/obj/machinery/disposal,/obj/disposalpipe/trunk{dir = 1},/obj/machinery/light{dir = 1; layer = 9.1; pixel_y = 21},/turf/simulated/floor/black,/area/station/chapel/sanctuary)

@@ -482,7 +482,7 @@
 "jw" = (/obj/machinery/vehicle/miniputt,/obj/machinery/light_switch/north{pixel_y = 30},/turf/simulated/floor/plating/airless/shuttlebay,/area/space)
 "jx" = (/obj/storage/closet/emergency,/turf/simulated/floor/caution/west,/area/space)
 "jy" = (/obj/machinery/light{dir = 8},/turf/simulated/floor,/area/space)
-"jz" = (/obj/table/wood/auto,/obj/item/device/radio/intercom{desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show."; device_color = "#E52780"; icon = 'icons/obj/radiostation.dmi'; icon_state = "mixtable-1"; name = "broadcast radio"},/turf/simulated/floor/carpet/grime,/area/space)
+"jz" = (/obj/table/wood/auto,/obj/item/device/radio/intercom{desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show."; device_color = "#E52780"; icon = 'icons/obj/items/radiostation.dmi'; icon_state = "mixtable-1"; name = "broadcast radio"},/turf/simulated/floor/carpet/grime,/area/space)
 "jA" = (/obj/table/wood/auto,/obj/submachine/mixing_desk,/turf/simulated/floor/carpet/grime,/area/space)
 "jB" = (/obj/table/wood/auto,/obj/submachine/record_player,/turf/simulated/floor/carpet/grime,/area/space)
 "jC" = (/obj/table/wood/auto,/obj/item/storage/box/record/radio/two{pixel_x = -4; pixel_y = 6},/obj/item/storage/box/record/radio/one,/turf/simulated/floor/carpet/grime,/area/space)
