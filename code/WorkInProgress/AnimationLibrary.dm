@@ -1070,7 +1070,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(transform = MD, time = 1, loop = -1, easing = LINEAR_EASING)
 
 // these don't use animate but they're close enough, idk
-/proc/showswirl(var/atom/target)
+/proc/showswirl(var/atom/target, var/play_sound = 1)
 	if (!target)
 		return
 	var/turf/target_turf = get_turf(target)
@@ -1079,7 +1079,8 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
-	playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
+	if (play_sound)
+		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
 	SPAWN_DBG(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
