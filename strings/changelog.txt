@@ -1,5 +1,9 @@
 
 (t)fri apr 30 21
+(u)Flaborized
+(p)4526
+(e)🎨|sprites
+(+)Added the ushanka, pinwheel hat and frog hat to the clothing booth. Added the boater hat to roundstart barbers.
 (u)Walpvrgis
 (p)4505
 (e)🎨|sprites
