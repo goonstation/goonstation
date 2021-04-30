@@ -1,5 +1,8 @@
 
 (t)fri apr 30 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Zipguns changed to deny ammunition of too large calibre (notably adding 40mm shells and antisingularity rockets to blacklist).
 (u)Flappybat
 (p)3751
 (e)⚖🆕🗺🎨|balance, feature, mapping, sprites
