@@ -336,115 +336,115 @@ ABSTRACT_TYPE(/obj/item/record/random)
 /obj/item/record/random/dance_on_a_space_volcano
 	name = "record - \"Dance On A Space Volcano\""
 	record_name = "Dance On A Space Volcano"
-	song = "sound/music/radio_station/dance_on_a_space_volcano.ogg"
+	song = "sound/radio_station/music/dance_on_a_space_volcano.ogg"
 
 /obj/item/record/random/adventure_1
 	name = "record - \"adventure track #1\""
 	record_name = "adventure track #1"
-	song = "sound/music/radio_station/adventure_1.mod"
+	song = "sound/radio_station/music/adventure_1.mod"
 
 /obj/item/record/random/adventure_2
 	name = "record - \"adventure track #2\""
 	record_name = "adventure track #2"
-	song = "sound/music/radio_station/adventure_2.s3m"
+	song = "sound/radio_station/music/adventure_2.s3m"
 
 /obj/item/record/random/adventure_3
 	name = "record - \"adventure track #3\""
 	record_name = "adventure track #3"
-	song = "sound/music/radio_station/adventure_3.ogg"
+	song = "sound/radio_station/music/adventure_3.ogg"
 
 /obj/item/record/random/adventure_4
 	name = "record - \"adventure track #4\""
 	record_name = "adventure track #4"
-	song = "sound/music/radio_station/adventure_4.ogg"
+	song = "sound/radio_station/music/adventure_4.ogg"
 
 /obj/item/record/random/adventure_5
 	name = "record - \"adventure track #5\""
 	record_name = "adventure track #5"
-	song = "sound/music/radio_station/adventure_5.ogg"
+	song = "sound/radio_station/music/adventure_5.ogg"
 
 /obj/item/record/random/adventure_6
 	name = "record - \"adventure track #6\""
 	record_name = "adventure track #6"
-	song = "sound/music/radio_station/adventure_6.mod"
+	song = "sound/radio_station/music/adventure_6.mod"
 
 /obj/item/record/random/upbeat_1
 	name = "record - \"upbeat track #1\""
 	record_name = "upbeat track #1"
-	song = "sound/music/radio_station/upbeat_1.ogg"
+	song = "sound/radio_station/music/upbeat_1.ogg"
 
 /obj/item/record/random/upbeat_2
 	name = "record - \"upbeat track #2\""
 	record_name = "upbeat track #2"
-	song = "sound/music/radio_station/upbeat_2.ogg"
+	song = "sound/radio_station/music/upbeat_2.ogg"
 
 /obj/item/record/random/chill_1
 	name = "record - \"chill track #1\""
 	record_name = "chill track #1"
-	song = "sound/music/radio_station/chill_1.ogg"
+	song = "sound/radio_station/music/chill_1.ogg"
 
 /obj/item/record/random/chill_2
 	name = "record - \"chill track #2\""
 	record_name = "chill track #2"
-	song = "sound/music/radio_station/chill_2.ogg"
+	song = "sound/radio_station/music/chill_2.ogg"
 
 /obj/item/record/random/chill_3
 	name = "record - \"chill track #3\""
 	record_name = "chill track #3"
-	song = "sound/music/radio_station/chill_3.ogg"
+	song = "sound/radio_station/music/chill_3.ogg"
 
 /obj/item/record/random/chill_4
 	name = "record - \"chill track #4\""
 	record_name = "chill track #4"
-	song = "sound/music/radio_station/chill_4.ogg"
+	song = "sound/radio_station/music/chill_4.ogg"
 
 /obj/item/record/january
 	record_name = "january"
-	song = "sound/radio_station/january.xm"
+	song = "sound/radio_station/music/january.xm"
 
 /obj/item/record/february
 	record_name = "february"
-	song = "sound/music/radio_station/february.xm"
+	song = "sound/radio_station/music/february.xm"
 
 /obj/item/record/march
 	record_name = "march"
-	song = "sound/music/radio_station/march.xm"
+	song = "sound/radio_station/music/march.xm"
 
 /obj/item/record/april
 	record_name = "april"
-	song = "sound/music/radio_station/april.xm"
+	song = "sound/radio_station/music/april.xm"
 
 /obj/item/record/may
 	record_name = "may"
-	song = "sound/music/radio_station/may.xm"
+	song = "sound/radio_station/music/may.xm"
 
 /obj/item/record/june
 	record_name = "june"
-	song = "sound/music/radio_station/june.xm"
+	song = "sound/radio_station/music/june.xm"
 
 /obj/item/record/july
 	record_name = "july"
-	song = "sound/music/radio_station/july.xm"
+	song = "sound/radio_station/music/july.xm"
 
 /obj/item/record/august
 	record_name = "august"
-	song = "sound/music/radio_station/august.xm"
+	song = "sound/radio_station/music/august.xm"
 
 /obj/item/record/september
 	record_name = "september"
-	song = "sound/music/radio_station/september.xm"
+	song = "sound/radio_station/music/september.xm"
 
 /obj/item/record/october
 	record_name = "october"
-	song = "sound/music/radio_station/october.xm"
+	song = "sound/radio_station/music/october.xm"
 
 /obj/item/record/november
 	record_name = "november"
-	song = "sound/music/radio_station/november.xm"
+	song = "sound/radio_station/music/november.xm"
 
 /obj/item/record/december
 	record_name = "december"
-	song = "sound/music/radio_station/december.xm"
+	song = "sound/radio_station/music/december.xm"
 
 /obj/item/record/spacebux // Many thanks to Camryn Buttes!!
 	add_overlay = 0
