@@ -1421,7 +1421,7 @@ obj/item/fragile_sword
 obj/item/whetstone
 	name = "whetstone"
 	desc = "A stone that can sharpen a blade and restore it to it's former glory."
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "whetstone"
 
 /*

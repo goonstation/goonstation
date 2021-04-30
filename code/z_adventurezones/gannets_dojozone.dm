@@ -66,7 +66,7 @@ Contents:
 * walls_sengoku.dmi
 * walls_paper.dmi
 * icons/turf/dojo.dmi <-- floor icons
-* icons/obj/dojo.dmi <-- object icons
+* icons/obj/adventurezones/dojo.dmi <-- object icons
 * radiotelescope.dm
 * browserassets/images/radioTelescope
 * icons/effects/224x160.dmi
@@ -88,7 +88,7 @@ Contents:
 	New()
 		..()
 
-		overlays += image(icon = 'icons/obj/dojo.dmi', icon_state = "sakura_overlay", layer = EFFECTS_LAYER_BASE)
+		overlays += image(icon = 'icons/obj/adventurezones/dojo.dmi', icon_state = "sakura_overlay", layer = EFFECTS_LAYER_BASE)
 
 /area/dojo
 	name = "dojo"
@@ -241,7 +241,7 @@ Contents:
 /obj/decal/fakeobjects/lotus
 	name = "lotus"
 	desc = "A pretty water garden flower."
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "lotus_1"
 
 /obj/decal/fakeobjects/birdhouse // i literally cannot find the correct name for this.
@@ -250,7 +250,7 @@ Contents:
 	anchored = 1
 	opacity = 0
 	layer = OBJ_LAYER
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "birdhouse"
 
 	light
@@ -273,7 +273,7 @@ Contents:
 	anchored = 1
 	opacity = 0
 	layer = EFFECTS_LAYER_UNDER_3
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "plantpot"
 
 /obj/decal/stone_lamp
@@ -293,7 +293,7 @@ Contents:
 
 /obj/decal/stage_edge/dojo
 	name = "stone wall"
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "stone_edge"
 
 /obj/decal/fakeobjects/furnace
@@ -307,7 +307,7 @@ Contents:
 /obj/decal/fakeobjects/anvil
 	name = "anvil"
 	desc = "A mighty iron anvil. It appears well worn."
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "anvil"
 	density = 1
 	anchored = 2
@@ -315,7 +315,7 @@ Contents:
 /obj/decal/fakeobjects/bellows
 	name = "bellows"
 	desc = "An old bellows. Used to keep a flame alight."
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "bellows"
 	density = 1
 	anchored = 2
@@ -323,7 +323,7 @@ Contents:
 /obj/decal/fakeobjects/swordrack
 	name = "katana rack"
 	desc = "A wooden rack of swords."
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "sword_wall_rack"
 	density = 1
 	anchored = 2
@@ -331,13 +331,13 @@ Contents:
 /obj/decal/fakeobjects/rake
 	name = "zen garden rake"
 	desc = "A little wooden tool for raking sand in to patterns."
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "rake"
 
 /obj/decal/fakeobjects/sealed_door
 	name = "laboratory door"
 	desc = "It appears to be sealed."
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "sealed_door"
 	density = 1
 	anchored = 2
@@ -350,7 +350,7 @@ Contents:
 	icon_state = "katana_sheathed"
 
 /obj/lantern // bad copypaste code from candle_light
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "lantern"
 	name = "paper lantern"
 	desc = "A brightly lit paper lantern."
@@ -384,7 +384,7 @@ Contents:
 			light.enable()
 
 /obj/table/hibachi // is there a better way to make it so you put items on an item when you click it? I bet.
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "hibachi"
 	name = "hibachi"
 	desc = "A small, wooden hibachi heater for boiling tea."
@@ -392,7 +392,7 @@ Contents:
 /obj/item/reagent_containers/food/drinks/teapot
 	name = "tetsubin"
 	desc = "A metal tetsubin teapot, for brewing multiple servings of tea."
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "tetsubin"
 	item_state = "tetsubin"
 	rc_flags = RC_SPECTRO
@@ -400,7 +400,7 @@ Contents:
 /obj/decal/wallscroll
  name = "wall scroll"
  desc = "A hanging paper wall scroll."
- icon = 'icons/obj/dojo.dmi'
+ icon = 'icons/obj/adventurezones/dojo.dmi'
  icon_state = "wallscroll_1"
 
 	scroll2
@@ -417,7 +417,7 @@ Contents:
 /obj/item/paper/book/scroll_sword
 	name = "sealed scroll"
 	desc = "An ancient scroll."
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "scroll"
 	info = {"<p>"A SWORD IS A SYMBOL AND USELESS OTHERWISE.<br>
 	A spear? That has use. An axe? That has use. The mace? Plenty of use against armoured foes.<br>
@@ -428,7 +428,7 @@ Contents:
 /obj/item/paper/book/scroll_1
 	name = "scroll"
 	desc = "An ancient scroll."
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "scroll"
 	info = {"<p>My work begins, I don't know for how long I am to be left here in solitude,<br>
 	but my keepers have built me a gilded cage of my designs.<br>
@@ -437,7 +437,7 @@ Contents:
 /obj/item/paper/book/scroll_2
 	name = "scroll"
 	desc = "An ancient scroll."
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "scroll"
 	info = {"<p>The company which hosts me have promised me great fortune in exchange for me returning to this work.<br>
 	I am loathed to capitulate to such men, for I know their designs and they intend to use me to do great harm.</p>"}
@@ -445,7 +445,7 @@ Contents:
 /obj/item/paper/book/scroll_3
 	name = "scroll"
 	desc = "An ancient scroll."
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "scroll"
 	info = {"<p>A smith such as myself knows intimately the shape and character of a blade, this is what they value of me.<br>
 	I am to construct a new weapon, sharper than any alloy before, light enough for any warrior to wield, deadly enough to be effective without a lifetime of study in swordfighting.<br>
@@ -454,7 +454,7 @@ Contents:
 /obj/item/paper/book/scroll_4
 	name = "scroll"
 	desc = "An ancient scroll."
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "scroll"
 	info = {"<p>My captors interupt my work once again, no blade I present to them will suffice.<br>
 	I commit my soul and spirit to the forging and tempering of this steel, but it is not keen enough.<br>
@@ -463,7 +463,7 @@ Contents:
 /obj/item/paper/book/scroll_5
 	name = "scroll"
 	desc = "An ancient scroll."
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "scroll"
 	info = {"<p>I cannot continue. From my adopted home my hosts have driven me deep underground, surrounded by noise and sparks, to apply my craft to new technology and scientific  method.<br>
 	The blade we have forged together is unlike any before it, hidden from sight but drawn in an instant, near weightless but brutishly powerful, it strikes with the heat of the sun.<br>
@@ -473,7 +473,7 @@ Contents:
 /obj/item/paper/book/scroll_shame
 	name = "scrawled scroll"
 	desc = "An ancient scroll."
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "scroll"
 	info = {"None can know of my shame."}
 

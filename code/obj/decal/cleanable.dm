@@ -1147,7 +1147,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/sakura
 	name = "sakura petals"
 	desc = "cherryblossom petals floating around from...somewhere?"
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "sakura_overlay"
 
 /obj/decal/cleanable/slime // made by slugs and snails

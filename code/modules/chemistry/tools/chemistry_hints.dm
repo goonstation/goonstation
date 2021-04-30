@@ -1,5 +1,5 @@
 /obj/item/chem_hint
-	icon = 'icons/obj/dojo.dmi'
+	icon = 'icons/obj/adventurezones/dojo.dmi'
 	icon_state = "scroll"
 	name = "Clue scroll"
 	desc = "A scroll containing a hint for a secret chemical recipe."
