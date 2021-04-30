@@ -1264,6 +1264,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	wages = PAY_UNTRAINED
 	limit = 0
 	slot_jump = /obj/item/clothing/under/misc/barber
+	slot_head = /obj/item/clothing/head/boater_hat
 	slot_foot = /obj/item/clothing/shoes/black
 	slot_poc1 = /obj/item/scissors
 	slot_poc2 = /obj/item/razor_blade

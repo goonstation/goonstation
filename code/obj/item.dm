@@ -562,15 +562,23 @@
 
 /obj/item/proc/stack_item(obj/item/other)
 	var/added = 0
-
-	if (other != src && check_valid_stack(other))
-		if (src.amount + other.amount > max_stack)
-			added = max_stack - src.amount
-		else
-			added = other.amount
-
-		src.change_stack_amount(added)
-		other.change_stack_amount(-added)
+	if(isrobot(other.loc))
+		max_stack = 500
+		if (other != src && check_valid_stack(src))
+			if (src.amount + other.amount > max_stack)
+				added = max_stack - other.amount
+			else
+				added = src.amount
+			src.change_stack_amount(-added)
+			other.change_stack_amount(added)
+	else
+		if (other != src && check_valid_stack(other))
+			if (src.amount + other.amount > max_stack)
+				added = max_stack - src.amount
+			else
+				added = other.amount
+			src.change_stack_amount(added)
+			other.change_stack_amount(-added)
 
 	return added
 

@@ -475,6 +475,20 @@
 	onAdd(var/mob/owner)
 		owner.bioHolder?.genetic_stability = 120
 
+/obj/trait/mildly_mutated
+	name = "Mildly Mutated (0) \[Genetics\]"
+	cleanName = "Mildly Mutated"
+	desc = "A random mutation in your gene pool starts activated."
+	id = "mildly_mutated"
+	icon_state = "mildly_mutatedB"
+	points = 0
+	isPositive = 0
+	category = "genetics"
+
+	onAdd(var/mob/owner)
+		var/datum/bioHolder/B = owner.bioHolder
+		B.ActivatePoolEffect(B.effectPool[pick(B.effectPool)], 1, 0)
+
 /obj/trait/stablegenes
 	name = "Stable Genes (-2) \[Genetics\]"
 	cleanName = "Stable Genes"
