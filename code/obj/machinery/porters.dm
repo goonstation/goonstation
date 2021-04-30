@@ -197,7 +197,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 /obj/item/remote/porter/port_a_medbay
 	name = "Port-A-Medbay Remote"
-	icon = 'icons/obj/porters.dmi'
+	icon = 'icons/obj/machinery/porters.dmi'
 	icon_state = "remote"
 	item_state = "electronic"
 	desc = "A remote that summons a Port-A-Medbay."
@@ -218,7 +218,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 // I suppose this device would be sorta useless with tele-block checks?
 /obj/item/remote/porter/port_a_sci
 	name = "Port-A-Sci Remote"
-	icon = 'icons/obj/porters.dmi'
+	icon = 'icons/obj/machinery/porters.dmi'
 	icon_state = "remote"
 	item_state = "electronic"
 	desc = "A remote that summons a Port-A-Sci."
@@ -238,7 +238,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 /obj/item/remote/porter/port_a_nanomed
 	name = "Port-A-NanoMed Remote"
-	icon = 'icons/obj/porters.dmi'
+	icon = 'icons/obj/machinery/porters.dmi'
 	icon_state = "remote"
 	item_state = "electronic"
 	desc = "A remote that summons a Port-A-NanoMed."
@@ -258,7 +258,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 /obj/item/remote/porter/port_a_gene
 	name = "Port-A-Gene Remote"
-	icon = 'icons/obj/porters.dmi'
+	icon = 'icons/obj/machinery/porters.dmi'
 	icon_state = "remote"
 	item_state = "electronic"
 	desc = "A remote that summons a Port-A-Gene."
@@ -278,7 +278,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 /obj/item/remote/busted
 	name = "Port-A-Busted Remote"
-	icon = 'icons/obj/porters.dmi'
+	icon = 'icons/obj/machinery/porters.dmi'
 	icon_state = "remote_busted"
 	desc = "A remote for a teleportation device. Looks like it's been through the laundry... or something..."
 
@@ -496,7 +496,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 /* replaced with an actual sleeper, see sleeper.dm
 /obj/machinery/port_a_medbay
 	name = "Port-A-Medbay"
-	icon = 'icons/obj/porters.dmi'
+	icon = 'icons/obj/machinery/porters.dmi'
 	icon_state = "sleeper"
 	var/image/image_lid = null
 	desc = "An emergency transportation device for critically injured patients."
@@ -804,7 +804,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 /obj/machinery/vending/port_a_nanomed
 	name = "Port-A-NanoMed"
 	desc = "A compact and portable version of the NanoMed Plus."
-	icon = 'icons/obj/porters.dmi'
+	icon = 'icons/obj/machinery/porters.dmi'
 	icon_state = "vend"
 	icon_deny = "vend-deny"
 	layer = FLOOR_EQUIP_LAYER1

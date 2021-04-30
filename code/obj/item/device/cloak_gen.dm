@@ -95,7 +95,7 @@
 /obj/item/remote/cloak_gen
 	name = "cloaking field generator remote"
 	desc = "A remote control for a cloaking field generator."
-	icon = 'icons/obj/porters.dmi'
+	icon = 'icons/obj/machinery/porters.dmi'
 	icon_state = "remote"
 	item_state = "electronic"
 	is_syndicate = 1

@@ -54,7 +54,7 @@
 /obj/item/adventurepuzzle/triggerer/remotecontrol
 	name = "remote control"
 	desc = "A remove control device."
-	icon = 'icons/obj/porters.dmi'
+	icon = 'icons/obj/machinery/porters.dmi'
 	icon_state = "remote"
 	var/use_delay = 20
 	var/next_use = 0
