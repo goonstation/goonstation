@@ -1,5 +1,9 @@
 
 (t)fri apr 30 21
+(u)Carbadox
+(p)4333
+(e)⚖🆕|balance, feature
+(*)Added a new iron oxide reagent. The recipe is iron, oxygen, acetic acid and salt, heated. It's now a required ingredient for thermite.
 (u)Flourish
 (+)The progress bar for entering a pod will now be interrupted by any movement.
 (t)thu apr 29 21
