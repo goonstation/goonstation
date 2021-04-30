@@ -43,7 +43,7 @@ ABSTRACT_TYPE(/datum/mail_order/audiovideo)
 	photocam
 		name = "Handheld Photo Camera"
 		desc = "Captures high-fidelity images with insta-develop film."
-		order_items = list(/obj/item/camera_test)
+		order_items = list(/obj/item/camera)
 		cost = PAY_TRADESMAN
 
 	photofilm
