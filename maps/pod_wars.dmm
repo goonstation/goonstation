@@ -9249,7 +9249,7 @@
 /area/pod_wars/spacejunk/miningoutpost)
 "Rt" = (
 /obj/warp_beacon/pod_wars{
-	control_point = "UBC67";
+	control_point = "UVB67";
 	name = "UVB-67"
 	},
 /turf/space,
