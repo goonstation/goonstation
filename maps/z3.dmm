@@ -16917,13 +16917,6 @@
 /obj/item/staple_gun,
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
-"aRR" = (
-/obj/table/auto,
-/obj/item/camera_test{
-	pixel_y = 6
-	},
-/turf/simulated/floor/white/grime,
-/area/derelict_ai_sat)
 "aRS" = (
 /turf/simulated/floor/caution/north{
 	dir = 8
@@ -25295,12 +25288,13 @@
 /obj/item/reagent_containers/food/snacks/breakfast,
 /turf/simulated/floor/caution/west,
 /area/mining/quarters)
-"oNB" = (
-/turf/simulated/wall/asteroid{
-	name = "weak compacted stone";
-	stone_color = "#575A5E"
+"lwM" = (
+/obj/table/auto,
+/obj/item/camera{
+	pixel_y = 6
 	},
-/area/space)
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
 "qBE" = (
 /obj/lattice{
 	dir = 1;
@@ -25339,6 +25333,12 @@
 	},
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
+"uIh" = (
+/turf/simulated/wall/asteroid{
+	name = "weak compacted stone";
+	stone_color = "#575A5E"
+	},
+/area/space)
 "vrI" = (
 /obj/stool/chair,
 /turf/simulated/floor/black,
@@ -65126,7 +65126,7 @@ aQK
 aQZ
 aRp
 aRo
-aRR
+lwM
 aSl
 aRo
 aTc
@@ -78096,8 +78096,8 @@ aac
 aac
 aac
 aac
-oNB
-oNB
+uIh
+uIh
 aaa
 aaa
 aaa

@@ -1,5 +1,10 @@
 
 (t)fri apr 30 21
+(u)Flappybat
+(p)3751
+(e)⚖🆕🗺🎨|balance, feature, mapping, sprites
+(*)Spies starting flash is replaced with a spy camera with a built in recharging flash! Use it to swap between flash and photo mode.
+(+)Sprite modification by Gannets
 (u)Kubius
 (p)4522
 (e)🆕🗺|feature, mapping

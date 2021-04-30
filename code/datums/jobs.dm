@@ -195,7 +195,7 @@ ABSTRACT_TYPE(/datum/job/command)
 		slot_back = /obj/item/storage/backpack/NT
 		slot_mask = /obj/item/clothing/mask/gas
 		slot_eyes = /obj/item/clothing/glasses/thermal
-		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/camera_test,/obj/item/gun/energy/egun)
+		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/camera,/obj/item/gun/energy/egun)
 
 		special_setup(var/mob/living/carbon/human/M)
 			..()
@@ -1301,7 +1301,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_poc1 = /obj/item/camera_film
 	slot_poc2 = /obj/item/spacecash/random/tourist // Exact amount is randomized.
 	slot_foot = /obj/item/clothing/shoes/tourist
-	slot_lhan = /obj/item/camera_test
+	slot_lhan = /obj/item/camera
 	slot_rhan = /obj/item/storage/photo_album
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -1568,7 +1568,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_jump = /obj/item/clothing/under/suit/red
 	slot_head = /obj/item/clothing/head/fedora
 	slot_lhan = /obj/item/storage/briefcase
-	slot_poc1 = /obj/item/camera_test
+	slot_poc1 = /obj/item/camera
 	slot_foot = /obj/item/clothing/shoes/brown
 	items_in_backpack = list(/obj/item/camera_film/large)
 
@@ -2601,7 +2601,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_poc1 = /obj/item/camera_film
 	slot_poc2 = /obj/item/spacecash/random/tourist // Exact amount is randomized.
 	slot_foot = /obj/item/clothing/shoes/tourist
-	slot_lhan = /obj/item/camera_test
+	slot_lhan = /obj/item/camera
 	slot_rhan = /obj/item/storage/photo_album
 
 	special_setup(var/mob/living/carbon/human/M)
