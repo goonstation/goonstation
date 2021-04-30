@@ -1,7 +1,7 @@
 /datum/projectile/claw
 
 	name = "crab claw"
-	icon = 'icons/obj/crabgun.dmi'
+	icon = 'icons/obj/items/crabgun.dmi'
 	icon_state = "proj_crab"
 
 	power = 50

@@ -485,10 +485,10 @@
 /obj/item/gun/energy/crabgun
 	name = "a strange crab"
 	desc = "Years of extreme genetic tinkering have finally led to the feared combination of crab and gun."
-	icon = 'icons/obj/crabgun.dmi'
+	icon = 'icons/obj/items/crabgun.dmi'
 	icon_state = "crabgun"
 	item_state = "crabgun-world"
-	inhand_image_icon = 'icons/obj/crabgun.dmi'
+	inhand_image_icon = 'icons/obj/items/crabgun.dmi'
 	w_class = 4.0
 	force = 12.0
 	throw_speed = 8
