@@ -317,7 +317,7 @@
 //magical crap
 /obj/item/enchantment_scroll
 	name = "Scroll of Enchantment"
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/items/wizard.dmi'
 	icon_state = "scroll_seal"
 	flags = FPRINT | TABLEPASS
 	w_class = 2.0

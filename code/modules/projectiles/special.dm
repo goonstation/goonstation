@@ -680,7 +680,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/homing/magicmissile
 	name = "magic missile"
 	sname = "magic missile"
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/items/wizard.dmi'
 	icon_state = "magicm"
 	shot_sound = null
 	power = 15

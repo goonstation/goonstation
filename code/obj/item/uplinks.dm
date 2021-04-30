@@ -901,7 +901,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 /obj/item/SWF_uplink
 	name = "Spellbook"
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/items/wizard.dmi'
 	icon_state = "spellbook"
 	item_state = "spellbook"
 	var/wizard_key = ""

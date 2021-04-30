@@ -7,7 +7,7 @@
 
 /obj/item/teleportation_scroll
 	name = "Teleportation Scroll"
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/items/wizard.dmi'
 	icon_state = "scroll_seal"
 	var/uses = 4.0
 	flags = FPRINT | TABLEPASS
@@ -63,7 +63,7 @@
 /obj/item/staff
 	name = "wizard's staff"
 	desc = "A magical staff used for channeling spells. It's got a little crystal ball on the end."
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/items/wizard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "staff"
 	item_state = "staff"

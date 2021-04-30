@@ -50,7 +50,7 @@
 			SPAWN_DBG(0)
 				var/obj/overlay/A = new /obj/overlay( holder.owner.loc )
 				A.icon_state = "icem"
-				A.icon = 'icons/obj/wizard.dmi'
+				A.icon = 'icons/obj/items/wizard.dmi'
 				A.name = "ice bolt"
 				A.anchored = 0
 				A.set_density(0)

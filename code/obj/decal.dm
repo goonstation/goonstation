@@ -524,7 +524,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/icefloor
 	name = "ice"
 	desc = "Slippery!"
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/items/wizard.dmi'
 	icon_state = "icefloor"
 	density = 0
 	opacity = 0

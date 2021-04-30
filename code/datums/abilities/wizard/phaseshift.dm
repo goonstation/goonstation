@@ -342,7 +342,7 @@
 
 	firepoof
 		icon_state = "fireball"
-		icon = 'icons/obj/wizard.dmi'
+		icon = 'icons/obj/items/wizard.dmi'
 		flags = TABLEPASS
 		stamina_mult = 1.1
 

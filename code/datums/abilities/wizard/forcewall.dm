@@ -50,7 +50,7 @@
 	desc = "A space wizard's magic wall."
 	name = "Forcewall"
 	desc = "An impenetrable magic barrier. Its only flaw is that it cannot last long."
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/items/wizard.dmi'
 	icon_state = "forcewall"
 	anchored = 1.0
 	opacity = 0

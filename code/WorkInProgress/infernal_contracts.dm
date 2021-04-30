@@ -362,7 +362,7 @@ END GUIDE
 
 /obj/item/contract
 	name = "infernal contract"
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/items/wizard.dmi'
 	icon_state = "scroll_seal"
 	var/uses = 4.0
 	flags = FPRINT | TABLEPASS

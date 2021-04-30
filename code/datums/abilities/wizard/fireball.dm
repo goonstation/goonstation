@@ -1,7 +1,7 @@
 /datum/projectile/fireball
 	name = "a fireball"
 	icon_state = "fireball"
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/items/wizard.dmi'
 	shot_sound = 'sound/effects/mag_fireballlaunch.ogg'
 
 	is_magical = 1
