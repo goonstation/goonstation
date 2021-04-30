@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 /obj/item/reagent_containers/food/snacks/candy
 	name = "candy"
 	desc = "Man, that shit looks good. I bet it's got nougat. Fuck."
@@ -36,6 +37,9 @@
 			src.razor_blade = 0
 			new /obj/item/razor_blade( get_turf(src) )
 		..()
+
+// just a non-abstract version
+/obj/item/reagent_containers/food/snacks/candy/regular
 
 /obj/item/reagent_containers/food/snacks/candy/nougat
 	name = "nougat bar"
@@ -164,7 +168,8 @@
 	real_name = "Hetz's Cup"
 	initial_reagents = list("chocolate" = 10)
 
-/obj/item/reagent_containers/food/snacks/candy/jellybean/
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
+/obj/item/reagent_containers/food/snacks/candy/jellybean
 	name = "jelly bean"
 	desc = "YOU SHOULDN'T SEE THIS OBJECT"
 	icon_state = "bean"

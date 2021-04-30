@@ -1663,6 +1663,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\EmergencyPodFab.dm"
 #include "code\WorkInProgress\explosion_particles.dm"
 #include "code\WorkInProgress\factionReputation.dm"
+#include "code\WorkInProgress\flourish.dm"
 #include "code\WorkInProgress\gehenna.dm"
 #include "code\WorkInProgress\GerhazoStuff.dm"
 #include "code\WorkInProgress\HaineWhatever.dm"

@@ -1898,11 +1898,20 @@ datum
 			mix_phrase = "Large white crystals precipitate out of the mixture."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		iron_oxide
+			name = "Iron Oxide"
+			id = "iron_oxide"
+			result = "iron_oxide"
+			required_reagents = list("iron" = 1, "oxygen" = 1, "acetic_acid" = 1, "salt" = 1)
+			result_amount = 4
+			mix_phrase = "The iron rapidly rusts."
+			required_temperature = T0C + 100
+
 		thermite
 			name = "Thermite"
 			id = "thermite"
 			result = "thermite"
-			required_reagents = list("aluminium" = 1, "iron" = 1, "oxygen" = 1)
+			required_reagents = list("aluminium" = 1, "iron_oxide" = 1)
 			result_amount = 3
 			mix_phrase = "The solution mixes into a reddish-brown powder."
 

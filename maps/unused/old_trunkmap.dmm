@@ -4356,7 +4356,7 @@
 /area/station/bridge)
 "ajz" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -4730,14 +4730,6 @@
 /obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/space)
-"akn" = (
-/obj/table/auto,
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/camera_test,
-/turf/simulated/floor,
-/area/station/crew_quarters/captain)
 "ako" = (
 /obj/table/auto,
 /obj/item/card/id/captains_spare,
@@ -5133,12 +5125,6 @@
 "alc" = (
 /obj/table/auto,
 /obj/item/paper_bin,
-/turf/simulated/floor,
-/area/station/crew_quarters/captain)
-"ald" = (
-/obj/displaycase{
-	displayed = new /obj/item/captaingun
-},
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
 "ale" = (
@@ -9971,7 +9957,7 @@
 "awC" = (
 /obj/machinery/light,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/cable{
 	icon_state = "1-8"
@@ -13841,18 +13827,6 @@
 /obj/item/ammo/bullets/a38/stun,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"aGn" = (
-/obj/machinery/light/small,
-/obj/table/wood{
-	dir = 9
-	},
-/obj/item/camera_test{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "aGo" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
@@ -14468,7 +14442,7 @@
 /area/station/crew_quarters/bar)
 "aHL" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -15035,9 +15009,6 @@
 /area/station/hallway/secondary/entry)
 "aJs" = (
 /turf/simulated/wall,
-/area/station/quartermaster/office)
-"aJt" = (
-/turf/simulated/floor,
 /area/station/quartermaster/office)
 "aJu" = (
 /obj/cable{
@@ -16121,10 +16092,6 @@
 /obj/window/reinforced/south,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"aMd" = (
-/obj/machinery/door/window/northleft,
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "aMe" = (
 /obj/machinery/door/window/northright,
 /turf/simulated/floor,
@@ -16621,9 +16588,6 @@
 /obj/item/paper_bin,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"aNm" = (
-/turf/simulated/wall,
-/area/station/quartermaster/office)
 "aNn" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -16724,7 +16688,7 @@
 /area/station/crew_quarters/cafeteria)
 "aNB" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/cafeteria)
@@ -17124,14 +17088,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"aOt" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "aOu" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -17395,7 +17351,7 @@
 	amount = 50
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/storage/primary)
@@ -17636,7 +17592,7 @@
 /obj/item/crowbar,
 /obj/machinery/light,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/device/flash,
 /turf/simulated/floor/red/side{
@@ -17681,14 +17637,6 @@
 "aPJ" = (
 /obj/stool/chair{
 	dir = 8
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/office)
-"aPK" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -18291,7 +18239,7 @@
 /area/station/hallway/primary/central)
 "aQW" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -18527,7 +18475,7 @@
 /area/station/quartermaster/office)
 "aRA" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -18959,14 +18907,6 @@
 /obj/window/reinforced/south,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
-"aSD" = (
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "aSE" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Cargo Bay Maintenance";
@@ -19439,7 +19379,7 @@
 /area/station/quartermaster/storage)
 "aTH" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/machinery/light_switch{
 	pixel_x = 25
@@ -20580,7 +20520,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/white,
 /area/station/science/lobby)
@@ -20644,7 +20584,7 @@
 /area/station/science/lab)
 "aWi" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
@@ -22185,7 +22125,7 @@
 /area/station/hydroponics/bay)
 "aZF" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
@@ -23422,7 +23362,7 @@
 "bcq" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -24602,7 +24542,7 @@
 	pixel_y = 10
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/extinguisher,
 /turf/simulated/floor/white,
@@ -25624,7 +25564,7 @@
 /area/station/crew_quarters/fitness)
 "bhp" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
@@ -26059,7 +25999,7 @@
 /area/station/hallway/primary/south)
 "biD" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -27936,7 +27876,7 @@
 /area/station/crew_quarters/locker)
 "bmN" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
@@ -34933,6 +34873,32 @@
 	},
 /turf/space,
 /area/space)
+"fLu" = (
+/obj/machinery/light/small,
+/obj/table/wood{
+	dir = 9
+	},
+/obj/item/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "detectives camera";
+	pictures_left = 30
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"rEU" = (
+/obj/table/auto,
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/camera,
+/turf/simulated/floor,
+/area/station/crew_quarters/captain)
+"uQc" = (
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/captain)
 
 (1,1,1) = {"
 aaa
@@ -47752,10 +47718,10 @@ avY
 aBN
 aHy
 aIs
-aJt
+aIy
 aKQ
 aLV
-aJt
+aIy
 aOp
 aPG
 aQx
@@ -47984,8 +47950,8 @@ aJu
 aLW
 aJu
 aOq
-aJt
-aJt
+aIy
+aIy
 aRA
 aSB
 aTB
@@ -48209,11 +48175,11 @@ aIu
 aJv
 aJv
 aLX
-aJt
+aIy
 aOr
-aJt
-aJt
-aJt
+aIy
+aIy
+aIy
 aSC
 aTC
 aUE
@@ -48436,11 +48402,11 @@ aIv
 aIy
 aIy
 aLY
-aJt
+aIy
 aOr
 aPH
-aJt
-aJt
+aIy
+aIy
 aSC
 aTD
 aUD
@@ -48663,11 +48629,11 @@ aHC
 aJw
 aKR
 aLZ
-aJt
+aIy
 aOr
-aJt
-aJt
-aJt
+aIy
+aIy
+aIy
 aSC
 aTE
 aUE
@@ -48892,8 +48858,8 @@ aJx
 aMa
 aNi
 aOr
-aJt
-aJt
+aIy
+aIy
 aRB
 aSB
 aTF
@@ -49345,7 +49311,7 @@ aJz
 aJx
 aMc
 aNk
-aOt
+aOr
 aPJ
 aIy
 aIy
@@ -49572,7 +49538,7 @@ aJx
 aJx
 aMc
 aNl
-aOt
+aOr
 aIy
 aIy
 aRD
@@ -49799,15 +49765,15 @@ aJA
 aJA
 aLY
 aIy
-aOt
+aOr
 aIy
 aIy
 aIy
 aIy
 aTI
-aOt
+aOr
 aIy
-aNm
+aJs
 aNq
 aJH
 aZB
@@ -50024,17 +49990,17 @@ aHC
 aIx
 aIy
 aIy
-aMd
+aLV
 aIy
 aOu
-aPK
+aOq
 aQz
 aRE
 aIy
 aIy
-aOt
+aOr
 aVJ
-aNm
+aJs
 aNq
 aJH
 aZB
@@ -50257,7 +50223,7 @@ aOv
 aPL
 aQA
 aRF
-aSD
+aJu
 aTJ
 aUH
 aVK
@@ -50479,16 +50445,16 @@ aHC
 aJC
 aJC
 aJC
-aNm
-aNm
-aNm
-aNm
-aNm
+aJs
+aJs
+aJs
+aJs
+aJs
 aSE
-aNm
-aNm
-aNm
-aNm
+aJs
+aJs
+aJs
+aJs
 aNq
 aJH
 aKS
@@ -51128,7 +51094,7 @@ aaa
 aaa
 aaa
 ajW
-akn
+rEU
 akZ
 alP
 ajW
@@ -53172,7 +53138,7 @@ aiP
 ajA
 aiM
 aku
-ald
+uQc
 alV
 ajW
 aab
@@ -55920,7 +55886,7 @@ aCS
 aDK
 aDH
 aFC
-aGn
+fLu
 aCS
 azi
 aAj
