@@ -559,7 +559,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	mode.declare_completion()
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] mode.declare_completion() done - calculating score")
 
-#ifndef  MAP_OVERRIDE_POD_WARS
 	score_tracker.calculate_score()
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] score calculated")
 
@@ -576,7 +575,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	boutput(world, score_tracker.escapee_facts())
 	boutput(world, score_tracker.heisenhat_stats())
-#endif
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] ai law display")
 	boutput(world, "<b>AIs and Cyborgs had the following laws at the end of the game:</b><br>[ticker.centralized_ai_laws.format_for_logs()]")
 

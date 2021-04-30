@@ -753,7 +753,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		if (get_pod_wars_team_num(user) == team_num)
 			message_admins("[user] just committed friendly fire against their team's [src]!")
 			logTheThing("combat", user, "\[POD WARS\][user] attacks their own team's critical system [src].")
-			
+
 			if (istype(ticker.mode, /datum/game_mode/pod_wars))
 				var/datum/game_mode/pod_wars/mode = ticker.mode
 				mode.stats_manager?.inc_friendly_fire(user)
@@ -1326,7 +1326,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	name = "champagne table"
 	desc = "It makes champagne. Who ever said spontanious generation was false?"
 	var/to_spawn = /obj/item/reagent_containers/food/drinks/bottle/champagne
-	var/turf/T 		//the turf this obj spawns at. 
+	var/turf/T 		//the turf this obj spawns at.
 
 	New()
 		..()
@@ -2523,18 +2523,17 @@ Player Stats
 		if (!islist(L) || !length(L))
 			logTheThing("debug", null, null, "Something trying to write one of the lists for stats...")
 			return
-		message_admins("list looping ")
 
 		var/cr_stats_NT = ""
 		var/cr_stats_SY = ""
 		for (var/stat in L)
-			message_admins("[stat]: [copytext(1,3)];[copytext(stat, 4)]")
+			// message_admins("[stat]:[copytext(1,3)];[copytext(stat, 4)]")
 			if (!istext(stat) || length(stat) <= 4) continue
 
 			if (copytext(stat, 1,3) == "NT")
-				cr_stats_NT = "<tr>[copytext(stat, 4)] = [L[stat]]</tr>"
+				cr_stats_NT += "<tr>[copytext(stat, 4)] = [L[stat]]</tr>"
 			else if (copytext(stat, 1,3) == "SY")
-				cr_stats_SY = "<tr>[copytext(stat, 4)] = [L[stat]]</tr>"
+				cr_stats_SY += "<tr>[copytext(stat, 4)] = [L[stat]]</tr>"
 
 		return {"
 
@@ -2552,6 +2551,18 @@ Player Stats
 		html_string = build_HTML()
 		for (var/client/C in clients)
 			C.Browse(html_string, "window=scores;size=700x500;title=Scores" )
+			boutput(C, "Use the command Display-Stats to view the stats screen if you missed it.")
+			C.mob.verbs += /client/proc/display_stats
+
+/client/proc/display_stats()
+	set name = "Display Stats"
+	var/datum/game_mode/pod_wars/mode = ticker.mode
+	if (istype(mode))
+		var/raw = alert(src,"Do you want to view the stats as raw html?", "Display Stats", "No", "Yes")
+		if (raw == "Yes")
+			src.Browse("<XMP>[mode.stats_manager?.html_string]</XMP>", "window=scores;size=700x500;title=Scores" )
+		else
+			src.Browse(mode.stats_manager?.html_string, "window=scores;size=700x500;title=Scores" )
 
 //for displaying info about players on round end to everyone.
 /datum/pw_player_stats
@@ -2592,8 +2603,8 @@ Player Stats
 		src.team_num = team_num
 		src.tier = tier
 
+		showswirl(src, 0)
 		playsound(loc, "sound/effects/mag_warp.ogg", 100, 1, flags = SOUND_IGNORE_SPACE)
-
 		//handle name, color, and access for types...
 		var/team_name_str
 		switch(team_num)
@@ -2694,7 +2705,7 @@ Player Stats
 proc/setup_pw_crate_lists()
 	pw_rewards_tier1 = list(/obj/item/storage/firstaid/regular = 1, /obj/item/reagent_containers/mender/both = 1, 	///obj/item/tank/plasma = 2
 		/obj/item/tank/oxygen = 1, /obj/item/old_grenade/energy_frag = 2, /obj/item/old_grenade/energy_concussion = 2, /obj/item/device/flash = 2, /obj/item/deployer/barricade = 4,
-		/obj/item/shipcomponent/mainweapon/taser = 3, /obj/item/shipcomponent/mainweapon/laser/short = 3, /obj/item/shipcomponent/mainweapon/foamer = 2,/obj/item/ammo/power_cell/high_power = 5,
+		/obj/item/shipcomponent/mainweapon/taser = 3, /obj/item/shipcomponent/mainweapon/laser/short = 3,/obj/item/ammo/power_cell/high_power = 5,
 		/obj/item/material_piece/steel{amount=10} = 1, /obj/item/material_piece/copper{amount=10} = 1, /obj/item/material_piece/glass{amount=10} = 1)
 
 	pw_rewards_tier2 = list(/obj/item/tank/jetpack = 1, /obj/item/old_grenade/smoke = 2,/obj/item/chem_grenade/flashbang = 2, /obj/item/barrier = 1,
