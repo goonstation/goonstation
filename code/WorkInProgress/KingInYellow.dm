@@ -84,7 +84,7 @@
 /obj/item/book_kinginyellow
 	name = "\"The King In Yellow\""
 	desc = ""
-	icon = 'icons/obj/writing.dmi'
+	icon = 'icons/obj/items/writing.dmi'
 	icon_state = "bookkiy"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"

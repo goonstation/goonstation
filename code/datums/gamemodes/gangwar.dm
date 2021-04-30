@@ -1184,7 +1184,7 @@
 /obj/item/gang_flyer
 	desc = "A gang recruitment flyer."
 	name = "gang recruitment flyer"
-	icon = 'icons/obj/writing.dmi'
+	icon = 'icons/obj/items/writing.dmi'
 	icon_state = "paper_caution"
 	w_class = 1.0
 	var/datum/gang/gang = null

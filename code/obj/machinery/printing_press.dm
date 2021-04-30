@@ -30,7 +30,7 @@
 	var/ink_color = "#000000" //what color is the text written in?
 	var/list/cover_designs = list("Grey", "Dull red", "Red", "Blue", "Green", "Yellow", "Dummies", "Robuddy", "Skull", "Latch", "Bee",\
 	"Albert", "Surgery", "Law", "Nuke", "Rat", "Pharma", "Bar") //list of covers to choose from
-	var/list/non_writing_icons = list("bible") //just the bible for now. !!!add covers to this list if their icon file isnt icons/obj/writing.dmi!!!
+	var/list/non_writing_icons = list("bible") //just the bible for now. !!!add covers to this list if their icon file isnt icons/obj/items/writing.dmi!!!
 
 	var/cover_color = "#FFFFFF" //white by default, what colour will our book be?
 	var/cover_symbol = "" //what symbol is on our front cover?

@@ -17,7 +17,7 @@
 /obj/item/pen
 	desc = "It's a normal black ink pen."
 	name = "pen"
-	icon = 'icons/obj/writing.dmi'
+	icon = 'icons/obj/items/writing.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "pen"
 	flags = FPRINT | ONBELT | TABLEPASS
@@ -671,7 +671,7 @@
 
 /obj/item/hand_labeler
 	name = "hand labeler"
-	icon = 'icons/obj/writing.dmi'
+	icon = 'icons/obj/items/writing.dmi'
 	icon_state = "labeler"
 	item_state = "labeler"
 	desc = "Make things seem more important than they really are with the hand labeler!<br/>Can also name your fancy new area by naming the fancy new APC you created for it."
@@ -792,7 +792,7 @@
 
 /obj/item/clipboard
 	name = "clipboard"
-	icon = 'icons/obj/writing.dmi'
+	icon = 'icons/obj/items/writing.dmi'
 	icon_state = "clipboard00"
 	var/obj/item/pen/pen = null
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
@@ -940,7 +940,7 @@
 /obj/item/folder //if any of these are bad numbers just change them im a bad idiot
 	name = "folder"
 	desc = "A folder for holding papers!"
-	icon = 'icons/obj/writing.dmi'
+	icon = 'icons/obj/items/writing.dmi'
 	icon_state = "folder" //futureproofed icons baby
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "folder"
@@ -998,7 +998,7 @@
 /obj/item/paper_booklet
 	name = "booklet"
 	desc = "A stack of papers stapled together in a sequence intended for reading in."
-	icon = 'icons/obj/writing.dmi'
+	icon = 'icons/obj/items/writing.dmi'
 	icon_state = "booklet-thin"
 	uses_multiple_icon_states = 1
 	//cogwerks - burning vars
@@ -1124,7 +1124,7 @@
 /obj/item/postit_stack
 	name = "SHOULDN'T BE SEEING THIS"
 	desc = "OLD AND BAD"
-	icon = 'icons/obj/writing.dmi'
+	icon = 'icons/obj/items/writing.dmi'
 	icon_state = "postit_stack"
 	/* force = 1
 	throwforce = 1

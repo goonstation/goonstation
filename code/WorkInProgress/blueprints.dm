@@ -301,7 +301,7 @@
 /obj/item/blueprint
 	name = "Blueprint"
 	desc = "A blueprint used to quickly construct rooms."
-	icon = 'icons/obj/writing.dmi'
+	icon = 'icons/obj/items/writing.dmi'
 
 	icon_state = "blueprint"
 	item_state = "sheet"

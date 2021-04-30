@@ -110,7 +110,7 @@
 	// i am so sorry for all of this. it is probably terrible.
 	name = "sticky note"
 	desc = "A piece of paper for taking notes, and then sticking those notes to things."
-	icon = 'icons/obj/writing.dmi'
+	icon = 'icons/obj/items/writing.dmi'
 	icon_state = "postit"
 	dont_make_an_overlay = 1
 	var/words = ""

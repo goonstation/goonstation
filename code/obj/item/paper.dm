@@ -27,7 +27,7 @@
 
 /obj/item/paper
 	name = "paper"
-	icon = 'icons/obj/writing.dmi'
+	icon = 'icons/obj/items/writing.dmi'
 	icon_state = "paper_blank"
 	uses_multiple_icon_states = 1
 	wear_image_icon = 'icons/mob/head.dmi'
@@ -213,7 +213,7 @@
 				var/list/stamp_info = list(list(stamp.current_state, stamp_x, stamp_y, stamp_r))
 				LAZYLISTADD(stamps, stamp_info)
 				/// This does the overlay stuff
-				var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[stamp.icon_state]");
+				var/image/stamp_overlay = image('icons/obj/items/writing.dmi', "paper_[stamp.icon_state]");
 				var/matrix/stamp_matrix = matrix()
 				stamp_matrix.Scale(1, 1)
 				stamp_matrix.Translate(rand(-2, 2), rand(-3, 2))
@@ -1060,7 +1060,7 @@ Please exercise caution in your testing, the result can best be described as a h
 
 /obj/item/paper_bin
 	name = "paper bin"
-	icon = 'icons/obj/writing.dmi'
+	icon = 'icons/obj/items/writing.dmi'
 	icon_state = "paper_bin1"
 	uses_multiple_icon_states = 1
 	amount = 10.0
@@ -1143,7 +1143,7 @@ Please exercise caution in your testing, the result can best be described as a h
 /obj/item/stamp
 	name = "rubber stamp"
 	desc = "A rubber stamp for stamping important documents."
-	icon = 'icons/obj/writing.dmi'
+	icon = 'icons/obj/items/writing.dmi'
 	icon_state = "stamp"
 	item_state = "stamp"
 	flags = FPRINT | TABLEPASS

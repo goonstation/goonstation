@@ -516,7 +516,7 @@
 /obj/item/toy/halloween2014spellbook
 	name = "Book of Spells"
 	desc = "An old spooky tome full of horrific eldritch magic. What insane mortal dares open it? Is it me?? Is it him??? Is it... yoooooooouuuuuu??????"
-	icon = 'icons/obj/writing.dmi'
+	icon = 'icons/obj/items/writing.dmi'
 	icon_state = "sbook"
 	var/uses = 1
 

@@ -25,7 +25,7 @@
 
 /obj/item/factionreset
 	name = "diplomatic correspondence"
-	icon = 'icons/obj/writing.dmi'
+	icon = 'icons/obj/items/writing.dmi'
 	icon_state = "stamped-thin"
 	desc = "Guaranteed to restore your relations with various groups. Or ... you know ... destroy them."
 	var/used = 0

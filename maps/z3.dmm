@@ -6240,7 +6240,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "A pen chained to the desk by little metal beads.  Pretty common at reception des-what the heck, the chain is attached to the wrong end.";
-	icon = 'icons/obj/writing.dmi';
+	icon = 'icons/obj/items/writing.dmi';
 	icon_state = "pen";
 	name = "chained pen";
 	pixel_y = 10
