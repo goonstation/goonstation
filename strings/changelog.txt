@@ -1,4 +1,28 @@
 
+(t)fri apr 30 21
+(u)Flaborized
+(p)4526
+(e)🎨|sprites
+(+)Added the ushanka, pinwheel hat and frog hat to the clothing booth. Added the boater hat to roundstart barbers.
+(u)Walpvrgis
+(p)4505
+(e)🎨|sprites
+(*)Mimes now have a Fancy Mime Suit and Mime Dress to choose from as lvl 0 job rewards. Go forth and gesticulate wildly in style.
+(u)Carbadox
+(p)4333
+(e)⚖🆕|balance, feature
+(*)Added a new iron oxide reagent. The recipe is iron, oxygen, acetic acid and salt, heated. It's now a required ingredient for thermite.
+(u)Flourish
+(+)The progress bar for entering a pod will now be interrupted by any movement.
+(t)thu apr 29 21
+(u)Kubius
+(p)4513
+(e)⚖|balance
+(*)Rathen's Secret nerfed - weaken duration reduced from 3 seconds to 0.1 seconds.
+(u)DimWhat
+(p)4510
+(e)⚖|balance
+(*)The amount of time to break a loyalty implant with a revolutionary flash has been lowered to 4 seconds.
 (t)tue apr 27 21
 (u)pali
 (e)🆕|feature
