@@ -766,7 +766,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	Voiceover by Brixx79 of Goonstation"}
 
-/obj/item/radio_tape/advertisement/chemistry
+/obj/item/radio_tape/advertisement/robotics
 	name = "bloodied compact tape stained with oil - 'Unofficial Robotics Advertisment tape'"
 	audio = "sound/radio_station/adverts/Robotics.ogg"
 	name_of_thing = "Unofficial Robotics Advertisment"
