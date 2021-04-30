@@ -27,7 +27,7 @@
 /mob/living/proc/create_submerged_images()
 	submerged_images.len = 0
 	for(var/i = 1, i <= 4, i++)
-		var/icon/I = new /icon('icons/obj/fluid.dmi', "overlay_[i]")
+		var/icon/I = new /icon('icons/obj/fluids/fluid.dmi', "overlay_[i]")
 		I.Blend(new /icon(src.icon, src.icon_state),ICON_MULTIPLY)
 
 		var/image/submerged_image = image(I)
@@ -43,7 +43,7 @@
 	var/mutable_appearance/ma
 
 	for(var/i = 1, i <= 4, i++)
-		var/icon/I = new /icon('icons/obj/fluid.dmi', "overlay_[i]")
+		var/icon/I = new /icon('icons/obj/fluids/fluid.dmi', "overlay_[i]")
 		var/icon/body = new /icon('icons/mob/human.dmi', "submerged_fill")
 
 		if (src.wear_suit)
@@ -100,7 +100,7 @@
 	var/mutable_appearance/ma
 
 	for(var/i = 1, i <= 4, i++)
-		var/icon/I = new /icon('icons/obj/fluid.dmi', "overlay_[i]")
+		var/icon/I = new /icon('icons/obj/fluids/fluid.dmi', "overlay_[i]")
 		I.Blend(new /icon(src.icon, src.icon_state),ICON_MULTIPLY)
 
 		var/image/submerged_image = image(I)

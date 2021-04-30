@@ -12,7 +12,7 @@
 /obj/machinery/drainage
 	anchored = 1
 	density = 0
-	icon = 'icons/obj/fluid.dmi'
+	icon = 'icons/obj/fluids/fluid.dmi'
 	var/base_icon = "drain"
 	icon_state = "drain"
 	plane = PLANE_FLOOR //They're supposed to be embedded in the floor.
@@ -115,7 +115,7 @@
 /obj/channel
 	anchored = 1
 	density = 0
-	icon = 'icons/obj/fluid.dmi'
+	icon = 'icons/obj/fluids/fluid.dmi'
 	icon_state = "channel"
 	name = "channel"
 	desc = "A channel that can restrict liquid flow in one direction."
@@ -216,7 +216,7 @@
 /obj/machinery/fluid_canister
 	anchored = 0
 	density = 1
-	icon = 'icons/obj/fluid.dmi'
+	icon = 'icons/obj/fluids/fluid.dmi'
 	var/base_icon = "blue"
 	icon_state = "blue0"
 	name = "fluid canister"
@@ -232,7 +232,7 @@
 
 	var/contained = 0
 
-	var/static/image/overlay_image = image('icons/obj/fluid.dmi')
+	var/static/image/overlay_image = image('icons/obj/fluids/fluid.dmi')
 
 	New()
 		..()
@@ -376,7 +376,7 @@
 /obj/sea_ladder_deployed
 	name = "deployed sea ladder"
 	desc = "A deployable sea ladder that will allow you to descend to and ascend from the trench."
-	icon = 'icons/obj/fluid.dmi'
+	icon = 'icons/obj/fluids/fluid.dmi'
 	icon_state = "ladder_on"
 
 	var/obj/sea_ladder_deployed/linked_ladder
@@ -418,7 +418,7 @@
 /obj/item/sea_ladder
 	name = "sea ladder"
 	desc = "A deployable sea ladder that will allow you to descend to and ascend from the trench."
-	icon = 'icons/obj/fluid.dmi'
+	icon = 'icons/obj/fluids/fluid.dmi'
 	icon_state = "ladder_off"
 	item_state = "folded_chair"
 	w_class = 4.0

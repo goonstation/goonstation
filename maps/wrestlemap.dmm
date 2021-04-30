@@ -3569,7 +3569,7 @@
 "mRp" = (/obj/machinery/light{dir = 1; layer = 9.1; pixel_y = 22},/obj/decoration/clock{pixel_y = 30},/obj/disposalpipe/trunk/ejection{dir = 8},/obj/machinery/disposal/brig,/turf/simulated/floor/black,/area/station/security/secwing{name = "Security Lobby"})
 "mRB" = (/obj/machinery/power/terminal,/obj/cable,/turf/simulated/floor/plating,/area/station/engine/power)
 "mRF" = (/obj/machinery/firealarm{dir = 8; pixel_x = -24},/obj/machinery/atmospherics/pipe/simple/northeast,/obj/disposalpipe/segment/bent/west,/obj/machinery/light/emergency{dir = 8},/turf/simulated/floor,/area/station/engine/inner)
-"mRP" = (/obj/pool/perspective{density = 0; dir = 1; tag = "icon-pool (NORTH)"},/obj/pool{density = 0; dir = 8; icon = 'icons/obj/fluid.dmi'; icon_state = "ladder"; name = "ladder"},/obj/channel{required_to_pass = 210},/turf/simulated/floor/blue,/area/station/crew_quarters/pool)
+"mRP" = (/obj/pool/perspective{density = 0; dir = 1; tag = "icon-pool (NORTH)"},/obj/pool{density = 0; dir = 8; icon = 'icons/obj/fluids/fluid.dmi'; icon_state = "ladder"; name = "ladder"},/obj/channel{required_to_pass = 210},/turf/simulated/floor/blue,/area/station/crew_quarters/pool)
 "mRZ" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor,/area/station/security/main)
 "mSc" = (/obj/machinery/light/incandescent/cool,/obj/table/wood/auto,/obj/item/storage/box/record/radio/two{pixel_x = -4; pixel_y = 6},/obj/item/storage/box/record/radio/one,/turf/simulated/floor/carpet/blue/standard/edge/sw,/area/station/crew_quarters/radio/commentators_desk)
 "mSx" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/grey,/area/station/maintenance/disposal)

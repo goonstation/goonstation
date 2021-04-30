@@ -4549,7 +4549,7 @@
 "bJy" = (/obj/item/storage/toilet{dir = 4},/obj/disposalpipe/segment/transport{dir = 4},/obj/landmark/start{name = "Security Officer"},/obj/item/storage/pill_bottle/cyberpunk{layer = 2.4},/obj/decal/cleanable/dirt,/turf/simulated/floor/black,/area/station/security/brig)
 "bJz" = (/obj/pool/perspective{dir = 9; tag = "icon-pool (NORTHWEST)"},/turf/simulated/floor/blue,/area/station/crew_quarters/pool)
 "bJA" = (/obj/pool/perspective{dir = 1; tag = "icon-pool (NORTH)"},/turf/simulated/floor/blue,/area/station/crew_quarters/pool)
-"bJB" = (/obj/pool/perspective{density = 0; dir = 1; tag = "icon-pool (NORTH)"},/obj/pool{density = 0; dir = 8; icon = 'icons/obj/fluid.dmi'; icon_state = "ladder"; name = "ladder"},/obj/channel{required_to_pass = 210},/turf/simulated/floor/blue,/area/station/crew_quarters/pool)
+"bJB" = (/obj/pool/perspective{density = 0; dir = 1; tag = "icon-pool (NORTH)"},/obj/pool{density = 0; dir = 8; icon = 'icons/obj/fluids/fluid.dmi'; icon_state = "ladder"; name = "ladder"},/obj/channel{required_to_pass = 210},/turf/simulated/floor/blue,/area/station/crew_quarters/pool)
 "bJC" = (/obj/pool/perspective{dir = 5; tag = "icon-pool (NORTHEAST)"},/turf/simulated/floor/blue,/area/station/crew_quarters/pool)
 "bJD" = (/turf/simulated/floor/blue/checker{dir = 1},/area/station/crew_quarters/pool)
 "bJE" = (/obj/table/auto,/obj/machinery/camera{c_tag = "autotag"; dir = 8; name = "autoname - SS13"; pixel_x = 10; tag = ""},/obj/item/device/light/candle/small,/obj/machinery/light_switch/east,/turf/simulated/floor/bluewhite{dir = 6},/area/station/crew_quarters/pool)

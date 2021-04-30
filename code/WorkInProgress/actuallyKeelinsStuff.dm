@@ -3244,14 +3244,14 @@ Returns:
 	anchored = 1
 	density = 0
 	dir = 8
-	icon = 'icons/obj/fluid.dmi'
+	icon = 'icons/obj/fluids/fluid.dmi'
 	icon_state = "ladder"
 
 /obj/pool/perspective
 	name = "pool"
 	density = 1
 	anchored = 1
-	icon = 'icons/obj/fluid.dmi'
+	icon = 'icons/obj/fluids/fluid.dmi'
 	plane = PLANE_FLOOR
 	icon_state = "pool"
 

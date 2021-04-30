@@ -12387,7 +12387,7 @@
 /obj/pool{
 	density = 0;
 	dir = 8;
-	icon = 'icons/obj/fluid.dmi';
+	icon = 'icons/obj/fluids/fluid.dmi';
 	icon_state = "ladder";
 	name = "ladder"
 	},
@@ -25468,7 +25468,7 @@
 	},
 /obj/table/wood/auto,
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2";

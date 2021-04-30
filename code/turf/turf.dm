@@ -1078,7 +1078,7 @@
 
 /turf/unsimulated/pool/no_animate
 	name = "pool floor"
-	icon = 'icons/obj/fluid.dmi'
+	icon = 'icons/obj/fluids/fluid.dmi'
 	icon_state = "poolwaterfloor"
 
 	New()
@@ -1095,7 +1095,7 @@
 
 /turf/simulated/pool/no_animate
 	name = "pool floor"
-	icon = 'icons/obj/fluid.dmi'
+	icon = 'icons/obj/fluids/fluid.dmi'
 	icon_state = "poolwaterfloor"
 
 	New()

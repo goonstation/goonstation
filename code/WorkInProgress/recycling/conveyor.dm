@@ -563,7 +563,7 @@
 	var/speedup = 0
 	var/speedup_max = 3.5
 	var/speedup_bonus = 1
-	icon = 'icons/obj/fluid.dmi'
+	icon = 'icons/obj/fluids/fluid.dmi'
 	icon_state = "battery-0"
 	name = "carousel power unit"
 	desc = "All power dumped into this power unit will boost the speed of the station's cargo carousel."

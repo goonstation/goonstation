@@ -31,7 +31,7 @@ var/mutable_appearance/fluid_ma
 /obj/fluid
 	name = "fluid"
 	desc = "It's a free-flowing liquid state of matter!"
-	icon = 'icons/obj/fluid.dmi'
+	icon = 'icons/obj/fluids/fluid.dmi'
 	icon_state = "15"
 	anchored = 1
 	mouse_opacity = 1
@@ -634,7 +634,7 @@ var/mutable_appearance/fluid_ma
 		if (wall_overlay_images[overlay_key])
 			overlay = wall_overlay_images[overlay_key]
 		else
-			overlay = image('icons/obj/fluid.dmi', "blank")
+			overlay = image('icons/obj/fluids/fluid.dmi', "blank")
 
 		var/over_obj = !(istype(src.loc, /turf/simulated/wall) || istype(src.loc,/turf/unsimulated/wall/)) //HEY HEY MBC THIS SMELLS THINK ABOUT IT LATER
 		overlay.layer = over_obj ? 4 : src.layer
