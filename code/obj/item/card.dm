@@ -161,18 +161,16 @@ GAUNTLET CARDS
 	var/team = 0
 #ifdef MAP_OVERRIDE_POD_WARS
 	//You can only pick this up if you're on the correct team, otherwise it explodes.
-	pickup(mob/user)
-		var/user_team = user?.mind?.special_role
-		if (user_team == "NanoTrasen" && team == 1)
-			..()
-		else if (user_team == "Syndicate" && team == 2)
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team)
 			..()
 		else
 			var/flavor = pick("doesn't like you", "can tell you don't deserve it", "saw into your very soul and found you wanting", "hates you", "thinks you stink", "thinks you two should start seeing other people", "doesn't trust you", "finds your lack of faith disturbing", "is just not that into you", "gently weeps")
 			//stolen from Captain's Explosive Spare ID down below...
-			boutput(user, "<span class='alert'>The ID card [flavor] <b>and explodes!</b></span>")
+			boutput(user, "<span class='alert'>The ID card [flavor] and <b>explodes!</b></span>")
 			make_fake_explosion(src)
 			user.u_equip(src)
+			src.dropped(user)
 			qdel(src)
 #endif
 

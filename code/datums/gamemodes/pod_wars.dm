@@ -32,6 +32,8 @@ var/list/pw_rewards_tier3 = null
 
 	var/atom/movable/screen/hud/score_board/board
 	var/round_limit = 80 MINUTES
+	var/activate_control_points_time = 15 MINUTES
+
 	var/force_end = 0
 	var/slow_delivery_process = 0			//number of ticks to skip the extra gang process loops
 
@@ -128,6 +130,11 @@ var/list/pw_rewards_tier3 = null
 
 	SPAWN_DBG(-1)
 		setup_asteroid_ores()
+
+	SPAWN_DBG(activate_control_points_time)
+		command_alert("There's a low spectrum signal that's been detected that might effect various computers in the area.","Control Point Computers Online")
+		for (var/datum/control_point/P in src.control_points)
+			P?.computer.can_be_captured = 1
 
 	//setup rewards crate lists
 	setup_pw_crate_lists()
@@ -314,12 +321,12 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 	switch(team_num)
 		if (TEAM_NANOTRASEN)
-			src.playsound_to_team(team_NT, "sound/voice/pod_wars_voices/{PWTN}Objective_Secured-[rand(1,2)].ogg")
-			src.playsound_to_team(team_SY, "sound/voice/pod_wars_voices/{PWTN}Lost_[true_name]-[rand(1,2)].ogg")
+			src.playsound_to_team(team_NT, "sound/voice/pod_wars_voices/{PWTN}Objective_Secured-[rand(1,2)].ogg", 60)
+			src.playsound_to_team(team_SY, "sound/voice/pod_wars_voices/{PWTN}Lost_[true_name]-[rand(1,2)].ogg", 60)
 
 		if (TEAM_SYNDICATE)
-			src.playsound_to_team(team_SY, "sound/voice/pod_wars_voices/{PWTN}Objective_Secured-[rand(1,2)].ogg")
-			src.playsound_to_team(team_NT, "sound/voice/pod_wars_voices/{PWTN}Lost_[true_name]-[rand(1,2)].ogg")
+			src.playsound_to_team(team_SY, "sound/voice/pod_wars_voices/{PWTN}Objective_Secured-[rand(1,2)].ogg", 60)
+			src.playsound_to_team(team_NT, "sound/voice/pod_wars_voices/{PWTN}Lost_[true_name]-[rand(1,2)].ogg", 60)
 
 /datum/game_mode/pod_wars/proc/handle_point_change(var/datum/pod_wars_team/team)
 	var/fraction = round (team.points/team.max_points, 0.01)
@@ -376,11 +383,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		team.first_system_destroyed = 1
 		src.playsound_to_team(team, "sound/voice/pod_wars_voices/{PWTN}Crit_System_Destroyed.ogg")
 	else
-		src.playsound_to_team(team, "sound/effects/ship_alert_major.ogg")
-
-	// for (var/datum/mind/M in team.members)
-	// 	if (M.current)
-	// 		M.current.playsound_local(M.current, "sound/effects/ship_alert_major.ogg", 50, 0)
+		src.playsound_to_team(team, "sound/effects/ship_alert_major.ogg", 60)
 
 	//Gah, why? Gotta say "The" I guess.
 	var/team_name_string = team?.name
@@ -396,10 +399,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		if (TEAM_SYNDICATE)
 			team = team_SY
 
-	for (var/datum/mind/M in team.members)
-		if (M.current)
-			boutput(M.current, "<h3><span class='alert'>Your team's [CS] is under attack!</span></h3>")
-			M.current.playsound_local(M.current, "sound/effects/ship_alert_minor.ogg", 50, 0)
+	src.playsound_to_team(team, "sound/effects/ship_alert_minor.ogg")
 
 
 /datum/game_mode/pod_wars/check_finished()
@@ -448,13 +448,13 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 	src.playsound_to_team(loser, "sound/voice/pod_wars_voices/{PWTN}Lose-[rand(1,2)].ogg")
 
 	// output the player stats on its own popup.
-	stats_manager?.display_HTML_to_clients()
+	stats_manager.display_HTML_to_clients()
 	..()
 
 //Plays a sound for a particular team.
 //pw_team can be the team datum or TEAM_NANOTRASEN|TEAM_SYNDICATE
 //filepath; sound file path as a string.
-/datum/game_mode/pod_wars/proc/playsound_to_team(var/pw_team, var/filepath)
+/datum/game_mode/pod_wars/proc/playsound_to_team(var/pw_team, var/filepath, var/volume = 75)
 	if (isnull(pw_team) || isnull(filepath))
 		return 0
 
@@ -484,7 +484,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 
 	message_admins("filepath is now: [filepath]")
 	for (var/datum/mind/M in team.members)
-		M.current.playsound_local(M.current, filepath, 100, 0, flags = SOUND_IGNORE_SPACE)
+		M.current.playsound_local(M.current, filepath, volume, 0, flags = SOUND_IGNORE_SPACE)
 
 	return 1
 
@@ -696,7 +696,20 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 			if(D_SLASHING)
 				damage_mult = 0.75
 
-		take_damage(damage*damage_mult)
+		//for detecting friendly fire. This bit stolen from logging.dm
+		var/shooter_data = null
+		if (P.mob_shooter)
+			shooter_data = P.mob_shooter
+		else if (ismob(P.shooter))
+			var/mob/M = P.shooter
+			shooter_data = M
+		var/obj/machinery/vehicle/V
+		if (istype(P.shooter,/obj/machinery/vehicle/))
+			V = P.shooter
+			if (!shooter_data)
+				shooter_data = V.pilot
+
+		take_damage(damage*damage_mult, shooter_data)
 		return
 
 	attackby(var/obj/item/W, var/mob/user)
@@ -737,13 +750,13 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 			return	//don't log if damage isn't done by a user (like it's critters are turrets)
 
 		//Friendly fire check
-		var/friendly_fire = 0
 		if (get_pod_wars_team_num(user) == team_num)
-			friendly_fire = 1
 			message_admins("[user] just committed friendly fire against their team's [src]!")
-
-		if (friendly_fire)
 			logTheThing("combat", user, "\[POD WARS\][user] attacks their own team's critical system [src].")
+			
+			if (istype(ticker.mode, /datum/game_mode/pod_wars))
+				var/datum/game_mode/pod_wars/mode = ticker.mode
+				mode.stats_manager?.inc_friendly_fire(user)
 
 //////////////special clone pod///////////////
 
@@ -784,9 +797,9 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		..()
 		UnsubscribeProcess()
 
-	//make cloning faster, by a lot.
+	//make cloning faster, by a lot. lol, I gues speed modules don't do anything when I override this...
 	healing_multiplier()
-		return 10
+		return 15
 
 	proc/growclone_a_ghost()
 		var/list/to_search
@@ -1313,16 +1326,20 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	name = "champagne table"
 	desc = "It makes champagne. Who ever said spontanious generation was false?"
 	var/to_spawn = /obj/item/reagent_containers/food/drinks/bottle/champagne
+	var/turf/T 		//the turf this obj spawns at. 
 
 	New()
 		..()
-		var/turf/T
-		while (1)
-			T = get_turf(src)
+		T = get_turf(src)
+		while (T)
 			if (!locate(to_spawn) in T.contents)
 				var/obj/item/champers = new /obj/item/reagent_containers/food/drinks/bottle/champagne(T)
 				champers.pixel_y = 10
-			sleep(10 SECONDS)
+			sleep(8 SECONDS)
+
+	disposing()
+		T = null
+		..()
 
 
 
@@ -1792,16 +1809,14 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 	//You can only pick this up if you're on the correct team, otherwise it explodes.
 	//exactly the same as /obj/item/card/id/pod_wars. Copy paste bad, but these two things I don't want people stealing, would be real lame... Might get rid of in the future if this structure isn't required.
-	pickup(mob/user)
-		var/user_team = user?.mind?.special_role
-		if (user_team == "NanoTrasen" && team == 1)
-			..()
-		else if (user_team == "Syndicate" && team == 2)
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team)
 			..()
 		else
-			boutput(user, "<span class='alert'>The headset <b>explodes as you reach out to grab it!</b></span>")
+			boutput(user, "<span class='alert'>The headset <b>explodes</b> as you reach out to grab it!</span>")
 			make_fake_explosion(src)
 			user.u_equip(src)
+			src.dropped(user)
 			qdel(src)
 
 /obj/item/device/radio/headset/pod_wars/nanotrasen
@@ -1846,6 +1861,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	var/owner_team = 0			//Which team currently controls this computer/area? 0 = neutral, 1 = NT, 2 = SY
 	var/capturing_team = 0		//Which team is capturing this computer/area? 0 = neutral, 1 = NT, 2 = SY 			//UNUSED
 	var/datum/control_point/ctrl_pt
+	var/can_be_captured = 0		//can't capture this point until it's set to TRUE. Will be done by control points at 15 MIN atm.
 
 	New()
 		..()
@@ -1871,9 +1887,13 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		ctrl_pt.capture(user, team_num)
 
 	attack_hand(mob/user as mob)
+		if (!can_be_captured)
+			boutput(user, "This computer seems to be frozen, you can't input any commands to run the control protocols for this satelite...")
+			playsound(src, "sound/machines/buzz-sigh.ogg", 30, 1, flags = SOUND_IGNORE_SPACE)
+			return 0
 		if (owner_team != get_pod_wars_team_num(user))
 			var/duration = is_commander(user) ? 10 SECONDS : 20 SECONDS
-			playsound(get_turf(src), "sound/machines/warning-buzzer.ogg", 150, 1)	//loud
+			playsound(get_turf(src), "sound/machines/warning-buzzer.ogg", 150, 1, flags = SOUND_IGNORE_SPACE)	//loud
 
 			SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/control_point_computer/proc/capture, list(user),\
 			 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!")
@@ -1962,7 +1982,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		light.set_color(light_r, light_g, light_b)
 
 /obj/warp_beacon/pod_wars
-	var/control_point 		//currently only use values FORTUNA, RELIANT, UVB67
+	var/control_point 		//currently only use values FORTUNA, RELIANT, UVB67 		//set in map file
 	var/current_owner		//which team is the owner right now. Acceptable values: null, TEAM_NANOTRASEN = 1, TEAM_SYNDICATE = 1
 
 	ex_act()
@@ -1990,7 +2010,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	var/capture_rate = 1				//1 or 3 based on if a commander has entered their code.  				/////////UNUSED
 	var/capturing_team					//0 if not moving, either uncaptured or at max capture. 1=NT, 2=SY  	/////////UNUSED
 	var/owner_team = 0						//1=NT, 2=SY
-	var/true_name						//backend name, var/name is the user readable name
+	var/true_name						//backend name, var/name is the user readable name. Used for warp beacon searching, etc.
 	var/last_cap_time					//Time it was last captured.
 	var/crate_rewards_tier = 0			//var 0-3 none/low/med/high. Should correlate to holding the point for <5 min, <10 min, <15
 	var/datum/game_mode/pod_wars/mode
@@ -2004,7 +2024,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		src.mode = mode
 
 		for(var/obj/warp_beacon/pod_wars/B in warp_beacons)
-			if (B.control_point == name)
+			if (B.control_point == true_name)
 				src.beacons += B
 
 	//deliver crate for appropriate tier.in front of this control point.
@@ -2198,7 +2218,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 //barricade deployer
 
 /obj/item/deployer/barricade
-	name = "barricade parts"
+	name = "barricade deployer"
 	desc = "A collection of parts that can be used to make some kind of barricade."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "barricade"
@@ -2309,6 +2329,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 	var/list/item_rewards = list()		//assoc list of item name -> amount
 	var/list/crate_list = list()			//assoc list of crate tier -> amount
+	var/html_string
 
 	proc/add_item_reward(var/string, var/team_num, var/amt = 1)
 		switch(team_num)
@@ -2444,7 +2465,9 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
  <td>[round(stat.alcohol_metabolized, 0.01)](u)</td>
  <td>[stat.farts]</td>
  <td>[stat.control_point_capture_count]</th>  d
-</tr>
+</tr>"}
+
+		return {"
 <h2>
 Game Stats
 </h2>
@@ -2464,9 +2487,10 @@ Player Stats
     <th>Ctrl Pts</th>
   </tr>
 [p_stat_text]</table>
-<h2>Two Equal Columns</h2>
+<h2>Reward Stats</h2>
+<h3>Crates</h3>
 [build_rewards_text(src.crate_list)]
-<h2>Two Equal Columns</h2>
+<h3>Items</h3>
 [build_rewards_text(src.item_rewards)]
 
 <style>
@@ -2499,15 +2523,17 @@ Player Stats
 		if (!islist(L) || !length(L))
 			logTheThing("debug", null, null, "Something trying to write one of the lists for stats...")
 			return
+		message_admins("list looping ")
 
 		var/cr_stats_NT = ""
 		var/cr_stats_SY = ""
 		for (var/stat in L)
+			message_admins("[stat]: [copytext(1,3)];[copytext(stat, 4)]")
 			if (!istext(stat) || length(stat) <= 4) continue
 
-			if (copytext(1,3) == "NT")
+			if (copytext(stat, 1,3) == "NT")
 				cr_stats_NT = "<tr>[copytext(stat, 4)] = [L[stat]]</tr>"
-			else if (copytext(1,3) == "SY")
+			else if (copytext(stat, 1,3) == "SY")
 				cr_stats_SY = "<tr>[copytext(stat, 4)] = [L[stat]]</tr>"
 
 		return {"
@@ -2523,9 +2549,9 @@ Player Stats
 "}
 
 	proc/display_HTML_to_clients()
-		var/string = build_HTML()
+		html_string = build_HTML()
 		for (var/client/C in clients)
-			C.Browse(string, "window=scores;size=700x500;title=Scores" )
+			C.Browse(html_string, "window=scores;size=700x500;title=Scores" )
 
 //for displaying info about players on round end to everyone.
 /datum/pw_player_stats
@@ -2565,7 +2591,8 @@ Player Stats
 		..()
 		src.team_num = team_num
 		src.tier = tier
-		playsound(loc, "sound/effects/mag_warp.ogg", 100, 1, -1)
+
+		playsound(loc, "sound/effects/mag_warp.ogg", 100, 1, flags = SOUND_IGNORE_SPACE)
 
 		//handle name, color, and access for types...
 		var/team_name_str
