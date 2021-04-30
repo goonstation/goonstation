@@ -1,5 +1,9 @@
 
 (t)fri apr 30 21
+(u)Kubius
+(p)4522
+(e)🆕🗺|feature, mapping
+(*)Kondaru's test chamber, accessed from the research pod bay, has been upgraded with more equipment and a pressurized causeway.
 (u)Brixx79
 (p)4350
 (e)|
