@@ -2533,9 +2533,9 @@ Player Stats
 			if (!istext(stat) || length(stat) <= 4) continue
 
 			if (copytext(stat, 1,3) == "NT")
-				cr_stats_NT += "<b>[copytext(stat, 4)]</b> = [L[stat]]<br>"
+				cr_stats_NT += "<tr><b>[copytext(stat, 4)]</b> = [L[stat]]</tr><br>"
 			else if (copytext(stat, 1,3) == "SY")
-				cr_stats_SY += "<b>[copytext(stat, 4)]</b> = [L[stat]]<br>"
+				cr_stats_SY += "<tr><b>[copytext(stat, 4)]</b> = [L[stat]]</tr><br>"
 
 		return {"
 
