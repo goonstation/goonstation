@@ -7,7 +7,7 @@
 /obj/item/reagent_containers/syringe
 	name = "syringe"
 	desc = "A syringe."
-	icon = 'icons/obj/syringe.dmi'
+	icon = 'icons/obj/items/syringe.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "syringe_0"
 	icon_state = "0"
@@ -43,7 +43,7 @@
 		else
 			src.UpdateOverlays(null, "inj_dr")
 		if (!src.fluid_image)
-			src.fluid_image = image('icons/obj/syringe.dmi')
+			src.fluid_image = image('icons/obj/items/syringe.dmi')
 		src.fluid_image.icon_state = "f[rounded_vol]"
 		if(reagents) // fix for Cannot execute null.get average color().
 			var/datum/color/average = reagents.get_average_color()

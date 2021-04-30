@@ -1,7 +1,7 @@
 /obj/item/genetics_injector
 	name = "genetics injector"
 	desc = "A special injector designed to interact with one's genetic structure."
-	icon = 'icons/obj/syringe.dmi'
+	icon = 'icons/obj/items/syringe.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "syringe_0"
 	icon_state = "injector_1"
@@ -101,7 +101,7 @@
 	duration = 20
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "genetics_injector"
-	icon = 'icons/obj/syringe.dmi'
+	icon = 'icons/obj/items/syringe.dmi'
 	icon_state = "injector_1"
 	var/mob/living/carbon/target = null
 	var/obj/item/genetics_injector/injector = null
