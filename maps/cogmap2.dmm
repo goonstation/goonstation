@@ -5738,20 +5738,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"amB" = (
-/obj/table/wood/auto,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 26;
-	pixel_y = 1
-	},
-/obj/item/device/camera_viewer,
-/obj/item/camera_test,
-/obj/item/device/audio_log,
-/obj/item/device/detective_scanner,
-/obj/disposalpipe/segment/mail/vertical,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "amC" = (
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/stairs{
@@ -19487,19 +19473,6 @@
 /obj/item/storage/wall/random,
 /turf/simulated/floor/plating/scorched,
 /area/station/garden/owlery)
-"aSL" = (
-/obj/decal/cleanable/cobweb{
-	icon_state = "cobweb2"
-	},
-/obj/table/auto,
-/obj/random_item_spawner/desk_stuff,
-/obj/item/camera_test,
-/obj/item/paper/book/critter_compendium,
-/obj/decal/cleanable/gangtag{
-	pixel_y = 28
-	},
-/turf/simulated/floor/plating/scorched,
-/area/station/garden/owlery)
 "aSM" = (
 /obj/stone{
 	dir = 1
@@ -32306,17 +32279,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/security)
-"bvQ" = (
-/obj/window/auto/reinforced,
-/obj/window_blinds/cog2{
-	dir = 4
-	},
-/obj/grille/steel,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/plating,
-/area/station/security/main)
 "bvR" = (
 /obj/item/device/radio/intercom/security,
 /obj/blind_switch/area{
@@ -33409,23 +33371,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/security)
-"bxW" = (
-/obj/window/auto/reinforced,
-/obj/window_blinds/cog2{
-	dir = 4
-	},
-/obj/grille/steel,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable,
-/turf/simulated/floor/plating,
-/area/station/security/main)
 "bxX" = (
 /obj/cable{
 	d1 = 4;
@@ -55962,18 +55907,6 @@
 /obj/storage/crate,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/teleporter)
-"crS" = (
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
-/obj/item/camera_test,
-/obj/item/camera_test,
-/obj/storage/crate,
-/turf/simulated/floor/specialroom/arcade,
-/area/station/science/teleporter)
 "crT" = (
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/specialroom/arcade,
@@ -56005,27 +55938,6 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/station/science/teleporter)
-"crY" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/radio/headset/multifreq,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "E APC";
-	pixel_x = 24
-	},
-/turf/simulated/floor/bot,
 /area/station/science/teleporter)
 "crZ" = (
 /obj/disposalpipe/segment/mail/vertical,
@@ -56620,18 +56532,6 @@
 "ctq" = (
 /obj/disposalpipe/segment/mail/bent/south,
 /turf/simulated/floor/specialroom/arcade,
-/area/station/science/teleporter)
-"ctr" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/radio/headset/multifreq,
-/turf/simulated/floor/bot,
 /area/station/science/teleporter)
 "cts" = (
 /obj/window/auto/reinforced,
@@ -57878,54 +57778,12 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/testchamber)
-"cwf" = (
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/reagent_containers/food/drinks/milk,
-/obj/item/reagent_containers/food/snacks/sandwich/pb,
-/obj/item/paper{
-	desc = "Aw dang, mooom";
-	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
-	name = "note from mom"
-	},
-/obj/item/device/radio/beacon,
-/obj/item/device/light/glowstick,
-/obj/item/device/light/glowstick,
-/obj/item/paper/book/critter_compendium,
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/obj/storage/crate,
-/obj/machinery/light,
-/turf/simulated/floor/specialroom/arcade,
-/area/station/science/teleporter)
 "cwg" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/specialroom/arcade,
-/area/station/science/teleporter)
-"cwh" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/radio/headset/multifreq,
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/simulated/floor/bot,
 /area/station/science/teleporter)
 "cwi" = (
 /obj/disposalpipe/segment/transport{
@@ -78639,6 +78497,33 @@
 	icon_state = "fgreen4"
 	},
 /area/station/hydroponics/bay)
+"dHM" = (
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/reagent_containers/food/drinks/milk,
+/obj/item/reagent_containers/food/snacks/sandwich/pb,
+/obj/item/paper{
+	desc = "Aw dang, mooom";
+	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
+	name = "note from mom"
+	},
+/obj/item/device/radio/beacon,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/paper/book/critter_compendium,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/storage/crate,
+/obj/machinery/light,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/teleporter)
 "dJs" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -78765,6 +78650,18 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
+"hlO" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/radio/headset/multifreq,
+/turf/simulated/floor/bot,
+/area/station/science/teleporter)
 "hlQ" = (
 /obj/stool/chair,
 /turf/simulated/floor/carpet{
@@ -79017,6 +78914,19 @@
 	icon_state = "blue5"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"laS" = (
+/obj/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/obj/table/auto,
+/obj/random_item_spawner/desk_stuff,
+/obj/item/camera,
+/obj/item/paper/book/critter_compendium,
+/obj/decal/cleanable/gangtag{
+	pixel_y = 28
+	},
+/turf/simulated/floor/plating/scorched,
+/area/station/garden/owlery)
 "luy" = (
 /obj/machinery/light{
 	dir = 1;
@@ -79256,6 +79166,17 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"oGS" = (
+/obj/window/auto/reinforced,
+/obj/window_blinds/cog2{
+	dir = 4
+	},
+/obj/grille/steel,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/main)
 "oHZ" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/sanitary/white,
@@ -79285,6 +79206,23 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
+"pqB" = (
+/obj/window/auto/reinforced,
+/obj/window_blinds/cog2{
+	dir = 4
+	},
+/obj/grille/steel,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/security/main)
 "ptb" = (
 /obj/table/wood/auto,
 /obj/item/decoration/ashtray,
@@ -79384,6 +79322,20 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"rFH" = (
+/obj/table/wood/auto,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 26;
+	pixel_y = 1
+	},
+/obj/item/device/camera_viewer,
+/obj/item/camera,
+/obj/item/device/audio_log,
+/obj/item/device/detective_scanner,
+/obj/disposalpipe/segment/mail/vertical,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "rJV" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools,
@@ -79578,6 +79530,42 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"tAc" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/radio/headset/multifreq,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "E APC";
+	pixel_x = 24
+	},
+/turf/simulated/floor/bot,
+/area/station/science/teleporter)
+"tBg" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/radio/headset/multifreq,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/bot,
+/area/station/science/teleporter)
 "tGo" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple,
@@ -79616,6 +79604,18 @@
 	icon_state = "blue1"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"uvj" = (
+/obj/item/device/camera_viewer{
+	network = "Zeta"
+	},
+/obj/item/device/camera_viewer{
+	network = "Zeta"
+	},
+/obj/item/camera,
+/obj/item/camera,
+/obj/storage/crate,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/teleporter)
 "uUh" = (
 /obj/railing/orange/reinforced{
 	dir = 8
@@ -110271,7 +110271,7 @@ ckV
 ckV
 ckV
 cij
-crS
+uvj
 ctl
 cuH
 cwb
@@ -111482,7 +111482,7 @@ cqj
 crW
 ctp
 cuM
-cwf
+dHM
 cuH
 cyY
 cyY
@@ -112083,10 +112083,10 @@ cla
 clc
 cla
 cjw
-crY
-ctr
-ctr
-cwh
+tAc
+hlO
+hlO
+tBg
 cxH
 cze
 cAz
@@ -115318,7 +115318,7 @@ ahY
 ajd
 akb
 alh
-amB
+rFH
 anM
 aoM
 apU
@@ -124704,7 +124704,7 @@ aGs
 bcB
 bdC
 aRF
-aSL
+laS
 aUc
 aVv
 aWM
@@ -134091,8 +134091,8 @@ boU
 bqD
 bsr
 bui
-bvQ
-bxW
+oGS
+pqB
 bui
 bBk
 bDc

@@ -283,7 +283,7 @@
 									"lighter" = /obj/item/device/light/zippo/,
 									"spray" = /obj/item/spraybottle,
 									"monitor" = /obj/item/device/camera_viewer,
-									"camera" = /obj/item/camera_test,
+									"camera" = /obj/item/camera,
 									"audiolog" = /obj/item/device/audio_log ,
 									"flashlight" = /obj/item/device/light/flashlight,
 									"glasses" = /obj/item/clothing/glasses)

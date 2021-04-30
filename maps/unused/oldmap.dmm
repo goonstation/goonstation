@@ -1605,7 +1605,7 @@
 "dI" = (
 /obj/table,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/bridge)
@@ -3006,7 +3006,7 @@
 	name = "Captain"
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/captain)
@@ -3432,17 +3432,6 @@
 	},
 /turf/simulated/floor,
 /area/crew_quarters/captain)
-"hz" = (
-/obj/table{
-	icon_state = "tabledir";
-	dir = 8
-	},
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/camera_test,
-/turf/simulated/floor,
-/area/crew_quarters/captain)
 "hA" = (
 /obj/machinery/light/small{
 	tag = "icon-bulb1 (WEST)";
@@ -3639,12 +3628,6 @@
 /obj/item/clothing/mask/gas/emergency,
 /turf/simulated/floor,
 /area/crew_quarters/captain)
-"id" = (
-/obj/displaycase{
-	displayed = new /obj/item/captaingun
-},
-/turf/simulated/floor,
-/area/crew_quarters/captain)
 "ie" = (
 /obj/landmark{
 	name = "NASSA spawn"
@@ -3717,7 +3700,7 @@
 /area/crew_quarters/courtroom)
 "is" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/courtroom)
@@ -3929,7 +3912,7 @@
 /obj/table,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/white,
 /area/medical/medbay)
@@ -5837,7 +5820,7 @@
 "nl" = (
 /obj/secure_closet/personal,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
@@ -6822,7 +6805,7 @@
 /obj/item/cleaner,
 /obj/item/cleaner,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/janitor)
@@ -6960,7 +6943,7 @@
 	network = "SS13"
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/security/main)
@@ -7079,7 +7062,7 @@
 /area/hallway/secondary/exit)
 "qb" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/hallway/secondary/exit)
@@ -7288,7 +7271,7 @@
 "qF" = (
 /obj/closet/wardrobe/pink,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
@@ -7357,7 +7340,7 @@
 /area/atmos)
 "qO" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/machinery/computer/general_air_control{
 	frequency = 1441;
@@ -8407,7 +8390,7 @@
 	c_tag = "Bar"
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
@@ -8456,7 +8439,7 @@
 /area/crew_quarters/cafeteria)
 "tr" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/white,
 /area/crew_quarters/cafeteria)
@@ -12450,7 +12433,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/black,
 /area/turret_protected/aisat_interior)
@@ -21163,6 +21146,23 @@
 	icon_state = "sw1"
 	},
 /area/space)
+"Wp" = (
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/turf/simulated/floor,
+/area/crew_quarters/captain)
+"Yk" = (
+/obj/table{
+	icon_state = "tabledir";
+	dir = 8
+	},
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/camera,
+/turf/simulated/floor,
+/area/crew_quarters/captain)
 
 (1,1,1) = {"
 aa
@@ -33696,9 +33696,9 @@ gy
 gJ
 gV
 hr
-hz
+Yk
 hQ
-id
+Wp
 il
 it
 iI
