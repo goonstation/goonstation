@@ -707,7 +707,7 @@
 	id = "storage_disassemble"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 20
-	icon = 'icons/obj/items/tools/wrench.dmi'
+	icon = 'icons/obj/items/tools/tools.dmi'
 	icon_state = "wrench"
 
 	var/obj/storage/the_storage

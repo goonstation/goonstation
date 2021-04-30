@@ -1,7 +1,7 @@
 /obj/item/screwdriver
 	name = "screwdriver"
 	desc = "A tool used to turn slotted screws and other slotted objects."
-	icon = 'icons/obj/items/tools/screwdriver.dmi'
+	icon = 'icons/obj/items/tools/tools.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 

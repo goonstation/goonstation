@@ -1,7 +1,7 @@
 /obj/item/wirecutters
 	name = "wirecutters"
 	desc = "A tool used to cut wires and bars of metal."
-	icon = 'icons/obj/items/tools/wirecutters.dmi'
+	icon = 'icons/obj/items/tools/tools.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/wirecutters.dmi'
 	icon_state = "wirecutters"
 
@@ -52,7 +52,7 @@
 		return
 
 /obj/item/wirecutters/vr
-	icon = 'icons/obj/items/tools/wirecutters.dmi'
+	icon = 'icons/obj/items/tools/tools.dmi'
 	icon_state = "wirecutters-vr"
 	item_state = "wirecutters"
 

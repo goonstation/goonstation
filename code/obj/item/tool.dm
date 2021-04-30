@@ -1,7 +1,7 @@
 /obj/item/tool
 	name = "tool"
 	desc = "Some sort of tool."
-	icon = 'icons/obj/items/tools/wrench.dmi'
+	icon = 'icons/obj/items/tools/tools.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/wrench.dmi'
 
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT

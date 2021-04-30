@@ -1,7 +1,7 @@
 /obj/item/device/multitool
 	name = "multitool"
 	desc = "You can use this on airlocks or APCs to try to hack them without cutting wires."
-	icon = 'icons/obj/items/tools/multitool.dmi'
+	icon = 'icons/obj/items/tools/tools.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/multitool.dmi'
 	icon_state = "multitool"
 

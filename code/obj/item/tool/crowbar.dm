@@ -1,8 +1,7 @@
 /obj/item/crowbar
 	name = "crowbar"
 	desc = "A tool used as a lever to pry objects."
-	icon = 'icons/obj/items/tools/crowbar.dmi'
-	// TODO: crowbar inhand icon
+	icon = 'icons/obj/items/tools/tools.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/crowbar.dmi'
 	icon_state = "crowbar"
 	item_state = "crowbar"

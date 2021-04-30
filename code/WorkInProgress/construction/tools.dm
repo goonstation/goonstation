@@ -232,7 +232,7 @@
 	desc = "The latest technology in viewing live blueprints."
 
 /obj/item/lamp_manufacturer/organic
-	icon = 'icons/obj/items/tools/lampman.dmi'
+	icon = 'icons/obj/items/tools/tools.dmi'
 	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings. Load metal sheets before using."
 	icon_state = "bio-white"
 	flags = FPRINT | TABLEPASS | EXTRADELAY

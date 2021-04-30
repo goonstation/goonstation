@@ -44,7 +44,7 @@
 /obj/item/lamp_manufacturer
 	name = "miniaturized lamp manufacturer"
 	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings."
-	icon = 'icons/obj/items/tools/lampman.dmi'
+	icon = 'icons/obj/items/tools/tools.dmi'
 	icon_state = "borg-white"
 	var/prefix = "borg"
 	var/metal_ammo = 0

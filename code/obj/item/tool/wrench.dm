@@ -1,7 +1,7 @@
 /obj/item/wrench
 	name = "wrench"
 	desc = "A tool used to apply torque to turn nuts and bolts."
-	icon = 'icons/obj/items/tools/wrench.dmi'
+	icon = 'icons/obj/items/tools/tools.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/wrench.dmi'
 	icon_state = "wrench"
 

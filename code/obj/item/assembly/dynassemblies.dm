@@ -124,7 +124,7 @@ For hairball DynAssemblies see: jonescity.dm
 	duration = 150
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "dynassSecure"
-	icon = 'icons/obj/items/tools/screwdriver.dmi'
+	icon = 'icons/obj/items/tools/tools.dmi'
 	icon_state = "screwdriver"
 	var/obj/item/dynassembly/assembly
 	var/mob/user
@@ -156,7 +156,7 @@ For hairball DynAssemblies see: jonescity.dm
 	duration = 150
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "dynassUnsecure"
-	icon = 'icons/obj/items/tools/wrench.dmi'
+	icon = 'icons/obj/items/tools/tools.dmi'
 	icon_state = "wrench"
 	var/obj/item/dynassembly/assembly
 	var/mob/user
