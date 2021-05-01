@@ -79997,7 +79997,7 @@
 	pixel_x = 7;
 	pixel_y = 15
 	},
-/obj/item/gun/reagent/syringe/lovefilled{
+/obj/item/gun/reagent/syringe/love/plus{
 	pixel_x = 2;
 	pixel_y = -6
 	},
