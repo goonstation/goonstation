@@ -33482,7 +33482,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A sleeper pod.  The lights are out and it appears to be pretty badly cracked.";
-	icon = 'icons/obj/Cryogenic2.dmi';
+	icon = 'icons/obj/machinery/Cryogenic2.dmi';
 	icon_state = "sleeper_0";
 	name = "broken sleeper"
 	},
@@ -33495,7 +33495,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A sleeper control console.  It doesn't seem to be responding.";
-	icon = 'icons/obj/Cryogenic2.dmi';
+	icon = 'icons/obj/machinery/Cryogenic2.dmi';
 	icon_state = "sleeperconsole";
 	name = "broken console"
 	},
@@ -33930,7 +33930,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A sleeper pod.  The lights are out and it appears to be pretty badly cracked.";
-	icon = 'icons/obj/Cryogenic2.dmi';
+	icon = 'icons/obj/machinery/Cryogenic2.dmi';
 	icon_state = "sleeper_0";
 	name = "broken sleeper"
 	},
@@ -33944,7 +33944,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A sleeper control console.  It doesn't seem to be responding.";
-	icon = 'icons/obj/Cryogenic2.dmi';
+	icon = 'icons/obj/machinery/Cryogenic2.dmi';
 	icon_state = "sleeperconsole";
 	name = "broken console"
 	},
@@ -41317,7 +41317,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A sleeper pod.  The lights are out and it appears to be pretty badly cracked.";
-	icon = 'icons/obj/Cryogenic2.dmi';
+	icon = 'icons/obj/machinery/Cryogenic2.dmi';
 	icon_state = "sleeper_0";
 	name = "broken sleeper"
 	},
@@ -41330,7 +41330,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A sleeper control console.  It doesn't seem to be responding.";
-	icon = 'icons/obj/Cryogenic2.dmi';
+	icon = 'icons/obj/machinery/Cryogenic2.dmi';
 	icon_state = "sleeperconsole";
 	name = "broken console"
 	},
@@ -41628,7 +41628,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A small note affixed to the front reads 'Out of Order.'";
-	icon = 'icons/obj/Cryogenic2.dmi';
+	icon = 'icons/obj/machinery/Cryogenic2.dmi';
 	icon_state = "scanner_0";
 	name = "Broken Pod"
 	},

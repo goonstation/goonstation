@@ -3,7 +3,7 @@ var/list/genetek_hair_styles = null
 
 /obj/machinery/genetics_scanner
 	name = "GeneTek scanner"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machinery/Cryogenic2.dmi'
 	icon_state = "scanner_0"
 	density = 1
 	mats = 15

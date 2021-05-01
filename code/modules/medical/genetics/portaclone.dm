@@ -1,7 +1,7 @@
 /obj/machinery/computer/cloner/portable
 	name = "Port-A-Clone"
 	desc = "A mobile cloning vat with a miniature enzymatic reclaimer attached. Requires corpses to be chopped up before they can be reclaimed."
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machinery/Cryogenic2.dmi'
 	icon_state = "PAG_0"
 
 	//Cloner vars

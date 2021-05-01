@@ -391,7 +391,7 @@ proc/find_ghost_by_key(var/find_key)
 /obj/machinery/clone_scanner
 	name = "cloning machine scanner"
 	desc = "Some sort of weird machine that you stuff people into to scan their genetic DNA for cloning."
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machinery/Cryogenic2.dmi'
 	icon_state = "scanner_0"
 	density = 1
 	mats = 15

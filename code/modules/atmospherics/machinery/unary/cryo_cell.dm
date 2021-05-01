@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/unary/cryo_cell
 	name = "cryogenic healing pod"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machinery/Cryogenic2.dmi'
 	icon_state = "celltop-P"
 	density = 1
 	anchored = 1.0
@@ -309,7 +309,7 @@
 			light.disable()
 			icon_state = "celltop-p"
 		O1 = new /obj/overlay(  )
-		O1.icon = 'icons/obj/Cryogenic2.dmi'
+		O1.icon = 'icons/obj/machinery/Cryogenic2.dmi'
 		if(src.node)
 			O1.icon_state = "cryo_bottom_[src.on]"
 		else

@@ -366,7 +366,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/sealedsleeper
 	name = "sleeper"
 	desc = "This one appears to still be sealed. Who's in there?"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machinery/Cryogenic2.dmi'
 	icon_state = "sealedsleeper"
 	anchored = 1
 	density = 1

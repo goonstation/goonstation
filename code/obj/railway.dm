@@ -225,7 +225,7 @@
 	var/speed = 2
 	var/waited = 0
 
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machinery/Cryogenic2.dmi'
 	icon_state = "sleeper_0"
 
 	name = "railway vehicle"
