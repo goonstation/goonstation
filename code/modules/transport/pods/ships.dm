@@ -1,7 +1,7 @@
 //////////Escape pod
 /obj/machinery/vehicle/pod
 	name = "Escape Pod A7-"
-	icon = 'icons/obj/ship.dmi'
+	icon = 'icons/obj/machinery/ship.dmi'
 	icon_state = "pod"
 	capacity = 4
 	health = 140
@@ -10,7 +10,7 @@
 //////////Recon
 /obj/machinery/vehicle/recon
 	name = "Reconaissance Ship 7X-"
-	icon = 'icons/obj/ship.dmi'
+	icon = 'icons/obj/machinery/ship.dmi'
 	icon_state = "recon"
 	capacity = 1
 	health= 200
@@ -34,7 +34,7 @@
 //////////Cargo
 /obj/machinery/vehicle/cargo
 	name = "Cargo Ship Q5-"
-	icon = 'icons/obj/ship.dmi'
+	icon = 'icons/obj/machinery/ship.dmi'
 	icon_state = "cargo"
 	capacity = 2
 	health = 200
@@ -78,7 +78,7 @@
 	checkhealth()
 		..()
 		if(health/maxhealth <= 0.25)
-			damaged = image("icon" = 'icons/obj/ship.dmi', "icon_state" = "saucer_damage", "layer" = MOB_LAYER)
+			damaged = image("icon" = 'icons/obj/machinery/ship.dmi', "icon_state" = "saucer_damage", "layer" = MOB_LAYER)
 			overlays += damaged
 		else
 			overlays -=damaged
@@ -117,7 +117,7 @@
 /*	checkhealth()
 		..()
 		if(health/maxhealth <= 0.25 && !busted)
-			damaged = image("icon" = 'icons/obj/ship.dmi', "icon_state" = "miniputt_fire", "layer" = MOB_LAYER)
+			damaged = image("icon" = 'icons/obj/machinery/ship.dmi', "icon_state" = "miniputt_fire", "layer" = MOB_LAYER)
 			overlays += damaged
 			busted++
 		else
@@ -205,7 +205,7 @@ obj/machinery/vehicle/miniputt/pilot
 //syndiput spawner
 /obj/syndi_putt_spawner
 	name = "syndiputt spawner"
-	icon = 'icons/obj/ship.dmi'
+	icon = 'icons/obj/machinery/ship.dmi'
 	icon_state = "syndi_mini_spawn"
 	New()
 		..()
@@ -375,7 +375,7 @@ obj/machinery/vehicle/miniputt/pilot
 /obj/structure/puttframe
 	name = "MiniPutt Frame"
 	desc = "A MiniPutt ship under construction."
-	icon = 'icons/obj/ship.dmi'
+	icon = 'icons/obj/machinery/ship.dmi'
 	icon_state = "putt_parts"
 	anchored = 1
 	density = 1
@@ -487,7 +487,7 @@ obj/machinery/vehicle/miniputt/pilot
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You wrench some of the frame parts together.")
-				src.overlays += image('icons/obj/ship.dmi', "[pick("putt_frame1", "putt_frame2")]")
+				src.overlays += image('icons/obj/machinery/ship.dmi', "[pick("putt_frame1", "putt_frame2")]")
 				stage = 1
 			else
 				boutput(user, "If only there was some way to secure all this junk together! You should get a wrench.")
@@ -500,8 +500,8 @@ obj/machinery/vehicle/miniputt/pilot
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You finish wrenching the frame parts together.")
-				src.overlays -= image('icons/obj/ship.dmi', "putt_frame1")
-				src.overlays -= image('icons/obj/ship.dmi', "putt_frame2")
+				src.overlays -= image('icons/obj/machinery/ship.dmi', "putt_frame1")
+				src.overlays -= image('icons/obj/machinery/ship.dmi', "putt_frame2")
 				icon_state = "putt_frame"
 				stage = 2
 			else
@@ -532,7 +532,7 @@ obj/machinery/vehicle/miniputt/pilot
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You add power cables to the MiniPutt frame.")
-				src.overlays += image('icons/obj/ship.dmi', "putt_wires")
+				src.overlays += image('icons/obj/machinery/ship.dmi', "putt_wires")
 				stage = 4
 			else
 				boutput(user, "You're not gonna get very far without power cables. You should get at least two lengths of it.")
@@ -547,7 +547,7 @@ obj/machinery/vehicle/miniputt/pilot
 				boutput(user, "You install the internal circuitry parts.")
 				user.u_equip(W)
 				qdel(W)
-				src.overlays += image('icons/obj/ship.dmi', "putt_circuits")
+				src.overlays += image('icons/obj/machinery/ship.dmi', "putt_circuits")
 				stage = 5
 			else
 				boutput(user, "Maybe those wires should be connecting something together. Some kind of circuitry, perhaps.")
@@ -565,7 +565,7 @@ obj/machinery/vehicle/miniputt/pilot
 						boutput(user, "<span class='alert'>You were interrupted!</span>")
 						return
 					boutput(user, "You construct internal covers over the circuitry systems.")
-					src.overlays += image('icons/obj/ship.dmi', "putt_covers")
+					src.overlays += image('icons/obj/machinery/ship.dmi', "putt_covers")
 					stage = 6
 				else
 					boutput(user, "<span class='alert'>These sheets aren't the right kind of material. You need metal!</span>")
@@ -582,7 +582,7 @@ obj/machinery/vehicle/miniputt/pilot
 				boutput(user, "You install the engine.")
 				user.u_equip(W)
 				qdel(W)
-				src.overlays += image('icons/obj/ship.dmi', "putt_engine")
+				src.overlays += image('icons/obj/machinery/ship.dmi', "putt_engine")
 				stage = 7
 			else
 				boutput(user, "Having an engine might be nice.")
@@ -597,7 +597,7 @@ obj/machinery/vehicle/miniputt/pilot
 				boutput(user, "You loosely attach the light armor plating.")
 				user.u_equip(W)
 				qdel(W)
-				src.overlays += image('icons/obj/ship.dmi', "pod_skin1")
+				src.overlays += image('icons/obj/machinery/ship.dmi', "pod_skin1")
 				stage = 8
 				armor_type = 1
 			else if(istype(W, /obj/item/pod/armor_heavy))
@@ -609,7 +609,7 @@ obj/machinery/vehicle/miniputt/pilot
 				boutput(user, "You loosely attach the heavy armor plating.")
 				user.u_equip(W)
 				qdel(W)
-				src.overlays += image('icons/obj/ship.dmi', "pod_skin2")
+				src.overlays += image('icons/obj/machinery/ship.dmi', "pod_skin2")
 				stage = 8
 				armor_type = 2
 			else if(istype(W, /obj/item/pod/armor_black))
@@ -621,7 +621,7 @@ obj/machinery/vehicle/miniputt/pilot
 				boutput(user, "You loosely attach the strange armor plating.")
 				user.u_equip(W)
 				qdel(W)
-				src.overlays += image('icons/obj/ship.dmi', "pod_skin3")
+				src.overlays += image('icons/obj/machinery/ship.dmi', "pod_skin3")
 				stage = 8
 				armor_type = 3
 			else if(istype(W, /obj/item/pod/armor_red))
@@ -633,7 +633,7 @@ obj/machinery/vehicle/miniputt/pilot
 				boutput(user, "You loosely attach the syndicate armor plating.")
 				user.u_equip(W)
 				qdel(W)
-				src.overlays += image('icons/obj/ship.dmi', "pod_skin2")
+				src.overlays += image('icons/obj/machinery/ship.dmi', "pod_skin2")
 				stage = 8
 				armor_type = 4
 			else if(istype(W, /obj/item/pod/armor_industrial))
@@ -645,7 +645,7 @@ obj/machinery/vehicle/miniputt/pilot
 				boutput(user, "You loosely attach the industrial armor plating.")
 				user.u_equip(W)
 				qdel(W)
-				src.overlays += image('icons/obj/ship.dmi', "pod_skin3")
+				src.overlays += image('icons/obj/machinery/ship.dmi', "pod_skin3")
 				stage = 8
 				armor_type = 5
 			else if(istype(W, /obj/item/pod/armor_gold))
@@ -657,7 +657,7 @@ obj/machinery/vehicle/miniputt/pilot
 				boutput(user, "You loosely attach the gold armor plating.")
 				user.u_equip(W)
 				qdel(W)
-				src.overlays += image('icons/obj/ship.dmi', "pod_skin4")
+				src.overlays += image('icons/obj/machinery/ship.dmi', "pod_skin4")
 				stage = 8
 				armor_type = 6
 			else if(istype(W, /obj/item/pod/armor_custom) && W.material)
@@ -667,7 +667,7 @@ obj/machinery/vehicle/miniputt/pilot
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "You loosely attach the custom armor plating.")
-				src.overlays += image('icons/obj/ship.dmi', "pod_skin1")
+				src.overlays += image('icons/obj/machinery/ship.dmi', "pod_skin1")
 				src.setMaterial(W.material)
 				user.u_equip(W)
 				qdel(W)
@@ -699,7 +699,7 @@ obj/machinery/vehicle/miniputt/pilot
 				boutput(user, "You install the control system for the pod.")
 				user.u_equip(W)
 				qdel(W)
-				src.overlays += image('icons/obj/ship.dmi',"putt_control")
+				src.overlays += image('icons/obj/machinery/ship.dmi',"putt_control")
 				stage = 10
 			else
 				boutput(user, "It's not gonna get very far without a control system!")

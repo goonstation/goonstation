@@ -37,7 +37,7 @@
 		if(!active)
 			return
 		ship.invisibility = 2
-		shield = image("icon" = 'icons/obj/ship.dmi', "icon_state" = "shield", "layer" = MOB_LAYER)
+		shield = image("icon" = 'icons/obj/machinery/ship.dmi', "icon_state" = "shield", "layer" = MOB_LAYER)
 		ship.overlays += shield
 		return
 
@@ -353,7 +353,7 @@
 		if(!target)
 			deactivate()
 			return
-		tractor = image("icon" = 'icons/obj/ship.dmi', "icon_state" = "tractor", "layer" = FLOAT_LAYER)
+		tractor = image("icon" = 'icons/obj/machinery/ship.dmi', "icon_state" = "tractor", "layer" = FLOAT_LAYER)
 		target.overlays += tractor
 		settingup = 0
 	deactivate()

@@ -6,7 +6,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 /obj/warp_beacon
 	name = "warp beacon"
 	desc = "Part of an elaborate small-ship teleportation network recently deployed by Nanotrasen.  Probably won't cause you to die."
-	icon = 'icons/obj/ship.dmi'
+	icon = 'icons/obj/machinery/ship.dmi'
 	icon_state = "beacon"
 	anchored = 1
 	density = 1
@@ -189,7 +189,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 /obj/beacon_deployer
 	name = "warp buoy unit"
 	desc = "A compact anchor for teleportation technology, held together by cut-rate construction supplies. What could possibly go wrong?"
-	icon = 'icons/obj/ship.dmi'
+	icon = 'icons/obj/machinery/ship.dmi'
 	icon_state = "beaconunit"
 	density = 1
 	var/deploying = null
@@ -249,7 +249,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 /obj/beaconkit
 	name = "warp buoy frame"
 	desc = "A partially completed frame for a deployable warp buoy. It's missing rods for its stand."
-	icon = 'icons/obj/ship.dmi'
+	icon = 'icons/obj/machinery/ship.dmi'
 	icon_state = "beacframe_1"
 	density = 1
 	var/state = 1

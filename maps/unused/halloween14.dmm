@@ -48823,7 +48823,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "An antenna to boost a distress signal.";
-	icon = 'icons/obj/ship.dmi';
+	icon = 'icons/obj/machinery/ship.dmi';
 	icon_state = "beacon";
 	name = "boost transmitter"
 	},
@@ -61176,7 +61176,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "An antenna to boost a distress signal.";
-	icon = 'icons/obj/ship.dmi';
+	icon = 'icons/obj/machinery/ship.dmi';
 	icon_state = "beacon";
 	name = "boost transmitter"
 	},

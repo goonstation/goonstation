@@ -1,6 +1,6 @@
 /obj/machinery/vehicle
 	name = "Vehicle Pod"
-	icon = 'icons/obj/ship.dmi'
+	icon = 'icons/obj/machinery/ship.dmi'
 	icon_state = "podfire"
 	density = 1
 	flags = FPRINT | USEDELAY

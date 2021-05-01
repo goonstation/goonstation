@@ -347,7 +347,7 @@ obj/item/paper/hootagenhint
 obj/decal/fakeobjects/bustedpod
 	name = "Busted Escape Pod"
 	desc = "A escape pod for escaping. It seems to be busted."
-	icon = 'icons/obj/ship.dmi'
+	icon = 'icons/obj/machinery/ship.dmi'
 	icon_state = "escape"
 	density = 1
 	anchored = 1

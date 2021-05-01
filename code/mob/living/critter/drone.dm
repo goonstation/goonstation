@@ -5,7 +5,7 @@
 	var/num_max = 999
 	desc = "An armed and automated Syndicate scout drone."
 	density = 1
-	icon = 'icons/obj/ship.dmi'
+	icon = 'icons/obj/machinery/ship.dmi'
 	icon_state = "drone"
 	custom_gib_handler = /proc/robogibs
 	hand_count = 1
@@ -58,7 +58,7 @@
 		if (dying)
 			return
 		dying = 1
-		overlays += image('icons/obj/ship.dmi', "dying-overlay")
+		overlays += image('icons/obj/machinery/ship.dmi', "dying-overlay")
 		SPAWN_DBG(2 SECONDS)
 			ghostize()
 			var/turf/L = get_turf(src)

@@ -340,7 +340,7 @@
 /obj/machinery/beacon
 	name = "coordinate beacon"
 	desc = "A coordinate beacon used for space GPSes."
-	icon = 'icons/obj/ship.dmi'
+	icon = 'icons/obj/machinery/ship.dmi'
 	icon_state = "beacon"
 	machine_registry_idx = MACHINES_BEACONS
 	var/sname = "unidentified"

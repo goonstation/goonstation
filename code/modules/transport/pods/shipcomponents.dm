@@ -1,7 +1,7 @@
 ///ship components have their work proc called in the vehicle's process
 /obj/item/shipcomponent
 	name = "Ship Component"
-	icon = 'icons/obj/ship.dmi'
+	icon = 'icons/obj/machinery/ship.dmi'
 	icon_state = "default"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	var/power_used = 0 //How much of the engine's capacity the part takes up
