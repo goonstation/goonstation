@@ -1093,8 +1093,8 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 
 /obj/deployable_turret/pod_wars/nt
 	deployer_path = /obj/deployable_turret/pod_wars/nt
-	projectile_type = /datum/projectile/laser/blaster/pod_pilot/blue_NT
-	current_projectile = new/datum/projectile/laser/blaster/pod_pilot/blue_NT
+	projectile_type = /datum/projectile/laser/blaster/pod_pilot/blue_NT/turret
+	current_projectile = new/datum/projectile/laser/blaster/pod_pilot/blue_NT/turret
 	icon_tag = "nt"
 
 	is_friend(var/mob/living/C)
@@ -1124,8 +1124,8 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 
 /obj/deployable_turret/pod_wars/sy
 	deployer_path = /obj/deployable_turret/pod_wars/sy
-	projectile_type = /datum/projectile/laser/blaster/pod_pilot/red_SY
-	current_projectile = new/datum/projectile/laser/blaster/pod_pilot/red_SY
+	projectile_type = /datum/projectile/laser/blaster/pod_pilot/red_SY/turret
+	current_projectile = new/datum/projectile/laser/blaster/pod_pilot/red_SY/turret
 	icon_tag = "st"
 
 	is_friend(var/mob/living/C)

@@ -370,6 +370,14 @@ toxic - poisons
 	override_color = 0
 	icon_state = "bolt"
 	damage_type = D_ENERGY
+	var/turret = 0		//have turret shots do less damage, but slow mobs it hits...
+
+	on_hit(atom/hit)
+		..()
+		if (turret && isliving(hit))
+			var/mob/living/L = hit
+			L.changeStatus("slowed", 2 SECONDS)
+
 
 /datum/projectile/laser/blaster/pod_pilot/blue_NT
 	name = "blue blaster bolt"
@@ -378,12 +386,20 @@ toxic - poisons
 	color_green = 0.28
 	color_blue = 0.51
 
+	turret
+		turret = 1
+		power = 15
+
 /datum/projectile/laser/blaster/pod_pilot/red_SY
 	name = "red blaster bolt"
 	color_icon = "#ff4043"
 	color_red = 0.51
 	color_green = 0.05
 	color_blue = 0.28
+
+	turret
+		turret = 1
+		power = 15
 
 
 // cogwerks- mining laser, first attempt
