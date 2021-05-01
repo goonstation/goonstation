@@ -1236,7 +1236,7 @@
 		return
 
 /obj/machinery/cruiser_destroyable/cruiser_pod
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "pod_command_0"
 	var/mob/using = null
 	var/area/ship_interior/interior

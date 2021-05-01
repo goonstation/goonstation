@@ -355,7 +355,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 
 /obj/machinery/mantapropulsion/big
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "bigsea_propulsion"
 	important = 1
 	bound_height = 64
@@ -394,7 +394,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		icon_state = "seaheater"
 
 /obj/machinery/power/seaheater/big
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "bigheater"
 	var/lastpower = 0
 
