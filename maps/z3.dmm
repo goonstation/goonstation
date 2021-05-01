@@ -7059,7 +7059,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A combination pick and place machine and wave soldering gizmo.  For making boards.  Buddy boards.   Well, it would if the interface wasn't broken.";
-	icon = 'icons/obj/manufacturer.dmi';
+	icon = 'icons/obj/machinery/manufacturer.dmi';
 	icon_state = "fab";
 	name = "PCB constructor"
 	},

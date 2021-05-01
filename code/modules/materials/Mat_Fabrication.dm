@@ -67,7 +67,7 @@
 /obj/machinery/nanofab
 	name = "Nano-fabricator"
 	desc = "'Nano' means it's high-tech stuff."
-	icon = 'icons/obj/manufacturer.dmi'
+	icon = 'icons/obj/machinery/manufacturer.dmi'
 	icon_state = "fab2-on"
 	anchored = 1
 	density = 1
