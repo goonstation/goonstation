@@ -622,6 +622,15 @@
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
+				else if (istype(M, /obj/item/clothing/head/helmet/space/captain))
+					var/prev = M.name
+					M.name = "\improper commander's space helmet"
+					M.desc = "Helps protect against vacuum. Comes in a fasionable blue befitting a commander. (Base Item: [prev])"
+					M.icon_state = "space-captain-blue"
+					M.item_state = "space-captain-blue"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
 			if (H.belt)
 				var/obj/item/M = H.belt
 				if (istype(M, /obj/item/katana_sheath/captain))

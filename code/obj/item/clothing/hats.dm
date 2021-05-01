@@ -228,7 +228,6 @@
 /obj/item/clothing/head/caphat
 	name = "Captain's hat"
 	icon_state = "captain"
-	c_flags = SPACEWEAR
 	item_state = "caphat"
 	desc = "A symbol of the captain's rank, and the source of all their power."
 	setupProperties()
@@ -238,7 +237,6 @@
 /obj/item/clothing/head/centhat
 	name = "Cent. Comm. hat"
 	icon_state = "centcom"
-	c_flags = SPACEWEAR
 	item_state = "centcom"
 	setupProperties()
 		..()
