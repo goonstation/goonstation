@@ -1,6 +1,6 @@
 /obj/machinery/fission/neutron_injector
 
-	icon = 'icons/obj/machines/nuclear.dmi'
+	icon = 'icons/obj/machinery/nuclear.dmi'
 	icon_state = "neutinj"
 
 	name = "neutron injector"

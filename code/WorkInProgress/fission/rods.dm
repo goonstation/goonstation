@@ -9,7 +9,7 @@
 	name = "control rod"
 	desc = "a control rod which can be used to absorb neutrons"
 
-	icon = 'icons/obj/machines/nuclear.dmi'
+	icon = 'icons/obj/machinery/nuclear.dmi'
 	icon_state = "Sing2"
 
 	anchored = 0
@@ -35,7 +35,7 @@
 	anchored = 0
 	density = 0
 
-	icon = 'icons/obj/machines/nuclear.dmi'
+	icon = 'icons/obj/machinery/nuclear.dmi'
 	icon_state = "fr"
 
 	lowered = 0

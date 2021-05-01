@@ -56771,7 +56771,7 @@
 "cws" = (
 /obj/decal/fakeobjects{
 	desc = "Looks like it needs to be replaced.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "broken solar panel retractor";
 	pixel_y = -2
@@ -56876,7 +56876,7 @@
 "cwG" = (
 /obj/decal/fakeobjects{
 	desc = "Looks like it needs to be replaced.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "broken solar panel retractor";
 	pixel_y = -2

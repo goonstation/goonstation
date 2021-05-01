@@ -1005,7 +1005,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be a part of a very old robotic arm.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "motor"
 	},

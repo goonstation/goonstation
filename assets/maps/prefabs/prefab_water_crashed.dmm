@@ -163,7 +163,7 @@
 "dm" = (/obj/machinery/door/firedoor/border_only,/obj/machinery/door/airlock/pyro/security/alt,/turf/simulated/floor/red,/area/station/turret_protected/sea_crashed)
 "dn" = (/obj/item/storage/wall/fire,/turf/simulated/wall/auto/reinforced/supernorn,/area/station/turret_protected/sea_crashed)
 "do" = (/obj/item/storage/wall/emergency,/turf/simulated/wall/auto/reinforced/supernorn,/area/station/turret_protected/sea_crashed)
-"dp" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "It appears to be a part of a very old robotic arm."; icon = 'icons/obj/machines/nuclear.dmi'; icon_state = "engineoff"; name = "motor"},/turf/simulated/floor/plating/random,/area/station/turret_protected/sea_crashed)
+"dp" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "It appears to be a part of a very old robotic arm."; icon = 'icons/obj/machinery/nuclear.dmi'; icon_state = "engineoff"; name = "motor"},/turf/simulated/floor/plating/random,/area/station/turret_protected/sea_crashed)
 "dq" = (/obj/decal/fakeobjects/lighttube_broken{desc = "This light might be broken.  It's probably not wired up, though."; dir = 1; icon_state = "tube0"; name = "inactive light tube"},/turf/simulated/floor/plating/random,/area/station/turret_protected/sea_crashed)
 "dr" = (/obj/decal/fakeobjects{anchored = 1; desc = "A security camera that is not on but, instead, off."; icon = 'icons/obj/monitors.dmi'; icon_state = "camerax"; name = "security camera"},/obj/decal/cleanable/dirt,/turf/simulated/floor/plating/random,/area/station/turret_protected/sea_crashed)
 "ds" = (/obj/item/storage/toolbox/emergency,/turf/simulated/floor/plating/random,/area/station/turret_protected/sea_crashed)

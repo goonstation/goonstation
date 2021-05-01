@@ -234,7 +234,7 @@
 /obj/item/raw_material/uqill,
 /obj/decal/fakeobjects{
 	desc = "A faint label on the side reads Z-38. It's covered in a green glow.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "Z-38 Emitter"
 	},

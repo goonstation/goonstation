@@ -2214,7 +2214,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of machine that is assuredly important.  It is also assuredly covered in words you cannot read.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "neutinj";
 	layer = 3.1;
 	name = "soviet shuttle doodad";

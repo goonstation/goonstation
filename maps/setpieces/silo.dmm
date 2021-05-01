@@ -38,7 +38,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "It probably has something to do with the elevator.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "neutinj";
 	name = "strange machine"
 	},
@@ -544,7 +544,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "You have no idea what this does.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "neutinj";
 	name = "unusual machine"
 	},

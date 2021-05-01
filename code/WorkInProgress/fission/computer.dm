@@ -3,7 +3,7 @@
 	icon_state = "comm"
 
 	machine_registry_idx = MACHINES_FISSION
-//	icon = 'icons/obj/machines/nuclear.dmi'
+//	icon = 'icons/obj/machinery/nuclear.dmi'
 //	icon_state = "Sing2"
 
 	var/id = 0.0

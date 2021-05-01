@@ -12313,7 +12313,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "You have no idea what this does.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "neutinj";
 	name = "peculiar machine"
 	},
@@ -12340,7 +12340,7 @@
 "aGj" = (
 /obj/decal/fakeobjects{
 	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "broken machine"
 	},
@@ -12664,7 +12664,7 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/fakeobjects{
 	desc = "It appears to be a part of a very old robotic arm.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "motor"
 	},
@@ -12792,7 +12792,7 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/fakeobjects{
 	desc = "It appears to be a part of a very old robotic arm.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "motor"
 	},
@@ -13167,7 +13167,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "It is still kinda warm.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "neutinj";
 	name = "busted machine"
 	},
@@ -13791,7 +13791,7 @@
 "aKk" = (
 /obj/decal/fakeobjects{
 	desc = "It appears to be a part of a very old robotic arm.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "motor"
 	},
@@ -19484,7 +19484,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "It's some sort of electrical machine thing.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "neutinj";
 	name = "old machine"
 	},
@@ -20384,7 +20384,7 @@
 "bap" = (
 /obj/decal/fakeobjects{
 	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "broken machine"
 	},
@@ -20516,7 +20516,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be a part of a very old robotic arm.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "motor"
 	},
@@ -20528,7 +20528,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be a part of a very old robotic arm.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "motor"
 	},
@@ -20539,7 +20539,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "It appears to be a part of a very old robotic arm.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "neutinj";
 	name = "motor"
 	},

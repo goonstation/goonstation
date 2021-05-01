@@ -10,7 +10,7 @@ ENGINE
 	name = "fission engine"
 	desc = "a fission engine, used to convert matter into energy via fission"
 
-	icon = 'icons/obj/machines/nuclear.dmi'
+	icon = 'icons/obj/machinery/nuclear.dmi'
 	icon_state = "engineoff"
 
 	anchored = 1

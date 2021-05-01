@@ -37390,7 +37390,7 @@
 /obj/decal/fakeobjects{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "Active Particle Phase Matrix"
 	},
@@ -47985,7 +47985,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "It is still kinda warm.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "neutinj";
 	name = "busted machine"
 	},

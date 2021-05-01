@@ -22256,7 +22256,7 @@
 /obj/decal/fakeobjects{
 	density = 1;
 	desc = "Whatever this thing was supposed to do, it's probably not doing it that well anymore.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "Simulatron"
 	},
@@ -44463,7 +44463,7 @@
 /obj/decal/fakeobjects{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "Active Particle Phase Matrix"
 	},
@@ -47098,7 +47098,7 @@
 "nDg" = (
 /obj/decal/fakeobjects{
 	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "broken machine"
 	},
@@ -49485,7 +49485,7 @@
 /obj/decal/fakeobjects{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "Active Particle Phase Matrix"
 	},

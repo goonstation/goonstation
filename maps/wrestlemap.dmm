@@ -6004,7 +6004,7 @@
 "vTs" = (/obj/stool/chair/office{dir = 1},/turf/simulated/floor/carpet/green/standard/edge,/area/station/medical/cdc)
 "vTu" = (/obj/rack,/obj/item/clothing/mask/breath,/obj/item/tank/air,/obj/item/device/light/flashlight,/obj/item/clothing/suit/space/emerg,/obj/item/clothing/head/emerg{pixel_x = 9; pixel_y = 4},/turf/simulated/floor/shuttlebay,/area/station/hangar/main)
 "vTG" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/station/ai_monitored/storage/eva)
-"vTN" = (/obj/disposalpipe/junction/left/east,/obj/decal/fakeobjects{density = 1; desc = "What was this thing even supposed to do?"; icon = 'icons/obj/machines/nuclear.dmi'; icon_state = "engineoff"; name = "Active Particle Phase Matrix"},/obj/item/device/radio/intercom/science{dir = 8; pixel_x = 21},/turf/simulated/floor/black,/area/station/science/teleporter)
+"vTN" = (/obj/disposalpipe/junction/left/east,/obj/decal/fakeobjects{density = 1; desc = "What was this thing even supposed to do?"; icon = 'icons/obj/machinery/nuclear.dmi'; icon_state = "engineoff"; name = "Active Particle Phase Matrix"},/obj/item/device/radio/intercom/science{dir = 8; pixel_x = 21},/turf/simulated/floor/black,/area/station/science/teleporter)
 "vTT" = (/turf/simulated/wall/auto/reinforced/supernorn/blackred,/area/station/security/secwing{name = "Security Lobby"})
 "vUa" = (/obj/machinery/light/incandescent/greenish{dir = 1; pixel_y = 21},/obj/lrteleporter,/turf/simulated/floor/caution,/area/station/science/teleporter)
 "vUe" = (/turf/unsimulated/floor/caution/corner/nw,/area/station/hangar/main)

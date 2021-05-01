@@ -55803,7 +55803,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "It would not be surprising if this was rusty when it WAS in operation, as well.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "neutinj";
 	name = "rusty industrial oven"
 	},

@@ -559,7 +559,7 @@ proc/Create_Tommyname()
 	name = "solar panel servo"
 	desc = "This machine contains a neatly-folded solar panel, for use when the ship is at little risk of external impacts and low on power."
 	//invisibility = 100
-	icon = 'icons/obj/machines/nuclear.dmi'
+	icon = 'icons/obj/machinery/nuclear.dmi'
 	icon_state = "engineoff"
 	var/extension_dir = WEST
 	var/num_panels = 4
