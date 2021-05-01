@@ -27,7 +27,7 @@
 
 			new_hotspot.move_center_to(T)
 		#endif
-		//var/image/I = image(icon = 'icons/obj/sealab_power.dmi')
+		//var/image/I = image(icon = 'icons/obj/machinery/sealab_power.dmi')
 		//var/obj/item/photo/P = new/obj/item/photo(get_turf(locate(1,1,1)), I, map, "test", "blah")
 
   		//var/obj/A = new /obj(locate(1,1,1))
@@ -454,7 +454,7 @@
 
 /obj/item/heat_dowsing
 	name = "dowsing rod"
-	icon = 'icons/obj/sealab_power.dmi'
+	icon = 'icons/obj/machinery/sealab_power.dmi'
 	icon_state = "dowsing_hands"
 	item_state = "dowsing"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -632,7 +632,7 @@
 /obj/venthole
 	name = "hole"
 	desc = "A hole dug in the seafloor."
-	icon = 'icons/obj/sealab_power.dmi'
+	icon = 'icons/obj/machinery/sealab_power.dmi'
 	icon_state = "venthole_1"
 	anchored = 1
 	density = 0
@@ -677,7 +677,7 @@
 /obj/item/vent_capture_unbuilt
 	name = "unbuilt vent capture unit"
 	desc = "An unbuilt piece of machinery that converts vent output into electricity."
-	icon = 'icons/obj/sealab_power.dmi'
+	icon = 'icons/obj/machinery/sealab_power.dmi'
 	icon_state = "hydrovent_unbuilt"
 	item_state = "vent"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'

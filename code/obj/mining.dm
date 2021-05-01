@@ -1707,7 +1707,7 @@ obj/item/clothing/gloves/concussive
 /obj/item/mining_tool/power_shovel
 	name = "power shovel"
 	desc = "The final word in digging."
-	icon = 'icons/obj/sealab_power.dmi'
+	icon = 'icons/obj/machinery/sealab_power.dmi'
 	icon_state = "powershovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "pshovel1"
@@ -1722,7 +1722,7 @@ obj/item/clothing/gloves/concussive
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
-		powered_overlay = image('icons/obj/sealab_power.dmi', "ps-glow")
+		powered_overlay = image('icons/obj/machinery/sealab_power.dmi', "ps-glow")
 		src.power_up()
 
 	attack_self(var/mob/user as mob)
