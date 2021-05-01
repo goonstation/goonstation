@@ -369,7 +369,7 @@
 					user.show_text("<b>Error:</b> Couldn't spawn window. Try again and please inform a coder if the problem persists.", "red")
 					return
 
-				S.consume_sheets(2)
+				S.change_stack_amount(-2)
 				return
 			else
 				..()

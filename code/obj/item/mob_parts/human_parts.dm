@@ -1492,10 +1492,12 @@
 /obj/item/parts/human_parts/arm/mutant/roach
 	icon = 'icons/mob/roach.dmi'
 	partIcon = 'icons/mob/roach.dmi'
+	skintoned = 1
 
 /obj/item/parts/human_parts/leg/mutant/roach
 	icon = 'icons/mob/roach.dmi'
 	partIcon = 'icons/mob/roach.dmi'
+	skintoned = 1
 
 ////// ACTUAL ROACH LIMBS //////
 /obj/item/parts/human_parts/arm/mutant/roach/left

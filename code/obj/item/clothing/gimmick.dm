@@ -691,7 +691,7 @@
 	item_state = "adeptus"
 	permeability_coefficient = 0.50
 	body_parts_covered = TORSO|LEGS|ARMS
-	over_all = 1
+	wear_layer = MOB_OVERLAY_BASE
 
 //power armor
 
@@ -829,7 +829,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "robuddy"
 	item_state = "robuddy"
-	over_back = 1
+	wear_layer = MOB_BACK_LAYER + 0.2
 	body_parts_covered = TORSO|LEGS|ARMS
 
 /obj/item/clothing/suit/bee
@@ -840,7 +840,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "bee"
 	item_state = "bee"
-	over_back = 1
+	wear_layer = MOB_BACK_LAYER + 0.2
 	body_parts_covered = TORSO|ARMS
 
 /obj/item/clothing/suit/monkey
@@ -1308,7 +1308,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "joyful"
 	body_parts_covered = TORSO|LEGS|ARMS
-	over_all = 1
+	wear_layer = MOB_OVERLAY_BASE
 
 /obj/item/clothing/head/rando
 	name = "red skull mask and cowl"
@@ -1455,7 +1455,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	name = "hotdog suit"
 	desc = "On close inspection, you notice a small collection of bones caught in the fabric of the suit. Spooky."
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
-	over_all = 1
+	wear_layer = MOB_OVERLAY_BASE
 	icon_state = "hotdogsuit"
 
 /obj/item/clothing/under/gimmick/vampire

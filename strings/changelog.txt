@@ -1,5 +1,136 @@
 
+(t)fri apr 30 21
+(u)MomoBerry
+(p)4392
+(e)⚖|balance
+(*)Changes several values for sold and bought commodities, and increases the QM console buy cap from 20 to 99. New dialogue for traders, yay personality!
+(+)Removes Research Cardlock from "Chemistry Resupply" Crate.
+(u)Tarmunora
+(e)⚖|balance
+(*)Zipguns changed to deny ammunition of too large calibre (notably adding 40mm shells and antisingularity rockets to blacklist).
+(u)Flappybat
+(p)3751
+(e)⚖🆕🗺🎨|balance, feature, mapping, sprites
+(*)Spies starting flash is replaced with a spy camera with a built in recharging flash! Use it to swap between flash and photo mode.
+(+)Sprite modification by Gannets
+(u)Kubius
+(p)4522
+(e)🆕🗺|feature, mapping
+(*)Kondaru's test chamber, accessed from the research pod bay, has been upgraded with more equipment and a pressurized causeway.
+(u)Brixx79
+(p)4350
+(e)|
+(+)Added new Chemistry and Robotics radio tape adverts.
+(u)Flaborized
+(p)4526
+(e)🎨|sprites
+(+)Added the ushanka, pinwheel hat and frog hat to the clothing booth. Added the boater hat to roundstart barbers.
+(u)Walpvrgis
+(p)4505
+(e)🎨|sprites
+(*)Mimes now have a Fancy Mime Suit and Mime Dress to choose from as lvl 0 job rewards. Go forth and gesticulate wildly in style.
+(u)Carbadox
+(p)4333
+(e)⚖🆕|balance, feature
+(*)Added a new iron oxide reagent. The recipe is iron, oxygen, acetic acid and salt, heated. It's now a required ingredient for thermite.
+(u)Flourish
+(+)The progress bar for entering a pod will now be interrupted by any movement.
+(t)thu apr 29 21
+(u)Kubius
+(p)4513
+(e)⚖|balance
+(*)Rathen's Secret nerfed - weaken duration reduced from 3 seconds to 0.1 seconds.
+(u)DimWhat
+(p)4510
+(e)⚖|balance
+(*)The amount of time to break a loyalty implant with a revolutionary flash has been lowered to 4 seconds.
+(t)tue apr 27 21
+(u)pali
+(e)🆕|feature
+(*)A new trait, Mildly Mutated. It activates a random mutation in you when you spawn in!
+(+)RP respawn timer now has a better visual indication. It also no longer gets reset by ghost respawn options like ghostcritters or ghosdrones or VR etc.
+(+)Also the timer is now 15 minutes instead of 30!
+(t)mon apr 26 21
+(u)Azrun
+(p)3917
+(e)🆕|feature
+(*)Adds Haunted TEG Event. Spooky!
+(u)Superlagg
+(p)4004
+(e)🆕|feature
+(+)The station's floorbots now start the shift off, having tired themselves out from immediately running around gathering up metal and boarding up space every morning.
+(u)TTerc
+(p)4361
+(e)🐛|bug
+(*)Added actionbars for unwelding the wall plating and all the console/computer construction steps.
+(u)TTerc
+(p)4364
+(e)⚖🐛|balance, bug
+(+)Vampire/thrall bite now only requires the player to take off victim's headgear, if the headgear has choking protection.
+(u)Luxizzle
+(p)4487
+(e)🐛|bug
+(+)Fixed AIs not able to track players from chat.
+(+)Fixed AIs not able to interact with intercoms.
+(u)mopcat
+(p)4458
+(e)|
+(+)NanoTrasen Security Operatives now spawn with a barrier on their belt.
+(u)DimWhat
+(p)4465
+(e)🎨|sprites
+(+)Added even more monkey clothing sprites. Chimpers.
+(u)Flourish
+(+)Attacking someone with a drinking glass while on harm intent no longer splashes your drink onto them (it just tries to forcefeed them).
+(t)sun apr 25 21
+(u)Ludolf and DimWhat
+(p)4386
+(e)🎨|sprites
+(+)Adds unique eyeballs to cows, skeletons, and lizards.
+(u)Luxizzle
+(p)4339
+(e)📄|tgui
+(*)Converted power monitors to tgui.
+(u)ZeWaka, BenLubar, & Rohesie
+(p)4468
+(e)🗺🎨|mapping, sprites
+(*)Added some wall smoothing to the game. Expect some walls to look a lot smoother soon, and potentially other things too in the future!
+(u)Luxizzle
+(p)4325
+(e)📄|tgui
+(*)Radio & Intercom UI's have been converted to tgui.
+(u)Flaborized
+(p)4451
+(e)🎨|sprites
+(*)Added two new hairstyles: Mermaid: Faded and Longbeard: Faded. They can be combined with the originals to make an interesting gradient effect.
+(t)sat apr 24 21
+(u)DimWhat
+(p)4422
+(e)🎨|sprites
+(+)Several new sprites have been added for monkey clothing. Ook!
+(u)pali
+(+)Verbs for (un)muting (L)OOC have been removed because people kept clicking them accidentally. Use the chat filters in the chat cogwheel menu instead.
+(u)Tarmunora
+(e)⚖|balance
+(+)Armored fire/bio/paramedic suits no longer are more bulletproof than the armor used to make them.
+(u)Jan.antilles
+(p)4445
+(e)🎨|sprites
+(+)Fixed the Pride Locker to not appear locked.
+(t)fri apr 23 21
+(u)Lythine
+(p)4426
+(e)🆕🎨|feature, sprites
+(*)Adds skin tone customization and talk sounds to the roach mutantrace.
+(u)Chickenish
+(p)3984
+(e)⚖🐛|balance, bug
+(*)Mutations are now lag adjusted.
 (t)thu apr 22 21
+(u)BatElite & ZeWaka
+(p)4086
+(e)🎨|sprites
+(*)Material sheets, rods and tiles look a lot better now. They also show roughly the amount that's on a stack.
 (u)Mordent
 (p)4405
 (e)📄|tgui

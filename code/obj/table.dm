@@ -685,7 +685,7 @@
 				var/obj/item/sheet/S = W
 				if (!S.material || !(S.material.material_flags & MATERIAL_CRYSTAL))
 					boutput(user, "<span class='alert'>You have to use glass or another crystalline material to repair [src]!</span>")
-				else if (S.consume_sheets(1))
+				else if (S.change_stack_amount(-1))
 					boutput(user, "<span class='notice'>You add glass to [src]!</span>")
 					if (S.reinforcement)
 						src.reinforced = 1

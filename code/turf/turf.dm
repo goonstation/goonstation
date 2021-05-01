@@ -759,6 +759,10 @@
 				W.update_icon()
 	return wall
 
+/turf/proc/is_sanctuary()
+  var/area/AR = src.loc
+  return AR.sanctuary
+
 ///turf/simulated/floor/Entered(atom/movable/A, atom/OL) //this used to run on every simulated turf (yes walls too!) -zewaka
 //	..()
 //moved step and slip functions into Carbon and Human files!
@@ -972,7 +976,7 @@
 		boutput(user, "<span class='alert'>You can't build here.</span>")
 		return
 	var/obj/item/rods/R = C
-	if (istype(R) && R.consume_rods(1))
+	if (istype(R) && R.change_stack_amount(-1))
 		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
 		playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 		ReplaceWithLattice()

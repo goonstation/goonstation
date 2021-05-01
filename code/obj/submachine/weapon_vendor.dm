@@ -71,6 +71,7 @@
 					var/atom/A = new M.path(src.loc)
 					playsound(src.loc, sound_buy, 80, 1)
 					src.vended(A)
+					usr.put_in_hand_or_eject(A)
 					return TRUE
 
 	attackby(var/obj/item/I, var/mob/user)
@@ -432,7 +433,7 @@
 		icon_state = "req-token"
 
 		vr
-			name = "NUKE_TKN.EXE"
+			name = "syndicoin requisition token"
 
 	security
 		desc = "An NT-provided token compatible with the Security Weapons Vendor."
@@ -440,6 +441,7 @@
 
 		assistant
 			desc = "An NT-provided token compatible with the Security Weapons Vendor. This one says <i>for security assistant use only</i>."
+			icon_state = "req-token-secass"
 
 #undef WEAPON_VENDOR_CATEGORY_SIDEARM
 #undef WEAPON_VENDOR_CATEGORY_LOADOUT
