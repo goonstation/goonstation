@@ -394,7 +394,7 @@
 
 /obj/machinery/computer/pathology
 	name = "Pathology Research"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "pathology"
 	desc = "A bulky machine used to control the pathogen manipulator."
 	var/obj/machinery/pathogen_manipulator/manip = null

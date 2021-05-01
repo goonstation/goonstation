@@ -3,7 +3,7 @@
 
 /obj/machinery/power/monitor
 	name = "Power Monitoring Computer"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "power2"
 	density = 1
 	anchored = 1
@@ -140,7 +140,7 @@
 // tweaked version to hook up to the engine->smes powernet and show SMES usage stats and power produced
 /obj/machinery/power/monitor/smes
 	name = "SMES Monitoring Computer"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "power"
 	density = 1
 	anchored = 1

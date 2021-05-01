@@ -15,7 +15,7 @@
 /obj/machinery/power/switchgear
 	name = "High Voltage Switchgear"
 	desc = "It looks like a giant cabinet full of switches and shiny metal parts. Why not start messing with it, what's the worst that could happen?"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "power"
 	density = 1
 	anchored = 1

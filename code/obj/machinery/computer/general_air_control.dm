@@ -2,7 +2,7 @@
 #define GET_SIGNAL_MIXTURE(ID) APPLY_TO_GASES(_GET_SIGNAL_GAS, ID)
 
 obj/machinery/computer/general_air_control
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "computer_generic"
 
 	name = "Computer"
@@ -130,7 +130,7 @@ obj/machinery/computer/general_air_control
 		set_frequency(frequency)
 
 	large_tank_control
-		icon = 'icons/obj/computer.dmi'
+		icon = 'icons/obj/machinery/computer.dmi'
 		icon_state = "tank"
 		req_access = list(access_engineering_atmos)
 		object_flags = CAN_REPROGRAM_ACCESS
@@ -274,7 +274,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				attack_hand(usr)
 
 	fuel_injection
-		icon = 'icons/obj/computer.dmi'
+		icon = 'icons/obj/machinery/computer.dmi'
 		icon_state = "atmos"
 
 

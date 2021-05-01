@@ -1,6 +1,6 @@
 /obj/machinery/computer/workstation
 	name = "Workstation"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "reactor_stats"
 	desc = "TODO"
 	density = 1

@@ -233,7 +233,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "old0";
 	name = "broken computer"
 	},
@@ -354,7 +354,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "A computer that is obviously completely broken, more so than previous obviously broken computers.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "oldb";
 	name = "broken computer"
 	},
@@ -498,7 +498,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "old0";
 	name = "broken computer"
 	},
@@ -875,7 +875,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "old0";
 	name = "broken computer"
 	},
@@ -1545,7 +1545,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "offbroken";
 	name = "broken computer"
 	},
@@ -4917,7 +4917,7 @@
 	tag = "icon-dterm0";
 	name = "broken computer";
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "dterm0";
 	density = 1;
 	anchored = 1
@@ -5114,7 +5114,7 @@
 	tag = "icon-aiuploadb";
 	name = "broken computer";
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "aiuploadb";
 	density = 1;
 	anchored = 1
@@ -5869,7 +5869,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "old0";
 	name = "broken computer"
 	},

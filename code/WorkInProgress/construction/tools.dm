@@ -96,7 +96,7 @@
 
 /obj/machinery/turretid/computer
 	var/list/turrets = list()
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "turret3"
 	density = 1
 	var/firesat = "humanoids"

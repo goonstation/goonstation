@@ -465,7 +465,7 @@
 /obj/haunted_television
 	name = "Television"
 	desc = "The television, that insidious beast, that Medusa which freezes a billion people to stone every night, staring fixedly, that Siren which called and sang and promised so much and gave, after all, so little."
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "security_det"
 	anchored = 1
 	density = 1

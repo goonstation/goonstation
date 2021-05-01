@@ -1094,7 +1094,7 @@
 "vb" = (/obj/decoration/decorativeplant/plant2,/turf/simulated/floor/grey,/area/space)
 "vc" = (/obj/machinery/computer/airbr,/turf/simulated/floor/grey,/area/space)
 "vd" = (/obj/table/reinforced/auto,/obj/deskclutter,/turf/simulated/floor/grey,/area/space)
-"ve" = (/obj/decal/fakeobjects/broadcastcomputer{name = "old PC"; icon = 'icons/obj/computer.dmi'; icon_state = "access"},/turf/simulated/floor/grey,/area/space)
+"ve" = (/obj/decal/fakeobjects/broadcastcomputer{name = "old PC"; icon = 'icons/obj/machinery/computer.dmi'; icon_state = "access"},/turf/simulated/floor/grey,/area/space)
 "vf" = (/turf/unsimulated/floor/lava,/obj/grille/catwalk,/turf/simulated/floor/airless/plating/catwalk,/area/space)
 "vg" = (/turf/unsimulated/floor/lava,/obj/decal/tile_edge/line/black{tag = "icon-line1 (NORTH)"; icon_state = "line1"; dir = 1},/obj/grille/catwalk,/turf/simulated/floor/airless/plating/catwalk,/area/space)
 "vh" = (/obj/decoration/decorativeplant/plant5,/turf/simulated/floor/grey,/area/space)

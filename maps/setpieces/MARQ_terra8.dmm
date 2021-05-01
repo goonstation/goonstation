@@ -6821,7 +6821,7 @@
 	density = 1;
 	desc = "Filing cabinets. The locking mechanism is jammed.";
 	dir = 4;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "messyfilesb";
 	name = "facility records";
 	pixel_x = -6;
@@ -6833,7 +6833,7 @@
 	density = 1;
 	desc = "Filing cabinets. The locking mechanism is jammed.";
 	dir = 4;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "messyfilesb";
 	name = "facility records";
 	pixel_x = 6;
@@ -10520,7 +10520,7 @@
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
 	dir = 8;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "aiuploadb";
 	name = "broken computer";
 	pixel_x = 12;

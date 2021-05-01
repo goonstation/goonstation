@@ -117,7 +117,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 /obj/machinery/computer/supplycomp
 	name = "Quartermaster's Console"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "QMcom"
 	req_access = list(access_supply_console)
 	object_flags = CAN_REPROGRAM_ACCESS

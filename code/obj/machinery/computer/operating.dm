@@ -2,7 +2,7 @@
 	name = "Operating Computer"
 	density = 1
 	anchored = 1.0
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "operating"
 	desc = "Shows information on a patient laying on an operating table."
 	power_usage = 500

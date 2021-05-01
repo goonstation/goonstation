@@ -24048,7 +24048,7 @@
 	},
 /obj/computerframe{
 	desc = "It is highly unlikely that this still works.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	name = "smashed computer"
 	},
@@ -70564,7 +70564,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This teller is incredibly broken.  Look at how broken it is!  And someone took the cash...";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "offbroken";
 	name = "broken cash register"
 	},
@@ -71196,7 +71196,7 @@
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
 	dir = 1;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "offbroken";
 	name = "broken computer";
 	tag = "icon-offbroken (NORTH)"

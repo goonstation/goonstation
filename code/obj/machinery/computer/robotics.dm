@@ -1,6 +1,6 @@
 /obj/machinery/computer/robotics
 	name = "Robotics Control"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "robotics"
 	req_access = list(access_robotics)
 	object_flags = CAN_REPROGRAM_ACCESS

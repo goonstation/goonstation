@@ -789,7 +789,7 @@
 
 /obj/machinery/computer/magnet
 	name = "mineral magnet controls"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "mmagnet"
 	var/temp = null
 	var/list/linked_magnets = list()

@@ -5,7 +5,7 @@
 
 /obj/machinery/power/reactor_stats
 	name = "Reactor Statistics Computer"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "reactor_stats"
 	desc = "A powerful supercomputer used to model the generator and provide corresponding statistical analysis"
 	density = 1

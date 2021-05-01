@@ -282,7 +282,7 @@
 /obj/machinery/computer3/generic/nomad_computer
 	name = "broken computer"
 	desc = "This computer has definitely seen better days."
-/*	icon = 'icons/obj/computer.dmi'
+/*	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "computer_generic"
 	base_icon_state = "computer_generic"
 	setup_frame_type = /obj/computer3frame //What kind of frame does it spawn while disassembled.  This better be a type of /obj/compute3frame !!

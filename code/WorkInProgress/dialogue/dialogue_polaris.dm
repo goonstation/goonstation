@@ -554,7 +554,7 @@
 
 /obj/dialogueobj/captainscomputer
 	name = "captain's private computer"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "old_alt"
 	density = 1
 	anchored = 2
@@ -778,7 +778,7 @@
 //ENGINEERING COMPUTER
 /obj/dialogueobj/engineeringcomputer
 	name = "engineering computer"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "computer_generic"
 	density = 1
 	anchored = 2

@@ -686,7 +686,7 @@
 /obj/computerframe{
 	name = "smashed computer";
 	desc = "It is highly unlikely that this still works.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	dir = 2;
 	anchored = 1
@@ -2727,7 +2727,7 @@
 /obj/computerframe{
 	name = "smashed computer";
 	desc = "It is highly unlikely that this still works.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	dir = 4;
 	anchored = 1
@@ -2776,7 +2776,7 @@
 /obj/computerframe{
 	name = "smashed computer";
 	desc = "It is highly unlikely that this still works.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	dir = 8;
 	anchored = 1
@@ -3820,7 +3820,7 @@
 /obj/computerframe{
 	name = "smashed computer";
 	desc = "It is highly unlikely that this still works.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	dir = 4;
 	anchored = 1
@@ -4337,7 +4337,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "offbroken";
 	name = "broken computer"
 	},
@@ -5305,7 +5305,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "A computer that is obviously completely broken, more so than previous obviously broken computers.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "oldb";
 	name = "broken computer"
 	},
@@ -7638,7 +7638,7 @@
 /obj/computerframe{
 	name = "smashed computer";
 	desc = "It is highly unlikely that this still works.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	dir = 4;
 	anchored = 1
@@ -8585,7 +8585,7 @@
 /obj/computerframe{
 	name = "smashed computer";
 	desc = "It is highly unlikely that this still works.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	dir = 4;
 	anchored = 1
@@ -8673,7 +8673,7 @@
 /obj/computerframe{
 	name = "smashed computer";
 	desc = "It is highly unlikely that this still works.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	dir = 8;
 	anchored = 1
@@ -8954,7 +8954,7 @@
 /obj/computerframe{
 	name = "smashed computer";
 	desc = "It is highly unlikely that this still works.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	dir = 4;
 	anchored = 1
@@ -11172,7 +11172,7 @@
 /obj/computerframe{
 	name = "smashed computer";
 	desc = "It is highly unlikely that this still works.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	dir = 4;
 	anchored = 1
@@ -11218,7 +11218,7 @@
 /obj/computerframe{
 	name = "smashed computer";
 	desc = "It is highly unlikely that this still works.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	dir = 8;
 	anchored = 1

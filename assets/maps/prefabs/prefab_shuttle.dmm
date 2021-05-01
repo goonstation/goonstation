@@ -79,7 +79,7 @@
 "bA" = (/obj/critter/zombie/scientist,/turf/simulated/floor/airless{icon_state = "damaged3"},/area/noGenerate)
 "bB" = (/obj/decal/cleanable/dirt,/obj/item/reagent_containers/pill/ipecac,/turf/simulated/floor/airless{icon_state = "floorgrime"},/area/noGenerate)
 "bC" = (/obj/item/cable_coil/cut{color = "#DD0000"; icon_state = "coil1"},/turf/simulated/floor/airless{icon_state = "floorgrime"},/area/noGenerate)
-"bD" = (/obj/computerframe{name = "smashed computer"; desc = "It is highly unlikely that this still works."; icon = 'icons/obj/computer.dmi'; icon_state = "datamedb"; dir = 8; anchored = 1},/obj/map/light/white,/turf/simulated/floor/airless/scorched,/area/noGenerate)
+"bD" = (/obj/computerframe{name = "smashed computer"; desc = "It is highly unlikely that this still works."; icon = 'icons/obj/machinery/computer.dmi'; icon_state = "datamedb"; dir = 8; anchored = 1},/obj/map/light/white,/turf/simulated/floor/airless/scorched,/area/noGenerate)
 "bE" = (/turf/simulated/shuttle/wall{dir = 4; icon_state = "wall_space"},/area/noGenerate)
 "bF" = (/obj/decal/floatingtiles{icon_state = "floattiles4"; dir = 8},/obj/item/raw_material/shard/glass,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
 "bG" = (/obj/item/raw_material/rock,/turf/simulated/wall/asteroid,/area/noGenerate)

@@ -535,7 +535,7 @@ datum/pump_ui/circulator_ui
 
 /obj/machinery/power/monitor
 	name = "Power Monitoring Computer"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "power"
 	density = 1
 	anchored = 1
@@ -1455,7 +1455,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 	req_access = list() //Change
 	req_access_txt = ""
 
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "computer_generic"
 
 	name = "Pump control computer"

@@ -30,7 +30,7 @@
 /obj/machinery/computer/turbine_computer
 	name = "Gas turbine control computer"
 	desc = "A computer to remotely control a gas turbine"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "airtunnel0e"
 	anchored = 1
 	density = 1

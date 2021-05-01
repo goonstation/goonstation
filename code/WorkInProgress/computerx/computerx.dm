@@ -11,7 +11,7 @@ var/compx_gridx_max = 5
 /obj/machinery/computerx
 	name = "computer"
 	desc = "A computer workstation."
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "computer_generic"
 	density = 1
 	anchored = 1.0
