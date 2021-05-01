@@ -1,5 +1,9 @@
 
 (t)sat may 01 21
+(u)Jan.antilles
+(p)4534
+(e)🎨|sprites
+(+)Resprite of popcorn, fries, and the takeout box.
 (u)DimWhat
 (p)4407
 (e)⚖|balance
