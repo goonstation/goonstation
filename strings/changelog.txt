@@ -1,5 +1,10 @@
 
 (t)fri apr 30 21
+(u)MomoBerry
+(p)4392
+(e)⚖|balance
+(*)Changes several values for sold and bought commodities, and increases the QM console buy cap from 20 to 99. New dialogue for traders, yay personality!
+(+)Removes Research Cardlock from "Chemistry Resupply" Crate.
 (u)Tarmunora
 (e)⚖|balance
 (*)Zipguns changed to deny ammunition of too large calibre (notably adding 40mm shells and antisingularity rockets to blacklist).
