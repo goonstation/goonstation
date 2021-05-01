@@ -1,6 +1,6 @@
 /obj/machinery/centrifuge
 	name = "Centrifuge"
-	icon = 'icons/obj/pathology.dmi'
+	icon = 'icons/obj/machinery/pathology.dmi'
 	icon_state = "centrifuge0"
 	desc = "A large machine that can be used to separate a pathogen sample from a blood sample."
 	anchored = 1
@@ -193,7 +193,7 @@
 
 /obj/machinery/microscope
 	name = "Microscope"
-	icon = 'icons/obj/pathology.dmi'
+	icon = 'icons/obj/machinery/pathology.dmi'
 	icon_state = "microscope0"
 	desc = "A device which provides a magnified view of a culture in a petri dish."
 
@@ -1032,7 +1032,7 @@
 
 /obj/machinery/pathogen_manipulator
 	name = "Pathogen Manipulator"
-	icon = 'icons/obj/pathology.dmi'
+	icon = 'icons/obj/machinery/pathology.dmi'
 	icon_state = "manipulator"
 	desc = "A large, softly humming machine."
 	density = 1
@@ -1130,7 +1130,7 @@
 /obj/item/synthmodule
 	name = "Synth-O-Matic module"
 	desc = "A module that integrates with a Synth-O-Matic machine."
-	icon = 'icons/obj/pathology.dmi'
+	icon = 'icons/obj/machinery/pathology.dmi'
 	icon_state = "synthmodule"
 	var/id = "bad"
 	proc/received(obj/machinery/synthomatic/S)
@@ -1194,7 +1194,7 @@
 /obj/machinery/synthomatic
 	name = "Synth-O-Matic 6.5.535"
 	desc = "The leading technological assistant in synthesizing cure for certain pathogens."
-	icon = 'icons/obj/pathology.dmi'
+	icon = 'icons/obj/machinery/pathology.dmi'
 	icon_state = "synth1"
 	density = 1
 	anchored = 1
@@ -1646,7 +1646,7 @@
 /obj/machinery/autoclave
 	name = "Autoclave"
 	desc = "A bulky machine used for sanitizing pathogen growth equipment."
-	icon = 'icons/obj/pathology.dmi'
+	icon = 'icons/obj/machinery/pathology.dmi'
 	icon_state = "autoclave"
 	density = 1
 	anchored = 1
@@ -1732,7 +1732,7 @@
 
 /obj/machinery/incubator
 	name = "Incubator"
-	icon = 'icons/obj/pathology.dmi'
+	icon = 'icons/obj/machinery/pathology.dmi'
 	icon_state = "incubator"
 	var/static/image/icon_beaker = image('icons/obj/chemical.dmi', "heater-beaker")
 	desc = "A machine that can automatically provide a petri dish with nutrients. It can also directly fill vials with a sample of the pathogen inside."

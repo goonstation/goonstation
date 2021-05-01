@@ -1,7 +1,7 @@
 // A blood slide, used by the centrifuge.
 /obj/item/bloodslide
 	name = "Blood Slide"
-	icon = 'icons/obj/pathology.dmi'
+	icon = 'icons/obj/machinery/pathology.dmi'
 	icon_state = "slide0"
 	desc = "An item used by scientists and serial killers operating in the Miami area to store blood samples."
 
@@ -34,7 +34,7 @@
 
 /obj/item/reagent_containers/glass/petridish
 	name = "Petri Dish"
-	icon = 'icons/obj/pathology.dmi'
+	icon = 'icons/obj/machinery/pathology.dmi'
 	icon_state = "petri0"
 	desc = "A dish tailored hold pathogen cultures."
 	initial_volume = 40
@@ -248,7 +248,7 @@
 /obj/item/reagent_containers/glass/vial
 	name = "vial"
 	desc = "A vial. Can hold up to 5 units."
-	icon = 'icons/obj/pathology.dmi'
+	icon = 'icons/obj/machinery/pathology.dmi'
 	icon_state = "vial0"
 	item_state = "vial"
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
@@ -269,7 +269,7 @@
 /obj/item/reagent_containers/glass/vial/prepared
 	name = "Totally Safe(tm) pathogen sample"
 	desc = "A vial. Can hold up to 5 units."
-	icon = 'icons/obj/pathology.dmi'
+	icon = 'icons/obj/machinery/pathology.dmi'
 	icon_state = "vial0"
 	item_state = "vial"
 	var/datum/microbody/FM = null
@@ -397,7 +397,7 @@
 /obj/item/serum_injector
 	name = "Pathological Injector"
 	desc = "A specialized injector for injecting patients with serums and vaccines."
-	icon = 'icons/obj/pathology.dmi'
+	icon = 'icons/obj/machinery/pathology.dmi'
 	icon_state = "serum"
 	var/datum/pathogen/pathogen = null
 	var/used = 1
