@@ -35,7 +35,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	var/last_dry_start = 0
 	var/dry_time = 100
 
-	flags = NOSPLASH
+	flags = NOSPLASH | FPRINT
 	layer = DECAL_LAYER
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
