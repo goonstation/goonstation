@@ -566,44 +566,44 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 
 /obj/item/record/notaquario_mixtape/beaches
 	record_name = "Beaches"
-	song = "sound/radio_station/beaches.ogg"
+	song = "sound/radio_station/music/beaches.ogg"
 
 /obj/item/record/notaquario_mixtape/bugdome
 	record_name = "Bug Quest 2"
-	song = "sound/radio_station/caves.ogg"
+	song = "sound/radio_station/music/caves.ogg"
 
 /obj/item/record/notaquario_mixtape/bugquest
 	record_name = "Bug Quest"
-	song = "sound/radio_station/bugquest.ogg"
+	song = "sound/radio_station/music/bugquest.ogg"
 
 /obj/item/record/notaquario_mixtape/graveyard
 	record_name = "Graveyard"
-	song = "sound/radio_station/graveyard.ogg"
+	song = "sound/radio_station/music/graveyard.ogg"
 
 /obj/item/record/notaquario_mixtape/floaty
 	record_name = "I'm Floaty In Space But Thats Ok"
-	song = "sound/radio_station/im_floaty_in_space_but_thats_ok.ogg"
+	song = "sound/radio_station/music/im_floaty_in_space_but_thats_ok.ogg"
 
 /obj/item/record/notaquario_mixtape/komo
 	record_name = "Komo"
-	song = "sound/radio_station/komo.ogg"
+	song = "sound/radio_station/music/komo.ogg"
 
 /obj/item/record/notaquario_mixtape/repose
 	record_name = "Repose"
-	song = "sound/radio_station/repose.ogg"
+	song = "sound/radio_station/music/repose.ogg"
 
 /obj/item/record/notaquario_mixtape/restful
 	record_name = "Restful"
-	song = "sound/radio_station/restful.ogg"
+	song = "sound/radio_station/music/restful.ogg"
 
 /obj/item/record/notaquario_mixtape/scarydome
 	record_name = "Bug Quest 3 - Biodome"
-	song = "sound/radio_station/scarydome.ogg"
+	song = "sound/radio_station/music/scarydome.ogg"
 
 /obj/item/record/distant_star
     desc = "A fairly worn and dusty record. It seems to be old"
     record_name = "Distant Star"
-    song = "sound/radio_station/distant_star.ogg"
+    song = "sound/radio_station/music/distant_star.ogg"
 
 // Record sets
 /obj/item/storage/box/record
