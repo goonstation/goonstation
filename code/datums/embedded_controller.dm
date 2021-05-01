@@ -468,7 +468,7 @@ obj/machinery/embedded_controller
 
 
 obj/machinery/embedded_controller/radio/access_controller
-	icon = 'icons/obj/airlock_machines.dmi'
+	icon = 'icons/obj/machinery/airlock_machines.dmi'
 	icon_state = "access_control_standby"
 
 	name = "Access Console"
@@ -534,7 +534,7 @@ obj/machinery/embedded_controller/radio/access_controller
 
 
 obj/machinery/embedded_controller/radio/airlock_controller
-	icon = 'icons/obj/airlock_machines.dmi'
+	icon = 'icons/obj/machinery/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
 
 	name = "Airlock Console"
@@ -616,7 +616,7 @@ obj/machinery/embedded_controller/radio/airlock_controller
 
 
 obj/machinery/embedded_controller/radio/department_controller
-	icon = 'icons/obj/airlock_machines.dmi'
+	icon = 'icons/obj/machinery/airlock_machines.dmi'
 	icon_state = "access_control_standby"
 
 	name = "Access Console"
