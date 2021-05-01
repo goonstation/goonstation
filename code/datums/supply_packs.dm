@@ -680,7 +680,8 @@
 	desc = "A Space Chinese meal for two, delivered galaxy-wide."
 	category = "Civilian Department"
 	contains = list(/obj/item/reagent_containers/food/snacks/takeout = 2,
-					/obj/item/reagent_containers/food/snacks/fortune_cookie = 2)
+					/obj/item/reagent_containers/food/snacks/fortune_cookie = 2,
+					/obj/item/kitchen/chopsticks_package = 2)
 	cost = 200
 	containertype = /obj/storage/crate/packing
 	containername = "Golden Gannet Delivery"
