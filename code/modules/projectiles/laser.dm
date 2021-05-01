@@ -371,6 +371,7 @@ toxic - poisons
 	icon_state = "bolt"
 	damage_type = D_ENERGY
 	var/turret = 0		//have turret shots do less damage, but slow mobs it hits...
+	var/team_num = 0	//1 for NT, 2 for SY
 
 	on_hit(atom/hit)
 		..()
@@ -385,6 +386,7 @@ toxic - poisons
 	color_red = 0.05
 	color_green = 0.28
 	color_blue = 0.51
+	team_num = 1
 
 	turret
 		turret = 1
@@ -396,6 +398,7 @@ toxic - poisons
 	color_red = 0.51
 	color_green = 0.05
 	color_blue = 0.28
+	team_num = 2
 
 	turret
 		turret = 1

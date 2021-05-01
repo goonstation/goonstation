@@ -678,7 +678,12 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		return
 
 	bullet_act(var/obj/projectile/P)
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		//bullets from friendly turrets don't damage this thingy.
+		if (istype(P.proj_data, /datum/projectile/laser/blaster/pod_pilot))
+			var/datum/projectile/laser/blaster/pod_pilot/blaster_bolt = P.proj_data
+			if (blaster_bolt.turret && blaster_bolt.team_num == src.team_num)
+				return
+
 		var/damage = round((P.power*P.proj_data.ks_ratio), 1.0)
 		var/damage_mult = 1
 		if (damage < 1)
