@@ -2,7 +2,7 @@
 /obj/machinery/processor
 	name = "Material processor"
 	desc = "Turns raw materials, and objects containing materials, into processed pieces."
-	icon = 'icons/obj/crafting.dmi'
+	icon = 'icons/obj/machinery/crafting.dmi'
 	icon_state = "fab3-on"
 	anchored = 1
 	density = 1
@@ -455,7 +455,7 @@
 /obj/machinery/smelter_portable
 	name = "Portable Smelter"
 	desc = "A small furnace-like machine used to melt and combine metals or minerals."
-	icon = 'icons/obj/crafting.dmi'
+	icon = 'icons/obj/machinery/crafting.dmi'
 	icon_state = "portsmelter0"
 	anchored = 0
 	density = 1
