@@ -184,6 +184,8 @@
 			src.SubscribeToProcess()
 		src.n_occupants++
 
+		src.update_icon()
+
 		occupant.bioHolder?.AddEffect("stinky")
 
 		for(var/obj/O in src)
@@ -203,5 +205,4 @@
 			return
 
 		src.add_fingerprint(usr)
-		src.on_accept_occupant(usr)
-		src.update_icon()
+		usr.set_loc(src)
