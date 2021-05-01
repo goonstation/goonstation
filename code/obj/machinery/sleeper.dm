@@ -760,7 +760,7 @@
 /obj/machinery/sleeper/compact
 	name = "Compact Sleeper"
 	desc = "Your usual sleeper, but compact this time. Wow!"
-	icon = 'icons/obj/compact_machines.dmi'
+	icon = 'icons/obj/machinery/compact_machines.dmi'
 	icon_state = "compact_sleeper"
 	anchored = 1
 
