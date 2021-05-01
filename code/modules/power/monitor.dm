@@ -24,7 +24,7 @@
 	light.set_color(light_r, light_g, light_b)
 	light.attach(src)
 	if(glow_in_dark_screen)
-		src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
+		src.screen_image = image('icons/obj/machinery/computer_screens.dmi', src.icon_state, -1)
 		screen_image.plane = PLANE_LIGHTING
 		screen_image.blend_mode = BLEND_ADD
 		screen_image.layer = LIGHTING_LAYER_BASE

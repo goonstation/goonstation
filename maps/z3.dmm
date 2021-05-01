@@ -641,7 +641,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "An older biopod for the creation of space bee eggs.";
-	icon = 'icons/obj/cloning.dmi';
+	icon = 'icons/obj/machinery/cloning.dmi';
 	icon_state = "pod_0";
 	name = "egg generator pod"
 	},

@@ -29,7 +29,7 @@ Modules to do things with cloning modules
 	desc = "An experimental treatment device meant for only the worst of criminals. Fires a barrage of electrical signals to the brain during medical procedues. It looks like it has some cloning goop and blood smeared on it - yuck."
 
 /obj/item/cloneModule/mindslave_module
-	icon = 'icons/obj/cloning.dmi'
+	icon = 'icons/obj/machinery/cloning.dmi'
 	icon_state = "slavemodule"
 	name = "Mindslave cloning module"
 	desc = "A powerful device that remaps people's brains when they get cloned to make them completely loyal to the owner of this module"

@@ -121,7 +121,7 @@
 	name = "gooncode hard disk drive"
 	desc = "The prized, sought after spaghetti and pooballs code, and the only known cure to apiphobia. Conveniently on a fancy hard drive that connects to PDAs. \
 	The most stealable thing in the universe."
-	icon = 'icons/obj/cloning.dmi' // sprite is an altered harddisk
+	icon = 'icons/obj/machinery/cloning.dmi' // sprite is an altered harddisk
 	icon_state = "gooncode"
 	flags = SUPPRESSATTACK
 	throwforce = 3

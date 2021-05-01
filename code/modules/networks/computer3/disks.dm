@@ -15,7 +15,7 @@
 
 /obj/item/disk/data
 	name = "data disk"
-	icon = 'icons/obj/cloning.dmi'
+	icon = 'icons/obj/machinery/cloning.dmi'
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	item_state = "card-id"
 	w_class = 1.0

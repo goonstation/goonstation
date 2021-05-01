@@ -33,7 +33,7 @@
 "G" = (/obj/table/wood/auto,/obj/shrub{dir = 2; icon = 'icons/obj/stationobjs.dmi'; icon_state = "plant_small"; layer = 3; pixel_y = 18},/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
 "H" = (/obj/table/auto,/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/moon{pixel_y = 6},/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
 "I" = (/obj/table/auto,/obj/item/device/camera_viewer,/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
-"J" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "An older biopod for the creation of space bee eggs."; icon = 'icons/obj/cloning.dmi'; icon_state = "pod_0"; name = "egg generator pod"},/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
+"J" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "An older biopod for the creation of space bee eggs."; icon = 'icons/obj/machinery/cloning.dmi'; icon_state = "pod_0"; name = "egg generator pod"},/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
 "K" = (/obj/stool/chair/office{dir = 1; icon_state = "office_chair"},/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
 "L" = (/obj/table/auto,/obj/item/record/honey,/obj/machinery/light/incandescent/warm,/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)
 "M" = (/obj/item/device/gps{identifier = "BEE1"},/turf/simulated/floor{icon_state = "hive"},/area/bee_trader)

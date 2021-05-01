@@ -12,7 +12,7 @@
 	name = "cloning pod"
 	desc = "An electronically-lockable pod for growing organic tissue."
 	density = 1
-	icon = 'icons/obj/cloning.dmi'
+	icon = 'icons/obj/machinery/cloning.dmi'
 	icon_state = "pod_0_lowmeat"
 	object_flags = CAN_REPROGRAM_ACCESS
 	mats = list("MET-1"=35, "beeswax"=5)
@@ -799,7 +799,7 @@
 /obj/machinery/clonegrinder
 	name = "enzymatic reclaimer"
 	desc = "A tank resembling a rather large blender, designed to recover biomatter for use in cloning."
-	icon = 'icons/obj/cloning.dmi'
+	icon = 'icons/obj/machinery/cloning.dmi'
 	icon_state = "grinder0"
 	anchored = 1
 	density = 1

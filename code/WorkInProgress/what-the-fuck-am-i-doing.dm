@@ -1,6 +1,6 @@
 /obj/machinery/portapuke
 	name = "Port-A-Puke"
-	icon = 'icons/obj/cloning.dmi'
+	icon = 'icons/obj/machinery/cloning.dmi'
 	icon_state = "puke_0"
 	desc = "A weapon of pure terror."
 	density = 1
