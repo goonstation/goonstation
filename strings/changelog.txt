@@ -1,5 +1,9 @@
 
 (t)sat may 01 21
+(u)DimWhat
+(p)4407
+(e)⚖|balance
+(+)Fabricating a stun baton now takes more difficult materials.
 (u)edwardly
 (p)4543
 (e)🗺🎨|mapping, sprites
