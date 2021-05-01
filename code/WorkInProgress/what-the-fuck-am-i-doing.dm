@@ -10,7 +10,7 @@
 	var/list/list/mob/occupant_buckets
 	var/current_bucket
 	var/n_occupants = 0
-	var/max_occupants = 1
+	var/max_occupants = INFINITY
 
 
 	New()
