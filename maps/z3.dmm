@@ -6750,6 +6750,10 @@
 /area/space)
 "asa" = (
 /obj/table/auto,
+/obj/item/radio_tape/advertisement/chemistry{
+	pixel_x = 8;
+	pixel_y = 4
+	},
 /obj/item/device/reagentscanner,
 /obj/item/storage/pill_bottle/cyberpunk,
 /turf/simulated/floor/plating/damaged1,
@@ -18470,6 +18474,10 @@
 /area/abandonedmedicalship/robot_trader)
 "aWa" = (
 /obj/table/auto,
+/obj/item/radio_tape/advertisement/robotics{
+	pixel_x = 8;
+	pixel_y = 7
+	},
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
