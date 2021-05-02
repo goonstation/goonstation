@@ -586,3 +586,34 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand_or_drop(I)
 		boutput(C.mob, "You look away for a second and the shaker turns into golden from top to bottom!")
 
+/////////////Mime////////////////
+
+/datum/jobXpReward/mime/mimefancy
+	name = "Fancy Mime Suit"
+	desc = "A suit perfect for more sophisticated mimes. Wait... This isn't just a bleached clown suit, is it?"
+	required_levels = list("Mime"=0)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		boutput(C, "You pretend to unfold a piece of clothing, and suddenly the Fancy Mime Suit is in your hands!")
+		var/obj/item/I = new/obj/item/clothing/under/misc/mimefancy()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(I)
+		return
+
+/datum/jobXpReward/mime/mimedress
+	name = "Mime Dress"
+	desc = "You may be trapped in an invisible box forever and ever, but at least you look stylish!"
+	required_levels = list("Mime"=0)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		boutput(C, "You pretend to unfold a piece of clothing, and suddenly the Mime Dress is in your hands!")
+		var/obj/item/I = new/obj/item/clothing/under/misc/mimedress()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(I)
+		return

@@ -570,7 +570,7 @@
 	item_state = "shard-glass"
 	flags = TABLEPASS | FPRINT
 	tool_flags = TOOL_CUTTING
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	force = 5.0
@@ -994,7 +994,7 @@
 			if(!istype(M, /obj/item/cable_coil))
 				if (!istype(M.material))
 					continue
-				if (!M.material.material_flags & MATERIAL_CRYSTAL || !M.material.material_flags & MATERIAL_METAL)
+				if (!(M.material.material_flags & MATERIAL_CRYSTAL) || !(M.material.material_flags & MATERIAL_METAL))
 					continue
 
 			M.set_loc(src)

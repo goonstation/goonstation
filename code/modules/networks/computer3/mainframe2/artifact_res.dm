@@ -850,7 +850,7 @@
 			return
 
 		var/driver_id = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dnetid"=current_device_id))
-		if (!driver_id & ESIG_DATABIT)
+		if (!(driver_id & ESIG_DATABIT))
 			return
 
 		driver_id &= ~ESIG_DATABIT

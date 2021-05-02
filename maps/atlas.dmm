@@ -11461,6 +11461,14 @@
 /obj/item/device/light/flashlight,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"BG" = (
+/obj/machinery/door_control{
+	id = "qm_dock";
+	name = "Cargo Dock Door Control";
+	pixel_y = 28
+	},
+/turf/simulated/floor/plating/random,
+/area/station/quartermaster/office)
 "BH" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -11885,6 +11893,14 @@
 	dir = 4
 	},
 /area/station/ranch)
+"CS" = (
+/obj/machinery/door_control{
+	id = "qm_dock_out";
+	name = "Cargo Outgoing Dock Door Control";
+	pixel_y = 28
+	},
+/turf/simulated/floor/plating/random,
+/area/station/quartermaster/office)
 "CU" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -12080,13 +12096,6 @@
 	layer = 3
 	},
 /turf/simulated/floor/red,
-/area/station/bridge/united_command)
-"Dw" = (
-/obj/storage/secure/closet/command/chief_engineer,
-/obj/item/pinpointer/teg_semi,
-/obj/item/deconstructor,
-/obj/item/stamp/ce,
-/turf/simulated/floor/yellow,
 /area/station/bridge/united_command)
 "Dx" = (
 /obj/storage/secure/closet/command/medical_director,
@@ -18646,6 +18655,15 @@
 	icon_state = "fgreen2"
 	},
 /area/station/crew_quarters/heads)
+"Vo" = (
+/obj/storage/secure/closet/command/chief_engineer,
+/obj/item/pinpointer/teg_semi,
+/obj/item/deconstructor,
+/obj/item/stamp/ce,
+/obj/item/rocko,
+/obj/item/rcd/construction/chiefEngineer,
+/turf/simulated/floor/yellow,
+/area/station/bridge/united_command)
 "Vv" = (
 /obj/rack,
 /obj/item/spacecash/bag,
@@ -62844,7 +62862,7 @@ av
 PT
 PT
 cj
-bY
+CS
 bY
 bH
 bS
@@ -63448,7 +63466,7 @@ SZ
 PT
 PT
 cj
-bY
+BG
 bY
 bH
 bW
@@ -77074,7 +77092,7 @@ AX
 Qj
 Cp
 Ya
-Dw
+Vo
 zf
 EX
 Rd

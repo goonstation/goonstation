@@ -461,7 +461,7 @@
 	desc = "Stick this rod into the sea floor to poll for underground heat. Distance readings may fluctuate based on the frequency of vibrational waves.<br>If the mass of heat moves via drift, this rod will follow its movements." //doppler effect lol i'm science
 	plane = PLANE_LIGHTING + 1
 	throwforce = 6
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	force = 6
 	throw_speed = 4
 	throw_range = 5
@@ -1111,7 +1111,7 @@
 	icon = 'icons/obj/decals/posters.dmi'
 	icon_state = "wall_poster_trench"
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 15
 	layer = OBJ_LAYER+1

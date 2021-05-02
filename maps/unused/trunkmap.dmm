@@ -5984,14 +5984,6 @@
 /obj/window/reinforced/north,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"asj" = (
-/obj/table/auto,
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/camera_test,
-/turf/simulated/floor/carpet/arcade/blank,
-/area/station/crew_quarters/captain)
 "ask" = (
 /obj/table/auto,
 /obj/item/card/id/captains_spare,
@@ -6429,12 +6421,6 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "att" = (
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
-"atu" = (
-/obj/displaycase{
-	displayed = new /obj/item/captaingun
-},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "atv" = (
@@ -18343,18 +18329,6 @@
 /obj/item/ammo/bullets/a38/stun,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"biv" = (
-/obj/machinery/light/small,
-/obj/table/wood{
-	dir = 9
-	},
-/obj/item/camera_test{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "biw" = (
 /obj/submachine/ice_cream_dispenser,
 /turf/simulated/floor/specialroom/bar,
@@ -28152,6 +28126,14 @@
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
+"edc" = (
+/obj/table/auto,
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/camera,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/station/crew_quarters/captain)
 "edA" = (
 /obj/grille/steel,
 /obj/window/reinforced/south,
@@ -28772,6 +28754,12 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/engineering)
+"fYF" = (
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 "gck" = (
 /obj/disposalpipe/trunk{
 	dir = 8
@@ -30378,6 +30366,18 @@
 	},
 /turf/simulated/floor,
 /area/station/science/chemistry)
+"kBd" = (
+/obj/machinery/light/small,
+/obj/table/wood{
+	dir = 9
+	},
+/obj/item/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "detectives camera";
+	pictures_left = 30
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "kBe" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
@@ -72465,7 +72465,7 @@ aaa
 aaa
 aaa
 arE
-asj
+edc
 atp
 auK
 arE
@@ -75184,7 +75184,7 @@ aqo
 ark
 apu
 asq
-atu
+fYF
 auR
 arE
 aab
@@ -78832,7 +78832,7 @@ bcq
 bdJ
 bdG
 bhx
-biv
+kBd
 bcq
 aTW
 bAx

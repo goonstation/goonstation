@@ -9,7 +9,7 @@
 	desc = "A piece of expansion circuitry for PDAs."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "pdamod"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	mats = 4.0
 	var/obj/item/device/pda2/host = null
 

@@ -128,7 +128,7 @@
 	var/build_step = 0
 	var/created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
 	var/skin = null // same as the bots themselves: options are brute1/2, burn1/2, toxin1/2, brain1/2, O21/2/3/4, berserk1/2/3, and psyche
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 
 /obj/item/firstaid_arm_assembly/New()
 	..()
@@ -812,7 +812,7 @@
 	if (!istype(S, /obj/item/parts/robot_parts/arm/))
 		if (src.contents.len >= 7)
 			return
-		if ((S.w_class >= 2 || istype(S, /obj/item/storage)))
+		if ((S.w_class >= W_CLASS_SMALL || istype(S, /obj/item/storage)))
 			if (!istype(S,/obj/item/storage/pill_bottle))
 				return
 		..()

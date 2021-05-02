@@ -7,7 +7,7 @@
 	flags = FPRINT | TABLEPASS
 	plane = PLANE_NOSHADOW_ABOVE
 	force = 8.0
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	anchored = 1.0
 	density = 0
 	mats = 8

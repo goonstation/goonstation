@@ -1257,7 +1257,7 @@
 	desc = "A device for teleporting crated goods. There is something really, really shady about this.."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "syndicargotele"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	flags = ONBELT
 	mats = 4
 

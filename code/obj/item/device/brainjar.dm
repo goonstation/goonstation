@@ -2,7 +2,7 @@
 	name = "janky assembly"
 	desc = "What the fuck is this!?"
 	icon_state = "tb-blue"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 
 
 	var/mob/living/intangible/brainmob/controller = null

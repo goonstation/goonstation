@@ -322,13 +322,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 			boutput(owner, "<span class='notice'>You successfully install the framework rods.</span>")
 			playsound(get_turf(beacon), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 
-			the_tool.amount -= 4
-			if (the_tool.amount < 1)
-				var/mob/source = owner
-				source.u_equip(the_tool)
-				qdel(the_tool)
-			else if(the_tool.inventory_counter)
-				the_tool.inventory_counter.update_number(the_tool.amount)
+			the_tool.change_stack_amount(-4) //the_tool should be rods
 
 			beacon.desc = "A partially completed frame for a deployable warp buoy. It's missing its wiring."
 			return

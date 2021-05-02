@@ -28,7 +28,7 @@
 	/// Minimum time between photography
 	var/shot_cooldown = 5 SECONDS
 
-	var/obj/item/camera_test/camera = null
+	var/obj/item/camera/camera = null
 	var/photographing = 0 // Are we currently photographing something?
 	var/list/photographed = null // what we've already photographed
 
@@ -37,7 +37,7 @@
 	src.clear_invalid_targets = TIME
 	SPAWN_DBG(0.5 SECONDS)
 		if (src)
-			src.camera = new /obj/item/camera_test(src)
+			src.camera = new /obj/item/camera(src)
 			src.icon_state = "cambot[src.on]"
 
 /obj/machinery/bot/cambot/emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -111,7 +111,7 @@
 
 	var/turf/T = get_turf(src)
 	if (T && isturf(T))
-		new /obj/item/camera_test(T)
+		new /obj/item/camera(T)
 		new /obj/item/device/prox_sensor(T)
 		if (prob(50))
 			new /obj/item/parts/robot_parts/arm/left(T)
@@ -307,7 +307,7 @@
 	desc = "A camera with a robot arm grafted to it."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "camera_arm"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = TABLEPASS
 	var/build_step = 0
 	var/created_name = "Cambot"

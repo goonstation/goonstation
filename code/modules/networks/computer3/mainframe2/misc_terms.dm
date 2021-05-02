@@ -3797,7 +3797,7 @@
 			else
 				return
 
-		if (I.w_class < 4)
+		if (I.w_class < W_CLASS_BULKY)
 			if (src.contents.len < src.setup_max_objects)
 				if(I.cant_drop)
 					return

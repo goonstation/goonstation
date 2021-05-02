@@ -173,7 +173,7 @@
 	icon = 'icons/obj/construction.dmi'
 	icon_state = "room"
 	item_state = "gun"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 	mats = 6
 	var/using = 0
@@ -236,7 +236,7 @@
 	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings. Load metal sheets before using."
 	icon_state = "bio-white"
 	flags = FPRINT | TABLEPASS | EXTRADELAY
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	click_delay = 1
 	prefix = "bio"
 	metal_ammo = 20
@@ -262,7 +262,7 @@
 
 	var/processing = 0
 
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 	var/sound/sound_process = sound('sound/effects/pop.ogg')
 	var/sound/sound_grump = sound('sound/machines/buzz-two.ogg')
@@ -446,7 +446,7 @@
 	item_state = "gun"
 	flags = FPRINT | TABLEPASS | EXTRADELAY
 	mats = 6
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	click_delay = 1
 
 	var/selecting = 0

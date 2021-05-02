@@ -277,7 +277,7 @@
 
 //Haunted camera. It's also broken.
 /*
-/obj/item/camera_test/haunted
+/obj/item/camera/haunted
 	name = "rusty camera"
 
 

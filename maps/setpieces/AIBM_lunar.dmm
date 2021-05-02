@@ -5686,7 +5686,7 @@
 	desc = "You would expect them to take this out before starting construction work, but..."
 	},
 /obj/item/device/audio_log/lunar_01,
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/unsimulated/floor/red/side{
 	dir = 1
 	},

@@ -159,7 +159,7 @@
 	icon_state = "rubber_duck"
 	item_state = "sponge"
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 15
 	var/spam_flag = 0

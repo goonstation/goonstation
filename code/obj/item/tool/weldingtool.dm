@@ -18,7 +18,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	m_amt = 30
 	g_amt = 30
 	stamina_damage = 30

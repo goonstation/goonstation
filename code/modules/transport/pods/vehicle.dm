@@ -1053,7 +1053,7 @@
 
 /datum/action/bar/icon/board_pod
 	duration = 20
-	interrupt_flags = INTERRUPT_STUNNED
+	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_MOVE
 	id = "board_pod"
 	icon = 'icons/ui/actions.dmi'
 	//icon_state = "working"

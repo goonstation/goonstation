@@ -42,7 +42,7 @@ Next, we're going to need to get some necessary extensions!
 
 ### Step 4: Extension-O-Rama :gear: 
 
-Click the Extensions button on the left bar or press `Ctrl+Shift+X`. It looks like a bunch of squares. You should see 6 recommended extensions. If you don't, type `@recommended` into the search bar. You'll want to install all of these.
+Click the Extensions button on the left bar or press `Ctrl+Shift+X`. It looks like a bunch of squares. You should see 2 recommended extensions. If you don't, type `@recommended` into the search bar. You'll want to install all of these.
 
 :::warning
 If this does not work, search for the following extensions:

@@ -23,7 +23,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "id_mod"
 	item_state = "electronic"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/obj/machinery/computer3/host
 	var/id = null
 	var/func_tag = "GENERIC" //What kind of peripheral is this, huh??

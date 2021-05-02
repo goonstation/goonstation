@@ -81,7 +81,7 @@
 
 	if(!operable)
 		operating = 0
-	if(!operating)
+	if(!operating || (status & NOPOWER))
 		for(var/atom/movable/A in loc.contents)
 			walk(A, 0)
 	else

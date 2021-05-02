@@ -7,7 +7,7 @@
 
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_WRENCHING
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	force = 5.0
 	throwforce = 7.0

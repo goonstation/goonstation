@@ -116,7 +116,7 @@
 					if ((src.metal_ammo + loadAmount) > src.max_ammo)
 						loadAmount = loadAmount + src.max_ammo - (src.metal_ammo + loadAmount)
 					src.metal_ammo += loadAmount
-					S.consume_sheets(loadAmount)
+					S.change_stack_amount(-loadAmount)
 					playsound(get_turf(src), "sound/machines/click.ogg", 25, 1)
 					src.inventory_counter.update_number(src.metal_ammo)
 					boutput(user, "You load the metal sheet into the lamp manufacturer.")
@@ -277,7 +277,7 @@
 	icon_state = "oilcan"
 	amount_per_transfer_from_this = 15
 	splash_all_contents = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	rc_flags = RC_FULLNESS
 	initial_volume = 120
 

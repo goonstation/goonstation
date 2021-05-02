@@ -851,7 +851,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				src.updateUsrDialog()
 				return
 
-			var/buy_cap = 20
+			var/buy_cap = 99
 			var/total_stuff_in_cart = 0
 
 			if (shippingmarket && istype(shippingmarket,/datum/shipping_market))
@@ -990,7 +990,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				cart_cost += C.price * C.amount
 				total_cart_amount += C.amount
 
-			var/buy_cap = 20
+			var/buy_cap = 99
 
 			if (shippingmarket && istype(shippingmarket,/datum/shipping_market))
 				buy_cap = shippingmarket.max_buy_items_at_once

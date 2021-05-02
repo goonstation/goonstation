@@ -5,7 +5,7 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/wrench.dmi'
 
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	// sensible defaults
 	force = 5.0

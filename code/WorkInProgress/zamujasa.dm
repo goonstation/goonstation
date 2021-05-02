@@ -423,7 +423,7 @@
 					qdel(I)
 
 			for (var/atom/S in gunsim)
-				if(istype(S, /obj/storage) || istype(S, /obj/artifact) || istype(S, /obj/critter) || istype(S, /obj/machinery/bot) || istype(S, /obj/decal) || istype(S, /mob/living/carbon/human/tdummy))
+				if(istype(S, /obj/storage) || istype(S, /obj/artifact) || istype(S, /obj/critter) || istype(S, /obj/machinery) || istype(S, /obj/decal) || istype(S, /mob/living/carbon/human/tdummy))
 					qdel(S)
 
 
@@ -519,7 +519,7 @@
 	uses_multiple_icon_states = 1
 	flags = FPRINT | TABLEPASS | ONBELT
 	force = 0
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 1
 	throw_speed = 3
 	throw_range = 8
@@ -535,7 +535,7 @@
 			src.desc = "Hoeeeh!? This is only useful if you're decked out."
 			src.icon_state = "clowwand"
 			src.item_state = "clowwand"
-			src.w_class = 4
+			src.w_class = W_CLASS_BULKY
 		else
 			src.name = initial(src.name)
 			src.desc = initial(src.desc)

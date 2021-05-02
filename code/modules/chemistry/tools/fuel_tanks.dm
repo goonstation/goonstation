@@ -11,7 +11,7 @@
 	desc = "A specialized anti-static tank for holding flammable compounds"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bottlefuel"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	amount_per_transfer_from_this = 25
 	incompatible_with_chem_dispensers = 1
 	flags = FPRINT | TABLEPASS | OPENCONTAINER

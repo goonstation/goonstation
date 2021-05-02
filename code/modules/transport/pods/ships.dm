@@ -561,7 +561,7 @@ obj/machinery/vehicle/miniputt/pilot
 						return
 					boutput(user, "You begin to install the internal plating...")
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-					if (!do_after(user, 3 SECONDS) || !S.consume_sheets(3))
+					if (!do_after(user, 3 SECONDS) || !S.change_stack_amount(-3))
 						boutput(user, "<span class='alert'>You were interrupted!</span>")
 						return
 					boutput(user, "You construct internal covers over the circuitry systems.")
@@ -719,7 +719,7 @@ obj/machinery/vehicle/miniputt/pilot
 					return
 				boutput(user, "You begin to install the glass...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS) || !S.consume_sheets(3))
+				if (!do_after(user, 3 SECONDS) || !S.change_stack_amount(-3))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "With the cockpit and exterior indicators secured, the control system automatically starts up.")
@@ -1500,7 +1500,7 @@ obj/machinery/vehicle/miniputt/pilot
 						return
 					boutput(user, "You begin to install the internal plating...")
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-					if (!do_after(user, 3 SECONDS) || !S.consume_sheets(5))
+					if (!do_after(user, 3 SECONDS) || !S.change_stack_amount(-5))
 						boutput(user, "<span class='alert'>You were interrupted!</span>")
 						return
 					boutput(user, "You construct internal covers over the circuitry systems.")
@@ -1658,7 +1658,7 @@ obj/machinery/vehicle/miniputt/pilot
 					return
 				boutput(user, "You begin to install the glass...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-				if (!do_after(user, 3 SECONDS) || !S.consume_sheets(5))
+				if (!do_after(user, 3 SECONDS) || !S.change_stack_amount(-5))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				boutput(user, "With the cockpit and exterior indicators secured, the control system automatically starts up.")
