@@ -8,7 +8,7 @@
 	var/list/food_effects = list()
 
 /obj/item/reagent_containers/food/snacks/soup/custom
-	icon = 'icons/obj/soup_pot.dmi'
+	icon = 'icons/obj/items/soup_pot.dmi'
 	icon_state = "soup_custom"
 	name = null
 	desc = "Ah, the, uh, wonders of the kitchen stove."
@@ -41,7 +41,7 @@
 				temp -= effect
 
 
-		fluid_icon = image("icon" = 'icons/obj/soup_pot.dmi', "icon_state" = "soup_custom-f")
+		fluid_icon = image("icon" = 'icons/obj/items/soup_pot.dmi', "icon_state" = "soup_custom-f")
 
 		..()
 
@@ -55,7 +55,7 @@
 /obj/stove
 	name = "stove"
 	desc = "A perfectly ordinary kitchen stove; not that you'll be doing anything ordinary with it.<br>It seems this model doesn't have a built in igniter, so you'll have to light it manually."
-	icon = 'icons/obj/soup_pot.dmi'
+	icon = 'icons/obj/items/soup_pot.dmi'
 	icon_state = "stove0"
 	anchored = 1
 	density = 1
@@ -290,9 +290,9 @@
 /obj/item/soup_pot
 	name = "soup pot"
 	desc = "Well, for a very broad definition of \"soup\", anyways."
-	icon = 'icons/obj/soup_pot.dmi'
+	icon = 'icons/obj/items/soup_pot.dmi'
 	icon_state = "souppot"
-	inhand_image_icon = 'icons/obj/soup_pot.dmi'
+	inhand_image_icon = 'icons/obj/items/soup_pot.dmi'
 	item_state = "souppot"
 	two_handed = 1
 	var/max_wclass = 3
@@ -307,7 +307,7 @@
 
 	New()
 		..()
-		fluid_icon = image("icon" = 'icons/obj/soup_pot.dmi', "icon_state" = "souppot-f")
+		fluid_icon = image("icon" = 'icons/obj/items/soup_pot.dmi', "icon_state" = "souppot-f")
 		src.create_reagents(max_reagents)
 
 	get_desc(var/dist)
@@ -467,14 +467,14 @@
 /obj/item/ladle
 	name = "ladle"
 	desc = "You'll need this to serve your soup; don't lose it!"
-	icon = 'icons/obj/soup_pot.dmi'
+	icon = 'icons/obj/items/soup_pot.dmi'
 	icon_state = "ladle"
 	var/datum/custom_soup/my_soup
 	var/image/fluid_icon
 
 	New()
 		..()
-		fluid_icon = image("icon" = 'icons/obj/soup_pot.dmi', "icon_state" = "ladle-f")
+		fluid_icon = image("icon" = 'icons/obj/items/soup_pot.dmi', "icon_state" = "ladle-f")
 		if(prob(1))
 			src.name = "Soup sword" //https://discordapp.com/channels/182249960895545344/469379618168897538/698632230851051552
 			src.setItemSpecial(/datum/item_special/swipe)
