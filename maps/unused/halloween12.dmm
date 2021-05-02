@@ -32448,7 +32448,7 @@
 /area/syndicate_station)
 "blU" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "Wall"
 	},
@@ -32888,7 +32888,7 @@
 	start_charge = 1e+031
 	},
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "Wall"
 	},
@@ -36176,7 +36176,7 @@
 /area/sim/gunsim)
 "buO" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "Wall"
 	},
@@ -36706,7 +36706,7 @@
 	})
 "bwg" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "outer forcefield";
 	opacity = 1
@@ -36733,7 +36733,7 @@
 	})
 "bwj" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "forcefield";
 	opacity = 0
@@ -36757,7 +36757,7 @@
 	})
 "bwm" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "v-space"
 	},

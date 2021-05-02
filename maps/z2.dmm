@@ -43,7 +43,7 @@
 /area/adventure/channel/teleport)
 "abj" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "cloaking field"
 	},
@@ -35231,7 +35231,7 @@
 /area/afterlife/heaven/hydroponics)
 "bTY" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "Wall"
 	},
@@ -38068,7 +38068,7 @@
 /area/syndicate_station/battlecruiser)
 "cbF" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "v-space"
 	},
@@ -40668,7 +40668,7 @@
 /area/sim/gunsim)
 "ciz" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "v-space"
 	},
@@ -40707,14 +40707,14 @@
 /area/meat_derelict/boss)
 "ciF" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "v-space"
 	},
 /area/blob/tutorial_zone_1)
 "ciG" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "v-space"
 	},

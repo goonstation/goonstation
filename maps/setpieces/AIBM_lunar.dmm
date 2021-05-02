@@ -6023,14 +6023,14 @@
 /area/moon/museum)
 "nz" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "Wall"
 	},
 /area/sim/test_area)
 "nA" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "Wall"
 	},

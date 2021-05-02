@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "v-space"
 	},

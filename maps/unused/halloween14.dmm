@@ -40235,7 +40235,7 @@
 /area/mining/magnet)
 "bCe" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "v-space"
 	},
@@ -50855,7 +50855,7 @@
 "cbh" = (
 /obj/decal/stalagmite{
 	desc = "It seems to be missing some parts.";
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingGen";
 	name = "Gravitational Singularity Generator"
 	},
@@ -66515,7 +66515,7 @@
 /area/crypt/mausoleum)
 "cFn" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "v-space"
 	},
@@ -70183,14 +70183,14 @@
 /area/crunch)
 "cNQ" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "Wall"
 	},
 /area/sim/test_area)
 "cNR" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "Wall"
 	},
@@ -72634,7 +72634,7 @@
 /area/crunch)
 "cTu" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "cloaking field"
 	},
@@ -76015,7 +76015,7 @@
 /area/sim/racing_track)
 "dbm" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "v-space"
 	},
@@ -76093,7 +76093,7 @@
 /area/crunch)
 "dbw" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "outer forcefield";
 	opacity = 1
@@ -76103,7 +76103,7 @@
 	})
 "dbx" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "forcefield";
 	opacity = 0

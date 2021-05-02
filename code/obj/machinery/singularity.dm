@@ -24,7 +24,7 @@ Contains:
 /obj/machinery/the_singularitygen/
 	name = "Gravitational Singularity Generator"
 	desc = "An Odd Device which produces a Black Hole when set up."
-	icon = 'icons/obj/singularity.dmi'
+	icon = 'icons/obj/machinery/singularity.dmi'
 	icon_state = "TheSingGen"
 	anchored = 0 // so it can be moved around out of crates
 	density = 1
@@ -426,7 +426,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/field_generator
 	name = "Field Generator"
 	desc = "Projects an energy field when active"
-	icon = 'icons/obj/singularity.dmi'
+	icon = 'icons/obj/machinery/singularity.dmi'
 	icon_state = "Field_Gen"
 	anchored = 0
 	density = 1
@@ -582,8 +582,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if(isnull(G))
 		return
 
-	src.UpdateOverlays(image('icons/obj/singularity.dmi', "Contain_F_Start", dir=NSEW, layer=(NSEW == NORTH ? src.layer - 1 : FLOAT_LAYER)), "field_start_[NSEW]")
-	G.UpdateOverlays(image('icons/obj/singularity.dmi', "Contain_F_End", dir=NSEW, layer=(NSEW == SOUTH ? src.layer - 1 : FLOAT_LAYER)), "field_end_[NSEW]")
+	src.UpdateOverlays(image('icons/obj/machinery/singularity.dmi', "Contain_F_Start", dir=NSEW, layer=(NSEW == NORTH ? src.layer - 1 : FLOAT_LAYER)), "field_start_[NSEW]")
+	G.UpdateOverlays(image('icons/obj/machinery/singularity.dmi', "Contain_F_End", dir=NSEW, layer=(NSEW == SOUTH ? src.layer - 1 : FLOAT_LAYER)), "field_end_[NSEW]")
 
 	T2 = src.loc
 
@@ -780,7 +780,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/containment_field
 	name = "Containment Field"
 	desc = "An energy field."
-	icon = 'icons/obj/singularity.dmi'
+	icon = 'icons/obj/machinery/singularity.dmi'
 	icon_state = "Contain_F"
 	anchored = 1
 	density = 0
@@ -900,7 +900,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/emitter
 	name = "Emitter"
 	desc = "Shoots a high power laser when active"
-	icon = 'icons/obj/singularity.dmi'
+	icon = 'icons/obj/machinery/singularity.dmi'
 	icon_state = "Emitter"
 	anchored = 0
 	density = 1
@@ -1161,7 +1161,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/power/collector_array
 	name = "Radiation Collector Array"
 	desc = "A device which uses Hawking Radiation and plasma to produce power."
-	icon = 'icons/obj/singularity.dmi'
+	icon = 'icons/obj/machinery/singularity.dmi'
 	icon_state = "ca"
 	anchored = 1
 	density = 1
@@ -1182,15 +1182,15 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if(status & (NOPOWER|BROKEN))
 		overlays = null
 	if(P)
-		overlays += image('icons/obj/singularity.dmi', "ptank")
+		overlays += image('icons/obj/machinery/singularity.dmi', "ptank")
 	else
 		overlays = null
-	overlays += image('icons/obj/singularity.dmi', "on")
+	overlays += image('icons/obj/machinery/singularity.dmi', "on")
 	if(P)
-		overlays += image('icons/obj/singularity.dmi', "ptank")
+		overlays += image('icons/obj/machinery/singularity.dmi', "ptank")
 	if(magic == 1)
-		overlays += image('icons/obj/singularity.dmi', "ptank")
-		overlays += image('icons/obj/singularity.dmi', "on")
+		overlays += image('icons/obj/machinery/singularity.dmi', "ptank")
+		overlays += image('icons/obj/machinery/singularity.dmi', "on")
 
 /obj/machinery/power/collector_array/power_change()
 	updateicon()
@@ -1279,7 +1279,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/power/collector_control
 	name = "Radiation Collector Control"
 	desc = "A device which uses Hawking Radiation and Plasma to produce power."
-	icon = 'icons/obj/singularity.dmi'
+	icon = 'icons/obj/machinery/singularity.dmi'
 	icon_state = "cu"
 	anchored = 1
 	density = 1
@@ -1374,25 +1374,25 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			overlays = null
 		if(src.active == 0)
 			return
-		overlays += image('icons/obj/singularity.dmi', "cu on")
+		overlays += image('icons/obj/machinery/singularity.dmi', "cu on")
 		if((P1)&&(CA1.active != 0))
-			overlays += image('icons/obj/singularity.dmi', "cu 1 on")
+			overlays += image('icons/obj/machinery/singularity.dmi', "cu 1 on")
 		if((P2)&&(CA2.active != 0))
-			overlays += image('icons/obj/singularity.dmi', "cu 2 on")
+			overlays += image('icons/obj/machinery/singularity.dmi', "cu 2 on")
 		if((P3)&&(CA3.active != 0))
-			overlays += image('icons/obj/singularity.dmi', "cu 3 on")
+			overlays += image('icons/obj/machinery/singularity.dmi', "cu 3 on")
 		if((!P1)||(!P2)||(!P3))
-			overlays += image('icons/obj/singularity.dmi', "cu n error")
+			overlays += image('icons/obj/machinery/singularity.dmi', "cu n error")
 		if(S1)
-			overlays += image('icons/obj/singularity.dmi', "cu sing")
+			overlays += image('icons/obj/machinery/singularity.dmi', "cu sing")
 			if(!S1.active)
-				overlays += image('icons/obj/singularity.dmi', "cu conterr")
+				overlays += image('icons/obj/machinery/singularity.dmi', "cu conterr")
 	else
-		overlays += image('icons/obj/singularity.dmi', "cu on")
-		overlays += image('icons/obj/singularity.dmi', "cu 1 on")
-		overlays += image('icons/obj/singularity.dmi', "cu 2 on")
-		overlays += image('icons/obj/singularity.dmi', "cu 3 on")
-		overlays += image('icons/obj/singularity.dmi', "cu sing")
+		overlays += image('icons/obj/machinery/singularity.dmi', "cu on")
+		overlays += image('icons/obj/machinery/singularity.dmi', "cu 1 on")
+		overlays += image('icons/obj/machinery/singularity.dmi', "cu 2 on")
+		overlays += image('icons/obj/machinery/singularity.dmi', "cu 3 on")
+		overlays += image('icons/obj/machinery/singularity.dmi', "cu sing")
 
 /obj/machinery/power/collector_control/power_change()
 	updateicon()

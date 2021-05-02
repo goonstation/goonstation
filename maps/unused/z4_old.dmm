@@ -1197,7 +1197,7 @@
 /area/shuttle/escape/centcom/donut2)
 "dM" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "cloaking field"
 	},
