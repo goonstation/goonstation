@@ -810,7 +810,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "coffee-fallen";
 	name = "broken vending machine"
 	},
@@ -819,7 +819,7 @@
 "cB" = (
 /obj/decal/fakeobjects{
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "snack-broken";
 	name = "broken vending machine"
 	},

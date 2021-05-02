@@ -44642,7 +44642,7 @@
 "mYl" = (
 /obj/decal/fakeobjects{
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "robust-broken";
 	name = "broken vending machine"
 	},

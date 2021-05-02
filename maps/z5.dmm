@@ -527,7 +527,7 @@
 "kg" = (/obj/cable,/obj/machinery/power/smes{charge = 3.5e+006; n_tag = "Solars"; name = "old power storage unit"; output = 50000},/turf/simulated/floor/airless/plating,/area/diner/solar)
 "kh" = (/obj/window/reinforced/west,/obj/lattice{dir = 10; icon_state = "lattice-dir"},/turf/space,/area/noGenerate)
 "ki" = (/obj/lattice{dir = 2; icon_state = "lattice-dir"},/obj/lattice{dir = 2; icon_state = "lattice-dir"},/turf/space,/area/noGenerate)
-"kj" = (/obj/decal/cleanable/dirt,/obj/decal/fakeobjects{desc = "The goods inside the machine probably expired before you were even born."; icon = 'icons/obj/vending.dmi'; icon_state = "robust-broken"; name = "broken vending machine"},/obj/item/spacecash/five,/turf/simulated/floor/grime,/area/diner/hallway)
+"kj" = (/obj/decal/cleanable/dirt,/obj/decal/fakeobjects{desc = "The goods inside the machine probably expired before you were even born."; icon = 'icons/obj/machinery/vending.dmi'; icon_state = "robust-broken"; name = "broken vending machine"},/obj/item/spacecash/five,/turf/simulated/floor/grime,/area/diner/hallway)
 "kk" = (/obj/stool/chair/wooden{dir = 4; icon_state = "chair_wooden"},/turf/simulated/floor/carpet/green/fancy,/area/diner/motel/observatory)
 "kl" = (/obj/machinery/light/incandescent/warm/very{dir = 1; icon_state = "tube1"},/turf/simulated/floor/black/grime,/area/diner/hallway/docking)
 "km" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/decal/cleanable/ripped_poster,/turf/simulated/wall/r_wall{icon = 'icons/misc/evilreaverstation.dmi'; icon_state = "old_rwall"},/area/diner/hallway)

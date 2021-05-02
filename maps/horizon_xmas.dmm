@@ -6568,7 +6568,7 @@
 "cxK" = (/obj/decal/fakeobjects{anchored = 1; desc = "A vent. Cool air is gently flowing through it."; icon = 'icons/obj/atmospherics/pipe_vent.dmi'; icon_state = "hvent"; name = "air vent"},/obj/item/raw_material/shard/glass,/obj/decal/cleanable/ash,/turf/simulated/floor/airless{icon_state = "floorscorched1"},/area/space)
 "cxL" = (/obj/storage/crate/freezer,/obj/item/reagent_containers/food/snacks/ice_cream/random{rand_pos = 0},/obj/item/reagent_containers/food/snacks/ice_cream/gross,/obj/item/reagent_containers/food/snacks/ice_cream_cone,/turf/simulated/floor/airless,/area/space)
 "cxM" = (/turf/simulated/floor/airless,/turf/simulated/shuttle/wall{dir = 8; icon_state = "diagonalWall3"},/area/space)
-"cxN" = (/obj/decal/fakeobjects{desc = "The goods inside the machine probably expired before you were even born."; icon = 'icons/obj/vending.dmi'; icon_state = "coffee-broken"; name = "broken vending machine"},/turf/simulated/floor/plating/airless/asteroid/lighted,/area/space)
+"cxN" = (/obj/decal/fakeobjects{desc = "The goods inside the machine probably expired before you were even born."; icon = 'icons/obj/machinery/vending.dmi'; icon_state = "coffee-broken"; name = "broken vending machine"},/turf/simulated/floor/plating/airless/asteroid/lighted,/area/space)
 "cxO" = (/obj/machinery/light/small,/turf/simulated/floor/plating{icon_state = "panelscorched"},/area/listeningpost/power)
 "cxP" = (/turf/simulated/wall/asteroid/lighted,/area/listeningpost/power)
 "cxQ" = (/obj/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/plating/airless/asteroid/lighted,/area/listeningpost/power)

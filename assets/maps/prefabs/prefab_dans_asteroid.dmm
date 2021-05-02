@@ -174,7 +174,7 @@
 "Se" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "What was this thing even supposed to do?"; icon = 'icons/obj/machinery/nuclear.dmi'; icon_state = "engineoff"; name = "broken machine"},/obj/map/light/white,/turf/simulated/floor/plating,/area/prefab/discount_dans_asteroid)
 "Sf" = (/turf/simulated/wall/auto/jen,/area/prefab/discount_dans_asteroid)
 "Sy" = (/obj/table/auto,/obj/machinery/coffeemaker,/obj/map/light/white,/turf/simulated/floor/airless/neutral,/area/prefab/discount_dans_asteroid)
-"SO" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "It's just sideways but apparently that's enough to stop it dead in its tracks."; icon = 'icons/obj/vending.dmi'; icon_state = "grife-fallen"; name = "broken vending machine"},/obj/decal/cleanable/blood{icon_state = "gib3"},/turf/simulated/floor/airless/neutral,/area/prefab/discount_dans_asteroid)
+"SO" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "It's just sideways but apparently that's enough to stop it dead in its tracks."; icon = 'icons/obj/machinery/vending.dmi'; icon_state = "grife-fallen"; name = "broken vending machine"},/obj/decal/cleanable/blood{icon_state = "gib3"},/turf/simulated/floor/airless/neutral,/area/prefab/discount_dans_asteroid)
 "Tk" = (/obj/stool/chair/wooden{dir = 1},/turf/simulated/floor/carpet/blue/standard/edge/nw,/area/prefab/discount_dans_asteroid)
 "Ty" = (/obj/item/device/light/glowstick/green_on{pixel_x = 3; pixel_y = -3},/turf/simulated/floor/airless/neutral,/area/prefab/discount_dans_asteroid)
 "Ub" = (/obj/item/pen{pixel_x = -9; pixel_y = -2},/turf/simulated/floor/carpet/blue/standard/edge/ne,/area/prefab/discount_dans_asteroid)

@@ -22,7 +22,7 @@
 /obj/machinery/vending/paint
 	name = "paint dispenser"
 	desc = "Dispenses paint. Derp."
-	icon = 'icons/obj/vending.dmi'
+	icon = 'icons/obj/machinery/vending.dmi'
 	icon_state = "paint-vend"
 	var/paint_color = "#ff0000"
 	var/add_orig = 0.2
@@ -70,7 +70,7 @@
 /obj/machinery/vending/paint/broken
 	name = "Broken Paint Dispenser"
 	desc = "Would dispense paint, if it were not broken."
-	icon = 'icons/obj/vending.dmi'
+	icon = 'icons/obj/machinery/vending.dmi'
 	icon_state = "paint-vend"
 	anchored = 1
 	density = 1

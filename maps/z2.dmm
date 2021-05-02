@@ -2962,7 +2962,7 @@
 "amI" = (
 /obj/decal/fakeobjects{
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "robust-broken";
 	name = "broken vending machine"
 	},
@@ -10842,7 +10842,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "med-off";
 	name = "broken vending machine"
 	},
@@ -11995,7 +11995,7 @@
 "aOr" = (
 /obj/decal/fakeobjects{
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "grife-fallen";
 	name = "broken vending machine"
 	},
@@ -13919,7 +13919,7 @@
 "aTy" = (
 /obj/decal/fakeobjects{
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "robust-broken";
 	name = "broken vending machine"
 	},
@@ -13930,7 +13930,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "coffee-fallen";
 	name = "broken vending machine"
 	},
@@ -19979,7 +19979,7 @@
 "bix" = (
 /obj/decal/fakeobjects{
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "coffee-broken";
 	name = "broken vending machine"
 	},
@@ -20140,7 +20140,7 @@
 "biO" = (
 /obj/decal/fakeobjects{
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "robust-broken";
 	name = "broken vending machine"
 	},
@@ -35894,7 +35894,7 @@
 "bVQ" = (
 /obj/decal/fakeobjects{
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "coffee-broken";
 	name = "broken vending machine"
 	},
@@ -47412,7 +47412,7 @@
 /obj/decal/fakeobjects{
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "snack-broken";
 	name = "broken vending machine"
 	},
@@ -55448,7 +55448,7 @@
 	},
 /obj/decal/fakeobjects{
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "robust-broken";
 	name = "broken vending machine"
 	},
@@ -57044,7 +57044,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "med-off";
 	name = "broken vending machine"
 	},
@@ -64645,7 +64645,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "coffee-fallen";
 	name = "broken vending machine"
 	},

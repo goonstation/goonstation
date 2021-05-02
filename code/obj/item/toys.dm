@@ -41,7 +41,7 @@
 /obj/item/toy/judge_gavel
 	name = "judge's gavel"
 	desc = "A judge's best friend."
-	icon = 'icons/obj/items/courtroom.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "gavel"
 	w_class = 2
 	force = 5
@@ -65,7 +65,7 @@
 /obj/item/toy/judge_block
 	name = "block"
 	desc = "bang bang bang Bang Bang Bang Bang BANG BANG BANG BANG BANG!!!"
-	icon = 'icons/obj/items/courtroom.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "block"
 	flags = SUPPRESSATTACK
 	w_class = 1

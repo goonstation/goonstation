@@ -41318,7 +41318,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "med-off";
 	name = "broken vending machine";
 	tag = "icon-med-off"
@@ -42210,7 +42210,7 @@
 	tag = "icon-snack-broken";
 	name = "broken vending machine";
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "snack-broken"
 	},
 /turf/unsimulated/floor/grime,
@@ -42550,7 +42550,7 @@
 	tag = "icon-grife-fallen";
 	name = "broken vending machine";
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "grife-fallen"
 	},
 /turf/unsimulated/floor/grime,
@@ -44685,7 +44685,7 @@
 	tag = "icon-robust-broken";
 	name = "broken vending machine";
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "robust-broken"
 	},
 /turf/unsimulated/floor/grime,
@@ -44695,7 +44695,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "coffee-fallen";
 	name = "broken vending machine";
 	tag = "icon-coffee-fallen"
@@ -51347,7 +51347,7 @@
 	tag = "icon-coffee-broken";
 	name = "broken vending machine";
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "coffee-broken"
 	},
 /turf/unsimulated/floor/purple/corner{
@@ -51536,7 +51536,7 @@
 	tag = "icon-robust-broken";
 	name = "broken vending machine";
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "robust-broken"
 	},
 /turf/unsimulated/floor/specialroom/bar,
@@ -70764,7 +70764,7 @@
 	tag = "icon-coffee-broken";
 	name = "broken vending machine";
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "coffee-broken"
 	},
 /turf/unsimulated/floor/white/grime,

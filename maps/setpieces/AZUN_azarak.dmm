@@ -986,7 +986,7 @@
 /obj/decal/fakeobjects{
 	name = "broken vending machine";
 	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
+	icon = 'icons/obj/machinery/vending.dmi';
 	icon_state = "snack-broken"
 	},
 /turf/unsimulated/floor/wood/two,

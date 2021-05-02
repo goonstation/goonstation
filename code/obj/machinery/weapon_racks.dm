@@ -145,7 +145,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isscrewingtool(W))
 			if (!src.panelopen)
-				src.overlays += image('icons/obj/vending.dmi', "grife-panel")
+				src.overlays += image('icons/obj/machinery/vending.dmi', "grife-panel")
 				src.panelopen = 1
 			else
 				src.overlays = null
