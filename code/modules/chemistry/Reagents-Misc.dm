@@ -157,7 +157,7 @@ datum
 				var/datum/reagents/silver_fulminate_holder = holder
 				var/silver_fulminate_volume = volume
 				silver_fulminate_holder.del_reagent("silver_fulminate")
-				silver_fulminate_holder.temperature_reagents(silver_fulminate_holder.total_temperature + silver_fulminate_volume*200,10,35,500)
+				silver_fulminate_holder.temperature_reagents(silver_fulminate_holder.total_temperature + silver_fulminate_volume*20,10,1,500)
 
 			reaction_temperature(var/exposed_temperature, var/exposed_volume)
 				if (exposed_temperature >= T0C + 30)
@@ -182,8 +182,12 @@ datum
 				pop(get_turf(O), amount)
 
 			physical_shock(var/force)
-				if (prob(force*5))
-					explode()
+				if (volume <= holder.total_volume/4) //be somewhat stable to shock if prepared like bang snaps
+					if (prob(max(0,force-12)*12) //safe to run with, but not sprint. 24% chance to pop on your face when thrown
+						explode()
+				else
+					if (prob(force*5))
+						explode()
 
 			on_transfer(var/datum/reagents/source, var/datum/reagents/target, var/transferred_volume)
 				var/datum/reagent/silver_fulminate/target_silver_fulminate = target.get_reagent("silver_fulminate")
