@@ -1,3 +1,9 @@
+#define BOUNTY_TYPE_ORGAN	1
+#define BOUNTY_TYPE_TRINK	2
+#define BOUNTY_TYPE_PHOTO	3
+#define BOUNTY_TYPE_ITEM	4
+#define BOUNTY_TYPE_BIG		5
+
 /datum/game_mode/spy_theft
 	name = "spy_thief"
 	config_tag = "spy_theft"
@@ -5,19 +11,19 @@
 	//maybe not??
 	//latejoin_antag_compatible = 1
 	//latejoin_antag_roles = list("spy_thief")
-	var/const/waittime_l = 600
-	var/const/waittime_h = 1800
+	var/const/waittime_l = 600	// Minimum after round start to send threat information to printer
+	var/const/waittime_h = 1800	// Maximum after round start to send threat information to printer
 
 	var/const/bounty_refresh_interval = 25 MINUTES
 	var/last_refresh_time = 0
 
 	var/const/spies_possible = 7
 
-	var/list/station_bounties = list() // on-station items that can have bounties placed on them, pair list
-	var/list/big_station_bounties = list() // on-station machines/other big objects that can have bounties placed on them, pair list
-	var/list/personal_bounties = list()  // things that belong to people like trinkets, pair list
-	var/list/organ_bounties = list() // things that belong to people that are on the inside
-	var/list/photo_bounties = list() // photos of people (Operates by text, because that's the only info that photos store)
+	var/list/station_bounties = list()			// On-station items that can have bounties placed on them, pair list
+	var/list/big_station_bounties = list()	// On-station machines/other big objects that can have bounties placed on them, pair list
+	var/list/personal_bounties = list() 		// Things that belong to people like trinkets, pair list
+	var/list/organ_bounties = list()				// Things that belong to people that are on the inside
+	var/list/photo_bounties = list()				// Photos of people (Operates by text, because that's the only info that photos store)
 
 	var/const/organ_bounty_amt = 4
 	var/const/person_bounty_amt = 5
@@ -30,17 +36,19 @@
 
 	var/list/uplinks = list()
 
-/datum/bounty_item
-	var/name = "bounty name (this is a BUG)" 	//when a bounty object is deleted, we will still need a ref to its name
-	var/obj/item = 0							//ref to exact item
-	var/path = 0								//req path of item
-	var/claimed = 0								//claimed already?
-	var/area/delivery_area = 0					//You need to stand here to deliver this
-	var/photo_containing = 0 					//Name required in a photograph. alright look photographs work on the basis of matching strings. Photos don't store refs to the mob or whatever so this will have to do
-	var/reveal_area = 0							//show area in pda
-	var/job = "job name"					//Job of bounty item owner (if itemm has an owner). Used for personal/organ bounties
+	var/list/high_diff_areas = list()
 
-	var/organ = 0 								//silly organ flag that is only checked in one place
+/datum/bounty_item
+	var/name = "bounty name (this is a BUG)" 	//When a bounty object is deleted, we will still need a ref to its name
+	var/obj/item = 0										//Ref to exact item
+	var/path = 0												//Req path of item
+	var/claimed = 0											//Claimed already?
+	var/area/delivery_area = 0					//You need to stand here to deliver this
+	var/photo_containing = 0 						//Name required in a photograph. alright look photographs work on the basis of matching strings. Photos don't store refs to the mob or whatever so this will have to do
+	var/reveal_area = 0									//Show area of target in pda
+	var/job = "job name"								//Job of bounty item owner (if item has an owner). Used for target difficulty on personal/organ bounties
+	var/type = 0 												//Type of objective, used to determine difficulty and organs 'Anywhere' delivery location
+	var/difficulty = 0									//Stored difficulty for items and big items
 
 	var/datum/syndicate_buylist/reward = 0
 	var/value_low = 0
@@ -63,7 +71,7 @@
 		else
 			return 1
 
-	//1 to 4
+	//Choose a reward from the four tiers
 	proc/pick_reward_tier(var/val)
 		switch(val)
 			if(1)
@@ -293,11 +301,12 @@
 /datum/game_mode/spy_theft/proc/build_bounty_list()
 	src.last_refresh_time = ticker.round_elapsed_ticks
 
-	//clear and reset these lists. Some of these items may have gone missing, new crewmembers may have arrived.
+	//Clear and reset these lists. Some of these items may have gone missing, new crewmembers may have arrived.
 	personal_bounties.len = 0
 	organ_bounties.len = 0
 	photo_bounties.len = 0
 
+	//Look for every living human that should be on the station, store their limbs and names for organ/photos
 	for(var/mob/living/carbon/human/H in mobs)
 		LAGCHECK(LAG_LOW)
 
@@ -311,8 +320,8 @@
 		if (!T || T.z != 1) //Nobody in the adventure zones, thanks.
 			continue
 
-		//personal bounties (items that belong to a person)
-		//pair list, stores job for difficulty lookup
+		//Personal bounties (items that belong to a person)
+		//Pair list, stores job for difficulty lookup
 		if (H.trinket && istype(H.trinket))
 			personal_bounties += list(list(H.trinket, H.job))
 		if (H.wear_id)
@@ -334,7 +343,8 @@
 		photo_bounties += H.real_name
 
 
-	//fugginhuge list of station item bounties (misc. things on the station that would be fun to steal)
+	//Master list of station item bounties (misc. things on the station that would be fun to steal)
+	//Exact type and difficult rating - Does not automatically include subtypes
 	station_bounties[/obj/item/ghostboard] = 1
 	station_bounties[/obj/item/gnomechompski] = 1
 	station_bounties[/obj/item/diary] = 1
@@ -475,7 +485,6 @@
 	station_bounties[/obj/item/device/radio/headset/deaf] = 1
 
 	// Big machinery (non portable) objects
-	// Can't grab all vehicles or we might get cars
 	big_station_bounties[/obj/machinery/vehicle/pod] = 1
 	big_station_bounties[/obj/machinery/vehicle/escape_pod] = 1
 	big_station_bounties[/obj/machinery/vehicle/cargo] = 1
@@ -583,19 +592,7 @@
 		B.organ = 1
 		O -= B.item
 
-		// Adjust reward based off target job to estimate risk level
-		var/difficulty = B.estimate_target_difficulty(B.job)
-		switch(difficulty)
-			if(3)
-				B.pick_reward_tier(4)
-			if (2)
-				B.pick_reward_tier(3)
-			if (1)
-				if (prob(7))
-					B.pick_reward_tier(3)
-				else
-					B.pick_reward_tier(2)
-
+		B.type == BOUNTY_TYPE_ORGAN
 		active_bounties += B
 
 	//Add personal items
@@ -609,22 +606,7 @@
 		B.reveal_area = 1
 		P -= pair
 
-		// Adjust reward based off target job to estimate risk level
-		var/difficulty = B.estimate_target_difficulty(B.job)
-		switch(difficulty)
-			if(3)
-				B.pick_reward_tier(4)
-			if (2)
-				if (prob(10))
-					B.pick_reward_tier(4)
-				else
-					B.pick_reward_tier(pick(2,3))
-			if (1)
-				if (prob(10))
-					B.pick_reward_tier(4)
-				else
-					B.pick_reward_tier(pick(1,3))
-
+		B.type == BOUNTY_TYPE_TRINK
 		active_bounties += B
 
 	//Add big station item bounties
@@ -644,23 +626,13 @@
 			// Catch picks that weren't found
 			big_station_bounties -= big_choice
 			continue
-		difficulty = big_station_bounties[big_choice]
 		var/datum/bounty_item/B = new /datum/bounty_item(src)
 		B.path = obj_existing.type
 		B.item = obj_existing
 		B.name = obj_existing.name
 
-		switch(difficulty)
-			if(3)
-				B.pick_reward_tier(pick(2,3))
-			if (2)
-				B.pick_reward_tier(pick(1,2))
-			if (1)
-				if (prob(15))
-					B.pick_reward_tier(pick(1,2))
-				else
-					B.pick_reward_tier(1)
-
+		B.difficulty = big_station_bounties[big_choice]
+		B.type == BOUNTY_TYPE_BIG
 		active_bounties += B
 		big_station_bounties -= big_choice
 		big_picked++
@@ -673,10 +645,8 @@
 		B.name = "a photograph of [B.photo_containing]"
 		PH -= B.photo_containing
 
-		B.pick_reward_tier(1)
-
+		B.type == BOUNTY_TYPE_PHOTO
 		active_bounties += B
-
 
 	//Add station item bounties
 	var/item_choice = null
@@ -701,17 +671,7 @@
 		B.item = item_existing
 		B.name = item_existing.name
 
-		switch(difficulty)
-			if(3)
-				B.pick_reward_tier(pick(2,3))
-			if (2)
-				B.pick_reward_tier(pick(1,2))
-			if (1)
-				if (prob(15))
-					B.pick_reward_tier(pick(1,2))
-				else
-					B.pick_reward_tier(1)
-
+		B.difficulty = station_bounties[item_choice]
 		active_bounties += B
 		station_bounties -= item_choice
 		item_picked++
@@ -741,9 +701,63 @@
 			break
 
 	for (var/datum/bounty_item/B in active_bounties)
-		if ((B.item && !istype(B.item,/obj/item)) || B.organ)
+		if (B.type == BOUNTY_TYPE_PHOTO || B.type == BOUNTY_TYPE_ORGAN)
 			B.delivery_area = 0
 		else
 			B.delivery_area = pick(possible_areas)
 
+	//Set difficulty
+	if (B.type == BOUNTY_TYPE_ORGAN)
+		// Adjust reward based off target job to estimate risk level
+		var/difficulty = B.estimate_target_difficulty(B.job)
+		switch(difficulty)
+			if(3)
+				B.pick_reward_tier(4)
+			if (2)
+				B.pick_reward_tier(3)
+			if (1)
+				if (prob(7))
+					B.pick_reward_tier(3)
+				else
+					B.pick_reward_tier(2)
+	else if (B.type == BOUNTY_TYPE_TRINKET)
+		// Adjust reward based off target job to estimate risk level
+		var/difficulty = B.estimate_target_difficulty(B.job)
+		switch(difficulty)
+			if(3)
+				B.pick_reward_tier(4)
+			if (2)
+				if (prob(10))
+					B.pick_reward_tier(4)
+				else
+					B.pick_reward_tier(pick(2,3))
+			if (1)
+				if (prob(10))
+					B.pick_reward_tier(4)
+				else
+					B.pick_reward_tier(pick(1,3))
+	else if (B.type == BOUNTY_TYPE_BIG)
+		// BIG ITEM
+		switch(B.difficulty)
+			if(3)
+				B.pick_reward_tier(pick(2,3))
+			if (2)
+				B.pick_reward_tier(pick(1,2))
+			if (1)
+				if (prob(15))
+					B.pick_reward_tier(pick(1,2))
+				else
+					B.pick_reward_tier(1)
+	else if (B.type == BOUNTY_TYPE_ITEM)
+		// ITEM
+		switch(B.difficulty)
+			if(3)
+				B.pick_reward_tier(pick(2,3))
+			if (2)
+				B.pick_reward_tier(pick(1,2))
+			if (1)
+				if (prob(15))
+					B.pick_reward_tier(pick(1,2))
+				else
+					B.pick_reward_tier(1)
 	return
