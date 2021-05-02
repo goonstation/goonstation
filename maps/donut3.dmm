@@ -8064,7 +8064,7 @@
 /area/station/maintenance/outer/east)
 "bZw" = (
 /obj/decal/mule/dropoff,
-/obj/access_spawn/maint,
+/obj/access_spawn/maint,1
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
