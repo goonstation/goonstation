@@ -54973,7 +54973,7 @@
 /obj/machinery/light/small/floor,
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	id = "vigilatornord";
 	pixel_y = 32;
 	req_access = null;
@@ -58404,7 +58404,7 @@
 /obj/stool/bench/blue/auto,
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	id = "west_test_zest";
 	pixel_y = 32;
 	starts_established = 1

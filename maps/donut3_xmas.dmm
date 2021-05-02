@@ -48493,7 +48493,7 @@
 "ogm" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	id = "asyshuttle_med";
 	pixel_y = 33;
 	starts_established = 1
@@ -59243,7 +59243,7 @@
 "rcL" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	id = "asyshuttle_viro";
 	pixel_y = 33;
 	starts_established = 1

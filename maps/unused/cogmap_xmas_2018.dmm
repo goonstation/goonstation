@@ -37552,7 +37552,7 @@
 "bzC" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	pixel_y = 32;
 	starts_established = 1
 	},
@@ -37583,7 +37583,7 @@
 "bzG" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	pixel_y = 32
 	},
 /turf/simulated/floor/bot,
@@ -38556,7 +38556,7 @@
 "bBy" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	id = "ai2medbay";
 	pixel_x = 32;
 	pixel_y = 0;
@@ -42404,7 +42404,7 @@
 "bJk" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	id = "ai2medbay";
 	pixel_x = 32;
 	pixel_y = 0

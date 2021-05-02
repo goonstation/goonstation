@@ -5247,7 +5247,7 @@
 "tdc" = (/obj/lattice{dir = 4; icon_state = "lattice-dir"},/obj/lattice,/turf/space,/area/station/hallway/secondary/construction)
 "tde" = (/obj/disposalpipe/switch_junction/right/east{mail_tag = "Chapel"; name = "Chapel Mail Router"},/turf/simulated/floor,/area/station/hallway/primary/central)
 "tdg" = (/turf/simulated/floor/white,/area/station/medical/medbay/cloner)
-"tdv" = (/obj/machinery/computer/airbr{density = 0; icon = 'icons/obj/airtunnel.dmi'; id = "Patho"; pixel_y = 32; starts_established = 1},/turf/simulated/floor/bluewhite{dir = 1},/area/station/medical/medbay)
+"tdv" = (/obj/machinery/computer/airbr{density = 0; icon = 'icons/obj/machinery/airtunnel.dmi'; id = "Patho"; pixel_y = 32; starts_established = 1},/turf/simulated/floor/bluewhite{dir = 1},/area/station/medical/medbay)
 "tdC" = (/obj/decal/tile_edge/stripe{icon_state = "xtra_bigstripe-edge"},/obj/cable{icon_state = "2-4"},/obj/cable{icon_state = "1-2"},/turf/simulated/floor/purple,/area/station/science/artifact)
 "tdH" = (/obj/machinery/light/emergency{dir = 1},/obj/lattice{icon_state = "lattice-dir"},/turf/space,/area/space)
 "tdY" = (/obj/cable{icon_state = "1-2"},/turf/simulated/floor/purple/side{dir = 4},/area/station/hallway/primary/west)

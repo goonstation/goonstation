@@ -6734,7 +6734,7 @@
 "arU" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	id = "northconnector";
 	pixel_y = 32;
 	starts_established = 1
@@ -61202,7 +61202,7 @@
 "xQm" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	id = "northconnector";
 	pixel_y = 32
 	},

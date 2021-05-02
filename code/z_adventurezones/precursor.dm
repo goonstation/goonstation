@@ -1384,7 +1384,7 @@
 /obj/ydrone_panel
 	name = "access panel"
 	desc = "It seems to be part of the satellite. The interface is locked. You see a small circular port below the keypad."
-	icon = 'icons/obj/airtunnel.dmi'
+	icon = 'icons/obj/machinery/airtunnel.dmi'
 	icon_state = "airbr0"
 	anchored = 1
 	pixel_y = 32

@@ -41889,7 +41889,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "That'll never work again.";
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	icon_state = "wall-c";
 	name = "broken air tunnel";
 	opacity = 1

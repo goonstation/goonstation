@@ -33937,7 +33937,7 @@
 	},
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	icon_state = "drawbr0";
 	id = "db0";
 	pixel_x = 32;
