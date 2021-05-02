@@ -11,6 +11,7 @@
 	flags = FPRINT | TABLEPASS | ONBELT
 	module_research = list("science" = 1, "miniaturization" = 5, "devices" = 5, "efficiency" = 3)
 	module_research_type = /obj/item/device/pda2
+	wear_layer = MOB_BELT_LAYER
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
 	var/registered = null // so we don't need to replace all the dang checks for ID cards
 	var/assignment = null

@@ -223,7 +223,7 @@ Code:
 //Supply record monitor
 /datum/computer/file/pda_program/qm_records
 	name = "Supply Records"
-	size = 8
+	size = 6
 
 	return_text()
 		if(..())

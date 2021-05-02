@@ -201,7 +201,7 @@
 		else if (A.caliber in K.caliber)
 			check = 1
 		else if (K.caliber == null)
-			if (A.caliber == 1.58) // Prevent MRPT rocket
+			if (A.caliber > 1) // Prevent MRPT rocket
 				check = 0
 			else
 				check = 1 // For zip guns.

@@ -2585,10 +2585,10 @@ datum
 				..()
 				return
 
-		glitter_harmless // doesn't do any damage
-			name = "glitter"
-			id = "glitter_harmless"
-			description = "Fabulous!"
+		sparkles // doesn't do any damage
+			name = "sparkles"
+			id = "sparkles"
+			description = "Fabulous! And harmless!"
 			reagent_state = SOLID
 			fluid_r = 230
 			fluid_g = 230
@@ -3769,6 +3769,14 @@ datum
 			fluid_g = 181
 			transparency = 255
 			blocks_sight_gas = 1
+
+		iron_oxide
+			name = "Iron Oxide"
+			id = "iron_oxide"
+			description = "Iron, artifically rusted under the effects of oxygen, acetic acid, salt and a high temperature enviroment."
+			fluid_r = 112
+			fluid_b = 40
+			fluid_g = 9
 
 		//=-=-=-=-=-=-=-=-=
 		//|| C E M E N T ||

@@ -1170,7 +1170,7 @@ var/datum/action_controller/actions
 				O.show_message("<span class='alert'><B>[owner] butchers [target].[target.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]</B></span>", 1)
 
 /datum/action/bar/icon/rev_flash
-	duration = 13 SECONDS
+	duration = 4 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	id = "rev_flash"
 	icon = 'icons/ui/actions.dmi'
@@ -1319,7 +1319,7 @@ var/datum/action_controller/actions
 	onUpdate()
 		..()
 		if (M?.hasStatus("resting") && !M.stat && M.getStatusDuration("burning"))
-			M.update_burning(-1.2)
+			M.update_burning(-1.5)
 
 			M.set_dir(turn(M.dir,up ? -90 : 90))
 			pixely += up ? 1 : -1
