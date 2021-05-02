@@ -631,7 +631,7 @@
 		desc = "A nearby Earthlike moon orbiting the gas giant. The stormy, humid atmosphere is quite breathable and the surface has been extensively seeded by terraforming efforts."
 
 	x4
-		icon = 'icons/obj/160x160.dmi'
+		icon = 'icons/obj/large/160x160.dmi'
 		icon_state = "bigasteroid_1"
 		name = "X4"
 		desc = "A jagged little moonlet or a really big asteroid. It's fairly close to your orbit, you can see the lights of Outpost Kappa."

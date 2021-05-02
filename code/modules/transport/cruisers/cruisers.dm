@@ -11,7 +11,7 @@
 /obj/cruiser_shield_visual//This is dumb but required because icons and images don't animate properly as overlays AND their icon_state cannot be changed properly once added (images)
 	name = ""
 	desc = ""
-	icon = 'icons/obj/160x160.dmi'
+	icon = 'icons/obj/large/160x160.dmi'
 	icon_state = "shield"
 	mouse_opacity = 0
 	bound_width = 160
@@ -27,7 +27,7 @@
 		return
 
 /obj/machinery/cruiser
-	icon = 'icons/obj/160x160.dmi'
+	icon = 'icons/obj/large/160x160.dmi'
 	icon_state = "placeholder"
 	name = "Experimental someone-didnt-give-me-a-name cruiser"
 	desc = "Ruh-roh"
@@ -222,11 +222,11 @@
 			pooList += pooObj
 		//pooser.vis_contents += block(wow, woa)
 
-		frames = image('icons/obj/160x160.dmi',src,"frames",src.layer+1)
-		overframes = image('icons/obj/160x160.dmi',src,"overframes",src.layer+2)
-		bar_top = image('icons/obj/160x160.dmi',src,"bartop",src.layer+1)
-		bar_middle = image('icons/obj/160x160.dmi',src,"barmiddle",src.layer+1)
-		bar_bottom = image('icons/obj/160x160.dmi',src,"barbottom",src.layer+1)
+		frames = image('icons/obj/large/160x160.dmi',src,"frames",src.layer+1)
+		overframes = image('icons/obj/large/160x160.dmi',src,"overframes",src.layer+2)
+		bar_top = image('icons/obj/large/160x160.dmi',src,"bartop",src.layer+1)
+		bar_middle = image('icons/obj/large/160x160.dmi',src,"barmiddle",src.layer+1)
+		bar_bottom = image('icons/obj/large/160x160.dmi',src,"barbottom",src.layer+1)
 
 		bar_top.color = "#8A1919"
 		bar_middle.color = "#19688A"
@@ -359,7 +359,7 @@
 		src.addPowerUse("shieldOverload", 90, -1)
 		src.shield_regen_always += 1
 		src.shield_regen_boost += 10
-		var/image/I = image('icons/obj/160x160.dmi',shield_obj,"shieldoverload",shield_obj.layer+1)
+		var/image/I = image('icons/obj/large/160x160.dmi',shield_obj,"shieldoverload",shield_obj.layer+1)
 		I.alpha = 150
 		shield_obj.overlays += I
 		internal_sound(src.loc, 'sound/machines/shieldoverload.ogg', 80, 0, -1)
@@ -536,7 +536,7 @@
 			return
 
 		internal_sound(src.loc, 'sound/machines/cruiser_warp.ogg', 85, 0, 1)
-		var/image/warpOverlay = image('icons/obj/160x160.dmi',"warp")
+		var/image/warpOverlay = image('icons/obj/large/160x160.dmi',"warp")
 		overlays.Add(warpOverlay)
 		animate(src, alpha = 0, time = 10)
 		shield_obj.invisibility = 101
