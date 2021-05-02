@@ -1588,10 +1588,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/noticeboard{
-	pixel_y = 28
-	},
 /obj/machinery/photocopier,
+/obj/noticeboard/persistent{
+	persistent_id = crew quarters;
+	pixel_y = 32
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "afh" = (
@@ -11044,14 +11045,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/east)
-"aDO" = (
-/obj/noticeboard{
-	pixel_y = 28
-	},
-/turf/simulated/floor/green/side{
-	dir = 1
-	},
-/area/station/hallway/primary/east)
 "aDP" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -12530,8 +12523,9 @@
 /area/station/security/main)
 "aHK" = (
 /obj/machinery/vending/security,
-/obj/noticeboard{
-	pixel_y = 28
+/obj/noticeboard/persistent{
+	persistent_id = security main;
+	pixel_y = 32
 	},
 /turf/simulated/floor/red/side{
 	dir = 1
@@ -12617,12 +12611,13 @@
 	pixel_x = -5;
 	pixel_y = 5
 	},
-/obj/noticeboard{
-	pixel_y = 28
-	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/noticeboard/persistent{
+	persistent_id = security foyer;
+	pixel_y = 32
 	},
 /turf/simulated/floor/red/side{
 	dir = 1
@@ -13967,8 +13962,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/noticeboard{
-	pixel_y = 28
+/obj/noticeboard/persistent{
+	persistent_id = chapel
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
@@ -16664,6 +16659,9 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer3/generic/secure_data,
+/obj/noticeboard/persistent{
+	persistent_id = detectives office
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aRC" = (
@@ -16873,9 +16871,6 @@
 /area/station/crew_quarters/courtroom)
 "aSb" = (
 /obj/table/glass/auto,
-/obj/noticeboard{
-	pixel_y = 28
-	},
 /obj/item/pen{
 	pixel_x = 3;
 	pixel_y = 2
@@ -16889,6 +16884,9 @@
 	},
 /obj/cable{
 	icon_state = "2-8"
+	},
+/obj/noticeboard/persistent{
+	persistent_id = courtroom
 	},
 /turf/simulated/floor/grey/side{
 	dir = 1
@@ -17526,6 +17524,9 @@
 	pixel_y = 21
 	},
 /obj/machinery/power/apc/autoname_east,
+/obj/noticeboard/persistent{
+	persistent_id = chaplain office
+	},
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "aTM" = (
@@ -22799,11 +22800,11 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/noticeboard{
-	pixel_y = 28
-	},
 /obj/machinery/light/emergency{
 	dir = 8
+	},
+/obj/noticeboard/persistent{
+	persistent_id = customs
 	},
 /turf/simulated/floor/grey/side{
 	dir = 1
@@ -25532,12 +25533,13 @@
 	},
 /area/station/crew_quarters/market)
 "bmt" = (
-/obj/noticeboard{
-	pixel_y = 28
-	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/noticeboard/persistent{
+	persistent_id = market;
+	pixel_y = 32
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 1
@@ -33262,6 +33264,9 @@
 	dir = 1
 	},
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/noticeboard/persistent{
+	persistent_id = cargo
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bGi" = (
@@ -38146,8 +38151,9 @@
 /area/station/science/lobby)
 "bQZ" = (
 /obj/disposalpipe/segment/mail,
-/obj/noticeboard{
-	pixel_y = 28
+/obj/noticeboard/persistent{
+	persistent_id = research coffee room;
+	pixel_y = 32
 	},
 /turf/simulated/floor/purple/side{
 	dir = 1
@@ -38242,9 +38248,6 @@
 	},
 /area/station/hallway/primary/south)
 "bRm" = (
-/obj/noticeboard{
-	pixel_x = -32
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -39784,11 +39787,11 @@
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/south)
 "bUG" = (
-/obj/noticeboard{
-	pixel_y = 28
-	},
 /obj/machinery/light/emergency{
 	dir = 8
+	},
+/obj/noticeboard/persistent{
+	persistent_id = mechanics workshop
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -47625,15 +47628,15 @@
 	},
 /area/station/medical/medbay)
 "coJ" = (
-/obj/noticeboard{
-	pixel_y = 28
-	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
 	},
 /obj/disposalpipe/segment/morgue{
 	dir = 4
+	},
+/obj/noticeboard/persistent{
+	persistent_id = medbay main
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -49423,6 +49426,9 @@
 	pixel_x = 5;
 	pixel_y = 3
 	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fred2"
@@ -49681,8 +49687,8 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
-/obj/machinery/firealarm{
-	pixel_y = 24
+/obj/noticeboard/persistent{
+	persistent_id = information office
 	},
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -54124,8 +54130,8 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/noticeboard{
-	pixel_y = 28
+/obj/noticeboard/persistent{
+	persistent_id = botany
 	},
 /turf/simulated/floor/green/side{
 	dir = 1
@@ -63491,6 +63497,9 @@
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/noticeboard/persistent{
+	persistent_id = ranch
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 8;
 	icon_state = "swampgrass_edge"
@@ -64097,9 +64106,6 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "vCn" = (
-/obj/noticeboard{
-	pixel_x = -32
-	},
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -64241,6 +64247,9 @@
 	},
 /obj/cable/brown{
 	icon_state = "4-8"
+	},
+/obj/noticeboard/persistent{
+	persistent_id = engineering
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/engineering)
@@ -65346,6 +65355,9 @@
 	},
 /obj/machinery/light/emergency{
 	dir = 4
+	},
+/obj/noticeboard/persistent{
+	persistent_id = brig
 	},
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -123454,7 +123466,7 @@ axN
 azh
 aAS
 aoE
-aDO
+aDL
 aFa
 aGo
 aHs

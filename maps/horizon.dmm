@@ -10804,6 +10804,10 @@
 "aCW" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
+/obj/noticeboard/persistent{
+	name = "Research Break Room persistent notice board";
+	persistent_id = research coffee room
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -14212,6 +14216,10 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/noticeboard/persistent{
+	name = "Genetics persistent notice board";
+	persistent_id = genetics
+	},
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
@@ -14836,6 +14844,10 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	name = "crematorium pipe"
+	},
+/obj/noticeboard/persistent{
+	name = "Robotics persistent notice board";
+	persistent_id = robotics
 	},
 /turf/simulated/floor/blueblack{
 	dir = 8
@@ -16864,6 +16876,11 @@
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
+	},
+/obj/noticeboard/persistent{
+	name = "Chapel persistent notice board";
+	persistent_id = chapel;
+	pixel_y = 36
 	},
 /turf/simulated/floor/wood/two,
 /area/station/chapel/sanctuary)
@@ -26563,6 +26580,10 @@
 /obj/item/paper/book/mechanicbook,
 /obj/item/paper/book/minerals,
 /obj/item/cargotele,
+/obj/noticeboard/persistent{
+	name = "Cargo persistent notice board";
+	persistent_id = cargo
+	},
 /turf/simulated/floor/black,
 /area/station/quartermaster/office)
 "bmM" = (
@@ -26971,6 +26992,10 @@
 "bnR" = (
 /obj/storage/crate/bin/lostandfound,
 /obj/item/clothing/shoes/thong,
+/obj/noticeboard/persistent{
+	name = "Customs persistent notice board";
+	persistent_id = customs
+	},
 /turf/simulated/floor/darkblue,
 /area/station/hallway/primary/west)
 "bnT" = (
@@ -33565,6 +33590,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/noticeboard/persistent{
+	name = "Main Medbay persistent notice board";
+	persistent_id = medbay main
+	},
 /turf/simulated/floor/stairs{
 	dir = 4
 	},
@@ -34212,6 +34241,10 @@
 /obj/item/pen,
 /obj/disposalpipe/segment/brig{
 	dir = 8
+	},
+/obj/noticeboard/persistent{
+	name = "Crew Quarters persistent notice board";
+	persistent_id = crew quarters
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/quarters_south)
@@ -37404,6 +37437,10 @@
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
+/obj/noticeboard/persistent{
+	name = "Botany persistent notice board";
+	persistent_id = botany
+	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "bPx" = (
@@ -38377,6 +38414,9 @@
 "bRP" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/item/device/radio/intercom/catering{
 	dir = 4
 	},
 /turf/simulated/floor/black,
@@ -40008,9 +40048,12 @@
 "bVK" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/cashreg,
-/obj/item/device/radio/intercom/catering,
 /obj/disposalpipe/segment/food{
 	dir = 4
+	},
+/obj/noticeboard/persistent{
+	name = "Bar persistent notice board";
+	persistent_id = bar
 	},
 /turf/simulated/floor{
 	icon_state = "bar-edge"
@@ -44067,6 +44110,10 @@
 "cfn" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
 /obj/machinery/manufacturer/general,
+/obj/noticeboard/persistent{
+	name = "Engineering persistent notice board";
+	persistent_id = engineering
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "cfo" = (
@@ -46120,6 +46167,10 @@
 /area/station/storage/tools)
 "cjR" = (
 /obj/table/reinforced/auto,
+/obj/noticeboard/persistent{
+	name = "Research persistent notice board";
+	persistent_id = research
+	},
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
 "cjS" = (
@@ -57891,6 +57942,10 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
+/obj/noticeboard/persistent{
+	name = "Brig persistent notice board";
+	persistent_id = brig
+	},
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "plf" = (
@@ -58714,6 +58769,17 @@
 /obj/disposalpipe/segment/cargo,
 /turf/simulated/floor/black,
 /area/station/quartermaster/office)
+"rpn" = (
+/obj/noticeboard/persistent{
+	name = "Kitchen persistent notice board";
+	persistent_id = kitchen;
+	pixel_x = 33;
+	pixel_y = 35
+	},
+/turf/simulated/floor/white/checker{
+	dir = 6
+	},
+/area/station/crew_quarters/kitchen)
 "rqB" = (
 /obj/machinery/light{
 	dir = 8;
@@ -61049,9 +61115,6 @@
 	},
 /obj/disposalpipe/segment/brig{
 	dir = 8
-	},
-/obj/noticeboard{
-	pixel_y = 28
 	},
 /obj/landmark/start{
 	name = "Security Officer"
@@ -111282,7 +111345,7 @@ bwk
 kaU
 bBy
 bEy
-bVD
+rpn
 tRN
 hjl
 bQd

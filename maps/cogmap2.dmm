@@ -7278,10 +7278,10 @@
 	},
 /area/station/chapel/sanctuary)
 "aqs" = (
-/obj/noticeboard{
-	pixel_y = 32
-	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/noticeboard/persistent{
+	persistent_id = chaplain office
+	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
@@ -12021,6 +12021,9 @@
 /obj/machinery/chem_dispenser/alcohol,
 /obj/item/device/radio/intercom/catering,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/noticeboard/persistent{
+	persistent_id = bar
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fpurple2"
@@ -14187,13 +14190,13 @@
 "aFP" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
-/obj/noticeboard{
-	pixel_y = 28
-	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/door/window/eastleft{
 	name = "Hydroponics";
 	req_access_txt = "35"
+	},
+/obj/noticeboard/persistent{
+	persistent_id = botany
 	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/lobby)
@@ -15187,8 +15190,8 @@
 	},
 /area/station/crew_quarters/garden)
 "aIm" = (
-/obj/noticeboard{
-	pixel_y = 32
+/obj/noticeboard/persistent{
+	persistent_id = chapel
 	},
 /turf/simulated/floor/green/side{
 	dir = 1
@@ -19693,7 +19696,8 @@
 	},
 /area/station/crew_quarters/arcade)
 "aTr" = (
-/obj/noticeboard{
+/obj/noticeboard/persistent{
+	persistent_id = ranch;
 	pixel_x = -32
 	},
 /turf/simulated/floor/green/side{
@@ -21269,6 +21273,10 @@
 	pixel_x = 4;
 	pixel_y = 3
 	},
+/obj/noticeboard/persistent{
+	persistent_id = crew quarters;
+	pixel_y = 32
+	},
 /turf/simulated/floor{
 	icon_state = "carpetS"
 	},
@@ -21346,17 +21354,6 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
-/turf/simulated/floor/neutral/side{
-	dir = 1
-	},
-/area/station/hallway/secondary/entry)
-"aXq" = (
-/obj/noticeboard{
-	pixel_y = 32
-	},
-/obj/table/glass/reinforced/auto,
-/obj/item/paper_bin,
-/obj/item/pen,
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
@@ -30938,15 +30935,15 @@
 	dir = 4;
 	icon_state = "pipe-j2"
 	},
-/obj/noticeboard{
-	pixel_y = 32
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
+	},
+/obj/noticeboard/persistent{
+	persistent_id = engineering
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
@@ -36236,6 +36233,10 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/noticeboard/persistent{
+	persistent_id = security main;
+	pixel_y = 32
+	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -38391,10 +38392,6 @@
 "bHk" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/lamp,
-/obj/noticeboard{
-	name = "Wanted Board";
-	pixel_y = 28
-	},
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 4;
@@ -38405,6 +38402,10 @@
 	},
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
+	},
+/obj/noticeboard/persistent{
+	persistent_id = security foyer;
+	pixel_y = 32
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer)
@@ -38476,10 +38477,6 @@
 /area/station/hallway/primary/east)
 "bHu" = (
 /obj/table/reinforced/auto,
-/obj/noticeboard{
-	name = "Complaint Board";
-	pixel_y = 28
-	},
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -38496,6 +38493,9 @@
 	},
 /obj/machinery/cashreg{
 	pixel_y = -3
+	},
+/obj/noticeboard/persistent{
+	persistent_id = customs
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/customs)
@@ -57069,10 +57069,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/noticeboard{
+/obj/landmark/halloween,
+/obj/noticeboard/persistent{
+	persistent_id = research coffee room;
 	pixel_y = 32
 	},
-/obj/landmark/halloween,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -61112,8 +61113,8 @@
 	},
 /area/station/medical/medbay/lobby)
 "cDI" = (
-/obj/noticeboard{
-	pixel_y = 32
+/obj/noticeboard/persistent{
+	persistent_id = robotics
 	},
 /turf/simulated/floor/blue/side{
 	dir = 1
@@ -61384,6 +61385,9 @@
 "cEw" = (
 /obj/stool/chair,
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/noticeboard/persistent{
+	persistent_id = mechanics workshop
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -68453,8 +68457,8 @@
 /obj/storage/secure/closet/medical{
 	name = "locker"
 	},
-/obj/noticeboard{
-	pixel_y = 32
+/obj/noticeboard/persistent{
+	persistent_id = genetics
 	},
 /turf/simulated/floor/redwhite{
 	dir = 1
@@ -70288,9 +70292,6 @@
 	dir = 0;
 	name = "autoname - SS13";
 	pixel_y = 20
-	},
-/obj/noticeboard{
-	pixel_y = 32
 	},
 /turf/simulated/floor/arrival{
 	dir = 1
@@ -128924,7 +128925,7 @@ aCV
 aod
 alM
 aGx
-aIm
+aIl
 aGE
 aLl
 aGF
@@ -143129,7 +143130,7 @@ aaa
 aaa
 aam
 aFi
-aXq
+aGY
 aZe
 baC
 bcA

@@ -2,6 +2,7 @@
 	name = "notice board"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nboard00"
+	pixel_y = 32
 	flags = FPRINT
 	plane = PLANE_NOSHADOW_BELOW
 	desc = "A board for pinning important notices upon."
@@ -88,6 +89,7 @@
 
 /obj/noticeboard/persistent
 	name = "persistent notice board"
+	desc = "A board for pinning important notices upon. Looks like this one doesn't get cleared out at the end of the shift."
 	var/static/file_name = "data/persistent_noticeboards.json"
 	var/static/data = null
 	var/persistent_id = null

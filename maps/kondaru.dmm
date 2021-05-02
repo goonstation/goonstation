@@ -3305,6 +3305,10 @@
 	pixel_y = 21
 	},
 /obj/machinery/photocopier,
+/obj/noticeboard/persistent{
+	name = "Chaplain Office persistent notice board";
+	persistent_id = chaplain office
+	},
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "aiN" = (
@@ -8033,6 +8037,10 @@
 	},
 /obj/item/clothing/suit/fire/heavy,
 /obj/item/clothing/head/helmet/welding,
+/obj/noticeboard/persistent{
+	name = "Engineering persistent notice board";
+	persistent_id = engineering
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -8628,6 +8636,10 @@
 	freq = 1443;
 	location = "tour15";
 	name = "tour 15 - chapel"
+	},
+/obj/noticeboard/persistent{
+	name = "Chapel persistent notice board";
+	persistent_id = chapel
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
@@ -11217,6 +11229,12 @@
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
+	},
+/obj/noticeboard/persistent{
+	name = "Detective's Office persistent notice board";
+	persistent_id = detective's office;
+	pixel_x = -32;
+	pixel_y = 2
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -17254,6 +17272,10 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/noticeboard/persistent{
+	name = "Crew Quarters persistent notice board";
+	persistent_id = crew quarters
+	},
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
@@ -19960,6 +19982,10 @@
 	pixel_y = 21
 	},
 /obj/disposalpipe/segment/mail/bent/south,
+/obj/noticeboard/persistent{
+	name = "Kitchen persistent notice board";
+	persistent_id = kitchen
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "bew" = (
@@ -21940,6 +21966,12 @@
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
+	},
+/obj/noticeboard/persistent{
+	name = "Main Medbay persistent notice board";
+	persistent_id = medbay main;
+	pixel_x = 32;
+	pixel_y = 2
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 4
@@ -28827,6 +28859,10 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/horizontal,
+/obj/noticeboard/persistent{
+	name = "Courtroom persistent notice board";
+	persistent_id = courtroom
+	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
 "bGW" = (
@@ -31380,6 +31416,10 @@
 "bMZ" = (
 /obj/machinery/disposal/mail/autoname/qm,
 /obj/disposalpipe/trunk/mail/east,
+/obj/noticeboard/persistent{
+	name = "Cargo persistent notice board";
+	persistent_id = cargo
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
@@ -37699,6 +37739,10 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/noticeboard/persistent{
+	name = "Robotics persistent notice board";
+	persistent_id = robotics
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "chw" = (
@@ -46852,8 +46896,9 @@
 	dir = 4;
 	pixel_x = -20
 	},
-/obj/noticeboard{
-	pixel_y = 32
+/obj/noticeboard/persistent{
+	name = "Main Medbay persistent notice board";
+	persistent_id = medbay main
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -50091,6 +50136,11 @@
 	pixel_y = 21
 	},
 /obj/submachine/seed_manipulator,
+/obj/noticeboard/persistent{
+	name = "Botany persistent notice board";
+	persistent_id = botany;
+	pixel_y = 36
+	},
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -50228,9 +50278,12 @@
 /turf/space,
 /area/station/ai_monitored/armory)
 "maH" = (
-/obj/item/device/radio/intercom/security,
 /obj/filing_cabinet,
 /obj/machinery/light_switch/east,
+/obj/noticeboard/persistent{
+	name = "Customs persistent notice board";
+	persistent_id = customs
+	},
 /turf/simulated/floor/black/side{
 	dir = 8
 	},
@@ -52788,6 +52841,12 @@
 /obj/machinery/glass_recycler{
 	glass_amt = 5;
 	pixel_y = 4
+	},
+/obj/noticeboard/persistent{
+	name = "Bar persistent notice board";
+	persistent_id = bar;
+	pixel_x = -32;
+	pixel_y = 0
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
@@ -60220,6 +60279,12 @@
 /obj/decal/poster/wallsign/escape_right,
 /turf/simulated/wall/auto/supernorn,
 /area/station/ranch)
+"wGM" = (
+/obj/item/device/radio/intercom/security{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/courtroom)
 "wHG" = (
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/north)
@@ -61491,6 +61556,10 @@
 /area/station/bridge)
 "xRV" = (
 /obj/machinery/vending/medical_public,
+/obj/noticeboard/persistent{
+	name = "Brig persistent notice board";
+	persistent_id = brig
+	},
 /turf/simulated/floor/red/side{
 	dir = 5
 	},
@@ -121928,7 +121997,7 @@ bEK
 chs
 bHe
 bIB
-wrE
+wGM
 vTU
 dQm
 bNK
