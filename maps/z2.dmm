@@ -23066,7 +23066,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 9;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -23083,7 +23083,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -23100,7 +23100,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 5;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -23232,7 +23232,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 6;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -23254,7 +23254,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 10;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -23463,7 +23463,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 9;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -23478,7 +23478,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 5;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -23684,7 +23684,7 @@
 	color_g = 1;
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	name = "power conduit"
 	},
 /turf/unsimulated/iomoon/ancient_floor,
@@ -23722,7 +23722,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 10;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -23943,7 +23943,7 @@
 	color_g = 1;
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
@@ -23964,7 +23964,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -23979,7 +23979,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -24000,7 +24000,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 6;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -24411,7 +24411,7 @@
 	color_g = 1;
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	name = "power conduit"
 	},
 /turf/unsimulated/iomoon/ancient_floor{
@@ -26525,7 +26525,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -27569,7 +27569,7 @@
 	color_g = 1;
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	name = "power conduit"
 	},
 /turf/unsimulated/iomoon/ancient_floor{
@@ -27866,7 +27866,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 9;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -27883,7 +27883,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 6;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -27906,7 +27906,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 10;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -27923,7 +27923,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 5;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -29647,7 +29647,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 5;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -29873,7 +29873,7 @@
 	color_g = 1;
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	name = "power conduit"
 	},
 /obj/iomoon_puzzle/lock{
@@ -29893,7 +29893,7 @@
 	color_g = 1;
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	name = "power conduit"
 	},
 /obj/iomoon_puzzle/lock/red{
@@ -29912,7 +29912,7 @@
 	color_g = 1;
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	name = "power conduit"
 	},
 /obj/critter/ancient_repairbot/security,
@@ -30079,7 +30079,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 9;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -30096,7 +30096,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -30116,7 +30116,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 6;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -30136,7 +30136,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 10;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -30151,7 +30151,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -30166,7 +30166,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 5;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -30307,7 +30307,7 @@
 	color_g = 1;
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	name = "power conduit"
 	},
 /turf/unsimulated/iomoon/ancient_floor,
@@ -30669,7 +30669,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 10;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -30684,7 +30684,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -30701,7 +30701,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 5;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -30713,7 +30713,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 9;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -30731,7 +30731,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -30987,7 +30987,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 9;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -31002,7 +31002,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -31030,7 +31030,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 10;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -31042,7 +31042,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 6;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -31059,7 +31059,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 5;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -31546,7 +31546,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 10;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -31562,7 +31562,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 6;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -46216,7 +46216,7 @@
 	anchored = 1;
 	desc = "A clamp for docking shuttles. It's all busted.";
 	dir = 1;
-	icon = 'icons/obj/turrets.dmi';
+	icon = 'icons/obj/machinery/turrets.dmi';
 	icon_state = "grey_target_prism";
 	name = "busted clamp"
 	},
@@ -46260,7 +46260,7 @@
 	anchored = 1;
 	desc = "A clamp for docking shuttles. It's all busted.";
 	dir = 1;
-	icon = 'icons/obj/turrets.dmi';
+	icon = 'icons/obj/machinery/turrets.dmi';
 	icon_state = "grey_target_prism";
 	name = "busted clamp"
 	},
@@ -50888,7 +50888,7 @@
 	anchored = 1;
 	desc = "A clamp for docking shuttles.";
 	dir = 8;
-	icon = 'icons/obj/turrets.dmi';
+	icon = 'icons/obj/machinery/turrets.dmi';
 	icon_state = "grey_target_prism";
 	name = "docking clamp"
 	},
@@ -66232,7 +66232,7 @@
 "dsr" = (
 /obj/decal/fakeobjects/core{
 	desc = "It looks inactive.  Hope there isn't any fuel left in there...";
-	icon = 'icons/obj/machines/nuclear64x32.dmi';
+	icon = 'icons/obj/machinery/nuclear64x32.dmi';
 	icon_state = "reactoroff"
 	},
 /obj/decal/fakeobjects{
@@ -78660,7 +78660,7 @@
 "jiO" = (
 /obj/decal/fakeobjects/core{
 	desc = "It looks inactive.  Hope there isn't any fuel left in there...";
-	icon = 'icons/obj/machines/nuclear64x32.dmi';
+	icon = 'icons/obj/machinery/nuclear64x32.dmi';
 	icon_state = "reactoroff"
 	},
 /turf/space,
@@ -80566,7 +80566,7 @@
 	anchored = 1;
 	desc = "A turret for ships.  Like this ship that it's attached to.";
 	dir = 1;
-	icon = 'icons/obj/turrets.dmi';
+	icon = 'icons/obj/machinery/turrets.dmi';
 	icon_state = "grey_target_prism";
 	name = "ship turret"
 	},
