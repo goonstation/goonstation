@@ -195,7 +195,7 @@ Contents:
 /obj/decal/fakeobjects/arch
 	name = "torii"
 	desc = "A great gate marking sacred grounds."
-	icon = 'icons/obj/160x128.dmi'
+	icon = 'icons/obj/large/160x128.dmi'
 	icon_state = "arch"
 
 /obj/sakura_tree

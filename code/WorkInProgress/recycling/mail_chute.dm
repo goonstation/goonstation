@@ -370,7 +370,7 @@
 			mail_tag = "podbay"
 
 /obj/machinery/disposal/mail/small
-	icon = 'icons/obj/disposal_small.dmi'
+	icon = 'icons/obj/machinery/disposal_small.dmi'
 	handle_normal_state = "disposal-handle"
 	density = 0
 

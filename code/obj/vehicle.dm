@@ -68,7 +68,7 @@ Contains:
 ABSTRACT_TYPE(/obj/vehicle)
 /obj/vehicle
 	name = "vehicle"
-	icon = 'icons/obj/vehicles.dmi'
+	icon = 'icons/obj/machinery/vehicles.dmi'
 	density = 1
 	var/mob/living/rider = null //rider is basically the "driver" of the vehicle
 	var/in_bump = 0 //sanity variable to prevent the vehicle from crashing multiple times due to a single collision

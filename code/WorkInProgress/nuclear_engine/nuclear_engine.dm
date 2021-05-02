@@ -12,7 +12,7 @@
 /obj/machinery/nuclear_engine
 	name = "Nuclear reactor core"
 	desc = "I'm sure there's no way this could go wrong!"
-	icon = 'icons/obj/machines/nuclear128x64.dmi'
+	icon = 'icons/obj/machinery/nuclear128x64.dmi'
 	icon_state = "reactor_off"
 	anchored = 2
 	density = 1

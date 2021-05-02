@@ -1603,7 +1603,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/vaultdoor
 	name = "vault door"
-	icon = 'icons/obj/96x32.dmi'
+	icon = 'icons/obj/large/96x32.dmi'
 	icon_state = "vaultdoor_closed"
 	density = 1
 	anchored = 2

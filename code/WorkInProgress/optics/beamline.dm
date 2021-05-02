@@ -90,7 +90,7 @@
 /obj/machinery/beamline
 	name = "beamline component"
 	desc = "Some sort of heavy machinery for use with a heavy laser setup."
-	icon = 'icons/obj/machines/beamline64x32.dmi'
+	icon = 'icons/obj/machinery/beamline64x32.dmi'
 	icon_state = "beamline"
 
 
@@ -101,13 +101,13 @@
 /obj/machinery/beamline/amplifier
 	name = "beamline amplifier"
 	desc = "Supercharges lasers that pass through it."
-	icon = 'icons/obj/machines/beamline64x32.dmi'
+	icon = 'icons/obj/machinery/beamline64x32.dmi'
 	icon_state = "amplifier-0"
 
 /obj/machinery/beamline/spectrometer
 	name = "spectrometer"
 	desc = "A huge mass spectrometer that works with laser setups."
-	icon = 'icons/obj/machines/beamline64x32.dmi'
+	icon = 'icons/obj/machinery/beamline64x32.dmi'
 	icon_state = "spectrometer-0"
 
 

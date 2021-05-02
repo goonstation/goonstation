@@ -991,7 +991,7 @@
 /obj/decal/fakeobjects/mantacontainer/upwards
 		name = "container"
 		desc = "These huge containers are used to transport goods from one place to another."
-		icon = 'icons/obj/96x64.dmi'
+		icon = 'icons/obj/large/96x64.dmi'
 		icon_state = "manta"
 		anchored = 2
 		density = 1
@@ -1073,7 +1073,7 @@
 /obj/decal/fakeobjects/turbinetest
 		name = "TEMP"
 		desc = "TEMP"
-		icon = 'icons/obj/96x160.dmi'
+		icon = 'icons/obj/large/96x160.dmi'
 		icon_state = "turbine_main"
 		anchored = 2
 		density = 1
