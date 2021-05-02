@@ -634,7 +634,7 @@
 	density = 1;
 	desc = "It probably doesn't work anymore.";
 	dir = 2;
-	icon = 'icons/obj/machines/mindswap.dmi';
+	icon = 'icons/obj/machinery/mindswap.dmi';
 	icon_state = "mindswap";
 	name = "fuel pump";
 	tag = "icon-mindswap"
