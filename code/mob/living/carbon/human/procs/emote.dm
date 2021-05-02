@@ -2008,12 +2008,33 @@
 								src.limbs.r_arm.sever()
 								if(dab_id)
 									dab_id.arm_count++
-							H.emote("scream")
+							if(H.limbs.r_leg)
+								src.limbs.r_leg.sever()
+							if(H.limbs.r_leg)
+								src.limbs.r_leg.sever()
 					if(!(istype(src.head, /obj/item/clothing/head/bighat/syndicate) || src.reagents.has_reagent("puredabs")))
 						src.take_brain_damage(10)
 						dab_id?.brain_damage_count += 10
 						if(src.get_brain_damage() > 60)
 							src.show_text(__red("Your head hurts!"))
+					for(var/atom/A as anything in src.loc)
+						if(istype(A, /obj/item/storage/bible))
+							if(H)
+								if(H.limbs.l_arm)
+									src.limbs.l_arm.sever()
+									if(dab_id)
+										dab_id.arm_count++
+								if(H.limbs.r_arm)
+									src.limbs.r_arm.sever()
+									if(dab_id)
+										dab_id.arm_count++
+								if(H.limbs.r_leg)
+									src.limbs.r_leg.sever()
+								if(H.limbs.l_leg)
+									src.limbs.l_leg.sever()
+								message = "<span class='alert'>an unseen force smites [src]'s' limbs off</B>!!!!</span>"
+								playsound(src.loc,"sound/misc/deepfrieddabs.ogg",50,0, channel=VOLUME_CHANNEL_EMOTE)
+								src.emote("scream")
 				else
 					src.show_text("You don't know how to do that but you feel deeply ashamed for trying", "red")
 
