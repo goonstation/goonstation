@@ -5,7 +5,7 @@
 /obj/machinery/industrial_laser
 	name = "industrial laser"
 	desc = "An industrial laser beam emitter."
-	icon = 'icons/obj/machines/fusion.dmi'
+	icon = 'icons/obj/machinery/fusion.dmi'
 	icon_state = "laser-premade"
 	var/obj/item/lens/lens = null
 	var/obj/beam/custom/beam = null

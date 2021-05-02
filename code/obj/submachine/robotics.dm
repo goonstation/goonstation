@@ -273,7 +273,7 @@
 /obj/item/reagent_containers/glass/oilcan
 	name = "oil can"
 	desc = "Contains oil intended for use on cyborgs and robots."
-	icon = 'icons/obj/robot_parts.dmi'
+	icon = 'icons/obj/machinery/robot_parts.dmi'
 	icon_state = "oilcan"
 	amount_per_transfer_from_this = 15
 	splash_all_contents = 0

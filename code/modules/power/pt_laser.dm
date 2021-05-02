@@ -3,7 +3,7 @@
 
 /obj/machinery/power/pt_laser
 	name = "power transmission laser"
-	icon = 'icons/obj/pt_laser.dmi'
+	icon = 'icons/obj/machinery/pt_laser.dmi'
 	desc = "Generates a laser beam used to transmit power vast distances across space."
 	icon_state = "ptl"
 	density = 1
@@ -85,24 +85,24 @@
 /obj/machinery/power/pt_laser/proc/updateicon(var/started_firing = 0)
 	overlays = null
 	if(status & BROKEN || charge == 0)
-		overlays += image('icons/obj/pt_laser.dmi', "unpowered")
+		overlays += image('icons/obj/machinery/pt_laser.dmi', "unpowered")
 		return
 
 	if(load_last_tick > 0)
-		overlays += image('icons/obj/pt_laser.dmi', "green_light")
+		overlays += image('icons/obj/machinery/pt_laser.dmi', "green_light")
 
 	if(online)
-		overlays += image('icons/obj/pt_laser.dmi', "red_light")
+		overlays += image('icons/obj/machinery/pt_laser.dmi', "red_light")
 		if(started_firing)
-			overlays += image('icons/obj/pt_laser.dmi', "started_firing")
+			overlays += image('icons/obj/machinery/pt_laser.dmi', "started_firing")
 		else if(firing)
-			overlays += image('icons/obj/pt_laser.dmi', "firing")
+			overlays += image('icons/obj/machinery/pt_laser.dmi', "firing")
 
 	var/clevel = chargedisplay()
 	if(clevel == 6)
-		overlays += image('icons/obj/pt_laser.dmi', "charge_full")
+		overlays += image('icons/obj/machinery/pt_laser.dmi', "charge_full")
 	else if(clevel>0)
-		overlays += image('icons/obj/pt_laser.dmi', "charge_[clevel]")
+		overlays += image('icons/obj/machinery/pt_laser.dmi', "charge_[clevel]")
 
 /obj/machinery/power/pt_laser/proc/chargedisplay()
 	if(!output)

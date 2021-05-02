@@ -392,7 +392,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/brokenportal
 	name = "broken portal ring"
 	desc = "This portal ring looks completely fried."
-	icon = 'icons/obj/teleporter.dmi'
+	icon = 'icons/obj/machinery/teleporter.dmi'
 	icon_state = "tele_fuzz"
 	anchored = 1
 	density = 1

@@ -2,7 +2,7 @@ ABSTRACT_TYPE(/obj/item/roboupgrade)
 /obj/item/roboupgrade
 	name = "cyborg upgrade"
 	desc = "A non-functional upgrade for a cyborg."
-	icon = 'icons/obj/robot_parts.dmi'
+	icon = 'icons/obj/machinery/robot_parts.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "electronic"
 

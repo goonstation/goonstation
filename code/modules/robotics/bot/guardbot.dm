@@ -363,7 +363,7 @@
 	mail
 		name = "Mailbuddy"
 		desc = "The PR-6PS Mailbuddy is a postal delivery ace.  This may seem like an extremely specialized robot application, but that's just because it is exactly that."
-		icon = 'icons/obj/mailbud.dmi'
+		icon = 'icons/obj/machinery/mailbud.dmi'
 
 		New()
 			..()

@@ -1,6 +1,6 @@
 /obj/item/parts/robot_parts
 	name = "robot parts"
-	icon = 'icons/obj/robot_parts.dmi'
+	icon = 'icons/obj/machinery/robot_parts.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "buildpipe"
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
