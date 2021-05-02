@@ -2029,7 +2029,8 @@
 									src.limbs.r_leg.sever()
 								if(H.limbs.l_leg)
 									src.limbs.l_leg.sever()
-								message = "<span class='alert'>An unseen force smites [src]'s' limbs off</B>!</span>"
+								message = "<span class='alert'>[src] does a sick dab on the bible</span>"
+								src.visible_message("<span class='alert'>An unseen force smites [src]'s' limbs off</B>!</span>")
 								playsound(src.loc,"sound/misc/deepfrieddabs.ogg",50,0, channel=VOLUME_CHANNEL_EMOTE)
 				else
 					src.show_text("You don't know how to do that but you feel deeply ashamed for trying", "red")
