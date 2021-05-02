@@ -400,6 +400,10 @@
 			if(isghostcritter(rev_mind.current) || isVRghost(rev_mind.current))
 				continue
 
+			if(ismobcritter(rev_mind.current))
+				//mob critters can't revolt because they don't work here.
+				continue
+
 			var/turf/T = get_turf(rev_mind.current)
 			if(T.z != 1)
 				continue
@@ -510,7 +514,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "revsign"
 
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	throwforce = 8
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = EQUIPPED_WHILE_HELD

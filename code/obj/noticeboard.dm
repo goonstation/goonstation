@@ -1,5 +1,5 @@
 /obj/noticeboard
-	name = "Notice Board"
+	name = "notice board"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nboard00"
 	flags = FPRINT
@@ -8,9 +8,12 @@
 	density = 0
 	anchored = 1
 	var/notices = 0
-	ex_act()//todo: update this entire old and dated thing
-		qdel(src)
-//attaching papers!!
+
+
+/obj/noticeboard/ex_act()
+	qdel(src)
+
+
 /obj/noticeboard/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if (istype(O, /obj/item/paper))
 		if (src.notices < 5)
@@ -19,11 +22,17 @@
 			user.drop_item()
 			O.set_loc(src)
 			src.notices++
-			src.icon_state = text("nboard0[]", src.notices) //update sprite
+			src.update_icon()
 			boutput(user, "<span class='notice'>You pin the paper to the noticeboard.</span>")
+			src.updateUsrDialog()
 		else
 			boutput(user, "<span class='alert'>You reach to pin your paper to the board but hesitate. You are certain your paper will not be seen among the many others already attached.</span>")
-//
+
+
+/obj/noticeboard/proc/update_icon()
+	src.icon_state = "nboard0[src.notices]"
+
+
 /obj/noticeboard/attack_hand(mob/user as mob)
 	var/dat = "<B>Noticeboard</B><BR>"
 	for(var/obj/item/paper/P in src)
@@ -49,7 +58,8 @@
 			P.add_fingerprint(usr)
 			src.add_fingerprint(usr)
 			src.notices--
-			src.icon_state = text("nboard0[]", src.notices)
+			src.update_icon()
+			src.updateUsrDialog()
 
 	if(href_list["write"])
 		var/obj/item/P = locate(href_list["write"])
@@ -74,4 +84,50 @@
 			else
 				usr.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", P.name, P.info), text("window=[]", P.name))
 				onclose(usr, "[P.name]")
-	return
+
+
+/obj/noticeboard/persistent
+	name = "persistent notice board"
+	var/static/file_name = "data/persistent_noticeboards.json"
+	var/static/data = null
+	var/persistent_id = null
+
+/obj/noticeboard/persistent/New()
+	. = ..()
+	if(isnull(src.persistent_id))
+		CRASH("A noticeboard has null id.")
+	for_by_tcl(other_noticeboard, /obj/noticeboard/persistent)
+		if(other_noticeboard.persistent_id == src.persistent_id)
+			CRASH("Two persistent noticeboards share the id: [persistent_id].")
+	START_TRACKING
+	src.load_stuff()
+
+/obj/noticeboard/persistent/disposing()
+	STOP_TRACKING
+	. = ..()
+
+/obj/noticeboard/persistent/proc/load_stuff()
+	if(isnull(src.data))
+		if(fexists(src.file_name))
+			src.data = json_decode(file2text(src.file_name))
+		else
+			src.data = list()
+	if(src.persistent_id in src.data)
+		for(var/list/book_info in src.data[src.persistent_id])
+			var/obj/item/paper/paper = new(src)
+			paper.name = book_info[1]
+			paper.info = book_info[2]
+	src.notices = length(src.contents)
+	src.update_icon()
+
+/obj/noticeboard/persistent/proc/save_stuff()
+	src.data[src.persistent_id] = list()
+	for(var/obj/item/paper/paper in src)
+		src.data[src.persistent_id] += list(list(paper.name, paper.info))
+
+proc/save_noticeboards()
+	var/obj/noticeboard/persistent/board
+	for(board in by_type[/obj/noticeboard/persistent])
+		board.save_stuff()
+	fdel(board.file_name)
+	text2file(json_encode(board.data), board.file_name)

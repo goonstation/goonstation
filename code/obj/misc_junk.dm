@@ -8,7 +8,7 @@
 	amount = 1
 	throwforce = 1
 	force = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 /obj/item/gears
 	name = "gears"
@@ -18,7 +18,7 @@
 	amount = 1
 	throwforce = 1
 	force = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 /obj/item/lens
 	name = "Lens"
@@ -28,7 +28,7 @@
 	amount = 1
 	throwforce = 1
 	force = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/clarity = 20 //probably somewhere between 0-100 ish
 	var/focal_strength = 20 //1-100 ish
 
@@ -49,21 +49,21 @@
 		icon_state = "small_coil"
 		throwforce = 3
 		force = 3
-		w_class = 1
+		w_class = W_CLASS_TINY
 
 	large
 		name = "large coil"
 		icon_state = "large_coil"
 		throwforce = 5
 		force = 5
-		w_class = 2
+		w_class = W_CLASS_SMALL
 
 /obj/item/gnomechompski
 	name = "Gnome Chompski"
 	desc = "what"
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "gnome"
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	stamina_damage = 40
 	stamina_cost = 20
 	stamina_crit_chance = 5
@@ -110,11 +110,11 @@
 	icon_state = "c_tube"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 5
 	desc = "A tube made of cardboard. Extremely non-threatening."
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	stamina_damage = 5
 	stamina_cost = 1
 
@@ -142,11 +142,11 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "c_sheet"
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 5
 	desc = "A sheet of creased cardboard."
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	stamina_damage = 0
 	stamina_cost = 0
 
@@ -173,7 +173,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "rubber_chicken"
 	item_state = "rubber_chicken"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	stamina_damage = 10
 	stamina_cost = 5
 	stamina_crit_chance = 3
@@ -181,7 +181,7 @@
 /obj/item/module
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "electronic"
 	flags = FPRINT|TABLEPASS|CONDUCT
@@ -219,7 +219,7 @@
 	icon_state = "brick"
 	item_state = "brick"
 	force = 8
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 10
 	rand_pos = 1
 	stamina_damage = 40
@@ -247,7 +247,7 @@
 	icon_state = "eldritch-1" // temp
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "eldritch" // temp
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	force = 1
 	throwforce = 5
 	var/spam_flag = 0
@@ -509,7 +509,7 @@
 	icon = 'icons/misc/racing.dmi'
 	icon_state = "superbuttshell"
 	c_flags = EQUIPPED_WHILE_HELD
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	var/mob/living/carbon/human/owner = null
 	var/changed = 0
 	var/pickup_time = 0

@@ -3241,12 +3241,6 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/mining/staff_room)
-"iF" = (
-/obj/displaycase{
-	displayed = new /obj/item/captaingun
-},
-/turf/simulated/floor/blue,
-/area/station/bridge/captain)
 "iG" = (
 /obj/lattice{
 	dir = 9;
@@ -9477,17 +9471,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
-"wX" = (
-/obj/table/auto,
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/item/card_box/plain,
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/cafeteria)
 "wY" = (
 /obj/machinery/light,
 /obj/cable{
@@ -11397,32 +11380,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
-	},
-/turf/simulated/floor/purplewhite,
-/area/station/science/teleporter)
-"AF" = (
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/storage/crate{
-	desc = "Only distantly related to the Adventure Closet.";
-	name = "Adventure Crate"
-	},
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/reagent_containers/food/drinks/milk,
-/obj/item/reagent_containers/food/snacks/sandwich/pb,
-/obj/item/paper{
-	desc = "Aw dang, mooom";
-	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
-	name = "note from mom"
-	},
-/obj/item/paper/book/critter_compendium,
-/obj/machinery/light{
-	layer = 3
 	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
@@ -14645,6 +14602,49 @@
 /obj/item/plank,
 /turf/simulated/floor/grime,
 /area/ghostdrone_factory)
+"Xp" = (
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/turf/simulated/floor/blue,
+/area/station/bridge/captain)
+"XR" = (
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/radio/headset/multifreq,
+/obj/storage/crate{
+	desc = "Only distantly related to the Adventure Closet.";
+	name = "Adventure Crate"
+	},
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/reagent_containers/food/drinks/milk,
+/obj/item/reagent_containers/food/snacks/sandwich/pb,
+/obj/item/paper{
+	desc = "Aw dang, mooom";
+	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
+	name = "note from mom"
+	},
+/obj/item/paper/book/critter_compendium,
+/obj/machinery/light{
+	layer = 3
+	},
+/turf/simulated/floor/purplewhite,
+/area/station/science/teleporter)
+"YM" = (
+/obj/table/auto,
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/item/card_box/plain,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 
 (1,1,1) = {"
 aa
@@ -57061,7 +57061,7 @@ qo
 Ak
 uE
 Av
-AF
+XR
 pG
 as
 Bk
@@ -61873,7 +61873,7 @@ wU
 fU
 gy
 Ee
-wX
+YM
 ie
 ie
 EM
@@ -71539,7 +71539,7 @@ aa
 aa
 aL
 aL
-iF
+Xp
 gN
 kv
 lt

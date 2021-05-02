@@ -118,7 +118,7 @@
 		if (!src.open)
 			src.visible_message("[user] tries to put [W] into [src], but [src]'s door is closed, so [he_or_she(user)] just smooshes [W] against the door.[prob(40) ? " What a doofus!" : null]")
 			return
-		else if (!istype(W, /obj/item/clothing) && W.w_class > 5)
+		else if (!istype(W, /obj/item/clothing) && W.w_class > W_CLASS_HUGE)
 			src.visible_message("[user] tries [his_or_her(user)] best to put [W] into [src], but [W] is too big to fit!")
 			return
 		else if (src.contents.len >= src.load_max)

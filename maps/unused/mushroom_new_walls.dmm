@@ -3543,15 +3543,6 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/south,
 /area/station/engine/engineering/ce)
-"aoH" = (
-/obj/storage/crate/rcd/CE,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/turf/simulated/floor/carpet/green/fancy/edge/sw,
-/area/station/engine/engineering/ce)
 "aoJ" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
@@ -15494,11 +15485,6 @@
 /obj/item/item_box/assorted/stickers/stickers_limited,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
-"bfX" = (
-/obj/table/auto,
-/obj/item/camera_test,
-/turf/simulated/floor/grime,
-/area/station/storage/warehouse)
 "bfY" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -20323,6 +20309,20 @@
 /obj/machinery/manufacturer/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
+"cyH" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/item/card_box/plain,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "carpet2";
+	tag = "icon-carpet2 (WEST)"
+	},
+/area/station/crew_quarters/cafeteria)
 "cyN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -22286,6 +22286,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"fqs" = (
+/obj/storage/crate/rcd/CE,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/carpet/green/fancy/edge/sw,
+/area/station/engine/engineering/ce)
 "fqw" = (
 /obj/stool/bed/brig,
 /obj/machinery/light/small,
@@ -24371,6 +24380,13 @@
 	dir = 4
 	},
 /area/station/crew_quarters/courtroom)
+"idz" = (
+/obj/rack,
+/obj/item/camera,
+/obj/item/camera,
+/obj/item/item_box/assorted/stickers/stickers_limited,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/quarters)
 "iee" = (
 /obj/health_scanner/floor{
 	dir = 4;
@@ -26176,6 +26192,21 @@
 	},
 /turf/space,
 /area/station/engine/proto)
+"kja" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/radio/headset/multifreq,
+/obj/item/camera,
+/turf/simulated/floor/purple/side{
+	dir = 6
+	},
+/area/station/science/teleporter)
 "kjS" = (
 /obj/landmark/start{
 	name = "predator"
@@ -26933,20 +26964,6 @@
 /obj/disposalpipe/junction/right/west,
 /turf/simulated/floor,
 /area/station/security/brig)
-"lkF" = (
-/obj/table/wood/auto,
-/obj/machinery/recharger{
-	pixel_y = 3
-	},
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/camera_test,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/blue,
-/area/station/crew_quarters/captain)
 "lkN" = (
 /turf/simulated/floor/bluewhite{
 	dir = 4
@@ -27149,6 +27166,20 @@
 	},
 /turf/simulated/floor/caution/south,
 /area/station/science/artifact)
+"lyg" = (
+/obj/table/wood/auto,
+/obj/machinery/recharger{
+	pixel_y = 3
+	},
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/camera,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/blue,
+/area/station/crew_quarters/captain)
 "lyL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -29003,6 +29034,18 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/detectives_office)
+"nWp" = (
+/obj/item/device/camera_viewer{
+	network = "Zeta"
+	},
+/obj/item/device/camera_viewer{
+	network = "Zeta"
+	},
+/obj/item/camera,
+/obj/item/camera,
+/obj/storage/crate,
+/turf/simulated/floor/purple,
+/area/station/science/teleporter)
 "nYh" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 10;
@@ -29867,17 +29910,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
-"oWn" = (
-/obj/table/wood/auto,
-/obj/item/camera_test{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
-/turf/simulated/floor{
-	icon_state = "carpetS"
-	},
-/area/station/security/detectives_office)
 "oWq" = (
 /obj/window/reinforced{
 	dir = 8;
@@ -32756,13 +32788,6 @@
 /obj/item/clothing/suit/jacket/yellow,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters)
-"sge" = (
-/obj/rack,
-/obj/item/camera_test,
-/obj/item/camera_test,
-/obj/item/item_box/assorted/stickers/stickers_limited,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/quarters)
 "sgi" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -33069,6 +33094,11 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"szu" = (
+/obj/table/auto,
+/obj/item/camera,
+/turf/simulated/floor/grime,
+/area/station/storage/warehouse)
 "szI" = (
 /obj/shrub,
 /turf/simulated/floor/purplewhite{
@@ -35581,6 +35611,17 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/proto)
+"vgS" = (
+/obj/table/wood/auto,
+/obj/item/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "detectives camera";
+	pictures_left = 30
+	},
+/turf/simulated/floor{
+	icon_state = "carpetS"
+	},
+/area/station/security/detectives_office)
 "vhm" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -35700,20 +35741,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
-"vqc" = (
-/obj/table/reinforced/bar/auto,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/item/card_box/plain,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "carpet2";
-	tag = "icon-carpet2 (WEST)"
-	},
-/area/station/crew_quarters/cafeteria)
 "vqf" = (
 /obj/stool/bar,
 /turf/simulated/floor{
@@ -36649,21 +36676,6 @@
 	},
 /turf/simulated/floor,
 /area/station/science/teleporter)
-"wuc" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/camera_test,
-/turf/simulated/floor/purple/side{
-	dir = 4
-	},
-/area/station/science/teleporter)
 "wuu" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/south)
@@ -37448,18 +37460,6 @@
 /obj/lrteleporter,
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
-"xrH" = (
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
-/obj/item/camera_test,
-/obj/item/camera_test,
-/obj/storage/crate,
-/turf/simulated/floor/purple,
-/area/station/science/teleporter)
 "xrU" = (
 /obj/critter/owl{
 	desc = "His name is Carl.";
@@ -37564,21 +37564,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
-"xvY" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/camera_test,
-/turf/simulated/floor/purple/side{
-	dir = 6
-	},
-/area/station/science/teleporter)
 "xwY" = (
 /obj/landmark/magnet_shield,
 /obj/securearea{
@@ -37967,6 +37952,21 @@
 	dir = 5
 	},
 /area/station/security/main)
+"xUF" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/radio/headset/multifreq,
+/obj/item/camera,
+/turf/simulated/floor/purple/side{
+	dir = 4
+	},
+/area/station/science/teleporter)
 "xUH" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4;
@@ -70127,7 +70127,7 @@ aaB
 axj
 axk
 ubp
-vqc
+cyH
 ayL
 wUa
 yio
@@ -74336,7 +74336,7 @@ axT
 axT
 wIC
 aof
-aoH
+fqs
 wIC
 wIC
 aaa
@@ -81349,7 +81349,7 @@ wHm
 dle
 sMW
 xyV
-lkF
+lyg
 iZy
 aaB
 aaa
@@ -81902,7 +81902,7 @@ iFD
 pdJ
 rzV
 rzV
-sge
+idz
 tfa
 btY
 vAr
@@ -84595,7 +84595,7 @@ aXa
 bdc
 bec
 beU
-bfX
+szu
 bhi
 bix
 bjh
@@ -86442,7 +86442,7 @@ vJu
 oPh
 ohr
 vtr
-oWn
+vgS
 cqe
 vfi
 xUu
@@ -90061,7 +90061,7 @@ aaa
 aaa
 aaa
 uCl
-xrH
+nWp
 lPm
 lny
 wRm
@@ -91570,8 +91570,8 @@ sJf
 gIf
 uJa
 vHh
-wuc
-xvY
+xUF
+kja
 ijN
 eRv
 bik

@@ -15,7 +15,7 @@
 	item_state = "brain"
 	flags = TABLEPASS
 	force = 1.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 1.0
 	throw_speed = 3
 	throw_range = 5

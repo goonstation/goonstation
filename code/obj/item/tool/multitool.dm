@@ -7,7 +7,7 @@
 
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	tool_flags = TOOL_PULSING
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	force = 5.0
 	throwforce = 5.0

@@ -139,7 +139,7 @@
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/color/orange, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc, slot_w_uniform)
 			src.equip_new_if_possible(/obj/item/clothing/head/beret/prisoner, slot_head)
 			if(prob(80)) // couldnt figure out how to hide it in the debris field, so i just chucked it in a monkey
 				var/obj/item/disk/data/cartridge/ringtone_numbers/idk = new
