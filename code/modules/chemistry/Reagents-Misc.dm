@@ -183,7 +183,7 @@ datum
 
 			physical_shock(var/force)
 				if (volume <= holder.total_volume/4) //be somewhat stable to shock if prepared like bang snaps
-					if (prob(max(0,force-12)*12) //safe to run with, but not sprint. 24% chance to pop on your face when thrown
+					if (prob(max(0,force-12)*12)) //safe to run with, but not sprint. 24% chance to pop on your face when thrown
 						explode()
 				else
 					if (prob(force*5))
