@@ -485,7 +485,7 @@
 /area/wrecknsspolaris)
 "bI" = (
 /obj/table/wood/auto,
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/unsimulated/floor/carpet/arcade,
 /area/wrecknsspolaris)
 "bJ" = (

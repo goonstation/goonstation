@@ -1446,7 +1446,7 @@
 					ReplaceWithEngineFloor()
 
 					if (C)
-						C:amount -= 2
+						C.change_stack_amount(-2)
 						if (C:amount <= 0)
 							qdel(C) //wtf
 

@@ -164,7 +164,10 @@ MATERIAL
 			else
 				if(!user.is_in_hands(src))
 					user.put_in_hand(src)
-				boutput(user, "<span class='notice'>You add [S] to the stack. It now has [S.amount] sheets.</span>")
+				if(isrobot(user))
+					boutput(user, "<span class='notice'>You add [success] sheets to the stack. It now has [S.amount] sheets.</span>")
+				else
+					boutput(user, "<span class='notice'>You add [success] sheets to the stack. It now has [src.amount] sheets.</span>")
 			return
 
 		else if (istype(W,/obj/item/rods))
@@ -733,7 +736,10 @@ MATERIAL
 			else
 				if(!user.is_in_hands(src))
 					user.put_in_hand(src)
-				boutput(user, "<span class='notice'>You add [success] rods to the stack. It now has [src.amount] rods.</span>")
+				if(isrobot(user))
+					boutput(user, "<span class='notice'>You add [success] rods to the stack. It now has [W.amount] rods.</span>")
+				else
+					boutput(user, "<span class='notice'>You add [success] rods to the stack. It now has [src.amount] rods.</span>")
 			return
 
 		if (istype(W, /obj/item/organ/head))
@@ -974,9 +980,9 @@ MATERIAL
 		..()
 		src.pixel_x = rand(0, 14)
 		src.pixel_y = rand(0, 14)
-		src.inventory_counter.update_number(amount)
 		SPAWN_DBG(0)
 			update_stack_appearance()
+			src.inventory_counter.update_number(amount)
 		return
 
 	check_valid_stack(atom/movable/O as obj)
@@ -1056,7 +1062,10 @@ MATERIAL
 			return
 		if(!user.is_in_hands(src))
 			user.put_in_hand(src)
-		boutput(user, "<span class='notice'>You add [success] tiles to the stack. It now has [src.amount] tiles.</span>")
+		if(isrobot(user))
+			boutput(user, "<span class='notice'>You add [success] tiles to the stack. It now has [W.amount] tiles.</span>")
+		else
+			boutput(user, "<span class='notice'>You add [success] tiles to the stack. It now has [src.amount] tiles.</span>")
 		tooltip_rebuild = 1
 		if (!W.pooled)
 			W.add_fingerprint(user)

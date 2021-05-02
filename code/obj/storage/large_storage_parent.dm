@@ -281,7 +281,7 @@
 					break
 
 		if (no_go) // no more scooting around walls and doors okay
-			if(!skip_penalty & istype(L))
+			if(!skip_penalty && istype(L))
 				L.visible_message("<span class='alert'><b>[L]</b> scoots around [src], right into [no_go]!</span>",\
 				"<span class='alert'>You scoot around [src], right into [no_go]!</span>")
 				if (!L.hasStatus("weakened"))

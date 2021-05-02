@@ -98,6 +98,8 @@ var/datum/respawn_controls/respawn_controller
 
 	var/due_for_respawn
 
+	var/respawn_time_modifier = 1
+
 	var/datum/respawn_controls/master
 
 
@@ -115,6 +117,9 @@ var/datum/respawn_controls/respawn_controller
 		// Get a reference to the client - this way we would know if they have disconnected or not
 		src.the_client = src.player?.client
 
+		if(src.the_client?.mob.suiciding)
+			src.respawn_time_modifier *= 2
+
 		src.update_time_display()
 
 	proc/update_time_display()
@@ -122,7 +127,7 @@ var/datum/respawn_controls/respawn_controller
 			return
 		if(isnull(the_client))
 			the_client = src.player?.client
-		var/time_left = master.respawn_time - (TIME - src.died_time)
+		var/time_left = master.respawn_time * respawn_time_modifier - (TIME - src.died_time)
 		var/mob/dead/observer/observer
 		if(istype(the_client?.mob, /mob/dead/observer))
 			observer = the_client.mob
@@ -137,7 +142,7 @@ var/datum/respawn_controls/respawn_controller
 
 	proc/checkValid()
 		// Time check (short-circuit saves some steps)
-		if(due_for_respawn || src.died_time + master.respawn_time <= TIME)
+		if(due_for_respawn || src.died_time + master.respawn_time * respawn_time_modifier <= TIME)
 			due_for_respawn = 1
 
 			// Try to get a valid client reference
@@ -198,7 +203,14 @@ var/datum/respawn_controls/respawn_controller
 		maptext = {"<span class='pixel c ol' style='font-size:16px;'><a style='color:#8f8;text-decoration:underline;' href='byond://winset?command=Respawn-As-New-Character'>Click here to respawn[rp?" as a <b>new</b> character":""]!</a></span>"}
 
 	proc/set_time_left(time)
-		maptext = {"<span class='pixel c ol' style='font-size:16px;'>Respawn in <span style='color:#f88;'>[time2text(time, "hh:mm:ss", 0)]</span></span>"}
+		var/time_text
+		if(time <= 75 SECONDS)
+			time_text = "<span style='color:#f88;'>[ceil(time / (1 SECOND))]</span> seconds"
+		else if(time <= 60 MINUTES)
+			time_text = "<span style='color:#f88;'>[ceil(time / (1 MINUTE))]</span> minutes"
+		else
+			time_text = "<span style='color:#f88;'>[time2text(time, "hh:mm:ss", 0)]</span>"
+		maptext = {"<span class='pixel c ol' style='font-size:16px;'>Respawn in [time_text]</span>"}
 
 #undef RESPAWNEE_STATE_WAITING
 #undef RESPAWNEE_STATE_ELIGIBLE
