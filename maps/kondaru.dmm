@@ -11232,7 +11232,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Detective's Office persistent notice board";
-	persistent_id = detective's office;
+	persistent_id = detectives office;
 	pixel_x = -32;
 	pixel_y = 2
 	},

@@ -37143,7 +37143,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Detective's Office persistent notice board";
-	persistent_id = detective's office
+	persistent_id = detectives office
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
