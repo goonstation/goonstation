@@ -4,7 +4,7 @@
 
 	name = "disposal pipe segment"
 	desc = "A huge pipe segment used for constructing disposal systems."
-	icon = 'icons/obj/disposal.dmi'
+	icon = 'icons/obj/machinery/disposal.dmi'
 	icon_state = "conpipe-s"
 	anchored = 0
 	density = 0

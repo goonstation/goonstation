@@ -463,7 +463,7 @@ MATERIAL
 					a_type = /obj/computerframe
 					a_amount = 1
 					a_cost = 5
-					a_icon = 'icons/obj/computer_frame.dmi'
+					a_icon = 'icons/obj/machinery/computer_frame.dmi'
 					a_icon_state = "0"
 					a_name = "a console frame"
 
@@ -472,7 +472,7 @@ MATERIAL
 					a_type = /obj/computer3frame
 					a_amount = 1
 					a_cost = 5
-					a_icon = 'icons/obj/computer_frame.dmi'
+					a_icon = 'icons/obj/machinery/computer_frame.dmi'
 					a_icon_state = "0"
 					a_name = "a computer frame"
 
@@ -481,7 +481,7 @@ MATERIAL
 					a_type = /obj/computer3frame/terminal
 					a_amount = 1
 					a_cost = 3
-					a_icon = 'icons/obj/terminal_frame.dmi'
+					a_icon = 'icons/obj/machinery/terminal_frame.dmi'
 					a_icon_state = "0"
 					a_name = "a terminal frame"
 

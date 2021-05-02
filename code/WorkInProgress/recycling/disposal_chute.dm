@@ -12,7 +12,7 @@
 /obj/machinery/disposal
 	name = "disposal unit"
 	desc = "A pneumatic waste disposal unit."
-	icon = 'icons/obj/disposal.dmi'
+	icon = 'icons/obj/machinery/disposal.dmi'
 	icon_state = "disposal"
 	anchored = 1
 	density = 1
@@ -360,9 +360,9 @@
 		UpdateOverlays(I, "status", 0, 1)
 		/*
 		if(mode == 1)
-			overlays += image('icons/obj/disposal.dmi', "dispover-charge")
+			overlays += image('icons/obj/machinery/disposal.dmi', "dispover-charge")
 		else if(mode == 2)
-			overlays += image('icons/obj/disposal.dmi', "dispover-ready")
+			overlays += image('icons/obj/machinery/disposal.dmi', "dispover-ready")
 		*/
 	// timed process
 	// charge the gas reservoir and perform flush if ready
@@ -620,7 +620,7 @@
 
 /obj/machinery/disposal/transport
 	name = "transportation unit"
-	icon = 'icons/obj/disposal.dmi'
+	icon = 'icons/obj/machinery/disposal.dmi'
 	icon_state = "scichute"
 	desc = "A pneumatic delivery chute for transporting people. Ever see Futurama? It's like that."
 	icon_style = "sci"

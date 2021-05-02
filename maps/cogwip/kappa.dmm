@@ -938,7 +938,7 @@
 "sb" = (/obj/decal/fakeobjects/shuttleengine{icon_state = "alt_heater"; dir = 4},/turf/space,/area/space)
 "sc" = (/obj/disposalpipe/segment/mineral,/turf/simulated/floor/longtile/black,/area/space)
 "sd" = (/obj/window/cubicle{dir = 4},/turf/simulated/wall/auto/marsoutpost{icon = 'icons/turf/walls.dmi'; icon_state = "mars-reinf"},/area/space)
-"se" = (/obj/table/auto,/obj/window/cubicle{icon_state = "cubicle"; dir = 1},/obj/decal/fakeobjects{anchored = 1; desc = "The power cord seems to have been completely ripped off."; icon = 'icons/obj/computer_frame_desk.dmi'; icon_state = "1"; name = "broken computer"; pixel_y = 7},/turf/simulated/floor/grey,/area/space)
+"se" = (/obj/table/auto,/obj/window/cubicle{icon_state = "cubicle"; dir = 1},/obj/decal/fakeobjects{anchored = 1; desc = "The power cord seems to have been completely ripped off."; icon = 'icons/obj/machinery/computer_frame_desk.dmi'; icon_state = "1"; name = "broken computer"; pixel_y = 7},/turf/simulated/floor/grey,/area/space)
 "sf" = (/obj/table/auto,/obj/window/cubicle{icon_state = "cubicle"; dir = 1},/turf/simulated/floor/grey,/area/space)
 "sg" = (/obj/decal/fakeobjects/vacuumtape,/turf/simulated/floor/grey,/area/space)
 "sh" = (/obj/stool/chair/office/blue{dir = 4; icon_state = "office_chair_blue"; pixel_x = 0; pixel_y = 6; tag = "icon-office_chair_blue (EAST)"},/turf/simulated/floor/grey,/area/space)

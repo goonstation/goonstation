@@ -649,7 +649,7 @@
 	name = "altar"
 	desc = "TEMP"
 	icon_state = "altar"
-	icon = 'icons/obj/64x96.dmi'
+	icon = 'icons/obj/large/64x96.dmi'
 	density = 1
 	anchored = 1
 
@@ -970,7 +970,7 @@
 /obj/decal/fakeobjects/mantacontainer
 	name = "container"
 	desc = "These huge containers are used to transport goods from one place to another."
-	icon = 'icons/obj/64x96.dmi'
+	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "manta"
 	anchored = 2
 	density = 1

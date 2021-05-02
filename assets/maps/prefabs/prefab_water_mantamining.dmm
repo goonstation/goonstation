@@ -9,7 +9,7 @@
 "ai" = (/obj/decal/fakeobjects/pipe{dir = 5},/turf/variableTurf/clear,/area/noGenerate)
 "aj" = (/obj/decal/fakeobjects/pipe{dir = 5},/obj/decal/fakeobjects/pipe{dir = 4; tag = "icon-intact-f (EAST)"},/turf/variableTurf/clear,/area/noGenerate)
 "ak" = (/obj/decal/fakeobjects/pipe{dir = 9},/obj/decal/fakeobjects/pipe{dir = 4; tag = "icon-intact-f (EAST)"},/turf/variableTurf/clear,/area/noGenerate)
-"al" = (/obj/decal/fakeobjects/pipe{desc = ""; icon = 'icons/obj/disposal.dmi'; icon_state = "pipe-s"; name = "coolant pipe"},/turf/variableTurf/clear,/area/noGenerate)
+"al" = (/obj/decal/fakeobjects/pipe{desc = ""; icon = 'icons/obj/machinery/disposal.dmi'; icon_state = "pipe-s"; name = "coolant pipe"},/turf/variableTurf/clear,/area/noGenerate)
 "am" = (/obj/wingrille_spawn/auto/crystal,/turf/simulated/floor/plating,/area/prefab/tunnelsnake)
 "an" = (/turf/variableTurf/clear,/area/space)
 "ao" = (/obj/table/reinforced/auto,/obj/machinery/recharger,/turf/simulated/floor,/area/prefab/tunnelsnake)

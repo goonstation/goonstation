@@ -1,5 +1,5 @@
 obj/machinery/access_button
-	icon = 'icons/obj/airlock_machines.dmi'
+	icon = 'icons/obj/machinery/airlock_machines.dmi'
 	icon_state = "access_button_standby"
 	name = "Access Button"
 	desc = "A button for cycling airlocks."

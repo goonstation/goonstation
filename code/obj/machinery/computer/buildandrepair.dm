@@ -2,7 +2,7 @@
 	density = 1
 	anchored = 0
 	name = "Console-frame"
-	icon = 'icons/obj/computer_frame.dmi'
+	icon = 'icons/obj/machinery/computer_frame.dmi'
 	icon_state = "0"
 	var/state = 0
 	var/obj/item/circuitboard/circuit = null

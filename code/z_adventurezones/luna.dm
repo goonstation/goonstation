@@ -1175,7 +1175,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 #define REASON_UPDATETEXT	4
 obj/machinery/embedded_controller/radio/maintpanel
 	name = "maintenance access panel"
-	icon = 'icons/obj/airlock_machines.dmi'
+	icon = 'icons/obj/machinery/airlock_machines.dmi'
 	icon_state = "museum_control"
 	anchored = 1
 	density = 0

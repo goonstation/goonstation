@@ -3,7 +3,7 @@
 /obj/machinery/floorflusher
 	name = "\improper Floor Flusher"
 	desc = "It's totally not just a gigantic disposal chute!"
-	//icon = 'icons/obj/disposal.dmi'
+	//icon = 'icons/obj/machinery/disposal.dmi'
 	icon = 'icons/obj/delivery.dmi' // new icon
 	icon_state = "floorflush_c"
 	anchored = 1
