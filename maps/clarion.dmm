@@ -10937,7 +10937,7 @@
 /area/station/security/detectives_office)
 "atY" = (
 /obj/noticeboard/persistent{
-	persistent_id = detectives office
+	persistent_id = "detectives office"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -14992,7 +14992,7 @@
 	pixel_y = 21
 	},
 /obj/noticeboard/persistent{
-	persistent_id = bar
+	persistent_id = "bar"
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
@@ -18885,7 +18885,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Chapel persistent notice board";
-	persistent_id = chapel
+	persistent_id = "chapel"
 	},
 /turf/simulated/floor/black/side{
 	dir = 1
@@ -19258,7 +19258,7 @@
 	pixel_y = 32
 	},
 /obj/noticeboard/persistent{
-	persistent_id = research coffee room;
+	persistent_id = "research coffee room";
 	pixel_x = 16
 	},
 /turf/simulated/floor/purple/side{
@@ -24476,7 +24476,7 @@
 	pixel_y = 21
 	},
 /obj/noticeboard/persistent{
-	persistent_id = security main;
+	persistent_id = "security main";
 	pixel_y = 32
 	},
 /turf/simulated/floor/red/side{
@@ -34050,7 +34050,7 @@
 	},
 /obj/machinery/rkit,
 /obj/noticeboard/persistent{
-	persistent_id = mechanics workshop
+	persistent_id = "mechanics workshop"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -34307,7 +34307,7 @@
 	},
 /obj/reagent_dispensers/fueltank,
 /obj/noticeboard/persistent{
-	persistent_id = engineering
+	persistent_id = "engineering"
 	},
 /turf/simulated/floor/white,
 /area/station/engine/engineering)
@@ -38739,7 +38739,7 @@
 /obj/tug_cart,
 /obj/vehicle/tug,
 /obj/noticeboard/persistent{
-	persistent_id = cargo
+	persistent_id = "cargo"
 	},
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/storage)

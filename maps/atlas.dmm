@@ -558,7 +558,7 @@
 /obj/machinery/computer/secure_data/detective_computer,
 /obj/noticeboard/persistent{
 	name = "Detective's Office persistent notice board";
-	persistent_id = detectives office;
+	persistent_id = "detectives office";
 	pixel_x = 32;
 	pixel_y = 2
 	},
@@ -2183,7 +2183,7 @@
 /obj/submachine/cargopad,
 /obj/noticeboard/persistent{
 	name = "Cargo persistent notice board";
-	persistent_id = cargo
+	persistent_id = "cargo"
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -3809,7 +3809,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Bar persistent notice board";
-	persistent_id = bar
+	persistent_id = "bar"
 	},
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -6061,7 +6061,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Brig persistent notice board";
-	persistent_id = brig;
+	persistent_id = "brig";
 	pixel_x = -32;
 	pixel_y = 2
 	},
@@ -6493,7 +6493,7 @@
 /obj/item/paper_bin,
 /obj/noticeboard/persistent{
 	name = "Main Medbay persistent notice board";
-	persistent_id = medbay main
+	persistent_id = "medbay main"
 	},
 /turf/simulated/floor/red,
 /area/station/security/secwing)
@@ -7184,7 +7184,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Botany persistent notice board";
-	persistent_id = botany;
+	persistent_id = "botany";
 	pixel_x = -32;
 	pixel_y = 2
 	},
@@ -11185,7 +11185,7 @@
 /obj/table/auto,
 /obj/noticeboard/persistent{
 	name = "Genetics persistent notice board";
-	persistent_id = genetics;
+	persistent_id = "genetics";
 	pixel_x = -32;
 	pixel_y = 2
 	},
@@ -12705,7 +12705,7 @@
 /obj/item/staple_gun,
 /obj/noticeboard/persistent{
 	name = "Robotics persistent notice board";
-	persistent_id = robotics;
+	persistent_id = "robotics";
 	pixel_x = 32;
 	pixel_y = 2
 	},
@@ -17097,7 +17097,7 @@
 /obj/stool/bench/blue/auto,
 /obj/noticeboard/persistent{
 	name = "Main Medbay persistent notice board";
-	persistent_id = medbay main
+	persistent_id = "medbay main"
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -18302,7 +18302,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Research persistent notice board";
-	persistent_id = research
+	persistent_id = "research"
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
@@ -18946,7 +18946,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Kitchen persistent notice board";
-	persistent_id = kitchen;
+	persistent_id = "kitchen";
 	pixel_x = 32;
 	pixel_y = 2
 	},

@@ -7280,7 +7280,7 @@
 "aqs" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/noticeboard/persistent{
-	persistent_id = chaplain office
+	persistent_id = "chaplain office"
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
@@ -12022,7 +12022,7 @@
 /obj/item/device/radio/intercom/catering,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /obj/noticeboard/persistent{
-	persistent_id = bar
+	persistent_id = "bar"
 	},
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -14196,7 +14196,7 @@
 	req_access_txt = "35"
 	},
 /obj/noticeboard/persistent{
-	persistent_id = botany
+	persistent_id = "botany"
 	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/lobby)
@@ -15191,7 +15191,7 @@
 /area/station/crew_quarters/garden)
 "aIm" = (
 /obj/noticeboard/persistent{
-	persistent_id = chapel
+	persistent_id = "chapel"
 	},
 /turf/simulated/floor/green/side{
 	dir = 1
@@ -19697,7 +19697,7 @@
 /area/station/crew_quarters/arcade)
 "aTr" = (
 /obj/noticeboard/persistent{
-	persistent_id = ranch;
+	persistent_id = "ranch";
 	pixel_x = -32
 	},
 /turf/simulated/floor/green/side{
@@ -21274,7 +21274,7 @@
 	pixel_y = 3
 	},
 /obj/noticeboard/persistent{
-	persistent_id = crew quarters;
+	persistent_id = "crew quarters";
 	pixel_y = 32
 	},
 /turf/simulated/floor{
@@ -30943,7 +30943,7 @@
 	tag = ""
 	},
 /obj/noticeboard/persistent{
-	persistent_id = engineering
+	persistent_id = "engineering"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
@@ -36234,7 +36234,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/noticeboard/persistent{
-	persistent_id = security main;
+	persistent_id = "security main";
 	pixel_y = 32
 	},
 /turf/simulated/floor/red/side{
@@ -38404,7 +38404,7 @@
 	dir = 4
 	},
 /obj/noticeboard/persistent{
-	persistent_id = security foyer;
+	persistent_id = "security foyer";
 	pixel_y = 32
 	},
 /turf/simulated/floor/black,
@@ -38495,7 +38495,7 @@
 	pixel_y = -3
 	},
 /obj/noticeboard/persistent{
-	persistent_id = customs
+	persistent_id = "customs"
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/customs)
@@ -57071,7 +57071,7 @@
 	},
 /obj/landmark/halloween,
 /obj/noticeboard/persistent{
-	persistent_id = research coffee room;
+	persistent_id = "research coffee room";
 	pixel_y = 32
 	},
 /turf/simulated/floor/purple/side{
@@ -61114,7 +61114,7 @@
 /area/station/medical/medbay/lobby)
 "cDI" = (
 /obj/noticeboard/persistent{
-	persistent_id = robotics
+	persistent_id = "robotics"
 	},
 /turf/simulated/floor/blue/side{
 	dir = 1
@@ -61386,7 +61386,7 @@
 /obj/stool/chair,
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/noticeboard/persistent{
-	persistent_id = mechanics workshop
+	persistent_id = "mechanics workshop"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -68458,7 +68458,7 @@
 	name = "locker"
 	},
 /obj/noticeboard/persistent{
-	persistent_id = genetics
+	persistent_id = "genetics"
 	},
 /turf/simulated/floor/redwhite{
 	dir = 1

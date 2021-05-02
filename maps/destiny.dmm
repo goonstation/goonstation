@@ -6735,7 +6735,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Main Medbay persistent notice board";
-	persistent_id = medbay main
+	persistent_id = "medbay main"
 	},
 /turf/simulated/floor,
 /area/station/medical/medbay/lobby)
@@ -15139,7 +15139,7 @@
 /obj/storage/secure/closet/engineering/mining,
 /obj/noticeboard/persistent{
 	name = "Mining persistent notice board";
-	persistent_id = mining
+	persistent_id = "mining"
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
@@ -22489,7 +22489,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Mechanic's Workshop persistent notice board";
-	persistent_id = mechanics workshop
+	persistent_id = "mechanics workshop"
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
@@ -23387,7 +23387,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Research Break Room persistent notice board";
-	persistent_id = research coffee room
+	persistent_id = "research coffee room"
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
@@ -32145,7 +32145,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Customs persistent notice board";
-	persistent_id = customs
+	persistent_id = "customs"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
@@ -35676,7 +35676,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Bar persistent notice board";
-	persistent_id = bar;
+	persistent_id = "bar";
 	pixel_x = 32;
 	pixel_y = 2
 	},
@@ -36028,7 +36028,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Kitchen persistent notice board";
-	persistent_id = kitchen
+	persistent_id = "kitchen"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -37143,7 +37143,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Detective's Office persistent notice board";
-	persistent_id = detectives office
+	persistent_id = "detectives office"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -47790,7 +47790,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Chapel persistent notice board";
-	persistent_id = chapel
+	persistent_id = "chapel"
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
@@ -48981,7 +48981,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Research persistent notice board";
-	persistent_id = research
+	persistent_id = "research"
 	},
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 1
@@ -56811,7 +56811,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Cargo persistent notice board";
-	persistent_id = cargo
+	persistent_id = "cargo"
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
@@ -59048,7 +59048,7 @@
 /obj/storage/crate/furnacefuel,
 /obj/noticeboard/persistent{
 	name = "Engineering persistent notice board";
-	persistent_id = engineering
+	persistent_id = "engineering"
 	},
 /turf/simulated/floor,
 /area/station/engine/gas)

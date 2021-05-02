@@ -12292,7 +12292,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Crew Quarters persistent notice board";
-	persistent_id = crew quarters
+	persistent_id = "crew quarters"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge)
@@ -12689,8 +12689,7 @@
 "aDM" = (
 /obj/noticeboard/persistent{
 	name = "Research Break Room persistent notice board";
-	persistent_id = research coffee room
-	},
+	persistent_id = "research coffee room"
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
 "aDN" = (
@@ -18683,7 +18682,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Brig persistent notice board";
-	persistent_id = brig
+	persistent_id = "brig"
 	},
 /turf/simulated/floor,
 /area/station/security/processing)
@@ -18855,7 +18854,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Main Security persistent notice board";
-	persistent_id = security main
+	persistent_id = "security main"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -19064,7 +19063,7 @@
 /obj/item/device/radio/intercom/engineering,
 /obj/noticeboard/persistent{
 	name = "Engineering persistent notice board";
-	persistent_id = engineering
+	persistent_id = "engineering"
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
@@ -24997,7 +24996,7 @@
 "bjO" = (
 /obj/noticeboard/persistent{
 	name = "Bar persistent notice board";
-	persistent_id = bar
+	persistent_id = "bar"
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
 /area/station/crew_quarters/bar)
@@ -28172,7 +28171,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Mechanic's Workshop persistent notice board";
-	persistent_id = mechanics workshop
+	persistent_id = "mechanics workshop"
 	},
 /turf/simulated/floor,
 /area/station/hangar/main)
@@ -33312,7 +33311,7 @@
 /obj/machinery/cashreg,
 /obj/noticeboard/persistent{
 	name = "Customs persistent notice board";
-	persistent_id = customs
+	persistent_id = "customs"
 	},
 /turf/simulated/floor/carpet{
 	dir = 4;
@@ -43751,7 +43750,7 @@
 /obj/machinery/light/incandescent/netural,
 /obj/noticeboard/persistent{
 	name = "Main Medbay persistent notice board";
-	persistent_id = medbay main
+	persistent_id = "medbay main"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
@@ -46142,7 +46141,7 @@
 "cCr" = (
 /obj/noticeboard/persistent{
 	name = "Detective's Office persistent notice board";
-	persistent_id = detectives office
+	persistent_id = "detectives office"
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
@@ -46245,7 +46244,7 @@
 "dvH" = (
 /obj/noticeboard/persistent{
 	name = "Chapel persistent notice board";
-	persistent_id = chapel
+	persistent_id = "chapel"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
@@ -46271,7 +46270,7 @@
 /obj/item/device/radio/intercom/cargo,
 /obj/noticeboard/persistent{
 	name = "Cargo persistent notice board";
-	persistent_id = cargo
+	persistent_id = "cargo"
 	},
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
@@ -47209,7 +47208,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Research persistent notice board";
-	persistent_id = research
+	persistent_id = "research"
 	},
 /turf/simulated/floor/black,
 /area/station/science/lobby)
@@ -48034,7 +48033,7 @@
 /obj/table/reinforced/auto,
 /obj/noticeboard/persistent{
 	name = "Market persistent notice board";
-	persistent_id = market
+	persistent_id = "market"
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
