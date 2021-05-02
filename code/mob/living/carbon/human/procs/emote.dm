@@ -2008,7 +2008,7 @@
 								src.limbs.r_arm.sever()
 								if(dab_id)
 									dab_id.arm_count++
-							src.emote("scream")
+							H.emote("scream")
 					if(!(istype(src.head, /obj/item/clothing/head/bighat/syndicate) || src.reagents.has_reagent("puredabs")))
 						src.take_brain_damage(10)
 						dab_id?.brain_damage_count += 10
