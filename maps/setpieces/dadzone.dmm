@@ -633,7 +633,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "server0";
 	name = "downed server"
 	},
@@ -716,7 +716,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "tapedrive-p";
 	name = "broken databank"
 	},
@@ -727,7 +727,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "tapedrive-p";
 	name = "broken databank"
 	},
@@ -1191,7 +1191,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "It's some sort of teleporter part.  In all likelihood.  It might just be an industrial arcade cabinet.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "pathmanip-p";
 	name = "strange machine"
 	},
@@ -1205,7 +1205,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This particular gizmo relates to teleportation in some way.  Alternatively, it might mix drinks.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "generic-p";
 	name = "strange machine"
 	},

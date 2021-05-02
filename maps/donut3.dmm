@@ -26338,7 +26338,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "dwaine";
 	name = "old mainframe"
 	},
@@ -36728,7 +36728,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "dwaine";
 	name = "old mainframe"
 	},
@@ -37847,7 +37847,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "tapedrive-p";
 	name = "downed server"
 	},

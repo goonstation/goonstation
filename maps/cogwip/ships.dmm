@@ -775,7 +775,7 @@
 "pl" = (/obj/decal/fakeobjects/pipe{dir = 4},/obj/decal/cleanable/dirt,/turf/simulated/floor/shuttle{icon_state = "floor2"},/area/space)
 "pm" = (/obj/decal/cleanable/oil,/obj/decal/cleanable/dirt,/obj/machinery/optable,/obj/decal/skeleton{desc = "Gross."; icon = 'icons/mob/human.dmi'; icon_state = "husk_l"; name = "dessicated husk"},/obj/map/light/white,/turf/simulated/floor/airless/damaged2,/area/space)
 "pn" = (/obj/decal/cleanable/blood/splatter{icon_state = "floor3"},/turf/simulated/floor/airless/scorched,/area/space)
-"po" = (/obj/decal/fakeobjects/pipe{dir = 4},/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "A large rack of server modules.  It appears to be in a low-power idle state."; icon = 'icons/obj/networked.dmi'; icon_state = "server0"; name = "idle server"},/obj/decal/tile_edge/stripe/extra_big{dir = 10},/obj/machinery/light/small/cool/very{dir = 1; icon_state = "bulb1"},/turf/simulated/floor/plating,/area/space)
+"po" = (/obj/decal/fakeobjects/pipe{dir = 4},/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "A large rack of server modules.  It appears to be in a low-power idle state."; icon = 'icons/obj/machinery/networked.dmi'; icon_state = "server0"; name = "idle server"},/obj/decal/tile_edge/stripe/extra_big{dir = 10},/obj/machinery/light/small/cool/very{dir = 1; icon_state = "bulb1"},/turf/simulated/floor/plating,/area/space)
 "pp" = (/obj/table/reinforced/auto,/obj/machinery/recharger,/obj/machinery/light/small{dir = 8},/turf/simulated/floor/red/side{dir = 8},/area/space)
 "pq" = (/turf/simulated/floor/red/side{dir = 4},/area/space)
 "pr" = (/obj/decal/cleanable/machine_debris,/turf/simulated/floor/airless/damaged3,/area/space)

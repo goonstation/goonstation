@@ -6593,7 +6593,7 @@
 "cyk" = (/obj/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/plating/airless/asteroid/lighted,/area/listeningpost/power)
 "cyl" = (/turf/space,/turf/simulated/floor/airless/plating/damaged2,/area/space)
 "cym" = (/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating/airless/asteroid/lighted,/area/listeningpost/power)
-"cyn" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "A large rack of server modules.  It doesn't seem to be in service."; icon = 'icons/obj/networked.dmi'; icon_state = "server0"; name = "downed server"},/turf/simulated/floor/plating/airless/asteroid/lighted,/area/listeningpost/power)
+"cyn" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "A large rack of server modules.  It doesn't seem to be in service."; icon = 'icons/obj/machinery/networked.dmi'; icon_state = "server0"; name = "downed server"},/turf/simulated/floor/plating/airless/asteroid/lighted,/area/listeningpost/power)
 "cyo" = (/obj/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating/airless/asteroid/lighted,/area/listeningpost/power)
 "cyp" = (/obj/cable{icon_state = "6-8"},/turf/simulated/floor/plating/airless/asteroid/lighted,/area/listeningpost/power)
 "cyq" = (/obj/machinery/light/small{brightness = 2; dir = 4},/turf/simulated/floor/plating/airless/asteroid/lighted,/area/listeningpost/power)

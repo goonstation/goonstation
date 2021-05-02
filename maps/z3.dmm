@@ -6313,7 +6313,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "tapedrive-p";
 	name = "broken databank"
 	},
@@ -6979,7 +6979,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "tapedrive-p";
 	name = "broken databank"
 	},
@@ -7301,7 +7301,7 @@
 /obj/machinery/power/data_terminal,
 /obj/overlay{
 	desc = "This piece of equipment seems to be thoroughly burned, beaten up and it houses several bullet holes.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "net_radio";
 	name = "busted radio"
 	},
@@ -8365,7 +8365,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "It doesn't seem to be working yet.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "dwaine";
 	name = "inactive mainframe"
 	},
@@ -12383,7 +12383,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "server0";
 	name = "idle server"
 	},
@@ -17087,7 +17087,7 @@
 /obj/decal/fakeobjects{
 	density = 1;
 	desc = "You haven't seen any of these in a while! Shame that it's broken.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "printer-blink";
 	name = "broken fax machine"
 	},
@@ -17830,7 +17830,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "tapedrive-p";
 	name = "broken databank"
 	},
@@ -20052,7 +20052,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "tapedrive-p";
 	name = "broken databank"
 	},
@@ -23015,7 +23015,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "server0";
 	name = "downed server"
 	},
@@ -23189,7 +23189,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "server0";
 	name = "idle server"
 	},
@@ -23385,7 +23385,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "server0";
 	name = "idle server"
 	},

@@ -38,7 +38,7 @@
 "aM" = (/obj/decal/fakeobjects/pipe/heat{name = "power conduit"; desc = "An outdated method of power delivery."; icon_state = "intact"; dir = 6},/obj/decal/fakeobjects/teleport_pad{layer = 3},/obj/decal/cleanable/dirt,/turf/simulated/floor/caution/corner/misc{icon_state = "floor_hazard_corners"; dir = 6},/area/janitor_setpiece)
 "aN" = (/obj/decal/fakeobjects/pipe/heat{name = "power conduit"; desc = "An outdated method of power delivery."; icon_state = "intact"; dir = 9},/turf/simulated/floor/caution/corner/se,/area/janitor_setpiece)
 "aO" = (/obj/machinery/networked/storage/tape_drive{bank_id = "Control"; locked = 0; name = "Databank - Control"; read_only = 0; setup_drive_type = /obj/item/disk/data/tape/master},/turf/simulated/floor,/area/janitor_setpiece)
-"aP" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "A mainframe computer. It's pretty big! Should it be blue like that?"; icon = 'icons/obj/networked.dmi'; icon_state = "dwaineb"; name = "busted mainframe"},/turf/simulated/floor,/area/janitor_setpiece)
+"aP" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "A mainframe computer. It's pretty big! Should it be blue like that?"; icon = 'icons/obj/machinery/networked.dmi'; icon_state = "dwaineb"; name = "busted mainframe"},/turf/simulated/floor,/area/janitor_setpiece)
 "aQ" = (/obj/machinery/networked/teleconsole,/turf/simulated/floor,/area/janitor_setpiece)
 "aR" = (/obj/table/wood/auto/desk,/obj/deskclutter,/obj/item/paper/janitor_joblist,/turf/simulated/floor,/area/janitor_setpiece)
 "aS" = (/obj/table/wood/auto/desk,/obj/machinery/computer3/generic/personal,/turf/simulated/floor,/area/janitor_setpiece)

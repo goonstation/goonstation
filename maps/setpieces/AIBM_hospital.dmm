@@ -3035,7 +3035,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This particular geegaw is probably related to power control or fire systems or something.  It could also be a really elaborate light switch.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "generic-p";
 	name = "strange machine"
 	},
