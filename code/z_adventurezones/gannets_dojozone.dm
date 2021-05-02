@@ -288,7 +288,7 @@ Contents:
 
 /obj/decal/fakeobjects/bridge_rail
 	name = "railing"
-	icon = 'icons/obj/dojo_rail.dmi'
+	icon = 'icons/obj/adventurezones/dojo_rail.dmi'
 	layer = EFFECTS_LAYER_BASE
 
 /obj/decal/stage_edge/dojo
