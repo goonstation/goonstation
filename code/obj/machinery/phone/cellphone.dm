@@ -126,7 +126,7 @@
 
 /obj/item/machinery/phone/cellphone/bananaphone
 	name = "Banana Phone"
-	icon = 'icons/obj/machines/phones.dmi'
+	icon = 'icons/obj/machinery/phones.dmi'
 	desc = "A cellular, bananular phone."
 	icon_state = "bananaphone"
 	phoneicon = "bananaphone"
@@ -139,7 +139,7 @@
 	duration = 50
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "activate_cell_phone"
-	icon = 'icons/obj/machines/phones.dmi'
+	icon = 'icons/obj/machinery/phones.dmi'
 	icon_state = "cellphone"
 	var/obj/item/machinery/phone/cellphone/phone = null
 	var/registering_name = "Anonymous"

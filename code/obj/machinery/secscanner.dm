@@ -1,7 +1,7 @@
 /obj/machinery/secscanner
 	name = "security scanner"
 	desc = "The latest innovation in invasive imagery, the programmable NT-X100 will scan anyone who walks through it with fans to simulate being patted down. <em>Nanotrasen is not to be held responsible for any deaths caused by the results the machine gives, or the machine itself.</em>"
-	icon = 'icons/obj/machines/scanner.dmi'
+	icon = 'icons/obj/machinery/scanner.dmi'
 	icon_state = "scanner_on"
 	density = 0
 	opacity = 0
@@ -341,5 +341,5 @@
 /obj/machinery/fakesecscanner
 	name = "security scanner"
 	desc = "The latest innovation in invasive imagery, the programmable NT-X100 will scan anyone who walks through it with fans to simulate being patted down. <em>Nanotrasen is not to be held responsible for any deaths caused by the results the machine gives, or the machine itself. ... Is this one even working properly?</em>"
-	icon = 'icons/obj/machines/scanner.dmi'
+	icon = 'icons/obj/machinery/scanner.dmi'
 	icon_state = "scanner_on"

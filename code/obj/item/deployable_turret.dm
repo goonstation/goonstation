@@ -5,7 +5,7 @@
 /obj/item/turret_deployer
 	name = "NAS-T Deployer"
 	desc = "A Nuclear Agent Sentry Turret Deployer. Use it in your hand to deploy."
-	icon = 'icons/obj/syndieturret.dmi'
+	icon = 'icons/obj/machinery/syndieturret.dmi'
 	icon_state = "st_deployer"
 	force = 3.0
 	throwforce = 10.0
@@ -70,7 +70,7 @@
 
 	name = "NAS-T"
 	desc = "A Nuclear Agent Sentry Turret."
-	icon = 'icons/obj/syndieturret.dmi'
+	icon = 'icons/obj/machinery/syndieturret.dmi'
 	icon_state = "st_off"
 	anchored = 0
 	density = 1

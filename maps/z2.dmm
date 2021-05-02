@@ -22248,7 +22248,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "You have no idea what this does.";
-	icon = 'icons/obj/recycling.dmi';
+	icon = 'icons/obj/machinery/recycling.dmi';
 	icon_state = "grinder-o1";
 	name = "assembly machine"
 	},
@@ -22258,7 +22258,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "You have no idea what this does.";
-	icon = 'icons/obj/recycling.dmi';
+	icon = 'icons/obj/machinery/recycling.dmi';
 	icon_state = "grinder-b1";
 	name = "assembly machine"
 	},
@@ -22268,7 +22268,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "You have no idea what this does.";
-	icon = 'icons/obj/recycling.dmi';
+	icon = 'icons/obj/machinery/recycling.dmi';
 	icon_state = "separator-AO1";
 	name = "assembly machine"
 	},

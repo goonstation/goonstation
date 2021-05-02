@@ -1254,9 +1254,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	// would allow easy implementation of other weps such as weldrods
 	name = "slamgun"
 	desc = "A 12 gauge shotgun. Apparently. It's just two pipes stacked together."
-	icon = 'icons/obj/slamgun.dmi'
+	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "slamgun-ready"
-	inhand_image_icon = 'icons/obj/slamgun.dmi'
+	inhand_image_icon = 'icons/obj/items/gun.dmi'
 	item_state = "slamgun-ready-world"
 	force = MELEE_DMG_RIFLE
 	caliber = 0.72

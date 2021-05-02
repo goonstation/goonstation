@@ -1,6 +1,6 @@
 /obj/machinery/tripod
 	name = "tripod"
-	icon = 'icons/obj/tripod.dmi'
+	icon = 'icons/obj/machinery/tripod.dmi'
 	icon_state = "tripod"
 	density = 1
 	anchored = 1
@@ -43,7 +43,7 @@
 
 /obj/item/tripod
 	name = "folded tripod"
-	icon = 'icons/obj/tripod.dmi'
+	icon = 'icons/obj/machinery/tripod.dmi'
 	icon_state = "folded"
 
 	attack_self(mob/user)
@@ -55,7 +55,7 @@
 
 /obj/item/tripod_bulb // TODO: draw power from the tripod battery or w/e
 	name = "bulb"
-	icon = 'icons/obj/tripod.dmi'
+	icon = 'icons/obj/machinery/tripod.dmi'
 
 	proc
 		removed()

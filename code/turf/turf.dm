@@ -1184,7 +1184,7 @@
 
 /turf/unsimulated/null_hole
 	name = "expedition chute"
-	icon = 'icons/obj/delivery.dmi'
+	icon = 'icons/obj/machinery/delivery.dmi'
 	icon_state = "floorflush_o"
 
 	Enter(atom/movable/mover, atom/forget)

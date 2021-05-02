@@ -159,7 +159,7 @@
 /obj/item/toy/cellphone
 	name = "flip phone"
 	desc = "Wow! You've always wanted one of these charmingly clunky doodads!"
-	icon = 'icons/obj/cellphone.dmi'
+	icon = 'icons/obj/items/cellphone.dmi'
 	icon_state = "cellphone-on"
 	w_class = 2
 	var/datum/game/tetris

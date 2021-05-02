@@ -454,7 +454,7 @@
 	desc = "A bell used to signal the start of a wrestling match"
 	anchored = 1
 	density = 1
-	icon = 'icons/obj/wrestlingbell.dmi'
+	icon = 'icons/obj/items/items.dmi'
 	icon_state = "wrestlingbell"
 	deconstruct_flags = DECON_WRENCH
 	var/last_ring = 0

@@ -16,7 +16,7 @@
 /obj/machinery/weapon_stand
 	name = "weapon stand"
 	desc = "A stand which can hold a weapon. This one is a little generic looking."
-	icon = 'icons/obj/weapon_rack.dmi'
+	icon = 'icons/obj/machinery/weapon_rack.dmi'
 	icon_state = "swordstand1"
 	var/amount = 1
 	anchored = 1

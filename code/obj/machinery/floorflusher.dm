@@ -4,7 +4,7 @@
 	name = "\improper Floor Flusher"
 	desc = "It's totally not just a gigantic disposal chute!"
 	//icon = 'icons/obj/machinery/disposal.dmi'
-	icon = 'icons/obj/delivery.dmi' // new icon
+	icon = 'icons/obj/machinery/delivery.dmi' // new icon
 	icon_state = "floorflush_c"
 	anchored = 1
 	density = 0
@@ -318,7 +318,7 @@
 /obj/machinery/floorflusher/industrial
 	name = "industrial loading chute"
 	desc = "Totally just a giant disposal chute"
-	icon = 'icons/obj/delivery.dmi'
+	icon = 'icons/obj/machinery/delivery.dmi'
 	event_handler_flags = USE_HASENTERED
 
 	New()

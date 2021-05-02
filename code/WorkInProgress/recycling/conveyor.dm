@@ -4,7 +4,7 @@
 
 
 /obj/machinery/conveyor
-	icon = 'icons/obj/recycling.dmi'
+	icon = 'icons/obj/machinery/recycling.dmi'
 #ifndef IN_MAP_EDITOR
 	icon_state = "conveyor0"
 #else
@@ -276,7 +276,7 @@
 //
 //
 /obj/machinery/diverter
-	icon = 'icons/obj/recycling.dmi'
+	icon = 'icons/obj/machinery/recycling.dmi'
 	icon_state = "diverter0"
 	name = "diverter"
 	desc = "A diverter arm for a conveyor belt."
@@ -404,7 +404,7 @@
 
 	name = "conveyor switch"
 	desc = "A conveyor control switch."
-	icon = 'icons/obj/recycling.dmi'
+	icon = 'icons/obj/machinery/recycling.dmi'
 	icon_state = "switch-off"
 	var/position = 0			// 0 off, -1 reverse, 1 forward
 	var/last_pos = -1			// last direction setting
