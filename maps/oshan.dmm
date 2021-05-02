@@ -12690,6 +12690,7 @@
 /obj/noticeboard/persistent{
 	name = "Research Break Room persistent notice board";
 	persistent_id = "research coffee room"
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
 "aDN" = (
