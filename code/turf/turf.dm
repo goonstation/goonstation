@@ -759,6 +759,10 @@
 				W.update_icon()
 	return wall
 
+/turf/proc/is_sanctuary()
+  var/area/AR = src.loc
+  return AR.sanctuary
+
 ///turf/simulated/floor/Entered(atom/movable/A, atom/OL) //this used to run on every simulated turf (yes walls too!) -zewaka
 //	..()
 //moved step and slip functions into Carbon and Human files!

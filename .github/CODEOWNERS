@@ -25,6 +25,9 @@
 # Tarmunora
 /code/modules/projectiles/projectile_parent.dm @Tarmunora
 
+# Virvatuli
+/sound/ @virvatuli-gh
+
 # ZeWaka
 *.md @ZeWaka
 /.github/ @ZeWaka
