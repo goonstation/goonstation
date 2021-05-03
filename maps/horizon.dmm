@@ -33139,9 +33139,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
 /area/station/security/brig/genpop)
-"bCl" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/brig)
 "bCm" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -36007,7 +36004,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/white,
-/area/station/security/brig)
+/area/station/security/brig/genpop)
 "bJz" = (
 /obj/pool/perspective{
 	dir = 9;
@@ -38748,10 +38745,6 @@
 /obj/access_spawn/brig,
 /turf/simulated/floor/black,
 /area/station/security/brig/genpop)
-"bQU" = (
-/obj/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/plating/random,
-/area/station/security/brig)
 "bQW" = (
 /obj/cable{
 	icon_state = "5-8"
@@ -38762,10 +38755,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
-"bQX" = (
-/obj/disposalpipe/segment/brig,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/brig)
 "bQY" = (
 /obj/cable{
 	d1 = 1;
@@ -39960,7 +39949,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/white,
-/area/station/security/brig)
+/area/station/security/brig/genpop)
 "bTX" = (
 /obj/stool/bed/brig,
 /obj/item/clothing/suit/bedsheet/black,
@@ -41953,12 +41942,12 @@
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/junction/middle/east,
 /turf/simulated/floor/plating/random,
-/area/station/security/brig)
+/area/station/security/brig/genpop)
 "bYO" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/junction/middle/west,
 /turf/simulated/floor/plating/random,
-/area/station/security/brig)
+/area/station/security/brig/genpop)
 "bYP" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 8
@@ -42789,7 +42778,6 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/carpet/red/standard/edge/west,
 /area/station/security/main)
 "caw" = (
@@ -42884,7 +42872,7 @@
 	},
 /obj/access_spawn/brig,
 /turf/simulated/floor/black,
-/area/station/security/brig)
+/area/station/security/brig/genpop)
 "caM" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
 /obj/disposalpipe/trunk/brig{
@@ -42892,7 +42880,7 @@
 	},
 /obj/machinery/floorflusher/solitary,
 /turf/simulated/floor/white,
-/area/station/security/brig)
+/area/station/security/brig/genpop)
 "caO" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -55703,7 +55691,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/white,
-/area/station/security/brig)
+/area/station/security/brig/genpop)
 "hMF" = (
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -55953,13 +55941,6 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
-"iBh" = (
-/obj/table/reinforced/auto,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/turf/simulated/floor/white,
-/area/station/security/brig)
 "iBH" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -56243,7 +56224,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/white,
-/area/station/security/brig)
+/area/station/security/brig/genpop)
 "jqT" = (
 /obj/machinery/drainage,
 /obj/disposalpipe/segment/mineral{
@@ -56418,7 +56399,7 @@
 	dir = 8
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/brig)
+/area/station/security/brig/genpop)
 "jRF" = (
 /obj/cable{
 	d1 = 2;
@@ -56773,7 +56754,7 @@
 	},
 /obj/machinery/atmospherics/unary/vent_pump/west,
 /turf/simulated/floor/white,
-/area/station/security/brig)
+/area/station/security/brig/genpop)
 "kSB" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -56791,6 +56772,16 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"kTg" = (
+/obj/stool/bed/brig,
+/obj/item/clothing/suit/bedsheet/black,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/white,
+/area/station/security/brig/genpop)
 "kVM" = (
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor,
@@ -60107,7 +60098,7 @@
 /obj/disposalpipe/trunk/brig,
 /obj/machinery/floorflusher/solitary2,
 /turf/simulated/floor/white,
-/area/station/security/brig)
+/area/station/security/brig/genpop)
 "uFM" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -61237,7 +61228,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/white,
-/area/station/security/brig)
+/area/station/security/brig/genpop)
 "xVC" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -127657,13 +127648,13 @@ bFl
 bHW
 bOj
 tIo
-bQU
-bQU
+tIo
+tIo
 caL
-bCl
+vVg
 caL
-bCl
-bCl
+vVg
+vVg
 dEu
 cgk
 bBN
@@ -127959,13 +127950,13 @@ ndF
 bHW
 bKX
 bOj
-bCl
-iBh
+vVg
+ner
 uDC
 bYN
 caM
-iBh
-bCl
+ner
+vVg
 dEu
 cgl
 bBN
@@ -128261,13 +128252,13 @@ bFm
 bHX
 bKY
 bOk
-bQX
+pLK
 bTW
 jqA
 bYO
 hMv
 bJy
-bCl
+vVg
 dEu
 cFg
 bBN
@@ -128563,13 +128554,13 @@ ner
 pQc
 xfQ
 bOl
-bCl
+vVg
 bTX
 kRP
-bCl
+vVg
 xVi
-bTX
-bCl
+kTg
+vVg
 dEu
 cgl
 bBN
@@ -128865,13 +128856,13 @@ mtl
 vVg
 vVg
 vVg
-bCl
-bCl
-bCl
-bCl
+vVg
+vVg
+vVg
+vVg
 jPo
-bCl
-bCl
+vVg
+vVg
 dEu
 cFg
 chd
