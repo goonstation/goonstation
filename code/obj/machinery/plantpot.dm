@@ -1260,8 +1260,10 @@
 			// +10: if HP >= 400% w/ 30% chance
 			// Mutations can add or remove this, of course
 			// @TODO adjust this later, this is just to fix runtimes and make it slightly consistent
-			if (base_quality_score >= 1 && prob(10))
+			if (base_quality_score >= 1 && prob(30))
 				if (base_quality_score >= 11)
+					JOB_XP(user, "Botanist", 4)
+				else if (base_quality_score >= 6)
 					JOB_XP(user, "Botanist", 2)
 				else
 					JOB_XP(user, "Botanist", 1)
@@ -1542,7 +1544,7 @@ proc/HYPadd_harvest_reagents(var/obj/item/I,var/datum/plant/growing,var/datum/pl
 	if(putreagents.len && I.reagents.maximum_volume)
 		var/putamount = round(to_add / putreagents.len)
 		for(var/X in putreagents)
-			I.reagents.add_reagent(X,putamount,,, 1)
+			I?.reagents?.add_reagent(X,putamount,,, 1) // ?. runtime fix
 	// And finally put them in there. We figure out the max volume and add an even amount of
 	// all reagents into the item.
 

@@ -620,6 +620,22 @@
 		icon_state = "clown-dress"
 		item_state = "clown-dress"
 
+/obj/item/clothing/under/misc/mimefancy
+	name = "fancy mime suit"
+	desc = "A suit perfect for more sophisticated mimes. Wait... This isn't just a bleached clown suit, is it?"
+	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+	wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+	icon_state = "mime-fancy"
+	item_state = "mime-fancy"
+
+/obj/item/clothing/under/misc/mimedress
+	name = "mime dress"
+	desc = "You may be trapped in an invisible box forever and ever, but at least you look stylish!"
+	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+	wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+	icon_state = "mime-dress"
+	item_state = "mime-dress"
+
 /obj/item/clothing/under/misc/vice
 	name = "vice officer's suit"
 	desc = "This thing reeks of weed."
@@ -695,6 +711,7 @@
 		item_state = "lawyerR"
 
 /obj/item/clothing/under/misc/lawyer/red/demonic
+	item_function_flags = IMMUNE_TO_ACID
 	setupProperties()
 		..()
 		setProperty("coldprot", 40) //slightly worse than a spacesuit
@@ -1113,11 +1130,11 @@
 		item_state = "darkred"
 
 	blue
-		icon_state = "scrub-b"
+		icon_state = "scrub-n"
 		item_state = "darkblue"
 
 	purple
-		icon_state = "scrub-p"
+		icon_state = "scrub-v"
 		item_state = "lightpurple"
 
 		New()
@@ -1160,7 +1177,7 @@
 	item_state = "towel"
 	layer = MOB_LAYER
 	throwforce = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throw_speed = 2
 	throw_range = 10
 	body_parts_covered = TORSO

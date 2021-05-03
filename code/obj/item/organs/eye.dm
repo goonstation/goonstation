@@ -30,7 +30,7 @@
 	proc/update_icon()
 		if (!src.change_iris)
 			return
-		var/image/iris_image = image(src.icon, src, "eye-iris")
+		var/image/iris_image = image(src.icon, src, "[icon_state]-iris")
 		iris_image.color = "#0D84A8"
 		if (src.donor && src.donor.bioHolder && src.donor.bioHolder.mobAppearance) // good lord
 			var/datum/appearanceHolder/AH = src.donor.bioHolder.mobAppearance // I ain't gunna type that a billion times thanks
@@ -439,3 +439,22 @@
 				OA.eye_proj = /datum/projectile/laser/eyebeams/left
 		else // just us!
 			aholder.removeAbility(abil)
+
+/obj/item/organ/eye/lizard
+	name = "slit eye"
+	desc = "I guess its owner is just a lzard now. Ugh that pun was terrible. Not worth losing an eye over."
+	icon_state = "eye-lizard"
+
+obj/item/organ/eye/skeleton
+	name = "boney eye"
+	desc = "Yes it also has eye sockets. How this works is unknown."
+	icon_state = "eye-bone"
+	made_from = "bone" //duh
+	blood_reagent = "calcium"
+	change_iris = 0
+
+/obj/item/organ/eye/cow
+	name = "cow eye"
+	desc = "This takes 'hitting the bullseye' to another level."
+	icon_state = "eye-cow"
+	blood_reagent = "milk"

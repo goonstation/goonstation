@@ -1372,7 +1372,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "cokebag"
 	item_state = "chefhat" // lol
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 	attack(mob/target as mob)
 		if (istype(target, /mob/living/carbon/human/machoman))

@@ -2972,6 +2972,7 @@
 /area/mining/refinery)
 "aiF" = (
 /mob/living/critter/spider,
+/obj/item/storage/box/record/notaquario_mixtape1,
 /turf/simulated/floor/wood/two,
 /area/space)
 "aiG" = (
@@ -6750,6 +6751,10 @@
 /area/space)
 "asa" = (
 /obj/table/auto,
+/obj/item/radio_tape/advertisement/chemistry{
+	pixel_x = 8;
+	pixel_y = 4
+	},
 /obj/item/device/reagentscanner,
 /obj/item/storage/pill_bottle/cyberpunk,
 /turf/simulated/floor/plating/damaged1,
@@ -16917,13 +16922,6 @@
 /obj/item/staple_gun,
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
-"aRR" = (
-/obj/table/auto,
-/obj/item/camera_test{
-	pixel_y = 6
-	},
-/turf/simulated/floor/white/grime,
-/area/derelict_ai_sat)
 "aRS" = (
 /turf/simulated/floor/caution/north{
 	dir = 8
@@ -18477,6 +18475,10 @@
 /area/abandonedmedicalship/robot_trader)
 "aWa" = (
 /obj/table/auto,
+/obj/item/radio_tape/advertisement/robotics{
+	pixel_x = 8;
+	pixel_y = 7
+	},
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
@@ -25295,6 +25297,13 @@
 /obj/item/reagent_containers/food/snacks/breakfast,
 /turf/simulated/floor/caution/west,
 /area/mining/quarters)
+"lwM" = (
+/obj/table/auto,
+/obj/item/camera{
+	pixel_y = 6
+	},
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
 "qBE" = (
 /obj/lattice{
 	dir = 1;
@@ -25333,6 +25342,12 @@
 	},
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
+"uIh" = (
+/turf/simulated/wall/asteroid{
+	name = "weak compacted stone";
+	stone_color = "#575A5E"
+	},
+/area/space)
 "vrI" = (
 /obj/stool/chair,
 /turf/simulated/floor/black,
@@ -65120,7 +65135,7 @@ aQK
 aQZ
 aRp
 aRo
-aRR
+lwM
 aSl
 aRo
 aTc
@@ -78090,8 +78105,8 @@ aac
 aac
 aac
 aac
-aHr
-aHr
+uIh
+uIh
 aaa
 aaa
 aaa

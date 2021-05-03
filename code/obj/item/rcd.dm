@@ -49,7 +49,7 @@ Broken RCD + Effects
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	m_amt = 50000
 
 	mats = list("MET-3"=20, "DEN-3" = 10, "CON-2" = 10, "POW-2" = 10)
@@ -571,6 +571,7 @@ Broken RCD + Effects
 	name = "rapid construction device custom"
 	desc = "Also known as an RCD, this is capable of rapidly constructing walls, flooring, windows, and doors. This device was customized by the Chief Engineer to have an enhanced feature set and work more efficiently."
 	icon_state = "base_CE"
+	mats = list("MET-3"=20, "DEN-3" = 10, "CON-2" = 10, "POW-2" = 10)
 
 	max_matter = 50
 	matter_create_wall = 1
@@ -769,7 +770,7 @@ Broken RCD + Effects
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 
 //Broken RCDs.  Attempting to use them is...ill advised.
 /obj/item/broken_rcd
@@ -784,7 +785,7 @@ Broken RCD + Effects
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	m_amt = 50000
 	var/mode = 1
 	var/broken = 0 //Fully broken, that is.

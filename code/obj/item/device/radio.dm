@@ -17,9 +17,9 @@
 	var/obj/item/device/radio/patch_link = null
 	var/obj/item/uplink/integrated/radio/traitorradio = null
 	var/wires = WIRE_SIGNAL | WIRE_RECEIVE | WIRE_TRANSMIT
-	var/b_stat = 0.0
-	var/broadcasting = null
-	var/listening = 1.0
+	var/b_stat = 0
+	var/broadcasting = FALSE
+	var/listening = TRUE
 	var/list/secure_connections = null
 	var/datum/radio_frequency/radio_connection
 	var/speaker_range = 2
@@ -29,7 +29,7 @@
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 	throw_speed = 2
 	throw_range = 9
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	mats = 3
 
 	var/icon_override = 0
@@ -108,67 +108,63 @@ var/list/headset_channel_lookup
 	src.secure_frequencies["[frequencyToken]"] = newFrequency
 	return
 
-/obj/item/device/radio/attack_self(mob/user as mob)
-	src.add_dialog(user)
+/obj/item/device/radio/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Radio")
+		ui.open()
 
-	var/dat = {"
-Microphone: [src.broadcasting ? "<a href='?src=\ref[src];talk=0'>Engaged</a>" : "<a href='?src=\ref[src];talk=1'>Disengaged</a>"]
-<br>Speaker: [src.listening ? "<a href='?src=\ref[src];listen=0'>Engaged</a>" : "<a href='?src=\ref[src];listen=1'>Disengaged</a>"]
-<br>Frequency:
-[!src.locked_frequency ? "<a href='?src=\ref[src];freq=-10'>-</a> <a href='?src=\ref[src];freq=-2'>-</a> <a href='?src=\ref[src];freq=set'><strong>[format_frequency(src.frequency)]</strong></a> <a href='?src=\ref[src];freq=2'>+</a> <a href='?src=\ref[src];freq=10'>+</a>" : "</strong>[format_frequency(src.frequency)]</strong>"]
-"}
+/obj/item/device/radio/ui_state(mob/user)
+	return tgui_physical_state
 
+/obj/item/device/radio/ui_status(mob/user, datum/ui_state/state)
+	if (isAI(user))
+		. = UI_INTERACTIVE
+	else
+		. = min(
+			state.can_use_topic(src, user),
+			tgui_not_incapacitated_state.can_use_topic(src, user)
+		)
+
+/obj/item/device/radio/ui_data(mob/user)
+
+	var/list/frequencies = new/list(length(src.secure_frequencies))
 	if (istype(src.secure_frequencies) && length(src.secure_frequencies))
-		dat += "<hr>Supplementary Channels:<table style='border-collapse: collapse;' cellpadding='2'><tr><th>Channel</th><th>Freq</th><th>Prefix</th></tr>"
-		for (var/sayToken in src.secure_frequencies)
-			dat += {"<tr><td>[ headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] : "???" ]</td><td> <strong>[format_frequency(src.secure_frequencies["[sayToken]"])]</strong></td><td><code>[sayToken]</code></td></tr>
-"}
+		for(var/i in 1 to length(src.secure_frequencies))
+			var/sayToken = src.secure_frequencies[i]
+			frequencies[i] = list(
+				"channel" = headset_channel_lookup["[src.secure_frequencies[sayToken]]"] ? headset_channel_lookup["[src.secure_frequencies[sayToken]]"] : "???",
+				"frequency" = format_frequency(src.secure_frequencies[sayToken]),
+				"sayToken" = sayToken,
+			)
 
-		dat += "</table>"
+	. = list(
+		"name" = src.name,
+		"broadcasting" = src.broadcasting,
+		"listening" = src.listening,
+		"frequency" = src.frequency,
+		"lockedFrequency" = src.locked_frequency,
+		"secureFrequencies" = frequencies,
+		"wires" = src.wires,
+		"modifiable" = src.b_stat,
+	)
 
-	if (src.b_stat)
-		dat += {"
-<hr>
-Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRANSMIT ? "Cut" : "Mend"] Wire</a>
-<br>Red Wire: <a href='?src=\ref[src];wires=[WIRE_RECEIVE]'>[src.wires & WIRE_RECEIVE ? "Cut" : "Mend"] Wire</a>
-<br>Blue Wire: <a href='?src=\ref[src];wires=[WIRE_SIGNAL]'>[src.wires & WIRE_SIGNAL ? "Cut" : "Mend"] Wire</a>
-"}
-
-	user.Browse(dat, WINDOW_OPTIONS)
-	onclose(user, "radio")
-	return
-
-/obj/item/device/radio/Topic(href, href_list)
-	//..()
-	if (usr.stat)
+/obj/item/device/radio/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if (.)
 		return
 
-	// Band-aid fix for intercoms, RE 'bounds_dist' check in the 'in_range' proc. Feel free to improve the implementation (Convair880).
-	var/special_cases =((istype(src, /obj/item/device/radio/intercom) && (get_dist(src, usr) <= 1) && (istype(src.loc, /turf))) || (istype(src, /obj/item/device/radio/spy) && (get_dist(src, usr) <= 1)))
-	if ((issilicon(usr) || isAI(usr)) || (src in usr) || (special_cases) || (usr.loc == src.loc))
-		src.add_dialog(usr)
+	switch(action)
+		if ("set-frequency")
+			if (src.locked_frequency)
+				return FALSE
+			set_frequency(sanitize_frequency(params["value"]))
 
-		if (href_list["track"])
-			// wait is tracking here? really? what? ???? ????????????
-			//var/mob/target = locate(href_list["track"])
-			var/mob/living/silicon/A = locate(href_list["track2"])
-			var/heard_name = href_list["track3"]
-			A.ai_name_track(heard_name)
-			return
-
-		if (href_list["freq"])
-			var/new_frequency = null
-
-			if (href_list["freq"] == "set")
-				new_frequency = input(usr, "New frequency ([R_FREQ_MINIMUM] - [R_FREQ_MAXIMUM]):", "Enter new frequency", frequency) as null|num
-				if (!new_frequency)
-					return
-			else
-				new_frequency = frequency + text2num(href_list["freq"])
-
-			set_frequency(sanitize_frequency(new_frequency))
-
-			if (!isnull(src.traitorradio) && src.traitor_frequency && src.frequency == src.traitor_frequency)
+			// We check "finish" here which is true whenever the user inputs a number
+			// with the input field or stops dragging so its harder to bruteforce the
+			// uplink.
+			if (params["finish"] && !isnull(src.traitorradio) && src.traitor_frequency && src.frequency == src.traitor_frequency)
+				ui.close()
 				src.remove_dialog(usr)
 				usr.Browse(null, WINDOW_OPTIONS)
 				onclose(usr, "radio")
@@ -182,42 +178,40 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 				T.attack_self(usr)
 				return
 
-		else if (href_list["talk"])
-			src.broadcasting = text2num(href_list["talk"])
+			return TRUE
 
-		else if (href_list["listen"])
-			src.listening = text2num(href_list["listen"])
+		if ("toggle-broadcasting")
+			src.broadcasting = !src.broadcasting
+			return TRUE
 
-		else if (href_list["wires"])
+		if ("toggle-listening")
+			src.listening = !src.listening
+			return TRUE
+
+		if ("toggle-wire")
 			if (!(usr.find_tool_in_hand(TOOL_SNIPPING)))
-				return
+				return FALSE
 
-			var/wireflip = text2num(href_list["wires"]) & (WIRE_SIGNAL | WIRE_RECEIVE | WIRE_TRANSMIT)
+			var/wireflip = params["wire"] & (WIRE_SIGNAL | WIRE_RECEIVE | WIRE_TRANSMIT)
 			if (wireflip)
 				src.wires ^= wireflip
 
-		if (istype(src, /obj/item/device/radio/spy))
-			src.updateSelfDialogFromTurf() //radio is inside of another object, use turf
+				return TRUE
 
-		if (!( src.master ))
-			if (ismob(src.loc))
-				attack_self(src.loc)
-				if (istype(src.loc, /mob/living/silicon/ai)) // eyecam handling
-					src.updateSelfDialog()
-			else if (istype(src.loc, /obj))
-				for(var/mob/M in src.loc)
-					attack_self(M)
-			else
-				src.updateDialog()
-		else
-			if (ismob(src.master.loc))
-				src.attack_self(src.master.loc)
-			else
-				src.updateDialog()
+/obj/item/device/radio/Topic(href, href_list)
+	if (usr.stat)
+		return
 
-		src.add_fingerprint(usr)
-	else
-		usr.Browse(null, WINDOW_OPTIONS)
+	if ((issilicon(usr) || isAI(usr)) || (src in usr) || (usr.loc == src.loc))
+		if (href_list["track"])
+			// wait is tracking here? really? what? ???? ????????????
+			var/mob/living/silicon/A = locate(href_list["track2"])
+			var/heard_name = href_list["track3"]
+			A.ai_name_track(heard_name)
+			return
+
+/obj/item/device/radio/attack_self(mob/user as mob)
+	src.ui_interact(user)
 
 //pass to talk_into instead of a mob if you don't have a mob handy
 //please don't read this i'm so ashamed
@@ -582,7 +576,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	desc = "An illegal device used to jam radio signals, preventing broadcast or transmission."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "shieldoff"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/active = 0
 	is_syndicate = 1
 	mats = 10
@@ -630,6 +624,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 
 /obj/item/device/radio/electropack
 	name = "\improper Electropack"
+	wear_image_icon = 'icons/mob/back.dmi'
 	icon_state = "electropack0"
 	var/code = 2.0
 	var/on = 0.0
@@ -637,7 +632,7 @@ Green Wire: <a href='?src=\ref[src];wires=[WIRE_TRANSMIT]'>[src.wires & WIRE_TRA
 	frequency = 1451
 	throw_speed = 1
 	throw_range = 3
-	w_class = 5.0
+	w_class = W_CLASS_HUGE
 	flags = FPRINT | TABLEPASS | ONBACK | CONDUCT
 	item_state = "electropack"
 	desc = "A device that, when signaled on the correct frequency, causes a disabling electric shock to be sent to the animal (or human) wearing it."
@@ -782,7 +777,7 @@ Code:
 	icon_state = "signaller"
 	item_state = "signaler"
 	var/code = 30.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	frequency = 1457
 	var/delay = 0
 	var/airlock_wire = null

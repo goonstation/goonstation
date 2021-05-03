@@ -320,7 +320,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll_seal"
 	flags = FPRINT | TABLEPASS
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	throw_speed = 4
@@ -411,13 +411,6 @@
 		return ..()
 
 //lily's office
-obj/item/gun/reagent/syringe/lovefilled
-	ammo_reagents = list("love")
-	New()
-		. = ..()
-		src.reagents?.maximum_volume = 750
-		src.reagents.add_reagent("love", src.reagents.maximum_volume)
-
 /obj/item/storage/desk_drawer/lily/
 	spawn_contents = list(	/obj/item/reagent_containers/food/snacks/cake,\
 	/obj/item/reagent_containers/food/snacks/cake,\
@@ -467,7 +460,7 @@ obj/item/gun/reagent/syringe/lovefilled
 	item_state = "geiger"
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
 	throwforce = 3
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
 	mats = 5

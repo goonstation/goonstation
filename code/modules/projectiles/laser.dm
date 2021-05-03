@@ -246,7 +246,7 @@ toxic - poisons
 /datum/projectile/laser/glitter // for the russian pod
 	name = "prismatic laser"
 	icon_state = "eyebeam"
-	power = 35
+	power = 25
 	cost = 35
 	sname = "phaser bolt"
 	dissipation_delay = 10

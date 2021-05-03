@@ -796,7 +796,7 @@
 	if (target == 13)
 		RS.trans_to(src.ejection_reservoir, amount, index = index)
 		RS = src.ejection_reservoir.reagents
-		RS.reaction(get_turf(src.holder), TOUCH, amount)
+		RS.reaction(get_turf(src.holder), TOUCH, min(amount, RS.total_volume))
 		RS.clear_reagents()
 		showMessage("Something drips out the side of [src.holder].")
 

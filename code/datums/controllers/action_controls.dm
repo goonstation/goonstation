@@ -379,7 +379,7 @@ var/datum/action_controller/actions
 	/// a list of args for the proc thats called once the action bar finishes, if needed.
 	var/list/proc_args = null
 
-	New(var/owner, var/target, var/duration, var/proc_path, var/proc_args, var/icon, var/icon_state, var/end_message)
+	New(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message)
 		..()
 		if (owner)
 			src.owner = owner
@@ -434,7 +434,8 @@ var/datum/action_controller/actions
 		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
 
-		src.owner.visible_message("[src.end_message]")
+		if (end_message)
+			src.owner.visible_message("[src.end_message]")
 		if (src.target)
 			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
 		else
@@ -487,9 +488,9 @@ var/datum/action_controller/actions
 			R.amount = amount
 			R.inventory_counter?.update_number(R.amount)
 		R.set_dir(owner.dir)
-		sheet.consume_sheets(cost)
+		sheet.change_stack_amount(-cost)
 		if (sheet2 && cost2)
-			sheet2.consume_sheets(cost2)
+			sheet2.change_stack_amount(-cost2)
 		logTheThing("station", owner, null, "builds [objname] (<b>Material:</b> [mat && istype(mat) && mat.mat_id ? "[mat.mat_id]" : "*UNKNOWN*"]) at [log_loc(owner)].")
 		if (callback)
 			call(callback)(src, R)
@@ -1169,7 +1170,7 @@ var/datum/action_controller/actions
 				O.show_message("<span class='alert'><B>[owner] butchers [target].[target.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]</B></span>", 1)
 
 /datum/action/bar/icon/rev_flash
-	duration = 13 SECONDS
+	duration = 4 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	id = "rev_flash"
 	icon = 'icons/ui/actions.dmi'
@@ -1318,7 +1319,7 @@ var/datum/action_controller/actions
 	onUpdate()
 		..()
 		if (M?.hasStatus("resting") && !M.stat && M.getStatusDuration("burning"))
-			M.update_burning(-1.2)
+			M.update_burning(-1.5)
 
 			M.set_dir(turn(M.dir,up ? -90 : 90))
 			pixely += up ? 1 : -1
@@ -1369,7 +1370,7 @@ var/datum/action_controller/actions
 
 
 /datum/action/bar/private/icon/pickup //Delayed pickup, used for mousedrags to prevent 'auto clicky' exploits but allot us to pickup with mousedrag as a possibel action
-	duration = 10
+	duration = 0
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	id = "pickup"
 	var/obj/item/target

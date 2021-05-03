@@ -7,15 +7,30 @@
 #endif
 	anchored = 1.0
 	plane = PLANE_NOSHADOW_ABOVE
-	mats = 0
+	mats = 3
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 	chat_class = RADIOCL_INTERCOM
 	var/number = 0
 	rand_pos = 0
 	desc = "A wall-mounted radio intercom, used to communicate with the specified frequency. Usually turned off except during emergencies."
 	hardened = 0
 
+/obj/item/device/radio/intercom/proc/update_pixel_offset_dir(obj/item/AM, old_dir, new_dir)
+	src.pixel_x = 0
+	src.pixel_y = 0
+	switch(new_dir)
+		if(NORTH)
+			src.pixel_y = -21
+		if(SOUTH)
+			src.pixel_y = 24
+		if(EAST)
+			src.pixel_x = -21
+		if(WEST)
+			src.pixel_x = 21
+
 /obj/item/device/radio/intercom/New()
 	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGED, .proc/update_pixel_offset_dir)
 	if(src.icon_state == "intercom") // if something overrides the icon we don't want this
 		var/image/screen_image = image(src.icon, "intercom-screen")
 		screen_image.color = src.device_color
@@ -26,15 +41,10 @@
 		screen_image.alpha = 180
 		src.UpdateOverlays(screen_image, "screen")
 		if(src.pixel_x == 0 && src.pixel_y == 0)
-			switch(src.dir)
-				if(NORTH)
-					pixel_y = -21
-				if(SOUTH)
-					pixel_y = 24
-				if(EAST)
-					pixel_x = -21
-				if(WEST)
-					pixel_x = 21
+			update_pixel_offset_dir(src,null,src.dir)
+
+/obj/item/device/radio/intercom/ui_state(mob/user)
+	return tgui_default_state
 
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)
 	src.add_fingerprint(user)

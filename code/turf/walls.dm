@@ -335,13 +335,8 @@
 			return
 
 		boutput(user, "<span class='notice'>Now disassembling the outer wall plating.</span>")
-
-		sleep(10 SECONDS)
-
-		if (user.loc == T && (user.equipped() == W || isrobot(user)))
-			boutput(user, "<span class='notice'>You disassembled the outer wall plating.</span>")
-			logTheThing("station", user, null, "deconstructed a wall ([src.name]) using \a [W] at [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
-			dismantle_wall()
+		SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /turf/simulated/wall/proc/weld_action,\
+			list(W, user), W.icon, W.icon_state, "[user] finishes disassembling the outer wall plating.")
 
 //Spooky halloween key
 	else if(istype(W,/obj/item/device/key/haunted))
@@ -376,6 +371,10 @@
 
 		src.take_hit(W)
 		//return attack_hand(user)
+
+/turf/simulated/wall/proc/weld_action(obj/item/W, mob/user)
+	logTheThing("station", user, null, "deconstructed a wall ([src.name]) using \a [W] at [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
+	dismantle_wall()
 
 /turf/simulated/wall/r_wall
 	name = "reinforced wall"
@@ -529,7 +528,7 @@
 	else if ((istype(W, /obj/item/sheet)) && (src.d_state))
 		var/obj/item/sheet/S = W
 		boutput(user, "<span class='notice'>Repairing wall.</span>")
-		if (do_after(user, 10 SECONDS) && S.consume_sheets(1))
+		if (do_after(user, 10 SECONDS) && S.change_stack_amount(-1))
 			src.d_state = 0
 			src.icon_state = initial(src.icon_state)
 			if(S.material)

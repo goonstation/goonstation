@@ -5,7 +5,7 @@
 #define S_DRAW 0
 #define S_INJECT 1
 /obj/item/reagent_containers/syringe
-	name = "Syringe"
+	name = "syringe"
 	desc = "A syringe."
 	icon = 'icons/obj/syringe.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'

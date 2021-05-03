@@ -9786,7 +9786,7 @@
 /area/crew_quarters/quarters)
 "atZ" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/crate,
 /obj/item/clothing/under/princess,
@@ -15311,22 +15311,6 @@
 	icon_state = "carpetS"
 	},
 /area/security/detectives_office)
-"aFm" = (
-/obj/cable{
-	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
-	},
-/obj/table/woodentable,
-/obj/item/camera_test{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
-/turf/simulated/floor{
-	icon_state = "carpetS"
-	},
-/area/security/detectives_office)
 "aFn" = (
 /obj/table/woodentable{
 	dir = 6
@@ -15914,21 +15898,6 @@
 /obj/item/hand_tele,
 /turf/simulated/floor,
 /area/crew_quarters/captain)
-"aGv" = (
-/obj/table{
-	tag = "icon-tabledir (SOUTHEAST)";
-	icon_state = "tabledir";
-	dir = 6
-	},
-/obj/machinery/recharger{
-	pixel_y = 3
-	},
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/camera_test,
-/turf/simulated/floor,
-/area/crew_quarters/captain)
 "aGw" = (
 /turf/simulated/wall/r_wall,
 /area/crew_quarters/captain)
@@ -16493,12 +16462,6 @@
 /obj/landmark/start{
 	name = "Captain"
 	},
-/turf/simulated/floor,
-/area/crew_quarters/captain)
-"aHy" = (
-/obj/displaycase{
-	displayed = new /obj/item/captaingun
-},
 /turf/simulated/floor,
 /area/crew_quarters/captain)
 "aHz" = (
@@ -28044,7 +28007,7 @@
 /area/crew_quarters/juryroom)
 "beu" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/juryroom)
@@ -28380,7 +28343,7 @@
 "bfe" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -31551,7 +31514,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;
@@ -65919,6 +65882,43 @@
 	},
 /turf/simulated/floor/delivery,
 /area/crunch)
+"gnx" = (
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/turf/simulated/floor,
+/area/crew_quarters/captain)
+"omC" = (
+/obj/table{
+	tag = "icon-tabledir (SOUTHEAST)";
+	icon_state = "tabledir";
+	dir = 6
+	},
+/obj/machinery/recharger{
+	pixel_y = 3
+	},
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/camera,
+/turf/simulated/floor,
+/area/crew_quarters/captain)
+"suU" = (
+/obj/cable{
+	icon_state = "2-8";
+	d1 = 2;
+	d2 = 8
+	},
+/obj/table/woodentable,
+/obj/item/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "detectives camera";
+	pictures_left = 30
+	},
+/turf/simulated/floor{
+	icon_state = "carpetS"
+	},
+/area/security/detectives_office)
 
 (1,1,1) = {"
 aaa
@@ -97115,7 +97115,7 @@ avH
 aDO
 aEn
 aEO
-aFm
+suU
 aFH
 aGc
 aGs
@@ -98483,7 +98483,7 @@ aGi
 aGt
 aGN
 aHh
-aHy
+gnx
 aGw
 aIh
 aIk
@@ -99161,7 +99161,7 @@ aEV
 aFt
 aFN
 aDR
-aGv
+omC
 aGP
 aHk
 aHB

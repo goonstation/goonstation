@@ -2,7 +2,7 @@
 	name = "Pill bottle"
 	icon_state = "pill_canister"
 	icon = 'icons/obj/chemical.dmi'
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1

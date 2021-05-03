@@ -127,7 +127,7 @@ export const AppearanceEditor = (params, context) => {
             }}
             style={{
               width: "80px",
-              height: "80px",
+              height: "160px",
             }} />
         </Flex.Item>
       </Flex>

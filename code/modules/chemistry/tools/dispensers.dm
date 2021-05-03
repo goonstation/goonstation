@@ -598,7 +598,7 @@
 	icon_state = "itemtank"
 	item_state = "flask"
 	initial_volume = 500
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	incompatible_with_chem_dispensers = 1
 
 	var/image/fluid_image

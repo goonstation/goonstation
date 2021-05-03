@@ -36,7 +36,7 @@
 	var/info = ""
 	var/stampable = 1
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 15
 	layer = OBJ_LAYER
@@ -855,7 +855,7 @@ Please exercise caution in your testing, the result can best be described as a h
 	icon_state = "fortune"
 
 	var/static/list/action = list("Beware of", "Keep an eye on", "Seek out", "Be wary of", "Make friends with", "Aid", "Talk to", "Avoid")
-	var/static/list/who = list("Zero-G Chem-Co Commander", "Shambling Abomination", "Merlin", "GeneTek Operative Javelin (as Destiny Calls)", "Remy", "Dr. Acula", "Morty")
+	var/static/list/who = list("Officer Beepsky", "Shambling Abomination", "Remy", "Dr. Acula", "Morty", "Sylvester", "Jones", "the staff assistant next to you", "the clown")
 	var/static/list/thing = list("are in possession of highly dangerous contraband.", "murdered a bee.", "kicked George.", "are a Syndicate operative.", "are a murderer.", "have disguised themselves from their true form.",
 	"are not who they claim to be.", "know Shitty Bill's secret.", "are lonely.", "hugged a space bear and survived to tell the tale.", "know the legendary double-fry technique.", "have the power to reanimate the dead.",
 	"consort with wizards.", "sell really awesome drugs.", "have all-access.", "know the king.", "make amazing pizza.", "have a toolbox and are not afraid to use it.")
@@ -1066,7 +1066,7 @@ Please exercise caution in your testing, the result can best be described as a h
 	amount = 10.0
 	item_state = "sheet-metal"
 	throwforce = 1
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 7
 
@@ -1102,6 +1102,10 @@ Please exercise caution in your testing, the result can best be described as a h
 				P.info = "Help me! I am being forced to code SS13 and It won't let me leave."
 	src.update()
 	return
+
+/obj/item/paper_bin/attack_self(mob/user as mob)
+	..()
+	src.attack_hand(user)
 
 /obj/item/paper_bin/attackby(obj/item/paper/P as obj, mob/user as mob) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
 	if (istype(P))
@@ -1144,7 +1148,7 @@ Please exercise caution in your testing, the result can best be described as a h
 	item_state = "stamp"
 	flags = FPRINT | TABLEPASS
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60
@@ -1423,7 +1427,7 @@ automatically adopt your criminal control strategy of choice.<br>
 <td>The perfect crowd control option, this Mode stuns all your enemies within a close radius, but leaves you untouched!</td>
 </tr>
 <tr>
-<td><b>"Execute"</b></td>
+<td><b>"Execute" / "Exterminate"</b></td>
 <td>30 PU</td>
 <td>Turn your Lawbringer™ into your favourite sidearm with these .38 Full Metal Jacket rounds!</td>
 </tr>
@@ -1438,7 +1442,7 @@ automatically adopt your criminal control strategy of choice.<br>
 <td>Never use a riot launcher again! These smoke grenades will let you manage line of sight with ease.</td>
 </tr>
 <tr>
-<td><b>"Knockout"</b></td>
+<td><b>"Knockout" /  "Sleepshot"</b></td>
 <td>60 PU</td>
 <td>When you just can't get things to slow down, <i>make 'em</i> slow down with these handy haloperidol tranquilizer darts!</td>
 </tr>
@@ -1453,7 +1457,7 @@ automatically adopt your criminal control strategy of choice.<br>
 <td>Lawbringer™ warranty is voided if exposed to clowns. Keep them at bay.</td>
 </tr>
 <tr>
-<td><b>"Pulse"</b></td>
+<td><b>"Pulse" / "Push"</b></td>
 <td>35 PU</td>
 <td>Just like our patented Pulse Rifle™s, this Mode sends your enemies flying! Keep crime at arm's length!</td>
 </tr>

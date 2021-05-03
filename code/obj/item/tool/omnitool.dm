@@ -47,6 +47,8 @@
 		if (src.omni_mode == "prying")
 			if (!pry_surgery(M, user))
 				return ..()
+		else
+			..()
 
 	get_desc(var/dist)
 		if (dist < 3)

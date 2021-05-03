@@ -9,7 +9,7 @@
 			if (ishuman(owner))
 				var/mob/living/carbon/human/H = owner
 
-				if (!owner.client.check_key(KEY_RUN) || !H.special_sprint & SPRINT_SNIPER)
+				if (!owner.client.check_key(KEY_RUN) || !(H.special_sprint & SPRINT_SNIPER))
 					for (var/obj/item/gun/kinetic/sniper/S in owner.equipped_list(check_for_magtractor = 0))
 						S.just_stop_snipe(owner)
 

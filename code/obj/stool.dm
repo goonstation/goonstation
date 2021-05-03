@@ -284,15 +284,14 @@
 		scoot_sounds = list( 'sound/misc/chair/office/scoot1.ogg', 'sound/misc/chair/office/scoot2.ogg', 'sound/misc/chair/office/scoot3.ogg', 'sound/misc/chair/office/scoot4.ogg', 'sound/misc/chair/office/scoot5.ogg' )
 
 	Move()
+		if(src.buckled_guy.loc != src.loc)
+			src.unbuckle()
 		. = ..()
 		if (. && src.buckled_guy)
 			var/mob/living/carbon/C = src.buckled_guy
-			if(src.buckled_guy.loc == src.loc)
-				C.buckled = null
-				C.Move(src.loc)
-				C.buckled = src
-			else
-				src.unbuckle()
+			C.buckled = null
+			C.Move(src.loc)
+			C.buckled = src
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/clothing/suit/bedsheet))
@@ -861,7 +860,7 @@
 	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "folded_chair"
 	item_state = "folded_chair"
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	throwforce = 10
 	flags = FPRINT | TABLEPASS | CONDUCT
 	force = 5
@@ -1168,6 +1167,12 @@
 	var/time_between_uses = 400 // The default time between uses.
 	var/list/items = list (/obj/item/device/light/zippo,
 	/obj/item/wrench,
+	/obj/item/device/multitool,
+	/obj/item/toy/plush/small/buddy,
+	/obj/item/toy/plush/small/stress_ball,
+	/obj/item/paper/lunchbox_note,
+	/obj/item/plant/herb/cannabis/spawnable,
+	/obj/item/reagent_containers/food/snacks/candy/candyheart,
 	/obj/item/bananapeel,
 	/obj/item/reagent_containers/food/snacks/lollipop/random_medical,
 	/obj/item/spacecash/random/small,
@@ -1222,6 +1227,9 @@
 				last_use = world.time
 				max_uses--
 
+		else if (max_uses <= 0)
+			user.visible_message("<span class='notice'><b>[user.name]</b> rummages through the seams and behind the cushions of [src] and pulls out absolutely nothing!</span>",\
+			"<span class='notice'>You rummage through the seams and behind the cushions of [src] and pull out absolutely nothing!</span>")
 		else
 			user.visible_message("<span class='notice'><b>[user.name]</b> rummages through the seams and behind the cushions of [src]!</span>",\
 			"<span class='notice'>You rummage through the seams and behind the cushions of [src]!</span>")
@@ -1439,9 +1447,9 @@
 		for (var/mob/M in AIviewers(src, null))
 			M.show_message("<span class='alert'>The electric chair went off!</span>", 3)
 			if (lethal)
-				playsound(src.loc, "sound/effects/electric_shock.ogg", 100, 0)
+				playsound(src.loc, "sound/effects/electric_shock.ogg", 50, 0)
 			else
-				playsound(src.loc, "sound/effects/sparks4.ogg", 100, 0)
+				playsound(src.loc, "sound/effects/sparks4.ogg", 50, 0)
 
 		if (src.buckled_guy && ishuman(src.buckled_guy))
 			var/mob/living/carbon/human/H = src.buckled_guy

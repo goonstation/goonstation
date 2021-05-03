@@ -1,15 +1,19 @@
 var/RL_Generation = 0
 
 //#define DEBUG_LIGHT_STRIP_APPLY
-// #define DEBUG_MOVING_LIGHTS_STATS
+#define DEBUG_MOVING_LIGHTS_STATS
 
 #ifdef DEBUG_MOVING_LIGHTS_STATS
 var/global/list/moving_lights_stats = list()
 var/global/list/moving_lights_stats_by_first_attached = list()
+var/global/list/color_changing_lights_stats = list()
+var/global/list/color_changing_lights_stats_by_first_attached = list()
 
 proc/get_moving_lights_stats()
 	boutput(usr, json_encode(moving_lights_stats))
 	boutput(usr, json_encode(moving_lights_stats_by_first_attached))
+	boutput(usr, json_encode(color_changing_lights_stats))
+	boutput(usr, json_encode(color_changing_lights_stats_by_first_attached))
 #endif
 
 // TODO readd counters for debugging
@@ -209,6 +213,11 @@ datum/light
 
 			if (src.r == red && src.g == green && src.b == blue && !queued_run)
 				return
+#ifdef DEBUG_MOVING_LIGHTS_STATS
+			if(src.enabled)
+				color_changing_lights_stats["[src.attached_to?.type]"]++
+				color_changing_lights_stats_by_first_attached["[src.first_attached_to?.type]"]++
+#endif
 
 			if (src.enabled)
 				if (SHOULD_QUEUE)
