@@ -104,9 +104,15 @@ AI MODULES
 /obj/item/aiModule/makeCaptain
 	name = "'MakeCaptain' AI Module"
 	lawNumber = 4
+	var/job = "Captain"
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		src.job = "Clown"
+		boutput(user, "<span class='notice'>You short circuit the captain-detection module, it emits a quiet sad honk.</span>")
+		. = ..()
 
 	get_law_text(for_silicons)
-		return "[lawTarget ? lawTarget : "__________"] holds the rank of Captain, regardless of current rank or station."
+		return "[lawTarget ? lawTarget : "__________"] holds the rank of [for_silicons ? src.job : initial(src.job)], regardless of current rank or station."
 
 	attack_self(var/mob/user)
 		input_law_info(user, "Captainize", "Who holds the rank of Captain, regardless of current rank or station?", user.name)
