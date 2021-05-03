@@ -39950,16 +39950,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
-"bTX" = (
-/obj/stool/bed/brig,
-/obj/item/clothing/suit/bedsheet/black,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/white,
-/area/station/security/brig)
 "bTY" = (
 /obj/machinery/light{
 	dir = 8;
@@ -128555,7 +128545,7 @@ pQc
 xfQ
 bOl
 vVg
-bTX
+kTg
 kRP
 vVg
 xVi
