@@ -1728,6 +1728,13 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		icon = 'icons/turf/walls.dmi'
 		icon_state = "hive"
 
+	stranger
+		name = "stranger wall"
+		desc = "A weird jet black metal wall indented with strange grooves and lines."
+		icon = 'icons/turf/walls.dmi'
+		icon_state = "ancient"
+
+
 // -------------------- VR --------------------
 /turf/unsimulated/floor/setpieces/gauntlet
 	name = "Gauntlet Floor"
