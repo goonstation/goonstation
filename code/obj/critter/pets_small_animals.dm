@@ -205,6 +205,7 @@
 /obj/critter/opossum/morty
 	name = "Morty"
 	generic = 0
+	feed_text = "chatters happily!"
 
 // hi I added my childhood cats' names to the list cause I miss em, they aren't really funny names but they were great cats
 // remove em if you want I guess
@@ -226,6 +227,7 @@
 	brutevuln = 1
 	angertext = "hisses at"
 	chase_text = "pounces on"
+	feed_text = "purrs contentedly."
 	butcherable = 2
 	var/cattype = 1
 	var/randomize_cat = 1
