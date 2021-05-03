@@ -723,6 +723,7 @@
 	opacity = 0
 	anchored = 1
 	plane = PLANE_NOSHADOW_ABOVE
+	flags = TGUI_INTERACTIVE
 
 	deconstruct_flags = DECON_MULTITOOL
 
@@ -737,7 +738,7 @@
 		STATE_LOGGEDOFF = 1
 		STATE_LOGGEDIN = 2
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	/* attackby(var/obj/item/I as obj, mob/user as mob)
 		if(broken)
 			boutput(user, "<span class='alert'>With its money removed and circuitry destroyed, it's unlikely this ATM will be able to do anything of use.</span>")
 			return
@@ -858,7 +859,7 @@
 
 		dat += "<BR><BR><A HREF='?action=mach_close&window=atm'>Close</A></span>"
 		user.Browse(dat.Join(), "window=atm;size=400x500;title=Automated Teller Machine")
-		onclose(user, "atm")
+		onclose(user, "atm") */
 
 	bullet_act(var/obj/projectile/P)
 		if (P.power && P.proj_data.ks_ratio) //shooting ATMs with lethal rounds instantly makes them spit out their money, just like in the movies!
@@ -871,8 +872,7 @@
 				return 1
 		return 0
 
-
-	Topic(href, href_list)
+	/* Topic(href, href_list)
 		if(..())
 			return
 		src.add_dialog(usr)
@@ -995,7 +995,7 @@
 					var/obj/item/spacebux/newbux = new(src.loc, amount)
 					usr.put_in_hand_or_drop(newbux)
 
-		src.updateUsrDialog()
+		src.updateUsrDialog() */
 
 	proc/take_damage(var/damage_amount = 5, var/mob/user as mob)
 		if (broken)
@@ -1018,6 +1018,55 @@
 	atm_alt
 		icon_state = "atm_alt"
 		layer = EFFECTS_LAYER_UNDER_1
+
+/obj/submachine/ATM/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "ATM", name)
+		ui.open()
+
+/obj/submachine/ATM/ui_data(mob/user)
+	. = list(
+		"scannedCard" = src.scan,
+		"scannedPIN" = src.scan.pin,
+		"loggedIn" = src.state
+	)
+
+/obj/submachine/ATM/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if (.)
+		return
+	switch(action)
+		if ("insert_card")
+			if (src.scan)
+				return TRUE
+			var/obj/O = usr.equipped()
+			if (istype(O, /obj/item/card/id))
+				boutput(usr, "<span class='notice'>You insert your ID card.</span>")
+				usr.drop_item()
+				O.set_loc(src)
+				src.scan = O
+				. = TRUE
+		if("eject")
+			if(!src.scan)
+				return TRUE
+			boutput(usr, "<span class='notice'>You eject your ID card.</span>")
+			usr.put_in_hand_or_eject(src.scan)
+			src.scan = null
+			. = TRUE
+		if("login_attempt")
+			if(!src.scan)
+				return TRUE
+			var/enteredPIN = text2num(params["entered_PIN"])
+			if (enteredPIN == src.scan.pin)
+				if(TryToFindRecord())
+					src.state = STATE_LOGGEDIN
+				else
+					boutput(usr, "<span class='alert'>Cannot find a bank record for this card.</span>")
+			else
+				boutput(usr, "<span class='alert'>Incorrect pin number.</span>")
+	src.add_fingerprint(usr)
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "machineUsed")
 
 /obj/submachine/ATM/afterlife
 	afterlife = 1
