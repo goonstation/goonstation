@@ -265,6 +265,8 @@
 	var/maximum_poison = 5
 	var/inject_poison = 2.5
 
+	var/allow_self_service = 1
+
 	New()
 		..()
 		src.update_icon()
@@ -542,7 +544,10 @@
 			return
 
 		if (target == user)
-			move_inside()
+			if(allow_self_service)
+				move_inside()
+			else
+				return
 		else if (can_operate(user))
 			var/previous_user_intent = user.a_intent
 			user.a_intent = INTENT_GRAB
@@ -671,6 +676,7 @@
 	mats = 30
 	p_class = 1.2
 	var/homeloc = null
+	allow_self_service = 0
 	/// Mailgroups it'll try to send PDA notifications to
 	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
 
