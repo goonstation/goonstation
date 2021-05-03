@@ -120,6 +120,25 @@
 
 				LAGCHECK(LAG_REALTIME)
 
+	proc/unauthorize()
+		if(src.authed)
+
+			authed = 0
+			icon_state = "drawbr0"
+
+			for (var/obj/machinery/door/airlock/D in armory_area)
+				if (D.has_access(access_security))
+					D.req_access = list(access_maxsec)
+				LAGCHECK(LAG_REALTIME)
+
+			if (armory_area)
+				for(var/obj/O in armory_area)
+					if (istype(O,/obj/storage/secure/crate))
+						O.req_access = list(access_maxsec)
+					else if (istype(O,/obj/machinery/vending))
+						O.req_access = list(access_maxsec)
+
+				LAGCHECK(LAG_REALTIME)
 
 	proc/print_auth_needed(var/mob/author)
 		if (author)
@@ -142,7 +161,7 @@
 		return ..()
 	if (!user)
 		return ..()
-	if(authed)
+	if(authed && (!(access_maxsec in W:access)))
 		boutput(user, "Armory has already been authorized!")
 		return
 
@@ -165,11 +184,28 @@
 		boutput(user, "The access level of [W] is not high enough.")
 		return
 
+	if(authed && (access_maxsec in W:access))
+		var/choice = alert(user, "Would you like to unauthorize security's access to riot gear?", "Armory Unauthorization", "Unauthorize", "No")
+		if(get_dist(user, src) > 1) return
+		switch(choice)
+			if("Unauthorize")
+				if(ON_COOLDOWN(src, "unauth", 5 MINUTES))
+					boutput(user, "<span class='alert'> The armory computer cannot take your commands at the moment! Wait [ON_COOLDOWN(src, "unauth", 0)/10] seconds!</span>")
+					playsound( src.loc,"sound/machines/airlock_deny.ogg", 10, 0 )
+					return
+				if(!ON_COOLDOWN(src, "Unauth", 5 MINUTES))
+					unauthorize()
+					playsound(src.loc,"sound/machines/chime.ogg", 10, 1)
+					boutput(user,"<span class='notice'> The armory's equipments have returned to having their default access!</span>")
+					return
+			if("No")
+				return
+
 	if (!src.authorized)
 		src.authorized = list()
 		src.authorized_registered = list()
 
-	var/choice = alert(user, text("Would you like to (un)authorize access to riot gear? [] authorization\s are still needed.", src.auth_need - src.authorized.len), "Armory Auth", "Authorize", "Repeal")
+	var/choice = alert(user, text("Would you like to authorize access to riot gear? [] authorization\s are still needed.", src.auth_need - src.authorized.len), "Armory Auth", "Authorize", "Repeal")
 	if(get_dist(user, src) > 1) return
 	switch(choice)
 		if("Authorize")
