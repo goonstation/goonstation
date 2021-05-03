@@ -680,3 +680,4 @@
 	cargonia
 		spawn_contents = list(/obj/item/radio_tape/advertisement/cargonia,
 		/obj/item/clothing/under/rank/cargo,/obj/decal/skeleton)
+
