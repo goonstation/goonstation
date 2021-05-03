@@ -161,6 +161,10 @@
 						<a href='[playeropt_link(M, "removeabil")]'>Remove</a> &bull;
 						<a href='[playeropt_link(M, "abilholder")]'>New Holder</a>
 				 	</div>
+					<div class='l'>Status Effects<a href='?src=\ref[src];action=secretsfun;type=setstatus_help'>*</a></div>
+					<div class='r'>
+						<a href='[playeropt_link(M, "setstatuseffect")]'>Set</a> &bull;
+				 	</div>
 					<div class='l'>Contents</div>
 					<div class='r'>
 				 		<a href='[playeropt_link(M, "checkcontents")]'>Check</a> &bull;
