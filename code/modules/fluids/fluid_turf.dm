@@ -55,6 +55,8 @@
 
 	var/allow_hole = 1
 
+	var/linked_hole = null
+
 
 	New()
 		..()
@@ -284,6 +286,13 @@
 	edge
 		icon_state = "pit_wall"
 
+		New()
+			. = ..()
+			START_TRACKING
+
+		Del()
+			STOP_TRACKING
+			. = ..()
 
 	proc/try_build_turf_list()
 		if (!L || L.len == 0)
@@ -328,6 +337,21 @@
 			for(var/turf/space/fluid/T in range(8,locate(src.x,src.y,5)))
 				L += T
 				break
+
+			if(length(L))
+				var/needlink = 1
+				var/turf/space/fluid/picked_turf = pick(L)
+
+				for(var/turf/space/fluid/T in range(5,picked_turf))
+					if(T.linked_hole)
+						needlink = 0
+						break
+
+				if(needlink)
+					if(!picked_turf.linked_hole)
+						picked_turf.linked_hole = src
+						picked_turf.UpdateOverlays(image(icon = 'icons/effects/64x64.dmi', icon_state = "lightshaft", loc = picked_turf), "lightshaft")
+
 		..()
 
 
