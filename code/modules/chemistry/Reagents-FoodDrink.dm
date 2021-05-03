@@ -512,6 +512,18 @@ datum
 			transparency = 190
 			alch_strength = 1
 
+		fooddrink/alcoholic/caipirinha
+			name = "Pineapple Caipirinha"
+			id = "caipirinha"
+			description = "A sweet vodka and pineapple cocktail thats fit for a day at the beach."
+			reagent_state = LIQUID
+			taste = "sweet"
+			fluid_r = 240
+			fluid_g = 236
+			fluid_b = 110
+			alch_strength = 0.25
+			thirst_value = 0.5
+
 		fooddrink/alcoholic/cocktail_grog
 			name = "grog"
 			id = "grog"
