@@ -564,6 +564,26 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	song = "sound/radio_station/music/core_of_poo.ogg"
 	color = "#DE9F47"
 
+/obj/item/record/notaquario_mixtape/beaches
+	record_name = "Beaches"
+	song = "sound/radio_station/music/beaches.ogg"
+
+/obj/item/record/notaquario_mixtape/graveyard
+	record_name = "Graveyard"
+	song = "sound/radio_station/music/graveyard.ogg"
+
+/obj/item/record/notaquario_mixtape/floaty
+	record_name = "I'm Floaty In Space But Thats Ok"
+	song = "sound/radio_station/music/floaty.ogg"
+
+/obj/item/record/notaquario_mixtape/repose
+	record_name = "Repose"
+	song = "sound/radio_station/music/repose.ogg"
+
+/obj/item/record/notaquario_mixtape/biodome
+	record_name = "Biodome"
+	song = "sound/radio_station/music/biodome.ogg"
+
 // Record sets
 /obj/item/storage/box/record
 	name = "record sleeve"
@@ -581,6 +601,15 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	/obj/item/record/clown_collection/eggshell,
 	/obj/item/record/clown_collection/disco,
 	/obj/item/record/clown_collection/poo)
+
+/obj/item/storage/box/record/notaquario_mixtape1
+	name = "Aquario and Not Tom's Mixtape Vol 1"
+	desc = "Woa, these are some old tunes! Made by Aquario and Not Tom way back in the early 2020s!"
+	spawn_contents = list(/obj/item/record/notaquario_mixtape/graveyard,
+	/obj/item/record/notaquario_mixtape/repose,
+	/obj/item/record/notaquario_mixtape/beaches,
+	/obj/item/record/notaquario_mixtape/floaty,
+	/obj/item/record/notaquario_mixtape/biodome)
 
 /obj/item/storage/box/record/radio
 	desc = "A sturdy record sleeve, designed to hold multiple records. The art on the cover is very lovely."
