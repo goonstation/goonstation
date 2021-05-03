@@ -23196,15 +23196,15 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "bgD" = (
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "bgE" = (

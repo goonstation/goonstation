@@ -1323,8 +1323,8 @@
 	},
 /area/station/maintenance/northeast)
 "adf" = (
-/obj/decal/cleanable/dirt,
 /obj/fitness/speedbag/captain,
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
 /area/station/maintenance/northeast)
 "adg" = (

@@ -5777,7 +5777,11 @@
 /obj/item/football,
 /obj/item/clothing/mask/balaclava,
 /obj/item/clothing/mask/balaclava,
-/obj/storage/crate,
+/obj/storage/crate{
+	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	icon = 'icons/misc/halloween.dmi';
+	name = "dented crate"
+	},
 /turf/simulated/floor/plating/damaged3,
 /area/station/crew_quarters/quartersB)
 "amH" = (
