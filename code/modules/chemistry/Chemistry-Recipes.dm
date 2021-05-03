@@ -957,6 +957,16 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
+		cocktail_caipirinha
+			name = "Pineapple Caipirinha"
+			id = "caipirinha"
+			result = "caipirinha"
+			required_reagents = list("vodka" = 2, "sugar" = 1,"ice" = 1, "juice_pineapple" = 2)
+			result_amount = 5
+			mix_phrase = "The vodka and pineapple juice mix together into a yellowish drink."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
 		cocktail_diesel
 			name = "Diesel"
 			id = "diesel"
