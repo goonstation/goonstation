@@ -47,7 +47,7 @@
 	var/photo_containing = 0 						//Name required in a photograph. alright look photographs work on the basis of matching strings. Photos don't store refs to the mob or whatever so this will have to do
 	var/reveal_area = 0									//Show area of target in pda
 	var/job = "job name"								//Job of bounty item owner (if item has an owner). Used for target difficulty on personal/organ bounties
-	var/type = 0 												//Type of objective, used to determine difficulty and organs 'Anywhere' delivery location
+	var/bounty_type = 0 												//Type of objective, used to determine difficulty and organs 'Anywhere' delivery location
 	var/difficulty = 0									//Stored difficulty for items and big items
 
 	var/datum/syndicate_buylist/reward = 0
@@ -589,10 +589,9 @@
 				continue
 			B.name = P.holder.real_name + "'s " + P.name
 		B.reveal_area = 1
-		B.organ = 1
 		O -= B.item
 
-		B.type == BOUNTY_TYPE_ORGAN
+		B.bounty_type = BOUNTY_TYPE_ORGAN
 		active_bounties += B
 
 	//Add personal items
@@ -606,12 +605,11 @@
 		B.reveal_area = 1
 		P -= pair
 
-		B.type == BOUNTY_TYPE_TRINK
+		B.bounty_type = BOUNTY_TYPE_TRINK
 		active_bounties += B
 
 	//Add big station item bounties
 	var/big_choice = null
-	var/difficulty = 0
 	var/obj/obj_existing = null
 	var/big_picked=1
 	while(big_picked<=big_station_bounty_amt)
@@ -632,7 +630,7 @@
 		B.name = obj_existing.name
 
 		B.difficulty = big_station_bounties[big_choice]
-		B.type == BOUNTY_TYPE_BIG
+		B.bounty_type = BOUNTY_TYPE_BIG
 		active_bounties += B
 		big_station_bounties -= big_choice
 		big_picked++
@@ -645,12 +643,11 @@
 		B.name = "a photograph of [B.photo_containing]"
 		PH -= B.photo_containing
 
-		B.type == BOUNTY_TYPE_PHOTO
+		B.bounty_type = BOUNTY_TYPE_PHOTO
 		active_bounties += B
 
 	//Add station item bounties
 	var/item_choice = null
-	difficulty = 0
 	var/obj/item_existing = null
 	var/item_picked=1
 	while(item_picked<=station_bounty_amt)
@@ -665,13 +662,13 @@
 			// Catch picks that weren't found
 			station_bounties -= item_choice
 			continue
-		difficulty = station_bounties[item_choice]
 		var/datum/bounty_item/B = new /datum/bounty_item(src)
 		B.path = item_existing.type
 		B.item = item_existing
 		B.name = item_existing.name
 
 		B.difficulty = station_bounties[item_choice]
+		B.bounty_type = BOUNTY_TYPE_ITEM
 		active_bounties += B
 		station_bounties -= item_choice
 		item_picked++
@@ -701,63 +698,66 @@
 			break
 
 	for (var/datum/bounty_item/B in active_bounties)
-		if (B.type == BOUNTY_TYPE_PHOTO || B.type == BOUNTY_TYPE_ORGAN)
+		if (B.bounty_type == BOUNTY_TYPE_ORGAN)
 			B.delivery_area = 0
 		else
 			B.delivery_area = pick(possible_areas)
 
-	//Set difficulty
-	if (B.type == BOUNTY_TYPE_ORGAN)
-		// Adjust reward based off target job to estimate risk level
-		var/difficulty = B.estimate_target_difficulty(B.job)
-		switch(difficulty)
-			if(3)
-				B.pick_reward_tier(4)
-			if (2)
-				B.pick_reward_tier(3)
-			if (1)
-				if (prob(7))
+		// Calculate bounty difficulty
+		if (B.bounty_type == BOUNTY_TYPE_PHOTO)
+			// Photos always Tier 1
+			B.pick_reward_tier(1)
+		else if (B.bounty_type == BOUNTY_TYPE_ORGAN)
+			// Adjust reward based off target job to estimate risk level
+			B.difficulty = B.estimate_target_difficulty(B.job)
+			switch(B.difficulty)
+				if(3)
+					B.pick_reward_tier(4)
+				if (2)
 					B.pick_reward_tier(3)
-				else
-					B.pick_reward_tier(2)
-	else if (B.type == BOUNTY_TYPE_TRINKET)
-		// Adjust reward based off target job to estimate risk level
-		var/difficulty = B.estimate_target_difficulty(B.job)
-		switch(difficulty)
-			if(3)
-				B.pick_reward_tier(4)
-			if (2)
-				if (prob(10))
+				if (1)
+					if (prob(7))
+						B.pick_reward_tier(3)
+					else
+						B.pick_reward_tier(2)
+		else if (B.bounty_type == BOUNTY_TYPE_TRINK)
+			// Adjust reward based off target job to estimate risk level
+			B.difficulty = B.estimate_target_difficulty(B.job)
+			switch(B.difficulty)
+				if(3)
 					B.pick_reward_tier(4)
-				else
+				if (2)
+					if (prob(10))
+						B.pick_reward_tier(4)
+					else
+						B.pick_reward_tier(pick(2,3))
+				if (1)
+					if (prob(10))
+						B.pick_reward_tier(4)
+					else
+						B.pick_reward_tier(pick(1,3))
+		else if (B.bounty_type == BOUNTY_TYPE_BIG)
+			// Preset difficulty depending upon type
+			switch(B.difficulty)
+				if(3)
 					B.pick_reward_tier(pick(2,3))
-			if (1)
-				if (prob(10))
-					B.pick_reward_tier(4)
-				else
-					B.pick_reward_tier(pick(1,3))
-	else if (B.type == BOUNTY_TYPE_BIG)
-		// BIG ITEM
-		switch(B.difficulty)
-			if(3)
-				B.pick_reward_tier(pick(2,3))
-			if (2)
-				B.pick_reward_tier(pick(1,2))
-			if (1)
-				if (prob(15))
+				if (2)
 					B.pick_reward_tier(pick(1,2))
-				else
-					B.pick_reward_tier(1)
-	else if (B.type == BOUNTY_TYPE_ITEM)
-		// ITEM
-		switch(B.difficulty)
-			if(3)
-				B.pick_reward_tier(pick(2,3))
-			if (2)
-				B.pick_reward_tier(pick(1,2))
-			if (1)
-				if (prob(15))
+				if (1)
+					if (prob(15))
+						B.pick_reward_tier(pick(1,2))
+					else
+						B.pick_reward_tier(1)
+		else if (B.bounty_type == BOUNTY_TYPE_ITEM)
+			// Preset difficulty depending upon type
+			switch(B.difficulty)
+				if(3)
+					B.pick_reward_tier(pick(2,3))
+				if (2)
 					B.pick_reward_tier(pick(1,2))
-				else
-					B.pick_reward_tier(1)
+				if (1)
+					if (prob(15))
+						B.pick_reward_tier(pick(1,2))
+					else
+						B.pick_reward_tier(1)
 	return

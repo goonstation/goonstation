@@ -679,7 +679,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			var/organ_succ = (B.item && delivery == B.item)
 			var/everythingelse_succ = ( (B.path && istype(delivery,B.path)) || B.item && delivery == B.item || (B.photo_containing && istype(delivery,/obj/item/photo) && findtext(delivery.name, B.photo_containing)) )
-			if ((B.organ && organ_succ) || (!B.organ && everythingelse_succ))
+			if (((B.bounty_type == BOUNTY_TYPE_ORGAN) && organ_succ) || ((B.bounty_type != BOUNTY_TYPE_ORGAN) && everythingelse_succ))
 				if (B.delivery_area && B.delivery_area != get_area(src.hostpda))
 					return 0
 				return delivery
@@ -787,7 +787,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		var/image/photo_image
 		var/icon/photo_icon
 		var/atom/A = null
-		if (B.organ && B.item)
+		if ((B.bounty_type == BOUNTY_TYPE_ORGAN) && B.item)
 			var/obj/item/parts/O = B.item
 			if (O.holder)
 				A = O.holder
