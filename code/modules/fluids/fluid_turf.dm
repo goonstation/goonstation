@@ -53,6 +53,8 @@
 
 	var/captured = 0 //Thermal vent collector on my tile? (messy i know, but faster lookups later)
 
+	var/allow_hole = 1
+
 
 	New()
 		..()
@@ -261,7 +263,7 @@
 			blow_hole()
 
 	proc/blow_hole()
-		if (src.z != 5)
+		if (src.z != 5 && allow_hole)
 			src.ReplaceWith(/turf/space/fluid/warp_z5/realwarp, FALSE, TRUE, FALSE, TRUE)
 
 //////////////////////duh look below
@@ -273,6 +275,8 @@
 	spawningFlags = 0
 	randomIcon = 0
 	generateLight = 0
+
+	allow_hole = 0
 
 	color = OCEAN_COLOR
 	// fullbright = 1
@@ -334,6 +338,7 @@
 	fullbright = 0
 	luminosity = 1
 	generateLight = 0
+	allow_hole = 0
 	spawningFlags = SPAWN_DECOR | SPAWN_PLANTS | SPAWN_FISH | SPAWN_LOOT | SPAWN_HALLU
 
 /turf/space/fluid/nospawn
@@ -343,6 +348,7 @@
 		return
 
 /turf/space/fluid/noexplosion
+	allow_hole = 0
 	ex_act(severity)
 		return
 
@@ -359,6 +365,7 @@
 	luminosity = 1
 	generateLight = 0
 	spawningFlags = null
+	allow_hole = 0
 	icon_state = "cenote"
 	name = "cenote"
 	desc = "A deep flooded sinkhole."
