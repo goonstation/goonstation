@@ -1004,8 +1004,8 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 /obj/deployable_turret/pod_wars
 	name = "Ship Defense Turret"
 	desc = "A ship defense turret."
-	health = 125
-	max_health = 125
+	health = 100
+	max_health = 100
 	wait_time = 20 //wait if it can't find a target
 	range = 8 // tiles
 	burst_size = 3 // number of shots to fire. Keep in mind the bullet's shot_count
@@ -2854,9 +2854,11 @@ proc/setup_pw_crate_lists()
 	desc = "A dangerous-looking blaster pistol. It's self-charging by a radioactive power cell."
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "pw_pistol"
+	item_state = "pw_pistol"
 	w_class = 3.0
 	force = 8.0
 	mats = 0
+
 	var/image/indicator_display = null
 	var/display_color =	"#00FF00"
 	var/initial_proj = /datum/projectile/laser/blaster
