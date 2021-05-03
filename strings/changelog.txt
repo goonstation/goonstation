@@ -1,4 +1,8 @@
 
+(t)sun may 02 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Port-a-sci PDA app can no longer summon the port-a-sci. The port-a-sci can be taken along on adventures either by dragging it with you, or via the RD's physical remote.
 (t)sat may 01 21
 (u)Jan.antilles
 (p)4534
