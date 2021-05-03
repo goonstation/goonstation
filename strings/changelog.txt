@@ -1,5 +1,7 @@
 
 (t)mon may 03 21
+(u)pali
+(*)The 'MakeCaptain' law module can now be emagged to stealthily turn it into an indistinguishable 'MakeClown' module.
 (u)Flourish
 (e)🆕|feature
 (+)You can now feed snacks to all kinds of critters.
