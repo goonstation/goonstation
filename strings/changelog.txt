@@ -7,6 +7,7 @@
 (u)Tarmunora
 (e)⛔⚖|removal, balance
 (*)Port-a-sci PDA app can no longer summon the port-a-sci. The port-a-sci can be taken along on adventures either by dragging it with you, or via the RD's physical remote.
+(*)You can now fit sea ladders in bags.
 (t)sat may 01 21
 (u)Jan.antilles
 (p)4534
