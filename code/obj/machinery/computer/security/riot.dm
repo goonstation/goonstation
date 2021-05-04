@@ -68,12 +68,15 @@
 			if ("help")
 				if (!signal.data["topic"])
 					returnsignal.data["description"] = "Armory Authorization Computer - allows for lowering of armory access level to SECURITY. Wireless authorization requires NETPASS_HEADS"
-					returnsignal.data["topics"] = "authorize"
+					returnsignal.data["topics"] = "authorize and unauthorize"
 				else
 					returnsignal.data["topic"] = signal.data["topic"]
 					switch (lowertext(signal.data["topic"]))
 						if ("authorize")
 							returnsignal.data["description"] = "Authorizes armory access. Requires NETPASS_HEADS. Requires close range transmission."
+							returnsignal.data["args"] = "acc_code"
+						if ("unauthorize")
+							returnsignal.data["description"] = "Unauthorizes armory access. Requires NETPASS_HEADS. Requires close range transmission."
 							returnsignal.data["args"] = "acc_code"
 						else
 							returnsignal.data["description"] = "ERROR: UNKNOWN TOPIC"
@@ -86,6 +89,18 @@
 					returnsignal.data["acc_code"] = netpass_security
 					returnsignal.data["data"] = "authorize"
 					authorize()
+				else
+					returnsignal.data["command"] = "nack"
+					returnsignal.data["data"] = "badpass"
+			if ("unauthorize")
+				if(!IN_RANGE(signal.source, src, radiorange))
+					returnsignal.data["command"] = "nack"
+					returnsignal.data["data"] = "outofrange"
+				else if (signal.data["acc_code"] == netpass_heads)
+					returnsignal.data["command"] = "ack"
+					returnsignal.data["acc_code"] = netpass_security
+					returnsignal.data["data"] = "unauthorize"
+					unauthorize()
 				else
 					returnsignal.data["command"] = "nack"
 					returnsignal.data["data"] = "badpass"
@@ -189,11 +204,11 @@
 		if(get_dist(user, src) > 1) return
 		switch(choice)
 			if("Unauthorize")
-				if(ON_COOLDOWN(src, "unauth", 5 MINUTES))
-					boutput(user, "<span class='alert'> The armory computer cannot take your commands at the moment! Wait [ON_COOLDOWN(src, "unauth", 0)/10] seconds!</span>")
+				if(GET_COOLDOWN(src, "unauth"))
+					boutput(user, "<span class='alert'> The armory computer cannot take your commands at the moment! Wait [GET_COOLDOWN(src, "unauth")/10] seconds!</span>")
 					playsound( src.loc,"sound/machines/airlock_deny.ogg", 10, 0 )
 					return
-				if(!ON_COOLDOWN(src, "Unauth", 5 MINUTES))
+				if(!ON_COOLDOWN(src, "unauth", 5 MINUTES))
 					unauthorize()
 					playsound(src.loc,"sound/machines/chime.ogg", 10, 1)
 					boutput(user,"<span class='notice'> The armory's equipments have returned to having their default access!</span>")
