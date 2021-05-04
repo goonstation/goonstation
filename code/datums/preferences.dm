@@ -1766,8 +1766,8 @@ var/global/list/masculine_hstyles = list("None" = "None",
 	"Temsik" = "temsik",
 	"Visual" = "visual",
 	"Tulip" = "tulip",
-	"Spikey" = "spikey",
-	"Subtle Spikey" = "subtlespikey",
+	"Spiky" = "spiky",
+	"Subtle Spiky" = "subtlespiky",
 	"Bloom" = "bloom")
 
 var/global/list/facial_hair = list("None" = "none",
