@@ -200,6 +200,7 @@
 		if(!can_use())
 			boutput(user, "<span class='alert'>You need to wear [src] for that.</span>")
 			return
+		return ..()
 
 /obj/item/storage/belt/utility
 	name = "utility belt"
