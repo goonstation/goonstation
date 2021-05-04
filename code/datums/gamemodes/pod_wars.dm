@@ -140,6 +140,7 @@ var/list/pw_rewards_tier3 = null
 		// add_control_point(/area/pod_wars/spacejunk/uvb67, UVB67)
 
 		setup_control_points()
+		setup_critical_systems()
 
 	SPAWN_DBG(-1)
 		setup_asteroid_ores()
@@ -175,6 +176,14 @@ var/list/pw_rewards_tier3 = null
 
 	src.playsound_to_team(team_NT, "sound/voice/pod_wars_voices/NanoTrasen-Roundstart{ALTS}.ogg", sound_type=PW_ROUNDSTART)
 	src.playsound_to_team(team_SY, "sound/voice/pod_wars_voices/Syndicate-Roundstart{ALTS}.ogg", sound_type=PW_ROUNDSTART)
+
+/datum/game_mode/pod_wars/proc/setup_critical_systems()
+	for (var/obj/pod_base_critical_system/sys in world)
+		switch(sys.team_num)
+			if (TEAM_NANOTRASEN)
+				team_NT.mcguffins += sys
+			if (TEAM_SYNDICATE)
+				team_SY.mcguffins += sys
 
 
 /datum/game_mode/pod_wars/proc/setup_control_points()
@@ -747,17 +756,6 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 
 	syndicate
 		team_num = TEAM_SYNDICATE
-
-	New()
-		..()
-		//add this crit system to its team datum's list of crit systems
-		if (istype(ticker.mode, /datum/game_mode/pod_wars))
-			var/datum/game_mode/pod_wars/mode = ticker.mode
-			switch(team_num)
-				if (TEAM_NANOTRASEN)
-					mode.team_NT.mcguffins += src
-				if (TEAM_SYNDICATE)
-					mode.team_SY.mcguffins += src
 
 	disposing()
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
