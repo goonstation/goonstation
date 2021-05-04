@@ -3650,10 +3650,7 @@
 /turf/simulated/wall/asteroid/pod_wars,
 /area/pod_wars/asteroid/major/maj_14)
 "qM" = (
-/obj/pod_base_critical_system{
-	name = "Refinery Critical System";
-	team_num = 1
-	},
+/obj/pod_base_critical_system/nanotrasen,
 /turf/space,
 /area/space)
 "qO" = (
@@ -5155,10 +5152,9 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/dorgun)
 "xH" = (
-/obj/pod_base_critical_system{
+/obj/pod_base_critical_system/syndicate{
 	dir = 8;
-	name = "Primary Engines Critical System";
-	team_num = 2
+	name = "Primary Engines Critical System"
 	},
 /turf/space,
 /area/space)
@@ -7150,13 +7146,6 @@
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
-"Hq" = (
-/obj/pod_base_critical_system{
-	name = "Bridge Critical System";
-	team_num = 1
-	},
-/turf/space,
-/area/space)
 "Hs" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -8487,10 +8476,9 @@
 	},
 /area/pod_wars/spacejunk/fstation/primary)
 "NU" = (
-/obj/pod_base_critical_system{
+/obj/pod_base_critical_system/syndicate{
 	dir = 8;
-	name = "Secondary Engines Critical System";
-	team_num = 2
+	name = "Secondary Engines Critical System"
 	},
 /turf/space,
 /area/space)
@@ -8982,14 +8970,6 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team1/manufacturing)
-"Qa" = (
-/obj/pod_base_critical_system{
-	dir = 1;
-	name = "Starboard Engines Critical System";
-	team_num = 1
-	},
-/turf/space,
-/area/space)
 "Qf" = (
 /obj/window/auto/reinforced/indestructible/extreme,
 /obj/forcefield/energyshield/perma/pod_wars/nanotrasen,
@@ -10033,10 +10013,9 @@
 	},
 /area/pod_wars/team1/manufacturing)
 "UK" = (
-/obj/pod_base_critical_system{
+/obj/pod_base_critical_system/syndicate{
 	dir = 4;
-	name = "Bridge Critical System";
-	team_num = 2
+	name = "Bridge Critical System"
 	},
 /turf/space,
 /area/space)
@@ -10664,9 +10643,8 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/dorgun)
 "XK" = (
-/obj/pod_base_critical_system{
-	name = "Medbay Critical System";
-	team_num = 2
+/obj/pod_base_critical_system/syndicate{
+	name = "Medbay Critical System"
 	},
 /turf/space,
 /area/space)
@@ -10768,10 +10746,8 @@
 /turf/space,
 /area/pod_wars/spacejunk/uvb67/central)
 "Yi" = (
-/obj/pod_base_critical_system{
-	dir = 1;
-	name = "Port Engines Critical System";
-	team_num = 1
+/obj/pod_base_critical_system/nanotrasen{
+	dir = 1
 	},
 /turf/space,
 /area/space)
@@ -46310,7 +46286,7 @@ JW
 JW
 JW
 JW
-Hq
+qM
 Mr
 jf
 mi
@@ -52362,7 +52338,7 @@ Ef
 gX
 Vt
 JW
-Qa
+Yi
 JW
 JW
 JW

@@ -144,10 +144,18 @@ var/list/pw_rewards_tier3 = null
 	SPAWN_DBG(-1)
 		setup_asteroid_ores()
 
-	SPAWN_DBG(activate_control_points_time)
-		command_alert("There's a low spectrum signal that's been detected that might effect various computers in the area.","Control Point Computers Online")
+	SPAWN_DBG(150)//activate_control_points_time
+		command_alert("An extremely powerful ion storm has reached this system! Control Point Computers are now able to be captured and both NanoTrasen and Syndicate Pod Carriers' shields are down!","Control Point Computers Online")
 		for (var/datum/control_point/P in src.control_points)
 			P?.computer.can_be_captured = 1
+
+		//for loop through crit systems for each team
+		for (var/obj/pod_base_critical_system/sys in team_NT.mcguffins)
+			sys.shielded = 0
+			message_admins("sys:[sys.name]-shielded:[sys.shielded]")
+		for (var/obj/pod_base_critical_system/sys in team_SY.mcguffins)
+			sys.shielded = 0
+			message_admins("sys:[sys.name]-shielded:[sys.shielded]")
 
 	//setup rewards crate lists
 	setup_pw_crate_lists()
@@ -730,18 +738,39 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 
 	var/health = 10000
 	var/health_max = 10000
-	var/team_num		//used for getting the team datum, this is set to 1 or 2 in the map editor. 1 = NT, 2 = Syndicate
+	var/team_num
 	var/suppress_damage_message = 0
+	var/shielded = 1
+
+	nanotrasen
+		team_num = TEAM_NANOTRASEN
+
+	syndicate
+		team_num = TEAM_SYNDICATE
 
 	New()
 		..()
+		//add this crit system to its team datum's list of crit systems
+		if (istype(ticker.mode, /datum/game_mode/pod_wars))
+			var/datum/game_mode/pod_wars/mode = ticker.mode
+			switch(team_num)
+				if (TEAM_NANOTRASEN)
+					mode.team_NT.mcguffins += src
+				if (TEAM_SYNDICATE)
+					mode.team_SY.mcguffins += src
 
 	disposing()
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
 			//get the team datum from its team number right when we allocate points.
 			var/datum/game_mode/pod_wars/mode = ticker.mode
-
 			mode.announce_critical_system_destruction(team_num, src)
+
+			switch(team_num)
+				if (TEAM_NANOTRASEN)
+					mode.team_NT.mcguffins -= src
+				if (TEAM_SYNDICATE)
+					mode.team_SY.mcguffins -= src
+
 		..()
 
 
@@ -821,6 +850,9 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 
 	proc/take_damage(var/damage, var/mob/user)
 		// if (damage > 0)
+		if (shielded)
+			return
+
 		src.health -= damage
 
 		if (!suppress_damage_message && istype(ticker.mode, /datum/game_mode/pod_wars))
@@ -2999,7 +3031,7 @@ proc/setup_pw_crate_lists()
 			indicator_display.icon_state = "pw_pistol_power-[ratio]"
 			indicator_display.color = display_color
 			UpdateOverlays(indicator_display, "ind_dis")
-			
+
 	nanotrasen
 		muzzle_flash = "muzzle_flash_plaser"
 		display_color =	"#3d9cff"
