@@ -145,7 +145,7 @@ var/list/pw_rewards_tier3 = null
 	SPAWN_DBG(-1)
 		setup_asteroid_ores()
 
-	SPAWN_DBG(150)//activate_control_points_time
+	SPAWN_DBG(activate_control_points_time)
 		command_alert("An extremely powerful ion storm has reached this system! Control Point Computers are now able to be captured and both NanoTrasen and Syndicate Pod Carriers' shields are down!","Control Point Computers Online")
 		for (var/datum/control_point/P in src.control_points)
 			P?.computer.can_be_captured = 1
@@ -153,10 +153,8 @@ var/list/pw_rewards_tier3 = null
 		//for loop through crit systems for each team
 		for (var/obj/pod_base_critical_system/sys in team_NT.mcguffins)
 			sys.shielded = 0
-			message_admins("sys:[sys.name]-shielded:[sys.shielded]")
 		for (var/obj/pod_base_critical_system/sys in team_SY.mcguffins)
 			sys.shielded = 0
-			message_admins("sys:[sys.name]-shielded:[sys.shielded]")
 
 	//setup rewards crate lists
 	setup_pw_crate_lists()

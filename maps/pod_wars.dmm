@@ -3650,7 +3650,9 @@
 /turf/simulated/wall/asteroid/pod_wars,
 /area/pod_wars/asteroid/major/maj_14)
 "qM" = (
-/obj/pod_base_critical_system/nanotrasen,
+/obj/pod_base_critical_system/nanotrasen{
+	name = "Refinery Critical System"
+	},
 /turf/space,
 /area/space)
 "qO" = (
@@ -5790,6 +5792,13 @@
 "AZ" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team1/porthall)
+"Ba" = (
+/obj/pod_base_critical_system/nanotrasen{
+	dir = 1;
+	name = "Starboard Engines Critical System"
+	},
+/turf/space,
+/area/space)
 "Bb" = (
 /obj/storage/secure/closet/medical/medkit,
 /obj/machinery/light{
@@ -8792,6 +8801,12 @@
 	},
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
+"Po" = (
+/obj/pod_base_critical_system/nanotrasen{
+	name = "Bridge Critical System"
+	},
+/turf/space,
+/area/space)
 "Pq" = (
 /obj/rack,
 /obj/item/magnet_parts/construction,
@@ -10747,7 +10762,8 @@
 /area/pod_wars/spacejunk/uvb67/central)
 "Yi" = (
 /obj/pod_base_critical_system/nanotrasen{
-	dir = 1
+	dir = 1;
+	name = "Port Engines Critical System"
 	},
 /turf/space,
 /area/space)
@@ -46286,7 +46302,7 @@ JW
 JW
 JW
 JW
-qM
+Po
 Mr
 jf
 mi
@@ -52338,7 +52354,7 @@ Ef
 gX
 Vt
 JW
-Yi
+Ba
 JW
 JW
 JW
