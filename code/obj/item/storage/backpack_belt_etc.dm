@@ -355,6 +355,16 @@
 	)
 	in_list_or_max = 1
 
+	attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
+		if (istype(W, /obj/item/storage/firstaid/regular))
+			var/obj/item/storage/S = W
+			for (var/obj/item/I in S.get_contents())
+				if (..(I, user, S) == 0)
+					break
+			return
+		else
+			return ..()
+
 /obj/item/storage/belt/mining
 	name = "miner's belt"
 	desc = "Can hold various mining tools."
