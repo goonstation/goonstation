@@ -6,6 +6,19 @@
 #define UVB67 "UVB67"
 #define CHUCKS "CHUCKS"
 
+
+#define PW_COMMANDER_DIES 1
+#define PW_CRIT_SYSTEM_DESTORYED 2
+#define PW_LOSE 3
+#define PW_LOSING 4
+#define PW_WIN 5
+#define PW_ROUNDSTART 6
+#define PW_OBJECTIVE_SECURED 7
+// #define PW_OBJECTIVE_LOST_CHUCKS 8
+// #define PW_OBJECTIVE_LOST_FORTUNA 9
+// #define PW_OBJECTIVE_LOST_RELIANT 10
+// #define PW_OBJECTIVE_LOST_UVB67 11
+
 //idk if this is a good idea. I'm setting them in the game mode, they'll be useless outisde of it...
 var/list/pw_rewards_tier1 = null
 var/list/pw_rewards_tier2 = null
@@ -73,7 +86,7 @@ var/list/pw_rewards_tier3 = null
 		var/length = length(readied_minds)
 		shuffle_list(readied_minds)
 		if (length < 2)
-			if (prob(0))	//change to 50 - KYLE
+			if (prob(100))	//change to 50 - KYLE
 				var/CHANGE_TO_50
 				team_NT.accept_initial_players(readied_minds)
 			else
@@ -152,8 +165,8 @@ var/list/pw_rewards_tier3 = null
 				M.emote("fart")
 			force_end = 1
 
-	src.playsound_to_team(team_NT, "sound/voice/pod_wars_voices/NanoTrasen-Roundstart.ogg")
-	src.playsound_to_team(team_SY, "sound/voice/pod_wars_voices/Syndicate-Roundstart.ogg")
+	src.playsound_to_team(team_NT, "sound/voice/pod_wars_voices/NanoTrasen-Roundstart{ALTS}.ogg", sound_type=PW_ROUNDSTART)
+	src.playsound_to_team(team_SY, "sound/voice/pod_wars_voices/Syndicate-Roundstart{ALTS}.ogg", sound_type=PW_ROUNDSTART)
 
 
 /datum/game_mode/pod_wars/proc/setup_control_points()
@@ -311,22 +324,22 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 //user = who did the capturing? //might remove later if I change the capture system
 //team = the team datum
 //team_num = 1 or 2 for NT or SY respectively
-/datum/game_mode/pod_wars/proc/handle_control_pt_change(var/true_name, var/mob/user, var/datum/pod_wars_team/team)
+/datum/game_mode/pod_wars/proc/handle_control_pt_change(var/datum/control_point/point, var/mob/user, var/datum/pod_wars_team/team)
 	var/team_num = team.team_num
-	board.change_control_point_owner(true_name, team_num)
+	board.change_control_point_owner(point.true_name, team_num)
 
 	var/team_string = "[team_num == 1 ? "NanoTrasen" : team_num == 2 ? "The Syndicate" : "Something Eldritch"]"
-	boutput(world, "<h4><span class='[team_num == 1 ? "notice":"alert"]'>[user] has captured [true_name] for [team_string]!</span></h4>")
+	boutput(world, "<h4><span class='[team_num == 1 ? "notice":"alert"]'>[user] has captured [point.true_name] for [team_string]!</span></h4>")
 
 
 	switch(team_num)
 		if (TEAM_NANOTRASEN)
-			src.playsound_to_team(team_NT, "sound/voice/pod_wars_voices/{PWTN}Objective_Secured-[rand(1,2)].ogg", 60)
-			src.playsound_to_team(team_SY, "sound/voice/pod_wars_voices/{PWTN}Lost_[true_name]-[rand(1,2)].ogg", 60)
+			src.playsound_to_team(team_NT, "sound/voice/pod_wars_voices/{PWTN}Objective_Secured{ALTS}.ogg", 60, sound_type=PW_OBJECTIVE_SECURED)
+			src.playsound_to_team(team_SY, "sound/voice/pod_wars_voices/{PWTN}Objective_Lost_[point.true_name]{ALTS}.ogg", 60, sound_type=point.true_name)
 
 		if (TEAM_SYNDICATE)
-			src.playsound_to_team(team_SY, "sound/voice/pod_wars_voices/{PWTN}Objective_Secured-[rand(1,2)].ogg", 60)
-			src.playsound_to_team(team_NT, "sound/voice/pod_wars_voices/{PWTN}Lost_[true_name]-[rand(1,2)].ogg", 60)
+			src.playsound_to_team(team_SY, "sound/voice/pod_wars_voices/{PWTN}Objective_Secured{ALTS}.ogg", 60, sound_type=PW_OBJECTIVE_SECURED)
+			src.playsound_to_team(team_NT, "sound/voice/pod_wars_voices/{PWTN}Objective_Lost_[point.true_name]{ALTS}.ogg", 60, sound_type=point.true_name)
 
 /datum/game_mode/pod_wars/proc/handle_point_change(var/datum/pod_wars_team/team)
 	var/fraction = round (team.points/team.max_points, 0.01)
@@ -365,7 +378,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		our_team.change_points(-2)
 		if (!our_team.first_commander_death)
 			our_team.first_commander_death = 1
-			src.playsound_to_team(our_team, "sound/voice/pod_wars_voices/{PWTN}Commander_Dies.ogg")
+			src.playsound_to_team(our_team, "sound/voice/pod_wars_voices/{PWTN}Commander_Dies{ALTS}.ogg", sound_type=PW_COMMANDER_DIES)
 	enemy_team.change_points(1)
 
 /datum/game_mode/pod_wars/proc/announce_critical_system_destruction(var/team_num, var/obj/pod_base_critical_system/CS)
@@ -381,7 +394,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 	//If it's the first one for this team, play the voice line, otherwise play the ship alert sound.
 	if (!team.first_system_destroyed)
 		team.first_system_destroyed = 1
-		src.playsound_to_team(team, "sound/voice/pod_wars_voices/{PWTN}Crit_System_Destroyed.ogg")
+		src.playsound_to_team(team, "sound/voice/pod_wars_voices/{PWTN}Crit_System_Destroyed{ALTS}.ogg", sound_type=PW_CRIT_SYSTEM_DESTORYED)
 	else
 		src.playsound_to_team(team, "sound/effects/ship_alert_major.ogg", 60)
 
@@ -444,8 +457,8 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 	output_team_members(loser)
 
 
-	src.playsound_to_team(winner, "sound/voice/pod_wars_voices/{PWTN}Win-[rand(1,2)].ogg")
-	src.playsound_to_team(loser, "sound/voice/pod_wars_voices/{PWTN}Lose-[rand(1,2)].ogg")
+	src.playsound_to_team(winner, "sound/voice/pod_wars_voices/{PWTN}Win{ALTS}.ogg", sound_type=PW_WIN)
+	src.playsound_to_team(loser, "sound/voice/pod_wars_voices/{PWTN}Lose{ALTS}.ogg", sound_type=PW_LOSE)
 
 	// output the player stats on its own popup.
 	stats_manager.display_HTML_to_clients()
@@ -454,14 +467,14 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 //Plays a sound for a particular team.
 //pw_team can be the team datum or TEAM_NANOTRASEN|TEAM_SYNDICATE
 //filepath; sound file path as a string.
-/datum/game_mode/pod_wars/proc/playsound_to_team(var/pw_team, var/filepath, var/volume = 75)
+/datum/game_mode/pod_wars/proc/playsound_to_team(var/pw_team, var/filepath, var/volume = 75, var/sound_type = 0)
 	if (isnull(pw_team) || isnull(filepath))
 		return 0
 
 	var/datum/pod_wars_team/team = null
 	//If pw_team is a num, make team a one of the pod_wars_team
 	if (isnum(pw_team))
-		switch(team)
+		switch(pw_team)
 			if (TEAM_NANOTRASEN)
 				team = team_NT
 			if (TEAM_SYNDICATE)
@@ -475,18 +488,49 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		message_admins("Something went wrong trying to play a sound for a team")
 		return 0
 
-	if (team == team_NT) return
 	//use the format of sound files in /sound/voice/pod_wars_voices.
 	//If we find "{PWTN}" in the filepath, then we replace that with the team name, either "NanoTrasen"- or "Syndicate-"?
 	//{PWTN} = PodWarsTeamName
 	if (findtext(filepath, "{PWTN}"))
 		filepath = replacetext(filepath, "{PWTN}", "[team.name]-")
 
+	var/sound_amts = get_voice_line_alts_for_team_sound(team, sound_type)
+	if (sound_amts && findtext(filepath, "{ALTS}"))
+		filepath = replacetext(filepath, "{ALTS}", "-[rand(1, sound_amts)]")	//if alts is 1, it rand(1,1) will always choose 1
+
+
 	message_admins("filepath is now: [filepath]")
 	for (var/datum/mind/M in team.members)
 		M.current.playsound_local(M.current, filepath, volume, 0, flags = SOUND_IGNORE_SPACE)
 
 	return 1
+
+//get the amount of alt lines we have for each type of voice line based on the define added...
+datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_wars_team/team, var/sound_type)
+	switch(sound_type)
+		if (PW_COMMANDER_DIES)
+			return team.sl_amt_commander_dies
+		if (PW_CRIT_SYSTEM_DESTORYED)
+			return team.sl_amt_crit_system_destroyed
+		if (PW_LOSE)
+			return team.sl_amt_lose
+		if (PW_LOSING)
+			return team.sl_amt_losing
+		if (PW_WIN)
+			return team.sl_amt_win
+		if (PW_ROUNDSTART)
+			return team.sl_amt_roundstart
+		if (PW_OBJECTIVE_SECURED)
+			return team.sl_amt_objective_secured
+		if (CHUCKS)
+			return team.sl_amt_objective_lost_chucks
+		if (RELIANT)
+			return team.sl_amt_objective_lost_fortuna
+		if (RELIANT)
+			return team.sl_amt_objective_lost_reliant
+		if (UVB67)
+			return team.sl_amt_objective_lost_uvb67
+	return 0
 
 //outputs the team members to world for declare_completion
 /datum/game_mode/pod_wars/proc/output_team_members(var/datum/pod_wars_team/pw_team)
@@ -518,20 +562,32 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 	var/first_system_destroyed = 0
 	var/first_commander_death = 0
 
+	//sound line alt amounts for random selection based on what's in the voice line directory
+	var/sl_amt_commander_dies
+	var/sl_amt_crit_system_destroyed
+	var/sl_amt_lose
+	var/sl_amt_losing
+	var/sl_amt_win
+	var/sl_amt_roundstart
+	var/sl_amt_objective_secured
+	var/sl_amt_objective_lost_chucks
+	var/sl_amt_objective_lost_fortuna
+	var/sl_amt_objective_lost_reliant
+	var/sl_amt_objective_lost_uvb67
+
 	New(var/datum/game_mode/pod_wars/mode, team_num)
 		..()
 		src.mode = mode
 		src.team_num = team_num
-		if (src.team_num == TEAM_NANOTRASEN)
-			name = "NanoTrasen"
-#ifdef MAP_OVERRIDE_POD_WARS
-			base_area = /area/pod_wars/team1 //area north, NT crew
-#endif
-		else if (src.team_num == TEAM_SYNDICATE)
-			name = "Syndicate"
-#ifdef MAP_OVERRIDE_POD_WARS
-			base_area = /area/pod_wars/team2 //area south, Syndicate crew
-#endif
+		switch(team_num)
+			if (TEAM_NANOTRASEN)
+				name = "NanoTrasen"
+				base_area = /area/pod_wars/team1 //area north, NT crew
+			if (TEAM_SYNDICATE)
+				name = "Syndicate"
+				base_area = /area/pod_wars/team2 //area south, Syndicate crew
+
+		setup_voice_line_alt_amounts()
 		set_comms(mode)
 
 	proc/change_points(var/amt)
@@ -633,6 +689,35 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		// SHOW_TIPS(H)
 		if (istype(mode))
 			mode.stats_manager?.add_player(H.mind, H.real_name, team_num, (H.mind == commander ? "Commander" : "Pilot"))
+
+	//set the amounts of files for each type of line based on the team and amount of voice line files for that line.
+	//files are in sound\voice\pod_wars_voices
+	proc/setup_voice_line_alt_amounts()
+		switch(team_num)
+			if (TEAM_NANOTRASEN)
+				sl_amt_commander_dies = 2
+				sl_amt_crit_system_destroyed = 2
+				sl_amt_lose = 4
+				sl_amt_losing = 3
+				sl_amt_win = 2
+				sl_amt_roundstart = 2
+				sl_amt_objective_secured = 3
+				sl_amt_objective_lost_chucks = 3
+				sl_amt_objective_lost_fortuna = 3
+				sl_amt_objective_lost_reliant = 3
+				sl_amt_objective_lost_uvb67 = 1
+			if (TEAM_SYNDICATE)
+				sl_amt_commander_dies = 1
+				sl_amt_crit_system_destroyed = 1
+				sl_amt_lose = 2
+				sl_amt_losing = 0
+				sl_amt_win = 2
+				sl_amt_roundstart = 1
+				sl_amt_objective_secured = 2
+				sl_amt_objective_lost_chucks = 2
+				sl_amt_objective_lost_fortuna = 2
+				sl_amt_objective_lost_reliant = 2
+				sl_amt_objective_lost_uvb67 = 2
 
 /obj/pod_base_critical_system
 	name = "Critical System"
@@ -1894,7 +1979,15 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 	attack_hand(mob/user as mob)
 		if (!can_be_captured)
-			boutput(user, "This computer seems to be frozen, you can't input any commands to run the control protocols for this satelite...")
+			var/cur_time
+			var/datum/game_mode/pod_wars/mode = ticker.mode
+			if (istype(mode))
+				cur_time = round((mode.activate_control_points_time-ticker.round_elapsed_ticks) / (1 MINUTES), 1)	//converts to minutes
+			else
+				cur_time = round( 15 MINUTES / 1 MINUTES, 1)
+
+
+			boutput(user, "<span class='notice'>This computer seems to be frozen on a space-weather tracking screen. It looks like a large ion storm will be passing this system in about <b class='alert'>[(cur_time)] minutes mission time</b>.<br>You can't input any commands to run the control protocols for this satelite...</span>")
 			playsound(src, "sound/machines/buzz-sigh.ogg", 30, 1, flags = SOUND_IGNORE_SPACE)
 			return 0
 		if (owner_team != get_pod_wars_team_num(user))
@@ -2088,7 +2181,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 				pw_team = mode.team_SY
 
 		//update scoreboard
-		mode.handle_control_pt_change(src.true_name, user, pw_team)
+		mode.handle_control_pt_change(src, user, pw_team)
 
 		//log player_stats. Increment nearby player's capture point stat
 		if (mode.stats_manager)
@@ -2395,7 +2488,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		// 	return
 		var/datum/pw_player_stats/stat = player_stats[ckey]
 		if (istype(stat))
-			var/shift_time = round(ticker.round_elapsed_ticks / (1 MINUTES), 0.01)		//this converts shift time to "minutes"
+			var/shift_time = round(ticker.round_elapsed_ticks / (1 MINUTES), 0.01)		//this converts shift time to "minutes". uses this cause it starts counting when the round starts, not when the lobby starts.
 
 
 			//I feel like I should explain this, but I'm not gonna cause it's not confusing enough to need it. Just the long names make it look weird.
@@ -2854,7 +2947,7 @@ proc/setup_pw_crate_lists()
 	desc = "A dangerous-looking blaster pistol. It's self-charging by a radioactive power cell."
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "pw_pistol"
-	item_state = "pw_pistol"
+	item_state = "pw_pistol_nt"
 	w_class = 3.0
 	force = 8.0
 	mats = 0
@@ -2890,12 +2983,12 @@ proc/setup_pw_crate_lists()
 		current_projectile = new initial_proj
 		projectiles = list(current_projectile)
 		src.indicator_display = image('icons/obj/items/gun.dmi', "")
-
 		..()
+
 
 	update_icon()
 		..()
-		src.overlays = null
+		// src.overlays = null
 
 		if (src.cell)
 			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
@@ -2905,17 +2998,19 @@ proc/setup_pw_crate_lists()
 				return
 			indicator_display.icon_state = "pw_pistol_power-[ratio]"
 			indicator_display.color = display_color
-			src.overlays += indicator_display
-
+			UpdateOverlays(indicator_display, "ind_dis")
+			
 	nanotrasen
 		muzzle_flash = "muzzle_flash_plaser"
-		display_color =	"#0a4882"
+		display_color =	"#3d9cff"
+		item_state = "pw_pistol_nt"
 		initial_proj = /datum/projectile/laser/blaster/pod_pilot/blue_NT
 		team_num = 1
 
 	syndicate
 		muzzle_flash = "muzzle_flash_laser"
 		display_color =	"#ff4043"
+		item_state = "pw_pistol_sy"
 		initial_proj = /datum/projectile/laser/blaster/pod_pilot/red_SY
 		team_num = 2
 
@@ -2969,3 +3064,15 @@ proc/setup_pw_crate_lists()
 	O.icon_state = "explosion"
 	SPAWN_DBG(3.5 SECONDS)
 		qdel(O)
+
+#undef PW_COMMANDER_DIES
+#undef PW_CRIT_SYSTEM_DESTORYED
+#undef PW_LOSE
+#undef PW_LOSING
+#undef PW_WIN
+#undef PW_ROUNDSTART
+#undef PW_OBJECTIVE_SECURED
+// #undef PW_OBJECTIVE_LOST_CHUCKS
+// #undef PW_OBJECTIVE_LOST_FORTUNA
+// #undef PW_OBJECTIVE_LOST_RELIANT
+// #undef PW_OBJECTIVE_LOST_UVB67
