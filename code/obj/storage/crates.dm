@@ -681,3 +681,6 @@
 		spawn_contents = list(/obj/item/radio_tape/advertisement/cargonia,
 		/obj/item/clothing/under/rank/cargo,/obj/decal/skeleton)
 
+	escape
+		spawn_contents = list(/obj/item/sea_ladder,
+		/obj/item/pipebomb/bomb/engineering = 2)
