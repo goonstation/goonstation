@@ -736,6 +736,10 @@
 			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
 
+	move_inside()
+		boutput(usr, "<span class='notice'>You can't seem to shove yourself into the [src] without it tipping over as you climb in.</span>")
+		return
+
 /// Yells at doctors to check the thing when it's sent home
 /obj/machinery/sleeper/port_a_medbay/proc/PDA_alert_check()
 	if (src.loc != homeloc)
