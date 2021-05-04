@@ -1,4 +1,8 @@
 
+(t)tue may 04 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Riot launcher grenade conversion chamber now requires a 1 second delay before the grenade is loaded
 (t)mon may 03 21
 (u)Tarmunora
 (e)🆕|feature
