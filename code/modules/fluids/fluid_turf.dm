@@ -365,6 +365,20 @@
 	allow_hole = 0
 	spawningFlags = SPAWN_DECOR | SPAWN_PLANTS | SPAWN_FISH | SPAWN_LOOT | SPAWN_HALLU
 
+	blow_hole()
+		if(src.z == 5)
+			for(var/turf/space/fluid/T in range(8, locate(src.x, src.y, 1)))
+				if(T.allow_hole)
+					var/x = T.x
+					var/y = T.y
+					T.blow_hole()
+					var/turf/space/fluid/warp_z5/hole = locate(x, y, 1)
+					if(istype(hole))
+						hole.L = list(src)
+						src.linked_hole = hole
+						src.UpdateOverlays(image(icon = 'icons/effects/64x64.dmi', icon_state = "lightshaft", loc = src), "lightshaft")
+						break
+
 /turf/space/fluid/nospawn
 	spawningFlags = null
 

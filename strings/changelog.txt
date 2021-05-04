@@ -3,6 +3,7 @@
 (u)Tarmunora
 (e)🆕|feature
 (*)Sea Ladders may be used from the sea floor (on/around tiles with lightshafts)
+(*)Undersea explosions will open holes to the trench (allowing escape via ladder)
 (u)pali
 (*)The 'MakeCaptain' law module can now be emagged to stealthily turn it into an indistinguishable 'MakeClown' module.
 (u)Flourish
