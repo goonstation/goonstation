@@ -749,6 +749,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		C.original_name = selfmob.real_name
 
 		C.Browse(grabResource("html/ghostcritter_mentor.html"),"window=ghostcritter_mentor;size=600x400;title=Ghost Critter Help")
+		logTheThing("admin", C, null, "respawned as a mentor mouse at [log_loc(C)].")
 
 		//hacky fix : qdel brain to prevent reviving
 		if (C.organHolder)

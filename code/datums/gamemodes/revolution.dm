@@ -401,6 +401,10 @@
 			if(isghostcritter(rev_mind.current) || isVRghost(rev_mind.current))
 				continue
 
+			if(ismobcritter(rev_mind.current))
+				//mob critters can't revolt because they don't work here.
+				continue
+
 			var/turf/T = get_turf(rev_mind.current)
 			if(T.z != 1)
 				continue

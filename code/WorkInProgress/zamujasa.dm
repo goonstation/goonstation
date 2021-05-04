@@ -423,7 +423,7 @@
 					qdel(I)
 
 			for (var/atom/S in gunsim)
-				if(istype(S, /obj/storage) || istype(S, /obj/artifact) || istype(S, /obj/critter) || istype(S, /obj/machinery/bot) || istype(S, /obj/decal) || istype(S, /mob/living/carbon/human/tdummy))
+				if(istype(S, /obj/storage) || istype(S, /obj/artifact) || istype(S, /obj/critter) || istype(S, /obj/machinery) || istype(S, /obj/decal) || istype(S, /mob/living/carbon/human/tdummy))
 					qdel(S)
 
 

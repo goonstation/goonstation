@@ -419,11 +419,13 @@ datum
 				var/datum/reagents/old_holder = src.holder //mbc pls, ZeWaka fix: null.holder
 				//if(!T.reagents) T.create_reagents(50)
 				//T.reagents.add_reagent("infernite", 5, null)
+				var/list/covered = old_holder.covered_turf()
+				if(length(covered) > 9)
+					volume = volume/length(covered)
 				if (volume < 3)
 					return
 
 				var/fail = 0
-				var/list/covered = old_holder.covered_turf()
 				if (covered.len>4)
 					fail = 1
 					if (prob(volume+6))

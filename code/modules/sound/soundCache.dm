@@ -590,6 +590,7 @@ var/global/list/soundCache = list(
  	"sound/machines/pc_process.ogg" = 'sound/machines/pc_process.ogg',\
  	"sound/machines/ping.ogg" = 'sound/machines/ping.ogg',\
  	"sound/machines/pod_alarm.ogg" = 'sound/machines/pod_alarm.ogg',\
+ 	"sound/machines/printer_cargo.ogg" = 'sound/machines/printer_cargo.ogg',\
  	"sound/machines/printer_dotmatrix.ogg" = 'sound/machines/printer_dotmatrix.ogg',\
  	"sound/machines/printer_press.ogg" = 'sound/machines/printer_press.ogg',\
  	"sound/machines/printer_thermal.ogg" = 'sound/machines/printer_thermal.ogg',\

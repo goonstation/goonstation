@@ -994,7 +994,7 @@
 			if(!istype(M, /obj/item/cable_coil))
 				if (!istype(M.material))
 					continue
-				if (!M.material.material_flags & MATERIAL_CRYSTAL || !M.material.material_flags & MATERIAL_METAL)
+				if (!(M.material.material_flags & MATERIAL_CRYSTAL) || !(M.material.material_flags & MATERIAL_METAL))
 					continue
 
 			M.set_loc(src)

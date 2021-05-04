@@ -271,6 +271,7 @@ datum
 			fluid_b = 193
 			transparency = 200
 
+		//new name for old stimulants
 		omegazine
 			name = "omegazine"
 			id = "omegazine"
@@ -3769,6 +3770,14 @@ datum
 			fluid_g = 181
 			transparency = 255
 			blocks_sight_gas = 1
+
+		iron_oxide
+			name = "Iron Oxide"
+			id = "iron_oxide"
+			description = "Iron, artifically rusted under the effects of oxygen, acetic acid, salt and a high temperature enviroment."
+			fluid_r = 112
+			fluid_b = 40
+			fluid_g = 9
 
 		//=-=-=-=-=-=-=-=-=
 		//|| C E M E N T ||
