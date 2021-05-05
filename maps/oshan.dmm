@@ -17222,13 +17222,6 @@
 	},
 /turf/simulated/floor/red,
 /area/listeningpost)
-"aOR" = (
-/obj/shrub{
-	dir = 8
-	},
-/obj/machinery/light/incandescent/harsh,
-/turf/simulated/floor/grass,
-/area/station/hydroponics/bay)
 "aOS" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/catering{
@@ -17365,13 +17358,6 @@
 /obj/stool/chair,
 /turf/simulated/floor/black,
 /area/listeningpost)
-"aPl" = (
-/obj/machinery/light/incandescent/harsh,
-/obj/shrub{
-	dir = 8
-	},
-/turf/simulated/floor/grass,
-/area/station/hydroponics/bay)
 "aPm" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 10
@@ -23573,7 +23559,7 @@
 /area/station/crew_quarters/baroffice)
 "bgj" = (
 /obj/machinery/light/incandescent/harsh,
-/obj/machinery/hydro_growlamp,
+/obj/machinery/plantpot,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "bgk" = (
@@ -46915,6 +46901,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/plantpot,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "jKq" = (
@@ -78111,7 +78098,7 @@ aKf
 pvB
 yiF
 yiF
-ydh
+yiF
 ydh
 yiF
 aPZ
@@ -78412,8 +78399,8 @@ euS
 aia
 aia
 aLL
-aOR
-nOT
+bgj
+avz
 aMf
 aLF
 aLF
@@ -78718,9 +78705,9 @@ aLF
 nOT
 aMf
 aMf
-aLF
-aLF
-aLF
+aMf
+aMf
+aMf
 aMf
 aMf
 aTc
@@ -79017,7 +79004,7 @@ agY
 agY
 aLL
 nkh
-avz
+nOT
 aMf
 aMf
 aMf
@@ -79319,7 +79306,7 @@ aia
 aia
 aLL
 aLH
-avz
+nOT
 aMf
 aMf
 aMf
@@ -79621,7 +79608,7 @@ agY
 agY
 ubH
 aLI
-avz
+nOT
 aMf
 aMH
 aMf
@@ -80224,7 +80211,7 @@ aJP
 fRB
 aKE
 ubH
-aPl
+bgj
 jKn
 vIY
 aNJ
