@@ -512,8 +512,8 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 	if (sound_amts && findtext(filepath, "{ALTS}"))
 		filepath = replacetext(filepath, "{ALTS}", "-[rand(1, sound_amts)]")	//if alts is 1, it rand(1,1) will always choose 1
 
-
-	message_admins("playing to:[team.name]. filepath is now: [filepath]")
+	//uncomment this message_admins for testing sounds
+	//message_admins("playing to:[team.name]. filepath is now: [filepath]")
 	for (var/datum/mind/M in team.members)
 		M.current.playsound_local(M.current, filepath, volume, 0, flags = SOUND_IGNORE_SPACE)
 
@@ -2379,7 +2379,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	name = "medicated bandage"
 	desc = "A length of gauze that will help stop bleeding and heal a small amount of brute/burn damage."
 	uses = 4
-	brute_heal = 5
+	brute_heal = 10
 	burn_heal = 5
 
 /obj/machinery/chem_dispenser/medical

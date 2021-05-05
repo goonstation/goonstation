@@ -817,8 +817,8 @@ CONTAINS:
 			else if (H.bleeding)
 				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 1, zone, 0, rand(4,6), brute_heal, burn_heal, "bandag"), user)
 				src.in_use = 1
-			else if (M.health < M.max_health)
-				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 15, 0, 0, 5, brute_heal, burn_heal, "sutur"), user)
+			else if ((brute_heal || burn_heal) && M.health < M.max_health)
+				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 5 SECONDS, 0, 0, 5, brute_heal, burn_heal, "bandag"), user)
 				src.in_use = 1
 			else
 				user.show_text("[H == user ? "You have" : "[H] has"] no wounds or incisions on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]] to bandage!", "red")
@@ -938,7 +938,7 @@ CONTAINS:
 				repair_bleeding_damage(target, 100, repair_amount)
 				if (brute_heal || burn_heal)
 					target.HealDamage("All", brute_heal, burn_heal)
-					
+
 			if (zone && vrb == "bandag" && !target.bandaged.Find(zone))
 				target.bandaged += zone
 				target.update_body()
@@ -951,6 +951,11 @@ CONTAINS:
 				B.uses --
 				B.tooltip_rebuild = 1
 				B.update_icon()
+				if (B.uses <= 0)
+					boutput(ownerMob, "<span class='alert'>You use up the last of the bandages.</span>")
+					ownerMob.u_equip(tool)
+					qdel(tool)
+
 			else if (istype(tool, /obj/item/material_piece/cloth))
 				ownerMob.u_equip(tool)
 				pool(tool)
