@@ -2025,41 +2025,6 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!")
 		else
 			boutput(user, "You can't think of anything else to do on this console...")
-		// old thing I was doing for capture system where it captured over time instead of all at once.
-		// switch(owner_team)
-		// 	if (TEAM_NANOTRASEN)
-		// 		switch(user_team)
-		// 			if (TEAM_NANOTRASEN)
-		// 				if (capturing_team == TEAM_SYNDICATE)
-		// 					SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/control_point_computer/proc/prevent_capture, list(user, user_team),\
-		// 					 null, null, "[user] re-assert control over \the [src]!")
-		// 					return
-		// 				boutput(user, "<br><span class='notice'>This already belongs to your team...</span>")
-		// 				return
-
-		// 			//NT owns this, Syndicate start to capture.
-		// 			if (TEAM_SYNDICATE)
-		// 				SETUP_GENERIC_ACTIONBAR(user, src, 7 SECONDS, /obj/control_point_computer/proc/start_capture, list(user, user_team),\
-		// 				 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!")
-		// 				return
-
-		// 	if (TEAM_SYNDICATE)
-		// 		switch(user_team)
-		// 			if (TEAM_SYNDICATE)
-		// 				if (capturing_team == TEAM_NANOTRASEN)
-		// 					boutput(user, "<br><span class='notice'>You enter a command re-assert control over this system...</span>")
-		// 					return
-		// 				boutput(user, "<br><span class='notice'>This already belongs to your team...</span>")
-		// 				return
-
-		// 			//SY owns this, NT start to capture.
-		// 			if (TEAM_NANOTRASEN)
-		// 				SETUP_GENERIC_ACTIONBAR(user, src, 7 SECONDS, /obj/control_point_computer/proc/start_capture, list(user, user_team),\
-		// 				 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!")
-		// 				return
-		// 	if (0)
-		// 		SETUP_GENERIC_ACTIONBAR(user, src, 7 SECONDS, /obj/control_point_computer/proc/start_capture, list(user, user_team),\
-		// 		 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!")
 
 	proc/is_commander(var/mob/user)
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
