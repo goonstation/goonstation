@@ -936,10 +936,9 @@ CONTAINS:
 				target.visible_message("<span class='success'>[owner] [vrb]es [owner == target ? "[his_or_her(owner)]" : "[target]'s"] wounds closed with [tool].</span>",\
 				"<span class='success'>[owner == target ? "You [vrb]e" : "[owner] [vrb]es"] your wounds closed with [tool].</span>")
 				repair_bleeding_damage(target, 100, repair_amount)
-				if (brute_heal)
-					random_brute_damage(target, brute_heal)
-				if (burn_heal)
-					random_burn_damage(target, burn_heal)
+				if (brute_heal || burn_heal)
+					target.HealDamage("All", brute_heal, burn_heal)
+					
 			if (zone && vrb == "bandag" && !target.bandaged.Find(zone))
 				target.bandaged += zone
 				target.update_body()

@@ -79,7 +79,7 @@
 // mindwipe from cloner zap chance
 #define SHOW_MINDWIPE_TIPS(M) M.Browse(grabResource("html/mindwipe.html"), MINDWIPE_TIPS_WINDOW)
 
-// mindwipe from cloner zap chance
+//Instructions for pod-wars gametype
 #define SHOW_POD_WARS(M) M.Browse(grabResource("html/pod_wars.html"), ANTAG_TIPS_WINDOW)
 
 /datum/adminAntagPopups
