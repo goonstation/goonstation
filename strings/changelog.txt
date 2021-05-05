@@ -1,4 +1,9 @@
 
+(t)wed may 05 21
+(u)edwardly
+(p)4566
+(e)⚖|balance
+(*)Removes the ability to unanchor the nuclear bomb once it's been anchored
 (t)tue may 04 21
 (u)Tarmunora
 (e)⚖|balance
