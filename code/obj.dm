@@ -102,6 +102,10 @@
 			artifact:holder = null
 		remove_dialogs()
 		..()
+	UpdateName()
+		if (src.real_name == null && name != null)
+			real_name = name
+		src.name = "[name_prefix(null, 1)][src.real_name || initial(src.name)][name_suffix(null, 1)]"
 
 	proc/can_access_remotely(mob/user)
 		. = FALSE
