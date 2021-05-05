@@ -463,7 +463,7 @@ var/syndicate_name = null
 		if(!isnull(last_reset_date))
 			var/days_passed = round((world.time - last_reset_date) / (1 DAY))
 			last_reset_text = "<h4>(memorial reset [days_passed] days ago)</h4>"
-		src.desc = "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3><br></center>"
+		src.desc = "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3><br>[last_reset_text]</center>"
 
 	attack_hand(var/mob/user as mob)
 		if (..(user))
