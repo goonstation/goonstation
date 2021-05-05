@@ -86,8 +86,7 @@ var/list/pw_rewards_tier3 = null
 		var/length = length(readied_minds)
 		shuffle_list(readied_minds)
 		if (length < 2)
-			if (prob(100))	//change to 50 - KYLE
-				var/CHANGE_TO_50
+			if (prob(50))
 				team_NT.accept_initial_players(readied_minds)
 			else
 				team_SY.accept_initial_players(readied_minds)
