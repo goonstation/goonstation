@@ -1918,6 +1918,8 @@ var/list/fun_images = list()
 	var/lose_value = input("Enter new lose value.") as num
 	world.save_intra_round_value("nukie_loss", lose_value)
 
+	world.save_intra_round_value("nukie_last_reset", world.time)
+
 	logTheThing("admin", usr ? usr : src, null, "set nuke ops values to [win_value] wins and [lose_value] loses.")
 	logTheThing("diary", usr ? usr : src, null, "set nuke ops values to [win_value] wins and [lose_value] loses.", "admin")
 	message_admins("[key_name(usr ? usr : src)] set nuke ops values to [win_value] wins and [lose_value] loses.")

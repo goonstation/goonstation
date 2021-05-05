@@ -458,6 +458,11 @@ var/syndicate_name = null
 			wins = 0
 		if(isnull(losses))
 			losses = 0
+		var/last_reset_date = world.load_intra_round_value("nukie_last_reset")
+		var/last_reset_text = null
+		if(!isnull(last_reset_date))
+			var/days_passed = round((world.time - last_reset_date) / (1 DAY))
+			last_reset_text = "<h4>(memorial reset [days_passed] days ago)</h4>"
 		src.desc = "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3><br></center>"
 
 	attack_hand(var/mob/user as mob)
@@ -470,11 +475,9 @@ var/syndicate_name = null
 			wins = 0
 		if(isnull(losses))
 			losses = 0
-		var/dat = ""
-		dat += "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3></center>"
 
 		src.add_dialog(user)
-		user.Browse(dat, "title=Mission Memorial;window=cairngorm_stats_[src];size=300x300")
+		user.Browse(src.desc, "title=Mission Memorial;window=cairngorm_stats_[src];size=300x300")
 		onclose(user, "cairngorm_stats_[src]")
 		return
 
