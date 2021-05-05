@@ -202,7 +202,10 @@
 				var/patchname = copytext(html_encode(input_name), 1, 32)
 				if (isnull(patchname) || !length(patchname) || patchname == " ")
 					return
-				var/med = src.check_whitelist(R)
+				var/all_safe = 1
+				for (var/reagent_id in R.reagent_list)
+					if (!global.chem_whitelist.Find(reagent_id))
+						all_safe = 0
 				var/obj/item/reagent_containers/patch/P
 				if (R.total_volume <= 15)
 					P = new /obj/item/reagent_containers/patch/mini(user.loc)
@@ -212,7 +215,7 @@
 					P = new /obj/item/reagent_containers/patch(user.loc)
 					P.name = "[patchname] patch"
 					R.trans_to(P, P.initial_volume)
-				P.medical = med
+				P.medical = all_safe
 				P.on_reagent_change()
 				logTheThing("combat",user,null,"created a [patchname] patch containing [log_reagents(P)].")
 			if("Create Ampoule")
