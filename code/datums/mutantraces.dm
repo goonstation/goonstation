@@ -703,9 +703,15 @@
 /datum/mutantrace/flashy
 	name = "flashy"
 	icon_state = "psyche"
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | WEARS_UNDERPANTS | USES_STATIC_ICON)
+	mutant_appearance_flags = (HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HEAD_HAS_OWN_COLORS | HAS_HUMAN_EYES | WEARS_UNDERPANTS | BUILT_FROM_PIECES)
 	override_attack = 0
-	race_mutation = /datum/bioEffect/mutantrace/flashy
+	mutant_folder = 'icons/mob/flashy.dmi'
+	special_head = HEAD_FLASHY
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/flashy/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/flashy/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/flashy/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/flashy/left
+
 
 /datum/mutantrace/virtual
 	name = "virtual"
