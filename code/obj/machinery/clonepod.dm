@@ -60,7 +60,7 @@
 	var/static/list/sounds_function = list('sound/machines/engine_grump1.ogg','sound/machines/engine_grump2.ogg','sound/machines/engine_grump3.ogg',
 	'sound/impact_sounds/Metal_Clang_1.ogg','sound/impact_sounds/Metal_Hit_Heavy_1.ogg')
 
-	var/perfect_clone = 0		//if TRUE, then clones always keep normal name and recieve no health debuffs
+	var/perfect_clone = FALSE		//if TRUE, then clones always keep normal name and receive no health debuffs
 
 	New()
 		..()
