@@ -187,21 +187,25 @@
 		return ..()
 
 	if (!W:access) //no access
+		src.add_fingerprint(user)
 		boutput(user, "The access level of [W] is not high enough.")
 		return
 
 	var/list/cardaccess = W:access
 	if(!istype(cardaccess, /list) || !length(cardaccess)) //no access
+		src.add_fingerprint(user)
 		boutput(user, "The access level of [W] is not high enough.")
 		return
 
 	if(!(access_securitylockers in W:access)) //doesn't have this access
+		src.add_fingerprint(user)
 		boutput(user, "The access level of [W] is not high enough.")
 		return
 
 	if(authed && (access_maxsec in W:access))
 		var/choice = alert(user, "Would you like to unauthorize security's access to riot gear?", "Armory Unauthorization", "Unauthorize", "No")
 		if(get_dist(user, src) > 1) return
+		src.add_fingerprint(user)
 		switch(choice)
 			if("Unauthorize")
 				if(GET_COOLDOWN(src, "unauth"))
@@ -222,6 +226,7 @@
 
 	var/choice = alert(user, text("Would you like to authorize access to riot gear? [] authorization\s are still needed.", src.auth_need - src.authorized.len), "Armory Auth", "Authorize", "Repeal")
 	if(get_dist(user, src) > 1) return
+	src.add_fingerprint(user)
 	switch(choice)
 		if("Authorize")
 			if (user in src.authorized)
