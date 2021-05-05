@@ -1,5 +1,10 @@
 
 (t)wed may 05 21
+(u)Walpvrgis
+(p)4579
+(e)🎨|sprites
+(*)Added 11 new hairstyles (including two new options for layering bangs and a new faded style)! Check the Minor Changes for the style names. Time for ANOTHER makeover?!
+(+)New hairstyles can be found under the following names; Two Bangs: Long, Two Bangs: Short, Long Mini Tail, Visual, Tulip, Bloom, Smooth Waves, Smooth Waves: Faded, Floof, Spiky and Subtle Spiky.
 (u)edwardly
 (p)4566
 (e)⚖|balance
