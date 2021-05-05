@@ -246,7 +246,7 @@
 			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
 			for(var/obj/item/clothing/W in restricted)
 				if (istype(W,/obj/item/clothing))
-					if(W.compatible_species.Find(src.name) || (src.human_compatible && W.compatible_species.Find("human")))
+					if(W.compatible_species.Find(src.name) || (src.uses_human_clothes && W.compatible_species.Find("human")))
 						continue
 					mob.u_equip(W)
 					boutput(mob, "<span class='alert'><B>You can no longer wear the [W.name] in your current state!</B></span>")
@@ -786,7 +786,10 @@
 	voice_override = "lizard"
 	special_head = HEAD_LIZARD
 	special_head_state = "head"
-	mutant_organs = list("tail" = /obj/item/organ/tail/lizard)
+	eye_state = "eyes_lizard"
+	mutant_organs = list("tail" = /obj/item/organ/tail/lizard,
+	"left_eye" = /obj/item/organ/eye/lizard,
+	"right_eye" = /obj/item/organ/eye/lizard)
 	mutant_folder = 'icons/mob/lizard.dmi'
 	special_hair_1_icon = 'icons/mob/lizard.dmi'
 	special_hair_1_state = "head-detail_1"
@@ -799,6 +802,7 @@
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/left
 	race_mutation = /datum/bioEffect/mutantrace // Most mutants are just another form of lizard, didn't you know?
+	clothing_icon_override = 'icons/mob/lizard_clothes.dmi'
 	color_channel_names = list("Episcutus", "Ventral Aberration", "Sagittal Crest")
 
 	New(var/mob/living/carbon/human/H)
@@ -1093,7 +1097,9 @@
 	mutant_folder = 'icons/mob/skeleton.dmi'
 	icon_state = "skeleton"
 	voice_override = "skelly"
-	mutant_organs = list("tail" = /obj/item/organ/tail/bone)
+	mutant_organs = list("tail" = /obj/item/organ/tail/bone,
+	"left_eye" = /obj/item/organ/eye/skeleton,
+	"right_eye" = /obj/item/organ/eye/skeleton)
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/left
@@ -1132,6 +1138,8 @@
 
 /datum/mutantrace/abomination
 	name = "abomination"
+	mutant_folder = 'icons/mob/abomination.dmi'
+	icon = 'icons/mob/abomination.dmi'
 	icon_state = "abomination"
 	human_compatible = 0
 	uses_human_clothes = 0
@@ -1226,7 +1234,6 @@
 	icon_state = "werewolf"
 	human_compatible = 0
 	uses_human_clothes = 0
-	head_offset = -1
 	var/original_name
 	jerk = 1
 	override_attack = 0
@@ -1241,6 +1248,9 @@
 	special_head = HEAD_WEREWOLF
 	mutant_organs = list("tail" = /obj/item/organ/tail/wolf)
 
+	head_offset = 5
+	hand_offset = 3
+	arm_offset = 3
 
 	New()
 		..()
@@ -1409,9 +1419,9 @@
 	icon = 'icons/mob/monkey.dmi'
 	mutant_folder = 'icons/mob/monkey.dmi'
 	icon_state = "monkey"
-	head_offset = -8
-	eye_offset = -8 // jeepers creepers their peepers are a pixel higher than human peepers
-	hand_offset = -5
+	eye_state = "eyes_monkey"
+	head_offset = -6
+	hand_offset = -2
 	body_offset = -7
 	leg_offset = -4
 	arm_offset = -8
@@ -1423,7 +1433,7 @@
 	voice_name = "monkey"
 	override_language = "monkey"
 	understood_languages = list("english")
-	clothing_icon_override = 'icons/mob/monkey.dmi'
+	clothing_icon_override = 'icons/mob/monkey_clothes.dmi'
 	race_mutation = /datum/bioEffect/mutantrace/monkey
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/left
@@ -1676,6 +1686,7 @@
 	name = "roach"
 	icon_state = "roach"
 	override_attack = 0
+	voice_override = "roach"
 	race_mutation = /datum/bioEffect/mutantrace/roach
 	mutant_organs = list("tail" = /obj/item/organ/tail/roach)
 	mutant_folder = 'icons/mob/roach.dmi'
@@ -1684,7 +1695,8 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/roach/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/roach/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/roach/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | FIX_COLORS | HAS_SPECIAL_HAIR | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS)
+	eye_state = "eyes_roach"
 	typevulns = list("blunt" = 1.66, "crush" = 1.66)
 
 	New(mob/living/carbon/human/M)
@@ -1961,21 +1973,24 @@
 /datum/mutantrace/cow
 	name = "cow"
 	icon_state = "cow"
-	human_compatible = FALSE
+	human_compatible = TRUE
 	uses_human_clothes = FALSE
 	override_attack = 0
 	voice_override = "cow"
 	step_override = "footstep"
 	race_mutation = /datum/bioEffect/mutantrace/cow
-	mutant_organs = list("tail" = /obj/item/organ/tail/cow)
+	mutant_organs = list("tail" = /obj/item/organ/tail/cow,
+	"left_eye" = /obj/item/organ/eye/cow,
+	"right_eye" = /obj/item/organ/eye/cow)
 	mutant_folder = 'icons/mob/cow.dmi'
 	special_head = HEAD_COW
 	special_hair_1_icon = 'icons/mob/cow.dmi'
 	special_hair_1_state = "head-detail1"
 	special_hair_1_color = CUST_1
-	detail_oversuit_1_icon = 'icons/mob/cow.dmi'
-	detail_oversuit_1_state = "cow_over_suit"
-	detail_oversuit_1_color = null
+	special_hair_2_icon = 'icons/mob/cow.dmi'
+	special_hair_2_state = "cow_over_suit"
+	special_hair_2_color = null
+	special_hair_2_layer = MOB_OVERMASK_LAYER
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/right

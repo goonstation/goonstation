@@ -13,7 +13,7 @@
 	icon_state = "item_blue"
 	item_state = "electronic"
 	throwforce = 2
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 2
 	throw_range = 5
 	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT|ONBELT

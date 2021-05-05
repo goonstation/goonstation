@@ -160,7 +160,7 @@
 	icon_state = "precursor-1" // temp
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "precursor" // temp
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	force = 1
 	throwforce = 5
 	var/spam_flag = 0
@@ -1418,7 +1418,7 @@
 /obj/item/device/dongle
 	name = "syndicate security dongle"
 	desc = "A form of secure, electronic identification with a round port connector and a funny name."
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	icon_state = "rfid"
 
 var/global/list/scarysounds = list('sound/machines/engine_alert3.ogg',

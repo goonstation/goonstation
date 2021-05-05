@@ -11614,7 +11614,7 @@
 /area/station/crew_quarters/quarters)
 "axr" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/crate,
 /obj/item/clothing/under/gimmick/princess,
@@ -17932,22 +17932,6 @@
 	icon_state = "carpetS"
 	},
 /area/station/security/detectives_office)
-"aKw" = (
-/obj/cable{
-	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
-	},
-/obj/table/woodentable,
-/obj/item/camera_test{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
-/turf/simulated/floor{
-	icon_state = "carpetS"
-	},
-/area/station/security/detectives_office)
 "aKx" = (
 /obj/table/woodentable{
 	dir = 6
@@ -18896,21 +18880,6 @@
 /obj/item/card/id/captains_spare,
 /obj/item/pinpointer,
 /obj/item/hand_tele,
-/turf/simulated/floor/grime,
-/area/station/crew_quarters/captain)
-"aMy" = (
-/obj/table{
-	tag = "icon-tabledir (SOUTHEAST)";
-	icon_state = "tabledir";
-	dir = 6
-	},
-/obj/machinery/recharger{
-	pixel_y = 3
-	},
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/camera_test,
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/captain)
 "aMz" = (
@@ -19945,12 +19914,6 @@
 /obj/landmark/start{
 	name = "Captain"
 	},
-/turf/simulated/floor,
-/area/station/crew_quarters/captain)
-"aOx" = (
-/obj/displaycase{
-	displayed = new /obj/item/captaingun
-},
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
 "aOy" = (
@@ -26067,7 +26030,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -34612,7 +34575,7 @@
 /area/station/crew_quarters/juryroom)
 "brd" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/juryroom)
@@ -35087,7 +35050,7 @@
 "brZ" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -38892,7 +38855,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;
@@ -40699,12 +40662,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bDq" = (
-/turf/unsimulated/wall/setpieces{
-	desc = "A weird jet black metal wall indented with strange grooves and lines.";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "ancient";
-	name = "stranger wall"
-	},
+/turf/unsimulated/wall/setpieces/stranger,
 /area/crater/cave)
 "bDr" = (
 /turf/unsimulated/floor/setpieces{
@@ -52196,12 +52154,7 @@
 	},
 /area/crater/cave/lower)
 "cdK" = (
-/turf/unsimulated/wall/setpieces{
-	desc = "A weird jet black metal wall indented with strange grooves and lines.";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "ancient";
-	name = "stranger wall"
-	},
+/turf/unsimulated/wall/setpieces/stranger,
 /area/crater/cave/lower)
 "cdL" = (
 /obj/decal/fakeobjects{
@@ -54332,12 +54285,7 @@
 	sd_ColorGreen = 0.3;
 	sd_ColorRed = 0.4
 	},
-/turf/unsimulated/wall/setpieces{
-	desc = "A weird jet black metal wall indented with strange grooves and lines.";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "ancient";
-	name = "stranger wall"
-	},
+/turf/unsimulated/wall/setpieces/stranger,
 /area/crater/cave/lower)
 "chL" = (
 /turf/unsimulated/wall{
@@ -68012,15 +67960,6 @@
 	icon_state = "reinf_tabledir"
 	},
 /obj/item/storage/briefcase,
-/turf/unsimulated/floor/white/grime,
-/area/crypt/sigma/lab)
-"cIS" = (
-/obj/table/reinforced{
-	tag = "icon-reinf_tabledir (SOUTHEAST)";
-	icon_state = "reinf_tabledir";
-	dir = 6
-	},
-/obj/item/camera_test,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "cIT" = (
@@ -90515,6 +90454,52 @@
 /obj/decal/fakeobjects/lightbulb_broken,
 /turf/simulated/floor/plating,
 /area/helldrone)
+"ebH" = (
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/captain)
+"kas" = (
+/obj/table{
+	tag = "icon-tabledir (SOUTHEAST)";
+	icon_state = "tabledir";
+	dir = 6
+	},
+/obj/machinery/recharger{
+	pixel_y = 3
+	},
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/camera,
+/turf/simulated/floor/grime,
+/area/station/crew_quarters/captain)
+"sAE" = (
+/obj/table/reinforced{
+	tag = "icon-reinf_tabledir (SOUTHEAST)";
+	icon_state = "reinf_tabledir";
+	dir = 6
+	},
+/obj/item/camera,
+/turf/unsimulated/floor/white/grime,
+/area/crypt/sigma/lab)
+"xoo" = (
+/obj/cable{
+	icon_state = "2-8";
+	d1 = 2;
+	d2 = 8
+	},
+/obj/table/woodentable,
+/obj/item/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "detectives camera";
+	pictures_left = 30
+	},
+/turf/simulated/floor{
+	icon_state = "carpetS"
+	},
+/area/station/security/detectives_office)
 
 (1,1,1) = {"
 aaa
@@ -132061,7 +132046,7 @@ azf
 aIq
 aJe
 aJT
-aKw
+xoo
 aKX
 aLH
 aMv
@@ -133879,7 +133864,7 @@ aLN
 aMw
 aNh
 aNM
-aOx
+ebH
 aMz
 aPR
 aPU
@@ -134782,7 +134767,7 @@ aKa
 aKD
 aLd
 aIt
-aMy
+kas
 aNj
 aNP
 aOA
@@ -223325,7 +223310,7 @@ cHk
 cHk
 cIc
 cGh
-cIS
+sAE
 cHo
 cHo
 cJZ

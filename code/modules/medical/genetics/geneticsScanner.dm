@@ -308,6 +308,7 @@ var/list/genetek_hair_styles = null
 
 		src.target_mob = target
 		src.preview = new()
+		src.preview.add_background("#092426")
 		src.load_mob_data(src.target_mob)
 		return
 

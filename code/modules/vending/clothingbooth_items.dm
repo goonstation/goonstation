@@ -776,6 +776,27 @@
 	category = "Headwear"
 	cost = PAY_TRADESMAN/2
 
+/datum/clothingbooth_item/ushanka
+	name = "Ushanka"
+	path = /obj/item/clothing/head/ushanka
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN
+
+/datum/clothingbooth_item/pinwheel_hat
+	name = "Pinwheel Hat"
+	path = /obj/item/clothing/head/pinwheel_hat
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN
+
+/datum/clothingbooth_item/frog_hat
+	name = "Frog Hat"
+	path = /obj/item/clothing/head/frog_hat
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN
+
 //Sci-Fi
 
 /datum/clothingbooth_item/sfjumpsuitbp

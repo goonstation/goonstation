@@ -2826,3 +2826,22 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 				message_admins("[key_name(src)] generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
+
+/client/proc/cmd_special_shuttle()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Special Shuttle"
+	set desc = "Spawn in a special escape shuttle"
+	admin_only
+	if(src.holder.level >= LEVEL_ADMIN)
+		var/datum/prefab_shuttle/shuttle = tgui_input_list(src, "Select a shuttle", "Special Shuttle", prefab_shuttles)
+		if (!shuttle) return
+		var/loaded = file2text(shuttle.prefab_path)
+		var/turf/T = landmarks[shuttle.landmark][1]
+		if(T && loaded)
+			var/dmm_suite/D = new/dmm_suite()
+			D.read_map(loaded,T.x,T.y,T.z,shuttle.prefab_path, DMM_OVERWRITE_OBJS)
+			logTheThing("admin", src, null, "replaced the shuttle with [shuttle].")
+			logTheThing("diary", src, null, "replaced the shuttle with [shuttle].", "admin")
+			message_admins("[key_name(src)] replaced the shuttle with [shuttle].")
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")

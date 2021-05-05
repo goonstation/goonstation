@@ -774,13 +774,15 @@
 		C.eye = src.eye
 		C.pixel_x = src.eye_pixel_x
 		C.pixel_y = src.eye_pixel_y
+	else if(!isturf(src.loc))
+		C.eye = src.loc
 	else
 		C.eye = src
 		C.pixel_x = src.loc_pixel_x
 		C.pixel_y = src.loc_pixel_y
 
 /mob/proc/can_strip(mob/M, showInv=0)
-	if(!showInv && check_target_immunity(src, 0, M))
+	if(!showInv && check_target_immunity(M, 0, src))
 		return 0
 	return 1
 

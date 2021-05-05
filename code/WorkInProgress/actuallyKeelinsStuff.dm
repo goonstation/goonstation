@@ -1848,7 +1848,7 @@ Returns:
 	icon_state = "lboard"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "ouijaboard"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 
 	New()
 		. = ..()
@@ -2166,7 +2166,7 @@ Returns:
 	icon_state = "teslacannon"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/firing = 0
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -2383,7 +2383,7 @@ Returns:
 	icon_state = "pstone"
 	item_state = "injector"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		var/obj/beam_dummy/B = showLine(get_turf(src), get_turf(target), "beam", 10)
@@ -2502,7 +2502,7 @@ Returns:
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "rpg_rocket"
 	item_state = "chips"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
 	force = 5.0
@@ -3699,7 +3699,7 @@ var/list/lag_list = new/list()
 	var/ckey_lock = null
 	var/z_level_lock = 0
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(ckey_lock && usr.ckey != ckey_lock)
 			boutput(user, "<span class='alert'>You are not authorized to use this item.</span>")
@@ -3809,7 +3809,7 @@ var/list/lag_list = new/list()
 	item_state = "clown"
 	density = 0
 	anchored = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	force = 0.0
 	throwforce = 0.0
 	throw_speed = 1

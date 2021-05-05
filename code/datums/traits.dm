@@ -180,7 +180,7 @@
 	proc/onRemove(var/mob/owner)
 		return
 
-	proc/onLife(var/mob/owner)
+	proc/onLife(var/mob/owner, var/mult)
 		return
 
 	proc/onMove(var/mob/owner)
@@ -275,6 +275,7 @@
 	cleanName = "Deaf"
 	desc = "Spawn with permanent deafness and an auditory headset."
 	id = "deaf"
+	icon_state = "deaf"
 	category = "body"
 	points = 1
 	isPositive = 0
@@ -323,6 +324,7 @@
 	cleanName = "Scottish"
 	desc = "Hear the pipes are calling, down thro' the glen. Och aye!"
 	id = "scottish"
+	icon_state = "scott"
 	points = 0
 	isPositive = 1
 	category = "language"
@@ -348,6 +350,7 @@
 	cleanName = "Funky Accent"
 	desc = "Give a man a banana and he will clown for a day. Teach a man to clown and he will live in a cold dark corner of a space station for the rest of his days. - Elvis, probably."
 	id = "elvis"
+	icon_state = "elvis"
 	points = 0
 	isPositive = 1
 	category = "language"
@@ -444,6 +447,7 @@
 	name = "Blind (+2)"
 	cleanName = "Blind"
 	desc = "Spawn with permanent blindness and a VISOR."
+	icon_state = "blind"
 	id = "blind"
 	category = "vision"
 	points = 2
@@ -474,6 +478,20 @@
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.genetic_stability = 120
+
+/obj/trait/mildly_mutated
+	name = "Mildly Mutated (0) \[Genetics\]"
+	cleanName = "Mildly Mutated"
+	desc = "A random mutation in your gene pool starts activated."
+	id = "mildly_mutated"
+	icon_state = "mildly_mutatedB"
+	points = 0
+	isPositive = 0
+	category = "genetics"
+
+	onAdd(var/mob/owner)
+		var/datum/bioHolder/B = owner.bioHolder
+		B.ActivatePoolEffect(B.effectPool[pick(B.effectPool)], 1, 0)
 
 /obj/trait/stablegenes
 	name = "Stable Genes (-2) \[Genetics\]"
@@ -532,6 +550,7 @@
 	cleanName = "BEEst friend"
 	desc = "Start with a bee egg as your trinket."
 	id = "beestfriend"
+	icon_state = "bee"
 	points = -1
 	isPositive = 1
 	category = "trinkets"
@@ -541,11 +560,12 @@
 	cleanName = "Lunchbox"
 	desc = "Start your shift with a cute little lunchbox, packed with all your favourite foods!"
 	id = "lunchbox"
+	icon_state = "lunchbox"
 	points = -1
 	isPositive = 1
 	category = "trinkets"
 
-// Skill - Undetermined Border
+// Skill - White Border
 
 /obj/trait/smoothtalker
 	name = "Smooth talker (-1) \[Skill\]"
@@ -579,6 +599,7 @@
 	cleanName = "Claw School Graduate"
 	desc = "Your skill at claw machines is unparalleled."
 	id = "claw"
+	icon_state = "claw"
 	category = "skill"
 	points = -1
 	isPositive = 1
@@ -822,8 +843,8 @@ obj/trait/pilot
 			selected_reagent = addicted_players[owner]
 			addAddiction(owner)
 
-	onLife(var/mob/owner) //Just to be safe.
-		if(isliving(owner) && prob(1))
+	onLife(var/mob/owner, var/mult) //Just to be safe.
+		if(isliving(owner) && probmult(1))
 			var/mob/living/M = owner
 			selected_reagent = addicted_players[owner]
 			for(var/datum/ailment_data/addiction/A in M.ailments)
@@ -872,6 +893,7 @@ obj/trait/pilot
 	cleanName = "Jailbird"
 	desc = "You have a criminal record and are currently on the run!"
 	id = "jailbird"
+	icon_state = "jail"
 	points = 0
 	isPositive = 0
 
@@ -947,6 +969,7 @@ obj/trait/pilot
 	name = "Carpenter (-1)"
 	cleanName = "Carpenter"
 	desc = "You can construct things more quickly than other people."
+	icon_state = "carpenter"
 	id = "carpenter"
 	points = -1
 	isPositive = 1
@@ -959,8 +982,8 @@ obj/trait/pilot
 	points = 1
 	isPositive = 0
 
-	onLife(var/mob/owner)
-		if(!owner.stat && can_act(owner) && prob(9))
+	onLife(var/mob/owner, var/mult)
+		if(!owner.stat && can_act(owner) && probmult(9))
 			if(!owner.equipped())
 				for(var/obj/item/I in view(1, owner))
 					if(!I.anchored && isturf(I.loc))
