@@ -5175,7 +5175,7 @@ area/station/security/visitation
 
 
 */
-/// pod_wars Areas
+// pod_wars Areas
 /area/pod_wars/team1/hangar
 	name = "NSV Pytheas Hangar"
 	icon_state = "purple"
