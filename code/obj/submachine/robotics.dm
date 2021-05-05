@@ -149,7 +149,7 @@
 		var/the_reagent = input("Which reagent do you want to manipulate?","Mini-ChemMaster",null,null) in B.reagents.reagent_list
 		if (src.loc != holder || !the_reagent)
 			return
-		var/action = input("What do you want to do with the [the_reagent]?","Mini-ChemMaster",null,null) in list("Isolate","Purge","Remove One Unit","Remove Five Units","Create Pill","Create Pill Bottle","Create Bottle","Do Nothing")
+		var/action = input("What do you want to do with the [the_reagent]?","Mini-ChemMaster",null,null) in list("Isolate","Purge","Remove One Unit","Remove Five Units","Create Pill","Create Pill Bottle","Create Bottle","Create Patch","Create Ampoule","Do Nothing")
 		if (src.loc != holder || !action || action == "Do Nothing")
 			working = 0
 			return
@@ -196,6 +196,38 @@
 					phrase_log.log_phrase("bottle", name, no_duplicates=TRUE)
 				P.name = "[name] bottle"
 				B.reagents.trans_to(P,30)
+			if("Create Patch")
+				var/datum/reagents/R = B.reagents
+				var/input_name = input(user, "Name the patch:", "Name", R.get_master_reagent_name()) as null|text
+				var/patchname = copytext(html_encode(input_name), 1, 32)
+				if (isnull(patchname) || !length(patchname) || patchname == " ")
+					return
+				var/med = src.check_whitelist(R)
+				var/obj/item/reagent_containers/patch/P
+				if (R.total_volume <= 15)
+					P = new /obj/item/reagent_containers/patch/mini(user.loc)
+					P.name = "[patchname] mini-patch"
+					R.trans_to(P, P.initial_volume)
+				else
+					P = new /obj/item/reagent_containers/patch(user.loc)
+					P.name = "[patchname] patch"
+					R.trans_to(P, P.initial_volume)
+				P.medical = med
+				P.on_reagent_change()
+				logTheThing("combat",user,null,"created a [patchname] patch containing [log_reagents(P)].")
+			if("Create Ampoule")
+				var/datum/reagents/R = B.reagents
+				var/input_name = input(user, "Name the ampoule:", "Name", R.get_master_reagent_name()) as null|text
+				var/ampoulename = copytext(html_encode(input_name), 1, 32)
+				if(!ampoulename)
+					return
+				if(ampoulename == " ")
+					ampoulename = R.get_master_reagent_name()
+				var/obj/item/reagent_containers/ampoule/A
+				A = new /obj/item/reagent_containers/ampoule(user.loc)
+				A.name = "ampoule ([ampoulename])"
+				R.trans_to(A, 5)
+				logTheThing("combat",user,null,"created a [ampoulename] ampoule containing [log_reagents(A)].")
 
 		working = 0
 
