@@ -8,10 +8,12 @@
 #define SECONDS *10
 #define MINUTES *600
 #define HOURS *36000
+#define DAYS *36000*24
 
 #define SECOND SECONDS
 #define MINUTE MINUTES
 #define HOUR HOURS
+#define DAY DAYS
 
 #define WATTS *1
 #define METERS *1
