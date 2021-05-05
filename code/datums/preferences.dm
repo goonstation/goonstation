@@ -1044,7 +1044,7 @@ datum/preferences
 			// add missing jobs
 
 //pod wars only special jobs
-#ifdef MAP_OVERRIDE_POD_WARS
+#if defined(MAP_OVERRIDE_POD_WARS)
 			for (var/datum/job/J in job_controls.special_jobs)
 				if (istype(J, /datum/job/special/pod_wars))
 					if (src.job_favorite != J.name && !(J.name in src.jobs_med_priority) && !(J.name in src.jobs_low_priority))
@@ -1318,7 +1318,7 @@ datum/preferences
 				return
 				//
 		//works for now, maybe move this to something on game mode to decide proper jobs... -kyle
-#ifdef MAP_OVERRIDE_POD_WARS
+#if defined(MAP_OVERRIDE_POD_WARS)
 		if (!find_job_in_controller_by_string(job,0))
 #else
 		if (!find_job_in_controller_by_string(job,1))
@@ -1351,7 +1351,7 @@ datum/preferences
 			return
 
 //pod wars only special jobs
-#ifdef MAP_OVERRIDE_POD_WARS
+#if defined(MAP_OVERRIDE_POD_WARS)
 		var/datum/job/temp_job = find_job_in_controller_by_string(job,0)
 #else
 		var/datum/job/temp_job = find_job_in_controller_by_string(job,1)

@@ -993,7 +993,7 @@
 			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			T.build(src)
 
-#ifdef MAP_OVERRIDE_POD_WARS
+#if defined(MAP_OVERRIDE_POD_WARS)
 /turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
 	
 	//testing pali's solution for getting the direction opposite of the map edge you are nearest to.

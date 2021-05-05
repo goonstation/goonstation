@@ -906,7 +906,7 @@
 					logs = list("punches [constructTarget(target,"combat")]")
 
 //Pod wars friendly fire check
-#ifdef MAP_OVERRIDE_POD_WARS
+#if defined(MAP_OVERRIDE_POD_WARS)
 			var/friendly_fire = 0
 			if (owner != target && get_pod_wars_team_num(owner) == get_pod_wars_team_num(target))
 				friendly_fire = 1

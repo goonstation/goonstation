@@ -248,7 +248,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 		return
 
 //Pod wars friendly fire check
-#ifdef MAP_OVERRIDE_POD_WARS
+#if defined(MAP_OVERRIDE_POD_WARS)
 	var/friendly_fire = 0
 	if (shooter_data != SHOT)
 		//if you shoot a teammate

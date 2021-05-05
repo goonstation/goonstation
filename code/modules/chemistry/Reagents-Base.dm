@@ -210,7 +210,7 @@ datum
 									HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
 //inc_alcohol_metabolized()
 //bunch of extra logic for dumb stat tracking. This is copy pasted from proc/how_many_depletions() in Chemistry-Reagents.dm									
-#ifdef MAP_OVERRIDE_POD_WARS
+#if defined(MAP_OVERRIDE_POD_WARS)
 						var/amt_of_alcohol_metabolized = depletion_rate
 						if (H.traitHolder?.hasTrait("slowmetabolism")) //fuck
 							amt_of_alcohol_metabolized/= 2

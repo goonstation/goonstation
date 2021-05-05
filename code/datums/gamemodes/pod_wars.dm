@@ -110,7 +110,7 @@ var/list/pw_rewards_tier3 = null
 
 //Loops through latejoin spots. Places you in the one that is on the correct base ship in accordance with your job.
 /datum/game_mode/pod_wars/proc/get_latejoin_turf(var/datum/mind/mind, var/team_num)
-#ifdef MAP_OVERRIDE_POD_WARS
+#if defined(MAP_OVERRIDE_POD_WARS)
 	for(var/turf/T in landmarks[LANDMARK_LATEJOIN])
 		if (team_num == TEAM_NANOTRASEN && istype(T.loc, /area/pod_wars/team1))
 			mind.current.set_loc(T)
@@ -934,7 +934,7 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 				break
 
 ////////////////////////////////////////////////
-#ifdef MAP_OVERRIDE_POD_WARS
+#if defined(MAP_OVERRIDE_POD_WARS)
 
 /obj/forcefield/energyshield/perma/pod_wars
 	name = "Permanent Military-Grade Forcefield"

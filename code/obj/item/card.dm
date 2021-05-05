@@ -159,7 +159,7 @@ GAUNTLET CARDS
 /obj/item/card/id/pod_wars
 	desc = "An ID card to help open doors, lock pods, and identify your body."
 	var/team = 0
-#ifdef MAP_OVERRIDE_POD_WARS
+#if defined(MAP_OVERRIDE_POD_WARS)
 	//You can only pick this up if you're on the correct team, otherwise it explodes.
 	attack_hand(mob/user)
 		if (get_pod_wars_team_num(user) == team)

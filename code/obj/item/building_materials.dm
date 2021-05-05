@@ -301,7 +301,7 @@ MATERIAL
 			else
 				return
 //You can't build! The if is to stop compiler warnings
-#ifdef MAP_OVERRIDE_POD_WARS
+#if defined(MAP_OVERRIDE_POD_WARS)
 		if (src)
 			boutput(usr, "<span class='alert'>What are you gonna do with this? You have a very particular set of skills, and building is not one of them...</span>")
 			return
@@ -1087,7 +1087,7 @@ MATERIAL
 
 	proc/build(turf/S as turf)
 //for now, any turf can't be built on.
-#ifdef MAP_OVERRIDE_POD_WARS
+#if defined(MAP_OVERRIDE_POD_WARS)
 		boutput(usr, "you can't build in this mode, you don't know how or something...")
 		return
 #else

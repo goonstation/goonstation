@@ -475,7 +475,7 @@ var/datum/action_controller/actions
 	onStart()
 		..()
 //You can't build! The if is to stop compiler warnings
-#ifdef MAP_OVERRIDE_POD_WARS
+#if defined(MAP_OVERRIDE_POD_WARS)
 		if (owner)
 			boutput(owner, "<span class='alert'>What are you gonna do with this? You have a very particular set of skills, and building is not one of them...</span>")
 			interrupt(INTERRUPT_ALWAYS)

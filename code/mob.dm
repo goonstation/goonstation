@@ -900,7 +900,7 @@
 	var/confirm = alert("Set yourself as Do Not Resuscitate (WARNING: This is one-use only and will prevent you from being revived in any manner)", "Set Do Not Resuscitate", "Yes", "Cancel")
 	if (confirm == "Cancel")
 		return
-#ifdef MAP_OVERRIDE_POD_WARS
+#if defined(MAP_OVERRIDE_POD_WARS)
 	if (confirm == "Yes")
 		if (src.mind)
 			if (isliving(src) && !isdead(src))
