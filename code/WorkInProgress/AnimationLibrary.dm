@@ -1070,7 +1070,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(transform = MD, time = 1, loop = -1, easing = LINEAR_EASING)
 
 // these don't use animate but they're close enough, idk
-/proc/showswirl(var/atom/target, var/play_sound = 1)
+/proc/showswirl(var/atom/target, var/play_sound = TRUE)
 	if (!target)
 		return
 	var/turf/target_turf = get_turf(target)
