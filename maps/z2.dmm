@@ -81414,14 +81414,16 @@
 /area/centcom/lounge)
 "sdh" = (
 /obj/rack,
-/obj/item/clothing/mask/gas/swat,
-/obj/item/clothing/mask/gas/swat,
-/obj/item/clothing/mask/gas/swat,
-/obj/item/clothing/mask/gas/swat,
-/obj/item/clothing/mask/gas/swat,
-/obj/item/clothing/mask/gas/swat,
-/obj/item/clothing/mask/gas/swat,
-/obj/item/clothing/mask/gas/swat,
+/obj/item/clothing/mask/gas/swat/syndicate,
+/obj/item/clothing/mask/gas/swat/syndicate,
+/obj/item/clothing/mask/gas/swat/syndicate,
+/obj/item/clothing/mask/gas/swat/syndicate,
+/obj/item/clothing/mask/gas/swat/syndicate,
+/obj/item/clothing/mask/gas/swat/syndicate,
+/obj/item/clothing/mask/gas/swat/syndicate,
+/obj/item/clothing/mask/gas/swat/syndicate,
+/obj/item/clothing/mask/gas/swat/syndicate,
+/obj/item/clothing/mask/gas/swat/syndicate,
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "seT" = (

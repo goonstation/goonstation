@@ -166,6 +166,10 @@
 	color_g = 0.8
 	color_b = 0.8
 
+	syndicate
+		name = "syndicate field protective mask"
+		item_function_flags = IMMUNE_TO_ACID
+
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"
 	desc = "A close-fitting mask that can filter some environmental toxins or be connected to an air supply."
