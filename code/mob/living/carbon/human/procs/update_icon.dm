@@ -525,8 +525,8 @@
 		src.belt.wear_image.pixel_x = 0
 		src.belt.wear_image.pixel_y = body_offset
 		src.belt.wear_image.layer = src.belt.wear_layer
-		if(src.back.wear_image.layer == MOB_CLOTHING_LAYER) // if default let's assume you actually want this on back
-			src.back.wear_image.layer = MOB_BELT_LAYER
+		if(src.belt.wear_image.layer == MOB_CLOTHING_LAYER) // if default let's assume you actually want this on back
+			src.belt.wear_image.layer = MOB_BELT_LAYER
 		src.belt.wear_image.color = src.belt.color
 		src.belt.wear_image.alpha = src.belt.alpha
 		UpdateOverlays(src.belt.wear_image, "wear_belt")

@@ -283,7 +283,7 @@
 									"lighter" = /obj/item/device/light/zippo/,
 									"spray" = /obj/item/spraybottle,
 									"monitor" = /obj/item/device/camera_viewer,
-									"camera" = /obj/item/camera_test,
+									"camera" = /obj/item/camera,
 									"audiolog" = /obj/item/device/audio_log ,
 									"flashlight" = /obj/item/device/light/flashlight,
 									"glasses" = /obj/item/clothing/glasses)
@@ -645,13 +645,13 @@
 	desc = "A green hood, full of magic, wonder, cromulence, and maybe a spider or two."
 	icon_state = "wizardgreen"
 	item_state = "wizardgreen"
+	seal_hair = 1
 
 /obj/item/clothing/head/wizard/witch
 	name = "witch hat"
 	desc = "Broomstick and cat not included."
 	icon_state = "witch"
 	item_state = "wizardnec"
-	see_face = 0
 
 /obj/item/clothing/head/wizard/necro
 	name = "necromancer hood"
@@ -659,6 +659,7 @@
 	icon_state = "wizardnec"
 	item_state = "wizardnec"
 	see_face = 0
+	seal_hair = 1
 
 /obj/item/clothing/head/pinkwizard //no magic properties
 	name = "pink wizard hat"
@@ -1328,3 +1329,35 @@
 			src.item_state = "hoscap"
 			boutput(user, "<span class='notice'>You unfold the beret back into a hat.</span>")
 		return
+
+/obj/item/clothing/head/pinwheel_hat
+	name = "pinwheel hat"
+	desc = "A fun hat with a little spinny wheel on it."
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "pinwheel_hat"
+	item_state = "pinwheel_hat"
+
+/obj/item/clothing/head/frog_hat
+	name = "frog"
+	desc = "A hat shaped like a frog's head. Not made of frogs."
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "frog_hat"
+	item_state = "frog_hat"
+
+/obj/item/clothing/head/boater_hat
+	name = "boater hat"
+	desc = "A hat useful for cutting hair and singing songs in a quartet."
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "boater_hat"
+	item_state = "boater_hat"
+
+/obj/item/clothing/head/ushanka
+	name = "ushanka"
+	desc = "A hat favored by those in cold climates."
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "ushanka"
+	item_state = "ushanka"
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 15)

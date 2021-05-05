@@ -1170,7 +1170,7 @@ var/datum/action_controller/actions
 				O.show_message("<span class='alert'><B>[owner] butchers [target].[target.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]</B></span>", 1)
 
 /datum/action/bar/icon/rev_flash
-	duration = 13 SECONDS
+	duration = 4 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	id = "rev_flash"
 	icon = 'icons/ui/actions.dmi'
@@ -1370,7 +1370,7 @@ var/datum/action_controller/actions
 
 
 /datum/action/bar/private/icon/pickup //Delayed pickup, used for mousedrags to prevent 'auto clicky' exploits but allot us to pickup with mousedrag as a possibel action
-	duration = 10
+	duration = 0
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	id = "pickup"
 	var/obj/item/target

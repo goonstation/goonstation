@@ -164,7 +164,7 @@
 	spawn_contents = list(/obj/item/device/radio/headset/multifreq = 4,
 	/obj/item/device/audio_log = 2,
 	/obj/item/audio_tape = 4,
-	/obj/item/camera_test = 2,
+	/obj/item/camera = 2,
 	/obj/item/device/light/flashlight = 2,
 	/obj/item/paper/book/critter_compendium,
 	/obj/item/reagent_containers/food/drinks/milk,
@@ -681,3 +681,6 @@
 		spawn_contents = list(/obj/item/radio_tape/advertisement/cargonia,
 		/obj/item/clothing/under/rank/cargo,/obj/decal/skeleton)
 
+	escape
+		spawn_contents = list(/obj/item/sea_ladder,
+		/obj/item/pipebomb/bomb/engineering = 2)

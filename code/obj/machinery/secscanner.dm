@@ -196,8 +196,6 @@
 				threatcount += 4
 			else if (istype(perp.mutantrace, /datum/mutantrace/cat))
 				threatcount += 3
-			else
-				threatcount += 2
 
 		for (var/datum/data/record/R as anything in data_core.security)
 			if (R.fields["name"] != perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))

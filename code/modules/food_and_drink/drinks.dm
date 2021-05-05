@@ -89,7 +89,7 @@
 	initial_reagents = list("cola"=20)
 
 	New()
-		switch(rand(1,12))
+		switch(rand(1,16))
 			if (1)
 				src.name += "Crunchy Kidney Stone Lemonade flavor"
 				src.initial_reagents["urine"] = 10
@@ -126,6 +126,23 @@
 			if (12)
 				src.name += "Cool Keratin Rush flavor"
 				src.initial_reagents["hairgrownium"] = 10
+			if (13)
+				src.name += "Rancher's Rage Whole Chicken Dinner flavor" //by Splints/FireMoose
+				src.initial_reagents += (list("chickensoup"=10, "juice_cran"=5, "juice_carrot"=5, "mashedpotatoes"=3,
+				 "gravy"=2, "ether"=5))
+				src.label = "rancher"
+			if (14)
+				src.name += "Prismatic Rainbow Punch flavor" //by Genesse
+				src.initial_reagents += (list("sparkles"=10, "colors"=10, "space_drugs"=10))
+				src.label = "rainbow"
+			if (15)
+				src.name += "Hearty Hellburn Brew flavor" //by Eagletanker
+				src.initial_reagents += (list("oxygen"=18, "plasma"=8, "ghostchilijuice"=1, "carbon"=3))
+				src.desc = "9/10 Engineers prefered Grones Hearty Hellburn, find out why yourself!"
+			if (16)
+				src.name += "Citrus Circus Catastrophe flavor" //by Coolvape
+				src.initial_reagents += (list("juice_lemon"=10, "juice_lime"=10, "honk_fart"=5, "honky_tonic"=5))
+
 		..()
 
 /obj/item/reagent_containers/food/drinks/bottle/orange
@@ -373,3 +390,27 @@ obj/item/reagent_containers/food/drinks/covfefe
 		reagents.add_reagent(pick("methamphetamine", "crank", "space_drugs", "cat_drugs", "coffee"), 5)
 		for(var/i=0; i<3; i++)
 			reagents.add_reagent(pick("beff","ketchup","eggnog","yuck","chocolate","vanilla","cleaner","capsaicin","toxic_slurry","luminol","urine","nicotine","weedkiller","venom","jenkem","ectoplasm"), 5)
+
+/obj/item/reagent_containers/food/drinks/bottle/contest
+	name = "Grones Soda Call 1-800-IMCODER flavour"
+	desc = "They make all kinds of flavors these days, good lord."
+	label = "grones"
+	heal_amt = 1
+	labeled = 1
+	initial_volume = 50
+
+	lizard_tonic
+		name = "Grones Soda Lucky Lizard Tonic flavor" //by Rlocks
+		initial_reagents = (list("cola"=20, "yee"=5, "chalk"=5, "sangria"=10, "capsaicin"=10))
+
+	babel_blast
+		name = "Grones Soda Mountain Grones Babel Blast flavor" //by warcrimes
+		initial_reagents = (list("cola"=20, "suomium"=5, "quebon"=5, "swedium"=5, "caledonium"=5, "worcestershire_sauce"=5))
+
+	jungle_juice
+		name = "Grones Soda Jammin' Jambalaya Jungle Juice flavor" //by Camryn Buttes
+		initial_reagents = (list("cola"=20, "strawberry_milk"=1, "ricewine"=1, "boorbon"=1, "diesel"=1, "irishcoffee"=1,
+		"vanilla"=1, "harlow"=1, "espressomartini"=1, "ectocooler"=1, "bread"=1, "sarsaparilla"=1, "eggnog"=1,
+		"chocolate"=1, "guacamole"=1, "salt"=1, "gravy"=1, "mashedpotatoes"=1, "msg"=1, "mugwort"=1, "juice_cran"=1,
+		"juice_blueberry"=1, "juice_grapefruit"=1, "juice_pickle"=1, "worcestershire_sauce"=1, "fakecheese"=1,
+		"capsaicin"=1, "urine"=1, "paper"=1, "chalk"=1)) //pain

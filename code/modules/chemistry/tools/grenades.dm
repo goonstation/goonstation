@@ -333,6 +333,7 @@
 		beakers += B2
 
 	revolution //convertssss
+		mats = null
 		explode()
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				var/datum/game_mode/revolution/R = ticker.mode

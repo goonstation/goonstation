@@ -725,4 +725,5 @@ that cannot be itched
 			p.name = "Official Caution - [ticket_target]"
 			p.info = ticket_text
 			p.icon_state = "paper_caution"
-		return
+
+		return T.target_byond_key

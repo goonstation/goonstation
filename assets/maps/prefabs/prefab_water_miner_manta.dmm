@@ -102,6 +102,8 @@
 /obj/table/reinforced/auto,
 /obj/item/oreprospector,
 /obj/item/oreprospector,
+/obj/item/sea_ladder,
+/obj/item/sea_ladder,
 /turf/simulated/floor/grime,
 /area/prefab/sea_mining)
 "aw" = (

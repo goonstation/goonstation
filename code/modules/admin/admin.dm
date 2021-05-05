@@ -1190,6 +1190,28 @@ var/global/noir = 0
 					message_admins("<span class='internal'>[key_name(usr)] transformed [H.real_name] into a [which].</span>")
 			else
 				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to transform a player.")
+		
+		if ("setstatuseffect")
+			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
+				var/mob/M = locate(href_list["target"])	//doesn't really have to be mob, could be atom. 
+
+				var/effect = input("Which Status Effect?","Give Status Effect") as null|text
+				if (!effect)
+					return
+
+				var/duration = input("Duration (in seconds)?","Status Effect Duration") as null|num
+				if (isnull(duration))
+					return
+
+				if (duration <= 0)
+					M.delStatus(effect)
+					message_admins("[key_name(usr)] removed the [effect] status-effect from [key_name(M)].")
+				else
+					M.setStatus(effect, duration * 10)	//convert to seconds
+					message_admins("[key_name(usr)] added the [effect] status-effect to [key_name(M)] for [duration * 10] seconds.")
+
+			else
+				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to statuseffect a player.")
 
 		if ("managebioeffect")
 			if(src.level >= LEVEL_SA)
@@ -2574,6 +2596,12 @@ var/global/noir = 0
 						for(var/S in bioEffectList)
 							be_string += "[S]<br>"
 						usr.Browse(be_string,"window=bioeffect_help;size=300x600")
+					
+					if ("statuseffect_help")
+						var/be_string = "To set Status Effects enter a status effect id (right side) in the first prompt and a duration in seconds in the second prompt.<br><br><b>All Status Effect IDs</b><hr>"
+						for(var/datum/statusEffect/S in globalStatusPrototypes)
+							be_string += "[S.name] = [S.id]<br>"
+						usr.Browse(be_string,"window=statuseffect_help;size=300x600")
 
 					if ("reagent_help")
 						var/r_string = "To add or remove multiple reagents enter multiple IDs separated by semicolons.<br><br><b>All Reagent IDs</b><hr>"
