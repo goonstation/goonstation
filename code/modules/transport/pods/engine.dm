@@ -85,13 +85,9 @@
 	//This is bad and dumb. I should turn the warp_beacons list into a manager datum, but this is already taking too long. -kyle
 	//I realize the possiblity of a bug where if you sit here ready to warp when it's about to change and then warp, but whatever
 #ifdef MAP_OVERRIDE_POD_WARS
-	var/pilot_team = ship?.pilot?.mind?.special_role
+	var/pilot_team = get_pod_wars_team_num(ship?.pilot)
 	for(var/obj/warp_beacon/pod_wars/W in warp_beacons)
-		//TEAM_NANOTRASEN = 1
-		if (W.current_owner == 1 && pilot_team == "NanoTrasen") 
-			beacons += W
-		//TEAM_SYNDICATE = 2
-		else if (W.current_owner == 2 && pilot_team == "Syndicate")
+		if (W.current_owner == pilot_team) 
 			beacons += W
 #else
 	for(var/obj/warp_beacon/W in warp_beacons)
@@ -105,6 +101,13 @@
 	if(!target)
 		wormholeQueued = 0
 		return
+
+#ifdef MAP_OVERRIDE_POD_WARS
+	var/obj/warp_beacon/pod_wars/W = target
+	if (istype(W) && W.current_owner != pilot_team)
+		boutput(usr, "Your access codes to this beacon are no longer working!")
+		return
+#endif
 	var/turf/T = ship.loc
 	if (!T.allows_vehicles)
 		boutput(usr, "[ship.ship_message("Cannot create wormhole on this flooring!")]")
