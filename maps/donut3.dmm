@@ -47619,7 +47619,6 @@
 /obj/grille/catwalk/jen/side{
 	dir = 4
 	},
-/obj/disposalpipe/segment,
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -79902,15 +79901,8 @@
 /area/station/medical/medbay/lobby)
 "xrP" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/grille/catwalk/jen/side{
 	dir = 4
-	},
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
