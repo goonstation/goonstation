@@ -102,6 +102,7 @@
 			artifact:holder = null
 		remove_dialogs()
 		..()
+
 	UpdateName()
 		if (src.real_name == null && name != null)
 			real_name = name
