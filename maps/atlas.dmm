@@ -556,6 +556,12 @@
 /area/station/security/detectives_office)
 "bq" = (
 /obj/machinery/computer/secure_data/detective_computer,
+/obj/noticeboard/persistent{
+	name = "Detective's Office persistent notice board";
+	persistent_id = "detectives office";
+	pixel_x = 32;
+	pixel_y = 2
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "br" = (
@@ -2175,6 +2181,10 @@
 	light_type = /obj/item/light/tube/yellowish
 	},
 /obj/submachine/cargopad,
+/obj/noticeboard/persistent{
+	name = "Cargo persistent notice board";
+	persistent_id = "cargo"
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "fv" = (
@@ -3161,6 +3171,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/noticeboard/persistent{
+	name = "Chapel persistent notice board";
+	persistent_id = "chapel"
+	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
@@ -3244,6 +3258,10 @@
 	pixel_y = 21
 	},
 /obj/machinery/vending/security,
+/obj/noticeboard/persistent{
+	name = "Security persistent notice board";
+	persistent_id = "security"
+	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -3548,6 +3566,10 @@
 	layer = 3;
 	name = "Kitchen Shutter"
 	},
+/obj/noticeboard/persistent{
+	name = "Kitchen persistent notice board";
+	persistent_id = "kitchen"
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "iN" = (
@@ -3796,6 +3818,10 @@
 /obj/machinery/glass_recycler,
 /obj/item/clothing/glasses/spectro{
 	pixel_y = 11
+	},
+/obj/noticeboard/persistent{
+	name = "Bar persistent notice board";
+	persistent_id = "bar"
 	},
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -6045,6 +6071,12 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/noticeboard/persistent{
+	name = "Brig persistent notice board";
+	persistent_id = "brig";
+	pixel_x = -32;
+	pixel_y = 0
+	},
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -6471,6 +6503,10 @@
 "pK" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
+/obj/noticeboard/persistent{
+	name = "Security Foyer persistent notice board";
+	persistent_id = "security foyer"
+	},
 /turf/simulated/floor/red,
 /area/station/security/secwing)
 "pL" = (
@@ -9723,6 +9759,12 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/noticeboard/persistent{
+	name = "Mechanics Workshop persistent notice board";
+	persistent_id = "mechanics";
+	pixel_x = 32;
+	pixel_y = 0
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -12333,6 +12375,10 @@
 	},
 /obj/table/auto,
 /obj/random_item_spawner/medicine,
+/obj/item/device/radio/intercom/medical{
+	dir = 1;
+	pixel_y = 6
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "Ea" = (
@@ -17054,6 +17100,10 @@
 	},
 /obj/item/device/radio/intercom/medical,
 /obj/stool/bench/blue/auto,
+/obj/noticeboard/persistent{
+	name = "Medbay persistent notice board";
+	persistent_id = "medbay"
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -17400,6 +17450,20 @@
 	},
 /turf/space,
 /area/space)
+"QD" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/noticeboard/persistent{
+	name = "Crew Quarters persistent notice board";
+	persistent_id = "crew quarters";
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/turf/simulated/floor,
+/area/station/hangar/arrivals)
 "QE" = (
 /obj/machinery/portableowl/attached{
 	name = "Hoot Topic"
@@ -17630,6 +17694,16 @@
 	icon_state = "engine_caution_we"
 	},
 /area/station/engine/combustion_chamber)
+"Rv" = (
+/obj/machinery/plantpot,
+/obj/noticeboard/persistent{
+	name = "Botany persistent notice board";
+	persistent_id = "botany";
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "RA" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 1;
@@ -66512,7 +66586,7 @@ bv
 bw
 UO
 ck
-qp
+Rv
 qp
 qp
 vP
@@ -74977,7 +75051,7 @@ hE
 hE
 ih
 Cl
-Qw
+QD
 Qw
 Qw
 Qw
