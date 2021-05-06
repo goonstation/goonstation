@@ -8,7 +8,7 @@
 (+)Added eye coloring for cows
 (t)wed may 05 21
 (u)pali
-(+)Cyborg CheMaster can now create patches and ampules
+(+)Cyborg CheMaster can now create patches and ampoules
 (u)Walpvrgis
 (p)4579
 (e)🎨|sprites
