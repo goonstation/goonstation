@@ -1061,7 +1061,7 @@
 	color = "#f1da10"
 	material_flags = MATERIAL_ORGANIC
 	edible_exact = TRUE
-	ediable = TRUE
+	edible = TRUE
 
 	New()
 		setProperty("density", 20)
