@@ -686,7 +686,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Brig persistent notice board";
-	persistent_id = "brig";
+	persistent_id = brig;
 	pixel_x = 32;
 	pixel_y = 0
 	},
@@ -9577,7 +9577,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Cargo persistent notice board";
-	persistent_id = "cargo"
+	persistent_id = cargo
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -11738,7 +11738,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Genetics persistent notice board";
-	persistent_id = "genetics"
+	persistent_id = genetics
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -19576,7 +19576,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Research persistent notice board";
-	persistent_id = "research"
+	persistent_id = research
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -20513,7 +20513,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Botany persistent notice board";
-	persistent_id = "botany"
+	persistent_id = botany
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -36522,12 +36522,16 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Main Medbay persistent notice board";
+<<<<<<< HEAD
 	persistent_id = "medbay main"
 =======
 /obj/noticeboard{
 	pixel_x = 1;
 	pixel_y = 32
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
+=======
+	persistent_id = medbay main
+>>>>>>> parent of 7578e39c3 (fixes runtimes)
 	},
 /turf/simulated/floor/carpet/green/fancy/narrow{
 	dir = 9
@@ -41251,7 +41255,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Kitchen persistent notice board";
-	persistent_id = "kitchen"
+	persistent_id = kitchen
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -49100,7 +49104,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Bar persistent notice board";
-	persistent_id = "bar"
+	persistent_id = bar
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -53942,7 +53946,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Engineering persistent notice board";
-	persistent_id = "engineering";
+	persistent_id = engineering;
 	pixel_x = -32;
 	pixel_y = 2
 	},
@@ -56957,11 +56961,15 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Courtroom persistent notice board";
+<<<<<<< HEAD
 	persistent_id = "courtroom"
 =======
 /obj/noticeboard{
 	pixel_y = 28
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
+=======
+	persistent_id = courtroom
+>>>>>>> parent of 7578e39c3 (fixes runtimes)
 	},
 /turf/simulated/floor/blue/side{
 	dir = 1
@@ -57066,7 +57074,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Market persistent notice board";
-	persistent_id = "market"
+	persistent_id = market
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -63632,7 +63640,7 @@
 /obj/disposalpipe/segment/transport,
 /obj/noticeboard/persistent{
 	name = "Crew Quarters persistent notice board";
-	persistent_id = "crew quarters";
+	persistent_id = crew quarters;
 	pixel_x = 32;
 	pixel_y = 2
 	},
@@ -65551,7 +65559,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Customs persistent notice board";
-	persistent_id = "customs"
+	persistent_id = customs
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -65907,7 +65915,7 @@
 /obj/access_spawn/engineering_mechanic,
 /obj/noticeboard/persistent{
 	name = "Mechanic's Workshop persistent notice board";
-	persistent_id = "mechanics workshop"
+	persistent_id = mechanics workshop
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
@@ -68512,10 +68520,14 @@
 /obj/noticeboard/persistent{
 	name = "Detective's Office persistent notice board";
 <<<<<<< HEAD
+<<<<<<< HEAD
 	persistent_id = "detectives office"
 =======
 	persistent_id = detective's office
 >>>>>>> parent of 73a32e10a (fix runtimes)
+=======
+	persistent_id = detectives office
+>>>>>>> parent of 7578e39c3 (fixes runtimes)
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -70051,7 +70063,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Mining persistent notice board";
-	persistent_id = "mining"
+	persistent_id = mining
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -72649,7 +72661,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Main Security persistent notice board";
-	persistent_id = "security main"
+	persistent_id = security main
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -76884,7 +76896,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Research Break Room persistent notice board";
-	persistent_id = "research coffee room"
+	persistent_id = research coffee room
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)

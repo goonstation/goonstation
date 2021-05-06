@@ -7281,11 +7281,15 @@
 <<<<<<< HEAD
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/noticeboard/persistent{
+<<<<<<< HEAD
 	persistent_id = "chaplain office"
 =======
 /obj/noticeboard{
 	pixel_y = 32
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
+=======
+	persistent_id = chaplain office
+>>>>>>> parent of 7578e39c3 (fixes runtimes)
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/specialroom/chapel{
@@ -12029,7 +12033,7 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
-	persistent_id = "bar"
+	persistent_id = bar
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -14209,7 +14213,7 @@
 	},
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
-	persistent_id = "botany"
+	persistent_id = botany
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -15207,11 +15211,15 @@
 "aIm" = (
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
+<<<<<<< HEAD
 	persistent_id = "chapel"
 =======
 /obj/noticeboard{
 	pixel_y = 32
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
+=======
+	persistent_id = chapel
+>>>>>>> parent of 7578e39c3 (fixes runtimes)
 	},
 /turf/simulated/floor/green/side{
 	dir = 1
@@ -19718,10 +19726,14 @@
 "aTr" = (
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
+<<<<<<< HEAD
 	persistent_id = "ranch";
 =======
 /obj/noticeboard{
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
+=======
+	persistent_id = ranch;
+>>>>>>> parent of 7578e39c3 (fixes runtimes)
 	pixel_x = -32
 	},
 /turf/simulated/floor/green/side{
@@ -21299,7 +21311,7 @@
 	},
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
-	persistent_id = "crew quarters";
+	persistent_id = crew quarters;
 	pixel_y = 32
 	},
 =======
@@ -30985,7 +30997,7 @@
 	},
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
-	persistent_id = "engineering"
+	persistent_id = engineering
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -36279,7 +36291,7 @@
 	},
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
-	persistent_id = "security main";
+	persistent_id = security main;
 	pixel_y = 32
 	},
 =======
@@ -38456,7 +38468,7 @@
 	},
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
-	persistent_id = "security foyer";
+	persistent_id = security foyer;
 	pixel_y = 32
 	},
 =======
@@ -38554,7 +38566,7 @@
 	},
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
-	persistent_id = "customs"
+	persistent_id = customs
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -57133,10 +57145,14 @@
 <<<<<<< HEAD
 /obj/landmark/halloween,
 /obj/noticeboard/persistent{
+<<<<<<< HEAD
 	persistent_id = "research coffee room";
 =======
 /obj/noticeboard{
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
+=======
+	persistent_id = research coffee room;
+>>>>>>> parent of 7578e39c3 (fixes runtimes)
 	pixel_y = 32
 	},
 /obj/landmark/halloween,
@@ -61181,11 +61197,15 @@
 "cDI" = (
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
+<<<<<<< HEAD
 	persistent_id = "robotics"
 =======
 /obj/noticeboard{
 	pixel_y = 32
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
+=======
+	persistent_id = robotics
+>>>>>>> parent of 7578e39c3 (fixes runtimes)
 	},
 /turf/simulated/floor/blue/side{
 	dir = 1
@@ -61458,7 +61478,7 @@
 /obj/disposalpipe/segment/mail/horizontal,
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
-	persistent_id = "mechanics workshop"
+	persistent_id = mechanics workshop
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -68533,11 +68553,15 @@
 	},
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
+<<<<<<< HEAD
 	persistent_id = "genetics"
 =======
 /obj/noticeboard{
 	pixel_y = 32
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
+=======
+	persistent_id = genetics
+>>>>>>> parent of 7578e39c3 (fixes runtimes)
 	},
 /turf/simulated/floor/redwhite{
 	dir = 1

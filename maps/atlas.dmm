@@ -560,10 +560,14 @@
 /obj/noticeboard/persistent{
 	name = "Detective's Office persistent notice board";
 <<<<<<< HEAD
+<<<<<<< HEAD
 	persistent_id = "detectives office";
 =======
 	persistent_id = detective's office;
 >>>>>>> parent of 73a32e10a (fix runtimes)
+=======
+	persistent_id = detectives office;
+>>>>>>> parent of 7578e39c3 (fixes runtimes)
 	pixel_x = 32;
 	pixel_y = 2
 	},
@@ -2191,7 +2195,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Cargo persistent notice board";
-	persistent_id = "cargo"
+	persistent_id = cargo
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -3820,7 +3824,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Bar persistent notice board";
-	persistent_id = "bar"
+	persistent_id = bar
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -6075,7 +6079,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Brig persistent notice board";
-	persistent_id = "brig";
+	persistent_id = brig;
 	pixel_x = -32;
 	pixel_y = 2
 	},
@@ -6510,7 +6514,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Main Medbay persistent notice board";
-	persistent_id = "medbay main"
+	persistent_id = medbay main
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -7204,7 +7208,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Botany persistent notice board";
-	persistent_id = "botany";
+	persistent_id = botany;
 	pixel_x = -32;
 	pixel_y = 2
 	},
@@ -11208,7 +11212,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Genetics persistent notice board";
-	persistent_id = "genetics";
+	persistent_id = genetics;
 	pixel_x = -32;
 	pixel_y = 2
 	},
@@ -12731,7 +12735,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Robotics persistent notice board";
-	persistent_id = "robotics";
+	persistent_id = robotics;
 	pixel_x = 32;
 	pixel_y = 2
 	},
@@ -17127,7 +17131,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Main Medbay persistent notice board";
-	persistent_id = "medbay main"
+	persistent_id = medbay main
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -18335,7 +18339,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Research persistent notice board";
-	persistent_id = "research"
+	persistent_id = research
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
@@ -18982,7 +18986,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Kitchen persistent notice board";
-	persistent_id = "kitchen";
+	persistent_id = kitchen;
 	pixel_x = 32;
 	pixel_y = 2
 	},

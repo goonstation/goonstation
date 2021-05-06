@@ -10938,6 +10938,7 @@
 "atY" = (
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
+<<<<<<< HEAD
 	persistent_id = "detectives office"
 =======
 /obj/machinery/firealarm{
@@ -10945,6 +10946,9 @@
 	pixel_x = 5;
 	pixel_y = 28
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
+=======
+	persistent_id = detectives office
+>>>>>>> parent of 7578e39c3 (fixes runtimes)
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -15004,7 +15008,7 @@
 	},
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
-	persistent_id = "bar"
+	persistent_id = bar
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -18904,7 +18908,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Chapel persistent notice board";
-	persistent_id = "chapel"
+	persistent_id = chapel
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -19280,7 +19284,7 @@
 	},
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
-	persistent_id = "research coffee room";
+	persistent_id = research coffee room;
 	pixel_x = 16
 =======
 /obj/noticeboard{
@@ -24500,7 +24504,7 @@
 	},
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
-	persistent_id = "security main";
+	persistent_id = security main;
 	pixel_y = 32
 	},
 =======
@@ -34077,7 +34081,7 @@
 /obj/machinery/rkit,
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
-	persistent_id = "mechanics workshop"
+	persistent_id = mechanics workshop
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
@@ -34337,11 +34341,15 @@
 <<<<<<< HEAD
 /obj/reagent_dispensers/fueltank,
 /obj/noticeboard/persistent{
+<<<<<<< HEAD
 	persistent_id = "engineering"
 =======
 /obj/noticeboard{
 	pixel_y = 32
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
+=======
+	persistent_id = engineering
+>>>>>>> parent of 7578e39c3 (fixes runtimes)
 	},
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/white,
@@ -38779,7 +38787,7 @@
 /obj/vehicle/tug,
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
-	persistent_id = "cargo"
+	persistent_id = cargo
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
