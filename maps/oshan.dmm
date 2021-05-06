@@ -12701,6 +12701,7 @@
 	name = "Research Break Room persistent notice board";
 <<<<<<< HEAD
 	persistent_id = "research coffee room"
+<<<<<<< HEAD
 =======
 /obj/noticeboard{
 	pixel_y = 28
@@ -12709,6 +12710,8 @@
 	persistent_id = research coffee room
 >>>>>>> parent of 7578e39c3 (fixes runtimes)
 	},
+=======
+>>>>>>> parent of 422f66f5e (fixes runtimes)
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
 "aDN" = (

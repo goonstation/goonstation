@@ -6952,7 +6952,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Engineering persistent notice board";
-	persistent_id = "engineering";
+	persistent_id = engineering;
 	pixel_x = -32;
 	pixel_y = 2
 	},
@@ -10012,7 +10012,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Kitchen persistent notice board";
-	persistent_id = "kitchen"
+	persistent_id = kitchen
 	},
 =======
 >>>>>>> parent of 7578e39c3 (fixes runtimes)
@@ -13161,7 +13161,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Brig persistent notice board";
-	persistent_id = "brig"
+	persistent_id = brig
 	},
 =======
 >>>>>>> parent of 7578e39c3 (fixes runtimes)
@@ -13782,7 +13782,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Courtroom persistent notice board";
-	persistent_id = "courtroom"
+	persistent_id = courtroom
 	},
 =======
 >>>>>>> parent of 7578e39c3 (fixes runtimes)
@@ -15762,7 +15762,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Customs persistent notice board";
-	persistent_id = "customs"
+	persistent_id = customs
 	},
 =======
 >>>>>>> parent of 7578e39c3 (fixes runtimes)
@@ -21625,12 +21625,16 @@
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon17,
 /obj/noticeboard/persistent{
 	name = "Chapel persistent notice board";
+<<<<<<< HEAD
 	persistent_id = "chapel"
 =======
 /obj/noticeboard{
 	name = "Chapel Board";
 	pixel_y = 28
 >>>>>>> parent of 7578e39c3 (fixes runtimes)
+=======
+	persistent_id = chapel
+>>>>>>> parent of 422f66f5e (fixes runtimes)
 	},
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon17,
 /turf/simulated/floor,
@@ -22094,7 +22098,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Main Medbay persistent notice board";
-	persistent_id = "medbay main"
+	persistent_id = medbay main
 	},
 =======
 >>>>>>> parent of 7578e39c3 (fixes runtimes)
@@ -23047,7 +23051,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Botany persistent notice board";
-	persistent_id = "botany";
+	persistent_id = botany;
 	pixel_x = -32;
 	pixel_y = 2
 	},
@@ -27423,7 +27427,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Mechanic's Workshop persistent notice board";
-	persistent_id = "mechanics workshop"
+	persistent_id = mechanics workshop
 	},
 =======
 >>>>>>> parent of 7578e39c3 (fixes runtimes)
@@ -30220,7 +30224,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Research persistent notice board";
-	persistent_id = "research"
+	persistent_id = research
 	},
 =======
 >>>>>>> parent of 7578e39c3 (fixes runtimes)
@@ -31708,7 +31712,7 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Detective's Office persistent notice board";
-	persistent_id = "detectives office"
+	persistent_id = detectives office
 	},
 =======
 >>>>>>> parent of 7578e39c3 (fixes runtimes)
@@ -39241,7 +39245,7 @@
 "jZU" = (
 /obj/noticeboard/persistent{
 	name = "Cargo persistent notice board";
-	persistent_id = "cargo"
+	persistent_id = cargo
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
@@ -44362,7 +44366,8 @@
 	},
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
-	persistent_id = "security main"
+	name = "Main Medbay persistent notice board";
+	persistent_id = medbay main
 	},
 =======
 >>>>>>> parent of 7578e39c3 (fixes runtimes)
@@ -45358,7 +45363,7 @@
 "yjj" = (
 /obj/noticeboard/persistent{
 	name = "Mining persistent notice board";
-	persistent_id = "mining"
+	persistent_id = mining
 	},
 /turf/simulated/floor/orange,
 /area/station/hallway/seaturtlehallway)
