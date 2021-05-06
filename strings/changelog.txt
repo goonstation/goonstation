@@ -1,6 +1,10 @@
 
 (t)thu may 06 21
 (u)Gannets
+(p)4595
+(e)⚖🗺|balance, mapping
+(+)Added acid-proof masks to the Cairngorm
+(u)Gannets
 (p)4593
 (e)⚖|balance
 (+)Adds authentication disk pinpointer to the infiltrator and scout class crates.
