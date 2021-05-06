@@ -68511,7 +68511,11 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Detective's Office persistent notice board";
+<<<<<<< HEAD
 	persistent_id = "detectives office"
+=======
+	persistent_id = detective's office
+>>>>>>> parent of 73a32e10a (fix runtimes)
 	},
 =======
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)

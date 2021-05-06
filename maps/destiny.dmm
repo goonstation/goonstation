@@ -37193,11 +37193,15 @@
 <<<<<<< HEAD
 /obj/noticeboard/persistent{
 	name = "Detective's Office persistent notice board";
+<<<<<<< HEAD
 	persistent_id = "detectives office"
 =======
 /obj/noticeboard{
 	pixel_y = 32
 >>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
+=======
+	persistent_id = detective's office
+>>>>>>> parent of 73a32e10a (fix runtimes)
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)

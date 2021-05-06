@@ -46183,7 +46183,11 @@
 "cCr" = (
 /obj/noticeboard/persistent{
 	name = "Detective's Office persistent notice board";
+<<<<<<< HEAD
 	persistent_id = "detectives office"
+=======
+	persistent_id = detective's office
+>>>>>>> parent of 73a32e10a (fix runtimes)
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
