@@ -1,5 +1,10 @@
 
 (t)thu may 06 21
+(u)Gannets
+(p)4593
+(e)⚖|balance
+(+)Adds authentication disk pinpointer to the infiltrator and scout class crates.
+(+)Removes the authentication disk pinpointer that spawns with the nuke ops commander.
 (u)pali
 (*)Honey (the item produced by bees) is now made out of a new honey material. Cloning pods now require honey instead of beeswax. (This is mostly because people understandably didn't know where to get beeswax.)
 (u)DimWhat
