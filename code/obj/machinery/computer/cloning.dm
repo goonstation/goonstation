@@ -306,10 +306,22 @@
 		if (isnull(pod1))
 			pod1 = P
 			continue
-		if (pod1.attempting && !P.attempting)
+
+		if (P.attempting)
+			// If this new pod is currently working, skip it.
+			continue
+
+		if (pod1.attempting)
 			pod1 = P
 			continue
-		if (!P.attempting && pod1.meat_level < P.meat_level)
+
+		// Pick the pod that has the most progress
+		if (pod1.get_progress() < P.get_progress())
+			pod1 = P
+			continue
+
+		// If they're both the same progress, pick the one with the most MEAT
+		if (pod1.get_progress() == P.get_progress() && pod1.meat_level < P.meat_level)
 			pod1 = P
 			continue
 
@@ -821,7 +833,7 @@ proc/find_ghost_by_key(var/find_key)
 		.["podNames"] += P.name
 		.["meatLevels"] += P.meat_level
 		.["cloneSlave"] += P.cloneslave
-		.["completion"] += (!isnull(P.occupant) ? clamp(100 - ((P.occupant.max_health - P.occupant.health) - P.heal_level), 0, 100) : 0)
+		.["completion"] += P.get_progress()
 	if(!isnull(src.scanner))
 		. += list(
 			"scannerOccupied" = src.scanner.occupant,
