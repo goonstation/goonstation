@@ -1,4 +1,9 @@
 
+(t)thu may 06 21
+(u)DimWhat
+(p)4594
+(e)🎨|sprites
+(+)Added eye coloring for cows
 (t)wed may 05 21
 (u)pali
 (+)Cyborg CheMaster can now create patches and ampules
