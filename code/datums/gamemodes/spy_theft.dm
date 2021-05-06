@@ -47,7 +47,7 @@
 	var/photo_containing = 0 						//Name required in a photograph. alright look photographs work on the basis of matching strings. Photos don't store refs to the mob or whatever so this will have to do
 	var/reveal_area = 0									//Show area of target in pda
 	var/job = "job name"								//Job of bounty item owner (if item has an owner). Used for target difficulty on personal/organ bounties
-	var/bounty_type = 0 												//Type of objective, used to determine difficulty and organs 'Anywhere' delivery location
+	var/bounty_type = 0 								//Type of objective, used to determine difficulty and organs 'Anywhere' delivery location
 	var/difficulty = 0									//Stored difficulty for items and big items
 
 	var/datum/syndicate_buylist/reward = 0
@@ -603,7 +603,7 @@
 		B.job = pair[2]
 		B.name = B.item.name
 		B.reveal_area = 1
-		P -= pair
+		P -= list(pair)
 
 		B.bounty_type = BOUNTY_TYPE_TRINK
 		active_bounties += B
@@ -617,7 +617,7 @@
 			logTheThing( "debug", src, null, "spy_theft.dm was unable to create enough big station bounties." )
 			message_admins("Spy bounty logic was unable to create enough big station bounties.")
 			break
-		// Pick a known valid item, retrieve difficulty rating from other list
+		// Pick an item type then check if it is valid
 		big_choice = pick(big_station_bounties)
 		obj_existing = pick(valid_spy_thief_targets_by_type[big_choice])
 		if (obj_existing == null)
@@ -629,6 +629,7 @@
 		B.item = obj_existing
 		B.name = obj_existing.name
 
+		//Retrieve difficulty rating
 		B.difficulty = big_station_bounties[big_choice]
 		B.bounty_type = BOUNTY_TYPE_BIG
 		active_bounties += B
@@ -655,7 +656,7 @@
 			logTheThing( "debug", src, null, "spy_theft.dm was unable to create enough item bounties." )
 			message_admins("Spy bounty logic was unable to create enough item bounties.")
 			break
-		// Pick a known valid item, retrieve difficulty rating from other list
+		// Pick an item type then check if it is valid
 		item_choice = pick(station_bounties)
 		item_existing = pick(valid_spy_thief_targets_by_type[item_choice])
 		if (item_existing == null)
@@ -667,8 +668,10 @@
 		B.item = item_existing
 		B.name = item_existing.name
 
+		//Retrieve difficulty rating
 		B.difficulty = station_bounties[item_choice]
 		B.bounty_type = BOUNTY_TYPE_ITEM
+
 		active_bounties += B
 		station_bounties -= item_choice
 		item_picked++
@@ -678,8 +681,8 @@
 	possible_areas = get_areas_with_unblocked_turfs(/area/station)
 	possible_areas += get_areas_with_unblocked_turfs(/area/diner)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/diner/tug)
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/medical/asylum)					// Donut 3 Asylum
-	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected/ai)			// AI core
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/medical/asylum)			// Donut 3 Asylum
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected/ai)		// AI core
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected/AIsat)	// AI satellite
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/maintenance)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/hallway)
