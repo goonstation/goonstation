@@ -7278,10 +7278,16 @@
 	},
 /area/station/chapel/sanctuary)
 "aqs" = (
+<<<<<<< HEAD
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/noticeboard/persistent{
 	persistent_id = "chaplain office"
+=======
+/obj/noticeboard{
+	pixel_y = 32
+>>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 	},
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
@@ -12021,9 +12027,12 @@
 /obj/machinery/chem_dispenser/alcohol,
 /obj/item/device/radio/intercom/catering,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+<<<<<<< HEAD
 /obj/noticeboard/persistent{
 	persistent_id = "bar"
 	},
+=======
+>>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fpurple2"
@@ -14190,14 +14199,20 @@
 "aFP" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
+/obj/noticeboard{
+	pixel_y = 28
+	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/door/window/eastleft{
 	name = "Hydroponics";
 	req_access_txt = "35"
 	},
+<<<<<<< HEAD
 /obj/noticeboard/persistent{
 	persistent_id = "botany"
 	},
+=======
+>>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/green,
 /area/station/hydroponics/lobby)
 "aFQ" = (
@@ -15190,8 +15205,13 @@
 	},
 /area/station/crew_quarters/garden)
 "aIm" = (
+<<<<<<< HEAD
 /obj/noticeboard/persistent{
 	persistent_id = "chapel"
+=======
+/obj/noticeboard{
+	pixel_y = 32
+>>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 	},
 /turf/simulated/floor/green/side{
 	dir = 1
@@ -19696,8 +19716,12 @@
 	},
 /area/station/crew_quarters/arcade)
 "aTr" = (
+<<<<<<< HEAD
 /obj/noticeboard/persistent{
 	persistent_id = "ranch";
+=======
+/obj/noticeboard{
+>>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 	pixel_x = -32
 	},
 /turf/simulated/floor/green/side{
@@ -21273,10 +21297,13 @@
 	pixel_x = 4;
 	pixel_y = 3
 	},
+<<<<<<< HEAD
 /obj/noticeboard/persistent{
 	persistent_id = "crew quarters";
 	pixel_y = 32
 	},
+=======
+>>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor{
 	icon_state = "carpetS"
 	},
@@ -21354,6 +21381,17 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/station/hallway/secondary/entry)
+"aXq" = (
+/obj/noticeboard{
+	pixel_y = 32
+	},
+/obj/table/glass/reinforced/auto,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
@@ -30935,6 +30973,9 @@
 	dir = 4;
 	icon_state = "pipe-j2"
 	},
+/obj/noticeboard{
+	pixel_y = 32
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -30942,9 +30983,12 @@
 	pixel_y = 20;
 	tag = ""
 	},
+<<<<<<< HEAD
 /obj/noticeboard/persistent{
 	persistent_id = "engineering"
 	},
+=======
+>>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "bsR" = (
@@ -36233,10 +36277,13 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+<<<<<<< HEAD
 /obj/noticeboard/persistent{
 	persistent_id = "security main";
 	pixel_y = 32
 	},
+=======
+>>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -38392,6 +38439,10 @@
 "bHk" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/lamp,
+/obj/noticeboard{
+	name = "Wanted Board";
+	pixel_y = 28
+	},
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 4;
@@ -38403,10 +38454,13 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+<<<<<<< HEAD
 /obj/noticeboard/persistent{
 	persistent_id = "security foyer";
 	pixel_y = 32
 	},
+=======
+>>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer)
 "bHl" = (
@@ -38477,6 +38531,10 @@
 /area/station/hallway/primary/east)
 "bHu" = (
 /obj/table/reinforced/auto,
+/obj/noticeboard{
+	name = "Complaint Board";
+	pixel_y = 28
+	},
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -38494,9 +38552,12 @@
 /obj/machinery/cashreg{
 	pixel_y = -3
 	},
+<<<<<<< HEAD
 /obj/noticeboard/persistent{
 	persistent_id = "customs"
 	},
+=======
+>>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/customs)
 "bHv" = (
@@ -57069,11 +57130,16 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+<<<<<<< HEAD
 /obj/landmark/halloween,
 /obj/noticeboard/persistent{
 	persistent_id = "research coffee room";
+=======
+/obj/noticeboard{
+>>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 	pixel_y = 32
 	},
+/obj/landmark/halloween,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -61113,8 +61179,13 @@
 	},
 /area/station/medical/medbay/lobby)
 "cDI" = (
+<<<<<<< HEAD
 /obj/noticeboard/persistent{
 	persistent_id = "robotics"
+=======
+/obj/noticeboard{
+	pixel_y = 32
+>>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 	},
 /turf/simulated/floor/blue/side{
 	dir = 1
@@ -61385,9 +61456,12 @@
 "cEw" = (
 /obj/stool/chair,
 /obj/disposalpipe/segment/mail/horizontal,
+<<<<<<< HEAD
 /obj/noticeboard/persistent{
 	persistent_id = "mechanics workshop"
 	},
+=======
+>>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -68457,8 +68531,13 @@
 /obj/storage/secure/closet/medical{
 	name = "locker"
 	},
+<<<<<<< HEAD
 /obj/noticeboard/persistent{
 	persistent_id = "genetics"
+=======
+/obj/noticeboard{
+	pixel_y = 32
+>>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 	},
 /turf/simulated/floor/redwhite{
 	dir = 1
@@ -70292,6 +70371,9 @@
 	dir = 0;
 	name = "autoname - SS13";
 	pixel_y = 20
+	},
+/obj/noticeboard{
+	pixel_y = 32
 	},
 /turf/simulated/floor/arrival{
 	dir = 1
@@ -128925,7 +129007,7 @@ aCV
 aod
 alM
 aGx
-aIl
+aIm
 aGE
 aLl
 aGF
@@ -143130,7 +143212,7 @@ aaa
 aaa
 aam
 aFi
-aGY
+aXq
 aZe
 baC
 bcA
