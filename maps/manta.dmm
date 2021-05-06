@@ -6949,15 +6949,6 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/item/stamp,
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Engineering persistent notice board";
-	persistent_id = engineering;
-	pixel_x = -32;
-	pixel_y = 2
-	},
-=======
->>>>>>> parent of 7578e39c3 (fixes runtimes)
 /turf/simulated/floor,
 /area/station/engine/storage)
 "auO" = (
@@ -10009,13 +10000,6 @@
 	dir = 1;
 	icon_state = "check1"
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Kitchen persistent notice board";
-	persistent_id = kitchen
-	},
-=======
->>>>>>> parent of 7578e39c3 (fixes runtimes)
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen/therustykrab)
 "aCE" = (
@@ -13158,13 +13142,6 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Brig persistent notice board";
-	persistent_id = brig
-	},
-=======
->>>>>>> parent of 7578e39c3 (fixes runtimes)
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -13779,13 +13756,6 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Courtroom persistent notice board";
-	persistent_id = courtroom
-	},
-=======
->>>>>>> parent of 7578e39c3 (fixes runtimes)
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "aMY" = (
@@ -15759,13 +15729,6 @@
 	pixel_x = 4;
 	pixel_y = 8
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Customs persistent notice board";
-	persistent_id = customs
-	},
-=======
->>>>>>> parent of 7578e39c3 (fixes runtimes)
 /turf/simulated/floor,
 /area/station/hos)
 "aTc" = (
@@ -21621,20 +21584,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-<<<<<<< HEAD
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon17,
-/obj/noticeboard/persistent{
-	name = "Chapel persistent notice board";
-<<<<<<< HEAD
-	persistent_id = "chapel"
-=======
 /obj/noticeboard{
 	name = "Chapel Board";
 	pixel_y = 28
->>>>>>> parent of 7578e39c3 (fixes runtimes)
-=======
-	persistent_id = chapel
->>>>>>> parent of 422f66f5e (fixes runtimes)
 	},
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon17,
 /turf/simulated/floor,
@@ -22095,13 +22047,6 @@
 /obj/landmark/start{
 	name = "Medical Doctor"
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Main Medbay persistent notice board";
-	persistent_id = medbay main
-	},
-=======
->>>>>>> parent of 7578e39c3 (fixes runtimes)
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
 "bjr" = (
@@ -23048,15 +22993,6 @@
 /obj/item/plantanalyzer,
 /obj/item/reagent_containers/glass/bottle/powerplant,
 /obj/item/reagent_containers/glass/bottle/topcrop,
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Botany persistent notice board";
-	persistent_id = botany;
-	pixel_x = -32;
-	pixel_y = 2
-	},
-=======
->>>>>>> parent of 7578e39c3 (fixes runtimes)
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "blE" = (
@@ -27424,13 +27360,6 @@
 	pixel_x = 10;
 	tag = ""
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Mechanic's Workshop persistent notice board";
-	persistent_id = mechanics workshop
-	},
-=======
->>>>>>> parent of 7578e39c3 (fixes runtimes)
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "bxl" = (
@@ -30221,13 +30150,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Research persistent notice board";
-	persistent_id = research
-	},
-=======
->>>>>>> parent of 7578e39c3 (fixes runtimes)
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "bEU" = (
@@ -31709,13 +31631,6 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Detective's Office persistent notice board";
-	persistent_id = detectives office
-	},
-=======
->>>>>>> parent of 7578e39c3 (fixes runtimes)
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "red2"
@@ -39241,16 +39156,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/market)
-<<<<<<< HEAD
-"jZU" = (
-/obj/noticeboard/persistent{
-	name = "Cargo persistent notice board";
-	persistent_id = cargo
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/cargobay)
-=======
->>>>>>> parent of 7578e39c3 (fixes runtimes)
 "kai" = (
 /obj/machinery/vending/coffee,
 /obj/machinery/light/incandescent/warm{
@@ -44364,13 +44269,6 @@
 /obj/item/device/detective_scanner{
 	rand_pos = 0
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Main Medbay persistent notice board";
-	persistent_id = medbay main
-	},
-=======
->>>>>>> parent of 7578e39c3 (fixes runtimes)
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -45359,16 +45257,6 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/seaturtle/boiler)
-<<<<<<< HEAD
-"yjj" = (
-/obj/noticeboard/persistent{
-	name = "Mining persistent notice board";
-	persistent_id = mining
-	},
-/turf/simulated/floor/orange,
-/area/station/hallway/seaturtlehallway)
-=======
->>>>>>> parent of 7578e39c3 (fixes runtimes)
 "ykr" = (
 /obj/table/round/auto,
 /obj/towelbin{

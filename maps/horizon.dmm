@@ -10804,13 +10804,6 @@
 "aCW" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Research Break Room persistent notice board";
-	persistent_id = research coffee room
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -14219,13 +14212,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Genetics persistent notice board";
-	persistent_id = genetics
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
@@ -14851,13 +14837,6 @@
 	dir = 4;
 	name = "crematorium pipe"
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Robotics persistent notice board";
-	persistent_id = robotics
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -16886,14 +16865,6 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Chapel persistent notice board";
-	persistent_id = chapel;
-	pixel_y = 36
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/wood/two,
 /area/station/chapel/sanctuary)
 "aRg" = (
@@ -26592,13 +26563,6 @@
 /obj/item/paper/book/mechanicbook,
 /obj/item/paper/book/minerals,
 /obj/item/cargotele,
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Cargo persistent notice board";
-	persistent_id = cargo
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/black,
 /area/station/quartermaster/office)
 "bmM" = (
@@ -27007,13 +26971,6 @@
 "bnR" = (
 /obj/storage/crate/bin/lostandfound,
 /obj/item/clothing/shoes/thong,
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Customs persistent notice board";
-	persistent_id = customs
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/darkblue,
 /area/station/hallway/primary/west)
 "bnT" = (
@@ -33608,13 +33565,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Main Medbay persistent notice board";
-	persistent_id = medbay main
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/stairs{
 	dir = 4
 	},
@@ -34263,13 +34213,6 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Crew Quarters persistent notice board";
-	persistent_id = crew quarters
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/quarters_south)
 "bGU" = (
@@ -37461,13 +37404,6 @@
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Botany persistent notice board";
-	persistent_id = botany
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "bPx" = (
@@ -40076,13 +40012,6 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Bar persistent notice board";
-	persistent_id = bar
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor{
 	icon_state = "bar-edge"
 	},
@@ -44138,13 +44067,6 @@
 "cfn" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
 /obj/machinery/manufacturer/general,
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Engineering persistent notice board";
-	persistent_id = engineering
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "cfo" = (
@@ -46198,13 +46120,6 @@
 /area/station/storage/tools)
 "cjR" = (
 /obj/table/reinforced/auto,
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Research persistent notice board";
-	persistent_id = research
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
 "cjS" = (
@@ -57976,13 +57891,6 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Brig persistent notice board";
-	persistent_id = brig
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "plf" = (
@@ -58806,20 +58714,6 @@
 /obj/disposalpipe/segment/cargo,
 /turf/simulated/floor/black,
 /area/station/quartermaster/office)
-<<<<<<< HEAD
-"rpn" = (
-/obj/noticeboard/persistent{
-	name = "Kitchen persistent notice board";
-	persistent_id = kitchen;
-	pixel_x = 33;
-	pixel_y = 35
-	},
-/turf/simulated/floor/white/checker{
-	dir = 6
-	},
-/area/station/crew_quarters/kitchen)
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 "rqB" = (
 /obj/machinery/light{
 	dir = 8;

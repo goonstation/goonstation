@@ -12290,18 +12290,8 @@
 /obj/machinery/vending/cigarette{
 	pixel_y = 9
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Crew Quarters persistent notice board";
-<<<<<<< HEAD
-	persistent_id = "crew quarters"
-=======
 /obj/decal/poster/wallsign/poster_nt{
 	pixel_y = 32
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
-=======
-	persistent_id = crew quarters
->>>>>>> parent of 7578e39c3 (fixes runtimes)
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge)
@@ -12696,22 +12686,9 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
 "aDM" = (
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Research Break Room persistent notice board";
-<<<<<<< HEAD
-	persistent_id = "research coffee room"
-<<<<<<< HEAD
-=======
 /obj/noticeboard{
 	pixel_y = 28
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
-=======
-	persistent_id = research coffee room
->>>>>>> parent of 7578e39c3 (fixes runtimes)
 	},
-=======
->>>>>>> parent of 422f66f5e (fixes runtimes)
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
 "aDN" = (
@@ -18699,13 +18676,6 @@
 	mail_tag = "security processing";
 	pixel_y = 32
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Brig persistent notice board";
-	persistent_id = brig
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor,
 /area/station/security/processing)
 "aSC" = (
@@ -18874,13 +18844,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Main Security persistent notice board";
-	persistent_id = security main
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aSU" = (
@@ -19086,13 +19049,6 @@
 /area/station/engine/inner)
 "aTm" = (
 /obj/item/device/radio/intercom/engineering,
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Engineering persistent notice board";
-	persistent_id = engineering
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "aTn" = (
@@ -25025,13 +24981,6 @@
 /turf/simulated/floor/carpet/blue/fancy/narrow/nw,
 /area/station/crew_quarters/bar)
 "bjO" = (
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Bar persistent notice board";
-	persistent_id = bar
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
 /area/station/crew_quarters/bar)
 "bjP" = (
@@ -28203,13 +28152,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Mechanic's Workshop persistent notice board";
-	persistent_id = mechanics workshop
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor,
 /area/station/hangar/main)
 "brs" = (
@@ -33352,13 +33294,6 @@
 /obj/table/reinforced/auto,
 /obj/machinery/light/incandescent/cool,
 /obj/machinery/cashreg,
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Customs persistent notice board";
-	persistent_id = customs
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "green2"
@@ -43797,13 +43732,6 @@
 	dir = 4
 	},
 /obj/machinery/light/incandescent/netural,
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Main Medbay persistent notice board";
-	persistent_id = medbay main
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "cfi" = (
@@ -46190,24 +46118,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
-<<<<<<< HEAD
-"cCr" = (
-/obj/noticeboard/persistent{
-	name = "Detective's Office persistent notice board";
-<<<<<<< HEAD
-<<<<<<< HEAD
-	persistent_id = "detectives office"
-=======
-	persistent_id = detective's office
->>>>>>> parent of 73a32e10a (fix runtimes)
-=======
-	persistent_id = detectives office
->>>>>>> parent of 7578e39c3 (fixes runtimes)
-	},
-/turf/simulated/floor/wood/two,
-/area/station/security/detectives_office)
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 "cGD" = (
 /obj/decal/poster{
 	pixel_y = 32
@@ -46304,16 +46214,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
-<<<<<<< HEAD
-"dvH" = (
-/obj/noticeboard/persistent{
-	name = "Chapel persistent notice board";
-	persistent_id = chapel
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 "dBL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -46334,13 +46234,6 @@
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/device/radio/intercom/cargo,
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Cargo persistent notice board";
-	persistent_id = cargo
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "dLb" = (
@@ -47265,25 +47158,6 @@
 	icon_state = "Stairs2_wide"
 	},
 /area/station/hallway/secondary/exit)
-<<<<<<< HEAD
-"mvR" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/decal/tile_edge/line/purple{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/noticeboard/persistent{
-	name = "Research persistent notice board";
-	persistent_id = research
-	},
-/turf/simulated/floor/black,
-/area/station/science/lobby)
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 "myo" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/catering{
@@ -48101,17 +47975,6 @@
 /area/station/crew_quarters/market{
 	name = "Supply Lobby"
 	})
-<<<<<<< HEAD
-"tZO" = (
-/obj/table/reinforced/auto,
-/obj/noticeboard/persistent{
-	name = "Market persistent notice board";
-	persistent_id = market
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/market)
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 "uah" = (
 /obj/table/round/auto,
 /turf/simulated/floor,

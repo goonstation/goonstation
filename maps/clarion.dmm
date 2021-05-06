@@ -10936,19 +10936,10 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "atY" = (
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-<<<<<<< HEAD
-	persistent_id = "detectives office"
-=======
 /obj/machinery/firealarm{
 	layer = 3.5;
 	pixel_x = 5;
 	pixel_y = 28
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
-=======
-	persistent_id = detectives office
->>>>>>> parent of 7578e39c3 (fixes runtimes)
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -15006,12 +14997,6 @@
 	pixel_x = -1;
 	pixel_y = 21
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	persistent_id = bar
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "aDu" = (
@@ -18905,13 +18890,6 @@
 /obj/machinery/light_switch/south{
 	pixel_y = 28
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	name = "Chapel persistent notice board";
-	persistent_id = chapel
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
@@ -19282,15 +19260,9 @@
 	pixel_x = -10;
 	pixel_y = 32
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	persistent_id = research coffee room;
-	pixel_x = 16
-=======
 /obj/noticeboard{
 	pixel_x = 16;
 	pixel_y = 32
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -24502,13 +24474,6 @@
 	pixel_x = -1;
 	pixel_y = 21
 	},
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	persistent_id = security main;
-	pixel_y = 32
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -34079,12 +34044,6 @@
 	dir = 4
 	},
 /obj/machinery/rkit,
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	persistent_id = mechanics workshop
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -34338,18 +34297,8 @@
 	dir = 1;
 	pixel_y = 21
 	},
-<<<<<<< HEAD
-/obj/reagent_dispensers/fueltank,
-/obj/noticeboard/persistent{
-<<<<<<< HEAD
-	persistent_id = "engineering"
-=======
 /obj/noticeboard{
 	pixel_y = 32
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
-=======
-	persistent_id = engineering
->>>>>>> parent of 7578e39c3 (fixes runtimes)
 	},
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/white,
@@ -38785,12 +38734,6 @@
 	},
 /obj/tug_cart,
 /obj/vehicle/tug,
-<<<<<<< HEAD
-/obj/noticeboard/persistent{
-	persistent_id = cargo
-	},
-=======
->>>>>>> parent of 4ec2600e1 (adds persistent notice boards to maps)
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/storage)
 "bBJ" = (
