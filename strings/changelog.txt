@@ -1,5 +1,7 @@
 
 (t)thu may 06 21
+(u)pali
+(*)Honey (the item produced by bees) is now made out of a new honey material. Cloning pods now require honey instead of beeswax. (This is mostly because people understandably didn't know where to get beeswax.)
 (u)DimWhat
 (p)4594
 (e)🎨|sprites
