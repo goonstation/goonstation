@@ -271,6 +271,7 @@ datum
 			fluid_b = 193
 			transparency = 200
 
+		//new name for old stimulants
 		omegazine
 			name = "omegazine"
 			id = "omegazine"

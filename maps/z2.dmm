@@ -10240,12 +10240,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aJr" = (
-/turf/unsimulated/wall/setpieces{
-	desc = "A weird jet black metal wall indented with strange grooves and lines.";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "ancient";
-	name = "stranger wall"
-	},
+/turf/unsimulated/wall/setpieces/stranger,
 /area/crater/cave)
 "aJs" = (
 /turf/unsimulated/floor/setpieces{
@@ -20679,12 +20674,7 @@
 	},
 /area/crater/cave/lower)
 "bkc" = (
-/turf/unsimulated/wall/setpieces{
-	desc = "A weird jet black metal wall indented with strange grooves and lines.";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "ancient";
-	name = "stranger wall"
-	},
+/turf/unsimulated/wall/setpieces/stranger,
 /area/crater/cave/lower)
 "bkd" = (
 /obj/decal/fakeobjects{
@@ -22522,12 +22512,7 @@
 /area/crater/cave/lower)
 "bop" = (
 /obj/map/light/dimreddish,
-/turf/unsimulated/wall/setpieces{
-	desc = "A weird jet black metal wall indented with strange grooves and lines.";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "ancient";
-	name = "stranger wall"
-	},
+/turf/unsimulated/wall/setpieces/stranger,
 /area/crater/cave/lower)
 "boq" = (
 /obj/item/casing/shotgun/orange{

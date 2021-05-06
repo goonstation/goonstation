@@ -1,4 +1,41 @@
 
+(t)thu may 06 21
+(u)DimWhat
+(p)4594
+(e)🎨|sprites
+(+)Added eye coloring for cows
+(t)wed may 05 21
+(u)pali
+(+)Cyborg CheMaster can now create patches and ampules
+(u)Walpvrgis
+(p)4579
+(e)🎨|sprites
+(*)Added 11 new hairstyles (including two new options for layering bangs and a new faded style)! Check the Minor Changes for the style names. Time for ANOTHER makeover?!
+(+)New hairstyles can be found under the following names; Two Bangs: Long, Two Bangs: Short, Long Mini Tail, Visual, Tulip, Bloom, Smooth Waves, Smooth Waves: Faded, Floof, Spiky and Subtle Spiky.
+(u)edwardly
+(p)4566
+(e)⚖|balance
+(*)Removes the ability to unanchor the nuclear bomb once it's been anchored
+(t)tue may 04 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Riot launcher grenade conversion chamber now requires a 1 second delay before the grenade is loaded
+(t)mon may 03 21
+(u)Tarmunora
+(e)🆕|feature
+(*)Sea Ladders may be used from the sea floor (on/around tiles with lightshafts)
+(*)Undersea explosions will open holes to the trench (allowing escape via ladder)
+(+)Added more ladders to the trench
+(u)pali
+(*)The 'MakeCaptain' law module can now be emagged to stealthily turn it into an indistinguishable 'MakeClown' module.
+(u)Flourish
+(e)🆕|feature
+(+)You can now feed snacks to all kinds of critters.
+(t)sun may 02 21
+(u)Tarmunora
+(e)⛔⚖|removal, balance
+(*)Port-a-sci PDA app can no longer summon the port-a-sci. The port-a-sci can be taken along on adventures either by dragging it with you, or via the RD's physical remote.
+(*)You can now fit sea ladders in bags.
 (t)sat may 01 21
 (u)Jan.antilles
 (p)4534

@@ -53,6 +53,10 @@
 
 	var/captured = 0 //Thermal vent collector on my tile? (messy i know, but faster lookups later)
 
+	var/allow_hole = 1
+
+	var/linked_hole = null
+
 
 	New()
 		..()
@@ -261,7 +265,7 @@
 			blow_hole()
 
 	proc/blow_hole()
-		if (src.z != 5)
+		if (src.z != 5 && allow_hole)
 			src.ReplaceWith(/turf/space/fluid/warp_z5/realwarp, FALSE, TRUE, FALSE, TRUE)
 
 //////////////////////duh look below
@@ -274,12 +278,21 @@
 	randomIcon = 0
 	generateLight = 0
 
+	allow_hole = 0
+
 	color = OCEAN_COLOR
 	// fullbright = 1
 
 	edge
 		icon_state = "pit_wall"
 
+		New()
+			. = ..()
+			START_TRACKING
+
+		Del()
+			STOP_TRACKING
+			. = ..()
 
 	proc/try_build_turf_list()
 		if (!L || L.len == 0)
@@ -324,6 +337,21 @@
 			for(var/turf/space/fluid/T in range(8,locate(src.x,src.y,5)))
 				L += T
 				break
+
+			if(length(L))
+				var/needlink = 1
+				var/turf/space/fluid/picked_turf = pick(L)
+
+				for(var/turf/space/fluid/T in range(5,picked_turf))
+					if(T.linked_hole)
+						needlink = 0
+						break
+
+				if(needlink)
+					if(!picked_turf.linked_hole)
+						picked_turf.linked_hole = src
+						picked_turf.UpdateOverlays(image(icon = 'icons/effects/64x64.dmi', icon_state = "lightshaft", loc = picked_turf), "lightshaft")
+
 		..()
 
 
@@ -334,7 +362,22 @@
 	fullbright = 0
 	luminosity = 1
 	generateLight = 0
+	allow_hole = 0
 	spawningFlags = SPAWN_DECOR | SPAWN_PLANTS | SPAWN_FISH | SPAWN_LOOT | SPAWN_HALLU
+
+	blow_hole()
+		if(src.z == 5)
+			for(var/turf/space/fluid/T in range(8, locate(src.x, src.y, 1)))
+				if(T.allow_hole)
+					var/x = T.x
+					var/y = T.y
+					T.blow_hole()
+					var/turf/space/fluid/warp_z5/hole = locate(x, y, 1)
+					if(istype(hole))
+						hole.L = list(src)
+						src.linked_hole = hole
+						src.UpdateOverlays(image(icon = 'icons/effects/64x64.dmi', icon_state = "lightshaft", loc = src), "lightshaft")
+						break
 
 /turf/space/fluid/nospawn
 	spawningFlags = null
@@ -343,6 +386,7 @@
 		return
 
 /turf/space/fluid/noexplosion
+	allow_hole = 0
 	ex_act(severity)
 		return
 
@@ -359,6 +403,7 @@
 	luminosity = 1
 	generateLight = 0
 	spawningFlags = null
+	allow_hole = 0
 	icon_state = "cenote"
 	name = "cenote"
 	desc = "A deep flooded sinkhole."

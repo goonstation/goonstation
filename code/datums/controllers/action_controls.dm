@@ -1370,7 +1370,7 @@ var/datum/action_controller/actions
 
 
 /datum/action/bar/private/icon/pickup //Delayed pickup, used for mousedrags to prevent 'auto clicky' exploits but allot us to pickup with mousedrag as a possibel action
-	duration = 10
+	duration = 0
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	id = "pickup"
 	var/obj/item/target
