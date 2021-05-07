@@ -224,11 +224,11 @@ datum
 					if(!T.reagents)
 						T.create_reagents(volume)
 					else
-						T.reagents.maximum_volume = T.reagents.maximum_volume + volume			
-					
+						T.reagents.maximum_volume = T.reagents.maximum_volume + volume
+
 					if(!T.reagents.has_reagent("thermite"))
 						T.UpdateOverlays(image('icons/effects/effects.dmi',icon_state = "thermite"), "thermite")
-						
+
 					T.reagents.add_reagent("thermite", volume, null)
 					if (T.active_hotspot)
 						T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 10, 300)
@@ -664,7 +664,9 @@ datum
 						holder.del_reagent(id)
 					return
 
-				if (!caused_fireflash)
+				if (caused_fireflash)
+					return
+				else
 					var/list/covered = holder.covered_turf()
 					if (covered.len < 4 || (volume / holder.total_volume) > min_req_fluid)
 						if(covered.len > 0) //possible fix for bug where caused_fireflash was set to 1 without fireflash going off, allowing fuel to reach any temp without igniting
