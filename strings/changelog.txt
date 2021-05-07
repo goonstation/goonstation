@@ -1,5 +1,9 @@
 
 (t)thu may 06 21
+(u)Flaborized
+(p)4515
+(e)⛔🎨|removal, sprites
+(*)Removed dwarfism.
 (u)Carbadox
 (p)4427
 (e)⚖🆕|balance, feature
