@@ -1403,17 +1403,6 @@
 	say_verb()
 		return "glubs"
 
-/datum/mutantrace/dwarf
-	name = "dwarf"
-	icon_state = "dwarf"
-	head_offset = -3
-	hand_offset = -2
-	body_offset = -3
-	override_attack = 0
-	race_mutation = /datum/bioEffect/mutantrace/dwarf
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | WEARS_UNDERPANTS | USES_STATIC_ICON)
-
-
 /datum/mutantrace/monkey
 	name = "monkey"
 	icon = 'icons/mob/monkey.dmi'
