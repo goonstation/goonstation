@@ -119,17 +119,20 @@
 			var/obj/item/paper/paper = new(src)
 			paper.name = book_info[1]
 			paper.info = book_info[2]
+			paper.fingerprintslast = book_info[3]
 	src.notices = length(src.contents)
 	src.update_icon()
 
 /obj/noticeboard/persistent/proc/save_stuff()
 	src.data[src.persistent_id] = list()
 	for(var/obj/item/paper/paper in src)
-		src.data[src.persistent_id] += list(list(paper.name, paper.info))
+		src.data[src.persistent_id] += list(list(paper.name, paper.info, paper.fingerprintslast))
 
 proc/save_noticeboards()
 	var/obj/noticeboard/persistent/board
 	for(board in by_type[/obj/noticeboard/persistent])
 		board.save_stuff()
 	fdel(board.file_name)
+	var/json_data = json_encode(board.data)
+	logTheThing("debug", null, null, "Persistent noticeboard save data: [json_data]")
 	text2file(json_encode(board.data), board.file_name)
