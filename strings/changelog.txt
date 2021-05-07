@@ -1,5 +1,9 @@
 
 (t)thu may 06 21
+(u)Arthur Holiday
+(p)4603
+(e)⚖🎨|balance, sprites
+(+)Added a new fire elemental ability, fireball! it is similar to the wizard spell but a bit weaker.
 (u)edwardly
 (p)4564
 (e)⚖|balance
