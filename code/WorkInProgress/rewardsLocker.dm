@@ -624,7 +624,7 @@
 
 				else if (istype(M, /obj/item/clothing/head/helmet/space/captain))
 					var/prev = M.name
-					M.name = "\improper commander's space helmet"
+					M.name = "commander's space helmet"
 					M.desc = "Helps protect against vacuum. Comes in a fasionable blue befitting a commander. (Base Item: [prev])"
 					M.icon_state = "space-captain-blue"
 					M.item_state = "space-captain-blue"
