@@ -2692,8 +2692,8 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_mask = /obj/item/clothing/mask/breath
 		slot_glov = /obj/item/clothing/gloves/swat/NT
 		slot_poc1 = /obj/item/tank/emergency_oxygen
-		slot_poc2 = /obj/item/survival_machete
-		items_in_backpack = list(/obj/item/storage/box,/obj/item/spacecash/hundred)
+		slot_poc2 = /obj/item/device/pda2/pod_wars/nanotrasen
+		items_in_backpack = list(/obj/item/survival_machete, /obj/item/spacecash/hundred)
 
 		commander
 			name = "NanoTrasen Commander"
@@ -2728,8 +2728,8 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_mask = /obj/item/clothing/mask/breath
 		slot_glov = /obj/item/clothing/gloves/swat
 		slot_poc1 = /obj/item/tank/emergency_oxygen
-		slot_poc2 = /obj/item/survival_machete/syndicate
-		items_in_backpack = list(/obj/item/storage/box,/obj/item/spacecash/hundred)
+		slot_poc2 = /obj/item/device/pda2/pod_wars/syndicate
+		items_in_backpack = list(/obj/item/survival_machete/syndicate, /obj/item/spacecash/hundred)
 
 		commander
 			name = "Syndicate Commander"

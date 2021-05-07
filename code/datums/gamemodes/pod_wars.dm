@@ -1439,6 +1439,52 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	syndicate
 		icon_state = "surv_machete_st"
 
+////////////////////PDAs and PDA Accessories/////////////////////
+/obj/item/device/pda2/pod_wars
+	setup_default_cartridge = /obj/item/disk/data/cartridge/pod_pilot //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
+	mailgroups = list()
+	bombproof = 1
+
+	nanotrasen
+		icon_state = "pda-nt"
+		setup_default_module = /obj/item/device/pda_module/flashlight/nt_blue
+	
+	syndicate
+		icon_state = "pda-syn"
+		setup_default_module = /obj/item/device/pda_module/flashlight/sy_red
+
+/obj/item/device/pda_module/flashlight/nt_blue
+	name = "NanoTrasen Blue Flashlight Module"
+	desc = "Love (or work for) NanoTrasen? This'll be your favorite flashlight!"
+	lumlevel = 0.8
+	light_r = 61
+	light_g = 156
+	light_b = 255
+
+
+/obj/item/device/pda_module/flashlight/sy_red
+	name = "Syndicate Red Flashlight Module"
+	desc = "Hate (or used to work for) NanoTrasen? This'll be your favorite flashlight!"
+	lumlevel = 0.8
+	//#ff4043
+	light_r = 255
+	light_g = 64
+	light_b = 67
+
+/obj/item/disk/data/cartridge/pod_pilot
+	name = "\improper Standard Utility cartridge"
+	desc = "A must for any one who braves the vast emptiness of space."
+	icon_state = "cart-network"
+
+	New()
+		..()
+		src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
+		src.root.add_file( new /datum/computer/file/pda_program/scan/forensic_scan(src))
+		src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
+		src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
+
+
+////////////////Champagne/////////////////////////////
 /obj/table/wood/round/champagne
 	name = "champagne table"
 	desc = "It makes champagne. Who ever said spontanious generation was false?"

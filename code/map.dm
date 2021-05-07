@@ -952,6 +952,8 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 	auto_walls = 1
+	style = "spess"
+
 
 	arrivals_type = MAP_SPAWN_CRYO
 
