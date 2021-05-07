@@ -1,4 +1,57 @@
 
+(t)fri may 07 21
+(u)112358sam
+(p)4604
+(e)🆕|feature
+(*)Added a Space GPS program to the default list set of PDA programs.
+(t)thu may 06 21
+(u)Flaborized
+(p)4515
+(e)⛔🎨|removal, sprites
+(*)Removed dwarfism.
+(u)Carbadox, Tarmunora
+(p)4427
+(e)⚖|balance
+(+)The stun baton reduced to a non-stacking 15 second stun, down from a stacking 20 second stun.
+(u)Arthur Holiday
+(p)4603
+(e)⚖🎨|balance, sprites
+(+)Added a new fire elemental ability, fireball! it is similar to the wizard spell but a bit weaker.
+(u)edwardly
+(p)4564
+(e)⚖|balance
+(*)Apply sonic stun to deaf mobs even without auditory headset - such as the shambler scream, vampire screech, and flashbangs.
+(u)Gannets
+(p)4595
+(e)⚖🗺|balance, mapping
+(+)Added acid-proof masks to the Cairngorm
+(u)Gannets
+(p)4593
+(e)⚖|balance
+(+)Adds authentication disk pinpointer to the infiltrator and scout class crates.
+(+)Removes the authentication disk pinpointer that spawns with the nuke ops commander.
+(u)pali
+(*)Honey (the item produced by bees) is now made out of a new honey material. Cloning pods now require honey instead of beeswax. (This is mostly because people understandably didn't know where to get beeswax.)
+(u)DimWhat
+(p)4594
+(e)🎨|sprites
+(+)Added eye coloring for cows
+(t)wed may 05 21
+(u)pali
+(+)Cyborg CheMaster can now create patches and ampoules
+(u)Walpvrgis
+(p)4579
+(e)🎨|sprites
+(*)Added 11 new hairstyles (including two new options for layering bangs and a new faded style)! Check the Minor Changes for the style names. Time for ANOTHER makeover?!
+(+)New hairstyles can be found under the following names; Two Bangs: Long, Two Bangs: Short, Long Mini Tail, Visual, Tulip, Bloom, Smooth Waves, Smooth Waves: Faded, Floof, Spiky and Subtle Spiky.
+(u)edwardly
+(p)4566
+(e)⚖|balance
+(*)Removes the ability to unanchor the nuclear bomb once it's been anchored
+(t)tue may 04 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Riot launcher grenade conversion chamber now requires a 1 second delay before the grenade is loaded
 (t)mon may 03 21
 (u)Tarmunora
 (e)🆕|feature

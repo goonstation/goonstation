@@ -172,11 +172,6 @@
 			synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
 			equip_syndicate(synd_mind.current, 1)
 			new /obj/item/device/audio_log/nuke_briefing(synd_mind.current.loc, target_location_name)
-			if (ishuman(synd_mind.current))
-				var/mob/living/carbon/human/M = synd_mind.current
-				M.equip_if_possible(new /obj/item/pinpointer/disk(M), M.slot_in_backpack)
-			else
-				new /obj/item/pinpointer/disk(synd_mind.current.loc)
 			leader_selected = 1
 		else
 			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
@@ -459,7 +454,12 @@ var/syndicate_name = null
 			wins = 0
 		if(isnull(losses))
 			losses = 0
-		src.desc = "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3><br></center>"
+		var/last_reset_date = world.load_intra_round_value("nukie_last_reset")
+		var/last_reset_text = null
+		if(!isnull(last_reset_date))
+			var/days_passed = round((world.realtime - last_reset_date) / (1 DAY))
+			last_reset_text = "<h4>(memorial reset [days_passed] days ago)</h4>"
+		src.desc = "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3><br>[last_reset_text]</center>"
 
 	attack_hand(var/mob/user as mob)
 		if (..(user))
@@ -471,11 +471,9 @@ var/syndicate_name = null
 			wins = 0
 		if(isnull(losses))
 			losses = 0
-		var/dat = ""
-		dat += "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3></center>"
 
 		src.add_dialog(user)
-		user.Browse(dat, "title=Mission Memorial;window=cairngorm_stats_[src];size=300x300")
+		user.Browse(src.desc, "title=Mission Memorial;window=cairngorm_stats_[src];size=300x300")
 		onclose(user, "cairngorm_stats_[src]")
 		return
 
