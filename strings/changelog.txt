@@ -1,5 +1,9 @@
 
 (t)fri may 07 21
+(u)Flaborized
+(p)4547
+(e)⚖🎨|balance, sprites
+(*)Added the captain's space helmet to their locker. Captain's hats and gas masks no longer count as space helmets.
 (u)Azrun
 (p)4121
 (e)⚖🆕|balance, feature
