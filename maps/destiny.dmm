@@ -25782,6 +25782,7 @@
 /obj/item/tank/jetpack,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/suit/space/captain,
+/obj/item/clothing/head/helmet/space/captain,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "fjW" = (

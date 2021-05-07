@@ -45038,7 +45038,7 @@
 /obj/rack,
 /obj/item/clothing/suit/space/captain,
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space,
+/obj/item/clothing/head/helmet/space/captain,
 /obj/item/tank/jetpack,
 /turf/simulated/floor/carpet{
 	dir = 5;
