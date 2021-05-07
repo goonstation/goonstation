@@ -572,10 +572,7 @@
 	icon_state = "shittystillFIN"
 	amount_per_transfer_from_this = 20
 
-	New()
-		..()
-		if(!random_reagents_list)
-			random_reagents_list = list("barium","flourine","lithium","magnesium","mercury",\
+	random_reagents_list = list("barium","flourine","lithium","magnesium","mercury",\
 	"oxygen","phosphorus","plasma","potassium","radium","silver","sugar","hydrogen","water",\
 	"carbon","chlorine","sulfur","calcium","iron","ethanol")
 
@@ -621,4 +618,3 @@
 			src.underlays += src.fluid_image
 		else
 			src.icon_state = initial(src.icon_state)
-
