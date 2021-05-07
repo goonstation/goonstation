@@ -59,7 +59,6 @@
 		var/obj/item/cell/cerenkite/charged/CELL = new /obj/item/cell/cerenkite/charged(src)
 		src.cell = CELL
 
-
 		src.health = src.max_health
 		src.botcard.access = list(access_maint_tunnels, access_ghostdrone, access_engineering,access_external_airlocks,
 						access_engineering_storage, access_engineering_atmos, access_engineering_engine, access_engineering_power)
@@ -70,7 +69,6 @@
 		src.tools = list(
 			new /obj/item/magtractor(src),
 			new /obj/item/tool/omnitool/silicon(src),
-			new /obj/item/rcd/safe(src),
 			new /obj/item/lamp_manufacturer(src),
 			new /obj/item/device/analyzer/atmospheric(src),
 			new /obj/item/device/t_scanner(src),
@@ -1320,7 +1318,7 @@
 			new /obj/item/rcd/construction/safe(src),
 			new /obj/item/material_shaper(src),
 			new /obj/item/room_planner(src),
-			)
+		)
 
 		//Make all the tools un-drop-able (to closets/tables etc)
 		for (var/obj/item/O in MT)
