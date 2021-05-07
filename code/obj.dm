@@ -104,7 +104,7 @@
 		..()
 
 	UpdateName()
-		if (src.real_name == null && name != null)
+		if (isnull(src.real_name && !isnull(src.name))
 			real_name = name
 		src.name = "[name_prefix(null, 1)][src.real_name || initial(src.name)][name_suffix(null, 1)]"
 
