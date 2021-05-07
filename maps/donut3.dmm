@@ -8064,7 +8064,7 @@
 /area/station/maintenance/outer/east)
 "bZw" = (
 /obj/decal/mule/dropoff,
-/obj/access_spawn/maint,1
+/obj/access_spawn/maint,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -8634,27 +8634,6 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/black,
 /area/station/science/lobby)
-<<<<<<< HEAD
-"cjq" = (
-/obj/pool/perspective{
-	density = 0;
-	dir = 1;
-	tag = "icon-pool (NORTH)"
-	},
-/obj/pool{
-	density = 0;
-	dir = 8;
-	icon = 'icons/obj/fluids/fluid.dmi';
-	icon_state = "ladder";
-	name = "ladder"
-	},
-/obj/channel{
-	required_to_pass = 210
-	},
-/turf/simulated/floor/white,
-/area/spacehabitat/pool)
-=======
->>>>>>> 94ffe2713db7a816336974b6b2addf6dc520097c
 "cjx" = (
 /obj/cable{
 	d2 = 2;

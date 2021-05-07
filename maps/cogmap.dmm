@@ -52684,7 +52684,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "Yikes.";
-	icon = 'icons/obj/machines/nuclear64x32.dmi';
+	icon = 'icons/obj/machinery/nuclear64x32.dmi';
 	icon_state = "broken";
 	name = "damaged reactor"
 	},
