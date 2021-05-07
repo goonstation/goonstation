@@ -4,10 +4,10 @@
 (p)4515
 (e)⛔🎨|removal, sprites
 (*)Removed dwarfism.
-(u)Carbadox
+(u)Carbadox, Tarmunora
 (p)4427
-(e)⚖🆕|balance, feature
-(*)The stun baton no longer knock down and weakens for 20 seconds but instead, only 10 seconds now. This shouldn't make a difference in Security arresting people but lower it's nerf it's very powerful combat potential.
+(e)⚖|balance
+(+)The stun baton reduced to a non-stacking 15 second stun, down from a stacking 20 second stun.
 (u)Arthur Holiday
 (p)4603
 (e)⚖🎨|balance, sprites
