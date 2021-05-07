@@ -1,4 +1,9 @@
 
+(t)fri may 07 21
+(u)112358sam
+(p)4604
+(e)🆕|feature
+(*)Added a Space GPS program to the default list set of PDA programs.
 (t)thu may 06 21
 (u)Flaborized
 (p)4515
