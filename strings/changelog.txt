@@ -1,5 +1,10 @@
 
 (t)fri may 07 21
+(u)Azrun
+(p)4121
+(e)⚖🆕|balance, feature
+(*)Allows department head of staff to lock down output from Genebooth and Ruckingenur Kit.
+(+)Department heads can now adjust price of Genebooth items as well as delete downloaded schematics from fabricators.
 (u)112358sam
 (p)4604
 (e)🆕|feature
