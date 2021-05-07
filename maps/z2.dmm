@@ -28876,6 +28876,7 @@
 /obj/decal/cleanable/machine_debris,
 /obj/decal/cleanable/machine_debris,
 /obj/item/cell/charged,
+/obj/reagent_dispensers/still/shittystill,
 /turf/simulated/floor/white,
 /area/shuttle/john/owlery)
 "bDt" = (

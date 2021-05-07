@@ -24,36 +24,36 @@
 /area/owlery/staffhall)
 "ag" = (
 /obj/lattice{
-	dir = 2;
-	icon_state = "lattice-dir-b"
+	icon_state = "lattice-dir-b";
+	dir = 2
 	},
 /turf/space,
 /area/space)
 "ah" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 8
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "ai" = (
 /obj/machinery/mass_driver{
-	dir = 1;
-	icon_state = "mass_driver"
+	icon_state = "mass_driver";
+	dir = 1
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "aj" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 4
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "ak" = (
 /obj/lattice{
-	dir = 9;
-	icon_state = "lattice-dir"
+	icon_state = "lattice-dir";
+	dir = 9
 	},
 /turf/space,
 /area/space)
@@ -63,15 +63,15 @@
 /area/space)
 "am" = (
 /obj/lattice{
-	dir = 5;
-	icon_state = "lattice-dir"
+	icon_state = "lattice-dir";
+	dir = 5
 	},
 /turf/space,
 /area/space)
 "an" = (
 /turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6;
-	icon_state = "rwindow"
+	icon_state = "rwindow";
+	dir = 6
 	},
 /area/owlery/staffhall)
 "ao" = (
@@ -79,8 +79,8 @@
 /obj/item/cigpacket/propuffs,
 /obj/item/clothing/under/suit/hop,
 /obj/machinery/light/small{
-	dir = 1;
-	icon_state = "bulb1"
+	icon_state = "bulb1";
+	dir = 1
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/owlery/staffhall)
@@ -91,8 +91,8 @@
 /obj/item/clothing/head/bio_hood/beekeeper,
 /obj/storage/secure/crate/bee/loaded,
 /obj/machinery/light/small{
-	dir = 1;
-	icon_state = "bulb1"
+	icon_state = "bulb1";
+	dir = 1
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/owlery/staffhall)
@@ -101,8 +101,8 @@
 /obj/item/clothing/head/NTberet,
 /obj/item/clothing/suit/armor/NT_alt,
 /obj/machinery/light/small{
-	dir = 1;
-	icon_state = "bulb1"
+	icon_state = "bulb1";
+	dir = 1
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/owlery/staffhall)
@@ -112,8 +112,8 @@
 /obj/item/clothing/mask/moustache,
 /obj/item/clothing/under/misc/syndicate,
 /obj/machinery/light/small{
-	dir = 1;
-	icon_state = "bulb1"
+	icon_state = "bulb1";
+	dir = 1
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/owlery/staffhall)
@@ -121,8 +121,8 @@
 /obj/storage/crate,
 /obj/random_item_spawner/medicine,
 /obj/machinery/light/small{
-	dir = 1;
-	icon_state = "bulb1"
+	icon_state = "bulb1";
+	dir = 1
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/owlery/staffhall)
@@ -135,29 +135,29 @@
 /area/owlery/staffhall)
 "av" = (
 /obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
+	icon_state = "lattice-dir";
+	dir = 8
 	},
 /turf/space,
 /area/space)
 "aw" = (
 /obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir"
+	icon_state = "lattice-dir";
+	dir = 1
 	},
 /turf/space,
 /area/space)
 "ax" = (
 /obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
+	icon_state = "lattice-dir";
+	dir = 6
 	},
 /turf/space,
 /area/space)
 "ay" = (
 /obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
+	icon_state = "lattice-dir";
+	dir = 4
 	},
 /turf/space,
 /area/space)
@@ -169,8 +169,8 @@
 /area/space)
 "aA" = (
 /obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir-b"
+	icon_state = "lattice-dir-b";
+	dir = 6
 	},
 /turf/space,
 /area/space)
@@ -209,8 +209,8 @@
 /area/owlery/staffhall)
 "aH" = (
 /turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6;
-	icon_state = "rwindow"
+	icon_state = "rwindow";
+	dir = 6
 	},
 /area/space)
 "aI" = (
@@ -224,25 +224,25 @@
 /area/owlery/staffhall)
 "aK" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 8
 	},
 /turf/unsimulated/floor/blackwhite{
-	dir = 9;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 9
 	},
 /area/owlery/staffhall)
 "aL" = (
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/staffhall)
 "aM" = (
 /obj/vehicle/forklift,
 /turf/unsimulated/floor/blackwhite{
-	dir = 5;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 5
 	},
 /area/owlery/staffhall)
 "aN" = (
@@ -261,8 +261,8 @@
 /area/owlery/staffhall)
 "aO" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 4
 	},
 /obj/storage/crate/internals{
 	name = "Oxygen tanks"
@@ -292,32 +292,32 @@
 /area/owlery/staffhall)
 "aR" = (
 /turf/unsimulated/floor/stairs/quilty{
-	dir = 4;
-	icon_state = "quiltystair"
+	icon_state = "quiltystair";
+	dir = 4
 	},
 /area/owlery/staffhall)
 "aS" = (
 /obj/machinery/door/airlock/pyro/external{
-	dir = 8;
-	icon_state = "airlock_closed"
+	icon_state = "airlock_closed";
+	dir = 8
 	},
 /turf/unsimulated/floor/caution/westeast,
 /area/owlery/staffhall)
 "aT" = (
 /obj/lattice{
-	dir = 2;
-	icon_state = "lattice-dir"
+	icon_state = "lattice-dir";
+	dir = 2
 	},
 /turf/space,
 /area/space)
 "aU" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 8
 	},
 /obj/item/storage/toilet/random{
-	dir = 4;
-	icon_state = "toilet"
+	icon_state = "toilet";
+	dir = 4
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/staffhall)
@@ -339,8 +339,8 @@
 /area/owlery/staffhall)
 "aY" = (
 /turf/unsimulated/floor/blackwhite{
-	dir = 8;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 8
 	},
 /area/owlery/staffhall)
 "aZ" = (
@@ -349,8 +349,8 @@
 /area/owlery/staffhall)
 "ba" = (
 /turf/unsimulated/floor/blackwhite{
-	dir = 4;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 4
 	},
 /area/owlery/staffhall)
 "bb" = (
@@ -370,29 +370,29 @@
 /area/owlery/staffhall)
 "be" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 8
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/staffhall)
 "bf" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 4
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/staffhall)
 "bg" = (
 /obj/storage/crate/clown,
 /turf/unsimulated/floor/blackwhite{
-	dir = 8;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 8
 	},
 /area/owlery/staffhall)
 "bh" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /turf/unsimulated/floor/orangeblack,
 /area/owlery/staffhall)
@@ -408,22 +408,22 @@
 /area/owlery/staffhall)
 "bl" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /turf/unsimulated/floor/stairs/quilty{
-	dir = 4;
-	icon_state = "quiltystair"
+	icon_state = "quiltystair";
+	dir = 4
 	},
 /area/owlery/staffhall)
 "bm" = (
 /obj/machinery/door/airlock/pyro/external{
-	dir = 8;
-	icon_state = "airlock_closed"
+	icon_state = "airlock_closed";
+	dir = 8
 	},
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /turf/unsimulated/floor/caution/westeast,
 /area/owlery/staffhall)
@@ -461,8 +461,8 @@
 	},
 /obj/machinery/optable,
 /obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 1
 	},
 /turf/unsimulated/floor/bluewhite{
 	dir = 1
@@ -487,8 +487,8 @@
 	},
 /obj/grille,
 /turf/unsimulated/floor/blackwhite{
-	dir = 8;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 8
 	},
 /area/owlery/staffhall)
 "bt" = (
@@ -501,14 +501,14 @@
 /area/owlery/staffhall)
 "bu" = (
 /turf/unsimulated/floor/blackwhite/corner{
-	dir = 8;
-	icon_state = "darkwhitecorner"
+	icon_state = "darkwhitecorner";
+	dir = 8
 	},
 /area/owlery/staffhall)
 "bv" = (
 /turf/unsimulated/floor/blackwhite{
-	dir = 5;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 5
 	},
 /area/owlery/staffhall)
 "bw" = (
@@ -524,8 +524,8 @@
 /area/space)
 "bx" = (
 /obj/machinery/door/airlock/pyro/alt{
-	dir = 8;
-	icon_state = "generic2_closed"
+	icon_state = "generic2_closed";
+	dir = 8
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/staffhall)
@@ -538,8 +538,8 @@
 /area/owlery/staffhall)
 "bz" = (
 /obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
+	icon_state = "lattice-dir";
+	dir = 10
 	},
 /turf/space,
 /area/space)
@@ -566,8 +566,8 @@
 	name = "torn up cable"
 	},
 /obj/lattice{
-	dir = 2;
-	icon_state = "lattice-dir-b"
+	icon_state = "lattice-dir-b";
+	dir = 2
 	},
 /turf/space,
 /area/space)
@@ -607,8 +607,8 @@
 	name = "busted clamp"
 	},
 /obj/lattice{
-	dir = 2;
-	icon_state = "lattice-dir-b"
+	icon_state = "lattice-dir-b";
+	dir = 2
 	},
 /turf/space,
 /area/space)
@@ -623,22 +623,22 @@
 /area/owlery/staffhall)
 "bG" = (
 /obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
+	icon_state = "lattice-dir";
+	dir = 6
 	},
 /turf/space,
 /area/owlery/staffhall)
 "bH" = (
 /obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
+	icon_state = "lattice-dir";
+	dir = 4
 	},
 /turf/space,
 /area/owlery/staffhall)
 "bI" = (
 /obj/lattice{
-	dir = 5;
-	icon_state = "lattice-dir"
+	icon_state = "lattice-dir";
+	dir = 5
 	},
 /turf/space,
 /area/owlery/staffhall)
@@ -684,17 +684,17 @@
 /area/owlery/staffhall)
 "bP" = (
 /obj/computerframe{
-	anchored = 1;
+	name = "smashed computer";
 	desc = "It is highly unlikely that this still works.";
-	dir = 2;
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
-	name = "smashed computer"
+	dir = 2;
+	anchored = 1
 	},
 /obj/machinery/light_switch/west,
 /turf/unsimulated/floor/blackwhite{
-	dir = 8;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 8
 	},
 /area/owlery/staffhall)
 "bQ" = (
@@ -713,28 +713,28 @@
 /area/owlery/staffhall)
 "bS" = (
 /turf/unsimulated/floor/arrival{
-	dir = 9;
-	icon_state = "arrival"
+	icon_state = "arrival";
+	dir = 9
 	},
 /area/owlery/staffhall)
 "bT" = (
 /obj/decal/cleanable/blood/tracks,
 /turf/unsimulated/floor/arrival{
-	dir = 1;
-	icon_state = "arrival"
+	icon_state = "arrival";
+	dir = 1
 	},
 /area/owlery/staffhall)
 "bU" = (
 /turf/unsimulated/floor/arrival{
-	dir = 5;
-	icon_state = "arrival"
+	icon_state = "arrival";
+	dir = 5
 	},
 /area/owlery/staffhall)
 "bV" = (
 /obj/item/scrap,
 /obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir-b"
+	icon_state = "lattice-dir-b";
+	dir = 6
 	},
 /turf/space,
 /area/space)
@@ -744,22 +744,22 @@
 /area/space)
 "bX" = (
 /obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir-b"
+	icon_state = "lattice-dir-b";
+	dir = 10
 	},
 /turf/space,
 /area/space)
 "bY" = (
 /obj/lattice{
-	dir = 2;
-	icon_state = "lattice-dir"
+	icon_state = "lattice-dir";
+	dir = 2
 	},
 /turf/space,
 /area/owlery/staffhall)
 "bZ" = (
 /obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir-b"
+	icon_state = "lattice-dir-b";
+	dir = 6
 	},
 /obj/item/cable_coil/cut{
 	color = "#DD0000";
@@ -775,8 +775,8 @@
 /area/owlery/staffhall)
 "cb" = (
 /obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir-b"
+	icon_state = "lattice-dir-b";
+	dir = 10
 	},
 /turf/space,
 /area/owlery/staffhall)
@@ -812,8 +812,8 @@
 /obj/item/reagent_containers/food/snacks/ingredient/meat,
 /obj/storage/crate/freezer,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 4
 	},
 /obj/item/reagent_containers/food/snacks/ice_cream/random,
 /obj/item/reagent_containers/food/snacks/ice_cream/random,
@@ -821,8 +821,8 @@
 /area/owlery/staffhall)
 "cf" = (
 /obj/stool/chair/office{
-	dir = 8;
-	icon_state = "office_chair"
+	icon_state = "office_chair";
+	dir = 8
 	},
 /turf/unsimulated/floor/bluewhite{
 	dir = 4
@@ -839,8 +839,8 @@
 "ch" = (
 /obj/item/storage/wall/random,
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/staffhall)
 "ci" = (
@@ -853,8 +853,8 @@
 /area/owlery/staffhall)
 "cj" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 8
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -869,8 +869,8 @@
 	icon_state = "chair"
 	},
 /turf/unsimulated/floor/blackwhite{
-	dir = 10;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 10
 	},
 /area/owlery/staffhall)
 "ck" = (
@@ -885,8 +885,8 @@
 /area/owlery/staffhall)
 "cm" = (
 /turf/unsimulated/floor/blackwhite/corner{
-	dir = 4;
-	icon_state = "darkwhitecorner"
+	icon_state = "darkwhitecorner";
+	dir = 4
 	},
 /area/owlery/staffhall)
 "cn" = (
@@ -894,8 +894,8 @@
 /area/owlery/staffhall)
 "co" = (
 /turf/unsimulated/floor/blackwhite{
-	dir = 6;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 6
 	},
 /area/owlery/staffhall)
 "cp" = (
@@ -904,14 +904,14 @@
 /obj/random_item_spawner/desk_stuff,
 /obj/item/storage/toolbox/mechanical,
 /turf/unsimulated/floor/blackwhite{
-	dir = 5;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 5
 	},
 /area/owlery/staffhall)
 "cq" = (
 /turf/unsimulated/floor/arrival{
-	dir = 8;
-	icon_state = "arrival"
+	icon_state = "arrival";
+	dir = 8
 	},
 /area/owlery/staffhall)
 "cr" = (
@@ -956,8 +956,8 @@
 /area/owlery/staffhall)
 "cy" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 1;
 	icon_state = "glass_closed";
+	dir = 1;
 	req_access_txt = null
 	},
 /turf/unsimulated/floor/bluewhite{
@@ -979,9 +979,9 @@
 "cA" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/window{
-	dir = 2;
 	icon = 'icons/obj/doors/windoor.dmi';
 	icon_state = "right";
+	dir = 2;
 	req_access_txt = "0"
 	},
 /obj/random_item_spawner/desk_stuff,
@@ -991,32 +991,32 @@
 /area/owlery/staffhall)
 "cB" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 1;
 	icon_state = "glass_closed";
+	dir = 1;
 	req_access_txt = null
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/staffhall)
 "cC" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 1;
 	icon_state = "glass_closed";
+	dir = 1;
 	req_access_txt = null
 	},
 /turf/unsimulated/floor/blackwhite{
-	dir = 8;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 8
 	},
 /area/owlery/staffhall)
 "cD" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 1;
 	icon_state = "glass_closed";
+	dir = 1;
 	req_access_txt = null
 	},
 /turf/unsimulated/floor/blackwhite{
-	dir = 4;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 4
 	},
 /area/owlery/staffhall)
 "cE" = (
@@ -1024,27 +1024,27 @@
 	icon_state = "u_guilty"
 	},
 /turf/unsimulated/floor/arrival{
-	dir = 4;
-	icon_state = "arrival"
+	icon_state = "arrival";
+	dir = 4
 	},
 /area/owlery/staffhall)
 "cF" = (
 /turf/unsimulated/floor/blackwhite{
-	dir = 9;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 9
 	},
 /area/owlery/staffhall)
 "cG" = (
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/staffhall)
 "cH" = (
 /obj/machinery/door/airlock/pyro/external{
-	dir = 8;
-	icon_state = "airlock_closed"
+	icon_state = "airlock_closed";
+	dir = 8
 	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
@@ -1086,8 +1086,8 @@
 /area/owlery/staffhall)
 "cL" = (
 /obj/decal/fakeobjects/bustedpod{
-	dir = 4;
-	icon_state = "escape"
+	icon_state = "escape";
+	dir = 4
 	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
@@ -1123,8 +1123,8 @@
 	tag = ""
 	},
 /turf/unsimulated/floor/arrival{
-	dir = 10;
-	icon_state = "arrival"
+	icon_state = "arrival";
+	dir = 10
 	},
 /area/owlery/staffhall)
 "cR" = (
@@ -1135,8 +1135,8 @@
 "cS" = (
 /obj/table/reinforced/auto,
 /turf/unsimulated/floor/arrival{
-	dir = 6;
-	icon_state = "arrival"
+	icon_state = "arrival";
+	dir = 6
 	},
 /area/owlery/staffhall)
 "cT" = (
@@ -1151,8 +1151,8 @@
 	name = "light fixture"
 	},
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/staffhall)
 "cV" = (
@@ -1162,15 +1162,15 @@
 	},
 /obj/machinery/vending/cigarette,
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/staffhall)
 "cW" = (
 /obj/machinery/vending/cola/red,
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/staffhall)
 "cX" = (
@@ -1179,8 +1179,8 @@
 /obj/item/clothing/head/flatcap,
 /obj/item/instrument/saxophone,
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/staffhall)
 "cY" = (
@@ -1193,19 +1193,19 @@
 	start_charge = 90
 	},
 /obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "0-2";
+	d2 = 2
 	},
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/staffhall)
 "cZ" = (
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/staffhall)
 "da" = (
@@ -1216,8 +1216,8 @@
 	},
 /obj/random_item_spawner/desk_stuff,
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/staffhall)
 "db" = (
@@ -1229,8 +1229,8 @@
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/desk_stuff,
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/staffhall)
 "dd" = (
@@ -1241,18 +1241,18 @@
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/desk_stuff,
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/staffhall)
 "de" = (
 /obj/stool/chair{
-	dir = 8;
-	icon_state = "chair"
+	icon_state = "chair";
+	dir = 8
 	},
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/staffhall)
 "df" = (
@@ -1260,21 +1260,21 @@
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/staffhall)
 "dg" = (
 /turf/unsimulated/floor/blackwhite/corner{
-	dir = 1;
-	icon_state = "darkwhitecorner"
+	icon_state = "darkwhitecorner";
+	dir = 1
 	},
 /area/owlery/staffhall)
 "dh" = (
 /obj/securearea{
+	name = "VACUUM AREA";
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	name = "VACUUM AREA"
+	icon_state = "space"
 	},
 /turf/unsimulated/wall/auto/reinforced,
 /area/owlery/staffhall)
@@ -1292,8 +1292,8 @@
 "dl" = (
 /obj/decal/cleanable/rust,
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 1;
 	icon_state = "glass_closed";
+	dir = 1;
 	req_access_txt = null
 	},
 /turf/unsimulated/floor/caution/northsouth,
@@ -1324,9 +1324,9 @@
 /area/owlery/staffhall)
 "dq" = (
 /obj/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
@@ -1359,8 +1359,8 @@
 	pixel_y = 8
 	},
 /obj/decal/tile_edge/line/grey{
-	dir = 4;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 4
 	},
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
@@ -1370,8 +1370,8 @@
 /area/owlery/staffhall)
 "dx" = (
 /obj/decal/tile_edge/line/grey{
-	dir = 4;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 4
 	},
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
@@ -1390,8 +1390,8 @@
 	name = "Gutted Corpse"
 	},
 /obj/decal/cleanable/blood/tracks{
-	dir = 8;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 8
 	},
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "drip5"
@@ -1411,8 +1411,8 @@
 /area/owlery/staffhall)
 "dA" = (
 /turf/unsimulated/floor/greenwhite{
-	dir = 9;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 9
 	},
 /area/owlery/staffhall)
 "dB" = (
@@ -1431,14 +1431,15 @@
 "dE" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	dir = 2;
+	dir = 1;
 	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
+	icon_state = "plant";
+	dir = 2
 	},
 /obj/machinery/light,
 /turf/unsimulated/floor/blackwhite{
-	dir = 6;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 6
 	},
 /area/owlery/staffhall)
 "dF" = (
@@ -1447,29 +1448,29 @@
 /area/owlery/staffhall)
 "dG" = (
 /obj/machinery/door/poddoor/blast{
+	name = "broken blast door";
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight. Wonder if there's a way to open this.";
-	dir = 8;
 	icon_state = "bdoorright1";
-	id = "brokenowlerydoors";
-	name = "broken blast door"
+	dir = 8;
+	id = "brokenowlerydoors"
 	},
 /turf/unsimulated/floor/blackwhite{
-	dir = 8;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 8
 	},
 /area/owlery/staffhall)
 "dH" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/poddoor/blast{
+	name = "broken blast door";
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight. Wonder if there's a way to open this.";
-	dir = 8;
 	icon_state = "bdoorleft1";
-	id = "brokenowlerydoors";
-	name = "broken blast door"
+	dir = 8;
+	id = "brokenowlerydoors"
 	},
 /turf/unsimulated/floor/blackwhite{
-	dir = 4;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 4
 	},
 /area/owlery/staffhall)
 "dI" = (
@@ -1487,16 +1488,16 @@
 /area/owlery/staffhall)
 "dK" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 4
 	},
 /obj/item/clothing/suit/chef,
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
 "dL" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 8;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 8
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
@@ -1506,70 +1507,70 @@
 	name = "light fixture"
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 1;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 1
 	},
 /area/owlery/staffhall)
 "dN" = (
 /obj/rack/lunar{
-	dir = 1;
-	icon_state = "aisleshelfend"
+	icon_state = "aisleshelfend";
+	dir = 1
 	},
 /obj/item/instrument/harmonica,
 /turf/unsimulated/floor/carpet{
-	dir = 9;
+	tag = "icon-fblue2 (NORTHWEST)";
 	icon_state = "fblue2";
-	tag = "icon-fblue2 (NORTHWEST)"
+	dir = 9
 	},
 /area/owlery/staffhall)
 "dO" = (
 /obj/rack/lunar{
-	dir = 1;
-	icon_state = "aisleshelfend"
+	icon_state = "aisleshelfend";
+	dir = 1
 	},
 /obj/item/mousetrap_roller{
 	desc = "A toy car. Yep totally a toy car alright.";
 	name = "Toy Car"
 	},
 /turf/unsimulated/floor/carpet{
-	dir = 1;
+	tag = "icon-fblue2 (NORTH)";
 	icon_state = "fblue2";
-	tag = "icon-fblue2 (NORTH)"
+	dir = 1
 	},
 /area/owlery/staffhall)
 "dP" = (
 /obj/rack/lunar{
-	dir = 1;
-	icon_state = "aisleshelfend"
+	icon_state = "aisleshelfend";
+	dir = 1
 	},
 /obj/item/gift,
 /turf/unsimulated/floor/carpet{
-	dir = 1;
+	tag = "icon-fblue2 (NORTH)";
 	icon_state = "fblue2";
-	tag = "icon-fblue2 (NORTH)"
+	dir = 1
 	},
 /area/owlery/staffhall)
 "dQ" = (
 /turf/unsimulated/floor/carpet{
-	dir = 5;
+	tag = "icon-fblue2 (NORTHEAST)";
 	icon_state = "fblue2";
-	tag = "icon-fblue2 (NORTHEAST)"
+	dir = 5
 	},
 /area/owlery/staffhall)
 "dR" = (
 /obj/shrub{
-	dir = 1;
 	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
+	icon_state = "plant";
+	dir = 1
 	},
 /obj/machinery/light,
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/staffhall)
 "dS" = (
 /obj/stool/chair{
-	dir = 4;
+	tag = "icon-chair (EAST)";
 	icon_state = "chair";
-	tag = "icon-chair (EAST)"
+	dir = 4
 	},
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/staffhall)
@@ -1582,16 +1583,16 @@
 /area/owlery/staffhall)
 "dU" = (
 /obj/stool/chair{
-	dir = 8;
-	icon_state = "chair"
+	icon_state = "chair";
+	dir = 8
 	},
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/staffhall)
 "dV" = (
 /obj/stool/chair{
-	dir = 4;
+	tag = "icon-chair (EAST)";
 	icon_state = "chair";
-	tag = "icon-chair (EAST)"
+	dir = 4
 	},
 /obj/cable{
 	d1 = 1;
@@ -1610,8 +1611,8 @@
 /area/owlery/staffhall)
 "dX" = (
 /obj/stool/chair{
-	dir = 8;
-	icon_state = "chair"
+	icon_state = "chair";
+	dir = 8
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -1652,41 +1653,41 @@
 /area/owlery/staffhall)
 "ec" = (
 /obj/stool/chair/couch{
-	dir = 9;
-	icon_state = "chair_couch-brown"
+	icon_state = "chair_couch-brown";
+	dir = 9
 	},
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/staffhall)
 "ed" = (
 /obj/stool/chair/couch{
-	dir = 6;
-	icon_state = "chair_couch-brown"
+	icon_state = "chair_couch-brown";
+	dir = 6
 	},
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/staffhall)
 "ee" = (
 /obj/stool/chair/couch{
-	dir = 5;
-	icon_state = "chair_couch-brown"
+	icon_state = "chair_couch-brown";
+	dir = 5
 	},
 /turf/unsimulated/floor/blackwhite{
-	dir = 6;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 6
 	},
 /area/owlery/staffhall)
 "ef" = (
 /obj/decal/cleanable/dirt,
 /obj/structure/woodwall,
 /turf/unsimulated/floor/blackwhite{
-	dir = 10;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 10
 	},
 /area/owlery/staffhall)
 "eg" = (
 /obj/structure/woodwall,
 /turf/unsimulated/floor/blackwhite{
-	dir = 6;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 6
 	},
 /area/owlery/staffhall)
 "eh" = (
@@ -1731,7 +1732,7 @@
 /obj/rack/lunar{
 	icon_state = "aisleshelfend"
 	},
-/obj/item/dice/robot/d100{
+/obj/item/dice_bot/d100{
 	pixel_x = -4
 	},
 /turf/unsimulated/floor/carpet{
@@ -1748,9 +1749,9 @@
 	name = "Farty Snot's Everycolor Paint"
 	},
 /turf/unsimulated/floor/carpet{
-	dir = 2;
+	tag = "icon-blue1";
 	icon_state = "blue1";
-	tag = "icon-blue1"
+	dir = 2
 	},
 /area/owlery/staffhall)
 "eo" = (
@@ -1762,16 +1763,16 @@
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/carpet{
-	dir = 2;
+	tag = "icon-blue1";
 	icon_state = "blue1";
-	tag = "icon-blue1"
+	dir = 2
 	},
 /area/owlery/staffhall)
 "ep" = (
 /turf/unsimulated/floor/carpet{
-	dir = 4;
+	tag = "icon-fblue2 (EAST)";
 	icon_state = "fblue2";
-	tag = "icon-fblue2 (EAST)"
+	dir = 4
 	},
 /area/owlery/staffhall)
 "eq" = (
@@ -1822,8 +1823,8 @@
 /area/owlery/staffhall)
 "ew" = (
 /obj/stool/chair/wooden{
-	dir = 4;
-	icon_state = "chair_wooden"
+	icon_state = "chair_wooden";
+	dir = 4
 	},
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
@@ -1854,50 +1855,50 @@
 "eB" = (
 /obj/marker/supplymarker,
 /turf/unsimulated/floor/carpet{
-	dir = 2;
+	tag = "icon-blue1";
 	icon_state = "blue1";
-	tag = "icon-blue1"
+	dir = 2
 	},
 /area/owlery/staffhall)
 "eC" = (
 /obj/table/reinforced/auto,
 /turf/unsimulated/floor/carpet{
-	dir = 2;
+	tag = "icon-blue1";
 	icon_state = "blue1";
-	tag = "icon-blue1"
+	dir = 2
 	},
 /area/owlery/staffhall)
 "eD" = (
 /turf/unsimulated/floor/greenwhite{
-	dir = 1;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 1
 	},
 /area/owlery/staffhall)
 "eE" = (
 /turf/unsimulated/floor/greenwhite{
-	dir = 8;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 8
 	},
 /area/owlery/staffhall)
 "eF" = (
 /obj/machinery/vending/pizza,
 /turf/unsimulated/floor/greenwhite{
-	dir = 8;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 8
 	},
 /area/owlery/staffhall)
 "eG" = (
 /obj/decal/cleanable/tomatosplat,
 /turf/unsimulated/floor/greenwhite{
-	dir = 8;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 8
 	},
 /area/owlery/staffhall)
 "eH" = (
 /obj/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/access_spawn/owlmaint,
@@ -1964,12 +1965,12 @@
 /area/owlery/office)
 "eR" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 4
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 4;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 4
 	},
 /area/owlery/staffhall)
 "eS" = (
@@ -1977,8 +1978,8 @@
 /area/owlery/office)
 "eT" = (
 /obj/machinery/shower{
-	dir = 4;
-	icon_state = "showerhead"
+	icon_state = "showerhead";
+	dir = 4
 	},
 /turf/unsimulated/floor/sanitary/blue,
 /area/owlery/Owlmait)
@@ -1989,9 +1990,9 @@
 	name = "ratty blue couch"
 	},
 /obj/stool/chair/couch{
-	dir = 4;
+	name = "ratty blue couch";
 	icon_state = "chair_couch-green";
-	name = "ratty blue couch"
+	dir = 4
 	},
 /obj/item/reagent_containers/food/snacks/slimjim,
 /obj/decal/cleanable/dirt,
@@ -2019,8 +2020,8 @@
 /area/owlery/gangzone)
 "eZ" = (
 /obj/stool/chair/wooden{
-	dir = 4;
-	icon_state = "chair_wooden"
+	icon_state = "chair_wooden";
+	dir = 4
 	},
 /obj/critter/zombie/security{
 	aggressive = 0;
@@ -2068,8 +2069,8 @@
 /obj/fluid_spawner/polluted_filth/madness,
 /obj/fluid_spawner/polluted_filth/madness,
 /turf/unsimulated/floor/redblack/corner{
-	dir = 4;
-	icon_state = "redblackcorner"
+	icon_state = "redblackcorner";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "fc" = (
@@ -2091,8 +2092,8 @@
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/cola,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 4
 	},
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
@@ -2114,16 +2115,16 @@
 	icon_state = "drip5"
 	},
 /obj/decal/cleanable/blood/tracks{
-	dir = 8;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 8
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "fh" = (
 /obj/item/casing/shotgun/blue,
 /obj/decal/cleanable/blood/tracks{
-	dir = 8;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 8
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
@@ -2156,51 +2157,51 @@
 /area/owlery/staffhall)
 "fl" = (
 /turf/unsimulated/floor/carpet{
-	dir = 10;
+	tag = "icon-fblue2 (SOUTHWEST)";
 	icon_state = "fblue2";
-	tag = "icon-fblue2 (SOUTHWEST)"
+	dir = 10
 	},
 /area/owlery/staffhall)
 "fm" = (
 /turf/unsimulated/floor/carpet{
-	dir = 2;
+	tag = "icon-fblue2";
 	icon_state = "fblue2";
-	tag = "icon-fblue2"
+	dir = 2
 	},
 /area/owlery/staffhall)
 "fn" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
 /turf/unsimulated/floor/carpet{
-	dir = 2;
+	tag = "icon-fblue2";
 	icon_state = "fblue2";
-	tag = "icon-fblue2"
+	dir = 2
 	},
 /area/owlery/staffhall)
 "fo" = (
 /obj/stool/chair/office{
-	dir = 8;
-	icon_state = "office_chair"
+	icon_state = "office_chair";
+	dir = 8
 	},
 /obj/npc/trader/greg,
 /turf/unsimulated/floor/carpet{
-	dir = 6;
+	tag = "icon-fblue2 (SOUTHEAST)";
 	icon_state = "fblue2";
-	tag = "icon-fblue2 (SOUTHEAST)"
+	dir = 6
 	},
 /area/owlery/staffhall)
 "fp" = (
 /obj/decal/glow{
 	anchored = 1;
 	brightness = 2;
-	color_b = 1;
-	color_g = 0.8;
-	color_r = 0;
 	desc = "A monochrome plasma display.  No, not the kind of plasma that burns, the other kind.";
 	icon = 'icons/misc/lunar.dmi';
 	icon_state = "sign_gift";
 	name = "gift shop sign";
-	pixel_y = 30
+	pixel_y = 30;
+	color_b = 1;
+	color_g = 0.8;
+	color_r = 0
 	},
 /obj/decal/glow{
 	anchored = 1;
@@ -2219,8 +2220,8 @@
 /area/owlery/staffhall)
 "fq" = (
 /obj/stool/chair/office{
-	dir = 8;
-	icon_state = "office_chair"
+	icon_state = "office_chair";
+	dir = 8
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/office)
@@ -2288,8 +2289,8 @@
 /area/owlery/office)
 "fB" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 8;
-	icon_state = "research2_closed"
+	icon_state = "research2_closed";
+	dir = 8
 	},
 /obj/access_spawn/owlcommand,
 /turf/unsimulated/floor/white,
@@ -2333,8 +2334,8 @@
 /area/owlery/gangzone)
 "fJ" = (
 /turf/unsimulated/floor/redblack/corner{
-	dir = 4;
-	icon_state = "redblackcorner"
+	icon_state = "redblackcorner";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "fK" = (
@@ -2346,8 +2347,8 @@
 	icon_state = "gib4"
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "fM" = (
@@ -2359,21 +2360,21 @@
 /area/owlery/gangzone)
 "fO" = (
 /obj/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "fP" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/decal/woodclutter,
 /obj/item/material_piece/wad,
@@ -2423,14 +2424,14 @@
 /area/owlery/Owlopen)
 "fV" = (
 /turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6;
-	icon_state = "rwindow"
+	icon_state = "rwindow";
+	dir = 6
 	},
 /area/owlery/Owlopen)
 "fW" = (
 /obj/machinery/chem_master{
-	dir = 4;
-	icon_state = "mixer0"
+	icon_state = "mixer0";
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -2471,10 +2472,10 @@
 /area/owlery/office)
 "gc" = (
 /obj/decal/skeleton{
+	name = "decomposed corpse";
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body1";
-	name = "decomposed corpse"
+	icon_state = "body1"
 	},
 /obj/item/paper/cleanerorder,
 /obj/cable{
@@ -2499,8 +2500,8 @@
 /area/owlery/office)
 "gf" = (
 /turf/unsimulated/floor/greenwhite{
-	dir = 4;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 4
 	},
 /area/owlery/staffhall)
 "gg" = (
@@ -2522,8 +2523,8 @@
 	icon_state = "1-2"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
-	dir = 8;
-	icon_state = "xtra_bigstripe-edge"
+	icon_state = "xtra_bigstripe-edge";
+	dir = 8
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
@@ -2550,9 +2551,9 @@
 /area/owlery/office)
 "gm" = (
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/unsimulated/wall/auto/reinforced,
 /area/owlery/gangzone)
@@ -2571,34 +2572,34 @@
 	dir = 8
 	},
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "gp" = (
 /obj/critter/madnessowl,
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "gq" = (
 /obj/item/raw_material/shard,
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/gangzone)
@@ -2606,30 +2607,30 @@
 /obj/decal/cleanable/blood/drip/high,
 /obj/item/rods,
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "gs" = (
 /obj/item/paper/fuckingidiot,
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/unsimulated/floor/red,
 /area/owlery/gangzone)
 "gt" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/unsimulated/floor/red,
 /area/owlery/gangzone)
@@ -2637,8 +2638,8 @@
 /obj/decal/cleanable/dirt,
 /obj/item/handcuffs,
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "gv" = (
@@ -2652,15 +2653,15 @@
 	name = "torn up cable"
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "gw" = (
 /obj/stool/chair{
-	dir = 4;
+	tag = "icon-chair (EAST)";
 	icon_state = "chair";
-	tag = "icon-chair (EAST)"
+	dir = 4
 	},
 /obj/critter/madnessowl/gun{
 	min_quality = 50;
@@ -2668,8 +2669,8 @@
 	wanderer = 0
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "gx" = (
@@ -2693,8 +2694,8 @@
 	},
 /obj/fluid_spawner/polluted_filth/madness,
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "gy" = (
@@ -2714,22 +2715,22 @@
 /obj/item/ammo/bullets/abg,
 /obj/item/ammo/bullets/abg,
 /turf/unsimulated/floor/redblack/corner{
-	dir = 4;
-	icon_state = "redblackcorner"
+	icon_state = "redblackcorner";
+	dir = 4
 	},
 /area/owlery/Owlopen)
 "gA" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 8
 	},
 /obj/computerframe{
-	anchored = 1;
+	name = "smashed computer";
 	desc = "It is highly unlikely that this still works.";
-	dir = 4;
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
-	name = "smashed computer"
+	dir = 4;
+	anchored = 1
 	},
 /obj/machinery/power/apc{
 	areastring = "Owlery Arrivals";
@@ -2740,12 +2741,12 @@
 	start_charge = 1
 	},
 /obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "0-2";
+	d2 = 2
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 9;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 9
 	},
 /area/owlery/Owlopen)
 "gB" = (
@@ -2753,36 +2754,36 @@
 	icon_state = "gibmid3"
 	},
 /obj/stool/chair/office{
-	dir = 8;
-	icon_state = "office_chair"
+	icon_state = "office_chair";
+	dir = 8
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 1;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 1
 	},
 /area/owlery/Owlopen)
 "gC" = (
 /obj/stool/chair/office{
-	dir = 4;
-	icon_state = "office_chair"
+	icon_state = "office_chair";
+	dir = 4
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 1;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 1
 	},
 /area/owlery/Owlopen)
 "gD" = (
 /obj/computerframe{
-	anchored = 1;
+	name = "smashed computer";
 	desc = "It is highly unlikely that this still works.";
-	dir = 8;
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
-	name = "smashed computer"
+	dir = 8;
+	anchored = 1
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 5;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 5
 	},
 /area/owlery/Owlopen)
 "gE" = (
@@ -2792,8 +2793,8 @@
 /area/owlery/office)
 "gF" = (
 /obj/submachine/chem_extractor{
-	dir = 4;
-	icon_state = "reex-off"
+	icon_state = "reex-off";
+	dir = 4
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/office)
@@ -2833,8 +2834,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 8;
-	icon_state = "research2_closed"
+	icon_state = "research2_closed";
+	dir = 8
 	},
 /obj/access_spawn/owlcommand,
 /turf/unsimulated/floor/white,
@@ -2849,8 +2850,8 @@
 "gM" = (
 /obj/critter/madnessowl,
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "gN" = (
@@ -2861,14 +2862,14 @@
 /area/owlery/gangzone)
 "gO" = (
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "gP" = (
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "gQ" = (
@@ -2884,38 +2885,38 @@
 	dir = 4
 	},
 /obj/stool/chair{
-	dir = 8;
-	icon_state = "chair"
+	icon_state = "chair";
+	dir = 8
 	},
 /obj/npc/trader/bee{
 	anchored = 0
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "gT" = (
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "gU" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 8
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/Owlopen)
 "gV" = (
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/Owlopen)
 "gW" = (
@@ -2933,8 +2934,8 @@
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/Owlopen)
 "gY" = (
@@ -2950,8 +2951,8 @@
 /obj/table/reinforced/auto,
 /obj/machinery/microwave,
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/Owlopen)
 "hb" = (
@@ -2984,8 +2985,8 @@
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/staffhall)
 "hf" = (
@@ -3018,9 +3019,9 @@
 /area/owlery/Owlmait)
 "hj" = (
 /obj/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/unsimulated/floor/engine,
 /area/owlery/Owlmait)
@@ -3079,8 +3080,8 @@
 	},
 /obj/item/reagent_containers/food/drinks/bottle/champagne,
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "hr" = (
@@ -3088,8 +3089,8 @@
 	anchored = 1
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "hs" = (
@@ -3113,8 +3114,8 @@
 	anchored = 1
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "hw" = (
@@ -3132,8 +3133,8 @@
 "hy" = (
 /obj/storage/closet/electrical_supply,
 /turf/unsimulated/floor/redblack/corner{
-	dir = 8;
-	icon_state = "redblackcorner"
+	icon_state = "redblackcorner";
+	dir = 8
 	},
 /area/owlery/Owlopen)
 "hz" = (
@@ -3142,23 +3143,23 @@
 /obj/item/clothing/head/helmet/welding,
 /obj/storage/secure/crate/weapon/confiscated_items,
 /turf/unsimulated/floor/redblack/corner{
-	dir = 1;
-	icon_state = "redblackcorner"
+	icon_state = "redblackcorner";
+	dir = 1
 	},
 /area/owlery/Owlopen)
 "hA" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/Owlopen)
 "hB" = (
 /obj/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/Owlopen)
@@ -3170,8 +3171,8 @@
 /obj/item/storage/box/donkpocket_kit,
 /obj/machinery/light/emergency,
 /turf/unsimulated/floor/redblack{
-	dir = 6;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 6
 	},
 /area/owlery/Owlopen)
 "hE" = (
@@ -3182,8 +3183,8 @@
 	id = "owlerydoors"
 	},
 /turf/unsimulated/floor/blackwhite{
-	dir = 8;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 8
 	},
 /area/owlery/owleryhall)
 "hF" = (
@@ -3203,8 +3204,8 @@
 	id = "owlerydoors"
 	},
 /turf/unsimulated/floor/blackwhite{
-	dir = 4;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 4
 	},
 /area/owlery/owleryhall)
 "hH" = (
@@ -3308,8 +3309,8 @@
 /area/owlery/office)
 "hV" = (
 /obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "diagonalWall3";
+	dir = 8
 	},
 /turf/space,
 /area/shuttle/spacebus)
@@ -3380,14 +3381,14 @@
 	name = "exhibit window"
 	},
 /obj/machinery/door/window{
-	dir = 8;
 	icon = 'icons/obj/doors/windoor.dmi';
 	icon_state = "right";
+	dir = 8;
 	req_access_txt = "0"
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "ic" = (
@@ -3400,8 +3401,8 @@
 	dir = 8
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "id" = (
@@ -3416,8 +3417,8 @@
 	name = "shredded fabric"
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "ie" = (
@@ -3433,8 +3434,8 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "ig" = (
@@ -3460,8 +3461,8 @@
 	req_access_txt = "0"
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "ih" = (
@@ -3485,21 +3486,21 @@
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical,
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/Owlopen)
 "ik" = (
 /obj/machinery/light_switch/east,
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/Owlopen)
 "il" = (
 /obj/machinery/door/airlock/pyro{
-	dir = 8;
-	icon_state = "generic_closed"
+	icon_state = "generic_closed";
+	dir = 8
 	},
 /turf/unsimulated/floor/specialroom/arcade,
 /area/owlery/staffhall)
@@ -3553,8 +3554,8 @@
 /area/owlery/office)
 "ir" = (
 /obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 1
 	},
 /turf/unsimulated/floor/wood/two,
 /area/owlery/office)
@@ -3572,8 +3573,8 @@
 	icon_state = "floor5"
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 4
 	},
 /obj/table/round,
 /obj/item/kitchen/utensil/knife,
@@ -3614,9 +3615,9 @@
 	icon_state = "0-8"
 	},
 /obj/stool/chair/couch/green{
-	dir = 8;
+	tag = "icon-chair_couch-green (WEST)";
 	icon_state = "chair_couch-green";
-	tag = "icon-chair_couch-green (WEST)"
+	dir = 8
 	},
 /obj/critter/madnessowl/switchblade,
 /turf/unsimulated/floor/black,
@@ -3626,9 +3627,9 @@
 	pixel_y = 32
 	},
 /obj/stool/chair/couch/green{
-	dir = 4;
+	tag = "icon-chair_couch-green (EAST)";
 	icon_state = "chair_couch-green";
-	tag = "icon-chair_couch-green (EAST)"
+	dir = 4
 	},
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
@@ -3656,9 +3657,9 @@
 "iC" = (
 /obj/decal/cleanable/paper,
 /obj/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/office)
@@ -3685,8 +3686,8 @@
 	name = "shredded fabric"
 	},
 /turf/unsimulated/floor/redblack/corner{
-	dir = 1;
-	icon_state = "redblackcorner"
+	icon_state = "redblackcorner";
+	dir = 1
 	},
 /area/owlery/gangzone)
 "iF" = (
@@ -3704,19 +3705,19 @@
 /obj/table/wood/auto/desk,
 /obj/item/kitchen/food_box/donut_box,
 /turf/unsimulated/floor/wizard/carpet/edge{
-	dir = 1;
-	icon_state = "carpet_edge"
+	icon_state = "carpet_edge";
+	dir = 1
 	},
 /area/owlery/office)
 "iI" = (
 /obj/stool/chair/comfy/green{
-	dir = 4;
-	icon_state = "chair_comfy-green"
+	icon_state = "chair_comfy-green";
+	dir = 4
 	},
 /obj/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/office)
@@ -3736,8 +3737,8 @@
 	icon_state = "gib1"
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "iM" = (
@@ -3774,15 +3775,15 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "iP" = (
 /obj/critter/madnessowl,
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "iQ" = (
@@ -3796,8 +3797,8 @@
 	tag = ""
 	},
 /turf/unsimulated/floor/arrival{
-	dir = 9;
-	icon_state = "arrival"
+	icon_state = "arrival";
+	dir = 9
 	},
 /area/owlery/Owlopen)
 "iR" = (
@@ -3806,8 +3807,8 @@
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/arrival{
-	dir = 5;
-	icon_state = "arrival"
+	icon_state = "arrival";
+	dir = 5
 	},
 /area/owlery/Owlopen)
 "iS" = (
@@ -3817,22 +3818,22 @@
 	tag = ""
 	},
 /obj/computerframe{
-	anchored = 1;
+	name = "smashed computer";
 	desc = "It is highly unlikely that this still works.";
-	dir = 4;
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
-	name = "smashed computer"
+	dir = 4;
+	anchored = 1
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 10;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 10
 	},
 /area/owlery/Owlopen)
 "iT" = (
 /obj/stool/chair/office/red{
-	dir = 8;
-	icon_state = "office_chair_red"
+	icon_state = "office_chair_red";
+	dir = 8
 	},
 /obj/cable{
 	d1 = 1;
@@ -3840,71 +3841,71 @@
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor/redblack/corner{
-	dir = 4;
-	icon_state = "redblackcorner"
+	icon_state = "redblackcorner";
+	dir = 4
 	},
 /area/owlery/Owlopen)
 "iU" = (
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/Owlopen)
 "iV" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 8
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /turf/unsimulated/floor/greenwhite{
-	dir = 8;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 8
 	},
 /area/owlery/owleryhall)
 "iW" = (
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/unsimulated/floor/stairs/quilty{
-	dir = 4;
-	icon_state = "quiltystair"
+	icon_state = "quiltystair";
+	dir = 4
 	},
 /area/owlery/owleryhall)
 "iX" = (
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 8;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 8
 	},
 /area/owlery/owleryhall)
 "iY" = (
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "iZ" = (
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/unsimulated/floor/greenwhite/corner{
-	dir = 8;
-	icon_state = "greenwhitecorner"
+	icon_state = "greenwhitecorner";
+	dir = 8
 	},
 /area/owlery/owleryhall)
 "ja" = (
@@ -3912,8 +3913,8 @@
 	icon_state = "2-8"
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 5;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 5
 	},
 /area/owlery/owleryhall)
 "jb" = (
@@ -3948,8 +3949,8 @@
 /area/shuttle/spacebus)
 "jg" = (
 /obj/indestructible/shuttle_corner{
-	dir = 1;
-	icon_state = "diagonalWall3"
+	icon_state = "diagonalWall3";
+	dir = 1
 	},
 /turf/space,
 /area/shuttle/spacebus)
@@ -3963,13 +3964,13 @@
 /area/owlery/office)
 "ji" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /turf/unsimulated/floor/greenwhite{
-	dir = 4;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 4
 	},
 /area/owlery/owleryhall)
 "jj" = (
@@ -3996,8 +3997,8 @@
 	icon_state = "gibmid1"
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "jn" = (
@@ -4012,42 +4013,42 @@
 /area/owlery/gangzone)
 "jp" = (
 /obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
+	icon_state = "lattice-dir";
+	dir = 4
 	},
 /turf/space/no_replace,
 /area/space)
 "jq" = (
 /obj/securearea{
+	name = "VACUUM AREA";
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	name = "VACUUM AREA"
+	icon_state = "space"
 	},
 /turf/unsimulated/wall/auto/reinforced,
 /area/owlery/Owlopen)
 "jr" = (
 /turf/unsimulated/floor/arrival{
-	dir = 8;
-	icon_state = "arrival"
+	icon_state = "arrival";
+	dir = 8
 	},
 /area/owlery/Owlopen)
 "js" = (
 /turf/unsimulated/floor/arrival{
-	dir = 4;
-	icon_state = "arrival"
+	icon_state = "arrival";
+	dir = 4
 	},
 /area/owlery/Owlopen)
 "jt" = (
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/Owlopen)
 "ju" = (
 /obj/machinery/light_switch/west,
 /turf/unsimulated/floor/greenwhite{
-	dir = 8;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 8
 	},
 /area/owlery/owleryhall)
 "jv" = (
@@ -4060,8 +4061,8 @@
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor/greenwhite/corner{
-	dir = 8;
-	icon_state = "greenwhitecorner"
+	icon_state = "greenwhitecorner";
+	dir = 8
 	},
 /area/owlery/owleryhall)
 "jx" = (
@@ -4071,14 +4072,14 @@
 	icon_state = "2-8"
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 5;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 5
 	},
 /area/owlery/owleryhall)
 "jy" = (
 /obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon_state = "wall3_trans"
+	icon_state = "wall3_trans";
+	dir = 4
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/shuttle{
@@ -4125,8 +4126,8 @@
 /area/owlery/office)
 "jF" = (
 /obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon_state = "diagonalWall3"
+	icon_state = "diagonalWall3";
+	dir = 5
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
@@ -4134,31 +4135,31 @@
 /area/shuttle/spacebus)
 "jG" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 8;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 8
 	},
 /turf/unsimulated/floor/carpet{
-	dir = 9;
+	tag = "icon-fblue2 (NORTHWEST)";
 	icon_state = "fblue2";
-	tag = "icon-fblue2 (NORTHWEST)"
+	dir = 9
 	},
 /area/owlery/owleryhall)
 "jH" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 6;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 6
 	},
 /turf/unsimulated/floor/carpet{
-	dir = 1;
+	tag = "icon-fblue2 (NORTHWEST)";
 	icon_state = "fblue5";
-	tag = "icon-fblue2 (NORTHWEST)"
+	dir = 1
 	},
 /area/owlery/owleryhall)
 "jI" = (
 /turf/unsimulated/floor/carpet{
-	dir = 8;
+	tag = "icon-fblue2 (NORTHWEST)";
 	icon_state = "fblue1";
-	tag = "icon-fblue2 (NORTHWEST)"
+	dir = 8
 	},
 /area/owlery/owleryhall)
 "jJ" = (
@@ -4166,9 +4167,9 @@
 /area/owlery/office)
 "jK" = (
 /turf/unsimulated/floor/carpet{
-	dir = 10;
+	tag = "icon-fblue2 (NORTHWEST)";
 	icon_state = "fblue5";
-	tag = "icon-fblue2 (NORTHWEST)"
+	dir = 10
 	},
 /area/owlery/owleryhall)
 "jL" = (
@@ -4177,8 +4178,8 @@
 	dir = 8
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "jM" = (
@@ -4217,40 +4218,40 @@
 /area/owlery/Owlopen)
 "jS" = (
 /turf/unsimulated/floor/arrival{
-	dir = 9;
-	icon_state = "arrival"
+	icon_state = "arrival";
+	dir = 9
 	},
 /area/owlery/Owlopen)
 "jT" = (
 /turf/unsimulated/floor/carpet{
-	dir = 5;
+	tag = "icon-fblue2 (NORTHEAST)";
 	icon_state = "fblue2";
-	tag = "icon-fblue2 (NORTHEAST)"
+	dir = 5
 	},
 /area/owlery/owleryhall)
 "jU" = (
 /turf/unsimulated/floor/arrival/corner{
-	dir = 4;
-	icon_state = "arrivalcorner"
+	icon_state = "arrivalcorner";
+	dir = 4
 	},
 /area/owlery/Owlopen)
 "jV" = (
 /obj/item/casing/small,
 /turf/unsimulated/floor/arrival{
-	dir = 5;
-	icon_state = "arrival"
+	icon_state = "arrival";
+	dir = 5
 	},
 /area/owlery/Owlopen)
 "jW" = (
 /turf/unsimulated/floor/redblack/corner{
-	dir = 8;
-	icon_state = "redblackcorner"
+	icon_state = "redblackcorner";
+	dir = 8
 	},
 /area/owlery/Owlopen)
 "jX" = (
 /obj/machinery/light/emergency{
-	dir = 1;
-	icon_state = "ebulb1"
+	icon_state = "ebulb1";
+	dir = 1
 	},
 /obj/machinery/door_control/oneshot{
 	desc = "A remote override panel for a blast door.";
@@ -4261,8 +4262,8 @@
 	pixel_y = 24
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 1;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 1
 	},
 /area/owlery/Owlopen)
 "jY" = (
@@ -4274,14 +4275,14 @@
 /obj/table/reinforced/auto,
 /obj/item/storage/box/id_kit,
 /turf/unsimulated/floor/redblack{
-	dir = 5;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 5
 	},
 /area/owlery/Owlopen)
 "jZ" = (
 /turf/unsimulated/floor/greenwhite{
-	dir = 8;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 8
 	},
 /area/owlery/owleryhall)
 "ka" = (
@@ -4293,22 +4294,22 @@
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor/greenwhite/corner{
-	dir = 8;
-	icon_state = "greenwhitecorner"
+	icon_state = "greenwhitecorner";
+	dir = 8
 	},
 /area/owlery/owleryhall)
 "kb" = (
 /obj/stool/bench/green/auto,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "2-8"
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 5;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 5
 	},
 /area/owlery/owleryhall)
 "kc" = (
@@ -4317,9 +4318,9 @@
 /area/owlery/Owlmait)
 "kd" = (
 /obj/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/unsimulated/wall/auto/reinforced,
 /area/owlery/office)
@@ -4359,8 +4360,8 @@
 /area/owlery/office)
 "kh" = (
 /obj/machinery/door/airlock/pyro/security{
-	dir = 8;
-	icon_state = "sec_closed"
+	icon_state = "sec_closed";
+	dir = 8
 	},
 /obj/access_spawn/owlsecurity,
 /turf/unsimulated/floor/black,
@@ -4376,30 +4377,30 @@
 	id = "owlerydoors"
 	},
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/owleryhall)
 "kk" = (
 /obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 1
 	},
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/office)
 "kl" = (
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/office)
 "km" = (
 /obj/machinery/computer/card{
-	dir = 4;
-	icon_state = "id"
+	icon_state = "id";
+	dir = 4
 	},
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
@@ -4407,8 +4408,8 @@
 	name = "exhibit window"
 	},
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/office)
 "kn" = (
@@ -4425,16 +4426,16 @@
 	icon_state = "floor5"
 	},
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/office)
 "ko" = (
 /obj/decal/floor/displays/owlsign,
 /turf/unsimulated/floor/carpet{
-	dir = 10;
+	tag = "icon-fblue2 (NORTHWEST)";
 	icon_state = "fblue1";
-	tag = "icon-fblue2 (NORTHWEST)"
+	dir = 10
 	},
 /area/owlery/owleryhall)
 "kp" = (
@@ -4472,27 +4473,27 @@
 	icon_state = "owlsign-mid"
 	},
 /turf/unsimulated/floor/carpet{
-	dir = 10;
+	tag = "icon-fblue2 (NORTHWEST)";
 	icon_state = "fblue1";
-	tag = "icon-fblue2 (NORTHWEST)"
+	dir = 10
 	},
 /area/owlery/owleryhall)
 "ks" = (
 /obj/decal/cleanable/dirt,
 /obj/shrub{
-	dir = 1;
 	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
+	icon_state = "plant";
+	dir = 1
 	},
 /turf/unsimulated/floor/redblack/corner{
-	dir = 8;
-	icon_state = "redblackcorner"
+	icon_state = "redblackcorner";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "kt" = (
 /turf/unsimulated/floor/redblack{
-	dir = 1;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 1
 	},
 /area/owlery/gangzone)
 "ku" = (
@@ -4508,14 +4509,14 @@
 "kw" = (
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/redblack/corner{
-	dir = 8;
-	icon_state = "redblackcorner"
+	icon_state = "redblackcorner";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "kx" = (
 /turf/unsimulated/floor/arrival{
-	dir = 10;
-	icon_state = "arrival"
+	icon_state = "arrival";
+	dir = 10
 	},
 /area/owlery/Owlopen)
 "ky" = (
@@ -4524,22 +4525,22 @@
 	icon_state = "owlsign-right"
 	},
 /turf/unsimulated/floor/carpet{
-	dir = 10;
+	tag = "icon-fblue2 (NORTHWEST)";
 	icon_state = "fblue1";
-	tag = "icon-fblue2 (NORTHWEST)"
+	dir = 10
 	},
 /area/owlery/owleryhall)
 "kz" = (
 /turf/unsimulated/floor/arrival/corner{
-	dir = 8;
-	icon_state = "arrivalcorner"
+	icon_state = "arrivalcorner";
+	dir = 8
 	},
 /area/owlery/Owlopen)
 "kA" = (
 /obj/item/casing/small,
 /obj/stool/chair/office/red{
-	dir = 4;
-	icon_state = "office_chair_red"
+	icon_state = "office_chair_red";
+	dir = 4
 	},
 /turf/unsimulated/floor/redblack/corner,
 /area/owlery/Owlopen)
@@ -4552,8 +4553,8 @@
 	},
 /obj/random_item_spawner/desk_stuff,
 /turf/unsimulated/floor/redblack{
-	dir = 6;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 6
 	},
 /area/owlery/Owlopen)
 "kC" = (
@@ -4563,33 +4564,33 @@
 "kD" = (
 /obj/stool/bench/green/auto,
 /obj/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/unsimulated/floor/greenwhite/corner{
-	dir = 8;
-	icon_state = "greenwhitecorner"
+	icon_state = "greenwhitecorner";
+	dir = 8
 	},
 /area/owlery/owleryhall)
 "kE" = (
 /obj/stool/bench/green/auto,
 /turf/unsimulated/floor/greenwhite{
-	dir = 5;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 5
 	},
 /area/owlery/owleryhall)
 "kF" = (
 /turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6;
-	icon_state = "rwindow"
+	icon_state = "rwindow";
+	dir = 6
 	},
 /area/owlery/owleryhall)
 "kG" = (
 /obj/cable,
 /obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
+	icon_state = "0-2";
+	d2 = 2
 	},
 /obj/grille,
 /obj/window_blinds/cog2{
@@ -4605,8 +4606,8 @@
 /area/owlery/office)
 "kH" = (
 /obj/stool/chair/office{
-	dir = 4;
-	icon_state = "office_chair"
+	icon_state = "office_chair";
+	dir = 4
 	},
 /turf/unsimulated/floor/wood/two,
 /area/owlery/office)
@@ -4633,16 +4634,16 @@
 	pixel_y = -8
 	},
 /turf/unsimulated/floor/wizard/carpet/edge{
-	dir = 6;
-	icon_state = "carpet_edge"
+	icon_state = "carpet_edge";
+	dir = 6
 	},
 /area/owlery/office)
 "kL" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/window{
-	dir = 2;
 	icon = 'icons/obj/doors/windoor.dmi';
 	icon_state = "right";
+	dir = 2;
 	req_access_txt = "0"
 	},
 /obj/item/folder,
@@ -4650,9 +4651,9 @@
 /area/owlery/office)
 "kM" = (
 /turf/unsimulated/floor/carpet{
-	dir = 10;
+	tag = "icon-fblue2 (SOUTHWEST)";
 	icon_state = "fblue2";
-	tag = "icon-fblue2 (SOUTHWEST)"
+	dir = 10
 	},
 /area/owlery/owleryhall)
 "kN" = (
@@ -4666,16 +4667,16 @@
 /area/owlery/office)
 "kO" = (
 /turf/unsimulated/floor/carpet{
-	dir = 2;
+	tag = "icon-fblue2 (NORTHWEST)";
 	icon_state = "fblue5";
-	tag = "icon-fblue2 (NORTHWEST)"
+	dir = 2
 	},
 /area/owlery/owleryhall)
 "kP" = (
 /turf/unsimulated/floor/carpet{
-	dir = 6;
+	tag = "icon-fblue2 (SOUTHEAST)";
 	icon_state = "fblue2";
-	tag = "icon-fblue2 (SOUTHEAST)"
+	dir = 6
 	},
 /area/owlery/owleryhall)
 "kQ" = (
@@ -4701,15 +4702,15 @@
 	dir = 8
 	},
 /turf/unsimulated/floor/redblack/corner{
-	dir = 8;
-	icon_state = "redblackcorner"
+	icon_state = "redblackcorner";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "kU" = (
 /obj/decal/cleanable/blood/drip/high,
 /turf/unsimulated/floor/redblack{
-	dir = 1;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 1
 	},
 /area/owlery/gangzone)
 "kV" = (
@@ -4717,8 +4718,8 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/redblack/corner{
-	dir = 1;
-	icon_state = "redblackcorner"
+	icon_state = "redblackcorner";
+	dir = 1
 	},
 /area/owlery/gangzone)
 "kW" = (
@@ -4742,8 +4743,8 @@
 "kZ" = (
 /obj/machinery/secscanner,
 /turf/unsimulated/floor/arrival{
-	dir = 6;
-	icon_state = "arrival"
+	icon_state = "arrival";
+	dir = 6
 	},
 /area/owlery/Owlopen)
 "la" = (
@@ -4757,8 +4758,8 @@
 	layer = 4
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 10;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 10
 	},
 /area/owlery/Owlopen)
 "lb" = (
@@ -4777,34 +4778,34 @@
 /obj/table/reinforced/auto,
 /obj/item/card/id,
 /turf/unsimulated/floor/redblack{
-	dir = 6;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 6
 	},
 /area/owlery/Owlopen)
 "ld" = (
 /obj/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "le" = (
 /obj/stool/bench/green/auto,
 /turf/unsimulated/floor/greenwhite/corner{
-	dir = 8;
-	icon_state = "greenwhitecorner"
+	icon_state = "greenwhitecorner";
+	dir = 8
 	},
 /area/owlery/owleryhall)
 "lf" = (
 /obj/stool/bench/green/auto,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 4
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 5;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 5
 	},
 /area/owlery/owleryhall)
 "lg" = (
@@ -4814,8 +4815,8 @@
 /area/owlery/office)
 "lh" = (
 /obj/stool/chair{
-	dir = 8;
-	icon_state = "chair"
+	icon_state = "chair";
+	dir = 8
 	},
 /turf/unsimulated/floor/wood/two,
 /area/owlery/office)
@@ -4880,35 +4881,35 @@
 "lr" = (
 /obj/storage/closet/office,
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/staffhall)
 "ls" = (
 /obj/table/reinforced/auto,
 /obj/item/staple_gun/red,
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/staffhall)
 "lt" = (
 /obj/decal/cleanable/rust,
 /obj/machinery/door/airlock/external,
 /turf/unsimulated/floor/greenwhite{
-	dir = 9;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 9
 	},
 /area/owlery/Owlopen)
 "lu" = (
 /obj/securearea{
+	name = "VACUUM AREA";
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	name = "VACUUM AREA"
+	icon_state = "space"
 	},
 /turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6;
-	icon_state = "rwindow"
+	icon_state = "rwindow";
+	dir = 6
 	},
 /area/owlery/Owlopen)
 "lv" = (
@@ -4940,20 +4941,20 @@
 /obj/decal/cleanable/blood/tracks,
 /obj/item/raw_material/shard/glass,
 /turf/unsimulated/floor/greenwhite{
-	dir = 9;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 9
 	},
 /area/owlery/owleryhall)
 "lA" = (
 /turf/unsimulated/floor/greenwhite{
-	dir = 1;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 1
 	},
 /area/owlery/owleryhall)
 "lB" = (
 /turf/unsimulated/floor/greenwhite/corner{
-	dir = 1;
-	icon_state = "greenwhitecorner"
+	icon_state = "greenwhitecorner";
+	dir = 1
 	},
 /area/owlery/owleryhall)
 "lC" = (
@@ -4965,15 +4966,15 @@
 "lD" = (
 /obj/storage/closet/office,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 4
 	},
 /turf/unsimulated/floor/wood/two,
 /area/owlery/office)
 "lE" = (
 /turf/unsimulated/floor/stairs/dark{
-	dir = 1;
-	icon_state = "dark_stairs"
+	icon_state = "dark_stairs";
+	dir = 1
 	},
 /area/owlery/office)
 "lF" = (
@@ -4983,8 +4984,8 @@
 /area/owlery/office)
 "lG" = (
 /turf/unsimulated/floor/stairs/dark{
-	dir = 1;
-	icon_state = "dark_stairs"
+	icon_state = "dark_stairs";
+	dir = 1
 	},
 /area/owlery/Owlmait)
 "lH" = (
@@ -5010,15 +5011,15 @@
 	name = "exhibit window"
 	},
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 8
 	},
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
 /turf/unsimulated/floor/wizard/carpet/edge{
-	dir = 9;
-	icon_state = "carpet_edge"
+	icon_state = "carpet_edge";
+	dir = 9
 	},
 /area/owlery/office)
 "lI" = (
@@ -5028,8 +5029,8 @@
 "lJ" = (
 /obj/item/raw_material/shard,
 /turf/unsimulated/floor/redblack/corner{
-	dir = 1;
-	icon_state = "redblackcorner"
+	icon_state = "redblackcorner";
+	dir = 1
 	},
 /area/owlery/gangzone)
 "lK" = (
@@ -5046,18 +5047,18 @@
 	pixel_x = 0
 	},
 /turf/unsimulated/floor/yellowblack{
-	dir = 4;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "lN" = (
 /obj/machinery/light/emergency{
-	dir = 4;
-	icon_state = "ebulb1"
+	icon_state = "ebulb1";
+	dir = 4
 	},
 /turf/unsimulated/floor/yellowblack{
-	dir = 8;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "lO" = (
@@ -5093,12 +5094,12 @@
 /area/owlery/office)
 "lS" = (
 /obj/decal/tile_edge/line/blue{
-	dir = 6;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 6
 	},
 /obj/decal/tile_edge/line/blue{
-	dir = 10;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 10
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
@@ -5106,8 +5107,8 @@
 /area/shuttle/spacebus)
 "lT" = (
 /obj/stool/chair{
-	dir = 8;
-	icon_state = "chair"
+	icon_state = "chair";
+	dir = 8
 	},
 /obj/decal/cleanable/dirt,
 /obj/item/storage/wall/random,
@@ -5137,8 +5138,8 @@
 	tag = ""
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 9;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 9
 	},
 /area/owlery/owleryhall)
 "lX" = (
@@ -5146,15 +5147,15 @@
 	icon_state = "gibleg"
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 1;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 1
 	},
 /area/owlery/owleryhall)
 "lY" = (
 /obj/decal/cleanable/blood/tracks,
 /turf/unsimulated/floor/greenwhite/corner{
-	dir = 1;
-	icon_state = "greenwhitecorner"
+	icon_state = "greenwhitecorner";
+	dir = 1
 	},
 /area/owlery/owleryhall)
 "lZ" = (
@@ -5219,25 +5220,25 @@
 /area/owlery/owleryhall)
 "mf" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 4
 	},
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/reagent_dispensers/watertank/fountain,
 /turf/unsimulated/floor/greenwhite{
-	dir = 5;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 5
 	},
 /area/owlery/owleryhall)
 "mg" = (
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/unsimulated/wall/auto/reinforced,
 /area/owlery/owleryhall)
@@ -5265,9 +5266,9 @@
 	icon_state = "0-8"
 	},
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/office)
@@ -5276,9 +5277,9 @@
 	desc = "Office Of Alex Cornwall, Head Researcher."
 	},
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/unsimulated/wall/auto/reinforced,
 /area/owlery/office)
@@ -5289,9 +5290,9 @@
 /area/owlery/office)
 "ml" = (
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/unsimulated/wall/auto/reinforced,
 /area/owlery/office)
@@ -5339,18 +5340,18 @@
 	pixel_x = 10
 	},
 /turf/unsimulated/floor/wizard/carpet/edge{
-	dir = 6;
-	icon_state = "carpet_edge"
+	icon_state = "carpet_edge";
+	dir = 6
 	},
 /area/owlery/office)
 "mr" = (
 /obj/stool/chair/comfy/green{
-	dir = 4;
-	icon_state = "chair_comfy-green"
+	icon_state = "chair_comfy-green";
+	dir = 4
 	},
 /turf/unsimulated/floor/wizard/carpet/edge{
-	dir = 10;
-	icon_state = "carpet_edge"
+	icon_state = "carpet_edge";
+	dir = 10
 	},
 /area/owlery/office)
 "ms" = (
@@ -5379,37 +5380,37 @@
 	name = "table"
 	},
 /turf/unsimulated/floor/wizard/carpet/edge{
-	dir = 9;
-	icon_state = "carpet_edge"
+	icon_state = "carpet_edge";
+	dir = 9
 	},
 /area/owlery/office)
 "mt" = (
 /turf/unsimulated/floor/wizard/carpet/inner_corner_onetwo{
-	dir = 9;
-	icon_state = "carpet_inner_corner_1_2"
+	icon_state = "carpet_inner_corner_1_2";
+	dir = 9
 	},
 /area/owlery/office)
 "mu" = (
 /obj/table/reinforced/bar/auto,
 /turf/unsimulated/floor/wizard/carpet/edge{
-	dir = 10;
-	icon_state = "carpet_edge"
+	icon_state = "carpet_edge";
+	dir = 10
 	},
 /area/owlery/office)
 "mv" = (
 /turf/unsimulated/floor/wizard/carpet/inner_corner_onetwo{
-	dir = 10;
-	icon_state = "carpet_inner_corner_1_2"
+	icon_state = "carpet_inner_corner_1_2";
+	dir = 10
 	},
 /area/owlery/office)
 "mw" = (
 /obj/stool/chair/comfy/green{
-	dir = 8;
-	icon_state = "chair_comfy-green"
+	icon_state = "chair_comfy-green";
+	dir = 8
 	},
 /turf/unsimulated/floor/wizard/carpet/edge{
-	dir = 6;
-	icon_state = "carpet_edge"
+	icon_state = "carpet_edge";
+	dir = 6
 	},
 /area/owlery/office)
 "mx" = (
@@ -5418,14 +5419,14 @@
 /area/owlery/gangzone)
 "my" = (
 /turf/unsimulated/floor/yellowblack{
-	dir = 4;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "mz" = (
 /turf/unsimulated/floor/yellowblack{
-	dir = 8;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "mA" = (
@@ -5442,8 +5443,8 @@
 /area/owlery/office)
 "mC" = (
 /obj/decal/tile_edge/line/blue{
-	dir = 4;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 4
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
@@ -5451,26 +5452,26 @@
 /area/shuttle/spacebus)
 "mD" = (
 /obj/machinery/sleeper{
-	dir = 8;
-	icon_state = "sleeper"
+	icon_state = "sleeper";
+	dir = 8
 	},
 /turf/unsimulated/floor/white,
 /area/shuttle/spacebus)
 "mE" = (
 /obj/machinery/sleeper{
-	dir = 4;
-	icon_state = "sleeper"
+	icon_state = "sleeper";
+	dir = 4
 	},
 /turf/unsimulated/floor/white,
 /area/shuttle/spacebus)
 "mF" = (
 /obj/decal/tile_edge/line/blue{
-	dir = 4;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 4
 	},
 /obj/decal/tile_edge/line/blue{
-	dir = 8;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 8
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
@@ -5478,8 +5479,8 @@
 /area/shuttle/spacebus)
 "mG" = (
 /obj/decal/tile_edge/line/blue{
-	dir = 8;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 8
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
@@ -5487,43 +5488,43 @@
 /area/shuttle/spacebus)
 "mH" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 8;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 8
 	},
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "drip5"
 	},
 /obj/machinery/vending/fortune,
 /turf/unsimulated/floor/greenwhite{
-	dir = 9;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 9
 	},
 /area/owlery/owleryhall)
 "mI" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 8;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 8
 	},
 /turf/unsimulated/floor/greenwhite/corner{
-	dir = 1;
-	icon_state = "greenwhitecorner"
+	icon_state = "greenwhitecorner";
+	dir = 1
 	},
 /area/owlery/owleryhall)
 "mJ" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 8;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 8
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "mK" = (
 /obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon_state = "diagonalWall3"
+	icon_state = "diagonalWall3";
+	dir = 5
 	},
 /obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir-b"
+	icon_state = "lattice-dir-b";
+	dir = 1
 	},
 /turf/space,
 /area/shuttle/spacebus)
@@ -5563,18 +5564,18 @@
 	name = "exhibit window"
 	},
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/mic_stand,
 /turf/unsimulated/floor/wood/two,
 /area/owlery/owleryhall)
 "mP" = (
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/disposalpipe/segment,
 /turf/unsimulated/floor/white,
@@ -5591,8 +5592,8 @@
 /area/owlery/owleryhall)
 "mS" = (
 /turf/unsimulated/floor/greenwhite/corner{
-	dir = 8;
-	icon_state = "greenwhitecorner"
+	icon_state = "greenwhitecorner";
+	dir = 8
 	},
 /area/owlery/owleryhall)
 "mT" = (
@@ -5602,8 +5603,8 @@
 	},
 /obj/grille,
 /turf/unsimulated/floor/greenwhite{
-	dir = 1;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 1
 	},
 /area/owlery/owleryhall)
 "mU" = (
@@ -5620,12 +5621,12 @@
 /area/owlery/office)
 "mW" = (
 /obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon_state = "wall3_trans"
+	icon_state = "wall3_trans";
+	dir = 4
 	},
 /obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir-b"
+	icon_state = "lattice-dir-b";
+	dir = 1
 	},
 /turf/space,
 /area/shuttle/spacebus)
@@ -5638,8 +5639,8 @@
 /area/owlery/office)
 "mY" = (
 /turf/unsimulated/floor/arrival{
-	dir = 1;
-	icon_state = "arrival"
+	icon_state = "arrival";
+	dir = 1
 	},
 /area/owlery/Owlopen)
 "mZ" = (
@@ -5653,8 +5654,8 @@
 /obj/table/reinforced/bar/auto,
 /obj/item/dice/magic8ball,
 /turf/unsimulated/floor/wizard/carpet/edge{
-	dir = 6;
-	icon_state = "carpet_edge"
+	icon_state = "carpet_edge";
+	dir = 6
 	},
 /area/owlery/office)
 "nb" = (
@@ -5676,21 +5677,21 @@
 /obj/decal/cleanable/greenpuke,
 /obj/critter/madnessowl/gun,
 /turf/unsimulated/floor/yellowblack{
-	dir = 6;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 6
 	},
 /area/owlery/gangzone)
 "ne" = (
 /turf/unsimulated/floor/yellowblack{
-	dir = 10;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 10
 	},
 /area/owlery/gangzone)
 "nf" = (
 /obj/decal/cleanable/eggsplat,
 /turf/unsimulated/floor/yellowblack/corner{
-	dir = 4;
-	icon_state = "yellowblackcorner"
+	icon_state = "yellowblackcorner";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "ng" = (
@@ -5705,8 +5706,8 @@
 /area/owlery/office)
 "ni" = (
 /obj/decal/tile_edge/line/blue{
-	dir = 1;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
@@ -5766,18 +5767,18 @@
 "nq" = (
 /obj/disposalpipe/segment,
 /turf/unsimulated/floor/stairs/quilty{
-	dir = 4;
-	icon_state = "quiltystair"
+	icon_state = "quiltystair";
+	dir = 4
 	},
 /area/owlery/owleryhall)
 "nr" = (
 /obj/stool/chair/wooden{
-	dir = 4;
-	icon_state = "chair_wooden"
+	icon_state = "chair_wooden";
+	dir = 4
 	},
 /turf/unsimulated/floor/wizard/carpet/edge{
-	dir = 4;
-	icon_state = "carpet_edge"
+	icon_state = "carpet_edge";
+	dir = 4
 	},
 /area/owlery/office)
 "ns" = (
@@ -5792,13 +5793,13 @@
 "nt" = (
 /obj/item/surgical_spoon,
 /obj/stool/chair/couch{
-	dir = 9;
-	icon_state = "chair_couch-brown"
+	icon_state = "chair_couch-brown";
+	dir = 9
 	},
 /obj/fluid_spawner/polluted_filth/madness,
 /turf/unsimulated/floor/yellowblack{
-	dir = 4;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "nu" = (
@@ -5820,14 +5821,14 @@
 /obj/item/ticket/golden,
 /obj/item/ticket/golden,
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "nv" = (
 /obj/item/storage/wall/medical{
-	dir = 8;
-	icon_state = "minimed"
+	icon_state = "minimed";
+	dir = 8
 	},
 /turf/unsimulated/wall/auto/reinforced,
 /area/owlery/office)
@@ -5847,8 +5848,8 @@
 /area/owlery/gangzone)
 "ny" = (
 /turf/unsimulated/floor/yellowblack{
-	dir = 6;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 6
 	},
 /area/owlery/gangzone)
 "nz" = (
@@ -5857,8 +5858,8 @@
 "nA" = (
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/yellowblack{
-	dir = 10;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 10
 	},
 /area/owlery/gangzone)
 "nB" = (
@@ -5867,14 +5868,14 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/yellowblack/corner{
-	dir = 4;
-	icon_state = "yellowblackcorner"
+	icon_state = "yellowblackcorner";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "nC" = (
 /obj/stool/chair/couch/red{
-	dir = 9;
-	icon_state = "chair_couch-red"
+	icon_state = "chair_couch-red";
+	dir = 9
 	},
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibmid1"
@@ -5883,8 +5884,8 @@
 /area/owlery/staffhall)
 "nD" = (
 /obj/stool/chair/couch/red{
-	dir = 5;
-	icon_state = "chair_couch-red"
+	icon_state = "chair_couch-red";
+	dir = 5
 	},
 /obj/item/raw_material/shard/glass,
 /turf/unsimulated/floor/wood/two,
@@ -5951,17 +5952,17 @@
 /area/owlery/owllock)
 "nL" = (
 /obj/machinery/door/airlock/pyro/command{
-	dir = 8;
-	icon_state = "com_closed"
+	icon_state = "com_closed";
+	dir = 8
 	},
 /obj/access_spawn/owlcommand,
 /turf/unsimulated/floor/black,
 /area/owlery/office)
 "nM" = (
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/unsimulated/floor/specialroom/arcade,
 /area/owlery/owllock)
@@ -5994,21 +5995,21 @@
 /area/owlery/owllock)
 "nR" = (
 /obj/machinery/bathtub{
-	anchored = 1;
+	icon_state = "bathtub";
 	dir = 8;
-	icon_state = "bathtub"
+	anchored = 1
 	},
 /obj/fluid_spawner/polluted_filth/madness,
 /obj/decal/cleanable/urine,
 /turf/unsimulated/floor/yellowblack{
-	dir = 8;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "nS" = (
 /turf/unsimulated/floor/stairs/quilty{
-	dir = 4;
-	icon_state = "quiltystair"
+	icon_state = "quiltystair";
+	dir = 4
 	},
 /area/owlery/office)
 "nT" = (
@@ -6027,14 +6028,14 @@
 /area/owlery/office)
 "nW" = (
 /turf/unsimulated/floor/stairs/dark{
-	dir = 4;
-	icon_state = "dark_stairs"
+	icon_state = "dark_stairs";
+	dir = 4
 	},
 /area/owlery/office)
 "nX" = (
 /turf/unsimulated/floor/wizard/carpet/edge{
-	dir = 9;
-	icon_state = "carpet_edge"
+	icon_state = "carpet_edge";
+	dir = 9
 	},
 /area/owlery/office)
 "nY" = (
@@ -6049,8 +6050,8 @@
 /obj/decal/cleanable/machine_debris,
 /obj/critter/roach,
 /turf/unsimulated/floor/yellowblack{
-	dir = 6;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 6
 	},
 /area/owlery/gangzone)
 "oa" = (
@@ -6068,14 +6069,14 @@
 "od" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/unsimulated/floor/yellowblack/corner{
-	dir = 4;
-	icon_state = "yellowblackcorner"
+	icon_state = "yellowblackcorner";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "oe" = (
 /turf/unsimulated/floor/wizard/carpet/edge{
-	dir = 1;
-	icon_state = "carpet_edge"
+	icon_state = "carpet_edge";
+	dir = 1
 	},
 /area/owlery/office)
 "of" = (
@@ -6083,28 +6084,28 @@
 /area/owlery/office)
 "og" = (
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/pyro/security{
-	dir = 8;
-	icon_state = "sec_closed"
+	icon_state = "sec_closed";
+	dir = 8
 	},
 /obj/access_spawn/owlsecurity,
 /turf/unsimulated/floor/redblack/corner{
-	dir = 4;
-	icon_state = "redblackcorner"
+	icon_state = "redblackcorner";
+	dir = 4
 	},
 /area/owlery/Owlopen)
 "oh" = (
 /obj/decal/tile_edge/line/blue{
-	dir = 9;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 9
 	},
 /obj/decal/tile_edge/line/blue{
-	dir = 5;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 5
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
@@ -6119,8 +6120,8 @@
 	tag = ""
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 10;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 10
 	},
 /area/owlery/owleryhall)
 "oj" = (
@@ -6136,14 +6137,14 @@
 /area/owlery/owleryhall)
 "ol" = (
 /turf/unsimulated/floor/greenwhite/corner{
-	dir = 4;
-	icon_state = "greenwhitecorner"
+	icon_state = "greenwhitecorner";
+	dir = 4
 	},
 /area/owlery/owleryhall)
 "om" = (
 /obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 1
 	},
 /obj/decal/stage_edge,
 /turf/unsimulated/floor/white,
@@ -6181,8 +6182,8 @@
 /area/owlery/owleryhall)
 "op" = (
 /obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 1
 	},
 /obj/decal/stage_edge,
 /obj/loudspeaker,
@@ -6193,12 +6194,12 @@
 /area/owlery/owleryhall)
 "or" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 4
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 6;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 6
 	},
 /area/owlery/owleryhall)
 "os" = (
@@ -6207,8 +6208,8 @@
 /area/owlery/owleryhall)
 "ot" = (
 /turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6;
-	icon_state = "rwindow"
+	icon_state = "rwindow";
+	dir = 6
 	},
 /area/owlery/office)
 "ou" = (
@@ -6224,16 +6225,16 @@
 	tag = ""
 	},
 /turf/unsimulated/floor/wizard/carpet/edge{
-	dir = 8;
-	icon_state = "carpet_edge"
+	icon_state = "carpet_edge";
+	dir = 8
 	},
 /area/owlery/office)
 "ow" = (
 /obj/table/wood/auto/desk,
 /obj/random_item_spawner/desk_stuff,
 /turf/unsimulated/floor/wizard/carpet/edge{
-	dir = 1;
-	icon_state = "carpet_edge"
+	icon_state = "carpet_edge";
+	dir = 1
 	},
 /area/owlery/office)
 "ox" = (
@@ -6256,8 +6257,8 @@
 "oz" = (
 /obj/critter/madnessowl/gun,
 /turf/unsimulated/floor/yellowblack{
-	dir = 10;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 10
 	},
 /area/owlery/gangzone)
 "oA" = (
@@ -6284,8 +6285,8 @@
 "oE" = (
 /obj/decal/cleanable/paper,
 /turf/unsimulated/floor/yellowblack{
-	dir = 10;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 10
 	},
 /area/owlery/gangzone)
 "oF" = (
@@ -6295,8 +6296,8 @@
 	network = "Zeta"
 	},
 /turf/unsimulated/floor/yellowblack/corner{
-	dir = 4;
-	icon_state = "yellowblackcorner"
+	icon_state = "yellowblackcorner";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "oG" = (
@@ -6307,8 +6308,8 @@
 /area/owlery/owleryhall)
 "oH" = (
 /turf/unsimulated/floor/greenwhite{
-	dir = 10;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 10
 	},
 /area/owlery/owleryhall)
 "oI" = (
@@ -6317,15 +6318,15 @@
 "oJ" = (
 /obj/machinery/vending/cigarette,
 /obj/decal/tile_edge/line/grey{
-	dir = 4;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 4
 	},
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
 "oK" = (
 /obj/machinery/door/airlock/pyro/command{
-	dir = 8;
-	icon_state = "com_closed"
+	icon_state = "com_closed";
+	dir = 8
 	},
 /obj/access_spawn/owlcommand,
 /turf/unsimulated/floor/carpet/grime,
@@ -6337,8 +6338,8 @@
 "oM" = (
 /obj/stool/bench/green/auto,
 /turf/unsimulated/floor/greenwhite{
-	dir = 6;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 6
 	},
 /area/owlery/owleryhall)
 "oN" = (
@@ -6347,18 +6348,18 @@
 	network = "Owlery"
 	},
 /turf/unsimulated/floor/wizard/carpet/edge{
-	dir = 5;
-	icon_state = "carpet_edge"
+	icon_state = "carpet_edge";
+	dir = 5
 	},
 /area/owlery/office)
 "oO" = (
 /obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon_state = "diagonalWall3"
+	icon_state = "diagonalWall3";
+	dir = 5
 	},
 /obj/lattice{
-	dir = 2;
-	icon_state = "lattice-dir"
+	icon_state = "lattice-dir";
+	dir = 2
 	},
 /turf/space,
 /area/shuttle/spacebus)
@@ -6374,8 +6375,8 @@
 /area/shuttle/spacebus)
 "oQ" = (
 /obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "diagonalWall3";
+	dir = 8
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
@@ -6391,8 +6392,8 @@
 "oS" = (
 /obj/critter/madnessowl/switchblade,
 /turf/unsimulated/floor/yellowblack{
-	dir = 6;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 6
 	},
 /area/owlery/gangzone)
 "oT" = (
@@ -6405,7 +6406,7 @@
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "oV" = (
-/obj/reagent_dispensers/cleanable/ants,
+/obj/reagent_dispensers/ants,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "oW" = (
@@ -6415,8 +6416,8 @@
 "oX" = (
 /obj/item/reagent_containers/food/snacks/popcorn,
 /turf/unsimulated/floor/yellowblack{
-	dir = 10;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 10
 	},
 /area/owlery/gangzone)
 "oY" = (
@@ -6432,8 +6433,8 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/yellowblack/corner{
-	dir = 4;
-	icon_state = "yellowblackcorner"
+	icon_state = "yellowblackcorner";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "oZ" = (
@@ -6446,8 +6447,8 @@
 	name = "docking clamp"
 	},
 /obj/lattice{
-	dir = 9;
-	icon_state = "lattice-dir"
+	icon_state = "lattice-dir";
+	dir = 9
 	},
 /turf/space,
 /area/space)
@@ -6506,8 +6507,8 @@
 	pixel_y = 0
 	},
 /turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6;
-	icon_state = "rwindow"
+	icon_state = "rwindow";
+	dir = 6
 	},
 /area/owlery/owleryhall)
 "ph" = (
@@ -6519,8 +6520,8 @@
 	pixel_y = 0
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 8;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 8
 	},
 /area/owlery/owleryhall)
 "pi" = (
@@ -6543,9 +6544,9 @@
 /area/owlery/owleryhall)
 "pk" = (
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/pyro/glass/command,
 /obj/access_spawn/owlcommand,
@@ -6562,19 +6563,19 @@
 /obj/decal/cleanable/blood/tracks,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /turf/unsimulated/floor/greenwhite{
-	dir = 8;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 8
 	},
 /area/owlery/owleryhall)
 "pn" = (
 /obj/stool/bench/green/auto,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 4
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 6;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 6
 	},
 /area/owlery/owleryhall)
 "po" = (
@@ -6583,14 +6584,14 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /turf/unsimulated/floor/greenwhite{
-	dir = 4;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 4
 	},
 /area/owlery/owleryhall)
 "pp" = (
 /obj/machinery/door/airlock/pyro{
-	dir = 8;
-	icon_state = "generic_closed"
+	icon_state = "generic_closed";
+	dir = 8
 	},
 /obj/access_spawn/owlcommand,
 /turf/unsimulated/floor/sanitary/blue,
@@ -6599,30 +6600,30 @@
 /obj/item/suture,
 /obj/fluid_spawner/polluted_filth/madness,
 /turf/unsimulated/floor/yellowblack/corner{
-	dir = 8;
-	icon_state = "yellowblackcorner"
+	icon_state = "yellowblackcorner";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "pr" = (
 /obj/stool/chair/couch{
-	dir = 6;
-	icon_state = "chair_couch-brown"
+	icon_state = "chair_couch-brown";
+	dir = 6
 	},
 /obj/item/reagent_containers/food/snacks/popcorn,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "ps" = (
 /obj/stool/chair/couch{
-	dir = 5;
-	icon_state = "chair_couch-brown"
+	icon_state = "chair_couch-brown";
+	dir = 5
 	},
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "pt" = (
 /obj/item/reagent_containers/vending/bag/random,
 /obj/stool/chair{
-	dir = 4;
-	icon_state = "chair"
+	icon_state = "chair";
+	dir = 4
 	},
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
@@ -6651,27 +6652,27 @@
 /area/owlery/gangzone)
 "py" = (
 /obj/stool/chair/couch{
-	dir = 9;
-	icon_state = "chair_couch-brown"
+	icon_state = "chair_couch-brown";
+	dir = 9
 	},
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "pz" = (
 /obj/stool/chair/couch{
-	dir = 6;
-	icon_state = "chair_couch-brown"
+	icon_state = "chair_couch-brown";
+	dir = 6
 	},
 /obj/critter/madnessowl/switchblade,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "pA" = (
 /obj/stool/chair/couch{
-	dir = 5;
-	icon_state = "chair_couch-brown"
+	icon_state = "chair_couch-brown";
+	dir = 5
 	},
 /turf/unsimulated/floor/yellowblack{
-	dir = 8;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "pB" = (
@@ -6688,8 +6689,8 @@
 /area/owlery/Owlmait)
 "pD" = (
 /obj/machinery/power/terminal{
-	dir = 8;
-	icon_state = "term"
+	icon_state = "term";
+	dir = 8
 	},
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -6709,8 +6710,8 @@
 /area/owlery/owleryhall)
 "pG" = (
 /obj/decal/tile_edge/line/grey{
-	dir = 4;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 4
 	},
 /turf/unsimulated/floor/green/checker,
 /area/owlery/owleryhall)
@@ -6743,8 +6744,8 @@
 	name = "smelly space owl"
 	},
 /turf/unsimulated/floor/yellowblack{
-	dir = 4;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "pL" = (
@@ -6786,12 +6787,12 @@
 /area/owlery/owllock)
 "pR" = (
 /obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon_state = "wall3_trans"
+	icon_state = "wall3_trans";
+	dir = 4
 	},
 /obj/lattice{
-	dir = 2;
-	icon_state = "lattice-dir"
+	icon_state = "lattice-dir";
+	dir = 2
 	},
 /turf/space,
 /area/shuttle/spacebus)
@@ -6800,23 +6801,23 @@
 /area/owlery/office)
 "pT" = (
 /obj/machinery/door/airlock/pyro/glass/command{
-	dir = 8;
-	icon_state = "com_glass_closed"
+	icon_state = "com_glass_closed";
+	dir = 8
 	},
 /obj/access_spawn/owlcommand,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "pU" = (
 /obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir-b"
+	icon_state = "lattice-dir-b";
+	dir = 1
 	},
 /turf/space,
 /area/shuttle/spacebus)
 "pV" = (
 /obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon_state = "diagonalWall3"
+	icon_state = "diagonalWall3";
+	dir = 5
 	},
 /turf/space,
 /area/shuttle/spacebus)
@@ -6826,8 +6827,8 @@
 /area/owlery/office)
 "pX" = (
 /obj/indestructible/shuttle_corner{
-	dir = 1;
-	icon_state = "diagonalWall3"
+	icon_state = "diagonalWall3";
+	dir = 1
 	},
 /obj/decal/cleanable/dirt,
 /obj/reagent_dispensers/beerkeg,
@@ -6841,18 +6842,18 @@
 /area/owlery/Owlmait)
 "pZ" = (
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	icon_state = "windoor_closed"
+	icon_state = "windoor_closed";
+	dir = 1
 	},
 /turf/unsimulated/floor/stairs/quilty{
-	dir = 1;
-	icon_state = "quiltystair"
+	icon_state = "quiltystair";
+	dir = 1
 	},
 /area/owlery/owllock)
 "qa" = (
 /obj/machinery/door/airlock/pyro/alt{
-	dir = 8;
-	icon_state = "generic2_closed"
+	icon_state = "generic2_closed";
+	dir = 8
 	},
 /turf/unsimulated/floor/green/checker,
 /area/owlery/Owlmait)
@@ -6869,8 +6870,8 @@
 	reinf = 1
 	},
 /turf/unsimulated/floor/redblack/corner{
-	dir = 4;
-	icon_state = "redblackcorner"
+	icon_state = "redblackcorner";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "qd" = (
@@ -6889,8 +6890,8 @@
 /area/owlery/Owlmait)
 "qe" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /obj/disposalpipe/segment,
 /turf/unsimulated/floor/green/checker,
@@ -6898,8 +6899,8 @@
 "qf" = (
 /obj/item/casing/small,
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /turf/unsimulated/floor/green/checker,
 /area/owlery/owleryhall)
@@ -6908,26 +6909,26 @@
 	icon_state = "u_ketchup"
 	},
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibarm"
 	},
 /obj/decal/tile_edge/line/grey{
-	dir = 4;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 4
 	},
 /turf/unsimulated/floor/green/checker,
 /area/owlery/owleryhall)
 "qh" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 5;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 5
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 8;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 8
 	},
 /area/owlery/owleryhall)
 "qi" = (
@@ -6952,8 +6953,8 @@
 /area/owlery/owleryhall)
 "ql" = (
 /turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6;
-	icon_state = "rwindow"
+	icon_state = "rwindow";
+	dir = 6
 	},
 /area/owlery/owllock)
 "qm" = (
@@ -6963,10 +6964,10 @@
 "qn" = (
 /obj/item/storage/pill_bottle/cyberpunk,
 /obj/decal/cleanable/dirt,
-/obj/reagent_dispensers/cleanable/ants,
+/obj/reagent_dispensers/ants,
 /turf/unsimulated/floor/yellowblack{
-	dir = 5;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 5
 	},
 /area/owlery/gangzone)
 "qo" = (
@@ -6998,8 +6999,8 @@
 "qs" = (
 /obj/critter/roach,
 /turf/unsimulated/floor/yellowblack{
-	dir = 9;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 9
 	},
 /area/owlery/gangzone)
 "qt" = (
@@ -7009,20 +7010,20 @@
 	pixel_y = 10
 	},
 /turf/unsimulated/floor/yellowblack/corner{
-	dir = 1;
-	icon_state = "yellowblackcorner"
+	icon_state = "yellowblackcorner";
+	dir = 1
 	},
 /area/owlery/gangzone)
 "qu" = (
 /turf/unsimulated/floor/wizard/carpet/edge{
-	dir = 8;
-	icon_state = "carpet_edge"
+	icon_state = "carpet_edge";
+	dir = 8
 	},
 /area/owlery/office)
 "qv" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
@@ -7062,8 +7063,8 @@
 	},
 /obj/decal/cleanable/blood/tracks,
 /turf/unsimulated/floor/greenwhite{
-	dir = 8;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 8
 	},
 /area/owlery/owleryhall)
 "qA" = (
@@ -7075,14 +7076,15 @@
 "qB" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	dir = 2;
+	dir = 1;
 	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
+	icon_state = "plant";
+	dir = 2
 	},
 /obj/disposalpipe/segment,
 /turf/unsimulated/floor/greenwhite{
-	dir = 6;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 6
 	},
 /area/owlery/owleryhall)
 "qC" = (
@@ -7111,8 +7113,8 @@
 /area/owlery/owllock)
 "qG" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 4
 	},
 /obj/shrub{
 	dir = 4;
@@ -7129,21 +7131,21 @@
 	dir = 8
 	},
 /turf/unsimulated/floor/yellowblack/corner{
-	dir = 8;
-	icon_state = "yellowblackcorner"
+	icon_state = "yellowblackcorner";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "qI" = (
 /turf/unsimulated/floor/yellowblack{
-	dir = 1;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 1
 	},
 /area/owlery/gangzone)
 "qJ" = (
 /obj/item/raw_material/shard,
 /turf/unsimulated/floor/yellowblack{
-	dir = 1;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 1
 	},
 /area/owlery/gangzone)
 "qK" = (
@@ -7151,14 +7153,14 @@
 /obj/burning_barrel,
 /obj/map/light/lava,
 /turf/unsimulated/floor/yellowblack{
-	dir = 1;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 1
 	},
 /area/owlery/gangzone)
 "qL" = (
 /turf/unsimulated/floor/yellowblack{
-	dir = 5;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 5
 	},
 /area/owlery/gangzone)
 "qM" = (
@@ -7166,16 +7168,16 @@
 	icon_state = "gibleg"
 	},
 /turf/unsimulated/floor/yellowblack{
-	dir = 9;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 9
 	},
 /area/owlery/gangzone)
 "qN" = (
 /obj/burning_barrel,
 /obj/map/light/lava,
 /turf/unsimulated/floor/yellowblack{
-	dir = 1;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 1
 	},
 /area/owlery/gangzone)
 "qO" = (
@@ -7184,8 +7186,8 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/yellowblack/corner{
-	dir = 1;
-	icon_state = "yellowblackcorner"
+	icon_state = "yellowblackcorner";
+	dir = 1
 	},
 /area/owlery/gangzone)
 "qP" = (
@@ -7209,8 +7211,8 @@
 /area/owlery/owleryhall)
 "qS" = (
 /obj/machinery/door/airlock/pyro/command/alt{
-	dir = 8;
-	icon_state = "com2_closed"
+	icon_state = "com2_closed";
+	dir = 8
 	},
 /obj/access_spawn/owlcommand,
 /turf/unsimulated/floor/black,
@@ -7230,31 +7232,31 @@
 /area/owlery/owleryhall)
 "qV" = (
 /obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+	icon_state = "pipe-c";
+	dir = 2
 	},
 /turf/unsimulated/wall/auto/reinforced,
 /area/owlery/owleryhall)
 "qW" = (
 /obj/stool/chair/couch/green{
-	dir = 9;
-	icon_state = "chair_couch-green"
+	icon_state = "chair_couch-green";
+	dir = 9
 	},
 /obj/critter/madnessowl,
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "qX" = (
 /obj/stool/chair/couch/green{
-	dir = 5;
-	icon_state = "chair_couch-green"
+	icon_state = "chair_couch-green";
+	dir = 5
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "qY" = (
 /obj/item/reagent_containers/food/snacks/granola_bar,
 /obj/stool/chair/couch/green{
-	dir = 9;
-	icon_state = "chair_couch-green"
+	icon_state = "chair_couch-green";
+	dir = 9
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -7298,17 +7300,17 @@
 /area/owlery/Owlmait)
 "rd" = (
 /turf/unsimulated/floor/carpet{
-	dir = 6;
+	tag = "icon-fblue2 (NORTHWEST)";
 	icon_state = "fblue5";
-	tag = "icon-fblue2 (NORTHWEST)"
+	dir = 6
 	},
 /area/owlery/owleryhall)
 "re" = (
 /obj/item/raw_material/shard,
 /obj/item/rods,
 /turf/unsimulated/floor/redblack/corner{
-	dir = 4;
-	icon_state = "redblackcorner"
+	icon_state = "redblackcorner";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "rf" = (
@@ -7323,8 +7325,8 @@
 /obj/item/storage/pill_bottle/bathsalts,
 /obj/critter/madnessowl/gun,
 /turf/unsimulated/floor/yellowblack{
-	dir = 6;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 6
 	},
 /area/owlery/gangzone)
 "rh" = (
@@ -7335,9 +7337,9 @@
 /area/owlery/Owlmait)
 "ri" = (
 /obj/cable{
+	icon_state = "2-8";
 	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 8
 	},
 /turf/unsimulated/floor/engine,
 /area/owlery/Owlmait)
@@ -7363,8 +7365,8 @@
 	id = "owlerydoors"
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 8;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 8
 	},
 /area/owlery/owleryhall)
 "rm" = (
@@ -7378,14 +7380,14 @@
 	id = "owlerydoors"
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 4;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 4
 	},
 /area/owlery/owleryhall)
 "rn" = (
 /obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir"
+	icon_state = "lattice-dir";
+	dir = 1
 	},
 /obj/disposalpipe/segment,
 /turf/space,
@@ -7429,10 +7431,10 @@
 /area/owlery/Owlmait)
 "rs" = (
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 8;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 8
 	},
 /obj/decal/fakeobjects/pipe{
 	density = 1;
@@ -7445,10 +7447,10 @@
 /area/owlery/Owlmait)
 "rt" = (
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 8;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 8
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
@@ -7488,8 +7490,8 @@
 /obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
 /obj/item/raw_material/shard,
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "rw" = (
@@ -7503,34 +7505,34 @@
 "rx" = (
 /obj/item/raw_material/shard,
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "ry" = (
 /obj/lattice{
-	dir = 5;
-	icon_state = "lattice-dir-b"
+	icon_state = "lattice-dir-b";
+	dir = 5
 	},
 /turf/space,
 /area/space)
 "rz" = (
 /obj/lattice{
-	dir = 9;
-	icon_state = "lattice-dir-b"
+	icon_state = "lattice-dir-b";
+	dir = 9
 	},
 /turf/space,
 /area/space)
 "rA" = (
 /turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6;
-	icon_state = "rwindow"
+	icon_state = "rwindow";
+	dir = 6
 	},
 /area/owlery/Owlmait)
 "rB" = (
 /obj/stool/chair/yellow{
-	dir = 8;
-	icon_state = "chair-y"
+	icon_state = "chair-y";
+	dir = 8
 	},
 /turf/unsimulated/floor/engine,
 /area/owlery/Owlmait)
@@ -7539,9 +7541,9 @@
 	icon_state = "1-4"
 	},
 /obj/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/unsimulated/floor/engine,
 /area/owlery/Owlmait)
@@ -7562,8 +7564,8 @@
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 4;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 4
 	},
 /area/owlery/owleryhall)
 "rG" = (
@@ -7614,17 +7616,17 @@
 	icon_state = "bedsheet-yellow"
 	},
 /obj/decal/skeleton{
+	name = "decomposed corpse";
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	name = "decomposed corpse"
+	icon_state = "body3"
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "rL" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 4
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -7634,19 +7636,19 @@
 /area/owlery/Owlmait)
 "rN" = (
 /obj/computerframe{
-	anchored = 1;
+	name = "smashed computer";
 	desc = "It is highly unlikely that this still works.";
-	dir = 4;
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
-	name = "smashed computer"
+	dir = 4;
+	anchored = 1
 	},
 /turf/unsimulated/floor/caution/west,
 /area/owlery/Owlmait)
 "rO" = (
 /obj/stool/chair{
-	dir = 8;
-	icon_state = "chair"
+	icon_state = "chair";
+	dir = 8
 	},
 /turf/simulated/floor/airless/grime,
 /area/owlery/Owlmait)
@@ -7662,15 +7664,15 @@
 	icon_state = "gibup1"
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "rR" = (
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/yellowblack{
-	dir = 4;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "rS" = (
@@ -7678,14 +7680,14 @@
 	icon_state = "gibbl2"
 	},
 /turf/unsimulated/floor/yellowblack{
-	dir = 8;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "rT" = (
 /obj/machinery/door/airlock/pyro/maintenance{
-	dir = 8;
-	icon_state = "maint_closed"
+	icon_state = "maint_closed";
+	dir = 8
 	},
 /obj/access_spawn/owlmaint,
 /turf/unsimulated/floor/green,
@@ -7719,14 +7721,14 @@
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 4;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 4
 	},
 /area/owlery/owleryhall)
 "rY" = (
 /obj/machinery/door/airlock/pyro/security{
-	dir = 8;
-	icon_state = "sec_closed"
+	icon_state = "sec_closed";
+	dir = 8
 	},
 /obj/access_spawn/owlsecurity,
 /turf/unsimulated/floor/black,
@@ -7742,8 +7744,8 @@
 /area/owlery/owllock)
 "sa" = (
 /obj/river{
-	dir = 9;
-	icon_state = "river"
+	icon_state = "river";
+	dir = 9
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -7755,15 +7757,15 @@
 /area/owlery/owllock)
 "sc" = (
 /obj/river{
-	dir = 5;
-	icon_state = "river"
+	icon_state = "river";
+	dir = 5
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "sd" = (
 /obj/shrub{
-	dir = 6;
-	icon_state = "shrub"
+	icon_state = "shrub";
+	dir = 6
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -7817,15 +7819,15 @@
 	dir = 8
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "sj" = (
 /obj/critter/roach,
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "sk" = (
@@ -7837,8 +7839,8 @@
 "sl" = (
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "sm" = (
@@ -7849,8 +7851,8 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "sn" = (
@@ -7861,9 +7863,9 @@
 /area/owlery/Owlmait)
 "so" = (
 /obj/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/machinery/door/airlock/pyro/classic{
 	locked = 1
@@ -7879,20 +7881,20 @@
 /area/owlery/owleryhall)
 "sq" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /turf/unsimulated/floor/greenwhite,
 /area/owlery/owleryhall)
 "sr" = (
 /obj/decal/cleanable/blood,
 /obj/decal/cleanable/blood/tracks{
-	dir = 6;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 6
 	},
 /turf/unsimulated/floor/greenwhite/corner{
-	dir = 4;
-	icon_state = "greenwhitecorner"
+	icon_state = "greenwhitecorner";
+	dir = 4
 	},
 /area/owlery/owleryhall)
 "ss" = (
@@ -7957,24 +7959,24 @@
 /area/owlery/owllock)
 "sw" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 8;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 8
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "sx" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 5;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 5
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "sy" = (
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 1;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 1
 	},
 /obj/grille/catwalk{
 	dir = 4
@@ -7991,8 +7993,8 @@
 /area/owlery/owllock)
 "sA" = (
 /obj/river{
-	dir = 10;
-	icon_state = "river"
+	icon_state = "river";
+	dir = 10
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -8005,23 +8007,23 @@
 	name = "grimy vent"
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "sC" = (
 /obj/decal/cleanable/blood/drip/high,
 /obj/critter/madnessowl/switchblade,
 /turf/unsimulated/floor/yellowblack{
-	dir = 4;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "sD" = (
 /obj/critter/roach,
 /turf/unsimulated/floor/yellowblack{
-	dir = 8;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "sE" = (
@@ -8030,8 +8032,8 @@
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "sF" = (
@@ -8042,14 +8044,14 @@
 	icon_state = "gibarm"
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "sG" = (
 /turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6;
-	icon_state = "rwindow"
+	icon_state = "rwindow";
+	dir = 6
 	},
 /area/owlery/gangzone)
 "sH" = (
@@ -8066,9 +8068,9 @@
 /area/owlery/Owlmait)
 "sJ" = (
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/decal/glow{
 	anchored = 1;
@@ -8084,19 +8086,19 @@
 	pixel_y = 30
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 1;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 1
 	},
 /area/owlery/owleryhall)
 "sK" = (
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 1;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 1
 	},
 /area/owlery/owleryhall)
 "sL" = (
@@ -8117,14 +8119,14 @@
 	},
 /obj/disposalpipe/segment,
 /turf/unsimulated/floor/greenwhite{
-	dir = 1;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 1
 	},
 /area/owlery/owleryhall)
 "sM" = (
 /turf/unsimulated/floor/greenwhite{
-	dir = 5;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 5
 	},
 /area/owlery/owleryhall)
 "sN" = (
@@ -8167,8 +8169,8 @@
 /area/owlery/owllock)
 "sQ" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 10;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 10
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -8199,9 +8201,9 @@
 /area/owlery/owllock)
 "sT" = (
 /obj/cable{
+	icon_state = "4-8";
 	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d2 = 8
 	},
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4;
@@ -8240,8 +8242,8 @@
 	name = "exhibit window"
 	},
 /obj/river{
-	dir = 5;
-	icon_state = "river"
+	icon_state = "river";
+	dir = 5
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -8255,16 +8257,16 @@
 /area/owlery/owllock)
 "sY" = (
 /obj/river{
-	dir = 10;
-	icon_state = "river"
+	icon_state = "river";
+	dir = 10
 	},
 /obj/decal/cleanable/eggsplat,
 /turf/unsimulated/grass,
 /area/owlery/Owlmait)
 "sZ" = (
 /obj/river{
-	dir = 5;
-	icon_state = "river"
+	icon_state = "river";
+	dir = 5
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/grass,
@@ -8287,15 +8289,15 @@
 	name = "gross organs"
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "tc" = (
 /obj/decal/cleanable/blood/gibs/body,
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "td" = (
@@ -8314,29 +8316,29 @@
 	name = "Gutted Corpse"
 	},
 /turf/unsimulated/floor/yellowblack{
-	dir = 4;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "te" = (
 /obj/critter/madnessowl/switchblade,
 /turf/unsimulated/floor/yellowblack{
-	dir = 8;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "tf" = (
 /obj/decal/cleanable/blood/splatter,
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "tg" = (
 /obj/item/paper/book/space_law,
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "th" = (
@@ -8357,18 +8359,18 @@
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 9;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 9
 	},
 /area/owlery/owleryhall)
 "ti" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 10;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 10
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 1;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 1
 	},
 /area/owlery/owleryhall)
 "tj" = (
@@ -8376,13 +8378,13 @@
 	icon_state = "floor6"
 	},
 /obj/stool/chair/office/red{
-	dir = 4;
-	icon_state = "office_chair_red"
+	icon_state = "office_chair_red";
+	dir = 4
 	},
 /obj/machinery/light_switch/north,
 /turf/unsimulated/floor/redblack{
-	dir = 1;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 1
 	},
 /area/owlery/owleryhall)
 "tk" = (
@@ -8394,19 +8396,19 @@
 	},
 /obj/machinery/recharger,
 /obj/machinery/light/emergency{
-	dir = 1;
-	icon_state = "ebulb1"
+	icon_state = "ebulb1";
+	dir = 1
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 5;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 5
 	},
 /area/owlery/owleryhall)
 "tl" = (
 /obj/item/casing/shotgun/blue,
 /turf/unsimulated/floor/greenwhite{
-	dir = 8;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 8
 	},
 /area/owlery/owleryhall)
 "tm" = (
@@ -8427,27 +8429,27 @@
 	dir = 9
 	},
 /obj/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /obj/disposalpipe/segment,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "to" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 4;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 4
 	},
 /area/owlery/owleryhall)
 "tp" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /turf/unsimulated/floor/green,
 /area/owlery/owleryhall)
@@ -8467,8 +8469,8 @@
 	name = "exhibit window"
 	},
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /obj/decal/skeleton{
 	desc = "He hasn't got a leg to stand on.";
@@ -8479,8 +8481,8 @@
 	pixel_x = -10
 	},
 /turf/unsimulated/floor/stairs/dark{
-	dir = 4;
-	icon_state = "dark_stairs"
+	icon_state = "dark_stairs";
+	dir = 4
 	},
 /area/owlery/owllock)
 "ts" = (
@@ -8490,8 +8492,8 @@
 	name = "exhibit window"
 	},
 /obj/decal/cleanable/blood/tracks{
-	dir = 5;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 5
 	},
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
@@ -8536,10 +8538,10 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 1;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 1
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/owllock)
@@ -8581,19 +8583,19 @@
 /obj/decal/cleanable/dirt,
 /obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
 /obj/computerframe{
-	anchored = 1;
+	name = "smashed computer";
 	desc = "It is highly unlikely that this still works.";
-	dir = 4;
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
-	name = "smashed computer"
+	dir = 4;
+	anchored = 1
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 8
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "tD" = (
@@ -8601,13 +8603,13 @@
 	icon_state = "gib3"
 	},
 /obj/stool/chair/office/red{
-	dir = 4;
+	tag = "icon-office_chair_red (EAST)";
 	icon_state = "office_chair_red";
-	tag = "icon-office_chair_red (EAST)"
+	dir = 4
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "tE" = (
@@ -8620,21 +8622,21 @@
 	icon_state = "gibbl2"
 	},
 /turf/unsimulated/floor/yellowblack{
-	dir = 4;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "tG" = (
 /obj/decal/cleanable/blood/drip/high,
 /turf/unsimulated/floor/yellowblack{
-	dir = 8;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "tH" = (
 /obj/stool/chair/office/red{
-	dir = 8;
-	icon_state = "office_chair_red"
+	icon_state = "office_chair_red";
+	dir = 8
 	},
 /obj/critter/zombie/security{
 	aggressive = 0;
@@ -8650,8 +8652,8 @@
 	name = "Gutted Corpse"
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "tI" = (
@@ -8660,8 +8662,8 @@
 	name = "Jacob Smith (Security Officer)"
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "tJ" = (
@@ -8669,19 +8671,19 @@
 	icon_state = "floor5"
 	},
 /obj/computerframe{
-	anchored = 1;
+	name = "smashed computer";
 	desc = "It is highly unlikely that this still works.";
-	dir = 8;
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
-	name = "smashed computer"
+	dir = 8;
+	anchored = 1
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 4
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "tK" = (
@@ -8690,8 +8692,8 @@
 	},
 /obj/random_item_spawner/med_kit,
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/owleryhall)
 "tL" = (
@@ -8706,8 +8708,8 @@
 	},
 /obj/item/paper/paperwelcome,
 /turf/unsimulated/floor/redblack{
-	dir = 6;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 6
 	},
 /area/owlery/owleryhall)
 "tN" = (
@@ -8721,10 +8723,10 @@
 /area/owlery/owleryhall)
 "tP" = (
 /obj/decal/skeleton{
+	name = "decomposed corpse";
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	name = "decomposed corpse"
+	icon_state = "body3"
 	},
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "gibdown1"
@@ -8741,8 +8743,8 @@
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 4;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 4
 	},
 /area/owlery/owleryhall)
 "tR" = (
@@ -8766,8 +8768,8 @@
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/stairs/dark{
-	dir = 4;
-	icon_state = "dark_stairs"
+	icon_state = "dark_stairs";
+	dir = 4
 	},
 /area/owlery/owllock)
 "tU" = (
@@ -8781,8 +8783,8 @@
 	},
 /obj/critter/madnessowl,
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -8791,8 +8793,8 @@
 /area/owlery/owllock)
 "tV" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "2-8"
@@ -8806,8 +8808,8 @@
 	name = "exhibit window"
 	},
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
@@ -8821,8 +8823,8 @@
 	icon_state = "gibdown1"
 	},
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
@@ -8836,8 +8838,8 @@
 	icon_state = "gibtorso"
 	},
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
@@ -8848,24 +8850,24 @@
 	name = "exhibit window"
 	},
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /obj/grille/catwalk{
 	dir = 4
 	},
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 1;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 1
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/owllock)
 "ua" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 5;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 5
 	},
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
@@ -8883,12 +8885,12 @@
 /area/owlery/owllock)
 "ud" = (
 /obj/river{
-	dir = 9;
-	icon_state = "river"
+	icon_state = "river";
+	dir = 9
 	},
 /obj/river{
-	dir = 10;
-	icon_state = "river"
+	icon_state = "river";
+	dir = 10
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -8901,8 +8903,8 @@
 /area/owlery/Owlmait)
 "uf" = (
 /obj/river{
-	dir = 6;
-	icon_state = "river"
+	icon_state = "river";
+	dir = 6
 	},
 /turf/unsimulated/grass,
 /area/owlery/Owlmait)
@@ -8916,8 +8918,8 @@
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/mug,
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "uh" = (
@@ -8925,8 +8927,8 @@
 	icon_state = "floor2"
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "ui" = (
@@ -8950,16 +8952,16 @@
 /area/owlery/owleryhall)
 "uj" = (
 /obj/computerframe{
-	anchored = 1;
+	name = "smashed computer";
 	desc = "It is highly unlikely that this still works.";
-	dir = 4;
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
-	name = "smashed computer"
+	dir = 4;
+	anchored = 1
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 10;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 10
 	},
 /area/owlery/owleryhall)
 "uk" = (
@@ -8974,8 +8976,8 @@
 /area/owlery/owleryhall)
 "ul" = (
 /turf/unsimulated/floor/redblack{
-	dir = 6;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 6
 	},
 /area/owlery/owleryhall)
 "um" = (
@@ -8989,8 +8991,8 @@
 	},
 /obj/reagent_dispensers/watertank/fountain,
 /turf/unsimulated/floor/greenwhite{
-	dir = 10;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 10
 	},
 /area/owlery/owleryhall)
 "un" = (
@@ -9007,8 +9009,8 @@
 	pixel_y = 0
 	},
 /turf/unsimulated/floor/greenwhite{
-	dir = 6;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 6
 	},
 /area/owlery/owleryhall)
 "up" = (
@@ -9050,8 +9052,8 @@
 /area/owlery/owllock)
 "us" = (
 /obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+	icon_state = "pipe-c";
+	dir = 2
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -9067,13 +9069,13 @@
 	name = "exhibit window"
 	},
 /obj/cable{
+	icon_state = "1-2";
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 2
 	},
 /turf/unsimulated/floor/stairs/quilty{
-	dir = 1;
-	icon_state = "quiltystair"
+	icon_state = "quiltystair";
+	dir = 1
 	},
 /area/owlery/owllock)
 "uu" = (
@@ -9112,8 +9114,8 @@
 	dir = 10
 	},
 /obj/river{
-	dir = 9;
-	icon_state = "river"
+	icon_state = "river";
+	dir = 9
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -9132,8 +9134,8 @@
 /area/owlery/owllock)
 "uB" = (
 /obj/river{
-	dir = 6;
-	icon_state = "river"
+	icon_state = "river";
+	dir = 6
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -9149,15 +9151,15 @@
 "uD" = (
 /obj/decal/cleanable/blood/drip/high,
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "uE" = (
 /obj/decal/cleanable/blood/drip/high,
 /turf/unsimulated/floor/yellowblack{
-	dir = 4;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "uF" = (
@@ -9165,8 +9167,8 @@
 	icon_state = "gibleg"
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "uG" = (
@@ -9210,8 +9212,8 @@
 	icon_state = "u_guilty"
 	},
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/office)
 "uL" = (
@@ -9275,10 +9277,10 @@
 	icon_state = "catwalk_cross"
 	},
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 8;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 8
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 1
@@ -9287,8 +9289,8 @@
 /area/owlery/Owlmait)
 "uQ" = (
 /obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
+	icon_state = "catwalk_cross";
+	dir = 6
 	},
 /obj/disposalpipe/segment{
 	desc = "An underfloor transport pipe.";
@@ -9305,8 +9307,8 @@
 	},
 /obj/grille,
 /turf/unsimulated/floor/redblack/corner{
-	dir = 8;
-	icon_state = "redblackcorner"
+	icon_state = "redblackcorner";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "uS" = (
@@ -9316,15 +9318,15 @@
 	},
 /obj/grille,
 /turf/unsimulated/floor/redblack/corner{
-	dir = 1;
-	icon_state = "redblackcorner"
+	icon_state = "redblackcorner";
+	dir = 1
 	},
 /area/owlery/gangzone)
 "uT" = (
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/yellowblack{
-	dir = 8;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "uU" = (
@@ -9345,19 +9347,19 @@
 /area/owlery/Owlmait)
 "uV" = (
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 8;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 8
 	},
 /turf/unsimulated/wall/auto/reinforced,
 /area/owlery/owllock)
 "uW" = (
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 8;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 8
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -9389,15 +9391,15 @@
 	layer = 2
 	},
 /obj/machinery/door/window{
-	dir = 2;
 	icon = 'icons/obj/doors/windoor.dmi';
 	icon_state = "right";
+	dir = 2;
 	req_access_txt = "0"
 	},
 /obj/machinery/door/window{
-	dir = 8;
 	icon = 'icons/obj/doors/windoor.dmi';
 	icon_state = "left";
+	dir = 8;
 	req_access_txt = "0"
 	},
 /obj/item/card/id/owlgold{
@@ -9483,8 +9485,8 @@
 	name = "exhibit window"
 	},
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
@@ -9495,8 +9497,8 @@
 	name = "exhibit window"
 	},
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "drip5"
@@ -9513,8 +9515,8 @@
 	name = "exhibit window"
 	},
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
@@ -9544,8 +9546,8 @@
 /area/owlery/owllock)
 "vl" = (
 /obj/machinery/light/emergency{
-	dir = 4;
-	icon_state = "ebulb1"
+	icon_state = "ebulb1";
+	dir = 4
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -9555,10 +9557,10 @@
 /area/owlery/Owlmait)
 "vn" = (
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 1;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 1
 	},
 /turf/unsimulated/wall/auto/reinforced,
 /area/owlery/Owlmait)
@@ -9608,8 +9610,8 @@
 	icon_state = "gibhead"
 	},
 /turf/unsimulated/floor/yellowblack{
-	dir = 6;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 6
 	},
 /area/owlery/gangzone)
 "vt" = (
@@ -9625,14 +9627,14 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/yellowblack/corner{
-	dir = 4;
-	icon_state = "yellowblackcorner"
+	icon_state = "yellowblackcorner";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "vw" = (
 /turf/unsimulated/floor/stairs/quilty{
-	dir = 1;
-	icon_state = "quiltystair"
+	icon_state = "quiltystair";
+	dir = 1
 	},
 /area/owlery/Owlmait)
 "vx" = (
@@ -9654,8 +9656,8 @@
 	name = "security camera"
 	},
 /obj/shrub{
-	dir = 6;
-	icon_state = "shrub"
+	icon_state = "shrub";
+	dir = 6
 	},
 /obj/decal/woodclutter,
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl,
@@ -9682,8 +9684,8 @@
 	dir = 1
 	},
 /obj/shrub{
-	dir = 1;
-	icon_state = "shrub"
+	icon_state = "shrub";
+	dir = 1
 	},
 /obj/decal/cleanable/paper,
 /obj/item/cable_coil/cut{
@@ -9698,16 +9700,18 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/item/device/radio/intercom/adventure/syndcommand,
+/obj/item/device/radio/intercom/adventure/syndcommand{
+
+	},
 /turf/unsimulated/floor/black,
 /area/owlery/office)
 "vD" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/skeleton{
+	name = "decomposed corpse";
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	name = "decomposed corpse"
+	icon_state = "body3"
 	},
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/grime,
@@ -9817,14 +9821,14 @@
 /area/owlery/owllock)
 "vR" = (
 /obj/machinery/light/emergency{
-	dir = 1;
-	icon_state = "ebulb1"
+	icon_state = "ebulb1";
+	dir = 1
 	},
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 1;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 1
 	},
 /obj/structure/woodwall,
 /turf/unsimulated/floor/yellowblack,
@@ -9832,8 +9836,8 @@
 "vS" = (
 /obj/critter/madnessowl,
 /turf/unsimulated/floor/yellowblack{
-	dir = 4;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "vT" = (
@@ -9851,7 +9855,7 @@
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "gib2"
 	},
-/obj/reagent_dispensers/cleanable/ants,
+/obj/reagent_dispensers/ants,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "vW" = (
@@ -9920,8 +9924,8 @@
 /area/owlery/owllock)
 "wf" = (
 /obj/stone{
-	dir = 9;
-	icon_state = "stone"
+	icon_state = "stone";
+	dir = 9
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -9961,23 +9965,23 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 1;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 1
 	},
 /turf/simulated/floor/airless/plating,
 /area/owlery/owllock)
 "wl" = (
 /obj/machinery/door/window{
-	dir = 8;
 	icon = 'icons/obj/doors/windoor.dmi';
 	icon_state = "right";
+	dir = 8;
 	req_access_txt = "0"
 	},
 /turf/unsimulated/floor/yellowblack{
-	dir = 4;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 4
 	},
 /area/owlery/owllock)
 "wm" = (
@@ -9992,18 +9996,18 @@
 /area/owlery/owllock)
 "wn" = (
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 1;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 1
 	},
 /obj/structure/woodwall,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "wo" = (
 /obj/stool/chair{
-	dir = 4;
-	icon_state = "chair"
+	icon_state = "chair";
+	dir = 4
 	},
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
@@ -10025,10 +10029,10 @@
 	name = "exhibit window"
 	},
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 8;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 8
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/owllock)
@@ -10040,10 +10044,10 @@
 	name = "exhibit window"
 	},
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 8;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 8
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/owllock)
@@ -10084,27 +10088,27 @@
 	name = "exhibit window"
 	},
 /turf/unsimulated/floor/stairs/quilty{
-	dir = 1;
-	icon_state = "quiltystair"
+	icon_state = "quiltystair";
+	dir = 1
 	},
 /area/owlery/owllock)
 "ww" = (
 /obj/decal/glow{
-	anchored = 1;
-	brightness = 2;
-	color_b = 1;
-	color_g = 0.8;
-	color_r = 0;
+	name = "arrow sign";
 	desc = "A monochrome plasma display.  No, not the kind of plasma that burns, the other kind.";
-	dir = 4;
 	icon = 'icons/misc/lunar.dmi';
 	icon_state = "sign_arrow";
-	name = "arrow sign";
-	pixel_y = 30
+	dir = 4;
+	pixel_y = 30;
+	anchored = 1;
+	brightness = 2;
+	color_r = 0;
+	color_g = 0.8;
+	color_b = 1
 	},
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -10138,10 +10142,10 @@
 	name = "exhibit window"
 	},
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 8;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 8
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/owllock)
@@ -10157,8 +10161,8 @@
 	name = "exhibit window"
 	},
 /turf/unsimulated/floor/yellowblack/corner{
-	dir = 8;
-	icon_state = "yellowblackcorner"
+	icon_state = "yellowblackcorner";
+	dir = 8
 	},
 /area/owlery/owllock)
 "wB" = (
@@ -10170,28 +10174,28 @@
 	name = "broken blast door"
 	},
 /turf/unsimulated/floor/yellowblack{
-	dir = 1;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 1
 	},
 /area/owlery/owllock)
 "wC" = (
 /obj/machinery/light/emergency,
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 1;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 1
 	},
 /obj/structure/woodwall,
 /turf/unsimulated/floor/yellowblack{
-	dir = 1;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 1
 	},
 /area/owlery/gangzone)
 "wD" = (
 /turf/unsimulated/floor/yellowblack{
-	dir = 1;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 1
 	},
 /area/owlery/gangzone)
 "wE" = (
@@ -10200,21 +10204,21 @@
 	icon_state = "chair"
 	},
 /turf/unsimulated/floor/yellowblack{
-	dir = 1;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 1
 	},
 /area/owlery/gangzone)
 "wF" = (
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/yellowblack{
-	dir = 1;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 1
 	},
 /area/owlery/gangzone)
 "wG" = (
 /turf/unsimulated/floor/yellowblack/corner{
-	dir = 1;
-	icon_state = "yellowblackcorner"
+	icon_state = "yellowblackcorner";
+	dir = 1
 	},
 /area/owlery/gangzone)
 "wH" = (
@@ -10236,12 +10240,12 @@
 /area/owlery/owllock)
 "wJ" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
@@ -10257,18 +10261,18 @@
 	name = "exhibit window"
 	},
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 1;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 1
 	},
 /turf/unsimulated/floor/stairs/dark{
-	dir = 4;
-	icon_state = "dark_stairs"
+	icon_state = "dark_stairs";
+	dir = 4
 	},
 /area/owlery/owllock)
 "wL" = (
@@ -10278,8 +10282,8 @@
 	name = "exhibit window"
 	},
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "gib2"
@@ -10288,8 +10292,8 @@
 /area/owlery/owllock)
 "wM" = (
 /obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	icon_state = "tracks"
+	icon_state = "tracks";
+	dir = 4
 	},
 /obj/critter/zombie/security{
 	aggressive = 0;
@@ -10350,10 +10354,10 @@
 "wR" = (
 /obj/decal/cleanable/rust,
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 1;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 1
 	},
 /turf/unsimulated/wall/auto/reinforced,
 /area/owlery/Owlmait)
@@ -10373,14 +10377,14 @@
 	name = "exhibit window"
 	},
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 1;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 1
 	},
 /turf/unsimulated/floor/stairs/dark{
-	dir = 4;
-	icon_state = "dark_stairs"
+	icon_state = "dark_stairs";
+	dir = 4
 	},
 /area/owlery/owllock)
 "wU" = (
@@ -10430,10 +10434,10 @@
 /area/owlery/owllock)
 "wZ" = (
 /obj/decal/skeleton{
+	name = "decomposed corpse";
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body1";
-	name = "decomposed corpse"
+	icon_state = "body1"
 	},
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -10451,10 +10455,10 @@
 	},
 /obj/decal/cleanable/ash,
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 1;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 1
 	},
 /obj/item/reagent_containers/food/drinks/fueltank/empty,
 /obj/decal/cleanable/cobweb,
@@ -10512,8 +10516,8 @@
 "xh" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/fakeobjects/pipe{
-	dir = 10;
-	icon_state = "intact"
+	icon_state = "intact";
+	dir = 10
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 1
@@ -10550,8 +10554,8 @@
 /area/owlery/owllock)
 "xn" = (
 /obj/shrub{
-	dir = 1;
-	icon_state = "shrub"
+	icon_state = "shrub";
+	dir = 1
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl,
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl,
@@ -10576,10 +10580,10 @@
 	},
 /obj/machinery/light,
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 1;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 1
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/owllock)
@@ -10681,8 +10685,8 @@
 	},
 /obj/decal/cleanable/fungus,
 /obj/pool{
-	dir = 9;
-	icon_state = "pool"
+	icon_state = "pool";
+	dir = 9
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/Owlmait)
@@ -10703,8 +10707,8 @@
 /area/owlery/Owlmait)
 "xE" = (
 /obj/pool{
-	dir = 5;
-	icon_state = "pool"
+	icon_state = "pool";
+	dir = 5
 	},
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/black,
@@ -10726,10 +10730,10 @@
 /area/owlery/Owlmait)
 "xH" = (
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 1;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 1
 	},
 /turf/unsimulated/wall/auto/reinforced,
 /area/owlery/owllock)
@@ -10740,10 +10744,10 @@
 	pixel_y = 0
 	},
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 1;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 1
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
@@ -10758,8 +10762,8 @@
 /area/owlery/Owlmait)
 "xK" = (
 /obj/pool{
-	dir = 9;
-	icon_state = "pool"
+	icon_state = "pool";
+	dir = 9
 	},
 /obj/decal/cleanable/fungus,
 /obj/decal/cleanable/paper,
@@ -10818,8 +10822,8 @@
 /area/owlery/gangzone)
 "xQ" = (
 /obj/pool{
-	dir = 4;
-	icon_state = "pool"
+	icon_state = "pool";
+	dir = 4
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
@@ -10861,8 +10865,8 @@
 /area/owlery/Owlmait)
 "xU" = (
 /obj/machinery/light/small{
-	dir = 1;
-	icon_state = "bulb1"
+	icon_state = "bulb1";
+	dir = 1
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
@@ -10874,17 +10878,17 @@
 	dir = 1
 	},
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 1;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 1
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "xW" = (
 /turf/unsimulated/floor/stairs/dark{
-	dir = 4;
-	icon_state = "dark_stairs"
+	icon_state = "dark_stairs";
+	dir = 4
 	},
 /area/owlery/Owlmait)
 "xX" = (
@@ -10892,10 +10896,10 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 1;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 1
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
@@ -10927,8 +10931,8 @@
 /area/owlery/Owlmait)
 "yd" = (
 /turf/unsimulated/floor/stairs/dark{
-	dir = 8;
-	icon_state = "dark_stairs"
+	icon_state = "dark_stairs";
+	dir = 8
 	},
 /area/owlery/Owlmait)
 "ye" = (
@@ -10979,10 +10983,10 @@
 	pixel_y = 0
 	},
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 1;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 1
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
@@ -11010,13 +11014,13 @@
 /area/owlery/Owlmait)
 "yl" = (
 /obj/pool{
-	dir = 8;
-	icon_state = "pool"
+	icon_state = "pool";
+	dir = 8
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/fakeobjects/pipe{
-	dir = 10;
-	icon_state = "intact"
+	icon_state = "intact";
+	dir = 10
 	},
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/black,
@@ -11026,10 +11030,10 @@
 /obj/decal/cleanable/dirt/dirt3,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
 /obj/decal/skeleton{
+	name = "decomposed corpse";
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body3";
-	name = "decomposed corpse"
+	icon_state = "body3"
 	},
 /obj/fluid_spawner/polluted_filth/green_goop,
 /turf/unsimulated/floor/pool,
@@ -11042,8 +11046,8 @@
 	},
 /obj/decal/cleanable/generic,
 /turf/unsimulated/floor/greenwhite/corner{
-	dir = 8;
-	icon_state = "greenwhitecorner"
+	icon_state = "greenwhitecorner";
+	dir = 8
 	},
 /area/owlery/owleryhall)
 "yo" = (
@@ -11081,37 +11085,37 @@
 /area/owlery/Owlmait)
 "ys" = (
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 8;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 8
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "yt" = (
 /obj/decal/cleanable/oil,
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 8;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 8
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "yu" = (
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 8;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 8
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "yv" = (
 /obj/river{
-	dir = 10;
-	icon_state = "river"
+	icon_state = "river";
+	dir = 10
 	},
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
@@ -11148,8 +11152,8 @@
 /area/owlery/Owlmait)
 "yx" = (
 /obj/river{
-	dir = 5;
-	icon_state = "river"
+	icon_state = "river";
+	dir = 5
 	},
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
@@ -11161,63 +11165,63 @@
 /area/owlery/Owlmait)
 "yy" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold";
+	dir = 1
 	},
 /obj/computerframe{
-	anchored = 1;
+	name = "smashed computer";
 	desc = "It is highly unlikely that this still works.";
-	dir = 4;
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
-	name = "smashed computer"
+	dir = 4;
+	anchored = 1
 	},
 /turf/simulated/floor/airless/grime,
 /area/owlery/Owlmait)
 "yz" = (
 /obj/decal/fakeobjects/pipe,
 /obj/decal/fakeobjects/pipe{
-	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold";
+	dir = 1
 	},
 /obj/stool/chair{
-	dir = 8;
-	icon_state = "chair"
+	icon_state = "chair";
+	dir = 8
 	},
 /turf/simulated/floor/airless/grime,
 /area/owlery/Owlmait)
 "yA" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold";
+	dir = 1
 	},
 /turf/simulated/floor/airless/grime,
 /area/owlery/Owlmait)
 "yB" = (
 /obj/decal/fakeobjects/pipe,
 /obj/decal/fakeobjects/pipe{
-	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold";
+	dir = 1
 	},
 /turf/unsimulated/floor/damaged3,
 /area/owlery/Owlmait)
 "yC" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold";
+	dir = 1
 	},
 /obj/computerframe{
-	anchored = 1;
+	name = "smashed computer";
 	desc = "It is highly unlikely that this still works.";
-	dir = 8;
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "datamedb";
-	name = "smashed computer"
+	dir = 8;
+	anchored = 1
 	},
 /turf/simulated/floor/airless/grime,
 /area/owlery/Owlmait)
@@ -11242,9 +11246,9 @@
 /area/owlery/Owlmait)
 "yE" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold";
+	dir = 1
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
@@ -11282,13 +11286,13 @@
 /area/owlery/Owlmait)
 "yI" = (
 /obj/pool{
-	dir = 8;
-	icon_state = "pool"
+	icon_state = "pool";
+	dir = 8
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/fakeobjects/pipe{
-	dir = 10;
-	icon_state = "intact"
+	icon_state = "intact";
+	dir = 10
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/Owlmait)
@@ -11327,14 +11331,14 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "yO" = (
 /obj/pool{
-	dir = 4;
-	icon_state = "pool"
+	icon_state = "pool";
+	dir = 4
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
@@ -11346,10 +11350,10 @@
 /area/owlery/Owlmait)
 "yP" = (
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 1;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 1
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
@@ -11392,10 +11396,10 @@
 /area/owlery/Owlmait)
 "yS" = (
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 8;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 8
 	},
 /turf/unsimulated/wall/auto/reinforced,
 /area/owlery/Owlmait)
@@ -11412,10 +11416,10 @@
 	name = "exhibit window"
 	},
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 8;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 8
 	},
 /turf/unsimulated/grass,
 /area/owlery/Owlmait)
@@ -11428,10 +11432,10 @@
 	name = "owl related machinery"
 	},
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 8;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 8
 	},
 /turf/simulated/floor/airless/grime,
 /area/owlery/Owlmait)
@@ -11444,10 +11448,10 @@
 	name = "river machinery"
 	},
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 8;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 8
 	},
 /turf/simulated/floor/airless/grime,
 /area/owlery/Owlmait)
@@ -11514,20 +11518,20 @@
 	icon_state = "old_co2"
 	},
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 8;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 8
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "zc" = (
 /obj/decal/cleanable/fungus,
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 8;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 8
 	},
 /turf/unsimulated/wall/auto/reinforced,
 /area/owlery/Owlmait)
@@ -11537,10 +11541,10 @@
 	icon_state = "pool_in"
 	},
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 8;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 8
 	},
 /obj/decal/cleanable/fungus,
 /obj/decal/cleanable/blood{
@@ -11601,18 +11605,18 @@
 /area/owlery/Owlmait)
 "zk" = (
 /obj/decal/fakeobjects/pipe{
+	name = "rusted valve";
 	desc = "It won't budge.";
-	dir = 2;
 	icon = 'icons/obj/pipe-item.dmi';
 	icon_state = "valve";
-	name = "rusted valve"
+	dir = 2
 	},
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 8;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 8
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
@@ -11621,10 +11625,10 @@
 	icon_state = "gib7"
 	},
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 8;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 8
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
@@ -11641,8 +11645,8 @@
 /area/owlery/Owlmait)
 "zn" = (
 /obj/river{
-	dir = 10;
-	icon_state = "river"
+	icon_state = "river";
+	dir = 10
 	},
 /obj/machinery/light/small,
 /obj/window{
@@ -11702,8 +11706,8 @@
 	pixel_y = 0
 	},
 /obj/river{
-	dir = 6;
-	icon_state = "river"
+	icon_state = "river";
+	dir = 6
 	},
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
@@ -11745,8 +11749,8 @@
 /area/owlery/office)
 "zv" = (
 /obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon_state = "wall3_trans"
+	icon_state = "wall3_trans";
+	dir = 4
 	},
 /turf/space,
 /area/shuttle/spacebus)
@@ -11777,8 +11781,8 @@
 /area/owlery/owllock)
 "zA" = (
 /turf/unsimulated/floor/wizard/carpet/inner_corner_onetwo{
-	dir = 6;
-	icon_state = "carpet_inner_corner_1_2"
+	icon_state = "carpet_inner_corner_1_2";
+	dir = 6
 	},
 /area/owlery/office)
 "zB" = (
@@ -11802,9 +11806,9 @@
 	icon_state = "2-8"
 	},
 /obj/cable{
+	icon_state = "2-4";
 	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d2 = 4
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating,
@@ -11841,8 +11845,8 @@
 /area/owlery/Owlmait)
 "zK" = (
 /obj/stool/chair{
-	dir = 8;
-	icon_state = "chair"
+	icon_state = "chair";
+	dir = 8
 	},
 /turf/unsimulated/floor/specialroom/arcade,
 /area/owlery/Owlmait)
@@ -11861,8 +11865,8 @@
 "zN" = (
 /obj/item/clipboard,
 /turf/unsimulated/floor/redblack{
-	dir = 4;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 4
 	},
 /area/owlery/gangzone)
 "zO" = (
@@ -11884,8 +11888,8 @@
 	tag = "null"
 	},
 /turf/unsimulated/floor/wizard/carpet/edge{
-	dir = 6;
-	icon_state = "carpet_edge"
+	icon_state = "carpet_edge";
+	dir = 6
 	},
 /area/owlery/office)
 "zR" = (
@@ -11904,8 +11908,8 @@
 	},
 /obj/item/gun/kinetic/riotgun,
 /turf/unsimulated/floor/greenwhite{
-	dir = 8;
-	icon_state = "greenwhite"
+	icon_state = "greenwhite";
+	dir = 8
 	},
 /area/owlery/owleryhall)
 "zS" = (
@@ -11922,8 +11926,8 @@
 /area/owlery/Owlmait)
 "zT" = (
 /obj/stool/chair/office{
-	dir = 4;
-	icon_state = "office_chair"
+	icon_state = "office_chair";
+	dir = 4
 	},
 /turf/unsimulated/floor/wizard/carpet,
 /area/owlery/office)
@@ -11934,18 +11938,18 @@
 /area/owlery/office)
 "zV" = (
 /obj/stool/chair/office{
-	dir = 8;
-	icon_state = "office_chair"
+	icon_state = "office_chair";
+	dir = 8
 	},
 /turf/unsimulated/floor/wizard/carpet/inner_corner_onetwo{
-	dir = 6;
-	icon_state = "carpet_inner_corner_1_2"
+	icon_state = "carpet_inner_corner_1_2";
+	dir = 6
 	},
 /area/owlery/office)
 "zW" = (
 /turf/unsimulated/floor/wizard/carpet/edge{
-	dir = 6;
-	icon_state = "carpet_edge"
+	icon_state = "carpet_edge";
+	dir = 6
 	},
 /area/owlery/office)
 "zX" = (
@@ -11957,8 +11961,8 @@
 /obj/table/reinforced/bar/auto,
 /obj/random_item_spawner/desk_stuff,
 /turf/unsimulated/floor/wizard/carpet/edge{
-	dir = 6;
-	icon_state = "carpet_edge"
+	icon_state = "carpet_edge";
+	dir = 6
 	},
 /area/owlery/office)
 "zZ" = (
@@ -11997,14 +12001,14 @@
 	name = "torn up cable"
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 8;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "Ae" = (
 /obj/disposalpipe/broken{
-	dir = 4;
-	icon_state = "pipe-b"
+	icon_state = "pipe-b";
+	dir = 4
 	},
 /obj/item/reagent_containers/vending/vial/random{
 	name = "Experiment #213"
@@ -12023,8 +12027,8 @@
 /area/owlery/gangzone)
 "Ah" = (
 /obj/decal/tile_edge/line/blue{
-	dir = 6;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 6
 	},
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/shuttle{
@@ -12040,10 +12044,10 @@
 	icon_state = "gib7"
 	},
 /obj/disposalpipe/segment{
+	name = "river pipe";
 	desc = "An underfloor transport pipe.";
-	dir = 1;
 	icon_state = "pipe-s";
-	name = "river pipe"
+	dir = 1
 	},
 /turf/unsimulated/floor/plating,
 /turf/unsimulated/floor/plating/damaged2,
@@ -12054,19 +12058,19 @@
 /area/owlery/office)
 "Al" = (
 /obj/shrub{
-	dir = 1;
 	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
+	icon_state = "plant";
+	dir = 1
 	},
 /turf/unsimulated/floor/redblack{
-	dir = 1;
-	icon_state = "redblack"
+	icon_state = "redblack";
+	dir = 1
 	},
 /area/owlery/gangzone)
 "Am" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	icon_state = "tube1";
+	dir = 4
 	},
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
@@ -12083,30 +12087,30 @@
 /area/owlery/office)
 "Ao" = (
 /obj/machinery/shower{
-	dir = 8;
-	icon_state = "showerhead"
+	icon_state = "showerhead";
+	dir = 8
 	},
 /turf/unsimulated/floor/sanitary/blue,
 /area/owlery/office)
 "Ap" = (
 /obj/machinery/shower/puzzle/part_two{
-	dir = 8;
-	icon_state = "showerhead"
+	icon_state = "showerhead";
+	dir = 8
 	},
 /turf/unsimulated/floor/sanitary/blue,
 /area/owlery/office)
 "Aq" = (
 /obj/machinery/drainage,
 /obj/machinery/shower/puzzle/part_one{
-	dir = 8;
-	icon_state = "showerhead"
+	icon_state = "showerhead";
+	dir = 8
 	},
 /turf/unsimulated/floor/sanitary/blue,
 /area/owlery/office)
 "Ar" = (
 /obj/machinery/shower/puzzle/part_three{
-	dir = 8;
-	icon_state = "showerhead"
+	icon_state = "showerhead";
+	dir = 8
 	},
 /turf/unsimulated/floor/sanitary/blue,
 /area/owlery/office)
@@ -12118,8 +12122,8 @@
 	name = "torn up cable"
 	},
 /turf/unsimulated/floor/yellowblack{
-	dir = 8;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 8
 	},
 /area/owlery/gangzone)
 "At" = (
@@ -12145,8 +12149,8 @@
 	name = "torn up cable"
 	},
 /turf/unsimulated/floor/yellowblack{
-	dir = 1;
-	icon_state = "yellowblack"
+	icon_state = "yellowblack";
+	dir = 1
 	},
 /area/owlery/gangzone)
 "Av" = (
@@ -12176,8 +12180,8 @@
 /area/shuttle/spacebus)
 "Ay" = (
 /obj/decal/tile_edge/line/blue{
-	dir = 10;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 10
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/cobweb2,
@@ -12187,8 +12191,8 @@
 /area/shuttle/spacebus)
 "Az" = (
 /obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "diagonalWall3";
+	dir = 8
 	},
 /obj/table/reinforced/auto,
 /obj/item/kitchen/food_box/lollipop,
@@ -12205,16 +12209,16 @@
 /area/shuttle/spacebus)
 "AB" = (
 /obj/machinery/sleeper{
-	dir = 8;
-	icon_state = "sleeper"
+	icon_state = "sleeper";
+	dir = 8
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/white,
 /area/shuttle/spacebus)
 "AC" = (
 /obj/decal/tile_edge/line/blue{
-	dir = 8;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 8
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/shuttle{
@@ -12231,22 +12235,22 @@
 "AE" = (
 /obj/item/storage/wall/random,
 /turf/unsimulated/floor/blackwhite{
-	dir = 1;
-	icon_state = "darkwhite"
+	icon_state = "darkwhite";
+	dir = 1
 	},
 /area/owlery/office)
 "AF" = (
 /obj/machinery/sleeper{
-	dir = 4;
-	icon_state = "sleeper"
+	icon_state = "sleeper";
+	dir = 4
 	},
 /obj/item/reagent_containers/food/snacks/chips,
 /turf/unsimulated/floor/white,
 /area/shuttle/spacebus)
 "AG" = (
 /obj/decal/tile_edge/line/blue{
-	dir = 4;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 4
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/shuttle{
@@ -12255,8 +12259,8 @@
 /area/shuttle/spacebus)
 "AH" = (
 /obj/decal/tile_edge/line/blue{
-	dir = 4;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 4
 	},
 /obj/decal/cleanable/paper,
 /turf/simulated/floor/shuttle{
@@ -12265,12 +12269,12 @@
 /area/shuttle/spacebus)
 "AI" = (
 /obj/decal/tile_edge/line/blue{
-	dir = 4;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 4
 	},
 /obj/decal/tile_edge/line/blue{
-	dir = 8;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 8
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/shuttle{
@@ -12279,8 +12283,8 @@
 /area/shuttle/spacebus)
 "AJ" = (
 /obj/machinery/sleeper{
-	dir = 4;
-	icon_state = "sleeper"
+	icon_state = "sleeper";
+	dir = 4
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/white,
@@ -12300,8 +12304,8 @@
 /area/shuttle/spacebus)
 "AN" = (
 /obj/machinery/sleeper{
-	dir = 8;
-	icon_state = "sleeper"
+	icon_state = "sleeper";
+	dir = 8
 	},
 /obj/item/shaker/salt,
 /turf/unsimulated/floor/white,
@@ -12333,8 +12337,8 @@
 /area/owlery/owllock)
 "AR" = (
 /obj/decal/tile_edge/line/blue{
-	dir = 5;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 5
 	},
 /obj/decal/cleanable/generic,
 /turf/simulated/floor/shuttle{
@@ -12382,8 +12386,8 @@
 /area/shuttle/spacebus)
 "AX" = (
 /obj/decal/tile_edge/line/blue{
-	dir = 9;
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 9
 	},
 /obj/decal/cleanable/generic,
 /obj/decal/cleanable/ash,
@@ -12401,8 +12405,8 @@
 /area/shuttle/spacebus)
 "AZ" = (
 /obj/indestructible/shuttle_corner{
-	dir = 1;
-	icon_state = "diagonalWall3"
+	icon_state = "diagonalWall3";
+	dir = 1
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/shuttle{
@@ -12453,33 +12457,33 @@
 /area/shuttle/spacebus)
 "Bf" = (
 /obj/window/cubicle{
-	dir = 1;
-	icon_state = "cubicle"
+	icon_state = "cubicle";
+	dir = 1
 	},
 /obj/window/cubicle{
-	dir = 2;
-	icon_state = "cubicle"
+	icon_state = "cubicle";
+	dir = 2
 	},
 /obj/item/storage/toilet/random{
-	dir = 4;
-	icon_state = "toilet"
+	icon_state = "toilet";
+	dir = 4
 	},
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/Owlmait)
 "Bg" = (
 /obj/window/cubicle{
-	dir = 1;
-	icon_state = "cubicle"
+	icon_state = "cubicle";
+	dir = 1
 	},
 /obj/window/cubicle{
-	dir = 2;
-	icon_state = "cubicle"
+	icon_state = "cubicle";
+	dir = 2
 	},
 /obj/item/suture,
 /obj/item/reagent_containers/syringe/krokodil,
 /obj/item/storage/toilet/random{
-	dir = 4;
-	icon_state = "toilet"
+	icon_state = "toilet";
+	dir = 4
 	},
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/Owlmait)
