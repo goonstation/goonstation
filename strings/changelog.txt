@@ -1,5 +1,21 @@
 
 (t)fri may 07 21
+(u)TDHooligan
+(p)4565
+(e)⚖|balance
+(+)Silver fulminate is now hotter & significantly safer to carry when 25% concentrated or less.
+(u)TTerc
+(p)4614
+(e)⚖|balance
+(+)You can no longer put cable coils into the material processor. Wires can still be inserted into the portable reclaimer, letting you convert one coil stack into one synthrubber block.
+(u)TTerc
+(p)4360
+(e)|
+(+)Added reagent scanner to botany PDA cartridges.
+(u)DimWhat
+(p)4599
+(e)🎨|sprites
+(*)Added yet more monkey clothing sprites. Together strong!
 (u)Flaborized
 (p)4547
 (e)⚖🎨|balance, sprites
