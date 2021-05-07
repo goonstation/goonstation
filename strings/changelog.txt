@@ -1,5 +1,9 @@
 
 (t)fri may 07 21
+(u)None
+(p)4619
+(e)|
+(+)Fixed character names in examine text with empty PDA's in the ID slot
 (u)TDHooligan
 (p)4565
 (e)⚖|balance
