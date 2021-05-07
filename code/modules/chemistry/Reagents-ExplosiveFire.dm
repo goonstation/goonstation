@@ -658,6 +658,10 @@ datum
 			var/caused_fireflash = 0
 			var/min_req_fluid = 0.10 //at least 10% of the fluid needs to be oil for it to ignite
 
+			unpooled(pooltype)
+				. = ..()
+				caused_fireflash = 0 //scream. Band-aid fix for unpooled fuel sometimes coming with caused_fireflash preset to True.
+
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(volume < 1)
 					if (holder)
