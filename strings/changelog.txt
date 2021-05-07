@@ -1,5 +1,9 @@
 
 (t)fri may 07 21
+(u)DimWhat
+(p)4618
+(e)🗺|mapping
+(+)The captain's space helmet resides with its respective space suit.
 (u)None
 (p)4619
 (e)|
