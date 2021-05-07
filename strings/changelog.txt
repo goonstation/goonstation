@@ -1,5 +1,9 @@
 
 (t)fri may 07 21
+(u)Penny
+(p)4597
+(e)🐛|bug
+(+)Hand labeler will no longer destroy the names of borgs, ID cards, and other items
 (u)DimWhat
 (p)4618
 (e)🗺|mapping
