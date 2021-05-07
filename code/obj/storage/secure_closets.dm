@@ -38,7 +38,6 @@
 	/obj/item/clothing/suit/armor/capcoat,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/clothing/suit/armor/vest,
-	/obj/item/clothing/head/helmet/space/captain,
 	/obj/item/clothing/head/helmet/swat,
 	/obj/item/clothing/glasses/sunglasses,
 	/obj/item/stamp/cap,

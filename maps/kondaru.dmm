@@ -60953,7 +60953,7 @@
 /obj/rack,
 /obj/item/clothing/suit/space/captain,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/space,
+/obj/item/clothing/head/helmet/space/captain,
 /obj/item/tank/jetpack,
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/carpet/arcade,

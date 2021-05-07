@@ -25995,6 +25995,7 @@
 /obj/disposalpipe/trunk,
 /obj/item/tank/jetpack,
 /obj/item/clothing/suit/space/captain,
+/obj/item/clothing/head/helmet/space/captain,
 /obj/item/clothing/mask/gas,
 /obj/storage/secure/closet/command/captain,
 /obj/machinery/light{

@@ -23940,6 +23940,10 @@
 	pixel_x = 4;
 	pixel_y = -2
 	},
+/obj/item/clothing/head/helmet/space/captain{
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /obj/item/clothing/mask/gas/emergency{
 	pixel_x = 5;
 	pixel_y = 2
