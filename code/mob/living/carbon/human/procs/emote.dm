@@ -2016,19 +2016,14 @@
 							src.show_text(__red("Your head hurts!"))
 					for(var/atom/A as anything in src.loc)
 						if(istype(A, /obj/item/storage/bible))
-							if(H)
-								if(H.limbs.l_arm)
-									src.limbs.l_arm.sever()
-									if(dab_id)
-										dab_id.arm_count++
-								if(H.limbs.r_arm)
-									src.limbs.r_arm.sever()
-									if(dab_id)
-										dab_id.arm_count++
-								if(H.limbs.r_leg)
-									src.limbs.r_leg.sever()
-								if(H.limbs.l_leg)
-									src.limbs.l_leg.sever()
+							if(H.limbs.l_arm)
+								src.limbs.l_arm.sever()
+								dab_id?.arm_count++
+							if(H.limbs.r_arm)
+								src.limbs.r_arm.sever()
+								dab_id?.arm_count++
+							src.limbs.r_leg?.sever()
+							src.limbs.l_leg?.sever()
 								message = "<span class='alert'>[src] does a sick dab on the bible</span>"
 								src.visible_message("<span class='alert'>An unseen force smites [src]'s' limbs off</B>!</span>")
 								playsound(src.loc,"sound/misc/deepfrieddabs.ogg",50,0, channel=VOLUME_CHANNEL_EMOTE)
@@ -2232,4 +2227,3 @@
 					G.affecting.force_laydown_standup()
 					sleep(1 SECOND) //let us do that combo shit people like with throwing
 					src.force_laydown_standup()
-
