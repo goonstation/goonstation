@@ -1,5 +1,9 @@
 
 (t)thu may 06 21
+(u)Carbadox
+(p)4427
+(e)⚖🆕|balance, feature
+(*)The stun baton no longer knock down and weakens for 20 seconds but instead, only 10 seconds now. This shouldn't make a difference in Security arresting people but lower it's nerf it's very powerful combat potential.
 (u)Arthur Holiday
 (p)4603
 (e)⚖🎨|balance, sprites
