@@ -1,5 +1,9 @@
 
 (t)fri may 07 21
+(u)Jan.antilles
+(p)4583
+(e)|
+(*)Hitting a small storage container (such as a box or belt) with another small storage container that can't fit into it will move all its contents with one click.
 (u)Penny
 (p)4597
 (e)🐛|bug
