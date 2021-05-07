@@ -1,5 +1,9 @@
 
 (t)fri may 07 21
+(u)DimWhat
+(p)4599
+(e)🎨|sprites
+(*)Added yet more monkey clothing sprites. Together strong!
 (u)Flaborized
 (p)4547
 (e)⚖🎨|balance, sprites
