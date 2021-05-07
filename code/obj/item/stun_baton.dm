@@ -298,7 +298,7 @@
 					if ((dude_to_stun.stuttering < src.stun_normal_stuttering))
 						dude_to_stun.stuttering = src.stun_normal_stuttering
 				else
-					dude_to_stun.do_disorient(src.stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 80, stack_stuns = 0)
+					dude_to_stun.do_disorient(src.stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 60, stack_stuns = 0)
 					//dude_to_stun.remove_stamina(src.stamina_damage)
 					//dude_to_stun.stamina_stun() // Must be called manually here to apply the stun instantly.
 
