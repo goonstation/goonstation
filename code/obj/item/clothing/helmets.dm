@@ -107,6 +107,24 @@
 
 /obj/item/clothing/head/helmet/space/engineer/abilities = list(/obj/ability_button/flashlight_engiehelm)
 
+/obj/item/clothing/head/helmet/space/captain
+	name = "captain's space helmet"
+	icon_state = "space-captain"
+	item_state = "space-captain"
+	desc = "Helps protect against vacuum. Comes in an interesting green befitting the captain."
+
+	blue
+		name = "commander's space helmet"
+		icon_state = "space-captain-blue"
+		item_state = "space-captain-blue"
+		desc = "Helps protect against vacuum. Comes in a fasionable blue befitting a commander."
+
+	red
+		name = "commander's space helmet"
+		icon_state = "space-captain-red"
+		item_state = "space-captain-red"
+		desc = "Helps protect against vacuum. Comes in a fasionable red befitting a commander."
+
 // Sealab helmets
 
 /obj/item/clothing/head/helmet/space/engineer/diving //hijacking engiehelms for the flashlight
