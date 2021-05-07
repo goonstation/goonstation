@@ -1,5 +1,9 @@
 
 (t)fri may 07 21
+(u)Lythine
+(p)4370
+(e)🎨|sprites
+(+)Butts and butt bombs can now be put on mousetraps.
 (u)Kubius
 (p)4457
 (e)🐛|bug
