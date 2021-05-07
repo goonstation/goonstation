@@ -1,5 +1,9 @@
 
 (t)thu may 06 21
+(u)edwardly
+(p)4564
+(e)⚖|balance
+(*)Apply sonic stun to deaf mobs even without auditory headset - such as the shambler scream, vampire screech, and flashbangs.
 (u)Gannets
 (p)4595
 (e)⚖🗺|balance, mapping
