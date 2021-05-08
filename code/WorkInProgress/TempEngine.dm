@@ -923,7 +923,7 @@ datum/pump_ui/circulator_ui
 			if(probmult(5)) grump -= (min(stoked_sum/10, 15)*mult)
 
 		// Use classic grump if not handled by variant
-		if(!src.active_form?.on_grump(src, mult))
+		if(!src.active_form?.on_grump(mult))
 			classic_grump(mult)
 
 	// engine looping sounds and hazards

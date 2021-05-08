@@ -128,6 +128,12 @@
 			return
 		var/canhold = src.check_can_hold(W,user)
 		if (canhold <= 0)
+			if(istype(W, /obj/item/storage) && (canhold == 0 || canhold == -1))
+				var/obj/item/storage/S = W
+				for (var/obj/item/I in S.get_contents())
+					if(src.check_can_hold(I) > 0)
+						src.attackby(I, user, S)
+				return
 			switch (canhold)
 				if(0)
 					boutput(user, "<span class='alert'>[src] cannot hold [W].</span>")

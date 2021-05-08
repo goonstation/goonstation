@@ -318,18 +318,6 @@
 	required_effects = list("horns","fire_resist")
 	result = /datum/bioEffect/mutantrace
 
-/datum/geneticsrecipe/dwarf // Discovered
-	required_effects = list("strong","resist_alcohol")
-	result = /datum/bioEffect/mutantrace/dwarf
-
-/datum/geneticsrecipe/dwarf_two
-	required_effects = list("strong","drunk")
-	result = /datum/bioEffect/mutantrace/dwarf
-
-/datum/geneticsrecipe/dwarf_three // Discovered
-	required_effects = list("strong","stinky")
-	result = /datum/bioEffect/mutantrace/dwarf
-
 /datum/geneticsrecipe/blank // Discovered
 	required_effects = list("albinism","melanism")
 	result = /datum/bioEffect/color_changer/blank

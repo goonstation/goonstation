@@ -127,6 +127,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	return
 
 /client/Del()
+	src.mob?.move_dir = 0
+
 	if (player_capa && src.login_success)
 		player_cap_grace[src.ckey] = TIME + 2 MINUTES
 	/* // THIS THING IS BREAKING THE REST OF THE PROC FOR SOME REASON AND I HAVE NO IDEA WHY

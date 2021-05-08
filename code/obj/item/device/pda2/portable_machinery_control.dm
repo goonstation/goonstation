@@ -151,7 +151,6 @@
 
 				. += "Location: [get_area(P2)] (Home: [P2.homeloc ? "[get_area(P2.homeloc)]" : "N/A"])"
 
-				. += "<BR>\[<A href='byond://?src=\ref[src];op=summon'>Summon</A>\] "
 				. += "\[<A href='byond://?src=\ref[src];op=return'>Send to home turf</A>\]<BR>"
 				. += "<HR><A href='byond://?src=\ref[src];op=machinerylist'>Return to list</A>"
 

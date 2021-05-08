@@ -95,7 +95,7 @@
 			if (!src.anchored)
 				. += "The floor bolts have been unsecured. The bomb can be moved around."
 			else
-				. += "It is firmly anchored to the floor by its floor bolts. A screwdriver could undo them."
+				. += "It is firmly anchored to the floor by its floor bolts."
 
 			switch(src._health)
 				if(80 to 125)
@@ -228,7 +228,8 @@
 
 			if (src.armed && src.anchored && !(user.mind in NUKEMODE.syndicates))
 				if (isscrewingtool(W))
-					actions.start(new /datum/action/bar/icon/unanchorNuke(src), user)
+					// Give the player a notice so they realize what has happened
+					boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
 					return
 				//else if (istype(W,/obj/item/wirecutters/))
 				//	user.visible_message("<b>[user]</b> opens up [src]'s wiring panel and takes a look.")

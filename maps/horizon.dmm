@@ -13212,6 +13212,10 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/noticeboard/persistent{
+	name = "Medbay persistent notice board";
+	persistent_id = "medbay"
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -15629,7 +15633,7 @@
 /obj/item/clothing/suit/space/captain,
 /obj/item/hand_tele,
 /obj/item/pen,
-/obj/item/clothing/head/helmet/space,
+/obj/item/clothing/head/helmet/space/captain,
 /obj/item/clothing/mask/breath,
 /obj/machinery/firealarm{
 	dir = 8;
@@ -16864,6 +16868,10 @@
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
+	},
+/obj/noticeboard/persistent{
+	name = "Chapel persistent notice board";
+	persistent_id = "chapel"
 	},
 /turf/simulated/floor/wood/two,
 /area/station/chapel/sanctuary)
@@ -25831,6 +25839,12 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/disposalpipe/segment/transport,
+/obj/noticeboard/persistent{
+	name = "Customs persistent notice board";
+	persistent_id = "customs";
+	pixel_x = -32;
+	pixel_y = 2
+	},
 /turf/simulated/floor/blue/side,
 /area/station/bridge/hos)
 "blh" = (
@@ -26563,6 +26577,10 @@
 /obj/item/paper/book/mechanicbook,
 /obj/item/paper/book/minerals,
 /obj/item/cargotele,
+/obj/noticeboard/persistent{
+	name = "Cargo persistent notice board";
+	persistent_id = "cargo"
+	},
 /turf/simulated/floor/black,
 /area/station/quartermaster/office)
 "bmM" = (
@@ -33412,6 +33430,10 @@
 /area/station/crew_quarters/kitchen)
 "bEy" = (
 /obj/submachine/chef_sink,
+/obj/noticeboard/persistent{
+	name = "Kitchen persistent notice board";
+	persistent_id = "kitchen"
+	},
 /turf/simulated/floor/white/checker{
 	dir = 6
 	},
@@ -33564,6 +33586,10 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/noticeboard/persistent{
+	name = "Security Foyer persistent notice board";
+	persistent_id = "security foyer"
 	},
 /turf/simulated/floor/stairs{
 	dir = 4
@@ -33775,6 +33801,10 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/east,
 /area/station/hallway/secondary/west)
 "bFI" = (
+/obj/noticeboard/persistent{
+	name = "Detective's Office persistent notice board";
+	persistent_id = "detectives office"
+	},
 /turf/simulated/floor/carpet/red/standard/edge/south,
 /area/station/security/detectives_office)
 "bFJ" = (
@@ -34212,6 +34242,10 @@
 /obj/item/pen,
 /obj/disposalpipe/segment/brig{
 	dir = 8
+	},
+/obj/noticeboard/persistent{
+	name = "Crew Quarters persistent notice board";
+	persistent_id = "crew quarters"
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/quarters_south)
@@ -37344,6 +37378,10 @@
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
+/obj/noticeboard/persistent{
+	name = "Botany persistent notice board";
+	persistent_id = "botany"
+	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "bPt" = (
@@ -40169,6 +40207,12 @@
 /obj/disposalpipe/segment/food{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/noticeboard/persistent{
+	name = "Security persistent notice board";
+	persistent_id = "security";
+	pixel_x = -32;
+	pixel_y = 0
 	},
 /turf/simulated/floor,
 /area/station/security/main)
@@ -44517,6 +44561,10 @@
 	},
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
+	},
+/obj/noticeboard/persistent{
+	name = "Engineering persistent notice board";
+	persistent_id = "engineering"
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
@@ -57891,6 +57939,10 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
+/obj/noticeboard/persistent{
+	name = "Brig persistent notice board";
+	persistent_id = "brig"
+	},
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "plf" = (
@@ -60842,6 +60894,16 @@
 /obj/disposalpipe/segment/cargo,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
+"xdA" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/noticeboard/persistent{
+	name = "Mechanics Workshop persistent notice board";
+	persistent_id = "mechanics"
+	},
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/west)
 "xfm" = (
 /obj/cable{
 	d2 = 8;
@@ -61049,9 +61111,6 @@
 	},
 /obj/disposalpipe/segment/brig{
 	dir = 8
-	},
-/obj/noticeboard{
-	pixel_y = 28
 	},
 /obj/landmark/start{
 	name = "Security Officer"
@@ -84700,7 +84759,7 @@ bca
 lmP
 bkQ
 aPW
-jhg
+xdA
 wKb
 bvp
 bxF

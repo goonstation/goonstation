@@ -1543,6 +1543,9 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 		playsound(src.loc, "sound/effects/mag_iceburstimpact.ogg", 25, 1)
 
+		for(var/mob/living/L in get_turf(src))
+			L.gib()
+
 		set_density(1)
 		invisibility = 0
 

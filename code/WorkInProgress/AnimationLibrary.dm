@@ -893,7 +893,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(time = 5, color = "#ffffff")
 	return
 
-/proc/animate_spin(var/atom/A, var/dir = "L", var/T = 1, var/looping = -1)
+/proc/animate_spin(var/atom/A, var/dir = "L", var/T = 1, var/looping = -1, var/parallel = TRUE)
 	if (!istype(A))
 		return
 
@@ -902,7 +902,9 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if (dir == "R")
 		turn = 90
 
-	animate(A, transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping, flags=ANIMATION_PARALLEL)
+	var/flag = parallel ? ANIMATION_PARALLEL : null
+
+	animate(A, transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping, flags = flag)
 	animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
 	animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
 	animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)

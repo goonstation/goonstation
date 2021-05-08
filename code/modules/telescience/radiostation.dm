@@ -450,6 +450,37 @@ ABSTRACT_TYPE(/obj/item/record/random)
 	add_overlay = 0
 	icon_state = "record_red"
 
+ABSTRACT_TYPE(/obj/item/record/random/nostalgic)
+/obj/item/record/random/nostalgic
+	New()
+		. = ..()
+		src.desc += {" Nostalgic sounds from SS13 yesteryears."}
+
+/obj/item/record/random/nostalgic/distant
+	name = "record - \"Distant Star\""
+	record_name = "Distant Star"
+	song = "sound/radio_station/music/distant_star.ogg"
+
+/obj/item/record/random/nostalgic/technologic
+	name = "record - \"High Technologic Beat\""
+	record_name = "High Technologic Beat"
+	song = "sound/radio_station/music/high_technologic_beat.ogg"
+
+/obj/item/record/random/nostalgic/afterparty
+	name = "record - \"After Party\""
+	record_name = "After Party"
+	song = "sound/radio_station/music/after_party.ogg"
+
+/obj/item/record/random/nostalgic/soalive
+	name = "record - \"Everyone Is So Alive\""
+	record_name = "Everyone Is So Alive"
+	song = "sound/radio_station/music/everyone_is_so_alive.ogg"
+
+/obj/item/record/random/nostalgic/alivetoo
+	name = "record - \"It Feels Good To Be Alive Too\""
+	record_name = "It Feels Good To Be Alive Too"
+	song = "sound/radio_station/music/it_feels_good_to_be_alive_too.ogg"
+
 ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 /obj/item/record/random/chronoquest
 	New()
@@ -564,6 +595,26 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	song = "sound/radio_station/music/core_of_poo.ogg"
 	color = "#DE9F47"
 
+/obj/item/record/notaquario_mixtape/beaches
+	record_name = "Beaches"
+	song = "sound/radio_station/music/beaches.ogg"
+
+/obj/item/record/notaquario_mixtape/graveyard
+	record_name = "Graveyard"
+	song = "sound/radio_station/music/graveyard.ogg"
+
+/obj/item/record/notaquario_mixtape/floaty
+	record_name = "I'm Floaty In Space But Thats Ok"
+	song = "sound/radio_station/music/floaty.ogg"
+
+/obj/item/record/notaquario_mixtape/repose
+	record_name = "Repose"
+	song = "sound/radio_station/music/repose.ogg"
+
+/obj/item/record/notaquario_mixtape/biodome
+	record_name = "Biodome"
+	song = "sound/radio_station/music/biodome.ogg"
+
 // Record sets
 /obj/item/storage/box/record
 	name = "record sleeve"
@@ -581,6 +632,15 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	/obj/item/record/clown_collection/eggshell,
 	/obj/item/record/clown_collection/disco,
 	/obj/item/record/clown_collection/poo)
+
+/obj/item/storage/box/record/notaquario_mixtape1
+	name = "Aquario and Not Tom's Mixtape Vol 1"
+	desc = "Woa, these are some old tunes! Made by Aquario and Not Tom way back in the early 2020s!"
+	spawn_contents = list(/obj/item/record/notaquario_mixtape/graveyard,
+	/obj/item/record/notaquario_mixtape/repose,
+	/obj/item/record/notaquario_mixtape/beaches,
+	/obj/item/record/notaquario_mixtape/floaty,
+	/obj/item/record/notaquario_mixtape/biodome)
 
 /obj/item/storage/box/record/radio
 	desc = "A sturdy record sleeve, designed to hold multiple records. The art on the cover is very lovely."
@@ -604,6 +664,16 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	/obj/item/record/october,
 	/obj/item/record/november,
 	/obj/item/record/december)
+
+/obj/item/storage/box/record/radio/nostalgic
+	name = "\improper Nostalgic Dance record sleeve"
+	desc = {"A sturdy record sleeve, designed to hold multiple records. These song titles seem familiar..."}
+	spawn_contents = list(
+		/obj/item/record/random/nostalgic/distant,
+		/obj/item/record/random/nostalgic/technologic,
+		/obj/item/record/random/nostalgic/afterparty,
+		/obj/item/record/random/nostalgic/soalive,
+		/obj/item/record/random/nostalgic/alivetoo)
 
 /obj/item/storage/box/record/radio/chronoquest
 	name = "\improper Chronoquest record sleeve"

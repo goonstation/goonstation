@@ -703,9 +703,15 @@
 /datum/mutantrace/flashy
 	name = "flashy"
 	icon_state = "psyche"
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | WEARS_UNDERPANTS | USES_STATIC_ICON)
+	mutant_appearance_flags = (HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HEAD_HAS_OWN_COLORS | HAS_HUMAN_EYES | WEARS_UNDERPANTS | BUILT_FROM_PIECES)
 	override_attack = 0
-	race_mutation = /datum/bioEffect/mutantrace/flashy
+	mutant_folder = 'icons/mob/flashy.dmi'
+	special_head = HEAD_FLASHY
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/flashy/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/flashy/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/flashy/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/flashy/left
+
 
 /datum/mutantrace/virtual
 	name = "virtual"
@@ -1403,17 +1409,6 @@
 	say_verb()
 		return "glubs"
 
-/datum/mutantrace/dwarf
-	name = "dwarf"
-	icon_state = "dwarf"
-	head_offset = -3
-	hand_offset = -2
-	body_offset = -3
-	override_attack = 0
-	race_mutation = /datum/bioEffect/mutantrace/dwarf
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | WEARS_UNDERPANTS | USES_STATIC_ICON)
-
-
 /datum/mutantrace/monkey
 	name = "monkey"
 	icon = 'icons/mob/monkey.dmi'
@@ -1995,8 +1990,9 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | HAS_OVERSUIT_DETAILS | HAS_SPECIAL_HAIR | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | HAS_OVERSUIT_DETAILS | HAS_SPECIAL_HAIR | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 	color_channel_names = list("Horn Detail", "Hoof Detail")
+	eye_state = "eyes-cow"
 
 	New(var/mob/living/carbon/human/H)
 		..()
