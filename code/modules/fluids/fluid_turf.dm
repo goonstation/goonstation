@@ -350,7 +350,7 @@
 				if(needlink)
 					if(!picked_turf.linked_hole)
 						picked_turf.linked_hole = src
-						picked_turf.UpdateOverlays(image(icon = 'icons/effects/64x64.dmi', icon_state = "lightshaft", loc = picked_turf), "lightshaft")
+						src.add_simple_light("trenchhole", list(120, 120, 120, 120))
 
 		..()
 
@@ -367,7 +367,7 @@
 
 	blow_hole()
 		if(src.z == 5)
-			for(var/turf/space/fluid/T in range(8, locate(src.x, src.y, 1)))
+			for(var/turf/space/fluid/T in range(1, locate(src.x, src.y, 1)))
 				if(T.allow_hole)
 					var/x = T.x
 					var/y = T.y
@@ -376,7 +376,7 @@
 					if(istype(hole))
 						hole.L = list(src)
 						src.linked_hole = hole
-						src.UpdateOverlays(image(icon = 'icons/effects/64x64.dmi', icon_state = "lightshaft", loc = src), "lightshaft")
+						src.add_simple_light("trenchhole", list(120, 120, 120, 120))
 						break
 
 /turf/space/fluid/nospawn
