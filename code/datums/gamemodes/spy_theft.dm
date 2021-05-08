@@ -681,6 +681,7 @@
 	possible_areas = get_areas_with_unblocked_turfs(/area/station)
 	possible_areas += get_areas_with_unblocked_turfs(/area/diner)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/diner/tug)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/diner/jucer_trader)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/medical/asylum)			// Donut 3 Asylum
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected/ai)		// AI core
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected/AIsat)	// AI satellite
