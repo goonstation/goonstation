@@ -279,7 +279,6 @@ MATERIAL
 				L["remetal"] = "Remove Reinforcement"
 		if (src?.material.mat_id == "cardboard")
 			L["c_box"] = "Cardboard Box (2 Sheets)"
-			L["c_rcd"] = "Realistic Cardboard Device (10 sheets)"
 
 		for(var/t in L)
 			counter++
@@ -440,16 +439,6 @@ MATERIAL
 					a_icon = 'icons/obj/clothing/overcoats/item_suit_cardboard.dmi'
 					a_icon_state = "c_box"
 					a_name = "a cardboard box"
-
-				if("c_rcd")
-					if (!amount_check(10,usr)) return
-					a_type = /obj/item/rcd/material/cardboard
-					a_amount = 1
-					a_cost = 10
-					a_icon = 'icons/obj/items/rcd.dmi'
-					a_icon_state = "base"
-					a_name = "Realistic Cardboard Device"
-
 
 				if("pipef")
 					if (!amount_check(3,usr)) return

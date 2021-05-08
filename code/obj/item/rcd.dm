@@ -730,9 +730,6 @@ Broken RCD + Effects
 
 /obj/item/rcd/material
 
-	New()
-		..()
-		src.setMaterial(getMaterial(material_name))
 
 	afterattack(atom/A, mob/user as mob)
 		if (get_dist(get_turf(src), get_turf(A)) > 1)
@@ -773,8 +770,8 @@ Broken RCD + Effects
 
 
 /obj/item/rcd/material/cardboard
-	name = "Realistic Cardboard Device"
-	desc = "This highly realistic cardboard imitation of a Rapid Construction Device is able to rapidly construct cardboard props."
+	name = "cardboard rapid construction Device"
+	desc = "Also known as a C-RCD, this device is able to rapidly construct cardboard props."
 	mats = list("DEN-3" = 10, "POW-2" = 10, "cardboard" = 30)
 	matter_create_floor = 0.5
 	time_create_floor = 0 SECONDS
@@ -824,19 +821,12 @@ Broken RCD + Effects
 
 	modes = list(RCD_MODE_FLOORSWALLS, RCD_MODE_AIRLOCK, RCD_MODE_DECONSTRUCT, RCD_MODE_WINDOWS)
 
-	New()
-		..()
-		src.setMaterial(getMaterial("cardboard"))
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/rcd_ammo))
 			..()
 		else if (isExploitableObject(W))
 			boutput(user, "Recycling [W] just doesn't work.")
-		else if (W?.material?.mat_id == "cardboard")
-			matter += 10
-			boutput(user, "\The [src] recycles [W], and now holds [src.matter]/[src.max_matter] [material_name]-units.")
-			qdel(W)
 		else if (istype(W, /obj/item/paper/book))
 			matter += 5
 			boutput(user, "\The [src] recycles [W], and now holds [src.matter]/[src.max_matter] [material_name]-units.")

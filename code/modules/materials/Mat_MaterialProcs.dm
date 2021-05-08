@@ -609,10 +609,10 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/cardboard_on_hit // MARK: add to ignorant children
 	execute(var/atom/owner, var/mob/attacker, var/obj/attackobj, var/meleeorthrow)
 		if (meleeorthrow == 1) //if it was a melee attack
-			if (isExploitableObject(owner))
-				boutput(attacker, "Cutting [owner] into a sheet isn't possible.")
-				return
 			if (issnippingtool(attackobj)||iscuttingtool(attackobj))
+				if (isExploitableObject(owner))
+					boutput(attacker, "Cutting [owner] into a sheet isn't possible.")
+					return
 				attacker.visible_message("<span class='alert'>[attacker] starts cutting [owner] apart.</span>", "<span class='notice'>You start cutting [owner] apart.</span>", "You hear the sound of cutting cardboard.")
 				var/datum/action/bar/icon/hitthingwithitem/action_bar = new /datum/action/bar/icon/hitthingwithitem(attacker, attacker, attackobj, owner, src, 10 SECONDS, /datum/materialProc/cardboard_on_hit/proc/snip_end,\
 				list(owner, attacker, attackobj), attackobj.icon, attackobj.icon_state)
@@ -664,7 +664,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			wall_owner.dismantle_wall()
 		else if (istype(owner, /turf/simulated/floor))
 			var/turf/simulated/floor/floor_owner = owner
-			attacker.visible_message("","","The sound of cutting cardboard stops.")
 			if (floor_owner.intact)
 				if (!(floor_owner.broken || floor_owner.burnt))
 					var/atom/A = new /obj/item/tile(src)
