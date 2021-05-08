@@ -134,6 +134,7 @@
 	icon_opened = "securemedicalcrateopen"
 	icon_closed = "securemedicalcrate"
 	req_access = list(access_medical_lockers)
+
 	monkey
 		name = "Lab Monkey crate"
 		desc = "Warning: Contains live monkeys!"
