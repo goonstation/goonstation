@@ -691,17 +691,6 @@
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/combustion_chamber)
 	possible_areas -= /area/sim/test_area
 
-	//Set difficult areas
-	high_diff_areas += /area/station/ai_monitored/armory
-	high_diff_areas += /area/station/security/armory
-	high_diff_areas += /area/station/security/hos
-	high_diff_areas += /area/station/turret_protected/
-
-	med_diff_areas += /area/station/crew_quarters/captain
-	med_diff_areas += /area/station/captain		// wtf manta
-	med_diff_areas += /area/station/security/
-	med_diff_areas += /area/station/hangar/sec
-
 	for (var/area/A in possible_areas)
 		LAGCHECK(LAG_LOW)
 		if (A.virtual)
@@ -719,12 +708,11 @@
 
 		// Calculate bounty difficulty
 		if (B.bounty_type == BOUNTY_TYPE_PHOTO)
-			if(predecessor_path_in_list(B.delivery_area.type, high_diff_areas))
-				message_admins("High difficulty: [B.delivery_area.type]")
-			else if(predecessor_path_in_list(B.delivery_area.type, med_diff_areas))
-				message_admins("Med difficulty: [B.delivery_area.type]")
-			// Photos always Tier 1
-			B.pick_reward_tier(1)
+			if(B.delivery_area.spy_secure_area)
+				message_admins("Difficult area: Photo - [B.delivery_area.type]")
+				B.pick_reward_tier(2)
+			else
+				B.pick_reward_tier(1)
 		else if (B.bounty_type == BOUNTY_TYPE_ORGAN)
 			// Adjust reward based off target job to estimate risk level
 			B.difficulty = B.estimate_target_difficulty(B.job)
@@ -734,15 +722,11 @@
 				if (2)
 					B.pick_reward_tier(3)
 				if (1)
-					if (prob(7))
+					if (prob(10))
 						B.pick_reward_tier(3)
 					else
 						B.pick_reward_tier(2)
 		else if (B.bounty_type == BOUNTY_TYPE_TRINK)
-			if(predecessor_path_in_list(B.delivery_area.type, high_diff_areas))
-				message_admins("High difficulty: [B.delivery_area.type]")
-			else if(predecessor_path_in_list(B.delivery_area.type, med_diff_areas))
-				message_admins("Med difficulty: [B.delivery_area.type]")
 			// Adjust reward based off target job to estimate risk level
 			B.difficulty = B.estimate_target_difficulty(B.job)
 			switch(B.difficulty)
@@ -751,11 +735,17 @@
 				if (2)
 					if (prob(10))
 						B.pick_reward_tier(4)
+					else if(B.delivery_area.spy_secure_area)
+						message_admins("Difficult area: [B.name] - [B.delivery_area.type] - Promotion in tier 2")
+						B.pick_reward_tier(pick(3.4))
 					else
 						B.pick_reward_tier(pick(2,3))
 				if (1)
 					if (prob(10))
 						B.pick_reward_tier(4)
+					else if(B.delivery_area.spy_secure_area)
+						message_admins("Difficult area: [B.name] - [B.delivery_area.type] - Promotion in tier 1")
+						B.pick_reward_tier(3)
 					else
 						B.pick_reward_tier(pick(1,3))
 		else if (B.bounty_type == BOUNTY_TYPE_BIG)
@@ -771,18 +761,25 @@
 					else
 						B.pick_reward_tier(1)
 		else if (B.bounty_type == BOUNTY_TYPE_ITEM)
-			if(predecessor_path_in_list(B.delivery_area.type, high_diff_areas))
-				message_admins("High difficulty: [B.delivery_area.type]")
-			else if(predecessor_path_in_list(B.delivery_area.type, med_diff_areas))
-				message_admins("Med difficulty: [B.delivery_area.type]")
 			// Preset difficulty depending upon type
 			switch(B.difficulty)
 				if(3)
-					B.pick_reward_tier(pick(2,3))
+					if(B.delivery_area.spy_secure_area)
+						message_admins("Difficult area: [B.name] - [B.delivery_area.type] - Promotion in tier 3")
+						B.pick_reward_tier(pick(3.4))
+					else
+						B.pick_reward_tier(pick(2,3))
 				if (2)
-					B.pick_reward_tier(pick(1,2))
+					if(B.delivery_area.spy_secure_area)
+						message_admins("Difficult area: [B.name] - [B.delivery_area.type] - Promotion in tier 2")
+						B.pick_reward_tier(pick(2.3))
+					else
+						B.pick_reward_tier(pick(1,2))
 				if (1)
-					if (prob(15))
+					if(B.delivery_area.spy_secure_area)
+						message_admins("Difficult area: [B.name] - [B.delivery_area.type] - Promotion in tier 1")
+						B.pick_reward_tier(pick(2.3))
+					else if (prob(15))
 						B.pick_reward_tier(pick(1,2))
 					else
 						B.pick_reward_tier(1)
