@@ -62,6 +62,12 @@
 	proc/irradiate_turf(var/turf/T)
 		if (!isturf(T))
 			return
+		//spatial interdictor: nullify radiation pulses
+		//consumes 100 units of charge per tile protected
+		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
+			if (IN_RANGE(IX,T,INTERDICT_RANGE) && IX.expend_interdict(100,1))
+				animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
+				return
 		animate_flash_color_fill_inherit(T,"#00FF00",1,5)
 		for (var/mob/living/carbon/M in T.contents)
 			M.changeStatus("radiation", (rad_strength)*10, 3)
@@ -108,6 +114,12 @@
 	proc/irradiate_turf(var/turf/T)
 		if (!isturf(T))
 			return
+		//spatial interdictor: nullify radiation pulses
+		//consumes 150 units of charge per tile protected
+		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
+			if (IN_RANGE(IX,T,INTERDICT_RANGE) && IX.expend_interdict(150,1))
+				animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
+				return
 		animate_flash_color_fill_inherit(T,"#0084ff",1,5)
 		for (var/atom/A in T.contents)
 			A.changeStatus("n_radiation", (rad_strength)*10, 3)
