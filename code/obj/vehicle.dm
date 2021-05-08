@@ -60,9 +60,7 @@ Contains:
 		for(var/mob/M in src){\
 			M.glide_size = src.glide_size;\
 			M.animate_movement = SYNC_STEPS;}\
-		src.do_special_on_relay(user, dir);\
-	} else {\
-		for (var/mob in src.contents) { var/mob/M = mob; M.set_loc(src.loc); }} ; \
+		src.do_special_on_relay(user, dir);}\
 	} while(false)
 //////////////////////////////// Vehicle parent ///////////////////////////////////////
 ABSTRACT_TYPE(/obj/vehicle)
