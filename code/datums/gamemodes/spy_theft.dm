@@ -589,7 +589,7 @@
 				continue
 			B.name = P.holder.real_name + "'s " + P.name
 		B.reveal_area = 1
-		O -= B.item
+		O -= list(pair)
 
 		B.bounty_type = BOUNTY_TYPE_ORGAN
 		active_bounties += B
