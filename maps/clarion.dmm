@@ -505,8 +505,6 @@
 	icon_state = "pipe-c"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
@@ -516,8 +514,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/glass/botany{
@@ -533,8 +529,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/grass/random/alt,
@@ -544,26 +538,18 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/grass/random/alt,
 /area/station/garden/aviary)
 "abA" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/disposalpipe/switch_junction{
@@ -575,8 +561,6 @@
 /area/station/garden/aviary)
 "abB" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/mail{
@@ -590,13 +574,9 @@
 	icon_state = "pipe-c"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
@@ -605,8 +585,6 @@
 	})
 "abD" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/cable{
@@ -24472,7 +24450,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/light_switch/north,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -24483,8 +24460,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Security persistent notice board";
-	persistent_id = "security";
-	pixel_y = 40
+	persistent_id = "security"
 	},
 /turf/simulated/floor/red/side{
 	dir = 1
@@ -44503,11 +44479,6 @@
 "chw" = (
 /obj/disposalpipe/segment,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
@@ -44574,10 +44545,10 @@
 /area/station/crew_quarters/pool)
 "cpm" = (
 /obj/cable,
-/obj/window_blinds/cog2{
+/obj/wingrille_spawn/auto/crystal,
+/obj/window_blinds/cog2/right{
 	dir = 8
 	},
-/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/armory)
 "csQ" = (
@@ -46028,7 +45999,10 @@
 	},
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
-	icon_state = "1-4"
+	dir = null
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
@@ -46325,17 +46299,24 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "hoE" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/wingrille_spawn/auto/crystal,
-/obj/window_blinds/cog2/right{
+/obj/window_blinds/cog2/middle{
 	dir = 8
+	},
+/obj/cable{
+	dir = null
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 4;
+	dir = 0;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/red,
 /area/station/security/armory)
@@ -46763,11 +46744,6 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/east)
 "iww" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment/mail,
 /obj/table/reinforced/auto,
 /obj/item/device/ticket_writer{
@@ -46777,6 +46753,12 @@
 	bank_id = "security"
 	},
 /obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "fred1"
 	},
@@ -46784,10 +46766,9 @@
 "iwK" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	icon_state = "0-8"
 	},
+/obj/cable,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "iyA" = (
@@ -46810,11 +46791,6 @@
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "iBm" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/table/reinforced/auto,
 /obj/machinery/networked/printer{
 	print_id = "Security"
@@ -46823,6 +46799,10 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -46891,10 +46871,15 @@
 /area/station/security/main)
 "iLR" = (
 /obj/cable,
-/obj/window_blinds/cog2/right{
+/obj/wingrille_spawn/auto/crystal,
+/obj/window_blinds/cog2/middle{
 	dir = 8
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/cable{
+	d2 = 2;
+	dir = null;
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/security/armory)
 "iMu" = (
@@ -47095,9 +47080,6 @@
 	},
 /obj/access_spawn/brig,
 /obj/firedoor_spawn,
-/obj/cable{
-	icon_state = "0-2"
-	},
 /turf/simulated/floor/red,
 /area/station/security/brig)
 "jtY" = (
@@ -47393,9 +47375,10 @@
 	},
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
@@ -48409,10 +48392,9 @@
 	name = "autoname  - SS13";
 	pixel_y = 21
 	},
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = 28;
-	text = "NF"
+/obj/noticeboard/persistent{
+	name = "Brig persistent notice board";
+	persistent_id = "brig"
 	},
 /turf/simulated/floor/caution/north,
 /area/station/security/main)
@@ -48508,15 +48490,16 @@
 "ntQ" = (
 /obj/disposalpipe/segment,
 /obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/cable{
 	icon_state = "1-8"
 	},
 /obj/machinery/light/emergency{
 	dir = 8;
 	pixel_x = -10
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -49350,9 +49333,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/cable{
-	icon_state = "1-4"
-	},
+/obj/cable,
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
@@ -49888,9 +49869,9 @@
 	icon_state = "1-2"
 	},
 /obj/cable{
+	d1 = 1;
 	d2 = 4;
-	dir = 0;
-	icon_state = "0-4"
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/red/side{
 	dir = 6
@@ -50179,9 +50160,6 @@
 	icon_state = "0-4"
 	},
 /obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
@@ -50239,6 +50217,11 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/flasher/portable,
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10;
+	pixel_y = -5
+	},
 /turf/simulated/floor/caution/corner/ne,
 /area/station/security/main)
 "swY" = (
@@ -50249,9 +50232,7 @@
 	icon_state = "1-2"
 	},
 /obj/cable{
-	d2 = 4;
-	dir = 0;
-	icon_state = "0-4"
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -50933,7 +50914,10 @@
 "uxG" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -51025,9 +51009,6 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/pool)
 "uOr" = (
-/obj/window_blinds/cog2/right{
-	dir = 8
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
@@ -51040,6 +51021,9 @@
 	icon_state = "2-4"
 	},
 /obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "uOX" = (
@@ -51167,7 +51151,7 @@
 "vfm" = (
 /obj/machinery/light{
 	dir = 1;
-	pixel_y = 10
+	pixel_y = 21
 	},
 /obj/shrub{
 	dir = 1
@@ -51179,6 +51163,7 @@
 	pixel_x = -10;
 	pixel_y = 15
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
@@ -51957,22 +51942,15 @@
 	},
 /area/station/security/main)
 "xEB" = (
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 10;
-	pixel_y = -5
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/landmark/start{
 	name = "Security Assistant"
 	},
-/obj/noticeboard/persistent{
-	name = "Brig persistent notice board";
-	persistent_id = "brig";
-	pixel_x = 32;
-	pixel_y = 0
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
 	},
 /turf/simulated/floor/caution/east{
 	dir = 8
