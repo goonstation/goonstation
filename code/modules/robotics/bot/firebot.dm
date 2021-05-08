@@ -445,7 +445,7 @@
 
 #undef FIREBOT_MOVE_SPEED
 
-/mob/living/critter/bot/cleanbot
-	name = "cleanbot"
+/mob/living/critter/bot/firebot
+	name = "firebot"
 
 	emagged
