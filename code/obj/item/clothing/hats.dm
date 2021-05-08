@@ -228,7 +228,6 @@
 /obj/item/clothing/head/caphat
 	name = "Captain's hat"
 	icon_state = "captain"
-	c_flags = SPACEWEAR
 	item_state = "caphat"
 	desc = "A symbol of the captain's rank, and the source of all their power."
 	setupProperties()
@@ -238,7 +237,6 @@
 /obj/item/clothing/head/centhat
 	name = "Cent. Comm. hat"
 	icon_state = "centcom"
-	c_flags = SPACEWEAR
 	item_state = "centcom"
 	setupProperties()
 		..()
@@ -283,7 +281,7 @@
 									"lighter" = /obj/item/device/light/zippo/,
 									"spray" = /obj/item/spraybottle,
 									"monitor" = /obj/item/device/camera_viewer,
-									"camera" = /obj/item/camera_test,
+									"camera" = /obj/item/camera,
 									"audiolog" = /obj/item/device/audio_log ,
 									"flashlight" = /obj/item/device/light/flashlight,
 									"glasses" = /obj/item/clothing/glasses)
@@ -783,11 +781,6 @@
 			return
 		return ..(hit_atom)
 
-	equipped(var/mob/user, var/slot)
-		..()
-		if (slot == SLOT_HEAD && ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.set_mutantrace(/datum/mutantrace/dwarf)
 
 /obj/item/clothing/head/bigtex
 	name = "75-gallon hat"
@@ -1329,3 +1322,35 @@
 			src.item_state = "hoscap"
 			boutput(user, "<span class='notice'>You unfold the beret back into a hat.</span>")
 		return
+
+/obj/item/clothing/head/pinwheel_hat
+	name = "pinwheel hat"
+	desc = "A fun hat with a little spinny wheel on it."
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "pinwheel_hat"
+	item_state = "pinwheel_hat"
+
+/obj/item/clothing/head/frog_hat
+	name = "frog"
+	desc = "A hat shaped like a frog's head. Not made of frogs."
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "frog_hat"
+	item_state = "frog_hat"
+
+/obj/item/clothing/head/boater_hat
+	name = "boater hat"
+	desc = "A hat useful for cutting hair and singing songs in a quartet."
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "boater_hat"
+	item_state = "boater_hat"
+
+/obj/item/clothing/head/ushanka
+	name = "ushanka"
+	desc = "A hat favored by those in cold climates."
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "ushanka"
+	item_state = "ushanka"
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 15)

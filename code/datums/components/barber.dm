@@ -341,9 +341,6 @@
 											M, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something on your head.",\
 									 user, "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s fishy head, knocking loose some space barnnacles.")
 				return 0
-			if("dwarf")
-				boutput(user, "You duck down slightly to cut [M]'s hair.")
-				return 1
 			if("monkey" || "sea monkey")
 				M.emote("scream")
 				playsound(M, "sound/impact_sounds/Slimy_Cut_1.ogg", 100, 1)

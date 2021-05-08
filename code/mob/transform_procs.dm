@@ -649,11 +649,11 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	var/traitor = 0
 
 	if (length(types))
-		C = selfmob.make_critter(pick(types), spawnpoint)
+		C = selfmob.make_critter(pick(types), spawnpoint, ghost_spawned=TRUE)
 	else
 		traitor = checktraitor(selfmob)
 		if (traitor)
-			C = selfmob.make_critter(pick(antag_respawn_critter_types), spawnpoint)
+			C = selfmob.make_critter(pick(antag_respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
 		else
 			if (selfmob.mind && istype(selfmob.mind.purchased_bank_item, /datum/bank_purchaseable/critter_respawn))
 				var/datum/bank_purchaseable/critter_respawn/critter_respawn = selfmob.mind.purchased_bank_item
@@ -746,6 +746,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		C.original_name = selfmob.real_name
 
 		C.Browse(grabResource("html/ghostcritter_mentor.html"),"window=ghostcritter_mentor;size=600x400;title=Ghost Critter Help")
+		logTheThing("admin", C, null, "respawned as a mentor mouse at [log_loc(C)].")
 
 		//hacky fix : qdel brain to prevent reviving
 		if (C.organHolder)

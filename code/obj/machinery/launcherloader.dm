@@ -362,8 +362,8 @@
 
 		if (href_list["print"] && !printing)
 			printing = 1
-			playsound(src.loc, "sound/machines/printer_thermal.ogg", 50, 0)
-			sleep(2.8 SECONDS)
+			playsound(src.loc, "sound/machines/printer_cargo.ogg", 75, 0)
+			sleep(1.75 SECONDS)
 			var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)
 			var/dest = strip_html(href_list["print"], 64)
 			B.name = "Barcode Sticker ([dest])"

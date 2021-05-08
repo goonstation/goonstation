@@ -151,6 +151,7 @@
 			ammoDrop.delete_on_reload = 1 // No duplicating empty magazines, please.
 			ammoDrop.update_icon()
 			usr.put_in_hand_or_drop(ammoDrop)
+			ammoDrop.after_unload(usr)
 			K.ammo.amount_left = 0 // Make room for the new ammo.
 			K.ammo.loadammo(A, K) // Let the other proc do the work for us.
 			//DEBUG_MESSAGE("Swapped [K]'s ammo with [A.type]. There are [A.amount_left] round left over.")
@@ -170,6 +171,7 @@
 			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please.
 			ammoHand.update_icon()
 			usr.put_in_hand_or_drop(ammoHand)
+			ammoHand.after_unload(usr)
 
 			var/obj/item/ammo/bullets/ammoGun = new A.type // Ditto.
 			ammoGun.amount_left = A.amount_left
@@ -201,7 +203,7 @@
 		else if (A.caliber in K.caliber)
 			check = 1
 		else if (K.caliber == null)
-			if (A.caliber == 1.58) // Prevent MRPT rocket
+			if (A.caliber > 1) // Prevent MRPT rocket
 				check = 0
 			else
 				check = 1 // For zip guns.
@@ -281,6 +283,9 @@
 		else
 			if (src.icon_empty)
 				src.icon_state = src.icon_empty
+		return
+
+	proc/after_unload(mob/user)
 		return
 
 /obj/item/ammo/bullets/derringer
@@ -784,7 +789,12 @@
 		else
 			src.icon_state = "40mmR-0"
 
-
+	after_unload(mob/user)
+		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
+		if(AMMO.has_grenade && src.delete_on_reload)
+			qdel(src)
+			user.put_in_hand_or_drop(AMMO.get_nade())
+			AMMO.unload_nade()
 
 // Ported from old, non-gun RPG-7 object class (Convair880).
 /obj/item/ammo/bullets/rpg

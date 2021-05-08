@@ -620,6 +620,22 @@
 		icon_state = "clown-dress"
 		item_state = "clown-dress"
 
+/obj/item/clothing/under/misc/mimefancy
+	name = "fancy mime suit"
+	desc = "A suit perfect for more sophisticated mimes. Wait... This isn't just a bleached clown suit, is it?"
+	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+	wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+	icon_state = "mime-fancy"
+	item_state = "mime-fancy"
+
+/obj/item/clothing/under/misc/mimedress
+	name = "mime dress"
+	desc = "You may be trapped in an invisible box forever and ever, but at least you look stylish!"
+	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+	wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+	icon_state = "mime-dress"
+	item_state = "mime-dress"
+
 /obj/item/clothing/under/misc/vice
 	name = "vice officer's suit"
 	desc = "This thing reeks of weed."
@@ -641,8 +657,8 @@
 /obj/item/clothing/under/misc/hydroponics
 	name = "senior botanist's jumpsuit"
 	desc = "Anyone wearing this has probably grown a LOT of weed in their time."
-	icon_state = "hydro"
-	item_state = "hydro"
+	icon_state = "hydro-senior"
+	item_state = "hydro-senior"
 
 /obj/item/clothing/under/misc/mail
 	name = "mailman's jumpsuit"
