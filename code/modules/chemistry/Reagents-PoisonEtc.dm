@@ -805,7 +805,7 @@ datum
 								else
 									H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
 								melted = 1
-							if (!(H?.head.c_flags & SPACEWEAR))
+							if (!(H.head?.c_flags & SPACEWEAR))
 								if (H.wear_mask)
 									var/obj/item/clothing/mask/K = H.wear_mask
 									if (!(K.item_function_flags & IMMUNE_TO_ACID))
