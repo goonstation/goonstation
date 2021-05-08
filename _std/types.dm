@@ -116,6 +116,16 @@ proc/get_singleton(type)
 	return singletons[type]
 var/global/list/singletons
 
+
+//
+// Find predecessor of a type
+proc/predecessor_path_in_list(type, list/types)
+  while(type)
+    if(type in types)
+      return type
+    type = type2parent(type)
+  return null
+
 // by_type and by_cat stuff
 
 // sometimes we want to have all objects of a certain type stored (bibles, staffs of cthulhu, ...)
