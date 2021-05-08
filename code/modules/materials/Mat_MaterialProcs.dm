@@ -614,8 +614,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 					boutput(attacker, "Cutting [owner] into a sheet isn't possible.")
 					return
 				attacker.visible_message("<span class='alert'>[attacker] starts cutting [owner] apart.</span>", "<span class='notice'>You start cutting [owner] apart.</span>", "You hear the sound of cutting cardboard.")
-				var/datum/action/bar/icon/hitthingwithitem/action_bar = new /datum/action/bar/icon/hitthingwithitem(attacker, attacker, attackobj, owner, src, 10 SECONDS, /datum/materialProc/cardboard_on_hit/proc/snip_end,\
+				var/datum/action/bar/icon/hitthingwithitem/action_bar = new /datum/action/bar/icon/hitthingwithitem(attacker, attacker, attackobj, owner, src, 3 SECONDS, /datum/materialProc/cardboard_on_hit/proc/snip_end,\
 				list(owner, attacker, attackobj), attackobj.icon, attackobj.icon_state)
+				action_bar.interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED // uh, is this how I'm supposed to do this?
 				actions.start(action_bar, attacker)
 				return
 
