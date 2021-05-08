@@ -180,6 +180,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/pen
+	name = "pen"
+	item_paths = list("MET-1")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/pen)
+	time = 3 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
 /datum/manufacture/vuvuzela
 	name = "Vuvuzela"
 	item_paths = list("ALL")

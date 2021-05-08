@@ -1986,6 +1986,7 @@
 		/datum/manufacture/welder,
 		/datum/manufacture/soldering,
 		/datum/manufacture/flashlight,
+		/datum/manufacture/pen,
 		/datum/manufacture/weldingmask,
 		/datum/manufacture/multitool,
 		/datum/manufacture/metal,
