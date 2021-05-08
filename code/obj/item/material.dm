@@ -897,7 +897,10 @@
 		if (istype(W,/obj/item/storage/) || istype(W,/obj/item/satchel/))
 			var/obj/item/storage/S = W
 			var/obj/item/satchel/B = W
-			for(var/obj/item/O in W)
+			var/items = W
+			if(istype(S))
+				items = S.get_contents()
+			for(var/obj/item/O in items)
 				if (load_reclaim(O))
 					. = TRUE
 					if (istype(S))
