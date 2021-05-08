@@ -91,6 +91,7 @@
 
 				var/datum/mind/M = pick(candidates)
 				if (M.current)
+					ticker.mode.Agimmicks |= M
 					M.current.make_ghost_critter(pestlandmark,select)
 					var/obj/item/implant/access/infinite/assistant/O = new /obj/item/implant/access/infinite/assistant(M.current)
 					O.owner = M.current
