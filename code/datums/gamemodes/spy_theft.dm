@@ -14,7 +14,7 @@
 	var/const/waittime_l = 600	// Minimum after round start to send threat information to printer
 	var/const/waittime_h = 1800	// Maximum after round start to send threat information to printer
 
-	var/const/bounty_refresh_interval = 1 MINUTES
+	var/const/bounty_refresh_interval = 25 MINUTES
 	var/last_refresh_time = 0
 
 	var/const/spies_possible = 7
@@ -28,7 +28,7 @@
 	var/const/organ_bounty_amt = 4
 	var/const/person_bounty_amt = 5
 	var/const/photo_bounty_amt = 4
-	var/const/station_bounty_amt = 14
+	var/const/station_bounty_amt = 4
 	var/const/big_station_bounty_amt = 2
 
 	var/list/possible_areas = list()
@@ -74,7 +74,7 @@
 	//Choose a reward from the four tiers
 	proc/pick_reward_tier(var/val)
 		switch(val)
-			if(1)
+			if (1)
 				value_high = 4
 				value_low = 0
 			if (2)
@@ -149,12 +149,12 @@
 		var/mob/new_player/player = C.mob
 		if (!istype(player)) continue
 
-		if(player.ready) num_players++
+		if (player.ready) num_players++
 
 	var/randomizer = rand(0,6)
 	var/num_spies = 2 //minimum
 
-	if(traitor_scaling)
+	if (traitor_scaling)
 		num_spies = max(2, min(round((num_players + randomizer) / 6), spies_possible))
 
 	var/list/possible_spies = get_possible_spies(num_spies)
@@ -212,10 +212,10 @@
 
 		if (ishellbanned(player)) continue //No treason for you
 		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_spy)
+			if (player.client.preferences.be_spy)
 				candidates += player.mind
 
-	if(candidates.len < minimum_traitors)
+	if (candidates.len < minimum_traitors)
 		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_spy set to yes were ready. We need [minimum_traitors] traitors so including players who don't want to be traitors in the pool.")
 		for(var/client/C)
 			var/mob/new_player/player = C.mob
@@ -228,7 +228,7 @@
 				if ((minimum_traitors > 1) && (candidates.len >= minimum_traitors))
 					break
 
-	if(candidates.len < 1)
+	if (candidates.len < 1)
 		return list()
 	else
 		return candidates
@@ -293,7 +293,7 @@
 
 		if (player.real_name != excluded_name)
 			names += player.real_name
-	if(!names.len)
+	if (!names.len)
 		return null
 	return pick(names)
 
@@ -559,14 +559,14 @@
 	// Loop through all objects and pick valid objects on station
 	for(var/obj/Object in world)
 		LAGCHECK(LAG_LOW)
-		if(spy_thief_target_types[Object.type])
+		if (spy_thief_target_types[Object.type])
 			var/turf/Turf = get_turf(Object)
-			if(!Turf || Turf.z != Z_LEVEL_STATION)
+			if (!Turf || Turf.z != Z_LEVEL_STATION)
 				continue
 			var/area/A = get_area(Object)
-			if(A.name == "Listening Post")
+			if (A.name == "Listening Post")
 				continue
-			if(valid_spy_thief_targets_by_type[Object.type])
+			if (valid_spy_thief_targets_by_type[Object.type])
 				valid_spy_thief_targets_by_type[Object.type] += Object
 			else
 				valid_spy_thief_targets_by_type[Object.type] = list(Object)
@@ -578,7 +578,7 @@
 		B.item = pair[1]
 		B.job = pair[2]
 		// B.path = B.item.type
-		if(istype(B.item, /obj/item/parts))
+		if (istype(B.item, /obj/item/parts))
 			var/obj/item/parts/P = B.item
 			if (!P || P.qdeled || !P.holder || P.holder.qdeled)
 				// "this seems really stupid"
@@ -709,7 +709,7 @@
 		// Calculate bounty difficulty
 		if (B.bounty_type == BOUNTY_TYPE_PHOTO)
 			// Adjust reward based off delivery area
-			if(B.delivery_area.spy_secure_area)
+			if (B.delivery_area.spy_secure_area)
 				B.pick_reward_tier(pick(2,3))
 			else
 				B.pick_reward_tier(1)
@@ -717,65 +717,68 @@
 			// Adjust reward based off target job and to estimate risk level
 			B.difficulty = B.estimate_target_difficulty(B.job)
 			switch(B.difficulty)
-				if(3)
+				if (3)
 					B.pick_reward_tier(4)
 				if (2)
 					B.pick_reward_tier(3)
 				if (1)
-					if (prob(10))
-						B.pick_reward_tier(3)
+					if (prob(10))	// Hot bounty
+						B.pick_reward_tier(pick(3.4))
 					else
 						B.pick_reward_tier(2)
 		else if (B.bounty_type == BOUNTY_TYPE_TRINK)
 			// Adjust reward based off target job and delivery area to estimate risk level
 			B.difficulty = B.estimate_target_difficulty(B.job)
 			switch(B.difficulty)
-				if(3)
+				if (3)
 					B.pick_reward_tier(4)
 				if (2)
-					if (prob(10))
+					if (prob(10))	// Hot bounty
 						B.pick_reward_tier(4)
-					else if(B.delivery_area.spy_secure_area)
-						B.pick_reward_tier(pick(3.4))
 					else
-						B.pick_reward_tier(pick(2,3))
+						if (B.delivery_area.spy_secure_area)
+							B.pick_reward_tier(pick(3.4))
+						else
+							B.pick_reward_tier(pick(2,3))
 				if (1)
-					if (prob(10))
+					if (prob(10))	// Hot bounty
 						B.pick_reward_tier(4)
-					else if(B.delivery_area.spy_secure_area)
-						B.pick_reward_tier(3)
 					else
-						B.pick_reward_tier(pick(1,3))
+						if (B.delivery_area.spy_secure_area)
+							B.pick_reward_tier(3)
+						else
+							B.pick_reward_tier(pick(1,2))
 		else if (B.bounty_type == BOUNTY_TYPE_BIG)
 			// Preset difficulty depending upon type
 			switch(B.difficulty)
-				if(3)
+				if (3)
 					B.pick_reward_tier(pick(2,3))
 				if (2)
 					B.pick_reward_tier(pick(1,2))
 				if (1)
-					if (prob(15))
+					if (prob(15))	// Random increase for variety
 						B.pick_reward_tier(pick(1,2))
 					else
 						B.pick_reward_tier(1)
 		else if (B.bounty_type == BOUNTY_TYPE_ITEM)
 			// Preset difficulty depending upon type, adjusted by delivery area
 			switch(B.difficulty)
-				if(3)
-					if(B.delivery_area.spy_secure_area)
+				if (3)
+					if (B.delivery_area.spy_secure_area)
 						B.pick_reward_tier(pick(3.4))
 					else
 						B.pick_reward_tier(pick(2,3))
 				if (2)
-					if(B.delivery_area.spy_secure_area)
+					if (B.delivery_area.spy_secure_area)
 						B.pick_reward_tier(pick(2.3))
 					else
 						B.pick_reward_tier(pick(1,2))
 				if (1)
-					if(B.delivery_area.spy_secure_area)
+					if (B.delivery_area.spy_secure_area)
 						B.pick_reward_tier(pick(2.3))
-					else if (prob(15))
-						B.pick_reward_tier(pick(1,2))
 					else
-						B.pick_reward_tier(1)
+						if (prob(15))	// Random increase for variety
+							B.pick_reward_tier(pick(1,2))
+						else
+							B.pick_reward_tier(1)
 	return
