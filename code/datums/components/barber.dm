@@ -71,7 +71,7 @@
 		boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
 		non_murderous_failure = BARBERY_FAILURE
 
-	if(M.bioHolder.mobAppearance.customization_first == "None")
+	if((M.bioHolder.mobAppearance.customization_first == "None") && (M.bioHolder.mobAppearance.customization_second == "None") && (M.bioHolder.mobAppearance.customization_third = "None"))
 		boutput(user, "<span class='alert'>There is nothing to cut!</span>")
 		non_murderous_failure = BARBERY_FAILURE
 
@@ -112,10 +112,6 @@
 	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
 		boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
-		non_murderous_failure = BARBERY_FAILURE
-
-	if(M.bioHolder.mobAppearance.customization_second == "None")
-		boutput(user, "<span class='alert'>You can't get a closer shave than that!</span>")
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(issilicon(M))
