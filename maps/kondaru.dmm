@@ -49204,13 +49204,28 @@
 /area/station/quartermaster/cargobay)
 "kWb" = (
 /obj/table/auto,
-/obj/item/storage/toolbox/electrical,
-/obj/item/clothing/gloves/yellow,
-/obj/item/device/multitool,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 12
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_y = 8
+	},
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = -5
+	},
+/obj/item/device/multitool{
+	pixel_y = 8
+	},
+/obj/item/wrench{
+	pixel_y = -4
+	},
+/obj/item/device/t_scanner{
+	pixel_x = -9
 	},
 /turf/simulated/floor/black,
 /area/station/engine/storage)
@@ -51562,7 +51577,9 @@
 /area/station/routing/security)
 "nwG" = (
 /obj/table/auto,
-/obj/item/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 7
+	},
 /obj/item/clothing/gloves/yellow,
 /obj/item/device/multitool,
 /obj/item/device/radio/intercom/engineering{
@@ -57477,12 +57494,32 @@
 /area/station/security/main)
 "tMd" = (
 /obj/table/auto,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/t_scanner,
-/obj/item/wrench,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
+	},
+/obj/item/interdictor_board{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/interdictor_board{
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/item/interdictor_board{
+	pixel_x = 3;
+	pixel_y = 8
+	},
+/obj/item/paper/manufacturer_blueprint/interdictor_frame{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/paper/manufacturer_blueprint/interdictor_rod{
+	pixel_x = -7;
+	pixel_y = -2
+	},
+/obj/item/paper/book/interdictor{
+	pixel_x = 3
 	},
 /turf/simulated/floor/black,
 /area/station/engine/storage)

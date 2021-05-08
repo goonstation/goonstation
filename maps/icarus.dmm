@@ -12397,16 +12397,29 @@
 /area/station/storage/primary)
 "aAT" = (
 /obj/table/auto,
-/obj/item/rods/steel{
-	amount = 50
+/obj/item/interdictor_board{
+	pixel_x = -5;
+	pixel_y = 8
 	},
-/obj/item/rods/steel{
-	amount = 50
+/obj/item/interdictor_board{
+	pixel_x = -1;
+	pixel_y = 8
 	},
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/interdictor_board{
+	pixel_x = 3;
+	pixel_y = 8
+	},
+/obj/item/paper/manufacturer_blueprint/interdictor_frame{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/paper/manufacturer_blueprint/interdictor_rod{
+	pixel_x = -7;
+	pixel_y = -2
+	},
+/obj/item/paper/book/interdictor{
+	pixel_x = 3
+	},
 /turf/simulated/floor,
 /area/station/storage/primary)
 "aAU" = (
@@ -12585,11 +12598,20 @@
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/device/t_scanner,
-/obj/item/wrench,
 /obj/item/device/radio/intercom/engineering{
 	dir = 4;
 	pixel_x = -20
 	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 16
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 16
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 16
+	},
+/obj/item/wrench,
 /turf/simulated/floor/yellow/side,
 /area/station/storage/primary)
 "aBp" = (
@@ -12643,6 +12665,14 @@
 /obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/ears/earmuffs,
 /obj/item/chem_grenade/metalfoam,
+/obj/item/rods/steel{
+	amount = 50;
+	pixel_x = -15
+	},
+/obj/item/rods/steel{
+	amount = 50;
+	pixel_x = -15
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/storage/primary)
 "aBt" = (

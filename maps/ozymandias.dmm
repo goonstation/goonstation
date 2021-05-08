@@ -43887,6 +43887,33 @@
 /obj/machinery/recharge_station,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"mES" = (
+/obj/table/auto,
+/obj/item/interdictor_board{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/interdictor_board{
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/item/interdictor_board{
+	pixel_x = 3;
+	pixel_y = 8
+	},
+/obj/item/paper/manufacturer_blueprint/interdictor_frame{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/paper/manufacturer_blueprint/interdictor_rod{
+	pixel_x = -7;
+	pixel_y = -2
+	},
+/obj/item/paper/book/interdictor{
+	pixel_x = 3
+	},
+/turf/simulated/floor/yellow/side,
+/area/station/engine/storage)
 "mFj" = (
 /obj/table/auto,
 /obj/machinery/networked/storage/scanner{
@@ -63503,7 +63530,12 @@
 /area/station/hallway/primary/south)
 "skD" = (
 /obj/table/auto,
-/obj/item/storage/box/cablesbox,
+/obj/item/storage/box/cablesbox{
+	pixel_x = -9
+	},
+/obj/item/storage/box/cablesbox{
+	pixel_x = 8
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/storage)
 "skL" = (
@@ -153955,7 +153987,7 @@ vqL
 vqL
 xwt
 vqL
-skD
+mES
 ykD
 tmI
 xIf
