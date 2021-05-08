@@ -268,15 +268,7 @@
 
 	//Add an implant if needed
 	var/obj/item/implant/health/imp = locate(/obj/item/implant/health, subject)
-	if (isnull(imp))
-		imp = new /obj/item/implant/health(subject)
-		imp.implanted = 1
-		imp.owner = subject
-		subject.implant.Add(imp)
-//		imp.implanted = subject // this isn't how this works with new implants sheesh
-		R.fields["imp"] = "\ref[imp]"
-	//Update it if needed
-	else
+	if(!isnull(imp))
 		R.fields["imp"] = "\ref[imp]"
 
 	if (!isnull(subjMind)) //Save that mind so traitors can continue traitoring after cloning.
