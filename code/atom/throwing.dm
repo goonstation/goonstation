@@ -57,7 +57,14 @@
 
 /atom/movable/Bump(atom/O)
 	if(src.throwing)
-		src.throw_impact(O)
+		var/found_any = FALSE
+		// can be optimized later by storing list on the atom itself if this ever becomes a problem (it won't)
+		for(var/datum/thrown_thing/thr as anything in global.throwing_controller.thrown)
+			if(thr.thing == src)
+				src.throw_impact(O, thr)
+				found_any = TRUE
+		if(!found_any)
+			src.throw_impact(O)
 		src.throwing = 0
 	..()
 

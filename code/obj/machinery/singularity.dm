@@ -1083,6 +1083,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		src.get_link()
 		desc = "Shoots a high power laser when active, it has been bolted and welded to the floor."
 		boutput(user, "You weld the emitter to the floor.")
+		logTheThing("station", user, null, "welds an emitter to the floor at [log_loc(src)].")
 	else if(state == WELDED)
 		state = WRENCHED
 		if(src.link) //Time to clear our link.
@@ -1090,6 +1091,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.link = null
 		desc = "Shoots a high power laser when active, it has been bolted to the floor."
 		boutput(user, "You cut the emitter free from the floor.")
+		logTheThing("station", user, null, "unwelds an emitter from the floor at [log_loc(src)].")
 
 //Send a signal over our link, if possible.
 /obj/machinery/emitter/proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)

@@ -209,6 +209,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 							src.population |= enteringM.mind
 							if (!src.active)
 								src.active = 1
+								SEND_SIGNAL(src, COMSIG_AREA_ACTIVATED)
 
 						//Dumb fucking medal fuck
 						if (src.name == "Space" && istype(A, /obj/vehicle/segway))
@@ -249,6 +250,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 								src.population -= exitingM.mind
 							if (src.active && src.population.len == 0) //Only if this area is now empty
 								src.active = 0
+								SEND_SIGNAL(src, COMSIG_AREA_DEACTIVATED)
 
 						//Put whatever you want here. See Entering above.
 

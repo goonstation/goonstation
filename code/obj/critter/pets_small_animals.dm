@@ -164,6 +164,7 @@
 	brutevuln = 1
 	butcherable = 1
 	pet_text = list("gently baps", "pets", "cuddles")
+	feed_text = "chatters happily!"
 
 	skinresult = /obj/item/material_piece/cloth/leather
 	max_skins = 1
@@ -226,6 +227,7 @@
 	brutevuln = 1
 	angertext = "hisses at"
 	chase_text = "pounces on"
+	feed_text = "purrs contentedly."
 	butcherable = 2
 	var/cattype = 1
 	var/randomize_cat = 1

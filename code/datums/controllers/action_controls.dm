@@ -477,7 +477,17 @@ var/datum/action_controller/actions
 			if(H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
+		if(QDELETED(sheet))
+			boutput(owner, "<span class='notice'>You have nothing to build with!</span>")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
 		owner.visible_message("<span class='notice'>[owner] begins assembling [objname]!</span>")
+
+	onUpdate()
+		. = ..()
+		if(QDELETED(sheet))
+			interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()
 		..()

@@ -216,3 +216,10 @@
 #define COMSIG_FULLAUTO_MOUSEDOWN "fullauto_mousedown"
 #define COMSIG_FULLAUTO_MOUSEDRAG "fullauto_mousedrag"
 #define COMSIG_GUN_PROJECTILE_CHANGED "gun_proj_changed"
+
+
+// ---- area signals ----
+/// area's active var set to true (when a client enters)
+#define COMSIG_AREA_ACTIVATED "area_activated"
+/// area's active var set to false (when all clients leave)
+#define COMSIG_AREA_DEACTIVATED "area_deactivated"

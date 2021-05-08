@@ -657,8 +657,8 @@
 /obj/item/clothing/under/misc/hydroponics
 	name = "senior botanist's jumpsuit"
 	desc = "Anyone wearing this has probably grown a LOT of weed in their time."
-	icon_state = "hydro"
-	item_state = "hydro"
+	icon_state = "hydro-senior"
+	item_state = "hydro-senior"
 
 /obj/item/clothing/under/misc/mail
 	name = "mailman's jumpsuit"
