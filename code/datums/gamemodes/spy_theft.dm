@@ -711,7 +711,7 @@
 		if (B.bounty_type == BOUNTY_TYPE_PHOTO)
 			// Adjust reward based off delivery area
 			if (B.delivery_area.spy_secure_area)
-				B.pick_reward_tier(pick(2,3))
+				B.pick_reward_tier(2)
 			else
 				B.pick_reward_tier(1)
 		else if (B.bounty_type == BOUNTY_TYPE_ORGAN)
@@ -724,7 +724,7 @@
 					B.pick_reward_tier(3)
 				if (1)
 					if (prob(10))	// Hot bounty
-						B.pick_reward_tier(pick(3.4))
+						B.pick_reward_tier(pick(3,4))
 					else
 						B.pick_reward_tier(2)
 		else if (B.bounty_type == BOUNTY_TYPE_TRINK)
@@ -738,7 +738,7 @@
 						B.pick_reward_tier(4)
 					else
 						if (B.delivery_area.spy_secure_area)
-							B.pick_reward_tier(pick(3.4))
+							B.pick_reward_tier(pick(3,4))
 						else
 							B.pick_reward_tier(pick(2,3))
 				if (1)
@@ -766,17 +766,17 @@
 			switch(B.difficulty)
 				if (3)
 					if (B.delivery_area.spy_secure_area)
-						B.pick_reward_tier(pick(3.4))
+						B.pick_reward_tier(pick(3,4))
 					else
 						B.pick_reward_tier(pick(2,3))
 				if (2)
 					if (B.delivery_area.spy_secure_area)
-						B.pick_reward_tier(pick(2.3))
+						B.pick_reward_tier(pick(2,3))
 					else
 						B.pick_reward_tier(pick(1,2))
 				if (1)
 					if (B.delivery_area.spy_secure_area)
-						B.pick_reward_tier(pick(2.3))
+						B.pick_reward_tier(pick(2,3))
 					else
 						if (prob(15))	// Random increase for variety
 							B.pick_reward_tier(pick(1,2))
