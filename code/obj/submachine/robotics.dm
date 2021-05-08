@@ -201,6 +201,7 @@
 				var/input_name = input(user, "Name the patch:", "Name", R.get_master_reagent_name()) as null|text
 				var/patchname = copytext(html_encode(input_name), 1, 32)
 				if (isnull(patchname) || !length(patchname) || patchname == " ")
+					working = 0
 					return
 				var/all_safe = 1
 				for (var/reagent_id in R.reagent_list)
@@ -223,6 +224,7 @@
 				var/input_name = input(user, "Name the ampoule:", "Name", R.get_master_reagent_name()) as null|text
 				var/ampoulename = copytext(html_encode(input_name), 1, 32)
 				if(!ampoulename)
+					working = 0
 					return
 				if(ampoulename == " ")
 					ampoulename = R.get_master_reagent_name()
