@@ -4,6 +4,9 @@
 (p)4635
 (e)⚖🐛🆕🎨|balance, bug, feature, sprites
 (+)Lab monkey crates are now card locked and cost 2500 credits to purchase.
+(u)Tarmunora
+(e)⚖|balance
+(+)themite turf reaction in smoke nerfed
 (u)edwardly
 (p)4602
 (e)⚖|balance

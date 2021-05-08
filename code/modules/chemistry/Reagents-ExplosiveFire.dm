@@ -221,6 +221,11 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				if(istype(T, /turf/simulated))
+					var/list/covered = holder.covered_turf()
+					if(length(covered) > 9)
+						volume = volume/length(covered)
+					if (volume < 3)
+						return
 					if(!T.reagents)
 						T.create_reagents(volume)
 					else
