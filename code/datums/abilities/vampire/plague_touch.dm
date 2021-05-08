@@ -1,6 +1,6 @@
 /datum/targetable/vampire/grave_grasp
 	name = "Grave grasp"
-	desc = "Grabs the target and infects them with a deadly, non-contagious disease."
+	desc = "Grabs the target's neck and infects them with a deadly, non-contagious disease."
 	icon_state = "badtouch" //brought to you by the bloodhound gang
 	targeted = 1
 	target_nodamage_check = 1
@@ -9,7 +9,7 @@
 	pointCost = 50
 	when_stunned = 0
 	not_when_handcuffed = 1
-	unlock_message = "You have gained grave grasp, when used on someone you will aggressively grab them and inflict them with a deadly non-contagious disease"
+	unlock_message = "You have gained grave grasp, when used on someone you will aggressively grab their neck and inflict them with a deadly, non-contagious disease"
 
 	cast(mob/target)
 		if (!holder)
@@ -45,7 +45,7 @@
 		L.add_fingerprint(M) // Why not leave some forensic evidence?
 		if (!(L.bioHolder && L.traitHolder.hasTrait("training_chaplain")))
 			L.contract_disease(/datum/ailment/disease/vamplague, null, null, 1) // path, name, strain, bypass resist
-			M.visible_message("<span class='alert'><B>[M] aggressively grabs [L]!</B></span>")
+			M.visible_message("<span class='alert'><B>[M] aggressively grabs [L]'s neck!</B></span>")
 			var/obj/item/grab/G = new /obj/item/grab(M, M, L)
 			M.put_in_hand(G, M.hand)
 			G.state = 3
