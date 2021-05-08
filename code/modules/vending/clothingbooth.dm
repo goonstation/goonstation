@@ -138,7 +138,7 @@ var/list/clothingbooth_items = list()
 			weapon.dropped()
 			qdel(weapon)
 		else
-			boutput(user,"<span style=\"color:red\">It seem the clothing booth is currently occupied. Maybe it's better to just wait.</span>")
+			boutput(user,"<span style=\"color:red\">It seems the clothing booth is currently occupied. Maybe it's better to just wait.</span>")
 
 	else
 		var/obj/item/grab/G = weapon
