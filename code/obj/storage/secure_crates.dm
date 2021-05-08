@@ -128,7 +128,7 @@
 
 /obj/storage/secure/crate/medical
 	desc = "A secure medical crate."
-	name = "Medical crate"
+	name = "medical crate"
 	icon_state = "securemedicalcrate"
 	density = 1
 	icon_opened = "securemedicalcrateopen"
@@ -136,6 +136,6 @@
 	req_access = list(access_medical_lockers)
 
 	monkey
-		name = "Lab Monkey crate"
+		name = "Lab Monkey Crate"
 		desc = "Warning: Contains live monkeys!"
 		req_access = list(access_medical_lockers, access_tox_storage)
