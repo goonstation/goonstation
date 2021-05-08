@@ -28,7 +28,7 @@
 	var/const/organ_bounty_amt = 4
 	var/const/person_bounty_amt = 5
 	var/const/photo_bounty_amt = 4
-	var/const/station_bounty_amt = 4
+	var/const/station_bounty_amt = 14
 	var/const/big_station_bounty_amt = 2
 
 	var/list/possible_areas = list()
@@ -708,13 +708,13 @@
 
 		// Calculate bounty difficulty
 		if (B.bounty_type == BOUNTY_TYPE_PHOTO)
+			// Adjust reward based off delivery area
 			if(B.delivery_area.spy_secure_area)
-				message_admins("Difficult area: Photo - [B.delivery_area.type]")
-				B.pick_reward_tier(2)
+				B.pick_reward_tier(pick(2,3))
 			else
 				B.pick_reward_tier(1)
 		else if (B.bounty_type == BOUNTY_TYPE_ORGAN)
-			// Adjust reward based off target job to estimate risk level
+			// Adjust reward based off target job and to estimate risk level
 			B.difficulty = B.estimate_target_difficulty(B.job)
 			switch(B.difficulty)
 				if(3)
@@ -727,7 +727,7 @@
 					else
 						B.pick_reward_tier(2)
 		else if (B.bounty_type == BOUNTY_TYPE_TRINK)
-			// Adjust reward based off target job to estimate risk level
+			// Adjust reward based off target job and delivery area to estimate risk level
 			B.difficulty = B.estimate_target_difficulty(B.job)
 			switch(B.difficulty)
 				if(3)
@@ -736,7 +736,6 @@
 					if (prob(10))
 						B.pick_reward_tier(4)
 					else if(B.delivery_area.spy_secure_area)
-						message_admins("Difficult area: [B.name] - [B.delivery_area.type] - Promotion in tier 2")
 						B.pick_reward_tier(pick(3.4))
 					else
 						B.pick_reward_tier(pick(2,3))
@@ -744,7 +743,6 @@
 					if (prob(10))
 						B.pick_reward_tier(4)
 					else if(B.delivery_area.spy_secure_area)
-						message_admins("Difficult area: [B.name] - [B.delivery_area.type] - Promotion in tier 1")
 						B.pick_reward_tier(3)
 					else
 						B.pick_reward_tier(pick(1,3))
@@ -761,23 +759,20 @@
 					else
 						B.pick_reward_tier(1)
 		else if (B.bounty_type == BOUNTY_TYPE_ITEM)
-			// Preset difficulty depending upon type
+			// Preset difficulty depending upon type, adjusted by delivery area
 			switch(B.difficulty)
 				if(3)
 					if(B.delivery_area.spy_secure_area)
-						message_admins("Difficult area: [B.name] - [B.delivery_area.type] - Promotion in tier 3")
 						B.pick_reward_tier(pick(3.4))
 					else
 						B.pick_reward_tier(pick(2,3))
 				if (2)
 					if(B.delivery_area.spy_secure_area)
-						message_admins("Difficult area: [B.name] - [B.delivery_area.type] - Promotion in tier 2")
 						B.pick_reward_tier(pick(2.3))
 					else
 						B.pick_reward_tier(pick(1,2))
 				if (1)
 					if(B.delivery_area.spy_secure_area)
-						message_admins("Difficult area: [B.name] - [B.delivery_area.type] - Promotion in tier 1")
 						B.pick_reward_tier(pick(2.3))
 					else if (prob(15))
 						B.pick_reward_tier(pick(1,2))
