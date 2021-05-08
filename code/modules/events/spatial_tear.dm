@@ -40,8 +40,8 @@
 		//spatial interdictor: mitigate spatial tears
 		//consumes 800 units of charge per tear segment weakened
 		//weakened tears can be traversed, but inflict minor brute damage
-		for (var/obj/machinery/interdictor/IX in orange(INTERDICT_RANGE, src))
-			if (IX.expend_interdict(800))
+		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
+			if (IN_RANGE(IX,src,INTERDICT_RANGE) && IX.expend_interdict(800))
 				src.alpha = 150
 				src.opacity = 0
 				src.stabilized = 1

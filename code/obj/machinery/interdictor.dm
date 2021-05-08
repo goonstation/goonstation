@@ -37,9 +37,11 @@
 		else
 			src.intcap = new /obj/item/cell/supercell(src) //deliberately not charged
 		..()
+		START_TRACKING
 		src.updateicon()
 
 	disposing()
+		STOP_TRACKING
 		src.stop_interdicting()
 		intcap?.dispose()
 		intcap = null
