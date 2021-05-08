@@ -1299,6 +1299,7 @@
 	item_state = "cultist"
 	see_face = 0
 	magical = 1
+	over_hair = TRUE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.01
