@@ -142,7 +142,7 @@
 
 /obj/item/handcuffs/tape_roll
 	name = "ducktape"
-	desc = "Our new top of the line high-tech handcuffs"
+	desc = "A convenient and illegal source of makeshift handcuffs."
 	icon_state = "ducktape"
 	flags = FPRINT | TABLEPASS | ONBELT
 	m_amt = 200
