@@ -192,7 +192,7 @@
 
 	if(src.frustration > 8)
 		src.KillPathAndGiveUp(1)
-	
+
 	if(src.target) // is our target still on fire?
 		if(src.emagged)
 			if(!IN_RANGE(src, src.target, 5) && prob(25))
@@ -444,3 +444,8 @@
 		src.created_name = t
 
 #undef FIREBOT_MOVE_SPEED
+
+/mob/living/critter/bot/cleanbot
+	name = "cleanbot"
+
+	emagged
