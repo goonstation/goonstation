@@ -691,6 +691,9 @@ that cannot be itched
 			I = H.wear_id
 		else if (ismobcritter(user))
 			I = locate(/obj/item/card/id) in user.contents
+		else if (issilicon(user))
+			var/mob/living/silicon/S = user
+			I = S.botcard
 		if (!I || !(access_security in I.access))
 			boutput(user, "<span class='alert'>Insufficient access.</span>")
 			return
