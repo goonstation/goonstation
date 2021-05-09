@@ -1,4 +1,5 @@
 //GUNS GUNS GUNS
+//asdf hands typing words
 /obj/item/gun/kinetic/g11
 	name = "\improper Manticore assault rifle"
 	desc = "An assault rifle capable of firing single precise bursts. The magazines holders are embossed with \"Anderson Para-Munitions\""
