@@ -895,17 +895,21 @@ obj/trait/pilot
 			src.turnOn(owner)
 		src.RegisterSignal(owner, COMSIG_MOB_LOGIN, .proc/turnOn)
 		src.RegisterSignal(owner, COMSIG_MOB_LOGOUT, .proc/turnOff)
+		src.RegisterSignal(owner, COMSIG_ATOM_EXAMINE, .proc/examined)
 
 	proc/turnOn(mob/owner)
 		for(var/image/I as anything in global.clown_disbelief_images)
 			owner.client.images += I
 
+	proc/examined(mob/owner, mob/examiner, list/lines)
+		if(examiner.job == "Clown")
+			lines += "<br>[capitalize(he_or_she(owner))] doesn't seem to notice you."
+
 	onRemove(mob/owner)
 		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_CLOWN_DISBELIEF_MOBS)
 		if(owner.client)
 			src.turnOff(owner)
-		src.UnregisterSignal(owner, COMSIG_MOB_LOGIN)
-		src.UnregisterSignal(owner, COMSIG_MOB_LOGOUT)
+		src.UnregisterSignal(owner, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_ATOM_EXAMINE))
 
 	proc/turnOff(mob/owner)
 		for(var/image/I as anything in global.clown_disbelief_images)
