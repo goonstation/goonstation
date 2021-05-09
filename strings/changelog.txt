@@ -1,5 +1,9 @@
 
 (t)sun may 09 21
+(u)edwardly
+(p)4647
+(e)|
+(+)AI is no longer an all-seeing entity and snipped cameras should correctly be removed from coverage.
 (u)pali
 (p)4643
 (e)🆕🎨|feature, sprites
