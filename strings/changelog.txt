@@ -1,5 +1,9 @@
 
 (t)sun may 09 21
+(u)Flaborized
+(p)4637
+(e)🎨|sprites
+(*)Traitors may now buy a roll of duct tape for 1 TC, instead of it being exclusive to surplus crates. It's handcuffs that you can use ten times.
 (u)Kubius
 (p)4644
 (e)🆕🗺|feature, mapping
