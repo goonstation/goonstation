@@ -32,8 +32,6 @@
 	var/const/big_station_bounty_amt = 2
 
 	var/list/possible_areas = list()
-	var/list/high_diff_areas = list()
-	var/list/med_diff_areas = list()
 	var/list/active_bounties = list()
 
 	var/list/uplinks = list()
