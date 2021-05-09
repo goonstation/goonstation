@@ -33,17 +33,17 @@ datum
 			// explodes instantly as a gas (50 °C < T)
 
 			proc/explode(var/list/covered_turf, expl_reason)
-				for (var/turf/T in covered_turf)
-					message_admins("Nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [showCoords(T.x, T.y, T.z)].")
-					var/context = "???"
-					if(holder?.my_atom) // Erik: Fix for Cannot read null.fingerprintshidden
-						var/list/fh = holder.my_atom.fingerprintshidden
+				var/turf/T = pick(covered_turf)
+				message_admins("Nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [showCoords(T.x, T.y, T.z)].")
+				var/context = "???"
+				if(holder?.my_atom) // Erik: Fix for Cannot read null.fingerprintshidden
+					var/list/fh = holder.my_atom.fingerprintshidden
 
-						if (length(fh)) //Wire: Fix for: bad text or out of bounds
-							context = "Fingerprints: [jointext(fh, "")]"
+					if (length(fh)) //Wire: Fix for: bad text or out of bounds
+						context = "Fingerprints: [jointext(fh, "")]"
 
-					logTheThing("combat", usr, null, "is associated with a nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [showCoords(T.x, T.y, T.z)]. Context: [context].")
-					explosion_new(usr, T, (12.5 * min(volume/covered_turf.len, 1000))**(2/3), 0.4) // Because people were being shit // okay its back but harder to handle // okay sci can have a little radius, as a treat
+				logTheThing("combat", usr, null, "is associated with a nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [showCoords(T.x, T.y, T.z)]. Context: [context].")
+				explosion_new(usr, T, (12.5 * min(volume, 1000))**(2/3), 0.4) // Because people were being shit // okay its back but harder to handle // okay sci can have a little radius, as a treat
 				holder.del_reagent("nitroglycerin")
 
 			reaction_temperature(exposed_temperature, exposed_volume)
