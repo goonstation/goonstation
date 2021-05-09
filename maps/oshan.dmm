@@ -40077,6 +40077,10 @@
 /obj/disposalpipe/trunk/mail/west,
 /obj/item/hand_labeler,
 /obj/item/device/audio_log,
+/obj/item/decoration/flower_vase{
+	pixel_x = -8;
+	pixel_y = 23
+	},
 /turf/simulated/floor,
 /area/station/engine/storage)
 "bUw" = (
