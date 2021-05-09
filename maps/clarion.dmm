@@ -15016,6 +15016,9 @@
 /area/station/crew_quarters/bar)
 "aDx" = (
 /obj/machinery/chem_heater,
+/obj/cup_rack{
+	pixel_y = 32
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "aDy" = (
@@ -45366,13 +45369,6 @@
 	dir = 1
 	},
 /area/station/security/main)
-"eGC" = (
-/obj/disposalpipe/segment/food{
-	dir = 4
-	},
-/obj/cup_rack,
-/turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/kitchen)
 "eJJ" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -87684,7 +87680,7 @@ ayX
 azG
 aAz
 aBr
-eGC
+aCz
 aDx
 aEF
 aFK
