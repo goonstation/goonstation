@@ -28,7 +28,7 @@
 	var/const/organ_bounty_amt = 4
 	var/const/person_bounty_amt = 5
 	var/const/photo_bounty_amt = 4
-	var/const/station_bounty_amt = 10
+	var/const/station_bounty_amt = 4
 	var/const/big_station_bounty_amt = 2
 
 	var/list/possible_areas = list()
