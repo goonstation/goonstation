@@ -65,6 +65,8 @@
 #define COMSIG_ATOM_HITBY_PROJ "atom_hitby_proj"
 /// when an atom is hit by a thrown thing (thrown_atom, /datum/thrown_thing)
 #define COMSIG_ATOM_HITBY_THROWN "atom_hitby_thrown"
+/// when an atom is examined (/mob/examiner, /list/lines), append to lines for more description
+#define COMSIG_ATOM_EXAMINE "atom_examine"
 
 // ---- atom/movable signals ----
 

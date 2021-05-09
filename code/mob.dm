@@ -2967,6 +2967,7 @@
 	set name = "Examine"
 	set category = "Local"
 	var/list/result = A.examine(src)
+	SEND_SIGNAL(A, COMSIG_ATOM_EXAMINE, src, result)
 	boutput(src, result.Join("\n"))
 
 
