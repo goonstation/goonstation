@@ -6403,8 +6403,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/security/brig/genpop)
 "py" = (
-/obj/table/auto,
-/obj/machinery/phone,
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "pz" = (
@@ -7583,6 +7582,10 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/paper/engine{
+	pixel_x = 12;
+	pixel_y = 19
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "sg" = (
@@ -8122,8 +8125,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/item/paper/engine{
-	pixel_x = 5
+/obj/machinery/phone/wall{
+	pixel_x = 9;
+	pixel_y = 5
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
@@ -9552,16 +9556,16 @@
 /obj/item/clothing/gloves/yellow,
 /obj/item/storage/firstaid/fire,
 /obj/item/extinguisher,
+/obj/item/device/radio/intercom/engineering{
+	dir = 4
+	},
 /obj/item/device/transfer_valve{
-	pixel_x = 5;
-	pixel_y = 14
+	pixel_x = 10;
+	pixel_y = 8
 	},
 /obj/item/device/transfer_valve{
 	pixel_x = -8;
-	pixel_y = 18
-	},
-/obj/item/device/radio/intercom/engineering{
-	dir = 4
+	pixel_y = 7
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)

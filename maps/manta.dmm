@@ -7907,6 +7907,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
 "axe" = (

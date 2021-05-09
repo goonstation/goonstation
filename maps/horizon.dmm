@@ -53482,6 +53482,7 @@
 	name = "Engineering Control Room"
 	})
 "cDY" = (
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},

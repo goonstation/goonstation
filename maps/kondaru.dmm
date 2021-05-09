@@ -14842,6 +14842,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
