@@ -28,7 +28,7 @@
 	var/const/organ_bounty_amt = 4
 	var/const/person_bounty_amt = 5
 	var/const/photo_bounty_amt = 4
-	var/const/station_bounty_amt = 4
+	var/const/station_bounty_amt = 10
 	var/const/big_station_bounty_amt = 2
 
 	var/list/possible_areas = list()
@@ -49,6 +49,7 @@
 	var/job = "job name"								//Job of bounty item owner (if item has an owner). Used for target difficulty on personal/organ bounties
 	var/bounty_type = 0 								//Type of objective, used to determine difficulty and organs 'Anywhere' delivery location
 	var/difficulty = 0									//Stored difficulty for items and big items
+	var/hot_bounty = 0									//This bounty randomly rolled a high tier reward
 
 	var/datum/syndicate_buylist/reward = 0
 	var/value_low = 0
@@ -702,11 +703,10 @@
 			break
 
 	for (var/datum/bounty_item/B in active_bounties)
-		if (B.bounty_type == BOUNTY_TYPE_ORGAN)
+		if (B.bounty_type == BOUNTY_TYPE_ORGAN || B.bounty_type == BOUNTY_TYPE_BIG)
 			B.delivery_area = 0
 		else
 			B.delivery_area = pick(possible_areas)
-
 		// Calculate bounty difficulty
 		if (B.bounty_type == BOUNTY_TYPE_PHOTO)
 			// Adjust reward based off delivery area
@@ -725,6 +725,7 @@
 				if (1)
 					if (prob(10))	// Hot bounty
 						B.pick_reward_tier(pick(3,4))
+						B.hot_bounty = TRUE
 					else
 						B.pick_reward_tier(2)
 		else if (B.bounty_type == BOUNTY_TYPE_TRINK)
@@ -736,6 +737,7 @@
 				if (2)
 					if (prob(10))	// Hot bounty
 						B.pick_reward_tier(4)
+						B.hot_bounty = TRUE
 					else
 						if (B.delivery_area.spy_secure_area)
 							B.pick_reward_tier(pick(3,4))
@@ -744,6 +746,7 @@
 				if (1)
 					if (prob(10))	// Hot bounty
 						B.pick_reward_tier(4)
+						B.hot_bounty = TRUE
 					else
 						if (B.delivery_area.spy_secure_area)
 							B.pick_reward_tier(3)

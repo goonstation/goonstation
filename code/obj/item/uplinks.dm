@@ -866,7 +866,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					var/rtext = ""
 					if (B.reward)
 						if (req_bounties() <= 1)
-							rtext = "<br><b>Reward</b> : [B.reward.name]"
+							rtext = "<br><b>Reward</b> : [B.reward.name] [(B.hot_bounty) ? "<b>**HOT**</b>" : ""]"
 						else
 							rtext = "<br><b>Reward</b> : Not available. Deliver [req_bounties()] more bounties."
 
