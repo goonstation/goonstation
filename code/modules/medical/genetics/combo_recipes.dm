@@ -144,6 +144,18 @@
 	required_effects = list("roach","detox")
 	result = /datum/bioEffect/bee
 
+/datum/geneticsrecipe/dwarf
+	required_effects = list("strong","resist_alcohol")
+	result = /datum/bioEffect/dwarf
+
+/datum/geneticsrecipe/dwarf_two
+	required_effects = list("strong","drunk")
+	result = /datum/bioEffect/dwarf
+
+/datum/geneticsrecipe/dwarf_three
+	required_effects = list("strong","stinky")
+	result = /datum/bioEffect/dwarf
+
 // Powers
 
 /datum/geneticsrecipe/telekinesis // Discovered

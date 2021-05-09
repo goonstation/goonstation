@@ -781,6 +781,15 @@
 			return
 		return ..(hit_atom)
 
+	equipped(mob/user, slot)
+		. = ..()
+		if(slot == SLOT_HEAD)
+			user.bioHolder.AddEffect("dwarf")
+
+	unequipped(mob/user)
+		if(equipped_in_slot == SLOT_HEAD)
+			user.bioHolder.RemoveEffect("dwarf")
+		. = ..()
 
 /obj/item/clothing/head/bigtex
 	name = "75-gallon hat"
