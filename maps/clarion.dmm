@@ -34353,7 +34353,30 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/reagent_dispensers/watertank/fountain,
+/obj/table/auto,
+/obj/item/interdictor_board{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/interdictor_board{
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/item/interdictor_board{
+	pixel_x = 3;
+	pixel_y = 8
+	},
+/obj/item/paper/manufacturer_blueprint/interdictor_frame{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/paper/manufacturer_blueprint/interdictor_rod{
+	pixel_x = -7;
+	pixel_y = -2
+	},
+/obj/item/paper/book/interdictor{
+	pixel_x = 3
+	},
 /turf/simulated/floor/white,
 /area/station/engine/engineering)
 "btr" = (
@@ -36425,7 +36448,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail,
-/obj/storage/cart,
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "bxa" = (

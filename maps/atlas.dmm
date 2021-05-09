@@ -5852,6 +5852,7 @@
 	dir = 1;
 	level = 2
 	},
+/obj/storage/crate/furnacefuel,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "og" = (
@@ -5866,6 +5867,7 @@
 	can_rupture = 0;
 	dir = 10
 	},
+/obj/storage/crate/furnacefuel,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "oi" = (
@@ -6250,15 +6252,14 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "pc" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4;
 	layer = 2.13
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "pd" = (
@@ -6314,7 +6315,30 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "pk" = (
-/obj/storage/secure/closet/engineering/engineer,
+/obj/table/auto,
+/obj/item/interdictor_board{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/interdictor_board{
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/item/interdictor_board{
+	pixel_x = 3;
+	pixel_y = 8
+	},
+/obj/item/paper/manufacturer_blueprint/interdictor_frame{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/paper/manufacturer_blueprint/interdictor_rod{
+	pixel_x = -7;
+	pixel_y = -2
+	},
+/obj/item/paper/book/interdictor{
+	pixel_x = 3
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "pl" = (
@@ -6696,12 +6720,12 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/combustion_chamber)
 "qf" = (
-/obj/storage/crate/furnacefuel,
 /obj/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/storage/secure/closet/engineering/engineer,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "qg" = (
@@ -9627,12 +9651,12 @@
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/southeast)
 "wF" = (
-/obj/storage/crate/furnacefuel,
 /obj/cable{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/storage/secure/closet/engineering/engineer,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "wH" = (
@@ -17269,6 +17293,10 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/cafeteria)
+"Qh" = (
+/obj/machinery/shieldgenerator/energy_shield,
+/turf/simulated/floor/orangeblack,
+/area/station/engine/engineering)
 "Qi" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -59644,7 +59672,7 @@ tw
 sm
 vE
 wF
-pk
+Qh
 zc
 zG
 zG

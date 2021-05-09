@@ -46059,7 +46059,29 @@
 /area/station/engine/coldloop)
 "bVq" = (
 /obj/table/reinforced/auto,
-/obj/random_item_spawner/tools,
+/obj/item/interdictor_board{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/interdictor_board{
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/item/interdictor_board{
+	pixel_x = 3;
+	pixel_y = 8
+	},
+/obj/item/paper/manufacturer_blueprint/interdictor_frame{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/paper/manufacturer_blueprint/interdictor_rod{
+	pixel_x = -7;
+	pixel_y = -2
+	},
+/obj/item/paper/book/interdictor{
+	pixel_x = 3
+	},
 /turf/simulated/floor/blue,
 /area/station/engine/coldloop)
 "bVr" = (
