@@ -842,7 +842,6 @@
 
 	New()
 		value = 650
-		setProperty("radioactive", 60)
 		setProperty("density", 60)
 		setProperty("hard", 60)
 		addTrigger(triggersOnAdd, new /datum/materialProc/enchanted_add())

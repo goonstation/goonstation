@@ -7,6 +7,7 @@
 (u)Tarmunora
 (e)⚖|balance
 (+)themite turf reaction in smoke nerfed
+(+)wizard crystal is no longer radioactive (but is still magical)
 (u)edwardly
 (p)4602
 (e)⚖|balance
