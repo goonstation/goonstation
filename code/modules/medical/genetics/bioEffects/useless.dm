@@ -232,7 +232,7 @@
 		owner.filters += filter(type="displace", size=0, render_source = src.distort.render_target)
 		owner.vis_contents += src.distort
 		src.filter = owner.filters[length(owner.filters)]
-		animate(src.filter, size=src.size, time=0.7 SECONDS, easing=SINE_EASING)
+		animate(src.filter, size=src.size, time=0.7 SECONDS, easing=SINE_EASING, flags=ANIMATION_PARALLEL)
 
 	OnRemove()
 		owner.filters -= filter
