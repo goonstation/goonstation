@@ -446,7 +446,10 @@
 				face_color = owner.faceColor
 				back_image.color = face_color
 				UpdateOverlays(back_image, "back_img")
-				UpdateOverlays(glow_image, "glow_img", 1) //forced so it displays on top
+				if (face_image.icon_state != "ai-tetris")
+					UpdateOverlays(glow_image, "glow_img", 1) //forced so it displays on top
+				else
+					UpdateOverlays(null, "glow_img", 1)
 				UpdateOverlays(face_image, "emotion_img", 1) //idem
 
 				var/colors = GetColors(face_color)
@@ -466,6 +469,10 @@
 			return //Hoooly balls why was this not here before argh
 		face_image.icon_state = state
 		UpdateOverlays(face_image, "emotion_img")
+		if (face_image.icon_state != "ai-tetris")
+			UpdateOverlays(glow_image, "glow_img", 1) //forced so it displays on top
+		else
+			UpdateOverlays(null, "glow_img", 1)
 
 	get_desc()
 		..()

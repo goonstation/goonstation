@@ -367,7 +367,7 @@ obj/item/gnomechompski/elf
 	name = "Russian Hootolver"
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "hootolver"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
 	m_amt = 2000

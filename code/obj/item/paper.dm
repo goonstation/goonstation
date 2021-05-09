@@ -36,7 +36,7 @@
 	var/info = ""
 	var/stampable = 1
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 15
 	layer = OBJ_LAYER
@@ -558,6 +558,27 @@ Only trained personnel should operate station systems. Follow all procedures car
 		STOP_TRACKING
 		. = ..()
 
+/obj/item/paper/hellburn
+	name = "paper- 'memo #R13-08-A'"
+	info = {"<h3 style="border-bottom: 1px solid black; width: 80%;">Nanotrasen Toxins Research</h3>
+<tt>
+<strong>MEMORANDUM &nbsp; &nbsp; * CONFIDENTIAL *</strong><br>
+<br><strong>DATE:</strong> 02/19/53
+<br><strong>FROM:</strong> NT Research Division.
+<br><strong>TO:&nbsp&nbsp;</strong> Space Station 13's Research Director
+<br><strong>SUBJ:</strong> Toxins Research Project #08-A
+<br>
+<p>
+The enclosed samples are to be used in continued plasma research.  Our current understanding is that the gas released from "Molitz Beta" in the presence of sufficient temperatures and plasma cause an unusual phenomenon. The gas, Oxygen Agent B, seems to disrupt the typical equilibrium formed in exothermic oxidation allowing for temperatures we have been unable to fully realize. This only seems to occur when combustion is incomplete and can be observed visually as a gentle swirling of the flame.
+</p>
+<p>
+Please exercise caution in your testing, the result can best be described as a hellfire.  Ensure adequite safety messures are in place to purge the fire.
+</p>
+<p>All findings and documents related to Project #08-A are to be provided in triplicate to CentComm on physical documents only. <b>DO NOT</b> provide this data digitally as it may become compromised.
+</p>
+</tt>
+<center><span style="font-family: 'Dancing Script';">Is this a Hellburn???!!?</span></center>"}
+
 /obj/item/paper/zeta_boot_kit
 	name = "Paper-'Instructions'"
 	info = {"<center><b>RECOVERY INSTRUCTIONS:</b></center><ul>
@@ -834,7 +855,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	icon_state = "fortune"
 
 	var/static/list/action = list("Beware of", "Keep an eye on", "Seek out", "Be wary of", "Make friends with", "Aid", "Talk to", "Avoid")
-	var/static/list/who = list("Zero-G Chem-Co Commander", "Shambling Abomination", "Merlin", "GeneTek Operative Javelin (as Destiny Calls)", "Remy", "Dr. Acula", "Morty")
+	var/static/list/who = list("Officer Beepsky", "Shambling Abomination", "Remy", "Dr. Acula", "Morty", "Sylvester", "Jones", "the staff assistant next to you", "the clown")
 	var/static/list/thing = list("are in possession of highly dangerous contraband.", "murdered a bee.", "kicked George.", "are a Syndicate operative.", "are a murderer.", "have disguised themselves from their true form.",
 	"are not who they claim to be.", "know Shitty Bill's secret.", "are lonely.", "hugged a space bear and survived to tell the tale.", "know the legendary double-fry technique.", "have the power to reanimate the dead.",
 	"consort with wizards.", "sell really awesome drugs.", "have all-access.", "know the king.", "make amazing pizza.", "have a toolbox and are not afraid to use it.")
@@ -1045,7 +1066,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	amount = 10.0
 	item_state = "sheet-metal"
 	throwforce = 1
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 7
 
@@ -1081,6 +1102,10 @@ Only trained personnel should operate station systems. Follow all procedures car
 				P.info = "Help me! I am being forced to code SS13 and It won't let me leave."
 	src.update()
 	return
+
+/obj/item/paper_bin/attack_self(mob/user as mob)
+	..()
+	src.attack_hand(user)
 
 /obj/item/paper_bin/attackby(obj/item/paper/P as obj, mob/user as mob) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
 	if (istype(P))
@@ -1123,7 +1148,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	item_state = "stamp"
 	flags = FPRINT | TABLEPASS
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60
@@ -1402,7 +1427,7 @@ automatically adopt your criminal control strategy of choice.<br>
 <td>The perfect crowd control option, this Mode stuns all your enemies within a close radius, but leaves you untouched!</td>
 </tr>
 <tr>
-<td><b>"Execute"</b></td>
+<td><b>"Execute" / "Exterminate"</b></td>
 <td>30 PU</td>
 <td>Turn your Lawbringer™ into your favourite sidearm with these .38 Full Metal Jacket rounds!</td>
 </tr>
@@ -1417,7 +1442,7 @@ automatically adopt your criminal control strategy of choice.<br>
 <td>Never use a riot launcher again! These smoke grenades will let you manage line of sight with ease.</td>
 </tr>
 <tr>
-<td><b>"Knockout"</b></td>
+<td><b>"Knockout" /  "Sleepshot"</b></td>
 <td>60 PU</td>
 <td>When you just can't get things to slow down, <i>make 'em</i> slow down with these handy haloperidol tranquilizer darts!</td>
 </tr>
@@ -1432,7 +1457,7 @@ automatically adopt your criminal control strategy of choice.<br>
 <td>Lawbringer™ warranty is voided if exposed to clowns. Keep them at bay.</td>
 </tr>
 <tr>
-<td><b>"Pulse"</b></td>
+<td><b>"Pulse" / "Push"</b></td>
 <td>35 PU</td>
 <td>Just like our patented Pulse Rifle™s, this Mode sends your enemies flying! Keep crime at arm's length!</td>
 </tr>

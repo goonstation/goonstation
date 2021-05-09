@@ -204,12 +204,16 @@
 	name = "feather"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "feather"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	p_class = 1
 	burn_point = 220
 	burn_output = 300
 	burn_possible = 1
 	rand_pos = 1
+
+	attack(mob/M as mob, mob/user as mob)
+		src.add_fingerprint(user)
+		M.emote("sneeze")
 
 var/list/parrot_species = list("eclectus" = /datum/species_info/parrot/eclectus,
 	"eclectusf" = /datum/species_info/parrot/eclectus/female,
@@ -523,7 +527,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	throwforce = 2.0
 	throw_speed = 1
 	throw_range = 8
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	max_stack = 20
 
@@ -1135,7 +1139,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	desc = "A little golden brooch that makes you feel compelled to yell silly things."
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "moonbrooch"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/activated = 0
 
 	verb/moon_prism_power()
@@ -1171,7 +1175,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	item_state = "moonstick"
 	flags = FPRINT | TABLEPASS | ONBELT
 	force = 2.0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throwforce = 2.0
 	throw_speed = 3
 	throw_range = 5
@@ -1261,7 +1265,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 3.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -1387,7 +1391,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	icon_state = "spacelipstick0"
 	color = null
 	font_color = "#FF0000"
-	font = "Dancing Script, cursive"
+	font = "'Dancing Script', cursive"
 	webfont = "Dancing Script"
 	uses_handwriting = 1
 	var/open = 0
@@ -1572,7 +1576,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	desc = "How can you tell it's blessed? Well, just look at it! It's so obvious!"
 	icon = 'icons/misc/HaineSpriteDump.dmi'
 	icon_state = "ballbearing"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	force = 7
 	throwforce = 5
 	stamina_damage = 25
@@ -1610,7 +1614,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "thing"
 	flags = FPRINT | CONDUCT | TABLEPASS
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	force = 10
 	throwforce = 7
 	mats = 50
@@ -1624,7 +1628,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	desc = "A little model of the NSS Destiny. How spiffy!"
 	icon = 'icons/misc/HaineSpriteDump.dmi'
 	icon_state = "destiny"
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 /obj/test_knife_switch_switch
 	name = "knife switch switch"

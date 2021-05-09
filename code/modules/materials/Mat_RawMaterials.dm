@@ -43,12 +43,24 @@
 		P.change_stack_amount(toRemove - P.amount)
 		return P
 
-	attackby(var/obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/material_piece) && W.material)
+	attack_hand(mob/user as mob)
+		if(user.is_in_hands(src) && src.amount > 1)
+			var/splitnum = round(input("How many material pieces do you want to take from the stack?","Stack of [src.amount]",1) as num)
+			if (splitnum >= amount || splitnum < 1)
+				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
+				return
+			var/obj/item/material_piece/new_stack = split_stack(splitnum)
+			user.put_in_hand_or_drop(new_stack)
+			new_stack.add_fingerprint(user)
+		else
+			..(user)
 
-			if(src.stack_item(W))
-				boutput(user, "<span class='notice'>You stack \the [W]!</span>")
-		return
+	attackby(obj/item/W, mob/user)
+		if(W.type == src.type)
+			stack_item(W)
+			if(!user.is_in_hands(src))
+				user.put_in_hand(src)
+			boutput(user, "<span class='notice'>You add the material to the stack. It now has [src.amount] pieces.</span>")
 
 	MouseDrop(over_object, src_location, over_location) //src dragged onto over_object
 		if (isobserver(usr))
@@ -264,6 +276,8 @@
 				change_stack_amount(-1)
 			else
 				qdel (src)
+		else
+			..()
 
 /obj/item/material_piece/organic/bamboo
 	name = "bamboo stalk"
@@ -280,6 +294,8 @@
 				change_stack_amount(-1)
 			else
 				qdel (src)
+		else
+			..()
 
 /obj/item/material_piece/cloth/spidersilk
 	name = "space spider silk"

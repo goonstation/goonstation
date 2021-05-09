@@ -13,7 +13,7 @@
 	name = "seashell"
 	icon = 'icons/obj/sealab_objects.dmi'
 	desc = "Hey, you remember collecting these things as a kid! Wait - you didn't grow up here!"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	rand_pos = 1
 	var/database_id = null
 

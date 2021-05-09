@@ -9,7 +9,7 @@ var/global/list/bible_contents = list()
 	item_state ="bible"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	max_wclass = 2
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
@@ -46,7 +46,7 @@ var/global/list/bible_contents = list()
 				if(prob(25))
 					H.cure_disease_by_path(/datum/ailment/disability/clumsy/cluwne)
 			M.HealDamage("All", heal_amt, heal_amt)
-			if(prob(30))
+			if(prob(40))
 				JOB_XP(user, "Chaplain", 1)
 
 	attackby(var/obj/item/W, var/mob/user, obj/item/storage/T)
@@ -87,7 +87,7 @@ var/global/list/bible_contents = list()
 			var/mob/H = M
 			// ******* Check
 			if ((ishuman(H) && prob(60) && !(M.traitHolder?.hasTrait("atheist"))))
-				bless(M)
+				bless(M, user)
 				M.visible_message("<span class='alert'><B>[user] heals [M] with the power of Christ!</B></span>")
 				boutput(M, "<span class='alert'>May the power of Christ compel you to be healed!</span>")
 				if (narrator_mode)
@@ -191,7 +191,7 @@ var/global/list/bible_contents = list()
 	name = "O.C. Bible"
 	desc = "For when you don't want the good book to take up too much space in your life."
 	icon_state = "minibible"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 /obj/item/storage/bible/hungry
 	name = "hungry bible"
@@ -255,8 +255,8 @@ var/global/list/bible_contents = list()
 		if(src.contents.len > 0)
 			. += " It feels a bit heavier than it should."
 
-	attack_hand(var/mob/user as mob)
-		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
+	attack_hand(mob/user as mob)
+		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain") && user.is_in_hands(src))
 			var/obj/item/gun/kinetic/faith/F = locate() in src.contents
 			if(F)
 				user.put_in_hand_or_drop(F)

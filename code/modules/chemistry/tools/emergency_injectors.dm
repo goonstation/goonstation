@@ -47,7 +47,7 @@
 					return ..()
 				logTheThing("combat", user, M, "injects [constructTarget(M,"combat")] with [src] [log_reagents(src)]")
 				src.reagents.trans_to(M, amount_per_transfer_from_this)
-				user.visible_message("<span class='alert'>[user] injects [M == user ? "[his_or_her(user)]self" : M] with [src]!</span>",\
+				user.visible_message("<span class='alert'>[user] injects [M == user ? himself_or_herself(user) : M] with [src]!</span>",\
 				"<span class='alert'>You inject [M == user ? "yourself" : M] with [src]!</span>")
 				playsound(get_turf(M), "sound/items/hypo.ogg", 40, 0)
 				if(!src.reagents.total_volume)
@@ -67,7 +67,7 @@
 					return ..()
 				logTheThing("combat", user, null, "injects themself with [src] [log_reagents(src)]")
 				src.reagents.trans_to(user, amount_per_transfer_from_this)
-				user.visible_message("<span class='alert'>[user] injects [his_or_her(user)]self with [src]!</span>",\
+				user.visible_message("<span class='alert'>[user] injects [himself_or_herself(user)] with [src]!</span>",\
 				"<span class='alert'>You inject yourself with [src]!</span>")
 				playsound(get_turf(user), "sound/items/hypo.ogg", 40, 0)
 				if(!src.reagents.total_volume)

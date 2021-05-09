@@ -125,3 +125,17 @@
 		desc = "Contains controlled explosives designed for trench use."
 		req_access = list(access_engineering)
 		spawn_contents = list(/obj/item/pipebomb/bomb/engineering = 6)
+
+/obj/storage/secure/crate/medical
+	desc = "A secure medical crate."
+	name = "medical crate"
+	icon_state = "securemedicalcrate"
+	density = 1
+	icon_opened = "securemedicalcrateopen"
+	icon_closed = "securemedicalcrate"
+	req_access = list(access_medical_lockers)
+
+	monkey
+		name = "Lab Monkey Crate"
+		desc = "Warning: Contains live monkeys!"
+		req_access = list(access_medical_lockers, access_tox_storage)

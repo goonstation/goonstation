@@ -989,7 +989,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				message = "<B>[src]</B> does a flip!"
 
 				//flick("ai-flip", src)
-				if(faceEmotion != "ai-red")
+				if(faceEmotion != "ai-red" && faceEmotion != "ai-tetris")
 					UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', "[faceEmotion]-flip", src.layer+0.2), "actual_face")
 					SPAWN_DBG(0.5 SECONDS)
 						UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
@@ -1900,7 +1900,11 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		I.color = faceColor
 		UpdateOverlays(I, "faceplate")
 
-		UpdateOverlays(SafeGetOverlayImage("face_glow", 'icons/mob/ai.dmi', "ai-face_glow", src.layer+0.1), "face_glow")
+		if (faceEmotion != "ai-tetris")
+			UpdateOverlays(SafeGetOverlayImage("face_glow", 'icons/mob/ai.dmi', "ai-face_glow", src.layer+0.1), "face_glow")
+		else
+			UpdateOverlays(null, "face_glow")
+
 		UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
 
 		if (src.power_mode == 1)
@@ -2203,7 +2207,7 @@ proc/get_mobs_trackable_by_AI()
 		if (W.material.material_flags & MATERIAL_METAL) // metal sheets
 			if (src.build_step < 1)
 				var/obj/item/sheet/M = W
-				if (M.consume_sheets(3))
+				if (M.change_stack_amount(-3))
 					src.build_step++
 					boutput(user, "You add plating to [src]!")
 					playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
@@ -2219,7 +2223,7 @@ proc/get_mobs_trackable_by_AI()
 			if (src.build_step >= 2)
 				if (!src.has_glass)
 					var/obj/item/sheet/G = W
-					if (G.consume_sheets(1))
+					if (G.change_stack_amount(-1))
 						src.build_step++
 						boutput(user, "You add glass to [src]!")
 						playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)

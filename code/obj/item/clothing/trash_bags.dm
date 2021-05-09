@@ -8,7 +8,7 @@
 	icon_state = "trashbag-f"
 	uses_multiple_icon_states = 1
 	item_state = ""
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	rand_pos = 1
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	tooltip_flags = REBUILD_DIST
@@ -41,7 +41,7 @@
 			src.item_state = src.base_state
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if(W.w_class > 3)
+		if(W.w_class > W_CLASS_NORMAL)
 			boutput(user, "<span class='alert'>\The [W] is too big to fit inside [src]!</span>")
 			return
 		if (W.cant_self_remove)
@@ -88,7 +88,7 @@
 	proc/calc_w_class(var/mob/user)
 		src.current_stuff = 0
 		if (!src.contents.len)
-			src.w_class = 1.0
+			src.w_class = W_CLASS_TINY
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
 				if (H.w_uniform == src)

@@ -52,7 +52,7 @@
 				qdel(G)
 
 			return
-	if ((!( shielded ) || !( W.flags ) & NOSHIELD))
+	if (!shielded || !(W.flags & NOSHIELD))
 		SPAWN_DBG( 0 )
 		// drsingh Cannot read null.force
 #ifdef DATALOGGER

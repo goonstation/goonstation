@@ -361,7 +361,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(T.density)
 			return
 		if(total_plasma <= 0)
-			if(prob(2))
+			if(prob(2) && src.owner.owner)
 				src.owner.owner.visible_message("<span class='alert>[src.owner.owner] dissipates.</span>")
 				qdel(src.owner.owner)
 			return

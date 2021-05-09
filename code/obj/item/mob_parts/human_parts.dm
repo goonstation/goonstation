@@ -436,6 +436,7 @@
 	var/special_icons = 'icons/mob/human.dmi'
 	var/original_flags = 0
 	var/image/handimage = 0
+	random_limb_blacklisted = 1
 	/// No more yee eating csaber arms
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ITEM)
@@ -585,6 +586,7 @@
 	var/original_flags = 0
 	var/image/handimage = 0
 	var/special_icons = 'icons/mob/human.dmi'
+	random_limb_blacklisted = 1
 	/// Also, item arms are supposedly junk jammed into a severed limb's socket
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ITEM)
@@ -1490,10 +1492,12 @@
 /obj/item/parts/human_parts/arm/mutant/roach
 	icon = 'icons/mob/roach.dmi'
 	partIcon = 'icons/mob/roach.dmi'
+	skintoned = 1
 
 /obj/item/parts/human_parts/leg/mutant/roach
 	icon = 'icons/mob/roach.dmi'
 	partIcon = 'icons/mob/roach.dmi'
+	skintoned = 1
 
 ////// ACTUAL ROACH LIMBS //////
 /obj/item/parts/human_parts/arm/mutant/roach/left
@@ -2117,3 +2121,49 @@
 	partlistPart = "foot_right"
 	step_image_state = "footprintsR"
 
+/// PSYCHEDELIC LIMBS ///
+///// PARENT /////
+
+/obj/item/parts/human_parts/arm/mutant/flashy
+	icon = 'icons/mob/flashy.dmi'
+	partIcon = 'icons/mob/flashy.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/flashy
+	icon = 'icons/mob/flashy.dmi'
+	partIcon = 'icons/mob/flashy.dmi'
+
+///// LIMBS /////
+
+/obj/item/parts/human_parts/arm/mutant/flashy/left
+	name = "psychedelic left arm"
+	desc = "A polychromatic left arm."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/flashy/right
+	name = "psychedelic right arm"
+	desc = "A polychromatic right arm."
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/flashy/left
+	name = "psychedelic left leg"
+	desc = "A polychromatic left leg."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/flashy/right
+	name = "psychedelic right leg"
+	desc = "A polychromatic right leg."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"

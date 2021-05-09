@@ -11,7 +11,7 @@ GAUNTLET CARDS
 	icon = 'icons/obj/items/card.dmi'
 	icon_state = "id"
 	wear_image_icon = 'icons/mob/mob.dmi'
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	burn_type = 1
 	stamina_damage = 0
 	stamina_cost = 0
@@ -76,6 +76,7 @@ GAUNTLET CARDS
 	desc = "A standardized NanoTrasen microchipped identification card that contains data that is scanned when attempting to access various doors and computers."
 	flags = FPRINT | TABLEPASS | ATTACK_SELF_DELAY
 	click_delay = 0.4 SECONDS
+	wear_layer = MOB_BELT_LAYER
 	var/access = list()
 	var/registered = null
 	var/assignment = null
@@ -83,7 +84,7 @@ GAUNTLET CARDS
 	var/emagged = 0
 	var/datum/reagent_group_account/reagent_account = null
 	/// this determines if the icon_state of the ID changes if it is given a new job
-	var/keep_icon = FALSE 
+	var/keep_icon = FALSE
 
 	// YOU START WITH  NO  CREDITS
 	// WOW
@@ -142,7 +143,6 @@ GAUNTLET CARDS
 	registered = "Member"
 	assignment = "Member"
 	keep_icon = TRUE
-	var/jones_swiped = 0
 
 /obj/item/card/id/captains_spare
 	name = "Captain's spare ID"

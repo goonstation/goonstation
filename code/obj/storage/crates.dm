@@ -164,7 +164,7 @@
 	spawn_contents = list(/obj/item/device/radio/headset/multifreq = 4,
 	/obj/item/device/audio_log = 2,
 	/obj/item/audio_tape = 4,
-	/obj/item/camera_test = 2,
+	/obj/item/camera = 2,
 	/obj/item/device/light/flashlight = 2,
 	/obj/item/paper/book/critter_compendium,
 	/obj/item/reagent_containers/food/drinks/milk,
@@ -437,7 +437,7 @@
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/gun/kinetic/tranq_pistol,
 		/obj/item/storage/pouch/tranq_pistol_dart,
-		/obj/beacon_deployer/syndicate,
+		/obj/item/pinpointer/disk,
 		/obj/item/genetics_injector/dna_scrambler,
 		/obj/item/voice_changer,
 		/obj/item/card/emag,
@@ -452,6 +452,7 @@
 		spawn_contents = list(/obj/item/gun/kinetic/smg,
 		/obj/item/storage/pouch/bullet_9mm/smg,
 		/obj/item/clothing/glasses/nightvision,
+		/obj/item/pinpointer/disk,
 		/obj/item/cloaking_device,
 		/obj/item/card/emag,
 		/obj/item/lightbreaker,
@@ -518,13 +519,13 @@
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/sniper)
 
 	melee //wip, not ready for use
-		name = "Class Crate - Templar"
+		name = "Class Crate - Knight"
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/heavy_power_sword,
-		/obj/item/syndicate_barrier,
-		/obj/item/clothing/shoes/magnetic,
-		/obj/item/clothing/suit/space/syndicate/heavy,
-		/obj/item/clothing/head/helmet/space/syndicate/specialist)
+		/obj/item/clothing/shoes/swat/knight,
+		/obj/item/clothing/gloves/swat/knight,
+		/obj/item/clothing/suit/space/syndicate/knight,
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
 
 	qm //Hi Gannets, I like your crate and wanted to use it for some QM stuff. Come yell at Azungar if this is not ok.
 		name = "Weapons crate"
@@ -681,3 +682,6 @@
 		spawn_contents = list(/obj/item/radio_tape/advertisement/cargonia,
 		/obj/item/clothing/under/rank/cargo,/obj/decal/skeleton)
 
+	escape
+		spawn_contents = list(/obj/item/sea_ladder,
+		/obj/item/pipebomb/bomb/engineering = 2)

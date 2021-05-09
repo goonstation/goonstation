@@ -7,7 +7,7 @@
 
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	tool_flags = TOOL_PULSING
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	force = 5.0
 	throwforce = 5.0
@@ -37,6 +37,11 @@
 	//Beacon and control frequencies for bots!
 	var/control
 	var/beacon
+	//turf and data_terminal for powernet check
+	var/turf/T = get_turf(target.loc)
+	var/obj/machinery/power/data_terminal/test_link = locate() in T
+	var/obj/item/implant/tracking/targetimplant = locate() in target.contents
+	//net_id block, except computers, where we do it all in one go
 	if (hasvar(target, "net_id"))
 		net_id = target:net_id
 	else if (hasvar(target, "botnet_id"))
@@ -53,7 +58,11 @@
 		//laptops are special too!
 		if(omniperipheral)
 			frequency = omniperipheral.frequency
+	else if (targetimplant)
+		net_id = targetimplant.net_id
+		frequency = targetimplant.pda_alert_frequency
 
+	//frequency block
 	if (hasvar(target, "alarm_frequency"))
 		frequency = target:alarm_frequency
 	else if (hasvar(target, "freq"))
@@ -81,3 +90,11 @@
 		boutput(user, "<span class='alert'>CTRLFREQ#[control]</span>")
 	if(beacon)
 		boutput(user, "<span class='alert'>BCKNFREQ#[beacon]</span>")
+	//Powernet Test Block
+	//If we have a net_id but no wireless frequency, we're probably a powernet device
+	if(isturf(T) && net_id && !frequency)
+		if(!test_link || !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
+			boutput(user, "<span class='alert'>ERR#NOLINK</span>")
+	if (test_link)
+		if (length(test_link.powernet.cables) < 1)
+			boutput(user, "<span class='alert'>ERR#NOTATERM</span>")

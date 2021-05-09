@@ -22,7 +22,6 @@
 			user.lastattacked = src
 			var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
 			A.effect_click_tile(src,user,U)
-			src.ArtifactFaultUsed(user)
 
 /datum/artifact/attack_wand
 	associated_object = /obj/item/artifact/attack_wand
@@ -49,9 +48,10 @@
 		attack_type = pick("lightning","fire","ice","sonic")
 		if(prob(10))
 			attack_type = "all"
-		cooldown = rand(25,900)
-		if (prob(5))
-			cooldown = 0
+		// cooldown
+		cooldown = rand(3 SECONDS, 70 SECONDS)
+		if(attack_type == "lightning")
+			cooldown = max(30 SECONDS, cooldown)
 		// fire
 		powerVars["fireTemp"] = rand(1000,10000)
 		if(prob(10))
@@ -145,4 +145,6 @@
 
 				if (R.total_volume)
 					R.clear_reagents()
+
+		O.ArtifactFaultUsed(user)
 		return

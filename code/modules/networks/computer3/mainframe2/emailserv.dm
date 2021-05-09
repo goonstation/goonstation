@@ -176,14 +176,14 @@
 				if (!check_read_permission(emailRec, useracc))
 					continue
 
-				if ((emailRec.fields.len >= 2) && lowertext(emailRec.fields[2]) == "*all")
+				if ((length(emailRec.fields) >= 2) && lowertext(emailRec.fields[2]) == "*all")
 					mailList += emailRec
 					continue
 
 				if (length(groupTargets))
 					var/success = 0
 					for (var/groupMember in groupTargets)
-						if (emailRec.fields.len >= 2 && (lowertext(groupMember) ==  lowertext(emailRec.fields[2])))
+						if (length(emailRec.fields) >= 2 && (lowertext(groupMember) ==  lowertext(emailRec.fields[2])))
 							mailList += emailRec
 							success = 1
 							break

@@ -24,7 +24,6 @@
 				A.effect_click_tile(src,user,U)
 			else
 				boutput(user, "<b>[src]</b> [A.error_phrase]")
-			src.ArtifactFaultUsed(user)
 
 /datum/artifact/telewand
 	associated_object = /obj/item/artifact/teleport_wand
@@ -72,9 +71,12 @@
 		var/turf/start_loc = get_turf(user)
 		playsound(start_loc, wand_sound, 50, 1, -1)
 		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(T,particle_sprite,particle_color))
+		O.ArtifactFaultUsed(user)
 		return
 
 	proc/can_teleport_here(var/turf/T)
+		if(isrestrictedz(T.z))
+			return 0
 		if (!istype(T,/turf/simulated/floor/))
 			return 0
 		if (T.density)

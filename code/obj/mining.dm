@@ -955,6 +955,7 @@
 
 	dark
 		fullbright = 0
+		luminosity = 1
 
 	lighted
 		fullbright = 1
@@ -1471,7 +1472,7 @@
 	icon_state = "pickaxe"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "pick"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	flags = ONBELT
 	force = 7
 	var/dig_strength = 1
@@ -1563,6 +1564,7 @@ obj/item/clothing/gloves/concussive
 		T.dig_strength = 4
 		T.hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 		T.hitsound_uncharged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
+		AddComponent(/datum/component/wearertargeting/unarmedblock/concussive, list(SLOT_GLOVES))
 
 /obj/item/mining_tool/power_pick
 	name = "power pick"
@@ -1766,7 +1768,7 @@ obj/item/clothing/gloves/concussive
 	name = "concussive charge"
 	desc = "It is set to detonate in 5 seconds."
 	flags = ONBELT
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/emagged = 0
 	var/hacked = 0
 	expl_devas = 0
@@ -1897,7 +1899,7 @@ obj/item/clothing/gloves/concussive
 	var/maximum_charges = 8
 	var/robocharge = 250
 	var/target = null
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	flags = ONBELT
 	mats = 4
 
@@ -2042,7 +2044,7 @@ obj/item/clothing/gloves/concussive
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "minanal"
 	flags = ONBELT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
 		mining_scan(get_turf(user), user, 6)
@@ -2106,7 +2108,7 @@ obj/item/clothing/gloves/concussive
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "minanal"
 	flags = ONBELT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
 		boutput(user, "The screen is clearly painted on. When you press Scan, a short metal spike extends from the top and sparks brightly before retracting again.")
@@ -2314,7 +2316,7 @@ var/global/list/cargopads = list()
 	icon_state = "scoop"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "buildpipe"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	mats = 6
 	var/obj/item/satchel/mining/satchel = null
 
