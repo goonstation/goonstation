@@ -462,6 +462,7 @@
 	anchored = 1
 	density = 1
 	//var/datum/electronics/electronics_items/link = null
+	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_engineering_chief)
 
 	var/processing = 0
 	var/net_id = null
@@ -586,6 +587,7 @@
 /obj/machinery/rkit/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 	var/dat
+	var/hide_allowed = src.allowed(usr)
 	dat = "<b>Ruckingenur Kit</b><HR>"
 
 	dat += "<b>Scanned Items:</b><br>"
@@ -595,7 +597,12 @@
 		if (S.item_mats && src.olde)
 			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=done'>Frame</A>"
 		else if (S.blueprint)
-			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=blueprint'>Blueprint</A>"
+			if(!S.locked || hide_allowed || src.olde)
+				dat += " * <A href='?src=\ref[src];op=\ref[S];tp=blueprint'>Blueprint</A>"
+			else
+				dat += " * Blueprint Disabled"
+		if(hide_allowed)
+			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=lock'>[S.locked ? "Locked" : "Unlocked"]</A>"
 		dat += "</small><br>"
 	dat += "<br>"
 
@@ -636,6 +643,11 @@
 							SPAWN_DBG(2.5 SECONDS)
 								if (src)
 									new /obj/item/paper/manufacturer_blueprint(src.loc, M)
+
+			if("lock")
+				if(href_list["op"])
+					var/datum/electronics/scanned_item/O = locate(href_list["op"]) in mechanic_controls.scanned_items
+					O.locked = !O.locked
 
 		updateDialog()
 	else

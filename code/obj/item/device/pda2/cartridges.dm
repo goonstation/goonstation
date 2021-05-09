@@ -338,6 +338,7 @@
 		New()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/scan/plant_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
 			src.root.add_file( new /datum/computer/file/text/handbook_botanist(src))
 			src.read_only = 1
 

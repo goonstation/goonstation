@@ -477,7 +477,17 @@ var/datum/action_controller/actions
 			if(H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
+		if(QDELETED(sheet))
+			boutput(owner, "<span class='notice'>You have nothing to build with!</span>")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
 		owner.visible_message("<span class='notice'>[owner] begins assembling [objname]!</span>")
+
+	onUpdate()
+		. = ..()
+		if(QDELETED(sheet))
+			interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()
 		..()
@@ -1370,7 +1380,7 @@ var/datum/action_controller/actions
 
 
 /datum/action/bar/private/icon/pickup //Delayed pickup, used for mousedrags to prevent 'auto clicky' exploits but allot us to pickup with mousedrag as a possibel action
-	duration = 10
+	duration = 0
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	id = "pickup"
 	var/obj/item/target

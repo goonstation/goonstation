@@ -2,6 +2,7 @@
 	name = "notice board"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nboard00"
+	pixel_y = 32
 	flags = FPRINT
 	plane = PLANE_NOSHADOW_BELOW
 	desc = "A board for pinning important notices upon."
@@ -88,6 +89,7 @@
 
 /obj/noticeboard/persistent
 	name = "persistent notice board"
+	desc = "A board for pinning important notices upon. Looks like this one doesn't get cleared out at the end of the shift."
 	var/static/file_name = "data/persistent_noticeboards.json"
 	var/static/data = null
 	var/persistent_id = null
@@ -110,24 +112,30 @@
 	if(isnull(src.data))
 		if(fexists(src.file_name))
 			src.data = json_decode(file2text(src.file_name))
-		else
-			src.data = list()
+	if(isnull(src.data))
+		src.data = list()
 	if(src.persistent_id in src.data)
 		for(var/list/book_info in src.data[src.persistent_id])
 			var/obj/item/paper/paper = new(src)
 			paper.name = book_info[1]
 			paper.info = book_info[2]
+			paper.fingerprintslast = book_info[3]
 	src.notices = length(src.contents)
 	src.update_icon()
 
 /obj/noticeboard/persistent/proc/save_stuff()
 	src.data[src.persistent_id] = list()
 	for(var/obj/item/paper/paper in src)
-		src.data[src.persistent_id] += list(list(paper.name, paper.info))
+		src.data[src.persistent_id] += list(list(paper.name, paper.info, paper.fingerprintslast))
 
 proc/save_noticeboards()
 	var/obj/noticeboard/persistent/board
 	for(board in by_type[/obj/noticeboard/persistent])
 		board.save_stuff()
+	if(isnull(board))
+		logTheThing("debug", null, null, "No persistent noticeboards to save.")
+		return
 	fdel(board.file_name)
+	var/json_data = json_encode(board.data)
+	logTheThing("debug", null, null, "Persistent noticeboard save data: [json_data]")
 	text2file(json_encode(board.data), board.file_name)

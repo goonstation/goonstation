@@ -76,8 +76,6 @@
 					continue
 				if (!M.ears_protected_from_sound())
 					boutput(M, "<span class='alert'>The loud, horrible noises painfully batter your eardrums!</span>")
-				else
-					continue
 
 				var/weak = 0
 				var/ear_damage = 2

@@ -221,14 +221,19 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				if(istype(T, /turf/simulated))
+					var/list/covered = holder.covered_turf()
+					if(length(covered) > 9)
+						volume = volume/length(covered)
+					if (volume < 3)
+						return
 					if(!T.reagents)
 						T.create_reagents(volume)
 					else
-						T.reagents.maximum_volume = T.reagents.maximum_volume + volume			
-					
+						T.reagents.maximum_volume = T.reagents.maximum_volume + volume
+
 					if(!T.reagents.has_reagent("thermite"))
 						T.UpdateOverlays(image('icons/effects/effects.dmi',icon_state = "thermite"), "thermite")
-						
+
 					T.reagents.add_reagent("thermite", volume, null)
 					if (T.active_hotspot)
 						T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 10, 300)
@@ -658,13 +663,19 @@ datum
 			var/caused_fireflash = 0
 			var/min_req_fluid = 0.10 //at least 10% of the fluid needs to be oil for it to ignite
 
+			unpooled(pooltype)
+				. = ..()
+				caused_fireflash = 0 //scream. Band-aid fix for unpooled fuel sometimes coming with caused_fireflash preset to True.
+
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(volume < 1)
 					if (holder)
 						holder.del_reagent(id)
 					return
 
-				if (!caused_fireflash)
+				if (caused_fireflash)
+					return
+				else
 					var/list/covered = holder.covered_turf()
 					if (covered.len < 4 || (volume / holder.total_volume) > min_req_fluid)
 						if(covered.len > 0) //possible fix for bug where caused_fireflash was set to 1 without fireflash going off, allowing fuel to reach any temp without igniting

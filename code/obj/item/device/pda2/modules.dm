@@ -103,13 +103,16 @@
 	var/image/lensflare
 	var/use_simple_light = 0
 	var/use_medium_light = 1
+	var/light_r = 255
+	var/light_g = 255
+	var/light_b = 255
 
 	New()
 		..()
 		if (!use_simple_light && !use_medium_light)
 			light = new /datum/light/line
 			light.set_brightness(lumlevel)
-			light.set_color(1, 1, 1)
+			light.set_color(light_r,light_g,light_b)
 		src.lensflare = image(src.flashlight_icon, src.flashlight_icon_state)
 
 	relay_pickup(mob/user)
@@ -119,7 +122,7 @@
 		else if (on)
 			if (src.host)
 				src.host.remove_sm_light("pda\ref[src]")
-			user.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
+			user.add_sm_light("pda\ref[src]", list(light_r,light_g,light_b,lumlevel * 255), use_medium_light)
 
 
 	relay_drop(mob/user)
@@ -131,7 +134,7 @@
 						light.attach(src.host.loc)
 					else if (on)
 						user.remove_sm_light("pda\ref[src]")
-						src.host.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
+						src.host.add_sm_light("pda\ref[src]", list(light_r,light_g,light_b,lumlevel * 255), use_medium_light)
 
 
 	return_menu_badge()
@@ -143,7 +146,7 @@
 		if (!use_simple_light && !use_medium_light)
 			light.attach(pda)
 		else if (on)
-			pda.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
+			pda.add_sm_light("pda\ref[src]", list(light_r,light_g,light_b,lumlevel * 255), use_medium_light)
 
 	uninstall()
 		if (!use_simple_light && !use_medium_light)
@@ -175,9 +178,9 @@
 			else
 				if (!isturf(src.host.loc))
 					var/atom/A = src.host.loc
-					A.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
+					A.add_sm_light("pda\ref[src]", list(light_r,light_g,light_b,lumlevel * 255), use_medium_light)
 				else
-					src.host.add_sm_light("pda\ref[src]", list(255,255,255,lumlevel * 255), use_medium_light)
+					src.host.add_sm_light("pda\ref[src]", list(light_r,light_g,light_b,lumlevel * 255), use_medium_light)
 
 		else
 			src.host.underlays -= src.lensflare
@@ -202,8 +205,11 @@
 	lumlevel = 0.8
 
 	toggle_light()
+		src.light_r = rand(255)
+		src.light_g = rand(255)
+		src.light_b = rand(255)
+		light?.set_color(light_r,light_g,light_b)
 		..()
-		light.set_color(rand(255), rand(255), rand(255))
 
 
 /obj/item/device/pda_module/flashlight/high_power

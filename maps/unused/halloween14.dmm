@@ -40662,12 +40662,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bDq" = (
-/turf/unsimulated/wall/setpieces{
-	desc = "A weird jet black metal wall indented with strange grooves and lines.";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "ancient";
-	name = "stranger wall"
-	},
+/turf/unsimulated/wall/setpieces/stranger,
 /area/crater/cave)
 "bDr" = (
 /turf/unsimulated/floor/setpieces{
@@ -52159,12 +52154,7 @@
 	},
 /area/crater/cave/lower)
 "cdK" = (
-/turf/unsimulated/wall/setpieces{
-	desc = "A weird jet black metal wall indented with strange grooves and lines.";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "ancient";
-	name = "stranger wall"
-	},
+/turf/unsimulated/wall/setpieces/stranger,
 /area/crater/cave/lower)
 "cdL" = (
 /obj/decal/fakeobjects{
@@ -54295,12 +54285,7 @@
 	sd_ColorGreen = 0.3;
 	sd_ColorRed = 0.4
 	},
-/turf/unsimulated/wall/setpieces{
-	desc = "A weird jet black metal wall indented with strange grooves and lines.";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "ancient";
-	name = "stranger wall"
-	},
+/turf/unsimulated/wall/setpieces/stranger,
 /area/crater/cave/lower)
 "chL" = (
 /turf/unsimulated/wall{
