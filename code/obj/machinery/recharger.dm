@@ -1,4 +1,4 @@
-#define CHARGE_AMOUNT 20
+#define CHARGE_AMOUNT 30
 #define ACTIVE_POWER_DRAIN 500
 
 #define STATUS_INACTIVE 0
@@ -99,7 +99,6 @@ obj/machinery/recharger
 			continue
 
 	if(to_charge)
-		SubscribeToProcess()
 
 		user.drop_item()
 		to_charge.set_loc(src)
@@ -126,7 +125,6 @@ obj/machinery/recharger
 		src.charging.set_loc(src.loc)
 		src.charging = null
 
-		UnsubscribeProcess()
 		power_usage = 50
 		charge_status = STATUS_INACTIVE
 		src.update_icon()

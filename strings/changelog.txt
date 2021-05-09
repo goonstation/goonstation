@@ -1,5 +1,9 @@
 
 (t)sun may 09 21
+(u)Kubius
+(p)4644
+(e)🆕🗺|feature, mapping
+(*)Engineering departments have received a crate for assembly of the Spatial Interdictor, a device which can mitigate certain random events in its range of influence given sufficient power.
 (u)Flourish
 (e)⚖|balance
 (+)The stun baton now features a stacking 15 second stun (up from a non-stacking 15 second stun).

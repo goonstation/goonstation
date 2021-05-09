@@ -140,7 +140,6 @@
 						[(M.stat == 2 || M.max_health == 0) ? "Dead" : "[round(100 * M.health / M.max_health)]%"]
 					</div>
 					"} : ""]
-				[!ishuman(M) ? "" : {"
 					<div class='l'>Reagents<a href='?src=\ref[src];action=secretsfun;type=reagent_help'>*</a></div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "checkreagent")]'>Check</a> &bull;
@@ -153,7 +152,6 @@
 						<a href='[playeropt_link(M, "addbioeffect")]'>Add</a> &bull;
 						<a href='[playeropt_link(M, "removebioeffect")]'>Remove</a>
 					</div>
-					"}]
 					<div class='l'>Abilities</div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "manageabils")]'>Manage</a> &bull;

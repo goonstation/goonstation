@@ -34472,6 +34472,7 @@
 /area/station/engine/power)
 "bJj" = (
 /obj/machinery/light,
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor,
 /area/station/engine/power)
 "bJk" = (
