@@ -43,8 +43,8 @@
 	var/uses_electricity = 1 // Does it use electricity? Certain interactions don't work with a wooden baton.
 	var/status = 1 //1 is on, 0 is off
 
-	var/stun_normal_weakened = 15
-	var/stun_normal_stuttering = 15
+	var/stun_normal_weakened = 20
+	var/stun_normal_stuttering = 20
 	var/stun_harm_weakened = 8 // Only used when next flag is set to 1.
 	var/instant_harmbaton_stun = 0 // Legacy behaviour for harmbaton, that is an instant knockdown.
 #ifdef USE_STAMINA_DISORIENT

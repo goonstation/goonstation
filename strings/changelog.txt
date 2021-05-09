@@ -1,4 +1,8 @@
 
+(t)sun may 09 21
+(u)Flourish
+(e)⚖|balance
+(+)The stun baton now features a non-stacking 20 second stun (up from a non-stacking 15 second stun).
 (t)sat may 08 21
 (u)Sovexe
 (p)4635
