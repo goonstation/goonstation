@@ -33,7 +33,7 @@
 	if (!( locate(/obj/table, src.loc) ))
 		boutput(user, "<span class='notice'>You MUST put the paper on a table!</span>")
 		return
-	if (W.w_class < 4)
+	if (W.w_class < W_CLASS_BULKY)
 		if ((istool(user.l_hand, TOOL_CUTTING | TOOL_SNIPPING) && user.l_hand != W) || (istool(user.r_hand, TOOL_CUTTING | TOOL_SNIPPING) && user.r_hand != W))
 			var/a_used = 2 ** (src.w_class - 1)
 			if (src.amount < a_used)
@@ -95,7 +95,7 @@
 	item_state = "gift"
 	var/size = 3.0
 	var/obj/item/gift = null
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0

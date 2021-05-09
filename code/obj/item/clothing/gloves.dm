@@ -4,11 +4,12 @@ var/list/glove_IDs = new/list() //Global list of all gloves. Identical to Cogwer
 ABSTRACT_TYPE(/obj/item/clothing/gloves)
 /obj/item/clothing/gloves
 	name = "gloves"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	icon = 'icons/obj/clothing/item_gloves.dmi'
 	wear_image_icon = 'icons/mob/hands.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
 	protective_temperature = 400
+	wear_layer = MOB_HAND_LAYER2
 	var/uses = 0
 	var/max_uses = 0 // If can_be_charged == 1, how many charges can these gloves store?
 	var/stunready = 0
@@ -186,6 +187,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		src.overridespecial = active
 		S.onAdd()
 		src.specialoverride = S
+		src.tooltip_rebuild = true;
 		return S
 
 
@@ -233,6 +235,14 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		..()
 		setProperty("heatprot", 7)
 
+/obj/item/clothing/gloves/black/attackby(obj/item/W, mob/user)
+	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
+		user.visible_message("<span class='notice'>[user] cuts off the fingertips from [src].</span>")
+		if(src.loc == user)
+			user.u_equip(src)
+		qdel(src)
+		user.put_in_hand_or_drop(new /obj/item/clothing/gloves/fingerless)
+	else . = ..()
 /obj/item/clothing/gloves/cyborg
 	desc = "beep boop borp"
 	name = "cyborg gloves"
@@ -323,6 +333,14 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("heatprot", 10)
 		setProperty("conductivity", 0.3)
 		setProperty("deflection", 20)
+
+/obj/item/clothing/gloves/swat/knight
+	name = "combat gauntlets"
+	desc = "Heavy-duty combat gloves that help you keep hold of your weapon."
+
+	setupProperties()
+		..()
+		setProperty("deflection", 25)
 
 /obj/item/clothing/gloves/swat/NT
 	desc = "A pair of Nanotrasen tactical gloves that are quite fire and electrically-resistant. They also help you block attacks. They do not specifically help you block against blocking though. Just regular attacks."
@@ -421,7 +439,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	throwforce = 25
 	throw_speed = 3
 	throw_range = 6
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS | NOSHIELD
 
 	New()

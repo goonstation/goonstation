@@ -1446,7 +1446,7 @@
 					ReplaceWithEngineFloor()
 
 					if (C)
-						C:amount -= 2
+						C.change_stack_amount(-2)
 						if (C:amount <= 0)
 							qdel(C) //wtf
 
@@ -1727,6 +1727,13 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		desc = "Honeycomb's big, yeah yeah yeah."
 		icon = 'icons/turf/walls.dmi'
 		icon_state = "hive"
+
+	stranger
+		name = "stranger wall"
+		desc = "A weird jet black metal wall indented with strange grooves and lines."
+		icon = 'icons/turf/walls.dmi'
+		icon_state = "ancient"
+
 
 // -------------------- VR --------------------
 /turf/unsimulated/floor/setpieces/gauntlet

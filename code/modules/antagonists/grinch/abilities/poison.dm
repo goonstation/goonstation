@@ -55,7 +55,6 @@
 					if (istype(RC, /obj/item/reagent_containers/food/))
 						var/obj/item/reagent_containers/food/F = RC
 						F.festivity -= 3
-						F.AddComponent(/datum/component/consume/festive_food, F.festivity)
 
 					RC.add_fingerprint(M)
 					attempt_success = 1

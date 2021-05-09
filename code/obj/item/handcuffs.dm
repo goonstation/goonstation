@@ -4,7 +4,7 @@
 	icon_state = "handcuff"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 2
 	throw_range = 5
 	m_amt = 500
@@ -142,7 +142,7 @@
 
 /obj/item/handcuffs/tape_roll
 	name = "ducktape"
-	desc = "Our new top of the line high-tech handcuffs"
+	desc = "A convenient and illegal source of makeshift handcuffs."
 	icon_state = "ducktape"
 	flags = FPRINT | TABLEPASS | ONBELT
 	m_amt = 200

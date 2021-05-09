@@ -511,7 +511,7 @@ var/global/atom_emergency_stop = 0
 				message_admins("[key_name(usr)]'s spinning command terminated due to an emergency stop!")
 				break
 			else
-				animate_spin(A, direction, time, looping)
+				animate_spin(A, direction, time, looping, FALSE)
 				spun ++
 				spun_total ++
 				if (spun >= amount_to_spin)
@@ -578,7 +578,7 @@ var/global/atom_emergency_stop = 0
 				break
 			else
 				if (istype(A, spin_path))
-					animate_spin(A, direction, time, looping)
+					animate_spin(A, direction, time, looping, FALSE)
 					spun ++
 					spun_total ++
 					if (spun >= amount_to_spin)
@@ -620,7 +620,7 @@ var/global/atom_emergency_stop = 0
 	logTheThing("diary", usr, null, "spun [target] (details: [direction] direction, [time] animate time, [looping] looping, [showCoords(target.x, target.y, target.z)] in [target.loc]))", "admin")
 	message_admins("[key_name(usr)] spun [target] (details: [direction] direction, [time] animate time, [looping] looping, [showCoords(target.x, target.y, target.z)] in [target.loc]))")
 
-	animate_spin(target, direction, time, looping)
+	animate_spin(target, direction, time, looping, FALSE)
 	return
 
 /* -------------------- Get -------------------- */

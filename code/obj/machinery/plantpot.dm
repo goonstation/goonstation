@@ -17,15 +17,23 @@
 		..()
 
 	proc/update_maptext()
-		if(!src.current)
-			src.maptext = "<span class='pixel ol c vb'>--</span>"
+		if (!src.current)
+			src.maptext = "<span class='pixel ol c vb'></span>"
 		maptext_width = 96
 		maptext_y = 32
 		maptext_x = -32
 		var/datum/plant/growing = src.current
 		var/datum/plantgenes/DNA = src.plantgenes
 		var/growth_pct = round(src.growth / (growing.harvtime - (DNA ? DNA.harvtime : 0)) * 100)
-		var/hp_pct = round(health / growing.starthealth * 100)
+		var/hp_pct = 0
+		var/hp_text = ""
+		if (growing.starthealth != 0)
+			hp_pct = round(health / growing.starthealth * 100)
+			hp_text = "[hp_pct]%"
+		else
+			hp_pct = round(health / 10 * 100)
+			hp_text = "[health]*"
+
 		var/hp_col = "#ffffff"
 		switch (hp_pct)
 			if(400 to INFINITY)
@@ -41,7 +49,7 @@
 			else
 				hp_col = "#ff0000"
 
-		src.maptext = "<span class='ps2p sh c vt'>GR [growth_pct]%\n<span style='color: [hp_col];'>HP [hp_pct]%</span></span>"
+		src.maptext = "<span class='pixel ol sh c vt'>GR [growth_pct]%\n<span style='color: [hp_col];'>HP [hp_text]</span></span>"
 
 	get_desc()
 		if(!src.current)
@@ -50,7 +58,7 @@
 		var/datum/plant/growing = src.current
 		var/datum/plantgenes/DNA = src.plantgenes
 		var/growthlimit = growing.harvtime - DNA.harvtime
-		return "Generation: [src.generation] - Health: [src.health] / [growing.starthealth] - Growth: [src.growth] / [growthlimit] - Harvests: [src.harvests] left."
+		return "Generation [src.generation] - Health: [src.health] / [growing.starthealth] - Growth: [src.growth] / [growthlimit] - Harvests: [src.harvests] left."
 
 	process()
 		..()
@@ -1135,7 +1143,6 @@
 						F.amount *= 2
 					else if(quality_status == "rotten")
 						F.heal_amt = 0
-					F.AddComponent(/datum/component/consume/foodheal, F.heal_amt)
 
 					HYPadd_harvest_reagents(F,growing,DNA,quality_status)
 					// We also want to put any reagents the plant produces into the new item.
@@ -1183,7 +1190,6 @@
 						M.amount *= 2
 					else if(quality_status == "rotten")
 						M.heal_amt = 0
-					M.AddComponent(/datum/component/consume/foodheal, M.heal_amt)
 
 					HYPadd_harvest_reagents(CROP,growing,DNA,quality_status)
 
@@ -1254,8 +1260,10 @@
 			// +10: if HP >= 400% w/ 30% chance
 			// Mutations can add or remove this, of course
 			// @TODO adjust this later, this is just to fix runtimes and make it slightly consistent
-			if (base_quality_score >= 1 && prob(10))
+			if (base_quality_score >= 1 && prob(30))
 				if (base_quality_score >= 11)
+					JOB_XP(user, "Botanist", 4)
+				else if (base_quality_score >= 6)
 					JOB_XP(user, "Botanist", 2)
 				else
 					JOB_XP(user, "Botanist", 1)
@@ -1536,7 +1544,7 @@ proc/HYPadd_harvest_reagents(var/obj/item/I,var/datum/plant/growing,var/datum/pl
 	if(putreagents.len && I.reagents.maximum_volume)
 		var/putamount = round(to_add / putreagents.len)
 		for(var/X in putreagents)
-			I.reagents.add_reagent(X,putamount,,, 1)
+			I?.reagents?.add_reagent(X,putamount,,, 1) // ?. runtime fix
 	// And finally put them in there. We figure out the max volume and add an even amount of
 	// all reagents into the item.
 

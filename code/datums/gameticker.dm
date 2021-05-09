@@ -89,18 +89,18 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 #ifdef SERVER_SIDE_PROFILING_PREGAME
 #warn Profiler will output at pregame stage
 	var/profile_out = file("data/profile/[time2text(world.realtime, "YYYY-MM-DD hh-mm-ss")]-pregame.log")
-	profile_out << world.Profile(PROFILE_START, "json")
+	profile_out << world.Profile(PROFILE_START, "sendmaps", "json")
 	world.log << "Dumped profiler data."
 #endif
 
 #if defined(SERVER_SIDE_PROFILING_INGAME_ONLY)
 #warn Profiler reset for ingame stage
 	// We're in game now, so reset profiler data
-	world.Profile(PROFILE_RESTART)
+	world.Profile(PROFILE_RESTART, "sendmaps", "json")
 #elif !defined(SERVER_SIDE_PROFILING_FULL_ROUND)
 #warn Profiler disabled after init
 	// If we aren't doing ingame or full round then we're done with the profiler
-	world.Profile(PROFILE_STOP)
+	world.Profile(PROFILE_STOP, "sendmaps", "json")
 #endif
 #endif
 
@@ -499,7 +499,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			if (!isdead(player))
 				if (in_centcom(player))
 					player.unlock_medal("100M dash", 1)
-					if (pets_rescued >= 6)
+					if (pets_rescued >= 7)
 						player.unlock_medal("Noah's Shuttle", 1)
 				player.unlock_medal("Survivor", 1)
 
@@ -563,6 +563,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	else if (final_score <= 0)
 		final_score = 0
 	else
+		final_score = 100
+
+	if(!score_tracker.score_calculated)
 		final_score = 100
 
 	boutput(world, score_tracker.escapee_facts())
@@ -740,6 +743,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	for_by_tcl(P, /obj/bookshelf/persistent) //make the bookshelf save its contents
 		P.build_curr_contents()
+
+	global.save_noticeboards()
 
 #ifdef SECRETS_ENABLED
 	for_by_tcl(S, /obj/santa_helper)

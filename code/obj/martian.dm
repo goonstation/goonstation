@@ -33,18 +33,18 @@
 		SPAWN_DBG(3 SECONDS)
 			if(prob(25))
 				boutput(user, "<span class='alert'><B>You fail to break free!</B></span>")
-				var/user_mob = user
-				user.ghostize()
-				qdel(user_mob)
-				sleep(3 SECONDS)
+				sleep(1 SECONDS)
 				playsound(src.loc, "sound/voice/burp_alien.ogg", 50, 1)
 				var/obj/decal/cleanable/blood/gibs/gib =make_cleanable( /obj/decal/cleanable/blood/gibs/core, src.loc )
 				gib.streak_cleanable(src.dir)
 				gib = make_cleanable( /obj/decal/cleanable/blood/gibs, src.loc )
 				gib.streak_cleanable(src.dir)
-				var/limb_type = pick(/obj/item/parts/human_parts/arm/left, /obj/item/parts/human_parts/arm/right, /obj/item/parts/human_parts/leg/left, /obj/item/parts/human_parts/leg/right)
-				gib = new limb_type(src.loc)
-				gib.throw_at(get_edge_target_turf(src.loc, src.dir), 4, 3)
+				if (ishuman(user))
+					var/mob/living/carbon/human/H = user
+					var/datum/human_limbs/HL = H.limbs
+					HL.sever("both_arms", user)
+				else
+					user.gib()
 				icon_state = "crevice1"
 				desc = "The crevice has closed"
 				used = 1
@@ -56,9 +56,9 @@
 				var/obj/decal/cleanable/blood/gibs/gib =make_cleanable( /obj/decal/cleanable/blood/gibs, src.loc )
 				gib.streak_cleanable(user.dir)
 
-	else if(prob(45))
+	else if(prob(60))
 		boutput(user, "<span class='alert'>You pull something out!</span>")
-		var/itemtype = pick(/obj/item/gun/energy/laser_gun,/obj/critter/cat,/obj/item/skull)
+		var/itemtype = pick(/obj/item/reagent_containers/glass/wateringcan/artifact,/obj/item/artifact/forcewall_wand,/obj/item/strange_candle,/obj/critter/cat,/obj/item/skull,/obj/item/gnomechompski,/obj/item/bat,/obj/critter/meatslinky,/obj/item/paint_can,/obj/item/mine/stun)
 		new itemtype(src.loc)
 		var/obj/decal/cleanable/blood/gibs/gib =make_cleanable( /obj/decal/cleanable/blood/gibs, src.loc )
 		gib.streak_cleanable(user.dir)

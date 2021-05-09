@@ -98,12 +98,12 @@
 	var/sleep_prob = 4
 	icon_state  = "bad"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/L = owner
 		if (!L)
 			return
-		if (prob(sleep_prob))
+		if (probmult(sleep_prob))
 			L.sleeping = 1
 
 /datum/bioEffect/narcolepsy/super
@@ -137,14 +137,14 @@
 	var/list/talk_strings = list("PISS","FUCK","SHIT","DAMN","TITS","ARGH","WOOF","CRAP","BALLS")
 	icon_state  = "bad"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/L = owner
 		if (!L)
 			return
 		if (isdead(L))
 			return
-		if (prob(talk_prob))
+		if (probmult(talk_prob))
 			L.say(pick(talk_strings))
 
 /datum/bioEffect/shortsighted
@@ -191,7 +191,7 @@
 
 /datum/bioEffect/epilepsy
 	name = "Epilepsy"
-	desc = "Causes damage to the subject's brain structure, resulting in occasional siezures from brain misfires."
+	desc = "Causes damage to the subject's brain structure, resulting in occasional seizures from brain misfires."
 	id = "epilepsy"
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
@@ -203,11 +203,11 @@
 	stability_loss = -10
 	icon_state  = "bad"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		if (isdead(owner))
 			return
-		if (prob(1) && !owner.getStatusDuration("paralysis"))
+		if (probmult(1) && !owner.getStatusDuration("paralysis"))
 			owner:visible_message("<span class='alert'><B>[owner] starts having a seizure!</span>", "<span class='alert'>You have a seizure!</span>")
 			owner.setStatus("paralysis", max(owner.getStatusDuration("paralysis"), 20))
 			owner:make_jittery(100)
@@ -255,12 +255,12 @@
 	var/tox_prob = 10
 	icon_state  = "bad"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		if (iscarbon(owner))
 			var/mob/living/carbon/C = owner
 			if (prob(tox_prob))
-				C.take_toxin_damage(tox_amount)
+				C.take_toxin_damage(tox_amount*mult)
 
 /datum/bioEffect/tourettes
 	name = "Tourettes"
@@ -275,11 +275,11 @@
 	stability_loss = -5
 	icon_state  = "bad"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		if (isdead(owner))
 			return
-		if ((prob(10) && !owner.getStatusDuration("paralysis")))
+		if ((probmult(10) && !owner.getStatusDuration("paralysis")))
 			owner.changeStatus("stunned", 3 SECONDS)
 			SPAWN_DBG( 0 )
 				switch(rand(1, 3))
@@ -308,11 +308,11 @@
 	reclaim_fail = 15
 	icon_state  = "bad"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		if (isdead(owner))
 			return
-		if ((prob(5) && !owner.getStatusDuration("paralysis")))
+		if ((probmult(5) && !owner.getStatusDuration("paralysis")))
 			owner:drop_item()
 			SPAWN_DBG(0)
 				owner:emote("cough")
@@ -368,7 +368,7 @@
 			src.limb_type = LIMB_IS_LEG
 			return
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		if (!src.limb || (src.limb.loc != src.owner))
 			return
@@ -376,14 +376,14 @@
 			return
 
 		if (src.limb_type == LIMB_IS_ARM)
-			if (prob(5))
+			if (probmult(5))
 				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] makes a [pick("rude", "funny", "weird", "lewd", "strange", "offensive", "cruel", "furious")] gesture!</span>")
-			else if (prob(2))
+			else if (probmult(2))
 				owner.emote("slap")
-			else if (prob(2))
+			else if (probmult(2))
 				owner.visible_message("<span class='alert'><B>[owner.name]'s [src.limb] punches [him_or_her(owner)] in the face!</B></span>")
 				owner.TakeDamageAccountArmor("head", rand(2,5), 0, 0, DAMAGE_BLUNT)
-			else if (prob(1))
+			else if (probmult(1))
 				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] tries to strangle [him_or_her(owner)]!</span>")
 				while (prob(80) && owner.bioHolder.HasEffect("funky_limb"))
 					owner.losebreath = max(owner.losebreath, 2)
@@ -392,16 +392,16 @@
 			return
 
 		else if (src.limb_type == LIMB_IS_LEG)
-			if (prob(5))
+			if (probmult(5))
 				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] twitches [pick("rudely", "awkwardly", "weirdly", "lewdly", "strangely", "offensively", "cruelly", "furiously")]!</span>")
-			else if (prob(3))
+			else if (probmult(3))
 				owner.visible_message("<span class='alert'><B>[owner.name] trips over [his_or_her(owner)] own [src.limb]!</B></span>")
 				owner.changeStatus("weakened", 2 SECONDS)
-			else if (prob(2))
+			else if (probmult(2))
 				owner.visible_message("<span class='alert'><B>[owner.name]'s [src.limb] kicks [him_or_her(owner)] in the head somehow!</B></span>")
 				owner.changeStatus("paralysis", 70)
 				owner.TakeDamageAccountArmor("head", rand(5,10), 0, 0, DAMAGE_BLUNT)
-			else if (prob(2))
+			else if (probmult(2))
 				owner.visible_message("<span class='alert'><B>[owner.name] can't seem to control [his_or_her(owner)] [src.limb]!</B></span>")
 				owner.change_misstep_chance(10)
 			return
@@ -434,14 +434,14 @@
 			overlay_image.color = "#BBD90F"
 		..()
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
-		owner.changeStatus("radiation", 30, 1)
+		owner.changeStatus("radiation", 30*mult, 1)
 		for(var/mob/living/L in range(1, owner))
 			if (L == owner)
 				continue
 			boutput(L, "<span class='alert'>You are enveloped by a soft green glow emanating from [owner].</span>")
-			L.changeStatus("radiation", 50, 1)
+			L.changeStatus("radiation", 50*mult, 1)
 		return
 
 /datum/bioEffect/mutagenic_field
@@ -475,9 +475,9 @@
 			if (prob(5))
 				mutation_type = "good"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
-		if (prob(proc_prob))
+		if (probmult(proc_prob))
 			owner.bioHolder.RandomEffect(mutation_type,1)
 			if (affect_others)
 				for(var/mob/living/L in range(field_range, get_turf(owner)))
@@ -506,7 +506,7 @@
 	var/tele_prob = 5
 	icon_state  = "bad"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/L = owner
 		if (!isturf(L.loc))
@@ -516,7 +516,7 @@
 			boutput(L, "<span class='notice'>You feel quite strange. Almost as if you're not supposed to be here.</span>")
 			return
 
-		if (prob(tele_prob))
+		if (probmult(tele_prob))
 			var/list/randomturfs = new/list()
 			for(var/turf/simulated/floor/T in orange(L, 10))
 				randomturfs.Add(T)
@@ -542,14 +542,14 @@
 	var/emote_type = "fart"
 	icon_state  = "bad"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/L = owner
 		if (!L)
 			return
 		if (isdead(L))
 			return
-		if (prob(emote_prob))
+		if (probmult(emote_prob))
 			L.emote(emote_type)
 
 /datum/bioEffect/colorblindness
@@ -685,11 +685,11 @@
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "buzz", layer = MOB_EFFECT_LAYER)
 		..()
 
-	OnLife()
+	OnLife(var/mult)
 		var/mob/living/L = owner
 		if (!istype(L) || (L.stat == 2))
 			return
-		if (prob(prob_sting))
+		if (probmult(prob_sting))
 			boutput(src, "<span class='alert'>A bee in your cloud stung you! How rude!</span>")
 			L.reagents.add_reagent("histamine", 2)
 
@@ -707,31 +707,30 @@
 	stability_loss = -10
 	var/const/radius = 2
 	icon_state  = "bad"
+	var/roundedmultremainder
 
-	OnLife()
+	OnLife(var/mult)
 		..()
-		if (prob(50))
-			return
+		if (prob(percentmult(50, mult)))
+			var/turf/T
+			//don't really need this but to make it more harmful to the user.
+			if (prob(5))
+				T = get_turf(owner)
+			else
+				T = locate(owner.x + rand(-radius/2,radius+2), owner.y+rand(-radius/2,radius/2), 1)
 
-		var/turf/T
-		//don't really need this but to make it more harmful to the user.
-		if (prob(5))
-			T = get_turf(owner)
-		else
-			T = locate(owner.x + rand(-radius/2,radius+2), owner.y+rand(-radius/2,radius/2), 1)
+			var/obj/overlay/pulse = new/obj/overlay(T)
+			pulse.icon = 'icons/effects/effects.dmi'
+			pulse.icon_state = "emppulse"
+			pulse.name = "emp pulse"
+			pulse.anchored = 1
+			SPAWN_DBG(2 SECONDS)
+				if (pulse) qdel(pulse)
 
-		var/obj/overlay/pulse = new/obj/overlay(T)
-		pulse.icon = 'icons/effects/effects.dmi'
-		pulse.icon_state = "emppulse"
-		pulse.name = "emp pulse"
-		pulse.anchored = 1
-		SPAWN_DBG(2 SECONDS)
-			if (pulse) qdel(pulse)
-
-		//maybe have this only emp some things on the tile.
-		if(istype(T))
-			for (var/atom/O in T.contents)
-				O.emp_act()
+			//maybe have this only emp some things on the tile.
+			if(istype(T))
+				for (var/atom/O in T.contents)
+					O.emp_act()
 
 /datum/bioEffect/fitness_debuff
 	name = "Physically Unfit"
@@ -773,8 +772,8 @@
 	var/ring_prob = 6
 	icon_state  = "bad"
 
-	OnLife()
-		if (prob(ring_prob) && owner.client)
+	OnLife(var/mult)
+		if (probmult(ring_prob) && owner.client)
 			// owner.client << sound("phone-ringing.wav")		//play sound only for client. Untested, don't know the sound
 			owner.client << sound("sound/machines/phones/ring_incoming.ogg")		//play sound only for client. Untested, don't know the sound
 
@@ -791,12 +790,12 @@
 	var/run = 1
 	icon_state  = "bad"
 
-	OnLife()
+	OnLife(var/mult)
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 
 			if (H.blood_volume > 400 && H.blood_volume > 0)
-				H.blood_volume -= 2
+				H.blood_volume -= 2*mult
 
 /datum/bioEffect/polycythemia
 	name = "Polycythemia"
@@ -811,13 +810,13 @@
 	var/run = 1
 	icon_state  = "bad"
 
-	OnLife()
+	OnLife(var/mult)
 
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 
 			if (H.blood_volume < 600 && H.blood_volume > 0)
-				H.blood_volume += 2
+				H.blood_volume += 2*mult
 
 
 ////////////////////////////
@@ -841,9 +840,9 @@
 	var/proc_prob = 5
 	icon_state  = "bad"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
-		if (prob(proc_prob))
+		if (probmult(proc_prob))
 			var/list/potential_victims = list()
 			for(var/mob/living/carbon/human/H in range(7,owner))
 				if (!H.client || H.stat)
@@ -901,9 +900,9 @@
 		if (!for_global_list)
 			name = "Booster Gene"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
-		if (prob(prob_per_tick))
+		if (probmult(prob_per_tick))
 			var/mob/living/L = owner
 			var/picker = rand(1,5)
 			switch(picker)
@@ -944,8 +943,8 @@
 	reclaim_fail = 15
 	icon_state  = "bad"
 
-	OnLife()
-		if (prob(5))
+	OnLife(var/mult)
+		if (probmult(5))
 			if (isdead(owner))
 				return
 			else

@@ -97,7 +97,7 @@
 		boutput(leaderMind.current, "<h1><font color=red>You are the leader of a gang!</font></h1>")
 		boutput(leaderMind.current, "<span class='alert'>You must recruit people to your gang and compete for wealth and territory!</span>")
 		boutput(leaderMind.current, "<span class='alert'>You can harm whoever you want, but be careful - the crew can harm gang members too!</span>")
-		boutput(leaderMind.current, "<span class='alert'>To set your gang's home turf and spawn your locker, use the Set Gang Base command. Make sure to pick somewhere safe, as your locker can be broken into and looted. You can only do this once!</span>")
+		boutput(leaderMind.current, "<span class='alert'>To set your gang's home turf and spawn your locker, use the Set Gang Base ability in the top left. Make sure to pick somewhere safe, as your locker can be broken into and looted. You can only do this once!</span>")
 		boutput(leaderMind.current, "<span class='alert'>Build up a stash of cash, guns and drugs. Use the items on your locker to store them.</span>")
 		boutput(leaderMind.current, "<span class='alert'>Use recruitment flyers obtained from the locker to invite new members, up to a limit of [current_max_gang_members].</span>")
 //		boutput(leaderMind.current, "<span class='alert'>Once all active gangs are at the current maximum size, the member cap will increase, up to an absolute maximum of [absolute_max_gang_members].</span>")
@@ -656,7 +656,7 @@
 	icon_state = "spraycan"
 	item_state = "spraycan"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/in_use = 0
 
 	afterattack(target as turf|obj, mob/user as mob)
@@ -1186,7 +1186,7 @@
 	name = "gang recruitment flyer"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper_caution"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/datum/gang/gang = null
 
 	attack(mob/target as mob, mob/user as mob)

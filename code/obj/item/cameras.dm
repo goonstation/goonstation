@@ -11,13 +11,13 @@
 
 	return ..()
 
-/obj/item/camera_test
+/obj/item/camera
 	name = "camera"
 	icon = 'icons/obj/items/device.dmi'
 	desc = "A reusable polaroid camera."
 	icon_state = "camera"
 	item_state = "electropack"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | EXTRADELAY | CONDUCT | ONBELT
 	m_amt = 2000
 	throwforce = 5
@@ -76,7 +76,7 @@
 			..()
 		return
 
-/obj/item/camera_test/voodoo //kubius: voodoo cam subtyped for cleanliness
+/obj/item/camera/voodoo //kubius: voodoo cam subtyped for cleanliness
 	desc = "There's some sort of faint writing etched into the casing."
 	takes_voodoo_pics = 1
 
@@ -85,6 +85,105 @@
 		desc = "No one cam should have all this power."
 		takes_voodoo_pics = 2
 
+/obj/item/camera/spy
+	inventory_counter_enabled = 1
+	var/obj/item/ammo/power_cell/self_charging/cell = null
+	var/flash_mode = 0
+	var/wait_cycle = 0
+
+	attack_self(mob/user)
+		if (user.find_in_hand(src))
+			if (!src.flash_mode)
+				user.show_text("You use the secret switch to set the camera to flash mode.", "blue")
+				playsound(user, "sound/items/pickup_defib.ogg", 100, 1)
+				src.icon_state = "camera_flash"
+			else
+				user.show_text("You use the secret switch to set the camera to take photos.", "blue")
+				playsound(user, "sound/items/putback_defib.ogg", 100, 1)
+				src.icon_state = "camera"
+			src.flash_mode = !src.flash_mode
+			src.update_icon()
+
+	New()
+		if (!cell)
+			cell = new/obj/item/ammo/power_cell/self_charging/
+			cell.max_charge = 200
+			cell.charge = 200
+			cell.recharge_rate = 10.0
+		if (!(src in processing_items)) // No self-charging cell? Will be kicked out after the first tick (Convair880).
+			processing_items.Add(src)
+		..()
+		update_icon()
+
+	proc/update_icon()
+		if (!src.flash_mode)
+			inventory_counter.update_text("")
+		else if (src.cell)
+			inventory_counter.update_percent(src.cell.charge, src.cell.max_charge)
+		else
+			inventory_counter.update_text("-")
+		return 0
+
+	disposing()
+		processing_items -= src
+		..()
+
+	process()
+		src.wait_cycle = !src.wait_cycle // Self-charging cells recharge every other tick
+		if (src.wait_cycle)
+			return
+
+		if (!(src in processing_items))
+			logTheThing("debug", null, null, "Process() was called for a spy ([src]) that wasn't in the item loop. Last touched by: [src.fingerprintslast]")
+			processing_items.Add(src)
+			return
+		if (!src.cell)
+			processing_items.Remove(src)
+			return
+		if (src.cell.charge == src.cell.max_charge)
+			return
+
+		src.update_icon()
+		return
+
+/obj/item/camera/spy/attack(atom/target, mob/user, flag)
+	if (!ismob(target))
+		return
+	if (src.flash_mode)
+		if (src.cell?.charge < 25)
+			user.show_text("[src] doesn't have enough battery power!", "red")
+			return 0
+		var/turf/T = get_turf(target.loc)
+		if (T.is_sanctuary())
+			user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!</span>")
+			return
+		// Use cell charge
+		src.cell.use(25)
+		src.update_icon()
+		// Generic flash
+		var/mob/M = target
+		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
+		playsound(get_turf(src), "sound/weapons/flash.ogg", 100, 1)
+		flick("camera_flash-anim", src)
+		// Log entry.
+		var/blind_msg_target = "!"
+		var/blind_msg_others = "!"
+		if (!blind_success)
+			blind_msg_target = " but your eyes are protected!"
+			blind_msg_others = " but [his_or_her(M)] eyes are protected!"
+		M.visible_message("<span class='alert'>[user] blinds [M] with the flash[blind_msg_others]</span>", "<span class='alert'>You are blinded by the flash[blind_msg_target]</span>") // Pretend to be a flash
+		logTheThing("combat", user, M, "blinds [constructTarget(M,"combat")] with spy [src] at [log_loc(user)].")
+	else
+		. = ..()
+
+/obj/item/camera/spy/afterattack(atom/target, mob/user, flag)
+	if (!can_use || ismob(target.loc))
+		return
+	if (src.flash_mode)
+		return
+	else
+		. = ..() 	// Call /obj/item/camera/spy/afterattack() for photo mode
+
 /obj/item/camera_film
 	name = "film cartridge"
 	desc = "A replacement film cartridge for an instant camera."
@@ -92,7 +191,7 @@
 	icon_state = "camera_film"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	mats = 10
 	var/pictures = 10
 
@@ -112,7 +211,7 @@
 	icon_state = "photo"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/image/fullImage
 	var/icon/fullIcon
 	var/list/signed = list()
@@ -213,7 +312,7 @@
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-/*/obj/item/camera_test*/
+/*/obj/item/camera*/
 /proc/build_composite_icon(var/atom/C)
 	if (!C)
 		return
@@ -225,10 +324,10 @@
 	composite.underlays = C.underlays
 	return composite
 //////////////////////////////////////////////////////////////////////////////////////////////////
-/obj/item/camera_test/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+/obj/item/camera/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
 
-/obj/item/camera_test/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+/obj/item/camera/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	if (!can_use || ismob(target.loc)) return
 	if (src.pictures_left == 0 && user)
 		user.show_text("The film cartridge is used up. You have to replace it first.", "red")
@@ -246,7 +345,7 @@
 		if (src)
 			src.can_use = 1
 
-/obj/item/camera_test/proc/create_photo(var/atom/target, var/powerflash = 0)
+/obj/item/camera/proc/create_photo(var/atom/target, var/powerflash = 0)
 	if (!target)
 		return 0
 	var/turf/the_turf = get_turf(target)

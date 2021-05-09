@@ -1007,6 +1007,8 @@
 	src.find_pilot()
 	if (M.client)
 		M.attach_hud(myhud)
+		if(ishuman(M))
+			myhud.check_hud_layout(M)
 		if (M.client.tooltipHolder)
 			M.client.tooltipHolder.inPod = 1
 
@@ -1051,7 +1053,7 @@
 
 /datum/action/bar/icon/board_pod
 	duration = 20
-	interrupt_flags = INTERRUPT_STUNNED
+	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_MOVE
 	id = "board_pod"
 	icon = 'icons/ui/actions.dmi'
 	//icon_state = "working"

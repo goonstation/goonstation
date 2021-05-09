@@ -12,7 +12,6 @@
 	organ_image_icon = 'icons/mob/werewolf.dmi' // please keep your on-mob tail icon_states with the rest of your mob's sprites
 	icon_state = "tail-wolf"
 	made_from = "flesh"
-	bite_damage = 40
 	var/tail_num = TAIL_NONE
 	var/colorful = 0 // if we need to colorize it
 	var/multipart_icon = 0 // if we need to run update_tail_icon
@@ -33,8 +32,6 @@
 		else
 			build_mob_tail_image()
 			update_tail_icon()
-		if(src.icon_piece_1 || src.icon_piece_2)
-			RegisterSignal(src, list(COMSIG_ITEM_CONSUMED_ALL, COMSIG_ITEM_CONSUMED_PARTIAL), .proc/update_tail_icon)
 
 	proc/colorize_tail(var/datum/appearanceHolder/AHL)
 		if(src.colorful)
@@ -173,13 +170,11 @@
 		if (src.icon_piece_1)
 			var/image/organ_piece_1 = image(src.icon, src.icon_piece_1)
 			organ_piece_1.color = src.organ_color_1
-			organ_piece_1.filters = src.filters
 			src.overlays += organ_piece_1
 
 		if (src.icon_piece_2)
 			var/image/organ_piece_2 = image(src.icon, src.icon_piece_2)
 			organ_piece_2.color = src.organ_color_2
-			organ_piece_2.filters = src.filters
 			src.overlays += organ_piece_2
 
 
@@ -271,3 +266,4 @@
 	organ_image_under_suit_1 = "roach_under_suit"
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = "roach_over_suit"
+	colorful = 1

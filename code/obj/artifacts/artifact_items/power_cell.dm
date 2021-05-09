@@ -47,7 +47,7 @@
 					if ("ancient")
 						src.leakChem = pick("voltagen","ash","cleaner", "oil", "thermite", "acid", "fuel", "nanites", "radium", "mercury")
 					if ("wizard")
-						src.leakChem = pick("glitter","sakuride","grassgro","glitter_harmless","glowing_fliptonium", "mugwort")
+						src.leakChem = pick("glitter","sakuride","grassgro","sparkles","glowing_fliptonium", "mugwort")
 					if ("precursor")
 						src.leakChem = pick(all_functional_reagent_ids) // no way this goes wrong
 				if(prob(10))
@@ -102,6 +102,16 @@
 		. = ..()
 		src.maxcharge = 1
 		src.charge = 1
+
+	reagent_act(reagent_id,volume)
+		if (..())
+			return
+		src.Artifact_reagent_act(reagent_id, volume)
+		return
+		
+	emp_act()
+		src.Artifact_emp_act()
+		..()
 
 /datum/artifact/powercell
 	associated_object = /obj/item/cell/artifact

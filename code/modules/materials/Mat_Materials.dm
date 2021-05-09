@@ -842,7 +842,6 @@
 
 	New()
 		value = 650
-		setProperty("radioactive", 60)
 		setProperty("density", 60)
 		setProperty("hard", 60)
 		addTrigger(triggersOnAdd, new /datum/materialProc/enchanted_add())
@@ -1052,6 +1051,23 @@
 	New()
 		setProperty("density", 15)
 		setProperty("hard", 15)
+		return ..()
+
+/datum/material/organic/honey
+	mat_id = "honey"
+	name = "honey"
+	desc = ""
+	color = "#f1da10"
+	material_flags = MATERIAL_ORGANIC
+	edible_exact = TRUE
+	edible = TRUE
+
+	New()
+		setProperty("density", 20)
+		setProperty("hard", 5)
+		setProperty("flammable", 30)
+		// addTrigger(triggersOnEat, new /datum/materialProc/oneat_honey())
+		// maybe make it sticky somehow?
 		return ..()
 
 /datum/material/organic/frozenfart

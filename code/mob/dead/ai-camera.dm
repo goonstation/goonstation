@@ -285,7 +285,7 @@
 
 	verb/cmd_return_mainframe()
 		set category = "AI Commands"
-		set name = "Return to Mainframe"
+		set name = "Recall to Mainframe"
 
 		return_mainframe()
 		return

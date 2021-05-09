@@ -194,7 +194,6 @@ powmonkey
 hephasto
 bobsedgws
 leadrobot
-omjenkins
 hufflaw
 maximusrex
 sankto
@@ -461,3 +460,8 @@ disturbherb
 kapu1178
 walpvrgis
 ardentspark
+deluuk
+nihisohel
+mexicat
+theangrypun
+asche

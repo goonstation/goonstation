@@ -759,6 +759,10 @@
 				W.update_icon()
 	return wall
 
+/turf/proc/is_sanctuary()
+  var/area/AR = src.loc
+  return AR.sanctuary
+
 ///turf/simulated/floor/Entered(atom/movable/A, atom/OL) //this used to run on every simulated turf (yes walls too!) -zewaka
 //	..()
 //moved step and slip functions into Carbon and Human files!
@@ -972,7 +976,7 @@
 		boutput(user, "<span class='alert'>You can't build here.</span>")
 		return
 	var/obj/item/rods/R = C
-	if (istype(R) && R.consume_rods(1))
+	if (istype(R) && R.change_stack_amount(-1))
 		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
 		playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 		ReplaceWithLattice()
@@ -1007,7 +1011,7 @@
 		return
 
 	if (A.z == 1 && zlevel != A.z)
-		if (!(isitem(A) && A:w_class <= 2))
+		if (!(isitem(A) && A:w_class <= W_CLASS_SMALL))
 			for_by_tcl(C, /obj/machinery/communications_dish)
 				C.add_cargo_logs(A)
 
@@ -1181,3 +1185,12 @@
 	opacity = 0
 	name = "floor"
 	desc = "A holographic projector floor."
+
+/turf/unsimulated/null_hole
+	name = "expedition chute"
+	icon = 'icons/obj/delivery.dmi'
+	icon_state = "floorflush_o"
+
+	Enter(atom/movable/mover, atom/forget)
+		. = ..()
+		mover.set_loc(null)

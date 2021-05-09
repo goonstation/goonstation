@@ -343,7 +343,7 @@ var/global/debug_messages = 0
 	if (!argnum)
 		return listargs
 	for (var/i=0, i<argnum, i++)
-		var/class = input("Type of Argument #[i]","Variable Type", null) as null|anything in list("text","num","type","reference","mob reference","reference atom at current turf","icon","color","file","the turf of which you are on top of right now")
+		var/class = input("Type of Argument #[i]","Variable Type", null) as null|anything in list("text","num","type","ref","reference","mob reference","reference atom at current turf","icon","color","file","the turf of which you are on top of right now")
 		if(!class)
 			break
 		switch(class)
@@ -362,6 +362,12 @@ var/global/debug_messages = 0
 					var/match = get_one_match(typename, /datum, use_concrete_types = FALSE)
 					if (match)
 						listargs += match
+
+			if ("ref")
+				var/input = input("Enter ref:") as null|text
+				var/target = locate(input)
+				if (!target) target = locate("\[[input]\]")
+				listargs += target
 
 			if ("reference")
 				listargs += input("Select reference:","Reference", null) as null|mob|obj|turf|area in world
@@ -518,7 +524,7 @@ var/global/debug_messages = 0
 		var/numdeleted = 0
 		for(var/atom/O in world)
 			if(istype(O, hsbitem))
-				del(O)
+				qdel(O)
 				numdeleted++
 				if(background == "Yes (Low)")
 					LAGCHECK(LAG_LOW)

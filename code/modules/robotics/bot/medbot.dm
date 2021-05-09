@@ -107,7 +107,7 @@
 	no_camera = 1
 
 /obj/machinery/bot/medbot/homeopath
-	name = "Homeopathic Medibot"
+	name = "Hollistic Medibot"
 	desc = "Finally a Medibot that can practice chiropractic!"
 	skin = "psyche"
 	color = "#88FFAA"
@@ -128,7 +128,7 @@
 	var/build_step = 0
 	var/created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
 	var/skin = null // same as the bots themselves: options are brute1/2, burn1/2, toxin1/2, brain1/2, O21/2/3/4, berserk1/2/3, and psyche
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 
 /obj/item/firstaid_arm_assembly/New()
 	..()
@@ -272,8 +272,6 @@
 		src.pick_poison()
 		logTheThing("station", user, null, "emagged a [src] at [log_loc(src)].")
 		return 1
-	else if (prob(1))
-		src.pick_poison()
 	return 0
 
 
@@ -424,10 +422,11 @@
 
 /obj/machinery/bot/medbot/proc/pick_poison()
 	src.dangerous_stuff = list()
-	switch(rand(1, 100))
+	switch(rand(1, 100))/* - what's deadly is this nonsense factory you call code!
 		if(1 to 5) // deadly deadly poison
 			src.audible_message("[src] makes an ominous buzzing noise!")
 			src.dangerous_stuff[pick_string("chemistry_tools.txt", "traitor_poison_bottle")] = 1 // they're pretty deadly
+			*/
 		if(11 to 50) // obnoxious but also pretty deadly poison
 			src.audible_message("[src] makes a trippy buzzing noise!")
 			var/primaries = rand(1,3)
@@ -677,8 +676,7 @@
 			else
 				for(var/reagent in reagent_id)
 					master.patient.reagents.add_reagent(reagent, reagent_id[reagent])
-				if(master.emagged && !master.terrifying && prob(1))
-					master.pick_poison()
+
 			master.visible_message("<span class='alert'><B>[master] injects [master.patient] with the syringe!</B></span>")
 
 		else if(master.terrifying)
@@ -814,7 +812,7 @@
 	if (!istype(S, /obj/item/parts/robot_parts/arm/))
 		if (src.contents.len >= 7)
 			return
-		if ((S.w_class >= 2 || istype(S, /obj/item/storage)))
+		if ((S.w_class >= W_CLASS_SMALL || istype(S, /obj/item/storage)))
 			if (!istype(S,/obj/item/storage/pill_bottle))
 				return
 		..()

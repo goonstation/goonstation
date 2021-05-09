@@ -13,7 +13,8 @@
 	list(/mob/living/critter/small_animal/dog/pug/weak,/mob/living/critter/small_animal/dog/corgi/weak,/mob/living/critter/small_animal/dog/shiba/weak),\
 	list(/mob/living/critter/changeling/eyespider,/mob/living/critter/changeling/buttcrab),\
 	list(/mob/living/critter/small_animal/frog/weak),\
-	list(/mob/living/critter/small_animal/cockroach/robo/weak),)
+	list(/mob/living/critter/small_animal/cockroach/robo/weak),\
+	list(/mob/living/critter/bot/cleanbot, /mob/living/critter/bot/firebot),)
 
 	admin_call(var/source)
 		if (..())
@@ -90,6 +91,7 @@
 
 				var/datum/mind/M = pick(candidates)
 				if (M.current)
+					ticker.mode.Agimmicks |= M
 					M.current.make_ghost_critter(pestlandmark,select)
 					var/obj/item/implant/access/infinite/assistant/O = new /obj/item/implant/access/infinite/assistant(M.current)
 					O.owner = M.current

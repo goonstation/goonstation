@@ -339,7 +339,6 @@
 					name = true_name
 					desc = true_desc
 					aggressive = 1							//Only after exiting the beacon form will the SWORD become aggressive.
-					defensive = 1
 					health = 6000
 					mode = 1
 

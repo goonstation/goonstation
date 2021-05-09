@@ -443,6 +443,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/crumpet(src)
 			src.recipes += new /datum/cookingrecipe/ice_cream_cone(src)
 			src.recipes += new /datum/cookingrecipe/waffles(src)
+			src.recipes += new /datum/cookingrecipe/lasagna(src)
 			src.recipes += new /datum/cookingrecipe/spaghetti_pg(src)
 			src.recipes += new /datum/cookingrecipe/spaghetti_m(src)
 			src.recipes += new /datum/cookingrecipe/spaghetti_s(src)
@@ -661,7 +662,6 @@ table#cooktime a#start {
 						if (src.emagged)
 							F.from_emagged_oven = 1
 						F.set_loc(src.loc)
-						F.AddComponent(/datum/component/consume/foodheal, F.heal_amt)
 				else
 					var/obj/item/reagent_containers/food/snacks/F
 					if (ispath(output))
@@ -689,9 +689,6 @@ table#cooktime a#start {
 								F.unlock_medal_when_eaten = "That tasted funny"
 							else
 								F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
-					F.AddComponent(/datum/component/consume/foodheal, F.heal_amt)
-					F.AddComponent(/datum/component/consume/unlock_medal_on_eaten, F.unlock_medal_when_eaten)
-
 				src.icon_state = "oven_off"
 				src.working = 0
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)

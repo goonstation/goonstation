@@ -21,7 +21,7 @@
 #endif
 
 //for light queue - when should we queue? and when should we pause processing our dowork loop?
-#define LIGHTING_MAX_TICKUSAGE 90
+#define LIGHTING_MAX_TICKUSAGE 140
 
 //LAGCHECK parameter levels. "when the tick is this% complete, sleep here."
 //lower numbers will sleep more often, and should be used for lower priority tasks.
@@ -39,7 +39,7 @@
 /// min value ticklag can be
 #define MIN_TICKLAG 0.4
 /// max value ticklag can be
-#define OVERLOADED_WORLD_TICKLAG 1
+#define OVERLOADED_WORLD_TICKLAG 1.4
 /// how ticklag much to increase by when appropriate
 #define TICKLAG_DILATION_INC 0.2
 /// how much to decrease by when appropriate //MBCX I DONT KNOW WHY BUT MOST VALUES CAUSE ROUNDING ERRORS, ITS VERY IMPORTANT THAT THIS REMAINS 0.2 FIOR NOW

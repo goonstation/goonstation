@@ -10,7 +10,7 @@
 	icon_state = "bike_horn"
 	inhand_image_icon = 'icons/mob/inhand/hand_instruments.dmi'
 	item_state = "bike_horn"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	p_class = 1
 	force = 2
 	throw_speed = 3
@@ -102,7 +102,7 @@
 /* -------------------- Large Instruments -------------------- */
 
 /obj/item/instrument/large
-	w_class = 6
+	w_class = W_CLASS_GIGANTIC
 	p_class = 2 // if they're anchored you can't move them anyway so this should default to making them easy to move
 	throwforce = 40
 	density = 1
@@ -267,7 +267,7 @@
 	desc = "A horn off of a bicycle."
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 3
 	stamina_damage = 5
 	stamina_cost = 5
@@ -363,7 +363,7 @@
 	desc = "A cheap pocket instrument, good for helping time to pass."
 	icon_state = "harmonica"
 	item_state = "r_shoes"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	force = 1
 	throwforce = 3
 	stamina_damage = 2
@@ -380,7 +380,7 @@
 	desc = "A whistle. Good for getting attention."
 	icon_state = "whistle"
 	item_state = "r_shoes"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	force = 1
 	throwforce = 3
 	stamina_damage = 2

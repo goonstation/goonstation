@@ -6,7 +6,7 @@ datum/component/itemblock/saberblock
 datum/component/itemblock/saberblock/on_block_begin(obj/item/I, var/obj/item/grab/block/B)
 	. = ..()//Always call your parents
 	var/obj/item/sword/S = I
-	if(istype(S) && S.active && S.off_w_class == 2) //this is gross but it makes it so only active, extendable, swords (not d-saber) get defensive bonuses
+	if(istype(S) && S.active && S.off_w_class == W_CLASS_SMALL) //this is gross but it makes it so only active, extendable, swords (not d-saber) get defensive bonuses
 		B.setProperty("reflection", 1)
 		B.setProperty("disorient_resist", 75)
 

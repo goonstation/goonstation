@@ -64,7 +64,7 @@
 	desc = "Wow. These look creepy..."
 	icon = 'icons/obj/zoldorf.dmi'
 	icon_state = "deck1"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/inuse = 0
 	var/nextcard
 	var/can_move = 1
@@ -443,7 +443,7 @@
 	afterattack(atom/target as obj, mob/user as mob)
 		if(src.hat && istype(target,/obj/item) && (!istype(target,/obj/item/device/radio/intercom)) && (!src.used))
 			var/obj/item/titem = target
-			if(titem.w_class <= 2)
+			if(titem.w_class <= W_CLASS_SMALL)
 				src.used = 1
 				src.health = 5
 				if(titem.loc == user)

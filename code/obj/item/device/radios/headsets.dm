@@ -6,13 +6,14 @@
 	icon_state = "headset"
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	item_state = "headset"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	rand_pos = 0
 	var/protective_temperature = 0
 	speaker_range = 0
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew."
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	icon_override = "civ"
+	wear_layer = MOB_EARS_LAYER
 	var/haswiretap
 	hardened = 0
 
@@ -375,4 +376,4 @@ Secure Frequency:
 	desc = "An illegal device capable of picking up and sending all secure station radio signals. Can be installed in a radio headset. Does not actually work by wiretapping."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "syndie_upgr"
-	w_class = 1
+	w_class = W_CLASS_TINY

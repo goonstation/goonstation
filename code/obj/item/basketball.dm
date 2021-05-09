@@ -6,7 +6,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bball"
 	item_state = "bball"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 0
 	throw_range = 10
 	throwforce = 0
@@ -214,7 +214,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "plutonium"
 	item_state = "egg3"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 0
 	throwforce = 10
 
@@ -246,7 +246,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bloodbowlball"
 	item_state = "bloodbowlball"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 10
 	throw_range = 10
 	throwforce = 2

@@ -233,7 +233,7 @@
 			B2.pixel_y = 6
 			B2.pixel_x = 5
 
-			new /obj/item/postit_stack(src)
+			new /obj/item/item_box/postit(src)
 			new /obj/item/hand_labeler(src)
 
 			var/obj/item/pen/B3 = new /obj/item/pen(src)
@@ -514,10 +514,11 @@
 	icon_state = "medical_clothes"
 	icon_opened = "secure_white-open"
 	desc = "A handy medical locker for storing your doctoring apparel."
-	spawn_contents = list(/obj/item/clothing/head/nursehat = 1,
-					/obj/item/clothing/suit/nursedress = 1,
-					/obj/item/clothing/head/headmirror = 1,
-					/obj/item/clothing/suit/labcoat/medical = 2)
+	spawn_contents = list(/obj/item/clothing/head/nursehat = 3,
+					/obj/item/clothing/suit/nursedress = 3,
+					/obj/item/clothing/suit/wintercoat/medical = 3,
+					/obj/item/clothing/head/headmirror = 3,
+					/obj/item/clothing/suit/labcoat/medical = 3)
 
 /obj/storage/closet/command/ruined //replacements for azones and mining level flavor
 	name = "Dented command locker"
