@@ -887,7 +887,6 @@ obj/trait/pilot
 	icon_state = "clown_disbelief"
 	points = 0
 	isPositive = 0
-	category = "genetics"
 
 	onAdd(mob/owner)
 		OTHER_START_TRACKING_CAT(owner, TR_CAT_CLOWN_DISBELIEF_MOBS)
