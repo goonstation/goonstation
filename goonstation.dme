@@ -1146,6 +1146,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\decal.dm"
 #include "code\obj\decorations.dm"
 #include "code\obj\displaycase.dm"
+#include "code\obj\effect.dm"
 #include "code\obj\effects.dm"
 #include "code\obj\false_wall.dm"
 #include "code\obj\foamedmetal.dm"
