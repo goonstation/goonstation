@@ -10661,6 +10661,10 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/stool/chair/yellow,
+/obj/landmark/start{
+	name = "Engineer"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "axk" = (
@@ -11326,16 +11330,11 @@
 	},
 /area/station/engine/engineering)
 "ayD" = (
-/obj/stool/chair/yellow{
-	dir = 4
-	},
-/obj/landmark/start{
-	name = "Engineer"
-	},
 /obj/item/device/radio/intercom/engineering{
 	dir = 4;
 	pixel_x = -20
 	},
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "ayE" = (
@@ -26260,6 +26259,15 @@
 /obj/cable,
 /turf/simulated/floor/airless/plating,
 /area/research_outpost/indigo_rye)
+"bQn" = (
+/obj/stool/chair/yellow{
+	dir = 8
+	},
+/obj/landmark/start{
+	name = "Engineer"
+	},
+/turf/simulated/floor,
+/area/station/storage/primary)
 "bQW" = (
 /obj/cable{
 	d1 = 1;
@@ -70118,7 +70126,7 @@ ayK
 azf
 azN
 aAv
-aAS
+bQn
 aBr
 azg
 aCc

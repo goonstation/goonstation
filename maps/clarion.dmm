@@ -34353,7 +34353,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/reagent_dispensers/watertank/fountain,
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/white,
 /area/station/engine/engineering)
 "btr" = (
@@ -36425,7 +36425,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail,
-/obj/storage/cart,
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "bxa" = (

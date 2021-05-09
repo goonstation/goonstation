@@ -22659,6 +22659,10 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/phone/wall{
+	pixel_x = 9;
+	pixel_y = 5
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "dTY" = (
@@ -45923,8 +45927,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "qnP" = (
-/obj/table/reinforced/auto,
-/obj/machinery/phone,
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
