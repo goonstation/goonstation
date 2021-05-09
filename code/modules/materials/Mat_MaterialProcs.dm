@@ -620,8 +620,17 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				actions.start(action_bar, attacker)
 				return
 
-
-		if(prob(5))
+		var/crumple = FALSE
+		if (meleeorthrow == 1)
+			if (!isitem(attackobj))
+				CRASH("meleeorthrow should only be set to 1 when attackobj is an item")
+			var/obj/item/meleeitem = attackobj
+			if (prob(meleeitem.force*3))
+				crumple = TRUE
+		else
+			if (prob(attackobj.throwforce*3))
+				crumple = TRUE
+		if(crumple)
 			if (istype(owner, /obj))
 				owner.visible_message("<span class='alert'>[owner] crumples!</span>", "<span class='alert'>You hear a crumpling sound.</span>")
 				qdel(owner)
