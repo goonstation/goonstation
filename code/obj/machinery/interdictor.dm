@@ -239,22 +239,33 @@
 	Congratulations on your recent acquisition or allocation of cutting-edge interdiction technology!
 	<br>
 	<br>
-	Using the power of yottahertz-range electromagnetic counter-interference, the Spatial Interdictor provides robust protection against a vast array of stellar phenomena, including:
+	Using the power of yottahertz-range electromagnetic counter-interference, the Spatial Interdictor provides robust protection against a wide array of stellar phenomena:
 	<br>
 	<br>
-	Space-time continuum disruptions
+	Biomagnetic fields nulled on discharge
 	<br>
-	Stellar radiation events, both minor and major
+	Black holes semi-stabilized, increasing time to respond**
 	<br>
-	Localized electromagnetic anomalies
+	Radiation pulses safely remodulated within field range
 	<br>
-	<i>(see Advanced Edition for full enumeration)</i>
+	Radiation storms interdicted on a per-individual basis*
+	<br>
+	Solar flare disruptions reduced per onboard interdictor
+	<br>
+	Spatial tears stabilized, permitting limited traversal**
+	<br>
+	Unstable wormholes nulled when entry is attempted
 	<br>
 	<br>
-	In just a few short steps, worrying about the myriad hazards of space will be a thing of the past!*
+	<i>*ADVISORY: heavy interdiction cost. Multiple interdictors or powerful cell recommended for crowds.</i>
+	<br>
+	<i>**WARNING: total interdiction impossible, and device must be active beforehand.</i>
 	<br>
 	<br>
-	<i>*Please be aware that no liability is assumed for failure to interdict any events absent from or present within the aforementioned list. Physical hazards such as meteor storms will not be interdicted.</i>
+	In just a few short steps, worrying about the myriad hazards of space will be a thing of the past!^
+	<br>
+	<br>
+	<i>^Please be aware that no liability is assumed for failure to interdict any events absent from or present within the aforementioned list. Physical hazards such as meteor storms will not be interdicted.</i>
 	<br>
 	<br>
 	<hr>
@@ -280,7 +291,7 @@
 	- Four sheets of industry-compliant steel
 	<br>
 	<br>
-	(III) Assemble objects in the sequence they are listed in the enumeration.
+	(III) Assemble objects in the sequence they are listed in the enumeration. Once assembled, the device may be transported to the site of utilisation to be connected and activated.
 	<br>
 	<br>
 	<hr>
