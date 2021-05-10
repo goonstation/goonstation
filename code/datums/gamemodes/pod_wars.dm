@@ -484,7 +484,6 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 /datum/game_mode/pod_wars/proc/playsound_to_team(var/pw_team, var/filepath, var/volume = 75, var/sound_type = 0)
 	if (isnull(pw_team) || isnull(filepath))
 		return 0
-	message_admins(sound_type)
 	var/datum/pod_wars_team/team = null
 	//If pw_team is a num, make team a one of the pod_wars_team
 	if (isnum(pw_team))
@@ -513,7 +512,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		filepath = replacetext(filepath, "{ALTS}", "-[rand(1, sound_amts)]")	//if alts is 1, it rand(1,1) will always choose 1
 
 	//uncomment this message_admins for testing sounds
-	//message_admins("playing to:[team.name]. filepath is now: [filepath]")
+	// message_admins("playing to:[team.name]. filepath is now: [filepath]")
 	for (var/datum/mind/M in team.members)
 		M.current.playsound_local(M.current, filepath, volume, 0, flags = SOUND_IGNORE_SPACE)
 
@@ -538,7 +537,7 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 			return team.sl_amt_objective_secured
 		if (CHUCKS)
 			return team.sl_amt_objective_lost_chucks
-		if (RELIANT)
+		if (FORTUNA)
 			return team.sl_amt_objective_lost_fortuna
 		if (RELIANT)
 			return team.sl_amt_objective_lost_reliant
@@ -953,7 +952,7 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 
 		for(var/datum/mind/mind in to_search)
 			if((istype(mind.current, /mob/dead/observer) || isdead(mind.current)) && mind.current.client && !mind.dnr)
-				var/success = growclone(mind.current, mind.current.real_name, mind, mind.current?.bioHolder, mind.current?.abilityHolder, mind.current?.traitHolder.traits.Copy())
+				var/success = growclone(mind.current, mind.current.real_name, mind, mind.current?.bioHolder, traits=mind.current?.traitHolder.traits.Copy())
 				if (success && team)
 					SPAWN_DBG(1)
 						team.equip_player(src.occupant)
@@ -2469,7 +2468,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 
 /obj/machinery/chem_dispenser/medical/fortuna
-	dispensable_reagents = list("antihol", "charcoal", "epinephrine", "mutadone", "proconvertin", "atropine",\
+	dispensable_reagents = list("antihol", "charcoal", "epinephrine", "mutadone", "proconvertin", "filgrastim", "atropine",\
 	"silver_sulfadiazine", "salbutamol", "perfluorodecalin", "synaptizine", "anti_rad",\
 	"oculine", "mannitol", "penteticacid", "styptic_powder", "saline",\
 	"salicylic_acid", "blood", "synthflesh",\
