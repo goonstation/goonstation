@@ -1,5 +1,9 @@
 
 (t)mon may 10 21
+(u)edwardly
+(p)4667
+(e)🐛|bug
+(+)Fix the 1 minute countdown on the cyborg killswitch timer.
 (u)RSG250
 (p)4661
 (e)|
