@@ -506,13 +506,13 @@
 			return
 
 		if (prob(dance_chance))
-			src.visible_message("<b>[src]</b> responds with a dance of its own!")
+			src.visible_message("<b>[src]</b> responds with a dance of its own!", group = "beedance")
 			src.dance()
 		else
 			if (istype(src, /obj/critter/domestic_bee/trauma))
 				src.visible_message("<b>[src]</b> buzzes in short-lived comfort.")
 			else
-				src.visible_message("<b>[src]</b> buzzes [pick("to the beat", "in tune", "approvingly", "happily")].")
+				src.visible_message("<b>[src]</b> buzzes [pick("to the beat", "in tune", "approvingly", "happily")].", group = "beedance")
 
 	proc/dance()
 		set waitfor = 0
