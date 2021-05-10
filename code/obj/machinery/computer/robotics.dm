@@ -160,7 +160,7 @@
 							if(R.client)
 								boutput(R, "<span class='alert'><b>Killswitch process activated.</b></span>")
 								boutput(R, "<span class='alert'><b>Killswitch will engage in 1 minute.</b></span>")
-							R.killswitch = 1
+							R.killswitch = TRUE
 							R.killswitch_at = TIME + 1 MINUTE
 						else if(istype(A))
 							var/mob/message = A.get_message_mob()
@@ -169,7 +169,7 @@
 							if(message.client)
 								boutput(message, "<span class='alert'><b>AI Killswitch process activated.</b></span>")
 								boutput(message, "<span class='alert'><b>Killswitch will engage in 3 minutes.</b></span>")
-							A.killswitch = 1
+							A.killswitch = TRUE
 							A.killswitch_at = TIME + 3 MINUTES
 					else
 						boutput(usr, "<span class='alert'>Access Denied.</span>")
