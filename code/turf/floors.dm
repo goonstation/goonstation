@@ -1296,6 +1296,9 @@
 /turf/simulated/floor/proc/dismantle_wall()//can get called due to people spamming weldingtools on walls
 	return
 
+/turf/simulated/floor/proc/take_hit()// can get called due to people crumpling cardboard walls
+	return
+
 /turf/simulated/floor/proc/break_tile_to_plating()
 	if(intact) to_plating()
 	break_tile()
