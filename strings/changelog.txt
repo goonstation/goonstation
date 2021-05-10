@@ -1,5 +1,9 @@
 
 (t)mon may 10 21
+(u)RSG250
+(p)4661
+(e)|
+(+)booster genes now show what they are in the scanner like the record
 (u)Chickenish
 (p)4639
 (e)⚖|balance
