@@ -1274,10 +1274,18 @@
 
 			if ("deathgasp")
 				if (!voluntary || src.emote_check(voluntary,50))
-					if (deathConfettiActive || (src.mind && src.mind.assigned_role == "Clown"))
-						src.deathConfetti()
-					if (prob(15) && !ischangeling(src) && !isdead(src)) message = "<span class='regular'><B>[src]</B> seizes up and falls limp, peeking out of one eye sneakily.</span>"
+					if (prob(15) && !ischangeling(src) && !isdead(src))
+						message = "<span class='regular'><B>[src]</B> seizes up and falls limp, peeking out of one eye sneakily.</span>"
 					else
+						if (!isdead(src))
+							#ifdef COMSIG_MOB_FAKE_DEATH
+							SEND_SIGNAL(src, COMSIG_MOB_FAKE_DEATH)
+							#endif
+
+						// Active if XMAS or manually toggled.
+						if (deathConfettiActive)
+							src.deathConfetti()
+
 						message = "<span class='regular'><B>[src]</B> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...</span>"
 						playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, src.get_age_pitch())
 					m_type = 1
