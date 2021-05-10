@@ -254,7 +254,7 @@
 		return
 
 	attack_hand(mob/user as mob)
-		if(!user.client?.holder)
+		if(isadmin(user))
 			boutput(user, "<span class='alert'>This dispenser is too powerful for you!</span>")
 			return
 		panel()
