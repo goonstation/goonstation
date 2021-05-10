@@ -43,7 +43,7 @@
 		if(mat)
 			src.setMaterial(mat)
 		else
-			src.setMaterial("steel")
+			src.setMaterial(material_cache["steel"])
 		..()
 		START_TRACKING
 		src.updateicon()
