@@ -2590,7 +2590,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	item_paths = list("MET-2","CON-1","CRY-1","INS-1")
 	item_amounts = list(10,20,10,5)
 	item_outputs = list(/obj/item/interdictor_rod)
-	time = 30 SECONDS
+	time = 20 SECONDS
 	create = 1
 	category = "Machinery"
 
@@ -2599,7 +2599,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	item_paths = list("MET-2","CON-2","INS-1","POW-1")
 	item_amounts = list(10,25,10,5)
 	item_outputs = list(/obj/item/interdictor_rod/sigma)
-	time = 30 SECONDS
+	time = 20 SECONDS
 	create = 1
 	category = "Machinery"
 
