@@ -88,7 +88,7 @@
 							second_exists_nearby = G
 							break
 
-					if(exists_nearby)
+					if(second_exists_nearby)
 						second_exists_nearby.change_stack_amount(out_amount)
 						second_mat_id = second_exists_nearby.material.mat_id
 					else
