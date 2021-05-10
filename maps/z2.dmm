@@ -20531,7 +20531,7 @@
 "bjM" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
-/obj/item/gun/kinetic/ak47,
+/obj/item/gun/kinetic/gyrojet,
 /turf/unsimulated/floor/carpet/grime,
 /area/drone/crew_quarters)
 "bjN" = (
