@@ -578,7 +578,7 @@
 					//spatial interdictor: mitigate biomagnetic discharges
 					//consumes 300 units of charge to interdict a repulsion, permitting safe discharge of the fields
 					for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-						if (IN_RANGE(IX,src,INTERDICT_RANGE) && IX.expend_interdict(300))
+						if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(300))
 							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
 							var/atom/source = get_turf(tmob)
 							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
@@ -622,7 +622,7 @@
 					//consumes 600 units of charge to interdict an attraction, permitting safe discharge of the fields
 
 					for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-						if (IN_RANGE(IX,src,INTERDICT_RANGE) && IX.expend_interdict(300))
+						if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(300))
 							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
 							var/atom/source = get_turf(tmob)
 							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
