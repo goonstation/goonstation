@@ -362,6 +362,21 @@
 /obj/item/sword/red
 	bladecolor = "R"
 
+	enakai
+		active = 1;
+		active_force = 5;
+		desc = "You were the chosen one! You were supposed to destroy the greytiders, not join them!";
+		icon_state = "sword1-R";
+		item_state = "sword1-R";
+		name = "Enakai's red cyalume saber"
+
+		pickup(mob/user)
+			if(isadmin(user) || current_state == GAME_STATE_FINISHED)
+				src.active_force = 60
+				if(src.active)
+					src.force = 60
+			. = ..()
+
 /obj/item/sword/orange
 	bladecolor = "O"
 

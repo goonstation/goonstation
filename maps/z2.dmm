@@ -82338,13 +82338,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/sword/red{
-	active = 1;
-	desc = "You were the chosen one! You were supposed to destroy the greytiders, not join them!";
-	icon_state = "sword1-R";
-	item_state = "sword1-R";
-	name = "Enakai's red cyalume saber"
-	},
+/obj/item/sword/red/enakai,
 /obj/cover/showcase,
 /turf/unsimulated/floor/wizard/showcase,
 /area/centcom/offices/enakai)
