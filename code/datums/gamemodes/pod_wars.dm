@@ -338,7 +338,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 //user = who did the capturing? //might remove later if I change the capture system
 //team = the team datum
 //team_num = 1 or 2 for NT or SY respectively
-/datum/game_mode/pod_wars/proc/handle_control_pt_change(var/datum/control_point/point, var/mob/user, var/datum/pod_wars_team/team)
+/datum/game_mode/pod_wars/proc/handle_control_point_change(var/datum/control_point/point, var/mob/user, var/datum/pod_wars_team/team)
 	var/team_num = team.team_num
 	board.change_control_point_owner(point.true_name, team_num)
 
@@ -484,7 +484,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 /datum/game_mode/pod_wars/proc/playsound_to_team(var/pw_team, var/filepath, var/volume = 75, var/sound_type = 0)
 	if (isnull(pw_team) || isnull(filepath))
 		return 0
-
+	message_admins(sound_type)
 	var/datum/pod_wars_team/team = null
 	//If pw_team is a num, make team a one of the pod_wars_team
 	if (isnum(pw_team))
@@ -570,6 +570,7 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 	var/points = 100
 	var/max_points = 200
 	var/list/mcguffins = list()		//Should have 4 AND ONLY 4
+	var/commander_job_title			//for commander selection
 	var/datum/game_mode/pod_wars/mode
 
 	//These two are for playing sounds, they'll only play for the first death or system destruction.
@@ -596,9 +597,11 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 		switch(team_num)
 			if (TEAM_NANOTRASEN)
 				name = "NanoTrasen"
+				commander_job_title = "NanoTrasen Commander"
 				base_area = /area/pod_wars/team1 //area north, NT crew
 			if (TEAM_SYNDICATE)
 				name = "Syndicate"
+				commander_job_title = "Syndicate Commander"
 				base_area = /area/pod_wars/team2 //area south, Syndicate crew
 
 		setup_voice_line_alt_amounts()
@@ -620,35 +623,58 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 
 	proc/accept_initial_players(var/list/players)
 		members = players
-		select_commander()
+		if (!select_commander())
+			message_admins("[src.name] could not rustle up a Commander. Oh no!")
 
 		for (var/datum/mind/M in players)
 			equip_player(M.current)
 			M.current.antagonist_overlay_refresh(1,0)
 
 	proc/select_commander()
-		var/list/possible_commanders = get_possible_commanders()
-		if (isnull(possible_commanders) || !possible_commanders.len)
-			return 0
 
-		commander = pick(possible_commanders)
-		// commander.special_role = "commander"
-		return 1
+		var/list/high_prio_commanders = get_possible_commanders(1)
+		if(length(high_prio_commanders))
+			commander = pick(high_prio_commanders)
+			return 1
 
-//Really stolen from gang, But this basically just picks everyone who is ready and not hellbanned or jobbanned from Command or Captain
-	proc/get_possible_commanders()
+		var/list/med_prio_commanders = get_possible_commanders(2)
+		if(length(med_prio_commanders))
+			commander = pick(med_prio_commanders)
+			return 1
+
+		var/list/low_prio_commanders = get_possible_commanders(3)
+		if(length(low_prio_commanders))
+			commander = pick(low_prio_commanders)
+			return 1
+
+		return 0
+
+	//Really stolen from gang, But this basically just picks everyone who is ready and not hellbanned or jobbanned from Command or Captain
+	//priority values 1=favorite,2=medium,3=low job priorities
+	proc/get_possible_commanders(var/priority)
 		var/list/candidates = list()
 		for(var/datum/mind/mind in members)
 			var/mob/new_player/M = mind.current
 			if (!istype(M)) continue
 			if (ishellbanned(M)) continue
 			if(jobban_isbanned(M, "Captain")) continue //If you can't captain a Space Station, you probably can't command a starship either...
-			if(jobban_isbanned(M, "NanoTrasen Commander") || ("NanoTrasen Commander" in M.client.preferences.jobs_unwanted)) continue
-			if(jobban_isbanned(M, "Syndicate Commander") || ("Syndicate Commander" in M.client.preferences.jobs_unwanted)) continue
+			if(jobban_isbanned(M, "NanoTrasen Commander")) continue
+			if(jobban_isbanned(M, "Syndicate Commander")) continue
+
 			if ((M.ready) && !candidates.Find(M.mind))
+				switch(priority)
+					if (1)
+						if (M.client.preferences.job_favorite == commander_job_title)
+							candidates += M.mind
+					if (2)
+						if (M.client.preferences.jobs_med_priority == commander_job_title)
+							candidates += M.mind
+					if (3)
+						if (M.client.preferences.jobs_low_priority == commander_job_title)
+							candidates += M.mind
 				candidates += M.mind
 
-		if(candidates.len < 1)
+		if(!length(candidates))
 			return null
 		else
 			return candidates
@@ -718,7 +744,7 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 				sl_amt_objective_secured = 3
 				sl_amt_objective_lost_chucks = 3
 				sl_amt_objective_lost_fortuna = 3
-				sl_amt_objective_lost_reliant = 3
+				sl_amt_objective_lost_reliant = 4
 				sl_amt_objective_lost_uvb67 = 1
 			if (TEAM_SYNDICATE)
 				sl_amt_commander_dies = 1
@@ -927,7 +953,7 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 
 		for(var/datum/mind/mind in to_search)
 			if((istype(mind.current, /mob/dead/observer) || isdead(mind.current)) && mind.current.client && !mind.dnr)
-				var/success = growclone(mind.current, mind.current.real_name, mind)
+				var/success = growclone(mind.current, mind.current.real_name, mind, mind.current?.bioHolder, mind.current?.abilityHolder, mind.current?.traitHolder.traits.Copy())
 				if (success && team)
 					SPAWN_DBG(1)
 						team.equip_player(src.occupant)
@@ -2219,7 +2245,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 				pw_team = mode.team_SY
 
 		//update scoreboard
-		mode.handle_control_pt_change(src, user, pw_team)
+		mode.handle_control_point_change(src, user, pw_team)
 
 		//log player_stats. Increment nearby player's capture point stat
 		if (mode.stats_manager)

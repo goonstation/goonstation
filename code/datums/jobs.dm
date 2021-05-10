@@ -2700,7 +2700,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			limit = 1
 			no_jobban_from_this_job = 0
 			high_priority_job = 1
-			cant_allocate_unwanted = 0
+			cant_allocate_unwanted = 1
 			access = list(access_heads, access_captain, access_medical, access_medical_lockers)
 
 			slot_head = /obj/item/clothing/head/NTberet/commander
@@ -2736,7 +2736,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			limit = 1
 			no_jobban_from_this_job = 0
 			high_priority_job = 1
-			cant_allocate_unwanted = 0
+			cant_allocate_unwanted = 1
 			access = list(access_syndicate_shuttle, access_syndicate_commander, access_medical, access_medical_lockers)
 
 			slot_head = /obj/item/clothing/head/helmet/space/syndicate/commissar_cap
