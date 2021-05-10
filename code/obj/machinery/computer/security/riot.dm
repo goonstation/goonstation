@@ -176,9 +176,6 @@
 		return ..()
 	if (!user)
 		return ..()
-	if(authed && (!(access_maxsec in W:access)))
-		boutput(user, "Armory has already been authorized!")
-		return
 
 	if (istype(W, /obj/item/device/pda2) && W:ID_card)
 		W = W:ID_card
@@ -200,6 +197,10 @@
 	if(!(access_securitylockers in W:access)) //doesn't have this access
 		src.add_fingerprint(user)
 		boutput(user, "The access level of [W] is not high enough.")
+		return
+
+	if(authed && (!(access_maxsec in W:access)))
+		boutput(user, "Armory has already been authorized!")
 		return
 
 	if(authed && (access_maxsec in W:access))
