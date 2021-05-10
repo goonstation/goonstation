@@ -364,7 +364,7 @@
 
 	enakai
 		active = 1;
-		active_force = 5;
+		active_force = 5
 		desc = "You were the chosen one! You were supposed to destroy the greytiders, not join them!";
 		icon_state = "sword1-R";
 		item_state = "sword1-R";
@@ -375,6 +375,8 @@
 				src.active_force = 60
 				if(src.active)
 					src.force = 60
+			else
+				boutput(user, "<span class='notice'>You feel that it was too soon for this...</span>")
 			. = ..()
 
 /obj/item/sword/orange
