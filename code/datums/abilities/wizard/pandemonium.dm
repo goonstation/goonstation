@@ -13,7 +13,8 @@
 	cast()
 		if(!holder)
 			return
-		holder.owner.say("WATT LEHFUQUE")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("WATT LEHFUQUE")
 		..()
 
 		var/list/available_effects = list("babel", "boost", "roar", "signaljam", "grilles", "meteors")
