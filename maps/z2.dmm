@@ -78633,7 +78633,6 @@
 /area/centcom/outside)
 "jNl" = (
 /obj/table/wood/auto,
-/obj/item/gun/energy/wavegun,
 /obj/item/clothing/head/sunhat/stunhatr{
 	pixel_x = -5;
 	pixel_y = 6
