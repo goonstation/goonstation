@@ -256,7 +256,7 @@
 	attack_hand(mob/user as mob)
 		if(!user.client?.holder)
 			boutput(user, "<span class='alert'>This dispenser is too powerful for you!</span>")
-			user.gib()
+			return
 		panel()
 
 	proc/panel()
