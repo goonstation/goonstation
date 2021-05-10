@@ -80832,7 +80832,7 @@
 /area/hospital/samostrel)
 "qwW" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/burger/plague{
+/obj/item/reagent_containers/food/snacks/burger/plague/fishstick{
 	pixel_x = 6;
 	pixel_y = 7
 	},
