@@ -1978,11 +1978,17 @@
 	icon_state = "artifact_form"
 	blueprint = /datum/manufacture/interdictor_frame
 
-/obj/item/paper/manufacturer_blueprint/interdictor_rod
-	name = "Interdictor Phase-Control Rod"
+/obj/item/paper/manufacturer_blueprint/interdictor_rod_lambda
+	name = "Lambda Phase-Control Rod"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "artifact_form"
-	blueprint = /datum/manufacture/interdictor_rod
+	blueprint = /datum/manufacture/interdictor_rod_lambda
+
+/obj/item/paper/manufacturer_blueprint/interdictor_rod_sigma
+	name = "Sigma Phase-Control Rod"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "artifact_form"
+	blueprint = /datum/manufacture/interdictor_rod_sigma
 
 // Fabricator Defines
 

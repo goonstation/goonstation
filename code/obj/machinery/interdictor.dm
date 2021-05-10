@@ -31,7 +31,7 @@
 	var/sound/sound_interdict_run = "sound/machines/interdictor_operate.ogg"
 	var/sound/sound_togglebolts = "sound/machines/click.ogg"
 
-	New(spawnlocation,var/obj/item/cell/altcap,var/obj/item/interdictor_rod/altrod)
+	New(spawnlocation,var/obj/item/cell/altcap,var/obj/item/interdictor_rod/altrod,var/datum/material/mat)
 		if(altcap)
 			altcap.set_loc(src)
 			src.intcap = altcap
@@ -40,6 +40,10 @@
 		if(altrod)
 			src.interdict_range = altrod.interdist
 			qdel(altrod)
+		if(mat)
+			src.setMaterial(mat)
+		else
+			src.setMaterial("steel")
 		..()
 		START_TRACKING
 		src.updateicon()
@@ -339,7 +343,7 @@
 //interdictor rod: the doohickey that lets the interdictor do its thing
 //the blueprint to create this should be in engineering along with guide, frame blueprint and mainboards
 //these are the primary factor for scarcity as they require several materials to manufacture
-//blueprint path is /obj/item/paper/manufacturer_blueprint/interdictor_rod
+//blueprint paths: /obj/item/paper/manufacturer_blueprint/interdictor_rod_lambda & /obj/item/paper/manufacturer_blueprint/interdictor_rod_sigma
 
 /obj/item/interdictor_rod
 	name = "Lambda phase-control rod"
@@ -618,7 +622,7 @@
 			//setting up for custom interdictor casing
 			var/obj/item/sheet/S = the_tool
 			var/datum/material/mat
-			if(!istype(the_tool, /obj/item/sheet/steel) && S.material)
+			if(S.material)
 				mat = S.material
 
 			the_tool.amount -= 4
@@ -630,8 +634,7 @@
 				the_tool.inventory_counter.update_number(the_tool.amount)
 
 			var/turf/T = get_turf(itdr)
-			var/obj/llama = new /obj/machinery/interdictor(T,itdr.intcap,itdr.introd)
-			if(mat) llama.setMaterial(mat) //custom interdictor casing
+			var/obj/llama = new /obj/machinery/interdictor(T,itdr.intcap,itdr.introd,mat)
 			itdr.intcap.set_loc(llama) //this may not be necessary but I feel like it'll stop something from randomly breaking due to timing
 			qdel(itdr)
 			return
