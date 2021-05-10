@@ -1,5 +1,9 @@
 
 (t)mon may 10 21
+(u)112358sam
+(p)4655
+(e)🐛|bug
+(+)Fixes the exploit with sheets, rods, shards, tiles, and cable coils in the material processor and re-enables processing these items.
 (u)edwardly
 (p)4667
 (e)🐛|bug
