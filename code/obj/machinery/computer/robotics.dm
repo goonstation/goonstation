@@ -159,8 +159,9 @@
 							logTheThing("combat", usr, R, "has activated the robot killswitch process on [constructTarget(R,"combat")]")
 							if(R.client)
 								boutput(R, "<span class='alert'><b>Killswitch process activated.</b></span>")
+								boutput(R, "<span class='alert'><b>Killswitch will engage in 1 minute.</b></span>")
 							R.killswitch = 1
-							A.killswitch_at = TIME + 1 MINUTE
+							R.killswitch_at = TIME + 1 MINUTE
 						else if(istype(A))
 							var/mob/message = A.get_message_mob()
 							message_admins("<span class='alert'>[key_name(usr)] has activated the AI self destruct on [key_name(message)].</span>")
