@@ -39,6 +39,10 @@
 		I.layer = initial(I.layer)
 
 	if(robe) wizard_mob.equip_if_possible(new /obj/item/clothing/suit/wizrobe(wizard_mob), wizard_mob.slot_wear_suit)
+
+	if (wizard_mob.traitHolder && wizard_mob.traitHolder.hasTrait("blind"))
+		wizard_mob.equip_if_possible(new /obj/item/clothing/glasses/visor(wizard_mob), wizard_mob.slot_glasses)
+
 	wizard_mob.equip_if_possible(new /obj/item/clothing/under/shorts/black(wizard_mob), wizard_mob.slot_w_uniform)
 	wizard_mob.equip_if_possible(new /obj/item/clothing/head/wizard(wizard_mob), wizard_mob.slot_head)
 	if(wizard_mob.traitHolder && wizard_mob.traitHolder.hasTrait("deaf"))
