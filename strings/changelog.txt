@@ -1,4 +1,9 @@
 
+(t)mon may 10 21
+(u)Chickenish
+(p)4639
+(e)⚖|balance
+(*)Replaced the Ghost Drone's RCD with the Cardboard RCD.
 (t)sun may 09 21
 (u)edwardly
 (p)4647
