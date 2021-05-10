@@ -1973,7 +1973,7 @@
 /******************** Spatial Interdictor *******************/
 
 /obj/item/paper/manufacturer_blueprint/interdictor_frame
-	name = "Interdictor Frame"
+	name = "Interdictor Frame Kit"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "artifact_form"
 	blueprint = /datum/manufacture/interdictor_frame

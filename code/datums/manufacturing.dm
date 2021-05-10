@@ -2577,10 +2577,10 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 /************ INTERDICTOR STUFF ************/
 
 /datum/manufacture/interdictor_frame
-	name = "Interdictor Frame"
+	name = "Interdictor Frame Kit"
 	item_paths = list("MET-2")
 	item_amounts = list(10)
-	item_outputs = list(/obj/interdictor_frame)
+	item_outputs = list(/obj/item/interdictor_frame_kit)
 	time = 15 SECONDS
 	create = 1
 	category = "Machinery"

@@ -271,12 +271,12 @@
 	<hr>
 	<h3>ASSEMBLING THE DEVICE</h3>
 	<br>
-	(I) Assemble the frame and phase-control rod at any manufacturer using the blueprints included with your Spatial Interdictor Starter Kit. Materials not provided.
+	(I) Assemble the frame kit and phase-control rod at any manufacturer using the blueprints included with your Spatial Interdictor Starter Kit. Materials not provided.
 	<br>
 	<br>
 	(II) Gather the following equipment before assembly:
 	<br>
-	- Interdictor frame
+	- Interdictor frame kit
 	<br>
 	- Interdictor mainboard
 	<br>
@@ -335,7 +335,7 @@
 	icon = 'icons/obj/machines/interdictor.dmi'
 	icon_state = "interdict-rod"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "electronic"
+	item_state = "rods"
 	force = 3
 	throwforce = 10
 	throw_speed = 1
@@ -363,13 +363,42 @@
 //the blueprint to create this should be in engineering along with guide, rod blueprint and mainboards
 //blueprint path is /obj/item/paper/manufacturer_blueprint/interdictor_frame
 
+/obj/item/interdictor_frame_kit
+	name = "spatial interdictor frame kit"
+	desc = "You can hear an awful lot of junk rattling around in this box."
+	icon = 'icons/obj/machines/interdictor.dmi'
+	icon_state = "interdict-kit"
+	w_class = W_CLASS_BULKY
+
+	attack_self(mob/user as mob)
+		var/canbuild = 1
+
+		var/turf/T = get_turf(user)
+		var/atom/A
+
+		if (istype(T, /turf/space))
+			for (A in T)
+				if (A == user)
+					continue
+				if (A.density)
+					canbuild = 0
+					boutput(user, "<span class='alert'>You can't build this here! [A] is in the way.</span>")
+					break
+
+		if (canbuild)
+			boutput(user, "<span class='notice'>You empty the box of parts onto the floor.</span>")
+			var/obj/O = new /obj/interdictor_frame( get_turf(user) )
+			O.fingerprints = src.fingerprints
+			O.fingerprintshidden = src.fingerprintshidden
+			qdel(src)
+
 /obj/interdictor_frame
 	name = "spatial interdictor frame"
-	desc = "A frame for a spatial interdictor. It's missing its mainboard."
+	desc = "An unassembled frame for a spatial interdictor. Several bolts are sticking out."
 	icon = 'icons/obj/machines/interdictor.dmi'
-	icon_state = "interframe-1"
+	icon_state = "interframe-0"
 	density = 1
-	var/state = 1
+	var/state = 0
 	var/obj/intcap = null
 
 	attack_hand(mob/user as mob)
@@ -387,6 +416,11 @@
 
 	attackby(var/obj/item/I as obj, var/mob/user as mob)
 		switch(state)
+			if(0)
+				if (iswrenchingtool(I))
+					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 4 SECONDS), user)
+				else
+					..()
 			if(1)
 				if (istype(I, /obj/item/interdictor_board))
 					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 2 SECONDS), user)
@@ -437,6 +471,7 @@
 
 
 //this is to be used with the following transitions:
+//0 > 1 (frame assembly)
 //1 > 2 (board installation)
 //2 > 3 (core installation)
 //4 > 5 (wire addition)
@@ -480,6 +515,9 @@
 
 	onStart()
 		..()
+		if (itdr.state == 0)
+			playsound(get_turf(itdr), "sound/items/Ratchet.ogg", 40, 1)
+			owner.visible_message("<span class='bold'>[owner]</span> begins assembling \the [itdr].")
 		if (itdr.state == 1)
 			playsound(get_turf(itdr), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins installing a mainboard into \the [itdr].")
@@ -497,6 +535,13 @@
 			owner.visible_message("<span class='bold'>[owner]</span> begins installing a casing onto \the [itdr].")
 	onEnd()
 		..()
+		if (itdr.state == 0) //unassembled > no components
+			itdr.state = 1
+			itdr.icon_state = "interframe-1"
+			boutput(owner, "<span class='notice'>You assemble and secure the frame components.</span>")
+			playsound(get_turf(itdr), "sound/items/Ratchet.ogg", 40, 1)
+			itdr.desc = "A frame for a spatial interdictor. It's missing its mainboard."
+			return
 		if (itdr.state == 1) //no components > mainboard
 			itdr.state = 2
 			itdr.icon_state = "interframe-2"
