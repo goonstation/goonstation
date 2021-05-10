@@ -18,7 +18,7 @@
 	New(var/for_global_list = 0)
 		..()
 		if (!for_global_list)
-			name = "Booster Gene"
+			name = "Booster Gene X"
 
 	OnAdd()
 		var/mob/living/L = owner
@@ -49,7 +49,7 @@
 	New(var/for_global_list = 0)
 		..()
 		if (!for_global_list)
-			name = "Booster Gene"
+			name = "Booster Gene Y"
 
 	OnAdd()
 		var/mob/living/L = owner
@@ -79,7 +79,7 @@
 	New(var/for_global_list = 0)
 		..()
 		if (!for_global_list)
-			name = "Booster Gene"
+			name = "Booster Gene Z"
 
 	OnAdd()
 		var/mob/living/L = owner
