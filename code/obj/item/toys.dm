@@ -222,7 +222,6 @@
 /obj/item/toy/handheld/arcade
 	arcademode = TRUE
 	icon_state = "arcade-adventure"
-	
 /obj/item/item_box/figure_capsule/gaming_capsule
 	name = "game capsule"
 	New()

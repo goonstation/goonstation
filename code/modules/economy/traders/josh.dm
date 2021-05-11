@@ -121,11 +121,11 @@
 /datum/commodity/trader/josh/robustris
 	comname = "Sick Gaming Device"
 	comtype = /obj/item/toy/handheld/robustris
-	price_boundary = list(50,300)
 	possible_names = list("You don't have the latest equipment? Let me hook you up bro.",
 	"Looking for some hardcore gaming dude? We got a sweet set.",
 	"Get pumped with some tight games my bro-nado.")
 
+	price_boundary = list(50,300)
 /datum/commodity/trader/josh/skateboards
 	comname = "Slickin' Skateboards"
 	comtype = /obj/vehicle/skateboard
