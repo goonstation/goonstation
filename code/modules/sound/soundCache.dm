@@ -600,6 +600,7 @@ var/global/list/soundCache = list(
  	"sound/machines/repairing.ogg" = 'sound/machines/repairing.ogg',\
  	"sound/machines/reprog.ogg" = 'sound/machines/reprog.ogg',\
  	"sound/machines/rev_engine.ogg" = 'sound/machines/rev_engine.ogg',\
+ 	"sound/machines/rock_drill.ogg" = 'sound/machines/rock_drill.ogg',\
  	"sound/machines/romhack1.ogg" = 'sound/machines/romhack1.ogg',\
  	"sound/machines/romhack2.ogg" = 'sound/machines/romhack2.ogg',\
  	"sound/machines/romhack3.ogg" = 'sound/machines/romhack3.ogg',\
