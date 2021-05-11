@@ -1,5 +1,7 @@
 
 (t)mon may 10 21
+(u)Tarmunora
+(+)Salt melts ice decals, carbon (dirt) splashed on floors undoes lube
 (u)112358sam
 (p)4655
 (e)🐛|bug
