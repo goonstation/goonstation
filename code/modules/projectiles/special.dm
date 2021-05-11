@@ -135,7 +135,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/pellets_to_fire = 15
 	var/spread_projectile_type = /datum/projectile/bullet/flak_chunk
 	var/split_type = 0
-	var/pellet_shot_volume = 100
+	var/pellet_shot_volume = 0
 	silentshot = 1
 	// 0 = on spawn
 	// 1 = on impact
