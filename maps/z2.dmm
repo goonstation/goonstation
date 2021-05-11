@@ -78172,7 +78172,7 @@
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "hVQ" = (
 /obj/machinery/door/poddoor/blast/single{
-	desc = "An old blast door. It has plenty of scratches and dents on it's surface.";
+	desc = "An old blast door. It has plenty of scratches and dents on its surface.";
 	id = "virvadoor"
 	},
 /turf/unsimulated/floor/plating/scorched,
