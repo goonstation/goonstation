@@ -9,6 +9,8 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if (src.material)
 		src.material.triggerTemp(src, exposed_temperature)
+	if (reagents)
+		reagents.temperature_reagents(exposed_temperature, 10, 10, 300)
 	if (electric) //mbc : i'm putting electric zaps on here because eleczaps ALWAYS happen alongside hotspot expose and i dont want to loop all atoms twice
 		for (var/atom/item in src) //I hate having to add this here too but too many things use hotspot_expose. This might cause lag on large fires.
 			item.temperature_expose(null, exposed_temperature, exposed_volume)
@@ -24,8 +26,6 @@
 	. = ..()
 	var/datum/gas_mixture/air_contents = return_air()
 
-	if (reagents)
-		reagents.temperature_reagents(exposed_temperature, 10, 10, 300)
 
 	if (!air_contents)
 		return 0
