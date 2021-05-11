@@ -511,7 +511,6 @@
 	ai_default_intent = INTENT_HARM
 	ai_aggression_timeout = null
 	max_health = 150
-	stamina_max = 250
 
 	New()
 		..()
@@ -519,6 +518,7 @@
 			var/head = pick(/obj/item/clothing/head/bandana/red, /obj/item/clothing/head/bandana/random_color)
 			src.equip_new_if_possible(head, slot_head)
 		APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "angry_monkey", 5)
+		src.add_stam_mod_max("angry_monkey", 100)
 
 	get_disorient_protection()
 		. = ..()
