@@ -18224,8 +18224,8 @@
 /area/station/crew_quarters/quarters)
 "aNP" = (
 /obj/rack,
-/obj/item/camera_test,
-/obj/item/camera_test,
+/obj/item/camera,
+/obj/item/camera,
 /obj/item/item_box/assorted/stickers/stickers_limited,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters)
@@ -19912,7 +19912,7 @@
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
 /obj/item/device/audio_log,
-/obj/item/camera_test,
+/obj/item/camera,
 /obj/item/device/radio/headset/multifreq,
 /obj/cable{
 	d2 = 8;
@@ -20284,8 +20284,8 @@
 /obj/item/device/camera_viewer{
 	network = "Zeta"
 	},
-/obj/item/camera_test,
-/obj/item/camera_test,
+/obj/item/camera,
+/obj/item/camera,
 /obj/storage/crate,
 /turf/simulated/floor,
 /area/station/science/teleporter)
@@ -22329,7 +22329,7 @@
 /area/station/security/detectives_office)
 "aWp" = (
 /obj/table/wood/auto,
-/obj/item/camera_test{
+/obj/item/camera{
 	desc = "A one use - polaroid camera. 30 photos left.";
 	name = "detectives camera";
 	pictures_left = 30
@@ -28247,7 +28247,7 @@
 /obj/item/storage/photo_album{
 	pixel_y = -10
 	},
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/captain)
 "bjs" = (

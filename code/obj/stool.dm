@@ -284,15 +284,14 @@
 		scoot_sounds = list( 'sound/misc/chair/office/scoot1.ogg', 'sound/misc/chair/office/scoot2.ogg', 'sound/misc/chair/office/scoot3.ogg', 'sound/misc/chair/office/scoot4.ogg', 'sound/misc/chair/office/scoot5.ogg' )
 
 	Move()
+		if(src.buckled_guy.loc != src.loc)
+			src.unbuckle()
 		. = ..()
 		if (. && src.buckled_guy)
 			var/mob/living/carbon/C = src.buckled_guy
-			if(src.buckled_guy.loc == src.loc)
-				C.buckled = null
-				C.Move(src.loc)
-				C.buckled = src
-			else
-				src.unbuckle()
+			C.buckled = null
+			C.Move(src.loc)
+			C.buckled = src
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/clothing/suit/bedsheet))
@@ -1448,9 +1447,9 @@
 		for (var/mob/M in AIviewers(src, null))
 			M.show_message("<span class='alert'>The electric chair went off!</span>", 3)
 			if (lethal)
-				playsound(src.loc, "sound/effects/electric_shock.ogg", 100, 0)
+				playsound(src.loc, "sound/effects/electric_shock.ogg", 50, 0)
 			else
-				playsound(src.loc, "sound/effects/sparks4.ogg", 100, 0)
+				playsound(src.loc, "sound/effects/sparks4.ogg", 50, 0)
 
 		if (src.buckled_guy && ishuman(src.buckled_guy))
 			var/mob/living/carbon/human/H = src.buckled_guy

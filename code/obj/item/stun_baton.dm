@@ -21,7 +21,7 @@
 	force = 10
 	throwforce = 7
 	w_class = W_CLASS_NORMAL
-	mats = 8
+	mats = list("MET-3"=10, "CON-2"=10)
 	contraband = 4
 	stamina_damage = 15
 	stamina_cost = 21
@@ -43,8 +43,8 @@
 	var/uses_electricity = 1 // Does it use electricity? Certain interactions don't work with a wooden baton.
 	var/status = 1 //1 is on, 0 is off
 
-	var/stun_normal_weakened = 20
-	var/stun_normal_stuttering = 20
+	var/stun_normal_weakened = 15
+	var/stun_normal_stuttering = 15
 	var/stun_harm_weakened = 8 // Only used when next flag is set to 1.
 	var/instant_harmbaton_stun = 0 // Legacy behaviour for harmbaton, that is an instant knockdown.
 #ifdef USE_STAMINA_DISORIENT
@@ -298,7 +298,7 @@
 					if ((dude_to_stun.stuttering < src.stun_normal_stuttering))
 						dude_to_stun.stuttering = src.stun_normal_stuttering
 				else
-					dude_to_stun.do_disorient(src.stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 80)
+					dude_to_stun.do_disorient(src.stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 60)
 					//dude_to_stun.remove_stamina(src.stamina_damage)
 					//dude_to_stun.stamina_stun() // Must be called manually here to apply the stun instantly.
 
@@ -485,6 +485,7 @@
 	item_on = "cane"
 	item_off = "cane"
 	cell_type = /obj/item/ammo/power_cell
+	mats = list("MET-3"=10, "CON-2"=10, "gem"=1, "gold"=1)
 
 /obj/item/baton/classic
 	name = "police baton"
@@ -515,6 +516,7 @@
 	icon_state = "ntso_baton-c"
 	item_state = "ntso-baton-c"
 	force = 7
+	mats = list("MET-3"=10, "CON-2"=10, "POW-1"=5)
 	icon_on = "ntso-baton-a-1"
 	icon_off = "ntso-baton-c"
 	var/icon_off_open = "ntso-baton-a-0"

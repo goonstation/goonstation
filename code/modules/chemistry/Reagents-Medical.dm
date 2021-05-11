@@ -1248,8 +1248,9 @@ datum
 							silent = 1
 
 					if (!silent)
-						boutput(M, "<span class='notice'>The styptic powder stings like hell as it closes some of your wounds.</span>")
-						M.emote("scream")
+						if(!ON_COOLDOWN(M, "styptic screaming", 3 SECONDS))
+							boutput(M, "<span class='notice'>The styptic powder stings like hell as it closes some of your wounds.</span>")
+							M.emote("scream")
 					M.UpdateDamageIcon()
 				else if(method == INGEST)
 					boutput(M, "<span class='alert'>You feel gross!</span>")
@@ -1302,7 +1303,6 @@ datum
 						if (H.organHolder)
 							H.organHolder.heal_organs(2*mult, 2*mult, 2*mult, target_organs)
 
-				if(prob(25)) M.UpdateDamageIcon() // gonna leave this one on for now, but only call it a quarter of the time
 				..()
 
 		medical/atropine // COGWERKS CHEM REVISION PROJECT. i dunno what the fuck this would be, probably something bad. maybe atropine?

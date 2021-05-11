@@ -303,6 +303,11 @@
 		src.ghost = O
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)
+
+		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[O.ckey]
+		if(istype(respawnee))
+			respawnee.update_time_display()
+
 		O.update_item_abilities()
 		return O
 	return null
@@ -790,6 +795,7 @@
 
 mob/dead/observer/proc/insert_observer(var/atom/target)
 	var/mob/dead/target_observer/newobs = unpool(/mob/dead/target_observer)
+	newobs.attach_hud(hud)
 	newobs.set_observe_target(target)
 	newobs.name = src.name
 	newobs.real_name = src.real_name

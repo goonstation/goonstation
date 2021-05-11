@@ -42,6 +42,7 @@
 		return
 
 	src.material?.triggerOnAttack(src, src, hit_atom)
+	hit_atom.material?.triggerOnHit(hit_atom, src, null, 2)
 	for(var/atom/A in hit_atom)
 		A.material?.triggerOnAttacked(A, src, hit_atom, src)
 
@@ -57,7 +58,14 @@
 
 /atom/movable/Bump(atom/O)
 	if(src.throwing)
-		src.throw_impact(O)
+		var/found_any = FALSE
+		// can be optimized later by storing list on the atom itself if this ever becomes a problem (it won't)
+		for(var/datum/thrown_thing/thr as anything in global.throwing_controller.thrown)
+			if(thr.thing == src)
+				src.throw_impact(O, thr)
+				found_any = TRUE
+		if(!found_any)
+			src.throw_impact(O)
 		src.throwing = 0
 	..()
 

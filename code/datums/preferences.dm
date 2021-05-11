@@ -1726,7 +1726,12 @@ var/global/list/feminine_hstyles = list("Mohawk" = "mohawk",
 	"Sage" = "sage",
 	"Fun Bun" = "fun_bun",
 	"Croft" = "croft",
-	"Disheveled" = "disheveled")
+	"Disheveled" = "disheveled",
+	"Tulip" = "tulip",
+	"Floof" = "floof",
+	"Bloom" = "bloom",
+	"Smooth Waves" = "smoothwave",
+	"Long Mini Tail" = "longtailed")
 
 var/global/list/masculine_hstyles = list("None" = "None",
 	"Balding" = "balding",
@@ -1758,7 +1763,12 @@ var/global/list/masculine_hstyles = list("None" = "None",
 	"Choppy Short" = "chop_short",
 	"Bangs" = "bangs",
 	"Mini Pigtails" = "minipig",
-	"Temsik" = "temsik")
+	"Temsik" = "temsik",
+	"Visual" = "visual",
+	"Tulip" = "tulip",
+	"Spiky" = "spiky",
+	"Subtle Spiky" = "subtlespiky",
+	"Bloom" = "bloom")
 
 var/global/list/facial_hair = list("None" = "none",
 	"Chaplin" = "chaplin",
@@ -1792,6 +1802,9 @@ var/global/list/facial_hair = list("None" = "none",
 var/global/list/hair_details = list("einstein" = "einalt",\
 	"80s" = "80sfade",\
 	"glammetal" = "glammetalO",\
+	"mermaid" = "mermaidfade",\
+	"smoothwave" = "smoothwave_fade",\
+	"longbeard" = "longbeardfade",\
 	"pomp" = "pompS",\
 	"mohawk" = list("mohawkFT", "mohawkFB", "mohawkS"),\
 	"emo" = "emoH",\

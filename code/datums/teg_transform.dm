@@ -1,64 +1,3 @@
-/// Provide support for IIR filters to perform all your standard filtering needs!
-/// Previous inputs and outputs of the function will be summed together and output
-///
-/// https://en.wikipedia.org/wiki/Infinite_impulse_response
-/datum/digital_filter
-	/// feedback (scalars for sumation of previous results)
-	var/list/a_coefficients
-	/// feedforward (scalars for sumation of previous inputs)
-	var/list/b_coefficients
-	var/z_a[1]
-	var/z_b[1]
-
-	proc/init(list/feedback, list/feedforward)
-		a_coefficients = feedback
-		b_coefficients = feedforward
-		z_a.len = length(a_coefficients)
-		z_b.len = length(b_coefficients)
-
-	proc/process(input)
-		var/feedback_sum
-		var/input_sum
-		z_b[1] = input
-
-		// Sum previous outputs
-		for(var/i in 1 to length(src.a_coefficients))
-			feedback_sum -= src.a_coefficients[i]*src.z_a[i]
-			if(i>1) src.z_a[i] = src.z_a[i-1]
-
-		// Sum inputs
-		for(var/i in 1 to length(src.b_coefficients))
-			input_sum += src.b_coefficients[i]*src.z_b[i]
-			if(i>1) src.z_b[i] = src.z_b[i-1]
-		. = feedback_sum + input_sum
-		if(length(src.z_a)) src.z_a[1] = .
-
-	/// Sum equally weighted previous inputs of window_size
-	window_average
-		init(window_size)
-			var/list/coeff_list = new()
-			for(var/i in 1 to window_size)
-				coeff_list += 1/window_size
-			..(null, coeff_list)
-
-	/// Sum weighted current input and weighted previous output to achieve output
-	/// input weight will be ratio of weight assigned to input value while remaining goes to previous output
-	///
-	/// Exponential Smoothing
-	/// Time constant will be the amount of time to achieve 63.2% of original sum
-	/// NOTE: This should be performed by a scheduled process as this ensures constant sample interval
-	/// https://en.wikipedia.org/wiki/Exponential_smoothing
-	exponential_moving_average
-		proc/init_basic(input_weight)
-			var/input_weight_list[1]
-			var/prev_output_weight_list[1]
-			input_weight_list[1] = input_weight
-			prev_output_weight_list[1] = -(1-input_weight)
-			init(prev_output_weight_list,input_weight_list)
-
-		proc/init_exponential_smoothing(sample_interval, time_const)
-			init_basic(1.0 - ( eulers ** ( -sample_interval / time_const )))
-
 /// Transformation Manager for Thermo-Electric Generator
 /datum/teg_transformation_mngr
 	var/obj/machinery/power/generatorTemp/generator
@@ -91,12 +30,18 @@
 					break
 
 			if(reagents_present)
-				SPAWN_DBG(0)
-					if(generator.active_form)
-						generator.active_form.on_revert()
-					generator.active_form = new T.type
-					generator.active_form.on_transform(generator)
+				transform_to_type(T.type)
 				return
+
+	proc/transform_to_type(type, mat_id)
+		if(ispath(type, /datum/teg_transformation))
+			SPAWN_DBG(0)
+				if(generator.active_form)
+					generator.active_form.on_revert()
+				generator.active_form = new type
+				if(mat_id)
+					generator.active_form.mat_id = mat_id
+				generator.active_form.on_transform(generator)
 
 	/// Transform when a matsci semiconductor is inserted and the material differs the material
 	/// from the TEG.  Transformation requires the semiconductor fully back in place and energy
@@ -114,11 +59,7 @@
 						generator.circ1.UpdateOverlays(nanite_overlay,"transform")
 						generator.circ2.UpdateOverlays(nanite_overlay,"transform")
 						sleep(rand(1.5 SECONDS, 2.5 SECONDS))
-						if(generator.active_form)
-							generator.active_form.on_revert()
-						generator.active_form = new /datum/teg_transformation/matsci
-						generator.active_form.mat_id = generator.semiconductor.material.mat_id
-						generator.active_form.on_transform(generator)
+						transform_to_type(/datum/teg_transformation/matsci, generator.semiconductor.material.mat_id)
 						sleep(rand(1.5 SECONDS, 2.5 SECONDS))
 						src.generator.visible_message("<span class='alert'>The swarm of nanites disappears back into \the [src.generator].</span>")
 						generator.UpdateOverlays(null,"transform")
@@ -149,25 +90,29 @@ datum/teg_transformation
 		. = ..()
 
 	/// Return False by default to cause classic grump behavior
-	proc/on_grump()
+	proc/on_grump(mult)
 		return FALSE
 
 	/// Base transformation to assign material
 	proc/on_transform(obj/machinery/power/generatorTemp/teg)
 		var/datum/material/M
 		src.teg = teg
-		if(src.mat_id)
+		if(initial(src.mat_id))
+			M = getMaterial(src.mat_id)
+		else
 			M = copyMaterial(src.teg.semiconductor.material)
-			teg.setMaterial(M)
-			teg.circ1.setMaterial(M)
-			teg.circ2.setMaterial(M)
+
+		teg.setMaterial(M)
+		teg.circ1.setMaterial(M)
+		teg.circ2.setMaterial(M)
 
 	/// Revert material back to initial values
 	proc/on_revert()
-		src.teg.setMaterial(getMaterial(initial(src.mat_id)))
-		src.teg.circ1.setMaterial(getMaterial(initial(src.mat_id)))
-		src.teg.circ2.setMaterial(getMaterial(initial(src.mat_id)))
-		qdel(src.teg.active_form)
+		src.teg.removeMaterial()
+		src.teg.circ1.removeMaterial()
+		src.teg.circ2.removeMaterial()
+		src.teg.active_form = null
+		qdel(src)
 
   //                    //
   // TEG TRANFORMATIONS //
@@ -177,12 +122,12 @@ datum/teg_transformation
 	default
 		mat_id = "steel"
 
-
 	/**
 	  * Material Science Transformation
 	  * Triggered by /obj/item/teg_semiconductor having a material applied likely by [/obj/machinery/arc_electroplater]
 	  */
 	matsci
+		mat_id = null
 		var/prev_efficiency
 
 		on_transform()

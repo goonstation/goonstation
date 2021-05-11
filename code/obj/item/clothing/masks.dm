@@ -8,6 +8,7 @@
 	var/obj/item/voice_changer/vchange = 0
 	body_parts_covered = HEAD
 	compatible_species = list("human", "cow", "werewolf")
+	wear_layer = MOB_HEAD_LAYER1
 	var/is_muzzle = 0
 	var/use_bloodoverlay = 1
 	var/stapled = 0
@@ -100,7 +101,7 @@
 	name = "gas mask"
 	desc = "A close-fitting mask that can filter some environmental toxins or be connected to an air supply."
 	icon_state = "gas_mask"
-	c_flags = SPACEWEAR | COVERSMOUTH | COVERSEYES | MASKINTERNALS | BLOCKSMOKE
+	c_flags =  COVERSMOUTH | COVERSEYES | MASKINTERNALS | BLOCKSMOKE
 	w_class = W_CLASS_NORMAL
 	see_face = 0.0
 	item_state = "gas_mask"
@@ -164,6 +165,10 @@
 	color_r = 1
 	color_g = 0.8
 	color_b = 0.8
+
+	syndicate
+		name = "syndicate field protective mask"
+		item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"
@@ -339,6 +344,10 @@
 				U.visible_message(__red("[src] latches onto [T]'s face!"),__red("You slap [src] onto [T]'s face!'"))
 				logTheThing("combat",user,target,"forces [T] to wear [src] (cursed clown mask) at [log_loc(T)].")
 				U.u_equip(src)
+
+				// If we don't empty out that slot first, it could blip the mask out of existence
+				T.drop_from_slot(T.wear_mask)
+
 				T.equip_if_possible(src,T.slot_wear_mask)
 
 

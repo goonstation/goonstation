@@ -362,6 +362,23 @@
 /obj/item/sword/red
 	bladecolor = "R"
 
+	enakai
+		active = 1;
+		active_force = 5
+		desc = "You were the chosen one! You were supposed to destroy the greytiders, not join them!";
+		icon_state = "sword1-R";
+		item_state = "sword1-R";
+		name = "Enakai's red cyalume saber"
+
+		pickup(mob/user)
+			if(isadmin(user) || current_state == GAME_STATE_FINISHED)
+				src.active_force = 60
+				if(src.active)
+					src.force = 60
+			else
+				boutput(user, "<span class='notice'>You feel that it was too soon for this...</span>")
+			. = ..()
+
 /obj/item/sword/orange
 	bladecolor = "O"
 
@@ -405,6 +422,7 @@
 	state_name = "d_sword"
 	icon_state = "d_sword0"
 	item_state = "d_sword0"
+	w_class = W_CLASS_NORMAL
 	off_w_class = W_CLASS_NORMAL
 	active_force = 18
 	inactive_force = 8
@@ -575,7 +593,7 @@
 			var/mob/living/carbon/human/H = M
 			H.implant.Add(src)
 			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
-			playsound(src.loc, "sound/weapons/slashcut.ogg", 100, 1)
+			playsound(src.loc, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
 			H.changeStatus("weakened", 2 SECONDS)
 			src.set_loc(M)
 			src.implanted = 1
@@ -1222,7 +1240,7 @@
 			user.update_clothing()
 			src.sword_inside = W //katana SHOULD be in the sheath now.
 			boutput(user, "<span class='notice'>You sheathe [W] in [src].</span>")
-			playsound(get_turf(user), "sound/effects/sword_sheath.ogg", 70, 0, 0)
+			playsound(get_turf(user), "sound/effects/sword_sheath.ogg", 50, 0, 0)
 		else
 			..()
 			if(W.cant_drop == 1)
@@ -1233,7 +1251,7 @@
 		if (!user.r_hand || !user.l_hand)
 			sword_inside.clean_forensic()
 			boutput(user, "You draw [sword_inside] from your sheath.")
-			playsound(get_turf(user), pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 70, 0, 0)
+			playsound(get_turf(user), pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 50, 0, 0)
 			icon_state = sheath_state
 			item_state = ih_sheath_state
 			user.put_in_hand_or_drop(sword_inside)

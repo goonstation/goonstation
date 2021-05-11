@@ -233,7 +233,7 @@
 		if(src.traitHolder)
 			for(var/T in src.traitHolder.traits)
 				var/obj/trait/O = getTraitById(T)
-				O.onLife(src)
+				O.onLife(src, life_mult)
 
 		update_icons_if_needed()
 
@@ -613,11 +613,6 @@
 			return 100
 
 		var/thermal_protection = 10 // base value
-
-		// Resistance from Bio Effects
-		if (src.bioHolder)
-			if (src.bioHolder.HasEffect("dwarf"))
-				thermal_protection += 10
 
 		// Resistance from Clothing
 		thermal_protection += GET_MOB_PROPERTY(src, PROP_COLDPROT)

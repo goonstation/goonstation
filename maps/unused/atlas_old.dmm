@@ -3274,12 +3274,6 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/mining/staff_room)
-"iF" = (
-/obj/displaycase{
-	displayed = new /obj/item/captaingun
-},
-/turf/simulated/floor/blue,
-/area/station/bridge/captain)
 "iG" = (
 /obj/lattice{
 	dir = 9;
@@ -3950,9 +3944,6 @@
 	dir = 5
 	},
 /area/station/hydroponics/bay)
-"km" = (
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
 "kn" = (
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
@@ -9534,16 +9525,6 @@
 /obj/machinery/vending/cola/red,
 /turf/unsimulated/nicegrass/random,
 /area/station/hallway/primary/west)
-"wX" = (
-/obj/table/auto,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/item/card_box/plain,
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/cafeteria)
 "wY" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/orangeblack,
@@ -10062,14 +10043,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
-"yg" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
 "yh" = (
 /obj/wingrille_spawn/auto/tuff,
 /obj/cable{
@@ -10374,17 +10347,6 @@
 	},
 /turf/unsimulated/nicegrass/random,
 /area/station/hydroponics/bay)
-"yN" = (
-/obj/potted_plant{
-	dir = 4
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
 "yO" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -11327,32 +11289,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
-	},
-/turf/simulated/floor/purplewhite,
-/area/station/science/teleporter)
-"AF" = (
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/storage/crate{
-	desc = "Only distantly related to the Adventure Closet.";
-	name = "Adventure Crate"
-	},
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/reagent_containers/food/drinks/milk,
-/obj/item/reagent_containers/food/snacks/sandwich/pb,
-/obj/item/paper{
-	desc = "Aw dang, mooom";
-	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
-	name = "note from mom"
-	},
-/obj/item/paper/book/critter_compendium,
-/obj/machinery/light{
-	layer = 3
 	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
@@ -12868,10 +12804,6 @@
 /obj/landmark/halloween,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"DG" = (
-/obj/disposalpipe/segment,
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
 "DH" = (
 /obj/machinery/atmospherics/unary/furnace_connector,
 /obj/machinery/firealarm{
@@ -13377,17 +13309,6 @@
 	dir = 5
 	},
 /area/station/medical/cdc)
-"EK" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
 "EL" = (
 /obj/cable{
 	d1 = 1;
@@ -16710,6 +16631,48 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"Tj" = (
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/radio/headset/multifreq,
+/obj/storage/crate{
+	desc = "Only distantly related to the Adventure Closet.";
+	name = "Adventure Crate"
+	},
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/reagent_containers/food/drinks/milk,
+/obj/item/reagent_containers/food/snacks/sandwich/pb,
+/obj/item/paper{
+	desc = "Aw dang, mooom";
+	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
+	name = "note from mom"
+	},
+/obj/item/paper/book/critter_compendium,
+/obj/machinery/light{
+	layer = 3
+	},
+/turf/simulated/floor/purplewhite,
+/area/station/science/teleporter)
+"Ue" = (
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/turf/simulated/floor/blue,
+/area/station/bridge/captain)
+"WQ" = (
+/obj/table/auto,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/item/card_box/plain,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 
 (1,1,1) = {"
 aa
@@ -59126,7 +59089,7 @@ qo
 Ak
 uE
 Av
-AF
+Tj
 tV
 as
 Cw
@@ -63039,7 +63002,7 @@ mV
 Fu
 JO
 DE
-DG
+hY
 DP
 DP
 DP
@@ -63341,7 +63304,7 @@ nq
 np
 xl
 yq
-yg
+wN
 nr
 ns
 nr
@@ -63938,14 +63901,14 @@ fW
 mB
 gy
 Ee
-wX
+WQ
 LB
 ie
 EM
 ce
 yv
 rj
-km
+dv
 sH
 dx
 mv
@@ -64247,7 +64210,7 @@ uH
 ni
 rg
 rj
-km
+dv
 sH
 ma
 mw
@@ -64851,7 +64814,7 @@ hk
 nH
 yv
 uV
-km
+dv
 sH
 md
 mX
@@ -65153,7 +65116,7 @@ jc
 ce
 yv
 uW
-km
+dv
 sH
 CS
 my
@@ -65455,7 +65418,7 @@ ig
 ig
 yv
 yr
-km
+dv
 pC
 ur
 tK
@@ -66059,7 +66022,7 @@ xN
 jf
 sn
 yr
-km
+dv
 pC
 mg
 oa
@@ -66361,7 +66324,7 @@ xO
 jf
 AA
 uW
-km
+dv
 pC
 mh
 pU
@@ -66663,7 +66626,7 @@ jf
 nM
 yv
 yt
-km
+dv
 pC
 mi
 mZ
@@ -66965,7 +66928,7 @@ EL
 BD
 Aj
 yu
-km
+dv
 pC
 ur
 tT
@@ -67267,7 +67230,7 @@ xQ
 cn
 yv
 rj
-km
+dv
 un
 ob
 po
@@ -67569,7 +67532,7 @@ qZ
 nQ
 yv
 rj
-km
+dv
 un
 Mu
 JQ
@@ -67871,8 +67834,8 @@ JM
 CC
 nB
 ET
-km
-km
+dv
+dv
 dv
 JY
 pv
@@ -68173,8 +68136,8 @@ hY
 hY
 EQ
 EU
-DG
-DG
+hY
+hY
 hY
 hY
 hY
@@ -68476,7 +68439,7 @@ xX
 xl
 sg
 sP
-yN
+xX
 yZ
 og
 DY
@@ -68487,7 +68450,7 @@ sx
 wN
 wN
 wN
-EK
+xl
 rP
 Bb
 Bg
@@ -69079,7 +69042,7 @@ Kt
 gx
 yv
 yp
-km
+dv
 pG
 ml
 pp
@@ -69985,7 +69948,7 @@ lG
 nU
 yv
 yx
-km
+dv
 pG
 pT
 pT
@@ -73604,7 +73567,7 @@ aa
 aa
 cc
 cc
-iF
+Ue
 iv
 kv
 lt

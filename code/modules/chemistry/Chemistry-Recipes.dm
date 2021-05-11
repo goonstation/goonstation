@@ -957,6 +957,16 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
+		cocktail_caipirinha
+			name = "Pineapple Caipirinha"
+			id = "caipirinha"
+			result = "caipirinha"
+			required_reagents = list("vodka" = 2, "sugar" = 1,"ice" = 1, "juice_pineapple" = 2)
+			result_amount = 5
+			mix_phrase = "The vodka and pineapple juice mix together into a yellowish drink."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
 		cocktail_diesel
 			name = "Diesel"
 			id = "diesel"
@@ -1898,11 +1908,20 @@ datum
 			mix_phrase = "Large white crystals precipitate out of the mixture."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		iron_oxide
+			name = "Iron Oxide"
+			id = "iron_oxide"
+			result = "iron_oxide"
+			required_reagents = list("iron" = 1, "oxygen" = 1, "acetic_acid" = 1, "salt" = 1)
+			result_amount = 4
+			mix_phrase = "The iron rapidly rusts."
+			required_temperature = T0C + 100
+
 		thermite
 			name = "Thermite"
 			id = "thermite"
 			result = "thermite"
-			required_reagents = list("aluminium" = 1, "iron" = 1, "oxygen" = 1)
+			required_reagents = list("aluminium" = 1, "iron_oxide" = 1)
 			result_amount = 3
 			mix_phrase = "The solution mixes into a reddish-brown powder."
 
@@ -2415,8 +2434,6 @@ datum
 							continue
 						if (!M.ears_protected_from_sound())
 							boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
-						else
-							continue
 
 						var/checkdist = get_dist(M, location)
 						var/weak = max(0, 2 * (3 - checkdist))
@@ -2446,8 +2463,6 @@ datum
 								continue
 							if (!M.ears_protected_from_sound())
 								boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
-							else
-								continue
 
 							var/checkdist = get_dist(M, location)
 							var/weak = max(0, 2 * (3 - checkdist))
@@ -2928,6 +2943,10 @@ datum
 			required_reagents = list("glycerol" = 1, "nitric_acid" = 1, "acid" = 1)
 			result_amount = 3
 			mix_phrase = "The mixture becomes seemingly heavy and viscous."
+
+			on_reaction(var/datum/reagents/holder, created_volume)
+				if(istype(holder?.my_atom, /obj/effects/foam))
+					holder.del_reagent("nitroglycerin")
 
 		/*
 		weedkiller/weedkiller2
@@ -3692,10 +3711,10 @@ datum
 			result_amount = 4
 			mix_phrase = "The mixture becomes far more fabulous!"
 
-		glitter_harmless
+		sparkles
 			name = "harmless glitter"
-			id = "glitter_harmless"
-			result = "glitter_harmless"
+			id = "sparkles"
+			result = "sparkles"
 			required_reagents = list("colors" = 1, "paper" = 1, "platinum" = 1)
 			mix_phrase = "The mixture becomes far more fabulous- safely."
 

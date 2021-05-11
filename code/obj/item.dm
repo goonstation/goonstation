@@ -11,6 +11,7 @@
 	var/item_state = null
 	var/image/wear_image = null
 	var/wear_image_icon = 'icons/mob/belt.dmi'
+	var/wear_layer = MOB_CLOTHING_LAYER
 	var/image/inhand_image = null
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	/// set to a colour to make the inhand image be that colour. if the item is coloured though that takes priority over this variable
@@ -39,7 +40,7 @@
 	var/hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	var/stamina_damage = STAMINA_ITEM_DMG //amount of stamina removed from target per hit.
 	var/stamina_cost = STAMINA_ITEM_COST  //amount of stamina removed from USER per hit. This cant bring you below 10 points and you will not be able to attack if it would.
-	
+
 	var/stamina_crit_chance = STAMINA_CRIT_CHANCE //Crit chance when attacking with this.
 	var/datum/item_special/special = null // Contains the datum which executes the items special, if it has one, when used beyond melee range.
 	var/hide_attack = 0 //If 1, hide the attack animation + particles. Used for hiding attacks with silenced .22 and sleepy pen
@@ -120,7 +121,7 @@
 	var/rarity = ITEM_RARITY_COMMON // Just a little thing to indicate item rarity. RPG fluff.
 	pressure_resistance = 50
 	var/obj/item/master = null
-	
+
 	var/last_tick_duration = 1 // amount of time spent between previous tick and this one (1 = normal)
 	var/last_processing_tick = -1
 
@@ -544,6 +545,8 @@
 	return
 
 /obj/item/proc/change_stack_amount(var/diff)
+	if ((amount + diff) < 0)
+		return 0
 	amount += diff
 	if (!inventory_counter)
 		create_inventory_counter()
@@ -555,18 +558,27 @@
 			var/mob/holding_mob = src.loc
 			holding_mob.u_equip(src)
 		pool(src)
+	return 1
 
 /obj/item/proc/stack_item(obj/item/other)
 	var/added = 0
-
-	if (other != src && check_valid_stack(other))
-		if (src.amount + other.amount > max_stack)
-			added = max_stack - src.amount
-		else
-			added = other.amount
-
-		src.change_stack_amount(added)
-		other.change_stack_amount(-added)
+	if(isrobot(other.loc))
+		max_stack = 500
+		if (other != src && check_valid_stack(src))
+			if (src.amount + other.amount > max_stack)
+				added = max_stack - other.amount
+			else
+				added = src.amount
+			src.change_stack_amount(-added)
+			other.change_stack_amount(added)
+	else
+		if (other != src && check_valid_stack(other))
+			if (src.amount + other.amount > max_stack)
+				added = max_stack - src.amount
+			else
+				added = other.amount
+			src.change_stack_amount(added)
+			other.change_stack_amount(-added)
 
 	return added
 
@@ -775,10 +787,9 @@
 			S.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
 
 /obj/item/attackby(obj/item/W as obj, mob/user as mob, params)
-	if (src.material)
+	if (W.firesource)
 		src.material.triggerTemp(src ,1500)
-	if (src.burn_possible && src.burn_point <= 1500)
-		if (W.firesource)
+		if (src.burn_possible && src.burn_point <= 1500)
 			src.combust()
 		else
 			..(W, user)
