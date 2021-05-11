@@ -517,6 +517,7 @@
 		SPAWN_DBG(1 SECOND)
 			var/head = pick(/obj/item/clothing/head/bandana/red, /obj/item/clothing/head/bandana/random_color)
 			src.equip_new_if_possible(head, slot_head)
+			src.put_in_hand_or_drop(new /obj/item/storage/toolbox/emergency)
 		APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "angry_monkey", 5)
 		src.add_stam_mod_max("angry_monkey", 100)
 
