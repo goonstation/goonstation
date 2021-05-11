@@ -336,6 +336,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_blindfold_monkeys,
 		/client/proc/cmd_swampify_station,
 		/client/proc/cmd_trenchify_station,
+		/client/proc/cmd_special_shuttle,
 
 		/datum/admins/proc/toggleaprilfools,
 		/client/proc/cmd_admin_pop_off_all_the_limbs_oh_god,
@@ -439,9 +440,6 @@ var/list/admin_verbs = list(
 		/client/proc/spawn_dbg,
 #elif defined(ENABLE_SPAWN_DEBUG_2)
 		/client/proc/spawn_dbg,
-#endif
-#ifdef INCLUDE_BUGGY_LUA_SHIT
-		/client/proc/RunLuaString,
 #endif
 		),
 
@@ -1919,6 +1917,8 @@ var/list/fun_images = list()
 
 	var/lose_value = input("Enter new lose value.") as num
 	world.save_intra_round_value("nukie_loss", lose_value)
+
+	world.save_intra_round_value("nukie_last_reset", world.realtime)
 
 	logTheThing("admin", usr ? usr : src, null, "set nuke ops values to [win_value] wins and [lose_value] loses.")
 	logTheThing("diary", usr ? usr : src, null, "set nuke ops values to [win_value] wins and [lose_value] loses.", "admin")

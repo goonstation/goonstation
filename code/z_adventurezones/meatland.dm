@@ -1626,7 +1626,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	pickup(var/mob/user)
 		if (ishuman(user))
 			boutput(user, "<span class='alert'>[src] clamps down on your arm!  Mercy sakes!</span>")
-			src.w_class = 10
+			src.w_class = W_CLASS_BUBSIAN
 		return ..()
 
 	dropped()

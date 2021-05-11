@@ -107,6 +107,24 @@
 
 /obj/item/clothing/head/helmet/space/engineer/abilities = list(/obj/ability_button/flashlight_engiehelm)
 
+/obj/item/clothing/head/helmet/space/captain
+	name = "captain's space helmet"
+	icon_state = "space-captain"
+	item_state = "space-captain"
+	desc = "Helps protect against vacuum. Comes in an interesting green befitting the captain."
+
+	blue
+		name = "commander's space helmet"
+		icon_state = "space-captain-blue"
+		item_state = "space-captain-blue"
+		desc = "Helps protect against vacuum. Comes in a fasionable blue befitting a commander."
+
+	red
+		name = "commander's space helmet"
+		icon_state = "space-captain-red"
+		item_state = "space-captain-red"
+		desc = "Helps protect against vacuum. Comes in a fasionable red befitting a commander."
+
 // Sealab helmets
 
 /obj/item/clothing/head/helmet/space/engineer/diving //hijacking engiehelms for the flashlight
@@ -187,7 +205,7 @@
 	icon_state = "syndicate"
 	item_state = "space_helmet_syndicate"
 	desc = "The standard space helmet of the dreaded Syndicate."
-
+	item_function_flags = IMMUNE_TO_ACID
 	old
 		icon_state = "syndicate-OLD"
 		desc = "A relic of the past."
@@ -195,8 +213,7 @@
 
 	commissar_cap
 		name = "commander's cap"
-		wear_image_icon = 'icons/mob/fruithat.dmi'
-		icon_state = "commissar_cap"
+		icon_state = "syndie_commander"
 		desc = "A terrifyingly tall, black & red cap, typically worn by a Syndicate Nuclear Operative Commander. Maybe they're trying to prove something to the Head of Security?"
 		seal_hair = 0
 		see_face = 1

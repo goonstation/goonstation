@@ -70,7 +70,7 @@
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 
 	burn_point = 2500
 	burn_output = 2500

@@ -131,7 +131,7 @@
 
 		if(!src.donor_appearance || makeshitup || !src.donor)
 			AHead = new/datum/appearanceHolder()
-			randomize_look(AHead, 0, 0, 0, 0, 0, 0)
+			randomize_look(AHead, 0, 0, 0, 0, 0, 0, src.donor)
 			src.donor_appearance = AHead
 			src.transplanted = FALSE // just in case
 		else
@@ -552,6 +552,10 @@
 				if(HEAD_VIRTUAL)
 					src.organ_name = "virtual head"
 					src.desc = "W311, 5h17." // 1337 5p34k
+
+				if(HEAD_FLASHY)
+					src.organ_name = "psychedelic head"
+					src.desc = "Well, that's trippy."
 
 		src.update_icon(makeshitup = 0)	// so our head actually looks like the thing its supposed to be
 		// though if our head's a transplant, lets run it anyway, in case their hair changed or something

@@ -18,7 +18,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	m_amt = 30
 	g_amt = 30
 	stamina_damage = 30
@@ -183,7 +183,7 @@
 			src.item_state = "weldingtool-on" + src.item_state_variant_suffix
 			processing_items |= src
 			if(user && !ON_COOLDOWN(src, "playsound", 1.3 SECONDS))
-				playsound(src.loc, "sound/effects/welder_ignite.ogg", 80, 1)
+				playsound(src.loc, "sound/effects/welder_ignite.ogg", 65, 1)
 		else
 			boutput(user, "<span class='notice'>Not welding anymore.</span>")
 			src.force = 3
@@ -331,7 +331,7 @@
 				return 0 //welding, doesnt have fuel
 			src.use_fuel(use_amt)
 			if(noisy)
-				playsound(user.loc, list('sound/items/Welder.ogg', 'sound/items/Welder2.ogg')[noisy], 50, 1)
+				playsound(user.loc, list('sound/items/Welder.ogg', 'sound/items/Welder2.ogg')[noisy], 40, 1)
 			if(burn_eyes)
 				src.eyecheck(user)
 			return 1 //welding, has fuel

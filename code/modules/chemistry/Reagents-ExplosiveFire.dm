@@ -111,7 +111,7 @@ datum
 					var/mob/living/L = M
 					var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 					if(istype(L) && burn)
-						L.TakeDamage("All", 0, clamp(2 * volume * (burn.getStage()-1.5), 0, 30), 0, DAMAGE_BURN)
+						L.TakeDamage("All", 0, clamp(2 * volume * (burn.getStage()-1.25), 0, 35), 0, DAMAGE_BURN)
 						if(!M.stat && !ON_COOLDOWN(M, "napalm_scream", 1 SECOND))
 							M.emote("scream")
 					return 0
@@ -121,14 +121,29 @@ datum
 				var/mob/living/L = M
 				var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 				if(istype(L) && burn)
-					L.changeStatus("burning", 15 * src.volume)
-					burn.counter += 7 * src.volume
+					L.changeStatus("burning", 20 * src.volume)
+					burn.counter += 10 * src.volume
 					holder?.del_reagent(src.id)
 				..()
 				return
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison",1)
+
+			syndicate
+				name = "syndicate napalm"
+				id = "syndicate_napalm"
+				description = "Extra sticky, extra burny"
+
+				reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+					. = ..()
+					if(method == TOUCH)
+						var/mob/living/L = M
+						var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
+						L.changeStatus("slowed", 2 SECONDS, optional = 4)
+						if(istype(L) && burn) //double up on the extra burny, not blockable by biosuits/etc either
+							L.changeStatus("burning", 10 * src.volume)
+							burn.counter += 5 * src.volume
 
 		combustible/kerosene
 			name = "kerosene"
@@ -206,13 +221,22 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				if(istype(T, /turf/simulated))
+					var/list/covered = holder.covered_turf()
+					if(length(covered) > 9)
+						volume = volume/length(covered)
+					if (volume < 3)
+						return
 					if(!T.reagents)
 						T.create_reagents(volume)
+					else
+						T.reagents.maximum_volume = T.reagents.maximum_volume + volume
+
 					if(!T.reagents.has_reagent("thermite"))
-						T.reagents.add_reagent("thermite", volume, null)
 						T.UpdateOverlays(image('icons/effects/effects.dmi',icon_state = "thermite"), "thermite")
-						if (T.active_hotspot)
-							T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 10, 300)
+
+					T.reagents.add_reagent("thermite", volume, null)
+					if (T.active_hotspot)
+						T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 10, 300)
 				return
 
 
@@ -400,11 +424,13 @@ datum
 				var/datum/reagents/old_holder = src.holder //mbc pls, ZeWaka fix: null.holder
 				//if(!T.reagents) T.create_reagents(50)
 				//T.reagents.add_reagent("infernite", 5, null)
+				var/list/covered = old_holder.covered_turf()
+				if(length(covered) > 9)
+					volume = volume/length(covered)
 				if (volume < 3)
 					return
 
 				var/fail = 0
-				var/list/covered = old_holder.covered_turf()
 				if (covered.len>4)
 					fail = 1
 					if (prob(volume+6))
@@ -578,7 +604,7 @@ datum
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(!src.reacting)
 					var/list/covered = holder.covered_turf()
-					if (length(covered) && ((exposed_volume / length(covered)) > 0.5))
+					if (length(covered) > 1 && ((exposed_volume / length(covered)) > 0.5))
 						return
 
 					src.reacting = ldmatter_reaction(holder, volume, id)
@@ -637,13 +663,19 @@ datum
 			var/caused_fireflash = 0
 			var/min_req_fluid = 0.10 //at least 10% of the fluid needs to be oil for it to ignite
 
+			unpooled(pooltype)
+				. = ..()
+				caused_fireflash = 0 //scream. Band-aid fix for unpooled fuel sometimes coming with caused_fireflash preset to True.
+
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(volume < 1)
 					if (holder)
 						holder.del_reagent(id)
 					return
 
-				if (!caused_fireflash)
+				if (caused_fireflash)
+					return
+				else
 					var/list/covered = holder.covered_turf()
 					if (covered.len < 4 || (volume / holder.total_volume) > min_req_fluid)
 						if(covered.len > 0) //possible fix for bug where caused_fireflash was set to 1 without fireflash going off, allowing fuel to reach any temp without igniting

@@ -26,6 +26,8 @@
 	var/oldloc = null
 	var/found_cooldown = 5 SECONDS
 	var/spray_cooldown = 3 SECONDS
+	/// If we pointed at someone, don't keep pointing at them, its rude
+	var/last_pointed = null
 	var/setup_party = 0
 	//To-Do: Patrol the station for fires maybe??
 
@@ -44,7 +46,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = TABLEPASS
 	var/extinguisher = 0 //Is the extinguisher added?
 	var/created_name = "Firebot"
@@ -191,12 +193,26 @@
 	if(src.frustration > 8)
 		src.KillPathAndGiveUp(1)
 
+	if(src.target) // is our target still on fire?
+		if(src.emagged)
+			if(!IN_RANGE(src, src.target, 5) && prob(25))
+				src.speak(pick("ONE FIRE, ONE EXTINGUISHER.", "HEAT DEATH: DELAYED.", "TARGET FIRE TRIANGLE: DISRUPTED.", "FIRE DESTROYED.",
+											"AN EXTINGUISHER TO THE FACE KEEPS ME AWAY.", "YOU HAVE OUTRUN AN INFERNO", "GOD MADE TOMORROW FOR THE FIRES WE DON'T KILL TODAY."))
+				src.KillPathAndGiveUp(1)
+		else if(!(src.target in by_cat[TR_CAT_BURNING_ITEMS]) && !(src.target in by_cat[TR_CAT_BURNING_MOBS]) && !(src.target in by_type[/obj/hotspot]))
+			src.speak(pick("FIRE: [pick("ENDED", "MURDERED", "STARVED", "KILLED", "DEAD", "DESTROYED")].", "FIRE SAFETY PROTOCOLS: OBSERVED.",
+										 "TARGET CREATURE, OBJECT, OR REGION OF FLAME: EXTINGUISHED.","YOU ARE NO LONGER ON FIRE."))
+			src.KillPathAndGiveUp(1) // Cus they used to keep trying to put someone out, even if they arent on fire. Or are dead.
+
 	if(!src.target || src.target.disposed)
 		src.doing_something = 0
 		src.target = src.look_for_fire()
 
 	if(src.target)
 		src.oldtarget = src.target
+		if(src.last_pointed != src.target)
+			src.last_pointed = src.target
+			src.point(src.target)
 		ON_COOLDOWN(src, FIREBOT_SEARCH_COOLDOWN, src.found_cooldown)
 		src.frustration = 0
 		src.doing_something = 1
@@ -218,7 +234,7 @@
 				if(src.setup_party)
 					src.speak(pick("IT IS PARTY TIME.","I AM A FAN OF PARTIES", "PARTIES ARE THE FUTURE"))
 				else
-					src.speak(pick("I AM GOING TO MURDER THIS FIRE.","KILL ALL FIRES.","I DIDN'T START THIS, BUT I'M GOING TO END IT.","[TIME >= 30 MINUTES ? "TONIGHT" : "TODAY"] A FIRE DIES."))
+					src.speak(pick("I AM GOING TO MURDER THIS FIRE.","KILL ALL FIRES.","I DIDN'T START THIS, BUT I'M GOING TO END IT.","[world.time >= 30 MINUTES ? "TONIGHT" : "TODAY"] A FIRE DIES."))
 			return H
 
 	for (var/obj/O in by_cat[TR_CAT_BURNING_ITEMS]) // Is anything else on fire?
@@ -229,11 +245,11 @@
 				if(src.setup_party)
 					src.speak(pick("PARTY SUPPLIES DETECTED. RIGHT ON.","PARTY FAVORS ARE THE BEST FLAVOR.", "[O] PARTY FOUL PROBABILITY: [rand(1, 150)]%. RECTIPARTYING."))
 				else
-					src.speak(pick("[O] BURN POINT TEMPERATURE EXCEEDED.","[O] DOT BURNING GREATER THAN ZERO EQUALS TRUE.","HOT [pick("ANGRY", "BURNING")] [O] IN MY AREA DETECTED.","[TIME >= 30 MINUTES ? "TONIGHT" : "TODAY"] A FIRE DIES."))
+					src.speak(pick("[O] BURN POINT TEMPERATURE EXCEEDED.","[O] DOT BURNING GREATER THAN ZERO EQUALS TRUE.","HOT [pick("ANGRY", "BURNING")] [O] IN MY AREA DETECTED.","[world.time >= 30 MINUTES ? "TONIGHT" : "TODAY"] A FIRE DIES."))
 			return O
 
 	for (var/mob/M in by_cat[TR_CAT_BURNING_MOBS]) // fine I guess we can go extinguish someone
-		if (M == src.oldtarget || M == src.oldtarget || isdead(M))
+		if (M == src.oldtarget || isdead(M))
 			continue
 		if(IN_RANGE(src, M, 7) && (M.getStatusDuration("burning") || (src.emagged && prob(25))))
 			if (src.setup_party)
@@ -252,6 +268,7 @@
 
 /obj/machinery/bot/firebot/KillPathAndGiveUp(var/give_up)
 	. = ..()
+	src.last_pointed = null
 	if(give_up)
 		src.oldtarget = src.target
 		src.target = null
@@ -286,7 +303,7 @@
 		playsound(src.loc, "sound/musical_instruments/Bikehorn_1.ogg", 75, 1, -3)
 
 	else
-		playsound(src.loc, "sound/effects/spray.ogg", 75, 1, -3)
+		playsound(src.loc, "sound/effects/spray.ogg", 30, 1, -3)
 
 	for(var/a in 0 to 5)
 		var/obj/effects/water/W = unpool(/obj/effects/water)
@@ -297,7 +314,7 @@
 		R.add_reagent("water", 2)
 		R.add_reagent("ff-foam", 8)
 		if (src.setup_party)	// heh
-			R.add_reagent("glitter_harmless", 5)
+			R.add_reagent("sparkles", 5)
 		W.spray_at(my_target, R, 1)
 
 	if (src.emagged && iscarbon(target))
@@ -427,3 +444,8 @@
 		src.created_name = t
 
 #undef FIREBOT_MOVE_SPEED
+
+/mob/living/critter/bot/firebot
+	name = "firebot"
+
+	emagged

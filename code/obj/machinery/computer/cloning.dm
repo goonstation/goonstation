@@ -69,7 +69,7 @@
 	desc = "A circuit module designed to improve cloning machine scanning capabilities to the point where even the deceased may be scanned."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cloner_upgrade"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 1
 
 /obj/item/grinder_upgrade
@@ -77,7 +77,7 @@
 	desc = "A circuit module designed to improve enzymatic reclaimer capabilities so that the machine will be able to reclaim more matter, faster."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "grinder_upgrade"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 1
 
 /obj/machinery/computer/cloning/New()
@@ -306,10 +306,22 @@
 		if (isnull(pod1))
 			pod1 = P
 			continue
-		if (pod1.attempting && !P.attempting)
+
+		if (P.attempting)
+			// If this new pod is currently working, skip it.
+			continue
+
+		if (pod1.attempting)
 			pod1 = P
 			continue
-		if (!P.attempting && pod1.meat_level < P.meat_level)
+
+		// Pick the pod that has the most progress
+		if (pod1.get_progress() < P.get_progress())
+			pod1 = P
+			continue
+
+		// If they're both the same progress, pick the one with the most MEAT
+		if (pod1.get_progress() == P.get_progress() && pod1.meat_level < P.meat_level)
 			pod1 = P
 			continue
 
@@ -821,7 +833,7 @@ proc/find_ghost_by_key(var/find_key)
 		.["podNames"] += P.name
 		.["meatLevels"] += P.meat_level
 		.["cloneSlave"] += P.cloneslave
-		.["completion"] += (!isnull(P.occupant) ? clamp(100 - ((P.occupant.max_health - P.occupant.health) - P.heal_level), 0, 100) : 0)
+		.["completion"] += P.get_progress()
 	if(!isnull(src.scanner))
 		. += list(
 			"scannerOccupied" = src.scanner.occupant,

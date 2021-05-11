@@ -6,11 +6,12 @@
 	icon = 'icons/obj/items/pda.dmi'
 	icon_state = "pda"
 	item_state = "pda"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	rand_pos = 0
 	flags = FPRINT | TABLEPASS | ONBELT
 	module_research = list("science" = 1, "miniaturization" = 5, "devices" = 5, "efficiency" = 3)
 	module_research_type = /obj/item/device/pda2
+	wear_layer = MOB_BELT_LAYER
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
 	var/registered = null // so we don't need to replace all the dang checks for ID cards
 	var/assignment = null
@@ -321,6 +322,7 @@
 			src.hd.root.add_file(new /datum/computer/file/text/pda2manual)
 			src.hd.root.add_file(new /datum/computer/file/pda_program/robustris)
 			src.hd.root.add_file(new /datum/computer/file/pda_program/emergency_alert)
+			src.hd.root.add_file(new /datum/computer/file/pda_program/gps)
 			src.hd.root.add_file(new /datum/computer/file/pda_program/cargo_request(src))
 			if(length(src.default_muted_mailgroups))
 				src.host_program.muted_mailgroups = src.default_muted_mailgroups

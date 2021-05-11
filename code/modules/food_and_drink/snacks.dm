@@ -182,7 +182,7 @@
 				var/mob/living/carbon/human/H = M
 				H.implant.Add(src)
 				src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
-				playsound(src.loc, "sound/weapons/slashcut.ogg", 100, 1)
+				playsound(src.loc, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
 				H.changeStatus("weakened", 2 SECONDS)
 				src.set_loc(M)
 				src.transfer_all_reagents(M)
@@ -428,7 +428,7 @@
 	needspoon = 1
 	amount = 6
 	heal_amt = 1
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	initial_volume = 100
 	food_effects = list("food_warm")
 	dropped_item = /obj/item/reagent_containers/food/drinks/bowl
@@ -628,7 +628,7 @@
 	icon_state = "cereal_box"
 	amount = 11
 	real_name = "cereal"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/prize = 10 //Chance of a rad prize inside!
 
 	New()

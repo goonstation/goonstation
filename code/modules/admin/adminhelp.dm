@@ -84,6 +84,8 @@
 	if(mmouse) // mouse in your pocket takes precedence over mhelps
 		var/msg = input("Please enter your whispers to the mouse:") as null|text
 		msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN)
+		if (!msg)
+			return
 		var/class = mmouse.is_admin ? "adminooc" : "mhelp"
 		boutput(mmouse, "<span class='[class]'><b>[client.mob]</b> whispers: \"<i>[msg]</i>\"</span>")
 		boutput(client.mob, "<span class='[class]'>You whisper to \the [mmouse]: \"<i>[msg]</i>\"</span>")

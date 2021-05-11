@@ -3,7 +3,7 @@
 	desc = "<b><span class='alert'>WARNING:</span> CHOKING HAZARD</b> - Small parts. Not for children under 3 years."
 	icon = 'icons/obj/items/figures.dmi'
 	icon_state = "fig-"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 1
 	throw_speed = 4
 	throw_range = 7
@@ -705,6 +705,11 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Vicky Hudson"
 		icon_state = "vicky"
 		ckey = "mrprogamer96"
+
+	vicky
+		name = "\improper Camryn Stern"
+		icon_state = "camrynstern"
+		ckey = "richardgere"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"

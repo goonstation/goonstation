@@ -20,6 +20,7 @@ datum/character_preview
 	/// The human mob shown in the preview.
 	/// May be useful to access directly if you want to put clothes on it or whatever.
 	var/mob/living/carbon/human/preview_mob
+	var/obj/overlay/background = null
 
 	New(client/viewer, window_id, control_id = null)
 		. = ..()
@@ -54,6 +55,17 @@ datum/character_preview
 
 		if(isturf(H.loc))
 			do_gimmick_mob_spawning_stuff(H)
+
+	proc/add_background(color)
+		if(isnull(src.background))
+			src.background = new()
+		src.background.icon = 'icons/effects/white.dmi'
+		src.background.color = color
+		src.background.transform = matrix(1, 0, 0, 0, 2, 16) // make it 2 tiles tall
+		src.background.screen_loc = "[src.preview_id]:1,1"
+		src.background.mouse_opacity = 0
+		src.handler.vis_contents |= src.background
+		src.viewer?.screen |= src.background
 
 	proc/do_gimmick_mob_spawning_stuff(mob/living/carbon/human/H)
 		H.a_intent = INTENT_HARM
@@ -99,6 +111,10 @@ datum/character_preview
 			if (src.viewer)
 				src.viewer.screen -= src.preview_mob
 			qdel(src.preview_mob)
+		if (src.background)
+			if (src.viewer)
+				src.viewer.screen -= src.background
+			qdel(src.background)
 		. = ..()
 
 	/// Sets the appearance, mutant race, and facing direction of the human mob.
@@ -160,7 +176,14 @@ datum/character_preview/multiclient
 			if (viewer)
 				viewer.screen -= src.handler
 				viewer.screen -= src.preview_mob
+				if(src.background)
+					viewer.screen -= src.background
 		. = ..()
+
+	add_background(color)
+		. = ..()
+		for(var/client/viewer in src.viewers)
+			viewer.screen |= src.background
 
 	/// Adds a subscribed client
 	proc/add_client(client/viewer)
@@ -168,6 +191,8 @@ datum/character_preview/multiclient
 			src.viewers += viewer
 			viewer.screen += src.handler
 			viewer.screen += src.preview_mob
+			if(src.background)
+				viewer.screen |= src.background
 
 	/// Removes a subscribed client
 	proc/remove_client(client/viewer)
@@ -175,6 +200,8 @@ datum/character_preview/multiclient
 			src.viewers -= viewer
 			viewer.screen -= src.handler
 			viewer.screen -= src.preview_mob
+			if(src.background)
+				viewer.screen -= src.background
 
 	/// Removes all subscribers
 	proc/remove_all_clients()
@@ -182,4 +209,6 @@ datum/character_preview/multiclient
 			if (viewer)
 				viewer.screen -= src.handler
 				viewer.screen -= src.preview_mob
+				if(src.background)
+					viewer.screen -= src.background
 		src.viewers.len = 0

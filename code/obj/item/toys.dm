@@ -6,7 +6,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	desc = "A sword made of cheap plastic. Contains a colored LED. Collect all five!"
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 5
 	contraband = 3
@@ -43,7 +43,7 @@
 	desc = "A judge's best friend."
 	icon = 'icons/obj/items/courtroom.dmi'
 	icon_state = "gavel"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	force = 5
 	throwforce = 7
 	stamina_damage = 25
@@ -68,7 +68,7 @@
 	icon = 'icons/obj/items/courtroom.dmi'
 	icon_state = "block"
 	flags = SUPPRESSATTACK
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 1
 	throw_speed = 4
 	throw_range = 7
@@ -95,7 +95,7 @@
 	name = "diploma"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "diploma"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	throwforce = 3
 	throw_speed = 3
 	throw_range = 5
@@ -125,7 +125,7 @@
 	icon_state = "gooncode"
 	flags = SUPPRESSATTACK
 	throwforce = 3
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 2
 	throw_range = 3
 	rand_pos = 1
@@ -161,7 +161,7 @@
 	desc = "Wow! You've always wanted one of these charmingly clunky doodads!"
 	icon = 'icons/obj/cellphone.dmi'
 	icon_state = "cellphone-on"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/datum/game/tetris
 	var/datum/mail
 

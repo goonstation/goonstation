@@ -19,7 +19,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	item_state = "electronic"
 	density = 0
 	anchored = 0
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	mats = 4
 	var/list/machinerylist = list()
 	var/machinery_name = "" // For user prompt stuff.
@@ -460,27 +460,6 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			return
 		src.go_out()
 		add_fingerprint(usr)
-		return
-
-	verb/move_inside()
-		set src in oview(1)
-		set category = "Local"
-		if (!ishuman(usr))
-			boutput(usr, "<span class='alert'>You can't seem to fit into \the [src].</span>")
-			return
-		if (src.occupant)
-			boutput(usr, "<span class='alert'>The Port-A-Brig is already occupied!</span>")
-			return
-		if (src.locked)
-			boutput(usr, "<span class='alert'>The Port-A-Brig is locked!</span>")
-			return
-		if (!isalive(usr) || usr.getStatusDuration("stunned") != 0)
-			return
-		usr.pulling = null
-		usr.set_loc(src)
-		src.occupant = usr
-		src.add_fingerprint(usr)
-		build_icon()
 		return
 
 /obj/item/paper/Port_A_Brig

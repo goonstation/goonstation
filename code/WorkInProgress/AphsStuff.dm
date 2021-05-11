@@ -26,7 +26,7 @@
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "satanai_tape"
 	var/tape_no = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 3
 
 /obj/item/aiboss_tape/first

@@ -109,7 +109,7 @@
 
 		if (iscarbon(user) || ismobcritter(user))
 			src.in_use = 1
-			user.visible_message("[user] applies [src] to [his_or_her(user)]self.",\
+			user.visible_message("[user] applies [src] to [himself_or_herself(user)].",\
 			"<span class='notice'>You apply [src] to yourself.</span>")
 			logTheThing("combat", user, null, "applies a patch to themself [log_reagents(src)] at [log_loc(user)].")
 			apply_to(user,0,user=user)
@@ -141,7 +141,7 @@
 			src.in_use = 1
 			if (M == user)
 				//M.show_text("You put [src] on your arm.", "blue")
-				M.visible_message("[user] applies [src] to [his_or_her(user)]self.",\
+				M.visible_message("[user] applies [src] to [himself_or_herself(user)].",\
 				"<span class='notice'>You apply [src] to yourself.</span>")
 			else
 				if (medical == 0)
@@ -532,7 +532,7 @@
 
 		if (can_operate_on(M) && !actions.hasAction(user,"automender_apply"))
 			if (M == user)
-				M.visible_message("[user] begins mending [his_or_her(user)]self with [src].",\
+				M.visible_message("[user] begins mending [himself_or_herself(user)] with [src].",\
 					"<span class='notice'>You begin mending yourself with [src].</span>")
 			else
 				user.visible_message("<span class='alert'><b>[user]</b> begins mending [M] with [src].</span>",\

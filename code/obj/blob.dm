@@ -135,11 +135,15 @@
 		particleMaster.SpawnSystem(new /datum/particleSystem/blobattack(T,overmind.color))
 		if (T?.density)
 			T.blob_act(overmind.attack_power * 20)
+			T.material?.triggerOnBlobHit(T, overmind.attack_power * 20)
+
 		else
 			for (var/mob/M in T.contents)
 				M.blob_act(overmind.attack_power * 20)
 			for (var/obj/O in T.contents)
 				O.blob_act(overmind.attack_power * 20)
+				O.material?.triggerOnBlobHit(O, overmind.attack_power * 20)
+
 
 	proc/attack_random()
 		var/list/allowed = list()
@@ -232,7 +236,7 @@
 		if(temp_difference > tolerance)
 			temp_difference = abs(temp_difference - tolerance)
 
-			src.take_damage(temp_difference / heat_divisor * volume / CELL_VOLUME, 1, "burn")
+			src.take_damage(temp_difference / heat_divisor * min(1, volume / (CELL_VOLUME/3)), 1, "burn")
 
 	attack_hand(var/mob/user)
 		user.lastattacked = src

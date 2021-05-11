@@ -285,7 +285,7 @@
 
 	verb/cmd_return_mainframe()
 		set category = "AI Commands"
-		set name = "Return to Mainframe"
+		set name = "Recall to Mainframe"
 
 		return_mainframe()
 		return
@@ -464,8 +464,8 @@
 	if(!src.cameras)
 		return
 
-	src.cameras &= C
-	C.coveredTiles &= src
+	src.cameras -= C
+	C.coveredTiles -= src
 
 	if(!src.cameras.len)
 		src.cameras = null
@@ -509,7 +509,7 @@
 		prev_tiles = coveredTiles
 
 	for(var/turf/T in view(CAM_RANGE, get_turf(src)))
-		new_tiles += T
+		new_tiles |= T
 
 	if (prev_tiles)
 		for(var/turf/O as anything in (prev_tiles - new_tiles))
@@ -535,13 +535,13 @@
 			if(src.coveredTiles == null)
 				src.coveredTiles = list(t)
 			else
-				src.coveredTiles += t
+				src.coveredTiles |= t
 		else
-			t.cameras += src
+			t.cameras |= src
 			if(src.coveredTiles == null)
 				src.coveredTiles = list(t)
 			else
-				src.coveredTiles += t
+				src.coveredTiles |= t
 
 		if (cam_amount < t.cameras.len)
 			if (t.aiImage)

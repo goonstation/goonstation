@@ -39,7 +39,7 @@
 /atom/proc/add_fingerprint(mob/living/M as mob)
 	if (!ismob(M) || isnull(M.key))
 		return
-	if (!( src.flags ) & FPRINT)
+	if (!(src.flags & FPRINT))
 		return
 	if (!src.fingerprintshidden)
 		src.fingerprintshidden = list()
@@ -95,7 +95,7 @@
 /atom/proc/add_blood(atom/source, var/amount = 5)
 //	if (!( isliving(M) ) || !M.blood_id)
 //		return 0
-	if (!( src.flags ) & FPRINT)
+	if (!(src.flags& FPRINT))
 		return
 	var/mob/living/L = source
 	var/b_uid = "--unidentified substance--"
@@ -178,7 +178,7 @@
 	if (!src)
 		return
 
-	if (!( src.flags ) & FPRINT)
+	if (!(src.flags & FPRINT))
 		return
 
 	// The first version accidently looped through everything for every atom. Consequently, cleaner grenades caused horrendous lag on my local server. Woops.
