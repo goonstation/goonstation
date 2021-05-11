@@ -511,12 +511,19 @@
 	ai_default_intent = INTENT_HARM
 	ai_aggression_timeout = null
 	max_health = 150
+	stamina_max = 250
 
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
 			var/head = pick(/obj/item/clothing/head/bandana/red, /obj/item/clothing/head/bandana/random_color)
 			src.equip_new_if_possible(head, slot_head)
+		APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "angry_monkey", 5)
+
+	get_disorient_protection()
+		. = ..()
+		return clamp(.+25, 80, .)
+
 
 // sea monkeys
 /mob/living/carbon/human/npc/monkey/sea
