@@ -538,6 +538,10 @@ Broken RCD + Effects
 				mode = "poddoors"
 			if (RCD_MODE_PODDOOR)
 				mode = "poddoors"
+			if (RCD_MODE_LIGHTBULBS)
+				mode = "lights"
+			if (RCD_MODE_LIGHTTUBES)
+				mode = "lights"
 			else
 				mode = "standard"
 
