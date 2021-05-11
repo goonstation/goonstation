@@ -199,6 +199,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	cost = 1
 	pellets_to_fire = 10
 	spread_projectile_type = /datum/projectile/bullet/buckshot
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	var/speed_max = 5
 	var/speed_min = 60
 	var/spread_angle_variance = 5
