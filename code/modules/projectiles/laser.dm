@@ -379,6 +379,7 @@ toxic - poisons
 	dissipation_rate = 8
 	sname = "mining laser"
 	shot_sound = 'sound/weapons/rocket.ogg'
+	shot_volume = 20
 	damage_type = D_BURNING
 	brightness = 0.8
 	window_pass = 0
