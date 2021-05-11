@@ -302,7 +302,7 @@
 			return
 		src.quick_deploy_fuel--
 		src.visible_message("<span class='alert'>[src]'s quick deploy system engages, automatically securing it!</span>")
-		playsound(src.loc, "sound/items/Welder2.ogg", 50, 1)
+		playsound(src.loc, "sound/items/Welder2.ogg", 30, 1)
 		set_projectile()
 		src.anchored = 1
 		src.active = 1
