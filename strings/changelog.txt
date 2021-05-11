@@ -1,5 +1,9 @@
 
 (t)tue may 11 21
+(u)Mordent
+(p)4675
+(e)⚖|balance
+(*)You no longer randomly miss cyborgs when melee attacking them.
 (u)Penny
 (p)4372
 (e)🆕🎨|feature, sprites
