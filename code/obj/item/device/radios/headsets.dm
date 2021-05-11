@@ -377,3 +377,5 @@ Secure Frequency:
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "syndie_upgr"
 	w_class = W_CLASS_TINY
+	is_syndicate = 1
+	mats = 12
