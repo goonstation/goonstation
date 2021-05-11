@@ -2,6 +2,7 @@
 (t)mon may 10 21
 (u)Tarmunora
 (+)Salt melts ice decals, carbon (dirt) splashed on floors undoes lube
+(+)1 second cooldown on being hit by magic missiles (will no longer get 'shotgunned' by a wizard at point-blank ranges)
 (u)112358sam
 (p)4655
 (e)🐛|bug
