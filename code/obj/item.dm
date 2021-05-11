@@ -808,7 +808,8 @@
 			src.material.triggerTemp(src, src.burn_output + rand(1,200))
 		var/turf/T = get_turf(src.loc)
 		if (T) // runtime error fix
-			T.hotspot_expose((src.burn_output + rand(1,200)),5)
+			if(!ON_COOLDOWN(T, "burning_item", 1 SECOND))
+				T.hotspot_expose((src.burn_output + rand(1,200)),5)
 
 		if (prob(7))
 			elecflash(src)
