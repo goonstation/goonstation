@@ -527,6 +527,8 @@
 		. = ..()
 		return clamp(.+25, 80, .)
 
+	ai_is_valid_target(mob/M)
+		return ..() && !(istype(M, /mob/living/carbon/human/npc/monkey/angry))
 
 // sea monkeys
 /mob/living/carbon/human/npc/monkey/sea
