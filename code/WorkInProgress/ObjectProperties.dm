@@ -325,7 +325,7 @@ var/list/globalPropList = null
 			if(istype(owner))
 				owner.force -= value
 
-	/datum/objectProperty/genericenchant
+	genericenchant
 		hidden = 1
 		name = "Enchantment"
 		id = "enchant"
