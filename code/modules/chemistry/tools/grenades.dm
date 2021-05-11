@@ -532,3 +532,17 @@
 
 		beakers += B1
 		beakers += B2
+
+/obj/item/chem_grenade/plasma
+	name = "plasma grenade"
+	desc = "A grenade that will fill an area with plasma gas."
+	icon = 'icons/obj/items/grenade.dmi'
+	icon_state = "incendiary"
+	icon_state_armed = "incendiary1"
+	stage = 2
+
+	New()
+		..()
+		var/obj/item/reagent_containers/glass/B1 = new(src)
+		B1.reagents.add_reagent("plasma", 20)
+		beakers += B1
