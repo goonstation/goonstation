@@ -544,5 +544,13 @@
 	New()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
-		B1.reagents.add_reagent("plasma", 20)
+		var/obj/item/reagent_containers/glass/B2 = new(src)
+
+		B1.reagents.add_reagent("plasma", 25)
+		B1.reagents.add_reagent("sugar",25)
+
+		B2.reagents.add_reagent("phosphorus", 25)
+		B2.reagents.add_reagent("potassium", 25)
+
 		beakers += B1
+		beakers += B2
