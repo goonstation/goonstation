@@ -1,5 +1,5 @@
 /obj/item/device/camera_viewer
-	name = "Camera monitor"
+	name = "camera monitor"
 	desc = "A portable video monitor connected to a security camera network."
 	icon_state = "monitor"
 	item_state = "electronic"
