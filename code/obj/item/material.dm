@@ -905,7 +905,7 @@
 					. = TRUE
 					if (istype(S))
 						S.hud.remove_object(O)
-			if (istype(B) || .)
+			if (istype(B) && .)
 				B.satchel_updateicon()
 			//Users loading individual items would make an annoying amount of messages
 			//But loading a container is more noticable and there should be less
