@@ -593,6 +593,8 @@
 				return 1
 			if("gold")
 				return 1
+			if("polaris")
+				return 1
 			else
 				return 0
 
