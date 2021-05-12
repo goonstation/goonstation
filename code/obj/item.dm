@@ -609,7 +609,7 @@
 	return 1
 
 /obj/item/proc/split_stack(var/toRemove)
-	if(toRemove >= amount) return 0
+	if(toRemove >= amount || toRemove < 1) return 0
 	var/obj/item/P = new src.type(src.loc)
 
 	if(src.material)
