@@ -1237,6 +1237,7 @@
 							seedname = "[MUT.name_prefix][growing.name][MUT.name_suffix]"
 
 					S.name = "[seedname] seed"
+					S.plant_seed_color(growing.seedcolor)
 					HYPpassplantgenes(HDNA,SDNA)
 					S.generation = src.generation
 					if(growing.hybrid)
