@@ -352,6 +352,7 @@
 						HYPpassplantgenes(DNA,SDNA)
 
 						S.name = stored.name
+						S.plant_seed_color(stored.seedcolor)
 						if (stored.hybrid)
 							var/datum/plant/hybrid = new /datum/plant(S)
 							for(var/V in stored.vars)
@@ -550,6 +551,9 @@
 				P.cantscan = dominantspecies.cantscan
 				P.nectarlevel = dominantspecies.nectarlevel
 				S.name = "[P.name] seed"
+
+				P.seedcolor = rgb(round((GetRedPart(P1.seedcolor) + GetRedPart(P2.seedcolor)) / 2), round((GetGreenPart(P1.seedcolor) + GetGreenPart(P2.seedcolor)) / 2), round((GetBluePart(P1.seedcolor) + GetBluePart(P2.seedcolor)) / 2))
+				S.plant_seed_color(P.seedcolor)
 
 				var/newgenome = P1.genome + P2.genome
 				if (newgenome)
