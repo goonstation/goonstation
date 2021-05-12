@@ -1059,7 +1059,7 @@
 		return
 
 /obj/item/device/light/zippo
-	name = "zippo lighter"
+	name = "\improper Zippo lighter"
 	desc = "A pretty nice lighter."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "zippo"
@@ -1236,13 +1236,13 @@
 		return 1
 
 /obj/item/device/light/zippo/gold
-	name = "golden zippo lighter"
+	name = "golden Zippo lighter"
 	icon_state = "gold_zippo"
 	icon_off = "gold_zippo"
 	icon_on = "gold_zippoon"
 
 /obj/item/device/light/zippo/brighter
-	name = "zippo brighter"
+	name = "\improper Zippo brighter"
 	desc = "Are you feeling blinded by the light?"
 	brightness = 4.0
 	col_r = 0.69
@@ -1250,7 +1250,7 @@
 	col_b = 1
 
 /obj/item/device/light/zippo/dan
-	name = "odd zippo lighter"
+	name = "odd Zippo lighter"
 	desc = "A sleek grey lighter. Something about it seems a bit strange."
 	icon_state = "dan_zippo"
 	icon_off = "dan_zippo"
