@@ -125,9 +125,9 @@
 		spawn_contents = list(/obj/item/old_grenade/stinger/frag = 3,
 		/obj/item/old_grenade/stinger = 3)
 
-	plasma
-		name = "plasma gas grenade pouch"
-		spawn_contents = list(/obj/item/chem_grenade/plasma = 6)
+	napalm
+		name = "napalm smoke grenade pouch"
+		spawn_contents = list(/obj/item/chem_grenade/napalm = 6)
 
 // dumb idiot gannets shouldn't have called these "ammo_pouches" if he was gonna make pouches for non-ammo things. wow.
 
