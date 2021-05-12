@@ -534,7 +534,7 @@
 		beakers += B2
 
 /obj/item/chem_grenade/plasma
-	name = "plasma grenade"
+	name = "plasma gas grenade"
 	desc = "A grenade that will fill an area with plasma gas."
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "incendiary"
