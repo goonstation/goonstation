@@ -1406,6 +1406,20 @@
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste/
 
+/datum/cookingrecipe/colorpaste  // stonepillar's crayon project
+	item1 = /obj/item/pen/crayon/
+	item2 = /obj/item/pen/crayon/
+	item3 = /obj/item/pen/crayon/
+	item4 = /obj/item/reagent_containers/food/snacks/yuckburn
+	cookbonus = 20
+	output = /obj/item/reagent_containers/food/snacks/ingredient/colorpaste
+
+/datum/cookingrecipe/colorburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/colorpaste
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/burger/crayon
+
 /datum/cookingrecipe/sloppyjoe
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough

@@ -332,6 +332,15 @@
 	initial_volume = 50
 	initial_reagents = list("meat_slurry"=15)
 
+/obj/item/reagent_containers/food/snacks/ingredient/colorpaste // stonepillar's crayon project
+	name = "colorpaste"
+	desc = "A colorful paste"
+	icon_state = "colorpaste"
+	custom_food = 0 // for now
+	amount = 1
+	initial_volume = 15
+	initial_reagents = list("colors"=5)
+
 /obj/item/reagent_containers/food/snacks/ingredient/sticky_rice
 	name = "sticky rice"
 	desc = "A big lump of sticky rice."

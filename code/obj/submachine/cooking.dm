@@ -419,6 +419,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/fishburger(src)
 			src.recipes += new /datum/cookingrecipe/sloppyjoe(src)
 			src.recipes += new /datum/cookingrecipe/superchili(src)
+			src.recipes += new /datum/cookingrecipe/colorburger(src)
 			src.recipes += new /datum/cookingrecipe/chili(src)
 			src.recipes += new /datum/cookingrecipe/queso(src)
 			src.recipes += new /datum/cookingrecipe/roburger(src)
@@ -550,6 +551,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/hardboiled(src)
 			src.recipes += new /datum/cookingrecipe/bakedpotato(src)
 			src.recipes += new /datum/cookingrecipe/rice_ball(src)
+			src.recipes += new /datum/cookingrecipe/colorpaste(src)
 
 	Topic(href, href_list)
 		if ((get_dist(src, usr) > 1 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))

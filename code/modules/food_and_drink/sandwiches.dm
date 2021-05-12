@@ -442,3 +442,9 @@
 	desc = "A delicious chicken sandwich with a bit of a kick."
 	icon_state = "chickenburger-spicy"
 	initial_reagents = list("capsaicin"=15)
+
+/obj/item/reagent_containers/food/snacks/burger/crayon // stonepillar's crayon project
+	name = "rainburger"
+	desc = "A rather colorful burger."
+	icon_state = "crayonburger"
+	initial_reagents = list("colors"=5)
