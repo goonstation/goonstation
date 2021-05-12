@@ -20008,16 +20008,16 @@
 /area/station/crew_quarters/courtroom)
 "aXY" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10
+	dir = 6
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/fitness)
 "aXZ" = (
-/obj/stool/chair/boxingrope_corner{
-	dir = 6
-	},
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/stool/chair/boxingrope_corner{
+	dir = 10
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/fitness)
@@ -20079,8 +20079,8 @@
 	density = 0;
 	dir = 8
 	},
-/obj/stool/chair/boxingrope_corner{
-	dir = 10
+/obj/decal/boxingrope{
+	dir = 5
 	},
 /turf/simulated/floor{
 	icon_state = "boxing"
@@ -20095,7 +20095,7 @@
 	dir = 4
 	},
 /obj/stool/chair/boxingrope_corner{
-	dir = 6
+	dir = 9
 	},
 /turf/simulated/floor{
 	icon_state = "boxing"

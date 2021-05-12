@@ -46472,6 +46472,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"hNM" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 9
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "hOS" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -58921,6 +58927,12 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
+"vmG" = (
+/obj/decal/boxingrope{
+	dir = 5
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "vmM" = (
 /obj/cable{
 	d1 = 1;
@@ -122514,11 +122526,11 @@ are
 fdN
 atw
 aIL
-aDp
+aBw
 azx
 aFC
 aFC
-aDp
+vmG
 aAA
 atr
 aNm
@@ -123722,11 +123734,11 @@ ajf
 aEs
 aAa
 atr
-aBw
+aDp
 aOn
 aOn
 aSp
-aBw
+hNM
 awy
 atr
 bei

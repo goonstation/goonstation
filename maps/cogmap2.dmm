@@ -78646,6 +78646,12 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
+"gJA" = (
+/obj/decal/boxingrope{
+	dir = 5
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "hlO" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -79600,6 +79606,12 @@
 	icon_state = "blue1"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"ucW" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 9
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "uvj" = (
 /obj/item/device/camera_viewer{
 	network = "Zeta"
@@ -115927,11 +115939,11 @@ asn
 atF
 atG
 awv
-axZ
+ayb
 azI
 aBf
 aBf
-axZ
+gJA
 asp
 aGf
 aHT
@@ -117135,11 +117147,11 @@ asp
 atJ
 atG
 awz
-ayb
+axZ
 azK
 aBh
 aCB
-ayb
+ucW
 aEU
 aGi
 aHV

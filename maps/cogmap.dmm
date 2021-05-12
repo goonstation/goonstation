@@ -9500,8 +9500,8 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aAl" = (
-/obj/stool/chair/boxingrope_corner{
-	dir = 10
+/obj/decal/boxingrope{
+	dir = 5
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -9516,7 +9516,7 @@
 /area/station/crew_quarters/fitness)
 "aAo" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 6
+	dir = 9
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -110164,7 +110164,7 @@ apt
 aqJ
 akT
 akT
-auH
+auJ
 avT
 axm
 ayH
@@ -111372,7 +111372,7 @@ apv
 aqL
 asd
 atu
-auJ
+auH
 avV
 axo
 ayJ

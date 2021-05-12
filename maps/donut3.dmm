@@ -28330,10 +28330,10 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "ieu" = (
-/obj/stool/chair/boxingrope_corner{
-	dir = 9
-	},
 /obj/disposalpipe/segment/morgue,
+/obj/decal/boxingrope{
+	dir = 5
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "iew" = (
@@ -30885,7 +30885,7 @@
 	dir = 4
 	},
 /obj/stool/chair/boxingrope_corner{
-	dir = 5
+	dir = 9
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -45294,9 +45294,6 @@
 /turf/simulated/floor,
 /area/station/hangar/science)
 "npz" = (
-/obj/stool/chair/boxingrope_corner{
-	dir = 5
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -45312,6 +45309,9 @@
 /obj/item/clothing/gloves/boxing{
 	pixel_x = 2;
 	pixel_y = -2
+	},
+/obj/stool/chair/boxingrope_corner{
+	dir = 10
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -67883,15 +67883,15 @@
 /turf/simulated/floor/carpet/red,
 /area/station/crew_quarters/barber_shop)
 "tRA" = (
-/obj/stool/chair/boxingrope_corner{
-	dir = 10
-	},
 /obj/table/wood/round/auto,
 /obj/item/bballbasket,
 /obj/item/bballbasket,
 /obj/item/bballbasket,
 /obj/item/bballbasket,
 /obj/disposalpipe/segment/morgue,
+/obj/stool/chair/boxingrope_corner{
+	dir = 6
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "tRB" = (

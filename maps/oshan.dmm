@@ -32463,8 +32463,8 @@
 /area/station/hallway/secondary/exit)
 "bBC" = (
 /obj/machinery/light/incandescent/warm,
-/obj/stool/chair/boxingrope_corner{
-	dir = 10
+/obj/decal/boxingrope{
+	dir = 5
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -36217,7 +36217,7 @@
 /area/space)
 "bKO" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 6
+	dir = 9
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -80305,7 +80305,7 @@ boX
 bpD
 bqu
 bqY
-brR
+brT
 bsA
 btj
 btG
@@ -81513,7 +81513,7 @@ bpa
 bpH
 bqv
 bra
-brT
+brR
 bsD
 bsD
 btI
