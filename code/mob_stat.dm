@@ -75,7 +75,7 @@
 				stats["Map Vote Link:"] = 0
 				stats["Map Vote Time:"] = 0
 
-		if (!isnull(vote_manager) && vote_manager.active_vote)
+		if (vote_manager?.active_vote)
 			saveStat("Vote Link:",newVoteLinkStat)
 			saveStat("Vote Time:", "([round(((vote_manager.active_vote.vote_started + vote_manager.active_vote.vote_length) - world.time) / 10)] seconds remaining, [vote_manager.active_vote.voted_ckey.len] vote[vote_manager.active_vote.voted_ckey.len != 1 ? "s" : ""])")
 			stats["Vote Spacer"] = -1

@@ -211,6 +211,7 @@
 			if (COM.reference && istype(COM.reference,/datum/commodity/))
 				if (COM.reference.amount > -1 && !sold_stuff) //If we sold shit then don't increase the amount. Fuck.
 					COM.reference.amount += COM.amount
+			COM.amount = 0
 			src.shopping_cart -= COM
 		src.shopping_cart.Cut()
 

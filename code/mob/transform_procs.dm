@@ -423,6 +423,9 @@
 				src.mind.transfer_to(W)
 				W.mind.special_role = "faustian macho man"
 				ticker.mode.Agimmicks.Add(W)
+				W.real_name = "[pick("Faustian", "Fony", "Fake", "False","Fraudulent", "Fragile")] [W.real_name]"
+				W.name = W.real_name
+
 			else
 				src.mind.transfer_to(W)
 				src.mind.special_role = "macho man"

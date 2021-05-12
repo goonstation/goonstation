@@ -17207,6 +17207,10 @@
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/grey,
 /area/station/mining/staff_room)
+"fdx" = (
+/obj/storage/secure/crate/eng/interdictor,
+/turf/simulated/floor/yellow/side,
+/area/station/engine/storage)
 "fdK" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/redblack{
@@ -63503,7 +63507,12 @@
 /area/station/hallway/primary/south)
 "skD" = (
 /obj/table/auto,
-/obj/item/storage/box/cablesbox,
+/obj/item/storage/box/cablesbox{
+	pixel_x = -9
+	},
+/obj/item/storage/box/cablesbox{
+	pixel_x = 6
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/storage)
 "skL" = (
@@ -153955,7 +153964,7 @@ vqL
 vqL
 xwt
 vqL
-skD
+fdx
 ykD
 tmI
 xIf

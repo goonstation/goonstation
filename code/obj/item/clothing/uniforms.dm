@@ -611,6 +611,10 @@
 	icon_state = "clown"
 	item_state = "clown"
 
+	New()
+		..()
+		AddComponent(/datum/component/clown_disbelief_item)
+
 	fancy
 		icon_state = "clown-fancy"
 		item_state = "clown-fancy"

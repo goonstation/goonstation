@@ -359,6 +359,7 @@
 
 	else
 		if(src.material)
+			src.material.triggerOnHit(src, W, user, 1)
 			var/fail = 0
 			if(src.material.hasProperty("stability") && src.material.getProperty("stability") < 15) fail = 1
 			if(src.material.quality < 0) if(prob(abs(src.material.quality))) fail = 1
@@ -549,6 +550,7 @@
 		src.icon_state = "r_wall-[d_state]"
 
 	if(src.material)
+		src.material.triggerOnHit(src, W, user, 1)
 		var/fail = 0
 		if(src.material.hasProperty("stability") && src.material.getProperty("stability") < 15) fail = 1
 		if(src.material.quality < 0) if(prob(abs(src.material.quality))) fail = 1

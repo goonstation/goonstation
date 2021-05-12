@@ -386,8 +386,8 @@
 	stamina_damage = 2
 	stamina_cost = 2
 	note_time = 20
-	sounds_instrument = list('sound/musical_instruments/Whistle_Police.ogg')
-	volume = 35
+	sounds_instrument = list('sound/items/police_whistle1.ogg', 'sound/items/police_whistle2.ogg')
+	volume = 75
 	randomized_pitch = 1
 	pick_random_note = 1
 

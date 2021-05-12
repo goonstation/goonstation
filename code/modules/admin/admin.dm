@@ -1190,10 +1190,10 @@ var/global/noir = 0
 					message_admins("<span class='internal'>[key_name(usr)] transformed [H.real_name] into a [which].</span>")
 			else
 				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to transform a player.")
-		
+
 		if ("setstatuseffect")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
-				var/mob/M = locate(href_list["target"])	//doesn't really have to be mob, could be atom. 
+				var/mob/M = locate(href_list["target"])	//doesn't really have to be mob, could be atom.
 
 				var/effect = input("Which Status Effect?","Give Status Effect") as null|text
 				if (!effect)
@@ -1217,10 +1217,6 @@ var/global/noir = 0
 			if(src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
 
-				if (!ishuman(M))
-					alert("You may only use this secret on human mobs.")
-					return
-
 				usr.client.cmd_admin_managebioeffect(M)
 
 			else
@@ -1236,10 +1232,6 @@ var/global/noir = 0
 		if ("managebioeffect_remove")
 			if(src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
-
-				if (!ishuman(M))
-					alert("You may only use this secret on human mobs.")
-					return
 				M.bioHolder.RemoveEffect(href_list["bioeffect"])
 				usr.client.cmd_admin_managebioeffect(M)
 
@@ -1398,9 +1390,6 @@ var/global/noir = 0
 		if ("managebioeffect_add")
 			if(src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
-				if (!ishuman(M))
-					alert("You may only use this secret on human mobs.")
-					return
 				var/input = input(usr, "Enter a /datum/bioEffect path or partial name.", "Add a Bioeffect", null) as null|text
 				input = get_one_match(input, "/datum/bioEffect")
 				var/datum/bioEffect/BE = text2path("[input]")
@@ -1435,12 +1424,6 @@ var/global/noir = 0
 		if ("addbioeffect")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
-
-				if (!ishuman(M))
-					alert("You may only use this secret on human mobs.")
-					return
-
-				var/mob/living/carbon/human/X = M
 				var/pick = input("Which effect(s)?","Give Bioeffects") as null|text
 				if (!pick)
 					return
@@ -1449,26 +1432,20 @@ var/global/noir = 0
 				if (length(picklist))
 					var/string_version
 					for(pick in picklist)
-						X.bioHolder.AddEffect(pick, magical = 1)
+						M.bioHolder.AddEffect(pick, magical = 1)
 
 						if (string_version)
 							string_version = "[string_version], \"[pick]\""
 						else
 							string_version = "\"[pick]\""
 
-					message_admins("[key_name(usr)] added the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] to [key_name(X)].")
+					message_admins("[key_name(usr)] added the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] to [key_name(M)].")
 			else
 				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to bioeffect a player.")
 
 		if ("removebioeffect")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
-
-				if (!ishuman(M))
-					alert("You may only use this secret on human mobs.")
-					return
-
-				var/mob/living/carbon/human/X = M
 				var/pick = input("Which effect(s)?","Remove Bioeffects") as null|text
 				if (!pick)
 					return
@@ -1477,14 +1454,14 @@ var/global/noir = 0
 				if (length(picklist))
 					var/string_version
 					for(pick in picklist)
-						X.bioHolder.RemoveEffect(pick)
+						M.bioHolder.RemoveEffect(pick)
 
 						if (string_version)
 							string_version = "[string_version], \"[pick]\""
 						else
 							string_version = "\"[pick]\""
 
-					message_admins("[key_name(usr)] removed the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] from [X.real_name].")
+					message_admins("[key_name(usr)] removed the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] from [M.real_name].")
 			else
 				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to bioeffect a player.")
 
@@ -1506,13 +1483,7 @@ var/global/noir = 0
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
 
-				if (!ishuman(M))
-					alert("You may only use this secret on human mobs.")
-					return
-
-				var/mob/living/carbon/human/X = M
-
-				if(!X.reagents) X.create_reagents(100)
+				if(!M.reagents) M.create_reagents(100)
 
 				var/list/L = list()
 				var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
@@ -1537,12 +1508,12 @@ var/global/noir = 0
 				var/amount = input(usr,"Amount:","Amount",50) as null|num
 				if(!amount) return
 
-				X.reagents.add_reagent(reagent.id, amount)
-				boutput(usr, "<span class='success'>Added [amount] units of [reagent.id] to [X.name]</span>")
+				M.reagents.add_reagent(reagent.id, amount)
+				boutput(usr, "<span class='success'>Added [amount] units of [reagent.id] to [M.name]</span>")
 
-				logTheThing("admin", usr, X, "added [amount] units of [reagent.id] to [X] at [log_loc(X)].")
-				logTheThing("diary", usr, X, "added [amount] units of [reagent.id] to [X] at [log_loc(X)].", "admin")
-				message_admins("[key_name(usr)] added [amount] units of [reagent.id] to [key_name(X)] at [log_loc(X)].")
+				logTheThing("admin", usr, M, "added [amount] units of [reagent.id] to [M] at [log_loc(M)].")
+				logTheThing("diary", usr, M, "added [amount] units of [reagent.id] to [M] at [log_loc(M)].", "admin")
+				message_admins("[key_name(usr)] added [amount] units of [reagent.id] to [key_name(M)] at [log_loc(M)].")
 
 			else
 				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to affect player reagents.")
@@ -1563,11 +1534,6 @@ var/global/noir = 0
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
 
-				if (!ishuman(M))
-					alert("You may only use this secret on human mobs.")
-					return
-
-				var/mob/living/carbon/human/X = M
 				var/pick = input("Which reagent(s)?","Remove Reagents") as null|text
 				if (!pick)
 					return
@@ -1581,15 +1547,15 @@ var/global/noir = 0
 						if(!amt || amt < 0)
 							return
 
-						if (X.reagents)
-							X.reagents.remove_reagent(pick,amt)
+						if (M.reagents)
+							M.reagents.remove_reagent(pick,amt)
 
 						if (string_version)
 							string_version = "[string_version], [amt] \"[pick]\""
 						else
 							string_version = "[amt] \"[pick]\""
 
-					message_admins("[key_name(usr)] removed [string_version] from [X.real_name].")
+					message_admins("[key_name(usr)] removed [string_version] from [M.real_name].")
 			else
 				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to affect player reagents.")
 
@@ -2596,7 +2562,7 @@ var/global/noir = 0
 						for(var/S in bioEffectList)
 							be_string += "[S]<br>"
 						usr.Browse(be_string,"window=bioeffect_help;size=300x600")
-					
+
 					if ("statuseffect_help")
 						var/be_string = "To set Status Effects enter a status effect id (right side) in the first prompt and a duration in seconds in the second prompt.<br><br><b>All Status Effect IDs</b><hr>"
 						for(var/datum/statusEffect/S in globalStatusPrototypes)
@@ -2613,16 +2579,11 @@ var/global/noir = 0
 						if (src.level >= LEVEL_PA)
 
 							var/adding = href_list["type"] == "add_bioeffect_one"
-							var/who = input("Which player?","[adding ? "Give" : "Remove"] Bioeffects") as null|mob in world
+							var/mob/M = input("Which player?","[adding ? "Give" : "Remove"] Bioeffects") as null|mob in world
 
-							if (!who)
+							if (!M)
 								return
 
-							if (!ishuman(who))
-								alert("You may only use this secret on human mobs.")
-								return
-
-							var/mob/living/carbon/human/X = who
 							var/pick = input("Which effect(s)?","[adding ? "Give" : "Remove"] Bioeffects") as null|text
 
 							if (!pick)
@@ -2635,18 +2596,18 @@ var/global/noir = 0
 
 								for(pick in picklist)
 									if (adding)
-										X.bioHolder.AddEffect(pick)
+										M.bioHolder.AddEffect(pick)
 									else
-										X.bioHolder.RemoveEffect(pick)
+										M.bioHolder.RemoveEffect(pick)
 
 									if (string_version)
 										string_version = "[string_version], \"[pick]\""
 									else
 										string_version = "\"[pick]\""
 
-								message_admins("[key_name(usr)] [adding ? "added" : "removed"] the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] [adding ? "to" : "from"] [key_name(X)].")
-								logTheThing("admin", usr, null, "[adding ? "added" : "removed"] the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] [adding ? "to" : "from"] [key_name(X)].")
-								logTheThing("diary", usr, null, "[adding ? "added" : "removed"] the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] [adding ? "to" : "from"] [key_name(X)].", "admin")
+								message_admins("[key_name(usr)] [adding ? "added" : "removed"] the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] [adding ? "to" : "from"] [key_name(M)].")
+								logTheThing("admin", usr, null, "[adding ? "added" : "removed"] the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] [adding ? "to" : "from"] [key_name(M)].")
+								logTheThing("diary", usr, null, "[adding ? "added" : "removed"] the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] [adding ? "to" : "from"] [key_name(M)].", "admin")
 						else
 							alert("You must be at least a Primary Administrator to bioeffect players.")
 							return
@@ -2681,16 +2642,11 @@ var/global/noir = 0
 						if (src.level >= LEVEL_PA)
 
 							var/adding = href_list["type"] == "add_reagent_one"
-							var/who = input("Which player?","[adding ? "Add" : "Remove"] Reagents") as null|mob in world
+							var/mob/M = input("Which player?","[adding ? "Add" : "Remove"] Reagents") as null|mob in world
 
-							if (!who)
+							if (!M)
 								return
 
-							if (!ishuman(who))
-								alert("You may only use this secret on human mobs.")
-								return
-
-							var/mob/living/carbon/human/X = who
 							var/pick = input("Which reagent(s)?","[adding ? "Add" : "Remove"] Reagents") as null|text
 
 							if (!pick)
@@ -2707,20 +2663,20 @@ var/global/noir = 0
 										return
 
 									if (adding)
-										if (X.reagents)
-											X.reagents.add_reagent(pick,amt)
+										if (M.reagents)
+											M.reagents.add_reagent(pick,amt)
 									else
-										if (X.reagents)
-											X.reagents.remove_reagent(pick,amt)
+										if (M.reagents)
+											M.reagents.remove_reagent(pick,amt)
 
 									if (string_version)
 										string_version = "[string_version], [amt] \"[pick]\""
 									else
 										string_version = "[amt] \"[pick]\""
 
-								message_admins("[key_name(usr)] [adding ? "added" : "removed"] [string_version] [adding ? "to" : "from"] [key_name(X)].")
-								logTheThing("admin", usr, null, "[adding ? "added" : "removed"] [string_version] [adding ? "to" : "from"] [key_name(X)].")
-								logTheThing("diary", usr, null, "[adding ? "added" : "removed"] [string_version] [adding ? "to" : "from"] [key_name(X)].", "admin")
+								message_admins("[key_name(usr)] [adding ? "added" : "removed"] [string_version] [adding ? "to" : "from"] [key_name(M)].")
+								logTheThing("admin", usr, null, "[adding ? "added" : "removed"] [string_version] [adding ? "to" : "from"] [key_name(M)].")
+								logTheThing("diary", usr, null, "[adding ? "added" : "removed"] [string_version] [adding ? "to" : "from"] [key_name(M)].", "admin")
 						else
 							alert("You must be at least a Primary Administrator to affect player reagents.")
 							return

@@ -47684,6 +47684,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"qnG" = (
+/obj/storage/secure/crate/eng/interdictor,
+/turf/simulated/floor/yellow,
+/area/station/engine/engineering)
 "qqR" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -107770,7 +107774,7 @@ ayu
 bgL
 aff
 bge
-bhr
+qnG
 bkt
 blj
 blV
