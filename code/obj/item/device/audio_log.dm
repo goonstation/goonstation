@@ -70,7 +70,7 @@
 
 
 /obj/item/device/audio_log
-	name = "Audio log"
+	name = "audio log"
 	desc = "A fairly spartan recording device."
 	icon_state = "recorder"
 	uses_multiple_icon_states = 1
@@ -425,4 +425,3 @@
 								"Electronic Voice",
 								"Electronic Voice",
 								"???")
-

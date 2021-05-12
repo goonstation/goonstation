@@ -245,6 +245,11 @@
 		src.distort = null
 		. = ..()
 
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "size" && src.filter)
+			animate(src.filter, size=newval, time=0.7 SECONDS, easing=SINE_EASING, flags=ANIMATION_PARALLEL)
+
 /datum/bioEffect/drunk
 	name = "Ethanol Production"
 	desc = "Encourages growth of ethanol-producing symbiotic fungus in the subject's body."

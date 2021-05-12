@@ -1300,3 +1300,4 @@
 		var/datum/abilityHolder/werewolf/W = src.get_ability_holder(/datum/abilityHolder/werewolf)
 		if (target && W?.tainted_saliva_reservoir.total_volume > 0)
 			W.tainted_saliva_reservoir.trans_to(target,5, 2)
+
