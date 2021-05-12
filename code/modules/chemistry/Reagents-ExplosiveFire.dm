@@ -111,7 +111,7 @@ datum
 					var/mob/living/L = M
 					var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 					if(istype(L) && burn)
-						L.TakeDamage("All", 0, (1 - L.get_heat_protection()/100) * clamp(2 * volume * (burn.getStage()-1.25), 0, 35), 0, DAMAGE_BURN)
+						L.TakeDamage("All", 0, clamp(2 * volume * (burn.getStage()-1.25), 0, 35), 0, DAMAGE_BURN)
 						if(!M.stat && !ON_COOLDOWN(M, "napalm_scream", 1 SECOND))
 							M.emote("scream")
 					return 0

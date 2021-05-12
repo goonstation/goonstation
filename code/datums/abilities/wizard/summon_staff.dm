@@ -43,10 +43,7 @@
 					boutput(M, __red("You're already holding your staff."))
 					return 1 // No cooldown.
 				else
-					boutput(M, __red("You summon a new staff to your hands."))
-					var/obj/item/staff/cthulhu/C = new /obj/item/staff/cthulhu(get_turf(M))
-					C.wizard_key = M.mind?.key
-					M.put_in_hand_or_drop(C)
+					boutput(M, __red("You were unable to summon your staff."))
 					return 0
 
 			if (1)

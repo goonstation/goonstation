@@ -303,7 +303,7 @@
 		playsound(src.loc, "sound/musical_instruments/Bikehorn_1.ogg", 75, 1, -3)
 
 	else
-		playsound(src.loc, "sound/effects/spray.ogg", 30, 1, -3)
+		playsound(src.loc, "sound/effects/spray.ogg", 75, 1, -3)
 
 	for(var/a in 0 to 5)
 		var/obj/effects/water/W = unpool(/obj/effects/water)

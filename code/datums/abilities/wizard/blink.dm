@@ -14,8 +14,7 @@
 		if(!holder)
 			return
 
-		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("SYCAR TYN")
+		holder.owner.say("SYCAR TYN")
 		..()
 
 		var/accuracy = 3

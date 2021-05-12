@@ -50,7 +50,7 @@
 
 
 /obj/item/coin_bot
-	name = "probability disc"
+	name = "Probability Disc"
 	desc = "A small golden disk of some sort. Possibly used in highly complex quantum experiments."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "coin"

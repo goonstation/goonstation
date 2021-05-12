@@ -1871,6 +1871,7 @@
 		if(!upgrade) return
 
 		if (upgrade.active)
+			upgrade.upgrade_activate(src)
 			if (!upgrade || upgrade.loc != src || (src.mind && src.mind.current != src) || !isrobot(src)) // Blame the teleport upgrade.
 				return
 			if (src.cell && src.cell.charge > upgrade.drainrate)
@@ -1878,7 +1879,6 @@
 			else
 				src.show_text("You do not have enough power to activate \the [upgrade]; you need [upgrade.drainrate]!", "red")
 				return
-			upgrade.upgrade_activate(src)
 
 			if (upgrade.charges > 0)
 				upgrade.charges--

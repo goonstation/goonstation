@@ -46,8 +46,7 @@
 			return 1
 
 
-		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("CLAE MASHON")
+		holder.owner.say("CLAE MASHON")
 		..()
 
 		var/obj/critter/golem/TheGolem

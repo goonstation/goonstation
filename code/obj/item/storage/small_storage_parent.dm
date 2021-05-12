@@ -94,14 +94,7 @@
 			SPAWN_DBG(1 DECI SECOND)
 				O.attack_hand(user)
 		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored)
-			user.swap_hand()
-			if(user.equipped() == null)
-				O.attack_hand(user)
-				if(O in user.equipped_list())
-					src.attackby(O, user, O.loc)
-			else
-				boutput(user, __blue("Your hands are full!"))
-			user.swap_hand()
+			src.attackby(O, user, O.loc)
 
 	//failure returns 0 or lower for diff messages - sorry
 	proc/check_can_hold(obj/item/W)

@@ -538,7 +538,7 @@
 	radio_path = /obj/item/device/radio/spy/det_only
 
 /obj/item/device/camera_viewer/sticker
-	name = "camera monitor"
+	name = "Camera monitor"
 	desc = "A portable video monitor connected to a network of spy cameras."
 	icon_state = "monitor"
 	item_state = "electronic"

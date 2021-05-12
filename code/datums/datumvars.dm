@@ -375,7 +375,7 @@
 		var/list/L = value
 		html += "\[[name]\]</th><td>List ([(!isnull(L) && L.len > 0) ? "[L.len] items" : "<em>empty</em>"])"
 
-		if (L?.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || name == "verbs"))
+		if (!isnull(L) && L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || name == "verbs"))
 			// not sure if this is completely right...
 			//if (0) // (L.vars.len > 0)
 			//	html += "<ol>"

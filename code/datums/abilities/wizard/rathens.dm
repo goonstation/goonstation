@@ -13,8 +13,7 @@
 	cast()
 		if(!holder)
 			return
-		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("ARSE NATH!")
+		holder.owner.say("ARSE NATH!")
 		..()
 
 		playsound(holder.owner, "sound/voice/farts/superfart.ogg", 25, 1)

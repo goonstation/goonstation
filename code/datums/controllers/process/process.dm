@@ -1,101 +1,101 @@
-/// Base definition of a process controller
+// Process
+
 /datum/controller/process
-	/*
+	/**
 	 * State vars
 	 */
-
 	// Main controller ref
 	var/tmp/datum/controller/processScheduler/main
 
-	/// TRUE if the process is not running or queued
-	var/tmp/idle = TRUE
+	// 1 if process is not running or queued
+	var/tmp/idle = 1
 
-	/// TRUE if process is queued
-	var/tmp/queued = FALSE
+	// 1 if process is queued
+	var/tmp/queued = 0
 
-	/// TRUE if process is running
-	var/tmp/running = FALSE
+	// 1 if process is running
+	var/tmp/running = 0
 
-	/// TRUE if process is blocked up
-	var/tmp/hung = FALSE
+	// 1 if process is blocked up
+	var/tmp/hung = 0
 
-	/// TRUE if process was killed
-	var/tmp/killed = FALSE
+	// 1 if process was killed
+	var/tmp/killed = 0
 
-	/// Status text to be displayed
+	// Status text var
 	var/tmp/status
 
-	/// Previous status text
+	// Previous status text var
 	var/tmp/previousStatus
 
-	/// TRUE if process is disabled
+	// 1 if process is disabled
 	var/tmp/disabled = 0
 
-	/*
-	 * Process Vars
+	/**
+	 * Config vars
 	 */
-
-	/// Process name
+	// Process name
 	var/name
 
-	/// This controls how often the process would run under ideal conditions.
-	/// If the process scheduler sees that the process has finished, it will wait until
-	/// this amount of time has elapsed from the start of the previous run to start the
-	/// process running again.
-	var/tmp/schedule_interval = PROCESS_DEFAULT_SCHEDULE_INTERVAL
+	// Process schedule interval
+	// This controls how often the process would run under ideal conditions.
+	// If the process scheduler sees that the process has finished, it will wait until
+	// this amount of time has elapsed from the start of the previous run to start the
+	// process running again.
+	var/tmp/schedule_interval = PROCESS_DEFAULT_SCHEDULE_INTERVAL // run every 50 ticks
 
-	/// This controls what percentage a single tick (0 to 100) the process should be allowed to run before sleeping.
+	// Process tick allowance
+	// This controls what percentage a single tick (0 to 100) the process should be
+	// allowed to run before sleeping.
 	var/tmp/tick_allowance = PROCESS_DEFAULT_TICK_ALLOWANCE
 
-	/// This is the time after which the server will begin to show "maybe hung" in the context window
+	// hang_warning_time - this is the time (in 1/10 seconds) after which the server will begin to show "maybe hung" in the context window
 	var/tmp/hang_warning_time = PROCESS_DEFAULT_HANG_WARNING_TIME
 
-	///  After this much time, the server will send an admin debug message saying the process may be hung
+	// hang_alert_time - After this much time(in 1/10 seconds), the server will send an admin debug message saying the process may be hung
 	var/tmp/hang_alert_time = PROCESS_DEFAULT_HANG_ALERT_TIME
 
-	/// After this much time, the server will automatically kill and restart the process.
+	// hang_restart_time - After this much time(in 1/10 seconds), the server will automatically kill and restart the process.
 	var/tmp/hang_restart_time = PROCESS_DEFAULT_HANG_RESTART_TIME
 
-	/// How many times in the current run has the process deferred work till the next tick?
+	// How many times in the current run has the process deferred work till the next tick?
 	var/tmp/cpu_defer_count = 0
 
-	/*
+	/**
 	 * recordkeeping vars
 	 */
 
-	/// Records the time (1/10s timeofday) at which the process last finished sleeping
+	// Records the time (1/10s timeofday) at which the process last finished sleeping
 	var/tmp/last_slept = 0
 
-	/// Records the time (1/10s timeofday) at which the process last began running
+	// Records the time (1/10s timeofday) at which the process last began running
 	var/tmp/run_start = 0
 
-	/// Records the world.tick_usage (0 to 100) at which the process last began running
-	/// drsingh - as of byond 514, world.map_cpu is also included in this via APPROX_TICK_USE
+	// Records the world.tick_usage (0 to 100) at which the process last began running
+	// drsingh - as of byond 514, world.map_cpu is also included in this via APPROX_TICK_USE
 	var/tmp/tick_start = 0
 
-	/// Records the total usage of the current run, each 100 = 1 byond tick
+	// Records the total usage of the current run, each 100 = 1 byond tick
 	var/tmp/current_usage = 0
 
-	/// Records the total usage of the last run, each 100 = 1 byond tick
+	// Records the total usage of the last run, each 100 = 1 byond tick
 	var/tmp/last_usage = 0
 
-	/// Records the total usage over the life of the process, each 100 = 1 byond tick
+	// Records the total usage over the life of the process, each 100 = 1 byond tick
 	var/tmp/total_usage = 0
 
-	/// Records the number of times this process has been killed and restarted
+	// Records the number of times this process has been killed and restarted
 	var/tmp/times_killed
 
-	/// Tick count
+	// Tick count
 	var/tmp/ticks = 0
 
-	/// Settable last task this loop was working on
 	var/tmp/last_task = ""
 
-	/// Settable last object this loop was processing
 	var/tmp/last_object
 
-/datum/controller/process/New(datum/controller/processScheduler/scheduler)
-	. = ..()
+datum/controller/process/New(var/datum/controller/processScheduler/scheduler)
+	..()
 	main = scheduler
 	previousStatus = "idle"
 	idle()
@@ -111,7 +111,7 @@
 	last_task = 0
 	last_object = null
 
-/datum/controller/process/proc/started()
+datum/controller/process/proc/started()
 	// Initialize last_slept so we can record timing information
 	last_slept = TimeOfHour
 
@@ -134,7 +134,7 @@
 
 	onStart()
 
-/datum/controller/process/proc/finished()
+datum/controller/process/proc/finished()
 	ticks++
 	current_usage += APPROX_TICK_USE - tick_start
 	last_usage = current_usage
@@ -144,43 +144,41 @@
 
 	onFinish()
 
-/datum/controller/process/proc/doWork()
-	return
+datum/controller/process/proc/doWork()
 
-/datum/controller/process/proc/setup()
-	return
+datum/controller/process/proc/setup()
 
-/datum/controller/process/proc/process()
+datum/controller/process/proc/process()
 	started()
 	doWork()
 	finished()
 
-/datum/controller/process/proc/running()
+datum/controller/process/proc/running()
 	idle = 0
 	queued = 0
 	running = 1
 	hung = 0
 	setStatus(PROCESS_STATUS_RUNNING)
 
-/datum/controller/process/proc/idle()
+datum/controller/process/proc/idle()
 	queued = 0
 	running = 0
 	idle = 1
 	hung = 0
 	setStatus(PROCESS_STATUS_IDLE)
 
-/datum/controller/process/proc/queued()
+datum/controller/process/proc/queued()
 	idle = 0
 	running = 0
 	queued = 1
 	hung = 0
 	setStatus(PROCESS_STATUS_QUEUED)
 
-/datum/controller/process/proc/hung()
+datum/controller/process/proc/hung()
 	hung = 1
 	setStatus(PROCESS_STATUS_HUNG)
 
-/datum/controller/process/proc/handleHung()
+datum/controller/process/proc/handleHung()
 	var/datum/lastObj = last_object
 	var/lastObjType = "null"
 	if(istype(lastObj))
@@ -196,7 +194,7 @@
 
 	main.restartProcess(src.name)
 
-/datum/controller/process/proc/kill()
+datum/controller/process/proc/kill()
 	if (!killed)
 		var/msg = "[name] process was killed at tick #[ticks]."
 		logTheThing("debug", null, null, msg)
@@ -209,8 +207,7 @@
 		// This should del
 		del(src)
 
-/datum/controller/process/proc/scheck()
-	. = 0
+datum/controller/process/proc/scheck()
 	if (killed)
 		// The kill proc is the only place where killed is set.
 		// The kill proc should have deleted this datum, and all sleeping procs that are
@@ -236,7 +233,9 @@
 
 		return 1
 
-/datum/controller/process/proc/update()
+	return 0
+
+datum/controller/process/proc/update()
 	// Clear delta
 	if(previousStatus != status)
 		setStatus(status)
@@ -253,36 +252,36 @@
 	else if (elapsedTime > hang_warning_time)
 		setStatus(PROCESS_STATUS_MAYBE_HUNG)
 
-/datum/controller/process/proc/getElapsedTime()
+datum/controller/process/proc/getElapsedTime()
 	if (TimeOfHour < run_start)
 		return TimeOfHour - (run_start - 36000)
 	return TimeOfHour - run_start
 
-/datum/controller/process/proc/getAverageUsage()
+datum/controller/process/proc/getAverageUsage()
+
+
+datum/controller/process/proc/tickDetail()
 	return
 
-/datum/controller/process/proc/tickDetail()
-	return
-
-/datum/controller/process/proc/getContext()
+datum/controller/process/proc/getContext()
 	return "<tr><td>[name]</td><td>[main.averageRunTime(src)]</td><td>[main.last_run_time[src]]</td><td>[main.highest_run_time[src]]</td><td>[ticks]</td></tr>\n"
 
-/datum/controller/process/proc/getContextData()
+datum/controller/process/proc/getContextData()
 	return list(
-		"name" = name,
-		"averageRunTime" = main.averageRunTime(src),
-		"lastRunTime" = main.last_run_time[src],
-		"highestRunTime" = main.highest_run_time[src],
-		"ticks" = ticks,
-		"schedule" = schedule_interval,
-		"status" = getStatusText(),
-		"disabled" = disabled
+	"name" = name,
+	"averageRunTime" = main.averageRunTime(src),
+	"lastRunTime" = main.last_run_time[src],
+	"highestRunTime" = main.highest_run_time[src],
+	"ticks" = ticks,
+	"schedule" = schedule_interval,
+	"status" = getStatusText(),
+	"disabled" = disabled
 	)
 
-/datum/controller/process/proc/getStatus()
+datum/controller/process/proc/getStatus()
 	return status
 
-/datum/controller/process/proc/getStatusText(s = 0)
+datum/controller/process/proc/getStatusText(var/s = 0)
 	if(!s)
 		s = status
 	switch(s)
@@ -301,21 +300,21 @@
 		else
 			return "UNKNOWN"
 
-/datum/controller/process/proc/getPreviousStatus()
+datum/controller/process/proc/getPreviousStatus()
 	return previousStatus
 
-/datum/controller/process/proc/getPreviousStatusText()
+datum/controller/process/proc/getPreviousStatusText()
 	return getStatusText(previousStatus)
 
-/datum/controller/process/proc/setStatus(newStatus)
+datum/controller/process/proc/setStatus(var/newStatus)
 	previousStatus = status
 	status = newStatus
 
-/datum/controller/process/proc/setLastTask(task, object)
+datum/controller/process/proc/setLastTask(var/task, var/object)
 	last_task = task
 	last_object = object
 
-/datum/controller/process/proc/_copyStateFrom(datum/controller/process/target)
+datum/controller/process/proc/_copyStateFrom(var/datum/controller/process/target)
 	main = target.main
 	name = target.name
 	schedule_interval = target.schedule_interval
@@ -330,16 +329,16 @@
 	last_object = target.last_object
 	copyStateFrom(target)
 
-/datum/controller/process/proc/copyStateFrom(datum/controller/process/target)
+datum/controller/process/proc/copyStateFrom(var/datum/controller/process/target)
 
-/datum/controller/process/proc/onKill()
+datum/controller/process/proc/onKill()
 
-/datum/controller/process/proc/onStart()
+datum/controller/process/proc/onStart()
 
-/datum/controller/process/proc/onFinish()
+datum/controller/process/proc/onFinish()
 
-/datum/controller/process/proc/disable()
+datum/controller/process/proc/disable()
 	disabled = 1
 
-/datum/controller/process/proc/enable()
+datum/controller/process/proc/enable()
 	disabled = 0

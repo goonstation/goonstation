@@ -34,8 +34,7 @@
 			var/image/I = X
 			P.overlays += I
 
-		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("GIN EMUS") // ^-- No speech bubble.
+		holder.owner.say("GIN EMUS") // ^-- No speech bubble.
 		..()
 
 		var/turf/curr_turf = get_turf(holder.owner)

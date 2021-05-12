@@ -609,7 +609,7 @@
 	return 1
 
 /obj/item/proc/split_stack(var/toRemove)
-	if(toRemove >= amount || toRemove < 1) return 0
+	if(toRemove >= amount) return 0
 	var/obj/item/P = new src.type(src.loc)
 
 	if(src.material)
@@ -787,9 +787,10 @@
 			S.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
 
 /obj/item/attackby(obj/item/W as obj, mob/user as mob, params)
-	if (W.firesource)
+	if (src.material)
 		src.material.triggerTemp(src ,1500)
-		if (src.burn_possible && src.burn_point <= 1500)
+	if (src.burn_possible && src.burn_point <= 1500)
+		if (W.firesource)
 			src.combust()
 		else
 			..(W, user)

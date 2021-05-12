@@ -15,6 +15,11 @@
 	lockedTries = 10
 	curable_by_mutadone = 0
 
+	New(var/for_global_list = 0)
+		..()
+		if (!for_global_list)
+			name = "Booster Gene"
+
 	OnAdd()
 		var/mob/living/L = owner
 		var/datum/bioHolder/B = L.bioHolder
@@ -41,6 +46,11 @@
 	lockedTries = 10
 	curable_by_mutadone = 0
 
+	New(var/for_global_list = 0)
+		..()
+		if (!for_global_list)
+			name = "Booster Gene"
+
 	OnAdd()
 		var/mob/living/L = owner
 		var/datum/bioHolder/B = L.bioHolder
@@ -65,6 +75,11 @@
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
 	curable_by_mutadone = 0
+
+	New(var/for_global_list = 0)
+		..()
+		if (!for_global_list)
+			name = "Booster Gene"
 
 	OnAdd()
 		var/mob/living/L = owner

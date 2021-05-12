@@ -258,22 +258,10 @@
 	heal_amt = 1
 	initial_volume = 15
 	initial_reagents = null
-	var/roundstart_pathogens = 1
 
 	New()
 		..()
-		if(roundstart_pathogens)
-			wrap_pathogen(reagents, generate_random_pathogen(), 15)
-
-	fishstick
-		roundstart_pathogens = 0
-		pickup(mob/user)
-			if(isadmin(user) || current_state == GAME_STATE_FINISHED)
-				wrap_pathogen(reagents, generate_random_pathogen(), 15)
-			else
-				boutput(user, "<span class='notice'>You feel that it was too soon for this...</span>")
-			. = ..()
-
+		wrap_pathogen(reagents, generate_random_pathogen(), 15)
 
 /obj/item/reagent_containers/food/snacks/burger/roburger
 	name = "roburger"

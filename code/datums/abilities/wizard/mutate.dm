@@ -13,8 +13,7 @@
 	cast()
 		if(!holder)
 			return
-		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("BIRUZ BENNAR")
+		holder.owner.say("BIRUZ BENNAR")
 		..()
 
 		boutput(holder.owner, "<span class='notice'>Your mind and muscles are magically empowered!</span>")

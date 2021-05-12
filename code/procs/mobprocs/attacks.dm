@@ -56,7 +56,7 @@
 		SPAWN_DBG( 0 )
 		// drsingh Cannot read null.force
 #ifdef DATALOGGER
-			if (W?.force)
+			if (!isnull(W) && W.force)
 				game_stats.Increment("violence")
 #endif
 			if (!isnull(W))

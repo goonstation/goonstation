@@ -13,8 +13,7 @@
 	cast()
 		if(!holder)
 			return
-		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("WATT LEHFUQUE")
+		holder.owner.say("WATT LEHFUQUE")
 		..()
 
 		var/list/available_effects = list("babel", "boost", "roar", "signaljam", "grilles", "meteors")
@@ -144,7 +143,7 @@
 
 /mob/living/proc/PAND_Roar(var/protectuser = 1)
 	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> emits a horrific reverberating roar!</span>", src), 1)
-	playsound_global(world, 'sound/effects/mag_pandroar.ogg', 50)
+	world << sound('sound/effects/mag_pandroar.ogg')
 	for (var/mob/living/carbon/human/M in mobs)
 		if (M == src && protectuser) continue
 		if (ishuman(M))

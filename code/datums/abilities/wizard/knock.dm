@@ -13,8 +13,7 @@
 	cast()
 		if(!holder)
 			return
-		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("AULIE OXIN FIERA")
+		holder.owner.say("AULIE OXIN FIERA")
 		..()
 
 		var/SPrange = 1

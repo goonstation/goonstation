@@ -57,7 +57,6 @@ datum
 					if(volume >= 5)
 						if(!locate(/obj/decal/cleanable/dirt) in T)
 							make_cleanable(/obj/decal/cleanable/dirt,T)
-						T.wet = 0
 
 		chlorine
 			name = "chlorine"

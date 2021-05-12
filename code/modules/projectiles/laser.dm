@@ -379,7 +379,6 @@ toxic - poisons
 	dissipation_rate = 8
 	sname = "mining laser"
 	shot_sound = 'sound/weapons/rocket.ogg'
-	shot_volume = 20
 	damage_type = D_BURNING
 	brightness = 0.8
 	window_pass = 0
@@ -403,8 +402,8 @@ toxic - poisons
 	cost = 1
 	brightness = 0
 	sname = "drill bit"
-	shot_sound = 'sound/machines/rock_drill.ogg'
-	shot_volume = 20
+	shot_sound = 'sound/machines/engine_grump1.ogg'
+	shot_volume = 45
 	dissipation_delay = 1
 	dissipation_rate = 35
 	icon_turf_hit = null

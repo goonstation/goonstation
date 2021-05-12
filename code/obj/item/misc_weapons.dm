@@ -362,23 +362,6 @@
 /obj/item/sword/red
 	bladecolor = "R"
 
-	enakai
-		active = 1;
-		active_force = 5
-		desc = "You were the chosen one! You were supposed to destroy the greytiders, not join them!";
-		icon_state = "sword1-R";
-		item_state = "sword1-R";
-		name = "Enakai's red cyalume saber"
-
-		pickup(mob/user)
-			if(isadmin(user) || current_state == GAME_STATE_FINISHED)
-				src.active_force = 60
-				if(src.active)
-					src.force = 60
-			else
-				boutput(user, "<span class='notice'>You feel that it was too soon for this...</span>")
-			. = ..()
-
 /obj/item/sword/orange
 	bladecolor = "O"
 
@@ -1240,7 +1223,7 @@
 			user.update_clothing()
 			src.sword_inside = W //katana SHOULD be in the sheath now.
 			boutput(user, "<span class='notice'>You sheathe [W] in [src].</span>")
-			playsound(get_turf(user), "sound/effects/sword_sheath.ogg", 50, 0, 0)
+			playsound(get_turf(user), "sound/effects/sword_sheath.ogg", 70, 0, 0)
 		else
 			..()
 			if(W.cant_drop == 1)
@@ -1251,7 +1234,7 @@
 		if (!user.r_hand || !user.l_hand)
 			sword_inside.clean_forensic()
 			boutput(user, "You draw [sword_inside] from your sheath.")
-			playsound(get_turf(user), pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 50, 0, 0)
+			playsound(get_turf(user), pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 70, 0, 0)
 			icon_state = sheath_state
 			item_state = ih_sheath_state
 			user.put_in_hand_or_drop(sword_inside)

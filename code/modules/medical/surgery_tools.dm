@@ -1637,7 +1637,8 @@ keeping this here because I want to make something else with it eventually
 /* ================================================== */
 
 /obj/item/scissors/surgical_scissors
-	name = "surgical scissors"
+	// name = "Garden Snips"
+	name = "Surgical Scissors"
 	desc = "Used for precisely cutting up people in surgery. I guess you could use them on paper too."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "surgical-scissors-base"

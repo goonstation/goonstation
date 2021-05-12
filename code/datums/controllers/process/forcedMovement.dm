@@ -12,13 +12,29 @@ proc/EndSpacePush(var/atom/movable/A)
 	spacePushList -= A
 	A.temp_flags &= ~SPACE_PUSHING
 
-/// Controls forced movements
-/datum/controller/process/fMove
+datum/controller/process/fMove
 	var/list/debugPushList = null //Remove this on release.
+
+	// mbc : replaced with IMMUNE_MANTA_PUSH flag. faster.
+	/*
+	var/list/pushBlacklist = list(
+		/obj/fluid,
+		/obj/fluid_spawner,
+		/obj/effect,
+		/obj/overlay,
+		/obj/particle,
+		/obj/torpedo,
+		/obj/torpedo_targeter,
+		/obj/machinery/vehicle/tank/minisub,
+		/obj/machinery/nuclearbomb,
+		/mob/living/intangible,
+		/mob/dead,
+		/mob/wraith,
+	)*/
 
 	setup()
 		name = "Forced movement"
-		schedule_interval = 0.5 SECONDS
+		schedule_interval = 5
 
 	doWork()
 		//space first :)

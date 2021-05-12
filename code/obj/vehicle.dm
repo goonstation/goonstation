@@ -683,7 +683,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			if (istype(T) && T.active_liquid)
 				if (T.active_liquid.group && T.active_liquid.group.members.len > 20) //Drain() is faster. use this if the group is large.
 					if (prob(20))
-						playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+						playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 1)
 
 					if (T.active_liquid.group)
 						T.active_liquid.group.queued_drains += rand(2,4)

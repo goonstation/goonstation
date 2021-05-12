@@ -48,7 +48,8 @@ export const BioEffect = (props, context) => {
     equipmentCooldown,
     saveSlots,
     savedMutations,
-    subject,
+    haveSubject,
+    subjectStat,
     boothCost,
     injectorCost,
     precisionEmitter,
@@ -227,7 +228,7 @@ export const BioEffect = (props, context) => {
           && isPotential && !!canScramble && (
           <Button
             icon="radiation"
-            disabled={onCooldown(equipmentCooldown, "Emitter") || subject.stat > 0}
+            disabled={onCooldown(equipmentCooldown, "Emitter") || subjectStat >= 0}
             color="bad"
             onClick={() => act("precisionemitter", { ref })}>
             Scramble Gene
@@ -270,7 +271,7 @@ export const BioEffect = (props, context) => {
             Splice
           </Button>
         )}
-        {isStorage && subject && (
+        {isStorage && (
           <Button
             icon="check"
             onClick={() => act("addstored", { ref })}
@@ -278,7 +279,7 @@ export const BioEffect = (props, context) => {
             Add to Occupant
           </Button>
         )}
-        {isStorage && (
+        {isStorage && haveSubject && (
           <Button
             icon="trash"
             onClick={() => act("deletegene", { ref })}

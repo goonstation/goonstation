@@ -42,7 +42,6 @@
 		return
 
 	src.material?.triggerOnAttack(src, src, hit_atom)
-	hit_atom.material?.triggerOnHit(hit_atom, src, null, 2)
 	for(var/atom/A in hit_atom)
 		A.material?.triggerOnAttacked(A, src, hit_atom, src)
 
@@ -64,7 +63,6 @@
 			if(thr.thing == src)
 				src.throw_impact(O, thr)
 				found_any = TRUE
-				break // I'd like this to process all relevant datums but something is duplicating throws so it actually sometimes causes a ton of lag
 		if(!found_any)
 			src.throw_impact(O)
 		src.throwing = 0

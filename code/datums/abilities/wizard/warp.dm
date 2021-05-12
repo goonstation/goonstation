@@ -16,8 +16,7 @@
 		if(!holder)
 			return
 
-		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("GHEIT AUT")
+		holder.owner.say("GHEIT AUT")
 		..()
 
 		if (target.traitHolder.hasTrait("training_chaplain"))

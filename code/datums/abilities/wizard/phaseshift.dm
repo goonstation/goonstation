@@ -17,8 +17,7 @@
 		if (spell_invisibility(holder.owner, 1, 0, 1, 1) != 1) // Dry run. Can we phaseshift?
 			return 1
 
-		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("PHEE CABUE")
+		holder.owner.say("PHEE CABUE")
 		..()
 
 		var/SPtime = 35

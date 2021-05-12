@@ -1,6 +1,5 @@
-
-/// handles mobs
-/datum/controller/process/mobs
+// handles mobs
+datum/controller/process/mobs
 	var/tmp/list/detailed_count
 	var/tmp/tick_counter
 	var/list/mobs
@@ -12,7 +11,7 @@
 
 	setup()
 		name = "Mob"
-		schedule_interval = 4 SECONDS
+		schedule_interval = 40
 		detailed_count = new
 		src.mobs = global.mobs
 

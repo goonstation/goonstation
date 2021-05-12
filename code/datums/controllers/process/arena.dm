@@ -1,11 +1,9 @@
-
-/// Handles the gauntlet and colosseum
-/datum/controller/process/arena
+datum/controller/process/arena
 	var/list/arenas = list()
 
 	setup()
 		name = "Arena"
-		schedule_interval = 0.8 SECONDS
+		schedule_interval = 8 // 0.8 seconds
 
 		arenas += gauntlet_controller
 		arenas += colosseum_controller

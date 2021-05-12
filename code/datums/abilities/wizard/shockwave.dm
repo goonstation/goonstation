@@ -13,8 +13,7 @@
 	cast()
 		if(!holder)
 			return
-		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("ERATH QUUK")
+		holder.owner.say("ERATH QUUK")
 		..()
 
 		playsound(holder.owner.loc, "sound/effects/exlow.ogg", 25, 1, -1)
