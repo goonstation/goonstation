@@ -21,3 +21,4 @@
 	// regular timing doesn't really apply since particles abuse the shit out of spawn and sleep
 	tickDetail()
 		boutput(usr, "<b>Particles:</b>types: [master.particleTypes.len], systems: [master.particleSystems.len]<br>")
+

@@ -41,7 +41,8 @@
 	var/datum/projectile/fireball/fb_proj = new
 
 	cast(atom/target)
-		holder.owner.say("MHOL HOTTOV")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("MHOL HOTTOV")
 		..()
 
 		var/obj/projectile/P = initialize_projectile_ST( holder.owner, fb_proj, target )

@@ -1,4 +1,64 @@
 
+(t)tue may 11 21
+(u)edwardly
+(p)4648
+(e)|
+(+)Prevent showing paper through cameras when the camera is inactive.
+(u)Lythine
+(p)4584
+(e)🗺|mapping
+(+)Added more trays to Oshan's hydroponics.
+(u)pali
+(p)4646
+(e)🆕🎨|feature, sprites
+(*)All cyborgs now have typewriters.
+(*)Brobocop cyborgs now also have ticket typewriters.
+(u)DimWhat
+(p)4682
+(e)🎨|sprites
+(+)Added more lizard headwear sprites. Hiss.
+(u)Zonespace
+(p)4678
+(e)🆕|feature
+(*)Syndicate Wiretap can now be scanned using a syndicate device analyzer.
+(u)112358sam
+(p)4670
+(e)🐛|bug
+(+)Fixes the creation of invisible, zero item stacks when entering 0 in a dialog for splitting a stack of items.
+(u)Tarmunora
+(e)⚖|balance
+(+)Staff of Cthulhu summoning spell will generate a new staff if the old one is destroyed
+(+)Staff of Cthulhu will only do strong brainmelts (>1s stun) on attacks if the victim already has 30+ brain damage
+(+)Napalm direct burn damage is reduced by firesuits etc
+(+) erebite asteroids less dense and more dangerous
+(u)Mordent
+(p)4675
+(e)⚖|balance
+(*)You no longer randomly miss cyborgs when melee attacking them.
+(u)Penny
+(p)4372
+(e)🆕🎨|feature, sprites
+(*)Handheld arcade machines are now available from Josh
+(t)mon may 10 21
+(u)Tarmunora
+(+)Salt melts ice decals, carbon (dirt) splashed on floors undoes lube
+(+)1 second cooldown on being hit by magic missiles (will no longer get 'shotgunned' by a wizard at point-blank ranges)
+(u)112358sam
+(p)4655
+(e)🐛|bug
+(+)Fixes the exploit with sheets, rods, shards, tiles, and cable coils in the material processor and re-enables processing these items.
+(u)edwardly
+(p)4667
+(e)🐛|bug
+(+)Fix the 1 minute countdown on the cyborg killswitch timer.
+(u)RSG250
+(p)4661
+(e)|
+(+)booster genes now show what they are in the scanner like the record
+(u)Chickenish
+(p)4639
+(e)⚖|balance
+(*)Replaced the Ghost Drone's RCD with the Cardboard RCD.
 (t)sun may 09 21
 (u)edwardly
 (p)4647

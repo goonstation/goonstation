@@ -114,7 +114,8 @@ var/global/datum/spacebee_extension_system/spacebee_extension_system = new
 	// parse arguments
 	var/list/arguments = src.parse_arguments(arg_string, command.argument_instances)
 	if(isnull(arguments))
-		src.reply("Invalid arguments.", user)
+		var/datum/spacebee_extension_command/help/help_command = src.commands["help"]
+		src.reply("Invalid arguments.\n" + help_command?.help_for_command(command), user)
 		return
 
 	// create a new instance for multi-stage commands and such

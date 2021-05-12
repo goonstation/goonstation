@@ -651,7 +651,7 @@
 			//cooldown = 0 //30
 			staminaCost = 15
 			swipe_color = "#a3774d"
-			damageMult = 0.5
+			damageMult = 0.8
 
 			onAdd()
 				if(master)
@@ -1041,7 +1041,7 @@
 		staminaCost = 0
 		moveDelay = 5
 		moveDelayDuration = 5
-		damageMult = 0.5
+		damageMult = 0.80
 
 		image = "dagger"
 		name = "Slice"
