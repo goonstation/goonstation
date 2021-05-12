@@ -1,5 +1,9 @@
 
 (t)tue may 11 21
+(u)edwardly
+(p)4648
+(e)|
+(+)Prevent showing paper through cameras when the camera is inactive.
 (u)Lythine
 (p)4584
 (e)🗺|mapping
