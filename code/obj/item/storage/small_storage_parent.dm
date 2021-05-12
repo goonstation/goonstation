@@ -95,9 +95,12 @@
 				O.attack_hand(user)
 		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored)
 			user.swap_hand()
-			O.attack_hand(user)
-			if(O in user.equipped_list())
-				src.attackby(O, user, O.loc)
+			if(user.equipped() == null)
+				O.attack_hand(user)
+				if(O in user.equipped_list())
+					src.attackby(O, user, O.loc)
+			else
+				boutput(user, __blue("Your hands are full!"))
 			user.swap_hand()
 
 	//failure returns 0 or lower for diff messages - sorry
