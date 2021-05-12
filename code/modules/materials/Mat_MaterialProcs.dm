@@ -698,3 +698,4 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				floor_owner.ReplaceWithSpace()
 				return
 
+

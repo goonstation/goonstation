@@ -112,3 +112,4 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	stability_loss = -999999
+
