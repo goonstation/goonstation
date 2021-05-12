@@ -651,7 +651,7 @@
 			//cooldown = 0 //30
 			staminaCost = 15
 			swipe_color = "#a3774d"
-			damageMult = 0.8
+			damageMult = 0.5
 
 			onAdd()
 				if(master)
@@ -1051,7 +1051,7 @@
 
 		onAdd()
 			if(master)
-				staminaCost = master.stamina_cost * 0.2 //Inherits from the item.
+				staminaCost = master.stamina_cost * 1.6 //Inherits from the item.
 				overrideStaminaDamage = master.stamina_damage * 0.5
 			return
 
