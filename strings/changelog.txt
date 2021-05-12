@@ -1,5 +1,9 @@
 
 (t)tue may 11 21
+(u)Zonespace
+(p)4678
+(e)🆕|feature
+(*)Syndicate Wiretap can now be scanned using a syndicate device analyzer.
 (u)112358sam
 (p)4670
 (e)🐛|bug
