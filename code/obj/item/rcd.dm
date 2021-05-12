@@ -305,10 +305,8 @@ Broken RCD + Effects
 						var/turf/simulated/floor/T = A:ReplaceWithFloor()
 						if (!restricted_materials || !safe_deconstruct)
 							T.setMaterial(getMaterial(material_name))
-						else if(!("steel" in restricted_materials))
-							T.setMaterial(getMaterial("steel"))
 						else
-							T.setMaterial(getMaterial("negativematter"))
+							T.setMaterial(getMaterial("steel"))
 						log_construction(user, "deconstructs a wall ([A])")
 						return
 
