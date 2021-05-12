@@ -243,10 +243,10 @@
 		O.internal_speed = projectile_speed
 
 	tick(obj/projectile/O)
-		O.internal_speed = min(O.internal_speed * 1.25, 56)
+		O.internal_speed = min(O.internal_speed * 1.25, 28)
 
 	get_power(obj/projectile/P, atom/A)
-		return 10 + P.internal_speed
+		return 15 + P.internal_speed
 
 //desert eagle. The biggest, baddest handgun
 /obj/item/gun/kinetic/deagle

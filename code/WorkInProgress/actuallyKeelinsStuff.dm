@@ -1861,6 +1861,8 @@ Returns:
 
 	Click(location,control,params)
 		if(isobserver(usr) || iswraith(usr))
+			if(isAIeye(usr))
+				boutput(usr, "<span class='notice'>Whoa, you can use this as an AI? Are you actually just a ghost trapped in a metal box??</span>")
 
 			if(GET_COOLDOWN(src, usr) == 0)
 				var/list/words = list()

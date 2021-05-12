@@ -2364,8 +2364,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 4
 
 /mob/living/critter/small_animal/figure
-	name = "collectable figure"
-	real_name = "collectable figure"
+	name = "collectible figure"
+	real_name = "collectible figure"
 	desc = "<b><span class='alert'>WARNING:</span> CHOKING HAZARD</b> - Small parts. Not for children under 3 years."
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
