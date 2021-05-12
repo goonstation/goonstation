@@ -1120,7 +1120,7 @@
 
 		setupProperties()
 			..()
-			setProperty("space_movespeed", 0.75)
+			setProperty("space_movespeed", -0.25)
 
 
 		firebrand
