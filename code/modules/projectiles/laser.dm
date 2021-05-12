@@ -399,14 +399,14 @@ toxic - poisons
 	window_pass = 0
 	icon_state = ""
 	damage_type = D_SLASHING
-	power = 35
+	power = 65
 	cost = 1
 	brightness = 0
 	sname = "drill bit"
 	shot_sound = 'sound/machines/rock_drill.ogg'
 	shot_volume = 20
-	dissipation_delay = 1
-	dissipation_rate = 35
+	dissipation_delay = 2
+	dissipation_rate = 65
 	icon_turf_hit = null
 	var/damtype = DAMAGE_STAB
 
@@ -417,7 +417,7 @@ toxic - poisons
 			var/turf/simulated/wall/asteroid/T = hit
 			if (power <= 0)
 				return
-			T.damage_asteroid(round(power / 10),1)
+			T.damage_asteroid(round(power / 5),1)
 			//if(prob(60)) // raised again
 			//	T.destroy_asteroid(1)
 			//else

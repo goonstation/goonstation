@@ -2405,8 +2405,8 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 /datum/manufacture/pod/weapon/mining/drill
 	name = "Rock Drilling Rig"
-	item_paths = list("POW-1","MET-3", "DEN-3")
-	item_amounts = list(10,10,20)
+	item_paths = list("POW-1","MET-3")
+	item_amounts = list(10,10)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/rockdrills)
 	time = 20 SECONDS
 	create = 1
