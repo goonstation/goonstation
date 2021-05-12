@@ -1269,6 +1269,11 @@
 		if (src.ore)
 			src.ore.onHit(src)
 
+		var/datum/ore/event/E = src.event
+
+		if (E)
+			E.onHit(src)
+
 		if (difference <= 0)
 			destroy_asteroid()
 		else
