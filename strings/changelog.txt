@@ -1,5 +1,9 @@
 
 (t)tue may 11 21
+(u)112358sam
+(p)4670
+(e)🐛|bug
+(+)Fixes the creation of invisible, zero item stacks when entering 0 in a dialog for splitting a stack of items.
 (u)Tarmunora
 (e)⚖|balance
 (+)Staff of Cthulhu summoning spell will generate a new staff if the old one is destroyed
