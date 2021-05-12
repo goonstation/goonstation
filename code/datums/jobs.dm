@@ -1419,6 +1419,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	cant_spawn_as_rev = 1
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/device/pda2/heads
+	slot_card = /obj/item/card/id/nt
 	slot_jump = /obj/item/clothing/under/misc/lawyer/black // so they can slam tables
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_ears = /obj/item/device/radio/headset/command
@@ -1453,6 +1454,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/device/pda2/heads
+	slot_card = /obj/item/card/id/nt
 	slot_jump = /obj/item/clothing/under/misc/NT
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_ears = /obj/item/device/radio/headset/command
@@ -2323,7 +2325,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_foot = /obj/item/clothing/shoes/swat
 	slot_ears = /obj/item/device/radio/headset/command/nt //needs their own secret channel
 	slot_mask = /obj/item/clothing/mask/breath
-	slot_card = /obj/item/card/id/command
+	slot_card = /obj/item/card/id/nt
 	slot_poc1 = /obj/item/spacecash/fivehundred
 	slot_poc2 = /obj/item/storage/pouch/bullet_9mm
 	items_in_backpack = list(/obj/item/gun/energy/ntgun,
@@ -2368,7 +2370,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_glov = /obj/item/clothing/gloves/swat/NT
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 	slot_ears = /obj/item/device/radio/headset/command/nt //needs their own secret channel
-	slot_card = /obj/item/card/id/command
+	slot_card = /obj/item/card/id/nt
 	slot_poc1 = /obj/item/device/pda2/ntso
 	slot_poc2 = /obj/item/spacecash/fivehundred
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
