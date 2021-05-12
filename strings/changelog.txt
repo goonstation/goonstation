@@ -9,6 +9,7 @@
 (+)Staff of Cthulhu summoning spell will generate a new staff if the old one is destroyed
 (+)Staff of Cthulhu will only do strong brainmelts (>1s stun) on attacks if the victim already has 30+ brain damage
 (+)Napalm direct burn damage is reduced by firesuits etc
+(+) erebite asteroids less dense and more dangerous
 (u)Mordent
 (p)4675
 (e)⚖|balance
