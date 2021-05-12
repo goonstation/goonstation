@@ -9261,10 +9261,7 @@
 	},
 /area/station/turret_protected/Zeta)
 "avz" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/plantpot,
+/obj/critter/domestic_bee/sea,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "avA" = (
@@ -16063,16 +16060,16 @@
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "aLH" = (
+/obj/machinery/plantpot,
 /obj/machinery/firealarm{
 	pixel_y = 24;
 	text = "NF"
 	},
-/obj/machinery/hydro_growlamp,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "aLI" = (
-/obj/machinery/light_switch/auto,
 /obj/machinery/plantpot,
+/obj/machinery/light_switch/auto,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "aLJ" = (
@@ -16389,7 +16386,9 @@
 	},
 /area/station/ranch)
 "aMH" = (
-/obj/critter/domestic_bee/sea,
+/obj/landmark/spawner{
+	name = "monkeyspawn_krimpus"
+	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "aMI" = (
@@ -17226,6 +17225,13 @@
 	},
 /turf/simulated/floor/red,
 /area/listeningpost)
+"aOR" = (
+/obj/shrub{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/harsh,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "aOS" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/catering{
@@ -17362,6 +17368,13 @@
 /obj/stool/chair,
 /turf/simulated/floor/black,
 /area/listeningpost)
+"aPl" = (
+/obj/machinery/light/incandescent/harsh,
+/obj/shrub{
+	dir = 8
+	},
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "aPm" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 10
@@ -23574,8 +23587,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "bgj" = (
-/obj/machinery/light/incandescent/harsh,
 /obj/machinery/plantpot,
+/obj/machinery/light/incandescent/harsh,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "bgk" = (
@@ -46938,16 +46951,16 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/observatory)
 "jKn" = (
+/obj/machinery/hydro_growlamp,
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/plantpot,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "jKq" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_krimpus"
+/obj/landmark/start{
+	name = "Botanist"
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
@@ -47027,11 +47040,15 @@
 /turf/simulated/floor/black,
 /area/research_outpost)
 "kvl" = (
-/obj/landmark/start{
-	name = "Botanist"
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
 	},
-/turf/simulated/floor/green,
-/area/station/hydroponics/bay)
+/obj/access_spawn/hydro,
+/turf/simulated/floor/grasstodirt{
+	icon_state = "dirt";
+	name = "not grass"
+	},
+/area/station/ranch)
 "kwr" = (
 /obj/lattice{
 	dir = 1;
@@ -47306,6 +47323,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "nkh" = (
+/obj/machinery/plantpot,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -47314,7 +47332,6 @@
 	tag = ""
 	},
 /obj/item/device/radio/intercom/botany,
-/obj/machinery/plantpot,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "nvJ" = (
@@ -78150,8 +78167,8 @@ aKf
 pvB
 yiF
 yiF
-yiF
 ydh
+kvl
 yiF
 aPZ
 aPZ
@@ -78451,12 +78468,12 @@ euS
 aia
 aia
 aLL
-bgj
-avz
+aOR
+nOT
 aMf
 aLF
-aLF
 bgj
+aLF
 aLF
 aMf
 blo
@@ -79060,8 +79077,8 @@ nOT
 aMf
 aMf
 aMf
-jKq
 aMf
+jKq
 aMf
 aMf
 aqQ
@@ -79359,9 +79376,9 @@ aia
 aLL
 aLH
 nOT
+aMH
 aMf
-aMf
-aMf
+avz
 aMf
 aMf
 bfH
@@ -79662,7 +79679,7 @@ ubH
 aLI
 nOT
 aMf
-aMH
+aMf
 aMf
 aMf
 aMf
@@ -80263,7 +80280,7 @@ aJP
 fRB
 aKE
 ubH
-bgj
+aPl
 jKn
 vIY
 aNJ
@@ -80873,7 +80890,7 @@ aeN
 aeP
 aeL
 aQe
-kvl
+bfh
 bfJ
 bgq
 aLL

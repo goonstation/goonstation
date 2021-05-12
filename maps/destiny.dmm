@@ -4579,8 +4579,7 @@
 	},
 /obj/noticeboard/persistent{
 	name = "Kitchen persistent notice board";
-	persistent_id = "kitchen";
-	pixel_x = 15
+	persistent_id = "kitchen"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
@@ -9562,6 +9561,10 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 1;
 	nostick = 1
+	},
+/obj/noticeboard/persistent{
+	name = "Crew Quarters persistent notice board";
+	persistent_id = "crew quarters"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
@@ -14695,7 +14698,6 @@
 /area/station/engine/gas)
 "bqc" = (
 /obj/item/storage/wall/medical{
-	pixel_x = 15;
 	pixel_y = 31
 	},
 /obj/machinery/computer/general_alert,
@@ -14705,11 +14707,6 @@
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
-	},
-/obj/noticeboard/persistent{
-	name = "Engineering persistent notice board";
-	persistent_id = "engineering";
-	pixel_x = -8
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
@@ -15605,17 +15602,18 @@
 /obj/machinery/light/emergency{
 	dir = 4
 	},
-/obj/item/chem_grenade/firefighting{
-	pixel_y = 10
-	},
-/obj/item/chem_grenade/firefighting{
-	pixel_y = 8
-	},
 /obj/machinery/cell_charger,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
+/obj/item/storage/firstaid/fire{
+	pixel_y = 4
+	},
+/obj/item/storage/firstaid/toxin,
+/obj/item/paper/engine,
+/obj/item/chem_grenade/firefighting,
+/obj/item/chem_grenade/firefighting,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -16759,8 +16757,6 @@
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/tank/air,
 /obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/chem_grenade/firefighting,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -18391,10 +18387,6 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/computer/stockexchange,
-/obj/noticeboard/persistent{
-	name = "Crew Quarters persistent notice board";
-	persistent_id = "crew quarters"
-	},
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/starboard)
 "bYC" = (
@@ -18682,9 +18674,6 @@
 /obj/item/clothing/head/helmet/hardhat,
 /obj/item/extinguisher,
 /obj/item/extinguisher,
-/obj/item/device/light/flashlight,
-/obj/item/chem_grenade/firefighting,
-/obj/item/chem_grenade/firefighting,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "cfn" = (
@@ -20561,6 +20550,14 @@
 "cWl" = (
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
+"cWt" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13"
+	},
+/turf/simulated/floor/red,
+/area/station/security/main)
 "cWv" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -27113,11 +27110,11 @@
 "fRM" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
+/obj/machinery/door/window/eastleft{
+	req_access_txt = "1"
+	},
 /obj/machinery/cashreg{
 	name = "bail payment device"
-	},
-/obj/machinery/door/window/eastright{
-	req_access_txt = "1"
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -27479,7 +27476,6 @@
 /obj/item/device/radio,
 /obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/device/audio_log,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -28452,7 +28448,6 @@
 	dir = 8;
 	pixel_x = -28
 	},
-/obj/item/clothing/suit/hi_vis,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -30331,13 +30326,11 @@
 "hvZ" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger{
-	pixel_x = -6;
 	pixel_y = 5
 	},
-/obj/item/device/t_scanner{
-	pixel_x = 10;
-	pixel_y = 5
-	},
+/obj/item/device/analyzer/atmospheric,
+/obj/item/device/t_scanner,
+/obj/item/device/light/flashlight,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -31534,6 +31527,12 @@
 	dir = 1;
 	icon_state = "line3"
 	},
+/obj/noticeboard/persistent{
+	name = "Brig persistent notice board";
+	persistent_id = "brig";
+	pixel_x = -32;
+	pixel_y = 0
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -31911,18 +31910,8 @@
 /obj/item/item_box/medical_patches/silver_sulf{
 	pixel_y = 5
 	},
-/obj/item/device/analyzer/atmospheric{
-	pixel_x = -10;
-	pixel_y = 3
-	},
-/obj/item/storage/firstaid/fire{
-	pixel_y = 4
-	},
-/obj/item/device/analyzer/atmospheric{
-	pixel_x = 10;
-	pixel_y = 5
-	},
-/obj/item/storage/firstaid/toxin,
+/obj/item/clothing/suit/hi_vis,
+/obj/item/clothing/suit/hi_vis,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "iuc" = (
@@ -33273,11 +33262,10 @@
 	pixel_y = 12;
 	switchon = 1
 	},
+/obj/item/reagent_containers/food/drinks/mug/random_color,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/item/paper/engine,
-/obj/item/reagent_containers/food/drinks/mug/random_color,
 /obj/item/rocko{
 	pixel_x = 12;
 	pixel_y = 6
@@ -39602,11 +39590,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/noticeboard/persistent{
-	name = "Brig persistent notice board";
-	persistent_id = "brig";
-	pixel_x = 5
-	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -41406,7 +41389,6 @@
 /obj/machinery/light/emergency{
 	dir = 8
 	},
-/obj/item/clothing/suit/hi_vis,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -41992,7 +41974,12 @@
 /obj/machinery/light/emergency{
 	dir = 8
 	},
-/obj/item/clothing/suit/hi_vis,
+/obj/noticeboard/persistent{
+	name = "Engineering persistent notice board";
+	persistent_id = "engineering";
+	pixel_x = -32;
+	pixel_y = 0
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -43751,9 +43738,6 @@
 	},
 /obj/machinery/light_switch/north,
 /obj/machinery/power/data_terminal,
-/obj/item/hand_labeler{
-	pixel_y = -3
-	},
 /turf/simulated/floor/yellow/corner{
 	dir = 8
 	},
@@ -50854,11 +50838,6 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/kitchen/food_box/donut_box,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13"
-	},
 /turf/simulated/floor/red/checker,
 /area/station/security/main)
 "tap" = (
@@ -53532,9 +53511,6 @@
 /area/station/medical/medbay/surgery/storage)
 "uvA" = (
 /obj/storage/closet/wardrobe/red/security_gimmick,
-/obj/machinery/light/emergency{
-	dir = 1
-	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "uwU" = (
@@ -56009,6 +55985,9 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "vFs" = (
+/obj/machinery/light/emergency{
+	dir = 1
+	},
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -58381,7 +58360,9 @@
 	pixel_x = 24;
 	pixel_y = 8
 	},
-/obj/machinery/phone,
+/obj/item/device/analyzer/atmospheric,
+/obj/item/hand_labeler,
+/obj/item/device/audio_log,
 /turf/simulated/floor/yellow/corner{
 	dir = 1
 	},
@@ -97739,7 +97720,7 @@ rER
 fIF
 ltO
 gca
-bEs
+cWt
 nRn
 tai
 juJ
