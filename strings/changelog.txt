@@ -1,5 +1,9 @@
 
 (t)wed may 12 21
+(u)pali
+(p)4633
+(e)⚖⛔|balance, removal
+(*)Cloners no longer automatically implant people with health implants on scanning.
 (u)UnfunnyPerson
 (p)4559
 (e)🆕|feature
