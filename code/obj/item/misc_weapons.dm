@@ -876,7 +876,7 @@
 			throwforce = 25
 			throw_speed = 4
 			throw_range = 8
-			stamina_damage = 40
+			stamina_damage = 45
 			stamina_cost = 25
 			stamina_crit_chance = 10
 		else
