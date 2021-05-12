@@ -1,5 +1,10 @@
 
 (t)tue may 11 21
+(u)pali
+(p)4646
+(e)🆕🎨|feature, sprites
+(*)All cyborgs now have typewriters.
+(*)Brobocop cyborgs now also have ticket typewriters.
 (u)DimWhat
 (p)4682
 (e)🎨|sprites
