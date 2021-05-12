@@ -23956,11 +23956,11 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "bnK" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 10
+	},
 /obj/stool/chair/green{
 	dir = 8
-	},
-/obj/decal/boxingrope{
-	dir = 5
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -23975,7 +23975,7 @@
 /area/station/crew_quarters/fitness)
 "bnN" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 9
+	dir = 6
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -76576,7 +76576,7 @@ aJb
 aJw
 aJJ
 aJU
-aKm
+aKj
 bkz
 blx
 bmF
@@ -77784,7 +77784,7 @@ bgb
 acd
 bhV
 aEi
-aKj
+aKm
 bkB
 nON
 bmG

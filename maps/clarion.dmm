@@ -17793,6 +17793,12 @@
 /obj/item/storage/box/kendo_box/hakama,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
+"aJD" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 10
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/fitness)
 "aJE" = (
 /obj/decal/boxingrope,
 /turf/simulated/floor/specialroom/gym,
@@ -28500,8 +28506,8 @@
 /area/station/medical/cdc)
 "bhd" = (
 /obj/machinery/light,
-/obj/decal/boxingrope{
-	dir = 5
+/obj/stool/chair/boxingrope_corner{
+	dir = 10
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -29836,8 +29842,8 @@
 	},
 /area/station/science/chemistry)
 "bkr" = (
-/obj/decal/boxingrope{
-	dir = 9
+/obj/stool/chair/boxingrope_corner{
+	dir = 6
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -45495,12 +45501,6 @@
 	dir = 1
 	},
 /area/station/turret_protected/ai)
-"fef" = (
-/obj/decal/boxingrope{
-	dir = 10
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/fitness)
 "fho" = (
 /obj/machinery/light_switch/west{
 	dir = 4
@@ -82029,7 +82029,7 @@ aUL
 aCh
 aDi
 aEp
-aJF
+aJD
 aGj
 aHq
 aIr
@@ -83057,7 +83057,7 @@ aEu
 aCi
 aDj
 aEt
-fef
+aJF
 aGl
 aHr
 aHr

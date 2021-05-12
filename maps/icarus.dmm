@@ -2986,8 +2986,9 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "ahc" = (
-/obj/decal/boxingrope{
-	dir = 5
+/obj/stool/chair/boxingrope_corner{
+	dir = 10;
+	icon_state = "ringrope"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -3001,7 +3002,8 @@
 /area/station/crew_quarters/fitness)
 "ahf" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 9
+	dir = 6;
+	icon_state = "ringrope"
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -27295,12 +27297,6 @@
 	dir = 1
 	},
 /area/research_outpost/indigo_rye)
-"nHU" = (
-/obj/stool/chair/boxingrope_corner{
-	dir = 6
-	},
-/turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
 "nII" = (
 /obj/cable{
 	d1 = 1;
@@ -27405,12 +27401,6 @@
 /obj/machinery/vending/pizza,
 /turf/simulated/floor/purpleblack,
 /area/research_outpost/indigo_rye)
-"pCR" = (
-/obj/stool/chair/boxingrope_corner{
-	dir = 10
-	},
-/turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
 "pDC" = (
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
@@ -67362,7 +67352,7 @@ aga
 ago
 agI
 agI
-nHU
+ahc
 ahs
 ahD
 ahD
@@ -68570,7 +68560,7 @@ aga
 ags
 agI
 agU
-pCR
+ahf
 ahu
 ahu
 ahO

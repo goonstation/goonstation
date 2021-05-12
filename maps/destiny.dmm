@@ -11026,8 +11026,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "aTZ" = (
-/obj/decal/boxingrope{
-	dir = 5
+/obj/stool/chair/boxingrope_corner{
+	dir = 10
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -39160,7 +39160,7 @@
 /area/station/hallway/secondary/construction)
 "mBC" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 9
+	dir = 6
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -106178,7 +106178,7 @@ aKZ
 aHV
 ejK
 fVH
-ePu
+mde
 aPk
 aPk
 xUM
@@ -107386,7 +107386,7 @@ iAI
 aHV
 iai
 fVH
-mde
+ePu
 aCb
 aFE
 aFE
