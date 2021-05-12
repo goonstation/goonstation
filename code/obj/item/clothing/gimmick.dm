@@ -392,6 +392,10 @@
 	cant_self_remove = 1
 	cant_other_remove = 1
 
+	New()
+		..()
+		AddComponent(/datum/component/clown_disbelief_item)
+
 /obj/item/clothing/gloves/cursedclown_gloves
 	name = "cursed white gloves"
 	desc = "These things smell terrible, and they're all lumpy. Gross."

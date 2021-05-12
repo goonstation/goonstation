@@ -191,7 +191,7 @@
 	weapon_score = 1.0
 	current_projectile = new/datum/projectile/laser/drill
 	appearanceString = "pod_weapon_drills"
-	firerate = 5
+	firerate = 10
 	icon_state = "rock-drill"
 
 /obj/item/shipcomponent/mainweapon/disruptor
@@ -434,7 +434,7 @@
 							purge_sps(destruction_point_x, destruction_point_y)
 							destruction_point_y = ship.loc.y + 1
 						purge_sps(destruction_point_x, destruction_point_y)
-				
+
 				else boutput(ship.pilot, "<span class='alert'><B>Shooting diagonally is unsupported.</B></span>")
 
 

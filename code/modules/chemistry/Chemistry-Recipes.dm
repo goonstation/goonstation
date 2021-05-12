@@ -2944,6 +2944,10 @@ datum
 			result_amount = 3
 			mix_phrase = "The mixture becomes seemingly heavy and viscous."
 
+			on_reaction(var/datum/reagents/holder, created_volume)
+				if(istype(holder?.my_atom, /obj/effects/foam))
+					holder.del_reagent("nitroglycerin")
+
 		/*
 		weedkiller/weedkiller2
 			id = "weedkiller2"

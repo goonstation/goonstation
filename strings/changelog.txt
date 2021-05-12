@@ -1,4 +1,65 @@
 
+(t)tue may 11 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Staff of Cthulhu summoning spell will generate a new staff if the old one is destroyed
+(+)Staff of Cthulhu will only do strong brainmelts (>1s stun) on attacks if the victim already has 30+ brain damage
+(u)Mordent
+(p)4675
+(e)⚖|balance
+(*)You no longer randomly miss cyborgs when melee attacking them.
+(u)Penny
+(p)4372
+(e)🆕🎨|feature, sprites
+(*)Handheld arcade machines are now available from Josh
+(t)mon may 10 21
+(u)Tarmunora
+(+)Salt melts ice decals, carbon (dirt) splashed on floors undoes lube
+(+)1 second cooldown on being hit by magic missiles (will no longer get 'shotgunned' by a wizard at point-blank ranges)
+(u)112358sam
+(p)4655
+(e)🐛|bug
+(+)Fixes the exploit with sheets, rods, shards, tiles, and cable coils in the material processor and re-enables processing these items.
+(u)edwardly
+(p)4667
+(e)🐛|bug
+(+)Fix the 1 minute countdown on the cyborg killswitch timer.
+(u)RSG250
+(p)4661
+(e)|
+(+)booster genes now show what they are in the scanner like the record
+(u)Chickenish
+(p)4639
+(e)⚖|balance
+(*)Replaced the Ghost Drone's RCD with the Cardboard RCD.
+(t)sun may 09 21
+(u)edwardly
+(p)4647
+(e)|
+(+)AI is no longer an all-seeing entity and snipped cameras should correctly be removed from coverage.
+(u)pali
+(p)4643
+(e)🆕🎨|feature, sprites
+(*)Dwarves are back! Better than ever!
+(u)pali
+(p)4548
+(e)⚖|balance
+(*)Port-a-Puke now has unlimited capacity for mobs
+(u)pali
+(p)4509
+(e)🆕🎨|feature, sprites
+(*)A new trait - Clown Disbelief. Pick it and clowns are no longer visible to you!
+(u)Flaborized
+(p)4637
+(e)🎨|sprites
+(*)Traitors may now buy a roll of duct tape for 1 TC, instead of it being exclusive to surplus crates. It's handcuffs that you can use ten times.
+(u)Kubius
+(p)4644
+(e)🆕🗺|feature, mapping
+(*)Engineering departments have received a crate for assembly of the Spatial Interdictor, a device which can mitigate certain random events in its range of influence given sufficient power.
+(u)Flourish
+(e)⚖|balance
+(+)The stun baton now features a stacking 15 second stun (up from a non-stacking 15 second stun).
 (t)sat may 08 21
 (u)Sovexe
 (p)4635
@@ -7,6 +68,7 @@
 (u)Tarmunora
 (e)⚖|balance
 (+)themite turf reaction in smoke nerfed
+(+)wizard crystal is no longer radioactive (but is still magical)
 (u)edwardly
 (p)4602
 (e)⚖|balance

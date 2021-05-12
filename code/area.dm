@@ -224,10 +224,12 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 		if (ismob(A))
 			var/mob/M = A
 			if (M?.client)
-				if (sound_loop)
+				if (sound_loop || sound_group)
 					SPAWN_DBG(1 DECI SECOND)
 						var/area/mobarea = get_area(M)
-						if (M?.client && (mobarea?.sound_group != src?.sound_group) && !mobarea.sound_loop)
+						// If the area we are exiting has a sound loop but the new area doesn't
+						// we should stop the ambience or it will play FOREVER causing player insanity
+						if (M?.client && (mobarea?.sound_group != src.sound_group || isnull(src.sound_group)) && !mobarea?.sound_loop)
 							M.client.playAmbience(src, AMBIENCE_LOOPING, 0) //pass 0 to cancel
 
 		if ((isliving(A) || iswraith(A)) || locate(/mob) in A)

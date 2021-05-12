@@ -43158,6 +43158,7 @@
 /obj/item/device/radio/intercom/loudspeaker/speaker/east{
 	pixel_x = -22
 	},
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
