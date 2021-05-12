@@ -1225,9 +1225,9 @@
 
 	proc/update_icon()
 		if(src.stored_paper)
-			src.icon_state = "portable_printer-full"
+			src.icon_state = "portable_typewriter-full"
 		else
-			src.icon_state = "portable_printer"
+			src.icon_state = "portable_typewriter"
 
 	proc/eject_paper(atom/target, mob/user)
 		if(isnull(src.stored_paper))
