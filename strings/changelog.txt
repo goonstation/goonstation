@@ -1,5 +1,9 @@
 
 (t)tue may 11 21
+(u)DimWhat
+(p)4682
+(e)🎨|sprites
+(+)Added more lizard headwear sprites. Hiss.
 (u)Zonespace
 (p)4678
 (e)🆕|feature
