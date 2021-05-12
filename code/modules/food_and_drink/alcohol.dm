@@ -333,8 +333,8 @@
 	module_research = list("vice" = 100)
 
 /obj/item/reagent_containers/food/drinks/curacao
-	name = "curacao liqueur"
-	desc = "A bottle of curacao liqueur, made from the dried peels of the bitter orange Lahara."
+	name = "curaçao liqueur"
+	desc = "A bottle of curaçao liqueur, made from the dried peels of the bitter orange Lahara."
 	icon_state = "curacao"
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
@@ -458,6 +458,5 @@
 	heal_amt = 1
 	g_amt = 60
 	initial_volume = 50
-
 
 
