@@ -684,7 +684,7 @@
 	buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0)
 		if(!istype(to_buckle))
 			return
-		if(user.hasStatus("weakened")))
+		if(user.hasStatus("weakened"))
 			return
 		if(src.buckled_guy && src.buckled_guy.buckled == src && to_buckle != src.buckled_guy) return
 
