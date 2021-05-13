@@ -1,6 +1,10 @@
 
 (t)thu may 13 21
 (u)Gannets
+(p)4699
+(e)⚖|balance
+(*)Added belt packs to Heavy Weapons Specialist, Marksman & Firebrand class crates.
+(u)Gannets
 (p)4698
 (e)⚖|balance
 (*)Added a pouch of napalm smoke grenades to the Firebrand class crate.
