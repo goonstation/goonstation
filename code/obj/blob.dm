@@ -354,6 +354,7 @@
 							while (poison)
 								Life()
 								sleep(1 SECOND)
+					return
 			if ("chaos")
 				ignore_armor = 1
 		if (!ignore_armor && armor_value > 0)
