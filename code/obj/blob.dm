@@ -347,7 +347,7 @@
 				amount *= poison_coefficient
 				//handle poison overlay
 				if (amount && damtype == "poison")
-					src.poison += amount
+					src.poison += amount * damage_mult
 					updatePoisonOverlay()
 					if (!overmind)
 						SPAWN_DBG(1 SECOND)
