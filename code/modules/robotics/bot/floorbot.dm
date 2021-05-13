@@ -147,16 +147,18 @@
 		boutput(user, "<span class='alert'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles!</span>")
 		src.updateicon()
 	//Regular ID
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
-	if (istype(W, /obj/item/card/id))
-		if (src.allowed(user))
-			src.locked = !src.locked
-			boutput(user, "You [src.locked ? "lock" : "unlock"] the [src] behaviour controls.")
+	else
+		if (istype(W, /obj/item/device/pda2) && W:ID_card)
+			W = W:ID_card
+		if (istype(W, /obj/item/card/id))
+			if (src.allowed(user))
+				src.locked = !src.locked
+				boutput(user, "You [src.locked ? "lock" : "unlock"] the [src] behaviour controls.")
+			else
+				boutput(user, "The [src] doesn't seem to accept your authority.")
+			src.updateUsrDialog()
 		else
-			boutput(user, "The [src] doesn't seem to accept your authority.")
-		src.updateUsrDialog()
-
+			..()
 
 
 /obj/machinery/bot/floorbot/Topic(href, href_list)
