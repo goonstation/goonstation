@@ -763,8 +763,7 @@
 							sleep(0.1 SECONDS)
 						C.pixel_x = initial(C.pixel_x)
 						C.pixel_y = initial(C.pixel_y)
-				if(!ON_COOLDOWN(src, "SecbotTimeoutIncrement", 1 SECOND))
-					src.container_cool_off_counter++
+				src.container_cool_off_counter++
 				if(src.container_cool_off_counter >= src.container_cool_off_max) // Give him some time to cool off
 					src.KillPathAndGiveUp(kpagu)
 					src.container_cool_off_counter = 0
