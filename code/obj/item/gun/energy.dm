@@ -1380,7 +1380,7 @@
 					logTheThing("combat", src, null, "Is not the law. Caused explosion with Lawbringer.")
 
 					SPAWN_DBG(2 SECONDS)
-						explosion_new(null, get_turf(src), 15)
+						src.blowthefuckup(15)
 					return 0
 				else
 					return 1
