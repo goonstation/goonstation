@@ -472,7 +472,7 @@
 			if (!overmind.tutorial.PerformSilentAction("blob-life", src))
 				return 0
 		if (src.poison)
-			var/damage_taken = min(5, src.poison)
+			var/damage_taken = min(10, src.poison)
 			take_damage(damage_taken, 1, "self_poison")
 			src.poison -= damage_taken * poison_depletion
 			src.poison = max(src.poison, 0)
