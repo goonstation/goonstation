@@ -523,12 +523,15 @@
 			src.name = "[material.name] [initial(src.name)]"
 
 			// ARBITRARY MATH TIME! WOO!
-			var/om_tough = overmind.initial_material.getProperty("density")
-			var/c_tough = material.getProperty("density")
+			var/om_tough = max(overmind.initial_material.getProperty("density"), 1) * max(overmind.initial_material.getProperty("hard"), 1)
+			var/c_tough = max(material.getProperty("density"), 1) * max(material.getProperty("hard"), 1)
 			var/hm_orig = initial(health_max)
+			var/new_tough = (c_tough/om_tough)
+			if(new_tough > 2)
+				new_tough = 1 + sqrt(new_tough-1)
 
 			if (om_tough)
-				var/hm_new = hm_orig * (c_tough / om_tough)
+				var/hm_new = hm_orig * new_tough
 				var/perc_change = hm_new / health_max
 				health_max = hm_new
 				health *= perc_change
