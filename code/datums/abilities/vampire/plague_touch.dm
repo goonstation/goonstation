@@ -47,5 +47,5 @@
 			L.contract_disease(/datum/ailment/disease/vamplague, null, null, 1) // path, name, strain, bypass resist
 
 		if (istype(H)) H.blood_tracking_output(src.pointCost)
-		logTheThing("combat", M, L, "uses dieseased touch on [constructTarget(L,"combat")] at [log_loc(M)].")
+		logTheThing("combat", M, L, "uses diseased touch on [constructTarget(L,"combat")] at [log_loc(M)].")
 		return 0
