@@ -2830,8 +2830,8 @@
 						src.drop_arrest_target()
 						return // target doesnt exist, is a ghost, or has given up the ghost
 
-					// Can we "see" them?
-					if(IN_RANGE(master, arrest_target, 7))
+					// Can we /see/ them?
+					if(src.arrest_target in view(7,get_turf(master)))
 						// Shoot them!
 						master.bot_attack(arrest_target, src.lethal)
 					else
