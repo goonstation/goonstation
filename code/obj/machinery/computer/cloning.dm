@@ -266,10 +266,11 @@
 	if(subject.traitHolder && length(subject.traitHolder.traits))
 		R.fields["traits"] = subject.traitHolder.traits.Copy()
 
-	//Add an implant if needed
-	var/obj/item/implant/health/imp = locate(/obj/item/implant/health, subject)
-	if(!isnull(imp))
-		R.fields["imp"] = "\ref[imp]"
+	var/obj/item/implant/cloner/imp = new(subject)
+	imp.implanted = TRUE
+	imp.owner = subject
+	subject.implant.Add(imp)
+	R.fields["imp"] = "\ref[imp]"
 
 	if (!isnull(subjMind)) //Save that mind so traitors can continue traitoring after cloning.
 		R.fields["mind"] = subjMind
@@ -840,10 +841,10 @@ proc/find_ghost_by_key(var/find_key)
 	var/list/recordsTemp = list()
 	for (var/r in records)
 		var/saved = FALSE
-		var/obj/item/implant/health/H = locate(r["fields"]["imp"])
+		var/obj/item/implant/cloner/implant = locate(r["fields"]["imp"])
 		var/currentHealth = ""
-		if ((H) && istype(H))
-			currentHealth = H.getHealthList()
+		if(istype(implant))
+			currentHealth = implant.getHealthList()
 		if(src.diskette) // checks if saved to disk
 			for (var/datum/computer/file/clone/F in src.diskette.root.contents)
 				if(F.fields["ckey"] == r["fields"]["ckey"])
@@ -854,7 +855,7 @@ proc/find_ghost_by_key(var/find_key)
 			id = r["fields"]["id"],
 			ckey = r["fields"]["ckey"],
 			health = currentHealth,
-			implant = !isnull(H),
+			implant = !isnull(implant),
 			saved = saved
 		)))
 

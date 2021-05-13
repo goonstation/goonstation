@@ -1,4 +1,7 @@
 
+(t)thu may 13 21
+(u)pali
+(*)Clonescanning people now implants people with a clonescan implant. This implant lets you see their health status on the cloning console (and the health implant no longer does this). It shows up as a red dot on health goggles view.
 (t)wed may 12 21
 (u)pali
 (p)4633
