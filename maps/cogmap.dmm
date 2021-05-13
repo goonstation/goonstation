@@ -56555,13 +56555,6 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/engine/core)
-"hvZ" = (
-/obj/wingrille_spawn/auto,
-/obj/window_blinds/cog2/left{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/elect)
 "hxk" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -56819,13 +56812,6 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/exit)
-"hWh" = (
-/obj/wingrille_spawn/auto,
-/obj/window_blinds/cog2/left,
-/obj/wingrille_spawn/auto,
-/obj/cable,
-/turf/simulated/floor/plating,
-/area/station/engine/elect)
 "hXZ" = (
 /obj/landmark/halloween,
 /turf/simulated/floor/grass{
@@ -58769,24 +58755,6 @@
 /obj/cable/brown,
 /turf/simulated/floor/plating,
 /area/station/engine/core)
-"lLb" = (
-/obj/storage/cart/mechcart,
-/obj/item/electronics/scanner,
-/obj/item/deconstructor,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
-/obj/decal/mule/beacon/no_auto_dropoff_spawn,
-/obj/machinery/disposal/mail/small/autoname,
-/obj/disposalpipe/trunk/mail{
-	dir = 2
-	},
-/obj/item/electronics/soldering{
-	pixel_x = -4;
-	pixel_y = -2
-	},
-/turf/simulated/floor,
-/area/station/engine/elect)
 "lOr" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -61133,6 +61101,14 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"qir" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 4
+	},
+/obj/disposalpipe/segment/mail,
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/elect)
 "qiY" = (
 /obj/machinery/disposal/mail{
 	mail_tag = "brig";
@@ -61346,6 +61322,13 @@
 	},
 /turf/simulated/floor,
 /area/station/routing/medsci)
+"qCO" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left,
+/obj/wingrille_spawn/auto,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
 "qDz" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -61576,6 +61559,13 @@
 	},
 /turf/simulated/floor,
 /area/station/bridge)
+"rda" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
 "rfA" = (
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
@@ -62312,14 +62302,6 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
-"smM" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 4
-	},
-/obj/disposalpipe/segment/mail,
-/turf/simulated/wall/auto/supernorn,
-/area/station/engine/elect)
 "snq" = (
 /obj/decal/cleanable/dirt,
 /obj/item/tile/steel,
@@ -62431,6 +62413,10 @@
 	dir = 1
 	},
 /area/station/chapel/sanctuary)
+"sxS" = (
+/obj/machinery/manufacturer/mechanic,
+/turf/simulated/floor,
+/area/station/engine/elect)
 "sAj" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/wreath/ephemeral,
@@ -64068,6 +64054,16 @@
 /obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/engineering/ce)
+"vup" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/portable_reclaimer,
+/obj/cable,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
 "vuN" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -64690,10 +64686,6 @@
 	icon_state = "wooden"
 	},
 /area/station/crew_quarters/barber_shop)
-"wwY" = (
-/obj/machinery/manufacturer/mechanic,
-/turf/simulated/floor,
-/area/station/engine/elect)
 "wxK" = (
 /obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -65388,20 +65380,28 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"yec" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/portable_reclaimer,
-/obj/cable,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/elect)
 "yeL" = (
 /obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/warehouse)
+"ygK" = (
+/obj/storage/cart/mechcart,
+/obj/item/electronics/scanner,
+/obj/item/deconstructor,
+/obj/item/storage/toolbox/electrical,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/device/multitool,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/machinery/disposal/mail/small/autoname,
+/obj/disposalpipe/trunk/mail{
+	dir = 2
+	},
+/obj/item/electronics/soldering{
+	pixel_x = -4;
+	pixel_y = -2
+	},
+/turf/simulated/floor,
+/area/station/engine/elect)
 "yhD" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -109712,9 +109712,9 @@ bKt
 bNv
 bTg
 bUI
-yec
+vup
 bRB
-hWh
+qCO
 bUA
 bVO
 bWU
@@ -110014,7 +110014,7 @@ bKt
 bLM
 bLM
 bYx
-hvZ
+rda
 bLM
 bLM
 bUB
@@ -110316,7 +110316,7 @@ eBZ
 bLQ
 bNo
 bNs
-wwY
+sxS
 bRD
 kRv
 bUA
@@ -111525,8 +111525,8 @@ bLU
 clf
 bOQ
 fFs
-lLb
-smM
+ygK
+qir
 bUG
 bWK
 bXa
