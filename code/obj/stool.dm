@@ -693,6 +693,8 @@
 
 		if(stand)
 			if(ishuman(to_buckle))
+				if(ON_COOLDOWN(to_buckle, "chair_stand", 1 SECOND))
+					return
 				user.visible_message("<span class='notice'><b>[to_buckle]</b> climbs up on [src]!</span>", "<span class='notice'>You climb up on [src].</span>")
 
 				var/mob/living/carbon/human/H = to_buckle
