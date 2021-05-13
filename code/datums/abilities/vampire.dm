@@ -39,7 +39,7 @@
 				C.abilityHolder.addAbility(/datum/targetable/vampire/cancel_stuns)
 				C.abilityHolder.addAbility(/datum/targetable/vampire/glare)
 				C.abilityHolder.addAbility(/datum/targetable/vampire/hypnotize)
-				C.abilityHolder.addAbility(/datum/targetable/vampire/grave_grasp)
+				C.abilityHolder.addAbility(/datum/targetable/vampire/plague_touch)
 				C.abilityHolder.addAbility(/datum/targetable/vampire/phaseshift_vampire)
 				C.abilityHolder.addAbility(/datum/targetable/vampire/call_bats)
 				C.abilityHolder.addAbility(/datum/targetable/vampire/vampire_scream)
@@ -292,13 +292,13 @@
 
 			src.addAbility(/datum/targetable/vampire/call_bats)
 			src.addAbility(/datum/targetable/vampire/vampire_scream)
-			src.addAbility(/datum/targetable/vampire/grave_grasp)
 
 		if (src.last_power == 3 && src.vamp_blood >= src.level4)
 			src.last_power = 4
 
 			src.removeAbility(/datum/targetable/vampire/phaseshift_vampire)
 			src.addAbility(/datum/targetable/vampire/phaseshift_vampire/mk2)
+			src.addAbility(/datum/targetable/vampire/plague_touch)
 
 		if (src.last_power == 4 && src.vamp_blood >= src.level5)
 			src.last_power = 5
@@ -326,7 +326,7 @@
 		src.removeAbility(/datum/targetable/vampire/call_bats)
 		src.removeAbility(/datum/targetable/vampire/vampire_scream)
 		src.removeAbility(/datum/targetable/vampire/vampire_scream/mk2)
-		src.removeAbility(/datum/targetable/vampire/grave_grasp)
+		src.removeAbility(/datum/targetable/vampire/plague_touch)
 
 		src.updateButtons()
 
