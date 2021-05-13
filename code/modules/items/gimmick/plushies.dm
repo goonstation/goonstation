@@ -27,7 +27,8 @@
 	/obj/item/toy/plush/small/chris,\
 	/obj/item/toy/plush/small/fancyflippers,\
 	/obj/item/toy/plush/small/billy,\
-	/obj/item/toy/plush/small/arthur)
+	/obj/item/toy/plush/small/arthur,\
+	/obj/item/toy/plush/small/deneb)
 
 /obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
 	src.add_dialog(user)
