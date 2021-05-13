@@ -237,3 +237,16 @@
 		boutput(user, "<span class='notice'>You feel [pick("a bit", "slightly", "a teeny bit", "somewhat", "surprisingly", "")] [pick("better", "more calm", "more composed", "less stressed")].</span>")
 	else if (menuchoice == "Say")
 		src.say_something(user)
+
+
+/obj/item/toy/plush/small/deneb
+	name = "Deneb the swan"
+	icon_state = "deneb"
+
+/obj/item/toy/plush/small/deneb/attack_self(mob/user as mob)
+	var/menuchoice = alert("What would you like to do with [src]?",,"Honk","Say")
+	if (menuchoice == "Honk")
+		playsound(user, "sound/items/rubberduck.ogg", 50, 1)
+		src.audible_message("<span class='emote'>[src] honks!</span>")
+	else if (menuchoice == "Say")
+		src.say_something(user)
