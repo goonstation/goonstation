@@ -238,7 +238,6 @@
 	else if (menuchoice == "Say")
 		src.say_something(user)
 
-
 /obj/item/toy/plush/small/deneb
 	name = "Deneb the swan"
 	icon_state = "deneb"
