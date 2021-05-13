@@ -47,6 +47,7 @@
 #define SECBOT_GUARDMOVE_COOLDOWN "secbot_mill_about_delay"
 #define SECBOT_HELPME_COOLDOWN "secbot_is_under_attack"
 #define SECBOT_CHATSPAM_COOLDOWN "secbot_tenfourtenfourtenfour_etcetera"
+#define SECBOT_CAGE_RAGE_COOLDOWN "secbot_no_like_crate"
 
 /obj/machinery/bot/secbot
 	name = "Securitron"
@@ -741,6 +742,32 @@
 		if(src.moving || src.cuffing || src.baton_charging)
 			return
 
+		/// We inside something?
+		if(istype(src.loc, /obj/storage))
+			var/obj/storage/C = src.loc
+			if(C.locked || C.welded)
+				if(!ON_COOLDOWN(src, SECBOT_CAGE_RAGE_COOLDOWN, 1.5 SECONDS))
+					src.weeoo()
+					YellAtPerp(impotent_rage = 1)
+					if(prob(25))
+						SPAWN_DBG(0)
+							for(var/mob/M in hearers(C, null))
+								M.show_text("<font size=[max(0, 5 - get_dist(get_turf(src), M))]>THUD, thud!</font>")
+							playsound(get_turf(C), "sound/impact_sounds/Wood_Hit_1.ogg", 15, 1, -3)
+							var/wiggle = 6
+							while(wiggle > 0)
+								wiggle--
+								C.pixel_x = rand(-3,3)
+								C.pixel_y = rand(-3,3)
+								sleep(0.1 SECONDS)
+							C.pixel_x = initial(C.pixel_x)
+							C.pixel_y = initial(C.pixel_y)
+				if(prob(30))
+					src.KillPathAndGiveUp(kpagu)
+				return // please stop zapping people from inside lockers
+			else
+				C.open() // just nudge it open, you goof
+
 		/// Tango!
 		if(src.target)
 			/// Tango in batonning distance?
@@ -843,18 +870,19 @@
 		weeoo()
 		process()	// ensure bot quickly responds to a perp
 
-	proc/YellAtPerp()
-		src.point(src.target, 1)
-		src.speak("Level [src.threatlevel] infraction alert!")
+	proc/YellAtPerp(impotent_rage = 0)
 		var/saything = pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg')
-		switch(saything)
-			if('sound/voice/bcriminal.ogg')
-				src.speak("CRIMINAL DETECTED.")
-			if('sound/voice/bjustice.ogg')
-				src.speak("PREPARE FOR JUSTICE.")
-			if('sound/voice/bfreeze.ogg')
-				src.speak("FREEZE. SCUMBAG.")
-		playsound(src.loc, saything, 50, 0)
+		if(!impotent_rage)
+			src.point(src.target, 1)
+			src.speak("Level [src.threatlevel] infraction alert!")
+			switch(saything)
+				if('sound/voice/bcriminal.ogg')
+					src.speak("CRIMINAL DETECTED.")
+				if('sound/voice/bjustice.ogg')
+					src.speak("PREPARE FOR JUSTICE.")
+				if('sound/voice/bfreeze.ogg')
+					src.speak("FREEZE. SCUMBAG.")
+		playsound(get_turf(src), saything, 50, 0)
 
 	proc/weeoo()
 		if(weeooing)
@@ -862,7 +890,7 @@
 		SPAWN_DBG(0)
 			weeooing = 1
 			var/weeoo = 10
-			playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
+			playsound(get_turf(src), "sound/machines/siren_police.ogg", 50, 1)
 			while (weeoo)
 				add_simple_light("secbot", list(255 * 0.9, 255 * 0.1, 255 * 0.1, 0.8 * 255))
 				sleep(0.3 SECONDS)
