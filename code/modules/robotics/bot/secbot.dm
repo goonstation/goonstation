@@ -47,7 +47,6 @@
 #define SECBOT_GUARDMOVE_COOLDOWN "secbot_mill_about_delay"
 #define SECBOT_HELPME_COOLDOWN "secbot_is_under_attack"
 #define SECBOT_CHATSPAM_COOLDOWN "secbot_tenfourtenfourtenfour_etcetera"
-#define SECBOT_CAGE_RAGE_COOLDOWN "secbot_no_like_crate"
 
 /obj/machinery/bot/secbot
 	name = "Securitron"
@@ -127,7 +126,11 @@
 	var/cuff_threat_threshold = 5
 	/// Obey the threat threshold. Otherwise, just cuff em
 	var/warn_minor_crime = 0
-
+	/// How long has the bot been sitting in the time-out locker? (process cycles spent inside a locked/welded storage object)
+	var/container_cool_off_counter = 0
+	/// When the bot's been stuck in a locker this long, they'll forget who they were mad at
+	/// Note, this is in process() calls, not seconds, so it could vary quite a bit
+	var/container_cool_off_max = 30
 	var/added_to_records = FALSE
 	/// Set a bot to guard an area, and they'll go there and mill around
 	var/area/guard_area
@@ -746,27 +749,30 @@
 		if(istype(src.loc, /obj/storage))
 			var/obj/storage/C = src.loc
 			if(C.locked || C.welded)
-				if(!ON_COOLDOWN(src, SECBOT_CAGE_RAGE_COOLDOWN, 1.5 SECONDS))
-					src.weeoo()
-					YellAtPerp(impotent_rage = 1)
-					if(prob(25))
-						SPAWN_DBG(0)
-							for(var/mob/M in hearers(C, null))
-								M.show_text("<font size=[max(0, 5 - get_dist(get_turf(src), M))]>THUD, thud!</font>")
-							playsound(get_turf(C), "sound/impact_sounds/Wood_Hit_1.ogg", 15, 1, -3)
-							var/wiggle = 6
-							while(wiggle > 0)
-								wiggle--
-								C.pixel_x = rand(-3,3)
-								C.pixel_y = rand(-3,3)
-								sleep(0.1 SECONDS)
-							C.pixel_x = initial(C.pixel_x)
-							C.pixel_y = initial(C.pixel_y)
-				if(prob(30))
+				src.weeoo()
+				if(prob(50 + (src.emagged * 15)))
+					SPAWN_DBG(0)
+						for(var/mob/M in hearers(C, null))
+							M.show_text("<font size=[max(0, 5 - get_dist(get_turf(src), M))]>THUD, thud!</font>")
+						playsound(get_turf(C), "sound/impact_sounds/Wood_Hit_1.ogg", 15, 1, -3)
+						var/wiggle = 6
+						while(wiggle > 0)
+							wiggle--
+							C.pixel_x = rand(-3,3)
+							C.pixel_y = rand(-3,3)
+							sleep(0.1 SECONDS)
+						C.pixel_x = initial(C.pixel_x)
+						C.pixel_y = initial(C.pixel_y)
+				if(!ON_COOLDOWN(src, "SecbotTimeoutIncrement", 1 SECOND))
+					src.container_cool_off_counter++
+				if(src.container_cool_off_counter >= src.container_cool_off_max) // Give him some time to cool off
 					src.KillPathAndGiveUp(kpagu)
+					src.container_cool_off_counter = 0
 				return // please stop zapping people from inside lockers
 			else
 				C.open() // just nudge it open, you goof
+
+		src.container_cool_off_counter = 0
 
 		/// Tango!
 		if(src.target)
