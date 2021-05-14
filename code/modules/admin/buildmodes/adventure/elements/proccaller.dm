@@ -38,6 +38,7 @@
 					return
 				. = (.):vars[variable]
 			return
+		return arg
 
 	trigger(act)
 		switch(act)
