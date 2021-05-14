@@ -33,4 +33,4 @@
 				var/datum/actual_object = var_object
 				if(actual_object == "usr")
 					actual_object = usr
-				var_object.vars[var_name] = var_value
+				actual_object.vars[var_name] = var_value
