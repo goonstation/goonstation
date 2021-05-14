@@ -102,7 +102,7 @@
 		var/obj/storage/container = null
 		while (length(potential_containers))
 			var/obj/storage/random_container = pick(potential_containers)
-			if (random_container.open == 0 && random_container.z == 1)  // container is closed and on station z-level
+			if (!random_container.open && random_container.z == Z_LEVEL_STATION)  // container is closed and on station z-level
 				container = random_container
 				break
 			potential_containers -= container
