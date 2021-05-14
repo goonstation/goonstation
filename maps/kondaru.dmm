@@ -19949,15 +19949,15 @@
 /area/station/routing/depot)
 "bes" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/drinks/bottle/empty{
+/obj/item/reagent_containers/food/drinks/bottle/soda/empty{
 	pixel_x = 7;
 	pixel_y = 7
 	},
-/obj/item/reagent_containers/food/drinks/bottle/empty{
+/obj/item/reagent_containers/food/drinks/bottle/soda/empty{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/food/drinks/bottle/empty,
+/obj/item/reagent_containers/food/drinks/bottle/soda/empty,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
@@ -22508,11 +22508,11 @@
 	desc = "Various supplies for the bar.";
 	name = "bartending crate"
 	},
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/item/storage/firstaid/toxin,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/glass/beaker/large,
@@ -43017,7 +43017,7 @@
 /area/station/quartermaster/cargobay)
 "eoO" = (
 /obj/table/round/auto,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_y = 16
 	},
 /obj/item/reagent_containers/food/drinks/mug/random_color{
@@ -51425,12 +51425,12 @@
 	desc = "Wow! Crate may or may not still contain bottles.";
 	name = "Bottles in a Crate"
 	},
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
 "nnt" = (
@@ -60475,7 +60475,7 @@
 	},
 /obj/item/storage/box/donkpocket_kit,
 /obj/item/reagent_containers/food/drinks/cola,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater,
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater,
 /obj/item/reagent_containers/food/snacks/soup/oatmeal,
 /obj/item/reagent_containers/food/snacks/soup/chili,
 /obj/item/reagent_containers/food/snacks/condiment/ketchup,

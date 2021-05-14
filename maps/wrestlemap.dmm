@@ -29952,11 +29952,11 @@
 /area/station/science/lab)
 "mIP" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_x = -8
 	},
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater,
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_x = 8
 	},
 /turf/simulated/floor/black/side,
@@ -42826,11 +42826,11 @@
 /area/station/hallway/primary/west)
 "skI" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_x = -8
 	},
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater,
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_x = 8
 	},
 /turf/simulated/floor/neutral/side{
@@ -52180,7 +52180,7 @@
 "wsS" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /turf/simulated/floor/carpet/green/fancy/narrow/northsouth,
 /area/station/crew_quarters/bar)
 "wsX" = (
