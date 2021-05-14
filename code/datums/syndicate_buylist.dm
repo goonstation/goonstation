@@ -79,14 +79,14 @@ proc/build_syndi_buylist_cache()
 
 /datum/syndicate_buylist/generic/empgrenades
 	name = "EMP Grenades"
-	item = /obj/item/storage/grenade_pouch/emp
+	item = /obj/item/storage/emp_grenade_pouch
 	cost = 1
 	desc = "A pouch of EMP grenades, each capable of causing havoc with the electrical and computer systems found aboard the modern space station. Shorts out power systems, causes feedback in electronic vision devices such as thermals, and causes robots to go haywire."
 	blockedmode = list(/datum/game_mode/spy)
 
 /datum/syndicate_buylist/generic/tacticalgrenades
 	name = "Tactical Grenades"
-	item = /obj/item/storage/grenade_pouch/tactical_kit
+	item = /obj/item/storage/tactical_grenade_pouch
 	cost = 2
 	desc = "A pouch of assorted special-ops grenades."
 	blockedmode = list(/datum/game_mode/revolution)
@@ -345,7 +345,7 @@ proc/build_syndi_buylist_cache()
 
 /datum/syndicate_buylist/traitor/sonicgrenades
 	name = "Sonic Grenades"
-	item = /obj/item/storage/grenade_pouch/sonic
+	item = /obj/item/storage/sonic_grenade_pouch
 	cost = 2
 	desc = "A pouch filled with five sonic grenades, each one packs enough power to shatter reinforced windows and pop eardrums. No more being cornered by an angry mob! Comes with earplugs."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
@@ -964,7 +964,7 @@ This is basically useless for anyone but miners.
 
 /datum/syndicate_buylist/surplus/bananagrenades
 	name = "Banana Grenades"
-	item = /obj/item/storage/grenade_pouch/banana
+	item = /obj/item/storage/banana_grenade_pouch
 	cost = 2
 	desc = "Honk."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft)
