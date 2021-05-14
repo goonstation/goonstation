@@ -97,7 +97,7 @@
 				return
 		//oh boy time to move
 
-		var/list/potential_containers = by_type[/obj/storage].Copy()
+		var/list/potential_containers = by_type[/obj/storage]?.Copy()
 
 		var/obj/storage/container = null
 		while (length(potential_containers))
