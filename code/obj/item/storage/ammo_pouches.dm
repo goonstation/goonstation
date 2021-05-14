@@ -158,6 +158,9 @@
 		icon_state = "ammopouch-banana"
 		slots = 7 //bonus two slots for the banana grenade kit
 		spawn_contents = list(/obj/item/old_grenade/banana = 5)
+	napalm
+		name = "napalm smoke grenade pouch"
+		spawn_contents = list(/obj/item/chem_grenade/napalm = 6)
 
 // dumb idiot gannets shouldn't have called these "ammo_pouches" if he was gonna make pouches for non-ammo things. wow.
 

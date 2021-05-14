@@ -920,10 +920,10 @@
 	edible = 1
 
 	New()
-		setProperty("corrosion", 1)
-		setProperty("density", 80)
-		setProperty("hard", 1)
-		setProperty("flammable", 80)
+		setProperty("corrosion", 30)
+		setProperty("density", 45)
+		setProperty("hard", 5)
+		setProperty("flammable", 120)
 		addTrigger(triggersOnEat, new /datum/materialProc/oneat_blob())
 		return ..()
 

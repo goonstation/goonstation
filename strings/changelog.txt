@@ -1,4 +1,19 @@
 
+(t)thu may 13 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Material stuff as blob maybe no longer worse than nothing? Try it.
+(u)Gannets
+(p)4699
+(e)⚖|balance
+(*)Added belt packs to Heavy Weapons Specialist, Marksman & Firebrand class crates.
+(u)Gannets
+(p)4698
+(e)⚖|balance
+(*)Added a pouch of napalm smoke grenades to the Firebrand class crate.
+(+)Buffed damage and stamina damage of the fire-axe, in both one and two-handed modes.
+(u)pali
+(*)Clonescanning people now implants people with a clonescan implant. This implant lets you see their health status on the cloning console (and the health implant no longer does this). It shows up as a red dot on health goggles view.
 (t)wed may 12 21
 (u)pali
 (p)4633

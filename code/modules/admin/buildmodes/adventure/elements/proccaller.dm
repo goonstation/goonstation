@@ -30,5 +30,8 @@
 	trigger(act)
 		switch(act)
 			if ("trigger")
-				call(object_to_call, procpath)(arg) //want more arguments? code it yourself
+				if (object_to_call)
+					call(object_to_call, procpath)(arg) //want more arguments? code it yourself
+				else
+					call(procpath)(arg)
 				return
