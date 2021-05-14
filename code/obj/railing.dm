@@ -90,12 +90,13 @@
 		layerify()
 
 	CanPass(atom/movable/O as mob|obj, turf/target, height=0, air_group=0)
+		if(air_group)
+			return 1
 		if (O == null)
-			//logTheThing("debug", src, O, "Target is null! CanPass failed.")
 			return 0
 		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced) || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
 			return 1
-		if (air_group || (height==0))
+		if(height==0)
 			return 1
 		if (get_dir(loc, O) == dir)
 			return !density
