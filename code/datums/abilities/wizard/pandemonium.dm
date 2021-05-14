@@ -117,7 +117,7 @@
 
 /mob/living/proc/PAND_Screech(var/protectuser = 1)
 	for(var/mob/O in AIviewers(src, null)) O.show_message(text("<span class='alert'><B>[]</B> emits a horrible shriek!</span>", src), 1)
-	playsound(src.loc, "sound/effects/screech.ogg", 25, 1, -1)
+	playsound(src.loc, "sound/effects/screech.ogg", 50, 1, -1)
 
 	for (var/mob/living/H in hearers(src, null))
 		if (H == src && protectuser)

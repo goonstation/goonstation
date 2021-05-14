@@ -161,7 +161,7 @@ proc/is_weak_rollable_contract(type)
 		else
 			asize++
 		acount++
-	src.playsound_local(C.loc,"sound/effects/screech.ogg", 100, 1)
+	src.playsound_local(C.loc,"sound/effects/screech.ogg", 50, 1)
 	if(C.mind)
 		shake_camera(C, 20, 16)
 		boutput(C, "<font color=red>[screamstring]</font>")
