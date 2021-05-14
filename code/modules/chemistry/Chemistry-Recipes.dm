@@ -1830,14 +1830,18 @@ datum
 			mix_phrase = "The mixture gives off a faint scent of almonds."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
-			on_reaction(var/datum/reagents/holder)
+			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
+
 				for(var/mob/M in all_viewers(null, location))
 					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
-				for(var/mob/living/carbon/human/H in range(location, 1))
-					if(ishuman(H))
-						if(!H.wear_mask)
-							H.reagents.add_reagent("cyanide",7) // BAHAHAHAHA
+
+				var/list/mob/living/carbon/mobs_affected = list()
+				for(var/mob/living/carbon/C in range(location, 1))
+					if(!C.wear_mask)
+						mobs_affected += C
+				for(var/mob/living/carbon/C as anything in mobs_affected)
+					C.reagents.add_reagent("cyanide", (0.4 * created_volume) / length(mobs_affected))
 				return
 
 		sarin // oh god why am i adding this
@@ -2227,17 +2231,19 @@ datum
 			result_amount = 3
 			mix_phrase = "The solution fizzes and gives off toxic fumes."
 
-			on_reaction(var/datum/reagents/holder)
+			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in all_viewers(null, location))
 					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
-				for(var/mob/living/carbon/human/H in range(location, 1))
-					if(ishuman(H))
-						if(!H.wear_mask)
-							H.emote("gasp")
-							H.losebreath++
-							H.reagents.add_reagent("toxin",10)
-							H.reagents.add_reagent("neurotoxin",20) // ~HEH~
+				var/list/mob/living/carbon/mobs_affected = list()
+				for(var/mob/living/carbon/C in range(location, 1))
+					if(!C.wear_mask)
+						mobs_affected += C
+				for(var/mob/living/carbon/C as anything in mobs_affected)
+					C.emote("gasp")
+					C.losebreath++
+					C.reagents.add_reagent("toxin",((0.25 * created_volume) / length(mobs_affected)))
+					C.reagents.add_reagent("neurotoxin",((0.5 * created_volume) / length(mobs_affected))) // ~HEH~
 				return
 
 		mutadone // // COGWERKS CHEM REVISION PROJECT: magic bullshit drug, make it involve mutagen
@@ -2727,14 +2733,16 @@ datum
 			mix_phrase = "The mixture ferments into a filthy morass."
 			mix_sound = 'sound/impact_sounds/Slimy_Hit_4.ogg'
 
-			on_reaction(var/datum/reagents/holder)
+			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in all_viewers(null, location))
 					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
-				for(var/mob/living/carbon/human/H in range(location, 1))
-					if(ishuman(H))
-						if(!H.wear_mask)
-							H.reagents.add_reagent("jenkem",25) // this is going to make people so, so angry
+				var/list/mob/living/carbon/mobs_affected = list()
+				for(var/mob/living/carbon/C in range(location, 1))
+					if(!C.wear_mask)
+						mobs_affected += C
+				for(var/mob/living/carbon/C as anything in mobs_affected)
+					C.reagents.add_reagent("jenkem",(1 * created_volume) / length(mobs_affected)) // this is going to make people so, so angry
 				return
 
 		/*plant_nutrients_mutagenic
