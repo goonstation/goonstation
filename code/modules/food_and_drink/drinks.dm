@@ -347,7 +347,7 @@
 		src.update_icon()
 
 	proc/update_icon()
-		src.overlays = null
+		src.underlays = null
 		if (reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 3 + 1), 1, 3))
 			if (!src.fluid_image)
@@ -357,7 +357,7 @@
 			src.icon_state = "milk[fluid_state]"
 			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
-			src.overlays += fluid_image
+			src.underlays += fluid_image
 		else
 			src.icon_state = "milk"
 
