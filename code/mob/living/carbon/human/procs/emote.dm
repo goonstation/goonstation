@@ -52,9 +52,9 @@
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					if(src.bioHolder?.HasEffect("mute"))
-						var/pre_message = "[pick("vibrates for a moment, then stops", "opens [his_or_her(src)] mouth incredibly wide, but no sound comes out",
-						"really wants to be noticed", "emits an audible silence","lets forth the silent echoes of an empty soul","huffs and puffs with all [his_or_her(src)] might, but can't seem to make a sound",
-						"unhinges [his_or_her(src)] maw to produce a deafening, roaring lack of any noise whatsoever","flails desperately","")]..."
+						var/pre_message = "[pick("vibrates for a moment, then stops", "opens [his_or_her(src)] mouth, but no sound comes out",
+						"tries to scream, but can't", "emits an audible silence", "huffs and puffs with all [his_or_her(src)] might, but can't seem to make a sound",
+						"opens [his_or_her(src)] mouth to produce a resounding lack of noise","flails desperately","")]..."
 						message = "<B>[src]</B> [pre_message]"
 						maptext_out = "<i>[pre_message]</i>"
 						m_type = 1
