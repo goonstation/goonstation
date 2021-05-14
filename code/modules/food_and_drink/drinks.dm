@@ -241,7 +241,7 @@
 	desc = "Cola. in space."
 	icon = 'icons/obj/foodNdrink/can.dmi'
 	icon_state = "cola-1"
-	item_state = "cola"
+	item_state = "cola-1"
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
 	initial_volume = 50
