@@ -329,6 +329,12 @@
 			return
 
 		var/obj/item/I = O
+		if(I.loc == user && I.cant_drop)
+			return
+		if(istype(O.loc, /obj/item/storage))
+			var/obj/item/storage/storage = O.loc
+			O.set_loc(get_turf(O))
+			storage.hud.remove_item(O)
 		if (istype(I,/obj/item/satchel))
 			var/obj/item/satchel/S = I
 			if (S.contents.len < 1)

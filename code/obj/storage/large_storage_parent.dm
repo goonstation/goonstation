@@ -348,6 +348,9 @@
 			return
 
 		if (O.loc == user)
+			var/obj/item/I = O
+			if(istype(I) && I.cant_drop)
+				return
 			user.u_equip(O)
 			O.set_loc(get_turf(user))
 		else if(istype(O.loc, /obj/item/storage))
