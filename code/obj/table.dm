@@ -331,6 +331,8 @@
 		var/obj/item/I = O
 		if(I.loc == user && I.cant_drop)
 			return
+		if(I.equipped_in_slot && I.cant_self_remove)
+			return
 		if(istype(O.loc, /obj/item/storage))
 			var/obj/item/storage/storage = O.loc
 			O.set_loc(get_turf(O))
