@@ -222,6 +222,11 @@
 			. = ..()
 			src.dir = pick(alldirs)
 
+//Plant this over a data terminal and set net_id to a joke
+//It'll show up on multitools
+/obj/shrub/syndicateplant
+	var/net_id
+
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"
 	icon = 'icons/misc/worlds.dmi'

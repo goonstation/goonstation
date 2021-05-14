@@ -37834,14 +37834,15 @@
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bQk" = (
-/obj/shrub{
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/shrub/syndicateplant{
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	net_id = "D:E:A:D:B:E:E:F"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -54659,6 +54660,13 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/east)
+"ebB" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
 "ees" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Engine Supply Dock";
@@ -56859,13 +56867,6 @@
 /obj/lattice,
 /turf/space,
 /area/space)
-"hZU" = (
-/obj/wingrille_spawn/auto,
-/obj/window_blinds/cog2/left{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/elect)
 "iaP" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -57183,6 +57184,16 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor,
 /area/station/storage/warehouse)
+"iES" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/portable_reclaimer,
+/obj/cable,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
 "iFc" = (
 /obj/decal/cleanable/cobweb,
 /obj/cable/yellow{
@@ -58001,13 +58012,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
-"jWq" = (
-/obj/wingrille_spawn/auto,
-/obj/window_blinds/cog2/left,
-/obj/wingrille_spawn/auto,
-/obj/cable,
-/turf/simulated/floor/plating,
-/area/station/engine/elect)
 "jXp" = (
 /obj/stool/chair{
 	dir = 8
@@ -59057,6 +59061,23 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
+"mlX" = (
+/obj/storage/cart/mechcart,
+/obj/item/electronics/scanner,
+/obj/item/deconstructor,
+/obj/item/storage/toolbox/electrical,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/device/multitool,
+/obj/machinery/disposal/mail/small/autoname,
+/obj/disposalpipe/trunk/mail{
+	dir = 2
+	},
+/obj/item/electronics/soldering{
+	pixel_x = -4;
+	pixel_y = -2
+	},
+/turf/simulated/floor,
+/area/station/engine/elect)
 "mmZ" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -60781,10 +60802,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"pDr" = (
-/obj/machinery/manufacturer/mechanic,
-/turf/simulated/floor,
-/area/station/engine/elect)
 "pDz" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -60987,23 +61004,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
-"pSi" = (
-/obj/storage/cart/mechcart,
-/obj/item/electronics/scanner,
-/obj/item/deconstructor,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
-/obj/machinery/disposal/mail/small/autoname,
-/obj/disposalpipe/trunk/mail{
-	dir = 2
-	},
-/obj/item/electronics/soldering{
-	pixel_x = -4;
-	pixel_y = -2
-	},
-/turf/simulated/floor,
-/area/station/engine/elect)
 "pSF" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor,
@@ -61294,6 +61294,15 @@
 /obj/cable/yellow,
 /turf/simulated/floor/airless/solar,
 /area/station/solar/south)
+"qwk" = (
+/obj/disposalpipe/segment,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=4";
+	location = "Mechlab #1"
+	},
+/turf/simulated/floor,
+/area/station/engine/elect)
 "qwC" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -61314,15 +61323,6 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/engine/core)
-"qyd" = (
-/obj/disposalpipe/segment,
-/obj/decal/mule/beacon/no_auto_dropoff_spawn,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	location = "Mechlab #1"
-	},
-/turf/simulated/floor,
-/area/station/engine/elect)
 "qzy" = (
 /obj/table/auto,
 /obj/item/chem_grenade/firefighting{
@@ -61824,6 +61824,14 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
+"rxl" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 4
+	},
+/obj/disposalpipe/segment/mail,
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/elect)
 "rzM" = (
 /obj/cable/brown{
 	icon_state = "4-8"
@@ -62208,16 +62216,6 @@
 	dir = 6
 	},
 /area/space)
-"rYb" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/portable_reclaimer,
-/obj/cable,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/elect)
 "rYD" = (
 /obj/machinery/power/tracker/east,
 /obj/cable/yellow{
@@ -63658,14 +63656,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"uug" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 4
-	},
-/obj/disposalpipe/segment/mail,
-/turf/simulated/wall/auto/supernorn,
-/area/station/engine/elect)
 "uuK" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -65005,6 +64995,13 @@
 	dir = 1
 	},
 /area/station/security/main)
+"xnD" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left,
+/obj/wingrille_spawn/auto,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
 "xpg" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer/atmosphere/pumpcontrol,
@@ -65442,6 +65439,10 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"ycr" = (
+/obj/machinery/manufacturer/mechanic,
+/turf/simulated/floor,
+/area/station/engine/elect)
 "yeL" = (
 /obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -109756,9 +109757,9 @@ bKt
 bNv
 bTg
 bUI
-rYb
+iES
 bRB
-jWq
+xnD
 bUA
 bVO
 bWU
@@ -110058,7 +110059,7 @@ bKt
 bLM
 bLM
 bYx
-hZU
+ebB
 bLM
 bLM
 bUB
@@ -110360,7 +110361,7 @@ eBZ
 bLQ
 bNo
 bNs
-pDr
+ycr
 bRD
 kRv
 bUA
@@ -110662,7 +110663,7 @@ bKs
 bLR
 bNp
 bOP
-qyd
+qwk
 bRE
 bTc
 bUD
@@ -111569,8 +111570,8 @@ bLU
 clf
 bOQ
 fFs
-pSi
-uug
+mlX
+rxl
 bUG
 bWK
 bXa
