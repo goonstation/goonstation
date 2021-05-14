@@ -7,7 +7,7 @@
 	icon_state = "railing"
 	layer = OBJ_LAYER
 	color = "#ffffff"
-	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
+	flags = FPRINT | USEDELAY | ON_BORDER
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
 	dir = SOUTH
 	custom_suicide = 1
@@ -160,6 +160,7 @@
 			actions.start(new /datum/action/bar/icon/railing_jump(user, src), user)
 
 	reinforced
+		flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
 		is_reinforced = 1
 		icon_state = "railing-reinforced"
 
