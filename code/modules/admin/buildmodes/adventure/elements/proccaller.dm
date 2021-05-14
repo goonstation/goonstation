@@ -31,9 +31,10 @@
 		switch(act)
 			if ("trigger")
 				if (object_to_call)
-					if(object_to_call == "usr")
-						object_to_call = usr
-					call(object_to_call, procpath)(arg) //want more arguments? code it yourself
+					var/actual_object = object_to_call
+					if(actual_object == "usr")
+						actual_object = usr
+					call(actual_object, procpath)(arg) //want more arguments? code it yourself
 				else
 					call(procpath)(arg)
 				return
