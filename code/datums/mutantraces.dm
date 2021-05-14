@@ -2039,7 +2039,13 @@
 		var/obj/item/storage/toilet/toilet = locate() in mob.loc
 		var/obj/item/reagent_containers/glass/beaker = locate() in mob.loc
 
-		if (!ishuman(mob))
+		var/can_output = 0
+		if (ishuman(mob))
+			var/mob/living/carbon/human/H = mob
+			if (H.blood_volume > 0)
+				can_output = 1
+
+		if (!can_output)
 			.= "<B>[mob]</B> strains, but fails to output milk!"
 		else if (toilet && (mob.buckled != null))
 			for (var/obj/item/storage/toilet/T in mob.loc)
