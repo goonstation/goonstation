@@ -78553,7 +78553,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer3/generic/personal{
-	setup_starting_program = /datum/computer/file/terminal_program/FROG
+	setup_starting_program = /datum/computer/file/terminal_program/file_transfer
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
