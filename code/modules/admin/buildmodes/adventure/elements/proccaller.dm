@@ -10,7 +10,7 @@
 	target = null
 	var/procpath = ""
 	var/arg = null
-	var/object_to_call = null
+	var/object_to_call = "usr"
 
 	var/static/list/triggeracts = list("Trigger" = "trigger")
 
