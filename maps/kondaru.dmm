@@ -19949,15 +19949,15 @@
 /area/station/routing/depot)
 "bes" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/drinks/bottle/soda/empty{
+/obj/item/reagent_containers/food/drinks/bottle/empty{
 	pixel_x = 7;
 	pixel_y = 7
 	},
-/obj/item/reagent_containers/food/drinks/bottle/soda/empty{
+/obj/item/reagent_containers/food/drinks/bottle/empty{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/food/drinks/bottle/soda/empty,
+/obj/item/reagent_containers/food/drinks/bottle/empty,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
