@@ -580,11 +580,14 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		. = ..()
-		if(QDELETED(sheet))
+		if(QDELETED(sheet) || csheet.amount < cost)
 			interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()
 		..()
+		if(QDELETED(sheet) || csheet.amount < cost)
+			interrupt(INTERRUPT_ALWAYS)
+			return
 		owner.visible_message("<span class='notice'>[owner] assembles [objname]!</span>")
 		var/obj/item/R = new objtype(get_turf(spot || owner))
 		R.setMaterial(mat)
