@@ -99,10 +99,11 @@
 
 		var/list/potential_containers = by_type[/obj/storage].Copy()
 
-		var/obj/storage/container
+		var/obj/storage/container = null
 		while (length(potential_containers))
-			container = pick(potential_containers)
-			if (container.open == 0 && container.z == 1)  // container is closed and on station z-level
+			var/obj/storage/random_container = pick(potential_containers)
+			if (random_container.open == 0 && random_container.z == 1)  // container is closed and on station z-level
+				container = random_container
 				break
 			potential_containers -= container
 
