@@ -125,6 +125,40 @@
 		spawn_contents = list(/obj/item/old_grenade/stinger/frag = 3,
 		/obj/item/old_grenade/stinger = 3)
 
+	emp
+		name = "EMP grenade pouch"
+		desc = "A pouch designed to hold EMP grenades."
+		icon_state = "ammopouch-emp"
+		slots = 5
+		spawn_contents = list(/obj/item/old_grenade/emp = 5)
+
+	tactical_kit
+		name = "tactical grenade pouch"
+		desc = "A pouch designed to hold assorted special-ops grenades."
+		icon_state = "ammopouch-grenade"
+		slots = 7
+		spawn_contents = list(/obj/item/chem_grenade/incendiary = 2,\
+		/obj/item/chem_grenade/shock,\
+		/obj/item/old_grenade/smoke = 1,\
+		/obj/item/old_grenade/stinger/frag,\
+		/obj/item/chem_grenade/flashbang,\
+		/obj/item/old_grenade/graviton)
+
+	sonic
+		name = "sonic grenade pouch"
+		desc = "A pouch designed to hold sonic grenades, and a pair of earplugs. Wear the earplugs before using the grenades."
+		icon_state = "ammopouch-sonic"
+		slots = 6
+		spawn_contents = list(/obj/item/old_grenade/sonic = 5,\
+		/obj/item/clothing/ears/earmuffs/earplugs)
+
+	banana
+		name = "banana grenade pouch"
+		desc = "A fun pouch designed to hold banana grenades."
+		icon_state = "ammopouch-banana"
+		slots = 7 //bonus two slots for the banana grenade kit
+		spawn_contents = list(/obj/item/old_grenade/banana = 5)
+
 // dumb idiot gannets shouldn't have called these "ammo_pouches" if he was gonna make pouches for non-ammo things. wow.
 
 /obj/item/storage/medical_pouch
