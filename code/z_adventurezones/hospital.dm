@@ -274,9 +274,9 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 /obj/item/reagent_containers/food/drinks/bottle/hospital
 	name = "Ham Brandy"
 	desc = "Uh.   Uhh"
-	//icon = 'icons/obj/foodNdrink/drinks.dmi'
-	icon_state = "whiskey"
-	bottle_style = "whiskey"
+	//icon = 'icons/obj/foodNdrink/bottle.dmi'
+	icon_state = "bottle-whiskey"
+	bottle_style = "bottle-whiskey"
 	fluid_style = "whiskey"
 	label = "spicedrum"//"brandy"
 	heal_amt = 1
