@@ -16917,10 +16917,11 @@
 /turf/simulated/floor/black,
 /area/station/engine/monitoring)
 "hby" = (
-/obj/decal/poster/wallsign/medal,
-/obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
-/area/station/security/hos)
+/obj/decal/poster/wallsign/medal{
+	pixel_y = 28
+	},
+/turf/simulated/floor/wood/six,
+/area/station/crew_quarters/hos)
 "hbO" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/emergency{
@@ -100676,8 +100677,8 @@ rrt
 fAR
 jFG
 ncb
+dQU
 hby
-tPY
 bdF
 hpF
 pYC

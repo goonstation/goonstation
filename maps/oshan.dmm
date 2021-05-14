@@ -40671,6 +40671,9 @@
 /obj/item/ammo/bullets/tranq_darts,
 /obj/item/ammo/bullets/tranq_darts,
 /obj/machinery/light/incandescent/harsh/very,
+/obj/decal/poster/wallsign/medal{
+	pixel_y = 28
+	},
 /turf/simulated/floor/redblack,
 /area/station/ai_monitored/armory)
 "bWa" = (
@@ -44209,10 +44212,6 @@
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
-"cgz" = (
-/obj/decal/poster/wallsign/medal,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/hos)
 "cgA" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -93608,7 +93607,7 @@ bRK
 bSO
 bTT
 bVc
-cgz
+bVc
 clX
 bVc
 bVc

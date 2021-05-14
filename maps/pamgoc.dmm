@@ -16134,10 +16134,6 @@
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/storage)
-"aAA" = (
-/obj/decal/poster/wallsign/medal,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/hos)
 "aAB" = (
 /obj/decal/poster/wallsign/medbay,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -36368,6 +36364,9 @@
 	dir = 2;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/decal/poster/wallsign/medal{
+	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
@@ -132077,7 +132076,7 @@ ctU
 beZ
 ctU
 ctU
-aAA
+cAQ
 bqL
 beW
 ayt
