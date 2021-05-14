@@ -97,15 +97,14 @@
 				return
 		//oh boy time to move
 
-		var/list/potential_containers = by_type[/obj/storage].Copy()
-
 		var/obj/storage/container = null
-		while (length(potential_containers))
-			var/obj/storage/random_container = pick(potential_containers)
-			if (random_container.open == 0 && random_container.z == 1)  // container is closed and on station z-level
-				container = random_container
-				break
-			potential_containers -= container
+
+		var/list/eligible_containers = list()
+		for_by_tcl(iterated_container, /obj/storage)
+			if (!iterated_container.open && iterated_container.z == Z_LEVEL_STATION)
+				eligible_containers += iterated_container
+		if (length(eligible_containers))
+			container = pick(eligible_containers)
 
 		if (container == null)  // no eligible target containers to move to
 			return
