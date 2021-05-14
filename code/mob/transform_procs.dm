@@ -620,7 +620,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	// determine if they're allowed to respawn
 	var/min_time_passed = 3 MINUTES
-	if(mind.assigned_role == "Animal")
+	if(mind.assigned_role == "Animal" || mind.assigned_role == "Ghostdrone")
 		// no you get to wait for longer
 		min_time_passed = 10 MINUTES
 	var/time_elapsed = (world.timeofday + ((world.timeofday < mind.last_death_time) ? 864000 : 0)) - mind.last_death_time // Offset the time of day in case of midnight rollover
