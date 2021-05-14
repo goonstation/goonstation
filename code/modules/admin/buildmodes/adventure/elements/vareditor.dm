@@ -27,10 +27,19 @@
 	trigger_actions()
 		return triggeracts
 
+	proc/process_argument(arg)
+		if(arg == "usr")
+			return usr
+		else if(length(arg) > 3 && copytext(arg, 1, 5) == "usr.")
+			. = usr
+			for(var/variable in splittext(copytext(arg, 5), "."))
+				if(isnull(.))
+					return
+				. = (.):vars[variable]
+			return
+
 	trigger(act)
 		switch(act)
 			if ("trigger")
-				var/datum/actual_object = var_object
-				if(actual_object == "usr")
-					actual_object = usr
+				var/datum/actual_object = process_argument(var_object)
 				actual_object.vars[var_name] = var_value
