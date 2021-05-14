@@ -633,6 +633,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\buildmodes\adventure\elements\switch.dm"
 #include "code\modules\admin\buildmodes\adventure\elements\trap.dm"
 #include "code\modules\admin\buildmodes\adventure\elements\trigger.dm"
+#include "code\modules\admin\buildmodes\adventure\elements\vareditor.dm"
 #include "code\modules\admin\buildmodes\adventure\elements\wall.dm"
 #include "code\modules\admin\buildmodes\adventure\elements\door\multiactivated.dm"
 #include "code\modules\admin\buildmodes\adventure\elements\door\timed.dm"
