@@ -350,6 +350,10 @@
 		if (O.loc == user)
 			user.u_equip(O)
 			O.set_loc(get_turf(user))
+		else if(istype(O.loc, /obj/item/storage))
+			var/obj/item/storage/storage = O.loc
+			O.set_loc(get_turf(O))
+			storage.hud.remove_item(O)
 
 		SPAWN_DBG(0.5 SECONDS)
 			var/stuffed = FALSE
