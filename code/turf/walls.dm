@@ -168,7 +168,7 @@
 		dismantle_wall(1)
 	return
 
-/turf/simulated/wall/proc/dismantle_wall(devastated=0)
+/turf/simulated/wall/proc/dismantle_wall(devastated=0, keep_material = 1)
 	if (istype(src, /turf/simulated/wall/r_wall) || istype(src, /turf/simulated/wall/auto/reinforced))
 		if (!devastated)
 			playsound(src, "sound/items/Welder.ogg", 100, 1)
@@ -252,7 +252,7 @@
 						C.setMaterial(M)
 
 	var/atom/D = ReplaceWithFloor()
-	if (src.material)
+	if (src.material && keep_material)
 		D.setMaterial(src.material)
 	else
 		var/datum/material/M = getMaterial("steel")

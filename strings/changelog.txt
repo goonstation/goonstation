@@ -1,9 +1,60 @@
 
+(t)thu may 13 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Material stuff as blob maybe no longer worse than nothing? Try it.
+(u)Gannets
+(p)4699
+(e)⚖|balance
+(*)Added belt packs to Heavy Weapons Specialist, Marksman & Firebrand class crates.
+(u)Gannets
+(p)4698
+(e)⚖|balance
+(*)Added a pouch of napalm smoke grenades to the Firebrand class crate.
+(+)Buffed damage and stamina damage of the fire-axe, in both one and two-handed modes.
+(u)pali
+(*)Clonescanning people now implants people with a clonescan implant. This implant lets you see their health status on the cloning console (and the health implant no longer does this). It shows up as a red dot on health goggles view.
+(t)wed may 12 21
+(u)pali
+(p)4633
+(e)⚖⛔|balance, removal
+(*)Cloners no longer automatically implant people with health implants on scanning.
+(u)UnfunnyPerson
+(p)4559
+(e)🆕|feature
+(*)You can no longer freely dab on the bible.
 (t)tue may 11 21
+(u)edwardly
+(p)4648
+(e)|
+(+)Prevent showing paper through cameras when the camera is inactive.
+(u)Lythine
+(p)4584
+(e)🗺|mapping
+(+)Added more trays to Oshan's hydroponics.
+(u)pali
+(p)4646
+(e)🆕🎨|feature, sprites
+(*)All cyborgs now have typewriters.
+(*)Brobocop cyborgs now also have ticket typewriters.
+(u)DimWhat
+(p)4682
+(e)🎨|sprites
+(+)Added more lizard headwear sprites. Hiss.
+(u)Zonespace
+(p)4678
+(e)🆕|feature
+(*)Syndicate Wiretap can now be scanned using a syndicate device analyzer.
+(u)112358sam
+(p)4670
+(e)🐛|bug
+(+)Fixes the creation of invisible, zero item stacks when entering 0 in a dialog for splitting a stack of items.
 (u)Tarmunora
 (e)⚖|balance
 (+)Staff of Cthulhu summoning spell will generate a new staff if the old one is destroyed
 (+)Staff of Cthulhu will only do strong brainmelts (>1s stun) on attacks if the victim already has 30+ brain damage
+(+)Napalm direct burn damage is reduced by firesuits etc
+(+) erebite asteroids less dense and more dangerous
 (u)Mordent
 (p)4675
 (e)⚖|balance

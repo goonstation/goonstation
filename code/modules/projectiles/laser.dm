@@ -378,8 +378,8 @@ toxic - poisons
 	dissipation_delay = 1
 	dissipation_rate = 8
 	sname = "mining laser"
-	shot_sound = 'sound/weapons/rocket.ogg'
-	shot_volume = 20
+	shot_sound = 'sound/weapons/cutter.ogg'
+	shot_volume = 30
 	damage_type = D_BURNING
 	brightness = 0.8
 	window_pass = 0
@@ -399,7 +399,7 @@ toxic - poisons
 	window_pass = 0
 	icon_state = ""
 	damage_type = D_SLASHING
-	power = 35
+	power = 45
 	cost = 1
 	brightness = 0
 	sname = "drill bit"
@@ -417,7 +417,7 @@ toxic - poisons
 			var/turf/simulated/wall/asteroid/T = hit
 			if (power <= 0)
 				return
-			T.damage_asteroid(round(power / 10),1)
+			T.damage_asteroid(round(power / 7),1)
 			//if(prob(60)) // raised again
 			//	T.destroy_asteroid(1)
 			//else

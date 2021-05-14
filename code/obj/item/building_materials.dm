@@ -716,6 +716,7 @@ MATERIAL
 				var/makemetal = round(src.amount / 2)
 				boutput(user, "<span class='notice'>You could make up to [makemetal] sheets by welding this stack.</span>")
 				weldinput = input("How many sheets do you want to make?","Welding",1) as num
+				makemetal = round(src.amount / 2) // could have changed during input()
 				if (weldinput < 1) return
 				if (weldinput > makemetal) weldinput = makemetal
 			var/obj/item/sheet/M = new /obj/item/sheet/steel(user.loc)

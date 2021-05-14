@@ -156,7 +156,8 @@
 				else
 					flags &= ~ONBACK
 					var/turf/location = get_turf(src)
-					new /obj/item/cable_coil/cut/small(location)
+					var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(location)
+					C.amount = 2
 					boutput(usr, "<span class='notice'>You detach the loops of wire from [src]!</span>")
 					update_icon()
 

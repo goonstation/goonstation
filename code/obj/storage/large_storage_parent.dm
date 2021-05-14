@@ -703,6 +703,12 @@
 				src.close()
 		return
 
+	mob_flip_inside(var/mob/user)
+		..(user)
+		if (prob(33) && src.can_flip_bust)
+			user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
+			src.bust_out()
+
 /datum/action/bar/icon/storage_disassemble
 	id = "storage_disassemble"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -889,12 +895,6 @@
 			if (user)
 				user.show_text("You repair the lock on [src].", "blue")
 			return 1
-
-	mob_flip_inside(var/mob/user)
-		..(user)
-		if (prob(33) && src.can_flip_bust)
-			user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
-			src.bust_out()
 
 #undef RELAYMOVE_DELAY
 
