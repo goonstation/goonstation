@@ -1976,7 +1976,7 @@
 
 
 					if(prob(92) && (!src.reagents.has_reagent("extremedabs")))
-						dabbify(H)
+						dabbify()
 						var/get_dabbed_on = 0
 						if(locate(/mob/living) in range(1, src))
 							if(isturf(src.loc))
@@ -2121,26 +2121,26 @@
 
 	src.remove_stamina(STAMINA_DEFAULT_FART_COST)
 
-/mob/living/carbon/human/proc/dabbify(var/mob/living/carbon/human/H)
+/mob/living/carbon/human/proc/dabbify()
 	if(ON_COOLDOWN(src, "dab", 2 SECONDS))
 		return
-	H.render_target = "*\ref[H]"
-	var/image/left_arm = image(null, H)
-	left_arm.render_source = H.render_target
+	src.render_target = "*\ref[src]"
+	var/image/left_arm = image(null, src)
+	left_arm.render_source = src.render_target
 	left_arm.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "r_arm"))
 	left_arm.appearance_flags = KEEP_APART
-	var/image/right_arm = image(null, H)
-	right_arm.render_source = H.render_target
+	var/image/right_arm = image(null, src)
+	right_arm.render_source = src.render_target
 	right_arm.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "l_arm"))
 	right_arm.appearance_flags = KEEP_APART
-	var/image/torso = image(null, H)
-	torso.render_source = H.render_target
+	var/image/torso = image(null, src)
+	torso.render_source = src.render_target
 	torso.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "torso"))
 	torso.appearance_flags = KEEP_APART
-	APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, "dabbify")
-	H.update_canmove()
-	H.set_dir(SOUTH)
-	H.dir_locked = TRUE
+	APPLY_MOB_PROPERTY(src, PROP_CANTMOVE, "dabbify")
+	src.update_canmove()
+	src.set_dir(SOUTH)
+	src.dir_locked = TRUE
 	sleep(0.1) //so the direction setting actually takes place
 	world << torso
 	world << right_arm
@@ -2160,10 +2160,10 @@
 		qdel(torso)
 		qdel(right_arm)
 		qdel(left_arm)
-		REMOVE_MOB_PROPERTY(H, PROP_CANTMOVE, "dabbify")
-		H.update_canmove()
-		H.dir_locked = FALSE
-		H.render_target = "\ref[H]"
+		REMOVE_MOB_PROPERTY(src, PROP_CANTMOVE, "dabbify")
+		src.update_canmove()
+		src.dir_locked = FALSE
+		src.render_target = "\ref[src]"
 
 /mob/living/proc/do_suplex(obj/item/grab/G)
 	if (!(G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc)))
