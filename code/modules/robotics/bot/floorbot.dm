@@ -207,7 +207,7 @@
 					continue
 				else if (D == src.oldtarget || should_ignore_tile(D))
 					continue
-				// Floorbot doesnt like space, so it won't accept space tiles without some kind of not-space next to it. Or they're right up against it. Or already on space. 
+				// Floorbot doesnt like space, so it won't accept space tiles without some kind of not-space next to it. Or they're right up against it. Or already on space.
 				else if (IN_RANGE(get_turf(src), get_turf(D), 1) || get_pathable_turf(D)) // silly little things
 					src.floorbottargets |= coord
 					return D
@@ -559,6 +559,10 @@
 		if (!master.on)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		var/turf/simulated/floor/T = master.target
+		if(!istype(T))
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
 	onStart()
 		..()
@@ -576,6 +580,9 @@
 		..()
 		playsound(get_turf(master), "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 		var/turf/simulated/floor/T = master.target
+		if(!istype(T))
+			interrupt(INTERRUPT_ALWAYS)
+			return
 		var/atom/A = new /obj/item/tile(T)
 		if (T.material)
 			A.setMaterial(T.material)
