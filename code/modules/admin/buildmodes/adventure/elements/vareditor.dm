@@ -30,7 +30,7 @@
 	trigger(act)
 		switch(act)
 			if ("trigger")
-				var/actual_object = var_object
+				var/datum/actual_object = var_object
 				if(actual_object == "usr")
 					actual_object = usr
 				var_object.vars[var_name] = var_value
