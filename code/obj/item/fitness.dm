@@ -43,7 +43,7 @@
 			else
 				playsound(src.loc, pick(sounds_punch + sounds_hit), 25, 1, -1)
 				playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
-			user.changeStatus("fitness_stam_regen",100 SECONDS)
+			user.changeStatus("fitness_stam_regen", 100 SECONDS)
 
 /obj/fitness/stacklifter
 	name = "Weight Machine"
@@ -90,7 +90,7 @@
 					H.sims.affectMotive("fun", 4)
 			var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 			icon_state = "fitnesslifter"
-			user.changeStatus("fitness_stam_regen",100 SECONDS)
+			user.changeStatus("fitness_stam_regen", 100 SECONDS)
 			boutput(user, "<span class='notice'>[finishmessage]</span>")
 
 /obj/fitness/weightlifter
@@ -150,7 +150,7 @@
 			icon_state = "fitnessweight"
 			qdel(W)
 			boutput(user, "<span class='notice'>[finishmessage]</span>")
-			user.changeStatus("fitness_stam_max",100 SECONDS)
+			user.changeStatus("fitness_stam_max", 100 SECONDS)
 
 /obj/item/rubberduck
 	name = "rubber duck"
