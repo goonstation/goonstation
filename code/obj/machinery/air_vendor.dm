@@ -163,7 +163,7 @@ obj/machinery/air_vendor
 						return
 					else if(scan)
 						var/datum/data/record/account = FindBankAccountByName(src.scan.registered)
-						if (account && account.fields["current_money"] > cost)
+						if (account && account.fields["current_money"] >= cost)
 							account.fields["current_money"] -= cost
 							src.fill()
 							boutput(usr, "<span class='notice'>You fill up the [src.holding].</span>")
