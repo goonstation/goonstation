@@ -1316,7 +1316,7 @@
 			if (mob.misstep_chance)
 				mob.change_misstep_chance(-10 * mult)
 			if (mob.getStatusDuration("slowed"))
-				mob.changeStatus("slowed", -20 * mult)
+				mob.changeStatus("slowed", -2 SECONDS * mult)
 
 		return
 
@@ -1651,7 +1651,7 @@
 		SPAWN_DBG(2 SECONDS)
 			if (ishuman(mob))
 				mob.visible_message("<span class='alert'><B>[mob]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
-				mob.changeStatus("weakened", 150)
+				mob.changeStatus("weakened", 15 SECONDS)
 				mob.make_jittery(1000)
 				sleep(rand(40, 120))
 				mob.gib()

@@ -657,7 +657,7 @@ datum
 				if (method == TOUCH)
 					var/mob/living/L = M
 					if (istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", -300)
+						L.changeStatus("burning", -30 SECONDS)
 						playsound(get_turf(L), "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
 					if (istype(L,/mob/living/critter/fire_elemental) && !ON_COOLDOWN(L, "fire_elemental_fffoam", 5 SECONDS))
 						L.changeStatus("weakened",0.5 SECONDS)
@@ -1016,7 +1016,7 @@ datum
 				var/mob/living/L = M //for cryostylane not putting out fires during mob tick -Cirrial
 				var/fireDiff = L.bodytemperature - FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 				if(istype(L) && L.getStatusDuration("burning") && fireDiff < 0)
-					L.changeStatus("burning", fireDiff*10 * mult) // by definition fireDiff will be negative
+					L.changeStatus("burning", fireDiff SECONDS * mult) // by definition fireDiff will be negative
 				..()
 				return
 
@@ -1213,7 +1213,7 @@ datum
 					if (10 to 18)
 						M.drowsyness  = max(M.drowsyness, 10)
 					if (19 to INFINITY)
-						M.changeStatus("paralysis", 30 * mult)
+						M.changeStatus("paralysis", 3 SECONDS * mult)
 				if (counter >= 19 && !fakedeathed)
 					M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 30 * mult))
 					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")

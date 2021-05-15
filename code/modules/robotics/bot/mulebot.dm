@@ -701,7 +701,7 @@
 				else
 					src.visible_message("<span class='alert'>[src] knocks over [M]!</span>")
 					M.pulling = null
-					M.changeStatus("stunned", 80)
+					M.changeStatus("stunned", 8 SECONDS)
 					M.changeStatus("weakened", 5 SECONDS)
 					M.lying = 1
 					M.set_clothing_icon_dirty()

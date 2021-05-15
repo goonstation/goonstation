@@ -138,7 +138,7 @@
 						if (istype(src.loc,/obj/))
 							var/obj/container = src.loc
 							boutput(src, "<span class='alert'>You leap and slam yourself against the inside of [container]! Ouch!</span>")
-							src.changeStatus("paralysis", 40)
+							src.changeStatus("paralysis", 4 SECONDS)
 							src.changeStatus("weakened", 3 SECONDS)
 							container.visible_message("<span class='alert'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
 							playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)

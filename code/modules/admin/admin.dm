@@ -1190,10 +1190,10 @@ var/global/noir = 0
 					message_admins("<span class='internal'>[key_name(usr)] transformed [H.real_name] into a [which].</span>")
 			else
 				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to transform a player.")
-		
+
 		if ("setstatuseffect")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
-				var/mob/M = locate(href_list["target"])	//doesn't really have to be mob, could be atom. 
+				var/mob/M = locate(href_list["target"])	//doesn't really have to be mob, could be atom.
 
 				var/effect = input("Which Status Effect?","Give Status Effect") as null|text
 				if (!effect)
@@ -2459,7 +2459,7 @@ var/global/noir = 0
 							if(loc.z > 1 || prisonwarped.Find(H))
 								//don't warp them if they aren't ready or are already there
 								continue
-							H.changeStatus("paralysis", 70)
+							H.changeStatus("paralysis", 7 SECONDS)
 							if(H.wear_id)
 								for(var/A in H.wear_id:access)
 									if(A == access_security)
@@ -2596,7 +2596,7 @@ var/global/noir = 0
 						for(var/S in bioEffectList)
 							be_string += "[S]<br>"
 						usr.Browse(be_string,"window=bioeffect_help;size=300x600")
-					
+
 					if ("statuseffect_help")
 						var/be_string = "To set Status Effects enter a status effect id (right side) in the first prompt and a duration in seconds in the second prompt.<br><br><b>All Status Effect IDs</b><hr>"
 						for(var/datum/statusEffect/S in globalStatusPrototypes)

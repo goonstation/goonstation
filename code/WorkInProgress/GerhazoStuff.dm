@@ -454,7 +454,7 @@
 		var/original_pixel_y = mob_target.pixel_y
 
 		M.visible_message("<span class='alert'><b>[M] extends his open hand forward in a grasping motion, freezing [mob_target] in place!</b></span>")
-		mob_target.changeStatus("stunned", 150)
+		mob_target.changeStatus("stunned", 15 SECONDS)
 		mob_target.force_laydown_standup()
 
 		sleep(1.5 SECONDS)

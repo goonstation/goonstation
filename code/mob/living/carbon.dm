@@ -41,7 +41,7 @@
 							return
 					if (2) //lube
 						src.pulling = null
-						src.changeStatus("weakened", 35)
+						src.changeStatus("weakened", 3.5 SECONDS)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
 						playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
 						var/atom/target = get_edge_target_turf(src, src.dir)

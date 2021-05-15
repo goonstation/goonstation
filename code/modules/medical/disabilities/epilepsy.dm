@@ -12,5 +12,5 @@
 	var/mob/living/M = D.affected_mob
 	if (prob(3))
 		M.visible_message("<span class='alert'><B>[M.name]</B> has a siezure!</span>")
-		M.changeStatus("paralysis", 40)
+		M.changeStatus("paralysis", 4 SECONDS)
 		M.make_jittery(100)

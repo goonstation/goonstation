@@ -181,7 +181,7 @@
 		#if STAMINA_NEG_CRIT_KNOCKOUT == 1
 		if(!src.getStatusDuration("weakened"))
 			src.visible_message("<span class='alert'>[src] collapses!</span>")
-			src.changeStatus("weakened", (STAMINA_STUN_CRIT_TIME)*10)
+			src.changeStatus("weakened", (STAMINA_STUN_CRIT_TIME) SECONDS)
 		#endif
 	stamina_stun() //Just in case.
 	return
@@ -206,7 +206,7 @@
 		if(prob(chance))
 			if(!src.getStatusDuration("weakened"))
 				src.visible_message("<span class='alert'>[src] collapses!</span>")
-				src.changeStatus("weakened", (STAMINA_STUN_TIME)*10)
+				src.changeStatus("weakened", (STAMINA_STUN_TIME) SECONDS)
 				src.force_laydown_standup()
 
 //new disorient thing

@@ -24,7 +24,7 @@
 			return 1
 		HH.set_loc(M.loc)
 		HH.set_dir(get_dir(HH, M))
-		HH.changeStatus("stunned",40)
+		HH.changeStatus("stunned", 4 SECONDS)
 		M.visible_message("<span class='alert'><B>[M] starts flinging [HH] around like a ragdoll!</B></span>")
 		M.emote("scream")
 		for (var/i = 0, i < 10, i++)
@@ -67,7 +67,7 @@
 				if (HH.stat != 2)
 					HH.emote("scream")
 				HH.throw_at(T, 10, 4)
-				HH.changeStatus("weakened",20)
+				HH.changeStatus("weakened", 2 SECONDS)
 				HH.change_misstep_chance(33)
 			logTheThing("combat", M, HH, "uses the throw werewolf move on [constructTarget(HH,"combat")] at [log_loc(M)].")
 		return 0

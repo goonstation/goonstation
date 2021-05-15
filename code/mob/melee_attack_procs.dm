@@ -57,9 +57,9 @@
 	target.sleeping = 0
 	target.delStatus("resting")
 
-	target.changeStatus("stunned", -50)
-	target.changeStatus("paralysis", -50)
-	target.changeStatus("weakened", -50)
+	target.changeStatus("stunned", -5 SECONDS)
+	target.changeStatus("paralysis", -5 SECONDS)
+	target.changeStatus("weakened", -5 SECONDS)
 
 	playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 	if (src == target)
@@ -162,7 +162,7 @@
 		if (target.health < 0 || target.find_ailment_by_type(/datum/ailment/malady/flatline))
 			target.take_oxygen_deprivation(-15)
 			target.losebreath = 0
-			target.changeStatus("paralysis", -20)
+			target.changeStatus("paralysis", -2 SECONDS)
 
 			if(target.find_ailment_by_type(/datum/ailment/malady/flatline) && target.health > -50)
 				if ((target.reagents?.has_reagent("epinephrine") || target.reagents?.has_reagent("atropine")) ? prob(5) : prob(2))
@@ -982,8 +982,8 @@
 				goto process_stamina
 
 			if (damage > 0 && target != owner)
-				target.changeStatus("staggered", 50)
-				owner.changeStatus("staggered", 50)
+				target.changeStatus("staggered", 5 SECONDS)
+				owner.changeStatus("staggered", 5 SECONDS)
 			// important
 
 			if (damage_type == DAMAGE_BLUNT && prob(25 + (damage * 2)) && damage >= 8)

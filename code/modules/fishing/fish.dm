@@ -19,7 +19,7 @@
 	attack(mob/M as mob, mob/user as mob)
 		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> swings \the [src] and hits [himself_or_herself(user)] in the face!.</span>")
-			user.changeStatus("weakened", 20 * src.force)
+			user.changeStatus("weakened", 2 * src.force SECONDS)
 			JOB_XP(user, "Clown", 1)
 			return
 		else

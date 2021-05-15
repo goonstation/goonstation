@@ -605,7 +605,7 @@
 	setStatus("burning", new_value*10)
 
 /mob/living/proc/update_burning(var/change)
-	changeStatus("burning", change*10)
+	changeStatus("burning", change SECONDS)
 
 /mob/living/proc/update_burning_icon(var/force_remove = 0)
 	return

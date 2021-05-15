@@ -281,7 +281,7 @@
 
 		// Stun the target mob.
 		if (type == "harm_classic")
-			dude_to_stun.changeStatus("weakened", src.stun_harm_weakened * 10)
+			dude_to_stun.changeStatus("weakened", src.stun_harm_weakened SECONDS)
 			dude_to_stun.force_laydown_standup()
 			random_brute_damage(dude_to_stun, src.force,1) // Necessary since the item/attack() parent wasn't called. Wait, was this armor-piercing? -Tarm
 			dude_to_stun.remove_stamina(src.stamina_damage)
@@ -293,7 +293,7 @@
 				boutput(dude_to_stun, "<span class='notice'>Thankfully, electricity doesn't do much to you in your current state.</span>")
 			else
 				if (!src.use_stamina_stun() || (src.use_stamina_stun() && ismob(dude_to_stun) && !hasvar(dude_to_stun, "stamina")))
-					dude_to_stun.changeStatus("weakened", src.stun_normal_weakened * 10)
+					dude_to_stun.changeStatus("weakened", src.stun_normal_weakened SECONDS)
 					dude_to_stun.force_laydown_standup()
 					if ((dude_to_stun.stuttering < src.stun_normal_stuttering))
 						dude_to_stun.stuttering = src.stun_normal_stuttering

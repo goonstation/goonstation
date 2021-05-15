@@ -194,10 +194,10 @@
 			if (prob(4))
 				boutput(affected_mob, "<span class='alert'>You feel like everything is wrong with your life!</span>")
 			if (prob(5))
-				affected_mob.changeStatus("slowed", rand(80,320))
+				affected_mob.changeStatus("slowed", rand(8,32) SECONDS)
 				boutput(affected_mob, "<span class='alert'>You feel [pick("tired", "exhausted", "sluggish")].</span>")
 			if (prob(5))
-				affected_mob.changeStatus("weakened", 120)
+				affected_mob.changeStatus("weakened", 12 SECONDS)
 				affected_mob.stuttering = max(10, affected_mob.stuttering)
 				boutput(affected_mob, "<span class='alert'>You feel [pick("numb", "confused", "dizzy", "lightheaded")].</span>")
 				affected_mob.emote("collapse")
@@ -205,13 +205,13 @@
 			if(prob(8))
 				affected_mob.contract_disease(/datum/ailment/malady/shock,null,null,1)
 			if(prob(12))
-				affected_mob.changeStatus("weakened", 120)
+				affected_mob.changeStatus("weakened", 12 SECONDS)
 				affected_mob.stuttering = max(10, affected_mob.stuttering)
 				boutput(affected_mob, "<span class='alert'>You feel [pick("numb", "confused", "dizzy", "lightheaded")].</span>")
 				affected_mob.emote("collapse")
 			if (prob(12))
 				boutput(affected_mob, "<span class='alert'>You feel [pick("tired", "exhausted", "sluggish")].</span>")
-				affected_mob.changeStatus("slowed", rand(80,320))
+				affected_mob.changeStatus("slowed", rand(8,32) SECONDS)
 
 
 

@@ -126,7 +126,7 @@
 			if(prob(3))
 				SPAWN_DBG(0.2 SECONDS)
 					target.visible_message("<span class='bold'>[target.name]</span> flops over in shame!")
-					target.changeStatus("stunned", 50)
+					target.changeStatus("stunned", 5 SECONDS)
 					target.changeStatus("weakened", 5 SECONDS)
 		else
 			..()

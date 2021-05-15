@@ -41,7 +41,7 @@
 		if (owner.loc && isarea(owner.loc.loc))
 			var/area/A = owner.loc.loc
 			if (A.irradiated)
-				owner.changeStatus("radiation", (A.irradiated * 10 * mult) SECONDS)
+				owner.changeStatus("radiation", (A.irradiated * 10) SECONDS * mult)
 
 		if (owner.bioHolder)
 			var/total_stability = owner.bioHolder.genetic_stability

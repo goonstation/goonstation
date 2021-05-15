@@ -211,7 +211,7 @@
 					boutput(target, "<span class='alert'>The [src] is out of energy.</span>")
 					var/mob/old_trg = target
 					deactivate()
-					old_trg.changeStatus("stunned", 200)
+					old_trg.changeStatus("stunned", 20 SECONDS)
 				sleep(1 SECOND)
 
 	proc/deactivate()

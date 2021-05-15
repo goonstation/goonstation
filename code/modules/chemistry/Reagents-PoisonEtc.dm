@@ -954,7 +954,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.changeStatus("radiation", 50 * mult, 4)
+				M.changeStatus("radiation", 5 SECONDS * mult, 4)
 				..()
 				return
 
@@ -1247,7 +1247,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.changeStatus("radiation", 30 * mult, 1)
+				M.changeStatus("radiation", 3 SECONDS * mult, 1)
 				var/mutChance = 4
 				if (M.traitHolder && M.traitHolder.hasTrait("stablegenes")) mutChance = 2
 				if (probmult(mutChance))
@@ -1283,7 +1283,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.changeStatus("radiation", 20 * mult)
+				M.changeStatus("radiation", 2 SECONDS * mult)
 				// DNA buckshot
 				var/mutChance = 15
 				if (M.traitHolder && M.traitHolder.hasTrait("stablegenes")) mutChance = 7
@@ -1839,10 +1839,10 @@ datum
 								H.show_text(pick_string("chemistry_reagent_messages.txt", "strychnine1"), "red")
 							if(4) //Drop stuff
 								H.show_text(pick_string("chemistry_reagent_messages.txt", "strychnine1b"), "red")
-								H.changeStatus("stunned", 10 * mult)
+								H.changeStatus("stunned", 1 SECOND * mult)
 							if(5) //Trip
 								H.show_text(pick_string("chemistry_reagent_messages.txt", "strychnine1c"), "red")
-								H.changeStatus("weakened", 20 * mult)
+								H.changeStatus("weakened", 2 SECONDS * mult)
 							if(6) //Light-headedness
 								H.show_text("You feel light-headed.", "red")
 								H.drowsyness += rand(2,4)
@@ -1856,13 +1856,13 @@ datum
 								H.take_oxygen_deprivation(rand(5, 10) * mult)
 							if(2) //Drop stuff
 								H.show_text(pick_string("chemistry_reagent_messages.txt", "strychnine2"), "red")
-								H.changeStatus("stunned", 20 * mult)
+								H.changeStatus("stunned", 2 SECONDS * mult)
 								H.change_misstep_chance(20 * mult)
 							if(3) //Trip
 								H.show_text(pick_string("chemistry_reagent_messages.txt", "strychnine2b"), "red")
 								H.visible_message("<span class='combat bold'>[H] stumbles and falls!</span>")
 								if(probmult(10)) H.emote("scream")
-								H.changeStatus("weakened", 20 * mult)
+								H.changeStatus("weakened", 2 SECONDS * mult)
 							if(4) //Light-headedness
 								H.show_text("You feel like you are about to faint!", "red")
 								H.drowsyness += rand(4,7)

@@ -1009,7 +1009,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 					var/turf/T = get_edge_target_turf(src, get_dir(src, get_step_away(M, src)))
 					if (T && isturf(T))
 						M.throw_at(T, 100, 2)
-						M.changeStatus("weakened", 1 SECOND)
+						M.("weakened", 1 SECOND)
 						M.changeStatus("stunned", 2 SECONDS)
 					break
 

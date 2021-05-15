@@ -533,7 +533,7 @@
 
 /obj/proc/mob_flip_inside(var/mob/user)
 	user.show_text("<span class='alert'>You leap and slam against the inside of [src]! Ouch!</span>")
-	user.changeStatus("paralysis", 40)
+	user.changeStatus("paralysis", 4 SECONDS)
 	user.changeStatus("weakened", 4 SECONDS)
 	src.visible_message("<span class='alert'><b>[src]</b> emits a loud thump and rattles a bit.</span>")
 
