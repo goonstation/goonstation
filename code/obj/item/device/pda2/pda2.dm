@@ -18,6 +18,7 @@
 	var/assignment = null
 	var/access = list()
 	var/image/ID_image = null
+	var/image/pen_image = "pen"
 
 	var/owner = null
 	var/ownerAssignment = null
@@ -868,6 +869,7 @@
 				var/turf/T = get_turf(src)
 				src.pen.set_loc(T)
 			src.pen = null
+			src.underlays -= src.pen_image
 			return
 
 	proc/insert_pen(var/obj/item/pen/insertedPen as obj, var/mob/user as mob)
@@ -879,6 +881,7 @@
 		if (user)
 			user.u_equip(insertedPen)
 			src.pen = insertedPen
+			src.underlays += src.pen_image
 		insertedPen.set_loc(src)
 		boutput(user, "<span class='notice'>You insert [insertedPen] into [src].</span>")
 /*
