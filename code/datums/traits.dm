@@ -508,7 +508,7 @@
 /obj/trait/loyalist
 	name = "NT loyalist (-1) \[Trinkets\]"
 	cleanName = "NT loyalist"
-	desc = "Start with a Nanotrasen Beret as your trinket."
+	desc = "Start with a Nanotrasen Beret as your trinket. You love working for Nanotrasen, and would never start a revolution against them."
 	id = "loyalist"
 	icon_state = "beretP"
 	points = -1
