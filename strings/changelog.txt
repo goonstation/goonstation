@@ -1,5 +1,9 @@
 
 (t)sat may 15 21
+(u)112358sam
+(p)4706
+(e)|
+(+)Removes the blood level check for performing the milk emote.
 (u)Superlagg
 (p)4711
 (e)🐛|bug
