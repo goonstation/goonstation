@@ -65,7 +65,7 @@
 //		if(((src.last_shot + src.fire_delay) <= world.time))
 //			src.last_shot = world.time
 		if(sound == 1)
-			playsound(src.loc, "sound/effects/screech.ogg", 100, 1)
+			playsound(src.loc, "sound/effects/screech.ogg", 50, 1)
 		else if(sound == 2)
 			playsound(src.loc, "sound/voice/burp.ogg", 100, 1)
 		else if(sound == 3)

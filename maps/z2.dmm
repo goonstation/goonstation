@@ -7050,7 +7050,7 @@
 /obj/item/gun/russianrevolver{
 	desc = "The cold-war classic!  Well, um, a model.  Probably?";
 	icon_state = "ak47";
-	name = "\improper AK-477 rifle"
+	name = "\improper JK-47 rifle"
 	},
 /turf/unsimulated/floor/escape{
 	dir = 1
@@ -10031,12 +10031,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aJr" = (
-/turf/unsimulated/wall/setpieces{
-	desc = "A weird jet black metal wall indented with strange grooves and lines.";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "ancient";
-	name = "stranger wall"
-	},
+/turf/unsimulated/wall/setpieces/stranger,
 /area/crater/cave)
 "aJs" = (
 /turf/unsimulated/floor/setpieces{
@@ -19972,7 +19967,7 @@
 "bjM" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
-/obj/item/gun/kinetic/ak47,
+/obj/item/gun/kinetic/gyrojet,
 /turf/unsimulated/floor/carpet/grime,
 /area/drone/crew_quarters)
 "bjN" = (
@@ -20115,12 +20110,7 @@
 	},
 /area/crater/cave/lower)
 "bkc" = (
-/turf/unsimulated/wall/setpieces{
-	desc = "A weird jet black metal wall indented with strange grooves and lines.";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "ancient";
-	name = "stranger wall"
-	},
+/turf/unsimulated/wall/setpieces/stranger,
 /area/crater/cave/lower)
 "bkd" = (
 /obj/decal/fakeobjects{
@@ -21958,12 +21948,7 @@
 /area/crater/cave/lower)
 "bop" = (
 /obj/map/light/dimreddish,
-/turf/unsimulated/wall/setpieces{
-	desc = "A weird jet black metal wall indented with strange grooves and lines.";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "ancient";
-	name = "stranger wall"
-	},
+/turf/unsimulated/wall/setpieces/stranger,
 /area/crater/cave/lower)
 "boq" = (
 /obj/item/casing/shotgun/orange{
@@ -76322,7 +76307,7 @@
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "hVQ" = (
 /obj/machinery/door/poddoor/blast/single{
-	desc = "An old blast door. It has plenty of scratches and dents on it's surface.";
+	desc = "An old blast door. It has plenty of scratches and dents on its surface.";
 	id = "virvadoor"
 	},
 /turf/unsimulated/floor/plating/scorched,
@@ -76769,7 +76754,6 @@
 /area/centcom/outside)
 "jNl" = (
 /obj/table/wood/auto,
-/obj/item/gun/energy/wavegun,
 /obj/item/clothing/head/sunhat/stunhatr{
 	pixel_x = -5;
 	pixel_y = 6
@@ -78922,7 +78906,7 @@
 /area/hospital/samostrel)
 "qwW" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/burger/plague{
+/obj/item/reagent_containers/food/snacks/burger/plague/fishstick{
 	pixel_x = 6;
 	pixel_y = 7
 	},
@@ -79488,14 +79472,16 @@
 /area/centcom/lounge)
 "sdh" = (
 /obj/rack,
-/obj/item/clothing/mask/gas/swat,
-/obj/item/clothing/mask/gas/swat,
-/obj/item/clothing/mask/gas/swat,
-/obj/item/clothing/mask/gas/swat,
-/obj/item/clothing/mask/gas/swat,
-/obj/item/clothing/mask/gas/swat,
-/obj/item/clothing/mask/gas/swat,
-/obj/item/clothing/mask/gas/swat,
+/obj/item/clothing/mask/gas/swat/syndicate,
+/obj/item/clothing/mask/gas/swat/syndicate,
+/obj/item/clothing/mask/gas/swat/syndicate,
+/obj/item/clothing/mask/gas/swat/syndicate,
+/obj/item/clothing/mask/gas/swat/syndicate,
+/obj/item/clothing/mask/gas/swat/syndicate,
+/obj/item/clothing/mask/gas/swat/syndicate,
+/obj/item/clothing/mask/gas/swat/syndicate,
+/obj/item/clothing/mask/gas/swat/syndicate,
+/obj/item/clothing/mask/gas/swat/syndicate,
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "seT" = (
@@ -80374,13 +80360,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/sword/red{
-	active = 1;
-	desc = "You were the chosen one! You were supposed to destroy the greytiders, not join them!";
-	icon_state = "sword1-R";
-	item_state = "sword1-R";
-	name = "Enakai's red cyalume saber"
-	},
+/obj/item/sword/red/enakai,
 /obj/cover/showcase,
 /turf/unsimulated/floor/wizard/showcase,
 /area/centcom/offices/enakai)

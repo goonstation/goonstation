@@ -266,18 +266,11 @@
 	if(subject.traitHolder && length(subject.traitHolder.traits))
 		R.fields["traits"] = subject.traitHolder.traits.Copy()
 
-	//Add an implant if needed
-	var/obj/item/implant/health/imp = locate(/obj/item/implant/health, subject)
-	if (isnull(imp))
-		imp = new /obj/item/implant/health(subject)
-		imp.implanted = 1
-		imp.owner = subject
-		subject.implant.Add(imp)
-//		imp.implanted = subject // this isn't how this works with new implants sheesh
-		R.fields["imp"] = "\ref[imp]"
-	//Update it if needed
-	else
-		R.fields["imp"] = "\ref[imp]"
+	var/obj/item/implant/cloner/imp = new(subject)
+	imp.implanted = TRUE
+	imp.owner = subject
+	subject.implant.Add(imp)
+	R.fields["imp"] = "\ref[imp]"
 
 	if (!isnull(subjMind)) //Save that mind so traitors can continue traitoring after cloning.
 		R.fields["mind"] = subjMind
@@ -306,10 +299,22 @@
 		if (isnull(pod1))
 			pod1 = P
 			continue
-		if (pod1.attempting && !P.attempting)
+
+		if (P.attempting)
+			// If this new pod is currently working, skip it.
+			continue
+
+		if (pod1.attempting)
 			pod1 = P
 			continue
-		if (!P.attempting && pod1.meat_level < P.meat_level)
+
+		// Pick the pod that has the most progress
+		if (pod1.get_progress() < P.get_progress())
+			pod1 = P
+			continue
+
+		// If they're both the same progress, pick the one with the most MEAT
+		if (pod1.get_progress() == P.get_progress() && pod1.meat_level < P.meat_level)
 			pod1 = P
 			continue
 
@@ -821,7 +826,7 @@ proc/find_ghost_by_key(var/find_key)
 		.["podNames"] += P.name
 		.["meatLevels"] += P.meat_level
 		.["cloneSlave"] += P.cloneslave
-		.["completion"] += (!isnull(P.occupant) ? clamp(100 - ((P.occupant.max_health - P.occupant.health) - P.heal_level), 0, 100) : 0)
+		.["completion"] += P.get_progress()
 	if(!isnull(src.scanner))
 		. += list(
 			"scannerOccupied" = src.scanner.occupant,
@@ -836,10 +841,10 @@ proc/find_ghost_by_key(var/find_key)
 	var/list/recordsTemp = list()
 	for (var/r in records)
 		var/saved = FALSE
-		var/obj/item/implant/health/H = locate(r["fields"]["imp"])
+		var/obj/item/implant/cloner/implant = locate(r["fields"]["imp"])
 		var/currentHealth = ""
-		if ((H) && istype(H))
-			currentHealth = H.getHealthList()
+		if(istype(implant))
+			currentHealth = implant.getHealthList()
 		if(src.diskette) // checks if saved to disk
 			for (var/datum/computer/file/clone/F in src.diskette.root.contents)
 				if(F.fields["ckey"] == r["fields"]["ckey"])
@@ -850,7 +855,7 @@ proc/find_ghost_by_key(var/find_key)
 			id = r["fields"]["id"],
 			ckey = r["fields"]["ckey"],
 			health = currentHealth,
-			implant = !isnull(H),
+			implant = !isnull(implant),
 			saved = saved
 		)))
 

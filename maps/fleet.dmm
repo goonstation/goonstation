@@ -4136,6 +4136,14 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/stool/bed,
+/obj/landmark/start{
+	name = "Chief Engineer"
+	},
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "yellow";
+	icon_state = "bedsheet-yellow"
+	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce{
 	name = "Maru Bridge"
@@ -4156,10 +4164,6 @@
 	dir = 4
 	},
 /obj/storage/crate/rcd,
-/obj/machinery/phone/wall{
-	pixel_x = 24;
-	pixel_y = 4
-	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce{
 	name = "Maru Bridge"
@@ -4640,6 +4644,10 @@
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/phone/wall{
+	pixel_x = 9;
+	pixel_y = 5
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce{
@@ -6415,19 +6423,12 @@
 /turf/simulated/floor/redblack,
 /area/station/security/secwing)
 "nr" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "yellow";
-	icon_state = "bedsheet-yellow"
-	},
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/landmark/start{
-	name = "Chief Engineer"
-	},
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce{
 	name = "Maru Bridge"

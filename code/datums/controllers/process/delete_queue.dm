@@ -7,7 +7,8 @@
 // otherwise this will stink up everything forever
 var/global/harddel_count = 0
 
-datum/controller/process/delete_queue
+/// The process controller for queued deletion
+/datum/controller/process/delete_queue
 	var/tmp/delcount = 0
 	var/tmp/gccount = 0
 	var/tmp/deleteChunkSize = MIN_DELETE_CHUNK_SIZE
@@ -31,11 +32,10 @@ datum/controller/process/delete_queue
 		name = "DeleteQueue"
 
 #ifdef HARD_DELETIONS_DISABLED
-		schedule_interval = 10 //ha ha whatever
+		schedule_interval = 1 SECOND //ha ha whatever
 #else
-		schedule_interval = 5
+		schedule_interval = 0.5 SECONDS
 #endif
-
 
 		tick_allowance = 25
 

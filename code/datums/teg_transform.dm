@@ -90,14 +90,14 @@ datum/teg_transformation
 		. = ..()
 
 	/// Return False by default to cause classic grump behavior
-	proc/on_grump()
+	proc/on_grump(mult)
 		return FALSE
 
 	/// Base transformation to assign material
 	proc/on_transform(obj/machinery/power/generatorTemp/teg)
 		var/datum/material/M
 		src.teg = teg
-		if(src.mat_id)
+		if(initial(src.mat_id))
 			M = getMaterial(src.mat_id)
 		else
 			M = copyMaterial(src.teg.semiconductor.material)

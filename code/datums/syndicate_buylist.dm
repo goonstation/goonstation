@@ -899,6 +899,13 @@ This is basically useless for anyone but miners.
 	desc = "A small device that may be installed in a headset to grant access to all station channels."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
+/datum/syndicate_buylist/traitor/tape
+	name = "Ducktape"
+	item = /obj/item/handcuffs/tape_roll
+	cost = 1
+	desc = "A roll of duct tape for makeshift handcuffs. Lets you restrain someone 10 times before being used up."
+	blockedmode = list(/datum/game_mode/revolution)
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 /datum/syndicate_buylist/surplus
@@ -946,13 +953,6 @@ This is basically useless for anyone but miners.
 	item = /obj/item/storage/box/flaregun // Gave this thing a box of spare ammo. Having only one shot was kinda lackluster (Convair880).
 	cost = 2
 	desc = "A signal flaregun for emergency use. Or for setting jerks on fire"
-	blockedmode = list(/datum/game_mode/spy)
-
-/datum/syndicate_buylist/surplus/tape
-	name = "Ducktape"
-	item = /obj/item/handcuffs/tape_roll
-	cost = 1
-	desc = "A roll of duct tape for makeshift handcuffs. Yep."
 	blockedmode = list(/datum/game_mode/spy)
 
 /datum/syndicate_buylist/surplus/rifle

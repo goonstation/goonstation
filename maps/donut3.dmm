@@ -683,6 +683,12 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
+/obj/noticeboard/persistent{
+	name = "Brig persistent notice board";
+	persistent_id = "brig";
+	pixel_x = 32;
+	pixel_y = 0
+	},
 /turf/simulated/floor/white,
 /area/station/security/brig/north_side)
 "abb" = (
@@ -5574,6 +5580,10 @@
 /obj/disposalpipe/switch_junction/left/east{
 	mail_tag = "pharmacy"
 	},
+/obj/noticeboard/persistent{
+	name = "Medbay persistent notice board";
+	persistent_id = "medbay"
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -9756,6 +9766,13 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"cAW" = (
+/obj/noticeboard/persistent{
+	name = "Security persistent notice board";
+	persistent_id = "security"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/quarters)
 "cAX" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 6;
@@ -16198,6 +16215,10 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
+/obj/noticeboard/persistent{
+	name = "Detective's Office persistent notice board";
+	persistent_id = "detectives office"
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "ezl" = (
@@ -20480,6 +20501,10 @@
 /obj/item/bee_egg_carton,
 /obj/item/bee_egg_carton,
 /obj/item/device/radio/intercom/botany,
+/obj/noticeboard/persistent{
+	name = "Botany persistent notice board";
+	persistent_id = "botany"
+	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "fJQ" = (
@@ -26961,6 +26986,12 @@
 /obj/table/round/auto,
 /obj/machinery/phone,
 /obj/machinery/light_switch/auto,
+/obj/noticeboard/persistent{
+	name = "Cargo persistent notice board";
+	persistent_id = "cargo";
+	pixel_x = 32;
+	pixel_y = 0
+	},
 /turf/simulated/floor/wood,
 /area/station/quartermaster/office)
 "hJO" = (
@@ -36482,10 +36513,6 @@
 	dir = 1
 	},
 /obj/disposalpipe/segment/mail,
-/obj/noticeboard{
-	pixel_x = 1;
-	pixel_y = 32
-	},
 /turf/simulated/floor/carpet/green/fancy/narrow{
 	dir = 9
 	},
@@ -42854,6 +42881,7 @@
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/tank/jetpack,
 /obj/item/clothing/suit/space/captain,
+/obj/item/clothing/head/helmet/space/captain,
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
 "mDT" = (
@@ -43130,6 +43158,7 @@
 /obj/item/device/radio/intercom/loudspeaker/speaker/east{
 	pixel_x = -22
 	},
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
@@ -44809,10 +44838,6 @@
 /area/station/routing/depot)
 "njd" = (
 /obj/reagent_dispensers/compostbin,
-/obj/noticeboard{
-	pixel_x = 1;
-	pixel_y = 34
-	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "nje" = (
@@ -47602,7 +47627,6 @@
 /obj/grille/catwalk/jen/side{
 	dir = 4
 	},
-/obj/disposalpipe/segment,
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -48882,7 +48906,6 @@
 "ost" = (
 /obj/machinery/light/incandescent/cool/very,
 /obj/disposalpipe/trunk/morgue{
-	dir = 0;
 	name = "kitchen freezer pipe"
 	},
 /obj/disposaloutlet{
@@ -49047,6 +49070,10 @@
 /area/station/hallway/secondary/exit)
 "ovE" = (
 /obj/machinery/chem_master,
+/obj/noticeboard/persistent{
+	name = "Bar persistent notice board";
+	persistent_id = "bar"
+	},
 /turf/simulated/floor/caution/south,
 /area/station/crew_quarters/cafeteria)
 "ovH" = (
@@ -51640,6 +51667,12 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/transport,
+/obj/noticeboard/persistent{
+	name = "Crew Quarters persistent notice board";
+	persistent_id = "crew quarters";
+	pixel_x = 32;
+	pixel_y = 0
+	},
 /turf/simulated/floor/stairs/wide/other,
 /area/station/hangar/arrivals)
 "plm" = (
@@ -52212,6 +52245,10 @@
 	name = "kitchen freezer pipe"
 	},
 /obj/surgery_tray/kitchen_island,
+/obj/noticeboard/persistent{
+	name = "Kitchen persistent notice board";
+	persistent_id = "kitchen"
+	},
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
@@ -53882,6 +53919,12 @@
 /turf/simulated/floor/plating,
 /area/station/engine/ptl)
 "pRN" = (
+/obj/noticeboard/persistent{
+	name = "Engineering persistent notice board";
+	persistent_id = "engineering";
+	pixel_x = -32;
+	pixel_y = 0
+	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/breakroom)
 "pRS" = (
@@ -56888,13 +56931,16 @@
 /turf/simulated/floor/redblack,
 /area/station/security/main)
 "qEA" = (
-/obj/noticeboard{
-	pixel_y = 28
+/obj/noticeboard/persistent{
+	name = "Mechanics Workshop persistent notice board";
+	persistent_id = "mechanics";
+	pixel_x = 32;
+	pixel_y = 0
 	},
-/turf/simulated/floor/blue/side{
-	dir = 1
+/turf/simulated/floor/yellow/side{
+	dir = 4
 	},
-/area/station/hallway/primary/west)
+/area/station/hallway/primary/east)
 "qED" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -57500,6 +57546,10 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/noticeboard/persistent{
+	name = "Chapel persistent notice board";
+	persistent_id = "chapel"
 	},
 /turf/simulated/floor/carpet/purple/fancy/narrow/west,
 /area/station/chapel/sanctuary)
@@ -65034,9 +65084,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
 "tbg" = (
-/obj/noticeboard{
-	pixel_y = 32
-	},
 /obj/stool/chair/couch/blue{
 	dir = 8
 	},
@@ -65453,6 +65500,10 @@
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
+	},
+/obj/noticeboard/persistent{
+	name = "Customs persistent notice board";
+	persistent_id = "customs"
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/customs)
@@ -72506,11 +72557,12 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "vmk" = (
-/obj/noticeboard{
-	pixel_y = 28
-	},
 /obj/machinery/light/incandescent/warm{
 	dir = 1
+	},
+/obj/noticeboard/persistent{
+	name = "Security Foyer persistent notice board";
+	persistent_id = "security foyer"
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -79872,15 +79924,8 @@
 /area/station/medical/medbay/lobby)
 "xrP" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/grille/catwalk/jen/side{
 	dir = 4
-	},
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
@@ -108528,7 +108573,7 @@ wXb
 htz
 abJ
 lJM
-nsT
+cAW
 qgO
 auG
 ewr
@@ -113985,7 +114030,7 @@ wfm
 xvP
 xvP
 hBL
-qEA
+qmx
 wam
 lqZ
 cgw
@@ -139308,7 +139353,7 @@ ihV
 qaW
 wdp
 gXg
-ihV
+qEA
 wdp
 nJk
 qaW

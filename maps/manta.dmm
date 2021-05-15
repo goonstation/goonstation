@@ -692,6 +692,10 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
+/obj/noticeboard/persistent{
+	name = "Bar persistent notice board";
+	persistent_id = "bar"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
 "abW" = (
@@ -7903,6 +7907,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
 "axe" = (
@@ -8436,6 +8441,12 @@
 /obj/disposalpipe/segment,
 /obj/potted_plant/potted_plant3{
 	dir = 8
+	},
+/obj/noticeboard/persistent{
+	name = "Engineering persistent notice board";
+	persistent_id = "engineering";
+	pixel_x = -32;
+	pixel_y = 0
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -9585,6 +9596,11 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/machinery/firealarm{
+	dir = 4;
+	layer = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
 "aBz" = (
@@ -9992,10 +10008,6 @@
 "aCC" = (
 /obj/table/reinforced/auto,
 /obj/machinery/microwave,
-/obj/noticeboard{
-	name = "Diner Orders Board";
-	pixel_y = 28
-	},
 /obj/decal/tile_edge/check{
 	dir = 1;
 	icon_state = "check1"
@@ -10339,11 +10351,6 @@
 	color = "#485e81";
 	dir = 5;
 	icon_state = "line1"
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	layer = 4;
-	pixel_x = 24
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
@@ -12059,6 +12066,10 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
+/obj/noticeboard/persistent{
+	name = "Crew Quarters persistent notice board";
+	persistent_id = "crew quarters"
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "aIc" = (
@@ -12872,6 +12883,10 @@
 /obj/submachine/seed_vendor,
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/noticeboard/persistent{
+	name = "Botany persistent notice board";
+	persistent_id = "botany"
 	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
@@ -15729,6 +15744,10 @@
 	pixel_x = 4;
 	pixel_y = 8
 	},
+/obj/noticeboard/persistent{
+	name = "Customs persistent notice board";
+	persistent_id = "customs"
+	},
 /turf/simulated/floor,
 /area/station/hos)
 "aTc" = (
@@ -18249,6 +18268,10 @@
 	},
 /obj/item/storage/box/cutlery,
 /obj/item/storage/box/plates,
+/obj/noticeboard/persistent{
+	name = "Kitchen persistent notice board";
+	persistent_id = "kitchen"
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen/therustykrab)
 "aZI" = (
@@ -21584,10 +21607,6 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/noticeboard{
-	name = "Chapel Board";
-	pixel_y = 28
-	},
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon17,
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
@@ -22032,6 +22051,10 @@
 	icon = 'icons/obj/decoration.dmi';
 	icon_state = "skeleton_stand";
 	name = "Jim"
+	},
+/obj/noticeboard/persistent{
+	name = "Medbay persistent notice board";
+	persistent_id = "medbay"
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
@@ -22549,6 +22572,12 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/noticeboard/persistent{
+	name = "Chapel persistent notice board";
+	persistent_id = "chapel";
+	pixel_x = -32;
+	pixel_y = 0
 	},
 /turf/simulated/floor/wood/five,
 /area/station/chapel/sanctuary)
@@ -27360,6 +27389,10 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/noticeboard/persistent{
+	name = "Mechanics Workshop persistent notice board";
+	persistent_id = "mechanics"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "bxl" = (
@@ -30143,15 +30176,12 @@
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "bET" = (
-/obj/noticeboard{
-	name = "Research Notice Board";
-	pixel_y = 28
+/obj/noticeboard/persistent{
+	name = "Cargo persistent notice board";
+	persistent_id = "cargo"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/purple,
-/area/station/science/lobby)
+/turf/simulated/floor,
+/area/station/quartermaster/cargobay)
 "bEU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -31643,6 +31673,10 @@
 	},
 /obj/item/clothing/head/fedora{
 	pixel_y = 11
+	},
+/obj/noticeboard/persistent{
+	name = "Detective's Office persistent notice board";
+	persistent_id = "detectives office"
 	},
 /turf/simulated/floor/wood/six,
 /area/station/security/detectives_office_manta)
@@ -35039,7 +35073,6 @@
 /area/station/security/secoffquarters)
 "bTI" = (
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 4;
 	frequency = 1455;
 	name = "Supply Intercom"
@@ -44257,10 +44290,6 @@
 /area/station/engine/inner)
 "vVC" = (
 /obj/table/wood/round/auto,
-/obj/noticeboard{
-	name = "Security Notice Board";
-	pixel_y = 28
-	},
 /obj/machinery/light/incandescent/warm{
 	dir = 1;
 	pixel_y = 20
@@ -44268,6 +44297,10 @@
 /obj/machinery/phone,
 /obj/item/device/detective_scanner{
 	rand_pos = 0
+	},
+/obj/noticeboard/persistent{
+	name = "Security persistent notice board";
+	persistent_id = "security"
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -73230,7 +73263,7 @@ aLJ
 bgr
 bpY
 aKs
-bvk
+bET
 bvk
 bvk
 byy
@@ -101625,7 +101658,7 @@ bvW
 bAH
 mUI
 aHI
-bET
+bEU
 bDL
 bHy
 bIr

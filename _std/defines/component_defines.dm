@@ -65,6 +65,8 @@
 #define COMSIG_ATOM_HITBY_PROJ "atom_hitby_proj"
 /// when an atom is hit by a thrown thing (thrown_atom, /datum/thrown_thing)
 #define COMSIG_ATOM_HITBY_THROWN "atom_hitby_thrown"
+/// when an atom is examined (/mob/examiner, /list/lines), append to lines for more description
+#define COMSIG_ATOM_EXAMINE "atom_examine"
 
 // ---- atom/movable signals ----
 
@@ -134,6 +136,10 @@
 
 // ---- mob signals ----
 
+/// When a client logs into a mob
+#define COMSIG_MOB_LOGIN "mob_login"
+/// When a client logs out of a mob
+#define COMSIG_MOB_LOGOUT "mob_logout"
 /// At the beginning of when an attackresults datum is being set up
 #define COMSIG_MOB_ATTACKED_PRE "attacked_pre"
 /// When a mob dies
@@ -216,3 +222,10 @@
 #define COMSIG_FULLAUTO_MOUSEDOWN "fullauto_mousedown"
 #define COMSIG_FULLAUTO_MOUSEDRAG "fullauto_mousedrag"
 #define COMSIG_GUN_PROJECTILE_CHANGED "gun_proj_changed"
+
+
+// ---- area signals ----
+/// area's active var set to true (when a client enters)
+#define COMSIG_AREA_ACTIVATED "area_activated"
+/// area's active var set to false (when all clients leave)
+#define COMSIG_AREA_DEACTIVATED "area_deactivated"

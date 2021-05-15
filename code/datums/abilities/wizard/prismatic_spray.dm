@@ -38,7 +38,8 @@
 
 	cast(atom/target)
 		if (holder.owner.wizard_spellpower(src) || istype(src, /datum/targetable/spell/prismatic_spray/admin))
-			holder.owner.say("PROJEHK TUL IHNFERNUS") //incantation credit to Grifflez
+			if(!istype(get_area(holder.owner), /area/sim/gunsim))
+				holder.owner.say("PROJEHK TUL IHNFERNUS") //incantation credit to Grifflez
 			//var/mob/living/carbon/human/O = holder.owner
 			if(!istype(src, /datum/targetable/spell/prismatic_spray/admin))
 				if( !do_after( holder.owner, 12 ) )

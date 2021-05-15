@@ -228,7 +228,6 @@
 /obj/item/clothing/head/caphat
 	name = "Captain's hat"
 	icon_state = "captain"
-	c_flags = SPACEWEAR
 	item_state = "caphat"
 	desc = "A symbol of the captain's rank, and the source of all their power."
 	setupProperties()
@@ -238,7 +237,6 @@
 /obj/item/clothing/head/centhat
 	name = "Cent. Comm. hat"
 	icon_state = "centcom"
-	c_flags = SPACEWEAR
 	item_state = "centcom"
 	setupProperties()
 		..()
@@ -783,11 +781,15 @@
 			return
 		return ..(hit_atom)
 
-	equipped(var/mob/user, var/slot)
-		..()
-		if (slot == SLOT_HEAD && ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.set_mutantrace(/datum/mutantrace/dwarf)
+	equipped(mob/user, slot)
+		. = ..()
+		if(slot == SLOT_HEAD)
+			user.bioHolder.AddEffect("dwarf")
+
+	unequipped(mob/user)
+		if(equipped_in_slot == SLOT_HEAD)
+			user.bioHolder.RemoveEffect("dwarf")
+		. = ..()
 
 /obj/item/clothing/head/bigtex
 	name = "75-gallon hat"

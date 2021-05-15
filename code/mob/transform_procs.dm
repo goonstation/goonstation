@@ -423,6 +423,9 @@
 				src.mind.transfer_to(W)
 				W.mind.special_role = "faustian macho man"
 				ticker.mode.Agimmicks.Add(W)
+				W.real_name = "[pick("Faustian", "Fony", "Fake", "False","Fraudulent", "Fragile")] [W.real_name]"
+				W.name = W.real_name
+
 			else
 				src.mind.transfer_to(W)
 				src.mind.special_role = "macho man"
@@ -617,7 +620,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	// determine if they're allowed to respawn
 	var/min_time_passed = 3 MINUTES
-	if(mind.assigned_role == "Animal")
+	if(mind.assigned_role == "Animal" || mind.assigned_role == "Ghostdrone")
 		// no you get to wait for longer
 		min_time_passed = 10 MINUTES
 	var/time_elapsed = (world.timeofday + ((world.timeofday < mind.last_death_time) ? 864000 : 0)) - mind.last_death_time // Offset the time of day in case of midnight rollover
@@ -649,11 +652,11 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	var/traitor = 0
 
 	if (length(types))
-		C = selfmob.make_critter(pick(types), spawnpoint)
+		C = selfmob.make_critter(pick(types), spawnpoint, ghost_spawned=TRUE)
 	else
 		traitor = checktraitor(selfmob)
 		if (traitor)
-			C = selfmob.make_critter(pick(antag_respawn_critter_types), spawnpoint)
+			C = selfmob.make_critter(pick(antag_respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
 		else
 			if (selfmob.mind && istype(selfmob.mind.purchased_bank_item, /datum/bank_purchaseable/critter_respawn))
 				var/datum/bank_purchaseable/critter_respawn/critter_respawn = selfmob.mind.purchased_bank_item

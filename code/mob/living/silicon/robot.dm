@@ -940,6 +940,8 @@
 					src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
 					src.emagged = 1
 					src.handle_robot_antagonist_status("emagged", 0, user)
+					if(src.syndicate)
+						src.antagonist_overlay_refresh(1, 1)
 					SPAWN_DBG(0)
 						update_appearance()
 					return 1
@@ -1871,7 +1873,6 @@
 		if(!upgrade) return
 
 		if (upgrade.active)
-			upgrade.upgrade_activate(src)
 			if (!upgrade || upgrade.loc != src || (src.mind && src.mind.current != src) || !isrobot(src)) // Blame the teleport upgrade.
 				return
 			if (src.cell && src.cell.charge > upgrade.drainrate)
@@ -1879,6 +1880,7 @@
 			else
 				src.show_text("You do not have enough power to activate \the [upgrade]; you need [upgrade.drainrate]!", "red")
 				return
+			upgrade.upgrade_activate(src)
 
 			if (upgrade.charges > 0)
 				upgrade.charges--

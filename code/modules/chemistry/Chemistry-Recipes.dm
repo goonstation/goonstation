@@ -957,6 +957,16 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
+		cocktail_caipirinha
+			name = "Pineapple Caipirinha"
+			id = "caipirinha"
+			result = "caipirinha"
+			required_reagents = list("vodka" = 2, "sugar" = 1,"ice" = 1, "juice_pineapple" = 2)
+			result_amount = 5
+			mix_phrase = "The vodka and pineapple juice mix together into a yellowish drink."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
 		cocktail_diesel
 			name = "Diesel"
 			id = "diesel"
@@ -2424,8 +2434,6 @@ datum
 							continue
 						if (!M.ears_protected_from_sound())
 							boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
-						else
-							continue
 
 						var/checkdist = get_dist(M, location)
 						var/weak = max(0, 2 * (3 - checkdist))
@@ -2455,8 +2463,6 @@ datum
 								continue
 							if (!M.ears_protected_from_sound())
 								boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
-							else
-								continue
 
 							var/checkdist = get_dist(M, location)
 							var/weak = max(0, 2 * (3 - checkdist))
@@ -2937,6 +2943,10 @@ datum
 			required_reagents = list("glycerol" = 1, "nitric_acid" = 1, "acid" = 1)
 			result_amount = 3
 			mix_phrase = "The mixture becomes seemingly heavy and viscous."
+
+			on_reaction(var/datum/reagents/holder, created_volume)
+				if(istype(holder?.my_atom, /obj/effects/foam))
+					holder.del_reagent("nitroglycerin")
 
 		/*
 		weedkiller/weedkiller2

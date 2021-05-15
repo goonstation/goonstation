@@ -94,7 +94,14 @@
 			SPAWN_DBG(1 DECI SECOND)
 				O.attack_hand(user)
 		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored)
-			src.attackby(O, user, O.loc)
+			user.swap_hand()
+			if(user.equipped() == null)
+				O.attack_hand(user)
+				if(O in user.equipped_list())
+					src.attackby(O, user, O.loc)
+			else
+				boutput(user, __blue("Your hands are full!"))
+			user.swap_hand()
 
 	//failure returns 0 or lower for diff messages - sorry
 	proc/check_can_hold(obj/item/W)
@@ -128,6 +135,12 @@
 			return
 		var/canhold = src.check_can_hold(W,user)
 		if (canhold <= 0)
+			if(istype(W, /obj/item/storage) && (canhold == 0 || canhold == -1))
+				var/obj/item/storage/S = W
+				for (var/obj/item/I in S.get_contents())
+					if(src.check_can_hold(I) > 0)
+						src.attackby(I, user, S)
+				return
 			switch (canhold)
 				if(0)
 					boutput(user, "<span class='alert'>[src] cannot hold [W].</span>")

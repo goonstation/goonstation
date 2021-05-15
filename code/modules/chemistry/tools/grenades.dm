@@ -333,6 +333,7 @@
 		beakers += B2
 
 	revolution //convertssss
+		mats = null
 		explode()
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				var/datum/game_mode/revolution/R = ticker.mode
@@ -524,6 +525,28 @@
 		var/obj/item/reagent_containers/glass/B2 = new(src)
 
 		B1.reagents.add_reagent("fog", 25)
+		B1.reagents.add_reagent("sugar",25)
+
+		B2.reagents.add_reagent("phosphorus", 25)
+		B2.reagents.add_reagent("potassium", 25)
+
+		beakers += B1
+		beakers += B2
+
+/obj/item/chem_grenade/napalm
+	name = "napalm smoke grenade"
+	desc = "A grenade that will fill an area with napalm smoke."
+	icon = 'icons/obj/items/grenade.dmi'
+	icon_state = "incendiary"
+	icon_state_armed = "incendiary1"
+	stage = 2
+
+	New()
+		..()
+		var/obj/item/reagent_containers/glass/B1 = new(src)
+		var/obj/item/reagent_containers/glass/B2 = new(src)
+
+		B1.reagents.add_reagent("syndicate_napalm", 25)
 		B1.reagents.add_reagent("sugar",25)
 
 		B2.reagents.add_reagent("phosphorus", 25)

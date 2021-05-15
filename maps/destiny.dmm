@@ -2070,8 +2070,7 @@
 	},
 /obj/item/device/radio/beacon,
 /obj/machinery/light{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -4578,6 +4577,11 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/noticeboard/persistent{
+	name = "Kitchen persistent notice board";
+	persistent_id = "kitchen";
+	pixel_x = 15
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "arK" = (
@@ -5582,8 +5586,7 @@
 /area/station/crew_quarters/bar)
 "avN" = (
 /obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = 0
+	dir = 8
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -6729,9 +6732,6 @@
 /obj/machinery/computer/security/wooden_tv/small{
 	pixel_y = 8
 	},
-/obj/noticeboard{
-	pixel_y = 32
-	},
 /obj/machinery/light/incandescent{
 	dir = 4;
 	nostick = 1
@@ -7569,8 +7569,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -8428,8 +8427,7 @@
 	},
 /obj/disposalpipe/segment,
 /obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = 0
+	dir = 8
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -8603,8 +8601,7 @@
 	dir = 10
 	},
 /obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = 0
+	dir = 8
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -9061,7 +9058,6 @@
 /area/station/crew_quarters/fitness)
 "aJY" = (
 /obj/overlay{
-	anchored = 1;
 	icon = 'icons/misc/beach2.dmi';
 	icon_state = "palm1";
 	layer = 10;
@@ -12516,8 +12512,7 @@
 /area/station/crew_quarters/pool)
 "bbu" = (
 /obj/machinery/light{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /obj/decal/tile_edge/line/blue{
 	color = "#485e81";
@@ -14700,6 +14695,7 @@
 /area/station/engine/gas)
 "bqc" = (
 /obj/item/storage/wall/medical{
+	pixel_x = 15;
 	pixel_y = 31
 	},
 /obj/machinery/computer/general_alert,
@@ -14709,6 +14705,11 @@
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/noticeboard/persistent{
+	name = "Engineering persistent notice board";
+	persistent_id = "engineering";
+	pixel_x = -8
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
@@ -15136,9 +15137,6 @@
 	icon_state = "line1"
 	},
 /obj/storage/secure/closet/engineering/mining,
-/obj/noticeboard{
-	pixel_y = 32
-	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "bsw" = (
@@ -15607,18 +15605,17 @@
 /obj/machinery/light/emergency{
 	dir = 4
 	},
+/obj/item/chem_grenade/firefighting{
+	pixel_y = 10
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_y = 8
+	},
 /obj/machinery/cell_charger,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
-/obj/item/storage/firstaid/fire{
-	pixel_y = 4
-	},
-/obj/item/storage/firstaid/toxin,
-/obj/item/paper/engine,
-/obj/item/chem_grenade/firefighting,
-/obj/item/chem_grenade/firefighting,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -16762,6 +16759,8 @@
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/tank/air,
 /obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/chem_grenade/firefighting,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -18392,8 +18391,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/computer/stockexchange,
-/obj/noticeboard{
-	pixel_y = 32
+/obj/noticeboard/persistent{
+	name = "Crew Quarters persistent notice board";
+	persistent_id = "crew quarters"
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/starboard)
@@ -18682,6 +18682,9 @@
 /obj/item/clothing/head/helmet/hardhat,
 /obj/item/extinguisher,
 /obj/item/extinguisher,
+/obj/item/device/light/flashlight,
+/obj/item/chem_grenade/firefighting,
+/obj/item/chem_grenade/firefighting,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "cfn" = (
@@ -19210,9 +19213,6 @@
 /area/station/chapel/office)
 "cpv" = (
 /obj/stool/bench,
-/obj/noticeboard{
-	pixel_y = 32
-	},
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=central_hall";
 	location = "lounge";
@@ -20404,8 +20404,7 @@
 /obj/table/wood/auto/desk,
 /obj/machinery/firealarm{
 	layer = 3.5;
-	pixel_y = 28;
-	text = ""
+	pixel_y = 28
 	},
 /obj/item/folder,
 /obj/item/paper_bin{
@@ -20562,14 +20561,6 @@
 "cWl" = (
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
-"cWt" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13"
-	},
-/turf/simulated/floor/red,
-/area/station/security/main)
 "cWv" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -21868,8 +21859,7 @@
 /obj/machinery/vending/monkey,
 /obj/machinery/firealarm{
 	layer = 3.5;
-	pixel_y = 28;
-	text = ""
+	pixel_y = 28
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -22491,8 +22481,9 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/noticeboard{
-	pixel_y = 32
+/obj/noticeboard/persistent{
+	name = "Mechanics Workshop persistent notice board";
+	persistent_id = "mechanics"
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
@@ -22670,6 +22661,10 @@
 	},
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/phone/wall{
+	pixel_x = 9;
+	pixel_y = 5
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
@@ -23385,16 +23380,12 @@
 /turf/simulated/floor/purple/checker,
 /area/station/janitor/office)
 "ens" = (
-/obj/noticeboard{
-	pixel_y = 32
+/obj/noticeboard/persistent{
+	name = "Detective's Office persistent notice board";
+	persistent_id = "detectives office"
 	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/purpleblack{
-	dir = 1
-	},
-/area/station/science/lobby)
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "ent" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -24060,8 +24051,7 @@
 	name = "peststart"
 	},
 /obj/machinery/light{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /obj/machinery/light_switch/north{
 	pixel_x = -8;
@@ -24763,8 +24753,7 @@
 /obj/item/storage/toolbox/electrical,
 /obj/machinery/firealarm{
 	layer = 3.5;
-	pixel_y = 28;
-	text = ""
+	pixel_y = 28
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -25782,6 +25771,7 @@
 /obj/item/tank/jetpack,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/suit/space/captain,
+/obj/item/clothing/head/helmet/space/captain,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "fjW" = (
@@ -26666,9 +26656,6 @@
 	name = "mail chute-'Janitor'"
 	},
 /obj/disposalpipe/trunk/mail,
-/obj/noticeboard{
-	pixel_y = 32
-	},
 /turf/simulated/floor/purple/checker,
 /area/station/janitor/office)
 "fGo" = (
@@ -26680,6 +26667,10 @@
 	},
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/noticeboard/persistent{
+	name = "Botany persistent notice board";
+	persistent_id = "botany"
 	},
 /turf/simulated/floor/blue/side,
 /area/station/hydroponics/bay)
@@ -27122,11 +27113,11 @@
 "fRM" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
-/obj/machinery/door/window/eastleft{
-	req_access_txt = "1"
-	},
 /obj/machinery/cashreg{
 	name = "bail payment device"
+	},
+/obj/machinery/door/window/eastright{
+	req_access_txt = "1"
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -27488,6 +27479,7 @@
 /obj/item/device/radio,
 /obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/ears/earmuffs,
+/obj/item/device/audio_log,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -27610,9 +27602,6 @@
 /area/station/storage/tools)
 "gbT" = (
 /obj/machinery/manufacturer/general,
-/obj/noticeboard{
-	pixel_y = 32
-	},
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 9
 	},
@@ -28463,6 +28452,7 @@
 	dir = 8;
 	pixel_x = -28
 	},
+/obj/item/clothing/suit/hi_vis,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -29994,8 +29984,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = 0
+	dir = 8
 	},
 /obj/decal/tile_edge/line/blue{
 	dir = 10;
@@ -30342,11 +30331,13 @@
 "hvZ" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger{
+	pixel_x = -6;
 	pixel_y = 5
 	},
-/obj/item/device/analyzer/atmospheric,
-/obj/item/device/t_scanner,
-/obj/item/device/light/flashlight,
+/obj/item/device/t_scanner{
+	pixel_x = 10;
+	pixel_y = 5
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -30697,8 +30688,7 @@
 	},
 /obj/machinery/genetics_booth,
 /obj/machinery/light{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/medical/medbay/lobby)
@@ -30833,6 +30823,10 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/noticeboard/persistent{
+	name = "Medbay persistent notice board";
+	persistent_id = "medbay"
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
@@ -30976,8 +30970,7 @@
 	icon_state = "line3"
 	},
 /obj/machinery/light{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
@@ -31918,8 +31911,18 @@
 /obj/item/item_box/medical_patches/silver_sulf{
 	pixel_y = 5
 	},
-/obj/item/clothing/suit/hi_vis,
-/obj/item/clothing/suit/hi_vis,
+/obj/item/device/analyzer/atmospheric{
+	pixel_x = -10;
+	pixel_y = 3
+	},
+/obj/item/storage/firstaid/fire{
+	pixel_y = 4
+	},
+/obj/item/device/analyzer/atmospheric{
+	pixel_x = 10;
+	pixel_y = 5
+	},
+/obj/item/storage/firstaid/toxin,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "iuc" = (
@@ -32151,9 +32154,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/noticeboard{
-	name = "Complaint Board";
-	pixel_y = 32
+/obj/noticeboard/persistent{
+	name = "Customs persistent notice board";
+	persistent_id = "customs"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
@@ -33270,10 +33273,11 @@
 	pixel_y = 12;
 	switchon = 1
 	},
-/obj/item/reagent_containers/food/drinks/mug/random_color,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/item/paper/engine,
+/obj/item/reagent_containers/food/drinks/mug/random_color,
 /obj/item/rocko{
 	pixel_x = 12;
 	pixel_y = 6
@@ -34165,9 +34169,7 @@
 /area/station/crew_quarters/pool)
 "jJR" = (
 /obj/machinery/light{
-	dir = 1;
-	pixel_x = 0;
-	pixel_y = 0
+	dir = 1
 	},
 /obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet,
@@ -36024,9 +36026,6 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "kOS" = (
-/obj/noticeboard{
-	pixel_y = 32
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -37141,9 +37140,6 @@
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "2-8"
-	},
-/obj/noticeboard{
-	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -38642,8 +38638,7 @@
 "mms" = (
 /obj/machinery/firealarm{
 	layer = 3.5;
-	pixel_y = 28;
-	text = ""
+	pixel_y = 28
 	},
 /obj/table/wood/auto/desk,
 /obj/item/folder,
@@ -39321,8 +39316,7 @@
 "mFK" = (
 /obj/machinery/firealarm{
 	layer = 3.5;
-	pixel_y = 28;
-	text = ""
+	pixel_y = 28
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
@@ -39607,6 +39601,11 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/noticeboard/persistent{
+	name = "Brig persistent notice board";
+	persistent_id = "brig";
+	pixel_x = 5
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -41407,6 +41406,7 @@
 /obj/machinery/light/emergency{
 	dir = 8
 	},
+/obj/item/clothing/suit/hi_vis,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -41992,6 +41992,7 @@
 /obj/machinery/light/emergency{
 	dir = 8
 	},
+/obj/item/clothing/suit/hi_vis,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -42852,8 +42853,7 @@
 "oAX" = (
 /obj/machinery/firealarm{
 	layer = 3.5;
-	pixel_y = 28;
-	text = ""
+	pixel_y = 28
 	},
 /obj/table/wood/auto/desk,
 /obj/machinery/light/lamp{
@@ -43751,6 +43751,9 @@
 	},
 /obj/machinery/light_switch/north,
 /obj/machinery/power/data_terminal,
+/obj/item/hand_labeler{
+	pixel_y = -3
+	},
 /turf/simulated/floor/yellow/corner{
 	dir = 8
 	},
@@ -44412,8 +44415,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/light{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -45941,8 +45943,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "qnP" = (
-/obj/table/reinforced/auto,
-/obj/machinery/phone,
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -47788,8 +47789,9 @@
 	dir = 1;
 	nostick = 1
 	},
-/obj/noticeboard{
-	pixel_y = 32
+/obj/noticeboard/persistent{
+	name = "Chapel persistent notice board";
+	persistent_id = "chapel"
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
@@ -48975,9 +48977,6 @@
 /obj/item/device/radio/headset/multifreq,
 /obj/item/device/radio/headset/multifreq,
 /obj/item/device/radio/headset/multifreq,
-/obj/noticeboard{
-	pixel_y = 32
-	},
 /obj/decal/tile_edge/line/white{
 	icon_state = "line3"
 	},
@@ -50855,6 +50854,11 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/kitchen/food_box/donut_box,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13"
+	},
 /turf/simulated/floor/red/checker,
 /area/station/security/main)
 "tap" = (
@@ -53528,6 +53532,9 @@
 /area/station/medical/medbay/surgery/storage)
 "uvA" = (
 /obj/storage/closet/wardrobe/red/security_gimmick,
+/obj/machinery/light/emergency{
+	dir = 1
+	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "uwU" = (
@@ -55686,8 +55693,7 @@
 "vvB" = (
 /obj/machinery/firealarm{
 	layer = 3.5;
-	pixel_y = 28;
-	text = ""
+	pixel_y = 28
 	},
 /obj/table/wood/auto/desk,
 /obj/item/folder,
@@ -56003,12 +56009,13 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "vFs" = (
-/obj/machinery/light/emergency{
-	dir = 1
-	},
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/noticeboard/persistent{
+	name = "Security persistent notice board";
+	persistent_id = "security"
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -56806,6 +56813,10 @@
 /obj/tug_cart,
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/noticeboard/persistent{
+	name = "Cargo persistent notice board";
+	persistent_id = "cargo"
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
@@ -58370,9 +58381,7 @@
 	pixel_x = 24;
 	pixel_y = 8
 	},
-/obj/item/device/analyzer/atmospheric,
-/obj/item/hand_labeler,
-/obj/item/device/audio_log,
+/obj/machinery/phone,
 /turf/simulated/floor/yellow/corner{
 	dir = 1
 	},
@@ -59039,9 +59048,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/noticeboard{
-	pixel_y = 32
-	},
 /obj/storage/crate/furnacefuel,
 /turf/simulated/floor,
 /area/station/engine/gas)
@@ -59432,6 +59438,12 @@
 /obj/table/reinforced/auto,
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/noticeboard/persistent{
+	name = "Bar persistent notice board";
+	persistent_id = "bar";
+	pixel_x = -32;
+	pixel_y = 0
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -59937,8 +59949,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/medical/medbay/lobby)
@@ -60718,8 +60729,7 @@
 	icon_state = "line2"
 	},
 /obj/machinery/light{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /obj/item/storage/wall/medical{
 	dir = 4;
@@ -97729,7 +97739,7 @@ rER
 fIF
 ltO
 gca
-cWt
+bEs
 nRn
 tai
 juJ
@@ -101321,7 +101331,7 @@ wLJ
 ghA
 ons
 fyo
-ons
+ens
 ons
 sXn
 fxq
@@ -119161,7 +119171,7 @@ dxj
 vDH
 ddu
 ddu
-ens
+jxc
 tEV
 lFN
 grW

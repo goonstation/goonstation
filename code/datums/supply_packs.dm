@@ -385,8 +385,8 @@
 	category = "Research Department"
 	contains = list(/mob/living/carbon/human/npc/monkey = 4,
 						/obj/item/clothing/mask/monkey_translator)
-	cost = 500
-	containertype = /obj/storage/crate/medical
+	cost = 2500
+	containertype = /obj/storage/secure/crate/medical/monkey
 	containername = "Lab Monkey Crate"
 
 /datum/supply_packs/bee

@@ -253,7 +253,7 @@
 				src.attacking = 0
 			return
 
-		src.visible_message("<span class='alert'><B>[src]</B> bites [M] with its [pick("tiny","eeny-weeny","minute","little", "nubby")] [prob(50) ? "mandibles" : "bee-teeth"]!</span>")
+		src.visible_message("<span class='alert'><B>[src]</B> bites [M] with its [pick("tiny","eeny-weeny","minute","little", "nubby")] [prob(50) ? "mandibles" : "bee-teeth"]!</span>", group = "beeattack")
 		logTheThing("combat", src.name, M, "bites [constructTarget(M,"combat")]")
 		random_brute_damage(M, 2, 1)
 		if (isliving(M))
@@ -276,7 +276,7 @@
 		if (M.stat || M.getStatusDuration("paralysis"))
 			src.task = "thinking"
 			return
-		src.visible_message("<span class='alert'><B>[src]</B> pokes [M] with its [pick("nubby","stubby","tiny")] little stinger!</span>")
+		src.visible_message("<span class='alert'><B>[src]</B> pokes [M] with its [pick("nubby","stubby","tiny")] little stinger!</span>", group = "beeattack")
 		logTheThing("combat", src.name, M, "stings [constructTarget(M,"combat")]")
 		if (isliving(M))
 			var/mob/living/H = M
@@ -506,13 +506,13 @@
 			return
 
 		if (prob(dance_chance))
-			src.visible_message("<b>[src]</b> responds with a dance of its own!")
+			src.visible_message("<b>[src]</b> responds with a dance of its own!", group = "beedance")
 			src.dance()
 		else
 			if (istype(src, /obj/critter/domestic_bee/trauma))
 				src.visible_message("<b>[src]</b> buzzes in short-lived comfort.")
 			else
-				src.visible_message("<b>[src]</b> buzzes [pick("to the beat", "in tune", "approvingly", "happily")].")
+				src.visible_message("<b>[src]</b> buzzes [pick("to the beat", "in tune", "approvingly", "happily")].", group = "beedance")
 
 	proc/dance()
 		set waitfor = 0

@@ -435,6 +435,7 @@
 		return
 
 	proc/smash()
+		logTheThing("station", usr, null, "smashes a [src] in [src.loc?.loc] ([showCoords(src.x, src.y, src.z)])")
 		if (src.health < (src.health_max * -0.75))
 			// You managed to destroy it so hard you ERASED it.
 			qdel(src)

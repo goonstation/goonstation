@@ -32,7 +32,8 @@
 				continue
 			missile_targets += M
 
-		holder.owner.say("ICEE BEEYEM") // EHM-EYEARRVEE
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("ICEE BEEYEM") // EHM-EYEARRVEE
 		..()
 
 		var/num_shots = src.base_shots

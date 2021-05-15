@@ -489,6 +489,17 @@ datum
 			fluid_b = 37
 			alch_strength = 0.15
 
+		fooddrink/alcoholic/caipirinha
+			name = "Pineapple Caipirinha"
+			id = "caipirinha"
+			description = "A sweet vodka and pineapple cocktail thats fit for a day at the beach."
+			reagent_state = LIQUID
+			taste = "like pineapple and sea breeze"
+			fluid_r = 240
+			fluid_g = 236
+			fluid_b = 110
+			alch_strength = 0.25
+
 		fooddrink/alcoholic/diesel
 			name = "Diesel"
 			id = "diesel"
@@ -2467,6 +2478,8 @@ datum
 					var/obj/critter/slug/S = O
 					S.visible_message("<span class='alert'>[S] shrivels up!</span>")
 					S.CritterDeath()
+				if(istype(O, /obj/decal/icefloor))
+					qdel(O)
 				..(O, volume)
 				return
 

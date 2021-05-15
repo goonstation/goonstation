@@ -254,7 +254,8 @@
 
 								var/datum/plantgenes/DNA = P.plantgenes
 								var/datum/plantgenes/PDNA = S.plantgenes
-								S.generic_seed_setup(stored)
+								if (!stored.hybrid && !stored.unique_seed)
+									S.generic_seed_setup(stored)
 								HYPpassplantgenes(DNA,PDNA)
 								if (stored.hybrid)
 									var/datum/plant/hybrid = new /datum/plant(S)
@@ -262,6 +263,7 @@
 										if (issaved(stored.vars[V]) && V != "holder")
 											hybrid.vars[V] = stored.vars[V]
 									S.planttype = hybrid
+									S.plant_seed_color(stored.seedcolor)
 								user.visible_message("<span class='notice'><b>[user]</b> spits out a seed.</span>",\
 								"<span class='notice'>You spit out a seed.</span>")
 					if(src.dropped_item)
@@ -1785,6 +1787,7 @@
 			playsound(get_turf(src), "sound/items/CocktailShake.ogg", 25, 1, -6)
 			sleep (0.3 SECONDS)
 			src.reagents.inert = 0
+			src.reagents.physical_shock(rand(5, 20))
 			src.reagents.handle_reactions()
 			src.reagents.inert = 1
 			if ((user.mind.assigned_role == "Bartender") && !ON_COOLDOWN(user, "bartender shaker xp", 180 SECONDS))
