@@ -50,7 +50,7 @@ obj/machinery/air_vendor
 
 	proc/fill_cost()
 		if(!holding) return 0
-		return round((src.target_pressure - MIXTURE_PRESSURE(src.holding.air_contents)) * src.holding.air_contents.volume * src.air_cost)
+		return clamp(round((src.target_pressure - MIXTURE_PRESSURE(src.holding.air_contents)) * src.holding.air_contents.volume * src.air_cost), 0, INFINITY)
 
 	proc/fill()
 		if(!holding) return
