@@ -155,7 +155,7 @@ obj/machinery/air_vendor
 			if(href_list["fill"])
 				if (holding)
 					var/cost = fill_cost()
-					if(credits > cost)
+					if(credits >= cost)
 						src.credits -= cost
 						src.fill()
 						boutput(usr, "<span class='notice'>You fill up the [src.holding].</span>")
