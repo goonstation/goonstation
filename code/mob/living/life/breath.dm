@@ -334,7 +334,7 @@
 			if (!has_cyberlungs)
 				var/datum/gas/rad_particles/RV = breath.get_trace_gas_by_type(/datum/gas/rad_particles)
 				if (RV)
-					owner.changeStatus("radiation", RV.moles, 20)
+					owner.changeStatus("radiation", RV.moles, 2 SECONDS)
 
 		if (human_owner?.organHolder)
 			if (breath.temperature > min(human_owner.organHolder.left_lung ? human_owner.organHolder.left_lung.temp_tolerance : INFINITY, human_owner.organHolder.right_lung ? human_owner.organHolder.right_lung.temp_tolerance : INFINITY) && !human_owner.is_heat_resistant()) // Hot air hurts :(
