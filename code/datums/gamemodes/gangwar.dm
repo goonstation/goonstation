@@ -1258,7 +1258,7 @@
 			boutput(target, "<span class='alert'>That gang is full!</span>")
 			return
 
-		var/joingang = gui_alert(M, "Do you wish to join [src.gang.gang_name]?", "[src]", list("Yes", "No"), timeout = 10 SECONDS)
+		var/joingang = tgui_alert(M, "Do you wish to join [src.gang.gang_name]?", "[src]", list("Yes", "No"), timeout = 10 SECONDS)
 		if (joingang == "No") return
 
 		target.mind.gang = gang
