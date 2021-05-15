@@ -201,6 +201,7 @@
 				var/input_name = input(user, "Name the patch:", "Name", R.get_master_reagent_name()) as null|text
 				var/patchname = copytext(html_encode(input_name), 1, 32)
 				if (isnull(patchname) || !length(patchname) || patchname == " ")
+					working = 0
 					return
 				var/all_safe = 1
 				for (var/reagent_id in R.reagent_list)
@@ -223,6 +224,7 @@
 				var/input_name = input(user, "Name the ampoule:", "Name", R.get_master_reagent_name()) as null|text
 				var/ampoulename = copytext(html_encode(input_name), 1, 32)
 				if(!ampoulename)
+					working = 0
 					return
 				if(ampoulename == " ")
 					ampoulename = R.get_master_reagent_name()
@@ -484,7 +486,7 @@ ported and crapped up by: haine
 
 			var/trans = src.active_tank.reagents.trans_to(target, amt_to_transfer)
 			user.show_text("You transfer [trans] unit\s of the solution to [target]. [active_tank.reagents.total_volume] unit\s remain.", "blue")
-			playsound(loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 0) // Play a sound effect.
+			playsound(loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 0) // Play a sound effect.
 			processing_items |= src
 		else
 			return ..() // call your parents!!

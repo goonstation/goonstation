@@ -1296,6 +1296,9 @@
 /turf/simulated/floor/proc/dismantle_wall()//can get called due to people spamming weldingtools on walls
 	return
 
+/turf/simulated/floor/proc/take_hit()// can get called due to people crumpling cardboard walls
+	return
+
 /turf/simulated/floor/proc/break_tile_to_plating()
 	if(intact) to_plating()
 	break_tile()
@@ -1607,6 +1610,8 @@
 		if (K)
 			K.attackby(C, user, params)
 
+	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1)) // this seemed like the neatest way to make attack_hand still trigger when needed
+		src?.material.triggerOnHit(src, C, user, 1)
 	else
 		return attack_hand(user)
 

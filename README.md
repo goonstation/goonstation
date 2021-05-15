@@ -43,7 +43,7 @@ To contribute maps to the game, please follow our mapping guidelines! This detai
 
 #### Q: I'm getting a compilation error like `unable to open +secret\__secret.dme`.
 
-You’ll need to create a file named `__secret.dme` in the +secret subdirectory. It should be blank and have no contents. Read the [Goonstation Development Guide](https://hackmd.io/@ZeWaka/goondev) for additional details.
+You’ll need to create a file named `__secret.dme` in the +secret subdirectory. It should be blank and have no contents. Read the [Goonstation Development Guide](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fdev) for additional details.
 
 
 ## LICENSE

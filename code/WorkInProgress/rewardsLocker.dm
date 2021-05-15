@@ -238,8 +238,8 @@
 				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
 				M.wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 				if (M.wear_image) M.wear_image.icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
-				M.icon_state = "mechanic"
-				M.item_state = "mechanic"
+				M.icon_state = "mechanic-reward"
+				M.item_state = "mechanic-reward"
 				M.name = "pilot suit"
 				M.real_name = "pilot suit"
 				M.desc = "A sleek but comfortable pilot's jumpsuit. (Base Item: [prev])"
@@ -619,6 +619,15 @@
 					M.name = "commander's hat"
 					M.real_name = "commander's hat"
 					M.desc = "A fancy hat specifically for NanoTrasen commanders. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+				else if (istype(M, /obj/item/clothing/head/helmet/space/captain))
+					var/prev = M.name
+					M.name = "commander's space helmet"
+					M.desc = "Helps protect against vacuum. Comes in a fasionable blue befitting a commander. (Base Item: [prev])"
+					M.icon_state = "space-captain-blue"
+					M.item_state = "space-captain-blue"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 

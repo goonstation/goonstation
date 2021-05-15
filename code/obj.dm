@@ -103,6 +103,11 @@
 		remove_dialogs()
 		..()
 
+	UpdateName()
+		if (isnull(src.real_name) && !isnull(src.name))
+			src.real_name = src.name
+		src.name = "[name_prefix(null, 1)][src.real_name || initial(src.name)][name_suffix(null, 1)]"
+
 	proc/can_access_remotely(mob/user)
 		. = FALSE
 

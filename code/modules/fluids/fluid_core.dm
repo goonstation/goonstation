@@ -306,7 +306,7 @@ var/mutable_appearance/fluid_ma
 		if (src.pooled) return
 
 		if (sfx)
-			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 1)
+			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 
 		if (src.group)
 			if (!src.group.remove(src))

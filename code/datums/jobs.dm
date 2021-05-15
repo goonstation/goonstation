@@ -751,8 +751,8 @@ ABSTRACT_TYPE(/datum/job/engineering)
 		if (!M)
 			return
 		M.bioHolder.AddEffect("training_miner")
-		if (prob(20) && !M.mutantrace)
-			M.bioHolder.AddEffect("dwarf", magical=1) // heh
+		if(prob(20))
+			M.bioHolder.AddEffect("dwarf", magical=1)
 
 /datum/job/engineering/mechanic
 	name = "Mechanic"
@@ -2412,8 +2412,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		if (!M)
 			return
 		M.bioHolder.AddEffect("training_miner")
-		if (prob(20) && !M.mutantrace)
-			M.bioHolder.AddEffect("dwarf", magical=1) // heh
 
 /datum/job/special/machoman
 	name = "Macho Man"

@@ -17,6 +17,7 @@
 #define HEAD_HUNTER 14
 #define HEAD_ITHILLID 15
 #define HEAD_VIRTUAL 16
+#define HEAD_FLASHY 17
 
 //tail defines
 #define TAIL_NONE 0

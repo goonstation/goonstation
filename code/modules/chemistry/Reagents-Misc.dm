@@ -33,17 +33,17 @@ datum
 			// explodes instantly as a gas (50 °C < T)
 
 			proc/explode(var/list/covered_turf, expl_reason)
-				for (var/turf/T in covered_turf)
-					message_admins("Nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [showCoords(T.x, T.y, T.z)].")
-					var/context = "???"
-					if(holder?.my_atom) // Erik: Fix for Cannot read null.fingerprintshidden
-						var/list/fh = holder.my_atom.fingerprintshidden
+				var/turf/T = pick(covered_turf)
+				message_admins("Nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [showCoords(T.x, T.y, T.z)].")
+				var/context = "???"
+				if(holder?.my_atom) // Erik: Fix for Cannot read null.fingerprintshidden
+					var/list/fh = holder.my_atom.fingerprintshidden
 
-						if (length(fh)) //Wire: Fix for: bad text or out of bounds
-							context = "Fingerprints: [jointext(fh, "")]"
+					if (length(fh)) //Wire: Fix for: bad text or out of bounds
+						context = "Fingerprints: [jointext(fh, "")]"
 
-					logTheThing("combat", usr, null, "is associated with a nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [showCoords(T.x, T.y, T.z)]. Context: [context].")
-					explosion_new(usr, T, (12.5 * min(volume/covered_turf.len, 1000))**(2/3), 0.4) // Because people were being shit // okay its back but harder to handle // okay sci can have a little radius, as a treat
+				logTheThing("combat", usr, null, "is associated with a nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [showCoords(T.x, T.y, T.z)]. Context: [context].")
+				explosion_new(usr, T, (12.5 * min(volume, 1000))**(2/3), 0.4) // Because people were being shit // okay its back but harder to handle // okay sci can have a little radius, as a treat
 				holder.del_reagent("nitroglycerin")
 
 			reaction_temperature(exposed_temperature, exposed_volume)
@@ -157,7 +157,7 @@ datum
 				var/datum/reagents/silver_fulminate_holder = holder
 				var/silver_fulminate_volume = volume
 				silver_fulminate_holder.del_reagent("silver_fulminate")
-				silver_fulminate_holder.temperature_reagents(silver_fulminate_holder.total_temperature + silver_fulminate_volume*200,10,35,500)
+				silver_fulminate_holder.temperature_reagents(silver_fulminate_holder.total_temperature + silver_fulminate_volume*20,10,1,500)
 
 			reaction_temperature(var/exposed_temperature, var/exposed_volume)
 				if (exposed_temperature >= T0C + 30)
@@ -182,8 +182,12 @@ datum
 				pop(get_turf(O), amount)
 
 			physical_shock(var/force)
-				if (prob(force*5))
-					explode()
+				if (volume <= holder.total_volume/4) //be somewhat stable to shock if prepared like bang snaps
+					if (prob(max(0,force-12)*12)) //safe to run with, but not sprint. 24% chance to pop on your face when thrown
+						explode()
+				else
+					if (prob(force*5))
+						explode()
 
 			on_transfer(var/datum/reagents/source, var/datum/reagents/target, var/transferred_volume)
 				var/datum/reagent/silver_fulminate/target_silver_fulminate = target.get_reagent("silver_fulminate")

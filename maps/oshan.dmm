@@ -23,7 +23,6 @@
 "aae" = (
 /obj/machinery/cell_charger,
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 8;
 	frequency = 1485;
 	name = "Security Intercom"
@@ -9262,7 +9261,10 @@
 	},
 /area/station/turret_protected/Zeta)
 "avz" = (
-/obj/critter/domestic_bee/sea,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/plantpot,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "avA" = (
@@ -10388,16 +10390,20 @@
 /area/station/hallway/primary/north)
 "aye" = (
 /obj/disposalpipe/segment,
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
+/obj/noticeboard/persistent{
+	name = "Crew Quarters persistent notice board";
+	persistent_id = "crew quarters"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "ayf" = (
 /obj/shrub{
 	dir = 8
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
@@ -10796,9 +10802,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/cable{
-	icon_state = "1-8"
-	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "aze" = (
@@ -10809,6 +10812,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
@@ -12686,9 +12692,6 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
 "aDM" = (
-/obj/noticeboard{
-	pixel_y = 28
-	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
 "aDN" = (
@@ -16060,16 +16063,16 @@
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "aLH" = (
-/obj/machinery/plantpot,
 /obj/machinery/firealarm{
 	pixel_y = 24;
 	text = "NF"
 	},
+/obj/machinery/hydro_growlamp,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "aLI" = (
-/obj/machinery/plantpot,
 /obj/machinery/light_switch/auto,
+/obj/machinery/plantpot,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "aLJ" = (
@@ -16386,9 +16389,7 @@
 	},
 /area/station/ranch)
 "aMH" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_krimpus"
-	},
+/obj/critter/domestic_bee/sea,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "aMI" = (
@@ -16408,6 +16409,10 @@
 	dir = 4
 	},
 /obj/access_spawn/hydro,
+/obj/noticeboard/persistent{
+	name = "Botany persistent notice board";
+	persistent_id = "botany"
+	},
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
 "aMJ" = (
@@ -17221,13 +17226,6 @@
 	},
 /turf/simulated/floor/red,
 /area/listeningpost)
-"aOR" = (
-/obj/shrub{
-	dir = 8
-	},
-/obj/machinery/light/incandescent/harsh,
-/turf/simulated/floor/grass,
-/area/station/hydroponics/bay)
 "aOS" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/catering{
@@ -17364,13 +17362,6 @@
 /obj/stool/chair,
 /turf/simulated/floor/black,
 /area/listeningpost)
-"aPl" = (
-/obj/machinery/light/incandescent/harsh,
-/obj/shrub{
-	dir = 8
-	},
-/turf/simulated/floor/grass,
-/area/station/hydroponics/bay)
 "aPm" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 10
@@ -18844,6 +18835,10 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/noticeboard/persistent{
+	name = "Security persistent notice board";
+	persistent_id = "security"
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aSU" = (
@@ -19048,7 +19043,10 @@
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "aTm" = (
-/obj/item/device/radio/intercom/engineering,
+/obj/noticeboard/persistent{
+	name = "Engineering persistent notice board";
+	persistent_id = "engineering"
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "aTn" = (
@@ -22885,6 +22883,11 @@
 /obj/item/storage/firstaid/regular{
 	pixel_x = -6
 	},
+/obj/noticeboard/persistent{
+	name = "Brig persistent notice board";
+	persistent_id = "brig";
+	pixel_y = -32
+	},
 /turf/simulated/floor,
 /area/station/security/processing)
 "beu" = (
@@ -23571,8 +23574,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "bgj" = (
-/obj/machinery/plantpot,
 /obj/machinery/light/incandescent/harsh,
+/obj/machinery/plantpot,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "bgk" = (
@@ -24719,9 +24722,6 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "bjk" = (
-/obj/noticeboard{
-	pixel_y = 28
-	},
 /obj/decal/tile_edge/line/black{
 	dir = 6;
 	icon_state = "line1"
@@ -24981,6 +24981,10 @@
 /turf/simulated/floor/carpet/blue/fancy/narrow/nw,
 /area/station/crew_quarters/bar)
 "bjO" = (
+/obj/noticeboard/persistent{
+	name = "Bar persistent notice board";
+	persistent_id = "bar"
+	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
 /area/station/crew_quarters/bar)
 "bjP" = (
@@ -26046,6 +26050,10 @@
 /obj/item/soup_pot,
 /obj/item/ladle,
 /obj/machinery/light/incandescent/netural,
+/obj/noticeboard/persistent{
+	name = "Kitchen persistent notice board";
+	persistent_id = "kitchen"
+	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "bmu" = (
@@ -27721,6 +27729,12 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/noticeboard/persistent{
+	name = "Detective's Office persistent notice board";
+	persistent_id = "detectives office";
+	pixel_x = -32;
+	pixel_y = 0
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "bqy" = (
@@ -28151,6 +28165,10 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/noticeboard/persistent{
+	name = "Mechanics Workshop persistent notice board";
+	persistent_id = "mechanics"
 	},
 /turf/simulated/floor,
 /area/station/hangar/main)
@@ -30572,9 +30590,6 @@
 	},
 /area/station/crew_quarters/market)
 "bxl" = (
-/obj/noticeboard{
-	pixel_y = 28
-	},
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -31598,9 +31613,6 @@
 "bzM" = (
 /obj/stool/bench/green,
 /obj/machinery/light/incandescent/cool,
-/obj/noticeboard{
-	pixel_y = 28
-	},
 /turf/simulated/floor/wood,
 /area/station/bridge/customs)
 "bzN" = (
@@ -31620,6 +31632,10 @@
 /obj/table/wood/auto,
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/phone,
+/obj/noticeboard/persistent{
+	name = "Information Office persistent notice board";
+	persistent_id = "information office"
+	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fred2"
@@ -33294,6 +33310,10 @@
 /obj/table/reinforced/auto,
 /obj/machinery/light/incandescent/cool,
 /obj/machinery/cashreg,
+/obj/noticeboard/persistent{
+	name = "Customs persistent notice board";
+	persistent_id = "customs"
+	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "green2"
@@ -35986,6 +36006,10 @@
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
+	},
+/obj/noticeboard/persistent{
+	name = "Cargo persistent notice board";
+	persistent_id = "cargo"
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -43526,6 +43550,9 @@
 	pixel_x = 5;
 	pixel_y = -1
 	},
+/obj/item/device/radio/intercom/engineering{
+	dir = 8
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "ceL" = (
@@ -43725,13 +43752,14 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/staff)
 "cfh" = (
-/obj/noticeboard{
-	pixel_y = 28
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /obj/machinery/light/incandescent/netural,
+/obj/noticeboard/persistent{
+	name = "Medbay persistent notice board";
+	persistent_id = "medbay"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "cfi" = (
@@ -46910,16 +46938,16 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/observatory)
 "jKn" = (
-/obj/machinery/hydro_growlamp,
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/plantpot,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "jKq" = (
-/obj/landmark/start{
-	name = "Botanist"
+/obj/landmark/spawner{
+	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
@@ -46999,15 +47027,11 @@
 /turf/simulated/floor/black,
 /area/research_outpost)
 "kvl" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
+/obj/landmark/start{
+	name = "Botanist"
 	},
-/obj/access_spawn/hydro,
-/turf/simulated/floor/grasstodirt{
-	icon_state = "dirt";
-	name = "not grass"
-	},
-/area/station/ranch)
+/turf/simulated/floor/green,
+/area/station/hydroponics/bay)
 "kwr" = (
 /obj/lattice{
 	dir = 1;
@@ -47018,6 +47042,13 @@
 	},
 /turf/space/fluid,
 /area/space)
+"kwD" = (
+/obj/noticeboard/persistent{
+	name = "Chapel persistent notice board";
+	persistent_id = "chapel"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "kLf" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/escape,
@@ -47275,7 +47306,6 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "nkh" = (
-/obj/machinery/plantpot,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -47284,6 +47314,7 @@
 	tag = ""
 	},
 /obj/item/device/radio/intercom/botany,
+/obj/machinery/plantpot,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "nvJ" = (
@@ -47636,6 +47667,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"qnG" = (
+/obj/storage/secure/crate/eng/interdictor,
+/turf/simulated/floor/yellow,
+/area/station/engine/engineering)
 "qqR" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -78115,8 +78150,8 @@ aKf
 pvB
 yiF
 yiF
+yiF
 ydh
-kvl
 yiF
 aPZ
 aPZ
@@ -78416,12 +78451,12 @@ euS
 aia
 aia
 aLL
-aOR
-nOT
+bgj
+avz
 aMf
 aLF
-bgj
 aLF
+bgj
 aLF
 aMf
 blo
@@ -79025,8 +79060,8 @@ nOT
 aMf
 aMf
 aMf
-aMf
 jKq
+aMf
 aMf
 aMf
 aqQ
@@ -79324,9 +79359,9 @@ aia
 aLL
 aLH
 nOT
-aMH
 aMf
-avz
+aMf
+aMf
 aMf
 aMf
 bfH
@@ -79627,7 +79662,7 @@ ubH
 aLI
 nOT
 aMf
-aMf
+aMH
 aMf
 aMf
 aMf
@@ -80228,7 +80263,7 @@ aJP
 fRB
 aKE
 ubH
-aPl
+bgj
 jKn
 vIY
 aNJ
@@ -80838,7 +80873,7 @@ aeN
 aeP
 aeL
 aQe
-bfh
+kvl
 bfJ
 bgq
 aLL
@@ -85643,7 +85678,7 @@ atp
 auF
 avU
 ahY
-ayd
+kwD
 azt
 aAD
 aBz
@@ -107722,7 +107757,7 @@ ayu
 bgL
 aff
 bge
-bhr
+qnG
 bkt
 blj
 blV

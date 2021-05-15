@@ -196,7 +196,7 @@
 				JOB_XP(M, "Chaplain", 2)
 				return
 
-			if (prob(20))
+			if (M.get_brain_damage() >= 30 && prob(20))
 				src.do_brainmelt(M, 1)
 			else if (prob(35))
 				src.do_brainmelt(M, 0)
