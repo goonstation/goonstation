@@ -1196,7 +1196,7 @@
 	initial_reagents = list("sugar" = 20)
 	food_effects = list("food_energized")
 	var/can_add_frosting = TRUE
-	var/list/styles = list("icing", "sprinkles")
+	var/list/frostingstyle = list("icing", "sprinkles", "zigzags", "center fill", "half and half icing", "dipped icing")
 	var/style_step = 1
 
 	heal(var/mob/M)
@@ -1216,24 +1216,45 @@
 			user.show_text("The [tube] isn't full enough to add frosting.", "red")
 			return
 
-		if (src.style_step > length(src.styles))
+		if (src.style_step > 2) // only allow up to two frosting types on a single donut
 			user.show_text("You can't add anymore frosting.", "red")
 			return
+
+		var/frostingtype = null
+		frostingtype = input("Which frosting style would you like?", "Frosting Style", null) as null|anything in frostingstyle
+		if(frostingtype && (get_dist(src, user) <= 1))
+			switch(frostingtype)
+				if("icing")
+					frostingtype = "icing"
+				if("Boston cream")
+					frostingtype = "full"
+				if("half and half icing")
+					frostingtype = "half"
+				if("dipped")
+					frostingtype = "dipped"
+				if("center fill")
+					frostingtype = "center"
+				if("zigzags")
+					frostingtype = "zigzags"
+				if("star")
+					frostingtype = "star"
+				if("heart")
+					frostingtype = "heart"
+			if(!src.GetOverlayImage(frostingstyle))
+				var/frostingstyle[src.style_step]
+				var/datum/color/average = tube.reagents.get_average_color()
+				var/image/frostingoverlay = new(src.icon, frostingtype)
+				frostingoverlay.color = average.to_rgba()
+				src.UpdateOverlays(frostingoverlay, frostingstyle)
+				user.show_text("You add some frosting to [src]", "red")
+				src.style_step += 1
+				tube.reagents.trans_to(src,15)
+				JOB_XP(user, "Chef", 1)
 
 		// When a user also fills the donut with a syringe it can get a bit crowded in the donut.
 		if (src.reagents.is_full())
 			user.show_text("It feels like adding anything more to [src] would overfill it.", "red")
 			return
-
-		var/style = src.styles[src.style_step]
-
-		var/datum/color/average_color = tube.reagents.get_average_color()
-		var/image/overlay = new(src.icon, style)
-		overlay.color = average_color.to_rgba()
-		src.UpdateOverlays(overlay, style)
-		tube.reagents.trans_to(src, 15)
-		user.show_text("You add some [style] to [src]", "red")
-		src.style_step += 1
 
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/reagent_containers/food/drinks/drinkingglass/icing))
