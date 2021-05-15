@@ -793,6 +793,7 @@
 				src.goods_sell += new /datum/commodity/contraband/stealthstorage(src)
 				src.goods_sell += new /datum/commodity/contraband/spy_sticker_kit(src)
 				src.goods_sell += new /datum/commodity/contraband/disguiser(src)
+				src.goods_sell += new /datum/commodity/contraband/voicechanger(src)
 				src.goods_sell += new /datum/commodity/contraband/birdbomb(src)
 				src.goods_sell += new /datum/commodity/contraband/flare(src)
 				src.goods_sell += new /datum/commodity/contraband/eguncell_highcap(src)
