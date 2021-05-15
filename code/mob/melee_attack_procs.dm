@@ -1064,25 +1064,6 @@
 
 	return 1
 
-/mob/living/silicon/robot/melee_attack_test(var/mob/attacker, var/obj/item/I, var/def_zone, var/disarm_check = 0)
-	if (!..())
-		return 0
-
-	if (I)
-		var/hit_chance = 50
-		if (def_zone == "chest")
-			hit_chance = 90
-		else if (def_zone == "head")
-			hit_chance = 70
-		if(!client || is_incapacitated(src))
-			hit_chance = 100
-		if (!prob(hit_chance))
-			playsound(loc, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 1, 1)
-			src.visible_message("<span class='alert'><b>[attacker] swings at [src], but misses!</b></span>")
-			return 0
-
-	return 1
-
 /mob/living/melee_attack_test(var/mob/attacker, var/obj/item/I, var/def_zone, var/disarm_check = 0)
 	if (!..())
 		return 0

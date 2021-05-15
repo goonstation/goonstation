@@ -441,9 +441,13 @@
 
 /mob/dead/observer/Logout()
 	..()
+
 	if(last_client)
 		health_shown = 0
 		last_client.images.Remove(health_mon_icons)
+		if(arrest_shown)
+			arrest_shown = 0
+			last_client.images.Remove(arrestIconsAll)
 
 	if(!src.key && delete_on_logout)
 		//qdel(src)

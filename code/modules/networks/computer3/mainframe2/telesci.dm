@@ -611,7 +611,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 			if("flash")
 				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>A bright flash emnates from the [src]!</span>", 1)
-				playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
+				playsound(src.loc, "sound/weapons/flashbang.ogg", 35, 1)
 				for (var/mob/N in viewers(src, null))
 					if (get_dist(N, src) <= 6)
 						N.apply_flash(30, 5)

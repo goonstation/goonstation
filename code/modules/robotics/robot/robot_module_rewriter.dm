@@ -37,15 +37,13 @@
 		user.drop_item()
 		I.set_loc(src)
 		LAZYLISTADD(src.modules, I)
-		boutput(user, "<span class=\"notice\">You insert [I] into the [src].</span>")
+		boutput(user, "<span class=\"notice\">You insert [I] into \the [src].</span>")
 		tgui_process.update_uis(src)
 	else
 		src.attack_hand(user)
 
 /obj/machinery/computer/robot_module_rewriter/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
-
-// INTERFACE
 
 /obj/machinery/computer/robot_module_rewriter/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)

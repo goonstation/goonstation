@@ -278,6 +278,7 @@
 	if(istype(W,/obj/item/parts/human_parts)) //dumb easter egg incoming
 		user.visible_message("<span class='alert'>[user] wipes [src] with the bloody end of [W.name]. What the fuck?</span>", "<span class='alert'>You wipe [src] with the bloody end of [W.name]. What the fuck?</span>")
 		return
+
 	if (issnippingtool(W))
 		src.camera_status = !( src.camera_status )
 		if (!( src.camera_status ))
@@ -303,7 +304,12 @@
 				updateCoverage() //(must happen in spawn!)
 		// now disconnect anyone using the camera
 		src.disconnect_viewers()
-	else if (istype(W, /obj/item/paper))
+		return
+
+	if (!src.camera_status)
+		return
+
+	if (istype(W, /obj/item/paper))
 		if (last_paper && ( (last_paper + 80) >= world.time))
 			return
 		last_paper = world.time

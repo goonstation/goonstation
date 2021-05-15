@@ -14,6 +14,7 @@
 	soundproofing = 0
 	on = 1
 	locked = 1
+	access_lookup = "Captain"
 	var/atom/movable/load = null		// the loaded crate (usually)
 
 	var/beacon_freq = 1445
@@ -70,8 +71,6 @@
 
 	New()
 		..()
-		botcard = new(src)
-		botcard.access = get_access("Captain")
 
 		var/global/mulecount = 0
 		if(!suffix)
