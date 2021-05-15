@@ -13,6 +13,7 @@
 	module_research_type = /obj/item/device/pda2
 	wear_layer = MOB_BELT_LAYER
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
+	var/obj/item/pen/pen = null // slap a pen into that thang
 	var/registered = null // so we don't need to replace all the dang checks for ID cards
 	var/assignment = null
 	var/access = list()
@@ -613,6 +614,12 @@
 				src.insert_id_card(ID, user)
 				boutput(user, "<span class='notice'>You insert [ID] into [src].</span>")
 
+	else if (istype(C, /obj/item/pen))
+		var/obj/item/pen/insertedPen = C
+		if (!src.pen)
+			src.insert_pen(insertedPen, user)
+			boutput(user, "<span class='notice'>You insert [insertedPen] into [src].</span>")
+
 /obj/item/device/pda2/examine()
 	. = ..()
 	. += "The back cover is [src.closed ? "closed" : "open"]."
@@ -746,6 +753,18 @@
 	eject_id_card(usr)
 	src.updateSelfDialog()
 
+/obj/item/device/pda2/verb/ejectPen()
+	set name = "Eject Pen"
+	set desc = "Eject the currently loaded writing utensil from this PDA."
+	set category = "Local"
+	set src in usr
+
+	if (is_incapacitated(usr))
+		return
+
+	eject_pen(usr)
+	src.updateSelfDialog()
+
 /obj/item/device/pda2
 
 	proc/update_colors(bg, linkbg)
@@ -838,6 +857,27 @@
 		src.underlays += src.ID_image
 		src.updateSelfDialog()
 		user.UpdateName()
+
+	proc/eject_pen(var/mob/user as mob)
+		if (src.pen)
+			if (istype(user))
+				user.put_in_hand_or_drop(src.pen)
+			else
+				var/turf/T = get_turf(src)
+				src.pen.set_loc(T)
+			src.pen = null
+			return
+
+	proc/insert_pen(var/obj/item/pen/insertedPen as obj, var/mob/user as mob)
+		if (!istype(insertedPen))
+			return
+		if (src.pen)
+			boutput(user, "<span class='alert'>There is already something in [src]'s pen slot!</span>")
+			return
+		if (user)
+			user.u_equip(insertedPen)
+			src.pen = insertedPen
+		insertedPen.set_loc(src)
 /*
 	//Toggle the built-in flashlight
 	toggle_light()
