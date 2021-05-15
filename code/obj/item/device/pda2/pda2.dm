@@ -618,7 +618,9 @@
 		var/obj/item/pen/insertedPen = C
 		if (!src.pen)
 			src.insert_pen(insertedPen, user)
-			boutput(user, "<span class='notice'>You insert [insertedPen] into [src].</span>")
+		else
+			boutput(user, "<span class='alert'>There is already something in [src]'s pen slot!</span>")
+
 
 /obj/item/device/pda2/examine()
 	. = ..()
@@ -871,13 +873,14 @@
 	proc/insert_pen(var/obj/item/pen/insertedPen as obj, var/mob/user as mob)
 		if (!istype(insertedPen))
 			return
-		if (src.pen)
-			boutput(user, "<span class='alert'>There is already something in [src]'s pen slot!</span>")
+		if (!insertedPen.fits_on_things)
+			boutput(user, "<span class='alert'>Huh, the [insertedPen] won't fit in [src]'s pen slot!</span>")
 			return
 		if (user)
 			user.u_equip(insertedPen)
 			src.pen = insertedPen
 		insertedPen.set_loc(src)
+		boutput(user, "<span class='notice'>You insert [insertedPen] into [src].</span>")
 /*
 	//Toggle the built-in flashlight
 	toggle_light()

@@ -188,6 +188,7 @@ proc/is_weak_rollable_contract(type)
 	hit_type = DAMAGE_STAB
 	color = "#FF0000"
 	font_color = "#FF0000"
+	fits_on_things = FALSE // no, don't put this in a PDA!
 
 	New()
 		..()
