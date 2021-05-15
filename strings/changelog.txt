@@ -1,4 +1,9 @@
 
+(t)sat may 15 21
+(u)Superlagg
+(p)4711
+(e)🐛|bug
+(*)Guardbuddies will now actually handcuff people instead of just bullying them all day.
 (t)thu may 13 21
 (u)Tarmunora
 (e)⚖|balance
