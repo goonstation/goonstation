@@ -234,6 +234,7 @@
 			return 0
 
 		var/has_cyberlungs = (human_owner?.organHolder && (human_owner.organHolder.left_lung && human_owner.organHolder.right_lung) && (human_owner.organHolder.left_lung.robotic && human_owner.organHolder.right_lung.robotic)) //gotta prevent null pointers...
+		var/has_synthlungs = (human_owner?.organHolder && (human_owner.organHolder.left_lung && human_owner.organHolder.right_lung) && (human_owner.organHolder.left_lung.synthetic && human_owner.organHolder.right_lung.synthetic))
 		var/safe_oxygen_min = 17 // Minimum safe partial pressure of O2, in kPa
 		//var/safe_oxygen_max = 140 // Maximum safe partial pressure of O2, in kPa (Not used for now)
 		var/safe_co2_max = 9 // Yes it's an arbitrary value who cares?
@@ -241,6 +242,7 @@
 		var/SA_para_min = 1
 		var/SA_sleep_min = 5
 		var/oxygen_used = 0
+		var/carbon_dioxide_used = 0
 		var/breath_pressure = (TOTAL_MOLES(breath)*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 		var/fart_smell_min = 0.69 // don't ask ~warc
 		var/fart_vomit_min = 6.9
@@ -253,6 +255,11 @@
 		// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
 		var/CO2_pp = (breath.carbon_dioxide/TOTAL_MOLES(breath))*breath_pressure
 
+		//safe gas levels for synthlungs
+		if (has_synthlungs)
+			safe_oxygen_min = 11 //plants need less air (but still need some)
+			safe_co2_max = 17 //plants can breath co2 as an alternative to oxygen (used as min, sorry :( ))
+			safe_toxins_max = 0.2 //plants are very susceptible to air pollution
 
 		//change safe gas levels for cyberlungs
 		if (has_cyberlungs)
@@ -284,7 +291,38 @@
 		breath.oxygen -= oxygen_used
 		breath.carbon_dioxide += oxygen_used
 
-		if (CO2_pp > safe_co2_max)
+		if (CO2_pp > safe_co2_max && !has_synthlungs) //for synth lungs breathing co2
+			owner.take_oxygen_deprivation(-8 * mult)
+			carbon_dioxide_used = breath.carbon_dioxide
+			update_oxy(0)
+
+			breath.carbon_dioxide -= carbon_dioxide_used
+			breath.oxygen += carbon_dioxide_used
+
+		if (O2_pp < safe_oxygen_min && !has_synthlungs) 			//for synth lungs breathing out oxygen
+			if (O2_pp > 0)
+				var/ratio = round(safe_oxygen_min/(O2_pp + 0.1))
+				owner.take_oxygen_deprivation(min(5*ratio, 5))
+				oxygen_used = breath.oxygen*ratio/6
+			else
+				owner.take_oxygen_deprivation(3 * mult)
+			update_oxy(1)
+		else
+			owner.take_oxygen_deprivation(-6 * mult)
+			oxygen_used = breath.oxygen/6
+			update_oxy(0)
+
+		breath.oxygen -= oxygen_used
+		breath.carbon_dioxide += oxygen_used
+
+		if (O2_pp < safe_oxygen_min && CO2_pp < safe_co2_max && !has_synthlungs) //to make gasping not happen when breathing co2
+			if (prob(20))
+				if (underwater)
+					owner.emote("gurgle")
+				else
+					owner.emote("gasp")
+
+		if (CO2_pp > safe_co2_max && (has_synthlungs = null)) //sorry for spaghet
 			if (!owner.co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
 				owner.co2overloadtime = world.time
 			else if (world.time - owner.co2overloadtime > 120)
