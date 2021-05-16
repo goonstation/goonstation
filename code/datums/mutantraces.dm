@@ -2042,7 +2042,7 @@
 		var/can_output = 0
 		if (ishuman(mob))
 			var/mob/living/carbon/human/H = mob
-			if (H.blood_volume > 250)
+			if (H.blood_volume > 0)
 				can_output = 1
 
 		if (!can_output)

@@ -1,4 +1,21 @@
 
+(t)sat may 15 21
+(u)zjdtmkhzt
+(p)4679
+(e)|
+(+)Artifact forms should now be easier to remove from non-artifacts. You can still remove them from artifacts via knives/scalpels/scissors/wirecutters/other stuff.
+(u)DimWhat
+(p)4747
+(e)🎨|sprites
+(+)Bang! guns are now more convincing
+(u)112358sam
+(p)4706
+(e)|
+(+)Removes the blood level check for performing the milk emote.
+(u)Superlagg
+(p)4711
+(e)🐛|bug
+(*)Guardbuddies will now actually handcuff people instead of just bullying them all day.
 (t)thu may 13 21
 (u)Tarmunora
 (e)⚖|balance
