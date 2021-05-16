@@ -422,8 +422,12 @@
 		return 1
 	return(direct != divert_from)
 
-
-
+/obj/item/furniture_parts/conveyor
+	name = "conveyor belt parts"
+	desc = "A collection of parts that can be used to make a conveyor belt."
+	icon = 'icons/obj/furniture/table_desk.dmi'
+	furniture_type = /obj/machinery/conveyor
+	furniture_name = "conveyor belt"
 
 
 // the conveyor control switch
@@ -491,11 +495,7 @@
 	else
 		icon_state = "switch-off"
 
-
-// timed process
-// if the switch changed, update the linked conveyors
-
-/obj/machinery/conveyor_switch/process()
+/obj/machinery/conveyor_switch/proc/update_conveyors()
 	if(!operated)
 		return
 	operated = 0
@@ -503,6 +503,12 @@
 	for(var/obj/machinery/conveyor/C in conveyors)
 		C.operating = position
 		C.setdir()
+
+// timed process
+// if the switch changed, update the linked conveyors
+/obj/machinery/conveyor_switch/process()
+	src.update_conveyors()
+
 
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/attack_hand(mob/user)
@@ -530,6 +536,8 @@
 
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"switchTriggered")
 
+	if(!ON_COOLDOWN(src, "INSTANT_SWITCH_1", 1 SECOND) || !ON_COOLDOWN(src, "INSTANT_SWITCH_2", 1 SECOND))
+		src.update_conveyors()
 
 //silly proc for corners that can be flippies
 /obj/machinery/conveyor/proc/rotateme()
