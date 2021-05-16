@@ -1,5 +1,9 @@
 
 (t)sun may 16 21
+(u)Gannets
+(p)4700
+(e)⚖|balance
+(*)Nuke ops Scout armour now provides a move speed boost to the wearer.
 (u)edwardly
 (p)4696
 (e)|
