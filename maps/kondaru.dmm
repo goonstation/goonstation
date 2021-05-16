@@ -31631,6 +31631,9 @@
 	},
 /area/station/security/secwing)
 "bNN" = (
+/obj/decal/poster/wallsign/medal{
+	pixel_y = 28
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/security/hos)
 "bNO" = (
@@ -43059,10 +43062,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/mining/magnet)
-"epD" = (
-/obj/decal/poster/wallsign/medal,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/bridge/hos)
 "epE" = (
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/plating,
@@ -123192,7 +123191,7 @@ njD
 bIE
 bLs
 sJb
-epD
+vTk
 bNN
 bQK
 lOK

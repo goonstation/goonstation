@@ -30841,6 +30841,9 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/decal/poster/wallsign/medal{
+	pixel_y = 28
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "bsH" = (
@@ -39598,10 +39601,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/east)
-"bJn" = (
-/obj/decal/poster/wallsign/medal,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/hos)
 "bJo" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/paper_bin,
@@ -139230,7 +139229,7 @@ bhR
 bma
 bhR
 bpi
-bJn
+bqU
 bsG
 bux
 bwg
