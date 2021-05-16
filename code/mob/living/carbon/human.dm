@@ -828,6 +828,9 @@
 		if (!antag_removal && src.spell_soulguard)
 			newbody.bioHolder.RemoveAllEffects()
 
+	if(src.traitHolder)
+		newbody.traitHolder = src.traitHolder
+		newbody.traitHolder.owner = newbody
 	// Prone to causing runtimes, don't enable.
 /*	if (src.mutantrace && !src.spell_soulguard)
 		newbody.mutantrace = new src.mutantrace.type(newbody)*/
