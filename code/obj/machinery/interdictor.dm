@@ -1,8 +1,6 @@
 //device for engineers to construct that counteracts the effects of random events in its zone,
 //if it has been set up a sufficient time in advance
 
-//all references to range should use INTERDICT_RANGE (defined in _std\defines\construction.dm)
-
 /obj/machinery/interdictor
 	name = "spatial interdictor"
 	desc = "A sophisticated device that lessens or nullifies the effects of assorted stellar phenomena."
@@ -23,6 +21,9 @@
 	var/hasInterdicted = 0 // indication of operation in progress
 	//if 1, play interdiction active sound on next machine tick
 
+	var/interdict_range = 7 // range of the interdictor's field
+	//for effects that are wide-band interdicted, such as solar flares, this should dictate the response strength
+
 	var/list/deployed_fields = list()
 
 	var/sound/sound_interdict_on = "sound/machines/interdictor_activate.ogg"
@@ -30,12 +31,19 @@
 	var/sound/sound_interdict_run = "sound/machines/interdictor_operate.ogg"
 	var/sound/sound_togglebolts = "sound/machines/click.ogg"
 
-	New(spawnlocation,var/obj/item/cell/altcap)
+	New(spawnlocation,var/obj/item/cell/altcap,var/obj/item/interdictor_rod/altrod,var/datum/material/mat)
 		if(altcap)
 			altcap.set_loc(src)
 			src.intcap = altcap
 		else
 			src.intcap = new /obj/item/cell/supercell(src) //deliberately not charged
+		if(altrod)
+			src.interdict_range = altrod.interdist
+			qdel(altrod)
+		if(mat)
+			src.setMaterial(mat)
+		else
+			src.setMaterial(material_cache["steel"])
 		..()
 		START_TRACKING
 		src.updateicon()
@@ -114,15 +122,18 @@
 	ratio = round(ratio, 0.33) * 100
 	var/image/I_chrg = SafeGetOverlayImage("charge", 'icons/obj/machines/interdictor.dmi', "idx-charge-[ratio]")
 	I_chrg.plane = PLANE_OVERLAY_EFFECTS
+	I_chrg.appearance_flags |= RESET_COLOR
 	UpdateOverlays(I_chrg, "charge", 0, 1)
 
 	var/gridtie = src.connected && powered()
 	var/image/I_grid = SafeGetOverlayImage("grid", 'icons/obj/machines/interdictor.dmi', "idx-grid-[gridtie]")
 	I_grid.plane = PLANE_OVERLAY_EFFECTS
+	I_grid.appearance_flags |= RESET_COLOR
 	UpdateOverlays(I_grid, "grid", 0, 1)
 
 	var/image/I_actv = SafeGetOverlayImage("active", 'icons/obj/machines/interdictor.dmi', "idx-active-[canInterdict]")
 	I_actv.plane = PLANE_OVERLAY_EFFECTS
+	I_actv.appearance_flags |= RESET_COLOR
 	UpdateOverlays(I_actv, "active", 0, 1)
 
 
@@ -132,6 +143,7 @@
 	ratio = round(ratio, 0.33) * 100
 	var/image/I_chrg = SafeGetOverlayImage("charge", 'icons/obj/machines/interdictor.dmi', "idx-charge-[ratio]")
 	I_chrg.plane = PLANE_OVERLAY_EFFECTS
+	I_chrg.appearance_flags |= RESET_COLOR
 	UpdateOverlays(I_chrg, "charge", 0, 1)
 
 
@@ -190,8 +202,8 @@
 
 //initalizes interdiction, including visual depiction of range
 /obj/machinery/interdictor/proc/start_interdicting()
-	for(var/turf/T in orange(INTERDICT_RANGE,src))
-		if (get_dist(T,src) != INTERDICT_RANGE)
+	for(var/turf/T in orange(src.interdict_range,src))
+		if (get_dist(T,src) != src.interdict_range)
 			continue
 		var/obj/interdict_edge/YEE = new /obj/interdict_edge(T)
 		src.deployed_fields += YEE
@@ -271,12 +283,16 @@
 	<hr>
 	<h3>ASSEMBLING THE DEVICE</h3>
 	<br>
-	(I) Assemble the frame and phase-control rod at any manufacturer using the blueprints included with your Spatial Interdictor Starter Kit. Materials not provided.
+	(I) Assemble the frame kit and phase-control rod at any manufacturer using the blueprints included with your Spatial Interdictor Starter Kit. Materials not provided.
+	<br>
+	Phase control rods may be manufactured in Lambda or Sigma configurations. Lambda rods cover a three-unit radius, while the advanced but more materially complex Sigma rods cover a seven-unit radius.
+	<br>
+	<i>Use of non-standard phase-control rods is not supported in this guide. Please consult a Nanotrasen certified engineer for a custom interdiction solution, including appropriate power cell.</i>
 	<br>
 	<br>
 	(II) Gather the following equipment before assembly:
 	<br>
-	- Interdictor frame
+	- Interdictor frame kit
 	<br>
 	- Interdictor mainboard
 	<br>
@@ -327,21 +343,29 @@
 //interdictor rod: the doohickey that lets the interdictor do its thing
 //the blueprint to create this should be in engineering along with guide, frame blueprint and mainboards
 //these are the primary factor for scarcity as they require several materials to manufacture
-//blueprint path is /obj/item/paper/manufacturer_blueprint/interdictor_rod
+//blueprint paths: /obj/item/paper/manufacturer_blueprint/interdictor_rod_lambda & /obj/item/paper/manufacturer_blueprint/interdictor_rod_sigma
 
 /obj/item/interdictor_rod
-	name = "interdictor phase-control rod"
-	desc = "A large, narrow cylinder with a highly-conductive core and inbuilt control circuitry."
+	name = "Lambda phase-control rod"
+	desc = "A large, narrow cylinder with a standard core and inbuilt control circuitry. Grants a lower range to interdictors."
 	icon = 'icons/obj/machines/interdictor.dmi'
 	icon_state = "interdict-rod"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "electronic"
+	item_state = "rods"
 	force = 3
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | CONDUCT
+	var/interdist = 3
+	//how far the interdictor constructed with this rod will extend its interdiction field
+
+	sigma
+		name = "Sigma phase-control rod"
+		desc = "A large, narrow cylinder with a highly conductive core and inbuilt control circuitry. Grants full range to interdictors."
+		icon_state = "interdict-rod-ex"
+		interdist = 7
 
 //interdictor board: power management circuitry and whatnot
 //engineering should start with about three of these,
@@ -363,14 +387,44 @@
 //the blueprint to create this should be in engineering along with guide, rod blueprint and mainboards
 //blueprint path is /obj/item/paper/manufacturer_blueprint/interdictor_frame
 
+/obj/item/interdictor_frame_kit
+	name = "spatial interdictor frame kit"
+	desc = "You can hear an awful lot of junk rattling around in this box."
+	icon = 'icons/obj/machines/interdictor.dmi'
+	icon_state = "interdict-kit"
+	w_class = W_CLASS_BULKY
+
+	attack_self(mob/user as mob)
+		var/canbuild = 1
+
+		var/turf/T = get_turf(user)
+		var/atom/A
+
+		if (istype(T, /turf/space))
+			for (A in T)
+				if (A == user)
+					continue
+				if (A.density)
+					canbuild = 0
+					boutput(user, "<span class='alert'>You can't build this here! [A] is in the way.</span>")
+					break
+
+		if (canbuild)
+			boutput(user, "<span class='notice'>You empty the box of parts onto the floor.</span>")
+			var/obj/O = new /obj/interdictor_frame( get_turf(user) )
+			O.fingerprints = src.fingerprints
+			O.fingerprintshidden = src.fingerprintshidden
+			qdel(src)
+
 /obj/interdictor_frame
 	name = "spatial interdictor frame"
-	desc = "A frame for a spatial interdictor. It's missing its mainboard."
+	desc = "An unassembled frame for a spatial interdictor. Several bolts are sticking out."
 	icon = 'icons/obj/machines/interdictor.dmi'
-	icon_state = "interframe-1"
+	icon_state = "interframe-0"
 	density = 1
-	var/state = 1
+	var/state = 0
 	var/obj/intcap = null
+	var/obj/introd = null
 
 	attack_hand(mob/user as mob)
 		if(state == 4) //permit removal of cell before you install wires
@@ -387,6 +441,11 @@
 
 	attackby(var/obj/item/I as obj, var/mob/user as mob)
 		switch(state)
+			if(0)
+				if (iswrenchingtool(I))
+					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 4 SECONDS), user)
+				else
+					..()
 			if(1)
 				if (istype(I, /obj/item/interdictor_board))
 					actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 2 SECONDS), user)
@@ -437,6 +496,7 @@
 
 
 //this is to be used with the following transitions:
+//0 > 1 (frame assembly)
 //1 > 2 (board installation)
 //2 > 3 (core installation)
 //4 > 5 (wire addition)
@@ -480,6 +540,9 @@
 
 	onStart()
 		..()
+		if (itdr.state == 0)
+			playsound(get_turf(itdr), "sound/items/Ratchet.ogg", 40, 1)
+			owner.visible_message("<span class='bold'>[owner]</span> begins assembling \the [itdr].")
 		if (itdr.state == 1)
 			playsound(get_turf(itdr), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins installing a mainboard into \the [itdr].")
@@ -497,6 +560,13 @@
 			owner.visible_message("<span class='bold'>[owner]</span> begins installing a casing onto \the [itdr].")
 	onEnd()
 		..()
+		if (itdr.state == 0) //unassembled > no components
+			itdr.state = 1
+			itdr.icon_state = "interframe-1"
+			boutput(owner, "<span class='notice'>You assemble and secure the frame components.</span>")
+			playsound(get_turf(itdr), "sound/items/Ratchet.ogg", 40, 1)
+			itdr.desc = "A frame for a spatial interdictor. It's missing its mainboard."
+			return
 		if (itdr.state == 1) //no components > mainboard
 			itdr.state = 2
 			itdr.icon_state = "interframe-2"
@@ -517,7 +587,8 @@
 
 			var/mob/source = owner
 			source.u_equip(the_tool)
-			qdel(the_tool)
+			the_tool.set_loc(itdr)
+			itdr.introd = the_tool
 
 			itdr.desc = "A semi-complete frame for a spatial interdictor. Its power cell compartment is empty."
 			return
@@ -551,7 +622,7 @@
 			//setting up for custom interdictor casing
 			var/obj/item/sheet/S = the_tool
 			var/datum/material/mat
-			if(!istype(the_tool, /obj/item/sheet/steel) && S.material)
+			if(S.material)
 				mat = S.material
 
 			the_tool.amount -= 4
@@ -563,8 +634,7 @@
 				the_tool.inventory_counter.update_number(the_tool.amount)
 
 			var/turf/T = get_turf(itdr)
-			var/obj/llama = new /obj/machinery/interdictor(T,itdr.intcap)
-			if(mat) llama.setMaterial(mat) //custom interdictor casing
+			var/obj/llama = new /obj/machinery/interdictor(T,itdr.intcap,itdr.introd,mat)
 			itdr.intcap.set_loc(llama) //this may not be necessary but I feel like it'll stop something from randomly breaking due to timing
 			qdel(itdr)
 			return
