@@ -327,8 +327,7 @@
 		if (src.alive && (user.a_intent != INTENT_HARM))
 			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
 			if(prob(10))
-				for(var/mob/O in hearers(src, null))
-					O.show_message("[src] purrs!",2)
+				src.audible_message("[src] purrs!",2)
 			return
 		else
 			..()
@@ -511,8 +510,7 @@
 			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
 			if(prob(30))
 				src.icon_state = "[src.doggy]-lying"
-				for(var/mob/O in hearers(src, null))
-					O.show_message("<span class='notice'><B>[src]</B> flops on his back! Scratch that belly!</span>",2)
+				src.audible_message("<span class='notice'><B>[src]</B> flops on his back! Scratch that belly!</span>",2)
 				SPAWN_DBG(3 SECONDS)
 				src.icon_state = "[src.doggy]"
 			return
@@ -524,11 +522,9 @@
 	CritterDeath()
 		..()
 		src.icon_state = "[src.doggy]-lying"
-		for(var/mob/O in hearers(src, null))
-			O.show_message("<span class='combat'><b>[src]</b> [pick("tires","tuckers out","gets pooped")] and lies down!</span>")
+		src.audible_message("<span class='combat'><b>[src]</b> [pick("tires","tuckers out","gets pooped")] and lies down!</span>")
 		SPAWN_DBG(1 MINUTE)
-			for(var/mob/O in hearers(src, null))
-				O.show_message("<span class='notice'><b>[src]</b> wags his tail and gets back up!</span>")
+			src.audible_message("<span class='notice'><b>[src]</b> wags his tail and gets back up!</span>")
 			src.alive = 1
 			set_density(1)
 			src.health = 100
@@ -536,8 +532,7 @@
 		return
 
 	proc/howl()
-		for (var/mob/O in hearers(src, null))
-			O.show_message("<span class='combat'><b>[src]</b> [pick("howls","bays","whines","barks","croons")] to the music! He thinks he's singing!</span>")
+		src.audible_message("<span class='combat'><b>[src]</b> [pick("howls","bays","whines","barks","croons")] to the music! He thinks he's singing!</span>")
 		playsound(get_turf(src), "sound/voice/animal/howl[rand(1,6)].ogg", 100, 0)
 
 /obj/critter/dog/george/blair
@@ -631,8 +626,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	on_pet(mob/user)
 		..()
 		if(prob(10))
-			for(var/mob/O in hearers(src, null))
-				O.show_message("[src] purrs!",2)
+			src.audible_message("[src] purrs!",2)
 
 /obj/critter/owl
 	name = "space owl"

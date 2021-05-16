@@ -76,7 +76,7 @@
 				for_by_tcl(G, /obj/critter/dog/george)
 					if (IN_RANGE(G, T, 6) && prob(60))
 						if(ON_COOLDOWN(G, "george howl", 10 SECONDS))
-							return
+							continue
 						G.howl()
 
 			src.post_play_effect(user)
