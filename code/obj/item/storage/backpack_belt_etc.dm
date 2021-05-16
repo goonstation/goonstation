@@ -125,6 +125,7 @@
 	item_state = "fanny"
 	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
 	w_class = W_CLASS_BULKY
+	slots = 5
 	max_wclass = 3
 	does_not_open_in_pocket = 0
 	stamina_damage = 0
@@ -154,6 +155,7 @@
 	desc = "It's different than a fanny pack. It's tactical and action-packed!"
 	icon_state = "syndie"
 	item_state = "syndie"
+	slots = 7
 
 /* -------------------- Belts -------------------- */
 
