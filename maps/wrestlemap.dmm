@@ -10588,7 +10588,7 @@
 	})
 "enw" = (
 /obj/decal/boxingropeenter{
-	dir = 9
+	dir = 10
 	},
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
@@ -11165,7 +11165,7 @@
 	dir = 10
 	},
 /obj/decal/boxingropeenter{
-	dir = 9
+	dir = 10
 	},
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
@@ -12243,7 +12243,7 @@
 	dir = 6
 	},
 /obj/decal/boxingropeenter{
-	dir = 5
+	dir = 6
 	},
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
@@ -19129,7 +19129,7 @@
 /area/station/bridge)
 "ian" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10
+	dir = 9
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market{
@@ -19664,7 +19664,7 @@
 	tag = ""
 	},
 /obj/stool/chair/boxingrope_corner{
-	dir = 6
+	dir = 5
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
@@ -22019,10 +22019,10 @@
 	name = "Research Computer Lab"
 	})
 "jjQ" = (
-/obj/decal/boxingropeenter{
-	dir = 5
-	},
 /obj/machinery/light/small/harsh/very,
+/obj/decal/boxingropeenter{
+	dir = 6
+	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/security/brig{
 	name = "The Cage Arena"
@@ -25873,9 +25873,7 @@
 /area/station/security/main)
 "kVH" = (
 /obj/decal/boxingropeenter{
-	dir = 5;
-	layer = 3.1;
-	pixel_x = -1
+	dir = 6
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/maintenance/west)
@@ -33128,7 +33126,7 @@
 "ode" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/decal/boxingropeenter{
-	dir = 5;
+	dir = 6;
 	layer = 3.1
 	},
 /turf/simulated/floor/specialroom/gym/alt,
@@ -34518,11 +34516,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "oLW" = (
-/obj/decal/boxingropeenter{
-	dir = 9;
-	layer = 3.1
-	},
 /obj/item/chair/folded,
+/obj/decal/boxingropeenter{
+	dir = 10
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/maintenance/west)
 "oLY" = (
@@ -39679,7 +39676,7 @@
 	icon_state = "line1"
 	},
 /obj/decal/boxingrope{
-	dir = 10
+	dir = 9
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
@@ -42003,7 +42000,7 @@
 /area/station/hallway/secondary/north)
 "rWg" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 6
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/central{
@@ -43460,7 +43457,7 @@
 "syT" = (
 /obj/machinery/light/small/harsh/very,
 /obj/decal/boxingropeenter{
-	dir = 9
+	dir = 10
 	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/security/brig{
@@ -48750,7 +48747,7 @@
 /area/station/maintenance/solar/north)
 "uSz" = (
 /obj/decal/boxingropeenter{
-	dir = 5
+	dir = 6
 	},
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
@@ -49306,9 +49303,8 @@
 /area/station/engine/storage)
 "vfi" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/decal/boxingropeenter{
-	dir = 9;
-	layer = 3.1
+/obj/decal/boxingrope{
+	dir = 10
 	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/courtroom)
@@ -50549,7 +50545,7 @@
 /area/space)
 "vIE" = (
 /obj/decal/boxingropeenter{
-	dir = 9
+	dir = 10
 	},
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
@@ -51447,7 +51443,7 @@
 	})
 "wcs" = (
 /obj/decal/boxingropeenter{
-	dir = 5;
+	dir = 6;
 	layer = 3.1
 	},
 /turf/simulated/floor/engine/glow/blue{

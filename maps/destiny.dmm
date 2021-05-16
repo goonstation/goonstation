@@ -24835,7 +24835,7 @@
 /area/station/quartermaster/cargobay)
 "ePu" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 6
+	dir = 5
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -38270,7 +38270,7 @@
 /area/station/quartermaster/cargobay)
 "mde" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10
+	dir = 9
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)

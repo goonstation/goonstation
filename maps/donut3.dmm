@@ -28331,7 +28331,7 @@
 /area/station/maintenance/inner/north)
 "ieu" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 9
+	dir = 10
 	},
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/specialroom/gym,
@@ -30885,7 +30885,7 @@
 	dir = 4
 	},
 /obj/stool/chair/boxingrope_corner{
-	dir = 5
+	dir = 6
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -67884,7 +67884,7 @@
 /area/station/crew_quarters/barber_shop)
 "tRA" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10
+	dir = 9
 	},
 /obj/table/wood/round/auto,
 /obj/item/bballbasket,

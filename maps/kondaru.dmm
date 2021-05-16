@@ -46758,6 +46758,12 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"ine" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 9
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "iod" = (
 /obj/cable{
 	d1 = 2;
@@ -55902,6 +55908,12 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
+"smb" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 5
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "sml" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
@@ -122513,7 +122525,7 @@ are
 fdN
 atw
 aIL
-aDp
+ine
 azx
 aFC
 aFC
@@ -123721,7 +123733,7 @@ ajf
 aEs
 aAa
 atr
-aBw
+smb
 aOn
 aOn
 aSp

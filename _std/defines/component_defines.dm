@@ -145,6 +145,9 @@
 /// When a mob dies
 #define COMSIG_MOB_DEATH "mob_death"
 
+/// When a mob fakes death
+#define COMSIG_MOB_FAKE_DEATH "mob_fake_death"
+
 #define COMSIG_MOB_PICKUP "mob_pickup"
 
 #define COMSIG_MOB_DROPPED "mob_drop"
