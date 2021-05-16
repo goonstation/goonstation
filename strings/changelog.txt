@@ -1,5 +1,9 @@
 
 (t)sun may 16 21
+(u)SynthFox
+(p)4318
+(e)|
+(*)Added "throw", "incendiary", "fog", and "clown" to the list of acceptable lawbringer mode phrases.
 (u)Gannets
 (p)4700
 (e)⚖|balance
