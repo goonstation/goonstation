@@ -39318,6 +39318,15 @@
 	dir = 1
 	},
 /area/station/crewquarters/cryotron)
+"klh" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/engine/power)
 "kly" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39581,15 +39590,6 @@
 /obj/machinery/drainage/big,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerstarboard)
-"lbF" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor,
-/area/station/engine/power)
 "lbS" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -41129,11 +41129,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/storage)
-"osL" = (
-/obj/machinery/door/airlock/pyro/engineering,
-/obj/access_spawn/engineering,
-/turf/simulated/floor,
-/area/station/engine/gas)
 "oty" = (
 /obj/storage/closet/dresser,
 /obj/item/clothing/under/gimmick/witchfinder,
@@ -43079,6 +43074,12 @@
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating,
 /area/station/security/hos)
+"sFI" = (
+/obj/machinery/door/airlock/pyro/engineering,
+/obj/access_spawn/engineering,
+/obj/firedoor_spawn,
+/turf/simulated/floor,
+/area/station/engine/gas)
 "sFT" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -88658,7 +88659,7 @@ gwG
 aAH
 bIt
 aOc
-osL
+sFI
 aBf
 aEC
 aGl
@@ -91374,7 +91375,7 @@ azs
 avp
 avp
 vky
-lbF
+klh
 vLr
 pUB
 bMt
