@@ -1,5 +1,9 @@
 
 (t)sat may 15 21
+(u)zjdtmkhzt
+(p)4679
+(e)|
+(+)Artifact forms should now be easier to remove from non-artifacts. You can still remove them from artifacts via knives/scalpels/scissors/wirecutters/other stuff.
 (u)DimWhat
 (p)4747
 (e)🎨|sprites
