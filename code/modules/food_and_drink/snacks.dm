@@ -1239,21 +1239,7 @@
 		var/frostingtype = null
 		frostingtype = input("Which frosting style would you like?", "Frosting Style", null) as null|anything in frostingstyle
 		if(frostingtype && (get_dist(src, user) <= 1))
-			switch(frostingtype)
-				if("icing")
-					frostingtype = "icing"
-				if("half and half icing")
-					frostingtype = "half"
-				if("dipped")
-					frostingtype = "dipped"
-				if("center fill")
-					frostingtype = "center"
-				if("zigzags")
-					frostingtype = "zigzags"
-				if("star")
-					frostingtype = "star"
-				if("heart")
-					frostingtype = "heart"
+			frosting_type = src.frostingstyle[frosting_type]
 			if(!src.GetOverlayImage(frostingstyle, src.layer + 0.2))
 				var/frostingstyle[src.style_step]
 				var/datum/color/average = tube.reagents.get_average_color()
