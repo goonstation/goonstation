@@ -2729,6 +2729,17 @@
 /obj/table/auto,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
+"gU" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/submachine/GTM{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/southeast)
 "gV" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
@@ -56030,7 +56041,7 @@ Qi
 XE
 RS
 YR
-wt
+gU
 CW
 DB
 aa
