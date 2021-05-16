@@ -74,9 +74,9 @@
 		if (prob(5) || sounds_instrument.len == 1)
 			if (src.dog_bark)
 				for_by_tcl(G, /obj/critter/dog/george)
-					if(ON_COOLDOWN(src, "george howl", 10 SECONDS))
-						return
 					if (IN_RANGE(G, T, 6) && prob(60))
+						if(ON_COOLDOWN(G, "george howl", 10 SECONDS))
+							return
 						G.howl()
 
 			src.post_play_effect(user)

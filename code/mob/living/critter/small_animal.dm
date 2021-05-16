@@ -653,10 +653,9 @@ todo: add more small animals!
 			src.hud.update_health()
 
 	proc/howl()
-		if (prob(60))
-			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='combat'><b>[src]</b> [pick("howls","bays","whines","barks","croons")] to the music! [capitalize(he_or_she(src))] thinks [he_or_she(src)]'s singing!</span>")
-			playsound(get_turf(src), "sound/voice/animal/howl[rand(1,6)].ogg", 100, 0)
+		for (var/mob/O in hearers(src, null))
+			O.show_message("<span class='combat'><b>[src]</b> [pick("howls","bays","whines","barks","croons")] to the music! [capitalize(he_or_she(src))] thinks [he_or_she(src)]'s singing!</span>")
+		playsound(get_turf(src), "sound/voice/animal/howl[rand(1,6)].ogg", 100, 0)
 
 
 /* -------------------- Shiba -------------------- */
