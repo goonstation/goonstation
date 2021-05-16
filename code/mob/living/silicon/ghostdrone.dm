@@ -578,6 +578,9 @@
 	equipped()
 		if (!active_tool)
 			return null
+		if(istype(active_tool, /obj/item/magtractor))
+			var/obj/item/magtractor/mag = active_tool
+			return mag.holding ? mag.holding : mag
 		return active_tool
 
 	u_equip(obj/item/W as obj)
