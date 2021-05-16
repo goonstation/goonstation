@@ -207,18 +207,6 @@ datum
 				..()
 				return
 
-		glycerol
-			name = "glycerol"
-			id = "glycerol"
-			description = "A sweet, non-toxic, viscous liquid. It is widely used as an additive."
-			taste = "sweet"
-			reagent_state = LIQUID
-			fluid_r = 220
-			fluid_g = 220
-			fluid_b = 255
-			transparency = 128
-			viscosity = 0.8
-
 		aranesp
 			name = "aranesp"
 			id = "aranesp"

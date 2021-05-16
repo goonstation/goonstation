@@ -721,23 +721,6 @@ datum
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison", 1)
 
-			epichlorohydrin
-				name = "epichlorohydrin"
-				id = "epichlorohydrin"
-				description = "A highly reactive, flammable, mildly toxic compound."
-				reagent_state = LIQUID
-				fluid_r = 220
-				fluid_g = 220
-				fluid_b = 255
-				transparency = 128
-				max_radius = 4
-				min_radius = 0
-				minimum_reaction_temperature = T0C + 385
-				volume_radius_multiplier = 0.05
-				explosion_threshold = 1000
-				volume_explosion_radius_modifier = -4.5
-				volatility = 2.5
-
 		// cogwerks - gunpowder test. IS THIS A TERRIBLE GODDAMN IDEA? PROBABLY
 
 		combustible/blackpowder

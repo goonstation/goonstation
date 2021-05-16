@@ -47,17 +47,6 @@ datum
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison", 3 * damage_factor)
 
-			allyl_chloride
-				name = "allyl chloride"
-				id = "allyl_chloride"
-				description = "A toxic intermediary substance."
-				reagent_state = LIQUID
-				fluid_r = 220
-				fluid_g = 220
-				fluid_b = 255
-				transparency = 128
-				damage_factor = 1.5
-
 		harmful/acid // COGWERKS CHEM REVISION PROJECT. give this a reaction and remove it from the dispenser machine, hydrogen (2) + sulfur (1) + oxygen (4)
 			name = "sulfuric acid"
 			id = "acid"
