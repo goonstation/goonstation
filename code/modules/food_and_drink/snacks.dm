@@ -1245,7 +1245,7 @@
 				var/datum/color/average = tube.reagents.get_average_color()
 				var/image/frostingoverlay = new(src.icon, frostingtype)
 				frostingoverlay.color = average.to_rgba()
-				src.UpdateOverlays(frostingoverlay, frostingstyle)
+				src.UpdateOverlays(frostingoverlay, "frosting[src.style_step]")
 				user.show_text("You add some frosting to [src]", "red")
 				src.style_step += 1
 				tube.reagents.trans_to(src, 15)
