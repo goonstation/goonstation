@@ -1,5 +1,11 @@
 
 (t)sun may 16 21
+(u)Flappybat
+(p)4629
+(e)⚖🐛|balance, bug
+(*)Spy thief objectives with difficult delivery locations now give a higher value reward.
+(+)Spy thief can no longer have multiple objectives for the same trinket/limb.
+(+)Spy limb/trinket rewards that roll the 10% chance to upgrade rewards are now marked as HOT
 (u)DimWhat
 (p)4363
 (e)⚖🗺|balance, mapping
