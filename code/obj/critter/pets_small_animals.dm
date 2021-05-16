@@ -1945,8 +1945,8 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			var/toweak = rand(0,3)
 			if (toweak)
 				M.visible_message("<span class='combat'><B>[M]</B> trips!</span>")
-			M.changeStatus("stunned", tostun * 10)
-			M.changeStatus("weakened", toweak * 10)
+			M.changeStatus("stunned", tostun SECONDS)
+			M.changeStatus("weakened", toweak SECONDS)
 
 	CritterAttack(mob/M)
 		..()

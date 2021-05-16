@@ -121,7 +121,7 @@ datum
 				var/mob/living/L = M
 				var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 				if(istype(L) && burn)
-					L.changeStatus("burning", 20 * src.volume)
+					L.changeStatus("burning", 2 * src.volume SECONDS)
 					burn.counter += 10 * src.volume
 					holder?.del_reagent(src.id)
 				..()
@@ -142,7 +142,7 @@ datum
 						var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 						L.changeStatus("slowed", 2 SECONDS, optional = 4)
 						if(istype(L) && burn) //double up on the extra burny, not blockable by biosuits/etc either
-							L.changeStatus("burning", 10 * src.volume)
+							L.changeStatus("burning", src.volume SECONDS)
 							burn.counter += 5 * src.volume
 
 		combustible/kerosene
@@ -216,7 +216,7 @@ datum
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", 100)
+						L.changeStatus("burning", 10 SECONDS)
 				return
 
 			reaction_turf(var/turf/T, var/volume)
@@ -459,7 +459,7 @@ datum
 
 				var/mob/living/L = M
 				if(istype(L) && L.getStatusDuration("burning"))
-					L.changeStatus("burning", 100 * mult)
+					L.changeStatus("burning", 10 SECONDS * mult)
 				..()
 
 		combustible/foof // this doesn't work yet
@@ -708,14 +708,14 @@ datum
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", 300)
+						L.changeStatus("burning", 30 SECONDS)
 				return 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
 
 				var/mob/living/L = M
 				if(istype(L) && L.getStatusDuration("burning"))
-					L.changeStatus("burning", 20 * mult)
+					L.changeStatus("burning", 2 SECONDS * mult)
 				..()
 
 			on_plant_life(var/obj/machinery/plantpot/P)

@@ -24,7 +24,7 @@
 			boutput(M, __blue("<B>You don't have any reagents in your bloodstream!</B>"))
 			return 1
 
-		M.changeStatus("werewolf_saliva",300)
+		M.changeStatus("werewolf_saliva", 30 SECONDS)
 		return 0
 
 /datum/statusEffect/tainted_saliva

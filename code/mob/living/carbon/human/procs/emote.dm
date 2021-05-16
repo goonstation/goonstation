@@ -1357,7 +1357,7 @@
 
 			if ("collapse", "trip")
 				if (!src.getStatusDuration("paralysis"))
-					src.changeStatus("paralysis", 30)
+					src.changeStatus("paralysis", 3 SECONDS)
 				message = "<B>[src]</B> [lowertext(act)]s!"
 				m_type = 2
 

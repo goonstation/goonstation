@@ -3086,7 +3086,7 @@
 			else if (src.chest_item.w_class == W_CLASS_BULKY || src.chest_item.w_class == W_CLASS_HUGE)
 				poopingDamage = 50
 				src.show_text("<span class='alert'><B>[src.chest_item] explodes out of your ass, jesus christ!</B></span>")
-				src.changeStatus("stunned", 50)
+				src.changeStatus("stunned", 5 SECONDS)
 				take_bleeding_damage(src, src, 20)
 
 			// Deal out ass damage
