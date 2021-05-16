@@ -1,4 +1,58 @@
 
+(t)sun may 16 21
+(u)Stonepillar
+(p)4691
+(e)🆕|feature
+(+)Lipstick now uses the same color as the crayon that was used to make it.
+(u)Flaborized
+(p)4716
+(e)🎨|sprites
+(*)Traitor tactical grenades, EMP grenades, sonic grenades, and banana grenades now come in pocket pouches instead of boxes, which can be reused as storage after you empty them of grenades.
+(u)Kyle
+(p)4740
+(e)⚖🆕|balance, feature
+(+)Wearing the monkey suit will prevent most monkeys from trying to attack you.
+(u)SynthFox
+(p)4318
+(e)|
+(*)Added "throw", "incendiary", "fog", and "clown" to the list of acceptable lawbringer mode phrases.
+(u)Gannets
+(p)4700
+(e)⚖|balance
+(*)Nuke ops Scout armour now provides a move speed boost to the wearer.
+(u)edwardly
+(p)4696
+(e)|
+(*)Ghosts now have a timeout before they can become a Ghost Drone.
+(u)Kubius
+(p)4652
+(e)🆕🎨|feature, sprites
+(+)The Spatial Interdictor has received an adjustment to functionality; its frame now comes in a more portable box, and new weaker rods may be manufactured without requiring more exotic materials.
+(u)Tarmunora
+(p)4760
+(e)⛔|removal
+(*)Nitroglycerin recipe removed
+(u)edwardly
+(p)4759
+(e)|
+(+)Fix the `send_alert` function in PDAs
+(t)sat may 15 21
+(u)zjdtmkhzt
+(p)4679
+(e)|
+(+)Artifact forms should now be easier to remove from non-artifacts. You can still remove them from artifacts via knives/scalpels/scissors/wirecutters/other stuff.
+(u)DimWhat
+(p)4747
+(e)🎨|sprites
+(+)Bang! guns are now more convincing
+(u)112358sam
+(p)4706
+(e)|
+(+)Removes the blood level check for performing the milk emote.
+(u)Superlagg
+(p)4711
+(e)🐛|bug
+(*)Guardbuddies will now actually handcuff people instead of just bullying them all day.
 (t)thu may 13 21
 (u)Tarmunora
 (e)⚖|balance

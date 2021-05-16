@@ -83,6 +83,8 @@
 
 	New()
 		..()
+		if(src.is_reinforced)
+			src.flags |= ALWAYS_SOLID_FLUID
 		layerify()
 
 	Turn()
@@ -160,7 +162,6 @@
 			actions.start(new /datum/action/bar/icon/railing_jump(user, src), user)
 
 	reinforced
-		flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
 		is_reinforced = 1
 		icon_state = "railing-reinforced"
 

@@ -33,7 +33,7 @@
 		//spatial interdictor: can't stop the black hole, but it can mitigate it
 		//interdiction consumes several thousand units - requiring a large cell - and the interdictor makes a hell of a ruckus
 		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-			if (IN_RANGE(IX,src,INTERDICT_RANGE) && IX.expend_interdict(9001))
+			if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(9001))
 				playsound(get_turf(IX),'sound/machines/alarm_a.ogg',50,0,5,1.5)
 				SPAWN_DBG(3 SECONDS)
 					if(IX) playsound(get_turf(IX),'sound/machines/alarm_a.ogg',50,0,5,1.5)

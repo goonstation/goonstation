@@ -343,7 +343,7 @@
 		user.TakeDamage("chest", 0, 150)
 		if (isliving(user))
 			var/mob/living/L = user
-			L.changeStatus("burning", 100)
+			L.changeStatus("burning", 10 SECONDS)
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0

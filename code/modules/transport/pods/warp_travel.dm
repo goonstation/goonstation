@@ -161,7 +161,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 			T.unlock_medal("Where we're going, we won't need eyes to see", 1)
 			return
 		else
-			T.changeStatus("radiation", rand(50,250), 2)
+			T.changeStatus("radiation", rand(5,25) SECONDS, 2)
 			if(ishuman(T))
 				var/mob/living/carbon/human/H = T
 				if (prob(75))

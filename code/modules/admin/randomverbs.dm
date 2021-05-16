@@ -68,7 +68,7 @@
 
 			var/PLoc = pick_landmark(LANDMARK_PRISONWARP)
 			if (PLoc)
-				M.changeStatus("paralysis", 80)
+				M.changeStatus("paralysis", 8 SECONDS)
 				M.set_loc(PLoc)
 			else
 				message_admins("[key_name(usr)] couldn't send [key_name(M)] to the prison zone (no landmark found).")

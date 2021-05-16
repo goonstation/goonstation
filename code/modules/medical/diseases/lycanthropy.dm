@@ -39,7 +39,7 @@
 					boutput(H, "<span class='alert'>Your body feels as if it's on fire!</span>")
 					if (prob(50) && src.triggered_transformation == 0)
 						H.visible_message("<span class='alert'><B>[H] starts having a seizure!</B></span>")
-						H.changeStatus("weakened", 150)
+						H.changeStatus("weakened", 15 SECONDS)
 						H.stuttering = max(10, H.stuttering)
 						H.make_jittery(1000)
 						src.triggered_transformation = 1

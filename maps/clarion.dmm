@@ -17795,7 +17795,7 @@
 /area/station/crew_quarters/fitness)
 "aJD" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10
+	dir = 9
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
@@ -17805,7 +17805,7 @@
 /area/station/crew_quarters/fitness)
 "aJF" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 6
+	dir = 5
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)

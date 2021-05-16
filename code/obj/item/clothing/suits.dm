@@ -1118,6 +1118,11 @@
 			icon_state = "syndie_specialist-infiltrator"
 			item_state = "syndie_specialist-infiltrator"
 
+		setupProperties()
+			..()
+			setProperty("space_movespeed", -0.25)
+
+
 		firebrand
 			name = "specialist operative firesuit"
 			icon_state = "syndie_specialist-firebrand"

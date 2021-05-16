@@ -155,8 +155,8 @@
 		var/mob/MT = target
 		var/tostun = rand(0,3)
 		var/toweak = rand(0,3)
-		MT.changeStatus("stunned", tostun * 10)
-		MT.changeStatus("weakened", toweak * 10)
+		MT.changeStatus("stunned", tostun SECONDS)
+		MT.changeStatus("weakened", toweak SECONDS)
 		holder.owner.visible_message("<span class='combat'><B>[holder.owner]</B> weaves around [MT]'s legs!</span>",\
 		"<span class='combat'>You weave around [MT]'s legs!</span>")
 		if (toweak)

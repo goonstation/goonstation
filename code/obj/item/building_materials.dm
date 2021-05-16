@@ -931,7 +931,7 @@ MATERIAL
 
 		user.visible_message("<span class='alert'><b>[user] headbutts the spike, impaling [his_or_her(user)] head on it!</b></span>")
 		user.TakeDamage("head", 50, 0)
-		user.changeStatus("stunned", 500)
+		user.changeStatus("stunned", 50 SECONDS)
 		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 		if(prob(40)) user.emote("scream")
 

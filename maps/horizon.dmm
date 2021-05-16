@@ -20008,13 +20008,13 @@
 /area/station/crew_quarters/courtroom)
 "aXY" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10
+	dir = 9
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/fitness)
 "aXZ" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 6
+	dir = 5
 	},
 /obj/disposalpipe/segment{
 	dir = 4

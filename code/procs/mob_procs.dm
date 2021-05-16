@@ -286,8 +286,8 @@
 #ifdef USE_STAMINA_DISORIENT
 		src.do_disorient(stamina_damage, weakened = weak*20, stunned = stun*20, disorient = disorient_time, remove_stamina_below_zero = 0, target_type = DISORIENT_EYE)
 #else
-		changeStatus("weakened", weak*20)
-		changeStatus("stunned", stun*20)
+		changeStatus("weakened", weak*2 SECONDS)
+		changeStatus("stunned", stun*2 SECONDS)
 #endif
 
 		if (!issilicon(src))

@@ -31631,6 +31631,9 @@
 	},
 /area/station/security/secwing)
 "bNN" = (
+/obj/decal/poster/wallsign/medal{
+	pixel_y = 28
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/security/hos)
 "bNO" = (
@@ -43059,10 +43062,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/mining/magnet)
-"epD" = (
-/obj/decal/poster/wallsign/medal,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/bridge/hos)
 "epE" = (
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/plating,
@@ -46759,6 +46758,12 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"ine" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 9
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "iod" = (
 /obj/cable{
 	d1 = 2;
@@ -55903,6 +55908,12 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
+"smb" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 5
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "sml" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
@@ -122514,7 +122525,7 @@ are
 fdN
 atw
 aIL
-aDp
+ine
 azx
 aFC
 aFC
@@ -123180,7 +123191,7 @@ njD
 bIE
 bLs
 sJb
-epD
+vTk
 bNN
 bQK
 lOK
@@ -123722,7 +123733,7 @@ ajf
 aEs
 aAa
 atr
-aBw
+smb
 aOn
 aOn
 aSp
