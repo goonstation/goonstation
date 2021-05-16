@@ -1196,7 +1196,15 @@
 	initial_reagents = list("sugar" = 20)
 	food_effects = list("food_energized")
 	var/can_add_frosting = TRUE
-	var/list/frostingstyle = list("icing", "sprinkles", "zigzags", "center fill", "half and half icing", "dipped icing", "heart", "star")
+	var/static/list/frostingstyle = list(
+	"icing" = "icing",
+	"sprinkles" = "sprinkles",
+	"zigzags" = "zigzags",
+	"center fill" = "center",
+	"half and half icing" = "half",
+	"dipped icing"= "dipped",
+	"heart" = "heart",
+	"star" = "star)
 	var/style_step = 1
 
 	heal(var/mob/M)
