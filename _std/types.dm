@@ -117,8 +117,7 @@ proc/get_singleton(type)
 var/global/list/singletons
 
 
-//
-// Find predecessor of a type
+/// Find predecessor of a type
 proc/predecessor_path_in_list(type, list/types)
   while(type)
     if(type in types)
