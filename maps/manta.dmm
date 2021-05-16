@@ -7424,14 +7424,12 @@
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "2-4"
-	},
 /obj/table/wood/auto,
 /obj/machinery/phone,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/blind_switch/area/west,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellowblack"
@@ -7463,9 +7461,6 @@
 "awf" = (
 /obj/disposalpipe/segment{
 	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /obj/stool/chair/comfy/yellow,
 /obj/landmark/start{
@@ -7707,11 +7702,10 @@
 /turf/simulated/floor/plating/random,
 /area/shuttle/escape/station/manta)
 "awN" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/table/wood/auto,
 /obj/item/device/radio/intercom/loudspeaker,
+/obj/cable,
+/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowblackcorner"
@@ -7719,10 +7713,13 @@
 /area/station/engine/engineering/ce)
 "awO" = (
 /obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/engineering/ce)
+/turf/simulated/floor,
+/area/station/engine/inner)
 "awQ" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -7793,15 +7790,8 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/ce)
 "axa" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/engineering/ce)
+/turf/space/fluid/manta,
+/area/station/engine/engineering/ce/private)
 "axb" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -7865,12 +7855,12 @@
 /area/station/engine/storage)
 "axj" = (
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "2-8"
 	},
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor,
 /area/station/engine/inner)
 "axl" = (
 /obj/stool/bed,
@@ -7885,6 +7875,7 @@
 /obj/landmark/start{
 	name = "Engineer"
 	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/east,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
 "axm" = (
@@ -7945,9 +7936,6 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -7958,7 +7946,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/ce)
@@ -8092,17 +8080,20 @@
 /turf/simulated/floor,
 /area/station/hangar/security)
 "axT" = (
-/obj/item/device/radio/intercom/loudspeaker/speaker/east,
 /obj/decal/tile_edge/line/black{
 	dir = 8;
 	icon_state = "line1"
 	},
 /obj/item/device/radio/beacon,
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
 "axU" = (
 /obj/cable{
-	icon_state = "2-4"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
@@ -8142,24 +8133,19 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellowblack"
 	},
 /area/station/engine/engineering/ce)
 "axZ" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "yellowblack"
 	},
 /area/station/engine/engineering/ce)
 "aya" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellowblack"
@@ -8261,6 +8247,7 @@
 	name = "Engineer"
 	},
 /obj/machinery/light/incandescent/netural,
+/obj/item/device/radio/intercom/loudspeaker/speaker/west,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
 "aym" = (
@@ -8421,12 +8408,8 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/computer/announcement{
-	name = "Engineering Announcement Computer"
-	},
-/obj/machinery/power/data_terminal,
 /obj/cable{
-	icon_state = "0-2"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "yellowblack"
@@ -8466,7 +8449,10 @@
 	dir = 8
 	},
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
@@ -8522,6 +8508,7 @@
 /obj/landmark/start{
 	name = "Engineer"
 	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/west,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
 "ayR" = (
@@ -8570,8 +8557,6 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/power/apc/autoname_south,
-/obj/cable,
 /obj/table/wood/auto,
 /obj/item/paper_bin,
 /obj/item/stamp/ce,
@@ -8593,6 +8578,9 @@
 /area/station/engine/storage)
 "aza" = (
 /obj/item/device/radio/intercom/loudspeaker/speaker/east,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -8643,15 +8631,16 @@
 	},
 /area/station/engine/monitoring)
 "azh" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/gun/kinetic/antisingularity,
-/obj/item/paper/antisingularity,
-/obj/machinery/light/incandescent/netural{
-	dir = 1;
-	pixel_y = 20
-	},
+/obj/item/device/radio/intercom/engineering,
+/obj/storage/secure/closet/command/chief_engineer,
+/obj/item/clothing/suit/hi_vis,
+/obj/item/deconstructor,
+/obj/item/clothing/suit/rad,
+/obj/item/clothing/head/rad_hood,
+/obj/item/mop,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/orangeblack,
-/area/station/engine/engineering/ce/private)
+/area/space)
 "azi" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -8825,6 +8814,11 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/machinery/firealarm{
+	pixel_x = 1;
+	pixel_y = 26;
+	text = "NF"
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "yellowblack"
@@ -8897,6 +8891,7 @@
 /obj/landmark/start{
 	name = "Engineer"
 	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/east,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
 "azN" = (
@@ -8910,8 +8905,6 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/power/apc/autoname_south,
-/obj/cable,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
 "azO" = (
@@ -8965,12 +8958,12 @@
 /area/station/engine/inner)
 "azW" = (
 /obj/machinery/firealarm{
-	dir = 1;
-	layer = 3.5;
-	pixel_y = -24
+	pixel_x = 1;
+	pixel_y = 26;
+	text = "NF"
 	},
-/turf/space/fluid/manta/nospawn,
-/area/mantaSpace)
+/turf/simulated/floor/damaged2,
+/area/station/engine/power)
 "azX" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -9008,9 +9001,6 @@
 	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
-	},
-/obj/machinery/light_switch/auto{
-	pixel_y = -24
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering/ce/private)
@@ -9225,14 +9215,6 @@
 /obj/item/rocko{
 	pixel_x = 2;
 	pixel_y = 13
-	},
-/obj/blind_switch/area/north{
-	pixel_x = -5;
-	pixel_y = -24
-	},
-/obj/machinery/light_switch/auto{
-	pixel_x = 5;
-	pixel_y = -24
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -13485,11 +13467,6 @@
 /obj/machinery/shield_generator,
 /obj/machinery/power/data_terminal,
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/firealarm{
-	dir = 1;
-	layer = 3.5;
-	pixel_y = -24
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -14199,13 +14176,10 @@
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/quarters)
 "aOx" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/firealarm{
-	dir = 1;
-	layer = 3.5;
-	pixel_y = -24
+	pixel_x = 1;
+	pixel_y = 26;
+	text = "NF"
 	},
 /turf/simulated/floor,
 /area/station/engine/power)
@@ -32425,10 +32399,9 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/machinery/power/monitor,
-/obj/machinery/power/data_terminal,
+/obj/decoration/decorativeplant/plant2,
 /obj/cable{
-	icon_state = "0-2"
+	icon_state = "2-4"
 	},
 /turf/simulated/floor{
 	icon_state = "yellowblackcorner"
@@ -36882,11 +36855,12 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "fkq" = (
+/obj/machinery/power/data_terminal,
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
-/obj/cable{
-	icon_state = "1-8"
+/obj/machinery/power/monitor{
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 9;
@@ -37944,12 +37918,6 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen/therustykrab)
 "hdg" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowblack"
@@ -38003,22 +37971,13 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
 "hpA" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/ammo/bullets/antisingularity{
-	pixel_x = -4
-	},
-/obj/item/ammo/bullets/antisingularity{
-	pixel_x = 2
-	},
-/obj/item/ammo/bullets/antisingularity{
-	pixel_x = 8
-	},
+/obj/storage/crate/rcd/CE,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/orangeblack,
-/area/station/engine/engineering/ce/private)
+/area/space)
 "hpN" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -38443,7 +38402,16 @@
 /turf/simulated/floor/red,
 /area/station/security/interrogation)
 "ijo" = (
-/obj/storage/crate/rcd/CE,
+/obj/table/reinforced/bar/auto,
+/obj/item/ammo/bullets/antisingularity{
+	pixel_x = -4
+	},
+/obj/item/ammo/bullets/antisingularity{
+	pixel_x = 2
+	},
+/obj/item/ammo/bullets/antisingularity{
+	pixel_x = 8
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering/ce/private)
 "ijx" = (
@@ -38528,10 +38496,10 @@
 /area/station/maintenance/upperstarboard)
 "iqP" = (
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "1-2"
 	},
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/ce)
@@ -39278,13 +39246,13 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "keZ" = (
-/obj/item/device/radio/intercom/engineering,
-/obj/storage/secure/closet/command/chief_engineer,
-/obj/item/clothing/suit/hi_vis,
-/obj/item/deconstructor,
-/obj/item/clothing/suit/rad,
-/obj/item/clothing/head/rad_hood,
-/obj/item/mop,
+/obj/table/reinforced/bar/auto,
+/obj/item/gun/kinetic/antisingularity,
+/obj/item/paper/antisingularity,
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 20
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering/ce/private)
 "kfj" = (
@@ -39868,6 +39836,9 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
 	pixel_x = -10
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -42467,12 +42438,17 @@
 	dir = 4
 	},
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "1-4"
 	},
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-4"
 	},
-/obj/decoration/decorativeplant/plant2,
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement{
+	dir = 8;
+	name = "Engineering Announcement Computer";
+	req_access_txt = "19"
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fgreen2"
@@ -42990,12 +42966,6 @@
 /area/station/maintenance/lowerstarboard)
 "stp" = (
 /obj/wingrille_spawn/auto,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "svc" = (
@@ -43446,15 +43416,13 @@
 /turf/simulated/floor,
 /area/station/construction)
 "tGG" = (
-/obj/rack,
-/obj/item/wrench,
-/obj/item/clothing/glasses/meson,
-/obj/item/clothing/shoes/magnetic,
-/obj/cable{
-	icon_state = "1-2"
+/obj/machinery/firealarm{
+	pixel_x = 1;
+	pixel_y = 26;
+	text = "NF"
 	},
-/turf/simulated/floor/yellow/side,
-/area/station/engine/inner)
+/turf/simulated/floor,
+/area/station/engine/gas)
 "tHn" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
@@ -44123,15 +44091,6 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
-"vkg" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
-/obj/machinery/firealarm{
-	dir = 1;
-	layer = 3.5;
-	pixel_y = -24
-	},
-/turf/simulated/floor,
-/area/station/engine/gas)
 "vky" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -81427,7 +81386,7 @@ act
 aaa
 aaa
 aaa
-aaa
+axa
 aaa
 aaa
 arz
@@ -81723,13 +81682,13 @@ aDs
 bEF
 aaa
 aaa
-azW
+adx
 adx
 act
 aaa
 aaa
 aaa
-aaa
+axa
 aaa
 aaa
 aaa
@@ -84129,9 +84088,9 @@ oEq
 axr
 axs
 axU
-ayy
-ayy
-ayy
+axs
+axs
+axs
 azN
 aym
 ijo
@@ -85346,10 +85305,10 @@ axY
 iqP
 avZ
 awN
-awO
-axj
-tGG
-vWb
+awX
+avp
+xCM
+azG
 axu
 lmk
 avp
@@ -86246,7 +86205,7 @@ ayi
 ayE
 ayT
 axX
-axa
+axw
 axw
 ayb
 ayr
@@ -86552,17 +86511,17 @@ stp
 axe
 axe
 axe
-axe
+svc
 aza
 lKW
-eNQ
-azs
-axe
-axe
-azG
-axe
-axe
-svc
+dZj
+awO
+axf
+axf
+vWb
+axf
+axf
+axj
 dLk
 azJ
 azJ
@@ -87469,7 +87428,7 @@ axe
 axe
 bDg
 azJ
-aAH
+azW
 eYI
 eYI
 pjt
@@ -88078,7 +88037,7 @@ rWh
 swY
 rWh
 azJ
-aBa
+tGG
 inR
 aFE
 aEr
@@ -88378,7 +88337,7 @@ jwI
 lDx
 mJU
 eYI
-aOx
+eYI
 azJ
 aBb
 aEz
@@ -88989,7 +88948,7 @@ aBa
 aHq
 cJT
 aMe
-vkg
+aMe
 aEr
 aEr
 act
@@ -90485,7 +90444,7 @@ axg
 axg
 azu
 aMp
-smG
+nLx
 pIf
 azs
 jwI
@@ -91093,7 +91052,7 @@ axe
 vSj
 jox
 azJ
-aAh
+aOx
 fbv
 aAh
 nFd
