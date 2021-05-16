@@ -1,5 +1,11 @@
 
 (t)sun may 16 21
+(u)DimWhat
+(p)4363
+(e)⚖🗺|balance, mapping
+(*)The hard hats that came with firesuits on station have been replaced with firefighter helmets
+(+)Altered the stats of the firefighter helmet and suit.
+(+)Added firefighter helmets to fire lockers and crates
 (u)edwardly
 (p)4715
 (e)|
