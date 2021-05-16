@@ -2200,7 +2200,7 @@
 	vend_delay = 0
 	slogan_list = list("Come buy some oxygen!",
 	"You NEED this to live!.")
-	var/global/image/holding_overlay_image = image('icons/obj/vending.dmi', "O2vend_slot")
+	var/global/image/holding_overlay_image = image('icons/obj/vending.dmi', "O2vend-slot")
 
 	// Currently installed tank
 	var/obj/item/tank/holding = null
@@ -2235,14 +2235,14 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/tank))
 			if (!src.holding)
-				boutput(user, "You insert the [W.name] into the the [src.name].</span>")
+				boutput(user, "You insert the [W] into the the [src].</span>")
 				UpdateOverlays(holding_overlay_image, "o2_vend_tank_overlay")
 				user.drop_item()
 				W.set_loc(src)
 				src.holding = W
 				src.updateUsrDialog()
 			else
-				boutput(user, "You try to insert the [W.name] into the the [src.name], but there's already a tank there!</span>")
+				boutput(user, "You try to insert the [W] into the the [src], but there's already a tank there!</span>")
 				return
 		else
 			..()
