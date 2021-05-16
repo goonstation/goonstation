@@ -537,8 +537,6 @@
 
 	proc/howl()
 		if (prob(60))
-			if(ON_COOLDOWN(src, "george howl", 10 SECONDS))
-				return
 			for (var/mob/O in hearers(src, null))
 				O.show_message("<span class='combat'><b>[src]</b> [pick("howls","bays","whines","barks","croons")] to the music! He thinks he's singing!</span>")
 			playsound(get_turf(src), "sound/voice/animal/howl[rand(1,6)].ogg", 100, 0)
