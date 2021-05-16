@@ -29,6 +29,8 @@
 	var/obj/machinery/conveyor/next_conveyor = null
 	var/obj/machinery/conveyor_switch/owner = null
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	mats = 5
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 
 
 /obj/machinery/conveyor/north
@@ -62,8 +64,53 @@
 		owner.conveyors -= src
 	..()
 
-	// set the dir and target turf depending on the operating direction
+/obj/machinery/conveyor/was_built_from_frame(mob/user, newly_built)
+	// needs to be done again since new() is run before the frame deployment sets the direction
+	basedir = dir
+	setdir()
+	// best guess for a conveyor whose settings we want to copy
+	var/obj/machinery/conveyor/prev_conveyor
+	prev_conveyor = locate(/obj/machinery/conveyor) in get_step(src,turn(basedir, 180)) // behind
+	if(!prev_conveyor)
+		prev_conveyor = locate(/obj/machinery/conveyor) in get_step(src,basedir) // front
+	if(!prev_conveyor)
+		prev_conveyor = locate(/obj/machinery/conveyor) in get_step(src,turn(basedir, -90)) // right
+	if(!prev_conveyor)
+		prev_conveyor = locate(/obj/machinery/conveyor) in get_step(src,turn(basedir, 90)) // left
+	if(prev_conveyor)
+		src.operating = prev_conveyor.operating
+		if(prev_conveyor.owner)
+			src.owner = prev_conveyor.owner
+			src.owner.conveyors += src
 
+/obj/machinery/conveyor/was_deconstructed_to_frame(mob/user)
+	src.owner.conveyors -= src
+	src.owner = null
+	src.operating = 0
+
+/obj/machinery/conveyor/MouseDrop(obj/copyobj, null)
+	var/mob/living/user = usr
+	if (!istype(user))
+		return
+	if (user.stat)
+		return
+	if (!user.find_tool_in_hand(TOOL_PULSING))
+		boutput(usr, "<span class='alert'>You need a multitool to link conveyor belts to levers!</span>")
+		return
+	var/obj/machinery/conveyor_switch/newswitch
+	if (istype(copyobj, /obj/machinery/conveyor_switch))
+		newswitch = copyobj
+	else if(istype(copyobj, /obj/machinery/conveyor))
+		var/obj/machinery/conveyor/conv = copyobj
+		newswitch = conv.owner
+	if(newswitch)
+		if(src.owner) // remove from old switch and add to new one
+			src.owner.conveyors -= src
+		src.owner = newswitch
+		newswitch.conveyors |= src
+		boutput(usr, "<span class='notice'>You connect the [src] to the [newswitch].</spawn>")
+
+// set the dir and target turf depending on the operating direction
 /obj/machinery/conveyor/proc/setdir()
 	if(operating == -1)
 		set_dir(turn(basedir,180))
@@ -196,6 +243,9 @@
 			else
 				src.visible_message("<span class='notice'>[M] had been cut free from the conveyor by [user].</span>")
 			return
+	else if (iswrenchingtool(I))
+		src.basedir = turn(src.basedir, -90)
+		src.setdir()
 
 // attack with hand, move pulled object onto conveyor
 
@@ -394,7 +444,8 @@
 
 	var/list/conveyors		// the list of converyors that are controlled by this switch
 	anchored = 1
-
+	mats = 8
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 
 
 /obj/machinery/conveyor_switch/New()
@@ -404,10 +455,11 @@
 
 	SPAWN_DBG(0.5 SECONDS)		// allow map load
 		conveyors = list()
-		for(var/obj/machinery/conveyor/C as anything in machine_registry[MACHINES_CONVEYORS])
-			if(C.id == id)
-				conveyors += C
-				C.owner = src
+		if(id != "")
+			for(var/obj/machinery/conveyor/C as anything in machine_registry[MACHINES_CONVEYORS])
+				if(C.id == id)
+					conveyors += C
+					C.owner = src
 
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", "trigger")
@@ -419,6 +471,11 @@
 	conveyors = null
 	..()
 
+/obj/machinery/conveyor_switch/was_deconstructed_to_frame(mob/user)
+	for(var/obj/machinery/conveyor/C as() in conveyors)
+		C.owner = null
+	src.conveyors = list()
+	src.id = ""
 
 /obj/machinery/conveyor_switch/proc/trigger(var/inp)
 	attack_hand(usr) //bit of a hack but hey.
@@ -464,11 +521,12 @@
 	update()
 
 	// find any switches with same id as this one, and set their positions to match us
-	for_by_tcl(S, /obj/machinery/conveyor_switch)
-		if(S.id == src.id)
-			S.position = position
-			S.update()
-		LAGCHECK(LAG_MED)
+	if(id != "")
+		for_by_tcl(S, /obj/machinery/conveyor_switch)
+			if(S.id == src.id)
+				S.position = position
+				S.update()
+			LAGCHECK(LAG_MED)
 
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"switchTriggered")
 
