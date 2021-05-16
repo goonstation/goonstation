@@ -1,5 +1,9 @@
 
 (t)sun may 16 21
+(u)Flaborized
+(p)4716
+(e)🎨|sprites
+(*)Traitor tactical grenades, EMP grenades, sonic grenades, and banana grenades now come in pocket pouches instead of boxes, which can be reused as storage after you empty them of grenades.
 (u)Kyle
 (p)4740
 (e)⚖🆕|balance, feature
