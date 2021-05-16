@@ -103,11 +103,9 @@
 		for_by_tcl(iterated_container, /obj/storage)
 			if (!iterated_container.open && iterated_container.z == Z_LEVEL_STATION)
 				eligible_containers += iterated_container
-		if (length(eligible_containers))
-			container = pick(eligible_containers)
-
-		if (container == null)  // no eligible target containers to move to
+		if (!length(eligible_containers))
 			return
+		container = pick(eligible_containers)
 
 		playsound(src.loc,"sound/misc/gnomechuckle.ogg" ,50,1)
 		src.set_loc(container)
