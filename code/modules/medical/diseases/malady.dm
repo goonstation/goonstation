@@ -340,7 +340,7 @@
 	info = "The patient's arteries have narrowed."
 	max_stages = 2
 	cure = "Lifestyle Changes, Anticoagulants or Aspirin"
-	reagentcure = list("heparin"=1, "salicylic_acid"=2, "nitroglycerin"=5)
+	reagentcure = list("heparin"=1, "salicylic_acid"=2)
 	affected_species = list("Human","Monkey")
 	stage_prob = 1
 
@@ -392,7 +392,7 @@
 			affected_mob.cure_disease(D)
 			return
 		else if (cureprob > 10 && src.reagentcure["heparin"] < 2)
-			reagentcure = list("heparin"=2, "salicylic_acid"=4, "nitroglycerin"=10)
+			reagentcure = list("heparin"=2, "salicylic_acid"=4)
 
 		if (D.stage >= 1) // chest pain, heartburn, shortness of breath and a little bit of damage from heart not getting enough oxygen
 			if (prob(5))
@@ -422,7 +422,7 @@
 	info = "The patient is having a cardiac emergency."
 	max_stages = 3
 	cure = "Cardiac Stimulants"
-	reagentcure = list("atropine"=8,"epinephrine"=10,"heparin"=5,"nitroglycerin"=35)
+	reagentcure = list("atropine"=8,"epinephrine"=10,"heparin"=5)
 	recureprob = 10
 	affected_species = list("Human","Monkey")
 	stage_prob = 5
