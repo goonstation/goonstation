@@ -2639,29 +2639,29 @@ Captain Peleg in his gruff voice loudly hailed us from his wigwam, saying he had
 <BR>
 'I mean', he replied, 'he must show his papers.'<BR>
 <BR>
-'Yes,' said Captain Bildad in his hollow voice, sticking his head from behind Peleg�s, out of the wigwam. 'He must show that he�s converted.<BR>
+'Yes,' said Captain Bildad in his hollow voice, sticking his head from behind Peleg's, out of the wigwam. 'He must show that he's converted.<BR>
 Son of darkness,' he added, turning to Queequeg, 'art thou at present in communion with any Christian church?'<BR>
 <BR>
-'Why,' said I, 'he�s a member of the first Congregational Church.' Here be it said, that many tattooed savages sailing in Nantucket ships atlast come to be converted into the churches.<BR>
+'Why,' said I, 'he's a member of the first Congregational Church.' Here be it said, that many tattooed savages sailing in Nantucket ships atlast come to be converted into the churches.<BR>
 <BR>
-'First Congregational Church,' cried Bildad, 'what! that worships in Deacon Deuteronomy Coleman�s meeting-house?' and so saying, taking out<BR>
+'First Congregational Church,' cried Bildad, 'what! that worships in Deacon Deuteronomy Coleman's meeting-house?' and so saying, taking out<BR>
 his spectacles, he rubbed them with his great yellow bandana handkerchief, and putting them on very carefully, came out of the wigwam, <BR>
 and leaning stiffly over the bulwarks, took a good long look at Queequeg.<BR>
 <BR>
 'How long hath he been a member?' he then said, turning to me; 'not very long, I rather guess, young man.'<BR>
 <BR>
-'No,' said Peleg, 'and he hasn�t been baptized right either, or it would have washed some of that devil�s blue off his face.'<BR>
+'No,' said Peleg, 'and he hasn't been baptized right either, or it would have washed some of that devil's blue off his face.'<BR>
 <BR>
-'Do tell, now,' cried Bildad, 'is this Philistine a regular member of Deacon Deuteronomy�s meeting? I never saw him going there, and I pass it every Lord�s day.'<BR>
+'Do tell, now,' cried Bildad, 'is this Philistine a regular member of Deacon Deuteronomy's meeting? I never saw him going there, and I pass it every Lord's day.'<BR>
 <BR>
-'I don�t know anything about Deacon Deuteronomy or his meeting,' said I; 'all I know is, that Queequeg here is a born member of the First <BR>
+'I don't know anything about Deacon Deuteronomy or his meeting,' said I; 'all I know is, that Queequeg here is a born member of the First <BR>
 Congregational Church. He is a deacon himself, Queequeg is.'<BR>
 <BR>
 'Young man,' said Bildad sternly, 'thou art skylarking with me'explain thyself, thou young Hittite. What church dost thee mean? answer me.'<BR>
 <BR>
-Finding myself thus hard pushed, I replied. �I mean, sir, the same ancient Catholic Church to which you and I, and Captain Peleg there,<BR>
-and Queequeg here, and all of us, and every mother�s son and soul of us belong; the great and everlasting First Congregation of this whole <BR>
-worshipping world; we all belong to that; only some of us cherish some queer crotchets no ways touching the grand belief; in _that_ we all join hands.' <BR>
+Finding myself thus hard pushed, I replied. 'I mean, sir, the same ancient Catholic Church to which you and I, and Captain Peleg there,<BR>
+and Queequeg here, and all of us, and every mother's son and soul of us belong; the great and everlasting First Congregation of this whole <BR>
+worshipping world; we all belong to that; only some of us cherish some queer crotchets no ways touching the grand belief; in <i>that</i> we all join hands.' <BR>
 <BR>
  </font>
 		"}
@@ -3571,42 +3571,42 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 
 /obj/item/paper/book/from_file/ai_programming_101
 	name = "AI Programming 101"
-	icon_state = "cyanbook"
+	icon_state = "aibook"
 	file_path = "strings/books/ai_programming_101.txt"
 
 /obj/item/paper/book/from_file/captaining_101
 	name = "Captaining 101"
-	icon_state = "greenbook"
+	icon_state = "capbook"
 	file_path = "strings/books/captaining_101.txt"
 
 /obj/item/paper/book/from_file/commanders_diary
 	name = "Commander's Diary"
-	icon_state = "redbook"
+	icon_state = "diary"
 	file_path = "strings/books/commanders_diary.txt"
 
 /obj/item/paper/book/from_file/dealing_with_clonelieness
 	name = "Dealing With Clonelieness"
-	icon_state = "cyanbook"
+	icon_state = "cloningbook"
 	file_path = "strings/books/dealing_with_clonelieness.txt"
 
 /obj/item/paper/book/from_file/elective_prosthetics_for_dummies
 	name = "Elective Prosthetics for Dummies"
-	icon_state = "whitebook"
+	icon_state = "roboticsbook"
 	file_path = "strings/books/elective_prosthetics_for_dummies.txt"
 
 /obj/item/paper/book/from_file/fun_facts_about_shelterfrogs
 	name = "Fun Facts About Shelterfrogs"
-	icon_state = "greenbook"
+	icon_state = "frogbook"
 	file_path = "strings/books/fun_facts_about_shelterfrogs.txt"
 
 /obj/item/paper/book/from_file/syndies_guide
 	name = "A SYNDIE'S GUIDE TO DOING YOUR FUCKING JOB"
-	icon_state = "redbook"
+	icon_state = "syndiebook"
 	file_path = "strings/books/syndies_guide.txt"
 
 /obj/item/paper/book/from_file/teg_guide
 	name = "Thermo-electric Power Generation"
-	icon_state = "yelbook"
+	icon_state = "tegbook"
 	file_path = "strings/books/teg_guide.txt"
 
 /obj/item/paper/book/custom //custom book parent, just to avoid cluttering up normal books
