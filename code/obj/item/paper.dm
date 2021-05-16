@@ -1457,7 +1457,7 @@ automatically adopt your criminal control strategy of choice.<br>
 <td>Lawbringer™ warranty is voided if exposed to clowns. Keep them at bay.</td>
 </tr>
 <tr>
-<td><b>"Pulse" / "Push" / "Punch"</b></td>
+<td><b>"Pulse" / "Push" / "Throw"</b></td>
 <td>35 PU</td>
 <td>Just like our patented Pulse Rifle™s, this Mode sends your enemies flying! Keep crime at arm's length!</td>
 </tr>
