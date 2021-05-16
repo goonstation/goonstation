@@ -691,10 +691,16 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "bunnyfriendsmen"
 		ckey = "bunnykimber"
 
-	neoxzilon
+	retrino
 		name = "\improper Neo Xzilon"
 		icon_state = "neoxzilon"
 		ckey = "retrino"
+
+		New()
+			..()
+			if(prob(50))
+				src.name = "\improper Matcha Usucha" //retrino's second character
+				src.icon_state = "matchausucha"
 
 	hazel
 		name = "\improper Hazel Adenine"
