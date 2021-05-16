@@ -1196,7 +1196,7 @@
 	initial_reagents = list("sugar" = 20)
 	food_effects = list("food_energized")
 	var/can_add_frosting = TRUE
-	var/list/frostingstyle = list("icing", "sprinkles", "zigzags", "center fill", "half and half icing", "dipped icing")
+	var/list/frostingstyle = list("icing", "sprinkles", "zigzags", "center fill", "half and half icing", "dipped icing", "heart", "star")
 	var/style_step = 1
 
 	heal(var/mob/M)
@@ -1206,6 +1206,14 @@
 			src.heal_amt /= 2
 		else
 			..()
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/reagent_containers/food/snacks/plant/coconutmeat)) //currently we can only put coconut on top of donuts
+			user.u_equip(W)
+			qdel(W)
+			src.UpdateOverlays(src.SafeGetOverlayImage('icons/obj/foodNdrink/donuts.dmi', "coconut", src.layer + 0.1), "coconut") //cosmetic only; does not count towards our two frosting styles per donut
+		else
+			. = ..()
 
 	proc/add_frosting(var/obj/item/reagent_containers/food/drinks/drinkingglass/icing/tube, var/mob/user)
 		if (!src.can_add_frosting)
@@ -1226,8 +1234,6 @@
 			switch(frostingtype)
 				if("icing")
 					frostingtype = "icing"
-				if("Boston cream")
-					frostingtype = "full"
 				if("half and half icing")
 					frostingtype = "half"
 				if("dipped")
@@ -1240,7 +1246,7 @@
 					frostingtype = "star"
 				if("heart")
 					frostingtype = "heart"
-			if(!src.GetOverlayImage(frostingstyle))
+			if(!src.GetOverlayImage(frostingstyle, src.layer + 0.2))
 				var/frostingstyle[src.style_step]
 				var/datum/color/average = tube.reagents.get_average_color()
 				var/image/frostingoverlay = new(src.icon, frostingtype)
