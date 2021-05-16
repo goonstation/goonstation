@@ -2201,10 +2201,15 @@
 	slogan_list = list("Come buy some oxygen!",
 	"You NEED this to live!.")
 	var/global/image/holding_overlay_image = image('icons/obj/vending.dmi', "O2vend_slot")
+
+	// Currently installed tank
 	var/obj/item/tank/holding = null
+
+	// Gas mix to be copied into the target tank
 	var/datum/gas_mixture/gas_prototype = null
+
 	var/target_pressure = ONE_ATMOSPHERE
-	var/air_cost = 0.1
+	var/air_cost = 0.1 // units: credits / ( kPa * L )
 
 	light_r =0.4
 	light_g = 0.4
@@ -2216,8 +2221,7 @@
 
 	proc/fill_cost()
 		if(!holding) return 0
-		if(src.target_pressure == src.holding.air_contents.volume) return 0
-		return round(src.target_pressure * src.holding.air_contents.volume * src.air_cost)
+		return clamp(round((src.target_pressure - MIXTURE_PRESSURE(src.holding.air_contents)) * src.holding.air_contents.volume * src.air_cost), 0, INFINITY)
 
 	proc/fill()
 		if(!holding) return
@@ -2232,7 +2236,7 @@
 		if (istype(W, /obj/item/tank))
 			if (!src.holding)
 				boutput(user, "You insert the [W.name] into the the [src.name].</span>")
-				src.UpdateOverlays(holding_overlay_image, "o2_vend_tank_overlay")
+				UpdateOverlays(holding_overlay_image, "o2_vend_tank_overlay")
 				user.drop_item()
 				W.set_loc(src)
 				src.holding = W
@@ -2291,7 +2295,7 @@
 		if(href_list["fill"])
 			if (holding)
 				var/cost = fill_cost()
-				if(credit > cost)
+				if(credit >= cost)
 					src.credit -= cost
 					src.fill()
 					boutput(usr, "<span class='notice'>You fill up the [src.holding].</span>")
@@ -2299,7 +2303,7 @@
 					return
 				else if(scan)
 					var/datum/data/record/account = FindBankAccountByName(src.scan.registered)
-					if (account && account.fields["current_money"] > cost)
+					if (account && account.fields["current_money"] >= cost)
 						account.fields["current_money"] -= cost
 						src.fill()
 						boutput(usr, "<span class='notice'>You fill up the [src.holding].</span>")
