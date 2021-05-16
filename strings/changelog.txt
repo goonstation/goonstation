@@ -1,5 +1,9 @@
 
 (t)sun may 16 21
+(u)Stonepillar
+(p)4691
+(e)🆕|feature
+(+)Lipstick now uses the same color as the crayon that was used to make it.
 (u)Flaborized
 (p)4716
 (e)🎨|sprites
