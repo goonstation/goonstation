@@ -3,7 +3,6 @@
 	flags = FPRINT | ONBELT | TABLEPASS | NOSPLASH | OPENCONTAINER
 	hide_attack = 1
 	move_triggered = 1
-	fits_on_things = FALSE // no, don't put this in a PDA!
 
 	New()
 		..()

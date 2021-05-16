@@ -19,6 +19,7 @@
 	var/access = list()
 	var/image/ID_image = null
 	var/image/pen_image = "pen"
+	var/image/cigarette_image = "cig" // you can put cigs and blunts into this because it's funny
 
 	var/owner = null
 	var/ownerAssignment = null
@@ -615,13 +616,11 @@
 				src.insert_id_card(ID, user)
 				boutput(user, "<span class='notice'>You insert [ID] into [src].</span>")
 
-	else if (istype(C, /obj/item/pen))
-		var/obj/item/pen/insertedPen = C
+	else if (istype(C, /obj/item/pen) || istype(C, /obj/item/clothing/mask/cigarette))
 		if (!src.pen)
-			src.insert_pen(insertedPen, user)
+			src.insert_pen(C, user)
 		else
 			boutput(user, "<span class='alert'>There is already something in [src]'s pen slot!</span>")
-
 
 /obj/item/device/pda2/examine()
 	. = ..()
@@ -870,20 +869,22 @@
 				src.pen.set_loc(T)
 			src.pen = null
 			src.underlays -= src.pen_image
+			src.underlays -= src.cigarette_image
 			return
 
-	proc/insert_pen(var/obj/item/pen/insertedPen as obj, var/mob/user as mob)
+	proc/insert_pen(var/obj/item/insertedPen as obj, var/mob/user as mob)
 		if (!istype(insertedPen))
-			return
-		if (!insertedPen.fits_on_things)
-			boutput(user, "<span class='alert'>Huh, the [insertedPen] won't fit in [src]'s pen slot!</span>")
 			return
 		if (user)
 			user.u_equip(insertedPen)
 			src.pen = insertedPen
-			src.underlays += src.pen_image
+			if(istype(insertedPen, /obj/item/clothing/mask/cigarette))
+				src.underlays += src.cigarette_image
+			else
+				src.underlays += src.pen_image
 		insertedPen.set_loc(src)
 		boutput(user, "<span class='notice'>You insert [insertedPen] into [src].</span>")
+
 /*
 	//Toggle the built-in flashlight
 	toggle_light()
