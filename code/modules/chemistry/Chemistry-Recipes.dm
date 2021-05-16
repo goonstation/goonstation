@@ -2936,18 +2936,6 @@ datum
 			on_reaction(var/datum/reagents/holder, created_volume)
 				holder.add_reagent("clacid", created_volume,,holder.total_temperature)
 
-		nitroglycerin
-			name = "Nitroglycerin"
-			id = "nitroglycerin"
-			result = "nitroglycerin"
-			required_reagents = list("glycerol" = 1, "nitric_acid" = 1, "acid" = 1)
-			result_amount = 3
-			mix_phrase = "The mixture becomes seemingly heavy and viscous."
-
-			on_reaction(var/datum/reagents/holder, created_volume)
-				if(istype(holder?.my_atom, /obj/effects/foam))
-					holder.del_reagent("nitroglycerin")
-
 		/*
 		weedkiller/weedkiller2
 			id = "weedkiller2"
