@@ -24,7 +24,8 @@
 			boutput(holder.owner, "Noone is in range!")
 			return 1
 
-		holder.owner.say("NYTH ERRIN")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("NYTH ERRIN")
 		..()
 
 		if(!holder.owner.wizard_spellpower(src))

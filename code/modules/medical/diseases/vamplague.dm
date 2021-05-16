@@ -22,7 +22,7 @@
 	if (probmult(15))
 		if (probmult(33))
 			boutput(affected_mob, "<span class='alert'>You feel sickly and weak.</span>")
-			affected_mob.changeStatus("slowed", 30 * mult)
+			affected_mob.changeStatus("slowed", 3 SECONDS * mult)
 		affected_mob.take_toxin_damage(toxdamage)
 
 	if (probmult(10))

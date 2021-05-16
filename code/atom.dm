@@ -643,6 +643,7 @@
 /atom/proc/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
 	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user))
 		return
+	src.material?.triggerOnHit(src, W, user, 1)
 	if (user && W && !(W.flags & SUPPRESSATTACK))  //!( istype(W, /obj/item/grab)  || istype(W, /obj/item/spraybottle) || istype(W, /obj/item/card/emag)))
 		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")
 	return

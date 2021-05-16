@@ -1,8 +1,10 @@
-datum/controller/process/respawn //WHY IN GODS NAME WAS THIS NAMED ..../ghost_notifications. NO WONDER THEY WERE BROKEN
+
+/// Controls the respawn controller
+datum/controller/process/respawn
 
 	setup()
 		name = "Respawn Controller"
-		schedule_interval = 600	// Since we will be operating on a longer time-scale, processing once per minute seems enough
+		schedule_interval = 1 MINUTE	// Since we will be operating on a longer time-scale, processing once per minute seems enough
 
 	doWork()
 		if (respawn_controller)

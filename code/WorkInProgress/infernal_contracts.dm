@@ -161,7 +161,7 @@ proc/is_weak_rollable_contract(type)
 		else
 			asize++
 		acount++
-	src.playsound_local(C.loc,"sound/effects/screech.ogg", 100, 1)
+	src.playsound_local(C.loc,"sound/effects/screech.ogg", 50, 1)
 	if(C.mind)
 		shake_camera(C, 20, 16)
 		boutput(C, "<font color=red>[screamstring]</font>")
@@ -536,7 +536,7 @@ obj/item/contract/wrestle
 			boutput(user, "<span class='notice'>Oh cripes, looks like your years of drug abuse caught up with you! </span>")
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 			user.visible_message("<span class='alert'>[user]'s pupils dilate.</span>")
-			user.changeStatus("stunned", 1000)
+			user.changeStatus("stunned", 100 SECONDS)
 			ticker.mode.Agimmicks.Add(user)
 
 		return 1

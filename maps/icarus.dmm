@@ -10661,6 +10661,10 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/stool/chair/yellow,
+/obj/landmark/start{
+	name = "Engineer"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "axk" = (
@@ -11326,16 +11330,11 @@
 	},
 /area/station/engine/engineering)
 "ayD" = (
-/obj/stool/chair/yellow{
-	dir = 4
-	},
-/obj/landmark/start{
-	name = "Engineer"
-	},
 /obj/item/device/radio/intercom/engineering{
 	dir = 4;
 	pixel_x = -20
 	},
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "ayE" = (
@@ -26260,6 +26259,15 @@
 /obj/cable,
 /turf/simulated/floor/airless/plating,
 /area/research_outpost/indigo_rye)
+"bQn" = (
+/obj/stool/chair/yellow{
+	dir = 8
+	},
+/obj/landmark/start{
+	name = "Engineer"
+	},
+/turf/simulated/floor,
+/area/station/storage/primary)
 "bQW" = (
 /obj/cable{
 	d1 = 1;
@@ -27080,6 +27088,12 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/indigo_rye)
+"lSM" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 5
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "lWS" = (
 /obj/cable{
 	d1 = 4;
@@ -27389,6 +27403,12 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/research_outpost/indigo_rye)
+"pvQ" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 9
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "pwS" = (
 /obj/machinery/vending/pizza,
 /turf/simulated/floor/purpleblack,
@@ -67344,7 +67364,7 @@ aga
 ago
 agI
 agI
-ahc
+pvQ
 ahs
 ahD
 ahD
@@ -68552,7 +68572,7 @@ aga
 ags
 agI
 agU
-ahf
+lSM
 ahu
 ahu
 ahO
@@ -70118,7 +70138,7 @@ ayK
 azf
 azN
 aAv
-aAS
+bQn
 aBr
 azg
 aCc

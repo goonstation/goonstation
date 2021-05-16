@@ -126,7 +126,7 @@
 			if(prob(3))
 				SPAWN_DBG(0.2 SECONDS)
 					target.visible_message("<span class='bold'>[target.name]</span> flops over in shame!")
-					target.changeStatus("stunned", 50)
+					target.changeStatus("stunned", 5 SECONDS)
 					target.changeStatus("weakened", 5 SECONDS)
 		else
 			..()
@@ -362,6 +362,23 @@
 /obj/item/sword/red
 	bladecolor = "R"
 
+	enakai
+		active = 1;
+		active_force = 5
+		desc = "You were the chosen one! You were supposed to destroy the greytiders, not join them!";
+		icon_state = "sword1-R";
+		item_state = "sword1-R";
+		name = "Enakai's red cyalume saber"
+
+		pickup(mob/user)
+			if(isadmin(user) || current_state == GAME_STATE_FINISHED)
+				src.active_force = 60
+				if(src.active)
+					src.force = 60
+			else
+				boutput(user, "<span class='notice'>You feel that it was too soon for this...</span>")
+			. = ..()
+
 /obj/item/sword/orange
 	bladecolor = "O"
 
@@ -576,7 +593,7 @@
 			var/mob/living/carbon/human/H = M
 			H.implant.Add(src)
 			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
-			playsound(src.loc, "sound/weapons/slashcut.ogg", 100, 1)
+			playsound(src.loc, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
 			H.changeStatus("weakened", 2 SECONDS)
 			src.set_loc(M)
 			src.implanted = 1
@@ -855,22 +872,22 @@
 	proc/set_values()
 		if(two_handed)
 			src.click_delay = 15
-			force = 30
-			throwforce = 20
+			force = 40
+			throwforce = 25
 			throw_speed = 4
 			throw_range = 8
-			stamina_damage = 40
-			stamina_cost = 27
-			stamina_crit_chance = 5
+			stamina_damage = 45
+			stamina_cost = 25
+			stamina_crit_chance = 10
 		else
 			src.click_delay = 10
-			force = 15
-			throwforce = 5
+			force = 20
+			throwforce = 10
 			throw_speed = 2
 			throw_range = 4
-			stamina_damage = 30
-			stamina_cost = 20
-			stamina_crit_chance = 2
+			stamina_damage = 25
+			stamina_cost = 15
+			stamina_crit_chance = 5
 		tooltip_rebuild = 1
 		return
 
@@ -1223,7 +1240,7 @@
 			user.update_clothing()
 			src.sword_inside = W //katana SHOULD be in the sheath now.
 			boutput(user, "<span class='notice'>You sheathe [W] in [src].</span>")
-			playsound(get_turf(user), "sound/effects/sword_sheath.ogg", 70, 0, 0)
+			playsound(get_turf(user), "sound/effects/sword_sheath.ogg", 50, 0, 0)
 		else
 			..()
 			if(W.cant_drop == 1)
@@ -1234,7 +1251,7 @@
 		if (!user.r_hand || !user.l_hand)
 			sword_inside.clean_forensic()
 			boutput(user, "You draw [sword_inside] from your sheath.")
-			playsound(get_turf(user), pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 70, 0, 0)
+			playsound(get_turf(user), pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 50, 0, 0)
 			icon_state = sheath_state
 			item_state = ih_sheath_state
 			user.put_in_hand_or_drop(sword_inside)

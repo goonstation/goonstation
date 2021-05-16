@@ -45,7 +45,7 @@
 			boutput(H, "<span class='notice'>Your tinfoil hat protects you from the psyblast!</span>")
 		else
 			boutput(H, "<span class='alert'>You are blasted by psychic energy!</span>")
-			H.changeStatus("paralysis", 70)
+			H.changeStatus("paralysis", 7 SECONDS)
 			H.stuttering += 60
 			H.take_brain_damage(20)
 			H.TakeDamage("head", 0, 5)

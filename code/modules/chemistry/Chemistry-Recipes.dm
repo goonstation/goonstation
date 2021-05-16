@@ -240,123 +240,6 @@ datum
 					holder.del_reagent("smokepowder")
 				return*/
 
-		nitroglycerin_violent_reaction
-			name = "Nitroglycerin Foam"
-			id = "nitroglycerin_foam"
-			result = "nitroglycerin_foam"
-			required_reagents = list("nitroglycerin" = 1, "fluorosurfactant" = 1)
-			instant = 1
-			mix_phrase = "The substance violently detonates!"
-			mix_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-				var/atom/my_atom = holder.my_atom
-
-				var/turf/location = 0
-				if (my_atom)
-					location = get_turf(my_atom)
-					explosion(my_atom, location, 0, 1, 4, 5)
-				else
-					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
-					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
-						location = pick(holder.covered_cache)
-						holder.covered_cache -= location
-						explosion_new(my_atom, location, 3.4/amt, 2/amt)
-				return
-
-		nitroglycerin_violent_reaction2
-			name = "Nitroglycerin Smoke"
-			id = "nitroglycerin_smoke"
-			result = "nitroglycerin_smoke"
-			required_reagents = list("nitroglycerin" = 1, "potassium" = 1, "phosphorus" = 1, "sugar" = 1)
-			instant = 1
-			mix_phrase = "The substance violently detonates!"
-			mix_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-				var/atom/my_atom = holder.my_atom
-
-				var/turf/location = 0
-				if (my_atom)
-					location = get_turf(my_atom)
-					explosion(my_atom, location, 0, 1, 4, 5)
-				else
-					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
-					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
-						location = pick(holder.covered_cache)
-						holder.covered_cache -= location
-						explosion_new(my_atom, location, 3.4/amt, 2/amt)
-				return
-
-		nitroglycerin_violent_reaction3
-			name = "Nitroglycerin Smoke (powder)"
-			id = "nitroglycerin_smoke"
-			result = "nitroglycerin_smoke"
-			required_reagents = list("nitroglycerin" = 1, "smokepowder" = 1)
-			instant = 1
-			mix_phrase = "The substance violently detonates!"
-			mix_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-				var/atom/my_atom = holder.my_atom
-
-				var/turf/location = 0
-				if (my_atom)
-					location = get_turf(my_atom)
-					explosion(my_atom, location, 0, 1, 4, 5)
-				else
-					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
-					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
-						location = pick(holder.covered_cache)
-						holder.covered_cache -= location
-						explosion_new(my_atom, location, 3.4/amt, 2/amt)
-				return
-
-
-		nitroglycerin_violent_reaction4
-			name = "Nitroglycerin Propellant"
-			id = "nitroglycerin_Propellant"
-			result = "nitroglycerin_propellant"
-			required_reagents = list("nitroglycerin" = 1, "chlorine" = 1, "sugar" = 1, "hydrogen" = 1, "platinum" = 1)
-			instant = 1
-			mix_phrase = "The substance violently detonates!"
-			mix_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-				var/atom/my_atom = holder.my_atom
-
-				var/turf/location = 0
-				if (my_atom)
-					location = get_turf(my_atom)
-					explosion(my_atom, location, 0, 1, 4, 5)
-				else
-					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
-					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
-						location = pick(holder.covered_cache)
-						holder.covered_cache -= location
-						explosion_new(my_atom, location, 3.4/amt, 2/amt)
-				return
-
-		nitroglycerin_violent_reaction5
-			name = "Nitroglycerin Propellant (powder)"
-			id = "nitroglycerin_propellant"
-			result = "nitroglycerin_propellant"
-			required_reagents = list("nitroglycerin" = 1, "propellant" = 1)
-			instant = 1
-			mix_phrase = "The substance violently detonates!"
-			mix_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-				var/atom/my_atom = holder.my_atom
-
-				var/turf/location = 0
-				if (my_atom)
-					location = get_turf(my_atom)
-					explosion(my_atom, location, 0, 1, 4, 5)
-				else
-					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
-					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
-						location = pick(holder.covered_cache)
-						holder.covered_cache -= location
-						explosion_new(my_atom, location, 3.4/amt, 2/amt)
-				return
-
-
 		// also no more fermid foams, fu nerds tOt
 
 		no_fermid_foam
@@ -2037,7 +1920,7 @@ datum
 							H.emote("scream")
 							boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
 							H.real_name = "Unknown"
-							H.changeStatus("weakened", 80)
+							H.changeStatus("weakened", 8 SECONDS)
 							H:unlock_medal("Red Hood", 1)
 				return
 
@@ -2904,45 +2787,6 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				holder.add_reagent("nitrogen_dioxide", created_volume, , holder.total_temperature)
 				holder.add_reagent("oxygen", created_volume/2, , holder.total_temperature)
-
-		allyl_chloride
-			name = "Allyl chloride"
-			id = "allyl_chloride"
-			result = "allyl_chloride"
-			required_reagents = list("oil" = 1, "chlorine" = 2)
-			required_temperature = T0C + 500
-			result_amount = 1
-			mix_phrase = "The mixture becomes colorless."
-			on_reaction(var/datum/reagents/holder, created_volume)
-				holder.add_reagent("clacid", created_volume,,holder.total_temperature)
-
-		epichlorohydrin
-			name = "Epichlorohydrin"
-			id = "epichlorohydrin"
-			result = "epichlorohydrin"
-			required_reagents = list("allyl_chloride" = 1, "clacid" = 1, "sodium" = 1, "oxygen" = 2, "hydrogen" = 1)
-			result_amount = 1
-			mix_phrase = "The mixture gives of a garlic-like odor."
-			on_reaction(var/datum/reagents/holder, created_volume)
-				holder.add_reagent("salt", created_volume,,holder.total_temperature)
-
-		glycerol
-			name = "Glycerol"
-			id = "glycerol"
-			result = "glycerol"
-			required_reagents = list("epichlorohydrin" = 1, "water" = 1)
-			result_amount = 1
-			mix_phrase = "The mixture bubbles."
-			on_reaction(var/datum/reagents/holder, created_volume)
-				holder.add_reagent("clacid", created_volume,,holder.total_temperature)
-
-		nitroglycerin
-			name = "Nitroglycerin"
-			id = "nitroglycerin"
-			result = "nitroglycerin"
-			required_reagents = list("glycerol" = 1, "nitric_acid" = 1, "acid" = 1)
-			result_amount = 3
-			mix_phrase = "The mixture becomes seemingly heavy and viscous."
 
 		/*
 		weedkiller/weedkiller2

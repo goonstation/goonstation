@@ -24179,7 +24179,7 @@
 /area/salyut)
 "bkp" = (
 /obj/storage/crate,
-/obj/item/storage/box/record/clown_collection,
+/obj/item/storage/box/record/radio/chronoquest,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bkq" = (

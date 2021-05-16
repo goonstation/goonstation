@@ -17207,6 +17207,10 @@
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/grey,
 /area/station/mining/staff_room)
+"fdx" = (
+/obj/storage/secure/crate/eng/interdictor,
+/turf/simulated/floor/yellow/side,
+/area/station/engine/storage)
 "fdK" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/redblack{
@@ -47534,6 +47538,14 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"nIq" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 5
+	},
+/turf/simulated/floor/specialroom/gym/alt,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "nIt" = (
 /obj/decal/tile_edge/floorguide/arrow_s{
 	dir = 1
@@ -63503,7 +63515,12 @@
 /area/station/hallway/primary/south)
 "skD" = (
 /obj/table/auto,
-/obj/item/storage/box/cablesbox,
+/obj/item/storage/box/cablesbox{
+	pixel_x = -9
+	},
+/obj/item/storage/box/cablesbox{
+	pixel_x = 6
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/storage)
 "skL" = (
@@ -65883,8 +65900,7 @@
 /area/station/security/brig/cell_block)
 "sPP" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10;
-	icon_state = "ringrope"
+	dir = 9
 	},
 /obj/machinery/light{
 	dir = 1;
@@ -69076,6 +69092,14 @@
 /obj/item/seed/alien,
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
+"tEI" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 9
+	},
+/turf/simulated/floor/specialroom/gym/alt,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "tEM" = (
 /obj/item/storage/wall/clothingrack/hatrack/hatrack_3{
 	dir = 4
@@ -83611,8 +83635,7 @@
 /area/station/maintenance/northeast)
 "xqf" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 6;
-	icon_state = "ringrope"
+	dir = 5
 	},
 /obj/machinery/light{
 	dir = 1;
@@ -116597,7 +116620,7 @@ lZk
 rfw
 oQR
 nAR
-gsR
+tEI
 ovS
 qaa
 qaa
@@ -117805,7 +117828,7 @@ lZk
 fik
 gjb
 wfD
-qUf
+nIq
 nIo
 nIo
 aJT
@@ -153955,7 +153978,7 @@ vqL
 vqL
 xwt
 vqL
-skD
+fdx
 ykD
 tmI
 xIf

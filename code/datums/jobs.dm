@@ -148,6 +148,7 @@ ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command
 	linkcolor = "#00CC00"
 	slot_card = /obj/item/card/id/command
+	map_can_autooverride = 0
 
 /datum/job/command/captain
 	name = "Captain"
@@ -751,6 +752,8 @@ ABSTRACT_TYPE(/datum/job/engineering)
 		if (!M)
 			return
 		M.bioHolder.AddEffect("training_miner")
+		if(prob(20))
+			M.bioHolder.AddEffect("dwarf", magical=1)
 
 /datum/job/engineering/mechanic
 	name = "Mechanic"
@@ -985,6 +988,10 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		if (!M)
 			return
+
+		// Yaaaaaay!
+		M.AddComponent(/datum/component/death_confetti)
+
 		M.bioHolder.AddEffect("clumsy", magical=1)
 		if (prob(50))
 			M.bioHolder.AddEffect("accent_comic", magical=1)

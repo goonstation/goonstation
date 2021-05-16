@@ -1550,7 +1550,7 @@ Returns:
 
 	attack_hand(mob/user as mob)
 		boutput(user, "[src] feels oddly warm ...")
-		user.changeStatus("radiation", 50)
+		user.changeStatus("radiation", 5 SECONDS)
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1861,6 +1861,8 @@ Returns:
 
 	Click(location,control,params)
 		if(isobserver(usr) || iswraith(usr))
+			if(isAIeye(usr))
+				boutput(usr, "<span class='notice'>Whoa, you can use this as an AI? Are you actually just a ghost trapped in a metal box??</span>")
 
 			if(GET_COOLDOWN(src, usr) == 0)
 				var/list/words = list()
@@ -2903,7 +2905,7 @@ Returns:
 				var/mob/living/carbon/human/user = usr
 				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-				user.changeStatus("stunned", 50)
+				user.changeStatus("stunned", 5 SECONDS)
 				user.changeStatus("weakened", 3 SECONDS)
 				user.changeStatus("paralysis", 2 SECONDS)
 				user.force_laydown_standup()

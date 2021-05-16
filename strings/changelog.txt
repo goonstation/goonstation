@@ -1,4 +1,163 @@
 
+(t)sun may 16 21
+(u)Tarmunora
+(p)4760
+(e)⛔|removal
+(*)Nitroglycerin recipe removed
+(u)edwardly
+(p)4759
+(e)|
+(+)Fix the `send_alert` function in PDAs
+(t)sat may 15 21
+(u)zjdtmkhzt
+(p)4679
+(e)|
+(+)Artifact forms should now be easier to remove from non-artifacts. You can still remove them from artifacts via knives/scalpels/scissors/wirecutters/other stuff.
+(u)DimWhat
+(p)4747
+(e)🎨|sprites
+(+)Bang! guns are now more convincing
+(u)112358sam
+(p)4706
+(e)|
+(+)Removes the blood level check for performing the milk emote.
+(u)Superlagg
+(p)4711
+(e)🐛|bug
+(*)Guardbuddies will now actually handcuff people instead of just bullying them all day.
+(t)thu may 13 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Material stuff as blob maybe no longer worse than nothing? Try it.
+(u)Gannets
+(p)4699
+(e)⚖|balance
+(*)Added belt packs to Heavy Weapons Specialist, Marksman & Firebrand class crates.
+(u)Gannets
+(p)4698
+(e)⚖|balance
+(*)Added a pouch of napalm smoke grenades to the Firebrand class crate.
+(+)Buffed damage and stamina damage of the fire-axe, in both one and two-handed modes.
+(u)pali
+(*)Clonescanning people now implants people with a clonescan implant. This implant lets you see their health status on the cloning console (and the health implant no longer does this). It shows up as a red dot on health goggles view.
+(t)wed may 12 21
+(u)pali
+(p)4633
+(e)⚖⛔|balance, removal
+(*)Cloners no longer automatically implant people with health implants on scanning.
+(u)UnfunnyPerson
+(p)4559
+(e)🆕|feature
+(*)You can no longer freely dab on the bible.
+(t)tue may 11 21
+(u)edwardly
+(p)4648
+(e)|
+(+)Prevent showing paper through cameras when the camera is inactive.
+(u)Lythine
+(p)4584
+(e)🗺|mapping
+(+)Added more trays to Oshan's hydroponics.
+(u)pali
+(p)4646
+(e)🆕🎨|feature, sprites
+(*)All cyborgs now have typewriters.
+(*)Brobocop cyborgs now also have ticket typewriters.
+(u)DimWhat
+(p)4682
+(e)🎨|sprites
+(+)Added more lizard headwear sprites. Hiss.
+(u)Zonespace
+(p)4678
+(e)🆕|feature
+(*)Syndicate Wiretap can now be scanned using a syndicate device analyzer.
+(u)112358sam
+(p)4670
+(e)🐛|bug
+(+)Fixes the creation of invisible, zero item stacks when entering 0 in a dialog for splitting a stack of items.
+(u)Tarmunora
+(e)⚖|balance
+(+)Staff of Cthulhu summoning spell will generate a new staff if the old one is destroyed
+(+)Staff of Cthulhu will only do strong brainmelts (>1s stun) on attacks if the victim already has 30+ brain damage
+(+)Napalm direct burn damage is reduced by firesuits etc
+(+) erebite asteroids less dense and more dangerous
+(u)Mordent
+(p)4675
+(e)⚖|balance
+(*)You no longer randomly miss cyborgs when melee attacking them.
+(u)Penny
+(p)4372
+(e)🆕🎨|feature, sprites
+(*)Handheld arcade machines are now available from Josh
+(t)mon may 10 21
+(u)Tarmunora
+(+)Salt melts ice decals, carbon (dirt) splashed on floors undoes lube
+(+)1 second cooldown on being hit by magic missiles (will no longer get 'shotgunned' by a wizard at point-blank ranges)
+(u)112358sam
+(p)4655
+(e)🐛|bug
+(+)Fixes the exploit with sheets, rods, shards, tiles, and cable coils in the material processor and re-enables processing these items.
+(u)edwardly
+(p)4667
+(e)🐛|bug
+(+)Fix the 1 minute countdown on the cyborg killswitch timer.
+(u)RSG250
+(p)4661
+(e)|
+(+)booster genes now show what they are in the scanner like the record
+(u)Chickenish
+(p)4639
+(e)⚖|balance
+(*)Replaced the Ghost Drone's RCD with the Cardboard RCD.
+(t)sun may 09 21
+(u)edwardly
+(p)4647
+(e)|
+(+)AI is no longer an all-seeing entity and snipped cameras should correctly be removed from coverage.
+(u)pali
+(p)4643
+(e)🆕🎨|feature, sprites
+(*)Dwarves are back! Better than ever!
+(u)pali
+(p)4548
+(e)⚖|balance
+(*)Port-a-Puke now has unlimited capacity for mobs
+(u)pali
+(p)4509
+(e)🆕🎨|feature, sprites
+(*)A new trait - Clown Disbelief. Pick it and clowns are no longer visible to you!
+(u)Flaborized
+(p)4637
+(e)🎨|sprites
+(*)Traitors may now buy a roll of duct tape for 1 TC, instead of it being exclusive to surplus crates. It's handcuffs that you can use ten times.
+(u)Kubius
+(p)4644
+(e)🆕🗺|feature, mapping
+(*)Engineering departments have received a crate for assembly of the Spatial Interdictor, a device which can mitigate certain random events in its range of influence given sufficient power.
+(u)Flourish
+(e)⚖|balance
+(+)The stun baton now features a stacking 15 second stun (up from a non-stacking 15 second stun).
+(t)sat may 08 21
+(u)Sovexe
+(p)4635
+(e)⚖🐛🆕🎨|balance, bug, feature, sprites
+(+)Lab monkey crates are now card locked and cost 2500 credits to purchase.
+(u)Tarmunora
+(e)⚖|balance
+(+)themite turf reaction in smoke nerfed
+(+)wizard crystal is no longer radioactive (but is still magical)
+(u)edwardly
+(p)4602
+(e)⚖|balance
+(+)The cloning process now prioritizes pods that are closest to completion.
+(u)Penny
+(p)4437
+(e)|
+(+)Portable reclaimers now load materials directly from boxes and satchels
+(u)Camryn Buttes
+(p)4631
+(e)🐛|bug
+(+)Clown cars should now be able to reliably hold their passengers hostage again.
 (t)fri may 07 21
 (u)Lythine
 (p)4370

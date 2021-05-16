@@ -302,6 +302,10 @@
 			var/obj/item/clipboard/C = src.loc
 			if(istype(C.pen, /obj/item/pen))
 				O = C.pen
+		if(istype(src.loc, /obj/item/portable_typewriter))
+			var/obj/item/portable_typewriter/typewriter = src.loc
+			if(istype(typewriter.pen, /obj/item/pen))
+				O = typewriter.pen
 	if(istype(O, /obj/item/pen))
 		var/obj/item/pen/PEN = O
 		. += list(
@@ -331,6 +335,8 @@
 		)
 
 /obj/item/paper/attackby(obj/item/P, mob/living/user, params)
+	if(istype(P, /obj/item/portable_typewriter))
+		return // suppress attack sound, the typewriter will load the paper in afterattack
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/pen/crayon))
 		if(src.sealed)
 			boutput(user, "<span class='alert'>You can't write on [src].</span>")
@@ -367,11 +373,14 @@
 
 
 /obj/item/paper/thermal
-	name = "Thermal Paper"
+	name = "thermal paper"
 	stampable = 0
 	icon_state = "thermal_paper"
 	sealed = 1
 	item_function_flags = SMOKELESS
+
+/obj/item/paper/thermal/portable_printer
+	sealed = 0
 
 /obj/item/paper/alchemy/
 	name = "'Chemistry Information'"

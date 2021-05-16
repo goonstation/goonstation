@@ -359,7 +359,7 @@
 /////////////////////////////////////////// Seed fabricator ///////////////////////////////
 
 /obj/item/seedplanter
-	name = "Portable Seed Fabricator"
+	name = "portable seed fabricator"
 	desc = "A tool for cyborgs used to create plant seeds."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "portable_seed_fab"

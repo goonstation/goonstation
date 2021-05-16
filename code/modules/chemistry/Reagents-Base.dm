@@ -57,6 +57,7 @@ datum
 					if(volume >= 5)
 						if(!locate(/obj/decal/cleanable/dirt) in T)
 							make_cleanable(/obj/decal/cleanable/dirt,T)
+						T.wet = 0
 
 		chlorine
 			name = "chlorine"
@@ -422,7 +423,7 @@ datum
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", 300)
+						L.changeStatus("burning", 30 SECONDS)
 				return 1
 
 			reaction_obj(var/obj/O, var/volume)
@@ -581,7 +582,7 @@ datum
 						boutput(M, "<span class='alert'>You pass out from hyperglycemic shock!</span>")
 						M.emote("collapse")
 						//M.changeStatus("paralysis", ((2 * severity)*15) * mult)
-						M.changeStatus("weakened", ((4 * severity)*15) * mult)
+						M.changeStatus("weakened", ((4 * severity)*1.5 SECONDS) * mult)
 
 					if (prob(8))
 						M.take_toxin_damage(severity * mult)
@@ -647,7 +648,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.changeStatus("radiation", 30*mult, 1)
+				M.changeStatus("radiation", 3 SECONDS * mult, 1)
 				..()
 				return
 
@@ -688,7 +689,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1 )
 				if(!M) M = holder.my_atom
-				M.changeStatus("radiation", 30 * mult, 1)
+				M.changeStatus("radiation", 3 SECONDS * mult, 1)
 				..()
 				return
 
@@ -784,7 +785,7 @@ datum
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", -10 * volume)
+						L.changeStatus("burning", -1 * volume SECONDS)
 						playsound(get_turf(L), "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
 				return 1
 
@@ -831,7 +832,7 @@ datum
 				if(method == TOUCH)
 					var/mob/living/L = target
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", -200)
+						L.changeStatus("burning", -20 SECONDS)
 				return !reacted
 
 		water/tonic

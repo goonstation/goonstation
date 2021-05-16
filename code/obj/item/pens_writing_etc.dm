@@ -1169,3 +1169,105 @@
 			qdel(src)
 			return
 */
+
+/* ============== PRINTERS & TYPEWRITERS ================= */
+
+/obj/item/pen/typewriter
+	name = "integrated typewriter pen"
+	desc = "A mechanical pen that writes on paper inside the portable typewriter. How did you even get this?"
+	font = "Monospace"
+	clicknoise = FALSE
+
+	write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
+		return
+
+/obj/item/portable_typewriter
+	name = "portable typewriter"
+	desc = "A portable typewriter, whoa!"
+	icon_state = "portable_typewriter"
+	icon = 'icons/obj/writing.dmi'
+	flags = FPRINT | ONBELT | TABLEPASS
+	throwforce = 0
+	w_class = W_CLASS_TINY
+	var/paper_creation_cooldown = 1 MINUTE
+	var/can_create_paper = FALSE
+
+	var/obj/item/paper/stored_paper = null
+	var/obj/item/pen/pen
+
+	New()
+		..()
+		if(isnull(src.pen))
+			src.pen = new /obj/item/pen/typewriter(src)
+
+	attack_self(mob/user)
+		. = ..()
+		if(isnull(src.stored_paper))
+			if(!src.can_create_paper)
+				return
+			if(ON_COOLDOWN(src, "create_paper", src.paper_creation_cooldown))
+				boutput(user, "<span class='alert'>\The [src]'s paper-manufacturing mechanism is recharging.</span>")
+				return
+			playsound(src.loc, "sound/machines/printer_thermal.ogg", 30, 0, pitch=0.7)
+			src.stored_paper = new/obj/item/paper/thermal/portable_printer(src)
+			src.update_icon()
+			src.stored_paper.attackby(src.pen, user)
+		else
+			src.stored_paper.attackby(src.pen, user)
+
+	attack_hand(mob/user)
+		if(src.loc == user && src.stored_paper)
+			var/obj/item/paper/paper = src.stored_paper
+			if(src.eject_paper(user.loc))
+				user.put_in_hand_or_drop(paper)
+		else
+			. = ..()
+
+	proc/update_icon()
+		if(src.stored_paper)
+			src.icon_state = "portable_typewriter-full"
+		else
+			src.icon_state = "portable_typewriter"
+
+	proc/eject_paper(atom/target, mob/user)
+		if(isnull(src.stored_paper))
+			return FALSE
+		boutput(user, "<span class='notice'>\The [src] ejects \the [src.stored_paper].</span>")
+		if(!ON_COOLDOWN(src, "eject_sound", 3 SECONDS))
+			playsound(src.loc, "sound/machines/typewriter.ogg", 60, 0)
+			// CC0 license on the sound, source here: https://freesound.org/people/tams_kp/sounds/43559/
+		src.stored_paper.set_loc(target)
+		src.stored_paper = null
+		src.update_icon()
+		return TRUE
+
+	attackby(obj/item/W, mob/user, params)
+		if(istype(W, /obj/item/paper))
+			user.drop_item(W)
+			W.set_loc(src)
+			src.stored_paper = W
+			src.update_icon()
+		else
+			. = ..()
+
+	afterattack(atom/target, mob/user, reach, params)
+		. = ..()
+		if(istype(target, /obj/item/paper))
+			var/obj/item/paper/paper = target
+			if(isnull(stored_paper))
+				paper.set_loc(src)
+				src.stored_paper = paper
+				user.visible_message("<span class='notice'>[user] sucks up \the [paper] into \the [src].</span>", "<span class='notice'>You suck up \the [paper] into \the [src].</span>")
+				src.update_icon()
+			else
+				boutput(user, "<span class='alert'>\The [src] already has a paper in it.</span>")
+		else if(isfloor(target) || istype(target, /obj/table))
+			if(src.stored_paper)
+				src.eject_paper(get_turf(target), user)
+
+/obj/item/portable_typewriter/borg
+	name = "integrated typewriter"
+	desc = "A built-in typewriter that can even create its own paper, whoa!"
+	cant_drop = TRUE
+	paper_creation_cooldown = 10 SECONDS
+	can_create_paper = TRUE

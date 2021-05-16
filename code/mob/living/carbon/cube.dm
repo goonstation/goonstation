@@ -4,6 +4,7 @@
 /mob/living/carbon/cube
 	name = "cube"
 	real_name = "cube"
+	say_language = "cubic" // How they communicate to each other is a mystery.
 	desc = "cubic"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "meatcube"
@@ -63,21 +64,8 @@
 	proc/pop()
 		src.gib(1)
 
-	say_quote(var/text)
-		if(src.emote_allowed)
-			if(!(src.client && src.client.holder))
-				src.emote_allowed = 0
-
-			if (narrator_mode)
-				playsound(src.loc, 'sound/vox/scream.ogg', 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-			else
-				playsound(get_turf(src), src.sound_scream, 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-
-			SPAWN_DBG(5 SECONDS)
-				src.emote_allowed = 1
-			return "screams!"
-		else
-			return "[get_cube_action()]."
+	say_verb()
+		return src.get_cube_action()
 
 	proc/specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		return null
@@ -138,7 +126,7 @@
 						if (istype(src.loc,/obj/))
 							var/obj/container = src.loc
 							boutput(src, "<span class='alert'>You leap and slam yourself against the inside of [container]! Ouch!</span>")
-							src.changeStatus("paralysis", 40)
+							src.changeStatus("paralysis", 4 SECONDS)
 							src.changeStatus("weakened", 3 SECONDS)
 							container.visible_message("<span class='alert'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
 							playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)

@@ -112,8 +112,8 @@
 	if(isnull(src.data))
 		if(fexists(src.file_name))
 			src.data = json_decode(file2text(src.file_name))
-		else
-			src.data = list()
+	if(isnull(src.data))
+		src.data = list()
 	if(src.persistent_id in src.data)
 		for(var/list/book_info in src.data[src.persistent_id])
 			var/obj/item/paper/paper = new(src)
@@ -129,10 +129,14 @@
 		src.data[src.persistent_id] += list(list(paper.name, paper.info, paper.fingerprintslast))
 
 proc/save_noticeboards()
-	var/obj/noticeboard/persistent/board
-	for(board in by_type[/obj/noticeboard/persistent])
+	var/obj/noticeboard/persistent/some_board = null
+	for_by_tcl(board, /obj/noticeboard/persistent)
 		board.save_stuff()
-	fdel(board.file_name)
-	var/json_data = json_encode(board.data)
+		some_board = board
+	if(isnull(some_board))
+		logTheThing("debug", null, null, "No persistent noticeboards to save.")
+		return
+	fdel(some_board.file_name)
+	var/json_data = json_encode(some_board.data)
 	logTheThing("debug", null, null, "Persistent noticeboard save data: [json_data]")
-	text2file(json_encode(board.data), board.file_name)
+	text2file(json_data, some_board.file_name)

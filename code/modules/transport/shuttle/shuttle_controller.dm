@@ -251,7 +251,7 @@ datum/shuttle_controller
 												if (M.buckled) M.buckled.unbuckle()
 												M.throw_at(target, 25, 1)
 												if (bonus_stun)
-													M.changeStatus("paralysis", 60)
+													M.changeStatus("paralysis", 6 SECONDS)
 													M.playsound_local(target, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 													M.show_text("You are thrown off the chair! [prob(50) ? "Standing on that during takeoff was a terrible idea!" : null]", "red")
 
