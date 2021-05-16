@@ -242,6 +242,10 @@ mob/new_player
 			if (ticker?.mode)
 				var/mob/living/silicon/S = locate(href_list["SelectedJob"]) in mobs
 				if (S)
+					if(jobban_isbanned(src.mind, "Cyborg"))
+						boutput(usr, "<span class='notice'>Sorry, you are banned from playing silicons.</span>")
+						close_spawn_windows()
+						return
 					var/obj/item/organ/brain/latejoin/latejoin = IsSiliconAvailableForLateJoin(S)
 					if(latejoin)
 						close_spawn_windows()
