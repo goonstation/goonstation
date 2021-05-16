@@ -1,5 +1,9 @@
 
 (t)sun may 16 21
+(u)Kubius
+(p)4652
+(e)🆕🎨|feature, sprites
+(+)The Spatial Interdictor has received an adjustment to functionality; its frame now comes in a more portable box, and new weaker rods may be manufactured without requiring more exotic materials.
 (u)Tarmunora
 (p)4760
 (e)⛔|removal
