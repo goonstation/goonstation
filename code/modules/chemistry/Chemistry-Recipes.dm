@@ -2905,49 +2905,6 @@ datum
 				holder.add_reagent("nitrogen_dioxide", created_volume, , holder.total_temperature)
 				holder.add_reagent("oxygen", created_volume/2, , holder.total_temperature)
 
-		allyl_chloride
-			name = "Allyl chloride"
-			id = "allyl_chloride"
-			result = "allyl_chloride"
-			required_reagents = list("oil" = 1, "chlorine" = 2)
-			required_temperature = T0C + 500
-			result_amount = 1
-			mix_phrase = "The mixture becomes colorless."
-			on_reaction(var/datum/reagents/holder, created_volume)
-				holder.add_reagent("clacid", created_volume,,holder.total_temperature)
-
-		epichlorohydrin
-			name = "Epichlorohydrin"
-			id = "epichlorohydrin"
-			result = "epichlorohydrin"
-			required_reagents = list("allyl_chloride" = 1, "clacid" = 1, "sodium" = 1, "oxygen" = 2, "hydrogen" = 1)
-			result_amount = 1
-			mix_phrase = "The mixture gives of a garlic-like odor."
-			on_reaction(var/datum/reagents/holder, created_volume)
-				holder.add_reagent("salt", created_volume,,holder.total_temperature)
-
-		glycerol
-			name = "Glycerol"
-			id = "glycerol"
-			result = "glycerol"
-			required_reagents = list("epichlorohydrin" = 1, "water" = 1)
-			result_amount = 1
-			mix_phrase = "The mixture bubbles."
-			on_reaction(var/datum/reagents/holder, created_volume)
-				holder.add_reagent("clacid", created_volume,,holder.total_temperature)
-
-		nitroglycerin
-			name = "Nitroglycerin"
-			id = "nitroglycerin"
-			result = "nitroglycerin"
-			required_reagents = list("glycerol" = 1, "nitric_acid" = 1, "acid" = 1)
-			result_amount = 3
-			mix_phrase = "The mixture becomes seemingly heavy and viscous."
-
-			on_reaction(var/datum/reagents/holder, created_volume)
-				if(istype(holder?.my_atom, /obj/effects/foam))
-					holder.del_reagent("nitroglycerin")
-
 		/*
 		weedkiller/weedkiller2
 			id = "weedkiller2"
