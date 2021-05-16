@@ -536,10 +536,12 @@
 		return
 
 	proc/howl()
-		if(prob(60))
-			for(var/mob/O in hearers(src, null))
+		if (prob(60))
+			if(ON_COOLDOWN(src, "george howl", 10 SECONDS))
+				return
+			for (var/mob/O in hearers(src, null))
 				O.show_message("<span class='combat'><b>[src]</b> [pick("howls","bays","whines","barks","croons")] to the music! He thinks he's singing!</span>")
-			playsound(get_turf(src), pick("sound/voice/animal/howl1.ogg","sound/voice/animal/howl2.ogg","sound/voice/animal/howl3.ogg","sound/voice/animal/howl4.ogg","sound/voice/animal/howl5.ogg","sound/voice/animal/howl6.ogg"), 100, 0)
+			playsound(get_turf(src), "sound/voice/animal/howl[rand(1,6)].ogg", 100, 0)
 
 /obj/critter/dog/george/blair
 	name = "Blair"
