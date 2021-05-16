@@ -198,7 +198,8 @@
 				boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
 	#undef VALID_MOB
 
-	if (deathConfettiActive || (src.mind && src.mind.assigned_role == "Clown")) //Active if XMAS or manually toggled. Or if theyre a clown. Clowns always have death confetti.
+	// Active if XMAS or manually toggled.
+	if (deathConfettiActive)
 		src.deathConfetti()
 
 	var/youdied = "You have died!"
