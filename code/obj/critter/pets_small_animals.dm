@@ -510,7 +510,7 @@
 			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
 			if(prob(30))
 				src.icon_state = "[src.doggy]-lying"
-				src.audible_message("<span class='notice'><B>[src]</B> flops on his back! Scratch that belly!</span>",2)
+				src.visible_message("<span class='notice'><B>[src]</B> flops on his back! Scratch that belly!</span>",2)
 				SPAWN_DBG(3 SECONDS)
 				src.icon_state = "[src.doggy]"
 			return
@@ -522,9 +522,9 @@
 	CritterDeath()
 		..()
 		src.icon_state = "[src.doggy]-lying"
-		src.audible_message("<span class='combat'><b>[src]</b> [pick("tires","tuckers out","gets pooped")] and lies down!</span>")
+		src.visible_message("<span class='combat'><b>[src]</b> [pick("tires","tuckers out","gets pooped")] and lies down!</span>")
 		SPAWN_DBG(1 MINUTE)
-			src.audible_message("<span class='notice'><b>[src]</b> wags his tail and gets back up!</span>")
+			src.visible_message("<span class='notice'><b>[src]</b> wags his tail and gets back up!</span>")
 			src.alive = 1
 			set_density(1)
 			src.health = 100
@@ -758,7 +758,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		if (task == "thinking" || task == "wandering")
 			if (prob(20))
 				if (!src.muted)
-					src.visible_message("<b>[src]</b> honks!")
+					src.audible_message("<b>[src]</b> honks!")
 				playsound(src.loc, "sound/voice/animal/goose.ogg", 70, 1)
 		else
 			if (prob(20))
@@ -789,7 +789,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	on_pet(mob/user)
 		..()
 		if(prob(10))
-			src.visible_message("<b>[src]</b> honks!",2)
+			src.audible_message("<b>[src]</b> honks!",2)
 			playsound(src.loc, "sound/voice/animal/goose.ogg", 50, 1)
 
 	patrol_to(var/turf/towhat)
@@ -964,7 +964,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 	proc/say(var/text) // mehhh
 		var/my_verb = pick("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles")
-		src.visible_message("<span class='game say'><span class='name'>[src]</span> [my_verb], [text]</span>")
+		src.audible_message("<span class='game say'><span class='name'>[src]</span> [my_verb], [text]</span>")
 
 	proc/take_stuff()
 		if (src.treasure)
@@ -1085,7 +1085,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			if (prob(src.chatter_chance) && !src.muted)
 				src.chatter(rand(1))
 			if (prob(5) && !src.muted)
-				src.visible_message("<span class='notice'><b>[src]</b> [pick("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles", "fusses", "preens", "clicks its beak", "fluffs up", "poofs up")]!</span>")
+				src.audible_message("<span class='notice'><b>[src]</b> [pick("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles", "fusses", "preens", "clicks its beak", "fluffs up", "poofs up")]!</span>")
 			if (prob(15))
 				flick("[src.species]-flaploop", src)
 			//if (prob(1) && prob(22) && (src.last_feather_time + 3000) <= world.time)

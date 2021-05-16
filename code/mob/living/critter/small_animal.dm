@@ -386,7 +386,7 @@ todo: add more small animals!
 		if (..())
 			return 1
 		if (prob(10))
-			src.visible_message("[src] purrs!",\
+			src.audible_message("[src] purrs!",\
 			"You purr!")
 
 /mob/living/critter/small_animal/cat/weak
@@ -1720,7 +1720,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (..())
 			return 1
 		if (prob(10))
-			src.visible_message("[src] purrs![prob(20) ? " Wait, what?" : null]",\
+			src.audible_message("[src] purrs![prob(20) ? " Wait, what?" : null]",\
 			"You purr!")
 
 
