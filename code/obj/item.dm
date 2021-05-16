@@ -9,6 +9,7 @@
 	var/icon_old = null
 	var/uses_multiple_icon_states = 0
 	var/item_state = null
+	var/wear_state = null // icon state used for worn sprites, icon_state used otherwise
 	var/image/wear_image = null
 	var/wear_image_icon = 'icons/mob/belt.dmi'
 	var/wear_layer = MOB_CLOTHING_LAYER
