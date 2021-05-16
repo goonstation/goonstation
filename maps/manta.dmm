@@ -8637,7 +8637,7 @@
 /obj/item/mop,
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/orangeblack,
-/area/space)
+/area/station/engine/engineering/ce/private)
 "azi" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -37974,7 +37974,7 @@
 	},
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/orangeblack,
-/area/space)
+/area/station/engine/engineering/ce/private)
 "hpN" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
