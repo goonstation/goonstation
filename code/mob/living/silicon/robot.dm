@@ -751,18 +751,21 @@
 
 	blob_act(var/power)
 		if (!isdead(src))
+			var/damage = 6 + power / 5
 			for (var/obj/item/roboupgrade/physshield/R in src.contents)
 				if (R.activated)
-					boutput(src, "<span class='notice'>Your force shield absorbs the blob's attack!</span>")
-					src.cell.use(power * 50 * R.overheat())
-					playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
-					src.update_bodypart()
-					return 1
+					var/damage_reduced_by = min(damage, R.damage_reduction)
+					src.cell.use(damage_reduced_by * R.cell_drain_per_damage_reduction)
+					damage -= damage_reduced_by
+					playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+			if (damage <= 0)
+				boutput(usr, "<span class='notice'>Your shield completely blocks the attack!</span>")
+				return 1
 			boutput(src, "<span class='alert'>The blob attacks you!</span>")
-			var/damage = 6 + power / 5
 			for (var/obj/item/parts/robot_parts/RP in src.contents)
-				if (RP.ropart_take_damage(damage,damage/2) == 1) src.compborg_lose_limb(RP)
-			// maybe the blob is a little acidic?? idk
+				// maybe the blob is a little acidic?? idk
+				if (RP.ropart_take_damage(damage, damage/2) == 1)
+					src.compborg_lose_limb(RP)
 			src.update_bodypart()
 			return 1
 		return 0
@@ -815,13 +818,14 @@
 		var/fire_protect = 0
 		for (var/obj/item/roboupgrade/R in src.contents)
 			if (istype(R, /obj/item/roboupgrade/physshield) && R.activated)
-				var/obj/item/roboupgrade/physshield/P = R
-				src.cell.use((4-severity) * 100 * P.overheat())
+				var/obj/item/roboupgrade/physshield/S = R
+				src.cell.use((4-severity) * S.cell_drain_per_damage_reduction)
 				boutput(src, "<span class='notice'>Your force shield absorbs some of the blast!</span>")
 				playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
 				severity++
 			if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated)
-				src.cell.use((4-severity) * 50)
+				var/obj/item/roboupgrade/fireshield/S = R
+				src.cell.use((4-severity) * S.cell_drain_per_damage_reduction)
 				boutput(src, "<span class='notice'>Your fire shield absorbs some of the blast!</span>")
 				playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
 				fire_protect = 1
@@ -873,7 +877,7 @@
 			src.do_disorient(clamp(P.power*4, P.proj_data.power*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
 			src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 
-		log_shot(P,src)
+		log_shot(P, src)
 		src.visible_message("<span class='alert'><b>[src]</b> is struck by [P]!</span>")
 		var/damage = (P.power / 3) * dmgmult
 		if (damage < 1)
@@ -881,27 +885,23 @@
 
 		for (var/obj/item/roboupgrade/R in src.contents)
 			if (istype(R, /obj/item/roboupgrade/physshield) && R.activated && dmgtype == 0)
-				var/obj/item/roboupgrade/physshield/phys = R
-				if(phys.overheat_level < phys.max_overheat)
-					shoot_reflected_to_sender(P, src)
-					src.cell.use(damage * 50 * phys.overheat())
-					boutput(src, "<span class='notice'>Your force shield deflects the shot!</span>")
-					playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
-					return
-				else
-					boutput(src, "<span class='notice'>Your force shield absorbs some of the shot!</span>")
-					src.cell.use(damage * 50 * phys.overheat())
-					playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
-					damage = damage/2
-					return
-			if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated && dmgtype == 1)
-				shoot_reflected_to_sender(P, src)
-				src.cell.use(damage * 25)
-				boutput(src, "<span class='notice'>Your fire shield deflects the shot!</span>")
+				var/obj/item/roboupgrade/physshield/S = R
+				var/damage_reduced_by = min(damage, S.damage_reduction)
+				src.cell.use(damage_reduced_by * S.cell_drain_per_damage_reduction)
+				damage -= damage_reduced_by
 				playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
-				return
+			if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated && dmgtype == 1)
+				var/obj/item/roboupgrade/fireshield/S = R
+				var/damage_reduced_by = min(damage, S.damage_reduction)
+				src.cell.use(damage_reduced_by * S.cell_drain_per_damage_reduction)
+				damage -= damage_reduced_by
+				playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
 
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		if (damage < 1)
+			return
+
+		if (src.material)
+			src.material.triggerOnBullet(src, src, P)
 
 		var/obj/item/parts/robot_parts/PART = null
 		if (ismob(P.shooter))
@@ -923,9 +923,9 @@
 			var/list/parts = list()
 			for (var/obj/item/parts/robot_parts/RP in src.contents)
 				parts.Add(RP)
-			if (parts.len > 0)
+			if (length(parts) > 0)
 				PART = pick(parts)
-		if (PART?.ropart_take_damage(damage,damage) == 1)
+		if (PART?.ropart_take_damage(damage, damage) == 1)
 			src.compborg_lose_limb(PART)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -969,11 +969,13 @@
 			src.gib()
 			return
 
-		var/Pshield = 0
-		var/Fshield = 0
+		var/Pshield = FALSE
+		var/Fshield = FALSE
 		for (var/obj/item/roboupgrade/R in src.contents)
-			if (istype(R, /obj/item/roboupgrade/physshield) && R.activated) Pshield = 1
-			if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated) Fshield = 1
+			if (istype(R, /obj/item/roboupgrade/physshield) && R.activated)
+				Pshield = TRUE
+			if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated)
+				Fshield = TRUE
 
 		if (Pshield)
 			src.cell.use(200)
@@ -989,28 +991,29 @@
 				playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
 			else
 				for (var/obj/item/parts/robot_parts/RP in src.contents)
-					if (RP.ropart_take_damage(0,35) == 1) src.compborg_lose_limb(RP)
-				if (istype(cell,/obj/item/cell/erebite))
+					if (RP.ropart_take_damage(0, 35) == 1) src.compborg_lose_limb(RP)
+				if (istype(cell, /obj/item/cell/erebite))
 					src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
 					explosion(cell, src.loc, 1, 2, 4, 6, 1)
 					SPAWN_DBG(1 DECI SECOND)
-						qdel (src.cell)
+						qdel(src.cell)
 						src.cell = null
-			update_bodypart()
-		return
+			src.update_bodypart()
 
 	temperature_expose(null, temp, volume)
-		var/Fshield = 0
+		var/Fshield = FALSE
 
 		src.material?.triggerTemp(src, temp)
 
 		for(var/atom/A in src.contents)
-			if(A.material)
-				A.material.triggerTemp(A, temp)
+			A.material?.triggerTemp(A, temp)
 
 		for (var/obj/item/roboupgrade/R in src.contents)
-			if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated) Fshield = 1
-		if (Fshield == 0)
+			if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated)
+				Fshield = TRUE
+				break
+
+		if (!Fshield)
 			if (istype(cell,/obj/item/cell/erebite))
 				src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
 				explosion(cell, src.loc, 1, 2, 4, 6, 1)
@@ -2513,9 +2516,6 @@
 				src.update_appearance()
 				src.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
 
-
-
-
 	var/image/i_head
 	var/image/i_head_decor
 
@@ -2780,16 +2780,22 @@
 		burn = max(burn, 0)
 		if (burn == 0 && brute == 0)
 			return 0
-		for (var/obj/item/roboupgrade/R in src.upgrades) //if 50% of the damage is less than 4, ignore it, elsewise take 50% damage
+		for (var/obj/item/roboupgrade/R in src.upgrades)
+			// shield upgrades reduce damage taken (and drain the power cell)
 			if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated)
-				src.cell.use(burn * 25)
-				burn = ((burn * 0.5) < 4) ? 0 : (burn * 0.5)
+				var/obj/item/roboupgrade/fireshield/S = R
+				var/damage_reduced_by = min(burn, S.damage_reduction)
+				src.cell.use(damage_reduced_by * S.cell_drain_per_damage_reduction)
+				burn -= damage_reduced_by
 				playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+				continue
 			if (istype(R, /obj/item/roboupgrade/physshield) && R.activated)
-				var/obj/item/roboupgrade/physshield/P = R
-				src.cell.use(brute * 50 * P.overheat())
-				brute = ((brute * 0.5) < 4) ? 0 : (brute * 0.5)
+				var/obj/item/roboupgrade/physshield/S = R
+				var/damage_reduced_by = min(brute, S.damage_reduction)
+				src.cell.use(damage_reduced_by * S.cell_drain_per_damage_reduction)
+				brute -= damage_reduced_by
 				playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+				continue
 		if (burn == 0 && brute == 0)
 			boutput(usr, "<span class='notice'>Your shield completely blocks the attack!</span>")
 			return 0
