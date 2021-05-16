@@ -529,7 +529,7 @@ var/obj/manta_speed_lever/mantaLever = null
 									power_drained += 50
 
 				if(power_drained > max_power * 0.95)
-					playsound(src, "sound/effects/screech.ogg", 100, 1, 1)
+					playsound(src, "sound/effects/screech.ogg", 50, 1, 1)
 				if(power_drained >= max_power)
 					processing_items.Remove(src)
 					explosion(src, src.loc, 3,6,9,12)

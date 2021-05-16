@@ -436,7 +436,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "horseshoe"
 	force = 6.5
-	throwforce = 25
+	throwforce = 15
 	throw_speed = 3
 	throw_range = 6
 	w_class = W_CLASS_TINY

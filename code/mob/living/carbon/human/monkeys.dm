@@ -254,6 +254,13 @@
 		if(aggroed)
 			walk_towards(src, ai_target, ai_movedelay)
 
+	ai_is_valid_target(mob/M)
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if (istype(H.wear_suit, /obj/item/clothing/suit/monkey))
+				return FALSE
+		return ..()
+
 	proc/shot_by(var/atom/A as mob|obj)
 		if (src.ai_state == AI_ATTACKING)
 			return
@@ -518,7 +525,7 @@
 			var/head = pick(/obj/item/clothing/head/bandana/red, /obj/item/clothing/head/bandana/random_color)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/tourist, slot_shoes)
 			src.equip_new_if_possible(head, slot_head)
-			var/weap = pick(/obj/item/storage/toolbox/emergency, /obj/item/extinguisher, /obj/item/ratstick, /obj/item/razor_blade, /obj/item/bat, /obj/item/kitchen/utensil/knife, /obj/item/raw_material/shard/plasmacrystal, /obj/item/nunchucks, /obj/item/rubber_hammer, /obj/item/storage/toolbox/mechanical, /obj/item/kitchen/rollingpin)
+			var/weap = pick(/obj/item/storage/toolbox/emergency, /obj/item/extinguisher, /obj/item/ratstick, /obj/item/razor_blade, /obj/item/bat, /obj/item/kitchen/utensil/knife, /obj/item/nunchucks, /obj/item/rubber_hammer, /obj/item/storage/toolbox/mechanical, /obj/item/kitchen/rollingpin)
 			src.put_in_hand_or_drop(new weap)
 		APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "angry_monkey", 5)
 		src.add_stam_mod_max("angry_monkey", 100)

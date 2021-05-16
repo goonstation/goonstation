@@ -828,6 +828,9 @@
 		if (!antag_removal && src.spell_soulguard)
 			newbody.bioHolder.RemoveAllEffects()
 
+	if(src.traitHolder)
+		newbody.traitHolder = src.traitHolder
+		newbody.traitHolder.owner = newbody
 	// Prone to causing runtimes, don't enable.
 /*	if (src.mutantrace && !src.spell_soulguard)
 		newbody.mutantrace = new src.mutantrace.type(newbody)*/
@@ -3086,7 +3089,7 @@
 			else if (src.chest_item.w_class == W_CLASS_BULKY || src.chest_item.w_class == W_CLASS_HUGE)
 				poopingDamage = 50
 				src.show_text("<span class='alert'><B>[src.chest_item] explodes out of your ass, jesus christ!</B></span>")
-				src.changeStatus("stunned", 50)
+				src.changeStatus("stunned", 5 SECONDS)
 				take_bleeding_damage(src, src, 20)
 
 			// Deal out ass damage

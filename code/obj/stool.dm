@@ -693,6 +693,8 @@
 
 		if(stand)
 			if(ishuman(to_buckle))
+				if(ON_COOLDOWN(to_buckle, "chair_stand", 1 SECOND))
+					return
 				user.visible_message("<span class='notice'><b>[to_buckle]</b> climbs up on [src]!</span>", "<span class='notice'>You climb up on [src].</span>")
 
 				var/mob/living/carbon/human/H = to_buckle
@@ -1048,7 +1050,7 @@
 				"<span class='alert'>You're tossed out of [src] as it tips [T ? "while rolling over [T]" : "over"]!</span>")
 				var/turf/target = get_edge_target_turf(src, src.dir)
 				M.throw_at(target, 5, 1)
-				M.changeStatus("stunned", 80)
+				M.changeStatus("stunned", 8 SECONDS)
 				M.changeStatus("weakened", 5 SECONDS)
 			else
 				src.visible_message("<span class='alert'>[src] tips [T ? "as it rolls over [T]" : "over"]!</span>")

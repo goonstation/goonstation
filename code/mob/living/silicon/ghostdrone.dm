@@ -578,6 +578,9 @@
 	equipped()
 		if (!active_tool)
 			return null
+		if(istype(active_tool, /obj/item/magtractor))
+			var/obj/item/magtractor/mag = active_tool
+			return mag.holding ? mag.holding : mag
 		return active_tool
 
 	u_equip(obj/item/W as obj)
@@ -1072,7 +1075,7 @@
 		var/damage = round((((P.power/3)*P.proj_data.ks_ratio)*dmgmult), 1.0)
 		var/stun = round((P.power*(1.0-P.proj_data.ks_ratio)), 1.0)
 
-		src.changeStatus("stunned", stun*10)
+		src.changeStatus("stunned", stun SECONDS)
 
 		if (src.hat) //For hats getting shot off
 			UpdateOverlays(null, "hat")
@@ -1127,7 +1130,7 @@
 			if (3.0)
 				SPAWN_DBG(0)
 					src.TakeDamage(null, round(src.health / 3, 1.0))
-					src.changeStatus("stunned", 50)
+					src.changeStatus("stunned", 5 SECONDS)
 
 	blob_act(var/power)
 		if (src.nodamage) return

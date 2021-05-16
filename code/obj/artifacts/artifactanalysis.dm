@@ -58,10 +58,12 @@
 		O.UpdateName()
 
 	attack_hand(mob/user)
-		user.lastattacked = src.attached
-		if(src.attached)
+		var/obj/attachedobj = src.attached
+		if(istype(attachedobj) && attachedobj.artifact) // touch artifact we are attached to
 			src.attached.attack_hand(user)
-			user.lastattacked = src.attached
+			user.lastattacked = user
+		else // do sticker things
+			..()
 
 	stick_to(atom/A, pox, poy)
 		. = ..()
@@ -69,16 +71,20 @@
 			checkArtifactVars(A)
 
 	attackby(obj/item/W, mob/living/user)
-		if(istype(W, /obj/item/pen))
+		if(istype(W, /obj/item/pen)) // write on it
 			ui_interact(user)
-		else if((iscuttingtool(W) || issnippingtool(W)) && user.a_intent == INTENT_HELP)
+		else if((iscuttingtool(W) || issnippingtool(W)) && user.a_intent == INTENT_HELP && src.attached) // remove attached paper from artifact
 			boutput(user, "You manage to scrape \the [src] off of \the [src.attached].")
 			src.remove_from_attached()
 			src.add_fingerprint(user)
 			user.put_in_hand_or_drop(src)
-		else if (src.attached)
-			src.attached.attackby(W, user)
-			user.lastattacked = user
+		else
+			var/obj/attachedobj = src.attached
+			if(istype(attachedobj) && attachedobj.artifact) // hit artifact we are attached to
+				src.attached.attackby(W, user)
+				user.lastattacked = user
+			else // just sticker things
+				..()
 
 	get_desc()
 		. = src.artifactType!=""?"This one seems to be describing a [src.artifactType] type artifact.":""

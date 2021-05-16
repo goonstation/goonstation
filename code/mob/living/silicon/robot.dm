@@ -940,6 +940,8 @@
 					src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
 					src.emagged = 1
 					src.handle_robot_antagonist_status("emagged", 0, user)
+					if(src.syndicate)
+						src.antagonist_overlay_refresh(1, 1)
 					SPAWN_DBG(0)
 						update_appearance()
 					return 1

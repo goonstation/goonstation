@@ -412,6 +412,9 @@
 
 /turf/simulated/wall/auto/reinforced/supernorn/yellow
 	icon = 'icons/turf/walls_manta.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "mapwall_r-Y"
+#endif
 	mod = "norn-Y-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -425,6 +428,9 @@
 
 /turf/simulated/wall/auto/reinforced/supernorn/orange
 	icon = 'icons/turf/walls_manta.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "mapwall_r-O"
+#endif
 	mod = "norn-O-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -439,6 +445,9 @@
 
 /turf/simulated/wall/auto/reinforced/supernorn/blackred
 	icon = 'icons/turf/walls_manta.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "mapwall_r-BR"
+#endif
 	mod = "norn-BR-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID

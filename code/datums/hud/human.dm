@@ -901,17 +901,17 @@
 			switch (brutedam)
 				if (-INFINITY to 0) // this goes the other way around from the normal health indicator since it's determined by how much of whatever damage you have
 					stage = 0 // bright green
-				if (1 to 15)
+				if (0 to 15)
 					stage = 1 // green
-				if (16 to 30)
+				if (15 to 30)
 					stage = 2 // yellow
-				if (31 to 45)
+				if (30 to 45)
 					stage = 3 // orange
-				if (46 to 60)
+				if (45 to 60)
 					stage = 4 // dark orange
-				if (61 to 75)
+				if (60 to 75)
 					stage = 5 // red
-				if (76 to INFINITY)
+				if (75 to INFINITY)
 					stage = 6 // crit
 
 			health_brute.name = "Brute Damage"
@@ -921,17 +921,17 @@
 			switch (burndam)
 				if (-INFINITY to 0)
 					stage = 0 // bright green
-				if (1 to 15)
+				if (0 to 15)
 					stage = 1 // green
-				if (16 to 30)
+				if (15 to 30)
 					stage = 2 // yellow
-				if (31 to 45)
+				if (30 to 45)
 					stage = 3 // orange
-				if (46 to 60)
+				if (45 to 60)
 					stage = 4 // dark orange
-				if (61 to 75)
+				if (60 to 75)
 					stage = 5 // red
-				if (76 to INFINITY)
+				if (75 to INFINITY)
 					stage = 6 // crit
 
 			health_burn.name = "Burn Damage"
@@ -941,17 +941,17 @@
 			switch (toxdam)
 				if (-INFINITY to 0)
 					stage = 0 // bright green
-				if (1 to 15)
+				if (0 to 15)
 					stage = 1 // green
-				if (16 to 30)
+				if (15 to 30)
 					stage = 2 // yellow
-				if (31 to 45)
+				if (30 to 45)
 					stage = 3 // orange
-				if (46 to 60)
+				if (45 to 60)
 					stage = 4 // dark orange
-				if (61 to 75)
+				if (60 to 75)
 					stage = 5 // red
-				if (76 to INFINITY)
+				if (75 to INFINITY)
 					stage = 6 // crit
 
 			health_tox.name = "Toxin Damage"
@@ -961,17 +961,17 @@
 			switch (oxydam)
 				if (-INFINITY to 0)
 					stage = 0 // bright green
-				if (1 to 15)
+				if (0 to 15)
 					stage = 1 // green
-				if (16 to 30)
+				if (15 to 30)
 					stage = 2 // yellow
-				if (31 to 45)
+				if (30 to 45)
 					stage = 3 // orange
-				if (46 to 60)
+				if (45 to 60)
 					stage = 4 // dark orange
-				if (61 to 75)
+				if (60 to 75)
 					stage = 5 // red
-				if (76 to INFINITY)
+				if (75 to INFINITY)
 					stage = 6 // crit
 
 			health_oxy.name = "Oxygen Damage"

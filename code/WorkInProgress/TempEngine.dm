@@ -992,7 +992,7 @@ datum/pump_ui/circulator_ui
 					fireflash(src, firesize)
 					for(var/atom/movable/M in view(firesize, src.loc)) // fuck up those jerkbag engineers
 						if(M.anchored) continue
-						if(ismob(M)) if(hasvar(M,"weakened")) M:changeStatus("weakened", 80)
+						if(ismob(M)) if(hasvar(M,"weakened")) M:changeStatus("weakened", 8 SECONDS)
 						if(ismob(M)) random_brute_damage(M, 10)
 						if(ismob(M))
 							var/atom/targetTurf = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))

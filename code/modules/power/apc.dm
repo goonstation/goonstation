@@ -808,8 +808,8 @@ var/zapLimiter = 0
 	var/stun = (user.getStatusDuration("stunned") < shock_damage * 10) ? shock_damage * 10 : 2
 	user.do_disorient(130, weakened = weak, stunned = stun, disorient = 80, remove_stamina_below_zero = 0)
 #else
-	if(user.getStatusDuration("stunned") < shock_damage * 10)	user.changeStatus("stunned", shock_damage * 10)
-	if(user.getStatusDuration("weakened") < shock_damage * 20)	user.changeStatus("weakened", shock_damage * 20)
+	if(user.getStatusDuration("stunned") < shock_damage * 10)	user.changeStatus("stunned", shock_damage SECONDS)
+	if(user.getStatusDuration("weakened") < shock_damage * 20)	user.changeStatus("weakened", shock_damage * 2 SECONDS)
 #endif
 	for(var/mob/M in AIviewers(src))
 		if(M == user)	continue

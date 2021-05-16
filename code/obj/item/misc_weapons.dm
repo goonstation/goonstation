@@ -126,7 +126,7 @@
 			if(prob(3))
 				SPAWN_DBG(0.2 SECONDS)
 					target.visible_message("<span class='bold'>[target.name]</span> flops over in shame!")
-					target.changeStatus("stunned", 50)
+					target.changeStatus("stunned", 5 SECONDS)
 					target.changeStatus("weakened", 5 SECONDS)
 		else
 			..()
@@ -872,22 +872,22 @@
 	proc/set_values()
 		if(two_handed)
 			src.click_delay = 15
-			force = 30
-			throwforce = 20
+			force = 40
+			throwforce = 25
 			throw_speed = 4
 			throw_range = 8
-			stamina_damage = 40
-			stamina_cost = 27
-			stamina_crit_chance = 5
+			stamina_damage = 45
+			stamina_cost = 25
+			stamina_crit_chance = 10
 		else
 			src.click_delay = 10
-			force = 15
-			throwforce = 5
+			force = 20
+			throwforce = 10
 			throw_speed = 2
 			throw_range = 4
-			stamina_damage = 30
-			stamina_cost = 20
-			stamina_crit_chance = 2
+			stamina_damage = 25
+			stamina_cost = 15
+			stamina_crit_chance = 5
 		tooltip_rebuild = 1
 		return
 
