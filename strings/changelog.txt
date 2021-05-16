@@ -1,5 +1,9 @@
 
 (t)sun may 16 21
+(u)Kyle
+(p)4740
+(e)⚖🆕|balance, feature
+(+)Wearing the monkey suit will prevent most monkeys from trying to attack you.
 (u)SynthFox
 (p)4318
 (e)|
