@@ -83,7 +83,7 @@ function clearCanvas(clrCanvas){ // clears the canvas used in the argument
 // Licenced under CC BY-SA 3.0
 // Modified from original by DisturbHerb
 
-// Draughts pieces drawn by DisturbHer
+// Draughts pieces drawn by DisturbHerb
 
 // following vars are how i have to import the piece images because i have no other choice
 // these damn things make me want to *cry*
