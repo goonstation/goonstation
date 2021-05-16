@@ -32758,8 +32758,10 @@
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/chemistry{
 	name = "airlock-'Science Lobby'";
-	req_access_txt = "24|12"
+	req_access_txt = null
 	},
+/obj/access_spawn/research,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating/random,
 /area/station/science/lobby)
 "iWD" = (
