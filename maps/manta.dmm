@@ -7789,9 +7789,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/ce)
-"axa" = (
-/turf/space/fluid/manta,
-/area/station/engine/engineering/ce/private)
 "axb" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -81386,7 +81383,7 @@ act
 aaa
 aaa
 aaa
-axa
+aaa
 aaa
 aaa
 arz
@@ -81688,7 +81685,7 @@ act
 aaa
 aaa
 aaa
-axa
+aaa
 aaa
 aaa
 aaa
