@@ -16,6 +16,7 @@ datum
 			transparency = 128
 			volatility = 3
 			minimum_reaction_temperature = -INFINITY
+			random_chem_blacklisted = 1
 
 			// These figures are for new nitro explosions
 			// brisance = 0.4
