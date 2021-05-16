@@ -1,5 +1,9 @@
 
 (t)sun may 16 21
+(u)edwardly
+(p)4696
+(e)|
+(*)Ghosts now have a timeout before they can become a Ghost Drone.
 (u)Kubius
 (p)4652
 (e)🆕🎨|feature, sprites
