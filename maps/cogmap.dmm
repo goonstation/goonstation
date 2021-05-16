@@ -2861,7 +2861,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 5;
 	pixel_y = 13
 	},
@@ -5584,7 +5584,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 5;
 	pixel_y = 13
 	},
@@ -9651,11 +9651,11 @@
 	pixel_x = 8;
 	pixel_y = 3
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 5;
 	pixel_y = 13
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 9;
 	pixel_y = 11
 	},
@@ -11434,7 +11434,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 5;
 	pixel_y = 13
 	},
@@ -16938,7 +16938,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 5;
 	pixel_y = 13
 	},
@@ -22903,7 +22903,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 5;
 	pixel_y = 13
 	},
@@ -23569,7 +23569,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 5;
 	pixel_y = 13
 	},
@@ -37185,7 +37185,7 @@
 	pixel_x = -4;
 	pixel_y = 8
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = -4;
 	pixel_y = 15
 	},
@@ -37828,7 +37828,7 @@
 	pixel_x = -4;
 	pixel_y = 8
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = -4;
 	pixel_y = 15
 	},
@@ -41081,7 +41081,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 5;
 	pixel_y = 13
 	},
@@ -45721,7 +45721,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 5;
 	pixel_y = 13
 	},
@@ -53070,7 +53070,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 5;
 	pixel_y = 13
 	},

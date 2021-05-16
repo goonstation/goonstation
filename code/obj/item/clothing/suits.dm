@@ -835,7 +835,7 @@
 	setupProperties()
 		..()
 		setProperty("coldprot", 20)
-		setProperty("heatprot", 50)
+		setProperty("heatprot", 45)
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 		setProperty("movespeed", 1)
