@@ -1254,7 +1254,7 @@
 				src.UpdateOverlays(frostingoverlay, frostingstyle)
 				user.show_text("You add some frosting to [src]", "red")
 				src.style_step += 1
-				tube.reagents.trans_to(src,15)
+				tube.reagents.trans_to(src, 15)
 				JOB_XP(user, "Chef", 1)
 
 		// When a user also fills the donut with a syringe it can get a bit crowded in the donut.
