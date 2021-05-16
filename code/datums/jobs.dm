@@ -148,6 +148,7 @@ ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command
 	linkcolor = "#00CC00"
 	slot_card = /obj/item/card/id/command
+	map_can_autooverride = 0
 
 /datum/job/command/captain
 	name = "Captain"
