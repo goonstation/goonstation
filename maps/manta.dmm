@@ -9203,7 +9203,13 @@
 /turf/simulated/floor,
 /area/station/engine/power)
 "aAH" = (
-/turf/simulated/floor/damaged2,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
 /area/station/engine/power)
 "aAI" = (
 /obj/machinery/light/incandescent/netural,
@@ -9374,10 +9380,7 @@
 /area/station/captain)
 "aBf" = (
 /obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "1-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/engine/gas)
@@ -14020,7 +14023,7 @@
 /area/station/communications/office)
 "aOc" = (
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "1-8"
 	},
 /turf/simulated/floor,
 /area/station/engine/power)
@@ -30986,7 +30989,7 @@
 	icon_state = "4-8"
 	},
 /obj/cable{
-	icon_state = "2-4"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/station/engine/power)
@@ -39578,6 +39581,15 @@
 /obj/machinery/drainage/big,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerstarboard)
+"lbF" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/engine/power)
 "lbS" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -41117,6 +41129,11 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/storage)
+"osL" = (
+/obj/machinery/door/airlock/pyro/engineering,
+/obj/access_spawn/engineering,
+/turf/simulated/floor,
+/area/station/engine/gas)
 "oty" = (
 /obj/storage/closet/dresser,
 /obj/item/clothing/under/gimmick/witchfinder,
@@ -44099,6 +44116,7 @@
 	dir = 1;
 	pixel_y = 20
 	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor,
 /area/station/engine/power)
 "vkN" = (
@@ -44899,7 +44917,10 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "wLD" = (
-/turf/simulated/floor/plating,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
 /area/station/engine/power)
 "wRO" = (
 /obj/wingrille_spawn/auto,
@@ -88634,10 +88655,10 @@ axe
 axe
 azJ
 gwG
-eYI
-eYI
+aAH
+bIt
 aOc
-bqU
+osL
 aBf
 aEC
 aGl
@@ -89843,7 +89864,7 @@ azs
 azJ
 nNY
 eYI
-aAh
+wLD
 bIt
 bqU
 aCE
@@ -90145,7 +90166,7 @@ azs
 jwI
 aAh
 eYI
-aAH
+mJU
 eYI
 azJ
 aCT
@@ -90447,7 +90468,7 @@ azs
 jwI
 aAh
 cuX
-wLD
+hUz
 cuX
 azJ
 aBa
@@ -90749,7 +90770,7 @@ bNI
 jwI
 aAm
 bNw
-wLD
+hUz
 bNw
 azJ
 aDr
@@ -91051,7 +91072,7 @@ jox
 azJ
 aOx
 fbv
-aAh
+eYI
 nFd
 azJ
 bEw
@@ -91353,7 +91374,7 @@ azs
 avp
 avp
 vky
-aZB
+lbF
 vLr
 pUB
 bMt
