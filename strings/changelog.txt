@@ -1,5 +1,21 @@
 
 (t)sun may 16 21
+(u)Erinexx
+(p)4401
+(e)🎨|sprites
+(+)Resprited APCs, they now show their cell and wires when opened
+(u)Flappybat
+(p)4629
+(e)⚖🐛|balance, bug
+(*)Spy thief objectives with difficult delivery locations now give a higher value reward.
+(+)Spy thief can no longer have multiple objectives for the same trinket/limb.
+(+)Spy limb/trinket rewards that roll the 10% chance to upgrade rewards are now marked as HOT
+(u)DimWhat
+(p)4363
+(e)⚖🗺|balance, mapping
+(*)The hard hats that came with firesuits on station have been replaced with firefighter helmets
+(+)Altered the stats of the firefighter helmet and suit.
+(+)Added firefighter helmets to fire lockers and crates
 (u)edwardly
 (p)4715
 (e)|
