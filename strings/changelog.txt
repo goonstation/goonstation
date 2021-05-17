@@ -1,4 +1,9 @@
 
+(t)mon may 17 21
+(u)Pali and DimWhat
+(p)4763
+(e)🎨|sprites
+(+)Made off station space suits have an NT on their back instead of a 13.
 (t)sun may 16 21
 (u)Hans
 (p)4727
