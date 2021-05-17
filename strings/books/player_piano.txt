@@ -1,4 +1,4 @@
-<BIG><B>Everything You Need To Know About The Player Piano</B></BIG>
+	<h1><b>Everything You Need To Know About The Player Piano</b></h1>
 	<br>
 	<br>This book is meant to give you an idea of how to work the player piano.
 	<br>

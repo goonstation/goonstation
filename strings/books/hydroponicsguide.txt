@@ -63,19 +63,19 @@ Gardening is awesome, easy and fun! I hope you like the smell of dirt!</p>
 <h2>Chapter 1: Basic Gardening</h2>
 <p>So, you've got an empty Hydroponics tray, some seeds and a burning desire to grow some goddamn plants. The next step should be obvious: Plant that seed in the tray!</p>
 <p>If you're using one of the standard issue Hydroponics growing trays, the plant should begin to grow almost immediatley. Most issues with the plant will be taken care of automatically by the tray.</p>
-<p>However, you will need to ensure that the tray is kept filled with water - but not too much! Apart from this, simply tend to the plant until it becomes ready to harvest, as will be indicated by a green light.</p>
+<p>However, you will need to ensure that the tray is kept filled with water - but not too much! Apart from this, simply tend to the plant until it becomes ready to harvest, as will be indicated by a flashing blue light.</p>
 <p>Now, I know what you're thinking. "It can't be that simple, surely!" Well you're wrong! If all you want to do is simply plant, grow and harvest, this is literally all you need to do. Even a prehistoric hunter-gatherer can do it!</p>
 <p>However, there are other things you can do to ensure a much better harvest and gardening experience. For example, you can add compost and other nutrients to the plant's solution to ensure the plant becomes and stays very healthy.</p>
 <p>A healthy plant is a happy plant, and a happy plant will grow more viable produce!</p>
 <p>Also, consider regularly checking the plant by hand - this will alert you to any issues with the tray or the plant that require correction.</p>
 <div class="tips">
-<li> Keep an eye on the LED displays on your Hydroponics tray. Green means a harvest is ready, Red means the plant is in poor condition. The bar on the side shows you how much water you have - aim for green!
+<li> Keep an eye on the LED displays on your Hydroponics tray. Flashing blue means a harvest is ready, Red means the plant is in poor condition. The bar on the side shows you how much water you have - aim for green!
 <li> If trays are kept empty, eventually strange weeds may start to grow in them. Even keeping a dead plant in a tray will prevent weeds! Some weeds can be rather bad to have around!
 </div>
 <br><br>
 <h2>Chapter 2: Tools of the Trade</h2>
-<p>Well, now you know how to grow a plant and harvest it all well and good. You may find yourself asking however, what do I use to go about doing this?! What is all the stuff in here!? Slow down junior. We'll get to that.</p>
-<p>A good Botanist is provided with many different tools to perform their work. Most likely, you'll be able to find an assortment of these tools in either a supplied set of lockers, or in a hydroponics tool vending machine.</p>
+<p>Well, now you know how to grow a plant and harvest it all well and good. You may find yourself asking however, <i>what do I use to go about doing this?! What is all the stuff in here!?</i> Slow down, junior. We'll get to that.</p>
+<p>A good Botanist is provided with many different tools to perform their work. Most likely, you'll be able to find an assortment of these tools in either a supplied set of lockers, or in a GardenGear vending machine.</p>
 <p>First of all, we have the humble and iconic Watering Can. A symbol for any gardener! Standard watering cans can hold quite a lot of reagents, but you'll mostly just want to keep water in it. Most often botanists will be supplied with a high-capacity water tank.</p>
 <p>The water tank holds a LOT of water inside - just attach the Watering Can to the spigot, give it a turn, and you'll have a lot of water to feed your plants! The tank will automatically fill the can as full as it can get, so don't worry about spills.</p>
 <p>Bags of Compost are another item that should be used often and well. These familiar old brown bags contain a lot of nutritious mulch that will make your plants healthy. Specifics will be covered later.</p>
@@ -84,11 +84,11 @@ Gardening is awesome, easy and fun! I hope you like the smell of dirt!</p>
 <p>Sometimes though, there's times where plants decide to be a pain. Getting annoyed at Creepers killing your plants? Radweed giving you a nasty case of poisoning? This is where you'll want to use your trusty Chainsaw! Just hack up the plant and it's as good as gone!</p>
 <p>If the Chainsaw doesn't work, try Weedkiller. Weedkiller solution has an extremely toxic effect on undesirable weed-like plants, while being completely harmless to regular plants. This is especially good against pesky Lasher plants!</p>
 <p>The Plant Analyzer isn't neccessary if you're just doing basic planting and harvesting, but it's a must-have if you want to get into botanical genetic engineering. This will be covered in a later chapter.</p>
-<p>The Seed Fabricator is the large, vending machine-like object that you can't take with you (unless you want to be crushed I guess), but it's vital - without it, you wouldn't be able to get any plant seeds! Any seeds obtained from this will have a completely clean genetic slate, also.</p>
+<p>The Seed Fabricator is the large, vending machine-like object that you can't take with you (unless you want to be crushed, I guess), but it's vital - without it, you wouldn't be able to get any plant seeds! Any seeds obtained from this will have a completely clean genetic slate, also.</p>
 <p>The Reagent Extractor accepts various produce, and extracts valuable reagents from them. This is especially important if you want to farm herbs!</p>
 <p>Finally, we have the PlantMaster Mk3 plant genetics manipulator, seed extractor and seed infuser! This is the piece de resistance if you want to engage in genetic engineering - but that's a complicated subject we'll tackle later!</p>
 <div class="tips">
-<li> Other common objects can come in handy, too. Beakers can be inserted in the Reagent Extractor and PlantMaster, and screwdrivers can be used to bolt down trays so they don't get knocked around.
+<li> Other common objects can come in handy, too. Beakers can be inserted in the Reagent Extractor and PlantMaster, and screwdrivers and wrenches can be used to bolt down trays so they don't get knocked around.
 </div>
 <h2>Chapter 3: Nutrient Solutions</h2>
 <p>So, now we know the basics of plant maintenance, growing, and harvesting. What can we do to become better at our craft?</p>
@@ -164,17 +164,34 @@ globules of this sludge can be harvested from the plant however - with proper pr
 <p><b>Fast Metabolism</b>: This strain accelerates a plant's growth, but causes it to drain reagents from its environment more quickly.</p>
 <p><b>Slow Metabolism</b>: This strain causes a plant to grow more slowly but also use less reagents.</p>
 <p><b>Toxin Immunity</b>: Any kind of toxin or poison will not harm a plant carrying this strain.</p>
+<p><b>Radiation Immunity</b>: Radioactive chemicals cannot damage plants with this strain, but may still cause plants to mutate.</p>
 <p><b>Drought Resistance</b>: When no water is available, plants with this strain will deteriorate a lot slower.</p>
+<p><b>Damage Resistance</b>: Harmful things like toxins and physical trauma from chainsaws are less damaging to plants with this gene strain.</p>
+<p><b>Vulnerability</b>: Plants with this strain are more easily damaged by toxins or physical trauma.</p>
+<p><b>Stabilizer</b>: This strain prevents plants from randomly mutating or from mutating via reagent exposure.</p>
+<p><b>Mutagenic</b>: Plants with the Mutagenic strain are more likely to randomly mutate.</p>
+<p><b>Anti-Mutagenic</b>: Plants with this strain are less likely to randomly mutate.</p>
+<p><b>Advanced Photosynthesis</b>: Providing additional light to plants with this strain triggers quicker maturation.</p>
 <p><b>Enhanced Yield</b>: Harvests from plants with this strain will be much more bountiful.</p>
 <p><b>Stunted Yield</b>: The harvest yield from plants with this strain will be poor.</p>
+<p><b>Hyperaquacity</b>: This strain causes the affected plants to develop produce that contain higher water content, which appears related to the potency of the plant.</p>
+<p><b>Toxic</b>: This strain causes plants to give harvests of produce that contain toxins making them unsafe for consumption. The toxin content also appears related to the potency of the plant.</p>
+<p><b>Enzymatic</b>: A plant with this strain is capable of producing in its tissues booster enzyme, with the quantity of enzyme produced being determined by the plant potency.</p>
+<p><b>Superior Quality</b>: Harvests from plants with this strain will be of higher quality, and large produce can contain more reagents.</p>
+<p><b>Inferior Quality</b>: Plants with this strain result in harvests of low-quality produce that are smaller and hold fewer reagents inside.</p>
 <p><b>Immortal</b>: A highly desirable strain that ensures a fruiting plant will never die from being harvested.</p>
 <p><b>Unstable</b>: Plants carrying this strain will continually mutate by themselves.</p>
 <p><b>Rapid Growth</b>: A very desirable strain that causes the plant to grow far faster than usual.</p>
+<p><b>Accelerator</b>: A strain that has the potential to rapidly accelerate maturation and production of a plant.</p>
 <p><b>Stunted Growth</b>: This strain will cause the plant to grow much more slowly.</p>
 <p><b>Poor Health</b>: The condition of plants carrying this strain will deteriorate over time.</p>
 <p><b>Seedless</b>: A very negative strain that prevents the host plant from reproducing at all.</p>
+<p><b>Splice Enabler</b>: A strain that allows the plant to be spliced more easily, and could potentially allow for splicing between two otherwise incompatible plants.</p>
+<p><b>Splice Blocker</b>: Seeds with this strain are fragile and more likely to fail in being spliced with other seeds. </p>
+<p><b>Terminator</b>: Development of this gene strain has the potential to trigger apoptosis and cause a plant to immediately die.
 
-<p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at the following sources:
-</li><li><a href="https://wiki.ss13.co/Guide_to_Botany" target="_blank">https://wiki.ss13.co/Guide_to_Botany</a></li>
+<p>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at the following sources:
+<ul>
+	<li><a href="https://wiki.ss13.co/Guide_to_Botany" target="_blank">https://wiki.ss13.co/Guide_to_Botany</a></li></ul>
 </body>
 </html>

@@ -9,7 +9,7 @@
 		<div class ="styptic">
 		<ul>
 			<li>Aluminium Sulfate helps control bleeding and heal physical wounds.
-			<li>This compound can be prepared by combining Aluminium Hydroxide with Sulfuric Acid.
+			<li>This compound can be prepared by combining aluminium and oxygen with with sulfuric acid.
 		<br>
 		<h4><i>Advanced:</i></h4>
 		<ul>
@@ -25,8 +25,8 @@
 		<div class ="sulfa">
 		<ul>
 			<li>This antibacterial compound is used to treat burn victims.
-			<li>Prepare a sulfonyl group with sulfur, oxygen and chlorine.
-			<li>React with ammonia for sulfonamide, and combine with silver.
+			<li>Prepare sulfur, oxygen and chlorine.
+			<li>React with ammonia and combine with silver.
 		<br>
 		<h4><i>Advanced:</i></h4>
 		<ul>
@@ -42,7 +42,7 @@
 		<div class ="charcoal">
 		<ul>
 			<li>Activated Charcoal helps to absorb toxins from the body and heal moderate toxin damage.
-			<li>Heat ashes together with salt to produce activated charcoal.
+			<li>Heat ashes together with salt at 374 K to produce activated charcoal.
 		<br>
 		<h4><i>Advanced:</i></h4>
 		<ul>
@@ -53,7 +53,7 @@
 		<ul>
 			<li>Calomel, or Mercurous Chloride, is a rapid purgative that will remove other reagents from the body. It is quite toxic.
 			<li>It should be used only when the the poisons in your patient are worse than Calomel itself.
-			<li>Preparation: heat Mercury and Chlorine together.
+			<li>Preparation: heat mercury and chlorine together to 374 K.
 		<br>
 		<h4><i>Advanced:</i></h4>
 		<ul>
@@ -67,7 +67,7 @@
 		<div class ="antirad">
 		<ul>
 			<li>Potassium Iodide is a medicinal drug used to counter the effects of radiation poisoning.
-			<li>React Potassium with Iodine. All done!
+			<li>React potassium with iodine. All done!
 		<br>
 		<h4><i>Advanced:</i></h4>
 		<ul>
@@ -87,7 +87,7 @@
 		<div class ="epinephrine">
 		<ul>
 			<li>Epinephrine is a potent neurotransmitter, used in medical emergencies to halt anaphylactic shock and prevent cardiac arrest.
-			<li>It can be synthesized by combining hydroxylated phenol with chloroacetyl chloride and methylamine,
+			<li>It can be synthesized by combining hydrogen, oxygen, and phenol with chlorine, acetone, and diethylamine.
 			<li>In the event that your station lacks these precursors... well, make do with something similar.
 		<br>
 		<h4><i>Advanced:</i></h4>
@@ -102,7 +102,7 @@
 		<div class="salicylic acid">
 		<ul>
 			<li>This is a is a standard salicylate pain reliever and fever reducer. It will help relieve slowed movement from injuries.
-			<li>Synthesis: treat Sodium Phenolate with Carbon Dioxide, then acidify with Sulfuric Acid.
+			<li>Synthesis: treat sodium and phenol with carbon and oxygen, then acidify with sulfuric acid.
 		<br>
 		<h4><i>Advanced:</i></h4>
 		<ul>
@@ -116,7 +116,7 @@
 		<div class = "salbutamol">
 		<ul>
 			<li>Salbutamol is a common bronchodilation medication for asthmatics. It may help with other breathing problems as well.
-			<li>Synthesis: treat Salicylic Acid with bromine, ammonia, and lithium aluminium hydride.
+			<li>Synthesis: treat oil with bromine, ammonia, and lithium and aluminium.
 		<br>
 		<h4><i>Advanced:</i></h4>
 		<ul>
@@ -126,13 +126,52 @@
 		</div>
 		<br>
 		<hr>
+		<h2>ADVANCED MEDICINES</h2>
+		<hr>
+		<h3>Synthflesh</h3>
+		<div class ="synthflesh">
+		<ul>
+			<li>Synthetic flesh, or synthflesh, is a useful laboratory-create grafting compound for treating severe injuries to dermal and muscle tissues.
+			<li>Synthesis: combine carbon, blood, and Styptic Powder.
+		</div>
+		<h3>Cryoxadone</h3>
+		<div class ="cryoxadone">
+		<ul>
+			<li>Cryoxadone is a cryogenic healing ketone derived from acetone that is useful for deep tissue repairs of damage that otherwise might require surgical interference.
+			<li>Synthesis: create an acetyl group by first mixing oil, welding fuel, and oxygen. 
+			<li>In a separate beaker, nitrogenate plasma and water to form cryostylane. 
+			<li>In a third beaker, create unstable mutagen by combining radium, plasma, and chlorine. 
+			<li>Combine all reagents in a beaker with plasma.
+		</div>
+		<h3>Pentetic Acid</h3>
+		<div class ="pentetic acid">
+		<ul>
+			<li>Also known as DTPA, Pentetic Acid combines an amine backbone with carboxymethyl groups that are useful in removing metal ions and other toxins from the body.
+			<li>Synthesis: create formaldehyde by mixing ethanol, silver, and oxygen at 424 K.
+			<li>Very carefully prepare a cyanide group by heating ammonia, oil, and oxygen at 374 K in a separate beaker, while wearing a mask with appropriate ventilation.
+			<li>Combine both mixtures with ammonia, sodium, chlorine, and welding fuel.
+		</div>
+		<h3>Atropine</h3>
+		<div class ="atropine">
+		<ul>
+			<li>Atropine is a useful alkaloid in treating nerve agents and poisonings, and can help situationally in treating slowed heart rate from supression of the cardiac system.
+			<li>Synthesis: mix ethanol, phenol, diethylamine, and acetone in sulfuric acid.
+		</div>
+		<h3>Atropine</h3>
+		<div class ="atropine">
+		<ul>
+			<li>A fluorocarbon, Perfluorodecalin has the ability to dissolve a large molar quantity of oxygen; topical application allows it to release stored oxygen to a target location. Can be applied internally for tissue oxygenation.
+			<li>Synthesis: hydrogenate fluorine and combine with Salicylic Acid, then heat to 374 K.
+		</div>
+		<br>
+		<hr>
 		<h2>VARIOUS OTHER PROBLEMS</h2>
 		<hr>
 		<h3>Diphenhydramine</h3>
 		<div class ="diphenhydramine">
 		<ul>
 			<li>Anti-allergy medication. May cause drowsiness.
-			<li>Synthesis route involves Benzhydryl bromide and 2-dimethylaminoethanol.
+			<li>Synthesis route involves mixing oil, carbon, bromine, and ethanol with diethylamine.
 		</div>
 		<h3>Spaceacillin</h3>
 		<div class = "spaceacillin">
@@ -144,7 +183,7 @@
 		<div class ="mannitol">
 		<ul>
 			<li>Mannitol is a sugar alcohol that can help alleviate cranial swelling.
-			<li>Hydrolyze sucrose towards fructose, hydrogenate to yield mannitol sugar.
+			<li>Hydrolyze sugar in water,then hydrogenate.
 		</div>
 		<h3>Oculine</h3>
 		<div class ="oculine">
@@ -165,12 +204,15 @@
 		<hr>
 		<i>This is not a complete list of all available medications. Further research and development efforts by NT Medical and Science divisions are strongly encouraged.</i>
 		<b><p>More information can be acquired at the following sources:</b><p>
-		<a href="https://wiki.ss13.co/Chemicals" target="_blank">Chemistry references</a>
+		<ul>
+			<li><a href="https://wiki.ss13.co/Chemicals" target="_blank">Chemistry references</a>
+		</li></ul>
 		<br>
 		<p>Trent's Anatomy:</p>
-		<li><a href="https://wiki.ss13.co/Trent%27s_Anatomy#Introduction">Introduction</a>
-		<li><a href="https://wiki.ss13.co/Trent%27s_Anatomy#The_Tools">Tools</a>
-		<li><a href="https://wiki.ss13.co/Trent%27s_Anatomy#Doing_Surgery">Surgery</a>
-		<li><a href="https://wiki.ss13.co/Trent%27s_Anatomy#Organ_Functions">Organ Functions</a>
-		<li><a href="https://wiki.ss13.co/Trent%27s_Anatomy#Organ_Diseases">Organ Diseases</a>
-		<li><a href="https://wiki.ss13.co/Trent%27s_Anatomy#Organ_Damage_Treatment">Treatments</a>
+		<ul>
+			<li><a href="https://wiki.ss13.co/Trent%27s_Anatomy#Introduction">Introduction</a>
+			<li><a href="https://wiki.ss13.co/Trent%27s_Anatomy#The_Tools">Tools</a>
+			<li><a href="https://wiki.ss13.co/Trent%27s_Anatomy#Doing_Surgery">Surgery</a>
+			<li><a href="https://wiki.ss13.co/Trent%27s_Anatomy#Organ_Functions">Organ Functions</a>
+			<li><a href="https://wiki.ss13.co/Trent%27s_Anatomy#Organ_Diseases">Organ Diseases</a>
+			<li><a href="https://wiki.ss13.co/Trent%27s_Anatomy#Organ_Damage_Treatment">Treatments</a></li></ul>

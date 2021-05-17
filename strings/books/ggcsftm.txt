@@ -1,9 +1,10 @@
 <html><body class="c17"><p class="c10 title" id="h.c79n657bcepp"><h1><span class="c6">The Goon Geothermal Capture System Field Training Manual</span></h1></p>
 <p class="c9 subtitle" id="h.bhgihtleap1h"><span class="c5">Prepared by Sov Extant</span></p>
-<p class="c2"><span class="c1">Thank you for your purchase of the </span><span>Goon Geothermal Capture system (GCS)</span><span>. </span>
-<span class="c1">Included with your purchase you will find </span><span>the </span><span class="c0">various pieces of equipment required for the successful harvesting of geothermal energy along with this field training manual.</span></p>
-<p class="c2 c4"><span class="c0"></span></p><p class="c2"><span class="c1">This field training manual covers how to properly utilize your purchased equipment for</span><span>&nbsp;the efficient</span><span class="c1">&nbsp;harvesting of Safe</span><span class="c16">™ </span><span>and renewable</span><span class="c1">&nbsp;geothermal energy.</span></p>
-<h1 class="c13" id="h.sqge7bhieh1c"><span class="c11">Equipment Checklist</span></h1>
+<p class="c2"><span class="c1">Thank you for your purchase of the Goon Geothermal Capture system (GCS). </span>
+<span class="c1">Included with your purchase you will find the various pieces of equipment required for the successful harvesting of geothermal energy along with this field training manual.</p>
+<p class="c2"><span class="c1">This field training manual covers how to properly utilize your purchased equipment for the efficient harvesting of Safe™ and renewable geothermal energy.</p>
+<br>
+<h1>Equipment Checklist</span></h1>
 <p class="c2"><span class="c1">The following is a list of essential equipment </span><span>required </span><span class="c0">for the safe harvesting of geothermal energy in accordance with Nanotrasen safety standards and guidelines:</span></p>
 <p class="c2 c4"><span class="c0"></span></p><ul class="c14 lst-kix_5z83a9fnvot4-0 start"><li class="c2 c7"><span class="c0">Dowsing Rods (at least 3 suggested for ease of field surveying)</span></li>
 <li class="c2 c7"><span class="c0">Unbuilt Vent Capture Units</span></li>
@@ -12,8 +13,8 @@
 <li class="c2 c7"><span class="c0">Appropriate protective diving gear complete with flippers</span></li>
 <li class="c2 c7"><span class="c0">Adequate oxygen supply for extended field work</span></li></ul>
 <h1 class="c13" id="h.i3ogysiiwprb"><span class="c11">Hotspots</span></h1><p class="c2">
-<span class="c1">Hot spots exist </span><span>in the form of unseen points</span><span class="c1">&nbsp;that each output a constant flow of heat. Survey results have </span>
-<span>determined </span><span class="c1">that hotspots are </span><span>warmest at their center-most point, with heat levels quickly dropping in a radius around the center.</span>
+<span class="c1">Hot spots exist in the form of unseen pointsthat each output a constant flow of heat. Survey results have
+determined that hotspots are warmest at their center-most point, with heat levels quickly dropping in a radius around the center.</span>
 </p><p class="c2 c4"><span class="c0"></span></p><p class="c2"><span class="c0">In their naturally occurring state, hotspots have been observed to be in constant motion in any one of the cardinal or intercardinal directions. Upon contact with the seemingly impenetrable trench walls however they will be reflected off resulting in a change in direction. </span></p>
 <h2 class="c3" id="h.fmgodj4ic5rs"><span class="c8">Detecting Hotspots</span></h2>
 <p class="c2"><span class="c1">Utilizing the provided standard issue dowsing rods hotspots can be quickly located. Repeatedly place the rods into different areas of the ocean floor and observe their readings. By default the rods exist in an unlit state. Once brought into the range of a hotspot</span>
@@ -45,6 +46,6 @@ This is due to the doppler effect </span><span>linked to the movement of the hot
 <span class="c1">.</span><span>&nbsp;Advanced teams may make use of the Stomper Unit to move a hotspot enabling them to take advantage of the huge tracts of asteroid rock below. &nbsp;This can lead</span><span class="c0">&nbsp;into untold amounts of energy for harvest.</span></p><p class="c2 c4"><span class="c0"></span></p><p class="c2"><span class="c1">While this process can</span><span>&nbsp;also </span><span class="c0">be completed alone; it is far more effective when done as a team.</span></p></body></html>
 <br>
 <p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at:
-</li><li><a href="https://wiki.ss13.co/Powering_the_Station" target="_blank">https://wiki.ss13.co/Powering_the_Station</a></li>
-</li><li><a href="https://wiki.ss13.co/Engineer" target="_blank">https://wiki.ss13.co/Engineer</a></li>
+<ul><li><a href="https://wiki.ss13.co/Powering_the_Station" target="_blank">https://wiki.ss13.co/Powering_the_Station</a>
+<li><a href="https://wiki.ss13.co/Engineer" target="_blank">https://wiki.ss13.co/Engineer</a></li></ul>
 Thank you for your service to Nanotrasen.</i></p>

@@ -17,27 +17,46 @@
 		A geological scanner - Scans an asteroid for ore types and dangers.
 		<br>
 		<br><b>Other gear may include:</b>
+		<br>
 		<br>Power hammer - More powerful mining tool, but holds less charges.
+		<br>
 		<br>Concussive charges - Works the same as before, but with a larger radius.
+		<br>
 		<br>Industrial space armour - Space suits that protect from radiation and explosions, both common hazards in this line of work.
+		<br>
 		<br>Mechanized boots - Shoes that allow for much faster movement.
-		<br>Laser drill - Mining tool that doesn't need charges.
+		<br><br>Laser drill - Mining tool that doesn't need charges.
+		<br>
 		<br>Now, a basic rundown on what you will be mining:
+		<br>
 		<br>Mauxite - Standard metal, easily mined with even a unpowered pickaxe.
+		<br>
 		<br>Pharosium - Standard Conductor, easily mined with even a unpowered pickaxe.
+		<br>
 		<br>Molitz - Standard Crystal, easily mined.
+		<br>
 		<br>Borhum - Sturdy metal, useful and easy to mine.
+		<br>
 		<br>Claretine - High power conductor, required to make improved gear!
+		<br>
 		<br>Cerenkite - Power source!, take caution when mining, as it is also incredibly radioactive.
+		<br>
 		<br>This is not an exhaustive list of all ores you can find, you may come accross more while mining, but these are some of the most useful!
+		<br>
 		<br>Next up, there's the machinery you'll need to understand.
+		<br>
 		<br>Mining fabricator - Makes most mining gear (And some other stuff) when supplied with ore.
+		<br>
 		<br>Mineral magnet - Pulls in asteroids from space for you to mine. Operated from the mineral magnet computer located near the rest of the machinery.
+		<br>
 		<br>Quantum telescope - High tech telescope that allows you to find better and rare ore, through a triangulation system.
+		<br>
 		<br>Arc smelter - Makes alloys out of two refined mineral chunks, combining there properties.
+		<br>
 		<br>Nanofabrictors - Makes special gear out of refined minerals, like metal sheets and lightbulbs.
 		<br>
 		Additional information is available at:
 		<br>
-		</li><li><a href="https://wiki.ss13.co/Guide_to_Mining" target="_blank">https://wiki.ss13.co/Guide_to_Mining</a><br>
+		<ul>
+			<li><a href="https://wiki.ss13.co/Guide_to_Mining" target="_blank">https://wiki.ss13.co/Guide_to_Mining</a><br>
 		We at Nanotrasen hope you find this information helpful, good luck!

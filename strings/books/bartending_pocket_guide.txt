@@ -32,5 +32,5 @@
 	    <br>Mutini: An odd drink of clashing chemicals. Gives you both horrific mutations and brain damage while curing it at the same time. A very good party starter.
 	    <br><hr>
 	    <br>Additional Mixology information:
-	    <br></li><li><a href="https://wiki.ss13.co/Foods_and_Drinks" target="_blank">https://wiki.ss13.co/Foods_and_Drinks</a></li>
-	    <br></li><li><a href="https://wiki.ss13.co/Chemicals" target="_blank">https://wiki.ss13.co/Chemicals</a></li>
+	    <br><ul>><li><a href="https://wiki.ss13.co/Foods_and_Drinks" target="_blank">https://wiki.ss13.co/Foods_and_Drinks</a></li>
+	    <br><li><a href="https://wiki.ss13.co/Chemicals" target="_blank">https://wiki.ss13.co/Chemicals</a></li></ul>

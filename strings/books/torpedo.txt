@@ -29,7 +29,7 @@
 		<li>1) Choose a torpedo that you wish to use. Open the torpedo tube and drag the torpedo onto the tray. Make sure you're not blocking the path of the tray.</li>
 		<li>2) Push the tray back in and close the hatch.</li>
 		<li>3) Mark your target with the torpedo console. You can exit the console at any time by pressing Q or E.</li>
-		<li>4) Await for confirmation orders from the captain,HoP or HoS before you proceed to fire the torpedo by pressing space. </li>
+		<li>4) Await for confirmation orders from the Captain, Head of Personnel or Head of Security before you proceed to fire the torpedo by pressing space. </li>
 		<li>5) Upon receiving confirmation, destroy your target.</li>
 	</ul>
 

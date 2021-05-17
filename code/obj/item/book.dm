@@ -87,7 +87,7 @@ Custom Books
 	bartending
 		name = "Bartending Pocket Guide"
 		icon_state = "barguide"
-		file_path = "bartending_pocket_guide"
+		file_path = "strings/books/bartending_pocket_guide.txt"
 
 	engineering
 		name = "Engineering Pocket Guide"
@@ -112,14 +112,14 @@ Custom Books
 	desc = "An explanation of how to work materials and their properties. Nanotrasen missed buying a few editions between the old one and this..."
 	icon_state = "orangebook"
 	file_path = "strings/books/matsci_guide_new.txt"
-//rev
+
 /obj/item/paper/book/from_file/minerals
 	name = "Mineralogy 101"
 	icon_state = "minerology"
 	file_path = "strings/books/minerals.txt"
 
 /****Engineering and Mechanics Guides****/
-
+//could use some more cleanup
 /obj/item/paper/book/from_file/ggcsftm
 	name = "Geothermal Capture System Field Training Manual"
 	desc = "A book detailing the proper operation of geothermal capture equipment."
@@ -146,13 +146,13 @@ Custom Books
 	file_path = "strings/books/interdictor_guide.txt"
 
 /****Civilian Guides****/
-//rev
+
 /obj/item/paper/book/from_file/hydroponicsguide
 	name = "The Helpful Hydroponics Handbook"
 	icon_state = "hydrohandbook"
 	file_path = "strings/books/hydroponicsguide.txt"
 
-//needs a review
+//needs a review + bullet reformat
 /obj/item/paper/book/from_file/cookbook
 	name = "To Serve Man"
 	icon_state = "serveman"
@@ -162,7 +162,7 @@ Custom Books
 /obj/item/paper/book/from_file/player_piano //book for helping people!
 	name = "Your Player Piano and You"
 	desc = "A guide to using the station's new player piano! Probably'd make good kindling."
-	file_path = "strings/books/player_paino.txt"
+	file_path = "strings/books/player_piano.txt"
 
 /****Head and Silicon Guides****/
 
@@ -175,7 +175,7 @@ Custom Books
 	name = "Captaining 101"
 	icon_state = "capbook"
 	file_path = "strings/books/captaining_101.txt"
-//rev
+
 /obj/item/paper/book/from_file/torpedo
 	name = "Torpedoes And You AKA How To Not Blow Yourself Up"
 	desc = "A book explaining on how to use and properly operate torpedos. The section about not blowing yourself up seems to be missing."
@@ -312,7 +312,7 @@ Custom Books
 	name = "Stations and Syndicates 8th Edition Rulebook"
 	desc = "A book detailing the ruleset for the tabletop RPG, Stations and Syndicates. You don't know what happened to the previous 7 editions but maybe its probably not worth looking for them."
 	icon_state = "bookcc"
-	file_path = "strings/books/stations_and_syndicates.txt"
+	file_path = "strings/books/DNDrulebook.txt"
 
 /******************** OTHER BOOKS ********************/
 /obj/item/diary
