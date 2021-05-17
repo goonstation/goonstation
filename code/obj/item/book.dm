@@ -3558,6 +3558,8 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 		..()
 		if(isnull(src.file_path))
 			CRASH("from_file book has no file path")
+		if(!fexists(src.file_path))
+			CRASH("from_file book's file '[src.file_path]' doesn't exist")
 		src.info = file2text(src.file_path)
 
 /obj/item/paper/from_file
@@ -3567,6 +3569,8 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 		..()
 		if(isnull(src.file_path))
 			CRASH("from_file paper has no file path")
+		if(!fexists(src.file_path))
+			CRASH("from_file paper's file '[src.file_path]' doesn't exist")
 		src.info = file2text(src.file_path)
 
 /obj/item/paper/book/from_file/ai_programming_101
