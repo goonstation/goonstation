@@ -1,5 +1,9 @@
 
 (t)sun may 16 21
+(u)Erinexx
+(p)4401
+(e)🎨|sprites
+(+)Resprited APCs, they now show their cell and wires when opened
 (u)Flappybat
 (p)4629
 (e)⚖🐛|balance, bug
