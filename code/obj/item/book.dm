@@ -119,7 +119,7 @@ Custom Books
 	file_path = "strings/books/minerals.txt"
 
 /****Engineering and Mechanics Guides****/
-//could use some more cleanup
+//could use some more formatting cleanup
 /obj/item/paper/book/from_file/ggcsftm
 	name = "Geothermal Capture System Field Training Manual"
 	desc = "A book detailing the proper operation of geothermal capture equipment."
@@ -171,7 +171,7 @@ Custom Books
 	icon_state = "aibook"
 	file_path = "strings/books/ai_programming_101.txt"
 
-/obj/item/paper/book/from_file/captaining_101 //By Investigangster Klutz / Froggit_Dogget , part of the February 2021 Contest
+/obj/item/paper/book/from_file/captaining_101 //By Investigangster Klutz / Froggit_Dogget, part of the February 2021 Contest
 	name = "Captaining 101"
 	icon_state = "capbook"
 	file_path = "strings/books/captaining_101.txt"
