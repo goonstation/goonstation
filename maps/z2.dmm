@@ -46032,7 +46032,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/south)
 "cwE" = (
-/obj/racist_button{
+/obj/death_button{
 	pixel_x = -15
 	},
 /obj/map/light/lava,
