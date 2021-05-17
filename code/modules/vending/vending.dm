@@ -2198,8 +2198,10 @@
 	pay = 1
 	acceptcard = 1
 	vend_delay = 0
-	slogan_list = list("Come buy some oxygen!",
-	"You NEED this to live!.")
+	slogan_list = list("Come get a breath of fresh air",
+	"You NEED this to live!.",
+	"Breathing is GOOD!",
+	"Contains only 2% farts!")
 	var/global/image/holding_overlay_image = image('icons/obj/vending.dmi', "O2vend-slot")
 
 	// Currently installed tank
