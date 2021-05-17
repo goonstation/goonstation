@@ -31942,7 +31942,7 @@
 /turf/simulated/floor/blue,
 /area/station/storage/warehouse)
 "bhn" = (
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/supplylobby)
 "bho" = (

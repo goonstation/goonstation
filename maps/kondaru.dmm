@@ -4696,7 +4696,7 @@
 /area/station/hangar/main)
 "amo" = (
 /obj/item/device/radio/intercom,
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/black/side,
 /area/station/hangar/main)
 "amp" = (
@@ -53384,7 +53384,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/east,
 /area/station/science/research_director)
 "pwM" = (
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /obj/decal/xmas_lights/ephemeral{
 	pixel_y = 32
 	},

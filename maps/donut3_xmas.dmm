@@ -25333,7 +25333,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
 "heY" = (
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/yellow/side{
 	dir = 5

@@ -11062,7 +11062,7 @@
 /area/station/crew_quarters/lounge)
 "ayj" = (
 /obj/disposalpipe/segment/mail,
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "ayk" = (
@@ -43570,7 +43570,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bYv" = (
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "bYw" = (

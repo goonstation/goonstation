@@ -2407,7 +2407,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
 "aiH" = (
@@ -3544,7 +3544,7 @@
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
 "alW" = (
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
 "alX" = (
