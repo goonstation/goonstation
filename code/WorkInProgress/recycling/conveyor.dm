@@ -64,7 +64,8 @@
 		owner.conveyors -= src
 	..()
 
-/obj/machinery/conveyor/was_built_from_frame(mob/user, newly_built)
+// called when constructed via mechanics or via conveyor parts
+/obj/machinery/conveyor/proc/connect_to_nearby()
 	// needs to be done again since new() is run before the frame deployment sets the direction
 	basedir = dir
 	setdir()
@@ -82,6 +83,9 @@
 		if(prev_conveyor.owner)
 			src.owner = prev_conveyor.owner
 			src.owner.conveyors += src
+
+/obj/machinery/conveyor/was_built_from_frame(mob/user, newly_built)
+	src.connect_to_nearby()
 
 /obj/machinery/conveyor/was_deconstructed_to_frame(mob/user)
 	src.owner.conveyors -= src
