@@ -1,5 +1,9 @@
 
 (t)sun may 16 21
+(u)Hans
+(p)4727
+(e)⚖🆕|balance, feature
+(+)Changed chem vapor events to prevent exploits.
 (u)Erinexx
 (p)4401
 (e)🎨|sprites
