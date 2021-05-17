@@ -755,14 +755,7 @@
 						for(var/mob/M in hearers(C, null))
 							M.show_text("<font size=[max(0, 5 - get_dist(get_turf(src), M))]>THUD, thud!</font>")
 						playsound(get_turf(C), "sound/impact_sounds/Wood_Hit_1.ogg", 15, 1, -3)
-						var/wiggle = 6
-						while(wiggle > 0)
-							wiggle--
-							C.pixel_x = rand(-3,3)
-							C.pixel_y = rand(-3,3)
-							sleep(0.1 SECONDS)
-						C.pixel_x = initial(C.pixel_x)
-						C.pixel_y = initial(C.pixel_y)
+						animate_storage_thump(C)
 				src.container_cool_off_counter++
 				if(src.container_cool_off_counter >= src.container_cool_off_max) // Give him some time to cool off
 					src.KillPathAndGiveUp(kpagu)
