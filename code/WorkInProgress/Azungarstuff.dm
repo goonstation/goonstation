@@ -1129,7 +1129,7 @@
 				var/mob/living/carbon/human/user = usr
 				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-				user.changeStatus("stunned", 50)
+				user.changeStatus("stunned", 5 SECONDS)
 				user.changeStatus("weakened", 3 SECONDS)
 				user.changeStatus("paralysis", 2 SECONDS)
 				user.force_laydown_standup()
@@ -1142,7 +1142,7 @@
 				var/hos = (istype(user.head, /obj/item/clothing/head/hosberet) || istype(user.head, /obj/item/clothing/head/hos_hat))
 				if(hos)
 					var/mob/living/carbon/human/H = hit_atom
-					H.changeStatus("stunned", 90)
+					H.changeStatus("stunned", 9 SECONDS)
 					H.changeStatus("weakened", 2 SECONDS)
 					H.force_laydown_standup()
 					//H.paralysis++

@@ -17,9 +17,10 @@
 			. = "Like the last jerk that pressed it."
 
 	attack_hand(mob/user as mob)
-		var/dca = deathConfettiActive //Save the current state of death confetti
 		if (!user.stat)
-			deathConfettiActive = 1	//Yaaaaaaaaaaaaaaaay!!
+			//Yaaaaaaaaaaaaaaaay!!
+			user.AddComponent(/datum/component/death_confetti)
+
 			user.death()
 			if(!user || isdead(user)) //User gibbed or actually dead.
 				numkills++
@@ -27,7 +28,8 @@
 					name = "blue ribbon [src.name]"
 					src.overlays += new /image {icon = 'icons/misc/stickers.dmi'; icon_state = "1st_place"; pixel_x = 3; pixel_y = -2} ()
 
-			deathConfettiActive = dca	//Restore it.
+			var/datum/component/C = user.GetComponent(/datum/component/death_confetti)
+			C?.RemoveComponent()
 		return
 
 /obj/racist_button

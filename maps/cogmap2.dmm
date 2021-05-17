@@ -24158,7 +24158,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/chem_grenade/firefighting,
 /turf/simulated/floor/plating,
@@ -30840,6 +30840,9 @@
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/decal/poster/wallsign/medal{
+	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
@@ -39598,10 +39601,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/east)
-"bJn" = (
-/obj/decal/poster/wallsign/medal,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/hos)
 "bJo" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/paper_bin,
@@ -46565,7 +46564,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/chem_grenade/firefighting,
 /obj/item/chem_grenade/firefighting,
@@ -47212,7 +47211,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/chem_grenade/firefighting,
 /obj/item/chem_grenade/firefighting,
@@ -47839,7 +47838,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/chem_grenade/firefighting,
 /obj/item/chem_grenade/firefighting,
@@ -51281,7 +51280,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/disposalpipe/segment/mail/bent/west,
 /obj/item/chem_grenade/firefighting,
@@ -51292,7 +51291,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/chem_grenade/firefighting,
 /obj/item/chem_grenade/firefighting,
@@ -56288,8 +56287,8 @@
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "csS" = (
-/obj/table/auto,
-/obj/machinery/light/lamp,
+/obj/rack,
+/obj/random_item_spawner/tools,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "csT" = (
@@ -57499,6 +57498,11 @@
 /obj/landmark/start{
 	name = "Mechanic"
 	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "cvC" = (
@@ -58205,8 +58209,8 @@
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "cxh" = (
-/obj/rack,
-/obj/random_item_spawner/tools,
+/obj/machinery/light/lamp,
+/obj/table/auto,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "cxi" = (
@@ -78540,6 +78544,18 @@
 	},
 /turf/simulated/floor,
 /area/station/science/teleporter)
+"dRY" = (
+/obj/table/auto,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/personal{
+	setup_starting_program = /datum/computer/file/terminal_program/file_transfer
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
 "dSl" = (
 /obj/decal/tile_edge/stripe{
 	dir = 5
@@ -78559,6 +78575,17 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
+"eLQ" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/caution/east,
+/area/station/engine/elect)
 "eQI" = (
 /obj/item/device/radio/intercom/catering{
 	dir = 8
@@ -78609,6 +78636,12 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"fOO" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 9
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "gcY" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
@@ -78721,6 +78754,14 @@
 	icon_state = "blue1"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"hNh" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
 "hPv" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating,
@@ -78968,6 +79009,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
+"lZR" = (
+/obj/disposalpipe/segment,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
 "maP" = (
 /turf/simulated/floor/carpet{
 	dir = 9;
@@ -79772,6 +79822,12 @@
 "xfw" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ranch)
+"xni" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 5
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "xBG" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -115927,7 +115983,7 @@ asn
 atF
 atG
 awv
-axZ
+fOO
 azI
 aBf
 aBf
@@ -117135,7 +117191,7 @@ asp
 atJ
 atG
 awz
-ayb
+xni
 azK
 aBh
 aCB
@@ -137751,7 +137807,7 @@ cpx
 crr
 csO
 cun
-cun
+eLQ
 cun
 cyE
 czS
@@ -138053,7 +138109,7 @@ cpy
 crs
 csP
 cuo
-cuo
+lZR
 cuo
 cyF
 czT
@@ -138355,7 +138411,7 @@ cpz
 crt
 csQ
 csM
-csM
+hNh
 csM
 cyG
 czU
@@ -138657,7 +138713,7 @@ cpw
 cru
 csR
 csM
-csM
+hNh
 cxf
 crl
 czV
@@ -139218,7 +139274,7 @@ bhR
 bma
 bhR
 bpi
-bJn
+bqU
 bsG
 bux
 bwg
@@ -139261,7 +139317,7 @@ cpA
 crl
 csS
 csM
-csM
+dRY
 cxh
 crl
 czX

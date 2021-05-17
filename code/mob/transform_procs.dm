@@ -561,8 +561,7 @@
 	set name = "Enter Ghostdrone Queue"
 	set category = "Ghost"
 
-	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
-		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
+	if (!src.can_respawn_as_ghost_critter())
 		return
 
 	var/obj/machinery/ghost_catcher/catcher = null
@@ -593,10 +592,9 @@
 // HI IT'S ME CIRR I DON'T KNOW WHERE ELSE TO PUT THIS
 var/list/respawn_critter_types = list(/mob/living/critter/small_animal/mouse/weak, /mob/living/critter/small_animal/cockroach/weak, /mob/living/critter/small_animal/butterfly/weak,)
 var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fly/weak, /mob/living/critter/small_animal/mosquito/weak,)
-/mob/dead/observer/verb/respawn_as_animal()
-	set name = "Respawn as Animal"
-	set category = "Ghost"
 
+
+/mob/dead/proc/can_respawn_as_ghost_critter(var/initial_time_passed = 3 MINUTES, var/second_time_around = 10 MINUTES)
 	// has the game started?
 	if(!ticker || !ticker.mode)
 		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
@@ -619,10 +617,10 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 			return
 
 	// determine if they're allowed to respawn
-	var/min_time_passed = 3 MINUTES
-	if(mind.assigned_role == "Animal")
+	var/min_time_passed = initial_time_passed
+	if(mind.assigned_role == "Animal" || mind.assigned_role == "Ghostdrone")
 		// no you get to wait for longer
-		min_time_passed = 10 MINUTES
+		min_time_passed = second_time_around
 	var/time_elapsed = (world.timeofday + ((world.timeofday < mind.last_death_time) ? 864000 : 0)) - mind.last_death_time // Offset the time of day in case of midnight rollover
 	var/time_left = min_time_passed - time_elapsed
 	if(time_left > 0)
@@ -632,17 +630,26 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		if(minutes >= 1)
 			time_left_message += "[minutes] minute[minutes == 1 ? "" : "s"] and "
 		time_left_message += "[seconds] second[seconds == 1 ? "" : "s"]"
-		boutput(src, "<span class='alert'>You must wait at least [time_left_message] until you can respawn as an animal.</span>")
-	else
-		if (alert(src, "Are you sure you want to respawn as an animal?", "Respawn as Animal", "Yes", "No") != "Yes")
-			return
-		// you can be an animal
-		// get spawnpoints
+		boutput(src, "<span class='alert'>You must wait at least [time_left_message] until you can respawn as a ghost critter.</span>")
 
-		var/turf/spawnpoint = pick_landmark(LANDMARK_PESTSTART)
-		if(!spawnpoint)
-			spawnpoint = pick_landmark(LANDMARK_LATEJOIN, get_turf(src))
-		src.make_ghost_critter(spawnpoint)
+		return FALSE
+	return TRUE
+
+/mob/dead/observer/verb/respawn_as_animal()
+	set name = "Respawn as Animal"
+	set category = "Ghost"
+
+	if (!src.can_respawn_as_ghost_critter())
+		return
+
+	if (alert(src, "Are you sure you want to respawn as an animal?", "Respawn as Animal", "Yes", "No") != "Yes")
+		return
+
+	var/turf/spawnpoint = pick_landmark(LANDMARK_PESTSTART)
+	if(!spawnpoint)
+		spawnpoint = pick_landmark(LANDMARK_LATEJOIN, get_turf(src))
+
+	src.make_ghost_critter(spawnpoint)
 
 
 /mob/proc/make_ghost_critter(var/turf/spawnpoint, var/list/types = null)
@@ -689,73 +696,36 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		boutput(src, "<span class='alert'>You aren't even a mentor, how did you get here?!</span>")
 		return
 
-	// has the game started?
-	if(!ticker || !ticker.mode)
-		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
-		return
-	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
-		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
+	if (!can_respawn_as_ghost_critter(0 MINUTES, 2 MINUTES))
 		return
 
-	// get the mind
-	var/datum/mind/mind = src.mind
-	if(isnull(src.mind))
-		// ok i don't know how this happened but make them a new mind
-		if (src.client)
-			src.mind = new /datum/mind(src)
-			ticker.minds += src.mind
-			mind = src.mind
-		else
-			// why is this happening aaaaa
-			return
+	if (alert(src, "Are you sure you want to respawn as a mentor mouse? You won't be able to come back as a human or cyborg!", "Respawn as Animal", "Yes", "No") != "Yes")
+		return
 
-	// determine if they're allowed to respawn
-	var/min_time_passed = 0 MINUTES
-	if(mind.assigned_role == "Animal")
-		// no you get to wait for longer
-		min_time_passed = 2 MINUTES
-	var/time_elapsed = (world.timeofday + ((world.timeofday < mind.last_death_time) ? 864000 : 0)) - mind.last_death_time // Offset the time of day in case of midnight rollover
-	var/time_left = min_time_passed - time_elapsed
-	if(time_left > 0)
-		var/time_left_message = ""
-		var/minutes = round(time_left / 600)
-		var/seconds = round((time_left - (minutes * 600))/10)
-		if(minutes >= 1)
-			time_left_message += "[minutes] minute[minutes == 1 ? "" : "s"] and "
-		else
-			time_left_message += "[seconds] second[seconds == 1 ? "" : "s"]"
-		boutput(src, "<span class='alert'>You must wait at least [time_left_message] until you can respawn as an animal.</span>")
-	else
-		if (alert(src, "Are you sure you want to respawn as a mentor mouse? You won't be able to come back as a human or cyborg!", "Respawn as Animal", "Yes", "No") != "Yes")
-			return
+	// you can be an animal
+	var/turf/spawnpoint = get_turf(src)
+	if(spawnpoint.density)
+		boutput(src, "<span class='alert'>The wall is in the way.</span>")
+		return
+	// be critter
 
-		if(!src || !src.mind || !src.client)
-			return // prevent double-spawning etc.
+	var/mob/selfmob = src
+	src = null
+	var/mob/living/critter/C = selfmob.make_critter(/mob/living/critter/small_animal/mouse/weak/mentor, spawnpoint, ghost_spawned=TRUE)
 
-		// you can be an animal
-		var/turf/spawnpoint = get_turf(src)
-		if(spawnpoint.density)
-			boutput(src, "<span class='alert'>The wall is in the way.</span>")
-			return
-		// be critter
+	C.mind.assigned_role = "Animal"
+	C.say_language = "animal"
+	C.literate = 0
+	C.original_name = selfmob.real_name
 
-		var/mob/selfmob = src
-		src = null
-		var/mob/living/critter/C = selfmob.make_critter(/mob/living/critter/small_animal/mouse/weak/mentor, spawnpoint, ghost_spawned=TRUE)
+	C.Browse(grabResource("html/ghostcritter_mentor.html"),"window=ghostcritter_mentor;size=600x400;title=Ghost Critter Help")
+	logTheThing("admin", C, null, "respawned as a mentor mouse at [log_loc(C)].")
 
-		C.mind.assigned_role = "Animal"
-		C.say_language = "animal"
-		C.literate = 0
-		C.original_name = selfmob.real_name
-
-		C.Browse(grabResource("html/ghostcritter_mentor.html"),"window=ghostcritter_mentor;size=600x400;title=Ghost Critter Help")
-		logTheThing("admin", C, null, "respawned as a mentor mouse at [log_loc(C)].")
-
-		//hacky fix : qdel brain to prevent reviving
-		if (C.organHolder)
-			var/obj/item/organ/brain/B = C.organHolder.get_organ("brain")
-			if (B)
-				qdel(B)
+	//hacky fix : qdel brain to prevent reviving
+	if (C.organHolder)
+		var/obj/item/organ/brain/B = C.organHolder.get_organ("brain")
+		if (B)
+			qdel(B)
 
 /mob/dead/observer/verb/respawn_as_admin_mouse()
 	set name = "Respawn as Admin Mouse"

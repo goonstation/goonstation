@@ -170,7 +170,7 @@
 			if ("suffocation")
 				M.take_oxygen_deprivation(damage)
 			if ("radiation")
-				M.changeStatus("radiation", damage*10, 3)
+				M.changeStatus("radiation", damage SECONDS, 3)
 
 	CritterAttack(mob/N)
 		if (!melee)
@@ -1333,7 +1333,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 				C.play_optional_sound(frenzy_attack_sound)
 				C.dodamage(atmob, attacktype, max(rand(attack_power), rand(attack_power)))
 				if (stunlocks)
-					atmob.changeStatus("weakened", (attack_cooldown / 3 * 2)*10)
+					atmob.changeStatus("weakened", (attack_cooldown / 3 * 2) SECONDS)
 				sleep(attack_cooldown)
 		return 1
 	change_configuration(var/datum/critterCreator/configurer, var/which)

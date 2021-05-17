@@ -35,7 +35,7 @@
 			while (loops > 0)
 				loops--
 				random_brute_damage(user, 15)
-				user.changeStatus("paralysis", 70)
+				user.changeStatus("paralysis", 7 SECONDS)
 				playsound(user.loc, pick(work_sounds), 50, 1, -1)
 				sleep(0.4 SECONDS)
 

@@ -1136,8 +1136,8 @@ About the new airlock wires panel:
 		L.Virus_ShockCure(33)
 		L.shock_cyberheart(33)
 	sleep(0.1 SECONDS)
-	if(user.getStatusDuration("stunned") < shock_damage * 10) user.changeStatus("stunned", shock_damage * 10)
-	if(user.getStatusDuration("weakened") < shock_damage * 10) user.changeStatus("weakened", 10 * prot)
+	if(user.getStatusDuration("stunned") < shock_damage * 10) user.changeStatus("stunned", shock_damage SECONDS)
+	if(user.getStatusDuration("weakened") < shock_damage * 10) user.changeStatus("weakened", prot SECONDS)
 	for(var/mob/M in AIviewers(src))
 		if(M == user)	continue
 		M.show_message("<span class='alert'>[user.name] was shocked by the [src.name]!</span>", 3, "<span class='alert'>You hear a heavy electrical crack</span>", 2)
@@ -1322,7 +1322,7 @@ About the new airlock wires panel:
 				boutput(user, "<span class='notice'>[bicon(C)] Regular electrical response received from access panel.</span>")
 		return
 
-	if (!issilicon(user))
+	if (!issilicon(user) && IN_RANGE(src, user, 1))
 		if (src.isElectrified())
 			if(src.shock(user, 75))
 				return

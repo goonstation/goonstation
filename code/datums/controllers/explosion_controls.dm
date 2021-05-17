@@ -232,7 +232,7 @@ var/datum/explosion_controller/explosions
 			for(var/mob/living/carbon/C in T)
 				if (!isdead(C) && C.client)
 					shake_camera(C, 3 * p, p * 4)
-				C.changeStatus("stunned", p * 10)
+				C.changeStatus("stunned", p SECONDS)
 				C.stuttering += p
 				C.lying = 1
 				C.set_clothing_icon_dirty()
