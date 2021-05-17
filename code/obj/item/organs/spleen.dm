@@ -38,7 +38,6 @@
 	icon_state = "plant"
 	desc = "I guess you could say, the person missing this has spleen better days!"
 	synthetic = 1
-	made_from = "pharosium"
 	New()
 		..()
 		src.icon_state = pick("plant_spleen", "plant_spleen_bloom")

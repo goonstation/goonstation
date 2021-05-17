@@ -99,7 +99,6 @@
 	desc = "I guess you could call this a... hearti-choke"
 	synthetic = 1
 	item_state = "plant"
-	made_from = "pharosium"
 	transplant_XP = 6
 	New()
 		..()

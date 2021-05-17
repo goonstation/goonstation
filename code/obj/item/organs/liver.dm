@@ -30,7 +30,6 @@
 	icon_state = "plant"
 	desc = "For all you vegan Hannibal Lecters."
 	synthetic = 1
-	made_from = "pharosium"
 	New()
 		..()
 		src.icon_state = pick("plant_liver", "plant_liver_bloom")

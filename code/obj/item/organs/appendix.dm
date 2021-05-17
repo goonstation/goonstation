@@ -20,7 +20,6 @@
 	icon_state = "plant"
 	desc = "A plant-based alternative to the normal appendix..."
 	synthetic = 1
-	made_from = "pharosium"
 	New()
 		..()
 		src.icon_state = pick("plant_appendix", "plant_appendix_bloom")

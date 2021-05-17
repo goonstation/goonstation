@@ -118,7 +118,6 @@
 	icon_state = "plant"
 	desc = "A bean based kidney!"
 	synthetic = 1
-	made_from = "pharosium"
 	New()
 		..()
 		src.icon_state = pick("plant_appendix", "plant_appendix_bloom")

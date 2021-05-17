@@ -135,7 +135,6 @@
 	icon_state = "plant"
 	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream."
 	synthetic = 1
-	made_from = "pharosium"
 	failure_disease = /datum/ailment/disease/respiratory_failure
 	var/overloading = 0
 	New()
@@ -195,7 +194,6 @@
 	icon_state = "plant"
 	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream. This is a left lung, since it has three lobes. Hopefully whoever used to have this one doesn't need it anymore."
 	synthetic = 1
-	made_from = "pharosium"
 	failure_disease = /datum/ailment/disease/respiratory_failure
 	New()
 		..()
@@ -207,7 +205,6 @@
 	icon_state = "plant"
 	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream. This is a right lung, since it has two lobes and a cardiac notch, where the heart would be. Hopefully whoever used to have this one doesn't need it anymore."
 	synthetic = 1
-	made_from = "pharosium"
 	failure_disease = /datum/ailment/disease/respiratory_failure
 	New()
 		..()

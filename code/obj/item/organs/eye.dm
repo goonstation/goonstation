@@ -105,7 +105,6 @@
 	icon_state = "eye-synth"
 	item_state = "plant"
 	synthetic = 1
-	made_from = "pharosium"
 
 /obj/item/organ/eye/cyber
 	name = "cybereye"

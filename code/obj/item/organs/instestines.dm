@@ -47,7 +47,6 @@
 	icon_state = "plant"
 	desc = "The large intestine is made from a root like material... that's a bit unsettling."
 	synthetic = 1
-	made_from = "pharosium"
 	New()
 		..()
 		src.icon_state = pick("plant_intestines", "plant_intestines_bloom")
