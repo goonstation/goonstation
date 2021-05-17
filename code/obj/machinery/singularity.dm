@@ -353,7 +353,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if (istype(H.glasses,/obj/item/clothing/glasses/meson))
 				M.show_text("You look directly into [src.name], good thing you had your protective eyewear on!", "green")
 				return
-		M.changeStatus("stunned", 3 SECONDS)
+		M.changeStatus("stunned", 7 SECONDS)
 		M.visible_message("<span class='alert'><B>[M] stares blankly at [src]!</B></span>",\
 		"<B>You look directly into [src]!<br><span class='alert'>You feel weak!</span></B>")
 
