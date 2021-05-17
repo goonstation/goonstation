@@ -426,14 +426,6 @@
 		return 1
 	return(direct != divert_from)
 
-/obj/item/furniture_parts/conveyor
-	name = "conveyor belt parts"
-	desc = "A collection of parts that can be used to make a conveyor belt."
-	icon = 'icons/obj/furniture/table_desk.dmi'
-	furniture_type = /obj/machinery/conveyor
-	furniture_name = "conveyor belt"
-
-
 // the conveyor control switch
 //
 //
