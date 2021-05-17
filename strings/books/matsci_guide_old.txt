@@ -1,7 +1,6 @@
  "The information in this piece of crap book is horribly outdated, making it useless. Let's hope centcom buys the new edition soon."
-
+	<br>
  	/*
-	info = {"
 	<BIG><B>Materials</B></BIG>
 	<br>
 	<br>This book is meant to give you a brief overview and explanation of the materials, their properties and how to work them.
