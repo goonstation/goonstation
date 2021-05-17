@@ -1,5 +1,9 @@
 
 (t)mon may 17 21
+(u)112358sam
+(p)4770
+(e)|
+(+)Added the names "Trench" and "Asteroid Field" to the landmarks the GPS device and app can report.
 (u)Pali and DimWhat
 (p)4763
 (e)🎨|sprites
