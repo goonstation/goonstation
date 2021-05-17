@@ -653,7 +653,10 @@
 /obj/item/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
 	..()
 
-	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL))
+	if (!src.anchored)
+		click_drag_tk(over_object, src_location, over_location, over_control, params)
+
+	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostcritter(usr) || !iswraith(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL))
 		return
 
 	var/on_turf = isturf(src.loc)
@@ -702,15 +705,15 @@
 			else
 				actions.start(new /datum/action/bar/private/icon/pickup/then_obj_click(src, over_object, params), usr)
 
-	//Click-drag tk stuff
+	//Click-drag tk stuff.  
+/obj/item/proc/click_drag_tk(atom/over_object, src_location, over_location, over_control, params)
 	if(!src.anchored)
-
 		if (iswraith(usr))
 			var/mob/wraith/W = usr
 			//Basically so poltergeists need to be close to an object to send it flying far...
-			if (W.weak_tk && get_dist(src, W) > 1)
+			if (W.weak_tk && (get_dist(src, W) > 2))
 				src.throw_at(over_object, 1, 1)
-				boutput(W, "<span class='alert'>You're too far away to manipulate this physical item!</span>")
+				boutput(W, "<span class='alert'>You're too far away to properly manipulate this physical item!</span>")
 				logTheThing("combat", usr, null, "moves [src] with wtk.")
 				return
 			src.throw_at(over_object, 7, 1)
