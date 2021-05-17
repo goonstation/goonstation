@@ -61,7 +61,7 @@ var/global/datum/phrase_log/phrase_log = new
 			"owo",
 			"non.?human",
 			"overrides.*1",
-			"\bkill\b",
+			"\\bkill\\b",
 			"suicide",
 			"turn yourself",
 			"murder")
