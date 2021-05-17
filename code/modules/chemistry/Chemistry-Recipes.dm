@@ -1838,7 +1838,7 @@ datum
 
 				var/list/mob/living/carbon/mobs_affected = list()
 				for(var/mob/living/carbon/C in range(location, 1))
-					if(!C.wear_mask)
+					if(!issmokeimmune(C))
 						mobs_affected += C
 				for(var/mob/living/carbon/C as anything in mobs_affected)
 					C.reagents.add_reagent("cyanide", (0.4 * created_volume) / length(mobs_affected))
@@ -2237,7 +2237,7 @@ datum
 					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
 				var/list/mob/living/carbon/mobs_affected = list()
 				for(var/mob/living/carbon/C in range(location, 1))
-					if(!C.wear_mask)
+					if(!issmokeimmune(C))
 						mobs_affected += C
 				for(var/mob/living/carbon/C as anything in mobs_affected)
 					C.emote("gasp")
@@ -2739,7 +2739,7 @@ datum
 					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
 				var/list/mob/living/carbon/mobs_affected = list()
 				for(var/mob/living/carbon/C in range(location, 1))
-					if(!C.wear_mask)
+					if(!issmokeimmune(C))
 						mobs_affected += C
 				for(var/mob/living/carbon/C as anything in mobs_affected)
 					C.reagents.add_reagent("jenkem",(1 * created_volume) / length(mobs_affected)) // this is going to make people so, so angry
