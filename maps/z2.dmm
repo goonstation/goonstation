@@ -13471,7 +13471,7 @@
 	dir = 4
 	},
 /obj/table/wood/auto,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
 "aSj" = (
@@ -32392,7 +32392,7 @@
 	desc = "The only PDAs you'll find in this locker are Plant Data Analyzers. Heh.";
 	locked = 0;
 	name = "strictly Botanical supplies locker";
-	spawn_contents = list(/obj/item/plantanalyzer,/obj/item/device/reagentscanner,/obj/item/reagent_containers/glass/wateringcan,/obj/item/paper/book/hydroponicsguide)
+	spawn_contents = list(/obj/item/plantanalyzer,/obj/item/device/reagentscanner,/obj/item/reagent_containers/glass/wateringcan,/obj/item/paper/book/from_file/hydroponicsguide)
 	},
 /obj/decal/stage_edge{
 	layer = 2.8;
@@ -35956,7 +35956,7 @@
 /area/crypt/sigma/rd)
 "bWg" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/item/reagent_containers/food/drinks/milk/rancid,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/kitchen)
@@ -36023,7 +36023,7 @@
 /area/crunch)
 "bWp" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/paper/book/monster_manual,
+/obj/item/paper/book/from_file/monster_manual,
 /turf/unsimulated/floor/black,
 /area/crypt/sigma/rd)
 "bWq" = (
@@ -44035,8 +44035,8 @@
 /obj/table/reinforced/auto,
 /obj/item/paper/blueprint/destiny,
 /obj/item/paper/blueprint/clarion,
-/obj/item/paper/book/moby_dick,
-/obj/item/paper/book/deep_blue_sea,
+/obj/item/paper/book/from_file/moby_dick,
+/obj/item/paper/book/from_file/deep_blue_sea,
 /turf/unsimulated/floor/black/side{
 	dir = 4
 	},
@@ -51846,7 +51846,7 @@
 /area/owlery/office)
 "cKx" = (
 /obj/table,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
 "cKy" = (
@@ -51857,7 +51857,7 @@
 /area/owlery/office)
 "cKz" = (
 /obj/table,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
 "cKA" = (
@@ -51866,7 +51866,7 @@
 /area/owlery/office)
 "cKB" = (
 /obj/table,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
 "cKC" = (
@@ -52125,7 +52125,7 @@
 	},
 /area/owlery/gangzone)
 "cLi" = (
-/obj/item/paper/book/guardbot_guide,
+/obj/item/paper/book/from_file/guardbot_guide,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cLj" = (
@@ -54269,7 +54269,7 @@
 	},
 /area/owlery/gangzone)
 "cQi" = (
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /turf/unsimulated/floor/redblack{
 	dir = 8
 	},
@@ -67437,7 +67437,7 @@
 	pixel_x = -13;
 	pixel_y = -5
 	},
-/obj/item/paper/book/deep_blue_sea,
+/obj/item/paper/book/from_file/deep_blue_sea,
 /obj/item/paper/Cloning{
 	pixel_x = -6;
 	pixel_y = 5
@@ -67448,7 +67448,7 @@
 /obj/decal/poster/wallsign/bookcase{
 	pixel_y = 28
 	},
-/obj/item/paper/book/pocketguide/bartending{
+/obj/item/paper/book/from_file/pocketguide/bartending{
 	pixel_x = 4;
 	pixel_y = 1
 	},
@@ -67696,7 +67696,7 @@
 	pixel_x = -6;
 	pixel_y = -14
 	},
-/obj/item/paper/book/monster_manual{
+/obj/item/paper/book/from_file/monster_manual{
 	pixel_x = -9
 	},
 /turf/unsimulated/floor/wood/two,
@@ -67714,7 +67714,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
 "dwx" = (
-/obj/item/paper/book/the_trial{
+/obj/item/paper/book/from_file/the_trial{
 	pixel_x = -8;
 	pixel_y = 6
 	},
@@ -67735,7 +67735,7 @@
 	pixel_x = -12;
 	pixel_y = -2
 	},
-/obj/item/paper/book/hydroponicsguide{
+/obj/item/paper/book/from_file/hydroponicsguide{
 	pixel_x = 5;
 	pixel_y = -13
 	},
@@ -67890,11 +67890,11 @@
 	pixel_x = -13;
 	pixel_y = -5
 	},
-/obj/item/paper/book/guardbot_guide{
+/obj/item/paper/book/from_file/guardbot_guide{
 	pixel_x = -6;
 	pixel_y = -3
 	},
-/obj/item/paper/book/player_piano{
+/obj/item/paper/book/from_file/player_piano{
 	pixel_x = 10;
 	pixel_y = 16
 	},
@@ -67902,11 +67902,11 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
 "dwX" = (
-/obj/item/paper/book/medical_guide{
+/obj/item/paper/book/from_file/pharmacopia{
 	pixel_x = -8;
 	pixel_y = 8
 	},
-/obj/item/paper/book/pocketguide/medical{
+/obj/item/paper/book/from_file/pocketguide/medical{
 	pixel_x = 8;
 	pixel_y = -3
 	},
@@ -69261,8 +69261,8 @@
 /obj/table/wood/auto/desk{
 	icon_state = "8"
 	},
-/obj/item/paper/book/cookbook,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/cookbook,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hukhukhuk)
 "dAQ" = (

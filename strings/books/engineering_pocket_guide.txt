@@ -66,6 +66,6 @@
 		<br>
 		<hr>
 		<p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at the following sources:
-		</li><li><a href="https://wiki.ss13.co/Powering_the_Station" target="_blank">https://wiki.ss13.co/Power_the_Station</a></li>
+		</li><li><a href="https://wiki.ss13.co/Powering_the_Station" target="_blank">https://wiki.ss13.co/Powering_the_Station</a></li>
 		</li><li><a href="https://wiki.ss13.co/Engineer" target="_blank">https://wiki.ss13.co/Engineer</a></li>
 		Thank you for your service to Nanotrasen.</i></p>

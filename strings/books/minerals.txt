@@ -197,6 +197,6 @@ of the Rock Snake race in paticular tend to buy these for high prices, as even a
 several months worth of nutrients for them.
 </p>
 
-<p><i>More information on minerals can be found at Nanotrasen's on-line data-base at:
-</li><li><a href="https://wiki.ss13.co/Guide_to_Mining" target="_blank">https://wiki.ss13.co/Guide_to_Mining</a></li>
+<p><i>More information on minerals can be found by consulting a mentor or at Nanotrasen's on-line data-base at:
+</li><li><a href="https://wiki.ss13.co/Guide_to_Mining#Ore" target="_blank">https://wiki.ss13.co/Guide_to_Mining#Ore</a></li>
 </p>

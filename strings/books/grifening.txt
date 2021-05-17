@@ -52,11 +52,11 @@
 			</ul>
 		</li>
 	<h3>Cards:</h3>
-	<ul style='list-style-type:disc'> Mobs</b>
+	Mobs
 		<ul style='list-style-type:circle'>
 		<li>Captain - LVL 7 / 20 ATK / 65 DEF</b>
 		<ul style='list-style-type:circle'>
-		<li>Cannot be played if any Nuclear Operatives are on the same side of the field, or if a Captain is already face up on the field. Can only be played while the Bridge area is active. When Captain enters play, you may immediately equip an Energy Gun card from your deck. When Captain enters play, all face down Captains must be discarded. </b>
+		<li>Cannot be played if any Nuclear Operatives are on the same side of the field, or if a Captain is already face up on the field. Can only be played while the Bridge area is active. When Captain enters play, you may immediately equip an Energy Gun card from your deck. When Captain enters play, all face down Captains must be discarded. </li></b>
 	<h3>Tips:</h3><hr>
 	<ul style='list-style-type:disc'>
 		<li>1) There are themed sets of cards that work great in combination with one another! Try to build your deck around that!</li>

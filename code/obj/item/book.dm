@@ -73,7 +73,7 @@ Custom Books
 		name = "Medbay Pocket Guide"
 		icon_state = "mediguide"
 		file_path = "strings/books/medbay_pocket_guide.txt"
-
+	//note in jobs.dm says both pocket guides can be combined; something to work on later
 	mining1
 		name = "Mining Pocket Guide No.1"
 		icon_state = "minerguide"
@@ -120,7 +120,6 @@ Custom Books
 
 /****Engineering and Mechanics Guides****/
 
-//rev
 /obj/item/paper/book/from_file/ggcsftm
 	name = "Geothermal Capture System Field Training Manual"
 	desc = "A book detailing the proper operation of geothermal capture equipment."
@@ -191,7 +190,7 @@ Custom Books
 	icon_state = "book5"
 	file_path = "strings/books/guardbot_guide.txt"
 
-//rev for ghost critters and others
+//needs a revise for ghost critters and others
 /obj/item/paper/book/from_file/critter_compendium
 	name = "Critter Compendium"
 	desc = "The definite guide to critters you might come across in the wild."
@@ -214,7 +213,7 @@ Custom Books
 	icon_state = "pharmacopia"
 	desc = "A listing of basic medicines and their uses."
 	file_path = "strings/books/pharmacopia.txt"
-//rev
+
 /obj/item/paper/book/from_file/medical_surgery_guide
 	// name = "Trents Anatomy"
 	name = "Surgical Textbook"
@@ -230,11 +229,12 @@ Custom Books
 	icon_state = "spacelaw"
 	file_path = "strings/books/space_law.txt"
 
-/obj/item/paper/book/space_law/first
+/obj/item/paper/book/from_file/space_law/first
 	name = "Space Law 1st Print"
 	desc = "A very rare first print of the fabled Space Law book."
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "lawbook"
+	file_path = "strings/books/space_law.txt"
 
 	density = 0
 	opacity = 0
@@ -423,6 +423,11 @@ Custom Books
 	desc = "Some kinda book. What's that doing here?"
 	icon_state = "book0"
 	file_path = "strings/books/moby_dick.txt"
+
+/obj/item/paper/book/from_file/icarus_ovid
+	name = "Mythological Stories of the Ancient Greeks"
+	desc = "An old dusty book of mythology, well worn and dog-eared."
+	file_path = "strings/books/icarus_ovid.txt"
 
 /obj/item/paper/book/from_file/syndies_guide //By PinkPuffball81, part of the February 2021 Contest
 	name = "A SYNDIE'S GUIDE TO DOING YOUR FUCKING JOB"

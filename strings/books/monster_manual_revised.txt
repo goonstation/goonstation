@@ -1,3 +1,4 @@
+<h3> Creature Conspectus, Revised Edition</h3>
 <body>
 <h2>Note for the Game Master</h2>
 <p>This bestiary is written to be flexible. As such, feel free to consider the stats as pure guidelines. If you think a creature is too strong, feel free to lower its stats. Same applies vice versa. Certain details have been omitted, for example the saving throws listed in monster abilities are absent to allow the GM to tweak them at will. Vulnerabilities are also open to interpretation.

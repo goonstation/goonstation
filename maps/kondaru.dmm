@@ -3413,7 +3413,7 @@
 "aji" = (
 /obj/stool/bed,
 /obj/decal/cleanable/dirt,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /obj/landmark/start{
 	name = "Clown"
 	},
@@ -6333,7 +6333,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/item/paper/book/monster_manual,
+/obj/item/paper/book/from_file/monster_manual,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
 "aqX" = (
@@ -7836,7 +7836,7 @@
 /area/station/crew_quarters/fitness)
 "avp" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/critter_compendium,
+/obj/item/paper/book/from_file/critter_compendium,
 /obj/decal/xmas_lights/ephemeral{
 	pixel_y = 32
 	},
@@ -19015,7 +19015,7 @@
 /area/station/crew_quarters/barber_shop)
 "bbt" = (
 /obj/table/auto,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai)
 "bbu" = (
@@ -19499,7 +19499,7 @@
 /obj/storage/secure/closet/research/chemical{
 	req_access_txt = "5"
 	},
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -21106,7 +21106,7 @@
 /area/station/medical/medbay/surgery)
 "biv" = (
 /obj/table/auto,
-/obj/item/paper/book/medical_surgery_guide{
+/obj/item/paper/book/from_file/medical_surgery_guide{
 	pixel_y = 14
 	},
 /obj/machinery/light{
@@ -26202,7 +26202,7 @@
 /area/station/medical/medbooth)
 "bzB" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/medical_surgery_guide{
+/obj/item/paper/book/from_file/medical_surgery_guide{
 	pixel_x = 9
 	},
 /obj/machinery/defib_mount{
@@ -26630,8 +26630,8 @@
 /area/station/mining/refinery)
 "bBj" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/materials,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/item/device/matanalyzer,
 /obj/item/device/matanalyzer,
 /obj/machinery/light_switch/east,
@@ -28148,10 +28148,10 @@
 /area/station/science/lobby)
 "bFd" = (
 /obj/table/auto,
-/obj/item/paper/book/dwainedummies{
+/obj/item/paper/book/from_file/dwainedummies{
 	pixel_x = -3
 	},
-/obj/item/paper/book/guardbot_guide{
+/obj/item/paper/book/from_file/guardbot_guide{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -28171,7 +28171,7 @@
 /area/station/science/chemistry)
 "bFf" = (
 /obj/storage/secure/closet/research/chemical,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/machinery/light,
 /turf/simulated/floor/purpleblack{
 	dir = 1
@@ -30172,7 +30172,7 @@
 /area/station/crew_quarters/courtroom)
 "bKa" = (
 /obj/storage/secure/closet/courtroom,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -31738,7 +31738,7 @@
 /area/station/bridge)
 "bNX" = (
 /obj/table/auto,
-/obj/item/paper/book/guardbot_guide{
+/obj/item/paper/book/from_file/guardbot_guide{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -46793,7 +46793,7 @@
 /area/station/hydroponics/bay)
 "iqe" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/machinery/light,
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/crew_quarters/courtroom)
@@ -52344,7 +52344,7 @@
 "omS" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/decal/xmas_lights/ephemeral{
 	pixel_y = 32
 	},
@@ -53431,7 +53431,7 @@
 	pixel_y = -5
 	},
 /obj/item/disk/data/tape/master/readonly,
-/obj/item/paper/book/dwainedummies{
+/obj/item/paper/book/from_file/dwainedummies{
 	pixel_y = 6
 	},
 /obj/item/device/multitool,
@@ -55660,11 +55660,11 @@
 /area/station/hallway/primary/east)
 "rWj" = (
 /obj/table/auto,
-/obj/item/paper/book/guardbot_guide{
+/obj/item/paper/book/from_file/guardbot_guide{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/paper/book/dwainedummies{
+/obj/item/paper/book/from_file/dwainedummies{
 	pixel_y = 6
 	},
 /obj/item/disk/data/tape/master/readonly,
@@ -57509,7 +57509,7 @@
 /area/station/maintenance/inner/west)
 "tNc" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "tNN" = (
@@ -58588,10 +58588,10 @@
 	pixel_x = 12;
 	pixel_y = 4
 	},
-/obj/item/paper/book/hydroponicsguide{
+/obj/item/paper/book/from_file/hydroponicsguide{
 	pixel_x = -5
 	},
-/obj/item/paper/book/hydroponicsguide{
+/obj/item/paper/book/from_file/hydroponicsguide{
 	pixel_x = -5;
 	pixel_y = 4
 	},

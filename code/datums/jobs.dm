@@ -508,7 +508,7 @@ ABSTRACT_TYPE(/datum/job/security)
 		slot_foot = /obj/item/clothing/shoes/brown
 		slot_poc1 = /obj/item/storage/security_pouch/assistant
 		slot_poc2 = /obj/item/requisition_token/security/assistant
-		items_in_backpack = list(/obj/item/paper/book/space_law)
+		items_in_backpack = list(/obj/item/paper/book/from_file/space_law)
 		rounds_needed_to_play = 5
 
 		New()
@@ -1107,7 +1107,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_jump = /obj/item/clothing/under/misc/lawyer
 	slot_foot = /obj/item/clothing/shoes/black
 	slot_lhan = /obj/item/storage/briefcase
-	slot_rhan = /obj/item/paper/book/space_law
+	slot_rhan = /obj/item/paper/book/from_file/space_law
 	slot_ears = /obj/item/device/radio/headset/civilian
 
 	New()

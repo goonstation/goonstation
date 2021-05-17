@@ -3,7 +3,7 @@
 		<h2><b>FOREWARD</b></h2>
 		<p>While snails share many organs in common with the human body, they have no sense of hearing.<br>
 		<i>by Dorothy "Dotty" Spud</i></p>
-		---------------------------------------------------------------------------------------------<br>
+		------------------------------------------------------------------<br>
 		<h3>Index</h3>
 		<ul>
 			<li>Introduction
@@ -21,6 +21,7 @@
 		<ul>
 			<li><b>Brain</b> - Needed for thinking.
 			<li><b>Butt</b> - Needed for thinking.
+			<li><b>Tail</b> - Needed for balance in some patients.
 			<li><b>Heart</b> - Pumps life giving blood around your body. If you remove this, you should replace it very quickly.
 			<li><b>Eyes</b> - You see out of these.
 			<li><b>Lungs</b> - These steal Oxygen from the air on space stations and give it to you to use for respiration. Atmos engineers hate em!
@@ -72,7 +73,7 @@
 		</ul>
 		<br>
 		<sup>1</sup> Use Right/Left hands for removing R/L organ on this step<br>
-		<sup>2</sup> Use "HELP" intent for the whole surgery. <b>ABSOLUTELY DO NOT USE "HARM" INTENT!
+		<sup>2</sup> Use "HELP" intent for the whole surgery. <b>ABSOLUTELY DO NOT USE "HARM" INTENT!</b>
 		<p>After each successful organ removal or replacement, the surgeon must close up so they can take the correct pathway to the next organ they want to locate. The simplest way to do so would be to suture the chest closed with regular a old medical suture.</p>
 		<br>
 		<p>As an afterthought, for the sake of completeness I <b>will</b> bother bore you with how to do some of the "lesser" surgeries, here are the steps for most other common surgical procedures:</p>
@@ -92,6 +93,9 @@
 		<b><p>Butt</b></p>
 		<p>This is needed for farting, I think, I've never removed mine so I wouldn't know. Presumably it has some medical function. It can be worn as a hat.</p>
 		<br>
+		<b><p>Tail</b></p>
+		<p>I don't have one of these but I think they help some people with balance. I've noticed lizardpeople without them fumble and lot and trip. My experimental work grafting random monkey tails onto these patients has shown that they can regain their coordination, at the cost of looking really strange. Alcohol is also a suitable replacement for a tail.
+		</p><br>
 		<b><p>Heart</b></p>
 		<p>This terrible organ is really awful, it breaks down more than any other organ and when it does, you're as good as dead. So many things can cause it to fail, such as not breathing for a minute or two. Silly things like that.</p>
 		<br>
@@ -158,6 +162,8 @@
 		<p><b>Group III: Appendix and Pancreas</b></p>
 		<p>These are the loneliest, in this case it's because there is no type of drug that can specifically target them for healing.</p>
 		<br>
+		<p><b>Group IV: Tail</b></p>
+		<p>Not only is there no medicine specifically for tails, but there's no treatment for them either. A damaged tail is a dead tail; if it's broken to the point of non-function, it must be replaced in a transplantation.</p>
 		<p>Despite these groupings, which are in no way arbitrary, there are several other reagents that can be used for more general treatment. Below are the two I have discovered thus far.</p>
 		<p><b>Cryoxadone</b></p>
 		<p>Capable of healing all organs in the body, just rather slowly and coldly.</p>

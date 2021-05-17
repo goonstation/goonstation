@@ -666,7 +666,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/item/paper/book/pocketguide/bartending,
+/obj/item/paper/book/from_file/pocketguide/bartending,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
 "abm" = (
@@ -870,7 +870,7 @@
 "abJ" = (
 /obj/table/wood/round/auto,
 /obj/item/storage/box/trackimp_kit2,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "abK" = (
@@ -1198,7 +1198,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/item/paper/book/torpedo,
+/obj/item/paper/book/from_file/torpedo,
 /turf/simulated/floor,
 /area/station/security/starboardtorpedoes)
 "acp" = (
@@ -3611,7 +3611,7 @@
 /obj/landmark/start{
 	name = "Clown"
 	},
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
 "ajC" = (
@@ -7368,7 +7368,7 @@
 /obj/item/device/radio/intercom/science{
 	
 	},
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/access_spawn/research,
 /obj/access_spawn/medical_director,
 /turf/simulated/floor/white,
@@ -7518,7 +7518,7 @@
 	pixel_y = -5
 	},
 /obj/item/disk/data/tape/master/readonly,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/item/device/multitool,
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/starboard)
@@ -7636,7 +7636,7 @@
 /area/station/turret_protected/starboard)
 "asc" = (
 /obj/table/auto,
-/obj/item/paper/book/pocketguide/mining2,
+/obj/item/paper/book/from_file/pocketguide/mining2,
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "asd" = (
@@ -8155,7 +8155,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "atu" = (
 /obj/table/auto,
-/obj/item/paper/book/torpedo,
+/obj/item/paper/book/from_file/torpedo,
 /turf/simulated/floor/redblack/corner{
 	dir = 1
 	},
@@ -8236,7 +8236,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "atE" = (
 /obj/table/auto,
-/obj/item/paper/book/torpedo,
+/obj/item/paper/book/from_file/torpedo,
 /turf/simulated/floor/redblack/corner{
 	dir = 8
 	},
@@ -14244,7 +14244,7 @@
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/breadloaf,
 /obj/item/kitchen/utensil/knife/bread,
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen/therustykrab)
 "aGi" = (
@@ -14629,7 +14629,7 @@
 	nostick = 1
 	},
 /obj/disposalpipe/segment,
-/obj/item/paper/book/mechanicbook,
+/obj/item/paper/book/from_file/mechanicbook,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "aGU" = (
@@ -15433,7 +15433,7 @@
 "aIA" = (
 /obj/table/wood/auto,
 /obj/item/storage/box/nerd_kit,
-/obj/item/paper/book/critter_compendium,
+/obj/item/paper/book/from_file/critter_compendium,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/quarters)
 "aIB" = (
@@ -16423,7 +16423,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/disposal)
 "aKC" = (
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/item/device/net_sniffer,
 /obj/cable{
 	icon_state = "2-4"
@@ -17652,7 +17652,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
 	},
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/access_spawn/hydro,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
@@ -17859,7 +17859,7 @@
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
-/obj/item/paper/book/guardbot_guide,
+/obj/item/paper/book/from_file/guardbot_guide,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "aNz" = (
@@ -20667,7 +20667,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/machinery/phone,
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/station/security/hos)
@@ -24314,7 +24314,7 @@
 /area/station/medical/medbay/surgery)
 "bay" = (
 /obj/table/auto,
-/obj/item/paper/book/pocketguide/medical,
+/obj/item/paper/book/from_file/pocketguide/medical,
 /obj/item/surgical_spoon{
 	pixel_y = -6
 	},
@@ -25004,7 +25004,7 @@
 /area/station/medical/research)
 "bcf" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2";
 	dir = 2
@@ -25166,7 +25166,7 @@
 /area/station/medical/medbay/surgery)
 "bcs" = (
 /obj/machinery/optable,
-/obj/item/paper/book/medical_surgery_guide,
+/obj/item/from_file/medical_surgery_guide,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "bct" = (
@@ -34142,7 +34142,7 @@
 /area/station/crew_quarters/fitness)
 "btL" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/pocketguide/quartermaster,
+/obj/item/paper/book/from_file/pocketguide/quartermaster,
 /obj/machinery/light/incandescent/netural{
 	icon_state = "tube1";
 	dir = 1
@@ -36390,7 +36390,7 @@
 "byK" = (
 /obj/disposalpipe/segment/mail,
 /obj/table/reinforced/auto,
-/obj/item/paper/book/minerals,
+/obj/item/paper/book/from_file/minerals,
 /obj/item/device/matanalyzer,
 /obj/item/device/matanalyzer{
 	pixel_x = 3;
@@ -42978,7 +42978,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/item/paper/book/torpedo,
+/obj/item/paper/book/from_file/torpedo,
 /turf/simulated/floor,
 /area/station/security/porttorpedoes)
 "bNl" = (
@@ -45802,12 +45802,12 @@
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "bTL" = (
-/obj/item/paper/book/pocketguide/mining1,
+/obj/item/paper/book/from_file/pocketguide/mining1,
 /obj/item/furniture_parts/table/reinforced,
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
 "bTM" = (
-/obj/item/paper/book/minerals{
+/obj/item/paper/book/from_file/minerals{
 	pixel_x = 0;
 	pixel_y = 0
 	},
@@ -46099,7 +46099,7 @@
 /turf/simulated/floor/scorched2,
 /area/station/science/restroom)
 "bUA" = (
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -48153,7 +48153,7 @@
 	pixel_x = 8;
 	pixel_y = 5
 	},
-/obj/item/paper/book/minerals{
+/obj/item/paper/book/from_file/minerals{
 	pixel_x = -4
 	},
 /obj/table/auto,
@@ -48873,7 +48873,7 @@
 /area/station/mining/staff_room)
 "cce" = (
 /obj/table/auto,
-/obj/item/paper/book/pocketguide/mining2,
+/obj/item/paper/book/from_file/pocketguide/mining2,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "ccf" = (

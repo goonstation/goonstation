@@ -3325,7 +3325,7 @@
 	tag = ""
 	},
 /obj/table/reinforced/bar/auto,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/item/clothing/under/misc/lawyer,
 /obj/machinery/light,
 /turf/simulated/floor/blueblack,
@@ -3964,7 +3964,7 @@
 /area/syndicate_teleporter)
 "bGk" = (
 /obj/table/auto,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/item/device/matanalyzer{
 	pixel_x = -5
 	},
@@ -4404,7 +4404,7 @@
 /obj/item/reagent_containers/food/snacks/pizza{
 	pixel_y = -10
 	},
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/item/kitchen/utensil/knife/pizza_cutter,
 /turf/simulated/floor/white/checker2,
 /area/station/crew_quarters/kitchen)
@@ -16775,7 +16775,7 @@
 	pixel_y = -5
 	},
 /obj/item/disk/data/tape/master/readonly,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/item/device/multitool,
 /obj/item/luggable_computer,
 /obj/cable{
@@ -22714,7 +22714,7 @@
 /area/station/hangar/science)
 "jzM" = (
 /obj/table/auto,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /turf/simulated/floor/purple,
 /area/station/science/gen_storage{
 	name = "Research Computer Lab"
@@ -24304,7 +24304,7 @@
 /obj/table/auto,
 /obj/item/satchel/hydro,
 /obj/item/satchel/hydro,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -26089,7 +26089,7 @@
 /area/station/security/main)
 "lab" = (
 /obj/item/storage/toolbox/emergency,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/item/device/matanalyzer{
 	pixel_x = 9;
 	pixel_y = 1
@@ -35019,7 +35019,7 @@
 	icon_state = "0-8"
 	},
 /obj/storage/secure/closet/research/chemical,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/pharmacy)
 "oXq" = (
@@ -37221,7 +37221,7 @@
 	})
 "qaz" = (
 /obj/decal/cleanable/dirt,
-/obj/item/paper/book/space_law{
+/obj/item/paper/book/from_file/space_law{
 	desc = "It looks like it hasn't been read in months..."
 	},
 /turf/simulated/floor/plating,
@@ -38241,7 +38241,7 @@
 "qtG" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/suit/robuddy,
-/obj/item/paper/book/guardbot_guide,
+/obj/item/paper/book/from_file/guardbot_guide,
 /obj/decal/tile_edge/stripe{
 	dir = 8;
 	tag = ""
@@ -49851,7 +49851,7 @@
 "vqf" = (
 /obj/table/glass/auto,
 /obj/item/robodefibrillator,
-/obj/item/paper/book/medical_surgery_guide,
+/obj/item/paper/book/from_file/medical_surgery_guide,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "vqn" = (
@@ -50709,7 +50709,7 @@
 /area/station/maintenance/inner/the_cage)
 "vNk" = (
 /obj/machinery/chem_master,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/machinery/firealarm{
 	pixel_x = 1;
 	pixel_y = 26;
@@ -52912,7 +52912,7 @@
 /area/station/janitor/office)
 "wHp" = (
 /obj/table/auto,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/machinery/door/firedoor/pyro,
 /obj/access_spawn/hydro,

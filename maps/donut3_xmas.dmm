@@ -12329,7 +12329,7 @@
 	},
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/captain,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /obj/landmark/start{
 	name = "Clown"
 	},
@@ -14788,7 +14788,7 @@
 /area/station/hallway/primary/east)
 "dXn" = (
 /obj/table/auto,
-/obj/item/paper/book/guardbot_guide{
+/obj/item/paper/book/from_file/guardbot_guide{
 	pixel_x = 6;
 	pixel_y = 2
 	},
@@ -18538,7 +18538,7 @@
 /area/station/science/lobby)
 "fdg" = (
 /obj/table/auto,
-/obj/item/paper/book/pocketguide/mining2,
+/obj/item/paper/book/from_file/pocketguide/mining2,
 /obj/machinery/light/incandescent/warm,
 /obj/decal/tile_edge/line/yellow{
 	dir = 6;
@@ -22129,7 +22129,7 @@
 /turf/simulated/floor/wood/six,
 /area/station/library)
 "gfr" = (
-/obj/item/paper/book/medical_guide{
+/obj/item/paper/book/from_file/pharmacopia{
 	pixel_x = 5
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -31331,7 +31331,7 @@
 /area/station/crew_quarters/fitness)
 "iUL" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/dwainedummies{
+/obj/item/paper/book/from_file/dwainedummies{
 	pixel_x = 5;
 	pixel_y = 2
 	},
@@ -32766,7 +32766,7 @@
 /area/station/routing/depot)
 "jtK" = (
 /obj/table/wood/auto/desk,
-/obj/item/paper/book/pocketguide/bartending{
+/obj/item/paper/book/from_file/pocketguide/bartending{
 	pixel_x = -7;
 	pixel_y = 3
 	},
@@ -40730,7 +40730,7 @@
 	icon_state = "line1"
 	},
 /obj/table/wood/auto,
-/obj/item/paper/book/hydroponicsguide{
+/obj/item/paper/book/from_file/hydroponicsguide{
 	pixel_x = 9
 	},
 /obj/machinery/camera{
@@ -48880,7 +48880,7 @@
 /obj/item/cell/charged{
 	pixel_x = -3
 	},
-/obj/item/paper/book/dwainedummies{
+/obj/item/paper/book/from_file/dwainedummies{
 	pixel_x = 9;
 	pixel_y = 7
 	},
@@ -52199,7 +52199,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "pkE" = (
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /obj/railing/green{
 	dir = 1;
 	name = "pen railing"
@@ -52226,7 +52226,7 @@
 	dir = 1
 	},
 /obj/disposalpipe/segment,
-/obj/item/paper/book/cookbook{
+/obj/item/paper/book/from_file/cookbook{
 	pixel_x = -11;
 	pixel_y = 6
 	},
@@ -54532,7 +54532,7 @@
 "pQj" = (
 /obj/table/wood/auto,
 /obj/item/wrench,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /turf/simulated/grimycarpet,
 /area/ghostdrone_factory)
 "pQm" = (
@@ -55240,7 +55240,7 @@
 /area/station/crew_quarters/courtroom)
 "qaQ" = (
 /obj/table/wood/round/auto,
-/obj/item/paper/book/critter_compendium,
+/obj/item/paper/book/from_file/critter_compendium,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "qaT" = (
@@ -55434,7 +55434,7 @@
 	pixel_x = 14;
 	pixel_y = 4
 	},
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /turf/simulated/floor/plating/jen,
 /area/station/storage/tech)
 "qdO" = (
@@ -60429,7 +60429,7 @@
 	pixel_y = 4
 	},
 /obj/access_spawn/medical,
-/obj/item/paper/book/medical_guide{
+/obj/item/paper/book/from_file/pharmacopia{
 	pixel_x = -6;
 	pixel_y = 1
 	},
@@ -64415,7 +64415,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/paper/book/cookbook{
+/obj/item/paper/book/from_file/cookbook{
 	pixel_x = -5;
 	pixel_y = 6
 	},
@@ -69005,7 +69005,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/paper/book/space_law{
+/obj/item/paper/book/from_file/space_law{
 	pixel_x = -6;
 	pixel_y = 3
 	},
@@ -72459,7 +72459,7 @@
 	pixel_x = -6;
 	pixel_y = 3
 	},
-/obj/item/paper/book/minerals{
+/obj/item/paper/book/from_file/minerals{
 	pixel_x = 5;
 	pixel_y = 3
 	},

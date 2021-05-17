@@ -120,7 +120,7 @@
 		<br>
 		<h4>Additonal documentation available at:</h4>
 		</li><li><a href="https://wiki.ss13.co/Doctoring" target="_blank">https://wiki.ss13.co/Doctoring</a>
-		</li><li><a href="https://wiki.ss13.co/Chemistry" target="_blank">https://wiki.ss13.co/Chemistry</a> - specifically the "Medical Chems" section.
+		</li><li><a href="https://wiki.ss13.co/Chemicals#Medical_Chems" target="_blank">https://wiki.ss13.co/Medical_Chems</a> - specifically the "Medical Chems" section.
 		<br>
 		<hr>
 		<i>Contents of the book written by the S.P.A.R.K. unit which hopes to see you successful in the field!</i></li><p></p></body>

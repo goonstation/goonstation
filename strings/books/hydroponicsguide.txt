@@ -173,5 +173,8 @@ globules of this sludge can be harvested from the plant however - with proper pr
 <p><b>Stunted Growth</b>: This strain will cause the plant to grow much more slowly.</p>
 <p><b>Poor Health</b>: The condition of plants carrying this strain will deteriorate over time.</p>
 <p><b>Seedless</b>: A very negative strain that prevents the host plant from reproducing at all.</p>
+
+<p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at the following sources:
+</li><li><a href="https://wiki.ss13.co/Guide_to_Botany" target="_blank">https://wiki.ss13.co/Guide_to_Botany</a></li>
 </body>
 </html>

@@ -1,3 +1,4 @@
+	<h3> Creature Conspectus</h3>
 	<b>Agent</b>, Syndicate
 	<br>
 	<br>Frequency: Rare
