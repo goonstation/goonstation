@@ -1196,7 +1196,7 @@
 	initial_reagents = list("sugar" = 20)
 	food_effects = list("food_energized")
 	var/can_add_frosting = TRUE
-	var/static/list/frostingstyle = list(
+	var/static/list/frosting_styles = list(
 	"icing" = "icing",
 	"sprinkles" = "sprinkles",
 	"zigzags" = "zigzags",
