@@ -2194,9 +2194,9 @@
 	icon_off = "O2vend-off"
 	icon_broken = "O2vend-broken"
 	icon_fallen = "O2vend-fallen"
-	can_hack = 0
-	pay = 1
-	acceptcard = 1
+	can_hack = FALSE
+	pay = TRUE
+	acceptcard = TRUE
 	vend_delay = 0
 	slogan_list = list("Come get a breath of fresh air",
 	"You NEED this to live!.",
