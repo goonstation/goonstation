@@ -311,6 +311,10 @@ datum
 			mix_phrase = "The mixture knits together into a fibrous, bloody mass."
 			mix_sound = 'sound/impact_sounds/Slimy_Hit_4.ogg'
 
+		synthflesh/synthflesh_ling
+			id = "synthflesh_ling"
+			required_reagents = list("bloodc" = 1, "carbon" = 1, "styptic_powder" = 1)
+
 		meat_slurry
 			name = "Meat Slurry"
 			id = "meat_slurry"
@@ -319,6 +323,10 @@ datum
 			result_amount = 2
 			mix_phrase = "The mixture congeals into a bloody mass."
 			mix_sound = 'sound/impact_sounds/Slimy_Hit_4.ogg'
+
+		meat_slurry/meat_slurry_ling
+			id = "meat_slurry_ling"
+			required_reagents = list("bloodc" = 1, "cornstarch" = 1)
 
 		beff
 			name = "Beff"
@@ -3032,12 +3040,20 @@ datum
 			required_reagents = list("blood" = 1, "dna_mutagen" = 1, "mannitol" = 1, "salt" = 1)
 			result_amount = 2
 
+		proconvertin/proconvertin_ling
+			id = "proconvertin_ling"
+			required_reagents = list("bloodc" = 1, "dna_mutagen" = 1, "mannitol" = 1, "salt" = 1)
+
 		filgrastim // hematopoiesis stimulant
 			name = "Filgrastim"
 			id = "filgrastim"
 			result = "filgrastim"
 			required_reagents = list("blood" = 1, "dna_mutagen" = 1, "e.coli" = 1, "spaceacillin" = 1)
 			result_amount = 2
+
+		filgrastim/filgrastim_ling // hematopoiesis stimulant
+			id = "filgrastim_ling"
+			required_reagents = list("bloodc" = 1, "dna_mutagen" = 1, "e.coli" = 1, "spaceacillin" = 1)
 
 		ecoli // needed for filgrastim vOv
 			name = "E.Coli Bacteria"
@@ -3168,6 +3184,10 @@ datum
 			required_reagents = list("space_fungus" = 1, "blood" = 1)
 			result_amount = 2
 			mix_phrase = "The substance turns thick and stiff, yet soft."
+
+		carpet/carpet_ling
+			id = "carpet_ling"
+			required_reagents = list("space_fungus" = 1, "bloodc" = 1)
 
 		badgrease
 			name = "Partially Hydrogenated Space-Soybean Oil"
@@ -3380,6 +3400,10 @@ datum
 				holder.remove_reagent("life",created_volume + 1) //+1 to prevent any of those weird errors where you get 5.423E-09 of something or whatever.
 				return
 
+		life/life_ling
+			id = "life_ling"
+			required_reagents = list("synthflesh" = 5, "bloodc" = 2, "strange_reagent" = 1)
+
 		ageinium
 			name = "Ageinium"
 			id = "ageinium"
@@ -3534,6 +3558,10 @@ datum
 				holder.remove_reagent("blood")
 				return
 
+		flaptonium/flaptonium_ling
+			id = "flaptonium_ling"
+			required_reagents = list("egg" = 1, "colors" = 1, "chickensoup" = 1, "strange_reagent" = 1, "bloodc" = 1)
+
 		feather_fluid
 			name = "feather fluid"
 			id = "feather_fluid"
@@ -3541,6 +3569,10 @@ datum
 			required_reagents = list("egg" = 1, "colors" = 1, "chickensoup" = 1, "strange_reagent" = 1, "blood" = 1, "sonicpowder" = 1, "eraser" = 1)
 			result_amount = 1
 			mix_phrase = "The solution makes a little 'chirp' noise and settles."
+
+		feather_fluid/feather_fluid_ling
+			id = "feather_fluid_ling"
+			required_reagents = list("egg" = 1, "colors" = 1, "chickensoup" = 1, "strange_reagent" = 1, "bloodc" = 1, "sonicpowder" = 1, "eraser" = 1)
 
 		mewtini
 			name = "Mewtini"
