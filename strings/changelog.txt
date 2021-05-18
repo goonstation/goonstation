@@ -1,5 +1,10 @@
 
 (t)tue may 18 21
+(u)Zonespace
+(p)4745
+(e)🆕|feature
+(*)C.A.R.L., the Syndicate merchant, now sells Voice Changers.
+(*)Part of C.A.R.L.'s inventory is now random.
 (u)Yellow-Mushroom
 (p)4735
 (e)🆕🎨|feature, sprites
