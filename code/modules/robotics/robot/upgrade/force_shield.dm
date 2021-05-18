@@ -5,4 +5,4 @@
 	drainrate = 100
 	borg_overlay = "up-pshield"
 	var/damage_reduction = 4
-	var/cell_drain_per_damage_reduction = 50
+	var/cell_drain_per_damage_reduction = 100
