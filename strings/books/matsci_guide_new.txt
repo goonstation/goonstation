@@ -1,0 +1,47 @@
+<h3>Foreword:</h3>
+<hr>
+This text serves as an introductory overview to Material Science. It is detailed but by no means exhaustive of all potential methods and projects. At the time of writing, all information in this book is correct. However, over time, the information may become out of date. Please see the footnote for additional reading.
+<hr>
+<h2>
+  Contents</h2>
+<nav> <ul> <li><a href="MatSci-W">Material Science: What, Where, and Why?</a></li> <li><a href="Index-of-Properties"> <a href="">Index of Properties</a></li> <li><a href="Basic-Mats">Basic Ores</a></li> <li><a href="Advanced-Mats">Advanced Materials</a></li> <li><a href="Alloying">Alloying</a></li></ul> </nav>
+
+  <section id="MatSci-W"><h3>Material Science: What is it, Where is it, and Why is it?</h3></section>
+<hr>
+The field of Materials Science is long studied and long storied. To detail precisely the extensive history of this field would require a tome all on its own, and we will instead focus not on what has been done in the field, but what there is yet to do.
+<br><br>
+An aspiring metallurgist requires a suitable workshop in which they can create and refine alloys. Recommended for this line of work are:
+<ul><li><b>Arc Smelter</b> - a large cuboid forge that melts two materials and reforms them as an alloyed bar
+<ul><li>Usage may produce slag and so it is recommended that you use a slag shovel to clean out the Smelter in between creating each alloy</li></ul>
+<ul>
+</ul><b>Slag Shovel</b> - used for removing slag buildup from impurities removed in the refining process
+<ul><li>Failure to remove slag can result in impurities infiltrating your created alloys, and release of caustic vapors
+  </li></ul><b>Material Processer</b> - a machine with a rectangular surface and two clamps to hold bars of alloys in place; used to process raw ores and gems into more workable ingots
+  </li><b>Nano-Fabricator</b> - the sibling machine of the Material Processor with two upright arms embedded with lasers that will precisely cut and mold your materials into any of the pre-loaded schematics
+<ul><li>Nano-fabricator schematics describe needing either metal alloys, fabrics, rubber, or crystals, but it is possible for a single bar of alloyed material to possess all the properties needed for a schematic to begin working
+<li> You can store and view your stored materials under the “storage” tab
+<li>You can automatically store projects you make in the Nano-Fabricator by setting output to the Nano-Fabricator under the “Settings” tab
+ </li></ul><b>Material Analyzer</b> - a green handheld device that reports the information of a material including electrical conductivity, thermal conductivity, hardness,
+</ul><br>
+The reasons for partaking in metallurgy are numerous and varied. You can, for example, create new types of walls and floorings with high reflectivity for defense from energy projectiles, which might be desirable additions to upgrade security in sensitive areas like an AI Core.
+<br><br>You may have an interest in producing infused jumpsuits that actively release small amounts of healing chemicals to patients who might need long-term and intensive medical care (please consult with licensed medical professionals if you are considering implementing this).
+<br><br>
+You can generate more protective spacewear for when you are working on highly dangerous projects outside of the station.
+  Materials Science is infinitely useful.
+<br><br>
+<section id="Index-of-Properties"><h3>An Index of Properties and their Effects</h3></section>
+<hr>
+<section id="Basic-Mats"><h3>Basic Ores and Their Properties</h3></section>
+<hr>
+<table>
+<tr><th align="right" >.:ORE:.</th><th>.:Radioact:.</th><th>.:Conduct:.</th><th>.:Stabil:.</th><th>.:Hard:.</th><th>.:Density:.</th><th>.:Flammabil:..</th><th>.:Cor. Resist:. </th><th>.:Permeability:.</th><th>.:Reflectiv:..</th><th>.:Other Notes:.</th></tr>
+<tr><td align="right" >Mauxite</td><td>.....N/A</td>......<td></td></tr>
+<tr><td align="right">N2</td><td>20</td><td></td></tr>
+<tr><td align="right">CO2</td><td>30</td><td>Byproduct of typical lung gas exchange, harmful in large quantities</td></tr>
+</table><br/>
+<section id="Advanced-Mats"><h3> Advanced Materials and Their Properties</h3>
+  <section id="Alloying"><h3>Alloying</h3></section>
+<p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at:
+</li><li><a href="https://wiki.ss13.co/Ore_Processing" target="_blank">https://wiki.ss13.co/Ore_Processing</a></li>
+</li><li><a href="https://wiki.ss13.co/Guide_to_Mining" target="_blank">https://wiki.ss13.co/Guide_to_Mining</a></li>
+Thank you for your service to Nanotrasen.</i></p>
