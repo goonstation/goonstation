@@ -236,6 +236,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 //Returns either the AI mainframe or the eyecam mob, depending on whther or not we are deployed
 /mob/living/silicon/ai/proc/get_message_mob()
 	RETURN_TYPE(/mob)
+
 	if (deployed_to_eyecam)
 		return src.eyecam
 	return src

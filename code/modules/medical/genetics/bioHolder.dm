@@ -494,13 +494,11 @@ var/list/datum/bioEffect/mutini_effects = list()
 				if (instance.mob_exclusive && src.owner.type != instance.mob_exclusive)
 					continue
 			if(instance.secret)
-				filteredSecret.Add(instance)
+				filteredSecret[instance] = instance.probability
 			else
 				if(instance.isBad)
-					filteredBad.Add(instance)
 					filteredBad[instance] = instance.probability
 				else
-					filteredGood.Add(instance)
 					filteredGood[instance] = instance.probability
 
 		if(!filteredGood.len || !length(filteredBad))

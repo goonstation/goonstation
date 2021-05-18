@@ -19010,7 +19010,7 @@
 	pixel_y = 24
 	},
 /obj/table/reinforced/bar/auto,
-/obj/item/reagent_containers/food/drinks/bottle/xmas,
+/obj/item/reagent_containers/food/drinks/bottle/soda/xmas,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "aOk" = (
@@ -20367,7 +20367,7 @@
 /obj/item/kitchen/utensil/fork,
 /obj/item/kitchen/utensil/fork,
 /obj/item/coin,
-/obj/item/reagent_containers/food/drinks/bottle/xmas,
+/obj/item/reagent_containers/food/drinks/bottle/soda/xmas,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "aQQ" = (
@@ -22500,9 +22500,9 @@
 /area/station/crew_quarters/bar)
 "aUY" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/reagent_containers/food/drinks/bottle/xmas,
-/obj/item/reagent_containers/food/drinks/bottle/xmas,
-/obj/item/reagent_containers/food/drinks/bottle/xmas,
+/obj/item/reagent_containers/food/drinks/bottle/soda/xmas,
+/obj/item/reagent_containers/food/drinks/bottle/soda/xmas,
+/obj/item/reagent_containers/food/drinks/bottle/soda/xmas,
 /obj/decal/tile_edge/stripe/xmas{
 	icon_state = "xmas";
 	dir = 1

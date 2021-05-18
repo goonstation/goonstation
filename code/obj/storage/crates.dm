@@ -48,10 +48,10 @@
 		spawn_contents = list(/obj/item/reagent_containers/food/drinks/noodlecup = 2,
 		/obj/item/reagent_containers/food/drinks/peach = 2,
 		/obj/item/reagent_containers/food/drinks/covfefe = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/spooky = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/spooky2 = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/gingerale = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/drowsy = 2)
+		/obj/item/reagent_containers/food/drinks/bottle/soda/spooky = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/soda/spooky2 = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/soda/gingerale = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/soda/drowsy = 2)
 
 	snacks
 		name = "Discount Dans 'edibles' crate"
@@ -118,7 +118,7 @@
 
 /obj/storage/crate/bartending
 	name = "bartending crate"
-	spawn_contents = list(/obj/item/reagent_containers/food/drinks/bottle = 5,
+	spawn_contents = list(/obj/item/reagent_containers/food/drinks/bottle/soda/ = 5,
 	/obj/item/reagent_containers/glass/beaker/large = 2,
 	/obj/item/device/reagentscanner,
 	/obj/item/clothing/glasses/spectro,

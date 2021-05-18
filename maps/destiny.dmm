@@ -13901,7 +13901,7 @@
 	pixel_x = -4;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_y = 16
 	},
 /turf/simulated/floor/wood{
@@ -58551,7 +58551,7 @@
 "xac" = (
 /obj/machinery/light,
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_y = 8
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass{

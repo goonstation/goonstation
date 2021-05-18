@@ -53,6 +53,7 @@
 		setProperty("viralprot", 50)
 		setProperty("disorient_resist_eye", 8)
 		setProperty("disorient_resist_ear", 8)
+		setProperty("space_movespeed", 0.2)
 
 	oldish
 		icon_state = "space-OLD"
@@ -112,6 +113,10 @@
 	icon_state = "space-captain"
 	item_state = "space-captain"
 	desc = "Helps protect against vacuum. Comes in an interesting green befitting the captain."
+
+	setupProperties()
+		..()
+		setProperty("space_movespeed", 0.1)
 
 	blue
 		name = "commander's space helmet"
@@ -206,6 +211,11 @@
 	item_state = "space_helmet_syndicate"
 	desc = "The standard space helmet of the dreaded Syndicate."
 	item_function_flags = IMMUNE_TO_ACID
+
+	setupProperties()
+		..()
+		setProperty("space_movespeed", 0)
+
 	old
 		icon_state = "syndicate-OLD"
 		desc = "A relic of the past."
@@ -346,12 +356,19 @@
 			setProperty("exploprot", 10)
 			setProperty("disorient_resist_eye", 50)
 			setProperty("disorient_resist_ear", 50)
+			setProperty("space_movespeed", 0.3)
+
 
 /obj/item/clothing/head/helmet/space/ntso //recoloured nuke class suits for ntso vs syndicate specialist
 	name = "NT-SO combat helmet"
 	desc = "A modified combat helmet for Nanotrasen special forces"
 	icon_state = "ntso_specialist"
 	item_state = "ntso_specialist"
+
+	setupProperties()
+		..()
+		setProperty("space_movespeed", 0)
+
 
 	unremovable
 		cant_self_remove = 1
@@ -689,6 +706,7 @@
 		..()
 		setProperty("radprot", 50)
 		setProperty("exploprot", 10)
+		setProperty("space_movespeed", 0)
 
 	syndicate
 		name = "Syndicate Command Helmet"
@@ -712,6 +730,7 @@
 		setProperty("meleeprot_head", 2)
 		setProperty("disorient_resist_eye", 25)
 		setProperty("disorient_resist_ear", 10)
+		setProperty("space_movespeed", 0)
 
 /obj/item/clothing/head/helmet/bucket
 	name = "bucket helmet"
@@ -800,6 +819,6 @@
 		setProperty("meleeprot_head", 3)
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 15)
-		setProperty("disorient_resit_eye", 8)
+		setProperty("disorient_resist_eye", 8)
 		setProperty("disorient_resist_ear", 8)
 

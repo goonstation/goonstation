@@ -386,7 +386,7 @@ todo: add more small animals!
 		if (..())
 			return 1
 		if (prob(10))
-			src.visible_message("[src] purrs!",\
+			src.audible_message("[src] purrs!",\
 			"You purr!")
 
 /mob/living/critter/small_animal/cat/weak
@@ -653,10 +653,9 @@ todo: add more small animals!
 			src.hud.update_health()
 
 	proc/howl()
-		if (prob(60))
-			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='combat'><b>[src]</b> [pick("howls","bays","whines","barks","croons")] to the music! [capitalize(he_or_she(src))] thinks [he_or_she(src)]'s singing!</span>")
-			playsound(get_turf(src), "sound/voice/animal/howl[rand(1,6)].ogg", 100, 0)
+		src.audible_message("<span class='combat'><b>[src]</b> [pick("howls","bays","whines","barks","croons")] to the music! [capitalize(he_or_she(src))] thinks [he_or_she(src)]'s singing!</span>")
+		playsound(get_turf(src), "sound/voice/animal/howl[rand(1,6)].ogg", 100, 0)
+
 
 /* -------------------- Shiba -------------------- */
 
@@ -1721,7 +1720,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (..())
 			return 1
 		if (prob(10))
-			src.visible_message("[src] purrs![prob(20) ? " Wait, what?" : null]",\
+			src.audible_message("[src] purrs![prob(20) ? " Wait, what?" : null]",\
 			"You purr!")
 
 

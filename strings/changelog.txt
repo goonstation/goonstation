@@ -1,5 +1,32 @@
 
 (t)tue may 18 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Migrate 1/4 of spacesuit slowdown to the helmet
+(u)Mordent
+(p)4779
+(e)⚖🎨|balance, sprites
+(*)Cyborg treads reduce effect of heavier cyborg parts on the cyborg's speed.
+(u)Zonespace
+(p)4745
+(e)🆕|feature
+(*)C.A.R.L., the Syndicate merchant, now sells Voice Changers.
+(*)Part of C.A.R.L.'s inventory is now random.
+(u)Yellow-Mushroom
+(p)4735
+(e)🆕🎨|feature, sprites
+(*)Kudzu people organs are now synthetic
+(*)New infusions to allow for an easier time coming across specific synthorgan plants
+(+)Addition of the synthetic version of appendixes, intestines, kidneys, livers, lungs, pancreata, spleens, and stomachs
+(+)Addition of crops for all the new synth organs
+(u)edwardly
+(p)4780
+(e)🐛|bug
+(+)Fix guardbuddy logic so they will eventually stop trying to arrest you if there's more than one of them.
+(u)Flaborized
+(p)4761
+(e)🎨|sprites
+(+)Resprited plating.
 (u)kyle
 (e)⚖|balance
 (*)Weapon power cells can now be swapped while moving. Still uses the timed action bar though.
