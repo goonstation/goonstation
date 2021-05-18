@@ -467,7 +467,7 @@
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		// in this case m is the consumer and user is the one holding it
-		if (istype(src, /obj/item/reagent_containers/food/drinks/bottle))
+		if (istype(src, /obj/item/reagent_containers/food/drinks/bottle/soda))
 			var/obj/item/reagent_containers/food/drinks/bottle/W = src
 			if (W.broken)
 				return
@@ -731,7 +731,7 @@
 /* -------------------- Drink Bottles -------------------- */
 /* ======================================================= */
 
-/obj/item/reagent_containers/food/drinks/bottle
+/obj/item/reagent_containers/food/drinks/bottle //for alcohol-related bottles specifically
 	name = "bottle"
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "bottle"
@@ -741,13 +741,14 @@
 	//var/static/image/bottle_image = null
 	var/static/image/image_fluid = null
 	var/static/image/image_label = null
-	// var/static/image/image_ice = null
-	// var/ice = null
+	var/static/image/image_ice = null
+	var/ice = null
 	var/unbreakable = 0
 	var/broken = 0
 	var/bottle_style = "clear"
 	var/fluid_style = "bottle"
 	var/alt_filled_state = null // does our icon state gain a 1 if we've got fluid? put that 1 in this here var if so!
+	var/fluid_underlay_shows_volume = FALSE // determines whether this bottle is special and shows reagent volume
 	var/shatter = 0
 	initial_volume = 50
 	g_amt = 60
@@ -802,7 +803,7 @@
 		else
 			if (!src.reagents || src.reagents.total_volume <= 0) //Fix for cannot read null/volume. Also FUCK YOU REAGENT CREATING FUCKBUG!
 				src.icon_state = "bottle-[src.bottle_style]"
-			else
+			else if(!src.fluid_underlay_shows_volume)
 				src.icon_state = "bottle-[src.bottle_style][src.alt_filled_state]"
 				ENSURE_IMAGE(src.image_fluid, src.icon, "fluid-[src.fluid_style]")
 				//if (!src.image_fluid)
@@ -810,6 +811,17 @@
 				var/datum/color/average = reagents.get_average_color()
 				image_fluid.color = average.to_rgba()
 				src.underlays += src.image_fluid
+			else
+				if (reagents.total_volume)
+					var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 3 + 1), 1, 3))
+					if (!src.image_fluid)
+						src.image_fluid = image(src.icon, "fluid-bottle[fluid_state]", -1)
+					else
+						src.image_fluid.icon_state = "fluid-bottle[fluid_state]"
+					src.icon_state = "bottle-[src.bottle_style][fluid_state]"
+					var/datum/color/average = reagents.get_average_color()
+					src.image_fluid.color = average.to_rgba()
+					src.underlays += src.image_fluid
 			if (src.label)
 				ENSURE_IMAGE(src.image_label, src.icon, "label-[src.label]")
 				//if (!src.image_label)
@@ -819,9 +831,9 @@
 			else
 				src.UpdateOverlays(null, "label")
 			// Ice is implemented below; we just need sprites from whichever poor schmuck that'll be willing to do all that ridiculous sprite work
-			// if (src.reagents.has_reagent("ice"))
-				// ENSURE_IMAGE(src.image_ice, src.icon, "ice-[src.fluid_style]")
-				// src.underlays += src.image_ice
+			if (src.reagents.has_reagent("ice"))
+				ENSURE_IMAGE(src.image_ice, src.icon, "ice-[src.fluid_style]")
+				src.underlays += src.image_ice
 		signal_event("icon_updated")
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -925,6 +937,10 @@
 				take_bleeding_damage(user, user, damage)
 			SPAWN_DBG(0)
 				qdel(src)
+
+/obj/item/reagent_containers/food/drinks/bottle/soda //for soda bottles and bottles from the glass recycler specifically
+	fluid_underlay_shows_volume = TRUE
+
 
 /* ========================================================== */
 /* -------------------- Drinking Glasses -------------------- */

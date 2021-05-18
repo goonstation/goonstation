@@ -5865,7 +5865,7 @@
 	pixel_x = 7;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/drinks/bottle/drowsy{
+/obj/item/reagent_containers/food/drinks/bottle/soda/drowsy{
 	pixel_y = 3;
 	pixel_z = 5
 	},
@@ -23708,7 +23708,7 @@
 /obj/table/glass/reinforced/auto,
 /obj/item/device/audio_log,
 /obj/item/audio_tape,
-/obj/item/reagent_containers/food/drinks/bottle/gingerale{
+/obj/item/reagent_containers/food/drinks/bottle/soda/gingerale{
 	pixel_x = -4;
 	pixel_y = 7
 	},
@@ -24073,7 +24073,7 @@
 	dir = 5
 	},
 /obj/table/round/auto,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_y = 16
 	},
 /obj/item/reagent_containers/food/drinks/mug/random_color{
@@ -38187,11 +38187,11 @@
 	},
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line3"
 	},

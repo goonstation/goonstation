@@ -202,7 +202,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Glass Bottle"
 	item_paths = list("CRY-1")
 	item_amounts = list(1)
-	item_outputs = list(/obj/item/reagent_containers/food/drinks/bottle)
+	item_outputs = list(/obj/item/reagent_containers/food/drinks/bottle/soda)
 	time = 4 SECONDS
 	create = 1
 	category = "Miscellaneous"
