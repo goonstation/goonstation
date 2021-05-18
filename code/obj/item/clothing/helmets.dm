@@ -356,6 +356,8 @@
 			setProperty("exploprot", 10)
 			setProperty("disorient_resist_eye", 50)
 			setProperty("disorient_resist_ear", 50)
+			setProperty("space_movespeed", 0.3)
+
 
 /obj/item/clothing/head/helmet/space/ntso //recoloured nuke class suits for ntso vs syndicate specialist
 	name = "NT-SO combat helmet"

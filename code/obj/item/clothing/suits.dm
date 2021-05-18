@@ -1091,7 +1091,7 @@
 			setProperty("meleeprot", 6)
 			setProperty("rangedprot", 1)
 			setProperty("exploprot", 30)
-			setProperty("space_movespeed", 1.2)
+			setProperty("space_movespeed", 0.9)
 			setProperty("disorient_resist", 65)
 
 	specialist
