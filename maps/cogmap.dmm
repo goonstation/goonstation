@@ -533,9 +533,7 @@
 "abs" = (
 /obj/disposalpipe/segment,
 /obj/storage/secure/closet/medical{
-	name = "locker";
-	step_x = 1;
-	step_y = 1
+	name = "locker"
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 4
@@ -891,8 +889,7 @@
 /area/station/medical/research)
 "acr" = (
 /obj/machinery/door/airlock/pyro/glass{
-	name = "Med-Sci";
-	req_access_txt = null
+	name = "Genetics"
 	},
 /obj/access_spawn/medical,
 /obj/decal/garland/ephemeral,
@@ -969,9 +966,7 @@
 	},
 /obj/table/auto,
 /obj/item/clothing/glasses/spectro{
-	pixel_y = -3;
-	step_x = 3;
-	step_y = 10
+	pixel_y = 8
 	},
 /obj/item/pen/marker/random,
 /obj/random_item_spawner/desk_stuff/four,
@@ -1463,14 +1458,9 @@
 /area/station/crew_quarters/observatory)
 "adH" = (
 /obj/item/clothing/glasses/spectro{
-	pixel_y = -3;
-	step_x = 2;
-	step_y = 0
+	pixel_y = -3
 	},
-/obj/table/auto{
-	step_x = 1;
-	step_y = 0
-	},
+/obj/table/auto,
 /obj/item/clipboard{
 	pixel_x = -7
 	},
@@ -2010,8 +2000,7 @@
 	},
 /obj/item/device/radio/intercom/medical{
 	dir = 8;
-	step_x = 17;
-	step_y = 1
+	pixel_x = 16
 	},
 /obj/stool/chair/office/red,
 /obj/landmark/start{
