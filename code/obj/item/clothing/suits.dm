@@ -967,6 +967,13 @@
 	protective_temperature = 1000
 	over_hair = 1
 
+	New()
+		..()
+		if(!istype(get_area(src), /area/station))
+			var/nt_wear_state = "[src.wear_state || src.icon_state]-nt"
+			if(nt_wear_state in icon_states(src.wear_image_icon))
+				src.wear_state = nt_wear_state
+
 	onMaterialChanged()
 		if(src.material)
 			if(material.hasProperty("thermal"))

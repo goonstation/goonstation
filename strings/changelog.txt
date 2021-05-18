@@ -1,5 +1,27 @@
 
+(t)tue may 18 21
+(u)kyle
+(e)⚖|balance
+(*)Weapon power cells can now be swapped while moving. Still uses the timed action bar though.
+(t)mon may 17 21
+(u)Mordent
+(p)4756
+(e)⚖🐛|balance, bug
+(*)Cyborg shield upgrades have been pretty heavily reduced in effectiveness, especially against higher-damage weapons. They no longer reflect projectiles.
+(*)Drain rate of cyborg force shield upgrade reduced by 60% (250 to 100)
+(u)112358sam
+(p)4770
+(e)|
+(+)Added the names "Trench" and "Asteroid Field" to the landmarks the GPS device and app can report.
+(u)Pali and DimWhat
+(p)4763
+(e)🎨|sprites
+(+)Made off station space suits have an NT on their back instead of a 13.
 (t)sun may 16 21
+(u)Hans
+(p)4727
+(e)⚖🆕|balance, feature
+(+)Changed chem vapor events to prevent exploits.
 (u)Erinexx
 (p)4401
 (e)🎨|sprites

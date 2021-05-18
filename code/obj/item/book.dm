@@ -427,6 +427,7 @@ Custom Books
 /obj/item/paper/book/from_file/icarus_ovid
 	name = "Mythological Stories of the Ancient Greeks"
 	desc = "An old dusty book of mythology, well worn and dog-eared."
+	icon_state = "book0"
 	file_path = "strings/books/icarus_ovid.txt"
 
 /obj/item/paper/book/from_file/syndies_guide //By PinkPuffball81, part of the February 2021 Contest

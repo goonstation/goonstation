@@ -51,13 +51,13 @@ var/global/list/cached_concrete_types
 	* ALSO OKAY:
 	* ```dm
 	* var/list/hats = concrete_typesof(/obj/item/clothing/head).Copy()
-  * hats -= /obj/item/clothing/head/hosberet
+	* hats -= /obj/item/clothing/head/hosberet
 	* ```
 	*
 	* NOT OKAY:
 	* ```dm
 	* var/list/hats = concrete_typesof(/obj/item/clothing/head)
-  * hats -= /obj/item/clothing/head/hosberet
+	* hats -= /obj/item/clothing/head/hosberet
 	* ```
 	*/
 proc/concrete_typesof(type, cache=TRUE)
@@ -119,11 +119,25 @@ var/global/list/singletons
 
 /// Find predecessor of a type
 proc/predecessor_path_in_list(type, list/types)
-  while(type)
-    if(type in types)
-      return type
-    type = type2parent(type)
-  return null
+	while(type)
+		if(type in types)
+			return type
+		type = type2parent(type)
+	return null
+
+/**
+	* Returns the maximal subtype (i.e. the most subby) in a list of given types
+	*/
+proc/maximal_subtype(var/list/L)
+	if (!(length(L)))
+		.= null
+	else
+		.= L[1]
+		for (var/t in L)
+			if (ispath(t, .))
+				.= t
+			else if (!(ispath(., t)))
+				return null // paths in L aren't linearly ordered
 
 // by_type and by_cat stuff
 

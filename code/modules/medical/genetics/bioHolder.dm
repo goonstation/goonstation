@@ -459,7 +459,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"]. (filteredList.len = [filteredList.len])"})
 			return 0
 
-		var/datum/bioEffect/selectedG = pickweight(filteredList)
+		var/datum/bioEffect/selectedG = weighted_pick(filteredList)
 		var/datum/bioEffect/selectedNew = selectedG.GetCopy()
 		selectedNew.dnaBlocks.ModBlocks() //Corrupt the local copy
 		selectedNew.holder = src
@@ -510,7 +510,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			return
 
 		for(var/g=0, g<5, g++)
-			var/datum/bioEffect/selectedG = pickweight(filteredGood)
+			var/datum/bioEffect/selectedG = weighted_pick(filteredGood)
 			if(selectedG)
 				var/datum/bioEffect/selectedNew = selectedG.GetCopy()
 				selectedNew.dnaBlocks.ModBlocks() //Corrupt the local copy
@@ -522,7 +522,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 				break
 
 		for(var/b=0, b<5, b++)
-			var/datum/bioEffect/selectedB = pickweight(filteredBad)
+			var/datum/bioEffect/selectedB = weighted_pick(filteredBad)
 			if(selectedB)
 				var/datum/bioEffect/selectedNew = selectedB.GetCopy()
 				selectedNew.dnaBlocks.ModBlocks() //Corrupt the local copy
@@ -534,7 +534,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 				break
 
 		if (filteredSecret.len)
-			var/datum/bioEffect/selectedS = pickweight(filteredSecret)
+			var/datum/bioEffect/selectedS = weighted_pick(filteredSecret)
 			var/datum/bioEffect/selectedNew = selectedS.GetCopy()
 			selectedNew.dnaBlocks.ModBlocks() //Corrupt the local copy
 			selectedNew.holder = src
@@ -836,7 +836,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		var/datum/bioEffect/E = null
 
 		if(useProbability)
-			E = pickweight(filtered)
+			E = weighted_pick(filtered)
 		else
 			E = pick(filtered)
 
