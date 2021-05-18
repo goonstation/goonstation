@@ -1,47 +1,181 @@
 <h3>Foreword:</h3>
 <hr>
-This text serves as an introductory overview to Material Science. It is detailed but by no means exhaustive of all potential methods and projects. At the time of writing, all information in this book is correct. However, over time, the information may become out of date. Please see the footnote for additional reading.
+This text serves as a comprehensive overview to Materials Science. It is detailed but by no means exhaustive of all potential methods and projects. At the time of writing, all information in this book is correct. However, over time, the information may become out of date. Please see the footnote for additional reading.
 <hr>
 <h2>
   Contents</h2>
-<nav> <ul> <li><a href="MatSci-W">Material Science: What, Where, and Why?</a></li> <li><a href="Index-of-Properties"> <a href="">Index of Properties</a></li> <li><a href="Basic-Mats">Basic Ores</a></li> <li><a href="Advanced-Mats">Advanced Materials</a></li> <li><a href="Alloying">Alloying</a></li></ul> </nav>
+<nav> <ul> <li><a href="MatSci-W">Materials Science: What, Where, and Why?</a></li> <li><a href="Index-of-Properties"> <a href="">Index of Properties</a></li> <li><a href="Basic-Mats">Basic Ores</a></li> <li><a href="Advanced-Mats">Advanced Materials</a></li> <li><a href="Alloyed-Mats">Alloyed Materials</a></li><li><a href="Alloying">Alloying</a></li></ul> </nav>
 
-  <section id="MatSci-W"><h3>Material Science: What is it, Where is it, and Why is it?</h3></section>
+  <section id="MatSci-W"><h3>Materials Science: What is it, Where is it, and Why is it?</h3></section>
 <hr>
 The field of Materials Science is long studied and long storied. To detail precisely the extensive history of this field would require a tome all on its own, and we will instead focus not on what has been done in the field, but what there is yet to do.
 <br><br>
 An aspiring metallurgist requires a suitable workshop in which they can create and refine alloys. Recommended for this line of work are:
-<ul><li><b>Arc Smelter</b> - a large cuboid forge that melts two materials and reforms them as an alloyed bar
+<ul><li><b>Nano-Crucible</b> - a large cuboid forge that melts two materials and reforms them as an alloyed bar
 <ul><li>Usage may produce slag and so it is recommended that you use a slag shovel to clean out the Smelter in between creating each alloy</li></ul>
 <ul>
 </ul><b>Slag Shovel</b> - used for removing slag buildup from impurities removed in the refining process
 <ul><li>Failure to remove slag can result in impurities infiltrating your created alloys, and release of caustic vapors
   </li></ul><b>Material Processer</b> - a machine with a rectangular surface and two clamps to hold bars of alloys in place; used to process raw ores and gems into more workable ingots
   </li><b>Nano-Fabricator</b> - the sibling machine of the Material Processor with two upright arms embedded with lasers that will precisely cut and mold your materials into any of the pre-loaded schematics
-<ul><li>Nano-fabricator schematics describe needing either metal alloys, fabrics, rubber, or crystals, but it is possible for a single bar of alloyed material to possess all the properties needed for a schematic to begin working
-<li> You can store and view your stored materials under the “storage” tab
-<li>You can automatically store projects you make in the Nano-Fabricator by setting output to the Nano-Fabricator under the “Settings” tab
- </li></ul><b>Material Analyzer</b> - a green handheld device that reports the information of a material including electrical conductivity, thermal conductivity, hardness,
-</ul><br>
-The reasons for partaking in metallurgy are numerous and varied. You can, for example, create new types of walls and floorings with high reflectivity for defense from energy projectiles, which might be desirable additions to upgrade security in sensitive areas like an AI Core.
-<br><br>You may have an interest in producing infused jumpsuits that actively release small amounts of healing chemicals to patients who might need long-term and intensive medical care (please consult with licensed medical professionals if you are considering implementing this).
+<ul><li>Nano-Fabricator schematics describe needing either metal alloys, fabrics, rubber, or crystals, but it is possible for a single bar of alloyed material to possess all the properties needed for a schematic to begin working
+<li> You can store and view your stored materials under the “storage” tab</li>
+<li>You can automatically store projects you make in the Nano-Fabricator by setting output to the Nano-Fabricator under the “Settings” tab</li>
+</li></ul><b>Material Analyzer</b> - a green handheld device that reports the information of a material including electrical conductivity, thermal conductivity, hardness, density, stability, and others. See "An Index of Properties and Their Effects" section below.
+</ul>
+<ul><b>Arc Electroplater</b> - a machine that allows for you to place a material in an electrolyte bath and then place an object into the bath to transfer the electrolyzed material to the surface of the object.
+<ul><li>This allows for transfer of material properties to objects you cannot make through the Nano-Fabricator. Particularly of interest in thermo-electric systems.</li></ul>
+</ul></ul><br>
+The reasons for partaking in metallurgy are numerous and varied. You can, for example, create new types of walls and floorings with high reflectivity for defense from energy projectiles, which might be desirable in sensitive areas like an AI Core.
+<br><br>You may have an interest in producing infused jumpsuits that actively release small amounts of healing chemicals to patients who need long-term and intensive medical care (please consult with licensed medical professionals if you are considering implementing this).
 <br><br>
 You can generate more protective spacewear for when you are working on highly dangerous projects outside of the station.
-  Materials Science is infinitely useful.
+Materials Science is infinitely useful.
 <br><br>
 <section id="Index-of-Properties"><h3>An Index of Properties and their Effects</h3></section>
 <hr>
+This section shows the different properties or materials that are of interest to us and how they affect our materials, and some primary materials for each property. Please see the footnote for an appendix on how these properties are rated.
+<p style="margin-right:10%; margin-left:1%"><b>Radioactivity</b> - higher radiation output means a higher recharge rate, but also higher radiation damage to those handling or around these materials.
+</p><ul><li>(ex.: Cerenkite, Erebite, Koshmarite)</ul></li>
+<p style="margin-right:10%; margin-left:1%"><b>Neutron Radioactivity</b> - a sub-type of radioactivity from incredibly dense materials that also recharges cells faster but also outputs higher radiation damage
+</p><ul><li>(ex.: Neutronium)</ul></li>
+<p style="margin-right:10%; margin-left:1%"><b>Electrical Conductivity</b> - ability of material to let electricity pass through it.
+</p><ul><li>(ex.: Copper, Claretine, Electrum)</ul></li>
+<p style="margin-right:10%; margin-left:1%"><b>Thermal Conductivity</b> - ability of material to transfer heat through it with little loss of energy.
+</p><ul><li>(ex.: Carbon nano fibre, Fibrilith, Space spider silk)</ul></li>
+<p style="margin-right:10%; margin-left:1%"><b>Stability</b> - how prone a material is to degradation.
+</p><ul><li>(ex.: Starstone, Carbon nano fibre, Hauntium)</ul></li>
+<p style="margin-right:10%; margin-left:1%"><b>Density</b> -  blunt force of the material; sturdiness.</p>
+</p><ul><li>(ex.: Viscerite, Plasmasteel, Starstone)</ul></li>
+<p style="margin-right:10%; margin-left:1%"><b>Hardness</b> - blunt force of the material; sturdiness.
+</p><ul><li>(ex.: Koshmarite, Dyneema, Starstone)</ul></li>
+<p style="margin-right:10%; margin-left:1%"><b>Flammability</b> - how combustible a material is.</p>
+</p><ul><li>(ex.: Char, Plasmastone)</ul></li>
+<p style="margin-right:10%; margin-left:1%"><b>Corrosion Resistance</b> - how well a material resists acids.</p>
+</p><ul><li>(ex.: Viscerite, Dyneema)</ul></li>
+<p style="margin-right:10%; margin-left:1%"><b>Permeability</b> - the porousness of the material and how well viruses pass through it.</p>
+</p><ul><li>(ex.: Viscerite [high protection], Carbon nano fibre [high protection])</ul></li>
+<p style="margin-right:10%; margin-left:1%"><b>Reflectivity</b> - the albedo of the material and how much light is bounced off the surface of it.</p>
+</p><ul><li>(ex.: Syreline, Starstone, Telecrystal)</ul></li>
 <section id="Basic-Mats"><h3>Basic Ores and Their Properties</h3></section>
 <hr>
+Below is a list of all the basic ores that are common to asteroids in this sector, as well as their particular properties that are of interest for Materials Science.
 <table>
-<tr><th align="right" >.:ORE:.</th><th>.:Radioact:.</th><th>.:Conduct:.</th><th>.:Stabil:.</th><th>.:Hard:.</th><th>.:Density:.</th><th>.:Flammabil:..</th><th>.:Cor. Resist:. </th><th>.:Permeability:.</th><th>.:Reflectiv:..</th><th>.:Other Notes:.</th></tr>
-<tr><td align="right" >Mauxite</td><td>.....N/A</td>......<td></td></tr>
+<tr><th align="right" >.:ORE:.</th><th>.:Rad:.</th><th>.:Condct:.</th><th>.:Stabil:.</th><th>.:Hard:.</th><th>.:Dens:.</th><th>.:Flam:.</th><th>.:Cor. Resist:. </th><th>.:Perm:.</th><th>.:Refl:..</th><th>.:Other Notes:.</th></tr>
+<tr><td align="right" >Mauxite</td><td>...N/A</td>.....N/A</td>.....N/A</td>10</td>50</td>.....N/A</td>.........N/A</td>.....<td></td></tr>
 <tr><td align="right">N2</td><td>20</td><td></td></tr>
 <tr><td align="right">CO2</td><td>30</td><td>Byproduct of typical lung gas exchange, harmful in large quantities</td></tr>
 </table><br/>
-<section id="Advanced-Mats"><h3> Advanced Materials and Their Properties</h3>
-  <section id="Alloying"><h3>Alloying</h3></section>
-<p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at:
+<section id="Advanced-Mats"><h3> Advanced Materials and Their Properties</h3></section>
+<section id="Alloyed-Mats"><h3> Alloyed Materials and Their Properties</h3></section>
+<section id="Alloying"><h3>Alloying</h3></section>
+Alloying is done in the Nano-Crucible using processed materials. When you alloy two materials together, the stats of the created alloy is an average of the two progenitor materials. So, if you were looking to create a dense material and you alloyed Plasmasteel (density 75) with Viscerite (density 65), the resulting alloy would have a density of 70.
+When you alloy a material, the material passes on any unique properties to the resulting alloy.<br><br>
+
+Two additional notes on how <b>Melee Damage Protection</b> and <b><i>Ranged Damage Protection</i></b> are determined on wearables. Melee Damage Protection is equal to the density of the material the piece is made from divided by 17.
+<b><i>Ranged Damage Protection</i></b> is equal to (material density divided by 17) divided by 10, and then 0.1 is added to the resulting number.
+
+<br><br>So if you had a Plasmasteel alloy at 70 density, it would provide 4 <b><i>Melee Damage Protection</b></i> (70/17 = 4.1) when made into a wearable, and 0.5 <b><i>Ranged Damage Protection</b></i> (0.4+0.1) when made into a wearable.
+<br>
+<br>
+You can directly transfer the stats of a material to an object by putting the material in the <b>Arc Electroplater</b> and then putting the desired object in with the plating. This process takes a few moments, and results in an object that is plated in and has the properties of your material.
+<br><br>
+<h4>Footnote</h4>
+<br><p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at:
 </li><li><a href="https://wiki.ss13.co/Ore_Processing" target="_blank">https://wiki.ss13.co/Ore_Processing</a></li>
 </li><li><a href="https://wiki.ss13.co/Guide_to_Mining" target="_blank">https://wiki.ss13.co/Guide_to_Mining</a></li>
 Thank you for your service to Nanotrasen.</i></p>
+<br><br><br><br>
+<hr>
+<h3>Appendix I.</h3>
+<h4>Classifications of various properties.</h4>
+		<p style="margin-right:10%; margin-left:1%"><b>Radioactivity</b></p>
+			<ul style='list-style-type:circle'>
+			<li>1 to 10  --  Slgihtly Radioactive</li>
+			<li>11 to 25 --  Somewhat Radioactive</li>
+			<li>26 to 50 --  Radioactive</li>
+			<li>51 to 75 --  Very Radioactive</li>
+			<li>76 to 90 --  Extremely Radioactive</li>
+			<li>90+      --  Impossibly Radioactive</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Neutron Radioactivity</b></p>
+			<ul style='list-style-type:circle'>
+			<li>1 to 10  --  Glowing slightly blue</li>
+			<li>11 to 25 --  Glowing somewhat blue</li>
+			<li>26 to 50 --  Glowing blue</li>
+			<li>51 to 75 --  Brightly glowing blue</li>
+			<li>76 to 90 --  Brilliantly glowing blue</li>
+			<li>90+      --  Blindingly glowing blue</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Electrical Conductivity</b></p>
+			<ul style='list-style-type:circle'>
+			<li>1 to 14  --  Highly insulating (low conductivity)</li>
+			<li>15 to 30 --  Insulating</li>
+			<li>31 to 45 --  Slightly insulating</li>
+			<li>46 to 65 --  Slightly conductive</li>
+			<li>66 to 76 --  Conductive</li>
+			<li>77 to 85 --  Highly conductive</li>
+			<li>86+      --  Extremely conductive</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Thermal Conductivity</b></p>
+			<ul style='list-style-type:circle'>
+			<li>1 to 14  --  Very temperature-resistant (low conductivity)</li>
+			<li>15 to 30 --  Temperature-resistant</li>
+			<li>31 to 45 --  Slightly temperature-resistant</li>
+			<li>46 to 65 --  Slightly thermally-conductive</li>
+			<li>66 to 76 --  Thermally-conductive</li>
+			<li>77 to 85 --  Highly thermally-conductive</li>
+			<li>86+      --  Extremely thermally-conductive</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Stability</b></p>
+			<ul style='list-style-type:circle'>
+			<li>1 to 10  --  Very unstable</li>
+			<li>11 to 25 --  Unstable</li>
+			<li>26 to 50 --  Slightly unstable</li>
+			<li>51 to 75 --  Slightly solid</li>
+			<li>76 to 90 --  Solid</li>
+			<li>90+      --  Very solid (stable)</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Hardness</b></p>
+			<ul style='list-style-type:circle'>
+			<li>1 to 10  --  Very soft (low hardness)</li>
+			<li>11 to 25 --  Soft</li>
+			<li>26 to 50 --  Slightly soft</li>
+			<li>51 to 75 --  Slightly hard</li>
+			<li>76 to 90 --  Hard</li>
+			<li>90+      --  Very hard (high hardness)</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Density</b></p>
+			<ul style='list-style-type:circle'>
+			<li>1 to 10  --  Very light (low density)</li>
+			<li>11 to 25 --  Light</li>
+			<li>26 to 50 --  Somewhat light</li>
+			<li>51 to 75 --  Somewhat dense</li>
+			<li>76 to 90 --  Dense</li>
+			<li>90+      --  Very dense</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Flammability</b></p>
+			<ul style='list-style-type:circle'>
+			<li>1 to 10  --  Very fireproof (low flammability)</li>
+			<li>11 to 25 --  Fireproof</li>
+			<li>26 to 50 --  Slightly fireproof</li>
+			<li>51 to 75 --  Slightly flammable</li>
+			<li>76 to 90 --  Flammable</li>
+			<li>90+      --  Very Flammable</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Corrosion Resistance</b></p>
+			<ul style='list-style-type:circle'>
+			<li>1 to 10  --  Very corroded (low resistance)</li>
+			<li>11 to 25 --  Corroded</li>
+			<li>26 to 50 --  Slightly corroded</li>
+			<li>51 to 75 --  Slightly corrosion-resistant</li>
+			<li>76 to 90 --  Corrosion-resistant</li>
+			<li>90+      --  Very corrosion-resistant</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Permeability</b></p>
+			<ul style='list-style-type:circle'>
+			<li>1 to 10  --  Very impermeable</li>
+			<li>11 to 25 --  Impermeable</li>
+			<li>26 to 50 --  Slightly impermeable</li>
+			<li>51 to 75 --  Slightly permeable</li>
+			<li>76 to 90 --  Permeable</li>
+			<li>90+      --  Very permeable</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Reflectivity</b></p>
+			<ul style='list-style-type:circle'>
+			<li>1 to 10  --  Very dull (low reflectivity)</li>
+			<li>11 to 25 --  Dull</li>
+			<li>26 to 50 --  Slightly dull</li>
+			<li>51 to 75 --  Slightly reflective</li>
+			<li>76 to 90 --  Reflective</li>
+			<li>90+      --  Very reflective</li></ul>
