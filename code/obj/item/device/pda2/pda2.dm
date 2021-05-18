@@ -18,8 +18,6 @@
 	var/assignment = null
 	var/access = list()
 	var/image/ID_image = null
-	var/pen_overlay_filter = null
-
 	var/owner = null
 	var/ownerAssignment = null
 	var/obj/item/disk/data/cartridge/cartridge = null //current cartridge
@@ -868,8 +866,6 @@
 				src.pen.set_loc(T)
 			src.pen = null
 			src.UpdateOverlays(null, "pen")
-			src.filters -= src.pen_overlay_filter
-			src.pen_overlay_filter = null
 			return
 
 	proc/insert_pen(var/obj/item/insertedPen as obj, var/mob/user as mob)
