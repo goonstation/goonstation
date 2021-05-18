@@ -876,6 +876,12 @@
 			src.pen = insertedPen
 			if(istype(insertedPen, /obj/item/clothing/mask/cigarette))
 				src.UpdateOverlays(image(src.icon, "cig"), "pen")
+			else if(istype(insertedPen, /obj/item/pen/crayon))
+				var/image/pen_overlay = image(src.icon, "crayon")
+				pen_overlay.color = insertedPen.color
+				src.UpdateOverlays(pen_overlay, "pen")
+			else if(istype(insertedPen, /obj/item/pen/pencil))
+				src.UpdateOverlays(image(src.icon, "pencil"), "pen")
 			else
 				src.UpdateOverlays(image(src.icon, "pen"), "pen")
 			var/original_icon_state = src.icon_state
