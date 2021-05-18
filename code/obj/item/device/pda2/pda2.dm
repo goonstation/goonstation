@@ -18,8 +18,7 @@
 	var/assignment = null
 	var/access = list()
 	var/image/ID_image = null
-	var/image/pen_image = "pen"
-	var/image/cigarette_image = "cig" // you can put cigs and blunts into this because it's funny
+	var/pen_overlay_filter = null
 
 	var/owner = null
 	var/ownerAssignment = null
@@ -868,8 +867,9 @@
 				var/turf/T = get_turf(src)
 				src.pen.set_loc(T)
 			src.pen = null
-			src.underlays -= src.pen_image
-			src.underlays -= src.cigarette_image
+			src.UpdateOverlays(null, "pen")
+			src.filters -= src.pen_overlay_filter
+			src.pen_overlay_filter = null
 			return
 
 	proc/insert_pen(var/obj/item/insertedPen as obj, var/mob/user as mob)
@@ -879,9 +879,14 @@
 			user.u_equip(insertedPen)
 			src.pen = insertedPen
 			if(istype(insertedPen, /obj/item/clothing/mask/cigarette))
-				src.underlays += src.cigarette_image
+				src.UpdateOverlays(image(src.icon, "cig"), "pen")
 			else
-				src.underlays += src.pen_image
+				src.UpdateOverlays(image(src.icon, "pen"), "pen")
+			var/original_icon_state = src.icon_state
+			animate(src, time=0, icon_state="")
+			animate(time=2, icon_state=original_icon_state)
+			animate(time=2, transform=matrix(null, 0, -1, MATRIX_TRANSLATE))
+			animate(time=3, transform=null)
 		insertedPen.set_loc(src)
 		boutput(user, "<span class='notice'>You insert [insertedPen] into [src].</span>")
 
