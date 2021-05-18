@@ -614,7 +614,7 @@ A Flamethrower in various states of assembly
 		src.remove_dialog(user)
 		user.Browse(null, "window=flamethrower")
 		return
-	if(user.stat || user.restrained() || user.lying || src.loc != user)
+	if(user.stat || user.restrained() || user.lying || !(src in user.equipped_list()))
 		return
 	src.add_dialog(user)
 

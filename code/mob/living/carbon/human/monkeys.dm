@@ -254,6 +254,13 @@
 		if(aggroed)
 			walk_towards(src, ai_target, ai_movedelay)
 
+	ai_is_valid_target(mob/M)
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if (istype(H.wear_suit, /obj/item/clothing/suit/monkey))
+				return FALSE
+		return ..()
+
 	proc/shot_by(var/atom/A as mob|obj)
 		if (src.ai_state == AI_ATTACKING)
 			return

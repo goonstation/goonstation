@@ -16134,10 +16134,6 @@
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/storage)
-"aAA" = (
-/obj/decal/poster/wallsign/medal,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/hos)
 "aAB" = (
 /obj/decal/poster/wallsign/medbay,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -36369,6 +36365,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/decal/poster/wallsign/medal{
+	pixel_y = 28
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "bqM" = (
@@ -55247,7 +55246,7 @@
 /area/station/crew_quarters/fitness)
 "can" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10
+	dir = 9
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -55259,7 +55258,7 @@
 /area/station/crew_quarters/fitness)
 "cap" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 6
+	dir = 5
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -132077,7 +132076,7 @@ ctU
 beZ
 ctU
 ctU
-aAA
+cAQ
 bqL
 beW
 ayt

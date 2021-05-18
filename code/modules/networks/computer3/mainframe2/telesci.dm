@@ -611,7 +611,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 			if("flash")
 				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>A bright flash emnates from the [src]!</span>", 1)
-				playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
+				playsound(src.loc, "sound/weapons/flashbang.ogg", 35, 1)
 				for (var/mob/N in viewers(src, null))
 					if (get_dist(N, src) <= 6)
 						N.apply_flash(30, 5)
@@ -661,7 +661,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				var/myturf = src.loc
 				for(var/atom/movable/M in view(4, myturf))
 					if(M.anchored) continue
-					if(ismob(M)) if(hasvar(M,"weakened")) M:changeStatus("weakened", 80)
+					if(ismob(M)) if(hasvar(M,"weakened")) M:changeStatus("weakened", 8 SECONDS)
 					if(ismob(M)) random_brute_damage(M, 20)
 					var/dir_away = get_dir(myturf,M)
 					var/turf/target = get_step(myturf,dir_away)

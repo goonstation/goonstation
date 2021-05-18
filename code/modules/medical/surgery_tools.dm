@@ -536,7 +536,7 @@ CONTAINS:
 				var/adjust = cell.charge
 				if (adjust <= 0) // bwuh??
 					adjust = 1000 // fu
-				patient.changeStatus("paralysis", min(0.002 * adjust, 10) * 10)
+				patient.changeStatus("paralysis", min(0.002 * adjust, 10) SECONDS)
 				patient.stuttering += min(0.005 * adjust, 25)
 				//DEBUG_MESSAGE("[src]'s defibrillate(): adjust = [adjust], paralysis + [min(0.001 * adjust, 5)], stunned + [min(0.002 * adjust, 10)], weakened + [min(0.002 * adjust, 10)], stuttering + [min(0.005 * adjust, 25)]")
 
@@ -548,9 +548,9 @@ CONTAINS:
 				if (emagged)
 					patient.do_disorient(130, weakened = 50, stunned = 50, paralysis = 40, disorient = 60, remove_stamina_below_zero = 0)
 				else
-					patient.changeStatus("paralysis", 50)
+					patient.changeStatus("paralysis", 5 SECONDS)
 #else
-				patient.changeStatus("paralysis", 50)
+				patient.changeStatus("paralysis", 5 SECONDS)
 
 #endif
 				patient.stuttering += 10

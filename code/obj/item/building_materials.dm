@@ -716,6 +716,7 @@ MATERIAL
 				var/makemetal = round(src.amount / 2)
 				boutput(user, "<span class='notice'>You could make up to [makemetal] sheets by welding this stack.</span>")
 				weldinput = input("How many sheets do you want to make?","Welding",1) as num
+				makemetal = round(src.amount / 2) // could have changed during input()
 				if (weldinput < 1) return
 				if (weldinput > makemetal) weldinput = makemetal
 			var/obj/item/sheet/M = new /obj/item/sheet/steel(user.loc)
@@ -930,7 +931,7 @@ MATERIAL
 
 		user.visible_message("<span class='alert'><b>[user] headbutts the spike, impaling [his_or_her(user)] head on it!</b></span>")
 		user.TakeDamage("head", 50, 0)
-		user.changeStatus("stunned", 500)
+		user.changeStatus("stunned", 50 SECONDS)
 		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 		if(prob(40)) user.emote("scream")
 

@@ -512,7 +512,7 @@
 					holder.owner.show_message("<span class='alert'>[H] is pulled from your telekinetic grip!</span>")
 					RH.channeling = 0
 					break
-				H.changeStatus("weakened", (2 + rand(0, iterations))*10)
+				H.changeStatus("weakened", (2 + rand(0, iterations)) SECONDS)
 				H.TakeDamage("chest", 4 + rand(0, iterations), 0, 0, DAMAGE_CRUSH)
 				if (prob(40))
 					H.visible_message("<span class='alert'>[H]'s bones crack loudly!</span>", "<span class='alert'>You feel like you're about to be [pick("crushed", "destroyed", "vaporized")].</span>")

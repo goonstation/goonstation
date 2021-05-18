@@ -466,9 +466,9 @@ toxic - poisons
 		if (!istype(L))
 			return
 		if(L.getStatusDuration("burning"))
-			L.changeStatus("burning", 70)
+			L.changeStatus("burning", 7 SECONDS)
 		else
-			L.changeStatus("burning", 35)
+			L.changeStatus("burning", 3.5 SECONDS)
 
 /datum/projectile/laser/signifer_lethal
 	name = "signifer bolt"

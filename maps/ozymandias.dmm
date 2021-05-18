@@ -8891,7 +8891,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/extinguisher,
 /obj/item/crowbar,
@@ -15264,7 +15264,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/chem_grenade/firefighting,
 /obj/item/chem_grenade/firefighting,
@@ -30702,8 +30702,8 @@
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/tank/air,
 /turf/simulated/floor/green/checker,
@@ -32913,7 +32913,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/extinguisher,
 /obj/item/crowbar,
@@ -47304,7 +47304,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/extinguisher,
 /obj/item/crowbar,
@@ -47533,6 +47533,14 @@
 "nIo" = (
 /obj/decal/boxingrope{
 	dir = 4
+	},
+/turf/simulated/floor/specialroom/gym/alt,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
+"nIq" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 5
 	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/hallway/secondary/construction{
@@ -65011,8 +65019,8 @@
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/tank/air,
 /obj/machinery/light/emergency,
@@ -65892,8 +65900,7 @@
 /area/station/security/brig/cell_block)
 "sPP" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10;
-	icon_state = "ringrope"
+	dir = 9
 	},
 /obj/machinery/light{
 	dir = 1;
@@ -69085,6 +69092,14 @@
 /obj/item/seed/alien,
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
+"tEI" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 9
+	},
+/turf/simulated/floor/specialroom/gym/alt,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "tEM" = (
 /obj/item/storage/wall/clothingrack/hatrack/hatrack_3{
 	dir = 4
@@ -71990,7 +72005,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/chem_grenade/firefighting,
 /obj/item/chem_grenade/firefighting,
@@ -79805,7 +79820,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/extinguisher,
 /obj/item/crowbar,
@@ -83620,8 +83635,7 @@
 /area/station/maintenance/northeast)
 "xqf" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 6;
-	icon_state = "ringrope"
+	dir = 5
 	},
 /obj/machinery/light{
 	dir = 1;
@@ -116606,7 +116620,7 @@ lZk
 rfw
 oQR
 nAR
-gsR
+tEI
 ovS
 qaa
 qaa
@@ -117814,7 +117828,7 @@ lZk
 fik
 gjb
 wfD
-qUf
+nIq
 nIo
 nIo
 aJT

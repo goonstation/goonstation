@@ -1322,7 +1322,7 @@
 			if (mob.misstep_chance)
 				mob.change_misstep_chance(-10 * mult)
 			if (mob.getStatusDuration("slowed"))
-				mob.changeStatus("slowed", -20 * mult)
+				mob.changeStatus("slowed", -2 SECONDS * mult)
 
 		return
 
@@ -1339,7 +1339,7 @@
 				if(mob.emote_allowed)
 					mob.emote_allowed = 0
 					message = "<span class='alert'><B>[mob] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B></span>"
-					playsound(get_turf(mob), "sound/voice/animal/werewolf_howl.ogg", 80, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)), channel=VOLUME_CHANNEL_EMOTE)
+					playsound(get_turf(mob), "sound/voice/animal/werewolf_howl.ogg", 65, 0, 0, max(0.7, min(1.2, 1.0 + (30 - mob.bioHolder.age)/60)), channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN_DBG(3 SECONDS)
 						mob.emote_allowed = 1
 			if("burp")
@@ -1646,7 +1646,7 @@
 		SPAWN_DBG(2 SECONDS)
 			if (ishuman(mob))
 				mob.visible_message("<span class='alert'><B>[mob]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
-				mob.changeStatus("weakened", 150)
+				mob.changeStatus("weakened", 15 SECONDS)
 				mob.make_jittery(1000)
 				sleep(rand(40, 120))
 				mob.gib()
@@ -2042,7 +2042,7 @@
 		var/can_output = 0
 		if (ishuman(mob))
 			var/mob/living/carbon/human/H = mob
-			if (H.blood_volume > 250)
+			if (H.blood_volume > 0)
 				can_output = 1
 
 		if (!can_output)
