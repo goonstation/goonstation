@@ -85,11 +85,11 @@
 	var/shoot_inventory_chance = 5
 	var/ai_control_enabled = 1
 
-	var/extended_inventory = 0 //can we access the hidden inventory?
-	var/can_fall = 1 //Can this machine be knocked over?
-	var/can_hack = 1 //Can this machine have it's panel open? Yes by default
+	var/extended_inventory = FALSE //can we access the hidden inventory?
+	var/can_fall = TRUE //Can this machine be knocked over?
+	var/can_hack = TRUE //Can this machine have it's panel open? TRUE by default
 
-	var/panel_open = 0 //Hacking that vending machine. Gonna get a free candy bar.
+	var/panel_open = FALSE //Hacking that vending machine. Gonna get a free candy bar.
 	var/wires = 15
 
 	// Paid vendor variables
