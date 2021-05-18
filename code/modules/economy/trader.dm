@@ -733,7 +733,6 @@
 	trader_area = "/area/turret_protected/robot_trade_outpost"
 	var/productset = 0 // 0 is robots and salvage, 1 is podparts and drugs, 2 is produce. 3 is syndicate junk, 4 is medical stuff
 	var/illegal = 0 // maybe trading with illegal bots could flag the user's criminal record for smuggling
-	var/carlsell
 	angrynope = "Unable to process request."
 	whotext = "I am a trading unit. I have been authorized to engage in trade with you."
 
@@ -788,7 +787,7 @@
 				src.goods_buy += new /datum/commodity/produce/special/glowfruit(src)
 
 			if(3) // syndicate bot
-				carlsell = rand(1,10)
+				var/carlsell = rand(1,10)
 				src.goods_sell += new /datum/commodity/contraband/command_suit(src)
 				src.goods_sell += new /datum/commodity/contraband/swatmask(src)
 				if (carlsell <= 2)
