@@ -54,6 +54,12 @@ proc/weighted_pick(list/L)
 	for(var/i = length(the_list), i > 0, i--)
 		. += the_list[i]
 
+proc/keep_truthy(some_list)
+	. = list()
+	for(var/x in some_list)
+		if(x)
+			. += x
+
 //Based on code from Popisfizzy: http://www.byond.com/forum/?post=134331#comment750984
 proc/params2complexlist(params)
 	RETURN_TYPE(/list)
