@@ -246,7 +246,7 @@ toxic - poisons
 /datum/projectile/laser/glitter // for the russian pod
 	name = "prismatic laser"
 	icon_state = "eyebeam"
-	power = 35
+	power = 25
 	cost = 35
 	sname = "phaser bolt"
 	dissipation_delay = 10
@@ -378,7 +378,8 @@ toxic - poisons
 	dissipation_delay = 1
 	dissipation_rate = 8
 	sname = "mining laser"
-	shot_sound = 'sound/weapons/rocket.ogg'
+	shot_sound = 'sound/weapons/cutter.ogg'
+	shot_volume = 30
 	damage_type = D_BURNING
 	brightness = 0.8
 	window_pass = 0
@@ -398,12 +399,12 @@ toxic - poisons
 	window_pass = 0
 	icon_state = ""
 	damage_type = D_SLASHING
-	power = 35
+	power = 45
 	cost = 1
 	brightness = 0
 	sname = "drill bit"
-	shot_sound = 'sound/machines/engine_grump1.ogg'
-	shot_volume = 45
+	shot_sound = 'sound/machines/rock_drill.ogg'
+	shot_volume = 20
 	dissipation_delay = 1
 	dissipation_rate = 35
 	icon_turf_hit = null
@@ -416,7 +417,7 @@ toxic - poisons
 			var/turf/simulated/wall/asteroid/T = hit
 			if (power <= 0)
 				return
-			T.damage_asteroid(round(power / 10),1)
+			T.damage_asteroid(round(power / 7),1)
 			//if(prob(60)) // raised again
 			//	T.destroy_asteroid(1)
 			//else
@@ -465,9 +466,9 @@ toxic - poisons
 		if (!istype(L))
 			return
 		if(L.getStatusDuration("burning"))
-			L.changeStatus("burning", 70)
+			L.changeStatus("burning", 7 SECONDS)
 		else
-			L.changeStatus("burning", 35)
+			L.changeStatus("burning", 3.5 SECONDS)
 
 /datum/projectile/laser/signifer_lethal
 	name = "signifer bolt"

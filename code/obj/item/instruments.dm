@@ -10,7 +10,7 @@
 	icon_state = "bike_horn"
 	inhand_image_icon = 'icons/mob/inhand/hand_instruments.dmi'
 	item_state = "bike_horn"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	p_class = 1
 	force = 2
 	throw_speed = 3
@@ -75,6 +75,8 @@
 			if (src.dog_bark)
 				for_by_tcl(G, /obj/critter/dog/george)
 					if (IN_RANGE(G, T, 6) && prob(60))
+						if(ON_COOLDOWN(G, "george howl", 10 SECONDS))
+							continue
 						G.howl()
 
 			src.post_play_effect(user)
@@ -102,7 +104,7 @@
 /* -------------------- Large Instruments -------------------- */
 
 /obj/item/instrument/large
-	w_class = 6
+	w_class = W_CLASS_GIGANTIC
 	p_class = 2 // if they're anchored you can't move them anyway so this should default to making them easy to move
 	throwforce = 40
 	density = 1
@@ -267,7 +269,7 @@
 	desc = "A horn off of a bicycle."
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 3
 	stamina_damage = 5
 	stamina_cost = 5
@@ -363,7 +365,7 @@
 	desc = "A cheap pocket instrument, good for helping time to pass."
 	icon_state = "harmonica"
 	item_state = "r_shoes"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	force = 1
 	throwforce = 3
 	stamina_damage = 2
@@ -380,14 +382,14 @@
 	desc = "A whistle. Good for getting attention."
 	icon_state = "whistle"
 	item_state = "r_shoes"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	force = 1
 	throwforce = 3
 	stamina_damage = 2
 	stamina_cost = 2
 	note_time = 20
-	sounds_instrument = list('sound/musical_instruments/Whistle_Police.ogg')
-	volume = 35
+	sounds_instrument = list('sound/items/police_whistle1.ogg', 'sound/items/police_whistle2.ogg')
+	volume = 75
 	randomized_pitch = 1
 	pick_random_note = 1
 

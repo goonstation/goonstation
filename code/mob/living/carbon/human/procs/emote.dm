@@ -52,9 +52,9 @@
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					if(src.bioHolder?.HasEffect("mute"))
-						var/pre_message = "[pick("vibrates for a moment, then stops", "opens [his_or_her(src)] mouth incredibly wide, but no sound comes out",
-						"really wants to be noticed", "emits an audible silence","lets forth the silent echoes of an empty soul","huffs and puffs with all [his_or_her(src)] might, but can't seem to make a sound",
-						"unhinges [his_or_her(src)] maw to produce a deafening, roaring lack of any noise whatsoever","flails desperately","")]..."
+						var/pre_message = "[pick("vibrates for a moment, then stops", "opens [his_or_her(src)] mouth, but no sound comes out",
+						"tries to scream, but can't", "emits an audible silence", "huffs and puffs with all [his_or_her(src)] might, but can't seem to make a sound",
+						"opens [his_or_her(src)] mouth to produce a resounding lack of noise","flails desperately","")]..."
 						message = "<B>[src]</B> [pre_message]"
 						maptext_out = "<i>[pre_message]</i>"
 						m_type = 1
@@ -277,7 +277,7 @@
 		#ifdef DATALOGGER
 						game_stats.Increment("farts")
 		#endif
-				if(src.mutantrace && src.mutantrace.name == "dwarf" && prob(1))
+				if(src.bioHolder && src.bioHolder.HasEffect("training_miner") && prob(1))
 					var/glowsticktype = pick(typesof(/obj/item/device/light/glowstick))
 					var/obj/item/device/light/glowstick/G = new glowsticktype
 					G.set_loc(src.loc)
@@ -285,6 +285,7 @@
 					var/turf/target = get_offset_target_turf(src.loc, (rand(5)-rand(5)), (rand(5)-rand(5)))
 					G.throw_at(target,5,1)
 					src.visible_message("<b>[src]</B> farts out a...glowstick?")
+
 
 			if ("salute","bow","hug","wave", "blowkiss","sidehug")
 				// visible targeted emotes
@@ -627,13 +628,13 @@
 
 			if ("hatstomp", "stomphat")
 				if (!src.restrained())
-					var/obj/item/clothing/head/helmet/HoS/hat = src.find_type_in_hand(/obj/item/clothing/head/helmet/HoS)
+					var/obj/item/clothing/head/hos_hat/hat = src.find_type_in_hand(/obj/item/clothing/head/hos_hat)
 					var/hat_or_beret = null
 					var/already_stomped = null // store the picked phrase in here
 					var/on_head = 0
 
 					if (!hat) // if the find_type_in_hand() returned 0 earlier
-						if (istype(src.head, /obj/item/clothing/head/helmet/HoS)) // maybe it's on our head?
+						if (istype(src.head, /obj/item/clothing/head/hos_hat)) // maybe it's on our head?
 							hat = src.head
 							on_head = 1
 						else // if not then never mind
@@ -1273,10 +1274,18 @@
 
 			if ("deathgasp")
 				if (!voluntary || src.emote_check(voluntary,50))
-					if (deathConfettiActive || (src.mind && src.mind.assigned_role == "Clown"))
-						src.deathConfetti()
-					if (prob(15) && !ischangeling(src) && !isdead(src)) message = "<span class='regular'><B>[src]</B> seizes up and falls limp, peeking out of one eye sneakily.</span>"
+					if (prob(15) && !ischangeling(src) && !isdead(src))
+						message = "<span class='regular'><B>[src]</B> seizes up and falls limp, peeking out of one eye sneakily.</span>"
 					else
+						if (!isdead(src))
+							#ifdef COMSIG_MOB_FAKE_DEATH
+							SEND_SIGNAL(src, COMSIG_MOB_FAKE_DEATH)
+							#endif
+
+						// Active if XMAS or manually toggled.
+						if (deathConfettiActive)
+							src.deathConfetti()
+
 						message = "<span class='regular'><B>[src]</B> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...</span>"
 						playsound(get_turf(src), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, src.get_age_pitch())
 					m_type = 1
@@ -1348,7 +1357,7 @@
 
 			if ("collapse", "trip")
 				if (!src.getStatusDuration("paralysis"))
-					src.changeStatus("paralysis", 30)
+					src.changeStatus("paralysis", 3 SECONDS)
 				message = "<B>[src]</B> [lowertext(act)]s!"
 				m_type = 2
 
@@ -1975,7 +1984,7 @@
 
 
 					if(prob(92) && (!src.reagents.has_reagent("extremedabs")))
-						dabbify(H)
+						dabbify()
 						var/get_dabbed_on = 0
 						if(locate(/mob/living) in range(1, src))
 							if(isturf(src.loc))
@@ -2014,6 +2023,18 @@
 						dab_id?.brain_damage_count += 10
 						if(src.get_brain_damage() > 60)
 							src.show_text(__red("Your head hurts!"))
+					if(locate(/obj/item/storage/bible) in src.loc)
+						if(H.limbs.l_arm)
+							src.limbs.l_arm.sever()
+							dab_id?.arm_count++
+						if(H.limbs.r_arm)
+							src.limbs.r_arm.sever()
+							dab_id?.arm_count++
+						src.limbs.r_leg?.sever()
+						src.limbs.l_leg?.sever()
+						message = "<span class='alert'>[src] does a sick dab on the bible!</span>"
+						src.visible_message("<span class='alert'>An unseen force smites [src]'s' limbs off</B>!</span>")
+						playsound(src.loc,"sound/misc/deepfrieddabs.ogg",50,0, channel=VOLUME_CHANNEL_EMOTE)
 				else
 					src.show_text("You don't know how to do that but you feel deeply ashamed for trying", "red")
 
@@ -2108,26 +2129,26 @@
 
 	src.remove_stamina(STAMINA_DEFAULT_FART_COST)
 
-/mob/living/carbon/human/proc/dabbify(var/mob/living/carbon/human/H)
+/mob/living/carbon/human/proc/dabbify()
 	if(ON_COOLDOWN(src, "dab", 2 SECONDS))
 		return
-	H.render_target = "*\ref[H]"
-	var/image/left_arm = image(null, H)
-	left_arm.render_source = H.render_target
+	src.render_target = "*\ref[src]"
+	var/image/left_arm = image(null, src)
+	left_arm.render_source = src.render_target
 	left_arm.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "r_arm"))
 	left_arm.appearance_flags = KEEP_APART
-	var/image/right_arm = image(null, H)
-	right_arm.render_source = H.render_target
+	var/image/right_arm = image(null, src)
+	right_arm.render_source = src.render_target
 	right_arm.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "l_arm"))
 	right_arm.appearance_flags = KEEP_APART
-	var/image/torso = image(null, H)
-	torso.render_source = H.render_target
+	var/image/torso = image(null, src)
+	torso.render_source = src.render_target
 	torso.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "torso"))
 	torso.appearance_flags = KEEP_APART
-	APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, "dabbify")
-	H.update_canmove()
-	H.set_dir(SOUTH)
-	H.dir_locked = TRUE
+	APPLY_MOB_PROPERTY(src, PROP_CANTMOVE, "dabbify")
+	src.update_canmove()
+	src.set_dir(SOUTH)
+	src.dir_locked = TRUE
 	sleep(0.1) //so the direction setting actually takes place
 	world << torso
 	world << right_arm
@@ -2147,10 +2168,10 @@
 		qdel(torso)
 		qdel(right_arm)
 		qdel(left_arm)
-		REMOVE_MOB_PROPERTY(H, PROP_CANTMOVE, "dabbify")
-		H.update_canmove()
-		H.dir_locked = FALSE
-		H.render_target = "\ref[H]"
+		REMOVE_MOB_PROPERTY(src, PROP_CANTMOVE, "dabbify")
+		src.update_canmove()
+		src.dir_locked = FALSE
+		src.render_target = "\ref[src]"
 
 /mob/living/proc/do_suplex(obj/item/grab/G)
 	if (!(G.state >= 1 && isturf(src.loc) && isturf(G.affecting.loc)))
@@ -2213,4 +2234,3 @@
 					G.affecting.force_laydown_standup()
 					sleep(1 SECOND) //let us do that combo shit people like with throwing
 					src.force_laydown_standup()
-

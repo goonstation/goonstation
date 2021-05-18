@@ -16,7 +16,7 @@
 
 	generatePoints(var/mult = 1)
 		if (relay)
-			relay.generatePoints(mult = 1)
+			relay.generatePoints(mult)
 
 	deductPoints(cost)
 		if (relay)
@@ -172,17 +172,17 @@
 		src.wraith = null
 		return
 
-	OnLife()
+	OnLife(var/mult)
 		if (!src.wraith)
 			return
 		if (ghoulTouchActive)
-			ghoulTouchActive--
+			ghoulTouchActive = max (ghoulTouchActive - mult, 0)
 			if (!ghoulTouchActive)
 				owner.show_message("<span class='alert'>You are no longer empowered by the netherworld.</span>")
 
 		src.wraith.Life()
 
-		owner.max_health -= 1.5
+		owner.max_health -= 1.5*mult
 
 		owner.ailments.Cut()
 		owner.take_toxin_damage(-INFINITY)
@@ -200,7 +200,7 @@
 		setalive(owner)
 
 
-		if (owner.health < -50)
+		if (owner.health < -50 || owner.max_health < -50) // Makes revenants have a definite time limit, instead of being able to just spam abilities in deepcrit.
 			boutput(owner, "<span class='alert'><strong>This vessel has grown too weak to maintain your presence.</strong></span>")
 			playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 100, 0)
 			owner.death(0) // todo: add custom death
@@ -512,7 +512,7 @@
 					holder.owner.show_message("<span class='alert'>[H] is pulled from your telekinetic grip!</span>")
 					RH.channeling = 0
 					break
-				H.changeStatus("weakened", (2 + rand(0, iterations))*10)
+				H.changeStatus("weakened", (2 + rand(0, iterations)) SECONDS)
 				H.TakeDamage("chest", 4 + rand(0, iterations), 0, 0, DAMAGE_CRUSH)
 				if (prob(40))
 					H.visible_message("<span class='alert'>[H]'s bones crack loudly!</span>", "<span class='alert'>You feel like you're about to be [pick("crushed", "destroyed", "vaporized")].</span>")

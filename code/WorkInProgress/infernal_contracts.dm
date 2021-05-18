@@ -161,7 +161,7 @@ proc/is_weak_rollable_contract(type)
 		else
 			asize++
 		acount++
-	src.playsound_local(C.loc,"sound/effects/screech.ogg", 100, 1)
+	src.playsound_local(C.loc,"sound/effects/screech.ogg", 50, 1)
 	if(C.mind)
 		shake_camera(C, 20, 16)
 		boutput(C, "<font color=red>[screamstring]</font>")
@@ -254,7 +254,8 @@ proc/is_weak_rollable_contract(type)
 	throw_speed = 1
 	throw_range = 8
 	burn_possible = 0 //Only makes sense since it's from hell.
-	w_class = 4.0
+	item_function_flags = IMMUNE_TO_ACID // we don't get a spare, better make sure it lasts.
+	w_class = W_CLASS_BULKY
 	max_wclass = 3
 	desc = "A diabolical human leather-bound briefcase, capable of holding a number of small objects and tormented souls. All those tormented souls give it a good deal of heft; you could use it as a great improvised bludgeoning weapon."
 	stamina_damage = 80 //buffed from 40
@@ -365,7 +366,7 @@ END GUIDE
 	icon_state = "scroll_seal"
 	var/uses = 4.0
 	flags = FPRINT | TABLEPASS
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	color = "#FF0000"
@@ -535,7 +536,7 @@ obj/item/contract/wrestle
 			boutput(user, "<span class='notice'>Oh cripes, looks like your years of drug abuse caught up with you! </span>")
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 			user.visible_message("<span class='alert'>[user]'s pupils dilate.</span>")
-			user.changeStatus("stunned", 1000)
+			user.changeStatus("stunned", 100 SECONDS)
 			ticker.mode.Agimmicks.Add(user)
 
 		return 1
@@ -766,6 +767,18 @@ obj/item/contract/hair
 			return 0
 		SPAWN_DBG(1 DECI SECOND)
 			user.traitHolder.addTrait("contract_hair")
+
+		return 1
+
+obj/item/contract/limbs
+	desc = "This contract is really just a sketch of one of those inflatable air tube dancer things you see near used pod dealerships with some signature fields tacked onto the bottom."
+
+
+	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
+		if(!..())
+			return 0
+		SPAWN_DBG(1 DECI SECOND)
+			user.traitHolder.addTrait("contract_limbs")
 
 		return 1
 

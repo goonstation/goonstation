@@ -9,6 +9,7 @@
 	density = 1
 	anchored = 1
 	mats = 20
+	req_access = list(access_heads)
 	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	flags = NOSPLASH
@@ -356,7 +357,12 @@
 				left: 0;
 				right: 0;
 				}
-
+			.product .delete {
+				color: #c44;
+				background: #222;
+				padding: 0.25em 0.5em;
+				border-radius: 10px;
+				}
 			.required div {
 				position: absolute;
 				top: 0;
@@ -378,11 +384,16 @@
 			function product(ref) {
 				window.location = "?src=\ref[src];disp=" + ref;
 			}
+
+			function delete_product(ref) {
+				window.location = "?src=\ref[src];delete=1;disp=" + ref;
+			}
 		</script>
 		"}
 
 
 		var/list/dat = list()
+		var/delete_allowed = src.allowed(usr)
 
 		if (src.panelopen || isAI(user))
 			var/list/manuwires = list(
@@ -438,6 +449,7 @@
 
 		// Then make it
 		var/can_be_made = 0
+		var/delete_link
 		for(var/datum/manufacture/A in products)
 			var/list/mats_used = get_materials_needed(A)
 
@@ -447,6 +459,11 @@
 				continue
 
 			can_be_made = (mats_used.len >= A.item_paths.len)
+			if(delete_allowed && src.download.Find(A))
+				delete_link = {"<span class='delete' onclick='delete_product("\ref[A]");'>DELETE</span>"}
+
+			else
+				delete_link = ""
 
 			var/icon_text = "<img class='icon'>"
 			// @todo probably refactor this since it's copy pasted twice now.
@@ -479,9 +496,11 @@
 			<strong>[A.name]</strong>
 			<div class='required'><div>[material_text.Join("<br>")]</div></div>
 			[icon_text]
+			[delete_link]
 			<span class='mats'>[material_count] mat.</span>
 			<span class='time'>[A.time && src.speed ? round(A.time / src.speed / 10, 0.1) : "??"] sec.</span>
 		</div>"}
+
 
 		dat += "</div><div id='info'>"
 		dat += build_material_list(user)
@@ -646,7 +665,18 @@
 				if (src.action_bar)
 					src.action_bar.interrupt(INTERRUPT_ALWAYS)
 
-			if (href_list["disp"])
+			if (href_list["delete"])
+				if(!src.allowed(usr))
+					boutput(usr, "<span class='alert'>Access denied.</span>")
+					return
+				var/datum/manufacture/I = locate(href_list["disp"])
+				if (!istype(I,/datum/manufacture/mechanics/))
+					boutput(usr, "<span class='alert'>Cannot delete this schematic.</span>")
+					return
+				last_queue_op = world.time
+				if(alert("Are you sure you want to remove [I.name] from the [src]?",,"Yes","No") == "Yes")
+					src.download -= I
+			else if (href_list["disp"])
 				var/datum/manufacture/I = locate(href_list["disp"])
 				if (!istype(I,/datum/manufacture/))
 					return
@@ -675,13 +705,6 @@
 					src.begin_work(1)
 					src.updateUsrDialog()
 					return
-
-			/*if (href_list["delete"])
-				var/datum/manufacture/I = locate(href_list["disp"])
-				if (!istype(I,/datum/manufacture/mechanics/))
-					boutput(usr, "<span class='alert'>Cannot delete this schematic.</span>")
-					return
-				src.download -= I*/
 
 			if (href_list["ejectbeaker"])
 				var/obj/item/reagent_containers/glass/beaker/B = locate(href_list["ejectbeaker"])
@@ -1896,9 +1919,9 @@
 	desc = "An old manilla folder covered in stains. It looks like it'll fall apart at the slightest touch."
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "folder"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throwforce = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 10
 
@@ -1945,6 +1968,27 @@
 	icon_state = "blueprint"
 	desc = "Seems like theres traces of charcoal on the paper. Huh."
 	blueprint = /datum/manufacture/alastor
+
+
+/******************** Spatial Interdictor *******************/
+
+/obj/item/paper/manufacturer_blueprint/interdictor_frame
+	name = "Interdictor Frame Kit"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "artifact_form"
+	blueprint = /datum/manufacture/interdictor_frame
+
+/obj/item/paper/manufacturer_blueprint/interdictor_rod_lambda
+	name = "Lambda Phase-Control Rod"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "artifact_form"
+	blueprint = /datum/manufacture/interdictor_rod_lambda
+
+/obj/item/paper/manufacturer_blueprint/interdictor_rod_sigma
+	name = "Sigma Phase-Control Rod"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "artifact_form"
+	blueprint = /datum/manufacture/interdictor_rod_sigma
 
 // Fabricator Defines
 

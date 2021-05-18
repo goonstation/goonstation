@@ -50,6 +50,8 @@
 
 /datum/titlecard/proc/set_maptext(id, text)
 	maptext_areas[id] = text
+	if(isnull(pregameHTML))
+		return
 	if (last_pregame_html == pregameHTML)
 		for(var/client/C)
 			if(istype(C.mob, /mob/new_player))
@@ -66,6 +68,8 @@
 
 /datum/titlecard/proc/send_lobby_text(client/C)
 	if (last_pregame_html != pregameHTML)
+		return
+	if(isnull(pregameHTML))
 		return
 
 	for (var/id in maptext_areas)

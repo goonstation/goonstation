@@ -1,7 +1,7 @@
 /obj/item/clothing
 	name = "clothing"
 	//var/obj/item/clothing/master = null
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	var/see_face = 1
 

@@ -15,7 +15,7 @@
 	var/toggle = 1
 	var/force_dud = 0
 
-	w_class = 6 /// HEH
+	w_class = W_CLASS_GIGANTIC /// HEH
 	p_class = 3 /// H E H
 	mats = 5
 
@@ -156,7 +156,8 @@
 				else
 					flags &= ~ONBACK
 					var/turf/location = get_turf(src)
-					new /obj/item/cable_coil/cut/small(location)
+					var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(location)
+					C.amount = 2
 					boutput(usr, "<span class='notice'>You detach the loops of wire from [src]!</span>")
 					update_icon()
 
@@ -283,7 +284,7 @@
 					shake_camera(L,10,32)
 					boutput(L, "<span class='alert'>You are sent flying!</span>")
 
-					L.changeStatus("weakened", stun_time * 10)
+					L.changeStatus("weakened", stun_time SECONDS)
 					while (throw_repeat > 0)
 						throw_repeat--
 						step_away(L,get_turf(src),throw_speed)

@@ -148,6 +148,7 @@ ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command
 	linkcolor = "#00CC00"
 	slot_card = /obj/item/card/id/command
+	map_can_autooverride = 0
 
 /datum/job/command/captain
 	name = "Captain"
@@ -195,7 +196,7 @@ ABSTRACT_TYPE(/datum/job/command)
 		slot_back = /obj/item/storage/backpack/NT
 		slot_mask = /obj/item/clothing/mask/gas
 		slot_eyes = /obj/item/clothing/glasses/thermal
-		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/camera_test,/obj/item/gun/energy/egun)
+		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/camera,/obj/item/gun/energy/egun)
 
 		special_setup(var/mob/living/carbon/human/M)
 			..()
@@ -261,7 +262,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_poc1 = /obj/item/requisition_token/security
 	slot_poc2 = /obj/item/storage/security_pouch //replaces sec starter kit
 	slot_foot = /obj/item/clothing/shoes/swat
-	slot_head = /obj/item/clothing/head/helmet/HoS
+	slot_head = /obj/item/clothing/head/hos_hat
 	slot_ears = /obj/item/device/radio/headset/command/hos
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 
@@ -274,7 +275,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_jump = /obj/item/clothing/under/rank/head_of_securityold
 	slot_suit = /obj/item/clothing/suit/armor/vest
 	slot_foot = /obj/item/clothing/shoes/swat
-	slot_head = /obj/item/clothing/head/helmet/HoS
+	slot_head = /obj/item/clothing/head/hos_hat
 	slot_ears = /obj/item/device/radio/headset/command/hos
 	slot_eyes = /obj/item/clothing/glasses/sunglasses/sechud
 #endif
@@ -751,8 +752,8 @@ ABSTRACT_TYPE(/datum/job/engineering)
 		if (!M)
 			return
 		M.bioHolder.AddEffect("training_miner")
-		if (prob(20) && !M.mutantrace)
-			M.bioHolder.AddEffect("dwarf", magical=1) // heh
+		if(prob(20))
+			M.bioHolder.AddEffect("dwarf", magical=1)
 
 /datum/job/engineering/mechanic
 	name = "Mechanic"
@@ -987,6 +988,10 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		if (!M)
 			return
+
+		// Yaaaaaay!
+		M.AddComponent(/datum/component/death_confetti)
+
 		M.bioHolder.AddEffect("clumsy", magical=1)
 		if (prob(50))
 			M.bioHolder.AddEffect("accent_comic", magical=1)
@@ -1264,6 +1269,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	wages = PAY_UNTRAINED
 	limit = 0
 	slot_jump = /obj/item/clothing/under/misc/barber
+	slot_head = /obj/item/clothing/head/boater_hat
 	slot_foot = /obj/item/clothing/shoes/black
 	slot_poc1 = /obj/item/scissors
 	slot_poc2 = /obj/item/razor_blade
@@ -1300,7 +1306,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_poc1 = /obj/item/camera_film
 	slot_poc2 = /obj/item/spacecash/random/tourist // Exact amount is randomized.
 	slot_foot = /obj/item/clothing/shoes/tourist
-	slot_lhan = /obj/item/camera_test
+	slot_lhan = /obj/item/camera
 	slot_rhan = /obj/item/storage/photo_album
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -1567,7 +1573,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_jump = /obj/item/clothing/under/suit/red
 	slot_head = /obj/item/clothing/head/fedora
 	slot_lhan = /obj/item/storage/briefcase
-	slot_poc1 = /obj/item/camera_test
+	slot_poc1 = /obj/item/camera
 	slot_foot = /obj/item/clothing/shoes/brown
 	items_in_backpack = list(/obj/item/camera_film/large)
 
@@ -2357,6 +2363,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
 	receives_badge = 1
+	recieves_miranda = 1
 	recieves_implant = /obj/item/implant/health
 	slot_back = /obj/item/storage/backpack/NT
 	slot_belt = /obj/item/storage/belt/security/ntso //special secbelt subtype that spawns with the NTSO gear inside
@@ -2410,8 +2417,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		if (!M)
 			return
 		M.bioHolder.AddEffect("training_miner")
-		if (prob(20) && !M.mutantrace)
-			M.bioHolder.AddEffect("dwarf", magical=1) // heh
 
 /datum/job/special/machoman
 	name = "Macho Man"
@@ -2599,7 +2604,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_poc1 = /obj/item/camera_film
 	slot_poc2 = /obj/item/spacecash/random/tourist // Exact amount is randomized.
 	slot_foot = /obj/item/clothing/shoes/tourist
-	slot_lhan = /obj/item/camera_test
+	slot_lhan = /obj/item/camera
 	slot_rhan = /obj/item/storage/photo_album
 
 	special_setup(var/mob/living/carbon/human/M)

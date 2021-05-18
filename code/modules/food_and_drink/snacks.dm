@@ -182,7 +182,7 @@
 				var/mob/living/carbon/human/H = M
 				H.implant.Add(src)
 				src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
-				playsound(src.loc, "sound/weapons/slashcut.ogg", 100, 1)
+				playsound(src.loc, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
 				H.changeStatus("weakened", 2 SECONDS)
 				src.set_loc(M)
 				src.transfer_all_reagents(M)
@@ -428,7 +428,7 @@
 	needspoon = 1
 	amount = 6
 	heal_amt = 1
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	initial_volume = 100
 	food_effects = list("food_warm")
 	dropped_item = /obj/item/reagent_containers/food/drinks/bowl
@@ -628,7 +628,7 @@
 	icon_state = "cereal_box"
 	amount = 11
 	real_name = "cereal"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/prize = 10 //Chance of a rad prize inside!
 
 	New()
@@ -1153,6 +1153,18 @@
 		. = ..()
 		name = "[random_spaghetti_name()] and meatballs"
 
+/obj/item/reagent_containers/food/snacks/lasagna
+	name = "lasagna"
+	desc = "Layers of saucy, cheesy goodness."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "lasagna"
+	needfork = 1
+	heal_amt = 2
+	amount = 5
+	initial_volume = 10
+	initial_reagents = "omnizine"
+	food_effects = list("food_energized","food_hp_up","food_brute","food_burn")
+
 /obj/item/reagent_containers/food/snacks/spaghetti/pizzaghetti
 	name = "pizza-ghetti"
 	desc = "This is just- It's pizza and spaghetti on a plate? They're not even touching. What gives?"
@@ -1184,7 +1196,15 @@
 	initial_reagents = list("sugar" = 20)
 	food_effects = list("food_energized")
 	var/can_add_frosting = TRUE
-	var/list/styles = list("icing", "sprinkles")
+	var/static/list/frosting_styles = list(
+	"icing" = "icing",
+	"sprinkles" = "sprinkles",
+	"zigzags" = "zigzags",
+	"center fill" = "center",
+	"half and half icing" = "half",
+	"dipped icing"= "dipped",
+	"heart" = "heart",
+	"star" = "star")
 	var/style_step = 1
 
 	heal(var/mob/M)
@@ -1195,6 +1215,14 @@
 		else
 			..()
 
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/reagent_containers/food/snacks/plant/coconutmeat)) //currently we can only put coconut on top of donuts
+			user.u_equip(W)
+			qdel(W)
+			src.UpdateOverlays(src.SafeGetOverlayImage('icons/obj/foodNdrink/donuts.dmi', "coconut", src.layer + 0.1), "coconut") //cosmetic only; does not count towards our two frosting styles per donut
+		else
+			. = ..()
+
 	proc/add_frosting(var/obj/item/reagent_containers/food/drinks/drinkingglass/icing/tube, var/mob/user)
 		if (!src.can_add_frosting)
 			user.show_text("You feel like adding your own frosting to [src] would ruin it somehow.", "red")
@@ -1204,24 +1232,27 @@
 			user.show_text("The [tube] isn't full enough to add frosting.", "red")
 			return
 
-		if (src.style_step > length(src.styles))
+		if (src.style_step > 2) // only allow up to two frosting types on a single donut
 			user.show_text("You can't add anymore frosting.", "red")
 			return
+
+		var/frosting_type = null
+		frosting_type = input("Which frosting style would you like?", "Frosting Style", null) as null|anything in frosting_styles
+		if(frosting_type && (get_dist(src, user) <= 1))
+			frosting_type = src.frosting_styles[frosting_type]
+			var/datum/color/average = tube.reagents.get_average_color()
+			var/image/frosting_overlay = new(src.icon, frosting_type)
+			frosting_overlay.color = average.to_rgba()
+			src.UpdateOverlays(frosting_overlay, "frosting[src.style_step]")
+			user.show_text("You add some frosting to [src]", "red")
+			src.style_step += 1
+			tube.reagents.trans_to(src, 15)
+			JOB_XP(user, "Chef", 1)
 
 		// When a user also fills the donut with a syringe it can get a bit crowded in the donut.
 		if (src.reagents.is_full())
 			user.show_text("It feels like adding anything more to [src] would overfill it.", "red")
 			return
-
-		var/style = src.styles[src.style_step]
-
-		var/datum/color/average_color = tube.reagents.get_average_color()
-		var/image/overlay = new(src.icon, style)
-		overlay.color = average_color.to_rgba()
-		src.UpdateOverlays(overlay, style)
-		tube.reagents.trans_to(src, 15)
-		user.show_text("You add some [style] to [src]", "red")
-		src.style_step += 1
 
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/reagent_containers/food/drinks/drinkingglass/icing))

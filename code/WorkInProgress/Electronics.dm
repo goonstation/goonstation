@@ -6,7 +6,7 @@
 	force = 5
 	hit_type = DAMAGE_BLUNT
 	throwforce = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	pressure_resistance = 10
 	item_state = "electronic"
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -387,7 +387,7 @@
 	force = 10
 	hit_type = DAMAGE_BURN
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	pressure_resistance = 40
 	module_research = list("electronics" = 3, "engineering" = 1)
 
@@ -417,7 +417,7 @@
 	force = 2
 	hit_type = DAMAGE_BLUNT
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	pressure_resistance = 50
 	var/list/scanned = list()
 	var/viewstat = 0
@@ -462,6 +462,7 @@
 	anchored = 1
 	density = 1
 	//var/datum/electronics/electronics_items/link = null
+	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_engineering_chief)
 
 	var/processing = 0
 	var/net_id = null
@@ -586,6 +587,7 @@
 /obj/machinery/rkit/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 	var/dat
+	var/hide_allowed = src.allowed(usr)
 	dat = "<b>Ruckingenur Kit</b><HR>"
 
 	dat += "<b>Scanned Items:</b><br>"
@@ -595,7 +597,12 @@
 		if (S.item_mats && src.olde)
 			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=done'>Frame</A>"
 		else if (S.blueprint)
-			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=blueprint'>Blueprint</A>"
+			if(!S.locked || hide_allowed || src.olde)
+				dat += " * <A href='?src=\ref[src];op=\ref[S];tp=blueprint'>Blueprint</A>"
+			else
+				dat += " * Blueprint Disabled"
+		if(hide_allowed)
+			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=lock'>[S.locked ? "Locked" : "Unlocked"]</A>"
 		dat += "</small><br>"
 	dat += "<br>"
 
@@ -637,6 +644,11 @@
 								if (src)
 									new /obj/item/paper/manufacturer_blueprint(src.loc, M)
 
+			if("lock")
+				if(href_list["op"])
+					var/datum/electronics/scanned_item/O = locate(href_list["op"]) in mechanic_controls.scanned_items
+					O.locked = !O.locked
+
 		updateDialog()
 	else
 		usr.Browse(null, "window=rkit")
@@ -655,7 +667,7 @@
 	hitsound = 'sound/machines/chainsaw_green.ogg'
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_SAWING
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	module_research = list("electronics" = 3, "engineering" = 1)
 
 	proc/finish_decon(atom/target,mob/user)
@@ -674,7 +686,7 @@
 		F.viewstat = 2
 		F.secured = 2
 		F.icon_state = "dbox_big"
-		F.w_class = 4
+		F.w_class = W_CLASS_BULKY
 
 		elecflash(src,power=2)
 
@@ -700,6 +712,10 @@
 
 		if ((!O.allowed(user) || O.is_syndicate) && !(O.deconstruct_flags & DECON_BUILT))
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] without sufficient access to operate it.</span>")
+			return
+
+		if(locate(/mob/living) in O)
+			boutput(user, "<span class='alert'>You cannot deconstruct [target] while someone is inside it!</span>")
 			return
 
 		if (isrestrictedz(O.z) && !isitem(target))
@@ -819,4 +835,4 @@
 	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	hit_type = DAMAGE_BLUNT
 	tool_flags = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL

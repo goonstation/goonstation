@@ -20,8 +20,8 @@
 	flags = FPRINT | ONBELT | TABLEPASS
 	force = 10
 	throwforce = 7
-	w_class = 3
-	mats = 8
+	w_class = W_CLASS_NORMAL
+	mats = list("MET-3"=10, "CON-2"=10)
 	contraband = 4
 	stamina_damage = 15
 	stamina_cost = 21
@@ -43,8 +43,8 @@
 	var/uses_electricity = 1 // Does it use electricity? Certain interactions don't work with a wooden baton.
 	var/status = 1 //1 is on, 0 is off
 
-	var/stun_normal_weakened = 20
-	var/stun_normal_stuttering = 20
+	var/stun_normal_weakened = 15
+	var/stun_normal_stuttering = 15
 	var/stun_harm_weakened = 8 // Only used when next flag is set to 1.
 	var/instant_harmbaton_stun = 0 // Legacy behaviour for harmbaton, that is an instant knockdown.
 #ifdef USE_STAMINA_DISORIENT
@@ -281,7 +281,7 @@
 
 		// Stun the target mob.
 		if (type == "harm_classic")
-			dude_to_stun.changeStatus("weakened", src.stun_harm_weakened * 10)
+			dude_to_stun.changeStatus("weakened", src.stun_harm_weakened SECONDS)
 			dude_to_stun.force_laydown_standup()
 			random_brute_damage(dude_to_stun, src.force,1) // Necessary since the item/attack() parent wasn't called. Wait, was this armor-piercing? -Tarm
 			dude_to_stun.remove_stamina(src.stamina_damage)
@@ -293,12 +293,12 @@
 				boutput(dude_to_stun, "<span class='notice'>Thankfully, electricity doesn't do much to you in your current state.</span>")
 			else
 				if (!src.use_stamina_stun() || (src.use_stamina_stun() && ismob(dude_to_stun) && !hasvar(dude_to_stun, "stamina")))
-					dude_to_stun.changeStatus("weakened", src.stun_normal_weakened * 10)
+					dude_to_stun.changeStatus("weakened", src.stun_normal_weakened SECONDS)
 					dude_to_stun.force_laydown_standup()
 					if ((dude_to_stun.stuttering < src.stun_normal_stuttering))
 						dude_to_stun.stuttering = src.stun_normal_stuttering
 				else
-					dude_to_stun.do_disorient(src.stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 80)
+					dude_to_stun.do_disorient(src.stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 60)
 					//dude_to_stun.remove_stamina(src.stamina_damage)
 					//dude_to_stun.stamina_stun() // Must be called manually here to apply the stun instantly.
 
@@ -485,6 +485,7 @@
 	item_on = "cane"
 	item_off = "cane"
 	cell_type = /obj/item/ammo/power_cell
+	mats = list("MET-3"=10, "CON-2"=10, "gem"=1, "gold"=1)
 
 /obj/item/baton/classic
 	name = "police baton"
@@ -515,6 +516,7 @@
 	icon_state = "ntso_baton-c"
 	item_state = "ntso-baton-c"
 	force = 7
+	mats = list("MET-3"=10, "CON-2"=10, "POW-1"=5)
 	icon_on = "ntso-baton-a-1"
 	icon_off = "ntso-baton-c"
 	var/icon_off_open = "ntso-baton-a-0"
@@ -522,7 +524,7 @@
 	item_off = "ntso-baton-c"
 	var/item_off_open = "ntso-baton-d"
 	flick_baton_active = "ntso-baton-a-1"
-	w_class = 2	//2 when closed, 4 when extended
+	w_class = W_CLASS_SMALL	//2 when closed, 4 when extended
 	can_swap_cell = 0
 	status = 0
 	// stamina_based_stun_amount = 110
@@ -562,7 +564,7 @@
 					boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
 					src.state = OPEN_AND_OFF
 					src.status = 0
-					src.w_class = 4
+					src.w_class = W_CLASS_BULKY
 					src.force = 7
 					playsound(get_turf(src), "sound/misc/lightswitch.ogg", 75, 1, -1)
 					boutput(user, "<span class='notice'>The [src.name] is now open and unpowered.</span>")
@@ -575,13 +577,13 @@
 				src.state = OPEN_AND_ON
 				src.status = 1
 				boutput(user, "<span class='notice'>The [src.name] is now open and on.</span>")
-				src.w_class = 4
+				src.w_class = W_CLASS_BULKY
 				src.force = 7
 				playsound(get_turf(src), "sparks", 75, 1, -1)
 			if (OPEN_AND_ON)		//move to open/off state
 				src.state = OPEN_AND_OFF
 				src.status = 0
-				src.w_class = 4
+				src.w_class = W_CLASS_BULKY
 				src.force = 7
 				playsound(get_turf(src), "sound/misc/lightswitch.ogg", 75, 1, -1)
 				boutput(user, "<span class='notice'>The [src.name] is now open and unpowered.</span>")
@@ -589,7 +591,7 @@
 			if (OPEN_AND_OFF)		//move to closed/off state
 				src.state = CLOSED_AND_OFF
 				src.status = 0
-				src.w_class = 2
+				src.w_class = W_CLASS_SMALL
 				src.force = 1
 				boutput(user, "<span class='notice'>The [src.name] is now closed.</span>")
 				playsound(get_turf(src), "sparks", 75, 1, -1)
@@ -635,146 +637,3 @@
 #undef CLOSED_AND_OFF
 #undef OPEN_AND_ON
 #undef OPEN_AND_OFF
-
-//todo : move this out of stun baton dm lol
-/obj/item/barrier
-	name = "barrier"
-	desc = "A personal barrier. Activate this item with both hands free to use it."
-	icon = 'icons/obj/items/weapons.dmi'
-	icon_state = "barrier_0"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	item_state = "barrier0"
-	uses_multiple_icon_states = 1
-	flags = FPRINT | ONBELT | TABLEPASS
-	c_flags = EQUIPPED_WHILE_HELD
-	force = 2
-	throwforce = 6
-	w_class = 2
-	mats = 8
-	stamina_damage = 40
-	stamina_cost = 10
-	stamina_crit_chance = 0
-	hitsound = 0
-
-	can_disarm = 1
-	two_handed = 0
-	var/use_two_handed = 0
-
-	var/status = 0
-	var/obj/itemspecialeffect/barrier/E = 0
-
-	New()
-		..()
-		BLOCK_SETUP(BLOCK_ALL)
-		c_flags &= ~BLOCK_TOOLTIP
-
-	block_prop_setup(source, obj/item/grab/block/B)
-		if(src.status)
-			B.setProperty("rangedprot", 0.5)
-			B.setProperty("exploprot", 10)
-			. = ..()
-
-	proc/update_icon()
-		icon_state = status ? "barrier_1" : "barrier_0"
-		item_state = status ? "barrier1" : "barrier0"
-
-	attack_self(mob/user as mob)
-		src.add_fingerprint(user)
-
-		if (!use_two_handed || setTwoHanded(!src.status))
-			src.status = !src.status
-
-			playsound(get_turf(src), "sparks", 75, 1, -1)
-			if (src.status)
-				w_class = 4
-				flags &= ~ONBELT //haha NO
-				setProperty("meleeprot_all", 9)
-				setProperty("rangedprot", 1.5)
-				setProperty("movespeed", 0.3)
-				setProperty("disorient_resist", 65)
-				setProperty("disorient_resist_eye", 65)
-				setProperty("disorient_resist_ear", 50) //idk how lol ok
-				flick("barrier_a",src)
-				c_flags |= BLOCK_TOOLTIP
-
-				src.setItemSpecial(/datum/item_special/barrier)
-			else
-				w_class = 2
-				flags |= ONBELT
-				delProperty("meleeprot_all", 0)
-				delProperty("rangedprot", 0)
-				delProperty("movespeed", 0)
-				delProperty("disorient_resist", 0)
-				delProperty("disorient_resist_eye", 0)
-				delProperty("disorient_resist_ear", 0)
-				c_flags &= ~BLOCK_TOOLTIP
-
-				src.setItemSpecial(/datum/item_special/simple)
-
-			user.update_equipped_modifiers() // Call the bruteforce movement modifier proc because we changed movespeed while equipped
-
-			destroy_deployed_barrier(user)
-
-			can_disarm = src.status
-
-			src.update_icon()
-			user.update_inhands()
-		else
-			user.show_text("You need two free hands in order to activate the [src.name].", "red")
-
-		..()
-
-	attack(mob/M as mob, mob/user as mob)
-		..()
-		playsound(get_turf(src), 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 0.1, 0, 2)
-
-	dropped(mob/M)
-		..()
-		destroy_deployed_barrier(M)
-
-	move_callback(var/mob/living/M, var/turf/source, var/turf/target)
-		//don't delete the barrier while we are restrained from deploying the barrier
-		if (M.restrain_time > TIME)
-			return
-
-		if (source != target)
-			destroy_deployed_barrier(M)
-
-	proc/destroy_deployed_barrier(var/mob/living/M)
-		if (E)
-			var/obj/itemspecialeffect/barrier/EE = E
-			E = 0
-			if (islist(M.move_laying))
-				M.move_laying -= src
-			else
-				M.move_laying = null
-			EE.deactivate()
-
-/obj/item/syndicate_barrier
-	name = "Aegis Riot Barrier"
-	desc = "A personal barrier."
-	icon = 'icons/obj/items/weapons.dmi'
-	icon_state = "metal"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	item_state = "barrier0"
-	flags = FPRINT | ONBELT | TABLEPASS
-	c_flags = EQUIPPED_WHILE_HELD
-	force = 2
-	throwforce = 6
-	w_class = 2
-	stamina_damage = 30
-	stamina_cost = 10
-	stamina_crit_chance = 0
-	hitsound = 0
-
-	setupProperties()
-		..()
-		setProperty("meleeprot_all", 9)
-		setProperty("rangedprot", 1.5)
-		setProperty("movespeed", 0.3)
-		setProperty("disorient_resist", 65)
-		setProperty("disorient_resist_eye", 65)
-		setProperty("disorient_resist_ear", 50)
-
-		src.setItemSpecial(/datum/item_special/barrier)
-		BLOCK_SETUP(BLOCK_ALL)

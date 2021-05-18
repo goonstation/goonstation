@@ -1,3 +1,15 @@
+(t)fri may 14 21
+(u)Gerhazo
+(*)"Ship to Cargo" functionality on tilde-click admin menu when targetting objects or mobs.
+(t)mon may 03 21
+(u)Kyle
+(*)Very lazily added a new button to the player options menu
+(t)mon apr 19 21
+(u)Sovexe
+(*)Added a new verb, Special-Shuttle. Allows you to replace the escape shuttle with one of the available prefabs.
+(t)sun apr 11 21
+(u)Sovexe
+(*)Added a new verb, trenchify. Turns the station Z level into a trench. Hostile mobs are optional.
 (t)tue mar 09 21
 (u)BatElite
 (*)Added revert turf visuals buildmode tool, which undoes floor and wall planner replacements.

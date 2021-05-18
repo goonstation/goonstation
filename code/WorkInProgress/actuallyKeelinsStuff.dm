@@ -1550,7 +1550,7 @@ Returns:
 
 	attack_hand(mob/user as mob)
 		boutput(user, "[src] feels oddly warm ...")
-		user.changeStatus("radiation", 50)
+		user.changeStatus("radiation", 5 SECONDS)
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1848,7 +1848,7 @@ Returns:
 	icon_state = "lboard"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "ouijaboard"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 
 	New()
 		. = ..()
@@ -1861,6 +1861,8 @@ Returns:
 
 	Click(location,control,params)
 		if(isobserver(usr) || iswraith(usr))
+			if(isAIeye(usr))
+				boutput(usr, "<span class='notice'>Whoa, you can use this as an AI? Are you actually just a ghost trapped in a metal box??</span>")
 
 			if(GET_COOLDOWN(src, usr) == 0)
 				var/list/words = list()
@@ -2166,7 +2168,7 @@ Returns:
 	icon_state = "teslacannon"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/firing = 0
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -2383,7 +2385,7 @@ Returns:
 	icon_state = "pstone"
 	item_state = "injector"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		var/obj/beam_dummy/B = showLine(get_turf(src), get_turf(target), "beam", 10)
@@ -2502,7 +2504,7 @@ Returns:
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "rpg_rocket"
 	item_state = "chips"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
 	force = 5.0
@@ -2903,7 +2905,7 @@ Returns:
 				var/mob/living/carbon/human/user = usr
 				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-				user.changeStatus("stunned", 50)
+				user.changeStatus("stunned", 5 SECONDS)
 				user.changeStatus("weakened", 3 SECONDS)
 				user.changeStatus("paralysis", 2 SECONDS)
 				user.force_laydown_standup()
@@ -3699,7 +3701,7 @@ var/list/lag_list = new/list()
 	var/ckey_lock = null
 	var/z_level_lock = 0
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(ckey_lock && usr.ckey != ckey_lock)
 			boutput(user, "<span class='alert'>You are not authorized to use this item.</span>")
@@ -3809,7 +3811,7 @@ var/list/lag_list = new/list()
 	item_state = "clown"
 	density = 0
 	anchored = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	force = 0.0
 	throwforce = 0.0
 	throw_speed = 1

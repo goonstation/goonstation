@@ -2,7 +2,7 @@
 /obj/item/mine
 	name = "land mine (parent)"
 	desc = "You shouldn't be able to see this!"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	density = 0
 	layer = OBJ_LAYER
 	icon = 'icons/obj/items/weapons.dmi'
@@ -207,7 +207,7 @@
 		if (mobs.len)
 			for (var/mob/living/L in mobs)
 				if (istype(L))
-					L.changeStatus("radiation", 800)
+					L.changeStatus("radiation", 80 SECONDS)
 					if (L.bioHolder && ishuman(L))
 						L.bioHolder.RandomEffect("bad")
 					if (L != M)
@@ -246,7 +246,7 @@
 		if (mobs.len)
 			for (var/mob/living/L in mobs)
 				if (istype(L))
-					L.changeStatus("weakened", 150)
+					L.changeStatus("weakened", 15 SECONDS)
 					L.stuttering += 15
 					if (L != M)
 						src.log_me(null, L)

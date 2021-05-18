@@ -5,7 +5,7 @@
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	force = 10.0
 	hit_type = DAMAGE_BURN
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	throwforce = 12
 	throw_range = 10
 	throw_speed = 2

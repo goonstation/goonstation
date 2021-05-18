@@ -11,12 +11,11 @@
 	wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
 	icon_state = "ljacket"
 	item_state = "ljacket"
+	wear_layer = MOB_ARMOR_LAYER
 	var/fire_resist = T0C+100
 	var/over_hair = 0
-	var/over_all = 0 // shows up over all other clothes/hair/etc on people
-	var/over_back = 0
 	flags = FPRINT | TABLEPASS
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	var/restrain_wearer = 0
 	var/bloodoverlayimage = 0
 
@@ -240,7 +239,7 @@
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
-		setProperty("rangedprot", 1.5)
+		setProperty("rangedprot", 1)
 
 /obj/item/clothing/suit/bio_suit/armored/nt
 	name = "\improper NT bio suit"
@@ -250,7 +249,7 @@
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
-		setProperty("rangedprot", 1.5)
+		setProperty("rangedprot", 1)
 
 /obj/item/clothing/suit/bio_suit/paramedic/armored
 	name = "armored paramedic suit"
@@ -260,7 +259,7 @@
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
-		setProperty("rangedprot", 1.9)
+		setProperty("rangedprot", 1)
 
 
 	para_troop
@@ -538,14 +537,14 @@
 	item_state = "bedsheet"
 	layer = MOB_LAYER
 	throwforce = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throw_speed = 2
 	throw_range = 10
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|ARMS
 	see_face = 0
 	over_hair = 1
-	over_all = 1
+	wear_layer = MOB_OVERLAY_BASE
 	var/eyeholes = 0 //Did we remember to cut eyes in the thing?
 	var/cape = 0
 	var/obj/stool/bed/Bed = null
@@ -655,15 +654,13 @@
 			src.item_state = src.icon_state
 			see_face = 1
 			over_hair = 0
-			over_all = 0
-			over_back = 1
+			wear_layer = MOB_BACK_LAYER + 0.2
 		else
 			src.icon_state = "bedsheet[src.bcolor ? "-[bcolor]" : null][src.eyeholes ? "1" : null]"
 			src.item_state = src.icon_state
 			see_face = 0
 			over_hair = 1
-			over_all = 1
-			over_back = 0
+			wear_layer = MOB_OVERLAY_BASE
 
 	proc/cut_eyeholes()
 		if (src.cape || src.eyeholes)
@@ -763,7 +760,7 @@
 	icon_state = "bedcape"
 	item_state = "bedcape"
 	cape = 1
-	over_back = 1
+	wear_layer = MOB_BACK_LAYER + 0.2
 	block_vision = 0
 
 /obj/item/clothing/suit/bedsheet/cape/red
@@ -838,7 +835,7 @@
 	setupProperties()
 		..()
 		setProperty("coldprot", 20)
-		setProperty("heatprot", 50)
+		setProperty("heatprot", 45)
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 		setProperty("movespeed", 1)
@@ -852,7 +849,7 @@
 	setupProperties()
 		..()
 		setProperty("meleeprot", 6)
-		setProperty("rangedprot", 1.5)
+		setProperty("rangedprot", 1)
 
 /obj/item/clothing/suit/fire/attackby(obj/item/W, mob/user)
 	var/turf/T = user.loc
@@ -970,6 +967,13 @@
 	protective_temperature = 1000
 	over_hair = 1
 
+	New()
+		..()
+		if(!istype(get_area(src), /area/station))
+			var/nt_wear_state = "[src.wear_state || src.icon_state]-nt"
+			if(nt_wear_state in icon_states(src.wear_image_icon))
+				src.wear_state = nt_wear_state
+
 	onMaterialChanged()
 		if(src.material)
 			if(material.hasProperty("thermal"))
@@ -1002,7 +1006,7 @@
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 
-		setProperty("space_movespeed", 0.8)
+		setProperty("space_movespeed", 0.6)
 
 /obj/item/clothing/suit/space/emerg
 	name = "emergency suit"
@@ -1015,7 +1019,7 @@
 
 	setupProperties()
 		..()
-		setProperty("space_movespeed", 2)
+		setProperty("space_movespeed", 1.5)
 
 	snow // bleh whatever!!!
 		name = "snow suit"
@@ -1043,7 +1047,7 @@
 
 	setupProperties()
 		..()
-		setProperty("space_movespeed", 0.4)
+		setProperty("space_movespeed", 0.3)
 
 	blue
 		icon_state = "spacecap-blue"
@@ -1059,6 +1063,7 @@
 	item_state = "space_suit_syndicate"
 	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives."
 	contraband = 3
+	item_function_flags = IMMUNE_TO_ACID
 
 	setupProperties()
 		..()
@@ -1086,7 +1091,7 @@
 			setProperty("meleeprot", 6)
 			setProperty("rangedprot", 1)
 			setProperty("exploprot", 30)
-			setProperty("space_movespeed", 1.2)
+			setProperty("space_movespeed", 0.9)
 			setProperty("disorient_resist", 65)
 
 	specialist
@@ -1119,6 +1124,11 @@
 			desc = "A syndicate issue combat dress system, pressurized for space travel."
 			icon_state = "syndie_specialist-infiltrator"
 			item_state = "syndie_specialist-infiltrator"
+
+		setupProperties()
+			..()
+			setProperty("space_movespeed", -0.25)
+
 
 		firebrand
 			name = "specialist operative firesuit"
@@ -1301,6 +1311,7 @@
 	item_state = "cultist"
 	see_face = 0
 	magical = 1
+	over_hair = TRUE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.01
@@ -1320,7 +1331,7 @@
 		desc = "For those who have seen the yellow sign and answered its call.."
 		icon_state = "hasturcultist"
 		item_state = "hasturcultist"
-		over_all = 1
+		wear_layer = MOB_OVERLAY_BASE
 
 	nerd
 		name = "robes of dungeon mastery"
@@ -1339,7 +1350,7 @@
 	icon_state = "flockcultist"
 	item_state = "flockcultistt"
 	see_face = 0
-	over_all = 1
+	wear_layer = MOB_OVERLAY_BASE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.01
@@ -1506,21 +1517,11 @@
 	permeability_coefficient = 0
 	over_hair = 1
 
-/obj/item/clothing/suit/nursedress
-	name = "nurse dress"
-	desc = "A traditional dress worn by a nurse."
-	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
-	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
-	icon_state = "nursedress"
-	item_state = "nursedress"
-	body_parts_covered = TORSO|LEGS|ARMS
-
 /obj/item/clothing/suit/security_badge
 	name = "Security Badge"
 	desc = "An official badge for a Nanotrasen Security Worker."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "security_badge"
@@ -1540,7 +1541,7 @@
 	name = "war medal"
 	desc = ""
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "hosmedal"
 	icon_state = "hosmedal"

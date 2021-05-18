@@ -166,7 +166,7 @@
 			return
 
 		var/obj/the_item = input("Which item do you want to eat?","Matter Eater") as null|obj in items
-		if (!the_item)
+		if (!the_item || (!istype(the_item, /obj/the_server_ingame_whoa) && the_item.anchored))
 			using = 0
 			return 1
 
@@ -327,7 +327,7 @@
 		if (istype(owner.loc,/obj/))
 			var/obj/container = owner.loc
 			boutput(owner, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
-			owner.changeStatus("paralysis", 50)
+			owner.changeStatus("paralysis", 5 SECONDS)
 			owner.changeStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[owner.loc]</b> emits a loud thump and rattles a bit.</span>")
 			playsound(owner.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
@@ -369,7 +369,7 @@
 			var/prevLayer = owner.layer
 			owner.layer = EFFECTS_LAYER_BASE
 			owner.changeStatus("weakened", 10 SECONDS)
-			owner.changeStatus("stunned", 50)
+			owner.changeStatus("stunned", 5 SECONDS)
 
 			SPAWN_DBG(0)
 				for(var/i=0, i < jump_tiles, i++)
@@ -386,7 +386,7 @@
 		if (istype(owner.loc,/obj/))
 			var/obj/container = owner.loc
 			boutput(owner, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
-			owner.changeStatus("paralysis", 50)
+			owner.changeStatus("paralysis", 5 SECONDS)
 			owner.changeStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[owner.loc]</b> emits a loud thump and rattles a bit.</span>")
 			playsound(owner.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
@@ -790,7 +790,7 @@
 		boutput(read, "<span class='alert'>Somehow, you sense <b>[owner]</b> trying and failing to read your mind!</span>")
 		boutput(owner, "<span class='alert'>You are mentally overwhelmed by a huge barrage of worthless data!</span>")
 		owner.emote("scream")
-		owner.changeStatus("paralysis", 50)
+		owner.changeStatus("paralysis", 5 SECONDS)
 		owner.changeStatus("stunned", 7 SECONDS)
 		return
 
@@ -991,14 +991,14 @@
 					continue
 				boutput(V, "<span class='alert'>You are sent flying!</span>")
 
-				V.changeStatus("weakened", stun_time * 10)
+				V.changeStatus("weakened", stun_time SECONDS)
 				// why the hell was this set to 12 christ
 				while (throw_repeat > 0)
 					throw_repeat--
 					step_away(V,get_turf(owner),throw_speed)
 
 			if(owner.bioHolder.HasEffect("toxic_farts"))
-				var/turf/fart_turf = get_turf(src)
+				var/turf/fart_turf = get_turf(owner)
 				fart_turf.fluid_react_single("toxic_fart",50,airborne = 1)
 
 			SF.farting = 0
@@ -1850,7 +1850,7 @@
 		src.cloak_decloak(2)
 		return
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		if (isliving(owner))
 			var/mob/living/L = owner
@@ -1930,7 +1930,7 @@
 			src.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
 		return
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		if(!src.active) return
 		if(isliving(owner))
@@ -2141,11 +2141,11 @@
 	var/datum/targetable/geneticsAbility/shoot_limb/AB = null
 	var/stun_mode = 0 // used by discount superhero
 
-	OnLife()
+	OnLife(var/mult)
 		..()
 
 		if (count < ticks_to_explode)
-			count++
+			count += mult
 			return
 		else
 			count = 0
@@ -2179,8 +2179,8 @@
 
 	proc/hit_callback(var/datum/thrown_thing/thr)
 		for(var/mob/living/carbon/hit in get_turf(thr.thing))
-			hit.changeStatus("weakened", 150)
-			hit.changeStatus("stunned", 50)
+			hit.changeStatus("weakened", 15 SECONDS)
+			hit.changeStatus("stunned", 5 SECONDS)
 			break
 		return 0
 

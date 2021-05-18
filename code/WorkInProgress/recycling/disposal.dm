@@ -151,7 +151,7 @@
 		if(!istype(P))
 			return
 		user.show_text("<span class='alert'>You leap and slam against the inside of [P]! Ouch!</span>")
-		user.changeStatus("paralysis", 40)
+		user.changeStatus("paralysis", 4 SECONDS)
 		user.changeStatus("weakened", 4 SECONDS)
 		src.visible_message("<span class='alert'><b>[P]</b> emits a loud thump and rattles a bit.</span>")
 
@@ -1852,7 +1852,12 @@
 	src.streak_cleanable(dirs)
 
 
-
+/obj/disposaloutlet/random_range
+	var/min_range = 1
+	var/max_range = 6
+	expel(obj/disposalholder/H)
+		src.throw_range = rand(min_range, max_range)
+		. = ..()
 
 /obj/disposaloutlet/artifact
 	throw_range = 10

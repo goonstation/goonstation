@@ -13253,28 +13253,6 @@
 /obj/decal/garland,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"awS" = (
-/obj/table/wood/auto,
-/obj/item/camera_test,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/secure/sbriefcase,
-/obj/item/device/audio_log,
-/obj/item/audio_tape{
-	pixel_y = 5
-	},
-/obj/item/audio_tape{
-	pixel_y = 5
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname  - SS13"
-	},
-/turf/simulated/floor/redblack{
-	dir = 9
-	},
-/area/station/security/detectives_office)
 "awT" = (
 /obj/machinery/light{
 	dir = 1;
@@ -14456,7 +14434,7 @@
 	pixel_y = 24
 	},
 /obj/table/round,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_y = 16
 	},
 /obj/item/reagent_containers/food/drinks/mug/random_color{
@@ -16737,14 +16715,6 @@
 	icon_state = "fpurple1"
 	},
 /area/station/crew_quarters/bar)
-"aEy" = (
-/obj/table/wood/auto,
-/obj/item/card_box/plain,
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fpurple1"
-	},
-/area/station/crew_quarters/bar)
 "aEz" = (
 /obj/stool/chair/wooden{
 	dir = 8
@@ -17680,11 +17650,11 @@
 	desc = "Various supplies for the bar.";
 	name = "bartending crate"
 	},
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/item/storage/firstaid/toxin,
 /obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/glass/beaker/large,
@@ -30442,40 +30412,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
-"bdm" = (
-/obj/machinery/light/emergency,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/table/wood/auto,
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/pinpointer,
-/obj/item/camera_test{
-	pixel_y = 6
-	},
-/obj/item/hand_tele,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
-"bdn" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/item/storage/secure/ssafe{
-	pixel_x = 26
-	},
-/obj/table/wood/auto,
-/obj/displaycase{
-	displayed = new /obj/item/captaingun
-	pixel_y = 8
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
 "bdo" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light/emergency{
@@ -34208,13 +34144,6 @@
 /obj/stool/bench/red/auto,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
-"bjS" = (
-/obj/table/reinforced/auto,
-/obj/decal/cleanable/dirt,
-/obj/item/card_box/plain,
-/obj/disposalpipe/segment/brig,
-/turf/simulated/floor/grime,
-/area/station/security/brig)
 "bjT" = (
 /obj/cable,
 /obj/cable{
@@ -34535,9 +34464,9 @@
 	},
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -35190,7 +35119,7 @@
 /area/station/turret_protected/Zeta)
 "bly" = (
 /obj/table/round,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_y = 16
 	},
 /obj/item/reagent_containers/food/drinks/eggnog,
@@ -35652,20 +35581,6 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/grime,
-/area/station/security/brig)
-"bmq" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/table/reinforced/auto,
-/obj/decal/cleanable/dirt,
-/obj/item/card_box/plain,
-/obj/machinery/power/data_terminal,
-/obj/disposalpipe/segment/brig{
-	dir = 4
-	},
-/obj/machinery/phone,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bmr" = (
@@ -49853,6 +49768,20 @@
 /obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"dji" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/table/reinforced/auto,
+/obj/decal/cleanable/dirt,
+/obj/item/card_box/plain,
+/obj/machinery/power/data_terminal,
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
+/obj/machinery/phone,
+/turf/simulated/floor/grime,
+/area/station/security/brig)
 "dkP" = (
 /obj/wingrille_spawn,
 /obj/decal/wreath,
@@ -49906,6 +49835,22 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
+"eYN" = (
+/obj/machinery/light/emergency,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/table/wood/auto,
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/pinpointer,
+/obj/item/camera{
+	pixel_y = 6
+	},
+/obj/item/hand_tele,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 "fPE" = (
 /obj/wingrille_spawn/reinforced,
 /obj/window_blinds,
@@ -49935,6 +49880,14 @@
 /obj/table/reinforced/auto,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"ilE" = (
+/obj/table/wood/auto,
+/obj/item/card_box/plain,
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fpurple1"
+	},
+/area/station/crew_quarters/bar)
 "irE" = (
 /obj/wingrille_spawn/reinforced,
 /obj/decal/xmas_lights,
@@ -49993,6 +49946,23 @@
 	dir = 5
 	},
 /area/station/hallway/secondary/exit)
+"lvL" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/item/storage/secure/ssafe{
+	pixel_x = 26
+	},
+/obj/table/wood/auto,
+/obj/displaycase{
+	displayed = new /obj/item/captaingunpixel_y = 8
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 "mqJ" = (
 /obj/wingrille_spawn,
 /obj/decal/xmas_lights,
@@ -50023,6 +49993,13 @@
 /obj/decal/wreath,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
+"ono" = (
+/obj/table/reinforced/auto,
+/obj/decal/cleanable/dirt,
+/obj/item/card_box/plain,
+/obj/disposalpipe/segment/brig,
+/turf/simulated/floor/grime,
+/area/station/security/brig)
 "oCF" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -50178,6 +50155,28 @@
 /obj/decal/garland,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
+"wCX" = (
+/obj/table/wood/auto,
+/obj/item/camera,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/storage/secure/sbriefcase,
+/obj/item/device/audio_log,
+/obj/item/audio_tape{
+	pixel_y = 5
+	},
+/obj/item/audio_tape{
+	pixel_y = 5
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname  - SS13"
+	},
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/station/security/detectives_office)
 "wFi" = (
 /obj/wingrille_spawn,
 /obj/decal/xmas_lights,
@@ -79148,7 +79147,7 @@ bhl
 biA
 bjP
 bjR
-bmq
+dji
 bhl
 boF
 bqb
@@ -80174,7 +80173,7 @@ bfg
 bgs
 bhr
 biE
-bjS
+ono
 bld
 bmu
 bhl
@@ -83746,7 +83745,7 @@ azw
 aBj
 aCt
 aDq
-aEy
+ilE
 aFD
 bsE
 aHw
@@ -86336,7 +86335,7 @@ bcL
 aWW
 baI
 bbS
-bdm
+eYN
 bep
 bfC
 bgK
@@ -86593,7 +86592,7 @@ aYK
 aWW
 baJ
 bbT
-bdn
+lvL
 bep
 bfD
 bgL
@@ -88620,7 +88619,7 @@ asM
 mxi
 avu
 asN
-awS
+wCX
 axK
 ayw
 ayX

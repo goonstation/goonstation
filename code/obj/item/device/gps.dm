@@ -10,7 +10,7 @@
 	var/active = 0		//probably should
 	var/atom/tracking_target = null		//unafilliated with allowtrack, which essentially just lets your gps appear on other gps lists
 	flags = FPRINT | TABLEPASS | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	m_amt = 50
 	g_amt = 100
 	mats = 2
@@ -40,6 +40,12 @@
 			. =  "Landmark: Restricted"
 		else if (T.z == 3)
 			. =  "Landmark: Debris Field"
+		else if (T.z == 5)
+			#ifdef UNDERWATER_MAP
+			. =  "Landmark: Trench"
+			#else
+			. =  "Landmark: Asteroid Field"
+			#endif
 		return
 
 	proc/show_HTML(var/mob/user)

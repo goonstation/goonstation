@@ -861,33 +861,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"abq" = (
-/obj/cable{
-	d1 = 0;
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal{
-	layer = 2
-	},
-/obj/machinery/computer3/generic/personal{
-	pixel_y = 5
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/table/auto,
-/obj/item/reagent_containers/hypospray,
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/item/item_box/postit,
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/head)
 "abr" = (
 /obj/cable{
 	d1 = 0;
@@ -15644,16 +15617,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"ayY" = (
-/obj/decal/cleanable/dirt,
-/obj/item/tile/steel,
-/obj/disposalpipe/segment/ejection{
-	dir = 8
-	},
-/obj/item/camera_test,
-/obj/decal/tile_edge/stripe/extra_big,
-/turf/simulated/floor/grime,
-/area/station/maintenance/disposal)
 "ayZ" = (
 /obj/decal/cleanable/dirt,
 /obj/landmark/start{
@@ -16171,10 +16134,6 @@
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/storage)
-"aAA" = (
-/obj/decal/poster/wallsign/medal,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/hos)
 "aAB" = (
 /obj/decal/poster/wallsign/medbay,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -16749,15 +16708,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
-"aBB" = (
-/obj/displaycase{
-	displayed = new /obj/item/captaingun
-},
-/obj/window/reinforced{
-	dir = 2
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
 "aBC" = (
 /obj/disposaloutlet{
 	dir = 1;
@@ -29359,65 +29309,6 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/security/brig)
-"bbK" = (
-/obj/storage/crate{
-	desc = "Only distantly related to the Adventure Closet.";
-	name = "Adventure Crate"
-	},
-/obj/item/paper/book/critter_compendium{
-	pixel_x = -10;
-	pixel_y = 5
-	},
-/obj/item/paper{
-	desc = "Aw dang, mooom";
-	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
-	name = "note from mom";
-	pixel_x = -10;
-	pixel_y = 5
-	},
-/obj/item/device/light/flashlight{
-	pixel_x = 7;
-	pixel_y = 9
-	},
-/obj/item/device/light/flashlight{
-	pixel_x = 7;
-	pixel_y = 5
-	},
-/obj/item/device/radio/headset/multifreq{
-	pixel_x = -4;
-	pixel_y = 13
-	},
-/obj/item/device/radio/headset/multifreq{
-	pixel_x = -5;
-	pixel_y = 9
-	},
-/obj/item/device/radio/headset/multifreq{
-	pixel_x = -6;
-	pixel_y = 5
-	},
-/obj/item/device/radio/headset/multifreq{
-	pixel_x = -7;
-	pixel_y = 1
-	},
-/obj/item/camera_test{
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/obj/item/device/audio_log{
-	pixel_x = 5;
-	pixel_y = -4
-	},
-/obj/item/reagent_containers/food/drinks/milk{
-	pixel_x = -7
-	},
-/obj/item/reagent_containers/food/snacks/sandwich/pb{
-	pixel_y = -3
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/science/teleporter)
 "bbL" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -30143,11 +30034,11 @@
 	desc = "Wow! Crate may or may not still contain bottles.";
 	name = "Bottles in a Crate"
 	},
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/lobby)
 "bcX" = (
@@ -34710,15 +34601,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"bmW" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 8
-	},
-/obj/table/glass/auto,
-/obj/random_item_spawner/desk_stuff,
-/obj/item/card_box/plain,
-/turf/simulated/floor/escape,
-/area/station/hallway/secondary/exit)
 "bmX" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 8
@@ -36482,6 +36364,9 @@
 	dir = 2;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/decal/poster/wallsign/medal{
+	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
@@ -47611,21 +47496,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/locker)
-"bLo" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/storage/crate/rcd/CE,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 5;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 8
-	},
-/area/station/engine/engineering/ce)
 "bLp" = (
 /obj/machinery/light{
 	dir = 8
@@ -50638,26 +50508,6 @@
 /obj/machinery/computer3/generic/personal,
 /turf/simulated/floor/carpet{
 	dir = 8;
-	icon_state = "fred2"
-	},
-/area/station/crew_quarters/info)
-"bQZ" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d1 = 0;
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/table/wood/auto,
-/obj/machinery/networked/printer{
-	print_id = "Information"
-	},
-/obj/item/item_box/postit{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/turf/simulated/floor/carpet{
-	dir = 9;
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/info)
@@ -53705,37 +53555,6 @@
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"bWh" = (
-/obj/table/auto,
-/obj/item/paper_bin{
-	pixel_x = 6;
-	pixel_y = 6
-	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = -6;
-	pixel_y = 12
-	},
-/obj/item/pen{
-	pixel_x = 8;
-	pixel_y = 6
-	},
-/obj/item/device/radio/signaler{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/device/radio/signaler{
-	pixel_x = -9
-	},
-/obj/item/camera_test{
-	pixel_x = 7;
-	pixel_y = -4
-	},
-/obj/item/device/radio/headset/multifreq{
-	pixel_x = 4;
-	pixel_y = 5
-	},
-/turf/simulated/floor,
-/area/station/science/teleporter)
 "bWi" = (
 /obj/reagent_dispensers/foamtank,
 /obj/item/storage/firstaid/toxin,
@@ -55427,7 +55246,7 @@
 /area/station/crew_quarters/fitness)
 "can" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10
+	dir = 9
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -55439,7 +55258,7 @@
 /area/station/crew_quarters/fitness)
 "cap" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 6
+	dir = 5
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -57948,22 +57767,22 @@
 	desc = "Wow! Crate may or may not still contain bottles.";
 	name = "Bottles in a Crate"
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_x = 6;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_x = -6;
 	pixel_y = 3
 	},
@@ -57983,11 +57802,11 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "cfe" = (
@@ -58065,8 +57884,8 @@
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/dropper,
 /obj/item/hand_labeler,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "cfl" = (
@@ -59928,22 +59747,6 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/security/main)
-"cii" = (
-/obj/table/auto,
-/obj/item/kitchen/food_box/donut_box{
-	desc = "It appears to be a Martian brand of donuts.";
-	name = "Robust Donuts";
-	pixel_x = 2;
-	pixel_y = 17
-	},
-/obj/item/camera_test{
-	pixel_x = -4;
-	pixel_y = -2
-	},
-/turf/simulated/floor/blue/side{
-	dir = 8
-	},
-/area/station/crew_quarters/quarters)
 "cij" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/milk{
@@ -61669,27 +61472,6 @@
 	},
 /turf/simulated/floor,
 /area/station/science/testchamber)
-"cjR" = (
-/obj/table/auto,
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/machinery/light,
-/obj/item/storage/photo_album{
-	pixel_y = -6
-	},
-/obj/item/camera_test{
-	pixel_x = -5;
-	pixel_y = 10
-	},
-/obj/item/pen/fancy{
-	pixel_x = 2;
-	pixel_y = -2
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/captain)
 "cjS" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical{
@@ -62696,7 +62478,7 @@
 	pixel_x = -9;
 	pixel_y = 1
 	},
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_y = 9
 	},
 /turf/simulated/floor/black,
@@ -62856,28 +62638,6 @@
 /obj/item/aiModule/rename,
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai_upload)
-"clv" = (
-/obj/table/reinforced/auto,
-/obj/item/clipboard{
-	pixel_x = -7;
-	pixel_y = 5
-	},
-/obj/item/item_box/postit{
-	pixel_x = -10;
-	pixel_y = 5
-	},
-/obj/item/device/radio/headset/engineer{
-	pixel_x = 7;
-	pixel_y = 8
-	},
-/obj/item/device/radio/headset/engineer{
-	pixel_x = 3;
-	pixel_y = 8
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
-/area/station/engine/engineering/ce)
 "clw" = (
 /obj/table/reinforced/auto,
 /obj/item/clipboard,
@@ -63279,24 +63039,6 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/market)
-"cme" = (
-/obj/table/reinforced/auto,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/item/item_box/postit{
-	pixel_x = 8;
-	pixel_y = 6
-	},
-/obj/item/stamp{
-	pixel_x = -4
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/black,
-/area/station/security/checkpoint)
 "cmf" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg{
@@ -63376,18 +63118,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
-"cmo" = (
-/obj/table/reinforced/auto,
-/obj/machinery/cashreg,
-/obj/item/item_box/postit,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/red,
-/area/station/security/checkpoint/arrivals)
 "cmp" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/lamp,
@@ -63955,20 +63685,6 @@
 	transform = list(-1, 0, 0, 0, 1, 0)
 	},
 /area/station/crew_quarters/cafeteria)
-"cmV" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/plate{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/item/card_box/plain{
-	pixel_x = -7;
-	pixel_y = 13
-	},
-/turf/simulated/floor/specialroom/bar/edge{
-	transform = list(-1, 0, 0, 0, 1, 0)
-	},
-/area/station/crew_quarters/cafeteria)
 "cmW" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/shaker/pepper{
@@ -64364,18 +64080,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/jazz)
-"cnv" = (
-/obj/table/wood/auto,
-/obj/item/camera_test{
-	pixel_x = -6;
-	pixel_y = 5
-	},
-/obj/item/camera_test{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/turf/simulated/floor,
-/area/station/crew_quarters/info)
 "cnw" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
@@ -64550,7 +64254,7 @@
 /area/station/crew_quarters/cafeteria)
 "cnK" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater,
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater,
 /obj/item/item_box/medical_patches/mini_styptic,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -64575,44 +64279,6 @@
 	icon_state = "fred2"
 	},
 /area/listeningpost)
-"cnN" = (
-/obj/table/wood/auto,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/item/dice{
-	pixel_x = -2;
-	pixel_y = 13
-	},
-/obj/item/dice{
-	pixel_x = -11;
-	pixel_y = 10
-	},
-/obj/item/card_box/plain{
-	pixel_x = 8;
-	pixel_y = 12
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
-	pixel_x = 8;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
-	pixel_x = 3;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/food/drinks/bottle/ntbrew{
-	pixel_x = -6;
-	pixel_y = 8
-	},
-/obj/item/clothing/head/flatcap{
-	pixel_x = -6;
-	pixel_y = -8
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
 "cnO" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/snacks/chips{
@@ -64718,13 +64384,6 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
-"cnV" = (
-/obj/table/wood/auto,
-/obj/item/storage/secure/sbriefcase,
-/obj/item/device/camera_viewer,
-/obj/item/camera_test,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "cnW" = (
 /obj/table/wood/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -64968,24 +64627,6 @@
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/grimycarpet,
 /area/ghostdrone_factory)
-"cor" = (
-/obj/table/wood/round/auto,
-/obj/disposalpipe/segment/mail{
-	dir = 8
-	},
-/obj/machinery/light/emergency{
-	dir = 1
-	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = 4;
-	pixel_y = 7
-	},
-/obj/item/item_box/postit{
-	pixel_x = -7;
-	pixel_y = 4
-	},
-/turf/simulated/floor/black,
-/area/station/bridge)
 "cos" = (
 /obj/table/wood/round/auto,
 /obj/item/clothing/gloves/yellow/unsulated{
@@ -68752,6 +68393,16 @@
 	icon_state = "aplaceholder"
 	},
 /area/space)
+"cDn" = (
+/obj/decal/cleanable/dirt,
+/obj/item/tile/steel,
+/obj/disposalpipe/segment/ejection{
+	dir = 8
+	},
+/obj/item/camera,
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/grime,
+/area/station/maintenance/disposal)
 "cDF" = (
 /obj/lattice{
 	dir = 1;
@@ -68762,6 +68413,37 @@
 "cHf" = (
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"cMk" = (
+/obj/table/auto,
+/obj/item/paper_bin{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/storage/firstaid/regular{
+	pixel_x = -6;
+	pixel_y = 12
+	},
+/obj/item/pen{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/device/radio/signaler{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/device/radio/signaler{
+	pixel_x = -9
+	},
+/obj/item/camera{
+	pixel_x = 7;
+	pixel_y = -4
+	},
+/obj/item/device/radio/headset/multifreq{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/turf/simulated/floor,
+/area/station/science/teleporter)
 "cSo" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -68885,6 +68567,15 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/armory_outside)
+"fdV" = (
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/obj/window/reinforced{
+	dir = 2
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 "feN" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 8
@@ -68933,6 +68624,18 @@
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"fTf" = (
+/obj/table/wood/auto,
+/obj/item/camera{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/camera{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/info)
 "fVb" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
@@ -68976,6 +68679,24 @@
 "hdu" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/armory_outside)
+"heo" = (
+/obj/table/wood/round/auto,
+/obj/disposalpipe/segment/mail{
+	dir = 8
+	},
+/obj/machinery/light/emergency{
+	dir = 1
+	},
+/obj/item/storage/firstaid/regular{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/obj/item/item_box/postit{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
 "hkd" = (
 /obj/cable{
 	d1 = 4;
@@ -69021,6 +68742,24 @@
 	dir = 6
 	},
 /area/station/mining/staff_room)
+"hUF" = (
+/obj/table/reinforced/auto,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/item/item_box/postit{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/stamp{
+	pixel_x = -4
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor/black,
+/area/station/security/checkpoint)
 "hUH" = (
 /obj/lattice{
 	dir = 2;
@@ -69061,6 +68800,74 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"jgU" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 8
+	},
+/obj/table/glass/auto,
+/obj/random_item_spawner/desk_stuff,
+/obj/item/card_box/plain,
+/turf/simulated/floor/escape,
+/area/station/hallway/secondary/exit)
+"jRV" = (
+/obj/storage/crate{
+	desc = "Only distantly related to the Adventure Closet.";
+	name = "Adventure Crate"
+	},
+/obj/item/paper/book/critter_compendium{
+	pixel_x = -10;
+	pixel_y = 5
+	},
+/obj/item/paper{
+	desc = "Aw dang, mooom";
+	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
+	name = "note from mom";
+	pixel_x = -10;
+	pixel_y = 5
+	},
+/obj/item/device/light/flashlight{
+	pixel_x = 7;
+	pixel_y = 9
+	},
+/obj/item/device/light/flashlight{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/device/radio/headset/multifreq{
+	pixel_x = -4;
+	pixel_y = 13
+	},
+/obj/item/device/radio/headset/multifreq{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/item/device/radio/headset/multifreq{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/device/radio/headset/multifreq{
+	pixel_x = -7;
+	pixel_y = 1
+	},
+/obj/item/camera{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/obj/item/device/audio_log{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/milk{
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/food/snacks/sandwich/pb{
+	pixel_y = -3
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/science/teleporter)
 "jTl" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -69214,6 +69021,22 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/entry)
+"lHd" = (
+/obj/table/auto,
+/obj/item/kitchen/food_box/donut_box{
+	desc = "It appears to be a Martian brand of donuts.";
+	name = "Robust Donuts";
+	pixel_x = 2;
+	pixel_y = 17
+	},
+/obj/item/camera{
+	pixel_x = -4;
+	pixel_y = -2
+	},
+/turf/simulated/floor/blue/side{
+	dir = 8
+	},
+/area/station/crew_quarters/quarters)
 "mhl" = (
 /obj/cable{
 	d1 = 2;
@@ -69230,6 +69053,18 @@
 "mvm" = (
 /turf/simulated/floor,
 /area/station/engine/engineering/ce)
+"mCM" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cashreg,
+/obj/item/item_box/postit,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor/red,
+/area/station/security/checkpoint/arrivals)
 "mGv" = (
 /obj/table/auto,
 /obj/item/reagent_containers/glass/bottle/powerplant{
@@ -69269,6 +69104,27 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"mWN" = (
+/obj/table/auto,
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/machinery/light,
+/obj/item/storage/photo_album{
+	pixel_y = -6
+	},
+/obj/item/camera{
+	pixel_x = -5;
+	pixel_y = 10
+	},
+/obj/item/pen/fancy{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/captain)
 "niB" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating,
@@ -69368,6 +69224,28 @@
 /obj/machinery/turret,
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"oum" = (
+/obj/table/reinforced/auto,
+/obj/item/clipboard{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/item_box/postit{
+	pixel_x = -10;
+	pixel_y = 5
+	},
+/obj/item/device/radio/headset/engineer{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/item/device/radio/headset/engineer{
+	pixel_x = 3;
+	pixel_y = 8
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/engine/engineering/ce)
 "pcr" = (
 /obj/machinery/door/poddoor/pyro{
 	dir = 8;
@@ -69560,6 +69438,20 @@
 "teZ" = (
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"tpj" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/plate{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/card_box/plain{
+	pixel_x = -7;
+	pixel_y = 13
+	},
+/turf/simulated/floor/specialroom/bar/edge{
+	transform = list(-1, 0, 0, 0, 1, 0)
+	},
+/area/station/crew_quarters/cafeteria)
 "tpK" = (
 /obj/grille/catwalk{
 	dir = 8
@@ -69591,6 +69483,21 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/engine/core)
+"udp" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/storage/crate/rcd/CE,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 5;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/engineering/ce)
 "unU" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8;
@@ -69621,6 +69528,13 @@
 "uPH" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/engineering/ce)
+"uYe" = (
+/obj/table/wood/auto,
+/obj/item/storage/secure/sbriefcase,
+/obj/item/device/camera_viewer,
+/obj/item/camera,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "vbk" = (
 /obj/lattice{
 	dir = 8;
@@ -69716,6 +69630,26 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"wNa" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d1 = 0;
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/table/wood/auto,
+/obj/machinery/networked/printer{
+	print_id = "Information"
+	},
+/obj/item/item_box/postit{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/info)
 "xli" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1
@@ -69740,10 +69674,75 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/security/main)
+"xYY" = (
+/obj/table/wood/auto,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/item/dice{
+	pixel_x = -2;
+	pixel_y = 13
+	},
+/obj/item/dice{
+	pixel_x = -11;
+	pixel_y = 10
+	},
+/obj/item/card_box/plain{
+	pixel_x = 8;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/bottle/ntbrew{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/clothing/head/flatcap{
+	pixel_x = -6;
+	pixel_y = -8
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/jazz)
 "ycW" = (
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"yfM" = (
+/obj/cable{
+	d1 = 0;
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal{
+	layer = 2
+	},
+/obj/machinery/computer3/generic/personal{
+	pixel_y = 5
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/table/auto,
+/obj/item/reagent_containers/hypospray,
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/item/item_box/postit,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/head)
 
 (1,1,1) = {"
 cCO
@@ -103405,7 +103404,7 @@ aIN
 boc
 aAh
 bEG
-ayY
+cDn
 baR
 cvX
 bbd
@@ -110037,7 +110036,7 @@ clP
 aWw
 bwp
 amt
-cnV
+uYe
 caG
 crQ
 aLb
@@ -110694,7 +110693,7 @@ aNL
 aOh
 uPH
 bYn
-bLo
+udp
 bZQ
 cfr
 bkl
@@ -111600,7 +111599,7 @@ bFO
 cBM
 uPH
 bRp
-clv
+oum
 cmx
 cng
 bkl
@@ -112221,7 +112220,7 @@ cuF
 cuF
 cuD
 bmy
-bmW
+jgU
 aZu
 cCO
 cCR
@@ -112439,7 +112438,7 @@ cxn
 cmX
 cmU
 boJ
-cmV
+tpj
 cnb
 aQI
 cxn
@@ -112729,7 +112728,7 @@ asr
 aUw
 aTN
 cmp
-cmo
+mCM
 aTp
 aAj
 cxn
@@ -113361,7 +113360,7 @@ cCO
 aYT
 aYT
 caI
-cnN
+xYY
 cnu
 cnt
 caI
@@ -120877,7 +120876,7 @@ cBG
 bQU
 cab
 ciq
-cii
+lHd
 bYc
 bmZ
 aRF
@@ -122488,7 +122487,7 @@ bqf
 alF
 bQj
 aVn
-abq
+yfM
 adh
 aju
 ads
@@ -124864,10 +124863,10 @@ cmd
 abR
 bqv
 cBA
-bQZ
+wNa
 bQY
 cnl
-cnv
+fTf
 cBA
 ciZ
 cjf
@@ -128811,10 +128810,10 @@ cCO
 cCO
 cCO
 aWd
-bbK
+jRV
 cqQ
 cqQ
-bWh
+cMk
 aIz
 aHR
 aqY
@@ -129376,7 +129375,7 @@ cml
 crr
 aJc
 crr
-cme
+hUF
 cuJ
 cqp
 cqp
@@ -132077,7 +132076,7 @@ ctU
 beZ
 ctU
 ctU
-aAA
+cAQ
 bqL
 beW
 ayt
@@ -134514,7 +134513,7 @@ bek
 acx
 bCA
 alr
-cjR
+mWN
 aUR
 cCO
 cCO
@@ -134814,7 +134813,7 @@ cfq
 avU
 css
 ayd
-aBB
+fdV
 coJ
 cix
 aUP
@@ -135100,7 +135099,7 @@ bQC
 amh
 bmi
 czj
-cor
+heo
 crf
 crf
 crW

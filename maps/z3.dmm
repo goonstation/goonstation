@@ -602,15 +602,13 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/radiostation/hallway)
 "abT" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/caution/northsouth,
 /area/radiostation/hallway)
 "abU" = (
-/obj/machinery/light_switch/west{
-	pixel_x = -22
-	},
 /obj/machinery/light{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /obj/table/auto,
 /obj/item/cigpacket,
@@ -719,7 +717,8 @@
 /area/radiostation/bridge)
 "acj" = (
 /obj/machinery/light{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /obj/table/auto,
 /obj/item/kitchen/food_box/donut_box{
@@ -739,6 +738,10 @@
 "acm" = (
 /obj/table/auto,
 /obj/machinery/networked/printer,
+/obj/machinery/light_switch/west{
+	dir = 4;
+	pixel_x = -22
+	},
 /turf/simulated/floor/black,
 /area/radiostation/bridge)
 "acn" = (
@@ -986,7 +989,10 @@
 /turf/simulated/floor/red/side,
 /area/radiostation/hallway)
 "ada" = (
-/turf/simulated/floor/caution/south,
+/obj/decal/tile_edge/stripe{
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor,
 /area/radiostation/hallway)
 "adb" = (
 /obj/grille/catwalk{
@@ -1035,7 +1041,8 @@
 /area/space)
 "adf" = (
 /obj/machinery/light{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/stairs,
 /area/radiostation/hallway)
@@ -1085,7 +1092,8 @@
 /area/radiostation/studio)
 "adp" = (
 /obj/machinery/light{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/stairs,
 /area/radiostation/hallway)
@@ -1117,7 +1125,6 @@
 /area/radiostation/hallway)
 "adt" = (
 /obj/wingrille_spawn/auto,
-/obj/window_blinds/cog2/right,
 /obj/machinery/light/small{
 	base_state = "radio";
 	brightness = 1.1;
@@ -1127,6 +1134,7 @@
 	pixel_y = -6;
 	removable_bulb = 0
 	},
+/obj/window_blinds/cog2,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
 "adu" = (
@@ -1146,6 +1154,10 @@
 /obj/stool/chair/couch{
 	dir = 4
 	},
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/wood/two,
 /area/radiostation/studio)
 "adx" = (
@@ -1156,9 +1168,6 @@
 	dir = 1;
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
-	},
-/obj/machinery/light/emergency{
-	dir = 1
 	},
 /turf/simulated/floor/wood/two,
 /area/radiostation/studio)
@@ -1295,7 +1304,8 @@
 "adQ" = (
 /obj/table/wood/auto,
 /obj/machinery/light{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /obj/loudspeaker{
 	layer = 4;
@@ -1360,9 +1370,8 @@
 	},
 /area/radiostation/studio)
 "adX" = (
-/obj/machinery/door/poddoor/blast{
-	autoclose = 1;
-	dir = 1;
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
 	icon_state = "bdoorleft1";
 	id = "radio_podbay1";
 	name = "Radio Ship Dock"
@@ -1428,7 +1437,8 @@
 /area/radiostation/podbay)
 "aek" = (
 /obj/machinery/light{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor,
 /area/radiostation/hallway)
@@ -1456,7 +1466,8 @@
 "aep" = (
 /obj/storage/crate/bin,
 /obj/machinery/light{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /obj/item/radio_tape/advertisement/dans_tickets,
 /obj/item/radio_tape/advertisement/grones{
@@ -1486,7 +1497,8 @@
 /area/radiostation/studio)
 "aeq" = (
 /obj/machinery/light{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/radiostation/hallway)
@@ -1511,9 +1523,8 @@
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "aeu" = (
-/obj/machinery/door/poddoor/blast{
-	autoclose = 1;
-	dir = 1;
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
 	icon_state = "bdoorleft1";
 	id = "radio_podbay2";
 	name = "Radio Ship Dock"
@@ -1549,9 +1560,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/radiostation/studio)
 "aez" = (
-/obj/machinery/door/poddoor/blast{
-	autoclose = 1;
-	dir = 1;
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
 	id = "radio_podbay1";
 	name = "Radio Ship Dock"
 	},
@@ -1671,18 +1681,16 @@
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "aeU" = (
-/obj/machinery/door/poddoor/blast{
-	autoclose = 1;
-	dir = 1;
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
 	id = "radio_podbay2";
 	name = "Radio Ship Dock"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "aeV" = (
-/obj/machinery/door/poddoor/blast{
-	autoclose = 1;
-	dir = 1;
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
 	icon_state = "bdoorright1";
 	id = "radio_podbay1";
 	name = "Radio Ship Dock"
@@ -1788,9 +1796,8 @@
 /turf/simulated/floor/plating/airless/shuttlebay,
 /area/radiostation/podbay)
 "afj" = (
-/obj/machinery/door/poddoor/blast{
-	autoclose = 1;
-	dir = 1;
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
 	icon_state = "bdoorright1";
 	id = "radio_podbay2";
 	name = "Radio Ship Dock"
@@ -2972,6 +2979,7 @@
 /area/mining/refinery)
 "aiF" = (
 /mob/living/critter/spider,
+/obj/item/storage/box/record/notaquario_mixtape1,
 /turf/simulated/floor/wood/two,
 /area/space)
 "aiG" = (
@@ -3174,9 +3182,12 @@
 	},
 /area/space)
 "ajj" = (
-/obj/noticeboard,
-/turf/simulated/wall/auto/supernorn,
-/area/radiostation/podbay)
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/red/side,
+/area/radiostation/hallway)
 "ajk" = (
 /obj/machinery/conveyor_switch{
 	id = "MINSouth";
@@ -6272,7 +6283,9 @@
 /turf/simulated/floor/plating,
 /area/buddyfactory)
 "arb" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/east{
+	dir = 4
+	},
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
@@ -6750,6 +6763,10 @@
 /area/space)
 "asa" = (
 /obj/table/auto,
+/obj/item/radio_tape/advertisement/chemistry{
+	pixel_x = 8;
+	pixel_y = 4
+	},
 /obj/item/device/reagentscanner,
 /obj/item/storage/pill_bottle/cyberpunk,
 /turf/simulated/floor/plating/damaged1,
@@ -12724,7 +12741,8 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/fakeobjects/tapedeck,
 /obj/machinery/light{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/black,
 /area/radiostation/engineering)
@@ -13243,7 +13261,8 @@
 /area/abandonedship)
 "aIR" = (
 /obj/machinery/light{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/carpet{
 	dir = 4;
@@ -15101,7 +15120,8 @@
 /area/space)
 "aNq" = (
 /obj/item/storage/wall/random{
-	pixel_x = -28;
+	dir = 4;
+	pixel_x = -32;
 	pixel_y = 0
 	},
 /turf/simulated/floor/orangeblack/side{
@@ -16687,7 +16707,8 @@
 	dir = 1
 	},
 /obj/item/storage/wall/emergency{
-	pixel_x = 26
+	dir = 8;
+	pixel_x = 32
 	},
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
@@ -16776,7 +16797,8 @@
 /area/derelict_ai_sat)
 "aRz" = (
 /obj/item/storage/wall/fire{
-	pixel_x = 26
+	dir = 8;
+	pixel_x = 32
 	},
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
@@ -16874,9 +16896,11 @@
 /area/abandonedship)
 "aRL" = (
 /obj/submachine/chef_sink/chem_sink{
-	dir = 8
+	dir = 8;
+	pixel_x = 5
 	},
 /obj/machinery/light_switch/west{
+	dir = 4;
 	pixel_x = -22
 	},
 /turf/simulated/floor/sanitary,
@@ -16915,13 +16939,6 @@
 "aRQ" = (
 /obj/table/auto,
 /obj/item/staple_gun,
-/turf/simulated/floor/white/grime,
-/area/derelict_ai_sat)
-"aRR" = (
-/obj/table/auto,
-/obj/item/camera_test{
-	pixel_y = 6
-	},
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
 "aRS" = (
@@ -17493,7 +17510,8 @@
 /area/derelict_ai_sat)
 "aTp" = (
 /obj/item/storage/wall/random{
-	pixel_x = 28;
+	dir = 8;
+	pixel_x = 32;
 	pixel_y = 0
 	},
 /obj/stool/bed,
@@ -18477,6 +18495,10 @@
 /area/abandonedmedicalship/robot_trader)
 "aWa" = (
 /obj/table/auto,
+/obj/item/radio_tape/advertisement/robotics{
+	pixel_x = 8;
+	pixel_y = 7
+	},
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
@@ -23923,7 +23945,7 @@
 /obj/submachine/chef_sink/chem_sink{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
-	pixel_x = -2
+	pixel_x = -5
 	},
 /turf/simulated/floor/purple,
 /area/radiostation/engineering)
@@ -24157,7 +24179,7 @@
 /area/salyut)
 "bkp" = (
 /obj/storage/crate,
-/obj/item/storage/box/record/clown_collection,
+/obj/item/storage/box/record/radio/chronoquest,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bkq" = (
@@ -25295,6 +25317,65 @@
 /obj/item/reagent_containers/food/snacks/breakfast,
 /turf/simulated/floor/caution/west,
 /area/mining/quarters)
+"cSD" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/radiostation/studio)
+"fkT" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/black,
+/area/radiostation/studio)
+"hUW" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/radiostation/studio)
+"hZM" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/radiostation/studio)
+"ivG" = (
+/obj/noticeboard{
+	pixel_x = 10;
+	pixel_y = 32
+	},
+/turf/simulated/floor/wood/two,
+/area/radiostation/bedroom)
+"kag" = (
+/obj/decal/tile_edge/stripe{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/red/side,
+/area/radiostation/hallway)
+"lwM" = (
+/obj/table/auto,
+/obj/item/camera{
+	pixel_y = 6
+	},
+/turf/simulated/floor/white/grime,
+/area/derelict_ai_sat)
+"npm" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/radiostation/studio)
+"qmR" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/black,
+/area/radiostation/studio)
 "qBE" = (
 /obj/lattice{
 	dir = 1;
@@ -25333,6 +25414,12 @@
 	},
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
+"uIh" = (
+/turf/simulated/wall/asteroid{
+	name = "weak compacted stone";
+	stone_color = "#575A5E"
+	},
+/area/space)
 "vrI" = (
 /obj/stool/chair,
 /turf/simulated/floor/black,
@@ -65120,7 +65207,7 @@ aQK
 aQZ
 aRp
 aRo
-aRR
+lwM
 aSl
 aRo
 aTc
@@ -78090,8 +78177,8 @@ aac
 aac
 aac
 aac
-aHr
-aHr
+uIh
+uIh
 aaa
 aaa
 aaa
@@ -107829,8 +107916,8 @@ acE
 acY
 adg
 adT
-adT
-adT
+cSD
+hZM
 adg
 adg
 adg
@@ -108129,7 +108216,7 @@ acm
 acp
 acF
 acZ
-adn
+qmR
 adu
 adx
 adK
@@ -108431,7 +108518,7 @@ acn
 acB
 acG
 acZ
-adn
+fkT
 adv
 adx
 adK
@@ -108732,7 +108819,7 @@ aat
 ach
 acp
 acH
-acZ
+ajj
 adn
 adw
 adx
@@ -109336,7 +109423,7 @@ acj
 aco
 acp
 acJ
-acZ
+kag
 adt
 ady
 adx
@@ -109640,8 +109727,8 @@ acp
 acK
 acY
 adg
-adU
-adU
+npm
+hUW
 adU
 adg
 adg
@@ -110251,8 +110338,8 @@ adO
 aej
 aeC
 aej
-ajj
-arr
+aej
+ivG
 aGx
 aGx
 aGx

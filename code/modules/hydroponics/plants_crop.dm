@@ -126,7 +126,12 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	genome = 7
 	special_proc = 1
 	assoc_reagents = list("synthflesh")
-	mutations = list(/datum/plantmutation/synthmeat/butt,/datum/plantmutation/synthmeat/limb,/datum/plantmutation/synthmeat/brain,/datum/plantmutation/synthmeat/heart,/datum/plantmutation/synthmeat/eye)
+	mutations = list(/datum/plantmutation/synthmeat/butt,/datum/plantmutation/synthmeat/limb,
+	/datum/plantmutation/synthmeat/brain,/datum/plantmutation/synthmeat/heart,
+	/datum/plantmutation/synthmeat/eye,/datum/plantmutation/synthmeat/lung,
+	/datum/plantmutation/synthmeat/appendix,/datum/plantmutation/synthmeat/pancreas,
+	/datum/plantmutation/synthmeat/liver,/datum/plantmutation/synthmeat/kidney,
+	/datum/plantmutation/synthmeat/spleen, /datum/plantmutation/synthmeat/stomach,)
 	commuts = list(/datum/plant_gene_strain/yield,/datum/plant_gene_strain/unstable)
 
 	HYPinfusionP(var/obj/item/seed/S,var/reagent)
@@ -135,7 +140,32 @@ ABSTRACT_TYPE(/datum/plant/crop)
 		if (!DNA) return
 		if (reagent == "nanites" && (DNA.mutation && istype(DNA.mutation,/datum/plantmutation/synthmeat/butt)))
 			DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/butt/buttbot)
-
+		switch(reagent)
+			if("simethicone")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/butt)
+			if("synthflesh")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/limb)
+			if("mannitol")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/brain)
+			if("blood")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/heart)
+			if("oculine")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/eye)
+			if("salbutamol")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/lung)
+			if("compost")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/appendix)
+			if("sugar")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/pancreas)
+			if("ethanol")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/liver)
+			if("urine")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/kidney)
+			if("proconvertin")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/spleen)
+			if("charcoal")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/stomach)
+				
 /datum/plant/crop/sugar
 	name = "Sugar"
 	seedcolor = "#BBBBBB"

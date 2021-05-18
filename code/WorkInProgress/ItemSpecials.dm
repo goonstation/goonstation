@@ -1041,7 +1041,7 @@
 		staminaCost = 0
 		moveDelay = 5
 		moveDelayDuration = 5
-		damageMult = 0.5
+		damageMult = 0.80
 
 		image = "dagger"
 		name = "Slice"
@@ -1051,7 +1051,7 @@
 
 		onAdd()
 			if(master)
-				staminaCost = master.stamina_cost * 0.2 //Inherits from the item.
+				staminaCost = master.stamina_cost * 1.6 //Inherits from the item.
 				overrideStaminaDamage = master.stamina_damage * 0.5
 			return
 

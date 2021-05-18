@@ -465,6 +465,24 @@
 			return
 		return 0
 
+	proc/randomize(var/target, var/mob/user, var/show_message = 1)
+		if (!src.holder || !target)
+			return 0
+		if (istext(target))
+			var/randlimb = null
+			if (target == "all" || target == "both_arms" || target == "l_arm")
+				randlimb = pick(all_valid_random_left_arms)
+				. += src.replace_with("l_arm", randlimb, user, show_message)
+			if (target == "all" || target == "both_arms" || target == "r_arm")
+				randlimb = pick(all_valid_random_right_arms)
+				. += src.replace_with("r_arm", randlimb, user, show_message)
+			if (target == "all" || target == "both_legs" || target == "r_leg")
+				randlimb = pick(all_valid_random_right_legs)
+				. += src.replace_with("r_leg", randlimb, user, show_message)
+			if (target == "all" || target == "both_legs" || target == "l_leg")
+				randlimb = pick(all_valid_random_left_legs)
+				. += src.replace_with("l_leg", randlimb, user, show_message)
+		return .
 
 
 /mob/living/carbon/human/proc/is_vampire()
@@ -810,6 +828,9 @@
 		if (!antag_removal && src.spell_soulguard)
 			newbody.bioHolder.RemoveAllEffects()
 
+	if(src.traitHolder)
+		newbody.traitHolder = src.traitHolder
+		newbody.traitHolder.owner = newbody
 	// Prone to causing runtimes, don't enable.
 /*	if (src.mutantrace && !src.spell_soulguard)
 		newbody.mutantrace = new src.mutantrace.type(newbody)*/
@@ -1167,9 +1188,9 @@
 	else
 		if (istype(src.wear_id) && src.wear_id:registered != src.real_name)
 			if (src.decomp_stage > 2)
-				src.name = "[src.name_prefix(null, 1)]Unknown (as [src.wear_id:registered])[src.name_suffix(null, 1)]"
+				src.name = "[src.name_prefix(null, 1)]Unknown[src.wear_id:registered ? " (as [src.wear_id:registered])" : ""][src.name_suffix(null, 1)]"
 			else
-				src.name = "[src.name_prefix(null, 1)][src.real_name] (as [src.wear_id:registered])[src.name_suffix(null, 1)]"
+				src.name = "[src.name_prefix(null, 1)][src.real_name][src.wear_id:registered ? " (as [src.wear_id:registered])" : ""][src.name_suffix(null, 1)]"
 		else
 			if (src.decomp_stage > 2)
 				src.name = "[src.name_prefix(null, 1)]Unknown[src.wear_id ? " (as [src.wear_id:registered])" : ""][src.name_suffix(null, 1)]"
@@ -1624,8 +1645,8 @@
 		processed = saylist(messages[2], heard_b, olocs, thickness, italics, processed, 1)
 
 	message = messages[1]
-	if(src.client && !forced)
-		phrase_log.log_phrase("whisper", message)
+	if(src.client)
+		phrase_log.log_phrase(forced ? "say" : "whisper", message)
 	for (var/mob/M in eavesdropping)
 		if (M.say_understands(src, lang_id))
 			var/message_c = stars(message)
@@ -2141,7 +2162,7 @@
 /mob/living/carbon/human/proc/can_equip(obj/item/I, slot)
 	switch (slot)
 		if (slot_l_store, slot_r_store)
-			if (I.w_class <= 2 && src.w_uniform)
+			if (I.w_class <= W_CLASS_SMALL && src.w_uniform)
 				return 1
 		if (slot_l_hand, slot_r_hand)
 			return 1
@@ -2208,12 +2229,12 @@
 		if (slot_in_backpack) // this slot is stupid
 			if (src.back && istype(src.back, /obj/item/storage))
 				var/obj/item/storage/S = src.back
-				if (S.contents.len < 7 && I.w_class <= 3)
+				if (S.contents.len < 7 && I.w_class <= W_CLASS_NORMAL)
 					return 1
 		if (slot_in_belt) // this slot is also stupid
 			if (src.belt && istype(src.belt, /obj/item/storage))
 				var/obj/item/storage/S = src.belt
-				if (S.contents.len < 7 && I.w_class <= 3)
+				if (S.contents.len < 7 && I.w_class <= W_CLASS_NORMAL)
 					return 1
 	return 0
 
@@ -3054,21 +3075,21 @@
 		if (istype(src.chest_item, /obj/item/))
 			// Determine ass and bleed damage based on item size
 			var/poopingDamage = 0
-			if (src.chest_item.w_class == 1 )
+			if (src.chest_item.w_class == W_CLASS_TINY )
 				poopingDamage = 5
 				src.show_text("<B>[src.chest_item]</B> plops out of your rear and onto the floor.")
-			else if (src.chest_item.w_class == 2 )
+			else if (src.chest_item.w_class == W_CLASS_SMALL )
 				poopingDamage = 10
 				src.show_text("You poop out <B>[src.chest_item]</B>! Your butt aches a bit.")
-			else if (src.chest_item.w_class == 3 )
+			else if (src.chest_item.w_class == W_CLASS_NORMAL )
 				poopingDamage = 20
 				src.show_text("<span class='alert'><B>[src.chest_item]</B> was shat out, that's got to hurt!</span>")
 				src.changeStatus("stunned", 2 SECONDS)
 				take_bleeding_damage(src, src, 5)
-			else if (src.chest_item.w_class == 4 || src.chest_item.w_class == 5)
+			else if (src.chest_item.w_class == W_CLASS_BULKY || src.chest_item.w_class == W_CLASS_HUGE)
 				poopingDamage = 50
 				src.show_text("<span class='alert'><B>[src.chest_item] explodes out of your ass, jesus christ!</B></span>")
-				src.changeStatus("stunned", 50)
+				src.changeStatus("stunned", 5 SECONDS)
 				take_bleeding_damage(src, src, 20)
 
 			// Deal out ass damage

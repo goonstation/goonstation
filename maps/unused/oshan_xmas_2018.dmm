@@ -8476,15 +8476,6 @@
 /obj/item/reagent_containers/food/snacks/cereal_box,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersA)
-"arQ" = (
-/obj/table/auto,
-/obj/item/camera_test,
-/obj/item/camera_test,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/quartersA)
 "arR" = (
 /obj/stool/chair/green{
 	icon_state = "chair-g";
@@ -11067,11 +11058,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/medical)
-"axE" = (
-/obj/table/reinforced/auto,
-/obj/item/card_group/plain,
-/turf/simulated/floor/carpet/arcade/half,
-/area/station/crew_quarters/clown)
 "axF" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -13745,24 +13731,6 @@
 	dir = 1
 	},
 /area/station/science/teleporter)
-"aDD" = (
-/obj/storage/crate/adventure,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/reagent_containers/food/drinks/milk,
-/obj/item/reagent_containers/food/snacks/sandwich/pb,
-/obj/item/paper{
-	desc = "Aw dang, mooom";
-	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
-	name = "note from mom"
-	},
-/obj/item/paper/book/critter_compendium,
-/turf/simulated/floor/orangeblack/side/white{
-	dir = 5
-	},
-/area/station/science/teleporter)
 "aDE" = (
 /obj/machinery/light/incandescent/netural,
 /obj/machinery/vending/coffee,
@@ -14739,9 +14707,9 @@
 /obj/storage/crate,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/decal/garland{
@@ -19217,26 +19185,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
-"aPY" = (
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/dropper,
-/obj/item/storage/firstaid/toxin,
-/obj/item/card_box/plain,
-/obj/storage/crate,
-/obj/item/reagent_containers/emergency_injector/calomel,
-/obj/item/reagent_containers/emergency_injector/calomel,
-/obj/item/device/reagentscanner,
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/decal/xmas_lights{
-	pixel_y = 32
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
 "aPZ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/baroffice)
@@ -20461,18 +20409,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
 /area/station/medical/staff)
-"aSN" = (
-/obj/table/wood/auto,
-/obj/item/reagent_containers/patch/bruise,
-/obj/item/item_box/postit,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/yellow/checker{
-	icon_state = "yellowchecker";
-	dir = 8
-	},
-/area/station/engine/engineering)
 "aSO" = (
 /obj/machinery/fluid_canister,
 /turf/simulated/floor/plating/random,
@@ -25463,15 +25399,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/darkpurple,
 /area/station/crew_quarters/data)
-"bfe" = (
-/obj/storage/crate/rcd/CE,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 26;
-	pixel_y = 1
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/ce)
 "bff" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -26485,11 +26412,11 @@
 /obj/item/reagent_containers/glass/bottle,
 /obj/item/reagent_containers/glass/bottle,
 /obj/item/reagent_containers/glass/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
@@ -29433,24 +29360,6 @@
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/snow/snowball,
 /area/station/hallway/primary/west)
-"boz" = (
-/obj/machinery/computer3/generic/secure_data{
-	name = "Security Records"
-	},
-/obj/item/device/camera_viewer,
-/obj/item/camera_test,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4";
-	pixel_y = 0
-	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "boA" = (
 /obj/landmark/gps_waypoint,
 /obj/cable{
@@ -32783,7 +32692,7 @@
 	pixel_x = 6;
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/food/drinks/bottle/xmas{
+/obj/item/reagent_containers/food/drinks/bottle/soda/xmas{
 	pixel_x = -3;
 	pixel_y = 4
 	},
@@ -32882,18 +32791,6 @@
 	dir = 1
 	},
 /area/station/bridge/hos)
-"bwt" = (
-/obj/table/wood/auto,
-/obj/item/camera_test{
-	pixel_y = 8
-	},
-/obj/item/camera_test{
-	pixel_y = 4
-	},
-/obj/item/camera_test,
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor,
-/area/station/crew_quarters/info)
 "bwu" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/market)
@@ -33006,15 +32903,6 @@
 "bwK" = (
 /turf/simulated/floor/caution/westeast,
 /area/station/mining/staff_room)
-"bwL" = (
-/obj/table/wood/round/auto,
-/obj/displaycase{
-	displayed = new /obj/item/captaingun
-	pixel_y = 8
-	},
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/carpet/purple/standard/narrow/nw,
-/area/station/crew_quarters/captain)
 "bwM" = (
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/carpet/purple/standard/narrow/T_north,
@@ -33505,15 +33393,6 @@
 	},
 /turf/simulated/floor/carpet/purple/standard/narrow/sw,
 /area/station/crew_quarters/captain)
-"bxM" = (
-/obj/table/wood/round/auto,
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/camera_test,
-/obj/item/stamp/cap,
-/turf/simulated/floor/carpet/purple/standard/narrow/T_south,
-/area/station/crew_quarters/captain)
 "bxN" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -33559,14 +33438,6 @@
 /obj/table/wood/round/auto,
 /obj/item/kitchen/food_box/donut_box,
 /turf/simulated/floor/carpet/blue/fancy/junction/ne_w,
-/area/station/bridge)
-"bxS" = (
-/obj/table/wood/round/auto,
-/obj/item/paper_bin,
-/obj/item/item_box/postit,
-/obj/item/pen/fancy,
-/obj/item/stamp,
-/turf/simulated/floor/carpet/blue/fancy/junction/nw_e,
 /area/station/bridge)
 "bxT" = (
 /obj/stool/chair/wooden{
@@ -34313,21 +34184,6 @@
 /obj/stool/bench/green,
 /turf/simulated/floor/wood,
 /area/station/bridge/customs)
-"bzP" = (
-/obj/table/wood/auto,
-/obj/item/paper_bin{
-	pixel_x = 6
-	},
-/obj/item/storage/box/crayon{
-	pixel_x = -6
-	},
-/obj/item/item_box/postit,
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/carpet{
-	icon_state = "fred2";
-	dir = 9
-	},
-/area/station/crew_quarters/info)
 "bzQ" = (
 /obj/stool/chair/couch{
 	dir = 8;
@@ -38678,9 +38534,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"bJw" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/office)
 "bJx" = (
 /turf/simulated/floor/plating/random,
 /area/station/quartermaster/office)
@@ -38698,9 +38551,6 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellow,
-/area/station/quartermaster/office)
-"bJA" = (
-/turf/simulated/wall/auto/supernorn,
 /area/station/quartermaster/office)
 "bJB" = (
 /obj/critter/walrus,
@@ -39344,7 +39194,7 @@
 	pixel_y = 4
 	},
 /obj/machinery/light/incandescent/warm,
-/obj/item/reagent_containers/food/drinks/bottle/xmas,
+/obj/item/reagent_containers/food/drinks/bottle/soda/xmas,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "bLm" = (
@@ -39921,9 +39771,6 @@
 "bMR" = (
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
-"bMS" = (
-/turf/simulated/floor/bot,
-/area/station/quartermaster/office)
 "bMT" = (
 /obj/cable{
 	icon_state = "6-9";
@@ -40155,20 +40002,6 @@
 "bNr" = (
 /obj/stool,
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor,
-/area/station/security/brig)
-"bNs" = (
-/obj/table/reinforced/auto,
-/obj/item/paper_bin{
-	pixel_x = -6
-	},
-/obj/item/pen{
-	pixel_x = -4;
-	pixel_y = 2
-	},
-/obj/item/card_box/plain{
-	pixel_x = 6
-	},
 /turf/simulated/floor,
 /area/station/security/brig)
 "bNt" = (
@@ -47746,6 +47579,163 @@
 /obj/item/reagent_containers/food/drinks/eggnog,
 /turf/simulated/floor/black,
 /area/station/security/hos)
+"dqe" = (
+/obj/table/wood/round/auto,
+/obj/displaycase{
+	displayed = new /obj/item/captaingunpixel_y = 8
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/carpet/purple/standard/narrow/nw,
+/area/station/crew_quarters/captain)
+"dME" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/patch/bruise,
+/obj/item/item_box/postit,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/yellow/checker{
+	icon_state = "yellowchecker";
+	dir = 8
+	},
+/area/station/engine/engineering)
+"dPj" = (
+/obj/table/wood/round/auto,
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/camera,
+/obj/item/stamp/cap,
+/turf/simulated/floor/carpet/purple/standard/narrow/T_south,
+/area/station/crew_quarters/captain)
+"foa" = (
+/obj/table/auto,
+/obj/item/camera,
+/obj/item/camera,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/quartersA)
+"gSY" = (
+/obj/table/wood/auto,
+/obj/item/paper_bin{
+	pixel_x = 6
+	},
+/obj/item/storage/box/crayon{
+	pixel_x = -6
+	},
+/obj/item/item_box/postit,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/carpet{
+	icon_state = "fred2";
+	dir = 9
+	},
+/area/station/crew_quarters/info)
+"iNV" = (
+/obj/table/reinforced/auto,
+/obj/item/paper_bin{
+	pixel_x = -6
+	},
+/obj/item/pen{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/card_box/plain{
+	pixel_x = 6
+	},
+/turf/simulated/floor,
+/area/station/security/brig)
+"iYP" = (
+/obj/table/wood/round/auto,
+/obj/item/paper_bin,
+/obj/item/item_box/postit,
+/obj/item/pen/fancy,
+/obj/item/stamp,
+/turf/simulated/floor/carpet/blue/fancy/junction/nw_e,
+/area/station/bridge)
+"jMF" = (
+/obj/storage/crate/rcd/CE,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 26;
+	pixel_y = 1
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/ce)
+"nqY" = (
+/obj/table/reinforced/auto,
+/obj/item/card_group/plain,
+/turf/simulated/floor/carpet/arcade/half,
+/area/station/crew_quarters/clown)
+"odd" = (
+/obj/machinery/computer3/generic/secure_data{
+	name = "Security Records"
+	},
+/obj/item/device/camera_viewer,
+/obj/item/camera,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"paI" = (
+/obj/table/wood/auto,
+/obj/item/camera{
+	pixel_y = 8
+	},
+/obj/item/camera{
+	pixel_y = 4
+	},
+/obj/item/camera,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor,
+/area/station/crew_quarters/info)
+"tgv" = (
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/dropper,
+/obj/item/storage/firstaid/toxin,
+/obj/item/card_box/plain,
+/obj/storage/crate,
+/obj/item/reagent_containers/emergency_injector/calomel,
+/obj/item/reagent_containers/emergency_injector/calomel,
+/obj/item/device/reagentscanner,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/decal/xmas_lights{
+	pixel_y = 32
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
+"tEZ" = (
+/obj/storage/crate/adventure,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/reagent_containers/food/drinks/milk,
+/obj/item/reagent_containers/food/snacks/sandwich/pb,
+/obj/item/paper{
+	desc = "Aw dang, mooom";
+	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
+	name = "note from mom"
+	},
+/obj/item/paper/book/critter_compendium,
+/turf/simulated/floor/orangeblack/side/white{
+	dir = 5
+	},
+/area/station/science/teleporter)
 
 (1,1,1) = {"
 cer
@@ -76584,7 +76574,7 @@ aMd
 aME
 aND
 aOR
-aPY
+tgv
 aQD
 bfD
 bgj
@@ -76929,11 +76919,11 @@ aqn
 aqn
 aqn
 aqn
-bJw
+bwD
 aJE
-bJw
+bwD
 aBP
-bJw
+bwD
 aqn
 aqn
 aqn
@@ -77229,18 +77219,18 @@ bxx
 bxx
 buE
 buE
-bJw
-bJw
-bJw
+bwD
+bwD
+bwD
 bMO
-bJw
+bwD
 aby
-bJw
-bJw
+bwD
+bwD
 bSj
 bSj
 bSj
-bJw
+bwD
 aqn
 aqn
 aqn
@@ -77542,7 +77532,7 @@ bJx
 aNw
 bJx
 bJx
-bJw
+bwD
 aqn
 aqn
 aqn
@@ -77833,18 +77823,18 @@ bwD
 bwD
 bwD
 bwD
-bJw
-bJw
-bJw
+bwD
+bwD
+bwD
 bMP
 bNZ
 bPf
-bJw
-bJw
+bwD
+bwD
 bSk
 bTk
 bTk
-bJw
+bwD
 aqn
 aqn
 aqn
@@ -78142,7 +78132,7 @@ bMQ
 bOa
 bPg
 bQg
-bJA
+bwE
 bSl
 bSl
 bSl
@@ -78444,7 +78434,7 @@ bMR
 bOb
 bMR
 bQh
-bJA
+bwE
 bSm
 bTl
 aPS
@@ -78746,7 +78736,7 @@ bKj
 bKj
 bPh
 bQi
-bJA
+bwE
 bSn
 bTm
 bUA
@@ -79041,14 +79031,14 @@ bwE
 bGT
 bHS
 bwE
-bJA
+bwE
 bKk
 bLL
-bMS
+bFX
 bKj
-bMS
+bFX
 bKj
-bJA
+bwE
 bSo
 bTn
 bUB
@@ -79343,14 +79333,14 @@ bwE
 bGU
 bHT
 bID
-bJA
+bwE
 bKl
 bLM
-bMS
+bFX
 bKj
-bMS
+bFX
 bPh
-bJA
+bwE
 aNT
 bTo
 bXF
@@ -79645,12 +79635,12 @@ bwE
 bGV
 bHU
 bIE
-bJA
+bwE
 bKm
 bLN
 bMT
 bOc
-bMS
+bFX
 bKj
 bRe
 bSq
@@ -79875,7 +79865,7 @@ amD
 asy
 apn
 amC
-arQ
+foa
 atf
 auv
 avK
@@ -79947,14 +79937,14 @@ bwE
 cfG
 bHU
 bIE
-bJA
+bwE
 bKn
 bLO
 bMU
 bOd
-bMS
+bFX
 bQj
-bJA
+bwE
 bSr
 bTq
 bUE
@@ -80249,14 +80239,14 @@ aay
 bGV
 bHU
 bIF
-bJA
+bwE
 bKo
 bLP
 bKj
 bOe
 bOd
 bPh
-bJA
+bwE
 bSl
 bTr
 bSl
@@ -80558,7 +80548,7 @@ bMV
 bOf
 bPi
 bQk
-bJA
+bwE
 bSs
 bTs
 bUF
@@ -80860,7 +80850,7 @@ bMW
 bOg
 bPj
 bQl
-bJA
+bwE
 aQP
 bTs
 bUG
@@ -81155,14 +81145,14 @@ bDa
 bGX
 bHU
 bIE
-bJA
-bJA
-bJA
-bJA
-bJA
-bJA
-bJA
-bJA
+bwE
+bwE
+bwE
+bwE
+bwE
+bwE
+bwE
+bwE
 bSu
 bTt
 bUG
@@ -83545,7 +83535,7 @@ blX
 bmF
 bne
 bnN
-boz
+odd
 bpe
 bpM
 bnO
@@ -90218,7 +90208,7 @@ bIW
 bJL
 bKM
 bMf
-bNs
+iNV
 bOt
 adb
 bQA
@@ -90806,7 +90796,7 @@ aqn
 aqn
 aqn
 bvA
-bwL
+dqe
 bxL
 bvA
 bzA
@@ -91109,7 +91099,7 @@ aqn
 bvA
 bvA
 bwM
-bxM
+dPj
 bvA
 bxK
 bAW
@@ -94129,7 +94119,7 @@ bva
 bvF
 bwm
 bwU
-bxS
+iYP
 byK
 bzG
 btK
@@ -100415,7 +100405,7 @@ aok
 ary
 avp
 awt
-axE
+nqY
 ary
 azQ
 aAY
@@ -100775,7 +100765,7 @@ aqn
 aqn
 bvN
 bvN
-bzP
+gSY
 bBk
 bCy
 bDM
@@ -101979,7 +101969,7 @@ aFf
 buv
 bsN
 bvN
-bwt
+paI
 bxf
 bxf
 byQ
@@ -104951,7 +104941,7 @@ azW
 aAY
 ayd
 aCF
-aDD
+tEZ
 aEs
 aFg
 aFL
@@ -106784,11 +106774,11 @@ aoc
 aJZ
 beG
 beN
-bfe
+jMF
 akN
 abH
 awc
-aSN
+dME
 aRi
 bge
 bge

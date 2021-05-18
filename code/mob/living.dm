@@ -198,7 +198,8 @@
 				boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
 	#undef VALID_MOB
 
-	if (deathConfettiActive || (src.mind && src.mind.assigned_role == "Clown")) //Active if XMAS or manually toggled. Or if theyre a clown. Clowns always have death confetti.
+	// Active if XMAS or manually toggled.
+	if (deathConfettiActive)
 		src.deathConfetti()
 
 	var/youdied = "You have died!"
@@ -276,7 +277,7 @@
 
 /mob/living/Login()
 	..()
-	if(!isdead(src))
+	if(!isdead(src) && !istype(get_area(src), /area/afterlife/bar) && !isVRghost(src) && !isghostcritter(src) && !isghostdrone(src))
 		respawn_controller.unsubscribeRespawnee(src.ckey)
 
 /mob/living/Life(datum/controller/process/mobs/parent)
@@ -500,7 +501,7 @@
 				if (use_delay)
 					src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 
-				if (src.invisibility > 0 && get_dist(src, target) > 0) // dont want to check for a cloaker every click if we're not invisible
+				if (src.invisibility > 0 && (target != src && isturf(target.loc))) // dont want to check for a cloaker every click if we're not invisible
 					for (var/obj/item/cloaking_device/I in src)
 						if (I.active)
 							I.deactivate(src)
@@ -605,7 +606,7 @@
 	setStatus("burning", new_value*10)
 
 /mob/living/proc/update_burning(var/change)
-	changeStatus("burning", change*10)
+	changeStatus("burning", change SECONDS)
 
 /mob/living/proc/update_burning_icon(var/force_remove = 0)
 	return
@@ -1188,8 +1189,6 @@
 		if (checkpath in default_mob_static_icons)
 			if (istype(default_mob_static_icons[checkpath], /image))
 				src.static_image = image(default_mob_static_icons[checkpath])
-				DEBUG_MESSAGE(bicon(src.static_image) + "<br>\ref[src.static_image]")
-				DEBUG_MESSAGE(bicon(default_mob_static_icons[checkpath]) + "<br>\ref[default_mob_static_icons[checkpath]]")
 				src.static_image.override = 1
 				src.static_image.loc = src
 				src.static_image.plane = PLANE_LIGHTING
@@ -1204,8 +1203,6 @@
 				src.static_image = getTexturedImage(src.default_static_icon ? src.default_static_icon : icon(src.icon, src.icon_state), "static", ICON_OVERLAY)
 			if (src.static_image)
 				default_mob_static_icons[checkpath] = image(src.static_image)
-				DEBUG_MESSAGE(bicon(src.static_image) + "<br>\ref[src.static_image]")
-				DEBUG_MESSAGE(bicon(default_mob_static_icons[checkpath]) + "<br>\ref[default_mob_static_icons[checkpath]]")
 				src.static_image.override = 1
 				src.static_image.loc = src
 				src.static_image.plane = PLANE_LIGHTING
@@ -1263,7 +1260,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		return
 
 	if (thing)
-		if (M.client && alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Choice", "Yes", "No") == "Yes" || M.ai_active)
+
+		if (M.client && tgui_alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Accept given [thing]", list("Yes", "No"), timeout = 10 SECONDS) == "Yes" || M.ai_active)
 			if (!thing || !M || !(get_dist(src, M) <= 1) || thing.loc != src || src.restrained())
 				return
 			src.u_equip(thing)
@@ -1945,14 +1943,14 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		if (26 to 59)
 			playsound(src.loc, "sound/effects/elec_bzzz.ogg", 50, 1)
 		if (60 to 99)
-			playsound(src.loc, "sound/effects/elec_bigzap.ogg", 50, 1)  // begin the fun arcflash
+			playsound(src.loc, "sound/effects/elec_bigzap.ogg", 40, 1)  // begin the fun arcflash
 			boutput(src, "<span class='alert'><b>[origin] discharges a violent arc of electricity!</b></span>")
 			src.apply_flash(60, 0, 10)
 			if (H)
 				H.cust_one_state = pick("xcom","bart","zapped")
 				H.set_face_icon_dirty()
 		if (100 to INFINITY)  // cogwerks - here are the big fuckin murderflashes
-			playsound(src.loc, "sound/effects/elec_bigzap.ogg", 50, 1)
+			playsound(src.loc, "sound/effects/elec_bigzap.ogg", 40, 1)
 			playsound(src.loc, "explosion", 50, 1)
 			src.flash(60)
 			if (H)

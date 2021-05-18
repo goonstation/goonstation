@@ -57,9 +57,9 @@
 	target.sleeping = 0
 	target.delStatus("resting")
 
-	target.changeStatus("stunned", -50)
-	target.changeStatus("paralysis", -50)
-	target.changeStatus("weakened", -50)
+	target.changeStatus("stunned", -5 SECONDS)
+	target.changeStatus("paralysis", -5 SECONDS)
+	target.changeStatus("weakened", -5 SECONDS)
 
 	playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 	if (src == target)
@@ -162,7 +162,7 @@
 		if (target.health < 0 || target.find_ailment_by_type(/datum/ailment/malady/flatline))
 			target.take_oxygen_deprivation(-15)
 			target.losebreath = 0
-			target.changeStatus("paralysis", -20)
+			target.changeStatus("paralysis", -2 SECONDS)
 
 			if(target.find_ailment_by_type(/datum/ailment/malady/flatline) && target.health > -50)
 				if ((target.reagents?.has_reagent("epinephrine") || target.reagents?.has_reagent("atropine")) ? prob(5) : prob(2))
@@ -982,8 +982,8 @@
 				goto process_stamina
 
 			if (damage > 0 && target != owner)
-				target.changeStatus("staggered", 50)
-				owner.changeStatus("staggered", 50)
+				target.changeStatus("staggered", 5 SECONDS)
+				owner.changeStatus("staggered", 5 SECONDS)
 			// important
 
 			if (damage_type == DAMAGE_BLUNT && prob(25 + (damage * 2)) && damage >= 8)
@@ -1061,25 +1061,6 @@
 		playsound(loc, "punch", 50, 1, 1)
 		src.visible_message("<span class='alert'><B>[attacker]'s attack bounces off [src] uselessly!</B></span>")
 		return 0
-
-	return 1
-
-/mob/living/silicon/robot/melee_attack_test(var/mob/attacker, var/obj/item/I, var/def_zone, var/disarm_check = 0)
-	if (!..())
-		return 0
-
-	if (I)
-		var/hit_chance = 50
-		if (def_zone == "chest")
-			hit_chance = 90
-		else if (def_zone == "head")
-			hit_chance = 70
-		if(!client || is_incapacitated(src))
-			hit_chance = 100
-		if (!prob(hit_chance))
-			playsound(loc, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 1, 1)
-			src.visible_message("<span class='alert'><b>[attacker] swings at [src], but misses!</b></span>")
-			return 0
 
 	return 1
 
@@ -1181,7 +1162,7 @@
 	return null
 
 /mob/living/check_attack_resistance(var/obj/item/I)
-	if (reagents?.get_reagent_amount("ethanol") >= 100 && prob(40) && (!I || I.force <= 15))
+	if (reagents?.get_reagent_amount("ethanol") >= 100 && prob(40) && !I)
 		return "<span class='alert'>You drunkenly shrug off the blow!</span>"
 	return null
 

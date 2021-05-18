@@ -180,7 +180,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			// If no item in chest, get surgeon's equipped item
 			var/obj/item/chest_item = surgeon.equipped()
 
-			if(chest_item.w_class > 3 && !(chest_item.type in chestitem_whitelist))
+			if(chest_item.w_class > W_CLASS_NORMAL && !(chest_item.type in chestitem_whitelist))
 				surgeon.show_text("<span class='alert'>[chest_item] is too big to fit into [patient]'s chest cavity.</span>")
 				return 1
 
@@ -1779,7 +1779,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!</span>", \
 		"<span class='alert'>You fumble and stab yourself in the eye with [src]!</span>")
 		surgeon.bioHolder.AddEffect("blind")
-		patient.changeStatus("weakened", 4)
+		patient.changeStatus("weakened", 0.4 SECONDS)
 
 		JOB_XP(surgeon, "Clown", 1)
 		var/damage = rand(5, 15)
@@ -2065,7 +2065,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
 		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> fumbles and clubs [him_or_her(surgeon)]self upside the head with [src]!</span>", \
 		"<span class='alert'>You fumble and club yourself in the head with [src]!</span>")
-		patient.changeStatus("weakened", 4)
+		patient.changeStatus("weakened", 0.4 SECONDS)
 
 		JOB_XP(surgeon, "Clown", 1)
 		var/damage = rand(5, 15)

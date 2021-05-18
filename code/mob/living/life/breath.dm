@@ -288,7 +288,7 @@
 			if (!owner.co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
 				owner.co2overloadtime = world.time
 			else if (world.time - owner.co2overloadtime > 120)
-				owner.changeStatus("paralysis", (4 * mult) SECONDS)
+				owner.changeStatus("paralysis", 4 SECONDS * mult)
 				owner.take_oxygen_deprivation(1.8 * mult) // Lets hurt em a little, let them know we mean business
 				if (world.time - owner.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 					owner.take_oxygen_deprivation(7 * mult)

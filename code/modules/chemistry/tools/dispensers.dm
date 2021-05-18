@@ -171,11 +171,11 @@
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			if(!src.anchored)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				src.anchored = 1
 			else
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				src.anchored = 0
 			return
 
@@ -343,7 +343,7 @@
 		user.TakeDamage("chest", 0, 150)
 		if (isliving(user))
 			var/mob/living/L = user
-			L.changeStatus("burning", 100)
+			L.changeStatus("burning", 10 SECONDS)
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -400,11 +400,11 @@
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			if(!src.anchored)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				src.anchored = 1
 			else
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				src.anchored = 0
 			return
 		var/load = 1
@@ -416,7 +416,7 @@
 
 		if(load)
 			boutput(user, "<span class='notice'>[src] mulches up [W].</span>")
-			playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
+			playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 30, 1)
 			user.u_equip(W)
 			W.dropped()
 			pool( W )
@@ -450,7 +450,7 @@
 					amount = 2
 				else if (istype(P,/obj/item/plant/))
 					amount = 15
-				playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
+				playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 30, 1)
 				src.reagents.add_reagent("poo", amount)
 				pool( P )
 				sleep(0.3 SECONDS)
@@ -569,7 +569,7 @@
 	icon_state = "itemtank"
 	item_state = "flask"
 	initial_volume = 500
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	incompatible_with_chem_dispensers = 1
 
 	var/image/fluid_image

@@ -445,7 +445,7 @@
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
 			AST.update_icon()
 
-		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"erebite",rand(2,8))
+		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"erebite",rand(1,4))
 
 /datum/mining_encounter/tel_cerenkite
 	name = "Cerenkite asteroid"

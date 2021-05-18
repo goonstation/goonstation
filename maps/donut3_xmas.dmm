@@ -2009,18 +2009,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/inner)
-"ajc" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/card_box/plain{
-	pixel_x = -5
-	},
-/obj/disposalpipe/segment/transport,
-/obj/item/item_box/assorted/ornaments{
-	pixel_x = 8;
-	pixel_y = 4
-	},
-/turf/simulated/floor/carpet/green,
-/area/station/crew_quarters/cafeteria)
 "ajf" = (
 /obj/machinery/plantpot,
 /obj/machinery/light/small/sticky{
@@ -10146,15 +10134,6 @@
 /obj/item/rubberduck,
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/captain)
-"cEO" = (
-/obj/displaycase{
-	displayed = new /obj/item/captaingun
-},
-/obj/machinery/light/incandescent/greenish{
-	dir = 1
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/bridge/captain)
 "cEY" = (
 /obj/table/reinforced/auto,
 /obj/machinery/power/data_terminal,
@@ -10945,6 +10924,11 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/carpet/green/standard/narrow/west,
 /area/station/medical/medbay/lobby)
+"cQP" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/card_box/plain,
+/turf/simulated/floor/carpet,
+/area/station/hallway/secondary/exit)
 "cQT" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/firealarm{
@@ -12805,6 +12789,14 @@
 	dir = 8
 	},
 /area/station/solar/small_backup1)
+"drK" = (
+/obj/table/wood/auto,
+/obj/item/camera{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/turf/simulated/floor/wood/six,
+/area/station/library)
 "drL" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -16012,6 +16004,15 @@
 /obj/disposalpipe/junction/right/south,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
+"esh" = (
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/obj/machinery/light/incandescent/greenish{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/bridge/captain)
 "eso" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=medbay";
@@ -20903,14 +20904,6 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/bot_storage)
-"fMy" = (
-/obj/table/wood/auto,
-/obj/item/camera_test{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/turf/simulated/floor/wood/six,
-/area/station/library)
 "fMB" = (
 /obj/lattice{
 	dir = 5;
@@ -21118,6 +21111,18 @@
 /area/station/chapel/sanctuary{
 	name = "Funeral Parlor"
 	})
+"fPf" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/card_box/plain{
+	pixel_x = -5
+	},
+/obj/disposalpipe/segment/transport,
+/obj/item/item_box/assorted/ornaments{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/turf/simulated/floor/carpet/green,
+/area/station/crew_quarters/cafeteria)
 "fPh" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -24061,20 +24066,6 @@
 "gMe" = (
 /turf/simulated/floor/stairs/wide/other,
 /area/listeningpost)
-"gMh" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/book/dwainedummies{
-	pixel_x = 5;
-	pixel_y = 2
-	},
-/obj/item/item_box/postit{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/turf/simulated/floor/carpet/green/standard/edge{
-	dir = 4
-	},
-/area/station/science/lobby)
 "gMo" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen,
@@ -31338,6 +31329,20 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
+"iUL" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/book/dwainedummies{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/item_box/postit{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/turf/simulated/floor/carpet/green/standard/edge{
+	dir = 4
+	},
+/area/station/science/lobby)
 "iUS" = (
 /turf/simulated/floor/carpet/green/fancy/narrow/T_west,
 /area/station/chapel/sanctuary{
@@ -32733,11 +32738,6 @@
 /obj/decal/mistletoe,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
-"jsA" = (
-/obj/table/glass/reinforced/auto,
-/obj/item/card_box/plain,
-/turf/simulated/floor/carpet,
-/area/station/hallway/secondary/exit)
 "jsD" = (
 /obj/wingrille_spawn/auto/tuff,
 /obj/cable,
@@ -38834,22 +38834,22 @@
 	desc = "Wow! Crate may or may not still contain bottles.";
 	name = "Bottles in a Crate"
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_x = -8;
 	pixel_y = -2
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_y = -2
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_x = 8;
 	pixel_y = -2
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_x = -4;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_x = 4;
 	pixel_y = 10
 	},
@@ -42982,6 +42982,15 @@
 "mxj" = (
 /turf/simulated/wall/auto/reinforced/jen/red,
 /area/space)
+"mxq" = (
+/obj/storage/crate/rcd/CE,
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/station/engine/engineering/ce)
 "mxs" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -50668,25 +50677,6 @@
 	dir = 1
 	},
 /area/listeningpost)
-"oKC" = (
-/obj/table/auto,
-/obj/item/device/gps{
-	pixel_x = -11;
-	pixel_y = -4
-	},
-/obj/item/device/gps{
-	pixel_x = 9;
-	pixel_y = -4
-	},
-/obj/item/device/gps{
-	pixel_x = -1;
-	pixel_y = -4
-	},
-/obj/item/camera_test{
-	pixel_y = 11
-	},
-/turf/simulated/floor/white,
-/area/station/science/teleporter)
 "oKD" = (
 /obj/machinery/light/incandescent/greenish{
 	dir = 1
@@ -70884,6 +70874,25 @@
 	icon_state = "red2"
 	},
 /area/station/security/detectives_office)
+"uBb" = (
+/obj/table/auto,
+/obj/item/device/gps{
+	pixel_x = -11;
+	pixel_y = -4
+	},
+/obj/item/device/gps{
+	pixel_x = 9;
+	pixel_y = -4
+	},
+/obj/item/device/gps{
+	pixel_x = -1;
+	pixel_y = -4
+	},
+/obj/item/camera{
+	pixel_y = 11
+	},
+/turf/simulated/floor/white,
+/area/station/science/teleporter)
 "uBg" = (
 /obj/decal/tile_edge/line/white{
 	color = "#ffccff";
@@ -76969,15 +76978,6 @@
 /obj/random_item_spawner/dressup/one_or_zero,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
-"wmX" = (
-/obj/storage/crate/rcd/CE,
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/black,
-/area/station/engine/engineering/ce)
 "wnj" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/machinery/disposal/small/north{
@@ -81991,11 +81991,11 @@
 /obj/item/reagent_containers/glass/bottle,
 /obj/item/reagent_containers/glass/bottle,
 /obj/item/reagent_containers/glass/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/machinery/light/incandescent/cool/very,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
@@ -112611,7 +112611,7 @@ lxQ
 quz
 quz
 qwp
-fMy
+drK
 sGu
 khw
 wGQ
@@ -118692,7 +118692,7 @@ fao
 kZm
 usg
 nOG
-cEO
+esh
 drM
 abM
 mDt
@@ -128308,7 +128308,7 @@ dgn
 rVl
 wec
 tmW
-ajc
+fPf
 asE
 wec
 pXc
@@ -130518,7 +130518,7 @@ hAg
 mac
 wLv
 aUo
-gMh
+iUL
 wuh
 vEX
 hQi
@@ -132020,7 +132020,7 @@ sTE
 qkQ
 jcK
 ukP
-oKC
+uBb
 xJS
 onh
 qva
@@ -139470,7 +139470,7 @@ ttx
 rcv
 kTO
 bqt
-jsA
+cQP
 cUx
 iPz
 mxH
@@ -152208,7 +152208,7 @@ dSF
 wCl
 xID
 bBs
-wmX
+mxq
 kTR
 kTR
 jQF

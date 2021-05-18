@@ -95,7 +95,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(ismob(entering))
 			var/mob/M = entering
 			if(owner.material)
-				M.changeStatus("radiation", max(round(owner.material.getProperty("radioactive") / 15),1)*10, 3)
+				M.changeStatus("radiation", max(round(owner.material.getProperty("radioactive") / 15),1) SECONDS, 3)
 		return
 
 /datum/materialProc/n_radioactive_on_enter
@@ -105,7 +105,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(ismob(entering))
 			var/mob/M = entering
 			if(owner.material)
-				M.changeStatus("n_radiation", max(round(owner.material.getProperty("n_radioactive") / 15),1)*10, 3)
+				M.changeStatus("n_radiation", max(round(owner.material.getProperty("n_radioactive") / 15),1) SECONDS, 3)
 		return
 
 /datum/materialProc/generic_reagent_onattacked
@@ -147,7 +147,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		explode_limit = limit
 		..()
 
-	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
+	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked, var/obj/attackobj, var/meleeorthrow)
 		if(explode_limit && explode_count >= explode_limit) return
 		if(world.time - lastTrigger < 50) return
 		lastTrigger = world.time
@@ -361,7 +361,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(T.density)
 			return
 		if(total_plasma <= 0)
-			if(prob(2))
+			if(prob(2) && src.owner.owner)
 				src.owner.owner.visible_message("<span class='alert>[src.owner.owner] dissipates.</span>")
 				qdel(src.owner.owner)
 			return
@@ -379,13 +379,17 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				target.air.merge(payload)
 		return
 
-/datum/materialProc/moltiz_temp
+/datum/materialProc/plasmastone_on_hit
+	execute(var/atom/owner)
+		owner.material.triggerTemp(locate(owner))
+
+/datum/materialProc/molitz_temp
 	var/total_oxygen = 200
 
 	execute(var/atom/location, var/temp, var/agent_b=FALSE)
 		if(total_oxygen <= 0) return
 		var/turf/target = get_turf(location)
-		if(ON_COOLDOWN(target, "moltiz_oxy_generate", 8 SECONDS)) return
+		if(ON_COOLDOWN(target, "molitz_oxy_generate", 8 SECONDS)) return
 
 		var/datum/gas_mixture/air = target.return_air()
 		if(!air) return
@@ -415,12 +419,12 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		target.assume_air(payload)
 		return
 
-/datum/materialProc/moltiz_temp/agent_b
+/datum/materialProc/molitz_temp/agent_b
 	execute(var/atom/location, var/temp)
 		..(location, temp, TRUE)
 		return
 
-/datum/materialProc/moltiz_exp
+/datum/materialProc/molitz_exp
 	execute(var/atom/location, var/sev)
 		var/turf/target = get_turf(location)
 		if(sev > 0 && sev < 4)
@@ -429,6 +433,10 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			payload.temperature = T20C
 			payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 			target.assume_air(payload)
+
+/datum/materialProc/molitz_on_hit
+	execute(var/atom/owner, var/obj/attackobj)
+		owner.material.triggerTemp(owner, 1500)
 
 /datum/materialProc/miracle_add
 	execute(var/location)
@@ -443,13 +451,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/radioactive_life
 	execute(var/mob/M, var/obj/item/I, mult)
 		if(I.material)
-			M.changeStatus("radiation", (max(round(I.material.getProperty("radioactive") / 20),1))*10 * mult, 2)
+			M.changeStatus("radiation", (max(round(I.material.getProperty("radioactive") / 20),1)) SECONDS * mult, 2)
 		return
 
 /datum/materialProc/radioactive_pickup
 	execute(var/mob/M, var/obj/item/I)
 		if(I.material)
-			M.changeStatus("radiation", (max(round(I.material.getProperty("radioactive") / 5),1))*10, 4)
+			M.changeStatus("radiation", (max(round(I.material.getProperty("radioactive") / 5),1)) SECONDS, 4)
 		return
 
 /datum/materialProc/n_radioactive_add
@@ -460,13 +468,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/n_radioactive_life
 	execute(var/mob/M, var/obj/item/I, mult)
 		if(I.material)
-			M.changeStatus("n_radiation", (max(round(I.material.getProperty("n_radioactive") / 20),1))*10 * mult, 2)
+			M.changeStatus("n_radiation", (max(round(I.material.getProperty("n_radioactive") / 20),1)) SECONDS * mult, 2)
 		return
 
 /datum/materialProc/n_radioactive_pickup
 	execute(var/mob/M, var/obj/item/I)
 		if(I.material)
-			M.changeStatus("n_radiation", (max(round(I.material.getProperty("n_radioactive") / 5),1))*10, 4)
+			M.changeStatus("n_radiation", (max(round(I.material.getProperty("n_radioactive") / 5),1)) SECONDS, 4)
 		return
 
 /datum/materialProc/erebite_flash
@@ -586,3 +594,108 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/obj/item/owner)
 		if(istype(owner))
 			owner.enchant(3, setTo = 1)
+
+/datum/materialProc/cardboard_blob_hit
+	execute(var/atom/owner, var/blobPower)
+		if (istype(owner, /obj))
+			owner.visible_message("<span class='alert'>[owner] crumples!</span>", "<span class='alert'>You hear a crumpling sound.</span>")
+			qdel(owner)
+		else if (istype(owner, /turf))
+			if (istype(owner, /turf/simulated/wall))
+				var/turf/simulated/wall/wall_owner = owner
+				owner.visible_message("<span class='alert'>Part of [owner] shears off under the blobby force! </span>")
+				wall_owner.dismantle_wall(1)
+
+/datum/materialProc/cardboard_on_hit // MARK: add to ignorant children
+	execute(var/atom/owner, var/mob/attacker, var/obj/attackobj, var/meleeorthrow)
+		if (meleeorthrow == 1) //if it was a melee attack
+			if (issnippingtool(attackobj)||iscuttingtool(attackobj))
+				if (isExploitableObject(owner))
+					boutput(attacker, "Cutting [owner] into a sheet isn't possible.")
+					return
+				attacker.visible_message("<span class='alert'>[attacker] starts cutting [owner] apart.</span>", "<span class='notice'>You start cutting [owner] apart.</span>", "You hear the sound of cutting cardboard.")
+				var/datum/action/bar/icon/hitthingwithitem/action_bar = new /datum/action/bar/icon/hitthingwithitem(attacker, attacker, attackobj, owner, src, 3 SECONDS, /datum/materialProc/cardboard_on_hit/proc/snip_end,\
+				list(owner, attacker, attackobj), attackobj.icon, attackobj.icon_state)
+				action_bar.interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED // uh, is this how I'm supposed to do this?
+				actions.start(action_bar, attacker)
+				return
+
+		var/crumple = FALSE
+		if (meleeorthrow == 1)
+			if (!isitem(attackobj))
+				CRASH("meleeorthrow should only be set to 1 when attackobj is an item")
+			var/obj/item/meleeitem = attackobj
+			if (prob(meleeitem.force*3))
+				crumple = TRUE
+		else
+			if (prob(attackobj.throwforce*3))
+				crumple = TRUE
+		if(crumple)
+			if (istype(owner, /obj))
+				owner.visible_message("<span class='alert'>[owner] crumples!</span>", "<span class='alert'>You hear a crumpling sound.</span>")
+				qdel(owner)
+			else if (istype(owner, /turf))
+				if (istype(owner, /turf/simulated/wall))
+					var/turf/simulated/wall/wall_owner = owner
+					owner.visible_message("<span class='alert'>[owner] shears apart under the force of [attackobj]! </span>","<span class='alert'>You hear a crumpling sound.</span>")
+					logTheThing("station", attacker ? attacker : null, null, "bashed apart a cardboard wall ([owner.name]) using \a [attackobj] at [attacker ? get_area(attacker) : get_area(owner)] ([attacker ? showCoords(attacker.x, attacker.y, attacker.z) : showCoords(owner.x, owner.y, owner.z)])[attacker ? null : ", attacker is unknown, shown location is of the wall"][meleeorthrow == 1 ? ", this was a thrown item" : null]")
+					wall_owner.dismantle_wall(1, 0)
+
+				else if (istype(owner, /turf/simulated/floor))
+					var/turf/simulated/floor/floor_owner = owner
+					if (floor_owner.broken && floor_owner.intact)
+						floor_owner.to_plating()
+						owner.visible_message("The top layer of [owner] breaks away!","<span class='alert'>You hear a crumpling sound.</span>")
+					else if (floor_owner.broken && !floor_owner.intact)
+						floor_owner.ReplaceWithSpace()
+						owner.visible_message("<span class='alert'> [owner] breaks apart, leaving a hole!</span>", "<span class='alert'>You hear a crumpling sound.\nYou feel a rapid gust of air, flowing towards the floor!")
+					if (floor_owner.reinforced)
+						floor_owner.ReplaceWithFloor()
+						floor_owner.to_plating()
+						owner.visible_message("<span class='alert'>[owner]'s reinforcement breaks apart!</span>", "<span class='alert'>You hear a crumpling sound.</span>")
+					else if (floor_owner.intact)
+						floor_owner.break_tile()
+						owner.visible_message("The top layer of [owner] crumples!", "You hear a crumpling sound.")
+
+/datum/materialProc/cardboard_on_hit/proc/snip_end(var/atom/owner, var/mob/attacker, var/obj/attackobj)
+	if (istype(owner, /obj))
+		attacker.visible_message("<span class='alert'>[attacker] cuts [owner] into a sheet.</span>","<span class='notice'>You finish cutting [owner] into a sheet.</span>","The sound of cutting cardboard stops.")
+		var/obj/item/sheet/createdsheet = new /obj/item/sheet(get_turf(owner))
+		createdsheet.setMaterial(owner.material)
+		qdel(owner)
+	else if (istype(owner, /turf))
+		if (istype(owner, /turf/simulated/wall))
+			var/turf/simulated/wall/wall_owner = owner
+			if (istype(owner, /turf/simulated/wall/r_wall) || istype(owner, /turf/simulated/wall/auto/reinforced))
+				attacker.visible_message("<span class='alert'>[attacker] cuts the reinforcment off [owner].</span>","You cut the reinforcement off [owner].","The sound of cutting cardboard stops.")
+			else
+				attacker.visible_message("<span class='alert'>[attacker] cuts apart the outer cover of [owner]</span>.","<span class='notice'>You cut apart the outer cover of [owner]</span>.","The sound of cutting cardboard stops.")
+				logTheThing("station", attacker, null, "cut apart a cardboard wall ([owner.name]) using \a [attackobj] at [get_area(attacker)] ([showCoords(attacker.x, attacker.y, attacker.z)])")
+			wall_owner.dismantle_wall(0, 0)
+		else if (istype(owner, /turf/simulated/floor))
+			var/turf/simulated/floor/floor_owner = owner
+			if (floor_owner.intact)
+				if (!(floor_owner.broken || floor_owner.burnt))
+					var/atom/A = new /obj/item/tile(floor_owner)
+					A.setMaterial(owner.material)
+				attacker.visible_message("<span class='alert'>[attacker] cuts off the top tile of [owner].</span>","<span class='notice'>You cut off the top tile of [owner].</span>","The sound of cutting cardboard stops.")
+				floor_owner.to_plating()
+				return
+			if (floor_owner.reinforced)
+				var/obj/R1 = new /obj/item/rods(src)
+				var/obj/R2 = new /obj/item/rods(src)
+				R1.setMaterial(owner.material)
+				R2.setMaterial(owner.material)
+				floor_owner.ReplaceWithFloor()
+				floor_owner.to_plating()
+				attacker.visible_message("<span class='alert'>[attacker] cuts the reinforcing rods off [owner].</span>","You finish cutting the reinforcing rods off of [owner].", "The sound of cutting cardboard stops.")
+				return
+			if (!floor_owner.intact)
+				var/atom/A = new /obj/item/tile(src)
+				A.setMaterial(owner.material)
+				logTheThing("station", attacker, null, "cut apart a cardboard floor ([owner.name]) using \a [attackobj] at [get_area(attacker)] ([showCoords(attacker.x, attacker.y, attacker.z)])")
+				attacker.visible_message("<span class='alert'>Cuts apart [owner], revealing space!</span>","<span class='alert'>You finish cutting apart [owner], revealing space.</span>","The sound of cutting cardboard stops.")
+				floor_owner.ReplaceWithSpace()
+				return
+
+

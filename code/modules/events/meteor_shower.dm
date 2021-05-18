@@ -63,7 +63,7 @@ var/global/meteor_shower_active = 0
 		commins = max(0,commins)
 		if (random_events.announce_events)
 			command_alert("[comsev] [shower_name] approaching [comdir]. Impact in [commins] seconds.", "Meteor Alert")
-			world << 'sound/machines/engine_alert2.ogg'
+			playsound_global(world, 'sound/machines/engine_alert2.ogg', 40)
 			meteor_shower_active = direction
 			for (var/obj/machinery/shield_generator/S as anything in machine_registry[MACHINES_SHIELDGENERATORS])
 				S.update_icon()
@@ -71,7 +71,7 @@ var/global/meteor_shower_active = 0
 		SPAWN_DBG(warning_delay)
 			if (random_events.announce_events)
 				command_alert("The [shower_name] has reached the [station_or_ship()]. Brace for impact.", "Meteor Alert")
-				world << 'sound/machines/engine_alert1.ogg'
+				playsound_global(world, 'sound/machines/engine_alert1.ogg', 30)
 
 			var/start_x
 			var/start_y

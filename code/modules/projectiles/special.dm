@@ -135,7 +135,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/pellets_to_fire = 15
 	var/spread_projectile_type = /datum/projectile/bullet/flak_chunk
 	var/split_type = 0
-	var/pellet_shot_volume = 100
+	var/pellet_shot_volume = 0
 	silentshot = 1
 	// 0 = on spawn
 	// 1 = on impact
@@ -199,6 +199,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	cost = 1
 	pellets_to_fire = 10
 	spread_projectile_type = /datum/projectile/bullet/buckshot
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	var/speed_max = 5
 	var/speed_min = 60
 	var/spread_angle_variance = 5
@@ -623,7 +624,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				if (vampire.can_bite(victim,is_pointblank = 0))
 					vampire.do_bite(victim, mult = 0.3333)
 
-				vampire.owner.add_stamina(20)
+				vampire.owner?.add_stamina(20)
 				victim.remove_stamina(4)
 
 		..()
@@ -707,7 +708,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(istype(O) && !(hit in O.hitlist))
 			if(ismob(hit))
 				var/mob/M = hit
-				if(iswizard(M) || M.traitHolder?.hasTrait("training_chaplain"))
+				if(iswizard(M) || M.traitHolder?.hasTrait("training_chaplain") || ON_COOLDOWN(M, "magic_missiled", 1 SECOND))
 					boutput(M, "The magic missile passes right through you!")
 					. = TRUE
 

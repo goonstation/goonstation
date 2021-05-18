@@ -35,7 +35,7 @@ A Flamethrower in various states of assembly
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	var/mode = FLAMER_MODE_SINGLE
 	var/processing = 0
 	var/lit = 0	//on or off
@@ -184,7 +184,7 @@ A Flamethrower in various states of assembly
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	var/obj/item/weldingtool/welder = null
 	var/obj/item/rods/rod = null
 	var/obj/item/device/igniter/igniter = null
@@ -316,7 +316,7 @@ A Flamethrower in various states of assembly
 /obj/item/gun/flamethrower/backtank/napalm
 	New()
 		..()
-		gastank.reagents.add_reagent("napalm_goo", 4000)
+		gastank.reagents.add_reagent("syndicate_napalm", 4000)
 
 /obj/item/gun/flamethrower/assembled/New()
 	..()
@@ -367,7 +367,7 @@ A Flamethrower in various states of assembly
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 /obj/item/assembly/weld_rod/New()
 	..()
@@ -388,7 +388,7 @@ A Flamethrower in various states of assembly
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 /obj/item/assembly/w_r_ignite/New()
 	..()
@@ -614,7 +614,7 @@ A Flamethrower in various states of assembly
 		src.remove_dialog(user)
 		user.Browse(null, "window=flamethrower")
 		return
-	if(user.stat || user.restrained() || user.lying || src.loc != user)
+	if(user.stat || user.restrained() || user.lying || !(src in user.equipped_list()))
 		return
 	src.add_dialog(user)
 

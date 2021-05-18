@@ -27,7 +27,8 @@
 	/obj/item/toy/plush/small/chris,\
 	/obj/item/toy/plush/small/fancyflippers,\
 	/obj/item/toy/plush/small/billy,\
-	/obj/item/toy/plush/small/arthur)
+	/obj/item/toy/plush/small/arthur,\
+	/obj/item/toy/plush/small/deneb)
 
 /obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
 	src.add_dialog(user)
@@ -100,7 +101,7 @@
 	icon_state = "bear"
 	desc = "A cute and cuddly plush toy!"
 	throwforce = 3
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 3
 	rand_pos = 1
@@ -128,7 +129,7 @@
 /obj/item/toy/plush/small
 	name = "small plush toy"
 	desc = "You found a new friend!"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 5
 
@@ -235,5 +236,17 @@
 	if (menuchoice == "Fidget")
 		user.visible_message("<span class='emote'>[user] fidgets with [src].</span>")
 		boutput(user, "<span class='notice'>You feel [pick("a bit", "slightly", "a teeny bit", "somewhat", "surprisingly", "")] [pick("better", "more calm", "more composed", "less stressed")].</span>")
+	else if (menuchoice == "Say")
+		src.say_something(user)
+
+/obj/item/toy/plush/small/deneb
+	name = "Deneb the swan"
+	icon_state = "deneb"
+
+/obj/item/toy/plush/small/deneb/attack_self(mob/user as mob)
+	var/menuchoice = alert("What would you like to do with [src]?",,"Honk","Say")
+	if (menuchoice == "Honk")
+		playsound(user, "sound/items/rubberduck.ogg", 50, 1)
+		src.audible_message("<span class='emote'>[src] honks!</span>")
 	else if (menuchoice == "Say")
 		src.say_something(user)

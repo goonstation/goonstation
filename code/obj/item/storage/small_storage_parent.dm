@@ -18,7 +18,7 @@
 	var/list/spawn_contents = list()
 	move_triggered = 1
 	flags = FPRINT | TABLEPASS | NOSPLASH
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 
 		//cogwerks - burn vars
 	burn_point = 2500
@@ -94,7 +94,14 @@
 			SPAWN_DBG(1 DECI SECOND)
 				O.attack_hand(user)
 		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored)
-			src.attackby(O, user, O.loc)
+			user.swap_hand()
+			if(user.equipped() == null)
+				O.attack_hand(user)
+				if(O in user.equipped_list())
+					src.attackby(O, user, O.loc)
+			else
+				boutput(user, __blue("Your hands are full!"))
+			user.swap_hand()
 
 	//failure returns 0 or lower for diff messages - sorry
 	proc/check_can_hold(obj/item/W)
@@ -128,6 +135,12 @@
 			return
 		var/canhold = src.check_can_hold(W,user)
 		if (canhold <= 0)
+			if(istype(W, /obj/item/storage) && (canhold == 0 || canhold == -1))
+				var/obj/item/storage/S = W
+				for (var/obj/item/I in S.get_contents())
+					if(src.check_can_hold(I) > 0)
+						src.attackby(I, user, S)
+				return
 			switch (canhold)
 				if(0)
 					boutput(user, "<span class='alert'>[src] cannot hold [W].</span>")
@@ -319,7 +332,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	item_state = "contsolid"
 	can_hold = list(/obj/item/reagent_containers/pill)
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	max_wclass = 1
 	desc = "A small bottle designed to carry pills. Does not come with a child-proof lock, as that was determined to be too difficult for the crew to open."
 
@@ -332,7 +345,7 @@
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	max_wclass = 3
 	desc = "A fancy synthetic leather-bound briefcase, capable of holding a number of small objects, with style."
 	stamina_damage = 40
@@ -353,7 +366,7 @@
 	item_state = "rd-case"
 	max_wclass = 4 // parity with secure briefcase
 	desc = "A large briefcase for experimental toxins research."
-	spawn_contents = list(/obj/item/raw_material/molitz_beta = 6)
+	spawn_contents = list(/obj/item/raw_material/molitz_beta = 6, /obj/item/paper/hellburn)
 
 /obj/item/storage/desk_drawer
 	name = "desk drawer"
@@ -361,7 +374,7 @@
 	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "desk_drawer"
 	flags = FPRINT | TABLEPASS
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	max_wclass = 2
 	slots = 13 // these can't move (in theory) and they can only hold w_class 2 things so we may as well let them hold a bunch
 	mechanics_type_override = /obj/item/storage/desk_drawer
@@ -394,7 +407,7 @@
 	icon_state = "rockit"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	max_wclass = 3
 
 	New()

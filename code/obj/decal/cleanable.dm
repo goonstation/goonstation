@@ -35,7 +35,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	var/last_dry_start = 0
 	var/dry_time = 100
 
-	flags = NOSPLASH
+	flags = NOSPLASH | FPRINT
 	layer = DECAL_LAYER
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
@@ -647,7 +647,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	stain = "sparkly"
 
 /obj/decal/cleanable/glitter/harmless //updated to not be lethal
-    sample_reagent = "glitter_harmless"
+    sample_reagent = "sparkles"
 
 
 /obj/decal/cleanable/ketchup //It's ketchup that looks like blood.
@@ -1251,7 +1251,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	CanPass(atom/A, turf/T)
 		if (ismob(A))
-			A.changeStatus("slowed", 2)
+			A.changeStatus("slowed", 0.2 SECONDS)
 			SPAWN_DBG(-1)
 				qdel(src)		//break when walked over
 		else return 1

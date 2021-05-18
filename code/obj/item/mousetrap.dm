@@ -5,7 +5,7 @@
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "mousetrap"
 	item_state = "mousetrap"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	force = null
 	throwforce = null
 	var/armed = 0
@@ -15,6 +15,8 @@
 	var/obj/item/device/radio/signaler/signaler = null
 	var/obj/item/reagent_containers/food/snacks/pie/pie = null
 	var/obj/item/parts/arm = null
+	var/obj/item/clothing/head/butt/butt = null
+	var/obj/item/gimmickbomb/butt/buttbomb = null
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 5
@@ -79,7 +81,7 @@
 		return
 
 	attackby(obj/item/C as obj, mob/user as mob)
-		if (istype(C, /obj/item/chem_grenade) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler)
+		if (istype(C, /obj/item/chem_grenade) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/chem_grenade/CG = C
 			if (CG.stage == 2 && !CG.state)
 				user.u_equip(CG)
@@ -91,7 +93,7 @@
 				message_admins("[key_name(user)] rigs [src] with [CG] at [log_loc(user)].")
 				logTheThing("bombing", user, null, "rigs [src] with [CG] at [log_loc(user)].")
 
-		else if (istype(C, /obj/item/old_grenade/) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler)
+		else if (istype(C, /obj/item/old_grenade/) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/old_grenade/OG = C
 			if (OG.not_in_mousetraps == 0 && !OG.state)
 				user.u_equip(OG)
@@ -103,7 +105,7 @@
 				message_admins("[key_name(user)] rigs [src] with [OG] at [log_loc(user)].")
 				logTheThing("bombing", user, null, "rigs [src] with [OG] at [log_loc(user)].")
 
-		else if (istype(C, /obj/item/pipebomb/bomb) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler)
+		else if (istype(C, /obj/item/pipebomb/bomb) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/pipebomb/bomb/PB = C
 			if (!PB.armed)
 				user.u_equip(PB)
@@ -115,7 +117,7 @@
 				message_admins("[key_name(user)] rigs [src] with [PB] at [log_loc(user)].")
 				logTheThing("bombing", user, null, "rigs [src] with [PB] at [log_loc(user)].")
 
-		else if (istype(C, /obj/item/device/radio/signaler) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler)
+		else if (istype(C, /obj/item/device/radio/signaler) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/device/radio/signaler/S = C
 			user.u_equip(S)
 			S.set_loc(src)
@@ -138,7 +140,7 @@
 
 			// Pies won't do, they require a mob as the target. Obviously, the mousetrap roller is much more
 			// likely to bump into an inanimate object.
-			if (!src.grenade && !src.grenade_old && !src.pipebomb)
+			if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.buttbomb)
 				user.show_text("[src] must have a grenade or pipe bomb attached first.", "red")
 				return
 
@@ -147,21 +149,21 @@
 			new /obj/item/mousetrap_roller(get_turf(src), src, PF)
 			return
 
-		else if (!src.arm && (istype(C, /obj/item/parts/robot_parts/arm) || istype(C, /obj/item/parts/human_parts/arm)) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler)
+		else if (!src.arm && (istype(C, /obj/item/parts/robot_parts/arm) || istype(C, /obj/item/parts/human_parts/arm)) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
 			user.u_equip(C)
 			src.arm = C
 			C.set_loc(src)
 			src.overlays += image(C.icon, C.icon_state)
 			user.show_text("You add [C] to [src].", "blue")
 
-		else if (istype(C, /obj/item/reagent_containers/food/snacks/pie) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler)
+		else if (istype(C, /obj/item/reagent_containers/food/snacks/pie) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
 			if (src.pie)
 				user.show_text("There's already a pie attached to [src]!", "red")
 				return
 			else if (!src.arm)
 				user.show_text("You can't quite seem to get [C] to stay on [src]. Seems like it needs something to hold it in place.", "red")
 				return
-			else if (C.w_class > 1) // Transfer valve bomb pies are a thing. Shouldn't fit in a backpack, much less a box.
+			else if (C.w_class > W_CLASS_TINY) // Transfer valve bomb pies are a thing. Shouldn't fit in a backpack, much less a box.
 				user.show_text("[C] is way too large. You can't find any way to balance it on the arm.", "red")
 				return
 			user.u_equip(C)
@@ -171,6 +173,22 @@
 			user.show_text("You carefully set [C] in [src]'s [src.arm].", "blue")
 
 			logTheThing("bombing", user, null, "rigs [src] with [src.arm] and [C] at [log_loc(user)].")
+
+		else if (istype(C, /obj/item/clothing/head/butt) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
+			var/obj/item/clothing/head/butt/B = C
+			user.u_equip(B)
+			B.set_loc(src)
+			user.show_text("You attach [B] to [src].", "blue")
+			src.butt = B
+			src.overlays += image('icons/obj/items/weapons.dmi', "trap-[src.butt.icon_state]")
+
+		else if (istype(C, /obj/item/gimmickbomb/butt) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
+			var/obj/item/gimmickbomb/BB = C
+			user.u_equip(BB)
+			BB.set_loc(src)
+			user.show_text("You attach [BB] to [src].", "blue")
+			src.buttbomb = BB
+			src.overlays += image('icons/obj/items/weapons.dmi', "trap-buttbomb")
 
 		else if (iswrenchingtool(C))
 			if (src.grenade)
@@ -205,6 +223,18 @@
 				src.arm.layer = initial(src.arm.layer)
 				src.arm.set_loc(get_turf(src))
 				src.arm = null
+			else if (src.butt)
+				user.show_text("You remove [src.butt] from [src].", "blue")
+				src.overlays -= image('icons/obj/items/weapons.dmi', "trap-[src.butt.icon_state]")
+				src.butt.layer = initial(src.butt.layer)
+				src.butt.set_loc(get_turf(src))
+				src.butt = null
+			else if (src.buttbomb)
+				user.show_text("You remove [src.buttbomb] from [src].", "blue")
+				src.overlays -= image('icons/obj/items/weapons.dmi', "trap-buttbomb")
+				src.buttbomb.layer = initial(src.buttbomb.layer)
+				src.buttbomb.set_loc(get_turf(src))
+				src.buttbomb = null
 		else
 			..()
 		return
@@ -304,6 +334,20 @@
 			src.pie.throw_impact(target, thr)
 			src.pie = null
 
+		else if (src.butt)
+			if (src.butt.sound_fart)
+				playsound(target, src.butt.sound_fart, 50)
+			else
+				playsound(target, "sound/voice/farts/poo2.ogg", 50)
+
+		else if (src.buttbomb)
+			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-buttbomb")
+			var/obj/effects/explosion/E = new /obj/effects/explosion(get_turf(src.loc))
+			E.fingerprintslast = src.fingerprintslast
+			playsound(get_turf(src.loc), 'sound/voice/farts/superfart.ogg', 100, 1)
+			src.buttbomb = null
+			qdel(src.buttbomb)
+
 		return
 
 // Added support for old-style grenades and pipe bombs (Convair880).
@@ -313,7 +357,7 @@
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "mousetrap_roller"
 	item_state = "mousetrap"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/armed = 0
 	var/obj/item/mousetrap/mousetrap = null
 	var/obj/item/pipebomb/frame/frame = null
@@ -329,7 +373,7 @@
 			src.mousetrap = new /obj/item/mousetrap(src)
 
 		// Fallback in case something goes wrong.
-		if (!src.mousetrap.grenade && !src.mousetrap.grenade_old && !src.mousetrap.pipebomb)
+		if (!src.mousetrap.grenade && !src.mousetrap.grenade_old && !src.mousetrap.pipebomb && !src.mousetrap.buttbomb)
 			src.mousetrap.grenade = new /obj/item/chem_grenade/flashbang(src.mousetrap)
 			src.mousetrap.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
 
@@ -342,6 +386,9 @@
 		else if (src.mousetrap.pipebomb)
 			src.payload = src.mousetrap.pipebomb.name
 			src.name = "mousetrap/pipe bomb/roller assembly"
+		else if (src.mousetrap.buttbomb)
+			src.payload = src.mousetrap.buttbomb.name
+			src.name = "mousetrap/butt bomb/roller assembly"
 		else
 			src.payload = "*unknown or null*"
 
@@ -419,3 +466,8 @@
 			qdel(src)
 
 		return
+
+	Move(var/turf/new_loc,direction)
+		if (src.mousetrap.buttbomb && src.armed)
+			playsound(src, 'sound/voice/farts/poo2.ogg', 30, 0, 0, 1.8)
+		..()

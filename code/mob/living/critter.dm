@@ -78,7 +78,7 @@
 	var/last_life_process = 0
 	var/use_stunned_icon = 1
 
-	var/pull_w_class = 2
+	var/pull_w_class = W_CLASS_SMALL
 
 	blood_id = "blood"
 
@@ -415,13 +415,13 @@
 		if (!src.ghost_spawned) //if its an admin or wizard made critter, just let them pull everythang
 			return 1
 		if (ismob(A))
-			return (src.pull_w_class >= 3)
+			return (src.pull_w_class >= W_CLASS_NORMAL)
 		else if (isobj(A))
 			if (istype(A,/obj/item))
 				var/obj/item/I = A
 				return (pull_w_class >= I.w_class)
 			else
-				return (src.pull_w_class >= 4)
+				return (src.pull_w_class >= W_CLASS_BULKY)
 		return 0
 
 	click(atom/target, list/params)
@@ -1010,7 +1010,7 @@
 						if (istype(src.loc,/obj/))
 							var/obj/container = src.loc
 							boutput(src, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
-							src.changeStatus("paralysis", 30)
+							src.changeStatus("paralysis", 3 SECONDS)
 							src.changeStatus("weakened", 4 SECONDS)
 							container.visible_message("<span class='alert'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
 							playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
@@ -1313,7 +1313,7 @@
 			for (var/mob/O in viewers(src, null))
 				O.show_message("<span class='alert'><B>The blob has knocked down [src]!</B></span>", 1, "<span class='alert'>You hear someone fall.</span>", 2)
 		else
-			src.changeStatus("stunned", 50)
+			src.changeStatus("stunned", 5 SECONDS)
 			for (var/mob/O in viewers(src, null))
 				if (O.client)	O.show_message("<span class='alert'><B>The blob has stunned [src]!</B></span>", 1)
 		if (isalive(src))

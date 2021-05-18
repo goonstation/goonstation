@@ -8,7 +8,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "backpack"
 	flags = ONBACK | FPRINT | TABLEPASS | NOSPLASH
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	max_wclass = 3
 	wear_image_icon = 'icons/mob/back.dmi'
 	does_not_open_in_pocket = 0
@@ -124,7 +124,7 @@
 	icon_state = "fanny"
 	item_state = "fanny"
 	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	max_wclass = 3
 	does_not_open_in_pocket = 0
 	stamina_damage = 0
@@ -168,7 +168,7 @@
 	stamina_damage = 10
 	stamina_cost = 5
 	stamina_crit_chance = 5
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 
 	New()
 		..()
@@ -200,14 +200,7 @@
 		if(!can_use())
 			boutput(user, "<span class='alert'>You need to wear [src] for that.</span>")
 			return
-		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
-			var/obj/item/storage/S = W
-			for (var/obj/item/I in S.get_contents())
-				if (..(I, user, S) == 0)
-					break
-			return
-		else
-			return ..()
+		return ..()
 
 /obj/item/storage/belt/utility
 	name = "utility belt"
@@ -221,7 +214,7 @@
 	name = "aurora MKII utility belt"
 	desc = "An utility belt for usage in high-risk salvage operations. Contains a personal shield generator. Can be activated to overcharge the shields temporarily."
 	icon_state = "cebelt"
-	item_state = "utility"
+	item_state = "cebelt"
 	rarity = 4
 	abilities = list(/obj/ability_button/cebelt_toggle)
 	var/active = 0
@@ -372,6 +365,7 @@
 	icon_state = "minerbelt"
 	item_state = "utility"
 	max_wclass = 3
+	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/storage/belt/security
 	name = "security toolbelt"
@@ -425,7 +419,7 @@
 		spawn_contents = list(/obj/item/barrier, /obj/item/device/detective_scanner, /obj/item/device/ticket_writer)
 
 	ntso
-		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/gun/kinetic/clock_188, /obj/item/baton/ntso, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntso_pouch) //secbelt subtype that only spawns on NTSO, not in vendor
+		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/gun/kinetic/clock_188, /obj/item/baton/ntso, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntso_pouch, /obj/item/barrier) //secbelt subtype that only spawns on NTSO, not in vendor
 
 	baton
 		spawn_contents = list(/obj/item/baton, /obj/item/barrier)
@@ -513,6 +507,7 @@
 	item_state = "machobelt"
 	contraband = 8
 	is_syndicate = 1
+	item_function_flags = IMMUNE_TO_ACID
 	mats = 18 //SPACE IS THE PLACE FOR WRESTLESTATION 13
 	var/fake = 0		//So the moves are all fake.
 
@@ -539,7 +534,7 @@
 	icon_state = "pool_ring"
 	item_state = "pool_ring"
 	flags = FPRINT | TABLEPASS | ONBELT
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	mats = 5 // I dunno???
 
 	New()

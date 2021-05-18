@@ -16,7 +16,7 @@ THROWING DARTS
 	name = "implant"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "implant-g"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/implanted = null
 	var/impcolor = "g"
 	var/mob/owner = null
@@ -200,20 +200,15 @@ THROWING DARTS
 /* ------------------------- Implants ------------------------- */
 /* ============================================================ */
 
-/obj/item/implant/health
-	name = "health implant"
+/obj/item/implant/cloner
+	name = "cloner record implant"
 	icon_state = "implant-b"
 	impcolor = "b"
-	//life_tick_energy = 0.1
-	var/healthstring = ""
-	uses_radio = 1
-	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
+	var/area/scanned_here
 
-
-	implanted(mob/M, mob/I)
+	New()
 		..()
-		if (!isdead(M) && M.client)
-			JOB_XP(I, "Medical Doctor", 5)
+		src.scanned_here = get_area(src)
 
 	proc/getHealthList()
 		var/healthlist = list()
@@ -232,6 +227,20 @@ THROWING DARTS
 				healthlist["BRUTE"] = round(L.get_brute_damage())
 		return healthlist
 
+
+/obj/item/implant/health
+	name = "health implant"
+	icon_state = "implant-b"
+	impcolor = "b"
+	var/healthstring = ""
+	uses_radio = 1
+	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
+
+	implanted(mob/M, mob/I)
+		..()
+		if (!isdead(M) && M.client)
+			JOB_XP(I, "Medical Doctor", 5)
+
 	proc/sensehealth()
 		if (!src.implanted)
 			return "ERROR"
@@ -243,11 +252,6 @@ THROWING DARTS
 			if (!src.healthstring)
 				src.healthstring = "ERROR"
 			return src.healthstring
-
-	// add gps info proc here if tracker exists
-
-	//implanted(var/mob/M, var/mob/I)
-		//..()
 
 	activate()
 		..()
@@ -295,13 +299,9 @@ THROWING DARTS
 		death_alert()
 		..()
 
-//	on_remove(var/mob/living/carbon/human/H)
-//		..()
-
 	proc/health_alert()
 		if (!src.owner)
 			return
-		//DEBUG_MESSAGE("implant reporting crit")
 		src.send_message("HEALTH ALERT: [src.owner][src.get_coords()] in [get_area(src)]: [src.sensehealth()]", MGA_MEDCRIT, "HEALTH-MAILBOT")
 
 	proc/death_alert()
@@ -309,23 +309,18 @@ THROWING DARTS
 			return
 		var/coords = src.get_coords()
 		var/myarea = get_area(src)
-		var/has_record = src.check_for_valid_record()
+		var/list/cloner_areas = list()
+		for(var/obj/item/implant/cloner/cl_implant in src.owner)
+			if(cl_implant.owner != src.owner)
+				continue
+			cloner_areas += "[cl_implant.scanned_here]"
 		var/message = "DEATH ALERT: [src.owner][coords] in [myarea], " //youre lucky im not onelining this
-		if (has_record) //the title for this next section of code is grammar sucks
-			if (he_or_she(src.owner) == "they")
-				message += "they [has_record ? "have a record in the cloner at [has_record]" : "do not have a cloning record." ]"
-			else
-				message += "[has_record ? "genetic record detected in cloning console at [has_record]" : "genetic record not detected."]"
+		if (he_or_she(src.owner) == "they")
+			message += "they " + (length(cloner_areas) ? "have been clone-scanned in [jointext(cloner_areas, ", ")]." : "do not have a cloning record.")
+		else
+			message += he_or_she(src.owner) + " " + (length(cloner_areas) ? "has been clone-scanned in [jointext(cloner_areas, ", ")]." : "does not have a cloning record.")
 
-		//DEBUG_MESSAGE("implant reporting death")
 		src.send_message(message, MGA_DEATH, "HEALTH-MAILBOT")
-
-	proc/check_for_valid_record() //returns the area of the cloner where we found our valid record - jank, but idk
-		if (src.owner && src.owner.ckey)
-			for_by_tcl(comp, /obj/machinery/computer/cloning)
-				if (comp.find_record(src.owner.ckey))
-					return get_area(comp)
-		return null
 
 /obj/item/implant/health/security
 	name = "health implant - security issue"
@@ -967,7 +962,7 @@ THROWING DARTS
 	item_state = "syringe_0"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	hide_attack = 2
 	var/sneaky = 0
 	tooltip_flags = REBUILD_DIST
@@ -1178,7 +1173,7 @@ THROWING DARTS
 	item_state = "implantcase"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/implant_type = /obj/item/implant/tracking
 	tooltip_flags = REBUILD_DIST
 	//Whether this is the paper type that goes away when emptied
@@ -1352,7 +1347,7 @@ THROWING DARTS
 	item_state = "electronic"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	mats = 5
 	desc = "A small device for analyzing implants."
 
@@ -1672,7 +1667,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 /obj/item/implant/projectile/bardart
 	name = "dart"
 	desc = "An object of d'art."
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "dart"
 	throw_spin = 0
@@ -1683,7 +1678,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			var/mob/living/carbon/human/H = M
 			H.implant.Add(src)
 			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
-			playsound(src.loc, "sound/weapons/slashcut.ogg", 100, 1)
+			playsound(src.loc, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
 			random_brute_damage(M, 1)
 			src.set_loc(M)
 			src.implanted = 1
@@ -1696,7 +1691,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 /obj/item/implant/projectile/lawndart
 	name = "lawn dart"
 	desc = "An oversized plastic dart with a metal spike at the tip. Fun for the whole family!"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "lawndart"
 	throw_spin = 0

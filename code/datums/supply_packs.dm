@@ -266,11 +266,12 @@
 
 /datum/supply_packs/firefighting
 	name = "Firefighting Supplies Crate"
-	desc = "x3 Extinguisher, x3 Firefighting Grenade, x2 Firesuit"
+	desc = "x3 Extinguisher, x3 Firefighting Grenade, x2 Firesuit, x2 Firefighter Helmets"
 	category = "Engineering Department"
 	contains = list(/obj/item/extinguisher = 3,
 	/obj/item/chem_grenade/firefighting = 3,
-	/obj/item/clothing/suit/fire = 2)
+	/obj/item/clothing/suit/fire = 2,
+	/obj/item/clothing/head/helmet/firefighter = 2)
 	cost = 1000
 	containertype = /obj/storage/crate
 	containername = "Firefighting Supplies Crate"
@@ -314,6 +315,15 @@
 	containertype = /obj/storage/crate/medical
 	containername = "Medical Crate"
 
+/datum/supply_packs/complex/glass_recycler
+	name = "Glass Recycler"
+	desc = "x1 Kitchenware Recycler, a tabletop machine allowing you to recycle reclaimed glass into many different types of glassware"
+	category = "Civilian Department"
+	contains = list(/obj/item/electronics/soldering)
+	frames = list(/obj/machinery/glass_recycler)
+	cost = 3000
+	containertype =/obj/storage/crate
+	containername = "Recycling Initiative Crate"
 
 /datum/supply_packs/janitor
 	name = "Janitorial Supplies"
@@ -376,8 +386,8 @@
 	category = "Research Department"
 	contains = list(/mob/living/carbon/human/npc/monkey = 4,
 						/obj/item/clothing/mask/monkey_translator)
-	cost = 500
-	containertype = /obj/storage/crate/medical
+	cost = 2500
+	containertype = /obj/storage/secure/crate/medical/monkey
 	containername = "Lab Monkey Crate"
 
 /datum/supply_packs/bee
@@ -395,7 +405,7 @@
 		return beez
 
 /datum/supply_packs/chemical
-	name = "Chemistry Resupply Crate (Cardlocked \[Research])"
+	name = "Chemistry Resupply Crate"
 	desc = "x6 Reagent Bottles, x1 Beaker Box, x1 Mechanical Dropper, x1 Spectroscopic Goggles, x1 Reagent Scanner"
 	category = "Research Department"
 	contains = list(/obj/item/storage/box/beakerbox,
@@ -410,8 +420,7 @@
 					/obj/item/device/reagentscanner)
 	cost = 500
 	containertype = /obj/storage/secure/crate/plasma
-	containername = "Chemistry Resupply Crate (Cardlocked \[Research])"
-	access = access_tox
+	containername = "Chemistry Resupply Crate"
 
 
 // Added security resupply crate (Convair880).
@@ -672,7 +681,8 @@
 	desc = "A Space Chinese meal for two, delivered galaxy-wide."
 	category = "Civilian Department"
 	contains = list(/obj/item/reagent_containers/food/snacks/takeout = 2,
-					/obj/item/reagent_containers/food/snacks/fortune_cookie = 2)
+					/obj/item/reagent_containers/food/snacks/fortune_cookie = 2,
+					/obj/item/kitchen/chopsticks_package = 2)
 	cost = 200
 	containertype = /obj/storage/crate/packing
 	containername = "Golden Gannet Delivery"
@@ -751,22 +761,6 @@
 	cost = 4500
 	containertype = /obj/storage/crate/wooden
 	containername = "Junior Medical Science Set: For Ages 7+"
-
-/datum/supply_packs/chemistry_resupply
-	name = "Chemistry Resupply Crate"
-	desc = "All the nessesary precursors needed to jump in to advanced chemistry."
-	category = "Research Department"
-	contains = list(/obj/item/reagent_containers/glass/beaker/large = 4,
-					/obj/item/storage/box/beakerbox = 2,
-					/obj/item/reagent_containers/glass/bottle/oil,
-					/obj/item/reagent_containers/glass/bottle/phenol,
-					/obj/item/reagent_containers/glass/bottle/acetone,
-					/obj/item/reagent_containers/glass/bottle/ammonia,
-					/obj/item/reagent_containers/glass/bottle/diethylamine,
-					/obj/item/reagent_containers/glass/bottle/acid)
-	cost = 3000
-	containertype = /obj/storage/crate/wooden
-	containername = "Chemistry Resupply Crate"
 
 /datum/supply_packs/rcd
 	name = "Rapid-construction-device Replacement"
@@ -869,7 +863,7 @@
 	desc = "Turn Cargo into a microbrewery."
 	contains = list(/obj/reagent_dispensers/still,
 					/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher = 2,
-					/obj/item/reagent_containers/food/drinks/bottle = 6)
+					/obj/item/reagent_containers/food/drinks/bottle/soda = 6)
 	cost = 5000
 	containertype = /obj/storage/crate/wooden
 	containername = "Home Distillery Kit"
@@ -950,6 +944,23 @@
 	cost = 5000
 	containertype = /obj/storage/crate/wooden
 	containername = "EVA Equipment Crate"
+
+/datum/supply_packs/XL_air_canister
+	name = "Extra Large Air Mix Canister"
+	desc = "Spare canister filled with a mix of nitrogen, oxygen and minimal amounts of carbon dioxide. Used for emergency re-pressurisation efforts."
+	category = "Engineering Department"
+	contains = list(/obj/machinery/portable_atmospherics/canister/air/large)
+	cost = 5000
+	containertype = /obj/storage/crate/wooden
+	containername = "Spare XL Air Mix Canister Crate"
+/datum/supply_packs/oxygen_canister
+	name = "Spare Oxygen Canister"
+	desc = "Spare oxygen canister, for resupplying Engineering's fuel or refilling oxygen tanks."
+	category = "Engineering Department"
+	contains = list(/obj/machinery/portable_atmospherics/canister/oxygen)
+	cost = 10000
+	containertype = /obj/storage/crate/wooden
+	containername = "Spare Oxygen Canister Crate"
 
 /datum/supply_packs/abcu
 	name = "ABCU Unit Crate"
@@ -1558,7 +1569,7 @@
 	frames = list(/obj/machinery/clone_scanner,
 					/obj/machinery/clonepod,
 					/obj/machinery/clonegrinder)
-	cost = 30000
+	cost = 50000
 	containertype = /obj/storage/crate
 	containername = "Cloning kit"
 

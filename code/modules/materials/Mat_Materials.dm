@@ -161,6 +161,11 @@
 	var/list/triggersOnEntered = list()
 	/// Called when someone eats a thing with this material assigned.
 	var/list/triggersOnEat = list()
+	/// Called when blob hits something with this material assigned.
+	var/list/triggersOnBlobHit = list()
+	/// Called when an obj hits something with this material assigned.
+	var/list/triggersOnHit = list()
+
 
 	proc/triggerOnFail(var/atom/owner)
 		for(var/datum/materialProc/X in triggersFail)
@@ -227,6 +232,17 @@
 		for(var/datum/materialProc/X in triggersOnEat)
 			call(X,  "execute")(M, I)
 		return
+
+	proc/triggerOnBlobHit(var/atom/owner, var/blobPower)
+		for(var/datum/materialProc/X in triggersOnBlobHit)
+			call(X,  "execute")(owner, blobPower)
+		return
+
+	proc/triggerOnHit(var/atom/owner, var/obj/attackobj, var/mob/attacker, var/meleeorthrow)
+		for(var/datum/materialProc/X in triggersOnHit)
+			call(X,  "execute")(owner, attacker = attacker, attackobj = attackobj, meleeorthrow = meleeorthrow)
+		return
+
 
 // Metals
 
@@ -499,8 +515,9 @@
 	New()
 		setProperty("density", 40)
 		setProperty("hard", 40)
-		addTrigger(triggersTemp, new /datum/materialProc/moltiz_temp())
-		addTrigger(triggersExp, new /datum/materialProc/moltiz_exp())
+		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
+		addTrigger(triggersOnHit, new /datum/materialProc/molitz_on_hit())
+		addTrigger(triggersExp, new /datum/materialProc/molitz_exp())
 		return ..()
 
 	beta
@@ -511,8 +528,8 @@
 
 		New()
 			..()
-			removeTrigger(triggersTemp, /datum/materialProc/moltiz_temp)
-			addTrigger(triggersTemp, new /datum/materialProc/moltiz_temp/agent_b())
+			removeTrigger(triggersTemp, /datum/materialProc/molitz_temp) // no need to remove molitz_on_hit, all it
+			addTrigger(triggersTemp, new /datum/materialProc/molitz_temp/agent_b()) // does is call molitz_temp
 			return
 
 /datum/material/crystal/claretine
@@ -547,6 +564,7 @@
 		addTrigger(triggersExp, new /datum/materialProc/erebite_exp())
 		addTrigger(triggersOnAttack, new /datum/materialProc/generic_explode_attack(33))
 		addTrigger(triggersOnAttacked, new /datum/materialProc/generic_explode_attack(33))
+		addTrigger(triggersOnHit, new /datum/materialProc/generic_explode_attack(33))
 		return ..()
 
 /datum/material/crystal/plasmastone
@@ -565,6 +583,7 @@
 
 		addTrigger(triggersTemp, new /datum/materialProc/plasmastone())
 		addTrigger(triggersExp, new /datum/materialProc/plasmastone())
+		addTrigger(triggersOnHit, new /datum/materialProc/plasmastone_on_hit())
 		return ..()
 
 /datum/material/crystal/plasmaglass
@@ -842,7 +861,6 @@
 
 	New()
 		value = 650
-		setProperty("radioactive", 60)
 		setProperty("density", 60)
 		setProperty("hard", 60)
 		addTrigger(triggersOnAdd, new /datum/materialProc/enchanted_add())
@@ -902,10 +920,10 @@
 	edible = 1
 
 	New()
-		setProperty("corrosion", 1)
-		setProperty("density", 80)
-		setProperty("hard", 1)
-		setProperty("flammable", 80)
+		setProperty("corrosion", 30)
+		setProperty("density", 45)
+		setProperty("hard", 5)
+		setProperty("flammable", 120)
 		addTrigger(triggersOnEat, new /datum/materialProc/oneat_blob())
 		return ..()
 
@@ -1028,6 +1046,8 @@
 		setProperty("density", 25)
 		setProperty("hard", 25)
 		setProperty("flammable", 67)
+		addTrigger(triggersOnBlobHit, new /datum/materialProc/cardboard_blob_hit())
+		addTrigger(triggersOnHit, new /datum/materialProc/cardboard_on_hit())
 		return ..()
 
 /datum/material/organic/chitin
@@ -1052,6 +1072,23 @@
 	New()
 		setProperty("density", 15)
 		setProperty("hard", 15)
+		return ..()
+
+/datum/material/organic/honey
+	mat_id = "honey"
+	name = "honey"
+	desc = ""
+	color = "#f1da10"
+	material_flags = MATERIAL_ORGANIC
+	edible_exact = TRUE
+	edible = TRUE
+
+	New()
+		setProperty("density", 20)
+		setProperty("hard", 5)
+		setProperty("flammable", 30)
+		// addTrigger(triggersOnEat, new /datum/materialProc/oneat_honey())
+		// maybe make it sticky somehow?
 		return ..()
 
 /datum/material/organic/frozenfart

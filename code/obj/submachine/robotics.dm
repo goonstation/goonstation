@@ -116,7 +116,7 @@
 					if ((src.metal_ammo + loadAmount) > src.max_ammo)
 						loadAmount = loadAmount + src.max_ammo - (src.metal_ammo + loadAmount)
 					src.metal_ammo += loadAmount
-					S.consume_sheets(loadAmount)
+					S.change_stack_amount(-loadAmount)
 					playsound(get_turf(src), "sound/machines/click.ogg", 25, 1)
 					src.inventory_counter.update_number(src.metal_ammo)
 					boutput(user, "You load the metal sheet into the lamp manufacturer.")
@@ -149,7 +149,7 @@
 		var/the_reagent = input("Which reagent do you want to manipulate?","Mini-ChemMaster",null,null) in B.reagents.reagent_list
 		if (src.loc != holder || !the_reagent)
 			return
-		var/action = input("What do you want to do with the [the_reagent]?","Mini-ChemMaster",null,null) in list("Isolate","Purge","Remove One Unit","Remove Five Units","Create Pill","Create Pill Bottle","Create Bottle","Do Nothing")
+		var/action = input("What do you want to do with the [the_reagent]?","Mini-ChemMaster",null,null) in list("Isolate","Purge","Remove One Unit","Remove Five Units","Create Pill","Create Pill Bottle","Create Bottle","Create Patch","Create Ampoule","Do Nothing")
 		if (src.loc != holder || !action || action == "Do Nothing")
 			working = 0
 			return
@@ -196,6 +196,43 @@
 					phrase_log.log_phrase("bottle", name, no_duplicates=TRUE)
 				P.name = "[name] bottle"
 				B.reagents.trans_to(P,30)
+			if("Create Patch")
+				var/datum/reagents/R = B.reagents
+				var/input_name = input(user, "Name the patch:", "Name", R.get_master_reagent_name()) as null|text
+				var/patchname = copytext(html_encode(input_name), 1, 32)
+				if (isnull(patchname) || !length(patchname) || patchname == " ")
+					working = 0
+					return
+				var/all_safe = 1
+				for (var/reagent_id in R.reagent_list)
+					if (!global.chem_whitelist.Find(reagent_id))
+						all_safe = 0
+				var/obj/item/reagent_containers/patch/P
+				if (R.total_volume <= 15)
+					P = new /obj/item/reagent_containers/patch/mini(user.loc)
+					P.name = "[patchname] mini-patch"
+					R.trans_to(P, P.initial_volume)
+				else
+					P = new /obj/item/reagent_containers/patch(user.loc)
+					P.name = "[patchname] patch"
+					R.trans_to(P, P.initial_volume)
+				P.medical = all_safe
+				P.on_reagent_change()
+				logTheThing("combat",user,null,"created a [patchname] patch containing [log_reagents(P)].")
+			if("Create Ampoule")
+				var/datum/reagents/R = B.reagents
+				var/input_name = input(user, "Name the ampoule:", "Name", R.get_master_reagent_name()) as null|text
+				var/ampoulename = copytext(html_encode(input_name), 1, 32)
+				if(!ampoulename)
+					working = 0
+					return
+				if(ampoulename == " ")
+					ampoulename = R.get_master_reagent_name()
+				var/obj/item/reagent_containers/ampoule/A
+				A = new /obj/item/reagent_containers/ampoule(user.loc)
+				A.name = "ampoule ([ampoulename])"
+				R.trans_to(A, 5)
+				logTheThing("combat",user,null,"created a [ampoulename] ampoule containing [log_reagents(A)].")
 
 		working = 0
 
@@ -250,7 +287,7 @@
 				if ("Cola")
 					new /obj/item/reagent_containers/food/drinks/cola(get_turf(src))
 				if ("Water")
-					new /obj/item/reagent_containers/food/drinks/bottle/bottledwater(get_turf(src))
+					new /obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater(get_turf(src))
 				else
 					user.show_text("<b>ERROR</b> - Invalid item! Resetting...", "red")
 					logTheThing("debug", user, null, "<b>Convair880</b>: [user]'s food synthesizer was set to an invalid value.")
@@ -277,7 +314,7 @@
 	icon_state = "oilcan"
 	amount_per_transfer_from_this = 15
 	splash_all_contents = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	rc_flags = RC_FULLNESS
 	initial_volume = 120
 
@@ -449,7 +486,7 @@ ported and crapped up by: haine
 
 			var/trans = src.active_tank.reagents.trans_to(target, amt_to_transfer)
 			user.show_text("You transfer [trans] unit\s of the solution to [target]. [active_tank.reagents.total_volume] unit\s remain.", "blue")
-			playsound(loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 0) // Play a sound effect.
+			playsound(loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 0) // Play a sound effect.
 			processing_items |= src
 		else
 			return ..() // call your parents!!

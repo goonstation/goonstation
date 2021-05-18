@@ -276,7 +276,7 @@ var/list/genetek_hair_styles = null
 		var/mob/living/carbon/human/H = src.occupant
 		if (istype(H))
 			if (src.occupant_preview)
-				src.occupant_preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace)
+				src.occupant_preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace, name=H.real_name)
 		else
 			qdel(src.occupant_preview)
 			src.occupant_preview = null
@@ -308,6 +308,7 @@ var/list/genetek_hair_styles = null
 
 		src.target_mob = target
 		src.preview = new()
+		src.preview.add_background("#092426")
 		src.load_mob_data(src.target_mob)
 		return
 

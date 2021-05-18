@@ -98,6 +98,8 @@
 		return 1
 	if (no_automatic_ending)
 		return 0
+	var/blobcount = 0
+	var/tilecount = 0
 	for (var/datum/mind/M in traitors)
 		if (!M)
 			continue
@@ -105,9 +107,8 @@
 			continue
 		if (isblob(M.current))
 			var/mob/living/intangible/blob_overmind/O = M.current
-			if (O.blobs.len < 500)
-				finish_counter = 0
-				return 0
+			blobcount += 1
+			tilecount += O.blobs.len
 	for (var/datum/mind/M in Agimmicks)
 		if (!M)
 			continue
@@ -115,9 +116,10 @@
 			continue
 		if (isblob(M.current))
 			var/mob/living/intangible/blob_overmind/O = M.current
-			if (O.blobs.len < 500)
-				finish_counter = 0
-				return 0
+			blobcount += 1
+			tilecount += O.blobs.len
+	if(tilecount < 500*blobcount)
+		return 0
 	return 1
 
 /datum/game_mode/blob/declare_completion()

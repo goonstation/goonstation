@@ -222,7 +222,7 @@ todo: add more small animals!
 	icon_state_dead = "remy-dead"
 	health_brute = 33
 	health_burn = 33
-	pull_w_class = 3
+	pull_w_class = W_CLASS_NORMAL
 
 	setup_overlays()
 		return
@@ -386,7 +386,7 @@ todo: add more small animals!
 		if (..())
 			return 1
 		if (prob(10))
-			src.visible_message("[src] purrs!",\
+			src.audible_message("[src] purrs!",\
 			"You purr!")
 
 /mob/living/critter/small_animal/cat/weak
@@ -444,7 +444,7 @@ todo: add more small animals!
 	var/dogtype = "pug"
 	var/sound/sound_bark = "sound/voice/animal/dogbark.ogg"
 	var/gabe = 0 //sniff. bark bork. brork.
-	pull_w_class = 4
+	pull_w_class = W_CLASS_BULKY
 
 	OnMove()
 		if(client?.player?.shamecubed)
@@ -653,10 +653,9 @@ todo: add more small animals!
 			src.hud.update_health()
 
 	proc/howl()
-		if (prob(60))
-			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='combat'><b>[src]</b> [pick("howls","bays","whines","barks","croons")] to the music! [capitalize(he_or_she(src))] thinks [he_or_she(src)]'s singing!</span>")
-			playsound(get_turf(src), "sound/voice/animal/howl[rand(1,6)].ogg", 100, 0)
+		src.audible_message("<span class='combat'><b>[src]</b> [pick("howls","bays","whines","barks","croons")] to the music! [capitalize(he_or_she(src))] thinks [he_or_she(src)]'s singing!</span>")
+		playsound(get_turf(src), "sound/voice/animal/howl[rand(1,6)].ogg", 100, 0)
+
 
 /* -------------------- Shiba -------------------- */
 
@@ -731,7 +730,7 @@ todo: add more small animals!
 	var/good_grip = 1 // they can hold any sized item because they are stronk birbs, otherwise small_critter limb
 	health_brute = 15
 	health_burn = 15
-	pull_w_class = 4
+	pull_w_class = W_CLASS_BULKY
 
 	New(loc, nspecies)
 		..()
@@ -1392,7 +1391,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 10
 	icon_state = "robot_roach"
 	icon_state_dead = "robot_roach-dead"
-	pull_w_class = 3
+	pull_w_class = W_CLASS_NORMAL
 	meat_type = /obj/item/reagent_containers/food/snacks/burger/roburger
 
 	base_move_delay = 1.6
@@ -1721,7 +1720,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (..())
 			return 1
 		if (prob(10))
-			src.visible_message("[src] purrs![prob(20) ? " Wait, what?" : null]",\
+			src.audible_message("[src] purrs![prob(20) ? " Wait, what?" : null]",\
 			"You purr!")
 
 
@@ -1890,7 +1889,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	skinresult = /obj/item/clothing/head/raccoon
 	max_skins = 1
 
-	pull_w_class = 4
+	pull_w_class = W_CLASS_BULKY
 
 	New()
 		..()
@@ -2223,7 +2222,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	hand_count = 2
 	health_brute = 20
 	health_burn = 20
-	pull_w_class = 4
+	pull_w_class = W_CLASS_BULKY
 
 	setup_hands()
 		..()
@@ -2364,8 +2363,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 4
 
 /mob/living/critter/small_animal/figure
-	name = "collectable figure"
-	real_name = "collectable figure"
+	name = "collectible figure"
+	real_name = "collectible figure"
 	desc = "<b><span class='alert'>WARNING:</span> CHOKING HAZARD</b> - Small parts. Not for children under 3 years."
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
@@ -2523,6 +2522,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			return
 		if(voluntary && M != src.last_poked) // if we poked that person it means we implicitly agree
 			boutput(M, "You extend your hand to the mouse, waiting for it to accept.")
+			if (ON_COOLDOWN(src, "mentor mouse pickup popup", 3 SECONDS))
+				return
 			if (alert(src, "[M] wants to pick you up and put you in their pocket. Is that okay with you?", "Hop in the pocket", "Yes", "No") != "Yes")
 				boutput(M, "\The [src] slips out as you try to pick it up.")
 				return
@@ -2543,6 +2544,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		else if(src.client)
 			obs.client = src.client
 		M.setStatus(src.status_name, duration = null)
+		logTheThing("admin", src, M, "jumps into [constructTarget(M, "admin")]'s pocket as a mentor mouse at [log_loc(M)].")
 
 	hand_attack(atom/target, params, location, control, origParams)
 		if(istype(target, /mob/living) && target != src)

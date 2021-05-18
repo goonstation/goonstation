@@ -1,3 +1,9 @@
+#define BOUNTY_TYPE_ORGAN	1
+#define BOUNTY_TYPE_TRINK	2
+#define BOUNTY_TYPE_PHOTO	3
+#define BOUNTY_TYPE_ITEM	4
+#define BOUNTY_TYPE_BIG		5
+
 /datum/game_mode/spy_theft
 	name = "spy_thief"
 	config_tag = "spy_theft"
@@ -5,19 +11,19 @@
 	//maybe not??
 	//latejoin_antag_compatible = 1
 	//latejoin_antag_roles = list("spy_thief")
-	var/const/waittime_l = 600
-	var/const/waittime_h = 1800
+	var/const/waittime_l = 600	// Minimum after round start to send threat information to printer
+	var/const/waittime_h = 1800	// Maximum after round start to send threat information to printer
 
 	var/const/bounty_refresh_interval = 25 MINUTES
 	var/last_refresh_time = 0
 
 	var/const/spies_possible = 7
 
-	var/list/station_bounties = list() // on-station items that can have bounties placed on them, pair list
-	var/list/big_station_bounties = list() // on-station machines/other big objects that can have bounties placed on them, pair list
-	var/list/personal_bounties = list()  // things that belong to people like trinkets, pair list
-	var/list/organ_bounties = list() // things that belong to people that are on the inside
-	var/list/photo_bounties = list() // photos of people (Operates by text, because that's the only info that photos store)
+	var/list/station_bounties = list()			// On-station items that can have bounties placed on them, pair list
+	var/list/big_station_bounties = list()	// On-station machines/other big objects that can have bounties placed on them, pair list
+	var/list/personal_bounties = list() 		// Things that belong to people like trinkets, pair list
+	var/list/organ_bounties = list()				// Things that belong to people that are on the inside
+	var/list/photo_bounties = list()				// Photos of people (Operates by text, because that's the only info that photos store)
 
 	var/const/organ_bounty_amt = 4
 	var/const/person_bounty_amt = 5
@@ -31,16 +37,17 @@
 	var/list/uplinks = list()
 
 /datum/bounty_item
-	var/name = "bounty name (this is a BUG)" 	//when a bounty object is deleted, we will still need a ref to its name
-	var/obj/item = 0							//ref to exact item
-	var/path = 0								//req path of item
-	var/claimed = 0								//claimed already?
+	var/name = "bounty name (this is a BUG)" 	//When a bounty object is deleted, we will still need a ref to its name
+	var/obj/item = 0										//Ref to exact item
+	var/path = 0												//Req path of item
+	var/claimed = 0											//Claimed already?
 	var/area/delivery_area = 0					//You need to stand here to deliver this
-	var/photo_containing = 0 					//Name required in a photograph. alright look photographs work on the basis of matching strings. Photos don't store refs to the mob or whatever so this will have to do
-	var/reveal_area = 0							//show area in pda
-	var/job = "job name"					//Job of bounty item owner (if itemm has an owner). Used for personal/organ bounties
-
-	var/organ = 0 								//silly organ flag that is only checked in one place
+	var/photo_containing = 0 						//Name required in a photograph. alright look photographs work on the basis of matching strings. Photos don't store refs to the mob or whatever so this will have to do
+	var/reveal_area = 0									//Show area of target in pda
+	var/job = "job name"								//Job of bounty item owner (if item has an owner). Used for target difficulty on personal/organ bounties
+	var/bounty_type = 0 								//Type of objective, used to determine difficulty and organs 'Anywhere' delivery location
+	var/difficulty = 0									//Stored difficulty for items and big items
+	var/hot_bounty = 0									//This bounty randomly rolled a high tier reward
 
 	var/datum/syndicate_buylist/reward = 0
 	var/value_low = 0
@@ -63,10 +70,10 @@
 		else
 			return 1
 
-	//1 to 4
+	//Choose a reward from the four tiers
 	proc/pick_reward_tier(var/val)
 		switch(val)
-			if(1)
+			if (1)
 				value_high = 4
 				value_low = 0
 			if (2)
@@ -141,12 +148,12 @@
 		var/mob/new_player/player = C.mob
 		if (!istype(player)) continue
 
-		if(player.ready) num_players++
+		if (player.ready) num_players++
 
 	var/randomizer = rand(0,6)
 	var/num_spies = 2 //minimum
 
-	if(traitor_scaling)
+	if (traitor_scaling)
 		num_spies = max(2, min(round((num_players + randomizer) / 6), spies_possible))
 
 	var/list/possible_spies = get_possible_spies(num_spies)
@@ -204,10 +211,10 @@
 
 		if (ishellbanned(player)) continue //No treason for you
 		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_spy)
+			if (player.client.preferences.be_spy)
 				candidates += player.mind
 
-	if(candidates.len < minimum_traitors)
+	if (candidates.len < minimum_traitors)
 		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_spy set to yes were ready. We need [minimum_traitors] traitors so including players who don't want to be traitors in the pool.")
 		for(var/client/C)
 			var/mob/new_player/player = C.mob
@@ -220,7 +227,7 @@
 				if ((minimum_traitors > 1) && (candidates.len >= minimum_traitors))
 					break
 
-	if(candidates.len < 1)
+	if (candidates.len < 1)
 		return list()
 	else
 		return candidates
@@ -285,7 +292,7 @@
 
 		if (player.real_name != excluded_name)
 			names += player.real_name
-	if(!names.len)
+	if (!names.len)
 		return null
 	return pick(names)
 
@@ -293,11 +300,12 @@
 /datum/game_mode/spy_theft/proc/build_bounty_list()
 	src.last_refresh_time = ticker.round_elapsed_ticks
 
-	//clear and reset these lists. Some of these items may have gone missing, new crewmembers may have arrived.
+	//Clear and reset these lists. Some of these items may have gone missing, new crewmembers may have arrived.
 	personal_bounties.len = 0
 	organ_bounties.len = 0
 	photo_bounties.len = 0
 
+	//Look for every living human that should be on the station, store their limbs and names for organ/photos
 	for(var/mob/living/carbon/human/H in mobs)
 		LAGCHECK(LAG_LOW)
 
@@ -311,8 +319,8 @@
 		if (!T || T.z != 1) //Nobody in the adventure zones, thanks.
 			continue
 
-		//personal bounties (items that belong to a person)
-		//pair list, stores job for difficulty lookup
+		//Personal bounties (items that belong to a person)
+		//Pair list, stores job for difficulty lookup
 		if (H.trinket && istype(H.trinket))
 			personal_bounties += list(list(H.trinket, H.job))
 		if (H.wear_id)
@@ -334,7 +342,8 @@
 		photo_bounties += H.real_name
 
 
-	//fugginhuge list of station item bounties (misc. things on the station that would be fun to steal)
+	//Master list of station item bounties (misc. things on the station that would be fun to steal)
+	//Exact type and difficult rating - Does not automatically include subtypes
 	station_bounties[/obj/item/ghostboard] = 1
 	station_bounties[/obj/item/gnomechompski] = 1
 	station_bounties[/obj/item/diary] = 1
@@ -349,7 +358,7 @@
 	station_bounties[/obj/item/clothing/head/merchant_hat] = 1
 	station_bounties[/obj/item/clothing/head/beret/prisoner] = 2
 	station_bounties[/obj/item/clothing/head/caphat] = 3
-	station_bounties[/obj/item/clothing/head/helmet/HoS] = 3
+	station_bounties[/obj/item/clothing/head/hos_hat] = 3
 
 	station_bounties[/obj/item/disk/data/floppy/read_only/communications] = 2
 	station_bounties[/obj/item/disk/data/floppy/read_only/authentication] = 3
@@ -475,7 +484,6 @@
 	station_bounties[/obj/item/device/radio/headset/deaf] = 1
 
 	// Big machinery (non portable) objects
-	// Can't grab all vehicles or we might get cars
 	big_station_bounties[/obj/machinery/vehicle/pod] = 1
 	big_station_bounties[/obj/machinery/vehicle/escape_pod] = 1
 	big_station_bounties[/obj/machinery/vehicle/cargo] = 1
@@ -550,14 +558,14 @@
 	// Loop through all objects and pick valid objects on station
 	for(var/obj/Object in world)
 		LAGCHECK(LAG_LOW)
-		if(spy_thief_target_types[Object.type])
+		if (spy_thief_target_types[Object.type])
 			var/turf/Turf = get_turf(Object)
-			if(!Turf || Turf.z != Z_LEVEL_STATION)
+			if (!Turf || Turf.z != Z_LEVEL_STATION)
 				continue
 			var/area/A = get_area(Object)
-			if(A.name == "Listening Post")
+			if (A.name == "Listening Post")
 				continue
-			if(valid_spy_thief_targets_by_type[Object.type])
+			if (valid_spy_thief_targets_by_type[Object.type])
 				valid_spy_thief_targets_by_type[Object.type] += Object
 			else
 				valid_spy_thief_targets_by_type[Object.type] = list(Object)
@@ -569,7 +577,7 @@
 		B.item = pair[1]
 		B.job = pair[2]
 		// B.path = B.item.type
-		if(istype(B.item, /obj/item/parts))
+		if (istype(B.item, /obj/item/parts))
 			var/obj/item/parts/P = B.item
 			if (!P || P.qdeled || !P.holder || P.holder.qdeled)
 				// "this seems really stupid"
@@ -580,22 +588,9 @@
 				continue
 			B.name = P.holder.real_name + "'s " + P.name
 		B.reveal_area = 1
-		B.organ = 1
-		O -= B.item
+		O -= list(pair)
 
-		// Adjust reward based off target job to estimate risk level
-		var/difficulty = B.estimate_target_difficulty(B.job)
-		switch(difficulty)
-			if(3)
-				B.pick_reward_tier(4)
-			if (2)
-				B.pick_reward_tier(3)
-			if (1)
-				if (prob(7))
-					B.pick_reward_tier(3)
-				else
-					B.pick_reward_tier(2)
-
+		B.bounty_type = BOUNTY_TYPE_ORGAN
 		active_bounties += B
 
 	//Add personal items
@@ -607,29 +602,13 @@
 		B.job = pair[2]
 		B.name = B.item.name
 		B.reveal_area = 1
-		P -= pair
+		P -= list(pair)
 
-		// Adjust reward based off target job to estimate risk level
-		var/difficulty = B.estimate_target_difficulty(B.job)
-		switch(difficulty)
-			if(3)
-				B.pick_reward_tier(4)
-			if (2)
-				if (prob(10))
-					B.pick_reward_tier(4)
-				else
-					B.pick_reward_tier(pick(2,3))
-			if (1)
-				if (prob(10))
-					B.pick_reward_tier(4)
-				else
-					B.pick_reward_tier(pick(1,3))
-
+		B.bounty_type = BOUNTY_TYPE_TRINK
 		active_bounties += B
 
 	//Add big station item bounties
 	var/big_choice = null
-	var/difficulty = 0
 	var/obj/obj_existing = null
 	var/big_picked=1
 	while(big_picked<=big_station_bounty_amt)
@@ -637,30 +616,21 @@
 			logTheThing( "debug", src, null, "spy_theft.dm was unable to create enough big station bounties." )
 			message_admins("Spy bounty logic was unable to create enough big station bounties.")
 			break
-		// Pick a known valid item, retrieve difficulty rating from other list
+		// Pick an item type then check if it is valid
 		big_choice = pick(big_station_bounties)
 		obj_existing = pick(valid_spy_thief_targets_by_type[big_choice])
 		if (obj_existing == null)
 			// Catch picks that weren't found
 			big_station_bounties -= big_choice
 			continue
-		difficulty = big_station_bounties[big_choice]
 		var/datum/bounty_item/B = new /datum/bounty_item(src)
 		B.path = obj_existing.type
 		B.item = obj_existing
 		B.name = obj_existing.name
 
-		switch(difficulty)
-			if(3)
-				B.pick_reward_tier(pick(2,3))
-			if (2)
-				B.pick_reward_tier(pick(1,2))
-			if (1)
-				if (prob(15))
-					B.pick_reward_tier(pick(1,2))
-				else
-					B.pick_reward_tier(1)
-
+		//Retrieve difficulty rating
+		B.difficulty = big_station_bounties[big_choice]
+		B.bounty_type = BOUNTY_TYPE_BIG
 		active_bounties += B
 		big_station_bounties -= big_choice
 		big_picked++
@@ -673,14 +643,11 @@
 		B.name = "a photograph of [B.photo_containing]"
 		PH -= B.photo_containing
 
-		B.pick_reward_tier(1)
-
+		B.bounty_type = BOUNTY_TYPE_PHOTO
 		active_bounties += B
-
 
 	//Add station item bounties
 	var/item_choice = null
-	difficulty = 0
 	var/obj/item_existing = null
 	var/item_picked=1
 	while(item_picked<=station_bounty_amt)
@@ -688,29 +655,21 @@
 			logTheThing( "debug", src, null, "spy_theft.dm was unable to create enough item bounties." )
 			message_admins("Spy bounty logic was unable to create enough item bounties.")
 			break
-		// Pick a known valid item, retrieve difficulty rating from other list
+		// Pick an item type then check if it is valid
 		item_choice = pick(station_bounties)
 		item_existing = pick(valid_spy_thief_targets_by_type[item_choice])
 		if (item_existing == null)
 			// Catch picks that weren't found
 			station_bounties -= item_choice
 			continue
-		difficulty = station_bounties[item_choice]
 		var/datum/bounty_item/B = new /datum/bounty_item(src)
 		B.path = item_existing.type
 		B.item = item_existing
 		B.name = item_existing.name
 
-		switch(difficulty)
-			if(3)
-				B.pick_reward_tier(pick(2,3))
-			if (2)
-				B.pick_reward_tier(pick(1,2))
-			if (1)
-				if (prob(15))
-					B.pick_reward_tier(pick(1,2))
-				else
-					B.pick_reward_tier(1)
+		//Retrieve difficulty rating
+		B.difficulty = station_bounties[item_choice]
+		B.bounty_type = BOUNTY_TYPE_ITEM
 
 		active_bounties += B
 		station_bounties -= item_choice
@@ -721,9 +680,15 @@
 	possible_areas = get_areas_with_unblocked_turfs(/area/station)
 	possible_areas += get_areas_with_unblocked_turfs(/area/diner)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/diner/tug)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/diner/jucer_trader)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/medical/asylum)			// Donut 3 Asylum
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected/ai)		// AI core
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/turret_protected/AIsat)	// AI satellite
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/maintenance)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/hallway)
 	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/substation)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/singcore)
+	possible_areas -= get_areas_with_unblocked_turfs(/area/station/engine/combustion_chamber)
 	possible_areas -= /area/sim/test_area
 
 	for (var/area/A in possible_areas)
@@ -731,14 +696,91 @@
 		if (A.virtual)
 			possible_areas -= A
 			break
-		if (A.name == "AI Perimeter Defenses" || A.name == "VR Test Area") //I have no idea what this "AI Perimeter Defenses" is, can't find it in code! All I know is that it's an area that the game can choose that DOESNT HAVE ANY TURFS
+		if (A.name == "AI Perimeter Defenses" || A.name == "VR Test Area" || A.name == "Ocean") //I have no idea what "AI Perimeter Defenses" or "Ocean" is, can't find it in code! All I know is that it's an area that the game can choose that DOESNT HAVE ANY TURFS
 			possible_areas -= A
 			break
 
 	for (var/datum/bounty_item/B in active_bounties)
-		if ((B.item && !istype(B.item,/obj/item)) || B.organ)
+		if (B.bounty_type == BOUNTY_TYPE_ORGAN || B.bounty_type == BOUNTY_TYPE_BIG)
 			B.delivery_area = 0
 		else
 			B.delivery_area = pick(possible_areas)
-
+		// Calculate bounty difficulty
+		if (B.bounty_type == BOUNTY_TYPE_PHOTO)
+			// Adjust reward based off delivery area
+			if (B.delivery_area.spy_secure_area)
+				B.pick_reward_tier(2)
+			else
+				B.pick_reward_tier(1)
+		else if (B.bounty_type == BOUNTY_TYPE_ORGAN)
+			// Adjust reward based off target job and to estimate risk level
+			B.difficulty = B.estimate_target_difficulty(B.job)
+			switch(B.difficulty)
+				if (3)
+					B.pick_reward_tier(4)
+				if (2)
+					B.pick_reward_tier(3)
+				if (1)
+					if (prob(10))	// Hot bounty
+						B.pick_reward_tier(pick(3,4))
+						B.hot_bounty = TRUE
+					else
+						B.pick_reward_tier(2)
+		else if (B.bounty_type == BOUNTY_TYPE_TRINK)
+			// Adjust reward based off target job and delivery area to estimate risk level
+			B.difficulty = B.estimate_target_difficulty(B.job)
+			switch(B.difficulty)
+				if (3)
+					B.pick_reward_tier(4)
+				if (2)
+					if (prob(10))	// Hot bounty
+						B.pick_reward_tier(4)
+						B.hot_bounty = TRUE
+					else
+						if (B.delivery_area.spy_secure_area)
+							B.pick_reward_tier(pick(3,4))
+						else
+							B.pick_reward_tier(pick(2,3))
+				if (1)
+					if (prob(10))	// Hot bounty
+						B.pick_reward_tier(4)
+						B.hot_bounty = TRUE
+					else
+						if (B.delivery_area.spy_secure_area)
+							B.pick_reward_tier(3)
+						else
+							B.pick_reward_tier(pick(1,2))
+		else if (B.bounty_type == BOUNTY_TYPE_BIG)
+			// Preset difficulty depending upon type
+			switch(B.difficulty)
+				if (3)
+					B.pick_reward_tier(pick(2,3))
+				if (2)
+					B.pick_reward_tier(pick(1,2))
+				if (1)
+					if (prob(15))	// Random increase for variety
+						B.pick_reward_tier(pick(1,2))
+					else
+						B.pick_reward_tier(1)
+		else if (B.bounty_type == BOUNTY_TYPE_ITEM)
+			// Preset difficulty depending upon type, adjusted by delivery area
+			switch(B.difficulty)
+				if (3)
+					if (B.delivery_area.spy_secure_area)
+						B.pick_reward_tier(pick(3,4))
+					else
+						B.pick_reward_tier(pick(2,3))
+				if (2)
+					if (B.delivery_area.spy_secure_area)
+						B.pick_reward_tier(pick(2,3))
+					else
+						B.pick_reward_tier(pick(1,2))
+				if (1)
+					if (B.delivery_area.spy_secure_area)
+						B.pick_reward_tier(pick(2,3))
+					else
+						if (prob(15))	// Random increase for variety
+							B.pick_reward_tier(pick(1,2))
+						else
+							B.pick_reward_tier(1)
 	return

@@ -281,7 +281,7 @@
 					break
 
 		if (no_go) // no more scooting around walls and doors okay
-			if(!skip_penalty & istype(L))
+			if(!skip_penalty && istype(L))
 				L.visible_message("<span class='alert'><b>[L]</b> scoots around [src], right into [no_go]!</span>",\
 				"<span class='alert'>You scoot around [src], right into [no_go]!</span>")
 				if (!L.hasStatus("weakened"))
@@ -348,8 +348,18 @@
 			return
 
 		if (O.loc == user)
+			var/obj/item/I = O
+			if(istype(I) && I.cant_drop)
+				return
+			if(istype(I) && I.equipped_in_slot && I.cant_self_remove)
+				return
 			user.u_equip(O)
 			O.set_loc(get_turf(user))
+
+		else if(istype(O.loc, /obj/item/storage))
+			var/obj/item/storage/storage = O.loc
+			O.set_loc(get_turf(O))
+			storage.hud.remove_item(O)
 
 		SPAWN_DBG(0.5 SECONDS)
 			var/stuffed = FALSE
@@ -373,7 +383,7 @@
 					if(!istype(thing, drag_type))
 						continue
 					if (thing.material && thing.material.getProperty("radioactive") > 0)
-						user.changeStatus("radiation", (round(min(thing.material.getProperty("radioactive") / 2, 20)))*10, 2)
+						user.changeStatus("radiation", (round(min(thing.material.getProperty("radioactive") / 2, 20))) SECONDS, 2)
 					if (thing in user)
 						continue
 					if (thing.loc == src || thing.loc == src.loc) // we're already there!
@@ -703,6 +713,12 @@
 				src.close()
 		return
 
+	mob_flip_inside(var/mob/user)
+		..(user)
+		if (prob(33) && src.can_flip_bust)
+			user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
+			src.bust_out()
+
 /datum/action/bar/icon/storage_disassemble
 	id = "storage_disassemble"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -889,12 +905,6 @@
 			if (user)
 				user.show_text("You repair the lock on [src].", "blue")
 			return 1
-
-	mob_flip_inside(var/mob/user)
-		..(user)
-		if (prob(33) && src.can_flip_bust)
-			user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
-			src.bust_out()
 
 #undef RELAYMOVE_DELAY
 

@@ -1,10 +1,11 @@
-// handles various global init and the position of the sun.
-datum/controller/process/world
+
+/// Handles various global init and the position of the sun.
+/datum/controller/process/world
 	var/shuttle
 
 	setup()
 		name = "World"
-		schedule_interval = 23
+		schedule_interval = 2.3 SECONDS
 
 		last_object = "genResearch.setup"
 		if(genResearch) genResearch.setup()

@@ -9,8 +9,10 @@
 	var/icon_old = null
 	var/uses_multiple_icon_states = 0
 	var/item_state = null
+	var/wear_state = null // icon state used for worn sprites, icon_state used otherwise
 	var/image/wear_image = null
 	var/wear_image_icon = 'icons/mob/belt.dmi'
+	var/wear_layer = MOB_CLOTHING_LAYER
 	var/image/inhand_image = null
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	/// set to a colour to make the inhand image be that colour. if the item is coloured though that takes priority over this variable
@@ -39,7 +41,7 @@
 	var/hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	var/stamina_damage = STAMINA_ITEM_DMG //amount of stamina removed from target per hit.
 	var/stamina_cost = STAMINA_ITEM_COST  //amount of stamina removed from USER per hit. This cant bring you below 10 points and you will not be able to attack if it would.
-	
+
 	var/stamina_crit_chance = STAMINA_CRIT_CHANCE //Crit chance when attacking with this.
 	var/datum/item_special/special = null // Contains the datum which executes the items special, if it has one, when used beyond melee range.
 	var/hide_attack = 0 //If 1, hide the attack animation + particles. Used for hiding attacks with silenced .22 and sleepy pen
@@ -56,7 +58,7 @@
 	/*Inventory*/
 	/*‾‾‾‾‾‾‾‾‾*/
 	var/pickup_sfx = 0 //if null, we auto-pick from a list based on w_class
-	var/w_class = 3.0 // how big they are, determines if they can fit in backpacks and pockets and the like
+	var/w_class = W_CLASS_NORMAL // how big they are, determines if they can fit in backpacks and pockets and the like
 	p_class = 1.5 // how hard they are to pull around, determines how much something slows you down while pulling it
 
 	var/cant_self_remove = 0 // Can't remove from non-hand slots
@@ -120,7 +122,7 @@
 	var/rarity = ITEM_RARITY_COMMON // Just a little thing to indicate item rarity. RPG fluff.
 	pressure_resistance = 50
 	var/obj/item/master = null
-	
+
 	var/last_tick_duration = 1 // amount of time spent between previous tick and this one (1 = normal)
 	var/last_processing_tick = -1
 
@@ -544,6 +546,8 @@
 	return
 
 /obj/item/proc/change_stack_amount(var/diff)
+	if ((amount + diff) < 0)
+		return 0
 	amount += diff
 	if (!inventory_counter)
 		create_inventory_counter()
@@ -555,18 +559,27 @@
 			var/mob/holding_mob = src.loc
 			holding_mob.u_equip(src)
 		pool(src)
+	return 1
 
 /obj/item/proc/stack_item(obj/item/other)
 	var/added = 0
-
-	if (other != src && check_valid_stack(other))
-		if (src.amount + other.amount > max_stack)
-			added = max_stack - src.amount
-		else
-			added = other.amount
-
-		src.change_stack_amount(added)
-		other.change_stack_amount(-added)
+	if(isrobot(other.loc))
+		max_stack = 500
+		if (other != src && check_valid_stack(src))
+			if (src.amount + other.amount > max_stack)
+				added = max_stack - other.amount
+			else
+				added = src.amount
+			src.change_stack_amount(-added)
+			other.change_stack_amount(added)
+	else
+		if (other != src && check_valid_stack(other))
+			if (src.amount + other.amount > max_stack)
+				added = max_stack - src.amount
+			else
+				added = other.amount
+			src.change_stack_amount(added)
+			other.change_stack_amount(-added)
 
 	return added
 
@@ -597,7 +610,7 @@
 	return 1
 
 /obj/item/proc/split_stack(var/toRemove)
-	if(toRemove >= amount) return 0
+	if(toRemove >= amount || toRemove < 1) return 0
 	var/obj/item/P = new src.type(src.loc)
 
 	if(src.material)
@@ -775,10 +788,9 @@
 			S.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
 
 /obj/item/attackby(obj/item/W as obj, mob/user as mob, params)
-	if (src.material)
+	if (W.firesource)
 		src.material.triggerTemp(src ,1500)
-	if (src.burn_possible && src.burn_point <= 1500)
-		if (W.firesource)
+		if (src.burn_possible && src.burn_point <= 1500)
 			src.combust()
 		else
 			..(W, user)
@@ -1024,11 +1036,11 @@
 /obj/item/get_desc()
 	var/t
 	switch(src.w_class)
-		if (-INFINITY to 1.0) t = "tiny"
-		if (2.0) t = "small"
-		if (3.0) t = "normal-sized"
-		if (4.0) t = "bulky"
-		if (5.0 to INFINITY) t = "huge"
+		if (-INFINITY to W_CLASS_TINY) t = "tiny"
+		if (W_CLASS_SMALL) t = "small"
+		if (W_CLASS_NORMAL) t = "normal-sized"
+		if (W_CLASS_BULKY) t = "bulky"
+		if (W_CLASS_HUGE to INFINITY) t = "huge"
 		else
 	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50)) t = "funny-looking"
 	return "It is \an [t] item."

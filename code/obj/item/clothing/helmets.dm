@@ -53,6 +53,7 @@
 		setProperty("viralprot", 50)
 		setProperty("disorient_resist_eye", 8)
 		setProperty("disorient_resist_ear", 8)
+		setProperty("space_movespeed", 0.2)
 
 	oldish
 		icon_state = "space-OLD"
@@ -106,6 +107,28 @@
 		return
 
 /obj/item/clothing/head/helmet/space/engineer/abilities = list(/obj/ability_button/flashlight_engiehelm)
+
+/obj/item/clothing/head/helmet/space/captain
+	name = "captain's space helmet"
+	icon_state = "space-captain"
+	item_state = "space-captain"
+	desc = "Helps protect against vacuum. Comes in an interesting green befitting the captain."
+
+	setupProperties()
+		..()
+		setProperty("space_movespeed", 0.1)
+
+	blue
+		name = "commander's space helmet"
+		icon_state = "space-captain-blue"
+		item_state = "space-captain-blue"
+		desc = "Helps protect against vacuum. Comes in a fasionable blue befitting a commander."
+
+	red
+		name = "commander's space helmet"
+		icon_state = "space-captain-red"
+		item_state = "space-captain-red"
+		desc = "Helps protect against vacuum. Comes in a fasionable red befitting a commander."
 
 // Sealab helmets
 
@@ -187,6 +210,11 @@
 	icon_state = "syndicate"
 	item_state = "space_helmet_syndicate"
 	desc = "The standard space helmet of the dreaded Syndicate."
+	item_function_flags = IMMUNE_TO_ACID
+
+	setupProperties()
+		..()
+		setProperty("space_movespeed", 0)
 
 	old
 		icon_state = "syndicate-OLD"
@@ -195,8 +223,7 @@
 
 	commissar_cap
 		name = "commander's cap"
-		wear_image_icon = 'icons/mob/fruithat.dmi'
-		icon_state = "commissar_cap"
+		icon_state = "syndie_commander"
 		desc = "A terrifyingly tall, black & red cap, typically worn by a Syndicate Nuclear Operative Commander. Maybe they're trying to prove something to the Head of Security?"
 		seal_hair = 0
 		see_face = 1
@@ -329,12 +356,19 @@
 			setProperty("exploprot", 10)
 			setProperty("disorient_resist_eye", 50)
 			setProperty("disorient_resist_ear", 50)
+			setProperty("space_movespeed", 0.3)
+
 
 /obj/item/clothing/head/helmet/space/ntso //recoloured nuke class suits for ntso vs syndicate specialist
 	name = "NT-SO combat helmet"
 	desc = "A modified combat helmet for Nanotrasen special forces"
 	icon_state = "ntso_specialist"
 	item_state = "ntso_specialist"
+
+	setupProperties()
+		..()
+		setProperty("space_movespeed", 0)
+
 
 	unremovable
 		cant_self_remove = 1
@@ -522,7 +556,7 @@
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye. Can be flipped up for clearer vision."
 	icon_state = "welding"
-	c_flags = SPACEWEAR | COVERSEYES | BLOCKCHOKE
+	c_flags = COVERSEYES | BLOCKCHOKE
 	see_face = 0.0
 	item_state = "welding"
 	protective_temperature = 1300
@@ -563,35 +597,7 @@
 		setProperty("meleeprot_head", 9)
 		setProperty("disorient_resist_eye", 25)
 		setProperty("exploprot", 20)
-
-/obj/item/clothing/head/helmet/HoS
-	name = "HoS Hat"
-	icon_state = "hoscap"
-	uses_multiple_icon_states = 1
-	item_state = "hoscap"
-	c_flags = SPACEWEAR | COVERSEYES | BLOCKCHOKE
-	var/is_a_communist = 0
-	var/folds = 0
-	desc = "Actually, you got this hat from a fast-food restaurant, that's why it folds like it was made of paper."
-	setupProperties()
-		..()
-		setProperty("meleeprot_head", 7)
-
-/obj/item/clothing/head/helmet/HoS/attack_self(mob/user as mob)
-	if(user.r_hand == src || user.l_hand == src)
-		if(!src.folds)
-			src.folds = 1
-			src.name = "HoS Beret"
-			src.icon_state = "hosberet"
-			src.item_state = "hosberet"
-			boutput(user, "<span class='notice'>You fold the hat into a beret.</span>")
-		else
-			src.folds = 0
-			src.name = "HoS Hat"
-			src.icon_state = "hoscap"
-			src.item_state = "hoscap"
-			boutput(user, "<span class='notice'>You unfold the beret back into a hat.</span>")
-		return
+		setProperty("movespeed", 0.15)
 
 /obj/item/clothing/head/helmet/siren
 	name = "siren helmet"
@@ -669,6 +675,7 @@
 		setProperty("meleeprot_head", 10)
 		setProperty("disorient_resist_eye", 50)
 		setProperty("disorient_resist_ear", 30)
+		setProperty("movespeed", 0.5)
 
 /obj/item/clothing/head/helmet/NT
 	name = "\improper Nanotrasen helmet"
@@ -701,6 +708,7 @@
 		..()
 		setProperty("radprot", 50)
 		setProperty("exploprot", 10)
+		setProperty("space_movespeed", 0)
 
 	syndicate
 		name = "Syndicate Command Helmet"
@@ -724,6 +732,7 @@
 		setProperty("meleeprot_head", 2)
 		setProperty("disorient_resist_eye", 25)
 		setProperty("disorient_resist_ear", 10)
+		setProperty("space_movespeed", 0)
 
 /obj/item/clothing/head/helmet/bucket
 	name = "bucket helmet"
@@ -806,3 +815,12 @@
 	icon_state = "firefighter"
 	item_state = "firefighter"
 	seal_hair = 1
+
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 3)
+		setProperty("coldprot", 5)
+		setProperty("heatprot", 15)
+		setProperty("disorient_resist_eye", 8)
+		setProperty("disorient_resist_ear", 8)
+

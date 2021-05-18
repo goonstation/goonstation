@@ -329,6 +329,14 @@
 			return
 
 		var/obj/item/I = O
+		if(I.loc == user && I.cant_drop)
+			return
+		if(I.equipped_in_slot && I.cant_self_remove)
+			return
+		if(istype(O.loc, /obj/item/storage))
+			var/obj/item/storage/storage = O.loc
+			I.set_loc(get_turf(O))
+			storage.hud.remove_item(O)
 		if (istype(I,/obj/item/satchel))
 			var/obj/item/satchel/S = I
 			if (S.contents.len < 1)
@@ -683,9 +691,9 @@
 		if (src.glass_broken)
 			if (istype(W, /obj/item/sheet))
 				var/obj/item/sheet/S = W
-				if (!S.material || !S.material.material_flags & MATERIAL_CRYSTAL)
+				if (!S.material || !(S.material.material_flags & MATERIAL_CRYSTAL))
 					boutput(user, "<span class='alert'>You have to use glass or another crystalline material to repair [src]!</span>")
-				else if (S.consume_sheets(1))
+				else if (S.change_stack_amount(-1))
 					boutput(user, "<span class='notice'>You add glass to [src]!</span>")
 					if (S.reinforcement)
 						src.reinforced = 1

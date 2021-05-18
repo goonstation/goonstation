@@ -15467,22 +15467,6 @@
 	icon_state = "carpetS"
 	},
 /area/station/security/detectives_office)
-"aEC" = (
-/obj/cable{
-	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
-	},
-/obj/table/woodentable,
-/obj/item/camera_test{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
-/turf/simulated/floor{
-	icon_state = "carpetS"
-	},
-/area/station/security/detectives_office)
 "aED" = (
 /obj/table/woodentable{
 	dir = 6
@@ -16082,21 +16066,6 @@
 /obj/item/hand_tele,
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
-"aFM" = (
-/obj/table{
-	tag = "icon-tabledir (SOUTHEAST)";
-	icon_state = "tabledir";
-	dir = 6
-	},
-/obj/machinery/recharger{
-	pixel_y = 3
-	},
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/camera_test,
-/turf/simulated/floor,
-/area/station/crew_quarters/captain)
 "aFN" = (
 /turf/simulated/wall/r_wall,
 /area/station/crew_quarters/captain)
@@ -16606,12 +16575,6 @@
 /obj/landmark/start{
 	name = "Captain"
 	},
-/turf/simulated/floor,
-/area/station/crew_quarters/captain)
-"aGK" = (
-/obj/displaycase{
-	displayed = new /obj/item/captaingun
-},
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
 "aGL" = (
@@ -37751,7 +37714,7 @@
 	},
 /area/space)
 "byG" = (
-/obj/item/reagent_containers/food/drinks/bottle/red,
+/obj/item/reagent_containers/food/drinks/bottle/soda/red,
 /turf/simulated/floor{
 	icon_state = "carpetNE"
 	},
@@ -57334,6 +57297,43 @@
 	},
 /turf/simulated/floor/delivery,
 /area/crunch)
+"gus" = (
+/obj/table{
+	tag = "icon-tabledir (SOUTHEAST)";
+	icon_state = "tabledir";
+	dir = 6
+	},
+/obj/machinery/recharger{
+	pixel_y = 3
+	},
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/camera,
+/turf/simulated/floor,
+/area/station/crew_quarters/captain)
+"tSA" = (
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/captain)
+"wdb" = (
+/obj/cable{
+	icon_state = "2-8";
+	d1 = 2;
+	d2 = 8
+	},
+/obj/table/woodentable,
+/obj/item/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "detectives camera";
+	pictures_left = 30
+	},
+/turf/simulated/floor{
+	icon_state = "carpetS"
+	},
+/area/station/security/detectives_office)
 
 (1,1,1) = {"
 aaa
@@ -88530,7 +88530,7 @@ auU
 aDe
 aDD
 aEe
-aEC
+wdb
 aEX
 aFt
 aFJ
@@ -89898,7 +89898,7 @@ aFz
 aFK
 aGd
 aGs
-aGK
+tSA
 aFN
 aHu
 aHx
@@ -90576,7 +90576,7 @@ aEl
 aEJ
 aFd
 aDh
-aFM
+gus
 aGf
 aGv
 aGN

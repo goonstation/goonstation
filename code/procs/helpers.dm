@@ -2352,16 +2352,10 @@ proc/getIconSize()
   * Finds a client by ckey, throws exception if not found
   */
 proc/getClientFromCkey(ckey)
-	var/client/C
-	for (var/client/LC in clients)
-		if (LC.ckey == ckey)
-			C = LC
-			break
-
-	if (!C)
+	var/datum/player/player = find_player(ckey)
+	if(!player?.client)
 		throw EXCEPTION("Client not found")
-
-	return C
+	return player.client
 
 /**
 	* Returns true if the given atom is within src's contents (deeply/recursively)
@@ -2373,80 +2367,6 @@ proc/getClientFromCkey(ckey)
 	for(var/atom/found = A.loc, found, found = found.loc)
 		if(found == src)
 			return TRUE
-
-/**
-  * Returns the vector magnitude of an x value and a y value
-  */
-proc/vector_magnitude(x,y)
-	//can early out
-	.= sqrt(x*x + y*y);
-
-/**
-  * Transforms a supplied vector x & y to a direction
-  */
-proc/vector_to_dir(x,y)
-	.= angle_to_dir(arctan(y,x))
-
-/**
-  * Transforms a given angle to a cardinal/ordinal direction
-  */
-proc/angle_to_dir(angle)
-	.= 0
-	if (angle >= 360)
-		return angle_to_dir(angle-360)
-	if (angle >= 0)
-		if (angle < 22.5)
-			.= NORTH
-		else if (angle <= 67.5)
-			.= NORTHEAST
-		else if (angle < 112.5)
-			.= EAST
-		else if (angle <= 157.5)
-			.= SOUTHEAST
-		else
-			.= SOUTH
-	else if (angle < 0)
-		if (angle > -22.5)
-			.= NORTH
-		else if (angle >= -67.5)
-			.= NORTHWEST
-		else if (angle > -112.5)
-			.= WEST
-		else if (angle >= -157.5)
-			.= SOUTHWEST
-		else
-			.= SOUTH
-
-/**
-  * Transforms a cardinal/ordinal direction to an angle
-  */
-proc/dir_to_angle(dir)
-	.= 0
-	switch(dir)
-		if(NORTH)
-			.= 0
-		if(NORTHEAST)
-			.= 45
-		if(EAST)
-			.= 90
-		if(SOUTHEAST)
-			.= 135
-		if(SOUTH)
-			.= 180
-		if(SOUTHWEST)
-			.= 225
-		if(WEST)
-			.= 270
-		if(NORTHWEST)
-			.= 315
-
-/**
-  * Transforms a given angle to vec2 in a list
-  */
-proc/angle_to_vector(ang)
-	.= list()
-	. += cos(ang)
-	. += sin(ang)
 
 /**
   * Removes non-whitelisted reagents from the reagents of TA
@@ -2559,12 +2479,8 @@ proc/inline_bicon(the_thing, height=32)
 	</span>"}
 
 
-/// fucking clients.len doesnt work, filled with null values
 proc/total_clients()
-	.= 0
-	for (var/C in clients)
-		if (C)
-			.++
+	return length(clients)
 
 
 //total clients used for player cap (which pretends admins don't exist)
@@ -2586,40 +2502,11 @@ proc/client_has_cap_grace(var/client/C)
 		.= (player_cap_grace[C.ckey] > TIME)
 
 
-/**
-	* Returns the maximal subtype (i.e. the most subby) in a list of given types
-	*/
-proc/maximal_subtype(var/list/L)
-	if (!(length(L)))
-		.= null
-	else
-		.= L[1]
-		for (var/t in L)
-			if (ispath(t, .))
-				.= t
-			else if (!(ispath(., t)))
-				return null // paths in L aren't linearly ordered
+//TODO: refactor the below two into one proc
 
-/**
- * Takes associative list of the form list(thing = weight), returns weighted random choice of keys based on weights.
- */
-proc/weighted_pick(list/choices)
-	var/total = 0
-	for(var/key in choices)
-		total += choices[key]
-	var/weighted_num = rand(1, total)
-	var/running_total = 0
-	for(var/key in choices)
-		running_total += choices[key]
-		if(weighted_num <= running_total)
-			return key
-	return
-
-proc/keep_truthy(some_list)
-	. = list()
-	for(var/x in some_list)
-		if(x)
-			. += x
+/// Returns true if not incapicitated and unhandcuffed (by default)
+proc/can_act(var/mob/M, var/include_cuffs = 1)
+	return !((include_cuffs && M.hasStatus("handcuffed")) || is_incapacitated(M))
 
 /// Returns true if the given mob is incapacitated
 proc/is_incapacitated(mob/M)

@@ -1543,6 +1543,9 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 		playsound(src.loc, "sound/effects/mag_iceburstimpact.ogg", 25, 1)
 
+		for(var/mob/living/L in get_turf(src))
+			L.gib()
+
 		set_density(1)
 		invisibility = 0
 
@@ -1714,7 +1717,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	desc = "This is obviously an ancient unlocking gizmo of some sort.  Clearly."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "robotkey-blue"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/keytype = 0 //0: blue, 1: red
 
 	red

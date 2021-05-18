@@ -236,6 +236,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 //Returns either the AI mainframe or the eyecam mob, depending on whther or not we are deployed
 /mob/living/silicon/ai/proc/get_message_mob()
 	RETURN_TYPE(/mob)
+
 	if (deployed_to_eyecam)
 		return src.eyecam
 	return src
@@ -2207,7 +2208,7 @@ proc/get_mobs_trackable_by_AI()
 		if (W.material.material_flags & MATERIAL_METAL) // metal sheets
 			if (src.build_step < 1)
 				var/obj/item/sheet/M = W
-				if (M.consume_sheets(3))
+				if (M.change_stack_amount(-3))
 					src.build_step++
 					boutput(user, "You add plating to [src]!")
 					playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
@@ -2223,7 +2224,7 @@ proc/get_mobs_trackable_by_AI()
 			if (src.build_step >= 2)
 				if (!src.has_glass)
 					var/obj/item/sheet/G = W
-					if (G.consume_sheets(1))
+					if (G.change_stack_amount(-1))
 						src.build_step++
 						boutput(user, "You add glass to [src]!")
 						playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)

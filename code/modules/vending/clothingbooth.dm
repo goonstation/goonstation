@@ -31,7 +31,7 @@ var/list/clothingbooth_items = list()
 		return
 
 	var/mob/living/carbon/human/H = user
-	src.preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace)
+	src.preview.update_appearance(H.bioHolder.mobAppearance, H.mutantrace, name=user.real_name)
 	qdel(src.preview_item)
 	src.preview_item = null
 	src.preview.remove_all_clients()
@@ -130,12 +130,16 @@ var/list/clothingbooth_items = list()
 
 /obj/machinery/clothingbooth/attackby(obj/item/weapon as obj, mob/user as mob)
 	if(istype(weapon, /obj/item/spacecash))
-		src.money += weapon.amount
-		weapon.amount = 0
-		user.visible_message("<span class='notice'>[user.name] inserts credits into the- Wait, was that a hand?</span>","<span class='notice'>A small goblin-like hand reaches out from a compartment within the clothing booth, takes your credits, and quickly pulls them back inside.</span>")
-		user.u_equip(weapon)
-		weapon.dropped()
-		qdel(weapon)
+		if(!(locate(/mob) in src))
+			src.money += weapon.amount
+			weapon.amount = 0
+			user.visible_message("<span class='notice'>[user.name] inserts credits into the- Wait, was that a hand?</span>","<span class='notice'>A small goblin-like hand reaches out from a compartment within the clothing booth, takes your credits, and quickly pulls them back inside.</span>")
+			user.u_equip(weapon)
+			weapon.dropped()
+			qdel(weapon)
+		else
+			boutput(user,"<span style=\"color:red\">It seems the clothing booth is currently occupied. Maybe it's better to just wait.</span>")
+
 	else
 		var/obj/item/grab/G = weapon
 		if(istype(G))

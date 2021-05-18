@@ -3,7 +3,7 @@
 	desc = "<b><span class='alert'>WARNING:</span> CHOKING HAZARD</b> - Small parts. Not for children under 3 years."
 	icon = 'icons/obj/items/figures.dmi'
 	icon_state = "fig-"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 1
 	throw_speed = 4
 	throw_range = 7
@@ -691,10 +691,16 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "bunnyfriendsmen"
 		ckey = "bunnykimber"
 
-	neoxzilon
+	retrino
 		name = "\improper Neo Xzilon"
 		icon_state = "neoxzilon"
 		ckey = "retrino"
+
+		New()
+			..()
+			if(prob(50))
+				src.name = "\improper Matcha Usucha" //retrino's second character
+				src.icon_state = "matchausucha"
 
 	hazel
 		name = "\improper Hazel Adenine"
@@ -705,6 +711,16 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Vicky Hudson"
 		icon_state = "vicky"
 		ckey = "mrprogamer96"
+
+	vicky
+		name = "\improper Camryn Stern"
+		icon_state = "camrynstern"
+		ckey = "richardgere"
+
+	edwardly
+		name = "\improper Newt Treitor"
+		icon_state = "newttreitor"
+		ckey = "edwardly"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
@@ -719,6 +735,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	rand_pos = 1
 	var/ccolor = "y"
 	var/image/cap_image = null
+	var/itemstate = "cap-fig"
 
 	New()
 		..()
@@ -732,7 +749,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 			src.cap_image = image(src.icon, "cap-cap[src.item_amount ? 1 : 0]")
 		if (src.open)
 			if (src.item_amount)
-				src.cap_image.icon_state = "cap-fig"
+				src.cap_image.icon_state = itemstate
 				src.UpdateOverlays(src.cap_image, "cap")
 			else
 				src.UpdateOverlays(null, "cap")
@@ -756,6 +773,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		//Products
 		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule, 26, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/satchel/figurines, 2, cost=PAY_UNTRAINED*3)
+		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule/gaming_capsule, rand(4,10), cost=PAY_UNTRAINED/3, hidden=1)
 		src.icon_state = "machine[rand(1,6)]"
 		src.capsule_image = image(src.icon, "m_caps26")
 		src.UpdateOverlays(src.capsule_image, "capsules")

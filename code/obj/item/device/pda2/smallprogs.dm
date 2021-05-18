@@ -223,7 +223,7 @@ Code:
 //Supply record monitor
 /datum/computer/file/pda_program/qm_records
 	name = "Supply Records"
-	size = 8
+	size = 6
 
 	return_text()
 		if(..())
@@ -1230,4 +1230,54 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			src.master.updateSelfDialog()
 
 		src.master.add_fingerprint(usr)
+		return
+
+/datum/computer/file/pda_program/gps
+	name = "Space GPS"
+	size = 2
+	var/x = -1
+	var/y = -1
+	var/z = -1
+
+	return_text()
+		if(..())
+			return
+
+		var/dat = src.return_text_header()
+		dat += "<h4>Space GPS: Pocket Edition</h4>"
+
+		dat += "<a href='byond://?src=\ref[src];getloc=1'>Get Coordinates</a>"
+		if (x >= 0)
+
+			var/landmark = "Unknown"
+			switch (src.z)
+				if (1)
+					landmark = capitalize(station_or_ship())
+				if (2)
+					landmark = "Restricted"
+				if (3)
+					landmark = "Debris Field"
+				if (5)
+					#ifdef UNDERWATER_MAP
+					landmark = "Trench"
+					#else
+					landmark = "Asteroid Field"
+					#endif
+
+			dat += "<BR>X = [src.x], Y = [src.y], Landmark: [landmark]"
+
+		return dat
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if (href_list["getloc"])
+			var/turf/T = get_turf(usr)
+			src.x = T.x
+			src.y = T.y
+			src.z = T.z
+
+		src.master.add_fingerprint(usr)
+		src.master.updateSelfDialog()
 		return

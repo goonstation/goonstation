@@ -367,7 +367,7 @@ obj/item/gnomechompski/elf
 	name = "Russian Hootolver"
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "hootolver"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
 	m_amt = 2000
@@ -1111,8 +1111,8 @@ obj/critter/madnessowl/switchblade
 			var/turf/T = get_edge_target_turf(user, get_dir(user, get_step_away(user, src)))
 			if (T && isturf(T))
 				user.throw_at(T, 3, 2)
-				user.changeStatus("weakened", 5)
-				user.changeStatus("stunned", 5)
+				user.changeStatus("weakened", 0.5 SECONDS)
+				user.changeStatus("stunned", 0.5 SECONDS)
 
 
 		if (src.alive && src.health <= 0) src.CritterDeath()
@@ -1223,7 +1223,7 @@ obj/critter/madnessowl/switchblade
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1)
 				src.visible_message("<span class='alert'><b>[src]</b> slams into [src.target]!</span>")
 				if(iscarbon(M))
-					M.changeStatus("weakened", 4)
+					M.changeStatus("weakened", 0.4 SECONDS)
 				frenzy(src.target)
 
 			if (isdead(M)) // devour corpses

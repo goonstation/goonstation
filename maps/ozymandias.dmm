@@ -1508,7 +1508,7 @@
 	pixel_x = -12
 	},
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_y = 16
 	},
 /obj/item/reagent_containers/food/drinks/mug/random_color{
@@ -2318,7 +2318,7 @@
 	},
 /obj/item/storage/box/donkpocket_kit,
 /obj/item/reagent_containers/food/drinks/cola,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater,
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater,
 /obj/item/reagent_containers/food/snacks/soup/oatmeal,
 /obj/item/reagent_containers/food/snacks/soup/chili,
 /obj/item/reagent_containers/food/snacks/condiment/ketchup,
@@ -6173,18 +6173,6 @@
 /area/station/routing/airbridge{
 	name = "Vessel Dock Router"
 	})
-"bRA" = (
-/obj/table/wood/auto,
-/obj/displaycase{
-	displayed = new /obj/item/captaingun
-	pixel_y = 6
-	},
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/bridge/captain)
 "bRK" = (
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -7022,19 +7010,6 @@
 /obj/decal/tile_edge/floorguide/science,
 /turf/simulated/floor/grey/side,
 /area/station/medical/staff)
-"cff" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/radio/headset/multifreq,
-/obj/machinery/light_switch/north,
-/turf/simulated/floor/engine/caution/south,
-/area/station/science/teleporter)
 "cfj" = (
 /obj/reagent_dispensers/foamtank,
 /obj/machinery/camera{
@@ -8916,7 +8891,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/extinguisher,
 /obj/item/crowbar,
@@ -10146,6 +10121,23 @@
 /area/station/crew_quarters/hor{
 	name = "Research Director's Office"
 	})
+"cYW" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/radio/headset/multifreq,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/engine/caution/south,
+/area/station/science/teleporter)
 "cYX" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -15272,7 +15264,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/chem_grenade/firefighting,
 /obj/item/chem_grenade/firefighting,
@@ -17215,6 +17207,10 @@
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/grey,
 /area/station/mining/staff_room)
+"fdx" = (
+/obj/storage/secure/crate/eng/interdictor,
+/turf/simulated/floor/yellow/side,
+/area/station/engine/storage)
 "fdK" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/redblack{
@@ -17601,6 +17597,18 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
+"fkv" = (
+/obj/table/wood/auto,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun;
+	pixel_y = 6
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/bridge/captain)
 "fkG" = (
 /obj/stool/chair/couch{
 	desc = "It's comfortable, but has an aura of unease about it, like somebody's watching you the moment you sit down.";
@@ -19312,6 +19320,28 @@
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/se)
+"fKX" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/radio/headset/multifreq,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/engine/caution/south,
+/area/station/science/teleporter)
 "fLh" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -24378,18 +24408,6 @@
 	dir = 5
 	},
 /area/station/medical/medbay)
-"hfS" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/radio/headset/multifreq,
-/turf/simulated/floor/engine/caution/south,
-/area/station/science/teleporter)
 "hfW" = (
 /obj/machinery/portable_reclaimer,
 /obj/machinery/light/emergency{
@@ -28966,6 +28984,18 @@
 /area/station/crew_quarters/toilets{
 	name = "Dockside Restroom"
 	})
+"ixV" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/radio/headset/multifreq,
+/turf/simulated/floor/engine/caution/south,
+/area/station/science/teleporter)
 "ixX" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	name = "Technical Storage";
@@ -30672,8 +30702,8 @@
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/tank/air,
 /turf/simulated/floor/green/checker,
@@ -32883,7 +32913,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/extinguisher,
 /obj/item/crowbar,
@@ -38387,15 +38417,6 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"lgH" = (
-/obj/table/wood/auto,
-/obj/item/camera_test,
-/obj/item/clothing/head/det_hat{
-	desc = "Ugh, gross.";
-	name = "fedora"
-	},
-/turf/simulated/floor/carpet/red/fancy/edge/ne,
-/area/station/crew_quarters/quartersA)
 "lgO" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/horizontal{
 	can_rupture = 0
@@ -42070,28 +42091,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/communications/centre)
-"mfH" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/radio/headset/multifreq,
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/engine/caution/south,
-/area/station/science/teleporter)
 "mfL" = (
 /obj/stool/chair{
 	dir = 4
@@ -47305,7 +47304,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/extinguisher,
 /obj/item/crowbar,
@@ -47534,6 +47533,14 @@
 "nIo" = (
 /obj/decal/boxingrope{
 	dir = 4
+	},
+/turf/simulated/floor/specialroom/gym/alt,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
+"nIq" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 5
 	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/hallway/secondary/construction{
@@ -58515,23 +58522,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/chapel/office)
-"qQN" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/radio/headset/multifreq,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/engine/caution/south,
-/area/station/science/teleporter)
 "qQR" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5
@@ -60084,6 +60074,22 @@
 /area/station/maintenance/storage{
 	name = "Rapid Transit Interchange"
 	})
+"rnr" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/radio/headset/multifreq,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/engine/caution/south,
+/area/station/science/teleporter)
 "rnv" = (
 /obj/machinery/chem_heater,
 /obj/machinery/light/emergency{
@@ -61776,6 +61782,19 @@
 	dir = 4
 	},
 /area/station/medical/medbay/lobby)
+"rMh" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/radio/headset/multifreq,
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/engine/caution/south,
+/area/station/science/teleporter)
 "rMx" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -62250,6 +62269,15 @@
 	},
 /turf/simulated/floor/caution/west,
 /area/station/maintenance/solar/south)
+"rRV" = (
+/obj/table/wood/auto,
+/obj/item/camera,
+/obj/item/clothing/head/det_hat{
+	desc = "Ugh, gross.";
+	name = "fedora"
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/ne,
+/area/station/crew_quarters/quartersA)
 "rRX" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -63487,7 +63515,12 @@
 /area/station/hallway/primary/south)
 "skD" = (
 /obj/table/auto,
-/obj/item/storage/box/cablesbox,
+/obj/item/storage/box/cablesbox{
+	pixel_x = -9
+	},
+/obj/item/storage/box/cablesbox{
+	pixel_x = 6
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/storage)
 "skL" = (
@@ -64234,16 +64267,16 @@
 /turf/simulated/floor/circuit/off,
 /area/station/engine/core)
 "suy" = (
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/storage/crate,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -64986,8 +65019,8 @@
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/tank/air,
 /obj/machinery/light/emergency,
@@ -65867,8 +65900,7 @@
 /area/station/security/brig/cell_block)
 "sPP" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10;
-	icon_state = "ringrope"
+	dir = 9
 	},
 /obj/machinery/light{
 	dir = 1;
@@ -69060,6 +69092,14 @@
 /obj/item/seed/alien,
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
+"tEI" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 9
+	},
+/turf/simulated/floor/specialroom/gym/alt,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "tEM" = (
 /obj/item/storage/wall/clothingrack/hatrack/hatrack_3{
 	dir = 4
@@ -71965,7 +72005,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/chem_grenade/firefighting,
 /obj/item/chem_grenade/firefighting,
@@ -79780,7 +79820,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/extinguisher,
 /obj/item/crowbar,
@@ -83595,8 +83635,7 @@
 /area/station/maintenance/northeast)
 "xqf" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 6;
-	icon_state = "ringrope"
+	dir = 5
 	},
 /obj/machinery/light{
 	dir = 1;
@@ -86570,22 +86609,6 @@
 /area/station/crew_quarters/heads{
 	name = "Officers' Lounge"
 	})
-"ycE" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/radio/headset/multifreq,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_north,
-/turf/simulated/floor/engine/caution/south,
-/area/station/science/teleporter)
 "ycG" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -116597,7 +116620,7 @@ lZk
 rfw
 oQR
 nAR
-gsR
+tEI
 ovS
 qaa
 qaa
@@ -117805,7 +117828,7 @@ lZk
 fik
 gjb
 wfD
-qUf
+nIq
 nIo
 nIo
 aJT
@@ -122580,7 +122603,7 @@ uOb
 mVA
 vMi
 sGk
-lgH
+rRV
 ihl
 kAo
 sGk
@@ -125252,7 +125275,7 @@ xNB
 svM
 cCS
 xly
-hfS
+ixV
 eXr
 tMP
 lzY
@@ -125554,7 +125577,7 @@ xNB
 svM
 pCl
 xly
-cff
+rMh
 tUY
 tUY
 bbb
@@ -125856,7 +125879,7 @@ xQp
 pqE
 icG
 xly
-mfH
+fKX
 tUY
 taf
 cUt
@@ -126158,7 +126181,7 @@ xTp
 xTp
 xTp
 xly
-qQN
+cYW
 tUY
 lKx
 mHc
@@ -126460,7 +126483,7 @@ eRl
 eRl
 eRl
 xly
-ycE
+rnr
 alU
 plp
 eOS
@@ -144595,7 +144618,7 @@ aJu
 mdZ
 jWT
 vTX
-bRA
+fkv
 gCo
 vTX
 azV
@@ -153955,7 +153978,7 @@ vqL
 vqL
 xwt
 vqL
-skD
+fdx
 ykD
 tmI
 xIf

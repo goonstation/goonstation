@@ -192,7 +192,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 	pit
 		required = 1
 		underwater = 1
-		maxNum = 1
+		maxNum = 3
 		probability = 100
 		prefabPath = "assets/maps/prefabs/prefab_water_oshanpit.dmm"
 		prefabSizeX = 8

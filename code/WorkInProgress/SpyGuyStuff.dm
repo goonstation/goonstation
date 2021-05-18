@@ -77,7 +77,7 @@ Fibre wire
 				being_mean = 0
 				return
 			H.emote("faint")
-			H.changeStatus("paralysis", 150)
+			H.changeStatus("paralysis", 15 SECONDS)
 			H.show_text("<I><font size=5>You feel your mind drifting away from your body!</font></I>", "red")
 
 			playsound(src.loc, 'sound/effects/ghost.ogg', 50, 1)
@@ -854,7 +854,7 @@ proc/Create_Tommyname()
 /obj/item/garrote
 	name = "fibre wire"
 	desc = "A sturdy wire between two handles. Could be used with both hands to really ruin someone's day."
-	w_class = 1
+	w_class = W_CLASS_TINY
 	c_flags = EQUIPPED_WHILE_HELD
 
 	icon = 'icons/obj/items/items.dmi'
@@ -885,10 +885,10 @@ proc/Create_Tommyname()
 
 	if(wire_readied)
 		playsound(usr, 'sound/items/garrote_twang.ogg', 25,5)
-		w_class = 4
+		w_class = W_CLASS_BULKY
 	else
 		drop_grab()
-		w_class = 1
+		w_class = W_CLASS_TINY
 
 	update_state()
 

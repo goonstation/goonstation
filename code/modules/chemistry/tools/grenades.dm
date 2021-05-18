@@ -9,7 +9,7 @@
 	icon = 'icons/obj/items/grenade.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "flashbang"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	force = 2.0
 	var/stage = 0
 	var/state = 0
@@ -23,6 +23,8 @@
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
+	move_triggered = 1
+
 
 	New()
 		..()
@@ -199,6 +201,12 @@
 			if (src.master) qdel(src.master)
 			if (src) qdel(src)	   //correctly before deleting the grenade.
 
+	move_trigger(var/mob/M, kindof)
+		if (..())
+			for (var/obj/O in contents)
+				if (O.move_triggered)
+					O.move_trigger(M, kindof)
+
 /obj/item/grenade_fuse
 	name = "grenade fuse"
 	desc = "A fuse mechanism with a safety lever."
@@ -206,7 +214,7 @@
 	icon_state = "grenade-fuse"
 	item_state = "pen"
 	force = 0
-	w_class = 1
+	w_class = W_CLASS_TINY
 	m_amt = 100
 
 /* =================================================== */
@@ -325,6 +333,7 @@
 		beakers += B2
 
 	revolution //convertssss
+		mats = null
 		explode()
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				var/datum/game_mode/revolution/R = ticker.mode
@@ -516,6 +525,28 @@
 		var/obj/item/reagent_containers/glass/B2 = new(src)
 
 		B1.reagents.add_reagent("fog", 25)
+		B1.reagents.add_reagent("sugar",25)
+
+		B2.reagents.add_reagent("phosphorus", 25)
+		B2.reagents.add_reagent("potassium", 25)
+
+		beakers += B1
+		beakers += B2
+
+/obj/item/chem_grenade/napalm
+	name = "napalm smoke grenade"
+	desc = "A grenade that will fill an area with napalm smoke."
+	icon = 'icons/obj/items/grenade.dmi'
+	icon_state = "incendiary"
+	icon_state_armed = "incendiary1"
+	stage = 2
+
+	New()
+		..()
+		var/obj/item/reagent_containers/glass/B1 = new(src)
+		var/obj/item/reagent_containers/glass/B2 = new(src)
+
+		B1.reagents.add_reagent("syndicate_napalm", 25)
 		B1.reagents.add_reagent("sugar",25)
 
 		B2.reagents.add_reagent("phosphorus", 25)

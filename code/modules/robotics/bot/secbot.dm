@@ -718,6 +718,12 @@
 			src.KillPathAndGiveUp(kpagu)
 			return
 
+		// If the target is or goes invisible, give up, securitrons don't have thermal vision! :p
+		if((src.target.invisibility > 0)  && (!src.is_beepsky))
+			speak("?!", just_float = 1)
+			src.KillPathAndGiveUp(kpagu)
+			return
+
 		/// Tango hidden inside something or someone? Welp, can't hit them through a locker, so may as well give up!
 		if(src.target?.loc && !isturf(src.target.loc))
 			speak("?", just_float = 1)
@@ -926,6 +932,12 @@
 
 		if(istype(perp.mutantrace, /datum/mutantrace/abomination))
 			threatcount += 5
+
+		if(perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
+			threatcount += 5
+			for (var/datum/data/record/R as anything in data_core.security)
+				if (R.fields["name"] == perp.name)
+					threatcount -= 5
 
 		//Agent cards lower threat level
 		if((istype(perp.wear_id, /obj/item/card/id/syndicate)))
@@ -1182,6 +1194,8 @@
 			)
 
 		var/say_thing = pick(voice_lines)
+		if(say_thing == 'sound/voice/binsultbeep.ogg' && prob(90))
+			say_thing = 'sound/voice/bsecureday.ogg'
 		switch(say_thing)
 			if('sound/voice/bgod.ogg')
 				src.speak("GOD MADE TOMORROW FOR THE CROOKS WE DON'T CATCH TO-DAY.")
@@ -1211,7 +1225,7 @@
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "secbot_cuff"
 	icon = 'icons/obj/items/items.dmi'
-	icon_state = "handcuff"
+	icon_state = "buddycuff"
 	var/obj/machinery/bot/secbot/master
 
 	New(var/obj/machinery/bot/secbot/the_bot)
@@ -1265,7 +1279,7 @@
 				uncuffable = 1
 
 			if(ishuman(master.target) && !uncuffable)
-				master.target.handcuffs = new /obj/item/handcuffs(master.target)
+				master.target.handcuffs = new /obj/item/handcuffs/guardbot(master.target)
 				master.target.setStatus("handcuffed", duration = INFINITE_STATUS)
 
 			if(!uncuffable)
@@ -1435,7 +1449,7 @@
 
 	else if (istype(W, /obj/item/rods) && src.build_step == 3)
 		var/obj/item/rods/R = W
-		if (!R.consume_rods(1))
+		if (!R.change_stack_amount(-1))
 			boutput(user, "You need a non-zero amount of rods. How did you even do that?")
 		else
 			src.build_step++
