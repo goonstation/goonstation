@@ -1,4 +1,4 @@
-	<center><h2>Spacemen the Grifening: Expanded Edition</h2></center><hr>
+<center><h2>Spacemen the Grifening: Expanded Edition</h2></center><hr>
 <center><i>The Definitive Handbook for Space's #1 Trading Card Game!</i></center>
 	<h3>Foreword:</h3>
 	<i>Be greeted by sugary soft-drinks and spooky cultists! You are now officially a </i><b>Nerd</b><i> but do not be afraid! You can indulge in the endless fun of collectible card-games like this one!</i>
@@ -212,9 +212,17 @@
 			<li>Effect or Equipment card being activated is instantly destroyed without activating</li></ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Deathgasp</b></p>
 			<ul style='list-style-type:circle'>
+			<li>Can only be played face down and is activated whenever opponent activates or plays a card</li>
+			<li>Destroys triggering card and any copies of it in opponent's hand and deck</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Deconstructor</b></p>
+			<ul style='list-style-type:circle'>
 			<li>Can be activated when opponent creature attacks you creature</li>
 			<li>When played to your creature, prevents being destroyed by an attack</li></ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Door Bolts</b></p>
+			<ul style='list-style-type:circle'>
+			<li>While in play, no area cards can be played</li>
+			<li>If played face-down, may be activated when opponent tries to play area card to prevent</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Firefighting Grenade</b></p>
 			<ul style='list-style-type:circle'>
 			<li>While in play, no area cards can be played</li>
 			<li>If played face-down, may be activated when opponent tries to play area card to prevent</li></ul>
@@ -224,6 +232,8 @@
 			<li>Can only be activated when opponent plays or activates a card</li>
 			<li>Allows you to play any Effect card during any point in opponent's turn, unless Effect card specifically says it cannot be played during opponent turn</li></ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Wet Floor</b></p>
+			<li>Can only be played face down and activates when a human attacks</li>
+			<li>Immediately concludes attack</li></ul>
 		</li></ul>
 	<b>ROBOTS</b><br>
 		<p style="margin-right:10%; margin-left:1%"><b>Officer Beepsky</b></p>
