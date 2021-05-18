@@ -597,6 +597,7 @@
 		setProperty("meleeprot_head", 9)
 		setProperty("disorient_resist_eye", 25)
 		setProperty("exploprot", 20)
+		setProperty("movespeed", 0.15)
 
 /obj/item/clothing/head/helmet/siren
 	name = "siren helmet"
@@ -674,6 +675,7 @@
 		setProperty("meleeprot_head", 10)
 		setProperty("disorient_resist_eye", 50)
 		setProperty("disorient_resist_ear", 30)
+		setProperty("movespeed", 0.5)
 
 /obj/item/clothing/head/helmet/NT
 	name = "\improper Nanotrasen helmet"
