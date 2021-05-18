@@ -80,7 +80,7 @@
 #define SHOW_MINDWIPE_TIPS(M) M.Browse(grabResource("html/mindwipe.html"), MINDWIPE_TIPS_WINDOW)
 
 //Instructions for pod-wars gametype
-#define SHOW_POD_WARS(M) M.Browse(grabResource("html/pod_wars.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_POD_WARS(M) M.Browse(grabResource("html/traitorTips/pod_wars.html"), ANTAG_TIPS_WINDOW)
 
 /datum/adminAntagPopups
 	var/html
