@@ -31,19 +31,3 @@
 			var/datum/component/C = user.GetComponent(/datum/component/death_confetti)
 			C?.RemoveComponent()
 		return
-
-/obj/racist_button
-	name = "button that will make you racist if you press it"
-	desc = "A button.  One that makes you racist (if you press it)."
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "doorctrl0"
-	layer = EFFECTS_LAYER_UNDER_1
-	anchored = 1
-
-	attack_hand(mob/user as mob)
-		var/mob/living/carbon/human/H = user
-		if (istype(H))
-
-			if(H.bioHolder)
-				H.visible_message("<span class='alert'><B>[H.name] is too racist!</B></span>", "<span class='alert'><B>That's too racist!</B></span>")
-				H.owlgib()
