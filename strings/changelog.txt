@@ -1,5 +1,9 @@
 
 (t)tue may 18 21
+(u)edwardly
+(p)4780
+(e)🐛|bug
+(+)Fix guardbuddy logic so they will eventually stop trying to arrest you if there's more than one of them.
 (u)Flaborized
 (p)4761
 (e)🎨|sprites
