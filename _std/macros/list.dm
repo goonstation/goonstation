@@ -41,7 +41,7 @@ proc/weighted_pick(list/L)
 		if(isnull(L[item]))
 			stack_trace("weighted_pick given null weight: [json_encode(L)]")
 		total += L[item]
-	total = rand(1, total)
+	total = rand() * total
 	for(item in L)
 		total -= L[item]
 		if(total <= 0)
