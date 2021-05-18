@@ -1,4 +1,8 @@
 
+(t)tue may 18 21
+(u)kyle
+(e)⚖|balance
+(*)Weapon power cells can now be swapped while moving. Still uses the timed action bar though.
 (t)mon may 17 21
 (u)Mordent
 (p)4756
