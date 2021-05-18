@@ -2600,21 +2600,6 @@ proc/maximal_subtype(var/list/L)
 			else if (!(ispath(., t)))
 				return null // paths in L aren't linearly ordered
 
-/**
- * Takes associative list of the form list(thing = weight), returns weighted random choice of keys based on weights.
- */
-proc/weighted_pick(list/choices)
-	var/total = 0
-	for(var/key in choices)
-		total += choices[key]
-	var/weighted_num = rand(1, total)
-	var/running_total = 0
-	for(var/key in choices)
-		running_total += choices[key]
-		if(weighted_num <= running_total)
-			return key
-	return
-
 proc/keep_truthy(some_list)
 	. = list()
 	for(var/x in some_list)

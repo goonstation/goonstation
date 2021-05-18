@@ -355,7 +355,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		return P
 	else
 		if(eligible.len)
-			var/datum/generatorPrefab/P = pickweight(eligible)
+			var/datum/generatorPrefab/P = weighted_pick(eligible)
 			if(P.type in miningModifiersUsed)
 				miningModifiersUsed[P.type] = (miningModifiersUsed[P.type] + 1)
 			else
