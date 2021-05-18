@@ -300,6 +300,9 @@
 
 /mob/disposing()
 	STOP_TRACKING
+
+	src.mob_properties = null
+
 	for(var/mob/dead/target_observer/TO in observers)
 		observers -= TO
 		TO.ghostize()
