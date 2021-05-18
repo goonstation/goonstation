@@ -1,5 +1,10 @@
 
 (t)mon may 17 21
+(u)Mordent
+(p)4756
+(e)⚖🐛|balance, bug
+(*)Cyborg shield upgrades have been pretty heavily reduced in effectiveness, especially against higher-damage weapons. They no longer reflect projectiles.
+(*)Drain rate of cyborg force shield upgrade reduced by 60% (250 to 100)
 (u)112358sam
 (p)4770
 (e)|
