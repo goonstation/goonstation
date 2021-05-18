@@ -112,7 +112,17 @@
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_PW_PETS)
 		..()
-		
+
+	ai_is_valid_target(mob/M)
+		var/team_num = get_pod_wars_team_num(M)
+		switch(team_num)
+			if (TEAM_NANOTRASEN)	//1
+				return TRUE
+			if (TEAM_SYNDICATE)		//2
+				return FALSE
+			else
+				return ..()
+
 /mob/living/carbon/human/npc/monkey/horse
 	name = "????"
 	real_name = "????"
