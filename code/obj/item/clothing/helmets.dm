@@ -556,7 +556,7 @@
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye. Can be flipped up for clearer vision."
 	icon_state = "welding"
-	c_flags = SPACEWEAR | COVERSEYES | BLOCKCHOKE
+	c_flags = COVERSEYES | BLOCKCHOKE
 	see_face = 0.0
 	item_state = "welding"
 	protective_temperature = 1300
