@@ -871,7 +871,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 				if (prob(10))
 					if (!M.getStatusDuration("burning"))
 						boutput(M, "<span class='alert'>You spontaneously combust!</span>")
-					M.changeStatus("burning", 70)
+					M.changeStatus("burning", 7 SECONDS)
 
 		tearDown()
 			for (var/turf/T in gauntlet_controller.gauntlet)

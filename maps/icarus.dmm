@@ -4631,11 +4631,11 @@
 	desc = "Various supplies for the bar.";
 	name = "bartending crate"
 	},
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/item/storage/firstaid/toxin,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/glass/beaker/large,
@@ -6328,7 +6328,7 @@
 /area/station/crew_quarters/cafeteria)
 "aod" = (
 /obj/table/round/auto,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_y = 16
 	},
 /obj/item/reagent_containers/food/drinks/mug/random_color{
@@ -27088,6 +27088,12 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/indigo_rye)
+"lSM" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 5
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "lWS" = (
 /obj/cable{
 	d1 = 4;
@@ -27397,6 +27403,12 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/research_outpost/indigo_rye)
+"pvQ" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 9
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "pwS" = (
 /obj/machinery/vending/pizza,
 /turf/simulated/floor/purpleblack,
@@ -67352,7 +67364,7 @@ aga
 ago
 agI
 agI
-ahc
+pvQ
 ahs
 ahD
 ahD
@@ -68560,7 +68572,7 @@ aga
 ags
 agI
 agU
-ahf
+lSM
 ahu
 ahu
 ahO

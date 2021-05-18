@@ -1323,7 +1323,7 @@
 					current_projectile.cost = 30
 					item_state = "lawg-execute"
 					playsound(M, "sound/vox/exterminate.ogg", 50)
-				if ("smokeshot")
+				if ("smokeshot","fog")
 					set_current_projectile(projectiles["smokeshot"])
 					current_projectile.cost = 50
 					item_state = "lawg-smokeshot"
@@ -1333,7 +1333,7 @@
 					current_projectile.cost = 60
 					item_state = "lawg-knockout"
 					playsound(M, "sound/vox/sleep.ogg", 50)
-				if ("hotshot")
+				if ("hotshot","incendiary")
 					set_current_projectile(projectiles["hotshot"])
 					current_projectile.cost = 60
 					item_state = "lawg-hotshot"
@@ -1345,11 +1345,11 @@
 					playsound(M, "sound/vox/high.ogg", 50)
 					SPAWN_DBG(0.4 SECONDS)
 						playsound(M, "sound/vox/explosive.ogg", 50)
-				if ("clownshot")
+				if ("clownshot","clown")
 					set_current_projectile(projectiles["clownshot"])
 					item_state = "lawg-clownshot"
 					playsound(M, "sound/vox/clown.ogg", 30)
-				if ("pulse", "push")
+				if ("pulse", "push", "throw")
 					set_current_projectile(projectiles["pulse"])
 					item_state = "lawg-pulse"
 					playsound(M, "sound/vox/push.ogg", 50)
@@ -1357,7 +1357,7 @@
 					/datum/projectile/energy_bolt/pulse
 		else		//if you're not the owner and try to change it, then fuck you
 			switch(text)
-				if ("detain","execute","knockout","hotshot","bigshot","highexplosive","he","clownshot", "pulse")
+				if ("detain","execute","knockout","hotshot","incendiary","bigshot","highexplosive","he","clownshot","clown", "pulse", "punch")
 					random_burn_damage(M, 50)
 					M.changeStatus("weakened", 4 SECONDS)
 					elecflash(src,power=2)
@@ -1380,7 +1380,7 @@
 					logTheThing("combat", src, null, "Is not the law. Caused explosion with Lawbringer.")
 
 					SPAWN_DBG(2 SECONDS)
-						explosion_new(null, get_turf(src), 15)
+						src.blowthefuckup(15)
 					return 0
 				else
 					return 1

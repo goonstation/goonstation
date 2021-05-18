@@ -284,7 +284,7 @@
 					shake_camera(L,10,32)
 					boutput(L, "<span class='alert'>You are sent flying!</span>")
 
-					L.changeStatus("weakened", stun_time * 10)
+					L.changeStatus("weakened", stun_time SECONDS)
 					while (throw_repeat > 0)
 						throw_repeat--
 						step_away(L,get_turf(src),throw_speed)

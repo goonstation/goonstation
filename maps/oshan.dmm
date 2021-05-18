@@ -2590,6 +2590,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/suit/fire,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/tank/air,
 /obj/item/clothing/mask/gas,
@@ -2601,6 +2602,7 @@
 /obj/item/clothing/suit/fire,
 /obj/item/tank/air,
 /obj/item/tank/air,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
 /turf/simulated/floor/plating/random,
@@ -14474,9 +14476,9 @@
 /area/station/science/lobby)
 "aHT" = (
 /obj/storage/crate,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/emergency_injector/calomel,
@@ -24494,7 +24496,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/chem_grenade/firefighting,
 /obj/item/chem_grenade/firefighting,
@@ -24741,7 +24743,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/chem_grenade/firefighting,
 /obj/item/chem_grenade/firefighting,
@@ -25922,7 +25924,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/chem_grenade/firefighting,
 /obj/item/chem_grenade/firefighting,
@@ -26031,11 +26033,11 @@
 /obj/item/reagent_containers/glass/bottle,
 /obj/item/reagent_containers/glass/bottle,
 /obj/item/reagent_containers/glass/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
@@ -28375,7 +28377,7 @@
 	dir = 4
 	},
 /obj/stool/chair/boxingrope_corner{
-	dir = 10
+	dir = 9
 	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
@@ -28391,7 +28393,7 @@
 	dir = 4
 	},
 /obj/stool/chair/boxingrope_corner{
-	dir = 6
+	dir = 5
 	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
@@ -36372,7 +36374,7 @@
 	pixel_x = 6;
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_y = 8
 	},
 /obj/machinery/light/incandescent/warm,
@@ -40671,6 +40673,9 @@
 /obj/item/ammo/bullets/tranq_darts,
 /obj/item/ammo/bullets/tranq_darts,
 /obj/machinery/light/incandescent/harsh/very,
+/obj/decal/poster/wallsign/medal{
+	pixel_y = 28
+	},
 /turf/simulated/floor/redblack,
 /area/station/ai_monitored/armory)
 "bWa" = (
@@ -44209,10 +44214,6 @@
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
-"cgz" = (
-/obj/decal/poster/wallsign/medal,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/hos)
 "cgA" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -93608,7 +93609,7 @@ bRK
 bSO
 bTT
 bVc
-cgz
+bVc
 clX
 bVc
 bVc

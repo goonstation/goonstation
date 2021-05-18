@@ -347,7 +347,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if (H.wear_suit)
 				return
 		M.take_toxin_damage(3)
-		M.changeStatus("radiation", 20*(radius+1))
+		M.changeStatus("radiation", 2*(radius+1) SECONDS)
 		M.show_text("You feel odd.", "red")
 
 /obj/machinery/the_singularity/proc/Mezzer()
@@ -865,8 +865,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		var/mob/living/L = user
 		L.Virus_ShockCure(100)
 		L.shock_cyberheart(100)
-	if(user.getStatusDuration("stunned") < shock_damage * 10)	user.changeStatus("stunned", shock_damage * 10)
-	if(user.getStatusDuration("weakened") < shock_damage * 10)	user.changeStatus("weakened", shock_damage * 10)
+	if(user.getStatusDuration("stunned") < shock_damage * 10)	user.changeStatus("stunned", shock_damage SECONDS)
+	if(user.getStatusDuration("weakened") < shock_damage * 10)	user.changeStatus("weakened", shock_damage SECONDS)
 
 	if(user.get_burn_damage() >= 500) //This person has way too much BURN, they've probably been shocked a lot! Let's destroy them!
 		user.visible_message("<span style=\"color:red;font-weight:bold;\">[user.name] was disintegrated by the [src.name]!</span>")

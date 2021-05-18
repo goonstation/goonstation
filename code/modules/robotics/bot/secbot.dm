@@ -960,14 +960,11 @@
 		if(istype(perp.mutantrace, /datum/mutantrace/abomination))
 			threatcount += 5
 
-		for (var/datum/data/record/R as anything in data_core.security)
-			if (R.fields["name"] != perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
-				if(!added_to_records)
-					threatcount += 5
-			else if ((R.fields["name"] == perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird")))
-				if(!added_to_records)
+		if(perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
+			threatcount += 5
+			for (var/datum/data/record/R as anything in data_core.security)
+				if (R.fields["name"] == perp.name)
 					threatcount -= 5
-					added_to_records = TRUE
 
 		//Agent cards lower threat level
 		if((istype(perp.wear_id, /obj/item/card/id/syndicate)))

@@ -2480,6 +2480,10 @@
 	pixel_x = -6;
 	pixel_y = -1
 	},
+/obj/item/clothing/head/helmet/firefighter{
+	pixel_x = 10;
+	pixel_y = -5
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/science/gen_storage)
 "arX" = (
@@ -18033,8 +18037,8 @@
 /obj/item/clothing/mask/gas/emergency{
 	pixel_y = 8
 	},
-/obj/item/clothing/head/helmet/hardhat{
-	pixel_x = -10;
+/obj/item/clothing/head/helmet/firefighter{
+	pixel_x = -6;
 	pixel_y = -5
 	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
@@ -28331,7 +28335,7 @@
 /area/station/maintenance/inner/north)
 "ieu" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 9
+	dir = 10
 	},
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/specialroom/gym,
@@ -30885,7 +30889,7 @@
 	dir = 4
 	},
 /obj/stool/chair/boxingrope_corner{
-	dir = 5
+	dir = 6
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
@@ -33018,8 +33022,8 @@
 /obj/item/clothing/mask/gas/emergency{
 	pixel_y = 8
 	},
-/obj/item/clothing/head/helmet/hardhat{
-	pixel_x = -10;
+/obj/item/clothing/head/helmet/firefighter{
+	pixel_x = -8;
 	pixel_y = -5
 	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
@@ -33299,6 +33303,14 @@
 /obj/item/clothing/mask/gas/emergency{
 	pixel_x = 1;
 	pixel_y = 9
+	},
+/obj/item/clothing/head/helmet/firefighter{
+	pixel_x = 8;
+	pixel_y = -5
+	},
+/obj/item/clothing/head/helmet/firefighter{
+	pixel_x = 3;
+	pixel_y = -2
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/storage/emergency)
@@ -38293,22 +38305,22 @@
 	desc = "Wow! Crate may or may not still contain bottles.";
 	name = "Bottles in a Crate"
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_x = -8;
 	pixel_y = -2
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_y = -2
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_x = 8;
 	pixel_y = -2
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_x = -4;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_x = 4;
 	pixel_y = 10
 	},
@@ -49914,8 +49926,8 @@
 /obj/item/clothing/mask/gas/emergency{
 	pixel_y = 8
 	},
-/obj/item/clothing/head/helmet/hardhat{
-	pixel_x = -10;
+/obj/item/clothing/head/helmet/firefighter{
+	pixel_x = -8;
 	pixel_y = -5
 	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
@@ -67884,7 +67896,7 @@
 /area/station/crew_quarters/barber_shop)
 "tRA" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10
+	dir = 9
 	},
 /obj/table/wood/round/auto,
 /obj/item/bballbasket,
@@ -80988,11 +81000,11 @@
 /obj/item/reagent_containers/glass/bottle,
 /obj/item/reagent_containers/glass/bottle,
 /obj/item/reagent_containers/glass/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/machinery/light/incandescent/cool/very,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)

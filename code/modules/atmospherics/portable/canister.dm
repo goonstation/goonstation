@@ -317,7 +317,7 @@
 					if(A.anchored) continue
 					if(ismob(A))
 						var/mob/M = A
-						M.changeStatus("weakened", 80)
+						M.changeStatus("weakened", 8 SECONDS)
 						random_brute_damage(M, 20)//armor won't save you from the pressure wave or something
 						var/atom/targetTurf = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
 						M.throw_at(targetTurf, 200, 4)
@@ -528,7 +528,7 @@
 				var/mob/living/carbon/human/H = user
 				H.show_message("<span class='alert'>You tried to cut a wire on the bomb, but got burned by it.</span>")
 				H.TakeDamage("chest", 0, 30)
-				H.changeStatus("stunned", 150)
+				H.changeStatus("stunned", 15 SECONDS)
 			else
 				src.visible_message("<b><font color=#B7410E>[user.name] cuts the [src.det.WireNames[which_wire]] on the detonator.</font></b>")
 				switch(src.det.WireFunctions[which_wire])
@@ -589,7 +589,7 @@
 				var/mob/living/carbon/human/H = user
 				H.show_message("<span class='alert'>You tried to pulse a wire on the bomb, but got burned by it.</span>")
 				H.TakeDamage("chest", 0, 30)
-				H.changeStatus("stunned", 150)
+				H.changeStatus("stunned", 15 SECONDS)
 				H.UpdateDamageIcon()
 			else
 				src.visible_message("<b><font color=#B7410E>[user.name] pulses the [src.det.WireNames[which_wire]] on the detonator.</font></b>")

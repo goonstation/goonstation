@@ -835,7 +835,7 @@
 	setupProperties()
 		..()
 		setProperty("coldprot", 20)
-		setProperty("heatprot", 50)
+		setProperty("heatprot", 45)
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 		setProperty("movespeed", 1)
@@ -966,6 +966,13 @@
 	permeability_coefficient = 0.02
 	protective_temperature = 1000
 	over_hair = 1
+
+	New()
+		..()
+		if(!istype(get_area(src), /area/station))
+			var/nt_wear_state = "[src.wear_state || src.icon_state]-nt"
+			if(nt_wear_state in icon_states(src.wear_image_icon))
+				src.wear_state = nt_wear_state
 
 	onMaterialChanged()
 		if(src.material)
@@ -1117,6 +1124,11 @@
 			desc = "A syndicate issue combat dress system, pressurized for space travel."
 			icon_state = "syndie_specialist-infiltrator"
 			item_state = "syndie_specialist-infiltrator"
+
+		setupProperties()
+			..()
+			setProperty("space_movespeed", -0.25)
+
 
 		firebrand
 			name = "specialist operative firesuit"

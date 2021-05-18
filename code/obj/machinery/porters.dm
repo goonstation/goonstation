@@ -737,15 +737,15 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 					if(51 to 70) //A nice tan
 						for(var/mob/living/carbon/M in src.contents)
-							M.changeStatus("radiation", 200, 1)
+							M.changeStatus("radiation", 20 SECONDS, 1)
 							M.show_text("\The [src] buzzes oddly.", "red")
 					if(31 to 50) //A very nice tan
 						for(var/mob/living/carbon/M in src.contents)
-							M.changeStatus("radiation", 300, 2)
+							M.changeStatus("radiation", 30 SECONDS, 2)
 							M.show_text("You feel a warm tingling sensation.", "red")
 					if(21 to 30) //The nicest tan
 						for(var/mob/living/carbon/human/M in src.contents)
-							M.changeStatus("radiation", 400, 3)
+							M.changeStatus("radiation", 40 SECONDS, 3)
 							M.show_text("<B>You feel a wave of searing heat wash over you!</B>", "red")
 							//if(M.bioHolder && M.bioHolder.mobAppearance) //lol
 								// s_tone now an RGB rather than a numeric value so disabling this for the moment

@@ -794,3 +794,12 @@
 	icon_state = "firefighter"
 	item_state = "firefighter"
 	seal_hair = 1
+
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 3)
+		setProperty("coldprot", 5)
+		setProperty("heatprot", 15)
+		setProperty("disorient_resist_eye", 8)
+		setProperty("disorient_resist_ear", 8)
+

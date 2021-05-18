@@ -5865,7 +5865,7 @@
 	pixel_x = 7;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/drinks/bottle/drowsy{
+/obj/item/reagent_containers/food/drinks/bottle/soda/drowsy{
 	pixel_y = 3;
 	pixel_z = 5
 	},
@@ -7829,7 +7829,7 @@
 "awV" = (
 /obj/storage/closet/fire,
 /obj/item/extinguisher,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/tank/air,
 /obj/item/clothing/suit/fire/heavy,
@@ -11229,7 +11229,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/extinguisher,
 /obj/item/crowbar,
@@ -12892,7 +12892,7 @@
 /area/station/hydroponics/bay)
 "aKj" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10
+	dir = 9
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -12911,7 +12911,7 @@
 /area/station/crew_quarters/fitness)
 "aKm" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 6
+	dir = 5
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -16552,7 +16552,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/extinguisher,
 /obj/item/crowbar,
@@ -23708,7 +23708,7 @@
 /obj/table/glass/reinforced/auto,
 /obj/item/device/audio_log,
 /obj/item/audio_tape,
-/obj/item/reagent_containers/food/drinks/bottle/gingerale{
+/obj/item/reagent_containers/food/drinks/bottle/soda/gingerale{
 	pixel_x = -4;
 	pixel_y = 7
 	},
@@ -24073,7 +24073,7 @@
 	dir = 5
 	},
 /obj/table/round/auto,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_y = 16
 	},
 /obj/item/reagent_containers/food/drinks/mug/random_color{
@@ -30355,7 +30355,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/extinguisher,
 /obj/item/crowbar,
@@ -30425,7 +30425,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/extinguisher,
 /obj/item/crowbar,
@@ -38187,11 +38187,11 @@
 	},
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line3"
 	},
@@ -40798,8 +40798,8 @@
 /obj/item/tank/air,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/extinguisher,
 /obj/item/extinguisher,
 /obj/item/clothing/suit/fire/heavy,

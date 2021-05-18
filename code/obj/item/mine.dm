@@ -207,7 +207,7 @@
 		if (mobs.len)
 			for (var/mob/living/L in mobs)
 				if (istype(L))
-					L.changeStatus("radiation", 800)
+					L.changeStatus("radiation", 80 SECONDS)
 					if (L.bioHolder && ishuman(L))
 						L.bioHolder.RandomEffect("bad")
 					if (L != M)
@@ -246,7 +246,7 @@
 		if (mobs.len)
 			for (var/mob/living/L in mobs)
 				if (istype(L))
-					L.changeStatus("weakened", 150)
+					L.changeStatus("weakened", 15 SECONDS)
 					L.stuttering += 15
 					if (L != M)
 						src.log_me(null, L)

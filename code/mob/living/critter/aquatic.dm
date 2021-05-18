@@ -488,9 +488,9 @@
 				return "<span class='alert'><b>[src]</b> does a sinister dance.</span>"
 		if ("snap")
 			if (src.emote_check(voluntary, 300))
-				src.changeStatus("paralysis", -300)
-				src.changeStatus("stunned", -300)
-				src.changeStatus("weakened", -300)
+				src.changeStatus("paralysis", -30 SECONDS)
+				src.changeStatus("stunned", -30 SECONDS)
+				src.changeStatus("weakened", -30 SECONDS)
 				return "<span class='alert'><b>[src]</b> clacks menacingly.</span>"
 		if ("flex")
 			if (src.emote_check(voluntary, 300))

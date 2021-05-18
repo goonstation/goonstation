@@ -1779,7 +1779,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> fumbles and stabs [him_or_her(surgeon)]self in the eye with [src]!</span>", \
 		"<span class='alert'>You fumble and stab yourself in the eye with [src]!</span>")
 		surgeon.bioHolder.AddEffect("blind")
-		patient.changeStatus("weakened", 4)
+		patient.changeStatus("weakened", 0.4 SECONDS)
 
 		JOB_XP(surgeon, "Clown", 1)
 		var/damage = rand(5, 15)
@@ -2065,7 +2065,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))
 		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> fumbles and clubs [him_or_her(surgeon)]self upside the head with [src]!</span>", \
 		"<span class='alert'>You fumble and club yourself in the head with [src]!</span>")
-		patient.changeStatus("weakened", 4)
+		patient.changeStatus("weakened", 0.4 SECONDS)
 
 		JOB_XP(surgeon, "Clown", 1)
 		var/damage = rand(5, 15)

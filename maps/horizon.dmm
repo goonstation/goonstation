@@ -984,7 +984,7 @@
 /area/station/wreckage)
 "acs" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/bottle/red,
+/obj/item/reagent_containers/food/drinks/bottle/soda/red,
 /turf/simulated/floor/plating/airless{
 	icon_state = "panelscorched"
 	},
@@ -20008,13 +20008,13 @@
 /area/station/crew_quarters/courtroom)
 "aXY" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10
+	dir = 9
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/fitness)
 "aXZ" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 6
+	dir = 5
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -41653,7 +41653,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
-/obj/item/reagent_containers/food/drinks/bottle/blue,
+/obj/item/reagent_containers/food/drinks/bottle/soda/blue,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /obj/item/reagent_containers/food/drinks/bottle/vintage,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,

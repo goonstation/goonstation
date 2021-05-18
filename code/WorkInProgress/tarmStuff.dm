@@ -1,3 +1,4 @@
+//rerun checks
 //GUNS GUNS GUNS
 /obj/item/gun/kinetic/g11
 	name = "\improper Manticore assault rifle"
