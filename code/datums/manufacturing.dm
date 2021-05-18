@@ -1181,7 +1181,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Cyborg Treads"
 	item_paths = list("MET-2","CON-1")
 	item_amounts = list(12,6)
-	item_outputs = list(/obj/item/parts/robot_parts/leg/left/treads, /obj/item/parts/robot_parts/leg/right/treads)//list(/obj/item/parts/robot_parts/leg/treads)
+	item_outputs = list(/obj/item/parts/robot_parts/leg/left/treads, /obj/item/parts/robot_parts/leg/right/treads)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"

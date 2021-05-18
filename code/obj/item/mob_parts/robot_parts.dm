@@ -828,31 +828,6 @@
 	robot_movement_modifier = /datum/movement_modifier/robot_part/tread_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS)
 
-/obj/item/parts/robot_parts/leg/treads
-	name = "cyborg treads"
-	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
-	slot = "leg_both"
-	appearanceString = "treads"
-	icon_state = "legs-treads"
-	max_health = 100
-	powerdrain = 5
-	step_image_state = "tracks-w"
-	movement_modifier = /datum/movement_modifier/robotleg_right // only one of these? if it replaces both it doesn't matter which one we put here.
-	robot_movement_modifier = /datum/movement_modifier/robot_part/tread_right
-	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS)
-
-/obj/item/parts/robot_parts/leg/thruster
-	name = "Alastor pattern thruster"
-	desc = "Nobody said this is safe."
-	slot = "leg_both"
-	appearanceString = "thruster"
-	icon_state = "legs-thruster"
-	max_health = 100
-	powerdrain = 5
-	step_image_state = null //It's flying so no need for this.
-	robot_movement_modifier = /datum/movement_modifier/robot_part/thruster_right
-	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS | LIMB_LIGHT)
-
 /obj/item/parts/robot_parts/leg/left/thruster
 	name = "left thruster assembly"
 	desc = "Is it really a good idea to give thrusters to cyborgs..? Probably not."
