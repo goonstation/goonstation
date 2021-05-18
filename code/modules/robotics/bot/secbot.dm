@@ -868,18 +868,17 @@
 		weeoo()
 		process()	// ensure bot quickly responds to a perp
 
-	proc/YellAtPerp(impotent_rage = 0)
+	proc/YellAtPerp()
 		var/saything = pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg')
-		if(!impotent_rage)
-			src.point(src.target, 1)
-			src.speak("Level [src.threatlevel] infraction alert!")
-			switch(saything)
-				if('sound/voice/bcriminal.ogg')
-					src.speak("CRIMINAL DETECTED.")
-				if('sound/voice/bjustice.ogg')
-					src.speak("PREPARE FOR JUSTICE.")
-				if('sound/voice/bfreeze.ogg')
-					src.speak("FREEZE. SCUMBAG.")
+		src.point(src.target, 1)
+		src.speak("Level [src.threatlevel] infraction alert!")
+		switch(saything)
+			if('sound/voice/bcriminal.ogg')
+				src.speak("CRIMINAL DETECTED.")
+			if('sound/voice/bjustice.ogg')
+				src.speak("PREPARE FOR JUSTICE.")
+			if('sound/voice/bfreeze.ogg')
+				src.speak("FREEZE. SCUMBAG.")
 		playsound(get_turf(src), saything, 50, 0)
 
 	proc/weeoo()
@@ -1261,7 +1260,7 @@
 
 	onUpdate()
 		..()
-		if (!IN_RANGE(master, master.target, 1) || !master.target || master.target.hasStatus("handcuffed") || master.moving)
+		if (src.failchecks())
 			master.weeoo()
 			interrupt(INTERRUPT_ALWAYS)
 			return
@@ -1269,7 +1268,7 @@
 	onStart()
 		..()
 		master.cuffing = 1
-		if (!IN_RANGE(master, master.target, 1) || !master.target || master.target.hasStatus("handcuffed") || master.moving)
+		if (src.failchecks())
 			master.weeoo()
 			interrupt(INTERRUPT_ALWAYS)
 			return
@@ -1342,6 +1341,14 @@
 					master.KillPathAndGiveUp(KPAGU_RETURN_TO_GUARD)
 				else
 					master.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
+	
+	proc/failchecks()
+		if (!IN_RANGE(master, master.target, 1))
+			return 1
+		if (!master.target || master.target.hasStatus("handcuffed") || master.moving)
+			return 1
+		if (!isturf(master.loc) || !isturf(master.target?.loc)) // Most often, inside a locker
+			return 1 // cant cuff people through lockers... and not enough room to cuff if both are in that locker
 
 //secbot stunner bar thing
 /datum/action/bar/icon/secbot_stun
