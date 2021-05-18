@@ -1,10 +1,11 @@
 	<center><h2>Spacemen the Grifening: Expanded Edition</h2></center><hr>
+<center><i>The Definitive Handbook for Space's #1 Trading Card Game!</i></center>
 	<h3>Foreword:</h3>
 	<i>Be greeted by sugary soft-drinks and spooky cultists! You are now officially a </i><b>Nerd</b><i> but do not be afraid! You can indulge in the endless fun of collectible card-games like this one!</i>
 	<br>
 	<br>
 	Spacemen the Grifening is a 2 player party-game; well worth the fun!
-	The machine that spit out this wonderful piece of literature can sell you a few booster packs or a starter set to get going! Each booster pack contains cards for 3 mobs, 3 friends, 3 effects, and 1 area. Feel free to buy a deck and begin immediately!
+	The machine that spit out this wonderful piece of literature can sell you a few booster packs or a starter set to get going! Each booster pack contains cards for 3 Mobs, 3 Friends, 3 Effects, and 1 area. Feel free to buy a deck and begin immediately! You can collect all the different cards available in Spacemen the Grifening in a Spacemen the Griffening deck box. There are also rare foiled versions of each card to seek out.
 	<br>
 	<br>
 	With more experience you can even create your own deck - feel free to experiment and start your own tournament!
@@ -13,9 +14,11 @@
 	<ul style='list-style-type:disc'>
 		<li><b>At Game Start</b>
 			<ul style='list-style-type:circle'>
-				<li>Each player initially has 100 HP. Normally, the player who loses all of their HP loses. There are additional ways to win.</li>
+				<li>Each player initially has 100 HP. Normally, the player who loses all of their HP first loses the game. There are additional ways to win.</li>
 				<br>
 				<li>Both players stock up their hand with <i>3</i> cards. The person taking the first turn has to draw another card according to the following Draw Phase.</li>
+				<br>
+				<li>The person who will be drawing first can be determined by a coin flip with a pre-inspected fair coin.</li>
 				<br>
 			</ul>
 		</li>
@@ -27,19 +30,21 @@
 		</li>
 		<li><b>Main Phase</b>
 			<ul style='list-style-type:circle'>
-				<li>Play any amount of effect and equipment cards - you may also play up to 1 creature card.</li>
+				<li>Play any amount of Effect and Equipment cards - you may also play up to 1 Creature card.</li>
 				<br>
-				<li>You may have up to 5 effect, equipment and creature cards on your side of field at any given time. There must be only 1 area card on the table; playing a new area card discards the previous one.</li>
+				<li>You may have up to 5 total Effect, Equipment and Creature cards on your side of field at any given time. There must be only 1 area card on the table; playing a new area card discards the previous one.</li>
 				<br>
 			</ul>
 		</li>
 		<li><b>Battle Phase</b>
 			<ul style='list-style-type:circle'>
-				<li>Each creature on your side of the field may attack up to once unless incapacitated or otherwise prevented by an effect. No cards may be played after the beginning of battle phase unless allowed by a special effect, but face down cards may be activated.</li>
+				<li>Each creature on your side of the field may attack up to once unless incapacitated or otherwise prevented by an Effect. No cards may be played after the beginning of the Battle Phase unless allowed by a special effect, but face down cards may be activated.</li>
 				<br>
-				<li>A creature is defeated in normal battle if its <i>DEF is lower than the ATK</i> of the attacking creature. The difference is then subtracted from the HP of the player whose creature was defeated.</li>
+				<li>A creature is defeated in normal battle if its <i>DEF is lower than the ATK</i> of the attacking creature. The difference is then subtracted from the HP of the player whose creature was defeated. Defeated creatures must be moved to the player's discard pile unless otherwise noted. All Equipment and Effects attached to the defeated Creature must be discarded.</li>
 				<br>
-				<li>If the attack fails <i>(DEF is higher than the attacker's ATK)</i>, then the difference is subtracted from the HP of the attacker, and additionally, if the <i>ATK of the defender is higher than the DEF of the attacker</i>, the attacker is defeated.</li>
+				<li>If the attack fails <i>(DEF is higher than the attacker's ATK)</i>, then the difference is subtracted from the HP of the attacker, and additionally, if the <i>ATK of the defender is higher than the DEF of the attacker</i>, the attacking creature is defeated.</li>
+				<br>
+				<li>After a player completes their Battle Phase, the next player then begins their turn by going through the Draw Phase, Main Phase, and Battle Phase. Once the second player is done with their Battle Phase, the first player begins their turn by starting again at the Draw Phase, and so on.</li>
 				<br>
 			</ul>
 		<li><b>Important Game Information</b>
@@ -48,27 +53,195 @@
 				<br>
 				<li>If a player must draw and is out of cards to draw, that player loses.</li>
 				<br>
-				<li>If a player plays
+				<li>If a player plays a particular dark flower card, they immediately win the game. Other penalties may apply to usage of non-foiled versions of this card.
 			</ul>
-		</li>
+		</li></ul></li>
 	<h3>Cards:</h3>
-	Mobs
-		<ul style='list-style-type:circle'>
-		<li>Captain - LVL 7 / 60 ATK / 40 DEF</b>
-		<ul style='list-style-type:circle'>
-			<li>Can't be played if any Nuclear Operatives are on the same side of the field, or if a Captain is already face up</li>
-			<li>Can only be played while the Bridge area is active</li>
-			<li>On play, equip an Energy Gun card from your deck</li>
-			<li>On play, discard all face down Captains</li></b></li><ul>
-		Head of Personnel - LVL 7 / 20 ATK / 65 DEF
-		Head of Security - LVL 7 / 50 ATK / 35 DEF
+	<hr>
+	<h4>Mobs</h4>
+	<hr noshade>
+	<b>HEADS</b><br>
+<p style="margin-right:10%; margin-left:1%"><b>Captain</b> - LVL 7 / 60 ATK / 40 DEF</p>
+			<ul style='list-style-type:circle'>
+				<li>Can't be played if any Nuclear Operatives are on the same side of the field, or if a Captain is already face up</li>
+				<li>Can only be played while the Bridge area is active</li>
+				<li>On play, equip an Energy Gun card from your deck</li>
+				<li>On play, discard all face down Captains</li></b>
+		</ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Head of Personnel</b> - LVL 7 / 20 ATK / 65 DEF</p>
+			<ul style='list-style-type:circle'>
+			<li>Three turns after being played, discard if there are no Equipment cards on them</li>
+			<li>When in play, prevents any other creature from being attacked by opponent</li></ul></li></ul>
+	<b>SILICONS</b><br>
+		<p style="margin-right:10%; margin-left:1%"><b>AI</b> - LVL 6 / 0 ATK / 60 DEF</p>
+			<ul style='list-style-type:circle'>
+			<li>Sacrifice one human crewmember or Cyborg to play</li>
+			<li>Upon play and at beginning of opponent's turn, all opponent Cyborgs and Robots are incapacitated for one turn (does not work if both players have AI in play)</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>CYBORG</b> - LVL 3 / 30 ATK / 15 DEF</p>
+			<ul style='list-style-type:circle'>
+			<li>Cannot attack humans unless an Effect allows it</li>
+			<li>Upon play, player may choose to retrieve Door Bolts and place in hand</li></ul></li></ul>
+	<b>SECURITY</b><br>
+		<p style="margin-right:10%; margin-left:1%"><b>Head of Security</b> - LVL 7 / 50 ATK / 35 DEF</p>
+			<ul style='list-style-type:circle'>
+			<li>Sacrifice one Security Officer on your side to play</li>
+			<li>Increases ATK of all Security Officers on the same side of the field by 20</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Security Officer</b> - LVL 5 / 30 ATK / 25 DEF</p>
+			<ul style='list-style-type:circle'>
+			<li>Cannot kill non-antagonist humans without Head of Security in play</li>
+			<li>Attacking non-antagonist humans with DEF lower than Security Officer's ATK incapacitates the non-antagonist for one turn</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Lawyer</b> - LVL 3 / 15 ATK / 8 DEF</p>
+			<ul style='list-style-type:circle'>
+			<li>While in play, antagonists on same side cannot be attacked by opponents</li>
+			<li>While in play, Security Officers on same side cannot attack opponents</li></ul></li></ul>
+	<b>SCIENCE</b><br>
+		<p style="margin-right:10%; margin-left:1%"><b>Research Director</b> - LVL 6 / 40 ATK / 40 DEF</p>
+			<ul style='list-style-type:circle'>
+			<li>Sacrifice one Scientist on your side to play</li>
+			<li>For each Scientist on same side of the field, ATK and DEF each increase by 10</li>
+			<li>At beginning of turn, can increase ATK or DEF by 10 for one turn</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Scientist</b> - LVL 3 / 25 ATK / 25 DEF</p>
+			<ul style='list-style-type:circle'>
+			<li>At beginning of turn, can increase ATK or DEF by 10 for one turn</li></u></li></ul>
+	<b>MEDICAL</b><br>
+		<p style="margin-right:10%; margin-left:1%"><b>Medical Director</b> - LVL 7 / 28 ATK / 20 DEF</p>
+			<ul style='list-style-type:circle'>
+			<li>Sacrifice one Medical Doctor on your side to play</li>
+			<li>Provides 20 DEF to each human on same side</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Roboticist</b> - LVL 3 / 16 ATK / 14 DEF</p>
+		<p style="margin-right:10%; margin-left:1%"><b>Geneticist</b> - LVL 3 / 17 ATK / 11 DEF</p>
+		<p style="margin-right:10%; margin-left:1%"><b>Medical Doctor</b> - LVL 2 / 12 ATK / 9 DEF</p>
+	<b>ENGINEERING</b><br>
+		<p style="margin-right:10%; margin-left:1%"><b>Chief Engineer</b> - LVL 5 / 40 ATK / 50 DEF</p>
+			<ul style='list-style-type:circle'>
+			<li>Sacrifice one Engineer on your side to play</li>
+			<li>Instead of attacking, may discard area in play; cannot be used when incapable of attacking</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Engineer</b> - LVL 6 / 23 ATK / 15 DEF</p>
+		<p style="margin-right:10%; margin-left:1%"><b>Mechanic</b> - LVL 4 / 20 ATK / 18 DEF</p>
+			<ul style='list-style-type:circle'>
+			<li>When equipped with any item, may retrieve Equipment card of same kind from deck</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Atmospheric Technician</b> - LVL 1 / 17 ATK / 10 DEF</p>
+	<b>CIVILIAN</b><br>
+		<p style="margin-right:10%; margin-left:1%"><b>Clown</b> - LVL 2 / 10 ATK / 25 DEF</p>
+			<ul style='list-style-type:circle'>
+			<li>May redirect opponent's attack to the clown once per turn; may be done while Clown is face-down, which reveals Clown</li>
+			<li>If the Clown attacks any opponent, discard opponent</li>
+			<li>If the Clown does not defeat opponent, Clown is incapacitated for one turn</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Chaplain</b> - LVL 1 / 8 ATK / 22 DEF</p>
+			<ul style='list-style-type:circle'>
+			<li>Immune to abilities of Wizards and Vampires</li>
+			<li>Cannot be sacrificed to play Vampire</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Assistant</b> - LVL 2 / 11 ATK / 6 DEF</p>
+		<p style="margin-right:10%; margin-left:1%"><b>Botanist</b> - LVL 3 / 16 ATK / 10 DEF</p>
+		<p style="margin-right:10%; margin-left:1%"><b>Bartender</b> - LVL 1 / 14 ATK / 12 DEF</p>
+		<p style="margin-right:10%; margin-left:1%"><b>Chef</b> - LVL 1 / 21 ATK / 9 DEF</p>
+		<p style="margin-right:10%; margin-left:1%"><b>Botanist</b> - LVL 2 / 14 ATK / 23 DEF</p>
+	<b>ANTAGONISTS</b><br>
+		<p style="margin-right:10%; margin-left:1%"><b>Lich</b> - LVL 10 / 90 ATK / 90 DEF</p>
+			<ul style='list-style-type:circle'>
+			<li>Cannot be incapacitated</li>
+			<li>Cannot be played normally</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Shambling Abomination</b> - LVL 9 / 80 ATK / 80 DEF</p>
+			<ul style='list-style-type:circle'>
+			<li>Cannot be destroyed by humans that don't have a non-armor card equipped</li>
+			<li>At start of opponent's turn, may incapacitate one human on the opposite side</li>
+			<li>When Flamethrower, Incendiary Grenade, or Plasma Fire Effects are successfully used by opponent, reduce Shambling Abomination DEF by half</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Wraith</b> - LVL 8 / 0 ATK / 0 DEF</p>
+			<ul style='list-style-type:circle'>
+			<li>Must sacrifice two human crewmembers on your side to play</li>
+			<li>Can only be killed in combat by Salt Effect or Ectoplasmic Destabilizer</li>
+			<li>When attacked, normal HP rules apply even if not killed</li>
+			<li>When killed, place directly in Gibbed pile</li>
+			<li>Gains 10 ATK and 10 DEF for each human in your own Discard pile</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Wizard</b> - LVL 7 / 28 ATK / 15 DEF</p>
+			<ul style='list-style-type:circle'>
+			<li>When equipped with Magical Robe and Magical hat, at start of opponent's turn may shift out of existence to avoid attack, incapacitate all opponent humans for one turn, or kill one opponent human </li>
+			<li>If also equipped with Wizard Staff, may use an additional ability at start of opponent's turn</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Vampire</b> - LVL 5 / 25 ATK / 25 DEF</p>
+			<ul style='list-style-type:circle'>
+			<li>Must sacrifice one human crewmember to play</li>
+			<li>Once per turn, may sacrifice human crewmember from your side to increase Vampire ATK and DEF by 20 each</li>
+			<li>Once per turn, may evade attack from a human, incapacitating them</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Nuclear Operative</b> - LVL 5 / 30 ATK / 19 DEF</p>
+			<ul style='list-style-type:circle'>
+			<li>Cannot be played if any Captains are on same side of field</li>
+			<li>May use Syndicate items at any time</li>
+			<li>When killed, attacking creature is incapacitated for one turn</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Traitor</b> - LVL 3 / 25 ATK / 25 DEF</p>
+			<ul style='list-style-type:circle'>
+			<li>May wield Syndicate items at any time</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Changeling</b> - LVL 1 / 10 ATK / 10 DEF</p>
+			<ul style='list-style-type:circle'>
+			<li>Once per turn, may take on form and stats of any human in opponent's Discard pile, and the selected human is moved to opponent's Gibbed pile</li>
+			<li>Discard Changeling when opponent successfully uses Flamethrower, Incendiary Grenade or Plasma Fire Effect</li></ul>
+	</li></ul></li></ul>
+	<hr>
+	<h4>Friends</h4>
+	<hr noshade>
+	<b>CRITTERS</b><br>
+		<p style="margin-right:10%; margin-left:1%"><b>Greater Domestic Space-Bee</b></p>
+		<p style="margin-right:10%; margin-left:1%"><b>Dr. Acula</b></p>
+			<ul style='list-style-type:circle'>
+			<li>Gains 20 ATK and 20 DEF when Medical Director is in play on same side</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Wendigo King</b> - LVL 8 / 75 ATK / 60 DEF </p>
+			<ul style='list-style-type:circle'>
+			<li>Must sacrifice one Wendidgo to play</li>
+			<li>Sends killed creatures to Gibbed piled instead of Discard pile</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Wendigo</b></p>
+		<p style="margin-right:10%; margin-left:1%"><b>Space Bear</b></p>
+		</li></ul>
+	<b>ROBOTS</b><br>
+		<p style="margin-right:10%; margin-left:1%"><b>Officer Beepsky</b></p>
+			<ul style='list-style-type:circle'>
+			<li>When in play, negates one attack per turn</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Automaton</b><br>
+	<b>OTHER</b><br>
+		<p style="margin-right:10%; margin-left:1%"><b>George Melons</b></p>
+			<ul style='list-style-type:circle'>
+			<li>Requires one each of Heart of George Melons, Brain of George Melons, Skull of George Melons, and Limbs of George Melons to play </li>
+			<li>When George Melons is played, player <b><i>instantly wins</b></i></li></ul>
+	</li></ul></li></ul>
+	<hr>
+	<h4>Effects</h4>
+	<hr noshade>
+	<b>RESPONSE</b><br>
+		<p style="margin-right:10%; margin-left:1%"><b>Adminhelp</b></p>
+			<ul style='list-style-type:circle'>
+			<li>Can only be played face down</li>
+			<li>Can be activated in response to any Effect or Equipment being activated</li>
+			<li>Effect or Equipment card being activated is instantly destroyed without activating</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Deathgasp</b></p>
+			<ul style='list-style-type:circle'>
+			<li>Can be activated when opponent creature attacks you creature</li>
+			<li>When played to your creature, prevents being destroyed by an attack</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Door Bolts</b></p>
+			<ul style='list-style-type:circle'>
+			<li>While in play, no area cards can be played</li>
+			<li>If played face-down, may be activated when opponent tries to play area card to prevent</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Stealth Storage</b></p>
+			<ul style='list-style-type:circle'>
+			<li>Can only be played face down</li>
+			<li>Can only be activated when opponent plays or activates a card</li>
+			<li>Allows you to play any Effect card during any point in opponent's turn, unless Effect card specifically says it cannot be played during opponent turn</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Wet Floor</b></p>
+		</li></ul>
+	<b>ROBOTS</b><br>
+		<p style="margin-right:10%; margin-left:1%"><b>Officer Beepsky</b></p>
+			<ul style='list-style-type:circle'>
+			<li>When in play, negates one attack per turn</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Automaton</b><br>
+	<b>OTHER</b><br>
+		<p style="margin-right:10%; margin-left:1%"><b>George Melons</b></p>
+			<ul style='list-style-type:circle'>
+			<li>Requires one each of Heart of George Melons, Brain of George Melons, Skull of George Melons, and Limbs of George Melons to play </li>
+			<li>When George Melons is played, player <b><i>instantly wins</b></i></li></ul>
 	</li></ul></li></ul>
 	<h3>Tips:</h3><hr>
 	<ul style='list-style-type:disc'>
 		<li>1) There are themed sets of cards that work great in combination with one another! Try to build your deck around that!</li>
-		<li>2) Tap your equipment, effect or even the boards area card to differentiate between creatures!</li>
+		<li>2) Tap your Equipment, Effect or even the board's area card to differentiate between Creatures!</li>
 		<li>3) Cards which are face-down on the table can surprise your opponent!</li>
-		<li>4) Just because a creature died and has to be put on your discard pile does not mean it is out of the game yet!</li>
+		<li>4) Just because a Creature died and has to be put on your Discard pile does not mean it is out of the game yet!</li>
 		<li>5) Keep some dice nearby. Some cards might require a bit of luck!</li>
 		<li>6) Buy more cards! Spend your cash!</li>
 	</ul>

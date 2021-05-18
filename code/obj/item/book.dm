@@ -104,13 +104,13 @@ Custom Books
 /obj/item/paper/book/from_file/matsci_guide_old
 	name = "Dummies guide to material science"
 	desc = "An explanation of how to work materials and their properties."
-	icon_state = "orangebook"
+	icon_state = "matscibook"
 	file_path = "strings/books/matsci_guide_old.txt"
 
 /obj/item/paper/book/from_file/matsci_guide
 	name = "Dummies' Guide to Material Science, 7th Ed."
 	desc = "An explanation of how to work materials and their properties. Nanotrasen missed buying a few editions between the old one and this..."
-	icon_state = "orangebook"
+	icon_state = "matscibook"
 	file_path = "strings/books/matsci_guide_new.txt"
 
 /obj/item/paper/book/from_file/minerals
@@ -141,7 +141,7 @@ Custom Books
 
 /obj/item/paper/book/from_file/interdictor_guide
 	name = "Spatial Interdictor Assembly and Use, 3rd Edition"
-	icon_state = "engiguide"
+	icon_state = "interdictorguide"
 	desc = "A handy guide on proper construction and maintenance of Spatial Interdictors"
 	file_path = "strings/books/interdictor_guide.txt"
 
