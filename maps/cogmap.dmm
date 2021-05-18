@@ -123,11 +123,13 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 5
+	},
 /obj/decal/tile_edge/stripe/big,
 /obj/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 8;
-	level = 1
+/obj/machinery/atmospherics/pipe/simple{
+	level = 2
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
@@ -679,8 +681,8 @@
 /area/station/medical/medbay)
 "abP" = (
 /obj/disposalpipe/segment{
-	icon_state = "pipe-c";
 	dir = 4;
+	icon_state = "pipe-c";
 	step_y = 0
 	},
 /obj/stool/bench/red/auto,
@@ -903,9 +905,9 @@
 "acs" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
+	pixel_x = 6;
 	step_x = 0;
-	step_y = 0;
-	pixel_x = 6
+	step_y = 0
 	},
 /obj/machinery/light{
 	dir = 4;
@@ -967,9 +969,9 @@
 	},
 /obj/table/auto,
 /obj/item/clothing/glasses/spectro{
+	pixel_y = -3;
 	step_x = 3;
-	step_y = 10;
-	pixel_y = -3
+	step_y = 10
 	},
 /obj/item/pen/marker/random,
 /obj/random_item_spawner/desk_stuff/four,
@@ -1461,9 +1463,9 @@
 /area/station/crew_quarters/observatory)
 "adH" = (
 /obj/item/clothing/glasses/spectro{
+	pixel_y = -3;
 	step_x = 2;
-	step_y = 0;
-	pixel_y = -3
+	step_y = 0
 	},
 /obj/table/auto{
 	step_x = 1;
@@ -1473,16 +1475,16 @@
 	pixel_x = -7
 	},
 /obj/item/storage/firstaid/brain{
-	step_x = 2;
-	step_y = 5;
 	pixel_x = 4;
-	pixel_y = 8
+	pixel_y = 8;
+	step_x = 2;
+	step_y = 5
 	},
 /obj/item/storage/firstaid/brain{
-	step_x = 0;
-	step_y = 0;
 	pixel_x = 4;
-	pixel_y = 8
+	pixel_y = 8;
+	step_x = 0;
+	step_y = 0
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
@@ -1521,10 +1523,6 @@
 /obj/item/paper_bin,
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
-	},
-/obj/item/storage/pill_bottle/mutadone{
-	step_x = 7;
-	step_y = 8
 	},
 /turf/simulated/floor,
 /area/station/medical/research)
