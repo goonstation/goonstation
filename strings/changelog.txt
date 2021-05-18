@@ -1,5 +1,8 @@
 
 (t)tue may 18 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Migrate 1/4 of spacesuit slowdown to the helmet
 (u)Mordent
 (p)4779
 (e)⚖🎨|balance, sprites

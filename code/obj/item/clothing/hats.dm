@@ -124,6 +124,7 @@
 		..()
 		setProperty("disorient_resist_eye", 9)
 		setProperty("disorient_resist_ear", 5)
+		setProperty("space_movespeed", 0.5)
 
 /obj/item/clothing/head/rad_hood
 	name = "Class II radiation hood"

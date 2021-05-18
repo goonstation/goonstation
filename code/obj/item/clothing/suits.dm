@@ -1006,7 +1006,7 @@
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 
-		setProperty("space_movespeed", 0.8)
+		setProperty("space_movespeed", 0.6)
 
 /obj/item/clothing/suit/space/emerg
 	name = "emergency suit"
@@ -1019,7 +1019,7 @@
 
 	setupProperties()
 		..()
-		setProperty("space_movespeed", 2)
+		setProperty("space_movespeed", 1.5)
 
 	snow // bleh whatever!!!
 		name = "snow suit"
@@ -1047,7 +1047,7 @@
 
 	setupProperties()
 		..()
-		setProperty("space_movespeed", 0.4)
+		setProperty("space_movespeed", 0.3)
 
 	blue
 		icon_state = "spacecap-blue"
