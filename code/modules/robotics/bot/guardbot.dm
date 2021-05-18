@@ -1947,9 +1947,14 @@
 	onEnd()
 		..()
 		if (src.failchecks())
+			// One of the possible failed checks is that they're cuffed so
+			// we can stop trying to arrest them.
+			if (task.arrest_target?.hasStatus("handcuffed"))
+				task.drop_arrest_target()
+
 			return
 
-		if (task.arrest_target.hasStatus("handcuffed") || !isturf(task.arrest_target.loc))
+		if (!isturf(task.arrest_target.loc))
 			task.drop_arrest_target()
 			return
 
