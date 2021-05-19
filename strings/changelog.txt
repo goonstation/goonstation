@@ -1,5 +1,10 @@
 
 (t)wed may 19 21
+(u)Blackrep
+(p)4772
+(e)⚖🐛|balance, bug
+(+)Fixed a bug that unintentionally nerfed a matsci space suit's ranged protection.
+(+)Buffed the melee and ranged protection of matsci space suits based on material used.
 (u)Sartorius7
 (p)4784
 (e)|
