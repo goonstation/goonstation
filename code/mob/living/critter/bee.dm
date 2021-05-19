@@ -1,4 +1,3 @@
-#define ADMIN_BEES_ONLY if(!src.non_admin_bee_allowed && src.client && !src.client.holder) {src.make_critter(/mob/living/critter/small_animal/wasp); return}
 
 /* ============================================= */
 /* -------------------- Bee -------------------- */
@@ -60,7 +59,6 @@
 		// bee mobs should have their actual bee names
 		real_name = name
 		SPAWN_DBG(0)
-			ADMIN_BEES_ONLY
 			//statlog_bees(src)
 			src.update_icon()
 
@@ -131,7 +129,6 @@
 		HH.can_hold_items = 0
 
 	Life(datum/controller/process/mobs/parent)
-		ADMIN_BEES_ONLY
 		if (..(parent))
 			return 1
 		if (shorn && (world.time - shorn_time) >= 1800)
@@ -1056,5 +1053,3 @@
 			for (var/mob/O in hearers(src, null))
 				O.show_message("[src] beeps[prob(50) ? " in a comforted manner, and gives [user] the ASCII" : ""].",2)
 		return
-
-#undef ADMIN_BEES_ONLY
