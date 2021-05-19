@@ -87,7 +87,7 @@
 
 	var/extended_inventory = FALSE //can we access the hidden inventory?
 	var/can_fall = TRUE //Can this machine be knocked over?
-	var/can_hack = TRUE //Can this machine have it's panel open? TRUE by default
+	var/can_hack = TRUE //Can this machine have it's panel open?
 
 	var/panel_open = FALSE //Hacking that vending machine. Gonna get a free candy bar.
 	var/wires = 15
@@ -2194,6 +2194,7 @@
 	icon_off = "O2vend-off"
 	icon_broken = "O2vend-broken"
 	icon_fallen = "O2vend-fallen"
+	deconstruct_flags = DECON_CROWBAR | DECON_WRENCH | DECON_MULTITOOL
 	can_hack = FALSE
 	pay = TRUE
 	acceptcard = TRUE
