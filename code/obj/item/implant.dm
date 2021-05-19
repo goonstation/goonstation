@@ -1630,6 +1630,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	hit_type = DAMAGE_STAB
 	casing = /obj/item/casing/small
 	icon_turf_hit = "bhole-small"
+	shot_number = 1
 	//silentshot = 1
 	var/obj/item/implant/my_implant = null
 	var/mob/implant_master = null
