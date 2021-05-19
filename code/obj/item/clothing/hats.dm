@@ -500,6 +500,7 @@
 	desc = "For the inner space commander in you."
 	icon_state = "ntberet_commander"
 	item_state = "ntberet_commander"
+	c_flags = SPACEWEAR
 
 /obj/item/clothing/head/XComHair
 	name = "rookie scalp"
@@ -1295,6 +1296,7 @@
 	icon_state = "hoscap"
 	uses_multiple_icon_states = 1
 	item_state = "hoscap"
+	c_flags = SPACEWEAR
 	var/folds = 0
 	desc = "Actually, this hat is from a fast-food restaurant, that's why it folds like it was made of paper."
 	setupProperties()
