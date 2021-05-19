@@ -496,7 +496,7 @@
 
 /obj/item/clothing/under/gimmick/mj_clothes
 	name = "Smooth Criminal's Jumpsuit"
-	desc = "You probably shouldn't wear this around small children."
+	desc = "You've been hit by..."
 	icon_state = "moonwalker"
 	item_state = "moonwalker"
 
