@@ -154,8 +154,12 @@ To remove:
 /// Defines of property update actions
 
 /// Sends a debug action about the property changing whenever it changes
-#define PROP_UPDATE_DEBUG(target, prop, old_val) DEBUG_MESSAGE("[target].[prop]: [old_val] -> [GET_MOB_PROPERTY_RAW(target, prop]")
+#define PROP_UPDATE_DEBUG(target, prop, old_val) DEBUG_MESSAGE("[target].[prop]: [old_val] -> [GET_MOB_PROPERTY_RAW(target, prop)]")
 
+#define PROP_UPDATE_INVISIBILITY(target, prop, old_val) do { \
+	target.invisibility = GET_MOB_PROPERTY_RAW(target, prop); \
+	SEND_SIGNAL(target, COMSIG_MOB_PROP_INVISIBILITY, old_val); \
+	} while(0)
 
 
 // Property defines
@@ -175,6 +179,7 @@ To remove:
 #define PROP_CANTSPRINT(x) x("cantsprint", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
 #define PROP_NO_MOVEMENT_PUFFS(x) x("nomovementpuffs", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
 #define PROP_NEVER_DENSE(x) x("neverdense", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
+#define PROP_INVISIBILITY(x) x("invisibility", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX, PROP_UPDATE_INVISIBILITY)
 //armour properties
 #define PROP_MELEEPROT_HEAD(x) x("meleeprot_head", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
 #define PROP_MELEEPROT_BODY(x) x("meleeprot_body", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
@@ -241,12 +246,13 @@ To remove:
 	do { \
 		var/list/_L = target.mob_properties; \
 		if (_L[property]) { \
+			var/_V = _L[property][MOB_PROPERTY_SOURCES_LIST][source]; \
 			_L[property][MOB_PROPERTY_SOURCES_LIST] -= source; \
 			if (!length(_L[property][MOB_PROPERTY_SOURCES_LIST])) { \
 				var/_OLD_VAL = _L[property][MOB_PROPERTY_ACTIVE_VALUE]; \
 				_L -= property; \
-				if(do_update) { update_macro(target, property, _OLD_VAL); } \
-			} else if(_L[property][MOB_PROPERTY_ACTIVE_VALUE] == _L[property][MOB_PROPERTY_SOURCES_LIST][source]) { \
+				if(do_update && _OLD_VAL) { update_macro(target, property, _OLD_VAL); } \
+			} else if(_L[property][MOB_PROPERTY_ACTIVE_VALUE] == _V) { \
 				var/_OLD_VAL = _L[property][MOB_PROPERTY_ACTIVE_VALUE]; \
 				_L[property][MOB_PROPERTY_ACTIVE_VALUE] = -INFINITY; \
 				for(var/_S in _L[property][MOB_PROPERTY_SOURCES_LIST]) { \
@@ -255,7 +261,7 @@ To remove:
 					} \
 				} \
 				if(do_update && _OLD_VAL != _L[property][MOB_PROPERTY_ACTIVE_VALUE]) \
-					{ update_macro(target, property, null); } \
+					{ update_macro(target, property, _OLD_VAL); } \
 			} \
 		} \
 	} while (0)

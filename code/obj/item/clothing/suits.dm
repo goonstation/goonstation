@@ -991,9 +991,9 @@
 				setProperty("viralprot", 40)
 
 			if(material.hasProperty("density"))
-				var/prot = round(material.getProperty("density") / 17)
+				var/prot = round(material.getProperty("density") / 13)
 				setProperty("meleeprot", prot)
-				setProperty("rangedprot", (0.1 + round(prot/10)))
+				setProperty("rangedprot", (0.2 + round(prot/10, 0.1)))
 			else
 				setProperty("meleeprot", 2)
 				setProperty("rangedprot", 0.4)

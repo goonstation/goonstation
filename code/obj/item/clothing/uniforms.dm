@@ -1317,8 +1317,8 @@
 	item_state = "princess"
 
 /obj/item/clothing/under/gimmick/cosby
-	name = "cosby sweater"
-	desc = "Symbol of a legendary 80's sitcom dad."
+	name = "comfy sweater"
+	desc = "A colourful and cozy jumper."
 	icon_state = "cosby1"
 	item_state = "cosby1"
 	New()

@@ -42,7 +42,7 @@
 
 			if(material.hasProperty("density"))
 				var/prot = round(material.getProperty("density") / 20)
-				setProperty("meleeprot_head", prot)
+				setProperty("meleeprot_head", 2+prot)
 			else
 				setProperty("meleeprot_head", 2)
 
@@ -411,7 +411,6 @@
 	name = "hard hat"
 	icon_state = "hardhat0"
 	uses_multiple_icon_states = 1
-	c_flags = SPACEWEAR
 	item_state = "hardhat0"
 	desc = "Protects your head from falling objects, and comes with a flashlight. Safety first!"
 	var/on = 0
@@ -516,7 +515,6 @@
 	name = "camera helmet"
 	desc = "A helmet with a built in camera."
 	icon_state = "camhat"
-	c_flags = SPACEWEAR
 	mats = list("MET-1"=4, "CRY-1"=2, "CON-1"=2)
 	item_state = "camhat"
 	var/obj/machinery/camera/camera = null
@@ -537,7 +535,6 @@
 	name = "security camera helmet"
 	desc = "A red helmet with a built in camera. It has a little note taped to it that says \"Security\"."
 	icon_state = "redcamhat"
-	c_flags = SPACEWEAR
 	item_state = "redcamhat"
 	camera_tag = "Security Helmet Cam"
 
@@ -545,7 +542,6 @@
 	name = "Fifties America Reclamation Team Helmet"
 	desc = "Combat helmet used by a minor terrorist group."
 	icon_state = "jetson1"
-	c_flags = SPACEWEAR
 	icon_state = "jetson"
 	item_state = "jetson"
 	setupProperties()
@@ -605,7 +601,6 @@
 	icon_state = "siren0"
 	uses_multiple_icon_states = 1
 	item_state = "siren"
-	c_flags = SPACEWEAR
 	mats = 8
 	abilities = list(/obj/ability_button/weeoo) // is near segway code in vehicle.dm
 	var/weeoo_in_progress = 0

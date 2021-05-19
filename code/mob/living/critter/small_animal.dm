@@ -1294,6 +1294,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
 
+	setup_healths()
+		. = ..()
+		qdel(src.healthlist["toxin"])
+		src.healthlist -= "toxin"
+
 	setup_overlays()
 		fur_color = src.client?.preferences.AH.customization_first_color
 		eye_color = src.client?.preferences.AH.e_color
