@@ -1282,7 +1282,7 @@
 	M.transforming = 1
 	M.canmove = 0
 	M.icon = null
-	M.invisibility = 101
+	APPLY_MOB_PROPERTY(M, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if (isobserver(M) && M:corpse)
 		G.oldmob = M:corpse

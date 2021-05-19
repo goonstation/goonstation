@@ -835,7 +835,7 @@
 	setupProperties()
 		..()
 		setProperty("coldprot", 20)
-		setProperty("heatprot", 50)
+		setProperty("heatprot", 45)
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 		setProperty("movespeed", 1)
@@ -967,6 +967,13 @@
 	protective_temperature = 1000
 	over_hair = 1
 
+	New()
+		..()
+		if(!istype(get_area(src), /area/station))
+			var/nt_wear_state = "[src.wear_state || src.icon_state]-nt"
+			if(nt_wear_state in icon_states(src.wear_image_icon))
+				src.wear_state = nt_wear_state
+
 	onMaterialChanged()
 		if(src.material)
 			if(material.hasProperty("thermal"))
@@ -984,9 +991,9 @@
 				setProperty("viralprot", 40)
 
 			if(material.hasProperty("density"))
-				var/prot = round(material.getProperty("density") / 17)
+				var/prot = round(material.getProperty("density") / 13)
 				setProperty("meleeprot", prot)
-				setProperty("rangedprot", (0.1 + round(prot/10)))
+				setProperty("rangedprot", (0.2 + round(prot/10, 0.1)))
 			else
 				setProperty("meleeprot", 2)
 				setProperty("rangedprot", 0.4)
@@ -999,7 +1006,7 @@
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 
-		setProperty("space_movespeed", 0.8)
+		setProperty("space_movespeed", 0.6)
 
 /obj/item/clothing/suit/space/emerg
 	name = "emergency suit"
@@ -1012,7 +1019,7 @@
 
 	setupProperties()
 		..()
-		setProperty("space_movespeed", 2)
+		setProperty("space_movespeed", 1.5)
 
 	snow // bleh whatever!!!
 		name = "snow suit"
@@ -1040,7 +1047,7 @@
 
 	setupProperties()
 		..()
-		setProperty("space_movespeed", 0.4)
+		setProperty("space_movespeed", 0.3)
 
 	blue
 		icon_state = "spacecap-blue"
@@ -1084,7 +1091,7 @@
 			setProperty("meleeprot", 6)
 			setProperty("rangedprot", 1)
 			setProperty("exploprot", 30)
-			setProperty("space_movespeed", 1.2)
+			setProperty("space_movespeed", 0.9)
 			setProperty("disorient_resist", 65)
 
 	specialist

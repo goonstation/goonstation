@@ -18,7 +18,6 @@
 	name = "AI Eye"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "a-eye"
-	invisibility = 9
 	see_invisible = 9
 	density = 0
 	layer = 101
@@ -38,6 +37,7 @@
 
 	New()
 		src.cancel_camera()
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_AI_EYE)
 		last_loc = src.loc
 		..()
 		sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF

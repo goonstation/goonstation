@@ -80,7 +80,7 @@
 	icon_state = "bio"
 	item_state = "bio_hood"
 	permeability_coefficient = 0.01
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "This hood protects you from harmful biological contaminants."
 	seal_hair = 1
 	path_prot = 0
@@ -124,6 +124,7 @@
 		..()
 		setProperty("disorient_resist_eye", 9)
 		setProperty("disorient_resist_ear", 5)
+		setProperty("space_movespeed", 0.5)
 
 /obj/item/clothing/head/rad_hood
 	name = "Class II radiation hood"
@@ -148,7 +149,7 @@
 	uses_multiple_icon_states = 1
 	var/status = 0
 	var/processing = 0
-	c_flags = SPACEWEAR | COVERSEYES
+	c_flags = COVERSEYES
 	var/fire_resist = T0C+1300	//this is the max temp it can stand before you start to cook. although it might not burn away, you take damage
 	var/datum/light/light
 	var/on = 0
@@ -191,11 +192,15 @@
 			src.force = 10
 			src.hit_type = DAMAGE_BURN
 			src.icon_state = "cakehat1"
+			tooltip_rebuild = 1
 			light.enable()
+			c_flags |= SPACEWEAR
 			processing_items |= src
 		else
 			src.firesource = FALSE
 			src.force = 3
+			c_flags &= ~SPACEWEAR
+			tooltip_rebuild = 1
 			src.hit_type = DAMAGE_BLUNT
 			src.icon_state = "cakehat0"
 			light.disable()
@@ -406,7 +411,6 @@
 	desc = "A purple tophat."
 	icon_state = "ptophat"
 	item_state = "pthat"
-	c_flags = SPACEWEAR
 	protective_temperature = 500
 
 	setupProperties()
@@ -419,7 +423,6 @@
 	desc = "A golden tophat."
 	icon_state = "gtophat"
 	item_state = "gthat"
-	c_flags = SPACEWEAR
 	protective_temperature = 500
 	mat_changename = 0
 	mat_appearances_to_ignore = list("gold") // we already look fine ty
@@ -444,33 +447,28 @@
 	desc = "Your toque blanche, coloured as such so that your poor sanitation is obvious, and the blood shows up nice and crazy."
 	icon_state = "chef"
 	item_state = "chefhat"
-	c_flags = SPACEWEAR
 
 /obj/item/clothing/head/souschefhat
 	name = "Sous-Chef's hat"
 	icon_state = "souschef"
 	item_state = "chefhat" //TODO: unique inhand sprite?
-	c_flags = SPACEWEAR
 
 /obj/item/clothing/head/dramachefhat
 	name = "Dramatic Chef's Hat"
 	icon_state = "drama"
 	item_state = "chefhat" //TODO: unique inhand sprite?
-	c_flags = SPACEWEAR
 
 /obj/item/clothing/head/mailcap
 	name = "Mailman's hat"
 	desc = "The hat of a mailman."
 	icon_state = "mailcap"
 	item_state = "mailcap"
-	c_flags = SPACEWEAR
 
 /obj/item/clothing/head/policecap
 	name = "Police hat"
 	desc = "An old surplus-issue police hat."
 	icon_state = "mailcap"
 	item_state = "mailcap"
-	c_flags = SPACEWEAR
 
 /obj/item/clothing/head/plunger
 	name = "plunger"
@@ -487,7 +485,6 @@
 	desc = "This makes you feel like Che Guevara."
 	icon_state = "hosberet"
 	item_state = "hosberet"
-	c_flags = SPACEWEAR
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 3)
@@ -497,7 +494,6 @@
 	desc = "For the inner dictator in you."
 	icon_state = "ntberet"
 	item_state = "ntberet"
-	c_flags = SPACEWEAR
 
 /obj/item/clothing/head/NTberet/commander
 	name = "Nanotrasen beret"
@@ -511,14 +507,12 @@
 	desc = "Some unfortunate soldier's charred scalp. The hair is intact."
 	icon_state = "xcomhair"
 	item_state = "xcomhair"
-	c_flags = SPACEWEAR
 
 /obj/item/clothing/head/apprentice
 	name = "Apprentice's cap"
 	desc = "Legends tell about space sorcerors taking on apprentices. Such apprentices would wear a magical cap, and this is one such ite- hey! This is just a cardboard cone with wrapping paper on it!"
 	icon_state = "apprentice"
 	item_state = "apprentice"
-	c_flags = SPACEWEAR
 
 	dan
 		name = "Royal Apprentice's Cap"
@@ -531,7 +525,6 @@
 	desc = "A rag that looks like it was dragged through the jungle. Yuck."
 	icon_state = "snake"
 	item_state = "snake"
-	c_flags = SPACEWEAR
 
 // Chaplain Hats
 
@@ -584,7 +577,6 @@
 	desc = "Yeehaw!"
 	icon_state = "cowboy"
 	item_state = "cowboy"
-	c_flags = SPACEWEAR
 
 /obj/item/clothing/head/fancy // placeholder icons until someone sprites an actual fancy hat
 	name = "fancy hat"
@@ -595,7 +587,6 @@
 /obj/item/clothing/head/fancy/captain
 	name = "Captain's hat"
 	icon_state = "captain-fancy"
-	c_flags = SPACEWEAR
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 3)
@@ -603,7 +594,6 @@
 /obj/item/clothing/head/fancy/rank
 	name = "Officer's hat"
 	icon_state = "rank-fancy"
-	c_flags = SPACEWEAR
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 3)
@@ -686,7 +676,6 @@
 	desc = "A white towel folded all into a fancy hat. NOT a turban!" // @;)
 	icon_state = "towelhat"
 	item_state = "lgloves"
-	c_flags = SPACEWEAR
 	see_face = 1
 	body_parts_covered = HEAD
 
@@ -804,7 +793,6 @@
 	name = "beret"
 	desc = "A blue beret with no affiliations to NanoTrasen."
 	icon_state = "beret_base"
-	c_flags = SPACEWEAR
 
 	New()
 		..()
@@ -1309,7 +1297,6 @@
 	uses_multiple_icon_states = 1
 	item_state = "hoscap"
 	c_flags = SPACEWEAR
-	var/is_a_communist = 0
 	var/folds = 0
 	desc = "Actually, this hat is from a fast-food restaurant, that's why it folds like it was made of paper."
 	setupProperties()
