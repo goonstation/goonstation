@@ -2282,6 +2282,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/monkey_translator
+	name = "Vocal Translator"
+	item_paths = list("CRY-1", "MET-1", "CON-1")
+	item_amounts = list(4, 4, 4)
+	item_outputs = list(/obj/item/clothing/mask/monkey_translator)
+	time = 10 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/hermes
 	name = "Offering to the Fabricator Gods"
 	item_paths = list("MET-3","CON-2","POW-3","DEN-3","FAB-1","INS-1")

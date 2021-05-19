@@ -2195,6 +2195,7 @@
 		/datum/manufacture/eyepatch,
 		/datum/manufacture/blindfold,
 		/datum/manufacture/muzzle,
+		/datum/manufacture/monkey_translator,
 		/datum/manufacture/body_bag,
 		/datum/manufacture/implanter,
 		/datum/manufacture/implant_health,
