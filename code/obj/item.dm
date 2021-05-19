@@ -711,7 +711,7 @@
 		if (iswraith(usr))
 			var/mob/wraith/W = usr
 			//Basically so poltergeists need to be close to an object to send it flying far...
-			if (W.weak_tk && (get_dist(src, W) > 2))
+			if (W.weak_tk && !IN_RANGE(src, W, 2))
 				src.throw_at(over_object, 1, 1)
 				boutput(W, "<span class='alert'>You're too far away to properly manipulate this physical item!</span>")
 				logTheThing("combat", usr, null, "moves [src] with wtk.")
