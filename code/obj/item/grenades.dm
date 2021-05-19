@@ -550,6 +550,58 @@ PIPE BOMBS + CONSTRUCTION
 			qdel(src)
 		return
 
+/obj/item/old_grenade/oxygen
+	name = "red oxygen grenade"
+	desc = "It is set to detonate in 3 seconds."
+	det_time = 30.0
+	org_det_time = 30
+	alt_det_time = 60
+	icon_state = "oxy"
+	item_state = "flashbang"
+	is_syndicate = 1
+	sound_armed = "sound/weapons/armbomb.ogg"
+	icon_state_armed = "oxy1"
+
+	prime()
+		var/turf/simulated/T = ..()
+		var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
+		GM.temperature = T20C + 15
+		GM.oxygen = 1500
+		GM.carbon_dioxide = 100
+
+		if (T && istype(T))
+			if(T.air)
+				if(T.parent?.group_processing)
+					T.parent.air.merge(GM)
+				else
+					var/count = length(T.parent.members)
+					for(var/turf/simulated/MT as() in T.parent.members)
+						if(GM.disposed)
+							GM = unpool(/datum/gas_mixture)
+							GM.temperature = T20C + 15
+							GM.oxygen = 1500 / count
+							GM.carbon_dioxide = 100 / count
+						MT.assume_air(GM)
+
+			for (var/mob/living/HH in range(8, src))
+				var/checkdist = get_dist(HH.loc, T)
+				var/misstep = clamp(1 + 10 * (5 - checkdist), 0, 40)
+				var/ear_damage = max(0, 5 * 0.2 * (3 - checkdist))
+				var/ear_tempdeaf = max(0, 5 * 0.2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
+				var/stamina = clamp(5 * (5 + 1 * (7 - checkdist)), 0, 120)
+				HH.apply_sonic_stun(0, 0, misstep, 0, 2, ear_damage, ear_tempdeaf, stamina)
+
+			playsound(T, 'sound/effects/Explosion2.ogg', 100, 1)
+			var/obj/effects/explosion/E = new /obj/effects/explosion(T)
+			E.fingerprintslast = src.fingerprintslast
+		else
+			playsound(T, 'sound/effects/Explosion2.ogg', 20, 1)
+			var/obj/effects/explosion/E = new /obj/effects/explosion(T)
+			E.fingerprintslast = src.fingerprintslast
+
+		qdel(src)
+		return
+
 /obj/item/old_grenade/moustache
 	name = "moustache grenade"
 	desc = "It is set to detonate in 3 seconds."
