@@ -42,7 +42,7 @@
 
 			if(material.hasProperty("density"))
 				var/prot = round(material.getProperty("density") / 20)
-				setProperty("meleeprot_head", prot)
+				setProperty("meleeprot_head", 2+prot)
 			else
 				setProperty("meleeprot_head", 2)
 
