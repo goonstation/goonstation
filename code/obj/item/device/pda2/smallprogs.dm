@@ -1257,6 +1257,12 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 					landmark = "Restricted"
 				if (3)
 					landmark = "Debris Field"
+				if (5)
+					#ifdef UNDERWATER_MAP
+					landmark = "Trench"
+					#else
+					landmark = "Asteroid Field"
+					#endif
 
 			dat += "<BR>X = [src.x], Y = [src.y], Landmark: [landmark]"
 

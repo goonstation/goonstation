@@ -1,5 +1,122 @@
 
+(t)wed may 19 21
+(u)pali
+(e)🦾🤖|
+(+)Cyborgs can now *flex if they have heavy arms.
+(u)Blackrep
+(p)4772
+(e)⚖🐛|balance, bug
+(+)Fixed a bug that unintentionally nerfed a matsci space suit's ranged protection.
+(+)Buffed the melee and ranged protection of matsci space suits based on material used.
+(u)Sartorius7
+(p)4784
+(e)|
+(+)More possible gifts from ducks and santa.
+(u)Mordent
+(p)4793
+(e)🐛|bug
+(*)Cyborgs now correctly show their active upgrades (e.g. shields, propulsion) when they are toggled on/off.
+(t)tue may 18 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Migrate 1/4 of spacesuit slowdown to the helmet
+(+)Also do it to EOD and riot armour
+(+)And welding masks don't count as space helmets
+(+)Also made many many hats that are not space helmets no longer count as spacewear
+(u)Mordent
+(p)4779
+(e)⚖🎨|balance, sprites
+(*)Cyborg treads reduce effect of heavier cyborg parts on the cyborg's speed.
+(u)Zonespace
+(p)4745
+(e)🆕|feature
+(*)C.A.R.L., the Syndicate merchant, now sells Voice Changers.
+(*)Part of C.A.R.L.'s inventory is now random.
+(u)Yellow-Mushroom
+(p)4735
+(e)🆕🎨|feature, sprites
+(*)Kudzu people organs are now synthetic
+(*)New infusions to allow for an easier time coming across specific synthorgan plants
+(+)Addition of the synthetic version of appendixes, intestines, kidneys, livers, lungs, pancreata, spleens, and stomachs
+(+)Addition of crops for all the new synth organs
+(u)edwardly
+(p)4780
+(e)🐛|bug
+(+)Fix guardbuddy logic so they will eventually stop trying to arrest you if there's more than one of them.
+(u)Flaborized
+(p)4761
+(e)🎨|sprites
+(+)Resprited plating.
+(u)kyle
+(e)⚖|balance
+(*)Weapon power cells can now be swapped while moving. Still uses the timed action bar though.
+(t)mon may 17 21
+(u)Mordent
+(p)4756
+(e)⚖🐛|balance, bug
+(*)Cyborg shield upgrades have been pretty heavily reduced in effectiveness, especially against higher-damage weapons. They no longer reflect projectiles.
+(*)Drain rate of cyborg force shield upgrade reduced by 60% (250 to 100)
+(u)112358sam
+(p)4770
+(e)|
+(+)Added the names "Trench" and "Asteroid Field" to the landmarks the GPS device and app can report.
+(u)Pali and DimWhat
+(p)4763
+(e)🎨|sprites
+(+)Made off station space suits have an NT on their back instead of a 13.
 (t)sun may 16 21
+(u)Hans
+(p)4727
+(e)⚖🆕|balance, feature
+(+)Changed chem vapor events to prevent exploits.
+(u)Erinexx
+(p)4401
+(e)🎨|sprites
+(+)Resprited APCs, they now show their cell and wires when opened
+(u)Flappybat
+(p)4629
+(e)⚖🐛|balance, bug
+(*)Spy thief objectives with difficult delivery locations now give a higher value reward.
+(+)Spy thief can no longer have multiple objectives for the same trinket/limb.
+(+)Spy limb/trinket rewards that roll the 10% chance to upgrade rewards are now marked as HOT
+(u)DimWhat
+(p)4363
+(e)⚖🗺|balance, mapping
+(*)The hard hats that came with firesuits on station have been replaced with firefighter helmets
+(+)Altered the stats of the firefighter helmet and suit.
+(+)Added firefighter helmets to fire lockers and crates
+(u)edwardly
+(p)4715
+(e)|
+(+)Bees can wear a big big hat now.
+(u)Stonepillar
+(p)4691
+(e)🆕|feature
+(+)Lipstick now uses the same color as the crayon that was used to make it.
+(u)Flaborized
+(p)4716
+(e)🎨|sprites
+(*)Traitor tactical grenades, EMP grenades, sonic grenades, and banana grenades now come in pocket pouches instead of boxes, which can be reused as storage after you empty them of grenades.
+(u)Kyle
+(p)4740
+(e)⚖🆕|balance, feature
+(+)Wearing the monkey suit will prevent most monkeys from trying to attack you.
+(u)SynthFox
+(p)4318
+(e)|
+(*)Added "throw", "incendiary", "fog", and "clown" to the list of acceptable lawbringer mode phrases.
+(u)Gannets
+(p)4700
+(e)⚖|balance
+(*)Nuke ops Scout armour now provides a move speed boost to the wearer.
+(u)edwardly
+(p)4696
+(e)|
+(*)Ghosts now have a timeout before they can become a Ghost Drone.
+(u)Kubius
+(p)4652
+(e)🆕🎨|feature, sprites
+(+)The Spatial Interdictor has received an adjustment to functionality; its frame now comes in a more portable box, and new weaker rods may be manufactured without requiring more exotic materials.
 (u)Tarmunora
 (p)4760
 (e)⛔|removal

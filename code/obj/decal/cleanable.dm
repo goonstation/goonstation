@@ -738,7 +738,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon_state = "rust1"
 	random_icon_states = list("rust1", "rust2", "rust3","rust4","rust5")
 	can_sample = 1
-	sample_reagent = "iron"
+	sample_reagent = "iron_oxide"
 	sample_verb = "scrape"
 
 /obj/decal/cleanable/rust/jen

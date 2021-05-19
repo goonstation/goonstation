@@ -1244,7 +1244,6 @@ var/global/list/soundCache = list(
  	"sound/voice/MEilive.ogg" = 'sound/voice/MEilive.ogg',\
  	"sound/voice/MEraaargh.ogg" = 'sound/voice/MEraaargh.ogg',\
  	"sound/voice/MEruncoward.ogg" = 'sound/voice/MEruncoward.ogg',\
- 	"sound/voice/raymanyeah.ogg" = 'sound/voice/raymanyeah.ogg',\
  	"sound/voice/Sad_Robot.ogg" = 'sound/voice/Sad_Robot.ogg',\
  	"sound/voice/tommy_did-not-hit-hehr.ogg" = 'sound/voice/tommy_did-not-hit-hehr.ogg',\
  	"sound/voice/tommy_hahahah.ogg" = 'sound/voice/tommy_hahahah.ogg',\

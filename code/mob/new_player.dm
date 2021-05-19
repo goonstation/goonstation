@@ -10,8 +10,6 @@ mob/new_player
 	var/twitch_bill_spawn = 0
 #endif
 
-	invisibility = 101
-
 	density = 0
 	stat = 2
 	canmove = 0
@@ -19,6 +17,10 @@ mob/new_player
 	anchored = 1	//  don't get pushed around
 
 	var/chui/window/spend_spacebux/bank_menu
+
+	New()
+		. = ..()
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_ALWAYS)
 
 	// How could this even happen? Regardless, no log entries for unaffected mobs (Convair880).
 	ex_act(severity)

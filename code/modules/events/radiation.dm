@@ -65,7 +65,7 @@
 		//spatial interdictor: nullify radiation pulses
 		//consumes 100 units of charge per tile protected
 		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-			if (IN_RANGE(IX,T,INTERDICT_RANGE) && IX.expend_interdict(100,1))
+			if (IN_RANGE(IX,T,IX.interdict_range) && IX.expend_interdict(100,1))
 				animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
 				return
 		animate_flash_color_fill_inherit(T,"#00FF00",1,5)
@@ -117,7 +117,7 @@
 		//spatial interdictor: nullify radiation pulses
 		//consumes 150 units of charge per tile protected
 		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-			if (IN_RANGE(IX,T,INTERDICT_RANGE) && IX.expend_interdict(150,1))
+			if (IN_RANGE(IX,T,IX.interdict_range) && IX.expend_interdict(150,1))
 				animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
 				return
 		animate_flash_color_fill_inherit(T,"#0084ff",1,5)

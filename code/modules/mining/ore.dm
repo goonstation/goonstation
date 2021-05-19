@@ -219,9 +219,9 @@
 	name = "erebite"
 	output = /obj/item/raw_material/erebite
 	events = list(/datum/ore/event/volatile)
-	event_chance = 10
-	tiles_per_rock_min = 4
-	tiles_per_rock_max = 16
+	event_chance = 33
+	tiles_per_rock_min = 1
+	tiles_per_rock_max = 4
 	hardness_mod = 2
 	rarity_tier = 3
 	no_pick = 1

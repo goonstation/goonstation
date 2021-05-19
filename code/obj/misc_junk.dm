@@ -86,24 +86,29 @@
 			last_laugh = world.time
 
 	process()
-		if(prob(50) || current_state < GAME_STATE_PLAYING) // Takes around 12 seconds for ol chompski to vanish
+		if (prob(50) || current_state < GAME_STATE_PLAYING) // Takes around 12 seconds for ol chompski to vanish
 			return
-		// No teleporting if youre in a crate
-		if(istype(src.loc,/obj/storage) || istype(src.loc,/mob/living))
+		// No teleporting if youre in a container
+		if (istype(src.loc,/obj/storage) || istype(src.loc,/mob/living))
 			return
 		// Nobody can ever see Chompski move
-		for(var/mob/M in viewers(src))
-			if(M.mind) // Only players. Monkeys and NPCs are fine. Chompski trusts them.
+		for (var/mob/M in viewers(src))
+			if (M.mind) // Only players. Monkeys and NPCs are fine. Chompski trusts them.
 				return
 		//oh boy time to move
+
+		var/obj/storage/container = null
+
+		var/list/eligible_containers = list()
+		for_by_tcl(iterated_container, /obj/storage)
+			if (!iterated_container.open && iterated_container.z == Z_LEVEL_STATION)
+				eligible_containers += iterated_container
+		if (!length(eligible_containers))
+			return
+		container = pick(eligible_containers)
+
 		playsound(src.loc,"sound/misc/gnomechuckle.ogg" ,50,1)
-		var/obj/crate = pick(by_type[/obj/storage])
-		while(crate.z != 1)
-			crate = pick(by_type[/obj/storage])
-		src.set_loc(crate)
-
-
-
+		src.set_loc(container)
 /obj/item/c_tube
 	name = "cardboard tube"
 	icon = 'icons/obj/items/items.dmi'

@@ -1944,12 +1944,22 @@
 		playsound(master, "sound/weapons/handcuffs.ogg", 30, 1, -2)
 		master.visible_message("<span class='alert'><B>[master] is trying to put handcuffs on [task.arrest_target]!</B></span>")
 
+	onInterrupt(flag)
+		. = ..(flag)
+		if (task.arrest_target?.hasStatus("handcuffed"))
+			task.drop_arrest_target()
+
 	onEnd()
 		..()
 		if (src.failchecks())
+			// One of the possible failed checks is that they're cuffed so
+			// we can stop trying to arrest them.
+			if (task.arrest_target?.hasStatus("handcuffed"))
+				task.drop_arrest_target()
+
 			return
 
-		if (task.arrest_target.hasStatus("handcuffed") || !isturf(task.arrest_target.loc))
+		if (!isturf(task.arrest_target.loc))
 			task.drop_arrest_target()
 			return
 

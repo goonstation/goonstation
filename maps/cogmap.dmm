@@ -2861,7 +2861,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 5;
 	pixel_y = 13
 	},
@@ -4597,11 +4597,11 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "anj" = (
@@ -5006,7 +5006,7 @@
 /area/station/crew_quarters/showers)
 "aoh" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater,
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater,
 /obj/item/item_box/medical_patches/mini_styptic,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -5584,7 +5584,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 5;
 	pixel_y = 13
 	},
@@ -8386,8 +8386,8 @@
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/dropper,
 /obj/item/hand_labeler,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "axu" = (
@@ -9651,11 +9651,11 @@
 	pixel_x = 8;
 	pixel_y = 3
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 5;
 	pixel_y = 13
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 9;
 	pixel_y = 11
 	},
@@ -9811,11 +9811,11 @@
 	desc = "Wow! Crate may or may not still contain bottles.";
 	name = "Bottles in a Crate"
 	},
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/lobby)
 "aAT" = (
@@ -11434,7 +11434,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 5;
 	pixel_y = 13
 	},
@@ -16165,7 +16165,7 @@
 	pixel_x = 9;
 	pixel_y = 1
 	},
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_y = 9
 	},
 /turf/simulated/floor/black,
@@ -16938,7 +16938,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 5;
 	pixel_y = 13
 	},
@@ -22903,7 +22903,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 5;
 	pixel_y = 13
 	},
@@ -23569,7 +23569,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 5;
 	pixel_y = 13
 	},
@@ -37185,7 +37185,7 @@
 	pixel_x = -4;
 	pixel_y = 8
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = -4;
 	pixel_y = 15
 	},
@@ -37828,7 +37828,7 @@
 	pixel_x = -4;
 	pixel_y = 8
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = -4;
 	pixel_y = 15
 	},
@@ -41081,7 +41081,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 5;
 	pixel_y = 13
 	},
@@ -45721,7 +45721,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 5;
 	pixel_y = 13
 	},
@@ -49890,22 +49890,22 @@
 	desc = "Wow! Crate may or may not still contain bottles.";
 	name = "Bottles in a Crate"
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_x = -6;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_x = 6;
 	pixel_y = 3
 	},
@@ -53070,7 +53070,7 @@
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/helmet/hardhat{
+/obj/item/clothing/head/helmet/firefighter{
 	pixel_x = 5;
 	pixel_y = 13
 	},

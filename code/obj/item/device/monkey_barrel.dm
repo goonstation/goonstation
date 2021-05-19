@@ -14,6 +14,7 @@
 	New()
 		..()
 		var/obj/item/barrel_signaller/M = new /obj/item/barrel_signaller(src.loc)
+		new /obj/item/clothing/suit/monkey(src.loc)
 		SPAWN_DBG(0)
 			M.my_barrel = src
 
