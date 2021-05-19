@@ -5,6 +5,7 @@
 (+)Migrate 1/4 of spacesuit slowdown to the helmet
 (+)Also do it to EOD and riot armour
 (+)And welding masks don't count as space helmets
+(+)Also made many many hats that are not space helmets no longer count as spacewear
 (u)Mordent
 (p)4779
 (e)⚖🎨|balance, sprites
