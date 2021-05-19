@@ -472,6 +472,50 @@ datum
 			fluid_b = 120
 			transparency = 255
 
+		disease/be_bee
+			name = "be-bee"
+			id = "be_bee"
+			description = "A fluid that is not quite like nectar, but it's close."
+			reagent_state = LIQUID
+			disease = /datum/ailment/disease/bee_fever
+			fluid_r = 200
+			fluid_g = 184
+			fluid_b = 96
+			transparency = 255
+
+		disease/royal_be_bee
+			name = "royal be-bee"
+			id = "royal_be_bee"
+			description = "A viscous fluid, smelling sweet and royal, but not like nectar. Strange."
+			reagent_state = LIQUID
+			disease = /datum/ailment/disease/royal_bee_fever
+			fluid_r = 222
+			fluid_g = 200
+			fluid_b = 75
+			transparency = 255
+
+		disease/royaler_be_bee
+			name = "royaler be-bee"
+			id = "royaler_be_bee"
+			description = "A fluid not dissimilar to nectar, smelling of royalty and honey."
+			reagent_state = LIQUID
+			disease = /datum/ailment/disease/royaler_bee_fever
+			fluid_r = 220
+			fluid_g = 26
+			fluid_b = 63
+			transparency = 255
+
+		disease/royalest_be_bee
+			name = "royalest be-bee"
+			id = "royalest_be_bee"
+			description = "A fluid equal in appearance to a flower's nectar, smelling strongly of royalty, somehow."
+			reagent_state = LIQUID
+			disease = /datum/ailment/disease/royalest_bee_fever
+			fluid_r = 240
+			fluid_g = 211
+			fluid_b = 50
+			transparency = 255
+
 		// Marquesas' one stop pathology shop
 		blood/pathogen
 			name = "pathogen"

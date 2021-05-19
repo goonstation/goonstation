@@ -1168,12 +1168,13 @@
 	icon_state = "garlic"
 	planttype = /datum/plant/veg/garlic
 	food_color = "#FEFEFE"
-	initial_volume = 10
+	initial_volume = 20
 	food_effects = list("food_bad_breath")
 
 	make_reagents()
 		..()
 		reagents.add_reagent("water_holy", 10)
+		reagents.add_reagent("juice_garlic", 10)
 
 /obj/item/reagent_containers/food/snacks/plant/avocado
 	name = "avocado"

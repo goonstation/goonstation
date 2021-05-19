@@ -3200,6 +3200,17 @@ datum
 					M.reagents.add_reagent("antihol", 1 * mult)
 				..()
 
+		fooddrink/juice_garlic //(puking noises)
+			name = "garlic juice"
+			id = "juice_garlic"
+			fluid_r = 244
+			fluid_g = 235
+			fluid_b = 217
+			description = "A foul-smelling fluid, made from pureed garlic."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+			bladder_value = -1.5
+
 		fooddrink/cocktail_citrus
 			name = "triple citrus"
 			id = "cocktail_citrus"

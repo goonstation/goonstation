@@ -438,7 +438,7 @@
 						"paloma","mintjulep","mojito","cremedementhe","grasshopper","curacao","bluelagoon",\
 						"bluehawaiian","negroni","necroni", "cola", "juice_lime", "juice_lemon", "juice_orange", \
 						"juice_cran", "juice_cherry", "juice_pineapple", "juice_tomato", \
-						"coconut_milk", "sugar", "water", "vanilla", "tea","mint")
+						"coconut_milk", "sugar", "water", "vanilla", "tea", "mint","juice_garlic")
 
 
 /obj/machinery/chem_dispenser/soda
