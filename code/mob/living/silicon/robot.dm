@@ -77,7 +77,7 @@
 	var/sound_automaton_scratch = 'sound/misc/automaton_scratch.ogg'
 	var/sound_automaton_ratchet = 'sound/misc/automaton_ratchet.ogg'
 	var/sound_automaton_tickhum = 'sound/misc/automaton_tickhum.ogg'
-	var/sound_sad_robot =  'sound/voice/Sad_Robot.ogg'
+	var/sound_sad_robot = 'sound/voice/Sad_Robot.ogg'
 
 	var/image/i_critdmg
 	var/image/i_panel
@@ -134,7 +134,7 @@
 				SPAWN_DBG(0)
 					src.choose_name(3)
 
-		else if (src.part_head && src.part_chest) // some wee child of ours sent us some parts, how nice  c:
+		else if (src.part_head && src.part_chest) // some wee child of ours sent us some parts, how nice c:
 			if (src.part_head.loc != src)
 				src.part_head.set_loc(src)
 			if (src.part_chest.loc != src)
@@ -1089,7 +1089,7 @@
 		for (var/I in L)
 			if (I == A.name)
 				var/list/alarm = L[I]
-				var/list/srcs  = alarm[3]
+				var/list/srcs = alarm[3]
 				if (origin in srcs)
 					srcs -= origin
 				if (srcs.len == 0)
@@ -1605,7 +1605,7 @@
 			var/mob/dead/observer/newmob = src.ghostize()
 			if (!newmob || !istype(newmob, /mob/dead/observer))
 				return
-			newmob.corpse = null //Otherwise they could return to a brainless body.  And that is weird.
+			newmob.corpse = null // Otherwise they could return to a brainless body.And that is weird.
 			newmob.mind.brain = src.brain
 			src.brain.owner = newmob.mind
 
@@ -1922,6 +1922,8 @@
 				upgrade.upgrade_activate(src)
 				boutput(src, "[upgrade] has been [upgrade.activated ? "activated" : "deactivated"].")
 		hud.update_upgrades()
+		if (upgrade?.borg_overlay)
+			src.update_appearance()
 
 	proc/set_module(var/obj/item/robot_module/RM)
 		RM.set_loc(src)
@@ -2514,7 +2516,7 @@
 			radio_controller.remove_object(src, "[frequency]")
 
 	proc/mainframe_check()
-		if (!src.dependent) // shells are available for use, dependent borgs are already in use by an AI.  do not kill empty shells!!
+		if (!src.dependent) // shells are available for use, dependent borgs are already in use by an AI. do not kill empty shells!!
 			return
 		if (mainframe)
 			if (isdead(mainframe))
@@ -3319,7 +3321,7 @@
 	src.color = "#ff0000"
 
 
-#define can_step_sfx(H)  (H.footstep >= 4 || (H.m_intent != "run" && H.footstep >= 3))
+#define can_step_sfx(H) (H.footstep >= 4 || (H.m_intent != "run" && H.footstep >= 3))
 
 /mob/living/silicon/robot/Move(var/turf/NewLoc, direct)
 	//var/oldloc = loc
