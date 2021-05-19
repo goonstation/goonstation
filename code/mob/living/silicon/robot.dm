@@ -558,7 +558,9 @@
 								setalive(src) //reset stat to ensure emote comes out
 
 			if("flex", "flexmuscles")
-				if(!(part_arm_r.kind_of_limb & LIMB_HEAVIER) || !(part_arm_l.kind_of_limb & LIMB_HEAVIER))
+				if(!part_arm_r || !part_arm_l)
+					boutput(src, "<span class='notice'>You don't even have both arms to flex!</span>")
+				else if(!(part_arm_r.kind_of_limb & LIMB_HEAVIER) || !(part_arm_l.kind_of_limb & LIMB_HEAVIER))
 					boutput(src, "<span class='notice'>Your arms are too weak to flex.</span>")
 				else
 					message = "<B>[src]</B> flexes [his_or_her(src)] arms!"
