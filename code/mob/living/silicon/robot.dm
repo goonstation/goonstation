@@ -557,6 +557,14 @@
 							if(isunconscious(src))
 								setalive(src) //reset stat to ensure emote comes out
 
+			if("flex", "flexmuscles")
+				if(!(part_arm_r.kind_of_limb & LIMB_HEAVIER) || !(part_arm_l.kind_of_limb & LIMB_HEAVIER))
+					boutput(src, "<span class='notice'>Your arms are too weak to flex.</span>")
+				else
+					message = "<B>[src]</B> flexes [his_or_her(src)] arms!"
+					maptext_out = "<I>flexes [his_or_her(src)] arms</I>"
+					m_type = 1
+
 			if ("fart")
 				if (farting_allowed && src.emote_check(voluntary))
 					m_type = 2
