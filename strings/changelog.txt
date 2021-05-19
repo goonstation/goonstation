@@ -1,10 +1,16 @@
 
+(t)wed may 19 21
+(u)Mordent
+(p)4793
+(e)🐛|bug
+(*)Cyborgs now correctly show their active upgrades (e.g. shields, propulsion) when they are toggled on/off.
 (t)tue may 18 21
 (u)Tarmunora
 (e)⚖|balance
 (+)Migrate 1/4 of spacesuit slowdown to the helmet
 (+)Also do it to EOD and riot armour
 (+)And welding masks don't count as space helmets
+(+)Also made many many hats that are not space helmets no longer count as spacewear
 (u)Mordent
 (p)4779
 (e)⚖🎨|balance, sprites

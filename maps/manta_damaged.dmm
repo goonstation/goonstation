@@ -449,10 +449,7 @@
 /turf/simulated/floor/damaged5,
 /area/station/security/starboardtorpedoes)
 "aaL" = (
-/obj/item/clothing/under/gimmick/cosby{
-	desc = "A colourful winter jumper.";
-	name = "comfy sweater"
-	},
+/obj/item/clothing/under/gimmick/cosby,
 /obj/item/device/microphone,
 /obj/machinery/firealarm{
 	dir = 8;
