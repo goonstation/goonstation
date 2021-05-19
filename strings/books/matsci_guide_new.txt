@@ -14,12 +14,11 @@ An aspiring metallurgist requires a suitable workshop in which they can create a
 <ul><li><b>Nano-Crucible</b> - a large cuboid forge that melts two materials and reforms them as an alloyed bar
 <ul><li>Usage may produce slag and so it is recommended that you use a slag shovel to clean out the Smelter in between creating each alloy</li></ul>
 <ul>
-</ul><b>Slag Shovel</b> - used for removing slag buildup from impurities removed in the refining process
-<ul><li>Failure to remove slag can result in impurities infiltrating your created alloys, and release of caustic vapors
-  </li></ul><b>Material Processer</b> - a machine with a rectangular surface and two clamps to hold bars of alloys in place; used to process raw ores and gems into more workable ingots
-  </li><b>Nano-Fabricator</b> - the sibling machine of the Material Processor with two upright arms embedded with lasers that will precisely cut and mold your materials into any of the pre-loaded schematics
+</ul><b>Slag Shovel</b> - used for removing slag buildup from impurities removed in the refining process. Modern Nano-Crucibles are able to filter impurities with more accuracy and so the old practice of slag shovelling has fallen by the wayside.
+</li></ul><ul><b>Material Processer</b> - a machine with a rectangular surface and two clamps to hold bars of alloys in place; used to process raw ores and gems into more workable ingots
+</li></ul><ul><b>Nano-Fabricator</b> - the sibling machine of the Material Processor with two upright arms embedded with lasers that will precisely cut and mold your materials into any of the pre-loaded schematics
 <ul><li>Nano-Fabricator schematics describe needing either metal alloys, fabrics, rubber, or crystals, but it is possible for a single bar of alloyed material to possess all the properties needed for a schematic to begin working
-<li> You can store and view your stored materials under the “storage” tab</li>
+<li> You can store and view your stored materials under the “Storage” tab</li>
 <li>You can automatically store projects you make in the Nano-Fabricator by setting output to the Nano-Fabricator under the “Settings” tab</li>
 </li></ul><b>Material Analyzer</b> - a green handheld device that reports the information of a material including electrical conductivity, thermal conductivity, hardness, density, stability, and others. See "An Index of Properties and Their Effects" section below.
 </ul>
@@ -41,33 +40,55 @@ This section shows the different properties or materials that are of interest to
 </p><ul><li>(ex.: Neutronium)</ul></li>
 <p style="margin-right:10%; margin-left:1%"><b>Electrical Conductivity</b> - ability of material to let electricity pass through it.
 </p><ul><li>(ex.: Copper, Claretine, Electrum)</ul></li>
-<p style="margin-right:10%; margin-left:1%"><b>Thermal Conductivity</b> - ability of material to transfer heat through it with little loss of energy.
-</p><ul><li>(ex.: Carbon nano fibre, Fibrilith, Space spider silk)</ul></li>
+<p style="margin-right:10%; margin-left:1%"><b>Thermal Conductivity</b> - ability of material to transfer heat through it with little loss of energy.</p>
+<ul><li>(ex.: Carbon nano fibre, Fibrilith, Space spider silk)</ul></li>
 <p style="margin-right:10%; margin-left:1%"><b>Stability</b> - how prone a material is to degradation.
 </p><ul><li>(ex.: Starstone, Carbon nano fibre, Hauntium)</ul></li>
-<p style="margin-right:10%; margin-left:1%"><b>Density</b> -  blunt force of the material; sturdiness.</p>
-</p><ul><li>(ex.: Viscerite, Plasmasteel, Starstone)</ul></li>
-<p style="margin-right:10%; margin-left:1%"><b>Hardness</b> - blunt force of the material; sturdiness.
-</p><ul><li>(ex.: Koshmarite, Dyneema, Starstone)</ul></li>
+<p style="margin-right:10%; margin-left:1%"><b>Density</b> -  blunt force of the material; sturdiness and ability to impact other materials when used in tools.</p>
+<ul><li>(ex.: Viscerite, Plasmasteel, Starstone)</ul></li>
+<p style="margin-right:10%; margin-left:1%"><b>Hardness</b> - blunt force of the material; sturdiness and ability to impact other materials when used in tools.</p>
+<ul><li>(ex.: Koshmarite, Dyneema, Starstone)</ul></li>
 <p style="margin-right:10%; margin-left:1%"><b>Flammability</b> - how combustible a material is.</p>
-</p><ul><li>(ex.: Char, Plasmastone)</ul></li>
+<ul><li>(ex.: Char, Plasmastone)</ul></li>
 <p style="margin-right:10%; margin-left:1%"><b>Corrosion Resistance</b> - how well a material resists acids.</p>
-</p><ul><li>(ex.: Viscerite, Dyneema)</ul></li>
+<ul><li>(ex.: Viscerite, Dyneema)</ul></li>
 <p style="margin-right:10%; margin-left:1%"><b>Permeability</b> - the porousness of the material and how well viruses pass through it.</p>
-</p><ul><li>(ex.: Viscerite [high protection], Carbon nano fibre [high protection])</ul></li>
+<ul><li>(ex.: Viscerite [high protection], Carbon nano fibre [high protection])</ul></li>
 <p style="margin-right:10%; margin-left:1%"><b>Reflectivity</b> - the albedo of the material and how much light is bounced off the surface of it.</p>
-</p><ul><li>(ex.: Syreline, Starstone, Telecrystal)</ul></li>
+<ul><li>(ex.: Syreline, Starstone, Telecrystal)</ul></li>
 <section id="Basic-Mats"><h3>Basic Ores and Their Properties</h3></section>
 <hr>
 Below is a list of all the basic ores that are common to asteroids in this sector, as well as their particular properties that are of interest for Materials Science.
 <table>
-<tr><th align="right" >.:ORE:.</th><th>.:Rad:.</th><th>.:Condct:.</th><th>.:Stabil:.</th><th>.:Hard:.</th><th>.:Dens:.</th><th>.:Flam:.</th><th>.:Cor. Resist:. </th><th>.:Perm:.</th><th>.:Refl:..</th><th>.:Other Notes:.</th></tr>
-<tr><td align="right" >Mauxite</td><td>...N/A</td>.....N/A</td>.....N/A</td>10</td>50</td>.....N/A</td>.........N/A</td>.....<td></td></tr>
-<tr><td align="right">N2</td><td>20</td><td></td></tr>
-<tr><td align="right">CO2</td><td>30</td><td>Byproduct of typical lung gas exchange, harmful in large quantities</td></tr>
+<tr><th align="right">...ORE</th>
+<th align="right">...Rad.</th>
+<th align="right">...El. Condct.</th>
+<th align="right">...Stabil.</th>
+<th align="right">...Hard.</th>
+<th align="right">...Dens.</th>
+<th align="right">...Flam.</th>
+<th align="right">...Cor. Resist.</th>
+<th align="right">...Perm.</th>
+<th align="right">...Reflect.</th>
+<th align="right">...Other</th></tr>
+<tr><td align="right">Mauxite</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">10</td>
+<td align="right">50</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A<td>
+<td align="right">N/A<td>
+</td></tr>
+<tr><td align="right">Gold</td>
+<td align="right">N/A</td>
+<td align="right">60</td></tr>
+<tr><td align="right">Cobryl</td><td>...N/A</td><td>.....N/A</td></tr>
 </table><br/>
-<section id="Advanced-Mats"><h3> Advanced Materials and Their Properties</h3></section>
-<section id="Alloyed-Mats"><h3> Alloyed Materials and Their Properties</h3></section>
+<section id="Advanced-Mats"><h3>Advanced Materials and Their Properties</h3></section>
+<section id="Alloyed-Mats"><h3>Alloyed Materials and Their Properties</h3></section>
 <section id="Alloying"><h3>Alloying</h3></section>
 Alloying is done in the Nano-Crucible using processed materials. When you alloy two materials together, the stats of the created alloy is an average of the two progenitor materials. So, if you were looking to create a dense material and you alloyed Plasmasteel (density 75) with Viscerite (density 65), the resulting alloy would have a density of 70.
 When you alloy a material, the material passes on any unique properties to the resulting alloy.<br><br>
