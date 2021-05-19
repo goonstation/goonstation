@@ -1,5 +1,9 @@
 
 (t)wed may 19 21
+(u)Sartorius7
+(p)4784
+(e)|
+(+)More possible gifts from ducks and santa.
 (u)Mordent
 (p)4793
 (e)🐛|bug
