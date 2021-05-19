@@ -24,7 +24,7 @@
 		src.transforming = 1
 		src.canmove = 0
 		src.icon = null
-		src.invisibility = 101
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 		if (src.mind || src.client)
 			src.ghostize()

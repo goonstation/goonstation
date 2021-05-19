@@ -1080,7 +1080,6 @@
 		// before it could get around to this list, so i tweaked their New() proc instead to grab all the shit out of
 		// the frame before process could go off resulting in a borg that doesn't instantly die
 
-		O.invisibility = 0
 		O.name = "Cyborg"
 		O.real_name = "Cyborg"
 

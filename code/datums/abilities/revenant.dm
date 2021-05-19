@@ -123,7 +123,7 @@
 			owner.ghost.corpse = null
 			owner.ghost = null
 		src.wraith = W
-		W.invisibility = 50
+		APPLY_MOB_PROPERTY(W, PROP_INVISIBILITY, W, INVIS_WRAITH_VERY)
 		W.set_loc(src.owner)
 		W.abilityHolder.suspendAllAbilities()
 
@@ -159,7 +159,7 @@
 			owner.mind.transfer_to(src.wraith)
 		else if (owner.client)
 			owner.client.mob = src.wraith
-		src.wraith.invisibility = 10
+		APPLY_MOB_PROPERTY(src.wraith, PROP_INVISIBILITY, src.wraith, INVIS_GHOST)
 		src.wraith.set_loc(get_turf(owner))
 		src.wraith.abilityHolder.resumeAllAbilities()
 		src.wraith.abilityHolder.regenRate /= 3

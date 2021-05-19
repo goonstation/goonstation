@@ -83,7 +83,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 	for(var/t in src.organs)
 		qdel(src.organs[t])
 		src.organs[t] = null
@@ -98,7 +98,6 @@
 	else
 		O = new /mob/living/silicon/ai( src.loc )
 
-	O.invisibility = 0
 	O.canmove = 0
 	O.name = src.name
 	O.real_name = src.real_name
@@ -220,7 +219,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 	for(var/t in src.organs) qdel(src.organs[text("[t]")])
 
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot/(src.loc,null,1)
@@ -233,7 +232,6 @@
 
 	O.gender = src.gender
 	O.bioHolder?.mobAppearance?.pronouns = src.bioHolder?.mobAppearance?.pronouns
-	O.invisibility = 0
 	O.name = "Cyborg"
 	O.real_name = "Cyborg"
 	if (src.client)
@@ -277,7 +275,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 	for(var/t in src.organs)
 		qdel(src.organs[t])
 //	var/atom/movable/overlay/animation = new /atom/movable/overlay( src.loc )
@@ -310,7 +308,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 	for(var/t in src.organs)
 		qdel(src.organs[t])
 //	var/atom/movable/overlay/animation = new /atom/movable/overlay( src.loc )
@@ -343,7 +341,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 	for(var/t in src.organs)
 		qdel(src.organs[text("[t]")])
 
@@ -351,7 +349,6 @@
 		var/mob/living/silicon/hivebot/O = new /mob/living/silicon/hivebot( src.loc )
 
 		O.gender = src.gender
-		O.invisibility = 0
 		O.name = "Robot"
 		O.real_name = "Robot"
 		O.lastKnownIP = src.client.address
@@ -372,7 +369,6 @@
 		var/mob/living/silicon/hive_mainframe/O = new /mob/living/silicon/hive_mainframe( src.loc )
 
 		O.gender = src.gender
-		O.invisibility = 0
 		O.name = "Robot"
 		O.real_name = "Robot"
 		O.lastKnownIP = src.client.address
@@ -528,14 +524,13 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 	for(var/t in src.organs) qdel(src.organs[text("[t]")])
 
 	var/mob/living/critter/mechmonstrosity/suffering/O = new /mob/living/critter/mechmonstrosity/suffering/(src.loc,null,1)
 
 
 	O.gender = src.gender
-	O.invisibility = 0
 	O.name = "[src.real_name]...?"
 	O.real_name =  "[src.real_name]...?"
 	if (src.client)
