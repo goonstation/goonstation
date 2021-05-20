@@ -238,8 +238,8 @@
 				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
 				M.wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 				if (M.wear_image) M.wear_image.icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
-				M.icon_state = "mechanic"
-				M.item_state = "mechanic"
+				M.icon_state = "mechanic-reward"
+				M.item_state = "mechanic-reward"
 				M.name = "pilot suit"
 				M.real_name = "pilot suit"
 				M.desc = "A sleek but comfortable pilot's jumpsuit. (Base Item: [prev])"
@@ -622,6 +622,15 @@
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
+				else if (istype(M, /obj/item/clothing/head/helmet/space/captain))
+					var/prev = M.name
+					M.name = "commander's space helmet"
+					M.desc = "Helps protect against vacuum. Comes in a fasionable blue befitting a commander. (Base Item: [prev])"
+					M.icon_state = "space-captain-blue"
+					M.item_state = "space-captain-blue"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
 			if (H.belt)
 				var/obj/item/M = H.belt
 				if (istype(M, /obj/item/katana_sheath/captain))
@@ -752,6 +761,25 @@
 		else
 			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
 
+/datum/achievementReward/ai_tetris
+	title = "(AI Skin) Tetris"
+	desc = "Turns you into a tetris-playing machine!"
+	required_medal = "Block Stacker"
+
+	rewardActivate(var/mob/activator)
+		if (isAI(activator))
+			var/mob/living/silicon/ai/A = activator
+			if (isAIeye(activator))
+				var/mob/dead/aieye/AE = activator
+				A = AE.mainframe
+			A.custom_emotions = ai_emotions | list("Tetris (reward)" = "ai-tetris")
+			A.faceEmotion = "ai-tetris"
+			A.set_color("#111111")
+			A.update_appearance()
+			return 1
+		else
+			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+
 /datum/achievementReward/borg_automoton
 	title = "(Cyborg Skin) Automaton"
 	desc = "Turns you into the mysterious Automaton! Only in appearance, of course. Keys not included."
@@ -815,6 +843,7 @@
 			gunmod.name = "Golden [gunmod.name]"
 			gunmod.icon_state = "[initial(gunmod.icon_state)]-golden"
 			gunmod.item_state = "[initial(gunmod.item_state)]-golden"
+			gunmod.gilded = TRUE
 			gunmod.update_icon()
 			H.update_inhands()
 			return 1

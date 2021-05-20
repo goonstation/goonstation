@@ -4,6 +4,7 @@
 
 /datum/artifact/borgifier
 	associated_object = /obj/artifact/borgifier
+	type_name = "Cyborg converter"
 	rarity_weight = 200
 	validtypes = list("ancient")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
@@ -34,7 +35,7 @@
 			while (loops > 0)
 				loops--
 				random_brute_damage(user, 15)
-				user.changeStatus("paralysis", 70)
+				user.changeStatus("paralysis", 7 SECONDS)
 				playsound(user.loc, pick(work_sounds), 50, 1, -1)
 				sleep(0.4 SECONDS)
 

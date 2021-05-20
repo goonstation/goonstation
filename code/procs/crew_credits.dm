@@ -24,7 +24,7 @@ var/global/crew_creds = null
 		for(var/datum/mind/M in ticker.minds)
 
 			// Antagonist?
-			if(M.special_role)
+			if(M.special_role && !("Faustian" in M.special_role))
 				round_antags.Add(M)
 				continue
 			if(!M.assigned_role)
@@ -49,6 +49,14 @@ var/global/crew_creds = null
 				if("Research Director","Scientist","Test Subject")
 					round_science.Add(M)
 					continue
+
+				// Pathology?
+				if("Pathologist")
+					#ifdef SCIENCE_PATHO_MAP
+					round_science.Add(M)
+					#else
+					round_medical.Add(M)
+					#endif
 
 				// Engineering?
 				if("Chief Engineer","Engineer","Quartermaster","Miner","Mechanic","Construction Worker")

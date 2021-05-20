@@ -15,25 +15,23 @@
 	var/list/upgrades = list()
 	var/list/modules = list()
 	var/list/clothes = list()
-	var/allow_clothes = 1
-	var/allow_self_service = 1
-	var/conversion_chamber = 0
+	var/allow_clothes = TRUE
+	var/allow_self_service = TRUE
+	var/conversion_chamber = FALSE
 	var/mob/occupant = null
 	power_usage = 50
-
 
 /obj/machinery/recharge_station/New()
 	..()
 	src.create_reagents(500)
-	reagents.add_reagent("fuel", 250)
+	src.reagents.add_reagent("fuel", 250)
 	src.build_icon()
 
 /obj/machinery/recharge_station/disposing()
-	if(occupant)
-		occupant.set_loc(get_turf(src.loc))
-		occupant = null
+	if (src.occupant)
+		src.occupant.set_loc(get_turf(src.loc))
+		src.occupant = null
 	..()
-
 
 /obj/machinery/recharge_station/process(mult)
 	if (!(src.status & BROKEN))
@@ -75,7 +73,7 @@
 		boutput(user, "<span class='alert'>[src] is out of power and cannot be used.</span>")
 		return
 	if (!src.anchored)
-		user.show_text("You must attach [src]'s floor bolts before the machine will work.", "red")
+		boutput(user, "<span class='alert'>You must attach [src]'s floor bolts before the machine will work.</span>")
 		return
 
 	src.add_dialog(user)
@@ -92,56 +90,55 @@
 				dat += "<A href='?src=\ref[src];rename=1'>(Rename)</A>"
 			dat += "<BR>"
 
-			var/mob/living/silicon/robot/RC = src.occupant
 			var/dmgalerts = 0
 			dat += "<u><b>Damage Report:</b></u><BR>"
 			dat += "<A href='?src=\ref[src];repair=1'>Repair Structural Damage</A> | <A href='?src=\ref[src];repair=2'>Repair Burn Damage</A><BR>"
-			if (RC.part_chest)
-				if (RC.part_chest.ropart_get_damage_percentage(0) > 0)
+			if (R.part_chest)
+				if (R.part_chest.ropart_get_damage_percentage(0) > 0)
 					dmgalerts++
-					dat += "<b>Chest Unit Damaged</b> ([RC.part_chest.ropart_get_damage_percentage(1)]%, [RC.part_chest.ropart_get_damage_percentage(2)]%)<BR>"
+					dat += "<b>Chest Unit Damaged</b> ([R.part_chest.ropart_get_damage_percentage(1)]%, [R.part_chest.ropart_get_damage_percentage(2)]%)<BR>"
 
-			if (RC.part_head)
-				if (RC.part_head.ropart_get_damage_percentage(0) > 0)
+			if (R.part_head)
+				if (R.part_head.ropart_get_damage_percentage(0) > 0)
 					dmgalerts++
-					dat += "<b>Head Unit Damaged</b> ([RC.part_head.ropart_get_damage_percentage(1)]%, [RC.part_head.ropart_get_damage_percentage(2)]%)<BR>"
+					dat += "<b>Head Unit Damaged</b> ([R.part_head.ropart_get_damage_percentage(1)]%, [R.part_head.ropart_get_damage_percentage(2)]%)<BR>"
 
-			if (RC.part_arm_r)
-				if (RC.part_arm_r.ropart_get_damage_percentage(0) > 0)
+			if (R.part_arm_r)
+				if (R.part_arm_r.ropart_get_damage_percentage(0) > 0)
 					dmgalerts++
-					if (RC.part_arm_r.slot == "arm_both")
-						dat += "<b>Arms Unit Damaged</b> ([RC.part_arm_r.ropart_get_damage_percentage(1)]%, [RC.part_arm_r.ropart_get_damage_percentage(2)]%)<BR>"
+					if (R.part_arm_r.slot == "arm_both")
+						dat += "<b>Arms Unit Damaged</b> ([R.part_arm_r.ropart_get_damage_percentage(1)]%, [R.part_arm_r.ropart_get_damage_percentage(2)]%)<BR>"
 					else
-						dat += "<b>Right Arm Unit Damaged</b> ([RC.part_arm_r.ropart_get_damage_percentage(1)]%, [RC.part_arm_r.ropart_get_damage_percentage(2)]%)<BR>"
+						dat += "<b>Right Arm Unit Damaged</b> ([R.part_arm_r.ropart_get_damage_percentage(1)]%, [R.part_arm_r.ropart_get_damage_percentage(2)]%)<BR>"
 			else
 				dmgalerts++
 				dat += "Right Arm Unit Missing<br>"
 
-			if (RC.part_arm_l)
-				if (RC.part_arm_l.ropart_get_damage_percentage(0) > 0)
+			if (R.part_arm_l)
+				if (R.part_arm_l.ropart_get_damage_percentage(0) > 0)
 					dmgalerts++
-					if (RC.part_arm_l.slot != "arm_both")
-						dat += "<b>Left Arm Unit Damaged</b> ([RC.part_arm_l.ropart_get_damage_percentage(1)]%, [RC.part_arm_l.ropart_get_damage_percentage(2)]%)<BR>"
+					if (R.part_arm_l.slot != "arm_both")
+						dat += "<b>Left Arm Unit Damaged</b> ([R.part_arm_l.ropart_get_damage_percentage(1)]%, [R.part_arm_l.ropart_get_damage_percentage(2)]%)<BR>"
 			else
 				dmgalerts++
 				dat += "Left Arm Unit Missing<br>"
 
-			if (RC.part_leg_r)
-				if (RC.part_leg_r.ropart_get_damage_percentage(0) > 0)
+			if (R.part_leg_r)
+				if (R.part_leg_r.ropart_get_damage_percentage(0) > 0)
 					dmgalerts++
-					if (RC.part_leg_r.slot == "leg_both")
-						dat += "<b>Legs Unit Damaged</b> ([RC.part_leg_r.ropart_get_damage_percentage(1)]%, [RC.part_leg_r.ropart_get_damage_percentage(2)]%)<BR>"
+					if (R.part_leg_r.slot == "leg_both")
+						dat += "<b>Legs Unit Damaged</b> ([R.part_leg_r.ropart_get_damage_percentage(1)]%, [R.part_leg_r.ropart_get_damage_percentage(2)]%)<BR>"
 					else
-						dat += "<b>Right Leg Unit Damaged</b> ([RC.part_leg_r.ropart_get_damage_percentage(1)]%, [RC.part_leg_r.ropart_get_damage_percentage(2)]%)<BR>"
+						dat += "<b>Right Leg Unit Damaged</b> ([R.part_leg_r.ropart_get_damage_percentage(1)]%, [R.part_leg_r.ropart_get_damage_percentage(2)]%)<BR>"
 			else
 				dmgalerts++
 				dat += "Right Leg Unit Missing<br>"
 
-			if (RC.part_leg_l)
-				if (RC.part_leg_l.ropart_get_damage_percentage(0) > 0)
+			if (R.part_leg_l)
+				if (R.part_leg_l.ropart_get_damage_percentage(0) > 0)
 					dmgalerts++
-					if (RC.part_leg_l.slot != "arm_both")
-						dat += "<b>Left Leg Unit Damaged</b> ([RC.part_leg_l.ropart_get_damage_percentage(1)]%, [RC.part_leg_l.ropart_get_damage_percentage(2)]%)<BR>"
+					if (R.part_leg_l.slot != "arm_both")
+						dat += "<b>Left Leg Unit Damaged</b> ([R.part_leg_l.ropart_get_damage_percentage(1)]%, [R.part_leg_l.ropart_get_damage_percentage(2)]%)<BR>"
 			else
 				dmgalerts++
 				dat += "Left Leg Unit Missing<br>"
@@ -169,8 +166,8 @@
 			else dat += "None"
 			dat += "<BR><BR>"
 
-			dat += "<b>Upgrades:</b> ([R.upgrades.len]/[R.max_upgrades]) "
-			if (R.upgrades.len)
+			dat += "<b>Upgrades:</b> ([length(R.upgrades)]/[R.max_upgrades]) "
+			if (length(R.upgrades))
 				for (var/obj/item/roboupgrade/U in R.upgrades)
 					dat += "<br>[U.name] <A HREF=?src=\ref[src];remove=\ref[U]>(Remove)</A>"
 			else
@@ -179,18 +176,17 @@
 			if (src.allow_clothes)
 				dat += "<BR><BR>"
 				dat += "<b>Clothes:</b> "
-				if (R.clothes.len)
+				if (length(R.clothes))
 					for (var/A in R.clothes)
 						var/obj/O = R.clothes[A]
 						dat += "<br>[O.name] <A HREF=?src=\ref[src];remove=\ref[O]>(Remove)</A>"
 				else
 					dat += "None"
 
-			var/mob/living/silicon/robot/C = occupant
 			dat += "<BR><B><U>Occupant is a Mk.2-Type Cyborg.</U></B><BR>"
 
-			if (istype(C.cosmetic_mods, /datum/robot_cosmetic/))
-				var/datum/robot_cosmetic/COS = C.cosmetic_mods
+			if (istype(R.cosmetic_mods, /datum/robot_cosmetic))
+				var/datum/robot_cosmetic/COS = R.cosmetic_mods
 				dat += "<B>Chest Decoration:</B> <A href='?src=\ref[src];decor=chest'>[COS.ches_mod ? COS.ches_mod : "None"]</A><BR>"
 				if (COS.painted)
 					dat += "Paint Options: <A href='?src=\ref[src];paint=change'>Repaint</A> | <A href='?src=\ref[src];paint=remove'>Remove Paint</A><BR>"
@@ -216,10 +212,10 @@
 	dat += "<b>Cable Coil Available:</b> [src.cabling]<BR>"
 
 	dat += "<b>Power Cells Available:</b> "
-	if (src.cells.len)
+	if (length(src.cells))
 		for (var/obj/item/cell/C in src.cells)
 			dat += "<br>[C.name] - [C.charge]/[C.maxcharge]"
-			if (isrobot(occupant) && !isrobot(user))
+			if (isrobot(src.occupant) && !isrobot(user))
 				dat += "<A HREF=?src=\ref[src];install=\ref[C]> (Install)</A>"
 			dat += " <A HREF=?src=\ref[src];eject=\ref[C]>(Eject)</A>"
 	else
@@ -227,7 +223,7 @@
 	dat += "<BR><BR>"
 
 	dat += "<b>Modules Available:</b> "
-	if (src.modules.len)
+	if (length(src.modules))
 		for (var/obj/item/robot_module/M in src.modules)
 			dat += "<br>[M.name]"
 			if (isrobot(src.occupant))
@@ -238,7 +234,7 @@
 	dat += "<BR><BR>"
 
 	dat += "<b>Upgrades Available:</b> "
-	if (src.upgrades.len)
+	if (length(src.upgrades))
 		for (var/obj/item/roboupgrade/U in src.upgrades)
 			dat += "<br>[U.name]"
 			if (isrobot(src.occupant))
@@ -247,17 +243,17 @@
 	else
 		dat += "None"
 
-	if (allow_clothes)
+	if (src.allow_clothes)
 		dat += "<BR><BR>"
 	else
 		dat += "<BR><HR>"
 
-	if (allow_clothes)
+	if (src.allow_clothes)
 		dat += "<b>Clothes Available:</b> "
-		if (src.clothes.len)
+		if (length(src.clothes))
 			for (var/obj/item/clothing/C in src.clothes)
 				dat += "<br>[C.name]"
-				if (isrobot(occupant))
+				if (isrobot(src.occupant))
 					dat += "<A HREF=?src=\ref[src];install=\ref[C]> (Install)</A>"
 				dat += " <A HREF=?src=\ref[src];eject=\ref[C]>(Eject)</A>"
 		else
@@ -343,33 +339,32 @@
 
 			var/ops = text2num(href_list["repair"])
 
-			var/mob/living/silicon/robot/C = R
-			if (ops == 1 && C.compborg_get_total_damage(1) > 0)
+			if (ops == 1 && R.compborg_get_total_damage(1) > 0)
 				var/usage = input(usr, "How much welding fuel do you want to use?", "Docking Station", 0) as num
 				if ((!issilicon(usr) && (get_dist(usr, src) > 1)) || usr.stat)
 					return
-				if (usage > C.compborg_get_total_damage(1))
-					usage = C.compborg_get_total_damage(1)
+				if (usage > R.compborg_get_total_damage(1))
+					usage = R.compborg_get_total_damage(1)
 				if (usage < 1)
 					return
-				for (var/obj/item/parts/robot_parts/RP in C.contents)
+				for (var/obj/item/parts/robot_parts/RP in R.contents)
 					RP.ropart_mend_damage(usage,0)
 				src.reagents.remove_reagent("fuel", usage)
-			else if (ops == 2 && C.compborg_get_total_damage(2) > 0)
+			else if (ops == 2 && R.compborg_get_total_damage(2) > 0)
 				var/usage = input(usr, "How much wiring do you want to use?", "Docking Station", 0) as num
 				if ((!issilicon(usr) && (get_dist(usr, src) > 1)) || usr.stat)
 					return
-				if (usage > C.compborg_get_total_damage(2))
-					usage = C.compborg_get_total_damage(2)
+				if (usage > R.compborg_get_total_damage(2))
+					usage = R.compborg_get_total_damage(2)
 				if (usage < 1)
 					return
-				for (var/obj/item/parts/robot_parts/RP in C.contents)
+				for (var/obj/item/parts/robot_parts/RP in R.contents)
 					RP.ropart_mend_damage(0, usage)
 				src.cabling -= usage
 				if (src.cabling < 0)
 					src.cabling = 0
 			else
-				boutput(usr, "<span class='alert'>[C] has no damage to repair.</span>")
+				boutput(usr, "<span class='alert'>[R] has no damage to repair.</span>")
 			R.update_appearance()
 
 		if (href_list["install"])
@@ -379,7 +374,7 @@
 			var/mob/living/silicon/robot/R = src.occupant
 			var/obj/item/O = locate(href_list["install"]) in src
 
-			//My apologies for this ugly code.
+			// My apologies for this ugly code.
 			if (src.allow_clothes && istype(O, /obj/item/clothing))
 				if (istype(O, /obj/item/clothing/under))
 					if (R.clothes["under"] != null)
@@ -413,14 +408,13 @@
 					R.clothes["head"] = O
 					src.clothes.Remove(O)
 					O.set_loc(R)
-			if (istype(O, /obj/item/cell/))
+			if (istype(O, /obj/item/cell))
 				if (R.cell)
 					var/obj/item/C = R.cell
-					src.cells.Add(R.cell)
+					src.cells.Add(C)
 					C.set_loc(src)
 					R.cell = null
 					boutput(R, "<span class='notice'>Your power cell is being swapped...</span>")
-
 				src.cells.Remove(O)
 				O.set_loc(R)
 				R.cell = O
@@ -428,7 +422,7 @@
 				R.hud.update_charge()
 
 			if (istype(O, /obj/item/roboupgrade))
-				if (R.upgrades.len >= R.max_upgrades)
+				if (length(R.upgrades) >= R.max_upgrades)
 					boutput(usr, "<span class='alert'>[R] has no room for further upgrades.</span>")
 					src.updateUsrDialog()
 					return
@@ -466,7 +460,7 @@
 						R.clothes.Remove(x)
 						break
 
-				boutput(R, "<span class='alert'>\the [O.name] was removed!</span>")
+				boutput(R, "<span class='alert'>\The [O.name] was removed!</span>")
 
 			if (istype(O, /obj/item/roboupgrade))
 				var/obj/item/roboupgrade/U = O
@@ -497,22 +491,22 @@
 			C.set_loc(src)
 			R.cell = null
 			boutput(R, "<span class='alert'>Your power cell was removed!</span>")
-			logTheThing("combat", usr, R, "removes [constructTarget(R,"combat")]'s power cell at [log_loc(usr)].") // Renders them mute and helpless (Convair880).
+			logTheThing("combat", usr, R, "removes [constructTarget(R,"combat")]'s power cell at [log_loc(usr)].")
 			R.hud.update_charge()
 
 		if (href_list["eject"])
 			var/obj/item/O = locate(href_list["eject"]) in src
-			if (istype(O, /obj/item/cell/))
+			if (istype(O, /obj/item/cell))
 				src.cells.Remove(O)
 			if (istype(O, /obj/item/roboupgrade))
 				src.upgrades.Remove(O)
 			if (istype(O, /obj/item/robot_module))
 				src.modules.Remove(O)
-			if (istype(O, /obj/item/clothing/))
+			if (istype(O, /obj/item/clothing))
 				src.clothes.Remove(O)
 			if (O)
 				O.set_loc(src.loc)
-			usr.put_in_hand_or_eject(O) // try to eject it into the users hand, if we can
+			usr.put_in_hand_or_eject(O)
 
 		// composite borg stuff
 
@@ -528,7 +522,7 @@
 				return
 			switch (selection)
 				if ("chest")
-					var/mod = input("Please select a chest decoration!", "Cyborg Decoration", null, null) in list("Nothing","Medical Insignia","Lab Coat")
+					var/mod = input("Please select a chest decoration!", "Cyborg Decoration", null, null) in list("Nothing", "Medical Insignia", "Lab Coat")
 					if (!mod)
 						mod = "Nothing"
 					if (mod == "Nothing")
@@ -536,7 +530,7 @@
 					else
 						C.ches_mod = mod
 				if ("head")
-					var/mod = input("Please select a head decoration!", "Cyborg Decoration", null, null) in list("Nothing","Medical Mirror","Janitor Cap","Hard Hat","Afro and Shades")
+					var/mod = input("Please select a head decoration!", "Cyborg Decoration", null, null) in list("Nothing", "Medical Mirror", "Janitor Cap", "Hard Hat", "Afro and Shades")
 					if (!mod)
 						mod = "Nothing"
 					if (mod == "Nothing")
@@ -552,7 +546,7 @@
 					else
 						C.arms_mod = mod
 				if ("legs")
-					var/mod = input("Please select a legs decoration!", "Cyborg Decoration", null, null) in list("Nothing","Disco Flares")
+					var/mod = input("Please select a legs decoration!", "Cyborg Decoration", null, null) in list("Nothing", "Disco Flares")
 					if (!mod)
 						mod = "Nothing"
 					if (mod == "Nothing")
@@ -579,13 +573,13 @@
 				boutput(usr, "<span class='alert'>ERROR: Cannot find cyborg's decorations.</span>")
 				src.updateUsrDialog()
 				return
-			switch(selection)
+			switch (selection)
 				if ("add")
 					C.painted = 1
 					C.paint = input(usr) as color
-				if("change")
+				if ("change")
 					C.paint = input(usr) as color
-				if("remove")
+				if ("remove")
 					C.painted = 0
 			R.update_appearance()
 			R.update_bodypart()
@@ -629,7 +623,6 @@
 	if (istype(W, /obj/item/cell))
 		if (user.contents.Find(W))
 			user.drop_item()
-		//Wire: Fix for clickdrag duplicating power cells in docks
 		if (W in src.cells)
 			qdel(W)
 			return
@@ -637,7 +630,7 @@
 		boutput(user, "You insert [W].")
 		src.cells.Add(W)
 		return
-	if (istype(W,/obj/item/cable_coil))
+	if (istype(W, /obj/item/cable_coil))
 		var/obj/item/cable_coil/C = W
 		src.cabling += C.amount
 		boutput(user, "You insert [W]. [src] now has [src.cabling] cable available.")
@@ -646,24 +639,25 @@
 		qdel(W)
 		return
 	if (istype(W, /obj/item/reagent_containers/glass))
-		if (!W.reagents.total_volume)
-			boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
+		var/obj/item/reagent_containers/glass/G = W
+		if (!G.reagents.total_volume)
+			boutput(user, "<span class='alert'>There is nothing in [G] to pour!</span>")
 			return
-		if (!src.reagents.has_reagent("fuel"))
-			boutput(user, "<span class='alert'>There's no fuel in [W]. It would be pointless to pour it in.</span>")
+		if (!G.reagents.has_reagent("fuel"))
+			boutput(user, "<span class='alert'>There's no fuel in [G]. It would be pointless to pour it in.</span>")
 			return
 		else
-			user.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
-			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 100, 1)
-			W.reagents.trans_to(src, W:amount_per_transfer_from_this)
-			if (!W.reagents.total_volume)
-				boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
+			user.visible_message("<span class='notice'>[user] pours [G.amount_per_transfer_from_this] units of [G]'s contents into [src].</span>")
+			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+			W.reagents.trans_to(src, G.amount_per_transfer_from_this)
+			if (!G.reagents.total_volume)
+				boutput(user, "<span class='alert'><b>[G] is now empty.</b></span>")
 			src.reagents.isolate_reagent("fuel")
 			return
 	..()
 
 /obj/machinery/recharge_station/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if (get_dist(O,user) > 1 || get_dist(src,user) > 1)
+	if (get_dist(O, user) > 1 || get_dist(src, user) > 1)
 		return
 	if (!isliving(user) || isAI(user))
 		return
@@ -673,19 +667,19 @@
 		return
 
 	if (isliving(O) && src.occupant)
-		boutput(user, "<span class='alert'>The cell is already occupied!</span>")
+		boutput(user, "<span class='alert'>\The [src] is already occupied!</span>")
 		return
 
 	if (isrobot(O))
 		var/mob/living/silicon/robot/R = O
 		if (isdead(R))
-			boutput(user, "<span class='alert'>[R] is dead and cannot enter the docking station.</span>")
+			boutput(user, "<span class='alert'>[R] is dead and cannot enter [src].</span>")
 			return
 		if (user != R)
 			if (isunconscious(user))
 				return
 			else
-				user.visible_message("<b>[user]</b> moves [R] into [src].")
+				user.visible_message("<b>[user]</b> moves [R] into  [src].")
 		R.pulling = null
 		R.set_loc(src)
 		src.occupant = R
@@ -697,7 +691,7 @@
 	if (isshell(O))
 		var/mob/living/silicon/hivebot/H = O
 		if (isdead(H))
-			boutput(user, "<span class='alert'>[H] is dead and cannot enter the docking station.</span>")
+			boutput(user, "<span class='alert'>[H] is dead and cannot enter [src].</span>")
 			return
 		if (user != H)
 			if (isunconscious(user))
@@ -792,13 +786,30 @@
 		else if (ishuman(occupant) && src.conversion_chamber)
 			var/mob/living/carbon/human/H = occupant
 			if (prob(80))
-				playsound(src.loc, pick('sound/machines/mixer.ogg','sound/misc/automaton_scratch.ogg','sound/misc/automaton_ratchet.ogg','sound/effects/brrp.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/effects/pump.ogg','sound/effects/syringeproj.ogg'), 100, 1)
+				playsound(src.loc, pick(
+					'sound/machines/mixer.ogg',
+					'sound/misc/automaton_scratch.ogg',
+					'sound/misc/automaton_ratchet.ogg',
+					'sound/effects/brrp.ogg',
+					'sound/impact_sounds/Metal_Clang_1.ogg',
+					'sound/effects/pump.ogg',
+					'sound/effects/syringeproj.ogg',
+				), 100, 1)
 				if (prob(15))
-					src.visible_message("<span class='alert'>[src] [pick("whirs","grinds","rumbles","clatters","clangs")] [pick("horribly","in a grisly manner","horrifyingly","scarily")]!</span>")
+					src.visible_message("<span class='alert'>[src] [pick("whirs", "grinds", "rumbles", "clatters", "clangs")] [pick("horribly", "in a grisly manner", "horrifyingly", "scarily")]!</span>")
 				if (prob(25))
 					SPAWN_DBG(0.3 SECONDS)
-						playsound(src.loc, pick('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Slimy_Hit_3.ogg','sound/impact_sounds/Slimy_Hit_4.ogg','sound/impact_sounds/Flesh_Break_1.ogg','sound/impact_sounds/Flesh_Tear_1.ogg','sound/impact_sounds/Generic_Snap_1.ogg','sound/impact_sounds/Generic_Hit_1.ogg'), 100, 1)
+						playsound(src.loc, pick(
+							'sound/impact_sounds/Flesh_Stab_1.ogg',
+							'sound/impact_sounds/Slimy_Hit_3.ogg',
+							'sound/impact_sounds/Slimy_Hit_4.ogg',
+							'sound/impact_sounds/Flesh_Break_1.ogg',
+							'sound/impact_sounds/Flesh_Tear_1.ogg',
+							'sound/impact_sounds/Generic_Snap_1.ogg',
+							'sound/impact_sounds/Generic_Hit_1.ogg',
+						), 100, 1)
 					SPAWN_DBG(0.6 SECONDS)
+						// TODO: use character scream choice
 						if (H.gender == "female")
 							playsound(src.loc, "sound/voice/screams/female_scream.ogg", 30, 1, channel=VOLUME_CHANNEL_EMOTE)
 						else
@@ -824,7 +835,7 @@
 				random_brute_damage(H, 3)
 				H.changeStatus("weakened", 5 SECONDS)
 				if (prob(15))
-					boutput(H, "<span class='alert'>[pick("You feel chunks of your flesh being ripped off!","Something cold and sharp skewers you!","You feel your organs being pulped and mashed!","Machines shred you from every direction!")]</span>")
+					boutput(H, "<span class='alert'>[pick("You feel chunks of your flesh being ripped off!"," Something cold and sharp skewers you!", "You feel your organs being pulped and mashed!", "Machines shred you from every direction!")]</span>")
 			src.updateUsrDialog()
 
 /obj/machinery/recharge_station/proc/go_out()
@@ -854,10 +865,10 @@
 	if (isdead(usr))
 		return
 	if (!isrobot(usr) && !src.conversion_chamber)
-		boutput(usr, "<span class='alert'>Only cyborgs may enter the recharger!</span>")
+		boutput(usr, "<span class='alert'>Only cyborgs may enter [src]!</span>")
 		return
 	if (src.occupant)
-		boutput(usr, "<span class='alert'>The cell is already occupied!</span>")
+		boutput(usr, "<span class='alert'>\The [src] is already occupied!</span>")
 		return
 	usr.pulling = null
 	usr.set_loc(src)
@@ -875,7 +886,7 @@
 /obj/machinery/recharge_station/syndicate/attackby(obj/item/W as obj, mob/user as mob)
 	if (iswrenchingtool(W))
 		src.anchored = !src.anchored
-		user.show_text("You [anchored ? "attach" : "release"] \the [src]'s floor clamps", "red")
+		user.show_text("You [src.anchored ? "attach" : "release"] \the [src]'s floor clamps", "red")
 		playsound(get_turf(src), "sound/items/Ratchet.ogg", 40, 0, 0)
 		return
 	..()

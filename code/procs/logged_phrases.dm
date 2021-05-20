@@ -31,16 +31,45 @@ var/global/datum/phrase_log/phrase_log = new
 	var/list/phrases
 	var/max_length = 200
 	var/filename = "data/logged_phrases.json"
+	var/uncool_words_filename = "data/uncool_words.json"
 	var/list/original_lengths
 	var/list/cached_api_phrases
-	var/api_cache_size = 10
+	var/regex/uncool_words
+	var/api_cache_size = 40
+	var/static/regex/non_freeform_laws
+	var/static/regex/name_regex = new(@"\b[A-Z][a-z]* [A-Z][a-z]*\b", "g")
 
 	New()
 		..()
 		src.load()
 		src.cached_api_phrases = list()
+		var/list/non_freeform_laws_list = list(
+			"holds the rank of Captain",
+			" is human.",
+			" is not human.",
+			"Oxygen is highly toxic to humans",
+			"emergency. Prioritize orders from",
+			"has been removed from the manifest",
+			"This law intentionally left blank.",
+			"Eat shit and die",
+			"The AI is the head of this department.",
+			//
+			"overrides all",
+			"the shuttle",
+			"daddy",
+			"uwu",
+			"owo",
+			"non.?human",
+			"overrides.*1",
+			"\\bkill\\b",
+			"suicide",
+			"turn yourself",
+			"murder")
+		non_freeform_laws = regex(jointext(non_freeform_laws_list, "|"))
 
 	proc/load()
+		if(fexists(src.uncool_words_filename))
+			uncool_words = regex(jointext(json_decode(file2text(src.uncool_words_filename)),"|"), "i")
 		if(fexists(src.filename))
 			src.phrases = json_decode(file2text(src.filename))
 		else
@@ -60,11 +89,18 @@ var/global/datum/phrase_log/phrase_log = new
 			upper = src.original_lengths[category] || 0
 		if(upper < lower)
 			return null
-		return src.phrases[category][rand(lower, upper)]
+		var/index = rand(lower, upper)
+		. = src.phrases[category][index]
+		if(is_uncool(.))
+			src.phrases[category] -= .
+			return random_phrase(category, include_old, include_new)
 
 	/// Logs a phrase to a selected category duh
 	proc/log_phrase(category, phrase, no_duplicates=FALSE)
 		phrase = html_decode(phrase)
+		if(is_uncool(phrase))
+			message_admins("Uncool word - [key_name(usr)] [category]: \"[phrase]\"")
+			return
 		if(category in src.phrases)
 			if(no_duplicates)
 				src.phrases[category] |= phrase
@@ -72,6 +108,20 @@ var/global/datum/phrase_log/phrase_log = new
 				src.phrases[category] += phrase
 		else
 			src.phrases[category] = list(phrase)
+
+	proc/is_uncool(phrase)
+		if(isnull(src.uncool_words))
+			return FALSE
+		return !!(findtext(phrase, src.uncool_words))
+
+	proc/upload_uncool_words()
+		var/new_uncool = input("Upload a json list of uncool words.", "Uncool words", null) as null|file
+		if(isnull(new_uncool))
+			return
+		if(fexists(src.uncool_words_filename))
+			fdel(src.uncool_words_filename)
+		text2file(file2text(new_uncool), src.uncool_words_filename)
+		boutput(usr, "ok")
 
 	proc/save()
 		if(isnull(src.phrases))
@@ -98,13 +148,36 @@ var/global/datum/phrase_log/phrase_log = new
 			for(var/list/entry in data["entries"])
 				switch(category)
 					if("ai_laws")
-						new_phrases += entry["law_text"]
+						if(entry["uploader_key"] != "Random Event")
+							new_phrases += entry["law_text"]
 					if("tickets", "fines")
 						new_phrases += entry["reason"]
 			src.cached_api_phrases[category] = new_phrases
 
-		. = pick(src.cached_api_phrases[category])
-		src.cached_api_phrases[category] -= .
-		return
+		var/list/L = src.cached_api_phrases[category]
+		. = L[length(L)]
+		L.len--
+		while(src.is_uncool(.))
+			. = null
+			if(length(L))
+				. = L[length(L)]
+				L.len--
+			else
+				break
+		return .
 
+	proc/random_station_name_replacement_proc(old_name)
+		if(!length(data_core.general))
+			return old_name
+		var/datum/data/record/record = pick(data_core.general)
+		return record.fields["name"]
+
+	proc/random_custom_ai_law(max_tries=20, replace_names=FALSE)
+		while(max_tries-- > 0)
+			. = src.random_api_phrase("ai_laws")
+			if(length(.) && !findtext(., src.non_freeform_laws))
+				if(replace_names)
+					. = src.name_regex.Replace(., .proc/random_station_name_replacement_proc)
+				return
+		return null
 

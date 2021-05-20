@@ -12,7 +12,7 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 7
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	max_wclass = 3
 
 	//cogwerks - burn vars
@@ -131,7 +131,7 @@
 	desc = "A metal container designed to hold various tools. This variety holds art supplies."
 	icon_state = "green"
 	item_state = "toolbox-green"
-	spawn_contents = list(/obj/item/paint_can/random = 7)
+	spawn_contents = list(/obj/item/paint_can/random = 6, /obj/item/item_box/crayon = 1)
 
 /* -------------------- Memetic Toolbox -------------------- */
 
@@ -176,7 +176,7 @@
 			return
 		if (src.contents.len >= 7)
 			return
-		if (((istype(W, /obj/item/storage) && W.w_class > 2) || src.loc == W))
+		if (((istype(W, /obj/item/storage) && W.w_class > W_CLASS_SMALL) || src.loc == W))
 			return
 		if(istype(W, /obj/item/grab))	// It will devour people! It's an evil thing!
 			var/obj/item/grab/G = W
@@ -253,7 +253,7 @@
 		servantlinks = null
 
 		src.visible_message("<span class='alert'><b>[src]</b> screams!</span>")
-		playsound(src.loc,"sound/effects/screech.ogg", 100, 1)
+		playsound(src.loc,"sound/effects/screech.ogg", 50, 1)
 
 		..()
 		return
@@ -301,7 +301,7 @@
 		else
 			asize++
 		acount++
-	src.playsound_local(src.loc,"sound/effects/screech.ogg", 100, 1)
+	src.playsound_local(src.loc,"sound/effects/screech.ogg", 50, 1)
 	shake_camera(src, 20, 16)
 	boutput(src, "<font color=red>[screamstring]</font>")
 	boutput(src, "<i><b><font face = Tempus Sans ITC>His Grace accepts thee, spread His will! All who look close to the Enlightened may share His gifts.</font></b></i>")

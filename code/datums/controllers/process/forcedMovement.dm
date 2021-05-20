@@ -12,33 +12,17 @@ proc/EndSpacePush(var/atom/movable/A)
 	spacePushList -= A
 	A.temp_flags &= ~SPACE_PUSHING
 
-datum/controller/process/fMove
+/// Controls forced movements
+/datum/controller/process/fMove
 	var/list/debugPushList = null //Remove this on release.
-
-	// mbc : replaced with IMMUNE_MANTA_PUSH flag. faster.
-	/*
-	var/list/pushBlacklist = list(
-		/obj/fluid,
-		/obj/fluid_spawner,
-		/obj/effect,
-		/obj/overlay,
-		/obj/particle,
-		/obj/torpedo,
-		/obj/torpedo_targeter,
-		/obj/machinery/vehicle/tank/minisub,
-		/obj/machinery/nuclearbomb,
-		/mob/living/intangible,
-		/mob/dead,
-		/mob/wraith,
-	)*/
 
 	setup()
 		name = "Forced movement"
-		schedule_interval = 5
+		schedule_interval = 0.5 SECONDS
 
 	doWork()
 		//space first :)
-		for (var/atom/movable/M as() in spacePushList)
+		for (var/atom/movable/M as anything in spacePushList)
 			if(!M)
 				continue
 
@@ -66,12 +50,12 @@ datum/controller/process/fMove
 						if (AA.stops_space_move && (!M.no_gravity || !isfloor(AA)))
 							if (!( tmob.l_hand ))
 								prob_slip -= 3
-							else if (tmob.l_hand.w_class <= 2)
+							else if (tmob.l_hand.w_class <= W_CLASS_SMALL)
 								prob_slip -= 1
 
 							if (!( tmob.r_hand ))
 								prob_slip -= 2
-							else if (tmob.r_hand.w_class <= 2)
+							else if (tmob.r_hand.w_class <= W_CLASS_SMALL)
 								prob_slip -= 1
 
 							break
@@ -99,7 +83,7 @@ datum/controller/process/fMove
 
 
 				if (M && !( M.anchored ) && !(M.flags & NODRIFT))
-					if (! (world.timeofday > (tmob.l_move_time + schedule_interval)) ) //we need to stand still for 5 realtime ticks before space starts pushing us!
+					if (! (TIME > (tmob.l_move_time + schedule_interval)) ) //we need to stand still for 5 realtime ticks before space starts pushing us!
 						continue
 
 					var/pre_inertia_loc = M.loc
@@ -151,7 +135,7 @@ datum/controller/process/fMove
 		//now manta!
 		debugPushList = mantaPushList
 		if(mantaMoving == 1)
-			for (var/atom/movable/M as() in mantaPushList)
+			for (var/atom/movable/M as anything in mantaPushList)
 				if(!M)
 					continue
 

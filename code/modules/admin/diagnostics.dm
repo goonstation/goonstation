@@ -11,26 +11,49 @@ proc/debug_color_of(var/thing)
 		color_caching[thing] = "#[copytext(md5(thing), 1, 7)]"
 	return color_caching[thing]
 
+proc/debug_map_apc_count(delim,zlim)
+	var/apc_count = 0
+	. = ""
+	var/list/apcs = new()
+	var/list/manual_apcs = new()
+	for(var/obj/machinery/power/apc/C in machine_registry[MACHINES_POWER])
+		if(zlim && C.z != zlim)
+			continue
+
+		if(C.areastring)
+			var/area/manual_area = get_area_name(C.areastring)
+			if(!manual_apcs[manual_area]) manual_apcs[manual_area] = list()
+			manual_apcs[manual_area] += C
+
+	for(var/area/area in world)
+		if (!area.requires_power)
+			continue
+
+		if(zlim)
+			var/turf/T = locate() in area
+			if(T?.z != zlim)
+				continue
+
+		for(var/obj/machinery/power/apc/current_apc in area)
+			if (!apcs.Find(current_apc) && !current_apc.areastring) apcs += current_apc
+		if(manual_apcs[area])
+			apcs += manual_apcs[area]
+
+		apc_count = length(apcs)
+		if (apc_count != 1)
+			. += "[area.name] [area.type] has [apc_count] APCs.[delim]"
+			if(apc_count)
+				for(var/obj/machinery/power/apc/duplicate_apc in apcs)
+					. += "  [duplicate_apc.name] ([duplicate_apc.x],[duplicate_apc.y],[duplicate_apc.z]) [duplicate_apc.area.area_apc == duplicate_apc ? "  !AREA APC" : ""][delim]"
+		apcs.len = 0
+		LAGCHECK(LAG_LOW)
+
 /client/proc
 	map_debug_panel()
 		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 		var/area_txt = "<B>APC LOCATION REPORT</B><HR>"
-		var/apc_count = 0
-		var/list/apcs = new()
-		for(var/area/area in world)
-			if (!area.requires_power)
-				continue
-
-			for(var/obj/machinery/power/apc/current_apc in area)
-				if (!apcs.Find(current_apc)) apcs += current_apc
-
-			apc_count = apcs.len
-			if (apc_count != 1)
-				area_txt += "[area.name] [area.type] has [apc_count] APCs.<br>"
-			apcs.len = 0
-
-			LAGCHECK(LAG_LOW)
+		area_txt += debug_map_apc_count("<BR>")
 
 		usr.Browse(area_txt,"window=mapdebugpanel")
 
@@ -41,7 +64,7 @@ proc/debug_color_of(var/thing)
 		if(!processScheduler)
 			usr << alert("Process Scheduler not found.")
 
-		var/mobs = global.mobs.len
+		var/mobs = length(global.mobs)
 
 
 		var/output = {"<B>GENERAL SYSTEMS REPORT</B><HR>
@@ -70,7 +93,7 @@ proc/debug_color_of(var/thing)
 				active_groups++
 			else
 				inactive_groups++
-				active_tiles += group.members.len
+				active_tiles += length(group.members)
 
 		var/hotspots = 0
 		for(var/obj/hotspot/hotspot in world)
@@ -147,7 +170,7 @@ proc/debug_color_of(var/thing)
 		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] t: [GM.temperature] Kelvin, [MIXTURE_PRESSURE(GM)] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
 
 		if(GM.trace_gases)
-			for(var/datum/gas/trace_gas as() in GM.trace_gases)
+			for(var/datum/gas/trace_gas as anything in GM.trace_gases)
 				boutput(usr, "[trace_gas.type]: [trace_gas.moles]")
 
 	fix_next_move()
@@ -514,7 +537,7 @@ proc/debug_color_of(var/thing)
 				pipe_image.appearance_flags = RESET_ALPHA | RESET_COLOR
 				var/n_objects = 0
 				for(var/obj/disposalholder/DH in pipe)
-					n_objects += DH.contents.len
+					n_objects += length(DH.contents)
 					if(DH.active)
 						pipe_image.color = "#0000ff"
 					else
@@ -528,7 +551,7 @@ proc/debug_color_of(var/thing)
 		name = "camera coverage"
 		help = {"blue - tile visible by a camera<br>without overlay - tile not visible by a camera<br>number - number of cameras seeing the tile"}
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			if(theTurf.cameras && theTurf.cameras.len)
+			if(theTurf.cameras && length(theTurf.cameras))
 				img.app.overlays = list(src.makeText(theTurf.cameras.len))
 				img.app.color = "#0000ff"
 			else
@@ -639,9 +662,9 @@ proc/debug_color_of(var/thing)
 		GetInfo(turf/theTurf, image/debugoverlay/img)
 			// I should probably also count overlays on overlays but I'm lazy
 			img.app.alpha = 0
-			var/num = 1 + theTurf.overlays.len + theTurf.underlays.len
-			for (var/atom/A as() in theTurf)
-				num += 1 + A.overlays.len + A.underlays.len
+			var/num = 1 + theTurf.overlays.len + length(theTurf.underlays)
+			for (var/atom/A as anything in theTurf)
+				num += 1 + A.overlays.len + length(A.underlays)
 			img.app.overlays = list(src.makeText(num, RESET_ALPHA))
 
 	count_atoms_plus_overlays_rec
@@ -649,10 +672,10 @@ proc/debug_color_of(var/thing)
 		GetInfo(turf/theTurf, image/debugoverlay/img)
 			img.app.alpha = 0
 			var/num = 0
-			for (var/atom/A as() in theTurf.contents + theTurf)
-				num += 1 + A.overlays.len + A.underlays.len
-				for (var/atom/A2 as() in A.overlays + A.underlays)
-					num += A2.overlays.len + A2.underlays.len
+			for (var/atom/A as anything in theTurf.contents + theTurf)
+				num += 1 + A.overlays.len + length(A.underlays)
+				for (var/atom/A2 as anything in A.overlays + A.underlays)
+					num += A2.overlays.len + length(A2.underlays)
 			img.app.overlays = list(src.makeText(num, RESET_ALPHA))
 
 	count_atoms
@@ -680,11 +703,11 @@ proc/debug_color_of(var/thing)
 			var/direct_trace = 0
 			var/turf/simulated/sim = theTurf
 			if (istype(sim) && sim.air)
-				for(var/datum/gas/tg as() in sim.air.trace_gases)
+				for(var/datum/gas/tg as anything in sim.air.trace_gases)
 					img.app.desc += "[tg.type] [tg.moles]<br>"
 					direct_trace = 1
 				if(sim?.parent?.air)
-					for(var/datum/gas/tg as() in sim.parent.air.trace_gases)
+					for(var/datum/gas/tg as anything in sim.parent.air.trace_gases)
 						img.app.desc += "(AG) [tg.type] [tg.moles]<br>"
 						air_group_trace = 1
 			if(air_group_trace && direct_trace)
@@ -957,7 +980,7 @@ proc/debug_color_of(var/thing)
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	admin_only
 	var/list/available_overlays = list()
-	for (var/datum/infooverlay/dummy as() in childrentypesof(/datum/infooverlay))
+	for (var/datum/infooverlay/dummy as anything in childrentypesof(/datum/infooverlay))
 		var/name = initial(dummy.name)
 		if(isnull(name))
 			name = replacetext("[dummy]", "/datum/infooverlay/", "")

@@ -94,6 +94,7 @@
 				if(MODE_MAINMENU)
 					. += {"<h2>PERSONAL DATA ASSISTANT</h2>
 					Owner: [src.master.owner]<br>
+					Time: [time2text(world.timeofday, "DDD MMM DD, hh:mm:ss")]<br>
 
 					<h4>General Functions</h4>
 					<ul>
@@ -202,7 +203,7 @@
 								count++
 							. += "</ul>"
 
-							if (count == 0 && !page_departments.len)
+							if (count == 0 && !length(page_departments))
 								. += "None detected.<br>"
 
 					else if (src.message_mode == 1)
@@ -690,7 +691,7 @@
 								return
 
 						else if (istype(target, /datum/computer/file/text))
-							if(!isnull(src.master.uplink) && src.master.uplink.active)
+							if(src.master.uplink?.active)
 								return
 							else
 								src.note = target:data

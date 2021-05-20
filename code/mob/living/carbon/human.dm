@@ -234,6 +234,7 @@
 	src.update_body()
 	src.update_face()
 	src.UpdateDamageIcon()
+	START_TRACKING
 
 	// for pope
 	if (microbombs_4_everyone)
@@ -464,6 +465,24 @@
 			return
 		return 0
 
+	proc/randomize(var/target, var/mob/user, var/show_message = 1)
+		if (!src.holder || !target)
+			return 0
+		if (istext(target))
+			var/randlimb = null
+			if (target == "all" || target == "both_arms" || target == "l_arm")
+				randlimb = pick(all_valid_random_left_arms)
+				. += src.replace_with("l_arm", randlimb, user, show_message)
+			if (target == "all" || target == "both_arms" || target == "r_arm")
+				randlimb = pick(all_valid_random_right_arms)
+				. += src.replace_with("r_arm", randlimb, user, show_message)
+			if (target == "all" || target == "both_legs" || target == "r_leg")
+				randlimb = pick(all_valid_random_right_legs)
+				. += src.replace_with("r_leg", randlimb, user, show_message)
+			if (target == "all" || target == "both_legs" || target == "l_leg")
+				randlimb = pick(all_valid_random_left_legs)
+				. += src.replace_with("l_leg", randlimb, user, show_message)
+		return .
 
 
 /mob/living/carbon/human/proc/is_vampire()
@@ -488,6 +507,7 @@
 		hud.inventory_bg = null
 		hud.inventory_items = null
 		qdel(hud)
+	STOP_TRACKING
 
 
 	for(var/obj/item/implant/imp in src.implant)
@@ -700,6 +720,9 @@
 			remove_mindslave_status(src, "vthrall", "death")
 		else if (src.mind.master)
 			remove_mindslave_status(src, "otherslave", "death")
+#ifdef DATALOGGER
+		game_stats.Increment("playerdeaths")
+#endif
 
 	logTheThing("combat", src, null, "dies [log_health(src)] at [log_loc(src)].")
 	//src.icon_state = "dead"
@@ -772,7 +795,7 @@
 	if (!antag_removal && src.spell_soulguard)
 		boutput(src, "<span class='notice'>Your Soulguard enchantment activates and saves you...</span>")
 		//soulguard ring puts you in the same spot
-		if(istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport))
+		if(src.spell_soulguard == 2)	//istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport)
 			reappear_turf = get_turf(src)
 		else
 			reappear_turf = pick(job_start_locations["wizard"])
@@ -805,6 +828,9 @@
 		if (!antag_removal && src.spell_soulguard)
 			newbody.bioHolder.RemoveAllEffects()
 
+	if(src.traitHolder)
+		newbody.traitHolder = src.traitHolder
+		newbody.traitHolder.owner = newbody
 	// Prone to causing runtimes, don't enable.
 /*	if (src.mutantrace && !src.spell_soulguard)
 		newbody.mutantrace = new src.mutantrace.type(newbody)*/
@@ -838,7 +864,7 @@
 	else
 		src.unkillable = 0
 		src.spell_soulguard = 0
-		src.invisibility = 20
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 		SPAWN_DBG(2.2 SECONDS) // Has to at least match the organ/limb replacement stuff (Convair880).
 			if (src) qdel(src)
 
@@ -1140,7 +1166,7 @@
 		if (O.move_triggered)
 			O.move_trigger(src, ev)
 	reagents?.move_trigger(src, ev)
-	for (var/datum/statusEffect/S as() in statusEffects)
+	for (var/datum/statusEffect/S as anything in statusEffects)
 		if (S?.move_triggered)
 			S.move_trigger(src, ev)
 
@@ -1162,9 +1188,9 @@
 	else
 		if (istype(src.wear_id) && src.wear_id:registered != src.real_name)
 			if (src.decomp_stage > 2)
-				src.name = "[src.name_prefix(null, 1)]Unknown (as [src.wear_id:registered])[src.name_suffix(null, 1)]"
+				src.name = "[src.name_prefix(null, 1)]Unknown[src.wear_id:registered ? " (as [src.wear_id:registered])" : ""][src.name_suffix(null, 1)]"
 			else
-				src.name = "[src.name_prefix(null, 1)][src.real_name] (as [src.wear_id:registered])[src.name_suffix(null, 1)]"
+				src.name = "[src.name_prefix(null, 1)][src.real_name][src.wear_id:registered ? " (as [src.wear_id:registered])" : ""][src.name_suffix(null, 1)]"
 		else
 			if (src.decomp_stage > 2)
 				src.name = "[src.name_prefix(null, 1)]Unknown[src.wear_id ? " (as [src.wear_id:registered])" : ""][src.name_suffix(null, 1)]"
@@ -1383,6 +1409,10 @@
 	var/original_language = src.say_language
 	if (mutantrace?.override_language)
 		say_language = mutantrace.override_language
+
+	if (istype(src.wear_mask, /obj/item/clothing/mask/monkey_translator))
+		var/obj/item/clothing/mask/monkey_translator/mask = src.wear_mask
+		say_language = mask.new_language
 
 	message = copytext(message, 1, MAX_MESSAGE_LEN)
 
@@ -1615,8 +1645,8 @@
 		processed = saylist(messages[2], heard_b, olocs, thickness, italics, processed, 1)
 
 	message = messages[1]
-	if(src.client && !forced)
-		phrase_log.log_phrase("whisper", message)
+	if(src.client)
+		phrase_log.log_phrase(forced ? "say" : "whisper", message)
 	for (var/mob/M in eavesdropping)
 		if (M.say_understands(src, lang_id))
 			var/message_c = stars(message)
@@ -2089,7 +2119,7 @@
 	if (equipped)
 		if (slot != slot_in_backpack && slot != slot_in_belt)
 			I.set_loc(src)
-		if (islist(I.ability_buttons) && I.ability_buttons.len)
+		if (islist(I.ability_buttons) && length(I.ability_buttons))
 			I.set_mob(src)
 			if (slot != slot_in_backpack && slot != slot_in_belt)
 				I.show_buttons()
@@ -2132,7 +2162,7 @@
 /mob/living/carbon/human/proc/can_equip(obj/item/I, slot)
 	switch (slot)
 		if (slot_l_store, slot_r_store)
-			if (I.w_class <= 2 && src.w_uniform)
+			if (I.w_class <= W_CLASS_SMALL && src.w_uniform)
 				return 1
 		if (slot_l_hand, slot_r_hand)
 			return 1
@@ -2199,12 +2229,12 @@
 		if (slot_in_backpack) // this slot is stupid
 			if (src.back && istype(src.back, /obj/item/storage))
 				var/obj/item/storage/S = src.back
-				if (S.contents.len < 7 && I.w_class <= 3)
+				if (S.contents.len < 7 && I.w_class <= W_CLASS_NORMAL)
 					return 1
 		if (slot_in_belt) // this slot is also stupid
 			if (src.belt && istype(src.belt, /obj/item/storage))
 				var/obj/item/storage/S = src.belt
-				if (S.contents.len < 7 && I.w_class <= 3)
+				if (S.contents.len < 7 && I.w_class <= W_CLASS_NORMAL)
 					return 1
 	return 0
 
@@ -2558,7 +2588,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if (ishuman(src))
 		animation = new(src.loc)
@@ -2892,7 +2922,7 @@
 	bleeding = max(bleeding - amt, 0)
 
 /mob/living/carbon/human/proc/juggling()
-	if (islist(src.juggling) && src.juggling.len)
+	if (islist(src.juggling) && length(src.juggling))
 		return 1
 	return 0
 
@@ -2961,6 +2991,8 @@
 
 	if(ispath(mutantrace_type, /datum/mutantrace) )	//Set a new mutantrace only if passed one
 		src.mutantrace = new mutantrace_type(src)
+		src.mutantrace.MutateMutant(src, "set")
+
 		. = 1
 
 	if(.)
@@ -3043,21 +3075,21 @@
 		if (istype(src.chest_item, /obj/item/))
 			// Determine ass and bleed damage based on item size
 			var/poopingDamage = 0
-			if (src.chest_item.w_class == 1 )
+			if (src.chest_item.w_class == W_CLASS_TINY )
 				poopingDamage = 5
 				src.show_text("<B>[src.chest_item]</B> plops out of your rear and onto the floor.")
-			else if (src.chest_item.w_class == 2 )
+			else if (src.chest_item.w_class == W_CLASS_SMALL )
 				poopingDamage = 10
 				src.show_text("You poop out <B>[src.chest_item]</B>! Your butt aches a bit.")
-			else if (src.chest_item.w_class == 3 )
+			else if (src.chest_item.w_class == W_CLASS_NORMAL )
 				poopingDamage = 20
 				src.show_text("<span class='alert'><B>[src.chest_item]</B> was shat out, that's got to hurt!</span>")
 				src.changeStatus("stunned", 2 SECONDS)
 				take_bleeding_damage(src, src, 5)
-			else if (src.chest_item.w_class == 4 || src.chest_item.w_class == 5)
+			else if (src.chest_item.w_class == W_CLASS_BULKY || src.chest_item.w_class == W_CLASS_HUGE)
 				poopingDamage = 50
 				src.show_text("<span class='alert'><B>[src.chest_item] explodes out of your ass, jesus christ!</B></span>")
-				src.changeStatus("stunned", 50)
+				src.changeStatus("stunned", 5 SECONDS)
 				take_bleeding_damage(src, src, 20)
 
 			// Deal out ass damage

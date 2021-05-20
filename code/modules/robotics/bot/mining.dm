@@ -16,7 +16,6 @@
 	var/turf/target
 	var/turf/oldtarget
 	var/oldloc = null
-	var/list/path = null
 	var/list/digbottargets = list()
 	var/lumlevel = 0.2
 	var/use_medium_light = 1
@@ -113,7 +112,7 @@
 			src.oldtarget = null
 		return
 
-	if(src.target && (!src.path || !src.path.len))
+	if(src.target && (!src.path || !length(src.path)))
 		src.buildPath()
 
 	if(src.path && src.path.len && src.target)
@@ -309,7 +308,7 @@
 	desc = "You need to add a robot arm next."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "digbot assembly 1"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	var/build_step = 0
 
 	attackby(var/obj/item/T, mob/user as mob)

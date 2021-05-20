@@ -90,8 +90,8 @@
 						continue
 					var/area/mob_area = get_area(M)
 					if(mob_area.storming)
-						M.changeStatus("burning",80)
-						M.changeStatus("radiation",80)
+						M.changeStatus("burning", 8 SECONDS)
+						M.changeStatus("radiation", 8 SECONDS)
 						random_brute_damage(M, rand(3,9))
 
 			command_alert("The storm has almost passed. ETA 5 seconds until all areas are safe.", "BATTLE STORM ABOUT TO END")

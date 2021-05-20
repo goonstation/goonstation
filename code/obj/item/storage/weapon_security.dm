@@ -34,7 +34,7 @@
 	name = "robust donuts box"
 	icon_state = "box"
 	desc = "Contains two robust donuts, for security use"
-	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/robust = 2)
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 2)
 
 // For sec officers and the HoS. Really love spawning with a full backpack (Convair880).
 /obj/item/storage/box/security_starter_kit
@@ -120,12 +120,6 @@
 	desc = "A box containing a flare gun and spare ammo."
 	spawn_contents = list(/obj/item/gun/kinetic/flaregun,\
 	/obj/item/ammo/bullets/flare)
-
-/obj/item/storage/box/riotrounds
-	name = "40mm riot rounds"
-	icon_state = "revolver"
-	desc = "A box containing two boxes of 40mm riot rounds"
-	spawn_contents = list(/obj/item/ammo/bullets/pbr = 2)
 
 /* -------------------- Grenades -------------------- */
 
@@ -267,7 +261,7 @@
 	sneaky = 1
 	var/cloaked = 0
 	flags = FPRINT | TABLEPASS | NOSPLASH
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	max_wclass = 3
 
 	New()

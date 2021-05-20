@@ -72,7 +72,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/can_use = 0
 	var/obj/overlay/anim = null //The toggle animation overlay will also be retained
 	var/obj/dummy/chameleon/cham = null //No sense creating / destroying this

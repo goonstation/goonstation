@@ -182,7 +182,7 @@
 				var/mob/living/carbon/human/H = M
 				H.implant.Add(src)
 				src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
-				playsound(src.loc, "sound/weapons/slashcut.ogg", 100, 1)
+				playsound(src.loc, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
 				H.changeStatus("weakened", 2 SECONDS)
 				src.set_loc(M)
 				src.transfer_all_reagents(M)
@@ -428,7 +428,7 @@
 	needspoon = 1
 	amount = 6
 	heal_amt = 1
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	initial_volume = 100
 	food_effects = list("food_warm")
 	dropped_item = /obj/item/reagent_containers/food/drinks/bowl
@@ -628,7 +628,7 @@
 	icon_state = "cereal_box"
 	amount = 11
 	real_name = "cereal"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/prize = 10 //Chance of a rad prize inside!
 
 	New()
@@ -732,10 +732,6 @@
 			new /obj/item/razor_blade( get_turf(src) )
 		..()
 
-	disposing()
-		if (src.amount < 1)
-			new /obj/item/reagent_containers/food/drinks/bowl(get_turf(src))
-		..()
 
 	is_open_container()
 		return 1
@@ -783,7 +779,7 @@
 
 	proc/cooltime()
 		if (src.warm)
-			SPAWN_DBG( 4200 )
+			SPAWN_DBG( 420 SECONDS )
 				src.warm = 0
 				src.name = "donk-pocket"
 		return
@@ -825,7 +821,7 @@
 
 	cooltime()
 		if (src.warm)
-			SPAWN_DBG( 4200 )
+			SPAWN_DBG( 420 SECONDS )
 				src.warm = 0
 				src.name = "honk-pocket"
 		return
@@ -1157,6 +1153,18 @@
 		. = ..()
 		name = "[random_spaghetti_name()] and meatballs"
 
+/obj/item/reagent_containers/food/snacks/lasagna
+	name = "lasagna"
+	desc = "Layers of saucy, cheesy goodness."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "lasagna"
+	needfork = 1
+	heal_amt = 2
+	amount = 5
+	initial_volume = 10
+	initial_reagents = "omnizine"
+	food_effects = list("food_energized","food_hp_up","food_brute","food_burn")
+
 /obj/item/reagent_containers/food/snacks/spaghetti/pizzaghetti
 	name = "pizza-ghetti"
 	desc = "This is just- It's pizza and spaghetti on a plate? They're not even touching. What gives?"
@@ -1179,47 +1187,112 @@
 /obj/item/reagent_containers/food/snacks/donut
 	name = "donut"
 	desc = "Goes great with Robust Coffee."
-	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
-	icon_state = "donut1"
+	icon = 'icons/obj/foodNdrink/donuts.dmi'
+	icon_state = "base"
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	appearance_flags = KEEP_TOGETHER
 	heal_amt = 1
-	initial_volume = 20
-	initial_reagents = "sugar"
+	initial_volume = 50
+	initial_reagents = list("sugar" = 20)
 	food_effects = list("food_energized")
+	var/can_add_frosting = TRUE
+	var/static/list/frosting_styles = list(
+	"icing" = "icing",
+	"sprinkles" = "sprinkles",
+	"zigzags" = "zigzags",
+	"center fill" = "center",
+	"half and half icing" = "half",
+	"dipped icing"= "dipped",
+	"heart" = "heart",
+	"star" = "star")
+	var/style_step = 1
 
 	heal(var/mob/M)
-		if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective")))
+		if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective", "Nanotrasen Security Operative", "Security Assistant", "Part-time Vice Officer")))
 			src.heal_amt *= 2
 			..()
 			src.heal_amt /= 2
 		else
 			..()
 
-	frosted
-		name = "frosted donut"
-		icon_state = "donut2"
-		heal_amt = 2
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/reagent_containers/food/snacks/plant/coconutmeat)) //currently we can only put coconut on top of donuts
+			user.u_equip(W)
+			qdel(W)
+			src.UpdateOverlays(src.SafeGetOverlayImage('icons/obj/foodNdrink/donuts.dmi', "coconut", src.layer + 0.1), "coconut") //cosmetic only; does not count towards our two frosting styles per donut
+		else
+			. = ..()
 
-	cinnamon
-		name = "cinnamon sugar donut"
-		desc = "One of Delectable Dan's seasonal bestsellers."
-		icon_state = "donut3"
-		heal_amt = 3
+	proc/add_frosting(var/obj/item/reagent_containers/food/drinks/drinkingglass/icing/tube, var/mob/user)
+		if (!src.can_add_frosting)
+			user.show_text("You feel like adding your own frosting to [src] would ruin it somehow.", "red")
+			return
 
-	robust
-		name = "robust donut"
-		desc = "It's like an energy bar, but in donut form! Contains some chemicals known for partial stun time reduction and boosted stamina regeneration."
-		icon_state = "donut4"
-		amount = 6
-		initial_volume = 36
-		initial_reagents = list("sugar"=12,"synaptizine"=12,"epinephrine"=12)
+		if (tube.reagents.total_volume < 15)
+			user.show_text("The [tube] isn't full enough to add frosting.", "red")
+			return
 
-	random
-		New()
-			if(rand(1,3) == 1)
-				src.icon_state = "donut2"
-				src.name = "frosted donut"
-				src.heal_amt = 2
-			..()
+		if (src.style_step > 2) // only allow up to two frosting types on a single donut
+			user.show_text("You can't add anymore frosting.", "red")
+			return
+
+		var/frosting_type = null
+		frosting_type = input("Which frosting style would you like?", "Frosting Style", null) as null|anything in frosting_styles
+		if(frosting_type && (get_dist(src, user) <= 1))
+			frosting_type = src.frosting_styles[frosting_type]
+			var/datum/color/average = tube.reagents.get_average_color()
+			var/image/frosting_overlay = new(src.icon, frosting_type)
+			frosting_overlay.color = average.to_rgba()
+			src.UpdateOverlays(frosting_overlay, "frosting[src.style_step]")
+			user.show_text("You add some frosting to [src]", "red")
+			src.style_step += 1
+			tube.reagents.trans_to(src, 15)
+			JOB_XP(user, "Chef", 1)
+
+		// When a user also fills the donut with a syringe it can get a bit crowded in the donut.
+		if (src.reagents.is_full())
+			user.show_text("It feels like adding anything more to [src] would overfill it.", "red")
+			return
+
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/reagent_containers/food/drinks/drinkingglass/icing))
+			src.add_frosting(I, user)
+			return
+		else
+			. = ..()
+
+	custom
+		icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+		icon_state = "donut1"
+		can_add_frosting = FALSE
+		initial_volume = 20
+
+		frosted
+			name = "frosted donut"
+			icon_state = "donut2"
+			heal_amt = 2
+
+		cinnamon
+			name = "cinnamon sugar donut"
+			desc = "One of Delectable Dan's seasonal bestsellers."
+			icon_state = "donut3"
+			heal_amt = 3
+
+		robust
+			name = "robust donut"
+			desc = "It's like an energy bar, but in donut form! Contains some chemicals known for partial stun time reduction and boosted stamina regeneration."
+			icon_state = "donut4"
+			amount = 6
+			initial_volume = 36
+			initial_reagents = list("sugar"=12,"synaptizine"=12,"epinephrine"=12)
+
+		random
+			New()
+				if(rand(1,3) == 1)
+					src.icon_state = "donut2"
+					src.name = "frosted donut"
+					src.heal_amt = 2
+				..()
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -1822,6 +1895,9 @@
 		..()
 		if(!syrup)
 			boutput(M, "<span class='alert'>[src] seem a bit dry.</span>")
+
+/obj/item/reagent_containers/food/snacks/pancake/classic
+	icon = 'icons/obj/foodNdrink/food_shitty.dmi'
 
 /obj/item/reagent_containers/food/snacks/mashedpotatoes
 	name ="mashed potatoes"

@@ -10,7 +10,6 @@
 	canmove = 1
 	blinded = 0
 	anchored = 1	//  don't get pushed around
-	var/invisibility_old = 0
 	var/mob/corpse = null	//	observer mode
 	var/observe_round = 0
 	var/health_shown = 0
@@ -74,7 +73,7 @@
 	// heres a thought: maybe ghostize() could look for your ghost or smth
 	// and put you in it instead of just making a new one.
 	// idk this codebase is an eldritch horror and i dont wanna try rn
-	src.invisibility = src.invisibility_old
+	REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, "clientless")
 
 
 /mob/dead/observer/point_at(var/atom/target)
@@ -223,8 +222,7 @@
 
 /mob/dead/observer/New(mob/corpse)
 	. = ..()
-	src.invisibility = 10
-	src.invisibility_old = 10
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	src.see_invisible = 16
 	src.see_in_dark = SEE_DARK_FULL
@@ -303,6 +301,11 @@
 		src.ghost = O
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)
+
+		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[O.ckey]
+		if(istype(respawnee))
+			respawnee.update_time_display()
+
 		O.update_item_abilities()
 		return O
 	return null
@@ -436,9 +439,13 @@
 
 /mob/dead/observer/Logout()
 	..()
+
 	if(last_client)
 		health_shown = 0
 		last_client.images.Remove(health_mon_icons)
+		if(arrest_shown)
+			arrest_shown = 0
+			last_client.images.Remove(arrestIconsAll)
 
 	if(!src.key && delete_on_logout)
 		//qdel(src)
@@ -451,8 +458,7 @@
 		// but that's way too much effort to fix and i do not feel like debugging
 		// 2000 different "use after free" issues.
 		// so. your ghost doesnt go away. it just, uh. it takes a break for a while.
-		src.invisibility_old = src.invisibility
-		src.invisibility = 101
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_ALWAYS)
 	return
 
 /mob/dead/observer/Move(NewLoc, direct)
@@ -790,6 +796,7 @@
 
 mob/dead/observer/proc/insert_observer(var/atom/target)
 	var/mob/dead/target_observer/newobs = unpool(/mob/dead/target_observer)
+	newobs.attach_hud(hud)
 	newobs.set_observe_target(target)
 	newobs.name = src.name
 	newobs.real_name = src.real_name

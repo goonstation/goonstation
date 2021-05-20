@@ -42,7 +42,7 @@
 	if(revs_possible.len >= 3)
 		rev_number = 3
 	else
-		rev_number = revs_possible.len
+		rev_number = length(revs_possible)
 
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)
@@ -150,7 +150,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(head_revolutionaries))
 /*
-	for (var/obj/machinery/computer/communications/comm as() in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/comm as anything in machine_registry[MACHINES_COMMSCONSOLES])
 		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
 			intercept.name = "paper- 'Cent. Com. Status Summary'"
@@ -400,6 +400,10 @@
 			if(isghostcritter(rev_mind.current) || isVRghost(rev_mind.current))
 				continue
 
+			if(ismobcritter(rev_mind.current))
+				//mob critters can't revolt because they don't work here.
+				continue
+
 			var/turf/T = get_turf(rev_mind.current)
 			if(T.z != 1)
 				continue
@@ -510,7 +514,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "revsign"
 
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	throwforce = 8
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = EQUIPPED_WHILE_HELD

@@ -15,7 +15,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0_lowmeat"
 	object_flags = CAN_REPROGRAM_ACCESS
-	mats = list("MET-1"=20, "uqill"=10, "beeswax"=5)
+	mats = list("MET-1"=35, "honey"=5)
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 	var/mob/living/occupant
 	var/heal_level = 10 //The clone is released once its health^W damage (maxHP - HP) reaches this level.
@@ -142,9 +142,8 @@
 	get_desc(dist, mob/user)
 		. = ""
 		if ((!isnull(src.occupant)) && (!isdead(src.occupant)))
-			var/completion = clamp(100 - ((src.occupant.max_health - src.occupant.health) - heal_level), 0, 100)
 			//var/completion = (100 * ((src.occupant.health + 100) / (src.heal_level + 100)))
-			. += "<br>Currently [!src.attempting ? "preparing a new body" : "cloning [src.occupant]"]. [round(completion)]% complete."
+			. += "<br>Currently [!src.attempting ? "preparing a new body" : "cloning [src.occupant]"]. [src.get_progress()]% complete."
 
 		var/meat_pct = round( 100 * (src.meat_level / MAXIMUM_MEAT_LEVEL) )
 
@@ -231,6 +230,10 @@
 		src.visible_message("<span class='alert'>[src] whirrs and starts up!</span>")
 
 		src.eject_wait = 10 SECONDS
+
+#ifdef DATALOGGER
+		game_stats.Increment("clones")
+#endif
 
 		if (istype(oldholder))
 			oldholder.clone_generation++
@@ -421,7 +424,7 @@
 				power_usage = 200
 				return ..()
 
-			else if ((src.occupant.max_health - src.occupant.health) > src.heal_level)
+			else if (src.get_progress() < 100)
 
 				if (src.attempting)
 					// If we're cloning an actual person, make weird noises
@@ -472,7 +475,7 @@
 					src.failed_tick_counter = 0
 				previous_heal = src.occupant.health
 
-				if ((src.occupant.health + (100 - src.occupant.max_health)) > 50 && src.failed_tick_counter >= 2 && (src.time_started + eject_wait < TIME))
+				if (src.get_progress() > 50 && src.failed_tick_counter >= 2 && (src.time_started + eject_wait < TIME))
 					// Wait a few ticks to see if they stop gaining health.
 					// Once that's the case, boot em
 					src.connected_message("Cloning Process Complete.", "success")
@@ -484,7 +487,7 @@
 				power_usage = 7500
 				return ..()
 
-			else if (src.occupant.max_health - src.occupant.health <= src.heal_level)
+			else if (src.get_progress() >= 100)
 				// Clone is more or less fully complete!
 
 				if (src.attempting && (src.time_started + eject_wait < TIME))
@@ -599,6 +602,7 @@
 			speed_bonus = DEFAULT_SPEED_BONUS
 			meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 			light.enable()
+			src.update_icon()
 			user.drop_item()
 			qdel(W)
 			return
@@ -609,13 +613,14 @@
 				return
 			boutput(user, "<span class='notice'>You begin detatching the mindslave cloning module...</span>")
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if(do_after(user,50))
+			if (do_after(user, 50) && cloneslave)
 				new /obj/item/cloneModule/mindslave_module( src.loc )
 				cloneslave = 0
 				implant_master = null
 				boutput(user,"<span class='alert'>The mindslave cloning module falls to the floor with a dull thunk!</span>")
 				playsound(src.loc, "sound/effects/thunk.ogg", 50, 0)
 				light.disable()
+				src.update_icon()
 			else
 				boutput(user,"<span class='alert'>You were interrupted!</span>")
 			return
@@ -782,6 +787,14 @@
 		else
 			animate_shake(src,3,rand(1,4),rand(1,4))
 
+	proc/get_progress()
+		if (!src.occupant)
+			return 0
+
+		if (src.heal_level == 0)
+			return 100
+
+		return round(clamp(100 - ((src.occupant.max_health - src.occupant.health) - src.heal_level), 0, 100))
 
 	//SOME SCRAPS I GUESS
 	/* EMP grenade/spell effect
@@ -828,7 +841,7 @@
 		if (!islist(src.pods))
 			src.pods = list()
 		if (!isnull(src.id) && genResearch && islist(genResearch.clonepods) && length(genResearch.clonepods))
-			for (var/obj/machinery/clonepod/pod as() in genResearch.clonepods)
+			for (var/obj/machinery/clonepod/pod as anything in genResearch.clonepods)
 				if (pod.id == src.id && !src.pods.Find(pod))
 					src.pods += pod
 					DEBUG_MESSAGE("[src] adds pod [log_loc(pod)] (ID [src.id]) in genResearch.clonepods")
@@ -875,7 +888,7 @@
 			if (prob(2))
 				src.reagents.add_reagent("beff", 1 * process_per_tick)
 
-		if (src.reagents.total_volume && islist(src.pods) && pods.len)
+		if (src.reagents.total_volume && islist(src.pods) && length(pods))
 			// Distribute reagents to cloning pods nearby
 			// Changed from before to distribute while grinding rather than all at once
 			// give an equal amount of reagents to each pod that happens to be around

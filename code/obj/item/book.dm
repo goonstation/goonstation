@@ -239,6 +239,11 @@
 	<br>The \"set rgb\" Input takes a Color in the HTML Color Code Format, for Example: #FF1200 .
 	<br>
 	<br>
+	<br><B>Letter Display Component:</B>
+	<br>Displays a single letter from the input signal.
+	<br>Set the letter index to choose which letter is displayed.  For example, if the letter index is 2, and an input signal of "Hello" arrives, "E" will be displayed.
+	<br>
+	<br>
 	<br><B>Microphone Component:</B>
 	<br>Forwards nearby speech as signal.
 	<br>The "Toggle Show-Source" option determines whether the component adds the source's name to the signal or not.
@@ -311,11 +316,6 @@
 	<br><B>Wifi Signal Splitter Component:</B>
 	<br>Returns the value of a field within a Radio signal. The components Trigger Field is the Field you want the Value of.
 	<br>For example: Set the Trigger Field to \"user_id\". When a Signal with \"user_id=captain\" arrives the Component forwards \"captain\"
-	<br>
-	<br>
-	<br><B>Letter Display Component:</B>
-	<br>Displays a single letter from the input signal.
-	<br>Set the letter index to choose which letter is displayed.  For example, if the letter index is 2, and an input signal of "Hello" arrives, "E" will be displayed.
 	<br>
 	<br>
 	"}
@@ -2639,29 +2639,29 @@ Captain Peleg in his gruff voice loudly hailed us from his wigwam, saying he had
 <BR>
 'I mean', he replied, 'he must show his papers.'<BR>
 <BR>
-'Yes,' said Captain Bildad in his hollow voice, sticking his head from behind Peleg�s, out of the wigwam. 'He must show that he�s converted.<BR>
+'Yes,' said Captain Bildad in his hollow voice, sticking his head from behind Peleg's, out of the wigwam. 'He must show that he's converted.<BR>
 Son of darkness,' he added, turning to Queequeg, 'art thou at present in communion with any Christian church?'<BR>
 <BR>
-'Why,' said I, 'he�s a member of the first Congregational Church.' Here be it said, that many tattooed savages sailing in Nantucket ships atlast come to be converted into the churches.<BR>
+'Why,' said I, 'he's a member of the first Congregational Church.' Here be it said, that many tattooed savages sailing in Nantucket ships atlast come to be converted into the churches.<BR>
 <BR>
-'First Congregational Church,' cried Bildad, 'what! that worships in Deacon Deuteronomy Coleman�s meeting-house?' and so saying, taking out<BR>
+'First Congregational Church,' cried Bildad, 'what! that worships in Deacon Deuteronomy Coleman's meeting-house?' and so saying, taking out<BR>
 his spectacles, he rubbed them with his great yellow bandana handkerchief, and putting them on very carefully, came out of the wigwam, <BR>
 and leaning stiffly over the bulwarks, took a good long look at Queequeg.<BR>
 <BR>
 'How long hath he been a member?' he then said, turning to me; 'not very long, I rather guess, young man.'<BR>
 <BR>
-'No,' said Peleg, 'and he hasn�t been baptized right either, or it would have washed some of that devil�s blue off his face.'<BR>
+'No,' said Peleg, 'and he hasn't been baptized right either, or it would have washed some of that devil's blue off his face.'<BR>
 <BR>
-'Do tell, now,' cried Bildad, 'is this Philistine a regular member of Deacon Deuteronomy�s meeting? I never saw him going there, and I pass it every Lord�s day.'<BR>
+'Do tell, now,' cried Bildad, 'is this Philistine a regular member of Deacon Deuteronomy's meeting? I never saw him going there, and I pass it every Lord's day.'<BR>
 <BR>
-'I don�t know anything about Deacon Deuteronomy or his meeting,' said I; 'all I know is, that Queequeg here is a born member of the First <BR>
+'I don't know anything about Deacon Deuteronomy or his meeting,' said I; 'all I know is, that Queequeg here is a born member of the First <BR>
 Congregational Church. He is a deacon himself, Queequeg is.'<BR>
 <BR>
 'Young man,' said Bildad sternly, 'thou art skylarking with me'explain thyself, thou young Hittite. What church dost thee mean? answer me.'<BR>
 <BR>
-Finding myself thus hard pushed, I replied. �I mean, sir, the same ancient Catholic Church to which you and I, and Captain Peleg there,<BR>
-and Queequeg here, and all of us, and every mother�s son and soul of us belong; the great and everlasting First Congregation of this whole <BR>
-worshipping world; we all belong to that; only some of us cherish some queer crotchets no ways touching the grand belief; in _that_ we all join hands.' <BR>
+Finding myself thus hard pushed, I replied. 'I mean, sir, the same ancient Catholic Church to which you and I, and Captain Peleg there,<BR>
+and Queequeg here, and all of us, and every mother's son and soul of us belong; the great and everlasting First Congregation of this whole <BR>
+worshipping world; we all belong to that; only some of us cherish some queer crotchets no ways touching the grand belief; in <i>that</i> we all join hands.' <BR>
 <BR>
  </font>
 		"}
@@ -2966,7 +2966,7 @@ On that note, CentComm would like to remind trainees that they do not recieve cl
 		else
 			if(ishuman(hit_atom))
 				var/mob/living/carbon/human/user = usr
-				var/hos = (istype(user.head, /obj/item/clothing/head/hosberet) || istype(user.head, /obj/item/clothing/head/helmet/HoS))
+				var/hos = (istype(user.head, /obj/item/clothing/head/hosberet) || istype(user.head, /obj/item/clothing/head/hos_hat))
 				if(hos)
 					var/mob/living/carbon/human/H = hit_atom
 					H.changeStatus("stunned", 2 SECONDS)
@@ -3550,6 +3550,68 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 		if (voidMessage)
 			boutput(wearer, "[voidMessage]")
 		return
+
+/obj/item/paper/book/from_file
+	var/file_path = null
+
+	New()
+		..()
+		if(isnull(src.file_path))
+			CRASH("from_file book has no file path")
+		if(!fexists(src.file_path))
+			CRASH("from_file book's file '[src.file_path]' doesn't exist")
+		src.info = file2text(src.file_path)
+
+/obj/item/paper/from_file
+	var/file_path = null
+
+	New()
+		..()
+		if(isnull(src.file_path))
+			CRASH("from_file paper has no file path")
+		if(!fexists(src.file_path))
+			CRASH("from_file paper's file '[src.file_path]' doesn't exist")
+		src.info = file2text(src.file_path)
+
+/obj/item/paper/book/from_file/ai_programming_101
+	name = "AI Programming 101"
+	icon_state = "aibook"
+	file_path = "strings/books/ai_programming_101.txt"
+
+/obj/item/paper/book/from_file/captaining_101
+	name = "Captaining 101"
+	icon_state = "capbook"
+	file_path = "strings/books/captaining_101.txt"
+
+/obj/item/paper/book/from_file/commanders_diary
+	name = "Commander's Diary"
+	icon_state = "diary"
+	file_path = "strings/books/commanders_diary.txt"
+
+/obj/item/paper/book/from_file/dealing_with_clonelieness
+	name = "Dealing With Clonelieness"
+	icon_state = "cloningbook"
+	file_path = "strings/books/dealing_with_clonelieness.txt"
+
+/obj/item/paper/book/from_file/elective_prosthetics_for_dummies
+	name = "Elective Prosthetics for Dummies"
+	icon_state = "roboticsbook"
+	file_path = "strings/books/elective_prosthetics_for_dummies.txt"
+
+/obj/item/paper/book/from_file/fun_facts_about_shelterfrogs
+	name = "Fun Facts About Shelterfrogs"
+	icon_state = "frogbook"
+	file_path = "strings/books/fun_facts_about_shelterfrogs.txt"
+
+/obj/item/paper/book/from_file/syndies_guide
+	name = "A SYNDIE'S GUIDE TO DOING YOUR FUCKING JOB"
+	icon_state = "syndiebook"
+	file_path = "strings/books/syndies_guide.txt"
+
+/obj/item/paper/book/from_file/teg_guide
+	name = "Thermo-electric Power Generation"
+	icon_state = "tegbook"
+	file_path = "strings/books/teg_guide.txt"
 
 /obj/item/paper/book/custom //custom book parent, just to avoid cluttering up normal books
 	var/custom_cover = 0 //if 1, goes thru with the build custom icon process

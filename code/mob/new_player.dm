@@ -10,8 +10,6 @@ mob/new_player
 	var/twitch_bill_spawn = 0
 #endif
 
-	invisibility = 101
-
 	density = 0
 	stat = 2
 	canmove = 0
@@ -19,6 +17,10 @@ mob/new_player
 	anchored = 1	//  don't get pushed around
 
 	var/chui/window/spend_spacebux/bank_menu
+
+	New()
+		. = ..()
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_ALWAYS)
 
 	// How could this even happen? Regardless, no log entries for unaffected mobs (Convair880).
 	ex_act(severity)
@@ -49,6 +51,15 @@ mob/new_player
 		new_player_panel()
 		src.set_loc(pick_landmark(LANDMARK_NEW_PLAYER, locate(1,1,1)))
 		src.sight |= SEE_TURFS
+
+
+		// byond members get a special join message :]
+		if (src.client?.IsByondMember())
+			var/list/msgs_which_are_gifs = list(8, 9, 10) //not all of these are normal jpgs
+			var/num = rand(1,16)
+			var/resource = resource("images/member_msgs/byond_member_msg_[num].[(msgs_which_are_gifs.Find(num)) ? "gif" : "jpg"]")
+			boutput(src, "<img src='[resource]' style='margin: auto; display: block; max-width: 100%;'>")
+
 
 		if (src.ckey && !adminspawned)
 			if ("[src.ckey]" in spawned_in_keys)
@@ -233,6 +244,10 @@ mob/new_player
 			if (ticker?.mode)
 				var/mob/living/silicon/S = locate(href_list["SelectedJob"]) in mobs
 				if (S)
+					if(jobban_isbanned(src.mind, "Cyborg"))
+						boutput(usr, "<span class='notice'>Sorry, you are banned from playing silicons.</span>")
+						close_spawn_windows()
+						return
 					var/obj/item/organ/brain/latejoin/latejoin = IsSiliconAvailableForLateJoin(S)
 					if(latejoin)
 						close_spawn_windows()
@@ -642,7 +657,7 @@ a.latejoin-card:hover {
 							break
 
 					var/bad_type = null
-					if (islist(ticker.mode.latejoin_antag_roles) && ticker.mode.latejoin_antag_roles.len)
+					if (islist(ticker.mode.latejoin_antag_roles) && length(ticker.mode.latejoin_antag_roles))
 						bad_type = pick(ticker.mode.latejoin_antag_roles)
 					else
 						bad_type = "traitor"

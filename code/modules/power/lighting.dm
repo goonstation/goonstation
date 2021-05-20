@@ -161,8 +161,8 @@
 
 
 //big standing lamps
-/obj/machinery/light/blamp
-	name = "big lamp"
+/obj/machinery/light/flamp
+	name = "floor lamp"
 	icon = 'icons/obj/lighting.dmi'
 	desc = "A tall and thin lamp that rests comfortably on the floor."
 	anchored = 1
@@ -171,7 +171,8 @@
 	fitting = "bulb"
 	brightness = 1.4
 	var/state
-	icon_state = "blamp1-off"
+	base_state = "flamp"
+	icon_state = "flamp1"
 	wallmounted = 0
 
 //regular light bulbs
@@ -245,6 +246,9 @@
 		purpleish
 			name = "purpleish fluorescent light bulb"
 			light_type = /obj/item/light/bulb/purpleish
+		frostedred
+			name = "frosted red fluorescent light bulb"
+			light_type = /obj/item/light/bulb/emergency
 
 		warm
 			name = "fluorescent light bulb"
@@ -292,6 +296,10 @@
 	purpleish
 		name = "purpleish fluorescent light fixture"
 		light_type = /obj/item/light/bulb/purpleish
+	frostedred
+		name = "frosted red fluorescent light fixture"
+		light_type = /obj/item/light/bulb/emergency
+
 
 	warm
 		name = "fluorescent light fixture"
@@ -932,7 +940,7 @@
 	flags = FPRINT | TABLEPASS
 	force = 2
 	throwforce = 5
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/light_status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/breakprob = 0	// number of times switched

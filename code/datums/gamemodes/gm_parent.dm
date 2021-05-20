@@ -36,6 +36,7 @@
 // Fuck.
 // F U C K
 /datum/game_mode/proc/post_post_setup()
+	return
 
 /datum/game_mode/proc/process()
 	if (spy_market)
@@ -123,7 +124,7 @@
 							stuff_to_output += "<B>Combined trophy value:</b> [S]"
 
 				if (traitor.special_role == "blob")
-					var/victims = traitor.blob_absorb_victims.len
+					var/victims = length(traitor.blob_absorb_victims)
 					stuff_to_output += "<b>\ [victims <= 0 ? "Not a single person was" : "[victims] lifeform[s_es(victims)] were"] absorbed by them  <span class='success'>Players in Green</span></b>"
 					if (victims)
 						var/absorbed_announce = "They absorbed: "
@@ -135,8 +136,8 @@
 						stuff_to_output += absorbed_announce
 
 				if (traitor.special_role == "traitor")
-					var/purchases = traitor.purchased_traitor_items.len
-					var/surplus = traitor.traitor_crate_items.len
+					var/purchases = length(traitor.purchased_traitor_items)
+					var/surplus = length(traitor.traitor_crate_items)
 					stuff_to_output += "<b>They purchased [purchases <= 0 ? "nothing" : "[purchases] item[s_es(purchases)]"] with their [syndicate_currency]![purchases <= 0 ? " [pick("Wow", "Dang", "Gosh", "Good work", "Good job")]!" : null]</b>"
 					if (purchases)
 						var/item_detail = "They purchased: "
@@ -151,8 +152,8 @@
 						stuff_to_output += item_detail
 
 				if (traitor.special_role == "spy_thief")
-					var/purchases = traitor.purchased_traitor_items.len
-					var/stolen = traitor.spy_stolen_items.len
+					var/purchases = length(traitor.purchased_traitor_items)
+					var/stolen = length(traitor.spy_stolen_items)
 					stuff_to_output += "<b>They stole [stolen <= 0 ? "nothing" : "[stolen] items"]!</b>"
 					if (purchases)
 						var/stolen_detail = "Items Thieved: "

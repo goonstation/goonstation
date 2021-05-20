@@ -55,7 +55,7 @@ RACK PARTS
 		return newThing
 
 	proc/deconstruct(var/reinforcement = 0)
-		if (src.contained_storage && src.contained_storage.contents.len)
+		if (src.contained_storage && length(src.contained_storage.contents))
 			var/turf/T = get_turf(src)
 			for (var/atom/movable/A in src.contained_storage)
 				A.set_loc(T)
@@ -86,7 +86,7 @@ RACK PARTS
 		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration), user)
 
 	disposing()
-		if (src.contained_storage && src.contained_storage.contents.len)
+		if (src.contained_storage && length(src.contained_storage.contents))
 			var/turf/T = get_turf(src)
 			for (var/atom/movable/A in src.contained_storage)
 				A.set_loc(T)
@@ -200,7 +200,7 @@ RACK PARTS
 	name = "industrial table parts"
 	desc = "A collection of parts that can be used to make an industrial looking table."
 	icon = 'icons/obj/furniture/table_industrial.dmi'
-	furniture_type = /obj/table/reinforced/industrial
+	furniture_type = /obj/table/reinforced/industrial/auto
 
 /obj/item/furniture_parts/table/reinforced/bar
 	name = "bar table parts"

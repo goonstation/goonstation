@@ -127,6 +127,8 @@ ABSTRACT_TYPE(/datum/game)
 			return
 		if (href_list["highscore"])
 			if (text2num(href_list["highscore"]))
+				if (text2num(href_list["highscore"]) >= 30000)
+					usr.unlock_medal("Block Stacker", 1)
 				if (text2num(href_list["highscore"]) > highscore)
 					highscore = text2num(href_list["highscore"])
 					highscorekey = usr.key

@@ -79,7 +79,7 @@
   icon_state = "atmos"
   item_state = "analyzer"
   rand_pos = 1
-  w_class = 2
+  w_class = W_CLASS_SMALL
   flags = FPRINT | TABLEPASS | ONBELT
   var/on = 0
   var/sleep = 0

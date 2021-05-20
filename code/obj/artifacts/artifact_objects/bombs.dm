@@ -7,6 +7,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	validtypes = list("ancient","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/cold,/datum/artifact_trigger/radiation)
+	fault_blacklist = list(ITEM_ONLY_FAULTS, TOUCH_ONLY_FAULTS) // can't sting you at range
 	react_xray = list(12,75,30,11,"COMPLEX")
 	var/explode_delay = 600
 	var/dud = 0
@@ -56,7 +57,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			playsound(T, alarm_initial, 100, 1, doAlert?200:-1)
 		if (doAlert)
 			var/area/A = get_area(O)
-			command_alert("An extremely unstable object of [artitype.name] origin has been detected in [A]. The crew is advised to dispose of it immediately.", "Station Threat Detected")
+			command_alert("An extremely unstable object of [artitype.type_name] origin has been detected in [A]. The crew is advised to dispose of it immediately.", "Station Threat Detected")
 		O.add_simple_light("artbomb", lightColor)
 		animate(O, pixel_y = rand(-3,3), pixel_y = rand(-3,3),time = 1,loop = src.explode_delay + 10 SECONDS, easing = ELASTIC_EASING, flags=ANIMATION_PARALLEL)
 		animate(O.simple_light, flags=ANIMATION_PARALLEL, time = src.explode_delay + 10 SECONDS, transform = matrix() * animationScale)
@@ -103,7 +104,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		var/turf/T = get_turf(O)
 		T.visible_message("<b><span class='notice'>[O] [text_disarmed]</b></span>")
 		if(src.doAlert && !src.blewUp && !ON_COOLDOWN(O, "alertDisarm", 10 MINUTES)) // lol, don't give the message if it was destroyed by exploding itself
-			command_alert("The object of [src.artitype.name] origin has been neutralized. All personnel should return to their duties.", "Station Threat Neutralized")
+			command_alert("The object of [src.artitype.type_name] origin has been neutralized. All personnel should return to their duties.", "Station Threat Neutralized")
 
 	proc/deploy_payload(var/obj/O)
 		if (!O)
@@ -111,6 +112,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if (dud)
 			var/turf/T = get_turf(O)
 			T.visible_message("<b>[O] [text_dud]")
+			if(src.doAlert && !ON_COOLDOWN(O, "alertDud", 10 MINUTES))
+				command_alert("The object of [src.artitype.type_name] origin appears to be nonfunctional. All personnel should return to their duties.", "Station Threat Neutralized")
 			O.ArtifactDeactivated()
 			return 1
 
@@ -130,12 +133,13 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if(src.artifact && istype(src.artifact, /datum/artifact/bomb))
 			var/datum/artifact/bomb/B = src.artifact
 			if(B.doAlert && B.activated && !B.blewUp) // lol, don't give the message if it was destroyed by exploding itself
-				command_alert("The object of [B.artitype.name] origin has been neutralized. All personnel should return to their duties.", "Station Threat Neutralized")
+				command_alert("The object of [B.artitype.type_name] origin has been neutralized. All personnel should return to their duties.", "Station Threat Neutralized")
 
 
 
 /datum/artifact/bomb/explosive
 	associated_object = /obj/machinery/artifact/bomb
+	type_name = "Bomb (explosive)"
 	rarity_weight = 200
 	var/exp_deva = 1
 	var/exp_hevy = 2
@@ -164,6 +168,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 /datum/artifact/bomb/explosive/devastating
 	associated_object = /obj/machinery/artifact/bomb/devastating
+	type_name = "Bomb (explosive, devastating)"
 	rarity_weight = 90
 	doAlert = 1
 	recharge_delay = 10 MINUTES
@@ -184,6 +189,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 /datum/artifact/bomb/blackhole
 	associated_object = /obj/machinery/artifact/bomb/blackhole
+	type_name = "Bomb (black hole)"
 	rarity_weight = 90
 	react_xray = list(12,75,30,11,"ULTRADENSE")
 	warning_initial = "begins intensifying its own gravity!"
@@ -211,6 +217,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 /datum/artifact/bomb/chemical
 	associated_object = /obj/machinery/artifact/bomb/chemical
+	type_name = "Bomb (chemical)"
 	rarity_weight = 350
 	explode_delay = 0
 	alarm_initial = null
@@ -317,7 +324,9 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 /datum/artifact/bomb/transmute
 	associated_object = /obj/machinery/artifact/bomb/transmute
+	type_name = "Bomb (material transmutation)"
 	validtypes = list("wizard","eldritch","martian","ancient","precursor")
+	fault_blacklist = list(ITEM_ONLY_FAULTS, TOUCH_ONLY_FAULTS)
 	rarity_weight = 90
 	react_xray = list(17,95,95,3,"ANOMALOUS")
 	warning_initial = ""
@@ -448,7 +457,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			var/range_squared = range**2
 			var/turf/T = get_turf(O)
 			for(var/atom/G in range(range, T))
-				if(istype(G, /obj/overlay) || istype(G, /obj/effects))
+				if(istype(G, /obj/overlay) || istype(G, /obj/effects) || istype(G, /turf/space) || istype(G, /obj/fluid))
 					continue
 				var/dist = GET_SQUARED_EUCLIDEAN_DIST(O, G)
 				var/distPercent = (dist/range_squared)*100
@@ -465,9 +474,12 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 							M.setMaterial(mat)
 							for(var/atom/I in M.get_all_items_on_mob())
 								I.setMaterial(mat)
+							O.ArtifactFaultUsed(M)
 						if(MAKE_HUMAN_STATUE)
 							if(distPercent < 40) // only inner 40% of range
-								M.become_statue(mat)
+								O.ArtifactFaultUsed(M)
+								if(M)
+									M.become_statue(mat)
 				else
 					G.setMaterial(mat)
 

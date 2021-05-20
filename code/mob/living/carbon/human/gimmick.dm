@@ -131,6 +131,7 @@
 			src.bioHolder.AddEffect("accent_void", 0, 0, 1)
 			abilityHolder.addAbility(/datum/targetable/gimmick/spooky)
 			abilityHolder.addAbility(/datum/targetable/gimmick/Jestershift)
+			abilityHolder.addAbility(/datum/targetable/gimmick/scribble)
 
 		SPAWN_DBG(1 SECOND)
 			abilityHolder.updateButtons()
@@ -149,17 +150,48 @@ mob/living/carbon/human/cluwne/satan
 	New()
 		..()
 		SPAWN_DBG(0)
-			src.bioHolder.AddEffect("horns", 0, 0, 1)
-			src.bioHolder.AddEffect("aura_fire", 0, 0, 1)
+			src.bioHolder.AddEffect("horns", 0, 0, 0, 1)
+			src.bioHolder.AddEffect("aura_fire", 0, 0, 0, 1)
 			src.bioHolder.AddEffect("superfartgriff")
-			src.bioHolder.AddEffect("bigpuke", 0, 0, 1)
-			src.bioHolder.AddEffect("melt", 0, 0, 1)
+			src.bioHolder.AddEffect("bigpuke", 0, 0, 0, 1)
+			src.bioHolder.AddEffect("melt", 0, 0, 0, 1)
 
 mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this for an admin gimmick.
 	New()
 		..()
 		SPAWN_DBG(0)
 			src.unkillable = 1 //for the megasatan in you
+
+/*
+ * Chicken man belongs in human zone, not ai zone
+ */
+/mob/living/carbon/human/chicken
+	name = "chicken man"
+	real_name = "chicken man"
+	desc = "half man, half BWAHCAWCK!"
+#ifdef IN_MAP_EDITOR
+	icon_state = "m-none"
+#endif
+	New()
+		. = ..()
+		SPAWN_DBG(0.5 SECONDS)
+			if (!src.disposed)
+				src.bioHolder.AddEffect("chicken", 0, 0, 1)
+
+/mob/living/carbon/human/chicken/ai_controlled
+	is_npc = TRUE
+	uses_mobai = TRUE
+	New()
+		. = ..()
+		src.ai = new /datum/aiHolder/wanderer(src)
+
+/datum/aiHolder/wanderer
+	New()
+		. = ..()
+		var/datum/aiTask/timed/wander/W =  get_instance(/datum/aiTask/timed/wander, list(src))
+		W.transition_task = W
+		default_task = W
+
 
 // how you gonna have father ted and father jack and not father dougal? smh
 
@@ -489,7 +521,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			var/area/A = get_area(src)
 			var/list/alive_mobs = list()
 			var/list/dead_mobs = list()
-			if (A.population && A.population.len)
+			if (A.population && length(A.population))
 				for(var/mob/living/M in oview(5,src))
 					if(!isdead(M))
 						alive_mobs += M
@@ -514,6 +546,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 					switch(speech_type)
 						if(1)
 							say("[BILL_PICK("greetings")] [M.name].")
+							M.add_karma(2)
 
 						if(2)
 							say("[BILL_PICK("question")] you lookin' at, [BILL_PICK("insults")]?")
@@ -639,6 +672,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			if (get_dist(J,src) <= 7)
 				if((!J.ai_active) || prob(25))
 					J.say("That's my brother, you [pick_string("johnbill.txt", "insults")]!")
+					M.add_karma(-1)
 				J.target = M
 				J.ai_set_active(1)
 				J.a_intent = INTENT_HARM

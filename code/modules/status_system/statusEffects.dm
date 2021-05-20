@@ -26,6 +26,8 @@
 	var/move_triggered = 0
 	/// Has a movement-modifying effect
 	var/datum/movement_modifier/movement_modifier
+	/// Put a label here to track anyone with this effect into this category
+	var/track_cat
 
 
 	/**
@@ -48,6 +50,8 @@
 		if (movement_modifier && ismob(owner))
 			var/mob/mob_owner = owner
 			APPLY_MOVEMENT_MODIFIER(mob_owner, movement_modifier, src.type)
+		if(src.track_cat && src.owner )
+			OTHER_START_TRACKING_CAT(src.owner, src.track_cat)
 
 	/**
 		* Called when the status is removed from the object. owner is still set at this point.
@@ -56,6 +60,8 @@
 		if (movement_modifier && ismob(owner))
 			var/mob/mob_owner = owner
 			REMOVE_MOVEMENT_MODIFIER(mob_owner, movement_modifier, src.type)
+		if(src.track_cat && src.owner)
+			OTHER_STOP_TRACKING_CAT(src.owner, src.track_cat)
 
 	/**
 		* Called every tick by the status controller.
@@ -187,6 +193,7 @@
 					duration = 1
 
 	simplehot //Simple heal over time.
+		id = "simplehot"
 		var/tickCount = 0
 		var/tickSpacing = 1 SECOND //Time between ticks.
 		var/heal_brute = 0
@@ -302,6 +309,7 @@
 				. = 0
 
 		onAdd(optional=null)
+			. = ..()
 			if(!isnull(optional) && optional >= stage)
 				stage = optional
 			else
@@ -436,6 +444,7 @@
 
 
 		onAdd(optional=null)
+			. = ..()
 			if(!isnull(optional) && optional >= stage)
 				stage = optional
 			else
@@ -536,6 +545,7 @@
 
 		damage_burn = 1
 		damage_type = DAMAGE_BURN
+		track_cat = TR_CAT_BURNING_MOBS
 
 		var/howMuch = ""
 		var/stage = -1
@@ -557,6 +567,7 @@
 				. = 0
 
 		onAdd(optional = BURNING_LV1)
+			. = ..()
 			if(!isnull(optional) && optional >= stage)
 				counter = optional
 
@@ -607,7 +618,7 @@
 				if(istype(owner, /mob/living))
 					var/mob/living/L = owner
 					L.update_burning_icon()
-				else
+				else if(onfire)
 					onfire.icon_state = "onfire[getStage()]"
 					owner.UpdateOverlays(onfire, "onfire")
 
@@ -937,6 +948,7 @@
 		var/wait = 0
 
 		onAdd(optional=null)
+			. = ..()
 			animate(owner, alpha=30, flags=ANIMATION_PARALLEL, time=30)
 
 		onRemove()
@@ -972,6 +984,7 @@
 			. = "Your stamina max is increased by [change]."
 
 		onAdd(optional=null)
+			. = ..()
 			if(hascall(owner, "add_stam_mod_max"))
 				owner:add_stam_mod_max("fitness_max", change)
 
@@ -990,6 +1003,7 @@
 		var/mob/living/carbon/human/H
 
 		onAdd(optional=null)
+			. = ..()
 			if (ishuman(owner))
 				H = owner
 			else
@@ -1013,6 +1027,7 @@
 		var/sleepcount = 5 SECONDS
 
 		onAdd(optional=null)
+			. = ..()
 			if (ishuman(owner))
 				H = owner
 				sleepcount = 5 SECONDS
@@ -1049,6 +1064,7 @@
 		var/mob/living/L
 
 		onAdd(optional=null)
+			. = ..()
 			if (isliving(owner))
 				L = owner
 				if (L.getStatusDuration("burning"))
@@ -1085,6 +1101,7 @@
 		var/on_turf = 0
 
 		onAdd(optional=null)
+			. = ..()
 			if (ishuman(owner))
 				H = owner
 			else
@@ -1150,6 +1167,7 @@
 		var/change = 1 //Effective change to maxHealth
 
 		onAdd(optional=null) //Optional is change.
+			. = ..()
 			if(ismob(owner))
 				owner.delStatus("janktank_withdrawl")
 				var/mob/M = owner
@@ -1190,6 +1208,7 @@
 		var/change = 1 //Effective change to maxHealth
 
 		onAdd(optional=null) //Optional is change.
+			. = ..()
 			if(ismob(owner) && optional != 0)
 				change = optional
 
@@ -1218,6 +1237,7 @@
 		var/mob/living/carbon/human/H
 
 		onAdd(optional=null)
+			. = ..()
 			if (ishuman(owner))
 				H = owner
 			else
@@ -1250,6 +1270,7 @@
 		var/mob/living/carbon/human/H
 
 		onAdd(optional=null)
+			. = ..()
 			if (ishuman(owner))
 				H = owner
 			else
@@ -1279,6 +1300,7 @@
 		var/endCount = 0
 
 		onAdd(optional)
+			. = ..()
 			src.oxygenAmount = optional
 			if(iscarbon(owner))
 				H = owner
@@ -1308,6 +1330,7 @@
 		var/efficiency = 1
 
 		onAdd(optional)
+			. = ..()
 			src.efficiency = optional
 			..()
 			if(H)
@@ -1351,6 +1374,7 @@
 			. = 0
 
 	onAdd(optional=null)
+		. = ..()
 		if (ishuman(owner))
 			H = owner
 		else
@@ -1427,7 +1451,14 @@
 		var/mob/M = owner
 		if(istype(M))
 			M.emote("shiver")
+			M.thermoregulation_mult *= 3
 		. = ..()
+
+	onRemove()
+		. = ..()
+		var/mob/M = owner
+		if(istype(M))
+			M.thermoregulation_mult /= 3
 
 /datum/statusEffect/maxhealth/decreased/hungry
 	id = "hungry"
@@ -1475,6 +1506,8 @@
 		var/weighting = 0.035 * mult
 		weighted_average = (1 - weighting) * weighted_average + weighting * how_miasma
 		var/mob/living/L = owner
+		if(!isalive(L))
+			return
 		var/puke_prob = 0
 		var/tox = 0
 		switch(how_miasma)

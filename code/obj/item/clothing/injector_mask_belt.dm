@@ -158,7 +158,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 	name = "Vapo-Matic"
 	desc = "Automated chemical vaporizer system built into an old industrial respirator. Doesn't look very safe at all!"
 	flags = FPRINT | TABLEPASS  | NOSPLASH
-	c_flags = SPACEWEAR | COVERSMOUTH | MASKINTERNALS
+	c_flags =  COVERSMOUTH | MASKINTERNALS
 	mats = 10
 	icon_state = "gas_injector"
 	item_state = "gas_injector"

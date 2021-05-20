@@ -47,7 +47,7 @@
 				w.tilenotify(src)
 
 	get_desc()
-		if (islist(src.proj_impacts) && src.proj_impacts.len)
+		if (islist(src.proj_impacts) && length(src.proj_impacts))
 			var/shots_taken = 0
 			for (var/i in src.proj_impacts)
 				shots_taken ++
@@ -85,7 +85,7 @@
 		make_cleanable( /obj/decal/cleanable/fungus,src)
 
 // Made this a proc to avoid duplicate code (Convair880).
-/turf/simulated/wall/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W)
+/turf/simulated/wall/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W, var/instantly)
 	if (!user || !istype(W, /obj/item/light_parts/) || istype(W, /obj/item/light_parts/floor))	//hack, no floor lights on walls
 		return
 
@@ -107,12 +107,13 @@
 	if (!dir)
 		return //..(parts, user)
 
-	playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
-	boutput(user, "You begin to attach the light fixture to [src]...")
+	if(!instantly)
+		playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
+		boutput(user, "You begin to attach the light fixture to [src]...")
 
-	if (!do_after(user, 4 SECONDS))
-		user.show_text("You were interrupted!", "red")
-		return
+		if (!do_after(user, 4 SECONDS))
+			user.show_text("You were interrupted!", "red")
+			return
 
 	if (!parts || parts.disposed) //ZeWaka: Fix for null.fixture_type
 		return
@@ -167,7 +168,7 @@
 		dismantle_wall(1)
 	return
 
-/turf/simulated/wall/proc/dismantle_wall(devastated=0)
+/turf/simulated/wall/proc/dismantle_wall(devastated=0, keep_material = 1)
 	if (istype(src, /turf/simulated/wall/r_wall) || istype(src, /turf/simulated/wall/auto/reinforced))
 		if (!devastated)
 			playsound(src, "sound/items/Welder.ogg", 100, 1)
@@ -251,7 +252,7 @@
 						C.setMaterial(M)
 
 	var/atom/D = ReplaceWithFloor()
-	if (src.material)
+	if (src.material && keep_material)
 		D.setMaterial(src.material)
 	else
 		var/datum/material/M = getMaterial("steel")
@@ -334,13 +335,8 @@
 			return
 
 		boutput(user, "<span class='notice'>Now disassembling the outer wall plating.</span>")
-
-		sleep(10 SECONDS)
-
-		if (user.loc == T && (user.equipped() == W || isrobot(user)))
-			boutput(user, "<span class='notice'>You disassembled the outer wall plating.</span>")
-			logTheThing("station", user, null, "deconstructed a wall ([src.name]) using \a [W] at [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
-			dismantle_wall()
+		SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /turf/simulated/wall/proc/weld_action,\
+			list(W, user), W.icon, W.icon_state, "[user] finishes disassembling the outer wall plating.")
 
 //Spooky halloween key
 	else if(istype(W,/obj/item/device/key/haunted))
@@ -363,6 +359,7 @@
 
 	else
 		if(src.material)
+			src.material.triggerOnHit(src, W, user, 1)
 			var/fail = 0
 			if(src.material.hasProperty("stability") && src.material.getProperty("stability") < 15) fail = 1
 			if(src.material.quality < 0) if(prob(abs(src.material.quality))) fail = 1
@@ -375,6 +372,10 @@
 
 		src.take_hit(W)
 		//return attack_hand(user)
+
+/turf/simulated/wall/proc/weld_action(obj/item/W, mob/user)
+	logTheThing("station", user, null, "deconstructed a wall ([src.name]) using \a [W] at [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
+	dismantle_wall()
 
 /turf/simulated/wall/r_wall
 	name = "reinforced wall"
@@ -528,7 +529,7 @@
 	else if ((istype(W, /obj/item/sheet)) && (src.d_state))
 		var/obj/item/sheet/S = W
 		boutput(user, "<span class='notice'>Repairing wall.</span>")
-		if (do_after(user, 10 SECONDS) && S.consume_sheets(1))
+		if (do_after(user, 10 SECONDS) && S.change_stack_amount(-1))
 			src.d_state = 0
 			src.icon_state = initial(src.icon_state)
 			if(S.material)
@@ -549,6 +550,7 @@
 		src.icon_state = "r_wall-[d_state]"
 
 	if(src.material)
+		src.material.triggerOnHit(src, W, user, 1)
 		var/fail = 0
 		if(src.material.hasProperty("stability") && src.material.getProperty("stability") < 15) fail = 1
 		if(src.material.quality < 0) if(prob(abs(src.material.quality))) fail = 1

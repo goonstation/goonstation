@@ -441,7 +441,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/AddRandomNewPoolEffect()
 		var/list/filteredList = list()
 
-		if (!bioEffectList || !bioEffectList.len)
+		if (!bioEffectList || !length(bioEffectList))
 			logTheThing("debug", null, null, {"<b>Genetics:</b> Tried to add new random effect to pool for
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"], but bioEffectList is empty!"})
 			return 0
@@ -459,7 +459,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"]. (filteredList.len = [filteredList.len])"})
 			return 0
 
-		var/datum/bioEffect/selectedG = pickweight(filteredList)
+		var/datum/bioEffect/selectedG = weighted_pick(filteredList)
 		var/datum/bioEffect/selectedNew = selectedG.GetCopy()
 		selectedNew.dnaBlocks.ModBlocks() //Corrupt the local copy
 		selectedNew.holder = src
@@ -481,7 +481,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			qdel(BE)
 		effectPool.Cut()
 
-		if (!bioEffectList || !bioEffectList.len)
+		if (!bioEffectList || !length(bioEffectList))
 			logTheThing("debug", null, null, {"<b>Genetics:</b> Tried to build effect pool for
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"], but bioEffectList is empty!"})
 
@@ -494,23 +494,21 @@ var/list/datum/bioEffect/mutini_effects = list()
 				if (instance.mob_exclusive && src.owner.type != instance.mob_exclusive)
 					continue
 			if(instance.secret)
-				filteredSecret.Add(instance)
+				filteredSecret[instance] = instance.probability
 			else
 				if(instance.isBad)
-					filteredBad.Add(instance)
 					filteredBad[instance] = instance.probability
 				else
-					filteredGood.Add(instance)
 					filteredGood[instance] = instance.probability
 
-		if(!filteredGood.len || !filteredBad.len)
+		if(!filteredGood.len || !length(filteredBad))
 			logTheThing("debug", null, null, {"<b>Genetics:</b> Unable to build effect pool for
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"]. (filteredGood.len = [filteredGood.len],
 			  filteredBad.len = [filteredBad.len])"})
 			return
 
 		for(var/g=0, g<5, g++)
-			var/datum/bioEffect/selectedG = pickweight(filteredGood)
+			var/datum/bioEffect/selectedG = weighted_pick(filteredGood)
 			if(selectedG)
 				var/datum/bioEffect/selectedNew = selectedG.GetCopy()
 				selectedNew.dnaBlocks.ModBlocks() //Corrupt the local copy
@@ -522,7 +520,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 				break
 
 		for(var/b=0, b<5, b++)
-			var/datum/bioEffect/selectedB = pickweight(filteredBad)
+			var/datum/bioEffect/selectedB = weighted_pick(filteredBad)
 			if(selectedB)
 				var/datum/bioEffect/selectedNew = selectedB.GetCopy()
 				selectedNew.dnaBlocks.ModBlocks() //Corrupt the local copy
@@ -534,7 +532,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 				break
 
 		if (filteredSecret.len)
-			var/datum/bioEffect/selectedS = pickweight(filteredSecret)
+			var/datum/bioEffect/selectedS = weighted_pick(filteredSecret)
 			var/datum/bioEffect/selectedNew = selectedS.GetCopy()
 			selectedNew.dnaBlocks.ModBlocks() //Corrupt the local copy
 			selectedNew.holder = src
@@ -544,14 +542,14 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		shuffle_list(effectPool)
 
-	proc/OnLife()
+	proc/OnLife(var/mult)
 		var/datum/bioEffect/BE
 		for(var/curr in effects)
 			BE = effects[curr]
 			if (BE)
-				BE.OnLife()
+				BE.OnLife(mult)
 				if(BE.timeLeft != -1)
-					BE.timeLeft--
+					BE.timeLeft -= 1*mult
 					if(BE.timeLeft <= 0)
 						RemoveEffect(BE.id)
 		return
@@ -643,7 +641,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		newEffect = new newEffect.type
 
 		if(istype(newEffect))
-			for(var/datum/bioEffect/curr_id as() in effects)
+			for(var/datum/bioEffect/curr_id as anything in effects)
 				var/datum/bioEffect/curr = effects[curr_id]
 				if(curr?.type == EFFECT_TYPE_MUTANTRACE && newEffect.type == EFFECT_TYPE_MUTANTRACE)
 					//Can only have one mutant race.
@@ -728,7 +726,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return 0
 
 	proc/RemoveAllEffects(var/type = null)
-		for(var/D as() in effects)
+		for(var/D as anything in effects)
 			var/datum/bioEffect/BE = effects[D]
 			if(BE && (isnull(type) || BE.effectType == type))
 				RemoveEffect(BE.id)
@@ -741,7 +739,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return 1
 
 	proc/RemoveAllPoolEffects(var/type = null)
-		for(var/D as() in effectPool)
+		for(var/D as anything in effectPool)
 			var/datum/bioEffect/BE = effectPool[D]
 			if(BE && (isnull(type) || BE.effectType == type))
 				effectPool.Remove(D)
@@ -755,7 +753,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/HasAnyEffect(var/type = null)
 		if(type)
-			for(var/D as() in effects)
+			for(var/D as anything in effects)
 				var/datum/bioEffect/BE = effects[D]
 				if(BE && BE.effectType == type)
 					return 1
@@ -795,14 +793,14 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/HasAllOfTheseEffects()
 		var/tally = 0 //We cannot edit the args list directly, so just keep a count.
-		for (var/datum/bioEffect/D as() in effects)
+		for (var/datum/bioEffect/D as anything in effects)
 			if (lowertext(D) in args)
 				tally++
 
-		return tally >= args.len
+		return tally >= length(args)
 
 	proc/GetASubtypeEffect(type)
-		for(var/id as() in effects)
+		for(var/id as anything in effects)
 			var/datum/bioEffect/BE = effects[id]
 			if(istype(BE, type))
 				return BE
@@ -836,7 +834,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		var/datum/bioEffect/E = null
 
 		if(useProbability)
-			E = pickweight(filtered)
+			E = weighted_pick(filtered)
 		else
 			E = pick(filtered)
 
@@ -851,7 +849,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/DegradeRandomEffect()
 		var/list/eligible_effects = list()
 		var/datum/bioEffect/BE = null
-		for (var/X as() in effects)
+		for (var/X as anything in effects)
 			BE = effects[X]
 			if (!BE.degrade_to) // doesn't turn into anything
 				continue

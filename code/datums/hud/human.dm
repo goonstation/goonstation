@@ -135,7 +135,7 @@
 		for(var/atom/movable/screen/statusEffect/G in src.objects)
 			remove_screen(G)
 
-		for(var/datum/statusEffect/S as() in src.statusUiElements) //Remove stray effects.
+		for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
 			if(!master || !master.statusEffects || !(S in master.statusEffects))
 				pool(statusUiElements[S])
 				src.statusUiElements.Remove(S)
@@ -145,7 +145,7 @@
 		var/pos_x = spacing - 0.2
 
 		if(master?.statusEffects)
-			for(var/datum/statusEffect/S as() in master.statusEffects) //Add new ones, update old ones.
+			for(var/datum/statusEffect/S as anything in master.statusEffects) //Add new ones, update old ones.
 				if(!S.visible) continue
 				if((S in statusUiElements) && statusUiElements[S])
 					var/atom/movable/screen/statusEffect/U = statusUiElements[S]
@@ -284,7 +284,7 @@
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/stabprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs stabbing attacks"+\
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/burnprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs burning attacks"+\
 			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/bluntprot.png")]\" width=\"12\" height=\"12\" /> Increased armor vs blunt attacks"+\
-			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/protdisorient.png")]\" width=\"12\" height=\"12\" /> Body Insulation (Disorient Resist): 15%"
+			"<br><img style=\"display:inline;margin:0\" width=\"12\" height=\"12\" /><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/protdisorient.png")]\" width=\"12\" height=\"12\" /> Body Insulation (Disorient Resist): 20%"
 
 			sel = create_screen("sel", "sel", src.icon_hud, "sel", null, HUD_LAYER+1.2)
 			sel.mouse_opacity = 0
@@ -757,9 +757,10 @@
 		newDesc += "<div><img src='[resource("images/tooltips/cold.png")]' alt='' class='icon' /><span>Total Resistance (Cold): [master.get_cold_protection()]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/radiation.png")]' alt='' class='icon' /><span>Total Resistance (Radiation): [master.get_rad_protection()]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/disease.png")]' alt='' class='icon' /><span>Total Resistance (Disease): [master.get_disease_protection()]%</span></div>"
+		newDesc += "<div><img src='[resource("images/tooltips/explosion.png")]' alt='' class='icon' /><span>Total Resistance (Explosion): [master.get_explosion_resistance() * 100]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/bullet.png")]' alt='' class='icon' /><span>Total Ranged Protection: [master.get_ranged_protection()]</span></div>"
-		newDesc += "<div><img src='[resource("images/tooltips/melee.png")]' alt='' class='icon' /><span>Total Melee Armor (Body): [master.get_melee_protection("chest", DAMAGE_CRUSH)]</span></div>"
-		newDesc += "<div><img src='[resource("images/tooltips/melee.png")]' alt='' class='icon' /><span>Total Melee Armor (Head): [master.get_melee_protection("head", DAMAGE_CRUSH)]</span></div>"
+		newDesc += "<div><img src='[resource("images/tooltips/melee.png")]' alt='' class='icon' /><span>Total Melee Armor (Body): [master.get_melee_protection("chest")]</span></div>"
+		newDesc += "<div><img src='[resource("images/tooltips/melee.png")]' alt='' class='icon' /><span>Total Melee Armor (Head): [master.get_melee_protection("head")]</span></div>"
 
 		var/block = master.get_passive_block()
 		if (block)
@@ -839,16 +840,6 @@
 					pos_x = 1
 					pos_y++
 
-			if (istype(master.loc,/obj/vehicle/))
-				var/obj/vehicle/V = master.loc
-				for(var/obj/ability_button/B2 in V.ability_buttons)
-					B2.screen_loc = "NORTH-[pos_y],[pos_x]"
-					master.client.screen += B2
-					pos_x++
-					if(pos_x > 15)
-						pos_x = 1
-						pos_y++
-
 		if (current_ability_set == 2) // genetics
 			var/datum/bioEffect/power/P
 			for(var/ID in master.bioHolder.effects)
@@ -863,6 +854,18 @@
 				if(pos_x > 15)
 					pos_x = 1
 					pos_y++
+
+		if (istype(master.loc,/obj/vehicle/)) //so we always see vehicle buttons
+			var/obj/vehicle/V = master.loc
+			for(var/obj/ability_button/B2 in V.ability_buttons)
+				B2.screen_loc = "NORTH-[pos_y],[pos_x]"
+				master.client.screen += B2
+				B2.the_mob = master
+				pos_x++
+				if(pos_x > 15)
+					pos_x = 1
+					pos_y++
+
 
 	proc/update_sprinting()
 		if (!sprinting || !master.client) return 0
@@ -898,17 +901,17 @@
 			switch (brutedam)
 				if (-INFINITY to 0) // this goes the other way around from the normal health indicator since it's determined by how much of whatever damage you have
 					stage = 0 // bright green
-				if (1 to 15)
+				if (0 to 15)
 					stage = 1 // green
-				if (16 to 30)
+				if (15 to 30)
 					stage = 2 // yellow
-				if (31 to 45)
+				if (30 to 45)
 					stage = 3 // orange
-				if (46 to 60)
+				if (45 to 60)
 					stage = 4 // dark orange
-				if (61 to 75)
+				if (60 to 75)
 					stage = 5 // red
-				if (76 to INFINITY)
+				if (75 to INFINITY)
 					stage = 6 // crit
 
 			health_brute.name = "Brute Damage"
@@ -918,17 +921,17 @@
 			switch (burndam)
 				if (-INFINITY to 0)
 					stage = 0 // bright green
-				if (1 to 15)
+				if (0 to 15)
 					stage = 1 // green
-				if (16 to 30)
+				if (15 to 30)
 					stage = 2 // yellow
-				if (31 to 45)
+				if (30 to 45)
 					stage = 3 // orange
-				if (46 to 60)
+				if (45 to 60)
 					stage = 4 // dark orange
-				if (61 to 75)
+				if (60 to 75)
 					stage = 5 // red
-				if (76 to INFINITY)
+				if (75 to INFINITY)
 					stage = 6 // crit
 
 			health_burn.name = "Burn Damage"
@@ -938,17 +941,17 @@
 			switch (toxdam)
 				if (-INFINITY to 0)
 					stage = 0 // bright green
-				if (1 to 15)
+				if (0 to 15)
 					stage = 1 // green
-				if (16 to 30)
+				if (15 to 30)
 					stage = 2 // yellow
-				if (31 to 45)
+				if (30 to 45)
 					stage = 3 // orange
-				if (46 to 60)
+				if (45 to 60)
 					stage = 4 // dark orange
-				if (61 to 75)
+				if (60 to 75)
 					stage = 5 // red
-				if (76 to INFINITY)
+				if (75 to INFINITY)
 					stage = 6 // crit
 
 			health_tox.name = "Toxin Damage"
@@ -958,17 +961,17 @@
 			switch (oxydam)
 				if (-INFINITY to 0)
 					stage = 0 // bright green
-				if (1 to 15)
+				if (0 to 15)
 					stage = 1 // green
-				if (16 to 30)
+				if (15 to 30)
 					stage = 2 // yellow
-				if (31 to 45)
+				if (30 to 45)
 					stage = 3 // orange
-				if (46 to 60)
+				if (45 to 60)
 					stage = 4 // dark orange
-				if (61 to 75)
+				if (60 to 75)
 					stage = 5 // red
-				if (76 to INFINITY)
+				if (75 to INFINITY)
 					stage = 6 // crit
 
 			health_oxy.name = "Oxygen Damage"

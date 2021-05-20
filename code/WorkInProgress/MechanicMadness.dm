@@ -11,6 +11,7 @@
 #define WIFI_NOISE_COOLDOWN 5 SECONDS
 #define WIFI_NOISE_VOLUME 30
 #define LIGHT_UP_HOUSING SPAWN_DBG(0) src.light_up_housing()
+
 // mechanics containers for mechanics components (read: portable horn [read: vuvuzela] honkers! yaaaay!)
 //
 /obj/item/storage/mechanics // generic
@@ -220,7 +221,7 @@
 									 // thinks it's not a constant and refuses to work with it.
 		desc="A rather chunky cabinet for storing up to 23 active mechanic components\
 		 at once.<br>It can only be connected to external components when bolted to the floor.<br>"
-		w_class = 4.0 //all the weight
+		w_class = W_CLASS_BULKY //all the weight
 		num_f_icons=3
 		density=1
 		anchored=false
@@ -253,7 +254,7 @@
 		desc="A massively shrunken component cabinet fitted with a handle and an external\
 		 button. Due to the average mechanic's low arm strength, it only holds 6 components." // same as above
 		 												//if you change the capacity, remember to manually update this string
-		w_class = 3.0 // fits in backpacks but not pockets. no quickdraw honk boxess
+		w_class = W_CLASS_NORMAL // fits in backpacks but not pockets. no quickdraw honk boxess
 		density=0
 		anchored=0
 		num_f_icons=1
@@ -293,7 +294,7 @@
 	density = 1
 	anchored= 1
 	level=1
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
@@ -340,7 +341,7 @@
 	item_state = "swat_suit"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	plane = PLANE_NOSHADOW_BELOW
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	level = 2
 	/// whether or not this component is prevented from being anchored in cabinets
 	var/cabinet_banned = FALSE
@@ -941,7 +942,7 @@
 			if(M == src) continue
 			throwstuff(M)
 			if(count > 50) return
-			if(world.tick_usage > 100) return //fuck it, failsafe
+			if(APPROX_TICK_USE > 100) return //fuck it, failsafe
 
 	proc/activateproc(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -1218,14 +1219,14 @@
 	name = "RegEx Replace Component"
 	desc = ""
 	icon_state = "comp_regrep"
-	var/expression = "original/replacement/g"
 	var/expressionpatt = "original"
 	var/expressionrepl = "replacement"
 	var/expressionflag = "g"
 
 	get_desc()
-		. += {"<span class='notice'>Current Expression: [html_encode(expression)]</span><br/>
+		. += {"<br/><span class='notice'>Current Pattern: [html_encode(expressionpatt)]</span><br/>
 		<span class='notice'>Current Replacement: [html_encode(expressionrepl)]</span><br/>
+		<span class='notice'>Current Flags: [html_encode(expressionflag)]</span><br/>
 		Your replacement string can contain $0-$9 to insert that matched group(things between parenthesis)<br/>
 		$` will be replaced with the text that came before the match, and $' will be replaced by the text after the match.<br/>
 		$0 or $& will be the entire matched string."}
@@ -1233,62 +1234,66 @@
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"replace string", "checkstr")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set regex", "setregex")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set regex replacement", "setregexreplace")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set pattern", "setPatternSignal")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set replacement", "setReplacementSignal")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set flags", "setFlagsSignal")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Pattern","setPattern")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Replacement","setReplacement")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Flags","setFlags")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Regular Expression Replacement","setRegexReplacement")
 
 	proc/setPattern(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Expression Pattern:","Expression setting", expressionpatt) as text
+		var/inp = input(user,"Please enter Pattern:","Pattern setting", expressionpatt) as text
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
 			expressionpatt = inp
 			inp = sanitize(html_encode(inp))
-			expression =("[expressionpatt]/[expressionrepl]/[expressionflag]")
-			boutput(user, "Expression Pattern set to [inp], Current Expression: [sanitize(html_encode(expression))]")
+			boutput(user, "Pattern set to [inp]")
 			tooltip_rebuild = 1
 			return 1
 		return 0
+
+	proc/setPatternSignal(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		LIGHT_UP_HOUSING
+		expressionpatt = input.signal
+		tooltip_rebuild = 1
 
 	proc/setReplacement(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Expression Replacement:","Expression setting", expressionrepl) as text
-		if(!in_interact_range(src, user) || user.stat)
-			return 0
-		if(length(inp))
-			expressionrepl = inp
-			inp = sanitize(html_encode(inp))
-			expression =("[expressionpatt]/[expressionrepl]/[expressionflag]")
-			boutput(user, "Expression Replacement set to [inp], Current Expression: [sanitize(html_encode(expression))]")
-			tooltip_rebuild = 1
-			return 1
-		return 0
-
-	proc/setFlags(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Expression Flags:","Expression setting", expressionflag) as text
-		if(!in_interact_range(src, user) || user.stat)
-			return 0
-		if(length(inp))
-			expressionflag = inp
-			inp = sanitize(html_encode(inp))
-			expression =("[expressionpatt]/[expressionrepl]/[expressionflag]")
-			boutput(user, "Expression Flags set to [inp], Current Expression: [sanitize(html_encode(expression))]")
-			tooltip_rebuild = 1
-			return 1
-		return 0
-
-	proc/setRegexReplacement(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Replacement:","Replacement setting", expressionrepl) as text
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
 			expressionrepl = inp
-			boutput(user, "Replacement set to [html_encode(inp)]")
+			inp = sanitize(html_encode(inp))
+			boutput(user, "Replacement set to [inp]")
 			tooltip_rebuild = 1
 			return 1
 		return 0
+
+	proc/setReplacementSignal(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		LIGHT_UP_HOUSING
+		expressionrepl = input.signal
+		tooltip_rebuild = 1
+
+	proc/setFlags(obj/item/W as obj, mob/user as mob)
+		var/inp = input(user,"Please enter Flags:","Flags setting", expressionflag) as text
+		if(!in_interact_range(src, user) || user.stat)
+			return 0
+		if(length(inp))
+			expressionflag = inp
+			inp = sanitize(html_encode(inp))
+			boutput(user, "Flags set to [inp]")
+			tooltip_rebuild = 1
+			return 1
+		return 0
+
+	proc/setFlagsSignal(var/datum/mechanicsMessage/input)
+		if(level == 2) return
+		LIGHT_UP_HOUSING
+		expressionflag = input.signal
+		tooltip_rebuild = 1
 
 	proc/checkstr(var/datum/mechanicsMessage/input)
 		if(level == 2 || !length(expressionpatt)) return
@@ -1304,15 +1309,6 @@
 			input.signal = mod
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 
-		return
-	proc/setregex(var/datum/mechanicsMessage/input)
-		if(level == 2) return
-		expression = input.signal
-		tooltip_rebuild = 1
-	proc/setregexreplace(var/datum/mechanicsMessage/input)
-		if(level == 2) return
-		expressionrepl = input.signal
-		tooltip_rebuild = 1
 	updateIcon()
 		icon_state = "[under_floor ? "u":""]comp_regrep"
 		return
@@ -1464,7 +1460,8 @@
 	name = "Dispatch Component"
 	desc = ""
 	icon_state = "comp_disp"
-	var/exact_match = 0
+	var/exact_match = FALSE
+	var/single_output = FALSE
 
 	//This stores all the relevant filters per output
 	//Notably, this list doesn't remove entries when an output is removed.
@@ -1472,7 +1469,7 @@
 	var/list/outgoing_filters
 
 	get_desc()
-		. += "<br><span class='notice'>Exact match mode: [exact_match ? "on" : "off"]</span>"
+		. += "<br><span class='notice'>Exact match mode: [exact_match ? "on" : "off"]<br>Single output mode: [single_output ? "on" : "off"]</span>"
 
 	New()
 		..()
@@ -1482,6 +1479,7 @@
 		RegisterSignal(src, list(_COMSIG_MECHCOMP_DISPATCH_VALIDATE), .proc/runFilter)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"dispatch", "dispatch")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle exact matching","toggleExactMatching")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle single output mode","toggleSingleOutput")
 
 	disposing()
 		var/list/signals = list(\
@@ -1498,6 +1496,12 @@
 	proc/toggleExactMatching(obj/item/W as obj, mob/user as mob)
 		exact_match = !exact_match
 		boutput(user, "Exact match mode now [exact_match ? "on" : "off"]")
+		tooltip_rebuild = 1
+		return 1
+
+	proc/toggleSingleOutput(obj/item/W as obj, mob/user as mob)
+		single_output = !single_output
+		boutput(user, "Single output mode now [single_output ? "on" : "off"]")
 		tooltip_rebuild = 1
 		return 1
 
@@ -1529,13 +1533,13 @@
 	//Called when mechanics_holder tries to fire out signals
 	proc/runFilter(var/comsig_target, atom/receiver, var/signal)
 		if(!(receiver in src.outgoing_filters))
-			return 0 //Not filtering this output, let anything pass
+			return src.single_output? _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER : _MECHCOMP_VALIDATE_RESPONSE_GOOD //Not filtering this output, let anything pass
 		for (var/filter in src.outgoing_filters[receiver])
 			var/text_found = findtext(signal, filter)
 			if (exact_match)
 				text_found = text_found && (length(signal) == length(filter))
 			if (text_found)
-				return 0 //Signal validated, let it pass
+				return src.single_output? _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER : _MECHCOMP_VALIDATE_RESPONSE_GOOD //Signal validated, let it pass
 		return 1 //Signal invalid, halt it
 
 	updateIcon()
@@ -2562,7 +2566,7 @@
 
 /obj/item/mechanics/trigger/button
 	name = "Button"
-	desc = "A button. It's red hue enticing you to press it."
+	desc = "A button. Its red hue entices you to press it."
 	icon_state = "comp_button"
 	var/icon_up = "comp_button"
 	var/icon_down = "comp_button1"

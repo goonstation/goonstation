@@ -9,22 +9,24 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if (src.material)
 		src.material.triggerTemp(src, exposed_temperature)
+	if (reagents)
+		reagents.temperature_reagents(exposed_temperature, 10, 10, 300)
+	if(!ON_COOLDOWN(src, "hotspot_expose_to_atoms__1", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__2", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__3", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__4", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__5", 1 SECOND))
+		if (electric) //mbc : i'm putting electric zaps on here because eleczaps ALWAYS happen alongside hotspot expose and i dont want to loop all atoms twice
+			for (var/atom/item in src) //I hate having to add this here too but too many things use hotspot_expose. This might cause lag on large fires.
+				item.temperature_expose(null, exposed_temperature, exposed_volume)
+				if (item?.flags & FLUID_SUBMERGE)
+					item.electric_expose(electric)
+		else
+			for(var/atom/item in src) //I hate having to add this here too but too many things use hotspot_expose. This might cause lag on large fires.
+				item.temperature_expose(null, exposed_temperature, exposed_volume)
+
+
 
 /turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, electric = 0)
 	. = ..()
 	var/datum/gas_mixture/air_contents = return_air()
 
-	if (reagents)
-		reagents.temperature_reagents(exposed_temperature, 10, 10, 300)
-
-	if (electric) //mbc : i'm putting electric zaps on here because eleczaps ALWAYS happen alongside hotspot expose and i dont want to loop all atoms twice
-		for (var/atom/item in src) //I hate having to add this here too but too many things use hotspot_expose. This might cause lag on large fires.
-			item.temperature_expose(null, exposed_temperature, exposed_volume)
-			if (item?.flags & FLUID_SUBMERGE)
-				item.electric_expose(electric)
-	else
-		for(var/atom/item in src) //I hate having to add this here too but too many things use hotspot_expose. This might cause lag on large fires.
-			item.temperature_expose(null, exposed_temperature, exposed_volume)
 
 	if (!air_contents)
 		return 0
@@ -94,6 +96,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		set_dir(pick(cardinal))
 		light = new /datum/light/point
 		light.set_brightness(0.5,queued_run = 1)
@@ -101,16 +104,19 @@
 		// note: light is left disabled until the color is set
 
 	disposing()
+		STOP_TRACKING
 		light.disable(queued_run = 1)
 		if (loc)
 			loc:active_hotspot = null
 		..()
 
 	pooled()
+		STOP_TRACKING
 		..()
 
 	unpooled()
 		..()
+		START_TRACKING
 		if (!light.attached_to)
 			light.attach(src)
 
@@ -208,7 +214,7 @@
 
 			location.assume_air(affected)
 
-			for(var/obj/object as() in location)
+			for(var/obj/object as anything in location)
 				object.temperature_expose(null, temperature, src.volume)
 
 		set_real_color()

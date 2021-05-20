@@ -154,7 +154,10 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 [Make_view_variabls_style()]</head>
 <body>
-	<a style="display:block;position:fixed;right:0;" href='byond://?src=\ref[src];Refresh=\ref[D]'>🔄</a>
+	<div class="refresh_controls">
+		<a href='byond://?src=\ref[src];Pause=\ref[D]'>⏯</a>
+		<a href='byond://?src=\ref[src];Refresh=\ref[D]'>🔄</a>
+	</div>
 	<strong>[title]</strong>
 "})
 
@@ -192,6 +195,7 @@
 	html += " &middot; <a href='byond://?src=\ref[src];HardDelete=\ref[D]'>Hard Delete</a>"
 	if (A || istype(D, /image))
 		html += " &middot; <a href='byond://?src=\ref[src];Display=\ref[D]'>Display In Chat</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];DebugOverlays=\ref[D]'>Debug Overlays</a>"
 
 	if (isobj(D))
 		html += "<br><a href='byond://?src=\ref[src];CheckReactions=\ref[D]'>Check Possible Reactions</a>"
@@ -205,8 +209,8 @@
 			html += " &middot; <a href='byond://?src=\ref[src];GiveSpecial=\ref[D]'>Give Special</a>"
 	if (A)
 		html += "<br><a href='byond://?src=\ref[src];CreatePoster=\ref[D]'>Create Poster</a>"
-		html += "&middot; <a href='byond://?src=\ref[src];Vars=\ref[A];varToEdit=maptext'>Edit Maptext</a>"
-		html += "&middot; <a href='byond://?src=\ref[src];AdminInteract=\ref[D]'>Interact</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];Vars=\ref[A];varToEdit=maptext'>Edit Maptext</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];AdminInteract=\ref[D]'>Interact</a>"
 
 	if (istype(D,/obj/critter))
 		html += "<br> &middot; <a href='byond://?src=\ref[src];KillCritter=\ref[D]'>Kill Critter</a>"
@@ -298,6 +302,11 @@
 			white-space: nowrap;
 			font-size: 80%;
 		}
+		.refresh_controls {
+			display:block;
+			position:fixed;
+			right:0;
+		}
 </style>"}
 
 /client/proc/debug_variable(name, value, var/fullvar, level, max_list_len=150)
@@ -366,7 +375,7 @@
 		var/list/L = value
 		html += "\[[name]\]</th><td>List ([(!isnull(L) && L.len > 0) ? "[L.len] items" : "<em>empty</em>"])"
 
-		if (!isnull(L) && L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || name == "verbs"))
+		if (L?.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || name == "verbs"))
 			// not sure if this is completely right...
 			//if (0) // (L.vars.len > 0)
 			//	html += "<ol>"
@@ -398,13 +407,19 @@
 	return html
 
 /client/Topic(href, href_list, hsrc)
+	if (href_list["Pause"])
+		usr_admin_only
+		src.refresh_varedit_onchange = !src.refresh_varedit_onchange
+		return
 	if (href_list["Refresh"])
 		usr_admin_only
 		src.debug_variables(locate(href_list["Refresh"]))
+		return
 	if (href_list["Refresh-Global-Var"])
 		usr_admin_only
 		src.debug_global_variable(href_list["Refresh-Global-Var"])
 		// src.debug_variable(S, V, V, 0)
+		return
 	if (href_list["JumpToThing"])
 		usr_admin_only
 		var/atom/A = locate(href_list["JumpToThing"])
@@ -416,6 +431,11 @@
 		var/atom/A = locate(href_list["GetThing"])
 		if (ismob(A) || isobj(A))
 			src.cmd_admin_get_mobject(A)
+		return
+	if (href_list["DebugOverlays"])
+		usr_admin_only
+		var/atom/A = locate(href_list["DebugOverlays"])
+		debug_overlays(A, src)
 		return
 	if (href_list["GetThing_Insert"])
 		usr_admin_only
@@ -735,7 +755,7 @@
 			boutput(usr, "If a direction, direction is: [dir]")
 
 	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-		"num","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list", "matrix","null", "ref", "restore to default")
+		"num","num adjust","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list", "matrix","null", "ref", "restore to default")
 
 	if(!class)
 		return
@@ -871,11 +891,26 @@
 				else
 					D.vars[variable] = theInput
 
+		if("num adjust")
+			if(!isnum(oldVal)) return
+			var/val = input("Enter value to adjust by:","[variable]", D == "GLOB" ? global.vars[variable] : D.vars[variable]) as null|num
+			if(!isnull(val))
+				if(set_global)
+					for(var/x in world)
+						if(!istype(x, D.type)) continue
+						x:vars[variable] += val
+						LAGCHECK(LAG_LOW)
+				else
+					if(D == "GLOB")
+						global.vars[variable] += val
+					else
+						D.vars[variable] += val
+
 		if("type")
 			boutput(usr, "<span class='hint'>Type part of the path of the type.</span>")
 			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 			if (typename)
-				var/match = get_one_match(typename, /datum)
+				var/match = get_one_match(typename, /datum, use_concrete_types = FALSE)
 				if (match)
 					if (set_global)
 						for (var/datum/x in world)
@@ -1043,7 +1078,7 @@
 				var/basetype = /obj
 				if (src.holder.rank in list("Host", "Coder", "Administrator"))
 					basetype = /datum
-				var/match = get_one_match(typename, basetype)
+				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE)
 				if (match)
 					if (set_global)
 						for (var/datum/x in world)
@@ -1065,7 +1100,8 @@
 	SPAWN_DBG(0)
 		if (istype(D, /datum))
 			D.onVarChanged(variable, oldVal, D.vars[variable])
-	src.debug_variables(D)
+	if(src.refresh_varedit_onchange)
+		src.debug_variables(D)
 
 /mob/proc/Delete(atom/A in view())
 	set category = "Debug"
@@ -1073,3 +1109,9 @@
 		if("Yes")
 			logTheThing("admin", usr, null, "deleted [A.name] at ([showCoords(A.x, A.y, A.z)])")
 			logTheThing("diary", usr, null, "deleted [A.name] at ([showCoords(A.x, A.y, A.z, 1)])", "admin")
+
+/proc/debug_overlays(target_thing, client/user, indent="")
+	for(var/ov in target_thing:overlays)
+		boutput(user, "[indent][ov:layer] [ov:icon] [ov:icon_state]")
+		if(length(ov:overlays))
+			debug_overlays(ov, user, "&nbsp;[indent]")

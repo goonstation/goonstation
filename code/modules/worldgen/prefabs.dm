@@ -179,12 +179,20 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabPath = "assets/maps/prefabs/prefab_von_ricken.dmm"
 		prefabSizeX = 42
 		prefabSizeY = 40
+
+	candy_shop //Ryn's store from out of time and out of place
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_candy_shop.dmm"
+		prefabSizeX = 20
+		prefabSizeY = 20
+
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit
 		required = 1
 		underwater = 1
-		maxNum = 1
+		maxNum = 3
 		probability = 100
 		prefabPath = "assets/maps/prefabs/prefab_water_oshanpit.dmm"
 		prefabSizeX = 8
@@ -378,6 +386,15 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabPath = "assets/maps/prefabs/prefab_water_danktrench.dmm"
 		prefabSizeX = 16
 		prefabSizeY = 9
+
+	grill //test post do not bonk
+		maxNum = 1
+		prefabPath = "assets/maps/prefabs/prefab_grill.dmm"
+		probability = 30
+		prefabSizeX = 10
+		prefabSizeY = 10
+
+
 
 #if defined(MAP_OVERRIDE_OSHAN)
 	sea_miner

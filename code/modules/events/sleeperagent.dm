@@ -158,7 +158,7 @@
 			obj_count++
 
 	proc/gen_numbers()
-		var/num_numbers = numbers.len
+		var/num_numbers = length(numbers)
 		numbers.len = 0
 		for(var/i = 0, i < num_numbers, i++)
 			numbers += rand(1,99)
@@ -195,7 +195,7 @@
 				if (M.client.ignore_sound_flags)
 					if (M.client.ignore_sound_flags & SOUND_ALL)
 						continue
-				M << sound(soundfile, volume = 50, channel = sound_channel, wait = 1)
+				M << sound(soundfile, volume = 30, channel = sound_channel, wait = 1)
 
 
 	proc/play_all_numbers()

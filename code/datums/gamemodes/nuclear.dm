@@ -11,7 +11,7 @@
 	var/agent_radiofreq = 0 //:h for syndies, randomized per round
 	var/obj/machinery/nuclearbomb/the_bomb = null
 	var/bomb_check_timestamp = 0 // See check_finished().
-	var/const/agents_possible = 8 //If we ever need more syndicate agents. cogwerks - raised from 5
+	var/const/agents_possible = 10 //If we ever need more syndicate agents. cogwerks - raised from 5
 
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
@@ -38,7 +38,7 @@
 
 		if (player.ready)
 			num_players++
-	var/num_synds = max(1, min(round(num_players / 4), agents_possible))
+	var/num_synds = clamp( round(num_players / 6 ), 1, agents_possible)
 
 	possible_syndicates = get_possible_syndicates(num_synds)
 
@@ -49,7 +49,7 @@
 	// I wandered in and made things hopefully a bit easier to work with since we have multiple maps now - Haine
 	var/list/list/target_locations = null
 
-	if (map_settings && islist(map_settings.valid_nuke_targets) && map_settings.valid_nuke_targets.len)
+	if (map_settings && islist(map_settings.valid_nuke_targets) && length(map_settings.valid_nuke_targets))
 		target_locations = map_settings.valid_nuke_targets
 	else
 		if (ismap("COGMAP2"))
@@ -102,7 +102,7 @@
 			"the robotics lab" = list(/area/station/medical/robotics))
 			//"the public pool" = list(/area/station/crew_quarters/pool)) // Don't ask, it just fits all criteria. Deathstar weakness or something.
 
-	if (!islist(target_locations) || !target_locations.len)
+	if (!islist(target_locations) || !length(target_locations))
 		target_locations = list("the station (anywhere)" = list(/area/station))
 		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station! The round will be able to be played like this but it will be unbalanced! Please inform a coder!")
 		logTheThing("debug", null, null, "<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station.")
@@ -171,11 +171,6 @@
 			synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
 			equip_syndicate(synd_mind.current, 1)
 			new /obj/item/device/audio_log/nuke_briefing(synd_mind.current.loc, target_location_name)
-			if (ishuman(synd_mind.current))
-				var/mob/living/carbon/human/M = synd_mind.current
-				M.equip_if_possible(new /obj/item/pinpointer/disk(M), M.slot_in_backpack)
-			else
-				new /obj/item/pinpointer/disk(synd_mind.current.loc)
 			leader_selected = 1
 		else
 			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
@@ -458,7 +453,12 @@ var/syndicate_name = null
 			wins = 0
 		if(isnull(losses))
 			losses = 0
-		src.desc = "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3><br></center>"
+		var/last_reset_date = world.load_intra_round_value("nukie_last_reset")
+		var/last_reset_text = null
+		if(!isnull(last_reset_date))
+			var/days_passed = round((world.realtime - last_reset_date) / (1 DAY))
+			last_reset_text = "<h4>(memorial reset [days_passed] days ago)</h4>"
+		src.desc = "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3><br>[last_reset_text]</center>"
 
 	attack_hand(var/mob/user as mob)
 		if (..(user))
@@ -470,11 +470,9 @@ var/syndicate_name = null
 			wins = 0
 		if(isnull(losses))
 			losses = 0
-		var/dat = ""
-		dat += "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3></center>"
 
 		src.add_dialog(user)
-		user.Browse(dat, "title=Mission Memorial;window=cairngorm_stats_[src];size=300x300")
+		user.Browse(src.desc, "title=Mission Memorial;window=cairngorm_stats_[src];size=300x300")
 		onclose(user, "cairngorm_stats_[src]")
 		return
 

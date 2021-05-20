@@ -149,6 +149,10 @@
 		maxcap = 1
 		name = "Small Cargo Hold"
 
+	Exited(Obj, newloc)
+		. = ..()
+		src.load -= Obj
+
 /obj/item/shipcomponent/secondary_system/cargo/Use(mob/user as mob)
 	activate()
 	return
@@ -198,7 +202,7 @@
 	return
 
 /obj/item/shipcomponent/secondary_system/cargo/Clickdrag_PodToObject(var/mob/living/user,var/atom/A)
-	if (load.len < 1)
+	if (!length(src.load))
 		boutput(user, "<span class='alert'>[src] has nothing to unload.</span>")
 		return
 	var/turf/T = get_turf(A)
@@ -224,7 +228,7 @@
 	return
 
 /obj/item/shipcomponent/secondary_system/cargo/Clickdrag_ObjectToPod(var/mob/living/user,var/atom/A)
-	if (src.load.len > src.maxcap)
+	if (length(src.load) > src.maxcap)
 		boutput(user, "<span class='alert'>[src] has no available cargo space.</span>")
 		return
 
@@ -250,7 +254,7 @@
 	return
 
 /obj/item/shipcomponent/secondary_system/cargo/proc/load(var/atom/movable/C)
-	if(load.len >= maxcap)
+	if(length(src.load) >= maxcap)
 		playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 0)
 		boutput(usr, "[ship.ship_message("Cargo hold is full!")]")
 		return 2
@@ -274,7 +278,8 @@
 			acceptable_cargo = 1
 			break
 	if (isliving(C))
-		if(C:stat == 2) // isliving ***should*** prevent any runtimes from happening. hopefully.
+		var/mob/living/L = C
+		if(isdead(L))
 			acceptable_cargo = 1
 	if (!acceptable_cargo)
 		playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 0)
@@ -284,7 +289,6 @@
 	sleep(0.2 SECONDS)
 	C.set_loc(src)
 	load += C
-	C.anchored = 1 // fix for pulled items getting pulled back out of the cargo hold
 	playsound(src.loc, "sound/machines/ping.ogg", 50, 0)
 	return 0
 
@@ -296,10 +300,7 @@
 		C.set_loc(T)
 	else
 		C.set_loc(ship.loc)
-	C.anchored = 0
 	step(C, turn(ship.dir,180))
-
-	load -= C
 	return C
 
 /obj/item/shipcomponent/secondary_system/cargo/on_shipdeath(var/obj/machinery/vehicle/ship)
@@ -864,7 +865,7 @@
 		boutput(ship.pilot, "<span class='alert'><B>You crash into [M]!</B></span>")
 		shake_camera(M, 8, 16)
 		boutput(M, "<span class='alert'><B>The [src] crashes into [M]!</B></span>")
-		M.changeStatus("stunned", 80)
+		M.changeStatus("stunned", 8 SECONDS)
 		M.changeStatus("weakened", 5 SECONDS)
 		M.TakeDamageAccountArmor("chest", 20, damage_type = DAMAGE_BLUNT)
 		var/turf/target = get_edge_target_turf(ship, ship.dir)
@@ -909,3 +910,72 @@
 		dispense()
 	in_bump = 0
 	return
+
+/obj/item/shipcomponent/secondary_system/syndicate_rewind_system
+	name = "Syndicate Rewind System"
+	desc = "An unfinished pod system, the blueprints for which have been plundered from a raid on a now-destroyed Syndicate base. Requires a unique power source to function."
+	power_used = 50
+	f_active = 1
+	hud_state = "SRS_icon"
+	var/cooldown = 0
+	var/core_inserted = false
+	var/health_snapshot
+	var/image/rewind
+	icon = 'icons/misc/retribution/SWORD_loot.dmi'
+	icon_state= "SRS_empty"
+
+	Use(mob/user as mob)
+		activate()
+		return
+
+	deactivate()
+		return
+
+	activate()
+		if(!core_inserted)
+			boutput(ship.pilot, "<span class='alert'><B>The system requires a unique power source to function!</B></span>")
+			return
+		else if(cooldown > TIME)
+			boutput(ship.pilot, "<span class='alert'><B>The system is still recharging!</B></span>")
+			return
+		else
+			boutput(ship.pilot, "<span class='alert'><B>Snapshot created!</B></span>")
+			playsound(ship.loc, "sound/machines/reprog.ogg", 75, 1)
+			cooldown = 20 SECONDS + TIME
+			health_snapshot = ship.health
+			if(ship.capacity == 1 || istype(/obj/machinery/vehicle/miniputt, ship) || istype(/obj/machinery/vehicle/recon, ship) || istype(/obj/machinery/vehicle/cargo, ship))
+				rewind = image('icons/misc/retribution/SWORD_loot.dmi', "SRS_o_small", "layer" = EFFECTS_LAYER_4)
+			else
+				rewind = image('icons/misc/retribution/64x64.dmi', "SRS_o_large", "layer" = EFFECTS_LAYER_4)
+			rewind.plane = PLANE_SELFILLUM
+			src.ship.UpdateOverlays(rewind, "rewind")
+
+			spawn(5 SECONDS)
+				spawn(1 SECONDS)
+					src.ship.UpdateOverlays(null, "rewind")
+				playsound(ship.loc, "sound/machines/bweep.ogg", 75, 1)
+				if(ship.health < health_snapshot)
+					ship.health = health_snapshot
+					boutput(ship.pilot, "<span class='alert'><B>Snapshot applied!</B></span>")
+				else
+					boutput(ship.pilot, "<span class='alert'><B>Snapshot discarded!</B></span>")
+				return
+		return
+
+	attackby(obj/item/W, mob/user)
+		if (isscrewingtool(W) && core_inserted)
+			core_inserted = false
+			set_icon_state("SRS_empty")
+			user.put_in_hand_or_drop(new /obj/item/sword_core)
+			user.show_message("<span class='notice'>You remove the SWORD core from the Syndicate Rewind System!</span>", 1)
+			desc = "After a delay, rewinds the ship's integrity to the state it was in at the moment of activation. The core is missing."
+			tooltip_rebuild = 1
+			return
+		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
+			core_inserted = true
+			qdel(W)
+			set_icon_state("SRS")
+			user.show_message("<span class='notice'>You insert the SWORD core into the Syndicate Rewind System!</span>", 1)
+			desc = "After a delay, rewinds the ship's integrity to the state it was in at the moment of activation. The core is installed."
+			tooltip_rebuild = 1
+			return

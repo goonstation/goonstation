@@ -41,8 +41,12 @@
 
 /mob/living/proc/handle_digestion(var/mult = 1)
 	if (src.stomach_process && length(src.stomach_process))
+		var/count_to_process = min(length(src.stomach_process), 10)
+		var/count_left = count_to_process
 		for(var/obj/item/reagent_containers/food/snacks/bite/B in stomach_process)
-			B.process_stomach(src, (1 / stomach_process.len) * mult) //1 units processed per Life() tick. Takes an even amt of reagents from all stomach contents
+			B.process_stomach(src, (1 / count_to_process) * mult) //1 units processed per Life() tick. Takes an even amt of reagents from all stomach contents
+			if(count_left-- <= 0)
+				break
 
 //TODO MOVE
 /mob/living/proc/handle_skinstuff(var/mult = 1)
@@ -54,7 +58,7 @@
 		var/multi_process_mult = skin_process.len > 1 ? (skin_process.len * 1.5) : 1
 		var/use_volume = 0.35 * mult * multi_process_mult
 
-		for (var/atom/A as() in skin_process)
+		for (var/atom/A as anything in skin_process)
 
 			if (A.loc != src)
 				skin_process -= A
@@ -72,7 +76,7 @@
 
 /mob/living/vomit(var/nutrition=0, var/specialType=null)
 	..()
-	if (src.stomach_process && src.stomach_process.len)
+	if (src.stomach_process && length(src.stomach_process))
 		var/obj/gross = pick(src.stomach_process)
 		src.stomach_process -= gross
 		gross.set_loc(src.loc)
@@ -367,6 +371,18 @@
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
+
+	onAdd(optional = 80)
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, optional)
+
+	onRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			REMOVE_MOB_PROPERTY(M, PROP_RADPROT, src)
 
 /datum/statusEffect/space_farts
 	id = "food_space_farts"

@@ -10,7 +10,7 @@ var/global/list/material_cache = list()
 /atom/var/datum/material/material = null
 
 /proc/isExploitableObject(var/atom/A)
-	if(istype(A, /obj/item/tile) || istype(A, /obj/item/rods) || istype(A, /obj/item/sheet)) return 1
+	if(istype(A, /obj/item/tile) || istype(A, /obj/item/rods) || istype(A, /obj/item/sheet) || istype(A, /obj/item/cable_coil) || istype(A, /obj/item/raw_material/shard)) return 1
 	return 0
 
 /// This contains the names of the trigger lists on materials. Required for copying materials. Remember to keep this updated if you add new triggers.
@@ -187,7 +187,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	src.alpha = 255
 	src.color = null
 	src.UpdateOverlays(null, "material")
-	if (islist(src.mat_appearances_to_ignore) && src.mat_appearances_to_ignore.len)
+	if (islist(src.mat_appearances_to_ignore) && length(src.mat_appearances_to_ignore))
 		if (mat1.name in src.mat_appearances_to_ignore)
 			set_color_alpha = 0
 	if (set_color_alpha && src.mat_changeappearance && appearance && mat1.applyColor)

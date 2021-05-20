@@ -35,7 +35,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	var/last_dry_start = 0
 	var/dry_time = 100
 
-	flags = NOSPLASH
+	flags = NOSPLASH | FPRINT
 	layer = DECAL_LAYER
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
@@ -96,6 +96,9 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 		src.diseases.len = 0
 
+	pooled()
+		..()
+		src.sampled = initial(src.sampled) //I had to fix fire not resetting on magnesium, and now I find out sampled only resets on magnesium?
 
 	proc/process()
 		if (world.time > last_dry_start + dry_time)
@@ -274,10 +277,12 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 		..()
 
 		SPAWN_DBG(0)
-			if (!src.pooled)
+			if (!src.pooled && !src.disposed && src.loc && length(src.loc.contents) < 15)
 				for (var/obj/O in src.loc)
 					LAGCHECK(LAG_LOW)
-					if (O && (!src.pooled) && prob(max(src?.reagents?.total_volume*5, 10)))
+					if(src.pooled || istype(O, /obj/decal/cleanable/blood) && O != src)
+						break
+					if(prob(max(src?.reagents?.total_volume*5, 10)))
 						O.add_blood(src)
 
 	proc/set_sample_reagent_custom(var/reagent_id, var/amt = 10)
@@ -376,7 +381,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			. = " It's [src.dry == DRY_BLOOD ? "dry and flakey" : "fresh"]."
 
 	proc/handle_reagent_list(var/list/reagent_list)
-		if (!reagent_list || !reagent_list.len)
+		if (!reagent_list || !length(reagent_list))
 			return
 
 		if (reagent_list["bloodc"])
@@ -510,7 +515,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	proc/create_overlay(var/list/icons_to_choose, var/add_color, var/direction)
 		var/blood_addition
-		if (islist(icons_to_choose) && icons_to_choose.len)
+		if (islist(icons_to_choose) && length(icons_to_choose))
 			blood_addition = pick(icons_to_choose)
 		else if (istext(icons_to_choose))
 			blood_addition = icons_to_choose
@@ -642,7 +647,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	stain = "sparkly"
 
 /obj/decal/cleanable/glitter/harmless //updated to not be lethal
-    sample_reagent = "glitter_harmless"
+    sample_reagent = "sparkles"
 
 
 /obj/decal/cleanable/ketchup //It's ketchup that looks like blood.
@@ -733,7 +738,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon_state = "rust1"
 	random_icon_states = list("rust1", "rust2", "rust3","rust4","rust5")
 	can_sample = 1
-	sample_reagent = "iron"
+	sample_reagent = "iron_oxide"
 	sample_verb = "scrape"
 
 /obj/decal/cleanable/rust/jen
@@ -1246,7 +1251,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	CanPass(atom/A, turf/T)
 		if (ismob(A))
-			A.changeStatus("slowed", 2)
+			A.changeStatus("slowed", 0.2 SECONDS)
 			SPAWN_DBG(-1)
 				qdel(src)		//break when walked over
 		else return 1
@@ -1560,10 +1565,6 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		var/turf/T = get_turf(src)
 		..()
 		updateSurroundingMagnesium(T)
-
-	pooled()
-		..()
-		src.sampled = 0 // stop fucking breaking butthead! >:(
 
 	Sample(var/obj/item/W as obj, var/mob/user as mob)
 		..()

@@ -222,7 +222,7 @@ todo: add more small animals!
 	icon_state_dead = "remy-dead"
 	health_brute = 33
 	health_burn = 33
-	pull_w_class = 3
+	pull_w_class = W_CLASS_NORMAL
 
 	setup_overlays()
 		return
@@ -386,7 +386,7 @@ todo: add more small animals!
 		if (..())
 			return 1
 		if (prob(10))
-			src.visible_message("[src] purrs!",\
+			src.audible_message("[src] purrs!",\
 			"You purr!")
 
 /mob/living/critter/small_animal/cat/weak
@@ -421,18 +421,6 @@ todo: add more small animals!
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if (istype(W, /obj/item/card/emag))
 			emag_act(user, W)
-		if (istype(W, /obj/item/card/id/blank_deluxe))
-			if (W.desc == "Some type of microchipped payment card. Looks like it's designed to deal with catcoins.")//Can't change descs
-				if (!swiped && W.stamina_cost == 1)
-					if (user)
-						user.show_text("You swipe down [src]'s back in a petting motion...")
-						src.show_text("[user] swipes the card down your back in a petting motion...")
-					src.visible_message("<span class='combat'>[src] vomits out a wad of paper!</span>",\
-					"<span class='combat'>You vomit out a wad of paper!</span>") //Jones City Puzzle
-					make_cleanable(/obj/decal/cleanable/vomit, src.loc)
-					new /obj/item/paper/jones_note(src.loc)
-					swiped++
-					W.stamina_cost = 2 //Can only use the card once.
 		else
 			..()
 
@@ -456,7 +444,7 @@ todo: add more small animals!
 	var/dogtype = "pug"
 	var/sound/sound_bark = "sound/voice/animal/dogbark.ogg"
 	var/gabe = 0 //sniff. bark bork. brork.
-	pull_w_class = 4
+	pull_w_class = W_CLASS_BULKY
 
 	OnMove()
 		if(client?.player?.shamecubed)
@@ -665,10 +653,9 @@ todo: add more small animals!
 			src.hud.update_health()
 
 	proc/howl()
-		if (prob(60))
-			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='combat'><b>[src]</b> [pick("howls","bays","whines","barks","croons")] to the music! [capitalize(he_or_she(src))] thinks [he_or_she(src)]'s singing!</span>")
-			playsound(get_turf(src), "sound/voice/animal/howl[rand(1,6)].ogg", 100, 0)
+		src.audible_message("<span class='combat'><b>[src]</b> [pick("howls","bays","whines","barks","croons")] to the music! [capitalize(he_or_she(src))] thinks [he_or_she(src)]'s singing!</span>")
+		playsound(get_turf(src), "sound/voice/animal/howl[rand(1,6)].ogg", 100, 0)
+
 
 /* -------------------- Shiba -------------------- */
 
@@ -743,7 +730,7 @@ todo: add more small animals!
 	var/good_grip = 1 // they can hold any sized item because they are stronk birbs, otherwise small_critter limb
 	health_brute = 15
 	health_burn = 15
-	pull_w_class = 4
+	pull_w_class = W_CLASS_BULKY
 
 	New(loc, nspecies)
 		..()
@@ -902,7 +889,7 @@ todo: add more small animals!
 
 		if (apply_random)
 			var/list/rand_s = initial(info.subspecies)
-			if (islist(rand_s) && rand_s.len)
+			if (islist(rand_s) && length(rand_s))
 				info = pick(rand_s)
 
 		src.name = initial(info.name)
@@ -978,7 +965,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		SPAWN_DBG(0)
 			if (!src.species && src.client && islist(parrot_species) && islist(special_parrot_species))
-				var/new_species = input(src, "Select Species", "Select Species") as() in (parrot_species + special_parrot_species)
+				var/new_species = input(src, "Select Species", "Select Species") as anything in (parrot_species + special_parrot_species)
 				if (new_species)
 					src.apply_species(new_species)
 
@@ -1307,6 +1294,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
 
+	setup_healths()
+		. = ..()
+		qdel(src.healthlist["toxin"])
+		src.healthlist -= "toxin"
+
 	setup_overlays()
 		fur_color = src.client?.preferences.AH.customization_first_color
 		eye_color = src.client?.preferences.AH.e_color
@@ -1404,7 +1396,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 10
 	icon_state = "robot_roach"
 	icon_state_dead = "robot_roach-dead"
-	pull_w_class = 3
+	pull_w_class = W_CLASS_NORMAL
 	meat_type = /obj/item/reagent_containers/food/snacks/burger/roburger
 
 	base_move_delay = 1.6
@@ -1733,7 +1725,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (..())
 			return 1
 		if (prob(10))
-			src.visible_message("[src] purrs![prob(20) ? " Wait, what?" : null]",\
+			src.audible_message("[src] purrs![prob(20) ? " Wait, what?" : null]",\
 			"You purr!")
 
 
@@ -1902,7 +1894,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	skinresult = /obj/item/clothing/head/raccoon
 	max_skins = 1
 
-	pull_w_class = 4
+	pull_w_class = W_CLASS_BULKY
 
 	New()
 		..()
@@ -2235,7 +2227,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	hand_count = 2
 	health_brute = 20
 	health_burn = 20
-	pull_w_class = 4
+	pull_w_class = W_CLASS_BULKY
 
 	setup_hands()
 		..()
@@ -2376,8 +2368,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 4
 
 /mob/living/critter/small_animal/figure
-	name = "collectable figure"
-	real_name = "collectable figure"
+	name = "collectible figure"
+	real_name = "collectible figure"
 	desc = "<b><span class='alert'>WARNING:</span> CHOKING HAZARD</b> - Small parts. Not for children under 3 years."
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
@@ -2535,6 +2527,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			return
 		if(voluntary && M != src.last_poked) // if we poked that person it means we implicitly agree
 			boutput(M, "You extend your hand to the mouse, waiting for it to accept.")
+			if (ON_COOLDOWN(src, "mentor mouse pickup popup", 3 SECONDS))
+				return
 			if (alert(src, "[M] wants to pick you up and put you in their pocket. Is that okay with you?", "Hop in the pocket", "Yes", "No") != "Yes")
 				boutput(M, "\The [src] slips out as you try to pick it up.")
 				return
@@ -2555,6 +2549,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		else if(src.client)
 			obs.client = src.client
 		M.setStatus(src.status_name, duration = null)
+		logTheThing("admin", src, M, "jumps into [constructTarget(M, "admin")]'s pocket as a mentor mouse at [log_loc(M)].")
 
 	hand_attack(atom/target, params, location, control, origParams)
 		if(istype(target, /mob/living) && target != src)

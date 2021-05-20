@@ -9,7 +9,7 @@
 	m_amt = 40000
 	g_amt = 0
 	throwforce = 2
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 20
 	var/datum/projectile/ammo_type
@@ -128,7 +128,10 @@
 		else if (A.caliber in K.caliber) // Some guns can have multiple calibers.
 			check = 1
 		else if (K.caliber == null) // Special treatment for zip guns, huh.
-			check = 1
+			if (A.caliber == 1.58)  // Prevent MRPT rocket
+				check = 0
+			else
+				check = 1
 		if (!check)
 			return 0
 			//DEBUG_MESSAGE("Couldn't swap [K]'s ammo ([K.ammo.type]) with [A.type].")
@@ -148,6 +151,7 @@
 			ammoDrop.delete_on_reload = 1 // No duplicating empty magazines, please.
 			ammoDrop.update_icon()
 			usr.put_in_hand_or_drop(ammoDrop)
+			ammoDrop.after_unload(usr)
 			K.ammo.amount_left = 0 // Make room for the new ammo.
 			K.ammo.loadammo(A, K) // Let the other proc do the work for us.
 			//DEBUG_MESSAGE("Swapped [K]'s ammo with [A.type]. There are [A.amount_left] round left over.")
@@ -167,6 +171,7 @@
 			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please.
 			ammoHand.update_icon()
 			usr.put_in_hand_or_drop(ammoHand)
+			ammoHand.after_unload(usr)
 
 			var/obj/item/ammo/bullets/ammoGun = new A.type // Ditto.
 			ammoGun.amount_left = A.amount_left
@@ -198,7 +203,10 @@
 		else if (A.caliber in K.caliber)
 			check = 1
 		else if (K.caliber == null)
-			check = 1 // For zip guns.
+			if (A.caliber > 1) // Prevent MRPT rocket
+				check = 0
+			else
+				check = 1 // For zip guns.
 		if (!check)
 			return 1
 
@@ -275,6 +283,9 @@
 		else
 			if (src.icon_empty)
 				src.icon_state = src.icon_empty
+		return
+
+	proc/after_unload(mob/user)
 		return
 
 /obj/item/ammo/bullets/derringer
@@ -630,7 +641,7 @@
 	icon_state = "40mmR"
 	ammo_type = new/datum/projectile/bullet/cannon
 	caliber = 0.787
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	icon_dynamic = 1
 	icon_empty = "40mmR-0"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
@@ -647,7 +658,7 @@
 	icon_state = "40mmR"
 	ammo_type = new/datum/projectile/bullet/autocannon
 	caliber = 1.57
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	icon_dynamic = 0
 	icon_empty = "40mmR-0"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
@@ -674,10 +685,10 @@
 	icon_state = "40mmR"
 	ammo_type = new/datum/projectile/bullet/grenade_round/
 	caliber = 1.57
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	icon_dynamic = 0
 	icon_empty = "40mmR-0"
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	sound_load = 'sound/weapons/gunload_40mm.ogg'
 
 	explosive
 		desc = "High Explosive Dual Purpose grenade rounds compatible with grenade launchers. Effective against infantry and armour."
@@ -699,10 +710,10 @@
 	icon_state = "40mmB"
 	ammo_type = new/datum/projectile/bullet/smoke
 	caliber = 1.57
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	icon_dynamic = 0
 	icon_empty = "40mmB-0"
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	sound_load = 'sound/weapons/gunload_40mm.ogg'
 
 	single
 		amount_left = 1
@@ -716,10 +727,10 @@
 	max_amount = 2
 	icon_state = "40mmB"
 	caliber = 1.57
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	icon_dynamic = 0
 	icon_empty = "40mmB-0"
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	sound_load = 'sound/weapons/gunload_40mm.ogg'
 
 //basically an internal object for converting hand-grenades into shells, but can be spawned independently.
 /obj/item/ammo/bullets/grenade_shell
@@ -731,11 +742,11 @@
 	icon_state = "paintballr-4"
 	ammo_type = new/datum/projectile/bullet/grenade_shell
 	caliber = 1.57
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	icon_dynamic = 0
 	icon_empty = "paintballb-4"
 	delete_on_reload = 0 //deleting it before the shell can be fired breaks things
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	sound_load = 'sound/weapons/gunload_40mm.ogg'
 	force_new_current_projectile = 1
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
@@ -778,7 +789,12 @@
 		else
 			src.icon_state = "40mmR-0"
 
-
+	after_unload(mob/user)
+		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
+		if(AMMO.has_grenade && src.delete_on_reload)
+			qdel(src)
+			user.put_in_hand_or_drop(AMMO.get_nade())
+			AMMO.unload_nade()
 
 // Ported from old, non-gun RPG-7 object class (Convair880).
 /obj/item/ammo/bullets/rpg
@@ -790,7 +806,7 @@
 	icon_state = "rpg_rocket"
 	ammo_type = new /datum/projectile/bullet/rpg
 	caliber = 1.58
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	delete_on_reload = 1
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
@@ -947,7 +963,7 @@
 			swapped_cell.set_loc(old_loc)
 			var/obj/item/storage/cell_container = old_loc
 			cell_container.hud.remove_item(src)
-			cell_container.hud.update()
+			cell_container.hud.update(user)
 		else
 			M.put_in_hand_or_drop(swapped_cell)
 
@@ -1076,7 +1092,7 @@
 	charge = 100.0
 	max_charge = 100.0
 	cycle = 0
-	recharge_rate = 5.0
+	recharge_rate = 7.5
 
 /obj/item/ammo/power_cell/self_charging/ntso_baton
 	name = "Power Cell - NTSO Stun Baton"
@@ -1146,7 +1162,7 @@
 	icon_state = "regularrocket"
 	ammo_type = new /datum/projectile/bullet/antisingularity
 	caliber = 1.12
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	delete_on_reload = 1
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
@@ -1159,7 +1175,7 @@
 	icon_state = "mininuke"
 	ammo_type = new /datum/projectile/bullet/mininuke
 	caliber = 1.12
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	delete_on_reload = 1
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
@@ -1171,7 +1187,7 @@
 	max_amount = 6
 	icon_state = "gungun"
 	throwforce = 2
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 20
 	ammo_type = new /datum/projectile/special/spawner/gun
@@ -1188,7 +1204,7 @@
 	max_amount = 1
 	ammo_type = new/datum/projectile/special/meowitzer
 	caliber = 20
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 
 
 /obj/item/ammo/bullets/meowitzer/inert
@@ -1200,7 +1216,7 @@
 
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 	id = "powercellswap"
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "power_cell"

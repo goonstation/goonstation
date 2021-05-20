@@ -237,16 +237,29 @@ var/zapLimiter = 0
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
 /obj/machinery/power/apc/proc/updateicon()
+	ClearAllOverlays(1)
 	if(opened)
-		icon_state = "[ cell ? "apc2" : "apc1" ]" // if opened, show cell if it's inserted
-		ClearAllOverlays(1)
+		icon_state = "apc1"
+
+		if (cell)
+			// if opened, update overlays for cell
+			var/image/I_cell = SafeGetOverlayImage("cell", 'icons/obj/power.dmi', "apc-[cell.icon_state]")
+			UpdateOverlays(I_cell, "cell", 0, 1)
+
 	else if(emagged)
 		icon_state = "apcemag"
-		ClearAllOverlays(1)
 		return
 	else if(wiresexposed)
 		icon_state = "apcwires"
-		ClearAllOverlays(1)
+		var/image/I_wireorange = SafeGetOverlayImage("wireorange", 'icons/obj/power.dmi', "apccut-orange")
+		var/image/I_wiredarkred = SafeGetOverlayImage("wiredarkred", 'icons/obj/power.dmi', "apccut-darkred")
+		var/image/I_wirewhite = SafeGetOverlayImage("wirewhite", 'icons/obj/power.dmi', "apccut-white")
+		var/image/I_wireyellow = SafeGetOverlayImage("wireyellow", 'icons/obj/power.dmi', "apccut-yellow")
+		UpdateOverlays(isWireColorCut(APC_WIRE_IDSCAN) ? I_wireorange : null, "wireorange", 0, 1)
+		UpdateOverlays(isWireColorCut(APC_WIRE_MAIN_POWER1) ? I_wiredarkred : null, "wiredarkred", 0, 1)
+		UpdateOverlays(isWireColorCut(APC_WIRE_MAIN_POWER2) ? I_wirewhite : null, "wirewhite", 0, 1)
+		UpdateOverlays(isWireColorCut(APC_WIRE_AI_CONTROL) ? I_wireyellow : null, "wireyellow", 0, 1)
+
 		return
 	else
 		icon_state = "apc0"
@@ -366,6 +379,7 @@ var/zapLimiter = 0
 					icon_state = initial(src.icon_state)
 					operating = 1
 					update()
+					updateicon()
 					return
 			return
 
@@ -807,8 +821,8 @@ var/zapLimiter = 0
 	var/stun = (user.getStatusDuration("stunned") < shock_damage * 10) ? shock_damage * 10 : 2
 	user.do_disorient(130, weakened = weak, stunned = stun, disorient = 80, remove_stamina_below_zero = 0)
 #else
-	if(user.getStatusDuration("stunned") < shock_damage * 10)	user.changeStatus("stunned", shock_damage * 10)
-	if(user.getStatusDuration("weakened") < shock_damage * 20)	user.changeStatus("weakened", shock_damage * 20)
+	if(user.getStatusDuration("stunned") < shock_damage * 10)	user.changeStatus("stunned", shock_damage SECONDS)
+	if(user.getStatusDuration("weakened") < shock_damage * 20)	user.changeStatus("weakened", shock_damage * 2 SECONDS)
 #endif
 	for(var/mob/M in AIviewers(src))
 		if(M == user)	continue
@@ -838,6 +852,7 @@ var/zapLimiter = 0
 				src.aidisabled = 1
 			src.updateUsrDialog()
 //		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
+	updateicon()
 
 /obj/machinery/power/apc/proc/bite(var/wireColor) // are you fuckin huffing or somethin
 	if (is_incapacitated(usr))
@@ -863,6 +878,7 @@ var/zapLimiter = 0
 		if(APC_WIRE_IDSCAN) // basically pulse but with a really good chance of dying
 			src.shock(usr, 90, 1)
 			src.locked = 0
+	updateicon()
 
 
 /obj/machinery/power/apc/proc/mend(var/wireColor)
@@ -891,6 +907,7 @@ var/zapLimiter = 0
 				src.aidisabled = 0
 			src.updateUsrDialog()
 //		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
+	updateicon()
 
 /obj/machinery/power/apc/proc/pulse(var/wireColor)
 	if (is_incapacitated(usr))

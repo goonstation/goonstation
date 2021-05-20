@@ -194,7 +194,7 @@ var/list/dirty_keystates = list()
 
 		if (parameters["left"])	//Had to move this up into here as the clickbuffer was causing issues.
 			var/list/contexts = mob.checkContextActions(object)
-			
+
 			if(length(contexts))
 				mob.showContextActions(contexts, object)
 				return
@@ -334,10 +334,10 @@ var/list/dirty_keystates = list()
 		while (1)
 			process_keystates()
 
-			for(var/client/C as() in clients) // as() is ok here since we nullcheck
+			for(var/client/C as anything in clients) // as() is ok here since we nullcheck
 				C?.mob?.internal_process_move(C.key_state)
 
-			for(var/datum/aiHolder/ai as() in ai_move_scheduled) // as() is ok here since we nullcheck
+			for(var/datum/aiHolder/ai as anything in ai_move_scheduled) // as() is ok here since we nullcheck
 				if (ai?.move_target)
 					ai.move_step()
 

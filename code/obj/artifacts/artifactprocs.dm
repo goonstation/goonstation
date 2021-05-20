@@ -35,7 +35,7 @@
 	// the sanity check detects that an artifact doesn't have the proper shit set up it'll just wipe out the artifact and stop
 	// the rest of the proc from occurring.
 	// This proc should be called in an if statement at the start of every artifact proc, since it returns 0 or 1.
-	if (!src.artifact)
+	if (!src.artifact || src.disposed)
 		return 0
 	// if the artifact var isn't set at all, it's probably not an artifact so don't bother continuing
 	if (!istype(src.artifact,/datum/artifact/))
@@ -101,8 +101,9 @@
 	A.react_mpct[2] = AO.impact_reaction_two
 	A.react_heat[1] = AO.heat_reaction_one
 	A.activ_sound = pick(AO.activation_sounds)
-	A.fault_types |= AO.fault_types
+	A.fault_types |= AO.fault_types - A.fault_blacklist
 	A.internal_name = AO.generate_name()
+	A.used_names[AO.type_name] = A.internal_name
 	A.nofx = AO.nofx
 
 	ArtifactDevelopFault(10)
@@ -130,9 +131,6 @@
 	if (!src.ArtifactSanityCheck())
 		return 1
 	var/datum/artifact/A = src.artifact
-	if(A.internal_name)
-		src.real_name = A.internal_name
-		UpdateName()
 	if (A.activated)
 		return 1
 	if (A.triggers.len < 1 && !A.automatic_activation)
@@ -168,6 +166,63 @@
 	else
 		src.UpdateOverlays(null, "activated")
 	A.effect_deactivate(src)
+
+/obj/proc/Artifact_emp_act()
+	if (!src.ArtifactSanityCheck())
+		return
+	src.ArtifactStimulus("elec", 800)
+	src.ArtifactStimulus("radiate", 3)
+
+/obj/proc/Artifact_blob_act(var/power)
+	if (!src.ArtifactSanityCheck())
+		return
+	src.ArtifactStimulus("force", power)
+	src.ArtifactStimulus("carbtouch", 1)
+
+/obj/proc/Artifact_reagent_act(var/reagent_id, var/volume)
+	if (!src.ArtifactSanityCheck())
+		return
+	var/datum/artifact/A = src.artifact
+	switch(reagent_id)
+		if("radium","porktonium")
+			src.ArtifactStimulus("radiate", round(volume / 10))
+		if("strange_reagent")
+			src.ArtifactStimulus("radiate", round(volume / 5))
+		if("uranium","polonium")
+			src.ArtifactStimulus("radiate", round(volume / 2))
+		if("dna_mutagen","mutagen","omega_mutagen")
+			if (A.artitype.name == "martian")
+				ArtifactDevelopFault(80)
+		if("phlogiston","el_diablo","thermite","thalmerite","argine")
+			src.ArtifactStimulus("heat", 310 + (volume * 5))
+		if("napalm_goo","kerosene","ghostchilijuice")
+			src.ArtifactStimulus("heat", 310 + (volume * 10))
+		if("infernite","foof","dbreath")
+			src.ArtifactStimulus("heat", 310 + (volume * 15))
+		if("cryostylane")
+			src.ArtifactStimulus("heat", 310 - (volume * 10))
+		if("freeze")
+			src.ArtifactStimulus("heat", 310 - (volume * 15))
+		if("voltagen","energydrink")
+			src.ArtifactStimulus("elec", volume * 50)
+		if("acid","acetic_acid")
+			src.ArtifactTakeDamage(volume * 2)
+		if("pacid","clacid","nitric_acid")
+			src.ArtifactTakeDamage(volume * 10)
+		if("george_melonium")
+			var/random_stimulus = pick("heat","force","radiate","elec")
+			var/random_strength = 0
+			switch(random_stimulus)
+				if ("heat")
+					random_strength = rand(200,400)
+				if ("elec")
+					random_strength = rand(5,5000)
+				if ("force")
+					random_strength = rand(3,30)
+				if ("radiate")
+					random_strength = rand(1,10)
+			src.ArtifactStimulus(random_stimulus,random_strength)
+	return
 
 /obj/proc/Artifact_attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/cargotele)) // Re-added (Convair880).
@@ -210,6 +265,12 @@
 			src.visible_message("<span class='alert'>[user.name] burns the artifact with [ZIP]!</span>")
 			return 0
 
+	if(istype(W,/obj/item/device/igniter))
+		var/obj/item/device/igniter/igniter = W
+		src.ArtifactStimulus("elec", 700)
+		src.ArtifactStimulus("heat", 385)
+		src.visible_message("<span class='alert'>[user.name] sparks against \the [src] with \the [igniter]!</span>")
+
 	if (istype(W, /obj/item/robodefibrillator))
 		var/obj/item/robodefibrillator/R = W
 		if (R.do_the_shocky_thing(user))
@@ -226,6 +287,17 @@
 			src.visible_message("<span class='alert'>[user.name] beats the artifact with [BAT]!</span>")
 			BAT.process_charges(-1, user)
 			return 0
+
+	if(istype(W,/obj/item/device/flyswatter))
+		var/obj/item/device/flyswatter/swatter = W
+		src.ArtifactStimulus("elec", 1500)
+		src.visible_message("<span class='alert'>[user.name] shocks \the [src] with \the [swatter]!</span>")
+		return 0
+
+	if(ispulsingtool(W))
+		src.ArtifactStimulus("elec", 1000)
+		src.visible_message("<span class='alert'>[user.name] shocks \the [src] with \the [W]!</span>")
+		return 0
 
 	if (istype(W,/obj/item/parts/robot_parts))
 		var/obj/item/parts/robot_parts/THISPART = W
@@ -277,28 +349,35 @@
 	src.ArtifactHitWith(W, user)
 	return 1
 
-/obj/proc/ArtifactFaultUsed(var/mob/user)
+#define FAULT_RESULT_INVALID 2 // artifact can't do faults
+#define FAULT_RESULT_STOP	1		 // we gotta stop, artifact was destroyed or deactivated
+#define FAULT_RESULT_SUCCESS 0 // everything's cool!
+/obj/proc/ArtifactFaultUsed(var/mob/user, var/atom/cosmeticSource = null)
 	// This is for a tool/item artifact that you can use. If it has a fault, whoever is using it is basically rolling the dice
 	// every time the thing is used (a check to see if rand(1,faultcount) hits 1 most of the time) and if they're unlucky, the
 	// thing will deliver it's payload onto them.
 	// There's also no reason this can't be used whoever the artifact is being used *ON*, also!
+	// The cosmetic source is just to specify where the effect comes from in the visual message.
+	// So that you can make it come from something like a forcefield or bullet instead of the artifact itself!
 	if (!src.ArtifactSanityCheck())
 		return
 
 	var/datum/artifact/A = src.artifact
 
 	if (!A.faults.len)
-		return // no faults, so dont waste any more time
-	if (!A.activated)
-		return // doesn't make a lot of sense for an inert artifact to go haywire
+		return FAULT_RESULT_INVALID // no faults, so dont waste any more time
+	if (!cosmeticSource)
+		cosmeticSource = src
 	var/halt = 0
 	for (var/datum/artifact_fault/F in A.faults)
 		if (prob(F.trigger_prob))
 			if (F.halt_loop)
 				halt = 1
-			F.deploy(src,user)
+			F.deploy(src,user,cosmeticSource)
 		if (halt)
-			break
+			return FAULT_RESULT_STOP
+	return FAULT_RESULT_SUCCESS
+
 
 /obj/proc/ArtifactStimulus(var/stimtype, var/strength = 0)
 	// This is what will be used for most of the testing equipment stuff. Stimtype is what kind of stimulus the artifact is being
@@ -415,10 +494,6 @@
 
 	var/datum/artifact/A = src.artifact
 
-	ArtifactLogs(usr, null, src, "destroyed", null, 0)
-
-	artifact_controls.artifacts -= src
-
 	var/turf/T = get_turf(src)
 	if (istype(T,/turf/))
 		switch(A.artitype.name)
@@ -432,6 +507,12 @@
 				T.visible_message("<span class='alert'><B>[src] warps in on itself and vanishes!</B></span>")
 			if("precursor")
 				T.visible_message("<span class='alert'><B>[src] implodes, crushing itself into dust!</B></span>")
+
+	src.ArtifactDeactivated()
+
+	ArtifactLogs(usr, null, src, "destroyed", null, 0)
+
+	artifact_controls.artifacts -= src
 
 	qdel(src)
 	return
@@ -453,7 +534,7 @@
 		faultprob *= 2 // eldritch artifacts fucking hate you and are twice as likely to go faulty
 	faultprob = max(0,min(faultprob,100))
 
-	if (prob(faultprob) && A.fault_types.len)
+	if (prob(faultprob) && length(A.fault_types))
 		var/new_fault = weighted_pick(A.fault_types)
 		if (ispath(new_fault))
 			var/datum/artifact_fault/F = new new_fault(A)

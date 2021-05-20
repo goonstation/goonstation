@@ -4,10 +4,12 @@
 
 /datum/artifact/forcefield_gen
 	associated_object = /obj/artifact/forcefield_generator
+	type_name = "Forcefield Generator"
 	rarity_weight = 450
 	validtypes = list("wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/carbon_touch,
 	/datum/artifact_trigger/silicon_touch)
+	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activated = 0
 	activ_text = "comes to life, projecting out a wall of force!"
 	deact_text = "shuts down, causing the forcefield to vanish!"
@@ -43,7 +45,7 @@
 		var/turf/Aloc = get_turf(O)
 		for (var/turf/T in range(field_radius,Aloc))
 			if(get_dist(O,T) == field_radius)
-				var/obj/forcefield/wand/FF = new /obj/forcefield/wand(T,0,src.icon_state)
+				var/obj/forcefield/wand/FF = new /obj/forcefield/wand(T,0,src.icon_state,O)
 				src.forcefields += FF
 		SPAWN_DBG(field_time)
 			if (O)

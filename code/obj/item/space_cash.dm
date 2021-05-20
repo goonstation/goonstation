@@ -13,7 +13,7 @@
 	throwforce = 1.0
 	throw_speed = 1
 	throw_range = 8
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	burn_point = 400
 	burn_possible = 2
 	burn_output = 750
@@ -64,13 +64,13 @@
 			if (-INFINITY to 9)
 				src.icon_state = "cashgreen"
 			if (10 to 49)
-				src.icon_state = "spacecash"
-			if (50 to 499)
 				src.icon_state = "cashblue"
-			if (500 to 999)
+			if (50 to 499)
 				src.icon_state = "cashindi"
-			if (1000 to 999999)
+			if (500 to 999)
 				src.icon_state = "cashpurp"
+			if (1000 to 999999)
+				src.icon_state = "cashred"
 			else // 1mil bby
 				src.icon_state = "cashrbow"
 
@@ -185,7 +185,7 @@
 		return
 
 	UpdateName()
-		src.name = "[src.amount] [name_prefix(null, 1)][pick("bit","butt","cosby ","bart", "bat", "bet", "bot")]coin[s_es(src.amount)][name_suffix(null, 1)]"
+		src.name = "[src.amount] [name_prefix(null, 1)][pick("bit","butt","shitty-bill ","bart", "bat", "bet", "bot")]coin[s_es(src.amount)][name_suffix(null, 1)]"
 
 	process()
 		src.amount = rand(1, 1000) / rand(10, 1000)
@@ -263,7 +263,7 @@
 	throwforce = 1.0
 	throw_speed = 1
 	throw_range = 8
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	burn_possible = 0
 	health = 1000
 	amount = 1

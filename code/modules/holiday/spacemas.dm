@@ -159,7 +159,8 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	setup_default_tool_path = /obj/item/device/guardbot_tool/xmas
 
 	speak(var/message)
-		return ..("<font face='Segoe Script'><i><b>[message]</b></i></font>")
+		message = ("<font face='Segoe Script'><i><b>[message]</b></i></font>")
+		. = ..()
 
 	explode()
 		if(src.exploding) return
@@ -505,7 +506,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "snowball"
 	amount = 2
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 1
 	doants = 0
 	food_color = "#FFFFFF"
@@ -523,8 +524,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	heal(var/mob/living/M)
 		if (!M || !isliving(M))
 			return
-		M.bodytemperature -= rand(1, 10)
-		M.show_text("That was chilly!", "blue")
+		var/mob/living/L = M
+		L.bodytemperature -= rand(1, 10)
+		L.show_text("That was chilly!", "blue")
 
 	proc/hit(var/mob/living/M as mob, var/message = 1)
 		if (!M || !isliving(M))
@@ -949,7 +951,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				for (var/mob/C in viewers(src))
 					shake_camera(C, 8, 16)
 					C.show_message("<span class='alert'><B>[src] tramples right over [M]!</B></span>", 1)
-				M.changeStatus("stunned", 80)
+				M.changeStatus("stunned", 8 SECONDS)
 				M.changeStatus("weakened", 5 SECONDS)
 				random_brute_damage(M, 10,1)
 				M.take_brain_damage(rand(5,10))
@@ -1154,7 +1156,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 							src.verbs += /mob/living/carbon/human/krampus/verb/krampus_crush
 							return
 						random_brute_damage(H, 10,1)
-						H.changeStatus("stunned", 80)
+						H.changeStatus("stunned", 8 SECONDS)
 						H.changeStatus("weakened", 5 SECONDS)
 						if (H.health < 0)
 							src.visible_message("<span class='alert'><B>[H] bursts like a ripe melon! Holy shit!</B></span>")
@@ -1221,10 +1223,10 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	attack_hand(mob/user as mob)
 		if (..())
 			return
-		if (!islist(src.gift_paths) || !src.gift_paths.len)
+		if (!islist(src.gift_paths) || !length(src.gift_paths))
 			src.gift_paths = generic_gift_paths + xmas_gift_paths
 
-		if (!islist(src.questionable_gift_paths) || !src.questionable_gift_paths.len)
+		if (!islist(src.questionable_gift_paths) || !length(src.questionable_gift_paths))
 			src.questionable_gift_paths = questionable_generic_gift_paths + questionable_xmas_gift_paths
 
 		if (user.key in giftees)

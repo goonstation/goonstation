@@ -2,7 +2,7 @@
 
 /mob/living
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS | IS_FARTABLE
-	var/spell_soulguard = 0
+	var/spell_soulguard = 0		//0 = none, 1 = normal_soulgruard, 2 = wizard_ring_soulguard
 
 	// this is a read only variable. do not set it directly.
 	// use set_burning or update_burning instead.
@@ -79,10 +79,8 @@
 
 	var/throws_can_hit_me = 1
 
-	var/obj/chat_maptext_holder/chat_text = new
 	var/last_heard_name = null
 	var/last_chat_color = null
-
 
 	var/list/random_emotes
 
@@ -162,9 +160,9 @@
 			thishud.remove_object(stamina_bar)
 		stamina_bar = null
 
-	for (var/atom/A as() in stomach_process)
+	for (var/atom/A as anything in stomach_process)
 		qdel(A)
-	for (var/atom/A as() in skin_process)
+	for (var/atom/A as anything in skin_process)
 		qdel(A)
 	stomach_process = null
 	skin_process = null
@@ -200,7 +198,8 @@
 				boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
 	#undef VALID_MOB
 
-	if (deathConfettiActive || (src.mind && src.mind.assigned_role == "Clown")) //Active if XMAS or manually toggled. Or if theyre a clown. Clowns always have death confetti.
+	// Active if XMAS or manually toggled.
+	if (deathConfettiActive)
 		src.deathConfetti()
 
 	var/youdied = "You have died!"
@@ -278,7 +277,7 @@
 
 /mob/living/Login()
 	..()
-	if(!isdead(src))
+	if(!isdead(src) && !istype(get_area(src), /area/afterlife/bar) && !isVRghost(src) && !isghostcritter(src) && !isghostdrone(src))
 		respawn_controller.unsubscribeRespawnee(src.ckey)
 
 /mob/living/Life(datum/controller/process/mobs/parent)
@@ -502,7 +501,7 @@
 				if (use_delay)
 					src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 
-				if (src.invisibility > 0 && get_dist(src, target) > 0) // dont want to check for a cloaker every click if we're not invisible
+				if (src.invisibility > 0 && (target != src && isturf(target.loc))) // dont want to check for a cloaker every click if we're not invisible
 					for (var/obj/item/cloaking_device/I in src)
 						if (I.active)
 							I.deactivate(src)
@@ -607,7 +606,7 @@
 	setStatus("burning", new_value*10)
 
 /mob/living/proc/update_burning(var/change)
-	changeStatus("burning", change*10)
+	changeStatus("burning", change SECONDS)
 
 /mob/living/proc/update_burning_icon(var/force_remove = 0)
 	return
@@ -839,6 +838,14 @@
 		if ((n >= 0 && n <= 20) || n == 420)
 			speech_bubble.icon_state = "[n]"
 
+	if(src.client)
+		if(singing)
+			phrase_log.log_phrase("sing", message)
+		else if(message_mode)
+			phrase_log.log_phrase("radio", message)
+		else
+			phrase_log.log_phrase("say", message)
+
 	if (src.stuttering)
 		message = stutter(message)
 
@@ -1010,7 +1017,7 @@
 	var/list/heard_a = list() // understood us
 	var/list/heard_b = list() // didn't understand us
 
-	for (var/mob/M as() in listening)
+	for (var/mob/M as anything in listening)
 		if(M.mob_flags & MOB_HEARS_ALL)
 			continue
 		else if (M.say_understands(src, forced_language))
@@ -1025,16 +1032,17 @@
 		//new /obj/maptext_junk/speech(src, msg = messages[1], style = src.speechpopupstyle) // sorry, Zamu
 		if(!last_heard_name || src.get_heard_name() != src.last_heard_name)
 			var/num = hex2num(copytext(md5(src.get_heard_name()), 1, 7))
-			src.last_chat_color = hsv2rgb(num % 360, (num / 360) % 10 / 100 + 0.18, num / 360 / 10 % 15 / 100 + 0.85)
-		/*
+			src.last_chat_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
+
 		var/turf/T = get_turf(src)
-		for(var/i = 0; i < 3; i++) T = get_step(T, WEST)
-		for(var/i = 0; i < 7; i++)
-			for(var/mob/living/M in T)
-				for(var/image/chat_maptext/I in M.chat_text.lines)
-					I.bump_up()
+		for(var/i = 0; i < 2; i++) T = get_step(T, WEST)
+		for(var/i = 0; i < 5; i++)
+			for(var/mob/living/L in T)
+				if(L != src)
+					for(var/image/chat_maptext/I in L.chat_text.lines)
+						I.bump_up()
 			T = get_step(T, EAST)
-		*/
+
 		var/singing_italics = singing ? " font-style: italic;" : ""
 		var/maptext_color
 		if (singing)
@@ -1057,12 +1065,6 @@
 
 	if (length(heard_b))
 		processed = saylist(messages[2], heard_b, olocs, thickness, italics, processed, 1)
-
-	if(src.client)
-		if(singing)
-			phrase_log.log_phrase("sing", messages[1])
-		else
-			phrase_log.log_phrase("say", messages[1])
 
 	message = src.say_quote(messages[1])
 
@@ -1125,7 +1127,7 @@
 // helper proooocs
 
 /mob/proc/send_hear_talks(var/message_range, var/messages, var/heardname, var/lang_id)	//helper to send hear_talk to all mob, obj, and turf
-	for (var/atom/A as() in all_view(message_range, src))
+	for (var/atom/A as anything in all_view(message_range, src))
 		A.hear_talk(src,messages,heardname,lang_id)
 
 /mob/proc/get_heard_name()
@@ -1187,8 +1189,6 @@
 		if (checkpath in default_mob_static_icons)
 			if (istype(default_mob_static_icons[checkpath], /image))
 				src.static_image = image(default_mob_static_icons[checkpath])
-				DEBUG_MESSAGE(bicon(src.static_image) + "<br>\ref[src.static_image]")
-				DEBUG_MESSAGE(bicon(default_mob_static_icons[checkpath]) + "<br>\ref[default_mob_static_icons[checkpath]]")
 				src.static_image.override = 1
 				src.static_image.loc = src
 				src.static_image.plane = PLANE_LIGHTING
@@ -1203,8 +1203,6 @@
 				src.static_image = getTexturedImage(src.default_static_icon ? src.default_static_icon : icon(src.icon, src.icon_state), "static", ICON_OVERLAY)
 			if (src.static_image)
 				default_mob_static_icons[checkpath] = image(src.static_image)
-				DEBUG_MESSAGE(bicon(src.static_image) + "<br>\ref[src.static_image]")
-				DEBUG_MESSAGE(bicon(default_mob_static_icons[checkpath]) + "<br>\ref[default_mob_static_icons[checkpath]]")
 				src.static_image.override = 1
 				src.static_image.loc = src
 				src.static_image.plane = PLANE_LIGHTING
@@ -1262,7 +1260,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		return
 
 	if (thing)
-		if (M.client && alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Choice", "Yes", "No") == "Yes" || M.ai_active)
+
+		if (M.client && tgui_alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Accept given [thing]", list("Yes", "No"), timeout = 10 SECONDS) == "Yes" || M.ai_active)
 			if (!thing || !M || !(get_dist(src, M) <= 1) || thing.loc != src || src.restrained())
 				return
 			src.u_equip(thing)
@@ -1944,14 +1943,14 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		if (26 to 59)
 			playsound(src.loc, "sound/effects/elec_bzzz.ogg", 50, 1)
 		if (60 to 99)
-			playsound(src.loc, "sound/effects/elec_bigzap.ogg", 50, 1)  // begin the fun arcflash
+			playsound(src.loc, "sound/effects/elec_bigzap.ogg", 40, 1)  // begin the fun arcflash
 			boutput(src, "<span class='alert'><b>[origin] discharges a violent arc of electricity!</b></span>")
 			src.apply_flash(60, 0, 10)
 			if (H)
 				H.cust_one_state = pick("xcom","bart","zapped")
 				H.set_face_icon_dirty()
 		if (100 to INFINITY)  // cogwerks - here are the big fuckin murderflashes
-			playsound(src.loc, "sound/effects/elec_bigzap.ogg", 50, 1)
+			playsound(src.loc, "sound/effects/elec_bigzap.ogg", 40, 1)
 			playsound(src.loc, "explosion", 50, 1)
 			src.flash(60)
 			if (H)

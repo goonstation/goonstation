@@ -14,6 +14,7 @@
 	soundproofing = 0
 	on = 1
 	locked = 1
+	access_lookup = "Captain"
 	var/atom/movable/load = null		// the loaded crate (usually)
 
 	var/beacon_freq = 1445
@@ -27,7 +28,6 @@
 	var/destination = ""		// destination description
 	var/home_destination = "" 	// tag of home beacon
 	req_access = list(access_cargo)
-	var/list/path = null
 
 	var/mode = 0		//0 = idle/ready
 						//1 = loading/unloading
@@ -71,8 +71,6 @@
 
 	New()
 		..()
-		botcard = new(src)
-		botcard.access = get_access("Captain")
 
 		var/global/mulecount = 0
 		if(!suffix)
@@ -494,6 +492,7 @@
 	var/last_process_time
 
 	process()
+		. = ..()
 		var/time_since_last = TIME - last_process_time
 		last_process_time = TIME
 		if(!has_power())
@@ -701,7 +700,7 @@
 				else
 					src.visible_message("<span class='alert'>[src] knocks over [M]!</span>")
 					M.pulling = null
-					M.changeStatus("stunned", 80)
+					M.changeStatus("stunned", 8 SECONDS)
 					M.changeStatus("weakened", 5 SECONDS)
 					M.lying = 1
 					M.set_clothing_icon_dirty()

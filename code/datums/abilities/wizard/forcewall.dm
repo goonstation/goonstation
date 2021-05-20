@@ -12,7 +12,8 @@
 	cast()
 		if(!holder)
 			return
-		holder.owner.say("BRIXHUN MOHTYR")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("BRIXHUN MOHTYR")
 		..()
 		if(!holder.owner.wizard_spellpower(src))
 			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
@@ -56,3 +57,16 @@
 	opacity = 0
 	density = 1
 	luminosity = 3
+
+/obj/forcefield/artifact
+	var/obj/artifact/forcefield_generator/source = null
+
+	New(var/obj/artifact/forcefield_generator/S)
+		. = ..()
+		source = S
+
+	Bumped(AM)
+		. = ..()
+		if(source && ismob(AM))
+			source.ArtifactFaultUsed(AM)
+

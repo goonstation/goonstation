@@ -17,6 +17,7 @@
 
 /datum/artifact/wallwand
 	associated_object = /obj/item/artifact/forcewall_wand
+	type_name = "Forcefield Wand"
 	rarity_weight = 350
 	validtypes = list("ancient","wizard","eldritch","precursor")
 	react_xray = list(10,60,92,11,"COMPLEX")
@@ -60,9 +61,17 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shieldsparkles"
 	desc = "Some kind of strange energy barrier. You can't get past it."
-	New(var/loc,var/duration,var/wallsprite)
+	var/obj/artifact/forcefield_generator/source = null
+
+	New(var/loc,var/duration,var/wallsprite,var/obj/artifact/forcefield_generator/S = null)
 		..()
 		icon_state = wallsprite
+		source = S
 		if (duration > 0)
 			SPAWN_DBG(duration * 10)
 				qdel(src)
+
+	Bumped(AM)
+		. = ..()
+		if(source && ismob(AM))
+			source.ArtifactFaultUsed(AM, src)

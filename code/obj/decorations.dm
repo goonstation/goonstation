@@ -54,6 +54,11 @@
 	density = 1
 	opacity = 0 // this causes some of the super ugly lighting issues too
 
+	elm_random
+		New()
+			. = ..()
+			src.dir = pick(cardinal - SOUTH)
+
 // what the hell is all this and why wasn't it just using a big icon? the lighting system gets all fucked up with this stuff
 
 /*
@@ -112,6 +117,11 @@
 	anchored = 1
 	density=1
 
+	random
+		New()
+			. = ..()
+			src.dir = pick(alldirs)
+
 /obj/shrub
 	name = "shrub"
 	icon = 'icons/misc/worlds.dmi'
@@ -162,7 +172,7 @@
 		if (max_uses > 0 && ((last_use + time_between_uses) < world.time) && prob(spawn_chance))
 			var/something = null
 
-			if (override_default_behaviour && islist(additional_items) && additional_items.len)
+			if (override_default_behaviour && islist(additional_items) && length(additional_items))
 				something = pick(additional_items)
 			else
 				something = pick(trinket_safelist)
@@ -206,6 +216,11 @@
 			playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 0)
 			qdel(src)
 			return
+
+	random
+		New()
+			. = ..()
+			src.dir = pick(alldirs)
 
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"
@@ -481,7 +496,7 @@
 	proc/toggle()
 		src.on = !(src.on)
 		src.icon_state = "light[!(src.on)]"
-		if (!islist(myBlinds) || !myBlinds.len)
+		if (!islist(myBlinds) || !length(myBlinds))
 			return
 		for (var/obj/window_blinds/blind in myBlinds)
 			blind.toggle(src.on)

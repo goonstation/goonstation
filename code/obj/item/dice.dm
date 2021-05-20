@@ -8,7 +8,7 @@ var/list/rollList = list()
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "d6_6"
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	stamina_damage = 0
 	stamina_cost = 0
 	var/sides = 6
@@ -38,7 +38,7 @@ var/list/rollList = list()
 			initialDesc = desc
 
 	get_desc()
-		if (src.last_roll && !src.dicePals.len)
+		if (src.last_roll && !length(src.dicePals))
 			if (isnum(src.last_roll))
 				. += "<br>[src] currently shows [get_english_num(src.last_roll)]."
 			else
@@ -196,7 +196,7 @@ var/list/rollList = list()
 		if(Pal.dicePals.len)
 			src.dicePals |= Pal.dicePals // |= adds things to lists that aren't already present
 
-			var/startoverlay = src.overlays.len
+			var/startoverlay = length(src.overlays)
 			var/endoverlay = (src.overlays.len-1)+(Pal.overlays.len-1)
 
 			for(var/i=startoverlay, i<=endoverlay, i++) //src.overlays.len will return dice position + 1 as the decoy overlay will be registered
@@ -500,11 +500,11 @@ var/list/rollList = list()
 	color = "#A3A3A3"
 
 /obj/item/dice/robot
-	name = "Probability Cube"
+	name = "probability cube"
 	desc = "A device for the calculation of random probabilities. Especially ones between one and six."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "d6_6"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	sides = 6
 	can_have_pals = FALSE
 	flags = SUPPRESSATTACK
@@ -518,27 +518,27 @@ var/list/rollList = list()
 		var/old_name = src.name
 		switch (src.sides)
 			if (4)
-				src.name = "Probability Cube (d6)"
+				src.name = "probability cube (d6)"
 				src.sides = 6
 				src.icon_state = "d6_6"
 			if (6)
-				src.name = "Probability Pentagonal Trapezohedron (d10)" // yes, it's actually called that
+				src.name = "probability pentagonal trapezohedron (d10)" // yes, it's actually called that
 				src.sides = 10
 				src.icon_state = "d20"
 			if (10)
-				src.name = "Probability Dodecahedron (d12)"
+				src.name = "probability dodecahedron (d12)"
 				src.sides = 12
 				src.icon_state = "d20"
 			if (12)
-				src.name = "Probability Icosahedron (d20)"
+				src.name = "probability icosahedron (d20)"
 				src.sides = 20
 				src.icon_state = "d20"
 			if (20)
-				src.name = "Probability Zocchihedron (d100)"
+				src.name = "probability zocchihedron (d100)"
 				src.sides = 100
 				src.icon_state = "d100"
 			else
-				src.name = "Probability Tetrahedron (d4)"
+				src.name = "probability tetrahedron (d4)"
 				src.sides = 4
 				src.icon_state = "d4"
 
@@ -560,23 +560,23 @@ var/list/rollList = list()
 		return
 
 	d4
-		name = "Probability Tetrahedron"
+		name = "probability tetrahedron"
 		sides = 4
 		icon_state = "d4"
 	d10
-		name = "Probability Pentagonal Trapezohedron" // yes, it's still actually called that
+		name = "probability pentagonal trapezohedron" // yes, it's still actually called that
 		sides = 10
 		icon_state = "d20"
 	d12
-		name = "Probability Dodecahedron"
+		name = "probability dodecahedron"
 		sides = 12
 		icon_state = "d20"
 	d20
-		name = "Probability Icosahedron"
+		name = "probability icosahedron"
 		sides = 20
 		icon_state = "d20"
 	d100
-		name = "Probability Zocchihedron"
+		name = "probability zocchihedron"
 		sides = 100
 		icon_state = "d100"
 
@@ -595,7 +595,7 @@ var/list/rollList = list()
 	var/diceinchatstring
 
 	proc/addDice(var/obj/item/dice/D as obj, var/baseoverlay, mob/living/user as mob) //takes a dice object, a base overlay (dicecup, diceboxt), and a user must be passed to the proc
-		var/looplength = D.dicePals.len
+		var/looplength = length(D.dicePals)
 		for(var/i=1,i<=looplength,i++)
 			if((istype(D.dicePals[i], /obj/item/dice/coin)) || (istype(D.dicePals[i], /obj/item/dice/magic8ball)))
 				user.put_in_hand_or_drop(D.contents[i])
@@ -684,7 +684,7 @@ var/list/rollList = list()
 		src.dicelist = list()
 
 	proc/pourout(atom/target,mob/living/user as mob) //requires the target and user to be passed to the proc
-		if((src.dicelist.len)&&(istype(target, /turf/simulated/floor)) || (src.dicelist.len)&&(istype(target, /turf/unsimulated/floor)))
+		if((src.dicelist.len)&&(istype(target, /turf/simulated/floor)) || length(src.dicelist) && (istype(target, /turf/unsimulated/floor)))
 			hiddenroll()
 			src.ClearAllOverlays()
 			src.diceinchatstring = src.dicelist[1].diceInChat(1,src.localRollList)
@@ -786,7 +786,7 @@ var/list/rollList = list()
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "dicepouch"
 	max_wclass = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/setcolor
 	can_hold=list(/obj/item/dice)
 	spawn_contents = list(/obj/item/dice/d4,/obj/item/dice,/obj/item/dice/d8,/obj/item/dice/d10,/obj/item/dice/d12,/obj/item/dice/d20,/obj/item/dice/d100)

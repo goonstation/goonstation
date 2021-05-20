@@ -337,6 +337,7 @@
 	execute_ability()
 		var/obj/item/device/light/flashlight/J = the_item
 		J.toggle()
+		src.icon_state = J.on ? "off" : "on"
 		..()
 
 ////////////////////////////////////////////////////////////
@@ -739,7 +740,7 @@
 		the_mob = M
 
 	proc/show_buttons()
-		if(!the_mob || !islist(src.ability_buttons) || !ability_buttons.len) return
+		if(!the_mob || !islist(src.ability_buttons) || !length(ability_buttons)) return
 		if(!the_mob.item_abilities.Find(ability_buttons[1]))
 			the_mob.item_abilities.Add(ability_buttons)
 			the_mob.need_update_item_abilities = 1

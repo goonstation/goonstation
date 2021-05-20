@@ -622,7 +622,7 @@
 		return
 
 	proc/set_difficulty(var/diff,var/code_length,var/attempts)
-		if (!diff || !code_length || !attempts || !code_chars.len)
+		if (!diff || !code_length || !attempts || !length(code_chars))
 			return null
 		src.difficulty = diff
 		src.code_length = code_length

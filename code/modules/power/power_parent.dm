@@ -88,7 +88,7 @@ var/makingpowernetssince = 0
 		PC.netnum = 0
 	LAGCHECK(LAG_MED)
 
-	for(var/obj/machinery/power/M as() in machine_registry[MACHINES_POWER])
+	for(var/obj/machinery/power/M as anything in machine_registry[MACHINES_POWER])
 		if(M.netnum >=0)
 			M.netnum = 0
 	LAGCHECK(LAG_MED)
@@ -110,7 +110,7 @@ var/makingpowernetssince = 0
 		PN.cables += C
 		LAGCHECK(LAG_MED)
 
-	for(var/obj/machinery/power/M as() in machine_registry[MACHINES_POWER])
+	for(var/obj/machinery/power/M as anything in machine_registry[MACHINES_POWER])
 		if(M.netnum<=0)		// APCs have netnum=-1 so they don't count as network nodes directly
 			continue
 
@@ -236,7 +236,7 @@ var/makingpowernetssince = 0
         if( istype(O, /obj/cable) )
             var/obj/cable/C = O
             if(C.netnum > 0)
-                if(!more || !more.len) return
+                if(!more || !length(more)) return
                 O = more[more.len]
                 more -= O
                 continue
@@ -248,7 +248,7 @@ var/makingpowernetssince = 0
 
             var/obj/machinery/power/M = O
             if(M.netnum > 0)
-                if(!more || !more.len) return
+                if(!more || !length(more)) return
                 O = more[more.len]
                 more -= O
                 continue
@@ -295,9 +295,9 @@ var/makingpowernetssince = 0
 
 	// zero the netnum of all cables & nodes in this powernet
 
-	for(var/obj/cable/OC as() in cables)
+	for(var/obj/cable/OC as anything in cables)
 		OC.netnum = 0
-	for(var/obj/machinery/power/OM as() in nodes)
+	for(var/obj/machinery/power/OM as anything in nodes)
 		OM.netnum = 0
 
 
@@ -331,16 +331,16 @@ var/makingpowernetssince = 0
 		var/datum/powernet/PN = new()
 		//PN.tag = "powernet #[L]"
 		powernets += PN
-		PN.number = powernets.len
+		PN.number = length(powernets)
 
-		for(var/obj/cable/OC as() in cables)
+		for(var/obj/cable/OC as anything in cables)
 			if(!OC.netnum)		// non-connected cables will have netnum==0, since they weren't reached by propagation
 				OC.netnum = PN.number
 				cables -= OC
 				PN.cables += OC		// remove from old network & add to new one
 			LAGCHECK(LAG_MED)
 
-		for(var/obj/machinery/power/OM as() in nodes)
+		for(var/obj/machinery/power/OM as anything in nodes)
 			if(!OM.netnum)
 				OM.netnum = PN.number
 				OM.powernet = PN
@@ -358,11 +358,11 @@ var/makingpowernetssince = 0
 	return
 
 /datum/powernet/proc/join_to(var/datum/powernet/PN) // maybe pool powernets someday
-	for(var/obj/cable/C as() in src.cables)
+	for(var/obj/cable/C as anything in src.cables)
 		C.netnum = PN.number
 		PN.cables += C
 
-	for(var/obj/machinery/power/M as() in src.nodes)
+	for(var/obj/machinery/power/M as anything in src.nodes)
 		M.netnum = PN.number
 		M.powernet = PN
 		PN.nodes += M
@@ -396,3 +396,5 @@ var/makingpowernetssince = 0
 	if( netexcess > 100)		// if there was excess power last cycle
 		for(var/obj/machinery/power/smes/S in nodes)	// find the SMESes in the network
 			S.restore()				// and restore some of the power that was used
+		for(var/obj/machinery/power/sword_engine/SW in nodes)	//Finds the SWORD Engines in the network.
+			SW.restore()				//Restore some of the power that was used.

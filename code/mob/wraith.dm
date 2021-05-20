@@ -22,6 +22,7 @@
 
 	var/deaths = 0
 	var/datum/hud/wraith/hud
+	var/hud_path = /datum/hud/wraith
 
 	var/atom/movable/overlay/animation = null
 
@@ -33,6 +34,15 @@
 	var/const/life_tick_spacing = 20
 	var/haunt_duration = 300
 	var/death_icon_state = "wraith-die"
+
+	var/list/poltergeists
+	//holy water, formaldehyde tolerances.
+	//probably will change these around, but these might be alright to start. -kyle
+	var/holy_water_tol = 0		//unused presently
+	var/formaldehyde_tol = 25
+
+	var/datum/movement_controller/movement_controller
+
 	//////////////
 	// Wraith Overrides
 	//////////////
@@ -55,10 +65,13 @@
 		theName = theName  + "[pick(" the Impaler", " the Tormentor", " the Forsaken", " the Destroyer", " the Devourer", " the Tyrant", " the Overlord", " the Damned", " the Desolator", " the Exiled")]"
 		return theName
 
+	proc/get_movement_controller(mob/user)
+		return movement_controller
 
 	New(var/mob/M)
 		. = ..()
-		src.invisibility = 16
+		src.poltergeists = list()
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 		//src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.sight |= SEE_SELF // let's not make it see through walls
 		src.see_invisible = 16
@@ -68,8 +81,11 @@
 		src.abilityHolder.points = 50
 		src.addAllAbilities()
 		last_life_update = world.timeofday
-		src.hud = new(src)
+		src.hud = new hud_path (src)
 		src.attach_hud(hud)
+
+		if (!movement_controller)
+			movement_controller = new /datum/movement_controller/poltergeist (src)
 
 		name = make_name()
 		real_name = name
@@ -99,6 +115,7 @@
 				plane.alpha = 255
 
 	disposing()
+		poltergeists = null
 		..()
 
 	Stat()
@@ -155,6 +172,10 @@
 		if (src.mind)
 			for (var/datum/objective/specialist/wraith/WO in src.mind.objectives)
 				WO.onWeakened()
+
+		//When a master wraith dies, any of its poltergeists who are following it are thrown out. also send a message
+		drop_following_poltergeists()
+
 		if (deaths < 2)
 			boutput(src, "<span class='alert'><b>You have been defeated...for now. The strain of banishment has weakened you, and you will not survive another.</b></span>")
 			src.justdied = 1
@@ -170,7 +191,7 @@
 			src.transforming = 1
 			src.canmove = 0
 			src.icon = null
-			src.invisibility = 101
+			APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 			if (client) client.color = null
 
@@ -182,6 +203,24 @@
 
 			src.ghostize()
 			qdel(src)
+
+	//When a master wraith dies, any of its poltergeists who are following it are thrown out. also send a message
+	proc/drop_following_poltergeists()
+		if (src.poltergeists)
+			for (var/mob/wraith/poltergeist/P in src.poltergeists)
+				if (P.following_master && locate(P) in src.poltergeists)	//just to be safe
+					var/turf/T1 = get_turf(src)
+					var/tx = T1.x + rand(3 * -1, 3)
+					var/ty = T1.y + rand(3 * -1, 3)
+
+					var/turf/tmploc = locate(tx, ty, 1)
+					if (isturf(tmploc))
+						P.exit_master(tmploc)
+					else
+						P.exit_master(T1)
+					P.makeCorporeal()
+					boutput(P, "<span class='alert'><b>Oh no! Your master has died and you've been ejected outside into the material plane!</b></span>")
+				boutput(P, "<span class='alert'><b>Your master has died!</b></span>")
 
 	proc/onAbsorb(var/mob/M)
 		if (src.mind)
@@ -331,6 +370,8 @@
 				SPAWN_DBG(1 MINUTE) //one minute
 					src.makeIncorporeal()
 
+		//if ((marker && get_dist(src, marker) > 15) && (master && get_dist(P,src) > 12 ))
+
 			return
 
 		//Z level boundary stuff
@@ -343,7 +384,6 @@
 		if((direct & WEST) && src.x > 1)
 			src.x--
 		OnMove()
-
 
 	can_use_hands()
 		if (src.density) return 1
@@ -366,6 +406,34 @@
 			return 100
 		if (!density)
 			src.examine_verb(target)
+
+	examine_verb(atom/A as mob|obj|turf in view())
+		..()
+
+		//Special info (that might eventually) be pertinent to the wraith.
+		//the target's chaplain training, formaldehyde (in use), and holy water amounts.
+		if (ismob(A))
+			var/string = ""
+			var/mob/M = A
+			if (M.traitHolder.hasTrait("training_chaplain"))
+				string += "<span class='alert'>This creature is <b><i>vile</i></b>!</span>\n"
+
+			if (M.reagents)
+				var/f_amt = M.reagents.get_reagent_amount("formaldehyde")
+				if (f_amt >= src.formaldehyde_tol)
+					string += "<span class='blue'>This creature is <i>saturated</i> with a most unpleasant substance!</span>\n"
+				else if (f_amt > 0)
+					string += "<span class='blue'>This creature has a somewhat unpleasant <i>taste</i>.</span>\n"
+
+				var/hw_amt = M.reagents.get_reagent_amount("water_holy")
+				if (hw_amt >= src.holy_water_tol)
+					string += "<span class='blue'>This creature exudes a truly vile <i>aroma</i>!</span>\n"
+				else if (hw_amt > 0)
+					string += "<span class='blue'>This creature has a somewhat vile <i>fragrance</i>!</span>\n"
+
+			if (length(string))
+				boutput(src, string)
+
 
 	say(var/message)
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -446,7 +514,7 @@
 		makeCorporeal()
 			if (!src.density)
 				src.set_density(1)
-				src.invisibility = 0
+				REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
 				src.alpha = 255
 				src.see_invisible = 0
 				src.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
@@ -455,7 +523,7 @@
 			if (src.density)
 				src.visible_message(pick("<span class='alert'>[src] vanishes!</span>", "<span class='alert'>The wraith dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
 				src.set_density(0)
-				src.invisibility = 10
+				APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 				src.alpha = 160
 				src.see_invisible = 16
 

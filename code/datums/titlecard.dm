@@ -50,6 +50,8 @@
 
 /datum/titlecard/proc/set_maptext(id, text)
 	maptext_areas[id] = text
+	if(isnull(pregameHTML))
+		return
 	if (last_pregame_html == pregameHTML)
 		for(var/client/C)
 			if(istype(C.mob, /mob/new_player))
@@ -67,6 +69,42 @@
 /datum/titlecard/proc/send_lobby_text(client/C)
 	if (last_pregame_html != pregameHTML)
 		return
+	if(isnull(pregameHTML))
+		return
 
 	for (var/id in maptext_areas)
 		C << output(list2params(list(id, maptext_areas[id])), "pregameBrowser:set_area")
+
+///old title card turf
+/obj/titlecard
+	appearance_flags = TILE_BOUND
+	icon = null //set in New()
+	icon_state = "title_main"
+	layer = 60
+	name = "Space Station 13"
+	desc = "The title card for it, at least."
+	plane = PLANE_OVERLAY_EFFECTS
+	pixel_x = -96
+	anchored = 2
+
+	ex_act(severity)
+		return
+
+	meteorhit(obj/meteor)
+		return
+
+	New()
+		..()
+		icon = file("assets/icons/widescreen.dmi")
+	#if defined(MAP_OVERRIDE_OSHAN)
+		icon_state = "title_oshan"
+		name = "Oshan Laboratory"
+		desc = "An underwater laboratory on the planet Abzu."
+	#elif defined(MAP_OVERRIDE_MANTA)
+		icon_state = "title_manta"
+		name = "The NSS Manta"
+		desc = "Some fancy comic about the NSS Manta and its travels on the planet Abzu."
+	#endif
+	#if defined(REVERSED_MAP)
+		transform = list(-1, 0, 0, 0, 1, 0)
+	#endif

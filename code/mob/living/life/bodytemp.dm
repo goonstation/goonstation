@@ -22,6 +22,8 @@
 			var/obj/vehicle/V = owner.loc
 			if (V.sealed_cabin)
 				loc_temp = T20C // hardcoded honkytonk nonsense
+			else
+				loc_temp = environment.temperature
 		else if (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			var/obj/machinery/atmospherics/unary/cryo_cell/C = owner.loc
 			loc_temp = C.air_contents.temperature
@@ -54,7 +56,7 @@
 			var/chance = round((diff/scaling_factor)*100)
 			chance = clamp(chance,0,100)
 			if(prob(percentmult(chance, get_multiplier())))
-				owner.changeStatus("shivering", 6 SECONDS)
+				owner.changeStatus("shivering", lerp(chance/100, 1, 0.25) * 6 SECONDS)
 		else
 			owner.delStatus("shivering")
 

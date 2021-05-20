@@ -15,6 +15,10 @@ var/datum/score_tracker/score_tracker
 	var/score_structural_damage = 0
 	var/final_score_eng = 0
 	// RESEARCH DEPARTMENT
+	var/artifacts_analyzed = 0
+	var/artifacts_correctly_analyzed = 0
+	var/score_artifact_analysis = 0
+	var/final_score_res = 0
 	// CIVILIAN DEPARTMENT
 	var/score_cleanliness = 0
 	var/score_expenses = 0
@@ -84,7 +88,7 @@ var/datum/score_tracker/score_tracker
 		// also civ cleanliness counted here cos fuck calling a world loop more than once
 		var/apc_count = 0
 		var/apcs_powered = 0
-		var/station_areas = 0
+		var/num_station_areas = 0
 		var/undamaged_areas = 0
 		var/clean_areas = 0
 
@@ -103,7 +107,7 @@ var/datum/score_tracker/score_tracker
 			var/cleanliness = AR.calculate_area_cleanliness()
 			if(cleanliness == -1) // no sim. turfs
 				continue
-			station_areas++
+			num_station_areas++
 			if (get_percentage_of_fraction_and_whole(AR.calculate_structure_value(),AR.initial_structure_value) >= 50)
 				undamaged_areas++
 			if (cleanliness >= 80)
@@ -117,9 +121,9 @@ var/datum/score_tracker/score_tracker
 			if (N.nuke_detonated)
 				score_structural_damage = 0
 			else
-				score_structural_damage = get_percentage_of_fraction_and_whole(undamaged_areas,station_areas)
+				score_structural_damage = get_percentage_of_fraction_and_whole(undamaged_areas,num_station_areas)
 		else
-			score_structural_damage = get_percentage_of_fraction_and_whole(undamaged_areas,station_areas)
+			score_structural_damage = get_percentage_of_fraction_and_whole(undamaged_areas,num_station_areas)
 
 		score_power_outages = clamp(score_power_outages,0,100)
 		score_structural_damage = clamp(score_structural_damage,0,100)
@@ -127,7 +131,18 @@ var/datum/score_tracker/score_tracker
 		final_score_eng = (score_power_outages + score_structural_damage) * 0.5
 
 		// RESEARCH DEPARTMENT SECTION
-		// yeah coming soon or w/e idgaf, fucking academics
+		for(var/obj/O in artifact_controls.artifacts)
+			if(O.disposed)
+				continue
+			var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in O.vis_contents
+			if(pap)
+				artifacts_analyzed++
+			if(pap?.lastAnalysis >= 3)
+				artifacts_correctly_analyzed++
+		if(artifacts_analyzed)
+			score_artifact_analysis = (artifacts_correctly_analyzed/artifacts_analyzed)*100
+
+		final_score_res = score_artifact_analysis
 
 		// CIVILIAN DEPARTMENT SECTION
 		if (!istype(wagesystem))
@@ -143,7 +158,7 @@ var/datum/score_tracker/score_tracker
 			else
 				score_expenses = get_percentage_of_fraction_and_whole(totalfunds,profit_target)
 
-		score_cleanliness = get_percentage_of_fraction_and_whole(clean_areas,station_areas)
+		score_cleanliness = get_percentage_of_fraction_and_whole(clean_areas,num_station_areas)
 
 		score_expenses = clamp(score_expenses,0,100)
 		score_cleanliness = clamp(score_cleanliness,0,100)
@@ -166,12 +181,12 @@ var/datum/score_tracker/score_tracker
 		// AND THE WINNER IS.....
 
 		var/department_score_sum = 0
-		department_score_sum = final_score_sec + final_score_eng + final_score_civ
+		department_score_sum = final_score_sec + final_score_eng + final_score_civ + final_score_res
 
 		if (department_score_sum == 0 || department_score_sum != department_score_sum) //check for 0 and for NaN values
 			final_score_all = 0
 		else
-			final_score_all = round(department_score_sum / 3)
+			final_score_all = round(department_score_sum / 4)
 
 		switch(final_score_all)
 			if (100 to INFINITY) grade = "NanoTrasen's Finest"
@@ -248,6 +263,9 @@ var/datum/score_tracker/score_tracker
 						command_pets_escaped += pet
 					else if(pet:is_pet)
 						pets_escaped += pet
+			else if(istype(pet, /obj/item/rocko))
+				if(in_centcom(pet))
+					command_pets_escaped += pet
 
 		if (length(by_type[/obj/machinery/bot/secbot/beepsky]))
 			beepsky_alive = 1
@@ -318,7 +336,7 @@ var/datum/score_tracker/score_tracker
 		if (length(command_pets_escaped))
 			var/list/who_escaped = list()
 			for (var/atom/A in command_pets_escaped)
-				who_escaped += "[A.name] [bicon(A)]"
+				who_escaped += "[A.name] [inline_bicon(getFlatIcon(A, no_anim=TRUE))]"
 			. += "<B>Command Pets Escaped:</B> [who_escaped.Join(" ")]<BR><BR>"
 		if (length(pets_escaped))
 			var/list/who_escaped = list()
@@ -358,7 +376,8 @@ var/datum/score_tracker/score_tracker
 		score_tracker.score_text += "<BR>"
 
 		score_tracker.score_text += "<B><U>RESEARCH DEPARTMENT</U></B><BR>"
-		score_tracker.score_text += "Scores for this department are not done yet.<br>"
+		score_tracker.score_text += "<B>Artifacts correctly analyzed:</B> [round(score_tracker.score_artifact_analysis)]% ([score_tracker.artifacts_correctly_analyzed]/[score_tracker.artifacts_analyzed])<BR>"
+		score_tracker.score_text += "<B>Total Department Score:</B> [round(score_tracker.final_score_res)]%<BR>"
 		score_tracker.score_text += "<BR>"
 
 		score_tracker.score_text += "<B><U>CIVILIAN DEPARTMENT</U></B><BR>"
@@ -378,7 +397,7 @@ var/datum/score_tracker/score_tracker
 	src.Browse(score_tracker.score_text, "window=roundscore;size=500x700;title=Round Statistics")
 
 /mob/proc/showtickets()
-	if(!data_core.tickets.len && !data_core.fines.len) return
+	if(!data_core.tickets.len && !length(data_core.fines)) return
 
 	if (!score_tracker.tickets_text)
 		logTheThing("debug", null, null, "Zamujasa/SHOWTICKETS: [world.timeofday] generating showtickets text")

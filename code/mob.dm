@@ -247,6 +247,8 @@
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
 	mob_properties = list()
+	src.chat_text = new
+	START_TRACKING
 
 /// do you want your mob to have custom hairstyles and stuff? don't use spawns but set all of those properties here
 /mob/proc/initializeBioholder()
@@ -297,6 +299,8 @@
 		G.affecting.glide_size = src.glide_size
 
 /mob/disposing()
+	STOP_TRACKING
+
 	for(var/mob/dead/target_observer/TO in observers)
 		observers -= TO
 		TO.ghostize()
@@ -386,6 +390,7 @@
 	lastattacked = null
 	lastattacker = null
 	health_update_queue -= src
+	src.mob_properties = null
 	..()
 
 /mob/Login()
@@ -500,15 +505,20 @@
 
 	src.client?.color = src.active_color_matrix
 
+	SEND_SIGNAL(src, COMSIG_MOB_LOGIN)
+
 /mob/Logout()
 
 	//logTheThing("diary", src, null, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
+
+	SEND_SIGNAL(src, COMSIG_MOB_LOGOUT)
 
 	tgui_process?.on_logout(src)
 
 	if (src.last_client && !src.key) // lets see if not removing the HUD from disconnecting players helps with the crashes
 		for (var/datum/hud/hud in src.huds)
 			hud.remove_client(src.last_client)
+
 
 	..()
 
@@ -567,7 +577,15 @@
 					src_effect.update_charge(-1)
 					tmob_effect.deactivate(10)
 					tmob_effect.update_charge(-1)
-					// like repels - bimp them away from each other
+					//spatial interdictor: mitigate biomagnetic discharges
+					//consumes 300 units of charge to interdict a repulsion, permitting safe discharge of the fields
+					for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
+						if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(300))
+							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
+							var/atom/source = get_turf(tmob)
+							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
+							return
+					// like repels - bump them away from each other
 					src.now_pushing = 0
 					var/atom/source = get_turf(tmob)
 					src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s identical magnetic fields repel each other!</span>")
@@ -602,6 +620,15 @@
 					src_effect.update_charge(-src_effect.charge)
 					tmob_effect.deactivate(10)
 					tmob_effect.update_charge(-tmob_effect.charge)
+					//spatial interdictor: mitigate biomagnetic discharges
+					//consumes 600 units of charge to interdict an attraction, permitting safe discharge of the fields
+
+					for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
+						if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(300))
+							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
+							var/atom/source = get_turf(tmob)
+							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
+							return
 					// opposite attracts - fling everything nearby at these dumbasses
 					src.now_pushing = 1
 					tmob.now_pushing = 1
@@ -615,7 +642,7 @@
 						if (!T.density)
 							sfloors += T
 					var/arcs = 8
-					while (arcs > 0 && sfloors.len)
+					while (arcs > 0 && length(sfloors))
 						arcs--
 						var/turf/Q = pick(sfloors)
 						arcFlashTurf(src, Q, 3000)
@@ -771,13 +798,15 @@
 		C.eye = src.eye
 		C.pixel_x = src.eye_pixel_x
 		C.pixel_y = src.eye_pixel_y
+	else if(!isturf(src.loc))
+		C.eye = src.loc
 	else
 		C.eye = src
 		C.pixel_x = src.loc_pixel_x
 		C.pixel_y = src.loc_pixel_y
 
 /mob/proc/can_strip(mob/M, showInv=0)
-	if(!showInv && check_target_immunity(src, 0, M))
+	if(!showInv && check_target_immunity(M, 0, src))
 		return 0
 	return 1
 
@@ -1475,16 +1504,16 @@
 		if (D_ENERGY)
 			TakeDamage("All", 0, damage)
 			if (prob(stun))
-				src.changeStatus("paralysis", stun*15)
+				src.changeStatus("paralysis", stun*1.5 SECONDS)
 			else if (prob(90))
-				src.changeStatus("stunned", stun*15)
+				src.changeStatus("stunned", stun*1.5 SECONDS)
 			else
-				src.changeStatus("weakened", (stun/2)*15)
+				src.changeStatus("weakened", (stun/2)*1.5 SECONDS)
 			src.set_clothing_icon_dirty()
 		if (D_BURNING)
 			TakeDamage("All", 0, damage)
 		if (D_RADIOACTIVE)
-			src.changeStatus("radiation", (damage)*10)
+			src.changeStatus("radiation", (damage)*1 SECOND)
 			src.stuttering += stun
 			src.drowsyness += stun
 		if (D_TOXIC)
@@ -1508,11 +1537,11 @@
 	switch(P.proj_data.damage_type)
 		if (D_ENERGY)
 			if (prob(stun))
-				src.changeStatus("paralysis", stun*15)
+				src.changeStatus("paralysis", stun*1.5 SECONDS)
 			else if (prob(90))
-				src.changeStatus("stunned", stun*15)
+				src.changeStatus("stunned", stun*1.5 SECONDS)
 			else
-				src.changeStatus("weakened", (stun/2)*15)
+				src.changeStatus("weakened", (stun/2)*1.5 SECONDS)
 			src.set_clothing_icon_dirty()
 			src.show_text("<span class='alert'>You are shocked by the impact of [P]!</span>")
 		if (D_RADIOACTIVE)
@@ -1561,7 +1590,7 @@
 
 /// Removes whichever matrix is associated with the label. Must be a string!
 /mob/proc/remove_color_matrix(var/label)
-	if (!label || !src.color_matrices.len)
+	if (!label || !length(src.color_matrices))
 		return
 
 	if(label == "all")
@@ -1621,7 +1650,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		src.ghostize()
@@ -1642,7 +1671,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	var/bdna = null // For forensics (Convair880).
 	var/btype = null
@@ -1730,7 +1759,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 
 
@@ -1762,7 +1791,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if (ishuman(src))
 		animation = new(src.loc)
@@ -1801,7 +1830,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	var/bdna = null // For forensics (Convair880).
 	var/btype = null
@@ -1847,7 +1876,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	var/bdna = null // For forensics (Convair880).
 	var/btype = null
@@ -1894,7 +1923,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 	logTheThing("combat", src, null, "is vaporized at [log_loc(src)].")
 
 	if (ishuman(src))
@@ -1932,7 +1961,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if (ishuman(src))
 		animation = new(src.loc)
@@ -2031,7 +2060,7 @@
 	src.transforming = 1
 	src.canmove = 0
 	src.icon = null
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	var/bdna = null
 	var/btype = null
@@ -2654,20 +2683,25 @@
 				continue
 			else
 				if (force_instead || alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
-					var/datum/data/record/B = FindBankAccountByName(src.real_name)
-					if (B?.fields["name"])
-						B.fields["name"] = newname
-					for (var/obj/item/card/id/ID in src.contents)
-						ID.registered = newname
-						ID.update_name()
-					for (var/obj/item/device/pda2/PDA in src.contents)
-						PDA.registered = newname
-						PDA.owner = newname
-						PDA.name = "PDA-[newname]"
-						if(PDA.ID_card)
-							var/obj/item/card/id/ID = PDA.ID_card
+					if(!src.traitHolder.hasTrait("immigrant"))// stowaway entertainers shouldn't be on the manifest
+						for (var/L in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
+							if (L)
+								var/datum/data/record/R = FindRecordByFieldValue(L, "name", src.real_name)
+								if (R)
+									R.fields["name"] = newname
+									if (R.fields["full_name"])
+										R.fields["full_name"] = newname
+						for (var/obj/item/card/id/ID in src.contents)
 							ID.registered = newname
 							ID.update_name()
+						for (var/obj/item/device/pda2/PDA in src.contents)
+							PDA.registered = newname
+							PDA.owner = newname
+							PDA.name = "PDA-[newname]"
+							if(PDA.ID_card)
+								var/obj/item/card/id/ID = PDA.ID_card
+								ID.registered = newname
+								ID.update_name()
 					src.real_name = newname
 					src.name = newname
 					return 1
@@ -2873,6 +2907,9 @@
 /mob/proc/handle_stamina_updates()
 	.= 0
 
+/mob/proc/update_canmove()
+	return
+
 /*/mob/proc/glove_weaponcheck()
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -2883,6 +2920,8 @@
 
 /mob/proc/sell_soul(var/amount, var/reduce_health=1, var/allow_overflow=0)
 	if(!src.mind)
+		return 0
+	if(isnpc(src))
 		return 0
 	if(allow_overflow)
 		amount = max(1, min(src.mind.soul, amount)) // can't sell less than 1
@@ -2902,9 +2941,7 @@
 	src.mind.soul -= amount
 
 	if(src.mind.soul <= 0)
-		total_souls_sold++
-		total_souls_value++
-
+		souladjust(1)
 	return 1
 
 /mob/proc/get_id()
@@ -2949,6 +2986,7 @@
 	set name = "Examine"
 	set category = "Local"
 	var/list/result = A.examine(src)
+	SEND_SIGNAL(A, COMSIG_ATOM_EXAMINE, src, result)
 	boutput(src, result.Join("\n"))
 
 
@@ -2966,7 +3004,7 @@
 		if (I.loc == get_turf(I))
 			items += I
 	if (items.len)
-		var/atom/A = input(usr, "What do you want to pick up?") as() in items
+		var/atom/A = input(usr, "What do you want to pick up?") as anything in items
 		A.interact(src)
 
 /mob/proc/can_eat(var/atom/A)

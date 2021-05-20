@@ -22,29 +22,43 @@
 		L.len-- \
 	}
 
+/proc/list_keys(var/list/L)
+	RETURN_TYPE(/list)
+	. = list()
+	for (var/K in L)
+		. += K
+
 /proc/uniquelist(var/list/L)
 	RETURN_TYPE(/list)
 	. = list()
 	for(var/item in L)
 		. |= item
 
-proc/pickweight(list/L)    // make this global
+proc/weighted_pick(list/L)
 	var/total = 0
 	var/item
 	for(item in L)
-		if(!L[item]) L[item] = 1    // if we didn't set a weight, call it 1
+		if(isnull(L[item]))
+			stack_trace("weighted_pick given null weight: [json_encode(L)]")
 		total += L[item]
-	total=rand(1, total)
+	total = rand() * total
 	for(item in L)
-		total-=L[item]
-		if(total <= 0) return item
-	return null   // this should never happen, but it's a fallback
+		total -= L[item]
+		if(total <= 0)
+			return item
+	return null
 
 /proc/reverse_list(var/list/the_list)
 	RETURN_TYPE(/list)
 	. = list()
 	for(var/i = length(the_list), i > 0, i--)
 		. += the_list[i]
+
+proc/keep_truthy(some_list)
+	. = list()
+	for(var/x in some_list)
+		if(x)
+			. += x
 
 //Based on code from Popisfizzy: http://www.byond.com/forum/?post=134331#comment750984
 proc/params2complexlist(params)

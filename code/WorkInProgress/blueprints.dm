@@ -344,7 +344,7 @@
 	item_state = "gun"
 
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	var/prints_left = 5
 
@@ -430,7 +430,7 @@
 			boutput(user, "<span class='alert'>Unsupported Tile type detected.</span>")
 			return
 
-		for(var/turf/t as() in roomList)
+		for(var/turf/t as anything in roomList)
 			if(t.x < minx) minx = t.x
 			if(t.y < miny) miny = t.y
 
@@ -498,7 +498,7 @@
 		var/maxx = 0
 		var/maxy = 0
 
-		for(var/turf/t as() in roomList)
+		for(var/turf/t as anything in roomList)
 			if(t.x < minx) minx = t.x
 			if(t.y < miny) miny = t.y
 

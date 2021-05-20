@@ -167,7 +167,6 @@
 	var/obj/item/organ/brain/brain = null
 	var/obj/item/ai_interface/ai_interface = null
 	var/visible_eyes = 1
-	var/wires_exposed = 0
 
 		// Screen head specific
 	var/mode = "lod" // lod (light-on-dark) or dol (dark-on-light)
@@ -192,10 +191,6 @@
 
 			if (src.ai_interface)
 				boutput(user, "<span class='alert'>There is already \an [src.ai_interface] in there. Use a wrench to remove it.</span>")
-				return
-
-			if (src.wires_exposed)
-				user.show_text("You can't add the brain to this head when the wires are exposed. Use a screwdriver to pack them away.", "red")
 				return
 
 			var/obj/item/organ/brain/B = W
@@ -226,10 +221,6 @@
 				boutput(user, "<span class='alert'>There is already \an [src.ai_interface] in there!</span>")
 				return
 
-			if (src.wires_exposed)
-				user.show_text("You can't add [W] to this head when the wires are exposed. Use a screwdriver to pack them away.", "red")
-				return
-
 			var/obj/item/ai_interface/I = W
 			user.drop_item()
 			I.set_loc(src)
@@ -251,25 +242,6 @@
 				boutput(user, "<span class='notice'>You open the head's compartment and take out [src.brain].</span>")
 				user.put_in_hand_or_drop(src.brain)
 				src.brain = null
-		else if (isscrewingtool(W))
-			if (src.brain)
-				user.show_text("You can't reach the wiring with a brain inside the cyborg head.", "red")
-				return
-			if (src.ai_interface)
-				user.show_text("You can't reach the wiring with [src.ai_interface] inside the cyborg head.", "red")
-				return
-
-			if (src.appearanceString != "generic") //Fuck my shit
-				user.show_text("The screws on this head have some kinda proprietary bitting. Huh.", "red")
-				return
-
-			src.wires_exposed = !src.wires_exposed
-			if (src.wires_exposed)
-				icon_state = "head-generic-wiresexposed"
-				user.show_text("You expose the wiring of the head's neural interface.", "red")
-			else
-				icon_state = "head-generic"
-				user.show_text("You neatly tuck the wiring of the head's neural interface away.", "red")
 
 		else if (istype(W,/obj/item/sheet) && (src.type == /obj/item/parts/robot_parts/head))
 			// second check up there is just watching out for those ..() calls
@@ -856,31 +828,6 @@
 	robot_movement_modifier = /datum/movement_modifier/robot_part/tread_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS)
 
-/obj/item/parts/robot_parts/leg/treads
-	name = "cyborg treads"
-	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
-	slot = "leg_both"
-	appearanceString = "treads"
-	icon_state = "legs-treads"
-	max_health = 100
-	powerdrain = 5
-	step_image_state = "tracks-w"
-	movement_modifier = /datum/movement_modifier/robotleg_right // only one of these? if it replaces both it doesn't matter which one we put here.
-	robot_movement_modifier = /datum/movement_modifier/robot_part/tread_right
-	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS)
-
-/obj/item/parts/robot_parts/leg/thruster
-	name = "Alastor pattern thruster"
-	desc = "Nobody said this is safe."
-	slot = "leg_both"
-	appearanceString = "thruster"
-	icon_state = "legs-thruster"
-	max_health = 100
-	powerdrain = 5
-	step_image_state = null //It's flying so no need for this.
-	robot_movement_modifier = /datum/movement_modifier/robot_part/thruster_right
-	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS | LIMB_LIGHT)
-
 /obj/item/parts/robot_parts/leg/left/thruster
 	name = "left thruster assembly"
 	desc = "Is it really a good idea to give thrusters to cyborgs..? Probably not."
@@ -1133,7 +1080,6 @@
 		// before it could get around to this list, so i tweaked their New() proc instead to grab all the shit out of
 		// the frame before process could go off resulting in a borg that doesn't instantly die
 
-		O.invisibility = 0
 		O.name = "Cyborg"
 		O.real_name = "Cyborg"
 

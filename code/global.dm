@@ -83,6 +83,10 @@ var/global
 	list/random_pod_codes = list() // if /obj/random_pod_spawner exists on the map, this will be filled with refs to the pods they make, and people joining up will have a chance to start with the unlock code in their memory
 
 	list/spacePushList = list()
+	/// All the accessible areas on the station in one convenient place
+	list/station_areas = list()
+	/// The station_areas list is up to date. If something changes an area, make sure to set this to 0
+	area_list_is_up_to_date = 0
 
 	already_a_dominic = 0 // no just shut up right now, I don't care
 
@@ -127,6 +131,7 @@ var/global
 	"Balding" = "balding",
 	"Bangs" = "bangs",
 	"Bieber" = "bieb",
+	"Bloom" = "bloom",
 	"Bobcut" = "bobcut",
 	"Bobcut Alt" = "baum_s",
 	"Bowl Cut" = "bowl",
@@ -143,6 +148,7 @@ var/global
 	"Emo" = "emo",
 	"Emo: Highlight" = "emoH",
 	"Flat Top" = "flattop",
+	"Floof" = "floof",
 	"Hair Streak" = "streak",
 	"Mohawk" = "mohawk",
 	"Mohawk: Fade from End" = "mohawkFT",
@@ -153,12 +159,18 @@ var/global
 	"Pompadour" = "pomp",
 	"Pompadour: Greaser Shine" = "pompS",
 	"Punky Flip" = "shortflip",
+	"Spiky" = "spiky",
+	"Subtle Spiky" = "subtlespiky",
 	"Temsik" = "temsik",
 	"Tonsure" = "tonsure",
 	"Trimmed" = "short",
+	"Tulip" = "tulip",
+	"Visual" = "visual",
 	/*Long*/
 	"Bang: Left" = "chub2_s",
 	"Bang: Right" = "chub_s",
+	"Two Bangs: Long" = "2bangs_long",
+	"Two Bangs: Short" = "2bangs_short",
 	"Bedhead" = "bedhead",
 	"Disheveled" = "disheveled",
 	"Double-Part" = "doublepart",
@@ -183,7 +195,10 @@ var/global
 	"Shoulder Drape" = "pulledf",
 	"Shoulder-Length" = "shoulderl",
 	"Shoulder-Length Mess" = "slightlymessy_s",
+	"Smooth Waves" = "smoothwave",
+	"Smooth Waves: Faded" = "smoothwave_fade",
 	"Mermaid" = "mermaid",
+	"Mermaid: Faded" = "mermaidfade",
 	"Mid-Back Length" = "midb",
 	"Mid-Length Curl" = "bluntbangs_s",
 	"Very Long" = "vlong",
@@ -197,6 +212,7 @@ var/global
 	"Fun Bun" = "fun_bun",
 	"High Flat Top" = "charioteers",
 	"High Ponytail" = "spud",
+	"Long Mini Tail" = "longtailed",
 	"Low Pigtails" = "lowpig",
 	"Low Ponytail" = "band",
 	"Mini Pigtails" = "minipig",
@@ -225,6 +241,7 @@ var/global
 	"Goatee" = "gt",
 	"Hipster" = "hip",
 	"Long Beard" = "longbeard",
+	"Long Beard: Faded" = "longbeardfade",
 	"Motley" = "motley",
 	"Neckbeard" = "neckbeard",
 	"Puffy Beard" = "puffbeard",
@@ -376,6 +393,8 @@ var/global
 	"Yesteryear",
 	"Zeyada")
 
+	list/selectable_ringtones = list()
+
 	//april fools
 	manualbreathing = 0
 	manualblinking = 0
@@ -485,6 +504,7 @@ var/global
 	list/warned_keys = list()	// tracking warnings per round, i guess
 
 	datum/dj_panel/dj_panel = new()
+	datum/player_panel/player_panel = new()
 
 	list/prisonwarped = list()	//list of players already warped
 	list/wormholeturfs = list()

@@ -1,11 +1,12 @@
-// handles status effects
-datum/controller/process/statusEffects
+
+/// handles status effects
+/datum/controller/process/statusEffects
 	var/lastUpdate = null
 	var/lastProcessLength = 1
 
 	setup()
 		name = "StatusEffects"
-		schedule_interval = 3 //Adjust as needed; Wouldnt go over 10.
+		schedule_interval = 0.3 //Adjust as needed; Wouldnt go over 10.
 		lastUpdate = world.timeofday
 
 	copyStateFrom(datum/controller/process/target)
@@ -21,7 +22,7 @@ datum/controller/process/statusEffects
 
 		var/list/notifyUiUpdate = list() //List of objects that need to update their status ui.
 
-		for (var/datum/statusEffect/S as() in globalStatusInstances)
+		for (var/datum/statusEffect/S as anything in globalStatusInstances)
 			if(S == null) continue
 			if(S.owner)
 				S.onUpdate(actual)

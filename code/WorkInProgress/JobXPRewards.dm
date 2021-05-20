@@ -256,7 +256,7 @@ mob/verb/checkrewards()
 
 /datum/jobXpReward/HeadofSecurity/mug
 	name = "Alternate Blue Mug"
-	desc = "It's your favourite coffee, but now its blue. Wow."
+	desc = "It's your favourite coffee mug, but now its text is blue. Wow."
 	required_levels = list("Head of Security"=1)
 	claimable = 1
 	var/path_to_spawn = /obj/item/reagent_containers/food/drinks/mug/HoS/blue
@@ -547,7 +547,7 @@ mob/verb/checkrewards()
 /datum/jobXpReward/bartender/spectromonocle
 	name = "Spectroscopic Monocle"
 	desc = "Now you can look dapper and know which drinks you poisoned at the same time"
-	required_levels = list("Bartender"=0)
+	required_levels = list("Bartender"=5)
 	icon_state = "?"
 	claimable = 1
 	var/path_to_spawn = /obj/item/clothing/glasses/spectro/monocle
@@ -586,3 +586,34 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand_or_drop(I)
 		boutput(C.mob, "You look away for a second and the shaker turns into golden from top to bottom!")
 
+/////////////Mime////////////////
+
+/datum/jobXpReward/mime/mimefancy
+	name = "Fancy Mime Suit"
+	desc = "A suit perfect for more sophisticated mimes. Wait... This isn't just a bleached clown suit, is it?"
+	required_levels = list("Mime"=0)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		boutput(C, "You pretend to unfold a piece of clothing, and suddenly the Fancy Mime Suit is in your hands!")
+		var/obj/item/I = new/obj/item/clothing/under/misc/mimefancy()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(I)
+		return
+
+/datum/jobXpReward/mime/mimedress
+	name = "Mime Dress"
+	desc = "You may be trapped in an invisible box forever and ever, but at least you look stylish!"
+	required_levels = list("Mime"=0)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		boutput(C, "You pretend to unfold a piece of clothing, and suddenly the Mime Dress is in your hands!")
+		var/obj/item/I = new/obj/item/clothing/under/misc/mimedress()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(I)
+		return

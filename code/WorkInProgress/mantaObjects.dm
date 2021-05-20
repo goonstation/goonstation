@@ -529,7 +529,7 @@ var/obj/manta_speed_lever/mantaLever = null
 									power_drained += 50
 
 				if(power_drained > max_power * 0.95)
-					playsound(src, "sound/effects/screech.ogg", 100, 1, 1)
+					playsound(src, "sound/effects/screech.ogg", 50, 1, 1)
 				if(power_drained >= max_power)
 					processing_items.Remove(src)
 					explosion(src, src.loc, 3,6,9,12)
@@ -661,12 +661,6 @@ var/obj/manta_speed_lever/mantaLever = null
 			world << 'sound/effects/manta_alarm.ogg'
 			command_alert("The Magnetic tether has suffered critical damage aboard NSS Manta. Jetpacks equipped with magnetic attachments are now offline, please do not venture out into the ocean until the tether has been repaired.", "Magnetic Tether Damaged")
 
-/obj/landmark
-	name = "bigboom"
-	icon = 'icons/mob/screen1.dmi'
-	icon_state = "x"
-	anchored = 1.0
-
 /obj/miningteleporter
 	name = "Experimental long-range mining teleporter"
 	desc = "Well this looks somewhat unsafe."
@@ -721,18 +715,6 @@ var/obj/manta_speed_lever/mantaLever = null
 						S.recharging = 0
 						src.recharging = 0
 				return
-
-/obj/item/hosmedal
-	name = "war medal"
-	icon = 'icons/obj/items/items.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-	icon_state = "hosmedal"
-	item_state = "hosmedal"
-
-	New()
-		..()
-		BLOCK_SETUP(BLOCK_BOOK)
-
 /obj/item/rddiploma
 	name = "RD's diploma"
 	icon = 'icons/obj/items/items.dmi'
@@ -778,7 +760,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	throwforce = 3.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS
 	stamina_damage = 15
 	stamina_cost = 8

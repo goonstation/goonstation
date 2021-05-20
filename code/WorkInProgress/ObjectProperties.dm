@@ -71,18 +71,18 @@ var/list/globalPropList = null
 
 	proc/getProperty(var/propId) //Gets property value.
 		.= null
-		if(src.properties && src.properties.len)
+		if(src.properties && length(src.properties))
 			var/datum/objectProperty/X = globalPropList[propId]
 			return src.properties[X]
 		/*
-		if(src.properties && src.properties.len)
+		if(src.properties && length(src.properties))
 			for(var/datum/objectProperty/X in src.properties)
 				if(X.id == propId)
 					.= src.properties[X] //Assoc. value of property is the value.
 		*/
 
 	proc/delProperty(var/propId) //Removes property.
-		if(src.properties && src.properties.len)
+		if(src.properties && length(src.properties))
 			for(var/datum/objectProperty/X in src.properties)
 				if(X.id == propId)
 					. = X
@@ -91,7 +91,7 @@ var/list/globalPropList = null
 
 	proc/hasProperty(var/propId) //Checks if property is on object.
 		.= 0
-		if(src.properties && src.properties.len)
+		if(src.properties && length(src.properties))
 			for(var/datum/objectProperty/X in src.properties)
 				if(X.id == propId)
 					.= 1
@@ -196,11 +196,11 @@ var/list/globalPropList = null
 	deflection
 		name = "Deflection"
 		id = "deflection"
-		desc = "Improves chance to deflect attacks while unarmed." //Value is extra block chance.
+		desc = "Improves chance to resist being disarmed." //Value is extra block chance.
 		tooltipImg = "block.png"
 		defaultValue = 10
 		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "+[propVal]% additional chance to deflect attacks while blocking"
+			return "+[propVal]% additional chance to deflect disarm attempts"
 	pierceprot
 		name = "Piercing Resistance"
 		id = "pierceprot"
@@ -324,6 +324,33 @@ var/list/globalPropList = null
 		onRemove(obj/item/owner, value)
 			if(istype(owner))
 				owner.force -= value
+
+	genericenchant
+		hidden = 1
+		name = "Enchantment"
+		id = "enchant"
+		desc = "Magic!"
+		tooltipImg = "block.png"
+		defaultValue = 1
+
+		onAdd(obj/item/owner, value)
+			. = ..()
+			for(var/datum/objectProperty/P in owner.properties)
+				if(P.id == "enchant") continue
+				owner.setProperty(P.id, owner.getProperty(P.id)*(1+(value/10)))
+			owner.force *= (1+value/10)
+
+		onChange(obj/item/owner, oldValue, newValue)
+			. = ..()
+			onRemove(owner, oldValue)
+			onAdd(owner, newValue)
+
+		onRemove(obj/item/owner, value)
+			. = ..()
+			for(var/datum/objectProperty/P in owner.properties)
+				if(P.id == "enchant") continue
+				owner.setProperty(P.id, owner.getProperty(P.id)/(1+(value/10)))
+			owner.force /= (1+value/10)
 
 	inline //Seriously, if anyone has a better idea, tell me.
 		inline = 1
@@ -534,7 +561,7 @@ to say if there's demand for that.
 	desc = "Affects stamina regenration." //Value is flat effective change to stamina regeneration.
 	tooltipImg = "stamregen.png"
 	defaultValue = 1
-	
+
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal] stamina regen."
 

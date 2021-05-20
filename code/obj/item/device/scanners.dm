@@ -17,7 +17,7 @@ Contains:
 	icon_state = "t-ray0"
 	var/on = 0
 	flags = FPRINT|ONBELT|TABLEPASS
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	m_amt = 150
 	mats = 5
@@ -131,12 +131,13 @@ that cannot be itched
 	name = "forensic scanner"
 	desc = "Used to scan objects for DNA and fingerprints."
 	icon_state = "fs"
-	w_class = 2 // PDA fits in a pocket, so why not the dedicated scanner (Convair880)?
+	w_class = W_CLASS_SMALL // PDA fits in a pocket, so why not the dedicated scanner (Convair880)?
 	item_state = "electronic"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | SUPPRESSATTACK
 	mats = 3
 	hide_attack = 2
 	var/active = 0
+	var/distancescan = 0
 	var/target = null
 
 	attack_self(mob/user as mob)
@@ -164,6 +165,13 @@ that cannot be itched
 
 		user.show_text("No match found in security records.", "red")
 		return
+
+	pixelaction(atom/target, params, mob/user, reach)
+		if(distancescan)
+			if(!IN_RANGE(user, target, 1) && IN_RANGE(user, target, 3))
+				user.visible_message("<span class='notice'><b>[user]</b> takes a distant forensic scan of [target].</span>")
+				boutput(user, scan_forensic(target, visible = 1))
+				src.add_fingerprint(user)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 
@@ -212,6 +220,11 @@ that cannot be itched
 		SPAWN_DBG(0.5 SECONDS)
 			.(T)
 
+/obj/item/device/detective_scanner/detective
+	name = "cool forensic scanner"
+	desc = "Used to scan objects for DNA and fingerprints. This model seems to have an upgrade that lets it scan for prints at a distance. You feel cool holding it."
+	distancescan = 1
+
 ///////////////////////////////////// Health analyzer ////////////////////////////////////////
 
 /obj/item/device/analyzer/healthanalyzer
@@ -222,7 +235,7 @@ that cannot be itched
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
 	throwforce = 3
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
 	m_amt = 200
@@ -232,9 +245,15 @@ that cannot be itched
 	var/reagent_scan = 0
 	var/organ_upgrade = 0
 	var/organ_scan = 0
+	var/image/scanner_status
 	module_research = list("analysis" = 2, "medicine" = 2, "devices" = 1)
 	module_research_type = /obj/item/device/analyzer/healthanalyzer
 	hide_attack = 2
+
+	New()
+		..()
+		scanner_status = image('icons/obj/items/device.dmi', icon_state = "health_over-basic")
+		UpdateOverlays(scanner_status, "status")
 
 	attack_self(mob/user as mob)
 		if (!src.reagent_upgrade && !src.organ_upgrade)
@@ -244,28 +263,40 @@ that cannot be itched
 			if (src.reagent_scan && src.organ_scan)				//if both active, make both off
 				src.reagent_scan = 0
 				src.organ_scan = 0
+				scanner_status.icon_state = "health_over-basic"
+				UpdateOverlays(scanner_status, "status")
 				boutput(user, "<span class='alert'>All upgrades disabled.</span>")
 
 			else if (!src.reagent_scan && !src.organ_scan)		//if both inactive, turn reagent on
 				src.reagent_scan = 1
 				src.organ_scan = 0
+				scanner_status.icon_state = "health_over-reagent"
+				UpdateOverlays(scanner_status, "status")
 				boutput(user, "<span class='alert'>Reagent scanner enabled.</span>")
 
 			else if (src.reagent_scan)							//if reagent active, turn reagent off, turn organ on
 				src.reagent_scan = 0
 				src.organ_scan = 1
+				scanner_status.icon_state = "health_over-organ"
+				UpdateOverlays(scanner_status, "status")
 				boutput(user, "<span class='alert'>Reagent scanner disabled. Organ scanner enabled.</span>")
 
 			else if (src.organ_scan)							//if organ active, turn BOTH on
 				src.reagent_scan = 1
 				src.organ_scan = 1
+				scanner_status.icon_state = "health_over-both"
+				UpdateOverlays(scanner_status, "status")
 				boutput(user, "<span class='alert'>All upgrades enabled.</span>")
 
 		else if (src.reagent_upgrade)
 			src.reagent_scan = !(src.reagent_scan)
+			scanner_status.icon_state = !reagent_scan ? "health_over-basic" : "health_over-reagent"
+			UpdateOverlays(scanner_status, "status")
 			boutput(user, "<span class='notice'>Reagent scanner [src.reagent_scan ? "enabled" : "disabled"].</span>")
 		else if (src.organ_upgrade)
 			src.organ_scan = !(src.organ_scan)
+			scanner_status.icon_state = !organ_scan ? "health_over-basic" : "health_over-organ"
+			UpdateOverlays(scanner_status, "status")
 			boutput(user, "<span class='notice'>Organ scanner [src.organ_scan ? "enabled" : "disabled"].</span>")
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -285,6 +316,9 @@ that cannot be itched
 		user.visible_message("<span class='alert'><b>[user]</b> has analyzed [M]'s vitals.</span>",\
 		"<span class='alert'>You have analyzed [M]'s vitals.</span>")
 		boutput(user, scan_health(M, src.reagent_scan, src.disease_detection, src.organ_scan, visible = 1))
+
+		scan_health_overhead(M, user)
+
 		update_medical_record(M)
 
 		if (M.stat > 1)
@@ -311,6 +345,11 @@ that cannot be itched
 	organ_upgrade = 1
 	organ_scan = 1
 
+	New()
+		..()
+		scanner_status.icon_state = "health_over-both"
+		UpdateOverlays(scanner_status, "status")
+
 /obj/item/device/analyzer/healthanalyzer/vr
 	icon = 'icons/effects/VR.dmi'
 
@@ -320,7 +359,7 @@ that cannot be itched
 	icon_state = "health_upgr"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
 	mats = 2
@@ -331,7 +370,7 @@ that cannot be itched
 	icon_state = "organ_health_upgr"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
 	mats = 2
@@ -346,7 +385,7 @@ that cannot be itched
 	desc = "A hand-held device that scans and lists the chemicals inside the scanned subject."
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
 	throwforce = 3
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
 	m_amt = 200
@@ -398,10 +437,10 @@ that cannot be itched
 	name = "atmospheric analyzer"
 	icon_state = "atmos-no_up"
 	item_state = "analyzer"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	throwforce = 5
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20
 	mats = 3
@@ -472,7 +511,7 @@ that cannot be itched
 	icon_state = "atmos_upgr" // add this
 	flags = FPRINT | TABLEPASS | CONDUCT
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
 	mats = 2
@@ -490,6 +529,8 @@ that cannot be itched
 				a.reagent_scan = 1
 				a.reagent_upgrade = 1
 				a.icon_state = a.organ_upgrade ? "health" : "health-r-up"
+				a.scanner_status.icon_state = a.organ_scan ? "health_over-both" : "health_over-reagent"
+				a.UpdateOverlays(a.scanner_status, "status")
 				a.item_state = "healthanalyzer"
 
 			else if (istype(W, /obj/item/device/analyzer/healthanalyzer_organ_upgrade))
@@ -499,6 +540,8 @@ that cannot be itched
 				a.organ_upgrade = 1
 				a.organ_scan = 1
 				a.icon_state = a.reagent_upgrade ? "health" : "health-o-up"
+				a.scanner_status.icon_state = a.reagent_scan ? "health_over-both" : "health_over-organ"
+				a.UpdateOverlays(a.scanner_status, "status")
 				a.item_state = "healthanalyzer"
 		else if(istype(src, /obj/item/device/analyzer/atmospheric) && istype(W, /obj/item/device/analyzer/atmosanalyzer_upgrade))
 			if (upgraded)
@@ -521,13 +564,13 @@ that cannot be itched
 ///////////////////////////////////////////////// Prisoner scanner ////////////////////////////////////
 
 /obj/item/device/prisoner_scanner
-	name = "Security RecordTrak"
+	name = "security RecordTrak"
 	desc = "A device used to scan in prisoners and update their security records."
 	icon_state = "recordtrak"
 	var/mode = 1
 	var/datum/data/record/active1 = null
 	var/datum/data/record/active2 = null
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	item_state = "recordtrak"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | EXTRADELAY
 	mats = 3
@@ -630,7 +673,7 @@ that cannot be itched
 	desc = "A device used to issue tickets from the security department."
 	icon_state = "ticketwriter"
 	item_state = "electronic"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 
@@ -648,6 +691,9 @@ that cannot be itched
 			I = H.wear_id
 		else if (ismobcritter(user))
 			I = locate(/obj/item/card/id) in user.contents
+		else if (issilicon(user))
+			var/mob/living/silicon/S = user
+			I = S.botcard
 		if (!I || !(access_security in I.access))
 			boutput(user, "<span class='alert'>Insufficient access.</span>")
 			return
@@ -682,4 +728,5 @@ that cannot be itched
 			p.name = "Official Caution - [ticket_target]"
 			p.info = ticket_text
 			p.icon_state = "paper_caution"
-		return
+
+		return T.target_byond_key
