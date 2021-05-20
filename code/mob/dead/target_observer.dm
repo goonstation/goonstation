@@ -18,6 +18,7 @@ var/list/observers = list()
 
 	unpooled()
 		..()
+		src.mob_properties = list()
 		observers += src
 		mobs += src
 		src.move_dir = 0
