@@ -268,6 +268,7 @@ MATERIAL
 				L["tcomputer"] = "Computer Terminal Frame (3 Sheets)"
 				L["computer"] = "Console Frame (5 Sheets)"
 				L["hcomputer"] = "Computer Frame (5 Sheets)"
+				L["conveyor"] = "Conveyor Belt"
 		if (src?.material.material_flags & MATERIAL_CRYSTAL)
 			L["smallwindow"] = "Thin Window"
 			L["bigwindow"] = "Large Window (2 Sheets)"
@@ -481,6 +482,14 @@ MATERIAL
 					a_icon = 'icons/obj/terminal_frame.dmi'
 					a_icon_state = "0"
 					a_name = "a terminal frame"
+
+				if("conveyor")
+					a_type = /obj/machinery/conveyor/constructed
+					a_amount = 1
+					a_cost = 1
+					a_icon = 'icons/obj/recycling.dmi'
+					a_icon_state = "conveyor0"
+					a_name = "a conveyor belt"
 
 				if("construct")
 					var/turf/T = get_turf(usr)
