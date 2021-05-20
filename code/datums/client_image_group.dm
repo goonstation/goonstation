@@ -29,7 +29,7 @@ var/global/list/datum/client_image_group/client_image_groups
 		loc_to_image_lookup[img.loc] -= img
 		if(!length(loc_to_image_lookup[img.loc]))
 			loc_to_image_lookup.Remove(img.loc)
-		UnregisterSignal(img.loc, COMSIG_MOB_PROP_INVISIBILITY)
+			UnregisterSignal(img.loc, COMSIG_MOB_PROP_INVISIBILITY)
 		for(var/mob/iterated_mob as() in subscribed_mobs)
 			iterated_mob.client?.images.Remove(img)
 
