@@ -21802,9 +21802,7 @@
 	},
 /area/afterlife/heaven/hydroponics/inside)
 "bmY" = (
-/obj/machinery/conveyor{
-	basedir = 8;
-	dir = 8;
+/obj/machinery/conveyor/west{
 	id = "ddan"
 	},
 /turf/unsimulated/floor/caution/north,
@@ -22257,9 +22255,7 @@
 /turf/unsimulated/floor,
 /area/drone/office)
 "bnO" = (
-/obj/machinery/conveyor{
-	basedir = 8;
-	dir = 8;
+/obj/machinery/conveyor/west{
 	id = "ddan"
 	},
 /turf/unsimulated/floor,
@@ -33572,17 +33568,13 @@
 	},
 /area/crunch)
 "bPp" = (
-/obj/machinery/conveyor{
-	basedir = 8;
-	dir = 8;
+/obj/machinery/conveyor/west{
 	id = "ddan"
 	},
 /turf/unsimulated/floor/orangeblack,
 /area/crunch)
 "bPq" = (
-/obj/machinery/conveyor{
-	basedir = 8;
-	dir = 8;
+/obj/machinery/conveyor/west{
 	id = "ddan"
 	},
 /obj/overlay{
@@ -33595,9 +33587,7 @@
 /turf/unsimulated/floor/orangeblack,
 /area/crunch)
 "bPr" = (
-/obj/machinery/conveyor{
-	basedir = 8;
-	dir = 8;
+/obj/machinery/conveyor/west{
 	id = "ddan"
 	},
 /obj/item/reagent_containers/food/snacks/snack_cake,
@@ -33707,9 +33697,7 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "bPF" = (
-/obj/machinery/conveyor{
-	basedir = 1;
-	dir = 1;
+/obj/machinery/conveyor/north{
 	id = "ddan"
 	},
 /turf/unsimulated/floor/orangeblack,
@@ -33982,9 +33970,7 @@
 /turf/unsimulated/floor/bot,
 /area/crunch)
 "bQp" = (
-/obj/machinery/conveyor{
-	basedir = 1;
-	dir = 1;
+/obj/machinery/conveyor/north{
 	id = "ddan"
 	},
 /obj/item/reagent_containers/food/snacks/snack_cake,
@@ -45739,9 +45725,7 @@
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/battlecruiser)
 "cvT" = (
-/obj/machinery/conveyor{
-	basedir = 8;
-	dir = 8;
+/obj/machinery/conveyor/west{
 	id = "ddan"
 	},
 /obj/overlay{
@@ -59247,9 +59231,7 @@
 	},
 /area/iomoon/caves)
 "dam" = (
-/obj/machinery/conveyor{
-	basedir = 8;
-	dir = 8;
+/obj/machinery/conveyor/west{
 	id = "ddan"
 	},
 /obj/item/shipcomponent/engine/hermes,
