@@ -559,6 +559,7 @@ PIPE BOMBS + CONSTRUCTION
 	icon_state = "oxy"
 	item_state = "flashbang"
 	is_syndicate = 1
+	mats = list("MET-2"=2, "CON-1"=2, "molitz"=10, "char"=1 )
 	sound_armed = "sound/weapons/armbomb.ogg"
 	icon_state_armed = "oxy1"
 
@@ -574,14 +575,17 @@ PIPE BOMBS + CONSTRUCTION
 				if(T.parent?.group_processing)
 					T.parent.air.merge(GM)
 				else
-					var/count = length(T.parent.members)
-					for(var/turf/simulated/MT as() in T.parent.members)
-						if(GM.disposed)
-							GM = unpool(/datum/gas_mixture)
-							GM.temperature = T20C + 15
-							GM.oxygen = 1500 / count
-							GM.carbon_dioxide = 100 / count
-						MT.assume_air(GM)
+					var/count = length(T.parent?.members)
+					if(count)
+						for(var/turf/simulated/MT as() in T.parent.members)
+							if(GM.disposed)
+								GM = unpool(/datum/gas_mixture)
+								GM.temperature = T20C + 15
+								GM.oxygen = 1500 / count
+								GM.carbon_dioxide = 100 / count
+							MT.assume_air(GM)
+					else
+						T.assume_air(GM)
 
 			for (var/mob/living/HH in range(8, src))
 				var/checkdist = get_dist(HH.loc, T)
