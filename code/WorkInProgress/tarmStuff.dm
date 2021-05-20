@@ -112,7 +112,6 @@
 			return
 		..()
 
-//TODO fix this to be better
 
 /obj/item/gun/kinetic/pistol/smart
 	name = "\improper Hydra smart pistol"
@@ -122,8 +121,11 @@
 	New()
 		..()
 		ammo.amount_left = 30
-		AddComponent(/datum/component/holdertargeting/smartgun, 3)
+		AddComponent(/datum/component/holdertargeting/smartgun/nukeop, 3)
 
+
+/datum/component/holdertargeting/smartgun/nukeop/is_valid_target(mob/user, mob/M)
+	return ..() && !istype(M.get_id(), /obj/item/card/id/syndicate)
 
 /obj/item/gun/kinetic/gyrojet
 	name = "Amaethon gyrojet pistol"
