@@ -1548,6 +1548,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	)
 	available = list(
 		/datum/manufacture/pod_wars/barricade,
+		/datum/manufacture/pod_wars/energy_concussion_grenade,
+		/datum/manufacture/pod_wars/energy_frag_grenade,
 		/datum/manufacture/pod_wars/lock,
 		/datum/manufacture/putt/engine,
 		/datum/manufacture/putt/boards,
@@ -1824,6 +1826,26 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	item_paths = list("MET-2")
 	item_amounts = list(5)
 	item_outputs = list(/obj/item/deployer/barricade)
+	time = 1 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
+/datum/manufacture/pod_wars/energy_concussion_grenade
+
+	name = "Deployable Barricade"
+	item_paths = list("MET-2")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/old_grenade/energy_concussion)
+	time = 1 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
+/datum/manufacture/pod_wars/energy_frag_grenade
+
+	name = "Deployable Barricade"
+	item_paths = list("MET-2")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/old_grenade/energy_frag)
 	time = 1 SECONDS
 	create = 1
 	category = "Miscellaneous"
@@ -2867,7 +2889,7 @@ Player Stats
 //The list here is set up where the object path is the key, and the value is its point amount
 proc/setup_pw_crate_lists()
 	pw_rewards_tier1 = list(/obj/item/storage/firstaid/regular = 1, /obj/item/reagent_containers/mender/both = 1, 	///obj/item/tank/plasma = 2
-		/obj/item/tank/oxygen = 1, /obj/item/old_grenade/energy_frag = 2, /obj/item/old_grenade/energy_concussion = 2, /obj/item/device/flash = 2, /obj/item/deployer/barricade = 4,
+		/obj/item/tank/oxygen = 1, /obj/item/storage/box/energy_frag = 4, /obj/item/storage/box/energy_concussion = 4, /obj/item/device/flash = 2, /obj/item/deployer/barricade = 4,
 		/obj/item/shipcomponent/mainweapon/taser = 3, /obj/item/shipcomponent/mainweapon/laser/short = 3,/obj/item/ammo/power_cell/high_power = 5,
 		/obj/item/material_piece/steel{amount=10} = 1, /obj/item/material_piece/copper{amount=10} = 1, /obj/item/material_piece/glass{amount=10} = 1)
 
@@ -2913,9 +2935,7 @@ proc/setup_pw_crate_lists()
 	high
 		tier = 3
 
-
 //basically like stinger in that it shoots projectiles, but has no explosions, different icon
-
 /obj/item/old_grenade/energy_frag
 	name = "blast grenade"
 	desc = "It is set to detonate in 3 seconds."
@@ -2954,6 +2974,12 @@ proc/setup_pw_crate_lists()
 		else
 			qdel(src)
 		return
+
+/obj/item/storage/box/energy_frag
+	name = "\improper blast grenade box"
+	desc = "A box with 5 blast grenade."
+	icon_state = "flashbang"
+	spawn_contents = list(/obj/item/old_grenade/energy_frag = 5)
 
 /obj/item/old_grenade/energy_concussion
 	name = "concussion grenade"
@@ -3003,6 +3029,12 @@ proc/setup_pw_crate_lists()
 		else
 			qdel(src)
 		return
+
+/obj/item/storage/box/energy_concussion
+	name = "\improper concussion grenade box"
+	desc = "A box with 5 concussion grenade."
+	icon_state = "flashbang"
+	spawn_contents = list(/obj/item/old_grenade/energy_concussion = 5)
 
 ///////////////////////////////////////PW Blasters
 /obj/item/gun/energy/blaster_pod_wars
