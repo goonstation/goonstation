@@ -9,7 +9,7 @@
 	var/shooting
 	var/tracking
 	var/list/tracked_targets
-	var/list/targeting_images
+	var/list/image/targeting_images
 
 	InheritComponent(datum/component/holdertargeting/smartgun/C, i_am_original, _maxlocks)
 		if(C)
@@ -138,9 +138,11 @@
 				if(tracked_targets[M] < src.maxlocks && src.is_valid_target(user, M) && shotcount < src.checkshots(parent))
 					tracked_targets[M] += 1
 					if(!targeting_images[M])
-						targeting_images[M] = image(null, M, pixel_y = 32)
+						targeting_images[M] = image(icon('icons/cursors/target/flat.dmi', "all"), M, pixel_y = 32)
 						aimer.images += targeting_images[M]
+						targeting_images[M].maptext_y = 3
 					targeting_images[M].maptext = "<span class='pixel c ol'>[tracked_targets[M]]</span>"
+
 		sleep(1 SECOND)
 
 	stopping = 0
