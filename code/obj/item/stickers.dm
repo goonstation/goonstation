@@ -323,6 +323,11 @@
 	name = "holly ornament"
 	icon_state = "holly"
 
+/obj/item/sticker/googly_eye
+	name = "googly eye sticker"
+	icon_state = "googly_eye"
+	random_icons = list("googly_eye1", "googly_eye2", "googly_eye3")
+
 /obj/item/sticker/ribbon
 	name = "award ribbon"
 	desc = "You're an award winner! You came in, uh... Well it looks like this doesn't say what place you came in, or what it's for. That's weird. But hey, it's an award for something! Maybe it was for being the #1 Farter, or maybe the #8 Ukelele Soloist. Truly, with an award as vague as this, you could be anything!"
