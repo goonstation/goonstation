@@ -1,5 +1,8 @@
 
 (t)wed may 19 21
+(u)kyle
+(e)⚖|balance
+(*)Changed the burning status effect so that now the burning sprite on the mob correlates to the current duration of the burning effect. This slightly changes the way burning damage is calculated.
 (u)pali
 (e)🦾🤖|
 (+)Cyborgs can now *flex if they have heavy arms.
