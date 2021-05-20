@@ -37,7 +37,7 @@ var/global/list/datum/client_image_group/client_image_groups
 		subscribed_mobs[added_mob] += 1
 		if (subscribed_mobs[added_mob] == 1)
 			for (var/image/I in images)
-				if (!I.loc.invisibility || (I == added_mob) || istype(added_mob, /mob/dead/observer))
+				if (!I.loc.invisibility || (I.loc == added_mob) || istype(added_mob, /mob/dead/observer))
 					added_mob.client?.images.Add(I)
 
 			RegisterSignal(added_mob, COMSIG_MOB_LOGIN, .proc/add_images_to_client_of_mob)
