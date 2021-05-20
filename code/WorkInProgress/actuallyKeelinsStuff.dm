@@ -3589,7 +3589,7 @@ var/list/lag_list = new/list()
 	used(atom/user, atom/target)
 		var/obj/machinery/conveyor/L = new/obj/machinery/conveyor(get_turf(target))
 		L.set_dir(user:dir)
-		L.basedir = L.dir
+		L.startdir = L.dir
 		return
 
 /datum/engibox_mode/poddoor

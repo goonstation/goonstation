@@ -18,8 +18,8 @@
 	machine_registry_idx = MACHINES_CONVEYORS
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
-	var/basedir			// this is the default (forward) direction, set by the map dir
-						// note dir var can vary when the direction changes
+	var/startdir = null // the default direction
+	var/altdir = null	 // the reverse direction
 
 	var/id = ""			// the control ID	- must match controller ID
 	// following two only used if a diverter is present
@@ -34,19 +34,30 @@
 
 
 /obj/machinery/conveyor/north
-	dir = NORTH
+	startdir = NORTH
+	altdir = SOUTH
 /obj/machinery/conveyor/south
-	dir = SOUTH
+	startdir = SOUTH
+	altdir = NORTH
 /obj/machinery/conveyor/east
-	dir = EAST
+	startdir = EAST
+	altdir = WEST
 /obj/machinery/conveyor/west
-	dir = WEST
+	startdir = WEST
+	altdir = EAST
+
+/obj/machinery/conveyor/constructed
+	New()
+		. = ..()
+		SPAWN_DBG(0.5 SECONDS) // construction takes a bit to set the dir right >.>
+			src.connect_to_nearby()
 
 	// create a conveyor
 
 /obj/machinery/conveyor/New()
 	..()
-	basedir = dir
+	src.startdir = src.dir
+	src.altdir = turn(src.dir, 180)
 	setdir()
 	UnsubscribeProcess()
 
@@ -67,22 +78,44 @@
 // called when constructed via mechanics or via conveyor parts
 /obj/machinery/conveyor/proc/connect_to_nearby()
 	// needs to be done again since new() is run before the frame deployment sets the direction
-	basedir = dir
-	setdir()
-	// best guess for a conveyor whose settings we want to copy
+	src.startdir = dir
+	src.altdir = turn(dir, 180)
+	// get adjacent conveyors, try to find one that leads into us, one that leads away from us
+	// then make us point in those directions, to make things easier
+	// also copy switch settings if we find at least one!
+	var/list/obj/machinery/conveyor/near_conveyors = list(locate(/obj/machinery/conveyor) in get_step(src,turn(startdir, 180)),
+	locate(/obj/machinery/conveyor) in get_step(src,startdir),
+	locate(/obj/machinery/conveyor) in get_step(src,turn(startdir, -90)),
+	locate(/obj/machinery/conveyor) in get_step(src,turn(startdir, 90)))
 	var/obj/machinery/conveyor/prev_conveyor
-	prev_conveyor = locate(/obj/machinery/conveyor) in get_step(src,turn(basedir, 180)) // behind
-	if(!prev_conveyor)
-		prev_conveyor = locate(/obj/machinery/conveyor) in get_step(src,basedir) // front
-	if(!prev_conveyor)
-		prev_conveyor = locate(/obj/machinery/conveyor) in get_step(src,turn(basedir, -90)) // right
-	if(!prev_conveyor)
-		prev_conveyor = locate(/obj/machinery/conveyor) in get_step(src,turn(basedir, 90)) // left
+	var/obj/machinery/conveyor/next_conveyor
+	for(var/obj/machinery/conveyor/cur_conveyor as() in near_conveyors)
+		if(!cur_conveyor)
+			continue
+		if(get_step(cur_conveyor.loc, cur_conveyor.startdir) == src.loc)
+			prev_conveyor = cur_conveyor
+			break
+	for(var/obj/machinery/conveyor/cur_conveyor as() in near_conveyors)
+		if(!cur_conveyor)
+			continue
+		if(get_step(cur_conveyor.loc, cur_conveyor.altdir) == src.loc)
+			next_conveyor = cur_conveyor
+			break
+
 	if(prev_conveyor)
-		src.operating = prev_conveyor.operating
-		if(prev_conveyor.owner)
-			src.owner = prev_conveyor.owner
+		src.altdir = get_dir(src, prev_conveyor)
+	if(next_conveyor)
+		src.startdir = get_dir(src, next_conveyor)
+	setdir()
+
+	var/obj/machinery/conveyor/settings_conveyor = prev_conveyor ? prev_conveyor : next_conveyor ? next_conveyor : null
+	if(settings_conveyor)
+		src.operating = settings_conveyor.operating
+		src.update()
+		if(settings_conveyor.owner)
+			src.owner = settings_conveyor.owner
 			src.owner.conveyors += src
+
 
 /obj/machinery/conveyor/was_built_from_frame(mob/user, newly_built)
 	src.connect_to_nearby()
@@ -117,9 +150,9 @@
 // set the dir and target turf depending on the operating direction
 /obj/machinery/conveyor/proc/setdir()
 	if(operating == -1)
-		set_dir(turn(basedir,180))
+		set_dir(altdir)
 	else
-		set_dir(basedir)
+		set_dir(startdir)
 	next_conveyor = locate(/obj/machinery/conveyor) in get_step(src,dir)
 	update()
 
@@ -140,7 +173,22 @@
 		for(var/atom/movable/A in loc.contents)
 			move_thing(A)
 
-	icon_state = "conveyor[(operating != 0) && !(status & NOPOWER)]"
+	// find bendy direction
+	var/angle_dir = dir2angle(src.altdir) - dir2angle(src.startdir)
+	if(angle_dir < 0)
+		angle_dir += 360
+	// reverse in case of reverse
+	if(operating == -1)
+		angle_dir = 360 - angle_dir
+	// 270 means left, 90 means right, 180 means straight, 0 means hypothetical stupid conveyor that goes back to where it comes from
+	var/bendy_dir = ""
+	if(angle_dir == 270)
+		bendy_dir = "left"
+	else if(angle_dir == 90)
+		bendy_dir = "right"
+
+
+	icon_state = "conveyor[bendy_dir][(operating != 0) && !(status & NOPOWER)]"
 
 
 /obj/machinery/conveyor/proc/move_thing(var/atom/movable/A)
@@ -248,7 +296,10 @@
 				src.visible_message("<span class='notice'>[M] had been cut free from the conveyor by [user].</span>")
 			return
 	else if (iswrenchingtool(I))
-		src.basedir = turn(src.basedir, -90)
+		src.startdir = turn(src.startdir, -90)
+		src.setdir()
+	else if (isscrewingtool(I))
+		src.altdir = turn(src.altdir, -90)
 		src.setdir()
 
 // attack with hand, move pulled object onto conveyor
@@ -277,12 +328,12 @@
 	status |= BROKEN
 	update()
 
-	var/obj/machinery/conveyor/C = locate() in get_step(src, basedir)
-	C?.set_operable(basedir, id, 0)
+	var/obj/machinery/conveyor/C = locate() in get_step(src, startdir)
+	C?.set_operable(startdir, id, 0)
 
-	C = locate() in get_step(src, turn(basedir,180))
+	C = locate() in get_step(src, altdir)
 	if(C)
-		C.set_operable(turn(basedir,180), id, 0)
+		C.set_operable(altdir, id, 0)
 
 
 //set the operable var if ID matches, propagating in the given direction
@@ -359,7 +410,7 @@
 		// wait for map load then find the conveyor in this turf
 		conv = locate() in src.loc
 		if(conv)	// divert_from dir must match possible conveyor movement
-			if(conv.basedir != divert_from && conv.basedir != turn(divert_from,180) )
+			if(conv.startdir != divert_from && conv.startdir != turn(divert_from,180) )
 				qdel(src)	// if no dir match, then delete self
 		set_divert()
 		update()
@@ -546,52 +597,35 @@
 	move_lag = 5.5
 	operating = 1
 
-
-/obj/machinery/conveyor/oshan_carousel/coroner
-	var/startdir = NORTH
-	var/altdir = NORTH
-
-	New()
-		..()
-		startdir = src.dir
-
-	setdir()
-		if(operating == -1)
-			set_dir(altdir)
-		else
-			set_dir(startdir)
-		next_conveyor = locate(/obj/machinery/conveyor) in get_step(src,dir)
-		update()
-
-/obj/machinery/conveyor/oshan_carousel/coroner/northeast
+/obj/machinery/conveyor/oshan_carousel/northeast
 	startdir = NORTH
 	altdir = EAST
 
-/obj/machinery/conveyor/oshan_carousel/coroner/northwest
+/obj/machinery/conveyor/oshan_carousel/northwest
 	startdir = NORTH
 	altdir = WEST
 
-/obj/machinery/conveyor/oshan_carousel/coroner/southeast
+/obj/machinery/conveyor/oshan_carousel/southeast
 	startdir = SOUTH
 	altdir = EAST
 
-/obj/machinery/conveyor/oshan_carousel/coroner/southwest
+/obj/machinery/conveyor/oshan_carousel/southwest
 	startdir = SOUTH
 	altdir = WEST
 
-/obj/machinery/conveyor/oshan_carousel/coroner/westsouth
+/obj/machinery/conveyor/oshan_carousel/westsouth
 	startdir = WEST
 	altdir = SOUTH
 
-/obj/machinery/conveyor/oshan_carousel/coroner/westnorth
+/obj/machinery/conveyor/oshan_carousel/westnorth
 	startdir = WEST
 	altdir = NORTH
 
-/obj/machinery/conveyor/oshan_carousel/coroner/eastsouth
+/obj/machinery/conveyor/oshan_carousel/eastsouth
 	startdir = EAST
 	altdir = SOUTH
 
-/obj/machinery/conveyor/oshan_carousel/coroner/eastnorth
+/obj/machinery/conveyor/oshan_carousel/eastnorth
 	startdir = EAST
 	altdir = NORTH
 
