@@ -390,8 +390,8 @@
 	lastattacked = null
 	lastattacker = null
 	health_update_queue -= src
-	src.mob_properties = null
 	..()
+	src.mob_properties = null
 
 /mob/Login()
 	// drsingh for cannot read null.address (still popping up though)
