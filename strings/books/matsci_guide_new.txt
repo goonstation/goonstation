@@ -4,7 +4,8 @@ This text serves as a comprehensive overview to Materials Science. It is detaile
 <hr>
 <h2>
   Contents</h2>
-<nav> <ul> <li><a href="MatSci-W">Materials Science: What, Where, and Why?</a></li> <li><a href="Index-of-Properties"> <a href="">Index of Properties</a></li> <li><a href="Basic-Mats">Basic Ores</a></li> <li><a href="Advanced-Mats">Advanced Materials</a></li> <li><a href="Alloyed-Mats">Alloyed Materials</a></li><li><a href="Alloying">Alloying</a></li></ul> </nav>
+<nav><ul><li><a href="MatSci-W">Materials Science: What, Where, and Why?</a></li> <li><a href="Index-of-Properties"> <a href="">Index of Properties</a></li> <li><a href="Basic-Mats">Basic Ores</a></li> <li><a href="Advanced-Mats">Advanced Materials</a></li> <li><a href="Alloyed-Mats">Alloyed Materials</a></li><li><a href="Alloying">Alloying</a></li>
+<li><a href="Infusing">Infusing</a></li></ul></nav>
 
   <section id="MatSci-W"><h3>Materials Science: What is it, Where is it, and Why is it?</h3></section>
 <hr>
@@ -12,17 +13,15 @@ The field of Materials Science is long studied and long storied. To detail preci
 <br><br>
 An aspiring metallurgist requires a suitable workshop in which they can create and refine alloys. Recommended for this line of work are:
 <ul><li><b>Nano-Crucible</b> - a large cuboid forge that melts two materials and reforms them as an alloyed bar
-<ul><li>Usage may produce slag and so it is recommended that you use a slag shovel to clean out the Smelter in between creating each alloy</li></ul>
-<ul>
-</ul><b>Slag Shovel</b> - used for removing slag buildup from impurities removed in the refining process. Modern Nano-Crucibles are able to filter impurities with more accuracy and so the old practice of slag shovelling has fallen by the wayside.
-</li></ul><ul><b>Material Processer</b> - a machine with a rectangular surface and two clamps to hold bars of alloys in place; used to process raw ores and gems into more workable ingots
-</li></ul><ul><b>Nano-Fabricator</b> - the sibling machine of the Material Processor with two upright arms embedded with lasers that will precisely cut and mold your materials into any of the pre-loaded schematics
+<li><b>Slag Shovel</b> - used for removing slag buildup from impurities removed in the refining process. Modern Nano-Crucibles filter impurities with more accuracy and so the old practice of slag shovelling has fallen by the wayside.
+</li></ul><ul><li><b>Material Processer</b> - a machine with a rectangular surface and two clamps to hold bars of alloys in place; used to process raw ores and gems into more workable ingots
+</li></ul><ul><li><b>Nano-Fabricator</b> - the machine with two upright arms embedded with lasers that precisely cut and mold materials into pre-loaded schematics
 <ul><li>Nano-Fabricator schematics describe needing either metal alloys, fabrics, rubber, or crystals, but it is possible for a single bar of alloyed material to possess all the properties needed for a schematic to begin working
-<li> You can store and view your stored materials under the “Storage” tab</li>
-<li>You can automatically store projects you make in the Nano-Fabricator by setting output to the Nano-Fabricator under the “Settings” tab</li>
-</li></ul><b>Material Analyzer</b> - a green handheld device that reports the information of a material including electrical conductivity, thermal conductivity, hardness, density, stability, and others. See "An Index of Properties and Their Effects" section below.
+<li> You can store and view your stored materials under the “Storage” tab</li><br>
+<li>You can automatically store projects you make in the Nano-Fabricator by setting output to the Nano-Fabricator under the “Settings” tab</li><br>
+</li></ul><li><b>Material Analyzer</b> - a green handheld device that reports information of a material including electrical conductivity, thermal conductivity, hardness, density, stability, and others. See "An Index of Properties and Their Effects" section below.
 </ul>
-<ul><b>Arc Electroplater</b> - a machine that allows for you to place a material in an electrolyte bath and then place an object into the bath to transfer the electrolyzed material to the surface of the object.
+<ul><li><b>Arc Electroplater</b> - a machine that allows for you to place a material in an electrolyte bath and then place an object into the bath to transfer the electrolyzed material to the surface of the object.
 <ul><li>This allows for transfer of material properties to objects you cannot make through the Nano-Fabricator. Particularly of interest in thermo-electric systems.</li></ul>
 </ul></ul><br>
 The reasons for partaking in metallurgy are numerous and varied. You can, for example, create new types of walls and floorings with high reflectivity for defense from energy projectiles, which might be desirable in sensitive areas like an AI Core.
@@ -38,9 +37,9 @@ This section shows the different properties or materials that are of interest to
 </p><ul><li>(ex.: Cerenkite, Erebite, Koshmarite)</ul></li>
 <p style="margin-right:10%; margin-left:1%"><b>Neutron Radioactivity</b> - a sub-type of radioactivity from incredibly dense materials that also recharges cells faster but also outputs higher radiation damage
 </p><ul><li>(ex.: Neutronium)</ul></li>
-<p style="margin-right:10%; margin-left:1%"><b>Electrical Conductivity</b> - ability of material to let electricity pass through it.
+<p style="margin-right:10%; margin-left:1%"><b>Electrical Conductivity</b> - ability of material to let electricity pass through it; <b>more conductive materials make for better reservoirs for energy storage in batteries</b>.
 </p><ul><li>(ex.: Copper, Claretine, Electrum)</ul></li>
-<p style="margin-right:10%; margin-left:1%"><b>Thermal Conductivity</b> - ability of material to transfer heat through it with little loss of energy.</p>
+<p style="margin-right:10%; margin-left:1%"><b>Thermal Conductivity</b> - ability of material to transfer heat through it with little loss of energy; <b>more insulating materials do better at keeping heat within which can be advantageous for creating temperature differentials.</b></p>
 <ul><li>(ex.: Carbon nano fibre, Fibrilith, Space spider silk)</ul></li>
 <p style="margin-right:10%; margin-left:1%"><b>Stability</b> - how prone a material is to degradation.
 </p><ul><li>(ex.: Starstone, Carbon nano fibre, Hauntium)</ul></li>
@@ -58,19 +57,118 @@ This section shows the different properties or materials that are of interest to
 <ul><li>(ex.: Syreline, Starstone, Telecrystal)</ul></li>
 <section id="Basic-Mats"><h3>Basic Ores and Their Properties</h3></section>
 <hr>
-Below is a list of all the basic ores that are common to asteroids in this sector, as well as their particular properties that are of interest for Materials Science.
+Below is a list of all the basic ores that are common to asteroids in this sector, as well as their particular properties that are of interest for Materials Science. See Appendix II for material classifications.
+The properties in full and in order are Radioactivity, Electrical Conductivity, Stability, Hardness, Density, Flammability, Corrosion Resistance, Permeability, and Reflectivity.
 <table>
-<tr><th align="right">...ORE</th>
-<th align="right">...Rad.</th>
-<th align="right">...El. Condct.</th>
-<th align="right">...Stabil.</th>
-<th align="right">...Hard.</th>
-<th align="right">...Dens.</th>
-<th align="right">...Flam.</th>
-<th align="right">...Cor. Resist.</th>
-<th align="right">...Perm.</th>
-<th align="right">...Reflect.</th>
-<th align="right">...Other</th></tr>
+<tr><th align="right">ORE</th>
+<th align="right">|  Rad.</th>
+<th align="right">|  El. Cond.</th>
+<th align="right">|  Stabil.</th>
+<th align="right">|  Hard.</th>
+<th align="right">|  Dens.</th>
+<th align="right">|  Flam.</th>
+<th align="right">|  Cor. Res.</th>
+<th align="right">|  Perm.</th>
+<th align="right">|  Reflect.|</th></tr>
+<tr><td align="right">Bohrum</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">30</td>
+<td align="right">40</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A<td>
+<td align="right">N/A<td>
+</td></tr>
+<tr><td align="right">Char</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">15</td>
+<td align="right">15</td>
+<td align="right">60</td>
+<td align="right">N/A</td>
+<td align="right">N/A<td>
+<td align="right">N/A<td>
+</td></tr>
+<tr><td align="right">Claretine</td>
+<td align="right">N/A</td>
+<td align="right">75</td>
+<td align="right">N/A</td>
+<td align="right">30</td>
+<td align="right">30</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A<td>
+<td align="right">N/A<td>
+</td></tr>
+<tr><td align="right">Cerenkite</td>
+<td align="right">55</td>
+<td align="right">65</td>
+<td align="right">30</td>
+<td align="right">15</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A<td>
+<td align="right">N/A<td>
+</td></tr>
+<tr><td align="right">Cobryl</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A<td>
+<td align="right">N/A<td>
+</td></tr>
+<tr><td align="right">Erebite</td>
+<td align="right">75</td>
+<td align="right">60</td>
+<td align="right">10</td>
+<td align="right">20</td>
+<td align="right">20</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A<td>
+<td align="right">N/A<td>
+</td></tr>
+<tr><td align="right">Gold</td>
+<td align="right">N/A</td>
+<td align="right">60</td>
+<td align="right">N/A</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A<td>
+<td align="right">55<td>
+</td></tr>
+<tr><td align="right">Ice</td>
+<td align="right">N/A</td>
+<td align="right">70</td>
+<td align="right">N/A</td>
+<td align="right">15</td>
+<td align="right">15</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A<td>
+<td align="right">N/A<td>
+</td></tr>
+<tr><td align="right">Koshmarite</td>
+<td align="right">20</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">55</td>
+<td align="right">35</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A<td>
+<td align="right">N/A<td>
+</td></tr>
 <tr><td align="right">Mauxite</td>
 <td align="right">N/A</td>
 <td align="right">N/A</td>
@@ -82,34 +180,139 @@ Below is a list of all the basic ores that are common to asteroids in this secto
 <td align="right">N/A<td>
 <td align="right">N/A<td>
 </td></tr>
-<tr><td align="right">Gold</td>
+<tr><td align="right">Moltiz / Beta</td>
 <td align="right">N/A</td>
-<td align="right">60</td></tr>
-<tr><td align="right">Cobryl</td><td>...N/A</td><td>.....N/A</td></tr>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">40</td>
+<td align="right">40</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A<td>
+<td align="right">N/A<td>
+</td></tr>
+<tr><td align="right">Pharosium</td>
+<td align="right">N/A</td>
+<td align="right">65</td>
+<td align="right">60</td>
+<td align="right">15</td>
+<td align="right">15</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A<td>
+<td align="right">N/A<td>
+</td></tr>
+<tr><td align="right">Plasmastone</td>
+<td align="right">20</td>
+<td align="right">50</td>
+<td align="right">N/A</td>
+<td align="right">10</td>
+<td align="right">10</td>
+<td align="right">85</td>
+<td align="right">N/A</td>
+<td align="right">N/A<td>
+<td align="right">N/A<td>
+</td></tr>
+<tr><td align="right">Syreline</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A<td>
+<td align="right">70<td>
+</td></tr>
+<tr><td align="right">Viscerite</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">3</td>
+<td align="right">65</td>
+<td align="right">N/A</td>
+<td align="right">70</td>
+<td align="right">90<td>
+<td align="right">N/A<td>
+</td></tr>
 </table><br/>
 <section id="Advanced-Mats"><h3>Advanced Materials and Their Properties</h3></section>
+These are additional useful materials and their relative properties.
+The properties in full and in order are Radioactivity, Electrical Conductivity, Thermal Conductivity, Stability, Hardness, Density, Flammability, Corrosion Resistance, Permeability, and Reflectivity.
+<table>
+<tr><th align="right">ORGANIC MAT</th>
+<th align="right">|  Rad.</th>
+<th align="right">|  El. Cond.</th>
+<th align="right">|  Thm. Cond.</th>
+<th align="right">|  Stabil.</th>
+<th align="right">|  Hard.</th>
+<th align="right">|  Dens.</th>
+<th align="right">|  Flam.</th>
+<th align="right">|  Cor. Res.</th>
+<th align="right">|  Perm.</th>
+<th align="right">|  Reflect.|</th></tr>
+<tr><td align="right">Bamboo</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">N/A</td>
+<td align="right">45</td>
+<td align="right">53</td>
+<td align="right">N/A</td>
+<td align="right">67</td>
+<td align="right">N/A<td>
+<td align="right">N/A<td>
+</td></tr>
+<tr><td align="right">Bee Wool</td>
+<td align="right">N/A</td>
+<td align="right">29</td>
+<td align="right">75</td>
+<td align="right">N/A</td>
+<td align="right">21</td>
+<td align="right">21</td>
+<td align="right">65</td>
+<td align="right">N/A</td>
+<td align="right">N/A<td>
+<td align="right">N/A<td>
+</td></tr>
+<tr><td align="right">Beeswax</td>
+<td align="right">N/A</td>
+<td align="right">29</td>
+<td align="right">75</td>
+<td align="right">N/A</td>
+<td align="right">21</td>
+<td align="right">21</td>
+<td align="right">65</td>
+<td align="right">N/A</td>
+<td align="right">N/A<td>
+<td align="right">N/A<td>
+</td></tr>
+</table><br/>
+
 <section id="Alloyed-Mats"><h3>Alloyed Materials and Their Properties</h3></section>
 <section id="Alloying"><h3>Alloying</h3></section>
 Alloying is done in the Nano-Crucible using processed materials. When you alloy two materials together, the stats of the created alloy is an average of the two progenitor materials. So, if you were looking to create a dense material and you alloyed Plasmasteel (density 75) with Viscerite (density 65), the resulting alloy would have a density of 70.
 When you alloy a material, the material passes on any unique properties to the resulting alloy.<br><br>
 
-Two additional notes on how <b>Melee Damage Protection</b> and <b><i>Ranged Damage Protection</i></b> are determined on wearables. Melee Damage Protection is equal to the density of the material the piece is made from divided by 17.
-<b><i>Ranged Damage Protection</i></b> is equal to (material density divided by 17) divided by 10, and then 0.1 is added to the resulting number.
+Two additional notes on how <b>Melee Damage Protection</b> and <b><i>Ranged Damage Protection</i></b> are determined on wearables. Melee Damage Protection is equal to the density of the material the piece is made from divided by 13.
+<b><i>Ranged Damage Protection</i></b> is equal to (material density divided by 13) divided by 10, and then 0.2 is added to the resulting number.
 
-<br><br>So if you had a Plasmasteel alloy at 70 density, it would provide 4 <b><i>Melee Damage Protection</b></i> (70/17 = 4.1) when made into a wearable, and 0.5 <b><i>Ranged Damage Protection</b></i> (0.4+0.1) when made into a wearable.
+<br><br>So if you had a Plasmasteel alloy at 70 density, it would provide 5 <b><i>Melee Damage Protection</b></i> (70/13 = 5.3) when made into a wearable, and 0.7 <b><i>Ranged Damage Protection</b></i> (0.5+0.2) when made into a wearable.
 <br>
 <br>
 You can directly transfer the stats of a material to an object by putting the material in the <b>Arc Electroplater</b> and then putting the desired object in with the plating. This process takes a few moments, and results in an object that is plated in and has the properties of your material.
+<section id="Infusing""><h3>Infusing</h3></section>
+As a final note, one can infuse a chemical into a material through an infusion process that utilizes starstone, and then use the material to go on and create more items in the Nano-Fabricator. These items then continuously dose the wearer or holder of the item with the chemical that was infused into the parent material.
 <br><br>
 <h4>Footnote</h4>
 <br><p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at:
-</li><li><a href="https://wiki.ss13.co/Ore_Processing" target="_blank">https://wiki.ss13.co/Ore_Processing</a></li>
-</li><li><a href="https://wiki.ss13.co/Guide_to_Mining" target="_blank">https://wiki.ss13.co/Guide_to_Mining</a></li>
+<ul><li><a href="https://wiki.ss13.co/Ore_Processing" target="_blank">https://wiki.ss13.co/Ore_Processing</a></li>
+</li><li><a href="https://wiki.ss13.co/Guide_to_Mining" target="_blank">https://wiki.ss13.co/Guide_to_Mining</a></li></ul>
 Thank you for your service to Nanotrasen.</i></p>
 <br><br><br><br>
 <hr>
 <h3>Appendix I.</h3>
-<h4>Classifications of various properties.</h4>
+<h4>Ratings of various properties.</h4>
 		<p style="margin-right:10%; margin-left:1%"><b>Radioactivity</b></p>
 			<ul style='list-style-type:circle'>
 			<li>1 to 10  --  Slgihtly Radioactive</li>
@@ -200,3 +403,67 @@ Thank you for your service to Nanotrasen.</i></p>
 			<li>51 to 75 --  Slightly reflective</li>
 			<li>76 to 90 --  Reflective</li>
 			<li>90+      --  Very reflective</li></ul>
+<hr>
+<h3>Appendix II.</h3>
+<h4>Classifications of different material groups</h4>
+<br><br>
+<b>Metal</b>
+<ul><li>Chitin</li><li>Cobryl</li><li>Copper</li><li>Coral</li>
+<li>Electrum</li><li>Gold</li><li>Hauntium</li><li>Iridium</li>
+<li>Plasmasteel</li><li>Slag</li><li>Spacelag</li><li>Soulsteel</li>
+<li>Syreline</li>
+</ul>
+
+<b>Sturdy Metal</b>
+<ul><li>Cerenkite</li><li>Iridium</li><li>Mauxite</li><li>Pharosium</li>
+<li>Rock</li><li>Slag</li><li>Steel</li>
+</ul>
+
+<b>Dense Metal</b>
+<ul><li>Bohrum</li><li>Iridium</li><li>Gnesis</li><li>Plasmasteel</li>
+<li>Translucent Gnesis</li></ul>
+
+<b>Crystal</b>
+<ul><li>Claretine</li><li>Coral</li><li>Erebite</li><li>Fibrilith</li>
+<li>Gemstone</li><li>Gensis</li><li>Glass</li><li>Ice</li><li>Koshmarite</li>
+<li>Miraclium</li><li>Pizza</li><li>Plasmastone</li><li>Telecrystal</li>
+<li>Translucent Gnesis</li></ul>
+
+<b>High Density Crystalline Matter</b>
+<ul><li>Molitz</li><li>Molitz Beta</li></ul>
+
+<b>Extraordinarily Dense Crystalline Matter</b>
+<ul><li>Neutronium</li><li>Starstone</li><li>Uqill</li></ul>
+
+<b>Reflective Material</b>
+<ul><li>Gnesis</li><li>Gold</li><li>Koshmarite</li><li>Translucent Gnesis</li></ul>
+
+<b>Conductive Material</b>
+<ul><li>Carbon Nanofibre</li><li>Cerenkite</li><li>Copper</li>
+<li>Ectofibre</li><li>Erebite</li><li>Gold</li><li>Ice</li>
+<li>Plasmastone</li></ul>
+
+<b>High Energy Conductor</b>
+<ul><li>Claretine</li><li>Electrum</li><li>Gnesis</li><li>Translucent Gnesis</li></ul>
+
+<b>Power Source</b>
+<ul><li>Cerenkite</li><li>Ectofibre</li><li>Erebite</li><li>Hauntium</li>
+<li>Neutronium</li><li>Plasmastone</li><li>Telecrystal</li><li>Soulsteel</li></ul>
+
+<b>Fabric/Cloth</b>
+<ul><li>Bee Wool</li><li>Carbon Nanofiber</li><li>Char</li><li>Coral</li><li>Cotton</li>
+<li>Dyneema</li><li>Ectofibre</li><li>Fibrilith</li><li>Hauntium</li><li>Koshmarite</li>
+<li>Leather</li><li>Space Spider Silk</li><li>Synthleather</li><li>Wendigo Hide</li></ul>
+
+<b>Organic</b>
+<ul><li>Bamboo</li><li>Beeswax</li><li>Bone</li><li>Char</li><li>Chitin</li>
+<li>Frozen Fart</li><li>Hamburgris</li><li>Honey</li><li>Koshmarite</li>
+<li>Pizza</li><li>Space Spider Silk</li><li>Viscerite</li><li>Wood</li></ul>
+
+<b>Rubber</b>
+<ul><li>Latex</li>
+<li>Synthrubber</li>
+<li>Synthblubber</li></ul>
+
+<b>Insulative Material</b>
+<ul><li>Fibrilith</li></ul>
