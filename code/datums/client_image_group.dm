@@ -20,7 +20,7 @@ var/global/list/datum/client_image_group/client_image_groups
 			RegisterSignal(img.loc, COMSIG_MOB_PROP_INVISIBILITY, .proc/on_mob_invisibility_changed)
 
 		for(var/mob/iterated_mob as() in subscribed_mobs)
-			if(!img.loc.invisibility || (img.loc == iterated_mob))
+			if(!img.loc.invisibility || (img.loc == iterated_mob) || istype(iterated_mob, /mob/dead/observer))
 				iterated_mob.client?.images.Add(img)
 
 
@@ -37,7 +37,7 @@ var/global/list/datum/client_image_group/client_image_groups
 		subscribed_mobs[added_mob] += 1
 		if(subscribed_mobs[added_mob] == 1)
 			for (var/image/I in images)
-				if(!I.loc.invisibility || (I == added_mob))
+				if(!I.loc.invisibility || (I == added_mob) || istype(added_mob, /mob/dead/observer))
 					added_mob.client?.images.Add(I)
 
 			RegisterSignal(added_mob, COMSIG_MOB_LOGIN, .proc/add_images_to_client_of_mob)
@@ -56,7 +56,7 @@ var/global/list/datum/client_image_group/client_image_groups
 	proc/add_images_to_client_of_mob(mob/target_mob) // registered on MOB_LOGIN
 		PRIVATE_PROC(TRUE)
 		for (var/image/I in images)
-			if(!I.loc.invisibility || (I.loc == target_mob))
+			if(!I.loc.invisibility || (I.loc == target_mob) || istype(target_mob, /mob/dead/observer))
 				target_mob.client?.images.Add(I)
 
 	proc/remove_images_from_client_of_mob(mob/target_mob) // registered on MOB_LOGOUT
@@ -73,11 +73,11 @@ var/global/list/datum/client_image_group/client_image_groups
 		for (var/image/I in loc_to_image_lookup[invis_updated_mob])
 			if(invis_updated_mob.invisibility) // mob is invisible, remove their icons for other mobs
 				for(var/mob/iterated_mob as() in subscribed_mobs)
-					if(iterated_mob != invis_updated_mob)
+					if((iterated_mob != invis_updated_mob) && !(istype(iterated_mob, /mob/dead/observer))) // do nothing for the same person or ghosts
 						iterated_mob.client?.images.Remove(I)
 			else // mob is visible, add their icons to other mobs
 				for(var/mob/iterated_mob as() in subscribed_mobs)
-					if(iterated_mob != invis_updated_mob)
+					if((iterated_mob != invis_updated_mob) && !(istype(iterated_mob, /mob/dead/observer))) // do nothing for the same person or ghosts
 						iterated_mob.client?.images.Add(I)
 
 
