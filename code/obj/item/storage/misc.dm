@@ -86,3 +86,10 @@
 	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/mercury = 3,
 	/obj/item/reagent_containers/food/drinks/bottle/wine = 3,
 	/obj/item/reagent_containers/glass/bottle/holywater)
+
+/obj/item/storage/box/engineering_repair
+	name = "engineering grenade box"
+	desc = "The latest in unorthodox station repair ordnance!"
+	icon_state = "flashbang"
+	spawn_contents = list(/obj/item/chem_grenade/metalfoam = 3,\
+	/obj/item/old_grenade/oxygen = 2)
