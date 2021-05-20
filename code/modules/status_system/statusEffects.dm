@@ -549,6 +549,7 @@
 
 		var/howMuch = ""
 		var/stage = -1
+		var/counter = 1
 
 		var/mob/living/carbon/human/H
 		var/image/onfire = null
@@ -567,6 +568,8 @@
 
 		onAdd(optional = BURNING_LV1)
 			. = ..()
+			if(!isnull(optional) && optional >= stage)
+				counter = optional
 
 			switchStage(getStage())
 			owner.delStatus("shivering")
@@ -584,7 +587,9 @@
 				owner.UpdateOverlays(onfire, "onfire")
 
 		onChange(var/optional = BURNING_LV1)
-			switchStage(getStage())
+			if(!isnull(optional) && optional >= stage)
+				counter = optional
+				switchStage(getStage())
 
 		onRemove()
 			if(!owner) return //owner got in our del queue
@@ -596,11 +601,11 @@
 
 		proc/getStage()
 			. = 1
-			if(duration < BURNING_LV2)
+			if(min(duration*2, counter) < BURNING_LV2)
 				return
-			else if (duration >= BURNING_LV2 && duration < BURNING_LV3)
+			else if (min(duration*2, counter) >= BURNING_LV2 && min(duration*2, counter) < BURNING_LV3)
 				return 2
-			else if (duration >= BURNING_LV3)
+			else if (min(duration*2, counter) >= BURNING_LV3)
 				return 3
 
 		proc/switchStage(var/toStage)
@@ -626,6 +631,7 @@
 					. = 1
 
 		onUpdate(timePassed)
+			counter += timePassed
 			switchStage(getStage())
 
 			var/prot = 1
