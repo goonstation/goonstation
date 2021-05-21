@@ -3361,7 +3361,7 @@ On that note, CentComm would like to remind trainees that they do not recieve cl
 		Damaged windows may be repaired by applying glass to a grille; if the grille is damaged or missing, repair it with metal rods from sheets or storage.
 		<br>
 		<br>
-		Once all breaches have been repaired, obtain and utilize an air canister (white, potentially with a red stripe) and space HVAC on heat setting.
+		Once all breaches have been repaired, obtain and utilize an air canister (white, potentially with a red stripe) and space HVAC on heat setting.  Alternatively utilize an oxygen grenade ensuring no associates are in blast zone prior to activation.
 		<br>
 		<hr>
 		<p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base. Thank you for your service to Nanotrasen.</i></p>
