@@ -56,8 +56,10 @@
 
 /obj/machinery/conveyor/New()
 	..()
-	src.startdir = src.dir
-	src.altdir = turn(src.dir, 180)
+	if(!src.startdir)
+		src.startdir = src.dir
+	if(!src.altdir)
+		src.altdir = turn(src.dir, 180)
 	setdir()
 	UnsubscribeProcess()
 

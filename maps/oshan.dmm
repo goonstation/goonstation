@@ -17548,7 +17548,7 @@
 /turf/simulated/floor,
 /area/listeningpost)
 "aPM" = (
-/obj/machinery/conveyor/oshan_carousel/coroner/westnorth,
+/obj/machinery/conveyor/oshan_carousel/westnorth,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "aPN" = (
@@ -24489,7 +24489,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/bar)
 "biD" = (
-/obj/machinery/conveyor/oshan_carousel/coroner/southeast,
+/obj/machinery/conveyor/oshan_carousel/southeast,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "biE" = (
@@ -45219,7 +45219,7 @@
 	},
 /area/shuttle/sea_elevator_room)
 "cjz" = (
-/obj/machinery/conveyor/oshan_carousel/coroner/northeast,
+/obj/machinery/conveyor/oshan_carousel/northeast,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "cjA" = (
@@ -45315,7 +45315,7 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "cjN" = (
-/obj/machinery/conveyor/oshan_carousel/coroner/eastnorth,
+/obj/machinery/conveyor/oshan_carousel/eastnorth,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "cjO" = (
@@ -45398,11 +45398,11 @@
 "ckb" = (
 /obj/lattice,
 /obj/lattice,
-/obj/machinery/conveyor/oshan_carousel/coroner/southeast,
+/obj/machinery/conveyor/oshan_carousel/southeast,
 /turf/space/fluid,
 /area/space)
 "ckc" = (
-/obj/machinery/conveyor/oshan_carousel/coroner/northeast,
+/obj/machinery/conveyor/oshan_carousel/northeast,
 /turf/space/fluid,
 /area/space)
 "ckd" = (
@@ -45464,7 +45464,7 @@
 "ckl" = (
 /obj/lattice,
 /obj/lattice,
-/obj/machinery/conveyor/oshan_carousel/coroner/westsouth,
+/obj/machinery/conveyor/oshan_carousel/westsouth,
 /turf/space/fluid,
 /area/space)
 "ckm" = (
@@ -45511,11 +45511,11 @@
 /area/station/maintenance/inner/central)
 "cks" = (
 /obj/lattice,
-/obj/machinery/conveyor/oshan_carousel/coroner/westsouth,
+/obj/machinery/conveyor/oshan_carousel/westsouth,
 /turf/space/fluid,
 /area/space)
 "ckt" = (
-/obj/machinery/conveyor/oshan_carousel/coroner/westnorth,
+/obj/machinery/conveyor/oshan_carousel/westnorth,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -45526,7 +45526,7 @@
 /area/station/maintenance/inner/central)
 "cku" = (
 /obj/lattice,
-/obj/machinery/conveyor/oshan_carousel/coroner/northeast,
+/obj/machinery/conveyor/oshan_carousel/northeast,
 /turf/space/fluid,
 /area/space)
 "ckv" = (
@@ -45539,11 +45539,11 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "ckw" = (
-/obj/machinery/conveyor/oshan_carousel/coroner/eastsouth,
+/obj/machinery/conveyor/oshan_carousel/eastsouth,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "ckx" = (
-/obj/machinery/conveyor/oshan_carousel/coroner/southwest,
+/obj/machinery/conveyor/oshan_carousel/southwest,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "cky" = (
@@ -45558,17 +45558,17 @@
 /area/station/maintenance/inner/central)
 "ckA" = (
 /obj/lattice,
-/obj/machinery/conveyor/oshan_carousel/coroner/westnorth,
+/obj/machinery/conveyor/oshan_carousel/westnorth,
 /turf/space/fluid,
 /area/space)
 "ckB" = (
 /obj/lattice,
-/obj/machinery/conveyor/oshan_carousel/coroner/southwest,
+/obj/machinery/conveyor/oshan_carousel/southwest,
 /turf/space/fluid,
 /area/space)
 "ckC" = (
 /obj/lattice,
-/obj/machinery/conveyor/oshan_carousel/coroner/southeast,
+/obj/machinery/conveyor/oshan_carousel/southeast,
 /turf/space/fluid,
 /area/space)
 "ckD" = (
@@ -45619,7 +45619,7 @@
 /area/station/maintenance/inner/central)
 "ckN" = (
 /obj/lattice,
-/obj/machinery/conveyor/oshan_carousel/coroner/eastnorth,
+/obj/machinery/conveyor/oshan_carousel/eastnorth,
 /turf/space/fluid,
 /area/space)
 "ckO" = (
@@ -45646,11 +45646,11 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/conveyor/oshan_carousel/coroner/eastnorth,
+/obj/machinery/conveyor/oshan_carousel/eastnorth,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "ckS" = (
-/obj/machinery/conveyor/oshan_carousel/coroner/northwest,
+/obj/machinery/conveyor/oshan_carousel/northwest,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "ckT" = (
