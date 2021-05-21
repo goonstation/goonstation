@@ -597,6 +597,8 @@ PIPE BOMBS + CONSTRUCTION
 
 			playsound(T, 'sound/effects/Explosion2.ogg', 100, 1)
 			var/obj/effects/explosion/E = new /obj/effects/explosion(T)
+			E.color = "#b22"
+			animate(E, color="#fff", time=3 SECONDS, flags=CIRCULAR_EASING | EASE_IN)
 			E.fingerprintslast = src.fingerprintslast
 		else
 			playsound(T, 'sound/effects/Explosion2.ogg', 20, 1)
