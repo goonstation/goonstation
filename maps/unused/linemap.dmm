@@ -28401,7 +28401,7 @@
 /area/station/medical/medbay/surgery)
 "boi" = (
 /obj/machinery/computer3/generic/med_data,
-/obj/item/paper/book/from_file/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "boj" = (
