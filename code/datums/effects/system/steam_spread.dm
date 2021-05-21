@@ -20,6 +20,7 @@ steam.start() -- spawns the effect
 	var/cardinals = 0
 	var/turf/location
 	var/atom/holder
+	var/color = null
 
 /datum/effects/system/steam_spread/pooled()
 	..()
@@ -28,12 +29,13 @@ steam.start() -- spawns the effect
 	location = null
 	holder = null
 
-/datum/effects/system/steam_spread/proc/set_up(n = 3, c = 0, turf/loc)
+/datum/effects/system/steam_spread/proc/set_up(n = 3, c = 0, turf/loc, color=null)
 	if(n > 10)
 		n = 10
-	number = n
-	cardinals = c
-	location = loc
+	src.number = n
+	src.cardinals = c
+	src.location = loc
+	src.color = color
 
 /*
 /datum/effects/system/steam_spread/disposing()
@@ -52,6 +54,8 @@ steam.start() -- spawns the effect
 			if(holder)
 				src.location = get_turf(holder)
 			var/obj/effects/steam/steam = unpool(/obj/effects/steam)
+			if(src.color)
+				steam.color = src.color
 			steam.set_loc(src.location)
 			var/direction
 			if(src.cardinals)
