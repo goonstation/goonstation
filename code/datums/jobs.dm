@@ -790,6 +790,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_glov = /obj/item/clothing/gloves/yellow
 	slot_poc1 = /obj/item/device/pda2/engine
 	slot_ears = /obj/item/device/radio/headset/engineer
+	items_in_backpack = list(/obj/item/paper/book/from_file/pocketguide/engineering)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()

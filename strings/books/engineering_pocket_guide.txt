@@ -52,7 +52,7 @@
 		Damaged windows may be repaired by applying glass to a grille; if the grille is damaged or missing, repair it with metal rods from sheets or storage.
 		<br>
 		<br>
-		Once all breaches have been repaired, obtain and utilize an air canister (white, potentially with a red stripe) and space HVAC on heat setting.
+		Once all breaches have been repaired, obtain and utilize an air canister (white, potentially with a red stripe) and space HVAC on heat setting. Alternatively utilize an oxygen grenade ensuring no associates are in blast zone prior to activation.
 		<br>
 		<br>
 		Station integrity can be further ensured during localized events through the construction of Spatial Interdictors. All Nanotrasen stations and ships come standard with one assembly kit for a Spatial Interdictor located in the Engineering Department.
@@ -66,6 +66,6 @@
 		<br>
 		<hr>
 		<p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at the following sources:
-		</li><li><a href="https://wiki.ss13.co/Powering_the_Station" target="_blank">https://wiki.ss13.co/Powering_the_Station</a></li>
-		</li><li><a href="https://wiki.ss13.co/Engineer" target="_blank">https://wiki.ss13.co/Engineer</a></li>
+		<ul><li><a href="https://wiki.ss13.co/Powering_the_Station" target="_blank">https://wiki.ss13.co/Powering_the_Station</a></li>
+		<li><a href="https://wiki.ss13.co/Engineer" target="_blank">https://wiki.ss13.co/Engineer</a></li></ul>
 		Thank you for your service to Nanotrasen.</i></p>

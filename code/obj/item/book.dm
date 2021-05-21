@@ -88,7 +88,8 @@ Custom Books
 		name = "Bartending Pocket Guide"
 		icon_state = "barguide"
 		file_path = "strings/books/bartending_pocket_guide.txt"
-
+	//i personally would like to re-do the pockt guide to be a little more comprehensive
+	//since it says to refer to the engine start-up documentation paper, which the sing doesn't even have - nefarious
 	engineering
 		name = "Engineering Pocket Guide"
 		icon_state = "engiguide"

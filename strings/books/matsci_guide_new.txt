@@ -40,9 +40,9 @@ This section shows the different properties or materials that are of interest to
 <p style="margin-right:10%; margin-left:1%"><b>Electrical Conductivity</b> - ability of material to let electricity pass through it; <b>more conductive materials make for better reservoirs for energy storage in batteries</b>.
 </p><ul><li>(ex.: Copper, Claretine, Electrum)</ul></li>
 <p style="margin-right:10%; margin-left:1%"><b>Thermal Conductivity</b> - ability of material to transfer heat through it with little loss of energy; <b>more insulating materials do better at keeping heat within which can be advantageous for creating temperature differentials.</b></p>
-<ul><li>(ex.: Carbon nano fibre, Fibrilith, Space spider silk)</ul></li>
+<ul><li>(ex.: Carbon Nanofiber, Fibrilith, Space spider silk)</ul></li>
 <p style="margin-right:10%; margin-left:1%"><b>Stability</b> - how prone a material is to degradation.
-</p><ul><li>(ex.: Starstone, Carbon nano fibre, Hauntium)</ul></li>
+</p><ul><li>(ex.: Starstone, Carbon Nanofiber, Hauntium)</ul></li>
 <p style="margin-right:10%; margin-left:1%"><b>Density</b> -  blunt force of the material; sturdiness and ability to impact other materials when used in tools.</p>
 <ul><li>(ex.: Viscerite, Plasmasteel, Starstone)</ul></li>
 <p style="margin-right:10%; margin-left:1%"><b>Hardness</b> - blunt force of the material; sturdiness and ability to impact other materials when used in tools.</p>
@@ -52,13 +52,14 @@ This section shows the different properties or materials that are of interest to
 <p style="margin-right:10%; margin-left:1%"><b>Corrosion Resistance</b> - how well a material resists acids.</p>
 <ul><li>(ex.: Viscerite, Dyneema)</ul></li>
 <p style="margin-right:10%; margin-left:1%"><b>Permeability</b> - the porousness of the material and how well viruses pass through it.</p>
-<ul><li>(ex.: Viscerite [high protection], Carbon nano fibre [high protection])</ul></li>
+<ul><li>(ex.: Viscerite [high protection], Carbon Nanofiber [high protection])</ul></li>
 <p style="margin-right:10%; margin-left:1%"><b>Reflectivity</b> - the albedo of the material and how much light is bounced off the surface of it.</p>
 <ul><li>(ex.: Syreline, Starstone, Telecrystal)</ul></li>
 <section id="Basic-Mats"><h3>Basic Ores and Their Properties</h3></section>
 <hr>
 Below is a list of all the basic ores that are common to asteroids in this sector, as well as their particular properties that are of interest for Materials Science. See Appendix II for material classifications.
 The properties in full and in order are Radioactivity, Electrical Conductivity, Stability, Hardness, Density, Flammability, Corrosion Resistance, Permeability, and Reflectivity.
+<br><br>
 <table>
 <tr><th align="right">ORE</th>
 <th align="right">|  Rad.</th>
@@ -71,174 +72,177 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 <th align="right">|  Perm.</th>
 <th align="right">|  Reflect.|</th></tr>
 <tr><td align="right">Bohrum</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">30</td>
-<td align="right">40</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A<td>
-<td align="right">N/A<td>
-</td></tr>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>30</b></td>
+<td align="right"><b>40</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
 <tr><td align="right">Char</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">15</td>
-<td align="right">15</td>
-<td align="right">60</td>
-<td align="right">N/A</td>
-<td align="right">N/A<td>
-<td align="right">N/A<td>
-</td></tr>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>15</b></td>
+<td align="right"><b>15</b></td>
+<td align="right"><b>60</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
 <tr><td align="right">Claretine</td>
-<td align="right">N/A</td>
-<td align="right">75</td>
-<td align="right">N/A</td>
-<td align="right">30</td>
-<td align="right">30</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A<td>
-<td align="right">N/A<td>
-</td></tr>
+<td align="right">n/a</td>
+<td align="right"><b>75</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>30</b></td>
+<td align="right"><b>30</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
 <tr><td align="right">Cerenkite</td>
-<td align="right">55</td>
-<td align="right">65</td>
-<td align="right">30</td>
-<td align="right">15</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A<td>
-<td align="right">N/A<td>
-</td></tr>
+<td align="right"><b>55</b></td>
+<td align="right"><b>65</b></td>
+<td align="right"><b>30</b></td>
+<td align="right"><b>15</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
 <tr><td align="right">Cobryl</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A<td>
-<td align="right">N/A<td>
-</td></tr>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
 <tr><td align="right">Erebite</td>
-<td align="right">75</td>
-<td align="right">60</td>
-<td align="right">10</td>
-<td align="right">20</td>
-<td align="right">20</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A<td>
-<td align="right">N/A<td>
-</td></tr>
+<td align="right"><b>75</b></td>
+<td align="right"><b>60</b></td>
+<td align="right"><b>10</b></td>
+<td align="right"><b>20</b></td>
+<td align="right"><b>20</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
 <tr><td align="right">Gold</td>
-<td align="right">N/A</td>
-<td align="right">60</td>
-<td align="right">N/A</td>
-<td align="right">2</td>
-<td align="right">2</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A<td>
-<td align="right">55<td>
-</td></tr>
+<td align="right">n/a</td>
+<td align="right"><b>60</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>2</b></td>
+<td align="right"><b>2</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>55</b></td>
+</tr>
 <tr><td align="right">Ice</td>
-<td align="right">N/A</td>
-<td align="right">70</td>
-<td align="right">N/A</td>
-<td align="right">15</td>
-<td align="right">15</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A<td>
-<td align="right">N/A<td>
-</td></tr>
+<td align="right">n/a</td>
+<td align="right"><b>70</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>15</b></td>
+<td align="right"><b>15</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
 <tr><td align="right">Koshmarite</td>
-<td align="right">20</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">55</td>
-<td align="right">35</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A<td>
-<td align="right">N/A<td>
-</td></tr>
+<td align="right"><b>20</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>55</b></td>
+<td align="right"><b>35</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
 <tr><td align="right">Mauxite</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">10</td>
-<td align="right">50</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A<td>
-<td align="right">N/A<td>
-</td></tr>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>10</b></td>
+<td align="right"><b>50<b/></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
 <tr><td align="right">Moltiz / Beta</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">40</td>
-<td align="right">40</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A<td>
-<td align="right">N/A<td>
-</td></tr>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>40</b></td>
+<td align="right"><b>40</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
 <tr><td align="right">Pharosium</td>
-<td align="right">N/A</td>
-<td align="right">65</td>
-<td align="right">60</td>
-<td align="right">15</td>
-<td align="right">15</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A<td>
-<td align="right">N/A<td>
-</td></tr>
+<td align="right">n/a</td>
+<td align="right"><b>65</b></td>
+<td align="right"><b>60</b></td>
+<td align="right"><b>15</b></td>
+<td align="right"><b>15</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
 <tr><td align="right">Plasmastone</td>
-<td align="right">20</td>
-<td align="right">50</td>
-<td align="right">N/A</td>
-<td align="right">10</td>
-<td align="right">10</td>
-<td align="right">85</td>
-<td align="right">N/A</td>
-<td align="right">N/A<td>
-<td align="right">N/A<td>
-</td></tr>
+<td align="right"><b>20</b></td>
+<td align="right"><b>50</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>10</b></td>
+<td align="right"><b>10</b></td>
+<td align="right"><b>85</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
 <tr><td align="right">Syreline</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">5</td>
-<td align="right">5</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A<td>
-<td align="right">70<td>
-</td></tr>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>5</b></td>
+<td align="right"><b>5</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>70</b></td>
+</tr>
 <tr><td align="right">Viscerite</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">3</td>
-<td align="right">65</td>
-<td align="right">N/A</td>
-<td align="right">70</td>
-<td align="right">90<td>
-<td align="right">N/A<td>
-</td></tr>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>3</b></td>
+<td align="right"><b>65</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>70</b></td>
+<td align="right"><b>90</b></td>
+<td align="right">n/a</td>
+</tr>
 </table><br/>
+<hr>
 <section id="Advanced-Mats"><h3>Advanced Materials and Their Properties</h3></section>
+<hr>
 These are additional useful materials and their relative properties.
 The properties in full and in order are Radioactivity, Electrical Conductivity, Thermal Conductivity, Stability, Hardness, Density, Flammability, Corrosion Resistance, Permeability, and Reflectivity.
+<br><br>
 <table>
 <tr><th align="right">ORGANIC MAT</th>
 <th align="right">|  Rad.</th>
@@ -252,44 +256,544 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 <th align="right">|  Perm.</th>
 <th align="right">|  Reflect.|</th></tr>
 <tr><td align="right">Bamboo</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">N/A</td>
-<td align="right">45</td>
-<td align="right">53</td>
-<td align="right">N/A</td>
-<td align="right">67</td>
-<td align="right">N/A<td>
-<td align="right">N/A<td>
-</td></tr>
-<tr><td align="right">Bee Wool</td>
-<td align="right">N/A</td>
-<td align="right">29</td>
-<td align="right">75</td>
-<td align="right">N/A</td>
-<td align="right">21</td>
-<td align="right">21</td>
-<td align="right">65</td>
-<td align="right">N/A</td>
-<td align="right">N/A<td>
-<td align="right">N/A<td>
-</td></tr>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>53</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>45</b></td>
+<td align="right"><b>67</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
 <tr><td align="right">Beeswax</td>
-<td align="right">N/A</td>
-<td align="right">29</td>
-<td align="right">75</td>
-<td align="right">N/A</td>
-<td align="right">21</td>
-<td align="right">21</td>
-<td align="right">65</td>
-<td align="right">N/A</td>
-<td align="right">N/A<td>
-<td align="right">N/A<td>
-</td></tr>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>5</b></td>
+<td align="right"><b>20</b></td>
+<td align="right"><b>30</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Blob (Amoeba)</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>5</b></td>
+<td align="right"><b>45</b></td>
+<td align="right"><b>120</b></td>
+<td align="right"><b>30</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Bone</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>64</b></td>
+<td align="right"><b>20</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Chitin</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>65</b></td>
+<td align="right"><b>25</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Cotton</td>
+<td align="right">n/a</td>
+<td align="right"><b>45</b></td>
+<td align="right"><b>38</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>16</b></td>
+<td align="right"><b>16</b></td>
+<td align="right"><b>78</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Coral</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>5</b></td>
+<td align="right"><b>50</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Flesh</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>5</b></td>
+<td align="right"><b>35</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Frozen Fart</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>10</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>30</b></td>
+<td align="right"><b>30</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Wood</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>52</b></td>
+<td align="right"><b>55</b></td>
+<td align="right"><b>67</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+</table><br/>
+<table>
+<tr><th align="right">FABRIC</th>
+<th align="right">|  Rad.</th>
+<th align="right">|  El. Cond.</th>
+<th align="right">|  Thm. Cond.</th>
+<th align="right">|  Stabil.</th>
+<th align="right">|  Hard.</th>
+<th align="right">|  Dens.</th>
+<th align="right">|  Flam.</th>
+<th align="right">|  Cor. Res.</th>
+<th align="right">|  Perm.|</th></tr>
+<tr><td align="right">Bee Wool</td>
+<td align="right">n/a</td>
+<td align="right"><b>29</b></td>
+<td align="right"><b>75</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>21</b></td>
+<td align="right"><b>21</b></td>
+<td align="right"><b>65</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Carbon Nanofiber</td>
+<td align="right">n/a</td>
+<td align="right"><b>65</b></td>
+<td align="right"><b>90</b></td>
+<td align="right"><b>33</b></td>
+<td align="right"><b>60</b></td>
+<td align="right"><b>70</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>85</b></td>
+</tr>
+<tr><td align="right">Ectofiber</td>
+<td align="right"><b>30</b></td>
+<td align="right"><b>75</b></td>
+<td align="right"><b>90</b></td>
+<td align="right"><b>80</b></td>
+<td align="right"><b>10</b></td>
+<td align="right"><b>70</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Fibrilith</td>
+<td align="right">n/a</td>
+<td align="right"><b>45</b></td>
+<td align="right"><b>20</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>30</b></td>
+<td align="right"><b>30</b></td>
+<td align="right"><b>10</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>30</b></td>
+</tr>
+<tr><td align="right">Latex</td>
+<td align="right">n/a</td>
+<td align="right"><b>29</b></td>
+<td align="right"><b>45</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>5</b></td>
+<td align="right"><b>5</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Leather</td>
+<td align="right">n/a</td>
+<td align="right"><b>32</td>
+<td align="right"><b>29</td>
+<td align="right">n/a</td>
+<td align="right"><b>5</b></td>
+<td align="right"><b>65</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Space Spider Silk</td>
+<td align="right">n/a</td>
+<td align="right"><b>60</b></td>
+<td align="right"><b>90</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>1</b></td>
+<td align="right"><b>70</b></td>
+<td align="right"><b>70</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Synthleather</td>
+<td align="right">n/a</td>
+<td align="right"><b>32</b></td>
+<td align="right"><b>35</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>10</b></td>
+<td align="right"><b>60</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Wendigo Hide</td>
+<td align="right">n/a</td>
+<td align="right"><b>45</b></td>
+<td align="right"><b>20</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>5</b></td>
+<td align="right"><b>5</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+</table><br/>
+<table>
+<tr><th align="right">METAL</th>
+<th align="right">|  Rad.</th>
+<th align="right">|  El. Cond.</th>
+<th align="right">|  Thm. Cond.</th>
+<th align="right">|  Stabil.</th>
+<th align="right">|  Hard.</th>
+<th align="right">|  Dens.</th>
+<th align="right">|  Flam.</th>
+<th align="right">|  Cor. Res.</th>
+<th align="right">|  Perm.</th>
+<th align="right">|  Reflect.|</th></tr>
+<tr><td align="right">Copper</td>
+<td align="right">n/a</td>
+<td align="right"><b>51</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>30</b></td>
+<td align="right"><b>5</b></td>
+<td align="right"><b>5</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Gnesis</td>
+<td align="right">n/a</td>
+<td align="right">80</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">50</td>
+<td align="right">5</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">90</td>
+</tr>
+<tr><td align="right">Iridium</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">80</td>
+<td align="right">80</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a/td>
+</tr>
+<tr><td align="right">Slag</td>
+<td align="right">n/a</td>
+<td align="right">20</td>
+<td align="right">n/a</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Spacelag</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">95</td>
+<td align="right">5</td>
+<td align="right">80</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+</table><br/>
+<table>
+<tr><th align="right">CRYSTAL</th>
+<th align="right">|  Rad.</th>
+<th align="right">|  El. Cond.</th>
+<th align="right">|  Thm. Cond.</th>
+<th align="right">|  Stabil.</th>
+<th align="right">|  Hard.</th>
+<th align="right">|  Dens.</th>
+<th align="right">|  Flam.</th>
+<th align="right">|  Cor. Res.</th>
+<th align="right">|  Perm.</th>
+<th align="right">|  Reflect.|</th></tr>
+<tr><td align="right">Gemstone</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>40</b></td>
+<td align="right"><b>40</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Glass</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Magic Crystal</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>60</b></td>
+<td align="right"><b>60</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Miraclium</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>70</b></td>
+<td align="right"><b>42</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>70</b></td>
+<td align="right"><b>59</b></td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Starstone</td>
+<td align="right">n/a</td>
+<td align="right"><b>10</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>70</b></td>
+<td align="right"><b>85</b></td>
+<td align="right"><b>85</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>90</b></td>
+</tr>
+<tr><td align="right">Telecrystal</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>10</b></td>
+<td align="right"><b>10</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>80</b></td>
+</tr>
+<tr><td align="right">Uqill</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>65</b></td>
+<td align="right"><b>75</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>60</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+</table><br/>
+<table>
+<tr><th align="right">POWER SOURCE</th>
+<th align="right">|  Rad.</th>
+<th align="right">|  El. Cond.</th>
+<th align="right">|  Thm. Cond.</th>
+<th align="right">|  Stabil.</th>
+<th align="right">|  Hard.</th>
+<th align="right">|  Dens.</th>
+<th align="right">|  Flam.</th>
+<th align="right">|  Cor. Res.</th>
+<th align="right">|  Perm.</th>
+<th align="right">|  Reflect.|</th></tr>
+<tr><td align="right">Ectoplasm</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>3</b></td>
+<td align="right"><b>1</b></td>
+<td align="right"><b>1</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+</table>
+<hr>
+<section id="Alloyed-Mats"><h3>Alloyed Materials and Their Properties</h3></section>
+<hr>
+This section contains different common and particular alloyed materials and the properties they possess that are of interest for Materials Science. The exact manner by which most of these can be made can be found at the references in the footnote.
+The properties in full and in order are Radioactivity, Neutron Radiation, Electrical Conductivity, Thermal Conductivity, Stability, Hardness, Density, Flammability, Corrosion Resistance, Permeability, and Reflectivity.
+<br><br>
+<table>
+<tr><th align="right">ALLOY</th>
+<th align="right">|  Rad.</th>
+<th align="right">|  Neu. Rad.</th>
+<th align="right">|  El. Cond.</th>
+<th align="right">|  Thm. Cond.</th>
+<th align="right">|  Stabil.</th>
+<th align="right">|  Hard.</th>
+<th align="right">|  Dens.</th>
+<th align="right">|  Flam.</th>
+<th align="right">|  Cor. Res.</th>
+<th align="right">|  Perm.</th>
+<th align="right">|  Reflect.|</th></tr>
+<tr><td align="right">Dyneema</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>65</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>80</b></td>
+<td align="right"><b>60</b></td>
+<td align="right"><b>70</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>65</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Electrum</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>80</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>5</b></td>
+<td align="right"><b>5</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Hauntium</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>10</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>100</b></td>
+<td align="right"><b>10</b></td>
+<td align="right"><b>10</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>10</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Neutronium</td>
+<td align="right">n/a</td>
+<td align="right"><b>85</b></td>
+<td align="right"><b>70</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>20</b></td>
+<td align="right"><b>10</b></td>
+<td align="right"><b>100</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Plasmasteel</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>30</b></td>
+<td align="right"><b>75</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Steel</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>15</b></td>
+<td align="right"><b>30</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Soulsteel</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>65</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
 </table><br/>
 
-<section id="Alloyed-Mats"><h3>Alloyed Materials and Their Properties</h3></section>
 <section id="Alloying"><h3>Alloying</h3></section>
 Alloying is done in the Nano-Crucible using processed materials. When you alloy two materials together, the stats of the created alloy is an average of the two progenitor materials. So, if you were looking to create a dense material and you alloyed Plasmasteel (density 75) with Viscerite (density 65), the resulting alloy would have a density of 70.
 When you alloy a material, the material passes on any unique properties to the resulting alloy.<br><br>
@@ -309,13 +813,13 @@ As a final note, one can infuse a chemical into a material through an infusion p
 <ul><li><a href="https://wiki.ss13.co/Ore_Processing" target="_blank">https://wiki.ss13.co/Ore_Processing</a></li>
 </li><li><a href="https://wiki.ss13.co/Guide_to_Mining" target="_blank">https://wiki.ss13.co/Guide_to_Mining</a></li></ul>
 Thank you for your service to Nanotrasen.</i></p>
-<br><br><br><br>
+<br><br>
 <hr>
 <h3>Appendix I.</h3>
 <h4>Ratings of various properties.</h4>
 		<p style="margin-right:10%; margin-left:1%"><b>Radioactivity</b></p>
 			<ul style='list-style-type:circle'>
-			<li>1 to 10  --  Slgihtly Radioactive</li>
+			<li>1 to 10  --  Slightly Radioactive</li>
 			<li>11 to 25 --  Somewhat Radioactive</li>
 			<li>26 to 50 --  Radioactive</li>
 			<li>51 to 75 --  Very Radioactive</li>
@@ -424,7 +928,7 @@ Thank you for your service to Nanotrasen.</i></p>
 <li>Translucent Gnesis</li></ul>
 
 <b>Crystal</b>
-<ul><li>Claretine</li><li>Coral</li><li>Erebite</li><li>Fibrilith</li>
+<ul><li>Blob (Amoeba)</li><li>Claretine</li><li>Coral</li><li>Erebite</li><li>Fibrilith</li>
 <li>Gemstone</li><li>Gensis</li><li>Glass</li><li>Ice</li><li>Koshmarite</li>
 <li>Miraclium</li><li>Pizza</li><li>Plasmastone</li><li>Telecrystal</li>
 <li>Translucent Gnesis</li></ul>
@@ -439,24 +943,24 @@ Thank you for your service to Nanotrasen.</i></p>
 <ul><li>Gnesis</li><li>Gold</li><li>Koshmarite</li><li>Translucent Gnesis</li></ul>
 
 <b>Conductive Material</b>
-<ul><li>Carbon Nanofibre</li><li>Cerenkite</li><li>Copper</li>
-<li>Ectofibre</li><li>Erebite</li><li>Gold</li><li>Ice</li>
+<ul><li>Carbon Nanofiber</li><li>Cerenkite</li><li>Copper</li>
+<li>Ectofiber</li><li>Erebite</li><li>Gold</li><li>Ice</li>
 <li>Plasmastone</li></ul>
 
 <b>High Energy Conductor</b>
 <ul><li>Claretine</li><li>Electrum</li><li>Gnesis</li><li>Translucent Gnesis</li></ul>
 
 <b>Power Source</b>
-<ul><li>Cerenkite</li><li>Ectofibre</li><li>Erebite</li><li>Hauntium</li>
+<ul><li>Cerenkite</li><li>Ectofiber</li><li>Erebite</li><li>Hauntium</li>
 <li>Neutronium</li><li>Plasmastone</li><li>Telecrystal</li><li>Soulsteel</li></ul>
 
 <b>Fabric/Cloth</b>
-<ul><li>Bee Wool</li><li>Carbon Nanofiber</li><li>Char</li><li>Coral</li><li>Cotton</li>
-<li>Dyneema</li><li>Ectofibre</li><li>Fibrilith</li><li>Hauntium</li><li>Koshmarite</li>
-<li>Leather</li><li>Space Spider Silk</li><li>Synthleather</li><li>Wendigo Hide</li></ul>
+<ul><li>Bee Wool</li><li>Blob (Amoeba)</li><li>Carbon Nanofiber</li><li>Char</li><li>Coral</li>
+<li>Cotton</li><li>Dyneema</li><li>Ectofiber</li><li>Fibrilith</li><li>Hauntium</li>
+<li>Koshmarite</li><li>Leather</li><li>Space Spider Silk</li><li>Synthleather</li><li>Wendigo Hide</li></ul>
 
 <b>Organic</b>
-<ul><li>Bamboo</li><li>Beeswax</li><li>Bone</li><li>Char</li><li>Chitin</li>
+<ul><li>Bamboo</li><li>Beeswax</li><li>Blob (Amoeba)</li><li>Bone</li><li>Char</li><li>Chitin</li>
 <li>Frozen Fart</li><li>Hamburgris</li><li>Honey</li><li>Koshmarite</li>
 <li>Pizza</li><li>Space Spider Silk</li><li>Viscerite</li><li>Wood</li></ul>
 
