@@ -701,5 +701,6 @@
 				break
 
 	proc/update_icon()
-		var/ico = (speedup / speedup_max) * icon_levels
-		icon_state = "[icon_base][round(ico)]"
+		var/ratio = speedup / speedup_max
+		var/ico = min(ratio, speedup_max) * icon_levels
+		icon_state = "[icon_base][ratio > 1 ? "bonus" : round(ico)]"
