@@ -137,6 +137,7 @@
 			for(var/mob/living/M in range(2, mouse_target))
 				if(tracked_targets[M] < src.maxlocks && src.is_valid_target(user, M) && shotcount < src.checkshots(parent))
 					tracked_targets[M] += 1
+					shotcount++
 					if(!targeting_images[M])
 						targeting_images[M] = image(icon('icons/cursors/target/flat.dmi', "all"), M, pixel_y = 32)
 						aimer.images += targeting_images[M]
