@@ -129,6 +129,8 @@
 
 //smart extinguisher
 /obj/item/gun/flamethrower/assembled/loaded/extinguisher
+	name = "smart fire extinguisher"
+	desc = "An advanced fire extinguisher that locks onto nearby burning personell and sprays them down with fire-fighting foam."
 	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "fire_extinguisher0"
@@ -145,7 +147,7 @@
 		return//:shelterfrog:
 
 /datum/component/holdertargeting/smartgun/extinguisher/is_valid_target(mob/user, mob/M)
-	return (M in by_cat[TR_CAT_BURNING_MOBS])
+	return (M.hasStatus("burning"))
 
 /obj/item/gun/kinetic/gyrojet
 	name = "Amaethon gyrojet pistol"
