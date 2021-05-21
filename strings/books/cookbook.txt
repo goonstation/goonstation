@@ -592,3 +592,7 @@
 	<div class = "birthdaycupcakesteps">
 	<li>Cook the ingredients in the oven for 10 seconds on high.
 	</div>
+	<p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at:
+	<ul>
+		<li><a href="https://wiki.ss13.co/Foods_and_Drinks" target="Goonstation Wiki: Foods and Drinks">https://wiki.ss13.co/Foods_and_Drinks</a></li></ul>
+	Thank you for your service to Nanotrasen.</i></p>

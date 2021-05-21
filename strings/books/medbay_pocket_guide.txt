@@ -118,9 +118,9 @@
 		Knowing when to use which can be greatly beneficial to your work. Knowledge of them will allow you to develop in areas such as: restoring blood, surgery and purging poisons, to name a few.
 		Worth noting is that your PDA contains a remote program for the portable NanoMed and portable Medbay emergency transport unit, allowing you to continue work in areas far away from Medbay!
 		<br>
-		<h4>Additonal documentation available at:</h4>
-		</li><li><a href="https://wiki.ss13.co/Doctoring" target="_blank">https://wiki.ss13.co/Doctoring</a>
-		</li><li><a href="https://wiki.ss13.co/Chemicals#Medical_Chems" target="_blank">https://wiki.ss13.co/Medical_Chems</a> - specifically the "Medical Chems" section.
+		<h4>Additonal documentation available is at:</h4>
+	<ul>><li><a href="https://wiki.ss13.co/Doctoring" target="Goonstation Wiki: Doctoring">https://wiki.ss13.co/Doctoring</a>
+		<li><a href="https://wiki.ss13.co/Chemicals#Medical_Chems" target="Goonstation Wiki: Medical Chems">https://wiki.ss13.co/Medical_Chems</a> - specifically the "Medical Chems" section.</ul>
 		<br>
 		<hr>
 		<i>Contents of the book written by the S.P.A.R.K. unit which hopes to see you successful in the field!</i></li><p></p></body>

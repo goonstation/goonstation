@@ -172,5 +172,7 @@
 		<br>
 		<p>It's been theorized that gene therapies are also capable to healing internal organs over time. Though I have not collected any solid data on this to date.</p>
 		</div>
+		<h4>Additonal documentation is available at:</h4>
+		<ul>><li><a href="https://wiki.ss13.co/Doctoring" target="Goonstation Wiki: Doctoring">https://wiki.ss13.co/Doctoring</a></li></ul>
 <h5>by Trent Durinste<br>2053 C.E.</h5>
 </div>

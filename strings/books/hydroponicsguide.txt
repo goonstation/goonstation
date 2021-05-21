@@ -192,6 +192,6 @@ globules of this sludge can be harvested from the plant however - with proper pr
 
 <p>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at the following sources:
 <ul>
-	<li><a href="https://wiki.ss13.co/Guide_to_Botany" target="_blank">https://wiki.ss13.co/Guide_to_Botany</a></li></ul>
+	<li><a href="https://wiki.ss13.co/Guide_to_Botany" target="Goonstation Wiki: Guide to Botany">https://wiki.ss13.co/Guide_to_Botany</a></li></ul>
 </body>
 </html>

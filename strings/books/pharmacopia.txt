@@ -138,9 +138,9 @@
 		<div class ="cryoxadone">
 		<ul>
 			<li>Cryoxadone is a cryogenic healing ketone derived from acetone that is useful for deep tissue repairs of damage that otherwise might require surgical interference.
-			<li>Synthesis: create an acetyl group by first mixing oil, welding fuel, and oxygen. 
-			<li>In a separate beaker, nitrogenate plasma and water to form cryostylane. 
-			<li>In a third beaker, create unstable mutagen by combining radium, plasma, and chlorine. 
+			<li>Synthesis: create an acetyl group by first mixing oil, welding fuel, and oxygen.
+			<li>In a separate beaker, nitrogenate plasma and water to form cryostylane.
+			<li>In a third beaker, create unstable mutagen by combining radium, plasma, and chlorine.
 			<li>Combine all reagents in a beaker with plasma.
 		</div>
 		<h3>Pentetic Acid</h3>
@@ -205,7 +205,7 @@
 		<i>This is not a complete list of all available medications. Further research and development efforts by NT Medical and Science divisions are strongly encouraged.</i>
 		<b><p>More information can be acquired at the following sources:</b><p>
 		<ul>
-			<li><a href="https://wiki.ss13.co/Chemicals" target="_blank">Chemistry references</a>
+			<li><a href="https://wiki.ss13.co/Chemicals" target="Goonstation Wiki: Chemicals">Chemistry references</a>
 		</li></ul>
 		<br>
 		<p>Trent's Anatomy:</p>

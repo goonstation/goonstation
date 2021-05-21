@@ -185,7 +185,7 @@ for biomatter intensive processes like cloning.
 <h2>Koshmarite</h2>
 <p>Classification: Crystal</p>
 <p>Koshmarite is a fairly common fiber that occurs in deposits of unknown origins. It is dusted in a fine layer of regolith, as Cerenkite
-is, though the pourous surface leads to less scatter of the regolith when handled. It should still be treated as a radiation hazard to 
+is, though the pourous surface leads to less scatter of the regolith when handled. It should still be treated as a radiation hazard to
 personnel working with it. It also has incredibly high albedo, leading to strong reflectance of light. Some believe that Koshmarite appears
 to pulsate, though it is not known if these visual effects were conjurations brought on to the observers by acute radiation sickness.
 </p>
@@ -200,7 +200,7 @@ materials, the prices it commands on the mineral market more than make up for it
 <h2>Gold</h2>
 <p>Classification: Metal, Conductor, Reflective Material</p>
 <p>Gold is of immense value as a raw ore that can be traded in the commodity industry. It, like Syreline, has light-refracting properties,
-but is a comparatively poor conductor to some of the other mineral types one may encounter. It is not particularly useful to 
+but is a comparatively poor conductor to some of the other mineral types one may encounter. It is not particularly useful to
 construction, and primarily is desirable as a part of luxury exports from a station's shipping department.
 </p>
 
@@ -224,5 +224,5 @@ several months worth of nutrients for them.
 
 <p><i>More information on minerals can be found by consulting a mentor or at Nanotrasen's on-line data-base at:
 <ul>
-	<li><a href="https://wiki.ss13.co/Guide_to_Mining#Ore" target="_blank">https://wiki.ss13.co/Guide_to_Mining#Ore</a></li></ul>
+	<li><a href="https://wiki.ss13.co/Guide_to_Mining#Ore" target="Goonstation Wiki: Guide to Mining">https://wiki.ss13.co/Guide_to_Mining#Ore</a></li></ul>
 </p>

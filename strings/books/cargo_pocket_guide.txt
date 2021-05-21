@@ -50,5 +50,5 @@
 		<hr>
 		<p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at:
 		<ul>
-			><li><a href="https://wiki.ss13.co/Quartermaster" target="_blank">https://wiki.ss13.co/Quartermaster</a></li></ul>
+			<li><a href="https://wiki.ss13.co/Quartermaster" target="Goonstation Wiki: Quartermaster">https://wiki.ss13.co/Quartermaster</a></li></ul>
 		Thank you for your service to Nanotrasen.</i></p>

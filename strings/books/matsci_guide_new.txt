@@ -810,8 +810,8 @@ As a final note, one can infuse a chemical into a material through an infusion p
 <br><br>
 <h4>Footnote</h4>
 <br><p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at:
-<ul><li><a href="https://wiki.ss13.co/Ore_Processing" target="_blank">https://wiki.ss13.co/Ore_Processing</a></li>
-</li><li><a href="https://wiki.ss13.co/Guide_to_Mining" target="_blank">https://wiki.ss13.co/Guide_to_Mining</a></li></ul>
+<ul><li><a href="https://wiki.ss13.co/Ore_Processing" target="Goonstation Wiki: Ore Processing">https://wiki.ss13.co/Ore_Processing</a></li>
+</li><li><a href="https://wiki.ss13.co/Guide_to_Mining" target="Goonstation Wiki: Guide to Mining">https://wiki.ss13.co/Guide_to_Mining</a></li></ul>
 Thank you for your service to Nanotrasen.</i></p>
 <br><br>
 <hr>

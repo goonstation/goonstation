@@ -58,5 +58,5 @@
 		Additional information is available at:
 		<br>
 		<ul>
-			<li><a href="https://wiki.ss13.co/Guide_to_Mining" target="_blank">https://wiki.ss13.co/Guide_to_Mining</a><br>
+			<li><a href="https://wiki.ss13.co/Guide_to_Mining" target="Goonstation Wiki: Guide to Mining">https://wiki.ss13.co/Guide_to_Mining</a><br>
 		We at Nanotrasen hope you find this information helpful, good luck!
