@@ -58222,6 +58222,11 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"klu" = (
+/obj/machinery/computer/genetics,
+/obj/item/cloneModule/genepowermodule,
+/turf/simulated/floor/blue/checker,
+/area/station/medical/research)
 "kmu" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -60627,8 +60632,18 @@
 /area/station/crew_quarters/clown)
 "pqb" = (
 /obj/table/auto,
-/obj/item/clothing/glasses/spectro,
-/obj/random_item_spawner/desk_stuff/five,
+/obj/random_item_spawner/desk_stuff/five{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/paper_bin{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clothing/glasses/spectro{
+	pixel_x = 1;
+	pixel_y = -4
+	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
 "prB" = (
@@ -105853,7 +105868,7 @@ abI
 vUX
 cuo
 aeb
-cwS
+klu
 vUX
 cxq
 cxr
