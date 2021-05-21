@@ -3048,7 +3048,8 @@
 	// If attacker is targeting the chest and a chest item exists, activate it.
 	if (M && M.zone_sel && M.zone_sel.selecting == "chest" && src.chest_item != null && (src.chest_item in src.contents))
 		logTheThing("combat", M, src, "activates [src.chest_item] embedded in [src]'s chest cavity at [log_loc(src)]")
-		src.chest_item.attack_self(src)
+		SPAWN_DBG(0) //might sleep/input/etc, and we don't want to hold anything up
+			src.chest_item.attack_self(src)
 	return
 
 /mob/living/carbon/human/proc/chest_item_dump_reagents_on_flip()
