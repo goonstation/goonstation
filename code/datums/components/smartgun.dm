@@ -186,7 +186,7 @@
 
 
 /datum/component/holdertargeting/smartgun/proc/is_valid_target(mob/user, mob/M)
-	return M != user
+	return M != user && !isdead(M)
 
 /datum/component/holdertargeting/smartgun/proc/checkshots(obj/item/gun/G)
 	if(istype(G, /obj/item/gun/kinetic))
