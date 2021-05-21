@@ -127,6 +127,26 @@
 /datum/component/holdertargeting/smartgun/nukeop/is_valid_target(mob/user, mob/M)
 	return ..() && !istype(M.get_id(), /obj/item/card/id/syndicate)
 
+//smart extinguisher
+/obj/item/gun/flamethrower/assembled/loaded/extinguisher
+	icon = 'icons/obj/items/items.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	icon_state = "fire_extinguisher0"
+	item_state = "fireextinguisher0"
+
+	New()
+		. = ..()
+		src.fueltank.reagents.remove_any(400)
+		src.fueltank.reagents.add_reagent("fffoam", 400)
+		src.amt_chem = 10
+		AddComponent(/datum/component/holdertargeting/smartgun/extinguisher, 1)
+
+	attack_hand()
+		return//:shelterfrog:
+
+/datum/component/holdertargeting/smartgun/extinguisher/is_valid_target(mob/user, mob/M)
+	return (M in by_cat[TR_CAT_BURNING_MOBS])
+
 /obj/item/gun/kinetic/gyrojet
 	name = "Amaethon gyrojet pistol"
 	desc = "A semi-automatic handgun that fires rocket-propelled bullets, developed by Mabinogi Firearms Company."
