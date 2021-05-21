@@ -205,11 +205,22 @@
 	<h4>Effects</h4>
 	<hr noshade>
 	<b>RESPONSE</b><br>
+		<p style="margin-right:10%; margin-left:1%"><b>Abductor</b></p>
+			<ul style='list-style-type:circle'>
+			<li>Can be played on any creature</li>
+			<li>Creature is taken out of battle until abductor is destroyed</li>
+			<li>Creatures out of battle are on field but cannot attack, be attacked, or be defeated</li>
+			<li>Can be played face down and activated in response to opponent attack</li></ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Adminhelp</b></p>
 			<ul style='list-style-type:circle'>
 			<li>Can only be played face down</li>
 			<li>Can be activated in response to any Effect or Equipment being activated</li>
 			<li>Effect or Equipment card being activated is instantly destroyed without activating</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Bee Mom</b></p>
+			<ul style='list-style-type:circle'>
+			<li>Can only be played face down</li>
+			<li>Can be activated in response to any opponent attack</li>
+			<li>Redirect attack to any bee on your side of the field</li></ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Deathgasp</b></p>
 			<ul style='list-style-type:circle'>
 			<li>Can only be played face down and is activated whenever opponent activates or plays a card</li>
@@ -218,6 +229,10 @@
 			<ul style='list-style-type:circle'>
 			<li>Can be activated when opponent creature attacks you creature</li>
 			<li>When played to your creature, prevents being destroyed by an attack</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Disarm</b></p>
+			<ul style='list-style-type:circle'>
+			<li>When actiavted, destroy one opponent Effect or Equipment card</li>
+			<li>If played face-down, may be activated when opponent plays Effect or Equipment card to prevent it</li></ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Door Bolts</b></p>
 			<ul style='list-style-type:circle'>
 			<li>While in play, no area cards can be played</li>
@@ -226,11 +241,23 @@
 			<ul style='list-style-type:circle'>
 			<li>While in play, no area cards can be played</li>
 			<li>If played face-down, may be activated when opponent tries to play area card to prevent</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Haloperidol Dart</b></p>
+			<ul style='list-style-type:circle'>
+			<li>When activated, roll a D6 and multiply the result by two; subtract the number to the ATK and DEF of a selected creature until end of current turn</li>
+			<li>Can be played face-down and activated in response to opponent attack</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Lucky Horseshoe</b></p>
+			<ul style='list-style-type:circle'>
+			<li>When activated, roll a D6 and multiply the result by two; add the number to the ATK and DEF of a selected creature until end of current turn</li>
+			<li>Can be played face-down and activated in response to opponent attack</li></ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Stealth Storage</b></p>
 			<ul style='list-style-type:circle'>
 			<li>Can only be played face down</li>
 			<li>Can only be activated when opponent plays or activates a card</li>
 			<li>Allows you to play any Effect card during any point in opponent's turn, unless Effect card specifically says it cannot be played during opponent turn</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Telekinesis</b></p>
+			<ul style='list-style-type:circle'>
+			<li>When activated, take one Equipment card from opponent's field and equip to one of your own creatures</li>
+			<li>Can be played face-down and activated in response to opponent equipping or attacking</li></ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Wet Floor</b></p>
 			<li>Can only be played face down and activates when a human attacks</li>
 			<li>Immediately concludes attack</li></ul>

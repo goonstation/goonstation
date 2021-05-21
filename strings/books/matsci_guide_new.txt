@@ -1,3 +1,23 @@
+<html>
+<head>
+<style type="text/css">
+table {
+    border-collapse: collapse;
+}
+table th{
+  padding: 3px;
+	border: 1px solid black;
+  border-collapse: collapse;
+	background-color:lightgray;
+}
+table td {
+	padding: 3px;
+	border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+</head>
+<body>
 <h3>Foreword:</h3>
 <hr>
 This text serves as a comprehensive overview to Materials Science. It is detailed but by no means exhaustive of all potential methods and projects. At the time of writing, all information in this book is correct. However, over time, the information may become out of date. Please see the footnote for additional reading.
@@ -62,15 +82,15 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 <br><br>
 <table>
 <tr><th align="right">ORE</th>
-<th align="right">|  Rad.</th>
-<th align="right">|  El. Cond.</th>
-<th align="right">|  Stabil.</th>
-<th align="right">|  Hard.</th>
-<th align="right">|  Dens.</th>
-<th align="right">|  Flam.</th>
-<th align="right">|  Cor. Res.</th>
-<th align="right">|  Perm.</th>
-<th align="right">|  Reflect.|</th></tr>
+<th align="right">Rad.</th>
+<th align="right">El. Cond.</th>
+<th align="right">Stabil.</th>
+<th align="right">Hard.</th>
+<th align="right">Dens.</th>
+<th align="right">Flam.</th>
+<th align="right">Cor. Res.</th>
+<th align="right">Perm.</th>
+<th align="right">Reflect.</th></tr>
 <tr><td align="right">Bohrum</td>
 <td align="right">n/a</td>
 <td align="right">n/a</td>
@@ -245,16 +265,16 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 <br><br>
 <table>
 <tr><th align="right">ORGANIC MAT</th>
-<th align="right">|  Rad.</th>
-<th align="right">|  El. Cond.</th>
-<th align="right">|  Thm. Cond.</th>
-<th align="right">|  Stabil.</th>
-<th align="right">|  Hard.</th>
-<th align="right">|  Dens.</th>
-<th align="right">|  Flam.</th>
-<th align="right">|  Cor. Res.</th>
-<th align="right">|  Perm.</th>
-<th align="right">|  Reflect.|</th></tr>
+<th align="right">Rad.</th>
+<th align="right">El. Cond.</th>
+<th align="right">Thm. Cond.</th>
+<th align="right">Stabil.</th>
+<th align="right">Hard.</th>
+<th align="right">Dens.</th>
+<th align="right">Flam.</th>
+<th align="right">Cor. Res.</th>
+<th align="right">Perm.</th>
+<th align="right">Reflect.</th></tr>
 <tr><td align="right">Bamboo</td>
 <td align="right">n/a</td>
 <td align="right">n/a</td>
@@ -378,15 +398,15 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 </table><br/>
 <table>
 <tr><th align="right">FABRIC</th>
-<th align="right">|  Rad.</th>
-<th align="right">|  El. Cond.</th>
-<th align="right">|  Thm. Cond.</th>
-<th align="right">|  Stabil.</th>
-<th align="right">|  Hard.</th>
-<th align="right">|  Dens.</th>
-<th align="right">|  Flam.</th>
-<th align="right">|  Cor. Res.</th>
-<th align="right">|  Perm.|</th></tr>
+<th align="right">Rad.</th>
+<th align="right">El. Cond.</th>
+<th align="right">Thm. Cond.</th>
+<th align="right">Stabil.</th>
+<th align="right">Hard.</th>
+<th align="right">Dens.</th>
+<th align="right">Flam.</th>
+<th align="right">Cor. Res.</th>
+<th align="right">Perm.</th></tr>
 <tr><td align="right">Bee Wool</td>
 <td align="right">n/a</td>
 <td align="right"><b>29</b></td>
@@ -489,16 +509,16 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 </table><br/>
 <table>
 <tr><th align="right">METAL</th>
-<th align="right">|  Rad.</th>
-<th align="right">|  El. Cond.</th>
-<th align="right">|  Thm. Cond.</th>
-<th align="right">|  Stabil.</th>
-<th align="right">|  Hard.</th>
-<th align="right">|  Dens.</th>
-<th align="right">|  Flam.</th>
-<th align="right">|  Cor. Res.</th>
-<th align="right">|  Perm.</th>
-<th align="right">|  Reflect.|</th></tr>
+<th align="right">Rad.</th>
+<th align="right">El. Cond.</th>
+<th align="right">Thm. Cond.</th>
+<th align="right">Stabil.</th>
+<th align="right">Hard.</th>
+<th align="right">Dens.</th>
+<th align="right">Flam.</th>
+<th align="right">Cor. Res.</th>
+<th align="right">Perm.</th>
+<th align="right">Reflect.</th></tr>
 <tr><td align="right">Copper</td>
 <td align="right">n/a</td>
 <td align="right"><b>51</b></td>
@@ -533,7 +553,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 <td align="right">n/a</td>
 <td align="right">n/a</td>
 <td align="right">n/a</td>
-<td align="right">n/a/td>
+<td align="right">n/a</td>
 </tr>
 <tr><td align="right">Slag</td>
 <td align="right">n/a</td>
@@ -561,17 +581,18 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 </tr>
 </table><br/>
 <table>
+<table border="1">
 <tr><th align="right">CRYSTAL</th>
-<th align="right">|  Rad.</th>
-<th align="right">|  El. Cond.</th>
-<th align="right">|  Thm. Cond.</th>
-<th align="right">|  Stabil.</th>
-<th align="right">|  Hard.</th>
-<th align="right">|  Dens.</th>
-<th align="right">|  Flam.</th>
-<th align="right">|  Cor. Res.</th>
-<th align="right">|  Perm.</th>
-<th align="right">|  Reflect.|</th></tr>
+<th align="right">Rad.</th>
+<th align="right">El. Cond.</th>
+<th align="right">Thm. Cond.</th>
+<th align="right">Stabil.</th>
+<th align="right">Hard.</th>
+<th align="right">Dens.</th>
+<th align="right">Flam.</th>
+<th align="right">Cor. Res.</th>
+<th align="right">Perm.</th>
+<th align="right">Reflect.</th></tr>
 <tr><td align="right">Gemstone</td>
 <td align="right">n/a</td>
 <td align="right">n/a</td>
@@ -659,16 +680,16 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 </table><br/>
 <table>
 <tr><th align="right">POWER SOURCE</th>
-<th align="right">|  Rad.</th>
-<th align="right">|  El. Cond.</th>
-<th align="right">|  Thm. Cond.</th>
-<th align="right">|  Stabil.</th>
-<th align="right">|  Hard.</th>
-<th align="right">|  Dens.</th>
-<th align="right">|  Flam.</th>
-<th align="right">|  Cor. Res.</th>
-<th align="right">|  Perm.</th>
-<th align="right">|  Reflect.|</th></tr>
+<th align="right">Rad.</th>
+<th align="right">El. Cond.</th>
+<th align="right">Thm. Cond.</th>
+<th align="right">Stabil.</th>
+<th align="right">Hard.</th>
+<th align="right">Dens.</th>
+<th align="right">Flam.</th>
+<th align="right">Cor. Res.</th>
+<th align="right">Perm.</th>
+<th align="right">Reflect.</th></tr>
 <tr><td align="right">Ectoplasm</td>
 <td align="right">n/a</td>
 <td align="right">n/a</td>
@@ -690,17 +711,17 @@ The properties in full and in order are Radioactivity, Neutron Radiation, Electr
 <br><br>
 <table>
 <tr><th align="right">ALLOY</th>
-<th align="right">|  Rad.</th>
-<th align="right">|  Neu. Rad.</th>
-<th align="right">|  El. Cond.</th>
-<th align="right">|  Thm. Cond.</th>
-<th align="right">|  Stabil.</th>
-<th align="right">|  Hard.</th>
-<th align="right">|  Dens.</th>
-<th align="right">|  Flam.</th>
-<th align="right">|  Cor. Res.</th>
-<th align="right">|  Perm.</th>
-<th align="right">|  Reflect.|</th></tr>
+<th align="right">Rad.</th>
+<th align="right">Neu. Rad.</th>
+<th align="right">El. Cond.</th>
+<th align="right">Thm. Cond.</th>
+<th align="right">Stabil.</th>
+<th align="right">Hard.</th>
+<th align="right">Dens.</th>
+<th align="right">Flam.</th>
+<th align="right">Cor. Res.</th>
+<th align="right">Perm.</th>
+<th align="right">Reflect.</th></tr>
 <tr><td align="right">Dyneema</td>
 <td align="right">n/a</td>
 <td align="right">n/a</td>
@@ -971,3 +992,5 @@ Thank you for your service to Nanotrasen.</i></p>
 
 <b>Insulative Material</b>
 <ul><li>Fibrilith</li></ul>
+</body>
+</html>
