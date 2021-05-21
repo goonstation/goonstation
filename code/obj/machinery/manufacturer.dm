@@ -2041,7 +2041,8 @@
 		/datum/manufacture/shoes,
 		/datum/manufacture/breathmask,
 		/datum/manufacture/fluidcanister,
-		/datum/manufacture/patch)
+		/datum/manufacture/patch,
+		/datum/manufacture/conveyor)
 	hidden = list(/datum/manufacture/RCDammo,
 		/datum/manufacture/RCDammomedium,
 		/datum/manufacture/RCDammolarge,

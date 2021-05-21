@@ -540,6 +540,20 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Machinery"
 
+/datum/manufacture/conveyor
+	name = "Conveyor Parts (x10)"
+	item_paths = list("MET-2")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/conveyor_parts)
+	time = 8 SECONDS
+	category = "Resource"
+
+	modify_output(var/obj/machinery/manufacturer/M, var/atom/A)
+		..()
+		var/obj/item/conveyor_parts/S = A
+		S.amount = 10
+		S.inventory_counter.update_number(S.amount)
+
 //// cogwerks - gas extraction stuff
 
 /datum/manufacture/air_can/large

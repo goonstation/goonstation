@@ -483,14 +483,6 @@ MATERIAL
 					a_icon_state = "0"
 					a_name = "a terminal frame"
 
-				if("conveyor")
-					a_type = /obj/machinery/conveyor/constructed
-					a_amount = 1
-					a_cost = 1
-					a_icon = 'icons/obj/recycling.dmi'
-					a_icon_state = "conveyor0"
-					a_name = "a conveyor belt"
-
 				if("construct")
 					var/turf/T = get_turf(usr)
 					var/area/A = get_area (usr)

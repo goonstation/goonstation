@@ -29,7 +29,6 @@
 	var/obj/machinery/conveyor/next_conveyor = null
 	var/obj/machinery/conveyor_switch/owner = null
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
-	mats = 5
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 
 
@@ -45,14 +44,13 @@
 /obj/machinery/conveyor/west
 	startdir = WEST
 	altdir = EAST
-
+/*
 /obj/machinery/conveyor/constructed
 	New()
 		. = ..()
 		SPAWN_DBG(0.5 SECONDS) // construction takes a bit to set the dir right >.>
 			src.connect_to_nearby()
-
-	// create a conveyor
+*/
 
 /obj/machinery/conveyor/New()
 	..()
@@ -143,10 +141,7 @@
 		var/obj/machinery/conveyor/conv = copyobj
 		newswitch = conv.owner
 	if(newswitch)
-		if(src.owner) // remove from old switch and add to new one
-			src.owner.conveyors -= src
-		src.owner = newswitch
-		newswitch.conveyors |= src
+		src.connect_to_switch(newswitch)
 		boutput(usr, "<span class='notice'>You connect the [src] to the [newswitch].</spawn>")
 
 // set the dir and target turf depending on the operating direction
@@ -355,6 +350,76 @@
 	..()
 	update()
 
+/obj/machinery/conveyor/proc/connect_to_switch(var/obj/machinery/conveyor_switch/newswitch)
+	if(!newswitch)
+		return
+	if(src.owner) // remove from old switch and add to new one
+		src.owner.conveyors -= src
+	src.owner = newswitch
+	newswitch.conveyors |= src
+
+/obj/item/conveyor_parts
+	name = "conveyor parts"
+	desc = "A collection of parts that can be used to construct a conveyor belt."
+	icon = 'icons/obj/recycling.dmi'
+	icon_state = "conveyor_parts"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	flags = FPRINT | TABLEPASS | CONDUCT
+	stamina_damage = 35
+	stamina_cost = 22
+	stamina_crit_chance = 10
+
+	amount = 10
+	max_stack = 50
+	inventory_counter_enabled = 1
+	stack_type = /obj/item/conveyor_parts
+	var/move_laying = FALSE									// do we lay conveyors when moving?
+	var/obj/machinery/conveyor_switch/connect_switch = null // switch to automatically connect new belts to
+
+/obj/item/conveyor_parts/proc/consumeConveyors(var/amount, var/mob/M)
+	src.change_stack_amount(-amount)
+	if (src.amount <= 0)
+		UnregisterSignal(M, COMSIG_MOVABLE_MOVED)
+		src.move_laying = FALSE
+		if (M)
+			boutput(M, "<span class='alert'>Your conveyor parts run out!</span>")
+
+
+/obj/item/conveyor_parts/proc/placeConveyor(mob/M, newLoc)
+	var/obj/machinery/conveyor/C = new /obj/machinery/conveyor(newLoc)
+	C.set_dir(M.dir)
+	C.connect_to_nearby()
+	if(connect_switch)
+		C.connect_to_switch(connect_switch)
+	src.consumeConveyors(1, M)
+
+/obj/item/conveyor_parts/proc/walkConveyors(mob/M, newLoc, direct)
+	var/obj/machinery/conveyor/C = locate() in newLoc
+	if(!C) // no conveyor where we are moving, so we can place one!
+		src.placeConveyor(M, newLoc)
+
+/obj/item/conveyor_parts/attack_self(mob/M)
+	if (istype(M))
+		if (src.move_laying)
+			src.move_laying = FALSE
+			UnregisterSignal(M, COMSIG_MOVABLE_MOVED)
+			boutput(M, "<span class='notice'>No longer laying the cable while moving.</span>")
+		else
+			src.move_laying = TRUE
+			RegisterSignal(M, COMSIG_MOVABLE_MOVED, .proc/walkConveyors)
+			boutput(M, "<span class='notice'>Now laying cable while moving.</span>")
+
+/obj/item/conveyor_parts/afterattack(atom/target, mob/M, reach, params)
+	if(istype(target, /obj/machinery/conveyor_switch))
+		src.connect_switch = target
+	else if(istype(target, /turf/))
+		src.placeConveyor(M, target)
+
+/obj/item/conveyor_parts/before_stack(atom/movable/O as obj, mob/user as mob)
+	user.visible_message("<span class='notice'>[user] begins collecting conveyor parts!</span>")
+
+/obj/item/conveyor_parts/after_stack(atom/movable/O as obj, mob/user as mob, var/added)
+	boutput(user, "<span class='notice'>You finish stacking the conveyor parts.</span>")
 
 // converyor diverter
 // extendable arm that can be switched so items on the conveyer are diverted sideways
