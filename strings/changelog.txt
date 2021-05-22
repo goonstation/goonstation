@@ -1,5 +1,9 @@
 
 (t)fri may 21 21
+(u)edwardly
+(p)4778
+(e)|
+(+)Include seconds in Cryosleep countdown so progress can be estimated below 1 minute.
 (u)kyle
 (p)4768
 (e)⚖|balance
