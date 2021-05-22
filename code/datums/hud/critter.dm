@@ -1,6 +1,6 @@
 /// Highly modular HUD for critters.
 /datum/hud/critter
-	/// list of hand hud elements
+	/// list of holders of hand hud elements
 	var/list/hands = list()
 	/// list of equipment hud elements
 	var/list/equipment = list()
@@ -52,9 +52,9 @@
 	var/top_right_offset = 0
 
 	/// idk, something left
-	var/rl = 0
+	var/wraparound_offset_left = 0
 	/// idk, something right
-	var/rr = 0
+	var/wraparound_offset_right = 0
 
 /datum/hud/critter/New(M)
 	..()
@@ -78,7 +78,8 @@
 		var/new_screen_loc = "CENTER[center_offset], SOUTH"
 		var/atom/movable/screen/hud/hand_element = src.create_screen("hand[i]", handHolder.name, handHolder.icon,\
 		"[handHolder.icon_state][i == src.master.active_hand ? 1 : 0]", new_screen_loc, HUD_LAYER)
-		src.hands.Add(hand_element)
+		handHolder.screenObj = hand_element
+		src.hands.Add(handHolder)
 	src.right_offset = initial_hand_offset + length(src.master.hands)
 
 	// health hud element creation
@@ -168,23 +169,26 @@
 
 /// gets the leftmost screen loc
 /datum/hud/critter/proc/loc_left()
-	if (src.left_offset < -6) //why -6
-		src.rl++
-		src.left_offset = src.rr < src.rl ? 0 : -1
+	if (src.left_offset < -6) // wraps vertically if the magnitude of left offset is greater than 6
+		src.wraparound_offset_left++
+		if (src.wraparound_offset_right < src.wraparound_offset_left)
+			src.right_offset = 0
+		else
+			src.right_offset = -1
 
-	var/east_offset = next_left()
+	var/next_left_offset = src.next_left()
 	var/x_offset = 0
 	var/y_offset = 0
 
-	if (east_offset < 0)
-		x_offset = east_offset
-	else if (east_offset > 0)
-		x_offset = "+[east_offset]"
+	if (next_left_offset < 0)
+		x_offset = next_left_offset
+	else if (next_left_offset > 0)
+		x_offset = "+[next_left_offset]"
 	else
 		x_offset = ""
 
-	if (src.rl > 0)
-		y_offset = "+[src.rl]"
+	if (src.wraparound_offset_left > 0)
+		y_offset = "+[src.wraparound_offset_left]"
 	else
 		y_offset = ""
 
@@ -192,23 +196,26 @@
 
 /// gets the rightmost screen loc
 /datum/hud/critter/proc/loc_right()
-	if (src.right_offset > 6) //why 6 ??? ?! ??!
-		src.rr++
-		src.right_offset = src.rl < src.rr ? 0 : 1
+	if (src.right_offset > 6) // wraps vertically if the magnitude of right offset is greater than 6
+		src.wraparound_offset_right++
+		if (src.wraparound_offset_left < src.wraparound_offset_right)
+			src.right_offset = 0
+		else
+			src.right_offset = 1
 
-	var/east_offset = src.next_right()
+	var/next_right_offset = src.next_right()
 	var/x_offset = 0
 	var/y_offset = 0
 
-	if (east_offset < 0)
-		x_offset = east_offset
-	else if (east_offset > 0)
-		x_offset = "+[east_offset]"
+	if (next_right_offset < 0)
+		x_offset = next_right_offset
+	else if (next_right_offset > 0)
+		x_offset = "+[next_right_offset]"
 	else
 		x_offset = ""
 
-	if (src.rl > 0)
-		y_offset = "+[src.rr]"
+	if (src.wraparound_offset_right > 0)
+		y_offset = "+[src.wraparound_offset_right]"
 	else
 		y_offset = ""
 
@@ -256,13 +263,11 @@
 /datum/hud/critter/proc/update_hands()
 	for (var/i = 1, i <= src.master.hands.len, i++)
 		var/datum/handHolder/handHolder = src.master.hands[i]
-		var/atom/movable/screen/hud/hand_hud = handHolder.screenObj
-		if (!hand_hud)
-			return
-		if (master.active_hand == i)
-			hand_hud.icon_state = "[handHolder.icon_state]1"
+		var/atom/movable/screen/hud/hand_element = handHolder.screenObj
+		if (src.master.active_hand == i)
+			hand_element.icon_state = "[handHolder.icon_state]1"
 		else
-			hand_hud.icon_state = "[handHolder.icon_state]0"
+			hand_element.icon_state = "[handHolder.icon_state]0"
 
 /// updates the throwing icon to show whether or not throwing is active
 /datum/hud/critter/proc/update_throwing()
