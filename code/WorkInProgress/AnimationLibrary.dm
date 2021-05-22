@@ -1460,3 +1460,23 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = EAST)
 	animate(pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = WEST)
 	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = WEST)
+
+/proc/animate_wave(var/atom/A, var/waves=7) // https://secure.byond.com/docs/ref/info.html#/{notes}/filters/wave
+	var/start = A.filters.len
+	var/X,Y,rsq,i,f
+	for(i=1, i<=waves, ++i)
+		// choose a wave with a random direction and a period between 10 and 30 pixels
+		do
+			X = 60*rand() - 30
+			Y = 60*rand() - 30
+			rsq = X*X + Y*Y
+		while(rsq<100 || rsq>900)   // keep trying if we don't like the numbers
+		// keep distortion (size) small, from 0.5 to 3 pixels
+		// choose a random phase (offset)
+		A.filters += filter(type="wave", x=X, y=Y, size=rand()*2.5+0.5, offset=rand())
+	for(i=1, i<=waves, ++i)
+		// animate phase of each wave from its original phase to phase-1 and then reset;
+		// this moves the wave forward in the X,Y direction
+		f = A.filters[start+i]
+		animate(f, offset=f:offset, time=0, loop=-1, flags=ANIMATION_PARALLEL)
+		animate(offset=f:offset-1, time=rand()*20+10)

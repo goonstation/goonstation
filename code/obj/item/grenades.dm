@@ -569,11 +569,10 @@ PIPE BOMBS + CONSTRUCTION
 		GM.oxygen = 1500
 		GM.carbon_dioxide = 100
 
-		var/obj/effects/explosion/E = new /obj/effects/explosion(T)
-		E.plane = PLANE_NOSHADOW_ABOVE
-		E.transform = matrix(0.75, MATRIX_SCALE)
 		// Adjust coloration of explosion to lighter cyan
-		E.color = list(0,0,0.6,0.2,0, 0.3,0,-0.8,0,0, 0,0.33,0,0,0, 0.9,0.8,0.8,0.7,0)
+		var/color_matrix = list(0,0,0.6,0.2,0, 0.3,0,-0.8,0,0, 0,0.33,0,0,0, 0.9,0.8,0.8,0.7,0)
+		var/obj/effects/explosion/E = new /obj/effects/explosion/custom(T,plane=PLANE_NOSHADOW_ABOVE,scale=0.75,color=color_matrix)
+		animate_wave(E,4)
 
 		if (T && istype(T))
 			if(T.air)
@@ -600,10 +599,10 @@ PIPE BOMBS + CONSTRUCTION
 				var/stamina = clamp(5 * (5 + 1 * (7 - checkdist)), 0, 120)
 				HH.apply_sonic_stun(0, 0, misstep, 0, 2, ear_damage, ear_tempdeaf, stamina)
 
-			animate(E, alpha=0, time=3 SECONDS, flags=CIRCULAR_EASING | EASE_IN)
+			animate(E, alpha=0, time=2.8 SECONDS, flags=CIRCULAR_EASING | EASE_IN)
 			playsound(T, "sound/weapons/flashbang.ogg", 30, 1)
 			var/datum/effects/system/steam_spread/steam = unpool(/datum/effects/system/steam_spread)
-			steam.set_up(10, 0, get_turf(src),color="#0ff")
+			steam.set_up(10, 0, get_turf(src), color="#0ff", plane=PLANE_NOSHADOW_ABOVE)
 			steam.attach(src.loc)
 			steam.start()
 

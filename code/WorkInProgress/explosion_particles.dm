@@ -56,6 +56,16 @@
 			..()
 			src.transform = matrix(0.5, MATRIX_SCALE)
 
+	custom
+		New(turf/newLoc, color=null, plane=null, scale=null)
+			..()
+			if(color)
+				src.color = color
+			if(plane)
+				src.plane = plane
+			if(scale)
+				src.transform = matrix(scale, MATRIX_SCALE)
+
 /obj/effects/explosion/New()
 	..()
 	SPAWN_DBG(3 SECONDS)
