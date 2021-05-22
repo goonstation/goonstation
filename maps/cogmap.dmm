@@ -1040,6 +1040,14 @@
 /area/station/hallway/secondary/entry)
 "acS" = (
 /obj/disposalpipe/segment,
+/obj/table/auto,
+/obj/item/clothing/glasses/spectro{
+	pixel_y = 6
+	},
+/obj/item/clothing/glasses/spectro{
+	pixel_x = 3;
+	pixel_y = -3
+	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
 "acT" = (
@@ -1425,10 +1433,6 @@
 	step_x = 0;
 	step_y = 0
 	},
-/obj/item/storage/pill_bottle/mutadone{
-	pixel_x = 9;
-	pixel_y = -3
-	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
 "adI" = (
@@ -1561,16 +1565,6 @@
 "aea" = (
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction2)
-"aeb" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/stool/chair/office/red,
-/obj/landmark/start{
-	name = "Geneticist"
-	},
-/turf/simulated/floor/blue/checker,
-/area/station/medical/research)
 "aec" = (
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
@@ -1628,19 +1622,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/solar/west)
 "aen" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "genetics";
-	mailgroup = "medresearch";
-	name = "mail chute-'Genetics'"
-	},
-/obj/disposalpipe/trunk/mail{
-	dir = 1
-	},
-/obj/machinery/firealarm{
-	dir = 1;
-	layer = 3.5;
-	pixel_y = -24
-	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
 "aeo" = (
@@ -1888,9 +1870,8 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/wingrille_spawn/auto,
-/obj/decal/xmas_lights/ephemeral,
-/turf/simulated/floor/plating,
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/blue/checker,
 /area/station/medical/research)
 "aeR" = (
 /obj/item/caution{
@@ -1924,18 +1905,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/disposalpipe/trunk{
-	dir = 1
-	},
-/obj/machinery/disposal/small{
-	dir = 4
-	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
 "aeV" = (
@@ -54602,6 +54572,21 @@
 /obj/machinery/meter,
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
+"dRa" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/disposal/mail{
+	mail_tag = "genetics";
+	mailgroup = "medresearch";
+	name = "mail chute-'Genetics'"
+	},
+/obj/disposalpipe/trunk/mail{
+	dir = 1
+	},
+/turf/simulated/floor/blue/checker,
+/area/station/medical/research)
 "dRb" = (
 /obj/grille/catwalk/cross{
 	dir = 1
@@ -56462,6 +56447,25 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
+"gYt" = (
+/obj/table/auto,
+/obj/item/paper_bin{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/item/pen/marker/blue{
+	pixel_x = -8
+	},
+/obj/item/pen/marker/random{
+	pixel_x = -10;
+	pixel_y = 6
+	},
+/obj/item/storage/pill_bottle/mutadone{
+	pixel_x = 9;
+	pixel_y = -3
+	},
+/turf/simulated/floor/blue/checker,
+/area/station/medical/research)
 "gYT" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights/ephemeral,
@@ -59229,6 +59233,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
+"mAy" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights/ephemeral,
+/turf/simulated/floor/plating,
+/area/station/medical/research)
 "mCe" = (
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/grass{
@@ -60631,19 +60644,15 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "pqb" = (
-/obj/table/auto,
-/obj/random_item_spawner/desk_stuff/five{
-	pixel_x = 6;
-	pixel_y = 6
+/obj/machinery/firealarm{
+	dir = 1;
+	layer = 3.5;
+	pixel_y = -24
 	},
-/obj/item/paper_bin{
-	pixel_x = -4;
-	pixel_y = 5
+/obj/disposalpipe/trunk{
+	dir = 1
 	},
-/obj/item/clothing/glasses/spectro{
-	pixel_x = 1;
-	pixel_y = -4
-	},
+/obj/machinery/disposal,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
 "prB" = (
@@ -62241,6 +62250,13 @@
 	},
 /turf/simulated/floor/airless/solar,
 /area/station/solar/south)
+"sbY" = (
+/obj/stool/chair/office/red,
+/obj/landmark/start{
+	name = "Geneticist"
+	},
+/turf/simulated/floor/blue/checker,
+/area/station/medical/research)
 "sdt" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -63445,20 +63461,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"ugY" = (
-/obj/overlay{
-	icon = 'icons/misc/beach2.dmi';
-	icon_state = "palm1";
-	layer = 10;
-	name = "palm tree"
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/research)
 "uhW" = (
 /obj/machinery/light/small,
 /obj/cable/brown{
@@ -64904,6 +64906,15 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"xac" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/blue/checker,
+/area/station/medical/research)
 "xau" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	req_access = null
@@ -105568,9 +105579,9 @@ rPt
 adN
 ctD
 vUX
-cxq
-cxq
-cxq
+ctD
+ctD
+cxr
 cxq
 vBq
 cxs
@@ -105867,11 +105878,11 @@ abo
 abI
 vUX
 cuo
-aeb
+cwj
+xac
+sbY
 klu
 vUX
-cxq
-cxr
 cxq
 cxS
 uzR
@@ -106170,11 +106181,11 @@ abN
 vUX
 cuo
 cwj
+cuo
+cuo
 cwR
 vUX
-cxq
-ugY
-cxq
+dhj
 rNh
 uzR
 aah
@@ -106470,12 +106481,12 @@ abh
 cqB
 abO
 abZ
-cuo
+gYt
 cwl
 aen
 aeQ
-cxs
-cxs
+dRa
+mAy
 cxs
 cxs
 cyn
