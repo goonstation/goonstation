@@ -2373,10 +2373,10 @@
 	/datum/manufacture/co2_can,
 	/datum/manufacture/n2_can,
 	/datum/manufacture/plasma_can)
-
-// a blank manufacturer for mechanics
-
-/obj/machinery/manufacturer/mechanic
+	#ifndef RP_MODE
+	hidden = list(/datum/manufacture/agentb_can)
+	#endif
+/obj/machinery/manufacturer/mechanic // a blank manufacturer for mechanics
 	name = "Reverse-Engineering Fabricator"
 	desc = "A manufacturing unit designed to create new things from blueprints."
 	icon_state = "fab-hangar"

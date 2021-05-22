@@ -58,6 +58,10 @@
 	name = "Canister: \[O2\]"
 	icon_state = "blue"
 	casecolor = "blue"
+/obj/machinery/portable_atmospherics/canister/agent_b
+	name = "Canister \[Oxygen Agent B\]"
+	icon_state = "bluish"
+	casecolor = "bluish"
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "Canister \[Plasma\]"
 	icon_state = "orange"
@@ -124,6 +128,13 @@
 			atmos_dmi.icon_state = "can-o3"
 
 		UpdateOverlays(atmos_dmi, "pressure")
+		return
+
+/obj/machinery/portable_atmospherics/canister/agent_b/update_icon()
+
+	if (src.destroyed)
+		src.icon_state = "[src.casecolor]-1"
+		ClearAllOverlays()
 	return
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -374,6 +385,12 @@
 		logTheThing("combat", user, null, "attacked [src] [log_atmos(src)] with [W] at [log_loc(src)].")
 		src.health -= W.force
 		healthcheck()
+	..()
+
+/obj/machinery/portable_atmospherics/canister/agent_b/attackby(var/obj/item/W as obj, var/mob/user as mob)
+	if (istype(W, /obj/item/assembly/detonator))
+		user.show_message("<span class='alert'>This tank doesn't appear to be the correct size.</span>")
+		return
 	..()
 
 /obj/machinery/portable_atmospherics/canister/attack_ai(var/mob/user as mob)
@@ -712,6 +729,16 @@
 
 	var/datum/gas/sleeping_agent/trace_gas = air_contents.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
 	trace_gas.moles = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+
+	src.update_icon()
+	return 1
+
+/obj/machinery/portable_atmospherics/canister/agent_b/New()
+
+	..()
+
+	var/datum/gas/oxygen_agent_b/trace_gas = air_contents.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
+	trace_gas.moles = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature*2)
 
 	src.update_icon()
 	return 1

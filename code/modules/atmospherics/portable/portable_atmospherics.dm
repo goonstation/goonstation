@@ -108,7 +108,9 @@
 
 /obj/machinery/portable_atmospherics/attackby(var/obj/item/W as obj, var/mob/user as mob)
 	if(istype(W, /obj/item/tank))
-		if(!src.holding)
+		if(istype(src, /obj/machinery/portable_atmospherics/canister/agent_b))
+			boutput(user, "<span class='alert'>You fail to attach the [W.name] to the the [src.name]. There appears to be no area to put the tank into the canister</span>")
+		else if(!src.holding)
 			boutput(user, "<span class='notice'>You attach the [W.name] to the the [src.name]</span>")
 			user.drop_item()
 			W.set_loc(src)
@@ -144,5 +146,4 @@
 			else
 				boutput(user, "<span class='notice'>Nothing happens.</span>")
 				return
-
 	return
