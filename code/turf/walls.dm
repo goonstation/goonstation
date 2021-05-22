@@ -62,7 +62,7 @@
 		return
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
-	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m steel wall
+	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m aluminum wall
 	explosion_resistance = 2
 
 	proc/update_projectile_image(var/update_time)
@@ -179,7 +179,7 @@
 				B.setMaterial(src.material)
 				B.set_reinforcement(src.material)
 			else
-				var/datum/material/M = getMaterial("steel")
+				var/datum/material/M = getMaterial("aluminum")
 				A.setMaterial(M)
 				B.setMaterial(M)
 				B.set_reinforcement(M)
@@ -189,7 +189,7 @@
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					var/datum/material/M = getMaterial("steel")
+					var/datum/material/M = getMaterial("aluminum")
 					A.setMaterial(M)
 
 				if (prob(50))
@@ -198,7 +198,7 @@
 					if (src.material)
 						B.setMaterial(src.material)
 					else
-						var/datum/material/M = getMaterial("steel")
+						var/datum/material/M = getMaterial("aluminum")
 						B.setMaterial(M)
 
 			else if( prob(50))
@@ -206,7 +206,7 @@
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					var/datum/material/M = getMaterial("steel")
+					var/datum/material/M = getMaterial("aluminum")
 					A.setMaterial(M)
 
 	else
@@ -220,7 +220,7 @@
 				B.setMaterial(src.material)
 				C.setMaterial(src.material)
 			else
-				var/datum/material/M = getMaterial("steel")
+				var/datum/material/M = getMaterial("aluminum")
 				A.setMaterial(M)
 				B.setMaterial(M)
 				C.setMaterial(M)
@@ -230,7 +230,7 @@
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					var/datum/material/M = getMaterial("steel")
+					var/datum/material/M = getMaterial("aluminum")
 					A.setMaterial(M)
 
 			else if (prob(50))
@@ -239,7 +239,7 @@
 				if (src.material)
 					B.setMaterial(src.material)
 				else
-					var/datum/material/M = getMaterial("steel")
+					var/datum/material/M = getMaterial("aluminum")
 					B.setMaterial(M)
 
 				if (prob(50))
@@ -248,14 +248,14 @@
 					if (src.material)
 						C.setMaterial(src.material)
 					else
-						var/datum/material/M = getMaterial("steel")
+						var/datum/material/M = getMaterial("aluminum")
 						C.setMaterial(M)
 
 	var/atom/D = ReplaceWithFloor()
 	if (src.material && keep_material)
 		D.setMaterial(src.material)
 	else
-		var/datum/material/M = getMaterial("steel")
+		var/datum/material/M = getMaterial("aluminum")
 		D.setMaterial(M)
 
 /turf/simulated/wall/burn_down()
@@ -438,7 +438,7 @@
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					A.setMaterial(getMaterial("steel"))
+					A.setMaterial(getMaterial("aluminum"))
 				boutput(user, "<span class='notice'>You removed the support rods.</span>")
 			else if((isrobot(user) && (user.loc == T)))
 				src.d_state = 6
@@ -446,7 +446,7 @@
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					A.setMaterial(getMaterial("steel"))
+					A.setMaterial(getMaterial("aluminum"))
 				boutput(user, "<span class='notice'>You removed the support rods.</span>")
 
 	else if (iswrenchingtool(W))
@@ -470,7 +470,7 @@
 			if (src.material)
 				A.setMaterial(src.material)
 			else
-				A.setMaterial(getMaterial("steel"))
+				A.setMaterial(getMaterial("aluminum"))
 
 	else if (isscrewingtool(W))
 		if (src.d_state == 1)
@@ -535,7 +535,7 @@
 			if(S.material)
 				src.setMaterial(S.material)
 			else
-				var/datum/material/M = getMaterial("steel")
+				var/datum/material/M = getMaterial("aluminum")
 				src.setMaterial(M)
 			boutput(user, "<span class='notice'>You repaired the wall.</span>")
 

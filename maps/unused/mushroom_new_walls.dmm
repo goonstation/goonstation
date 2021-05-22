@@ -654,7 +654,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "acT" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "acU" = (
@@ -2784,11 +2784,11 @@
 	pixel_x = 5;
 	pixel_y = 1
 	},
-/obj/item/sheet/steel/fullstack{
+/obj/item/sheet/aluminum/fullstack{
 	pixel_x = -3;
 	pixel_y = 4
 	},
-/obj/item/sheet/steel/reinforced/fullstack{
+/obj/item/sheet/aluminum/reinforced/fullstack{
 	pixel_y = -1
 	},
 /turf/simulated/floor/black,
@@ -2930,7 +2930,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "amt" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -3062,7 +3062,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/com_dish/auxdish)
 "amS" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/simulated/floor/plating/airless,
 /area/station/com_dish/auxdish)
 "amT" = (
@@ -3699,10 +3699,10 @@
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
 "ape" = (
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 50
 	},
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 50
 	},
 /turf/simulated/floor,
@@ -3716,10 +3716,10 @@
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
 "apg" = (
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 50
 	},
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 50
 	},
 /obj/cable{
@@ -7482,10 +7482,10 @@
 	name = "W light switch";
 	pixel_x = -24
 	},
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 50
 	},
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 50
 	},
 /obj/item/device/multitool{
@@ -11430,7 +11430,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload)
 "aTs" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/simulated/wall/auto/supernorn,
 /area/station/turret_protected/ai_upload)
 "aTt" = (
@@ -15108,7 +15108,7 @@
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "beV" = (
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 10
 	},
 /obj/machinery/light/small/floor,
@@ -16135,7 +16135,7 @@
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "biw" = (
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 10
 	},
 /obj/cable{
@@ -16344,7 +16344,7 @@
 /turf/simulated/floor,
 /area/station/storage/emergency)
 "bja" = (
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 10
 	},
 /turf/simulated/floor/grime,
@@ -17671,7 +17671,7 @@
 	},
 /area/station/storage/warehouse)
 "boH" = (
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 50
 	},
 /turf/simulated/floor/bot,
@@ -19641,7 +19641,7 @@
 /turf/simulated/floor/carpet/green/standard/edge/east,
 /area/station/engine/engineering/breakroom)
 "bIY" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -20599,7 +20599,7 @@
 /turf/simulated/floor/caution/south,
 /area/station/science/chemistry)
 "cVH" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
@@ -20720,7 +20720,7 @@
 	},
 /area/station/turret_protected/AIsat)
 "dhg" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-8"
@@ -20818,7 +20818,7 @@
 	},
 /area/station/turret_protected/AIsat)
 "dnr" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/lattice{
 	dir = 9;
 	icon_state = "lattice-dir-b"
@@ -21645,7 +21645,7 @@
 	},
 /area/station/security/detectives_office)
 "eEz" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/lattice{
 	dir = 10;
 	icon_state = "lattice-dir"
@@ -22955,7 +22955,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
 "gkJ" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -23957,7 +23957,7 @@
 	},
 /area/station/turret_protected/AIsat)
 "hCX" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -23972,7 +23972,7 @@
 /area/station/turret_protected/AIbaseoutside)
 "hDA" = (
 /obj/lattice,
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/space,
 /area/station/engine/proto)
 "hDW" = (
@@ -24319,7 +24319,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay/lobby)
 "hZN" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/lattice{
 	dir = 5;
 	icon_state = "lattice-dir-b"
@@ -24986,7 +24986,7 @@
 /turf/space,
 /area/space)
 "iNW" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-4"
@@ -25957,7 +25957,7 @@
 	},
 /area/station/crew_quarters/bar)
 "jSi" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -26122,7 +26122,7 @@
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/hor)
 "kdh" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -26718,7 +26718,7 @@
 /turf/simulated/floor/red,
 /area/station/security/brig)
 "kPu" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -26813,7 +26813,7 @@
 	},
 /area/station/medical/medbay/lobby)
 "kWv" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/lattice{
 	dir = 4;
 	icon_state = "lattice-dir"
@@ -27487,7 +27487,7 @@
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "lYn" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/lattice{
 	dir = 6;
 	icon_state = "lattice-dir"
@@ -28236,7 +28236,7 @@
 	},
 /area/station/medical/medbay)
 "mYq" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -28440,7 +28440,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/armory_outside)
 "nnq" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -29286,7 +29286,7 @@
 /turf/simulated/floor/engine,
 /area/station/security/armory)
 "olQ" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/simulated/floor/plating/airless,
 /area/station/com_dish/comdish)
 "olV" = (
@@ -32497,7 +32497,7 @@
 	},
 /area/station/crew_quarters/hor)
 "rLq" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/lattice{
 	dir = 10;
 	icon_state = "lattice-dir-b"
@@ -32564,7 +32564,7 @@
 /turf/simulated/floor,
 /area/station/storage/primary)
 "rNY" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -33023,7 +33023,7 @@
 /turf/simulated/floor,
 /area/station/storage/primary)
 "svE" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "svG" = (
@@ -34159,7 +34159,7 @@
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "txy" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/lattice{
 	dir = 8;
 	icon_state = "lattice-dir"
@@ -34898,7 +34898,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/courtroom)
 "upS" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/lattice{
 	dir = 6;
 	icon_state = "lattice-dir-b"
@@ -36490,7 +36490,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "whg" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
@@ -37600,7 +37600,7 @@
 /turf/simulated/floor/black,
 /area/station/security/detectives_office)
 "xxk" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/lattice{
 	dir = 1;
 	icon_state = "lattice-dir"
@@ -38219,7 +38219,7 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "yiy" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/cable{
 	icon_state = "0-2"
 	},

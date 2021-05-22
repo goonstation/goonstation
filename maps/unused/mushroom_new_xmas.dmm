@@ -1222,7 +1222,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "acT" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "acU" = (
@@ -1603,10 +1603,10 @@
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
 "adM" = (
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 50
 	},
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 50
 	},
 /turf/simulated/floor,
@@ -7058,7 +7058,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload)
 "apl" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/simulated/wall/auto/supernorn,
 /area/station/turret_protected/ai_upload)
 "apm" = (
@@ -7314,7 +7314,7 @@
 "apQ" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools,
-/obj/item/sheet/steel/fullstack,
+/obj/item/sheet/aluminum/fullstack,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "apR" = (
@@ -7469,7 +7469,7 @@
 "aql" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools,
-/obj/item/sheet/steel/reinforced/fullstack,
+/obj/item/sheet/aluminum/reinforced/fullstack,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "aqm" = (
@@ -10405,7 +10405,7 @@
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "awE" = (
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 10
 	},
 /turf/simulated/floor/grime,
@@ -11156,7 +11156,7 @@
 /area/station/storage/warehouse)
 "ayu" = (
 /obj/disposalpipe/segment,
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 10
 	},
 /turf/simulated/floor/grime,
@@ -11864,7 +11864,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/east)
 "azT" = (
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 50
 	},
 /obj/machinery/light/small{
@@ -23964,10 +23964,10 @@
 	pixel_x = -24;
 	pixel_y = 0
 	},
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 50
 	},
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 50
 	},
 /obj/item/device/multitool{
@@ -27608,7 +27608,7 @@
 /turf/space,
 /area/station/turret_protected/ai)
 "bgb" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/space,
 /area/station/turret_protected/ai)
 "bgc" = (
@@ -28211,7 +28211,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/hos)
 "bhp" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/space,
 /area/space)
 "bhq" = (
@@ -29565,7 +29565,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai)
 "bjO" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai)
 "bjP" = (
@@ -29574,7 +29574,7 @@
 	d1 = 1;
 	d2 = 2
 	},
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai)
 "bjQ" = (
@@ -29862,7 +29862,7 @@
 /turf/space,
 /area/station/turret_protected/ai)
 "bkt" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/cable{
 	icon_state = "4-8";
 	d1 = 4;

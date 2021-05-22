@@ -314,8 +314,8 @@
 				src.ai_interface.set_loc(newhead)
 
 			//costs 2 sheets to make vov
-			new/obj/item/sheet/steel(get_turf(src))
-			new/obj/item/sheet/steel(get_turf(src))
+			new/obj/item/sheet/aluminum(get_turf(src))
+			new/obj/item/sheet/aluminum(get_turf(src))
 
 			qdel(src)
 			return
@@ -345,8 +345,8 @@
 				newhead.ai_interface = src.ai_interface
 				src.ai_interface.set_loc(newhead)
 			//costs 2 sheets to make vov
-			new/obj/item/sheet/steel/reinforced(get_turf(src))
-			new/obj/item/sheet/steel/reinforced(get_turf(src))
+			new/obj/item/sheet/aluminum/reinforced(get_turf(src))
+			new/obj/item/sheet/aluminum/reinforced(get_turf(src))
 
 			qdel(src)
 			return
@@ -515,8 +515,8 @@
 				else if (slot == "r_arm")
 					new /obj/item/parts/robot_parts/arm/right(get_turf(src))
 
-				new/obj/item/sheet/steel(get_turf(src))
-				new/obj/item/sheet/steel(get_turf(src))
+				new/obj/item/sheet/aluminum(get_turf(src))
+				new/obj/item/sheet/aluminum(get_turf(src))
 
 			else if (appearanceString == "heavy")
 				if (slot == "l_arm")
@@ -524,8 +524,8 @@
 				else if (slot == "r_arm")
 					new /obj/item/parts/robot_parts/arm/right/sturdy(get_turf(src))
 
-				new/obj/item/sheet/steel/reinforced(get_turf(src))
-				new/obj/item/sheet/steel/reinforced(get_turf(src))
+				new/obj/item/sheet/aluminum/reinforced(get_turf(src))
+				new/obj/item/sheet/aluminum/reinforced(get_turf(src))
 
 			qdel(src)
 			return

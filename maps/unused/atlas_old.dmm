@@ -2568,7 +2568,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "hf" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -3283,7 +3283,7 @@
 /turf/space,
 /area/space)
 "iH" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -3365,7 +3365,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "iR" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -4369,7 +4369,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "li" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
 "lj" = (
@@ -6460,7 +6460,7 @@
 	},
 /area/station/medical/medbay)
 "pW" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -6562,7 +6562,7 @@
 /obj/item/sheet/glass/reinforced{
 	amount = 50
 	},
-/obj/item/sheet/steel/reinforced{
+/obj/item/sheet/aluminum/reinforced{
 	amount = 50
 	},
 /turf/simulated/floor/plating/random,
@@ -7044,7 +7044,7 @@
 	},
 /area/station/hangar/science)
 "rq" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -7744,7 +7744,7 @@
 /turf/simulated/wall/auto/supernorn/the_tuff_stuff,
 /area/station/medical/medbay/lobby)
 "sV" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;

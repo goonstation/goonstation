@@ -101,7 +101,7 @@
 	icon_opened = "flock-open"
 	open_sound = "sound/misc/flockmind/flockdrone_locker_open.ogg"
 	close_sound = "sound/misc/flockmind/flockdrone_locker_close.ogg"
-	mat_appearances_to_ignore = list("steel","gnesis")
+	mat_appearances_to_ignore = list("aluminum","gnesis")
 	mat_changename = 0
 	mat_changedesc = 0
 	var/health_attack = 100
@@ -213,7 +213,7 @@
 	name = "fibrenet"
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "fibrenet"
-	mat_appearances_to_ignore = list("steel","gnesis")
+	mat_appearances_to_ignore = list("aluminum","gnesis")
 	mat_changename = 0
 	mat_changedesc = 0
 
@@ -253,7 +253,7 @@
 	health_max = 50
 	shock_when_entered = 0
 	auto = FALSE
-	mat_appearances_to_ignore = list("steel","gnesis")
+	mat_appearances_to_ignore = list("aluminum","gnesis")
 	mat_changename = 0
 	mat_changedesc = 0
 

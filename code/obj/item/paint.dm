@@ -130,7 +130,7 @@
 							return
 						repair_stage = 2
 						user.visible_message("[user] pries open the maintenance panel, exposing the service module!")
-						var/obj/item/tile/steel/panel = new /obj/item/tile/steel(src.loc)
+						var/obj/item/tile/aluminum/panel = new /obj/item/tile/aluminum(src.loc)
 						panel.name = "maintenance panel"
 						panel.desc = "A panel that is clearly from a paint dispenser. Obviously."
 

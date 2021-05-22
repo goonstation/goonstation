@@ -3450,7 +3450,7 @@ var/list/lag_list = new/list()
 	name = "Spawn 100 Metal"
 	desc = "Spawns 100 Metal sheets."
 	used(atom/user, atom/target)
-		var/obj/item/sheet/steel/M = new/obj/item/sheet/steel(get_turf(target))
+		var/obj/item/sheet/aluminum/M = new/obj/item/sheet/aluminum(get_turf(target))
 		M.amount = 100
 		return
 
@@ -3630,7 +3630,7 @@ var/list/lag_list = new/list()
 	name = "Place Grille"
 	desc = "Places a Grille."
 	used(atom/user, atom/target)
-		var/obj/grille/L = new/obj/grille/steel(get_turf(target))
+		var/obj/grille/L = new/obj/grille/aluminum(get_turf(target))
 		L.set_dir(user:dir)
 		return
 
@@ -3744,7 +3744,7 @@ var/list/lag_list = new/list()
 				if(!active_mode.saved_var || isnull(active_mode.saved_var)) active_mode = null
 
 			if(istype(active_mode,/datum/engibox_mode/transmute)) //You only have yourself to blame for this. This shitty code is the fault of whoever changed this!!!
-				active_mode:mat_id = input(usr,"Select material","material","gold") in list("gold", "steel", "mauxite", "pharosium","cobryl","bohrum","cerenkite","syreline","glass","molitz","claretine","erebite","plasmastone","plasmaglass","quartz","uqill","telecrystal","miraclium","starstone","flesh","char","koshmarite","viscerite","beeswax","latex","synthrubber","synthblubber","wendigohide","cotton","fibrilith")
+				active_mode:mat_id = input(usr,"Select material","material","gold") in list("gold", "aluminum", "mauxite", "pharosium","cobryl","bohrum","cerenkite","syreline","glass","molitz","claretine","erebite","plasmastone","plasmaglass","quartz","uqill","telecrystal","miraclium","starstone","flesh","char","koshmarite","viscerite","beeswax","latex","synthrubber","synthblubber","wendigohide","cotton","fibrilith")
 
 			if(istype(active_mode,/datum/engibox_mode/replicate))
 				active_mode:obj_path = null

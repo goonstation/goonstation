@@ -23,7 +23,7 @@
 // airbridge
 
 /turf/simulated/floor/airbridge
-	// regular white steel floor for now but a good candidate for new sprites!
+	// regular white aluminum floor for now but a good candidate for new sprites!
 	icon_state = "airbridge"
 	name = "airbridge floor"
 

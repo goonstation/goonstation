@@ -450,7 +450,7 @@ obj/machinery/vehicle/miniputt/pilot
 		O.fingerprintshidden = src.fingerprintshidden
 		stage--
 	if (stage == 6)
-		var/obj/item/sheet/steel/M = new ( get_turf(src) )
+		var/obj/item/sheet/aluminum/M = new ( get_turf(src) )
 		M.amount = 3
 		M.fingerprints = src.fingerprints
 		M.fingerprintshidden = src.fingerprintshidden
@@ -1392,7 +1392,7 @@ obj/machinery/vehicle/miniputt/pilot
 		O.fingerprintshidden = src.fingerprintshidden
 		stage--
 	if (stage == 6)
-		var/obj/item/sheet/steel/M = new ( get_turf(src) )
+		var/obj/item/sheet/aluminum/M = new ( get_turf(src) )
 		M.amount = 5
 		M.fingerprints = src.fingerprints
 		M.fingerprintshidden = src.fingerprintshidden

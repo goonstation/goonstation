@@ -2848,7 +2848,7 @@
 "akc" = (
 /obj/table/auto,
 /obj/item/sheet/glass/fullstack,
-/obj/item/rods/steel/fullstack,
+/obj/item/rods/aluminum/fullstack,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
@@ -2883,8 +2883,8 @@
 /area/ghostdrone_factory)
 "aki" = (
 /obj/table/auto,
-/obj/item/sheet/steel/fullstack,
-/obj/item/rods/steel/fullstack,
+/obj/item/sheet/aluminum/fullstack,
+/obj/item/rods/aluminum/fullstack,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "akj" = (
@@ -2912,7 +2912,7 @@
 /area/ghostdrone_factory)
 "akn" = (
 /obj/table/auto,
-/obj/item/sheet/steel/reinforced/fullstack,
+/obj/item/sheet/aluminum/reinforced/fullstack,
 /obj/item/light/tube,
 /obj/item/light/tube,
 /obj/item/light/tube,
@@ -7184,10 +7184,10 @@
 /area/station/engine/monitoring)
 "avu" = (
 /obj/table/auto,
-/obj/item/sheet/steel/fullstack{
+/obj/item/sheet/aluminum/fullstack{
 	rand_pos = 0
 	},
-/obj/item/sheet/steel/fullstack{
+/obj/item/sheet/aluminum/fullstack{
 	rand_pos = 0
 	},
 /obj/item/chem_grenade/metalfoam{
@@ -7691,11 +7691,11 @@
 	},
 /area/station/engine/inner)
 "awI" = (
-/obj/item/rods/steel{
+/obj/item/rods/aluminum{
 	amount = 50;
 	pixel_x = 8
 	},
-/obj/item/rods/steel{
+/obj/item/rods/aluminum{
 	amount = 50;
 	pixel_x = 8
 	},
@@ -27016,7 +27016,7 @@
 /obj/item/device/guardbot_tool/medicator,
 /obj/item/guardbot_core,
 /obj/item/guardbot_core,
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 50
 	},
 /obj/item/parts/robot_parts/arm/right,
@@ -37878,12 +37878,12 @@
 /area/station/crewquarters/garbagegarbs)
 "gUj" = (
 /obj/table/auto,
-/obj/item/sheet/steel/reinforced{
+/obj/item/sheet/aluminum/reinforced{
 	amount = 50;
 	pixel_y = 6;
 	rand_pos = 0
 	},
-/obj/item/sheet/steel/reinforced{
+/obj/item/sheet/aluminum/reinforced{
 	amount = 50;
 	pixel_y = 6;
 	rand_pos = 0
@@ -42164,10 +42164,10 @@
 	pixel_x = 10
 	},
 /obj/table/reinforced/industrial/auto,
-/obj/item/sheet/steel/fullstack{
+/obj/item/sheet/aluminum/fullstack{
 	rand_pos = 0
 	},
-/obj/item/sheet/steel/fullstack{
+/obj/item/sheet/aluminum/fullstack{
 	rand_pos = 0
 	},
 /turf/simulated/floor,
@@ -44669,7 +44669,7 @@
 /area/station/quartermaster/cargobay)
 "wLD" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/steel/fullstack,
+/obj/item/sheet/aluminum/fullstack,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
 	nostick = 1;

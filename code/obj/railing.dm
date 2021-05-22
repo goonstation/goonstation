@@ -42,7 +42,7 @@
 
 	//break it apart into the sheets that made it up!
 	proc/railing_deconstruct()
-		var/obj/item/sheet/steel/S
+		var/obj/item/sheet/aluminum/S
 		S = new (src.loc)
 		if (S && src.material)
 			S.setMaterial(src.material)
@@ -52,7 +52,7 @@
 			if(src.material)
 				R.setMaterial(src.material)
 			else
-				var/datum/material/M = getMaterial("steel")
+				var/datum/material/M = getMaterial("aluminum")
 				R.setMaterial(M)
 		qdel(src)
 
@@ -132,7 +132,7 @@
 				if(src.material)
 					R.setMaterial(src.material)
 				else
-					var/datum/material/M = getMaterial("steel")
+					var/datum/material/M = getMaterial("aluminum")
 					R.setMaterial(M)
 			else
 				user.show_text("There's no reinforcment on [src] to cut off!", "blue")

@@ -34,7 +34,7 @@
 	},
 /area/shuttle/escape/centcom/cogmap2)
 "eY" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -120,7 +120,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/escape/centcom/cogmap2)
 "tW" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -394,7 +394,7 @@
 	},
 /area/shuttle/escape/centcom/cogmap2)
 "ZJ" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;

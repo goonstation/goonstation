@@ -3638,7 +3638,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "iM" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-4";
@@ -3653,7 +3653,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "iN" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -4035,11 +4035,11 @@
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "jA" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "jB" = (
@@ -4214,7 +4214,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "jR" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/cable{
 	icon_state = "0-4";
 	d2 = 4
@@ -4311,7 +4311,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "jZ" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/unsimulated/floor,
 /area/moon/museum)
 "ka" = (

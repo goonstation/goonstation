@@ -38,7 +38,7 @@
 "aL" = (/obj/table/reinforced/auto,/obj/item/wrench,/obj/item/clothing/shoes/magnetic,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
 "aM" = (/obj/reagent_dispensers/fueltank,/obj/machinery/light/small/floor/harsh,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
 "aN" = (/obj/storage/closet/welding_supply,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
-"aO" = (/obj/table/auto,/obj/item/sheet/steel/fullstack,/obj/item/sheet/steel/reinforced/fullstack,/turf/simulated/floor/damaged2,/area/prefab/sea_mining)
+"aO" = (/obj/table/auto,/obj/item/sheet/aluminum/fullstack,/obj/item/sheet/aluminum/reinforced/fullstack,/turf/simulated/floor/damaged2,/area/prefab/sea_mining)
 "aP" = (/obj/machinery/light/small/floor/warm,/turf/simulated/floor/grime,/area/prefab/sea_mining)
 "aQ" = (/obj/machinery/manufacturer/mining,/turf/simulated/floor/grime,/area/prefab/sea_mining)
 "aR" = (/obj/machinery/manufacturer/mining,/turf/simulated/floor,/area/prefab/sea_mining)

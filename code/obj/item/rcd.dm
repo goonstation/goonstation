@@ -113,7 +113,7 @@ Broken RCD + Effects
 
 	var/shits_sparks = 1
 
-	var/material_name = "steel"
+	var/material_name = "aluminum"
 	// list of materials that the RCD can deconstruct, if empty no restriction.
 	var/safe_deconstruct = FALSE // whether deconstructing a wall will make the material
 	// of the floor be different than the material of the wall
@@ -305,8 +305,8 @@ Broken RCD + Effects
 						var/turf/simulated/floor/T = A:ReplaceWithFloor()
 						if (!restricted_materials || !safe_deconstruct)
 							T.setMaterial(getMaterial(material_name))
-						else if(!("steel" in restricted_materials))
-							T.setMaterial(getMaterial("steel"))
+						else if(!("aluminum" in restricted_materials))
+							T.setMaterial(getMaterial("aluminum"))
 						else
 							T.setMaterial(getMaterial("negativematter"))
 						log_construction(user, "deconstructs a wall ([A])")

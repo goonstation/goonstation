@@ -212,7 +212,7 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/h7/space_hive)
 "aG" = (
-/obj/grille/steel{
+/obj/grille/aluminum{
 	density = 0;
 	icon_state = "brokengrille";
 	tag = "icon-brokengrille"
@@ -432,7 +432,7 @@
 	},
 /area/h7/space_hive)
 "bl" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window{
 	dir = 8
 	},
@@ -521,7 +521,7 @@
 /turf/unsimulated/floor/white,
 /area/h7/space_hive)
 "bv" = (
-/obj/grille/steel{
+/obj/grille/aluminum{
 	density = 0;
 	icon_state = "brokengrille";
 	tag = "icon-brokengrille"
@@ -534,7 +534,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/h7/space_hive)
 "bw" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window{
 	tag = "icon-rwindow";
 	icon_state = "rwindow";
@@ -544,7 +544,7 @@
 /turf/unsimulated/floor,
 /area/h7/space_hive)
 "bx" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window{
 	icon_state = "rwindow";
 	dir = 1;
@@ -593,7 +593,7 @@
 /turf/unsimulated/floor,
 /area/h7/space_hive)
 "bB" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/h7/space_hive)
 "bC" = (
@@ -1832,7 +1832,7 @@
 	},
 /area/solarium)
 "eB" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -1935,7 +1935,7 @@
 	},
 /area/solarium)
 "eN" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -1962,7 +1962,7 @@
 /turf/simulated/floor,
 /area/solarium)
 "eQ" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
@@ -2019,7 +2019,7 @@
 /turf/simulated/floor/carpet,
 /area/solarium)
 "eW" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -2555,7 +2555,7 @@
 	dir = 4;
 	level = 2
 	},
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -2640,7 +2640,7 @@
 /turf/simulated/floor,
 /area/solarium)
 "gC" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -2654,7 +2654,7 @@
 /turf/simulated/floor/plating,
 /area/solarium)
 "gD" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -2668,7 +2668,7 @@
 /turf/simulated/floor/plating,
 /area/solarium)
 "gE" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -2830,7 +2830,7 @@
 	},
 /area/solarium)
 "gY" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -2844,7 +2844,7 @@
 /turf/simulated/floor/plating,
 /area/solarium)
 "gZ" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -2866,7 +2866,7 @@
 	icon_state = "intact";
 	level = 2
 	},
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -2880,7 +2880,7 @@
 /turf/simulated/floor/plating,
 /area/solarium)
 "hb" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -2989,7 +2989,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/sim/area1)
 "hm" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -3034,11 +3034,11 @@
 /turf/simulated/floor/bot,
 /area/solarium)
 "hq" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/space,
 /area/space)
 "hr" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced{
 	tag = "icon-rwindow";
 	icon_state = "rwindow";
@@ -3057,7 +3057,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "hs" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced{
 	tag = "icon-rwindow";
 	icon_state = "rwindow";
@@ -3263,7 +3263,7 @@
 /turf/simulated/floor/circuit/red,
 /area/space)
 "hP" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced{
 	tag = "icon-rwindow";
 	icon_state = "rwindow";
@@ -3507,7 +3507,7 @@
 /turf/simulated/wall/r_wall,
 /area/buddyfactory)
 "io" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window{
 	tag = "icon-window (NORTH)";
 	icon_state = "window";
@@ -3807,7 +3807,7 @@
 /turf/simulated/floor/caution/corner/ne,
 /area/buddyfactory)
 "iY" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -4073,7 +4073,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/buddyfactory)
 "jG" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced{
 	tag = "icon-rwindow";
 	icon_state = "rwindow";
@@ -4092,7 +4092,7 @@
 /turf/simulated/floor/plating,
 /area/buddyfactory)
 "jH" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced{
 	tag = "icon-rwindow";
 	icon_state = "rwindow";
@@ -4106,7 +4106,7 @@
 /turf/simulated/floor/plating,
 /area/buddyfactory)
 "jI" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced{
 	tag = "icon-rwindow";
 	icon_state = "rwindow";

@@ -764,7 +764,7 @@
 	},
 /area/bunker)
 "bZ" = (
-/obj/steel_beams,
+/obj/aluminum_beams,
 /turf/unsimulated/floor/plating,
 /area/terraeight/fog/ground/lv2)
 "ca" = (
@@ -4713,7 +4713,7 @@
 /turf/unsimulated/floor/plating,
 /area/terraeight/fog/ground/lv3)
 "ki" = (
-/obj/steel_beams,
+/obj/aluminum_beams,
 /turf/unsimulated/floor/plating,
 /area/terraeight/fog/ground/lv3)
 "kj" = (

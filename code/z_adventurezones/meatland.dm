@@ -240,7 +240,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 					playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
 					gibs(src.loc)
 					if (src.loc)
-						new /obj/item/tile/steel (src.loc)
+						new /obj/item/tile/aluminum (src.loc)
 						src.loc.invisibility = 0
 
 					qdel(src)

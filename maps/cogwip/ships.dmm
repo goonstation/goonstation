@@ -1179,7 +1179,7 @@
 	},
 /area/space)
 "dw" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced,
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 1;
@@ -1349,7 +1349,7 @@
 /turf/unsimulated/floor/plating,
 /area/space)
 "dT" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -1375,7 +1375,7 @@
 	},
 /area/space)
 "dW" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -1384,7 +1384,7 @@
 /turf/unsimulated/floor/plating,
 /area/space)
 "dX" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -1616,7 +1616,7 @@
 	},
 /area/space)
 "eE" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced/west,
 /obj/window/reinforced/east,
 /obj/window/reinforced/north,
@@ -1663,7 +1663,7 @@
 	},
 /area/diner/tug)
 "eJ" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced/east,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
@@ -1953,7 +1953,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/space)
 "fx" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -2024,7 +2024,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/space)
 "fI" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -2033,7 +2033,7 @@
 	},
 /area/space)
 "fJ" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced/north,
 /obj/window/reinforced/south,
 /obj/window/reinforced/east,
@@ -2229,7 +2229,7 @@
 	},
 /area/space)
 "gl" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -4166,7 +4166,7 @@
 /turf/space,
 /area/space)
 "lp" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced/east,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
@@ -5322,7 +5322,7 @@
 /turf/simulated/shuttle/wall,
 /area/space)
 "od" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/crystal/reinforced,
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
@@ -5330,7 +5330,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "oe" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/crystal/reinforced,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/north,
@@ -6318,7 +6318,7 @@
 "qS" = (
 /obj/window/reinforced/west,
 /obj/window/reinforced/east,
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 4
 	},
@@ -6607,7 +6607,7 @@
 "rB" = (
 /obj/window/reinforced/west,
 /obj/window/reinforced/east,
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 4
 	},
@@ -6899,7 +6899,7 @@
 /turf/space,
 /area/space)
 "rZ" = (
-/obj/item/tile/steel,
+/obj/item/tile/aluminum,
 /turf/space,
 /area/space)
 "sa" = (
@@ -7025,7 +7025,7 @@
 /area/space)
 "so" = (
 /obj/lattice,
-/obj/item/sheet/steel,
+/obj/item/sheet/aluminum,
 /turf/space,
 /area/space)
 "sp" = (
@@ -7037,7 +7037,7 @@
 /obj/item/raw_material/shard/glass{
 	icon_state = "medium"
 	},
-/obj/grille/steel/broken,
+/obj/grille/aluminum/broken,
 /turf/space,
 /area/space)
 "sr" = (

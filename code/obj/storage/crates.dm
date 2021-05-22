@@ -173,7 +173,7 @@
 
 /obj/storage/crate/materials
 	name = "building materials crate"
-	spawn_contents = list(/obj/item/sheet/steel/fullstack,
+	spawn_contents = list(/obj/item/sheet/aluminum/fullstack,
 	/obj/item/sheet/glass/fullstack)
 
 /obj/storage/crate/furnacefuel
@@ -184,7 +184,7 @@
 /obj/storage/crate/robotics_supplies
 	name = "robotics supplies crate"
 	desc = "A crate containing supplies for Robotics."
-	spawn_contents = list(/obj/item/sheet/steel/fullstack = 3,
+	spawn_contents = list(/obj/item/sheet/aluminum/fullstack = 3,
 	/obj/item/sheet/glass/fullstack,
 	/obj/item/cell/supercell = 4,
 	/obj/item/cable_coil = 2)
@@ -192,7 +192,7 @@
 /obj/storage/crate/robotics_supplies_borg
 	name = "robotics supplies crate"
 	desc = "A crate containing supplies for Robotics and an extra set of cyborg parts."
-	spawn_contents = list(/obj/item/sheet/steel/fullstack = 3,
+	spawn_contents = list(/obj/item/sheet/aluminum/fullstack = 3,
 	/obj/item/sheet/glass/fullstack,
 	/obj/item/ai_interface,
 	/obj/item/parts/robot_parts/robot_frame,
@@ -224,7 +224,7 @@
 
 /obj/storage/crate/materials
 	name = "building materials crate"
-	spawn_contents = list(/obj/item/sheet/steel/fullstack,
+	spawn_contents = list(/obj/item/sheet/aluminum/fullstack,
 	/obj/item/sheet/glass/fullstack)
 
 /*

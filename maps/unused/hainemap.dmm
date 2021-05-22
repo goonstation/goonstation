@@ -7570,7 +7570,7 @@
 	},
 /area/space)
 "vO" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "vP" = (

@@ -17,7 +17,7 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			// Roughly tweaked to be equal to steel (hard = 15 density = 30) = 90,
+			// Roughly tweaked to be equal to aluminum (hard = 15 density = 30) = 90,
 			// which I assume these are generally made out of
 			// Mauxite is 15 / 50, so slightly better.
 			// I went with hardness here just because I figure if it's hard it doesn't break all that well.

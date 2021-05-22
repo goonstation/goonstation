@@ -566,7 +566,7 @@
 
 /obj/window/reinforced
 	icon_state = "rwindow"
-	default_reinforcement = "steel"
+	default_reinforcement = "aluminum"
 	health = 50
 	health_max = 50
 	the_tuff_stuff
@@ -590,7 +590,7 @@
 
 /obj/window/crystal/reinforced
 	icon_state = "rwindow"
-	default_reinforcement = "steel"
+	default_reinforcement = "aluminum"
 	health = 100
 	health_max = 100
 	explosion_resistance = 4
@@ -752,7 +752,7 @@
 /obj/window/auto/reinforced
 	icon_state = "mapwin_r"
 	mod = "R"
-	default_reinforcement = "steel"
+	default_reinforcement = "aluminum"
 	health = 50
 	health_max = 50
 	the_tuff_stuff
@@ -832,7 +832,7 @@
 /obj/window/auto/crystal/reinforced
 	icon_state = "mapwin_r"
 	mod = "R"
-	default_reinforcement = "steel"
+	default_reinforcement = "aluminum"
 	health = 100
 	health_max = 100
 	//deconstruct_time = 50
@@ -864,7 +864,7 @@
 	//layer = 99
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	var/win_path = "/obj/window"
-	var/grille_path = "/obj/grille/steel"
+	var/grille_path = "/obj/grille/aluminum"
 	var/full_win = 0 // adds a full window as well
 	var/no_dirs = 0 //ignore directional
 

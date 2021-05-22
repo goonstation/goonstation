@@ -288,7 +288,7 @@
 		bar.pixel_x = -nround( ((30 - (30 * complete)) / 2) )
 
 /obj/item/arrow
-	name = "steel-headed arrow"
+	name = "aluminum-headed arrow"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = null
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
@@ -383,9 +383,9 @@
 		else if (head_material)
 			name = "[amount] [head_material]-headed arrow[amount > 1 ? "s":""]"
 		else if (shaft_material)
-			name = "[amount] steel-headed [shaft_material] arrow[amount > 1 ? "s":""]"
+			name = "[amount] aluminum-headed [shaft_material] arrow[amount > 1 ? "s":""]"
 		else
-			name = "[amount] steel-headed arrow[amount > 1 ? "s":""]"
+			name = "[amount] aluminum-headed arrow[amount > 1 ? "s":""]"
 
 	proc/setHeadMaterial(var/datum/material/M)
 		head_material = copyMaterial(M)

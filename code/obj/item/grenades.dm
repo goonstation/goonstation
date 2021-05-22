@@ -1473,7 +1473,7 @@ PIPE BOMBS + CONSTRUCTION
 	var/sound_effect = 0
 	var/rcd = 0
 	var/plasma = 0
-	var/rcd_mat = "steel"
+	var/rcd_mat = "aluminum"
 	//if it contains reagents, those will be splashed on the floor
 
 	var/list/throw_objs = new /list()
@@ -1590,7 +1590,7 @@ PIPE BOMBS + CONSTRUCTION
 				if (rcd > 1)
 					for (var/turf/T in view(3,src.loc))
 						if (prob(rcd * 10))
-							new /obj/grille/steel(T)
+							new /obj/grille/aluminum(T)
 
 			if (plasma)
 				for (var/turf/simulated/floor/target in range(1,src.loc))

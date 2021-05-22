@@ -7550,7 +7550,7 @@
 	dir = 4
 	},
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille3-0"
 	},
@@ -8090,7 +8090,7 @@
 /area/station/hallway/primary/north)
 "anW" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille3-0"
 	},
@@ -8352,7 +8352,7 @@
 "aox" = (
 /obj/window/auto/reinforced,
 /obj/disposalpipe/segment/mail,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -8360,7 +8360,7 @@
 /area/station/crew_quarters/arcade)
 "aoy" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -8385,7 +8385,7 @@
 /area/station/crew_quarters/arcade)
 "aoB" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -8402,7 +8402,7 @@
 "aoD" = (
 /obj/window/auto/reinforced,
 /obj/decal/poster/wallsign/poster_hair,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -8479,7 +8479,7 @@
 /area/space)
 "aoM" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille3-0"
 	},
@@ -9303,7 +9303,7 @@
 	dir = 4
 	},
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille3-0"
 	},
@@ -9448,7 +9448,7 @@
 "aqM" = (
 /obj/disposalpipe/segment,
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -9466,7 +9466,7 @@
 "aqO" = (
 /obj/window/auto/reinforced,
 /obj/disposalpipe/segment,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -9477,7 +9477,7 @@
 /obj/decal/poster/wallsign/barber{
 	pixel_y = -5
 	},
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -9486,7 +9486,7 @@
 "aqQ" = (
 /obj/disposalpipe/segment/mail,
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -10618,7 +10618,7 @@
 /area/station/hallway/primary/central)
 "atj" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	icon_state = "grille6-0"
 	},
 /turf/simulated/floor/plating,
@@ -11101,7 +11101,7 @@
 /area/station/hallway/primary/central)
 "aux" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille3-0"
 	},
@@ -11429,7 +11429,7 @@
 /area/station/hydroponics/bay)
 "avk" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -12816,7 +12816,7 @@
 /area/station/crew_quarters/clown)
 "ayC" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -12946,7 +12946,7 @@
 /area/station/hydroponics/bay)
 "ayV" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille3-0"
 	},
@@ -13563,7 +13563,7 @@
 	icon_state = "4-8"
 	},
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille3-0"
 	},
@@ -14417,7 +14417,7 @@
 	})
 "aCe" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille3-0"
 	},
@@ -14520,7 +14520,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille3-0"
 	},
@@ -14835,7 +14835,7 @@
 	})
 "aDa" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	icon_state = "grille8-0"
 	},
 /turf/simulated/floor/plating,
@@ -15257,7 +15257,7 @@
 /area/station/maintenance/west)
 "aEg" = (
 /obj/storage/cart,
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 10
 	},
 /obj/item/storage/box/cablesbox,
@@ -15389,7 +15389,7 @@
 /area/station/crew_quarters/fitness)
 "aEu" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -15551,7 +15551,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aES" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aET" = (
@@ -15911,7 +15911,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille3-0"
 	},
@@ -16041,7 +16041,7 @@
 /area/station/storage/tools)
 "aFN" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/steel/fullstack,
+/obj/item/sheet/aluminum/fullstack,
 /obj/random_item_spawner/tools,
 /obj/item/storage/belt/utility,
 /turf/simulated/floor/orangeblack/side{
@@ -17121,7 +17121,7 @@
 /area/station/medical/medbay/pharmacy)
 "aIf" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille3-0"
 	},
@@ -17366,8 +17366,8 @@
 /area/station/storage/tools)
 "aIH" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/steel/fullstack,
-/obj/item/sheet/steel/fullstack,
+/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/aluminum/fullstack,
 /obj/random_item_spawner/tools,
 /obj/item/storage/belt/utility,
 /turf/simulated/floor/orangeblack/side{
@@ -18166,7 +18166,7 @@
 /area/station/hallway/primary/central)
 "aKM" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -18226,7 +18226,7 @@
 /obj/landmark{
 	name = "Observer-Start"
 	},
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -18313,7 +18313,7 @@
 	dir = 0;
 	icon_state = "0-4"
 	},
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -18331,7 +18331,7 @@
 	dir = 0;
 	icon_state = "0-4"
 	},
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -18348,7 +18348,7 @@
 	dir = 0;
 	icon_state = "0-4"
 	},
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -18384,7 +18384,7 @@
 	dir = 0;
 	icon_state = "0-4"
 	},
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -18396,7 +18396,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -23206,7 +23206,7 @@
 /area/station/medical/cdc)
 "aUL" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	icon_state = "grille4-0"
 	},
 /turf/simulated/floor/plating,
@@ -23726,7 +23726,7 @@
 /obj/item/device/guardbot_tool/medicator,
 /obj/item/guardbot_core,
 /obj/item/guardbot_core,
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 50
 	},
 /obj/item/parts/robot_parts/arm/right,
@@ -28551,7 +28551,7 @@
 /area/station/medical/medbay/surgery)
 "bhh" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	icon_state = "grille10-0"
 	},
 /turf/simulated/floor/plating,
@@ -31713,7 +31713,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "boF" = (
@@ -31788,7 +31788,7 @@
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/electronics/scanner,
 /obj/item/storage/box/mousetraps,
-/obj/item/rods/steel,
+/obj/item/rods/aluminum,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "boM" = (
@@ -31823,12 +31823,12 @@
 	icon_state = "pipe-c"
 	},
 /obj/decal/cleanable/dirt,
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/structure/girder,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "boQ" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/structure/girder,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
@@ -31925,7 +31925,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bpb" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bpc" = (
@@ -31937,7 +31937,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bpe" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/decal/cleanable/gangtag{
 	icon_state = "gangtag12";
 	pixel_x = 28
@@ -34238,8 +34238,8 @@
 	},
 /obj/disposalpipe/trunk,
 /obj/table/reinforced/auto,
-/obj/item/sheet/steel/fullstack,
-/obj/item/sheet/steel/reinforced/fullstack,
+/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/aluminum/reinforced/fullstack,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/toolbox/electrical{
@@ -35157,7 +35157,7 @@
 /area/station/quartermaster/storage)
 "buL" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille3-0"
 	},
@@ -36412,7 +36412,7 @@
 	dir = 4
 	},
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille3-0"
 	},
@@ -36445,7 +36445,7 @@
 	dir = 4
 	},
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille3-0"
 	},
@@ -36991,7 +36991,7 @@
 /area/station/quartermaster/storage)
 "byg" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille3-0"
 	},
@@ -37983,7 +37983,7 @@
 	dir = 4
 	},
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille3-0"
 	},
@@ -40021,7 +40021,7 @@
 	dir = 0;
 	icon_state = "0-4"
 	},
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -40033,7 +40033,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -40218,7 +40218,7 @@
 	icon_state = "4-8"
 	},
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -40243,7 +40243,7 @@
 	icon_state = "1-8"
 	},
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -40271,7 +40271,7 @@
 	dir = 0;
 	icon_state = "0-4"
 	},
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -40283,7 +40283,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -40507,7 +40507,7 @@
 "bFp" = (
 /obj/disposalpipe/segment/mail,
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -40515,7 +40515,7 @@
 /area/station/mining/staff_room)
 "bFq" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -41470,7 +41470,7 @@
 /area/station/mining/staff_room)
 "bHD" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 10
 	},
 /obj/item/storage/toolbox/mechanical,
@@ -41484,7 +41484,7 @@
 /area/station/hangar/qm)
 "bHF" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille8-0"
 	},
@@ -41888,7 +41888,7 @@
 /area/station/engine/combustion_chamber)
 "bID" = (
 /obj/lattice,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	connects_to_obj = null;
 	icon_state = "grille3-0"
@@ -41971,7 +41971,7 @@
 	dir = 9;
 	icon_state = "lattice-dir-b"
 	},
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	connects_to_obj = null;
 	icon_state = "grille4-0"
@@ -41983,7 +41983,7 @@
 	dir = 5;
 	icon_state = "lattice-dir-b"
 	},
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	connects_to_obj = null;
 	icon_state = "grille8-0"
@@ -42052,7 +42052,7 @@
 /area/station/maintenance/southwest)
 "bIW" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	connects_to_obj = null;
 	icon_state = "grille4-0"
@@ -42392,7 +42392,7 @@
 /turf/space,
 /area/space)
 "bJO" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bJP" = (
@@ -43527,7 +43527,7 @@
 "bMF" = (
 /obj/window/auto/reinforced,
 /obj/disposalpipe/segment,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -43541,8 +43541,8 @@
 /area/ghostdrone_factory)
 "bMH" = (
 /obj/table/auto,
-/obj/item/rods/steel/fullstack,
-/obj/item/sheet/steel/fullstack,
+/obj/item/rods/aluminum/fullstack,
+/obj/item/sheet/aluminum/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
 /obj/item/light/tube,
@@ -43559,7 +43559,7 @@
 /area/ghostdrone_factory)
 "bMJ" = (
 /obj/table/auto,
-/obj/item/rods/steel/fullstack,
+/obj/item/rods/aluminum/fullstack,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
@@ -43570,8 +43570,8 @@
 /area/ghostdrone_factory)
 "bMK" = (
 /obj/table/auto,
-/obj/item/rods/steel/fullstack,
-/obj/item/sheet/steel/reinforced/fullstack,
+/obj/item/rods/aluminum/fullstack,
+/obj/item/sheet/aluminum/reinforced/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
 /obj/item/light/tube,
@@ -43579,7 +43579,7 @@
 /area/ghostdrone_factory)
 "bML" = (
 /obj/table/auto,
-/obj/item/sheet/steel/fullstack,
+/obj/item/sheet/aluminum/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
 /turf/simulated/grimycarpet,
@@ -44436,7 +44436,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -46029,7 +46029,7 @@
 /area/station/security/main)
 "gtQ" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -46086,7 +46086,7 @@
 	dir = 0;
 	icon_state = "0-4"
 	},
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -46732,7 +46732,7 @@
 	dir = 0;
 	icon_state = "0-4"
 	},
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -46780,7 +46780,7 @@
 /area/station/security/brig)
 "izZ" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille3-0"
 	},
@@ -47105,7 +47105,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -47202,7 +47202,7 @@
 /area/station/security/brig)
 "jOq" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -47765,7 +47765,7 @@
 /area/station/solar/west)
 "kUF" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille3-0"
 	},
@@ -47833,7 +47833,7 @@
 /area/station/security/armory)
 "lfI" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	connects_to_obj = null;
 	icon_state = "grille12-0"
@@ -49208,7 +49208,7 @@
 /area/station/security/hos)
 "pqs" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille6-0"
 	},
@@ -49575,7 +49575,7 @@
 /area/station/hangar/sec)
 "qwD" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	connects_to_obj = null;
 	icon_state = "grille8-0"
@@ -50066,7 +50066,7 @@
 /area/station/crew_quarters/pool)
 "shp" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -50257,14 +50257,14 @@
 /area/station/engine/substation/east)
 "sBI" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	icon_state = "grille10-0"
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
 "sBO" = (
 /obj/window/auto/reinforced,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -50900,7 +50900,7 @@
 /area/station/medical/medbay/lobby)
 "uxi" = (
 /obj/lattice,
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	connects_to_obj = null;
 	icon_state = "grille12-0"
@@ -50991,7 +50991,7 @@
 	dir = 0;
 	icon_state = "0-4"
 	},
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},
@@ -51349,7 +51349,7 @@
 	dir = 0;
 	icon_state = "0-4"
 	},
-/obj/grille/steel{
+/obj/grille/aluminum{
 	auto = 0;
 	icon_state = "grille12-0"
 	},

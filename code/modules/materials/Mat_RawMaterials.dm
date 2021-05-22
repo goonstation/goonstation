@@ -186,13 +186,13 @@
 		src.setMaterial(getMaterial("frozenfart"), appearance = 0, setname = 0)
 		..()
 
-/obj/item/material_piece/steel
-	desc = "A processed bar of Steel, a common metal."
-	default_material = "steel"
+/obj/item/material_piece/aluminum
+	desc = "A processed bar of aluminum, a common metal."
+	default_material = "aluminum"
 	icon_state = "bar"
 
 	setup_material()
-		src.setMaterial(getMaterial("steel"), appearance = 1, setname = 1)
+		src.setMaterial(getMaterial("aluminum"), appearance = 1, setname = 1)
 		..()
 
 /obj/item/material_piece/hamburgris

@@ -337,7 +337,7 @@
 			return
 		if (isweldingtool(C) && C:try_weld(user,0))
 			boutput(user, "<span class='notice'>Slicing lattice joints ...</span>")
-			new /obj/item/rods/steel(src.loc)
+			new /obj/item/rods/aluminum(src.loc)
 			qdel(src)
 		if (istype(C, /obj/item/rods))
 			var/obj/item/rods/R = C
@@ -359,7 +359,7 @@
 		playsound(src.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 50, 1)
 		if (strength < 1)
 			src.visible_message("The barricade breaks!")
-			if (prob(50)) new /obj/item/rods/steel(src.loc)
+			if (prob(50)) new /obj/item/rods/aluminum(src.loc)
 			qdel(src)
 			return
 
@@ -367,7 +367,7 @@
 		if (isweldingtool(W))
 			if(W:try_weld(user,1))
 				boutput(user, "<span class='notice'>You disassemble the barricade.</span>")
-				var/obj/item/rods/R = new /obj/item/rods/steel(src.loc)
+				var/obj/item/rods/R = new /obj/item/rods/aluminum(src.loc)
 				R.amount = src.strength
 				qdel(src)
 				return

@@ -50,7 +50,7 @@
 	/// How to blend the [/datum/material/var/texture].
 	var/texture_blend = ICON_MULTIPLY
 
-	/// Should this even color the objects made from it? Mostly used for base station materials like steel
+	/// Should this even color the objects made from it? Mostly used for base station materials like aluminum
 	var/applyColor = 1
 	/// The color of the material
 	var/color = "#FFFFFF"
@@ -277,10 +277,10 @@
 		setProperty("hard", 5)
 		return ..()
 
-/datum/material/metal/steel
-	mat_id = "steel"
-	name = "steel"
-	desc = "Terrestrial steel from Earth."
+/datum/material/metal/aluminum
+	mat_id = "aluminum"
+	name = "aluminum"
+	desc = "Terrestrial aluminum from Earth."
 	New()
 		setProperty("density", 30)
 		setProperty("hard", 15)
@@ -405,6 +405,16 @@
 		setProperty("hard", 1)
 		setProperty("reflective", 50)
 		setProperty("electrical", 60)
+		return ..()
+
+/datum/material/metal/steel //about double the stats of aluminum
+	mat_id = "steel"
+	name = "steel"
+	desc = "Steel! in space!"
+
+	New()
+		setProperty("density", 50)
+		setProperty("hard", 30)
 		return ..()
 
 /datum/material/metal/plasmasteel //This should have inverted plasmaglass stats

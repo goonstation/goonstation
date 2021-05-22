@@ -120,7 +120,7 @@ datum/teg_transformation
 
 	/// Default TEG Transformation we know and ""love""
 	default
-		mat_id = "steel"
+		mat_id = "aluminum"
 
 	/**
 	  * Material Science Transformation

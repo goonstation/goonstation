@@ -299,7 +299,7 @@
 			F.burnt	= 1
 			F.setIntact(FALSE)
 			F.levelupdate()
-			new /obj/item/tile/steel(H)	// add to holder so it will be thrown with other stuff
+			new /obj/item/tile/aluminum(H)	// add to holder so it will be thrown with other stuff
 			F.icon_state = "[F.burnt ? "panelscorched" : "plating"]"
 
 		if(direction)		// direction is specified

@@ -806,7 +806,7 @@
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "grass"
-	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_appearances_to_ignore = list("aluminum","synthrubber")
 	mat_changename = 0
 	mat_changedesc = 0
 

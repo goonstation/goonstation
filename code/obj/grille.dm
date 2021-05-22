@@ -42,16 +42,16 @@
 		for (var/obj/grille/O in neighbors)
 			O?.update_icon() //now that we are in nullspace tell them to update
 
-	steel
+	aluminum
 #ifdef IN_MAP_EDITOR
 		icon_state = "grille0-0"
 #endif
 		New()
 			..()
-			var/datum/material/M = getMaterial("steel")
+			var/datum/material/M = getMaterial("aluminum")
 			src.setMaterial(M)
 
-	steel/broken
+	aluminum/broken
 		desc = "Looks like its been in this sorry state for quite some time."
 		icon_state = "grille-cut"
 		ruined = 1
@@ -480,7 +480,7 @@
 		if(src.material)
 			R.setMaterial(src.material)
 		else
-			var/datum/material/M = getMaterial("steel")
+			var/datum/material/M = getMaterial("aluminum")
 			R.setMaterial(M)
 
 	proc/get_connection()

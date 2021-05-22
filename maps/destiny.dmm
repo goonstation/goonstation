@@ -6958,7 +6958,7 @@
 /area/station/medical/cdc)
 "aBL" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/steel/fullstack,
+/obj/item/sheet/aluminum/fullstack,
 /obj/item/sheet/glass/fullstack,
 /obj/item/storage/box/cablesbox,
 /obj/item/storage/toolbox/mechanical,
@@ -10318,7 +10318,7 @@
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
-/obj/item/sheet/steel/reinforced/fullstack,
+/obj/item/sheet/aluminum/reinforced/fullstack,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "aPf" = (
@@ -16140,7 +16140,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/space,
 /turf/space,
 /area/station/com_dish/auxdish)
@@ -16686,7 +16686,7 @@
 /area/station/hallway/primary/north)
 "bza" = (
 /obj/lattice,
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/space,
 /area/station/com_dish/auxdish)
 "bzb" = (
@@ -16777,7 +16777,7 @@
 	name = "Genetic Research"
 	})
 "bzy" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "bzz" = (
@@ -19478,7 +19478,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/sheet/steel/fullstack,
+/obj/item/sheet/aluminum/fullstack,
 /obj/random_item_spawner/tools,
 /turf/simulated/floor,
 /area/station/storage/tools)
@@ -20884,8 +20884,8 @@
 	max_amt2spawn = 14;
 	min_amt2spawn = 6
 	},
-/obj/item/sheet/steel/reinforced/fullstack,
-/obj/item/sheet/steel/fullstack,
+/obj/item/sheet/aluminum/reinforced/fullstack,
+/obj/item/sheet/aluminum/fullstack,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -29836,7 +29836,7 @@
 /obj/table/auto,
 /obj/random_item_spawner/tools,
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
-/obj/item/sheet/steel/fullstack,
+/obj/item/sheet/aluminum/fullstack,
 /obj/decal/tile_edge/line/blue{
 	dir = 6;
 	icon_state = "line2"
@@ -39924,7 +39924,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/space,
 /area/space)
 "mZE" = (
@@ -43188,7 +43188,7 @@
 	dir = 9;
 	icon_state = "lattice-dir-b"
 	},
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/space,
 /turf/space,
 /area/station/com_dish/auxdish)
@@ -48231,7 +48231,7 @@
 	},
 /obj/item/device/guardbot_tool/medicator,
 /obj/item/guardbot_core,
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 50
 	},
 /obj/item/parts/robot_parts/arm/right,
@@ -49147,7 +49147,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/space,
 /area/station/com_dish/auxdish)
 "sar" = (
@@ -52809,7 +52809,7 @@
 	dir = 5;
 	icon_state = "lattice-dir-b"
 	},
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/space,
 /turf/space,
 /area/station/com_dish/auxdish)
@@ -54475,7 +54475,7 @@
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
-/obj/item/sheet/steel/fullstack,
+/obj/item/sheet/aluminum/fullstack,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/storage/box/cablesbox,
 /obj/item/shipcomponent/mainweapon/rockdrills,
@@ -58197,7 +58197,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/space,
 /area/station/com_dish/auxdish)
 "wQD" = (
@@ -58422,7 +58422,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/hydroponics/bay)
 "wVL" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/machinery/door/poddoor/blast/single{
 	id = "tox_mix";
 	layer = 4;

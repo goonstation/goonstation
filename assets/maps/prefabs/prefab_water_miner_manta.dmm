@@ -190,8 +190,8 @@
 /area/prefab/sea_mining)
 "aO" = (
 /obj/table/auto,
-/obj/item/sheet/steel/fullstack,
-/obj/item/sheet/steel/reinforced/fullstack,
+/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/aluminum/reinforced/fullstack,
 /turf/simulated/floor/damaged2,
 /area/prefab/sea_mining)
 "aP" = (

@@ -3980,7 +3980,7 @@
 /turf/unsimulated/wall/auto/reinforced,
 /area/owlery/office)
 "jk" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /obj/window/reinforced,
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 1;

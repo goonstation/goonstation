@@ -165,7 +165,7 @@
 "aat" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/hand_labeler,
-/obj/item/sheet/steel,
+/obj/item/sheet/aluminum,
 /turf/simulated/floor/carpet/green/fancy/narrow/east,
 /area/station/engine/monitoring)
 "aau" = (
@@ -1414,8 +1414,8 @@
 /area/station/medical/cdc)
 "ayM" = (
 /obj/table/auto,
-/obj/item/sheet/steel/fullstack,
-/obj/item/rods/steel/fullstack,
+/obj/item/sheet/aluminum/fullstack,
+/obj/item/rods/aluminum/fullstack,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -6261,7 +6261,7 @@
 /area/station/crew_quarters/bar)
 "cCv" = (
 /obj/table/auto,
-/obj/item/sheet/steel/reinforced{
+/obj/item/sheet/aluminum/reinforced{
 	amount = 50
 	},
 /obj/item/storage/box/cablesbox,
@@ -10400,7 +10400,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crewquarters/cryotron)
 "ejb" = (
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 10
 	},
 /obj/item/storage/toolbox/mechanical{
@@ -10990,7 +10990,7 @@
 	},
 /area/station/crew_quarters/jazz)
 "ewF" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "ewT" = (
@@ -13274,7 +13274,7 @@
 	pixel_y = -4
 	},
 /obj/item/guardbot_core,
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 50
 	},
 /obj/item/parts/robot_parts/arm/right,
@@ -33513,8 +33513,8 @@
 /area/station/storage/warehouse)
 "olz" = (
 /obj/table/auto,
-/obj/item/sheet/steel,
-/obj/item/rods/steel,
+/obj/item/sheet/aluminum,
+/obj/item/rods/aluminum,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/warehouse)
 "olH" = (
@@ -36732,7 +36732,7 @@
 /area/listeningpost)
 "pOg" = (
 /obj/table/auto,
-/obj/item/sheet/steel,
+/obj/item/sheet/aluminum,
 /obj/item/wirecutters,
 /obj/item/clothing/mask/cigarette,
 /obj/item/device/light/glowstick,
@@ -37435,7 +37435,7 @@
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "qdE" = (
-/obj/grille/steel,
+/obj/grille/aluminum,
 /turf/simulated/floor/plating/airless,
 /area/station/com_dish/comdish)
 "qdJ" = (
@@ -47533,7 +47533,7 @@
 "usk" = (
 /obj/decal/cleanable/dirt,
 /obj/table/auto,
-/obj/item/sheet/steel/fullstack,
+/obj/item/sheet/aluminum/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
 /turf/simulated/floor/plating,
@@ -52281,7 +52281,7 @@
 /area/station/science/storage)
 "wua" = (
 /obj/table/auto,
-/obj/item/sheet/steel/reinforced/fullstack,
+/obj/item/sheet/aluminum/reinforced/fullstack,
 /obj/item/light/tube,
 /obj/item/light/tube,
 /obj/item/light/tube,

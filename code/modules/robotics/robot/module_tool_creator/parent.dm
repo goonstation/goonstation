@@ -10,7 +10,7 @@
  * Can have specific child classes created with correct var overrides (see other files),
  * or be instantiated with var overrides if no custom behavior is needed, e.g.:
  * - new /datum/robot/module_tool_creator/item_type{item_type = /obj/item/extinguisher}
- * - new /datum/robot/module_tool_creator/item_type/amount{item_type = /obj/item/sheet/steel, amount = 50}
+ * - new /datum/robot/module_tool_creator/item_type/amount{item_type = /obj/item/sheet/aluminum, amount = 50}
  */
 
 /**

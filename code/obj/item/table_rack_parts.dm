@@ -70,7 +70,7 @@ RACK PARTS
 				A.set_reinforcement(src.material)
 				// will have to come back to this later
 		else
-			var/datum/material/M = getMaterial("steel")
+			var/datum/material/M = getMaterial("aluminum")
 			A.setMaterial(M)
 			if (reinforcement == 1)
 				A.set_reinforcement(M)

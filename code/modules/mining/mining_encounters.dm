@@ -797,7 +797,7 @@
 							if(5)
 								make_cleanable(/obj/decal/cleanable/machine_debris, locate(S.x, S.y, S.z),0)
 							if(6)
-								new /obj/grille/steel/broken(locate(S.x, S.y, S.z),0)
+								new /obj/grille/aluminum/broken(locate(S.x, S.y, S.z),0)
 							else
 								new /obj/lattice(locate(S.x, S.y, S.z),0)
 
@@ -806,7 +806,7 @@
 
 	switch(RarityClassRoll(100,0,list(90,50)))
 		if(1)
-			scrap_material = copyMaterial(getMaterial(pick("steel","mauxite")))
+			scrap_material = copyMaterial(getMaterial(pick("aluminum","mauxite")))
 		if(2)
 			scrap_material = copyMaterial(getMaterial(pick("cobryl","bohrum")))
 		if(3)

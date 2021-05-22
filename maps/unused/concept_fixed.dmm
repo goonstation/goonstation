@@ -2238,10 +2238,10 @@
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
 "aez" = (
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 50
 	},
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 50
 	},
 /turf/simulated/floor,
@@ -11897,7 +11897,7 @@
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "axr" = (
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 10
 	},
 /turf/simulated/floor/grime,
@@ -12942,7 +12942,7 @@
 /area/station/storage/warehouse)
 "azy" = (
 /obj/disposalpipe/segment,
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 10
 	},
 /turf/simulated/floor/grime,
@@ -13675,7 +13675,7 @@
 	},
 /area/station/storage/warehouse)
 "aAW" = (
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 50
 	},
 /turf/simulated/floor/bot,
@@ -27046,10 +27046,10 @@
 	pixel_x = -24;
 	pixel_y = 0
 	},
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 50
 	},
-/obj/item/sheet/steel{
+/obj/item/sheet/aluminum{
 	amount = 50
 	},
 /obj/item/device/multitool{

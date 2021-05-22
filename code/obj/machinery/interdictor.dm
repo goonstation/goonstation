@@ -43,7 +43,7 @@
 		if(mat)
 			src.setMaterial(mat)
 		else
-			src.setMaterial(material_cache["steel"])
+			src.setMaterial(material_cache["aluminum"])
 		..()
 		START_TRACKING
 		src.updateicon()
@@ -304,7 +304,7 @@
 	<br>
 	- Soldering iron
 	<br>
-	- Four sheets of industry-compliant steel
+	- Four sheets of industry-compliant aluminum
 	<br>
 	<br>
 	(III) Assemble objects in the sequence they are listed in the enumeration. Once assembled, the device may be transported to the site of utilisation to be connected and activated.
