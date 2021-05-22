@@ -16224,7 +16224,7 @@
 /obj/critter/spider/ice/queen,
 /obj/item/device/key{
 	desc = "What does this go to?";
-	name = "cold aluminum key"
+	name = "cold steel key"
 	},
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
