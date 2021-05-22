@@ -209,7 +209,7 @@
 					var/obj/item/kitchen/utensil/spoon/plastic/plastic_spoon = utensil
 					if (istype(plastic_spoon))
 						if (prob(20))
-							plastic_fork.break_utensil(M)
+							plastic_spoon.break_utensil(M)
 							utensil = null
 
 					if (!utensil)
