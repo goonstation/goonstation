@@ -177,7 +177,7 @@
 	for (var/turf/T in affected)
 		if (istype(T, /turf/simulated) && !T.loc:sanctuary)
 			var/mytemp = affected[T]
-			var/melt = 1643.15 // default aluminum melting point
+			var/melt = 1643.15 // default iron melting point
 			if (T.material && T.material.hasProperty("flammable") && ((T.material.material_flags & MATERIAL_METAL) || (T.material.material_flags & MATERIAL_CRYSTAL) || (T.material.material_flags & MATERIAL_RUBBER)))
 				melt = melt + (((T.material.getProperty("flammable") - 50) * 15)*(-1)) //+- 750° ?
 			var/divisor = melt

@@ -31,7 +31,7 @@
 
 /turf/simulated/floor/shuttlebay/flock
 	name = "shuttle bay plating"
-	mat_appearances_to_ignore = list("aluminum","gnesis")
+	mat_appearances_to_ignore = list("iron","gnesis")
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "shuttle-bay"
 	allows_vehicles = 1

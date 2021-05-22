@@ -774,7 +774,7 @@
 	var/mutable_appearance/wet_overlay = null
 	var/default_melt_cap = 30
 	can_write_on = 1
-	mat_appearances_to_ignore = list("aluminum")
+	mat_appearances_to_ignore = list("iron")
 	text = "<font color=#aaa>."
 
 	oxygen = MOLES_O2STANDARD

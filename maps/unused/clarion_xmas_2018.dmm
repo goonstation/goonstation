@@ -17034,7 +17034,7 @@
 /area/station/maintenance/west)
 "aEg" = (
 /obj/storage/cart,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 10
 	},
 /obj/item/storage/box/cablesbox,
@@ -17342,7 +17342,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aES" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aET" = (
@@ -17818,7 +17818,7 @@
 /area/station/storage/tools)
 "aFN" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/random_item_spawner/tools,
 /obj/item/storage/belt/utility,
 /turf/simulated/floor/orangeblack/side{
@@ -19254,8 +19254,8 @@
 /area/station/storage/tools)
 "aIH" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/aluminum/fullstack,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/random_item_spawner/tools,
 /obj/item/storage/belt/utility,
 /turf/simulated/floor/orangeblack/side{
@@ -26982,7 +26982,7 @@
 /obj/item/device/guardbot_tool/medicator,
 /obj/item/guardbot_core,
 /obj/item/guardbot_core,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/parts/robot_parts/arm/right,
@@ -38233,7 +38233,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "boZ" = (
@@ -38308,7 +38308,7 @@
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/electronics/scanner,
 /obj/item/storage/box/mousetraps,
-/obj/item/rods/aluminum,
+/obj/item/rods/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bpg" = (
@@ -38344,7 +38344,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/decal/cleanable/dirt,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/structure/girder,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
@@ -38353,7 +38353,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bpl" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/structure/girder,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
@@ -38448,7 +38448,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bpw" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bpx" = (
@@ -38463,7 +38463,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bpz" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/decal/cleanable/gangtag{
 	icon_state = "gangtag12";
 	pixel_x = 28
@@ -41005,8 +41005,8 @@
 	},
 /obj/disposalpipe/trunk,
 /obj/table/reinforced/auto,
-/obj/item/sheet/aluminum/fullstack,
-/obj/item/sheet/aluminum/reinforced/fullstack,
+/obj/item/sheet/iron/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/toolbox/electrical{
@@ -48537,7 +48537,7 @@
 /area/station/mining/staff_room)
 "bId" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 10
 	},
 /obj/item/storage/toolbox/mechanical,
@@ -49140,7 +49140,7 @@
 /area/station/quartermaster/office)
 "bJg" = (
 /obj/lattice,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/station/com_dish/auxdish)
 "bJh" = (
@@ -49259,7 +49259,7 @@
 	icon_state = "lattice-dir-b";
 	dir = 9
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/station/com_dish/auxdish)
 "bJt" = (
@@ -49267,7 +49267,7 @@
 	icon_state = "lattice-dir-b";
 	dir = 5
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/station/com_dish/auxdish)
 "bJu" = (
@@ -49681,7 +49681,7 @@
 	},
 /area/space)
 "bKp" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bKq" = (

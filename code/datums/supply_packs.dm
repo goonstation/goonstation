@@ -128,7 +128,7 @@
 	name = "200 Metal Sheets"
 	desc = "x200 Metal Sheets"
 	category = "Basic Materials"
-	contains = list(/obj/item/sheet/aluminum)
+	contains = list(/obj/item/sheet/iron)
 	amount = 200
 	cost = 2000
 	containertype = /obj/storage/crate
@@ -138,7 +138,7 @@
 	name = "50 Metal Sheets"
 	desc = "x50 Metal Sheets"
 	category = "Basic Materials"
-	contains = list(/obj/item/sheet/aluminum)
+	contains = list(/obj/item/sheet/iron)
 	amount = 50
 	cost = 500
 	containertype = /obj/storage/crate
@@ -839,7 +839,7 @@
 	name = "Home Networking Kit"
 	desc = "Build your own state of the art computer system! (Contents may vary.)"
 	contains = list(/obj/item/sheet/glass/fullstack,
-					/obj/item/sheet/aluminum/fullstack,
+					/obj/item/sheet/iron/fullstack,
 					/obj/item/cable_coil = 3,
 					/obj/item/motherboard,
 					/obj/random_item_spawner/peripherals,

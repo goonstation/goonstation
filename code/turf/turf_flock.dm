@@ -8,7 +8,7 @@
 	desc = "I don't like the looks of that whatever-it-is."
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "floor"
-	mat_appearances_to_ignore = list("aluminum","gnesis")
+	mat_appearances_to_ignore = list("iron","gnesis")
 	mat_changename = 0
 	mat_changedesc = 0
 	broken = 0
@@ -252,7 +252,7 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 	desc = "You can feel it thrumming and pulsing."
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "0"
-	mat_appearances_to_ignore = list("aluminum","gnesis")
+	mat_appearances_to_ignore = list("iron","gnesis")
 	connects_to = list(/turf/simulated/wall/auto/feather, /obj/machinery/door/feather)
 
 /turf/simulated/wall/auto/feather/New()

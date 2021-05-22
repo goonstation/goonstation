@@ -59,7 +59,7 @@
 
 /datum/commodity/trader/pianzi/metal
 	comname = "Sheets of Construction Supplies"
-	comtype = /obj/item/sheet/aluminum
+	comtype = /obj/item/sheet/iron
 	price_boundary = list(5,9)
 	possible_alt_types = list(/obj/item/paper)
 	alt_type_chance = 80

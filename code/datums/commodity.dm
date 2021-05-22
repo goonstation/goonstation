@@ -125,13 +125,13 @@
 	upperfluc = 30
 	lowerfluc = -30
 
-/datum/commodity/ore/mauxite
-	comname = "Mauxite"
-	comtype = /obj/item/raw_material/mauxite
+/datum/commodity/ore/iron
+	comname = "Iron"
+	comtype = /obj/item/raw_material/iron
 	onmarket = 1
-/datum/commodity/mat_bar/mauxite
-	comname = "Mauxite Bar"
-	comtype = /obj/item/material_piece/mauxite
+/datum/commodity/mat_bar/iron
+	comname = "Iron Bar"
+	comtype = /obj/item/material_piece/iron
 	onmarket = 0
 
 /datum/commodity/ore/pharosium

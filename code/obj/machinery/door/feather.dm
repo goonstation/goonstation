@@ -4,7 +4,7 @@
 	icon_state = "door1"
 	name = "weird imposing wall"
 	desc = "It sounds like it's hollow."
-	mat_appearances_to_ignore = list("aluminum","gnesis")
+	mat_appearances_to_ignore = list("iron","gnesis")
 	autoclose = 1
 	var/broken = 0
 	health = 80

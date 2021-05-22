@@ -1,9 +1,9 @@
 /*
  * - cable coil
  * - glass sheet
- * - aluminum rod
- * - aluminum sheet
- * - aluminum tile
+ * - iron rod
+ * - iron sheet
+ * - iron tile
  */
 
 /datum/robot/module_tool_creator/item_type/amount/cable_coil
@@ -22,23 +22,23 @@
 	amount = 500
 	item_type = /obj/item/sheet/glass
 
-/datum/robot/module_tool_creator/item_type/amount/aluminum_rod
-	name = "aluminum rods"
+/datum/robot/module_tool_creator/item_type/amount/iron_rod
+	name = "iron rods"
 	amount = 500
-	item_type = /obj/item/rods/aluminum
+	item_type = /obj/item/rods/iron
 
-/datum/robot/module_tool_creator/item_type/amount/aluminum_rod/setup(obj/item/rods/aluminum/I)
+/datum/robot/module_tool_creator/item_type/amount/iron_rod/setup(obj/item/rods/iron/I)
 	..()
 	if (!isnull(I))
 		I.update_stack_appearance()
 	return I
 
-/datum/robot/module_tool_creator/item_type/amount/aluminum_sheet
-	name = "aluminum sheets"
+/datum/robot/module_tool_creator/item_type/amount/iron_sheet
+	name = "iron sheets"
 	amount = 500
-	item_type = /obj/item/sheet/aluminum
+	item_type = /obj/item/sheet/iron
 
-/datum/robot/module_tool_creator/item_type/amount/aluminum_tile
-	name = "aluminum tiles"
+/datum/robot/module_tool_creator/item_type/amount/iron_tile
+	name = "iron tiles"
 	amount = 500
-	item_type = /obj/item/tile/aluminum
+	item_type = /obj/item/tile/iron

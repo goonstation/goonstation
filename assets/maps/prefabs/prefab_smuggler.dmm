@@ -1,6 +1,6 @@
 "aa" = (/turf/space,/area/space)
 "ab" = (/turf/variableTurf/clear,/area/noGenerate)
-"ac" = (/obj/grille/aluminum,/turf/simulated/floor/plating/airless,/area/prefab/smuggler_den)
+"ac" = (/obj/grille/iron,/turf/simulated/floor/plating/airless,/area/prefab/smuggler_den)
 "ad" = (/turf/variableTurf/wall,/area/noGenerate)
 "ae" = (/turf/variableTurf/floor,/area/noGenerate)
 "af" = (/obj/machinery/communications_dish,/obj/cable{icon_state = "0-2"},/obj/machinery/power/data_terminal,/turf/simulated/floor/plating/airless,/area/prefab/smuggler_den)

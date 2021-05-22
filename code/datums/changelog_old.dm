@@ -1834,7 +1834,7 @@
 (-)
 (t)sun jan 15 12
 (u)Infinite Monkeys
-(*)Horror form isn’t harmed by stepping on glass and can consume with an Agressive grip.
+(*)Horror form isnï¿½t harmed by stepping on glass and can consume with an Agressive grip.
 (*)AI can now make an intercom (VOX) announcement once every two minutes!
 (-)
 (t)fri jan 13 12
@@ -1890,7 +1890,7 @@
 (t)fri sep 30 11
 (u)JackMassacre
 (*)QM shipping list altered: More choices, more descriptions, some old crate contents have been changed.
-(*)The worth of Mauxite, Molitz, and Pharosium as a shipping commodity has been lowered to curb exploits. This will be more meaningful later.
+(*)The worth of Iron, Molitz, and Pharosium as a shipping commodity has been lowered to curb exploits. This will be more meaningful later.
 (*)Emagging mining explosives now sabotages them so that they blow up in the user's face, rather than unlocking the targets they're usable on.
 (*)Traitor Miners now get special job-based syndicate items: hacked low and high yield mining explosives. These behave as old emagged mining explosives.
 (*)Both hacked and emagged mining explosives now have their own added descriptions upon examine, to vaguely reveal that something is different about them.
@@ -2630,7 +2630,7 @@
 (*)Mining Outpost has been changed around a bit. It has a conveyor belt now.
 (*)Cerenkite will now give you radiation poisoning if handled without protection.
 (*)Erebite will now explode if exposed to explosions or fire.
-(*)Mauxite and Pharosium can now come in rare Dense Veins. They are harder to mine but give more ore.
+(*)Iron and Pharosium can now come in rare Dense Veins. They are harder to mine but give more ore.
 (*)You can now eject ores from Manufacturing Units.
 (*)Two new score criteria: Ore Mined and Cyborgs Constructed.
 (-)
@@ -2699,7 +2699,7 @@
 (*)Russian roulette is now more like its exciting real life counterpart.
 (-)
 (u)ProcitizenSA (kinda)
-(*)<b>ATTENTION STATION SECURITY</b>: The following is a message from SecuTech security. <i>Thank you for trying SecuTech Virtual-Reality (VSPACE) Prisoner Containment Unit™. We hope you enjoyed your trial, but your evaluation copy has expired. Please register and purchase SecuTech Virtual-Reality (VSPACE) Prisoner Containment Unit™ to continue. Thank you and have a secure day. (NT vbrig will keep on keepin on)</i>
+(*)<b>ATTENTION STATION SECURITY</b>: The following is a message from SecuTech security. <i>Thank you for trying SecuTech Virtual-Reality (VSPACE) Prisoner Containment Unitï¿½. We hope you enjoyed your trial, but your evaluation copy has expired. Please register and purchase SecuTech Virtual-Reality (VSPACE) Prisoner Containment Unitï¿½ to continue. Thank you and have a secure day. (NT vbrig will keep on keepin on)</i>
 (-)
 (t)sun dec 19 10
 (u)I Said No

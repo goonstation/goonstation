@@ -155,7 +155,7 @@
 	base_price_multiplier = 0.5
 
 /datum/demand_control/common_ores
-	commodities = list(/datum/commodity/ore/mauxite, /datum/commodity/ore/pharosium, /datum/commodity/ore/molitz, /datum/commodity/ore/char)
+	commodities = list(/datum/commodity/ore/iron, /datum/commodity/ore/pharosium, /datum/commodity/ore/molitz, /datum/commodity/ore/char)
 	high_demand_level = 100
 	static_growth = 20
 	current_demand_level = 100

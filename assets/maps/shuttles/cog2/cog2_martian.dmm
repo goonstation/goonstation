@@ -20,7 +20,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
 "nn" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -122,7 +122,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
 "FV" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -153,7 +153,7 @@
 /turf/simulated/martian/floor,
 /area/shuttle/escape/centcom/cogmap2)
 "NK" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;

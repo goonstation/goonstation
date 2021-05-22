@@ -55,7 +55,7 @@
 /area/space)
 "al" = (
 /obj/map/light/green,
-/obj/grille/aluminum/broken,
+/obj/grille/iron/broken,
 /obj/item/raw_material/shard/glass,
 /obj/item/sticker/no,
 /obj/critter/zombie/radiation,
@@ -555,7 +555,7 @@
 /area/jones/ruins)
 "bo" = (
 /obj/map/light/green,
-/obj/grille/aluminum/broken,
+/obj/grille/iron/broken,
 /obj/item/raw_material/shard/glass,
 /turf/unsimulated/floor/concrete/cat{
 	tag = "icon-floor-cracked (WEST)";
@@ -1062,7 +1062,7 @@
 	},
 /area/jones/ruins)
 "cC" = (
-/obj/grille/aluminum/broken,
+/obj/grille/iron/broken,
 /turf/unsimulated/floor/concrete/cat{
 	tag = "icon-floor-cracked (WEST)";
 	icon_state = "floor-cracked";
@@ -1220,7 +1220,7 @@
 	},
 /area/jones/ruins)
 "cX" = (
-/obj/grille/aluminum/broken,
+/obj/grille/iron/broken,
 /obj/item/raw_material/shard/glass,
 /turf/unsimulated/floor/concrete/cat{
 	tag = "icon-floor-cracked (NORTH)";
@@ -1282,7 +1282,7 @@
 	},
 /area/jones/radiation)
 "df" = (
-/obj/grille/aluminum/broken,
+/obj/grille/iron/broken,
 /obj/item/raw_material/shard/glass,
 /turf/unsimulated/floor/concrete/cat{
 	tag = "icon-floor-cracked (EAST)";
@@ -3140,7 +3140,7 @@
 /turf/unsimulated/wall/auto/gannets/cat,
 /area/jones/complex)
 "hz" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -3776,7 +3776,7 @@
 	dir = 5;
 	anchored = 1
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/unsimulated/floor/plating/scorched,
 /area/jones/alley)
 "iW" = (
@@ -3810,7 +3810,7 @@
 	icon_state = "meter";
 	name = "meter"
 	},
-/obj/grille/aluminum/broken,
+/obj/grille/iron/broken,
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor{
 	name = "plating"
@@ -3961,7 +3961,7 @@
 /obj/item/hairball/one{
 	layer = 2.8
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -4348,7 +4348,7 @@
 	icon_state = "intact";
 	dir = 1
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/unsimulated/floor{
 	name = "plating"
 	},

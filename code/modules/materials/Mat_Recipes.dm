@@ -100,7 +100,7 @@
 		var/two = 0
 
 		for(var/datum/material/CM in M.parent_materials)
-			if(CM.mat_id == "mauxite") one = 1
+			if(CM.mat_id == "iron") one = 1
 			if(CM.mat_id == "char") two = 1
 
 		if(one && two) return 1

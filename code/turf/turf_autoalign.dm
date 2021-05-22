@@ -220,7 +220,7 @@
 				if (S.material)
 					src.setMaterial(S.material)
 				else
-					var/datum/material/M = getMaterial("aluminum")
+					var/datum/material/M = getMaterial("iron")
 					src.setMaterial(M)
 				boutput(user, "<span class='notice'>You repaired the wall.</span>")
 				return
@@ -754,7 +754,7 @@
 				if (the_wall.material)
 					A.setMaterial(the_wall.material)
 				else
-					A.setMaterial(getMaterial("aluminum"))
+					A.setMaterial(getMaterial("iron"))
 				the_wall.d_state = 1
 				the_wall.update_icon()
 			if (WALL_REMOVESUPPORTLINES)
@@ -770,7 +770,7 @@
 				if (the_wall.material)
 					A.setMaterial(the_wall.material)
 				else
-					A.setMaterial(getMaterial("aluminum"))
+					A.setMaterial(getMaterial("iron"))
 			if (WALL_PRYCOVER)
 				message = "You removed the cover."
 				the_wall.d_state = 4

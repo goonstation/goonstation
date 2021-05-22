@@ -45,10 +45,10 @@
 
 /datum/commodity/trader/generic/sheetmetal
 	comname = "Sheet Metal"
-	comtype = /obj/item/sheet/aluminum
+	comtype = /obj/item/sheet/iron
 	price_boundary = list(5,10)
-	possible_names = list("I'm selling sheets of construction-grade aluminum.",
-	"I'm selling sheets of aluminum. Below market price, guaranteed!")
+	possible_names = list("I'm selling sheets of construction-grade iron.",
+	"I'm selling sheets of iron. Below market price, guaranteed!")
 
 /datum/commodity/trader/generic/rcd_ammo
 	comname = "RCD Charges"

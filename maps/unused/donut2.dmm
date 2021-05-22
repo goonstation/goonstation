@@ -23,7 +23,7 @@
 /turf/space,
 /area/space)
 "aaf" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "aag" = (
@@ -848,7 +848,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "acj" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -935,7 +935,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "acs" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -1045,7 +1045,7 @@
 /turf/space,
 /area/space)
 "acH" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -1077,7 +1077,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "acJ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -1093,7 +1093,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "acK" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -1334,7 +1334,7 @@
 	},
 /area/station/science/chemistry)
 "adp" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -1473,7 +1473,7 @@
 /turf/simulated/floor/caution/south,
 /area/station/science/lobby)
 "adG" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -1507,7 +1507,7 @@
 /turf/simulated/floor/delivery,
 /area/station/security/prison)
 "adI" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -1537,7 +1537,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -1561,7 +1561,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -1585,7 +1585,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -1601,7 +1601,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -1626,7 +1626,7 @@
 	},
 /area/station/science/chemistry)
 "adQ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -1660,7 +1660,7 @@
 /turf/space,
 /area/space)
 "adT" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -1679,7 +1679,7 @@
 /turf/simulated/floor/bot,
 /area/station/security/prison)
 "adV" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -1713,7 +1713,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/ai_monitored/storage/secure)
 "adZ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -1725,7 +1725,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "aea" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -1737,7 +1737,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "aeb" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -1833,7 +1833,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/science/storage)
 "aem" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -1849,7 +1849,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "aen" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -1861,7 +1861,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "aeo" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -1873,7 +1873,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "aep" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -1892,7 +1892,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/security/prison)
 "aer" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -1908,7 +1908,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
 "aes" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -1920,7 +1920,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
 "aet" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -1951,7 +1951,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/ai_monitored/storage/secure)
 "aex" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -2029,7 +2029,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "aeK" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -2150,7 +2150,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "afc" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -2561,7 +2561,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "afW" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -2573,7 +2573,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "afX" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -2593,7 +2593,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "afZ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -2613,7 +2613,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "aga" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -2642,7 +2642,7 @@
 /turf/simulated/floor/red,
 /area/station/security/prison)
 "agc" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -2767,7 +2767,7 @@
 	},
 /area/shuttle/research/outpost)
 "agn" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -2980,7 +2980,7 @@
 	},
 /area/station/security/prison)
 "agI" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -3250,7 +3250,7 @@
 /turf/simulated/floor/red,
 /area/station/security/prison)
 "ahj" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -3458,7 +3458,7 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "ahD" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -3478,7 +3478,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "ahE" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -3502,7 +3502,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "ahF" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -3556,7 +3556,7 @@
 /turf/simulated/floor/red,
 /area/station/security/prison)
 "ahK" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -3592,7 +3592,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/science/teleporter)
 "ahO" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -3651,7 +3651,7 @@
 /turf/simulated/floor/white,
 /area/station/ai_monitored/storage/secure)
 "ahU" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/east,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
@@ -3706,7 +3706,7 @@
 	},
 /area/shuttle/research/outpost)
 "aia" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -3732,7 +3732,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "aib" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -3748,7 +3748,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "aic" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -3760,7 +3760,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "aid" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -4104,7 +4104,7 @@
 /turf/simulated/floor/white,
 /area/station/ai_monitored/storage/secure)
 "aiF" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -4295,7 +4295,7 @@
 /turf/simulated/floor/white,
 /area/station/ai_monitored/storage/secure)
 "aiV" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -4325,7 +4325,7 @@
 /turf/simulated/floor,
 /area/station/science/lobby)
 "aiY" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -4517,7 +4517,7 @@
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "aju" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -4537,7 +4537,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "ajv" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -4562,7 +4562,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "ajw" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -4645,7 +4645,7 @@
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "ajG" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -4661,7 +4661,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/bot_storage)
 "ajH" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -4673,7 +4673,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/bot_storage)
 "ajI" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -4765,7 +4765,7 @@
 	},
 /area/shuttle/research/outpost)
 "ajR" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -4936,7 +4936,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "akg" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -5255,7 +5255,7 @@
 	pixel_x = -24;
 	pixel_y = 0
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /turf/simulated/floor,
@@ -5320,7 +5320,7 @@
 	},
 /area/shuttle/research/outpost)
 "akS" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -5340,7 +5340,7 @@
 	},
 /area/shuttle/research/outpost)
 "akT" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -5357,7 +5357,7 @@
 	},
 /area/shuttle/research/outpost)
 "akU" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -5457,7 +5457,7 @@
 	},
 /area/station/medical/cdc)
 "ale" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -5663,7 +5663,7 @@
 	},
 /area/station/medical/cdc)
 "alw" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -5689,7 +5689,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "aly" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -6053,7 +6053,7 @@
 /turf/space,
 /area/shuttle/merchant_shuttle/left_station/donut2)
 "amf" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -6207,7 +6207,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
 "amt" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -6291,7 +6291,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
 "amE" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -6322,7 +6322,7 @@
 /turf/simulated/floor/caution/north,
 /area/station/turret_protected/Zeta)
 "amG" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -6581,7 +6581,7 @@
 	},
 /area/station/medical/cdc)
 "anc" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -6597,7 +6597,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/observatory)
 "and" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -6609,7 +6609,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/observatory)
 "ane" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -6617,7 +6617,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/observatory)
 "anf" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -6658,7 +6658,7 @@
 /turf/simulated/floor/caution/south,
 /area/station/turret_protected/Zeta)
 "anj" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -6690,7 +6690,7 @@
 	},
 /area/station/medical/cdc)
 "anl" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -6762,7 +6762,7 @@
 	},
 /area/station/medical/cdc)
 "anq" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -7085,7 +7085,7 @@
 /turf/simulated/floor/delivery/white,
 /area/station/medical/cdc)
 "anW" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -7101,7 +7101,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
 "anX" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -7139,7 +7139,7 @@
 	},
 /area/station/medical/cdc)
 "aoc" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -7190,7 +7190,7 @@
 /turf/simulated/floor,
 /area/station/science/lobby)
 "aoh" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -7206,7 +7206,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "aoi" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aoj" = (
@@ -7300,7 +7300,7 @@
 	icon_state = "rwindow";
 	dir = 2
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -7320,7 +7320,7 @@
 	icon_state = "rwindow";
 	dir = 2
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -7336,7 +7336,7 @@
 	icon_state = "rwindow";
 	dir = 2
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -7368,7 +7368,7 @@
 	icon_state = "rwindow";
 	dir = 4
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "aos" = (
@@ -7417,7 +7417,7 @@
 /turf/simulated/floor/bot/white,
 /area/station/medical/cdc)
 "aox" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -7446,7 +7446,7 @@
 	},
 /area/station/medical/cdc)
 "aoA" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -7458,7 +7458,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
 "aoB" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 2;
 	icon_state = "rwindow"
@@ -7470,7 +7470,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
 "aoC" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 2;
 	icon_state = "rwindow"
@@ -7487,7 +7487,7 @@
 /area/station/medical/cdc)
 "aoD" = (
 /obj/rack,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass{
@@ -7500,7 +7500,7 @@
 /area/station/science/lobby)
 "aoE" = (
 /obj/rack,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass{
@@ -7510,7 +7510,7 @@
 /turf/simulated/floor,
 /area/station/science/lobby)
 "aoF" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -7576,7 +7576,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aoO" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -7629,7 +7629,7 @@
 	},
 /area/station/medical/cdc)
 "aoU" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -7667,7 +7667,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aoY" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -7699,7 +7699,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/shuttle)
 "apb" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -7747,7 +7747,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "aph" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -7821,7 +7821,7 @@
 	},
 /area/station/hallway/secondary/shuttle)
 "apq" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -7851,7 +7851,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "apt" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -7863,7 +7863,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
 "apu" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -7957,7 +7957,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/quartermaster/office)
 "apG" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/west{
 	icon_state = "rwindow";
 	dir = 2
@@ -7970,7 +7970,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "apH" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/west{
 	icon_state = "rwindow";
 	dir = 2
@@ -7982,7 +7982,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "apI" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west{
 	icon_state = "rwindow";
@@ -8015,7 +8015,7 @@
 	icon_state = "rwindow";
 	dir = 1
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
 "apL" = (
@@ -8027,7 +8027,7 @@
 	icon_state = "rwindow";
 	dir = 1
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
 "apM" = (
@@ -8043,11 +8043,11 @@
 	icon_state = "rwindow";
 	dir = 1
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
 "apN" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -8069,7 +8069,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "apP" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -8119,7 +8119,7 @@
 /turf/space,
 /area/supply/sell_point)
 "apV" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -8135,7 +8135,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "apW" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -8274,7 +8274,7 @@
 /turf/space,
 /area/space)
 "aqn" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -8306,7 +8306,7 @@
 /turf/simulated/floor/caution/north,
 /area/station/hallway/secondary/shuttle)
 "aqp" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -8332,7 +8332,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aqr" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -8344,7 +8344,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "aqs" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -8356,7 +8356,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "aqt" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -8491,7 +8491,7 @@
 	},
 /area/shuttle/arrival/station)
 "aqK" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -8503,7 +8503,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "aqL" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 2
@@ -8543,7 +8543,7 @@
 	},
 /area/station/quartermaster/office)
 "aqQ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 2
@@ -8562,7 +8562,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "aqS" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -8578,7 +8578,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "aqT" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -8594,7 +8594,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "aqU" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -8639,7 +8639,7 @@
 /turf/space,
 /area/shuttle/arrival/station)
 "arb" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -8725,7 +8725,7 @@
 /turf/simulated/floor/airless/solar,
 /area/space)
 "arn" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -8737,7 +8737,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "aro" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -8749,7 +8749,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "arp" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -8771,7 +8771,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/shuttle)
 "arr" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -8787,7 +8787,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "art" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -8803,7 +8803,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "aru" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -8937,7 +8937,7 @@
 /turf/simulated/wall,
 /area/station/quartermaster/office)
 "arH" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -9274,7 +9274,7 @@
 	},
 /area/station/hallway/secondary/shuttle)
 "ass" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -9286,7 +9286,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "ast" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -9302,7 +9302,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "asu" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -9326,7 +9326,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "asv" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -9346,7 +9346,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "asw" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -9366,7 +9366,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "asx" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -9442,7 +9442,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "asF" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -10013,7 +10013,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/shuttle)
 "atU" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -10047,7 +10047,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/shuttle)
 "atW" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -10064,7 +10064,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/shuttle)
 "atX" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -10153,7 +10153,7 @@
 	},
 /area/station/quartermaster/office)
 "auf" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -10218,7 +10218,7 @@
 /turf/simulated/wall,
 /area/station/quartermaster/office)
 "auj" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -10406,7 +10406,7 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/office)
 "auG" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -10435,7 +10435,7 @@
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "auI" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -10456,7 +10456,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "auJ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -10500,7 +10500,7 @@
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "auN" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -11180,7 +11180,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/ghostdrone_factory)
 "awl" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
@@ -11330,7 +11330,7 @@
 /turf/simulated/wall,
 /area/station/chapel/office)
 "awI" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -11346,7 +11346,7 @@
 /turf/simulated/floor/plating,
 /area/station/chapel/office)
 "awJ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -11358,7 +11358,7 @@
 /turf/simulated/floor/plating,
 /area/station/chapel/office)
 "awK" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -11466,7 +11466,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/shuttle)
 "awY" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -11497,7 +11497,7 @@
 /turf/simulated/wall,
 /area/station/quartermaster/office)
 "axb" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -11516,7 +11516,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "axc" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -11531,7 +11531,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "axd" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -11583,7 +11583,7 @@
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "axi" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -11684,7 +11684,7 @@
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "axx" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -12007,7 +12007,7 @@
 	},
 /area/station/chapel/office)
 "ayp" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -12023,7 +12023,7 @@
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "ayq" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -12035,7 +12035,7 @@
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "ayr" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -12076,7 +12076,7 @@
 /turf/space,
 /area/space)
 "ayw" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -12293,7 +12293,7 @@
 /turf/simulated/wall,
 /area/station/storage/emergency2)
 "ayR" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -12311,7 +12311,7 @@
 	name = "Renovation Area"
 	})
 "ayS" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -12359,7 +12359,7 @@
 	icon_state = "rwindow";
 	dir = 1
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage{
 	name = "Renovation Area"
@@ -12459,7 +12459,7 @@
 	},
 /area/station/chapel/sanctuary)
 "azi" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -13053,7 +13053,7 @@
 /turf/simulated/wall,
 /area/station/storage/emergency)
 "aAD" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -13069,7 +13069,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
 "aAE" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -13081,7 +13081,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
 "aAF" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -13549,7 +13549,7 @@
 /area/station/storage/emergency2)
 "aBO" = (
 /obj/rack,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 20
 	},
 /turf/simulated/floor,
@@ -14040,7 +14040,7 @@
 	},
 /area/station/hallway/primary/north)
 "aCI" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -14056,7 +14056,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/emergency2)
 "aCJ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -14089,7 +14089,7 @@
 	icon_state = "rwindow";
 	dir = 2
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency2)
 "aCM" = (
@@ -14101,7 +14101,7 @@
 	icon_state = "rwindow";
 	dir = 1
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency2)
 "aCN" = (
@@ -14117,7 +14117,7 @@
 	icon_state = "rwindow";
 	dir = 1
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency2)
 "aCO" = (
@@ -14160,7 +14160,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aCS" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -14180,8 +14180,8 @@
 /area/ghostdrone_factory)
 "aCU" = (
 /obj/table/auto,
-/obj/item/rods/aluminum/fullstack,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/rods/iron/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
 /obj/item/light/tube,
@@ -14198,7 +14198,7 @@
 /area/ghostdrone_factory)
 "aCW" = (
 /obj/table/auto,
-/obj/item/rods/aluminum/fullstack,
+/obj/item/rods/iron/fullstack,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
@@ -14209,8 +14209,8 @@
 /area/ghostdrone_factory)
 "aCX" = (
 /obj/table/auto,
-/obj/item/rods/aluminum/fullstack,
-/obj/item/sheet/aluminum/reinforced/fullstack,
+/obj/item/rods/iron/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
 /obj/item/light/tube,
@@ -14218,7 +14218,7 @@
 /area/ghostdrone_factory)
 "aCY" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
 /turf/simulated/grimycarpet,
@@ -14401,7 +14401,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/engine/substation/north)
 "aDv" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -14421,7 +14421,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north)
 "aDw" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -14618,7 +14618,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "aDT" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -14834,7 +14834,7 @@
 	},
 /area/station/hallway/primary/north)
 "aEr" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -14990,7 +14990,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aEE" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -15104,7 +15104,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "aEP" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -15120,7 +15120,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quarters)
 "aEQ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -15132,7 +15132,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quarters)
 "aER" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -15582,7 +15582,7 @@
 	icon_state = "rwindow";
 	dir = 1
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "aFX" = (
@@ -15598,7 +15598,7 @@
 	icon_state = "rwindow";
 	dir = 1
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "aFY" = (
@@ -15836,7 +15836,7 @@
 	opacity = 0;
 	p_open = 1
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -16053,7 +16053,7 @@
 	icon_state = "rwindow";
 	dir = 1
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "aGO" = (
@@ -16162,7 +16162,7 @@
 	},
 /area/station/hallway/primary/north)
 "aGV" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -16352,7 +16352,7 @@
 	opacity = 0;
 	p_open = 1
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -16426,7 +16426,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aHy" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -16442,7 +16442,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aHz" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -16555,7 +16555,7 @@
 	icon_state = "rwindow";
 	dir = 1
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "aHL" = (
@@ -16762,7 +16762,7 @@
 	opacity = 0;
 	p_open = 1
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -16787,16 +16787,16 @@
 	},
 /area/station/ai_monitored/storage/eva)
 "aIi" = (
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass/reinforced{
@@ -16901,7 +16901,7 @@
 	icon_state = "rwindow";
 	dir = 4
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "aIw" = (
@@ -16965,7 +16965,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aIG" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -17388,7 +17388,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aJx" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -18062,7 +18062,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aKU" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -18082,7 +18082,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aKV" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -18210,7 +18210,7 @@
 	},
 /area/station/ai_monitored/storage/eva)
 "aLi" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -18274,7 +18274,7 @@
 	icon_state = "rwindow";
 	dir = 4
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "aLo" = (
@@ -18463,7 +18463,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aLH" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -18496,7 +18496,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aLL" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -18512,7 +18512,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aLM" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -18524,7 +18524,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aLN" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -18562,7 +18562,7 @@
 	pixel_y = 0
 	},
 /obj/item/wrench/monkey,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aLR" = (
@@ -18687,7 +18687,7 @@
 	},
 /area/station/hallway/primary/north)
 "aMe" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -18707,7 +18707,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aMf" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -18727,7 +18727,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aMh" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -18954,7 +18954,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aMG" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -19170,7 +19170,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aNa" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -19182,7 +19182,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aNb" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -19256,7 +19256,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/inner/central)
 "aNi" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -19272,7 +19272,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "aNj" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -19375,7 +19375,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment/ejection{
 	icon_state = "pipe-s";
@@ -19392,7 +19392,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/disposalpipe/segment/ejection{
 	icon_state = "pipe-s";
 	dir = 4
@@ -19409,7 +19409,7 @@
 	d2 = 4
 	},
 /obj/cable,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/disposalpipe/segment/ejection{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -19425,7 +19425,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aNw" = (
@@ -19437,7 +19437,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/grille/aluminum{
+/obj/grille/iron{
 	density = 0;
 	icon_state = "brokengrille"
 	},
@@ -19448,7 +19448,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aNy" = (
@@ -19495,7 +19495,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aNB" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -19580,7 +19580,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aNH" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -19802,7 +19802,7 @@
 	icon_state = "rwindow";
 	dir = 2
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "aOb" = (
@@ -19814,7 +19814,7 @@
 	icon_state = "rwindow";
 	dir = 1
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "aOc" = (
@@ -19837,7 +19837,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "aOf" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -19949,7 +19949,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aOr" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -19966,13 +19966,13 @@
 /area/station/maintenance/west)
 "aOs" = (
 /obj/storage/crate,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/cell{
@@ -20036,7 +20036,7 @@
 	},
 /area/station/medical/head)
 "aOx" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -20111,7 +20111,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "aOE" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -20212,7 +20212,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "aOP" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -20355,7 +20355,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aPd" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -20536,7 +20536,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "aPv" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -20552,7 +20552,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "aPw" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -20564,7 +20564,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
 "aPx" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -20619,7 +20619,7 @@
 	icon_state = "rwindow";
 	dir = 8
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window_blinds/left,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
@@ -20636,7 +20636,7 @@
 	icon_state = "rwindow";
 	dir = 4
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window_blinds/right,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
@@ -20652,7 +20652,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aPG" = (
@@ -20665,7 +20665,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aPH" = (
@@ -20686,7 +20686,7 @@
 	name = "AI Module Storage"
 	})
 "aPK" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -20722,7 +20722,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aPO" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -20834,7 +20834,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aQa" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -20850,7 +20850,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aQb" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -20862,7 +20862,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aQc" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -20936,7 +20936,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "aQk" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -21022,7 +21022,7 @@
 	icon_state = "rwindow";
 	dir = 4
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 2
@@ -21126,7 +21126,7 @@
 	name = "AI Module Storage"
 	})
 "aQB" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -21224,7 +21224,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aQK" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -21380,7 +21380,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "aRa" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -21545,7 +21545,7 @@
 	name = "AI Module Storage"
 	})
 "aRs" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -21933,7 +21933,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
 "aSk" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -21962,7 +21962,7 @@
 	},
 /area/station/medical/robotics)
 "aSm" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -22072,7 +22072,7 @@
 	},
 /area/station/crew_quarters/fitness)
 "aSy" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -22114,7 +22114,7 @@
 	icon_state = "rwindow";
 	dir = 4
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 2
@@ -22445,7 +22445,7 @@
 	},
 /area/station/hallway/primary/east)
 "aTj" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -22786,7 +22786,7 @@
 /turf/simulated/wall,
 /area/station/crew_quarters/stockex)
 "aTP" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 2
@@ -22802,7 +22802,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/stockex)
 "aTQ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 2
@@ -22814,7 +22814,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/stockex)
 "aTR" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 2
@@ -23348,7 +23348,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "aUX" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -23651,7 +23651,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "aVH" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -23799,7 +23799,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/stockex)
 "aVW" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/space)
 "aVX" = (
@@ -24184,7 +24184,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/captain)
 "aWI" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -24200,7 +24200,7 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "aWJ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -24212,7 +24212,7 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "aWK" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -24546,7 +24546,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aXs" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -24697,7 +24697,7 @@
 	},
 /area/station/medical/medbay/lobby)
 "aXG" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -25186,7 +25186,7 @@
 	},
 /area/station/medical/medbay/lobby)
 "aYB" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -25259,7 +25259,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -25542,7 +25542,7 @@
 	},
 /area/station/medical/medbay/lobby)
 "aZo" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -26822,7 +26822,7 @@
 	name = "Bridge Blast Doors";
 	opacity = 0
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -26849,7 +26849,7 @@
 	name = "Bridge Blast Doors";
 	opacity = 0
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -27254,7 +27254,7 @@
 	name = "Bridge Blast Doors";
 	opacity = 0
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -27355,7 +27355,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bct" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -27432,7 +27432,7 @@
 	},
 /area/station/medical/medbay)
 "bcB" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -27524,7 +27524,7 @@
 	dir = 2;
 	icon_state = "rwindow"
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
 "bcH" = (
@@ -27651,7 +27651,7 @@
 	name = "Bridge Blast Doors";
 	opacity = 0
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -27781,7 +27781,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bda" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -27922,7 +27922,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "bdo" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -27951,7 +27951,7 @@
 /turf/simulated/floor,
 /area/station/engine/substation/east)
 "bdr" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -28156,7 +28156,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "bdM" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -28290,7 +28290,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bea" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -28548,7 +28548,7 @@
 /turf/simulated/floor/delivery,
 /area/station/engine/inner)
 "beE" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -28564,7 +28564,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "beF" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -28576,7 +28576,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "beG" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -28692,7 +28692,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "beU" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -29155,7 +29155,7 @@
 	},
 /area/station/crew_quarters/heads)
 "bfP" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -29527,7 +29527,7 @@
 	},
 /area/station/crew_quarters/heads)
 "bgB" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -29559,7 +29559,7 @@
 	icon_state = "rwindow";
 	dir = 4
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bgD" = (
@@ -29734,7 +29734,7 @@
 /turf/space,
 /area/space)
 "bgV" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -29746,7 +29746,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "bgW" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -29758,7 +29758,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "bgX" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -29784,7 +29784,7 @@
 /turf/simulated/wall,
 /area/station/medical/research)
 "bhb" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -29799,7 +29799,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "bhc" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -29810,7 +29810,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "bhd" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -29916,7 +29916,7 @@
 /turf/simulated/wall,
 /area/station/maintenance/east)
 "bhs" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -29997,7 +29997,7 @@
 /area/station/medical/research)
 "bhA" = (
 /obj/disposalpipe/segment,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -30050,7 +30050,7 @@
 /turf/simulated/floor/caution/north,
 /area/station/engine/inner)
 "bhH" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -30267,7 +30267,7 @@
 /area/station/medical/research)
 "bib" = (
 /obj/disposalpipe/segment,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -30474,7 +30474,7 @@
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "biw" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -30534,7 +30534,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/medical/research)
 "biD" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -30713,7 +30713,7 @@
 /area/station/medical/research)
 "bja" = (
 /obj/disposalpipe/segment,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -30721,7 +30721,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "bjb" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -30745,7 +30745,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/medical/research)
 "bjd" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -30954,7 +30954,7 @@
 	icon_state = "pipe-s";
 	dir = 4
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -31205,7 +31205,7 @@
 /turf/simulated/floor/delivery,
 /area/station/engine/substation/pylon)
 "bjU" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/wall/r_wall,
 /area/station/turret_protected/AIbasecore1{
 	name = "Upload Station"
@@ -31607,7 +31607,7 @@
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "bkR" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -31619,7 +31619,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "bkS" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -32015,7 +32015,7 @@
 /area/station/medical/research)
 "blJ" = (
 /obj/disposalpipe/segment,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -32098,7 +32098,7 @@
 /area/station/crew_quarters/bar)
 "blT" = (
 /obj/disposalpipe/segment/mail,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -32114,7 +32114,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
 "blU" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -32126,7 +32126,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
 "blV" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -32254,7 +32254,7 @@
 /turf/simulated/wall,
 /area/station/security/main)
 "bmn" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -32311,7 +32311,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bmt" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -32335,7 +32335,7 @@
 /area/station/security/brig)
 "bmu" = (
 /obj/disposalpipe/segment,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -32356,7 +32356,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/hos)
 "bmv" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -32577,7 +32577,7 @@
 /turf/simulated/wall,
 /area/station/crew_quarters/market)
 "bmR" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -32593,7 +32593,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
 "bmS" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -32605,7 +32605,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
 "bmT" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -32621,7 +32621,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
 "bmU" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -32642,8 +32642,8 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
 "bmV" = (
-/obj/grille/aluminum,
-/obj/grille/aluminum,
+/obj/grille/iron,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -33042,7 +33042,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "bnS" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -33129,7 +33129,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "boc" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -33424,7 +33424,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "boE" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -33566,7 +33566,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "boT" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -33608,7 +33608,7 @@
 	},
 /area/station/hallway/primary/south)
 "boY" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -33810,7 +33810,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "bpq" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -33863,7 +33863,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "bpu" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -33884,7 +33884,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "bpv" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -33904,7 +33904,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "bpw" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -34040,7 +34040,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "bpN" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -34380,7 +34380,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "bqC" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -34711,7 +34711,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "brk" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -34774,7 +34774,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "brp" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -34862,7 +34862,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "brx" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -35068,7 +35068,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "brV" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -35118,7 +35118,7 @@
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/market)
 "brZ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -35381,7 +35381,7 @@
 /area/station/crew_quarters/bar)
 "bsC" = (
 /obj/disposalpipe/segment/mail,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -35394,7 +35394,7 @@
 /area/station/crew_quarters/market)
 "bsD" = (
 /obj/disposalpipe/segment/mail,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -35414,7 +35414,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "bsF" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -35435,7 +35435,7 @@
 /area/station/crew_quarters/market)
 "bsG" = (
 /obj/disposalpipe/segment/mail,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -35495,7 +35495,7 @@
 /turf/simulated/wall,
 /area/station/hallway/primary/south)
 "bsM" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -35582,7 +35582,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "bsT" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -36229,7 +36229,7 @@
 /turf/simulated/floor/yellow/corner,
 /area/station/hallway/primary/south)
 "bur" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -36253,19 +36253,19 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/window/reinforced{
@@ -36397,7 +36397,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "buH" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -36562,7 +36562,7 @@
 	},
 /area/station/hallway/primary/south)
 "bvf" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2";
@@ -36685,7 +36685,7 @@
 	},
 /area/station/hallway/primary/south)
 "bvx" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -36806,7 +36806,7 @@
 /turf/simulated/wall,
 /area/station/maintenance/east)
 "bvH" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -36822,7 +36822,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bvI" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -36849,7 +36849,7 @@
 /turf/space,
 /area/space)
 "bvK" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload_foyer)
 "bvL" = (
@@ -36858,7 +36858,7 @@
 	d1 = 1;
 	d2 = 2
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload_foyer)
 "bvM" = (
@@ -36918,7 +36918,7 @@
 /area/station/hydroponics/bay)
 "bvW" = (
 /obj/disposalpipe/segment/mail,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -36934,7 +36934,7 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "bvX" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -36946,7 +36946,7 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "bvY" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -36988,7 +36988,7 @@
 /turf/simulated/floor/delivery,
 /area/station/hydroponics/bay)
 "bwb" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -37017,7 +37017,7 @@
 	},
 /area/station/hallway/primary/south)
 "bwd" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2";
@@ -37195,7 +37195,7 @@
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/juryroom)
 "bww" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -37221,7 +37221,7 @@
 /area/station/crew_quarters/juryroom)
 "bwx" = (
 /obj/disposalpipe/segment,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -37237,7 +37237,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/juryroom)
 "bwy" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -37249,7 +37249,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/juryroom)
 "bwz" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -37346,7 +37346,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/turret_protected/ai_upload_foyer)
 "bwL" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -37482,7 +37482,7 @@
 	},
 /area/station/hydroponics/bay)
 "bxa" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -37748,7 +37748,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/juryroom)
 "bxC" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/south,
 /obj/window/reinforced/north,
 /obj/window/reinforced/east,
@@ -38018,7 +38018,7 @@
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "byh" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-4";
@@ -38035,7 +38035,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/storage)
 "byi" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable{
 	icon_state = "0-4";
 	d2 = 4
@@ -38055,7 +38055,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/storage)
 "byj" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable{
 	icon_state = "0-4";
 	d2 = 4
@@ -38099,7 +38099,7 @@
 /turf/simulated/floor,
 /area/station/engine/storage)
 "byl" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable{
 	icon_state = "0-4";
 	d2 = 4
@@ -38123,7 +38123,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/storage)
 "bym" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -38239,7 +38239,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/storage/autolathe)
 "byu" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -38273,7 +38273,7 @@
 /turf/simulated/floor,
 /area/station/storage/autolathe)
 "byw" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -38297,7 +38297,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/autolathe)
 "byx" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -39039,7 +39039,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bzS" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -39055,7 +39055,7 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "bzT" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -39067,7 +39067,7 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "bzU" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -40449,7 +40449,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bCJ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -40465,7 +40465,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bCK" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -40605,7 +40605,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/southwest)
 "bCZ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -40740,7 +40740,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "bDr" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -40762,7 +40762,7 @@
 /turf/simulated/floor,
 /area/station/storage/tools)
 "bDt" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -40778,7 +40778,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tools)
 "bDu" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -40790,7 +40790,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tools)
 "bDv" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -40977,7 +40977,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bDN" = (
-/obj/grille/aluminum{
+/obj/grille/iron{
 	density = 0;
 	icon_state = "brokengrille"
 	},
@@ -41178,7 +41178,7 @@
 	icon_state = "pipe-s";
 	dir = 4
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -41278,7 +41278,7 @@
 /turf/simulated/wall,
 /area/station/maintenance/disposal)
 "bEt" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -41311,7 +41311,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bEw" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -41327,7 +41327,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "bEx" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -41355,7 +41355,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "bEz" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -42018,7 +42018,7 @@
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "bFH" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
@@ -42214,7 +42214,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload_foyer)
 "bGf" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -42230,7 +42230,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bGg" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -42303,7 +42303,7 @@
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "bGp" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
@@ -42411,7 +42411,7 @@
 	},
 /area/space)
 "bGC" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable{
 	icon_state = "4-8";
 	d1 = 4;
@@ -42685,7 +42685,7 @@
 /area/station/storage/tools)
 "bHd" = (
 /obj/rack,
-/obj/item/rods/aluminum/fullstack,
+/obj/item/rods/iron/fullstack,
 /turf/simulated/floor/grime,
 /area/station/storage/tools)
 "bHe" = (
@@ -42711,7 +42711,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bHi" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -42735,7 +42735,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bHk" = (
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /turf/simulated/floor/plating,
@@ -42903,7 +42903,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -42927,7 +42927,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -42943,7 +42943,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -42986,7 +42986,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bHG" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -43184,7 +43184,7 @@
 	dir = 8
 	},
 /obj/rack,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/item/sheet/glass/fullstack,
 /turf/simulated/floor/grime,
 /area/station/storage/tools)
@@ -43577,7 +43577,7 @@
 	},
 /area/station/solar/east)
 "bIG" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -43612,7 +43612,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "bII" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -43628,7 +43628,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "bIJ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -43811,7 +43811,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload_foyer)
 "bIW" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -43827,7 +43827,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bIX" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -44082,7 +44082,7 @@
 	},
 /area/station/solar/south)
 "bJr" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -44099,7 +44099,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bJs" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -44145,7 +44145,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bJx" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -44161,7 +44161,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bJy" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -44196,7 +44196,7 @@
 /turf/space,
 /area/space)
 "bJB" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -44212,7 +44212,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bJC" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -44224,7 +44224,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bJD" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -44247,7 +44247,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bJF" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -44338,14 +44338,14 @@
 /turf/simulated/wall/r_wall,
 /area/station/quartermaster/refinery)
 "bJM" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/south,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
 "bJN" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/west{
 	icon_state = "rwindow";
 	dir = 2
@@ -44357,14 +44357,14 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
 "bJO" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/south,
 /obj/window/reinforced/north,
 /obj/window/reinforced/east,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
 "bJP" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/east,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
@@ -44409,7 +44409,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bJV" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
 /turf/simulated/floor/plating,
@@ -44467,7 +44467,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bKa" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/south,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
@@ -44700,7 +44700,7 @@
 	},
 /area/mining/magnet)
 "bKx" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/station/turret_protected/ai_upload_foyer)
 "bKy" = (
@@ -44953,7 +44953,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bKS" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/east,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
@@ -44981,7 +44981,7 @@
 /turf/space,
 /area/space)
 "bKV" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/south,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
@@ -45055,14 +45055,14 @@
 	},
 /area/space)
 "bLc" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/south,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /turf/simulated/floor/plating,
 /area/space)
 "bLd" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/west{
 	icon_state = "rwindow";
 	dir = 2
@@ -45074,7 +45074,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "bLe" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/south,
 /obj/window/reinforced/north,
 /obj/window/reinforced/east,

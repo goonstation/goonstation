@@ -571,21 +571,21 @@ MATERIAL
 
 		return
 
-/obj/item/sheet/aluminum
+/obj/item/sheet/iron
 
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "sheet-metal"
 
 	New()
 		..()
-		var/datum/material/M = getMaterial("aluminum")
+		var/datum/material/M = getMaterial("iron")
 		src.setMaterial(M)
 
 	reinforced
 		icon_state = "sheet-m-r_5"
 		New()
 			..()
-			var/datum/material/M = getMaterial("aluminum")
+			var/datum/material/M = getMaterial("iron")
 			src.set_reinforcement(M)
 
 /obj/item/sheet/glass
@@ -603,7 +603,7 @@ MATERIAL
 		icon_state = "sheet-g-r_5"
 		New()
 			..()
-			var/datum/material/M = getMaterial("aluminum")
+			var/datum/material/M = getMaterial("iron")
 			src.set_reinforcement(M)
 
 	crystal
@@ -617,7 +617,7 @@ MATERIAL
 			icon_state = "sheet-g-r_5"
 			New()
 				..()
-				var/datum/material/M = getMaterial("aluminum")
+				var/datum/material/M = getMaterial("iron")
 				src.set_reinforcement(M)
 
 // RODS
@@ -719,7 +719,7 @@ MATERIAL
 				makemetal = round(src.amount / 2) // could have changed during input()
 				if (weldinput < 1) return
 				if (weldinput > makemetal) weldinput = makemetal
-			var/obj/item/sheet/M = new /obj/item/sheet/aluminum(user.loc)
+			var/obj/item/sheet/M = new /obj/item/sheet/iron(user.loc)
 			if(src.material) M.setMaterial(src.material)
 			M.amount = weldinput
 			src.change_stack_amount(-(weldinput * 2))
@@ -951,11 +951,11 @@ MATERIAL
 		return 1
 
 
-/obj/item/rods/aluminum
+/obj/item/rods/iron
 
 	New()
 		..()
-		var/datum/material/M = getMaterial("aluminum")
+		var/datum/material/M = getMaterial("iron")
 		src.setMaterial(M)
 
 // TILES
@@ -1092,18 +1092,18 @@ MATERIAL
 				W.icon_old = "floor"
 			W.to_plating()
 
-		if(ismob(usr) && !istype(src.material, /datum/material/metal/aluminum))
+		if(ismob(usr) && !istype(src.material, /datum/material/metal/iron))
 			logTheThing("station", usr, null, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(S)].")
 		if(src.material)
 			W.setMaterial(src.material)
 		src.change_stack_amount(-1)
 		return TRUE
 
-/obj/item/tile/aluminum
+/obj/item/tile/iron
 
 	New()
 		..()
-		var/datum/material/M = getMaterial("aluminum")
+		var/datum/material/M = getMaterial("iron")
 		src.setMaterial(M)
 
 /obj/item/sheet/electrum
@@ -1119,9 +1119,9 @@ MATERIAL
 			R.cell.use(use_amount * 200)
 
 // kinda needed for some stuff I'm making - haine
-/obj/item/sheet/aluminum/fullstack
+/obj/item/sheet/iron/fullstack
 	amount = 50
-/obj/item/sheet/aluminum/reinforced/fullstack
+/obj/item/sheet/iron/reinforced/fullstack
 	amount = 50
 /obj/item/sheet/glass/fullstack
 	amount = 50
@@ -1131,7 +1131,7 @@ MATERIAL
 	amount = 50
 /obj/item/sheet/glass/crystal/reinforced/fullstack
 	amount = 50
-/obj/item/rods/aluminum/fullstack
+/obj/item/rods/iron/fullstack
 	amount = 50
-/obj/item/tile/aluminum/fullstack
+/obj/item/tile/iron/fullstack
 	amount = 80

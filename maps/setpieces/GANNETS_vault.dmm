@@ -114,7 +114,7 @@
 /turf/unsimulated/floor/grey,
 /area/wtc)
 "ar" = (
-/obj/aluminum_beams,
+/obj/iron_beams,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "floor"

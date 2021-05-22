@@ -323,7 +323,7 @@
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/teleport)
 "bc" = (
-/obj/item/sheet/aluminum,
+/obj/item/sheet/iron,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "bd" = (
@@ -651,7 +651,7 @@
 	},
 /area/wrecknsspolaris)
 "cd" = (
-/obj/item/sheet/aluminum,
+/obj/item/sheet/iron,
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris)
 "ce" = (
@@ -830,7 +830,7 @@
 	},
 /area/wrecknsspolaris)
 "cC" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "cD" = (
@@ -1391,7 +1391,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "dM" = (
-/obj/item/sheet/aluminum,
+/obj/item/sheet/iron,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "floor"
@@ -1662,7 +1662,7 @@
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "er" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "floor"
@@ -1754,7 +1754,7 @@
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "eB" = (
-/obj/item/sheet/aluminum,
+/obj/item/sheet/iron,
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "eC" = (
@@ -1779,7 +1779,7 @@
 /area/wrecknsspolaris)
 "eF" = (
 /obj/item/scrap,
-/obj/item/sheet/aluminum,
+/obj/item/sheet/iron,
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "eG" = (
@@ -1898,12 +1898,12 @@
 /turf/space/fluid/noexplosion/nospawn,
 /area/wrecknsspolaris/outside/back)
 "eV" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/back)
 "eW" = (
 /obj/lattice,
-/obj/item/sheet/aluminum,
+/obj/item/sheet/iron,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/back)
 "eX" = (
@@ -1928,7 +1928,7 @@
 /turf/space/fluid/noexplosion/nospawn,
 /area/wrecknsspolaris/outside/back)
 "fa" = (
-/obj/item/sheet/aluminum,
+/obj/item/sheet/iron,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/back)
 "fb" = (
@@ -1995,7 +1995,7 @@
 /turf/space/fluid/noexplosion/nospawn,
 /area/wrecknsspolaris/outside/back)
 "fm" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "fn" = (
@@ -2039,7 +2039,7 @@
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
 "fs" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /obj/decoration/vent{
 	pixel_y = 32
 	},
@@ -2328,7 +2328,7 @@
 /area/wrecknsspolaris/outside/back)
 "gj" = (
 /obj/item/scrap,
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/back)
 "gk" = (
@@ -2374,7 +2374,7 @@
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/teleport)
 "go" = (
-/obj/item/sheet/aluminum,
+/obj/item/sheet/iron,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/teleport)
 "gp" = (
@@ -10475,7 +10475,7 @@
 /area/dank_trench)
 "LN" = (
 /obj/rack,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 10
 	},
 /obj/item/sheet/glass{

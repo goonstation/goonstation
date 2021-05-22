@@ -50,7 +50,7 @@
 	/// How to blend the [/datum/material/var/texture].
 	var/texture_blend = ICON_MULTIPLY
 
-	/// Should this even color the objects made from it? Mostly used for base station materials like aluminum
+	/// Should this even color the objects made from it? Mostly used for base station materials like iron
 	var/applyColor = 1
 	/// The color of the material
 	var/color = "#FFFFFF"
@@ -277,22 +277,12 @@
 		setProperty("hard", 5)
 		return ..()
 
-/datum/material/metal/aluminum
-	mat_id = "aluminum"
-	name = "aluminum"
-	desc = "Terrestrial aluminum from Earth."
+/datum/material/metal/iron
+	mat_id = "iron"
+	name = "iron"
+	desc = "Iron is a sturdy common metal."
 	New()
 		setProperty("density", 30)
-		setProperty("hard", 15)
-		return ..()
-
-/datum/material/metal/mauxite
-	mat_id = "mauxite"
-	name = "mauxite"
-	desc = "Mauxite is a sturdy common metal."
-	color = "#574846"
-	New()
-		setProperty("density", 50)
 		setProperty("hard", 15)
 		return ..()
 
@@ -407,7 +397,7 @@
 		setProperty("electrical", 60)
 		return ..()
 
-/datum/material/metal/steel //about double the stats of aluminum
+/datum/material/metal/steel //about double the stats of iron
 	mat_id = "steel"
 	name = "steel"
 	desc = "Steel! in space!"

@@ -1031,7 +1031,7 @@
 			desc = "Dense metallic rock."
 			icon_state = "comet_iron"
 			stone_color = "#333333"
-			default_ore = /obj/item/raw_material/mauxite
+			default_ore = /obj/item/raw_material/iron
 			hardness = 8
 
 		plasma

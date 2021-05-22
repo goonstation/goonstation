@@ -598,10 +598,10 @@
 	crop = /obj/item/raw_material/bohrum
 	chance = 20
 
-/datum/plantmutation/rocks/mauxite
-	name_prefix = "Mauxite "
+/datum/plantmutation/rocks/iron
+	name_prefix = "Iron "
 	dont_rename_crop = true
-	crop = /obj/item/raw_material/mauxite
+	crop = /obj/item/raw_material/iron
 	chance = 10
 
 /datum/plantmutation/rocks/erebite

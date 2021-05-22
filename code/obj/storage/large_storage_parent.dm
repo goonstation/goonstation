@@ -766,7 +766,7 @@
 		if (the_storage.material)
 			I.setMaterial(the_storage.material)
 		else
-			var/datum/material/M = getMaterial("aluminum")
+			var/datum/material/M = getMaterial("iron")
 			I.setMaterial(M)
 		qdel(the_storage)
 

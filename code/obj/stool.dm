@@ -67,7 +67,7 @@
 			if (src.material)
 				I.setMaterial(src.material)
 			else
-				var/datum/material/M = getMaterial("aluminum")
+				var/datum/material/M = getMaterial("iron")
 				I.setMaterial(M)
 			qdel(src)
 
@@ -120,7 +120,7 @@
 			if (src.material)
 				S.setMaterial(src.material)
 			else
-				var/datum/material/M = getMaterial("aluminum")
+				var/datum/material/M = getMaterial("iron")
 				S.setMaterial(M)
 		qdel(src)
 		return
@@ -1025,7 +1025,7 @@
 	scoot_sounds = list("sound/misc/chair/office/scoot1.ogg", "sound/misc/chair/office/scoot2.ogg", "sound/misc/chair/office/scoot3.ogg", "sound/misc/chair/office/scoot4.ogg", "sound/misc/chair/office/scoot5.ogg")
 	var/lying = 0 // didja get knocked over? fall down some stairs?
 	parts_type = /obj/item/furniture_parts/wheelchair
-	mat_appearances_to_ignore = list("aluminum")
+	mat_appearances_to_ignore = list("iron")
 	mats = 15
 
 	New()

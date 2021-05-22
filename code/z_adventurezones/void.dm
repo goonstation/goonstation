@@ -41,7 +41,7 @@ CONTENTS:
 	desc = "It seems solid..."
 	opacity = 1
 	density = 1
-	mat_appearances_to_ignore = list("aluminum")
+	mat_appearances_to_ignore = list("iron")
 #ifdef IN_MAP_EDITOR
 	icon_state = "darkvoid-map" //so we can actually the walls from the floor
 #else
@@ -56,7 +56,7 @@ CONTENTS:
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "void"
 	desc = "A strange shifting void ..."
-	mat_appearances_to_ignore = list("aluminum")
+	mat_appearances_to_ignore = list("iron")
 
 /turf/unsimulated/floor/void/crunch
 	fullbright = 0
@@ -68,7 +68,7 @@ CONTENTS:
 	desc = "It seems solid..."
 	opacity = 1
 	density = 1
-	mat_appearances_to_ignore = list("aluminum")
+	mat_appearances_to_ignore = list("iron")
 
 	ex_act()
 		return
@@ -93,7 +93,7 @@ CONTENTS:
 	desc = "A strange shifting void ..."
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
-	mat_appearances_to_ignore = list("aluminum")
+	mat_appearances_to_ignore = list("iron")
 
 	ex_act()
 		return

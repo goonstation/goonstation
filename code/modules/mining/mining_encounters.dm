@@ -200,8 +200,8 @@
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"miraclium",rand(2,9))
 
-/datum/mining_encounter/tel_mauxite
-	name = "Mauxite asteroid"
+/datum/mining_encounter/tel_iron
+	name = "Iron asteroid"
 	rarity_tier = 1
 	no_pick = 1
 
@@ -228,7 +228,7 @@
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
 			AST.update_icon()
 
-		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"mauxite",rand(2,5))
+		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"iron",rand(2,5))
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,9))
 
 /datum/mining_encounter/tel_valuable
@@ -797,7 +797,7 @@
 							if(5)
 								make_cleanable(/obj/decal/cleanable/machine_debris, locate(S.x, S.y, S.z),0)
 							if(6)
-								new /obj/grille/aluminum/broken(locate(S.x, S.y, S.z),0)
+								new /obj/grille/iron/broken(locate(S.x, S.y, S.z),0)
 							else
 								new /obj/lattice(locate(S.x, S.y, S.z),0)
 
@@ -806,7 +806,7 @@
 
 	switch(RarityClassRoll(100,0,list(90,50)))
 		if(1)
-			scrap_material = copyMaterial(getMaterial(pick("aluminum","mauxite")))
+			scrap_material = copyMaterial(getMaterial(pick("iron","iron")))
 		if(2)
 			scrap_material = copyMaterial(getMaterial(pick("cobryl","bohrum")))
 		if(3)
@@ -848,7 +848,7 @@
 
 // Modifiers
 
-/proc/Turfspawn_Asteroid_SeedSpecificOre(var/list/turfs,var/ore_name = "mauxite",var/veins = 0)
+/proc/Turfspawn_Asteroid_SeedSpecificOre(var/list/turfs,var/ore_name = "iron",var/veins = 0)
 	if (!turfs || turfs.len < 1)
 		return list()
 

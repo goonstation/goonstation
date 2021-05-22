@@ -2587,8 +2587,8 @@
 	pixel_x = 10
 	},
 /obj/rack,
-/obj/item/sheet/aluminum/fullstack,
-/obj/item/sheet/aluminum/reinforced/fullstack,
+/obj/item/sheet/iron/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
@@ -3635,7 +3635,7 @@
 /turf/space,
 /area/space)
 "iX" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -4063,7 +4063,7 @@
 	},
 /area/station/chapel/sanctuary)
 "jW" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -4079,7 +4079,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "jY" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -7110,7 +7110,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "qW" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
 "qX" = (
@@ -9661,7 +9661,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "wz" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -9714,7 +9714,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/engineering)
 "wE" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -11116,7 +11116,7 @@
 /turf/simulated/floor/black,
 /area/station/storage/tech)
 "An" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -15968,7 +15968,7 @@
 /turf/simulated/grimycarpet,
 /area/ghostdrone_factory)
 "MK" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "ML" = (
@@ -20078,9 +20078,9 @@
 /turf/simulated/floor/red,
 /area/station/security/brig/genpop)
 "Yw" = (
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/table/auto,
-/obj/item/sheet/aluminum/reinforced/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "Yx" = (

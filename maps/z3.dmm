@@ -343,7 +343,7 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "abe" = (
-/obj/grille/aluminum/broken,
+/obj/grille/iron/broken,
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "abf" = (
@@ -663,7 +663,7 @@
 	},
 /area/space_hive)
 "acc" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window{
 	dir = 8
 	},
@@ -779,11 +779,11 @@
 	icon_state = "rwindow";
 	reinf = 1
 	},
-/obj/grille/aluminum/broken,
+/obj/grille/iron/broken,
 /turf/unsimulated/floor/plating/scorched,
 /area/space_hive)
 "acv" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window{
 	dir = 2;
 	icon_state = "rwindow";
@@ -792,7 +792,7 @@
 /turf/unsimulated/floor,
 /area/space_hive)
 "acw" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window{
 	dir = 1;
 	icon_state = "rwindow";
@@ -835,7 +835,7 @@
 /turf/unsimulated/floor,
 /area/space_hive)
 "acA" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -912,7 +912,7 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "acM" = (
-/obj/item/rods/aluminum,
+/obj/item/rods/iron,
 /turf/unsimulated/floor/plating/scorched,
 /area/space_hive)
 "acN" = (
@@ -1221,7 +1221,7 @@
 /turf/unsimulated/floor,
 /area/space_hive)
 "adE" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "adF" = (
@@ -1839,7 +1839,7 @@
 /turf/unsimulated/floor/arctic,
 /area/space_hive)
 "afq" = (
-/obj/item/rods/aluminum,
+/obj/item/rods/iron,
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "afr" = (
@@ -2580,7 +2580,7 @@
 	},
 /area/mining/dock)
 "ahH" = (
-/obj/item/rods/aluminum,
+/obj/item/rods/iron,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -3297,9 +3297,9 @@
 	name = "S light switch";
 	pixel_y = -24
 	},
-/obj/item/rods/aluminum,
-/obj/item/rods/aluminum,
-/obj/item/rods/aluminum,
+/obj/item/rods/iron,
+/obj/item/rods/iron,
+/obj/item/rods/iron,
 /turf/simulated/floor/grime,
 /area/mining/comms)
 "ajF" = (
@@ -3311,9 +3311,9 @@
 /turf/simulated/floor/grime,
 /area/mining/comms)
 "ajG" = (
-/obj/item/rods/aluminum,
-/obj/item/rods/aluminum,
-/obj/item/rods/aluminum,
+/obj/item/rods/iron,
+/obj/item/rods/iron,
+/obj/item/rods/iron,
 /turf/simulated/floor/grime,
 /area/mining/comms)
 "ajH" = (
@@ -6092,11 +6092,11 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aqF" = (
-/obj/grille/aluminum/broken,
+/obj/grille/iron/broken,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aqG" = (
-/obj/grille/aluminum/broken,
+/obj/grille/iron/broken,
 /turf/simulated/floor/airless/plating/scorched,
 /area/space)
 "aqH" = (
@@ -8034,7 +8034,7 @@
 /turf/simulated/floor/plating,
 /area/buddyfactory)
 "avh" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 8
 	},
@@ -8047,7 +8047,7 @@
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "avi" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 4
 	},
@@ -8172,7 +8172,7 @@
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "avx" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "avy" = (
@@ -8261,10 +8261,10 @@
 /area/tech_outpost)
 "avM" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum/reinforced{
+/obj/item/sheet/iron/reinforced{
 	amount = 50
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/screwdriver,
@@ -8393,7 +8393,7 @@
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "awh" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /obj/item/caution{
 	desc = "Caution! Construction Zone!";
 	name = "caution sign"
@@ -8526,7 +8526,7 @@
 /turf/simulated/floor/white,
 /area/buddyfactory)
 "awD" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 1
 	},
@@ -8592,7 +8592,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/tech_outpost)
 "awN" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 8
 	},
@@ -8622,7 +8622,7 @@
 	},
 /area/tech_outpost)
 "awS" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 8
 	},
@@ -9222,7 +9222,7 @@
 /turf/simulated/floor/white,
 /area/evilreaver/genetics)
 "ays" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
 "ayt" = (
@@ -9915,7 +9915,7 @@
 /turf/simulated/martian/floor,
 /area/martian_trader)
 "azZ" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/simulated/floor/plating/damaged3,
 /area/martian_trader)
 "aAa" = (
@@ -10320,7 +10320,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
 "aAY" = (
-/obj/item/rods/aluminum,
+/obj/item/rods/iron,
 /obj/decal/fakeobjects/lighttube_broken,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
@@ -11976,7 +11976,7 @@
 /area/evilreaver/bar)
 "aFm" = (
 /obj/decal/cleanable/molten_item,
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /obj/item/cigbutt,
 /obj/item/device/light/zippo,
 /turf/simulated/floor/plating/damaged3,
@@ -13016,7 +13016,7 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedmedicalship)
 "aIh" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 8
 	},
@@ -13035,7 +13035,7 @@
 /turf/simulated/floor/airless/damaged2,
 /area/abandonedmedicalship)
 "aIj" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 1
 	},
@@ -13530,7 +13530,7 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "aJC" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 1
 	},
@@ -13996,7 +13996,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aKJ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 8
 	},
@@ -16360,7 +16360,7 @@
 /turf/simulated/floor/engine,
 /area/derelict_ai_sat)
 "aQy" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced,
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
@@ -16368,7 +16368,7 @@
 /turf/simulated/floor/plating,
 /area/abandonedship)
 "aQz" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/north,
@@ -17725,7 +17725,7 @@
 	},
 /area/iss)
 "aTR" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced,
 /turf/simulated/floor/plating,
 /area/iss)
@@ -18486,7 +18486,7 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
 "aVZ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced,
 /turf/simulated/floor/plating,
 /area/abandonedmedicalship/robot_trader)
@@ -19045,10 +19045,10 @@
 /area/iss)
 "aXj" = (
 /obj/rack,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 10
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 10
 	},
 /turf/simulated/floor/orangeblack,
@@ -19225,10 +19225,10 @@
 	name = "power conduit"
 	},
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /turf/simulated/floor/plating,
@@ -20410,7 +20410,7 @@
 /turf/simulated/floor/plating,
 /area/iss)
 "baq" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/south,
 /obj/window/crystal/reinforced/west,
@@ -20421,7 +20421,7 @@
 /turf/simulated/floor/plating/random,
 /area/abandonedoutpostthing)
 "bar" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/south,
@@ -20588,7 +20588,7 @@
 	},
 /area/abandonedoutpostthing)
 "baP" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/south,
@@ -20902,7 +20902,7 @@
 /turf/simulated/floor/white/grime,
 /area/iss)
 "bbE" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /obj/decal/cleanable/machine_debris,
 /obj/landmark/artifact,
 /turf/simulated/floor/plating,
@@ -21081,7 +21081,7 @@
 /turf/simulated/floor,
 /area/h7/crew)
 "bcd" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/simulated/floor/plating,
 /area/h7)
 "bce" = (
@@ -22132,7 +22132,7 @@
 	},
 /area/helldrone)
 "bfe" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/helldrone)
 "bff" = (
@@ -22147,7 +22147,7 @@
 	},
 /area/h7/lab)
 "bfg" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/simulated/aprilfools{
 	desc = "A strange shifting void ...";
 	icon_state = "void";
@@ -22174,7 +22174,7 @@
 	},
 /area/helldrone)
 "bfk" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -22187,7 +22187,7 @@
 /turf/simulated/floor/plating,
 /area/helldrone)
 "bfl" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -22689,7 +22689,7 @@
 /turf/simulated/floor/plating,
 /area/h7/lab)
 "bgs" = (
-/obj/item/sheet/aluminum,
+/obj/item/sheet/iron,
 /turf/simulated/floor/plating,
 /area/h7/lab)
 "bgt" = (
@@ -23230,7 +23230,7 @@
 /turf/simulated/floor,
 /area/helldrone)
 "bhK" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -23375,7 +23375,7 @@
 /area/helldrone)
 "bib" = (
 /obj/structure/girder,
-/obj/item/sheet/aluminum,
+/obj/item/sheet/iron,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/h7/lab)
 "bic" = (
@@ -23450,7 +23450,7 @@
 /turf/simulated/floor/plating,
 /area/helldrone)
 "bii" = (
-/obj/item/sheet/aluminum,
+/obj/item/sheet/iron,
 /turf/space,
 /area/space)
 "bij" = (
@@ -24540,7 +24540,7 @@
 	},
 /area/spyshack)
 "bkX" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bkY" = (

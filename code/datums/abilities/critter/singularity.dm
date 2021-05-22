@@ -59,7 +59,7 @@
 
   // copy pasted from the singularity because lol more copy paste shoot me
   // default material cached
-  var/datum/material/defaultMaterial = getMaterial("aluminum")
+  var/datum/material/defaultMaterial = getMaterial("iron")
   for (var/turf/T in orange(range,holder.owner))
     LAGCHECK(LAG_LOW)
     if (prob(70))

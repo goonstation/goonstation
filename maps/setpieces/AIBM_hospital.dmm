@@ -5679,7 +5679,7 @@
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
 "oo" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -5693,7 +5693,7 @@
 	},
 /area/hospital/samostrel)
 "op" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 2;
 	icon_state = "rwindow"
@@ -5707,7 +5707,7 @@
 	},
 /area/hospital/samostrel)
 "oq" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 2;
 	icon_state = "rwindow"
@@ -5765,7 +5765,7 @@
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
 "ou" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 2;
 	icon_state = "rwindow"
@@ -5783,7 +5783,7 @@
 	},
 /area/hospital/samostrel)
 "ov" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -5805,7 +5805,7 @@
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
 "ox" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 2;
 	icon_state = "rwindow"
@@ -6238,7 +6238,7 @@
 	},
 /area/hospital/samostrel)
 "pf" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/north,
 /obj/window/south,
 /obj/window/east,
@@ -6789,7 +6789,7 @@
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/hospital/samostrel)
 "ql" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/north,
 /obj/window/east,
 /obj/window/west,
@@ -6840,7 +6840,7 @@
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/hospital/samostrel)
 "qs" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/south,
 /obj/window/east,
 /obj/window/west,
@@ -7428,7 +7428,7 @@
 /obj/rail/cap{
 	dir = 8
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1

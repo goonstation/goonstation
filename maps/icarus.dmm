@@ -230,7 +230,7 @@
 /turf/space,
 /area/station/com_dish/comdish)
 "aaM" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/station/com_dish/comdish)
 "aaN" = (
@@ -4053,7 +4053,7 @@
 "ajD" = (
 /obj/machinery/manufacturer/hangar{
 	free_resource_amt = 4;
-	free_resources = list(/obj/item/material_piece/mauxite,/obj/item/material_piece/pharosium,/obj/item/material_piece/molitz,/obj/item/material_piece/bohrum)
+	free_resources = list(/obj/item/material_piece/iron,/obj/item/material_piece/pharosium,/obj/item/material_piece/molitz,/obj/item/material_piece/bohrum)
 	},
 /obj/machinery/light{
 	dir = 8;
@@ -4080,7 +4080,7 @@
 /obj/item/sheet/glass/reinforced{
 	amount = 5
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 5
 	},
 /obj/item/cable_coil,
@@ -7721,7 +7721,7 @@
 /area/station/maintenance/west)
 "arl" = (
 /obj/rack,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass{
@@ -11384,7 +11384,7 @@
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "ayK" = (
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/storage/toolbox/mechanical,
@@ -12396,10 +12396,10 @@
 /area/station/storage/primary)
 "aAT" = (
 /obj/table/auto,
-/obj/item/rods/aluminum{
+/obj/item/rods/iron{
 	amount = 50
 	},
-/obj/item/rods/aluminum{
+/obj/item/rods/iron{
 	amount = 50
 	},
 /obj/item/reagent_containers/food/drinks/fueltank,
@@ -12593,13 +12593,13 @@
 /area/station/storage/primary)
 "aBp" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass{
@@ -12632,10 +12632,10 @@
 /area/station/storage/primary)
 "aBs" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum/reinforced{
+/obj/item/sheet/iron/reinforced{
 	amount = 50
 	},
-/obj/item/sheet/aluminum/reinforced{
+/obj/item/sheet/iron/reinforced{
 	amount = 50
 	},
 /obj/item/clothing/ears/earmuffs,
@@ -13828,7 +13828,7 @@
 /area/station/maintenance/disposal)
 "aEq" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/wrench,
@@ -15421,13 +15421,13 @@
 /area/station/storage/eva)
 "aHF" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass/reinforced{
 	amount = 50
 	},
-/obj/item/rods/aluminum{
+/obj/item/rods/iron{
 	amount = 50
 	},
 /obj/item/storage/toolbox/emergency,
@@ -15743,7 +15743,7 @@
 /obj/item/sheet/glass{
 	amount = 50
 	},
-/obj/item/sheet/aluminum/reinforced{
+/obj/item/sheet/iron/reinforced{
 	amount = 50
 	},
 /obj/item/storage/toolbox/mechanical,
@@ -18397,7 +18397,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "aNE" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/station/com_dish/auxdish)
 "aNF" = (
@@ -19392,7 +19392,7 @@
 /area/station/hangar/qm)
 "aPM" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 10
 	},
 /obj/item/weldingtool,
@@ -23596,7 +23596,7 @@
 "aYd" = (
 /obj/machinery/manufacturer/gas{
 	free_resource_amt = 3;
-	free_resources = list(/obj/item/material_piece/mauxite)
+	free_resources = list(/obj/item/material_piece/iron)
 	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
@@ -25296,7 +25296,7 @@
 	},
 /area/mining/magnet)
 "bbw" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "bbx" = (
@@ -26121,7 +26121,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/machinery/light/small,
@@ -27931,7 +27931,7 @@
 /turf/simulated/floor/engine,
 /area/research_outpost/indigo_rye)
 "xjm" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/research_outpost/indigo_rye)
 "xtt" = (

@@ -968,7 +968,7 @@
 					src.dismantle_stage = 0
 				else if (src.dismantle_stage == 3)
 					user.visible_message("<b>[user]</b> dismantles [src]'s mechanisms.")
-					new /obj/item/sheet/aluminum/reinforced(src.loc)
+					new /obj/item/sheet/iron/reinforced(src.loc)
 					qdel(src)
 					return
 				src.build_icon()
@@ -977,7 +977,7 @@
 			user.visible_message("<b>[user]</b> pries off [src]'s plating.")
 			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
 			src.dismantle_stage = 2
-			new /obj/item/sheet/aluminum/reinforced(src.loc)
+			new /obj/item/sheet/iron/reinforced(src.loc)
 			src.build_icon()
 
 		else if (issnippingtool(W) && src.dismantle_stage == 2)
@@ -992,7 +992,7 @@
 			C.amount = 1
 			src.build_icon()
 
-		else if (istype(W,/obj/item/sheet/aluminum/reinforced) && src.dismantle_stage == 2)
+		else if (istype(W,/obj/item/sheet/iron/reinforced) && src.dismantle_stage == 2)
 			user.visible_message("<b>[user]</b> adds plating to [src].")
 			src.dismantle_stage = 1
 			qdel(W)
@@ -1996,7 +1996,7 @@
 	name = "General Manufacturer"
 	desc = "A manufacturing unit calibrated to produce tools and general purpose items."
 	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/aluminum,
+	free_resources = list(/obj/item/material_piece/iron,
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass)
 	available = list(/datum/manufacture/screwdriver,
@@ -2059,7 +2059,7 @@
 	icon_state = "fab-robotics"
 	icon_base = "robotics"
 	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/aluminum,
+	free_resources = list(/obj/item/material_piece/iron,
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass)
 
@@ -2159,7 +2159,7 @@
 	icon_state = "fab-med"
 	icon_base = "med"
 	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/aluminum,
+	free_resources = list(/obj/item/material_piece/iron,
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass,
 		/obj/item/material_piece/cloth/cottonfabric)
@@ -2225,7 +2225,7 @@
 	icon_state = "fab-mining"
 	icon_base = "mining"
 	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/aluminum,
+	free_resources = list(/obj/item/material_piece/iron,
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass)
 	available = list(/datum/manufacture/pick,
@@ -2276,7 +2276,7 @@
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
 	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/aluminum,
+	free_resources = list(/obj/item/material_piece/iron,
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass)
 	available = list(
@@ -2382,7 +2382,7 @@
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
 	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/aluminum,
+	free_resources = list(/obj/item/material_piece/iron,
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass)
 
@@ -2392,7 +2392,7 @@
 	icon_state = "fab-access"
 	icon_base = "access"
 	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/aluminum,
+	free_resources = list(/obj/item/material_piece/iron,
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass)
 	available = list(/datum/manufacture/id_card, /datum/manufacture/implant_access,	/datum/manufacture/implanter) //hey if you update these please remember to add it to /hop_and_uniform's list too
@@ -2406,7 +2406,7 @@
 	icon_state = "fab-access"
 	icon_base = "access"
 	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/aluminum,
+	free_resources = list(/obj/item/material_piece/iron,
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass,
 		/obj/item/material_piece/cloth/cottonfabric)
@@ -2460,7 +2460,7 @@
 	icon_state = "fab-crates"
 	icon_base = "crates"
 	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/aluminum)
+	free_resources = list(/obj/item/material_piece/iron)
 	accept_blueprints = 0
 	available = list(/datum/manufacture/crate,	//hey if you update these please remember to add it to /hop_and_uniform's list too
 	/datum/manufacture/packingcrate,
@@ -2477,7 +2477,7 @@
 	icon_state = "fab-crates"
 	icon_base = "crates"
 	free_resource_amt = 50
-	free_resources = list(/obj/item/material_piece/aluminum,
+	free_resources = list(/obj/item/material_piece/iron,
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass,
 		/obj/item/material_piece/cloth/cottonfabric)

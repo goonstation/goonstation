@@ -124,7 +124,7 @@
 			// if(src.material)
 			// 	A.setMaterial(src.material)
 			// else
-			// 	var/datum/material/M = getMaterial("aluminum")
+			// 	var/datum/material/M = getMaterial("iron")
 			// 	A.setMaterial(M)
 			qdel(src)
 			return

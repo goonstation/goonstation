@@ -342,7 +342,7 @@ obj/item/storage/wall/clothingrack/hatrack
 	icon_state = "mineralshelf"
 	plane = PLANE_DEFAULT
 	can_hold = list(/obj/item/raw_material,/obj/item/material_piece)
-	spawn_contents = list(/obj/item/raw_material/mauxite = 4)
+	spawn_contents = list(/obj/item/raw_material/iron = 4)
 
 	New()
 		hud = new(src)

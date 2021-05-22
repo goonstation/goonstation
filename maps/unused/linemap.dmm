@@ -35,11 +35,11 @@
 /turf/simulated/wall/auto/reinforced/gannets,
 /area/station/solar/small_backup1)
 "aag" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/airless,
 /area/station/solar/small_backup1)
 "aah" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable{
 	icon_state = "1-2";
 	d1 = 1;
@@ -315,7 +315,7 @@
 /turf/space,
 /area/station/turret_protected/ai)
 "aaM" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -354,11 +354,11 @@
 /turf/space,
 /area/station/turret_protected/ai)
 "aaS" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai)
 "aaT" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -1959,7 +1959,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "aes" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aet" = (
@@ -2239,7 +2239,7 @@
 /turf/simulated/floor/plating/damaged2,
 /area/station/maintenance/west)
 "afe" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable{
 	icon_state = "1-2";
 	d1 = 1;
@@ -3160,7 +3160,7 @@
 /area/station/hangar/main)
 "ahk" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/storage/toolbox/mechanical,
@@ -3357,7 +3357,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/space)
 "ahH" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/space)
@@ -4616,7 +4616,7 @@
 /turf/simulated/floor,
 /area/station/storage/primary)
 "aky" = (
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /turf/simulated/floor,
@@ -4752,7 +4752,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "akP" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "akQ" = (
@@ -5083,19 +5083,19 @@
 /area/station/teleporter)
 "alE" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum/reinforced{
+/obj/item/sheet/iron/reinforced{
 	amount = 50
 	},
-/obj/item/sheet/aluminum/reinforced{
+/obj/item/sheet/iron/reinforced{
 	amount = 50
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/storage/belt/utility,
@@ -5506,8 +5506,8 @@
 /area/space)
 "amF" = (
 /obj/table/auto,
-/obj/item/rods/aluminum/fullstack,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/rods/iron/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
 /obj/item/light/tube,
@@ -5524,7 +5524,7 @@
 /area/space)
 "amH" = (
 /obj/table/auto,
-/obj/item/rods/aluminum/fullstack,
+/obj/item/rods/iron/fullstack,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
@@ -5535,8 +5535,8 @@
 /area/space)
 "amI" = (
 /obj/table/auto,
-/obj/item/rods/aluminum/fullstack,
-/obj/item/sheet/aluminum/reinforced/fullstack,
+/obj/item/rods/iron/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
 /obj/item/light/tube,
@@ -5544,7 +5544,7 @@
 /area/space)
 "amJ" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
 /turf/simulated/grimycarpet,
@@ -7551,7 +7551,7 @@
 	},
 /area/mining/magnet)
 "arh" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -7829,7 +7829,7 @@
 /turf/simulated/floor/bot,
 /area/station/quartermaster/office)
 "arP" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2";
@@ -7869,7 +7869,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "arU" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/wall/auto/gannets,
 /area/station/turret_protected/ai_upload)
 "arV" = (
@@ -8622,7 +8622,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "atO" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4";
@@ -8880,7 +8880,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "aut" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload_foyer)
@@ -9480,7 +9480,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/northwest)
 "avJ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4";
@@ -9489,7 +9489,7 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload_foyer)
 "avK" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable,
 /obj/cable{
 	d2 = 8;
@@ -9503,7 +9503,7 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload_foyer)
 "avL" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -9516,7 +9516,7 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload_foyer)
 "avM" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -10371,7 +10371,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "axI" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "axJ" = (
@@ -10485,10 +10485,10 @@
 /area/station/storage/tools)
 "axW" = (
 /obj/rack,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 10
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 10
 	},
 /obj/item/storage/box/lightbox/tubes,
@@ -10902,7 +10902,7 @@
 /turf/simulated/floor,
 /area/station/storage/tools)
 "ayX" = (
-/obj/item/rods/aluminum{
+/obj/item/rods/iron{
 	amount = 50
 	},
 /obj/item/caution{
@@ -10975,7 +10975,7 @@
 /turf/space,
 /area/station/com_dish/auxdish)
 "azi" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/airless,
 /area/station/com_dish/auxdish)
 "azj" = (
@@ -11420,7 +11420,7 @@
 	},
 /area/station/hallway/primary/south)
 "aAs" = (
-/obj/item/rods/aluminum,
+/obj/item/rods/iron,
 /obj/landmark{
 	icon_state = "x3";
 	name = "peststart"
@@ -11429,11 +11429,11 @@
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "aAt" = (
-/obj/item/tile/aluminum{
+/obj/item/tile/iron{
 	pixel_x = -7;
 	pixel_y = -3
 	},
-/obj/item/tile/aluminum{
+/obj/item/tile/iron{
 	pixel_x = 5;
 	pixel_y = 4
 	},
@@ -11477,7 +11477,7 @@
 /area/station/com_dish/auxdish)
 "aAy" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 10
 	},
 /obj/item/storage/toolbox/mechanical,
@@ -11586,7 +11586,7 @@
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "aAN" = (
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 10
 	},
 /turf/simulated/floor/grime,
@@ -12310,7 +12310,7 @@
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "aCB" = (
-/obj/item/rods/aluminum,
+/obj/item/rods/iron,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "aCC" = (
@@ -13165,7 +13165,7 @@
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "aEk" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /obj/landmark{
 	icon_state = "x3";
 	name = "peststart"
@@ -13299,7 +13299,7 @@
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "aEH" = (
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 10
 	},
 /obj/machinery/light,
@@ -14062,7 +14062,7 @@
 /area/station/storage/warehouse)
 "aGE" = (
 /obj/rack,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/machinery/light{
@@ -14358,7 +14358,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
 "aHl" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/machinery/door/poddoor/blast/single{
 	id = "tox_vent2";
 	layer = 8;
@@ -15038,7 +15038,7 @@
 /turf/space,
 /area/space)
 "aIW" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "aIX" = (
@@ -16071,7 +16071,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aLB" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/machinery/door/poddoor/blast{
 	dir = 4;
 	icon_state = "bdoorleft1";
@@ -16082,7 +16082,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "aLC" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/machinery/door/poddoor/blast{
 	autoclose = 0;
 	dir = 4;
@@ -16094,7 +16094,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "aLD" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/machinery/door/poddoor/blast{
 	dir = 4;
 	doordir = "right";
@@ -16820,7 +16820,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "aNm" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aNn" = (
@@ -19434,7 +19434,7 @@
 /area/station/storage/emergency2)
 "aTK" = (
 /obj/rack,
-/obj/item/sheet/aluminum/reinforced{
+/obj/item/sheet/iron/reinforced{
 	amount = 50
 	},
 /obj/machinery/firealarm{
@@ -20633,10 +20633,10 @@
 /area/station/storage/eva)
 "aWp" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum/fullstack,
-/obj/item/sheet/aluminum/reinforced/fullstack,
-/obj/item/sheet/aluminum/fullstack,
-/obj/item/sheet/aluminum/reinforced/fullstack,
+/obj/item/sheet/iron/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack,
+/obj/item/sheet/iron/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack,
 /obj/item/cable_coil,
 /obj/item/cable_coil,
 /obj/item/cable_coil,
@@ -21944,7 +21944,7 @@
 /obj/item/sheet/glass/fullstack,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/sheet/glass/reinforced/fullstack,
-/obj/item/rods/aluminum/fullstack,
+/obj/item/rods/iron/fullstack,
 /obj/cable{
 	d1 = 1;
 	d2 = 8;
@@ -33553,7 +33553,7 @@
 /turf/simulated/wall/auto/reinforced/gannets,
 /area/station/crew_quarters/heads)
 "bzt" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -33676,7 +33676,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
 "bzK" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/airless,
 /area/station/com_dish/comdish)
 "bzL" = (
@@ -33791,7 +33791,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bzY" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -34346,7 +34346,7 @@
 	},
 /area/space)
 "bAU" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "bAV" = (

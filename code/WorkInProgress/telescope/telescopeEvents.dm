@@ -114,8 +114,8 @@
 		D.start.nodeText = "It's a large miraclium asteroid."
 
 
-/datum/telescope_event/ore_mauxite
-	name = "Mauxite asteroid"
+/datum/telescope_event/ore_iron
+	name = "Iron asteroid"
 	name_undiscovered = "Celestial body"
 	id = "oma"
 	tags = TAG_ORE | TAG_MAGNET_LOC
@@ -127,10 +127,10 @@
 		telescopeDialogue = new/datum/dialogueMaster/telescopeAsteroidDialogue(src)
 		var/datum/dialogueMaster/telescopeAsteroidDialogue/D = telescopeDialogue
 		D.linkedEvent = src
-		D.encounterName = "Mauxite asteroid"
+		D.encounterName = "Iron asteroid"
 		D.start.nodeImage = "asteroidred.png"
 		D.start.linkText = "..."
-		D.start.nodeText = "It's a large Mauxite asteroid."
+		D.start.nodeText = "It's a large Iron asteroid."
 
 
 /datum/telescope_event/ore_valuable

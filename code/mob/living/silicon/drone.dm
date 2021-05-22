@@ -394,7 +394,7 @@
 						if(src.material)
 							S.setMaterial(src.material)
 						else
-							var/datum/material/M = getMaterial("aluminum")
+							var/datum/material/M = getMaterial("iron")
 							S.setMaterial(M)
 
 						qdel(src)

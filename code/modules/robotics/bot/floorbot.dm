@@ -395,7 +395,7 @@
 	else
 		sheets_to_use = M.amount
 
-	var/obj/item/tile/T = new /obj/item/tile/aluminum
+	var/obj/item/tile/T = new /obj/item/tile/iron
 	T.set_loc(get_turf(src))
 	M.set_loc(get_turf(src))
 	T.amount = sheets_to_use * 4
@@ -521,7 +521,7 @@
 		playsound(get_turf(master), "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 		if (new_tile)
 			// Make a new tile
-			var/obj/item/tile/T = new /obj/item/tile/aluminum
+			var/obj/item/tile/T = new /obj/item/tile/iron
 			T.build(get_turf(master.target))
 		else
 			// Fix yo shit
@@ -587,7 +587,7 @@
 		if (T.material)
 			A.setMaterial(T.material)
 		else
-			var/datum/material/M = getMaterial("aluminum")
+			var/datum/material/M = getMaterial("iron")
 			A.setMaterial(M)
 
 		T.ReplaceWithSpace()

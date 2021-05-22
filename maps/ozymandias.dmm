@@ -867,7 +867,7 @@
 /turf/simulated/floor/wood/seven,
 /area/station/garden/aviary)
 "anC" = (
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/storage/toolbox/mechanical,
@@ -2863,7 +2863,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "aSH" = (
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/storage/toolbox/mechanical,
@@ -7856,7 +7856,7 @@
 /area/station/storage/warehouse)
 "cqr" = (
 /obj/rack,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 10
 	},
 /obj/cable{
@@ -8431,7 +8431,7 @@
 /area/station/science/testchamber)
 "cBb" = (
 /obj/window/auto/reinforced/indestructible,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/decal/poster/wallsign/stencil/left/a,
 /obj/decal/poster/wallsign/stencil/right/r,
 /turf/simulated/floor{
@@ -8642,7 +8642,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/head)
 "cEq" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/garden/aviary)
 "cEu" = (
@@ -11607,8 +11607,8 @@
 /area/station/engine/engineering/private)
 "dvt" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum/fullstack,
-/obj/item/sheet/aluminum/fullstack{
+/obj/item/sheet/iron/fullstack,
+/obj/item/sheet/iron/fullstack{
 	pixel_y = 2
 	},
 /obj/machinery/light,
@@ -14541,7 +14541,7 @@
 /obj/item/storage/wall/fire{
 	pixel_y = 32
 	},
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/item/sheet/glass/reinforced/fullstack{
 	pixel_x = 3;
 	pixel_y = 4
@@ -16491,7 +16491,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "eRl" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "eRo" = (
@@ -17541,8 +17541,8 @@
 /area/station/crew_quarters/barber_shop)
 "fjD" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum/fullstack,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/yellow/checker,
 /area/station/storage/tools)
@@ -25475,7 +25475,7 @@
 	},
 /area/station/engine/elect)
 "hty" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -27644,13 +27644,13 @@
 /area/station/medical/medbay)
 "iaT" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass/reinforced{
 	amount = 50
 	},
-/obj/item/rods/aluminum{
+/obj/item/rods/iron{
 	amount = 50
 	},
 /obj/item/storage/toolbox/emergency,
@@ -29719,7 +29719,7 @@
 /area/station/engine/engineering)
 "iGq" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/wrench,
@@ -32844,7 +32844,7 @@
 /turf/simulated/floor/circuit/off,
 /area/station/engine/core)
 "jBK" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "jBL" = (
@@ -32994,7 +32994,7 @@
 /area/station/hallway/primary/west)
 "jDF" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/caution/east,
 /area/station/hangar/engine)
@@ -33679,7 +33679,7 @@
 	})
 "jNY" = (
 /obj/window/auto/reinforced/indestructible,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor{
 	desc = "";
 	dir = 8;
@@ -36214,10 +36214,10 @@
 /area/station/crew_quarters/market)
 "kxy" = (
 /obj/table/auto,
-/obj/item/rods/aluminum/fullstack{
+/obj/item/rods/iron/fullstack{
 	pixel_x = -7
 	},
-/obj/item/rods/aluminum/fullstack{
+/obj/item/rods/iron/fullstack{
 	pixel_x = 7
 	},
 /obj/machinery/light,
@@ -36646,7 +36646,7 @@
 	})
 "kEu" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 10
 	},
 /obj/item/weldingtool,
@@ -36979,7 +36979,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge/west,
 /area/station/crew_quarters/courtroom)
 "kJN" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/airless/plating,
 /area/station/science/storage)
 "kJT" = (
@@ -38855,7 +38855,7 @@
 /area/station/maintenance/inner/north)
 "llO" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/item/storage/box/cablesbox,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -39643,7 +39643,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/hor/horprivate)
 "lAK" = (
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/storage/toolbox/mechanical,
@@ -40046,7 +40046,7 @@
 	name = "Med-Sci Security Checkpoint"
 	})
 "lEt" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade/dungeon)
 "lEH" = (
@@ -41683,10 +41683,10 @@
 /area/station/maintenance/inner/north)
 "lZN" = (
 /obj/rack,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/machinery/light/small{
@@ -46753,7 +46753,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/chapel/sanctuary)
 "nzr" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced/indestructible,
 /turf/simulated/floor{
 	desc = "";
@@ -53064,7 +53064,7 @@
 	},
 /area/station/science/lab)
 "pnk" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced/indestructible,
 /turf/simulated/floor{
 	desc = "";
@@ -53746,7 +53746,7 @@
 /obj/item/sheet/glass{
 	amount = 50
 	},
-/obj/item/sheet/aluminum/reinforced{
+/obj/item/sheet/iron/reinforced{
 	amount = 50
 	},
 /obj/item/storage/toolbox/mechanical,
@@ -56340,7 +56340,7 @@
 /turf/simulated/floor/red/side,
 /area/station/hallway/primary/west)
 "qmQ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "qmT" = (
@@ -58834,7 +58834,7 @@
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "qUF" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
 "qUL" = (
@@ -60293,7 +60293,7 @@
 /area/station/crew_quarters/quartersA)
 "rqF" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/storage/toolbox/electrical,
@@ -60339,7 +60339,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "rrs" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "rrz" = (
@@ -63286,7 +63286,7 @@
 	},
 /area/station/crew_quarters/quartersA)
 "sga" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "sgj" = (
@@ -63401,7 +63401,7 @@
 	name = "Book Nook"
 	})
 "siE" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "siF" = (
@@ -63730,7 +63730,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "snn" = (
@@ -65528,7 +65528,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "sKW" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/item/a_gift/easter,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
@@ -66895,7 +66895,7 @@
 /area/station/science/lab)
 "tce" = (
 /obj/rack,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /turf/simulated/floor/grey/side{
@@ -73499,7 +73499,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade)
 "uNO" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/station/communications/centre)
 "uNS" = (
@@ -73739,7 +73739,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/power)
 "uRv" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "uRD" = (
@@ -75237,7 +75237,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/main)
 "vkW" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/west)
 "vlb" = (
@@ -76018,7 +76018,7 @@
 	},
 /area/station/crew_quarters/quartersA)
 "vuR" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -76654,7 +76654,7 @@
 /area/station/hallway/primary/south)
 "vCK" = (
 /obj/window/auto/reinforced/indestructible,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor{
 	desc = "";
 	dir = 8;
@@ -77663,7 +77663,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/barber_shop)
 "vPW" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -79850,7 +79850,7 @@
 /area/station/security/hos)
 "wtO" = (
 /obj/window/auto/reinforced/indestructible,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/decal/poster/wallsign/stencil/left/r,
 /obj/decal/poster/wallsign/stencil/right/v,
 /turf/simulated/floor{
@@ -79862,8 +79862,8 @@
 /area/shuttle/arrival/station)
 "wud" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum/reinforced/fullstack,
-/obj/item/sheet/aluminum/reinforced/fullstack{
+/obj/item/sheet/iron/reinforced/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack{
 	pixel_y = 2
 	},
 /obj/machinery/camera{
@@ -83359,7 +83359,7 @@
 /turf/simulated/floor/grey,
 /area/station/storage/tools)
 "xmo" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "xmy" = (
@@ -84035,7 +84035,7 @@
 /turf/simulated/floor/grey,
 /area/station/chapel/office)
 "xvo" = (
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/storage/toolbox/mechanical,
@@ -86407,7 +86407,7 @@
 /area/station/hallway/primary/east/restroom)
 "xZQ" = (
 /obj/rack,
-/obj/item/rods/aluminum{
+/obj/item/rods/iron{
 	amount = 10
 	},
 /obj/machinery/light/small{

@@ -523,7 +523,7 @@
 /turf/space,
 /area/space)
 "acW" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 1
 	},
@@ -535,7 +535,7 @@
 	},
 /area/hospital/samostrel)
 "acX" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -569,7 +569,7 @@
 /turf/space,
 /area/space)
 "add" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 1
 	},
@@ -649,7 +649,7 @@
 /turf/unsimulated/floor/grass/leafy,
 /area/hospital/somewhere)
 "adp" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -1323,7 +1323,7 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
 "afi" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/north,
 /obj/window/south,
 /obj/window/east,
@@ -4271,7 +4271,7 @@
 /obj/rail/cap{
 	dir = 8
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 1
 	},
@@ -5652,7 +5652,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "auc" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable,
 /obj/cable{
 	d2 = 4;
@@ -5666,7 +5666,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "aud" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -6291,11 +6291,11 @@
 	dir = 1;
 	name = "grimy pipe"
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "avQ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "avR" = (
@@ -6527,7 +6527,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "awC" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -6783,7 +6783,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "axj" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/unsimulated/floor,
 /area/moon/museum)
 "axk" = (
@@ -10035,7 +10035,7 @@
 	},
 /area/marsoutpost)
 "aIT" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/decal/fakeobjects{
 	anchored = 1;
 	density = 1;
@@ -10068,7 +10068,7 @@
 /turf/unsimulated/floor,
 /area/marsoutpost)
 "aIU" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/decal/fakeobjects{
 	anchored = 1;
 	density = 1;
@@ -10770,7 +10770,7 @@
 /area/marsoutpost)
 "aKU" = (
 /obj/item/mousetrap/armed/cleaner,
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /obj/machinery/door/airlock/classic,
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
@@ -11177,7 +11177,7 @@
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/north)
 "aMi" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/west,
 /obj/channel{
@@ -11186,7 +11186,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/north)
 "aMj" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/south,
 /obj/channel{
@@ -11208,7 +11208,7 @@
 	},
 /area/crater/cave)
 "aMm" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/decal/fakeobjects{
 	anchored = 1;
 	density = 1;
@@ -11607,7 +11607,7 @@
 	},
 /area/upper_arctic/exterior/surface)
 "aNo" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/unsimulated/floor/arctic/plating,
 /area/upper_arctic/comms)
 "aNp" = (
@@ -11802,7 +11802,7 @@
 	},
 /area/lower_arctic/mining)
 "aNV" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/south,
@@ -12146,7 +12146,7 @@
 /turf/unsimulated/wall/setpieces/leadwall,
 /area/lower_arctic/mining)
 "aOO" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/unsimulated/floor/plating/scorched,
 /area/lower_arctic/mining)
 "aOP" = (
@@ -12793,7 +12793,7 @@
 /turf/unsimulated/floor/grime,
 /area/lower_arctic/mining)
 "aQp" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/south,
 /obj/window/crystal/reinforced/west,
@@ -12831,7 +12831,7 @@
 	},
 /area/crater/biodome/research)
 "aQu" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/research)
 "aQv" = (
@@ -12911,7 +12911,7 @@
 	},
 /area/crater/biodome/north)
 "aQF" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/south,
 /obj/window/crystal/reinforced/east,
@@ -13236,7 +13236,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty1"
 	},
@@ -13523,7 +13523,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aSr" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/north,
 /obj/channel{
@@ -13554,7 +13554,7 @@
 /area/marsoutpost)
 "aSw" = (
 /obj/decal/cleanable/dirt,
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty2"
 	},
@@ -13998,7 +13998,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aTL" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/crew)
 "aTM" = (
@@ -14994,7 +14994,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
 "aWs" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /obj/item/device/audio_log/mars,
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty1"
@@ -15565,7 +15565,7 @@
 	},
 /area/marsoutpost/duststorm)
 "aXP" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/decal/fakeobjects{
 	anchored = 1;
 	density = 1;
@@ -15598,7 +15598,7 @@
 /turf/unsimulated/floor,
 /area/marsoutpost/duststorm)
 "aXQ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/decal/fakeobjects{
 	anchored = 1;
 	density = 1;
@@ -15689,7 +15689,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/decal/fakeobjects/pipe,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty2"
 	},
@@ -16025,7 +16025,7 @@
 	},
 /area/marsoutpost)
 "aYN" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/decal/fakeobjects{
 	anchored = 1;
 	density = 1;
@@ -16095,7 +16095,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/decal/fakeobjects/pipe,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/unsimulated/floor/setpieces/martian,
 /area/marsoutpost/duststorm)
 "aYX" = (
@@ -16241,7 +16241,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aZp" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/south,
 /obj/channel{
@@ -16250,7 +16250,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/north)
 "aZq" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/south,
 /obj/window/crystal/reinforced/west,
 /obj/channel{
@@ -16329,7 +16329,7 @@
 	},
 /area/crater/biodome/south)
 "aZC" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/west,
 /obj/channel{
@@ -16352,7 +16352,7 @@
 	},
 /area/crater/cave)
 "aZF" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/decal/fakeobjects{
 	anchored = 1;
 	density = 1;
@@ -16375,7 +16375,7 @@
 /turf/unsimulated/floor,
 /area/marsoutpost)
 "aZG" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/decal/fakeobjects{
 	anchored = 1;
 	density = 1;
@@ -16723,7 +16723,7 @@
 	},
 /area/lower_arctic/pod1)
 "baA" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/south,
 /obj/window/crystal/reinforced/west,
@@ -17566,7 +17566,7 @@
 	},
 /area/marsoutpost)
 "bcy" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/unsimulated/floor/plating/scorched,
 /area/upper_arctic/mining)
 "bcz" = (
@@ -17842,7 +17842,7 @@
 /turf/unsimulated/floor/delivery,
 /area/crater/biodome/south)
 "bdf" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/west,
@@ -18485,7 +18485,7 @@
 /area/lower_arctic/lower)
 "bev" = (
 /obj/decal/cleanable/machine_debris,
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "bew" = (
@@ -18822,7 +18822,7 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "bfr" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/decal/fakeobjects{
 	anchored = 1;
 	density = 1;
@@ -18980,7 +18980,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater)
 "bfL" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/decal/fakeobjects{
 	anchored = 1;
 	density = 1;
@@ -19110,7 +19110,7 @@
 	},
 /area/marsoutpost)
 "bgg" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty1"
 	},
@@ -19161,7 +19161,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bgo" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "bgp" = (
@@ -19239,11 +19239,11 @@
 /obj/item/raw_material/shard/glass{
 	icon_state = "small"
 	},
-/obj/grille/aluminum/broken,
+/obj/grille/iron/broken,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bgB" = (
-/obj/item/sheet/aluminum,
+/obj/item/sheet/iron,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bgC" = (
@@ -19538,7 +19538,7 @@
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bhx" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bhy" = (
@@ -19712,7 +19712,7 @@
 /area/upper_arctic/exterior/surface)
 "bhS" = (
 /obj/lattice,
-/obj/item/sheet/aluminum,
+/obj/item/sheet/iron,
 /obj/landmark{
 	name = "telesci"
 	},
@@ -19730,7 +19730,7 @@
 /obj/item/raw_material/shard/glass{
 	icon_state = "medium"
 	},
-/obj/grille/aluminum/broken,
+/obj/grille/iron/broken,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bhV" = (
@@ -19758,7 +19758,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 9
 	},
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty1"
 	},
@@ -19946,7 +19946,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty1"
 	},
@@ -20365,7 +20365,7 @@
 	},
 /area/crater/cave/lower)
 "bjq" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /obj/decal/fakeobjects{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "5-6";
@@ -21944,7 +21944,7 @@
 /turf/unsimulated/floor/engine,
 /area/marsoutpost)
 "bnn" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
 /obj/window/reinforced/north,
@@ -21974,7 +21974,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
 "bnr" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	dir = 8
@@ -21990,7 +21990,7 @@
 	},
 /area/drone/office)
 "bns" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	dir = 2
@@ -22004,7 +22004,7 @@
 	},
 /area/drone/office)
 "bnt" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	dir = 4
@@ -22218,7 +22218,7 @@
 	},
 /area/precursor)
 "bnK" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/west,
 /obj/channel{
@@ -22407,7 +22407,7 @@
 	},
 /area/drone/assembly)
 "boe" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	dir = 8
@@ -22423,7 +22423,7 @@
 	},
 /area/drone/assembly)
 "bof" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	dir = 2
@@ -22437,7 +22437,7 @@
 	},
 /area/drone/assembly)
 "bog" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced,
 /obj/window/reinforced{
 	dir = 4
@@ -23887,7 +23887,7 @@
 /area/drone/assembly)
 "brP" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/aluminum/reinforced{
+/obj/item/sheet/iron/reinforced{
 	amount = 50
 	},
 /obj/item/device/analyzer/atmospheric,
@@ -24843,7 +24843,7 @@
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
 "btU" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
 "btV" = (
@@ -25018,7 +25018,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
 "but" = (
@@ -25748,7 +25748,7 @@
 	},
 /area/iomoon/base/underground)
 "bwi" = (
-/obj/item/rods/aluminum,
+/obj/item/rods/iron,
 /obj/decal/cleanable/machine_debris{
 	icon_state = "gib7"
 	},
@@ -32417,7 +32417,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
 "bMf" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window{
 	icon_state = "rwindow";
 	reinf = 1
@@ -32435,7 +32435,7 @@
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "bMg" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window{
 	icon_state = "rwindow";
 	reinf = 1
@@ -32448,7 +32448,7 @@
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "bMh" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window{
 	icon_state = "rwindow";
 	reinf = 1
@@ -32805,7 +32805,7 @@
 /area/owlery/staffhall)
 "bNb" = (
 /obj/item/bananapeel,
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "bNc" = (
@@ -34377,7 +34377,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crunch)
 "bRu" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "bRv" = (
@@ -34886,7 +34886,7 @@
 	},
 /area/crypt/sigma/mainhall)
 "bTa" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/unsimulated/floor,
 /area/crypt/sigma)
 "bTb" = (
@@ -36344,7 +36344,7 @@
 /turf/unsimulated/floor,
 /area/meat_derelict/main)
 "bXk" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/south,
 /obj/window/crystal/reinforced/west,
 /obj/channel{
@@ -36521,7 +36521,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
 "bXI" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/north,
 /obj/channel{
@@ -36739,7 +36739,7 @@
 	name = "VR Test Area"
 	})
 "bYm" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/west,
 /obj/channel{
@@ -36763,7 +36763,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
 "bYp" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/south,
 /obj/channel{
@@ -36835,7 +36835,7 @@
 	},
 /area/meat_derelict/main)
 "bYA" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window{
 	icon_state = "rwindow";
 	reinf = 1
@@ -37303,7 +37303,7 @@
 	},
 /area/meat_derelict/main)
 "bZE" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 1
 	},
@@ -37313,7 +37313,7 @@
 /turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "bZF" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -37323,7 +37323,7 @@
 /turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "bZG" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 1
 	},
@@ -37488,7 +37488,7 @@
 	},
 /area/meat_derelict/entry)
 "cad" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -37527,7 +37527,7 @@
 	},
 /area/meat_derelict/guts)
 "cah" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -37629,7 +37629,7 @@
 /turf/unsimulated/floor/setpieces/bloodfloor,
 /area/meat_derelict/main)
 "caw" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 4
 	},
@@ -37703,7 +37703,7 @@
 	},
 /area/crunch)
 "caG" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/unsimulated/floor,
 /area/crunch)
 "caH" = (
@@ -38525,7 +38525,7 @@
 	},
 /area/meat_derelict/guts)
 "cdg" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 1
 	},
@@ -38572,7 +38572,7 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "cdn" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/unsimulated/floor/plating/scorched,
 /area/crunch)
 "cdo" = (
@@ -38724,7 +38724,7 @@
 	},
 /area/meat_derelict/guts)
 "cdK" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -39091,7 +39091,7 @@
 	},
 /area/meat_derelict/entry)
 "ceJ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 1
 	},
@@ -39104,7 +39104,7 @@
 /turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "ceK" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 1
 	},
@@ -39114,7 +39114,7 @@
 /turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "ceL" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 1
 	},
@@ -40256,7 +40256,7 @@
 /turf/unsimulated/floor/bot/white,
 /area/crunch)
 "chB" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/unsimulated/floor/void,
 /area/crunch)
 "chC" = (
@@ -40795,7 +40795,7 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "ciX" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/unsimulated/floor/plating{
 	icon_state = ""
 	},
@@ -42104,7 +42104,7 @@
 	},
 /area/meat_derelict/soviet)
 "clX" = (
-/obj/item/rods/aluminum,
+/obj/item/rods/iron,
 /obj/item/raw_material/shard/glass{
 	icon_state = "medium"
 	},
@@ -42126,7 +42126,7 @@
 /obj/item/raw_material/shard/glass{
 	icon_state = "small"
 	},
-/obj/grille/aluminum/broken,
+/obj/grille/iron/broken,
 /turf/unsimulated/floor,
 /area/meat_derelict/soviet)
 "clZ" = (
@@ -43610,7 +43610,7 @@
 	layer = 8
 	},
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/mauxite{
+/obj/item/raw_material/iron{
 	layer = 10;
 	pixel_y = -8
 	},
@@ -43699,7 +43699,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
 "cqT" = (
-/obj/item/raw_material/mauxite,
+/obj/item/raw_material/iron,
 /turf/unsimulated/floor/tatami/west,
 /area/dojo)
 "cqU" = (
@@ -43718,7 +43718,7 @@
 "cqX" = (
 /obj/item/raw_material/scrap_metal,
 /obj/item/material_piece/slag,
-/obj/item/rods/aluminum,
+/obj/item/rods/iron,
 /obj/item/material_piece/bone,
 /turf/unsimulated/floor/dojo/stone,
 /area/dojo)
@@ -43778,21 +43778,21 @@
 /area/dojo)
 "crh" = (
 /obj/storage/crate/wooden,
-/obj/item/raw_material/mauxite,
-/obj/item/raw_material/mauxite,
-/obj/item/raw_material/mauxite,
-/obj/item/raw_material/mauxite,
-/obj/item/raw_material/mauxite,
+/obj/item/raw_material/iron,
+/obj/item/raw_material/iron,
+/obj/item/raw_material/iron,
+/obj/item/raw_material/iron,
+/obj/item/raw_material/iron,
 /turf/unsimulated/floor/tatami/south,
 /area/dojo)
 "cri" = (
 /obj/table/wood/round/auto,
-/obj/item/rods/aluminum/fullstack,
+/obj/item/rods/iron/fullstack,
 /turf/unsimulated/floor/tatami/west,
 /area/dojo)
 "crj" = (
 /obj/table/wood/round/auto,
-/obj/item/sheet/aluminum,
+/obj/item/sheet/iron,
 /turf/unsimulated/floor/tatami/east,
 /area/dojo)
 "crk" = (
@@ -44271,7 +44271,7 @@
 "csx" = (
 /obj/window/reinforced/west,
 /obj/window/reinforced/east,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 4
 	},
@@ -46023,7 +46023,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "cwD" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/south,
 /obj/channel{
@@ -46085,7 +46085,7 @@
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "cwK" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/south,
 /obj/window/crystal/reinforced/east,
@@ -47097,7 +47097,7 @@
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "czk" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -47592,7 +47592,7 @@
 /turf/unsimulated/wall/auto/reinforced,
 /area/owlery/Owlmait)
 "cAr" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/staffhall)
 "cAs" = (
@@ -49540,7 +49540,7 @@
 /turf/unsimulated/floor/sanitary/blue,
 /area/owlery/lab)
 "cEZ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/south,
 /obj/window/crystal/reinforced/west,
@@ -49726,7 +49726,7 @@
 	},
 /area/owlery/Owlopen)
 "cFx" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/unsimulated/floor/plating,
 /area/owlery/staffhall)
 "cFy" = (
@@ -59390,7 +59390,7 @@
 	},
 /area/afterlife/bar/sanctuary)
 "daI" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/map/light/white,
 /turf/unsimulated/floor/wood,
@@ -60331,7 +60331,7 @@
 	},
 /area/syndicate_station/battlecruiser)
 "dcR" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/map/light/white,
 /obj/disposalpipe/switch_junction/biofilter/left/east,
@@ -63308,7 +63308,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/wizard_station)
 "djW" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -63689,7 +63689,7 @@
 /area/shuttle/escape/transit/battle_shuttle)
 "dlh" = (
 /obj/window/auto/reinforced,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/transit/battle_shuttle)
 "dli" = (
@@ -63708,7 +63708,7 @@
 /turf/space/shuttle_transit,
 /area/shuttle/escape/transit/battle_shuttle)
 "dll" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -63743,13 +63743,13 @@
 /area/shuttle/escape/transit/battle_shuttle)
 "dlr" = (
 /obj/window/auto/reinforced,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/transit/battle_shuttle)
 "dls" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -63833,7 +63833,7 @@
 	},
 /area/shuttle/escape/transit/battle_shuttle)
 "dlD" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -65385,7 +65385,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/escape/centcom/donut2)
 "dqs" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -65501,7 +65501,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom/donut2)
 "dqI" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -65610,7 +65610,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom/donut2)
 "dqV" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -66855,7 +66855,7 @@
 	},
 /area/afterlife/bar)
 "dus" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -66864,7 +66864,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
 "dut" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/south,
 /obj/window/reinforced/east,
@@ -66918,7 +66918,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
 "duB" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -69199,7 +69199,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/bubs)
 "dAJ" = (
-/obj/item/tile/aluminum{
+/obj/item/tile/iron{
 	interesting = "there's litle bee footprints all over this";
 	name = "ceiling tile"
 	},
@@ -78022,7 +78022,7 @@
 /turf/unsimulated/floor/caution/east,
 /area/hospital/samostrel)
 "hBs" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/north,
 /obj/window/south,
 /obj/window/east,
@@ -78285,7 +78285,7 @@
 	},
 /area/centcom/offices/cogwerks)
 "iBC" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/south,
 /obj/window/east,
 /obj/window/west,
@@ -79011,7 +79011,7 @@
 	},
 /area/ship_interior/cruisertest2)
 "kRQ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -79475,7 +79475,7 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/cogmap)
 "mBL" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -80025,7 +80025,7 @@
 	},
 /area/centcom/lounge)
 "nSm" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -80713,7 +80713,7 @@
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
 "qfx" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/north,
 /obj/window/east,
 /obj/window/west,

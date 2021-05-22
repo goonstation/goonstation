@@ -8,7 +8,7 @@ TILES
 // TILES
 
 /obj/item/tile
-	name = "aluminum floor tile"
+	name = "iron floor tile"
 	desc = "They keep the floor in a good and walkable condition."
 	icon = 'icons/obj/metal.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'

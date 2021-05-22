@@ -26,7 +26,7 @@
 		..()
 		if (has_material)
 			if (isnull(plate_mat))
-				plate_mat = getMaterial("aluminum")
+				plate_mat = getMaterial("iron")
 			setMaterial(plate_mat)
 		roundstart_icon_state = icon_state
 		roundstart_dir = dir
@@ -75,7 +75,7 @@
 			make_cleanable( C ,src)
 		else if ((locate(/obj) in src) && prob(3))
 			var/obj/C = pick(/obj/item/cable_coil/cut/small, /obj/item/brick, /obj/item/cigbutt, /obj/item/scrap, /obj/item/raw_material/scrap_metal,\
-			/obj/item/spacecash, /obj/item/tile/aluminum, /obj/item/weldingtool, /obj/item/screwdriver, /obj/item/wrench, /obj/item/wirecutters, /obj/item/crowbar)
+			/obj/item/spacecash, /obj/item/tile/iron, /obj/item/weldingtool, /obj/item/screwdriver, /obj/item/wrench, /obj/item/wirecutters, /obj/item/crowbar)
 			new C (src)
 		else if (prob(1) && prob(2)) // really rare. not "three space things spawn on destiny during first test with just prob(1)" rare.
 			var/obj/C = pick(/obj/item/space_thing, /obj/item/sticker/gold_star, /obj/item/sticker/banana, /obj/item/sticker/heart,\
@@ -943,7 +943,7 @@
 	icon_state = "snow1"
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
-	mat_appearances_to_ignore = list("aluminum")
+	mat_appearances_to_ignore = list("iron")
 
 	New()
 		..()
@@ -1007,7 +1007,7 @@
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "grass"
-	mat_appearances_to_ignore = list("aluminum","synthrubber")
+	mat_appearances_to_ignore = list("iron","synthrubber")
 	mat_changename = 0
 	mat_changedesc = 0
 	step_material = "step_outdoors"
@@ -1055,7 +1055,7 @@
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "grasstodirt"
-	mat_appearances_to_ignore = list("aluminum","synthrubber")
+	mat_appearances_to_ignore = list("iron","synthrubber")
 	mat_changename = 0
 	mat_changedesc = 0
 
@@ -1063,7 +1063,7 @@
 	name = "dirt"
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "dirt"
-	mat_appearances_to_ignore = list("aluminum","synthrubber")
+	mat_appearances_to_ignore = list("iron","synthrubber")
 	mat_changename = 0
 	mat_changedesc = 0
 
@@ -1214,7 +1214,7 @@
 						if (src.material)
 							I.setMaterial(src.material)
 						else
-							var/datum/material/M = getMaterial("aluminum")
+							var/datum/material/M = getMaterial("iron")
 							I.setMaterial(M)
 					src.ReplaceWithLattice()
 				if(2)
@@ -1226,7 +1226,7 @@
 						if (src.material)
 							I.setMaterial(src.material)
 						else
-							var/datum/material/M = getMaterial("aluminum")
+							var/datum/material/M = getMaterial("iron")
 							I.setMaterial(M)
 					if(prob(80))
 						src.break_tile_to_plating()
@@ -1290,7 +1290,7 @@
 	if(plate_mat)
 		src.setMaterial(plate_mat)
 	else
-		src.setMaterial(getMaterial("aluminum"))
+		src.setMaterial(getMaterial("iron"))
 	levelupdate()
 
 /turf/simulated/floor/proc/dismantle_wall()//can get called due to people spamming weldingtools on walls
@@ -1397,7 +1397,7 @@
 		if(src.material)
 			A.setMaterial(src.material)
 		else
-			var/datum/material/M = getMaterial("aluminum")
+			var/datum/material/M = getMaterial("iron")
 			A.setMaterial(M)
 		.= A //return tile for crowbar special attack ok
 
@@ -1435,8 +1435,8 @@
 				R1.setMaterial(material)
 				R2.setMaterial(material)
 			else
-				R1.setMaterial(getMaterial("aluminum"))
-				R2.setMaterial(getMaterial("aluminum"))
+				R1.setMaterial(getMaterial("iron"))
+				R2.setMaterial(getMaterial("iron"))
 			ReplaceWithFloor()
 			src.to_plating()
 			return
@@ -1480,7 +1480,7 @@
 				src.setMaterial(C.material)
 			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 
-			if(!istype(src.material, /datum/material/metal/aluminum))
+			if(!istype(src.material, /datum/material/metal/iron))
 				logTheThing("station", user, null, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(src)].")
 
 			T.change_stack_amount(-1)

@@ -1767,7 +1767,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "eb" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/south,
@@ -1777,7 +1777,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "ec" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/south,
@@ -3356,7 +3356,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
 "hz" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/east,
@@ -3502,7 +3502,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "hN" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/machinery/door/poddoor{
 	id = "tox_vent1";
 	layer = 8;
@@ -3801,7 +3801,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
 "iq" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/east,
@@ -3918,7 +3918,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 1;
 	icon_state = "rwindow"
@@ -3977,7 +3977,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 1;
 	icon_state = "rwindow"
@@ -4113,7 +4113,7 @@
 /area/station/maintenance/central)
 "iM" = (
 /obj/disposalpipe/segment,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/east,
 /turf/simulated/floor/plating,
@@ -4125,7 +4125,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/east,
 /turf/simulated/floor/plating,
@@ -4993,7 +4993,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/garden)
 "kB" = (
-/obj/item/tile/aluminum/fullstack,
+/obj/item/tile/iron/fullstack,
 /turf/simulated/floor/red,
 /area/station/storage/warehouse)
 "kC" = (
@@ -6526,7 +6526,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "nF" = (
-/obj/item/rods/aluminum/fullstack,
+/obj/item/rods/iron/fullstack,
 /turf/simulated/floor/red,
 /area/station/storage/warehouse)
 "nG" = (
@@ -6669,7 +6669,7 @@
 /turf/simulated/floor/red,
 /area/station/storage/warehouse)
 "nV" = (
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /turf/simulated/floor/red,
 /area/station/storage/warehouse)
 "nW" = (

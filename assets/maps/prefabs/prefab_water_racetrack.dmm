@@ -30,7 +30,7 @@
 "aD" = (/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 1},/obj/item/seed/grass,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
 "aE" = (/obj/decal/tile_edge/check/white{icon_state = "check2"; dir = 5},/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
 "aF" = (/obj/wingrille_spawn/auto,/turf/simulated/floor/plating/random,/area/prefab/raceway)
-"aG" = (/obj/item/sheet/aluminum/fullstack,/obj/item/rods/aluminum/fullstack,/turf/simulated/floor/black,/area/prefab/raceway)
+"aG" = (/obj/item/sheet/iron/fullstack,/obj/item/rods/iron/fullstack,/turf/simulated/floor/black,/area/prefab/raceway)
 "aH" = (/obj/decal/cleanable/oil/streak,/turf/simulated/floor/black,/area/prefab/raceway)
 "aI" = (/obj/decal/cleanable/dirt,/obj/rack,/obj/item/paint_can/random,/obj/item/paint_can/random,/obj/item/paint_can/random,/turf/simulated/floor/black,/area/prefab/raceway)
 "aJ" = (/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 9},/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)

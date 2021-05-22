@@ -214,7 +214,7 @@
 					if (F.material)
 						TILE.setMaterial(F.material)
 					else
-						var/datum/material/M = getMaterial("aluminum")
+						var/datum/material/M = getMaterial("iron")
 						TILE.setMaterial(M)
 					F.break_tile_to_plating(1)
 				else
@@ -232,7 +232,7 @@
 				A.setMaterial(T.material)
 				B.setMaterial(T.material)
 			else
-				var/datum/material/M = getMaterial("aluminum")
+				var/datum/material/M = getMaterial("iron")
 				A.setMaterial(M)
 				B.setMaterial(M)
 

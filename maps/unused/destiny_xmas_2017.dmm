@@ -4752,7 +4752,7 @@
 /area/station/maintenance/north)
 "aih" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/item/sheet/glass/fullstack,
 /obj/item/storage/box/cablesbox,
 /obj/item/storage/toolbox/mechanical,
@@ -7692,7 +7692,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/machinery/door/poddoor/blast/single{
 	density = 0;
 	icon_state = "bdoorsingle0";
@@ -24339,7 +24339,7 @@
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
-/obj/item/sheet/aluminum/reinforced/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "aPf" = (
@@ -24802,7 +24802,7 @@
 	},
 /area/station/science/lab)
 "aPT" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/machinery/door/poddoor/blast/single{
 	id = "tox_mix";
 	layer = 4;
@@ -25380,7 +25380,7 @@
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
 	},
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "aQS" = (
@@ -27509,7 +27509,7 @@
 	},
 /obj/item/device/guardbot_tool/medicator,
 /obj/item/guardbot_core,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/parts/robot_parts/arm/right,
@@ -27619,7 +27619,7 @@
 	icon_state = "lattice-dir";
 	dir = 4
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/station/science/lab)
 "aUH" = (
@@ -41710,7 +41710,7 @@
 	icon_state = "line1";
 	dir = 2
 	},
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/storage/box/cablesbox,
 /obj/item/shipcomponent/mainweapon/rockdrills,
@@ -43264,8 +43264,8 @@
 	max_amt2spawn = 14;
 	min_amt2spawn = 6
 	},
-/obj/item/sheet/aluminum/reinforced/fullstack,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack,
+/obj/item/sheet/iron/fullstack,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -45725,7 +45725,7 @@
 /area/station/com_dish/auxdish)
 "byQ" = (
 /obj/lattice,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/station/com_dish/auxdish)
 "byR" = (
@@ -45771,7 +45771,7 @@
 	icon_state = "lattice-dir";
 	dir = 4
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/station/com_dish/auxdish)
 "byW" = (
@@ -45828,7 +45828,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/station/com_dish/auxdish)
 "bzc" = (
@@ -45861,7 +45861,7 @@
 	icon_state = "lattice-dir-b";
 	dir = 9
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/station/com_dish/auxdish)
 "bzg" = (
@@ -45871,7 +45871,7 @@
 	d1 = 1;
 	d2 = 2
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/station/com_dish/auxdish)
 "bzh" = (
@@ -45879,7 +45879,7 @@
 	icon_state = "lattice-dir-b";
 	dir = 5
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/station/com_dish/auxdish)
 "bzi" = (
@@ -46011,7 +46011,7 @@
 /turf/space,
 /area/mining/magnet)
 "bzy" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "bzz" = (

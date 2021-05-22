@@ -188,15 +188,15 @@
 		src.icon_state = pick("rock1","rock2","rock3")
 		src.setMaterial(getMaterial("rock"), appearance = 0, setname = 0)
 
-/obj/item/raw_material/mauxite
-	name = "mauxite ore"
-	desc = "A chunk of Mauxite, a sturdy common metal."
-	icon_state = "mauxite"
-	material_name = "Mauxite"
+/obj/item/raw_material/iron
+	name = "iron ore"
+	desc = "A chunk of Iron, a sturdy common metal."
+	icon_state = "iron"
+	material_name = "Iron"
 	metal = 2
 
 	setup_material()
-		src.setMaterial(getMaterial("mauxite"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("iron"), appearance = 0, setname = 0)
 		return ..()
 
 /obj/item/raw_material/molitz
@@ -663,10 +663,10 @@
 
 // bars, tied into the new material system
 
-/obj/item/material_piece/mauxite
-	desc = "A processed bar of Mauxite, a sturdy common metal."
-	default_material = "mauxite"
-	icon_state = "mauxite-bar"
+/obj/item/material_piece/iron
+	desc = "A processed bar of Iron, a sturdy common metal."
+	default_material = "iron"
+	icon_state = "iron-bar"
 
 /obj/item/material_piece/molitz
 	desc = "A cut block of Molitz, a common crystalline substance."

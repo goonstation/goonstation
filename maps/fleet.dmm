@@ -2076,7 +2076,7 @@
 	pixel_x = -10
 	},
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass/reinforced{
@@ -2594,7 +2594,7 @@
 /area/station/science/tenebrae)
 "fz" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass{
@@ -4507,7 +4507,7 @@
 	pixel_x = -10
 	},
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass/reinforced{
@@ -4765,10 +4765,10 @@
 	})
 "kh" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass/reinforced{
@@ -5939,7 +5939,7 @@
 	})
 "my" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass{
@@ -6495,7 +6495,7 @@
 	pixel_x = -10
 	},
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass/reinforced{
@@ -7625,7 +7625,7 @@
 	})
 "pG" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass{
@@ -11427,7 +11427,7 @@
 	pixel_x = -10
 	},
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass/reinforced{
@@ -11760,7 +11760,7 @@
 	})
 "xu" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass{
@@ -15012,7 +15012,7 @@
 	pixel_x = -10
 	},
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass/reinforced{
@@ -16052,7 +16052,7 @@
 	})
 "Fz" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass{
@@ -18530,7 +18530,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/machinery/light/small,
@@ -19205,7 +19205,7 @@
 /turf/simulated/floor/purpleblack,
 /area/research_outpost/indigo_rye)
 "Mn" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/research_outpost/indigo_rye)
 "Mo" = (
@@ -20101,7 +20101,7 @@
 	})
 "NH" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass/reinforced{
@@ -20277,7 +20277,7 @@
 	name = "Erebus Primary Zone"
 	})
 "NY" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/airless/plating,
 /area/listeningpost)
 "NZ" = (
@@ -23343,7 +23343,7 @@
 	})
 "Tz" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass{
@@ -23520,10 +23520,10 @@
 	})
 "Ug" = (
 /obj/rack,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass{

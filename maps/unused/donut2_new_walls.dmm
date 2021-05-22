@@ -23,7 +23,7 @@
 /turf/space,
 /area/space)
 "aaf" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "aag" = (
@@ -2232,7 +2232,7 @@
 	},
 /area/shuttle/research/outpost)
 "afX" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	dir = 1;
 	icon_state = "rwindow"
@@ -5894,7 +5894,7 @@
 /turf/simulated/floor,
 /area/station/science/lobby)
 "anB" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "anE" = (
@@ -5990,10 +5990,10 @@
 /obj/rack,
 /obj/random_item_spawner/tools,
 /obj/machinery/light,
-/obj/item/sheet/aluminum/fullstack,
-/obj/item/sheet/aluminum/fullstack,
-/obj/item/sheet/aluminum/reinforced/fullstack,
-/obj/item/sheet/aluminum/reinforced/fullstack,
+/obj/item/sheet/iron/fullstack,
+/obj/item/sheet/iron/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack,
 /turf/simulated/floor/green/corner{
 	dir = 1
 	},
@@ -8755,7 +8755,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/ghostdrone_factory)
 "auN" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
@@ -10786,7 +10786,7 @@
 /area/station/storage/emergency2)
 "aAh" = (
 /obj/rack,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 20
 	},
 /turf/simulated/floor,
@@ -11326,8 +11326,8 @@
 /area/ghostdrone_factory)
 "aBm" = (
 /obj/table/auto,
-/obj/item/rods/aluminum/fullstack,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/rods/iron/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
 /obj/item/light/tube,
@@ -11344,7 +11344,7 @@
 /area/ghostdrone_factory)
 "aBo" = (
 /obj/table/auto,
-/obj/item/rods/aluminum/fullstack,
+/obj/item/rods/iron/fullstack,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
@@ -11355,8 +11355,8 @@
 /area/ghostdrone_factory)
 "aBp" = (
 /obj/table/auto,
-/obj/item/rods/aluminum/fullstack,
-/obj/item/sheet/aluminum/reinforced/fullstack,
+/obj/item/rods/iron/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
 /obj/item/light/tube,
@@ -11364,7 +11364,7 @@
 /area/ghostdrone_factory)
 "aBq" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
 /turf/simulated/grimycarpet,
@@ -13633,8 +13633,8 @@
 /area/station/ai_monitored/storage/eva)
 "aGt" = (
 /obj/item/sheet/glass/reinforced/fullstack,
-/obj/item/sheet/aluminum/fullstack,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
+/obj/item/sheet/iron/fullstack,
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
 "aGu" = (
@@ -14014,7 +14014,7 @@
 	c_tag = "EVA";
 	dir = 8
 	},
-/obj/item/sheet/aluminum/reinforced/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
@@ -14303,7 +14303,7 @@
 	},
 /area/station/ai_monitored/storage/eva)
 "aHU" = (
-/obj/item/sheet/aluminum/reinforced/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack,
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
 "aHV" = (
@@ -15262,7 +15262,7 @@
 	pixel_y = 0
 	},
 /obj/item/wrench/monkey,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aJZ" = (
@@ -15921,7 +15921,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment/ejection{
 	dir = 4;
@@ -15939,7 +15939,7 @@
 	icon_state = "0-4"
 	},
 /obj/cable,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/disposalpipe/segment/ejection{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -15955,7 +15955,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aLy" = (
@@ -15974,7 +15974,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aLA" = (
@@ -19558,7 +19558,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/stockex)
 "aTA" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/space)
 "aTB" = (
@@ -26327,7 +26327,7 @@
 /turf/simulated/floor/delivery,
 /area/station/engine/substation/pylon)
 "bht" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/AIbasecore1{
 	name = "Upload Station"
@@ -30777,10 +30777,10 @@
 	dir = 1;
 	icon_state = "rwindow"
 	},
-/obj/item/sheet/aluminum/fullstack,
-/obj/item/sheet/aluminum/fullstack,
-/obj/item/sheet/aluminum/reinforced/fullstack,
-/obj/item/sheet/aluminum/reinforced/fullstack,
+/obj/item/sheet/iron/fullstack,
+/obj/item/sheet/iron/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack,
 /turf/simulated/floor,
 /area/station/engine/storage)
 "brQ" = (
@@ -31340,7 +31340,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "btl" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/AIbaseoutside)
 "btm" = (
@@ -31349,7 +31349,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/AIbaseoutside)
 "btn" = (
@@ -35845,7 +35845,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bDY" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -35940,7 +35940,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "bEj" = (
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/landmark/artifact{
@@ -36054,7 +36054,7 @@
 /area/station/storage/tools)
 "bEz" = (
 /obj/rack,
-/obj/item/rods/aluminum/fullstack,
+/obj/item/rods/iron/fullstack,
 /turf/simulated/floor/grime,
 /area/station/storage/tools)
 "bEA" = (
@@ -36467,7 +36467,7 @@
 	dir = 8
 	},
 /obj/rack,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/item/sheet/glass/reinforced/fullstack,
 /turf/simulated/floor/grime,
 /area/station/storage/tools)
@@ -37588,7 +37588,7 @@
 	},
 /area/space)
 "bHC" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
 "bHD" = (
@@ -40251,7 +40251,7 @@
 	},
 /area/station/maintenance/inner/central)
 "hKD" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/item/raw_material/shard/glass,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
@@ -40468,7 +40468,7 @@
 	dir = 4;
 	icon_state = "pipe-s"
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -42617,7 +42617,7 @@
 	name = "Chief Engineer's Office"
 	})
 "pxc" = (
-/obj/grille/aluminum{
+/obj/grille/iron{
 	layer = 2.7
 	},
 /obj/machinery/door/poddoor/blast/pyro{
@@ -44290,7 +44290,7 @@
 	dir = 2;
 	icon_state = "lattice-dir"
 	},
-/obj/grille/aluminum{
+/obj/grille/iron{
 	layer = 2.7
 	},
 /turf/space,
@@ -44921,7 +44921,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "wIi" = (
-/obj/grille/aluminum{
+/obj/grille/iron{
 	layer = 2.7
 	},
 /obj/machinery/door/poddoor/blast/pyro{
@@ -44977,7 +44977,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "wNb" = (
-/obj/grille/aluminum{
+/obj/grille/iron{
 	layer = 2.7
 	},
 /obj/machinery/door/poddoor/pyro{

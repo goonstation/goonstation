@@ -394,8 +394,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			if("ancient") // industrial type stuff
 				material = pick(
 					100;"electrum",
-					100;"aluminum",
-					100;"mauxite",
+					100;"iron",
+					100;"iron",
 					100;"copper",
 					100;"pharosium",
 					100;"glass",

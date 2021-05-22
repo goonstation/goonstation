@@ -135,7 +135,7 @@
 					A.setMaterial(src.material)
 					B.setMaterial(src.material)
 				else
-					var/datum/material/M = getMaterial("aluminum")
+					var/datum/material/M = getMaterial("iron")
 					A.setMaterial(M)
 					B.setMaterial(M)
 				F.levelupdate()

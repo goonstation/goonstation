@@ -218,7 +218,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aI" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,

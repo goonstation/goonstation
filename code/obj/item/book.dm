@@ -2259,9 +2259,9 @@ Over the course of this handbook, we hope to give you at least a rudimentary edu
 found in a space environment, and what they should be used for. This is especially helpful if you are trying to understand
 the recent (as of the time of writing) changes made to the NanoTrasen \"AutoArtisan\" standard-issue Manufacturing Units.</p>
 
-<h2>Mauxite</h2>
+<h2>Iron</h2>
 <p>Classification: Sturdy Metal</p>
-<p>Mauxite is a common metal alloy, characterised by its dull reddish-brown color and mild coppery smell. It is commonly used
+<p>Iron is a common metal alloy, characterised by its dull reddish-brown color and mild coppery smell. It is commonly used
 in construction projects due to being very durable while still rather easy to work with, no doubt due to it being an alloy
 comprised mostly of naturally occurring steel with elements of copper and zinc also present among other elements.
 It tends to be rather easy to find in space due to its abundance, and poses little risk during extraction or refinement.</p>
@@ -2270,7 +2270,7 @@ It tends to be rather easy to find in space due to its abundance, and poses litt
 <p>Classification: Metal, Conductor</p>
 <p>Easily recognizable due to its distinct bright orange hue, Pharosium is a conductive metal found in plentiful quantity
 and as such is generally considered an industry standard. It finds most common use in electrical wiring and circuit boards.
-Often, basic electronics are comprised mostly of Pharosium and Mauxite in their construction.
+Often, basic electronics are comprised mostly of Pharosium and Iron in their construction.
 </p>
 
 <h2>Molitz</h2>
@@ -3212,7 +3212,7 @@ On that note, CentComm would like to remind trainees that they do not recieve cl
 		Mechanized boots - Shoes that allow for much faster movement.
 		Laser drill - Mining tool that doesn't need charges.
 		Now, a basic rundown on what you will be mining:
-		Mauxite - Standard metal, easily mined with even a unpowered pickaxe.
+		Iron - Standard metal, easily mined with even a unpowered pickaxe.
 		Pharosium - Standard Conductor, easily mined with even a unpowered pickaxe.
 		Molitz - Standard Crystal, easily mined.
 		Borhum - Sturdy metal, useful and easy to mine.

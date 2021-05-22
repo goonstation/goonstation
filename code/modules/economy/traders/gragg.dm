@@ -13,7 +13,7 @@
 	max_goods_sell = 3
 
 	base_goods_buy = list(/datum/commodity/trader/gragg/rock,
-	/datum/commodity/trader/gragg/mauxite,
+	/datum/commodity/trader/gragg/iron,
 	/datum/commodity/trader/gragg/bohrum,
 	/datum/commodity/trader/gragg/cobryl,
 	/datum/commodity/trader/gragg/syreline)
@@ -124,9 +124,9 @@
 	possible_names = list("BUYING PLAIN ROCK. NOT ORE, JUST ROCK. STOCKING UP ON FOOD.",
 	"BUYING PLAIN ROCK. NOT METAL OR CRYSTAL, JUST STONE.")
 
-/datum/commodity/trader/gragg/mauxite
-	comname = "Mauxite"
-	comtype = /obj/item/raw_material/mauxite
+/datum/commodity/trader/gragg/iron
+	comname = "Iron"
+	comtype = /obj/item/raw_material/iron
 	price_boundary = list(60,120)
 	possible_names = list("BUYING MAUXITE. CRUNCHY AND DELICIOUS.",
 	"BUYING MAUXITE. GOOD MEAL FOR LITHOVORE. HELPS GROW STRONG CARAPACE.")

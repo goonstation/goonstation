@@ -98,7 +98,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
 "ay" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -107,7 +107,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
 "az" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/south,
 /obj/window/reinforced/east,
@@ -145,7 +145,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
 "aF" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -264,7 +264,7 @@
 /turf/simulated/floor/plating/airless,
 /area/shuttle/escape/centcom/cogmap)
 "aW" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -305,7 +305,7 @@
 	},
 /area/shuttle/escape/centcom/cogmap)
 "bc" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -314,7 +314,7 @@
 	},
 /area/shuttle/escape/centcom/cogmap)
 "bd" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/south,
 /turf/simulated/floor/shuttle{
@@ -322,7 +322,7 @@
 	},
 /area/shuttle/escape/centcom/cogmap)
 "be" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/south,
 /obj/window/reinforced/east,
@@ -331,7 +331,7 @@
 	},
 /area/shuttle/escape/centcom/cogmap)
 "bf" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -340,7 +340,7 @@
 	},
 /area/shuttle/escape/centcom/cogmap)
 "bg" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/south,
 /turf/simulated/floor/shuttle{
@@ -348,7 +348,7 @@
 	},
 /area/shuttle/escape/centcom/cogmap)
 "bh" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/south,
 /obj/window/reinforced/east,
@@ -746,7 +746,7 @@
 	},
 /area/centcom)
 "ct" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
@@ -780,7 +780,7 @@
 	},
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
 "cy" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/west,
 /obj/window/reinforced/east,
 /turf/simulated/floor/shuttle,
@@ -807,7 +807,7 @@
 	},
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
 "cC" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -824,7 +824,7 @@
 	},
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
 "cF" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -843,7 +843,7 @@
 /turf/simulated/shuttle/wall/corner,
 /area/shuttle/escape/centcom/cogmap)
 "cI" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -875,7 +875,7 @@
 	},
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
 "cM" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
@@ -977,7 +977,7 @@
 	},
 /area/shuttle/escape/centcom/cogmap)
 "dc" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/engine,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
@@ -1219,7 +1219,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/escape/centcom/donut2)
 "dQ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -1235,7 +1235,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/escape/centcom/donut2)
 "dR" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -1323,7 +1323,7 @@
 	},
 /area/shuttle/escape/centcom/donut2)
 "ed" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -1362,7 +1362,7 @@
 	},
 /area/shuttle/escape/centcom/donut2)
 "eh" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -1405,7 +1405,7 @@
 	},
 /area/shuttle/escape/centcom/donut2)
 "el" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -1443,7 +1443,7 @@
 /turf/simulated/shuttle/wall/escape,
 /area/shuttle/escape/centcom/donut2)
 "eq" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -1500,7 +1500,7 @@
 	},
 /area/shuttle/escape/centcom/donut2)
 "ew" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -1869,7 +1869,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/wizard_station)
 "fv" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -2553,7 +2553,7 @@
 /area/shuttle/escape/centcom/cogmap2)
 "ho" = (
 /obj/window/auto/reinforced,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/shuttle,
 /area/shuttle/escape/centcom/cogmap2)
 "hp" = (
@@ -2592,7 +2592,7 @@
 	},
 /area/centcom)
 "hv" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 8;
@@ -2643,7 +2643,7 @@
 /area/shuttle/escape/centcom/cogmap2)
 "hC" = (
 /obj/window/auto/reinforced,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -2660,7 +2660,7 @@
 	},
 /area/centcom)
 "hF" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 8;
@@ -2703,7 +2703,7 @@
 	},
 /area/shuttle/escape/centcom/cogmap2)
 "hL" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 8;
@@ -3023,7 +3023,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
 "iC" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
@@ -3108,7 +3108,7 @@
 	},
 /area/syndicate_station)
 "iP" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/engine,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
@@ -3344,7 +3344,7 @@
 	},
 /area/syndicate_station)
 "ju" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
@@ -3426,7 +3426,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "jH" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -3541,7 +3541,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "jY" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
@@ -3579,7 +3579,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/syndicate_station)
 "ke" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window{
 	icon_state = "rwindow";
 	dir = 4;
@@ -3645,7 +3645,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "kl" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/west,
 /obj/window/reinforced/east,
 /turf/simulated/floor/shuttle,
@@ -3666,7 +3666,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "ko" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -4385,7 +4385,7 @@
 	},
 /area/shuttle/escape/centcom/destiny)
 "lS" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -4414,7 +4414,7 @@
 /turf/space,
 /area/syndicate_station)
 "lW" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -4536,7 +4536,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
 "mo" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -4545,7 +4545,7 @@
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
 "mp" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/reinforced/north,
 /obj/window/reinforced/south,
 /obj/window/reinforced/east,

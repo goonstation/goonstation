@@ -4697,7 +4697,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "aYr" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/jen,
 /area/station/chapel/sanctuary)
 "aYV" = (
@@ -6245,7 +6245,7 @@
 /turf/simulated/floor/redblack,
 /area/station/security/main)
 "bxM" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable,
 /obj/cable{
 	d2 = 2;
@@ -7917,7 +7917,7 @@
 /area/station/maintenance/outer/nw)
 "bVX" = (
 /obj/rack,
-/obj/item/sheet/aluminum/fullstack{
+/obj/item/sheet/iron/fullstack{
 	pixel_y = 6
 	},
 /obj/item/sheet/glass/fullstack{
@@ -11407,7 +11407,7 @@
 	},
 /area/station/science/lobby)
 "cXw" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/structure/woodwall,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
@@ -14715,7 +14715,7 @@
 /area/space)
 "dWW" = (
 /obj/rack,
-/obj/item/sheet/aluminum/fullstack{
+/obj/item/sheet/iron/fullstack{
 	pixel_y = 6
 	},
 /obj/item/sheet/glass/fullstack{
@@ -15814,7 +15814,7 @@
 /area/station/security/brig/north_side)
 "eoC" = (
 /obj/rack,
-/obj/item/sheet/aluminum/fullstack{
+/obj/item/sheet/iron/fullstack{
 	pixel_y = 6
 	},
 /obj/item/sheet/glass/fullstack{
@@ -16491,7 +16491,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/sw)
 "eAg" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
 "eAo" = (
@@ -25360,7 +25360,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "hfN" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable,
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -26641,7 +26641,7 @@
 	id = "tox_vent2";
 	name = "Exhaust Vent"
 	},
-/obj/grille/aluminum{
+/obj/grille/iron{
 	layer = 2.7
 	},
 /turf/simulated/floor/plating/airless,
@@ -29086,8 +29086,8 @@
 /area/space)
 "ijn" = (
 /obj/table/auto,
-/obj/item/rods/aluminum/fullstack,
-/obj/item/sheet/aluminum/reinforced/fullstack,
+/obj/item/rods/iron/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
 /obj/item/light/tube,
@@ -29469,7 +29469,7 @@
 	pixel_x = -2;
 	pixel_y = 6
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50;
 	pixel_x = 6
 	},
@@ -36195,7 +36195,7 @@
 	pixel_y = 20
 	},
 /obj/item/sheet/glass/reinforced/fullstack,
-/obj/item/sheet/aluminum/reinforced/fullstack{
+/obj/item/sheet/iron/reinforced/fullstack{
 	pixel_x = 6;
 	pixel_y = -4
 	},
@@ -37515,7 +37515,7 @@
 	icon_state = "bdoormid1";
 	id = "tox_vent1"
 	},
-/obj/grille/aluminum{
+/obj/grille/iron{
 	layer = 2.7
 	},
 /turf/simulated/floor/plating/airless,
@@ -40905,7 +40905,7 @@
 /area/station/crew_quarters/hor)
 "lQv" = (
 /obj/rack,
-/obj/item/sheet/aluminum/fullstack{
+/obj/item/sheet/iron/fullstack{
 	pixel_y = 6
 	},
 /obj/item/sheet/glass/fullstack{
@@ -41495,7 +41495,7 @@
 	id = "tox_vent1";
 	name = "Exhaust Vent"
 	},
-/obj/grille/aluminum{
+/obj/grille/iron{
 	layer = 2.7
 	},
 /turf/simulated/floor/plating/airless,
@@ -43786,7 +43786,7 @@
 	},
 /area/station/medical/breakroom)
 "mKW" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/cable,
 /obj/cable{
 	d2 = 8;
@@ -44572,7 +44572,7 @@
 	icon_state = "bdoorright1";
 	id = "tox_vent1"
 	},
-/obj/grille/aluminum{
+/obj/grille/iron{
 	layer = 2.7
 	},
 /turf/simulated/floor/plating/airless,
@@ -50957,7 +50957,7 @@
 	},
 /area/shuttle/arrival/station)
 "oPI" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/lattice,
 /turf/space,
 /area/station/science/lab)
@@ -54307,7 +54307,7 @@
 /obj/item/storage/belt/utility{
 	pixel_x = -4
 	},
-/obj/item/sheet/aluminum/fullstack{
+/obj/item/sheet/iron/fullstack{
 	pixel_x = 7;
 	pixel_y = -4
 	},
@@ -55920,7 +55920,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/medbay/pharmacy)
 "qjp" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
@@ -58072,7 +58072,7 @@
 /turf/simulated/grass,
 /area/station/crew_quarters/garden)
 "qNq" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -64748,8 +64748,8 @@
 /area/station/science/lab)
 "sID" = (
 /obj/table/auto,
-/obj/item/rods/aluminum/fullstack,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/rods/iron/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
 /obj/item/light/tube,
@@ -64828,7 +64828,7 @@
 /area/station/ranch)
 "sJH" = (
 /obj/disposalpipe/segment/mail/bent/north,
-/obj/grille/aluminum/broken,
+/obj/grille/iron/broken,
 /obj/item/raw_material/shard/glass{
 	pixel_x = 8;
 	pixel_y = 9
@@ -70738,7 +70738,7 @@
 	},
 /area/station/hallway/primary/west)
 "uzx" = (
-/obj/grille/aluminum/broken,
+/obj/grille/iron/broken,
 /obj/item/raw_material/shard/glass{
 	pixel_x = 4;
 	pixel_y = 6
@@ -72780,7 +72780,7 @@
 /area/station/library/reading1)
 "vbB" = (
 /obj/table/auto,
-/obj/item/rods/aluminum/fullstack,
+/obj/item/rods/iron/fullstack,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
@@ -72796,7 +72796,7 @@
 	id = "tox_vent2";
 	name = "Exhaust Vent"
 	},
-/obj/grille/aluminum{
+/obj/grille/iron{
 	layer = 2.7
 	},
 /turf/simulated/floor/plating/airless,
@@ -74463,7 +74463,7 @@
 /obj/storage/crate{
 	name = "Spare Parts"
 	},
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50;
 	pixel_x = 2
 	},
@@ -78607,7 +78607,7 @@
 	id = "tox_vent2";
 	name = "Exhaust Vent"
 	},
-/obj/grille/aluminum{
+/obj/grille/iron{
 	layer = 2.7
 	},
 /turf/simulated/floor/plating/airless,
@@ -80682,7 +80682,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
 "xnH" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/machinery/door/poddoor/pyro{
 	id = "tox_mix";
 	layer = 8;
@@ -82625,7 +82625,7 @@
 /area/station/engine/inner)
 "xRQ" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
 /turf/simulated/grimycarpet,

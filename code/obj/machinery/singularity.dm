@@ -388,7 +388,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					if (W.material)
 						S.setMaterial(W.material)
 					else
-						var/datum/material/M = getMaterial("aluminum")
+						var/datum/material/M = getMaterial("iron")
 						S.setMaterial(M)
 					W.ReplaceWithFloor()
 			else

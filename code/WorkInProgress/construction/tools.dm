@@ -684,7 +684,7 @@
 		var/datum/material/glass = origin.glass
 		var/turf/L = get_turf(src)
 		if (!metal)
-			metal = getMaterial("aluminum")
+			metal = getMaterial("iron")
 		if (!glass)
 			glass = getMaterial("glass")
 

@@ -5010,7 +5010,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -5146,7 +5146,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -5213,7 +5213,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -5913,7 +5913,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -6091,7 +6091,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -6172,7 +6172,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -7037,7 +7037,7 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aqm" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "aqn" = (
@@ -10089,7 +10089,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "axy" = (
-/obj/item/tile/aluminum{
+/obj/item/tile/iron{
 	amount = 14
 	},
 /turf/simulated/floor/plating/random,
@@ -12499,7 +12499,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/catering)
 "aDn" = (
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 3
 	},
 /turf/simulated/floor/plating/random,
@@ -13409,10 +13409,10 @@
 /area/station/crew_quarters/arcade/dungeon)
 "aFx" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/item/sheet/glass/fullstack,
 /obj/item/sheet/glass/reinforced/fullstack,
-/obj/item/sheet/aluminum/reinforced/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
@@ -14344,7 +14344,7 @@
 	pixel_y = -4
 	},
 /obj/item/guardbot_core,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/parts/robot_parts/arm/right,
@@ -17586,7 +17586,7 @@
 /area/station/engine/gas)
 "aPS" = (
 /obj/rack,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/sheet/glass{
@@ -19928,12 +19928,12 @@
 /turf/simulated/floor/plating,
 /area/iss)
 "aWd" = (
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /turf/simulated/floor/plating,
 /area/iss)
 "aWe" = (
-/obj/item/sheet/aluminum/fullstack,
-/obj/item/rods/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
+/obj/item/rods/iron/fullstack,
 /turf/simulated/floor/plating,
 /area/iss)
 "aWf" = (
@@ -20095,7 +20095,7 @@
 	},
 /area/evilreaver/genetics)
 "aWA" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/simulated/floor/plating/damaged3,
 /area/space)
 "aWB" = (
@@ -20106,7 +20106,7 @@
 /turf/simulated/floor/white,
 /area/evilreaver/genetics)
 "aWC" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
 "aWD" = (
@@ -20790,7 +20790,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
 "aYl" = (
-/obj/item/rods/aluminum,
+/obj/item/rods/iron,
 /obj/decal/fakeobjects/lighttube_broken,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
@@ -23726,10 +23726,10 @@
 /area/station/crew_quarters/arcade)
 "bgD" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum/fullstack,
-/obj/item/sheet/aluminum/fullstack,
-/obj/item/sheet/aluminum/fullstack,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
+/obj/item/sheet/iron/fullstack,
+/obj/item/sheet/iron/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/item/chem_grenade/metalfoam{
 	pixel_x = 4
 	},
@@ -23757,11 +23757,11 @@
 /area/station/storage/eeva)
 "bgE" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum/reinforced{
+/obj/item/sheet/iron/reinforced{
 	amount = 50;
 	pixel_y = 6
 	},
-/obj/item/sheet/aluminum/reinforced{
+/obj/item/sheet/iron/reinforced{
 	amount = 50;
 	pixel_y = 6
 	},
@@ -25080,11 +25080,11 @@
 /area/evilreaver/bridge)
 "bkd" = (
 /obj/machinery/light/incandescent/warm,
-/obj/item/rods/aluminum{
+/obj/item/rods/iron{
 	amount = 50;
 	pixel_x = -2
 	},
-/obj/item/rods/aluminum{
+/obj/item/rods/iron{
 	amount = 50;
 	pixel_x = 8
 	},
@@ -25280,7 +25280,7 @@
 /area/evilreaver/bar)
 "bkz" = (
 /obj/decal/cleanable/molten_item,
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /obj/item/cigbutt,
 /obj/item/device/light/zippo,
 /turf/simulated/floor/plating/damaged3,
@@ -25767,7 +25767,7 @@
 /turf/simulated/floor/yellow/side,
 /area/station/storage/emergency)
 "blG" = (
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /turf/simulated/floor/yellow/side,
 /area/station/storage/emergency)
 "blH" = (
@@ -31503,7 +31503,7 @@
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/item/sheet/glass/fullstack,
 /obj/item/trench_map,
 /turf/simulated/floor/darkpurple,
@@ -37044,7 +37044,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/obj/item/rods/aluminum/fullstack,
+/obj/item/rods/iron/fullstack,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -41679,7 +41679,7 @@
 /turf/simulated/floor/caution/east,
 /area/station/maintenance/south)
 "bYE" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space/fluid,
 /area/station/com_dish/comdish)
 "bYF" = (
@@ -41943,8 +41943,8 @@
 /area/ghostdrone_factory)
 "bZD" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum/fullstack,
-/obj/item/rods/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
+/obj/item/rods/iron/fullstack,
 /turf/simulated/floor/grime,
 /area/ghostdrone_factory)
 "bZE" = (
@@ -41987,7 +41987,7 @@
 /area/ghostdrone_factory)
 "bZJ" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum/reinforced/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack,
 /obj/item/light/tube,
 /obj/item/light/tube,
 /obj/item/light/tube,
@@ -42058,7 +42058,7 @@
 "bZR" = (
 /obj/decal/cleanable/dirt,
 /obj/table/auto,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
 /turf/simulated/floor/grime,
@@ -42066,7 +42066,7 @@
 "bZS" = (
 /obj/table/auto,
 /obj/item/sheet/glass/fullstack,
-/obj/item/rods/aluminum/fullstack,
+/obj/item/rods/iron/fullstack,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "bZT" = (
@@ -43119,7 +43119,7 @@
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "cdz" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /obj/cable{
 	d1 = 1;
 	d2 = 8;
@@ -43270,7 +43270,7 @@
 	},
 /area/tech_outpost)
 "cdY" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "cdZ" = (
@@ -43308,10 +43308,10 @@
 /area/tech_outpost)
 "ceg" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
-/obj/item/sheet/aluminum/reinforced{
+/obj/item/sheet/iron/reinforced{
 	amount = 50
 	},
 /turf/simulated/floor/plating/random,
@@ -44776,7 +44776,7 @@
 /area/station/maintenance/southwest)
 "cih" = (
 /obj/machinery/light/incandescent/warm/very,
-/obj/item/sheet/aluminum,
+/obj/item/sheet/iron,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "cii" = (
@@ -44806,11 +44806,11 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "cim" = (
-/obj/item/rods/aluminum,
+/obj/item/rods/iron,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "cin" = (
-/obj/item/rods/aluminum/fullstack,
+/obj/item/rods/iron/fullstack,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "cio" = (
@@ -45606,7 +45606,7 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "ckK" = (
-/obj/item/tile/aluminum,
+/obj/item/tile/iron,
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "ckL" = (
@@ -45614,7 +45614,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "ckM" = (
-/obj/item/sheet/aluminum,
+/obj/item/sheet/iron,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "ckN" = (
@@ -46857,7 +46857,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
 	icon_state = "0-8"
@@ -47477,7 +47477,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "oUx" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space/fluid,
 /area/station/com_dish/research_outpost)
 "oVm" = (
@@ -47652,7 +47652,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
 	icon_state = "0-2"

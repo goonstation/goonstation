@@ -41,9 +41,9 @@
 		if (!istype(AST))
 			return 1
 
-/datum/ore/mauxite
-	name = "mauxite"
-	output = /obj/item/raw_material/mauxite
+/datum/ore/iron
+	name = "iron"
+	output = /obj/item/raw_material/iron
 	events = list(/datum/ore/event/gem)
 	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/uqill,/obj/item/raw_material/fibrilith)
 	hardness_mod = 1

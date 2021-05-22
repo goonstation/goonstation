@@ -16556,7 +16556,7 @@
 /area/station/maintenance/west)
 "aEg" = (
 /obj/storage/cart,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 10
 	},
 /obj/item/storage/box/cablesbox,
@@ -16840,7 +16840,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aES" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aET" = (
@@ -17318,7 +17318,7 @@
 /area/station/storage/tools)
 "aFN" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/random_item_spawner/tools,
 /obj/item/storage/belt/utility,
 /turf/simulated/floor/orangeblack/side{
@@ -18707,8 +18707,8 @@
 /area/station/storage/tools)
 "aIH" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/aluminum/fullstack,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/random_item_spawner/tools,
 /obj/item/storage/belt/utility,
 /turf/simulated/floor/orangeblack/side{
@@ -26170,7 +26170,7 @@
 /obj/item/device/guardbot_tool/medicator,
 /obj/item/guardbot_core,
 /obj/item/guardbot_core,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 50
 	},
 /obj/item/parts/robot_parts/arm/right,
@@ -36839,7 +36839,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "boF" = (
@@ -36914,7 +36914,7 @@
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/electronics/scanner,
 /obj/item/storage/box/mousetraps,
-/obj/item/rods/aluminum,
+/obj/item/rods/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "boM" = (
@@ -36948,12 +36948,12 @@
 	icon_state = "pipe-c"
 	},
 /obj/decal/cleanable/dirt,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/structure/girder,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "boQ" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/structure/girder,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
@@ -37057,7 +37057,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bpb" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bpc" = (
@@ -37069,7 +37069,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bpe" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /obj/decal/cleanable/gangtag{
 	icon_state = "gangtag12";
 	pixel_x = 28
@@ -39516,8 +39516,8 @@
 	},
 /obj/disposalpipe/trunk,
 /obj/table/reinforced/auto,
-/obj/item/sheet/aluminum/fullstack,
-/obj/item/sheet/aluminum/reinforced/fullstack,
+/obj/item/sheet/iron/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/toolbox/electrical{
@@ -46785,7 +46785,7 @@
 /area/station/mining/staff_room)
 "bHD" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/aluminum{
+/obj/item/sheet/iron{
 	amount = 10
 	},
 /obj/item/storage/toolbox/mechanical,
@@ -47265,7 +47265,7 @@
 /area/station/engine/combustion_chamber)
 "bID" = (
 /obj/lattice,
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/station/com_dish/auxdish)
 "bIE" = (
@@ -47344,7 +47344,7 @@
 	dir = 9;
 	icon_state = "lattice-dir-b"
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/station/com_dish/auxdish)
 "bIN" = (
@@ -47352,7 +47352,7 @@
 	dir = 5;
 	icon_state = "lattice-dir-b"
 	},
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/space,
 /area/station/com_dish/auxdish)
 "bIO" = (
@@ -47777,7 +47777,7 @@
 /turf/space,
 /area/space)
 "bJO" = (
-/obj/grille/aluminum,
+/obj/grille/iron,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bJP" = (
@@ -48935,8 +48935,8 @@
 /area/ghostdrone_factory)
 "bMH" = (
 /obj/table/auto,
-/obj/item/rods/aluminum/fullstack,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/rods/iron/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
 /obj/item/light/tube,
@@ -48953,7 +48953,7 @@
 /area/ghostdrone_factory)
 "bMJ" = (
 /obj/table/auto,
-/obj/item/rods/aluminum/fullstack,
+/obj/item/rods/iron/fullstack,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
@@ -48964,8 +48964,8 @@
 /area/ghostdrone_factory)
 "bMK" = (
 /obj/table/auto,
-/obj/item/rods/aluminum/fullstack,
-/obj/item/sheet/aluminum/reinforced/fullstack,
+/obj/item/rods/iron/fullstack,
+/obj/item/sheet/iron/reinforced/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
 /obj/item/light/tube,
@@ -48973,7 +48973,7 @@
 /area/ghostdrone_factory)
 "bML" = (
 /obj/table/auto,
-/obj/item/sheet/aluminum/fullstack,
+/obj/item/sheet/iron/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
 /turf/simulated/grimycarpet,
