@@ -572,7 +572,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Oxygen Agent B Canister"
 	item_paths = list("MET-2","molitz_b","uqill")
 	item_names = list("Sturdy Metal","Molitz Beta","Uqill")
-	item_amounts = list(3,10,5)
+	item_amounts = list(3,100,5)
 	item_outputs = list(/obj/machinery/portable_atmospherics/canister/agent_b)
 	time = 100 SECONDS
 	create = 1
