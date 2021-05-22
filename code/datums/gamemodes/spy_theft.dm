@@ -14,7 +14,7 @@
 	var/const/waittime_l = 600	// Minimum after round start to send threat information to printer
 	var/const/waittime_h = 1800	// Maximum after round start to send threat information to printer
 
-	var/const/bounty_refresh_interval = 25 MINUTES
+	var/const/bounty_refresh_interval = 1 MINUTES
 	var/last_refresh_time = 0
 
 	var/const/spies_possible = 7
@@ -28,7 +28,7 @@
 	var/const/organ_bounty_amt = 4
 	var/const/person_bounty_amt = 5
 	var/const/photo_bounty_amt = 4
-	var/const/station_bounty_amt = 4
+	var/const/station_bounty_amt = 20
 	var/const/big_station_bounty_amt = 2
 
 	var/list/possible_areas = list()
@@ -367,7 +367,9 @@
 
 	station_bounties[/obj/item/cell] = 1
 	station_bounties[/obj/item/device/multitool] = 1
+	station_bounties[/obj/item/device/net_sniffer] = 1
 	station_bounties[/obj/item/mop] = 1
+	station_bounties[/obj/item/handheld_vacuum] = 1
 	station_bounties[/obj/item/spraybottle] = 1
 
 	station_bounties[/obj/item/clothing/gloves/yellow] = 1
@@ -376,8 +378,11 @@
 	station_bounties[/obj/item/clothing/shoes/magnetic] = 1
 	station_bounties[/obj/item/clothing/shoes/clown_shoes] = 1
 
-	station_bounties[/obj/item/clothing/suit/armor/vest] = 2
 	station_bounties[/obj/item/clothing/suit/bio_suit] = 1
+	station_bounties[/obj/item/clothing/suit/bio_suit/paramedic] = 1
+	station_bounties[/obj/item/clothing/suit/judgerobe] = 1
+	station_bounties[/obj/item/clothing/suit/fire] = 1
+	station_bounties[/obj/item/clothing/suit/armor/vest] = 2
 
 	station_bounties[/obj/item/robodefibrillator] = 1
 	station_bounties[/obj/item/remote/porter/port_a_medbay] = 1
@@ -385,23 +390,30 @@
 	station_bounties[/obj/item/storage/firstaid] = 1
 	station_bounties[/obj/item/circular_saw] = 1
 	station_bounties[/obj/item/paper/book/medical_guide] = 1
+	station_bounties[/obj/item/reagent_containers/hypospray] = 1
 
 	station_bounties[/obj/item/reagent_containers/food/drinks/mug/HoS] = 1
 	station_bounties[/obj/item/reagent_containers/food/drinks/rum_spaced] = 2
 	station_bounties[/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff] = 2
 	station_bounties[/obj/item/reagent_containers/food/drinks/bottle/champagne] = 2
-	station_bounties[/obj/captain_bottleship ] = 3
+	station_bounties[/obj/item/pen/crayon/golden] = 2
+	station_bounties[/obj/item/clothing/suit/hosmedal] = 3
+	station_bounties[/obj/item/rddiploma] = 2
+	station_bounties[/obj/item/mdlicense] = 2
+	station_bounties[/obj/item/firstbill] = 2
+	station_bounties[/obj/captain_bottleship] = 3
 	station_bounties[/obj/item/hand_tele] = 3
+
 	station_bounties[/obj/item/card/id/captains_spare] = 3
 	station_bounties[/obj/item/gun/kinetic/riot40mm] = 2
 	station_bounties[/obj/item/captaingun] = 3
 	station_bounties[/obj/item/gun/kinetic/detectiverevolver] = 3
 	station_bounties[/obj/item/gun/kinetic/dart_rifle] = 3
+	station_bounties[/obj/item/gun/energy/taser_gun] = 2
 	station_bounties[/obj/item/gun/energy/egun] = 3
 
 	station_bounties[/obj/item/tank/jetpack] = 1
 	station_bounties[/obj/item/baton] = 2
-	station_bounties[/obj/item/gun/energy/taser_gun] = 2
 
 	station_bounties[/obj/item/kitchen/utensil] = 1
 	station_bounties[/obj/item/kitchen/rollingpin] = 1
@@ -458,16 +470,18 @@
 	station_bounties[/obj/item/storage/backpack/captain/blue] = 3
 	station_bounties[/obj/item/storage/backpack/captain/red] = 3
 	station_bounties[/obj/item/storage/backpack/captain] = 3
-	station_bounties[/obj/item/storage/backpack/medic] = 2
 	station_bounties[/obj/item/storage/backpack/satchel/captain/blue] = 3
 	station_bounties[/obj/item/storage/backpack/satchel/captain/red] = 3
 	station_bounties[/obj/item/storage/backpack/satchel/captain] = 3
+	station_bounties[/obj/item/storage/backpack/medic] = 2
+	station_bounties[/obj/item/storage/secure/sbriefcase] = 2
+	station_bounties[/obj/item/storage/briefcase/toxins] = 2
 	station_bounties[/obj/item/storage/backpack] = 1
 
 	station_bounties[/obj/item/device/radio/headset/command/nt] = 3
 	station_bounties[/obj/item/device/radio/headset/command/captain] = 3
+	station_bounties[/obj/item/device/radio/headset/command/hos] = 3
 	station_bounties[/obj/item/device/radio/headset/command/radio_show_host] = 2
-	station_bounties[/obj/item/device/radio/headset/command/hos] = 2
 	station_bounties[/obj/item/device/radio/headset/command/hop] = 2
 	station_bounties[/obj/item/device/radio/headset/command/rd] = 2
 	station_bounties[/obj/item/device/radio/headset/command/md] = 2
@@ -510,8 +524,10 @@
 	big_station_bounties[/obj/machinery/vending/port_a_nanomed] = 1
 	big_station_bounties[/obj/machinery/vending/fortune] = 1
 	big_station_bounties[/obj/machinery/vending/standard] = 1
+	big_station_bounties[/obj/machinery/vending/monkey] = 1
 	big_station_bounties[/obj/machinery/vending/security] = 2
 
+	big_station_bounties[/obj/morgue] = 1
 	big_station_bounties[/obj/machinery/optable] = 2
 	big_station_bounties[/obj/machinery/clonegrinder] = 1
 	big_station_bounties[/obj/machinery/genetics_scanner] = 2
@@ -523,7 +539,6 @@
 	big_station_bounties[/obj/machinery/recharge_station] = 2
 
 	big_station_bounties[/obj/machinery/sleeper/port_a_medbay] = 1
-	big_station_bounties[/obj/storage/closet/port_a_sci] = 2
 	big_station_bounties[/obj/machinery/port_a_brig] = 3
 
 	big_station_bounties[/obj/machinery/manufacturer/robotics] = 1
@@ -546,9 +561,9 @@
 	big_station_bounties[/obj/reagent_dispensers/beerkeg] = 2
 	big_station_bounties[/obj/reagent_dispensers/still] = 2
 
-	big_station_bounties[/obj/machinery/crusher] = 3
 	big_station_bounties[/obj/machinery/communications_dish] = 2
 	big_station_bounties[/obj/item/teg_semiconductor] = 2
+	big_station_bounties[/obj/machinery/crusher] = 3
 
 	active_bounties.len = 0
 

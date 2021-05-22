@@ -778,6 +778,11 @@
 
 			// 0 = GLASS, MEDAL 1 = GLASS OFF, MEDAL IN CASE, 2 = GLASS OFF, MEDAL GONE,
 
+			New()
+				var/obj/item/clothing/suit/hosmedal/M = new /obj/item/clothing/suit/hosmedal(src.loc)
+				M.desc = src.desc
+				src.contents.Add(M)
+
 			get_desc()
 				if(award_text)
 					return award_text
@@ -808,13 +813,14 @@
 
 					if (1)
 						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						var/obj/item/clothing/suit/hosmedal/M = new /obj/item/clothing/suit/hosmedal()
-						M.desc = src.desc
-						user.put_in_hand_or_drop(M)
-						user.visible_message("[user] takes the medal from the frame.", "You take the medal out of the frame.")
-						src.icon_state = "frame"
-						src.add_fingerprint(user)
-						src.usageState = 2
+						var/obj/item/clothing/suit/hosmedal/M = locate() in src.contents
+						if(M)
+							M.desc = src.desc
+							user.put_in_hand_or_drop(M)
+							user.visible_message("[user] takes the medal from the frame.", "You take the medal out of the frame.")
+							src.icon_state = "frame"
+							src.add_fingerprint(user)
+							src.usageState = 2
 
 			attackby(obj/item/W as obj, mob/user as mob)
 				if (user.stat)
@@ -831,7 +837,7 @@
 					if (istype(W, /obj/item/clothing/suit/hosmedal))
 						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
 						user.u_equip(W)
-						qdel(W)
+						W.set_loc(src)
 						user.visible_message("[user] places the medal back in the frame.", "You place the medal back in the frame.")
 						src.usageState = 1
 						src.icon_state = "medal1"
@@ -868,6 +874,11 @@
 			icon_state = "hopcredit"
 			pixel_y = -6
 
+			New()
+				var/obj/item/firstbill/M = new /obj/item/firstbill()(src.loc)
+				M.desc = src.desc
+				src.contents.Add(M)
+
 			get_desc()
 				if(award_text_hop)
 					return award_text_hop
@@ -897,13 +908,14 @@
 
 					if (1)
 						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						var/obj/item/firstbill/M = new /obj/item/firstbill()
-						M.desc = src.desc
-						user.put_in_hand_or_drop(M)
-						user.visible_message("[user] takes the first bill from the frame.", "You take the first bill out of the frame.")
-						src.icon_state = "frame"
-						src.add_fingerprint(user)
-						src.usageState = 2
+						var/obj/item/firstbill/M = locate() in src.contents
+						if(M)
+							M.desc = src.desc
+							user.put_in_hand_or_drop(M)
+							user.visible_message("[user] takes the first bill from the frame.", "You take the first bill out of the frame.")
+							src.icon_state = "frame"
+							src.add_fingerprint(user)
+							src.usageState = 2
 
 			attackby(obj/item/W as obj, mob/user as mob)
 				if (user.stat)
@@ -913,7 +925,7 @@
 					if (istype(W, /obj/item/firstbill))
 						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
 						user.u_equip(W)
-						qdel(W)
+						W.set_loc(src)
 						user.visible_message("[user] places the first bill back in the frame.", "You place the first bill back in the frame.")
 						src.usageState = 1
 						src.icon_state = "hopcredit1"
@@ -947,6 +959,11 @@
 			icon_state = "rddiploma"
 			pixel_y = -6
 
+			New()
+				var/obj/item/rddiploma/M = new /obj/item/rddiploma(src.loc)
+				M.desc = src.desc
+				src.contents.Add(M)
+
 			get_desc(dist)
 				if(award_text_rd)
 					return award_text_rd
@@ -978,7 +995,9 @@
 
 					if (1)
 						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						var/obj/item/rddiploma/M = new /obj/item/rddiploma()
+						var/obj/item/rddiploma/M = locate() in src.contents
+						if(M)
+							M.desc = src.desc
 						user.put_in_hand_or_drop(M)
 						user.visible_message("[user] takes the diploma from the frame.", "You take the diploma out of the frame.")
 						src.icon_state = "frame"
@@ -993,7 +1012,7 @@
 					if (istype(W, /obj/item/rddiploma))
 						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
 						user.u_equip(W)
-						qdel(W)
+						W.set_loc(src)
 						user.visible_message("[user] places the diploma back in the frame.", "You place the diploma back in the frame.")
 						src.usageState = 1
 						src.icon_state = "rddiploma1"
@@ -1023,6 +1042,11 @@
 			var/usageState = 0
 			pixel_y = -6
 
+			New()
+				var/obj/item/mdlicense/M = new /obj/item/mdlicense(src.loc)
+				M.desc = src.desc
+				src.contents.Add(M)
+
 			attack_hand(mob/user as mob)
 				if (user.stat || isghostdrone(user) || !isliving(user))
 					return
@@ -1040,13 +1064,14 @@
 
 					if (1)
 						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						var/obj/item/mdlicense/M = new /obj/item/mdlicense()
-						M.desc = src.desc
-						user.put_in_hand_or_drop(M)
-						user.visible_message("[user] takes the medical license from the frame.", "You take the medical license out of the frame.")
-						src.icon_state = "frame"
-						src.add_fingerprint(user)
-						src.usageState = 2
+						var/obj/item/mdlicense/M = locate() in src.contents
+						if(M)
+							M.desc = src.desc
+							user.put_in_hand_or_drop(M)
+							user.visible_message("[user] takes the medical license from the frame.", "You take the medical license out of the frame.")
+							src.icon_state = "frame"
+							src.add_fingerprint(user)
+							src.usageState = 2
 
 			attackby(obj/item/W as obj, mob/user as mob)
 				if (user.stat)
@@ -1056,7 +1081,7 @@
 					if (istype(W, /obj/item/mdlicense))
 						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
 						user.u_equip(W)
-						qdel(W)
+						W.set_loc(src)
 						user.visible_message("[user] places the medical license back in the frame.", "You place the medical license back in the frame.")
 						src.usageState = 1
 						src.icon_state = "mdlicense1"
