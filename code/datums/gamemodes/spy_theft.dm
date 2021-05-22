@@ -14,7 +14,7 @@
 	var/const/waittime_l = 600	// Minimum after round start to send threat information to printer
 	var/const/waittime_h = 1800	// Maximum after round start to send threat information to printer
 
-	var/const/bounty_refresh_interval = 1 MINUTES
+	var/const/bounty_refresh_interval = 25 MINUTES
 	var/last_refresh_time = 0
 
 	var/const/spies_possible = 7
@@ -28,7 +28,7 @@
 	var/const/organ_bounty_amt = 4
 	var/const/person_bounty_amt = 5
 	var/const/photo_bounty_amt = 4
-	var/const/station_bounty_amt = 20
+	var/const/station_bounty_amt = 4
 	var/const/big_station_bounty_amt = 2
 
 	var/list/possible_areas = list()
