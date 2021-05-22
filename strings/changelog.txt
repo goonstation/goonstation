@@ -1,5 +1,9 @@
 
 (t)sat may 22 21
+(u)Disturbherb
+(p)4819
+(e)🎨|sprites
+(*)Added googly eyes to the game, and you can buy them from a certain trader! 🤡
 (u)edwardly
 (p)4821
 (e)🐛|bug
