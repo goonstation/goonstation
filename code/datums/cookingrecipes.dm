@@ -1414,11 +1414,11 @@
 	cookbonus = 20
 	output = /obj/item/reagent_containers/food/snacks/ingredient/colorpaste
 
-/datum/cookingrecipe/colorburger
+/datum/cookingrecipe/rainburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/colorpaste
 	cookbonus = 10
-	output = /obj/item/reagent_containers/food/snacks/burger/crayon
+	output = /obj/item/reagent_containers/food/snacks/burger/rainburger
 
 /datum/cookingrecipe/sloppyjoe
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste

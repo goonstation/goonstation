@@ -419,7 +419,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/fishburger(src)
 			src.recipes += new /datum/cookingrecipe/sloppyjoe(src)
 			src.recipes += new /datum/cookingrecipe/superchili(src)
-			src.recipes += new /datum/cookingrecipe/colorburger(src)
+			src.recipes += new /datum/cookingrecipe/rainburger(src)
 			src.recipes += new /datum/cookingrecipe/chili(src)
 			src.recipes += new /datum/cookingrecipe/queso(src)
 			src.recipes += new /datum/cookingrecipe/roburger(src)

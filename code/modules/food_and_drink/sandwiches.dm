@@ -443,8 +443,8 @@
 	icon_state = "chickenburger-spicy"
 	initial_reagents = list("capsaicin"=15)
 
-/obj/item/reagent_containers/food/snacks/burger/crayon // stonepillar's crayon project
+/obj/item/reagent_containers/food/snacks/burger/rainburger // stonepillar's crayon project
 	name = "rainburger"
 	desc = "A rather colorful burger."
-	icon_state = "crayonburger"
+	icon_state = "rainburger"
 	initial_reagents = list("colors"=5)
