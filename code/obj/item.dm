@@ -721,12 +721,9 @@
 		else if (ismegakrampus(usr))
 			src.throw_at(over_object, 7, 1)
 			logTheThing("combat", usr, null, "throws [src] with k_tk.")
-		else if(usr.bioHolder && usr.bioHolder.HasEffect("telekinesis_drag") && istype(src, /obj)  && isturf(src.loc) && isalive(usr)  && usr.canmove && get_dist(src,usr) <= 7 )
-			var/datum/bioEffect/TK = usr.bioHolder.GetEffect("telekinesis_drag")
-
-			if(!src.anchored && (isitem(src) || TK.variant == 2))
-				src.throw_at(over_object, 7, 1)
-				logTheThing("combat", usr, null, "throws [src] with tk.")
+		else if(usr.bioHolder && usr.bioHolder.HasEffect("telekinesis_drag") && isturf(src.loc) && isalive(usr) && usr.canmove && get_dist(src,usr) <= 7 && !src.anchored && src.w_class < W_CLASS_GIGANTIC)
+			src.throw_at(over_object, 7, 1)
+			logTheThing("combat", usr, null, "throws [src] with tk.")
 
 #ifdef HALLOWEEN
 		else if (istype(usr, /mob/dead/observer))	//ghost
