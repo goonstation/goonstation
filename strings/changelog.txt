@@ -1,5 +1,9 @@
 
 (t)fri may 21 21
+(u)kyle
+(p)4768
+(e)⚖|balance
+(+)Poltergeists now need to be near an item to throw it telekinetically. Otherwise you only can toss it one tile.
 (u)112358sam
 (p)4810
 (e)📄|tgui
