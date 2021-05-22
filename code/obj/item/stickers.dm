@@ -329,10 +329,9 @@
 	icon_state = "googly1"
 	random_icons = list("googly1", "googly2")
 
-/obj/item/sticker/googly_eye_angry
-	name = "angry googly eye sticker"
-	icon_state = "googly_anger1"
-	random_icons = list("googly_angerL", "googly_angerR")
+	angry
+		name = "angry googly eye sticker"
+		random_icons = list("googly_angerL", "googly_angerR")
 
 /obj/item/sticker/ribbon
 	name = "award ribbon"
