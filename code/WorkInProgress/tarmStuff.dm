@@ -130,7 +130,7 @@
 //smart extinguisher
 /obj/item/gun/flamethrower/assembled/loaded/extinguisher
 	name = "smart fire extinguisher"
-	desc = "An advanced fire extinguisher that locks onto nearby burning personell and sprays them down with fire-fighting foam."
+	desc = "An advanced fire extinguisher that locks onto nearby burning personnel and sprays them down with fire-fighting foam."
 	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "fire_extinguisher0"
