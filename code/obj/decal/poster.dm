@@ -779,6 +779,7 @@
 			// 0 = GLASS, MEDAL 1 = GLASS OFF, MEDAL IN CASE, 2 = GLASS OFF, MEDAL GONE,
 
 			New()
+				..()
 				var/obj/item/clothing/suit/hosmedal/M = new /obj/item/clothing/suit/hosmedal(src.loc)
 				M.desc = src.desc
 				src.contents.Add(M)
@@ -875,7 +876,8 @@
 			pixel_y = -6
 
 			New()
-				var/obj/item/firstbill/M = new /obj/item/firstbill()(src.loc)
+				..()
+				var/obj/item/firstbill/M = new /obj/item/firstbill(src.loc)
 				M.desc = src.desc
 				src.contents.Add(M)
 
@@ -960,6 +962,7 @@
 			pixel_y = -6
 
 			New()
+				..()
 				var/obj/item/rddiploma/M = new /obj/item/rddiploma(src.loc)
 				M.desc = src.desc
 				src.contents.Add(M)
@@ -1043,6 +1046,7 @@
 			pixel_y = -6
 
 			New()
+				..()
 				var/obj/item/mdlicense/M = new /obj/item/mdlicense(src.loc)
 				M.desc = src.desc
 				src.contents.Add(M)
