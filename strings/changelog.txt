@@ -1,5 +1,9 @@
 
 (t)sat may 22 21
+(u)edwardly
+(p)4821
+(e)🐛|bug
+(+)duckbots, buttbots, chefbots, etc, can be contained within a crate and won't wander out of them
 (u)Azrun
 (p)4803
 (e)🐛|bug
