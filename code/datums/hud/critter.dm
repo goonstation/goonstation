@@ -5,120 +5,154 @@
 	/// list of equipment hud elements
 	var/list/equipment = list()
 	/// health hud element
-	var/atom/movable/screen/hud/health
+	var/atom/movable/screen/hud/health = null
 	/// oxygen hud element
-	var/atom/movable/screen/hud/oxygen
+	var/atom/movable/screen/hud/oxygen = null
 	/// fire hud element
-	var/atom/movable/screen/hud/fire
+	var/atom/movable/screen/hud/fire = null
 	/// attack intent hud element
-	var/atom/movable/screen/hud/intent
+	var/atom/movable/screen/hud/intent = null
 	/// movement intent hud element
-	var/atom/movable/screen/hud/mintent
+	var/atom/movable/screen/hud/mintent = null
 	/// throwing hud element
-	var/atom/movable/screen/hud/throwing
+	var/atom/movable/screen/hud/throwing = null
 	/// pulling hud element
-	var/atom/movable/screen/hud/pulling
+	var/atom/movable/screen/hud/pulling = null
 	/// resist hud element
-	var/atom/movable/screen/hud/resist
+	var/atom/movable/screen/hud/resist = null
 	/// stamina hud element
-	var/atom/movable/screen/hud/stamina
+	var/atom/movable/screen/hud/stamina = null
 	/// backdrop of stamina hud element
-	var/atom/movable/screen/hud/stamina_back
+	var/atom/movable/screen/hud/stamina_back = null
 	/// temperature hud element
-	var/atom/movable/screen/hud/bodytemp
+	var/atom/movable/screen/hud/bodytemp = null
 	/// toxic gas hud element
-	var/atom/movable/screen/hud/toxin
+	var/atom/movable/screen/hud/toxin = null
 	/// radiation hud element
-	var/atom/movable/screen/hud/rad
+	var/atom/movable/screen/hud/rad = null
 	/// bleeding hud element
-	var/atom/movable/screen/hud/bleeding
+	var/atom/movable/screen/hud/bleeding = null
 	/// resting hud element
-	var/atom/movable/screen/hud/resting
+	var/atom/movable/screen/hud/resting = null
 
 	/// hud owner mob
-	var/mob/living/critter/master
+	var/mob/living/critter/master = null
 
 	/// hud icons to use
-	var/icon/icon_hud = 'icons/mob/hud_human.dmi'
+	var/icon/hud_icon = 'icons/mob/hud_human.dmi'
 
 	/// Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(atom/movable/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
 	var/list/statusUiElements = list()
 
-	// i hate you 2 letter undocumented variable names PLEASE use descriptive names or at least comment :'[
+	/// offset for a screen location to the right
+	var/right_offset = 0
+	/// offset for a screen location to the left
+	var/left_offset = 0
+	/// offset for a screen location in the top right (generally where health and status icons go)
+	var/top_right_offset = 0
 
-	/// next screen location to the right
-	var/nr = 0
-	/// next screen location to the left
-	var/nl = 0
 	/// idk, something left
 	var/rl = 0
 	/// idk, something right
 	var/rr = 0
-	/// next top right??
-	var/tre = 0
 
 /datum/hud/critter/New(M)
 	..()
 	src.master = M
 
 	// hand hud element creation
-	var/hand_s = -round((src.master.hands.len - 1) / 2) //used for offsets for weird amts of hands?
-	nl = hand_s - 1
+	var/initial_hand_offset = -round((src.master.hands.len - 1) / 2) // calculates an offset using a methodology i dont understand
+	src.left_offset = initial_hand_offset - 1
 	for (var/i = 1, i <= src.master.hands.len, i++)
-		var/curr = hand_s + i - 1
+		var/curr = initial_hand_offset + i - 1
 		var/datum/handHolder/handHolder = src.master.hands[i]
-		var/screen_loc = "CENTER[curr < 0 ? curr : (curr > 0 ? "+[curr]" : null)],SOUTH"
-		var/atom/movable/screen/hud/hand_element = create_screen("hand[i]", handHolder.name, handHolder.icon,\
-		"[handHolder.icon_state][i == src.master.active_hand ? 1 : 0]", screen_loc, HUD_LAYER_1)
-		handHolder.screenObj = hand_element
+
+		var/center_offset = 0
+		if (curr < 0)
+			center_offset = curr
+		else if (curr > 0)
+			center_offset = "+[curr]"
+		else
+			center_offset = ""
+
+		var/new_screen_loc = "CENTER[center_offset], SOUTH"
+		var/atom/movable/screen/hud/hand_element = src.create_screen("hand[i]", handHolder.name, handHolder.icon,\
+		"[handHolder.icon_state][i == src.master.active_hand ? 1 : 0]", new_screen_loc, HUD_LAYER)
 		src.hands.Add(hand_element)
-	nr = hand_s + length(src.master.hands)
+	src.right_offset = initial_hand_offset + length(src.master.hands)
 
 	// health hud element creation
-	src.health = create_screen("health", "health", src.icon_hud, "health0", "EAST[src.next_topright()],NORTH", HUD_LAYER_1)
+	src.health = src.create_screen("health", "health", src.hud_icon, "health0",\
+	"EAST[src.next_topright()],NORTH", HUD_LAYER)
 
 	// stamina element creation
 	if (src.master.use_stamina)
-		var/stamloc = "EAST-1, NORTH"
-		stamina = create_screen("stamina","Stamina", src.icon_hud, "stamina", stamloc, HUD_LAYER, tooltipTheme = "stamina")
-		stamina_back = create_screen("stamina_back","Stamina", src.icon_hud, "stamina_back", stamloc, HUD_LAYER-2)
-		if (master.stamina_bar)
-			stamina.desc = master.stamina_bar.getDesc(master)
+		var/stamloc = "EAST[src.next_topright()], NORTH"
+		src.stamina = src.create_screen("stamina","Stamina", src.hud_icon, "stamina",\
+		stamloc, HUD_LAYER, tooltipTheme = "stamina")
+		src.stamina_back = src.create_screen("stamina_back","Stamina", src.hud_icon, "stamina_back",\
+		stamloc, HUD_LAYER_UNDER_1)
+		if (src.master.stamina_bar)
+			src.stamina.desc = src.master.stamina_bar.getDesc(src.master)
 
-	bodytemp = create_screen("bodytemp","Temperature", src.icon_hud, "temp0", "EAST[next_topright()], NORTH", HUD_LAYER, tooltipTheme = "tempInd tempInd0")
-	bodytemp.desc = "The temperature feels fine."
+	// temperature element creation
+	src.bodytemp = src.create_screen("bodytemp","Temperature", src.hud_icon, "temp0",\
+	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "tempInd tempInd0")
+	src.bodytemp.desc = "The temperature feels fine."
 
-	if (master.get_health_holder("oxy"))
-		oxygen = create_screen("oxygen", "Suffocation Warning", src.icon_hud, "oxy0", "EAST[next_topright()], NORTH", HUD_LAYER)
+	if (src.master.get_health_holder("oxy"))
+		// oxygen element creation
+		src.oxygen = src.create_screen("oxygen", "Suffocation Warning", src.hud_icon, "oxy0",\
+		"EAST[src.next_topright()], NORTH", HUD_LAYER)
 
-		fire = create_screen("fire","Fire Warning", src.icon_hud, "fire0", "EAST[next_topright()], NORTH", HUD_LAYER)
+		// fire element creation
+		src.fire = src.create_screen("fire","Fire Warning", src.hud_icon, "fire0",\
+		"EAST[src.next_topright()], NORTH", HUD_LAYER)
 
-		toxin = create_screen("toxin","Toxic Warning",src.icon_hud, "toxin0", "EAST[next_topright()], NORTH", HUD_LAYER, tooltipTheme = "statusToxin")
-		toxin.desc = "This indicator warns that you are poisoned. You will take toxic damage until the situation is remedied."
+		// toxic gas element creation
+		src.toxin = src.create_screen("toxin","Toxic Warning",src.hud_icon, "toxin0",\
+		"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "statusToxin")
+		src.toxin.desc = "This indicator warns that you are poisoned. You will take toxic damage until the situation is remedied."
 
-		rad = create_screen("rad","Radiation Warning", src.icon_hud, "rad0", "EAST[next_topright()], NORTH", HUD_LAYER, tooltipTheme = "statusRad")
-		rad.desc = "This indicator warns that you are irradiated. You will take toxic and burn damage until the situation is remedied."
+		// radiation element creation
+		src.rad = src.create_screen("rad","Radiation Warning", src.hud_icon, "rad0",\
+		"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "statusRad")
+		src.rad.desc = "This indicator warns that you are irradiated. You will take toxic and burn damage until the situation is remedied."
 
-	if (master.can_bleed)
-		bleeding = create_screen("bleeding","Bleed Warning", src.icon_hud, "blood0", "EAST[next_topright()], NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
-		bleeding.desc = "This indicator warns that you are currently bleeding. You will die if the situation is not remedied."
+	// bleeding element creation
+	if (src.master.can_bleed)
+		src.bleeding = src.create_screen("bleeding","Bleed Warning", src.hud_icon, "blood0",\
+		"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")
+		src.bleeding.desc = "This indicator warns that you are currently bleeding. You will die if the situation is not remedied."
 
-	if (master.can_throw)
-		throwing = create_screen("throw", "throw mode", src.icon_hud, "throw0", "CENTER+[nr], SOUTH", HUD_LAYER+1)
-		nr++
+	// throwing element creation
+	if (src.master.can_throw)
+		src.throwing = src.create_screen("throw", "throw mode", src.hud_icon, "throw0",\
+		"CENTER[src.next_right()], SOUTH", HUD_LAYER_1)
 
-	intent = create_screen("intent", "action intent", src.icon_hud, "intent-help", "CENTER+[nr],SOUTH", HUD_LAYER+1)
-	nr++
-	pulling = create_screen("pull", "pulling", 'icons/mob/critter_ui.dmi', "pull0", "CENTER+[nr], SOUTH", HUD_LAYER+1)
-	mintent = create_screen("mintent", "movement mode", 'icons/mob/critter_ui.dmi', "move-run", "CENTER+[nr], SOUTH", HUD_LAYER+1)
-	nr++
-	resist = create_screen("resist", "resist", 'icons/mob/critter_ui.dmi', "resist_critter", "CENTER+[nr], SOUTH", HUD_LAYER+1)
-	resting = create_screen("rest", "resting", src.icon_hud, "rest0", "CENTER+[nr], SOUTH+0.5", HUD_LAYER+1)
-	nr++
+	// intent element creation
+	src.intent = src.create_screen("intent", "action intent", src.hud_icon, "intent-help",\
+	"CENTER[src.next_right()],SOUTH", HUD_LAYER_1)
 
+	// pulling element creation
+	src.pulling = src.create_screen("pull", "pulling", 'icons/mob/critter_ui.dmi', "pull0",\
+	"CENTER[src.get_right()], SOUTH", HUD_LAYER_1)
 
-	for (var/i = 1, i <= master.equipment.len, i++)
-		var/datum/equipmentHolder/equipmentHolder = master.equipment[i]
+	// movement intent element creation
+	src.mintent = src.create_screen("mintent", "movement mode", 'icons/mob/critter_ui.dmi', "move-run",\
+	"CENTER[src.next_right()], SOUTH", HUD_LAYER_1)
+
+	// resting element creation
+	src.resting = src.create_screen("rest", "resting", 'icons/mob/critter_ui.dmi', "rest0",\
+	"CENTER[src.get_right()], SOUTH", HUD_LAYER_1)
+
+	// resist element creation
+	src.resist = src.create_screen("resist", "resist", 'icons/mob/critter_ui.dmi', "resist_critter",\
+	"CENTER[src.next_right()], SOUTH", HUD_LAYER_1)
+
+	// equipment element creation
+	for (var/i = 1, i <= src.master.equipment.len, i++)
+		var/datum/equipmentHolder/equipmentHolder = src.master.equipment[i]
 		var/screen_loc = src.loc_left()
 		var/atom/movable/screen/hud/equipment_hud = src.create_screen("equipment[i]", equipmentHolder.name, equipmentHolder.icon,\
 		equipmentHolder.icon_state, screen_loc, HUD_LAYER_1)
@@ -134,43 +168,77 @@
 
 /// gets the leftmost screen loc
 /datum/hud/critter/proc/loc_left()
-	if (nl < -6)
-		rl++
-		nl = rr < rl ? 0 : -1
-	var/e = nl
-	nl--
-	var/col = "CENTER[e < 0 ? e : (e > 0 ? "+[e]" : null)]"
-	var/row = "SOUTH[rl > 0 ? "+[rl]" : null]"
-	return "[col],[row]"
+	if (src.left_offset < -6) //why -6
+		src.rl++
+		src.left_offset = src.rr < src.rl ? 0 : -1
+
+	var/east_offset = next_left()
+	var/x_offset = 0
+	var/y_offset = 0
+
+	if (east_offset < 0)
+		x_offset = east_offset
+	else if (east_offset > 0)
+		x_offset = "+[east_offset]"
+	else
+		x_offset = ""
+
+	if (src.rl > 0)
+		y_offset = "+[src.rl]"
+	else
+		y_offset = ""
+
+	return "CENTER[x_offset], SOUTH[y_offset]"
 
 /// gets the rightmost screen loc
 /datum/hud/critter/proc/loc_right()
-	if (nr > 6)
-		rr++
-		nr = rl < rr ? 0 : 1
-	var/e = nr
-	nr++
-	var/col = "CENTER[e < 0 ? e : (e > 0 ? "+[e]" : null)]"
-	var/row = "SOUTH[rr > 0 ? "+[rr]" : null]"
-	return "[col],[row]"
+	if (src.right_offset > 6) //why 6 ??? ?! ??!
+		src.rr++
+		src.right_offset = src.rl < src.rr ? 0 : 1
 
-/// returns current value of nr as a string and then adds 1 (moving right one)
+	var/east_offset = src.next_right()
+	var/x_offset = 0
+	var/y_offset = 0
+
+	if (east_offset < 0)
+		x_offset = east_offset
+	else if (east_offset > 0)
+		x_offset = "+[east_offset]"
+	else
+		x_offset = ""
+
+	if (src.rl > 0)
+		y_offset = "+[src.rr]"
+	else
+		y_offset = ""
+
+	return "CENTER[x_offset], SOUTH[y_offset]"
+
+/// gives an offset for the next right screen element, and then increases the magnitude of the next offset
 /datum/hud/critter/proc/next_right()
-	. = "+[nr]"
-	nr++
+	. = "+[src.right_offset]"
+	src.right_offset++
 
-/// returns current value of nl and then subtracts 1 (moving left one)
+/// gives an offset for the next left screen element, and then increases the magnitude of the next offset
 /datum/hud/critter/proc/next_left()
-	. = nl
-	nl--
+	. = src.left_offset
+	src.left_offset--
 
-/// ???
+/// gives an offset for the next top-right screen element, and then increases the magnitude of the next offset
 /datum/hud/critter/proc/next_topright()
-	if ((tre + 1) == 0)
+	if (!src.top_right_offset)
 		. = ""
 	else
-		. = tre
-	return tre + 1 == 0 ? "" : tre
+		. = src.top_right_offset
+	src.top_right_offset--
+
+/// returns the right offset correctly formatted for a screen loc
+/datum/hud/critter/proc/get_right()
+	return "+[src.right_offset]"
+
+/// returns the left offset correctly formatted for a screen loc
+/datum/hud/critter/proc/get_left()
+	return "-[src.left_offset]"
 
 /// sets the suffocation icon on the hud to show suffocation status
 /datum/hud/critter/proc/set_suffocating(var/status)
@@ -178,7 +246,7 @@
 		return
 	src.oxygen.icon_state = "oxy[status]"
 
-/// sets the breathing fire icon on the hud to show breathinf fire status
+/// sets the breathing fire icon on the hud to show breathing fire status
 /datum/hud/critter/proc/set_breathing_fire(var/status)
 	if (!src.fire)
 		return
@@ -189,6 +257,8 @@
 	for (var/i = 1, i <= src.master.hands.len, i++)
 		var/datum/handHolder/handHolder = src.master.hands[i]
 		var/atom/movable/screen/hud/hand_hud = handHolder.screenObj
+		if (!hand_hud)
+			return
 		if (master.active_hand == i)
 			hand_hud.icon_state = "[handHolder.icon_state]1"
 		else
@@ -200,109 +270,125 @@
 		return
 	src.throwing.icon_state = "throw[src.master.in_throw_mode]"
 
-/datum/hud/critter/clicked(id, mob/user, list/params)
+/// recieves clicks from the screen hud objects
+/datum/hud/critter/relay_click(id, mob/user, list/params)
 	if (copytext(id, 1, 5) == "hand")
 		var/handid = text2num(copytext(id, 5))
-		master.active_hand = handid
-		master.hand = handid
-		update_hands()
+		src.master.active_hand = handid
+		src.master.hand = handid
+		src.update_hands()
+
 	else if (copytext(id, 1, 10) == "equipment")
-		var/eid = text2num(copytext(id, 10))
-		master.equip_click(master.equipment[eid])
+		var/equipment_id = text2num(copytext(id, 10))
+		src.master.equip_click(src.master.equipment[equipment_id])
 	else
 		switch(id)
 			if ("oxygen")
-				boutput(master, "<span class='alert'>This indicator warns that you are currently suffocating. You will take oxygen damage until the situation is remedied.</span>")
+				boutput(src.master, "<span class='alert'>This indicator warns that you are currently suffocating.\
+				You will take oxygen damage until the situation is remedied.</span>")
 
 			if ("intent")
 				var/icon_x = text2num(params["icon-x"])
 				var/icon_y = text2num(params["icon-y"])
 				if (icon_x > 16)
 					if (icon_y > 16)
-						master.a_intent = INTENT_DISARM
+						src.master.a_intent = INTENT_DISARM
 					else
-						master.a_intent = INTENT_HARM
+						src.master.a_intent = INTENT_HARM
 				else
 					if (icon_y > 16)
-						master.a_intent = INTENT_HELP
+						src.master.a_intent = INTENT_HELP
 					else
-						master.a_intent = INTENT_GRAB
+						src.master.a_intent = INTENT_GRAB
 				src.update_intent()
 
 			if ("mintent")
-				if (master.m_intent == "run")
-					master.m_intent = "walk"
+				if (src.master.m_intent == "run")
+					src.master.m_intent = "walk"
 				else
-					master.m_intent = "run"
-				out(master, "You are now [master.m_intent == "walk" ? "walking" : "running"]")
+					src.master.m_intent = "run"
+				out(src.master, "You are now [src.master.m_intent == "walk" ? "walking" : "running"]")
 				src.update_mintent()
 
 			if ("pull")
-				if (master.pulling)
-					unpull_particle(master,pulling)
-				master.pulling = null
+				if (src.master.pulling)
+					global.unpull_particle(src.master, src.pulling)
+				src.master.pulling = null
 				src.update_pulling()
 
 			if ("throw")
 				var/icon_y = text2num(params["icon-y"])
-				if (icon_y > 16 || master.in_throw_mode)
-					master.toggle_throw_mode()
+				if (icon_y > 16 || src.master.in_throw_mode)
+					src.master.toggle_throw_mode()
 				else
-					master.drop_item()
+					src.master.drop_item()
 			if ("resist")
-				master.resist()
+				src.master.resist()
+
 			if ("health")
-				boutput(master, "<span class='notice'>Your health: [master.health]/[master.max_health]</span>")
+				boutput(src.master, "<span class='notice'>Your health: [src.master.health]/[src.master.max_health]</span>")
+
 			if ("rest")
-				if(ON_COOLDOWN(src.master, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
-				if(master.ai_active && !master.hasStatus("resting"))
-					master.show_text("You feel too restless to do that!", "red")
+				if(ON_COOLDOWN(src.master, "toggle_rest", REST_TOGGLE_COOLDOWN))
+					return
+				if(src.master.ai_active && !src.master.hasStatus("resting"))
+					src.master.show_text("You feel too restless to do that!", "red")
+				else if (src.master.hasStatus("resting"))
+					src.master.delStatus("resting")
+					src.master.force_laydown_standup()
 				else
-					master.hasStatus("resting") ? master.delStatus("resting") : master.setStatus("resting", INFINITE_STATUS)
-					master.force_laydown_standup()
+					src.master.setStatus("resting", INFINITE_STATUS)
+					src.master.force_laydown_standup()
 				src.update_resting()
 
+/// updates health hud element
 /datum/hud/critter/proc/update_health()
-	if (!isdead(master))
-		if (!health) //Runtime fix: Cannot modify null.icon_state
+	if (!isdead(src.master))
+		if (!src.health) //Runtime fix: Cannot modify null.icon_state
 			return
-		var/h_ratio = master.health / master.max_health * 100
+		var/h_ratio = (src.master.health / src.master.max_health) * 100
 		switch(h_ratio)
 			if(90 to INFINITY)
-				health.icon_state = "health0" // green with green marker
+				src.health.icon_state = "health0" // green with green marker
 			if(75 to 90)
-				health.icon_state = "health1" // green
+				src.health.icon_state = "health1" // green
 			if(60 to 75)
-				health.icon_state = "health2" // yellow
+				src.health.icon_state = "health2" // yellow
 			if(45 to 60)
-				health.icon_state = "health3" // orange
+				src.health.icon_state = "health3" // orange
 			if(20 to 45)
-				health.icon_state = "health4" // dark orange
+				src.health.icon_state = "health4" // dark orange
 			if(10 to 20)
-				health.icon_state = "health5" // red
+				src.health.icon_state = "health5" // red
 			else
-				health.icon_state = "health6" // crit
+				src.health.icon_state = "health6" // crit
 	else
-		health.icon_state = "health7"         // dead
+		src.health.icon_state = "health7"         // dead
 
+/// updates intent hud element
 /datum/hud/critter/proc/update_intent()
-	intent.icon_state = "intent-[master.a_intent]"
+	src.intent.icon_state = "intent-[src.master.a_intent]"
 
+/// updates movement intent hud element
 /datum/hud/critter/proc/update_mintent()
-	if (!mintent) return 0
-	mintent.icon_state = "move-[master.m_intent]"
+	if (!src.mintent)
+		return 0
+	src.mintent.icon_state = "move-[src.master.m_intent]"
 
+/// updates pull hud element
 /datum/hud/critter/proc/update_pulling()
-	if (!pulling) return 0
-	pulling.icon_state = "pull[!!master.pulling]"
+	if (!src.pulling)
+		return 0
+	src.pulling.icon_state = "pull[!!src.master.pulling]"
 
+/// updates all status effect hud elements
 /datum/hud/critter/proc/update_status_effects()
 	for(var/atom/movable/screen/statusEffect/G in src.objects)
-		remove_screen(G)
+		src.remove_screen(G)
 
 	for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
-		if(!master.statusEffects || !(S in master.statusEffects))
-			pool(statusUiElements[S])
+		if(!src.master.statusEffects || !(S in src.master.statusEffects))
+			pool(src.statusUiElements[S])
 			src.statusUiElements.Remove(S)
 			qdel(S)
 
@@ -312,41 +398,43 @@
 	if(master.statusEffects)
 		for(var/datum/statusEffect/S as anything in master.statusEffects) //Add new ones, update old ones.
 			if(!S.visible) continue
-			if((S in statusUiElements) && statusUiElements[S])
-				var/atom/movable/screen/statusEffect/U = statusUiElements[S]
-				U.icon = icon_hud
+			if((S in statusUiElements) && src.statusUiElements[S])
+				var/atom/movable/screen/statusEffect/U = src.statusUiElements[S]
+				U.icon = src.hud_icon
 				U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH-0.7"
 				U.update_value()
-				add_screen(U)
+				src.add_screen(U)
 				pos_x -= spacing
 			else
 				if(S.visible)
-					var/atom/movable/screen/statusEffect/U = new/atom/movable/screen/statusEffect(master, S)
-					U.init(master,S)
-					U.icon = icon_hud
-					statusUiElements.Add(S)
-					statusUiElements[S] = U
+					var/atom/movable/screen/statusEffect/U = new/atom/movable/screen/statusEffect(src.master, S)
+					U.init(src.master,S)
+					U.icon = src.hud_icon
+					src.statusUiElements.Add(S)
+					src.statusUiElements[S] = U
 					U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH-0.7"
 					U.update_value()
-					add_screen(U)
+					src.add_screen(U)
 					pos_x -= spacing
-					animate_buff_in(U)
+					global.animate_buff_in(U)
 	return
 
 //HUMAN COPOY PASTE
+/// updates stamina sprinting icon state
 /datum/hud/critter/proc/set_sprint(var/on)
-	if(stamina)
-		stamina.icon_state = on ? "stamina_sprint" : "stamina"
+	if(src.stamina)
+		src.stamina.icon_state = on ? "stamina_sprint" : "stamina"
 
+/// updates bleeding hud element
 /datum/hud/critter/proc/update_blood_indicator()
-	if (!bleeding || isdead(master))
-		bleeding.icon_state = "blood0"
-		bleeding.tooltipTheme = "healthDam healthDam0"
+	if (!src.bleeding || isdead(src.master))
+		src.bleeding.icon_state = "blood0"
+		src.bleeding.tooltipTheme = "healthDam healthDam0"
 		return
 
 	var/state = 0
 	var/theme = 0
-	switch (master.bleeding)
+	switch (src.master.bleeding)
 		if (-INFINITY to 0)
 			state = 0 // blank
 			theme = 0
@@ -359,80 +447,73 @@
 		if (5 to INFINITY)
 			state = 3
 			theme = 6
-/*			if (-INFINITY to 0)
-			state = 0 // blank
-			theme = 0
-		if (1 to 3)
-			state = 1
-			theme = 3
-		if (4 to 6)
-			state = 2
-			theme = 4
-		if (7 to INFINITY)
-			state = 3
-			theme = 6
-*/
-	bleeding.icon_state = "blood[state]"
-	bleeding.tooltipTheme = "healthDam healthDam[theme]"
 
+	src.bleeding.icon_state = "blood[state]"
+	src.bleeding.tooltipTheme = "healthDam healthDam[theme]"
+
+/// updates temperature hud element
 /datum/hud/critter/proc/update_temp_indicator()
-	if (!bodytemp)
+	if (!src.bodytemp)
 		return
-	if(master.getStatusDuration("burning") && !master.is_heat_resistant())
-		bodytemp.icon_state = "tempF" // on fire
-		bodytemp.tooltipTheme = "tempInd tempIndF"
-		bodytemp.desc = "OH FUCK FIRE FIRE FIRE OH GOD FIRE AAAAAAA"
+	if(src.master.getStatusDuration("burning") && !src.master.is_heat_resistant())
+		src.bodytemp.icon_state = "tempF" // on fire
+		src.bodytemp.tooltipTheme = "tempInd tempIndF"
+		src.bodytemp.desc = "OH FUCK FIRE FIRE FIRE OH GOD FIRE AAAAAAA"
 		return
 
-	var/dev = master.get_temp_deviation()
-	var/state
+	var/dev = src.master.get_temp_deviation()
+	var/state = 0
 	switch(dev)
 		if(4)
 			state = 4 // burning up
-			bodytemp.desc = "It's scorching hot!"
+			src.bodytemp.desc = "It's scorching hot!"
 		if(3)
 			state = 3 // far too hot
-			bodytemp.desc = "It's too hot."
+			src.bodytemp.desc = "It's too hot."
 		if(2)
 			state = 2 // too hot
-			bodytemp.desc = "It's a bit warm, but nothing to worry about."
+			src.bodytemp.desc = "It's a bit warm, but nothing to worry about."
 		if(1)
 			state = 1 // warm but safe
-			bodytemp.desc = "It feels a little warm."
+			src.bodytemp.desc = "It feels a little warm."
 		if(-1)
 			state = -1 // cool but safe
-			bodytemp.desc = "It feels a little cool."
+			src.bodytemp.desc = "It feels a little cool."
 		if(-2)
 			state = -2 // too cold
-			bodytemp.desc = "It's a little cold, but nothing to worry about."
+			src.bodytemp.desc = "It's a little cold, but nothing to worry about."
 		if(-3)
 			state = -3 // far too cold
-			bodytemp.desc = "It's too cold."
+			src.bodytemp.desc = "It's too cold."
 		if(-4)
 			state = -4 // freezing
-			bodytemp.desc = "It's absolutely freezing!"
+			src.bodytemp.desc = "It's absolutely freezing!"
 		else
 			state = 0 // 310 is optimal body temp
-			bodytemp.desc = "The temperature feels fine."
+			src.bodytemp.desc = "The temperature feels fine."
 
-	bodytemp.icon_state = "temp[state]"
-	bodytemp.tooltipTheme = "tempInd tempInd[state]"
+	src.bodytemp.icon_state = "temp[state]"
+	src.bodytemp.tooltipTheme = "tempInd tempInd[state]"
 
+/// updates toxic gas hud element
 /datum/hud/critter/proc/update_tox_indicator(var/status)
-	if (!toxin)
+	if (!src.toxin)
 		return
-	toxin.icon_state = "tox[status]"
+	src.toxin.icon_state = "tox[status]"
 
+/// updates radiation hud element
 /datum/hud/critter/proc/update_rad_indicator(var/status)
-	if (!rad) // not rad :'(
+	if (!src.rad) // not rad :'(
 		return
-	rad.icon_state = "rad[status]"
+	src.rad.icon_state = "rad[status]"
 
+/// updates resting status
 /datum/hud/critter/proc/update_resting()
-	if (!resting) return 0
-	resting.icon_state = "rest[master.hasStatus("resting") ? 1 : 0]"
+	if (!src.resting)
+		return 0
+	src.resting.icon_state = "rest[src.master.hasStatus("resting") ? 1 : 0]"
 
-
+/// updates status effects on the owner's hud
 /mob/living/critter/updateStatusUi()
 	if(src.hud && istype(src.hud, /datum/hud/critter))
 		var/datum/hud/critter/H = src.hud
