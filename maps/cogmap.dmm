@@ -51322,10 +51322,6 @@
 	dir = 6
 	},
 /area/station/medical/medbay/surgery)
-"cwR" = (
-/obj/machinery/genetics_scanner,
-/turf/simulated/floor/blue/checker,
-/area/station/medical/research)
 "cwS" = (
 /obj/machinery/computer/genetics,
 /turf/simulated/floor/blue/checker,
@@ -106183,7 +106179,7 @@ cuo
 cwj
 cuo
 cuo
-cwR
+afH
 vUX
 dhj
 rNh
