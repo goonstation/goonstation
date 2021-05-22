@@ -1453,7 +1453,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	animate(A.filters[A.filters.len], time = 10, size=size_max, loop=-1,easing = SINE_EASING, flags=ANIMATION_PARALLEL)
 	animate(time = 10, size=size_min, loop=-1,easing = SINE_EASING)
 
-/proc/animate_bouncy(var/atom/A) // little bouncy dance for admin and mentor mice, could be used for other stuff
+/proc/animate_bouncy(atom/A) // little bouncy dance for admin and mentor mice, could be used for other stuff
 	if (!istype(A))
 		return
 	animate(A, pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = EAST, flags=ANIMATION_PARALLEL)
@@ -1461,7 +1461,9 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	animate(pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = WEST)
 	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = WEST)
 
-/proc/animate_wave(var/atom/A, var/waves=7) // https://secure.byond.com/docs/ref/info.html#/{notes}/filters/wave
+/proc/animate_wave(atom/A, waves=7) // https://secure.byond.com/docs/ref/info.html#/{notes}/filters/wave
+	if (!istype(A))
+		return
 	var/start = A.filters.len
 	var/X,Y,rsq,i,f
 	for(i=1, i<=waves, ++i)
@@ -1480,3 +1482,13 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 		f = A.filters[start+i]
 		animate(f, offset=f:offset, time=0, loop=-1, flags=ANIMATION_PARALLEL)
 		animate(offset=f:offset-1, time=rand()*20+10)
+
+/proc/animate_ripple(atom/A, ripples=1)
+	if (!istype(A))
+		return
+	var/filter
+	for(var/i=1, i<=ripples, ++i)
+		A.filters += filter(type="ripple", x=0, y=0, size=rand()*2.5+1, repeat=rand()*2.5+1, radius=0)
+		filter = A.filters[A.filters.len]
+		animate(filter, size=filter:size, time=0, loop=-1, radius=0, flags=ANIMATION_PARALLEL)
+		animate(size=0, radius=rand()*10+10, time=rand()*20+10)

@@ -599,7 +599,7 @@ PIPE BOMBS + CONSTRUCTION
 				var/stamina = clamp(5 * (5 + 1 * (7 - checkdist)), 0, 120)
 				HH.apply_sonic_stun(0, 0, misstep, 0, 2, ear_damage, ear_tempdeaf, stamina)
 
-			animate(E, alpha=0, time=2.8 SECONDS, flags=CIRCULAR_EASING | EASE_IN)
+			animate(E, alpha=0, time=2.5 SECONDS)
 			playsound(T, "sound/weapons/flashbang.ogg", 30, 1)
 			var/datum/effects/system/steam_spread/steam = unpool(/datum/effects/system/steam_spread)
 			steam.set_up(10, 0, get_turf(src), color="#0ff", plane=PLANE_NOSHADOW_ABOVE)
@@ -607,7 +607,7 @@ PIPE BOMBS + CONSTRUCTION
 			steam.start()
 
 		else
-			animate(E, alpha=0, time=2 SECONDS, flags=CIRCULAR_EASING | EASE_IN)
+			animate(E, alpha=0, time=2 SECONDS)
 			playsound(T, "sound/weapons/flashbang.ogg", 15, 1)
 
 		E.fingerprintslast = src.fingerprintslast
