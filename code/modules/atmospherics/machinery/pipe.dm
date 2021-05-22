@@ -414,9 +414,7 @@ obj/machinery/atmospherics/pipe
 				list(user, S), W.icon, W.icon_state, "[user] finishes working with \the [src].")
 				actions.start(action_bar, user)
 
-		proc/reconstruct_pipe(proc_args)
-			var/mob/M = proc_args[1]
-			var/obj/item/rods/R = proc_args[2]
+		proc/reconstruct_pipe(mob/M, obj/item/rods/R)
 			if(istype(R) && istype(M))
 				R.change_stack_amount(-1)
 				src.setMaterial(R.material)

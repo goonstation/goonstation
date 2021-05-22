@@ -1,5 +1,18 @@
 
+(t)sat may 22 21
+(u)Azrun
+(p)4803
+(e)🐛|bug
+(+)Fittings for atmos pipes re-adjusted to properly allow for rods when severely damaged.
 (t)fri may 21 21
+(u)edwardly
+(p)4778
+(e)|
+(+)Include seconds in Cryosleep countdown so progress can be estimated below 1 minute.
+(u)kyle
+(p)4768
+(e)⚖|balance
+(+)Poltergeists now need to be near an item to throw it telekinetically. Otherwise you only can toss it one tile.
 (u)112358sam
 (p)4810
 (e)📄|tgui
