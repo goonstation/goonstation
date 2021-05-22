@@ -15,16 +15,14 @@
 	/// Doesn't feel right to have this guy *constantly* flipping its lid like a methed up graytider
 	dynamic_processing = 0
 
-/obj/machinery/bot/chefbot/proc/do_step()
-	step_rand(src, 1)
-
 /obj/machinery/bot/chefbot/process()
 	. = ..()
 	if (raging)
 		return
 	if(prob(60) && src.on == 1)
+		src.navigate_to(get_step_rand(src))
+
 		SPAWN_DBG(0)
-			do_step()
 			if(prob(src.emagged * 20))
 				drama()
 			if(prob(30 + src.emagged * 30))

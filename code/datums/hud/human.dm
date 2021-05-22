@@ -305,7 +305,7 @@
 
 			master?.update_equipment_screen_loc()
 
-	clicked(id, mob/user, list/params)
+	relay_click(id, mob/user, list/params)
 		switch (id)
 			if ("invtoggle")
 				var/obj/item/I = master.equipped()
