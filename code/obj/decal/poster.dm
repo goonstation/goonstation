@@ -1001,11 +1001,11 @@
 						var/obj/item/rddiploma/M = locate() in src.contents
 						if(M)
 							M.desc = src.desc
-						user.put_in_hand_or_drop(M)
-						user.visible_message("[user] takes the diploma from the frame.", "You take the diploma out of the frame.")
-						src.icon_state = "frame"
-						src.add_fingerprint(user)
-						src.usageState = 2
+							user.put_in_hand_or_drop(M)
+							user.visible_message("[user] takes the diploma from the frame.", "You take the diploma out of the frame.")
+							src.icon_state = "frame"
+							src.add_fingerprint(user)
+							src.usageState = 2
 
 			attackby(obj/item/W as obj, mob/user as mob)
 				if (user.stat)
