@@ -336,7 +336,7 @@
 			if (RV)
 				var/RV_pp = (RV.moles/TOTAL_MOLES(breath))*breath_pressure
 				if(RV_pp >= 1)
-				owner.changeStatus("radiation", (1 + RV_pp) * mult)
+					owner.changeStatus("radiation", (1 + RV_pp) * mult)
 
 		if (human_owner?.organHolder)
 			if (breath.temperature > min(human_owner.organHolder.left_lung ? human_owner.organHolder.left_lung.temp_tolerance : INFINITY, human_owner.organHolder.right_lung ? human_owner.organHolder.right_lung.temp_tolerance : INFINITY) && !human_owner.is_heat_resistant()) // Hot air hurts :(
