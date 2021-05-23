@@ -1906,6 +1906,7 @@
 	amount = 5
 	heal_amt = 1
 	needfork = 1
+	needspoon = 1
 	food_color = "#FFFFFF"
 	initial_volume = 50
 	initial_reagents = list("mashedpotatoes"=25)
@@ -1918,6 +1919,7 @@
 	amount = 5
 	heal_amt = 1
 	needfork = 1
+	needspoon = 1
 	food_color = "#FF6699"
 	food_effects = list("food_hp_up_big")
 

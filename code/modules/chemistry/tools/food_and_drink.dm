@@ -191,29 +191,37 @@
 					boutput(M, "<span class='alert'>You can't eat [src]!</span>")
 					return 0
 				if (!bypass_utensils)
-					if (src.needfork && !user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
-						boutput(M, "<span class='alert'>You need a fork to eat [src]!</span>")
+					var/utensil = null
+
+					if (src.needfork && user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
+						utensil = user.find_type_in_hand(/obj/item/kitchen/utensil/fork)
+					else if (src.needspoon && user.find_type_in_hand(/obj/item/kitchen/utensil/spoon))
+						utensil = user.find_type_in_hand(/obj/item/kitchen/utensil/spoon)
+
+					// If it's a plastic fork we've found then test if we've broken it
+					var/obj/item/kitchen/utensil/fork/plastic/plastic_fork = utensil
+					if (istype(plastic_fork))
+						if (prob(20))
+							plastic_fork.break_utensil(M)
+							utensil = null
+
+					// If it's a plastic spoon we've found then test if we've broken it
+					var/obj/item/kitchen/utensil/spoon/plastic/plastic_spoon = utensil
+					if (istype(plastic_spoon))
+						if (prob(20))
+							plastic_spoon.break_utensil(M)
+							utensil = null
+
+					if (!utensil)
+						if (needfork && needspoon)
+							boutput(M, "<span class='alert'>You need a fork or spoon to eat [src]!</span>")
+						else if (needfork)
+							boutput(M, "<span class='alert'>You need a fork to eat [src]!</span>")
+						else if (needspoon)
+							boutput(M, "<span class='alert'>You need a spoon to eat [src]!</span>")
+
 						M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
 						return
-					if (src.needfork && user.find_type_in_hand(/obj/item/kitchen/utensil/fork/plastic) && prob(20))
-						// this can be kinda fucky if they're eating with two forks in hand.
-						// basically, the fork in their left hand will always be chosen
-						// I guess people in space are all left handed
-						for (var/obj/item/kitchen/utensil/fork/plastic/F in user.equipped_list(check_for_magtractor = 0))
-							F.break_utensil(M)
-							M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
-							return
-					if (src.needspoon && !user.find_type_in_hand(/obj/item/kitchen/utensil/spoon))
-						boutput(M, "<span class='alert'>You need a spoon to eat [src]!</span>")
-						M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
-						return
-					if (src.needspoon && user.find_type_in_hand(/obj/item/kitchen/utensil/spoon/plastic) && prob(20))
-						// this can be kinda fucky if they're eating with two forks in hand.
-						// basically, the fork in their left hand will always be chosen
-						// I guess people in space are all left handed
-						for (var/obj/item/kitchen/utensil/spoon/plastic/S in user.equipped_list(check_for_magtractor = 0))
-							S.break_utensil(M)
-							M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
 
 				//no or broken stomach
 				if (ishuman(M))
