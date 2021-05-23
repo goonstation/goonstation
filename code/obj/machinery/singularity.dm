@@ -631,6 +631,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			state = WRENCHED
 			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
 			boutput(user, "You secure the external reinforcing bolts to the floor.")
+			desc = "Projects an energy field when active, It has been bolted to the floor."
 			src.anchored = 1
 			return
 
@@ -638,6 +639,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			state = UNWRENCHED
 			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
 			boutput(user, "You undo the external reinforcing bolts.")
+			desc = "Projects an energy field when active."
 			src.anchored = 0
 			return
 
@@ -675,12 +677,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		state = WELDED
 		src.get_link() //Set up a link, now that we're secure!
 		boutput(user, "You weld the field generator to the floor.")
+		desc = "Projects an energy field when active, It has been bolted and welded to the floor."
 	else if(state == WELDED)
 		state = WRENCHED
 		if(src.link) //Clear active link.
 			src.link.master = null
 			src.link = null
 		boutput(user, "You cut the field generator free from the floor.")
+		desc = "Projects an energy field when active, It has been bolted to the floor."
 
 /obj/machinery/field_generator/proc/cleanup(var/NSEW)
 	var/obj/machinery/containment_field/F
