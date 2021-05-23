@@ -38,9 +38,9 @@
 		</li>
 		<li><b>Battle Phase</b>
 			<ul style='list-style-type:circle'>
-				<li>Each creature on your side of the field may attack up to once unless incapacitated or otherwise prevented by an Effect. No cards may be played after the beginning of the Battle Phase unless allowed by a special effect, but face down cards may be activated.</li>
+				<li>Each creature on your side of the field may attack up to once unless incapacitated or otherwise prevented by an Effect. No cards may be played after the beginning of the Battle Phase unless allowed by a special effect, but face-down cards may be activated.</li>
 				<br>
-				<li>A creature is defeated in normal battle if its <i>DEF is lower than the ATK</i> of the attacking creature. The difference is then subtracted from the HP of the player whose creature was defeated. Defeated creatures must be moved to the player's discard pile unless otherwise noted. All Equipment and Effects attached to the defeated Creature must be discarded.</li>
+				<li>A creature is defeated in normal battle if its <i>DEF is lower than the ATK</i> of the attacking creature. The difference is then subtracted from the HP of the player whose creature was defeated. Defeated creatures must be moved to the player's Discard pile unless otherwise noted. All Equipment and Effects attached to the defeated Creature must be discarded.</li>
 				<br>
 				<li>If the attack fails <i>(DEF is higher than the attacker's ATK)</i>, then the difference is subtracted from the HP of the attacker, and additionally, if the <i>ATK of the defender is higher than the DEF of the attacker</i>, the attacking creature is defeated.</li>
 				<br>
@@ -66,7 +66,7 @@
 				<li>Can't be played if any Nuclear Operatives are on the same side of the field, or if a Captain is already face up</li>
 				<li>Can only be played while the Bridge area is active</li>
 				<li>On play, equip an Energy Gun card from your deck</li>
-				<li>On play, discard all face down Captains</li></b>
+				<li>On play, discard all face-down Captains</li></b>
 		</ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Head of Personnel</b> - LVL 7 / 20 ATK / 65 DEF</p>
 			<ul style='list-style-type:circle'>
@@ -125,7 +125,7 @@
 		<p style="margin-right:10%; margin-left:1%"><b>Clown</b> - LVL 2 / 10 ATK / 25 DEF</p>
 			<ul style='list-style-type:circle'>
 			<li>May redirect opponent's attack to the clown once per turn; may be done while Clown is face-down, which reveals Clown</li>
-			<li>If the Clown attacks any opponent, discard opponent</li>
+			<li>If the Clown attacks any opponent creature, discard opponent creature</li>
 			<li>If the Clown does not defeat opponent, Clown is incapacitated for one turn</li></ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Chaplain</b> - LVL 1 / 8 ATK / 22 DEF</p>
 			<ul style='list-style-type:circle'>
@@ -210,20 +210,20 @@
 			<li>Can be played on any creature</li>
 			<li>Creature is taken out of battle until abductor is destroyed</li>
 			<li>Creatures out of battle are on field but cannot attack, be attacked, or be defeated</li>
-			<li>Can be played face down and activated in response to opponent attack</li></ul>
+			<li>Can be played face-down and activated in response to opponent attack</li></ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Adminhelp</b></p>
 			<ul style='list-style-type:circle'>
-			<li>Can only be played face down</li>
+			<li>Can only be played face-down</li>
 			<li>Can be activated in response to any Effect or Equipment being activated</li>
 			<li>Effect or Equipment card being activated is instantly destroyed without activating</li></ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Bee Mom</b></p>
 			<ul style='list-style-type:circle'>
-			<li>Can only be played face down</li>
+			<li>Can only be played face-down</li>
 			<li>Can be activated in response to any opponent attack</li>
 			<li>Redirect attack to any bee on your side of the field</li></ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Deathgasp</b></p>
 			<ul style='list-style-type:circle'>
-			<li>Can only be played face down and is activated whenever opponent activates or plays a card</li>
+			<li>Can only be played face-down and is activated whenever opponent activates or plays a card</li>
 			<li>Destroys triggering card and any copies of it in opponent's hand and deck</li></ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Deconstructor</b></p>
 			<ul style='list-style-type:circle'>
@@ -249,9 +249,13 @@
 			<ul style='list-style-type:circle'>
 			<li>When activated, roll a D6 and multiply the result by two; add the number to the ATK and DEF of a selected creature until end of current turn</li>
 			<li>Can be played face-down and activated in response to opponent attack</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Salt</b></p>
+			<ul style='list-style-type:circle'>
+			<li>When played, all ethereal mobs become coporeal until end of turn</li>
+			<li>Can be played face-down and activated in response to an attack</li></ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Stealth Storage</b></p>
 			<ul style='list-style-type:circle'>
-			<li>Can only be played face down</li>
+			<li>Can only be played face-down</li>
 			<li>Can only be activated when opponent plays or activates a card</li>
 			<li>Allows you to play any Effect card during any point in opponent's turn, unless Effect card specifically says it cannot be played during opponent turn</li></ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Telekinesis</b></p>
@@ -259,15 +263,50 @@
 			<li>When activated, take one Equipment card from opponent's field and equip to one of your own creatures</li>
 			<li>Can be played face-down and activated in response to opponent equipping or attacking</li></ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Wet Floor</b></p>
-			<li>Can only be played face down and activates when a human attacks</li>
+			<li>Can only be played face-down and activates when a human attacks</li>
 			<li>Immediately concludes attack</li></ul>
 		</li></ul>
-	<b>ROBOTS</b><br>
-		<p style="margin-right:10%; margin-left:1%"><b>Officer Beepsky</b></p>
+	<b>EQUIPMENT</b><br>
+		<p style="margin-right:10%; margin-left:1%"><b>Cyalume Saber</b></p>
 			<ul style='list-style-type:circle'>
-			<li>When in play, negates one attack per turn</li></ul>
-		<p style="margin-right:10%; margin-left:1%"><b>Automaton</b><br>
-	<b>OTHER</b><br>
+			<li><b><i>Can only be equipped to Traitor, Spy, or Nuclear Operative unless otherwise specified</i></b></li>
+			<li>When equipped, increases ATK by 40</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Energy Gun</b></p>
+			<ul style='list-style-type:circle'>
+			<li>When equipped, adds 30 ATK and 15 DEF to creature</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Fake .357</b></p>
+			<ul style='list-style-type:circle'>
+			<li>Can be equipped on any human</li>
+			<li>When equipped, if human with it equipped tries to attack, they are defeated without attacking and must be discarded</ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Injector</b></p>
+			<ul style='list-style-type:circle'>
+			<li>Must equip on a human</li>
+			<li>When equipped, human can only be killed by mobs with ATK at least 20 points higher than the human's DEF</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Mindslave Implant</b></p>
+			<ul style='list-style-type:circle'>
+			<li>Can only be played if player has Traitor or Spy in play</li>
+			<li>Equip to an opponent's human to take control of the card</li>
+			<li>When destroyed, control of card returns to opponent</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Motivational Speech</b></p>
+			<ul style='list-style-type:circle'>
+			<li>Equip card to creature to transfer to opposing side of field for one turn</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Radio</b></p>
+			<ul style='list-style-type:circle'>
+			<li>Must equip on a human</li>
+			<li>When equipped, if human is killed or gibbed, choose any LVL 4 or lower mob or friend from deck and put into hand; shuffle deck after</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Stimpack</b></p>
+			<ul style='list-style-type:circle'>
+			<li>Must equip on a human</li>
+			<li>When equipped, human gains 30 DEF and is unable to be incapacitated</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Toolbox</b></p>
+			<ul style='list-style-type:circle'>
+			<li>When equipped, increases ATK by 10</li></ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Wrestling Belt</b></p>
+			<ul style='list-style-type:circle'>
+			<li><b><i>Can only be equipped to Traitor, Spy, or Nuclear Operative unless otherwise specified</i></b></li>
+			<li>When equipped, increases ATK by 20 and DEF by 20</li></ul>
+	<b>ARMOR</b><br>
+	<b>INSTANT EFFECTS</b><br>
 		<p style="margin-right:10%; margin-left:1%"><b>George Melons</b></p>
 			<ul style='list-style-type:circle'>
 			<li>Requires one each of Heart of George Melons, Brain of George Melons, Skull of George Melons, and Limbs of George Melons to play </li>
