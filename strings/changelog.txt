@@ -1,5 +1,9 @@
 
 (t)sat may 22 21
+(u)TDHooligan
+(p)4490
+(e)⚖|balance
+(+)Increased frequency of gene strains when infusing with the PlantMaster.
 (u)Disturbherb
 (p)4819
 (e)🎨|sprites
