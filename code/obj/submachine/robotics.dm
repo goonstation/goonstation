@@ -117,7 +117,7 @@
 						loadAmount = loadAmount + src.max_ammo - (src.metal_ammo + loadAmount)
 					src.metal_ammo += loadAmount
 					S.change_stack_amount(-loadAmount)
-					playsound(get_turf(src), "sound/machines/click.ogg", 25, 1)
+					playsound(src, "sound/machines/click.ogg", 25, 1)
 					src.inventory_counter.update_number(src.metal_ammo)
 					boutput(user, "You load the metal sheet into the lamp manufacturer.")
 			else

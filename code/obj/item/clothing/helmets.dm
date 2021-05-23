@@ -264,7 +264,7 @@
 
 			proc/toggle(var/mob/toggler)
 				src.on = !src.on
-				playsound(get_turf(src), "sound/items/mesonactivate.ogg", 30, 1)
+				playsound(src, "sound/items/mesonactivate.ogg", 30, 1)
 				if (ishuman(toggler))
 					var/mob/living/carbon/human/H = toggler
 					if (istype(H.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)) //handling of the rest is done in life.dm

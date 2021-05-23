@@ -621,7 +621,7 @@
 		if(launched) return
 		else launched = 1
 		var/flying = 1
-		playsound(get_turf(src), "sound/effects/torpedolaunch.ogg", 100, 1)
+		playsound(src, "sound/effects/torpedolaunch.ogg", 100, 1)
 		src.changeIcon()
 		var/aboutToBlow = 0
 		var/steps = 0

@@ -1877,7 +1877,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 				src.visible_message("\The [src] goes quiet.")
 
 		src.icon_state = "fogmachine[src.active]"
-		playsound(get_turf(src), "sound/misc/lightswitch.ogg", 50, 1)
+		playsound(src, "sound/misc/lightswitch.ogg", 50, 1)
 
 	is_open_container()
 		return 1 // :I

@@ -1284,7 +1284,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		if (!AM)
 			return ..()
 		user.visible_message("<span class='alert'><b>[user] somehow cuts [AM] out of [M] with [src]!</b></span>")
-		playsound(get_turf(M), src.hitsound, 50, 1)
+		playsound(M, src.hitsound, 50, 1)
 		if (istype(AM, /obj/item))
 			user.u_equip(AM)
 		AM.set_loc(get_turf(M))
@@ -1519,7 +1519,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		else
 			src.bangfired = 1
 			user?.visible_message("<span class='alert'><span class='alert'>[user] fires [src][target ? " at [target]" : null]! [description]</span>")
-			playsound(get_turf(user), "sound/musical_instruments/Trombone_Failiure.ogg", 50, 1)
+			playsound(user, "sound/musical_instruments/Trombone_Failiure.ogg", 50, 1)
 			icon_state = "bangflag[icon_state]"
 			return
 

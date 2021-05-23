@@ -431,7 +431,7 @@
 			src.state = 3
 			src.icon_state = "interframe-3"
 			boutput(user, "<span class='notice'>You remove \the [intcap] from the interdictor's cell compartment.</span>")
-			playsound(get_turf(src), "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(src, "sound/items/Deconstruct.ogg", 40, 1)
 
 			user.put_in_hand_or_drop(src.intcap)
 			src.intcap = null
@@ -461,7 +461,7 @@
 					src.state = 4
 					src.icon_state = "interframe-4"
 					boutput(user, "<span class='notice'>You install \the [I] into the interdictor's cell compartment.</span>")
-					playsound(get_turf(src), "sound/items/Deconstruct.ogg", 40, 1)
+					playsound(src, "sound/items/Deconstruct.ogg", 40, 1)
 
 					user.u_equip(I)
 					I.set_loc(src)
@@ -541,22 +541,22 @@
 	onStart()
 		..()
 		if (itdr.state == 0)
-			playsound(get_turf(itdr), "sound/items/Ratchet.ogg", 40, 1)
+			playsound(itdr, "sound/items/Ratchet.ogg", 40, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins assembling \the [itdr].")
 		if (itdr.state == 1)
-			playsound(get_turf(itdr), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins installing a mainboard into \the [itdr].")
 		if (itdr.state == 2)
-			playsound(get_turf(itdr), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins installing a phase-control rod into \the [itdr].")
 		if (itdr.state == 4)
-			playsound(get_turf(itdr), "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(itdr, "sound/items/Deconstruct.ogg", 40, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins connecting \the [itdr]'s electrical systems.")
 		if (itdr.state == 5)
-			playsound(get_turf(itdr), "sound/effects/zzzt.ogg", 30, 1)
+			playsound(itdr, "sound/effects/zzzt.ogg", 30, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins soldering \the [itdr]'s wiring into place.")
 		if (itdr.state == 6)
-			playsound(get_turf(itdr), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins installing a casing onto \the [itdr].")
 	onEnd()
 		..()
@@ -564,14 +564,14 @@
 			itdr.state = 1
 			itdr.icon_state = "interframe-1"
 			boutput(owner, "<span class='notice'>You assemble and secure the frame components.</span>")
-			playsound(get_turf(itdr), "sound/items/Ratchet.ogg", 40, 1)
+			playsound(itdr, "sound/items/Ratchet.ogg", 40, 1)
 			itdr.desc = "A frame for a spatial interdictor. It's missing its mainboard."
 			return
 		if (itdr.state == 1) //no components > mainboard
 			itdr.state = 2
 			itdr.icon_state = "interframe-2"
 			boutput(owner, "<span class='notice'>You install the interdictor mainboard.</span>")
-			playsound(get_turf(itdr), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 
 			var/mob/source = owner
 			source.u_equip(the_tool)
@@ -583,7 +583,7 @@
 			itdr.state = 3
 			itdr.icon_state = "interframe-3"
 			boutput(owner, "<span class='notice'>You install the phase-control rod.</span>")
-			playsound(get_turf(itdr), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 
 			var/mob/source = owner
 			source.u_equip(the_tool)
@@ -596,7 +596,7 @@
 			itdr.state = 5
 			itdr.icon_state = "interframe-5"
 			boutput(owner, "<span class='notice'>You finish wiring together the interdictor's systems.</span>")
-			playsound(get_turf(itdr), "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(itdr, "sound/items/Deconstruct.ogg", 40, 1)
 
 			the_tool.amount -= 4
 			if (the_tool.amount < 1)
@@ -612,12 +612,12 @@
 			itdr.state = 6
 			itdr.icon_state = "interframe-5"
 			boutput(owner, "<span class='notice'>You solder the wiring into place. The internal systems are now fully installed.</span>")
-			playsound(get_turf(itdr), "sound/effects/zzzt.ogg", 40, 1)
+			playsound(itdr, "sound/effects/zzzt.ogg", 40, 1)
 			itdr.desc = "A nearly-complete frame for a spatial interdictor. It's missing a casing."
 			return
 		if (itdr.state == 6)
 			boutput(owner, "<span class='notice'>You install a metal casing onto the interdictor, completing its construction.</span>")
-			playsound(get_turf(itdr), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 
 			//setting up for custom interdictor casing
 			var/obj/item/sheet/S = the_tool

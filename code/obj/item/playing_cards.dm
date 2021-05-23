@@ -37,11 +37,11 @@
     attack_hand(mob/user as mob)
         ..()
         set_dir(NORTH) //makes sure cards are always upright in the inventory (unless tapped or reversed - see later)
-        
+
 
     attack_self(mob/user as mob)
         flip() //uno reverse O.O
-    
+
     attackby(obj/item/W as obj, mob/user as mob)
         if(istype(W,/obj/item/playing_card)) //if a card is hit by a card, open the context menu for the player to decide what happens.
             if(loc != user)
@@ -151,7 +151,7 @@
             else
                 reversed = FALSE
                 name = stored_info[1]
-        else 
+        else
             if(!tapped)
                 tapped = TRUE
                 name = "tapped [name]"
@@ -343,14 +343,14 @@
         if(tapped)
             var/mob/user = usr
             user.deathConfetti()
-            playsound(get_turf(user.loc), 'sound/musical_instruments/Bikehorn_1.ogg', 50)
+            playsound(user.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50)
             user.visible_message("<span class='combat'><b>[uppertext(user.name)] WINS THE GAME!</b></span>")
             if(!foiled)
                 user.take_brain_damage(1000)
             else
                 user.partygib(1)
 
-/obj/item/card_group //since "playing_card"s are singular cards, card_groups handling groups of playing_cards in the form of either a deck or hand 
+/obj/item/card_group //since "playing_card"s are singular cards, card_groups handling groups of playing_cards in the form of either a deck or hand
     name = "deck of cards"
     icon = 'icons/obj/items/playing_card.dmi'
     dir = NORTH
@@ -363,7 +363,7 @@
     /// same function as playing_card card name
     var/card_name
     ///the type of card back used for this group (references icon_state names in the dmi)
-    var/card_style = "plain" 
+    var/card_style = "plain"
     ///how many cards are in a fully built deck of this type? (54 for plain decks, 78 for tarot, etc.) : used for reference on stack heights
     var/total_cards
     var/is_hand = FALSE
@@ -373,7 +373,7 @@
     var/list/datum/contextAction/cardActions
     var/list/stored_cards = list()
 
-    attack_hand(mob/user as mob) 
+    attack_hand(mob/user as mob)
         if(!is_hand) //handling the player interacting with a deck of cards with an empty hand
             update_card_actions("empty")
             user.showContextActions(cardActions, src)
@@ -601,7 +601,7 @@
                 qdel(src)
             else
                 update_group_sprite("user.name")
-            
+
     proc/search(var/mob/user) //the context action proc that handles players search a group for a specific card
         user.visible_message("<b>[user.name]</b> begins to search through the [src.name]...")
         var/card = input(user, "Which card would you like to draw?", "[name]")  as null|anything in stored_cards
@@ -695,7 +695,7 @@
         var/list/possible_friends = childrentypesof(/datum/playing_card/griffening/creature/friend)
         var/list/possible_effects = childrentypesof(/datum/playing_card/griffening/effect)
         var/list/possible_areas = childrentypesof(/datum/playing_card/griffening/area)
-        
+
 
         var/modified_card_amount
         if(deck)
@@ -731,7 +731,7 @@
                         card.stg_area(possible_areas)
             update_card_information(card)
             card.update_stored_info()
-        
+
         if((modified_card_amount == 39) || (modified_card_amount == 9))
             var/obj/item/playing_card/expensive/e = new /obj/item/playing_card/expensive
             switch(modified_card_amount)
@@ -798,7 +798,7 @@
                     card.name = "Red Joker"
                 else
                     card.name = "Black Joker"
-            
+
             card.icon_state = "[card_style]-[suit_num]-[card_num]"
             update_card_information(card)
             card.update_stored_info()
@@ -848,7 +848,7 @@
                     suit_name = "Wands"
                 if(5)
                     minor = FALSE
-            
+
             if(minor)
                 if(card_num == 1)
                     card.name = "Ace of [suit_name]"

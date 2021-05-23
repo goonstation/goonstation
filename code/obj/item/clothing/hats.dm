@@ -741,7 +741,7 @@
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (src.active && ismob(hit_atom))
 			var/mob/M = hit_atom
-			playsound(get_turf(src), src.hitsound, 60, 1)
+			playsound(src, src.hitsound, 60, 1)
 			M.changeStatus("weakened", 2 SECONDS)
 			M.force_laydown_standup()
 			SPAWN_DBG(0) // show these messages after the "hit by" ones

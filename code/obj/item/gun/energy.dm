@@ -161,7 +161,7 @@
 
 	pixelaction(atom/target, params, mob/user, reach)
 		if(..(target, params, user, reach))
-			playsound(get_turf(user), "sound/weapons/heavyioncharge.ogg", 90)
+			playsound(user, "sound/weapons/heavyioncharge.ogg", 90)
 
 ////////////////////////////////////TASERGUN
 /obj/item/gun/energy/taser_gun

@@ -77,7 +77,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 				boutput(user,"This beacon's retraction hardware is locked into place and can't be altered.")
 				return
 			src.visible_message("<b>[user.name]</b> undeploys [src].")
-			playsound(get_turf(src), "sound/items/Ratchet.ogg", 40, 1)
+			playsound(src, "sound/items/Ratchet.ogg", 40, 1)
 			src.startpack()
 		else if (istype(W, /obj/item/device/multitool))
 			if (!packable)
@@ -178,7 +178,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 	src.icon_state = "beaconpack"
 	SPAWN_DBG(14) //wait until packing is complete
 		var/obj/beacon_deployer/packitup = new /obj/beacon_deployer(src.loc)
-		playsound(get_turf(src), "sound/machines/heater_off.ogg", 20, 1)
+		playsound(src, "sound/machines/heater_off.ogg", 20, 1)
 		if(src.beaconid)
 			packitup.beaconid = src.beaconid
 			packitup.name = "warp buoy unit [beaconid]"
@@ -210,7 +210,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 				boutput(user, "<span style=\"color:red\">The beacon can't connect to the warp network.</span>")
 				return
 			src.visible_message("<b>[user.name]</b> deploys [src].")
-			playsound(get_turf(src), "sound/items/Ratchet.ogg", 40, 1)
+			playsound(src, "sound/items/Ratchet.ogg", 40, 1)
 			src.deploying = 1
 			src.deploybeacon()
 
@@ -233,7 +233,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 	src.anchored = 1
 	SPAWN_DBG(16) //wait until unpacking is complete
 		var/obj/warp_beacon/depbeac = new /obj/warp_beacon/deployed(src.loc)
-		playsound(get_turf(src), "sound/machines/heater_off.ogg", 20, 1)
+		playsound(src, "sound/machines/heater_off.ogg", 20, 1)
 		depbeac.name = "Buoy [src.beaconid]"
 		depbeac.beaconid = src.beaconid
 		qdel(src)
@@ -306,13 +306,13 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 	onStart()
 		..()
 		if (beacon.state == 1)
-			playsound(get_turf(beacon), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(beacon, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins installing rods onto \the [beacon].")
 		if (beacon.state == 2)
-			playsound(get_turf(beacon), "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(beacon, "sound/items/Deconstruct.ogg", 40, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins connecting \the [beacon]'s electrical systems.")
 		if (beacon.state == 3)
-			playsound(get_turf(beacon), "sound/effects/zzzt.ogg", 30, 1)
+			playsound(beacon, "sound/effects/zzzt.ogg", 30, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins soldering \the [beacon]'s wiring into place.")
 	onEnd()
 		..()
@@ -320,7 +320,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 			beacon.state = 2
 			beacon.icon_state = "beacframe_2"
 			boutput(owner, "<span class='notice'>You successfully install the framework rods.</span>")
-			playsound(get_turf(beacon), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(beacon, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 
 			the_tool.change_stack_amount(-4) //the_tool should be rods
 
@@ -330,7 +330,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 			beacon.state = 3
 			beacon.icon_state = "beaconunit"
 			boutput(owner, "<span class='notice'>You finish wiring together the beacon's electronics.</span>")
-			playsound(get_turf(beacon), "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(beacon, "sound/items/Deconstruct.ogg", 40, 1)
 
 			the_tool.amount -= 1
 			if (the_tool.amount < 1)
@@ -344,7 +344,7 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 			return
 		if (beacon.state == 3)
 			boutput(owner, "<span class='notice'>You solder the wiring into place, completing the beacon. It's now ready to deploy with a wrench.</span>")
-			playsound(get_turf(beacon), "sound/effects/zzzt.ogg", 40, 1)
+			playsound(beacon, "sound/effects/zzzt.ogg", 40, 1)
 			var/turf/T = get_turf(beacon)
 			new /obj/beacon_deployer(T)
 			qdel(beacon)

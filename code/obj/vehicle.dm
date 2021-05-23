@@ -922,7 +922,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			src.icon_state = "buffer[FB.sprayer_active]"
 			if (FB.rider)
 				FB.icon_state = "[FB.icon_base][FB.sprayer_active]"
-			playsound(get_turf(the_mob), "sound/machines/click.ogg", 50, 1)
+			playsound(the_mob, "sound/machines/click.ogg", 50, 1)
 		return
 
 /obj/ability_button/fbuffer_status

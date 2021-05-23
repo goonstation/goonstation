@@ -834,7 +834,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		var/obj/item/photo/P = new(src, photo_image, photo_icon, title, detail)
 		user.put_in_hand_or_drop(P)
-		playsound(get_turf(src), "sound/machines/scan.ogg", 10, 1)
+		playsound(src, "sound/machines/scan.ogg", 10, 1)
 		last_photo_print = TIME
 
 	generate_menu()
