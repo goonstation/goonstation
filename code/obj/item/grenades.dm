@@ -569,20 +569,24 @@ PIPE BOMBS + CONSTRUCTION
 		GM.oxygen = 1500
 		GM.carbon_dioxide = 100
 
-		// Adjust coloration of explosion to lighter cyan
-		var/color_matrix = list(0,0,0.6,0.2,0, 0.3,0,-0.8,0,0, 0,0.33,0,0,0, 0.9,0.8,0.8,0.7,0)
-		var/obj/effects/explosion/E = new /obj/effects/explosion/custom(T,plane=PLANE_NOSHADOW_ABOVE,scale=0.75,color=color_matrix)
+		var/obj/effects/explosion/E = new /obj/effects/explosion(T)
+		// Uses existing animated icon adjust coloration of explosion to lighter cyan to match oxygen items
+		// scaling it to cover a turf, adjusting plane to avoid casting shadows, and wave animation to
+		// help differentiate it from a standard explosion (also makes it wispy)
+		E.color = list(0,0,0.6,0.2,0, 0.3,0,-0.8,0,0, 0,0.33,0,0,0, 0.9,0.8,0.8,0.7,0)
+		E.plane = PLANE_NOSHADOW_ABOVE
+		E.transform = matrix(0.75, MATRIX_SCALE)
 		animate_wave(E,4)
 
 		if (T && istype(T))
-			if(T.air)
-				if(T.parent?.group_processing)
+			if (T.air)
+				if (T.parent?.group_processing)
 					T.parent.air.merge(GM)
 				else
 					var/count = length(T.parent?.members)
-					if(count)
-						for(var/turf/simulated/MT as() in T.parent.members)
-							if(GM.disposed)
+					if (count)
+						for (var/turf/simulated/MT as() in T.parent.members)
+							if (GM.disposed)
 								GM = unpool(/datum/gas_mixture)
 							GM.temperature = T20C + 15
 							GM.oxygen = 1500 / count
@@ -595,7 +599,7 @@ PIPE BOMBS + CONSTRUCTION
 				var/checkdist = get_dist(HH.loc, T)
 				var/misstep = clamp(1 + 10 * (5 - checkdist), 0, 40)
 				var/ear_damage = max(0, 5 * 0.2 * (3 - checkdist))
-				var/ear_tempdeaf = max(0, 5 * 0.2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
+				var/ear_tempdeaf = max(0, 5 * 0.2 * (5 - checkdist))
 				var/stamina = clamp(5 * (5 + 1 * (7 - checkdist)), 0, 120)
 				HH.apply_sonic_stun(0, 0, misstep, 0, 2, ear_damage, ear_tempdeaf, stamina)
 

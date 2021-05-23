@@ -1486,9 +1486,10 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_ripple(atom/A, ripples=1)
 	if (!istype(A))
 		return
-	var/filter
+	var/filter,size
 	for(var/i=1, i<=ripples, ++i)
-		A.filters += filter(type="ripple", x=0, y=0, size=rand()*2.5+1, repeat=rand()*2.5+1, radius=0)
+		size=rand()*2.5+1
+		A.filters += filter(type="ripple", x=0, y=0, size=size, repeat=rand()*2.5+1, radius=0)
 		filter = A.filters[A.filters.len]
-		animate(filter, size=filter:size, time=0, loop=-1, radius=0, flags=ANIMATION_PARALLEL)
+		animate(filter, size=size, time=0, loop=-1, radius=0, flags=ANIMATION_PARALLEL)
 		animate(size=0, radius=rand()*10+10, time=rand()*20+10)
