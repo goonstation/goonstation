@@ -1628,8 +1628,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 /datum/manufacture/pod/weapon/mining
 	name = "Plasma Cutter System"
-	item_paths = list("MET-2","CON-2")
-	item_amounts = list(50,50)
+	item_paths = list("MET-2","CON-2", "telecrystal")
+	item_amounts = list(50,50,10)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/mining)
 	time = 5 SECONDS
 	create = 1
@@ -1662,8 +1662,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 /datum/manufacture/pod/weapon/disruptor
 	name = "Heavy Disruptor Array"
-	item_paths = list("MET-3","CON-2","CRY-1")
-	item_amounts = list(20,20,50)
+	item_paths = list("MET-3","CON-2","CRY-1", "telecrystal")
+	item_amounts = list(20,20,50, 20)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/disruptor_light)
 	time = 10 SECONDS
 	create  = 1
@@ -1680,8 +1680,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 /datum/manufacture/pod/weapon/ass_laser
 	name = "Mk.4 Assault Laser"
-	item_paths = list("MET-3","CON-2","CRY-1")
-	item_amounts = list(35,30,30)
+	item_paths = list("MET-3","CON-2","CRY-1", "telecrystal")
+	item_amounts = list(35,30,30, 30)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/laser_ass)
 	time = 10 SECONDS
 	create  = 1
@@ -1773,8 +1773,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 /datum/manufacture/pod_wars/cell_higher
 	name = "Standard Bubs Weapon Cell"
-	item_paths = list("MET-3", "CON-2", "POW-2")
-	item_amounts = list(5, 20, 60)
+	item_paths = list("MET-3", "CON-2", "POW-1", "telecrystal")
+	item_amounts = list(5, 20, 60, 20)
 	item_outputs = list(/obj/item/ammo/power_cell/higher_power)
 	time = 1 SECONDS
 	create = 1
@@ -1793,8 +1793,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 /datum/manufacture/pod_wars/cell_pod_wars_standard
 	name = "Standard Self-Charging Weapon Cell"
-	item_paths = list("DEN-2", "CON-2", "POW-2")
-	item_amounts = list(30, 60, 50)
+	item_paths = list("DEN-2", "CON-2", "POW-1", "telecrystal")
+	item_amounts = list(30, 60, 50, 10)
 	item_outputs = list(/obj/item/ammo/power_cell/self_charging/pod_wars_standard)
 	time = 1 SECONDS
 	create = 1
@@ -1802,8 +1802,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 /datum/manufacture/pod_wars/cell_pod_wars_high
 	name = "Robust Self-Charging Weapon Cell"
-	item_paths = list("DEN-2", "CON-2", "POW-2", "REF-1")
-	item_amounts = list(30, 70, 80, 10)
+	item_paths = list("DEN-2", "CON-2", "POW-2", "telecrystal")
+	item_amounts = list(30, 70, 30, 30)
 	item_outputs = list(/obj/item/ammo/power_cell/self_charging/pod_wars_high)
 	time = 1 SECONDS
 	create = 1
@@ -1832,23 +1832,23 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 /datum/manufacture/pod_wars/energy_concussion_grenade
 
-	name = "Deployable Barricade"
-	item_paths = list("MET-2")
-	item_amounts = list(5)
+	name = "Concussion Grenade"
+	item_paths = list("MET-2", "CON-2", "telecrystal")
+	item_amounts = list(5, 5, 5)
 	item_outputs = list(/obj/item/old_grenade/energy_concussion)
 	time = 1 SECONDS
 	create = 1
-	category = "Miscellaneous"
+	category = "Weapon"
 
 /datum/manufacture/pod_wars/energy_frag_grenade
 
-	name = "Deployable Barricade"
-	item_paths = list("MET-2")
-	item_amounts = list(5)
+	name = "Blast Grenade"
+	item_paths = list("MET-2", "CON-2", "telecrystal")
+	item_amounts = list(5, 5, 5)
 	item_outputs = list(/obj/item/old_grenade/energy_frag)
 	time = 1 SECONDS
 	create = 1
-	category = "Miscellaneous"
+	category = "Weapon"
 
 /////////////////////////////////////////////////
 ///////////////////ABILITY HOLDER////////////////
