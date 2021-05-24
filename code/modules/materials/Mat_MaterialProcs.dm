@@ -389,7 +389,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/location, var/temp, var/agent_b=FALSE)
 		if(total_oxygen <= 0) return
 		var/turf/target = get_turf(location)
-		if(temp != 1500)
+		if(temp != 1500) //Same temp that hitting it sets it too, this is so hitting it ignores cooldown, making it practical to manually farm
 			if(ON_COOLDOWN(target, "molitz_oxy_generate", 8 SECONDS)) return
 
 		var/datum/gas_mixture/air = target.return_air()
@@ -405,9 +405,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 			// Itr 1: 0.2 Agent B, Blegh oxy
 			// Itr 2: 0.0605 Agent B
-			// (This math is old and I dont know how to do the math to correct it, take this with a grain of salt) 0.1855moles/12cells=0.0155moles per cell
-			// (Same for this) At 0.0155 moles per cell it will take 100 iterations for reaction rate to drop below MINIMUM_REACT_QUANTITY
-			// Providing 6.5 minutes of catalyst assuming 4 sec ATMOS for a 12 cell burn chamber
+			// Should be 100 iterations to deplete total of 19.099 mols of agent B and 100 oxygen, will take 110 iterations to hit minimum reaction rate whihch is about 7.33 minutes, (this is azruns math not mine dont blame me if wrong)
+
 			animate_flash_color_fill_inherit(location,"#ff0000",4, 2 SECONDS)
 			trace_gas.moles += min(total_oxygen/500,0.2)
 			total_oxygen -= 10
