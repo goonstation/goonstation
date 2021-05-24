@@ -313,6 +313,12 @@
 	name = "wooden floor"
 	},
 /area/prefab/torpedo_deposit)
+"Ao" = (
+/obj/critter/gunbot/drone/buzzdrone/fish{
+	dir = 8
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
 "AB" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin{
@@ -563,6 +569,7 @@
 /area/prefab/torpedo_deposit)
 "WB" = (
 /obj/decal/cleanable/dirt/dirt3,
+/obj/critter/gunbot/heavy,
 /turf/simulated/floor/black,
 /area/prefab/torpedo_deposit)
 "WO" = (
@@ -709,7 +716,7 @@ RK
 "}
 (4,1,1) = {"
 aj
-aj
+Ao
 aj
 dj
 aj
