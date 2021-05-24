@@ -212,7 +212,7 @@
 							plastic_spoon.break_utensil(M)
 							utensil = null
 
-					if (!utensil)
+					if (!utensil && (needfork || needspoon))
 						if (needfork && needspoon)
 							boutput(M, "<span class='alert'>You need a fork or spoon to eat [src]!</span>")
 						else if (needfork)
