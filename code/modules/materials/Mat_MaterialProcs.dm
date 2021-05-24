@@ -380,16 +380,17 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/plasmastone_on_hit
-	execute(var/atom/owner)
+	execute(var/atom/owner, var/obj/attackobj, var/mob/attacker, var/meleeorthrow)
 		owner.material.triggerTemp(locate(owner))
 
 /datum/materialProc/molitz_temp
-	var/total_oxygen = 200
+	var/total_oxygen = 1000
 
 	execute(var/atom/location, var/temp, var/agent_b=FALSE)
 		if(total_oxygen <= 0) return
 		var/turf/target = get_turf(location)
-		if(ON_COOLDOWN(target, "molitz_oxy_generate", 8 SECONDS)) return
+		if(temp != 1500)
+			if(ON_COOLDOWN(target, "molitz_oxy_generate", 8 SECONDS)) return
 
 		var/datum/gas_mixture/air = target.return_air()
 		if(!air) return
@@ -402,21 +403,24 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			var/datum/gas/oxygen_agent_b/trace_gas = payload.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
 			payload.temperature = T0C // Greatly reduce temperature to simulate an endothermic reaction
 
-			// Itr 1: 0.125 Agent B, 10 Oxy
+			// Itr 1: 0.2 Agent B, Blegh oxy
 			// Itr 2: 0.0605 Agent B
-			// 0.1855moles/12cells=0.0155moles per cell
-			// At 0.0155 moles per cell it will take 20 iterations for reaction rate to drop below MINIMUM_REACT_QUANTITY
-			// Providing 1.3 minutes of catalyst assuming 4 sec ATMOS for a 12 cell burn chamber
-			trace_gas.moles += min(total_oxygen/1024,0.125)
-			total_oxygen -= min(trace_gas.moles*1024,total_oxygen)
-			animate_flash_color_fill_inherit(location,"#FF0000",4, 2 SECONDS)
+			// (This math is old and I dont know how to do the math to correct it, take this with a grain of salt) 0.1855moles/12cells=0.0155moles per cell
+			// (Same for this) At 0.0155 moles per cell it will take 100 iterations for reaction rate to drop below MINIMUM_REACT_QUANTITY
+			// Providing 6.5 minutes of catalyst assuming 4 sec ATMOS for a 12 cell burn chamber
+			animate_flash_color_fill_inherit(location,"#ff0000",4, 2 SECONDS)
+			trace_gas.moles += min(total_oxygen/500,0.2)
+			total_oxygen -= 10
+			payload.oxygen = min(total_oxygen,1)
+
+			target.assume_air(payload)
 		else
 			animate_flash_color_fill_inherit(location,"#0000FF",4, 2 SECONDS)
+			payload.oxygen = min(total_oxygen,10)
+			total_oxygen -= 10
 
-		payload.oxygen = min(total_oxygen,10)
-		total_oxygen -= payload.oxygen
+			target.assume_air(payload)
 
-		target.assume_air(payload)
 		return
 
 /datum/materialProc/molitz_temp/agent_b
@@ -435,7 +439,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			target.assume_air(payload)
 
 /datum/materialProc/molitz_on_hit
-	execute(var/atom/owner, var/obj/attackobj)
+	execute(var/atom/owner, var/obj/attackobj, var/mob/attacker, var/meleeorthrow)
 		owner.material.triggerTemp(owner, 1500)
 
 /datum/materialProc/miracle_add
