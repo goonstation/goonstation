@@ -91,7 +91,7 @@
 	if(src.client)
 		boutput(src, "<span class='alert'>With the last of your drones dying, nothing is left to compute your consciousness. You abruptly cease to exist.</span>")
 	src.flock?.perish()
-	src.invisibility = 0
+	REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
 	src.icon_state = "blank"
 	src.canmove = 0
 	flick("flockmind-death", src)

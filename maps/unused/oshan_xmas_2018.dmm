@@ -39366,10 +39366,7 @@
 /area/station/crew_quarters/radio/lab)
 "bLG" = (
 /obj/storage/secure/closet/personal,
-/obj/item/clothing/under/gimmick/cosby{
-	desc = "A colourful winter jumper.";
-	name = "comfy sweater"
-	},
+/obj/item/clothing/under/gimmick/cosby,
 /obj/item/device/microphone,
 /obj/machinery/camera{
 	c_tag = "autotag";

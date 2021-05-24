@@ -327,7 +327,7 @@
 			src.transforming = 1
 			src.canmove = 0
 			src.icon = null
-			src.invisibility = 101
+			APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 			if (src.mind || src.client)
 				src.ghostize()
 			qdel(src)
@@ -413,8 +413,8 @@
 	New()
 		. = ..()
 		var/h = rand(360)
-		var/s = rand() * 0.2 + 0.8
-		var/v = rand() * 0.5 + 0.5
+		var/s = rand() * 20 + 80
+		var/v = rand() * 50 + 50
 		var/suit_color = hsv2rgb(h, s, v)
 		var/boots_color = hsv2rgb(h + rand(-30, 30), s, v * 0.8)
 		var/col = color_mapping_matrix(

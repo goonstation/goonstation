@@ -18,7 +18,6 @@
 	name = "AI Eye"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "a-eye"
-	invisibility = 9
 	see_invisible = 9
 	density = 0
 	layer = 101
@@ -41,6 +40,7 @@
 		last_loc = src.loc
 		..()
 		sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_AI_EYE)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 	Login()

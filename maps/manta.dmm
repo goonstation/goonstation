@@ -256,10 +256,7 @@
 /turf/simulated/floor/longtile,
 /area/station/bridge)
 "aaL" = (
-/obj/item/clothing/under/gimmick/cosby{
-	desc = "A colourful winter jumper.";
-	name = "comfy sweater"
-	},
+/obj/item/clothing/under/gimmick/cosby,
 /obj/item/device/microphone,
 /obj/machinery/firealarm{
 	dir = 8;

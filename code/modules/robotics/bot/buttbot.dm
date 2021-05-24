@@ -10,6 +10,7 @@
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "buttbot"
 	layer = 5.0 // Todo layer
+	bot_move_delay = BUTTBOT_MOVE_SPEED
 	density = 0
 	anchored = 0
 	on = 1
@@ -114,8 +115,7 @@
 				src.navigate_to(A, BUTTBOT_MOVE_SPEED, 0, 30)
 				break
 	else
-		SPAWN_DBG(0)
-			step_rand(src,1)
+		src.navigate_to(get_step_rand(src))
 
 /obj/machinery/bot/buttbot/process(mult)
 	if(src.exploding)

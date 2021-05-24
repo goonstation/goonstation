@@ -12982,10 +12982,7 @@
 /area/abandonedmedicalship)
 "aIe" = (
 /obj/storage/secure/closet/personal,
-/obj/item/clothing/under/gimmick/cosby{
-	desc = "A colourful winter jumper.";
-	name = "comfy sweater"
-	},
+/obj/item/clothing/under/gimmick/cosby,
 /obj/item/device/microphone,
 /turf/simulated/floor/carpet{
 	dir = 8;

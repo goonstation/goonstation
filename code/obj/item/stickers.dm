@@ -9,6 +9,7 @@
 	w_class = W_CLASS_TINY
 	force = 0
 	throwforce = 0
+	vis_flags = VIS_INHERIT_DIR
 	var/dont_make_an_overlay = 0
 	var/active = 0
 	var/overlay_key
@@ -322,6 +323,15 @@
 /obj/item/sticker/xmas_ornament/holly
 	name = "holly ornament"
 	icon_state = "holly"
+
+/obj/item/sticker/googly_eye
+	name = "googly eye sticker"
+	icon_state = "googly1"
+	random_icons = list("googly1", "googly2")
+
+	angry
+		name = "angry googly eye sticker"
+		random_icons = list("googly_angerL", "googly_angerR")
 
 /obj/item/sticker/ribbon
 	name = "award ribbon"

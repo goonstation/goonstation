@@ -33867,7 +33867,7 @@
 /turf/unsimulated/floor/caution/corner/nw,
 /area/crypt/sigma/lab)
 "bQd" = (
-/obj/machinery/atmospherics/pipe/tank/oxygen_agent_b{
+/obj/machinery/atmospherics/pipe/tank/rad_particles{
 	desc = "A large vessel containing an unknown pressurized gas.";
 	name = "Unidentified Gas Tank"
 	},

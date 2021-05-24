@@ -50070,7 +50070,9 @@
 	},
 /area/station/maintenance/central)
 "ceq" = (
-/obj/machinery/door/firedoor/pyro,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
@@ -65524,10 +65526,6 @@
 /obj/item/reagent_containers/glass/bottle/formaldehyde,
 /obj/item/reagent_containers/syringe,
 /obj/item/hand_labeler,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "E APC";
