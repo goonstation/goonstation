@@ -13,6 +13,7 @@
 
 	var/fan_state = FAN_OFF
 	var/process_materials = FALSE
+	var/blast_armed = FALSE
 	var/material_progress = 0
 	var/obj/item/target_material = null
 	var/inlet_flow = 100 // percentage
@@ -84,6 +85,18 @@
 		else
 			UpdateOverlays(null, "fan")
 
+		if(src.process_materials)
+			UpdateOverlays(image('icons/obj/atmospherics/atmos.dmi', "pressurizer-fab"), "fab")
+		else
+			UpdateOverlays(null, "fab")
+
+		if(src.blast_armed)
+			UpdateOverlays(image('icons/obj/atmospherics/atmos.dmi', "pressurizer-blow"), "armed")
+		else
+			UpdateOverlays(null, "armed")
+
+
+
 	proc/process_raw_materials()
 		if(!target_material)
 			material_progress = 0
@@ -93,6 +106,7 @@
 				target_material.set_loc(null)
 			else
 				process_materials = FALSE
+				return
 
 		if(material_progress < 100)
 			var/progress = 10
