@@ -187,6 +187,13 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 20
 		prefabSizeY = 20
 
+	space_casino // Lythine's casino with some dubious gambling machines
+		maxNum = 1
+		probability = 100
+		prefabPath = "assets/maps/prefabs/prefab_space_casino.dmm"
+		prefabSizeX = 31
+		prefabSizeY = 23
+
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit

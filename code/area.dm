@@ -1195,6 +1195,10 @@ ABSTRACT_TYPE(/area/prefab)
 	sound_loop = 'sound/ambience/music/shoptheme.ogg'
 	sound_environment = 2
 
+/area/prefab/space_casino
+	name ="Space Casino"
+	icon_state = "blue"
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room
