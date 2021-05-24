@@ -4,7 +4,6 @@
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
-	var/icon_base = "dispenser"
 	flags = NOSPLASH | TGUI_INTERACTIVE
 	var/health = 400
 	mats = 30
@@ -25,10 +24,12 @@
 	var/list/accounts = list()
 	var/output_target = null
 	var/dispense_sound = 'sound/effects/zzzt.ogg'
+	var/image/glass_over = null //overlay for the glass
 
 	New()
 		..()
 		update_account()
+		glass_over = image('icons/obj/chemical.dmi', null)
 
 	disposing()
 		beaker = null
@@ -167,9 +168,10 @@
 
 	proc/update_icon()
 		if (!beaker)
-			src.icon_state = src.icon_base
+			glass_over.icon_state = null
 		else
-			src.icon_state = "[src.icon_base][rand(1,5)]"
+			glass_over.icon_state = "dispenserglass-[rand(1,5)]"
+		UpdateOverlays(glass_over, "glass")
 
 	MouseDrop(over_object, src_location, over_location)
 		if(!isliving(usr))
@@ -393,8 +395,7 @@
 	dispensable_reagents = list("beer", "cider", "gin", "wine", "champagne", \
 								"rum", "vodka", "bourbon", "vermouth", "tequila", \
 								"bitters", "tonic")
-	icon_state = "alc_dispenser"
-	icon_base = "alc_dispenser"
+	icon_state = "dispenser_alcohol"
 	glass_path = /obj/item/reagent_containers/food/drinks
 	glass_name = "bottle"
 	dispenser_name = "Alcohol"
@@ -416,13 +417,7 @@
 							"mimosa","french75","sangria","tomcollins","peachschnapps","moscowmule","tequila","tequilasunrise",\
 							"paloma","mintjulep","mojito","cremedementhe","grasshopper","freeze","curacao","bluelagoon",\
 							"bluehawaiian","negroni","necroni") // ow my hands
-	icon_state = "alc_dispenser"
-	icon_base = "alc_dispenser"
-	glass_path = /obj/item/reagent_containers/food/drinks
-	glass_name = "bottle"
-	dispenser_name = "Alcohol"
 
-	dispense_sound = 'sound/misc/pourdrink2.ogg'
 
 /obj/machinery/chem_dispenser/alcohol/hydro
 	name = "ULTRA DISPENSER"
@@ -447,8 +442,7 @@
 	dispensable_reagents = list("cola", "juice_lime", "juice_lemon", "juice_orange", \
 								"juice_cran", "juice_cherry", "juice_pineapple", "juice_tomato", \
 								"coconut_milk", "sugar", "water", "vanilla", "tea", "grenadine")
-	icon_state = "alc_dispenser"
-	icon_base = "alc_dispenser"
+	icon_state = "dispenser_soda"
 	glass_path = /obj/item/reagent_containers/food/drinks
 	glass_name = "bottle"
 	dispenser_name = "Soda"
@@ -461,8 +455,7 @@
 	dispensable_reagents = list("cola", "juice_lime", "juice_lemon", "juice_orange", "mint", "mustard", "pepper", \
 								"juice_cran", "juice_cherry", "juice_pineapple","coconut_milk", "ketchup", \
 								"sugar", "water", "vanilla", "tea", "chocolate", "chocolate_milk","strawberry_milk")
-	icon_state = "alc_dispenser"
-	icon_base = "alc_dispenser"
+	icon_state = "dispenser_soda"
 	glass_path = /obj/item/reagent_containers/food/drinks
 	glass_name = "bottle"
 	dispenser_name = "Soda"
