@@ -656,6 +656,15 @@
 						succ = TRUE
 
 			if (H.back)
+				if (istype(H.back, /obj/item/storage/backpack/satchel/captain) || (H.back.icon_state == "capsatchel" || H.back.icon_state == "capsatchel_red"))
+					var/obj/item/storage/backpack/satchel/captain/M = activator.back
+					var/prev = M.name
+					M.icon_state = "capsatchel_blue"
+					M.item_state = "capsatchel_blue"
+					M.desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
 				if (istype(H.back, /obj/item/storage/backpack/captain))
 					if (H.back.icon_state == "capbackpack" || H.back.icon_state == "capbackpack_red")
 						var/obj/item/storage/backpack/captain/M = activator.back
@@ -666,14 +675,6 @@
 						H.set_clothing_icon_dirty()
 						succ = TRUE
 
-				else if (istype(H.back, /obj/item/storage/backpack/satchel/captain) || (H.back.icon_state == "capsatchel" || H.back.icon_state == "capsatchel_red"))
-					var/obj/item/storage/backpack/satchel/captain/M = activator.back
-					var/prev = M.name
-					M.icon_state = "capsatchel_blue"
-					M.item_state = "capsatchel_blue"
-					M.desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: [prev])"
-					H.set_clothing_icon_dirty()
-					succ = TRUE
 
 			if (!succ)
 				boutput(activator, "<span class='alert'>Unable to redeem... What kind of fake captain are you!?</span>")
@@ -783,6 +784,15 @@
 						succ = TRUE
 
 			if (H.back)
+				if (istype(H.back, /obj/item/storage/backpack/satchel/captain) || (H.back.icon_state == "capsatchel" || H.back.icon_state == "capsatchel_blue"))
+					var/obj/item/storage/backpack/satchel/captain/M = activator.back
+					var/prev = M.name
+					M.icon_state = "capsatchel_red"
+					M.item_state = "capsatchel_red"
+					M.desc = "A fancy designer bag made out of rare red space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
 				if (istype(H.back, /obj/item/storage/backpack/captain))
 					if (H.back.icon_state == "capbackpack" || H.back.icon_state == "capbackpack_blue")
 						var/obj/item/storage/backpack/captain/M = activator.back
@@ -793,14 +803,6 @@
 						H.set_clothing_icon_dirty()
 						succ = TRUE
 
-				if (istype(H.back, /obj/item/storage/backpack/satchel/captain) || (H.back.icon_state == "capsatchel" || H.back.icon_state == "capsatchel_blue"))
-					var/obj/item/storage/backpack/satchel/captain/M = activator.back
-					var/prev = M.name
-					M.icon_state = "capsatchel_red"
-					M.item_state = "capsatchel_red"
-					M.desc = "A fancy designer bag made out of rare red space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: [prev])"
-					H.set_clothing_icon_dirty()
-					succ = TRUE
 
 			if (!succ)
 				boutput(activator, "<span class='alert'>Unable to redeem... What kind of fake captain are you!?</span>")
