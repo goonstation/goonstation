@@ -702,6 +702,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\atmospherics\machinery\unary\vent_scrubber.dm"
 #include "code\modules\atmospherics\portable\canister.dm"
 #include "code\modules\atmospherics\portable\portable_atmospherics.dm"
+#include "code\modules\atmospherics\portable\portable_pressurizer.dm"
 #include "code\modules\atmospherics\portable\pump.dm"
 #include "code\modules\atmospherics\portable\scrubber.dm"
 #include "code\modules\chemistry\chemicompiler_core.dm"
