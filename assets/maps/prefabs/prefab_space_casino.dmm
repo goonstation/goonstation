@@ -37,7 +37,7 @@
 "qY" = (/obj/submachine/slot_machine,/obj/machinery/light/incandescent{dir = 1},/turf/simulated/floor/carpet/red/fancy/edge/north,/area/prefab/space_casino)
 "rb" = (/obj/machinery/vending/kitchen,/turf/simulated/floor/blackwhite/whitegrime,/area/prefab/space_casino)
 "sf" = (/turf/simulated/floor/plating/airless/random,/area/prefab/space_casino)
-"sB" = (/obj/submachine/slot_machine,/turf/simulated/floor/carpet/red/fancy/edge/north,/area/prefab/space_casino)
+"sB" = (/turf/simulated/floor/carpet/red/fancy/edge/north,/area/prefab/space_casino)
 "tc" = (/obj/decal/cleanable/blood/gibs{icon_state = "gib4"},/obj/decal/skeleton/decomposed_corpse,/turf/simulated/floor/plating,/area/prefab/space_casino)
 "te" = (/turf/simulated/floor/plating,/area/prefab/space_casino)
 "tm" = (/obj/machinery/light/incandescent{dir = 1},/turf/simulated/floor/wood,/area/prefab/space_casino)
@@ -80,7 +80,7 @@
 "MT" = (/turf/simulated/floor/carpet/red/fancy/edge/sw,/area/prefab/space_casino)
 "Nm" = (/obj/decal/fakeobjects/firelock_broken{density = 1; desc = "Rust has rendered this airlock useless."; icon = 'icons/obj/doors/Doormaint.dmi'; icon_state = "door_closed"; name = "rusted airlock"; opacity = 1},/obj/forcefield/energyshield/perma,/turf/simulated/floor/plating,/area/prefab/space_casino)
 "NK" = (/turf/simulated/floor/carpet/red/fancy/edge/se,/area/prefab/space_casino)
-"Od" = (/turf/simulated/floor/carpet/red/fancy/edge/north,/area/prefab/space_casino)
+"Od" = (/obj/submachine/slot_machine/item,/turf/simulated/floor/carpet/red/fancy/edge/north,/area/prefab/space_casino)
 "Ol" = (/obj/machinery/chem_dispenser/alcohol,/turf/simulated/floor/black,/area/prefab/space_casino)
 "Or" = (/obj/machinery/light/small/floor,/turf/simulated/floor/carpet/red/fancy,/area/prefab/space_casino)
 "OA" = (/obj/submachine/slot_machine,/turf/simulated/floor/carpet/red/fancy/edge/east,/area/prefab/space_casino)
@@ -109,9 +109,9 @@ UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUTbTbTbTbUUUUUUUUUUUUUUUU
 UUUUUUUUUUUUUUTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbUUUUUUUU
 UUUUUUUUUUdididididididididiTbdididididididididiTbTbTbTbTbUUUU
 UUUUUUUUUUdinIrbUgGpUgeLjCdiTbdipeqYsBOdsBqYDfdiTbTbTbTbTbTbUU
-UUUUdidididikJpxpxakpxpxpxdiTbdiZnnunuiknunukWdiTbTbTbTbTbTbTb
-UUUUdiZZZZdiwNpxVllUZTpxQediTbdiuhvyvyikvyvyOAdiTbTbTbTbTbTbTb
-UUUUdixUHxIxXqInpxpxpxpxkJdiTbdiZnzvnuiknuzvkWdididididididiTb
+UUUUdidididikJpxpxakpxpxpxdiTbdiZnnuiknuiknukWdiTbTbTbTbTbTbTb
+UUUUdiZZZZdiwNpxVllUZTpxQediTbdiuhvyikikikvyOAdiTbTbTbTbTbTbTb
+UUUUdixUHxIxXqInpxpxpxpxkJdiTbdiZnzvikikikzvkWdididididididiTb
 UUUUdiFwLCdiuwfzJoXWpxpxbjdiTbdiFJdidiikdidiFJdiiHMxSdfOtmdiTb
 UUdidididididivzdidijQdididididikkdiyuikdgdikkdiKzMxMxMxKzdiTb
 UUdivhTcvhditeBPtedimBOljYCsDOSdKztmyuikdgtmKzKzKzKzKzKzKzdiTb
