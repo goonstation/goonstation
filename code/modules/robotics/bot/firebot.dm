@@ -192,7 +192,7 @@
 
 	if(src.frustration > 8)
 		src.KillPathAndGiveUp(1)
-	
+
 	if(src.target) // is our target still on fire?
 		if(src.emagged)
 			if(!IN_RANGE(src, src.target, 5) && prob(25))
@@ -303,7 +303,7 @@
 		playsound(src.loc, "sound/musical_instruments/Bikehorn_1.ogg", 75, 1, -3)
 
 	else
-		playsound(src.loc, "sound/effects/spray.ogg", 75, 1, -3)
+		playsound(src.loc, "sound/effects/spray.ogg", 30, 1, -3)
 
 	for(var/a in 0 to 5)
 		var/obj/effects/water/W = unpool(/obj/effects/water)
@@ -444,3 +444,8 @@
 		src.created_name = t
 
 #undef FIREBOT_MOVE_SPEED
+
+/mob/living/critter/bot/firebot
+	name = "firebot"
+
+	emagged

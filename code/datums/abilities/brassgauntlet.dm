@@ -178,7 +178,7 @@
 						if(prob(50))
 							random_brute_damage(M, rand(1,5))
 							M.flash(10)
-						M.changeStatus("weakened", 5)
+						M.changeStatus("weakened", 0.5 SECONDS)
 						sleep(rand(1,5))
 						hooting++
 
@@ -207,7 +207,7 @@
 				SPAWN_DBG(rand(30,50)) //Let's stagger out the vomitting a bit
 					M.visible_message("<span class='alert'><B>[M] is violently sick everywhere!</B></span>")
 					random_brute_damage(M, rand(5,30))
-					M.changeStatus("weakened", 5)
+					M.changeStatus("weakened", 0.5 SECONDS)
 					var/turf/T = get_turf(M)
 					playsound(T, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 					if(prob(1)) //Oh no you rolled poorly. Welcome to the *instant death raffle!!*

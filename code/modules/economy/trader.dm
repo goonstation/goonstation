@@ -787,10 +787,19 @@
 				src.goods_buy += new /datum/commodity/produce/special/glowfruit(src)
 
 			if(3) // syndicate bot
+				var/carlsell = rand(1,10)
 				src.goods_sell += new /datum/commodity/contraband/command_suit(src)
 				src.goods_sell += new /datum/commodity/contraband/swatmask(src)
-				src.goods_sell += new /datum/commodity/contraband/radiojammer(src)
-				src.goods_sell += new /datum/commodity/contraband/stealthstorage(src)
+				if (carlsell <= 2)
+					src.goods_sell += new /datum/commodity/contraband/radiojammer(src)
+				if (carlsell >= 3 && carlsell <= 5)
+					src.goods_sell += new /datum/commodity/contraband/stealthstorage(src)
+				if (carlsell >= 6 && carlsell <= 8)
+					src.goods_sell += new /datum/commodity/contraband/voicechanger(src)
+				if (carlsell == 9) // if it rolls 10, then none of the three are sold
+					src.goods_sell += new /datum/commodity/contraband/radiojammer(src)
+					src.goods_sell += new /datum/commodity/contraband/stealthstorage(src)
+					src.goods_sell += new /datum/commodity/contraband/voicechanger(src)
 				src.goods_sell += new /datum/commodity/contraband/spy_sticker_kit(src)
 				src.goods_sell += new /datum/commodity/contraband/disguiser(src)
 				src.goods_sell += new /datum/commodity/contraband/birdbomb(src)
@@ -1056,6 +1065,8 @@
 		src.goods_sell += new /datum/commodity/costume/mime/alt(src) //suspenders and such
 		src.goods_sell += new /datum/commodity/balloons(src)
 		src.goods_sell += new /datum/commodity/crayons(src)
+		src.goods_sell += new /datum/commodity/sticker/googly_eyes(src)
+		src.goods_sell += new /datum/commodity/sticker/googly_eyes_angry(src)
 		src.goods_sell += new /datum/commodity/junk/circus_board(src)
 		src.goods_sell += new /datum/commodity/junk/pie_launcher(src)
 		src.goods_sell += new /datum/commodity/junk/laughbox(src)

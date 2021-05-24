@@ -601,11 +601,11 @@
 
 		proc/getStage()
 			. = 1
-			if(counter < BURNING_LV2)
+			if(min(duration*2, counter) < BURNING_LV2)
 				return
-			else if (counter >= BURNING_LV2 && counter < BURNING_LV3)
+			else if (min(duration*2, counter) >= BURNING_LV2 && min(duration*2, counter) < BURNING_LV3)
 				return 2
-			else if (counter >= BURNING_LV3)
+			else if (min(duration*2, counter) >= BURNING_LV3)
 				return 3
 
 		proc/switchStage(var/toStage)

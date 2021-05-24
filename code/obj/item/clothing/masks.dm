@@ -101,7 +101,7 @@
 	name = "gas mask"
 	desc = "A close-fitting mask that can filter some environmental toxins or be connected to an air supply."
 	icon_state = "gas_mask"
-	c_flags = SPACEWEAR | COVERSMOUTH | COVERSEYES | MASKINTERNALS | BLOCKSMOKE
+	c_flags =  COVERSMOUTH | COVERSEYES | MASKINTERNALS | BLOCKSMOKE
 	w_class = W_CLASS_NORMAL
 	see_face = 0.0
 	item_state = "gas_mask"
@@ -344,6 +344,10 @@
 				U.visible_message(__red("[src] latches onto [T]'s face!"),__red("You slap [src] onto [T]'s face!'"))
 				logTheThing("combat",user,target,"forces [T] to wear [src] (cursed clown mask) at [log_loc(T)].")
 				U.u_equip(src)
+
+				// If we don't empty out that slot first, it could blip the mask out of existence
+				T.drop_from_slot(T.wear_mask)
+
 				T.equip_if_possible(src,T.slot_wear_mask)
 
 

@@ -622,11 +622,11 @@
 	name = "12ga flares"
 	amount_left = 8
 	max_amount = 8
-	icon_state = "12"
+	icon_state = "flare"
 	ammo_type = new/datum/projectile/bullet/flare
 	caliber = 0.72
 	icon_dynamic = 0
-	icon_empty = "12-0"
+	icon_empty = "flare-0"
 
 	single
 		amount_left = 1
@@ -1216,7 +1216,7 @@
 
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 	id = "powercellswap"
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "power_cell"

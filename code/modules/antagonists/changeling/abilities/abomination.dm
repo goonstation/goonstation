@@ -56,7 +56,7 @@
 		var/datum/abilityHolder/changeling/C = H.get_ability_holder(/datum/abilityHolder/changeling)
 		if(!C || C.points < 15)
 			boutput(H, __red("You weren't strong enough to change back safely and blacked out!"))
-			H.changeStatus("paralysis", 100)
+			H.changeStatus("paralysis", 10 SECONDS)
 		else
 			boutput(H, __red("You revert back to your original form. It leaves you weak."))
 			H.changeStatus("weakened", 5 SECONDS)

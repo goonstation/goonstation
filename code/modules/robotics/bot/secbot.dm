@@ -127,7 +127,6 @@
 	/// Obey the threat threshold. Otherwise, just cuff em
 	var/warn_minor_crime = 0
 
-	var/added_to_records = FALSE
 	/// Set a bot to guard an area, and they'll go there and mill around
 	var/area/guard_area
 	/// Arrest anyone who arent security / heads if they're in this area?
@@ -934,14 +933,11 @@
 		if(istype(perp.mutantrace, /datum/mutantrace/abomination))
 			threatcount += 5
 
-		for (var/datum/data/record/R as anything in data_core.security)
-			if (R.fields["name"] != perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
-				if(!added_to_records)
-					threatcount += 5
-			else if ((R.fields["name"] == perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird")))
-				if(!added_to_records)
+		if(perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
+			threatcount += 5
+			for (var/datum/data/record/R as anything in data_core.security)
+				if (R.fields["name"] == perp.name)
 					threatcount -= 5
-					added_to_records = TRUE
 
 		//Agent cards lower threat level
 		if((istype(perp.wear_id, /obj/item/card/id/syndicate)))
@@ -1229,7 +1225,7 @@
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "secbot_cuff"
 	icon = 'icons/obj/items/items.dmi'
-	icon_state = "handcuff"
+	icon_state = "buddycuff"
 	var/obj/machinery/bot/secbot/master
 
 	New(var/obj/machinery/bot/secbot/the_bot)
@@ -1283,7 +1279,7 @@
 				uncuffable = 1
 
 			if(ishuman(master.target) && !uncuffable)
-				master.target.handcuffs = new /obj/item/handcuffs(master.target)
+				master.target.handcuffs = new /obj/item/handcuffs/guardbot(master.target)
 				master.target.setStatus("handcuffed", duration = INFINITE_STATUS)
 
 			if(!uncuffable)

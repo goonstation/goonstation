@@ -103,6 +103,7 @@ var/global
 	"Animated Rainbow" = 'icons/cursors/target/rainbowanimated.dmi',
 	"Flashing" = 'icons/cursors/target/flashing.dmi',
 	"Minimalistic" = 'icons/cursors/target/minimalistic.dmi',
+	"Flat" = 'icons/cursors/target/flat.dmi',
 	"Small" = 'icons/cursors/target/small.dmi')
 
 	list/hud_style_selection = list("New" = 'icons/mob/hud_human_new.dmi',

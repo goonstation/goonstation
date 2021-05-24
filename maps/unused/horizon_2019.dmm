@@ -8757,7 +8757,7 @@
 /area/station/wreckage)
 "auF" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/bottle/red,
+/obj/item/reagent_containers/food/drinks/bottle/soda/red,
 /turf/simulated/floor/plating/airless{
 	icon_state = "panelscorched"
 	},
@@ -46446,7 +46446,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
-/obj/item/reagent_containers/food/drinks/bottle/blue,
+/obj/item/reagent_containers/food/drinks/bottle/soda/blue,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /obj/item/reagent_containers/food/drinks/bottle/vintage,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,

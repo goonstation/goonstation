@@ -48,10 +48,10 @@
 		spawn_contents = list(/obj/item/reagent_containers/food/drinks/noodlecup = 2,
 		/obj/item/reagent_containers/food/drinks/peach = 2,
 		/obj/item/reagent_containers/food/drinks/covfefe = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/spooky = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/spooky2 = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/gingerale = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/drowsy = 2)
+		/obj/item/reagent_containers/food/drinks/bottle/soda/spooky = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/soda/spooky2 = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/soda/gingerale = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/soda/drowsy = 2)
 
 	snacks
 		name = "Discount Dans 'edibles' crate"
@@ -118,7 +118,7 @@
 
 /obj/storage/crate/bartending
 	name = "bartending crate"
-	spawn_contents = list(/obj/item/reagent_containers/food/drinks/bottle = 5,
+	spawn_contents = list(/obj/item/reagent_containers/food/drinks/bottle/soda/ = 5,
 	/obj/item/reagent_containers/glass/beaker/large = 2,
 	/obj/item/device/reagentscanner,
 	/obj/item/clothing/glasses/spectro,
@@ -406,6 +406,7 @@
 		spawn_contents = list(/obj/item/gun/kinetic/light_machine_gun,
 		/obj/item/ammo/bullets/lmg = 3,
 		/obj/item/storage/grenade_pouch/high_explosive,
+		/obj/item/storage/fanny/syndie,
 		/obj/item/clothing/suit/space/industrial/syndicate/specialist,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 
@@ -504,7 +505,9 @@
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/gun/flamethrower/backtank/napalm,
 		/obj/item/fireaxe,
+		/obj/item/storage/grenade_pouch/napalm,
 		/obj/item/storage/grenade_pouch/incendiary,
+		/obj/item/storage/fanny/syndie,
 		/obj/item/clothing/suit/space/syndicate/specialist/firebrand,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/firebrand)
 
@@ -514,6 +517,7 @@
 		spawn_contents = list(/obj/item/gun/kinetic/sniper,
 		/obj/item/storage/pouch/sniper,
 		/obj/item/storage/grenade_pouch/smoke,
+		/obj/item/storage/fanny/syndie,
 		/obj/item/clothing/glasses/thermal/traitor,
 		/obj/item/clothing/suit/space/syndicate/specialist/sniper,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/sniper)

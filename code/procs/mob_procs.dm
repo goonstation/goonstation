@@ -286,8 +286,8 @@
 #ifdef USE_STAMINA_DISORIENT
 		src.do_disorient(stamina_damage, weakened = weak*20, stunned = stun*20, disorient = disorient_time, remove_stamina_below_zero = 0, target_type = DISORIENT_EYE)
 #else
-		changeStatus("weakened", weak*20)
-		changeStatus("stunned", stun*20)
+		changeStatus("weakened", weak*2 SECONDS)
+		changeStatus("stunned", stun*2 SECONDS)
 #endif
 
 		if (!issilicon(src))
@@ -471,6 +471,9 @@
 	return 1
 
 /proc/man_or_woman(var/mob/subject)
+	if(isabomination(subject))
+		return "abomination"
+
 	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
 		return "person"
 
@@ -483,6 +486,9 @@
 			return "person"
 
 /proc/his_or_her(var/mob/subject)
+	if(isabomination(subject))
+		return "our"
+
 	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
 		return "their"
 
@@ -495,6 +501,9 @@
 			return "their"
 
 /proc/him_or_her(var/mob/subject)
+	if(isabomination(subject))
+		return "us"
+
 	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
 		return "them"
 
@@ -507,6 +516,9 @@
 			return "them"
 
 /proc/he_or_she(var/mob/subject)
+	if(isabomination(subject))
+		return "we"
+
 	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
 		return "they"
 
@@ -519,6 +531,9 @@
 			return "they"
 
 /proc/hes_or_shes(var/mob/subject)
+	if(isabomination(subject))
+		return "we're"
+
 	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
 		return "they're"
 
@@ -531,6 +546,9 @@
 			return "they're"
 
 /proc/himself_or_herself(var/mob/subject)
+	if(isabomination(subject))
+		return "ourself"
+
 	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
 		return "themselves"
 

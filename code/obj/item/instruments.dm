@@ -75,6 +75,8 @@
 			if (src.dog_bark)
 				for_by_tcl(G, /obj/critter/dog/george)
 					if (IN_RANGE(G, T, 6) && prob(60))
+						if(ON_COOLDOWN(G, "george howl", 10 SECONDS))
+							continue
 						G.howl()
 
 			src.post_play_effect(user)
@@ -386,8 +388,8 @@
 	stamina_damage = 2
 	stamina_cost = 2
 	note_time = 20
-	sounds_instrument = list('sound/musical_instruments/Whistle_Police.ogg')
-	volume = 35
+	sounds_instrument = list('sound/items/police_whistle1.ogg', 'sound/items/police_whistle2.ogg')
+	volume = 75
 	randomized_pitch = 1
 	pick_random_note = 1
 

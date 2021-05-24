@@ -111,7 +111,7 @@
 
 /obj/machinery/cargo_router/kd_depot_south
 	New()
-		destinations = list("Catering" = NORTH,"Engineering" = NORTH,"Mining" = WEST)
+		destinations = list("Catering" = WEST,"Engineering" = WEST,"Mining" = WEST)
 		default_direction = SOUTH
 		..()
 

@@ -752,7 +752,7 @@
 //		SPAWN_DBG(2 SECONDS)
 //			src.icon_state = "[initial(icon_state)]-fallen"
 	if (istype(victim) && vicTurf && (get_dist(vicTurf, src) <= 1))
-		victim.changeStatus("weakened", 300)
+		victim.changeStatus("weakened", 30 SECONDS)
 		src.visible_message("<b><font color=red>[src.name] tips over onto [victim]!</font></b>")
 		victim.lying = 1
 		victim.set_loc(vicTurf)
@@ -1012,7 +1012,7 @@
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/coffee, 25, cost=PAY_TRADESMAN/10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/tea, 10, cost=PAY_TRADESMAN/10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/xmas, 10, cost=PAY_TRADESMAN/10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/xmas, 10, cost=PAY_TRADESMAN/10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/chickensoup, 10, cost=PAY_TRADESMAN/5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/weightloss_shake, 10, cost=PAY_TRADESMAN/2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/covfefe, 10, cost=PAY_TRADESMAN, hidden=1)
@@ -1254,7 +1254,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola, rand(1, 6), cost=PAY_UNTRAINED/10, hidden = 1)
 		product_list += new/datum/data/vending_product(/obj/item/canned_laughter, rand(1,5), cost=PAY_UNTRAINED/5,hidden=1)
 		if(prob(25))
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/softsoft_pizza, rand(1, 3), cost=PAY_UNTRAINED/5, hidden = 1)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza, rand(1, 3), cost=PAY_UNTRAINED/5, hidden = 1)
 
 	red
 		icon_state = "robust"
@@ -1271,11 +1271,11 @@
 
 		create_products()
 			..()
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/red, 10, cost=PAY_UNTRAINED/10)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/pink, 10, cost=PAY_UNTRAINED/6)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/lime, 10, cost=PAY_UNTRAINED/6)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/grones, 10, cost=PAY_UNTRAINED/6)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/bottledwater, 10, cost=PAY_UNTRAINED/4)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/red, 10, cost=PAY_UNTRAINED/10)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/pink, 10, cost=PAY_UNTRAINED/6)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/lime, 10, cost=PAY_UNTRAINED/6)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/grones, 10, cost=PAY_UNTRAINED/6)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater, 10, cost=PAY_UNTRAINED/4)
 			product_list += new/datum/data/vending_product("/obj/item/reagent_containers/food/drinks/cola/random", 10, cost=PAY_UNTRAINED/10) //does this even work??
 
 	blue
@@ -1293,11 +1293,11 @@
 
 		create_products()
 			..()
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/blue, 10, cost=PAY_UNTRAINED/10)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/orange, 10, cost=PAY_UNTRAINED/6)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/spooky, 10, cost=PAY_UNTRAINED/6)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/spooky2,10, cost=PAY_UNTRAINED/6)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/bottledwater, 10, cost=PAY_UNTRAINED/4)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/blue, 10, cost=PAY_UNTRAINED/10)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/orange, 10, cost=PAY_UNTRAINED/6)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/spooky, 10, cost=PAY_UNTRAINED/6)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/spooky2,10, cost=PAY_UNTRAINED/6)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater, 10, cost=PAY_UNTRAINED/4)
 			product_list += new/datum/data/vending_product("/obj/item/reagent_containers/food/drinks/cola/random", 10, cost=PAY_UNTRAINED/10)
 
 /obj/machinery/vending/electronics
@@ -2084,6 +2084,8 @@
 		product_list += new/datum/data/vending_product(/obj/item/gobowl/w, 1, cost=PAY_TRADESMAN/4)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/clow, 5, cost=PAY_TRADESMAN/2) // (this is an anime joke)
 		product_list += new/datum/data/vending_product(/obj/item/clow_key, 5, cost=PAY_TRADESMAN/2)      //      (please laugh)
+		product_list += new/datum/data/vending_product(/obj/item/dice/weighted, rand(1,3), cost=PAY_TRADESMAN/2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/dice/d1, rand(0,1), cost=PAY_TRADESMAN/3, hidden=1)
 
 /obj/machinery/vending/clothing
 	name = "FancyPantsCo Sew-O-Matic"

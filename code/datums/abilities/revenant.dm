@@ -123,7 +123,7 @@
 			owner.ghost.corpse = null
 			owner.ghost = null
 		src.wraith = W
-		W.invisibility = 50
+		APPLY_MOB_PROPERTY(W, PROP_INVISIBILITY, W, INVIS_WRAITH_VERY)
 		W.set_loc(src.owner)
 		W.abilityHolder.suspendAllAbilities()
 
@@ -159,7 +159,7 @@
 			owner.mind.transfer_to(src.wraith)
 		else if (owner.client)
 			owner.client.mob = src.wraith
-		src.wraith.invisibility = 10
+		APPLY_MOB_PROPERTY(src.wraith, PROP_INVISIBILITY, src.wraith, INVIS_GHOST)
 		src.wraith.set_loc(get_turf(owner))
 		src.wraith.abilityHolder.resumeAllAbilities()
 		src.wraith.abilityHolder.regenRate /= 3
@@ -512,7 +512,7 @@
 					holder.owner.show_message("<span class='alert'>[H] is pulled from your telekinetic grip!</span>")
 					RH.channeling = 0
 					break
-				H.changeStatus("weakened", (2 + rand(0, iterations))*10)
+				H.changeStatus("weakened", (2 + rand(0, iterations)) SECONDS)
 				H.TakeDamage("chest", 4 + rand(0, iterations), 0, 0, DAMAGE_CRUSH)
 				if (prob(40))
 					H.visible_message("<span class='alert'>[H]'s bones crack loudly!</span>", "<span class='alert'>You feel like you're about to be [pick("crushed", "destroyed", "vaporized")].</span>")

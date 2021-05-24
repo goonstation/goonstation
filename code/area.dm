@@ -38,6 +38,9 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	// some semi-random turf in the area to guide spy thieves
 	var/turf/spyturf = null
 
+	// To help decided objective difficulty for spy thieves
+	var/spy_secure_area = 0
+
 	/// for escape checks
 	var/is_centcom = 0
 
@@ -224,10 +227,12 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 		if (ismob(A))
 			var/mob/M = A
 			if (M?.client)
-				if (sound_loop)
+				if (sound_loop || sound_group)
 					SPAWN_DBG(1 DECI SECOND)
 						var/area/mobarea = get_area(M)
-						if (M?.client && (mobarea?.sound_group != src?.sound_group) && !mobarea.sound_loop)
+						// If the area we are exiting has a sound loop but the new area doesn't
+						// we should stop the ambience or it will play FOREVER causing player insanity
+						if (M?.client && (mobarea?.sound_group != src.sound_group || isnull(src.sound_group)) && !mobarea?.sound_loop)
 							M.client.playAmbience(src, AMBIENCE_LOOPING, 0) //pass 0 to cancel
 
 		if ((isliving(A) || iswraith(A)) || locate(/mob) in A)
@@ -1908,6 +1913,7 @@ ABSTRACT_TYPE(/area/station/mining)
 /area/station/bridge/captain
 	name = "Captain's Office"
 	icon_state = "CAPN"
+	spy_secure_area = TRUE
 
 /area/station/bridge/hos
 	name = "Head of Personnel's Office"
@@ -1946,6 +1952,7 @@ ABSTRACT_TYPE(/area/station/crew_quarters)
 	name = "Head of Security's Quarters"
 	icon_state = "HOS"
 	sound_environment = 4
+	spy_secure_area = TRUE
 
 /area/station/crew_quarters/md
 	name = "Medical Director's Quarters"
@@ -2499,6 +2506,7 @@ ABSTRACT_TYPE(/area/station/security)
 /area/station/security
 	teleport_blocked = 1
 	workplace = 1
+	spy_secure_area = TRUE
 
 /area/station/security/main
 	name = "Security"
@@ -2545,6 +2553,7 @@ ABSTRACT_TYPE(/area/station/security)
 	name = "Bridge Security Checkpoint"
 	icon_state = "checkpoint1"
 	sound_environment = 2
+	spy_secure_area = FALSE		// Usually easy to get into
 
 /area/station/security/checkpoint/arrivals
 		name = "Arrivals Security Checkpoint"
@@ -2658,6 +2667,7 @@ ABSTRACT_TYPE(/area/station/security)
 	name = "Beepsky's House"
 	icon_state = "storage"
 	do_not_irradiate = 1
+	spy_secure_area = FALSE	// Easy to get into
 
 ABSTRACT_TYPE(/area/station/solar)
 /area/station/solar
@@ -3043,6 +3053,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 
 /area/station/routing/security
 		name = "Security Router"
+		spy_secure_area = TRUE
 
 /area/station/routing/airbridge
 		name = "Airbridge Router"
@@ -3192,6 +3203,7 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 	icon_state = "armory"
 	sound_environment = 2
 	teleport_blocked = 1
+	spy_secure_area = TRUE
 
 // // // // // //
 
@@ -3199,6 +3211,7 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 ABSTRACT_TYPE(/area/station/turret_protected)
 /area/station/turret_protected
 	name = "Turret Protected Area"
+	spy_secure_area = TRUE
 	var/list/obj/machinery/turret/turret_list = list()
 	var/obj/machinery/camera/motion/motioncamera = null
 	var/list/obj/blob/blob_list = list() //faster to cache blobs as they enter instead of searching the area for them (For turrets)

@@ -88,21 +88,28 @@
 
 /proc/assess_ghostdrone_eligibility(var/datum/mind/M)
 	if(!istype(M))
-		return 0
+		return FALSE
 
 	var/mob/dead/G = M.current
 	if (!istype(G))
-		return 0
+		return FALSE
+
 	if (!G.client)
-		return 0
+		return FALSE
+
 	if (jobban_isbanned(G, "Ghostdrone"))
-		return 0
+		return FALSE
+
 	if (G.client.player)
 		var/round_num = G.client.player.get_rounds_participated()
 		if (!isnull(round_num) && round_num < 20)
 			boutput(G, "<span class='alert'>You only have [round_num] rounds played. You need 20 rounds to play this role.")
-			return 0
-	return 1
+			return FALSE
+
+	if (!G.can_respawn_as_ghost_critter())
+		return FALSE
+
+	return TRUE
 
 #define GHOSTDRONE_BUILD_INTERVAL 1000
 

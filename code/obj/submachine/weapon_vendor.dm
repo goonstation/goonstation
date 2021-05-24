@@ -295,7 +295,6 @@
 /datum/materiel/assistant/basic
 	name = "Assistant"
 	path = /obj/item/storage/belt/security/assistant
-	cost = 0.9
 	description = "One belt containing a security barrier, a forensic scanner, and a security ticket writer."
 
 //SYNDIE

@@ -53,8 +53,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 			icon_state = "nougat1"
 
 /obj/item/reagent_containers/food/snacks/candy/caramel
-	name = "Goatze's Caramel Cremes"
-	desc = "You know you've thought of this when reading the name.  Shame on you."
+	name = "'Hole Zone Layer' caramel creme"
+	desc = "You know that missing O-Zone from earth? We made it in a candy!"
 	real_name = "caramel"
 	icon_state = "caramel"
 	food_effects = list("food_energized")

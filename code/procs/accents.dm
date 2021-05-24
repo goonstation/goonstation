@@ -790,7 +790,7 @@
 
 		// That legendary harsh R
 		if("r")
-			if(lowertext(R.next_char) != "r")
+			if(lowertext(R.next_char) != "r" && R.prev_char != ":") //stop duplicating the research radio shortcut
 				new_string = "rr"
 				used = 1
 		if("i")

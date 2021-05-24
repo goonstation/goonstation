@@ -18,7 +18,6 @@
 	name = "AI Eye"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "a-eye"
-	invisibility = 9
 	see_invisible = 9
 	density = 0
 	layer = 101
@@ -41,6 +40,7 @@
 		last_loc = src.loc
 		..()
 		sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_AI_EYE)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 	Login()
@@ -464,8 +464,8 @@
 	if(!src.cameras)
 		return
 
-	src.cameras &= C
-	C.coveredTiles &= src
+	src.cameras -= C
+	C.coveredTiles -= src
 
 	if(!src.cameras.len)
 		src.cameras = null
@@ -509,7 +509,7 @@
 		prev_tiles = coveredTiles
 
 	for(var/turf/T in view(CAM_RANGE, get_turf(src)))
-		new_tiles += T
+		new_tiles |= T
 
 	if (prev_tiles)
 		for(var/turf/O as anything in (prev_tiles - new_tiles))
@@ -535,13 +535,13 @@
 			if(src.coveredTiles == null)
 				src.coveredTiles = list(t)
 			else
-				src.coveredTiles += t
+				src.coveredTiles |= t
 		else
-			t.cameras += src
+			t.cameras |= src
 			if(src.coveredTiles == null)
 				src.coveredTiles = list(t)
 			else
-				src.coveredTiles += t
+				src.coveredTiles |= t
 
 		if (cam_amount < t.cameras.len)
 			if (t.aiImage)

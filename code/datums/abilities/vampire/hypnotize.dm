@@ -102,9 +102,9 @@
 		else if (target.sight_check(1)) // Can't stare through a blindfold very well, no?
 			boutput(target, __red("Your consciousness is overwhelmed by [M]'s dark glare!"))
 			boutput(M, __blue("Your piercing gaze knocks out [target]."))
-			target.changeStatus("stunned", 300)
-			target.changeStatus("weakened", 300)
-			target.changeStatus("paralysis", 300)
+			target.changeStatus("stunned", 30 SECONDS)
+			target.changeStatus("weakened", 30 SECONDS)
+			target.changeStatus("paralysis", 30 SECONDS)
 			target.remove_stamina(300)
 			target.force_laydown_standup()
 
