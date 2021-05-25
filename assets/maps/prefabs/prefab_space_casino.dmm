@@ -4,7 +4,6 @@
 "bj" = (/obj/submachine/slot_machine,/turf/simulated/floor/carpet/red/fancy/edge/ne,/area/prefab/space_casino)
 "co" = (/obj/decal/fakeobjects/pipe,/obj/machinery/light/incandescent,/turf/simulated/floor/plating,/area/prefab/space_casino)
 "cy" = (/obj/machinery/bot/barbuddy,/turf/simulated/floor/black,/area/prefab/space_casino)
-"cG" = (/obj/stool,/obj/decal/fakeobjects/brokengamblebot,/turf/simulated/floor/wood,/area/prefab/space_casino)
 "cN" = (/turf/simulated/floor/airless/engine/caution/east,/area/prefab/space_casino)
 "cY" = (/obj/machinery/light/small/floor,/turf/simulated/floor/airless/engine,/area/prefab/space_casino)
 "da" = (/turf/simulated/floor/airless/engine,/area/prefab/space_casino)
@@ -71,9 +70,11 @@
 "HK" = (/obj/forcefield/energyshield/perma,/turf/simulated/floor/stairs/wood2/wide,/area/prefab/space_casino)
 "In" = (/obj/decal/cleanable/blood/gibs{icon_state = "gibup1"},/obj/machinery/light/incandescent{dir = 4},/turf/simulated/floor/sanitary,/area/prefab/space_casino)
 "Ix" = (/obj/machinery/light/incandescent,/turf/simulated/floor/blackwhite/whitegrime,/area/prefab/space_casino)
+"IQ" = (/turf/space,/area/noGenerate)
 "Jb" = (/obj/decal/fakeobjects/pipe,/turf/simulated/floor/plating,/area/prefab/space_casino)
 "Jo" = (/obj/submachine/ATM,/turf/simulated/wall/auto/supernorn,/area/prefab/space_casino)
 "Kp" = (/turf/simulated/floor/carpet/red/fancy/edge/west,/area/prefab/space_casino)
+"Kv" = (/obj/stool,/obj/decal/fakeobjects/brokengamblebot,/turf/simulated/floor/wood,/area/prefab/space_casino)
 "Lf" = (/obj/submachine/foodprocessor,/turf/simulated/floor/blackwhite/whitegrime,/area/prefab/space_casino)
 "Lw" = (/obj/table/reinforced/bar/auto,/turf/simulated/floor/wood,/area/prefab/space_casino)
 "LC" = (/obj/decal/cleanable/blood/splatter{icon_state = "floor2"},/obj/decal/cleanable/blood/tracks,/turf/simulated/floor/blackwhite/whitegrime,/area/prefab/space_casino)
@@ -109,25 +110,25 @@
 (1,1,1) = {"
 UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU
 UUUUUUUUUUUUUUUUUUTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbUUUUUUUUUUUUUU
-UUUUUUUUUUUUTbdididididididididiTbdididididididididiUUUUUUUUUU
+UUUUUUUUUUUUUUdididididididididiTbdididididididididiUUUUUUUUUU
 UUUUUUUUUUTbTbdiUgGpjCeLjCGpbjdiTbdisBOdDfqYDfdBfzdiUUUUUUUUUU
 UUUUUUTbTbTbTbdipxakZTakZTakfYdiTbdizvzvzvkkzvzvnIdidididiUUUU
 UUUUTbTbTbTbTbdiVllUZTZTZTlUoudiTbdipezvrbvyOAzvsfdiuhuhdiUUUU
 UUdididididididipxvzZTZTZTvzfYdiTbdinIzvzvzvzvwNxUxYHxIndiUUUU
-UUdiCsFwcGLwuwdiJodidiZTdidiJodiTbdiIxzvzvLfFJLCiHdiMTfOdiUUUU
+UUdiCsFwKvLwuwdiJodidiZTdidiJodiTbdiIxzvzvLfFJLCiHdiMTfOdiUUUU
 UUdiZQLwLwLwZQdiNmdiKpZTPXdiNmdidididididgdidiNKdidididididiUU
 UUdiZQZQZQZQZQZQZQCsKpZTPXCsZQSdditmyuXqOrdiMOXWMOdiYtYuYtdiUU
 TbdiZnZQZQZQZQZQZQZQKpZTPXZQZQSdZZOrOrOrOrdiMOXWMOdiMOMOMOdiUU
 TbdiZQZQZQZQZQZQZQZQKpWuPXZQZQSdliOrcyOrGudiMOpoMOdiMOMOXVdiTb
 TbdiZQdRzVLwZQZQZQZQKpZTPXZQZQSdhQOrOrOrOrdiFQQFledileMxMOdiTb
-TbdiRcLwcGLwRcZQZQZQKpZTPXZQZQSddiqOopRCGJdiMOMOMOTqMOJbyHdiTb
+TbdiRcLwKvLwRcZQZQZQKpZTPXZQZQSddiqOopRCGJdiMOMOMOTqMOJbyHdiTb
 TbdidididididididiRcKpZTPXRcdidididididididiMOMOMOdiMOJbyHdiTb
 TbTbTbTbTbTbTbTbdidiKpZTPXdidiTbTbTbTbTbTbdidioDdidiMOcoEsdiTb
 UUTbTbTbTbTbTbTbTbdiestDtBdiTbTbTbTbTbTbTbTbTbadTbdididididiTb
 UUTbTbTbTbTbTbTbTbdiwLBjHKdiTbTbTbTbTbTbTbTbTbadTbTbTbTbTbTbUU
-UUCrqUqUqUqUqUqUqUqUdadadaqUqUqUqUqUqUqUqUqUqUqUqUqUqUqUqUaHUU
-UUePdacYdadadacYdadadacYdadadacYdadadacYdadadacYdadadacYdacNUU
-UUFgCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLvkUU
+IQCrqUqUqUqUqUqUqUqUdadadaqUqUqUqUqUqUqUqUqUqUqUqUqUqUqUqUaHIQ
+IQePdacYdadadacYdadadacYdadadacYdadadacYdadadacYdadadacYdacNIQ
+IQFgCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLCLvkIQ
 UUUUTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbTbUU
 UUUUUUUUTbTbTbTbTbTbTbTbTbTbTbTbTbTbUUUUUUTbTbTbTbTbTbTbTbUUUU
 "}

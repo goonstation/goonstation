@@ -12,7 +12,8 @@
 	name = "Item Slot Machine"
 	desc = "A slot machine that produces items rather than money. Somehow."
 	icon_state = "slotsitem-off"
-	mats = 40
+	mats = 50
+	var/uses = 0
 
 	var/list/junktier = list( // junk tier, 60% chance
 		"/obj/item/a_gift/easter",
@@ -22,10 +23,21 @@
 		"/obj/item/clothing/shoes/moon",
 		"/obj/item/fish/carp",
 		"/obj/item/instrument/bagpipe",
-		"/obj/item/clothing/under/gimmick/yay"
+		"/obj/item/clothing/under/gimmick/yay",
+		"/obj/item/scrap",
+		"/obj/item/paper_bin",
+		"/obj/item/item_box/stickers",
+		"/obj/item/storage/box/costume/hotdog",
+		"/mob/living/critter/small_animal/cockroach",
+		"/obj/item/device/light/flashlight",
+		"/obj/item/kitchen/utensil/knife",
+		"/obj/item/staple_gun",
+		"/obj/item/old_grenade/banana/cheese_sandwich",
+		"/obj/item/old_grenade/banana/banana_corndog",
+		"/obj/item/rubberduck"
 	)
 
-	var/list/usefultier = list( // half decent tier, 30% chance
+	var/list/usefultier = list( // half decent tier, 35% chance
 		"/obj/item/clothing/gloves/yellow",
 		"/obj/item/bat",
 		"/obj/item/reagent_containers/food/snacks/donkpocket/warm",
@@ -33,23 +45,37 @@
 		"/obj/item/clothing/glasses/sunglasses",
 		"/obj/vehicle/skateboard",
 		"/obj/item/storage/firstaid/regular",
-		"/obj/item/clothing/shoes/sandal"
+		"/obj/item/clothing/shoes/sandal",
+		"/obj/item/cigpacket/random",
+		"/obj/item/clothing/mask/gas",
+		"/obj/critter/domestic_bee/trauma",
+		"/obj/item/storage/firstaid/crit"
 	)
 
-	var/list/raretier = list( // rare tier, 7% chance
+	var/list/raretier = list( // rare tier, 5%~ chance
 		"/obj/item/hand_tele",
 		"/obj/item/baton",
 		"/obj/item/clothing/suit/armor/vest",
 		"/obj/item/device/voltron",
-		"/obj/item/gun/energy/phaser_gun"
+		"/obj/item/gun/energy/phaser_gun",
+		"/obj/item/gimmickbomb/hotdog",
+		"/obj/item/card/id/captains_spare",
+		"/obj/item/storage/banana_grenade_pouch",
+		"/mob/living/critter/wendigo", // have fun!
+		"/obj/item/artifact/teleport_wand",
+		"/obj/machinery/vehicle/tank/car/blue", // A BRAAAAAAND NEEEEEEW CAAAAAAAAAR!
+		"/obj/item/card/id/dabbing_license"
 	)
 
 	var/list/veryraretier = list( // very rare tier, 0.2% chance
-		"/obj/item/pipebomb/bomb/syndicate",
-		"/obj/item/card/id/captains_spare",
 		"/obj/item/sword_core",
-		"/obj/item/sword",
-		"/obj/item/storage/belt/wrestling"
+		"/obj/item/storage/bowling",
+		"/obj/item/storage/belt/wrestling",
+		"/obj/item/stimpack",
+		"/obj/item/clothing/head/bighat/syndicate",
+		"/obj/item/gun/energy/laser_gun/pred",
+		"/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector",
+		"/obj/item/clothing/suit/space/industrial/syndicate"
 	)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -102,18 +128,20 @@
 		var/win_sound = "sound/machines/ping.ogg"
 		var/obj/item/P = null
 
+		if (prob(src.uses))
+			src.emag_act(null, null) // bye bye!
+
 		if (roll <= 1) // very rare tier, 0.2% chance
 			P = text2path(pick(veryraretier))
 			win_sound = "sound/misc/airraid_loop_short.ogg"
 			exclamation = "JACKPOT! "
-		else if (roll > 1 && roll <= 15) // self destruction, 2.8% chance -- higher than very rare tier so that this isnt just free csaber every time
-			src.emag_act(null, null)
-			return
-		else if (roll > 15 && roll <= 50) // rare tier, 7% chance
+			src.uses += 100 // ok you've had your fun
+		else if (roll > 1 && roll <= 25) // rare tier, 5%~ chance
 			P = text2path(pick(raretier))
 			win_sound =  "sound/musical_instruments/Bell_Huge_1.ogg"
 			exclamation = "Big Winner! "
-		else if (roll > 50 && roll <= 200) // half decent tier, 30% chance
+			src.uses += 20
+		else if (roll > 25 && roll <= 200) // half decent tier, 35% chance
 			P = text2path(pick(usefultier))
 			exclamation = "Winner! "
 		else // junk tier, 60% chance
@@ -125,10 +153,11 @@
 		var/obj/item/prize = new P
 		prize.loc = src.loc
 		prize.layer += 0.1
-		src.visible_message("<span class='subtle'><b>[src]</b> says, '[exclamation][src.scan.registered] has won [prize.name]!'</span>")
+		src.visible_message("<span class='subtle'><b>[src]</b> says, '[exclamation][src.scan.registered] has won \an [prize.name]!'</span>")
 		playsound(get_turf(src), "[win_sound]", 55, 1)
 		src.working = 0
 		src.icon_state = "slotsitem-off"
+		src.uses++
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E) // Freak out and die
 		src.icon_state = "slotsitem-malf"
@@ -261,7 +290,10 @@
 		else if (istype(moveTowards, /obj/table/reinforced/bar)) // If it's a table, so let's generate a drink.
 			var/pickedVessel = pick(possible_vessels)
 			var/obj/item/reagent_containers/food/drinks/drinkingglass/W = new pickedVessel(moveTowards.loc)
-			W.reagents.add_reagent(pick(possible_drinks), 500)
+			if (src.emagged)
+				W.reagents.add_reagent(pick(all_functional_reagent_ids), 500)
+			else
+				W.reagents.add_reagent(pick(possible_drinks), 500)
 			W.pixel_x = rand(-8, 8)
 			W.pixel_y = rand(0, 16)
 			if (prob(25)) // Chance of stuff!
@@ -276,6 +308,14 @@
 				W.update_icon()
 			hasDrink = 0
 			KillPathAndGiveUp(1)
+
+	emag_act(var/mob/user, var/obj/item/card/emag/E)
+		if (user)
+			user.show_text("You show [src] your [E]. They smile so hard that they begin sparking!", "red")
+		emagged = 1
+
+	demag(var/mob/user)
+		emagged = 0
 
 // Misc props
 
@@ -310,7 +350,7 @@
 	name = "note"
 	info = {"I don't care if it's "not safe" or "we don't know how it works", we're about to go out of business!<br>
 			I tested it and all I got were some clothes and food, it's safe enough to be making us money.<br>
-			I'm putting the machine out for all to play. That's final.<br><br>
+			I'm putting the machine out for all to play. That's final. I don't see your genetics THING making us anything other than a lawsuit anyway.<br><br>
 
 			P.S. Tell me if you see any suspicious pods outside, I'm starting to get paranoid.
 			"}
