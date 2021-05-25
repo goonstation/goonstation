@@ -2587,6 +2587,7 @@
 			flick(icon_down, src)
 			LIGHT_UP_HOUSING
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
+			logTheThing("station", user, null, "presses the mechcomp button at [log_loc(src)].")
 			return 1
 		return ..(user)
 
@@ -2671,6 +2672,7 @@
 				LIGHT_UP_HOUSING
 				flick(icon_down, src)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, src.active_buttons[selected_button])
+				logTheThing("station", user, null, "presses the mechcomp button [selected_button] at [log_loc(src)].")
 				return 1
 			else
 				boutput(user, "<span class='alert'>[src] has no active buttons - there's nothing to press!</span>")
