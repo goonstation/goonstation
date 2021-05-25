@@ -730,7 +730,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon_state = "mdlicense"
 	item_state = "mdlicense"
 
-/obj/item/framed_award/firstbill
+/obj/item/firstbill
 	name = "HoP's first bill"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "hopbill"

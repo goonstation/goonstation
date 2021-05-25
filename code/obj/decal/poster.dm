@@ -818,7 +818,7 @@
 
 					if (1)
 						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						var/obj/item/award_item = locate(award_type) in src.contents
+						var/obj/item/award_item = locate(award_type) in src
 						if(award_item)
 							award_item.desc = src.desc
 							user.put_in_hand_or_drop(award_item)
@@ -894,7 +894,7 @@
 		framed_award/firstbill
 			name = "framed space currency"
 			desc = "A single bill of space currency."
-			award_type = /obj/item/framed_award/firstbill/
+			award_type = /obj/item/firstbill/
 			award_name = "first bill"
 			owner_job = "Head of Personnel"
 			icon_glass = "hopcredit1"

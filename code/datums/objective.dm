@@ -171,7 +171,7 @@ proc/create_fluff(var/datum/mind/target)
 			if("Medical Director\'s Medical License")
 				steal_target = /obj/item/mdlicense
 			if("Head of Personnel\'s First Bill")
-				steal_target = /obj/item/framed_award/firstbill
+				steal_target = /obj/item/firstbill
 			if("much coveted Gooncode")
 				steal_target = /obj/item/toy/gooncode
 			if("horse mask")
