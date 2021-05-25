@@ -351,7 +351,7 @@
 
 		setupProperties()
 			..()
-			setProperty("meleeprot", 2)
+			setProperty("meleeprot_head", 2)
 			setProperty("rangedprot", 1)
 			setProperty("exploprot", 10)
 			setProperty("disorient_resist_eye", 50)
