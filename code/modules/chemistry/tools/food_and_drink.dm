@@ -1673,7 +1673,7 @@
 	icon_state = "carafe-eng"
 	item_state = "carafe-eng"
 	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE
-	initial_volume = 80
+	initial_volume = 100
 	var/smashed = 0
 	var/shard_amt = 1
 	var/image/fluid_image
