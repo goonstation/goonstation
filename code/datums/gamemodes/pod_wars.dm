@@ -1480,7 +1480,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	nanotrasen
 		icon_state = "pda-nt"
 		setup_default_module = /obj/item/device/pda_module/flashlight/nt_blue
-	
+
 	syndicate
 		icon_state = "pda-syn"
 		setup_default_module = /obj/item/device/pda_module/flashlight/sy_red
@@ -2492,7 +2492,6 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		"menthol", "antihistamine")
 
 	icon_state = "dispenser"
-	icon_base = "dispenser"
 	dispenser_name = "Medical"
 
 
