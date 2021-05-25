@@ -1,5 +1,9 @@
 
 (t)tue may 25 21
+(u)Walpvrgis
+(p)4843
+(e)🎨|sprites
+(+)Resprites donut boxes, and various cooking ingredients; check PR for a list and preview images.
 (u)COOLVAPE
 (p)4799
 (e)|
