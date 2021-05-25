@@ -146,6 +146,13 @@ var/list/pw_rewards_tier3 = null
 
 	SPAWN_DBG(activate_control_points_time)
 		command_alert("An extremely powerful ion storm has reached this system! Control Point Computers are now able to be captured and both NanoTrasen and Syndicate Pod Carriers' shields are down!","Control Point Computers Online")
+		//stolen from blowout.
+		var/sound/siren = sound('sound/misc/airraid_loop.ogg')
+		siren.repeat = FALSE
+		siren.channel = 5
+		siren.volume = 50
+		world << siren
+
 		for (var/datum/control_point/P in src.control_points)
 			P?.computer.can_be_captured = 1
 
