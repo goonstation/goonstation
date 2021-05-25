@@ -101,11 +101,11 @@ var/list/pw_rewards_tier3 = null
 /datum/game_mode/pod_wars/proc/add_latejoin_to_team(var/datum/mind/mind, var/datum/job/JOB)
 	if (istype(JOB, /datum/job/special/pod_wars/nanotrasen))
 		team_NT.members += mind
-		team_NT.equip_player(mind.current)
+		team_NT.equip_player(mind.current, TRUE)
 		get_latejoin_turf(mind, TEAM_NANOTRASEN)
 	else if (istype(JOB, /datum/job/special/pod_wars/syndicate))
 		team_SY.members += mind
-		team_SY.equip_player(mind.current)
+		team_SY.equip_player(mind.current, TRUE)
 		get_latejoin_turf(mind, TEAM_SYNDICATE)
 
 //Loops through latejoin spots. Places you in the one that is on the correct base ship in accordance with your job.
@@ -145,7 +145,7 @@ var/list/pw_rewards_tier3 = null
 		setup_asteroid_ores()
 
 	SPAWN_DBG(activate_control_points_time)
-		command_alert("An extremely powerful ion storm has reached this system! <b>Control Point</b> Computers are now active! Both NanoTrasen and Syndicate <b>Pod Carriers' shields are down!</b>","Control Point Computers Online")
+		command_alert("An extremely powerful ion storm has reached this system! <b>Control Point Computers at Fortuna, the Reliant, and UVB-67</b> are now active! Both NanoTrasen and Syndicate <b>Pod Carriers' shields are down!</b>","Control Point Computers Online")
 		//stolen from blowout.
 		var/sound/siren = sound('sound/misc/airraid_loop.ogg')
 		siren.repeat = FALSE
@@ -633,7 +633,7 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 			message_admins("[src.name] could not rustle up a Commander. Oh no!")
 
 		for (var/datum/mind/M in players)
-			equip_player(M.current)
+			equip_player(M.current, TRUE)
 			M.current.antagonist_overlay_refresh(1,0)
 
 	proc/select_commander()
@@ -686,7 +686,8 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 			return candidates
 
 	//this initializes the player with all their equipment, edits to their mind, showing antag popup, and initializing player_stats
-	proc/equip_player(var/mob/M)
+	//if show_popup is TRUE, then show them the tips popup
+	proc/equip_player(var/mob/M, var/show_popup = FALSE)
 		var/mob/living/carbon/human/H = M
 		var/datum/job/special/pod_wars/JOB
 
@@ -732,7 +733,8 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 		// H.set_loc(pick(pod_pilot_spawns[team_num]))
 		boutput(H, "You're in the [name] faction!")
 		// bestow_objective(player,/datum/objective/battle_royale/win)
-		SHOW_POD_WARS(H)
+		if (show_popup)
+			SHOW_POD_WARS(H)
 		if (istype(mode))
 			mode.stats_manager?.add_player(H.mind, H.real_name, team_num, (H.mind == commander ? "Commander" : "Pilot"))
 
@@ -962,7 +964,7 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 				var/success = growclone(mind.current, mind.current.real_name, mind, mind.current?.bioHolder, traits=mind.current?.traitHolder.traits.Copy())
 				if (success && team)
 					SPAWN_DBG(1)
-						team.equip_player(src.occupant)
+						team.equip_player(src.occupant, FALSE)
 				break
 
 ////////////////////////////////////////////////
