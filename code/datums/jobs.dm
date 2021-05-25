@@ -2645,7 +2645,11 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 ABSTRACT_TYPE(/datum/job/special/pod_wars)
 /datum/job/special/pod_wars
 	name = "Pod_Wars"
+#ifdef MAP_OVERRIDE_POD_WARS
 	limit = -1
+#else
+	limit = 0
+#endif
 	allow_traitors = 0
 	cant_spawn_as_rev = 1
 	var/team = 0 //1 = NT, 2 = SY
@@ -2704,7 +2708,11 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 		commander
 			name = "NanoTrasen Commander"
+#ifdef MAP_OVERRIDE_POD_WARS
 			limit = 1
+#else
+			limit = 0
+#endif
 			no_jobban_from_this_job = 0
 			high_priority_job = 1
 			cant_allocate_unwanted = 1
@@ -2740,7 +2748,11 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 		commander
 			name = "Syndicate Commander"
+#ifdef MAP_OVERRIDE_POD_WARS
 			limit = 1
+#else
+			limit = 0
+#endif
 			no_jobban_from_this_job = 0
 			high_priority_job = 1
 			cant_allocate_unwanted = 1
