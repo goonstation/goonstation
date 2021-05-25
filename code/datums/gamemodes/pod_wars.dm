@@ -145,7 +145,7 @@ var/list/pw_rewards_tier3 = null
 		setup_asteroid_ores()
 
 	SPAWN_DBG(activate_control_points_time)
-		command_alert("An extremely powerful ion storm has reached this system! Control Point Computers are now able to be captured and both NanoTrasen and Syndicate Pod Carriers' shields are down!","Control Point Computers Online")
+		command_alert("An extremely powerful ion storm has reached this system! <b>Control Point</b> Computers are now active! Both NanoTrasen and Syndicate <b>Pod Carriers' shields are down!</b>","Control Point Computers Online")
 		//stolen from blowout.
 		var/sound/siren = sound('sound/misc/airraid_loop.ogg')
 		siren.repeat = FALSE
@@ -1840,7 +1840,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 /datum/manufacture/pod_wars/energy_concussion_grenade
 
 	name = "Concussion Grenade"
-	item_paths = list("MET-2", "CON-2", "telecrystal")
+	item_paths = list("MET-1", "CON-1", "telecrystal")
 	item_amounts = list(5, 5, 5)
 	item_outputs = list(/obj/item/old_grenade/energy_concussion)
 	time = 1 SECONDS
@@ -2976,7 +2976,7 @@ proc/setup_pw_crate_lists()
 				L.emote("twitch_v")
 			else
 				shoot_projectile_ST(get_turf(src), PJ, get_step(src, NORTH))
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN_DBG(0.1 SECONDS)
 				qdel(src)
 		else
 			qdel(src)
@@ -3030,7 +3030,7 @@ proc/setup_pw_crate_lists()
 					if (target)
 						A.throw_at(target, 10 - get_dist(src, A)*2, 1)		//throw things farther if they are closer to the epicenter.
 
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN_DBG(0.1 SECONDS)
 				qdel(O)
 				qdel(src)
 		else
