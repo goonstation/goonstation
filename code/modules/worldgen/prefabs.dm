@@ -189,7 +189,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 
 	space_casino // Lythine's casino with some dubious gambling machines
 		maxNum = 1
-		probability = 100
+		probability = 25
 		prefabPath = "assets/maps/prefabs/prefab_space_casino.dmm"
 		prefabSizeX = 31
 		prefabSizeY = 23
