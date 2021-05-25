@@ -33,7 +33,7 @@ TOILET
 	if (istype(W, /obj/item/storage))
 		return
 	if (istype(W, /obj/item/grab))
-		playsound(get_turf(src), "sound/effects/toilet_flush.ogg", 50, 1)
+		playsound(src, "sound/effects/toilet_flush.ogg", 50, 1)
 		user.visible_message("<span class='notice'>[user] gives [W:affecting] a swirlie!</span>", "<span class='notice'>You give [W:affecting] a swirlie. It's like Middle School all over again!</span>")
 		return
 
@@ -97,7 +97,7 @@ TOILET
 			src.add_fingerprint(user)
 	if((src.clogged < 1) || (src.contents.len < 7) || (user.loc != src.loc))
 		user.visible_message("<span class='notice'>[user] flushes [src].</span>", "<span class='notice'>You flush [src].</span>")
-		playsound(get_turf(src), "sound/effects/toilet_flush.ogg", 50, 1)
+		playsound(src, "sound/effects/toilet_flush.ogg", 50, 1)
 
 
 #ifdef UNDERWATER_MAP

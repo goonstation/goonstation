@@ -141,6 +141,6 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		if (src.safe && M.health < 90)
 			JOB_XP(user, "Medical Doctor", 1)
 
-		playsound(get_turf(M), src.sound_inject, 80, 0)
+		playsound(M, src.sound_inject, 80, 0)
 
 		update_icon()

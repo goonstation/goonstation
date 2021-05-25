@@ -1,4 +1,22 @@
 
+(t)tue may 25 21
+(u)Walpvrgis
+(p)4843
+(e)🎨|sprites
+(+)Resprites donut boxes, and various cooking ingredients; check PR for a list and preview images.
+(u)COOLVAPE
+(p)4799
+(e)|
+(+)Added vocal translators as a hidden item in Valuchimp Machines.
+(t)mon may 24 21
+(u)Zonespace
+(p)4851
+(e)🆕|feature
+(+)Getting splashed with Black Powder now gives gunshot residue.
+(u)Arthur Holiday
+(p)4575
+(e)⚖|balance
+(*)The HoS can now unauthorize the armory.
 (t)sun may 23 21
 (u)edwardly
 (p)4773

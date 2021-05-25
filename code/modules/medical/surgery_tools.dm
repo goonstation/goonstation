@@ -669,7 +669,7 @@ CONTAINS:
 			src.defib = new /obj/item/robodefibrillator/mounted(src)
 		user.put_in_hand_or_drop(src.defib)
 		src.defib.parent = src
-		playsound(get_turf(src), "sound/items/pickup_defib.ogg", 65, vary=0.2)
+		playsound(src, "sound/items/pickup_defib.ogg", 65, vary=0.2)
 
 		update_icon()
 
@@ -697,7 +697,7 @@ CONTAINS:
 		else
 			M.move_laying = null
 
-		playsound(get_turf(src), "sound/items/putback_defib.ogg", 65, vary=0.2)
+		playsound(src, "sound/items/putback_defib.ogg", 65, vary=0.2)
 		update_icon()
 
 
@@ -786,6 +786,9 @@ CONTAINS:
 	var/uses = 6
 	var/in_use = 0
 	hide_attack = 2
+	//if we want this bandage to do some healing. choose how much healing of each type of damage it should do per application.
+	var/brute_heal = 0
+	var/burn_heal = 0
 
 	get_desc()
 		..()
@@ -809,10 +812,13 @@ CONTAINS:
 			var/zone = user.zone_sel.selecting
 			var/surgery_status = H.get_surgery_status(zone)
 			if (surgery_status && H.organHolder)
-				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, zone, surgery_status, rand(2,5), "bandag"), user)
+				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 10, zone, surgery_status, rand(2,5), brute_heal, burn_heal, "bandag"), user)
 				src.in_use = 1
 			else if (H.bleeding)
-				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 1, zone, 0, rand(4,6), "bandag"), user)
+				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 1, zone, 0, rand(4,6), brute_heal, burn_heal, "bandag"), user)
+				src.in_use = 1
+			else if ((brute_heal || burn_heal) && M.health < M.max_health)
+				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 5 SECONDS, 0, 0, 5, brute_heal, burn_heal, "bandag"), user)
 				src.in_use = 1
 			else
 				user.show_text("[H == user ? "You have" : "[H] has"] no wounds or incisions on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]] to bandage!", "red")
@@ -851,14 +857,19 @@ CONTAINS:
 	var/surgery_status
 	var/repair_amount
 	var/vrb
+	var/brute_heal
+	var/burn_heal
 
-	New(Target, Tool, Time, Zone, Status, Repair, Vrb)
-		target = Target
-		tool = Tool
-		duration = Time
-		zone = Zone
-		surgery_status = Status
-		repair_amount = Repair
+	New(Target, Tool, Time, Zone, Status, Repair, brute_heal, burn_heal, Vrb)
+		src.target = Target
+		src.tool = Tool
+		src.duration = Time
+		src.zone = Zone
+		src.surgery_status = Status
+		src.repair_amount = Repair
+		src.brute_heal = brute_heal
+		src.burn_heal = burn_heal
+
 		vrb = Vrb
 		if (zone && surgery_status)
 			duration = clamp((duration * surgery_status), 5, 50)
@@ -925,6 +936,9 @@ CONTAINS:
 				target.visible_message("<span class='success'>[owner] [vrb]es [owner == target ? "[his_or_her(owner)]" : "[target]'s"] wounds closed with [tool].</span>",\
 				"<span class='success'>[owner == target ? "You [vrb]e" : "[owner] [vrb]es"] your wounds closed with [tool].</span>")
 				repair_bleeding_damage(target, 100, repair_amount)
+				if (brute_heal || burn_heal)
+					target.HealDamage("All", brute_heal, burn_heal)
+
 			if (zone && vrb == "bandag" && !target.bandaged.Find(zone))
 				target.bandaged += zone
 				target.update_body()
@@ -937,6 +951,11 @@ CONTAINS:
 				B.uses --
 				B.tooltip_rebuild = 1
 				B.update_icon()
+				if (B.uses <= 0)
+					boutput(ownerMob, "<span class='alert'>You use up the last of the bandages.</span>")
+					ownerMob.u_equip(tool)
+					qdel(tool)
+
 			else if (istype(tool, /obj/item/material_piece/cloth))
 				ownerMob.u_equip(tool)
 				pool(tool)
@@ -1172,7 +1191,7 @@ CONTAINS:
 			src.attack_hand(usr)
 
 	proc/open()
-		playsound(get_turf(src), src.sound_zipper, 100, 1, , 6)
+		playsound(src, src.sound_zipper, 100, 1, , 6)
 		for (var/obj/O in src)
 			O.set_loc(get_turf(src))
 		for (var/mob/M in src)
@@ -1183,7 +1202,7 @@ CONTAINS:
 		src.update_icon()
 
 	proc/close()
-		playsound(get_turf(src), src.sound_zipper, 100, 1, , 6)
+		playsound(src, src.sound_zipper, 100, 1, , 6)
 		for (var/obj/O in get_turf(src))
 			if (O.density || O.anchored || O == src)
 				continue
@@ -1289,14 +1308,14 @@ CONTAINS:
 				else if (clumsy && !doctor && prob(1)) // extreme clumsiness can lead to extremely unintended examination results
 					var/obj/item/organ/head/head = H.drop_organ("head")
 					H.visible_message("<span style='color:red;font-weight:bold'>[user] swings [src] way too hard at [H == user ? "[his_or_her(H)] own" : "[H]'s"] head and hits it clean off [H == user ? "[his_or_her(H)] own" : "[H]'s"] shoulders!</span>")
-					playsound(get_turf(H), "sound/impact_sounds/Flesh_Stab_1.ogg", 80, 1)
+					playsound(H, "sound/impact_sounds/Flesh_Stab_1.ogg", 80, 1)
 					if (head)
 						head.throw_at(get_dir(user, H), 3, 3)
 					return
 
 				else if (clumsy && prob(33)) // WHACK
 					H.visible_message("<span style='color:red;font-weight:bold'>[user] swings [src] way too hard at [H == user ? "[his_or_her(H)] own" : "[H]'s"] head!</span>")
-					playsound(get_turf(H), "sound/impact_sounds/Generic_Hit_1.ogg", 80, 1)
+					playsound(H, "sound/impact_sounds/Generic_Hit_1.ogg", 80, 1)
 					my_damage = (max(my_damage, 2) * 3)
 
 				else if (!headSurgeryCheck(H))
@@ -1316,7 +1335,7 @@ CONTAINS:
 				if (!H.limbs || !H.
 */
 		H.TakeDamage(def_zone, my_damage)
-		playsound(get_turf(H), my_sound, 80, 1)
+		playsound(H, my_sound, 80, 1)
 		return
 
 	//else if (isrobot(M)) // clonk clonk
@@ -1523,7 +1542,7 @@ keeping this here because I want to make something else with it eventually
 		. = ..()
 		if (.)
 			if (prob(75))
-				playsound(get_turf(src), "sound/misc/chair/office/scoot[rand(1,5)].ogg", 40, 1)
+				playsound(src, "sound/misc/chair/office/scoot[rand(1,5)].ogg", 40, 1)
 			if (islist(bring_this_stuff) && length(bring_this_stuff))
 				var/stuff_moved = 0
 				for (var/obj/item/I in bring_this_stuff)
@@ -1557,7 +1576,7 @@ keeping this here because I want to make something else with it eventually
 		. = ..()
 		if (.)
 			if (prob(75))
-				playsound(get_turf(src), "sound/misc/chair/office/scoot[rand(1,5)].ogg", 40, 1)
+				playsound(src, "sound/misc/chair/office/scoot[rand(1,5)].ogg", 40, 1)
 
 			//if we're over the max amount a table can fit, have a chance to drop an item. Chance increases with items on tray
 			if (prob((src.contents.len-max_to_move)*1.1))

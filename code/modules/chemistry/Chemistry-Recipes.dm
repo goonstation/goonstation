@@ -1479,6 +1479,16 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
+		hot_toddy_halfnhalf
+			name = "Hot Toddy"
+			id = "hottoddy_halfnhalf"
+			result = "hottoddy"
+			required_reagents = list("halfandhalf" = 2, "bourbon" = 1)
+			result_amount = 3
+			mix_phrase = "The drink suddenly fills the room with a festive aroma."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
 		bees_knees
 			name = "Bee's knees"
 			id = "beesknees"

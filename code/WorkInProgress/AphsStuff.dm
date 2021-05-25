@@ -12,9 +12,9 @@
 		user.lastattacked = src
 		src.visible_message("<B>[src]</B> screams!",1)
 		if (narrator_mode)
-			playsound(get_turf(src), 'sound/vox/scream.ogg', 10, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(src, 'sound/vox/scream.ogg', 10, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
 		else
-			playsound(get_turf(src), 'sound/voice/screams/monkey_scream.ogg', 10, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(src, 'sound/voice/screams/monkey_scream.ogg', 10, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
 		..()
 		return
 
@@ -75,7 +75,7 @@
 		if(!ai.ready_for_tapes) return
 		if(src.loaded)
 			src.visible_message("[user] ejects the tape from the databank.",1)
-			playsound(get_turf(src), 'sound/machines/driveclick.ogg', 80,1)
+			playsound(src, 'sound/machines/driveclick.ogg', 80,1)
 			tape.set_loc(user.loc)
 			tape.layer = 3
 			icon_state = "oldai_mem-0"
@@ -102,7 +102,7 @@
 			ai.ready_for_tapes = 0
 			src.loaded = 1
 			var/tape_no = tape.tape_no
-			playsound(get_turf(src), 'sound/machines/driveclick.ogg', 80,1)
+			playsound(src, 'sound/machines/driveclick.ogg', 80,1)
 			src.visible_message("The databank begins loading the tape.",1)
 			src.icon_state = "oldai_mem-1"
 			sleep(1 SECOND)
@@ -172,7 +172,7 @@
 
 		if(prob(5))
 			speak(messages[1], 0) // spooky!!!
-			playsound(get_turf(src), 'sound/machines/modem.ogg', 80,1)
+			playsound(src, 'sound/machines/modem.ogg', 80,1)
 		return
 
 	power_change()
@@ -282,7 +282,7 @@
 	proc/load_tape(tapeno)
 		src.ready_for_tapes = 0
 		if(!on) return
-		playsound(get_turf(src), 'sound/machines/modem.ogg', 80,1)
+		playsound(src, 'sound/machines/modem.ogg', 80,1)
 		sleep(7 SECONDS)
 		switch(tapeno)
 			if(1)

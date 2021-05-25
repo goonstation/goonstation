@@ -864,7 +864,7 @@
 			counter += timePassed
 			if (counter >= count && owner && !owner.hasStatus(list("weakened", "paralysis")) )
 				counter -= count
-				playsound(get_turf(owner), sound, 17, 1, 0.4, 1.6)
+				playsound(owner, sound, 17, 1, 0.4, 1.6)
 				violent_twitch(owner)
 			. = ..(timePassed)
 
@@ -885,7 +885,7 @@
 			counter += timePassed
 			if (counter >= count && owner)
 				counter -= count
-				playsound(get_turf(owner), sound, 17, 1, 0.4, 1.6)
+				playsound(owner, sound, 17, 1, 0.4, 1.6)
 				violent_twitch(owner)
 			. = ..(timePassed)
 

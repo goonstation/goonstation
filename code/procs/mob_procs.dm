@@ -832,6 +832,7 @@
 	var/see_special = 0 // Just a pass-through. Game mode-specific stuff is handled further down in the proc.
 	var/see_everything = 0
 	var/datum/gang/gang_to_see = null
+	var/PWT_to_see = null
 
 	if (isadminghost(src))
 		see_everything = 1
@@ -853,6 +854,10 @@
 		if (istype(ticker.mode, /datum/game_mode/gang))
 			if(src.mind.gang != null)
 				gang_to_see = src.mind.gang
+		//mostly took this from gang. I'm sure it can be better though, sorry. -Kyle
+		if (istype(ticker.mode, /datum/game_mode/pod_wars))
+			// var/datum/game_mode/pod_wars/PW = ticker.mode
+			PWT_to_see = get_pod_wars_team_num(src)
 		if (issilicon(src)) // We need to look for borged antagonists too.
 			var/mob/living/silicon/S = src
 			if (src.mind.special_role == "syndicate robot" || (S.syndicate && !S.dependent)) // No AI shells.
@@ -879,7 +884,7 @@
 	if (remove)
 		return
 
-	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_special && !see_everything && gang_to_see == null)
+	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null)
 		src.last_overlay_refresh = world.time
 		return
 
@@ -1058,6 +1063,39 @@
 					if (!see_everything && isobserver(M.current)) continue
 					var/II = image(antag_gang, loc = M.current)
 					can_see.Add(II)
+	else if (istype(ticker.mode, /datum/game_mode/pod_wars))
+		var/datum/game_mode/pod_wars/mode = ticker.mode
+		if (PWT_to_see || see_everything)
+			for (var/datum/mind/M in (mode.team_NT.members + mode.team_SY.members))
+				if (M.current)
+					var/cur_team
+					cur_team = get_pod_wars_team_num(M.current)
+					if (!see_everything && isobserver(M.current)) continue
+					if (PWT_to_see == cur_team)//NANOTRASEN
+						if (cur_team == 1)
+							var/image/I = image(pod_wars_NT, loc = M.current)
+							I.pixel_y = 4
+							can_see.Add(I)
+						if (cur_team == 2)
+					// else if (PWT_to_see == cur_team)//SYNDICATE
+							var/image/I = image(pod_wars_SY, loc = M.current)
+							I.pixel_y = 4
+							can_see.Add(I)
+
+			//show commanders to everyone, can't hide.
+			//Alright, I'll confess. this draws the commander over the other one. idk how this shit works and it works anyway, I'm not in the mood to learn for real. -Kyle
+			if(mode.team_NT.commander && mode.team_NT.commander.current)
+				// if (PWT_to_see == mode.team_NT || see_everything)
+				var/image/I = image(pod_wars_NT_CMDR, loc = mode.team_NT.commander.current)
+				I.pixel_y = 4
+				can_see.Add(I)
+
+			if(mode.team_SY.commander && mode.team_SY.commander.current)
+				// if (PWT_to_see == mode.team_SY || see_everything)
+				var/image/I = image(pod_wars_SY_CMDR, loc = mode.team_SY.commander.current)
+				I.pixel_y = 4
+				can_see.Add(I)
+
 
 	if (can_see.len > 0)
 		//logTheThing("debug", src, null, "<b>Convair880 antag overlay:</b> [can_see.len] added with parameters all ([see_everything]), T ([see_traitors]), S ([see_nukeops]), W ([see_wizards]), R ([see_revs]), SP ([see_special])")
