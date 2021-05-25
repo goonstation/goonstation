@@ -389,6 +389,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	initializeBioholder()
 		. = ..()
 		bioHolder.mobAppearance.customization_second = "Tramp"
+		bioHolder.mobAppearance.customization_third = "Long Beard"
 		bioHolder.age = 62
 		bioHolder.bloodType = "A-"
 		bioHolder.mobAppearance.gender = "male"

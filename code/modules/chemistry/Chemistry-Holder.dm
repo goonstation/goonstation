@@ -87,7 +87,7 @@ datum
 			covered_cache_volume = total_volume
 
 		proc/play_mix_sound(var/mix_sound)
-			playsound(get_turf(my_atom), mix_sound, 80, 1, 3)
+			playsound(my_atom, mix_sound, 80, 1, 3)
 
 		proc/copy_to(var/datum/reagents/target, var/multiplier = 1, var/do_not_react = 0, var/copy_temperature = 0)
 			if(!target || target == src) return

@@ -119,6 +119,7 @@
 	initial_reagents = list("champagne"=30)
 	module_research = list("vice" = 5)
 	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
+	var/makes_shards_on_break = 1
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if (istype(O, /obj/machinery/vehicle) || istype(O, /obj/vehicle) && user.a_intent == "harm")
@@ -129,8 +130,9 @@
 			if (prob(50))
 				user.visible_message("<span class='alert'><b>[user]</b> hits [O] with [src], shattering it open!</span>")
 				playsound(U, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(U)
+				if (makes_shards_on_break)
+					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+					G.set_loc(U)
 				src.broken = 1
 				src.reagents.reaction(U)
 				src.create_reagents(0)
@@ -160,6 +162,8 @@
 		module_research = list("vice" = 5)
 		module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
+	breakaway_glass
+		makes_shards_on_break = 0
 
 /obj/item/reagent_containers/food/drinks/bottle/cider
 	name = "cider"

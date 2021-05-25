@@ -71,7 +71,7 @@ proc/filter_is_character_setup_ringtone(type)
 	proc/PlayRingtone(var/use_short = 0)
 		if(!istype(holder))
 			return // we havent been put in a PDA yet!
-		playsound(get_turf(src.holder), ((use_short && src.has_short) ? src.ringShortList[src.ringListIndex] : src.ringList[src.ringListIndex]), src.volList[src.ringListIndex], src.varyList[src.ringListIndex], src.rangeList[src.ringListIndex], src.pitchList[src.ringListIndex])
+		playsound(src.holder, ((use_short && src.has_short) ? src.ringShortList[src.ringListIndex] : src.ringList[src.ringListIndex]), src.volList[src.ringListIndex], src.varyList[src.ringListIndex], src.rangeList[src.ringListIndex], src.pitchList[src.ringListIndex])
 		src.DoSpecialThing(src.ringListIndex)
 		if(src.alertList[ringListIndex])
 			. = src.alertList[ringListIndex]
@@ -704,7 +704,7 @@ ringtone.dm,58: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 	proc/MakeSoundPlay(var/index)
 		if(!src.holder || index > length(src.ringList))
 			return 1
-		playsound(get_turf(src.holder), src.ringList[index], src.volList[index], src.varyList[index], pitch = src.pitchList[index])
+		playsound(src.holder, src.ringList[index], src.volList[index], src.varyList[index], pitch = src.pitchList[index])
 
 /datum/ringtone/syndie/lasersword
 	name = "SPACEBATTLE - Realistic Sci-Fi FX"

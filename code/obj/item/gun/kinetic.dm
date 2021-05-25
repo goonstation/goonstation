@@ -1473,7 +1473,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		src.keys_changed(0,0xFFFF)
 		if(!src.hasOverlayComposition(/datum/overlayComposition/sniper_scope))
 			src.addOverlayComposition(/datum/overlayComposition/sniper_scope)
-		playsound(get_turf(src), "sound/weapons/scope.ogg", 50, 1)
+		playsound(src, "sound/weapons/scope.ogg", 50, 1)
 		break
 
 

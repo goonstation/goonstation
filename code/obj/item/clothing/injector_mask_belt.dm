@@ -129,7 +129,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 				can_trigger = 0
 				SPAWN_DBG(min_time*10) can_trigger = 1
 
-				playsound(get_turf(src),"sound/items/injectorbelt_active.ogg", 33, 0, -5)
+				playsound(src,"sound/items/injectorbelt_active.ogg", 33, 0, -5)
 				boutput(owner, "<span class='notice'>Your Injector belt activates.</span>")
 
 				container.reagents.reaction(owner, INGEST)
