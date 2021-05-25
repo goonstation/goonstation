@@ -1,4 +1,9 @@
 
+(t)mon may 24 21
+(u)Arthur Holiday
+(p)4575
+(e)⚖|balance
+(*)The HoS can now unauthorize the armory.
 (t)sun may 23 21
 (u)edwardly
 (p)4773
