@@ -47,8 +47,12 @@
 			playsound(user, "sound/weapons/Gunshot.ogg", 100, 1)
 			for(var/mob/O in AIviewers(user, null))
 				if (O.client)	O.show_message("<span class='alert'><B>BOOM!</B> [user]'s head explodes.</span>", 1, "<span class='alert'>You hear someone's head explode.</span>", 2)
+				user.suiciding = 1
 				user.TakeDamage("head", 300, 0)
 				take_bleeding_damage(user, null, 500, DAMAGE_STAB)
+				SPAWN_DBG(50 SECONDS)
+					if (user && !isdead(user))
+						user.suiciding = 0
 			inventory_counter.update_number(0)
 			return 1
 		else

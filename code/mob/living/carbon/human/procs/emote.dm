@@ -555,7 +555,9 @@
 					SPAWN_DBG(1 SECOND)
 						src.wear_mask.set_loc(src.loc)
 						src.wear_mask = null
+						src.suiciding = 1
 						src.gib()
+						src.suiciding = 0
 						return
 				else
 					src.show_text("You just don't feel kawaii enough to uguu right now!", "red")
@@ -617,7 +619,9 @@
 							hat.set_loc(src.loc)
 							src.head = null
 							src.add_karma(-10)
+							src.suiciding = 1
 							src.gib()
+							src.suiciding = 0
 					else if (istype(src.head, /obj/item/clothing/head) && !istype(src.head, /obj/item/clothing/head/fedora))
 						src.show_text("This hat just isn't [pick("fancy", "suave", "manly", "sexerific", "majestic", "euphoric")] enough for that!", "red")
 						//maptext_out = "<I>tips hat</I>"
