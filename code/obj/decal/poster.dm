@@ -768,21 +768,19 @@
 // AZUNGAR'S HEAD OF DEPARTMENT ITEMS// + FIREBARRAGE HELPED TOO BUT HE SMELLS
 ///////////////////////////////////////
 
-		medal
-			name = "framed medal"
-			desc = "A dusty old war medal."
+		framed_award
+			name = "A framed award"
+			desc = "Just some generic award"
 			var/award_text = null
-			var/usageState = 0
-			icon_state = "medal"
+			var/award_type = /obj/item/rddiploma		// /obj/item/
+			var/award_name ="diploma"
+			var/usage_state = 0
+			var/owner_job = "Research Director"
+			var/icon_glass = "rddiploma1"
+			var/icon_award = "rddiploma"
 			pixel_y = -6
 
 			// 0 = GLASS, MEDAL 1 = GLASS OFF, MEDAL IN CASE, 2 = GLASS OFF, MEDAL GONE,
-
-			New()
-				..()
-				var/obj/item/clothing/suit/hosmedal/M = new /obj/item/clothing/suit/hosmedal(src.loc)
-				M.desc = src.desc
-				src.contents.Add(M)
 
 			get_desc()
 				if(award_text)
@@ -792,7 +790,7 @@
 					for(var/mob/living/carbon/human/player in mobs)
 						if(!player.mind)
 							continue
-						if(player.mind.assigned_role == "Head of Security")
+						if(player.mind.assigned_role == owner_job)
 							award_text = src.get_award_text(player.mind)
 							return award_text
 
@@ -801,11 +799,11 @@
 				if (user.stat || isghostdrone(user) || !isliving(user))
 					return
 
-				switch (usageState)
+				switch (usage_state)
 					if (0)
 						if (issilicon(user)) return
-						src.usageState = 1
-						src.icon_state = "medal1"
+						src.usage_state = 1
+						src.icon_state = icon_glass
 						user.visible_message("[user] takes off the glass frame.", "You take off the glass frame.")
 						var/obj/item/sheet/glass/G = new /obj/item/sheet/glass()
 						G.amount = 1
@@ -814,58 +812,41 @@
 
 					if (1)
 						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						var/obj/item/clothing/suit/hosmedal/M = locate() in src.contents
+						var/award_type/M = locate() in src.contents
 						if(M)
 							M.desc = src.desc
 							user.put_in_hand_or_drop(M)
-							user.visible_message("[user] takes the medal from the frame.", "You take the medal out of the frame.")
+							user.visible_message("[user] takes the [award_name] from the frame.", "You take the [award_name] out of the frame.")
 							src.icon_state = "frame"
 							src.add_fingerprint(user)
-							src.usageState = 2
+							src.usage_state = 2
 
 			attackby(obj/item/W as obj, mob/user as mob)
 				if (user.stat)
 					return
 
-				if (istype(W, /obj/item/diary))
-					var/obj/item/paper/book/space_law/first/newbook = new /obj/item/paper/book/space_law/first
-					user.u_equip(W)
-					user.put_in_hand_or_drop(newbook)
-					boutput(user, "<span class='alert'>Beepsky's private journal transforms into Space Law 1st Print.</span>")
-					qdel(W)
-
-				if (src.usageState == 2)
-					if (istype(W, /obj/item/clothing/suit/hosmedal))
+				if (src.usage_state == 2)
+					if (istype(W, award_type))
 						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
 						user.u_equip(W)
 						W.set_loc(src)
-						user.visible_message("[user] places the medal back in the frame.", "You place the medal back in the frame.")
-						src.usageState = 1
-						src.icon_state = "medal1"
+						user.visible_message("[user] places the [award_name] back in the frame.", "You place the [award_name] back in the frame.")
+						src.usage_state = 1
+						src.icon_state = icon_glass
 
-				if (src.usageState == 1)
+				if (src.usage_state == 1)
 					if (istype(W, /obj/item/sheet/glass))
 						if (W.amount >= 1)
 							playsound(src.loc, "sound/machines/click.ogg", 50, 1)
 							user.u_equip(W)
 							qdel(W)
 							user.visible_message("[user] places glass back in the frame.", "You place the glass back in the frame.")
-							src.usageState = 0
-							src.icon_state = "medal"
+							src.usage_state = 0
+							src.icon_state = icon_award
 
 
 			proc/get_award_text(var/datum/mind/M)
-				var/hosname = "Anonymous"
-				if(M?.current?.client?.preferences?.name_last)
-					hosname = M.current.client.preferences.name_last
-				var/hosage = 50
-				if(M?.current?.bioHolder?.age)
-					hosage = M.current.bioHolder.age
-				. = "Awarded to [pick("Pvt.","Sgt","Cpl.","Maj.","Cpt.","Col.","Gen.")] "
-				. += "[hosname] for [pick("Outstanding","Astounding","Incredible")] "
-				. += "[pick("Bravery","Courage","Sneakiness","Competence","Participation","Robustness")] in the "
-				. += "[pick("Great","Scary","Bloody","")] [pick("War","Battle","Massacre","Riot","Kerfuffle","Undeclared Conflict")] of "
-				. += "'[(CURRENT_SPACE_YEAR - rand((hosage - 18),hosage)) % 100]."
+				. = "Awarded to some chump for achieving something."
 
 		firstbill
 			name = "framed space currency"
