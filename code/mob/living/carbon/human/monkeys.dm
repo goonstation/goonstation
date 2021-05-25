@@ -94,8 +94,19 @@
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, slot_w_uniform)
 			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, slot_wear_suit)
 			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, slot_head)
+
+			var/obj/item/card/id/ID = new/obj/item/card/id(src)
+			ID.name = "Oppenheimer's ID Card"
+			ID.assignment = "Syndicate Monkey"
+			ID.registered = "Oppenheimer"
+			ID.icon = 'icons/obj/items/card.dmi'
+			ID.icon_state = "id_syndie"
+			ID.desc = "Oppenheimer's identification card."
+
+			src.equip_if_possible(ID, slot_wear_id)
 
 
 	ai_is_valid_target(mob/M)
