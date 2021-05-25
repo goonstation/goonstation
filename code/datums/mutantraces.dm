@@ -1867,7 +1867,6 @@
 		"left_eye"=/obj/item/organ/eye/synth,\
 		"right_eye"=/obj/item/organ/eye/synth,\
 		"heart"=/obj/item/organ/heart/synth,\
-		"brain"=/obj/item/organ/brain/synth,\
 		"appendix"=/obj/item/organ/appendix/synth,\
 		"intestines"=/obj/item/organ/intestines/synth,\
 		"left_kidney"=/obj/item/organ/kidney/synth/left,\
