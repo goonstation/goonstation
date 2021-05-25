@@ -358,7 +358,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 	execute(var/location) //exp and temp both have the location as first argument so i can use this for both.
 		var/turf/T = get_turf(location)
-		if(T.density)
+		if(!T || T.density)
 			return
 		if(total_plasma <= 0)
 			if(prob(2) && src.owner.owner)
@@ -380,7 +380,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/plasmastone_on_hit
-	execute(var/atom/owner, var/obj/attackobj, var/mob/attacker, var/meleeorthrow)
+	execute(var/atom/owner)
 		owner.material.triggerTemp(locate(owner))
 
 /datum/materialProc/molitz_temp
@@ -440,7 +440,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			target.assume_air(payload)
 
 /datum/materialProc/molitz_on_hit
-	execute(var/atom/owner, var/obj/attackobj, var/mob/attacker, var/meleeorthrow)
+	execute(var/atom/owner, var/obj/attackobj)
 		owner.material.triggerTemp(owner, 1500)
 
 /datum/materialProc/miracle_add
