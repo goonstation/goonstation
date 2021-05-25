@@ -742,7 +742,7 @@ About the new airlock wires panel:
 */
 /obj/machinery/door/airlock/proc/play_deny()
 	play_animation("deny")
-	playsound(get_turf(src), src.sound_deny_temp, 100, 0)
+	playsound(src, src.sound_deny_temp, 100, 0)
 
 /obj/machinery/door/airlock/proc/try_pulse(var/wire_color, mob/user)
 	if (!user.find_tool_in_hand(TOOL_PULSING))
