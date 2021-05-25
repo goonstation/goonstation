@@ -15457,7 +15457,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/poster/wallsign/medal{
+/obj/decal/poster/wallsign/framed_award/hos_medal{
 	pixel_y = 27
 	},
 /turf/simulated/floor/redblack{
@@ -16015,7 +16015,7 @@
 	switchon = 1
 	},
 /obj/item/item_box/gold_star,
-/obj/decal/poster/wallsign/firstbill{
+/obj/decal/poster/wallsign/framed_award/firstbill{
 	pixel_y = 27
 	},
 /turf/simulated/floor/carpet{
@@ -23350,7 +23350,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/poster/wallsign/mdlicense{
+/obj/decal/poster/wallsign/framed_award/mdlicense{
 	pixel_y = 30
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
@@ -27579,7 +27579,7 @@
 "bxJ" = (
 /obj/table/wood/auto,
 /obj/machinery/phone,
-/obj/decal/poster/wallsign/rddiploma{
+/obj/decal/poster/wallsign/framed_award/rddiploma{
 	pixel_x = 32;
 	pixel_y = -3
 	},

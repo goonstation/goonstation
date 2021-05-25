@@ -2963,7 +2963,7 @@
 	icon_state = "4-8"
 	},
 /obj/storage/secure/closet/command/hop,
-/obj/decal/poster/wallsign/firstbill{
+/obj/decal/poster/wallsign/framed_award/firstbill{
 	pixel_y = 28
 	},
 /turf/simulated/floor/carpet{
@@ -35341,7 +35341,7 @@
 /turf/simulated/floor/purple/checker,
 /area/station/janitor/supply)
 "ktJ" = (
-/obj/decal/poster/wallsign/mdlicense{
+/obj/decal/poster/wallsign/framed_award/mdlicense{
 	pixel_y = 28
 	},
 /obj/stool/chair/comfy/blue,
@@ -42780,7 +42780,7 @@
 /obj/landmark/start{
 	name = "Head of Security"
 	},
-/obj/decal/poster/wallsign/medal{
+/obj/decal/poster/wallsign/framed_award/hos_medal{
 	pixel_y = 28
 	},
 /turf/simulated/floor/carpet{
@@ -53630,7 +53630,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/beepsky)
 "uyo" = (
-/obj/decal/poster/wallsign/rddiploma{
+/obj/decal/poster/wallsign/framed_award/rddiploma{
 	pixel_y = 28
 	},
 /obj/stool/chair/comfy/purple,

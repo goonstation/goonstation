@@ -772,21 +772,27 @@
 			name = "A framed award"
 			desc = "Just some generic award"
 			var/award_text = null
-			var/award_type = /obj/item/rddiploma		// /obj/item/
+			var/obj/item/award_type = /obj/item/rddiploma
 			var/award_name ="diploma"
-			var/usage_state = 0
+			var/usage_state = 0		// 0 = GLASS, AWARD 1 = GLASS OFF, AWARD IN CASE, 2 = GLASS OFF, AWARD GONE,
 			var/owner_job = "Research Director"
 			var/icon_glass = "rddiploma1"
 			var/icon_award = "rddiploma"
+			var/icon_empty = "frame"
+			icon_state = "rddiploma"
 			pixel_y = -6
 
-			// 0 = GLASS, MEDAL 1 = GLASS OFF, MEDAL IN CASE, 2 = GLASS OFF, MEDAL GONE,
+			New()
+				..()
+				var/obj/item/M = new award_type(src.loc)
+				M.desc = src.desc
+				src.contents.Add(M)
 
 			get_desc()
 				if(award_text)
 					return award_text
 				else
-					// Do we have a hos?
+					// Do we have a player of the right job?
 					for(var/mob/living/carbon/human/player in mobs)
 						if(!player.mind)
 							continue
@@ -812,12 +818,12 @@
 
 					if (1)
 						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						var/award_type/M = locate() in src.contents
-						if(M)
-							M.desc = src.desc
-							user.put_in_hand_or_drop(M)
+						var/obj/item/award_item = locate(award_type) in src.contents
+						if(award_item)
+							award_item.desc = src.desc
+							user.put_in_hand_or_drop(award_item)
 							user.visible_message("[user] takes the [award_name] from the frame.", "You take the [award_name] out of the frame.")
-							src.icon_state = "frame"
+							src.icon_state = icon_empty
 							src.add_fingerprint(user)
 							src.usage_state = 2
 
@@ -848,238 +854,100 @@
 			proc/get_award_text(var/datum/mind/M)
 				. = "Awarded to some chump for achieving something."
 
-		firstbill
-			name = "framed space currency"
-			desc = "A single space currency in a glass frame."
-			var/award_text_hop = null
-			var/usageState = 0
-			icon_state = "hopcredit"
-			pixel_y = -6
-
-			New()
-				..()
-				var/obj/item/firstbill/M = new /obj/item/firstbill(src.loc)
-				M.desc = src.desc
-				src.contents.Add(M)
-
-			get_desc()
-				if(award_text_hop)
-					return award_text_hop
-				else
-					// Do we have a hop?
-					for(var/mob/living/carbon/human/player in mobs)
-						if(!player.mind)
-							continue
-						if(player.mind.assigned_role == "Head of Personnel")
-							award_text_hop = src.get_award_text_hop(player.mind)
-							return award_text_hop
-
-			attack_hand(mob/user as mob)
-				if (user.stat || isghostdrone(user) || !isliving(user))
-					return
-
-				switch (usageState)
-					if (0)
-						if (issilicon(user)) return
-						src.usageState = 1
-						src.icon_state = "hopcredit1"
-						user.visible_message("[user] takes off the glass frame.", "You take off the glass frame.")
-						var/obj/item/sheet/glass/G = new /obj/item/sheet/glass()
-						G.amount = 1
-						src.add_fingerprint(user)
-						user.put_in_hand_or_drop(G)
-
-					if (1)
-						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						var/obj/item/firstbill/M = locate() in src.contents
-						if(M)
-							M.desc = src.desc
-							user.put_in_hand_or_drop(M)
-							user.visible_message("[user] takes the first bill from the frame.", "You take the first bill out of the frame.")
-							src.icon_state = "frame"
-							src.add_fingerprint(user)
-							src.usageState = 2
+		framed_award/hos_medal
+			name = "framed medal"
+			desc = "A dusty old war medal."
+			award_type = /obj/item/clothing/suit/hosmedal/
+			award_name = "medal"
+			owner_job = "Head of Security"
+			icon_glass = "medal1"
+			icon_award = "medal"
+			icon_empty = "frame"
+			icon_state = "medal"
 
 			attackby(obj/item/W as obj, mob/user as mob)
 				if (user.stat)
 					return
 
-				if (src.usageState == 2)
-					if (istype(W, /obj/item/firstbill))
-						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						user.u_equip(W)
-						W.set_loc(src)
-						user.visible_message("[user] places the first bill back in the frame.", "You place the first bill back in the frame.")
-						src.usageState = 1
-						src.icon_state = "hopcredit1"
+				if (istype(W, /obj/item/diary))
+					var/obj/item/paper/book/space_law/first/newbook = new /obj/item/paper/book/space_law/first
+					user.u_equip(W)
+					user.put_in_hand_or_drop(newbook)
+					boutput(user, "<span class='alert'>Beepsky's private journal transforms into Space Law 1st Print.</span>")
+					qdel(W)
 
-				if (src.usageState == 1)
-					if (istype(W, /obj/item/sheet/glass))
-						if (W.amount >= 1)
-							playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-							user.u_equip(W)
-							qdel(W)
-							user.visible_message("[user] places glass back in the frame.", "You place the glass back in the frame.")
-							src.usageState = 0
-							src.icon_state = "hopcredit"
+				..()
 
-			proc/get_award_text_hop(var/datum/mind/M)
+			get_award_text(var/datum/mind/M)
+				var/hosname = "Anonymous"
+				if(M?.current?.client?.preferences?.name_last)
+					hosname = M.current.client.preferences.name_last
+				var/hosage = 50
+				if(M?.current?.bioHolder?.age)
+					hosage = M.current.bioHolder.age
+				. = "Awarded to [pick("Pvt.","Sgt","Cpl.","Maj.","Cpt.","Col.","Gen.")] "
+				. += "[hosname] for [pick("Outstanding","Astounding","Incredible")] "
+				. += "[pick("Bravery","Courage","Sneakiness","Competence","Participation","Robustness")] in the "
+				. += "[pick("Great","Scary","Bloody","")] [pick("War","Battle","Massacre","Riot","Kerfuffle","Undeclared Conflict")] of "
+				. += "'[(CURRENT_SPACE_YEAR - rand((hosage - 18),hosage)) % 100]."
+
+		framed_award/firstbill
+			name = "framed space currency"
+			desc = "A single bill of space currency."
+			award_type = /obj/item/framed_award/firstbill/
+			award_name = "first bill"
+			owner_job = "Head of Personnel"
+			icon_glass = "hopcredit1"
+			icon_award = "hopcredit"
+			icon_empty = "frame"
+			icon_state = "hopcredit"
+
+			get_award_text(var/datum/mind/M)
 				var/hopname = "Anonymous"
 				if(M?.current?.client?.preferences?.name_last)
 					hopname = M.current.client.preferences.name_last
 				. = "The first [pick("Space","NT", "Golden","Silver")] "
-				. += "[pick("Dollar","Doubloon","Buck","Peso","Credit")] earned by [hopname]"
-				. += "for selling a [pick("Amazing","Mediocre","Suspicious","Quality","Decent","Odd")]"
+				. += "[pick("Dollar","Doubloon","Buck","Peso","Credit")] earned by [hopname] "
+				. += "for selling a [pick("Amazing","Mediocre","Suspicious","Quality","Decent","Odd")] "
 				. += "[pick("Time share","Hamburger", "Clown shoe","Corporate secrets")]"
 
-
-
-		rddiploma
+		framed_award/rddiploma
 			name = "research directors diploma"
-			desc = "A fancy space diploma in a glass frame."
-			var/award_text_rd = null
-			var/usageState = 0
-			icon_state = "rddiploma"
-			pixel_y = -6
-
-			New()
-				..()
-				var/obj/item/rddiploma/M = new /obj/item/rddiploma(src.loc)
-				M.desc = src.desc
-				src.contents.Add(M)
+			desc = "A fancy space diploma."
+			award_type = /obj/item/rddiploma/
 
 			get_desc(dist)
-				if(award_text_rd)
-					return award_text_rd
+				if(award_text)
+					return award_text
 				if (dist <= 1 & prob(50))
 					. += ".. Upon closer inspection this degree seems to be fake! Who could have guessed!"
 				else
 					// Do we have a rd?
-					for(var/mob/living/carbon/human/player in mobs)
-						if(!player.mind)
-							continue
-						if(player.mind.assigned_role == "Research Director")
-							award_text_rd = src.get_award_text_rd(player.mind)
-							return award_text_rd
+					..()
 
-			attack_hand(mob/user as mob)
-				if (user.stat || isghostdrone(user) || !isliving(user))
-					return
-
-				switch (usageState)
-					if (0)
-						if (issilicon(user)) return
-						src.usageState = 1
-						src.icon_state = "rddiploma1"
-						user.visible_message("[user] takes off the glass frame.", "You take off the glass frame.")
-						var/obj/item/sheet/glass/G = new /obj/item/sheet/glass()
-						G.amount = 1
-						src.add_fingerprint(user)
-						user.put_in_hand_or_drop(G)
-
-					if (1)
-						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						var/obj/item/rddiploma/M = locate() in src.contents
-						if(M)
-							M.desc = src.desc
-							user.put_in_hand_or_drop(M)
-							user.visible_message("[user] takes the diploma from the frame.", "You take the diploma out of the frame.")
-							src.icon_state = "frame"
-							src.add_fingerprint(user)
-							src.usageState = 2
-
-			attackby(obj/item/W as obj, mob/user as mob)
-				if (user.stat)
-					return
-
-				if (src.usageState == 2)
-					if (istype(W, /obj/item/rddiploma))
-						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						user.u_equip(W)
-						W.set_loc(src)
-						user.visible_message("[user] places the diploma back in the frame.", "You place the diploma back in the frame.")
-						src.usageState = 1
-						src.icon_state = "rddiploma1"
-
-				if (src.usageState == 1)
-					if (istype(W, /obj/item/sheet/glass))
-						if (W.amount >= 1)
-							playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-							user.u_equip(W)
-							qdel(W)
-							user.visible_message("[user] places glass back in the frame.", "You place the glass back in the frame.")
-							src.usageState = 0
-							src.icon_state = "rddiploma"
-
-			proc/get_award_text_rd(var/datum/mind/M)
+			get_award_text(var/datum/mind/M)
 				var/rdname = "Anonymous"
 				if(M?.current?.client?.preferences?.name_last)
 					rdname = M.current.client.preferences.name_last
-				. += "It says \ [rdname] has been awarded the degree of [pick("Associate", "Bachelor")] of [pick("arts","science")]"
-				. += "Master of [pick("arts","science")],"
+				. += "It says \ [rdname] has been awarded the degree of [pick("Associate", "Bachelor")] of [pick("arts","science")] "
+				. += "Master of [pick("arts","science")], "
 				. += "in [pick("Superstition","Quantum","Avian","Simian","Relative","Absolute","Computational","Philosophical","Practical","Inadvisably-applied","Impractical","Hyper", "Mega", "Giga", "Probabilistic")] [pick("Physics","Astronomy","Plasmatology", "Astrology","Cosmetology", "Dentistry","Botany","Science","Ologylogy","Wumbology")].\""
 
-		mdlicense
+		framed_award/mdlicense
 			name = "medical directors medical license"
 			desc = "There's just no way this is real."
+			award_name = "medical license"
+			owner_job = "Medical Director"
+			icon_glass = "mdlicense1"
+			icon_award = "mdlicense"
+			icon_empty = "frame"
 			icon_state = "mdlicense"
-			var/usageState = 0
-			pixel_y = -6
 
-			New()
-				..()
-				var/obj/item/mdlicense/M = new /obj/item/mdlicense(src.loc)
-				M.desc = src.desc
-				src.contents.Add(M)
-
-			attack_hand(mob/user as mob)
-				if (user.stat || isghostdrone(user) || !isliving(user))
-					return
-
-				switch (usageState)
-					if (0)
-						if (issilicon(user)) return
-						src.usageState = 1
-						src.icon_state = "mdlicense1"
-						user.visible_message("[user] takes off the glass frame.", "You take off the glass frame.")
-						var/obj/item/sheet/glass/G = new /obj/item/sheet/glass()
-						G.amount = 1
-						src.add_fingerprint(user)
-						user.put_in_hand_or_drop(G)
-
-					if (1)
-						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						var/obj/item/mdlicense/M = locate() in src.contents
-						if(M)
-							M.desc = src.desc
-							user.put_in_hand_or_drop(M)
-							user.visible_message("[user] takes the medical license from the frame.", "You take the medical license out of the frame.")
-							src.icon_state = "frame"
-							src.add_fingerprint(user)
-							src.usageState = 2
-
-			attackby(obj/item/W as obj, mob/user as mob)
-				if (user.stat)
-					return
-
-				if (src.usageState == 2)
-					if (istype(W, /obj/item/mdlicense))
-						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-						user.u_equip(W)
-						W.set_loc(src)
-						user.visible_message("[user] places the medical license back in the frame.", "You place the medical license back in the frame.")
-						src.usageState = 1
-						src.icon_state = "mdlicense1"
-
-				if (src.usageState == 1)
-					if (istype(W, /obj/item/sheet/glass))
-						if (W.amount >= 1)
-							playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-							user.u_equip(W)
-							qdel(W)
-							user.visible_message("[user] places glass back in the frame.", "You place the glass back in the frame.")
-							src.usageState = 0
-							src.icon_state = "mdlicense"
+			get_award_text(var/datum/mind/M)
+				var/mdname = "Anonymous"
+				if(M?.current?.client?.preferences?.name_last)
+					mdname = M.current.client.preferences.name_last
+				. += "It says \ [mdname] has been granted a license as a Physician and Surgeon entitled to practice the profession of medicine in space."
 
 /obj/decal/poster/wallsign/pod_build
 	name = "poster"

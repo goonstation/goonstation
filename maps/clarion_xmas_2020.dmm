@@ -49065,7 +49065,7 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "bMT" = (
-/obj/decal/poster/wallsign/medal,
+/obj/decal/poster/wallsign/framed_award/hos_medal,
 /turf/simulated/wall/auto/reinforced/gannets,
 /area/station/security/armory)
 "bMU" = (

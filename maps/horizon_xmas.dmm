@@ -44349,7 +44349,7 @@
 /turf/simulated/floor/red,
 /area/station/security/hos)
 "bTK" = (
-/obj/decal/poster/wallsign/medal,
+/obj/decal/poster/wallsign/framed_award/hos_medal,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},

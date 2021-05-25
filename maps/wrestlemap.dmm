@@ -11619,7 +11619,7 @@
 	},
 /area/station/engine/inner)
 "eNx" = (
-/obj/decal/poster/wallsign/firstbill,
+/obj/decal/poster/wallsign/framed_award/firstbill,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge/hos)
 "eNK" = (
@@ -16923,7 +16923,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/monitoring)
 "hby" = (
-/obj/decal/poster/wallsign/medal{
+/obj/decal/poster/wallsign/framed_award/hos_medal{
 	pixel_y = 28
 	},
 /turf/simulated/floor/wood/six,
@@ -29395,7 +29395,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "mwe" = (
-/obj/decal/poster/wallsign/rddiploma,
+/obj/decal/poster/wallsign/framed_award/rddiploma,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/research_director)
 "mwi" = (

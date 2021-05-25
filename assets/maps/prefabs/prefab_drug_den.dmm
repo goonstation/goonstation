@@ -368,7 +368,7 @@
 /turf/space,
 /area/noGenerate)
 "zL" = (
-/obj/decal/poster/wallsign/firstbill,
+/obj/decal/poster/wallsign/framed_award/firstbill,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/drug_den)
 "Ad" = (

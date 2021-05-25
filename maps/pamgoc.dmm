@@ -36365,7 +36365,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/decal/poster/wallsign/medal{
+/obj/decal/poster/wallsign/framed_award/hos_medal{
 	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/grime,

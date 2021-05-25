@@ -16329,7 +16329,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "Mo" = (
-/obj/decal/poster/wallsign/medal,
+/obj/decal/poster/wallsign/framed_award/hos_medal,
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
 /area/station/security/armory)
 "Mp" = (

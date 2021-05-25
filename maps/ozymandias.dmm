@@ -20206,7 +20206,7 @@
 /area/station/engine/engineering)
 "fYY" = (
 /obj/storage/secure/closet/command/hos,
-/obj/decal/poster/wallsign/medal{
+/obj/decal/poster/wallsign/framed_award/hos_medal{
 	pixel_y = 26
 	},
 /turf/simulated/floor/redblack{

@@ -48249,7 +48249,7 @@
 	icon_state = "bedsheet-red"
 	},
 /obj/item/device/radio/intercom/security,
-/obj/decal/poster/wallsign/medal{
+/obj/decal/poster/wallsign/framed_award/hos_medal{
 	pixel_y = 25
 	},
 /turf/simulated/floor/carpet{

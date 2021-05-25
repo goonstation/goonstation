@@ -40670,7 +40670,7 @@
 /obj/item/ammo/bullets/tranq_darts,
 /obj/item/ammo/bullets/tranq_darts,
 /obj/machinery/light/incandescent/harsh/very,
-/obj/decal/poster/wallsign/medal{
+/obj/decal/poster/wallsign/framed_award/hos_medal{
 	pixel_y = 28
 	},
 /turf/simulated/floor/redblack,

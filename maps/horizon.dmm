@@ -57047,7 +57047,7 @@
 /area/station/ranch)
 "nih" = (
 /obj/burning_barrel,
-/obj/decal/poster/wallsign/medal{
+/obj/decal/poster/wallsign/framed_award/hos_medal{
 	pixel_y = 27
 	},
 /turf/simulated/floor/plating/random,
