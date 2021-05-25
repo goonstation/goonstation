@@ -51,7 +51,7 @@
 			logTheThing("station", src.emagger, null, "emagged a cambot[src.name != "Cambot" ? ", [src.name]," : null] at [log_loc(src)].")
 
 		src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
-		playsound(get_turf(src), "sound/weapons/flash.ogg", 50, 1)
+		playsound(src, "sound/weapons/flash.ogg", 50, 1)
 		flick("cambot-spark", src)
 		src.emagged = 1
 		return 1
@@ -279,13 +279,13 @@
 					var/obj/item/photo/P = src.camera.create_photo(target, src.emagged)
 					if (P)
 						src.visible_message("[src] takes \a [target == src ? "selfie! How?" : P]!")
-					playsound(get_turf(src), "sound/items/polaroid[rand(1,2)].ogg", 75, 1, -3)
+					playsound(src, "sound/items/polaroid[rand(1,2)].ogg", 75, 1, -3)
 
 				if (src.emagged) // if emagged, flash the target too
 					if (ismob(target))
 						var/mob/M = target
 						M.apply_flash(30, 8, 0, 0, 0, rand(0, 2), 0, 0, 100)
-					playsound(get_turf(src), "sound/weapons/flash.ogg", 100, 1)
+					playsound(src, "sound/weapons/flash.ogg", 100, 1)
 
 			// don't sit there taking pictures of the same thing over and over
 			if (!(target in src.photographed))

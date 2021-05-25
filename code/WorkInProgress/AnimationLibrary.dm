@@ -128,7 +128,7 @@
 	if(!istype(A))
 		return
 	if(prob(10))
-		playsound(get_turf(A), "sound/effects/creaking_metal[pick("1", "2")].ogg", 40, 1)
+		playsound(A, "sound/effects/creaking_metal[pick("1", "2")].ogg", 40, 1)
 	var/image/underneath = image('icons/effects/white.dmi')
 	underneath.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
 	A.underlays += underneath
@@ -1311,7 +1311,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_storage_thump(var/atom/A, wiggle=6)
 	if(!istype(A))
 		return
-	playsound(get_turf(A), "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+	playsound(A, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
 	var/orig_x = A.pixel_x
 	var/orig_y = A.pixel_y
 	animate(A, pixel_x=orig_x, pixel_y=orig_y, flags=ANIMATION_PARALLEL, time=0.01 SECONDS)

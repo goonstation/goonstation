@@ -31,13 +31,13 @@
 	var/obj/item/clothing/gloves/concussive/conc = parent
 	if(hitcounter++ == 3)
 		conc.setSpecialOverride(/datum/item_special/slam/no_item_attack, true)
-		playsound(get_turf(conc), "sound/items/miningtool_on.ogg", 20, 1, 0, 1.3)
+		playsound(conc, "sound/items/miningtool_on.ogg", 20, 1, 0, 1.3)
 
 /datum/component/wearertargeting/unarmedblock/concussive/proc/used_special(obj/item/clothing/gloves/concussive/conc, mob/user)
 	if(hitcounter > 3)
 		conc.setSpecialOverride(null, 0)
 		hitcounter = 0
-		playsound(get_turf(conc), "sound/items/miningtool_off.ogg", 20, 1, 0, 1.3)
+		playsound(conc, "sound/items/miningtool_off.ogg", 20, 1, 0, 1.3)
 
 /datum/component/wearertargeting/unarmedblock/concussive/proc/append_to_tooltip(parent, list/tooltip)
 	tooltip += itemblock_tooltip_entry("special.png", "Absorbs attacks to charge up a kinetic slam attack.")

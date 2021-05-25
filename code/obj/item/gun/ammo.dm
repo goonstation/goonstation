@@ -212,7 +212,7 @@
 
 		K.add_fingerprint(usr)
 		A.add_fingerprint(usr)
-		playsound(get_turf(K), sound_load, 50, 1)
+		playsound(K, sound_load, 50, 1)
 
 		if (K.ammo.amount_left < 0)
 			K.ammo.amount_left = 0
@@ -973,7 +973,7 @@
 		swapped_cell.update_icon()
 		src.update_icon()
 
-		playsound(get_turf(src), sound_load, 50, 1)
+		playsound(src, sound_load, 50, 1)
 		return 1
 
 	proc/charge(var/amt = 0)

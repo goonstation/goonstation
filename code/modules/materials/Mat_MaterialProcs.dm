@@ -527,7 +527,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			var/mob/living/L = entering
 			if(L.slip())
 				boutput(L, "You slip on the icy floor!")
-				playsound(get_turf(owner), "sound/misc/slip.ogg", 30, 1)
+				playsound(owner, "sound/misc/slip.ogg", 30, 1)
 		return
 
 /datum/materialProc/ice_life

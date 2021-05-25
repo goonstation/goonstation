@@ -255,7 +255,7 @@
 					owner.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
 				if (prob(2))
 					owner.visible_message("<span class='alert'>[owner] coughs up a little blood!</span>")
-					playsound(get_turf(owner), "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+					playsound(owner, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
 					bleed(owner, rand(1,2) * mult, 1)
 				APPLY_MOB_PROPERTY(owner, PROP_STAMINA_REGEN_BONUS, "hypertension", -3)
 				owner.add_stam_mod_max("hypertension", -15)
