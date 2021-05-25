@@ -187,11 +187,9 @@
 			C.pixel_y = 32*(user.y - target.y)*0.5
 			animate(C,transform=m1,time=8)
 			H.remove_stamina(40)
-			H.unlock_medal("Brown Pants", 1)
 			if (ishuman(user))
 				var/mob/living/carbon/human/U = user
 				U.remove_stamina(15)
-				U.unlock_medal("Brown Pants", 1)
 
 			return 1
 	return 0
@@ -1081,11 +1079,9 @@
 			C.pixel_y = 32*(user.y - target.y)*0.5
 			animate(C,transform=m1,time=8)
 			H.remove_stamina(60)
-			H.unlock_medal("Brown Pants", 1)
 			if (ishuman(user))
 				var/mob/living/carbon/human/U = user
 				U.remove_stamina(20)
-				U.unlock_medal("Brown Pants", 1)
 
 			return 1
 	return 0
