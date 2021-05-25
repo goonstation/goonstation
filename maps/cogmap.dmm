@@ -348,9 +348,6 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/light{
-	dir = 1
-	},
 /turf/simulated/floor/bot,
 /area/station/medical/research)
 "aaZ" = (
@@ -364,9 +361,6 @@
 	},
 /obj/cable{
 	icon_state = "0-8"
-	},
-/obj/machinery/light{
-	dir = 1
 	},
 /turf/simulated/floor/bot,
 /area/station/medical/research)
@@ -1433,6 +1427,10 @@
 	step_x = 0;
 	step_y = 0
 	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
 "adI" = (
@@ -1627,10 +1625,10 @@
 /area/station/medical/research)
 "aeo" = (
 /obj/monkeyplant,
-/obj/machinery/light{
-	dir = 4;
-	step_x = 0;
-	step_y = 0
+/obj/item/device/radio/intercom/medical{
+	dir = 8;
+	pixel_x = 16;
+	pixel_y = -5
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
@@ -1863,16 +1861,6 @@
 /obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/surgery)
-"aeQ" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/blue/checker,
-/area/station/medical/research)
 "aeR" = (
 /obj/item/caution{
 	desc = "Caution! Construction Zone!";
@@ -1902,16 +1890,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aeU" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment,
-/turf/simulated/floor/blue/checker,
-/area/station/medical/research)
-"aeV" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
 "aeW" = (
@@ -1922,20 +1901,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/armory)
-"aeX" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/item/device/radio/intercom/medical{
-	dir = 8;
-	pixel_x = 16
-	},
-/obj/stool/chair/office/red,
-/obj/landmark/start{
-	name = "Geneticist"
-	},
-/turf/simulated/floor/blue/checker,
-/area/station/medical/research)
 "aeY" = (
 /obj/storage/crate,
 /obj/item/clothing/under/gimmick/princess,
@@ -49381,6 +49346,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/bot,
 /area/station/medical/research)
 "crW" = (
@@ -54569,10 +54537,6 @@
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "dRa" = (
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/disposal/mail{
 	mail_tag = "genetics";
 	mailgroup = "medresearch";
@@ -57682,6 +57646,14 @@
 	icon_state = "swampgrass"
 	},
 /area/station/hydroponics/bay)
+"jsZ" = (
+/obj/cable,
+/obj/wingrille_spawn/auto,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/research)
 "jtM" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -58412,6 +58384,14 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/gas)
+"kFi" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/wreath/ephemeral,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/research)
 "kFk" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights/ephemeral,
@@ -59230,12 +59210,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "mAy" = (
-/obj/cable,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights/ephemeral,
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "mCe" = (
@@ -60224,6 +60206,13 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction2)
+"oAo" = (
+/obj/wingrille_spawn/auto,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/research)
 "oAP" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
@@ -60601,6 +60590,14 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/security/secwing)
+"pkG" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/xmas_lights/ephemeral,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/research)
 "pkK" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 1;
@@ -65442,6 +65439,13 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
+"ybx" = (
+/obj/wingrille_spawn/auto,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/research)
 "ybI" = (
 /obj/submachine/chicken_incubator,
 /obj/item/reagent_containers/food/snacks/ingredient/egg{
@@ -106480,7 +106484,7 @@ abZ
 gYt
 cwl
 aen
-aeQ
+aen
 dRa
 mAy
 cxs
@@ -106784,7 +106788,7 @@ aeh
 afM
 aeU
 pqb
-vUX
+pkG
 aag
 aar
 aaq
@@ -107084,9 +107088,9 @@ acr
 adD
 kQE
 cuo
-aeV
+cuo
 afH
-abZ
+kFi
 aah
 adC
 adC
@@ -107386,9 +107390,9 @@ vUX
 adH
 cus
 aeo
-aeX
+sbY
 cwS
-vUX
+pkG
 aah
 adC
 adC
@@ -107688,9 +107692,9 @@ cng
 cng
 unt
 aep
-cyn
-ctD
-ctD
+jsZ
+ybx
+oAo
 aah
 adC
 adC
