@@ -1083,6 +1083,21 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				SpawnParticle()
 			Sleep(1)
 
+/datum/particleSystem/sparklesagentb
+	New(var/atom/location = null)
+		..(location, "sparkle", 10, "#ff0000")
+
+	Init()
+		sleepCounter = 3
+
+	Run()
+		if (..())
+			if (sleepCounter > 0)
+				sleepCounter--
+				SpawnParticle()
+				Sleep(1)
+			else
+				Die()
 /datum/particleSystem/sparkles_disco
 	New(var/atom/location = null)
 		..(location, "sparkle", 10, "#FFFFFF")

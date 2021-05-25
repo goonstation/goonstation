@@ -384,10 +384,10 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		owner.material.triggerTemp(locate(owner))
 
 /datum/materialProc/molitz_temp
-	var/total_oxygen = 1000
+	var/iterations = 100
 
 	execute(var/atom/location, var/temp, var/agent_b=FALSE)
-		if(total_oxygen <= 0) return
+		if(iterations <= 0) return
 		var/turf/target = get_turf(location)
 		if(temp != 1500) //Same temp that hitting it sets it too, this is so hitting it ignores cooldown, making it practical to manually farm
 			if(ON_COOLDOWN(target, "molitz_oxy_generate", 8 SECONDS)) return
@@ -403,20 +403,22 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			var/datum/gas/oxygen_agent_b/trace_gas = payload.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
 			payload.temperature = T0C // Greatly reduce temperature to simulate an endothermic reaction
 
-			// Itr 1: 0.2 Agent B, Blegh oxy
+			// Itr 1: 0.2 Agent B, 1 oxy
 			// Itr 2: 0.0605 Agent B
 			// Should be 100 iterations to deplete total of 19.099 mols of agent B and 100 oxygen, will take 110 iterations to hit minimum reaction rate whihch is about 7.33 minutes, (this is azruns math not mine dont blame me if wrong)
 
 			animate_flash_color_fill_inherit(location,"#ff0000",4, 2 SECONDS)
-			trace_gas.moles += min(total_oxygen/500,0.2)
-			total_oxygen -= 10
-			payload.oxygen = min(total_oxygen,1)
+			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, location))
+				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(location))
+			trace_gas.moles += min(iterations/50,0.2)
+			iterations -= 1
+			payload.oxygen = 1
 
 			target.assume_air(payload)
 		else
 			animate_flash_color_fill_inherit(location,"#0000FF",4, 2 SECONDS)
-			payload.oxygen = min(total_oxygen,10)
-			total_oxygen -= 10
+			payload.oxygen = 10
+			iterations -= 1
 
 			target.assume_air(payload)
 
