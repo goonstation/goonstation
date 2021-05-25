@@ -924,6 +924,7 @@
 	var/confirm = alert("Set yourself as Do Not Resuscitate (WARNING: This is one-use only and will prevent you from being revived in any manner)", "Set Do Not Resuscitate", "Yes", "Cancel")
 	if (confirm == "Cancel")
 		return
+//So that players can leave their team and spectate. Since normal dying get's you instantly cloned.
 #if defined(MAP_OVERRIDE_POD_WARS)
 	if (confirm == "Yes")
 		if (src.mind)
