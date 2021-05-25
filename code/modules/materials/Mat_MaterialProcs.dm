@@ -358,7 +358,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 	execute(var/location) //exp and temp both have the location as first argument so i can use this for both.
 		var/turf/T = get_turf(location)
-		if(T.density)
+		if(!T || T.density)
 			return
 		if(total_plasma <= 0)
 			if(prob(2) && src.owner.owner)
