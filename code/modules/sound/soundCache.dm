@@ -769,6 +769,7 @@ var/global/list/soundCache = list(
  	"sound/misc/PhilCollinsTom.ogg" = 'sound/misc/PhilCollinsTom.ogg',\
  	"sound/misc/pourdrink.ogg" = 'sound/misc/pourdrink.ogg',\
  	"sound/misc/pourdrink2.ogg" = 'sound/misc/pourdrink2.ogg',\
+ 	"sound/misc/prayerchime.ogg" = 'sound/misc/prayerchime.ogg',\
  	"sound/misc/rimshot.ogg" = 'sound/misc/rimshot.ogg',\
  	"sound/misc/rustle1.ogg" = 'sound/misc/rustle1.ogg',\
  	"sound/misc/rustle2.ogg" = 'sound/misc/rustle2.ogg',\
