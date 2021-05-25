@@ -491,7 +491,7 @@
 
 /obj/item/clothing/head/NTberet
 	name = "Nanotrasen beret"
-	desc = "For the inner dictator in you."
+	desc = "For the inner space dictator in you."
 	icon_state = "ntberet"
 	item_state = "ntberet"
 

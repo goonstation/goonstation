@@ -307,7 +307,6 @@
 			src.icon_state = "phaser-new[ratio]"
 			return
 
-
 ///////////////////////////////////////Rad Crossbow
 /obj/item/gun/energy/crossbow
 	name = "mini rad-poison-crossbow"
@@ -801,6 +800,7 @@
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "pistol[ratio]"
 			return
+
 
 
 

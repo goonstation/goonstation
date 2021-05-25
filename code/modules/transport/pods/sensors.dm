@@ -5,10 +5,17 @@
 	system = "Sensors"
 	var/ships = 0
 	var/list/obj/shiplist = list()
-	var/list/obj/whos_tracking_me = list()
+	var/beacons = 0
+	var/list/beaconlist = list()
 	var/lifeforms = 0
 	var/list/lifelist = list()
+	var/list/obj/whos_tracking_me = list()
+	//HAHA SUE ME NERDS, I'LL REMOVE THIS WHEN SENSORS DON'T SUCK --Kyle
+#if defined(MAP_OVERRIDE_POD_WARS)
+	var/seekrange = 90
+#else
 	var/seekrange = 30
+#endif
 	var/sight = SEE_SELF
 	var/see_in_dark = SEE_DARK_HUMAN + 3
 	var/antisight = 0
@@ -49,6 +56,10 @@
 		if(src.active)
 			dat += build_html_gps_form(src, false, src.tracking_target)
 			dat += {"<HR><BR><A href='?src=\ref[src];scan=1'>Scan Area</A>"}
+			dat += {"<HR><B>[beacons] Beacons Nearby:</B><BR>"}
+			if(beaconlist.len)
+				for(var/obj/B in beaconlist)
+					dat += {"<HR><a href=\"byond://?src=\ref[src];dest_cords=1;x=[B.x];y=[B.y];z=[B.z]\">[B.name]</a>~[round(get_dist(src.ship, B), 25)]M [dir_name(get_dir(src.ship, B))]"}
 			dat += {"<HR><B>[ships] Ships Detected:</B><BR>"}
 			if(shiplist.len)
 				for(var/obj/V in shiplist)
@@ -284,8 +295,10 @@
 		scanning = 1
 		lifeforms = 0
 		ships = 0
+		beacons = 0
 		lifelist = list()
 		shiplist = list()
+		beaconlist = list()
 		for(var/mob/living/carbon/human/M in ship)
 			M << sound('sound/machines/signal.ogg')
 		ship.visible_message("<b>[ship] begins a sensor sweep of the area.</b>")
@@ -311,6 +324,12 @@
 			if(C.alive)
 				lifeforms++
 				lifelist += C.name
+
+		for (var/obj/B in warp_beacons) //ignoring cruisers, they barely exist, sue me.
+			if(B != ship)
+				if (ship.z == B.z)
+					beacons++
+					beaconlist[B] = "[dir_name(get_dir(ship, B))]"
 
 		for (var/obj/machinery/vehicle/V in by_cat[TR_CAT_PODS_AND_CRUISERS]) //ignoring cruisers, they barely exist, sue me.
 			if(V != ship)

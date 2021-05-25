@@ -106,8 +106,9 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_ICARUS
 //#define MAP_OVERRIDE_GEHENNA			// Warcrimes WIP do not use
 //#define MAP_OVERRIDE_PAMGOC			// Pamgoc
-//#define MAP_OVERRIDE_WRESTLEMAP		// Wrestlemap by Overtone
-
+//#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap by Overtone
+// #define MAP_OVERRIDE_POD_WARS   // 500x500 Pod Wars map
+// 
 
 //////////// HOLIDAYS AND OTHER SUCH TOGGLES
 

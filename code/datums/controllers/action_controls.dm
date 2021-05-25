@@ -410,6 +410,8 @@ var/datum/action_controller/actions
 		if (src.proc_path)
 			src.id = "[src.proc_path]"
 
+		src.proc_args = proc_args
+
 	onStart()
 		..()
 		if (!src.owner)
@@ -566,6 +568,14 @@ var/datum/action_controller/actions
 
 	onStart()
 		..()
+//You can't build! The if is to stop compiler warnings
+#if defined(MAP_OVERRIDE_POD_WARS)
+		if (owner)
+			boutput(owner, "<span class='alert'>What are you gonna do with this? You have a very particular set of skills, and building is not one of them...</span>")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+#endif
+
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if(H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
