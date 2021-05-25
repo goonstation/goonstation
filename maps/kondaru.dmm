@@ -35050,15 +35050,13 @@
 	},
 /area/station/science/lab)
 "bZz" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/machinery/door_control{
 	id = "tox_accessvent";
 	name = "Access Buffer Vent";
 	pixel_y = 28
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
@@ -35257,13 +35255,16 @@
 	pixel_x = -12
 	},
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 9
 	},
 /area/station/science/lab)
 "cao" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -35274,6 +35275,9 @@
 	dir = 0;
 	name = "autoname - SS13";
 	pixel_y = 20
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
@@ -35509,11 +35513,6 @@
 	pixel_x = -25;
 	pixel_y = 9
 	},
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -35526,28 +35525,23 @@
 	dir = 10;
 	icon_state = "line1"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "cbl" = (
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "2-4"
 	},
 /obj/cable{
-	icon_state = "2-4"
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "cbm" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	icon_state = "4-8"
 	},
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
