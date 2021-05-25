@@ -502,6 +502,12 @@
 	item_state = "ntberet_commander"
 	c_flags = SPACEWEAR
 
+	setupProperties()
+		..()
+		setProperty("coldprot", 20)
+		setProperty("heatprot", 5)
+		setProperty("meleeprot_head", 4)
+
 /obj/item/clothing/head/XComHair
 	name = "rookie scalp"
 	desc = "Some unfortunate soldier's charred scalp. The hair is intact."
