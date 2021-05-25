@@ -119,6 +119,9 @@ var/datum/event_controller/random_events
 		if (!event_bank || event_bank.len < 1)
 			logTheThing("debug", null, null, "<b>Random Events:</b> do_random_event proc was passed a bad event bank")
 			return
+		if (!ticker?.mode?.do_random_events)
+			logTheThing("debug", null, null, "<b>Random Events:</b> Random events are turned off on this game mode.")
+			return
 		var/list/eligible = list()
 		var/list/weights = list()
 		for (var/datum/random_event/RE in event_bank)
