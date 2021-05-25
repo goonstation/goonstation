@@ -307,6 +307,8 @@
 
 		var/image/chat_maptext/chat_text = null
 		var/h_pct = M.max_health ? round(100 * M.health / M.max_health) : M.health
+		if(M.max_health <= 0)
+			h_pct = "???"
 		var/oxy = round(M.get_oxygen_deprivation())
 		var/tox = round(M.get_toxin_damage())
 		var/burn = round(M.get_burn_damage())
