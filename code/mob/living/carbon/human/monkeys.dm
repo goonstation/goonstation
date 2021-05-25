@@ -89,17 +89,50 @@
 	ai_calm_down = FALSE
 	ai_default_intent = INTENT_HARM
 	ai_aggression_timeout = 0
+	var/preferred_card_type = /obj/item/card/id/syndicate
 
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, slot_w_uniform)
 			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, slot_wear_suit)
 			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, slot_head)
+
+			var/obj/item/card/id/ID = new/obj/item/card/id(src)
+			ID.name = "Oppenheimer's ID Card"
+			ID.assignment = "Syndicate Monkey"
+			ID.registered = "Oppenheimer"
+			ID.icon = 'icons/obj/items/card.dmi'
+			ID.icon_state = "id_syndie"
+			ID.desc = "Oppenheimer's identification card."
+
+			src.equip_if_possible(ID, slot_wear_id)
+
 
 	ai_is_valid_target(mob/M)
 		if(!isliving(M) || !isalive(M))
 			return FALSE
-		return !istype(M.get_id(), /obj/item/card/id/syndicate)
+		return !istype(M.get_id(), preferred_card_type)
+
+/mob/living/carbon/human/npc/monkey/oppenheimer/pod_wars
+	preferred_card_type = /obj/item/card/id/pod_wars/syndicate
+
+	New()
+		START_TRACKING_CAT(TR_CAT_PW_PETS)
+		..()
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_PW_PETS)
+		..()
+
+	ai_is_valid_target(mob/M)
+		var/team_num = get_pod_wars_team_num(M)
+		switch(team_num)
+			if (TEAM_NANOTRASEN)	//1
+				return TRUE
+			if (TEAM_SYNDICATE)		//2
+				return FALSE
+			else
+				return ..()
 
 /mob/living/carbon/human/npc/monkey/horse
 	name = "????"

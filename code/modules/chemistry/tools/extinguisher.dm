@@ -137,7 +137,7 @@
 				qdel(src)
 				return
 
-		playsound(get_turf(src), "sound/effects/spray.ogg", 30, 1, -3)
+		playsound(src, "sound/effects/spray.ogg", 30, 1, -3)
 
 		var/direction = get_dir(src,target)
 

@@ -40781,7 +40781,7 @@
 /turf/unsimulated/wall/setpieces/leadwall,
 /area/crater)
 "bDI" = (
-/obj/machinery/atmospherics/pipe/tank/oxygen_agent_b{
+/obj/machinery/atmospherics/pipe/tank/rad_particles{
 	desc = "A large vessel containing an unknown pressurized gas.";
 	name = "Unidentified Gas Tank"
 	},

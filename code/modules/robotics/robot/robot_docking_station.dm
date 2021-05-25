@@ -887,6 +887,6 @@
 	if (iswrenchingtool(W))
 		src.anchored = !src.anchored
 		user.show_text("You [src.anchored ? "attach" : "release"] \the [src]'s floor clamps", "red")
-		playsound(get_turf(src), "sound/items/Ratchet.ogg", 40, 0, 0)
+		playsound(src, "sound/items/Ratchet.ogg", 40, 0, 0)
 		return
 	..()

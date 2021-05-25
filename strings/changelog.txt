@@ -1,5 +1,42 @@
 
+(t)tue may 25 21
+(u)Walpvrgis
+(p)4843
+(e)🎨|sprites
+(+)Resprites donut boxes, and various cooking ingredients; check PR for a list and preview images.
+(u)COOLVAPE
+(p)4799
+(e)|
+(+)Added vocal translators as a hidden item in Valuchimp Machines.
+(t)mon may 24 21
+(u)Zonespace
+(p)4851
+(e)🆕|feature
+(+)Getting splashed with Black Powder now gives gunshot residue.
+(u)Arthur Holiday
+(p)4575
+(e)⚖|balance
+(*)The HoS can now unauthorize the armory.
+(t)sun may 23 21
+(u)edwardly
+(p)4773
+(e)🆕|feature
+(+)Sure, use a spoon to eat mashed potatoes, why not?
 (t)sat may 22 21
+(u)Tarmunora
+(*)Swapped out a certain pressure tank by a certain cenote.
+(u)TDHooligan
+(p)4490
+(e)⚖|balance
+(+)Increased frequency of gene strains when infusing with the PlantMaster.
+(u)Disturbherb
+(p)4819
+(e)🎨|sprites
+(*)Added googly eyes to the game, and you can buy them from a certain trader! 🤡
+(u)edwardly
+(p)4821
+(e)🐛|bug
+(+)duckbots, buttbots, chefbots, etc, can be contained within a crate and won't wander out of them
 (u)Azrun
 (p)4803
 (e)🐛|bug

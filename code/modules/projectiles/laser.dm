@@ -336,7 +336,6 @@ toxic - poisons
 	icon_state = "modproj"
 	name = "blaster bolt"
 	sname = "blaster"
-	damage_type = D_BURNING
 	shot_sound = 'sound/weapons/laser_a.ogg'
 	dissipation_delay = 6
 	dissipation_rate = 5
@@ -362,7 +361,48 @@ toxic - poisons
 		icon_state = "crescent"
 		shot_number = 1
 
+/datum/projectile/laser/blaster/pod_pilot
+	cost = 20
+	power = 33
+	color_red = 0
+	color_green = 0
+	color_blue = 0
+	override_color = 0
+	icon_state = "bolt"
+	damage_type = D_ENERGY
+	var/turret = 0		//have turret shots do less damage, but slow mobs it hits...
+	var/team_num = 0	//1 for NT, 2 for SY
 
+	on_hit(atom/hit)
+		..()
+		if (turret && isliving(hit))
+			var/mob/living/L = hit
+			L.changeStatus("slowed", 2 SECONDS)
+
+
+/datum/projectile/laser/blaster/pod_pilot/blue_NT
+	name = "blue blaster bolt"
+	color_icon = "#3d9cff"
+	color_red = 0.05
+	color_green = 0.28
+	color_blue = 0.51
+	team_num = 1
+
+	turret
+		turret = 1
+		power = 15
+
+/datum/projectile/laser/blaster/pod_pilot/red_SY
+	name = "red blaster bolt"
+	color_icon = "#ff4043"
+	color_red = 0.51
+	color_green = 0.05
+	color_blue = 0.28
+	team_num = 2
+
+	turret
+		turret = 1
+		power = 15
 
 
 // cogwerks- mining laser, first attempt

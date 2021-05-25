@@ -191,29 +191,37 @@
 					boutput(M, "<span class='alert'>You can't eat [src]!</span>")
 					return 0
 				if (!bypass_utensils)
-					if (src.needfork && !user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
-						boutput(M, "<span class='alert'>You need a fork to eat [src]!</span>")
+					var/utensil = null
+
+					if (src.needfork && user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
+						utensil = user.find_type_in_hand(/obj/item/kitchen/utensil/fork)
+					else if (src.needspoon && user.find_type_in_hand(/obj/item/kitchen/utensil/spoon))
+						utensil = user.find_type_in_hand(/obj/item/kitchen/utensil/spoon)
+
+					// If it's a plastic fork we've found then test if we've broken it
+					var/obj/item/kitchen/utensil/fork/plastic/plastic_fork = utensil
+					if (istype(plastic_fork))
+						if (prob(20))
+							plastic_fork.break_utensil(M)
+							utensil = null
+
+					// If it's a plastic spoon we've found then test if we've broken it
+					var/obj/item/kitchen/utensil/spoon/plastic/plastic_spoon = utensil
+					if (istype(plastic_spoon))
+						if (prob(20))
+							plastic_spoon.break_utensil(M)
+							utensil = null
+
+					if (!utensil && (needfork || needspoon))
+						if (needfork && needspoon)
+							boutput(M, "<span class='alert'>You need a fork or spoon to eat [src]!</span>")
+						else if (needfork)
+							boutput(M, "<span class='alert'>You need a fork to eat [src]!</span>")
+						else if (needspoon)
+							boutput(M, "<span class='alert'>You need a spoon to eat [src]!</span>")
+
 						M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
 						return
-					if (src.needfork && user.find_type_in_hand(/obj/item/kitchen/utensil/fork/plastic) && prob(20))
-						// this can be kinda fucky if they're eating with two forks in hand.
-						// basically, the fork in their left hand will always be chosen
-						// I guess people in space are all left handed
-						for (var/obj/item/kitchen/utensil/fork/plastic/F in user.equipped_list(check_for_magtractor = 0))
-							F.break_utensil(M)
-							M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
-							return
-					if (src.needspoon && !user.find_type_in_hand(/obj/item/kitchen/utensil/spoon))
-						boutput(M, "<span class='alert'>You need a spoon to eat [src]!</span>")
-						M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
-						return
-					if (src.needspoon && user.find_type_in_hand(/obj/item/kitchen/utensil/spoon/plastic) && prob(20))
-						// this can be kinda fucky if they're eating with two forks in hand.
-						// basically, the fork in their left hand will always be chosen
-						// I guess people in space are all left handed
-						for (var/obj/item/kitchen/utensil/spoon/plastic/S in user.equipped_list(check_for_magtractor = 0))
-							S.break_utensil(M)
-							M.visible_message("<span class='alert'>[user] stares glumly at [src].</span>")
 
 				//no or broken stomach
 				if (ishuman(M))
@@ -1178,7 +1186,7 @@
 			bladder = H.sims?.getValue("Bladder")
 			if ((!isnull(bladder) && (bladder <= 65)) || (isnull(bladder) && (H.urine >= 2)))
 				H.visible_message("<span class='alert'><B>[H] pees in [src]!</B></span>")
-				playsound(get_turf(H), "sound/misc/pourdrink.ogg", 50, 1)
+				playsound(H, "sound/misc/pourdrink.ogg", 50, 1)
 				if (!H.sims)
 					H.urine -= 2
 				else
@@ -1220,7 +1228,7 @@
 				H.losebreath += max(H.losebreath, 5)
 			else if (eat_thing.reagents && eat_thing.reagents.total_volume)
 				eat_thing.reagents.trans_to(H, eat_thing.reagents.total_volume)
-			playsound(get_turf(H), "sound/items/eatfood.ogg", rand(10,50), 1)
+			playsound(H, "sound/items/eatfood.ogg", rand(10,50), 1)
 			qdel(eat_thing)
 			src.update_icon()
 			return
@@ -1665,7 +1673,7 @@
 	icon_state = "carafe-eng"
 	item_state = "carafe-eng"
 	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE
-	initial_volume = 80
+	initial_volume = 100
 	var/smashed = 0
 	var/shard_amt = 1
 	var/image/fluid_image
@@ -1800,7 +1808,7 @@
 	attack_self(mob/user)
 		if (src.reagents.total_volume > 0)
 			user.visible_message("<b>[user.name]</b> shakes the container [pick("rapidly", "thoroughly", "carefully")].")
-			playsound(get_turf(src), "sound/items/CocktailShake.ogg", 25, 1, -6)
+			playsound(src, "sound/items/CocktailShake.ogg", 25, 1, -6)
 			sleep (0.3 SECONDS)
 			src.reagents.inert = 0
 			src.reagents.physical_shock(rand(5, 20))

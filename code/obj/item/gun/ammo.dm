@@ -212,7 +212,7 @@
 
 		K.add_fingerprint(usr)
 		A.add_fingerprint(usr)
-		playsound(get_turf(K), sound_load, 50, 1)
+		playsound(K, sound_load, 50, 1)
 
 		if (K.ammo.amount_left < 0)
 			K.ammo.amount_left = 0
@@ -622,11 +622,11 @@
 	name = "12ga flares"
 	amount_left = 8
 	max_amount = 8
-	icon_state = "12"
+	icon_state = "flare"
 	ammo_type = new/datum/projectile/bullet/flare
 	caliber = 0.72
 	icon_dynamic = 0
-	icon_empty = "12-0"
+	icon_empty = "flare-0"
 
 	single
 		amount_left = 1
@@ -973,7 +973,7 @@
 		swapped_cell.update_icon()
 		src.update_icon()
 
-		playsound(get_turf(src), sound_load, 50, 1)
+		playsound(src, sound_load, 50, 1)
 		return 1
 
 	proc/charge(var/amt = 0)

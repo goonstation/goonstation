@@ -1494,7 +1494,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 						var/datum/bioEffect/hidden/magnetic/src_effect = src.bioHolder.GetEffect("magnets_pos")
 						if(src_effect == null) src_effect = src.bioHolder.GetEffect("magnets_neg")
 						if(src_effect.update_charge(1))
-							playsound(get_turf(src), "sound/effects/sparks[rand(1,6)].ogg", 25, 1,extrarange = -25)
+							playsound(src, "sound/effects/sparks[rand(1,6)].ogg", 25, 1,extrarange = -25)
 
 
 				sustained_moves = 0
