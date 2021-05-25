@@ -358,7 +358,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 	execute(var/location) //exp and temp both have the location as first argument so i can use this for both.
 		var/turf/T = get_turf(location)
-		if(T.density)
+		if(!T || T.density)
 			return
 		if(total_plasma <= 0)
 			if(prob(2) && src.owner.owner)
@@ -384,12 +384,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		owner.material.triggerTemp(locate(owner))
 
 /datum/materialProc/molitz_temp
-	var/total_oxygen = 200
+	var/iterations = 100
 
 	execute(var/atom/location, var/temp, var/agent_b=FALSE)
-		if(total_oxygen <= 0) return
+		if(iterations <= 0) return
 		var/turf/target = get_turf(location)
-		if(ON_COOLDOWN(target, "molitz_oxy_generate", 8 SECONDS)) return
+		if(temp != 1500) //Same temp that hitting it sets it too, this is so hitting it ignores cooldown, making it practical to manually farm
+			if(ON_COOLDOWN(target, "molitz_oxy_generate", 8 SECONDS)) return
 
 		var/datum/gas_mixture/air = target.return_air()
 		if(!air) return
@@ -402,21 +403,25 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			var/datum/gas/oxygen_agent_b/trace_gas = payload.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
 			payload.temperature = T0C // Greatly reduce temperature to simulate an endothermic reaction
 
-			// Itr 1: 0.125 Agent B, 10 Oxy
+			// Itr 1: 0.2 Agent B, 1 oxy
 			// Itr 2: 0.0605 Agent B
-			// 0.1855moles/12cells=0.0155moles per cell
-			// At 0.0155 moles per cell it will take 20 iterations for reaction rate to drop below MINIMUM_REACT_QUANTITY
-			// Providing 1.3 minutes of catalyst assuming 4 sec ATMOS for a 12 cell burn chamber
-			trace_gas.moles += min(total_oxygen/1024,0.125)
-			total_oxygen -= min(trace_gas.moles*1024,total_oxygen)
-			animate_flash_color_fill_inherit(location,"#FF0000",4, 2 SECONDS)
+			// Should be 100 iterations to deplete total of 19.099 mols of agent B and 100 oxygen, will take 110 iterations to hit minimum reaction rate whihch is about 7.33 minutes, (this is azruns math not mine dont blame me if wrong)
+
+			animate_flash_color_fill_inherit(location,"#ff0000",4, 2 SECONDS)
+			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, location))
+				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(location))
+			trace_gas.moles += min(iterations/50,0.2)
+			iterations -= 1
+			payload.oxygen = 1
+
+			target.assume_air(payload)
 		else
 			animate_flash_color_fill_inherit(location,"#0000FF",4, 2 SECONDS)
+			payload.oxygen = 10
+			iterations -= 1
 
-		payload.oxygen = min(total_oxygen,10)
-		total_oxygen -= payload.oxygen
+			target.assume_air(payload)
 
-		target.assume_air(payload)
 		return
 
 /datum/materialProc/molitz_temp/agent_b
