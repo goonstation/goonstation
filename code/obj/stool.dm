@@ -284,7 +284,7 @@
 		scoot_sounds = list( 'sound/misc/chair/office/scoot1.ogg', 'sound/misc/chair/office/scoot2.ogg', 'sound/misc/chair/office/scoot3.ogg', 'sound/misc/chair/office/scoot4.ogg', 'sound/misc/chair/office/scoot5.ogg' )
 
 	Move()
-		if(src.buckled_guy.loc != src.loc)
+		if(src.buckled_guy?.loc != src.loc)
 			src.unbuckle()
 		. = ..()
 		if (. && src.buckled_guy)
