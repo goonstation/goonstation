@@ -705,6 +705,8 @@
 			src.fire_standing = SafeGetOverlayImage("fire", 'icons/mob/monkey.dmi', istate, MOB_EFFECT_LAYER)
 		else if (istype(src:mutantrace, /datum/mutantrace/lizard))
 			src.fire_standing = SafeGetOverlayImage("fire", 'icons/mob/lizard.dmi', istate, MOB_EFFECT_LAYER)
+		else if (istype(src:mutantrace, /datum/mutantrace/werewolf))
+			src.fire_standing = SafeGetOverlayImage("fire", 'icons/mob/werewolf.dmi', istate, MOB_EFFECT_LAYER)
 		else
 			src.fire_standing = SafeGetOverlayImage("fire", 'icons/mob/human.dmi', istate, MOB_EFFECT_LAYER)
 
