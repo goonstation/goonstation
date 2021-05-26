@@ -64,7 +64,8 @@
 		"/mob/living/critter/wendigo", // have fun!
 		"/obj/item/artifact/teleport_wand",
 		"/obj/machinery/vehicle/tank/car/blue", // A BRAAAAAAND NEEEEEEW CAAAAAAAAAR!
-		"/obj/item/card/id/dabbing_license"
+		"/obj/item/card/id/dabbing_license",
+		"/obj/item/gun/energy/egun"
 	)
 
 	var/list/veryraretier = list( // very rare tier, 0.2% chance
@@ -130,6 +131,7 @@
 
 		if (prob(src.uses))
 			src.emag_act(null, null) // bye bye!
+			return
 
 		if (roll <= 1) // very rare tier, 0.2% chance
 			P = text2path(pick(veryraretier))
@@ -149,7 +151,7 @@
 			exclamation = "Winner! "
 
 		if (P == null)
-			return
+			P = /obj/item/raw_material/rock
 		var/obj/item/prize = new P
 		prize.loc = src.loc
 		prize.layer += 0.1
