@@ -1,5 +1,12 @@
 
 (t)tue may 25 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Synthflesh/styptic/sulfazdine topical healing capped to 10u at a time.
+(u)Blackrep
+(p)4865
+(e)⚖|balance
+(+)Arc plating small / large power cells no longer changes their capacity or recharge rate.
 (u)Walpvrgis
 (p)4843
 (e)🎨|sprites

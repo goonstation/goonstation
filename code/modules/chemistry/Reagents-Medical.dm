@@ -389,6 +389,8 @@ datum
 				. = ..()
 				if(!volume_passed)
 					return
+				volume_passed = clamp(volume_passed, 0, 10)
+
 				if(method == TOUCH)
 					M.HealDamage("All", volume_passed * 1.5, volume_passed * 1.5)
 					if (isliving(M))
@@ -999,6 +1001,7 @@ datum
 				. = ..()
 				if (!volume_passed)
 					return
+				volume_passed = clamp(volume_passed, 0, 10)
 
 				if (method == TOUCH)
 					M.HealDamage("All", 0, volume_passed)
@@ -1224,6 +1227,7 @@ datum
 					return
 				if(!isliving(M)) // fucking human shitfucks
 					return
+				volume_passed = clamp(volume_passed, 0, 10)
 				if(method == TOUCH)
 					M.HealDamage("All", volume_passed, 0)
 					// M.HealBleeding(volume_passed) // At least implement your stuff properly first, thanks. Styptic also shouldn't be as good as synthflesh for healing bleeding.
