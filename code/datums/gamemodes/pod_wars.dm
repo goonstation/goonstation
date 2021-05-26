@@ -1360,7 +1360,9 @@ ABSTRACT_TYPE(/obj/machinery/macrofab/pod_wars)
 	desc = "A sophisticated machine that fabricates short-range emergency pods from a nearby reserve of supplies."
 	createdObject = /obj/machinery/vehicle/arrival_pod
 	itemName = "emergency pod"
+	sound_volume = 15
 	var/team_num = 0
+
 
 	attack_hand(var/mob/user as mob)
 		if (get_pod_wars_team_num(user) != team_num)
