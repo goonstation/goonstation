@@ -30567,11 +30567,6 @@
 	dir = 10
 	},
 /area/crypt/graveyard)
-"bHg" = (
-/turf/simulated/floor/airless/orangeblack/corner{
-	dir = 4
-	},
-/area/centcom)
 "bHh" = (
 /obj/shrub{
 	dir = 4
@@ -38544,7 +38539,7 @@
 /turf/unsimulated/floor/caution/westeast,
 /area/owlery/staffhall)
 "cdi" = (
-/turf/simulated/floor/airless/orangeblack/corner,
+/turf/unsimulated/floor/orangeblack/corner,
 /area/centcom)
 "cdj" = (
 /obj/machinery/light{
@@ -69968,7 +69963,7 @@
 /obj/landmark/viscontents_spawn{
 	targetZ = 4
 	},
-/turf/simulated/floor/stairs/wide/other{
+/turf/unsimulated/floor/stairs/wide/other{
 	dir = 1
 	},
 /area/centcom/offices{
@@ -145981,7 +145976,7 @@ dmr
 dmw
 dmw
 bwb
-bHg
+dnv
 cdi
 bwb
 dmw
