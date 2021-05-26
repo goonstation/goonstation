@@ -879,7 +879,7 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 		user.lastattacked = src
 
 		//Healing with welding tool
-		if (health < health_max && isweldingtool(W))
+		if (health <= health_max && isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
 			take_damage(-30)
@@ -988,9 +988,8 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 		for(var/datum/mind/mind in to_search)
 			if((istype(mind.current, /mob/dead/observer) || isdead(mind.current)) && mind.current.client && !mind.dnr)
 				//prune puritan trait
-				var/list/trait_list = mind.current?.traitHolder.traits.Copy()
-				trait_list -= trait_list["puritan"]
-				var/success = growclone(mind.current, mind.current.real_name, mind, mind.current?.bioHolder, traits=trait_list)
+				mind.current?.traitHolder.removeTrait("puritan")
+				var/success = growclone(mind.current, mind.current.real_name, mind, mind.current?.bioHolder, traits=mind.current?.traitHolder.traits.Copy())
 				if (success && team)
 					SPAWN_DBG(1)
 						team.equip_player(src.occupant, FALSE)
