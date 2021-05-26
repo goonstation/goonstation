@@ -187,39 +187,42 @@
 	//find a PDA, hide the uplink inside
 	var/loc = ""
 	var/obj/item/device/R = null
-	if (!R && istype(traitor_mob.belt, /obj/item/device/pda2))
+	if (istype(traitor_mob.belt, /obj/item/device/pda2))
 		R = traitor_mob.belt
 		loc = "on your belt"
-	if (!R && istype(traitor_mob.r_store, /obj/item/device/pda2))
+	else if (istype(traitor_mob.r_store, /obj/item/device/pda2))
 		R = traitor_mob.r_store
-		loc = "In your pocket"
-	if (!R && istype(traitor_mob.l_store, /obj/item/device/pda2))
+		loc = "In your right pocket"
+	else if (istype(traitor_mob.l_store, /obj/item/device/pda2))
 		R = traitor_mob.l_store
-		loc = "In your pocket"
-	if (!R && istype(traitor_mob.wear_id, /obj/item/device/pda2))
+		loc = "In your left pocket"
+	else if (istype(traitor_mob.wear_id, /obj/item/device/pda2))
 		R = traitor_mob.wear_id
 		loc = "In your ID slot"
-	if (!R && istype(traitor_mob.l_hand, /obj/item/storage))
+	else if (istype(traitor_mob.l_hand, /obj/item/device/pda2))
+		R = traitor_mob.l_hand
+		loc = "In your left hand"
+	else if (istype(traitor_mob.r_hand, /obj/item/device/pda2))
+		R = traitor_mob.r_hand
+		loc = "In your right hand"
+	else if (istype(traitor_mob.l_hand, /obj/item/storage))
 		var/obj/item/storage/S = traitor_mob.l_hand
 		var/list/L = S.get_contents()
 		for (var/obj/item/device/pda2/foo in L)
 			R = foo
 			loc = "in the [S.name] in your left hand"
-			break
-	if (!R && istype(traitor_mob.r_hand, /obj/item/storage))
+	else if (istype(traitor_mob.r_hand, /obj/item/storage))
 		var/obj/item/storage/S = traitor_mob.r_hand
 		var/list/L = S.get_contents()
 		for (var/obj/item/device/pda2/foo in L)
 			R = foo
 			loc = "in the [S.name] in your right hand"
-			break
-	if (!R && istype(traitor_mob.back, /obj/item/storage))
+	else if (istype(traitor_mob.back, /obj/item/storage))
 		var/obj/item/storage/S = traitor_mob.back
 		var/list/L = S.get_contents()
 		for (var/obj/item/device/pda2/foo in L)
 			R = foo
-			loc = "in the [S.name] in your backpack"
-			break
+			loc = "in the [S.name] on your back"
 
 	if (!R) //They have no PDA. Make one!
 		R = new /obj/item/device/pda2(traitor_mob)
