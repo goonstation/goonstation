@@ -279,7 +279,7 @@
 						SubscribeToProcess()
 						src.is_processing = 1
 				update()
-				playsound(get_turf(src), "sound/misc/handle_click.ogg", 50, 1)
+				playsound(src, "sound/misc/handle_click.ogg", 50, 1)
 				. = TRUE
 			if("togglePump")
 				if (src.mode)
@@ -643,7 +643,7 @@
 			SubscribeToProcess()
 			is_processing = 1
 
-		playsound(get_turf(src), "sound/misc/handle_click.ogg", 50, 1)
+		playsound(src, "sound/misc/handle_click.ogg", 50, 1)
 
 		update()
 		return

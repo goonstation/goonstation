@@ -37,7 +37,7 @@
 		if (!is_incapacitated(MT))
 			boutput(holder.owner, __red("That is moving around far too much to pounce."))
 			return 1
-		playsound(get_turf(holder.owner), "sound/voice/animal/wendigo_roar.ogg", 80, 1)
+		playsound(holder.owner, "sound/voice/animal/wendigo_roar.ogg", 80, 1)
 		disabled = 1
 		SPAWN_DBG(0)
 			var/frenz = rand(10, 20)
@@ -49,7 +49,7 @@
 					holder.owner.set_loc(MT.loc)
 				if (is_incapacitated(holder?.owner))
 					break
-				playsound(get_turf(holder.owner), "sound/voice/animal/wendigo_maul.ogg", 80, 1)
+				playsound(holder.owner, "sound/voice/animal/wendigo_maul.ogg", 80, 1)
 				holder.owner.visible_message("<span class='alert'><b>[holder.owner] [pick("mauls", "claws", "slashes", "tears at", "lacerates", "mangles")] [MT]!</b></span>")
 				holder.owner.set_dir((cardinal))
 				holder.owner.pixel_x = rand(-5, 5)

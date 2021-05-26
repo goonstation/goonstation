@@ -58,7 +58,7 @@
 		interrupt(INTERRUPT_ALWAYS)
 		return
 	if(prob(10) && !M.traitHolder?.hasTrait("claw"))
-		playsound(get_turf(CM), 'sound/machines/claw_machine_fail.ogg', 80, 1)
+		playsound(CM, 'sound/machines/claw_machine_fail.ogg', 80, 1)
 		M.visible_message("<span class='alert'>[M] flubs up and the claw drops [his_or_her(M)] prize!</spawn>")
 		interrupt(INTERRUPT_ALWAYS)
 		return
@@ -77,7 +77,7 @@
 	if(get_dist(M, CM) > 1 || M == null || CM == null)
 		interrupt(INTERRUPT_ALWAYS)
 		return
-	playsound(get_turf(CM), 'sound/machines/capsulebuy.ogg', 80, 1)
+	playsound(CM, 'sound/machines/capsulebuy.ogg', 80, 1)
 	CM.busy = 1
 	CM.icon_state = "claw_playing"
 
@@ -88,7 +88,7 @@
 		return
 	CM.busy = 0
 	CM.icon_state = "claw"
-	playsound(get_turf(CM), 'sound/machines/claw_machine_success.ogg', 80, 1)
+	playsound(CM, 'sound/machines/claw_machine_success.ogg', 80, 1)
 	M.visible_message("<span class='notice'>[M] successfully secures their precious goodie, and it drops into the prize chute with a satisfying <i>plop</i>.</span>")
 	var/obj/item/P = pick(prob(20) ? (prob(33) ? CM.prizes_ultra_rare : CM.prizes_rare) : CM.prizes)
 	P = new P(get_turf(src.M))

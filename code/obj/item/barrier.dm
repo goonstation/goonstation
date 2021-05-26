@@ -45,7 +45,7 @@
 		if (!use_two_handed || setTwoHanded(!src.status))
 			src.status = !src.status
 
-			playsound(get_turf(src), "sparks", 75, 1, -1)
+			playsound(src, "sparks", 75, 1, -1)
 			if (src.status)
 				w_class = W_CLASS_BULKY
 				flags &= ~ONBELT //haha NO
@@ -87,7 +87,7 @@
 
 	attack(mob/M as mob, mob/user as mob)
 		..()
-		playsound(get_turf(src), 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 0.1, 0, 2)
+		playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 0.1, 0, 2)
 
 	dropped(mob/M)
 		..()

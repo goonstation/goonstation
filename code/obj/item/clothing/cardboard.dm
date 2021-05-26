@@ -51,7 +51,7 @@
 				block_vision = 0
 				src.UpdateOverlays(image(src.icon, "eyeholes"), "eyeholes")
 				src.wear_image.overlays += image(src.wear_image_icon, "eyeholes")
-				playsound(get_turf(src), "sound/items/Scissor.ogg", 100, 1)
+				playsound(src, "sound/items/Scissor.ogg", 100, 1)
 				user.visible_message("<span class='notice'>[user] cuts eyeholes out of [src].</span>",\
 				"<span class='notice'>You cut eyeholes out of [src].</span>")
 		else if (istype(W, /obj/item/pen/crayon))

@@ -85,7 +85,7 @@
 				S.satchel.satchel_updateicon()
 				if (S.satchel.contents.len >= S.satchel.maxitems)
 					boutput(H, "<span class='alert'>Your ore scoop's satchel is full!</span>")
-					playsound(get_turf(H), "sound/machines/chime.ogg", 20, 1)
+					playsound(H, "sound/machines/chime.ogg", 20, 1)
 		else if (istype(AM,/obj/machinery/vehicle/))
 			var/obj/machinery/vehicle/V = AM
 			if (istype(V.sec_system,/obj/item/shipcomponent/secondary_system/orescoop))
@@ -915,11 +915,11 @@
 			//But loading a container is more noticable and there should be less
 			if (.)
 				user.visible_message("<b>[user.name]</b> loads [W] into [src].")
-				playsound(get_turf(src), sound_load, 40, 1)
+				playsound(src, sound_load, 40, 1)
 
 		else if (load_reclaim(W, user))
 			boutput(user, "You load [W] into [src].")
-			playsound(get_turf(src), sound_load, 40, 1)
+			playsound(src, sound_load, 40, 1)
 
 		else
 			. = ..()
@@ -1026,7 +1026,7 @@
 					continue
 
 			M.set_loc(src)
-			playsound(get_turf(src), sound_load, 40, 1)
+			playsound(src, sound_load, 40, 1)
 			sleep(0.5)
 			if (user.loc != staystill) break
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")

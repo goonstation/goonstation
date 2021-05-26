@@ -1,4 +1,42 @@
 
+(t)wed may 26 21
+(u)DimWhat
+(p)4888
+(e)|
+(+)Made satchels layer under tails.
+(u)virvatuli
+(e)🎶|sound
+(*)Added six new songs to the random record pool, 3 metal and 3 funky for some more diverse tunes over the radio!
+(t)tue may 25 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Synthflesh/styptic/sulfazdine topical healing capped to 10u at a time.
+(u)Blackrep
+(p)4865
+(e)⚖|balance
+(+)Arc plating small / large power cells no longer changes their capacity or recharge rate.
+(u)Walpvrgis
+(p)4843
+(e)🎨|sprites
+(+)Resprites donut boxes, and various cooking ingredients; check PR for a list and preview images.
+(u)COOLVAPE
+(p)4799
+(e)|
+(+)Added vocal translators as a hidden item in Valuchimp Machines.
+(t)mon may 24 21
+(u)Zonespace
+(p)4851
+(e)🆕|feature
+(+)Getting splashed with Black Powder now gives gunshot residue.
+(u)Arthur Holiday
+(p)4575
+(e)⚖|balance
+(*)The HoS can now unauthorize the armory.
+(t)sun may 23 21
+(u)edwardly
+(p)4773
+(e)🆕|feature
+(+)Sure, use a spoon to eat mashed potatoes, why not?
 (t)sat may 22 21
 (u)Tarmunora
 (*)Swapped out a certain pressure tank by a certain cenote.
