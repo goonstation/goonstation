@@ -359,6 +359,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\gamemodes\mixed.dm"
 #include "code\datums\gamemodes\mixed_rp.dm"
 #include "code\datums\gamemodes\nuclear.dm"
+#include "code\datums\gamemodes\pod_wars.dm"
 #include "code\datums\gamemodes\revolution.dm"
 #include "code\datums\gamemodes\spy.dm"
 #include "code\datums\gamemodes\spy_theft.dm"

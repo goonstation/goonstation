@@ -205,7 +205,7 @@
 				R.trans_to(M, reagents.total_volume/2)
 				src.in_use = 0
 
-			playsound(get_turf(src), 'sound/items/sticker.ogg', 50, 1)
+			playsound(src, 'sound/items/sticker.ogg', 50, 1)
 
 		else
 			if (!borg)
@@ -569,7 +569,7 @@
 				R.trans_to(M, use_volume_adjusted/2)
 			logTheThing("combat", user, M, " automends [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 
-			playsound(get_turf(src), pick(sfx), 50, 1)
+			playsound(src, pick(sfx), 50, 1)
 
 
 

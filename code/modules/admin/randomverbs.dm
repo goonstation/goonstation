@@ -99,6 +99,7 @@
 	if (!msg)
 		return
 	if (src?.holder)
+		M.playsound_local(M, "sound/misc/prayerchime.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 		boutput(Mclient.mob, __blue("You hear a voice in your head... <i>[msg]</i>"))
 
 	logTheThing("admin", src.mob, Mclient.mob, "Subtle Messaged [constructTarget(Mclient.mob,"admin")]: [msg]")

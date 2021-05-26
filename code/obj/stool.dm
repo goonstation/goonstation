@@ -102,7 +102,7 @@
 	proc/toggle_secure(mob/user as mob)
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
-		playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
+		playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
 		src.anchored = !(src.anchored)
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return
@@ -369,7 +369,7 @@
 		to_buckle.set_loc(src.loc)
 
 		to_buckle.set_clothing_icon_dirty()
-		playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
+		playsound(src, "sound/misc/belt_click.ogg", 50, 1)
 		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 
 	unbuckle()
@@ -379,7 +379,7 @@
 			buckled_guy.buckled = null
 			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
-			playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
+			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
 
 	proc/tuck_sheet(var/obj/item/clothing/suit/bedsheet/newSheet as obj, var/mob/user as mob)
 		if (!newSheet || newSheet.cape || (src.Sheet == newSheet && newSheet.loc == src.loc)) // if we weren't provided a new bedsheet, the new bedsheet we got is tied into a cape, or the new bedsheet is actually the one we already have and is still in the same place as us...
@@ -554,7 +554,7 @@
 			return
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "unscrews [src] from" : "secures [src] to"] the floor.")
-		playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
+		playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
 		src.anchored = !(src.anchored)
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return
@@ -722,9 +722,9 @@
 			src.buckledIn = 1
 			to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 		if (has_butt)
-			playsound(get_turf(src), (has_butt.sound_fart ? has_butt.sound_fart : 'sound/voice/farts/fart1.ogg'), 50, 1)
+			playsound(src, (has_butt.sound_fart ? has_butt.sound_fart : 'sound/voice/farts/fart1.ogg'), 50, 1)
 		else
-			playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
+			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
 
 
 	unbuckle()
@@ -753,7 +753,7 @@
 			SPAWN_DBG(0.5 SECONDS)
 				src.buckledIn = 0
 
-		playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
+		playsound(src, "sound/misc/belt_click.ogg", 50, 1)
 
 	ex_act(severity)
 		for (var/mob/M in src.loc)
@@ -1302,7 +1302,7 @@
 	toggle_secure(mob/user as mob)
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
-		playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
+		playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
 		src.anchored = !(src.anchored)
 		return
 

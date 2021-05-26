@@ -127,7 +127,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].")
-			playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
 			src.anchored = !(src.anchored)
 			return
 		else
@@ -218,8 +218,8 @@
 
 /obj/item/instrument/saxophone/attack(mob/M as mob, mob/user as mob)
 	if(ismob(M))
-		playsound(get_turf(src), pick(sounds_punch), 50, 1, -1)
-		playsound(get_turf(src), pick('sound/musical_instruments/saxbonk.ogg', 'sound/musical_instruments/saxbonk2.ogg', 'sound/musical_instruments/saxbonk3.ogg'), 50, 1, -1)
+		playsound(src, pick(sounds_punch), 50, 1, -1)
+		playsound(src, pick('sound/musical_instruments/saxbonk.ogg', 'sound/musical_instruments/saxbonk2.ogg', 'sound/musical_instruments/saxbonk3.ogg'), 50, 1, -1)
 		user.visible_message("<span class='alert'><b>[user] bonks [M] with [src]!</b></span>")
 	else
 		. = ..()
@@ -404,12 +404,12 @@
 		user.take_oxygen_deprivation(155)
 
 		user.u_equip(src) // leaves it in the mob's contents, but takes it out of their hands and off their hud. makes it kinda like swallowing the whistle, it'll still be in them if they gib  :)
-		playsound(get_turf(user), islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
+		playsound(user, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
 		for (var/i=5, i>0, i--)
 			if (!user)
 				break
 			if (prob(75))
-				playsound(get_turf(user), islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
+				playsound(user, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
 			if (i<=1)
 				user.suiciding = 0
 			else
@@ -521,9 +521,9 @@
 			return
 		else
 			S.visible_message("<span class='alert'><b>[S.name]'s skeleton rips itself free upon hearing the song of its people!</b></span>")
-			playsound(get_turf(S), S.gender == "female" ? "sound/voice/screams/female_scream.ogg" : "sound/voice/screams/male_scream.ogg", 50, 0, 0, S.get_age_pitch())
-			playsound(get_turf(S), "sound/effects/bubbles.ogg", 50, 0)
-			playsound(get_turf(S), "sound/impact_sounds/Flesh_Tear_2.ogg", 50, 0)
+			playsound(S, S.gender == "female" ? "sound/voice/screams/female_scream.ogg" : "sound/voice/screams/male_scream.ogg", 50, 0, 0, S.get_age_pitch())
+			playsound(S, "sound/effects/bubbles.ogg", 50, 0)
+			playsound(S, "sound/impact_sounds/Flesh_Tear_2.ogg", 50, 0)
 			var/bdna = null // For forensics (Convair880).
 			var/btype = null
 			if (S.bioHolder.Uid && S.bioHolder.bloodType)
@@ -563,7 +563,7 @@
 
 	attack(mob/M as mob, mob/user as mob)
 		src.add_fingerprint(user)
-		playsound(get_turf(src), "swing_hit", 50, 1, -1)
+		playsound(src, "swing_hit", 50, 1, -1)
 		..()
 		satanic_home_run(M, user)
 
