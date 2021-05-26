@@ -40,6 +40,12 @@
 			. =  "Landmark: Restricted"
 		else if (T.z == 3)
 			. =  "Landmark: Debris Field"
+		else if (T.z == 5)
+			#ifdef UNDERWATER_MAP
+			. =  "Landmark: Trench"
+			#else
+			. =  "Landmark: Asteroid Field"
+			#endif
 		return
 
 	proc/show_HTML(var/mob/user)

@@ -221,7 +221,7 @@
 			return 1
 
 		my_mob.visible_message("<span class='alert'><b>[holder.owner] raises his hand into the air wide open!</b></span>")
-		playsound(get_turf(sword), 'sound/effects/gust.ogg', 70, 1)
+		playsound(sword, 'sound/effects/gust.ogg', 70, 1)
 
 		if (ismob(sword.loc))
 			if(sword.loc == my_mob)
@@ -243,7 +243,7 @@
 		for(var/i=0, i<100, i++)
 			step_to(sword, my_mob)
 			if (get_dist(sword,my_mob) <= 1)
-				playsound(get_turf(my_mob), 'sound/effects/throw.ogg', 50, 1)
+				playsound(my_mob, 'sound/effects/throw.ogg', 50, 1)
 				sword.set_loc(get_turf(my_mob))
 				if (my_mob.put_in_hand(sword))
 					my_mob.visible_message("<span class='alert'><b>[my_mob] catches the [sword]!</b></span>")
@@ -303,7 +303,7 @@
 
 		var/mob/owner_mob = holder.owner
 		owner_mob.visible_message("<span class='alert'><b>[holder.owner] thrusts the palm of his hand forward, releasing an overwhelming gust of wind!</b></span>")
-		playsound(get_turf(holder.owner), 'sound/effects/gust.ogg', 50, 1)
+		playsound(holder.owner, 'sound/effects/gust.ogg', 50, 1)
 		var/increment_value = (end_angle - start_angle) / (num_projectiles - 1)
 		var/current_angle = start_angle
 		var/i
@@ -599,7 +599,7 @@
 			M.take_oxygen_deprivation(-15)
 			M.losebreath = max(0, M.losebreath - 10)
 			M.visible_message("<span class='alert'>Some of [M]'s wounds slowly fade away!</span>", "<span class='alert'>Your wounds begin to fade away.</span>")
-			playsound(get_turf(M), 'sound/items/mender.ogg', 50, 1)
+			playsound(M, 'sound/items/mender.ogg', 50, 1)
 		else
 			..()
 			boutput(M, "<span class='alert'>You don't have any lingering wounds to heal.</span>")

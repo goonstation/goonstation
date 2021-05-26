@@ -1057,7 +1057,7 @@
 				if (H.a_intent == INTENT_HARM && (H.job == "Chef" || H.job == "Sous-Chef") && H.bioHolder?.HasEffect("accent_swedish"))
 					src.visible_message("<span class='alert'><b>[H] hits the [src] with [W]!<b></span>")
 					src.visible_message("<span class='alert'>The [src] barks at [H]!</span>")
-					playsound(get_turf(src), "sound/voice/animal/dogbark.ogg", 40, 1)
+					playsound(src, "sound/voice/animal/dogbark.ogg", 40, 1)
 					SPAWN_DBG(0.75 SECONDS)
 						if (src && H)
 							src.visible_message("<span class='alert'>The [src] takes a bite out of [H]!</span>")
@@ -1196,7 +1196,15 @@
 	initial_reagents = list("sugar" = 20)
 	food_effects = list("food_energized")
 	var/can_add_frosting = TRUE
-	var/list/styles = list("icing", "sprinkles")
+	var/static/list/frosting_styles = list(
+	"icing" = "icing",
+	"sprinkles" = "sprinkles",
+	"zigzags" = "zigzags",
+	"center fill" = "center",
+	"half and half icing" = "half",
+	"dipped icing"= "dipped",
+	"heart" = "heart",
+	"star" = "star")
 	var/style_step = 1
 
 	heal(var/mob/M)
@@ -1207,6 +1215,14 @@
 		else
 			..()
 
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/reagent_containers/food/snacks/plant/coconutmeat)) //currently we can only put coconut on top of donuts
+			user.u_equip(W)
+			qdel(W)
+			src.UpdateOverlays(src.SafeGetOverlayImage('icons/obj/foodNdrink/donuts.dmi', "coconut", src.layer + 0.1), "coconut") //cosmetic only; does not count towards our two frosting styles per donut
+		else
+			. = ..()
+
 	proc/add_frosting(var/obj/item/reagent_containers/food/drinks/drinkingglass/icing/tube, var/mob/user)
 		if (!src.can_add_frosting)
 			user.show_text("You feel like adding your own frosting to [src] would ruin it somehow.", "red")
@@ -1216,24 +1232,27 @@
 			user.show_text("The [tube] isn't full enough to add frosting.", "red")
 			return
 
-		if (src.style_step > length(src.styles))
+		if (src.style_step > 2) // only allow up to two frosting types on a single donut
 			user.show_text("You can't add anymore frosting.", "red")
 			return
+
+		var/frosting_type = null
+		frosting_type = input("Which frosting style would you like?", "Frosting Style", null) as null|anything in frosting_styles
+		if(frosting_type && (get_dist(src, user) <= 1))
+			frosting_type = src.frosting_styles[frosting_type]
+			var/datum/color/average = tube.reagents.get_average_color()
+			var/image/frosting_overlay = new(src.icon, frosting_type)
+			frosting_overlay.color = average.to_rgba()
+			src.UpdateOverlays(frosting_overlay, "frosting[src.style_step]")
+			user.show_text("You add some frosting to [src]", "red")
+			src.style_step += 1
+			tube.reagents.trans_to(src, 15)
+			JOB_XP(user, "Chef", 1)
 
 		// When a user also fills the donut with a syringe it can get a bit crowded in the donut.
 		if (src.reagents.is_full())
 			user.show_text("It feels like adding anything more to [src] would overfill it.", "red")
 			return
-
-		var/style = src.styles[src.style_step]
-
-		var/datum/color/average_color = tube.reagents.get_average_color()
-		var/image/overlay = new(src.icon, style)
-		overlay.color = average_color.to_rgba()
-		src.UpdateOverlays(overlay, style)
-		tube.reagents.trans_to(src, 15)
-		user.show_text("You add some [style] to [src]", "red")
-		src.style_step += 1
 
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/reagent_containers/food/drinks/drinkingglass/icing))
@@ -1887,6 +1906,7 @@
 	amount = 5
 	heal_amt = 1
 	needfork = 1
+	needspoon = 1
 	food_color = "#FFFFFF"
 	initial_volume = 50
 	initial_reagents = list("mashedpotatoes"=25)
@@ -1899,6 +1919,7 @@
 	amount = 5
 	heal_amt = 1
 	needfork = 1
+	needspoon = 1
 	food_color = "#FF6699"
 	food_effects = list("food_hp_up_big")
 

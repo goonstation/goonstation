@@ -1,4 +1,138 @@
 
+(t)wed may 26 21
+(u)virvatuli
+(e)🎶|sound
+(*)Added six new songs to the random record pool, 3 metal and 3 funky for some more diverse tunes over the radio!
+(t)tue may 25 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Synthflesh/styptic/sulfazdine topical healing capped to 10u at a time.
+(u)Blackrep
+(p)4865
+(e)⚖|balance
+(+)Arc plating small / large power cells no longer changes their capacity or recharge rate.
+(u)Walpvrgis
+(p)4843
+(e)🎨|sprites
+(+)Resprites donut boxes, and various cooking ingredients; check PR for a list and preview images.
+(u)COOLVAPE
+(p)4799
+(e)|
+(+)Added vocal translators as a hidden item in Valuchimp Machines.
+(t)mon may 24 21
+(u)Zonespace
+(p)4851
+(e)🆕|feature
+(+)Getting splashed with Black Powder now gives gunshot residue.
+(u)Arthur Holiday
+(p)4575
+(e)⚖|balance
+(*)The HoS can now unauthorize the armory.
+(t)sun may 23 21
+(u)edwardly
+(p)4773
+(e)🆕|feature
+(+)Sure, use a spoon to eat mashed potatoes, why not?
+(t)sat may 22 21
+(u)Tarmunora
+(*)Swapped out a certain pressure tank by a certain cenote.
+(u)TDHooligan
+(p)4490
+(e)⚖|balance
+(+)Increased frequency of gene strains when infusing with the PlantMaster.
+(u)Disturbherb
+(p)4819
+(e)🎨|sprites
+(*)Added googly eyes to the game, and you can buy them from a certain trader! 🤡
+(u)edwardly
+(p)4821
+(e)🐛|bug
+(+)duckbots, buttbots, chefbots, etc, can be contained within a crate and won't wander out of them
+(u)Azrun
+(p)4803
+(e)🐛|bug
+(+)Fittings for atmos pipes re-adjusted to properly allow for rods when severely damaged.
+(t)fri may 21 21
+(u)edwardly
+(p)4778
+(e)|
+(+)Include seconds in Cryosleep countdown so progress can be estimated below 1 minute.
+(u)kyle
+(p)4768
+(e)⚖|balance
+(+)Poltergeists now need to be near an item to throw it telekinetically. Otherwise you only can toss it one tile.
+(u)112358sam
+(p)4810
+(e)📄|tgui
+(+)Changes genetek combine to check genes to combine.
+(t)wed may 19 21
+(u)kyle
+(e)⚖|balance
+(*)Changed the burning status effect so that now the burning state will decrease in intesnity as duration of the statuseffect approaches zero. This slightly changes the way burning damage is calculated. Edit - retweaked a bit
+(u)pali
+(e)🦾🤖|
+(+)Cyborgs can now *flex if they have heavy arms.
+(u)Blackrep
+(p)4772
+(e)⚖🐛|balance, bug
+(+)Fixed a bug that unintentionally nerfed a matsci space suit's ranged protection.
+(+)Buffed the melee and ranged protection of matsci space suits based on material used.
+(u)Sartorius7
+(p)4784
+(e)|
+(+)More possible gifts from ducks and santa.
+(u)Mordent
+(p)4793
+(e)🐛|bug
+(*)Cyborgs now correctly show their active upgrades (e.g. shields, propulsion) when they are toggled on/off.
+(t)tue may 18 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Migrate 1/4 of spacesuit slowdown to the helmet
+(+)Also do it to EOD and riot armour
+(+)And welding masks don't count as space helmets
+(+)Also made many many hats that are not space helmets no longer count as spacewear
+(u)Mordent
+(p)4779
+(e)⚖🎨|balance, sprites
+(*)Cyborg treads reduce effect of heavier cyborg parts on the cyborg's speed.
+(u)Zonespace
+(p)4745
+(e)🆕|feature
+(*)C.A.R.L., the Syndicate merchant, now sells Voice Changers.
+(*)Part of C.A.R.L.'s inventory is now random.
+(u)Yellow-Mushroom
+(p)4735
+(e)🆕🎨|feature, sprites
+(*)Kudzu people organs are now synthetic
+(*)New infusions to allow for an easier time coming across specific synthorgan plants
+(+)Addition of the synthetic version of appendixes, intestines, kidneys, livers, lungs, pancreata, spleens, and stomachs
+(+)Addition of crops for all the new synth organs
+(u)edwardly
+(p)4780
+(e)🐛|bug
+(+)Fix guardbuddy logic so they will eventually stop trying to arrest you if there's more than one of them.
+(u)Flaborized
+(p)4761
+(e)🎨|sprites
+(+)Resprited plating.
+(u)kyle
+(e)⚖|balance
+(*)Weapon power cells can now be swapped while moving. Still uses the timed action bar though.
+(t)mon may 17 21
+(u)Mordent
+(p)4756
+(e)⚖🐛|balance, bug
+(*)Cyborg shield upgrades have been pretty heavily reduced in effectiveness, especially against higher-damage weapons. They no longer reflect projectiles.
+(*)Drain rate of cyborg force shield upgrade reduced by 60% (250 to 100)
+(u)112358sam
+(p)4770
+(e)|
+(+)Added the names "Trench" and "Asteroid Field" to the landmarks the GPS device and app can report.
+(u)Pali and DimWhat
+(p)4763
+(e)🎨|sprites
+(+)Made off station space suits have an NT on their back instead of a 13.
 (t)sun may 16 21
 (u)Hans
 (p)4727

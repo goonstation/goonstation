@@ -232,15 +232,15 @@
 				if (src.uses_electricity != 0)
 					user.visible_message("<span class='alert'><b>[user]</b> fumbles with the [src.name] and accidentally stuns [himself_or_herself(user)]!</span>")
 					flick(flick_baton_active, src)
-					playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_3.ogg", 50, 1, -1)
+					playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 50, 1, -1)
 				else
 					user.visible_message("<span class='alert'><b>[user]</b> swings the [src.name] in the wrong way and accidentally hits [himself_or_herself(user)]!</span>")
-					playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1, -1)
+					playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1, -1)
 					random_brute_damage(user, 2 * src.force)
 
 			if ("failed_stun")
 				user.visible_message("<span class='alert'><B>[victim] has been prodded with the [src.name] by [user]! Luckily it was off.</B></span>")
-				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1, -1)
+				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1, -1)
 				logTheThing("combat", user, victim, "unsuccessfully tries to stun [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 
 				if (src.uses_electricity && src.status == 1 && (src.cell && istype(src.cell) && (src.cell.charge < src.cost_normal)))
@@ -250,7 +250,7 @@
 
 			if ("failed_harm")
 				user.visible_message("<span class='alert'><B>[user] has attempted to beat [victim] with the [src.name] but held it wrong!</B></span>")
-				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1, -1)
+				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1, -1)
 				logTheThing("combat", user, victim, "unsuccessfully tries to beat [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 
 			if ("stun", "stun_classic")
@@ -258,14 +258,14 @@
 				logTheThing("combat", user, victim, "stuns [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 				JOB_XP(victim, "Clown", 3)
 				if (type == "stun_classic")
-					playsound(get_turf(src), "swing_hit", 50, 1, -1)
+					playsound(src, "swing_hit", 50, 1, -1)
 				else
 					flick(flick_baton_active, src)
-					playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_3.ogg", 50, 1, -1)
+					playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 50, 1, -1)
 
 			if ("harm_classic")
 				user.visible_message("<span class='alert'><B>[victim] has been beaten with the [src.name] by [user]!</B></span>")
-				playsound(get_turf(src), "swing_hit", 50, 1, -1)
+				playsound(src, "swing_hit", 50, 1, -1)
 				logTheThing("combat", user, victim, "beats [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 
 			else
@@ -338,10 +338,10 @@
 
 		if (src.status)
 			boutput(user, "<span class='notice'>The [src.name] is now on.</span>")
-			playsound(get_turf(src), "sparks", 75, 1, -1)
+			playsound(src, "sparks", 75, 1, -1)
 		else
 			boutput(user, "<span class='notice'>The [src.name] is now off.</span>")
-			playsound(get_turf(src), "sparks", 75, 1, -1)
+			playsound(src, "sparks", 75, 1, -1)
 
 		src.update_icon()
 		user.update_inhands()
@@ -370,14 +370,14 @@
 					if (src.instant_harmbaton_stun != 0)
 						src.do_stun(user, M, "harm_classic", 2)
 					else
-						playsound(get_turf(src), "swing_hit", 50, 1, -1)
+						playsound(src, "swing_hit", 50, 1, -1)
 						..() // Parent handles attack log entry and stamina drain.
 				else
 					if (src.status == 0 || (src.status != 0 && src.can_stun() == 0))
 						if (src.instant_harmbaton_stun != 0)
 							src.do_stun(user, M, "harm_classic", 2)
 						else
-							playsound(get_turf(src), "swing_hit", 50, 1, -1)
+							playsound(src, "swing_hit", 50, 1, -1)
 							..()
 					else
 						src.do_stun(user, M, "failed_harm", 1)
@@ -566,7 +566,7 @@
 					src.status = 0
 					src.w_class = W_CLASS_BULKY
 					src.force = 7
-					playsound(get_turf(src), "sound/misc/lightswitch.ogg", 75, 1, -1)
+					playsound(src, "sound/misc/lightswitch.ogg", 75, 1, -1)
 					boutput(user, "<span class='notice'>The [src.name] is now open and unpowered.</span>")
 					src.update_icon()
 					user.update_inhands()
@@ -579,22 +579,22 @@
 				boutput(user, "<span class='notice'>The [src.name] is now open and on.</span>")
 				src.w_class = W_CLASS_BULKY
 				src.force = 7
-				playsound(get_turf(src), "sparks", 75, 1, -1)
+				playsound(src, "sparks", 75, 1, -1)
 			if (OPEN_AND_ON)		//move to open/off state
 				src.state = OPEN_AND_OFF
 				src.status = 0
 				src.w_class = W_CLASS_BULKY
 				src.force = 7
-				playsound(get_turf(src), "sound/misc/lightswitch.ogg", 75, 1, -1)
+				playsound(src, "sound/misc/lightswitch.ogg", 75, 1, -1)
 				boutput(user, "<span class='notice'>The [src.name] is now open and unpowered.</span>")
-				// playsound(get_turf(src), "sparks", 75, 1, -1)
+				// playsound(src, "sparks", 75, 1, -1)
 			if (OPEN_AND_OFF)		//move to closed/off state
 				src.state = CLOSED_AND_OFF
 				src.status = 0
 				src.w_class = W_CLASS_SMALL
 				src.force = 1
 				boutput(user, "<span class='notice'>The [src.name] is now closed.</span>")
-				playsound(get_turf(src), "sparks", 75, 1, -1)
+				playsound(src, "sparks", 75, 1, -1)
 
 		src.update_icon()
 		user.update_inhands()

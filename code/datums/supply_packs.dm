@@ -863,7 +863,7 @@
 	desc = "Turn Cargo into a microbrewery."
 	contains = list(/obj/reagent_dispensers/still,
 					/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher = 2,
-					/obj/item/reagent_containers/food/drinks/bottle = 6)
+					/obj/item/reagent_containers/food/drinks/bottle/soda = 6)
 	cost = 5000
 	containertype = /obj/storage/crate/wooden
 	containername = "Home Distillery Kit"

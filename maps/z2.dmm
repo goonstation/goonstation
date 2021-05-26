@@ -33867,7 +33867,7 @@
 /turf/unsimulated/floor/caution/corner/nw,
 /area/crypt/sigma/lab)
 "bQd" = (
-/obj/machinery/atmospherics/pipe/tank/oxygen_agent_b{
+/obj/machinery/atmospherics/pipe/tank/rad_particles{
 	desc = "A large vessel containing an unknown pressurized gas.";
 	name = "Unidentified Gas Tank"
 	},
@@ -46032,7 +46032,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/south)
 "cwE" = (
-/obj/racist_button{
+/obj/death_button{
 	pixel_x = -15
 	},
 /obj/map/light/lava,
@@ -69237,7 +69237,7 @@
 /obj/table/wood/auto/desk{
 	icon_state = "5"
 	},
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	desc = "It's just water.";
 	dir = 8;
 	icon_state = "bottle-clear";
@@ -71789,7 +71789,7 @@
 /area/centcom/lounge)
 "dHf" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/drinks/bottle/xmas,
+/obj/item/reagent_containers/food/drinks/bottle/soda/xmas,
 /obj/item/reagent_containers/food/snacks/pickle,
 /turf/unsimulated/floor/specialroom/medbay,
 /area/centcom/lounge)
@@ -74039,7 +74039,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_x = 4;
 	pixel_y = 2
 	},
@@ -78219,7 +78219,7 @@
 	desc = "It's full of a bunch of old nerds. Looks like they're hanging out on the NSS Destiny and NSS Clarion.  Geeze, those really must be old!";
 	name = "old photo album"
 	},
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	desc = "It looks well loved.";
 	name = "water bottle";
 	pixel_x = -6;

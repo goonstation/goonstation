@@ -366,6 +366,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 
 	initializeBioholder()
 		bioHolder.mobAppearance.customization_second = "Tramp"
+		bioHolder.mobAppearance.customization_third = "Long Beard"
 		bioHolder.mobAppearance.underwear = "briefs"
 		bioHolder.age = 3500
 		. = ..()

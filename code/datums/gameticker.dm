@@ -117,7 +117,12 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		if("random","secret") src.mode = config.pick_random_mode()
 		if("action") src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
 		if("intrigue") src.mode = config.pick_mode(pick("mixed_rp", "traitor","changeling","vampire","conspiracy","spy_theft", prob(50); "extended"))
+		if("pod_wars") src.mode = config.pick_mode("pod_wars")
 		else src.mode = config.pick_mode(master_mode)
+
+#if defined(MAP_OVERRIDE_POD_WARS)
+	src.mode = config.pick_mode("pod_wars")
+#endif
 
 	if(hide_mode)
 		#ifdef RP_MODE
@@ -570,7 +575,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	boutput(world, score_tracker.escapee_facts())
 	boutput(world, score_tracker.heisenhat_stats())
-
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] ai law display")
 	boutput(world, "<b>AIs and Cyborgs had the following laws at the end of the game:</b><br>[ticker.centralized_ai_laws.format_for_logs()]")
 
@@ -603,10 +607,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	// DO THE PERSISTENT_BANK STUFF
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] processing spacebux updates")
-
-	var/escape_possible = 1
-	if (istype(mode, /datum/game_mode/blob) || istype(mode, /datum/game_mode/nuclear) || istype(mode, /datum/game_mode/revolution))
-		escape_possible = 0
 
 	var/time = world.time
 
@@ -668,7 +668,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 					var/mob/dead/aieye/E = player
 					player_loses_held_item = isdead(E.mainframe)
 
-			if (!escape_possible)
+			if (!mode.escape_possible)
 				player_body_escaped = 1
 				if (istype(mode, /datum/game_mode/nuclear)) //bleh the nuke thing kills everyone
 					player_loses_held_item = 0

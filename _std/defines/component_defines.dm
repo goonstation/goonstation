@@ -160,6 +160,10 @@
 /// When a Life tick occurs
 #define COMSIG_LIVING_LIFE_TICK "human_life_tick"
 
+// ---- mob property signals ----
+/// When invisibility of a mob gets updated (old_value)
+#define COMSIG_MOB_PROP_INVISIBILITY "mob_prop_invis"
+
 // ---- attack_X signals ----
 
 /// Attacking wiht an item in-hand

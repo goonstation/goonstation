@@ -14,6 +14,16 @@
 			donor.contract_disease(failure_disease,null,null,1)
 		return 1
 
+/obj/item/organ/appendix/synth
+	name = "synthappendix"
+	organ_name = "synthappendix"
+	icon_state = "plant"
+	desc = "A plant-based alternative to the normal appendix..."
+	synthetic = 1
+	New()
+		..()
+		src.icon_state = pick("plant_appendix", "plant_appendix_bloom")
+
 /obj/item/organ/appendix/cyber
 	name = "cyberappendix"
 	desc = "A fancy robotic appendix to replace one that someone's lost!"

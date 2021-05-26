@@ -127,7 +127,6 @@
 	/// Obey the threat threshold. Otherwise, just cuff em
 	var/warn_minor_crime = 0
 
-	var/added_to_records = FALSE
 	/// Set a bot to guard an area, and they'll go there and mill around
 	var/area/guard_area
 	/// Arrest anyone who arent security / heads if they're in this area?
@@ -934,14 +933,11 @@
 		if(istype(perp.mutantrace, /datum/mutantrace/abomination))
 			threatcount += 5
 
-		for (var/datum/data/record/R as anything in data_core.security)
-			if (R.fields["name"] != perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
-				if(!added_to_records)
-					threatcount += 5
-			else if ((R.fields["name"] == perp.name && perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird")))
-				if(!added_to_records)
+		if(perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
+			threatcount += 5
+			for (var/datum/data/record/R as anything in data_core.security)
+				if (R.fields["name"] == perp.name)
 					threatcount -= 5
-					added_to_records = TRUE
 
 		//Agent cards lower threat level
 		if((istype(perp.wear_id, /obj/item/card/id/syndicate)))
@@ -1220,7 +1216,7 @@
 				for(var/j in 1 to rand(2,5))
 					qbert += "[pick("!","?")]"
 				src.speak("[qbert]")
-		playsound(get_turf(src), say_thing, 50, 0, 0, 1)
+		playsound(src, say_thing, 50, 0, 0, 1)
 		ON_COOLDOWN(src, "[SECBOT_LASTTARGET_COOLDOWN]-[src.target?.name]", src.last_target_cooldown)
 
 //secbot handcuff bar thing

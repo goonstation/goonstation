@@ -202,7 +202,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Glass Bottle"
 	item_paths = list("CRY-1")
 	item_amounts = list(1)
-	item_outputs = list(/obj/item/reagent_containers/food/drinks/bottle)
+	item_outputs = list(/obj/item/reagent_containers/food/drinks/bottle/soda)
 	time = 4 SECONDS
 	create = 1
 	category = "Miscellaneous"
@@ -1181,7 +1181,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Cyborg Treads"
 	item_paths = list("MET-2","CON-1")
 	item_amounts = list(12,6)
-	item_outputs = list(/obj/item/parts/robot_parts/leg/left/treads, /obj/item/parts/robot_parts/leg/right/treads)//list(/obj/item/parts/robot_parts/leg/treads)
+	item_outputs = list(/obj/item/parts/robot_parts/leg/left/treads, /obj/item/parts/robot_parts/leg/right/treads)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
@@ -2224,6 +2224,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/scrub/pink)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/medical_backpack
+	name = "Medical Backpack"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/storage/backpack/medic)
 	time = 5 SECONDS
 	create = 1
 	category = "Clothing"

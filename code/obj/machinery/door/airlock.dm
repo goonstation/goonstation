@@ -742,7 +742,7 @@ About the new airlock wires panel:
 */
 /obj/machinery/door/airlock/proc/play_deny()
 	play_animation("deny")
-	playsound(get_turf(src), src.sound_deny_temp, 100, 0)
+	playsound(src, src.sound_deny_temp, 100, 0)
 
 /obj/machinery/door/airlock/proc/try_pulse(var/wire_color, mob/user)
 	if (!user.find_tool_in_hand(TOOL_PULSING))
@@ -1322,7 +1322,7 @@ About the new airlock wires panel:
 				boutput(user, "<span class='notice'>[bicon(C)] Regular electrical response received from access panel.</span>")
 		return
 
-	if (!issilicon(user))
+	if (!issilicon(user) && IN_RANGE(src, user, 1))
 		if (src.isElectrified())
 			if(src.shock(user, 75))
 				return

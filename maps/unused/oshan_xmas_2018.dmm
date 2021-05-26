@@ -10780,7 +10780,7 @@
 	pixel_y = 5
 	},
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -14707,9 +14707,9 @@
 /obj/storage/crate,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/glass/beaker/large,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/decal/garland{
@@ -14722,7 +14722,7 @@
 "aFP" = (
 /obj/storage/secure/closet/research/chemical,
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /obj/decal/garland{
 	dir = 6;
@@ -20675,7 +20675,7 @@
 /area/station/engine/inner)
 "aTm" = (
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
@@ -20687,7 +20687,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /turf/simulated/floor/yellow/checker{
 	icon_state = "yellowchecker";
@@ -26412,11 +26412,11 @@
 /obj/item/reagent_containers/glass/bottle,
 /obj/item/reagent_containers/glass/bottle,
 /obj/item/reagent_containers/glass/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
@@ -31905,7 +31905,7 @@
 "bup" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -31918,7 +31918,7 @@
 "buq" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/security{
-	
+
 	},
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -31931,7 +31931,7 @@
 "bur" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /obj/machinery/light/incandescent/warm,
 /obj/decal/xmas_lights{
@@ -31945,7 +31945,7 @@
 "bus" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -32692,7 +32692,7 @@
 	pixel_x = 6;
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/food/drinks/bottle/xmas{
+/obj/item/reagent_containers/food/drinks/bottle/soda/xmas{
 	pixel_x = -3;
 	pixel_y = 4
 	},
@@ -39194,7 +39194,7 @@
 	pixel_y = 4
 	},
 /obj/machinery/light/incandescent/warm,
-/obj/item/reagent_containers/food/drinks/bottle/xmas,
+/obj/item/reagent_containers/food/drinks/bottle/soda/xmas,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "bLm" = (
@@ -39366,10 +39366,7 @@
 /area/station/crew_quarters/radio/lab)
 "bLG" = (
 /obj/storage/secure/closet/personal,
-/obj/item/clothing/under/gimmick/cosby{
-	desc = "A colourful winter jumper.";
-	name = "comfy sweater"
-	},
+/obj/item/clothing/under/gimmick/cosby,
 /obj/item/device/microphone,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -44130,7 +44127,7 @@
 /area/station/security/brig)
 "bXr" = (
 /obj/item/device/radio/intercom/security{
-	
+
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)

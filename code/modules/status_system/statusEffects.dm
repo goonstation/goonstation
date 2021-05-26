@@ -601,11 +601,11 @@
 
 		proc/getStage()
 			. = 1
-			if(counter < BURNING_LV2)
+			if(min(duration*2, counter) < BURNING_LV2)
 				return
-			else if (counter >= BURNING_LV2 && counter < BURNING_LV3)
+			else if (min(duration*2, counter) >= BURNING_LV2 && min(duration*2, counter) < BURNING_LV3)
 				return 2
-			else if (counter >= BURNING_LV3)
+			else if (min(duration*2, counter) >= BURNING_LV3)
 				return 3
 
 		proc/switchStage(var/toStage)
@@ -864,7 +864,7 @@
 			counter += timePassed
 			if (counter >= count && owner && !owner.hasStatus(list("weakened", "paralysis")) )
 				counter -= count
-				playsound(get_turf(owner), sound, 17, 1, 0.4, 1.6)
+				playsound(owner, sound, 17, 1, 0.4, 1.6)
 				violent_twitch(owner)
 			. = ..(timePassed)
 
@@ -885,7 +885,7 @@
 			counter += timePassed
 			if (counter >= count && owner)
 				counter -= count
-				playsound(get_turf(owner), sound, 17, 1, 0.4, 1.6)
+				playsound(owner, sound, 17, 1, 0.4, 1.6)
 				violent_twitch(owner)
 			. = ..(timePassed)
 
