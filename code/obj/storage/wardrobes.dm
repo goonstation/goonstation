@@ -156,7 +156,10 @@
 	/obj/item/clothing/head/that = 2,
 	/obj/item/clothing/under/rank/bartender = 2,
 	/obj/item/clothing/suit/wcoat = 2,
-	/obj/item/clothing/shoes/black = 2)
+	/obj/item/clothing/shoes/black = 2,
+	/obj/item/clothing/under/gimmick/dinerdress_mint,
+	/obj/item/clothing/under/gimmick/dinerdress_pink,
+	/obj/item/clothing/head/waitresshat = 2)
 
 /obj/storage/closet/wardrobe/yellow/engineering
 	name = "\improper Engineering wardrobe"

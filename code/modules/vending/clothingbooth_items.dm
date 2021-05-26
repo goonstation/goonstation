@@ -376,6 +376,19 @@
 	category = "Formal"
 	cost = PAY_TRADESMAN/3
 
+/datum/clothingbooth_item/dinerdress_mint
+	name = "Mint Diner Waitress's Dress"
+	path = /obj/item/clothing/under/gimmick/dinerdress_mint
+	slot = SLOT_W_UNIFORM
+	category = "Formal"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/dinerdress_pink
+	name = "Pink Diner Waitress's Dress"
+	path = /obj/item/clothing/under/gimmick/dinerdress_pink
+	slot = SLOT_W_UNIFORM
+	category = "Formal"
+	cost = PAY_TRADESMAN/3
 /datum/clothingbooth_item/dress
 	name = "Little Black Dress"
 	path = /obj/item/clothing/under/misc/dress
@@ -624,6 +637,34 @@
 	category = "Shoes"
 	cost = PAY_TRADESMAN/5
 
+/datum/clothingbooth_item/mjblack
+	name = "Black Mary Janes"
+	path = /obj/item/clothing/shoes/mjblack
+	slot = SLOT_SHOES
+	category = "Shoes"
+	cost = PAY_TRADESMAN/5
+
+/datum/clothingbooth_item/mjbrown
+	name = "Brown Mary Janes"
+	path = /obj/item/clothing/shoes/mjbrown
+	slot = SLOT_SHOES
+	category = "Shoes"
+	cost = PAY_TRADESMAN/5
+
+/datum/clothingbooth_item/mjnavy
+	name = "Navy Mary Janes"
+	path = /obj/item/clothing/shoes/mjnavy
+	slot = SLOT_SHOES
+	category = "Shoes"
+	cost = PAY_TRADESMAN/5
+
+/datum/clothingbooth_item/mjwhite
+	name = "White Mary Janes"
+	path = /obj/item/clothing/shoes/mjwhite
+	slot = SLOT_SHOES
+	category = "Shoes"
+	cost = PAY_TRADESMAN/5
+
 //Headwear
 
 /datum/clothingbooth_item/catears_white
@@ -796,6 +837,13 @@
 	slot = SLOT_HEAD
 	category = "Headwear"
 	cost = PAY_TRADESMAN
+
+/datum/clothingbooth_item/waitresshat
+	name = "Diner Waitress's Hat"
+	path = /obj/item/clothing/head/waitresshat
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN/5
 
 //Sci-Fi
 

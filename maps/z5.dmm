@@ -439,7 +439,7 @@
 "iw" = (/obj/machinery/chem_dispenser/soda,/obj/decal/cleanable/dirt,/turf/simulated/floor/scorched2,/area/diner/kitchen)
 "ix" = (/obj/machinery/chem_dispenser/alcohol,/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,/obj/decal/cleanable/dirt,/turf/simulated/floor/scorched2,/area/diner/kitchen)
 "iy" = (/obj/machinery/vending/kitchen,/obj/decal/cleanable/dirt,/turf/simulated/floor/scorched2,/area/diner/kitchen)
-"iz" = (/obj/item/kitchen/rollingpin,/obj/storage/secure/closet/civilian/kitchen,/obj/decal/cleanable/dirt,/turf/simulated/floor/damaged2,/area/diner/kitchen)
+"iz" = (/obj/item/kitchen/rollingpin,/obj/item/clothing/under/gimmick/dinerdress_mint,/obj/item/clothing/under/gimmick/dinerdress_pink,/obj/item/clothing/hat/waitresshat,/obj/item/clothing/hat/waitresshat,/obj/item/clothing/shoes/mjblack,/obj/item/clothing/shoes/mjblack,/obj/storage/secure/closet/civilian/kitchen,/obj/decal/cleanable/dirt,/turf/simulated/floor/damaged2,/area/diner/kitchen)
 "iA" = (/obj/table/reinforced/auto,/obj/item/storage/box/glassbox,/obj/item/storage/box/cutlery,/obj/machinery/light/small{dir = 1; status = 2},/obj/item/reagent_containers/food/snacks/ingredient/pancake_batter,/obj/item/kitchen/rollingpin,/obj/decal/cleanable/dirt,/turf/simulated/floor/scorched2,/area/diner/kitchen)
 "iB" = (/obj/submachine/foodprocessor,/obj/decal/cleanable/dirt,/turf/simulated/floor/scorched2,/area/diner/kitchen)
 "iC" = (/obj/decal/fakeobjects/firealarm_broken{pixel_y = 28},/obj/machinery/vending/alcohol,/obj/decal/cleanable/dirt,/turf/simulated/floor/grime,/area/diner/kitchen)
