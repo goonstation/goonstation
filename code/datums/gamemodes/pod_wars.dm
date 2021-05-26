@@ -2288,13 +2288,14 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			//get the team datum from its team number right when we allocate points.
 			var/datum/game_mode/pod_wars/mode = ticker.mode
 
+			//get the opposite team. lower their points
 			var/datum/pod_wars_team/other_team
 			switch(src.owner_team)
 				if (TEAM_NANOTRASEN)
-					other_team = mode.team_NT
-				if (TEAM_SYNDICATE)
 					other_team = mode.team_SY
-			other_team.change_points(-2)
+				if (TEAM_SYNDICATE)
+					other_team = mode.team_NT
+			other_team.change_points(-1)
 
 		return 1
 
