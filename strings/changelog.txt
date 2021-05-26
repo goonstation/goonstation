@@ -1,5 +1,9 @@
 
 (t)wed may 26 21
+(u)Kubius
+(p)4872
+(e)🆕|feature
+(+)Spatial Interdictors may now interdict spatial tears after they form, requiring a fresh initialization within range of the tear.
 (u)Vaskritaya
 (p)4877
 (e)|
