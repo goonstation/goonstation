@@ -380,11 +380,16 @@
 	item_state = "nthelm2"
 	desc = "Well protected helmet used by certain Nanotrasen bodyguards."
 
+
 /obj/item/clothing/head/helmet/space/nanotrasen/pilot
 	name = "Nanotrasen Pilot Helmet"
 	icon_state = "nanotrasen_pilot"
 	item_state = "nanotrasen_pilot"
 	desc = "A space helmet used by certain Nanotrasen pilots."
+
+	setupProperties()
+		..()
+		setProperty("space_movespeed", 0)
 
 /obj/item/clothing/head/helmet/swat
 	name = "swat helmet"
