@@ -2264,6 +2264,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			return 0
 
 		var/turf/T = get_step(src.computer, src.computer.dir)		//tile in front of computer
+		var/spawned_crate = FALSE
 
 		//GAZE UPON MY WORKS AND DESPAIR!!!
 		//Spawns a crate at the correct time at the correct tier.
@@ -2273,18 +2274,21 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		else if (TIME > last_cap_time + 10 MINUTES && src.crate_rewards_tier == 1)
 			new/obj/storage/secure/crate/pod_wars_rewards(loc = T, team_num = src.owner_team, tier = src.crate_rewards_tier)
 			src.crate_rewards_tier ++
+			spawned_crate = TRUE
 
 		else if (TIME > last_cap_time + 15 MINUTES && src.crate_rewards_tier == 2)
 			new/obj/storage/secure/crate/pod_wars_rewards(loc = T, team_num = src.owner_team, tier = src.crate_rewards_tier)
 			src.crate_rewards_tier ++
+			spawned_crate = TRUE
 
 		//ok, this is shit. To explain, if the tier is 3, then it'll be 15 minutes, if it's 4, it'll be 20 minutes, if it's 5, it'll be 25 minutes, etc...
 		else if (TIME >= last_cap_time + (15 MINUTES + 5 MINUTES * (src.crate_rewards_tier-3) ) && src.crate_rewards_tier == 3)
 			new/obj/storage/secure/crate/pod_wars_rewards(loc = T, team_num = src.owner_team, tier = src.crate_rewards_tier)
 			src.crate_rewards_tier ++
+			spawned_crate = TRUE
 
 		//subtract 2 points from the enemy team every time a rewards crate is spawned on a point.
-		if (istype(ticker.mode, /datum/game_mode/pod_wars))
+		if (spawned_crate == TRUE && istype(ticker.mode, /datum/game_mode/pod_wars))
 			//get the team datum from its team number right when we allocate points.
 			var/datum/game_mode/pod_wars/mode = ticker.mode
 
@@ -2295,7 +2299,12 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 					other_team = mode.team_SY
 				if (TEAM_SYNDICATE)
 					other_team = mode.team_NT
-			other_team.change_points(-1)
+			//error checking
+			if (!other_team)
+				message_admins("Can't grab the opposite team for control point [src.name]. It's owner_team value is:[src.owner_team]")
+				logTheThing("debug", null, null, "Can't grab the opposite team for control point [src.name]. It's owner_team value is:[src.owner_team]")
+				return 0
+			other_team.change_points(-2)
 
 		return 1
 
