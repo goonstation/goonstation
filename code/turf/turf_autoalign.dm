@@ -725,22 +725,22 @@
 		switch (interaction)
 			if (WALL_REMOVERERODS)
 				message = "Removing some reinforcing rods."
-				playsound(get_turf(the_wall), "sound/items/Wirecutter.ogg", 100, 1)
+				playsound(the_wall, "sound/items/Wirecutter.ogg", 100, 1)
 			if (WALL_REMOVESUPPORTLINES)
 				message = "Removing support lines."
-				playsound(get_turf(the_wall), "sound/items/Screwdriver.ogg", 100, 1)
+				playsound(the_wall, "sound/items/Screwdriver.ogg", 100, 1)
 			if (WALL_SLICECOVER)
 				message = "Slicing metal cover."
 			if (WALL_REMOVESUPPORTRODS)
 				message = "Removing support rods."
 			if (WALL_PRYCOVER)
 				message = "Prying cover off."
-				playsound(get_turf(the_wall), "sound/items/Crowbar.ogg", 100, 1)
+				playsound(the_wall, "sound/items/Crowbar.ogg", 100, 1)
 			if (WALL_PRYSHEATH)
 				message = "Prying outer sheath off."
-				playsound(get_turf(the_wall), "sound/items/Crowbar.ogg", 100, 1)
+				playsound(the_wall, "sound/items/Crowbar.ogg", 100, 1)
 			if (WALL_DETATCHSUPPORTRODS)
-				playsound(get_turf(the_wall), "sound/items/Ratchet.ogg", 100, 1)
+				playsound(the_wall, "sound/items/Ratchet.ogg", 100, 1)
 				message = "Detaching support rods."
 		owner.visible_message("<span class='notice'>[message].</span>")
 

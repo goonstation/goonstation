@@ -1057,7 +1057,7 @@
 				if (H.a_intent == INTENT_HARM && (H.job == "Chef" || H.job == "Sous-Chef") && H.bioHolder?.HasEffect("accent_swedish"))
 					src.visible_message("<span class='alert'><b>[H] hits the [src] with [W]!<b></span>")
 					src.visible_message("<span class='alert'>The [src] barks at [H]!</span>")
-					playsound(get_turf(src), "sound/voice/animal/dogbark.ogg", 40, 1)
+					playsound(src, "sound/voice/animal/dogbark.ogg", 40, 1)
 					SPAWN_DBG(0.75 SECONDS)
 						if (src && H)
 							src.visible_message("<span class='alert'>The [src] takes a bite out of [H]!</span>")
@@ -1906,6 +1906,7 @@
 	amount = 5
 	heal_amt = 1
 	needfork = 1
+	needspoon = 1
 	food_color = "#FFFFFF"
 	initial_volume = 50
 	initial_reagents = list("mashedpotatoes"=25)
@@ -1918,6 +1919,7 @@
 	amount = 5
 	heal_amt = 1
 	needfork = 1
+	needspoon = 1
 	food_color = "#FF6699"
 	food_effects = list("food_hp_up_big")
 

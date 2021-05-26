@@ -330,11 +330,13 @@
 					boutput(owner, "<span class='alert'>Oh god it's so bad you could choke to death in here!</span>")
 
 
-			//cyber lungs beat radiation. Is there anything they can't do?
-			if (!has_cyberlungs)
-				var/datum/gas/rad_particles/RV = breath.get_trace_gas_by_type(/datum/gas/rad_particles)
-				if (RV)
-					owner.changeStatus("radiation", RV.moles, 2 SECONDS)
+		//cyber lungs beat radiation. Is there anything they can't do?
+		if (!has_cyberlungs)
+			var/datum/gas/rad_particles/RV = breath.get_trace_gas_by_type(/datum/gas/rad_particles)
+			if (RV)
+				var/RV_pp = (RV.moles/TOTAL_MOLES(breath))*breath_pressure
+				if(RV_pp >= 1)
+					owner.changeStatus("radiation", (1 + RV_pp) * mult)
 
 		if (human_owner?.organHolder)
 			if (breath.temperature > min(human_owner.organHolder.left_lung ? human_owner.organHolder.left_lung.temp_tolerance : INFINITY, human_owner.organHolder.right_lung ? human_owner.organHolder.right_lung.temp_tolerance : INFINITY) && !human_owner.is_heat_resistant()) // Hot air hurts :(

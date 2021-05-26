@@ -32,9 +32,9 @@
 
 	proc/smack_bug(atom/target as obj|mob, mob/user as mob)
 		user.visible_message("<span class='notice'><b>[user] smacks [target] with [src]. KO!</b></span>")
-		playsound(get_turf(target), "sound/effects/electric_shock_short.ogg", 50, 1)
+		playsound(target, "sound/effects/electric_shock_short.ogg", 50, 1)
 		SPAWN_DBG(0.2 SECONDS)
-			playsound(get_turf(target), "sound/impact_sounds/Flesh_Crush_1.ogg", 50, 1)
+			playsound(target, "sound/impact_sounds/Flesh_Crush_1.ogg", 50, 1)
 		if (ismobcritter(target))
 			var/mob/living/critter/MC = target
 			MC.TakeDamage("all", 20, 20)

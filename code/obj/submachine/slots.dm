@@ -67,7 +67,7 @@
 			src.working = 1
 			src.icon_state = "slots-on"
 
-			playsound(get_turf(src), "sound/machines/ding.ogg", 50, 1)
+			playsound(src, "sound/machines/ding.ogg", 50, 1)
 			. = TRUE
 			ui_interact(usr, ui)
 			SPAWN_DBG(2.5 SECONDS) // why was this at ten seconds, christ
@@ -147,7 +147,7 @@
 
 	if (amount > 0)
 		src.visible_message("<span class='subtle'><b>[src]</b> says, '[exclamation][src.scan.registered] has won [amount_text]!'</span>")
-		playsound(get_turf(src), "[win_sound]", 55, 1)
+		playsound(src, "[win_sound]", 55, 1)
 		src.scan.money += amount
 
 /obj/submachine/slot_machine_manta
