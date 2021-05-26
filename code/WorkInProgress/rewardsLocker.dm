@@ -42,6 +42,7 @@
 			M.real_name = "medic's satchel"
 			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder. (Base Item: [prev1])"
 			activator.set_clothing_icon_dirty()
+			M.wear_layer = MOB_BACK_LAYER_SATCHEL
 
 		else if (istype(activator.back, /obj/item/storage/backpack/NT) || activator.back.icon_state == "NTbackpack")
 			var/obj/item/storage/backpack/M = activator.back
@@ -57,6 +58,7 @@
 			M.real_name = "NT satchel"
 			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder. (Base Item: [prev2])"
 			activator.set_clothing_icon_dirty()
+			M.wear_layer = MOB_BACK_LAYER_SATCHEL
 
 		else if (istype(activator.back, /obj/item/storage/backpack/captain))
 			if (activator.back.icon_state == "capbackpack")
@@ -73,6 +75,7 @@
 				M.real_name = "Captains Satchel"
 				M.desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: [prev3])"
 				activator.set_clothing_icon_dirty()
+				M.wear_layer = MOB_BACK_LAYER_SATCHEL
 			else
 				var/obj/item/storage/backpack/M = activator.back
 				var/prev3 = M.name
@@ -87,6 +90,7 @@
 				M.real_name = "Captains Satchel"
 				M.desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: [prev3])"
 				activator.set_clothing_icon_dirty()
+				M.wear_layer = MOB_BACK_LAYER_SATCHEL
 
 		else if (istype(activator.back, /obj/item/storage/backpack))
 			var/obj/item/storage/backpack/M = activator.back
@@ -102,6 +106,7 @@
 			M.real_name = "satchel"
 			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder. (Base Item: [prev3])"
 			activator.set_clothing_icon_dirty()
+			M.wear_layer = MOB_BACK_LAYER_SATCHEL
 
 		else
 			boutput(activator, "<span class='alert'>Whatever it is you've got on your back, it can't be reskinned!</span>")
