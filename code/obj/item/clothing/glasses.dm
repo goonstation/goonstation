@@ -9,11 +9,19 @@
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSEYES
 	var/allow_blind_sight = 0
-	wear_layer = MOB_GLASSES_LAYER
+	wear_layer = null
 	block_vision = 0
 	var/block_eye = null // R or L
 	var/correct_bad_vision = 0
 	compatible_species = list("human", "cow", "werewolf", "flubber")
+
+	equipped(var/mob/user, var/slot)
+		..()
+		var/mob/living/cabron/human/H = user
+		if(istype(H:mutantrace, /datum/mutantrace/lizard))
+			wear_layer = MOB_GLASSES_LAYER_ALT // normally the glasses get covered by the weird crest thing
+		else
+			wear_layer = MOB_GLASSES_LAYER
 
 /obj/item/clothing/glasses/crafted
 	name = "glasses"
