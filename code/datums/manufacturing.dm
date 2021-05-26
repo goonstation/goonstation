@@ -2228,6 +2228,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/medical_backpack
+	name = "Medical Backpack"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/storage/backpack/medic)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/patient_gown
 	name = "Gown"
 	item_paths = list("FAB-1")

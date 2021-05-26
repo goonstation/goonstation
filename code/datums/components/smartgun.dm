@@ -137,13 +137,14 @@
 			for(var/mob/living/M in range(2, mouse_target))
 				if(tracked_targets[M] < src.maxlocks && src.is_valid_target(user, M) && shotcount < src.checkshots(parent))
 					tracked_targets[M] += 1
+					shotcount++
 					if(!targeting_images[M])
 						targeting_images[M] = image(icon('icons/cursors/target/flat.dmi', "all"), M, pixel_y = 32)
 						aimer.images += targeting_images[M]
 						targeting_images[M].maptext_y = 3
 					targeting_images[M].maptext = "<span class='pixel c ol'>[tracked_targets[M]]</span>"
 
-		sleep(1 SECOND)
+		sleep(0.8 SECONDS)
 
 	stopping = 0
 	tracking = 0
@@ -185,7 +186,7 @@
 
 
 /datum/component/holdertargeting/smartgun/proc/is_valid_target(mob/user, mob/M)
-	return M != user
+	return M != user && !isdead(M)
 
 /datum/component/holdertargeting/smartgun/proc/checkshots(obj/item/gun/G)
 	if(istype(G, /obj/item/gun/kinetic))

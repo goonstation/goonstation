@@ -212,7 +212,7 @@
 
 		K.add_fingerprint(usr)
 		A.add_fingerprint(usr)
-		playsound(get_turf(K), sound_load, 50, 1)
+		playsound(K, sound_load, 50, 1)
 
 		if (K.ammo.amount_left < 0)
 			K.ammo.amount_left = 0
@@ -622,11 +622,11 @@
 	name = "12ga flares"
 	amount_left = 8
 	max_amount = 8
-	icon_state = "12"
+	icon_state = "flare"
 	ammo_type = new/datum/projectile/bullet/flare
 	caliber = 0.72
 	icon_dynamic = 0
-	icon_empty = "12-0"
+	icon_empty = "flare-0"
 
 	single
 		amount_left = 1
@@ -875,17 +875,6 @@
 	var/sound_load = 'sound/weapons/gunload_click.ogg'
 	var/unusualCell = 0
 
-	onMaterialChanged()
-		..()
-		if(istype(src.material))
-			if(src.material.hasProperty("electrical"))
-				max_charge = round(material.getProperty("electrical") ** 1.33)
-			else
-				max_charge =  40
-
-		charge = max_charge
-		return
-
 	New()
 		..()
 		update_icon()
@@ -973,7 +962,7 @@
 		swapped_cell.update_icon()
 		src.update_icon()
 
-		playsound(get_turf(src), sound_load, 50, 1)
+		playsound(src, sound_load, 50, 1)
 		return 1
 
 	proc/charge(var/amt = 0)
@@ -1030,16 +1019,6 @@
 	var/cycle = 0 //Recharge every other tick.
 	var/recharge_rate = 5.0
 
-	onMaterialChanged()
-		..()
-		if(istype(src.material))
-			recharge_rate = 0
-			if(src.material.hasProperty("radioactive"))
-				recharge_rate += ((src.material.getProperty("radioactive") / 10) / 2.5) //55(cerenkite) should give around 2.2, slightly less than a slow charge cell.
-			if(src.material.hasProperty("n_radioactive"))
-				recharge_rate += ((src.material.getProperty("n_radioactive") / 10) / 2)
-		return
-
 	New()
 		processing_items |= src
 		..()
@@ -1076,6 +1055,23 @@
 /obj/item/ammo/power_cell/self_charging/custom
 	name = "Power Cell"
 	desc = "A custom-made power cell."
+
+	onMaterialChanged()
+		..()
+		if(istype(src.material))
+			if(src.material.hasProperty("electrical"))
+				max_charge = round(material.getProperty("electrical") ** 1.33)
+			else
+				max_charge =  40
+
+			recharge_rate = 0
+			if(src.material.hasProperty("radioactive"))
+				recharge_rate += ((src.material.getProperty("radioactive") / 10) / 2.5) //55(cerenkite) should give around 2.2, slightly less than a slow charge cell.
+			if(src.material.hasProperty("n_radioactive"))
+				recharge_rate += ((src.material.getProperty("n_radioactive") / 10) / 2)
+
+		charge = max_charge
+		return
 
 /obj/item/ammo/power_cell/self_charging/slowcharge
 	name = "Power Cell - Atomic Slowcharge"

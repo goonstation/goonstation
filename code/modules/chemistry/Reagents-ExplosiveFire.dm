@@ -122,6 +122,7 @@ datum
 				var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 				if(istype(L) && burn)
 					L.changeStatus("burning", 2 * src.volume SECONDS)
+					burn.counter += 10 * src.volume
 					holder?.del_reagent(src.id)
 				..()
 				return
@@ -142,6 +143,7 @@ datum
 						L.changeStatus("slowed", 2 SECONDS, optional = 4)
 						if(istype(L) && burn) //double up on the extra burny, not blockable by biosuits/etc either
 							L.changeStatus("burning", src.volume SECONDS)
+							burn.counter += 5 * src.volume
 
 		combustible/kerosene
 			name = "kerosene"
@@ -806,6 +808,11 @@ datum
 						D.desc = "Uh oh. Someone better clean this up!"
 						if(!D.reagents) D.create_reagents(10)
 						D.reagents.add_reagent("blackpowder", 5, null)
+				return
+			reaction_mob(var/mob/living/carbon/human/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if (ishuman(M) && volume >= 10)
+					M.gunshot_residue = 1
 				return
 
 		combustible/nitrogentriiodide

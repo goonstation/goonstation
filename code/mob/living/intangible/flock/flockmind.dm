@@ -62,7 +62,7 @@
 	if(src.flock)
 		var/obj/flock_structure/rift/r = new(get_turf(src), src.flock)
 		r.mainflock = src.flock
-		playsound(get_turf(src), "sound/impact_sounds/Metal_Clang_1.ogg", 30, 1)
+		playsound(src, "sound/impact_sounds/Metal_Clang_1.ogg", 30, 1)
 	else
 		boutput(src, "<span class='alert'>You don't have a flock, it's not going to listen to you! Also call a coder, this should be impossible!</span>")
 		return

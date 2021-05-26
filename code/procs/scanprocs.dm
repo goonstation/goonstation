@@ -17,6 +17,8 @@
 	var/health_percent = round(100 * M.health / M.max_health)
 
 	var/colored_health
+	if(M.max_health <= 0)
+		colored_health = "<span class='alert'>???</span>"
 	if (health_percent >= 51 && health_percent <= 100)
 		colored_health = "<span style='color:#138015'>[health_percent]</span>"
 	else if (health_percent >= 1 && health_percent <= 50)
@@ -305,6 +307,8 @@
 
 		var/image/chat_maptext/chat_text = null
 		var/h_pct = M.max_health ? round(100 * M.health / M.max_health) : M.health
+		if(M.max_health <= 0)
+			h_pct = "???"
 		var/oxy = round(M.get_oxygen_deprivation())
 		var/tox = round(M.get_toxin_damage())
 		var/burn = round(M.get_burn_damage())
