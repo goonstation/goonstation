@@ -15,9 +15,9 @@
 	var/correct_bad_vision = 0
 	compatible_species = list("human", "cow", "werewolf", "flubber")
 
-	equipped(var/mob/user, var/slot)
+	equipped(var/mob/living/user, var/slot)
 		..()
-		var/mob/living/cabron/human/H = user
+		var/mob/living/carbon/human/H = user
 		if(istype(H:mutantrace, /datum/mutantrace/lizard))
 			wear_layer = MOB_GLASSES_LAYER_ALT // normally the glasses get covered by the weird crest thing
 		else
