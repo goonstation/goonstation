@@ -997,7 +997,6 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 				break
 
 ////////////////////////////////////////////////
-#if defined(MAP_OVERRIDE_POD_WARS)
 
 /obj/forcefield/energyshield/perma/pod_wars
 	name = "Permanent Military-Grade Forcefield"
@@ -1018,7 +1017,6 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 	team_num = 2
 	color = "#FF6666"
 
-#endif
 //////////////////SCOREBOARD STUFF//////////////////
 //only the board really need to be a hud.  I guess the others could too, but it doesn't matter.
 /atom/movable/screen/hud/score_board
