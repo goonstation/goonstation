@@ -1,5 +1,8 @@
 
 (t)tue may 25 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Synthflesh/styptic/sulfazdine topical healing capped to 10u at a time.
 (u)Blackrep
 (p)4865
 (e)⚖|balance
