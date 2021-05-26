@@ -1254,8 +1254,8 @@
 /obj/decal/cleanable/dirt,
 /obj/kitchenspike,
 /obj/item/clothing/shoes/mjblack,
-/obj/item/clothing/hat/waitresshat,
-/obj/item/clothing/under/gimmick/dinerdress_pink,
+/obj/item/clothing/under/gimmick/dinerdress_mint,
+/obj/item/clothing/head/waitresshat,
 /turf/simulated/floor/plating/random,
 /area/diner/kitchen)
 "aec" = (
@@ -1264,9 +1264,9 @@
 "aed" = (
 /obj/decal/cleanable/cobweb2,
 /obj/decal/cleanable/blood/splatter,
-/obj/item/clothing/under/gimmick/dinerdress_mint,
 /obj/item/clothing/shoes/mjblack,
-/obj/item/clothing/hat/waitresshat,
+/obj/item/clothing/under/gimmick/dinerdress_pink,
+/obj/item/clothing/head/waitresshat,
 /turf/simulated/floor/plating/random,
 /area/diner/kitchen)
 "aee" = (
