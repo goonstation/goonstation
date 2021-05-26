@@ -37,18 +37,16 @@
 
 	New(var/loc,var/duration)
 		..()
+		START_TRACKING
 		//spatial interdictor: mitigate spatial tears
 		//consumes 800 units of charge per tear segment weakened
 		//weakened tears can be traversed, but inflict minor brute damage
 		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
 			if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(800))
-				src.alpha = 150
-				src.opacity = 0
-				src.stabilized = 1
-				src.name = "Stabilized Spatial Tear"
-				desc = "A breach in the spatial fabric, partially stabilized by an interdictor. Difficult to pass."
+				src.stabilize()
 				break
 		SPAWN_DBG(duration)
+			STOP_TRACKING
 			qdel(src)
 
 	attack_hand(mob/user)
@@ -63,6 +61,13 @@
 
 	proc/try_pass(mob/user)
 		actions.start(new /datum/action/bar/icon/push_through_tear(user, src), user)
+
+	proc/stabilize()
+		src.alpha = 150
+		src.opacity = 0
+		src.stabilized = 1
+		src.name = "Stabilized Spatial Tear"
+		desc = "A breach in the spatial fabric, partially stabilized by an interdictor. Difficult to pass."
 
 
 /datum/action/bar/icon/push_through_tear
