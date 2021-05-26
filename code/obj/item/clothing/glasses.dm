@@ -9,7 +9,7 @@
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSEYES
 	var/allow_blind_sight = 0
-	wear_layer = null
+	wear_layer = MOB_GLASSES_LAYER
 	block_vision = 0
 	var/block_eye = null // R or L
 	var/correct_bad_vision = 0
