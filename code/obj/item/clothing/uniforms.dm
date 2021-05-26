@@ -1693,3 +1693,15 @@
 	desc = "There doesn't appear to be anything inside, how strange..."
 	icon_state = "ook"
 	item_state = "ook"
+
+/obj/item/clothing/under/suit/hopG
+	name = "\improper Head of Personnel's suit"
+	desc = "A grey suit and blue necktie. An authoritative yet bland ensemble."
+	icon_state = "suitT-alt"
+	item_state = "suitT-alt"
+
+/obj/item/clothing/under/suit/hopGdress
+	name = "\improper Head of Personnel's suit"
+	desc = "A grey dress and blue necktie. An authoritative yet bland ensemble."
+	icon_state = "suitT-dress-alt"
+	item_state = "suitT-dress-alt"

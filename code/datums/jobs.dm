@@ -213,8 +213,6 @@ ABSTRACT_TYPE(/datum/job/command)
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 
-
-#ifdef SUBMARINE_MAP
 	slot_suit = /obj/item/clothing/suit/armor/hopcoat
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/device/pda2/heads
@@ -222,14 +220,6 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_foot = /obj/item/clothing/shoes/brown
 	slot_ears = /obj/item/device/radio/headset/command/hop
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash,/obj/item/storage/box/accessimp_kit)
-#else
-	slot_back = /obj/item/storage/backpack/withO2
-	slot_belt = /obj/item/device/pda2/heads
-	slot_jump = /obj/item/clothing/under/suit/hop
-	slot_foot = /obj/item/clothing/shoes/brown
-	slot_ears = /obj/item/device/radio/headset/command/hop
-	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash,/obj/item/storage/box/accessimp_kit)
-#endif
 
 	New()
 		..()

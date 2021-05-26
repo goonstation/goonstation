@@ -305,6 +305,22 @@
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 
+	april_fools
+		icon_state = "hopcoat-alt"
+		item_state = "hopcoat-alt"
+
+	attack_self(mob/user as mob)
+		user.show_text("You change the coats's style.")
+		if (src.icon_state == "hopcoat")
+			src.icon_state = "hopopen"
+		else if (src.icon_state == "hopopen")
+			src.icon_state = "hopcoat"
+		else if (src.icon_state == "hopcoat-alt")
+			src.icon_state = "hopopen-alt"
+		else if (src.icon_state == "hopopen-alt")
+			src.icon_state = "hopcoat-alt"
+		else
+			src.icon_state = "armorvest"
 /obj/item/clothing/suit/armor/centcomm
 	name = "administrator's armor"
 	desc = "A suit of protective formal armor. It is made specifically for NanoTrasen commanders."

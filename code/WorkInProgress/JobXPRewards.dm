@@ -542,6 +542,38 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand(banana)
 		return
 
+///////////Head of Personnel///////////
+/datum/jobXpReward/HeadofPersonnel/greysuit
+	name = "Grey Suit"
+	desc = "Now you can look respectable as you do your job as a desk monkey"
+	required_levels = list("Head of Personnel"=0)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound=1
+
+	activate(var/client/C)
+		boutput(C, "A grey suit pops into existance!")
+		var/obj/item/I = new/obj/item/clothing/under/suit/hopG()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(I)
+		return
+
+/datum/jobXpReward/HeadofPersonnel/greydress
+	name = "Grey Dress"
+	desc = "Now you can look respectable as you do your job as a desk monkey"
+	required_levels = list("Head of Personnel"=0)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound=1
+
+	activate(var/client/C)
+		boutput(C, "A grey dress pops into existance!")
+		var/obj/item/I = new/obj/item/clothing/under/suit/hopGdress()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(I)
+		return
+
+/////////////Head of Personnel End//////
 /////////////Bartender////////////////
 
 /datum/jobXpReward/bartender/spectromonocle

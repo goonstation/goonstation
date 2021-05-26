@@ -423,8 +423,6 @@
 		..()
 		update_icon()
 
-
-
 //////////////////////// Taser Shotgun
 //Azungar's Improved, more beefy weapon for security that can only be acquired via QM.
 /obj/item/gun/energy/tasershotgun
@@ -458,7 +456,6 @@
 			shoot_delay = 4
 		else
 			shoot_delay = 6
-
 
 ////////////////////////////////////VUVUV
 /obj/item/gun/energy/vuvuzela_gun
@@ -1664,4 +1661,37 @@
 			spread_angle = 8
 		else
 			spread_angle = 2
+		update_icon()
+////////////////////////////////////HOP ENERGY PISTOL
+/obj/item/gun/energy/Energy_pistol
+	name = "energy pistol"
+	icon_state = "sdwe"
+	item_state = "sdwe"
+	uses_multiple_icon_states = 1
+	force = 5.0
+	cell_type = /obj/item/ammo/power_cell/med_power
+	desc = "A small, concelable, nonlethal energy gun"
+	module_research = list("weapons" = 4, "energy" = 4, "miniaturization" = 5)
+	muzzle_flash = "muzzle_flash_elec"
+	can_swap_cell = 0
+	can_dual_wield = 1
+	New()
+		set_current_projectile(new/datum/projectile/energy_bolt)
+		..()
+	update_icon()
+		if(cell)
+			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+			ratio = round(ratio, 0.25) * 100
+			if (current_projectile.type == /datum/projectile/energy_bolt)
+				src.icon_state = "sdwe"
+				src.icon_state = "sdwe_stun[ratio]"
+				muzzle_flash = "muzzle_flash_elec"
+			else if(current_projectile.type == /datum/projectile/energy_bolt)
+				src.item_state = "sdwe"
+				src.icon_state = "sdwe_stun[ratio]"
+				muzzle_flash = "muzzle_flash_elec"
+				..()
+
+	attack_self()
+		..()
 		update_icon()
