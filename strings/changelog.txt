@@ -1,5 +1,9 @@
 
 (t)wed may 26 21
+(u)Vaskritaya
+(p)4877
+(e)|
+(+)Salesman and tourists can now change their name on spawn, in case they spawn as a mutantrace or just if they feel like it.
 (u)DimWhat
 (p)4888
 (e)|
