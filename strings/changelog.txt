@@ -1,5 +1,9 @@
 
 (t)wed may 26 21
+(u)DimWhat
+(p)4888
+(e)|
+(+)Made satchels layer under tails.
 (u)virvatuli
 (e)🎶|sound
 (*)Added six new songs to the random record pool, 3 metal and 3 funky for some more diverse tunes over the radio!
