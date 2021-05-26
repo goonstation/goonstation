@@ -7579,7 +7579,7 @@
 /area/pod_wars/spacejunk/fstation/power)
 "Jh" = (
 /obj/machinery/light,
-/obj/machinery/manufacturer/medical,
+/obj/machinery/manufacturer/medical/pod_wars,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "Ji" = (
@@ -9277,7 +9277,7 @@
 /turf/unsimulated/floor/caution/east,
 /area/pod_wars/team1/manufacturing)
 "RK" = (
-/obj/machinery/manufacturer/medical,
+/obj/machinery/manufacturer/medical/pod_wars,
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/fstation/medbay)
 "RL" = (
@@ -9944,7 +9944,7 @@
 	},
 /area/pod_wars/team2/central_hallway)
 "Uq" = (
-/obj/machinery/manufacturer/mining,
+/obj/machinery/manufacturer/mining/pod_wars,
 /turf/simulated/floor/bot,
 /area/pod_wars/spacejunk/miningoutpost)
 "Us" = (
@@ -11007,7 +11007,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/manufacturer/medical,
+/obj/machinery/manufacturer/medical/pod_wars,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
 "Zr" = (

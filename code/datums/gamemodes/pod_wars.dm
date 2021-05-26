@@ -1779,6 +1779,12 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		hidden = list()
 		..()
 
+/obj/machinery/manufacturer/medical/pod_wars
+	New()
+		available += /datum/manufacture/medical_backpack
+		..()
+
+
 /datum/manufacture/pod_wars/cell_high
 	name = "Standard Large Weapon Cell"
 	item_paths = list("MET-2", "CON-2", "POW-1")
