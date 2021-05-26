@@ -870,6 +870,7 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 			src.add_fingerprint(user)
 			src.visible_message("<span class='alert'>[user] has fixed some of the damage on [src]!</span>")
 			if(health >= health_max)
+				health = health_max
 				src.visible_message("<span class='alert'>[src] is fully repaired!</span>")
 			return
 		..()
