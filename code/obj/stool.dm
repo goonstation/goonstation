@@ -328,6 +328,7 @@
 			return 0
 		if (C.buckled)
 			boutput(user, "They're already buckled into something!", "red")
+			return 0
 		if (src.security)
 			user.show_text("There's nothing you can buckle them to!", "red")
 			return 0
@@ -678,6 +679,7 @@
 			return 0
 		if (M.buckled)
 			boutput(user, "They're already buckled into something!", "red")
+			return 0
 		if (!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || !isalive(user))
 			return 0
 		if(src.buckled_guy && src.buckled_guy.buckled == src && src.buckled_guy != M)
