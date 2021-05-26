@@ -39,6 +39,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 	new /datum/bank_purchaseable/critter_respawn,\
 	new /datum/bank_purchaseable/golden_ghost,\
+	new /datum/bank_purchaseable/death_confetti,\
 
 	new /datum/bank_purchaseable/fruithat,\
 	new /datum/bank_purchaseable/hoodie,\
@@ -174,7 +175,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			name = "Plaid Paint Can"
 			cost = 3000
 			path = /obj/item/paint_can/rainbow/plaid
-		
+
 		crayon_box
 			name = "Crayon Creator"
 			cost = 2500
@@ -468,6 +469,14 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		cost = 1500
 
 		Create(var/mob/M)
+			return 1
+
+	death_confetti
+		name = "Death Confetti"
+		cost = 1000
+
+		Create(var/mob/M)
+			M.AddComponent(/datum/component/death_confetti)
 			return 1
 
 	bp_fjallraven
