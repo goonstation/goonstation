@@ -44,8 +44,10 @@ var/list/pw_rewards_tier3 = null
 	var/datum/pod_wars_team/team_SY
 
 	var/atom/movable/screen/hud/score_board/board
-	var/round_limit = 90 MINUTES
+	var/round_limit = 70 MINUTES
 	var/activate_control_points_time = 15 MINUTES
+	var/round_start_time					//value of TIME macro at post_setup proc call. IDK if this value is stored somewhere already.
+	var/did_ion_storm_happen = FALSE 		//set to true when the ion storm comes.
 
 	var/force_end = 0
 	var/slow_delivery_process = 0			//number of ticks to skip the extra gang process loops
@@ -144,23 +146,7 @@ var/list/pw_rewards_tier3 = null
 	SPAWN_DBG(-1)
 		setup_asteroid_ores()
 
-	SPAWN_DBG(activate_control_points_time)
-		command_alert("An extremely powerful ion storm has reached this system! <b>Control Point Computers at Fortuna, the Reliant, and UVB-67</b> are now active! Both NanoTrasen and Syndicate <b>Pod Carriers' shields are down!</b>","Control Point Computers Online")
-		//stolen from blowout.
-		var/sound/siren = sound('sound/misc/airraid_loop.ogg')
-		siren.repeat = FALSE
-		siren.channel = 5
-		siren.volume = 50
-		world << siren
-
-		for (var/datum/control_point/P in src.control_points)
-			P?.computer.can_be_captured = 1
-
-		//for loop through crit systems for each team
-		for (var/obj/pod_base_critical_system/sys in team_NT.mcguffins)
-			sys.shielded = 0
-		for (var/obj/pod_base_critical_system/sys in team_SY.mcguffins)
-			sys.shielded = 0
+	round_start_time = TIME
 
 	//setup rewards crate lists
 	setup_pw_crate_lists()
@@ -425,6 +411,10 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		team_name_string = "The Syndicate"
 	boutput(world, "<h3><span class='alert'>[team_name_string]'s [CS] has been destroyed!!</span></h3>")
 
+	//if all of this team's crit systems have been destroyed, atomatically end the round...
+	if (!length(team.mcguffins))
+		team.change_points(-300)
+
 /datum/game_mode/pod_wars/proc/announce_critical_system_damage(var/team_num, var/obj/pod_base_critical_system/CS)
 	var/datum/pod_wars_team/team
 	switch (team_num)
@@ -434,6 +424,10 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 			team = team_SY
 
 	src.playsound_to_team(team, "sound/effects/ship_alert_minor.ogg")
+	var/team_name_string = team?.name
+	if (team.team_num == TEAM_SYNDICATE)
+		team_name_string = "The Syndicate"
+	boutput(world, "<h3><span class='alert'>[team_name_string]'s [CS] is under attack!!</span></h3>")
 
 
 /datum/game_mode/pod_wars/check_finished()
@@ -453,11 +447,32 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		slow_delivery_process = 0
 		src.handle_control_point_rewards()
 
+
+	//ion storm once then never again 
+	if (!did_ion_storm_happen && round_start_time + activate_control_points_time < TIME)
+		did_ion_storm_happen = TRUE
+		command_alert("An extremely powerful ion storm has reached this system! <b>Control Point Computers at Fortuna, the Reliant, and UVB-67</b> are now active! Both NanoTrasen and Syndicate <b>Pod Carriers' shields are down!</b>","Control Point Computers Online")
+		//stolen from blowout.
+		var/sound/siren = sound('sound/misc/airraid_loop.ogg')
+		siren.repeat = FALSE
+		siren.channel = 5
+		siren.volume = 50
+		world << siren
+
+		for (var/datum/control_point/P in src.control_points)
+			P?.computer.can_be_captured = 1
+
+		//for loop through crit systems for each team
+		for (var/obj/pod_base_critical_system/sys in team_NT.mcguffins)
+			sys.shielded = 0
+		for (var/obj/pod_base_critical_system/sys in team_SY.mcguffins)
+			sys.shielded = 0
+
 /datum/game_mode/pod_wars/proc/handle_control_point_rewards()
 
 	for (var/datum/control_point/P in src.control_points)
 		// message_admins("[P.name]-owner=[P.owner_team]-tier=[P.crate_rewards_tier]")
-		P.do_item_delivery(P.owner_team)
+		P.do_item_delivery()
 
 /datum/game_mode/pod_wars/declare_completion()
 	var/datum/pod_wars_team/winner
@@ -792,7 +807,6 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
 			//get the team datum from its team number right when we allocate points.
 			var/datum/game_mode/pod_wars/mode = ticker.mode
-			mode.announce_critical_system_destruction(team_num, src)
 
 			switch(team_num)
 				if (TEAM_NANOTRASEN)
@@ -800,6 +814,7 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 				if (TEAM_SYNDICATE)
 					mode.team_SY.mcguffins -= src
 
+			mode.announce_critical_system_destruction(team_num, src)
 		..()
 
 
@@ -861,17 +876,23 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 		return
 
 	attackby(var/obj/item/W, var/mob/user)
-		take_damage(W.force, user)
 		user.lastattacked = src
+
+		//Healing with welding tool
 		if (health < health_max && isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
 			take_damage(-30)
-			src.add_fingerprint(user)
 			src.visible_message("<span class='alert'>[user] has fixed some of the damage on [src]!</span>")
 			if(health >= health_max)
+				health = health_max
 				src.visible_message("<span class='alert'>[src] is fully repaired!</span>")
 			return
+
+		//normal damage stuff
+		take_damage(W.force, user)
+		src.add_fingerprint(user)
+
 		..()
 
 	get_desc()
@@ -966,14 +987,16 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 
 		for(var/datum/mind/mind in to_search)
 			if((istype(mind.current, /mob/dead/observer) || isdead(mind.current)) && mind.current.client && !mind.dnr)
-				var/success = growclone(mind.current, mind.current.real_name, mind, mind.current?.bioHolder, traits=mind.current?.traitHolder.traits.Copy())
+				//prune puritan trait
+				var/list/trait_list = mind.current?.traitHolder.traits.Copy()
+				trait_list -= trait_list["puritan"]
+				var/success = growclone(mind.current, mind.current.real_name, mind, mind.current?.bioHolder, traits=trait_list)
 				if (success && team)
 					SPAWN_DBG(1)
 						team.equip_player(src.occupant, FALSE)
 				break
 
 ////////////////////////////////////////////////
-#if defined(MAP_OVERRIDE_POD_WARS)
 
 /obj/forcefield/energyshield/perma/pod_wars
 	name = "Permanent Military-Grade Forcefield"
@@ -994,7 +1017,6 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 	team_num = 2
 	color = "#FF6666"
 
-#endif
 //////////////////SCOREBOARD STUFF//////////////////
 //only the board really need to be a hud.  I guess the others could too, but it doesn't matter.
 /atom/movable/screen/hud/score_board
@@ -1680,7 +1702,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	name = "Heavy Disruptor Array"
 	item_paths = list("MET-3","CON-2","CRY-1", "telecrystal")
 	item_amounts = list(20,20,50, 20)
-	item_outputs = list(/obj/item/shipcomponent/mainweapon/disruptor_light)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/disruptor)
 	time = 10 SECONDS
 	create  = 1
 	category = "Tool"
@@ -1689,7 +1711,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	name = "Mk.3 Disruptor"
 	item_paths = list("MET-2","CON-1","CRY-1")
 	item_amounts = list(20,30,30)
-	item_outputs = list(/obj/item/shipcomponent/mainweapon/disruptor)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/disruptor_light)
 	time = 10 SECONDS
 	create  = 1
 	category = "Tool"
@@ -1777,6 +1799,12 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 
 		hidden = list()
 		..()
+
+/obj/machinery/manufacturer/medical/pod_wars
+	New()
+		available += /datum/manufacture/medical_backpack
+		..()
+
 
 /datum/manufacture/pod_wars/cell_high
 	name = "Standard Large Weapon Cell"
@@ -2209,7 +2237,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	var/capture_value = 0				//values from -100 to 100. Positives denote NT, negatives denote SY.  	/////////UNUSED
 	var/capture_rate = 1				//1 or 3 based on if a commander has entered their code.  				/////////UNUSED
 	var/capturing_team					//0 if not moving, either uncaptured or at max capture. 1=NT, 2=SY  	/////////UNUSED
-	var/owner_team = 0						//1=NT, 2=SY
+	var/owner_team = 0						//1=NT, 2=SY, not the team datum
 	var/true_name						//backend name, var/name is the user readable name. Used for warp beacon searching, etc.
 	var/last_cap_time					//Time it was last captured.
 	var/crate_rewards_tier = 0			//var 0-3 none/low/med/high. Should correlate to holding the point for <5 min, <10 min, <15
@@ -2227,8 +2255,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			if (B.control_point == true_name)
 				src.beacons += B
 
-	//deliver crate for appropriate tier.in front of this control point.
-	proc/do_item_delivery(var/owner_team)
+	//deliver crate for appropriate tier.in front of this control point for the owner of the point
+	proc/do_item_delivery()
 		if (!src.computer)
 			message_admins("SOMETHING WENT THE CONTROL POINTS!!!owner_team=[owner_team]|1 is NT, 2 is SY")
 			logTheThing("debug", null, null, "PW CONTROL POINT has null computer var.!!!owner_team=[owner_team]")
@@ -2245,8 +2273,8 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			return 0
 		else if (TIME > last_cap_time + 10 MINUTES && src.crate_rewards_tier == 1)
 			new/obj/storage/secure/crate/pod_wars_rewards(loc = T, team_num = src.owner_team, tier = src.crate_rewards_tier)
-
 			src.crate_rewards_tier ++
+
 		else if (TIME > last_cap_time + 15 MINUTES && src.crate_rewards_tier == 2)
 			new/obj/storage/secure/crate/pod_wars_rewards(loc = T, team_num = src.owner_team, tier = src.crate_rewards_tier)
 			src.crate_rewards_tier ++
@@ -2255,6 +2283,19 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		else if (TIME >= last_cap_time + (15 MINUTES + 5 MINUTES * (src.crate_rewards_tier-3) ) && src.crate_rewards_tier == 3)
 			new/obj/storage/secure/crate/pod_wars_rewards(loc = T, team_num = src.owner_team, tier = src.crate_rewards_tier)
 			src.crate_rewards_tier ++
+
+		//subtract 2 points from the enemy team every time a rewards crate is spawned on a point.
+		if (istype(ticker.mode, /datum/game_mode/pod_wars))
+			//get the team datum from its team number right when we allocate points.
+			var/datum/game_mode/pod_wars/mode = ticker.mode
+
+			var/datum/pod_wars_team/other_team
+			switch(src.owner_team)
+				if (TEAM_NANOTRASEN)
+					other_team = mode.team_NT
+				if (TEAM_SYNDICATE)
+					other_team = mode.team_SY
+			other_team.change_points(-2)
 
 		return 1
 
@@ -2265,7 +2306,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		src.last_cap_time = TIME
 		//rewards tier goes to back down to 1 AFTER giving the enemy a crate. A little sort of catchup mechanic...
 		if (src.crate_rewards_tier > 0)
-			src.do_item_delivery(src.owner_team)
+			src.do_item_delivery()
 			src.crate_rewards_tier = 1
 
 		//update beacon teams
