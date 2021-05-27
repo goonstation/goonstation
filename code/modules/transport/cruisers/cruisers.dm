@@ -206,7 +206,6 @@
 			var/obj/overlay/pooObj = new
 			pooObj.screen_loc = "CENTER,CENTER"
 			mtx.Reset()
-			mtx.Scale(scale, scale)
 			mtx.Translate( (T.x - center.x) * world.icon_size, (T.y - center.y) * world.icon_size)
 			pooObj.vis_contents = list(T)
 			pooObj.transform = mtx
