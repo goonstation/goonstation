@@ -1313,7 +1313,7 @@
 		ih_sheath_state = "blue_scabbard-cap0"
 		sword_path = /obj/item/katana/captain/blue
 
-	red //not used yet but should be used if a medal is ever made for the red cap stuff
+	red //for brown pants medal reward
 		icon_state = "red_cap_sword_scabbard"
 		item_state = "red_scabbard-cap1"
 
