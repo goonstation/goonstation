@@ -25,11 +25,14 @@
 	var/material_progress = 0
 	var/obj/item/target_material = null
 	var/inlet_flow = 100 // percentage
-	var/whitelist = list()
+	var/whitelist = list("molitz", "viscerite")
+	var/blacklist = list("char", "plasmastone")
 	var/release_pressure = ONE_ATMOSPHERE
 	var/process_rate = 2
 	var/powconsumption = 0
-	mats = 12
+	var/emagged = 0
+	mats = list("MET-1"=15,"MET-2"=3, "INS-1" = 3, "CON-1" = 10)
+
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
 
 	var/image/image_fan
@@ -37,8 +40,8 @@
 	var/image/image_blow
 
 	var/target_outlet_pressure
-
 	volume = 750
+
 
 	New()
 		..()
@@ -51,29 +54,11 @@
 		if(!loc) return
 		if(src.contained) return
 
-		var/datum/gas_mixture/environment
-		var/datum/gas_mixture/removed
+		src.process_fan()
 
-		environment = loc.return_air()
-
-		switch( fan_state )
-			if( FAN_ON_OUTLET )
-				var/pressure_delta = target_outlet_pressure - MIXTURE_PRESSURE(environment)
-				var/transfer_moles = 0
-				if(air_contents.temperature > 0)
-					transfer_moles = pressure_delta*environment.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
-					removed = air_contents.remove(transfer_moles)
-					loc.assume_air(removed)
-
-			if( FAN_ON_INLET )
-				var/transfer_rate = 200
-				var/transfer_ratio = max(1, transfer_rate/environment.volume)
-
-				if( MIXTURE_PRESSURE(src.air_contents) < src.maximum_pressure )
-					removed = environment.remove_ratio(transfer_ratio)
-					air_contents.merge(removed)
-
-		if( process_materials )
+		if(src.contents.len && !src.process_materials)
+			src.process_materials = PROCESS_ACTIVE
+		if(process_materials)
 			src.powconsumption = 500 * src.process_rate ** 2
 			src.process_raw_materials()
 			src.updateDialog()
@@ -108,15 +93,38 @@
 	return_air()
 		return air_contents
 
+	proc/process_fan()
+		var/datum/gas_mixture/environment
+		var/datum/gas_mixture/removed
+
+		environment = loc.return_air()
+
+		switch( fan_state)
+			if(FAN_ON_OUTLET)
+				var/pressure_delta = target_outlet_pressure - MIXTURE_PRESSURE(environment)
+				var/transfer_moles = 0
+				if(air_contents.temperature > 0)
+					transfer_moles = pressure_delta*environment.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
+					removed = air_contents.remove(transfer_moles)
+					loc.assume_air(removed)
+
+			if(FAN_ON_INLET)
+				var/transfer_rate = 200
+				var/transfer_ratio = max(1, transfer_rate/environment.volume)
+
+				if(MIXTURE_PRESSURE(src.air_contents) < src.maximum_pressure)
+					removed = environment.remove_ratio(transfer_ratio)
+					air_contents.merge(removed)
+
 	proc/process_raw_materials()
-		if( status & NOPOWER)
+		if(status & NOPOWER)
 			return
 
 		if(!target_material)
 			material_progress = 0
 			if(length(src.contents))
 				target_material = pick(src.contents)
-				if(target_material.amount > 1)
+				if((target_material.amount > 1) && (target_material.material?.name in src.whitelist))
 					var/atom/movable/splitStack = target_material.split_stack(target_material.amount-1)
 					splitStack.set_loc(src)
 				// check material... eject if invalid
@@ -125,45 +133,67 @@
 				process_materials = PROCESS_OFF
 				return
 
-		if( MIXTURE_PRESSURE(air_contents) > maximum_pressure*2 )
+		if(MIXTURE_PRESSURE(air_contents) > maximum_pressure*2)
 			process_materials = PROCESS_PAUSED
 			return
 		else if(material_progress < 100)
 			process_materials = PROCESS_ACTIVE
-			var/progress = src.process_rate * 5
+			var/progress = min(src.process_rate * 5,100-material_progress)
 			var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
 			GM.temperature = T20C
-			switch(target_material.material?.name)
-				if("molitz")
-					GM.oxygen += 1870 * progress / 100
-				if("viscerite")
-					GM.temperature = 80
-					GM.nitrogen += 6858 * progress / 100
-				if("char")
-					GM.carbon_dioxide += 1870 * progress / 100
-				if("plasmastone")
-					GM.toxins += 1870 * progress / 100
-				//if("koshmarite")
-				else
-					playsound(src.loc, 'sound/machines/buzz-two.ogg', 50 )
-					target_material?.set_loc(src.loc)
-					target_material = null
-					return
+			if(target_material.material?.name in src.whitelist)
+				switch(target_material.material?.name)
+					if("molitz")
+						GM.oxygen += 1870 * progress / 100
+					if("viscerite")
+						GM.temperature = 80
+						GM.nitrogen += 6858 * progress / 100
+					if("char")
+						GM.carbon_dioxide += 1870 * progress / 100
+					if("plasmastone")
+						GM.toxins += 1870 * progress / 100
+			else
+				playsound(src.loc, 'sound/machines/buzz-two.ogg', 20)
+				process_materials = PROCESS_PAUSED
+				target_material?.set_loc(src.loc)
+				target_material = null
+				return
 			src.air_contents.merge(GM)
-			material_progress += progress
+			material_progress = clamp(material_progress + progress, 0, 100)
 			use_power(src.powconsumption)
 		else
 			qdel(target_material)
 			target_material = null
 
+	emag_act(var/mob/user, var/obj/item/card/emag/E)
+		if (!src.emagged)
+			if (user)
+				user.show_text("You short out the material processor on [src].", "red")
+			src.audible_message("<span class='combat'><B>[src] buzzes oddly!</B></span>")
+			playsound(src.loc, "sparks", 50, 1, -1)
+			whitelist += blacklist
+			src.emagged = 1
+			return 1
+		return 0
+
+	demag(var/mob/user)
+		if (!src.emagged)
+			return 0
+		if (user)
+			user.show_text("You repair [src]'s material processor.", "blue")
+		src.emagged = 0
+		src.process_rate = min(src.process_rate, 3)
+		whitelist = initial(whitelist)
+		return 1
+
 	// attack by item places it in to disposal
 	attackby(obj/item/I, mob/user)
 		if(status & BROKEN)
 			return
-		if( iswrenchingtool(I) || istype(I,/obj/item/device/analyzer/atmospheric))
+		if(iswrenchingtool(I) || istype(I,/obj/item/device/analyzer/atmospheric) || istype(I,/obj/item/card/emag))
 			..()
 			return
-		if(istype(I,/obj/item/electronics/scanner) || istype(I,/obj/item/deconstructor) )
+		if(istype(I,/obj/item/electronics/scanner) || istype(I,/obj/item/deconstructor) || (istype(I, /obj/item/device/pda2)))
 			user.visible_message("<span class='alert'><B>[user] hits [src] with [I]!</B></span>")
 			return
 		if(istype(I,/obj/item/satchel/))
@@ -210,9 +240,6 @@
 			"You place \the [I] into \the [src].")
 			actions.interrupt(user, INTERRUPT_ACT)
 
-		if(src.contents.len)
-			src.process_materials = TRUE
-
 	// eject the contents of the unit
 	proc/eject()
 		for(var/atom/movable/AM in src)
@@ -222,9 +249,10 @@
 		if(src.blast_armed)
 			src.blast_armed = FALSE
 		else
-			blast_armed = TRUE
+			var/blast_key = rand()
+			blast_armed = blast_key
 			SPAWN_DBG(blast_delay)
-				if(src.blast_armed)
+				if(src.blast_armed == blast_key)
 					blast_release()
 
 	proc/blast_visual_effects(pressure)
@@ -251,7 +279,7 @@
 		var/pressure = MIXTURE_PRESSURE(src.air_contents) KILO PASCALS
 		src.blast_visual_effects(pressure)
 
-		var/volume = clamp(pressure / 206 MEGA PASCAL * 35, 5, 35 )
+		var/volume = clamp(pressure / 206 MEGA PASCAL * 35, 5, 35)
 		playsound(src, "sound/weapons/flashbang.ogg", volume, 1)
 
 		var/turf/simulated/T = get_turf(src)
@@ -313,7 +341,8 @@
 		"materialsCount" = src.contents.len,
 		"materialsProgress" = src.material_progress,
 		"targetMaterial" = src.target_material,
-		"processRate" = src.process_rate
+		"processRate" = src.process_rate,
+		"emagged" = src.emagged
 	)
 
 /obj/machinery/portable_atmospherics/pressurizer/ui_static_data(mob/user)
@@ -335,7 +364,7 @@
 				. = set_release_pressure(target_pressure)
 
 		if("arm")
-			arm_blast()
+			src.arm_blast()
 			. = TRUE
 			src.update_icon()
 

@@ -1388,6 +1388,15 @@
 	containertype = /obj/storage/crate
 	containername = "AI Kit"
 
+/datum/supply_packs/complex/eppd_kit
+	name = "Emergency Pressurzation Kit"
+	desc = "Frames: 1x Extreme-Pressure Pressurization Device"
+	category = "Engineering Department"
+	frames = list(/obj/machinery/portable_atmospherics/pressurizer)
+	cost = 5000
+	containertype = /obj/storage/crate
+	containername = "Prototype EPPD Kit"
+
 /datum/supply_packs/complex/basic_power_kit
 	name = "Basic Power Kit"
 	desc = "Frames: 1x SMES cell, 2x Furnace"

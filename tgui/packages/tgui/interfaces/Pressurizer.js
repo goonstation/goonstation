@@ -22,6 +22,7 @@ export const Pressurizer = (props, context) => {
     maxRelease,
     minArmDelay,
     maxArmDelay,
+    emagged,
   } = data;
 
   const FanState = {
@@ -72,6 +73,7 @@ export const Pressurizer = (props, context) => {
 
   return (
     <Window
+      theme={emagged ? 'syndicate' : 'ntos'}
       width={390}
       height={410}>
       <Window.Content>
@@ -166,6 +168,14 @@ export const Pressurizer = (props, context) => {
                   content="3"
                   color={processRate === 3 ? 'good' : 'default'}
                   onClick={() => handleSetProcessRate(3)} />
+                { !!emagged && (<Button
+                  content="4"
+                  color={processRate === 4 ? 'good' : 'default'}
+                  onClick={() => handleSetProcessRate(4)} />)}
+                { !!emagged && <Button
+                  content="5"
+                  color={processRate === 5 ? 'good' : 'default'}
+                  onClick={() => handleSetProcessRate(5)} /> }
               </LabeledList.Item>
               <LabeledList>
                 <LabeledList.Item label="Progress" />
