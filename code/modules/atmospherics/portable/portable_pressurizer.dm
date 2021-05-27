@@ -38,10 +38,7 @@
 	var/image/image_fan
 	var/image/image_fab
 	var/image/image_blow
-
-	var/target_outlet_pressure
 	volume = 750
-
 
 	New()
 		..()
@@ -101,7 +98,7 @@
 
 		switch( fan_state)
 			if(FAN_ON_OUTLET)
-				var/pressure_delta = target_outlet_pressure - MIXTURE_PRESSURE(environment)
+				var/pressure_delta = src.release_pressure - MIXTURE_PRESSURE(environment)
 				var/transfer_moles = 0
 				if(air_contents.temperature > 0)
 					transfer_moles = pressure_delta*environment.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
@@ -115,6 +112,10 @@
 				if(MIXTURE_PRESSURE(src.air_contents) < src.maximum_pressure)
 					removed = environment.remove_ratio(transfer_ratio)
 					air_contents.merge(removed)
+
+	proc/is_air_safe()
+		var/total_moles = max(TOTAL_MOLES(src.air_contents),1)
+		return(((src.air_contents.toxins/total_moles) < 0.01) && ((src.air_contents.carbon_dioxide/total_moles) < 0.05) && (src.air_contents.temperature < FIRE_MINIMUM_TEMPERATURE_TO_SPREAD))
 
 	proc/process_raw_materials()
 		if(status & NOPOWER)
@@ -144,14 +145,13 @@
 			if(target_material.material?.name in src.whitelist)
 				switch(target_material.material?.name)
 					if("molitz")
-						GM.oxygen += 1870 * progress / 100
+						GM.oxygen += 1500 * progress / 100
 					if("viscerite")
-						GM.temperature = 80
-						GM.nitrogen += 6858 * progress / 100
+						GM.nitrogen += 1500 * progress / 100
 					if("char")
-						GM.carbon_dioxide += 1870 * progress / 100
+						GM.carbon_dioxide += 500 * progress / 100
 					if("plasmastone")
-						GM.toxins += 1870 * progress / 100
+						GM.toxins += 500 * progress / 100
 			else
 				playsound(src.loc, 'sound/machines/buzz-two.ogg', 20)
 				process_materials = PROCESS_PAUSED
@@ -252,7 +252,7 @@
 			var/blast_key = rand()
 			blast_armed = blast_key
 			SPAWN_DBG(blast_delay)
-				if(src.blast_armed == blast_key)
+				if(src.blast_armed == blast_key && src.is_air_safe())
 					blast_release()
 
 	proc/blast_visual_effects(pressure)
@@ -342,7 +342,8 @@
 		"materialsProgress" = src.material_progress,
 		"targetMaterial" = src.target_material,
 		"processRate" = src.process_rate,
-		"emagged" = src.emagged
+		"emagged" = src.emagged,
+		"airSafe" = src.is_air_safe()
 	)
 
 /obj/machinery/portable_atmospherics/pressurizer/ui_static_data(mob/user)

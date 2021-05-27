@@ -23,6 +23,7 @@ export const Pressurizer = (props, context) => {
     minArmDelay,
     maxArmDelay,
     emagged,
+    airSafe,
   } = data;
 
   const FanState = {
@@ -56,10 +57,14 @@ export const Pressurizer = (props, context) => {
   };
 
   const getArmedState = () => {
+    if (pressure<maxPressure*0.2)
+    { return "Insufficient Pressure"; }
+    if (!airSafe)
+    { return "AIR UNSAFE - Locked"; }
     if (blastArmed)
     { return "Armed"; }
     else
-    { return "Not Armed"; }
+    { return "Ready"; }
 
   };
 
@@ -91,7 +96,7 @@ export const Pressurizer = (props, context) => {
                     textAlign="center"
                     icon="circle"
                     content={getArmedState()}
-                    disabled={pressure<maxPressure*0.2}
+                    disabled={pressure<maxPressure*0.2 || !airSafe}
                     color={blastArmed ? 'bad' : 'average'}
                     onClick={() => handleArmPressurizer()} />
                 </LabeledList.Item>
