@@ -948,6 +948,7 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 	perfect_clone = 1
 
 	process()
+		meat_level = initial(meat_level)	//infinite meat...
 
 		if(!src.attempting)
 			if (world.time - last_check >= check_delay)
@@ -2304,7 +2305,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 				message_admins("Can't grab the opposite team for control point [src.name]. It's owner_team value is:[src.owner_team]")
 				logTheThing("debug", null, null, "Can't grab the opposite team for control point [src.name]. It's owner_team value is:[src.owner_team]")
 				return 0
-			other_team.change_points(-2)
+			other_team.change_points(-5)
 
 		return 1
 
