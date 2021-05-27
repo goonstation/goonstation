@@ -9808,6 +9808,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/item/device/radio/intercom/AI{
+	dir = 8
+	},
 /turf/simulated/floor/stairs/dark,
 /area/station/turret_protected/ai)
 "aAq" = (
@@ -10637,7 +10640,9 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/item/device/radio/intercom/AI,
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai)
 "aCy" = (
@@ -16530,9 +16535,6 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "aTH" = (
-/obj/machinery/turretid{
-	pixel_y = 26
-	},
 /obj/cable{
 	d1 = 2;
 	d2 = 8;
@@ -16540,6 +16542,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
@@ -16558,6 +16563,9 @@
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/machinery/turretid{
+	pixel_y = 26
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
@@ -24853,6 +24861,9 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/mining/magnet)
 "buP" = (
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor/neutral/side{
 	dir = 5
 	},
@@ -25915,6 +25926,10 @@
 	},
 /obj/stool/chair/red{
 	dir = 4
+	},
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -20
 	},
 /turf/simulated/floor/escape{
 	dir = 1
@@ -27479,8 +27494,8 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
-/obj/decal/xmas_lights/ephemeral{
-	pixel_y = 32
+/obj/machinery/ai_status_display{
+	pixel_y = 28
 	},
 /turf/simulated/floor/orangeblack/corner{
 	dir = 4
@@ -30069,8 +30084,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/alarm{
-	pixel_y = 24
+/obj/machinery/ai_status_display{
+	pixel_y = 28
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -31726,6 +31741,9 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/tapebox,
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
@@ -37648,6 +37666,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "chw" = (
@@ -53574,6 +53595,9 @@
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
