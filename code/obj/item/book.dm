@@ -302,7 +302,7 @@ Custom Books
 	desc = "A large book detailing many creatures of myth and legend for the tabletop RPG, Stations and Syndicates."
 	icon_state = "book3"
 	file_path = "strings/books/monster_manual_revised.txt"
-
+//will come back to this; saved all the card info that was done so far - nef
 /obj/item/paper/book/from_file/grifening
 	name = "Spacemen the Grifening rulebook"
 	desc = "A book outlining the rules of the stations favorite nerd trading-card-game Spacemen the Grifening."
