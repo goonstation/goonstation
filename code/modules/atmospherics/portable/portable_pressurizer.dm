@@ -1,7 +1,11 @@
 #define FAN_OFF 0
 #define FAN_ON_INLET 1
 #define FAN_ON_OUTLET 2
-
+#define PROCESS_OFF 0
+#define PROCESS_ACTIVE 1
+#define PROCESS_PAUSED 2
+#define MIN_BLAST_DELAY (5 SECONDS)
+#define MAX_BLAST_DELAY (30 SECONDS)
 
 /obj/machinery/portable_atmospherics/pressurizer
 	name = "Extreme-Pressure Pressurization Device"
@@ -10,22 +14,37 @@
 	icon = 'icons/obj/atmospherics/atmos.dmi'
 	icon_state = "pressurizer"
 	density = 1
+	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
+	requires_power = FALSE //power only required for material processing
+	p_class = 3
 
 	var/fan_state = FAN_OFF
-	var/process_materials = FALSE
+	var/process_materials = PROCESS_OFF
+	var/blast_delay = 5 SECONDS
 	var/blast_armed = FALSE
 	var/material_progress = 0
 	var/obj/item/target_material = null
 	var/inlet_flow = 100 // percentage
 	var/whitelist = list()
+	var/release_pressure = ONE_ATMOSPHERE
+	var/process_rate = 2
+	var/powconsumption = 0
 	mats = 12
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
 
-	var/target_inlet_pressure
+	var/image/image_fan
+	var/image/image_fab
+	var/image/image_blow
+
 	var/target_outlet_pressure
 
 	volume = 750
-	p_class = 3
+
+	New()
+		..()
+		image_fan = image('icons/obj/atmospherics/atmos.dmi', "pressurizer-fan")
+		image_fab = image('icons/obj/atmospherics/atmos.dmi', "pressurizer-fab")
+		image_blow = image('icons/obj/atmospherics/atmos.dmi', "pressurizer-blow")
 
 	process()
 		..()
@@ -33,83 +52,85 @@
 		if(src.contained) return
 
 		var/datum/gas_mixture/environment
-		if(holding)
-			environment = holding.air_contents
-		else
-			environment = loc.return_air()
+		var/datum/gas_mixture/removed
+
+		environment = loc.return_air()
 
 		switch( fan_state )
 			if( FAN_ON_OUTLET )
 				var/pressure_delta = target_outlet_pressure - MIXTURE_PRESSURE(environment)
-				//Can not have a pressure delta that would cause environment pressure > tank pressure
-
 				var/transfer_moles = 0
 				if(air_contents.temperature > 0)
 					transfer_moles = pressure_delta*environment.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
+					removed = air_contents.remove(transfer_moles)
+					loc.assume_air(removed)
 
-					//Actually transfer the gas
-					var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
-
-					if(holding)
-						environment.merge(removed)
-					else
-						loc.assume_air(removed)
 			if( FAN_ON_INLET )
-				var/pressure_delta = target_inlet_pressure - MIXTURE_PRESSURE(air_contents)
-				//Can not have a pressure delta that would cause environment pressure > tank pressure
+				var/transfer_rate = 200
+				var/transfer_ratio = max(1, transfer_rate/environment.volume)
 
-				var/transfer_moles = 0
-				if(environment.temperature > 0)
-					transfer_moles = pressure_delta*air_contents.volume/(environment.temperature * R_IDEAL_GAS_EQUATION)
-
-					//Actually transfer the gas
-					var/datum/gas_mixture/removed
-					if(holding)
-						removed = environment.remove(transfer_moles)
-					else
-						removed = loc.remove_air(transfer_moles)
-
+				if( MIXTURE_PRESSURE(src.air_contents) < src.maximum_pressure )
+					removed = environment.remove_ratio(transfer_ratio)
 					air_contents.merge(removed)
 
 		if( process_materials )
+			src.powconsumption = 500 * src.process_rate ** 2
 			src.process_raw_materials()
-
 			src.updateDialog()
+
 		src.update_icon()
 		return
 
 	update_icon()
 		. = ..()
 		if(src.fan_state != FAN_OFF)
-			UpdateOverlays(image('icons/obj/atmospherics/atmos.dmi', "pressurizer-fan"), "fan")
+			UpdateOverlays(image_fan, "fan")
 		else
 			UpdateOverlays(null, "fan")
 
 		if(src.process_materials)
-			UpdateOverlays(image('icons/obj/atmospherics/atmos.dmi', "pressurizer-fab"), "fab")
+			image_fab.color = null
+			if(src.status & NOPOWER)
+				image_fab.color = "#800"
+			else if(src.process_materials == PROCESS_PAUSED)
+				image_fab.color = "#dd0"
+			else
+				image_fab.color = "#0d0"
+			UpdateOverlays(image_fab, "fab")
 		else
 			UpdateOverlays(null, "fab")
 
 		if(src.blast_armed)
-			UpdateOverlays(image('icons/obj/atmospherics/atmos.dmi', "pressurizer-blow"), "armed")
+			UpdateOverlays(image_blow, "armed")
 		else
 			UpdateOverlays(null, "armed")
 
-
+	return_air()
+		return air_contents
 
 	proc/process_raw_materials()
+		if( status & NOPOWER)
+			return
+
 		if(!target_material)
 			material_progress = 0
 			if(length(src.contents))
 				target_material = pick(src.contents)
+				if(target_material.amount > 1)
+					var/atom/movable/splitStack = target_material.split_stack(target_material.amount-1)
+					splitStack.set_loc(src)
 				// check material... eject if invalid
 				target_material.set_loc(null)
 			else
-				process_materials = FALSE
+				process_materials = PROCESS_OFF
 				return
 
-		if(material_progress < 100)
-			var/progress = 10
+		if( MIXTURE_PRESSURE(air_contents) > maximum_pressure*2 )
+			process_materials = PROCESS_PAUSED
+			return
+		else if(material_progress < 100)
+			process_materials = PROCESS_ACTIVE
+			var/progress = src.process_rate * 5
 			var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
 			GM.temperature = T20C
 			switch(target_material.material?.name)
@@ -123,64 +144,63 @@
 				if("plasmastone")
 					GM.toxins += 1870 * progress / 100
 				//if("koshmarite")
+				else
+					playsound(src.loc, 'sound/machines/buzz-two.ogg', 50 )
+					target_material?.set_loc(src.loc)
+					target_material = null
+					return
 			src.air_contents.merge(GM)
 			material_progress += progress
+			use_power(src.powconsumption)
 		else
 			qdel(target_material)
 			target_material = null
 
 	// attack by item places it in to disposal
-	attackby(var/obj/item/I, var/mob/user)
+	attackby(obj/item/I, mob/user)
 		if(status & BROKEN)
 			return
-		if (istype(I,/obj/item/electronics/scanner) || istype(I,/obj/item/deconstructor))
+		if( iswrenchingtool(I) || istype(I,/obj/item/device/analyzer/atmospheric))
+			..()
+			return
+		if(istype(I,/obj/item/electronics/scanner) || istype(I,/obj/item/deconstructor) )
 			user.visible_message("<span class='alert'><B>[user] hits [src] with [I]!</B></span>")
 			return
-		if (istype(I, /obj/item/handheld_vacuum))
-			return
-		if (istype(I,/obj/item/satchel/))
+		if(istype(I,/obj/item/satchel/))
 			var/action = input(user, "What do you want to do with the satchel?") in list("Empty it into the Chute","Place it in the Chute","Never Mind")
-			if (!action || action == "Never Mind") return
-			if (get_dist(src,user) > 1)
+			if(!action || action == "Never Mind") return
+			if(get_dist(src,user) > 1)
 				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
 				return
-			if (action == "Empty it into the Chute")
+			if(action == "Empty it into the Chute")
 				var/obj/item/satchel/S = I
 				for(var/obj/item/O in S.contents) O.set_loc(src)
 				S.satchel_updateicon()
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
-		if (istype(I,/obj/item/storage/))
+		if(istype(I,/obj/item/storage/))
 			var/action = input(user, "What do you want to do with [I]?") as null|anything in list("Empty it into the chute","Place it in the Chute")
-			if (!in_interact_range(src, user))
+			if(!in_interact_range(src, user))
 				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
 				return
-			if (action == "Empty it into the chute")
+			if(action == "Empty it into the chute")
 				var/obj/item/storage/S = I
 				for(var/obj/item/O in S)
 					O.set_loc(src)
 					S.hud.remove_object(O)
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
-			if (isnull(action)) return
-		var/obj/item/magtractor/mag
-		if (istype(I.loc, /obj/item/magtractor))
-			mag = I.loc
-		else if (issilicon(user))
-			boutput(user, "<span class='alert'>You can't put that in the trash when it's attached to you!</span>")
-			return
+			if(isnull(action)) return
 
 		var/obj/item/grab/G = I
 		if(istype(G))	// handle grabbed mob
-			if (ismob(G.affecting))
+			if(ismob(G.affecting))
 				var/mob/GM = G.affecting
-				if (istype(src, /obj/machinery/disposal/mail) && !GM.canRideMailchutes())
+				if(istype(src, /obj/machinery/disposal/mail) && !GM.canRideMailchutes())
 					boutput(user, "<span class='alert'>That won't fit!</span>")
 					return
 		else
-			if (istype(mag))
-				actions.stopId("magpickerhold", user)
-			else if (!user.drop_item())
+			if(!user.drop_item())
 				return
 			else if(I.w_class > W_CLASS_NORMAL)
 				boutput(user, "<span class='alert'>That won't fit!</span>")
@@ -188,36 +208,44 @@
 			I.set_loc(src)
 			user.visible_message("[user.name] places \the [I] into \the [src].",\
 			"You place \the [I] into \the [src].")
-
-			process_materials = TRUE //Azrun TODO REMOVE HACK UNTIL UI IMPLEMENTED
-
 			actions.interrupt(user, INTERRUPT_ACT)
+
+		if(src.contents.len)
+			src.process_materials = TRUE
 
 	// eject the contents of the unit
 	proc/eject()
 		for(var/atom/movable/AM in src)
 			AM.set_loc(src.loc)
 
-	proc/blast_visual_effects(pressure)
-		//if meets jump threshold
-		var/orig_x = src.pixel_x
-		var/orig_y = src.pixel_y
-		animate(src, pixel_x=orig_x, pixel_y=orig_y, flags=ANIMATION_PARALLEL, time=0.01 SECONDS)
-		for(var/i in 1 to 3)
-			animate(pixel_x=orig_x + rand(-2, 2), pixel_y=orig_y + rand(-2, 2), easing=JUMP_EASING, time=0.1 SECONDS)
-		animate(pixel_x=orig_x, pixel_y=orig_y)
+	proc/arm_blast()
+		if(src.blast_armed)
+			src.blast_armed = FALSE
+		else
+			blast_armed = TRUE
+			SPAWN_DBG(blast_delay)
+				if(src.blast_armed)
+					blast_release()
 
+	proc/blast_visual_effects(pressure)
+		// Perform jump animation if more than 70% maximum pressure
+		if(pressure > maximum_pressure*0.7)
+			var/orig_x = src.pixel_x
+			var/orig_y = src.pixel_y
+			animate(src, pixel_x=orig_x, pixel_y=orig_y, flags=ANIMATION_PARALLEL, time=0.01 SECONDS)
+			for(var/i in 1 to 3)
+				animate(pixel_x=orig_x + rand(-2, 2), pixel_y=orig_y + rand(-2, 2), easing=JUMP_EASING, time=0.1 SECONDS)
+			animate(pixel_x=orig_x, pixel_y=orig_y)
 
 		var/obj/overlay/poof = new/obj/overlay(get_turf(src))
 		poof.icon = 'icons/obj/atmospherics/atmos.dmi'
-		//Azrun TODO adjust color based on gas composition
-		poof.color="#00EDFF"
-		//Azrun TODO adjust alpha based on pressure
-		//clamp( , 90, 200)
-		poof.alpha = 180
+		poof.color=rgb(air_contents.toxins/TOTAL_MOLES(air_contents)*255, 	\
+						air_contents.oxygen/TOTAL_MOLES(air_contents)*255,	\
+						air_contents.oxygen+air_contents.toxins/TOTAL_MOLES(air_contents)*255)
+		poof.alpha = clamp(MIXTURE_PRESSURE(src.air_contents)/src.maximum_pressure*180, 90, 220)
 		flick("pressurizer-poof", poof)
 		SPAWN_DBG(0.8 SECONDS)
-			if (poof) qdel(poof)
+			if(poof) qdel(poof)
 
 	proc/blast_release()
 		var/pressure = MIXTURE_PRESSURE(src.air_contents) KILO PASCALS
@@ -227,30 +255,115 @@
 		playsound(src, "sound/weapons/flashbang.ogg", volume, 1)
 
 		var/turf/simulated/T = get_turf(src)
-		if (T && istype(T))
-			if (T.air)
-				if (T.parent?.group_processing)
+		if(T && istype(T))
+			if(T.air)
+				if(T.parent?.group_processing)
 					T.parent.air.merge(src.air_contents)
 				else
 					var/count = length(T.parent?.members)
-					if (count)
+					if(count)
 						if(count>1)
 							src.air_contents = src.air_contents.remove_ratio(count-1/count)
 						var/datum/gas_mixture/GM
-						for (var/turf/simulated/MT as() in T.parent.members)
+						for(var/turf/simulated/MT as() in T.parent.members)
 							GM = unpool(/datum/gas_mixture)
 							GM.copy_from(src.air_contents)
 							MT.assume_air(GM)
 					else
 						T.assume_air(src.air_contents)
 
-			for (var/mob/living/HH in range(8, src))
+			for(var/mob/living/HH in range(8, src))
 				var/checkdist = get_dist(HH.loc, T)
 				var/misstep = clamp(1 + 10 * (5 - checkdist), 0, 40)
 				var/ear_damage = max(0, 5 * 0.2 * (3 - checkdist))
 				var/ear_tempdeaf = max(0, 5 * 0.2 * (5 - checkdist))
 				var/stamina = clamp(5 * (5 + 1 * (7 - checkdist)), 0, 120)
 				HH.apply_sonic_stun(0, 0, misstep, 0, 2, ear_damage, ear_tempdeaf, stamina)
+		src.blast_armed = FALSE
+		update_icon()
 
-	return_air()
-		return air_contents
+	proc/set_release_pressure(pressure as num)
+		src.release_pressure = clamp(pressure, PORTABLE_ATMOS_MIN_RELEASE_PRESSURE, PORTABLE_ATMOS_MAX_RELEASE_PRESSURE)
+		return TRUE
+
+	proc/set_arm_delay(delay as num)
+		src.blast_delay = clamp(delay, MIN_BLAST_DELAY, MAX_BLAST_DELAY)
+		return TRUE
+
+	proc/set_process_rate(rate as num)
+		src.process_rate = clamp(rate, 1, 5)
+		return TRUE
+
+
+/obj/machinery/portable_atmospherics/pressurizer/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Pressurizer", name)
+		ui.open()
+
+/obj/machinery/portable_atmospherics/pressurizer/ui_data(mob/user)
+	. = list(
+		"pressure" = MIXTURE_PRESSURE(src.air_contents),
+		"connected" = src.connected_port ? TRUE : FALSE,
+		"fanState" = src.fan_state,
+		"maxPressure" = src.maximum_pressure,
+		"releasePressure" = src.release_pressure,
+		"blastArmed" = src.blast_armed,
+		"blastDelay" = src.blast_delay/10,
+		"materialsCount" = src.contents.len,
+		"materialsProgress" = src.material_progress,
+		"targetMaterial" = src.target_material,
+		"processRate" = src.process_rate
+	)
+
+/obj/machinery/portable_atmospherics/pressurizer/ui_static_data(mob/user)
+	. = list(
+		"minRelease" = PORTABLE_ATMOS_MIN_RELEASE_PRESSURE,
+		"maxRelease" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
+		"minArmDelay" = MIN_BLAST_DELAY/10,
+		"maxArmDelay" = MAX_BLAST_DELAY/10,
+	)
+
+/obj/machinery/portable_atmospherics/pressurizer/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("set-pressure")
+			var/target_pressure = params["releasePressure"]
+			if(isnum(target_pressure))
+				. = set_release_pressure(target_pressure)
+
+		if("arm")
+			arm_blast()
+			. = TRUE
+			src.update_icon()
+
+		if("fan")
+			var/target_mode = params["fanState"]
+			src.fan_state = target_mode
+			. = TRUE
+			src.update_icon()
+
+		if("eject-materials")
+			src.eject()
+			.= TRUE
+
+		if("set-blast-delay")
+			var/target_delay = params["blastDelay"]
+			if(isnum(target_delay))
+				. = set_arm_delay(target_delay SECONDS)
+
+		if("set-process_rate")
+			var/target_rate = params["processRate"]
+			if(isnum(target_rate))
+				. = set_process_rate(target_rate)
+
+#undef FAN_OFF
+#undef FAN_ON_INLET
+#undef FAN_ON_OUTLET
+#undef PROCESS_OFF
+#undef PROCESS_ACTIVE
+#undef PROCESS_PAUSED
+#undef MIN_BLAST_DELAY
+#undef MAX_BLAST_DELAY
