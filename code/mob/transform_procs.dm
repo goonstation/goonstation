@@ -124,7 +124,7 @@
 //	O.laws_object = ticker.centralized_ai_laws
 //	O.current_law_set = O.laws_object
 	ticker.centralized_ai_laws.show_laws(O)
-	boutput(O, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
+	boutput(O, "<b>These laws may be changed by other players.</b>")
 
 	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb
