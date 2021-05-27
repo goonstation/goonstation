@@ -790,7 +790,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (isghostdrone(user))
 		return list()
 
-	. = list("<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span>")
+	. = list("<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span><br>")
+	if (src.hat)
+		. += "<span class='notice'>[src.name] is wearing the [bicon(src.hat)] [src.hat.name]."
+
 
 	if (isdead(src))
 		. += "<span class='alert'>[src.name] is nonfunctional...</span>"
