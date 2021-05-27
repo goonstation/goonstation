@@ -1,5 +1,10 @@
 
 (t)wed may 26 21
+(u)DimWhat
+(p)4860
+(e)🎨|sprites
+(*)Added a new medal "Brown Pants" which has the reward of the red captain set.
+(+)Made a red version of the captain's fancy uniform.
 (u)Kubius
 (p)4872
 (e)🆕|feature
