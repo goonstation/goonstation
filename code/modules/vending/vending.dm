@@ -755,7 +755,7 @@
 	if (istype(victim) && vicTurf && (get_dist(vicTurf, src) <= 1))
 		victim.changeStatus("weakened", 30 SECONDS)
 		src.visible_message("<b><font color=red>[src.name] tips over onto [victim]!</font></b>")
-		victim.lying = 1
+		victim.force_laydown_standup()
 		victim.set_loc(vicTurf)
 		if (src.layer < victim.layer)
 			src.layer = victim.layer+1
@@ -1716,10 +1716,10 @@
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/mob/living/carbon/human/npc/monkey, rand(10, 15), logged_on_vend=TRUE)
-		
+
 		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/monkey_translator, rand(1,2), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/banana, rand(1,20), hidden=1)
-		
+
 
 /obj/machinery/vending/magivend
 	name = "MagiVend"
