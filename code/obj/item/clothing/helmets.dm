@@ -386,6 +386,10 @@
 	item_state = "nanotrasen_pilot"
 	desc = "A space helmet used by certain Nanotrasen pilots."
 
+	setupProperties()
+		..()
+		setProperty("space_movespeed", 0)
+
 /obj/item/clothing/head/helmet/swat
 	name = "swat helmet"
 	icon_state = "swat"
