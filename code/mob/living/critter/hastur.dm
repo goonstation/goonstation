@@ -121,7 +121,7 @@ var/HasturPresent = 0
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/misc/hastur/growl.ogg" , 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, "sound/misc/hastur/growl.ogg" , 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>Something growls menacingly under [src]'s robe!</b>"
 		return null
 

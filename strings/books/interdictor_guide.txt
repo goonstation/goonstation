@@ -10,22 +10,24 @@
 	<br>
 	Biomagnetic fields nulled on discharge
 	<br>
-	Black holes semi-stabilized, increasing time to respond**
+	Black holes semi-stabilized, increasing time to respond*
 	<br>
 	Radiation pulses safely remodulated within field range
 	<br>
-	Radiation storms interdicted on a per-individual basis*
+	Radiation storms interdicted on a per-individual basis**
 	<br>
 	Solar flare disruptions reduced per onboard interdictor
 	<br>
-	Spatial tears stabilized, permitting limited traversal**
+	Spatial tears stabilized, permitting limited traversal***
 	<br>
 	Unstable wormholes nulled when entry is attempted
 	<br>
 	<br>
-	<i>*ADVISORY: heavy interdiction cost. Multiple interdictors or powerful cell recommended for crowds.</i>
+	<i>*WARNING: total interdiction impossible, and device must be active beforehand.</i>
 	<br>
-	<i>**WARNING: total interdiction impossible, and device must be active beforehand.</i>
+	<i>**ADVISORY: heavy interdiction cost. Multiple interdictors or powerful cell recommended for crowds.</i>
+	<br>
+	<i>***ADVISORY: as a countermeasure to capacitance failure, interdicting spatial tears will require reinitializing the interdictor if it was not installed near the tear at the time of the event.</i>
 	<br>
 	<br>
 	In just a few short steps, worrying about the myriad hazards of space will be a thing of the past!^

@@ -651,12 +651,12 @@ datum
 					var/mob/living/L = M
 					if (istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", -30 SECONDS)
-						playsound(get_turf(L), "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
+						playsound(L, "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
 					if (istype(L,/mob/living/critter/fire_elemental) && !ON_COOLDOWN(L, "fire_elemental_fffoam", 5 SECONDS))
-						L.changeStatus("weakened",0.5 SECONDS)
+						L.changeStatus("weakened", 2 SECONDS)
 						L.force_laydown_standup()
 						L.TakeDamage("All", volume * 1.5, 0, 0, DAMAGE_BLUNT)
-						playsound(get_turf(L), "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.5)
+						playsound(L, "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.5)
 				return
 
 		silicate
@@ -1211,7 +1211,7 @@ datum
 					M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 30 * mult))
 					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
 					M.setStatus("resting", INFINITE_STATUS)
-					playsound(get_turf(M), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
+					playsound(M, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
 					fakedeathed = 1
 				..()
 
@@ -1244,7 +1244,7 @@ datum
 				if (counter >= 19 && !fakedeathed)
 					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
 					M.setStatus("resting", INFINITE_STATUS)
-					playsound(get_turf(M), "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
+					playsound(M, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
 					fakedeathed = 1
 				..()
 
@@ -2508,7 +2508,7 @@ datum
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
 						if (H.sound_list_flap && length(H.sound_list_flap))
-							playsound(get_turf(H), pick(H.sound_list_flap), 80, 0, 0, H.get_age_pitch())
+							playsound(H, pick(H.sound_list_flap), 80, 0, 0, H.get_age_pitch())
 				..()
 				return
 
@@ -3319,7 +3319,7 @@ datum
 							boutput(H, "You have a strange feeling for a moment.")
 						H.bioHolder.AddEffect("accent_yee", timeleft = 180)
 						H.visible_message("<span class='emote'><b>[M]</b> yees.</span>")
-						playsound(get_turf(H), "sound/misc/yee.ogg", 50, 1)
+						playsound(H, "sound/misc/yee.ogg", 50, 1)
 
 			pooled()
 				..()
@@ -3358,7 +3358,7 @@ datum
 					M.bioHolder.AddEffect("accent_yee", timeleft = 180)
 				if (probmult(20))
 					M.visible_message("<span class='emote'><b>[M]</b> yees.</span>")
-					playsound(get_turf(M), "sound/misc/yee.ogg", 50, 1)
+					playsound(M, "sound/misc/yee.ogg", 50, 1)
 				if (probmult(8))
 					fake_attackEx(M, 'icons/effects/hallucinations.dmi', "bop-bop", "bop-bop")
 				if (probmult(8))

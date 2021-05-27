@@ -15,7 +15,7 @@
 				signal_loss_current = max(0,signal_loss_current - rand(itdr_strength,itdr_strength*2))
 				SPAWN_DBG(flare_start_time)
 					if(IX && IX.canInterdict) //just in case
-						playsound(get_turf(IX),'sound/machines/firealarm.ogg',50,0,5,0.6)
+						playsound(IX,'sound/machines/firealarm.ogg',50,0,5,0.6)
 						var/adjusted_est = max(signal_loss_current + rand(-5,5),0)
 						IX.visible_message("<span class='alert'><b>[IX]</b> detects a radio-frequency disturbance. Estimated strength post-interdiction: [adjusted_est]%.</span>")
 						//break omitted, multiple interdictors can stack

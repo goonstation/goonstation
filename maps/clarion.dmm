@@ -6904,7 +6904,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "alZ" = (

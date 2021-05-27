@@ -253,7 +253,7 @@
 
 	onStart()
 		..()
-		playsound(get_turf(owner), 'sound/effects/bow_aim.ogg', 75, 1)
+		playsound(owner, 'sound/effects/bow_aim.ogg', 75, 1)
 		owner.visible_message("<span class='alert'>[owner] pulls the string on [bow]!</span>", "<span class='notice'>You pull the string on [bow]!</span>")
 
 	onDelete()
@@ -418,11 +418,11 @@
 		if (isliving(target))
 			if (prob(50))
 				user.visible_message("<span class='alert'><b>[user] tries to stab [target] with [src] but misses!</b></span>")
-				playsound(get_turf(user), 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, 1)
+				playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, 1)
 				return
 			user.visible_message("<span class='alert'><b>[user] stabs [target] with [src]!</b></span>")
 			user.u_equip(src)
-			playsound(get_turf(user), 'sound/impact_sounds/Flesh_Stab_1.ogg', 75, 1)
+			playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 75, 1)
 			var/datum/material/fusedmaterial = getFusedMaterial(head_material,shaft_material)//uses a fused material to get the effects of both the shaft and head material as an implant as the lifeloop only accepts one material per implant
 			if (ishuman(target))
 				var/mob/living/carbon/human/H = target
@@ -587,7 +587,7 @@
 
 	on_hit(var/atom/A, angle, var/obj/projectile/P)
 		if (ismob(A))
-			playsound(get_turf(A), 'sound/impact_sounds/Flesh_Stab_1.ogg', 75, 1)
+			playsound(A, 'sound/impact_sounds/Flesh_Stab_1.ogg', 75, 1)
 			var/obj/item/implant/projectile/arrow/B = P.implanted
 			if (istype(B))
 				if (B.material)

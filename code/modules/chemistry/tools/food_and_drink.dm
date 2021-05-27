@@ -1186,7 +1186,7 @@
 			bladder = H.sims?.getValue("Bladder")
 			if ((!isnull(bladder) && (bladder <= 65)) || (isnull(bladder) && (H.urine >= 2)))
 				H.visible_message("<span class='alert'><B>[H] pees in [src]!</B></span>")
-				playsound(get_turf(H), "sound/misc/pourdrink.ogg", 50, 1)
+				playsound(H, "sound/misc/pourdrink.ogg", 50, 1)
 				if (!H.sims)
 					H.urine -= 2
 				else
@@ -1228,7 +1228,7 @@
 				H.losebreath += max(H.losebreath, 5)
 			else if (eat_thing.reagents && eat_thing.reagents.total_volume)
 				eat_thing.reagents.trans_to(H, eat_thing.reagents.total_volume)
-			playsound(get_turf(H), "sound/items/eatfood.ogg", rand(10,50), 1)
+			playsound(H, "sound/items/eatfood.ogg", rand(10,50), 1)
 			qdel(eat_thing)
 			src.update_icon()
 			return
@@ -1673,7 +1673,7 @@
 	icon_state = "carafe-eng"
 	item_state = "carafe-eng"
 	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE
-	initial_volume = 80
+	initial_volume = 100
 	var/smashed = 0
 	var/shard_amt = 1
 	var/image/fluid_image
@@ -1808,7 +1808,7 @@
 	attack_self(mob/user)
 		if (src.reagents.total_volume > 0)
 			user.visible_message("<b>[user.name]</b> shakes the container [pick("rapidly", "thoroughly", "carefully")].")
-			playsound(get_turf(src), "sound/items/CocktailShake.ogg", 25, 1, -6)
+			playsound(src, "sound/items/CocktailShake.ogg", 25, 1, -6)
 			sleep (0.3 SECONDS)
 			src.reagents.inert = 0
 			src.reagents.physical_shock(rand(5, 20))

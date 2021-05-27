@@ -1086,3 +1086,18 @@
 	icon_state = "nt-pod-poster"
 /obj/decal/poster/wallsign/pod_build/sy
 	icon_state = "sy-pod-poster"
+
+/obj/decal/poster/wallsign/pw_map
+	name = "Map"
+	desc = "A map affixed to the wall!'."
+	icon = 'icons/obj/decals/posters.dmi'
+	icon_state = "pw_map"
+	popup_win = 1
+	imgw = 702
+	imgh = 702
+
+	show_popup_win(var/client/C)
+		if (!C || !src.popup_win)
+			return
+
+		C.Browse("<img src=\"[resource("images/pw_map.png")]\">","window=Map;size=[imgw]x[imgh];title=Map")

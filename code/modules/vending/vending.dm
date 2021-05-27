@@ -85,10 +85,11 @@
 	var/shoot_inventory_chance = 5
 	var/ai_control_enabled = 1
 
-	var/extended_inventory = 0 //can we access the hidden inventory?
-	var/can_fall = 1 //Can this machine be knocked over?
+	var/extended_inventory = FALSE //can we access the hidden inventory?
+	var/can_fall = TRUE //Can this machine be knocked over?
+	var/can_hack = TRUE //Can this machine have it's panel open?
 
-	var/panel_open = 0 //Hacking that vending machine. Gonna get a free candy bar.
+	var/panel_open = FALSE //Hacking that vending machine. Gonna get a free candy bar.
 	var/wires = 15
 
 	// Paid vendor variables
@@ -411,7 +412,7 @@
 		else
 			boutput(user, "<span class='alert'>This machine does not accept ID cards.</span>")
 			return
-	else if (isscrewingtool(W))
+	else if (isscrewingtool(W) && (src.can_hack))
 		src.panel_open = !src.panel_open
 		boutput(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
 		src.UpdateOverlays(src.panel_open ? src.panel_image : null, "panel")
@@ -1715,8 +1716,10 @@
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/mob/living/carbon/human/npc/monkey, rand(10, 15), logged_on_vend=TRUE)
-
+		
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/monkey_translator, rand(1,2), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/banana, rand(1,20), hidden=1)
+		
 
 /obj/machinery/vending/magivend
 	name = "MagiVend"
@@ -2185,3 +2188,132 @@
 
 		product_list += new/datum/data/vending_product(/obj/item/sponge/cheese, 2, hidden=1)
 
+/obj/machinery/vending/air_vendor
+	name = "Oxygen Vending Machine"
+	desc = "Here, you can buy the oxygen that you need to live."
+	icon_state = "O2vend"
+	icon_panel = "O2vend-panel"
+	icon_off = "O2vend-off"
+	icon_broken = "O2vend-broken"
+	icon_fallen = "O2vend-fallen"
+	deconstruct_flags = DECON_CROWBAR | DECON_WRENCH | DECON_MULTITOOL
+	can_hack = FALSE
+	pay = TRUE
+	acceptcard = TRUE
+	vend_delay = 0
+	slogan_list = list("Come get a breath of fresh air",
+	"You NEED this to live!.",
+	"Breathing is GOOD!",
+	"Contains only 2% farts!")
+	var/global/image/holding_overlay_image = image('icons/obj/vending.dmi', "O2vend-slot")
+
+	// Currently installed tank
+	var/obj/item/tank/holding = null
+
+	// Gas mix to be copied into the target tank
+	var/datum/gas_mixture/gas_prototype = null
+
+	var/target_pressure = ONE_ATMOSPHERE
+	var/air_cost = 0.1 // units: credits / ( kPa * L )
+
+	light_r =0.4
+	light_g = 0.4
+	light_b = 1
+
+	New()
+		..()
+		gas_prototype = unpool(/datum/gas_mixture)
+
+	proc/fill_cost()
+		if(!holding) return 0
+		return clamp(round((src.target_pressure - MIXTURE_PRESSURE(src.holding.air_contents)) * src.holding.air_contents.volume * src.air_cost), 0, INFINITY)
+
+	proc/fill()
+		if(!holding) return
+		gas_prototype.volume = holding.air_contents.volume
+		gas_prototype.temperature = T20C
+
+		gas_prototype.oxygen = (target_pressure)*gas_prototype.volume/(R_IDEAL_GAS_EQUATION*gas_prototype.temperature)
+
+		holding.air_contents.copy_from(gas_prototype)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/tank))
+			if (!src.holding)
+				boutput(user, "You insert the [W] into the the [src].</span>")
+				UpdateOverlays(holding_overlay_image, "o2_vend_tank_overlay")
+				user.drop_item()
+				W.set_loc(src)
+				src.holding = W
+				src.updateUsrDialog()
+			else
+				boutput(user, "You try to insert the [W] into the the [src], but there's already a tank there!</span>")
+				return
+		else
+			..()
+
+	attack_hand(mob/user as mob)
+		if (status & (BROKEN|NOPOWER))
+			return
+		if (usr.stat || usr.restrained())
+			return
+
+		src.add_dialog(user)
+		var/html = ""
+		html += "<TT><b>Welcome!</b><br>"
+		html += "<b>Current balance: <a href='byond://?src=\ref[src];return_credits=1'>[src.credit] credits</a></b><br>"
+		if (src.scan)
+			var/datum/data/record/account = null
+			account = FindBankAccountByName(src.scan.registered)
+			html += "<b>Current ID:</b> <a href='?src=\ref[src];logout=1'>[src.scan]</a><br />"
+			html += "<b>Credits on Account: [account.fields["current_money"]] Credits</b> <br>"
+		else
+			html += "<b>Current ID:</b> None<br>"
+		if(src.holding)
+			html += "<font color = 'blue'>Current tank:</font> <a href='?src=\ref[src];eject=1'>[holding]</a><br />"
+			html += "<font color = 'red'>Pressure:</font> [MIXTURE_PRESSURE(holding.air_contents)] kPa<br />"
+		else
+			html += "<font color = 'blue'>Current tank:</font> none<br />"
+
+		html += "<font color = 'green'>Desired pressure:</font> <a href='?src=\ref[src];changepressure=1'>[src.target_pressure] kPa</a><br/>"
+		html += (holding) ? "<a href='?src=\ref[src];fill=1'>Fill ([src.fill_cost()] credits)</a>" : "<font color = 'red'>Fill (unavailable)</red>"
+
+		user.Browse(html, "window=o2_vending")
+		onclose(user, "vending")
+
+	Topic(href, href_list)
+		..()
+
+		if(href_list["eject"])
+			if(holding)
+				usr.put_in_hand_or_eject(holding)
+				holding = null
+				UpdateOverlays(null, "o2_vend_tank_overlay")
+				src.updateUsrDialog()
+
+		if(href_list["changepressure"])
+			var/change = input(usr,"Target Pressure (10.1325-1013.25):","Enter target pressure",target_pressure) as num
+			if(isnum(change))
+				target_pressure = min(max(10.1325, change),1013.25)
+				src.updateUsrDialog()
+
+		if(href_list["fill"])
+			if (holding)
+				var/cost = fill_cost()
+				if(credit >= cost)
+					src.credit -= cost
+					src.fill()
+					boutput(usr, "<span class='notice'>You fill up the [src.holding].</span>")
+					src.updateUsrDialog()
+					return
+				else if(scan)
+					var/datum/data/record/account = FindBankAccountByName(src.scan.registered)
+					if (account && account.fields["current_money"] >= cost)
+						account.fields["current_money"] -= cost
+						src.fill()
+						boutput(usr, "<span class='notice'>You fill up the [src.holding].</span>")
+						src.updateUsrDialog()
+						return
+				boutput(usr, "<span class='alert'>Insufficient funds.</span>")
+			else
+				boutput(usr, "<span class='alert'>There is no tank to fill up!</span>")

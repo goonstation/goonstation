@@ -809,6 +809,11 @@ datum
 						if(!D.reagents) D.create_reagents(10)
 						D.reagents.add_reagent("blackpowder", 5, null)
 				return
+			reaction_mob(var/mob/living/carbon/human/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if (ishuman(M) && volume >= 10)
+					M.gunshot_residue = 1
+				return
 
 		combustible/nitrogentriiodide
 			//This is the parent and should not be spawned

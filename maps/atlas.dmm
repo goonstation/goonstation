@@ -5184,7 +5184,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/blue/side{
 	dir = 8
 	},

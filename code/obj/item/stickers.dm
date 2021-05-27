@@ -68,7 +68,7 @@
 		src.active = 1
 		src.set_loc(A)
 
-		playsound(get_turf(src), 'sound/items/sticker.ogg', 50, 1)
+		playsound(src, 'sound/items/sticker.ogg', 50, 1)
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()

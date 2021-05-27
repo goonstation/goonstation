@@ -5243,7 +5243,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/blue/side{
 	dir = 8
 	},
@@ -7442,10 +7442,8 @@
 "rG" = (
 /obj/disposalpipe/segment,
 /obj/juggleplaque{
-	desc = {"NCS Atlas, Nanotrasen,  \"Man always kills the thing he loves, and so we the pioneers have killed our wilderness. Some say we had to. Be that as it may, I am glad I shall never be young without wild country to be young in. Of what avail are forty freedoms without a blank spot on the map?  - Aldo Leopold\""};
-	name = "dedication plaque";
-	pixel_y = 25
-	},
+	desc = {"NCS Atlas, Nanotrasen,  \"Man always kills the thing he loves, and so we the pioneers have killed our wilderness. Some say we had to. Be that as it may, I am glad I shall never be young without wild country to be young in. Of what avail are forty freedoms without a blank spot on the map?  - Aldo Leopold\""
+	};name = "dedication plaque";pixel_y = 25},
 /turf/simulated/floor/blueblack,
 /area/station/bridge)
 "rH" = (
@@ -10129,7 +10127,7 @@
 "xI" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
-},
+	},
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)
 "xL" = (

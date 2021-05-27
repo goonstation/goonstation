@@ -95,7 +95,7 @@
 			return
 
 		src.on = !src.on
-		playsound(get_turf(src), "sound/items/penclick.ogg", 30, 1)
+		playsound(src, "sound/items/penclick.ogg", 30, 1)
 		if (src.on)
 			set_icon_state(src.icon_on)
 			if (src.emagged) // Burn them all!
@@ -418,7 +418,7 @@
 		if(src.on && !src.did_thing)
 			src.did_thing = 1
 			//what should it do, other than this sound?? i tried a particle system but it didn't work :{
-			playsound(get_turf(src), pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg'), 65, 0)
+			playsound(src, pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg'), 65, 0)
 
 		return
 
@@ -446,7 +446,7 @@
 	brightness = 0.8
 
 	attack_self(mob/user as mob)
-		playsound(get_turf(src), "sound/items/penclick.ogg", 30, 1)
+		playsound(src, "sound/items/penclick.ogg", 30, 1)
 		src.on = !src.on
 		user.visible_message("<b>[user]</b> flicks [src.on ? "on" : "off"] the [src].")
 		if (src.on)
