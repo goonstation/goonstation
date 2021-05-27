@@ -1,5 +1,8 @@
 
 (t)thu may 27 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Synthflesh/styptic/sulfazdine consumed from fluid puddles on touch reactions.
 (u)Flappybat
 (p)4911
 (e)🔄|rework
