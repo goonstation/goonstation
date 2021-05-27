@@ -1,4 +1,25 @@
 
+(t)wed may 26 21
+(u)DimWhat
+(p)4860
+(e)🎨|sprites
+(*)Added a new medal "Brown Pants" which has the reward of the red captain set.
+(+)Made a red version of the captain's fancy uniform.
+(u)Kubius
+(p)4872
+(e)🆕|feature
+(+)Spatial Interdictors may now interdict spatial tears after they form, requiring a fresh initialization within range of the tear.
+(u)Vaskritaya
+(p)4877
+(e)|
+(+)Salesman and tourists can now change their name on spawn, in case they spawn as a mutantrace or just if they feel like it.
+(u)DimWhat
+(p)4888
+(e)|
+(+)Made satchels layer under tails.
+(u)virvatuli
+(e)🎶|sound
+(*)Added six new songs to the random record pool, 3 metal and 3 funky for some more diverse tunes over the radio!
 (t)tue may 25 21
 (u)Tarmunora
 (e)⚖|balance

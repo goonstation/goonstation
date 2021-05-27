@@ -210,6 +210,12 @@
 
 	src.canInterdict = 1
 	playsound(src.loc, src.sound_interdict_on, 40, 0)
+	SPAWN_DBG(rand(30,40)) //after it's been on for a little bit, check for tears
+		if(src.canInterdict)
+			for (var/obj/forcefield/event/tear in by_type[/obj/forcefield/event])
+				SPAWN_DBG(rand(8,22)) //stagger stabilizations, since it's getting stabilized post-formation
+					if (!tear.stabilized && IN_RANGE(src,tear,src.interdict_range) && src.expend_interdict(800))
+						tear.stabilize()
 	src.updateicon()
 
 
@@ -256,22 +262,24 @@
 	<br>
 	Biomagnetic fields nulled on discharge
 	<br>
-	Black holes semi-stabilized, increasing time to respond**
+	Black holes semi-stabilized, increasing time to respond*
 	<br>
 	Radiation pulses safely remodulated within field range
 	<br>
-	Radiation storms interdicted on a per-individual basis*
+	Radiation storms interdicted on a per-individual basis**
 	<br>
 	Solar flare disruptions reduced per onboard interdictor
 	<br>
-	Spatial tears stabilized, permitting limited traversal**
+	Spatial tears stabilized, permitting limited traversal***
 	<br>
 	Unstable wormholes nulled when entry is attempted
 	<br>
 	<br>
-	<i>*ADVISORY: heavy interdiction cost. Multiple interdictors or powerful cell recommended for crowds.</i>
+	<i>*WARNING: total interdiction impossible, and device must be active beforehand.</i>
 	<br>
-	<i>**WARNING: total interdiction impossible, and device must be active beforehand.</i>
+	<i>**ADVISORY: heavy interdiction cost. Multiple interdictors or powerful cell recommended for crowds.</i>
+	<br>
+	<i>***ADVISORY: as a countermeasure to capacitance failure, interdicting spatial tears will require reinitializing the interdictor if it was not installed near the tear at the time of the event.</i>
 	<br>
 	<br>
 	In just a few short steps, worrying about the myriad hazards of space will be a thing of the past!^

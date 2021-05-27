@@ -284,7 +284,7 @@
 		scoot_sounds = list( 'sound/misc/chair/office/scoot1.ogg', 'sound/misc/chair/office/scoot2.ogg', 'sound/misc/chair/office/scoot3.ogg', 'sound/misc/chair/office/scoot4.ogg', 'sound/misc/chair/office/scoot5.ogg' )
 
 	Move()
-		if(src.buckled_guy.loc != src.loc)
+		if(src.buckled_guy?.loc != src.loc)
 			src.unbuckle()
 		. = ..()
 		if (. && src.buckled_guy)
@@ -325,6 +325,9 @@
 
 		if (!ticker)
 			user.show_text("You can't buckle anyone in before the game starts.", "red")
+			return 0
+		if (C.buckled)
+			boutput(user, "They're already buckled into something!", "red")
 			return 0
 		if (src.security)
 			user.show_text("There's nothing you can buckle them to!", "red")
@@ -673,6 +676,9 @@
 	can_buckle(var/mob/M, var/mob/user)
 		if (!ticker)
 			boutput(user, "You can't buckle anyone in before the game starts.")
+			return 0
+		if (M.buckled)
+			boutput(user, "They're already buckled into something!", "red")
 			return 0
 		if (!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || !isalive(user))
 			return 0

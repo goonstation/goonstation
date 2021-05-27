@@ -1308,6 +1308,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_foot = /obj/item/clothing/shoes/tourist
 	slot_lhan = /obj/item/camera
 	slot_rhan = /obj/item/storage/photo_album
+	change_name_on_spawn = 1
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -1537,6 +1538,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_lhan = /obj/item/storage/briefcase
 	slot_foot = /obj/item/clothing/shoes/brown
 	alt_names = list("Salesman", "Merchant")
+	change_name_on_spawn = 1
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2606,6 +2608,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_foot = /obj/item/clothing/shoes/tourist
 	slot_lhan = /obj/item/camera
 	slot_rhan = /obj/item/storage/photo_album
+	change_name_on_spawn = 1
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2653,7 +2656,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	allow_traitors = 0
 	cant_spawn_as_rev = 1
 	var/team = 0 //1 = NT, 2 = SY
-	
+
 	special_setup(var/mob/living/carbon/human/M)
 		..()
 		if (!M)
@@ -2680,8 +2683,8 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		if (istype(headset))
 			headset.set_secure_frequency("g",freq)
 			headset.secure_classes["g"] = RADIOCL_SYNDICATE
-			headset.cant_self_remove = 0 
-			headset.cant_other_remove = 0 
+			headset.cant_self_remove = 0
+			headset.cant_other_remove = 0
 
 	nanotrasen
 		name = "NanoTrasen Pod Pilot"
