@@ -800,6 +800,8 @@
 	special_hair_1_icon = 'icons/mob/lizard.dmi'
 	special_hair_1_state = "head-detail_1"
 	special_hair_1_color = CUST_3
+	special_hair_1_layer = MOB_FACE_LAYER
+	special_hair_1_layer_f = MOB_FACE_LAYER
 	detail_1_icon = 'icons/mob/lizard.dmi'
 	detail_1_state = "lizard_detail-1"
 	detail_1_color = CUST_2
