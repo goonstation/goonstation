@@ -35,7 +35,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		
+
 		if(isdead(target) || target.health <= -100) //If basically dead, instaconvert.
 			target.set_mutantrace(/datum/mutantrace/zombie/can_infect)
 			target.full_heal()
@@ -47,7 +47,7 @@
 			logTheThing("combat", ownerMob, target, "zombifies [constructTarget(target,"combat")].")
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='alert'><B>[owner] successfully infected [target]!</B></span>", 1)
-			playsound(get_turf(ownerMob), "sound/impact_sounds/Flesh_Crush_1.ogg", 50, 0)
+			playsound(ownerMob, "sound/impact_sounds/Flesh_Crush_1.ogg", 50, 0)
 			ownerMob.health = ownerMob.max_health
 
 			target.TakeDamageAccountArmor("head", 30, 0, 0, DAMAGE_CRUSH)

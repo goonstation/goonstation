@@ -1488,7 +1488,7 @@ PIPE BOMBS + CONSTRUCTION
 
 		if (sound_effect)
 			SPAWN_DBG(4 SECONDS) //you can use a sound effect to hold a bomb in hand and throw it at the very last moment!
-				playsound(get_turf(src), sound_effect, 50, 1)
+				playsound(src, sound_effect, 50, 1)
 		SPAWN_DBG(5 SECONDS)
 			do_explode()
 
@@ -1582,7 +1582,7 @@ PIPE BOMBS + CONSTRUCTION
 							boutput(M, "<span class='alert'>You suddenly teleport ...</span>")
 							M.set_loc(warp_to)
 			if (rcd)
-				playsound(get_turf(src), "sound/items/Deconstruct.ogg", 70, 1)
+				playsound(src, "sound/items/Deconstruct.ogg", 70, 1)
 				for (var/turf/T in view(rcd,src.loc))
 					if (istype(T, /turf/space))
 						var/turf/simulated/floor/F = T:ReplaceWithFloor()

@@ -9438,7 +9438,7 @@
 	})
 "tl" = (
 /obj/machinery/light/small,
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/utility{
 	name = "Dionysus Cryocore"

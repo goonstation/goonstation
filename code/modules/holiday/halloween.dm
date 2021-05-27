@@ -428,8 +428,8 @@
 			if(!(src.client && src.client.holder))
 				src.emote_allowed = 0
 
-			if(src.gender == MALE) playsound(get_turf(src), "sound/voice/screams/male_scream.ogg", 100, 0, 0, 0.91, channel=VOLUME_CHANNEL_EMOTE)
-			else playsound(get_turf(src), "sound/voice/screams/female_scream.ogg", 100, 0, 0, 0.9, channel=VOLUME_CHANNEL_EMOTE)
+			if(src.gender == MALE) playsound(src, "sound/voice/screams/male_scream.ogg", 100, 0, 0, 0.91, channel=VOLUME_CHANNEL_EMOTE)
+			else playsound(src, "sound/voice/screams/female_scream.ogg", 100, 0, 0, 0.9, channel=VOLUME_CHANNEL_EMOTE)
 			SPAWN_DBG(5 SECONDS)
 				src.emote_allowed = 1
 			return "screams!"
@@ -555,7 +555,7 @@
 			if("ONION SLUG CANDY") // Anagram: ANNOYING CLOUDS
 				particleMaster.SpawnSystem(new /datum/particleSystem/spooky_mist(get_turf(user)))
 				user.show_text("A cold and spooky wind begins to blow!","#8218A8")
-				playsound(get_turf(user), 'sound/ambience/nature/Wind_Cold2.ogg', 50, 1, 5)
+				playsound(user, 'sound/ambience/nature/Wind_Cold2.ogg', 50, 1, 5)
 			if("HOT SIGMA") // Anagram: IM A GHOST
 				user.blend_mode = 2
 				user.alpha = 150
@@ -665,7 +665,7 @@
 
 	proc/scare_some_people()
 		src.spooky_shake()
-		playsound(get_turf(src), src.trigger_sound, 100, 0)
+		playsound(src, src.trigger_sound, 100, 0)
 		src.visible_message("<span class='alert'><b>\The [src] comes to life and starts making an unearthly, haunting wail!</b></span>")
 		for (var/mob/M in viewers(src))
 			if (prob(66))

@@ -407,7 +407,7 @@
 		name = "whoopie pie"
 		desc = "A confection infamous for being especially terrible for you, in a culture noted for having nothing but foods that are terrible for you."
 		icon_state = "moonpie-chocolate"
-		heal_amt = 250 //oh jesus
+		heal_amt = 25 //oh jesus
 		food_effects = list("food_refreshed_big")
 
 	spooky
@@ -1057,7 +1057,7 @@
 				if (H.a_intent == INTENT_HARM && (H.job == "Chef" || H.job == "Sous-Chef") && H.bioHolder?.HasEffect("accent_swedish"))
 					src.visible_message("<span class='alert'><b>[H] hits the [src] with [W]!<b></span>")
 					src.visible_message("<span class='alert'>The [src] barks at [H]!</span>")
-					playsound(get_turf(src), "sound/voice/animal/dogbark.ogg", 40, 1)
+					playsound(src, "sound/voice/animal/dogbark.ogg", 40, 1)
 					SPAWN_DBG(0.75 SECONDS)
 						if (src && H)
 							src.visible_message("<span class='alert'>The [src] takes a bite out of [H]!</span>")

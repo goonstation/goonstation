@@ -527,6 +527,46 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 		..()
 		src.UpdateOverlays(new /image(src.icon, "record_6"), "recordlabel") //it should always be green because I'm so funny.
 
+/obj/item/record/random/metal
+	New()
+		. = ..()
+		src.desc += {" A space metal record, rock on!"}
+
+/obj/item/record/random/metal/xtra
+	name = "record - \"Radstorm Rock\""
+	record_name = "Radstorm Rock"
+	song = "sound/radio_station/music/xtra.ogg"
+
+/obj/item/record/random/metal/giga
+	name = "record - \"Punctured Spacesuit\""
+	record_name = "Punctured Spacesuit"
+	song = "sound/radio_station/music/giga.ogg"
+
+/obj/item/record/random/metal/maxi
+	name = "record - \"Plasmageddon\""
+	record_name = "Plasmageddon"
+	song = "sound/radio_station/music/maxi.ogg"
+
+/obj/item/record/random/funk
+	New()
+		. = ..()
+		src.desc += {" A space funk record to groove to!"}
+
+/obj/item/record/random/funk/funkadelic
+	name = "record - \"Fission Funk\""
+	record_name = "Fission Funk"
+	song = "sound/radio_station/music/funkadelic.ogg"
+
+/obj/item/record/random/funk/groovy
+	name = "record - \"Gaussian Groove\""
+	record_name = "Gaussian Groove"
+	song = "sound/radio_station/music/groovy.ogg"
+
+/obj/item/record/random/funk/time4lunch
+	name = "record - \"Lunch4Laika\""
+	record_name = "Lunch4Laika"
+	song = "sound/radio_station/music/lunch.ogg"
+
 /obj/item/record/spacebux/New()
 	..()
 	var/obj/item/record/record_type = pick(concrete_typesof(/obj/item/record/random))
@@ -674,6 +714,17 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 		/obj/item/record/random/nostalgic/afterparty,
 		/obj/item/record/random/nostalgic/soalive,
 		/obj/item/record/random/nostalgic/alivetoo)
+
+/obj/item/storage/box/record/radio/guitar
+	name = "\improper Space Metal N' Funk record sleeve"
+	desc = {"A sturdy record sleeve, designed to hold multiple records. It seems to have an assortment of rockin' tunes."}
+	spawn_contents = list(
+		/obj/item/record/random/metal/xtra,
+		/obj/item/record/random/metal/giga,
+		/obj/item/record/random/metal/maxi,
+		/obj/item/record/random/funk/funkadelic,
+		/obj/item/record/random/funk/groovy,
+		/obj/item/record/random/funk/time4lunch)
 
 /obj/item/storage/box/record/radio/chronoquest
 	name = "\improper Chronoquest record sleeve"

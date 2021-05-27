@@ -209,7 +209,24 @@ datum
 									HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
 								else if (ethanol_amt >= 40 && prob(ethanol_amt/2))
 									HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
+//inc_alcohol_metabolized()
+//bunch of extra logic for dumb stat tracking. This is copy pasted from proc/how_many_depletions() in Chemistry-Reagents.dm									
+#if defined(MAP_OVERRIDE_POD_WARS)
+						var/amt_of_alcohol_metabolized = depletion_rate
+						if (H.traitHolder?.hasTrait("slowmetabolism")) //fuck
+							amt_of_alcohol_metabolized/= 2
+						if (H.organHolder)
+							if (!H.organHolder.liver || H.organHolder.liver.broken)	//if no liver or liver is dead, deplete slower
+								amt_of_alcohol_metabolized /= 2
+							if (H.organHolder.get_working_kidney_amt() == 0)	//same with kidneys
+								amt_of_alcohol_metabolized /= 2
+
+						if (istype(ticker.mode, /datum/game_mode/pod_wars))
+							var/datum/game_mode/pod_wars/mode = ticker.mode
+							mode.stats_manager?.inc_alcohol_metabolized(H, amt_of_alcohol_metabolized * mult)
+#endif
 					..()
+
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				//Maybe add a bit that gives you a stamina buff if OD-ing on ethanol and you have a cyberliver.
@@ -786,7 +803,7 @@ datum
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", -1 * volume SECONDS)
-						playsound(get_turf(L), "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
+						playsound(L, "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
 				return 1
 
 		water/water_holy

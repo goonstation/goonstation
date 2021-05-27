@@ -5979,7 +5979,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "cxP" = (
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /obj/disposalpipe/segment/horizontal,
 /obj/decal/tile_edge/stripe{
 	dir = 6;

@@ -697,7 +697,7 @@ that cannot be itched
 		if (!I || !(access_security in I.access))
 			boutput(user, "<span class='alert'>Insufficient access.</span>")
 			return
-		playsound(get_turf(src), "sound/machines/keyboard3.ogg", 30, 1)
+		playsound(src, "sound/machines/keyboard3.ogg", 30, 1)
 		var/issuer = I.registered
 		var/issuer_job = I.assignment
 		var/ticket_target = input(user, "Ticket recipient:", "Recipient", "Ticket Recipient") as text
@@ -721,7 +721,7 @@ that cannot be itched
 		T.issuer_byond_key = user.key
 		data_core.tickets += T
 
-		playsound(get_turf(src), "sound/machines/printer_thermal.ogg", 50, 1)
+		playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
 		SPAWN_DBG(3 SECONDS)
 			var/obj/item/paper/p = unpool(/obj/item/paper)
 			p.set_loc(get_turf(src))

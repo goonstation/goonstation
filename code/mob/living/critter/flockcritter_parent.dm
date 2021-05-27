@@ -111,7 +111,7 @@
 
 	// automatic extinguisher! after some time, anyway
 	if(getStatusDuration("burning") > 0 && !src.extinguishing)
-		playsound(get_turf(src), "sound/weapons/rev_flash_startup.ogg", 40, 1, -3)
+		playsound(src, "sound/weapons/rev_flash_startup.ogg", 40, 1, -3)
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Fire detected in critical systems. Integrated extinguishing systems are engaging.\]</b></span>")
 		src.extinguishing = 1
 		SPAWN_DBG(5 SECONDS)
@@ -122,7 +122,7 @@
 				SPAWN_DBG(10 SECONDS)
 					if (F && !F.disposed)
 						pool(F)
-			playsound(get_turf(src), "sound/effects/spray.ogg", 50, 1, -3)
+			playsound(src, "sound/effects/spray.ogg", 50, 1, -3)
 			update_burning(-100)
 			sleep(2 SECONDS)
 			src.extinguishing = 0
@@ -298,7 +298,7 @@
 			return
 		if(F && prob(40))
 			animate_shake(F)
-			playsound(get_turf(F), pick("sound/machines/mixer.ogg", "sound/machines/repairing.ogg", "sound/impact_sounds/Metal_Clang_1.ogg"), 30, 1)
+			playsound(F, pick("sound/machines/mixer.ogg", "sound/machines/repairing.ogg", "sound/impact_sounds/Metal_Clang_1.ogg"), 30, 1)
 
 	onStart()
 		..()
@@ -313,7 +313,7 @@
 			F.canmove = 1
 			F.visible_message("<span class='alert'>[owner] deploys some sort of device!</span>", "<span class='notice'>You deploy a second-stage assembler.</span>")
 			new /obj/flock_structure/egg(get_turf(F), F.flock)
-			playsound(get_turf(F), "sound/impact_sounds/Metal_Clang_1.ogg", 60, 1)
+			playsound(F, "sound/impact_sounds/Metal_Clang_1.ogg", 60, 1)
 			F.pay_resources(100)
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -423,7 +423,7 @@
 				if(src.decal)
 					src.decal.set_loc(target)
 					flick("spawn-wall", src.decal)
-				playsound(get_turf(target), "sound/misc/flockmind/flockdrone_build.ogg", 50, 1)
+				playsound(target, "sound/misc/flockmind/flockdrone_build.ogg", 50, 1)
 
 	onInterrupt()
 		..()
@@ -439,7 +439,7 @@
 			var/obj/icecube/flockdrone/cage = new /obj/icecube/flockdrone(target.loc, target, F.flock)
 			cage.visible_message("<span class='alert'>[cage] forms around [target], entombing them completely!</span>")
 			F.pay_resources(15)
-			playsound(get_turf(target), "sound/misc/flockmind/flockdrone_build_complete.ogg", 70, 1)
+			playsound(target, "sound/misc/flockmind/flockdrone_build_complete.ogg", 70, 1)
 
 ///
 //decon action
@@ -500,7 +500,7 @@
 				target = null
 			if(/obj/table/flock, /obj/table/flock/auto)
 				var/obj/table/flock/f = target
-				playsound(get_turf(f), "sound/items/Deconstruct.ogg", 50, 1)
+				playsound(f, "sound/items/Deconstruct.ogg", 50, 1)
 				f.deconstruct()
 //
 //deposit action
