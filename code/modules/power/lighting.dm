@@ -135,7 +135,7 @@
 				var/turf/T = null
 				for (var/dir in cardinal)
 					T = get_step(src,dir)
-					if (istype(T,/turf/simulated/wall) || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))
+					if (istype(T,/turf/simulated/wall) || istype(T,/turf/unsimulated/wall) || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))
 						var/is_jen_wall = 0 // jen walls' ceilings are narrower, so let's move the lights a bit further inward!
 						if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
 							is_jen_wall = 1
