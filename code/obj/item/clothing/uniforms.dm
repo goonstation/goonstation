@@ -1104,6 +1104,18 @@
 		icon_state = "suitT-dress"
 		item_state = "suitT-dress"
 
+/obj/item/clothing/under/suit/hopG
+	name = "\improper Head of Personnel's suit"
+	desc = "A grey suit and blue necktie. An authoritative yet boring ensemble."
+	icon_state = "suitT-alt"
+	item_state = "suitT-alt"
+
+/obj/item/clothing/under/suit/hopGdress
+	name = "\improper Head of Personnel's suit"
+	desc = "A grey dress and blue necktie. An authoritative yet boring ensemble."
+	icon_state = "suitT-dress-alt"
+	item_state = "suitT-dress-alt"
+
 /obj/item/clothing/under/suit/hos
 	name = "\improper Head of Security's suit"
 	desc = "A red suit and black necktie. You're either parking cars for people, or you have no taste."
