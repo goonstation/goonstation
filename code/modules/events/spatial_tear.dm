@@ -46,8 +46,11 @@
 				src.stabilize()
 				break
 		SPAWN_DBG(duration)
-			STOP_TRACKING
 			qdel(src)
+
+	disposing()
+		STOP_TRACKING
+		..()
 
 	attack_hand(mob/user)
 		if(src.stabilized)
