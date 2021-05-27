@@ -807,13 +807,13 @@
 	proc/play_block_sound(var/hit_type = DAMAGE_BLUNT)
 		switch(hit_type)
 			if (DAMAGE_BLUNT)
-				playsound(get_turf(src), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1)
+				playsound(src, 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1)
 			if (DAMAGE_CUT)
-				playsound(get_turf(src), 'sound/impact_sounds/block_cut.ogg', 50, 1, -1)
+				playsound(src, 'sound/impact_sounds/block_cut.ogg', 50, 1, -1)
 			if (DAMAGE_STAB)
-				playsound(get_turf(src), 'sound/impact_sounds/block_stab.ogg', 50, 1, -1)
+				playsound(src, 'sound/impact_sounds/block_stab.ogg', 50, 1, -1)
 			if (DAMAGE_BURN)
-				playsound(get_turf(src), 'sound/impact_sounds/block_burn.ogg', 50, 1, -1)
+				playsound(src, 'sound/impact_sounds/block_burn.ogg', 50, 1, -1)
 
 	handle_throw(var/mob/living/user,var/atom/target)
 		if (isturf(user.loc) && target)
@@ -845,7 +845,7 @@
 							damage += H.limbs.l_leg.limb_hit_bonus
 
 					dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
-					playsound(get_turf(user), 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
+					playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
 					for (var/mob/O in AIviewers(user))
 						O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
 					logTheThing("combat", user, dive_attack_hit, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")

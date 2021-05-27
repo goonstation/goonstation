@@ -286,8 +286,8 @@
 #ifdef USE_STAMINA_DISORIENT
 		src.do_disorient(stamina_damage, weakened = weak*20, stunned = stun*20, disorient = disorient_time, remove_stamina_below_zero = 0, target_type = DISORIENT_EYE)
 #else
-		changeStatus("weakened", weak*20)
-		changeStatus("stunned", stun*20)
+		changeStatus("weakened", weak*2 SECONDS)
+		changeStatus("stunned", stun*2 SECONDS)
 #endif
 
 		if (!issilicon(src))
@@ -324,10 +324,10 @@
 		return 0
 	return 1
 
-/mob/proc/hearing_check(var/consciousness_check = 0)
+/mob/proc/hearing_check(var/consciousness_check = 0, var/ear_disability_check = 1)
 	return 1
 
-/mob/living/carbon/human/hearing_check(var/consciousness_check = 0)
+/mob/living/carbon/human/hearing_check(var/consciousness_check = 0, var/ear_disability_check = 1)
 	if (consciousness_check && (src.stat || src.getStatusDuration("paralysis") || src.sleeping))
 		// you may be physically capable of hearing it, but you're sure as hell not mentally able when you're out cold
 		.= 0
@@ -340,24 +340,24 @@
 			else if (src.ears.block_hearing_when_worn <= HEARING_ANTIDEAF)
 				return 1
 
-		if (src.ear_disability || src.get_ear_damage(1))
+		if (ear_disability_check && (src.ear_disability || src.get_ear_damage(1)))
 			.= 0
 
-/mob/living/silicon/hearing_check(var/consciousness_check = 0)
+/mob/living/silicon/hearing_check(var/consciousness_check = 0, var/ear_disability_check = 1)
 	if (consciousness_check && (src.getStatusDuration("paralysis") || src.sleeping || src.stat))
 		return 0
 
-	if (src.ear_disability)
+	if (ear_disability_check && src.ear_disability)
 		return 0
 
 	return 1
 
 // Bit redundant at the moment, but we might get ear transplants at some point, who knows? Just put 'em here (Convair880).
-/mob/proc/ears_protected_from_sound()
+/mob/proc/ears_protected_from_sound(var/ear_disability_check = 1)
 	return 0
 
-/mob/living/carbon/human/ears_protected_from_sound()
-	if (!src.hearing_check(1))
+/mob/living/carbon/human/ears_protected_from_sound(var/ear_disability_check = 1)
+	if (!src.hearing_check(1, ear_disability_check))
 		return 1
 	return 0
 
@@ -372,6 +372,9 @@
 	if (DO_NOTHING)
 		return
 
+	// If the target is deaf but is still affected, set this to true
+	var/is_deaf = FALSE
+
 	// Target checks.
 	var/mod_weak = 0 // Note: these aren't multipliers.
 	var/mod_stun = 0
@@ -381,8 +384,17 @@
 	var/mod_eardamage = 0
 	var/mod_eartempdeaf = 0
 
-	if (src.ears_protected_from_sound())
+	if (src.ears_protected_from_sound(0))
 		return
+
+	if (!src.hearing_check())
+		// If the target's ears aren't protected from sound
+		// but the target fails the hearing check then we mark
+		// them as deaf and won't damage their ears more.
+		// However, we will still apply this as a concussion.
+		mod_eardamage = -INFINITY
+		mod_eartempdeaf = -INFINITY
+		is_deaf = TRUE
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -405,7 +417,10 @@
 	//DEBUG_MESSAGE("Apply_sonic_stun() called for [src] at [log_loc(src)]. W: [weak], S: [stun], MS: [misstep], SL: [slow], DI: [drop_item], ED: [ears_damage], EF: [ear_tempdeaf]")
 
 	// Stun target mob.
-	boutput(src, "<span class='alert'><b>You hear an extremely loud noise!</b></span>")
+	if (is_deaf)
+		boutput(src, "<span class='alert'><b>You feel a wave of concussive force rattle your head!</b></span>")
+	else
+		boutput(src, "<span class='alert'><b>You hear an extremely loud noise!</b></span>")
 
 
 #ifdef USE_STAMINA_DISORIENT
@@ -428,7 +443,10 @@
 			src.take_ear_damage(ear_tempdeaf, 1)
 
 		if (weak == 0 && stun == 0 && prob(max(0, min(drop_item, 100))))
-			src.show_message(__red("<B>You drop what you were holding to clutch at your ears!</B>"))
+			if (is_deaf)
+				src.show_message(__red("<B>You drop what you were holding to clutch at your head!</B>"))
+			else
+				src.show_message(__red("<B>You drop what you were holding to clutch at your ears!</B>"))
 			src.drop_item()
 
 	return
@@ -453,6 +471,9 @@
 	return 1
 
 /proc/man_or_woman(var/mob/subject)
+	if(isabomination(subject))
+		return "abomination"
+
 	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
 		return "person"
 
@@ -465,6 +486,9 @@
 			return "person"
 
 /proc/his_or_her(var/mob/subject)
+	if(isabomination(subject))
+		return "our"
+
 	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
 		return "their"
 
@@ -477,6 +501,9 @@
 			return "their"
 
 /proc/him_or_her(var/mob/subject)
+	if(isabomination(subject))
+		return "us"
+
 	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
 		return "them"
 
@@ -489,6 +516,9 @@
 			return "them"
 
 /proc/he_or_she(var/mob/subject)
+	if(isabomination(subject))
+		return "we"
+
 	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
 		return "they"
 
@@ -501,6 +531,9 @@
 			return "they"
 
 /proc/hes_or_shes(var/mob/subject)
+	if(isabomination(subject))
+		return "we're"
+
 	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
 		return "they're"
 
@@ -513,6 +546,9 @@
 			return "they're"
 
 /proc/himself_or_herself(var/mob/subject)
+	if(isabomination(subject))
+		return "ourself"
+
 	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
 		return "themselves"
 
@@ -796,6 +832,7 @@
 	var/see_special = 0 // Just a pass-through. Game mode-specific stuff is handled further down in the proc.
 	var/see_everything = 0
 	var/datum/gang/gang_to_see = null
+	var/PWT_to_see = null
 
 	if (isadminghost(src))
 		see_everything = 1
@@ -817,6 +854,10 @@
 		if (istype(ticker.mode, /datum/game_mode/gang))
 			if(src.mind.gang != null)
 				gang_to_see = src.mind.gang
+		//mostly took this from gang. I'm sure it can be better though, sorry. -Kyle
+		if (istype(ticker.mode, /datum/game_mode/pod_wars))
+			// var/datum/game_mode/pod_wars/PW = ticker.mode
+			PWT_to_see = get_pod_wars_team_num(src)
 		if (issilicon(src)) // We need to look for borged antagonists too.
 			var/mob/living/silicon/S = src
 			if (src.mind.special_role == "syndicate robot" || (S.syndicate && !S.dependent)) // No AI shells.
@@ -843,7 +884,7 @@
 	if (remove)
 		return
 
-	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_special && !see_everything && gang_to_see == null)
+	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null)
 		src.last_overlay_refresh = world.time
 		return
 
@@ -1022,6 +1063,39 @@
 					if (!see_everything && isobserver(M.current)) continue
 					var/II = image(antag_gang, loc = M.current)
 					can_see.Add(II)
+	else if (istype(ticker.mode, /datum/game_mode/pod_wars))
+		var/datum/game_mode/pod_wars/mode = ticker.mode
+		if (PWT_to_see || see_everything)
+			for (var/datum/mind/M in (mode.team_NT.members + mode.team_SY.members))
+				if (M.current)
+					var/cur_team
+					cur_team = get_pod_wars_team_num(M.current)
+					if (!see_everything && isobserver(M.current)) continue
+					if (PWT_to_see == cur_team)//NANOTRASEN
+						if (cur_team == 1)
+							var/image/I = image(pod_wars_NT, loc = M.current)
+							I.pixel_y = 4
+							can_see.Add(I)
+						if (cur_team == 2)
+					// else if (PWT_to_see == cur_team)//SYNDICATE
+							var/image/I = image(pod_wars_SY, loc = M.current)
+							I.pixel_y = 4
+							can_see.Add(I)
+
+			//show commanders to everyone, can't hide.
+			//Alright, I'll confess. this draws the commander over the other one. idk how this shit works and it works anyway, I'm not in the mood to learn for real. -Kyle
+			if(mode.team_NT.commander && mode.team_NT.commander.current)
+				// if (PWT_to_see == mode.team_NT || see_everything)
+				var/image/I = image(pod_wars_NT_CMDR, loc = mode.team_NT.commander.current)
+				I.pixel_y = 4
+				can_see.Add(I)
+
+			if(mode.team_SY.commander && mode.team_SY.commander.current)
+				// if (PWT_to_see == mode.team_SY || see_everything)
+				var/image/I = image(pod_wars_SY_CMDR, loc = mode.team_SY.commander.current)
+				I.pixel_y = 4
+				can_see.Add(I)
+
 
 	if (can_see.len > 0)
 		//logTheThing("debug", src, null, "<b>Convair880 antag overlay:</b> [can_see.len] added with parameters all ([see_everything]), T ([see_traitors]), S ([see_nukeops]), W ([see_wizards]), R ([see_revs]), SP ([see_special])")

@@ -18,7 +18,6 @@
 	name = "AI Eye"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "a-eye"
-	invisibility = 9
 	see_invisible = 9
 	density = 0
 	layer = 101
@@ -41,6 +40,7 @@
 		last_loc = src.loc
 		..()
 		sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_AI_EYE)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 	Login()
@@ -285,7 +285,7 @@
 
 	verb/cmd_return_mainframe()
 		set category = "AI Commands"
-		set name = "Return to Mainframe"
+		set name = "Recall to Mainframe"
 
 		return_mainframe()
 		return
@@ -464,8 +464,8 @@
 	if(!src.cameras)
 		return
 
-	src.cameras &= C
-	C.coveredTiles &= src
+	src.cameras -= C
+	C.coveredTiles -= src
 
 	if(!src.cameras.len)
 		src.cameras = null
@@ -509,7 +509,7 @@
 		prev_tiles = coveredTiles
 
 	for(var/turf/T in view(CAM_RANGE, get_turf(src)))
-		new_tiles += T
+		new_tiles |= T
 
 	if (prev_tiles)
 		for(var/turf/O as anything in (prev_tiles - new_tiles))
@@ -535,13 +535,13 @@
 			if(src.coveredTiles == null)
 				src.coveredTiles = list(t)
 			else
-				src.coveredTiles += t
+				src.coveredTiles |= t
 		else
-			t.cameras += src
+			t.cameras |= src
 			if(src.coveredTiles == null)
 				src.coveredTiles = list(t)
 			else
-				src.coveredTiles += t
+				src.coveredTiles |= t
 
 		if (cam_amount < t.cameras.len)
 			if (t.aiImage)
@@ -588,10 +588,6 @@ world/proc/updateCameraVisibility()
 		ma.appearance_flags = TILE_BOUND | KEEP_APART | RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR
 		ma.name = " "
 
-		var/lastpct = 0
-		var/thispct = 0
-		var/donecount = 0
-
 		// takes about one second compared to the ~12++ that the actual calculations take
 		game_start_countdown?.update_status("Updating cameras...\n(Calculating...)")
 		var/list/turf/cam_candidates = list()
@@ -599,6 +595,12 @@ world/proc/updateCameraVisibility()
 			if( t.z != 1 ) continue
 			cam_candidates += t
 
+//pod wars has no AI so this is just a waste of time...
+#ifndef MAP_OVERRIDE_POD_WARS
+
+		var/lastpct = 0
+		var/thispct = 0
+		var/donecount = 0
 
 		for(var/turf/t as anything in cam_candidates) //ugh
 			t.aiImage = new
@@ -615,7 +617,6 @@ world/proc/updateCameraVisibility()
 				game_start_countdown?.update_status("Updating cameras...\n[thispct]%")
 
 			LAGCHECK(100)
-
 		aiDirty = 1
 		game_start_countdown?.update_status("Updating camera vis...\n")
 	for_by_tcl(C, /obj/machinery/camera)
@@ -627,6 +628,7 @@ world/proc/updateCameraVisibility()
 			else
 				t.aiImage.loc = t
 	aiDirty = 0
+#endif
 
 /obj/machinery/camera/proc/remove_from_turfs() //check if turf cameras is 0 . Maybe loop through each affected turf's cameras, and update static on them here instead of going thru updateCameraVisibility()?
 	//world << "Camera deleted! @ [src.loc]"

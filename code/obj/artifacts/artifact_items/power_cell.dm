@@ -47,7 +47,7 @@
 					if ("ancient")
 						src.leakChem = pick("voltagen","ash","cleaner", "oil", "thermite", "acid", "fuel", "nanites", "radium", "mercury")
 					if ("wizard")
-						src.leakChem = pick("glitter","sakuride","grassgro","glitter_harmless","glowing_fliptonium", "mugwort")
+						src.leakChem = pick("glitter","sakuride","grassgro","sparkles","glowing_fliptonium", "mugwort")
 					if ("precursor")
 						src.leakChem = pick(all_functional_reagent_ids) // no way this goes wrong
 				if(prob(10))

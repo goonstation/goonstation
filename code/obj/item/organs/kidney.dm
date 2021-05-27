@@ -112,6 +112,16 @@
 	body_side = R_ORGAN
 	failure_disease = /datum/ailment/disease/kidney_failure/right
 
+/obj/item/organ/kidney/synth
+	name = "synthkidney"
+	organ_name = "synthkidney"
+	icon_state = "plant"
+	desc = "A bean based kidney!"
+	synthetic = 1
+	New()
+		..()
+		src.icon_state = pick("plant_appendix", "plant_appendix_bloom")
+
 /obj/item/organ/kidney/cyber
 	name = "cyberkidney"
 	desc = "A fancy robotic kidney to replace one that someone's lost!"
@@ -166,6 +176,32 @@
 			chem_metabolism_modifier = clamp(chem_metabolism_modifier, 75, 150) / 100
 		else
 			. = ..()
+
+/obj/item/organ/kidney/synth/left
+	name = "left kidney"
+	desc = "A bean based kidney! It's the left kidney!"
+	synthetic = 1
+	icon_state = "plant"
+	organ_name = "synthkidney_L"
+	organ_holder_name = "left_kidney"
+	body_side = L_ORGAN
+	failure_disease = /datum/ailment/disease/kidney_failure/left
+	New()
+		..()
+		src.icon_state = pick("plant_kidney_L", "plant_kidney_L_bloom")
+
+/obj/item/organ/kidney/synth/right
+	name = "right kidney"
+	desc = "A bean based kidney! It's the right kidney!"
+	synthetic = 1
+	icon_state = "plant"
+	organ_name = "synthkidney_R"
+	organ_holder_name = "right_kidney"
+	body_side = R_ORGAN
+	failure_disease = /datum/ailment/disease/kidney_failure/right
+	New()
+		..()
+		src.icon_state = pick("plant_kidney_R", "plant_kidney_R_bloom")
 
 /obj/item/organ/kidney/cyber/left
 	name = "left kidney"

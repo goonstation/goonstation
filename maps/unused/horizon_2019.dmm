@@ -1631,13 +1631,6 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/entry)
-"adN" = (
-/obj/table/reinforced/auto,
-/obj/item/stg_booster,
-/obj/item/pen,
-/obj/item/device/radio,
-/turf/simulated/floor/grey/whitegrime,
-/area/station/science/gen_storage)
 "adO" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
@@ -8764,7 +8757,7 @@
 /area/station/wreckage)
 "auF" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/bottle/red,
+/obj/item/reagent_containers/food/drinks/bottle/soda/red,
 /turf/simulated/floor/plating/airless{
 	icon_state = "panelscorched"
 	},
@@ -10001,16 +9994,6 @@
 	icon_state = "wall3"
 	},
 /area/tech_outpost)
-"ayb" = (
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/table/wood/auto,
-/obj/item/stg_booster,
-/obj/decal/cleanable/cobweb,
-/turf/simulated/floor/grey/blackgrime,
-/area/tech_outpost)
 "ayc" = (
 /obj/table/wood/auto,
 /obj/item/chem_grenade/cleaner,
@@ -11138,14 +11121,6 @@
 	},
 /turf/space,
 /area/station/engine/substation/pylon)
-"aAX" = (
-/obj/item/card_box/plain,
-/obj/item/crowbar,
-/obj/stool/chair/comfy/shuttle{
-	dir = 8
-	},
-/turf/simulated/floor/plating/airless/random,
-/area/station/engine/substation/pylon)
 "aAY" = (
 /obj/machinery/shuttle/engine/heater,
 /turf/simulated/shuttle/wall{
@@ -11852,14 +11827,6 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/storage/emergency{
-	name = "Hilarious Storage A"
-	})
-"aCQ" = (
-/obj/machinery/light_switch/north,
-/obj/table/reinforced/auto,
-/obj/item/stg_box,
-/turf/simulated/floor/black,
 /area/station/storage/emergency{
 	name = "Hilarious Storage A"
 	})
@@ -20054,13 +20021,6 @@
 /obj/machinery/disposal,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/south,
 /area/station/bridge/captain)
-"aUj" = (
-/obj/table/wood/auto,
-/obj/displaycase{
-	displayed = new /obj/item/captaingun
-},
-/turf/simulated/floor/carpet/blue/fancy/innercorner/south,
-/area/station/bridge/captain)
 "aUk" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -24693,24 +24653,6 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
-"beg" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/radio/headset/multifreq,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/light,
-/turf/simulated/floor/purple,
-/area/station/science/lobby)
 "beh" = (
 /obj/rack,
 /obj/item/circuitboard/teleporter,
@@ -25029,24 +24971,6 @@
 	icon_state = "panelscorched"
 	},
 /area/station/maintenance/northwest)
-"beX" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/radio/headset/multifreq,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/item/storage/box/trackimp_kit2,
-/turf/simulated/floor/purple,
-/area/station/science/lobby)
 "beY" = (
 /obj/machinery/light{
 	dir = 1;
@@ -39873,20 +39797,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
-"bKA" = (
-/obj/table/wood/auto,
-/obj/item/device/camera_viewer,
-/obj/item/camera_test,
-/obj/item/device/audio_log,
-/obj/item/device/detective_scanner,
-/obj/item/spraybottle/cleaner,
-/obj/machinery/light_switch/west,
-/obj/item/audio_tape,
-/obj/item/audio_tape,
-/turf/simulated/floor{
-	icon_state = "grimy"
-	},
-/area/station/security/detectives_office)
 "bKB" = (
 /obj/disposalpipe/trunk{
 	dir = 1
@@ -43028,17 +42938,6 @@
 	},
 /obj/item/storage/secure/ssafe{
 	pixel_y = 26
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/quarters_south)
-"bRp" = (
-/obj/table/wood/auto,
-/obj/item/card_box/plain,
-/obj/item/clothing/gloves/black,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 22
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_south)
@@ -46547,7 +46446,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
-/obj/item/reagent_containers/food/drinks/bottle/blue,
+/obj/item/reagent_containers/food/drinks/bottle/soda/blue,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /obj/item/reagent_containers/food/drinks/bottle/vintage,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
@@ -50732,12 +50631,6 @@
 /turf/simulated/floor/yellowblack{
 	dir = 10
 	},
-/area/station/crew_quarters/ce)
-"chC" = (
-/obj/storage/crate/rcd/CE,
-/obj/item/clothing/shoes/magnetic,
-/obj/item/clothing/gloves/yellow,
-/turf/simulated/floor/yellowblack,
 /area/station/crew_quarters/ce)
 "chD" = (
 /obj/cable{
@@ -55549,13 +55442,6 @@
 /obj/item/bandage,
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/listeningpost/power)
-"ctE" = (
-/obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/bottle/tequila,
-/obj/item/card_group/plain,
-/obj/item/spacecash/hundred,
-/turf/simulated/floor/carpet/red/fancy/edge/north,
-/area/listeningpost/power)
 "ctF" = (
 /obj/stool/chair{
 	dir = 8
@@ -57845,6 +57731,120 @@
 	dir = 4
 	},
 /area/listeningpost/solars)
+"hjM" = (
+/obj/table/wood/auto,
+/obj/item/card_box/plain,
+/obj/item/clothing/gloves/black,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 22
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/quarters_south)
+"kwM" = (
+/obj/table/wood/auto,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/turf/simulated/floor/carpet/blue/fancy/innercorner/south,
+/area/station/bridge/captain)
+"mNS" = (
+/obj/storage/crate/rcd/CE,
+/obj/item/clothing/shoes/magnetic,
+/obj/item/clothing/gloves/yellow,
+/turf/simulated/floor/yellowblack,
+/area/station/crew_quarters/ce)
+"oZV" = (
+/obj/machinery/light_switch/north,
+/obj/table/reinforced/auto,
+/obj/item/stg_box,
+/turf/simulated/floor/black,
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
+"pYU" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/drinks/bottle/tequila,
+/obj/item/card_group/plain,
+/obj/item/spacecash/hundred,
+/turf/simulated/floor/carpet/red/fancy/edge/north,
+/area/listeningpost/power)
+"qYq" = (
+/obj/table/reinforced/auto,
+/obj/item/stg_booster,
+/obj/item/pen,
+/obj/item/device/radio,
+/turf/simulated/floor/grey/whitegrime,
+/area/station/science/gen_storage)
+"rlw" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/radio/headset/multifreq,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/item/storage/box/trackimp_kit2,
+/turf/simulated/floor/purple,
+/area/station/science/lobby)
+"rFT" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/radio/headset/multifreq,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/light,
+/turf/simulated/floor/purple,
+/area/station/science/lobby)
+"sOU" = (
+/obj/item/card_box/plain,
+/obj/item/crowbar,
+/obj/stool/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless/random,
+/area/station/engine/substation/pylon)
+"tjD" = (
+/obj/table/wood/auto,
+/obj/item/device/camera_viewer,
+/obj/item/camera,
+/obj/item/device/audio_log,
+/obj/item/device/detective_scanner,
+/obj/item/spraybottle/cleaner,
+/obj/machinery/light_switch/west,
+/obj/item/audio_tape,
+/obj/item/audio_tape,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/security/detectives_office)
+"tNn" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/table/wood/auto,
+/obj/item/stg_booster,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/grey/blackgrime,
+/area/tech_outpost)
 
 (1,1,1) = {"
 aaa
@@ -65742,7 +65742,7 @@ azq
 azN
 aAf
 aAC
-aAX
+sOU
 aBl
 acw
 aaa
@@ -72077,7 +72077,7 @@ aaa
 aaa
 aaa
 asu
-ayb
+tNn
 ayC
 ayY
 azz
@@ -73297,7 +73297,7 @@ afs
 aBU
 aCj
 aCy
-aCQ
+oZV
 aDh
 aDB
 aDy
@@ -77335,7 +77335,7 @@ aeW
 aan
 bEB
 bHy
-bKA
+tjD
 bHz
 bNx
 aaa
@@ -103309,7 +103309,7 @@ bFz
 bIw
 bLC
 bLC
-bRp
+hjM
 bTL
 bCX
 bYa
@@ -104100,7 +104100,7 @@ aaa
 agf
 agf
 ami
-adN
+qYq
 aCS
 aok
 aDE
@@ -105103,7 +105103,7 @@ atg
 aNc
 aPf
 aRs
-aUj
+kwM
 aWZ
 bao
 bdc
@@ -128387,7 +128387,7 @@ cfx
 cgg
 cgE
 chi
-chC
+mNS
 cii
 aaa
 aaa
@@ -129870,7 +129870,7 @@ aSv
 apU
 aYb
 bbq
-beg
+rFT
 aqU
 bkd
 bmx
@@ -130172,7 +130172,7 @@ aSw
 apU
 aYb
 bbq
-beX
+rlw
 aqU
 bke
 bmy
@@ -138745,7 +138745,7 @@ csw
 csw
 csw
 ctn
-ctE
+pYU
 ctV
 cum
 cuG

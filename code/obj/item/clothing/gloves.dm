@@ -9,6 +9,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	wear_image_icon = 'icons/mob/hands.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
 	protective_temperature = 400
+	wear_layer = MOB_HAND_LAYER2
 	var/uses = 0
 	var/max_uses = 0 // If can_be_charged == 1, how many charges can these gloves store?
 	var/stunready = 0
@@ -435,7 +436,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "horseshoe"
 	force = 6.5
-	throwforce = 25
+	throwforce = 15
 	throw_speed = 3
 	throw_range = 6
 	w_class = W_CLASS_TINY

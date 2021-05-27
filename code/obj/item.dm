@@ -9,8 +9,10 @@
 	var/icon_old = null
 	var/uses_multiple_icon_states = 0
 	var/item_state = null
+	var/wear_state = null // icon state used for worn sprites, icon_state used otherwise
 	var/image/wear_image = null
 	var/wear_image_icon = 'icons/mob/belt.dmi'
+	var/wear_layer = MOB_CLOTHING_LAYER
 	var/image/inhand_image = null
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	/// set to a colour to make the inhand image be that colour. if the item is coloured though that takes priority over this variable
@@ -39,7 +41,7 @@
 	var/hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	var/stamina_damage = STAMINA_ITEM_DMG //amount of stamina removed from target per hit.
 	var/stamina_cost = STAMINA_ITEM_COST  //amount of stamina removed from USER per hit. This cant bring you below 10 points and you will not be able to attack if it would.
-	
+
 	var/stamina_crit_chance = STAMINA_CRIT_CHANCE //Crit chance when attacking with this.
 	var/datum/item_special/special = null // Contains the datum which executes the items special, if it has one, when used beyond melee range.
 	var/hide_attack = 0 //If 1, hide the attack animation + particles. Used for hiding attacks with silenced .22 and sleepy pen
@@ -120,7 +122,7 @@
 	var/rarity = ITEM_RARITY_COMMON // Just a little thing to indicate item rarity. RPG fluff.
 	pressure_resistance = 50
 	var/obj/item/master = null
-	
+
 	var/last_tick_duration = 1 // amount of time spent between previous tick and this one (1 = normal)
 	var/last_processing_tick = -1
 
@@ -561,15 +563,23 @@
 
 /obj/item/proc/stack_item(obj/item/other)
 	var/added = 0
-
-	if (other != src && check_valid_stack(other))
-		if (src.amount + other.amount > max_stack)
-			added = max_stack - src.amount
-		else
-			added = other.amount
-
-		src.change_stack_amount(added)
-		other.change_stack_amount(-added)
+	if(isrobot(other.loc))
+		max_stack = 500
+		if (other != src && check_valid_stack(src))
+			if (src.amount + other.amount > max_stack)
+				added = max_stack - other.amount
+			else
+				added = src.amount
+			src.change_stack_amount(-added)
+			other.change_stack_amount(added)
+	else
+		if (other != src && check_valid_stack(other))
+			if (src.amount + other.amount > max_stack)
+				added = max_stack - src.amount
+			else
+				added = other.amount
+			src.change_stack_amount(added)
+			other.change_stack_amount(-added)
 
 	return added
 
@@ -600,7 +610,7 @@
 	return 1
 
 /obj/item/proc/split_stack(var/toRemove)
-	if(toRemove >= amount) return 0
+	if(toRemove >= amount || toRemove < 1) return 0
 	var/obj/item/P = new src.type(src.loc)
 
 	if(src.material)
@@ -642,6 +652,9 @@
 
 /obj/item/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
 	..()
+
+	if (!src.anchored)
+		click_drag_tk(over_object, src_location, over_location, over_control, params)
 
 	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL))
 		return
@@ -691,6 +704,38 @@
 						usr.click(over_object, params, src_location, over_control)
 			else
 				actions.start(new /datum/action/bar/private/icon/pickup/then_obj_click(src, over_object, params), usr)
+
+	//Click-drag tk stuff.
+/obj/item/proc/click_drag_tk(atom/over_object, src_location, over_location, over_control, params)
+	if(!src.anchored)
+		if (iswraith(usr))
+			var/mob/wraith/W = usr
+			//Basically so poltergeists need to be close to an object to send it flying far...
+			if (W.weak_tk && !IN_RANGE(src, W, 2))
+				src.throw_at(over_object, 1, 1)
+				boutput(W, "<span class='alert'>You're too far away to properly manipulate this physical item!</span>")
+				logTheThing("combat", usr, null, "moves [src] with wtk.")
+				return
+			src.throw_at(over_object, 7, 1)
+			logTheThing("combat", usr, null, "throws [src] with wtk.")
+		else if (ismegakrampus(usr))
+			src.throw_at(over_object, 7, 1)
+			logTheThing("combat", usr, null, "throws [src] with k_tk.")
+		else if(usr.bioHolder && usr.bioHolder.HasEffect("telekinesis_drag") && isturf(src.loc) && isalive(usr) && usr.canmove && get_dist(src,usr) <= 7 && !src.anchored && src.w_class < W_CLASS_GIGANTIC)
+			src.throw_at(over_object, 7, 1)
+			logTheThing("combat", usr, null, "throws [src] with tk.")
+
+#ifdef HALLOWEEN
+		else if (istype(usr, /mob/dead/observer))	//ghost
+			var/obj/item/I = src
+			if (I.w_class > W_CLASS_NORMAL)
+				return
+			if (istype(usr:abilityHolder, /datum/abilityHolder/ghost_observer))
+				var/datum/abilityHolder/ghost_observer/GH = usr:abilityHolder
+				if (GH.spooking)
+					src.throw_at(over_object, 7-I.w_class, 1)
+					logTheThing("combat", usr, null, "throws [src] with g_tk.")
+#endif
 
 //equip an item, given an inventory hud object or storage item UI thing
 /obj/item/proc/try_equip_to_inventory_object(var/mob/user, var/atom/over_object, var/params)
@@ -778,10 +823,10 @@
 			S.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
 
 /obj/item/attackby(obj/item/W as obj, mob/user as mob, params)
-	if (src.material)
+	if(src.material)
 		src.material.triggerTemp(src ,1500)
-	if (src.burn_possible && src.burn_point <= 1500)
-		if (W.firesource)
+	if (W.firesource)
+		if (src.burn_possible && src.burn_point <= 1500)
 			src.combust()
 		else
 			..(W, user)
@@ -1246,13 +1291,13 @@
 		block_spark(M,armor=1)
 		switch(hit_type)
 			if (DAMAGE_BLUNT)
-				playsound(get_turf(M), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1, pitch=1.5)
+				playsound(M, 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1, pitch=1.5)
 			if (DAMAGE_CUT)
-				playsound(get_turf(M), 'sound/impact_sounds/block_cut.ogg', 50, 1, -1, pitch=1.5)
+				playsound(M, 'sound/impact_sounds/block_cut.ogg', 50, 1, -1, pitch=1.5)
 			if (DAMAGE_STAB)
-				playsound(get_turf(M), 'sound/impact_sounds/block_stab.ogg', 50, 1, -1, pitch=1.5)
+				playsound(M, 'sound/impact_sounds/block_stab.ogg', 50, 1, -1, pitch=1.5)
 			if (DAMAGE_BURN)
-				playsound(get_turf(M), 'sound/impact_sounds/block_burn.ogg', 50, 1, -1, pitch=1.5)
+				playsound(M, 'sound/impact_sounds/block_burn.ogg', 50, 1, -1, pitch=1.5)
 		if(power <= 0)
 			fuckup_attack_particle(user)
 			armor_blocked = 1

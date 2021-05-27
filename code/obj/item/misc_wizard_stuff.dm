@@ -48,6 +48,8 @@
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 		if (href_list["spell_teleport"])
+			if (!can_act(H))
+				return
 			if (src.uses >= 1 && usr.teleportscroll(0, 1, src) == 1)
 				src.uses -= 1
 		if (ismob(src.loc))
@@ -114,7 +116,7 @@
 				affected_mob.visible_message("<span class='alert'>The curse upon [src] rebukes [affected_mob]!</span>")
 				boutput(affected_mob, "<span class='alert'>Horrible visions of depravity and terror flood your mind!</span>")
 				affected_mob.emote("scream")
-				affected_mob.changeStatus("paralysis", 80)
+				affected_mob.changeStatus("paralysis", 8 SECONDS)
 				affected_mob.changeStatus("stunned", 10 SECONDS)
 				affected_mob.stuttering += 20
 				affected_mob.take_brain_damage(25)
@@ -194,7 +196,7 @@
 				JOB_XP(M, "Chaplain", 2)
 				return
 
-			if (prob(20))
+			if (M.get_brain_damage() >= 30 && prob(20))
 				src.do_brainmelt(M, 1)
 			else if (prob(35))
 				src.do_brainmelt(M, 0)

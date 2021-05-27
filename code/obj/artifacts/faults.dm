@@ -42,7 +42,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		if (..())
 			return
 		boutput(user, "<span class='alert'>You feel strange.</span>")
-		user.changeStatus("radiation", (src.rads_amount)*10, 3)
+		user.changeStatus("radiation", (src.rads_amount) SECONDS, 3)
 
 /datum/artifact_fault/shutdown
 	// deactivates the artifact
@@ -130,7 +130,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 				I.dropped()
 		var/turf/T = get_turf(O)
 		T.visible_message("<span class='alert'><b>The [cosmeticSource.name] utterly annihilates [user.name]!</b></span>")
-		playsound(T, "sound/effects/elec_bigzap.ogg", 100, 1)
+		playsound(T, "sound/effects/elec_bigzap.ogg", 40, 1) // seriously 100 volume on this file? Are you trying to deafen players?
 		user.elecgib()
 
 /datum/artifact_fault/explode

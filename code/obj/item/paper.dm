@@ -302,6 +302,10 @@
 			var/obj/item/clipboard/C = src.loc
 			if(istype(C.pen, /obj/item/pen))
 				O = C.pen
+		if(istype(src.loc, /obj/item/portable_typewriter))
+			var/obj/item/portable_typewriter/typewriter = src.loc
+			if(istype(typewriter.pen, /obj/item/pen))
+				O = typewriter.pen
 	if(istype(O, /obj/item/pen))
 		var/obj/item/pen/PEN = O
 		. += list(
@@ -331,6 +335,8 @@
 		)
 
 /obj/item/paper/attackby(obj/item/P, mob/living/user, params)
+	if(istype(P, /obj/item/portable_typewriter))
+		return // suppress attack sound, the typewriter will load the paper in afterattack
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/pen/crayon))
 		if(src.sealed)
 			boutput(user, "<span class='alert'>You can't write on [src].</span>")
@@ -367,11 +373,14 @@
 
 
 /obj/item/paper/thermal
-	name = "Thermal Paper"
+	name = "thermal paper"
 	stampable = 0
 	icon_state = "thermal_paper"
 	sealed = 1
 	item_function_flags = SMOKELESS
+
+/obj/item/paper/thermal/portable_printer
+	sealed = 0
 
 /obj/item/paper/alchemy/
 	name = "'Chemistry Information'"
@@ -1432,12 +1441,12 @@ automatically adopt your criminal control strategy of choice.<br>
 <td>Turn your Lawbringer™ into your favourite sidearm with these .38 Full Metal Jacket rounds!</td>
 </tr>
 <tr>
-<td><b>"Hotshot"</b></td>
+<td><b>"Hotshot" / "Incendiary"</b></td>
 <td>60 PU</td>
 <td>This handy flare gun/flamethrower option is sure to heat things up! The Lawbringer™ is not certified fireproof. Do not set on fire.</td>
 </tr>
 <tr>
-<td><b>"Smokeshot"</b></td>
+<td><b>"Smokeshot" / "Fog"</b></td>
 <td>50 PU</td>
 <td>Never use a riot launcher again! These smoke grenades will let you manage line of sight with ease.</td>
 </tr>
@@ -1452,12 +1461,12 @@ automatically adopt your criminal control strategy of choice.<br>
 <td>You'll be the talk of the station when you bust down a wall with one of these explosive rounds! May cause loss of limbs or life.</td>
 </tr>
 <tr>
-<td><b>"Clownshot"</b></td>
+<td><b>"Clownshot" / "Clown"</b></td>
 <td>15 PU</td>
 <td>Lawbringer™ warranty is voided if exposed to clowns. Keep them at bay.</td>
 </tr>
 <tr>
-<td><b>"Pulse" / "Push"</b></td>
+<td><b>"Pulse" / "Push" / "Throw"</b></td>
 <td>35 PU</td>
 <td>Just like our patented Pulse Rifle™s, this Mode sends your enemies flying! Keep crime at arm's length!</td>
 </tr>

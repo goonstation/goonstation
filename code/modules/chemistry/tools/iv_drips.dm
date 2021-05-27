@@ -222,6 +222,7 @@
 	anchored = 0
 	density = 0
 	var/image/fluid_image = null
+	var/image/bag_image = null
 	var/obj/item/reagent_containers/iv_drip/IV = null
 	var/obj/paired_obj = null
 	mats = 10
@@ -236,12 +237,15 @@
 			src.icon_state = "IVstand"
 			src.name = "\improper IV stand"
 			src.UpdateOverlays(null, "fluid")
+			src.UpdateOverlays(null, "bag")
 		else
-			src.icon_state = "IVstand1"
+			if(!src.bag_image)
+				src.bag_image = image(src.icon, icon_state = "IVstand1")
+			src.UpdateOverlays(src.bag_image, "bag")
 			src.name = "\improper IV stand ([src.IV])"
 			if (src.IV.reagents.total_volume)
 				if (!src.fluid_image)
-					src.fluid_image = image(src.icon, "IVstand1-fluid", -1)
+					src.fluid_image = image(src.icon, icon_state = "IVstand1-fluid")
 				src.fluid_image.icon_state = "IVstand1-fluid"
 				var/datum/color/average = src.IV.reagents.get_average_color()
 				src.fluid_image.color = average.to_rgba()

@@ -1296,6 +1296,9 @@
 /turf/simulated/floor/proc/dismantle_wall()//can get called due to people spamming weldingtools on walls
 	return
 
+/turf/simulated/floor/proc/take_hit()// can get called due to people crumpling cardboard walls
+	return
+
 /turf/simulated/floor/proc/break_tile_to_plating()
 	if(intact) to_plating()
 	break_tile()
@@ -1446,7 +1449,7 @@
 					ReplaceWithEngineFloor()
 
 					if (C)
-						C:amount -= 2
+						C.change_stack_amount(-2)
 						if (C:amount <= 0)
 							qdel(C) //wtf
 
@@ -1607,6 +1610,8 @@
 		if (K)
 			K.attackby(C, user, params)
 
+	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1)) // this seemed like the neatest way to make attack_hand still trigger when needed
+		src?.material.triggerOnHit(src, C, user, 1)
 	else
 		return attack_hand(user)
 
@@ -1728,6 +1733,13 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		icon = 'icons/turf/walls.dmi'
 		icon_state = "hive"
 
+	stranger
+		name = "stranger wall"
+		desc = "A weird jet black metal wall indented with strange grooves and lines."
+		icon = 'icons/turf/walls.dmi'
+		icon_state = "ancient"
+
+
 // -------------------- VR --------------------
 /turf/unsimulated/floor/setpieces/gauntlet
 	name = "Gauntlet Floor"
@@ -1754,7 +1766,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 				if(H.gender == MALE) playsound(H.loc, "sound/voice/screams/male_scream.ogg", 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 				else playsound(H.loc, "sound/voice/screams/female_scream.ogg", 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			random_brute_damage(M, 50)
-			M.changeStatus("paralysis", 70)
+			M.changeStatus("paralysis", 7 SECONDS)
 			SPAWN_DBG(0)
 				playsound(M.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Flesh_Break_1.ogg'), 75, 1)
 		A.set_loc(T)

@@ -2,6 +2,8 @@
 
 [ToC]
 
+{%hackmd @ZeWaka/dark-theme %}
+
 ## :question: So, how do I get started?
 
 ### Step 1: Downloading Visual Studio Code :arrow_down: 
@@ -12,7 +14,7 @@ Visit https://code.visualstudio.com/ to download the appropriate installation fo
 
 You should be greeted with a screen that looks like this:![](https://i.imgur.com/HjDKDqj.png)
 
-Now, we need to create our own repository to contribute to! :rocket: 
+Now, we need to create our own repository to contribute to! :rocket:
 
 ### Step 2: Forking :fork_and_knife: 
 

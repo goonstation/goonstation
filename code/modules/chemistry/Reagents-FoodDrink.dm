@@ -440,7 +440,7 @@ datum
 								M.visible_message("<span class='alert'>[M] pukes everywhere and passes out!</span>")
 								M.vomit()
 								M.reagents.del_reagent("bojack")
-								M.changeStatus("paralysis", 30)
+								M.changeStatus("paralysis", 3 SECONDS)
 
 		fooddrink/alcoholic/cocktail_screwdriver
 			name = "Screwdriver"
@@ -488,6 +488,17 @@ datum
 			fluid_g = 74
 			fluid_b = 37
 			alch_strength = 0.15
+
+		fooddrink/alcoholic/caipirinha
+			name = "Pineapple Caipirinha"
+			id = "caipirinha"
+			description = "A sweet vodka and pineapple cocktail thats fit for a day at the beach."
+			reagent_state = LIQUID
+			taste = "like pineapple and sea breeze"
+			fluid_r = 240
+			fluid_g = 236
+			fluid_b = 110
+			alch_strength = 0.25
 
 		fooddrink/alcoholic/diesel
 			name = "Diesel"
@@ -990,7 +1001,7 @@ datum
 				if(method == INGEST && prob(20))
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", 300)
+						L.changeStatus("burning", 30 SECONDS)
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1015,7 +1026,7 @@ datum
 					boutput(M, "<span class='alert'><b>OH GOD OH GOD PLEASE NO!!</b></span>")
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", 1000 * mult)
+						L.changeStatus("burning", 100 SECONDS * mult)
 					if (prob(50))
 						SPAWN_DBG(2 SECONDS)
 							//Roast up the player
@@ -1753,9 +1764,9 @@ datum
 							M.reagents.add_reagent("psilocybin", 30)
 						if(5)
 							boutput(M, "<span class='alert'>What stunning texture!</span>")
-							M.changeStatus("paralysis", 60)
+							M.changeStatus("paralysis", 6 SECONDS)
 							M.changeStatus("stunned", 7 SECONDS)
-							M.changeStatus("weakened", 80)
+							M.changeStatus("weakened", 8 SECONDS)
 							M.stuttering += 20
 
 		fooddrink/capsaicin
@@ -2467,6 +2478,8 @@ datum
 					var/obj/critter/slug/S = O
 					S.visible_message("<span class='alert'>[S] shrivels up!</span>")
 					S.CritterDeath()
+				if(istype(O, /obj/decal/icefloor))
+					qdel(O)
 				..(O, volume)
 				return
 
@@ -2853,7 +2866,7 @@ datum
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 20 * mult))
 					else if(effect <= 3)
 						M.visible_message("<span class='alert'><b>[M.name]</b> begins to reminisce about food.</span>")
-						M.changeStatus("stunned", 20 * mult)
+						M.changeStatus("stunned", 2 SECONDS * mult)
 					else if(effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> pouts and sniffles a bit.</span>")
 					else if(effect <= 7)
@@ -3614,7 +3627,7 @@ datum
 					boutput(M, "<span class='alert'><b>OH GOD OH GOD PLEASE NO!!</b></span>")
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", 1000 * mult)
+						L.changeStatus("burning", 100 SECONDS * mult)
 					if(prob(50))
 						SPAWN_DBG(2 SECONDS)
 							//Roast up the player

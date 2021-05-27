@@ -42,6 +42,7 @@
 			M.real_name = "medic's satchel"
 			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder. (Base Item: [prev1])"
 			activator.set_clothing_icon_dirty()
+			M.wear_layer = MOB_BACK_LAYER_SATCHEL
 
 		else if (istype(activator.back, /obj/item/storage/backpack/NT) || activator.back.icon_state == "NTbackpack")
 			var/obj/item/storage/backpack/M = activator.back
@@ -57,6 +58,7 @@
 			M.real_name = "NT satchel"
 			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder. (Base Item: [prev2])"
 			activator.set_clothing_icon_dirty()
+			M.wear_layer = MOB_BACK_LAYER_SATCHEL
 
 		else if (istype(activator.back, /obj/item/storage/backpack/captain))
 			if (activator.back.icon_state == "capbackpack")
@@ -73,6 +75,7 @@
 				M.real_name = "Captains Satchel"
 				M.desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: [prev3])"
 				activator.set_clothing_icon_dirty()
+				M.wear_layer = MOB_BACK_LAYER_SATCHEL
 			else
 				var/obj/item/storage/backpack/M = activator.back
 				var/prev3 = M.name
@@ -87,6 +90,7 @@
 				M.real_name = "Captains Satchel"
 				M.desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: [prev3])"
 				activator.set_clothing_icon_dirty()
+				M.wear_layer = MOB_BACK_LAYER_SATCHEL
 
 		else if (istype(activator.back, /obj/item/storage/backpack))
 			var/obj/item/storage/backpack/M = activator.back
@@ -102,6 +106,7 @@
 			M.real_name = "satchel"
 			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder. (Base Item: [prev3])"
 			activator.set_clothing_icon_dirty()
+			M.wear_layer = MOB_BACK_LAYER_SATCHEL
 
 		else
 			boutput(activator, "<span class='alert'>Whatever it is you've got on your back, it can't be reskinned!</span>")
@@ -238,8 +243,8 @@
 				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
 				M.wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 				if (M.wear_image) M.wear_image.icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
-				M.icon_state = "mechanic"
-				M.item_state = "mechanic"
+				M.icon_state = "mechanic-reward"
+				M.item_state = "mechanic-reward"
 				M.name = "pilot suit"
 				M.real_name = "pilot suit"
 				M.desc = "A sleek but comfortable pilot's jumpsuit. (Base Item: [prev])"
@@ -619,6 +624,15 @@
 					M.name = "commander's hat"
 					M.real_name = "commander's hat"
 					M.desc = "A fancy hat specifically for NanoTrasen commanders. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+				else if (istype(M, /obj/item/clothing/head/helmet/space/captain))
+					var/prev = M.name
+					M.name = "commander's space helmet"
+					M.desc = "Helps protect against vacuum. Comes in a fasionable blue befitting a commander. (Base Item: [prev])"
+					M.icon_state = "space-captain-blue"
+					M.item_state = "space-captain-blue"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 

@@ -96,16 +96,16 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/toy/figure))
 			if(user:a_intent == INTENT_HELP)
-				playsound(get_turf(src), "sound/items/toys/figure-kiss.ogg", 15, 1)
+				playsound(src, "sound/items/toys/figure-kiss.ogg", 15, 1)
 				user.visible_message("<span class='alert'>[user] makes the [W.name] and the [src.name] kiss and kiss and kiss!</span>")
 			else if(user:a_intent == INTENT_DISARM)
-				playsound(get_turf(src), "sound/items/toys/figure-knock.ogg", 15, 1)
+				playsound(src, "sound/items/toys/figure-knock.ogg", 15, 1)
 				user.visible_message("<span class='alert'>[user] makes the [W.name] knock over and fart on the [src.name]!</span>")
 			else if(user:a_intent == INTENT_GRAB)
-				playsound(get_turf(src), "sound/items/toys/figure-headlock.ogg", 15, 1)
+				playsound(src, "sound/items/toys/figure-headlock.ogg", 15, 1)
 				user.visible_message("<span class='alert'>[user] has [W.name] put the [src.name] in a headlock!</span>")
 			else if(user:a_intent == INTENT_HARM)
-				playsound(get_turf(src), "sound/impact_sounds/Flesh_Break_1.ogg", 15, 1, 0.1, 2.5)
+				playsound(src, "sound/impact_sounds/Flesh_Break_1.ogg", 15, 1, 0.1, 2.5)
 				user.visible_message("<span class='alert'>[user] bangs the [W.name] into the [src.name] over and over!</span>")
 		else if (W.force > 1 && src.icon_state == "fig-shelterfrog" || src.icon_state == "fig-shelterfrog-dead")
 			playsound(src.loc, W.hitsound, 50, 1, -1)
@@ -691,10 +691,16 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "bunnyfriendsmen"
 		ckey = "bunnykimber"
 
-	neoxzilon
+	retrino
 		name = "\improper Neo Xzilon"
 		icon_state = "neoxzilon"
 		ckey = "retrino"
+
+		New()
+			..()
+			if(prob(50))
+				src.name = "\improper Matcha Usucha" //retrino's second character
+				src.icon_state = "matchausucha"
 
 	hazel
 		name = "\improper Hazel Adenine"
@@ -705,6 +711,16 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Vicky Hudson"
 		icon_state = "vicky"
 		ckey = "mrprogamer96"
+
+	vicky
+		name = "\improper Camryn Stern"
+		icon_state = "camrynstern"
+		ckey = "richardgere"
+
+	edwardly
+		name = "\improper Newt Treitor"
+		icon_state = "newttreitor"
+		ckey = "edwardly"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
@@ -719,6 +735,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	rand_pos = 1
 	var/ccolor = "y"
 	var/image/cap_image = null
+	var/itemstate = "cap-fig"
 
 	New()
 		..()
@@ -732,7 +749,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 			src.cap_image = image(src.icon, "cap-cap[src.item_amount ? 1 : 0]")
 		if (src.open)
 			if (src.item_amount)
-				src.cap_image.icon_state = "cap-fig"
+				src.cap_image.icon_state = itemstate
 				src.UpdateOverlays(src.cap_image, "cap")
 			else
 				src.UpdateOverlays(null, "cap")
@@ -756,6 +773,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		//Products
 		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule, 26, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/satchel/figurines, 2, cost=PAY_UNTRAINED*3)
+		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule/gaming_capsule, rand(4,10), cost=PAY_UNTRAINED/3, hidden=1)
 		src.icon_state = "machine[rand(1,6)]"
 		src.capsule_image = image(src.icon, "m_caps26")
 		src.UpdateOverlays(src.capsule_image, "capsules")

@@ -410,6 +410,8 @@ var/datum/action_controller/actions
 		if (src.proc_path)
 			src.id = "[src.proc_path]"
 
+		src.proc_args = proc_args
+
 	onStart()
 		..()
 		if (!src.owner)
@@ -441,6 +443,100 @@ var/datum/action_controller/actions
 		else
 			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
 
+/datum/action/bar/icon/hitthingwithitem // used when you need to make sure that mob is holding item
+	// and is next to other thing while doing thing
+	// what item is required to be held during it
+	var/helditem = null
+	// what mob is required to be holding the item
+	var/mob/holdingmob = null
+	// this was made for material compatibility, choose what to call the proc on
+	var/call_proc_on = null
+	// Copy-Pasted from Adhara's generic action bar
+	/// set to a string version of the callback proc path
+	id = null
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	/// set to the path of the proc that will be called if the action bar finishes
+	var/proc_path = null
+	/// what the target of the action is, if any
+	var/target = null
+	/// what string is broadcast once the action bar finishes
+	var/end_message = ""
+	/// what is the maximum range target and owner can be apart? need to modify before starting the action.
+	var/maximum_range = 1
+	/// a list of args for the proc thats called once the action bar finishes, if needed.
+	var/list/proc_args = null
+
+
+	New(var/owner, var/mob/holdingmob, var/obj/item/helditem, var/target, var/call_proc_on, var/duration, var/proc_path, var/list/proc_args, var/icon, var/icon_state, var/end_message)
+		..()
+		if (owner)
+			src.owner = owner
+		else //no owner means we have nothing to do things with
+			CRASH("action bars need an owner object to be tied to")
+		if (holdingmob)
+			src.holdingmob = holdingmob
+		else
+			CRASH("hitthingwithitem needs a mob to hold item")
+		if (helditem)
+			src.helditem = helditem
+		else
+			CRASH("hitthingwithitem needs an item to be held")
+		if (target) //not having a target is okay, sometimes were just doing things to ourselves
+			src.target = target
+		if (call_proc_on)
+			src.call_proc_on = call_proc_on // if we don't have a call_proc_on, we'll default to owner
+		if (duration)
+			src.duration = duration
+		else //no duration dont do the thing
+			CRASH("action bars need a duration to run for, there's no default duration")
+		if (proc_path)
+			src.proc_path = proc_path
+		else //no proc, dont do the thing
+			CRASH("no proc was specified to be called once the action bar ends")
+		if (proc_args)
+			src.proc_args = proc_args
+		if (icon) //optional, dont always want an icon
+			src.icon = icon
+			if (icon_state) //optional, dont always want an icon state
+				src.icon_state = icon_state
+		else if (icon_state)
+			CRASH("icon state set for action bar, but no icon was set")
+		if (end_message)
+			src.end_message = end_message
+
+		//generate a id
+		if (src.proc_path)
+			src.id = "[src.proc_path]"
+
+	onStart()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if ((src.target && !IN_RANGE(src.owner, src.target, src.maximum_range)) || holdingmob.equipped() != helditem)
+			interrupt(INTERRUPT_ALWAYS)
+
+	onUpdate()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if ((src.target && !IN_RANGE(src.owner, src.target, src.maximum_range)) || holdingmob.equipped() != helditem)
+			interrupt(INTERRUPT_ALWAYS)
+
+	onEnd()
+		..()
+		if (!src.proc_path)
+			CRASH("action bar had no proc to call upon completion")
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if ((src.target && !IN_RANGE(src.owner, src.target, src.maximum_range)) || holdingmob.equipped() != helditem)
+			interrupt(INTERRUPT_ALWAYS)
+
+		src.owner.visible_message("[src.end_message]")
+		if (src.call_proc_on)
+			INVOKE_ASYNC(arglist(list(src.call_proc_on, src.proc_path) + src.proc_args))
+		else
+			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
 /datum/action/bar/icon/build
 	duration = 30
 	var/obj/item/sheet/sheet
@@ -472,15 +568,36 @@ var/datum/action_controller/actions
 
 	onStart()
 		..()
+//You can't build! The if is to stop compiler warnings
+#if defined(MAP_OVERRIDE_POD_WARS)
+		if (owner)
+			boutput(owner, "<span class='alert'>What are you gonna do with this? You have a very particular set of skills, and building is not one of them...</span>")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+#endif
+
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if(H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
+		if(QDELETED(sheet))
+			boutput(owner, "<span class='notice'>You have nothing to build with!</span>")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
 		owner.visible_message("<span class='notice'>[owner] begins assembling [objname]!</span>")
+
+	onUpdate()
+		. = ..()
+		if(QDELETED(sheet) || sheet.amount < cost)
+			interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()
 		..()
+		if(QDELETED(sheet) || sheet.amount < cost)
+			interrupt(INTERRUPT_ALWAYS)
+			return
 		owner.visible_message("<span class='notice'>[owner] assembles [objname]!</span>")
 		var/obj/item/R = new objtype(get_turf(spot || owner))
 		R.setMaterial(mat)
@@ -1170,7 +1287,7 @@ var/datum/action_controller/actions
 				O.show_message("<span class='alert'><B>[owner] butchers [target].[target.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]</B></span>", 1)
 
 /datum/action/bar/icon/rev_flash
-	duration = 13 SECONDS
+	duration = 4 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	id = "rev_flash"
 	icon = 'icons/ui/actions.dmi'
@@ -1319,7 +1436,7 @@ var/datum/action_controller/actions
 	onUpdate()
 		..()
 		if (M?.hasStatus("resting") && !M.stat && M.getStatusDuration("burning"))
-			M.update_burning(-1.2)
+			M.update_burning(-1.5)
 
 			M.set_dir(turn(M.dir,up ? -90 : 90))
 			pixely += up ? 1 : -1
@@ -1370,7 +1487,7 @@ var/datum/action_controller/actions
 
 
 /datum/action/bar/private/icon/pickup //Delayed pickup, used for mousedrags to prevent 'auto clicky' exploits but allot us to pickup with mousedrag as a possibel action
-	duration = 10
+	duration = 0
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	id = "pickup"
 	var/obj/item/target
@@ -1485,11 +1602,11 @@ var/datum/action_controller/actions
 	onStart()
 		..()
 		if(iswrenchingtool(tool))
-			playsound(get_turf(target), "sound/items/Ratchet.ogg", 50, 1)
+			playsound(target, "sound/items/Ratchet.ogg", 50, 1)
 		else if(isweldingtool(tool))
-			playsound(get_turf(target), "sound/items/Welder.ogg", 50, 1)
+			playsound(target, "sound/items/Welder.ogg", 50, 1)
 		else if(isscrewingtool(tool))
-			playsound(get_turf(target), "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(target, "sound/items/Screwdriver.ogg", 50, 1)
 		owner.visible_message("<span class='notice'>[owner] begins [unanchor ? "un" : ""]anchoring [target].</span>")
 
 	onEnd()

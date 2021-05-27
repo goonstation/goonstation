@@ -21,6 +21,7 @@
 	var/round_limit = 21000 // 35 minutes (see post_setup)
 	var/endthisshit = 0
 	do_antag_random_spawns = 0
+	escape_possible = 0
 
 /datum/game_mode/revolution/extended
 	name = "extended revolution"
@@ -398,6 +399,10 @@
 				continue
 
 			if(isghostcritter(rev_mind.current) || isVRghost(rev_mind.current))
+				continue
+
+			if(ismobcritter(rev_mind.current))
+				//mob critters can't revolt because they don't work here.
 				continue
 
 			var/turf/T = get_turf(rev_mind.current)

@@ -13627,30 +13627,6 @@
 /obj/machinery/door/airlock/gannets/security/alt,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"awS" = (
-/obj/table/wood/auto,
-/obj/item/camera_test,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/secure/sbriefcase,
-/obj/item/device/audio_log,
-/obj/item/audio_tape{
-	pixel_y = 5
-	},
-/obj/item/audio_tape{
-	pixel_y = 5
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	icon_state = "camera";
-	name = "autoname  - SS13";
-	network = "SS13"
-	},
-/turf/simulated/floor/redblack{
-	dir = 9
-	},
-/area/station/security/detectives_office)
 "awT" = (
 /obj/machinery/light{
 	dir = 1;
@@ -14866,7 +14842,7 @@
 	pixel_y = 24
 	},
 /obj/table/round,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_y = 16
 	},
 /obj/item/reagent_containers/food/drinks/mug/random_color{
@@ -17376,15 +17352,6 @@
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/gannets,
 /area/station/science/testchamber)
-"aEV" = (
-/obj/table/wood/auto,
-/obj/item/card_box/plain,
-/obj/item/a_gift/festive,
-/turf/simulated/floor/carpet{
-	icon_state = "fpurple1";
-	dir = 5
-	},
-/area/station/crew_quarters/bar)
 "aEW" = (
 /obj/wingrille_spawn,
 /obj/decal/poster/wallsign/barber,
@@ -18205,11 +18172,11 @@
 	desc = "Various supplies for the bar.";
 	name = "bartending crate"
 	},
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/item/storage/firstaid/toxin,
 /obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/glass/beaker/large,
@@ -25468,7 +25435,7 @@
 	},
 /obj/table/wood/auto,
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2";
@@ -31484,42 +31451,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
-"bdw" = (
-/obj/machinery/light/emergency,
-/obj/disposalpipe/segment{
-	dir = 4;
-	pixel_y = 0
-	},
-/obj/table/wood/auto,
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/pinpointer,
-/obj/item/camera_test{
-	pixel_y = 6
-	},
-/obj/item/hand_tele,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
-"bdx" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 4
-	},
-/obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/item/storage/secure/ssafe{
-	pixel_x = 26
-	},
-/obj/table/wood/auto,
-/obj/displaycase{
-	displayed = new /obj/item/captaingun
-	pixel_y = 8
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
 "bdy" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light/emergency{
@@ -35502,13 +35433,6 @@
 /obj/stool/bench/red/auto,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
-"bkl" = (
-/obj/table/reinforced/auto,
-/obj/decal/cleanable/dirt,
-/obj/item/card_box/plain,
-/obj/disposalpipe/segment/brig,
-/turf/simulated/floor/grime,
-/area/station/security/brig)
 "bkm" = (
 /obj/cable,
 /obj/cable{
@@ -35848,9 +35772,9 @@
 	},
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -36499,7 +36423,7 @@
 /area/station/turret_protected/Zeta)
 "blR" = (
 /obj/table/round,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_y = 16
 	},
 /turf/simulated/floor/black,
@@ -36985,20 +36909,6 @@
 /obj/disposalpipe/segment/brig{
 	dir = 1;
 	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/grime,
-/area/station/security/brig)
-"bmK" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/table/reinforced/auto,
-/obj/decal/cleanable/dirt,
-/obj/item/card_box/plain,
-/obj/machinery/computer3/generic/personal,
-/obj/machinery/power/data_terminal,
-/obj/disposalpipe/segment/brig{
-	dir = 4
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -51394,6 +51304,55 @@
 	layer = 2
 	},
 /area/listeningpost/solars)
+"fhB" = (
+/obj/machinery/light/emergency,
+/obj/disposalpipe/segment{
+	dir = 4;
+	pixel_y = 0
+	},
+/obj/table/wood/auto,
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/pinpointer,
+/obj/item/camera{
+	pixel_y = 6
+	},
+/obj/item/hand_tele,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
+"gAp" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/table/reinforced/auto,
+/obj/decal/cleanable/dirt,
+/obj/item/card_box/plain,
+/obj/machinery/computer3/generic/personal,
+/obj/machinery/power/data_terminal,
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/station/security/brig)
+"igX" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 4
+	},
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/item/storage/secure/ssafe{
+	pixel_x = 26
+	},
+/obj/table/wood/auto,
+/obj/displaycase{
+	displayed = new /obj/item/captaingunpixel_y = 8
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 "iqO" = (
 /obj/machinery/clonepod,
 /obj/cable{
@@ -51414,6 +51373,22 @@
 	dir = 1
 	},
 /area/station/medical/medbay/cloner)
+"kps" = (
+/obj/table/reinforced/auto,
+/obj/decal/cleanable/dirt,
+/obj/item/card_box/plain,
+/obj/disposalpipe/segment/brig,
+/turf/simulated/floor/grime,
+/area/station/security/brig)
+"kOQ" = (
+/obj/table/wood/auto,
+/obj/item/card_box/plain,
+/obj/item/a_gift/festive,
+/turf/simulated/floor/carpet{
+	icon_state = "fpurple1";
+	dir = 5
+	},
+/area/station/crew_quarters/bar)
 "ocQ" = (
 /obj/machinery/light_switch/north,
 /obj/machinery/computer/cloning{
@@ -51432,6 +51407,30 @@
 	dir = 1
 	},
 /area/station/medical/medbay/cloner)
+"sDy" = (
+/obj/table/wood/auto,
+/obj/item/camera,
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/storage/secure/sbriefcase,
+/obj/item/device/audio_log,
+/obj/item/audio_tape{
+	pixel_y = 5
+	},
+/obj/item/audio_tape{
+	pixel_y = 5
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	icon_state = "camera";
+	name = "autoname  - SS13";
+	network = "SS13"
+	},
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/station/security/detectives_office)
 "tkM" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
@@ -80409,7 +80408,7 @@ bhC
 biS
 bki
 bkk
-bmK
+gAp
 bhC
 boZ
 bqw
@@ -81435,7 +81434,7 @@ bfv
 bgI
 bhI
 biW
-bkl
+kps
 blw
 bmO
 bhC
@@ -85007,7 +85006,7 @@ azw
 aBj
 aCt
 aDq
-aEV
+kOQ
 aFD
 aGr
 aHw
@@ -87597,7 +87596,7 @@ aYn
 aWU
 baR
 bcc
-bdw
+fhB
 beB
 bfR
 bha
@@ -87854,7 +87853,7 @@ aYo
 aWU
 baS
 bcd
-bdx
+igX
 beB
 bfS
 bhb
@@ -89881,7 +89880,7 @@ asR
 asR
 avu
 asS
-awS
+sDy
 axK
 ayw
 ayX

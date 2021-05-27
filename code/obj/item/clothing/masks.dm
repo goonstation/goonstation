@@ -8,6 +8,7 @@
 	var/obj/item/voice_changer/vchange = 0
 	body_parts_covered = HEAD
 	compatible_species = list("human", "cow", "werewolf")
+	wear_layer = MOB_HEAD_LAYER1
 	var/is_muzzle = 0
 	var/use_bloodoverlay = 1
 	var/stapled = 0
@@ -89,7 +90,7 @@
 
 		//Commence owie
 		take_bleeding_damage(target, null, rand(8, 16), DAMAGE_BLUNT)	//My
-		playsound(get_turf(target), "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1) //head,
+		playsound(target, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1) //head,
 		target.emote("scream") 									//FUCKING
 		target.TakeDamage("head", rand(12, 18), 0) 				//OW!
 		target.changeStatus("weakened", 4 SECONDS)
@@ -100,7 +101,7 @@
 	name = "gas mask"
 	desc = "A close-fitting mask that can filter some environmental toxins or be connected to an air supply."
 	icon_state = "gas_mask"
-	c_flags = SPACEWEAR | COVERSMOUTH | COVERSEYES | MASKINTERNALS | BLOCKSMOKE
+	c_flags =  COVERSMOUTH | COVERSEYES | MASKINTERNALS | BLOCKSMOKE
 	w_class = W_CLASS_NORMAL
 	see_face = 0.0
 	item_state = "gas_mask"
@@ -164,6 +165,10 @@
 	color_r = 1
 	color_g = 0.8
 	color_b = 0.8
+
+	syndicate
+		name = "syndicate field protective mask"
+		item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/clothing/mask/gas/voice
 	name = "gas mask"
@@ -269,7 +274,7 @@
 			spam_flag = 1
 			src.add_fingerprint(user)
 			user?.visible_message("<B>[user]</B> honks the nose on [his_or_her(user)] [src.name]!")
-			playsound(get_turf(src), islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
+			playsound(src, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
 			SPAWN_DBG(src.spam_timer)
 				spam_flag = 0
 			return 1
@@ -339,6 +344,10 @@
 				U.visible_message(__red("[src] latches onto [T]'s face!"),__red("You slap [src] onto [T]'s face!'"))
 				logTheThing("combat",user,target,"forces [T] to wear [src] (cursed clown mask) at [log_loc(T)].")
 				U.u_equip(src)
+
+				// If we don't empty out that slot first, it could blip the mask out of existence
+				T.drop_from_slot(T.wear_mask)
+
 				T.equip_if_possible(src,T.slot_wear_mask)
 
 

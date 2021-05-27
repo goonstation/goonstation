@@ -3638,10 +3638,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering/ce)
-"aik" = (
-/obj/storage/crate/rcd/CE,
-/turf/simulated/floor,
-/area/station/engine/engineering/ce)
 "ail" = (
 /obj/grille/catwalk{
 	dir = 10
@@ -8257,16 +8253,6 @@
 	d2 = 2
 	},
 /obj/cable,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
-"asW" = (
-/obj/table/wood/auto,
-/obj/item/camera_test{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
-/obj/item/storage/secure/sbriefcase,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "asX" = (
@@ -23283,11 +23269,11 @@
 	desc = "Various supplies for the bar.";
 	name = "bartending crate"
 	},
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/item/storage/firstaid/toxin,
 /obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/glass/beaker/large,
@@ -30299,29 +30285,6 @@
 	},
 /turf/simulated/floor,
 /area/station/science/teleporter)
-"bsD" = (
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/storage/crate{
-	desc = "Only distantly related to the Adventure Closet.";
-	name = "Adventure Crate"
-	},
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/reagent_containers/food/drinks/milk,
-/obj/item/reagent_containers/food/snacks/sandwich/pb,
-/obj/item/paper{
-	desc = "Aw dang, mooom";
-	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
-	name = "note from mom"
-	},
-/obj/item/paper/book/critter_compendium,
-/turf/simulated/floor,
-/area/station/science/teleporter)
 "bsE" = (
 /obj/decal/glow{
 	brightness = 3;
@@ -31524,17 +31487,6 @@
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
-/area/station/science/teleporter)
-"bvf" = (
-/obj/machinery/networked/teleconsole{
-	tag = "icon-s_teleport (EAST)";
-	icon_state = "s_teleport";
-	dir = 4
-	},
-/obj/item/camera_test,
-/obj/machinery/power/data_terminal,
-/obj/cable,
-/turf/simulated/floor,
 /area/station/science/teleporter)
 "bvg" = (
 /obj/landmark/start{
@@ -33708,19 +33660,6 @@
 /obj/machinery/disposal/mail/small/autoname/bridge/west,
 /turf/simulated/floor/black,
 /area/station/bridge)
-"bzF" = (
-/obj/displaycase{
-	displayed = new /obj/item/captaingun
-},
-/obj/machinery/camera{
-	name = "autoname  - SS13";
-	icon_state = "camera";
-	dir = 5;
-	network = "SS13";
-	c_tag = "autotag"
-	},
-/turf/simulated/floor/black,
-/area/station/bridge/captain)
 "bzG" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -34014,12 +33953,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/blue,
-/area/station/bridge/captain)
-"bAo" = (
-/obj/table/auto,
-/obj/item/camera_test,
-/obj/item/storage/photo_album,
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)
 "bAp" = (
@@ -35172,6 +35105,73 @@
 	},
 /turf/space,
 /area/space)
+"gVa" = (
+/obj/table/wood/auto,
+/obj/item/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "detectives camera";
+	pictures_left = 30
+	},
+/obj/item/storage/secure/sbriefcase,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"hkK" = (
+/obj/machinery/networked/teleconsole{
+	tag = "icon-s_teleport (EAST)";
+	icon_state = "s_teleport";
+	dir = 4
+	},
+/obj/item/camera,
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/turf/simulated/floor,
+/area/station/science/teleporter)
+"isF" = (
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/radio/headset/multifreq,
+/obj/storage/crate{
+	desc = "Only distantly related to the Adventure Closet.";
+	name = "Adventure Crate"
+	},
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/reagent_containers/food/drinks/milk,
+/obj/item/reagent_containers/food/snacks/sandwich/pb,
+/obj/item/paper{
+	desc = "Aw dang, mooom";
+	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
+	name = "note from mom"
+	},
+/obj/item/paper/book/critter_compendium,
+/turf/simulated/floor,
+/area/station/science/teleporter)
+"slg" = (
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/obj/machinery/camera{
+	name = "autoname  - SS13";
+	icon_state = "camera";
+	dir = 5;
+	network = "SS13";
+	c_tag = "autotag"
+	},
+/turf/simulated/floor/black,
+/area/station/bridge/captain)
+"uVE" = (
+/obj/table/auto,
+/obj/item/camera,
+/obj/item/storage/photo_album,
+/turf/simulated/floor/blue,
+/area/station/bridge/captain)
+"vyd" = (
+/obj/storage/crate/rcd/CE,
+/turf/simulated/floor,
+/area/station/engine/engineering/ce)
 
 (1,1,1) = {"
 aaa
@@ -83103,7 +83103,7 @@ btm
 btN
 btN
 btN
-bvf
+hkK
 bvu
 bvP
 bwp
@@ -83702,7 +83702,7 @@ bpV
 bnQ
 bru
 brq
-bsD
+isF
 btn
 btO
 bui
@@ -84926,7 +84926,7 @@ bvR
 byA
 byR
 bzj
-bzF
+slg
 bzY
 bAm
 bAC
@@ -85532,7 +85532,7 @@ byR
 bzl
 bzH
 byz
-bAo
+uVE
 bAE
 bAO
 bzM
@@ -86013,7 +86013,7 @@ acY
 agq
 agY
 ahB
-aik
+vyd
 agq
 agq
 agq
@@ -86634,7 +86634,7 @@ ank
 aqt
 arx
 asi
-asW
+gVa
 aty
 asi
 auN

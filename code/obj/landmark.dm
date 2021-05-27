@@ -266,10 +266,12 @@ var/global/list/job_start_locations = list()
 		else
 			T.appearance_flags |= KEEP_TOGETHER
 			T.vistarget = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
-			if(warptarget_modifier) T.vistarget.warptarget = T
-			T.updateVis()
-			T.vistarget.fullbright = TRUE
-			T.vistarget.RL_Init()
+			if (T.vistarget)
+				if(warptarget_modifier) 
+					T.vistarget.warptarget = T
+				T.updateVis()
+				T.vistarget.fullbright = TRUE
+				T.vistarget.RL_Init()
 		..()
 
 /obj/landmark/viscontents_spawn/no_vis
@@ -288,11 +290,9 @@ var/global/list/job_start_locations = list()
 	if(vistarget)
 		vistarget.overlays.Cut()
 		vistarget.vis_contents += src
-		/*
 		var/obj/overlay/tile_effect/lighting/L = locate() in vistarget.vis_contents
 		if(L)
 			vistarget.vis_contents -= L
-		*/
 
 /obj/landmark/load_prefab_shuttledmm
 	name = "custom shuttle dmm loading location"

@@ -155,6 +155,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please (Convair880).
 			ammoHand.update_icon()
 			user.put_in_hand_or_drop(ammoHand)
+			ammoHand.after_unload(user)
 
 			// The gun may have been fired; eject casings if so.
 			src.ejectcasings()
@@ -892,12 +893,15 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
 				return
 			else
-				var/obj/item/ammo/bullets/grenade_shell/TO_LOAD = new /obj/item/ammo/bullets/grenade_shell
-				TO_LOAD.attackby(b, user)
-				src.attackby(TO_LOAD, user)
+				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"")
 				return
 		else
 			..()
+
+	proc/convert_grenade(obj/item/nade, mob/user)
+		var/obj/item/ammo/bullets/grenade_shell/TO_LOAD = new /obj/item/ammo/bullets/grenade_shell
+		TO_LOAD.attackby(nade, user)
+		src.attackby(TO_LOAD, user)
 
 
 // Ported from old, non-gun RPG-7 object class (Convair880).
@@ -1241,12 +1245,15 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
 				return
 			else
-				var/obj/item/ammo/bullets/grenade_shell/TO_LOAD = new /obj/item/ammo/bullets/grenade_shell
-				TO_LOAD.attackby(b, user)
-				src.attackby(TO_LOAD, user)
+				SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECONDS, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"")
 				return
 		else
 			..()
+
+	proc/convert_grenade(obj/item/nade, mob/user)
+		var/obj/item/ammo/bullets/grenade_shell/TO_LOAD = new /obj/item/ammo/bullets/grenade_shell
+		TO_LOAD.attackby(nade, user)
+		src.attackby(TO_LOAD, user)
 
 // slamgun
 /obj/item/gun/kinetic/slamgun
@@ -1466,7 +1473,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		src.keys_changed(0,0xFFFF)
 		if(!src.hasOverlayComposition(/datum/overlayComposition/sniper_scope))
 			src.addOverlayComposition(/datum/overlayComposition/sniper_scope)
-		playsound(get_turf(src), "sound/weapons/scope.ogg", 50, 1)
+		playsound(src, "sound/weapons/scope.ogg", 50, 1)
 		break
 
 

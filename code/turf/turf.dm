@@ -507,6 +507,8 @@
 
 	var/rlapplygen = RL_ApplyGeneration
 	var/rlupdategen = RL_UpdateGeneration
+	var/rlmuloverlay = RL_MulOverlay
+	var/rladdoverlay = RL_AddOverlay
 	var/rllumr = RL_LumR
 	var/rllumg = RL_LumG
 	var/rllumb = RL_LumB
@@ -572,6 +574,12 @@
 
 	new_turf.RL_ApplyGeneration = rlapplygen
 	new_turf.RL_UpdateGeneration = rlupdategen
+	if(new_turf.RL_MulOverlay)
+		pool(new_turf.RL_MulOverlay)
+	if(new_turf.RL_AddOverlay)
+		pool(new_turf.RL_AddOverlay)
+	new_turf.RL_MulOverlay = rlmuloverlay
+	new_turf.RL_AddOverlay = rladdoverlay
 
 	new_turf.RL_LumR = rllumr
 	new_turf.RL_LumG = rllumg
@@ -750,6 +758,10 @@
 			for (var/obj/window/auto/W in orange(1))
 				W.update_icon()
 	return wall
+
+/turf/proc/is_sanctuary()
+  var/area/AR = src.loc
+  return AR.sanctuary
 
 ///turf/simulated/floor/Entered(atom/movable/A, atom/OL) //this used to run on every simulated turf (yes walls too!) -zewaka
 //	..()
@@ -981,6 +993,17 @@
 			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			T.build(src)
 
+#if defined(MAP_OVERRIDE_POD_WARS)
+/turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
+	
+	//testing pali's solution for getting the direction opposite of the map edge you are nearest to.
+	// A.set_loc(A.loc)
+	var/atom/target = get_edge_target_turf(A, (A.x + A.y > world.maxx ? SOUTH | WEST : NORTH | EAST) & (A.x - A.y > 0 ? NORTH | WEST : SOUTH | EAST))
+	if (!istype(A, /obj/machinery/vehicle) && target)	//Throw everything but vehicles(pods)
+		A.throw_at(target, 1, 1)
+
+	return
+#else
 /turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
 	var/zlevel = 3 //((A.z=3)?5:3)//(3,4)
 
@@ -1011,7 +1034,7 @@
 	SPAWN_DBG(0)
 		if ((A?.loc))
 			A.loc.Entered(A)
-
+#endif
 //Vr turf is a jerk and pretends to be broken.
 /turf/unsimulated/bombvr/ex_act(severity)
 	switch(severity)

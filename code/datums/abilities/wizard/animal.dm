@@ -51,7 +51,8 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/mous
 			return 1
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [target]!</b></span>")
 		if (do_mob(holder.owner, target, 20))
-			holder.owner.say("YORAF UHRY") // AN EMAL? PAL EMORF? TURAN SPHORM?
+			if(!istype(get_area(holder.owner), /area/sim/gunsim))
+				holder.owner.say("YORAF UHRY") // AN EMAL? PAL EMORF? TURAN SPHORM?
 			..()
 
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()

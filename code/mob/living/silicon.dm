@@ -25,6 +25,8 @@
 	blood_id = "oil"
 	use_stamina = 0
 	can_lie = 0
+	canbegrabbed = FALSE // silicons can't be grabbed, they're too bulky or something
+	grabresistmessage = "but can't get a good grip!"
 
 	dna_to_absorb = 0 //robots dont have DNA for fuck sake
 

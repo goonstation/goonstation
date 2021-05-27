@@ -194,7 +194,6 @@ powmonkey
 hephasto
 bobsedgws
 leadrobot
-omjenkins
 hufflaw
 maximusrex
 sankto
@@ -466,3 +465,5 @@ nihisohel
 mexicat
 theangrypun
 asche
+alyasgrey
+lt3

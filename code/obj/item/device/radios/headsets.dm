@@ -13,6 +13,7 @@
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew."
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	icon_override = "civ"
+	wear_layer = MOB_EARS_LAYER
 	var/haswiretap
 	hardened = 0
 
@@ -376,3 +377,5 @@ Secure Frequency:
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "syndie_upgr"
 	w_class = W_CLASS_TINY
+	is_syndicate = 1
+	mats = 12

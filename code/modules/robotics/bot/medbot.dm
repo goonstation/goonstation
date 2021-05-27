@@ -688,7 +688,7 @@
 				sput_words += reagent_id_to_name(reagent)
 			smoke_reaction(sput, 1, get_turf(master))
 			master.visible_message("<span class='alert'>A shower of [english_list(sput_words)] shoots out of [master]'s hypospray!</span>")
-		playsound(get_turf(master), 'sound/items/hypo.ogg', 80, 0)
+		playsound(master, 'sound/items/hypo.ogg', 80, 0)
 
 		master.KillPathAndGiveUp() // Don't discard the patient just yet, maybe they need more healing!
 		master.update_icon()

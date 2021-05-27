@@ -22,7 +22,8 @@
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [target]!</b></span>")
 
 		if (do_mob(holder.owner, target, 15))
-			holder.owner.say("NWOLC EGNEVER")
+			if(!istype(get_area(holder.owner), /area/sim/gunsim))
+				holder.owner.say("NWOLC EGNEVER")
 			..()
 
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -51,7 +52,7 @@
 				H.job = "Cluwne"
 				H.contract_disease(/datum/ailment/disability/clumsy/cluwne,null,null,1)
 				H.contract_disease(/datum/ailment/disease/cluwneing_around/cluwne,null,null,1)
-				playsound(get_turf(H), pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
+				playsound(H, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
 				H.change_misstep_chance(60)
 
 				animate_clownspell(H)
