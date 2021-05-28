@@ -321,6 +321,19 @@
 		icon_state = "hop-dress"
 		item_state = "hop-dress"
 
+	fancy/bland
+		icon_state = "hop-fancy-alt"
+		item_state = "hop-fancy-alt"
+
+	dress/bland
+		icon_state = "hop-dress-alt"
+		item_state = "hop-dress-alt"
+
+	dress/bland
+		icon_state = "hop-alt"
+		item_state = "hop-alt"
+
+
 /obj/item/clothing/under/rank/head_of_securityold
 	name = "head of security's uniform"
 	desc = "It's bright red and rather crisp, much like security's victims tend to be."
@@ -1104,17 +1117,13 @@
 		icon_state = "suitT-dress"
 		item_state = "suitT-dress"
 
-/obj/item/clothing/under/suit/hopG
-	name = "\improper Head of Personnel's suit"
-	desc = "A grey suit and blue necktie. An authoritative yet boring ensemble."
-	icon_state = "suitT-alt"
-	item_state = "suitT-alt"
+	bland
+		icon_state = "suitT-alt"
+		item_state = "suitT-alt"
 
-/obj/item/clothing/under/suit/hopGdress
-	name = "\improper Head of Personnel's suit"
-	desc = "A grey dress and blue necktie. An authoritative yet boring ensemble."
-	icon_state = "suitT-dress-alt"
-	item_state = "suitT-dress-alt"
+	dress/bland
+		icon_state = "suitT-dress-alt"
+		item_state = "suitT-dress-alt"
 
 /obj/item/clothing/under/suit/hos
 	name = "\improper Head of Security's suit"

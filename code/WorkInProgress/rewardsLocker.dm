@@ -1179,3 +1179,63 @@
 					src.player.claimed_rewards.Add(S.type)
 			else
 				boutput(usr, "<span class='alert'>Redemption of \"[S.title]\" failed.</span>")
+////////navygreyhop////////
+/datum/achievementReward/ntso_commander
+	title = "(Skin set) Bland Bureaucrat"
+	desc = "Will change the skin of suits, naval jackets, and Head of personal uniforms."
+	required_medal = "Unperson"
+	once_per_round = 0
+
+	rewardActivate(var/mob/activator)
+		if (ishuman(activator))
+			var/mob/living/carbon/human/H = activator
+			var/succ = 0
+			if (H.w_uniform)
+				var/obj/item/clothing/M = H.w_uniform
+				if (istype(M, /obj/item/clothing/under/rank/head_of_personnel))
+					var/prev = M.name
+					M.name = "Bureaucrat's uniform"
+					M.desc = "A uniform tailored to be unoticable and as inoffensive as possible. (Base Item: [prev])"
+					if (istype(M, /obj/item/clothing/under/rank/head_of_personnel/fancy))
+						M.icon_state = "hop-fancy-alt"
+						M.item_state = "hop-fancy-alt"
+					else if (istype(M, /obj/item/clothing/under/rank/head_of_personnel/dress))
+						M.icon_state = "hop-dress-alt"
+						M.item_state = "hop-dress-alt"
+					else
+						M.icon_state = "hop-alt"
+						M.item_state = "hop-alt"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+				else if (istype(M, /obj/item/clothing/under/suit/hop))
+					var/prev = M.name
+					M.name = "\improper Bureaucrats's suit"
+					M.desc = "A uniform specifically for NanoTrasen Burecrats. (Base Item: [prev])"
+					if (istype(M, /obj/item/clothing/under/suit/hop/dress))
+						M.icon_state = "suitT-dress-alt"
+						M.item_state = "suitT-dress-alt"
+					else
+						M.icon_state = "suitT-alt"
+						M.item_state = "suitT-alt"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (H.wear_suit)
+				var/obj/item/clothing/M = H.wear_suit
+				if (istype(M, /obj/item/clothing/suit/armor/hopcoat))
+					var/prev = M.name
+					M.icon_state = "hopcoat-alt"
+					M.item_state = "hopcoat-alt"
+					M.name = "Burecrat's Coat"
+					M.real_name = "Bureaucrat's Coat"
+					M.desc = "A formal and inoffensive coat. It is made specifically for NanoTrasen Bureaucrats. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (!succ)
+				boutput(activator, "<span class='alert'>Unable to redeem... What kind of fake HOP are you!?</span>")
+			return succ
+		else
+			boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
+			return FALSE
