@@ -163,7 +163,7 @@
 		// Generic flash
 		var/mob/M = target
 		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
-		playsound(get_turf(src), "sound/weapons/flash.ogg", 100, 1)
+		playsound(src, "sound/weapons/flash.ogg", 100, 1)
 		flick("camera_flash-anim", src)
 		// Log entry.
 		var/blind_msg_target = "!"
@@ -334,7 +334,7 @@
 		return
 
 	src.create_photo(target)
-	playsound(get_turf(src), "sound/items/polaroid[rand(1,2)].ogg", 75, 1, -3)
+	playsound(src, "sound/items/polaroid[rand(1,2)].ogg", 75, 1, -3)
 
 	if (src.pictures_left > 0)
 		src.pictures_left = max(0, src.pictures_left - 1)

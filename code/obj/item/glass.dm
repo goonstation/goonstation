@@ -96,6 +96,12 @@ SHARDS
 		. += "There are [src.amount] glass sheet\s on the stack."
 
 	attack_self(mob/user as mob)
+//no glass for pod wars either. man this is getting out of hand. Sorry zewaka. - kyle
+#if defined(MAP_OVERRIDE_POD_WARS)
+		if (user.loc)
+			boutput(usr, "<span class='alert'>What are you gonna do with this? You have a very particular set of skills, and building is not one of them...</span>")
+			return
+#endif
 
 		if (!( istype(user.loc, /turf/simulated) ))
 			return

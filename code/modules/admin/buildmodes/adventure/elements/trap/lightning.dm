@@ -89,7 +89,7 @@
 						for (var/mob/living/M in get_turf(target))
 							if (damage < 500)
 								M.TakeDamage("chest", 0, damage, 0, DAMAGE_BURN)
-								M.changeStatus("stunned", stun * 10)
+								M.changeStatus("stunned", stun SECONDS)
 								boutput(M, "<b><span class='alert'>You feel a powerful shock course through your body!</span></b>")
 							else
 								M:gib()
@@ -102,7 +102,7 @@
 									pool(OB)
 							if (damage < 500)
 								M.TakeDamage("chest", 0, damage, 0, DAMAGE_BURN)
-								M.changeStatus("stunned", stun * 10)
+								M.changeStatus("stunned", stun SECONDS)
 								boutput(M, "<b><span class='alert'>You feel a powerful shock course through your body!</span></b>")
 							else
 								M:gib()

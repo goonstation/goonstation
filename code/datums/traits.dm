@@ -671,7 +671,7 @@
 		if(!owner.stat && can_act(owner) && istype(owner.loc, /turf/space))
 			if(prob(2))
 				owner.emote("faint")
-				owner.changeStatus("paralysis", 80)
+				owner.changeStatus("paralysis", 8 SECONDS)
 			else if (prob(8))
 				owner.emote("scream")
 				owner.changeStatus("stunned", 2 SECONDS)
@@ -878,6 +878,42 @@ obj/trait/pilot
 	icon_state = "syringe"
 	points = 1
 	isPositive = 0
+
+/obj/trait/clown_disbelief
+	name = "Clown Disbelief (0)"
+	cleanName = "Clown Disbelief"
+	desc = "You refuse to acknowledge that clowns could exist on a space station."
+	id = "clown_disbelief"
+	icon_state = "clown_disbelief"
+	points = 0
+	isPositive = 0
+
+	onAdd(mob/owner)
+		OTHER_START_TRACKING_CAT(owner, TR_CAT_CLOWN_DISBELIEF_MOBS)
+		if(owner.client)
+			src.turnOn(owner)
+		src.RegisterSignal(owner, COMSIG_MOB_LOGIN, .proc/turnOn)
+		src.RegisterSignal(owner, COMSIG_MOB_LOGOUT, .proc/turnOff)
+		src.RegisterSignal(owner, COMSIG_ATOM_EXAMINE, .proc/examined)
+
+	proc/turnOn(mob/owner)
+		for(var/image/I as anything in global.clown_disbelief_images)
+			owner.client.images += I
+
+	proc/examined(mob/owner, mob/examiner, list/lines)
+		if(examiner.job == "Clown")
+			lines += "<br>[capitalize(he_or_she(owner))] doesn't seem to notice you."
+
+	onRemove(mob/owner)
+		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_CLOWN_DISBELIEF_MOBS)
+		if(owner.client)
+			src.turnOff(owner)
+		src.UnregisterSignal(owner, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_ATOM_EXAMINE))
+
+	proc/turnOff(mob/owner)
+		for(var/image/I as anything in global.clown_disbelief_images)
+			owner.last_client.images -= I
+
 
 /obj/trait/unionized
 	name = "Unionized (-1)"

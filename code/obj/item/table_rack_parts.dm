@@ -519,11 +519,11 @@ RACK PARTS
 
 	onStart()
 		..()
-		playsound(get_turf(the_furniture), "sound/items/Ratchet.ogg", 50, 1)
+		playsound(the_furniture, "sound/items/Ratchet.ogg", 50, 1)
 		owner.visible_message("<span class='notice'>[owner] begins disassembling [the_furniture].</span>")
 
 	onEnd()
 		..()
-		playsound(get_turf(the_furniture), "sound/items/Deconstruct.ogg", 50, 1)
+		playsound(the_furniture, "sound/items/Deconstruct.ogg", 50, 1)
 		the_furniture:deconstruct() // yes a colon, bite me
 		owner.visible_message("<span class='notice'>[owner] disassembles [the_furniture].</span>")

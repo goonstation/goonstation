@@ -76,16 +76,6 @@
 	msgLose = "You feel dry."
 	icon_state  = "squid"
 
-/datum/bioEffect/mutantrace/dwarf
-	name = "Dwarfism"
-	desc = "Greatly reduces the overall size of the subject, resulting in markedly dimished height."
-	id = "dwarf"
-	mutantrace_option = "Dwarf"
-	mutantrace_path = /datum/mutantrace/dwarf
-	msgGain = "Did everything just get bigger?"
-	msgLose = "You feel tall!"
-	icon_state  = "dwarf"
-
 /datum/bioEffect/mutantrace/roach
 	name = "Blattodean Genetics"
 	desc = "Re-enables ancient vestigal genes in the subject's body."

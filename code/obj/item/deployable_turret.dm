@@ -168,6 +168,7 @@
 
 
 	attackby(obj/item/W, mob/user)
+		user.lastattacked = src
 		if (isweldingtool(W) && !(src.active))
 			var/turf/T = user.loc
 			if(!W:try_weld(user, 1))
@@ -292,6 +293,8 @@
 
 		else
 			src.health = src.health - W.force
+			playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 25, 1)
+			attack_particle(user,src)
 			src.check_health()
 			..()
 
@@ -302,7 +305,7 @@
 			return
 		src.quick_deploy_fuel--
 		src.visible_message("<span class='alert'>[src]'s quick deploy system engages, automatically securing it!</span>")
-		playsound(src.loc, "sound/items/Welder2.ogg", 50, 1)
+		playsound(src.loc, "sound/items/Welder2.ogg", 30, 1)
 		set_projectile()
 		src.anchored = 1
 		src.active = 1

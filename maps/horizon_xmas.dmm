@@ -985,7 +985,7 @@
 /area/station/wreckage)
 "acs" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/bottle/red,
+/obj/item/reagent_containers/food/drinks/bottle/soda/red,
 /turf/simulated/floor/plating/airless{
 	icon_state = "panelscorched"
 	},
@@ -8340,7 +8340,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/hallway/secondary/entry)
 "auQ" = (
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -47518,7 +47518,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
-/obj/item/reagent_containers/food/drinks/bottle/blue,
+/obj/item/reagent_containers/food/drinks/bottle/soda/blue,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /obj/item/reagent_containers/food/drinks/bottle/vintage,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,

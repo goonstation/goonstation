@@ -1269,6 +1269,11 @@
 		if (src.ore)
 			src.ore.onHit(src)
 
+		var/datum/ore/event/E = src.event
+
+		if (E)
+			E.onHit(src)
+
 		if (difference <= 0)
 			destroy_asteroid()
 		else
@@ -1593,13 +1598,13 @@ obj/item/clothing/gloves/concussive
 				src.power_up()
 				item_state = "ppick1"
 				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_on.ogg", 50, 1)
+				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
 			else
 				boutput(user, "<span class='notice'>You power down [src].</span>")
 				src.power_down()
 				item_state = "ppick0"
 				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_off.ogg", 50, 1)
+				playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
 		else
 			boutput(user, "<span class='alert'>No charge left in [src].</span>")
 
@@ -1683,13 +1688,13 @@ obj/item/clothing/gloves/concussive
 				src.power_up()
 				item_state = "phammer1"
 				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_on.ogg", 50, 1)
+				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
 			else
 				boutput(user, "<span class='notice'>You power down [src].</span>")
 				src.power_down()
 				item_state = "phammer0"
 				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_off.ogg", 50, 1)
+				playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
 		else
 			boutput(user, "<span class='alert'>No charge left in [src].</span>")
 
@@ -1733,13 +1738,13 @@ obj/item/clothing/gloves/concussive
 				src.power_up()
 				item_state = "pshovel1"
 				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_on.ogg", 50, 1)
+				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
 			else
 				boutput(user, "<span class='notice'>You power down [src].</span>")
 				src.power_down()
 				item_state = "pshovel0"
 				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_off.ogg", 50, 1)
+				playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
 		else
 			boutput(user, "<span class='alert'>No charge left in [src].</span>")
 
@@ -1882,7 +1887,7 @@ obj/item/clothing/gloves/concussive
 		for(var/mob/living/carbon/C in range(src.expl_flash, src))
 			if (!isdead(C) && C.client) shake_camera(C, 3, 2)
 			if(get_dist(src,C) <= src.expl_light)
-				C.changeStatus("stunned", 80)
+				C.changeStatus("stunned", 8 SECONDS)
 				C.changeStatus("weakened", 10 SECONDS)
 				C.stuttering += 15
 				boutput(C, "<span class='alert'>The concussive blast knocks you off your feet!</span>")

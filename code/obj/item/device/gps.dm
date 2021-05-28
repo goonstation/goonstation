@@ -40,6 +40,12 @@
 			. =  "Landmark: Restricted"
 		else if (T.z == 3)
 			. =  "Landmark: Debris Field"
+		else if (T.z == 5)
+			#ifdef UNDERWATER_MAP
+			. =  "Landmark: Trench"
+			#else
+			. =  "Landmark: Asteroid Field"
+			#endif
 		return
 
 	proc/show_HTML(var/mob/user)
@@ -70,14 +76,17 @@
 		.buttons a:hover {
 			background: #6BC7E8;
 		}
-		.gps {
+		.buttons.gps a {
+			display: block;
+			width: calc(100% - 7px);
+  			text-transform: none;
 			border-top: 1px solid #58B4DC;
 			background: #21272C;
 			padding: 3px;
 			margin: 0 0 1px 0;
 			font-size: 11px;
 		}
-		.gps.distress {
+		.buttons.gps.distress a {
 			border-top: 2px solid #BE3737;
 			background: #2C2121;
 		}
@@ -106,9 +115,10 @@
 				var/turf/T = get_turf(G.loc)
 				if (!T)
 					continue
-				HTML += "<div class='gps [G.distress ? "distress" : ""]'><span><b>[G.serial]-[G.identifier]</b>"
-				HTML += "<span style='font-size:85%;float: right'>[G.distress ? "<font color=\"red\">(DISTRESS)</font>" : "<font color=666666>(DISTRESS)</font>"]</span>"
-				HTML += "<br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></div>"
+				var/name = "[G.serial]-[G.identifier]"
+				HTML += "<div class='buttons gps [G.distress ? "distress" : ""]'><A href='byond://?src=\ref[src];dest_cords=1;x=[T.x];y=[T.y];z=[T.z];name=[name]'><span><b>[name]</b>"
+				HTML += "<span style='font-size:85%;float:right'>[G.distress ? "<font color=\"red\">(DISTRESS)</font>" : "<font color=666666>(DISTRESS)</font>"]</span><br>"
+				HTML += "Located at: [T.x], [T.y]<span style='float:right'>[src.get_z_info(T)]</span></span></A></div>"
 
 		HTML += "<div class='gps group'><b>Tracking Implants</b></div>"
 		for_by_tcl(imp, /obj/item/implant/tracking)
@@ -117,14 +127,14 @@
 				var/turf/T = get_turf(imp.loc)
 				if (!T)
 					continue
-				HTML += "<div class='gps'><span><b>[imp.loc.name]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></div>"
+				HTML += "<div class='buttons gps'><A href='byond://?src=\ref[src];dest_cords=1;x=[T.x];y=[T.y];z=[T.z];name=[imp.loc.name]'><span><b>[imp.loc.name]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></A></div>"
 		HTML += "<hr>"
 
 		HTML += "<div class='gps group'><b>Beacons</b></div>"
 		for (var/obj/machinery/beacon/B as anything in machine_registry[MACHINES_BEACONS])
 			if (B.enabled == 1)
 				var/turf/T = get_turf(B.loc)
-				HTML += "<div class='gps'><span><b>[B.sname]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></div>"
+				HTML += "<div class='buttons gps'><A href='byond://?src=\ref[src];dest_cords=1;x=[T.x];y=[T.y];z=[T.z];name=[B.sname]'><span><b>[B.sname]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></A></div>"
 		HTML += "<br></div>"
 
 		user.Browse(HTML, "window=gps_[src];title=GPS;size=400x540;override_setting=1")
@@ -229,7 +239,7 @@
 			//Set located turf to be the tracking_target
 			if (isturf(T))
 				src.tracking_target = T
-				boutput(usr, "<span class='notice'>Now tracking: <b>X</b>: [T.x], <b>Y</b>: [T.y]</span>")
+				boutput(usr, "<span class='notice'>Now tracking: <b>[href_list["name"]]</b> at <b>X</b>: [T.x], <b>Y</b>: [T.y]</span>")
 
 				begin_tracking()
 			else
@@ -243,7 +253,7 @@
 				return
 			active = 1
 			process()
-			boutput(usr, "<span class='notice'>You activate the gps</span>")
+			boutput(usr, "<span class='notice'>You activate the gps.</span>")
 
 	proc/send_distress_signal(distress)
 		var/distressAlert = distress ? "help" : "clear"

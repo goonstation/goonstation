@@ -336,7 +336,6 @@ toxic - poisons
 	icon_state = "modproj"
 	name = "blaster bolt"
 	sname = "blaster"
-	damage_type = D_BURNING
 	shot_sound = 'sound/weapons/laser_a.ogg'
 	dissipation_delay = 6
 	dissipation_rate = 5
@@ -362,7 +361,55 @@ toxic - poisons
 		icon_state = "crescent"
 		shot_number = 1
 
+/datum/projectile/laser/blaster/pod_pilot
+	cost = 20
+	power = 33
+	color_red = 0
+	color_green = 0
+	color_blue = 0
+	override_color = 0
+	icon_state = "bolt"
+	damage_type = D_ENERGY
+	var/turret = 0		//have turret shots do less damage, but slow mobs it hits...
+	var/team_num = 0	//1 for NT, 2 for SY
 
+	on_hit(atom/hit)
+		..()
+		//have turret shots slow mobs it hits...
+		if (turret && isliving(hit))
+			var/mob/living/L = hit
+			L.changeStatus("slowed", 2 SECONDS)
+
+	//lower power when they hit vehicles by half
+	get_power(obj/projectile/P, atom/A)
+		var/mult = 1
+		if (!turret && istype(A, /obj/machinery/vehicle))
+			mult = 0.5
+		return ..(P, A) * mult
+
+/datum/projectile/laser/blaster/pod_pilot/blue_NT
+	name = "blue blaster bolt"
+	color_icon = "#3d9cff"
+	color_red = 0.05
+	color_green = 0.28
+	color_blue = 0.51
+	team_num = 1
+
+	turret
+		turret = 1
+		power = 15
+
+/datum/projectile/laser/blaster/pod_pilot/red_SY
+	name = "red blaster bolt"
+	color_icon = "#ff4043"
+	color_red = 0.51
+	color_green = 0.05
+	color_blue = 0.28
+	team_num = 2
+
+	turret
+		turret = 1
+		power = 15
 
 
 // cogwerks- mining laser, first attempt
@@ -378,7 +425,8 @@ toxic - poisons
 	dissipation_delay = 1
 	dissipation_rate = 8
 	sname = "mining laser"
-	shot_sound = 'sound/weapons/rocket.ogg'
+	shot_sound = 'sound/weapons/cutter.ogg'
+	shot_volume = 30
 	damage_type = D_BURNING
 	brightness = 0.8
 	window_pass = 0
@@ -398,12 +446,12 @@ toxic - poisons
 	window_pass = 0
 	icon_state = ""
 	damage_type = D_SLASHING
-	power = 35
+	power = 45
 	cost = 1
 	brightness = 0
 	sname = "drill bit"
-	shot_sound = 'sound/machines/engine_grump1.ogg'
-	shot_volume = 45
+	shot_sound = 'sound/machines/rock_drill.ogg'
+	shot_volume = 20
 	dissipation_delay = 1
 	dissipation_rate = 35
 	icon_turf_hit = null
@@ -416,7 +464,7 @@ toxic - poisons
 			var/turf/simulated/wall/asteroid/T = hit
 			if (power <= 0)
 				return
-			T.damage_asteroid(round(power / 10),1)
+			T.damage_asteroid(round(power / 7),1)
 			//if(prob(60)) // raised again
 			//	T.destroy_asteroid(1)
 			//else
@@ -465,9 +513,9 @@ toxic - poisons
 		if (!istype(L))
 			return
 		if(L.getStatusDuration("burning"))
-			L.changeStatus("burning", 70)
+			L.changeStatus("burning", 7 SECONDS)
 		else
-			L.changeStatus("burning", 35)
+			L.changeStatus("burning", 3.5 SECONDS)
 
 /datum/projectile/laser/signifer_lethal
 	name = "signifer bolt"

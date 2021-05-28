@@ -229,7 +229,7 @@
 	Entered(atom/movable/A as mob|obj) //MBC : I was too hurried and lazy to make this actually apply reagents on touch. this is a note to myself. FUCK YOUUU
 		..()
 		if(A.getStatusDuration("burning"))
-			A.changeStatus("burning", -500)
+			A.changeStatus("burning", -50 SECONDS)
 
 		//nah disable for now i dont wanna do istype checks on enter
 		//else if(isitem(A))
@@ -350,7 +350,7 @@
 				if(needlink)
 					if(!picked_turf.linked_hole)
 						picked_turf.linked_hole = src
-						picked_turf.UpdateOverlays(image(icon = 'icons/effects/64x64.dmi', icon_state = "lightshaft", loc = picked_turf), "lightshaft")
+						src.add_simple_light("trenchhole", list(120, 120, 120, 120))
 
 		..()
 
@@ -364,6 +364,20 @@
 	generateLight = 0
 	allow_hole = 0
 	spawningFlags = SPAWN_DECOR | SPAWN_PLANTS | SPAWN_FISH | SPAWN_LOOT | SPAWN_HALLU
+
+	blow_hole()
+		if(src.z == 5)
+			for(var/turf/space/fluid/T in range(1, locate(src.x, src.y, 1)))
+				if(T.allow_hole)
+					var/x = T.x
+					var/y = T.y
+					T.blow_hole()
+					var/turf/space/fluid/warp_z5/hole = locate(x, y, 1)
+					if(istype(hole))
+						hole.L = list(src)
+						src.linked_hole = hole
+						src.add_simple_light("trenchhole", list(120, 120, 120, 120))
+						break
 
 /turf/space/fluid/nospawn
 	spawningFlags = null

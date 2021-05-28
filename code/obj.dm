@@ -103,6 +103,11 @@
 		remove_dialogs()
 		..()
 
+	UpdateName()
+		if (isnull(src.real_name) && !isnull(src.name))
+			src.real_name = src.name
+		src.name = "[name_prefix(null, 1)][src.real_name || initial(src.name)][name_suffix(null, 1)]"
+
 	proc/can_access_remotely(mob/user)
 		. = FALSE
 
@@ -195,37 +200,6 @@
 				return ..(I, user)
 			else return
 		return ..(I, user)
-
-
-	MouseDrop(atom/over_object as mob|obj|turf)
-		..()
-		if (iswraith(usr))
-			if(!src.anchored && isitem(src))
-				src.throw_at(over_object, 7, 1)
-				logTheThing("combat", usr, null, "throws [src] with wtk.")
-		else if (ismegakrampus(usr))
-			if(!src.anchored && isitem(src))
-				src.throw_at(over_object, 7, 1)
-				logTheThing("combat", usr, null, "throws [src] with k_tk.")
-		else if(usr.bioHolder && usr.bioHolder.HasEffect("telekinesis_drag") && istype(src, /obj) && isturf(src.loc) && isalive(usr)  && usr.canmove && get_dist(src,usr) <= 7 )
-			var/datum/bioEffect/TK = usr.bioHolder.GetEffect("telekinesis_drag")
-
-			if(!src.anchored && (isitem(src) || TK.variant == 2))
-				src.throw_at(over_object, 7, 1)
-				logTheThing("combat", usr, null, "throws [src] with tk.")
-
-#ifdef HALLOWEEN
-		else if (istype(usr, /mob/dead/observer))	//ghost
-			if(!src.anchored && isitem(src))
-				var/obj/item/I = src
-				if (I.w_class > W_CLASS_NORMAL)
-					return
-				if (istype(usr:abilityHolder, /datum/abilityHolder/ghost_observer))
-					var/datum/abilityHolder/ghost_observer/GH = usr:abilityHolder
-					if (GH.spooking)
-						src.throw_at(over_object, 7-I.w_class, 1)
-						logTheThing("combat", usr, null, "throws [src] with g_tk.")
-#endif
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		F["[path].type"] << type
@@ -533,7 +507,7 @@
 
 /obj/proc/mob_flip_inside(var/mob/user)
 	user.show_text("<span class='alert'>You leap and slam against the inside of [src]! Ouch!</span>")
-	user.changeStatus("paralysis", 40)
+	user.changeStatus("paralysis", 4 SECONDS)
 	user.changeStatus("weakened", 4 SECONDS)
 	src.visible_message("<span class='alert'><b>[src]</b> emits a loud thump and rattles a bit.</span>")
 

@@ -1,6 +1,6 @@
 /datum/game_mode
 	var/name = "invalid" // Don't implement ticker.mode.name or .config_tag checks again, okay? I've had to swap them all to get game mode children to work.
-	var/config_tag = null // Use istype(ticker.mode, /datum/game_mode/whatever) instead.
+	var/config_tag = null // Use istype(ticker.mode, /datum/game_mode/whatever) when checking instead, but this must be set in new game mode
 	var/votable = 1
 	var/probability = 0 // Overridden by the server config. If you don't have access to that repo, keep it 0.
 	var/crew_shortage_enabled = 1
@@ -23,6 +23,8 @@
 	var/datum/game_mode/spy_theft/spy_market = 0	//In case any spies are spawned into a round that is NOT spy_theft, we need a place to hold their spy market.
 
 	var/do_antag_random_spawns = 1
+	var/do_random_events = 1
+	var/escape_possible = 1		//for determining if players lose their held spacebux item on round end if they are able to "escape" in this mode.
 
 /datum/game_mode/proc/announce()
 	boutput(world, "<B>[src] did not define announce()</B>")
@@ -238,6 +240,9 @@
 ////////////////////////////
 // Objective related code //
 ////////////////////////////
+
+//what do we do when a mob dies
+/datum/game_mode/proc/on_human_death(var/mob/M)
 
 /datum/game_mode/proc/bestow_objective(var/datum/mind/traitor,var/objective_path)
 	if (!istype(traitor) || !ispath(objective_path))

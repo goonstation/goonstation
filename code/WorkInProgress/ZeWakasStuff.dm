@@ -7,9 +7,7 @@
 
 
 /* 514 checklist
-	`as anything in` -> `as anything in`
 	?[] experimentation perhaps
-	hsv/hsl/hcy destruction
 	make some lib animate stuff better with spaces? (better rainbow anyone?)
 	world.map_cpu hookin (fuck why i delete the old code)
 	enable TILE_MOVEMENT_MODE and see if break
