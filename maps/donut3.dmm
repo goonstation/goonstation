@@ -10258,6 +10258,14 @@
 	pixel_x = 5;
 	pixel_y = 11
 	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 3;
+	pixel_y = 4
+	},
 /obj/item/chem_grenade/metalfoam{
 	pixel_x = 7
 	},
@@ -36837,12 +36845,24 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
 "kPz" = (
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = 7
+/obj/item/old_grenade/oxygen{
+	pixel_x = 11;
+	pixel_y = 12
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -7;
+	pixel_y = 12
 	},
 /obj/item/clothing/ears/earmuffs{
 	pixel_x = 1;
 	pixel_y = 6
+	},
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = 7
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 2;
+	pixel_y = 12
 	},
 /obj/item/clothing/ears/earmuffs{
 	pixel_x = -5

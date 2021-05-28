@@ -546,6 +546,7 @@
 	/obj/item/storage/box/clothing/engineer,
 	/obj/item/clothing/suit/wintercoat/engineering,
 	/obj/item/clothing/mask/gas,
+	/obj/item/old_grenade/oxygen,
 	/obj/item/clothing/head/helmet/hardhat,
 	/obj/item/clothing/glasses/meson,
 	/obj/item/pen/infrared,

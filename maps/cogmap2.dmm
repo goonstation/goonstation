@@ -24122,6 +24122,8 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "bdw" = (
@@ -33625,6 +33627,14 @@
 /obj/item/storage/toolbox/emergency,
 /obj/item/chem_grenade/metalfoam,
 /obj/item/chem_grenade/metalfoam,
+/obj/item/old_grenade/oxygen{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 5;
+	pixel_y = 5
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/ai_monitored/storage/eva)
 "byr" = (
@@ -45125,6 +45135,8 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/chem_grenade/metalfoam,
 /obj/item/chem_grenade/metalfoam,
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart equipped for handling hull breaches.";
 	name = "breach repair cart";
@@ -45879,6 +45891,8 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/chem_grenade/metalfoam,
 /obj/item/chem_grenade/metalfoam,
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart equipped for handling hull breaches.";
 	name = "breach repair cart";
@@ -50629,6 +50643,8 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/chem_grenade/metalfoam,
 /obj/item/chem_grenade/metalfoam,
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/east)
 "cfN" = (
@@ -75303,6 +75319,7 @@
 	name = "caution sign"
 	},
 /obj/item/storage/firstaid/oxygen,
+/obj/item/old_grenade/oxygen,
 /turf/simulated/floor/plating,
 /area/research_outpost)
 "diB" = (

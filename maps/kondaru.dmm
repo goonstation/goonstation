@@ -9428,6 +9428,8 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/chem_grenade/metalfoam,
 /obj/item/chem_grenade/metalfoam,
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart equipped for handling hull breaches.";
 	name = "breach repair cart";
@@ -20427,8 +20429,16 @@
 /obj/table/auto,
 /obj/machinery/cell_charger,
 /obj/item/cell/supercell/charged,
-/obj/item/chem_grenade/metalfoam,
-/obj/item/chem_grenade/metalfoam,
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = 7;
+	pixel_y = 13
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = 7;
+	pixel_y = 13
+	},
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
 /turf/simulated/floor/darkblue,
 /area/station/storage/eva)
 "bgl" = (
@@ -53837,6 +53847,17 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -16;
+	pixel_y = 10
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -14;
+	pixel_y = 5
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -11
+	},
 /turf/simulated/floor/black,
 /area/station/engine/storage)
 "pSq" = (
@@ -59545,6 +59566,8 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/chem_grenade/metalfoam,
 /obj/item/chem_grenade/metalfoam,
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart equipped for handling hull breaches.";
 	name = "breach repair cart";

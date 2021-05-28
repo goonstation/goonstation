@@ -23566,9 +23566,20 @@
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/device/gps,
-/obj/item/chem_grenade/metalfoam,
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -5;
+	pixel_y = 7
+	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 7;
+	pixel_y = 3
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/storage/eva)
@@ -40698,7 +40709,18 @@
 /obj/item/device/t_scanner,
 /obj/item/extinguisher,
 /obj/item/device/light/flashlight,
-/obj/item/chem_grenade/metalfoam,
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 7;
+	pixel_y = 4
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bFM" = (

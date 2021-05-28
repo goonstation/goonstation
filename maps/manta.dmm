@@ -7213,6 +7213,17 @@
 	pixel_x = 4
 	},
 /obj/item/chem_grenade/metalfoam,
+/obj/item/old_grenade/oxygen{
+	pixel_x = 5;
+	pixel_y = 17
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -5;
+	pixel_y = 17
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_y = 17
+	},
 /turf/simulated/floor/bot,
 /area/station/engine/storage)
 "avw" = (
@@ -31732,6 +31743,14 @@
 /obj/item/clothing/suit/hi_vis,
 /obj/item/clothing/suit/hi_vis,
 /obj/item/clothing/suit/hi_vis,
+/obj/item/old_grenade/oxygen{
+	pixel_x = -7;
+	pixel_y = 13
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -7;
+	pixel_y = 13
+	},
 /turf/simulated/floor,
 /area/station/engine/storage)
 "bKj" = (

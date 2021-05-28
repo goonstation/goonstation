@@ -45346,6 +45346,17 @@
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
 /obj/item/wrench,
+/obj/item/old_grenade/oxygen{
+	pixel_x = 6;
+	pixel_y = 16
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -6;
+	pixel_y = 16
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_y = 11
+	},
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},

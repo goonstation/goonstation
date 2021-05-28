@@ -23765,6 +23765,17 @@
 	amount = 50;
 	pixel_y = 6
 	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 4;
+	pixel_y = 14
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -4;
+	pixel_y = 14
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_y = 11
+	},
 /obj/item/clothing/ears/earmuffs{
 	pixel_y = 4
 	},
@@ -31486,6 +31497,8 @@
 /obj/item/chem_grenade/metalfoam{
 	pixel_x = 3
 	},
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
 /obj/item/device/radio,
 /obj/item/device/gps,
 /obj/machinery/camera{

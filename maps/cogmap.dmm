@@ -35189,11 +35189,14 @@
 	},
 /obj/item/chem_grenade/metalfoam{
 	pixel_x = 7;
-	pixel_y = 7
+	pixel_y = 8
 	},
 /obj/item/chem_grenade/metalfoam{
-	pixel_x = 6;
-	pixel_y = -2
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = 7
 	},
 /turf/simulated/floor/yellow,
 /area/station/storage/primary)
@@ -35845,9 +35848,16 @@
 	pixel_x = -8;
 	pixel_y = 11
 	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = 5;
-	pixel_y = 1
+/obj/item/old_grenade/oxygen{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 7
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 4;
+	pixel_y = -7
 	},
 /turf/simulated/floor/yellow,
 /area/station/storage/primary)

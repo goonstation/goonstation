@@ -16289,6 +16289,8 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/sheet/glass/fullstack,
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -16368,6 +16370,7 @@
 /obj/decal/tile_edge/stripe{
 	icon_state = "xtra_bigstripe-edge"
 	},
+/obj/item/old_grenade/oxygen,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "byk" = (
@@ -19492,6 +19495,14 @@
 /obj/item/chem_grenade/metalfoam,
 /obj/item/chem_grenade/metalfoam,
 /obj/item/chem_grenade/metalfoam,
+/obj/item/old_grenade/oxygen{
+	pixel_x = 10;
+	pixel_y = 7
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 8;
+	pixel_y = 2
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/storage/eva)
 "cvg" = (

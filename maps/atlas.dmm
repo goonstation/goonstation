@@ -6624,6 +6624,8 @@
 	max_amt2spawn = 14;
 	min_amt2spawn = 6
 	},
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "pW" = (
@@ -7341,6 +7343,12 @@
 /area/station/hallway/primary/north)
 "rC" = (
 /obj/table/auto,
+/obj/item/old_grenade/oxygen{
+	pixel_y = 8
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_y = 8
+	},
 /obj/item/tank/jetpack,
 /obj/item/tank/jetpack,
 /obj/item/tank/jetpack,
