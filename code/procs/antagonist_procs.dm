@@ -224,6 +224,12 @@
 			for (var/obj/item/device/pda2/foo in L)
 				R = foo
 				loc = "in the [S.name] on your back"
+		if (!R && istype(traitor_mob.belt, /obj/item/storage))
+			var/obj/item/storage/S = traitor_mob.belt
+			var/list/L = S.get_contents()
+			for (var/obj/item/device/pda2/foo in L)
+				R = foo
+				loc = "in the [S.name] on your belt"
 
 	if (!R) //They have no PDA. Make one!
 		R = new /obj/item/device/pda2(traitor_mob)
