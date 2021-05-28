@@ -2968,9 +2968,7 @@
 "amK" = (
 /obj/table,
 /obj/item/stamp,
-/obj/noticeboard{
-	pixel_y = 32
-	},
+/obj/noticeboard,
 /turf/unsimulated/floor/black,
 /area/hospital)
 "amL" = (
@@ -5098,9 +5096,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
 "asU" = (
-/obj/noticeboard{
-	pixel_y = 32
-	},
+/obj/noticeboard,
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
 "asV" = (
@@ -9826,6 +9822,7 @@
 /area/marsoutpost)
 "aIn" = (
 /obj/table/reinforced/auto,
+/obj/item/item_box/googly_eyes/angry,
 /turf/unsimulated/floor/carpet/red/decal/outercross,
 /area/syndicate_station/battlecruiser)
 "aIo" = (
@@ -11536,9 +11533,7 @@
 "aNg" = (
 /obj/table/auto,
 /obj/item/kitchen/food_box/donut_box,
-/obj/noticeboard{
-	pixel_y = 32
-	},
+/obj/noticeboard,
 /turf/unsimulated/floor/specialroom/bar,
 /area/upper_arctic/pod2)
 "aNh" = (
@@ -14236,9 +14231,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/noticeboard{
-	pixel_y = 32
-	},
+/obj/noticeboard,
 /turf/unsimulated/floor/neutral/side{
 	dir = 1
 	},
