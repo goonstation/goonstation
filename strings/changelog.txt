@@ -1,5 +1,26 @@
 
+(t)fri may 28 21
+(u)Kubius
+(p)4874
+(e)🐛🆕🗺|bug, feature, mapping
+(+)Kondaru mini fix-batch - Test Chamber control room no longer partially depressurized, toxins a bit bigger, market a bit spiffier.
+(t)thu may 27 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Synthflesh/styptic/sulfazdine consumed from fluid puddles on touch reactions.
+(u)Flappybat
+(p)4911
+(e)🔄|rework
+(+)Segway crashes now knock you down instantly, instead of waiting a few seconds to think about it.
+(u)Flourish
+(e)🆕|feature
+(*)You can now use GPSes to track beacons, tracking implants, and other GPSes. Select your tracking target in the menu and your GPS will point you in the right direction!
 (t)wed may 26 21
+(u)DimWhat
+(p)4860
+(e)🎨|sprites
+(*)Added a new medal "Brown Pants" which has the reward of the red captain set.
+(+)Made a red version of the captain's fancy uniform.
 (u)Kubius
 (p)4872
 (e)🆕|feature

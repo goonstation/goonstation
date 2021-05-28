@@ -2399,14 +2399,6 @@
 	},
 /turf/simulated/floor/carpet/red/standard/edge/east,
 /area/ghostdrone_factory)
-"aiG" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/air_vendor,
-/turf/simulated/floor,
-/area/station/hallway/portupperhallway)
 "aiH" = (
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/grime,
@@ -3540,10 +3532,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
-"alW" = (
-/obj/machinery/air_vendor,
-/turf/simulated/floor,
-/area/station/hallway/starboardupperhallway)
 "alX" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -7182,50 +7170,6 @@
 	icon_state = "yellowblack"
 	},
 /area/station/engine/monitoring)
-"avu" = (
-/obj/table/auto,
-/obj/item/sheet/steel/fullstack{
-	rand_pos = 0
-	},
-/obj/item/sheet/steel/fullstack{
-	rand_pos = 0
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = 4
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = -4
-	},
-/obj/item/chem_grenade/metalfoam,
-/obj/item/chem_grenade/metalfoam,
-/obj/item/chem_grenade/metalfoam,
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = -4
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = -4
-	},
-/obj/item/chem_grenade/metalfoam,
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = 4
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = 4
-	},
-/obj/item/chem_grenade/metalfoam,
-/obj/item/old_grenade/oxygen{
-	pixel_x = 5;
-	pixel_y = 17
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = -5;
-	pixel_y = 17
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_y = 17
-	},
-/turf/simulated/floor/bot,
-/area/station/engine/storage)
 "avw" = (
 /obj/decal/poster/wallsign/hazard_rad,
 /obj/disposalpipe/switch_junction/right/north{
@@ -31732,27 +31676,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/shuttle/escape/station/manta)
-"bKi" = (
-/obj/machinery/firealarm{
-	pixel_x = 1;
-	pixel_y = 26;
-	text = "NF"
-	},
-/obj/table/auto,
-/obj/item/clothing/suit/hi_vis,
-/obj/item/clothing/suit/hi_vis,
-/obj/item/clothing/suit/hi_vis,
-/obj/item/clothing/suit/hi_vis,
-/obj/item/old_grenade/oxygen{
-	pixel_x = -7;
-	pixel_y = 13
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = -7;
-	pixel_y = 13
-	},
-/turf/simulated/floor,
-/area/station/engine/storage)
 "bKj" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/tapebox,
@@ -35481,6 +35404,50 @@
 /area/station/hangar/engine{
 	name = "Submarine Bay (Engineering)"
 	})
+"cbl" = (
+/obj/table/auto,
+/obj/item/sheet/steel/fullstack{
+	rand_pos = 0
+	},
+/obj/item/sheet/steel/fullstack{
+	rand_pos = 0
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = 4
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -4
+	},
+/obj/item/chem_grenade/metalfoam,
+/obj/item/chem_grenade/metalfoam,
+/obj/item/chem_grenade/metalfoam,
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -4
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -4
+	},
+/obj/item/chem_grenade/metalfoam,
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = 4
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = 4
+	},
+/obj/item/chem_grenade/metalfoam,
+/obj/item/old_grenade/oxygen{
+	pixel_x = 5;
+	pixel_y = 17
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -5;
+	pixel_y = 17
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_y = 17
+	},
+/turf/simulated/floor/bot,
+/area/station/engine/storage)
 "cea" = (
 /obj/decal/tile_edge/check{
 	dir = 4;
@@ -38179,6 +38146,10 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
+"hGD" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor,
+/area/station/hallway/starboardupperhallway)
 "hHD" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
@@ -39789,6 +39760,14 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/research)
+"lEj" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor,
+/area/station/hallway/portupperhallway)
 "lHv" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -40494,6 +40473,27 @@
 	dir = 5
 	},
 /area/station/engine/inner)
+"nkL" = (
+/obj/machinery/firealarm{
+	pixel_x = 1;
+	pixel_y = 26;
+	text = "NF"
+	},
+/obj/table/auto,
+/obj/item/clothing/suit/hi_vis,
+/obj/item/clothing/suit/hi_vis,
+/obj/item/clothing/suit/hi_vis,
+/obj/item/clothing/suit/hi_vis,
+/obj/item/old_grenade/oxygen{
+	pixel_x = -7;
+	pixel_y = 13
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -7;
+	pixel_y = 13
+	},
+/turf/simulated/floor,
+/area/station/engine/storage)
 "nkZ" = (
 /obj/disposalpipe/switch_junction/right/west{
 	mail_tag = "Research Director"
@@ -85006,7 +85006,7 @@ bNq
 alj
 aae
 aae
-aiG
+lEj
 acu
 acu
 aob
@@ -92318,7 +92318,7 @@ qDZ
 bpV
 bJU
 aui
-bKi
+nkL
 auW
 avC
 avX
@@ -92858,7 +92858,7 @@ abA
 aci
 aDy
 aDy
-alW
+hGD
 aEA
 aEA
 aox
@@ -94131,7 +94131,7 @@ aui
 aui
 auX
 gUj
-avu
+cbl
 auW
 auW
 awm

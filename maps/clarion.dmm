@@ -6899,14 +6899,6 @@
 /area/station/crew_quarters/bathroom{
 	name = "Locker Room"
 	})
-"alY" = (
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/air_vendor,
-/turf/simulated/floor/black,
-/area/station/hallway/primary/north)
 "alZ" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -23561,28 +23553,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge/hos)
-"aVH" = (
-/obj/disposalpipe/segment/mail,
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/gps,
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = -5;
-	pixel_y = 7
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = 5;
-	pixel_y = 7
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = 7;
-	pixel_y = 3
-	},
-/turf/simulated/floor/black,
-/area/station/ai_monitored/storage/eva)
 "aVI" = (
 /obj/machinery/light/emergency,
 /obj/table/reinforced/auto,
@@ -40699,30 +40669,6 @@
 	},
 /turf/simulated/floor/caution/misc,
 /area/station/engine/core)
-"bFL" = (
-/obj/machinery/light,
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 5
-	},
-/obj/table/reinforced/auto,
-/obj/item/device/analyzer/atmospheric,
-/obj/item/device/t_scanner,
-/obj/item/extinguisher,
-/obj/item/device/light/flashlight,
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = 4;
-	pixel_y = 8
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = 7;
-	pixel_y = 4
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "bFM" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
@@ -47001,6 +46947,14 @@
 /obj/window/reinforced/north,
 /turf/simulated/floor/plating/airless,
 /area/station/engine/substation/east)
+"jbr" = (
+/obj/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/north)
 "jbP" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/research_director)
@@ -47100,6 +47054,30 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/security/brig)
+"jtd" = (
+/obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 5
+	},
+/obj/table/reinforced/auto,
+/obj/item/device/analyzer/atmospheric,
+/obj/item/device/t_scanner,
+/obj/item/extinguisher,
+/obj/item/device/light/flashlight,
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "jtY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -48403,6 +48381,28 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"mQv" = (
+/obj/disposalpipe/segment/mail,
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/device/gps,
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/storage/eva)
 "mWV" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -81068,7 +81068,7 @@ bCu
 bDB
 bEx
 bJk
-bFL
+jtd
 tUJ
 jCk
 dQp
@@ -83565,7 +83565,7 @@ aes
 akC
 akU
 alv
-alY
+jbr
 ajZ
 ajZ
 ajZ
@@ -87461,7 +87461,7 @@ aPV
 aRn
 aSK
 aUk
-aVH
+mQv
 aWV
 aYk
 aZA

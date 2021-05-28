@@ -35167,39 +35167,6 @@
 "bKJ" = (
 /turf/simulated/floor/yellow,
 /area/station/storage/primary)
-"bKK" = (
-/obj/table/auto,
-/obj/item/sheet/glass/reinforced{
-	amount = 50;
-	pixel_x = 2;
-	pixel_y = -2
-	},
-/obj/item/sheet/glass/reinforced{
-	amount = 50;
-	pixel_x = -1;
-	pixel_y = 1
-	},
-/obj/item/storage/belt/utility{
-	pixel_x = -7;
-	pixel_y = -2
-	},
-/obj/item/storage/belt/utility{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = 7;
-	pixel_y = 8
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = 5;
-	pixel_y = 4
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = 7
-	},
-/turf/simulated/floor/yellow,
-/area/station/storage/primary)
 "bKL" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -35824,43 +35791,6 @@
 	dir = 8
 	},
 /area/station/mining/staff_room)
-"bMi" = (
-/obj/table/auto,
-/obj/item/sheet/steel/reinforced{
-	amount = 50;
-	pixel_x = 2;
-	pixel_y = -1
-	},
-/obj/item/sheet/steel/reinforced{
-	amount = 50;
-	pixel_x = -1;
-	pixel_y = 2
-	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = -6;
-	pixel_y = -5
-	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = -7;
-	pixel_y = 3
-	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = -8;
-	pixel_y = 11
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = 4;
-	pixel_y = 7
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = 7
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = 4;
-	pixel_y = -7
-	},
-/turf/simulated/floor/yellow,
-/area/station/storage/primary)
 "bMj" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -46270,10 +46200,6 @@
 /obj/item/storage/box/body_bag,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
-"clk" = (
-/obj/machinery/air_vendor,
-/turf/simulated/floor/bot,
-/area/station/crew_quarters/supplylobby)
 "cll" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -55564,6 +55490,10 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
+"fIW" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/bot,
+/area/station/crew_quarters/supplylobby)
 "fJj" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
@@ -62179,6 +62109,43 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quarters)
+"sfj" = (
+/obj/table/auto,
+/obj/item/sheet/steel/reinforced{
+	amount = 50;
+	pixel_x = 2;
+	pixel_y = -1
+	},
+/obj/item/sheet/steel/reinforced{
+	amount = 50;
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = -8;
+	pixel_y = 11
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 7
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 4;
+	pixel_y = -7
+	},
+/turf/simulated/floor/yellow,
+/area/station/storage/primary)
 "sfv" = (
 /obj/machinery/light{
 	dir = 8;
@@ -65286,6 +65253,39 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor/black,
 /area/station/security/main)
+"yaf" = (
+/obj/table/auto,
+/obj/item/sheet/glass/reinforced{
+	amount = 50;
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/sheet/glass/reinforced{
+	amount = 50;
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = -7;
+	pixel_y = -2
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = 7
+	},
+/turf/simulated/floor/yellow,
+/area/station/storage/primary)
 "yaw" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -117492,8 +117492,8 @@ bAS
 bHG
 bIC
 bJB
-bKK
-bMi
+yaf
+sfj
 bNK
 bPa
 bQs
@@ -120827,7 +120827,7 @@ bXg
 bYC
 bZP
 cbm
-clk
+fIW
 ccv
 ceU
 cgo

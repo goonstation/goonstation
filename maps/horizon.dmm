@@ -7746,15 +7746,6 @@
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/blue/checker,
 /area/station/hallway/secondary/entry)
-"auQ" = (
-/obj/machinery/air_vendor,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/blue/checker,
-/area/station/hallway/secondary/entry)
 "auR" = (
 /obj/machinery/vending/medical_public,
 /turf/simulated/floor/blue/checker,
@@ -45339,28 +45330,6 @@
 /obj/machinery/atmospherics/valve,
 /turf/simulated/floor/black,
 /area/station/engine/substation/east)
-"cjg" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0
-	},
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/emergency,
-/obj/item/wrench,
-/obj/item/old_grenade/oxygen{
-	pixel_x = 6;
-	pixel_y = 16
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = -6;
-	pixel_y = 16
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_y = 11
-	},
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
-/area/station/engine/coldloop)
 "cjh" = (
 /obj/machinery/atmospherics/valve,
 /turf/simulated/floor/blue,
@@ -56125,6 +56094,28 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"kUZ" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/emergency,
+/obj/item/wrench,
+/obj/item/old_grenade/oxygen{
+	pixel_x = 6;
+	pixel_y = 16
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -6;
+	pixel_y = 16
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_y = 11
+	},
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/engine/coldloop)
 "kVM" = (
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor,
@@ -56747,6 +56738,15 @@
 /area/station/science/artifact{
 	name = "Artifact Lounge"
 	})
+"mxQ" = (
+/obj/machinery/vending/air_vendor,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/blue/checker,
+/area/station/hallway/secondary/entry)
 "mzf" = (
 /obj/cable{
 	d1 = 4;
@@ -98081,7 +98081,7 @@ aaa
 asO
 aaa
 atb
-auQ
+mxQ
 bJw
 awX
 ayf
@@ -136183,7 +136183,7 @@ bKn
 chq
 cia
 ciE
-cjg
+kUZ
 cjF
 cki
 ckP

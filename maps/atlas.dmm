@@ -5178,17 +5178,6 @@
 	icon_state = "corner_east"
 	},
 /area/station/engine/hotloop)
-"mD" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/machinery/air_vendor,
-/turf/simulated/floor/blue/side{
-	dir = 8
-	},
-/area/station/hallway/primary/south)
 "mE" = (
 /obj/cable{
 	d1 = 1;
@@ -6612,22 +6601,6 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
-"pV" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/mechanical,
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/random_item_spawner/tools_w_igloves{
-	max_amt2spawn = 14;
-	min_amt2spawn = 6
-	},
-/obj/item/old_grenade/oxygen,
-/obj/item/old_grenade/oxygen,
-/turf/simulated/floor/orangeblack,
-/area/station/engine/engineering)
 "pW" = (
 /obj/cable{
 	d1 = 2;
@@ -7341,26 +7314,6 @@
 /obj/machinery/navbeacon/tour/atlas/tour12,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"rC" = (
-/obj/table/auto,
-/obj/item/old_grenade/oxygen{
-	pixel_y = 8
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_y = 8
-	},
-/obj/item/tank/jetpack,
-/obj/item/tank/jetpack,
-/obj/item/tank/jetpack,
-/obj/item/tank/jetpack,
-/obj/item/tank/jetpack,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/storage/eva)
 "rD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -10596,6 +10549,26 @@
 "yX" = (
 /turf/space,
 /area/shuttle_sound_spawn)
+"yZ" = (
+/obj/table/auto,
+/obj/item/old_grenade/oxygen{
+	pixel_y = 8
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_y = 8
+	},
+/obj/item/tank/jetpack,
+/obj/item/tank/jetpack,
+/obj/item/tank/jetpack,
+/obj/item/tank/jetpack,
+/obj/item/tank/jetpack,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/storage/eva)
 "za" = (
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
@@ -17537,6 +17510,17 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/storage/tech)
+"QK" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/blue/side{
+	dir = 8
+	},
+/area/station/hallway/primary/south)
 "QR" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -18266,6 +18250,22 @@
 	icon_state = "engine_caution_corners"
 	},
 /area/station/engine/combustion_chamber)
+"Tx" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/random_item_spawner/tools_w_igloves{
+	max_amt2spawn = 14;
+	min_amt2spawn = 6
+	},
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
+/turf/simulated/floor/orangeblack,
+/area/station/engine/engineering)
 "TA" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/cola/random{
@@ -59056,7 +59056,7 @@ mC
 nj
 np
 ok
-pV
+Tx
 XG
 rW
 sf
@@ -59958,7 +59958,7 @@ jg
 wC
 xr
 lH
-mD
+QK
 nl
 oZ
 qx
@@ -76571,7 +76571,7 @@ je
 ct
 po
 qz
-rC
+yZ
 pp
 ve
 fl

@@ -16273,28 +16273,6 @@
 	},
 /turf/simulated/floor,
 /area/station/storage/warehouse)
-"bxU" = (
-/obj/table/reinforced/auto,
-/obj/random_item_spawner/tools_w_igloves{
-	max_amt2spawn = 14;
-	min_amt2spawn = 6
-	},
-/obj/item/device/audio_log/wall_mounted{
-	anchored = 1;
-	max_lines = 350;
-	mode = 1;
-	name = "Engineering Recorder";
-	pixel_x = -25
-	},
-/obj/item/storage/toolbox/mechanical,
-/obj/item/sheet/glass/reinforced/fullstack,
-/obj/item/sheet/glass/fullstack,
-/obj/item/old_grenade/oxygen,
-/obj/item/old_grenade/oxygen,
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
-/area/station/engine/engineering)
 "bxW" = (
 /obj/wingrille_spawn/reinforced,
 /obj/cable{
@@ -16344,33 +16322,6 @@
 /obj/decal/tile_edge/stripe{
 	icon_state = "xtra_bigstripe-edge"
 	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"byj" = (
-/obj/machinery/door_control{
-	id = "combustion";
-	name = "Combustion Chamber Vent";
-	pixel_x = -8;
-	pixel_y = -24
-	},
-/obj/machinery/door_control{
-	id = "fireshield";
-	name = "Combustion Chamber Heat Shield";
-	pixel_x = 8;
-	pixel_y = -24
-	},
-/obj/machinery/light,
-/obj/table/reinforced/auto,
-/obj/item/device/analyzer/atmospheric,
-/obj/item/device/t_scanner,
-/obj/item/extinguisher,
-/obj/item/device/t_scanner,
-/obj/item/device/light/flashlight,
-/obj/item/chem_grenade/metalfoam,
-/obj/decal/tile_edge/stripe{
-	icon_state = "xtra_bigstripe-edge"
-	},
-/obj/item/old_grenade/oxygen,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "byk" = (
@@ -19485,26 +19436,6 @@
 /obj/random_item_spawner/tools,
 /turf/simulated/floor,
 /area/station/storage/tools)
-"cuS" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/mechanical,
-/obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
-	},
-/obj/item/device/gps,
-/obj/item/chem_grenade/metalfoam,
-/obj/item/chem_grenade/metalfoam,
-/obj/item/chem_grenade/metalfoam,
-/obj/item/old_grenade/oxygen{
-	pixel_x = 10;
-	pixel_y = 7
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = 8;
-	pixel_y = 2
-	},
-/turf/simulated/floor/black,
-/area/station/ai_monitored/storage/eva)
 "cvg" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -35138,6 +35069,28 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/port)
+"kmh" = (
+/obj/table/reinforced/auto,
+/obj/random_item_spawner/tools_w_igloves{
+	max_amt2spawn = 14;
+	min_amt2spawn = 6
+	},
+/obj/item/device/audio_log/wall_mounted{
+	anchored = 1;
+	max_lines = 350;
+	mode = 1;
+	name = "Engineering Recorder";
+	pixel_x = -25
+	},
+/obj/item/storage/toolbox/mechanical,
+/obj/item/sheet/glass/reinforced/fullstack,
+/obj/item/sheet/glass/fullstack,
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/engine/engineering)
 "kng" = (
 /obj/wingrille_spawn,
 /obj/cable,
@@ -38504,6 +38457,26 @@
 /obj/item/reagent_containers/glass/bucket,
 /turf/simulated/floor/purple/checker,
 /area/station/janitor/office)
+"miv" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/decal/tile_edge/line/blue{
+	icon_state = "line1"
+	},
+/obj/item/device/gps,
+/obj/item/chem_grenade/metalfoam,
+/obj/item/chem_grenade/metalfoam,
+/obj/item/chem_grenade/metalfoam,
+/obj/item/old_grenade/oxygen{
+	pixel_x = 10;
+	pixel_y = 7
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/storage/eva)
 "mix" = (
 /obj/table/reinforced/bar/auto,
 /obj/random_item_spawner/tableware,
@@ -45145,6 +45118,33 @@
 /obj/machinery/vending/medical_public,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
+"pOP" = (
+/obj/machinery/door_control{
+	id = "combustion";
+	name = "Combustion Chamber Vent";
+	pixel_x = -8;
+	pixel_y = -24
+	},
+/obj/machinery/door_control{
+	id = "fireshield";
+	name = "Combustion Chamber Heat Shield";
+	pixel_x = 8;
+	pixel_y = -24
+	},
+/obj/machinery/light,
+/obj/table/reinforced/auto,
+/obj/item/device/analyzer/atmospheric,
+/obj/item/device/t_scanner,
+/obj/item/extinguisher,
+/obj/item/device/t_scanner,
+/obj/item/device/light/flashlight,
+/obj/item/chem_grenade/metalfoam,
+/obj/decal/tile_edge/stripe{
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/item/old_grenade/oxygen,
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "pOU" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -47720,6 +47720,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hangar/main)
+"rnp" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor,
+/area/station/crew_quarters/lounge/port)
 "rnN" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/med_kit,
@@ -51333,10 +51337,6 @@
 /area/station/crew_quarters/quartersA{
 	name = "Crew Quarters P04"
 	})
-"tkJ" = (
-/obj/machinery/air_vendor,
-/turf/simulated/floor,
-/area/station/crew_quarters/lounge/port)
 "tkQ" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail{
@@ -102292,7 +102292,7 @@ ofh
 qxy
 fdg
 gxT
-bxU
+kmh
 dcV
 nOm
 byt
@@ -104074,7 +104074,7 @@ mUP
 nqH
 avT
 bLv
-cuS
+miv
 aJI
 ths
 uwU
@@ -105220,7 +105220,7 @@ tYJ
 aGF
 eZo
 uZV
-tkJ
+rnp
 apT
 xas
 ank
@@ -106221,7 +106221,7 @@ bwk
 nIM
 iQC
 vFp
-byj
+pOP
 pvn
 mdn
 cfC

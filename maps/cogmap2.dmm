@@ -24093,39 +24093,6 @@
 /obj/disposalpipe/segment/mail/bent/south,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
-"bdv" = (
-/obj/storage/cart/mechcart{
-	desc = "A big rolling supply cart equipped for handling hull breaches.";
-	name = "breach repair cart";
-	req_access_txt = "40"
-	},
-/obj/item/sheet/steel{
-	amount = 50
-	},
-/obj/item/storage/toolbox/mechanical,
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/storage/firstaid/oxygen{
-	pixel_y = -4
-	},
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/chem_grenade/metalfoam,
-/obj/item/chem_grenade/metalfoam,
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/item/old_grenade/oxygen,
-/obj/item/old_grenade/oxygen,
-/turf/simulated/floor/plating,
-/area/station/engine/substation/west)
 "bdw" = (
 /obj/cable{
 	d1 = 1;
@@ -33610,30 +33577,6 @@
 	dir = 8;
 	pixel_x = -26;
 	pixel_y = -1
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/ai_monitored/storage/eva)
-"byq" = (
-/obj/table/auto,
-/obj/item/sheet/steel{
-	amount = 50
-	},
-/obj/item/sheet/glass/reinforced{
-	amount = 50
-	},
-/obj/item/rods/steel{
-	amount = 50
-	},
-/obj/item/storage/toolbox/emergency,
-/obj/item/chem_grenade/metalfoam,
-/obj/item/chem_grenade/metalfoam,
-/obj/item/old_grenade/oxygen{
-	pixel_x = 6;
-	pixel_y = 10
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = 5;
-	pixel_y = 5
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/ai_monitored/storage/eva)
@@ -45111,44 +45054,6 @@
 	icon_state = "stairs_middle"
 	},
 /area/station/hallway/primary/west)
-"bTu" = (
-/obj/item/sheet/steel{
-	amount = 50
-	},
-/obj/item/storage/toolbox/mechanical,
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/machinery/firealarm{
-	pixel_x = 1;
-	pixel_y = 26;
-	text = "NF"
-	},
-/obj/item/storage/firstaid/oxygen{
-	pixel_y = -4
-	},
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/chem_grenade/metalfoam,
-/obj/item/chem_grenade/metalfoam,
-/obj/item/old_grenade/oxygen,
-/obj/item/old_grenade/oxygen,
-/obj/storage/cart/mechcart{
-	desc = "A big rolling supply cart equipped for handling hull breaches.";
-	name = "breach repair cart";
-	req_access_txt = "40"
-	},
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/turf/simulated/floor/bot,
-/area/station/storage/emergency)
 "bTv" = (
 /turf/simulated/floor/yellow/side{
 	dir = 9
@@ -45872,34 +45777,6 @@
 	dir = 4
 	},
 /area/station/security/main)
-"bUU" = (
-/obj/item/sheet/steel{
-	amount = 50
-	},
-/obj/item/storage/toolbox/mechanical,
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/storage/firstaid/oxygen{
-	pixel_y = -4
-	},
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/chem_grenade/metalfoam,
-/obj/item/chem_grenade/metalfoam,
-/obj/item/old_grenade/oxygen,
-/obj/item/old_grenade/oxygen,
-/obj/storage/cart/mechcart{
-	desc = "A big rolling supply cart equipped for handling hull breaches.";
-	name = "breach repair cart";
-	req_access_txt = "40"
-	},
-/turf/simulated/floor/bot,
-/area/station/storage/emergency)
 "bUV" = (
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -50611,40 +50488,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/plating,
-/area/station/engine/substation/east)
-"cfM" = (
-/obj/item/storage/wall/random,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/autoname_east,
-/obj/storage/cart/mechcart{
-	desc = "A big rolling supply cart equipped for handling hull breaches.";
-	name = "breach repair cart";
-	req_access_txt = "40"
-	},
-/obj/item/sheet/steel{
-	amount = 50
-	},
-/obj/item/storage/toolbox/mechanical,
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/storage/firstaid/oxygen{
-	pixel_y = -4
-	},
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/chem_grenade/metalfoam,
-/obj/item/chem_grenade/metalfoam,
-/obj/item/old_grenade/oxygen,
-/obj/item/old_grenade/oxygen,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/east)
 "cfN" = (
@@ -60156,10 +59999,6 @@
 	},
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/black,
-/area/station/crew_quarters/market)
-"cBp" = (
-/obj/machinery/air_vendor,
-/turf/simulated/floor/bot,
 /area/station/crew_quarters/market)
 "cBq" = (
 /obj/machinery/vending/pda,
@@ -75305,23 +75144,6 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/research_outpost)
-"diA" = (
-/obj/storage/cart/mechcart{
-	desc = "A big rolling supply cart equipped for handling hull breaches.";
-	name = "breach repair cart";
-	req_access_txt = "40"
-	},
-/obj/item/chem_grenade/metalfoam,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/storage/firstaid/oxygen,
-/obj/item/old_grenade/oxygen,
-/turf/simulated/floor/plating,
-/area/research_outpost)
 "diB" = (
 /obj/grille/catwalk/cross{
 	dir = 6
@@ -78559,6 +78381,34 @@
 	},
 /turf/simulated/floor,
 /area/station/science/teleporter)
+"dRf" = (
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/obj/item/storage/toolbox/mechanical,
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/item/storage/firstaid/oxygen{
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/chem_grenade/metalfoam,
+/obj/item/chem_grenade/metalfoam,
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
+/obj/storage/cart/mechcart{
+	desc = "A big rolling supply cart equipped for handling hull breaches.";
+	name = "breach repair cart";
+	req_access_txt = "40"
+	},
+/turf/simulated/floor/bot,
+/area/station/storage/emergency)
 "dRY" = (
 /obj/table/auto,
 /obj/cable{
@@ -78621,6 +78471,44 @@
 	icon_state = "blue2"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"faR" = (
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/obj/item/storage/toolbox/mechanical,
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/machinery/firealarm{
+	pixel_x = 1;
+	pixel_y = 26;
+	text = "NF"
+	},
+/obj/item/storage/firstaid/oxygen{
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/chem_grenade/metalfoam,
+/obj/item/chem_grenade/metalfoam,
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
+/obj/storage/cart/mechcart{
+	desc = "A big rolling supply cart equipped for handling hull breaches.";
+	name = "breach repair cart";
+	req_access_txt = "40"
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/bot,
+/area/station/storage/emergency)
 "fji" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -78911,6 +78799,30 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"jCl" = (
+/obj/table/auto,
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/obj/item/sheet/glass/reinforced{
+	amount = 50
+	},
+/obj/item/rods/steel{
+	amount = 50
+	},
+/obj/item/storage/toolbox/emergency,
+/obj/item/chem_grenade/metalfoam,
+/obj/item/chem_grenade/metalfoam,
+/obj/item/old_grenade/oxygen{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/ai_monitored/storage/eva)
 "jNp" = (
 /obj/item/paper/book/monster_manual_revised,
 /turf/simulated/wall/asteroid,
@@ -78922,6 +78834,39 @@
 	icon_state = "blue5"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"kAc" = (
+/obj/storage/cart/mechcart{
+	desc = "A big rolling supply cart equipped for handling hull breaches.";
+	name = "breach repair cart";
+	req_access_txt = "40"
+	},
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/obj/item/storage/toolbox/mechanical,
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/item/storage/firstaid/oxygen{
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/chem_grenade/metalfoam,
+/obj/item/chem_grenade/metalfoam,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
+/turf/simulated/floor/plating,
+/area/station/engine/substation/west)
 "kBU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -79300,6 +79245,40 @@
 /obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/chapel)
+"pJY" = (
+/obj/item/storage/wall/random,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_east,
+/obj/storage/cart/mechcart{
+	desc = "A big rolling supply cart equipped for handling hull breaches.";
+	name = "breach repair cart";
+	req_access_txt = "40"
+	},
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/obj/item/storage/toolbox/mechanical,
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/item/storage/firstaid/oxygen{
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/chem_grenade/metalfoam,
+/obj/item/chem_grenade/metalfoam,
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
+/turf/simulated/floor/plating,
+/area/station/engine/substation/east)
 "pJZ" = (
 /obj/machinery/camera/television{
 	c_tag = "game room";
@@ -79810,6 +79789,23 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"wBn" = (
+/obj/storage/cart/mechcart{
+	desc = "A big rolling supply cart equipped for handling hull breaches.";
+	name = "breach repair cart";
+	req_access_txt = "40"
+	},
+/obj/item/chem_grenade/metalfoam,
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/item/storage/firstaid/oxygen,
+/obj/item/old_grenade/oxygen,
+/turf/simulated/floor/plating,
+/area/research_outpost)
 "wEk" = (
 /obj/cable{
 	d1 = 4;
@@ -79849,6 +79845,10 @@
 	icon_state = "fgreen2"
 	},
 /area/station/hydroponics/bay)
+"xGc" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/bot,
+/area/station/crew_quarters/market)
 "xGk" = (
 /obj/table/wood/auto,
 /obj/deskclutter,
@@ -93788,7 +93788,7 @@ doU
 aab
 dii
 dip
-diA
+wBn
 diN
 djb
 djd
@@ -114844,8 +114844,8 @@ bEc
 bGB
 bQm
 bRN
-bTu
-bUU
+faR
+dRf
 bQm
 bXU
 bYa
@@ -126591,7 +126591,7 @@ aSQ
 aSQ
 bbw
 bcx
-bdv
+kAc
 bef
 beJ
 bfq
@@ -126938,7 +126938,7 @@ cwq
 aaI
 aaa
 cfm
-cfM
+pJY
 cgk
 cgJ
 chG
@@ -130276,7 +130276,7 @@ cpo
 dgM
 dgQ
 czC
-cBp
+xGc
 cCz
 cEa
 cFU
@@ -142615,7 +142615,7 @@ bqZ
 bsN
 buG
 bwp
-byq
+jCl
 bjq
 bBx
 bDw

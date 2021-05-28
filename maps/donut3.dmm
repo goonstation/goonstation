@@ -8794,6 +8794,32 @@
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/crew_quarters/barber_shop)
+"ckS" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = -6;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 5;
+	pixel_y = 11
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = 7
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -5
+	},
+/turf/simulated/floor/darkblue/checker,
+/area/station/ai_monitored/storage/eva)
 "ckY" = (
 /obj/table/glass/auto,
 /obj/item/paper_bin,
@@ -10248,32 +10274,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
-"cJO" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_x = -6;
-	pixel_y = 11
-	},
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_x = 5;
-	pixel_y = 11
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = -7;
-	pixel_y = 4
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = 3;
-	pixel_y = 4
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = 7
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = -5
-	},
-/turf/simulated/floor/darkblue/checker,
-/area/station/ai_monitored/storage/eva)
 "cKu" = (
 /obj/reagent_dispensers/watertank/fountain,
 /obj/item/device/radio/intercom/security{
@@ -24948,13 +24948,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
-"heY" = (
-/obj/machinery/air_vendor,
-/obj/decal/mule/dropoff,
-/turf/simulated/floor/yellow/side{
-	dir = 5
-	},
-/area/station/hallway/primary/east)
 "hfB" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/firedoor_spawn,
@@ -36844,34 +36837,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
-"kPz" = (
-/obj/item/old_grenade/oxygen{
-	pixel_x = 11;
-	pixel_y = 12
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = -7;
-	pixel_y = 12
-	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = 1;
-	pixel_y = 6
-	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = 7
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = 2;
-	pixel_y = 12
-	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = -5
-	},
-/obj/table/reinforced/industrial/auto,
-/turf/simulated/floor/yellowblack{
-	dir = 4
-	},
-/area/station/storage/primary)
 "kPG" = (
 /obj/cable{
 	d1 = 4;
@@ -67824,6 +67789,34 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
+"tPQ" = (
+/obj/item/old_grenade/oxygen{
+	pixel_x = 11;
+	pixel_y = 12
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -7;
+	pixel_y = 12
+	},
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = 7
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 2;
+	pixel_y = 12
+	},
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = -5
+	},
+/obj/table/reinforced/industrial/auto,
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/station/storage/primary)
 "tPS" = (
 /obj/machinery/light/runway_light,
 /obj/lattice{
@@ -74250,6 +74243,13 @@
 	},
 /turf/simulated/floor/red/checker,
 /area/station/security/checkpoint/west)
+"vJZ" = (
+/obj/machinery/vending/air_vendor,
+/obj/decal/mule/dropoff,
+/turf/simulated/floor/yellow/side{
+	dir = 5
+	},
+/area/station/hallway/primary/east)
 "vKl" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -114612,7 +114612,7 @@ yko
 fvQ
 muC
 kUo
-cJO
+ckS
 jMF
 vxs
 saB
@@ -138813,7 +138813,7 @@ elM
 kuW
 rwx
 elM
-heY
+vJZ
 ygs
 vIP
 mpG
@@ -143042,7 +143042,7 @@ tuT
 ohh
 hrV
 mrR
-kPz
+tPQ
 fuA
 lVy
 xcV

@@ -10432,11 +10432,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/lounge)
-"ayj" = (
-/obj/disposalpipe/segment/mail,
-/obj/machinery/air_vendor,
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
 "ayk" = (
 /obj/machinery/vending/floppy,
 /turf/simulated/floor,
@@ -23755,33 +23750,6 @@
 /obj/item/chem_grenade/metalfoam,
 /turf/simulated/floor,
 /area/station/storage/eeva)
-"bgE" = (
-/obj/table/auto,
-/obj/item/sheet/steel/reinforced{
-	amount = 50;
-	pixel_y = 6
-	},
-/obj/item/sheet/steel/reinforced{
-	amount = 50;
-	pixel_y = 6
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = 4;
-	pixel_y = 14
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = -4;
-	pixel_y = 14
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_y = 11
-	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_y = 4
-	},
-/obj/item/clothing/ears/earmuffs,
-/turf/simulated/floor,
-/area/station/storage/eeva)
 "bgF" = (
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor,
@@ -31484,32 +31452,6 @@
 "bzx" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload)
-"bzy" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_x = 2
-	},
-/obj/item/chem_grenade/firefighting{
-	pixel_x = -3
-	},
-/obj/item/chem_grenade/metalfoam,
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = 3
-	},
-/obj/item/old_grenade/oxygen,
-/obj/item/old_grenade/oxygen,
-/obj/item/device/radio,
-/obj/item/device/gps,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/darkpurple,
-/area/station/ai_monitored/storage/eva)
 "bzz" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
@@ -41648,10 +41590,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
-"bYv" = (
-/obj/machinery/air_vendor,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/south)
 "bYw" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/plating/random,
@@ -46253,6 +46191,59 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"dvF" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 2
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = -3
+	},
+/obj/item/chem_grenade/metalfoam,
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = 3
+	},
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
+/obj/item/device/radio,
+/obj/item/device/gps,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/darkpurple,
+/area/station/ai_monitored/storage/eva)
+"dzY" = (
+/obj/table/auto,
+/obj/item/sheet/steel/reinforced{
+	amount = 50;
+	pixel_y = 6
+	},
+/obj/item/sheet/steel/reinforced{
+	amount = 50;
+	pixel_y = 6
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 4;
+	pixel_y = 14
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -4;
+	pixel_y = 14
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_y = 11
+	},
+/obj/item/clothing/ears/earmuffs{
+	pixel_y = 4
+	},
+/obj/item/clothing/ears/earmuffs,
+/turf/simulated/floor,
+/area/station/storage/eeva)
 "dBL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -48239,12 +48230,21 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"wmx" = (
+/obj/disposalpipe/segment/mail,
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "wqE" = (
 /obj/submachine/GTM{
 	pixel_y = 32
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"wvk" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/south)
 "wyq" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/shuttlebay,
@@ -82669,7 +82669,7 @@ atk
 auA
 avO
 axe
-ayj
+wmx
 azk
 aAt
 aBw
@@ -90301,7 +90301,7 @@ bVR
 bWD
 bXp
 acZ
-bYv
+wvk
 bRU
 bLr
 lbK
@@ -90880,7 +90880,7 @@ cjZ
 ckA
 bxK
 bxK
-bzy
+dvF
 bAU
 bAU
 bAU
@@ -102630,7 +102630,7 @@ aDr
 aks
 aks
 arD
-bgE
+dzY
 bfW
 gFa
 bfW

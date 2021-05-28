@@ -2699,7 +2699,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_back = /obj/item/storage/backpack/NT
 		slot_belt = /obj/item/gun/energy/blaster_pod_wars/nanotrasen
 		slot_jump = /obj/item/clothing/under/misc/turds
-		slot_head = /obj/item/clothing/head/helmet/space/ntso
+		slot_head = /obj/item/clothing/head/helmet/space/nanotrasen/pilot
 		slot_suit = /obj/item/clothing/suit/space/nanotrasen/pilot
 		slot_foot = /obj/item/clothing/shoes/swat
 		slot_card = /obj/item/card/id/pod_wars/nanotrasen
