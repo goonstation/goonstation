@@ -108,7 +108,7 @@
 
 			var/bad_stuff = 0
 			if (L.implant && L.implant.len > 0)
-				for (var/obj/item/implant/I in L)
+				for (var/obj/item/implant/I in L.implant)
 					if (istype(I, /obj/item/implant/projectile))
 						bad_stuff ++
 
