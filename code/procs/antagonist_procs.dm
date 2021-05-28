@@ -192,19 +192,19 @@
 		loc = "on your belt"
 	else if (istype(traitor_mob.r_store, /obj/item/device/pda2))
 		R = traitor_mob.r_store
-		loc = "In your right pocket"
+		loc = "in your right pocket"
 	else if (istype(traitor_mob.l_store, /obj/item/device/pda2))
 		R = traitor_mob.l_store
-		loc = "In your left pocket"
+		loc = "in your left pocket"
 	else if (istype(traitor_mob.wear_id, /obj/item/device/pda2))
 		R = traitor_mob.wear_id
-		loc = "In your ID slot"
+		loc = "in your ID slot"
 	else if (istype(traitor_mob.l_hand, /obj/item/device/pda2))
 		R = traitor_mob.l_hand
-		loc = "In your left hand"
+		loc = "in your left hand"
 	else if (istype(traitor_mob.r_hand, /obj/item/device/pda2))
 		R = traitor_mob.r_hand
-		loc = "In your right hand"
+		loc = "in your right hand"
 	else
 		if (istype(traitor_mob.l_hand, /obj/item/storage))
 			var/obj/item/storage/S = traitor_mob.l_hand
