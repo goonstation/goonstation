@@ -175,7 +175,7 @@
 				if (Hs.frequency == frequency)
 					listeners += H
 					boutput(H, "<span class='notice'>A peculiar noise intrudes upon the radio frequency of your [Hs].</span>")
-					if (H.client && !checktraitor(H) && (H.client.preferences.be_traitor || src.override_player_pref))
+					if (H.client && !checktraitor(H) && (H.client.preferences.be_sleeper || src.override_player_pref))
 						var/datum/job/J = find_job_in_controller_by_string(H?.mind.assigned_role)
 						if (J.allow_traitors)
 							candidates.Add(H)

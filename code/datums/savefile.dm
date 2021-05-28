@@ -83,6 +83,7 @@
 		F["[profileNum]_job_prefs_3"] << src.jobs_low_priority
 		F["[profileNum]_job_prefs_4"] << src.jobs_unwanted
 		F["[profileNum]_be_traitor"] << src.be_traitor
+		F["[profileNum]_be_sleeper"] << src.be_sleeper
 		F["[profileNum]_be_syndicate"] << src.be_syndicate
 		F["[profileNum]_be_spy"] << src.be_spy
 		F["[profileNum]_be_gangleader"] << src.be_gangleader
@@ -247,6 +248,7 @@
 		F["[profileNum]_job_prefs_3"] >> src.jobs_low_priority
 		F["[profileNum]_job_prefs_4"] >> src.jobs_unwanted
 		F["[profileNum]_be_traitor"] >> src.be_traitor
+		F["[profileNum]_be_sleeper"] << src.be_sleeper
 		F["[profileNum]_be_syndicate"] >> src.be_syndicate
 		F["[profileNum]_be_spy"] >> src.be_spy
 		F["[profileNum]_be_gangleader"] >> src.be_gangleader
