@@ -2914,7 +2914,7 @@
 		if (length(sounds) > 1 && index > 0 && index <= length(sounds))
 			unReady(delay)
 			flick("comp_instrument1", src)
-			playsound(get_turf(src), sounds[signum], volume, 0)
+			playsound(get_turf(src), sounds[index], volume, 0)
 		else if (signum &&((signum >= 0.1 && signum <= 2) || (signum <= -0.1 && signum >= -2) || pitchUnlocked))
 			var/mod_delay = delay
 			if(abs(signum) < 1)
