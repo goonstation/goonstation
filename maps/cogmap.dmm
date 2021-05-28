@@ -46261,7 +46261,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "clk" = (
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/supplylobby)
 "cll" = (

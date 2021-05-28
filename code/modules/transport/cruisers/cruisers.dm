@@ -197,27 +197,17 @@
 
 		shield_obj = new(src.loc)
 		var/matrix/mtx = new
-		var/scale = 0.75
 		var/turf/center
 		for(var/turf/T in landmarks[LANDMARK_CRUISER_ENTRANCE])
 			if(T.loc == interior_area)
 				center = T
 				break
-		var/turf/wow
-		for(var/turf/t in interior_area.contents)
-			if(!wow || (t.x < wow.x || t.y < wow.y))
-				wow = t
-		var/turf/woa
-		for(var/turf/t in interior_area.contents)
-			if(!woa || (t.x > woa.x || t.y > woa.y))
-				woa = t//todo rewrite this, a relic from a more optimal fix that encounted a byond bug
-		for(var/turf/t in block(wow, woa))
+		for(var/turf/T in get_area_turfs(interior_type))
 			var/obj/overlay/pooObj = new
 			pooObj.screen_loc = "CENTER,CENTER"
 			mtx.Reset()
-			mtx.Scale(scale, scale)
-			mtx.Translate( (t.x - center.x + 2) * world.icon_size * scale, (t.y - center.y) * world.icon_size * scale )
-			pooObj.vis_contents = list(t)
+			mtx.Translate( (T.x - center.x) * world.icon_size, (T.y - center.y) * world.icon_size)
+			pooObj.vis_contents = list(T)
 			pooObj.transform = mtx
 			pooList += pooObj
 		//pooser.vis_contents += block(wow, woa)
@@ -1328,6 +1318,7 @@
 			var/datum/abilityHolder/composite/H = user.abilityHolder
 			H.addHolderInstance(AbHolder)
 			AbHolder.resumeAllAbilities()
+			user.attach_hud(AbHolder.hud)
 		if(C)
 			user.client.images += C.frames
 			user.client.images += C.overframes
@@ -1348,6 +1339,7 @@
 		if(ishuman(using) && istype(using.abilityHolder, /datum/abilityHolder/composite))
 			using.targeting_ability = null
 			using.update_cursor()
+			using.detach_hud(AbHolder.hud)
 			var/datum/abilityHolder/composite/H = using.abilityHolder
 			AbHolder.suspendAllAbilities()
 			H.removeHolder(/datum/abilityHolder/cruiser)

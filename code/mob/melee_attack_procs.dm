@@ -905,8 +905,22 @@
 				else
 					logs = list("punches [constructTarget(target,"combat")]")
 
+//Pod wars friendly fire check
+#if defined(MAP_OVERRIDE_POD_WARS)
+			var/friendly_fire = 0
+			if (owner != target && get_pod_wars_team_num(owner) == get_pod_wars_team_num(target))
+				friendly_fire = 1
+				if (istype(ticker.mode, /datum/game_mode/pod_wars))
+					var/datum/game_mode/pod_wars/mode = ticker.mode
+					mode.stats_manager?.inc_friendly_fire(owner)
+				// message_admins("[owner] just committed friendly fire against [target]!")
+
+			for (var/message in logs)
+				logTheThing("combat", owner, target, "[friendly_fire ? "<span class='alert'>Friendly Fire!</span>":""][message] at [log_loc(owner)].")
+#else
 			for (var/message in logs)
 				logTheThing("combat", owner, target, "[message] at [log_loc(owner)].")
+#endif
 
 		if (stamina_self)
 			if (stamina_self > 0)

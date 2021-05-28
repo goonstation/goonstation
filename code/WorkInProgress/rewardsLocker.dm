@@ -42,6 +42,7 @@
 			M.real_name = "medic's satchel"
 			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder. (Base Item: [prev1])"
 			activator.set_clothing_icon_dirty()
+			M.wear_layer = MOB_BACK_LAYER_SATCHEL
 
 		else if (istype(activator.back, /obj/item/storage/backpack/NT) || activator.back.icon_state == "NTbackpack")
 			var/obj/item/storage/backpack/M = activator.back
@@ -57,6 +58,7 @@
 			M.real_name = "NT satchel"
 			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder. (Base Item: [prev2])"
 			activator.set_clothing_icon_dirty()
+			M.wear_layer = MOB_BACK_LAYER_SATCHEL
 
 		else if (istype(activator.back, /obj/item/storage/backpack/captain))
 			if (activator.back.icon_state == "capbackpack")
@@ -73,7 +75,9 @@
 				M.real_name = "Captains Satchel"
 				M.desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: [prev3])"
 				activator.set_clothing_icon_dirty()
-			else
+				M.wear_layer = MOB_BACK_LAYER_SATCHEL
+
+			else if (activator.back.icon_state == "capbackpack_blue")
 				var/obj/item/storage/backpack/M = activator.back
 				var/prev3 = M.name
 				M.icon = 'icons/obj/items/storage.dmi'
@@ -87,6 +91,23 @@
 				M.real_name = "Captains Satchel"
 				M.desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: [prev3])"
 				activator.set_clothing_icon_dirty()
+				M.wear_layer = MOB_BACK_LAYER_SATCHEL
+
+			else
+				var/obj/item/storage/backpack/M = activator.back
+				var/prev3 = M.name
+				M.icon = 'icons/obj/items/storage.dmi'
+				M.inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_general.dmi'
+				M.wear_image_icon = 'icons/mob/back.dmi'
+				if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+				M.icon_state = "capsatchel_red"
+				M.item_state = "capbackpack_red"
+				M.name = "Captains Satchel"
+				M.real_name = "Captains Satchel"
+				M.desc = "A fancy designer bag made out of rare red space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: [prev3])"
+				activator.set_clothing_icon_dirty()
+
 
 		else if (istype(activator.back, /obj/item/storage/backpack))
 			var/obj/item/storage/backpack/M = activator.back
@@ -102,6 +123,7 @@
 			M.real_name = "satchel"
 			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder. (Base Item: [prev3])"
 			activator.set_clothing_icon_dirty()
+			M.wear_layer = MOB_BACK_LAYER_SATCHEL
 
 		else
 			boutput(activator, "<span class='alert'>Whatever it is you've got on your back, it can't be reskinned!</span>")
@@ -634,23 +656,13 @@
 			if (H.belt)
 				var/obj/item/M = H.belt
 				if (istype(M, /obj/item/katana_sheath/captain))
-					if (M.item_state == "scabbard-cap1")
+					if (M.item_state == "scabbard-cap1" || M.item_state == "red_scabbard-cap1")
 						qdel(M)
 						H.equip_if_possible(new /obj/item/katana_sheath/captain/blue(H), H.slot_belt)
 						succ = TRUE
 
 			if (H.back)
-				if (istype(H.back, /obj/item/storage/backpack/captain))
-					if (H.back.icon_state == "capbackpack")
-						var/obj/item/storage/backpack/captain/M = activator.back
-						var/prev = M.name
-						M.icon_state = "capbackpack_blue"
-						M.item_state = "capbackpack_blue"
-						M.desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: [prev])"
-						H.set_clothing_icon_dirty()
-						succ = TRUE
-
-				if (istype(H.back, /obj/item/storage/backpack/satchel/captain)|| H.back.icon_state == "capsatchel")
+				if (istype(H.back, /obj/item/storage/backpack/satchel/captain) || (H.back.icon_state == "capsatchel" || H.back.icon_state == "capsatchel_red"))
 					var/obj/item/storage/backpack/satchel/captain/M = activator.back
 					var/prev = M.name
 					M.icon_state = "capsatchel_blue"
@@ -659,6 +671,17 @@
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
+				if (istype(H.back, /obj/item/storage/backpack/captain))
+					if (H.back.icon_state == "capbackpack" || H.back.icon_state == "capbackpack_red")
+						var/obj/item/storage/backpack/captain/M = activator.back
+						var/prev = M.name
+						M.icon_state = "capbackpack_blue"
+						M.item_state = "capbackpack_blue"
+						M.desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: [prev])"
+						H.set_clothing_icon_dirty()
+						succ = TRUE
+
+
 			if (!succ)
 				boutput(activator, "<span class='alert'>Unable to redeem... What kind of fake captain are you!?</span>")
 			return succ
@@ -666,41 +689,47 @@
 			boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
 			return FALSE
 
-
-// I don't like this being tied to Nero
-// but please use it for a different medal!!!!!
-/*
+//red captain medal, after all this time!
 /datum/achievementReward/centcom_administrator
 	title = "(Skin Set) CENTCOM Administrator Uniform"
-	desc = "Will change the skin of captain hats, captain armor/spacesuits and captain uniforms."
-	required_medal = "Nero" //nero for now, only a suggestion, please replace if anyone has better ideas for this ty <3
+	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, sabres and captain uniforms."
+	required_medal = "Brown Pants" //Red shirt, brown pants.
 	once_per_round = 0
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
-
+			var/succ = 0
 			if (H.w_uniform)
 				var/obj/item/clothing/M = H.w_uniform
 				if (istype(M, /obj/item/clothing/under/rank/captain))
 					var/prev = M.name
 					M.name = "administrator's uniform"
 					M.desc = "A uniform specifically for CENTCOM administrators. (Base Item: [prev])"
-					if (istype(M, /obj/item/clothing/under/rank/captain/dress))
+					if (istype(M, /obj/item/clothing/under/rank/captain/fancy))
+						M.icon_state = "captain-fancy-red"
+						M.item_state = "captain-fancy-red"
+					else if (istype(M, /obj/item/clothing/under/rank/captain/dress))
 						M.icon_state = "captain-dress-red"
 						M.item_state = "captain-dress-red"
 					else
 						M.icon_state = "captain-red"
 						M.item_state = "captain-red"
 					H.set_clothing_icon_dirty()
+					succ = TRUE
 
 				else if (istype(M, /obj/item/clothing/under/suit/captain))
 					var/prev = M.name
-					M.name = "administrator's uniform"
+					M.name = "\improper Administator's suit"
 					M.desc = "A uniform specifically for CENTCOM administrators. (Base Item: [prev])"
-					M.icon_state = "suit-capR"
-					M.item_state = "suit-capR"
+					if (istype(M, /obj/item/clothing/under/suit/captain/dress))
+						M.icon_state = "suit-capR-dress"
+						M.item_state = "suit-capR-dress"
+					else
+						M.icon_state = "suit-capR"
+						M.item_state = "suit-capR"
 					H.set_clothing_icon_dirty()
+					succ = TRUE
 
 			if (H.wear_suit)
 				var/obj/item/clothing/M = H.wear_suit
@@ -711,13 +740,14 @@
 					M.name = "administrator's armor"
 					M.desc = "A suit of protective formal armor. It is made specifically for CENTCOM administrators. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
+					succ = TRUE
 
 				if (istype(M, /obj/item/clothing/suit/armor/capcoat))
 					var/prev = M.name
 					M.icon_state = "centcoat-red"
 					M.item_state = "centcoat-red"
-					M.name = "commander's coat"
-					M.real_name = "commander's coat"
+					M.name = "administrator's coat"
+					M.real_name = "administrator's coat"
 					M.desc = "A luxorious formal coat. It is specifically made for CENTCOM administrators.(Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
@@ -729,6 +759,7 @@
 					M.name = "administrator's space suit"
 					M.desc = "A suit that protects against low pressure environments. It is made specifically for CENTCOM administrators. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
+					succ = TRUE
 
 			if (H.head)
 				var/obj/item/clothing/M = H.head
@@ -736,11 +767,55 @@
 					var/prev = M.name
 					M.icon_state = "centcom-red"
 					M.item_state = "centcom-red"
-					M.name = "CENTCOM hat"
+					M.name = "administrator's hat"
 					M.desc = "A fancy hat specifically for CENTCOM administrators. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
-		return
-*/
+					succ = TRUE
+
+				else if (istype(M, /obj/item/clothing/head/helmet/space/captain))
+					var/prev = M.name
+					M.name = "administrator's space helmet"
+					M.desc = "Helps protect against vacuum. Comes in a fasionable red befitting a admninistrator. (Base Item: [prev])"
+					M.icon_state = "space-captain-red"
+					M.item_state = "space-captain-red"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (H.belt)
+				var/obj/item/M = H.belt
+				if (istype(M, /obj/item/katana_sheath/captain))
+					if (M.item_state == "scabbard-cap1" || M.item_state == "blue_scabbard-cap1")
+						qdel(M)
+						H.equip_if_possible(new /obj/item/katana_sheath/captain/red(H), H.slot_belt)
+						succ = TRUE
+
+			if (H.back)
+				if (istype(H.back, /obj/item/storage/backpack/satchel/captain) || (H.back.icon_state == "capsatchel" || H.back.icon_state == "capsatchel_blue"))
+					var/obj/item/storage/backpack/satchel/captain/M = activator.back
+					var/prev = M.name
+					M.icon_state = "capsatchel_red"
+					M.item_state = "capsatchel_red"
+					M.desc = "A fancy designer bag made out of rare red space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+				if (istype(H.back, /obj/item/storage/backpack/captain))
+					if (H.back.icon_state == "capbackpack" || H.back.icon_state == "capbackpack_blue")
+						var/obj/item/storage/backpack/captain/M = activator.back
+						var/prev = M.name
+						M.icon_state = "capbackpack_red"
+						M.item_state = "capbackpack_red"
+						M.desc = "A fancy designer bag made out of rare red space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: [prev])"
+						H.set_clothing_icon_dirty()
+						succ = TRUE
+
+
+			if (!succ)
+				boutput(activator, "<span class='alert'>Unable to redeem... What kind of fake captain are you!?</span>")
+			return succ
+		else
+			boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
+			return FALSE
 
 /datum/achievementReward/ai_malf
 	title = "(AI Skin) Malfunction"

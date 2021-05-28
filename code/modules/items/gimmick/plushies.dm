@@ -219,7 +219,7 @@
 
 /obj/item/toy/plush/small/arthur/attack_self(mob/user as mob)
 	var/menuchoice = alert("What would you like to do with [src]?",,"Awoo","Say")
-	if (menuchoice == "Awoo")
+	if (menuchoice == "Awoo" && !ON_COOLDOWN(src, "playsound", 2 SECONDS))
 		playsound(user, "sound/voice/babynoise.ogg", 50, 1)
 		src.audible_message("<span class='emote'>[src] awoos!</span>")
 	else if (menuchoice == "Say")
@@ -245,7 +245,7 @@
 
 /obj/item/toy/plush/small/deneb/attack_self(mob/user as mob)
 	var/menuchoice = alert("What would you like to do with [src]?",,"Honk","Say")
-	if (menuchoice == "Honk")
+	if (menuchoice == "Honk" && !ON_COOLDOWN(src, "playsound", 2 SECONDS))
 		playsound(user, "sound/items/rubberduck.ogg", 50, 1)
 		src.audible_message("<span class='emote'>[src] honks!</span>")
 	else if (menuchoice == "Say")

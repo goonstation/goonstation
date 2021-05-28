@@ -491,7 +491,7 @@
 
 /obj/item/clothing/head/NTberet
 	name = "Nanotrasen beret"
-	desc = "For the inner dictator in you."
+	desc = "For the inner space dictator in you."
 	icon_state = "ntberet"
 	item_state = "ntberet"
 
@@ -501,6 +501,12 @@
 	icon_state = "ntberet_commander"
 	item_state = "ntberet_commander"
 	c_flags = SPACEWEAR
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 20)
+		setProperty("heatprot", 5)
+		setProperty("meleeprot_head", 4)
 
 /obj/item/clothing/head/XComHair
 	name = "rookie scalp"
