@@ -1180,9 +1180,9 @@
 			else
 				boutput(usr, "<span class='alert'>Redemption of \"[S.title]\" failed.</span>")
 ////////navygreyhop////////
-/datum/achievementReward/ntso_commander
+/datum/achievementReward/bland_deskworker
 	title = "(Skin set) Bland Bureaucrat"
-	desc = "Will change the skin of suits, naval jackets, and Head of personal uniforms."
+	desc = "Will change the skin of suits, naval jackets, and Head of personnel uniforms."
 	required_medal = "Unperson"
 	once_per_round = 0
 

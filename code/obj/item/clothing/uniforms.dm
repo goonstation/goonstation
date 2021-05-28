@@ -329,7 +329,7 @@
 		icon_state = "hop-dress-alt"
 		item_state = "hop-dress-alt"
 
-	dress/bland
+	bland
 		icon_state = "hop-alt"
 		item_state = "hop-alt"
 
