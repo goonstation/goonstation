@@ -33665,9 +33665,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/cable{
-	icon_state = "0-4"
-	},
 /turf/simulated/floor,
 /area/station/engine/power)
 "bHk" = (
@@ -35123,11 +35120,11 @@
 	dir = 1
 	},
 /obj/table/reinforced/auto,
-/obj/machinery/computer3/generic/personal{
-	setup_starting_program = /datum/computer/file/terminal_program/file_transfer
-	},
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/computer3/generic/personal{
+	setup_drive_type = /obj/item/disk/data/fixed_disk/techcomputer3
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
