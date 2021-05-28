@@ -448,7 +448,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		src.handle_control_point_rewards()
 
 
-	//ion storm once then never again 
+	//ion storm once then never again
 	if (!did_ion_storm_happen && round_start_time + activate_control_points_time < TIME)
 		did_ion_storm_happen = TRUE
 		command_alert("An extremely powerful ion storm has reached this system! <b>Control Point Computers at Fortuna, the Reliant, and UVB-67</b> are now active! Both NanoTrasen and Syndicate <b>Pod Carriers' shields are down!</b>","Control Point Computers Online")
@@ -484,6 +484,17 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 	else
 		winner = team_SY
 		loser = team_NT
+
+	if(winner == team_NT) //putting this in a seperate code block for cleanliness
+		var/value = world.load_intra_round_value("nt_win")
+		if(isnull(value))
+			value = 0
+		world.save_intra_round_value("nt_win", value + 1)
+	else if(winner == team_SY)
+		var/value = world.load_intra_round_value("syndie_win")
+		if(isnull(value))
+			value = 0
+		world.save_intra_round_value("syndie_win", value + 1)
 
 	// var/text = ""
 	boutput(world, "<FONT size = 3><B>The winner was the [winner.name], commanded by [winner.commander?.current] ([winner.commander?.current?.ckey]):</B></FONT><br>")
@@ -1511,7 +1522,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	nanotrasen
 		icon_state = "pda-nt"
 		setup_default_module = /obj/item/device/pda_module/flashlight/nt_blue
-	
+
 	syndicate
 		icon_state = "pda-syn"
 		setup_default_module = /obj/item/device/pda_module/flashlight/sy_red
@@ -3226,6 +3237,53 @@ proc/setup_pw_crate_lists()
 	O.icon_state = "explosion"
 	SPAWN_DBG(3.5 SECONDS)
 		qdel(O)
+
+/obj/pod_war_stats/
+	name = "Mission Log"
+	icon = 'icons/obj/32x64.dmi'
+	icon_state = "memorial_mid" //placeholder, i'm not good at spriting
+	anchored = 1.0
+	opacity = 0
+	density = 1
+
+
+
+	New()
+		..()
+		var/nt_wins = world.load_intra_round_value("nt_win")
+		var/sy_wins = world.load_intra_round_value("syndie_win")
+		if(isnull(nt_wins))
+			nt_wins = 0
+		if(isnull(sy_wins))
+			sy_wins = 0
+		var/last_reset_date = world.load_intra_round_value("pod_wars_last_reset")
+		var/last_reset_text = null
+		if(!isnull(last_reset_date))
+			var/days_passed = round((world.realtime - last_reset_date) / (1 DAY))
+			last_reset_text = "<h4>(mission log reset [days_passed] days ago)</h4>"
+		src.desc = "<center><h2><b>Pod Wars Mission Log</b></h2><br> <h3>Nanotrasen Victories: [nt_wins]<br>\nSyndicate Victories: [sy_wins]</h3><br>[last_reset_text]</center>"
+
+	attack_hand(var/mob/user as mob)
+		if (..(user))
+			return
+
+		var/nt_wins = world.load_intra_round_value("nt_win")
+		var/sy_wins = world.load_intra_round_value("syndie_win")
+		if(isnull(nt_wins))
+			nt_wins = 0
+		if(isnull(sy_wins))
+			sy_wins = 0
+
+		src.add_dialog(user)
+		user.Browse(src.desc, "title=Mission Log;window=pod_war_stats_[src];size=300x300")
+		onclose(user, "pod_war_stats_[src]")
+		return
+/* commented out pending potential spriter things, but these two aren't very necessary
+/obj/pod_war_stats/left
+	icon_state = "memorial_left"
+
+/obj/pod_war_stats/right
+	icon_state = "memorial_right"*/
 
 #undef PW_COMMANDER_DIES
 #undef PW_CRIT_SYSTEM_DESTORYED
