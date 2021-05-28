@@ -1518,14 +1518,32 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	setup_default_cartridge = /obj/item/disk/data/cartridge/pod_pilot //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
 	mailgroups = list()
 	bombproof = 1
+	var/team_num 			// 1 TEAM_NANOTRASEN, 2 TEAM_SYNDICATE
+
+#if defined(MAP_OVERRIDE_POD_WARS)
+	//You can only pick this up if you're on the correct team, otherwise it explodes.
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == src.team_num)
+			..()
+		else
+			var/flavor = pick("doesn't like you", "can tell you don't deserve it", "saw into your very soul and found you wanting", "hates you", "thinks you stink", "thinks you two should start seeing other people", "doesn't trust you", "finds your lack of faith disturbing", "is just not that into you", "gently weeps")
+			//stolen from Captain's Explosive Spare ID down below...
+			boutput(user, "<span class='alert'>The ID card [flavor] and <b>explodes!</b></span>")
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+#endif
 
 	nanotrasen
 		icon_state = "pda-nt"
 		setup_default_module = /obj/item/device/pda_module/flashlight/nt_blue
+		team_num = TEAM_NANOTRASEN
 
 	syndicate
 		icon_state = "pda-syn"
 		setup_default_module = /obj/item/device/pda_module/flashlight/sy_red
+		team_num = TEAM_SYNDICATE
 
 /obj/item/device/pda_module/flashlight/nt_blue
 	name = "NanoTrasen Blue Flashlight Module"
@@ -2091,6 +2109,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	icon_state = "headset"
 	secure_frequencies = list("g" = R_FREQ_SYNDICATE)
 	secure_classes = list(RADIOCL_COMMAND)
+	secure_colors = list("#0099cc")
 	icon_override = "nt"
 	team = TEAM_NANOTRASEN
 
