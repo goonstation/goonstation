@@ -357,6 +357,7 @@
 	station_bounties[/obj/item/clothing/head/helmet/space/santahat] = 1
 	station_bounties[/obj/item/clothing/head/merchant_hat] = 1
 	station_bounties[/obj/item/clothing/head/beret/prisoner] = 2
+	station_bounties[/obj/item/clothing/head/helmet/hardhat/security] = 2
 	station_bounties[/obj/item/clothing/head/caphat] = 3
 	station_bounties[/obj/item/clothing/head/hos_hat] = 3
 
@@ -369,7 +370,6 @@
 	station_bounties[/obj/item/device/multitool] = 1
 	station_bounties[/obj/item/device/net_sniffer] = 1
 	station_bounties[/obj/item/mop] = 1
-	station_bounties[/obj/item/handheld_vacuum] = 1
 	station_bounties[/obj/item/spraybottle] = 1
 
 	station_bounties[/obj/item/clothing/gloves/yellow] = 1
@@ -403,17 +403,21 @@
 	station_bounties[/obj/item/firstbill] = 2
 	station_bounties[/obj/captain_bottleship] = 3
 	station_bounties[/obj/item/hand_tele] = 3
-
 	station_bounties[/obj/item/card/id/captains_spare] = 3
+
+	station_bounties[/obj/item/remote/porter/port_a_medbay] = 2
+	station_bounties[/obj/item/remote/porter/port_a_nanomed] = 2
+	station_bounties[/obj/item/remote/porter/port_a_brig] = 2
+	station_bounties[/obj/item/remote/porter/port_a_sci] = 2
+
+	station_bounties[/obj/item/baton] = 2
 	station_bounties[/obj/item/gun/kinetic/riot40mm] = 2
-	station_bounties[/obj/item/captaingun] = 3
-	station_bounties[/obj/item/gun/kinetic/detectiverevolver] = 3
 	station_bounties[/obj/item/gun/kinetic/dart_rifle] = 3
+	station_bounties[/obj/item/gun/kinetic/detectiverevolver] = 3
+	station_bounties[/obj/item/captaingun] = 3
 	station_bounties[/obj/item/gun/energy/taser_gun] = 2
 	station_bounties[/obj/item/gun/energy/egun] = 3
 
-	station_bounties[/obj/item/tank/jetpack] = 1
-	station_bounties[/obj/item/baton] = 2
 
 	station_bounties[/obj/item/kitchen/utensil] = 1
 	station_bounties[/obj/item/kitchen/rollingpin] = 1
@@ -455,7 +459,6 @@
 	station_bounties[/obj/item/clothing/glasses/healthgoggles] = 1
 
 	station_bounties[/obj/item/clothing/suit/space/santa] = 1
-	station_bounties[/obj/item/clothing/suit/space/emerg] = 1
 	station_bounties[/obj/item/clothing/suit/space/captain/blue] = 2
 	station_bounties[/obj/item/clothing/suit/space/captain/red] = 2
 	station_bounties[/obj/item/clothing/suit/space/captain] = 2
@@ -466,6 +469,11 @@
 	station_bounties[/obj/item/clothing/suit/space/diving/engineering] = 1
 	station_bounties[/obj/item/clothing/suit/space] = 1
 
+	station_bounties[/obj/item/tank/jetpack] = 1
+
+	station_bounties[/obj/item/storage/secure/sbriefcase] = 2
+	station_bounties[/obj/item/storage/briefcase/toxins] = 2
+	station_bounties[/obj/item/storage/backpack/medic] = 2
 	station_bounties[/obj/item/storage/backpack/NT] = 3
 	station_bounties[/obj/item/storage/backpack/captain/blue] = 3
 	station_bounties[/obj/item/storage/backpack/captain/red] = 3
@@ -473,29 +481,24 @@
 	station_bounties[/obj/item/storage/backpack/satchel/captain/blue] = 3
 	station_bounties[/obj/item/storage/backpack/satchel/captain/red] = 3
 	station_bounties[/obj/item/storage/backpack/satchel/captain] = 3
-	station_bounties[/obj/item/storage/backpack/medic] = 2
-	station_bounties[/obj/item/storage/secure/sbriefcase] = 2
-	station_bounties[/obj/item/storage/briefcase/toxins] = 2
-	station_bounties[/obj/item/storage/backpack] = 1
 
-	station_bounties[/obj/item/device/radio/headset/command/nt] = 3
-	station_bounties[/obj/item/device/radio/headset/command/captain] = 3
-	station_bounties[/obj/item/device/radio/headset/command/hos] = 3
+	station_bounties[/obj/item/device/radio/headset/engineer] = 1
+	station_bounties[/obj/item/device/radio/headset/medical] = 1
+	station_bounties[/obj/item/device/radio/headset/research] = 1
+	station_bounties[/obj/item/device/radio/headset/shipping] = 1
+	station_bounties[/obj/item/device/radio/headset/mail] = 1
+	station_bounties[/obj/item/device/radio/headset/clown] = 1
+	station_bounties[/obj/item/device/radio/headset/deaf] = 1
+	station_bounties[/obj/item/device/radio/headset/security] = 2
 	station_bounties[/obj/item/device/radio/headset/command/radio_show_host] = 2
 	station_bounties[/obj/item/device/radio/headset/command/hop] = 2
 	station_bounties[/obj/item/device/radio/headset/command/rd] = 2
 	station_bounties[/obj/item/device/radio/headset/command/md] = 2
 	station_bounties[/obj/item/device/radio/headset/command/ce] = 2
 	station_bounties[/obj/item/device/radio/headset/command] = 2
-	station_bounties[/obj/item/device/radio/headset/security] = 2
-	station_bounties[/obj/item/device/radio/headset/engineer] = 1
-	station_bounties[/obj/item/device/radio/headset/medical] = 1
-	station_bounties[/obj/item/device/radio/headset/research] = 1
-	station_bounties[/obj/item/device/radio/headset/civilian] = 1
-	station_bounties[/obj/item/device/radio/headset/shipping] = 1
-	station_bounties[/obj/item/device/radio/headset/mail] = 1
-	station_bounties[/obj/item/device/radio/headset/clown] = 1
-	station_bounties[/obj/item/device/radio/headset/deaf] = 1
+	station_bounties[/obj/item/device/radio/headset/command/nt] = 3
+	station_bounties[/obj/item/device/radio/headset/command/captain] = 3
+	station_bounties[/obj/item/device/radio/headset/command/hos] = 3
 
 	// Big machinery (non portable) objects
 	big_station_bounties[/obj/machinery/vehicle/pod] = 1
