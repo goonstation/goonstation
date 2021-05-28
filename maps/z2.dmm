@@ -48562,7 +48562,10 @@
 /area/owlery/lab)
 "cCH" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/reagent_containers/food/drinks/coffee,
+/obj/item/reagent_containers/food/drinks/coffee{
+	pixel_x = 5;
+	pixel_y = -4
+	},
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
 "cCI" = (
@@ -52751,7 +52754,10 @@
 /area/owlery/gangzone)
 "cMO" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/drinks/coffee,
+/obj/item/reagent_containers/food/drinks/coffee{
+	pixel_x = 5;
+	pixel_y = -4
+	},
 /turf/unsimulated/floor/carpet/red/decal/outercross,
 /area/syndicate_station/battlecruiser)
 "cMP" = (
@@ -68174,6 +68180,7 @@
 /area/centcom/offices/gannets)
 "dxH" = (
 /obj/admin_plaque{
+	name = "Caroline Audibert's office";
 	pixel_x = -32
 	},
 /turf/unsimulated/floor{
@@ -77070,6 +77077,17 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/sealab)
+"eey" = (
+/obj/rack,
+/obj/item/clothing/head/frog_hat{
+	pixel_x = -7
+	},
+/obj/item/clothing/under/color/green{
+	pixel_x = 6;
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/wood/five,
+/area/centcom/offices/tterc)
 "eih" = (
 /obj/kudzu_marker{
 	icon_state = "kudzu-benign-3"
@@ -77909,6 +77927,15 @@
 /obj/item/luggable_computer/personal/adhara_laptop,
 /turf/unsimulated/floor/carpet/office/other,
 /area/centcom/offices/adhara)
+"hhH" = (
+/obj/item/reagent_containers/pill/methamphetamine{
+	name = "methamphetamine pill";
+	pixel_x = -2;
+	pixel_y = -6
+	},
+/obj/map/light/green,
+/turf/unsimulated/floor/setpieces/swampgrass,
+/area/centcom/offices/tterc)
 "hjf" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -78044,6 +78071,13 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"hEl" = (
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/setpieces/swampgrass,
+/area/centcom/offices/tterc)
 "hEL" = (
 /obj/machinery/light{
 	on = 1
@@ -78142,6 +78176,16 @@
 	},
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"hRS" = (
+/obj/item/toy/plush/small/bunny/mask{
+	anchored = 1;
+	name = "Steal McSmash the staff assistant"
+	},
+/obj/decal/cleanable/blood/tracks{
+	icon_state = "drip5"
+	},
+/turf/unsimulated/floor/setpieces/swampgrass,
+/area/centcom/offices/tterc)
 "hSK" = (
 /turf/space,
 /turf/unsimulated/floor{
@@ -78485,6 +78529,18 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"jlw" = (
+/obj/critter/frog{
+	anchored = 1;
+	desc = "Wow, did it really steal that pilot's seat?";
+	name = "interdimensional crime frog";
+	pixel_y = -3
+	},
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 4
+	},
+/turf/unsimulated/floor/void,
+/area/centcom/offices/tterc)
 "jns" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
@@ -78597,6 +78653,16 @@
 /obj/decal/fakeobjects/dreambeach/palm_leaf,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"jIX" = (
+/obj/item/toy/plush/small/bunny/mask{
+	anchored = 1;
+	name = "Smash McSteal the staff assistant"
+	},
+/obj/decal/cleanable/blood/tracks{
+	icon_state = "drip5"
+	},
+/turf/unsimulated/floor/setpieces/swampgrass,
+/area/centcom/offices/tterc)
 "jJr" = (
 /obj/machinery/door_control{
 	desc = "A button set into the wall. You probably shouldn't press this.";
@@ -80133,6 +80199,14 @@
 	},
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
+"ohb" = (
+/obj/railing/red{
+	dir = 8;
+	name = "reinforced staffie-resistant barrier"
+	},
+/obj/machinery/light/incandescent/greenish,
+/turf/unsimulated/floor/setpieces/swampgrass,
+/area/centcom/offices/tterc)
 "ohz" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-36"
@@ -80532,6 +80606,21 @@
 	dir = 1
 	},
 /area/centcom)
+"pEs" = (
+/obj/decal/fakeobjects/robotpedestal{
+	desc = "Looks fairly robust.";
+	name = "robust pedestal"
+	},
+/obj/item/reagent_containers/food/drinks/coffee{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/item/kitchen/rollingpin{
+	name = "robust rolling pin";
+	pixel_x = -2
+	},
+/turf/unsimulated/floor/void,
+/area/centcom/offices/tterc)
 "pEv" = (
 /obj/lattice{
 	dir = 10;
@@ -80686,6 +80775,13 @@
 	icon_state = "diagonalWall3"
 	},
 /area/diner/tug)
+"pYB" = (
+/obj/railing/red{
+	dir = 8;
+	name = "reinforced staffie-resistant barrier"
+	},
+/turf/unsimulated/floor/setpieces/swampgrass,
+/area/centcom/offices/tterc)
 "qan" = (
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans"
@@ -80765,6 +80861,12 @@
 	icon_state = "shore-6"
 	},
 /area/titlescreen)
+"qnd" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/swampgrass,
+/area/centcom/offices/tterc)
 "qnn" = (
 /obj/item/extinguisher,
 /turf/space,
@@ -81222,6 +81324,13 @@
 	dir = 1
 	},
 /area/retentioncenter)
+"rIl" = (
+/obj/machinery/door/unpowered/wood{
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 8
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/tterc)
 "rIL" = (
 /obj/decal/cleanable/blood,
 /obj/item/organ/spleen{
@@ -81593,6 +81702,16 @@
 /obj/item/shinai_bag,
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
+"sIq" = (
+/obj/railing/red{
+	dir = 8;
+	name = "reinforced staffie-resistant barrier"
+	},
+/obj/machinery/light/incandescent/greenish{
+	dir = 1
+	},
+/turf/unsimulated/floor/setpieces/swampgrass,
+/area/centcom/offices/tterc)
 "sJF" = (
 /turf/unsimulated/floor/stairs{
 	dir = 8;
@@ -82897,6 +83016,13 @@
 	icon_state = "shore-7"
 	},
 /area/titlescreen)
+"xNU" = (
+/obj/item/raw_material/shard/glass{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/setpieces/swampgrass,
+/area/centcom/offices/tterc)
 "xOg" = (
 /obj/stool/chair{
 	dir = 1
@@ -154511,9 +154637,9 @@ nte
 njo
 mmF
 dvw
-dvW
-dvW
-dvW
+eey
+jlw
+pEs
 dvw
 aES
 aES
@@ -154813,9 +154939,9 @@ dYf
 jSc
 vbL
 dvw
-dvW
-dvW
-dvW
+sIq
+pYB
+ohb
 dvw
 aES
 aES
@@ -155115,9 +155241,9 @@ vEe
 wAT
 vbL
 dvw
-dvW
-dvW
-dvW
+jIX
+xNU
+hEl
 dvw
 aES
 aES
@@ -155417,9 +155543,9 @@ iPz
 jSc
 vbL
 dvw
-dvW
-dvW
-dvW
+qnd
+hhH
+hRS
 dvw
 aES
 aES
@@ -155720,7 +155846,7 @@ eCq
 dDP
 dvP
 dDP
-kKw
+rIl
 dDP
 dvO
 dDP
