@@ -55306,7 +55306,6 @@
 	can_rupture = 0;
 	dir = 5
 	},
-/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "fhL" = (
@@ -61888,7 +61887,7 @@
 	name = "S light switch";
 	pixel_y = -24
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor/plating,
 /area/station/engine/inner)
 "rEA" = (
 /obj/cable{
