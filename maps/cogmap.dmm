@@ -33661,6 +33661,13 @@
 /obj/cable/brown{
 	icon_state = "1-8"
 	},
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor,
 /area/station/engine/power)
 "bHk" = (
@@ -34043,6 +34050,9 @@
 	name = "Escape procedures"
 	},
 /obj/item/tinyhammer,
+/obj/cable/brown{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/power)
 "bIh" = (
@@ -34052,6 +34062,9 @@
 	},
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor,
 /area/station/engine/power)
@@ -34276,7 +34289,10 @@
 "bIJ" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/power)
@@ -34454,7 +34470,6 @@
 	dir = 8;
 	icon_state = "xtra_bigstripe-edge"
 	},
-/obj/machinery/power/apc/autoname_south,
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/cable{
@@ -35058,6 +35073,10 @@
 "bKs" = (
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/light{
+	dir = 8;
+	tag = ""
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
@@ -62980,6 +62999,9 @@
 "twD" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/wreath/ephemeral,
+/obj/cable/brown{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/power)
 "txq" = (
