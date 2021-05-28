@@ -33678,10 +33678,6 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/item/device/net_sniffer,
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "bHm" = (
@@ -33689,7 +33685,10 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/item/storage/wall/random,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "bHo" = (
@@ -34480,6 +34479,17 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/power)
+"bJi" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/storage/wall/random{
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = 1
+	},
+/turf/simulated/floor,
+/area/station/engine/elect)
 "bJj" = (
 /obj/cable/brown{
 	icon_state = "4-8"
@@ -36346,12 +36356,8 @@
 	icon_state = "2-4"
 	},
 /obj/table/auto,
-/obj/item/deconstructor{
-	pixel_x = -2;
-	pixel_y = 7
-	},
-/obj/random_item_spawner/snacks/one_or_zero,
 /obj/item/plate,
+/obj/random_item_spawner/snacks/maybe_few,
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bNp" = (
@@ -54682,7 +54688,7 @@
 /area/station/maintenance/east)
 "ebB" = (
 /obj/wingrille_spawn/auto,
-/obj/window_blinds/cog2/left{
+/obj/window_blinds/cog2/right{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -64957,9 +64963,9 @@
 /area/station/security/main)
 "xnD" = (
 /obj/wingrille_spawn/auto,
-/obj/window_blinds/cog2/left,
 /obj/wingrille_spawn/auto,
 /obj/cable,
+/obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "xpg" = (
@@ -110618,7 +110624,7 @@ qJd
 bUK
 bHl
 bIj
-bKs
+bJi
 bKs
 bLR
 bNp
