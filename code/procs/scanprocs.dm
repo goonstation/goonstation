@@ -410,7 +410,7 @@
 
 		if (H.implant && H.implant.len > 0)
 			var/wounds = null
-			for (var/obj/item/implant/I in H)
+			for (var/obj/item/implant/I in H.implant)
 				if (istype(I, /obj/item/implant/projectile))
 					wounds ++
 			if (wounds)
