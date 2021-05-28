@@ -7,6 +7,7 @@
 	icon_redlight = "securecrater"
 	icon_greenlight = "securecrateg"
 	icon_sparks = "securecratesparks"
+	icon_welded = "welded-crate"
 	//var/emag = "securecrateemag"
 	density = 1
 	always_display_locks = 1
@@ -167,6 +168,7 @@
 	density = 1
 	icon_opened = "securemedicalcrateopen"
 	icon_closed = "securemedicalcrate"
+	weld_image_offset_Y = -2
 	req_access = list(access_medical_lockers)
 
 	monkey
