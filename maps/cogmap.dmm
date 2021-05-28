@@ -34114,9 +34114,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/cable{
-	icon_state = "2-4"
-	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "bIo" = (
@@ -35129,6 +35126,9 @@
 /obj/machinery/computer3/generic/personal{
 	setup_starting_program = /datum/computer/file/terminal_program/file_transfer
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "bKw" = (
@@ -35798,6 +35798,9 @@
 /obj/landmark/start{
 	name = "Mechanic"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -36423,6 +36426,9 @@
 	},
 /obj/cable{
 	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
@@ -63029,9 +63035,6 @@
 	pixel_x = 2
 	},
 /obj/table/wood/auto,
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "tyo" = (
