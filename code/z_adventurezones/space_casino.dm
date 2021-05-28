@@ -15,7 +15,7 @@
 	mats = 50
 	var/uses = 0
 
-	var/list/junktier = list( // junk tier, 60% chance
+	var/list/junktier = list( // junk tier, 68% chance
 		"/obj/item/a_gift/easter",
 		"/obj/item/raw_material/rock",
 		"/obj/item/balloon_animal",
@@ -37,7 +37,7 @@
 		"/obj/item/rubberduck"
 	)
 
-	var/list/usefultier = list( // half decent tier, 35% chance
+	var/list/usefultier = list( // half decent tier, 30% chance
 		"/obj/item/clothing/gloves/yellow",
 		"/obj/item/bat",
 		"/obj/item/reagent_containers/food/snacks/donkpocket/warm",
@@ -52,31 +52,17 @@
 		"/obj/item/storage/firstaid/crit"
 	)
 
-	var/list/raretier = list( // rare tier, 5%~ chance
+	var/list/raretier = list( // rare tier, 2% chance
 		"/obj/item/hand_tele",
-		"/obj/item/baton",
 		"/obj/item/clothing/suit/armor/vest",
 		"/obj/item/device/voltron",
-		"/obj/item/gun/energy/phaser_gun",
 		"/obj/item/gimmickbomb/hotdog",
 		"/obj/item/card/id/captains_spare",
 		"/obj/item/storage/banana_grenade_pouch",
 		"/mob/living/critter/wendigo", // have fun!
 		"/obj/item/artifact/teleport_wand",
 		"/obj/machinery/vehicle/tank/car/blue", // A BRAAAAAAND NEEEEEEW CAAAAAAAAAR!
-		"/obj/item/card/id/dabbing_license",
-		"/obj/item/gun/energy/egun"
-	)
-
-	var/list/veryraretier = list( // very rare tier, 0.2% chance
-		"/obj/item/sword_core",
-		"/obj/item/storage/bowling",
-		"/obj/item/storage/belt/wrestling",
-		"/obj/item/stimpack",
-		"/obj/item/clothing/head/bighat/syndicate",
-		"/obj/item/gun/energy/laser_gun/pred",
-		"/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector",
-		"/obj/item/clothing/suit/space/industrial/syndicate"
+		"/obj/item/card/id/dabbing_license"
 	)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -133,20 +119,15 @@
 			src.emag_act(null, null) // bye bye!
 			return
 
-		if (roll <= 1) // very rare tier, 0.2% chance
-			P = text2path(pick(veryraretier))
+		if (roll <= 10) // rare tier, 2% chance
+			P = text2path(pick(raretier))
 			win_sound = "sound/misc/airraid_loop_short.ogg"
 			exclamation = "JACKPOT! "
-			src.uses += 100 // ok you've had your fun
-		else if (roll > 1 && roll <= 25) // rare tier, 5%~ chance
-			P = text2path(pick(raretier))
-			win_sound =  "sound/musical_instruments/Bell_Huge_1.ogg"
-			exclamation = "Big Winner! "
 			src.uses += 20
-		else if (roll > 25 && roll <= 200) // half decent tier, 35% chance
+		else if (roll > 10 && roll <= 160) // half decent tier, 30% chance
 			P = text2path(pick(usefultier))
-			exclamation = "Winner! "
-		else // junk tier, 60% chance
+			exclamation = "Big Winner! "
+		else // junk tier, 68% chance
 			P = text2path(pick(junktier))
 			exclamation = "Winner! "
 
@@ -198,7 +179,7 @@
 	var/atom/moveTowards // The object that should be moved towards.
 
 	var/possible_drinks = list("bilk","beer","cider","mead","wine","champagne","rum","vodka","bourbon", \
-							"boorbon","beepskybeer","moonshine","bojack","screwdriver","bloody_mary","bloody_scary",\
+							"boorbon","beepskybeer","screwdriver","bloody_mary","bloody_scary",\
 							"snakebite","diesel","suicider","port","gin","vermouth","bitters","whiskey_sour",\
 							"daiquiri","martini","v_martini","murdini","manhattan","libre","ginfizz","gimlet",\
 							"v_gimlet","w_russian","b_russian","irishcoffee","cosmo","beach","gtonic","vtonic","sonic",\
@@ -209,6 +190,9 @@
 							"bluehawaiian","negroni","necroni", "cola", "juice_lime", "juice_lemon", "juice_orange", \
 							"juice_cran", "juice_cherry", "juice_pineapple", "juice_tomato", \
 							"coconut_milk", "sugar", "water", "vanilla", "tea","mint")
+
+	var/possible_poisons = list("acetaldehyde","wolfsbane","ants","weedkiller","cyanide","krokodil", "fluorine", "radium", \
+							"neurotoxin","phlogiston","freeze","dbreath","ghostchilijuice", "cholesterol", "mercury")
 
 	var/possible_vessels = list("/obj/item/reagent_containers/food/drinks/drinkingglass", \
 							"/obj/item/reagent_containers/food/drinks/drinkingglass/shot", \
@@ -293,7 +277,7 @@
 			var/pickedVessel = pick(possible_vessels)
 			var/obj/item/reagent_containers/food/drinks/drinkingglass/W = new pickedVessel(moveTowards.loc)
 			if (src.emagged)
-				W.reagents.add_reagent(pick(all_functional_reagent_ids), 500)
+				W.reagents.add_reagent(pick(possible_poisons), 500)
 			else
 				W.reagents.add_reagent(pick(possible_drinks), 500)
 			W.pixel_x = rand(-8, 8)
