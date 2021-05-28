@@ -448,7 +448,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		src.handle_control_point_rewards()
 
 
-	//ion storm once then never again 
+	//ion storm once then never again
 	if (!did_ion_storm_happen && round_start_time + activate_control_points_time < TIME)
 		did_ion_storm_happen = TRUE
 		command_alert("An extremely powerful ion storm has reached this system! <b>Control Point Computers at Fortuna, the Reliant, and UVB-67</b> are now active! Both NanoTrasen and Syndicate <b>Pod Carriers' shields are down!</b>","Control Point Computers Online")
@@ -1511,7 +1511,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	nanotrasen
 		icon_state = "pda-nt"
 		setup_default_module = /obj/item/device/pda_module/flashlight/nt_blue
-	
+
 	syndicate
 		icon_state = "pda-syn"
 		setup_default_module = /obj/item/device/pda_module/flashlight/sy_red
@@ -3133,6 +3133,21 @@ proc/setup_pw_crate_lists()
 					return
 			else
 				return ..(target, start, user)
+
+	shoot_point_blank(mob/M, mob/user)
+		if (canshoot())
+			if (team_num)
+				if (team_num == 1 && user?.mind?.special_role == "NanoTrasen")
+					return ..(M, user)
+				else if (team_num == 2 && user?.mind?.special_role == "Syndicate")
+					return ..(M, user)
+				else
+					boutput(user, "<span class='alert'>You don't have to right DNA to fire this weapon!</span><br>")
+					playsound(get_turf(user), "sound/machines/buzz-sigh.ogg", 20, 1)
+
+					return
+			else
+				return ..(M, user)
 
 	disposing()
 		indicator_display = null
