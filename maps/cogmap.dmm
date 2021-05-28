@@ -35730,10 +35730,9 @@
 	dir = 4
 	},
 /obj/table/auto,
-/obj/item/plate,
 /obj/item/clothing/glasses/meson{
-	pixel_x = -5;
-	pixel_y = 3
+	pixel_x = 4;
+	pixel_y = 6
 	},
 /obj/item/deconstructor{
 	pixel_x = 4;
@@ -36377,6 +36376,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/turf/simulated/floor,
+/area/station/engine/elect)
+"bNr" = (
+/obj/machinery/rkit,
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bNs" = (
@@ -38517,19 +38520,21 @@
 /area/station/engine/elect)
 "bRD" = (
 /obj/machinery/rkit,
-/turf/simulated/floor,
+/turf/simulated/floor/yellow/side{
+	dir = 10
+	},
 /area/station/engine/elect)
 "bRE" = (
 /obj/disposalpipe/segment,
 /obj/stool/chair/yellow,
-/turf/simulated/floor,
+/turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "bRF" = (
 /obj/stool/chair/yellow,
 /obj/landmark/start{
 	name = "Mechanic"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "bRG" = (
 /obj/machinery/light{
@@ -111229,7 +111234,7 @@ bUK
 qog
 bIk
 bNn
-bRD
+bNr
 ycr
 bNq
 bNn
