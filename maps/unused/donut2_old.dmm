@@ -25176,7 +25176,7 @@
 /obj/item/kitchen/rollingpin,
 /obj/item/storage/cutlery,
 /obj/item/reagent_containers/food/drinks/bowl,
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/item/reagent_containers/glass/bottle/icing,
 /obj/item/reagent_containers/glass/bottle/icing,
 /turf/simulated/floor/sanitary,
