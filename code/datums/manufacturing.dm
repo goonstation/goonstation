@@ -620,22 +620,8 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A,var/list/materials)
 		..()
 		var/obj/item/cable_coil/coil = A
-		var/min_cond = 1
-		var/max_cond = 0
-		var/min_cond_mat = null
-		var/max_cond_mat = null
-		for (var/pattern in materials)
-			var/datum/material/cand = getMaterial(materials[pattern])
-			if (!cand)
-				continue
-			if (cand.getProperty("electrical") < min_cond)
-				min_cond = cand.getProperty("electrical")
-				min_cond_mat = cand
-			else if (cand.getProperty("electrical") > max_cond)
-				max_cond = cand.getProperty("electrical")
-				max_cond_mat = cand
-		coil.setInsulator(min_cond_mat)
-		coil.setConductor(max_cond_mat)
+		coil.setInsulator(getMaterial(materials["INS-1"]))
+		coil.setConductor(getMaterial(materials["CON-1"]))
 		return 1
 
 /datum/manufacture/RCD
