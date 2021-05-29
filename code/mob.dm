@@ -942,7 +942,7 @@
 				mode.team_NT.members -= src.mind
 				mode.team_SY.members -= src.mind
 				message_admins("[src]([src.ckey]) just set DNR and was removed from their team. which was probably [src.mind.special_role]!")
-#else 
+#else
 	if (confirm == "Yes")
 		if (src.mind)
 			src.verbs -= list(/mob/verb/setdnr)
@@ -1047,6 +1047,20 @@
 			continue
 
 		LI += W
+	.= LI
+
+/mob/living/critter/get_unequippable()
+	var/list/obj/item/LI = list()
+
+	for (var/obj/item/W in src)
+		if (src.organHolder)
+			if (istype(W, /obj/item/organ/brain) && src.organHolder.brain == W)
+				continue
+
+		if (istype(W, /obj/item/reagent_containers/food/snacks/bite))
+			continue
+		LI += W
+
 	.= LI
 
 /mob/proc/findname(msg)
