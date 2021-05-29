@@ -993,19 +993,6 @@
 		if (istype(W, /obj/item/parts) && W:holder == src)
 			continue
 
-		if (istype(W, /obj/item/reagent_containers/food/snacks/bite))
-			continue
-		LI += W
-
-	.= LI
-
-/mob/living/carbon/human/get_unequippable()
-	var/list/obj/item/LI = list()
-
-	for (var/obj/item/W in src)
-		if (istype(W, /obj/item/parts) && W:holder == src)
-			continue
-
 		if(istype(W, /obj/item/implant))
 			continue
 
@@ -1047,20 +1034,6 @@
 			continue
 
 		LI += W
-	.= LI
-
-/mob/living/critter/get_unequippable()
-	var/list/obj/item/LI = list()
-
-	for (var/obj/item/W in src)
-		if (src.organHolder)
-			if (istype(W, /obj/item/organ/brain) && src.organHolder.brain == W)
-				continue
-
-		if (istype(W, /obj/item/reagent_containers/food/snacks/bite))
-			continue
-		LI += W
-
 	.= LI
 
 /mob/proc/findname(msg)
