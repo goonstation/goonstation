@@ -8,6 +8,8 @@
 	soundproofing = 10
 	var/trick = 0 //enjoy some gimmicky bullfuckery
 	var/id = null
+	weld_image_offset_X = -6
+	weld_image_offset_Y = 2
 
 /obj/storage/closet/wardrobe
 	name = "wardrobe"
