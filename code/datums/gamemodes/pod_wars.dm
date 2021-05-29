@@ -2111,6 +2111,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	icon_state = "headset"
 	secure_frequencies = list("g" = R_FREQ_SYNDICATE)
 	secure_classes = list(RADIOCL_SYNDICATE)
+	secure_colors = list("#ff69b4")
 	protected_radio = 1
 	icon_override = "syndie"
 	team = TEAM_SYNDICATE
