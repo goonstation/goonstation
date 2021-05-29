@@ -67,7 +67,7 @@
 
 	proc/wipe_or_zap(mob/user)
 		if(!read_only)
-			user.visible_message("<span class='alert'><b>[user] wipes the '[src.name]'!</b></span>")
+			user.visible_message("<span class='alert'><b>[user] wipes the [src.name]!</b></span>")
 			//qdel(src.root)
 			elecflash(src,0, power=2, exclude_center = 0)
 			if (src.root)
@@ -77,13 +77,13 @@
 			src.root.holder = src
 			src.root.name = "root"
 		else
-			user.visible_message("<span class='alert'><b>[user] is zapped as the multitool backfires! The '[src.name]' seems unphased.</b></span>")
+			user.visible_message("<span class='alert'><b>[user] is zapped as the multitool backfires! The [src.name] seems unphased.</b></span>")
 			elecflash(user,0, power=2, exclude_center = 0)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (ispulsingtool(W))
-			user.visible_message("<span class='alert'><b>[user] begins to wipe '[src.name]'!</b></span>")
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/disk/data/proc/wipe_or_zap, list(user), src.icon, src.icon_state, null)
+			user.visible_message("<span class='alert'><b>[user] begins to wipe [src.name]!</b></span>")
+			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/disk/data/proc/wipe_or_zap, list(user), src.icon, src.icon_state, null)
 
 /obj/item/disk/data/floppy
 	var/random_color = 1
