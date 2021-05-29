@@ -448,7 +448,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		src.handle_control_point_rewards()
 
 
-	//ion storm once then never again 
+	//ion storm once then never again
 	if (!did_ion_storm_happen && round_start_time + activate_control_points_time < TIME)
 		did_ion_storm_happen = TRUE
 		command_alert("An extremely powerful ion storm has reached this system! <b>Control Point Computers at Fortuna, the Reliant, and UVB-67</b> are now active! Both NanoTrasen and Syndicate <b>Pod Carriers' shields are down!</b>","Control Point Computers Online")
@@ -1528,7 +1528,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		icon_state = "pda-nt"
 		setup_default_module = /obj/item/device/pda_module/flashlight/nt_blue
 		team_num = TEAM_NANOTRASEN
-	
+
 	syndicate
 		icon_state = "pda-syn"
 		setup_default_module = /obj/item/device/pda_module/flashlight/sy_red
@@ -2271,7 +2271,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 		src.true_name = true_name
 		src.mode = mode
 
-		for(var/obj/warp_beacon/pod_wars/B in warp_beacons)
+		for(var/obj/warp_beacon/pod_wars/B in by_type[/obj/warp_beacon])
 			if (B.control_point == true_name)
 				src.beacons += B
 
