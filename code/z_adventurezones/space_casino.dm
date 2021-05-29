@@ -12,7 +12,7 @@
 	name = "Item Slot Machine"
 	desc = "A slot machine that produces items rather than money. Somehow."
 	icon_state = "slotsitem-off"
-	mats = 50
+	//mats = 50
 	var/uses = 0
 
 	var/list/junktier = list( // junk tier, 68% chance
@@ -28,7 +28,7 @@
 		"/obj/item/paper_bin",
 		"/obj/item/item_box/stickers",
 		"/obj/item/storage/box/costume/hotdog",
-		"/mob/living/critter/small_animal/cockroach",
+		"/obj/critter/cockroach",
 		"/obj/item/device/light/flashlight",
 		"/obj/item/kitchen/utensil/knife",
 		"/obj/item/staple_gun",
@@ -48,7 +48,7 @@
 		"/obj/item/clothing/shoes/sandal",
 		"/obj/item/cigpacket/random",
 		"/obj/item/clothing/mask/gas",
-		"/obj/critter/domestic_bee/trauma",
+		"/obj/critter/domestic_bee",
 		"/obj/item/storage/firstaid/crit"
 	)
 
@@ -59,7 +59,7 @@
 		"/obj/item/gimmickbomb/hotdog",
 		"/obj/item/card/id/captains_spare",
 		"/obj/item/storage/banana_grenade_pouch",
-		"/mob/living/critter/wendigo", // have fun!
+		"/obj/critter/wendigo", // have fun!
 		"/obj/item/artifact/teleport_wand",
 		"/obj/machinery/vehicle/tank/car/blue", // A BRAAAAAAND NEEEEEEW CAAAAAAAAAR!
 		"/obj/item/card/id/dabbing_license"
@@ -173,7 +173,8 @@
 	anchored = 0
 	bot_move_delay = FLOORBOT_MOVE_SPEED
 	var/hasDrink = 0
-	var/atom/home
+	var/atom/home // Initialized early. Where the barbuddy should be serving. Barbuddy explodes if taken too far from here.
+	var/list/homeTables = list() // Initialized early. All nearby tables that the barbuddy should be checking for drinks.
 	var/list/targets = list() // Nearby tables that are in need of drinks.
 	var/target
 	var/atom/moveTowards // The object that should be moved towards.
@@ -212,14 +213,24 @@
 							"/obj/item/reagent_containers/food/snacks/plant/lemon/wedge", \
 							"/obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge")
 
-	proc/find_empty_tables()
+	New()
+		..()
+		// Start by getting a few initial things
 		if (!src.home || !isturf(src.home))
 			src.home = get_turf(src)
+		if (src.homeTables.len == 0)
+			for (var/obj/table/reinforced/bar/T in view(5, src.home))
+				src.homeTables |= T
 
-		// If there's a table nearby that doesn't have 3 drinks, we need to put another drink on that table. Add it to the list.
-		for (var/obj/table/reinforced/bar/T in view(5, src.home))
-			if ((T in targets))
-				continue
+	proc/get_empty_tables()
+		if (src.homeTables.len == 0)
+			for (var/obj/table/reinforced/bar/T in view(5, src.home))
+				src.homeTables |= T
+			if (src.homeTables.len == 0)
+				explode()
+		for (var/obj/table/reinforced/bar/T in src.homeTables)
+			if (!istype(T))
+				src.homeTables -= T
 			var/glasses = 0
 			for (var/obj/item/reagent_containers/food/drinks/drinkingglass in view(0, get_turf(T)))
 				glasses++
@@ -229,8 +240,12 @@
 	process()
 		// Nothing to do. Let's find something to do.
 		if (targets.len == 0)
-			find_empty_tables()
-			if (targets.len == 0)
+			get_empty_tables()
+			if (targets.len == 0) // No work to be done, let's go home.
+				if (!isturf(home))
+					explode()
+					return
+				if (get_turf(src) == get_turf(home)) return
 				src.navigate_to(get_turf(home), FLOORBOT_MOVE_SPEED, max_dist = 10)
 				if (!src.path || !length(src.path))
 					KillPathAndGiveUp(1)
@@ -243,7 +258,7 @@
 		if (!moveTowards)
 			if (!hasDrink)
 				// if there's a barbuddy dispenser nearby, let's do the cute little animation thing. if not, use magic to summon a drink
-				for (var/obj/decal/fakeobjects/barbuddy_dispenser/D in view(5, src.home))
+				for (var/obj/decal/fakeobjects/barbuddy_dispenser/D in view(5, src))
 					moveTowards = D
 				if (!moveTowards)
 					hasDrink = 1
@@ -252,6 +267,12 @@
 
 		if (IN_RANGE(get_turf(src), get_turf(src.moveTowards), 1))
 			bartend()
+			return
+
+		if (isnull(get_turf(moveTowards)))
+			if (moveTowards in src.homeTables)
+				src.homeTables -= moveTowards
+			KillPathAndGiveUp(1)
 			return
 
 		if (!src.path || !length(src.path))
@@ -266,6 +287,9 @@
 			src.targets -= src.target
 			src.target = null
 			moveTowards = null
+			// Let's check if we've been stolen.
+			if (!(src.home in view(5, src)))
+				explode()
 
 	proc/bartend()
 		if (istype(moveTowards, /obj/decal/fakeobjects/barbuddy_dispenser)) // If it's the dispenser, do a little animation.
@@ -277,9 +301,9 @@
 			var/pickedVessel = pick(possible_vessels)
 			var/obj/item/reagent_containers/food/drinks/drinkingglass/W = new pickedVessel(moveTowards.loc)
 			if (src.emagged)
-				W.reagents.add_reagent(pick(possible_poisons), 500)
+				W.reagents.add_reagent(pick(possible_poisons), W.initial_volume)
 			else
-				W.reagents.add_reagent(pick(possible_drinks), 500)
+				W.reagents.add_reagent(pick(possible_drinks), W.initial_volume)
 			W.pixel_x = rand(-8, 8)
 			W.pixel_y = rand(0, 16)
 			if (prob(25)) // Chance of stuff!
@@ -302,6 +326,13 @@
 
 	demag(var/mob/user)
 		emagged = 0
+
+	explode()
+		src.visible_message("<span class='alert'><B>[src] gets confused and explodes!</B></span>", 1)
+		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+		elecflash(src, radius=1, power=3, exclude_center = 0)
+		qdel(src)
+		return
 
 // Misc props
 
