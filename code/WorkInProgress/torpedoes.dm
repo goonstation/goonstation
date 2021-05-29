@@ -555,11 +555,10 @@
 	icon_state = "emptymissiletray"
 	New()
 		..()
-		var/obj/torpedo/hiexplosive/T = pick(new/obj/torpedo/toxic,new/obj/torpedo/incendiary,new/obj/torpedo/hiexplosive,new/obj/torpedo/explosive)
+		var/obj/torpedo/T = pick(new/obj/torpedo/toxic,new/obj/torpedo/incendiary,new/obj/torpedo/hiexplosive,new/obj/torpedo/explosive)
 		src.loaded = T
 		T.set_loc(src)
 		changeIcon()
-		return
 
 
 /obj/torpedo
