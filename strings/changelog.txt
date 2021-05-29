@@ -1,5 +1,9 @@
 
 (t)fri may 28 21
+(u)Flaborized
+(p)4925
+(e)🎨|sprites
+(+)Resprited land mines.
 (u)Kubius
 (p)4874
 (e)🐛🆕🗺|bug, feature, mapping
