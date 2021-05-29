@@ -1,4 +1,9 @@
 
+(t)sat may 29 21
+(u)Walpvrgis
+(p)4853
+(e)🎨|sprites
+(+)Roach critters have had a resprite to match perspective better.
 (t)fri may 28 21
 (u)Flaborized
 (p)4925
