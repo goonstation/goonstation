@@ -35,9 +35,9 @@
 	proc/fire_gun(mob/user as mob)
 		if(src.shotsLeft > 1)
 			src.shotsLeft--
-			playsound(user, "sound/weapons/Gunclick.ogg", 80, 1)
 			for(var/mob/O in AIviewers(user, null))
 				if (O.client)
+					playsound(user, "sound/weapons/Gunclick.ogg", 80, 1)
 					O.show_message("<span class='alert'>[user] points the gun at \his head. Click!</span>", 1, "<span class='alert'>Click!</span>", 2)
 
 			inventory_counter.update_number(1)
