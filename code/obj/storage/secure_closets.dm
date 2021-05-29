@@ -660,6 +660,7 @@
 	icon_redlight = "fridge-redlight"
 	icon_sparks = "fridge-sparks"
 	intact_frame = 1
+	weld_image_offset_X = 3
 
 /obj/storage/secure/closet/fridge/opened
 	New()
