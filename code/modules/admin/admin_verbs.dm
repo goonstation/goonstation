@@ -427,6 +427,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_modify_respawn_variables,
 		/client/proc/set_nukie_score,
 		/client/proc/set_pod_wars_score,
+		/client/proc/set_pod_wars_deaths,
 
 		/client/proc/player_panel_tgui,
 
@@ -1936,13 +1937,32 @@ var/list/fun_images = list()
 	world.save_intra_round_value("nt_win", nt_win_value)
 
 	var/sy_win_value = input("Enter new Syndicate loss value.") as num
-	world.save_intra_round_value("syndie_win", sy_win_value)
+	world.save_intra_round_value("sy_win", sy_win_value)
 
 	world.save_intra_round_value("pod_wars_last_reset", world.realtime)
 
 	logTheThing("admin", usr ? usr : src, null, "set pod war win values to [nt_win_value] Nanotrasen wins and [sy_win_value] Syndicate wins.")
 	logTheThing("diary", usr ? usr : src, null, "set pod war win values to [nt_win_value] Nanotrasen wins and [sy_win_value] Syndicate wins.", "admin")
 	message_admins("[key_name(usr ? usr : src)] set pod war win values to [nt_win_value] Nanotrasen wins and [sy_win_value] Syndicate wins.")
+
+/client/proc/set_pod_wars_deaths()
+	set popup_menu = 0
+	set name = "Set Pod Wars Death Scoreboard Values"
+	set desc = "Manually assign values to the Pod Wars Nanotrasen/Syndicate deaths scoreboard."
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	admin_only
+
+	var/nt_win_value = input("Enter new Nanotrasen death value.") as num
+	world.save_intra_round_value("nt_death", nt_win_value)
+
+	var/sy_win_value = input("Enter new Syndicate death value.") as num
+	world.save_intra_round_value("sy_death", sy_win_value)
+
+	world.save_intra_round_value("pod_wars_last_reset", world.realtime)
+
+	logTheThing("admin", usr ? usr : src, null, "set pod war death values to [nt_win_value] Nanotrasen deaths and [sy_win_value] Syndicate deaths.")
+	logTheThing("diary", usr ? usr : src, null, "set pod war death values to [nt_win_value] Nanotrasen deaths and [sy_win_value] Syndicate deaths.", "admin")
+	message_admins("[key_name(usr ? usr : src)] set pod war death values to [nt_win_value] Nanotrasen deaths and [sy_win_value] Syndicate deaths.")
 
 
 /mob/verb/admin_interact_verb()
