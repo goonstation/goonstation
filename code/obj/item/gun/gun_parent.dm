@@ -280,6 +280,11 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 						user.l_hand:shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5))
 
 
+	if (src.artifact && istype(src.artifact, /datum/artifact))
+		var/datum/artifact/art_gun = src.artifact
+		if (!art_gun.activated)
+			return
+
 	if (!canshoot())
 		if (!silenced)
 			M.visible_message("<span class='alert'><B>[user] tries to shoot [user == M ? "[him_or_her(user)]self" : M] with [src] point-blank, but it was empty!</B></span>")
