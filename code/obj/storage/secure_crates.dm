@@ -156,7 +156,7 @@
 				B6.pixel_x = 8
 				B6.pixel_y = 3
 
-				var/obj/item/paper/book/interdictor/B7 = new(src)
+				var/obj/item/paper/book/from_file/interdictor_guide/B7 = new(src)
 				B7.pixel_y = 1
 				return 1
 
