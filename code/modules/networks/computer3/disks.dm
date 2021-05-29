@@ -68,7 +68,6 @@
 	proc/wipe_or_zap(mob/user)
 		if(!read_only)
 			user.visible_message("<span class='alert'><b>[user] wipes the [src.name]!</b></span>")
-			//qdel(src.root)
 			elecflash(src,0, power=2, exclude_center = 0)
 			if (src.root)
 				src.root.dispose()

@@ -764,12 +764,7 @@ proc/find_ghost_by_key(var/find_key)
 				src.diskette = null
 				. = TRUE
 		if("load")
-			// Read only switches on floppy disks are software, the cloner can ignore it for loading
-			/*if (src.diskette.read_only)
-				// The file needs to be deleted from the disk after loading the record
-				show_message("Load error - cannot transfer clone records from a disk in read only mode.", "warning")
-				. = TRUE
-			*/
+
 			var/loaded = 0
 
 			for(var/datum/computer/file/clone/cloneRecord in src.diskette.root.contents)

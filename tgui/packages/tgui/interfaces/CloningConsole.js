@@ -245,7 +245,7 @@ const Functions = (props, context) => {
               name={'check'}
             />
             {' '}
-            {diskReadOnly ? 'Disk is ready. Read only mode.' : "Disk is ready."}
+            {diskReadOnly ? 'Disk is read only.' : 'Disk is writeable.'}
           </Box>
         </Section>
       )}
