@@ -1,5 +1,9 @@
 
 (t)sat may 29 21
+(u)Blackrep
+(p)4932
+(e)🐛|bug
+(+)Fixed stun and radiation mines not applying their effects on people caught in their blast radiuses.
 (u)Walpvrgis
 (p)4853
 (e)🎨|sprites
