@@ -1013,7 +1013,7 @@
 			// with greater chances for an extra harvest if this is the case.
 			// The cap is defined in hydro_controls and can be edited by coders on the fly.
 
-		getamount = max(getamount, 0)
+		getamount = round(max(getamount, 0))
 
 		if(getamount < 1)
 			boutput(user, "<span class='alert'>You aren't able to harvest anything worth salvaging.</span>")
@@ -1876,7 +1876,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 				src.visible_message("\The [src] goes quiet.")
 
 		src.icon_state = "fogmachine[src.active]"
-		playsound(get_turf(src), "sound/misc/lightswitch.ogg", 50, 1)
+		playsound(src, "sound/misc/lightswitch.ogg", 50, 1)
 
 	is_open_container()
 		return 1 // :I

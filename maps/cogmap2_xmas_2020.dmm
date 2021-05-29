@@ -1974,7 +1974,7 @@
 "aee" = (
 /obj/table/wood/auto,
 /obj/item/wrench,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /turf/simulated/grimycarpet,
 /area/ghostdrone_factory)
 "aef" = (
@@ -16673,7 +16673,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
@@ -18591,7 +18591,7 @@
 /area/station/maintenance/north)
 "aQj" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/item/seed/alien/litelotus,
 /obj/item/seed/alien/rocks,
 /turf/simulated/floor/grass/random,
@@ -18855,7 +18855,7 @@
 /obj/item/reagent_containers/glass/bottle/fruitful,
 /obj/item/reagent_containers/glass/bottle/topcrop,
 /obj/item/wrench,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/item/storage/firstaid/regular,
 /obj/item/device/light/zippo,
 /obj/cable{
@@ -21106,7 +21106,7 @@
 /area/station/crew_quarters/arcade/dungeon)
 "aWf" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/critter_compendium,
+/obj/item/paper/book/from_file/critter_compendium,
 /obj/disposalpipe/segment,
 /obj/item/reagent_containers/food/drinks/cola,
 /turf/simulated/floor/carpet{
@@ -34706,7 +34706,7 @@
 /area/space)
 "bzq" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/machinery/door_timer/solitary{
 	pixel_x = -5
 	},
@@ -37588,7 +37588,7 @@
 	})
 "bEx" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/dwainedummies{
+/obj/item/paper/book/from_file/dwainedummies{
 	pixel_y = 6
 	},
 /obj/item/disk/data/tape/master/readonly,
@@ -41643,11 +41643,11 @@
 /area/station/security/checkpoint/customs)
 "bLh" = (
 /obj/table/auto,
-/obj/item/paper/book/guardbot_guide{
+/obj/item/paper/book/from_file/guardbot_guide{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/paper/book/dwainedummies{
+/obj/item/paper/book/from_file/dwainedummies{
 	pixel_y = 6
 	},
 /obj/item/device/multitool,
@@ -57286,7 +57286,7 @@
 "crM" = (
 /obj/machinery/power/data_terminal,
 /obj/table/wood/auto,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/item/disk/data/tape/master/readonly,
 /obj/item/reagent_containers/food/snacks/beefood{
 	desc = "A little birthday cupcake for Heisenbee.  May not taste good to non-bees.";
@@ -61640,7 +61640,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "cBp" = (
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/market)
 "cBq" = (
@@ -64195,7 +64195,7 @@
 	pixel_x = -7;
 	pixel_y = 1
 	},
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -64584,7 +64584,7 @@
 	pixel_x = 8;
 	pixel_y = -10
 	},
-/obj/item/paper/book/medical_guide{
+/obj/item/paper/book/from_file/pharmacopia{
 	pixel_x = -8;
 	pixel_y = -9
 	},
@@ -65556,7 +65556,7 @@
 /area/station/mining/staff_room)
 "cKq" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/item/device/matanalyzer,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/bot,
@@ -69278,7 +69278,7 @@
 /area/station/science/chemistry)
 "cSm" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/reagent_containers/emergency_injector/calomel,
 /obj/item/reagent_containers/emergency_injector/calomel,
 /obj/item/reagent_containers/dropper/mechanical,
@@ -71958,7 +71958,7 @@
 /area/station/medical/medbay/surgery)
 "cXN" = (
 /obj/machinery/optable,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
 /turf/simulated/floor/bot/white,
 /area/station/medical/medbay/surgery)
@@ -73598,7 +73598,7 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/machinery/light,
-/obj/item/paper/book/medical_surgery_guide,
+/obj/item/paper/book/from_file/medical_surgery_guide,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "dba" = (
@@ -74081,7 +74081,7 @@
 /obj/item/scalpel,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
-/obj/item/paper/book/medical_surgery_guide,
+/obj/item/paper/book/from_file/medical_surgery_guide,
 /turf/simulated/floor/blueblack{
 	dir = 6
 	},
@@ -75793,7 +75793,7 @@
 "dfY" = (
 /obj/machinery/optable,
 /obj/disposalpipe/segment/morgue,
-/obj/item/paper/book/medical_surgery_guide,
+/obj/item/paper/book/from_file/medical_surgery_guide,
 /turf/simulated/floor/bot/white,
 /area/station/medical/medbay/surgery)
 "dfZ" = (
@@ -81058,7 +81058,7 @@
 /obj/item/device/radio/beacon,
 /obj/item/device/light/glowstick,
 /obj/item/device/light/glowstick,
-/obj/item/paper/book/critter_compendium,
+/obj/item/paper/book/from_file/critter_compendium,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -81454,8 +81454,8 @@
 "sqz" = (
 /obj/item/storage/box/beakerbox,
 /obj/storage/crate,
-/obj/item/paper/book/hydroponicsguide,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /turf/simulated/floor/snow/snowball,
 /area/station/hydroponics/bay)
 "svu" = (
@@ -81503,7 +81503,7 @@
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
 /obj/item/camera,
-/obj/item/paper/book/critter_compendium,
+/obj/item/paper/book/from_file/critter_compendium,
 /obj/decal/cleanable/gangtag{
 	pixel_y = 28
 	},
@@ -81814,7 +81814,7 @@
 /area/station/hangar/main)
 "xsY" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/item/item_box/postit,
 /obj/item/device/radio/headset/research,
 /obj/item/device/radio/headset/research,

@@ -68,6 +68,7 @@
 	name = "satchel"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder."
 	icon_state = "satchel"
+	wear_layer = MOB_BACK_LAYER_SATCHEL // satchels show over the tail of lizards normally, they should be BEHIND the tail
 
 /obj/item/storage/backpack/satchel/syndie
 	name = "\improper Syndicate Satchel"

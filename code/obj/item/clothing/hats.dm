@@ -491,7 +491,7 @@
 
 /obj/item/clothing/head/NTberet
 	name = "Nanotrasen beret"
-	desc = "For the inner dictator in you."
+	desc = "For the inner space dictator in you."
 	icon_state = "ntberet"
 	item_state = "ntberet"
 
@@ -501,6 +501,12 @@
 	icon_state = "ntberet_commander"
 	item_state = "ntberet_commander"
 	c_flags = SPACEWEAR
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 20)
+		setProperty("heatprot", 5)
+		setProperty("meleeprot_head", 4)
 
 /obj/item/clothing/head/XComHair
 	name = "rookie scalp"
@@ -741,7 +747,7 @@
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (src.active && ismob(hit_atom))
 			var/mob/M = hit_atom
-			playsound(get_turf(src), src.hitsound, 60, 1)
+			playsound(src, src.hitsound, 60, 1)
 			M.changeStatus("weakened", 2 SECONDS)
 			M.force_laydown_standup()
 			SPAWN_DBG(0) // show these messages after the "hit by" ones

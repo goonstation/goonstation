@@ -1,5 +1,87 @@
 
+(t)sat may 29 21
+(u)Blackrep
+(p)4932
+(e)🐛|bug
+(+)Fixed stun and radiation mines not applying their effects on people caught in their blast radiuses.
+(u)Walpvrgis
+(p)4853
+(e)🎨|sprites
+(+)Roach critters have had a resprite to match perspective better.
+(t)fri may 28 21
+(u)Flaborized
+(p)4925
+(e)🎨|sprites
+(+)Resprited land mines.
+(u)Kubius
+(p)4874
+(e)🐛🆕🗺|bug, feature, mapping
+(+)Kondaru mini fix-batch - Test Chamber control room no longer partially depressurized, toxins a bit bigger, market a bit spiffier.
+(t)thu may 27 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Synthflesh/styptic/sulfazdine consumed from fluid puddles on touch reactions.
+(u)Flappybat
+(p)4911
+(e)🔄|rework
+(+)Segway crashes now knock you down instantly, instead of waiting a few seconds to think about it.
+(u)Flourish
+(e)🆕|feature
+(*)You can now use GPSes to track beacons, tracking implants, and other GPSes. Select your tracking target in the menu and your GPS will point you in the right direction!
+(t)wed may 26 21
+(u)DimWhat
+(p)4860
+(e)🎨|sprites
+(*)Added a new medal "Brown Pants" which has the reward of the red captain set.
+(+)Made a red version of the captain's fancy uniform.
+(u)Kubius
+(p)4872
+(e)🆕|feature
+(+)Spatial Interdictors may now interdict spatial tears after they form, requiring a fresh initialization within range of the tear.
+(u)Vaskritaya
+(p)4877
+(e)|
+(+)Salesman and tourists can now change their name on spawn, in case they spawn as a mutantrace or just if they feel like it.
+(u)DimWhat
+(p)4888
+(e)|
+(+)Made satchels layer under tails.
+(u)virvatuli
+(e)🎶|sound
+(*)Added six new songs to the random record pool, 3 metal and 3 funky for some more diverse tunes over the radio!
+(t)tue may 25 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Synthflesh/styptic/sulfazdine topical healing capped to 10u at a time.
+(u)Blackrep
+(p)4865
+(e)⚖|balance
+(+)Arc plating small / large power cells no longer changes their capacity or recharge rate.
+(u)Walpvrgis
+(p)4843
+(e)🎨|sprites
+(+)Resprites donut boxes, and various cooking ingredients; check PR for a list and preview images.
+(u)COOLVAPE
+(p)4799
+(e)|
+(+)Added vocal translators as a hidden item in Valuchimp Machines.
+(t)mon may 24 21
+(u)Zonespace
+(p)4851
+(e)🆕|feature
+(+)Getting splashed with Black Powder now gives gunshot residue.
+(u)Arthur Holiday
+(p)4575
+(e)⚖|balance
+(*)The HoS can now unauthorize the armory.
+(t)sun may 23 21
+(u)edwardly
+(p)4773
+(e)🆕|feature
+(+)Sure, use a spoon to eat mashed potatoes, why not?
 (t)sat may 22 21
+(u)Tarmunora
+(*)Swapped out a certain pressure tank by a certain cenote.
 (u)TDHooligan
 (p)4490
 (e)⚖|balance

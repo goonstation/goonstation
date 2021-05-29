@@ -8443,7 +8443,7 @@
 "atZ" = (
 /obj/table/wood/auto,
 /obj/item/wrench,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /turf/simulated/grimycarpet,
 /area/ghostdrone_factory)
 "aua" = (
@@ -27627,7 +27627,7 @@
 "bkF" = (
 /obj/table/auto,
 /obj/item/paper_bin,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/item/kitchen/food_box/donut_box,
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -34158,7 +34158,7 @@
 "bzD" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/icing,
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/item/kitchen/utensil/knife,
 /turf/unsimulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -37923,7 +37923,7 @@
 "bIb" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/emergency,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
 "bIc" = (
@@ -39978,7 +39978,7 @@
 /area/station/turret_protected/ai)
 "gTE" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/minerals{
+/obj/item/paper/book/from_file/minerals{
 	pixel_x = 5;
 	pixel_y = 3
 	},

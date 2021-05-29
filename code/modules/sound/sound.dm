@@ -149,7 +149,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	var/scaled_dist
 	var/storedVolume
 
-	for (var/mob/M in GET_NEARBY(source,MAX_SOUND_RANGE + extrarange))
+	for (var/mob/M in GET_NEARBY(source_turf, MAX_SOUND_RANGE + extrarange))
 		var/client/C = M.client
 		if (!C)
 			continue

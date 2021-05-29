@@ -219,10 +219,12 @@
 		. = "Your max. stamina is increased by [change]."
 
 	onAdd(optional=null)
+		. = ..()
 		if(hascall(owner, "add_stam_mod_max"))
 			owner:add_stam_mod_max("food_bonus", change)
 
 	onRemove()
+		. = ..()
 		if(hascall(owner, "remove_stam_mod_max"))
 			owner:remove_stam_mod_max("food_bonus")
 

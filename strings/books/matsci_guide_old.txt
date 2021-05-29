@@ -1,0 +1,132 @@
+ "The information in this piece of crap book is horribly outdated, making it useless. Let's hope Central Command buys the new edition soon."
+	<br>
+ 	/*
+	<BIG><B>Materials</B></BIG>
+	<br>
+	<br>This book is meant to give you a brief overview and explanation of the materials, their properties and how to work them.
+	<br>
+	<br>
+	<br><B>General information:</B>
+	<br>
+	<br>Under normal circumstances a material can only have one additive used on it - any further additives are lost.
+	<br>However, there might be certain chemicals or materials that allow to work materials beyond this limit.
+	<br>
+	<br>Additives can have all kinds of effects on materials.
+	<br>Some will change the stats of a material while others will give it special or unique effects.
+	<br>
+	<br>Some combinations of materials and/or additives might produce unique alloys / materials.
+	<br>These fixed recipes and their resulting materials will usually have a special ability, use or just good stats.
+	<br>
+	<br>Different departments have different manufacturers, each with different recipes.
+	<br>You might sometimes be able to find blueprints for manufacturers while exploring.
+	<br>These blueprints will add a new item to the craftable objects of manufacturer when used on it.
+	<br>
+	<br>
+	<br><B>Material properties:</B>
+	<br>
+	<br><B>Siemens coefficient:</B>
+	<br>How well a material conducts electricity.
+	<br>Values range from 0 = Non-conductive to 1 = Perfectly conductive.
+	<br>
+	<br>
+	<br><B>Heat transfer coefficient:</B>
+	<br>How well heat can transfer through a material - how insulating it is.
+	<br>Values range from 0 = Perfect insulation to 1 = Heat transfers without loss.
+	<br>A common spacesuit will have a value below/around 0.1.
+	<br>
+	<br>
+	<br><B>Protective temperature:</B>
+	<br>How high of a temperature this material can shield something from.
+	<br>Higher is better.
+	<br>
+	<br>
+	<br><B>Thermal conductivity:</B>
+	<br>How well heat can transfer through this.
+	<br>Only applies to walls and such. See Heat transfer coefficient
+	<br>
+	<br>
+	<br><B>Heat capacity:</B>
+	<br>(Honestly, who even knows anymore? This atmos code is a mess)
+	<br>(Fairly sure this does SOMETHING)
+	<br>
+	<br>
+	<br><B>Permeability coefficient:</B>
+	<br>How well chemicals can penetrate this material.
+	<br>Values range from 0 = Can not penetrate to 1 = Goes right through
+	<br>
+	<br>
+	<br><B>Disease resistance:</B>
+	<br>How well this material can shield a person from diseases.
+	<br>Values range from 0 = No protection to 100 = Complete protection.
+	<br>
+	<br>
+	<br><B>Melee Protection:</B>
+	<br>How well this material will protect from melee attacks.
+	<br>Reduces both damage and stamina damage. Higher is better.
+	<br>
+	<br>
+	<br><B>Bullet Protection:</B>
+	<br>How well this material will protect from bullets.
+	<br>Bullet damage will be divided by this. Higher is better.
+	<br>
+	<br>
+	<br><B>Explosion resistance:</B>
+	<br>If applied to a wall or another solid object this
+	<br>determines how well that object will shield objects behind it from an explosion.
+	<br>Higher is better.
+	<br>
+	<br>
+	<br><B>Explosion protection:</B>
+	<br>How well this material will protect from explosions.
+	<br>Reduces both severity and damage from explosions.
+	<br>
+	<br>
+	<br><B>Radiation Protection:</B>
+	<br>How well does this protects against radiation. More is better.
+	<br>
+	<br>
+	<br><B>Magical:</B>
+	<br>Does this material allow wizards to channel magic?
+	<br>
+	<br>
+	<br><B>Value:</B>
+	<br>How valuable this material is.
+	<br>Higher is better.
+	<br>
+	<br>
+	<br><B>Damage:</B>
+	<br>How damaging this material is when used on items.
+	<br>Higher is better.
+	<br>
+	<br>
+	<br><B>Quality:</B>
+	<br>Determines the quality of items made using this.
+	<br>This can have many different effect but higher is always better.
+	<br>
+	<br>
+	<br><B>Durability:</B>
+	<br>How durable objects made from this are.
+	<br>More durability means that the objects can take more damage.
+	<br>
+	<br>
+	<br><B>Hardness:</B>
+	<br>How hard objects made from this are.
+	<br>Can have different effects depending on the object.
+	<br>What value you want depends on the item.
+	<br>
+	<br>
+	<br><B>Autoignition temperature:</B>
+	<br>At which temperature this material will ignite.
+	<br>
+	<br>
+	<br><B>Burn output:</B>
+	<br>How much energy this material outputs while burning.
+	<br>
+	<br>
+	<br><B>Instability:</B>
+	<br>How likely it is that the material fails during manufacturing and possibly use. Higher is worse.
+	<br>
+	<br>
+	"}
+	*/
+
