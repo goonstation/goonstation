@@ -141,7 +141,7 @@ function byondFound(x,y,size,id)
 {
     clearMap(null);
     addPing(x ,y,60,"green",0.3,10);
-    var audio = new Audio('{{resource("sounds/found.mp3")}}');
+    var audio = new Audio('{{resource("sounds/found.ogg")}}');
     audio.volume = soundVolume;
     audio.play();
 }
@@ -166,7 +166,7 @@ function update()
         if(progress >= 0.55 && !curr.soundPlayed)
         {
             curr.soundPlayed = true;
-            var audio = new Audio('{{resource("sounds/sweep.mp3")}}');
+            var audio = new Audio('{{resource("sounds/sweep.ogg")}}');
             audio.volume = soundVolume;
             audio.play();
         }
