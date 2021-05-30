@@ -7,7 +7,7 @@
 	icon_state = "item_box"
 	force = 1
 	throwforce = 1
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	inventory_counter_enabled = 1
 	var/contained_item = /obj/item/sticker/gold_star
 	var/list/contained_items = null
@@ -83,6 +83,15 @@
 	bee
 		name = "box of bee stickers"
 		contained_item = /obj/item/sticker/bee
+
+	googly_eyes
+		name = "box of googly eyes"
+		desc = "If you give it googly eyes, it immediately becomes better!"
+		contained_item = /obj/item/sticker/googly_eye
+
+		angry
+			name ="box of angry googly eyes"
+			contained_item = /obj/item/sticker/googly_eye/angry
 
 	award_ribbon
 		name = "box of award ribbons"
@@ -192,6 +201,7 @@
 
 				set_contained_items()
 					contained_items = typesof(/obj/item/sticker/xmas_ornament)
+
 
 		take_from()
 			if( !contained_items.len )

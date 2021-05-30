@@ -5,7 +5,7 @@
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	force = 10.0
 	hit_type = DAMAGE_BURN
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	throwforce = 12
 	throw_range = 10
 	throw_speed = 2
@@ -32,9 +32,9 @@
 
 	proc/smack_bug(atom/target as obj|mob, mob/user as mob)
 		user.visible_message("<span class='notice'><b>[user] smacks [target] with [src]. KO!</b></span>")
-		playsound(get_turf(target), "sound/effects/electric_shock_short.ogg", 50, 1)
+		playsound(target, "sound/effects/electric_shock_short.ogg", 50, 1)
 		SPAWN_DBG(0.2 SECONDS)
-			playsound(get_turf(target), "sound/impact_sounds/Flesh_Crush_1.ogg", 50, 1)
+			playsound(target, "sound/impact_sounds/Flesh_Crush_1.ogg", 50, 1)
 		if (ismobcritter(target))
 			var/mob/living/critter/MC = target
 			MC.TakeDamage("all", 20, 20)

@@ -700,7 +700,7 @@
 /area/station/wreckage)
 "abP" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/bottle/red,
+/obj/item/reagent_containers/food/drinks/bottle/soda/red,
 /turf/simulated/floor/plating/airless{
 	icon_state = "panelscorched"
 	},
@@ -2946,13 +2946,6 @@
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/device/igniter,
-/turf/simulated/floor/grey/whitegrime,
-/area/station/science/gen_storage)
-"ahC" = (
-/obj/table/reinforced/auto,
-/obj/item/stg_booster,
-/obj/item/pen,
-/obj/item/device/radio,
 /turf/simulated/floor/grey/whitegrime,
 /area/station/science/gen_storage)
 "ahD" = (
@@ -9305,17 +9298,6 @@
 	},
 /turf/simulated/floor,
 /area/station2/hallway/primary/west)
-"awn" = (
-/obj/table/auto,
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/item/card_box/plain,
-/turf/simulated/floor/specialroom/bar,
-/area/station2/crew_quarters/cafeteria)
 "awo" = (
 /obj/stool/bench/auto,
 /obj/disposalpipe/segment,
@@ -18793,32 +18775,6 @@
 	icon_state = "2-8";
 	d1 = 2;
 	d2 = 8
-	},
-/turf/simulated/floor/purplewhite,
-/area/station2/science/teleporter)
-"aQt" = (
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/storage/crate{
-	desc = "Only distantly related to the Adventure Closet.";
-	name = "Adventure Crate"
-	},
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/reagent_containers/food/drinks/milk,
-/obj/item/reagent_containers/food/snacks/sandwich/pb,
-/obj/item/paper{
-	desc = "Aw dang, mooom";
-	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
-	name = "note from mom"
-	},
-/obj/item/paper/book/critter_compendium,
-/obj/machinery/light{
-	layer = 3
 	},
 /turf/simulated/floor/purplewhite,
 /area/station2/science/teleporter)
@@ -29913,13 +29869,6 @@
 /obj/machinery/disposal,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/south,
 /area/station/bridge/captain)
-"boK" = (
-/obj/table/wood/auto,
-/obj/displaycase{
-	displayed = new /obj/item/captaingun
-},
-/turf/simulated/floor/carpet/blue/fancy/innercorner/south,
-/area/station/bridge/captain)
 "boL" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -31689,36 +31638,6 @@
 /area/station/science/artifact{
 	name = "Artifact Lounge"
 	})
-"bsI" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/radio/headset/multifreq,
-/obj/machinery/light,
-/turf/simulated/floor/purpleblack,
-/area/station/science/artifact{
-	name = "Artifact Lounge"
-	})
-"bsJ" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/storage/box/trackimp_kit2,
-/turf/simulated/floor/purpleblack,
-/area/station/science/artifact{
-	name = "Artifact Lounge"
-	})
 "bsK" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -33014,7 +32933,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "bvp" = (
-/obj/item/reagent_containers/food/drinks/bottle/xmas,
+/obj/item/reagent_containers/food/drinks/bottle/soda/xmas,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/random,
 /area/space)
@@ -50240,20 +50159,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
-"cgv" = (
-/obj/table/wood/auto,
-/obj/item/device/camera_viewer,
-/obj/item/camera_test,
-/obj/item/device/audio_log,
-/obj/item/device/detective_scanner,
-/obj/item/spraybottle/cleaner,
-/obj/machinery/light_switch/west,
-/obj/item/audio_tape,
-/obj/item/audio_tape,
-/turf/simulated/floor{
-	icon_state = "grimy"
-	},
-/area/station/security/detectives_office)
 "cgw" = (
 /obj/disposalpipe/trunk{
 	dir = 1
@@ -53537,17 +53442,6 @@
 	},
 /obj/item/storage/secure/ssafe{
 	pixel_y = 26
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/quarters_south)
-"cnx" = (
-/obj/table/wood/auto,
-/obj/item/card_box/plain,
-/obj/item/clothing/gloves/black,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 22
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_south)
@@ -57108,7 +57002,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
-/obj/item/reagent_containers/food/drinks/bottle/blue,
+/obj/item/reagent_containers/food/drinks/bottle/soda/blue,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /obj/item/reagent_containers/food/drinks/bottle/vintage,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
@@ -61995,12 +61889,6 @@
 	dir = 10
 	},
 /area/station/crew_quarters/ce)
-"cFO" = (
-/obj/storage/crate/rcd/CE,
-/obj/item/clothing/shoes/magnetic,
-/obj/item/clothing/gloves/yellow,
-/turf/simulated/floor/yellowblack,
-/area/station/crew_quarters/ce)
 "cFP" = (
 /obj/cable{
 	d1 = 2;
@@ -66654,16 +66542,6 @@
 	icon_state = "wall3"
 	},
 /area/tech_outpost)
-"cQV" = (
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/table/wood/auto,
-/obj/item/stg_booster,
-/obj/decal/cleanable/cobweb,
-/turf/simulated/floor/grey/blackgrime,
-/area/tech_outpost)
 "cQW" = (
 /obj/table/wood/auto,
 /obj/item/chem_grenade/cleaner,
@@ -67899,14 +67777,6 @@
 	},
 /turf/space,
 /area/station/engine/substation/pylon)
-"cUi" = (
-/obj/item/card_box/plain,
-/obj/item/crowbar,
-/obj/stool/chair/comfy/shuttle{
-	dir = 8
-	},
-/turf/simulated/floor/plating/airless/random,
-/area/station/engine/substation/pylon)
 "cUj" = (
 /obj/machinery/shuttle/engine/heater,
 /turf/simulated/shuttle/wall{
@@ -68527,14 +68397,6 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/storage/emergency{
-	name = "Hilarious Storage A"
-	})
-"cVQ" = (
-/obj/machinery/light_switch/north,
-/obj/table/reinforced/auto,
-/obj/item/stg_box,
-/turf/simulated/floor/black,
 /area/station/storage/emergency{
 	name = "Hilarious Storage A"
 	})
@@ -69999,13 +69861,6 @@
 /obj/table/wood/auto,
 /obj/item/storage/firstaid/regular,
 /obj/item/bandage,
-/turf/simulated/floor/carpet/red/fancy/edge/north,
-/area/listeningpost/power)
-"dae" = (
-/obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/bottle/tequila,
-/obj/item/card_group/plain,
-/obj/item/spacecash/hundred,
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/listeningpost/power)
 "daf" = (
@@ -73442,7 +73297,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/item/reagent_containers/food/drinks/bottle/xmas,
+/obj/item/reagent_containers/food/drinks/bottle/soda/xmas,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "dip" = (
@@ -75597,6 +75452,151 @@
 	dir = 4
 	},
 /area/listeningpost/solars)
+"eMB" = (
+/obj/table/wood/auto,
+/obj/item/card_box/plain,
+/obj/item/clothing/gloves/black,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 22
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/quarters_south)
+"hlD" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/radio/headset/multifreq,
+/obj/item/storage/box/trackimp_kit2,
+/turf/simulated/floor/purpleblack,
+/area/station/science/artifact{
+	name = "Artifact Lounge"
+	})
+"ixC" = (
+/obj/storage/crate/rcd/CE,
+/obj/item/clothing/shoes/magnetic,
+/obj/item/clothing/gloves/yellow,
+/turf/simulated/floor/yellowblack,
+/area/station/crew_quarters/ce)
+"iNB" = (
+/obj/table/reinforced/auto,
+/obj/item/stg_booster,
+/obj/item/pen,
+/obj/item/device/radio,
+/turf/simulated/floor/grey/whitegrime,
+/area/station/science/gen_storage)
+"jjJ" = (
+/obj/table/wood/auto,
+/obj/item/device/camera_viewer,
+/obj/item/camera,
+/obj/item/device/audio_log,
+/obj/item/device/detective_scanner,
+/obj/item/spraybottle/cleaner,
+/obj/machinery/light_switch/west,
+/obj/item/audio_tape,
+/obj/item/audio_tape,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/security/detectives_office)
+"jUG" = (
+/obj/table/auto,
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/item/card_box/plain,
+/turf/simulated/floor/specialroom/bar,
+/area/station2/crew_quarters/cafeteria)
+"mgi" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/table/wood/auto,
+/obj/item/stg_booster,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/grey/blackgrime,
+/area/tech_outpost)
+"nPT" = (
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/radio/headset/multifreq,
+/obj/storage/crate{
+	desc = "Only distantly related to the Adventure Closet.";
+	name = "Adventure Crate"
+	},
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/reagent_containers/food/drinks/milk,
+/obj/item/reagent_containers/food/snacks/sandwich/pb,
+/obj/item/paper{
+	desc = "Aw dang, mooom";
+	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
+	name = "note from mom"
+	},
+/obj/item/paper/book/critter_compendium,
+/obj/machinery/light{
+	layer = 3
+	},
+/turf/simulated/floor/purplewhite,
+/area/station2/science/teleporter)
+"pls" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/drinks/bottle/tequila,
+/obj/item/card_group/plain,
+/obj/item/spacecash/hundred,
+/turf/simulated/floor/carpet/red/fancy/edge/north,
+/area/listeningpost/power)
+"rWG" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/radio/headset/multifreq,
+/obj/machinery/light,
+/turf/simulated/floor/purpleblack,
+/area/station/science/artifact{
+	name = "Artifact Lounge"
+	})
+"xfq" = (
+/obj/table/wood/auto,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/turf/simulated/floor/carpet/blue/fancy/innercorner/south,
+/area/station/bridge/captain)
+"xhZ" = (
+/obj/item/card_box/plain,
+/obj/item/crowbar,
+/obj/stool/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless/random,
+/area/station/engine/substation/pylon)
+"xxF" = (
+/obj/machinery/light_switch/north,
+/obj/table/reinforced/auto,
+/obj/item/stg_box,
+/turf/simulated/floor/black,
+/area/station/storage/emergency{
+	name = "Hilarious Storage A"
+	})
 
 (1,1,1) = {"
 aaa
@@ -94515,7 +94515,7 @@ cSs
 cSQ
 cTp
 cTN
-cUi
+xhZ
 cUv
 aaB
 aaa
@@ -95087,7 +95087,7 @@ bUN
 bRU
 cap
 cdr
-cgv
+jjJ
 cds
 cju
 aaa
@@ -100850,7 +100850,7 @@ aaa
 aaa
 aaa
 cPV
-cQV
+mgi
 cRB
 cSa
 cSB
@@ -102070,7 +102070,7 @@ cUL
 cVf
 cVv
 cVF
-cVQ
+xxF
 cVX
 cWe
 cWb
@@ -121061,7 +121061,7 @@ cbp
 ces
 chz
 chz
-cnx
+eMB
 cpW
 bYH
 cur
@@ -122855,7 +122855,7 @@ beS
 bhc
 bjr
 blV
-boK
+xfq
 brF
 bva
 bxP
@@ -124044,7 +124044,7 @@ aKZ
 aMf
 aNK
 aPd
-aQt
+nPT
 aMe
 aKO
 aTI
@@ -128518,7 +128518,7 @@ aaa
 ahc
 ahc
 ahq
-ahC
+iNB
 ahL
 ahZ
 aio
@@ -128856,7 +128856,7 @@ atk
 atT
 auJ
 avx
-awn
+jUG
 bTg
 bTm
 ayY
@@ -146139,7 +146139,7 @@ cCw
 cDs
 cEb
 cEW
-cFO
+ixC
 djl
 aaa
 aqV
@@ -148224,7 +148224,7 @@ bim
 bkv
 bmY
 bpR
-bsI
+rWG
 bwe
 bwe
 bBY
@@ -148526,7 +148526,7 @@ bin
 bkw
 bnb
 bpR
-bsJ
+hlD
 aWU
 byV
 bBZ
@@ -156497,7 +156497,7 @@ cYW
 cYW
 cYW
 cZN
-dae
+pls
 dav
 daM
 dbg

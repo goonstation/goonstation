@@ -47,12 +47,8 @@
 			boutput(M, __red("You are already draining someone's blood!"))
 			return 0
 
-	if (is_pointblank && target.head && target.head.body_parts_covered & HEAD)
+	if (is_pointblank && target.head && target.head.c_flags & (BLOCKCHOKE))
 		boutput(M, __red("You need to remove their headgear first."))
-		return 0
-
-	if (is_pointblank && target.wear_mask && target.wear_mask.body_parts_covered & HEAD)
-		boutput(M, __red("You need to remove their facemask first."))
 		return 0
 
 	if (check_target_immunity(target) == 1)
@@ -142,7 +138,7 @@
 					if (HH.blood_volume < 300 && prob(15))
 						if (!HH.getStatusDuration("paralysis"))
 							boutput(HH, __red("Your vision fades to blackness."))
-						HH.changeStatus("paralysis", 100)
+						HH.changeStatus("paralysis", 10 SECONDS)
 					else
 						if (prob(65))
 							HH.changeStatus("weakened", 1 SECOND)
@@ -208,12 +204,8 @@
 			boutput(M, __red("You are already draining someone's blood!"))
 			return 0
 
-	if (is_pointblank && target.head && target.head.body_parts_covered & HEAD)
+	if (is_pointblank && target.head && target.head.c_flags & (BLOCKCHOKE))
 		boutput(M, __red("You need to remove their headgear first."))
-		return 0
-
-	if (is_pointblank && target.wear_mask && target.wear_mask.body_parts_covered & HEAD)
-		boutput(M, __red("You need to remove their facemask first."))
 		return 0
 
 	if (check_target_immunity(target) == 1)
@@ -304,7 +296,7 @@
 					if (HH.blood_volume < 300 && prob(15))
 						if (!HH.getStatusDuration("paralysis"))
 							boutput(HH, __red("Your vision fades to blackness."))
-						HH.changeStatus("paralysis", 100)
+						HH.changeStatus("paralysis", 10 SECONDS)
 					else
 						if (prob(65))
 							HH.changeStatus("weakened", 1 SECOND)
@@ -371,7 +363,7 @@
 
 	onUpdate()
 		..()
-		if(get_dist(M, HH) > 7 || M == null || HH == null)
+		if(get_dist(M, HH) > 7 || M == null || HH == null || HH.blood_volume <= 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -426,7 +418,7 @@
 
 	onInterrupt() //Called when the action fails / is interrupted.
 		if (state == ACTIONSTATE_RUNNING)
-			if (HH.blood_volume < 0)
+			if (HH.blood_volume <= 0)
 				boutput(M, __red("[HH] doesn't have enough blood left to drink."))
 			else if (!H.can_take_blood_from(H, HH))
 				boutput(M, __red("You have drank your fill [HH]'s blood. It tastes all bland and gross now."))

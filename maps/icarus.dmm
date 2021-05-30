@@ -3564,22 +3564,6 @@
 "aio" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/detectives_office)
-"aip" = (
-/obj/table/wood/auto,
-/obj/item/device/camera_viewer,
-/obj/item/camera_test,
-/obj/item/device/audio_log,
-/obj/item/device/detective_scanner,
-/obj/item/pen,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/machinery/phone/wall{
-	pixel_y = 32
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "aiq" = (
 /obj/table/wood/auto,
 /obj/item/ammo/bullets/a38/stun,
@@ -4647,11 +4631,11 @@
 	desc = "Various supplies for the bar.";
 	name = "bartending crate"
 	},
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/item/storage/firstaid/toxin,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/glass/beaker/large,
@@ -6344,7 +6328,7 @@
 /area/station/crew_quarters/cafeteria)
 "aod" = (
 /obj/table/round/auto,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_y = 16
 	},
 /obj/item/reagent_containers/food/drinks/mug/random_color{
@@ -10677,6 +10661,10 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/stool/chair/yellow,
+/obj/landmark/start{
+	name = "Engineer"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "axk" = (
@@ -11342,16 +11330,11 @@
 	},
 /area/station/engine/engineering)
 "ayD" = (
-/obj/stool/chair/yellow{
-	dir = 4
-	},
-/obj/landmark/start{
-	name = "Engineer"
-	},
 /obj/item/device/radio/intercom/engineering{
 	dir = 4;
 	pixel_x = -20
 	},
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "ayE" = (
@@ -17358,18 +17341,6 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/bridge/captain)
-"aLE" = (
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/obj/table/wood/auto,
-/obj/displaycase{
-	displayed = new /obj/item/captaingun
-	pixel_y = 6
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/station/bridge/captain)
 "aLF" = (
 /obj/machinery/weapon_stand/rifle_rack/recharger,
 /turf/simulated/floor/wood,
@@ -21375,35 +21346,6 @@
 	dir = 1
 	},
 /area/station/science/lobby)
-"aTC" = (
-/obj/table/auto,
-/obj/item/device/radio/signaler,
-/obj/item/device/radio/signaler,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/storage/box/trackimp_kit2,
-/obj/machinery/door_control{
-	id = "scienceteleporter2";
-	name = "Pad Access Door";
-	pixel_x = -24;
-	pixel_y = 6
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	icon_state = "camera";
-	name = "autoname - SS13";
-	pixel_x = -10;
-	pixel_y = -20;
-	tag = ""
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 9
-	},
-/area/station/science/teleporter)
 "aTD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -22683,33 +22625,6 @@
 /turf/simulated/floor/purplewhite{
 	dir = 10
 	},
-/area/station/science/teleporter)
-"aVU" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/radio/headset/multifreq,
-/obj/machinery/light,
-/turf/simulated/floor/purplewhite{
-	dir = 6
-	},
-/area/station/science/teleporter)
-"aVV" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/radio/headset/multifreq,
-/turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
 "aVW" = (
 /obj/machinery/light,
@@ -26344,6 +26259,15 @@
 /obj/cable,
 /turf/simulated/floor/airless/plating,
 /area/research_outpost/indigo_rye)
+"bQn" = (
+/obj/stool/chair/yellow{
+	dir = 8
+	},
+/obj/landmark/start{
+	name = "Engineer"
+	},
+/turf/simulated/floor,
+/area/station/storage/primary)
 "bQW" = (
 /obj/cable{
 	d1 = 1;
@@ -26437,6 +26361,35 @@
 	},
 /turf/simulated/floor/black,
 /area/research_outpost/indigo_rye)
+"cUH" = (
+/obj/table/auto,
+/obj/item/device/radio/signaler,
+/obj/item/device/radio/signaler,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/gps,
+/obj/item/device/gps,
+/obj/item/device/gps,
+/obj/item/storage/box/trackimp_kit2,
+/obj/machinery/door_control{
+	id = "scienceteleporter2";
+	name = "Pad Access Door";
+	pixel_x = -24;
+	pixel_y = 6
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	icon_state = "camera";
+	name = "autoname - SS13";
+	pixel_x = -10;
+	pixel_y = -20;
+	tag = ""
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 9
+	},
+/area/station/science/teleporter)
 "cVZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -26557,6 +26510,21 @@
 /obj/stool/chair/office,
 /turf/simulated/floor/purplewhite,
 /area/research_outpost/indigo_rye)
+"ebv" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/radio/headset/multifreq,
+/obj/machinery/light,
+/turf/simulated/floor/purplewhite{
+	dir = 6
+	},
+/area/station/science/teleporter)
 "esW" = (
 /obj/item/clothing/glasses/blindfold,
 /turf/simulated/floor/engine/vacuum,
@@ -27120,6 +27088,12 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost/indigo_rye)
+"lSM" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 5
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "lWS" = (
 /obj/cable{
 	d1 = 4;
@@ -27429,6 +27403,12 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/research_outpost/indigo_rye)
+"pvQ" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 9
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "pwS" = (
 /obj/machinery/vending/pizza,
 /turf/simulated/floor/purpleblack,
@@ -27476,6 +27456,18 @@
 	dir = 1
 	},
 /area/research_outpost/indigo_rye)
+"qzc" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/table/wood/auto,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun;
+	pixel_y = 6
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/ne,
+/area/station/bridge/captain)
 "qAr" = (
 /obj/machinery/door_control{
 	id = "ppap";
@@ -27866,6 +27858,22 @@
 	},
 /turf/simulated/floor/caution/east,
 /area/research_outpost/indigo_rye)
+"vYa" = (
+/obj/table/wood/auto,
+/obj/item/device/camera_viewer,
+/obj/item/camera,
+/obj/item/device/audio_log,
+/obj/item/device/detective_scanner,
+/obj/item/pen,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "vZW" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
 	dir = 4
@@ -27926,6 +27934,18 @@
 /obj/grille/steel,
 /turf/space,
 /area/research_outpost/indigo_rye)
+"xtt" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/radio/headset/multifreq,
+/turf/simulated/floor/purplewhite,
+/area/station/science/teleporter)
 "xJC" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
@@ -65618,7 +65638,7 @@ aQF
 aQF
 aQF
 aSV
-aTC
+cUH
 aUq
 aVg
 aVT
@@ -65923,7 +65943,7 @@ aSW
 aTD
 aUr
 aVh
-aVU
+ebv
 aWG
 aUA
 aUA
@@ -66211,7 +66231,7 @@ aIZ
 aJH
 aKp
 aKU
-aLE
+qzc
 aMr
 aNb
 aNS
@@ -66225,7 +66245,7 @@ aSX
 aTE
 aUs
 aVi
-aVV
+xtt
 aWG
 aUA
 aUA
@@ -66527,7 +66547,7 @@ aPW
 aTF
 aUt
 aVi
-aVV
+xtt
 aWG
 aUA
 aUA
@@ -66829,7 +66849,7 @@ aSY
 aTD
 aUu
 aVj
-aVV
+xtt
 aWG
 aUA
 aUA
@@ -67344,7 +67364,7 @@ aga
 ago
 agI
 agI
-ahc
+pvQ
 ahs
 ahD
 ahD
@@ -68552,7 +68572,7 @@ aga
 ags
 agI
 agU
-ahf
+lSM
 ahu
 ahu
 ahO
@@ -70068,7 +70088,7 @@ ahG
 ahR
 aia
 agd
-aip
+vYa
 aiD
 aiN
 aio
@@ -70118,7 +70138,7 @@ ayK
 azf
 azN
 aAv
-aAS
+bQn
 aBr
 azg
 aCc

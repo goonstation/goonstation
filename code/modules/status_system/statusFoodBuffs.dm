@@ -41,8 +41,12 @@
 
 /mob/living/proc/handle_digestion(var/mult = 1)
 	if (src.stomach_process && length(src.stomach_process))
+		var/count_to_process = min(length(src.stomach_process), 10)
+		var/count_left = count_to_process
 		for(var/obj/item/reagent_containers/food/snacks/bite/B in stomach_process)
-			B.process_stomach(src, (1 / stomach_process.len) * mult) //1 units processed per Life() tick. Takes an even amt of reagents from all stomach contents
+			B.process_stomach(src, (1 / count_to_process) * mult) //1 units processed per Life() tick. Takes an even amt of reagents from all stomach contents
+			if(count_left-- <= 0)
+				break
 
 //TODO MOVE
 /mob/living/proc/handle_skinstuff(var/mult = 1)
@@ -215,10 +219,12 @@
 		. = "Your max. stamina is increased by [change]."
 
 	onAdd(optional=null)
+		. = ..()
 		if(hascall(owner, "add_stam_mod_max"))
 			owner:add_stam_mod_max("food_bonus", change)
 
 	onRemove()
+		. = ..()
 		if(hascall(owner, "remove_stam_mod_max"))
 			owner:remove_stam_mod_max("food_bonus")
 

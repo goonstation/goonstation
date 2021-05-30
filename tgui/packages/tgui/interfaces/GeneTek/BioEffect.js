@@ -48,8 +48,7 @@ export const BioEffect = (props, context) => {
     equipmentCooldown,
     saveSlots,
     savedMutations,
-    haveSubject,
-    subjectStat,
+    subject,
     boothCost,
     injectorCost,
     precisionEmitter,
@@ -57,6 +56,7 @@ export const BioEffect = (props, context) => {
   } = data;
   const {
     gene,
+    showSequence,
     isSample,
     isPotential,
     isActive,
@@ -227,7 +227,7 @@ export const BioEffect = (props, context) => {
           && isPotential && !!canScramble && (
           <Button
             icon="radiation"
-            disabled={onCooldown(equipmentCooldown, "Emitter") || subjectStat >= 0}
+            disabled={onCooldown(equipmentCooldown, "Emitter") || subject.stat > 0}
             color="bad"
             onClick={() => act("precisionemitter", { ref })}>
             Scramble Gene
@@ -270,7 +270,7 @@ export const BioEffect = (props, context) => {
             Splice
           </Button>
         )}
-        {isStorage && (
+        {isStorage && subject && (
           <Button
             icon="check"
             onClick={() => act("addstored", { ref })}
@@ -278,7 +278,7 @@ export const BioEffect = (props, context) => {
             Add to Occupant
           </Button>
         )}
-        {isStorage && haveSubject && (
+        {isStorage && (
           <Button
             icon="trash"
             onClick={() => act("deletegene", { ref })}
@@ -287,7 +287,9 @@ export const BioEffect = (props, context) => {
         <Box inline />
       </Box>
       <Description text={desc} />
-      <DNASequence {...props} />
+      {showSequence && (
+        <DNASequence {...props} />
+      )}
     </Section>
   );
 };
@@ -358,6 +360,7 @@ export const GeneList = (props, context) => {
         <BioEffect
           key={ag.ref}
           gene={ag}
+          showSequence
           {...rest} />
       )}
     </Fragment>

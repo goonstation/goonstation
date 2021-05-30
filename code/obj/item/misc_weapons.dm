@@ -34,7 +34,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	is_syndicate = 1
@@ -51,7 +51,7 @@
 	var/inactive_force = 1
 	var/inactive_stamina_cost = 5
 	var/state_name = "sword"
-	var/off_w_class = 2
+	var/off_w_class = W_CLASS_SMALL
 	var/datum/component/holdertargeting/simple_light/light_c
 	var/do_stun = 0
 
@@ -117,8 +117,8 @@
 			var/mob/living/carbon/human/H = user
 			age_modifier = 30 - H.bioHolder.age
 
-		if(user.gender == MALE) playsound(get_turf(user), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 5, 0, max(0.7, min(1.2, 1.0 + age_modifier/60)))
-		else playsound(get_turf(user), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 5, 0, max(0.7, min(1.4, 1.0 + age_modifier/50)))
+		if(user.gender == MALE) playsound(user, pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 5, 0, max(0.7, min(1.2, 1.0 + age_modifier/60)))
+		else playsound(user, pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 5, 0, max(0.7, min(1.4, 1.0 + age_modifier/50)))
 		..()
 	else
 		if (user.a_intent == INTENT_HELP)
@@ -126,7 +126,7 @@
 			if(prob(3))
 				SPAWN_DBG(0.2 SECONDS)
 					target.visible_message("<span class='bold'>[target.name]</span> flops over in shame!")
-					target.changeStatus("stunned", 50)
+					target.changeStatus("stunned", 5 SECONDS)
 					target.changeStatus("weakened", 5 SECONDS)
 		else
 			..()
@@ -175,8 +175,8 @@
 			S = H.find_type_in_hand(/obj/item/sword, "left")
 		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus("stunned", "weakened", "paralysis")))
 			var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
-			if(target.gender == MALE) playsound(get_turf(target), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - H.bioHolder.age)/60)))
-			else playsound(get_turf(target), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
+			if(target.gender == MALE) playsound(target, pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - H.bioHolder.age)/60)))
+			else playsound(target, pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
 			C.setup(H.loc)
 			var/matrix/m = matrix()
 			m.Turn(rand(0,360))
@@ -202,12 +202,12 @@
 
 		if (!loaded_glowstick)
 			boutput(user, "<span class='alert'>The sword emits a brief flash of light and turns off! The blade-focus glowstick seems to be missing.</span>")
-			playsound(get_turf(user), "sound/items/zippo_close.ogg", 60, 1)
+			playsound(user, "sound/items/zippo_close.ogg", 60, 1)
 			return
 
 		if (!loaded_glowstick.on)
 			boutput(user, "<span class='alert'>The sword emits a brief flash of light and turns off! The blade-focus glowstick hasn't been cracked!</span>")
-			playsound(get_turf(user), "sound/items/zippo_close.ogg", 60, 1)
+			playsound(user, "sound/items/zippo_close.ogg", 60, 1)
 			return
 
 	if (user.bioHolder.HasEffect("clumsy") && prob(50))
@@ -226,8 +226,8 @@
 		stamina_damage = active_stamina_dmg
 		if(ishuman(user) && !ON_COOLDOWN(src, "playsound_on", 2 SECONDS))
 			var/mob/living/carbon/human/U = user
-			if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordstart.ogg", 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
-			else playsound(get_turf(U),"sound/weapons/female_cswordturnon.ogg" , 100, 0, 5, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
+			if(U.gender == MALE) playsound(U,"sound/weapons/male_cswordstart.ogg", 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
+			else playsound(U,"sound/weapons/female_cswordturnon.ogg" , 100, 0, 5, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
 		src.force = active_force
 		src.stamina_cost = active_stamina_cost
 		if (src.bladecolor)
@@ -235,7 +235,7 @@
 				src.bladecolor = null
 		src.icon_state = "[state_name]1-[src.bladecolor]"
 		src.item_state = "[state_name]1-[src.bladecolor]"
-		src.w_class = 4
+		src.w_class = W_CLASS_BULKY
 		user.unlock_medal("The Force is strong with this one", 1)
 	else
 		var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
@@ -246,8 +246,8 @@
 		stamina_damage = inactive_stamina_dmg
 		if(ishuman(user) && !ON_COOLDOWN(src, "playsound_off", 2 SECONDS))
 			var/mob/living/carbon/human/U = user
-			if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordturnoff.ogg", 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
-			else playsound(get_turf(U),"sound/weapons/female_cswordturnoff.ogg", 100, 0, 5, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
+			if(U.gender == MALE) playsound(U,"sound/weapons/male_cswordturnoff.ogg", 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
+			else playsound(U,"sound/weapons/female_cswordturnoff.ogg", 100, 0, 5, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
 		src.force = inactive_force
 		src.stamina_cost = inactive_stamina_cost
 		src.icon_state = "[state_name]0"
@@ -287,7 +287,7 @@
 				return
 
 			user.visible_message("<b>[user]</b> unscrews and opens [src].")
-			playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
 			src.open = 1
 			if (loaded_glowstick)
 				src.icon_state = "[state_name]-open-[bladecolor]"
@@ -296,12 +296,12 @@
 			return
 		else if (src.open && src.bladecolor)
 			user.visible_message("<b>[user]</b> closes and screws [src] shut.")
-			playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
 			src.open = 0
 			src.icon_state = "[state_name]0"
 		else
 			boutput(user, "<span class='alert'>The screw spins freely in place without a blade to screw into.</span>")
-			playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
 			return
 
 	if (istype(W, /obj/item/device/light/glowstick) && !loaded_glowstick && open)
@@ -362,6 +362,23 @@
 /obj/item/sword/red
 	bladecolor = "R"
 
+	enakai
+		active = 1;
+		active_force = 5
+		desc = "You were the chosen one! You were supposed to destroy the greytiders, not join them!";
+		icon_state = "sword1-R";
+		item_state = "sword1-R";
+		name = "Enakai's red cyalume saber"
+
+		pickup(mob/user)
+			if(isadmin(user) || current_state == GAME_STATE_FINISHED)
+				src.active_force = 60
+				if(src.active)
+					src.force = 60
+			else
+				boutput(user, "<span class='notice'>You feel that it was too soon for this...</span>")
+			. = ..()
+
 /obj/item/sword/orange
 	bladecolor = "O"
 
@@ -405,7 +422,8 @@
 	state_name = "d_sword"
 	icon_state = "d_sword0"
 	item_state = "d_sword0"
-	off_w_class = 3
+	w_class = W_CLASS_NORMAL
+	off_w_class = W_CLASS_NORMAL
 	active_force = 18
 	inactive_force = 8
 	active_stamina_dmg = 65
@@ -436,8 +454,8 @@
 			hit_type = DAMAGE_BLUNT
 			if(ishuman(user))
 				var/mob/living/carbon/human/U = user
-				if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordturnoff.ogg", 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
-				else playsound(get_turf(U),"sound/weapons/female_cswordturnoff.ogg", 100, 0, 0, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
+				if(U.gender == MALE) playsound(U,"sound/weapons/male_cswordturnoff.ogg", 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
+				else playsound(U,"sound/weapons/female_cswordturnoff.ogg", 100, 0, 0, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
 			active = 0
 			force = inactive_force
 			icon_state = "[state_name]0"
@@ -457,7 +475,7 @@
 	throwforce = 15.0
 	throw_range = 5
 	hit_type = DAMAGE_STAB
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	desc = "Gets the blood to run out juuuuuust right. Looks like this could be nasty when thrown."
@@ -506,9 +524,13 @@
 	desc = "An ornamental dagger for syndicate higher-ups. It sounds fancy, but it's basically the munitions company equivalent of those glass cubes with the company logo frosted on."
 
 /obj/item/dagger/syndicate/specialist //Infiltrator class knife
-	name = "syndicate combat knife"
+	name = "syndicate fighting utility knife"
 	desc = "A light but robust combat knife that allows you to move faster in fights."
 	icon_state = "combat_knife"
+	force = 15
+	throwforce = 20
+	stamina_cost = 5
+	c_flags = EQUIPPED_WHILE_HELD
 
 	setupProperties()
 		..()
@@ -559,7 +581,7 @@
 /obj/item/implant/projectile/shuriken
 	name = "shuriken"
 	desc = "A cheap replica of an ancient japanese throwing star."
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "shuriken"
 	throw_spin = 1
@@ -571,7 +593,7 @@
 			var/mob/living/carbon/human/H = M
 			H.implant.Add(src)
 			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
-			playsound(src.loc, "sound/weapons/slashcut.ogg", 100, 1)
+			playsound(src.loc, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
 			H.changeStatus("weakened", 2 SECONDS)
 			src.set_loc(M)
 			src.implanted = 1
@@ -588,7 +610,7 @@
 	throwforce = 6.0
 	throw_range = 7
 	hit_type = DAMAGE_BLUNT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	desc = "An ancient and questionably effective weapon."
 	burn_type = 0
@@ -613,7 +635,7 @@
 	throwforce = 6.0
 	throw_range = 5
 	hit_type = DAMAGE_BLUNT
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	c_flags = EQUIPPED_WHILE_HELD
 	desc = "An ancient and effective weapon. It's not just a stick alright!"
@@ -638,7 +660,7 @@
 
 		if (!use_two_handed || setTwoHanded(!src.status))
 			src.status = !src.status
-			// playsound(get_turf(src), "sparks", 75, 1, -1)
+			// playsound(src, "sparks", 75, 1, -1)
 			if (src.status)
 				setProperty("meleeprot", 3)
 				setProperty("movespeed", 0.1)
@@ -677,7 +699,7 @@
 	throwforce = 15.0
 	throw_speed = 4
 	throw_range = 8
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_STAB
@@ -775,7 +797,7 @@
 	throwforce = 25.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	contraband = 80
 	flags = FPRINT | CONDUCT | NOSHIELD | TABLEPASS | USEDELAY
 	tool_flags = TOOL_CUTTING
@@ -800,13 +822,13 @@
 		src.hit_type = DAMAGE_BURN
 		src.force = 150
 		src.icon_state = "axe1"
-		src.w_class = 5
+		src.w_class = W_CLASS_HUGE
 	else
 		boutput(user, "<span class='notice'>The axe can now be concealed.</span>")
 		src.hit_type = DAMAGE_CUT
 		src.force = 40
 		src.icon_state = "axe0"
-		src.w_class = 5
+		src.w_class = W_CLASS_HUGE
 	src.add_fingerprint(user)
 	user.update_inhands()
 	return
@@ -838,7 +860,7 @@
 	click_delay = 10
 	two_handed = 0
 
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	force = 15
 	throwforce = 5
 	throw_speed = 2
@@ -850,22 +872,22 @@
 	proc/set_values()
 		if(two_handed)
 			src.click_delay = 15
-			force = 30
-			throwforce = 20
+			force = 40
+			throwforce = 25
 			throw_speed = 4
 			throw_range = 8
-			stamina_damage = 40
-			stamina_cost = 27
-			stamina_crit_chance = 5
+			stamina_damage = 45
+			stamina_cost = 25
+			stamina_crit_chance = 10
 		else
 			src.click_delay = 10
-			force = 15
-			throwforce = 5
+			force = 20
+			throwforce = 10
 			throw_speed = 2
 			throw_range = 4
-			stamina_damage = 30
-			stamina_cost = 20
-			stamina_crit_chance = 2
+			stamina_damage = 25
+			stamina_cost = 15
+			stamina_crit_chance = 5
 		tooltip_rebuild = 1
 		return
 
@@ -906,10 +928,12 @@
 	stamina_damage = 24
 	stamina_cost = 30
 	stamina_crit_chance = 15
+	mats = list("wood" = 8)
 
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		src.AddComponent(/datum/component/holdertargeting/baseball_bat_reflect)
 		BLOCK_SETUP(BLOCK_ROD)
 
 /obj/item/ratstick
@@ -975,7 +999,7 @@
 	throw_range = 5
 	is_syndicate = 1
 	contraband = 7 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 
 	// pickup_sfx = "sound/items/blade_pull.ogg"
@@ -1044,7 +1068,7 @@
 		var/mob/living/carbon/human/H = target
 		if (H.find_type_in_hand(/obj/item/katana, "right") || H.find_type_in_hand(/obj/item/katana, "left"))
 			var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
-			playsound(get_turf(target), pick("sound/effects/sword_clash1.ogg","sound/effects/sword_clash2.ogg","sound/effects/sword_clash3.ogg"), 70, 0, 0)
+			playsound(target, pick("sound/effects/sword_clash1.ogg","sound/effects/sword_clash2.ogg","sound/effects/sword_clash3.ogg"), 70, 0, 0)
 			C.setup(H.loc)
 			var/matrix/m = matrix()
 			m.Turn(rand(0,360))
@@ -1177,7 +1201,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY | ONBELT
 	is_syndicate = 1
 	var/obj/item/katana/sword_inside = 1
@@ -1196,7 +1220,7 @@
 		BLOCK_SETUP(BLOCK_ROD)
 
 	attack_hand(mob/living/carbon/human/user as mob)
-		if(user.r_hand == src || user.l_hand == src || user.belt == src)
+		if(src.sword_inside && (user.r_hand == src || user.l_hand == src || user.belt == src))
 			draw_sword(user)
 		else
 			return ..()
@@ -1216,7 +1240,7 @@
 			user.update_clothing()
 			src.sword_inside = W //katana SHOULD be in the sheath now.
 			boutput(user, "<span class='notice'>You sheathe [W] in [src].</span>")
-			playsound(get_turf(user), "sound/effects/sword_sheath.ogg", 70, 0, 0)
+			playsound(user, "sound/effects/sword_sheath.ogg", 50, 0, 0)
 		else
 			..()
 			if(W.cant_drop == 1)
@@ -1227,7 +1251,7 @@
 		if (!user.r_hand || !user.l_hand)
 			sword_inside.clean_forensic()
 			boutput(user, "You draw [sword_inside] from your sheath.")
-			playsound(get_turf(user), pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 70, 0, 0)
+			playsound(user, pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 50, 0, 0)
 			icon_state = sheath_state
 			item_state = ih_sheath_state
 			user.put_in_hand_or_drop(sword_inside)
@@ -1235,9 +1259,6 @@
 			user.update_clothing()
 		else
 			boutput(user, "You don't have a free hand to draw with!")
-			return
-	else
-		return
 
 /obj/item/katana_sheath/reverse
 	name = "reverse-blade katana sheath"
@@ -1292,7 +1313,7 @@
 		ih_sheath_state = "blue_scabbard-cap0"
 		sword_path = /obj/item/katana/captain/blue
 
-	red //not used yet but should be used if a medal is ever made for the red cap stuff
+	red //for brown pants medal reward
 		icon_state = "red_cap_sword_scabbard"
 		item_state = "red_scabbard-cap1"
 
@@ -1339,7 +1360,7 @@
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
 	contraband = 5
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	force = 0
 	throwforce = 5
 	stamina_damage = 25
@@ -1381,13 +1402,14 @@ obj/item/fragile_sword
 	item_state = "fragile_sword"
 	hit_type = DAMAGE_CUT
 	contraband = 5
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	force = 60
 	throwforce = 60
 	stamina_damage = 25
 	stamina_cost = 25
 	stamina_crit_chance = 15
 	pickup_sfx = "sound/items/blade_pull.ogg"
+
 	var/minimum_force = 5
 	var/maximum_force = 70
 
@@ -1430,61 +1452,78 @@ obj/item/whetstone
 */
 
 /obj/item/heavy_power_sword
-	name = "crusader heavy power-sword mkII"
-	desc = "A heavy cyalume saber variant, builds generator charge when used in combat & supports multiple stance types."
-	icon = 'icons/obj/items/weapons.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	wear_image_icon = 'icons/mob/back.dmi' //todo back sprites
-	icon_state = "claymore" //todo new sprite
-	item_state = "longsword" //todo new sprite
+	name = "Hadar heavy power-sword"
+	desc = "A heavy cyalume saber variant, builds generator charge when used in combat & supports multiple attack types."
+	icon = 'icons/obj/64x32.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
+	wear_image_icon = 'icons/mob/back.dmi'
+	icon_state = "hadar_sword2"
+	item_state = "hadar_sword2"
 	flags = ONBACK
-	hit_type = DAMAGE_CUT
-	tool_flags = TOOL_CUTTING | TOOL_CHOPPING // cuts doors like the fire-axe
+	hit_type = DAMAGE_CUT | DAMAGE_STAB
+	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
+	object_flags = NO_ARM_ATTACH
 	contraband = 5
-	w_class = 4
-	force = 50 // almost as good as a csaber before it builds charge
+	w_class = W_CLASS_BULKY
+	force = 25
 	throwforce = 25
 	stamina_damage = 25
-	stamina_cost = 30
+	stamina_cost = 20
 	stamina_crit_chance = 15
-	pickup_sfx = "sound/items/blade_pull.ogg" // could use a cool lasery sfx
+	pickup_sfx = "sound/weapons/hadar-pickup.ogg"
+	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+	two_handed = 1
+	uses_multiple_icon_states = 1
 
-	var/mode = 0
-	var/maximum_force = 100 // not as bad as the bloodthirsty blade
+	var/mode = 2
+	var/maximum_force = 100
 
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
+		AddComponent(/datum/component/itemblock/saberblock)
 		BLOCK_SETUP(BLOCK_SWORD)
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
-		if(istype (M) | !isdead(M))
-			var/turf/throw_target = get_edge_target_turf(M, get_dir(user,M))
-			M.throw_at(throw_target, 2, 2)
-			if(force <= maximum_force)
-				force += 5
-				boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
-				take_bleeding_damage(M, user, 5, DAMAGE_STAB)
-		playsound(M, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
-		..()
+/obj/item/heavy_power_sword/attack(mob/M as mob, mob/user as mob, def_zone)
 
-	dropped(mob/user)
-		..()
-		if (isturf(src.loc))
-			user.visible_message("<span class='alert'>[src] falls from [user]'s hands and powers down!</span>")
-			force = 50
-			return
+	var/turf/t = get_turf(user) // no farming in the safety of the Cairngorm
+	if (t.loc:sanctuary)
+		return
 
-	attack_self(mob/user as mob)
-		if(src.mode == 0)
-			boutput(user, "<span class='alert'>You switch your grip on [src] enabling a ranged stab!</span>")
-			src.mode = 1
+	if(ishuman(M) && isalive(M) && src.force <= src.maximum_force) //build charge on living humans only, up to the cap
+		src.force += 5
+		boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
+	if(src.mode == 1) // only knock back on the sweep attack
+		var/turf/throw_target = get_edge_target_turf(M, get_dir(user,M))
+		M.throw_at(throw_target, 2, 2)
+	..()
+
+/obj/item/heavy_power_sword/dropped(mob/user)
+	..()
+	if (isturf(src.loc))
+		user.visible_message("<span class='alert'>[src] drops from [user]'s hands and powers down!</span>")
+		force = initial(src.force)
+		return
+
+/obj/item/heavy_power_sword/attack_self(mob/user as mob)
+	switch(src.mode) // switch in-case i want to add more modes later
+		if(1)
+			boutput(user, "<span class='alert'>[src] transforms enabling a ranged stab!</span>")
+			icon_state = "hadar_sword1"
+			item_state = "hadar_sword1"
+			src.mode = 2
+			user.update_inhands()
 			src.setItemSpecial(/datum/item_special/rangestab)
-		else
-			boutput(user, "<span class='alert'>You switch your grip on [src] in order to swing wide!</span>")
-			src.mode = 0
+			tooltip_rebuild = TRUE
+		if(2)
+			boutput(user, "<span class='alert'>[src] transforms in order to swing wide!</span>")
+			icon_state = "hadar_sword2"
+			item_state = "hadar_sword2"
+			src.mode = 1
+			user.update_inhands()
 			src.setItemSpecial(/datum/item_special/swipe)
-		..()
+			tooltip_rebuild = TRUE
+	..()
 
 // Battering ram - a door breeching melee tool for the armory
 
@@ -1498,7 +1537,7 @@ obj/item/whetstone
 
 	tool_flags = TOOL_CHOPPING //to chop through doors
 	hit_type = DAMAGE_BLUNT
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	two_handed = 1
 	click_delay = 30
 

@@ -25,7 +25,7 @@ var/list/stinkExclamations = list("Ugh","Good lord","Good grief","Christ","Fuck"
 var/list/stinkThings = list("garbage can","trash heap","cesspool","toilet","pile of poo",
 	"butt","skunk","outhouse","corpse","fart","devil")
 var/list/stinkVerbs = list("took a shit","died","farted","threw up","wiped its ass")
-var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","Readster")
+var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","administrator")
 
 /proc/stinkString()
 	// i am five - ISN
@@ -263,15 +263,6 @@ var/obj/item/dummy/click_dummy = new
 	if(!the_atom) return
 	. = format_net_id("\ref[the_atom]")
 
-/proc/can_act(var/mob/M, var/include_cuffs = 1)
-	if(!M) return 0 //Please pass the M, I need a sprinkle of it on my potatoes.
-	if(include_cuffs && M.hasStatus("handcuffed")) return 0
-	if(M.getStatusDuration("stunned")) return 0
-	if(M.getStatusDuration("weakened")) return 0
-	if(M.getStatusDuration("paralysis")) return 0
-	if(M.stat) return 0
-	return 1
-
 #define CLUWNE_NOISE_DELAY 50
 
 /proc/process_accents(var/mob/living/carbon/human/H, var/message)
@@ -294,12 +285,12 @@ var/obj/item/dummy/click_dummy = new
 	if (iscluwne(H))
 		message = honk(message)
 		if (world.time >= (H.last_cluwne_noise + CLUWNE_NOISE_DELAY))
-			playsound(get_turf(H), pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, H.get_age_pitch())
+			playsound(H, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, H.get_age_pitch())
 			H.last_cluwne_noise = world.time
 	if (ishorse(H))
 		message = neigh(message)
 		if (world.time >= (H.last_cluwne_noise + CLUWNE_NOISE_DELAY))
-			playsound(get_turf(H), pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, H.get_age_pitch())
+			playsound(H, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, H.get_age_pitch())
 			H.last_cluwne_noise = world.time
 
 	if ((H.reagents && H.reagents.get_reagent_amount("ethanol") > 30 && !isdead(H)) || H.traitHolder.hasTrait("alcoholic"))

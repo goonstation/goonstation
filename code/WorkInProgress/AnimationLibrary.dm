@@ -128,7 +128,7 @@
 	if(!istype(A))
 		return
 	if(prob(10))
-		playsound(get_turf(A), "sound/effects/creaking_metal[pick("1", "2")].ogg", 40, 1)
+		playsound(A, "sound/effects/creaking_metal[pick("1", "2")].ogg", 40, 1)
 	var/image/underneath = image('icons/effects/white.dmi')
 	underneath.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
 	A.underlays += underneath
@@ -893,7 +893,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(time = 5, color = "#ffffff")
 	return
 
-/proc/animate_spin(var/atom/A, var/dir = "L", var/T = 1, var/looping = -1)
+/proc/animate_spin(var/atom/A, var/dir = "L", var/T = 1, var/looping = -1, var/parallel = TRUE)
 	if (!istype(A))
 		return
 
@@ -902,7 +902,9 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if (dir == "R")
 		turn = 90
 
-	animate(A, transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping, flags=ANIMATION_PARALLEL)
+	var/flag = parallel ? ANIMATION_PARALLEL : null
+
+	animate(A, transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping, flags = flag)
 	animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
 	animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
 	animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
@@ -1070,7 +1072,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(transform = MD, time = 1, loop = -1, easing = LINEAR_EASING)
 
 // these don't use animate but they're close enough, idk
-/proc/showswirl(var/atom/target)
+/proc/showswirl(var/atom/target, var/play_sound = TRUE)
 	if (!target)
 		return
 	var/turf/target_turf = get_turf(target)
@@ -1079,7 +1081,8 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
-	playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
+	if (play_sound)
+		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
 	SPAWN_DBG(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
@@ -1309,13 +1312,13 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_storage_thump(var/atom/A, wiggle=6)
 	if(!istype(A))
 		return
-	playsound(get_turf(A), "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+	playsound(A, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
 	var/orig_x = A.pixel_x
 	var/orig_y = A.pixel_y
-	animate(A, pixel_x=orig_x, pixel_y=orig_y, flags=ANIMATION_PARALLEL, time=0)
+	animate(A, pixel_x=orig_x, pixel_y=orig_y, flags=ANIMATION_PARALLEL, time=0.01 SECONDS)
 	for(var/i in 1 to wiggle)
-		animate(pixel_x=orig_x + rand(-3, 3), pixel_y=orig_y + rand(-3, 3), flags=ANIMATION_PARALLEL, easing=JUMP_EASING, time=0.1 SECONDS)
-	animate(pixel_x=orig_x, pixel_y=orig_y, flags=ANIMATION_PARALLEL)
+		animate(pixel_x=orig_x + rand(-3, 3), pixel_y=orig_y + rand(-3, 3), easing=JUMP_EASING, time=0.1 SECONDS)
+	animate(pixel_x=orig_x, pixel_y=orig_y)
 
 /obj/overlay/tile_effect/fake_fullbright
 	icon = 'icons/effects/white.dmi'

@@ -14,7 +14,7 @@
 	hit_type = DAMAGE_BLUNT
 	throw_speed = 0.5
 	c_flags = EQUIPPED_WHILE_HELD
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/on = 0
 	var/exploding = 0 //Does it blow up when it goes out?
 	var/flavor = null
@@ -134,7 +134,7 @@
 
 			hit_type = DAMAGE_BLUNT
 
-			playsound(get_turf(src), "sound/impact_sounds/burn_sizzle.ogg", 50, 1)
+			playsound(src, "sound/impact_sounds/burn_sizzle.ogg", 50, 1)
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (src.on == 0)
@@ -405,7 +405,7 @@
 	force = 0
 	hit_type = DAMAGE_BLUNT
 	throw_speed = 0.5
-	w_class = 1
+	w_class = W_CLASS_TINY
 	rand_pos = 1
 	var/flavor = null
 
@@ -518,7 +518,7 @@
 	icon_state = "cigpacket"
 	uses_multiple_icon_states = 1
 	item_state = "cigpacket"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 2
 	var/cigcount = 6
 	var/cigtype = /obj/item/clothing/mask/cigarette
@@ -609,7 +609,7 @@
 	desc = "A manky old cigarette butt."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "cigbutt"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 1
 	stamina_damage = 0
 	stamina_cost = 0
@@ -622,7 +622,7 @@
 	icon_state = "cigarbox"
 	uses_multiple_icon_states = 1
 	item_state = "cigarbox"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 2
 	var/cigcount = 5
 	var/cigtype = /obj/item/clothing/mask/cigarette/cigar
@@ -686,7 +686,7 @@
 	icon_state = "cigarbox"
 	uses_multiple_icon_states = 1
 	item_state = "cigarbox"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 2
 	cigcount = 5
 	cigtype = /obj/item/clothing/mask/cigarette/cigar/gold
@@ -770,7 +770,7 @@
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "matchbook"
 	uses_multiple_icon_states = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	stamina_damage = 0
@@ -849,7 +849,7 @@
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "match"
 	uses_multiple_icon_states = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	stamina_damage = 0
@@ -918,7 +918,7 @@
 		src.firesource = TRUE
 		src.icon_state = "match-lit"
 
-		playsound(get_turf(user), "sound/items/matchstick_light.ogg", 50, 1)
+		playsound(user, "sound/items/matchstick_light.ogg", 50, 1)
 		light.enable()
 
 		processing_items |= src
@@ -931,11 +931,11 @@
 			src.icon_state = "match-broken"
 			src.name = "broken match"
 			if (user)
-				playsound(get_turf(user), "sound/impact_sounds/Flesh_Crush_1.ogg", 60, 1, 0, 2)
+				playsound(user, "sound/impact_sounds/Flesh_Crush_1.ogg", 60, 1, 0, 2)
 		else
 			src.icon_state = "match-burnt"
 			src.name = "burnt-out match"
-			playsound(get_turf(src), "sound/impact_sounds/burn_sizzle.ogg", 50, 1)
+			playsound(src, "sound/impact_sounds/burn_sizzle.ogg", 50, 1)
 
 		light.disable()
 
@@ -1059,13 +1059,13 @@
 		return
 
 /obj/item/device/light/zippo
-	name = "zippo lighter"
+	name = "\improper Zippo lighter"
 	desc = "A pretty nice lighter."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "zippo"
 	item_state = "zippo"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 4
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
 	click_delay = 0.7 SECONDS
@@ -1101,7 +1101,7 @@
 				set_icon_state(src.icon_on)
 				src.item_state = "zippoon"
 				user.visible_message("<span class='alert'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
-				playsound(get_turf(user), 'sound/items/zippo_open.ogg', 30, 1)
+				playsound(user, 'sound/items/zippo_open.ogg', 30, 1)
 				light.enable()
 
 				processing_items |= src
@@ -1111,7 +1111,7 @@
 				set_icon_state(src.icon_off)
 				src.item_state = "zippo"
 				user.visible_message("<span class='alert'>You hear a quiet click, as [user] shuts off [src] without even looking what they're doing. Wow.</span>")
-				playsound(get_turf(user), 'sound/items/zippo_close.ogg', 30, 1)
+				playsound(user, 'sound/items/zippo_close.ogg', 30, 1)
 				light.disable()
 
 				processing_items.Remove(src)
@@ -1236,13 +1236,13 @@
 		return 1
 
 /obj/item/device/light/zippo/gold
-	name = "golden zippo lighter"
+	name = "golden Zippo lighter"
 	icon_state = "gold_zippo"
 	icon_off = "gold_zippo"
 	icon_on = "gold_zippoon"
 
 /obj/item/device/light/zippo/brighter
-	name = "zippo brighter"
+	name = "\improper Zippo brighter"
 	desc = "Are you feeling blinded by the light?"
 	brightness = 4.0
 	col_r = 0.69
@@ -1250,7 +1250,7 @@
 	col_b = 1
 
 /obj/item/device/light/zippo/dan
-	name = "odd zippo lighter"
+	name = "odd Zippo lighter"
 	desc = "A sleek grey lighter. Something about it seems a bit strange."
 	icon_state = "dan_zippo"
 	icon_off = "dan_zippo"

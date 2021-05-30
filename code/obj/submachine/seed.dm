@@ -287,7 +287,7 @@
 
 		else if(href_list["label"])
 			var/obj/item/I = locate(href_list["label"]) in src
-			if (istype(I))
+			if (istype(I) && !isghostdrone(usr) && !isghostcritter(usr))
 				var/newName = copytext(strip_html(input(usr,"What do you want to label [I.name]?","[src.name]",I.name) ),1, 129)
 				if(newName && newName != I.name)
 					phrase_log.log_phrase("seed", newName, no_duplicates=TRUE)
@@ -352,6 +352,7 @@
 						HYPpassplantgenes(DNA,SDNA)
 
 						S.name = stored.name
+						S.plant_seed_color(stored.seedcolor)
 						if (stored.hybrid)
 							var/datum/plant/hybrid = new /datum/plant(S)
 							for(var/V in stored.vars)
@@ -551,6 +552,9 @@
 				P.nectarlevel = dominantspecies.nectarlevel
 				S.name = "[P.name] seed"
 
+				P.seedcolor = rgb(round((GetRedPart(P1.seedcolor) + GetRedPart(P2.seedcolor)) / 2), round((GetGreenPart(P1.seedcolor) + GetGreenPart(P2.seedcolor)) / 2), round((GetBluePart(P1.seedcolor) + GetBluePart(P2.seedcolor)) / 2))
+				S.plant_seed_color(P.seedcolor)
+
 				var/newgenome = P1.genome + P2.genome
 				if (newgenome)
 					newgenome = round(newgenome / 2)
@@ -592,6 +596,8 @@
 				DNA.endurance = SpliceMK2(P1DNA.alleles[7],P2DNA.alleles[7],P1DNA.vars["endurance"],P2DNA.vars["endurance"])
 
 				boutput(usr, "<span class='notice'>Splice successful.</span>")
+				//0 xp for a 100% splice, 4 xp for a 10% splice
+				JOB_XP(usr, "Botanist", clamp(round((100 - splice_chance) / 20), 0, 4))
 				if (!src.seedoutput) src.seeds.Add(S)
 				else S.set_loc(src.loc)
 

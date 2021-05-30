@@ -642,7 +642,7 @@
 	icon_state = "0-8"
 	},
 /obj/item/device/radio/intercom/security{
-	
+
 	},
 /obj/machinery/light/emergency{
 	icon_state = "ebulb1";
@@ -1077,18 +1077,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/captain)
-"acn" = (
-/obj/table/wood/auto,
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/camera_test{
-	pixel_y = 6
-	},
-/obj/item/pinpointer,
-/obj/item/hand_tele,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
 "aco" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -1132,20 +1120,6 @@
 	dir = 1;
 	icon_state = "camera";
 	name = "autoname - SS13"
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
-"acr" = (
-/obj/table/wood/auto,
-/obj/displaycase{
-	displayed = new /obj/item/captaingun
-	pixel_y = 8
-	},
-/obj/machinery/light,
-/obj/machinery/firealarm{
-	dir = 1;
-	layer = 3.5;
-	pixel_y = -24
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
@@ -5932,7 +5906,7 @@
 	pixel_y = 3;
 	switchon = 1
 	},
-/obj/item/reagent_containers/food/drinks/bottle/xmas,
+/obj/item/reagent_containers/food/drinks/bottle/soda/xmas,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_west)
 "akz" = (
@@ -9282,7 +9256,7 @@
 	id = "crematorium"
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
@@ -9298,7 +9272,7 @@
 "aqn" = (
 /obj/storage/closet/coffin,
 /obj/item/device/radio/intercom/security{
-	
+
 	},
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -10225,7 +10199,7 @@
 	pixel_x = 6
 	},
 /obj/item/device/radio/intercom/catering{
-	
+
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -10945,7 +10919,7 @@
 "atk" = (
 /obj/table/reinforced/auto,
 /obj/machinery/glass_recycler,
-/obj/item/reagent_containers/food/drinks/bottle/xmas,
+/obj/item/reagent_containers/food/drinks/bottle/soda/xmas,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "atl" = (
@@ -13175,26 +13149,6 @@
 /obj/item/device/light/flashlight,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
-"axq" = (
-/obj/table/wood/auto,
-/obj/item/device/camera_viewer,
-/obj/item/camera_test,
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/secure/sbriefcase,
-/obj/item/device/audio_log,
-/obj/item/audio_tape{
-	pixel_y = 5
-	},
-/obj/item/audio_tape{
-	pixel_y = 5
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "axr" = (
 /obj/storage/cart/forensic,
 /obj/item/reagent_containers/food/drinks/bottle/bojackson,
@@ -13951,7 +13905,7 @@
 	icon_state = "line3"
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -14021,7 +13975,7 @@
 	pixel_x = -4;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/drinks/bottle/xmas,
+/obj/item/reagent_containers/food/drinks/bottle/soda/xmas,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -17815,7 +17769,7 @@
 /area/station/medical/robotics)
 "aFk" = (
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/stairs{
 	dir = 8;
@@ -19009,7 +18963,7 @@
 /obj/shrub,
 /obj/item/cigpacket,
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /obj/machinery/light/emergency{
 	dir = 8
@@ -19048,7 +19002,7 @@
 	d2 = 2
 	},
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /obj/item/reagent_containers/food/drinks/eggnog,
 /turf/simulated/floor/white/checker,
@@ -19993,7 +19947,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/red,
@@ -22792,7 +22746,7 @@
 	name = "autoname - SS13"
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /obj/machinery/autoclave,
 /turf/simulated/floor/purplewhite/corner{
@@ -23680,7 +23634,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/purple,
 /area/station/science/research_director{
@@ -23735,7 +23689,7 @@
 	network = "Zeta"
 	},
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /turf/simulated/floor/purple,
 /area/station/science/research_director{
@@ -27323,16 +27277,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering/ce)
-"aUh" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/storage/crate/rcd/CE,
-/obj/machinery/light/emergency,
-/turf/simulated/floor/yellow,
-/area/station/engine/engineering/ce)
 "aUi" = (
 /obj/machinery/power/monitor/smes{
 	dir = 8;
@@ -27716,7 +27660,7 @@
 	pltanks = 15
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
@@ -27873,7 +27817,7 @@
 /obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet,
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /obj/landmark/start{
 	name = "Geneticist"
@@ -31515,7 +31459,7 @@
 	icon_state = "stripe-edge";
 	tag = ""
 	},
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_y = 8
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass{
@@ -32196,7 +32140,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
@@ -32489,7 +32433,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom/brig{
-	
+
 	},
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1";
@@ -33161,7 +33105,7 @@
 	d2 = 4
 	},
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
@@ -37490,11 +37434,11 @@
 	},
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /turf/simulated/floor/purplewhite/corner,
 /area/station/science/chemistry)
 "bkX" = (
@@ -39118,7 +39062,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
@@ -39168,15 +39112,6 @@
 /obj/submachine/ATM{
 	pixel_y = -32
 	},
-/turf/simulated/floor/grime,
-/area/station/security/brig)
-"bnK" = (
-/obj/decal/poster/wallsign/cdnp{
-	pixel_y = -32
-	},
-/obj/table/reinforced/auto,
-/obj/item/instrument/harmonica,
-/obj/item/card_box/plain,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bnL" = (
@@ -40028,7 +39963,7 @@
 	},
 /obj/machinery/light_switch/west,
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/engine{
@@ -41030,7 +40965,7 @@
 	network = "SS13"
 	},
 /obj/item/device/radio/intercom/cargo{
-	
+
 	},
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/black,
@@ -44890,7 +44825,7 @@
 	icon_state = "0-8"
 	},
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
@@ -45065,7 +45000,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
@@ -47280,6 +47215,28 @@
 	layer = 2
 	},
 /area/space)
+"cCN" = (
+/obj/decal/poster/wallsign/cdnp{
+	pixel_y = -32
+	},
+/obj/table/reinforced/auto,
+/obj/item/instrument/harmonica,
+/obj/item/card_box/plain,
+/turf/simulated/floor/grime,
+/area/station/security/brig)
+"eAK" = (
+/obj/table/wood/auto,
+/obj/displaycase{
+	displayed = new /obj/item/captaingunpixel_y = 8
+	},
+/obj/machinery/light,
+/obj/machinery/firealarm{
+	dir = 1;
+	layer = 3.5;
+	pixel_y = -24
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 "fra" = (
 /obj/machinery/clonepod,
 /obj/cable{
@@ -47288,6 +47245,36 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
+"mGZ" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/storage/crate/rcd/CE,
+/obj/machinery/light/emergency,
+/turf/simulated/floor/yellow,
+/area/station/engine/engineering/ce)
+"nKX" = (
+/obj/table/wood/auto,
+/obj/item/device/camera_viewer,
+/obj/item/camera,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/obj/item/storage/box/evidence,
+/obj/item/storage/box/evidence,
+/obj/item/storage/secure/sbriefcase,
+/obj/item/device/audio_log,
+/obj/item/audio_tape{
+	pixel_y = 5
+	},
+/obj/item/audio_tape{
+	pixel_y = 5
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "oSY" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
@@ -47310,6 +47297,18 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
+"uHp" = (
+/obj/table/wood/auto,
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/camera{
+	pixel_y = 6
+	},
+/obj/item/pinpointer,
+/obj/item/hand_tele,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 
 (1,1,1) = {"
 aaa
@@ -83465,7 +83464,7 @@ biD
 bjV
 blj
 bms
-bnK
+cCN
 bcw
 bpJ
 bqR
@@ -86454,7 +86453,7 @@ avb
 avB
 atZ
 awH
-axq
+nKX
 ayh
 ayQ
 azA
@@ -92082,7 +92081,7 @@ abU
 acb
 acf
 acj
-acn
+uHp
 acq
 acf
 acu
@@ -92385,7 +92384,7 @@ abV
 acg
 ack
 aco
-acr
+eAK
 acf
 acv
 acB
@@ -96739,7 +96738,7 @@ aNN
 aPv
 aRi
 aSP
-aUh
+mGZ
 aVV
 aXE
 aYP

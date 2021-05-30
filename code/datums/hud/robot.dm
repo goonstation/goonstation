@@ -281,7 +281,7 @@
 					else items_screen--
 					update_equipment()
 
-	clicked(id)
+	relay_click(id)
 		if (!master)
 			return
 		switch (id)

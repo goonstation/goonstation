@@ -4,7 +4,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "coin"
 	item_state = "coin"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	stamina_damage = 0
 	stamina_cost = 0
 	module_research = list("vice" = 3, "efficiency" = 1)
@@ -50,12 +50,12 @@
 
 
 /obj/item/coin_bot
-	name = "Probability Disc"
+	name = "probability disc"
 	desc = "A small golden disk of some sort. Possibly used in highly complex quantum experiments."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "coin"
 	item_state = "coin"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
 		playsound(src.loc, "sound/items/coindrop.ogg", 100, 1)

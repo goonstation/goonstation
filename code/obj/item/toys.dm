@@ -6,7 +6,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	desc = "A sword made of cheap plastic. Contains a colored LED. Collect all five!"
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 5
 	contraband = 3
@@ -34,16 +34,16 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/U = user
 			if (U.gender == MALE)
-				playsound(get_turf(U), pick(src.sound_attackM1, src.sound_attackM2), 100, 0, 0, U.get_age_pitch())
+				playsound(U, pick(src.sound_attackM1, src.sound_attackM2), 100, 0, 0, U.get_age_pitch())
 			else
-				playsound(get_turf(U), pick(src.sound_attackF1, src.sound_attackF2), 100, 0, 0, U.get_age_pitch())
+				playsound(U, pick(src.sound_attackF1, src.sound_attackF2), 100, 0, 0, U.get_age_pitch())
 
 /obj/item/toy/judge_gavel
 	name = "judge's gavel"
 	desc = "A judge's best friend."
 	icon = 'icons/obj/items/courtroom.dmi'
 	icon_state = "gavel"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	force = 5
 	throwforce = 7
 	stamina_damage = 25
@@ -68,7 +68,7 @@
 	icon = 'icons/obj/items/courtroom.dmi'
 	icon_state = "block"
 	flags = SUPPRESSATTACK
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 1
 	throw_speed = 4
 	throw_range = 7
@@ -95,7 +95,7 @@
 	name = "diploma"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "diploma"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	throwforce = 3
 	throw_speed = 3
 	throw_range = 5
@@ -114,7 +114,7 @@
 		var/mob/living/L = user
 		if (L.mind && L.mind.assigned_role == "Clown")
 			L.visible_message("<span class='alert'><B>[L] bonks [M] [pick("kindly", "graciously", "helpfully", "sympathetically")].</B></span>")
-			playsound(get_turf(M), "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
+			playsound(M, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
 			M.say("[pick("Wow", "Gosh dangit", "Aw heck", "Oh gosh", "Damnit")], [L], [pick("why are you so", "it's totally unfair that you're so", "how come you're so", "tell me your secrets to being so")] [pick("cool", "smart", "worldly", "funny", "wise", "drop dead hilarious", "incredibly likeable", "beloved by everyone", "straight up amazing", "devilishly handsome")]!")
 
 /obj/item/toy/gooncode
@@ -125,7 +125,7 @@
 	icon_state = "gooncode"
 	flags = SUPPRESSATTACK
 	throwforce = 3
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 2
 	throw_range = 3
 	rand_pos = 1
@@ -161,13 +161,14 @@
 	desc = "Wow! You've always wanted one of these charmingly clunky doodads!"
 	icon = 'icons/obj/cellphone.dmi'
 	icon_state = "cellphone-on"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/datum/game/tetris
 	var/datum/mail
 
 	New()
 		src.contextLayout = new /datum/contextLayout/instrumental(16)
 		src.contextActions = childrentypesof(/datum/contextAction/cellphone)
+		//Email was never even coded so ???
 		..()
 		START_TRACKING
 		src.tetris = new /datum/game/tetris(src)
@@ -179,3 +180,56 @@
 	attack_self(mob/user as mob)
 		..()
 		user.showContextActions(contextActions, src)
+
+/obj/machinery/computer/arcade/handheld
+	desc = "You shouldn't see this, I exist for typechecks"
+
+/obj/item/toy/handheld
+	name = "arcade toy"
+	desc = "These high tech gadgets compress the full arcade experience into a large, clunky handheld!"
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "arcade-generic"
+	mats = 2
+	var/arcademode = FALSE
+	//The arcade machine will typecheck if we're this type
+	var/obj/machinery/computer/arcade/handheld/arcadeholder = null
+	var/datum/game/gameholder = null
+	var/datum/gametype = /datum/game/tetris
+
+	New()
+		. = ..()
+		if (!arcademode)
+			gameholder = new gametype(src)
+			return
+		//I wanted to make this the first time it's used
+		//But then I don't have a name
+		arcadeholder = new(src)
+		name = arcadeholder.name
+
+	attack_self(mob/user as mob)
+		. = ..()
+		if (!arcademode)
+			src.gameholder.new_game(user)
+			return
+
+		arcadeholder.show_ui(user)
+
+
+/obj/item/toy/handheld/robustris
+	icon_state = "arcade-robustris"
+	name = "Robustris Pro"
+
+/obj/item/toy/handheld/arcade
+	arcademode = TRUE
+	icon_state = "arcade-adventure"
+/obj/item/item_box/figure_capsule/gaming_capsule
+	name = "game capsule"
+	New()
+		contained_item = pick(30;/obj/item/toy/handheld/arcade, 70;/obj/item/toy/handheld/robustris)
+		. = ..()
+		if (ispath(contained_item, /obj/item/toy/handheld/robustris))
+			itemstate = "robustris-fig"
+		else if (ispath(contained_item, /obj/item/toy/handheld/arcade))
+			itemstate = "arcade-fig"
+		else
+			itemstate = "game-fig"

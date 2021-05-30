@@ -80,7 +80,7 @@ Contains:
 
 /obj/machinery/the_singularity/
 	name = "gravitational singularity"
-	desc = "A Gravitational Singularity."
+	desc = "Perhaps the densest thing in existence, except for you."
 
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "Sing2"
@@ -347,7 +347,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if (H.wear_suit)
 				return
 		M.take_toxin_damage(3)
-		M.changeStatus("radiation", 20*(radius+1))
+		M.changeStatus("radiation", 2*(radius+1) SECONDS)
 		M.show_text("You feel odd.", "red")
 
 /obj/machinery/the_singularity/proc/Mezzer()
@@ -643,16 +643,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if(isweldingtool(W))
 		if(state != UNWRENCHED)
+			if(!W:try_weld(user, 1, noisy = 2))
+				return
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/field_generator/proc/weld_action,\
 			list(user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the field generator.")
 		if(state == WRENCHED)
-			if(!W:try_weld(user, 1, noisy = 2))
-				return
 			boutput(user, "You start to weld the field generator to the floor.")
 			return
 		else if(state == WELDED)
-			if(!W:try_weld(user, 1, noisy = 2))
-				return
 			boutput(user, "You start to cut the field generator free from the floor.")
 			return
 
@@ -867,8 +865,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		var/mob/living/L = user
 		L.Virus_ShockCure(100)
 		L.shock_cyberheart(100)
-	if(user.getStatusDuration("stunned") < shock_damage * 10)	user.changeStatus("stunned", shock_damage * 10)
-	if(user.getStatusDuration("weakened") < shock_damage * 10)	user.changeStatus("weakened", shock_damage * 10)
+	if(user.getStatusDuration("stunned") < shock_damage * 10)	user.changeStatus("stunned", shock_damage SECONDS)
+	if(user.getStatusDuration("weakened") < shock_damage * 10)	user.changeStatus("weakened", shock_damage SECONDS)
 
 	if(user.get_burn_damage() >= 500) //This person has way too much BURN, they've probably been shocked a lot! Let's destroy them!
 		user.visible_message("<span style=\"color:red;font-weight:bold;\">[user.name] was disintegrated by the [src.name]!</span>")
@@ -1050,16 +1048,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if(isweldingtool(W))
 		if(state != UNWRENCHED)
+			if(!W:try_weld(user, 1, noisy = 2))
+				return
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/emitter/proc/weld_action,\
 			list(user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the emitter.")
 		if(state == WRENCHED)
-			if(!W:try_weld(user, 1, noisy = 2))
-				return
 			boutput(user, "You start to weld the emitter to the floor.")
 			return
 		else if(state == WELDED)
-			if(!W:try_weld(user, 1, noisy = 2))
-				return
 			boutput(user, "You start to cut the emitter free from the floor.")
 			return
 
@@ -1087,6 +1083,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		src.get_link()
 		desc = "Shoots a high power laser when active, it has been bolted and welded to the floor."
 		boutput(user, "You weld the emitter to the floor.")
+		logTheThing("station", user, null, "welds an emitter to the floor at [log_loc(src)].")
 	else if(state == WELDED)
 		state = WRENCHED
 		if(src.link) //Time to clear our link.
@@ -1094,6 +1091,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.link = null
 		desc = "Shoots a high power laser when active, it has been bolted to the floor."
 		boutput(user, "You cut the emitter free from the floor.")
+		logTheThing("station", user, null, "unwelds an emitter from the floor at [log_loc(src)].")
 
 //Send a signal over our link, if possible.
 /obj/machinery/emitter/proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
@@ -1356,7 +1354,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				P2 = CA2.P
 		else
 			CAE = null
-		if(isnull(S1))
+		if(isnull(S1) || S1.disposed)
 			S1 = null
 
 		updateicon()

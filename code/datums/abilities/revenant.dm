@@ -16,7 +16,7 @@
 
 	generatePoints(var/mult = 1)
 		if (relay)
-			relay.generatePoints(mult = 1)
+			relay.generatePoints(mult)
 
 	deductPoints(cost)
 		if (relay)
@@ -123,7 +123,7 @@
 			owner.ghost.corpse = null
 			owner.ghost = null
 		src.wraith = W
-		W.invisibility = 50
+		APPLY_MOB_PROPERTY(W, PROP_INVISIBILITY, W, INVIS_WRAITH_VERY)
 		W.set_loc(src.owner)
 		W.abilityHolder.suspendAllAbilities()
 
@@ -153,13 +153,13 @@
 			return
 
 		message_admins("Revenant [key_name(owner)] died at [showCoords(owner.x, owner.y, owner.z)].")
-		playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 100, 0)
+		playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 60, 0)
 		logTheThing("combat", usr, null, "died as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
 		if (owner.mind)
 			owner.mind.transfer_to(src.wraith)
 		else if (owner.client)
 			owner.client.mob = src.wraith
-		src.wraith.invisibility = 10
+		APPLY_MOB_PROPERTY(src.wraith, PROP_INVISIBILITY, src.wraith, INVIS_GHOST)
 		src.wraith.set_loc(get_turf(owner))
 		src.wraith.abilityHolder.resumeAllAbilities()
 		src.wraith.abilityHolder.regenRate /= 3
@@ -172,17 +172,17 @@
 		src.wraith = null
 		return
 
-	OnLife()
+	OnLife(var/mult)
 		if (!src.wraith)
 			return
 		if (ghoulTouchActive)
-			ghoulTouchActive--
+			ghoulTouchActive = max (ghoulTouchActive - mult, 0)
 			if (!ghoulTouchActive)
 				owner.show_message("<span class='alert'>You are no longer empowered by the netherworld.</span>")
 
 		src.wraith.Life()
 
-		owner.max_health -= 1.5
+		owner.max_health -= 1.5*mult
 
 		owner.ailments.Cut()
 		owner.take_toxin_damage(-INFINITY)
@@ -200,9 +200,9 @@
 		setalive(owner)
 
 
-		if (owner.health < -50)
+		if (owner.health < -50 || owner.max_health < -50) // Makes revenants have a definite time limit, instead of being able to just spam abilities in deepcrit.
 			boutput(owner, "<span class='alert'><strong>This vessel has grown too weak to maintain your presence.</strong></span>")
-			playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 100, 0)
+			playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 60, 0)
 			owner.death(0) // todo: add custom death
 			return
 
@@ -282,7 +282,7 @@
 	cooldown = 30 SECONDS
 
 	cast(atom/target)
-		playsound(target.loc, "sound/voice/wraith/wraithlivingobject.ogg", 90, 0)
+		playsound(target.loc, "sound/voice/wraith/wraithlivingobject.ogg", 60, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -403,7 +403,7 @@
 	special_screen_loc = "NORTH-1,WEST+2"
 
 	cast()
-		playsound(usr.loc, "sound/voice/wraith/revtouch.ogg", 85, 0)
+		playsound(usr.loc, "sound/voice/wraith/revtouch.ogg", 70, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -424,7 +424,7 @@
 	special_screen_loc = "NORTH-1,WEST+3"
 
 	cast(atom/target)
-		playsound(target.loc, "sound/voice/wraith/revpush[rand(1, 2)].ogg", 90, 0)
+		playsound(target.loc, "sound/voice/wraith/revpush[rand(1, 2)].ogg", 70, 0)
 		if (isturf(target))
 			holder.owner.show_message("<span class='alert'>You must target an object or mob with this ability.</span>")
 			return 1
@@ -463,7 +463,7 @@
 	special_screen_loc = "NORTH-1,WEST+4"
 
 	cast(atom/target)
-		playsound(target.loc, "sound/voice/wraith/revfocus.ogg", 120, 0)
+		playsound(target.loc, "sound/voice/wraith/revfocus.ogg", 80, 0)
 		if (!ishuman(target))
 			holder.owner.show_message("<span class='alert'>You must target a human with this ability.</span>")
 			return 1
@@ -512,7 +512,7 @@
 					holder.owner.show_message("<span class='alert'>[H] is pulled from your telekinetic grip!</span>")
 					RH.channeling = 0
 					break
-				H.changeStatus("weakened", (2 + rand(0, iterations))*10)
+				H.changeStatus("weakened", (2 + rand(0, iterations)) SECONDS)
 				H.TakeDamage("chest", 4 + rand(0, iterations), 0, 0, DAMAGE_CRUSH)
 				if (prob(40))
 					H.visible_message("<span class='alert'>[H]'s bones crack loudly!</span>", "<span class='alert'>You feel like you're about to be [pick("crushed", "destroyed", "vaporized")].</span>")

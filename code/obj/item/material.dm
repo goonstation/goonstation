@@ -44,6 +44,12 @@
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if(W.type == src.type)
+			stack_item(W)
+			if(!user.is_in_hands(src))
+				user.put_in_hand(src)
+			boutput(user, "<span class='notice'>You add the ores to the stack. It now has [src.amount] ores.</span>")
+			return
 		if (istype(W, /obj/item/satchel/mining/))
 			if (W.contents.len < W:maxitems)
 				src.set_loc(W)
@@ -56,6 +62,18 @@
 				boutput(user, "<span class='alert'>[W] is full!</span>")
 		else ..()
 
+	attack_hand(mob/user as mob)
+		if(user.is_in_hands(src) && src.amount > 1)
+			var/splitnum = round(input("How many ores do you want to take from the stack?","Stack of [src.amount]",1) as num)
+			if (splitnum >= amount || splitnum < 1)
+				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
+				return
+			var/obj/item/raw_material/new_stack = split_stack(splitnum)
+			user.put_in_hand_or_drop(new_stack)
+			new_stack.add_fingerprint(user)
+		else
+			..(user)
+
 	HasEntered(AM as mob|obj)
 		if (isobserver(AM))
 			return
@@ -67,7 +85,7 @@
 				S.satchel.satchel_updateicon()
 				if (S.satchel.contents.len >= S.satchel.maxitems)
 					boutput(H, "<span class='alert'>Your ore scoop's satchel is full!</span>")
-					playsound(get_turf(H), "sound/machines/chime.ogg", 20, 1)
+					playsound(H, "sound/machines/chime.ogg", 20, 1)
 		else if (istype(AM,/obj/machinery/vehicle/))
 			var/obj/machinery/vehicle/V = AM
 			if (istype(V.sec_system,/obj/item/shipcomponent/secondary_system/orescoop))
@@ -552,7 +570,7 @@
 	item_state = "shard-glass"
 	flags = TABLEPASS | FPRINT
 	tool_flags = TOOL_CUTTING
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	force = 5.0
@@ -797,6 +815,10 @@
 				if (output_bar_from_item(M, 30, C.conductor.mat_id))
 					qdel(C)
 
+			else if (istype(M, /obj/item/raw_material/shard))
+				if (output_bar_from_item(M, 10))
+					qdel(M)
+
 			else if (istype(M, /obj/item/wizard_crystal))
 				if (output_bar_from_item(M))
 					qdel(M)
@@ -864,19 +886,43 @@
 
 		playsound(src.loc, sound_process, 40, 1)
 
+	proc/load_reclaim(obj/item/W as obj, mob/user as mob)
+		. = FALSE
+		if (istype(W,/obj/item/raw_material/) || istype(W,/obj/item/sheet/) || istype(W,/obj/item/rods/) || istype(W,/obj/item/tile/) || istype(W,/obj/item/cable_coil) || istype(W,/obj/item/wizard_crystal))
+			W.set_loc(src)
+			if (user) user.u_equip(W)
+			W.dropped()
+			. = TRUE
+
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (W.cant_drop) //For borg held items
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return ..()
-		if (istype(W,/obj/item/raw_material/) || istype(W,/obj/item/sheet/) || istype(W,/obj/item/rods/) || istype(W,/obj/item/tile/) || istype(W,/obj/item/cable_coil) || istype(W,/obj/item/wizard_crystal))
+		if (istype(W,/obj/item/storage/) || istype(W,/obj/item/satchel/))
+			var/obj/item/storage/S = W
+			var/obj/item/satchel/B = W
+			var/items = W
+			if(istype(S))
+				items = S.get_contents()
+			for(var/obj/item/O in items)
+				if (load_reclaim(O))
+					. = TRUE
+					if (istype(S))
+						S.hud.remove_object(O)
+			if (istype(B) && .)
+				B.satchel_updateicon()
+			//Users loading individual items would make an annoying amount of messages
+			//But loading a container is more noticable and there should be less
+			if (.)
+				user.visible_message("<b>[user.name]</b> loads [W] into [src].")
+				playsound(src, sound_load, 40, 1)
+
+		else if (load_reclaim(W, user))
 			boutput(user, "You load [W] into [src].")
-			W.set_loc(src)
-			user.u_equip(W)
-			W.dropped()
-			playsound(get_turf(src), sound_load, 40, 1)
+			playsound(src, sound_load, 40, 1)
+
 		else
-			..()
-			return
+			. = ..()
 
 	MouseDrop(over_object, src_location, over_location)
 		if(!isliving(usr))
@@ -976,11 +1022,11 @@
 			if(!istype(M, /obj/item/cable_coil))
 				if (!istype(M.material))
 					continue
-				if (!M.material.material_flags & MATERIAL_CRYSTAL || !M.material.material_flags & MATERIAL_METAL)
+				if (!(M.material.material_flags & MATERIAL_CRYSTAL) && !(M.material.material_flags & MATERIAL_METAL))
 					continue
 
 			M.set_loc(src)
-			playsound(get_turf(src), sound_load, 40, 1)
+			playsound(src, sound_load, 40, 1)
 			sleep(0.5)
 			if (user.loc != staystill) break
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")

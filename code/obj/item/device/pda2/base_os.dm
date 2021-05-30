@@ -691,7 +691,7 @@
 								return
 
 						else if (istype(target, /datum/computer/file/text))
-							if(!isnull(src.master.uplink) && src.master.uplink.active)
+							if(src.master.uplink?.active)
 								return
 							else
 								src.note = target:data

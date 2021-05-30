@@ -104,7 +104,7 @@
 	name = "syringe gun"
 	icon_state = "syringegun"
 	item_state = "syringegun"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
 	force = 4.0
@@ -160,6 +160,25 @@
 	New()
 		..()
 		src.emag_act()
+
+
+/obj/item/gun/reagent/syringe/love
+	name = "Love Gun"
+	icon_state = "syringegun-love"
+	item_state = "syringegun-love"
+	contraband = 1
+	capacity = 250
+	ammo_reagents = list("love", "hugs")
+	custom_reject_message = "This Gun was built for Love, not War!"
+
+	New()
+		..()
+		src.reagents.add_reagent("love", src.reagents.maximum_volume)
+
+
+obj/item/gun/reagent/syringe/love/plus // Sometimes you just need more love in your life.
+	name = "Love Gun Plus"
+	capacity = 1000
 
 
 /obj/item/gun/reagent/ecto

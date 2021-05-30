@@ -955,6 +955,7 @@
 
 	dark
 		fullbright = 0
+		luminosity = 1
 
 	lighted
 		fullbright = 1
@@ -1268,6 +1269,11 @@
 		if (src.ore)
 			src.ore.onHit(src)
 
+		var/datum/ore/event/E = src.event
+
+		if (E)
+			E.onHit(src)
+
 		if (difference <= 0)
 			destroy_asteroid()
 		else
@@ -1471,7 +1477,7 @@
 	icon_state = "pickaxe"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "pick"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	flags = ONBELT
 	force = 7
 	var/dig_strength = 1
@@ -1592,13 +1598,13 @@ obj/item/clothing/gloves/concussive
 				src.power_up()
 				item_state = "ppick1"
 				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_on.ogg", 50, 1)
+				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
 			else
 				boutput(user, "<span class='notice'>You power down [src].</span>")
 				src.power_down()
 				item_state = "ppick0"
 				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_off.ogg", 50, 1)
+				playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
 		else
 			boutput(user, "<span class='alert'>No charge left in [src].</span>")
 
@@ -1682,13 +1688,13 @@ obj/item/clothing/gloves/concussive
 				src.power_up()
 				item_state = "phammer1"
 				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_on.ogg", 50, 1)
+				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
 			else
 				boutput(user, "<span class='notice'>You power down [src].</span>")
 				src.power_down()
 				item_state = "phammer0"
 				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_off.ogg", 50, 1)
+				playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
 		else
 			boutput(user, "<span class='alert'>No charge left in [src].</span>")
 
@@ -1732,13 +1738,13 @@ obj/item/clothing/gloves/concussive
 				src.power_up()
 				item_state = "pshovel1"
 				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_on.ogg", 50, 1)
+				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
 			else
 				boutput(user, "<span class='notice'>You power down [src].</span>")
 				src.power_down()
 				item_state = "pshovel0"
 				user.update_inhands()
-				playsound(user.loc, "sound/items/miningtool_off.ogg", 50, 1)
+				playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
 		else
 			boutput(user, "<span class='alert'>No charge left in [src].</span>")
 
@@ -1767,7 +1773,7 @@ obj/item/clothing/gloves/concussive
 	name = "concussive charge"
 	desc = "It is set to detonate in 5 seconds."
 	flags = ONBELT
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/emagged = 0
 	var/hacked = 0
 	expl_devas = 0
@@ -1881,7 +1887,7 @@ obj/item/clothing/gloves/concussive
 		for(var/mob/living/carbon/C in range(src.expl_flash, src))
 			if (!isdead(C) && C.client) shake_camera(C, 3, 2)
 			if(get_dist(src,C) <= src.expl_light)
-				C.changeStatus("stunned", 80)
+				C.changeStatus("stunned", 8 SECONDS)
 				C.changeStatus("weakened", 10 SECONDS)
 				C.stuttering += 15
 				boutput(C, "<span class='alert'>The concussive blast knocks you off your feet!</span>")
@@ -1898,7 +1904,7 @@ obj/item/clothing/gloves/concussive
 	var/maximum_charges = 8
 	var/robocharge = 250
 	var/target = null
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	flags = ONBELT
 	mats = 4
 
@@ -2043,7 +2049,7 @@ obj/item/clothing/gloves/concussive
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "minanal"
 	flags = ONBELT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
 		mining_scan(get_turf(user), user, 6)
@@ -2107,7 +2113,7 @@ obj/item/clothing/gloves/concussive
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "minanal"
 	flags = ONBELT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
 		boutput(user, "The screen is clearly painted on. When you press Scan, a short metal spike extends from the top and sparks brightly before retracting again.")
@@ -2315,7 +2321,7 @@ var/global/list/cargopads = list()
 	icon_state = "scoop"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "buildpipe"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	mats = 6
 	var/obj/item/satchel/mining/satchel = null
 

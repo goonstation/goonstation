@@ -16,7 +16,7 @@ PIPE BOMBS + CONSTRUCTION
 	var/det_time = 30
 	var/org_det_time = 30
 	var/alt_det_time = 60
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	icon = 'icons/obj/items/grenade.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "banana"
@@ -696,7 +696,7 @@ PIPE BOMBS + CONSTRUCTION
 	var/sound_beep = 'sound/machines/twobeep.ogg'
 
 	proc/detonate()
-		playsound(src.loc, sound_explode, 100, 1)
+		playsound(src.loc, sound_explode, 45, 1)
 
 		var/obj/effects/explosion/E = new /obj/effects/explosion(src.loc)
 		E.fingerprintslast = src.fingerprintslast
@@ -726,7 +726,7 @@ PIPE BOMBS + CONSTRUCTION
 
 	proc/playbeep(var/atom/source, i as num, sound)
 		var/soundin = sound
-		var/vol = 100
+		var/vol = 40
 
 		var/sound/S = sound(soundin)
 		S.frequency = 32000 + ((10-i)*4000)
@@ -885,7 +885,7 @@ PIPE BOMBS + CONSTRUCTION
 	throwforce = 1.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/det_time = 20
 	stamina_damage = 5
 	stamina_cost = 5
@@ -1051,7 +1051,7 @@ PIPE BOMBS + CONSTRUCTION
 	icon_state = "bcharge"
 	var/state = null
 	var/det_time = 50.0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "flashbang"
 	throw_speed = 4
 	throw_range = 20
@@ -1156,7 +1156,7 @@ PIPE BOMBS + CONSTRUCTION
 	name = "Thermite Breaching Charge"
 	desc = "When applied to a wall, causes a thermite reaction which totally destroys it."
 	flags = ONBELT
-	w_class = 1
+	w_class = W_CLASS_TINY
 	expl_range = 2
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -1488,7 +1488,7 @@ PIPE BOMBS + CONSTRUCTION
 
 		if (sound_effect)
 			SPAWN_DBG(4 SECONDS) //you can use a sound effect to hold a bomb in hand and throw it at the very last moment!
-				playsound(get_turf(src), sound_effect, 50, 1)
+				playsound(src, sound_effect, 50, 1)
 		SPAWN_DBG(5 SECONDS)
 			do_explode()
 
@@ -1582,7 +1582,7 @@ PIPE BOMBS + CONSTRUCTION
 							boutput(M, "<span class='alert'>You suddenly teleport ...</span>")
 							M.set_loc(warp_to)
 			if (rcd)
-				playsound(get_turf(src), "sound/items/Deconstruct.ogg", 70, 1)
+				playsound(src, "sound/items/Deconstruct.ogg", 70, 1)
 				for (var/turf/T in view(rcd,src.loc))
 					if (istype(T, /turf/space))
 						var/turf/simulated/floor/F = T:ReplaceWithFloor()

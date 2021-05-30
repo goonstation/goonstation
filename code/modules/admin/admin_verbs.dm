@@ -335,6 +335,8 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_disco_lights,
 		/client/proc/cmd_blindfold_monkeys,
 		/client/proc/cmd_swampify_station,
+		/client/proc/cmd_trenchify_station,
+		/client/proc/cmd_special_shuttle,
 
 		/datum/admins/proc/toggleaprilfools,
 		/client/proc/cmd_admin_pop_off_all_the_limbs_oh_god,
@@ -438,9 +440,6 @@ var/list/admin_verbs = list(
 		/client/proc/spawn_dbg,
 #elif defined(ENABLE_SPAWN_DEBUG_2)
 		/client/proc/spawn_dbg,
-#endif
-#ifdef INCLUDE_BUGGY_LUA_SHIT
-		/client/proc/RunLuaString,
 #endif
 		),
 
@@ -1919,6 +1918,8 @@ var/list/fun_images = list()
 	var/lose_value = input("Enter new lose value.") as num
 	world.save_intra_round_value("nukie_loss", lose_value)
 
+	world.save_intra_round_value("nukie_last_reset", world.realtime)
+
 	logTheThing("admin", usr ? usr : src, null, "set nuke ops values to [win_value] wins and [lose_value] loses.")
 	logTheThing("diary", usr ? usr : src, null, "set nuke ops values to [win_value] wins and [lose_value] loses.", "admin")
 	message_admins("[key_name(usr ? usr : src)] set nuke ops values to [win_value] wins and [lose_value] loses.")
@@ -1990,6 +1991,8 @@ var/list/fun_images = list()
 			C.cmd_admin_delete(A)
 		if("Copy Here")
 			semi_deep_copy(A, src.loc)
+		if("Ship to Cargo")
+			C.cmd_admin_ship_movable_to_cargo(A)
 
 		if("Player Options")
 			C.cmd_admin_playeropt(A)
@@ -2063,8 +2066,8 @@ var/list/fun_images = list()
 		message_admins("Error while adding ckey [vpnckey] to the VPN whitelist: [e.name]")
 		return 0
 	global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
-	message_admins("Ckey [vpnckey] added to the VPN whitelist.")
-	logTheThing("admin", null, null, "Ckey [vpnckey] added to the VPN whitelist.")
+	message_admins("Ckey [vpnckey] added to the VPN whitelist by [src.key].")
+	logTheThing("admin", src, null, "Ckey [vpnckey] added to the VPN whitelist.")
 	return 1
 
 /client/proc/vpn_whitelist_remove(vpnckey as text)
@@ -2076,6 +2079,6 @@ var/list/fun_images = list()
 	catch(var/exception/e)
 		message_admins("Error while removing ckey [vpnckey] from the VPN whitelist: [e.name]")
 		return 0
-	message_admins("Ckey [vpnckey] removed from the VPN whitelist.")
-	logTheThing("admin", null, null, "Ckey [vpnckey] removed from the VPN whitelist.")
+	message_admins("Ckey [vpnckey] removed from the VPN whitelist by [src.key].")
+	logTheThing("admin", src, null, "Ckey [vpnckey] removed from the VPN whitelist.")
 	return 1

@@ -254,6 +254,9 @@
 		return
 
 	attack_hand(mob/user as mob)
+		if(!isadmin(user) || current_state < GAME_STATE_FINISHED)
+			boutput(user, "<span class='alert'>This dispenser is too powerful for you!</span>")
+			return
 		panel()
 
 	proc/panel()

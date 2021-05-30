@@ -1,5 +1,5 @@
 /obj/item/noisemaker
-	name = "Sound Synthesiser"
+	name = "sound synthesizer"
 	desc = "Either the most awesome or most annoying thing in the universe, depending on which side of it you're on."
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "bike_horn"

@@ -123,17 +123,18 @@
 
 	var/trigger_when_no_match = 1
 
+	proc/get_next_dir()
+		for(var/atom/movable/AM in src.loc)
+			if(AM.anchored || AM == src) continue
+			if(AM.delivery_destination)
+				if(destinations.Find(AM.delivery_destination))
+					return destinations[AM.delivery_destination]
+		return null
+
 	proc/activate()
 		if(operating || !isturf(src.loc)) return
 
-		var/next_dest = null
-
-		for(var/atom/movable/AM in src.loc)
-			if(AM.anchored || AM == src) continue
-			if(AM.delivery_destination && !next_dest)
-				if(destinations.Find(AM.delivery_destination))
-					next_dest = destinations[AM.delivery_destination]
-					break
+		var/next_dest = src.get_next_dir()
 
 		if(next_dest)
 			src.set_dir(next_dest)
@@ -188,6 +189,10 @@
 
 		return_if_overlay_or_effect(A)
 		activate()
+
+/obj/machinery/cargo_router/random
+	get_next_dir()
+		return src.destinations[pick(src.destinations)]
 
 /obj/machinery/cargo_router/exampleRouter
 	New()
@@ -357,8 +362,8 @@
 
 		if (href_list["print"] && !printing)
 			printing = 1
-			playsound(src.loc, "sound/machines/printer_thermal.ogg", 50, 0)
-			sleep(2.8 SECONDS)
+			playsound(src.loc, "sound/machines/printer_cargo.ogg", 75, 0)
+			sleep(1.75 SECONDS)
 			var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)
 			var/dest = strip_html(href_list["print"], 64)
 			B.name = "Barcode Sticker ([dest])"

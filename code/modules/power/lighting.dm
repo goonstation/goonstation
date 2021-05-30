@@ -135,7 +135,7 @@
 				var/turf/T = null
 				for (var/dir in cardinal)
 					T = get_step(src,dir)
-					if (istype(T,/turf/simulated/wall) || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))
+					if (istype(T,/turf/simulated/wall) || istype(T,/turf/unsimulated/wall) || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))
 						var/is_jen_wall = 0 // jen walls' ceilings are narrower, so let's move the lights a bit further inward!
 						if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
 							is_jen_wall = 1
@@ -161,8 +161,8 @@
 
 
 //big standing lamps
-/obj/machinery/light/blamp
-	name = "big lamp"
+/obj/machinery/light/flamp
+	name = "floor lamp"
 	icon = 'icons/obj/lighting.dmi'
 	desc = "A tall and thin lamp that rests comfortably on the floor."
 	anchored = 1
@@ -171,7 +171,8 @@
 	fitting = "bulb"
 	brightness = 1.4
 	var/state
-	icon_state = "blamp1-off"
+	base_state = "flamp"
+	icon_state = "flamp1"
 	wallmounted = 0
 
 //regular light bulbs
@@ -782,6 +783,8 @@
 		else
 			prot = 1
 
+		if (!in_interact_range(src, user))
+			return
 		if (prot > 0 || user.is_heat_resistant())
 			boutput(user, "You remove the light [fitting].")
 		else
@@ -939,7 +942,7 @@
 	flags = FPRINT | TABLEPASS
 	force = 2
 	throwforce = 5
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/light_status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/breakprob = 0	// number of times switched

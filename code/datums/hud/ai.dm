@@ -126,7 +126,7 @@
 				tracking.maptext = ""
 
 
-	clicked(id, mob/user, list/params)
+	relay_click(id, mob/user, list/params)
 		switch (id)
 			if ("health")
 				//output health info

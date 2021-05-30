@@ -103,6 +103,7 @@ var/global
 	"Animated Rainbow" = 'icons/cursors/target/rainbowanimated.dmi',
 	"Flashing" = 'icons/cursors/target/flashing.dmi',
 	"Minimalistic" = 'icons/cursors/target/minimalistic.dmi',
+	"Flat" = 'icons/cursors/target/flat.dmi',
 	"Small" = 'icons/cursors/target/small.dmi')
 
 	list/hud_style_selection = list("New" = 'icons/mob/hud_human_new.dmi',
@@ -131,6 +132,7 @@ var/global
 	"Balding" = "balding",
 	"Bangs" = "bangs",
 	"Bieber" = "bieb",
+	"Bloom" = "bloom",
 	"Bobcut" = "bobcut",
 	"Bobcut Alt" = "baum_s",
 	"Bowl Cut" = "bowl",
@@ -147,6 +149,7 @@ var/global
 	"Emo" = "emo",
 	"Emo: Highlight" = "emoH",
 	"Flat Top" = "flattop",
+	"Floof" = "floof",
 	"Hair Streak" = "streak",
 	"Mohawk" = "mohawk",
 	"Mohawk: Fade from End" = "mohawkFT",
@@ -157,12 +160,18 @@ var/global
 	"Pompadour" = "pomp",
 	"Pompadour: Greaser Shine" = "pompS",
 	"Punky Flip" = "shortflip",
+	"Spiky" = "spiky",
+	"Subtle Spiky" = "subtlespiky",
 	"Temsik" = "temsik",
 	"Tonsure" = "tonsure",
 	"Trimmed" = "short",
+	"Tulip" = "tulip",
+	"Visual" = "visual",
 	/*Long*/
 	"Bang: Left" = "chub2_s",
 	"Bang: Right" = "chub_s",
+	"Two Bangs: Long" = "2bangs_long",
+	"Two Bangs: Short" = "2bangs_short",
 	"Bedhead" = "bedhead",
 	"Disheveled" = "disheveled",
 	"Double-Part" = "doublepart",
@@ -187,7 +196,10 @@ var/global
 	"Shoulder Drape" = "pulledf",
 	"Shoulder-Length" = "shoulderl",
 	"Shoulder-Length Mess" = "slightlymessy_s",
+	"Smooth Waves" = "smoothwave",
+	"Smooth Waves: Faded" = "smoothwave_fade",
 	"Mermaid" = "mermaid",
+	"Mermaid: Faded" = "mermaidfade",
 	"Mid-Back Length" = "midb",
 	"Mid-Length Curl" = "bluntbangs_s",
 	"Very Long" = "vlong",
@@ -201,6 +213,7 @@ var/global
 	"Fun Bun" = "fun_bun",
 	"High Flat Top" = "charioteers",
 	"High Ponytail" = "spud",
+	"Long Mini Tail" = "longtailed",
 	"Low Pigtails" = "lowpig",
 	"Low Ponytail" = "band",
 	"Mini Pigtails" = "minipig",
@@ -229,6 +242,7 @@ var/global
 	"Goatee" = "gt",
 	"Hipster" = "hip",
 	"Long Beard" = "longbeard",
+	"Long Beard: Faded" = "longbeardfade",
 	"Motley" = "motley",
 	"Neckbeard" = "neckbeard",
 	"Puffy Beard" = "puffbeard",
@@ -582,6 +596,11 @@ var/global
 	antag_blob = image('icons/mob/antag_overlays.dmi', icon_state = "blob")
 	antag_wrestler = image('icons/mob/antag_overlays.dmi', icon_state = "wrestler")
 	antag_spy_theft = image('icons/mob/antag_overlays.dmi', icon_state = "spy_thief")
+
+	pod_wars_NT = image('icons/mob/antag_overlays.dmi', icon_state = "nanotrasen")
+	pod_wars_NT_CMDR = image('icons/mob/antag_overlays.dmi', icon_state = "nanocomm")
+	pod_wars_SY = image('icons/mob/antag_overlays.dmi', icon_state = "syndicate")
+	pod_wars_SY_CMDR = image('icons/mob/antag_overlays.dmi', icon_state = "syndcomm")
 
 	//SpyGuy: Oh my fucking god the QM shit. *cry *wail *sob *weep *vomit *scream
 	list/datum/supply_packs/qm_supply_cache = list()

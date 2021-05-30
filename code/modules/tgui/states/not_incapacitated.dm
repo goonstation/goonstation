@@ -26,8 +26,4 @@ var/global/datum/ui_state/tgui_not_incapacitated_state/tgui_not_incapacitated_tu
 		return UI_CLOSE
 	if(!can_act(user) || (turf_check && !isturf(user.loc)))
 		return UI_DISABLED
-	if(isliving(user))
-		var/mob/living/L = user
-		if(L.lying)
-			return UI_DISABLED
 	return UI_INTERACTIVE

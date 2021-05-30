@@ -292,6 +292,7 @@
 		// we really need to fix this or it'll be some kinda weird inf loop shit
 		low_priority_jobs += "Staff Assistant"
 	for (var/mob/new_player/player in unassigned)
+		if(!player?.mind) continue
 		logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [player] given a low priority role")
 		player.mind.assigned_role = pick(low_priority_jobs)
 		logTheThing("debug", player, null, "assigned job: [player.mind.assigned_role]")
@@ -342,6 +343,13 @@
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
+
+		//remove problem traits from people on pod_wars
+		if (istype(ticker.mode, /datum/game_mode/pod_wars))
+			H.traitHolder.removeTrait("immigrant")
+			H.traitHolder.removeTrait("pilot")
+			H.traitHolder.removeTrait("puritan")
+
 		H.Equip_Job_Slots(JOB)
 
 	var/possible_new_mob = JOB.special_setup(src, no_special_spawn) //If special_setup creates a new mob for us, it should return the new mob!
@@ -547,7 +555,7 @@
 	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
 		trinket = new/obj/item/clothing/head/NTberet(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))
-		var/picked = pick(childrentypesof(/obj/item/clothing/head) - (typesof(/obj/item/clothing/head/bighat))) //IM A MONSTER DONT LOOK AT ME. NOOOOOOOOOOO
+		var/picked = pick(childrentypesof(/obj/item/clothing/head) - (typesof(/obj/item/clothing/head/bighat)) - (typesof(/obj/item/clothing/head/helmet/space/syndicate))) //IM A MONSTER DONT LOOK AT ME. NOOOOOOOOOOO
 		trinket = new picked(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("conspiracytheorist"))
 		trinket = new/obj/item/clothing/head/tinfoil_hat

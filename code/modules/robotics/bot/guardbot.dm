@@ -1917,44 +1917,49 @@
 //Buddy handcuff bar thing
 /datum/action/bar/icon/buddy_cuff
 	duration = 30 // zippy zipcuffs
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	interrupt_flags = INTERRUPT_MOVE
 	id = "buddy_cuff"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
 	var/obj/machinery/bot/guardbot/master
 	var/datum/computer/file/guardbot_task/security/task
 
-	New(var/the_bot, var/the_task)
+	New(the_bot, the_task)
 		src.master = the_bot
 		src.task = the_task
 		..()
 
 	onUpdate()
 		..()
-		if (!master || !master.on || master.idle || master.stunned || !IN_RANGE(master, task.arrest_target, 1) || !task.arrest_target || task.arrest_target.hasStatus("handcuffed") || master.moving)
+		if (src.failchecks())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		task.cuffing = 1
-		if (!master || !master.on || master.idle || master.stunned || !IN_RANGE(master, task.arrest_target, 1) || !task.arrest_target || task.arrest_target.hasStatus("handcuffed") || master.moving)
+		if (src.failchecks())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		playsound(master, "sound/weapons/handcuffs.ogg", 30, 1, -2)
 		master.visible_message("<span class='alert'><B>[master] is trying to put handcuffs on [task.arrest_target]!</B></span>")
 
-	onInterrupt()
-		..()
-		task.cuffing = 0
+	onInterrupt(flag)
+		. = ..(flag)
+		if (task.arrest_target?.hasStatus("handcuffed"))
+			task.drop_arrest_target()
 
 	onEnd()
 		..()
-		if (!master || !master.on || master.idle || master.stunned || !IN_RANGE(master, task.arrest_target, 1) || !task.arrest_target || task.arrest_target.hasStatus("handcuffed") || master.moving)
+		if (src.failchecks())
+			// One of the possible failed checks is that they're cuffed so
+			// we can stop trying to arrest them.
+			if (task.arrest_target?.hasStatus("handcuffed"))
+				task.drop_arrest_target()
+
 			return
 
-		if (task.arrest_target.hasStatus("handcuffed") || !isturf(task.arrest_target.loc))
+		if (!isturf(task.arrest_target.loc))
 			task.drop_arrest_target()
 			return
 
@@ -1978,8 +1983,6 @@
 			var/arrest_message = pick(task.arrested_messages)
 			master.speak(arrest_message)
 
-		task.cuffing = 0
-
 		var/bot_location = get_area(master)
 		var/last_target = task.arrest_target
 		var/turf/LT_loc = get_turf(last_target)
@@ -2000,6 +2003,13 @@
 		if(transmit_connection != null)
 			transmit_connection.post_signal(master, pdaSignal)
 
+	/// Interrupts the action if the bot cant (or shouldnt be able to) continue cuffing
+	proc/failchecks()
+		if (!master || !master.on || master.idle || master.stunned || master.moving)
+			return 1
+		if (!IN_RANGE(master, task.arrest_target, 1) || !task.arrest_target || task.arrest_target.hasStatus("handcuffed"))
+			return 1
+
 //Robot tools.  Flash boards, batons, etc
 /obj/item/device/guardbot_tool
 	name = "Tool module"
@@ -2007,7 +2017,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "tool_generic"
 	mats = 6
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/is_stun = 0 //Can it be non-lethal?
 	var/is_lethal = 0 //Can it be lethal?
 	var/tool_id = "GENERIC" //Identification ID.
@@ -2302,7 +2312,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "tool_generic"
 	mats = 6
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/tool_id = "MOD"
 	is_syndicate = 1
 
@@ -2697,7 +2707,6 @@
 		var/list/target_names = list() //Dudes we are preprogrammed to arrest.
 		var/tmp/mode = 0 //0: Patrol, 1: Arresting somebody
 		var/tmp/arrest_attempts = 0
-		var/tmp/cuffing = 0
 		var/tmp/last_cute_action = 0
 
 		var/weapon_access = access_carrypermit //These guys can use guns, ok!
@@ -2809,42 +2818,47 @@
 
 					if(!master.moving)
 						find_patrol_target()
+				/*
+				Hunt and arrest mode. Like an angry secbot, but cuter and sometimes has a gun
+				Script should go as follows:
+					Check if the bot is cuffing someone, and don't do anything else if they are (otherwise they just stunlock people like dorks)
+					Check if the bot has a valid target (living, and not dead, and also existing) Done second since the cuffbar implies it has a target already
+					Check if the bot can see the target.
+						If it can, shoot them, then check if they're in cuffing range.
+							If in cuffing range, cuff em, then stand still until they're done.
+							If not, go after them!
+						If it can't, go after them! And get a little frustrated too.
+				*/
 				if(1)
-					if(!arrest_target || !master.tool)
-						src.mode = 0
+					// First, check if we're already cuffing someone. Quit getting sidetracked, you scatterbrained rectangles
+					if(actions.hasAction(src.master, "buddy_cuff"))
 						return
 
-					if(arrest_target)
+					// Next check if they have someone to arrest, and that they're alive. And that they're living.
+					if(!src.arrest_target || !isliving(src.arrest_target) || isdead(src.arrest_target))
+						src.mode = 0
+						src.drop_arrest_target()
+						return // target doesnt exist, is a ghost, or has given up the ghost
 
-						if(!(arrest_target in view(7,master)) && !master.moving)
-							//qdel(master.mover)
-							master.frustration += 2
-							if (master.mover)
-								master.mover.master = null
-								master.mover = null
-							master.navigate_to(arrest_target,ARREST_DELAY, 0, 0)
-							return
+					// Can we /see/ them?
+					if(src.arrest_target in view(7,get_turf(master)))
+						// Shoot them!
+						master.bot_attack(arrest_target, src.lethal)
+					else
+						// Otherwise get frustrated
+						master.frustration += 2
 
-						else
-							var/targdist = get_dist(master, arrest_target)
-							if((targdist <= 1) || master.tool && master.tool.is_gun || master.budgun || (master.tool == /obj/item/device/guardbot_tool/gun))	// If you have a gun, USE IT AAA
-								if (!isliving(arrest_target) || isdead(arrest_target))
-									mode = 0
-									drop_arrest_target()
-									return
-
-								master.bot_attack(arrest_target, src.lethal)
-								if(targdist <= 1 && !cuffing && (arrest_target.getStatusDuration("weakened") || arrest_target.getStatusDuration("stunned")))
-									actions.start(new/datum/action/bar/icon/buddy_cuff(src.master, src), src.master)
-									return
-							if(!master.path || !master.path.len || (4 < get_dist(arrest_target,master.path[master.path.len])) )
-								master.moving = 0
-								//master.current_movepath = "HEH" //Stop any current movement.
-								master.navigate_to(arrest_target,ARREST_DELAY, 0,0)
-
-					return
-
-			return
+					// Right up against them? Book em!
+					if(IN_RANGE(src.master, src.arrest_target, 1) && is_incapacitated(src.arrest_target))
+						actions.start(new/datum/action/bar/icon/buddy_cuff(src.master, src), src.master)
+					// Otherwise, go get them!
+					else
+						if (master.mover)
+							master.mover.master = null
+							master.mover = null
+						master.moving = 0
+						master.navigate_to(arrest_target,ARREST_DELAY, 0, 0)
+						//master.current_movepath = "HEH" //Stop any current movement.
 
 		task_input(input)
 			if(..()) return 1
@@ -2860,14 +2874,14 @@
 						src.arrest_target = null
 						src.last_found = world.time
 					src.arrest_attempts = 0
-					src.cuffing = 0
+					actions.stopId("buddy_cuff", src.master)
 
 					return 1
 
 				if("path_error","path_blocked")
 					src.arrest_attempts++
 					if(src.arrest_attempts >= 2)
-						src.cuffing = 0
+						actions.stopId("buddy_cuff", src.master)
 						src.target = null
 						if(arrest_target)
 							src.arrest_target = null
@@ -3070,7 +3084,7 @@
 			drop_arrest_target()
 				src.arrest_target = null
 				src.last_found = world.time
-				src.cuffing = 0
+				actions.stopId("buddy_cuff", src.master)
 				src.master.frustration = 0
 				master.set_emotion()
 				return
@@ -3314,7 +3328,6 @@
 		var/tmp/mob/living/carbon/arrest_target = null
 		var/tmp/arrest_attempts = 0
 		var/tmp/follow_attempts = 0
-		var/tmp/cuffing = 0
 		var/tmp/mode = 0 //0: Following protectee, 1: Arresting threat
 
 		var/lethal = 0 //Do we use lethal force (if possible) ?
@@ -3393,7 +3406,7 @@
 					src.protected = null
 					src.arrest_attempts = 0
 					src.follow_attempts = 0
-					src.cuffing = 0
+					actions.stopId("buddy_cuff", src.master)
 				if("path_error","path_blocked")
 
 					if (src.protected)
@@ -3457,7 +3470,7 @@
 
 			drop_arrest_target()
 				src.arrest_target = null
-				src.cuffing = 0
+				actions.stopId("buddy_cuff", src.master)
 				return
 
 			check_buddy()
@@ -4144,7 +4157,7 @@
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddy_core-6"
 	mats = 6
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/created_default_task = null //Default task path of result
 	var/datum/computer/file/guardbot_task/created_model_task = null
 	var/created_name = "Guardbuddy" //Name of resulting guardbot
@@ -4984,7 +4997,7 @@
 
 			W.set_loc(src)
 			src.created_cell = W
-			src.stage = 3
+			src.stage = 2
 			src.icon_state = "goldbuddy_frame-[buddy_model]-2"
 			boutput(user, "You add the power cell to [src]!")
 
@@ -5100,7 +5113,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "coin"
 	item_state = "coin"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
 		playsound(src.loc, "sound/items/coindrop.ogg", 100, 1)

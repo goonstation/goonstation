@@ -389,7 +389,10 @@ datum
 				. = ..()
 				if(!volume_passed)
 					return
+				volume_passed = clamp(volume_passed, 0, 10)
+
 				if(method == TOUCH)
+					. = 0
 					M.HealDamage("All", volume_passed * 1.5, volume_passed * 1.5)
 					if (isliving(M))
 						var/mob/living/H = M
@@ -595,9 +598,9 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(M.getStatusDuration("radiation") && prob(80))
-					M.changeStatus("radiation", -20 * mult, 1)
+					M.changeStatus("radiation", -2 SECONDS * mult, 1)
 				if(M.getStatusDuration("n_radiation") && prob(80))
-					M.changeStatus("n_radiation", -20 * mult, 1)
+					M.changeStatus("n_radiation", -2 SECONDS * mult, 1)
 
 				M.take_toxin_damage(-0.5 * mult)
 				M.HealDamage("All", 0, 0, 0.5 * mult)
@@ -653,7 +656,7 @@ datum
 					if (M.health < -5 && M.health > -30)
 						M.HealDamage("All", 1 * mult, 1 * mult, 1 * mult)
 				if(M.getStatusDuration("radiation") && prob(30))
-					M.changeStatus("radiation", -20 * mult, 1)
+					M.changeStatus("radiation", -2 SECONDS * mult, 1)
 				if (prob(5))
 					M.take_toxin_damage(1 * mult)
 				..()
@@ -861,11 +864,11 @@ datum
 				if (severity == 1) //lesser
 					if (effect <= 2)
 						M.visible_message("<span class='alert'>[M] coughs up a lot of blood!</span>")
-						playsound(get_turf(M), "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+						playsound(M, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
 						bleed(M, rand(5,10) * mult, 3 * mult)
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'>[M] coughs up a little blood!</span>")
-						playsound(get_turf(M), "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+						playsound(M, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
 						bleed(M, rand(1,2) * mult, 1 * mult)
 				else if (severity == 2) // greater
 					if (effect <= 2)
@@ -881,11 +884,11 @@ datum
 							H.set_clothing_icon_dirty()
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'>[M] coughs up a lot of blood!</span>")
-						playsound(get_turf(M), "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+						playsound(M, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
 						bleed(M, rand(5,10) * mult, 3 * mult)
 					else if (effect <= 8)
 						M.visible_message("<span class='alert'>[M] coughs up a little blood!</span>")
-						playsound(get_turf(M), "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+						playsound(M, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
 						bleed(M, rand(1,2) * mult, 1 * mult)
 
 		medical/proconvertin // old name for factor VII, which is a protein that causes blood to clot. this stuff is seemingly just used for people with hemophilia but this is ss13 so let's give it to everybody who's bleeding a little, it's fine.
@@ -945,7 +948,7 @@ datum
 						L.emote("cough")
 					else if (severity > 1 && prob(50))
 						L.visible_message("<span class='alert'>[L] coughs up a little blood!</span>")
-						playsound(get_turf(L), "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+						playsound(L, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
 						bleed(L, rand(2,8) * mult, 3 * mult)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -999,8 +1002,10 @@ datum
 				. = ..()
 				if (!volume_passed)
 					return
+				volume_passed = clamp(volume_passed, 0, 10)
 
 				if (method == TOUCH)
+					. = 0
 					M.HealDamage("All", 0, volume_passed)
 
 					var/silent = 0
@@ -1144,7 +1149,7 @@ datum
 				for (var/reagent_id in M.reagents.reagent_list)
 					if (reagent_id != id)
 						M.reagents.remove_reagent(reagent_id, 4 * mult)
-				M.changeStatus("radiation", -70, 1)
+				M.changeStatus("radiation", -7 SECONDS, 1)
 				if (M.get_toxin_damage() && prob(75))
 					M.take_toxin_damage(-4 * mult)
 					M.HealDamage("All", 0, 0, 2 * mult)
@@ -1224,7 +1229,9 @@ datum
 					return
 				if(!isliving(M)) // fucking human shitfucks
 					return
+				volume_passed = clamp(volume_passed, 0, 10)
 				if(method == TOUCH)
+					. = 0
 					M.HealDamage("All", volume_passed, 0)
 					// M.HealBleeding(volume_passed) // At least implement your stuff properly first, thanks. Styptic also shouldn't be as good as synthflesh for healing bleeding.
 
@@ -1248,8 +1255,9 @@ datum
 							silent = 1
 
 					if (!silent)
-						boutput(M, "<span class='notice'>The styptic powder stings like hell as it closes some of your wounds.</span>")
-						M.emote("scream")
+						if(!ON_COOLDOWN(M, "styptic screaming", 3 SECONDS))
+							boutput(M, "<span class='notice'>The styptic powder stings like hell as it closes some of your wounds.</span>")
+							M.emote("scream")
 					M.UpdateDamageIcon()
 				else if(method == INGEST)
 					boutput(M, "<span class='alert'>You feel gross!</span>")
@@ -1302,7 +1310,6 @@ datum
 						if (H.organHolder)
 							H.organHolder.heal_organs(2*mult, 2*mult, 2*mult, target_organs)
 
-				if(prob(25)) M.UpdateDamageIcon() // gonna leave this one on for now, but only call it a quarter of the time
 				..()
 
 		medical/atropine // COGWERKS CHEM REVISION PROJECT. i dunno what the fuck this would be, probably something bad. maybe atropine?

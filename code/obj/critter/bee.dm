@@ -45,7 +45,7 @@
 	"butt-nc","butt-plant","butt-cyber","purplebutt","santa","yellow","blue","red","green","black","white",
 	"psyche","wizard","wizardred","wizardpurple","witch","obcrown","macrown","safari","viking","dolan",
 	"camhat","redcamhat","mailcap","paper","policehelm","bikercap","apprentice","chavcap","flatcap","ntberet",
-	"captain-fancy","rank-fancy","mime_beret","mime_bowler","buckethat")
+	"captain-fancy","rank-fancy","mime_beret","mime_bowler","buckethat", "syndicate_top", "syndicate_top_biggest")
 
 	var/sleep_y_offset = 5 // this amount removed from the hat's pixel_y on sleep or death
 	var/hat_y_offset = 0
@@ -253,7 +253,7 @@
 				src.attacking = 0
 			return
 
-		src.visible_message("<span class='alert'><B>[src]</B> bites [M] with its [pick("tiny","eeny-weeny","minute","little", "nubby")] [prob(50) ? "mandibles" : "bee-teeth"]!</span>")
+		src.visible_message("<span class='alert'><B>[src]</B> bites [M] with its [pick("tiny","eeny-weeny","minute","little", "nubby")] [prob(50) ? "mandibles" : "bee-teeth"]!</span>", group = "beeattack")
 		logTheThing("combat", src.name, M, "bites [constructTarget(M,"combat")]")
 		random_brute_damage(M, 2, 1)
 		if (isliving(M))
@@ -276,7 +276,7 @@
 		if (M.stat || M.getStatusDuration("paralysis"))
 			src.task = "thinking"
 			return
-		src.visible_message("<span class='alert'><B>[src]</B> pokes [M] with its [pick("nubby","stubby","tiny")] little stinger!</span>")
+		src.visible_message("<span class='alert'><B>[src]</B> pokes [M] with its [pick("nubby","stubby","tiny")] little stinger!</span>", group = "beeattack")
 		logTheThing("combat", src.name, M, "stings [constructTarget(M,"combat")]")
 		if (isliving(M))
 			var/mob/living/H = M
@@ -489,6 +489,38 @@
 
 		src.hat = ourHat
 
+		// TIME. FOR. CRIME.
+		if (istype(src.hat, /obj/item/clothing/head/bighat/syndicate))
+			var/obj/item/clothing/head/bighat/syndicate/beeBigHat = src.hat
+			var/icon/workingIcon = new /icon(beeBigHat.wear_image_icon, beeBigHat.icon_state, SOUTH)
+
+			workingIcon.Shift(SOUTH, 5)
+
+			var/icon/leftIcon = new /icon()
+			leftIcon.Insert(workingIcon, "hat", SOUTH)
+			leftIcon.Insert(workingIcon, "hat", WEST)
+			leftIcon.Shift(WEST, 2)
+			hat_overlay_left = image(leftIcon, "hat")
+
+			var/icon/rightIcon = new /icon()
+			rightIcon.Insert(workingIcon, "hat", NORTH)
+			rightIcon.Insert(workingIcon, "hat", EAST)
+			rightIcon.Shift(WEST, 4)
+			hat_overlay_right = image(rightIcon, "hat")
+
+			// ANNOUNCE THE CRIME!
+
+			SPAWN_DBG(1 SECOND)
+				playsound(src.loc, "sound/vox/bees.ogg", 100, 1)
+				sleep(1 SECOND)
+				playsound(src.loc, "sound/vox/great.ogg", 100, 1)
+				sleep(1 SECOND)
+				playsound(src.loc, "sound/vox/at.ogg", 100, 1)
+				sleep(1 SECOND)
+				playsound(src.loc, "sound/vox/crime.ogg", 100, 1)
+
+			return
+
 		var/icon/newHatIcon = new /icon()
 		var/icon/workingIcon = new /icon(src.hat_icon, "bhat-[src.hat.icon_state]", SOUTH)
 		newHatIcon.Insert(workingIcon, "hat", SOUTH)
@@ -506,13 +538,13 @@
 			return
 
 		if (prob(dance_chance))
-			src.visible_message("<b>[src]</b> responds with a dance of its own!")
+			src.visible_message("<b>[src]</b> responds with a dance of its own!", group = "beedance")
 			src.dance()
 		else
 			if (istype(src, /obj/critter/domestic_bee/trauma))
 				src.visible_message("<b>[src]</b> buzzes in short-lived comfort.")
 			else
-				src.visible_message("<b>[src]</b> buzzes [pick("to the beat", "in tune", "approvingly", "happily")].")
+				src.visible_message("<b>[src]</b> buzzes [pick("to the beat", "in tune", "approvingly", "happily")].", group = "beedance")
 
 	proc/dance()
 		set waitfor = 0
@@ -796,15 +828,17 @@
 		/obj/item/clothing/head/mj_hat,
 		/obj/item/clothing/head/that,
 		/obj/item/clothing/head/NTberet,
-		/obj/item/clothing/head/helmet/HoS,
+		/obj/item/clothing/head/hos_hat,
 		/obj/item/clothing/head/hosberet,
 		/obj/item/clothing/head/caphat,
 		/obj/item/clothing/head/fancy/captain,
 		/obj/item/clothing/head/apprentice,
 		/obj/item/clothing/head/wizard,
 		/obj/item/clothing/head/wizard/red,
+		/obj/item/clothing/head/bighat/syndicate,
 		/obj/item/clothing/head/helmet/viking,
-		/obj/item/clothing/head/void_crown
+		/obj/item/clothing/head/void_crown,
+		/obj/item/clothing/head/bighat/syndicate/biggest
 	)
 
 	New()
@@ -1808,7 +1842,7 @@
 	desc = "A space-age cardboard carton designed to safely transport a single space bee egg."
 	icon = 'icons/misc/bee.dmi'
 	icon_state = "petbee_carton"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/ourEgg
 	var/open = 0
 

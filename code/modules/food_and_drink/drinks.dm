@@ -1,7 +1,7 @@
 
 // Drinks
 
-/obj/item/reagent_containers/food/drinks/bottle/red
+/obj/item/reagent_containers/food/drinks/bottle/soda/red
 	name = "Robust-Eez"
 	desc = "A carbonated robustness tonic. It has quite a kick."
 	label = "robust"
@@ -10,7 +10,7 @@
 	initial_volume = 50
 	initial_reagents = list("methamphetamine"=3,"VHFCS"=10,"cola"=17)
 
-/obj/item/reagent_containers/food/drinks/bottle/blue
+/obj/item/reagent_containers/food/drinks/bottle/soda/blue
 	name = "Grife-O"
 	desc = "The carbonated beverage of a space generation. Contains actual space dust!"
 	label = "grife"
@@ -18,7 +18,7 @@
 	initial_volume = 50
 	initial_reagents = list("radium"=3,"ephedrine"=6,"VHFCS"=10,"cola"=11)
 
-/obj/item/reagent_containers/food/drinks/bottle/pink
+/obj/item/reagent_containers/food/drinks/bottle/soda/pink
 	name = "Dr. Pubber"
 	desc = "The beverage of an original crowd. Tastes like an industrial tranquilizer."
 	label = "pubber"
@@ -26,7 +26,7 @@
 	initial_volume = 50
 	initial_reagents = list("haloperidol"=4,"morphine"=4,"VHFCS"=10,"cola"=12)
 
-/obj/item/reagent_containers/food/drinks/bottle/lime
+/obj/item/reagent_containers/food/drinks/bottle/soda/lime
 	name = "Lime-Aid"
 	desc = "Antihol mixed with lime juice. A well-known cure for hangovers."
 	label = "limeaid"
@@ -34,7 +34,7 @@
 	initial_volume = 50
 	initial_reagents = list("antihol"=20,"juice_lime"=20)
 
-/obj/item/reagent_containers/food/drinks/bottle/spooky
+/obj/item/reagent_containers/food/drinks/bottle/soda/spooky
 	name = "Spooky Dan's Runoff Cola"
 	desc = "A spoooky cola for Halloween!  Rumors that Runoff Cola contains actual industrial runoff are unsubstantiated."
 	label = "spooky"
@@ -42,7 +42,7 @@
 	initial_volume = 50
 	initial_reagents = list("chlorine"=5,"phosphorus"=5,"mercury"=5,"VHFCS"=10,"cola"=15)
 
-/obj/item/reagent_containers/food/drinks/bottle/spooky2
+/obj/item/reagent_containers/food/drinks/bottle/soda/spooky2
 	name = "Spooky Dan's Horrortastic Cola"
 	desc = "A terrifying Halloween soda.  It's especially frightening if you're diabetic."
 	label = "spooky"
@@ -50,7 +50,7 @@
 	initial_volume = 50
 	initial_reagents = list("ectoplasm"=10,"sulfur"=5,"VHFCS"=5,"cola"=20)
 
-/obj/item/reagent_containers/food/drinks/bottle/xmas
+/obj/item/reagent_containers/food/drinks/bottle/soda/xmas
 	name = "Happy Elf Hot Chocolate"
 	desc = "Surprising to see this here, in a world of corporate plutocrat lunatics."
 	label = "choco"
@@ -63,7 +63,7 @@
 			src.initial_reagents["grognardium"] = 5
 		..()
 
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater
 	name = "Decirprevo Bottled Water"
 	desc = "Bottled from our cool natural springs on Europa."
 	label = "water"
@@ -71,7 +71,7 @@
 	initial_volume = 50
 	initial_reagents = list("iodine"=5,"water"=45)
 
-/obj/item/reagent_containers/food/drinks/bottle/softsoft_pizza
+/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza
 	name = "Soft Soft Pizza"
 	desc = "Pizza so soft you can drink it!"
 	label= "pizza"
@@ -79,7 +79,7 @@
 	initial_volume = 50
 	initial_reagents = list("pizza" = 40, "salt" = 10)
 
-/obj/item/reagent_containers/food/drinks/bottle/grones
+/obj/item/reagent_containers/food/drinks/bottle/soda/grones
 	name = "Grones Soda "
 	desc = "They make all kinds of flavors these days, good lord."
 	label = "grones"
@@ -89,9 +89,9 @@
 	initial_reagents = list("cola"=20)
 
 	New()
-		switch(rand(1,12))
+		switch(rand(1,16))
 			if (1)
-				src.name += "Ballin' Banana Testicular Torsion flavor"
+				src.name += "Crunchy Kidney Stone Lemonade flavor"
 				src.initial_reagents["urine"] = 10
 			if (2)
 				src.name += "Radical Roadkill Rampage flavor"
@@ -126,9 +126,28 @@
 			if (12)
 				src.name += "Cool Keratin Rush flavor"
 				src.initial_reagents["hairgrownium"] = 10
+			if (13)
+				src.name += "Rancher's Rage Whole Chicken Dinner flavor" //by Splints/FireMoose
+				src.initial_reagents += (list("chickensoup"=10, "juice_cran"=5, "juice_carrot"=5, "mashedpotatoes"=3,
+				 "gravy"=2, "ether"=5))
+				src.label = "rancher"
+			if (14)
+				src.name += "Prismatic Rainbow Punch flavor" //by Genesse
+				src.initial_reagents += (list("sparkles"=10, "colors"=10, "space_drugs"=10))
+				src.label = "rainbow"
+			if (15)
+				src.name += "Hearty Hellburn Brew flavor" //by Eagletanker
+				src.initial_reagents += (list("oxygen"=18, "plasma"=8, "ghostchilijuice"=1, "carbon"=3))
+				src.desc = "9/10 Engineers prefered Grones Hearty Hellburn, find out why yourself!"
+				src.label = "engine"
+			if (16)
+				src.name += "Citrus Circus Catastrophe flavor" //by Coolvape
+				src.initial_reagents += (list("juice_lemon"=10, "juice_lime"=10, "honk_fart"=5, "honky_tonic"=5))
+				src.label = "clown"
+
 		..()
 
-/obj/item/reagent_containers/food/drinks/bottle/orange
+/obj/item/reagent_containers/food/drinks/bottle/soda/orange
 	name = "Orange-Aid"
 	desc = "A vitamin tonic that promotes good eyesight and health."
 	label = "orangeaid"
@@ -137,7 +156,7 @@
 	initial_volume = 50
 	initial_reagents = list("oculine"=20,"juice_orange"=20)
 
-/obj/item/reagent_containers/food/drinks/bottle/gingerale
+/obj/item/reagent_containers/food/drinks/bottle/soda/gingerale
 	name = "Delightful Dan's Ginger Ale"
 	desc = "Ginger ale is known for its soothing, healing, and beautifying properties. So claims this compostable, recycled, and eco-friendly paper label."
 	label = "gingerale"
@@ -146,7 +165,7 @@
 	initial_volume = 50
 	initial_reagents = "ginger_ale"
 
-/obj/item/reagent_containers/food/drinks/bottle/drowsy
+/obj/item/reagent_containers/food/drinks/bottle/soda/drowsy
 	name = "Drowsy Dan's Terrific Tonic"
 	desc = "You'll be fast asleep in no time!"
 	label = "drowsy"
@@ -373,3 +392,31 @@ obj/item/reagent_containers/food/drinks/covfefe
 		reagents.add_reagent(pick("methamphetamine", "crank", "space_drugs", "cat_drugs", "coffee"), 5)
 		for(var/i=0; i<3; i++)
 			reagents.add_reagent(pick("beff","ketchup","eggnog","yuck","chocolate","vanilla","cleaner","capsaicin","toxic_slurry","luminol","urine","nicotine","weedkiller","venom","jenkem","ectoplasm"), 5)
+
+/obj/item/reagent_containers/food/drinks/bottle/soda/contest
+	name = "Grones Soda Call 1-800-IMCODER flavour"
+	desc = "They make all kinds of flavors these days, good lord."
+	label = "grones"
+	heal_amt = 1
+	labeled = 1
+	initial_volume = 50
+
+	lizard_tonic
+		name = "Grones Soda Lucky Lizard Tonic flavor" //by Rlocks
+		label = "lizard"
+		initial_reagents = (list("cola"=20, "yee"=5, "chalk"=5, "sangria"=10, "capsaicin"=10))
+
+
+	babel_blast
+		name = "Grones Soda Mountain Grones Babel Blast flavor" //by warcrimes
+		label = "babel"
+		initial_reagents = (list("cola"=20, "suomium"=5, "quebon"=5, "swedium"=5, "caledonium"=5, "worcestershire_sauce"=5))
+
+	jungle_juice
+		name = "Grones Soda Jammin' Jambalaya Jungle Juice flavor" //by Camryn Buttes
+		label = "jungle"
+		initial_reagents = (list("cola"=20, "strawberry_milk"=1, "ricewine"=1, "boorbon"=1, "diesel"=1, "irishcoffee"=1,
+		"vanilla"=1, "harlow"=1, "espressomartini"=1, "ectocooler"=1, "bread"=1, "sarsaparilla"=1, "eggnog"=1,
+		"chocolate"=1, "guacamole"=1, "salt"=1, "gravy"=1, "mashedpotatoes"=1, "msg"=1, "mugwort"=1, "juice_cran"=1,
+		"juice_blueberry"=1, "juice_grapefruit"=1, "juice_pickle"=1, "worcestershire_sauce"=1, "fakecheese"=1,
+		"capsaicin"=1, "urine"=1, "paper"=1, "chalk"=1)) //pain; a little of everything
