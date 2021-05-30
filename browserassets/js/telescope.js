@@ -144,7 +144,6 @@ function byondFound(x,y,size,id)
     addPing(x ,y,60,"green",0.3,10);
     var audio = new Audio('{{resource("sounds/found.mp3")}}');
     audio.volume = soundVolume;
-	alert("Making noise now at " + audio.volume);
     audio.play();
 }
 
@@ -170,7 +169,6 @@ function update()
             curr.soundPlayed = true;
             var audio = new Audio('{{resource("sounds/sweep.mp3")}}');
             audio.volume = soundVolume;
-			alert("Making noise now at " + audio.volume);
             audio.play();
         }
         if(curr.currentStep <= totalSteps)
