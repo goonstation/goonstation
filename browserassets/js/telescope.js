@@ -29,6 +29,7 @@ var cooldownProps = {lastUse : 0, cooldown : 2500, barOpacity : 0, barOpacityMax
 var pings = [];
 var timerDelay = 33; //= 30fps , 1000ms / 33 = 30fps
 var ref;
+var soundVolume = 0;
 
 window.addEventListener("resize", resizeCanvas);
 canvas.addEventListener("click", clickMap);
@@ -62,6 +63,12 @@ function clearEvents()
 function showFooterMsg(msg)
 {
     document.getElementById("footer").innerText = msg;
+}
+
+function setVolume(vol)
+{
+    soundVolume = vol;
+	alert("Set audio to " + soundVolume);
 }
 
 function rebuildEventList()
@@ -136,7 +143,8 @@ function byondFound(x,y,size,id)
     clearMap(null);
     addPing(x ,y,60,"green",0.3,10);
     var audio = new Audio('{{resource("sounds/found.mp3")}}');
-    audio.volume = 0.25;
+    audio.volume = soundVolume;
+	alert("Making noise now at " + audio.volume);
     audio.play();
 }
 
@@ -161,7 +169,8 @@ function update()
         {
             curr.soundPlayed = true;
             var audio = new Audio('{{resource("sounds/sweep.mp3")}}');
-            audio.volume = 0.25;
+            audio.volume = soundVolume;
+			alert("Making noise now at " + audio.volume);
             audio.play();
         }
         if(curr.currentStep <= totalSteps)
