@@ -1572,19 +1572,6 @@
 /obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
-"dQ" = (
-/obj/table/auto,
-/obj/item/paper/book/minerals{
-	pixel_x = -2;
-	pixel_y = 5
-	},
-/obj/item/paper/book/materials,
-/obj/item/device/matanalyzer,
-/turf/simulated/floor/engine{
-	allows_vehicles = 0;
-	icon_state = "engine_caution_corners"
-	},
-/area/station/mining/staff_room)
 "dR" = (
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_south"
@@ -2267,13 +2254,6 @@
 	pixel_y = 21
 	},
 /obj/storage/secure/closet/security/armory,
-/turf/simulated/floor/caution/south,
-/area/station/security/armory)
-"fF" = (
-/obj/machinery/weapon_stand/shotgun_rack,
-/obj/decal/poster/wallsign/framed_award/hos_medal{
-	pixel_y = 26
-	},
 /turf/simulated/floor/caution/south,
 /area/station/security/armory)
 "fG" = (
@@ -5178,17 +5158,6 @@
 	icon_state = "corner_east"
 	},
 /area/station/engine/hotloop)
-"mD" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/machinery/air_vendor,
-/turf/simulated/floor/blue/side{
-	dir = 8
-	},
-/area/station/hallway/primary/south)
 "mE" = (
 /obj/cable{
 	d1 = 1;
@@ -7194,19 +7163,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/turret_protected/Zeta)
-"rm" = (
-/obj/table/auto,
-/obj/item/paper/book/hydroponicsguide,
-/obj/item/plantanalyzer,
-/obj/item/device/reagentscanner,
-/obj/item/device/reagentscanner,
-/obj/item/paper_bin,
-/obj/item/plantanalyzer,
-/obj/item/pen/pencil{
-	pixel_x = -6
-	},
-/turf/simulated/floor/green,
-/area/station/hydroponics/bay)
 "rn" = (
 /obj/machinery/plantpot,
 /obj/machinery/disposal/small{
@@ -11576,6 +11532,13 @@
 	dir = 5
 	},
 /area/station/security/main)
+"BR" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/cookbook,
+/obj/item/kitchen/rollingpin,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "BU" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/substation/east)
@@ -12294,20 +12257,6 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/white,
-/area/station/science/chemistry)
-"DQ" = (
-/obj/storage/crate{
-	desc = "null";
-	name = "Chemistry Supplies Crate"
-	},
-/obj/item/reagent_containers/dropper/mechanical,
-/obj/item/storage/box/patchbox,
-/obj/item/paper/book/medical_guide,
-/obj/item/storage/box/syringes,
-/obj/item/storage/box/beakerbox,
-/turf/simulated/floor/purplewhite{
-	dir = 4
-	},
 /area/station/science/chemistry)
 "DR" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -17966,13 +17915,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
-"Ss" = (
-/obj/table/auto,
-/obj/item/paper/book/cookbook,
-/obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "St" = (
 /obj/machinery/power/smes,
 /obj/cable,
@@ -18061,6 +18003,19 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
+"SH" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/minerals{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/paper/book/from_file/matsci_guide,
+/obj/item/device/matanalyzer,
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_corners"
+	},
+/area/station/mining/staff_room)
 "SI" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -18169,6 +18124,21 @@
 	icon_state = "fgreen2"
 	},
 /area/station/crew_quarters/heads)
+"Te" = (
+/obj/storage/crate/clown,
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	light_type = /obj/item/light/bulb/yellowish;
+	pixel_x = -8
+	},
+/obj/item/paper/book/from_file/the_trial,
+/turf/simulated/floor/plating/random,
+/area/station/quartermaster/office)
 "Tg" = (
 /obj/disposalpipe/segment,
 /obj/machinery/vending/cola/blue,
@@ -18204,6 +18174,13 @@
 	dir = 8
 	},
 /area/station/crew_quarters/kitchen)
+"Tm" = (
+/obj/machinery/weapon_stand/shotgun_rack,
+/obj/decal/poster/wallsign/framed_award/hos_medal{
+	pixel_y = 26
+	},
+/turf/simulated/floor/caution/south,
+/area/station/security/armory)
 "To" = (
 /obj/machinery/light{
 	dir = 8;
@@ -18754,6 +18731,20 @@
 /obj/item/rcd/construction/chiefEngineer,
 /turf/simulated/floor/yellow,
 /area/station/bridge/united_command)
+"Vp" = (
+/obj/storage/crate{
+	desc = "null";
+	name = "Chemistry Supplies Crate"
+	},
+/obj/item/reagent_containers/dropper/mechanical,
+/obj/item/storage/box/patchbox,
+/obj/item/paper/book/from_file/pharmacopia,
+/obj/item/storage/box/syringes,
+/obj/item/storage/box/beakerbox,
+/turf/simulated/floor/purplewhite{
+	dir = 4
+	},
+/area/station/science/chemistry)
 "Vv" = (
 /obj/rack,
 /obj/item/spacecash/bag,
@@ -19806,21 +19797,6 @@
 /obj/disposalpipe/junction/right/east,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"YG" = (
-/obj/storage/crate/clown,
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/machinery/light/small{
-	dir = 8;
-	light_type = /obj/item/light/bulb/yellowish;
-	pixel_x = -8
-	},
-/obj/item/paper/book/the_trial,
-/turf/simulated/floor/plating/random,
-/area/station/quartermaster/office)
 "YI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -20221,6 +20197,19 @@
 /obj/item/disk/data/tape/guardbot_tools,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"ZN" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/hydroponicsguide,
+/obj/item/plantanalyzer,
+/obj/item/device/reagentscanner,
+/obj/item/device/reagentscanner,
+/obj/item/paper_bin,
+/obj/item/plantanalyzer,
+/obj/item/pen/pencil{
+	pixel_x = -6
+	},
+/turf/simulated/floor/green,
+/area/station/hydroponics/bay)
 "ZO" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -20244,6 +20233,17 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/brig/genpop)
+"ZU" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/blue/side{
+	dir = 8
+	},
+/area/station/hallway/primary/south)
 "ZW" = (
 /turf/simulated/floor/purple,
 /area/station/bridge/united_command)
@@ -59335,7 +59335,7 @@ aa
 cJ
 cJ
 do
-dQ
+SH
 eD
 fo
 fZ
@@ -59950,7 +59950,7 @@ jg
 wC
 xr
 lH
-mD
+ZU
 nl
 oZ
 qx
@@ -62348,7 +62348,7 @@ av
 PT
 PT
 aH
-YG
+Te
 aY
 Hl
 kP
@@ -63291,7 +63291,7 @@ Xk
 XF
 CA
 Dg
-DQ
+Vp
 EF
 Fl
 Gf
@@ -65391,7 +65391,7 @@ oI
 vP
 vP
 qn
-rm
+ZN
 sy
 tK
 uQ
@@ -70210,7 +70210,7 @@ dF
 ej
 eX
 fB
-Ss
+BR
 gT
 gT
 jF
@@ -74135,7 +74135,7 @@ fa
 fa
 cD
 ez
-fF
+Tm
 gr
 gW
 hO

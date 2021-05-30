@@ -4536,7 +4536,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/obj/item/paper/book/critter_compendium,
+/obj/item/paper/book/from_file/critter_compendium,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
@@ -12503,7 +12503,7 @@
 "aBm" = (
 /obj/stool/bed,
 /obj/decal/cleanable/dirt,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -15426,8 +15426,8 @@
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/paper/book/hydroponicsguide,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "aHe" = (
@@ -17279,7 +17279,7 @@
 "aKG" = (
 /obj/rack,
 /obj/random_item_spawner/tools,
-/obj/item/paper/book/mechanicbook,
+/obj/item/paper/book/from_file/mechanicbook,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "aKH" = (
@@ -19925,11 +19925,11 @@
 /area/station/crew_quarters/quarters)
 "aPU" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/guardbot_guide{
+/obj/item/paper/book/from_file/guardbot_guide{
 	pixel_x = 6;
 	pixel_y = 5
 	},
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "aPV" = (
@@ -24379,7 +24379,7 @@
 /obj/item/kitchen/utensil/fork,
 /obj/item/kitchen/utensil/spoon,
 /obj/item/kitchen/utensil/knife,
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/item/reagent_containers/glass/bottle/icing,
 /obj/item/reagent_containers/glass/bottle/icing,
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
@@ -32042,7 +32042,7 @@
 "bpt" = (
 /obj/table/wood/auto,
 /obj/item/storage/box/tapebox,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /turf/simulated/floor/purplewhite{
 	dir = 6
 	},
@@ -32727,7 +32727,7 @@
 /obj/item/paper_bin{
 	pixel_x = -5
 	},
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/blue,
 /area/station/medical/cdc{
 	name = "Medbay Lobby"
@@ -34366,7 +34366,7 @@
 "buo" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/emergency,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
 "bup" = (

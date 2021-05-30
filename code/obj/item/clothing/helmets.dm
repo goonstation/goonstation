@@ -349,14 +349,14 @@
 			icon_state = "syndie_specialist-knight" //todo
 			item_state = "syndie_specialist-knight" //todo
 
-		setupProperties()
-			..()
-			setProperty("meleeprot_head", 2)
-			setProperty("rangedprot", 1)
-			setProperty("exploprot", 10)
-			setProperty("disorient_resist_eye", 50)
-			setProperty("disorient_resist_ear", 50)
-			setProperty("space_movespeed", 0.3)
+			setupProperties()
+				..()
+				setProperty("meleeprot_head", 6)
+				setProperty("rangedprot", 1)
+				setProperty("exploprot", 10)
+				setProperty("disorient_resist_eye", 50)
+				setProperty("disorient_resist_ear", 50)
+				setProperty("space_movespeed", 0.3)
 
 
 /obj/item/clothing/head/helmet/space/ntso //recoloured nuke class suits for ntso vs syndicate specialist
@@ -385,6 +385,10 @@
 	icon_state = "nanotrasen_pilot"
 	item_state = "nanotrasen_pilot"
 	desc = "A space helmet used by certain Nanotrasen pilots."
+
+	setupProperties()
+		..()
+		setProperty("space_movespeed", 0)
 
 /obj/item/clothing/head/helmet/swat
 	name = "swat helmet"

@@ -1980,14 +1980,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
-"aER" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/book/guardbot_guide,
-/obj/item/device/radio/intercom/catering{
-	dir = 4
-	},
-/turf/simulated/floor/circuit,
-/area/station/communications/centre)
 "aES" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -3163,6 +3155,15 @@
 /area/station/routing/eva{
 	name = "Router Cabinet"
 	})
+"aVY" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/emergency,
+/obj/item/paper/book/from_file/matsci_guide,
+/obj/item/device/matanalyzer,
+/turf/simulated/floor/orangeblack/side{
+	dir = 10
+	},
+/area/station/mining/refinery)
 "aWa" = (
 /obj/machinery/sleeper{
 	dir = 4
@@ -3252,18 +3253,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/listeningpost)
-"aXF" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/book/medical_guide,
-/obj/item/paper/book/medical_guide,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/purpleblack,
-/area/station/science/chemistry)
 "aYc" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -4430,6 +4419,11 @@
 	},
 /turf/simulated/floor/orangeblack/side,
 /area/station/hangar/science)
+"bqz" = (
+/obj/table/wood/auto,
+/obj/item/paper/book/from_file/monster_manual,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/arcade/dungeon)
 "bqF" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -4551,13 +4545,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
-"bsG" = (
-/obj/table/auto,
-/obj/item/paper/book/guardbot_guide,
-/turf/simulated/floor/greenblack{
-	dir = 1
-	},
-/area/station/turret_protected/Zeta)
 "bsL" = (
 /obj/machinery/shieldgenerator/energy_shield,
 /obj/machinery/atmospherics/pipe/simple{
@@ -11237,6 +11224,17 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
+"dqr" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/guardbot_guide,
+/obj/item/paper/book/from_file/dwainedummies{
+	pixel_y = 4
+	},
+/obj/item/device/multitool{
+	pixel_x = -12
+	},
+/turf/simulated/floor/grey/side,
+/area/station/science/bot_storage)
 "dqu" = (
 /obj/machinery/light,
 /obj/machinery/disposal,
@@ -12033,6 +12031,17 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/quartersA)
+"dCP" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/medical_surgery_guide{
+	pixel_x = 5
+	},
+/obj/item/storage/box/stma_kit{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/turf/simulated/floor/white/grime,
+/area/station/medical/medbay/surgery/storage)
 "dCS" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -14691,6 +14700,11 @@
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
+"erh" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/space_law,
+/turf/simulated/floor/carpet/green/fancy/edge/sw,
+/area/station/crew_quarters/courtroom)
 "erm" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/stool/chair,
@@ -15227,10 +15241,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/mining/staff_room)
-"eyJ" = (
-/obj/machinery/air_vendor,
-/turf/simulated/floor/purple,
-/area/station/hangar/science)
 "eyR" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -15948,6 +15958,19 @@
 "eJp" = (
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai_upload)
+"eJr" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/dwainedummies{
+	pixel_x = -3
+	},
+/obj/item/paper/book/from_file/guardbot_guide{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 4
+	},
+/area/station/science/lobby)
 "eJz" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 8;
@@ -17168,6 +17191,15 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters/market)
+"fch" = (
+/obj/table/reinforced/auto,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 20
+	},
+/obj/item/paper/book/from_file/pharmacopia,
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
 "fcl" = (
 /obj/cable{
 	d1 = 4;
@@ -17194,15 +17226,6 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/red,
 /area/station/security/main)
-"fdg" = (
-/obj/table/reinforced/auto,
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 20
-	},
-/obj/item/paper/book/medical_guide,
-/turf/simulated/floor/white,
-/area/station/medical/cdc)
 "fdi" = (
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/grey,
@@ -18034,6 +18057,20 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/listeningpost)
+"fqD" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/paper/book/from_file/pharmacopia,
+/obj/item/hand_labeler,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/machinery/light_switch/north{
+	pixel_x = -12
+	},
+/turf/simulated/floor/blueblack,
+/area/station/medical/medbay/pharmacy)
 "fqE" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -20204,15 +20241,6 @@
 	dir = 4
 	},
 /area/station/engine/engineering)
-"fYY" = (
-/obj/storage/secure/closet/command/hos,
-/obj/decal/poster/wallsign/framed_award/hos_medal{
-	pixel_y = 26
-	},
-/turf/simulated/floor/redblack{
-	dir = 8
-	},
-/area/station/security/hos)
 "fZb" = (
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
@@ -21627,6 +21655,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
+"gtk" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/pharmacopia,
+/obj/item/paper/book/from_file/pharmacopia,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/purpleblack,
+/area/station/science/chemistry)
 "gtm" = (
 /obj/decal/tile_edge/floorguide/evac{
 	dir = 1
@@ -25603,19 +25643,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/staff)
-"huR" = (
-/obj/storage/secure/closet/courtroom,
-/obj/item/paper/book/space_law,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/disposalpipe/segment/brig{
-	dir = 1
-	},
-/turf/simulated/floor/black/side,
-/area/station/crew_quarters/courtroom)
 "huS" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -35121,6 +35148,10 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
+"khr" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/purple,
+/area/station/hangar/science)
 "khs" = (
 /obj/storage/closet/fire,
 /obj/machinery/light/emergency{
@@ -35359,6 +35390,19 @@
 /area/station/routing/medsci{
 	name = "Research Router"
 	})
+"kkE" = (
+/obj/table/wood/auto,
+/obj/item/paper/book/from_file/dwainedummies,
+/obj/item/disk/data/tape/master/readonly,
+/obj/item/reagent_containers/food/snacks/beefood{
+	desc = "A little birthday cupcake for Heisenbee.  May not taste good to non-bees.";
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi';
+	icon_state = "cupcake";
+	name = "Heisenbee's birthday cupcake"
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/hor/horprivate)
 "kkU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -35928,11 +35972,6 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/listeningpost)
-"kst" = (
-/obj/table/wood/auto,
-/obj/item/paper/book/critter_compendium,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/arcade/dungeon)
 "ksw" = (
 /obj/stool/chair{
 	dir = 8
@@ -36115,6 +36154,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/south)
+"kvR" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/guardbot_guide,
+/obj/item/device/radio/intercom/catering{
+	dir = 4
+	},
+/turf/simulated/floor/circuit,
+/area/station/communications/centre)
 "kvT" = (
 /obj/voting_box,
 /turf/simulated/floor/neutral/side{
@@ -36402,17 +36449,6 @@
 /area/station/medical/maintenance{
 	name = "Medical Booth Morgue"
 	})
-"kAE" = (
-/obj/table/auto,
-/obj/item/paper/book/medical_surgery_guide{
-	pixel_x = 5
-	},
-/obj/item/storage/box/stma_kit{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/turf/simulated/floor/white/grime,
-/area/station/medical/medbay/surgery/storage)
 "kAG" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/southwest,
 /turf/simulated/floor,
@@ -40238,6 +40274,12 @@
 	},
 /turf/simulated/floor/engine/caution/west,
 /area/station/engine/core)
+"lGL" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/black/side{
+	dir = 4
+	},
+/area/station/hangar/main)
 "lGT" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/grey,
@@ -44527,14 +44569,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/maintenance/solar/south)
-"mPm" = (
-/obj/table/auto,
-/obj/item/paper/book/the_trial,
-/turf/simulated/floor/carpet/grime,
-/area/station/hallway/secondary/construction2{
-	icon_state = "crewquarters";
-	name = "Warrens Hall"
-	})
 "mPr" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -44701,17 +44735,6 @@
 "mRO" = (
 /turf/simulated/floor/carpet/purple/fancy/innercorner/omni,
 /area/station/crew_quarters/hor/horprivate)
-"mSa" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/book/dwainedummies,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/heads{
-	name = "Officers' Lounge"
-	})
 "mSb" = (
 /obj/stool/chair/blue{
 	dir = 8
@@ -46640,6 +46663,11 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
+"nxE" = (
+/obj/table/wood/auto,
+/obj/item/paper/book/from_file/critter_compendium,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/arcade/dungeon)
 "nyl" = (
 /obj/cryotron,
 /turf/simulated/floor/darkblue,
@@ -50595,6 +50623,17 @@
 	dir = 4
 	},
 /area/station/security/checkpoint/east)
+"oAk" = (
+/obj/disposalpipe/segment/brig{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/obj/table/wood/round/auto,
+/obj/item/paper/book/from_file/space_law,
+/turf/simulated/floor/red/corner{
+	dir = 4
+	},
+/area/station/security/brig)
 "oAw" = (
 /turf/simulated/floor/caution/corner/sw,
 /area/station/security/armory)
@@ -51202,11 +51241,6 @@
 /obj/item/reagent_containers/emergency_injector/atropine,
 /turf/simulated/floor/black,
 /area/station/security/armory)
-"oJv" = (
-/obj/table/wood/auto,
-/obj/item/paper/book/monster_manual,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/arcade/dungeon)
 "oJx" = (
 /obj/table/auto,
 /obj/machinery/phone,
@@ -56768,19 +56802,6 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"qsP" = (
-/obj/table/wood/auto,
-/obj/item/paper/book/dwainedummies,
-/obj/item/disk/data/tape/master/readonly,
-/obj/item/reagent_containers/food/snacks/beefood{
-	desc = "A little birthday cupcake for Heisenbee.  May not taste good to non-bees.";
-	icon = 'icons/obj/foodNdrink/food_dessert.dmi';
-	icon_state = "cupcake";
-	name = "Heisenbee's birthday cupcake"
-	},
-/obj/machinery/light/small,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/hor/horprivate)
 "qta" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9
@@ -58056,6 +58077,13 @@
 /obj/item/pen,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment1)
+"qKz" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/guardbot_guide,
+/turf/simulated/floor/greenblack{
+	dir = 1
+	},
+/area/station/turret_protected/Zeta)
 "qKC" = (
 /obj/machinery/atmospherics/valve/notify_admins/vertical{
 	name = "Air Reserve (Station Command)"
@@ -59489,19 +59517,6 @@
 	dir = 9
 	},
 /area/station/hallway/secondary/exit)
-"reC" = (
-/obj/table/auto,
-/obj/item/paper/book/dwainedummies{
-	pixel_x = -3
-	},
-/obj/item/paper/book/guardbot_guide{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 4
-	},
-/area/station/science/lobby)
 "reH" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
@@ -60845,17 +60860,6 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
-"ryV" = (
-/obj/disposalpipe/segment/brig{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/obj/table/wood/round/auto,
-/obj/item/paper/book/space_law,
-/turf/simulated/floor/red/corner{
-	dir = 4
-	},
-/area/station/security/brig)
 "ryW" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
@@ -62199,6 +62203,14 @@
 /obj/item/stamp,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
+"rQZ" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/the_trial,
+/turf/simulated/floor/carpet/grime,
+/area/station/hallway/secondary/construction2{
+	icon_state = "crewquarters";
+	name = "Warrens Hall"
+	})
 "rRq" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -62840,17 +62852,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/staff)
-"rYF" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/book/guardbot_guide,
-/obj/item/paper/book/dwainedummies{
-	pixel_y = 4
-	},
-/obj/item/device/multitool{
-	pixel_x = -12
-	},
-/turf/simulated/floor/grey/side,
-/area/station/science/bot_storage)
 "rYQ" = (
 /obj/machinery/light/emergency,
 /turf/simulated/floor/bluewhite{
@@ -64738,6 +64739,19 @@
 "sAT" = (
 /turf/simulated/floor/blackwhite,
 /area/station/medical/medbay)
+"sAV" = (
+/obj/storage/secure/closet/courtroom,
+/obj/item/paper/book/from_file/space_law,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/disposalpipe/segment/brig{
+	dir = 1
+	},
+/turf/simulated/floor/black/side,
+/area/station/crew_quarters/courtroom)
 "sAZ" = (
 /obj/machinery/light{
 	dir = 4;
@@ -66652,11 +66666,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
-"sYw" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/book/space_law,
-/turf/simulated/floor/carpet/green/fancy/edge/sw,
-/area/station/crew_quarters/courtroom)
 "sYy" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -74525,15 +74534,6 @@
 	dir = 4
 	},
 /area/station/crew_quarters/courtroom)
-"vbg" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/emergency,
-/obj/item/paper/book/materials,
-/obj/item/device/matanalyzer,
-/turf/simulated/floor/orangeblack/side{
-	dir = 10
-	},
-/area/station/mining/refinery)
 "vbi" = (
 /obj/item/device/radio/intercom/science{
 	dir = 8
@@ -74736,20 +74736,6 @@
 /obj/machinery/vehicle/miniputt/indyputt/armed,
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/refinery)
-"vdM" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/paper/book/medical_guide,
-/obj/item/hand_labeler,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_north,
-/obj/machinery/light_switch/north{
-	pixel_x = -12
-	},
-/turf/simulated/floor/blueblack,
-/area/station/medical/medbay/pharmacy)
 "vdQ" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
@@ -77864,6 +77850,15 @@
 "vSl" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/teleporter)
+"vSm" = (
+/obj/storage/secure/closet/command/hos,
+/obj/decal/poster/wallsign/framed_award/hos_medal{
+	pixel_y = 26
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/security/hos)
 "vSq" = (
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor,
@@ -79113,6 +79108,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
+"wkr" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/dwainedummies,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/heads{
+	name = "Officers' Lounge"
+	})
 "wkt" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/grey,
@@ -81342,12 +81348,6 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
-"wMG" = (
-/obj/machinery/air_vendor,
-/turf/simulated/floor/black/side{
-	dir = 4
-	},
-/area/station/hangar/main)
 "wMM" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical{
@@ -119647,7 +119647,7 @@ jGh
 fcl
 vuD
 jTS
-mPm
+rQZ
 sFi
 lCk
 tKz
@@ -121084,7 +121084,7 @@ xlI
 lCd
 qRn
 xoI
-bsG
+qKz
 cNI
 udc
 xoI
@@ -121353,7 +121353,7 @@ woq
 woq
 jGg
 ekP
-rYF
+dqr
 xWv
 yel
 auD
@@ -121379,7 +121379,7 @@ uVk
 jmD
 lHx
 jCd
-qsP
+kkE
 xoI
 fLC
 xoI
@@ -123446,7 +123446,7 @@ nWW
 wpW
 nWW
 wpW
-eyJ
+khr
 vCY
 wrG
 vCw
@@ -123476,7 +123476,7 @@ nHB
 pLL
 tTM
 akT
-reC
+eJr
 tfg
 nHB
 vZN
@@ -125598,7 +125598,7 @@ vok
 soM
 xGi
 sqg
-aXF
+gtk
 xUE
 raC
 syX
@@ -131719,8 +131719,8 @@ lNI
 nDz
 vAw
 dZM
-kst
-oJv
+nxE
+bqz
 mfl
 xkd
 xkd
@@ -134090,7 +134090,7 @@ ula
 pmd
 qmP
 uUI
-fYY
+vSm
 kCZ
 mbc
 usz
@@ -136138,7 +136138,7 @@ rCV
 pvB
 pvB
 xWz
-vdM
+fqD
 vBg
 jeF
 xJt
@@ -137970,7 +137970,7 @@ oKW
 aiE
 xLF
 swn
-aER
+kvR
 jzn
 uEF
 oKW
@@ -138016,7 +138016,7 @@ cPk
 vDc
 jym
 kuP
-huR
+sAV
 lsY
 vCh
 oLO
@@ -138326,7 +138326,7 @@ tDr
 sTS
 sni
 tDr
-ryV
+oAk
 wqp
 rDL
 vDV
@@ -139527,11 +139527,11 @@ pmd
 elR
 xri
 pCk
-sYw
+erh
 wlj
 wlj
 pCk
-sYw
+erh
 lQG
 wpK
 kgz
@@ -140080,7 +140080,7 @@ gKi
 gKi
 wuv
 whA
-mSa
+wkr
 wIP
 meD
 ooi
@@ -141395,7 +141395,7 @@ mGE
 xFP
 xGd
 xGd
-wMG
+lGL
 sUO
 iGq
 xGd
@@ -145487,7 +145487,7 @@ jeX
 lZH
 mBa
 qHZ
-fdg
+fch
 jtN
 vgU
 rik
@@ -146387,7 +146387,7 @@ wlK
 beF
 nGV
 kar
-kAE
+dCP
 wlK
 rpB
 mak
@@ -148635,7 +148635,7 @@ koe
 peu
 xUC
 hEE
-vbg
+aVY
 xEM
 jJz
 tqW

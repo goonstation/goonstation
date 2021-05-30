@@ -191,6 +191,9 @@
 					timer_modifier = src.timer_modifier_disk
 					user.visible_message("<span class='alert'><b>[user]</b> inserts [W.name], extending the bomb's timer by [src.timer_modifier_disk / 10] seconds!</span>")
 
+					if (user.mind && user.mind.assigned_role == "Captain") //the fat frog did it!
+						user.unlock_medal("Brown Pants", 1)
+
 				playsound(src.loc, "sound/machines/ping.ogg", 100, 0)
 				logTheThing("bombing", user, null, "inserted [W.name] into [src] at [log_loc(src)], modifying the timer by [timer_modifier / 10] seconds.")
 				user.u_equip(W)
