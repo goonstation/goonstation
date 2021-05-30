@@ -1141,11 +1141,11 @@
 /area/station/crew_quarters/ce)
 "aet" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/monster_manual_revised{
+/obj/item/paper/book/from_file/monster_manual_revised{
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/paper/book/DNDrulebook{
+/obj/item/paper/book/from_file/DNDrulebook{
 	pixel_x = -5;
 	pixel_y = 8
 	},
@@ -6078,7 +6078,7 @@
 	req_access_txt = "35"
 	},
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/item/storage/toolbox/mechanical,
 /obj/cable{
 	icon_state = "1-2"
@@ -6243,7 +6243,7 @@
 "ayx" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/table/reinforced/auto,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/machinery/phone,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
@@ -9181,7 +9181,7 @@
 	pixel_y = 12;
 	switchon = 1
 	},
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/item/reagent_containers/food/drinks/mug/random_color{
 	pixel_x = 4;
 	pixel_y = 8
@@ -10212,7 +10212,7 @@
 /obj/item/clothing/under/patient_gown{
 	pixel_y = -5
 	},
-/obj/item/paper/book/medical_surgery_guide,
+/obj/item/paper/book/from_file/medical_surgery_guide,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -17985,7 +17985,7 @@
 	pixel_y = -5
 	},
 /obj/item/disk/data/tape/master/readonly,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/item/device/multitool,
 /obj/cable{
 	icon_state = "1-2"
@@ -18575,7 +18575,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/mug_rack{
 	pixel_y = 29
 	},
@@ -21048,7 +21048,7 @@
 /area/station/science/research_director)
 "dgl" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/guardbot_guide,
+/obj/item/paper/book/from_file/guardbot_guide,
 /obj/item/toy/plush/small/buddy{
 	pixel_y = 5
 	},
@@ -21821,7 +21821,7 @@
 /area/station/engine/combustion_chamber)
 "dzX" = (
 /obj/table/reinforced/industrial/auto,
-/obj/item/paper/book/moby_dick,
+/obj/item/paper/book/from_file/moby_dick,
 /turf/simulated/floor/carpet/blue/standard/edge/west,
 /area/station/maintenance/inner/south)
 "dzY" = (
@@ -25985,7 +25985,7 @@
 /area/station/maintenance/east)
 "fox" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/item/kitchen/food_box/donut_box,
 /obj/item/instrument/bikehorn/dramatic,
 /obj/machinery/disposal/small{
@@ -34682,7 +34682,7 @@
 /area/station/maintenance/west)
 "kay" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/player_piano,
+/obj/item/paper/book/from_file/player_piano,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
@@ -40456,7 +40456,7 @@
 /obj/decal/tile_edge/stripe{
 	icon_state = "bigstripe"
 	},
-/obj/item/paper/book/medical_surgery_guide,
+/obj/item/paper/book/from_file/medical_surgery_guide,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
@@ -40931,7 +40931,7 @@
 	},
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/captain,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /obj/landmark/start{
 	name = "Clown"
 	},
@@ -41778,8 +41778,8 @@
 /obj/table/reinforced/auto,
 /obj/item/device/matanalyzer,
 /obj/item/device/matanalyzer,
-/obj/item/paper/book/materials,
-/obj/item/paper/book/minerals,
+/obj/item/paper/book/from_file/matsci_guide,
+/obj/item/paper/book/from_file/minerals,
 /obj/item/storage/firstaid/fire,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
@@ -44892,7 +44892,7 @@
 /area/station/hydroponics/bay)
 "pKs" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/item/paper{
 	desc = "";
 	info = "We are very sorry, but the system upgrade is taking longer than expected.  Some systems may not be accesable. Please take enclosed $BAKED_GOOD as a token of our sincere regret.";
@@ -45424,8 +45424,8 @@
 /area/station/science/lobby)
 "pYB" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/paper/book/medical_guide,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/hand_labeler,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white,
@@ -50123,7 +50123,7 @@
 /area/station/security/brig)
 "sHy" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/surgical_spoon{
 	pixel_y = 4
 	},
@@ -51126,7 +51126,7 @@
 /obj/table/wood/auto/desk{
 	pixel_y = -2
 	},
-/obj/item/paper/book/caterpillar{
+/obj/item/paper/book/from_file/caterpillar{
 	pixel_x = 6
 	},
 /turf/simulated/floor/darkblue,
@@ -51323,7 +51323,7 @@
 	name = "Crew Quarters P04"
 	})
 "tkJ" = (
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/port)
 "tkQ" = (
@@ -52968,10 +52968,10 @@
 /area/station/security/main)
 "uhn" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/deep_blue_sea{
+/obj/item/paper/book/from_file/deep_blue_sea{
 	pixel_y = 3
 	},
-/obj/item/paper/book/the_trial{
+/obj/item/paper/book/from_file/the_trial{
 	pixel_x = 3;
 	pixel_y = 6
 	},
@@ -56529,7 +56529,7 @@
 /obj/machinery/computer3/generic/personal{
 	pixel_y = 9
 	},
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -57687,7 +57687,7 @@
 	pixel_y = 28
 	},
 /obj/storage/crate,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/item/device/matanalyzer{
 	pixel_x = 3;
 	pixel_y = 5
@@ -58717,8 +58717,8 @@
 /area/station/security/main)
 "xfV" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/minerals,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/minerals,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/item/cargotele,
 /obj/item/device/light/glowstick,
 /obj/decal/tile_edge/line/yellow{
@@ -59650,7 +59650,7 @@
 /area/station/crew_quarters/courtroom)
 "xCl" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/blind_switch/area/north{
 	pixel_x = -8;
 	pixel_y = 28

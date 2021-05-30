@@ -375,10 +375,17 @@ toxic - poisons
 
 	on_hit(atom/hit)
 		..()
+		//have turret shots slow mobs it hits...
 		if (turret && isliving(hit))
 			var/mob/living/L = hit
 			L.changeStatus("slowed", 2 SECONDS)
 
+	//lower power when they hit vehicles by half
+	get_power(obj/projectile/P, atom/A)
+		var/mult = 1
+		if (!turret && istype(A, /obj/machinery/vehicle))
+			mult = 0.5
+		return ..(P, A) * mult
 
 /datum/projectile/laser/blaster/pod_pilot/blue_NT
 	name = "blue blaster bolt"
