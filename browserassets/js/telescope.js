@@ -68,7 +68,6 @@ function showFooterMsg(msg)
 function setVolume(vol)
 {
     soundVolume = vol;
-	alert("Set audio to " + soundVolume);
 }
 
 function rebuildEventList()
