@@ -20,7 +20,6 @@ var/datum/mechanic_controller/mechanic_controls
 	var/item_type = ""
 	var/list/item_mats
 	var/finish_time = 0
-	var/locked = FALSE
 	var/datum/manufacture/mechanics/blueprint = null
 
 	proc

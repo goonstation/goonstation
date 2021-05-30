@@ -470,9 +470,11 @@
 	var/datum/radio_frequency/radio_connection
 	var/no_print_spam = 1 // In relation to world.time.
 	var/olde = 0
+	var/list/locked = null
 
 /obj/machinery/rkit/New()
 	..()
+	locked = list()
 	//link = mechanic_controls
 	SPAWN_DBG(0.8 SECONDS)
 		if(radio_controller)
@@ -592,17 +594,18 @@
 
 	dat += "<b>Scanned Items:</b><br>"
 	for(var/datum/electronics/scanned_item/S in mechanic_controls.scanned_items)
+		var/itemlocked = FALSE
+		if (S in locked) itemlocked = TRUE
 		dat += "<u>[S.name]</u><small> "
-		//dat += "<A href='?src=\ref[src];op=\ref[S];tp=done'>Frame</A>"
 		if (S.item_mats && src.olde)
 			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=done'>Frame</A>"
 		else if (S.blueprint)
-			if(!S.locked || hide_allowed || src.olde)
+			if ((!itemlocked && hide_allowed) || src.olde)
 				dat += " * <A href='?src=\ref[src];op=\ref[S];tp=blueprint'>Blueprint</A>"
 			else
 				dat += " * Blueprint Disabled"
 		if(hide_allowed)
-			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=lock'>[S.locked ? "Locked" : "Unlocked"]</A>"
+			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=lock'>[itemlocked ? "Locked" : "Unlocked"]</A>"
 		dat += "</small><br>"
 	dat += "<br>"
 
@@ -635,7 +638,9 @@
 						usr.show_text("[src] isn't done with the previous print job.", "red")
 					else
 						var/datum/electronics/scanned_item/O = locate(href_list["op"]) in mechanic_controls.scanned_items
-						if (istype(O.blueprint, /datum/manufacture/mechanics/))
+						if (O in locked)
+							usr.show_text("[O] has been disabled!", "red")
+						else if (istype(O.blueprint, /datum/manufacture/mechanics/))
 							usr.show_text("Print job started...", "blue")
 							var/datum/manufacture/mechanics/M = O.blueprint
 							playsound(src.loc, 'sound/machines/printer_thermal.ogg', 25, 1)
@@ -647,7 +652,10 @@
 			if("lock")
 				if(href_list["op"])
 					var/datum/electronics/scanned_item/O = locate(href_list["op"]) in mechanic_controls.scanned_items
-					O.locked = !O.locked
+					if(O in locked)
+						locked -= O
+					else
+						locked += O
 
 		updateDialog()
 	else
