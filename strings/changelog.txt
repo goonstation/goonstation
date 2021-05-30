@@ -1,5 +1,7 @@
 
 (t)sat may 29 21
+(u)Flourish
+(*)Player monkeys now must be dead in order to be monkey spiked or reclaimed, gibbers now require all victims to be dead.
 (u)Walpvrgis
 (p)4942
 (e)🎨|sprites
