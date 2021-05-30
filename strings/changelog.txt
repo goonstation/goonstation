@@ -1,5 +1,9 @@
 
 (t)sat may 29 21
+(u)Walpvrgis
+(p)4942
+(e)🎨|sprites
+(+)Resprites bread loaves/slices/toast and related recipes found in food_bread.dmi.
 (u)Blackrep
 (p)4932
 (e)🐛|bug
