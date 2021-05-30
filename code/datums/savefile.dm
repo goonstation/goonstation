@@ -240,6 +240,18 @@
 			F["[profileNum]_detail_style_name"] >> AH.customization_third_original
 			F["[profileNum]_underwear_style_name"] >> AH.underwear
 			F["[profileNum]_underwear_color"] >> AH.u_color
+			if(!istype(src.AH.customization_first,/datum/customization_style))
+				src.AH.customization_first = find_style_by_name(src.AH.customization_first)
+			if(!istype(src.AH.customization_second,/datum/customization_style))
+				src.AH.customization_second = find_style_by_name(src.AH.customization_second)
+			if(!istype(src.AH.customization_third,/datum/customization_style))
+				src.AH.customization_third = find_style_by_name(src.AH.customization_third)
+			if(!istype(src.AH.customization_first_original,/datum/customization_style))
+				src.AH.customization_first_original = find_style_by_name(src.AH.customization_first_original)
+			if(!istype(src.AH.customization_second_original,/datum/customization_style))
+				src.AH.customization_second_original = find_style_by_name(src.AH.customization_second_original)
+			if(!istype(src.AH.customization_third_original,/datum/customization_style))
+				src.AH.customization_third_original = find_style_by_name(src.AH.customization_third_original)
 
 		// Job prefs
 		F["[profileNum]_job_prefs_1"] >> src.job_favorite

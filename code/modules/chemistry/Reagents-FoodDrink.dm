@@ -398,8 +398,9 @@ datum
 					return
 
 				if (probmult(8) && (M.gender == "male"))
-					if (M.cust_two_state != "gt" && M.cust_two_state != "neckbeard" && M.cust_two_state != "fullbeard" && M.cust_two_state != "longbeard")
-						M.cust_two_state = pick("gt","neckbeard","fullbeard","longbeard")
+					if (M.bioHolder.mobAppearance.customization_second.id != "gt" && M.bioHolder.mobAppearance.customization_second.id != "neckbeard" && M.bioHolder.mobAppearance.customization_second.id != "fullbeard" && M.bioHolder.mobAppearance.customization_second.id != "longbeard")
+						var/second_type = pick(/datum/customization_style/beard/gt,/datum/customization_style/beard/neckbeard,/datum/customization_style/beard/fullbeard,/datum/customization_style/beard/longbeard)
+						M.bioHolder.mobAppearance.customization_second = new second_type
 						M.set_face_icon_dirty()
 						boutput(M, "<span class='notice'>You feel manly!</span>")
 
@@ -572,12 +573,10 @@ datum
 						new /obj/item/clothing/mask/moustache(get_turf(H))
 						H.gib()
 						return
-					if(H.cust_one_state != "dreads" || H.cust_two_state != "fullbeard")
+					if(H.bioHolder.mobAppearance.customization_first.id != "dreads" || H.bioHolder.mobAppearance.customization_second.id != "fullbeard")
 						boutput(H, "<b>You feel more piratey! Arr!</b>")
-						H.cust_one_state = "dreads"
-						H.cust_two_state = "fullbeard"
-						H.bioHolder.mobAppearance.customization_first = "Dreadlocks"
-						H.bioHolder.mobAppearance.customization_second = "Full Beard"
+						H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/dreads
+						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/fullbeard
 						H.real_name = "Captain [H.real_name]"
 						if (H.wear_id)
 							if (istype(H.wear_id, /obj/item/card/id))

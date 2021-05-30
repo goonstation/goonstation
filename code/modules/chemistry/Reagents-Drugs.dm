@@ -43,8 +43,8 @@ datum
 				var/check = rand(0,100)
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
-					if (check < 8 && H.cust_two_state != "tramp") // M.is_hobo = very yes
-						H.cust_two_state = "tramp"
+					if (check < 8 && H.bioHolder.mobAppearance.customization_second.id != "tramp") // M.is_hobo = very yes
+						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/tramp
 						H.set_face_icon_dirty()
 						boutput(M, "<span class='alert'><b>You feel gruff!</b></span>")
 						SPAWN_DBG(0.3 SECONDS)

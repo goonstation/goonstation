@@ -75,6 +75,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\cookingrecipes.dm"
 #include "code\datums\crew_objective.dm"
 #include "code\datums\critter_objective.dm"
+#include "code\datums\customization_styles.dm"
 #include "code\datums\datacore.dm"
 #include "code\datums\datalogger.dm"
 #include "code\datums\datumvars.dm"

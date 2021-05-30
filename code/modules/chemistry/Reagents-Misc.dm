@@ -333,9 +333,13 @@ datum
 
 				if (probmult(10) && ishuman(M))
 					var/mob/living/carbon/human/H = M
-					H.bioHolder.mobAppearance.customization_first = pick(feminine_hstyles + masculine_hstyles)
-					H.bioHolder.mobAppearance.customization_second = pick(feminine_hstyles + masculine_hstyles)
-					H.bioHolder.mobAppearance.customization_third = pick(feminine_hstyles + masculine_hstyles)
+					var/list/hair_styles = concrete_typesof(/datum/customization_style/hair)-concrete_typesof(/datum/customization_style/hair/gimmick)
+					var/hair_type = pick(hair_styles)
+					H.bioHolder.mobAppearance.customization_first = new hair_type
+					hair_type = pick(hair_styles)
+					H.bioHolder.mobAppearance.customization_second = new hair_type
+					hair_type = pick(hair_styles)
+					H.bioHolder.mobAppearance.customization_third = new hair_type
 					H.update_colorful_parts()
 					boutput(H, "<span class='notice'>Your scalp feels itchy!</span>")
 				..()
@@ -359,11 +363,11 @@ datum
 				if (ishuman(M))
 					var/somethingchanged = 0
 					var/mob/living/carbon/human/H = M
-					if (H.cust_one_state != "80s")
-						H.cust_one_state = "80s"
+					if (H.bioHolder.mobAppearance.customization_first.id != "80s")
+						H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/eighties
 						somethingchanged = 1
-					if (H.gender == MALE && H.cust_two_state != "longbeard")
-						H.cust_two_state = "longbeard"
+					if (H.gender == MALE && H.bioHolder.mobAppearance.customization_second.id != "longbeard")
+						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/longbeard
 						somethingchanged = 1
 					if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/moustache)))
 						somethingchanged = 1
