@@ -2113,7 +2113,7 @@
 "hS" = (
 /obj/machinery/light/incandescent{
 	dir = 4;
-	icon_state = "tube-broken"
+	icon_state = "tube-empty"
 	},
 /turf/simulated/floor/circuit/off,
 /area/pod_wars/spacejunk/memorial_stats)
@@ -93572,8 +93572,8 @@ Pf
 Pf
 JW
 JW
-JW
-JW
+co
+co
 JW
 JW
 JW
@@ -95069,14 +95069,14 @@ JW
 Pf
 Pf
 Il
-FC
+mp
 YP
 Wx
 Wx
 lF
 Wx
 Wx
-Wx
+Bk
 DW
 mp
 Il
@@ -95576,12 +95576,12 @@ zN
 bF
 bF
 bF
+Bk
 bF
 bF
-bF
-Om
+Bk
 mp
-Il
+co
 JW
 JW
 JW
@@ -96075,7 +96075,7 @@ Pf
 Il
 np
 zN
-bF
+Bk
 bF
 bF
 bF
@@ -96578,7 +96578,7 @@ Il
 Li
 zN
 bF
-bF
+Bk
 bF
 Bk
 Bk
@@ -97078,7 +97078,7 @@ Pf
 Pf
 Il
 FC
-zN
+Bk
 bF
 bF
 bF
@@ -97579,7 +97579,7 @@ Pf
 Pf
 Pf
 Il
-FC
+mp
 fI
 qB
 qB
@@ -98081,7 +98081,7 @@ JW
 Pf
 Pf
 Il
-FC
+mp
 mC
 mp
 FC
@@ -99089,8 +99089,8 @@ Pf
 Pf
 Pf
 Pf
-JW
-JW
+co
+co
 JW
 JW
 JW
@@ -99591,7 +99591,7 @@ Pf
 Pf
 Pf
 Pf
-JW
+co
 JW
 JW
 JW
@@ -101107,7 +101107,7 @@ JW
 JW
 JW
 JW
-JW
+co
 MD
 JW
 JW
