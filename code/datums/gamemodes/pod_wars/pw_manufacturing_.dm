@@ -332,7 +332,6 @@
 		"menthol", "antihistamine")
 
 	icon_state = "dispenser"
-	icon_base = "dispenser"
 	dispenser_name = "Medical"
 
 
