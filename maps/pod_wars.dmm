@@ -5701,7 +5701,9 @@
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/bridge)
 "vH" = (
-/obj/machinery/manufacturer/mining/pod_wars,
+/obj/machinery/manufacturer/mining/pod_wars{
+	team_num = TEAM_NANOTRASEN
+},
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
@@ -6236,7 +6238,9 @@
 /area/pod_wars/spacejunk/fstation/landingpads)
 "xv" = (
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/manufacturer/mining/pod_wars,
+/obj/machinery/manufacturer/mining/pod_wars{
+	team_num = TEAM_SYNDICATE
+},
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
@@ -7044,7 +7048,9 @@
 /area/pod_wars/spacejunk/restaurant/solars)
 "AL" = (
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/manufacturer/mining/pod_wars,
+/obj/machinery/manufacturer/mining/pod_wars{
+	team_num = TEAM_SYNDICATE
+},
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
@@ -11960,7 +11966,9 @@
 	},
 /area/pod_wars/team2/central_hallway)
 "Uq" = (
-/obj/machinery/manufacturer/mining/pod_wars,
+/obj/machinery/manufacturer/mining/pod_wars{
+	team_num = TEAM_NANOTRASEN
+},
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},

@@ -206,6 +206,15 @@
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/pod_wars/jetpack/syndicate
+	name = "Jetpack"
+	item_paths = list("MET-2","CON-1")
+	item_amounts = list(30,50)
+	item_outputs = list(/obj/item/tank/jetpack/syndicate)
+	time = 60 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/pod_wars/industrialboots
 	name = "Mechanised Boots"
 	item_paths = list("MET-3","CON-2","POW-2", "DEN-2")
@@ -216,10 +225,14 @@
 	category = "Clothing"
 
 
-/obj/machinery/manufacturer/mining/pod_wars
+/obj/machinery/manufacturer/mining/pod_wars/
+	var/team_num = 0
 	New()
 		available -= /datum/manufacture/jetpack
-		available += /datum/manufacture/pod_wars/jetpack
+		if(src.team_num == TEAM_NANOTRASEN)
+			available += /datum/manufacture/pod_wars/jetpack
+		if(src.team_num == TEAM_SYNDICATE)
+			available += /datum/manufacture/pod_wars/jetpack/syndicate
 
 		available -= /datum/manufacture/industrialboots
 		available += /datum/manufacture/pod_wars/industrialboots
