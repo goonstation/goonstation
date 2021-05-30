@@ -80,9 +80,10 @@
 		if (istype(I, /obj/item/handheld_vacuum))
 			return
 		if (istype(I,/obj/item/satchel/) && I.contents.len)
-			var/action = input(user, "What do you want to do with the satchel?") in list("Empty it into the Chute","Place it in the Chute","Never Mind")
-			if (!action || action == "Never Mind") return
-			if (get_dist(src,user) > 1)
+			var/action = input(user, "What do you want to do with the satchel?") in list("Place it in the Chute","Empty it into the Chute","Never Mind")
+			if (!action || action == "Never Mind")
+				return
+			if (!in_interact_range(src, user))
 				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
 				return
 			if (action == "Empty it into the Chute")
@@ -92,7 +93,9 @@
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
 		if (istype(I,/obj/item/storage/) && I.contents.len)
-			var/action = input(user, "What do you want to do with [I]?") as null|anything in list("Empty it into the chute","Place it in the Chute")
+			var/action = input(user, "What do you want to do with [I]?") as null|anything in list("Place it in the Chute","Empty it into the chute","Never Mind")
+			if (!action || action == "Never Mind")
+				return
 			if (!in_interact_range(src, user))
 				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
 				return
