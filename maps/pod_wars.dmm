@@ -589,6 +589,7 @@
 	icon_state = "1-2"
 	},
 /obj/table/reinforced/bar/auto,
+/obj/item/storage/box/crayon,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "cw" = (
@@ -954,11 +955,14 @@
 /turf/space,
 /area/space)
 "dQ" = (
-/obj/machinery/nanofab/mining,
-/turf/unsimulated/floor/yellow/side{
-	dir = 9
+/obj/cable{
+	icon_state = "4-8"
 	},
-/area/pod_wars/team1/mining)
+/obj/machinery/chem_master{
+	dir = 8
+	},
+/turf/unsimulated/floor/white,
+/area/pod_wars/team1/medbay)
 "dR" = (
 /turf/unsimulated/floor/yellow/side,
 /area/pod_wars/team1/starboardhall)
@@ -1804,7 +1808,7 @@
 /area/pod_wars/spacejunk/uvb67/central)
 "gJ" = (
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/chem_master,
+/obj/machinery/chem_dispenser/medical,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
 "gM" = (
@@ -1935,18 +1939,11 @@
 /turf/space,
 /area/space)
 "hn" = (
-/obj/table/auto,
-/obj/machinery/glass_recycler/chemistry,
-/obj/item/storage/box/beakerbox{
-	pixel_x = -8;
-	pixel_y = 15
+/obj/machinery/nanofab/mining,
+/turf/unsimulated/floor/yellow/side{
+	dir = 9
 	},
-/obj/item/storage/box/beakerbox{
-	pixel_x = 8;
-	pixel_y = 15
-	},
-/turf/unsimulated/floor/white,
-/area/pod_wars/team2/medbay)
+/area/pod_wars/team1/mining)
 "hp" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -2755,17 +2752,10 @@
 	},
 /area/pod_wars/team2/mining)
 "kE" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/obj/access_spawn/heads,
-/obj/forcefield/energyshield/perma{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/pod_wars/team1/mining)
+/obj/table/reinforced/bar/auto,
+/obj/item/storage/box/crayon,
+/turf/unsimulated/floor/specialroom/bar,
+/area/pod_wars/team1/bar)
 "kF" = (
 /obj/machinery/light/incandescent/netural,
 /obj/stool/chair,
@@ -2860,18 +2850,11 @@
 	},
 /area/pod_wars/team1/manufacturing)
 "kX" = (
+/obj/submachine/chem_extractor{
+	dir = 4;
+	pixel_x = -4
+	},
 /obj/machinery/light/incandescent/netural,
-/obj/table/auto,
-/obj/item/storage/belt/medical,
-/obj/item/storage/belt/medical,
-/obj/item/storage/belt/medical,
-/obj/item/storage/belt/medical,
-/obj/item/reagent_containers/glass/beaker/large/brute,
-/obj/item/reagent_containers/glass/beaker/large/brute,
-/obj/item/clothing/glasses/healthgoggles/upgraded,
-/obj/item/clothing/glasses/healthgoggles/upgraded,
-/obj/item/clothing/glasses/healthgoggles/upgraded,
-/obj/item/clothing/glasses/healthgoggles/upgraded,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "kZ" = (
@@ -4686,6 +4669,12 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/pod_wars/spacejunk/nancy)
+"rB" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/unsimulated/floor/yellow/side{
+	dir = 1
+	},
+/area/pod_wars/team2/mining)
 "rD" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -6084,10 +6073,17 @@
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
 "wO" = (
-/obj/item_dispenser/bandage,
-/obj/machinery/manufacturer/medical/pod_wars,
-/turf/unsimulated/floor/white,
-/area/pod_wars/team1/medbay)
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/access_spawn/heads,
+/obj/forcefield/energyshield/perma{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/pod_wars/team1/mining)
 "wP" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/corner/extra_big,
@@ -6853,12 +6849,6 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/pod_wars/spacejunk/fstation/maintdock)
-"zK" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/unsimulated/floor/yellow/side{
-	dir = 1
-	},
-/area/pod_wars/team2/mining)
 "zL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -7052,6 +7042,7 @@
 /obj/item/reagent_containers/glass/beaker/large/antitox,
 /obj/item/reagent_containers/hypospray,
 /obj/item/reagent_containers/dropper,
+/obj/item_dispenser/bandage,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "AA" = (
@@ -7150,13 +7141,15 @@
 /area/pod_wars/spacejunk/fstation/secdock)
 "AU" = (
 /obj/table/auto,
-/obj/item/reagent_containers/glass/beaker/large/brute,
-/obj/item/reagent_containers/glass/beaker/large/brute,
-/obj/item/clothing/glasses/healthgoggles/upgraded,
-/obj/item/clothing/glasses/healthgoggles/upgraded,
-/obj/machinery/light/incandescent/netural,
-/obj/item/clothing/glasses/healthgoggles/upgraded,
-/obj/item/clothing/glasses/healthgoggles/upgraded,
+/obj/machinery/glass_recycler/chemistry,
+/obj/item/storage/box/beakerbox{
+	pixel_x = -8;
+	pixel_y = 15
+	},
+/obj/item/storage/box/beakerbox{
+	pixel_x = 8;
+	pixel_y = 15
+	},
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
 "AW" = (
@@ -7191,7 +7184,10 @@
 /area/space)
 "Bb" = (
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/chem_master,
+/obj/machinery/chem_master{
+	dir = 4;
+	pixel_x = -4
+	},
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "Bd" = (
@@ -7880,7 +7876,14 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "DQ" = (
-/obj/machinery/manufacturer/medical/pod_wars,
+/obj/table/auto,
+/obj/item/reagent_containers/glass/beaker/large/brute,
+/obj/item/reagent_containers/glass/beaker/large/brute,
+/obj/item/clothing/glasses/healthgoggles/upgraded,
+/obj/item/clothing/glasses/healthgoggles/upgraded,
+/obj/machinery/light/incandescent/netural,
+/obj/item/clothing/glasses/healthgoggles/upgraded,
+/obj/item/clothing/glasses/healthgoggles/upgraded,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
 "DT" = (
@@ -8439,6 +8442,14 @@
 	dir = 1
 	},
 /area/pod_wars/spacejunk/fstation/primary)
+"FZ" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/access_spawn/syndie_shuttle,
+/obj/forcefield/energyshield/perma,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/pod_wars/team2/mining)
 "Gb" = (
 /obj/grille/catwalk{
 	dir = 6;
@@ -8631,7 +8642,10 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/maintdock)
 "GQ" = (
-/obj/machinery/chem_dispenser/medical,
+/obj/machinery/chem_master{
+	dir = 4;
+	pixel_x = -4
+	},
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
 "GR" = (
@@ -9252,8 +9266,18 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/power)
 "Jh" = (
+/obj/table/auto,
+/obj/item/storage/belt/medical,
+/obj/item/storage/belt/medical,
+/obj/item/storage/belt/medical,
+/obj/item/storage/belt/medical,
+/obj/item/reagent_containers/glass/beaker/large/brute,
+/obj/item/reagent_containers/glass/beaker/large/brute,
+/obj/item/clothing/glasses/healthgoggles/upgraded,
+/obj/item/clothing/glasses/healthgoggles/upgraded,
+/obj/item/clothing/glasses/healthgoggles/upgraded,
+/obj/item/clothing/glasses/healthgoggles/upgraded,
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/chem_dispenser/medical,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "Ji" = (
@@ -9975,7 +9999,6 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team1/manufacturing)
 "Mc" = (
-/obj/machinery/light/incandescent/netural,
 /obj/landmark/start{
 	name = "NanoTrasen Pod Pilot"
 	},
@@ -10559,7 +10582,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/uvb67/power)
 "Ow" = (
-/obj/machinery/chem_master,
+/obj/machinery/manufacturer/medical/pod_wars,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "Ox" = (
@@ -11441,16 +11464,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/table/auto,
-/obj/machinery/glass_recycler/chemistry,
-/obj/item/storage/box/beakerbox{
-	pixel_x = 8;
-	pixel_y = 15
-	},
-/obj/item/storage/box/beakerbox{
-	pixel_x = -8;
-	pixel_y = 15
-	},
+/obj/machinery/chem_dispenser/medical,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "Sb" = (
@@ -12082,6 +12096,10 @@
 	},
 /turf/simulated/floor/yellow,
 /area/pod_wars/spacejunk/miningoutpost)
+"Ur" = (
+/obj/submachine/chem_extractor,
+/turf/unsimulated/floor/white,
+/area/pod_wars/team2/cloning)
 "Us" = (
 /obj/machinery/macrofab/pod_wars/syndicate/mining{
 	dir = 8
@@ -12644,14 +12662,6 @@
 "Wv" = (
 /turf/simulated/wall/asteroid/pod_wars,
 /area/pod_wars/asteroid/major/maj_11)
-"Ww" = (
-/obj/machinery/door/airlock/pyro/external,
-/obj/access_spawn/syndie_shuttle,
-/obj/forcefield/energyshield/perma,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/pod_wars/team2/mining)
 "Wy" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -12743,6 +12753,7 @@
 /obj/landmark/start{
 	name = "NanoTrasen Pod Pilot"
 	},
+/obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/yellow/side,
 /area/pod_wars/team1/mining)
 "WY" = (
@@ -12930,6 +12941,7 @@
 /area/pod_wars/spacejunk/miningoutpost/crewquarters)
 "XH" = (
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/manufacturer/medical/pod_wars,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
 "XI" = (
@@ -38224,8 +38236,8 @@ qZ
 pp
 pp
 qZ
-kE
-kE
+wO
+wO
 qZ
 pp
 pp
@@ -39224,7 +39236,7 @@ Tr
 qZ
 qZ
 qZ
-dQ
+hn
 Mc
 WX
 qZ
@@ -45746,8 +45758,8 @@ wf
 oS
 bW
 bW
-wO
-VK
+aZ
+dQ
 ed
 ed
 ed
@@ -54284,7 +54296,7 @@ yx
 yx
 yx
 oN
-wB
+kE
 Xt
 yx
 JL
@@ -230891,7 +230903,7 @@ tN
 UB
 rc
 rc
-hn
+rc
 vQ
 vQ
 JW
@@ -231883,7 +231895,7 @@ JW
 JW
 JW
 qa
-qU
+Ur
 qU
 qU
 qU
@@ -234397,7 +234409,7 @@ Lf
 Au
 il
 zZ
-qU
+Lf
 re
 uB
 Sk
@@ -238425,7 +238437,7 @@ ED
 Fq
 XP
 HI
-zK
+rB
 Ux
 Ux
 Ux
@@ -239436,7 +239448,7 @@ Ux
 dz
 aX
 ZC
-Ww
+FZ
 ty
 uz
 WT
@@ -239938,7 +239950,7 @@ Ux
 dz
 aX
 ZC
-Ww
+FZ
 ty
 uz
 WT
