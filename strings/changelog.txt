@@ -1,5 +1,9 @@
 
 (t)sun may 30 21
+(u)Arthur Holiday
+(p)4858
+(e)🆕🗺|feature, mapping
+(+)Added a new prefab to water maps, a torpedo deposit, it contains a few torpedoes and a cool back story. Check it out!
 (u)Flappybat
 (p)4958
 (e)🆕🎨|feature, sprites
