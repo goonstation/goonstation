@@ -215,9 +215,27 @@
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/pod_wars/accumulator
+	name = "Mineral Accumulator"
+	item_paths = list("MET-2","CON-2","DEN-1")
+	item_amounts = list(25,15,2)
+	item_outputs = list(/obj/machinery/oreaccumulator)
+	time = 120 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/pod_wars/accumulator/syndicate
+	name = "Syndicate Mineral Accumulator"
+	item_outputs = list(/obj/machinery/oreaccumulator/pod_wars/syndicate)
+
+/datum/manufacture/pod_wars/accumulator/nanotrasen
+	name = "NanoTrasen Mineral Accumulator"
+	item_outputs = list(/obj/machinery/oreaccumulator/pod_wars/nanotrasen)
 
 /obj/machinery/manufacturer/mining/pod_wars
 	New()
+		available -= /datum/manufacture/ore_accumulator
+
 		available -= /datum/manufacture/jetpack
 		available += /datum/manufacture/pod_wars/jetpack
 
@@ -225,6 +243,16 @@
 		available += /datum/manufacture/pod_wars/industrialboots
 
 		hidden = list()
+		..()
+
+/obj/machinery/manufacturer/mining/pod_wars/syndicate
+	New()
+		available += /datum/manufacture/pod_wars/accumulator/syndicate
+		..()
+
+/obj/machinery/manufacturer/mining/pod_wars/nanotrasen
+	New()
+		available += /datum/manufacture/pod_wars/accumulator/nanotrasen
 		..()
 
 /obj/machinery/manufacturer/medical/pod_wars
