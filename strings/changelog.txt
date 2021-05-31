@@ -1,4 +1,9 @@
 
+(t)mon may 31 21
+(u)Flappybat
+(p)4973
+(e)⚖|balance
+(+)Scanning Syndicate command armor now requires a syndicate device analyser.
 (t)sun may 30 21
 (u)Arthur Holiday
 (p)4858
