@@ -144,6 +144,7 @@
 	item_state = "funny"
 	spawn_contents = list(/obj/item/storage/box/starter,\
 	/obj/item/storage/box/balloonbox)
+	slots = 7
 
 /obj/item/storage/fanny/funny/mini
 	name = "mini funny pack"
