@@ -774,8 +774,8 @@
 
 	OnLife(var/mult)
 		if (probmult(ring_prob) && owner.client)
-			// owner.client << sound("phone-ringing.wav")		//play sound only for client. Untested, don't know the sound
-			owner.client << sound("sound/machines/phones/ring_incoming.ogg")		//play sound only for client. Untested, don't know the sound
+			// owner.client << sound("sound/machines/phones/ring_incoming.ogg")		//hee hoo let's give someone legit tinnitus with the mutation, that's good game design (it's actually not)
+			owner.playsound_local(owner.loc, "sound/machines/phones/ring_incoming.ogg", 40, 1)
 
 /datum/bioEffect/anemia
 	name = "Anemia"

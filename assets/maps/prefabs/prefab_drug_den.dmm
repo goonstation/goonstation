@@ -623,7 +623,7 @@
 	pixel_x = 5;
 	pixel_y = -2
 	},
-/obj/item/paper/book/cookbook{
+/obj/item/paper/book/from_file/cookbook{
 	pixel_x = -5;
 	pixel_y = 6
 	},

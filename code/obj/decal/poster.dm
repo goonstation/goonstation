@@ -821,7 +821,7 @@
 					return
 
 				if (istype(W, /obj/item/diary))
-					var/obj/item/paper/book/space_law/first/newbook = new /obj/item/paper/book/space_law/first
+					var/obj/item/paper/book/from_file/space_law/first/newbook = new /obj/item/paper/book/from_file/space_law/first
 					user.u_equip(W)
 					user.put_in_hand_or_drop(newbook)
 					boutput(user, "<span class='alert'>Beepsky's private journal transforms into Space Law 1st Print.</span>")

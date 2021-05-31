@@ -1355,7 +1355,7 @@
 	},
 /area/station/solar/east)
 "adf" = (
-/obj/item/paper/book/pocketguide/quartermaster,
+/obj/item/paper/book/from_file/pocketguide/quartermaster,
 /turf/simulated/floor/plating/random,
 /area/space)
 "adg" = (
@@ -7747,7 +7747,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/hallway/secondary/entry)
 "auQ" = (
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -17647,7 +17647,7 @@
 /turf/simulated/floor/plating/airless/random,
 /area/station/mining/magnet)
 "aSI" = (
-/obj/item/paper/book/minerals,
+/obj/item/paper/book/from_file/minerals,
 /turf/simulated/floor/plating/airless/random,
 /area/station/mining/magnet)
 "aSJ" = (
@@ -18502,7 +18502,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -19025,7 +19025,7 @@
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/electrical,
 /obj/item/storage/box/starter,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -19920,7 +19920,7 @@
 /obj/machinery/alarm{
 	pixel_y = 20
 	},
-/obj/item/paper/book/medical_surgery_guide,
+/obj/item/paper/book/from_file/medical_surgery_guide,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay/surgery)
 "aXL" = (
@@ -21843,7 +21843,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/item/paper/book/mechanicbook,
+/obj/item/paper/book/from_file/mechanicbook,
 /turf/simulated/floor/carpet/grime,
 /area/station/engine/elect)
 "bcd" = (
@@ -22596,7 +22596,7 @@
 /area/station/medical/medbay/surgery)
 "bdQ" = (
 /obj/machinery/optable,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay/surgery)
 "bdR" = (
@@ -26487,8 +26487,8 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/item/paper/book/materials,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/matsci_guide,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/item/cargotele,
 /turf/simulated/floor/black,
 /area/station/quartermaster/office)
@@ -31044,7 +31044,7 @@
 	pixel_x = 3;
 	pixel_y = 12
 	},
-/obj/item/paper/book/medical_surgery_guide,
+/obj/item/paper/book/from_file/medical_surgery_guide,
 /obj/item/scalpel,
 /turf/simulated/floor/blueblack{
 	dir = 4
@@ -31735,7 +31735,7 @@
 "bAP" = (
 /obj/table/wood/auto,
 /obj/item/saw,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/item/saw,
 /obj/item/satchel/hydro,
 /obj/decal/cleanable/dirt,
@@ -31750,7 +31750,7 @@
 	icon_state = "plant";
 	pixel_y = 20
 	},
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/item/device/microphone,
 /obj/item/device/radio/intercom/security,
 /obj/disposalpipe/segment/bent/south,
@@ -33969,7 +33969,7 @@
 /area/station/hydroponics/bay)
 "bGx" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/item/reagent_containers/glass/bottle/groboost,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
@@ -34301,7 +34301,7 @@
 	d2 = 4;
 	icon_state = "5-8"
 	},
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/landmark/start{
 	name = "Head of Security"
 	},
@@ -34692,7 +34692,7 @@
 /area/station/hallway/secondary/west)
 "bIF" = (
 /obj/table/wood/round/auto,
-/obj/item/paper/book/critter_compendium,
+/obj/item/paper/book/from_file/critter_compendium,
 /turf/simulated/floor/carpet/purple/fancy/edge,
 /area/station/hallway/secondary/west)
 "bIG" = (
@@ -34706,7 +34706,7 @@
 /area/station/hallway/secondary/west)
 "bIH" = (
 /obj/table/wood/round/auto,
-/obj/item/paper/book/monster_manual,
+/obj/item/paper/book/from_file/monster_manual,
 /turf/simulated/floor/carpet/purple/fancy/edge,
 /area/station/hallway/secondary/west)
 "bII" = (
@@ -36464,7 +36464,7 @@
 /area/station/crew_quarters/kitchen)
 "bNn" = (
 /obj/table/auto,
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
@@ -42453,7 +42453,7 @@
 	},
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
-/obj/item/paper/book/medical_surgery_guide,
+/obj/item/paper/book/from_file/medical_surgery_guide,
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/medical/robotics)
 "cch" = (
@@ -46798,7 +46798,7 @@
 /area/station/quartermaster/storage)
 "cmK" = (
 /obj/decal/cleanable/dirt,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/barber_shop)
 "cmL" = (
@@ -52424,7 +52424,7 @@
 /obj/landmark/start{
 	name = "Research Director"
 	},
-/obj/item/paper/book/guardbot_guide,
+/obj/item/paper/book/from_file/guardbot_guide,
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/crew_quarters/hor)
 "cCx" = (
@@ -55346,7 +55346,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/item/pen/crayon/red,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "iUz" = (
@@ -58217,8 +58217,8 @@
 	dir = 1
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper/book/mechanicbook,
-/obj/item/paper/book/minerals,
+/obj/item/paper/book/from_file/mechanicbook,
+/obj/item/paper/book/from_file/minerals,
 /obj/item/cargotele,
 /obj/noticeboard/persistent{
 	name = "Cargo persistent notice board";
