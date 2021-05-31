@@ -1,4 +1,22 @@
 
+(t)mon may 31 21
+(u)DimWhat
+(p)4755
+(e)⚖|balance
+(*)Made fanny packs (not funny packs) only have inventory 5 slots.
+(u)Flappybat
+(p)4973
+(e)⚖|balance
+(+)Scanning Syndicate command armor now requires a syndicate device analyser.
+(t)sun may 30 21
+(u)Arthur Holiday
+(p)4858
+(e)🆕🗺|feature, mapping
+(+)Added a new prefab to water maps, a torpedo deposit, it contains a few torpedoes and a cool back story. Check it out!
+(u)Flappybat
+(p)4958
+(e)🆕🎨|feature, sprites
+(+)Adds a roburger variant, the cheeseborger. Just add cheese! Sprite modification by BatElite.
 (t)sat may 29 21
 (u)Flourish
 (*)Player monkeys now must be dead in order to be monkey spiked or reclaimed, gibbers now require all victims to be dead.
