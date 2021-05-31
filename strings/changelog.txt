@@ -1,5 +1,10 @@
 
 (t)mon may 31 21
+(u)Azrun
+(p)4809
+(e)⚖🆕🗺🎨|balance, feature, mapping, sprites
+(*)Added experimental red oxygen grenade to station repair equipment.  Violently releases large amounts of oxygen into an area.
+(+)Red oxygen grenades are available from QM and each engineer starts with one.
 (u)Tarmunora
 (e)⚖|balance
 (*)10 degree spread on dual-wielding guns.
