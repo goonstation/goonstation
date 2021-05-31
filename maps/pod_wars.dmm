@@ -954,6 +954,7 @@
 /turf/space,
 /area/space)
 "dQ" = (
+/obj/machinery/nanofab/mining,
 /turf/unsimulated/floor/yellow/side{
 	dir = 9
 	},
@@ -1173,6 +1174,7 @@
 /area/pod_wars/spacejunk/fstation/landingpads)
 "eJ" = (
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/unsimulated/floor/yellow/side{
 	dir = 4
 	},
@@ -1376,6 +1378,14 @@
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
+/obj/item/device/multitool{
+	pixel_x = -9;
+	pixel_y = 4
+	},
+/obj/item/device/multitool{
+	pixel_x = -9;
+	pixel_y = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -1817,7 +1827,6 @@
 /area/pod_wars/team2/mining)
 "gO" = (
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/nanofab/mining,
 /turf/unsimulated/floor/yellow/side,
 /area/pod_wars/team1/mining)
 "gP" = (
@@ -2746,9 +2755,17 @@
 	},
 /area/pod_wars/team2/mining)
 "kE" = (
-/obj/table/wood/round/champagne,
-/turf/unsimulated/floor/red/side,
-/area/pod_wars/team2/central_hallway)
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/access_spawn/heads,
+/obj/forcefield/energyshield/perma{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/pod_wars/team1/mining)
 "kF" = (
 /obj/machinery/light/incandescent/netural,
 /obj/stool/chair,
@@ -6836,6 +6853,12 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/pod_wars/spacejunk/fstation/maintdock)
+"zK" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/unsimulated/floor/yellow/side{
+	dir = 1
+	},
+/area/pod_wars/team2/mining)
 "zL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9466,6 +9489,14 @@
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/storage/toolbox/mechanical,
+/obj/item/device/multitool{
+	pixel_x = -9;
+	pixel_y = 4
+	},
+/obj/item/device/multitool{
+	pixel_x = -9;
+	pixel_y = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -9948,7 +9979,7 @@
 /obj/landmark/start{
 	name = "NanoTrasen Pod Pilot"
 	},
-/turf/unsimulated/floor/yellow/side{
+/turf/unsimulated/floor/yellow/corner{
 	dir = 1
 	},
 /area/pod_wars/team1/mining)
@@ -10048,6 +10079,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/unsimulated/floor/yellow/side{
 	dir = 4
 	},
@@ -11364,6 +11396,7 @@
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/fstation/medbay)
 "RO" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/unsimulated/floor/yellow/side{
 	dir = 5
 	},
@@ -12611,6 +12644,14 @@
 "Wv" = (
 /turf/simulated/wall/asteroid/pod_wars,
 /area/pod_wars/asteroid/major/maj_11)
+"Ww" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/access_spawn/syndie_shuttle,
+/obj/forcefield/energyshield/perma,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/pod_wars/team2/mining)
 "Wy" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -13245,6 +13286,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
+/obj/table/wood/round/champagne,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -38182,8 +38224,8 @@ qZ
 pp
 pp
 qZ
-PH
-PH
+kE
+kE
 qZ
 pp
 pp
@@ -38679,7 +38721,7 @@ JW
 JW
 JW
 JW
-JW
+qZ
 qZ
 Jx
 la
@@ -39182,7 +39224,7 @@ Tr
 qZ
 qZ
 qZ
-qZ
+dQ
 Mc
 WX
 qZ
@@ -39684,8 +39726,8 @@ JW
 pp
 gQ
 Xb
-dQ
-Sr
+FV
+eR
 Yp
 VM
 VM
@@ -238383,7 +238425,7 @@ ED
 Fq
 XP
 HI
-jD
+zK
 Ux
 Ux
 Ux
@@ -239394,7 +239436,7 @@ Ux
 dz
 aX
 ZC
-aX
+Ww
 ty
 uz
 WT
@@ -239896,7 +239938,7 @@ Ux
 dz
 aX
 ZC
-aX
+Ww
 ty
 uz
 WT
@@ -240389,7 +240431,7 @@ ED
 Ew
 ED
 Ts
-kE
+XP
 HI
 jD
 cI
