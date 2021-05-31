@@ -1572,19 +1572,6 @@
 /obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
-"dQ" = (
-/obj/table/auto,
-/obj/item/paper/book/from_file/minerals{
-	pixel_x = -2;
-	pixel_y = 5
-	},
-/obj/item/paper/book/from_file/matsci_guide,
-/obj/item/device/matanalyzer,
-/turf/simulated/floor/engine{
-	allows_vehicles = 0;
-	icon_state = "engine_caution_corners"
-	},
-/area/station/mining/staff_room)
 "dR" = (
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_south"
@@ -6612,20 +6599,6 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
-"pV" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/mechanical,
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/random_item_spawner/tools_w_igloves{
-	max_amt2spawn = 14;
-	min_amt2spawn = 6
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/engine/engineering)
 "pW" = (
 /obj/cable{
 	d1 = 2;
@@ -7194,19 +7167,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/turret_protected/Zeta)
-"rm" = (
-/obj/table/auto,
-/obj/item/paper/book/from_file/hydroponicsguide,
-/obj/item/plantanalyzer,
-/obj/item/device/reagentscanner,
-/obj/item/device/reagentscanner,
-/obj/item/paper_bin,
-/obj/item/plantanalyzer,
-/obj/item/pen/pencil{
-	pixel_x = -6
-	},
-/turf/simulated/floor/green,
-/area/station/hydroponics/bay)
 "rn" = (
 /obj/machinery/plantpot,
 /obj/machinery/disposal/small{
@@ -7339,20 +7299,6 @@
 /obj/machinery/navbeacon/tour/atlas/tour12,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"rC" = (
-/obj/table/auto,
-/obj/item/tank/jetpack,
-/obj/item/tank/jetpack,
-/obj/item/tank/jetpack,
-/obj/item/tank/jetpack,
-/obj/item/tank/jetpack,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/storage/eva)
 "rD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -11065,6 +11011,19 @@
 	dir = 1
 	},
 /area/station/hallway/primary/east)
+"Au" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/hydroponicsguide,
+/obj/item/plantanalyzer,
+/obj/item/device/reagentscanner,
+/obj/item/device/reagentscanner,
+/obj/item/paper_bin,
+/obj/item/plantanalyzer,
+/obj/item/pen/pencil{
+	pixel_x = -6
+	},
+/turf/simulated/floor/green,
+/area/station/hydroponics/bay)
 "Ax" = (
 /obj/machinery/atmospherics/valve,
 /turf/simulated/floor/engine,
@@ -12294,20 +12253,6 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/white,
-/area/station/science/chemistry)
-"DQ" = (
-/obj/storage/crate{
-	desc = "null";
-	name = "Chemistry Supplies Crate"
-	},
-/obj/item/reagent_containers/dropper/mechanical,
-/obj/item/storage/box/patchbox,
-/obj/item/paper/book/from_file/pharmacopia,
-/obj/item/storage/box/syringes,
-/obj/item/storage/box/beakerbox,
-/turf/simulated/floor/purplewhite{
-	dir = 4
-	},
 /area/station/science/chemistry)
 "DR" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -15065,6 +15010,13 @@
 	dir = 6
 	},
 /area/station/medical/cdc)
+"KG" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/cookbook,
+/obj/item/kitchen/rollingpin,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "KH" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -17529,12 +17481,48 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/storage/tech)
+"QM" = (
+/obj/table/auto,
+/obj/item/old_grenade/oxygen{
+	pixel_y = 8
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_y = 8
+	},
+/obj/item/tank/jetpack,
+/obj/item/tank/jetpack,
+/obj/item/tank/jetpack,
+/obj/item/tank/jetpack,
+/obj/item/tank/jetpack,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/storage/eva)
 "QR" = (
 /obj/cable{
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
+"QS" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/random_item_spawner/tools_w_igloves{
+	max_amt2spawn = 14;
+	min_amt2spawn = 6
+	},
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
+/turf/simulated/floor/orangeblack,
+/area/station/engine/engineering)
 "QT" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/chapel{
@@ -17684,6 +17672,21 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"Rr" = (
+/obj/storage/crate/clown,
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	light_type = /obj/item/light/bulb/yellowish;
+	pixel_x = -8
+	},
+/obj/item/paper/book/from_file/the_trial,
+/turf/simulated/floor/plating/random,
+/area/station/quartermaster/office)
 "Rs" = (
 /turf/simulated/floor/wood/two,
 /area/station/bridge/united_command)
@@ -17966,13 +17969,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
-"Ss" = (
-/obj/table/auto,
-/obj/item/paper/book/from_file/cookbook,
-/obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "St" = (
 /obj/machinery/power/smes,
 /obj/cable,
@@ -18886,6 +18882,20 @@
 /obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor/caution/west,
 /area/station/engine/hotloop)
+"VS" = (
+/obj/storage/crate{
+	desc = "null";
+	name = "Chemistry Supplies Crate"
+	},
+/obj/item/reagent_containers/dropper/mechanical,
+/obj/item/storage/box/patchbox,
+/obj/item/paper/book/from_file/pharmacopia,
+/obj/item/storage/box/syringes,
+/obj/item/storage/box/beakerbox,
+/turf/simulated/floor/purplewhite{
+	dir = 4
+	},
+/area/station/science/chemistry)
 "VT" = (
 /obj/cable{
 	d1 = 1;
@@ -19090,6 +19100,19 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/bridge/united_command)
+"WD" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/minerals{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/paper/book/from_file/matsci_guide,
+/obj/item/device/matanalyzer,
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_corners"
+	},
+/area/station/mining/staff_room)
 "WF" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19806,21 +19829,6 @@
 /obj/disposalpipe/junction/right/east,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"YG" = (
-/obj/storage/crate/clown,
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/machinery/light/small{
-	dir = 8;
-	light_type = /obj/item/light/bulb/yellowish;
-	pixel_x = -8
-	},
-/obj/item/paper/book/from_file/the_trial,
-/turf/simulated/floor/plating/random,
-/area/station/quartermaster/office)
 "YI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -59048,7 +59056,7 @@ mC
 nj
 np
 ok
-pV
+QS
 XG
 rW
 sf
@@ -59335,7 +59343,7 @@ aa
 cJ
 cJ
 do
-dQ
+WD
 eD
 fo
 fZ
@@ -62348,7 +62356,7 @@ av
 PT
 PT
 aH
-YG
+Rr
 aY
 Hl
 kP
@@ -63291,7 +63299,7 @@ Xk
 XF
 CA
 Dg
-DQ
+VS
 EF
 Fl
 Gf
@@ -65391,7 +65399,7 @@ oI
 vP
 vP
 qn
-rm
+Au
 sy
 tK
 uQ
@@ -70210,7 +70218,7 @@ dF
 ej
 eX
 fB
-Ss
+KG
 gT
 gT
 jF
@@ -76563,7 +76571,7 @@ je
 ct
 po
 qz
-rC
+QM
 pp
 ve
 fl
