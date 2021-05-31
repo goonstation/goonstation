@@ -167,45 +167,34 @@
 					var/displayMessage = "[bicon(master)] Unable to place order due to connection failure. Please try again later."
 					src.master.display_message(displayMessage)
 
-				else if(src.master.ID_card && src.master.ID_card.money >= src.cartcost)
-					var/destination = "SHIP_TO_QM"
-					if(pick_landmark(LANDMARK_MAILORDER_SPAWN)) //pick a destination if mail insertion is supported by map
-						destination = input(usr, "Enter mail tag without quotes, or SHIP_TO_QM for secure crate-based delivery", src.name, null) as text
-					var/purchase_authed = 1
-					for(var/P in src.cart)
-						var/datum/mail_order/F = P
-						if(!istype(F, /datum/mail_order))
-							continue
-						if(!length(F.order_perm))
-							continue
-						purchase_authed = 0
-						//a loop inside a loop oh no
-						for(var/acval in F.order_perm)
-							if(acval in src.master.ID_card.access)
-								purchase_authed = 1
-								break
-					if(!purchase_authed)
-						src.master.display_alert(alert_beep)
-						var/displayMessage = "[bicon(master)] Purchase unsuccessful due to insufficient authorization on card."
-						src.master.display_message(displayMessage)
-
-					else if(destination && isalive(usr))
-						var/buy_success = src.shipcart(destination)
-						src.master.display_alert(alert_beep)
-						var/displayMessage = "[bicon(master)] Purchase unsuccessful due to lack of mail-order service to your area."
-						if(buy_success)
-							src.master.ID_card.money -= src.cartcost
-							switch(buy_success)
-								if(DELIVERED_TO_MAIL)
-									displayMessage = "[bicon(master)] Thank you for your purchase! Delivery to '[destination]' in progress."
-								if(DELIVERED_TO_QM)
-									displayMessage = "[bicon(master)] Thank you for your purchase! Your items will be sent to the quartermaster's office."
-							src.mode = MODE_LIST
-						src.master.display_message(displayMessage)
 				else
-					src.master.display_alert(alert_beep)
-					var/displayMessage = "[bicon(master)] Card error - please insert a card with sufficient loaded credits."
-					src.master.display_message(displayMessage)
+					var/creditCheck = src.authCard(usr)
+					if(creditCheck == "SUCCESS")
+						var/destination = "SHIP_TO_QM"
+						if(pick_landmark(LANDMARK_MAILORDER_SPAWN)) //pick a destination if mail insertion is supported by map
+							destination = input(usr, "Enter mail tag without quotes, or SHIP_TO_QM for secure crate-based delivery", src.name, null) as text
+						if(destination && isalive(usr))
+							var/final_bill = src.cartcost //da-na-na na, da-na-na na na
+							var/buy_success = src.shipCart(destination)
+							src.master.display_alert(alert_beep)
+							var/displayMessage = "[bicon(master)] Purchase unsuccessful due to lack of mail-order service to your area."
+							if(buy_success)
+								var/datum/data/record/spender = FindBankAccountByName(src.master.ID_card.registered)
+								if(spender)
+									spender.fields["current_money"] -= final_bill
+								else
+									message_admins("<span class='alert'>[src] tried to charge a card that doesn't exist, yell at kubius</span>")
+								switch(buy_success)
+									if(DELIVERED_TO_MAIL)
+										displayMessage = "[bicon(master)] Thank you for your purchase! Delivery to '[destination]' in progress."
+									if(DELIVERED_TO_QM)
+										displayMessage = "[bicon(master)] Thank you for your purchase! Your items will be sent to the quartermaster's office."
+								src.mode = MODE_LIST
+							src.master.display_message(displayMessage)
+					else
+						src.master.display_alert(alert_beep)
+						var/displayMessage = "[bicon(master)] Purchase failed | [creditCheck]" //period omitted intentionally
+						src.master.display_message(displayMessage)
 
 		if (href_list["clearcart"])
 			if(length(src.cart) > 0)
@@ -233,7 +222,7 @@
 		return
 
 	// arrange for package construction/shipping, then clear cart
-	proc/shipcart(var/destination)
+	proc/shipCart(var/destination)
 		var/list/boxstock = list()
 		var/success_style = null //feeds back via return to let purchase process know what to tell the user
 		var/spawn_package_at = null //used for targeting in mail delivery, and just as an integrity check for qm delivery
@@ -298,6 +287,40 @@
 		src.cartcost = 0
 		src.cart.Cut()
 		return success_style
+
+	proc/authCard(var/mob/user as mob) //handles clearance requirements and payment check
+		if(!src.master.ID_card)
+			return "NO CARD INSERTED"
+		if(!src.master.ID_card.registered)
+			return "NO CARDHOLDER"
+		var/purchase_authed = 1
+		for(var/P in src.cart)
+			var/datum/mail_order/F = P
+			if(!istype(F, /datum/mail_order))
+				continue
+			if(!length(F.order_perm))
+				continue
+			purchase_authed = 0
+			//a loop inside a loop oh no
+			for(var/acval in F.order_perm)
+				if(acval in src.master.ID_card.access)
+					purchase_authed = 1
+				break
+		if(!purchase_authed)
+			return "INSUFFICIENT AUTHORIZATION"
+		var/datum/data/record/account = null
+		account = FindBankAccountByName(src.master.ID_card.registered)
+		if (account)
+			var/enterpin = input(user, "Please enter your PIN number.", "Enter PIN", 0) as null|num
+			if (enterpin == src.master.ID_card.pin)
+				var/bux = account.fields["current_money"]
+				if (bux < src.cartcost)
+					return "INSUFFICIENT FUNDS ([bux] OF [src.cartcost])"
+				return "SUCCESS"
+			else
+				return "MISSING OR INCORRECT PIN"
+		else
+			return "NO ACCOUNT ON FILE"
 
 #undef DELIVERED_TO_QM
 #undef DELIVERED_TO_MAIL
