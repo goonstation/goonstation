@@ -1,5 +1,8 @@
 
 (t)mon may 31 21
+(u)Tarmunora
+(e)⚖|balance
+(*)10 degree spread on dual-wielding guns.
 (u)Penny
 (p)4940
 (e)🆕📄|feature, tgui
