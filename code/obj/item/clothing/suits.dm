@@ -1063,6 +1063,11 @@
 	item_state = "space_suit_syndicate"
 	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives."
 	contraband = 3
+	#ifdef MAP_OVERRIDE_POD_WARS
+	cant_drop = 1
+	cant_other_remove = 1
+	cant_self_remove = 1
+	#endif
 	item_function_flags = IMMUNE_TO_ACID
 
 	setupProperties()
@@ -1073,6 +1078,11 @@
 		name = "commander's great coat"
 		icon_state = "commissar_greatcoat"
 		desc = "A fear-inspiring, black-leather great coat, typically worn by a Syndicate Nuclear Operative Commander. So scary even the vacuum of space doesn't dare claim the wearer."
+		#ifdef MAP_OVERRIDE_POD_WARS
+		cant_drop = 1
+		cant_other_remove = 1
+		cant_self_remove = 1
+		#endif
 
 		setupProperties()
 			..()
@@ -1307,6 +1317,11 @@
 		icon_state = "nanotrasen_pilot"
 		item_state = "nanotrasen_pilot"
 		desc = "A suit that protects against low pressure environments. Issued to nanotrasen pilots."
+		#ifdef MAP_OVERRIDE_POD_WARS
+		cant_drop = 1
+		cant_other_remove = 1
+		cant_self_remove = 1
+		#endif
 
 		setupProperties()
 			..()
@@ -1317,6 +1332,11 @@
 			icon_state = "ntcommander_coat"
 			item_state = "ntcommander_coat"
 			desc = "A fear-inspiring, blue-ish-leather great coat, typically worn by a NanoTrasen Pod Commander. Why does it look like it's been dyed painted blue?"
+			#ifdef MAP_OVERRIDE_POD_WARS
+			cant_drop = 1
+			cant_other_remove = 1
+			cant_self_remove = 1
+			#endif
 
 			setupProperties()
 				..()

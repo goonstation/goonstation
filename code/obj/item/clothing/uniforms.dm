@@ -728,12 +728,22 @@
 	desc = "Non-descript, slightly suspicious civilian clothing."
 	icon_state = "syndicate"
 	item_state = "syndicate"
+	#ifdef MAP_OVERRIDE_POD_WARS
+	cant_drop = 1
+	cant_other_remove = 1
+	cant_self_remove = 1
+	#endif
 
 /obj/item/clothing/under/misc/turds
 	name = "NT-SO Jumpsuit"
 	desc = "A Nanotrasen Special Operations jumpsuit."
 	icon_state = "turdsuit"
 	item_state = "turdsuit"
+	#ifdef MAP_OVERRIDE_POD_WARS
+	cant_drop = 1
+	cant_other_remove = 1
+	cant_self_remove = 1
+	#endif
 
 /obj/item/clothing/under/misc/NT
 	name = "nanotrasen jumpsuit"

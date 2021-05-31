@@ -211,6 +211,11 @@
 	item_state = "space_helmet_syndicate"
 	desc = "The standard space helmet of the dreaded Syndicate."
 	item_function_flags = IMMUNE_TO_ACID
+	#ifdef MAP_OVERRIDE_POD_WARS
+	cant_drop = 1
+	cant_other_remove = 1
+	cant_self_remove = 1
+	#endif
 
 	setupProperties()
 		..()
@@ -227,6 +232,11 @@
 		desc = "A terrifyingly tall, black & red cap, typically worn by a Syndicate Nuclear Operative Commander. Maybe they're trying to prove something to the Head of Security?"
 		seal_hair = 0
 		see_face = 1
+		#ifdef MAP_OVERRIDE_POD_WARS
+		cant_drop = 1
+		cant_other_remove = 1
+		cant_self_remove = 1
+		#endif
 
 	specialist
 		name = "specialist combat helmet"
@@ -385,6 +395,11 @@
 	icon_state = "nanotrasen_pilot"
 	item_state = "nanotrasen_pilot"
 	desc = "A space helmet used by certain Nanotrasen pilots."
+	#ifdef MAP_OVERRIDE_POD_WARS
+	cant_drop = 1
+	cant_other_remove = 1
+	cant_self_remove = 1
+	#endif
 
 	setupProperties()
 		..()
