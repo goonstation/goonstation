@@ -1101,3 +1101,27 @@
 			return
 
 		C.Browse("<img src=\"[resource("images/pw_map.png")]\">","window=Map;size=[imgw]x[imgh];title=Map")
+
+/obj/decal/poster/customizable_banners
+	name = "Banner"
+	desc = "An unfinished banner, try adding some colors to it by using a crayon!"
+	icon = 'icons/obj/decals/banners.dmi'
+	icon_state = "banner_base"
+	color = "#f0e7e7"
+	popup_win = 0
+	var/state = FALSE
+	var/image/banner
+	var/chosen_overlay = "stripes_horizontal"
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(istype(W,/obj/item/pen/crayon) && (src.state == 0))
+			src.color = W.color
+			src.state = 1
+
+		else if(istype(W,/obj/item/pen/crayon) && (src.state == 1))
+			var/image/new_overlay = image('icons/obj/decals/banners.dmi', src.chosen_overlay)
+			new_overlay.color = W.color
+			src.overlays += new_overlay
+
+
+
