@@ -12,6 +12,9 @@
 		/obj/item/material_piece/molitz
 	)
 	available = list(
+		#ifdef RP_MODE
+		/datum/manufacture/pod_wars/handcuffs
+		#endif
 		/datum/manufacture/pod_wars/barricade,
 		/datum/manufacture/pod_wars/energy_concussion_grenade,
 		/datum/manufacture/pod_wars/energy_frag_grenade,
@@ -346,6 +349,16 @@
 	item_amounts = list(5, 5, 5)
 	item_outputs = list(/obj/item/old_grenade/energy_frag)
 	time = 1 SECONDS
+	create = 1
+	category = "Weapon"
+
+/datum/manufacture/pod_wars/handcuffs
+	
+	name = "Handcuffs"
+	item_paths = list("MET-1")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/handcuffs)
+	time = 2 SECONDS
 	create = 1
 	category = "Weapon"
 
