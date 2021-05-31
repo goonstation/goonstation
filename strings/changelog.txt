@@ -1,5 +1,9 @@
 
 (t)mon may 31 21
+(u)DimWhat
+(p)4755
+(e)⚖|balance
+(*)Made fanny packs (not funny packs) only have inventory 5 slots.
 (u)Flappybat
 (p)4973
 (e)⚖|balance
