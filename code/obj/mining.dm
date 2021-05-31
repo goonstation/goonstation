@@ -2232,8 +2232,9 @@ obj/item/clothing/gloves/concussive
 		if (!cargopads.len)
 			boutput(user, "<span class='alert'>No receivers available.</span>")
 		else
-			var/list/L = list()
+			var/list/L
 			if (src.group)
+				L = list()
 				for (var/obj/submachine/cargopad/C in cargopads)
 					if (C.group == src.group)
 						L += C
