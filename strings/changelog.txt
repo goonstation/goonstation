@@ -1,5 +1,10 @@
 
 (t)mon may 31 21
+(u)Penny
+(p)4940
+(e)🆕📄|feature, tgui
+(+)Multitools can now wipe storage devices
+(+)Security disks are now read only, and read only disks can be read in the cloner
 (u)DimWhat
 (p)4755
 (e)⚖|balance
