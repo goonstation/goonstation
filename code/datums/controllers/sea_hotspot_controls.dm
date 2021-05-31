@@ -67,7 +67,7 @@
 
 					map.DrawBox(map_colors[turf_color], x * 2, y * 2, x * 2 + 1, y * 2 + 1)
 
-			for (var/beacon in warp_beacons)
+			for (var/beacon in by_type[/obj/warp_beacon])
 				if (istype(beacon, /obj/warp_beacon/miningasteroidbelt))
 					var/turf/T = get_turf(beacon)
 					map.DrawBox(map_colors["station"], T.x * 2 - 2, T.y * 2 - 2, T.x * 2 + 2, T.y * 2 + 2)

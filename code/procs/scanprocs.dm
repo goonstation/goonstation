@@ -108,7 +108,7 @@
 
 			var/bad_stuff = 0
 			if (L.implant && L.implant.len > 0)
-				for (var/obj/item/implant/I in L)
+				for (var/obj/item/implant/I in L.implant)
 					if (istype(I, /obj/item/implant/projectile))
 						bad_stuff ++
 
@@ -410,7 +410,7 @@
 
 		if (H.implant && H.implant.len > 0)
 			var/wounds = null
-			for (var/obj/item/implant/I in H)
+			for (var/obj/item/implant/I in H.implant)
 				if (istype(I, /obj/item/implant/projectile))
 					wounds ++
 			if (wounds)

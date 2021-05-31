@@ -606,7 +606,7 @@
 	/obj/item/plantanalyzer,
 	/obj/item/device/reagentscanner,
 	/obj/item/reagent_containers/glass/wateringcan,
-	/obj/item/paper/book/hydroponicsguide)
+	/obj/item/paper/book/from_file/hydroponicsguide)
 
 /obj/storage/secure/closet/civilian/kitchen
 	name = "\improper Catering supplies locker"
@@ -615,7 +615,7 @@
 	/obj/item/storage/box/clothing/souschef,\
 	/obj/item/storage/box/cutlery,\
 	/obj/item/kitchen/rollingpin,\
-	/obj/item/paper/book/cookbook,\
+	/obj/item/paper/book/from_file/cookbook,\
 	/obj/item/reagent_containers/food/snacks/ingredient/spaghetti = 5)
 
 /obj/storage/secure/closet/civilian/bartender
@@ -661,6 +661,7 @@
 	icon_redlight = "fridge-redlight"
 	icon_sparks = "fridge-sparks"
 	intact_frame = 1
+	weld_image_offset_X = 3
 
 /obj/storage/secure/closet/fridge/opened
 	New()
