@@ -151,6 +151,7 @@
 			ammoDrop.delete_on_reload = 1 // No duplicating empty magazines, please.
 			ammoDrop.update_icon()
 			usr.put_in_hand_or_drop(ammoDrop)
+			ammoDrop.after_unload(usr)
 			K.ammo.amount_left = 0 // Make room for the new ammo.
 			K.ammo.loadammo(A, K) // Let the other proc do the work for us.
 			//DEBUG_MESSAGE("Swapped [K]'s ammo with [A.type]. There are [A.amount_left] round left over.")
@@ -170,6 +171,7 @@
 			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please.
 			ammoHand.update_icon()
 			usr.put_in_hand_or_drop(ammoHand)
+			ammoHand.after_unload(usr)
 
 			var/obj/item/ammo/bullets/ammoGun = new A.type // Ditto.
 			ammoGun.amount_left = A.amount_left
@@ -201,7 +203,7 @@
 		else if (A.caliber in K.caliber)
 			check = 1
 		else if (K.caliber == null)
-			if (A.caliber == 1.58) // Prevent MRPT rocket
+			if (A.caliber > 1) // Prevent MRPT rocket
 				check = 0
 			else
 				check = 1 // For zip guns.
@@ -210,7 +212,7 @@
 
 		K.add_fingerprint(usr)
 		A.add_fingerprint(usr)
-		playsound(get_turf(K), sound_load, 50, 1)
+		playsound(K, sound_load, 50, 1)
 
 		if (K.ammo.amount_left < 0)
 			K.ammo.amount_left = 0
@@ -281,6 +283,9 @@
 		else
 			if (src.icon_empty)
 				src.icon_state = src.icon_empty
+		return
+
+	proc/after_unload(mob/user)
 		return
 
 /obj/item/ammo/bullets/derringer
@@ -617,11 +622,11 @@
 	name = "12ga flares"
 	amount_left = 8
 	max_amount = 8
-	icon_state = "12"
+	icon_state = "flare"
 	ammo_type = new/datum/projectile/bullet/flare
 	caliber = 0.72
 	icon_dynamic = 0
-	icon_empty = "12-0"
+	icon_empty = "flare-0"
 
 	single
 		amount_left = 1
@@ -784,7 +789,12 @@
 		else
 			src.icon_state = "40mmR-0"
 
-
+	after_unload(mob/user)
+		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
+		if(AMMO.has_grenade && src.delete_on_reload)
+			qdel(src)
+			user.put_in_hand_or_drop(AMMO.get_nade())
+			AMMO.unload_nade()
 
 // Ported from old, non-gun RPG-7 object class (Convair880).
 /obj/item/ammo/bullets/rpg
@@ -864,17 +874,6 @@
 	module_research_type = /obj/item/ammo/power_cell
 	var/sound_load = 'sound/weapons/gunload_click.ogg'
 	var/unusualCell = 0
-
-	onMaterialChanged()
-		..()
-		if(istype(src.material))
-			if(src.material.hasProperty("electrical"))
-				max_charge = round(material.getProperty("electrical") ** 1.33)
-			else
-				max_charge =  40
-
-		charge = max_charge
-		return
 
 	New()
 		..()
@@ -963,7 +962,7 @@
 		swapped_cell.update_icon()
 		src.update_icon()
 
-		playsound(get_turf(src), sound_load, 50, 1)
+		playsound(src, sound_load, 50, 1)
 		return 1
 
 	proc/charge(var/amt = 0)
@@ -1020,16 +1019,6 @@
 	var/cycle = 0 //Recharge every other tick.
 	var/recharge_rate = 5.0
 
-	onMaterialChanged()
-		..()
-		if(istype(src.material))
-			recharge_rate = 0
-			if(src.material.hasProperty("radioactive"))
-				recharge_rate += ((src.material.getProperty("radioactive") / 10) / 2.5) //55(cerenkite) should give around 2.2, slightly less than a slow charge cell.
-			if(src.material.hasProperty("n_radioactive"))
-				recharge_rate += ((src.material.getProperty("n_radioactive") / 10) / 2)
-		return
-
 	New()
 		processing_items |= src
 		..()
@@ -1066,6 +1055,23 @@
 /obj/item/ammo/power_cell/self_charging/custom
 	name = "Power Cell"
 	desc = "A custom-made power cell."
+
+	onMaterialChanged()
+		..()
+		if(istype(src.material))
+			if(src.material.hasProperty("electrical"))
+				max_charge = round(material.getProperty("electrical") ** 1.33)
+			else
+				max_charge =  40
+
+			recharge_rate = 0
+			if(src.material.hasProperty("radioactive"))
+				recharge_rate += ((src.material.getProperty("radioactive") / 10) / 2.5) //55(cerenkite) should give around 2.2, slightly less than a slow charge cell.
+			if(src.material.hasProperty("n_radioactive"))
+				recharge_rate += ((src.material.getProperty("n_radioactive") / 10) / 2)
+
+		charge = max_charge
+		return
 
 /obj/item/ammo/power_cell/self_charging/slowcharge
 	name = "Power Cell - Atomic Slowcharge"
@@ -1206,7 +1212,7 @@
 
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 	id = "powercellswap"
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "power_cell"

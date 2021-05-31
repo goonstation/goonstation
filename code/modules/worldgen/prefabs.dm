@@ -192,7 +192,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 	pit
 		required = 1
 		underwater = 1
-		maxNum = 1
+		maxNum = 3
 		probability = 100
 		prefabPath = "assets/maps/prefabs/prefab_water_oshanpit.dmm"
 		prefabSizeX = 8
@@ -394,6 +394,13 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 10
 		prefabSizeY = 10
 
+	torpedo_deposit // Torpedo deposit
+		underwater = 1
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_water_torpedo_deposit.dmm"
+		prefabSizeX = 21
+		prefabSizeY = 21
 
 
 #if defined(MAP_OVERRIDE_OSHAN)

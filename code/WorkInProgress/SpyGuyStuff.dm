@@ -77,7 +77,7 @@ Fibre wire
 				being_mean = 0
 				return
 			H.emote("faint")
-			H.changeStatus("paralysis", 150)
+			H.changeStatus("paralysis", 15 SECONDS)
 			H.show_text("<I><font size=5>You feel your mind drifting away from your body!</font></I>", "red")
 
 			playsound(src.loc, 'sound/effects/ghost.ogg', 50, 1)

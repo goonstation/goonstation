@@ -16134,10 +16134,6 @@
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/storage)
-"aAA" = (
-/obj/decal/poster/wallsign/medal,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/hos)
 "aAB" = (
 /obj/decal/poster/wallsign/medbay,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -29228,7 +29224,7 @@
 	pixel_x = 13;
 	pixel_y = 15
 	},
-/obj/item/paper/book/medical_guide{
+/obj/item/paper/book/from_file/pharmacopia{
 	pixel_x = -8;
 	pixel_y = 2
 	},
@@ -30038,11 +30034,11 @@
 	desc = "Wow! Crate may or may not still contain bottles.";
 	name = "Bottles in a Crate"
 	},
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/lobby)
 "bcX" = (
@@ -31946,7 +31942,7 @@
 /turf/simulated/floor/blue,
 /area/station/storage/warehouse)
 "bhn" = (
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/supplylobby)
 "bho" = (
@@ -36368,6 +36364,9 @@
 	dir = 2;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/decal/poster/wallsign/medal{
+	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
@@ -48726,7 +48725,7 @@
 "bNH" = (
 /obj/machinery/optable,
 /obj/item/robodefibrillator,
-/obj/item/paper/book/medical_surgery_guide,
+/obj/item/paper/book/from_file/medical_surgery_guide,
 /turf/simulated/floor/bot,
 /area/station/medical/medbay/surgery)
 "bNI" = (
@@ -54523,7 +54522,7 @@
 /obj/shrub{
 	dir = 6
 	},
-/obj/item/paper/book/player_piano,
+/obj/item/paper/book/from_file/player_piano,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fred2"
@@ -54992,7 +54991,7 @@
 	dir = 1;
 	status = 2
 	},
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/clown)
 "bZL" = (
@@ -55247,7 +55246,7 @@
 /area/station/crew_quarters/fitness)
 "can" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10
+	dir = 9
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -55259,7 +55258,7 @@
 /area/station/crew_quarters/fitness)
 "cap" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 6
+	dir = 5
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -55459,7 +55458,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/disposalpipe/segment/mail{
 	dir = 8
 	},
@@ -55489,7 +55488,7 @@
 /obj/stool/chair/couch{
 	dir = 4
 	},
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /turf/simulated/floor/purple/side{
 	dir = 5
 	},
@@ -57768,22 +57767,22 @@
 	desc = "Wow! Crate may or may not still contain bottles.";
 	name = "Bottles in a Crate"
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_x = 6;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/bottle{
+/obj/item/reagent_containers/food/drinks/bottle/soda{
 	pixel_x = -6;
 	pixel_y = 3
 	},
@@ -57803,11 +57802,11 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "cfe" = (
@@ -57885,8 +57884,8 @@
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/dropper,
 /obj/item/hand_labeler,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "cfl" = (
@@ -58717,7 +58716,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/item/paper/book/medical_guide{
+/obj/item/paper/book/from_file/pharmacopia{
 	pixel_x = -11;
 	pixel_y = 5
 	},
@@ -58859,7 +58858,7 @@
 /area/station/ai_monitored/storage/eva)
 "chl" = (
 /obj/table/auto,
-/obj/item/paper/book/guardbot_guide{
+/obj/item/paper/book/from_file/guardbot_guide{
 	pixel_x = 12;
 	pixel_y = 7
 	},
@@ -59289,7 +59288,7 @@
 /area/station/ai_monitored/storage/eva)
 "chG" = (
 /obj/table/auto,
-/obj/item/paper/book/minerals{
+/obj/item/paper/book/from_file/minerals{
 	pixel_x = 8;
 	pixel_y = 7
 	},
@@ -59767,11 +59766,11 @@
 /area/station/crew_quarters/kitchen)
 "cik" = (
 /obj/table/auto,
-/obj/item/paper/book/dwainedummies{
+/obj/item/paper/book/from_file/dwainedummies{
 	pixel_x = 7;
 	pixel_y = 9
 	},
-/obj/item/paper/book/guardbot_guide{
+/obj/item/paper/book/from_file/guardbot_guide{
 	pixel_x = -5;
 	pixel_y = 1
 	},
@@ -59795,7 +59794,7 @@
 /area/station/turret_protected/Zeta)
 "cim" = (
 /obj/table/auto,
-/obj/item/paper/book/hydroponicsguide{
+/obj/item/paper/book/from_file/hydroponicsguide{
 	pixel_x = -7;
 	pixel_y = 3
 	},
@@ -61568,7 +61567,7 @@
 /area/station/hallway/secondary/construction2)
 "cjW" = (
 /obj/table/auto,
-/obj/item/paper/book/materials{
+/obj/item/paper/book/from_file/matsci_guide{
 	pixel_x = -7;
 	pixel_y = 5
 	},
@@ -62479,7 +62478,7 @@
 	pixel_x = -9;
 	pixel_y = 1
 	},
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_y = 9
 	},
 /turf/simulated/floor/black,
@@ -62734,7 +62733,7 @@
 	name = "S light switch";
 	pixel_y = -24
 	},
-/obj/item/paper/book/medical_guide{
+/obj/item/paper/book/from_file/pharmacopia{
 	pixel_x = -8;
 	pixel_y = 6
 	},
@@ -62872,7 +62871,7 @@
 	pixel_x = 7;
 	pixel_y = 11
 	},
-/obj/item/paper/book/medical_surgery_guide{
+/obj/item/paper/book/from_file/medical_surgery_guide{
 	pixel_x = -9;
 	pixel_y = 6
 	},
@@ -62952,7 +62951,7 @@
 /area/shuttle/arrival/station)
 "clV" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/minerals{
+/obj/item/paper/book/from_file/minerals{
 	pixel_x = -9;
 	pixel_y = 2
 	},
@@ -63563,7 +63562,7 @@
 	pixel_x = 8;
 	pixel_y = 6
 	},
-/obj/item/paper/book/medical_guide{
+/obj/item/paper/book/from_file/pharmacopia{
 	pixel_x = -5;
 	pixel_y = 5
 	},
@@ -64255,7 +64254,7 @@
 /area/station/crew_quarters/cafeteria)
 "cnK" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater,
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater,
 /obj/item/item_box/medical_patches/mini_styptic,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -64393,7 +64392,7 @@
 "cnX" = (
 /obj/table/wood/auto,
 /obj/item/wrench,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /turf/simulated/grimycarpet,
 /area/ghostdrone_factory)
 "cnY" = (
@@ -65048,7 +65047,7 @@
 /obj/item/pen{
 	pixel_x = -3
 	},
-/obj/item/paper/book/space_law{
+/obj/item/paper/book/from_file/space_law{
 	pixel_x = -12
 	},
 /obj/window/reinforced{
@@ -68815,7 +68814,7 @@
 	desc = "Only distantly related to the Adventure Closet.";
 	name = "Adventure Crate"
 	},
-/obj/item/paper/book/critter_compendium{
+/obj/item/paper/book/from_file/critter_compendium{
 	pixel_x = -10;
 	pixel_y = 5
 	},
@@ -132077,7 +132076,7 @@ ctU
 beZ
 ctU
 ctU
-aAA
+cAQ
 bqL
 beW
 ayt

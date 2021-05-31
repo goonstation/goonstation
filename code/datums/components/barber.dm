@@ -66,12 +66,13 @@
 
 	var/non_murderous_failure = 0
 	var/mob/living/carbon/human/H = M
+	var/datum/appearanceHolder/AH = M.bioHolder.mobAppearance
 	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
 		boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
 		non_murderous_failure = BARBERY_FAILURE
 
-	if(M.bioHolder.mobAppearance.customization_first == "None")
+	if((AH.customization_first == "None") && (AH.customization_second == "None") && (AH.customization_third == "None"))
 		boutput(user, "<span class='alert'>There is nothing to cut!</span>")
 		non_murderous_failure = BARBERY_FAILURE
 
@@ -112,10 +113,6 @@
 	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
 		boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
-		non_murderous_failure = BARBERY_FAILURE
-
-	if(M.bioHolder.mobAppearance.customization_second == "None")
-		boutput(user, "<span class='alert'>You can't get a closer shave than that!</span>")
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(issilicon(M))
@@ -341,9 +338,6 @@
 											M, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something on your head.",\
 									 user, "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s fishy head, knocking loose some space barnnacles.")
 				return 0
-			if("dwarf")
-				boutput(user, "You duck down slightly to cut [M]'s hair.")
-				return 1
 			if("monkey" || "sea monkey")
 				M.emote("scream")
 				playsound(M, "sound/impact_sounds/Slimy_Cut_1.ogg", 100, 1)

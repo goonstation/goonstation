@@ -1918,6 +1918,8 @@ var/list/fun_images = list()
 	var/lose_value = input("Enter new lose value.") as num
 	world.save_intra_round_value("nukie_loss", lose_value)
 
+	world.save_intra_round_value("nukie_last_reset", world.realtime)
+
 	logTheThing("admin", usr ? usr : src, null, "set nuke ops values to [win_value] wins and [lose_value] loses.")
 	logTheThing("diary", usr ? usr : src, null, "set nuke ops values to [win_value] wins and [lose_value] loses.", "admin")
 	message_admins("[key_name(usr ? usr : src)] set nuke ops values to [win_value] wins and [lose_value] loses.")
@@ -1989,6 +1991,8 @@ var/list/fun_images = list()
 			C.cmd_admin_delete(A)
 		if("Copy Here")
 			semi_deep_copy(A, src.loc)
+		if("Ship to Cargo")
+			C.cmd_admin_ship_movable_to_cargo(A)
 
 		if("Player Options")
 			C.cmd_admin_playeropt(A)

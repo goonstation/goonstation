@@ -7432,7 +7432,7 @@
 /area/station/maintenance/northeast)
 "arz" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/guardbot_guide,
+/obj/item/paper/book/from_file/guardbot_guide,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
@@ -7906,7 +7906,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/item/hand_labeler,
 /obj/decal/tile_edge/line/purple,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor,
 /area/station/science/artifact{
 	name = "Artifact Lounge"
@@ -8757,7 +8757,7 @@
 /area/station/wreckage)
 "auF" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/bottle/red,
+/obj/item/reagent_containers/food/drinks/bottle/soda/red,
 /turf/simulated/floor/plating/airless{
 	icon_state = "panelscorched"
 	},
@@ -17095,7 +17095,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/paper/book/guardbot_guide,
+/obj/item/paper/book/from_file/guardbot_guide,
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "aOj" = (
@@ -18063,7 +18063,7 @@
 	icon_state = "1-2"
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "aQb" = (
@@ -19471,7 +19471,7 @@
 /turf/simulated/floor/plating/airless/random,
 /area/station/mining/magnet)
 "aSX" = (
-/obj/item/paper/book/minerals,
+/obj/item/paper/book/from_file/minerals,
 /turf/simulated/floor/plating/airless/random,
 /area/station/mining/magnet)
 "aSY" = (
@@ -20716,7 +20716,7 @@
 /area/station/mining/refinery)
 "aVQ" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/machinery/cell_charger,
 /turf/simulated/floor/engine,
 /area/station/mining/refinery)
@@ -20845,7 +20845,7 @@
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/electrical,
 /obj/item/storage/box/starter,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/northwest)
 "aWe" = (
@@ -23683,7 +23683,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/item/paper/book/mechanicbook,
+/obj/item/paper/book/from_file/mechanicbook,
 /turf/simulated/floor/carpet/grime,
 /area/station/engine/elect)
 "bcf" = (
@@ -23877,7 +23877,7 @@
 /obj/machinery/alarm{
 	pixel_y = 20
 	},
-/obj/item/paper/book/medical_surgery_guide,
+/obj/item/paper/book/from_file/medical_surgery_guide,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay/surgery)
 "bcy" = (
@@ -24492,7 +24492,7 @@
 	})
 "bdQ" = (
 /obj/machinery/optable,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay/surgery)
 "bdR" = (
@@ -28676,8 +28676,8 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/item/paper/book/materials,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/matsci_guide,
+/obj/item/paper/book/from_file/dwainedummies,
 /turf/simulated/floor/black,
 /area/station/quartermaster/office)
 "bmv" = (
@@ -28686,8 +28686,8 @@
 	dir = 1
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper/book/mechanicbook,
-/obj/item/paper/book/minerals,
+/obj/item/paper/book/from_file/mechanicbook,
+/obj/item/paper/book/from_file/minerals,
 /turf/simulated/floor/black,
 /area/station/quartermaster/office)
 "bmw" = (
@@ -34900,7 +34900,7 @@
 	icon_state = "plant";
 	pixel_y = 20
 	},
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/item/device/microphone,
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -37335,7 +37335,7 @@
 /area/station/hydroponics/bay)
 "bFl" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/item/reagent_containers/glass/bottle/groboost,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/grass,
@@ -38273,7 +38273,7 @@
 /area/station/hallway/secondary/west)
 "bHp" = (
 /obj/table/wood/round/auto,
-/obj/item/paper/book/critter_compendium,
+/obj/item/paper/book/from_file/critter_compendium,
 /turf/simulated/floor/carpet/purple/fancy/edge,
 /area/station/hallway/secondary/west)
 "bHq" = (
@@ -38288,7 +38288,7 @@
 "bHr" = (
 /obj/table/wood/round/auto,
 /obj/disposalpipe/segment/bent/east,
-/obj/item/paper/book/monster_manual,
+/obj/item/paper/book/from_file/monster_manual,
 /turf/simulated/floor/carpet/purple/fancy/edge,
 /area/station/hallway/secondary/west)
 "bHs" = (
@@ -39182,7 +39182,7 @@
 	dir = 4
 	},
 /obj/table/auto,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/item/handcuffs,
 /obj/item/reagent_containers/food/drinks/bottle/vodka,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
@@ -40460,7 +40460,7 @@
 	dir = 4
 	},
 /obj/table/auto,
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /turf/simulated/floor/white/grime,
 /area/station/crew_quarters/kitchen)
 "bLV" = (
@@ -40697,7 +40697,7 @@
 	icon_state = "4-8"
 	},
 /obj/table/auto,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/disposalpipe/segment/brig,
 /obj/disposalpipe/segment/horizontal,
 /obj/item/pen,
@@ -40805,7 +40805,7 @@
 "bMG" = (
 /obj/table/wood/auto,
 /obj/item/saw,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/item/saw,
 /obj/disposalpipe/segment/produce{
 	dir = 4
@@ -46446,7 +46446,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
-/obj/item/reagent_containers/food/drinks/bottle/blue,
+/obj/item/reagent_containers/food/drinks/bottle/soda/blue,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /obj/item/reagent_containers/food/drinks/bottle/vintage,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
@@ -51941,7 +51941,7 @@
 /area/station/crew_quarters/barber_shop)
 "ckO" = (
 /obj/decal/cleanable/dirt,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/barber_shop)
 "ckP" = (

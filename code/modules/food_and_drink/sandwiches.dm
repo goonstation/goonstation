@@ -258,15 +258,38 @@
 	heal_amt = 1
 	initial_volume = 15
 	initial_reagents = null
+	var/roundstart_pathogens = 1
 
 	New()
 		..()
-		wrap_pathogen(reagents, generate_random_pathogen(), 15)
+		if(roundstart_pathogens)
+			wrap_pathogen(reagents, generate_random_pathogen(), 15)
+
+	fishstick
+		roundstart_pathogens = 0
+		pickup(mob/user)
+			if(isadmin(user) || current_state == GAME_STATE_FINISHED)
+				wrap_pathogen(reagents, generate_random_pathogen(), 15)
+			else
+				boutput(user, "<span class='notice'>You feel that it was too soon for this...</span>")
+			. = ..()
+
 
 /obj/item/reagent_containers/food/snacks/burger/roburger
 	name = "roburger"
 	desc = "The lettuce is the only organic component. Beep."
 	icon_state = "roburger"
+	amount = 3
+	heal_amt = 1
+	food_color = "#C8C8C8"
+	brewable = 1
+	brew_result = "beepskybeer"
+	initial_reagents = list("cholesterol"=5,"nanites"=20)
+
+/obj/item/reagent_containers/food/snacks/burger/cheeseborger
+	name = "cheeseborger"
+	desc = "The cheese really helps smooth out the metallic flavor."
+	icon_state = "cheeseborger"
 	amount = 3
 	heal_amt = 1
 	food_color = "#C8C8C8"

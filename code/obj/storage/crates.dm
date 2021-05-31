@@ -41,6 +41,7 @@
 	icon_state = "dd_freezer"
 	icon_opened = "dd_freezeropen"
 	icon_closed = "dd_freezer"
+	weld_image_offset_Y = -1
 
 	beverages
 		name = "Discount Dans beverages crate"
@@ -48,10 +49,10 @@
 		spawn_contents = list(/obj/item/reagent_containers/food/drinks/noodlecup = 2,
 		/obj/item/reagent_containers/food/drinks/peach = 2,
 		/obj/item/reagent_containers/food/drinks/covfefe = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/spooky = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/spooky2 = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/gingerale = 2,
-		/obj/item/reagent_containers/food/drinks/bottle/drowsy = 2)
+		/obj/item/reagent_containers/food/drinks/bottle/soda/spooky = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/soda/spooky2 = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/soda/gingerale = 2,
+		/obj/item/reagent_containers/food/drinks/bottle/soda/drowsy = 2)
 
 	snacks
 		name = "Discount Dans 'edibles' crate"
@@ -75,6 +76,7 @@
 	icon_state = "medicalcrate"
 	icon_opened = "medicalcrateopen"
 	icon_closed = "medicalcrate"
+	weld_image_offset_Y = -2
 
 
 /obj/storage/crate/medical/morgue
@@ -115,10 +117,11 @@
 	icon_state = "freezer"
 	icon_opened = "freezeropen"
 	icon_closed = "freezer"
+	weld_image_offset_Y = -1
 
 /obj/storage/crate/bartending
 	name = "bartending crate"
-	spawn_contents = list(/obj/item/reagent_containers/food/drinks/bottle = 5,
+	spawn_contents = list(/obj/item/reagent_containers/food/drinks/bottle/soda/ = 5,
 	/obj/item/reagent_containers/glass/beaker/large = 2,
 	/obj/item/device/reagentscanner,
 	/obj/item/clothing/glasses/spectro,
@@ -134,6 +137,7 @@
 	icon_state = "biohazardcrate"
 	icon_opened = "biohazardcrateopen"
 	icon_closed = "biohazardcrate"
+	weld_image_offset_Y = -2
 
 	cdc
 		name = "CDC pathogen sample crate"
@@ -166,7 +170,7 @@
 	/obj/item/audio_tape = 4,
 	/obj/item/camera = 2,
 	/obj/item/device/light/flashlight = 2,
-	/obj/item/paper/book/critter_compendium,
+	/obj/item/paper/book/from_file/critter_compendium,
 	/obj/item/reagent_containers/food/drinks/milk,
 	/obj/item/reagent_containers/food/snacks/sandwich/pb,
 	/obj/item/paper/note_from_mom)
@@ -292,6 +296,8 @@
 	icon_state = "pizzabox"
 	icon_opened = "pizzabox_open"
 	icon_closed = "pizzabox"
+	icon_welded = "welded-short-horizontal"
+	weld_image_offset_Y = -10
 
 	New()
 		..()
@@ -325,12 +331,21 @@
 	icon_state = "packingcrate1"
 
 	New()
-		..()
 		var/n = rand(1,12)
+		switch(n)
+			if(1 to 3)
+				weld_image_offset_Y = 7
+			if(4 to 6)
+				icon_welded = "welded-short-horizontal"
+			if(7 to 9)
+				weld_image_offset_Y = 4
+			if(10 to 12)
+				icon_welded = "welded-short-vertical"
 		icon_state = "packingcrate[n]"
 		icon_opened = "packingcrate[n]_open"
 		icon_closed = "packingcrate[n]"
 		src.setMaterial(getMaterial("cardboard"), appearance = 0, setname = 0)
+		..()
 
 /obj/storage/crate/wooden
 	name = "wooden crate"
@@ -338,6 +353,14 @@
 	icon_state = "woodencrate1"
 	New()
 		var/n = rand(1,9)
+		switch(n)
+			if(1 to 3)
+				icon_welded = "welded-short-horizontal"
+			if(4 to 6)
+				weld_image_offset_Y = 5
+			if(7 to 9)
+				weld_image_offset_Y = 3
+
 		icon_state = "woodencrate[n]"
 		icon_opened = "woodencrate[n]_open"
 		icon_closed = "woodencrate[n]"
@@ -390,6 +413,7 @@
 	icon_state = "attachecase"
 	icon_opened = "attachecase_open"
 	icon_closed = "attachecase"
+	weld_image_offset_Y = -5
 
 	demo
 		name = "Class Crate - Grenadier"
@@ -406,6 +430,7 @@
 		spawn_contents = list(/obj/item/gun/kinetic/light_machine_gun,
 		/obj/item/ammo/bullets/lmg = 3,
 		/obj/item/storage/grenade_pouch/high_explosive,
+		/obj/item/storage/fanny/syndie,
 		/obj/item/clothing/suit/space/industrial/syndicate/specialist,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 
@@ -437,7 +462,7 @@
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/gun/kinetic/tranq_pistol,
 		/obj/item/storage/pouch/tranq_pistol_dart,
-		/obj/beacon_deployer/syndicate,
+		/obj/item/pinpointer/disk,
 		/obj/item/genetics_injector/dna_scrambler,
 		/obj/item/voice_changer,
 		/obj/item/card/emag,
@@ -452,6 +477,7 @@
 		spawn_contents = list(/obj/item/gun/kinetic/smg,
 		/obj/item/storage/pouch/bullet_9mm/smg,
 		/obj/item/clothing/glasses/nightvision,
+		/obj/item/pinpointer/disk,
 		/obj/item/cloaking_device,
 		/obj/item/card/emag,
 		/obj/item/lightbreaker,
@@ -503,7 +529,9 @@
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/gun/flamethrower/backtank/napalm,
 		/obj/item/fireaxe,
+		/obj/item/storage/grenade_pouch/napalm,
 		/obj/item/storage/grenade_pouch/incendiary,
+		/obj/item/storage/fanny/syndie,
 		/obj/item/clothing/suit/space/syndicate/specialist/firebrand,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/firebrand)
 
@@ -513,6 +541,7 @@
 		spawn_contents = list(/obj/item/gun/kinetic/sniper,
 		/obj/item/storage/pouch/sniper,
 		/obj/item/storage/grenade_pouch/smoke,
+		/obj/item/storage/fanny/syndie,
 		/obj/item/clothing/glasses/thermal/traitor,
 		/obj/item/clothing/suit/space/syndicate/specialist/sniper,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/sniper)
@@ -681,3 +710,6 @@
 		spawn_contents = list(/obj/item/radio_tape/advertisement/cargonia,
 		/obj/item/clothing/under/rank/cargo,/obj/decal/skeleton)
 
+	escape
+		spawn_contents = list(/obj/item/sea_ladder,
+		/obj/item/pipebomb/bomb/engineering = 2)

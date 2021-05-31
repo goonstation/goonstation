@@ -152,7 +152,7 @@
 				G = new /obj/item/reagent_containers/glass/vial(get_turf(src))
 				src.glass_amt -= 1
 			if("drinkbottle")
-				G = new /obj/item/reagent_containers/food/drinks/bottle(get_turf(src))
+				G = new /obj/item/reagent_containers/food/drinks/bottle/soda(get_turf(src))
 				src.glass_amt -= 1
 			if("longbottle")
 				G = new /obj/item/reagent_containers/food/drinks/bottle/empty/long(get_turf(src))

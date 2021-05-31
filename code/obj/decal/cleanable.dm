@@ -35,7 +35,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	var/last_dry_start = 0
 	var/dry_time = 100
 
-	flags = NOSPLASH
+	flags = NOSPLASH | FPRINT
 	layer = DECAL_LAYER
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
@@ -738,7 +738,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon_state = "rust1"
 	random_icon_states = list("rust1", "rust2", "rust3","rust4","rust5")
 	can_sample = 1
-	sample_reagent = "iron"
+	sample_reagent = "iron_oxide"
 	sample_verb = "scrape"
 
 /obj/decal/cleanable/rust/jen
@@ -1251,7 +1251,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	CanPass(atom/A, turf/T)
 		if (ismob(A))
-			A.changeStatus("slowed", 2)
+			A.changeStatus("slowed", 0.2 SECONDS)
 			SPAWN_DBG(-1)
 				qdel(src)		//break when walked over
 		else return 1

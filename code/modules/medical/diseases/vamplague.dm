@@ -22,13 +22,13 @@
 	if (prob(15))
 		if (prob(33))
 			boutput(affected_mob, "<span class='alert'>You feel sickly and weak.</span>")
-			affected_mob.changeStatus("slowed", 30)
+			affected_mob.changeStatus("slowed", 3 SECONDS)
 		affected_mob.take_toxin_damage(toxdamage)
 
 	if (prob(5))
 		boutput(affected_mob, "<span class='alert'>Your joints ache horribly!</span>")
-		affected_mob.changeStatus("weakened", stuntime * 10)
-		affected_mob.changeStatus("stunned", stuntime * 10)
+		affected_mob.changeStatus("weakened", stuntime SECONDS)
+		affected_mob.changeStatus("stunned", stuntime SECONDS)
 
 //The other vamplague, the one that makes vampires
 /datum/ailment/disease/vampiritis

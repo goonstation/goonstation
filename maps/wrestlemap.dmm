@@ -193,6 +193,9 @@
 	},
 /obj/storage/secure/closet/personal,
 /obj/item/clothing/gloves/boxing,
+/obj/item/storage/belt/wrestling/fake,
+/obj/item/storage/belt/wrestling/fake,
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers{
 	name = "Locker Room"
@@ -3325,7 +3328,7 @@
 	tag = ""
 	},
 /obj/table/reinforced/bar/auto,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/item/clothing/under/misc/lawyer,
 /obj/machinery/light,
 /turf/simulated/floor/blueblack,
@@ -3964,7 +3967,7 @@
 /area/syndicate_teleporter)
 "bGk" = (
 /obj/table/auto,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/item/device/matanalyzer{
 	pixel_x = -5
 	},
@@ -4404,7 +4407,7 @@
 /obj/item/reagent_containers/food/snacks/pizza{
 	pixel_y = -10
 	},
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/item/kitchen/utensil/knife/pizza_cutter,
 /turf/simulated/floor/white/checker2,
 /area/station/crew_quarters/kitchen)
@@ -5976,7 +5979,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "cxP" = (
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /obj/disposalpipe/segment/horizontal,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
@@ -7479,6 +7482,7 @@
 	pixel_y = -8
 	},
 /obj/machinery/light/small/floor/greenish,
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/captain)
 "dfg" = (
@@ -10588,7 +10592,7 @@
 	})
 "enw" = (
 /obj/decal/boxingropeenter{
-	dir = 9
+	dir = 10
 	},
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
@@ -11165,7 +11169,7 @@
 	dir = 10
 	},
 /obj/decal/boxingropeenter{
-	dir = 9
+	dir = 10
 	},
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
@@ -11655,6 +11659,7 @@
 /area/station/crew_quarters/fitness)
 "eOP" = (
 /obj/storage/secure/closet/command/hop,
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/bridge/hos)
 "ePC" = (
@@ -12243,7 +12248,7 @@
 	dir = 6
 	},
 /obj/decal/boxingropeenter{
-	dir = 5
+	dir = 6
 	},
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
@@ -13485,6 +13490,7 @@
 /obj/landmark/start{
 	name = "Captain"
 	},
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/carpet/green/fancy/narrow/south,
 /area/station/crew_quarters/captain)
 "fCm" = (
@@ -16775,7 +16781,7 @@
 	pixel_y = -5
 	},
 /obj/item/disk/data/tape/master/readonly,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/item/device/multitool,
 /obj/item/luggable_computer,
 /obj/cable{
@@ -16917,10 +16923,11 @@
 /turf/simulated/floor/black,
 /area/station/engine/monitoring)
 "hby" = (
-/obj/decal/poster/wallsign/medal,
-/obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
-/area/station/security/hos)
+/obj/decal/poster/wallsign/medal{
+	pixel_y = 28
+	},
+/turf/simulated/floor/wood/six,
+/area/station/crew_quarters/hos)
 "hbO" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/emergency{
@@ -19128,7 +19135,7 @@
 /area/station/bridge)
 "ian" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10
+	dir = 9
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market{
@@ -19663,7 +19670,7 @@
 	tag = ""
 	},
 /obj/stool/chair/boxingrope_corner{
-	dir = 6
+	dir = 5
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
@@ -22018,10 +22025,10 @@
 	name = "Research Computer Lab"
 	})
 "jjQ" = (
-/obj/decal/boxingropeenter{
-	dir = 5
-	},
 /obj/machinery/light/small/harsh/very,
+/obj/decal/boxingropeenter{
+	dir = 6
+	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/security/brig{
 	name = "The Cage Arena"
@@ -22713,7 +22720,7 @@
 /area/station/hangar/science)
 "jzM" = (
 /obj/table/auto,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /turf/simulated/floor/purple,
 /area/station/science/gen_storage{
 	name = "Research Computer Lab"
@@ -22756,6 +22763,7 @@
 	name = "Chief Engineer"
 	},
 /obj/disposalpipe/segment/mail/vertical,
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/orange/side{
 	dir = 4
 	},
@@ -23728,6 +23736,9 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/item/storage/belt/wrestling/fake,
+/obj/item/storage/belt/wrestling/fake,
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers{
 	name = "Locker Room"
@@ -24085,6 +24096,7 @@
 /obj/machinery/light/small/floor,
 /obj/item/clothing/gloves/boxing,
 /obj/decal/boxingrope,
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
@@ -24303,7 +24315,7 @@
 /obj/table/auto,
 /obj/item/satchel/hydro,
 /obj/item/satchel/hydro,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -24572,6 +24584,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north{
 	name = "The Ring Entrance"
@@ -25872,9 +25885,7 @@
 /area/station/security/main)
 "kVH" = (
 /obj/decal/boxingropeenter{
-	dir = 5;
-	layer = 3.1;
-	pixel_x = -1
+	dir = 6
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/maintenance/west)
@@ -26090,7 +26101,7 @@
 /area/station/security/main)
 "lab" = (
 /obj/item/storage/toolbox/emergency,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/item/device/matanalyzer{
 	pixel_x = 9;
 	pixel_y = 1
@@ -28167,6 +28178,9 @@
 "lSO" = (
 /obj/storage/secure/closet/personal,
 /obj/item/clothing/gloves/boxing,
+/obj/item/storage/belt/wrestling/fake,
+/obj/item/storage/belt/wrestling/fake,
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers{
 	name = "Locker Room"
@@ -29140,6 +29154,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/wood,
 /area/station/bridge/hos)
 "mqB" = (
@@ -29952,11 +29967,11 @@
 /area/station/science/lab)
 "mIP" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_x = -8
 	},
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater,
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_x = 8
 	},
 /turf/simulated/floor/black/side,
@@ -31946,6 +31961,7 @@
 /area/station/maintenance/east)
 "nFn" = (
 /obj/storage/closet/wardrobe/pink,
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/utility)
 "nFr" = (
@@ -32202,6 +32218,7 @@
 /area/station/crew_quarters/bar)
 "nKZ" = (
 /obj/storage/closet/wardrobe/red,
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/utility)
 "nLi" = (
@@ -32433,6 +32450,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/station/security/hos)
 "nPG" = (
@@ -33127,7 +33145,7 @@
 "ode" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/decal/boxingropeenter{
-	dir = 5;
+	dir = 6;
 	layer = 3.1
 	},
 /turf/simulated/floor/specialroom/gym/alt,
@@ -33186,6 +33204,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/wood/three,
 /area/station/medical/head)
 "oeu" = (
@@ -34517,11 +34536,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "oLW" = (
-/obj/decal/boxingropeenter{
-	dir = 9;
-	layer = 3.1
-	},
 /obj/item/chair/folded,
+/obj/decal/boxingropeenter{
+	dir = 10
+	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/maintenance/west)
 "oLY" = (
@@ -35021,7 +35039,7 @@
 	icon_state = "0-8"
 	},
 /obj/storage/secure/closet/research/chemical,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/pharmacy)
 "oXq" = (
@@ -35550,6 +35568,9 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/item/storage/belt/wrestling/fake,
+/obj/item/storage/belt/wrestling/fake,
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers{
 	name = "Locker Room"
@@ -35976,6 +35997,7 @@
 "pwL" = (
 /obj/storage/closet/wardrobe/blue,
 /obj/disposalpipe/segment/horizontal,
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/utility)
 "pwO" = (
@@ -36234,6 +36256,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/utility)
 "pBE" = (
@@ -36932,6 +36955,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north{
 	name = "The Ring Entrance"
@@ -37223,7 +37247,7 @@
 	})
 "qaz" = (
 /obj/decal/cleanable/dirt,
-/obj/item/paper/book/space_law{
+/obj/item/paper/book/from_file/space_law{
 	desc = "It looks like it hasn't been read in months..."
 	},
 /turf/simulated/floor/plating,
@@ -38243,7 +38267,7 @@
 "qtG" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/suit/robuddy,
-/obj/item/paper/book/guardbot_guide,
+/obj/item/paper/book/from_file/guardbot_guide,
 /obj/decal/tile_edge/stripe{
 	dir = 8;
 	tag = ""
@@ -38468,6 +38492,7 @@
 /area/station/maintenance/inner/central)
 "qyn" = (
 /obj/storage/closet/wardrobe/yellow,
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/utility)
 "qyr" = (
@@ -38737,6 +38762,7 @@
 /area/station/atmos/hookups/central)
 "qDJ" = (
 /obj/storage/closet/wardrobe/green,
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/utility)
 "qEb" = (
@@ -38898,6 +38924,7 @@
 	d2 = 4;
 	icon_state = "5-8"
 	},
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
@@ -39678,7 +39705,7 @@
 	icon_state = "line1"
 	},
 /obj/decal/boxingrope{
-	dir = 10
+	dir = 9
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
@@ -40321,6 +40348,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north{
 	name = "The Ring Entrance"
@@ -42002,7 +42030,7 @@
 /area/station/hallway/secondary/north)
 "rWg" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 6
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/central{
@@ -42826,11 +42854,11 @@
 /area/station/hallway/primary/west)
 "skI" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_x = -8
 	},
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater,
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_x = 8
 	},
 /turf/simulated/floor/neutral/side{
@@ -43459,7 +43487,7 @@
 "syT" = (
 /obj/machinery/light/small/harsh/very,
 /obj/decal/boxingropeenter{
-	dir = 9
+	dir = 10
 	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/security/brig{
@@ -48749,7 +48777,7 @@
 /area/station/maintenance/solar/north)
 "uSz" = (
 /obj/decal/boxingropeenter{
-	dir = 5
+	dir = 6
 	},
 /turf/simulated/floor/engine{
 	icon_state = "gym_mat"
@@ -49305,9 +49333,8 @@
 /area/station/engine/storage)
 "vfi" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/decal/boxingropeenter{
-	dir = 9;
-	layer = 3.1
+/obj/decal/boxingrope{
+	dir = 10
 	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/courtroom)
@@ -49854,7 +49881,7 @@
 "vqf" = (
 /obj/table/glass/auto,
 /obj/item/robodefibrillator,
-/obj/item/paper/book/medical_surgery_guide,
+/obj/item/paper/book/from_file/medical_surgery_guide,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "vqn" = (
@@ -50548,7 +50575,7 @@
 /area/space)
 "vIE" = (
 /obj/decal/boxingropeenter{
-	dir = 9
+	dir = 10
 	},
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
@@ -50712,7 +50739,7 @@
 /area/station/maintenance/inner/the_cage)
 "vNk" = (
 /obj/machinery/chem_master,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/machinery/firealarm{
 	pixel_x = 1;
 	pixel_y = 26;
@@ -51446,7 +51473,7 @@
 	})
 "wcs" = (
 /obj/decal/boxingropeenter{
-	dir = 5;
+	dir = 6;
 	layer = 3.1
 	},
 /turf/simulated/floor/engine/glow/blue{
@@ -52031,6 +52058,7 @@
 /area/station/mining/staff_room)
 "wqq" = (
 /obj/storage/secure/closet/command/captain,
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/captain)
 "wrb" = (
@@ -52180,7 +52208,7 @@
 "wsS" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /turf/simulated/floor/carpet/green/fancy/narrow/northsouth,
 /area/station/crew_quarters/bar)
 "wsX" = (
@@ -52915,7 +52943,7 @@
 /area/station/janitor/office)
 "wHp" = (
 /obj/table/auto,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/machinery/door/firedoor/pyro,
 /obj/access_spawn/hydro,
@@ -53566,6 +53594,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/item/storage/belt/wrestling/fake,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north{
 	name = "The Ring Entrance"
@@ -100676,8 +100705,8 @@ rrt
 fAR
 jFG
 ncb
+dQU
 hby
-tPY
 bdF
 hpF
 pYC

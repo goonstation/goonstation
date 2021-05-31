@@ -611,6 +611,10 @@
 	icon_state = "clown"
 	item_state = "clown"
 
+	New()
+		..()
+		AddComponent(/datum/component/clown_disbelief_item)
+
 	fancy
 		icon_state = "clown-fancy"
 		item_state = "clown-fancy"
@@ -657,8 +661,8 @@
 /obj/item/clothing/under/misc/hydroponics
 	name = "senior botanist's jumpsuit"
 	desc = "Anyone wearing this has probably grown a LOT of weed in their time."
-	icon_state = "hydro"
-	item_state = "hydro"
+	icon_state = "hydro-senior"
+	item_state = "hydro-senior"
 
 /obj/item/clothing/under/misc/mail
 	name = "mailman's jumpsuit"
@@ -1313,8 +1317,8 @@
 	item_state = "princess"
 
 /obj/item/clothing/under/gimmick/cosby
-	name = "cosby sweater"
-	desc = "Symbol of a legendary 80's sitcom dad."
+	name = "comfy sweater"
+	desc = "A colourful and cozy jumper."
 	icon_state = "cosby1"
 	item_state = "cosby1"
 	New()

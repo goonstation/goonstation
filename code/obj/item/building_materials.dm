@@ -120,6 +120,9 @@ MATERIAL
 	attack_hand(mob/user as mob)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
+			splitnum = round(clamp(splitnum, 0, src.amount))
+			if(amount == 0)
+				return
 			var/obj/item/sheet/new_stack = split_stack(splitnum)
 			if (!istype(new_stack))
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
@@ -300,6 +303,12 @@ MATERIAL
 					return
 			else
 				return
+//You can't build! The if is to stop compiler warnings
+#if defined(MAP_OVERRIDE_POD_WARS)
+		if (src)
+			boutput(usr, "<span class='alert'>What are you gonna do with this? You have a very particular set of skills, and building is not one of them...</span>")
+			return
+#endif
 
 		if (href_list["make"])
 			if (src.amount < 1)
@@ -482,6 +491,7 @@ MATERIAL
 				if("construct")
 					var/turf/T = get_turf(usr)
 					var/area/A = get_area (usr)
+
 					if (!istype(T, /turf/simulated/floor))
 						boutput(usr, "<span class='alert'>You can't build girders here.</span>")
 						return
@@ -713,6 +723,7 @@ MATERIAL
 				var/makemetal = round(src.amount / 2)
 				boutput(user, "<span class='notice'>You could make up to [makemetal] sheets by welding this stack.</span>")
 				weldinput = input("How many sheets do you want to make?","Welding",1) as num
+				makemetal = round(src.amount / 2) // could have changed during input()
 				if (weldinput < 1) return
 				if (weldinput > makemetal) weldinput = makemetal
 			var/obj/item/sheet/M = new /obj/item/sheet/steel(user.loc)
@@ -927,7 +938,7 @@ MATERIAL
 
 		user.visible_message("<span class='alert'><b>[user] headbutts the spike, impaling [his_or_her(user)] head on it!</b></span>")
 		user.TakeDamage("head", 50, 0)
-		user.changeStatus("stunned", 500)
+		user.changeStatus("stunned", 50 SECONDS)
 		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 		if(prob(40)) user.emote("scream")
 
@@ -1079,6 +1090,11 @@ MATERIAL
 		boutput(user, "<span class='notice'>You finish stacking tiles.</span>")
 
 	proc/build(turf/S as turf)
+//for now, any turf can't be built on.
+#if defined(MAP_OVERRIDE_POD_WARS)
+		boutput(usr, "you can't build in this mode, you don't know how or something...")
+		return
+#else
 		if (src.amount < 1)
 			return FALSE
 		var/turf/simulated/floor/W = S.ReplaceWithFloor()
@@ -1094,6 +1110,7 @@ MATERIAL
 			W.setMaterial(src.material)
 		src.change_stack_amount(-1)
 		return TRUE
+#endif
 
 /obj/item/tile/steel
 

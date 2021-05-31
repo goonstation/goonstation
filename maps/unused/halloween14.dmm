@@ -40008,7 +40008,7 @@
 	dir = 10
 	},
 /obj/item/storage/toolbox/emergency,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bBT" = (
@@ -40662,12 +40662,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bDq" = (
-/turf/unsimulated/wall/setpieces{
-	desc = "A weird jet black metal wall indented with strange grooves and lines.";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "ancient";
-	name = "stranger wall"
-	},
+/turf/unsimulated/wall/setpieces/stranger,
 /area/crater/cave)
 "bDr" = (
 /turf/unsimulated/floor/setpieces{
@@ -40786,7 +40781,7 @@
 /turf/unsimulated/wall/setpieces/leadwall,
 /area/crater)
 "bDI" = (
-/obj/machinery/atmospherics/pipe/tank/oxygen_agent_b{
+/obj/machinery/atmospherics/pipe/tank/rad_particles{
 	desc = "A large vessel containing an unknown pressurized gas.";
 	name = "Unidentified Gas Tank"
 	},
@@ -44164,7 +44159,7 @@
 	icon_state = "woodentable";
 	dir = 8
 	},
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
 "bLY" = (
@@ -52159,12 +52154,7 @@
 	},
 /area/crater/cave/lower)
 "cdK" = (
-/turf/unsimulated/wall/setpieces{
-	desc = "A weird jet black metal wall indented with strange grooves and lines.";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "ancient";
-	name = "stranger wall"
-	},
+/turf/unsimulated/wall/setpieces/stranger,
 /area/crater/cave/lower)
 "cdL" = (
 /obj/decal/fakeobjects{
@@ -54295,12 +54285,7 @@
 	sd_ColorGreen = 0.3;
 	sd_ColorRed = 0.4
 	},
-/turf/unsimulated/wall/setpieces{
-	desc = "A weird jet black metal wall indented with strange grooves and lines.";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "ancient";
-	name = "stranger wall"
-	},
+/turf/unsimulated/wall/setpieces/stranger,
 /area/crater/cave/lower)
 "chL" = (
 /turf/unsimulated/wall{
@@ -70795,7 +70780,7 @@
 	icon_state = "reinf_tabledir";
 	dir = 6
 	},
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/item/reagent_containers/food/drinks/milk/rancid,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/kitchen)
@@ -70852,7 +70837,7 @@
 	icon_state = "bar";
 	dir = 8
 	},
-/obj/item/paper/book/monster_manual,
+/obj/item/paper/book/from_file/monster_manual,
 /turf/unsimulated/floor/black,
 /area/crypt/sigma/rd)
 "cPx" = (

@@ -144,6 +144,18 @@
 	required_effects = list("roach","detox")
 	result = /datum/bioEffect/bee
 
+/datum/geneticsrecipe/dwarf
+	required_effects = list("strong","resist_alcohol")
+	result = /datum/bioEffect/dwarf
+
+/datum/geneticsrecipe/dwarf_two
+	required_effects = list("strong","drunk")
+	result = /datum/bioEffect/dwarf
+
+/datum/geneticsrecipe/dwarf_three
+	required_effects = list("strong","stinky")
+	result = /datum/bioEffect/dwarf
+
 // Powers
 
 /datum/geneticsrecipe/telekinesis // Discovered
@@ -317,18 +329,6 @@
 /datum/geneticsrecipe/lizard_two
 	required_effects = list("horns","fire_resist")
 	result = /datum/bioEffect/mutantrace
-
-/datum/geneticsrecipe/dwarf // Discovered
-	required_effects = list("strong","resist_alcohol")
-	result = /datum/bioEffect/mutantrace/dwarf
-
-/datum/geneticsrecipe/dwarf_two
-	required_effects = list("strong","drunk")
-	result = /datum/bioEffect/mutantrace/dwarf
-
-/datum/geneticsrecipe/dwarf_three // Discovered
-	required_effects = list("strong","stinky")
-	result = /datum/bioEffect/mutantrace/dwarf
 
 /datum/geneticsrecipe/blank // Discovered
 	required_effects = list("albinism","melanism")

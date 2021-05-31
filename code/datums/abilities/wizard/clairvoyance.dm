@@ -13,7 +13,8 @@
 	cast()
 		if(!holder)
 			return
-		holder.owner.say("HAIDAN SEEHQ")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("HAIDAN SEEHQ")
 		..()
 
 		var/list/mob/targets = list()

@@ -7,7 +7,7 @@
 	icon_state = "railing"
 	layer = OBJ_LAYER
 	color = "#ffffff"
-	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
+	flags = FPRINT | USEDELAY | ON_BORDER
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
 	dir = SOUTH
 	custom_suicide = 1
@@ -83,6 +83,8 @@
 
 	New()
 		..()
+		if(src.is_reinforced)
+			src.flags |= ALWAYS_SOLID_FLUID
 		layerify()
 
 	Turn()
@@ -90,12 +92,13 @@
 		layerify()
 
 	CanPass(atom/movable/O as mob|obj, turf/target, height=0, air_group=0)
+		if(air_group)
+			return 1
 		if (O == null)
-			//logTheThing("debug", src, O, "Target is null! CanPass failed.")
 			return 0
 		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced) || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
 			return 1
-		if (air_group || (height==0))
+		if(height==0)
 			return 1
 		if (get_dir(loc, O) == dir)
 			return !density
@@ -367,13 +370,13 @@
 		switch (interaction)
 			if (RAILING_DISASSEMBLE)
 				verbing = "to disassemble"
-				playsound(get_turf(the_railing), "sound/items/Welder.ogg", 50, 1)
+				playsound(the_railing, "sound/items/Welder.ogg", 50, 1)
 			if (RAILING_FASTEN)
 				verbing = "fastening"
-				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
 			if (RAILING_UNFASTEN)
 				verbing = "unfastening"
-				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
 		for(var/mob/O in AIviewers(ownerMob))
 			O.show_text("[owner] begins [verbing] [the_railing].", "red")
 
@@ -385,15 +388,15 @@
 				verbens = "disassembles"
 				tool:try_weld(ownerMob, 2)
 				the_railing.railing_deconstruct()
-				playsound(get_turf(the_railing), "sound/items/Welder.ogg", 50, 1)
+				playsound(the_railing, "sound/items/Welder.ogg", 50, 1)
 			if (RAILING_FASTEN)
 				verbens = "fastens"
 				the_railing.anchored = 1
-				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
 			if (RAILING_UNFASTEN)
 				verbens = "unfastens"
 				the_railing.anchored = 0
-				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
 		for(var/mob/O in AIviewers(ownerMob))
 			O.show_text("[owner] [verbens] [the_railing].", "red")
 			logTheThing("station", ownerMob, the_railing, "[verbens] [the_railing].")

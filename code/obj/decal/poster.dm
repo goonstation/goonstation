@@ -821,7 +821,7 @@
 					return
 
 				if (istype(W, /obj/item/diary))
-					var/obj/item/paper/book/space_law/first/newbook = new /obj/item/paper/book/space_law/first
+					var/obj/item/paper/book/from_file/space_law/first/newbook = new /obj/item/paper/book/from_file/space_law/first
 					user.u_equip(W)
 					user.put_in_hand_or_drop(newbook)
 					boutput(user, "<span class='alert'>Beepsky's private journal transforms into Space Law 1st Print.</span>")
@@ -1086,3 +1086,18 @@
 	icon_state = "nt-pod-poster"
 /obj/decal/poster/wallsign/pod_build/sy
 	icon_state = "sy-pod-poster"
+
+/obj/decal/poster/wallsign/pw_map
+	name = "Map"
+	desc = "A map affixed to the wall!'."
+	icon = 'icons/obj/decals/posters.dmi'
+	icon_state = "pw_map"
+	popup_win = 1
+	imgw = 702
+	imgh = 702
+
+	show_popup_win(var/client/C)
+		if (!C || !src.popup_win)
+			return
+
+		C.Browse("<img src=\"[resource("images/pw_map.png")]\">","window=Map;size=[imgw]x[imgh];title=Map")

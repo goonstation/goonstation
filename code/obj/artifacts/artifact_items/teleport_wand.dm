@@ -75,6 +75,8 @@
 		return
 
 	proc/can_teleport_here(var/turf/T)
+		if(isrestrictedz(T.z))
+			return 0
 		if (!istype(T,/turf/simulated/floor/))
 			return 0
 		if (T.density)

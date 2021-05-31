@@ -256,10 +256,7 @@
 /turf/simulated/floor/longtile,
 /area/station/bridge)
 "aaL" = (
-/obj/item/clothing/under/gimmick/cosby{
-	desc = "A colourful winter jumper.";
-	name = "comfy sweater"
-	},
+/obj/item/clothing/under/gimmick/cosby,
 /obj/item/device/microphone,
 /obj/machinery/firealarm{
 	dir = 8;
@@ -434,7 +431,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/item/paper/book/pocketguide/bartending,
+/obj/item/paper/book/from_file/pocketguide/bartending,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
 "abm" = (
@@ -590,7 +587,7 @@
 "abJ" = (
 /obj/table/wood/round/auto,
 /obj/item/storage/box/trackimp_kit2,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "abK" = (
@@ -691,6 +688,10 @@
 	},
 /obj/disposalpipe/trunk/mail{
 	dir = 4
+	},
+/obj/noticeboard/persistent{
+	name = "Bar persistent notice board";
+	persistent_id = "bar"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
@@ -829,7 +830,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/item/paper/book/torpedo,
+/obj/item/paper/book/from_file/torpedo,
 /turf/simulated/floor,
 /area/station/security/starboardtorpedoes)
 "acs" = (
@@ -2403,7 +2404,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
 "aiH" = (
@@ -2666,7 +2667,7 @@
 /obj/landmark/start{
 	name = "Clown"
 	},
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
 "ajC" = (
@@ -3540,7 +3541,7 @@
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
 "alW" = (
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
 "alX" = (
@@ -5834,7 +5835,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/item/device/radio/intercom/science,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/access_spawn/research,
 /obj/access_spawn/medical_director,
 /turf/simulated/floor/white,
@@ -5861,7 +5862,7 @@
 	pixel_x = 7;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/drinks/bottle/drowsy{
+/obj/item/reagent_containers/food/drinks/bottle/soda/drowsy{
 	pixel_y = 3;
 	pixel_z = 5
 	},
@@ -5977,7 +5978,7 @@
 	pixel_y = -5
 	},
 /obj/item/disk/data/tape/master/readonly,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/item/device/multitool,
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/starboard)
@@ -6462,7 +6463,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "atu" = (
 /obj/table/auto,
-/obj/item/paper/book/torpedo,
+/obj/item/paper/book/from_file/torpedo,
 /turf/simulated/floor/redblack/corner{
 	dir = 1
 	},
@@ -6530,7 +6531,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "atE" = (
 /obj/table/auto,
-/obj/item/paper/book/torpedo,
+/obj/item/paper/book/from_file/torpedo,
 /turf/simulated/floor/redblack/corner{
 	dir = 8
 	},
@@ -7825,7 +7826,7 @@
 "awV" = (
 /obj/storage/closet/fire,
 /obj/item/extinguisher,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/tank/air,
 /obj/item/clothing/suit/fire/heavy,
@@ -7903,6 +7904,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
 "axe" = (
@@ -8436,6 +8438,12 @@
 /obj/disposalpipe/segment,
 /obj/potted_plant/potted_plant3{
 	dir = 8
+	},
+/obj/noticeboard/persistent{
+	name = "Engineering persistent notice board";
+	persistent_id = "engineering";
+	pixel_x = -32;
+	pixel_y = 0
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -9585,6 +9593,11 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/machinery/firealarm{
+	dir = 4;
+	layer = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
 "aBz" = (
@@ -9992,10 +10005,6 @@
 "aCC" = (
 /obj/table/reinforced/auto,
 /obj/machinery/microwave,
-/obj/noticeboard{
-	name = "Diner Orders Board";
-	pixel_y = 28
-	},
 /obj/decal/tile_edge/check{
 	dir = 1;
 	icon_state = "check1"
@@ -10339,11 +10348,6 @@
 	color = "#485e81";
 	dir = 5;
 	icon_state = "line1"
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	layer = 4;
-	pixel_x = 24
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
@@ -11222,7 +11226,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/extinguisher,
 /obj/item/crowbar,
@@ -11561,11 +11565,11 @@
 /area/station/crew_quarters/quarters)
 "aGS" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/monster_manual_revised{
+/obj/item/paper/book/from_file/monster_manual_revised{
 	pixel_x = -3;
 	pixel_y = 1
 	},
-/obj/item/paper/book/DNDrulebook{
+/obj/item/paper/book/from_file/DNDrulebook{
 	pixel_x = 3;
 	pixel_y = 1
 	},
@@ -12059,6 +12063,10 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
+/obj/noticeboard/persistent{
+	name = "Crew Quarters persistent notice board";
+	persistent_id = "crew quarters"
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "aIc" = (
@@ -12873,11 +12881,15 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/noticeboard/persistent{
+	name = "Botany persistent notice board";
+	persistent_id = "botany"
+	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "aKj" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 10
+	dir = 9
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -12896,7 +12908,7 @@
 /area/station/crew_quarters/fitness)
 "aKm" = (
 /obj/stool/chair/boxingrope_corner{
-	dir = 6
+	dir = 5
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -13809,7 +13821,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
 	},
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/access_spawn/hydro,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
@@ -13916,7 +13928,7 @@
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
-/obj/item/paper/book/guardbot_guide,
+/obj/item/paper/book/from_file/guardbot_guide,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "aNz" = (
@@ -15729,6 +15741,10 @@
 	pixel_x = 4;
 	pixel_y = 8
 	},
+/obj/noticeboard/persistent{
+	name = "Customs persistent notice board";
+	persistent_id = "customs"
+	},
 /turf/simulated/floor,
 /area/station/hos)
 "aTc" = (
@@ -15841,7 +15857,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/machinery/phone,
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/station/security/hos)
@@ -16533,7 +16549,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/extinguisher,
 /obj/item/crowbar,
@@ -18249,6 +18265,10 @@
 	},
 /obj/item/storage/box/cutlery,
 /obj/item/storage/box/plates,
+/obj/noticeboard/persistent{
+	name = "Kitchen persistent notice board";
+	persistent_id = "kitchen"
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen/therustykrab)
 "aZI" = (
@@ -18501,7 +18521,7 @@
 /area/station/medical/medbay/surgery)
 "bay" = (
 /obj/table/auto,
-/obj/item/paper/book/pocketguide/medical,
+/obj/item/paper/book/from_file/pocketguide/medical,
 /obj/item/surgical_spoon{
 	pixel_y = -6
 	},
@@ -19014,7 +19034,7 @@
 /area/station/crew_quarters/courtroom)
 "bcf" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
@@ -19176,7 +19196,7 @@
 /area/station/medical/medbay/surgery)
 "bcs" = (
 /obj/machinery/optable,
-/obj/item/paper/book/medical_surgery_guide,
+/obj/item/paper/book/from_file/medical_surgery_guide,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "bct" = (
@@ -21584,10 +21604,6 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/noticeboard{
-	name = "Chapel Board";
-	pixel_y = 28
-	},
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon17,
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
@@ -22032,6 +22048,10 @@
 	icon = 'icons/obj/decoration.dmi';
 	icon_state = "skeleton_stand";
 	name = "Jim"
+	},
+/obj/noticeboard/persistent{
+	name = "Medbay persistent notice board";
+	persistent_id = "medbay"
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
@@ -22549,6 +22569,12 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/noticeboard/persistent{
+	name = "Chapel persistent notice board";
+	persistent_id = "chapel";
+	pixel_x = -32;
+	pixel_y = 0
 	},
 /turf/simulated/floor/wood/five,
 /area/station/chapel/sanctuary)
@@ -23679,7 +23705,7 @@
 /obj/table/glass/reinforced/auto,
 /obj/item/device/audio_log,
 /obj/item/audio_tape,
-/obj/item/reagent_containers/food/drinks/bottle/gingerale{
+/obj/item/reagent_containers/food/drinks/bottle/soda/gingerale{
 	pixel_x = -4;
 	pixel_y = 7
 	},
@@ -24044,7 +24070,7 @@
 	dir = 5
 	},
 /obj/table/round/auto,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_y = 16
 	},
 /obj/item/reagent_containers/food/drinks/mug/random_color{
@@ -27360,6 +27386,10 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/noticeboard/persistent{
+	name = "Mechanics Workshop persistent notice board";
+	persistent_id = "mechanics"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "bxl" = (
@@ -27808,7 +27838,7 @@
 /area/station/quartermaster/cargobay)
 "byC" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/pocketguide/quartermaster{
+/obj/item/paper/book/from_file/pocketguide/quartermaster{
 	pixel_y = 10
 	},
 /obj/item/storage/toolbox/mechanical,
@@ -27853,7 +27883,7 @@
 /area/station/hallway/seaturtlehallway)
 "byH" = (
 /obj/table/auto,
-/obj/item/paper/book/pocketguide/mining2,
+/obj/item/paper/book/from_file/pocketguide/mining2,
 /obj/item/storage/firstaid/toxin,
 /obj/machinery/drainage/big,
 /turf/simulated/floor,
@@ -30143,15 +30173,12 @@
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "bET" = (
-/obj/noticeboard{
-	name = "Research Notice Board";
-	pixel_y = 28
+/obj/noticeboard/persistent{
+	name = "Cargo persistent notice board";
+	persistent_id = "cargo"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/purple,
-/area/station/science/lobby)
+/turf/simulated/floor,
+/area/station/quartermaster/cargobay)
 "bEU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -30325,7 +30352,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/extinguisher,
 /obj/item/crowbar,
@@ -30395,7 +30422,7 @@
 /obj/rack,
 /obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
 /obj/item/extinguisher,
 /obj/item/crowbar,
@@ -31644,6 +31671,10 @@
 /obj/item/clothing/head/fedora{
 	pixel_y = 11
 	},
+/obj/noticeboard/persistent{
+	name = "Detective's Office persistent notice board";
+	persistent_id = "detectives office"
+	},
 /turf/simulated/floor/wood/six,
 /area/station/security/detectives_office_manta)
 "bKd" = (
@@ -31759,7 +31790,7 @@
 /area/station/science/restroom)
 "bKn" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -32888,7 +32919,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/item/paper/book/torpedo,
+/obj/item/paper/book/from_file/torpedo,
 /turf/simulated/floor,
 /area/station/security/porttorpedoes)
 "bNl" = (
@@ -33561,7 +33592,7 @@
 	pixel_x = 8;
 	pixel_y = 5
 	},
-/obj/item/paper/book/minerals{
+/obj/item/paper/book/from_file/minerals{
 	pixel_x = -4
 	},
 /obj/table/auto,
@@ -35039,7 +35070,6 @@
 /area/station/security/secoffquarters)
 "bTI" = (
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
 	dir = 4;
 	frequency = 1455;
 	name = "Supply Intercom"
@@ -35745,7 +35775,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cGN" = (
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/item/device/net_sniffer,
 /obj/cable{
 	icon_state = "2-4"
@@ -35855,7 +35885,7 @@
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/breadloaf,
 /obj/item/kitchen/utensil/knife/bread,
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen/therustykrab)
 "cVW" = (
@@ -38154,11 +38184,11 @@
 	},
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line3"
 	},
@@ -40765,8 +40795,8 @@
 /obj/item/tank/air,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/hardhat,
-/obj/item/clothing/head/helmet/hardhat,
+/obj/item/clothing/head/helmet/firefighter,
+/obj/item/clothing/head/helmet/firefighter,
 /obj/item/extinguisher,
 /obj/item/extinguisher,
 /obj/item/clothing/suit/fire/heavy,
@@ -44257,10 +44287,6 @@
 /area/station/engine/inner)
 "vVC" = (
 /obj/table/wood/round/auto,
-/obj/noticeboard{
-	name = "Security Notice Board";
-	pixel_y = 28
-	},
 /obj/machinery/light/incandescent/warm{
 	dir = 1;
 	pixel_y = 20
@@ -44268,6 +44294,10 @@
 /obj/machinery/phone,
 /obj/item/device/detective_scanner{
 	rand_pos = 0
+	},
+/obj/noticeboard/persistent{
+	name = "Security persistent notice board";
+	persistent_id = "security"
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -44836,7 +44866,7 @@
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/disposalpipe/segment,
-/obj/item/paper/book/mechanicbook,
+/obj/item/paper/book/from_file/mechanicbook,
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
 	pixel_y = 20
@@ -73230,7 +73260,7 @@ aLJ
 bgr
 bpY
 aKs
-bvk
+bET
 bvk
 bvk
 byy
@@ -101625,7 +101655,7 @@ bvW
 bAH
 mUI
 aHI
-bET
+bEU
 bDL
 bHy
 bIr

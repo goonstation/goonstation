@@ -111,7 +111,7 @@ datum
 					var/mob/living/L = M
 					var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 					if(istype(L) && burn)
-						L.TakeDamage("All", 0, clamp(2 * volume * (burn.getStage()-1.25), 0, 35), 0, DAMAGE_BURN)
+						L.TakeDamage("All", 0, (1 - L.get_heat_protection()/100) * clamp(2 * volume * (burn.getStage()-1.25), 0, 35), 0, DAMAGE_BURN)
 						if(!M.stat && !ON_COOLDOWN(M, "napalm_scream", 1 SECOND))
 							M.emote("scream")
 					return 0
@@ -121,7 +121,7 @@ datum
 				var/mob/living/L = M
 				var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 				if(istype(L) && burn)
-					L.changeStatus("burning", 20 * src.volume)
+					L.changeStatus("burning", 2 * src.volume SECONDS)
 					burn.counter += 10 * src.volume
 					holder?.del_reagent(src.id)
 				..()
@@ -142,7 +142,7 @@ datum
 						var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 						L.changeStatus("slowed", 2 SECONDS, optional = 4)
 						if(istype(L) && burn) //double up on the extra burny, not blockable by biosuits/etc either
-							L.changeStatus("burning", 10 * src.volume)
+							L.changeStatus("burning", src.volume SECONDS)
 							burn.counter += 5 * src.volume
 
 		combustible/kerosene
@@ -216,19 +216,24 @@ datum
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", 100)
+						L.changeStatus("burning", 10 SECONDS)
 				return
 
 			reaction_turf(var/turf/T, var/volume)
 				if(istype(T, /turf/simulated))
+					var/list/covered = holder.covered_turf()
+					if(length(covered) > 9)
+						volume = volume/length(covered)
+					if (volume < 3)
+						return
 					if(!T.reagents)
 						T.create_reagents(volume)
 					else
-						T.reagents.maximum_volume = T.reagents.maximum_volume + volume			
-					
+						T.reagents.maximum_volume = T.reagents.maximum_volume + volume
+
 					if(!T.reagents.has_reagent("thermite"))
 						T.UpdateOverlays(image('icons/effects/effects.dmi',icon_state = "thermite"), "thermite")
-						
+
 					T.reagents.add_reagent("thermite", volume, null)
 					if (T.active_hotspot)
 						T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 10, 300)
@@ -454,7 +459,7 @@ datum
 
 				var/mob/living/L = M
 				if(istype(L) && L.getStatusDuration("burning"))
-					L.changeStatus("burning", 100 * mult)
+					L.changeStatus("burning", 10 SECONDS * mult)
 				..()
 
 		combustible/foof // this doesn't work yet
@@ -658,13 +663,19 @@ datum
 			var/caused_fireflash = 0
 			var/min_req_fluid = 0.10 //at least 10% of the fluid needs to be oil for it to ignite
 
+			unpooled(pooltype)
+				. = ..()
+				caused_fireflash = 0 //scream. Band-aid fix for unpooled fuel sometimes coming with caused_fireflash preset to True.
+
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(volume < 1)
 					if (holder)
 						holder.del_reagent(id)
 					return
 
-				if (!caused_fireflash)
+				if (caused_fireflash)
+					return
+				else
 					var/list/covered = holder.covered_turf()
 					if (covered.len < 4 || (volume / holder.total_volume) > min_req_fluid)
 						if(covered.len > 0) //possible fix for bug where caused_fireflash was set to 1 without fireflash going off, allowing fuel to reach any temp without igniting
@@ -676,8 +687,8 @@ datum
 								if(holder.my_atom)
 									holder.my_atom.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")
 									// Added log entries (Convair880).
-									message_admins("Fuel tank explosion ([holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[holder.my_atom.fingerprintslast]" : "*null*"].")
-									logTheThing("bombing", holder.my_atom.fingerprintslast, null, "Fuel tank explosion ([holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[holder.my_atom.fingerprintslast]" : "*null*"].")
+									message_admins("Fuel tank explosion ([holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
+									logTheThing("bombing", holder.my_atom.fingerprintslast, null, "Fuel tank explosion ([holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
 								else
 									turf.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")
 									// Added log entries (Convair880).
@@ -697,35 +708,18 @@ datum
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", 300)
+						L.changeStatus("burning", 30 SECONDS)
 				return 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
 
 				var/mob/living/L = M
 				if(istype(L) && L.getStatusDuration("burning"))
-					L.changeStatus("burning", 20 * mult)
+					L.changeStatus("burning", 2 SECONDS * mult)
 				..()
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison", 1)
-
-			epichlorohydrin
-				name = "epichlorohydrin"
-				id = "epichlorohydrin"
-				description = "A highly reactive, flammable, mildly toxic compound."
-				reagent_state = LIQUID
-				fluid_r = 220
-				fluid_g = 220
-				fluid_b = 255
-				transparency = 128
-				max_radius = 4
-				min_radius = 0
-				minimum_reaction_temperature = T0C + 385
-				volume_radius_multiplier = 0.05
-				explosion_threshold = 1000
-				volume_explosion_radius_modifier = -4.5
-				volatility = 2.5
 
 		// cogwerks - gunpowder test. IS THIS A TERRIBLE GODDAMN IDEA? PROBABLY
 
@@ -814,6 +808,11 @@ datum
 						D.desc = "Uh oh. Someone better clean this up!"
 						if(!D.reagents) D.create_reagents(10)
 						D.reagents.add_reagent("blackpowder", 5, null)
+				return
+			reaction_mob(var/mob/living/carbon/human/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if (ishuman(M) && volume >= 10)
+					M.gunshot_residue = 1
 				return
 
 		combustible/nitrogentriiodide

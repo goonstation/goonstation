@@ -129,6 +129,13 @@
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/roburger
 
+/datum/cookingrecipe/cheeseborger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/parts/robot_parts/head
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/cheeseborger
+
 /datum/cookingrecipe/baconburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
@@ -1573,3 +1580,14 @@
 	item2 = /obj/item/item_box/figure_capsule
 	cookbonus = 10
 	output = /obj/item/pen/crayon/lipstick
+
+	specialOutput(obj/submachine/ourCooker)
+		if (!ourCooker)
+			return null
+		var/obj/item/pen/crayon/lipstick/lipstick = new /obj/item/pen/crayon/lipstick
+		for (var/obj/item/pen/crayon/C in ourCooker.contents)
+			lipstick.font_color = C.font_color
+			lipstick.color_name = hex2color_name(lipstick.font_color)
+			lipstick.name = "[lipstick.color_name] lipstick"
+			lipstick.update_icon()
+		return lipstick

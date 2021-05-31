@@ -399,7 +399,7 @@
 				owner.changeStatus("weakened", 2 SECONDS)
 			else if (probmult(2))
 				owner.visible_message("<span class='alert'><B>[owner.name]'s [src.limb] kicks [him_or_her(owner)] in the head somehow!</B></span>")
-				owner.changeStatus("paralysis", 70)
+				owner.changeStatus("paralysis", 7 SECONDS)
 				owner.TakeDamageAccountArmor("head", rand(5,10), 0, 0, DAMAGE_BLUNT)
 			else if (probmult(2))
 				owner.visible_message("<span class='alert'><B>[owner.name] can't seem to control [his_or_her(owner)] [src.limb]!</B></span>")
@@ -436,12 +436,12 @@
 
 	OnLife(var/mult)
 		if(..()) return
-		owner.changeStatus("radiation", 30*mult, 1)
+		owner.changeStatus("radiation", 3 SECONDS*mult, 1)
 		for(var/mob/living/L in range(1, owner))
 			if (L == owner)
 				continue
 			boutput(L, "<span class='alert'>You are enveloped by a soft green glow emanating from [owner].</span>")
-			L.changeStatus("radiation", 50*mult, 1)
+			L.changeStatus("radiation", 5 SECONDS*mult, 1)
 		return
 
 /datum/bioEffect/mutagenic_field
@@ -774,8 +774,8 @@
 
 	OnLife(var/mult)
 		if (probmult(ring_prob) && owner.client)
-			// owner.client << sound("phone-ringing.wav")		//play sound only for client. Untested, don't know the sound
-			owner.client << sound("sound/machines/phones/ring_incoming.ogg")		//play sound only for client. Untested, don't know the sound
+			// owner.client << sound("sound/machines/phones/ring_incoming.ogg")		//hee hoo let's give someone legit tinnitus with the mutation, that's good game design (it's actually not)
+			owner.playsound_local(owner.loc, "sound/machines/phones/ring_incoming.ogg", 40, 1)
 
 /datum/bioEffect/anemia
 	name = "Anemia"

@@ -15,7 +15,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0_lowmeat"
 	object_flags = CAN_REPROGRAM_ACCESS
-	mats = list("MET-1"=35, "beeswax"=5)
+	mats = list("MET-1"=35, "honey"=5)
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 	var/mob/living/occupant
 	var/heal_level = 10 //The clone is released once its health^W damage (maxHP - HP) reaches this level.
@@ -60,6 +60,7 @@
 	var/static/list/sounds_function = list('sound/machines/engine_grump1.ogg','sound/machines/engine_grump2.ogg','sound/machines/engine_grump3.ogg',
 	'sound/impact_sounds/Metal_Clang_1.ogg','sound/impact_sounds/Metal_Hit_Heavy_1.ogg')
 
+	var/perfect_clone = FALSE		//if TRUE, then clones always keep normal name and receive no health debuffs
 
 	New()
 		..()
@@ -142,9 +143,8 @@
 	get_desc(dist, mob/user)
 		. = ""
 		if ((!isnull(src.occupant)) && (!isdead(src.occupant)))
-			var/completion = clamp(100 - ((src.occupant.max_health - src.occupant.health) - heal_level), 0, 100)
 			//var/completion = (100 * ((src.occupant.health + 100) / (src.heal_level + 100)))
-			. += "<br>Currently [!src.attempting ? "preparing a new body" : "cloning [src.occupant]"]. [round(completion)]% complete."
+			. += "<br>Currently [!src.attempting ? "preparing a new body" : "cloning [src.occupant]"]. [src.get_progress()]% complete."
 
 		var/meat_pct = round( 100 * (src.meat_level / MAXIMUM_MEAT_LEVEL) )
 
@@ -258,7 +258,7 @@
 		if(src.occupant.client) // gross hack for resetting tg layout bleh bluh
 			src.occupant.client.set_layout(src.occupant.client.tg_layout)
 
-		if(src.occupant.bioHolder.clone_generation > 1)
+		if(!src.perfect_clone && src.occupant.bioHolder.clone_generation > 1)
 			var/health_penalty = (src.occupant.bioHolder.clone_generation - 1) * 15
 			src.occupant.setStatus("maxhealth-", null, -health_penalty)
 			if(health_penalty >= 100)
@@ -296,7 +296,7 @@
 			boutput(src.occupant, "<span class='notice'><b>Clone generation process initiated.</b> This might take a moment, please hold.</span>")
 
 		if (clonename)
-			if (prob(15))
+			if (!src.perfect_clone && prob(15))
 				src.occupant.real_name = "[pick("Almost", "Sorta", "Mostly", "Kinda", "Nearly", "Pretty Much", "Roughly", "Not Quite", "Just About", "Something Resembling", "Somewhat")] [clonename]"
 			else
 				src.occupant.real_name = clonename
@@ -425,7 +425,7 @@
 				power_usage = 200
 				return ..()
 
-			else if ((src.occupant.max_health - src.occupant.health) > src.heal_level)
+			else if (src.get_progress() < 100)
 
 				if (src.attempting)
 					// If we're cloning an actual person, make weird noises
@@ -476,7 +476,7 @@
 					src.failed_tick_counter = 0
 				previous_heal = src.occupant.health
 
-				if ((src.occupant.health + (100 - src.occupant.max_health)) > 50 && src.failed_tick_counter >= 2 && (src.time_started + eject_wait < TIME))
+				if (src.get_progress() > 50 && src.failed_tick_counter >= 2 && (src.time_started + eject_wait < TIME))
 					// Wait a few ticks to see if they stop gaining health.
 					// Once that's the case, boot em
 					src.connected_message("Cloning Process Complete.", "success")
@@ -488,7 +488,7 @@
 				power_usage = 7500
 				return ..()
 
-			else if (src.occupant.max_health - src.occupant.health <= src.heal_level)
+			else if (src.get_progress() >= 100)
 				// Clone is more or less fully complete!
 
 				if (src.attempting && (src.time_started + eject_wait < TIME))
@@ -788,6 +788,14 @@
 		else
 			animate_shake(src,3,rand(1,4),rand(1,4))
 
+	proc/get_progress()
+		if (!src.occupant)
+			return 0
+
+		if (src.heal_level == 0)
+			return 100
+
+		return round(clamp(100 - ((src.occupant.max_health - src.occupant.health) - src.heal_level), 0, 100))
 
 	//SOME SCRAPS I GUESS
 	/* EMP grenade/spell effect
@@ -1065,7 +1073,7 @@
 			boutput(user, "<span class='alert'>There is already somebody in there.</span>")
 			return
 
-		else if (G?.affecting && !src.emagged && !isdead(G.affecting) && !ismonkey(G.affecting))
+		else if (G?.affecting && !src.emagged && !isdead(G.affecting) && (!isnpcmonkey(G.affecting) || G.affecting.client))
 			user.visible_message("<span class='alert'>[user] tries to stuff [G.affecting] into [src], but it beeps angrily as the safety overrides engage!</span>")
 			return
 
@@ -1195,33 +1203,3 @@
 #undef DEFAULT_MEAT_USED_PER_TICK
 #undef DEFAULT_SPEED_BONUS
 #undef MEAT_LOW_LEVEL
-
-/obj/machinery/clonepod/automatic
-	name = "Cloning Pod Deluxe"
-	meat_level = 1.#INF
-	var/last_check = 0
-	var/check_delay = 10 SECONDS
-
-/obj/machinery/clonepod/automatic/process()
-	if(!src.attempting)
-		if (world.time - last_check >= check_delay)
-			last_check = world.time
-			INVOKE_ASYNC(src, /obj/machinery/clonepod/automatic.proc/growclone_a_ghost)
-	return..()
-
-/obj/machinery/clonepod/automatic/New()
-	..()
-	animate_rainbow_glow(src) // rgb shit cause it looks cool
-	SubscribeToProcess()
-	last_check = world.time
-
-/obj/machinery/clonepod/automatic/disposing()
-	..()
-	UnsubscribeProcess()
-
-/obj/machinery/clonepod/automatic/proc/growclone_a_ghost()
-	for(var/mob/dead/observer/ghost in mobs)
-		var/datum/mind/ghost_mind = ghost.mind
-		if(ghost.client && !ghost_mind.dnr)
-			growclone(ghost, ghost.real_name, ghost_mind)
-			break
