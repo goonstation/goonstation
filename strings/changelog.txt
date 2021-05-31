@@ -1,5 +1,9 @@
 
 (t)mon may 31 21
+(u)Flaborized
+(p)4978
+(e)|
+(+)Renamed the epilepsy mutation to 'Stupefaction'.
 (u)Azrun
 (p)4809
 (e)⚖🆕🗺🎨|balance, feature, mapping, sprites
