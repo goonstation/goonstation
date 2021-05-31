@@ -376,19 +376,6 @@
 	category = "Formal"
 	cost = PAY_TRADESMAN/3
 
-/datum/clothingbooth_item/dinerdress_mint
-	name = "Mint Diner Waitress's Dress"
-	path = /obj/item/clothing/under/gimmick/dinerdress_mint
-	slot = SLOT_W_UNIFORM
-	category = "Formal"
-	cost = PAY_TRADESMAN/3
-
-/datum/clothingbooth_item/dinerdress_pink
-	name = "Pink Diner Waitress's Dress"
-	path = /obj/item/clothing/under/gimmick/dinerdress_pink
-	slot = SLOT_W_UNIFORM
-	category = "Formal"
-	cost = PAY_TRADESMAN/3
 /datum/clothingbooth_item/dress
 	name = "Little Black Dress"
 	path = /obj/item/clothing/under/misc/dress
@@ -838,13 +825,6 @@
 	category = "Headwear"
 	cost = PAY_TRADESMAN
 
-/datum/clothingbooth_item/waitresshat
-	name = "Diner Waitress's Hat"
-	path = /obj/item/clothing/head/waitresshat
-	slot = SLOT_HEAD
-	category = "Headwear"
-	cost = PAY_TRADESMAN/5
-
 //Sci-Fi
 
 /datum/clothingbooth_item/sfjumpsuitbp
@@ -1077,3 +1057,24 @@
 	slot = SLOT_HEAD
 	category = "Costumes"
 	cost = PAY_EXECUTIVE/2
+
+/datum/clothingbooth_item/dinerdress_mint
+	name = "Mint Diner Waitress's Dress"
+	path = /obj/item/clothing/under/gimmick/dinerdress_mint
+	slot = SLOT_W_UNIFORM
+	category = "Costumes"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/dinerdress_pink
+	name = "Pink Diner Waitress's Dress"
+	path = /obj/item/clothing/under/gimmick/dinerdress_pink
+	slot = SLOT_W_UNIFORM
+	category = "Costumes"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/waitresshat
+	name = "Diner Waitress's Hat"
+	path = /obj/item/clothing/head/waitresshat
+	slot = SLOT_HEAD
+	category = "Costumes"
+	cost = PAY_TRADESMAN/5
