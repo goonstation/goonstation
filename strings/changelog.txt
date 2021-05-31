@@ -1,4 +1,9 @@
 
+(t)sun may 30 21
+(u)Flappybat
+(p)4958
+(e)🆕🎨|feature, sprites
+(+)Adds a roburger variant, the cheeseborger. Just add cheese! Sprite modification by BatElite.
 (t)sat may 29 21
 (u)Flourish
 (*)Player monkeys now must be dead in order to be monkey spiked or reclaimed, gibbers now require all victims to be dead.
