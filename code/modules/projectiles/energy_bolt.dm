@@ -165,7 +165,7 @@ burning - hot
 radioactive - rips apart cells or some shit
 toxic - poisons
 */
-	damage_type = D_ENERGY
+	damage_type = D_SPECIAL
 	//With what % do we hit mobs laying down
 	hit_ground_chance = 0
 	//Can we pass windows
@@ -178,14 +178,14 @@ toxic - poisons
 	on_hit(atom/hit) //purposefully not getting falloff, so it's not just a worse taser
 		if (isliving(hit))
 			var/mob/living/L = hit
-			L.apply_sonic_stun(1.5, 0, 25, 10, 0, rand(1, 3), stamina_damage = 80)
+			L.apply_sonic_stun(1.5, 0, 25, 10, 0, rand(1, 3), stamina_damage = 120)
 			impact_image_effect(ie_type, hit)
 		return
 
  //purposefully keeping (some of) the pointblank double-dip,
  //because a staffie with a vuvu won't always have the option to follow up with a baton and cuffs, and this helps keep a guy down
 	on_pointblank(var/obj/projectile/P, var/mob/living/M)
-		M.apply_sonic_stun(3, 0, 25, 20, 0, rand(2, 4), stamina_damage = 80)
+		M.apply_sonic_stun(6, 0, 25, 20, 0, rand(2, 4), stamina_damage = 40)
 		impact_image_effect(ie_type, M)
 
 //////////// Ghost Hunting for Halloween

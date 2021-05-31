@@ -331,7 +331,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_eyes = /obj/item/clothing/glasses/meson
 	slot_jump = /obj/item/clothing/under/rank/chief_engineer
 	slot_ears = /obj/item/device/radio/headset/command/ce
-	slot_poc1 = /obj/item/paper/book/pocketguide/engineering
+	slot_poc1 = /obj/item/paper/book/from_file/pocketguide/engineering
 	items_in_backpack = list(/obj/item/device/flash, /obj/item/rcd_ammo/medium)
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -508,7 +508,7 @@ ABSTRACT_TYPE(/datum/job/security)
 		slot_foot = /obj/item/clothing/shoes/brown
 		slot_poc1 = /obj/item/storage/security_pouch/assistant
 		slot_poc2 = /obj/item/requisition_token/security/assistant
-		items_in_backpack = list(/obj/item/paper/book/space_law)
+		items_in_backpack = list(/obj/item/paper/book/from_file/space_law)
 		rounds_needed_to_play = 5
 
 		New()
@@ -673,7 +673,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_ears = /obj/item/device/radio/headset/medical
 	slot_eyes = /obj/item/clothing/glasses/healthgoggles
 	slot_poc1 = /obj/item/device/pda2/medical
-	slot_poc2 = /obj/item/paper/book/pocketguide/medical
+	slot_poc2 = /obj/item/paper/book/from_file/pocketguide/medical
 	items_in_backpack = list(/obj/item/crowbar, /obj/item/robodefibrillator) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
 	// 2018: guaranteed air tanks now spawn in boxes (depending on backpack type) to save room
 
@@ -721,7 +721,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_jump = /obj/item/clothing/under/rank/cargo
 	slot_belt = /obj/item/device/pda2/quartermaster
 	slot_ears = /obj/item/device/radio/headset/shipping
-	slot_poc1 = /obj/item/paper/book/pocketguide/quartermaster
+	slot_poc1 = /obj/item/paper/book/from_file/pocketguide/quartermaster
 
 	New()
 		..()
@@ -738,8 +738,8 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_foot = /obj/item/clothing/shoes/orange
 	slot_glov = /obj/item/clothing/gloves/black
 	slot_ears = /obj/item/device/radio/headset/engineer
-	slot_poc1 = /obj/item/paper/book/pocketguide/mining1
-	slot_poc2 = /obj/item/paper/book/pocketguide/mining2 // fuck it i'll merge these later
+	slot_poc1 = /obj/item/paper/book/from_file/pocketguide/mining1
+	slot_poc2 = /obj/item/paper/book/from_file/pocketguide/mining2 // fuck it i'll merge these later
 	items_in_backpack = list(/obj/item/crowbar)
 
 	New()
@@ -790,6 +790,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_glov = /obj/item/clothing/gloves/yellow
 	slot_poc1 = /obj/item/device/pda2/engine
 	slot_ears = /obj/item/device/radio/headset/engineer
+	items_in_backpack = list(/obj/item/paper/book/from_file/pocketguide/engineering, /obj/item/old_grenade/oxygen)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -856,7 +857,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_foot = /obj/item/clothing/shoes/black
 	slot_suit = /obj/item/clothing/suit/armor/vest
 	slot_ears = /obj/item/device/radio/headset/civilian
-	slot_poc1 = /obj/item/paper/book/pocketguide/bartending
+	slot_poc1 = /obj/item/paper/book/from_file/pocketguide/bartending
 	slot_lhan = /obj/item/reagent_containers/food/drinks/cocktailshaker
 	items_in_backpack = list(/obj/item/gun/kinetic/riotgun)
 
@@ -1107,7 +1108,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_jump = /obj/item/clothing/under/misc/lawyer
 	slot_foot = /obj/item/clothing/shoes/black
 	slot_lhan = /obj/item/storage/briefcase
-	slot_rhan = /obj/item/paper/book/space_law
+	slot_rhan = /obj/item/paper/book/from_file/space_law
 	slot_ears = /obj/item/device/radio/headset/civilian
 
 	New()
@@ -1308,6 +1309,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_foot = /obj/item/clothing/shoes/tourist
 	slot_lhan = /obj/item/camera
 	slot_rhan = /obj/item/storage/photo_album
+	change_name_on_spawn = 1
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -1537,6 +1539,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_lhan = /obj/item/storage/briefcase
 	slot_foot = /obj/item/clothing/shoes/brown
 	alt_names = list("Salesman", "Merchant")
+	change_name_on_spawn = 1
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2606,6 +2609,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_foot = /obj/item/clothing/shoes/tourist
 	slot_lhan = /obj/item/camera
 	slot_rhan = /obj/item/storage/photo_album
+	change_name_on_spawn = 1
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2653,7 +2657,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	allow_traitors = 0
 	cant_spawn_as_rev = 1
 	var/team = 0 //1 = NT, 2 = SY
-	
+
 	special_setup(var/mob/living/carbon/human/M)
 		..()
 		if (!M)
@@ -2680,8 +2684,8 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		if (istype(headset))
 			headset.set_secure_frequency("g",freq)
 			headset.secure_classes["g"] = RADIOCL_SYNDICATE
-			headset.cant_self_remove = 0 
-			headset.cant_other_remove = 0 
+			headset.cant_self_remove = 0
+			headset.cant_other_remove = 0
 
 	nanotrasen
 		name = "NanoTrasen Pod Pilot"
@@ -2695,7 +2699,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_back = /obj/item/storage/backpack/NT
 		slot_belt = /obj/item/gun/energy/blaster_pod_wars/nanotrasen
 		slot_jump = /obj/item/clothing/under/misc/turds
-		slot_head = /obj/item/clothing/head/helmet/space/ntso
+		slot_head = /obj/item/clothing/head/helmet/space/nanotrasen/pilot
 		slot_suit = /obj/item/clothing/suit/space/nanotrasen/pilot
 		slot_foot = /obj/item/clothing/shoes/swat
 		slot_card = /obj/item/card/id/pod_wars/nanotrasen

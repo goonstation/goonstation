@@ -1061,11 +1061,11 @@
 /area/station/crew_quarters/catering)
 "dg" = (
 /obj/table/auto,
-/obj/item/paper/book/minerals{
+/obj/item/paper/book/from_file/minerals{
 	pixel_x = -2;
 	pixel_y = 5
 	},
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/item/device/matanalyzer,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
@@ -1207,7 +1207,7 @@
 	},
 /obj/item/reagent_containers/dropper/mechanical,
 /obj/item/storage/box/patchbox,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/storage/box/syringes,
 /obj/item/storage/box/beakerbox,
 /turf/simulated/floor/purplewhite{
@@ -2913,7 +2913,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/item/paper/book/medical_surgery_guide,
+/obj/item/paper/book/from_file/medical_surgery_guide,
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "hP" = (
@@ -7170,7 +7170,7 @@
 /area/station/science/teleporter)
 "rD" = (
 /obj/table/auto,
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/item/kitchen/rollingpin,
 /obj/item/reagent_containers/glass/bottle/icing,
 /turf/simulated/floor/black,
@@ -9953,7 +9953,7 @@
 /area/station/turret_protected/Zeta)
 "xU" = (
 /obj/table/auto,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/item/plantanalyzer,
 /obj/item/device/reagentscanner,
 /obj/item/device/reagentscanner,
@@ -16651,7 +16651,7 @@
 	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
 	name = "note from mom"
 	},
-/obj/item/paper/book/critter_compendium,
+/obj/item/paper/book/from_file/critter_compendium,
 /obj/machinery/light{
 	layer = 3
 	},

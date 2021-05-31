@@ -325,7 +325,7 @@ obj/machinery/vehicle/miniputt/pilot
 	name = "Pod SYR-"
 	desc = "A syndicate-crafted robust pod."
 	armor_score_multiplier = 1.5
-	icon_state = "putt_wizard"
+	icon_state = "putt_sy_robust"
 	health = 350
 	maxhealth = 350
 	speed = 0.6
@@ -761,7 +761,7 @@ obj/machinery/vehicle/miniputt/pilot
 				boutput(user, "You loosely attach the robust armor plating.")
 				user.u_equip(W)
 				qdel(W)
-				src.overlays += image('icons/obj/ship.dmi', "pod_skinW")
+				src.overlays += image('icons/obj/ship.dmi', "pod_skinRF")
 				stage = 8
 				armor_type = 11
 			////////////////////pod wars end//////////////////////
@@ -1188,7 +1188,7 @@ obj/machinery/vehicle/miniputt/pilot
 	name = "Pod SYR-"
 	desc = "A syndicate-crafted robust pod."
 	armor_score_multiplier = 1.5
-	icon_state = "pod_wizard"
+	icon_state = "pod_sy_robust"
 	health = 500
 	maxhealth = 500
 	speed = 0.8
@@ -1838,7 +1838,7 @@ obj/machinery/vehicle/miniputt/pilot
 				boutput(user, "You loosely attach the robust armor plating.")
 				user.u_equip(W)
 				qdel(W)
-				src.overlays += image('icons/effects/64x64.dmi', "pod_skinW")
+				src.overlays += image('icons/effects/64x64.dmi', "pod_skinRF")
 				stage = 8
 				armor_type = 11
 			////////////////////pod wars end//////////////////////

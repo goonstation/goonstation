@@ -264,8 +264,8 @@ var/global/list/playersSeen = list()
 
 		if (!mobRef)
 			data["ckey"] = input(usr, "Ckey (lowercase, only alphanumeric, no spaces, leave blank to skip)", "Ban") as null|text
-			data["compID"] = input(usr, "Computer ID (leave blank to skip)", "Ban") as null|text
-			data["ip"] = input(usr, "IP Address (leave blank to skip)", "Ban") as null|text
+			data["compID"] = input(usr, "Computer ID (leave blank to autofill)", "Ban") as null|text
+			data["ip"] = input(usr, "IP Address (leave blank to autofill)", "Ban") as null|text
 		else
 			data["ckey"] = M.ckey
 			data["compID"] = M.computer_id
@@ -274,7 +274,19 @@ var/global/list/playersSeen = list()
 		if (!data["ckey"] && !data["ip"] && !data["compID"])
 			boutput(usr, "<span class='alert'>You need to input a ckey or IP or computer ID, all cannot be blank.</span>")
 			return null
-
+		if (data["ckey"] && (!data["ip"] || !data["compID"]))
+			var/list/response
+			try
+				response = apiHandler.queryAPI("playerInfo/get", list("ckey" = data["ckey"]), forceResponse = 1)
+			catch ()
+				boutput(usr, "<span class='alert'>Failed to query API, try again later.</span>")
+				return
+			if (text2num(response["seen"]) < 1)
+				boutput(usr, "<span class='alert'>No data found for target, IP and/or compID will be left blank.</span>")
+			if (!data["ip"])
+				data["ip"] = response["last_ip"]
+			if (!data["compID"])
+				data["compID"] = response["last_compID"]
 		boutput(usr, "<span class='alert'><b>You are currently banning the following player:</b></span>")
 		boutput(usr, "<b>Mob:</b> [mobRef ? M.name : "N/A"]")
 		boutput(usr, "<b>Key:</b> [data["ckey"] ? data["ckey"] : "N/A"] (IP: [data["ip"] ? data["ip"] : "N/A"], CompID: [data["compID"] ? data["compID"] : "N/A"])")

@@ -325,7 +325,7 @@
 				lifeforms++
 				lifelist += C.name
 
-		for (var/obj/B in warp_beacons) //ignoring cruisers, they barely exist, sue me.
+		for (var/obj/B in by_type[/obj/warp_beacon]) //ignoring cruisers, they barely exist, sue me.
 			if(B != ship)
 				if (ship.z == B.z)
 					beacons++
