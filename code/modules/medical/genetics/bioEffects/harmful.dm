@@ -189,10 +189,10 @@
 					applied = 0
 		return
 
-/datum/bioEffect/epilepsy
-	name = "Epilepsy"
-	desc = "Causes damage to the subject's brain structure, resulting in occasional seizures from brain misfires."
-	id = "epilepsy"
+/datum/bioEffect/stupefaction
+	name = "Stupefaction"
+	desc = "Causes damage to the subject's brain structure, occassionally utterly stupefying and stunning them."
+	id = "stupefaction"
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 66
@@ -208,9 +208,8 @@
 		if (isdead(owner))
 			return
 		if (probmult(1) && !owner.getStatusDuration("paralysis"))
-			owner:visible_message("<span class='alert'><B>[owner] starts having a seizure!</span>", "<span class='alert'>You have a seizure!</span>")
+			owner:visible_message("<span class='alert'><B>[owner] looks totally stupefied!</span>", "<span class='alert'>You feel totally stupefied!</span>")
 			owner.setStatus("paralysis", max(owner.getStatusDuration("paralysis"), 20))
-			owner:make_jittery(100)
 		return
 
 /datum/bioEffect/thermal_vuln
