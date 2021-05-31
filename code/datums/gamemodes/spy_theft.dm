@@ -357,7 +357,6 @@
 	station_bounties[/obj/item/clothing/head/helmet/space/santahat] = 1
 	station_bounties[/obj/item/clothing/head/merchant_hat] = 1
 	station_bounties[/obj/item/clothing/head/beret/prisoner] = 2
-	station_bounties[/obj/item/clothing/head/helmet/hardhat/security] = 2
 	station_bounties[/obj/item/clothing/head/caphat] = 3
 	station_bounties[/obj/item/clothing/head/hos_hat] = 3
 
@@ -397,6 +396,7 @@
 	station_bounties[/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff] = 2
 	station_bounties[/obj/item/reagent_containers/food/drinks/bottle/champagne] = 2
 	station_bounties[/obj/item/pen/crayon/golden] = 2
+	station_bounties[/obj/item/remote/porter/port_a_sci] = 2
 	station_bounties[/obj/item/clothing/suit/hosmedal] = 3
 	station_bounties[/obj/item/rddiploma] = 2
 	station_bounties[/obj/item/mdlicense] = 2
@@ -404,11 +404,6 @@
 	station_bounties[/obj/captain_bottleship] = 3
 	station_bounties[/obj/item/hand_tele] = 3
 	station_bounties[/obj/item/card/id/captains_spare] = 3
-
-	station_bounties[/obj/item/remote/porter/port_a_medbay] = 2
-	station_bounties[/obj/item/remote/porter/port_a_nanomed] = 2
-	station_bounties[/obj/item/remote/porter/port_a_brig] = 2
-	station_bounties[/obj/item/remote/porter/port_a_sci] = 2
 
 	station_bounties[/obj/item/baton] = 2
 	station_bounties[/obj/item/gun/kinetic/riot40mm] = 2
