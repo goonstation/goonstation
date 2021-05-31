@@ -12090,9 +12090,7 @@
 	},
 /area/pod_wars/team2/central_hallway)
 "Uq" = (
-/obj/machinery/manufacturer/mining/pod_wars{
-	team_num = TEAM_NANOTRASEN
-},
+/obj/machinery/manufacturer/mining/pod_wars,
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
