@@ -1006,3 +1006,20 @@
 	high
 		tier = 3
 
+////////////// special pod wars cargo pads + mineral accumulators ///////////////
+
+/obj/submachine/cargopad/pod_wars/syndicate
+	name = "Lodbrok Mining Pad"
+	group = "syndicate"
+
+/obj/submachine/cargopad/pod_wars/nanotrasen
+	name = "NSV Pytheas Mining Pad"
+	group = "nanotrasen"
+
+/obj/machinery/oreaccumulator/pod_wars/syndicate
+	name = "Syndicate mineral accumulator"
+	group = "syndicate"
+
+/obj/machinery/oreaccumulator/pod_wars/nanotrasen
+	name = "NanoTrasen mineral accumulator"
+	group = "nanotrasen"
