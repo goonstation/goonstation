@@ -245,12 +245,7 @@
 	var/team_num = 0
 	New()
 		available -= /datum/manufacture/ore_accumulator
-
 		available -= /datum/manufacture/jetpack
-		if(src.team_num == TEAM_NANOTRASEN)
-			available += /datum/manufacture/pod_wars/jetpack
-		if(src.team_num == TEAM_SYNDICATE)
-			available += /datum/manufacture/pod_wars/jetpack/syndicate
 
 		available -= /datum/manufacture/industrialboots
 		available += /datum/manufacture/pod_wars/industrialboots
@@ -261,11 +256,13 @@
 /obj/machinery/manufacturer/mining/pod_wars/syndicate
 	New()
 		available += /datum/manufacture/pod_wars/accumulator/syndicate
+		available += /datum/manufacture/pod_wars/jetpack/syndicate
 		..()
 
 /obj/machinery/manufacturer/mining/pod_wars/nanotrasen
 	New()
 		available += /datum/manufacture/pod_wars/accumulator/nanotrasen
+		available += /datum/manufacture/pod_wars/jetpack
 		..()
 
 /obj/machinery/manufacturer/medical/pod_wars
