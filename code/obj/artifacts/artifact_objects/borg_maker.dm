@@ -48,7 +48,7 @@
 				if (limb.kind_of_limb & LIMB_ROBOT)
 					convertable_limbs -= limb
 			//people with existing robolimbs get converted faster.
-			//(loops_per_conversion_step - 1) term adds some 'buffer time' before any limbs are converted.
+			//(loops_per_conversion_step - 1) bit adds some 'buffer time' before any limbs are converted.
 			var/loops = (loops_per_conversion_step * (convertable_limbs.len + 1)) + (loops_per_conversion_step - 1)
 			while (loops > 0)
 				if (escapable && user.loc != O.loc)
@@ -59,6 +59,7 @@
 				user.changeStatus("paralysis", 7 SECONDS)
 				playsound(user.loc, pick(work_sounds), 50, 1, -1)
 				if (loops % loops_per_conversion_step == 0)
+					boutput(world, "CONVERTING LIMB! LOOPS IS [loops], LOOPS_PER_CONVERSION_STEP IS [loops_per_conversion_step]")
 					var/obj/item/parts/limb_to_replace = pick(convertable_limbs)
 					switch(limb_to_replace.slot)
 						if ("l_arm")
@@ -69,6 +70,8 @@
 							humanuser.limbs.replace_with("l_leg", /obj/item/parts/robot_parts/leg/left/light, null, 0)
 						if ("r_leg")
 							humanuser.limbs.replace_with("r_leg", /obj/item/parts/robot_parts/leg/right/light, null, 0)
+					convertable_limbs -= limb_to_replace
+					boutput(world, "CONVERTED [limb_to_replace.slot] TO ROBOTIC")
 				sleep(0.4 SECONDS)
 
 			var/bdna = null // For forensics (Convair880).
