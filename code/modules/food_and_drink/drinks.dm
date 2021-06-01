@@ -291,7 +291,7 @@
 
 	proc/set_stuff(var/name, var/icon_state)
 		src.name = "crushed [name]"
-		if (icon_state == "cola-1" || "cola-2")
+		if (icon_state == "cola-1" || icon_state == "cola-2")
 			switch(icon_state)
 				if ("cola-1")
 					src.icon_state = "crushed-1"
