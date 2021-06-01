@@ -517,6 +517,31 @@
 
 		return
 
+	else if(signal.data["address_1"] == "TRANSRKIT" && signal.data["acc_code"] == netpass_heads && !isnull(signal.data["data"]) && !isnull(signal.data["lock"]))
+		var/targetitem = signal.data["data"]
+		for(var/datum/electronics/scanned_item/O in mechanic_controls.scanned_items)
+			if (targetitem == O.name)
+				O.locked = signal.data["lock"]
+		return
+	//I have no idea why anyone would want blueprint files
+	//But I love making packets cryptic
+	if(signal.data["address_1"] == src.net_id && signal.data["command"] == "download" && target && !isnull(signal.data["data"]))
+		var/targetitem = signal.data["data"]
+		for(var/datum/electronics/scanned_item/O in mechanic_controls.scanned_items)
+			if (targetitem == O.name)
+				SPAWN_DBG(0.5 SECONDS)
+					var/datum/computer/file/electronics_scan/scanFile = new
+					scanFile.scannedName = O.name
+					scanFile.scannedPath = O.item_type
+					scanFile.scannedMats = O.mats
+					var/datum/signal/newsignal = get_free_signal()
+					newsignal.source = src
+					newsignal.transmission_method = TRANSMISSION_RADIO
+					newsignal.data["command"] = "upload"
+					newsignal.data["address_1"] = target
+					newsignal.data_file = scanFile
+					radio_connection.post_signal(src, newsignal)
+
 	if(signal.data["address_1"] != src.net_id || !target || signal.data["command"] != "add" || !istype(signal.data_file, /datum/computer/file/electronics_scan))
 		return
 
@@ -537,8 +562,8 @@
 
 				radio_connection.post_signal(src, newsignal)
 			return
-
-	mechanic_controls.scan_in(scanFile.scannedName, scanFile.scannedPath, scanFile.scannedMats)
+	var/strippedName = scanFile.scannedName
+	mechanic_controls.scan_in(strippedName, scanFile.scannedPath, scanFile.scannedMats)
 	SPAWN_DBG(0.5 SECONDS)
 
 		var/datum/signal/newsignal = get_free_signal()
@@ -647,9 +672,19 @@
 			if("lock")
 				if(href_list["op"])
 					var/datum/electronics/scanned_item/O = locate(href_list["op"]) in mechanic_controls.scanned_items
-					O.locked = !O.locked
+					//O.locked = !O.locked
+					SPAWN_DBG(0.5 SECONDS)
+						var/datum/signal/newsignal = get_free_signal()
+						newsignal.source = src
+						newsignal.transmission_method = TRANSMISSION_RADIO
+						newsignal.data["address_1"] = "TRANSRKIT"
+						newsignal.data["acc_code"] = netpass_heads
+						newsignal.data["lock"] = !O.locked
+						newsignal.data["data"] = O.name
+						newsignal.data["sender"] = src.net_id
+						radio_connection.post_signal(src, newsignal)
+						updateDialog()
 
-		updateDialog()
 	else
 		usr.Browse(null, "window=rkit")
 		src.remove_dialog(usr)

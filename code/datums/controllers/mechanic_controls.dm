@@ -5,10 +5,11 @@ var/datum/mechanic_controller/mechanic_controls
 	var/list/rkit_addresses = list()
 
 	proc
-		scan_in(var/N,var/T,var/M)
+		scan_in(var/N,var/T,var/list/M)
 			var/datum/electronics/scanned_item/S = new/datum/electronics/scanned_item
 			S.name = N
 			S.item_type = T
+			S.mats = M.Copy()
 			S.item_mats = M
 			S.create_partslist(M)
 			S.create_blueprint(M)
@@ -18,7 +19,8 @@ var/datum/mechanic_controller/mechanic_controls
 /datum/electronics/scanned_item
 	var/name = "Unknown"
 	var/item_type = ""
-	var/list/item_mats
+	var/list/item_mats //old electronics parts list
+	var/list/mats //list or amount of materials
 	var/finish_time = 0
 	var/locked = FALSE
 	var/datum/manufacture/mechanics/blueprint = null
