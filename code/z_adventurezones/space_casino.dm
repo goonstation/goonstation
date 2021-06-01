@@ -55,13 +55,11 @@
 	var/list/raretier = list( // rare tier, 2% chance
 		"/obj/item/hand_tele",
 		"/obj/item/clothing/suit/armor/vest",
-		"/obj/item/device/voltron",
 		"/obj/item/gimmickbomb/hotdog",
 		"/obj/item/card/id/captains_spare",
 		"/obj/item/storage/banana_grenade_pouch",
 		"/obj/critter/wendigo", // have fun!
 		"/obj/item/artifact/teleport_wand",
-		"/obj/machinery/vehicle/tank/car/blue", // A BRAAAAAAND NEEEEEEW CAAAAAAAAAR!
 		"/obj/item/card/id/dabbing_license"
 	)
 
