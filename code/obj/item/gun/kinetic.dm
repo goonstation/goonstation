@@ -893,7 +893,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
 				return
 			else
-				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"")
+				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"", null)
 				return
 		else
 			..()
@@ -1245,7 +1245,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
 				return
 			else
-				SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECONDS, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"")
+				SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECONDS, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"", null)
 				return
 		else
 			..()

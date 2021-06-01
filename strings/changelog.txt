@@ -7,6 +7,9 @@
 (u)Tarmunora
 (e)⚖|balance
 (+)Lie down while being used as a meatshield and bullets may pass over you at their normal rates.
+(u)Tarmunora
+(e)⚖|balance
+(*)Port-a-brig now has a short delay before shoving someone inside
 (t)mon may 31 21
 (u)Flaborized
 (p)4978

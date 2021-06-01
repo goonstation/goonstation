@@ -408,14 +408,8 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			if (src.locked)
 				boutput(user, "<span class='alert'>The Port-A-Brig is locked!</span>")
 				return
-			var/mob/living/carbon/human/H = G.affecting
-			H.set_loc(src)
-			src.occupant = H
-			for(var/obj/O in src)
-				O.set_loc(src.loc)
 			src.add_fingerprint(user)
-			build_icon()
-			qdel(W)
+			SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, .proc/go_in, list(G.affecting, G), null, null, "[user] shoves [G.affecting] into [src]!", (INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION))
 
 		else if (ispryingtool(W))
 			var/turf/T = user.loc
@@ -452,6 +446,15 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			UnsubscribeProcess()
 
 		return
+
+	proc/go_in(mob/victim, obj/item/grab/G)
+		victim.set_loc(src)
+		src.occupant = victim
+		for(var/obj/O in src)
+			O.set_loc(src.loc)
+		build_icon()
+		qdel(G)
+
 
 	verb/move_eject()
 		set src in oview(1)
