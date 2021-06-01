@@ -60,7 +60,7 @@
 				playsound(user.loc, pick(work_sounds), 50, 1, -1)
 				if (loops % loops_per_conversion_step == 0)
 					boutput(world, "CONVERTING LIMB! LOOPS IS [loops], LOOPS_PER_CONVERSION_STEP IS [loops_per_conversion_step]")
-					var/obj/item/parts/limb_to_replace = pick(convertable_limbs)
+					var/obj/item/parts/limb_to_replace = convertable_limbs.len ? pick(convertable_limbs) : null //avoid runtiming once all limbs are converted
 					switch(limb_to_replace.slot)
 						if ("l_arm")
 							humanuser.limbs.replace_with("l_arm", /obj/item/parts/robot_parts/arm/left/light, null, 0)
