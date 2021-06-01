@@ -59,7 +59,6 @@
 				user.changeStatus("paralysis", 7 SECONDS)
 				playsound(user.loc, pick(work_sounds), 50, 1, -1)
 				if (loops % loops_per_conversion_step == 0)
-					boutput(world, "CONVERTING LIMB! LOOPS IS [loops], LOOPS_PER_CONVERSION_STEP IS [loops_per_conversion_step]")
 					if (!convertable_limbs.len) //avoid runtiming once all limbs are converted
 						continue
 					var/obj/item/parts/limb_to_replace = pick(convertable_limbs)
@@ -74,7 +73,6 @@
 							humanuser.limbs.replace_with("r_leg", /obj/item/parts/robot_parts/leg/right/light, null, 0)
 					convertable_limbs -= limb_to_replace
 					humanuser.update_body()
-					boutput(world, "CONVERTED [limb_to_replace.slot] TO ROBOTIC")
 				sleep(0.4 SECONDS)
 
 			var/bdna = null // For forensics (Convair880).
