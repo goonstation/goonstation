@@ -4,6 +4,9 @@
 (p)4827
 (e)⚖🗺|balance, mapping
 (+)Added some new spy bounties, most significantly the Head items such as the HoS medal. Removed the Port-A-Sci bounty,
+(u)Tarmunora
+(e)⚖|balance
+(+)Lie down while being used as a meatshield and bullets may pass over you at their normal rates.
 (t)mon may 31 21
 (u)Flaborized
 (p)4978
