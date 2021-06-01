@@ -56,6 +56,7 @@
 			src.bound_height = 32
 			src.bound_width = 64
 
+#ifndef UNDERWATER_MAP
 /datum/action/bar/icon/magnet_build
 	id = "magnet_build"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -109,7 +110,6 @@
 		qdel(mag_parts)
 		owner.visible_message("<span class='notice'>[owner] constructs [magnet]!</span>")
 
-#ifndef UNDERWATER_MAP
 /obj/item/magnet_parts
 	name = "mineral magnet parts"
 	desc = "Used to construct a new magnet on a magnet chassis."
