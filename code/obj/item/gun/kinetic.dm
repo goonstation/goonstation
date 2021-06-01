@@ -40,8 +40,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	examine()
 		. = ..()
 		if (src.ammo && (src.ammo.amount_left > 0))
-			var/datum/projectile/ammo_type = src.ammo
-			. += "There are [src.ammo.amount_left][(ammo_type.material && istype(ammo_type, /datum/material/metal/silver)) ? " silver " : " "]bullets of [src.ammo.sname] left!"
+			var/datum/projectile/ammo_type = src.ammo.ammo_type
+			. += "There are [src.ammo.amount_left][(ammo_type.material && istype(ammo_type.material, /datum/material/metal/silver)) ? " silver " : " "]bullets of [src.ammo.sname] left!"
 		else
 			. += "There are 0 bullets left!"
 		if (current_projectile)
