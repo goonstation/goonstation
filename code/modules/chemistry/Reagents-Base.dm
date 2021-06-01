@@ -672,7 +672,7 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
 				var/spawncleanable = 1
-				if(covered.len > 5 && (length(volume/covered) < 1))
+				if(length(covered) > 5 && (volume/length(covered) < 1))
 					spawncleanable = prob((volume/covered.len) * 10)
 
 
