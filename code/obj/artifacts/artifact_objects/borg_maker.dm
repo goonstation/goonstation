@@ -16,13 +16,13 @@
 	var/list/work_sounds = list('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/effects/airbridge_dpl.ogg','sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Slimy_Hit_3.ogg')
 	examine_hint = "It looks vaguely foreboding."
 	var/escapable = TRUE //Can you be dragged out to cancel the borgifying
-	var/conversioncycles //Relative time it takes to get borged- sped up by existing robot limbs
+	var/loops_per_conversion_step //Number of 0.4 second loops per 'step'- on each step a robolimb is added, and if all 4 limbs are robotic, they're borged.
 
 	New()
 		..()
 		if (prob(15))
 			escapable = FALSE
-		conversioncycles = escapable ? rand(6, 10) : rand(2, 6)
+		loops_per_conversion_step = escapable ? rand(4, 7) : rand(2, 4)
 
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())
@@ -47,7 +47,9 @@
 			for (var/obj/item/parts/limb in convertable_limbs)
 				if (limb.kind_of_limb & LIMB_ROBOT)
 					convertable_limbs -= limb
-			var/loops = conversioncycles * (convertable_limbs.len + 1) //people with existing robolimbs get converted faster
+			//people with existing robolimbs get converted faster.
+			//(loops_per_conversion_step - 1) term adds some 'buffer time' before any limbs are converted.
+			var/loops = (loops_per_conversion_step * (convertable_limbs.len + 1)) + (loops_per_conversion_step - 1)
 			while (loops > 0)
 				if (escapable && user.loc != O.loc)
 					converting = FALSE
@@ -56,9 +58,7 @@
 				random_brute_damage(humanuser, 10)
 				user.changeStatus("paralysis", 7 SECONDS)
 				playsound(user.loc, pick(work_sounds), 50, 1, -1)
-				//TODO remove
-				boutput(world, "<span class='alert'>Borgifying! loops % conversioncycles is: [loops % conversioncycles]</span>")
-				if (loops % conversioncycles == 0) //floating points
+				if (loops % loops_per_conversion_step == 0)
 					var/obj/item/parts/limb_to_replace = pick(convertable_limbs)
 					switch(limb_to_replace.slot)
 						if ("l_arm")
