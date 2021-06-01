@@ -1,5 +1,9 @@
 
 (t)tue jun 01 21
+(u)Sovexe
+(p)4987
+(e)🐛🆕|bug, feature
+(+)Constructing mineral magnets now displays an action bar. Corrected constructed magnets breaking fullbright space.
 (u)Jan.antilles
 (p)4997
 (e)|
