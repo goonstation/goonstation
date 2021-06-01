@@ -1573,11 +1573,11 @@
 /area/station/hallway/secondary/exit)
 "dQ" = (
 /obj/table/auto,
-/obj/item/paper/book/minerals{
+/obj/item/paper/book/from_file/minerals{
 	pixel_x = -2;
 	pixel_y = 5
 	},
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/item/device/matanalyzer,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
@@ -2743,7 +2743,7 @@
 /area/station/crew_quarters/catering)
 "gU" = (
 /obj/table/auto,
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/item/kitchen/rollingpin,
 /obj/item/reagent_containers/glass/bottle/icing,
 /turf/simulated/floor/black,
@@ -7258,7 +7258,7 @@
 /area/station/turret_protected/Zeta)
 "rm" = (
 /obj/table/auto,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/item/plantanalyzer,
 /obj/item/device/reagentscanner,
 /obj/item/device/reagentscanner,
@@ -12408,7 +12408,7 @@
 	},
 /obj/item/reagent_containers/dropper/mechanical,
 /obj/item/storage/box/patchbox,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/storage/box/syringes,
 /obj/item/storage/box/beakerbox,
 /turf/simulated/floor/purplewhite{
@@ -20143,7 +20143,7 @@
 	light_type = /obj/item/light/bulb/yellowish;
 	pixel_x = -8
 	},
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /turf/simulated/floor/plating/random,
 /area/station/quartermaster/office)
 "YI" = (

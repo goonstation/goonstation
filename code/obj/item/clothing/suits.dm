@@ -1255,6 +1255,7 @@
 	syndicate
 		name = "\improper Syndicate command armor"
 		desc = "An armored space suit, not for your average expendable chumps. No sir."
+		is_syndicate = 1
 		icon_state = "indusred"
 		item_state = "indusred"
 		setupProperties()
@@ -1264,6 +1265,7 @@
 
 		specialist
 			name = "specialist heavy operative combat armor"
+			is_syndicate = 0
 			desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
 			icon_state = "syndie_specialist-heavy"
 			item_state = "syndie_specialist-heavy"
@@ -1272,6 +1274,7 @@
 
 	name = "NT-SO heavy operative combat armor"
 	desc = "A Nanotrasen special forces heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
+	is_syndicate = 0
 	icon_state = "ntso_specialist-heavy"
 	item_state = "ntso_specialist-heavy"
 	cant_self_remove = 1

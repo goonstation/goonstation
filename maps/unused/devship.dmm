@@ -1069,11 +1069,11 @@
 /area/station/quartermaster/office)
 "dg" = (
 /obj/table/auto,
-/obj/item/paper/book/minerals{
+/obj/item/paper/book/from_file/minerals{
 	pixel_x = -2;
 	pixel_y = 5
 	},
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/item/device/matanalyzer,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
@@ -5955,7 +5955,7 @@
 	},
 /obj/item/reagent_containers/dropper/mechanical,
 /obj/item/storage/box/patchbox,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -7080,7 +7080,7 @@
 /area/station/science/teleporter)
 "rD" = (
 /obj/table/auto,
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/item/kitchen/rollingpin,
 /obj/item/reagent_containers/glass/bottle/icing,
 /turf/simulated/floor/black,
@@ -9955,7 +9955,7 @@
 /area/station/turret_protected/Zeta)
 "xU" = (
 /obj/table/auto,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/item/plantanalyzer,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
@@ -14628,7 +14628,7 @@
 	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
 	name = "note from mom"
 	},
-/obj/item/paper/book/critter_compendium,
+/obj/item/paper/book/from_file/critter_compendium,
 /obj/machinery/light{
 	layer = 3
 	},

@@ -291,7 +291,7 @@
 
 	//Return true if cruiser is valid/found.
 	proc/check_cruiser()
-		var/area/ship_interior/A = get_area(src.host)
+		var/area/cruiser/A = get_area(src.host)
 		if(istype(A))
 			cruiser = A.ship
 			return 1
