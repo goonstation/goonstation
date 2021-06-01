@@ -16,7 +16,7 @@
 	var/list/work_sounds = list('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/effects/airbridge_dpl.ogg','sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Slimy_Hit_3.ogg')
 	examine_hint = "It looks vaguely foreboding."
 	var/escapable = TRUE //Can you be dragged out to cancel the borgifying
-	var/loops_per_conversion_step //Number of 0.4 second loops per 'step'- on each step a robolimb is added, and if all 4 limbs are robotic, they're borged.
+	var/loops_per_conversion_step //Number of 0.4 second loops per 'step'- on each step a robolimb is added, and if all 4 limbs are robotic, they're borged
 
 	New()
 		..()
@@ -60,7 +60,9 @@
 				playsound(user.loc, pick(work_sounds), 50, 1, -1)
 				if (loops % loops_per_conversion_step == 0)
 					boutput(world, "CONVERTING LIMB! LOOPS IS [loops], LOOPS_PER_CONVERSION_STEP IS [loops_per_conversion_step]")
-					var/obj/item/parts/limb_to_replace = convertable_limbs.len ? pick(convertable_limbs) : null //avoid runtiming once all limbs are converted
+					if (!convertable_limbs.len) //avoid runtiming once all limbs are converted
+						continue
+					var/obj/item/parts/limb_to_replace = pick(convertable_limbs)
 					switch(limb_to_replace.slot)
 						if ("l_arm")
 							humanuser.limbs.replace_with("l_arm", /obj/item/parts/robot_parts/arm/left/light, null, 0)
