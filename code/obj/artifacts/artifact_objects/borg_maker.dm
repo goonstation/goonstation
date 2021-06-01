@@ -20,7 +20,7 @@
 	New()
 		..()
 		if (prob(15))
-			inescapable = TRUE
+			escapable = FALSE
 
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())
@@ -33,7 +33,7 @@
 			if(!isalive(user) && user.ghost && user.ghost.mind && user.ghost.mind.dnr)
 				O.visible_message("<span class='alert'><b>[O]</b> refuses to process [user.name]!</span>")
 				return
-			O.visible_message("<span class='alert'><b>[O]</b> suddenly pulls [user.name] inside[inescapable ? " and slams shut!" : "!"]</span>")
+			O.visible_message("<span class='alert'><b>[O]</b> suddenly pulls [user.name] inside[escapable ? "!" : " and slams shut!"]</span>")
 			user.emote("scream")
 			user.set_loc(O.loc)
 			if (!escapable)
@@ -41,7 +41,7 @@
 			converting = 1
 			var/loops = escapable ? rand(25, 50) : rand(10, 20)
 			while (loops > 0)
-				if (escapable && user.loc != src.loc) //If they're somewhere else, cancel the borgin
+				if (escapable && user.loc != O.loc) //If they're somewhere else, cancel the borgin
 					return
 				loops--
 				random_brute_damage(user, 10)
