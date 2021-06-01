@@ -46,7 +46,6 @@
 		if (master && (!master.click_check || (usr in master.mobs)))
 			master.scrolled(src.id, dx, dy, usr, parms, src)
 
-
 	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
 		if (master && (!master.click_check || (usr in master.mobs)))
 			master.MouseDrop(src, over_object, src_location, over_location, over_control, params)
@@ -54,6 +53,10 @@
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if (master && (!master.click_check || (user in master.mobs)))
 			master.MouseDrop_T(src, O, user)
+
+	disposing()
+		src.screen_loc = null // idk if this is necessary but im writing it anyways so there
+		..()
 
 
 /datum/hud

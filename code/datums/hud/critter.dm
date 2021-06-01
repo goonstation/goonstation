@@ -56,7 +56,30 @@
 	/// status effect right offset
 	var/wraparound_offset_right = 0
 
-	/// assoc. list format: list("alias" = list("coords" = list(x_low = num, y_low = num, x_high = num, y_high = num), ))
+	// why doesnt byond have structs ...  you made me do this !!
+
+	/**
+	* assoc list of hud zones with the format:
+	*
+	* list(
+	*
+	*	"zone_alias" = list(
+	*
+	*		"coords" = list( // list of 2 coordinate pairs for the lower left corner and the upper right corner of the hud zone
+	*			x_low = num, y_low = num, x_high = num, y_high = num
+	*
+	*		"elements" = list( // list of all visible hud elements in the hud zone
+	*			"elem_alias" = screenobj // screenobj is the hud object that is visible on the players screen
+	*
+	*		"horizontal_edge" = "" // what horizontal edge of the zone elements are initially added from. should be EAST or WEST or CENTER.
+	*
+	*		"vertical_edge" = "" // what vertical edge of the zone elements are intially added from. should be NORTH or SOUTH.
+	*
+	*		"horizontal_offset" = num // offset for the horizontal placement of elements, used when placing new elements so they dont overlap
+	*
+	*		"vertical_offset" = num // offset for the horizontal placement of elements, used when placing new elements so they dont overlap
+	**/
+
 	var/list/hud_zones = null
 
 /datum/hud/critter/New(M)
@@ -454,12 +477,11 @@
 	return
 
 /datum/hud/critter/proc/create_hand_element()
-	var/initial_hand_offset = -round((src.master.hands.len - 1) / 2) // calculates an offset using a methodology i dont understand
+	var/initial_hand_offset = -round((src.master.hands.len - 1) / 2) // calculates an offset based on even//odd number of hands
 	src.left_offset = initial_hand_offset - 1
 	for (var/i = 1, i <= src.master.hands.len, i++)
 		var/curr = initial_hand_offset + i - 1
 		var/datum/handHolder/handHolder = src.master.hands[i]
-
 		var/center_offset = 0
 		if (curr < 0)
 			center_offset = curr
@@ -552,38 +574,53 @@
 		if (equipmentHolder.item)
 			src.add_object(equipmentHolder.item)
 
-/// defines a hud zone within the bounds of the screen at the selected coordinates
-/datum/hud/critter/proc/add_hud_zone(var/list/coords, var/alias)
+/** defines a hud zone within the bounds of the screen at the supplied coordinates
+*
+*
+*
+**/
+
+/datum/hud/critter/proc/add_hud_zone(var/list/coords, var/alias, var/horizontal_edge, var/vertical_edge)
 	if (!coords || !alias || !src.hud_zones || !src.master?.client || src.boundary_check() == false)
 		return
 
-	src.hud_zones[alias] = list("coords" = coords, "elements" = list())
+	src.hud_zones[alias] = list("coords" = coords, "elements" = list(), "horizontal_edge" = "[horizontal_edge]",\
+	"vertical_edge" = "[vertical_edge]", "horizontal_offset" = 0, "vertical_offset" = 0)
 
-/// adds a hud element (which will be associated with elem_alias) to the hud zone associated with zone_alias. size override ignores amt of elements
-/datum/hud/critter/proc/register_element(var/zone_alias, var/elem_alias, var/atom/movable/screen/hud/element, var/size_override = 0)
+/// removes the zone
+/datum/hud/critter/proc/remove_hud_zone(var/alias)
+	var/to_remove = src.hud_zones[alias]
+	src.hud_zones -= to_remove
+
+/// adds a hud element (which will be associated with elem_alias) to the elements list of the hud zone associated with zone_alias.
+/datum/hud/critter/proc/register_element(var/zone_alias, var/atom/movable/screen/hud/element, var/elem_alias)
 	if (!zone_alias || !src.hud_zones[zone_alias] || !elem_alias || !element)
 		return
 
-	var/hud_zone = src.hud_zones[zone_alias]
-	if ((length(hud_zone["elements"]) < src.zone_area(hud_zone)) && !size_override)
+	var/hud_zone = src.hud_zones["[zone_alias]"]
+	if ((length(hud_zone["elements"]) < HUD_ZONE_AREA(hud_zone["coords"]))) // if the amount of hud elements in the zone dont exceed its max
 		return
 
-	hud_zone["elements"]["[elem_alias]"] = element
+	hud_zone["elements"]["[elem_alias]"] = element // adds element to internal list
 
-/// removes a hud element associated with element_alias from the hud zone associated with zone_alias
+	src.adjust_offset(hud_zone, element) // sets it correctly (and automatically) on screen
+
+/// removes a hud element associated with eleument_alias from the elements list of the hud zone associated with zone_alias and deletes it
 /datum/hud/critter/proc/unregister_element(var/zone_alias, var/elem_alias)
 	if (!elem_alias)
 		return
 
-	var/to_remove = src.hud_zones["[zone_alias]"]["elements"]["[elem_alias]"]
+	var/atom/movable/screen/hud/to_remove = src.hud_zones["[zone_alias]"]["elements"]["[elem_alias]"]
 	src.hud_zones["[zone_alias]"]["elements"] -= to_remove
+
+	qdel(to_remove)
 
 /// checks if the provided coordinates are within the boundaries of the screen, returns true if true, false if false
 /datum/hud/critter/proc/boundary_check(var/list/coords)
 	if (!coords || !src.master?.client)
 		return false
 
-	// why hardcode simple values when you can just write ugly code instead
+	// why hardcode simple screen size values when you can just write ugly code instead
 	var/x_dim = 0
 	var/y_dim = 0
 	var/list/dimensions = splittext(src.master.client.view, "x")
@@ -601,23 +638,37 @@
 
 	return true
 
-/// returns area (l * h) of a zone
-/datum/hud/critter/proc/zone_area(var/list/zone)
-	if (!zone)
-		return 0
+/datum/hud/critter/proc/adjust_offset(var/list/hud_zone, var/atom/movable/screen/hud/element)
+	var/dir_horizontal = hud_zone["horizontal_edge"]
+	var/dir_vertical = hud_zone["vertical_edge"]
+	var/curr_horizontal = hud_zone["horizontal_offset"]
+	var/curr_vertical = hud_zone["vertical_offset"]
 
-	var/list/coords = zone["coords"]
+	var/east_west_mod = (dir_horizontal == "EAST" ? -1 : 1) // if it starts at the east edge, we add new elements to the left. west edge, right
+	var/north_south_mod = (dir_vertical == "NORTH" ? -1 : 1) // if it starts at the north edge, we add new elements downwards. south edge, upwards
 
-	var/length = (coords["x_high"] - coords["x_low"])
-	if (length < 0)
-		length = 0 - length
+	if ((curr_horizontal + east_west_mod) > HUD_ZONE_LENGTH(hud_zone["coords"])) // we need to wrap around
+		curr_horizontal = 0 // realign with edge
+		curr_vertical += (north_south_mod) // wrap vertically
 
-	var/height = (coords["y_high"] - coords["y_low"])
-	if (height < 0)
-		length = 0 - length
+	else //just add on normally
+		curr_horizontal += (east_west_mod) //increment offset
 
-	var/area = length * height
-	if (!area)
-		return 0
+	var/screen_loc_horizontal = "[dir_horizontal]"
+	if (east_west_mod >= 0) //if its positive or 0
+		screen_loc_horizontal += "+[curr_horizontal]"
+	else //its negative
+		screen_loc_horizontal += "[curr_horizontal]]"
 
-	return area
+	var/screen_loc_vertical = "[dir_vertical]"
+	if (north_south_mod >= 0) //if its positive or 0
+		screen_loc_vertical += "+[curr_vertical]"
+	else //its negative
+		screen_loc_vertical += "[curr_vertical]"
+
+	var/screen_loc = "[screen_loc_horizontal], [screen_loc_vertical]"
+
+	element.screen_loc = screen_loc
+
+	hud_zone["horizontal_offset"] = curr_horizontal
+	hud_zone["vertical_offset"] = curr_vertical
