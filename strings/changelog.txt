@@ -1,5 +1,10 @@
 
 (t)tue jun 01 21
+(u)Zonespace
+(p)4977
+(e)🆕🗺|feature, mapping
+(*)In Pod Wars, general fabricators can now produce handcuffs on RP.
+(+)In Pod Wars, moved grenades and power cells to the general fabricators.
 (u)Asche
 (p)4986
 (e)|
