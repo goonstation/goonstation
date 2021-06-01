@@ -101,7 +101,7 @@
 "bW" = (/obj/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 1},/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
 "bX" = (/obj/machinery/light/lamp,/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
 "bY" = (/obj/stool/bed,/obj/item/clothing/suit/bedsheet,/obj/item/implant/freedom,/obj/item/coin{pixel_y = 4},/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
-"bZ" = (/obj/table/auto,/obj/item/paper/book/the_trial,/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
+"bZ" = (/obj/table/auto,/obj/item/paper/book/from_file/the_trial,/turf/simulated/floor/black/grime,/area/prefab/sea_monkey_hideout)
 "ca" = (/obj/item/clipboard,/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
 "cb" = (/obj/item/paper{info = ":-("},/turf/simulated/floor/white,/area/prefab/sea_monkey_hideout)
 "cc" = (/obj/machinery/door/unpowered/wood/pyro{dir = 1},/turf/simulated/floor/carpet/blue/fancy/edge/west,/area/prefab/sea_monkey_hideout)

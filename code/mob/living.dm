@@ -501,7 +501,7 @@
 				if (use_delay)
 					src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 
-				if (src.invisibility > 0 && (target != src && isturf(target.loc))) // dont want to check for a cloaker every click if we're not invisible
+				if (src.invisibility > 0 && (isturf(target) || (target != src && isturf(target.loc)))) // dont want to check for a cloaker every click if we're not invisible
 					for (var/obj/item/cloaking_device/I in src)
 						if (I.active)
 							I.deactivate(src)
