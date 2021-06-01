@@ -1,4 +1,9 @@
 
+(t)tue jun 01 21
+(u)Flappybat
+(p)4827
+(e)⚖🗺|balance, mapping
+(+)Added some new spy bounties, most significantly the Head items such as the HoS medal. Removed the Port-A-Sci bounty,
 (t)mon may 31 21
 (u)Flaborized
 (p)4978
