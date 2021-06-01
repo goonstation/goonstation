@@ -174,7 +174,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			name = "Plaid Paint Can"
 			cost = 3000
 			path = /obj/item/paint_can/rainbow/plaid
-		
+
 		crayon_box
 			name = "Crayon Creator"
 			cost = 2500
@@ -234,11 +234,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			name = "Sound Synthesizer"
 			cost = 14000
 			path = /obj/item/noisemaker
-
-		food_synth
-			name = "Food Synthesizer"
-			cost = 8000
-			path = /obj/item/robot_foodsynthesizer
 
 		record
 			name = "Record"
