@@ -1,5 +1,9 @@
 
 (t)tue jun 01 21
+(u)Jan.antilles
+(p)4997
+(e)|
+(+)Inspecting mugs, paper cups, and the skull chalice will now allow you to see what's inside.
 (u)Flappybat
 (p)4827
 (e)⚖🗺|balance, mapping
