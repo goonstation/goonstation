@@ -12,7 +12,7 @@
 	activated = 0
 	react_xray = list(13,60,80,6,"COMPLEX")
 	touch_descriptors = list("You seem to have a little difficulty taking your hand off its surface.")
-	var/converting = 0
+	var/converting = FALSE
 	var/list/work_sounds = list('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/effects/airbridge_dpl.ogg','sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Slimy_Hit_3.ogg')
 	examine_hint = "It looks vaguely foreboding."
 	var/escapable = TRUE //If false, you can't be dragged out to cancel the borgifying
@@ -38,10 +38,11 @@
 			user.set_loc(O.loc)
 			if (!escapable)
 				user.anchored = 1 //you ain't going nowhere
-			converting = 1
+			converting = TRUE
 			var/loops = escapable ? rand(25, 50) : rand(10, 20)
 			while (loops > 0)
 				if (escapable && user.loc != O.loc) //If they're somewhere else, cancel the borgin
+					converting = FALSE
 					return
 				loops--
 				random_brute_damage(user, 10)
@@ -70,7 +71,7 @@
 			else
 				var/mob/living/carbon/human/M = user
 				M.Robotize_MK2(1)
-			converting = 0
+			converting = FALSE
 		else if (issilicon(user))
 			boutput(user, "<span class='alert'>An imperious voice rings out in your head... \"<b>UPGRADE COMPLETE, RETURN TO ASSIGNED TASK</b>\"</span>")
 		else
