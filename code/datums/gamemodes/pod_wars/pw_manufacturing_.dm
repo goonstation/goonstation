@@ -13,7 +13,7 @@
 	)
 	available = list(
 		#ifdef RP_MODE
-		/datum/manufacture/pod_wars/handcuffs
+		/datum/manufacture/pod_wars/handcuffs,
 		#endif
 		/datum/manufacture/pod_wars/barricade,
 		/datum/manufacture/pod_wars/energy_concussion_grenade,
@@ -353,7 +353,7 @@
 	category = "Weapon"
 
 /datum/manufacture/pod_wars/handcuffs
-	
+
 	name = "Handcuffs"
 	item_paths = list("MET-1")
 	item_amounts = list(5)
