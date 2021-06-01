@@ -195,7 +195,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 <td align="right">n/a</td>
 <td align="right">n/a</td>
 <td align="right"><b>10</b></td>
-<td align="right"><b>50<b/></td>
+<td align="right"><b>50</b></td>
 <td align="right">n/a</td>
 <td align="right">n/a</td>
 <td align="right">n/a</td>
@@ -464,8 +464,8 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 </tr>
 <tr><td align="right">Leather</td>
 <td align="right">n/a</td>
-<td align="right"><b>32</td>
-<td align="right"><b>29</td>
+<td align="right"><b>32</b></td>
+<td align="right"><b>29</b></td>
 <td align="right">n/a</td>
 <td align="right"><b>5</b></td>
 <td align="right"><b>65</b></td>
@@ -581,7 +581,6 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 </tr>
 </table><br/>
 <table>
-<table border="1">
 <tr><th align="right">CRYSTAL</th>
 <th align="right">Rad.</th>
 <th align="right">El. Cond.</th>
