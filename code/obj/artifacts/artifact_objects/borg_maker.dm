@@ -47,7 +47,7 @@
 			for (var/obj/item/parts/limb in convertable_limbs)
 				if (limb.kind_of_limb & LIMB_ROBOT)
 					convertable_limbs -= limb
-			var/loops = conversioncycles * convertable_limbs.len //people with existing robolimbs get converted faster
+			var/loops = conversioncycles * (convertable_limbs.len + 1) //people with existing robolimbs get converted faster
 			while (loops > 0)
 				if (escapable && user.loc != O.loc)
 					converting = FALSE
@@ -69,8 +69,6 @@
 							humanuser.limbs.replace_with("l_leg", /obj/item/parts/robot_parts/leg/left/light, null, 0)
 						if ("r_leg")
 							humanuser.limbs.replace_with("r_leg", /obj/item/parts/robot_parts/leg/right/light, null, 0)
-						else //TODO remove
-							CRASH("You fucked up the modulo somehow and there's nothing left to replace.")
 				sleep(0.4 SECONDS)
 
 			var/bdna = null // For forensics (Convair880).
