@@ -3025,6 +3025,7 @@ datum
 								boutput(O, "<span class='alert'>The blood reacts, attempting to escape the heat before sizzling away!</span>")
 
 				holder.del_reagent(id)
+				holder.del_reagent("blood")
 
 
 		vomit

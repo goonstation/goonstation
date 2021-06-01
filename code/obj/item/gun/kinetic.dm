@@ -161,8 +161,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.ejectcasings()
 			src.casings_to_eject = 0
 
-			src.update_icon()
 			src.ammo.amount_left = 0
+			src.update_icon()
 			src.add_fingerprint(user)
 			ammoHand.add_fingerprint(user)
 

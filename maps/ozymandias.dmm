@@ -2089,7 +2089,7 @@
 /area/station/maintenance/southwest)
 "aER" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/guardbot_guide,
+/obj/item/paper/book/from_file/guardbot_guide,
 /obj/item/device/radio/intercom/catering{
 	dir = 4
 	},
@@ -3412,8 +3412,8 @@
 /area/listeningpost)
 "aXF" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/medical_guide,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
@@ -4741,7 +4741,7 @@
 /area/station/crew_quarters/courtroom)
 "bsG" = (
 /obj/table/auto,
-/obj/item/paper/book/guardbot_guide,
+/obj/item/paper/book/from_file/guardbot_guide,
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
@@ -15698,7 +15698,7 @@
 /turf/simulated/floor/grey,
 /area/station/mining/staff_room)
 "eyJ" = (
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/purple,
 /area/station/hangar/science)
 "eyR" = (
@@ -17737,7 +17737,7 @@
 	dir = 8;
 	pixel_x = 20
 	},
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "fdi" = (
@@ -26510,7 +26510,7 @@
 /area/station/medical/staff)
 "huR" = (
 /obj/storage/secure/closet/courtroom,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -37191,7 +37191,7 @@
 /area/listeningpost)
 "kst" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/critter_compendium,
+/obj/item/paper/book/from_file/critter_compendium,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
 "ksw" = (
@@ -37672,7 +37672,7 @@
 	})
 "kAE" = (
 /obj/table/auto,
-/obj/item/paper/book/medical_surgery_guide{
+/obj/item/paper/book/from_file/medical_surgery_guide{
 	pixel_x = 5
 	},
 /obj/item/storage/box/stma_kit{
@@ -46161,7 +46161,7 @@
 /area/station/maintenance/solar/south)
 "mPm" = (
 /obj/table/auto,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /turf/simulated/floor/carpet/grime,
 /area/station/hallway/secondary/construction2{
 	icon_state = "crewquarters";
@@ -46353,7 +46353,7 @@
 /area/station/crew_quarters/hor/horprivate)
 "mSa" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -53154,7 +53154,7 @@
 /area/station/security/armory)
 "oJv" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/monster_manual,
+/obj/item/paper/book/from_file/monster_manual,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
 "oJx" = (
@@ -59020,7 +59020,7 @@
 /area/station/maintenance/east)
 "qsP" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/item/disk/data/tape/master/readonly,
 /obj/item/reagent_containers/food/snacks/beefood{
 	desc = "A little birthday cupcake for Heisenbee.  May not taste good to non-bees.";
@@ -61823,10 +61823,10 @@
 /area/station/hallway/secondary/exit)
 "reC" = (
 /obj/table/auto,
-/obj/item/paper/book/dwainedummies{
+/obj/item/paper/book/from_file/dwainedummies{
 	pixel_x = -3
 	},
-/obj/item/paper/book/guardbot_guide{
+/obj/item/paper/book/from_file/guardbot_guide{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -63250,7 +63250,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/table/wood/round/auto,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /turf/simulated/floor/red/corner{
 	dir = 4
 	},
@@ -65317,8 +65317,8 @@
 /area/station/medical/staff)
 "rYF" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/guardbot_guide,
-/obj/item/paper/book/dwainedummies{
+/obj/item/paper/book/from_file/guardbot_guide,
+/obj/item/paper/book/from_file/dwainedummies{
 	pixel_y = 4
 	},
 /obj/item/device/multitool{
@@ -69256,7 +69256,7 @@
 /area/station/science/chemistry)
 "sYw" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/crew_quarters/courtroom)
 "sYy" = (
@@ -77421,7 +77421,7 @@
 "vbg" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/item/device/matanalyzer,
 /turf/simulated/floor/orangeblack/side{
 	dir = 10
@@ -77635,7 +77635,7 @@
 /area/station/mining/refinery)
 "vdM" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/hand_labeler,
 /obj/cable{
 	d2 = 2;
@@ -84460,7 +84460,7 @@
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "wMG" = (
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/black/side{
 	dir = 4
 	},
