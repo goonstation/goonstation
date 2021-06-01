@@ -12,12 +12,6 @@
 		/obj/item/material_piece/molitz
 	)
 	available = list(
-		#ifdef RP_MODE
-		/datum/manufacture/pod_wars/handcuffs,
-		#endif
-		/datum/manufacture/pod_wars/barricade,
-		/datum/manufacture/pod_wars/energy_concussion_grenade,
-		/datum/manufacture/pod_wars/energy_frag_grenade,
 		/datum/manufacture/pod_wars/lock,
 		/datum/manufacture/putt/engine,
 		/datum/manufacture/putt/boards,
@@ -46,11 +40,6 @@
 		/datum/manufacture/pod/weapon/disruptor/light,
 		/datum/manufacture/pod/weapon/shotgun,
 		/datum/manufacture/pod/weapon/ass_laser,
-		/datum/manufacture/pod_wars/cell_high,
-		/datum/manufacture/pod_wars/cell_higher,
-		/datum/manufacture/pod_wars/cell_pod_wars_basic,
-		/datum/manufacture/pod_wars/cell_pod_wars_standard,
-		/datum/manufacture/pod_wars/cell_pod_wars_high
 	)
 
 	New()
@@ -383,3 +372,20 @@
 	"oculine", "mannitol", "penteticacid", "styptic_powder", "saline",\
 	"salicylic_acid", "blood", "synthflesh",\
 	"menthol", "antihistamine", "smelling_salt")
+
+/obj/machinery/manufacturer/general/pod_wars
+	New()
+		#ifdef RP_MODE
+		available += /datum/manufacture/pod_wars/handcuffs
+		#endif
+		available += /datum/manufacture/pod_wars/barricade
+		available += /datum/manufacture/pod_wars/energy_frag_grenade
+		available += /datum/manufacture/pod_wars/energy_concussion_grenade
+		available += /datum/manufacture/pod_wars/cell_pod_wars_basic
+		available += /datum/manufacture/pod_wars/cell_pod_wars_standard
+		available += /datum/manufacture/pod_wars/cell_pod_wars_high
+		available += /datum/manufacture/pod_wars/cell_high
+		available += /datum/manufacture/pod_wars/cell_higher
+
+		hidden = list()
+		..()
