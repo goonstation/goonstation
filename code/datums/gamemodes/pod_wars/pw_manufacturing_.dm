@@ -242,7 +242,6 @@
 	item_outputs = list(/obj/machinery/oreaccumulator/pod_wars/nanotrasen)
 
 /obj/machinery/manufacturer/mining/pod_wars/
-	var/team_num = 0
 	New()
 		available -= /datum/manufacture/ore_accumulator
 		available -= /datum/manufacture/jetpack
