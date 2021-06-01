@@ -1104,22 +1104,25 @@
 
 /obj/decal/poster/customizable_banners
 	name = "Banner"
-	desc = "An unfinished banner, try adding some colors to it by using a crayon!"
+	desc = "An unfinished banner, try adding some color to it by using a crayon!"
 	icon = 'icons/obj/decals/banners.dmi'
 	icon_state = "banner_base"
 	color = "#f0e7e7"
 	popup_win = 0
-	var/state = FALSE
+	var/state = 0
 	var/image/banner
-	var/chosen_overlay = "stripes_horizontal"
+	var/static/list/choosable_overlays = list("stripes_horizontal","stripes_vertical","stripes_diagonal","ball","cross","big_x","full")
+	var/chosen_overlay = null
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W,/obj/item/pen/crayon) && (src.state == 0))
 			src.color = W.color
 			src.state = 1
+			desc = "A colored banner, try adding some drawings to it with a crayon!"
 
 		else if(istype(W,/obj/item/pen/crayon) && (src.state == 1))
-			var/image/new_overlay = image('icons/obj/decals/banners.dmi', src.chosen_overlay)
+			chosen_overlay = input(user, "What do you want to draw?", null, null) as null|anything in choosable_overlays
+			var/image/new_overlay = image('icons/obj/decals/banners.dmi', chosen_overlay)
 			new_overlay.color = W.color
 			src.overlays += new_overlay
 
