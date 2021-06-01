@@ -6,6 +6,7 @@
 #define PROCESS_PAUSED 2
 #define MIN_BLAST_DELAY (5 SECONDS)
 #define MAX_BLAST_DELAY (30 SECONDS)
+#define BLAST_EFFECT_RATIO (0.7)
 
 /obj/machinery/portable_atmospherics/pressurizer
 	name = "Extreme-Pressure Pressurization Device"
@@ -128,7 +129,6 @@
 				if((target_material.amount > 1) && (target_material.material?.name in src.whitelist))
 					var/atom/movable/splitStack = target_material.split_stack(target_material.amount-1)
 					splitStack.set_loc(src)
-				// check material... eject if invalid
 				target_material.set_loc(null)
 			else
 				process_materials = PROCESS_OFF
@@ -196,10 +196,11 @@
 		if(istype(I,/obj/item/electronics/scanner) || istype(I,/obj/item/deconstructor) || (istype(I, /obj/item/device/pda2)))
 			user.visible_message("<span class='alert'><B>[user] hits [src] with [I]!</B></span>")
 			return
-		if(istype(I,/obj/item/satchel/))
-			var/action = input(user, "What do you want to do with the satchel?") in list("Empty it into the Chute","Place it in the Chute","Never Mind")
-			if(!action || action == "Never Mind") return
-			if(get_dist(src,user) > 1)
+		if (istype(I,/obj/item/satchel/) && I.contents.len)
+			var/action = input(user, "What do you want to do with the satchel?") in list("Place it in the Chute","Empty it into the Chute","Never Mind")
+			if (!action || action == "Never Mind")
+				return
+			if (!in_interact_range(src, user))
 				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
 				return
 			if(action == "Empty it into the Chute")
@@ -208,8 +209,10 @@
 				S.satchel_updateicon()
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
-		if(istype(I,/obj/item/storage/))
-			var/action = input(user, "What do you want to do with [I]?") as null|anything in list("Empty it into the chute","Place it in the Chute")
+		if (istype(I,/obj/item/storage/) && I.contents.len)
+			var/action = input(user, "What do you want to do with [I]?") as null|anything in list("Place it in the Chute","Empty it into the chute","Never Mind")
+			if (!action || action == "Never Mind")
+				return
 			if(!in_interact_range(src, user))
 				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
 				return
@@ -257,7 +260,7 @@
 
 	proc/blast_visual_effects(pressure)
 		// Perform jump animation if more than 70% maximum pressure
-		if(pressure > maximum_pressure*0.7)
+		if(pressure > maximum_pressure * BLAST_EFFECT_RATIO)
 			var/orig_x = src.pixel_x
 			var/orig_y = src.pixel_y
 			animate(src, pixel_x=orig_x, pixel_y=orig_y, flags=ANIMATION_PARALLEL, time=0.01 SECONDS)
@@ -276,11 +279,12 @@
 			if(poof) qdel(poof)
 
 	proc/blast_release()
-		var/pressure = MIXTURE_PRESSURE(src.air_contents) KILO PASCALS
+		var/pressure = MIXTURE_PRESSURE(src.air_contents)
 		src.blast_visual_effects(pressure)
 
-		var/volume = clamp(pressure / 206 MEGA PASCAL * 35, 5, 35)
-		playsound(src, "sound/weapons/flashbang.ogg", volume, 1)
+		// Flashbang pressure wave is 30,000 psi thus 206 MPa
+		var/volume = clamp(pressure KILO PASCALS / 206 MEGA PASCAL * 35, 15, 70)
+		playsound(src, "sound/effects/exlow.ogg", volume, 1)
 
 		var/turf/simulated/T = get_turf(src)
 		if(T && istype(T))
@@ -300,13 +304,14 @@
 					else
 						T.assume_air(src.air_contents)
 
-			for(var/mob/living/HH in range(8, src))
-				var/checkdist = get_dist(HH.loc, T)
-				var/misstep = clamp(1 + 10 * (5 - checkdist), 0, 40)
-				var/ear_damage = max(0, 5 * 0.2 * (3 - checkdist))
-				var/ear_tempdeaf = max(0, 5 * 0.2 * (5 - checkdist))
-				var/stamina = clamp(5 * (5 + 1 * (7 - checkdist)), 0, 120)
-				HH.apply_sonic_stun(0, 0, misstep, 0, 2, ear_damage, ear_tempdeaf, stamina)
+			if(pressure > (maximum_pressure * BLAST_EFFECT_RATIO))
+				for(var/mob/living/HH in range(8, src))
+					var/checkdist = get_dist(HH.loc, T)
+					var/misstep = clamp(1 + 10 * (5 - checkdist), 0, 40)
+					var/ear_damage = max(0, 5 * 0.2 * (3 - checkdist))
+					var/ear_tempdeaf = max(0, 5 * 0.2 * (5 - checkdist))
+					var/stamina = clamp(5 * (5 + 1 * (7 - checkdist)), 0, 120)
+					HH.apply_sonic_stun(0, 0, misstep, 0, 2, ear_damage, ear_tempdeaf, stamina)
 		src.blast_armed = FALSE
 		update_icon()
 
@@ -397,3 +402,4 @@
 #undef PROCESS_PAUSED
 #undef MIN_BLAST_DELAY
 #undef MAX_BLAST_DELAY
+#undef BLAST_EFFECT_RATIO
