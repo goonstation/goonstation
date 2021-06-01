@@ -371,6 +371,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				user.visible_message("<span class='alert'><b>[user]</b> dips [I] into [src] coating it in silver. Watch out, evil creatures!</span>")
 				I.tooltip_rebuild = 1
 			else
+				if(istype(I, /obj/item/ammo/bullets))
+					var/obj/item/ammo/A = I
+					I = A.ammo_type
 				if (I.material && I.material.mat_id == "silver")
 					boutput(user, "<span class='notice'>[I] is already coated, more silver won't do any good.</span>")
 				else
