@@ -15,12 +15,14 @@
 	var/converting = FALSE
 	var/list/work_sounds = list('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/effects/airbridge_dpl.ogg','sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Slimy_Hit_3.ogg')
 	examine_hint = "It looks vaguely foreboding."
-	var/escapable = TRUE //If false, you can't be dragged out to cancel the borgifying
+	var/escapable = TRUE //Can you be dragged out to cancel the borgifying
+	var/conversioncycles //Relative time it takes to get borged- sped up by existing robot limbs
 
 	New()
 		..()
 		if (prob(15))
 			escapable = FALSE
+		conversioncycles = escapable ? rand(6, 10) : rand(2, 6)
 
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())
@@ -30,6 +32,7 @@
 		if (converting)
 			return
 		if (ishuman(user))
+			var/mob/living/carbon/human/humanuser = user
 			if(!isalive(user) && user.ghost && user.ghost.mind && user.ghost.mind.dnr)
 				O.visible_message("<span class='alert'><b>[O]</b> refuses to process [user.name]!</span>")
 				return
@@ -37,17 +40,37 @@
 			user.emote("scream")
 			user.set_loc(O.loc)
 			if (!escapable)
-				user.anchored = 1 //you ain't going nowhere
+				user.anchored = TRUE //you ain't going nowhere
 			converting = TRUE
-			var/loops = escapable ? rand(25, 50) : rand(10, 20)
+			var/list/obj/item/parts/convertable_limbs = list(humanuser.limbs.l_arm, humanuser.limbs.r_arm, humanuser.limbs.l_leg, humanuser.limbs.r_leg)
+			//figure out which limbs are already robotic and remove them from the list
+			for (var/obj/item/parts/limb in convertable_limbs)
+				if (limb.kind_of_limb & LIMB_ROBOT)
+					convertable_limbs -= limb
+			var/loops = conversioncycles * convertable_limbs.len //people with existing robolimbs get converted faster
 			while (loops > 0)
-				if (escapable && user.loc != O.loc) //If they're somewhere else, cancel the borgin
+				if (escapable && user.loc != O.loc)
 					converting = FALSE
 					return
 				loops--
-				random_brute_damage(user, 10)
+				random_brute_damage(humanuser, 10)
 				user.changeStatus("paralysis", 7 SECONDS)
 				playsound(user.loc, pick(work_sounds), 50, 1, -1)
+				//TODO remove
+				boutput(world, "<span class='alert'>Borgifying! loops % conversioncycles is: [loops % conversioncycles]</span>")
+				if (loops % conversioncycles == 0) //floating points
+					var/obj/item/parts/limb_to_replace = pick(convertable_limbs)
+					switch(limb_to_replace.slot)
+						if ("l_arm")
+							humanuser.limbs.replace_with("l_arm", /obj/item/parts/robot_parts/arm/left/light, null, 0)
+						if ("r_arm")
+							humanuser.limbs.replace_with("r_arm", /obj/item/parts/robot_parts/arm/right/light, null, 0)
+						if ("l_leg")
+							humanuser.limbs.replace_with("l_leg", /obj/item/parts/robot_parts/leg/left/light, null, 0)
+						if ("r_leg")
+							humanuser.limbs.replace_with("r_leg", /obj/item/parts/robot_parts/leg/right/light, null, 0)
+						else //TODO remove
+							CRASH("You fucked up the modulo somehow and there's nothing left to replace.")
 				sleep(0.4 SECONDS)
 
 			var/bdna = null // For forensics (Convair880).
@@ -76,3 +99,4 @@
 			boutput(user, "<span class='alert'>An imperious voice rings out in your head... \"<b>UPGRADE COMPLETE, RETURN TO ASSIGNED TASK</b>\"</span>")
 		else
 			return
+
