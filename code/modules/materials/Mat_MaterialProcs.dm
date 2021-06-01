@@ -147,13 +147,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		explode_limit = limit
 		..()
 
-	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked, var/obj/attackobj, var/meleeorthrow)
+	execute(var/obj/item/owner)
 		if(explode_limit && explode_count >= explode_limit) return
 		if(world.time - lastTrigger < 50) return
 		lastTrigger = world.time
 		if(prob(trigger_chance))
 			explode_count++
-			var/turf/tloc = get_turf(attacked)
+			var/turf/tloc = get_turf(owner)
 			explosion(owner, tloc, 0, 1, 2, 3, 1)
 			tloc.visible_message("<span class='alert'>[owner] explodes!</span>")
 			qdel(owner)
@@ -358,7 +358,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 	execute(var/location) //exp and temp both have the location as first argument so i can use this for both.
 		var/turf/T = get_turf(location)
-		if(T.density)
+		if(!T || T.density)
 			return
 		if(total_plasma <= 0)
 			if(prob(2) && src.owner.owner)
@@ -527,7 +527,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			var/mob/living/L = entering
 			if(L.slip())
 				boutput(L, "You slip on the icy floor!")
-				playsound(get_turf(owner), "sound/misc/slip.ogg", 30, 1)
+				playsound(owner, "sound/misc/slip.ogg", 30, 1)
 		return
 
 /datum/materialProc/ice_life
@@ -607,7 +607,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				wall_owner.dismantle_wall(1)
 
 /datum/materialProc/cardboard_on_hit // MARK: add to ignorant children
-	execute(var/atom/owner, var/mob/attacker, var/obj/attackobj, var/meleeorthrow)
+	execute(var/atom/owner, var/obj/attackobj, var/mob/attacker, var/meleeorthrow)
 		if (meleeorthrow == 1) //if it was a melee attack
 			if (issnippingtool(attackobj)||iscuttingtool(attackobj))
 				if (isExploitableObject(owner))

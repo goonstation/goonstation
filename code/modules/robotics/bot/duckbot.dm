@@ -65,12 +65,13 @@
 						src.navigate_to(get_turf(M), src.bot_move_delay, 0, 100)
 						break
 	else
-		SPAWN_DBG(0)
-			step_rand(src,1)
+		src.navigate_to(get_step_rand(src))
 
 /// Sends the duckbot to a random spot on the station
 /obj/machinery/bot/duckbot/proc/mystical_journey()
 	var/list/stationAreas = get_accessible_station_areas()
+	if (!length(stationAreas))
+		return FALSE
 	var/area/AR = pick(stationAreas)
 	var/list/T = get_area_turfs(stationAreas[AR], 1)
 	if(length(T) >= 1)

@@ -18,7 +18,7 @@
 
 	proc/sendclick(list/params,mob/user = null)
 		if (master && (!master.click_check || (user in master.mobs)))
-			master.clicked(src.id, user, params)
+			master.relay_click(src.id, user, params)
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
@@ -178,7 +178,7 @@
 				return SC
 		return null
 
-	proc/clicked(id)
+	proc/relay_click(id)
 	proc/scrolled(id, dx, dy, user, parms)
 	proc/MouseEntered(id,location, control, params)
 	proc/MouseExited(id)

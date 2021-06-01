@@ -13,7 +13,7 @@
 		master = null
 		..()
 
-	clicked(id, mob/user, list/params)
+	relay_click(id, mob/user, list/params)
 		if (id == "leave_master")
 			if (ispoltergeist(master))
 				var/mob/wraith/poltergeist/P = master

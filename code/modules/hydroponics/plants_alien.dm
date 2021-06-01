@@ -218,7 +218,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		var/datum/plantgenes/DNA = POT.plantgenes
 
 		if (POT.growth > (P.growtime + DNA.growtime) && prob(16))
-			playsound(get_turf(POT),'sound/voice/animal/cat.ogg',30,1,-1)
+			playsound(POT,'sound/voice/animal/cat.ogg',30,1,-1)
 			POT.visible_message("<span class='alert'><b>[POT.name]</b> meows!</span>")
 
 		if (POT.growth > (P.harvtime + DNA.harvtime + 10))
@@ -236,7 +236,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 
 		if (POT.growth < (P.growtime + DNA.growtime)) return 0
 
-		playsound(get_turf(POT),'sound/voice/animal/cat_hiss.ogg',30,1,-1)
+		playsound(POT,'sound/voice/animal/cat_hiss.ogg',30,1,-1)
 		POT.visible_message("<span class='alert'><b>[POT.name]</b> hisses!</span>")
 
 // Weird Shit

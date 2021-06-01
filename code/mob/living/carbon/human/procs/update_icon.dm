@@ -576,10 +576,11 @@
 					shielded = 2
 					break
 
+	// TODO: move to cloaker activation / deactivation
 	if (shielded == 2)
-		src.invisibility = 2
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "cloak", INVIS_CLOAK)
 	else
-		src.invisibility = 0
+		REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, "cloak")
 
 	if (shielded)
 		UpdateOverlays(shield_image, "shield")
@@ -702,8 +703,10 @@
 			//src.fire_lying = image('icons/mob/human.dmi', "fire3_l", MOB_EFFECT_LAYER)
 		if (ismonkey(src))
 			src.fire_standing = SafeGetOverlayImage("fire", 'icons/mob/monkey.dmi', istate, MOB_EFFECT_LAYER)
-		if (istype(src:mutantrace, /datum/mutantrace/lizard))
+		else if (istype(src:mutantrace, /datum/mutantrace/lizard))
 			src.fire_standing = SafeGetOverlayImage("fire", 'icons/mob/lizard.dmi', istate, MOB_EFFECT_LAYER)
+		else if (istype(src:mutantrace, /datum/mutantrace/werewolf))
+			src.fire_standing = SafeGetOverlayImage("fire", 'icons/mob/werewolf.dmi', istate, MOB_EFFECT_LAYER)
 		else
 			src.fire_standing = SafeGetOverlayImage("fire", 'icons/mob/human.dmi', istate, MOB_EFFECT_LAYER)
 

@@ -132,7 +132,7 @@
 			if(src.holder) return 1 // need to do special stuff in this case, so we let the borg's melee hit take care of it
 			else
 				src.visible_message("<b>[src]</b> breaks!")
-				playsound(get_turf(src), "sound/impact_sounds/Metal_Hit_Light_1.ogg", 40, 1)
+				playsound(src, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 40, 1)
 				if (istype(src.loc,/turf/)) make_cleanable( /obj/decal/cleanable/robot_debris/limb,src.loc)
 				del(src)
 				return 0
@@ -209,7 +209,7 @@
 			B.set_loc(src)
 			src.brain = B
 			boutput(user, "<span class='notice'>You insert the brain.</span>")
-			playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 			return
 
 		else if (istype(W, /obj/item/ai_interface))
@@ -226,14 +226,14 @@
 			I.set_loc(src)
 			src.ai_interface = I
 			boutput(user, "<span class='notice'>You insert [I].</span>")
-			playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 			return
 
 		else if (iswrenchingtool(W))
 			if (!src.brain && !src.ai_interface)
 				boutput(user, "<span class='alert'>There's no brain or AI interface chip in there to remove.</span>")
 				return
-			playsound(get_turf(src), "sound/items/Ratchet.ogg", 40, 1)
+			playsound(src, "sound/items/Ratchet.ogg", 40, 1)
 			if (src.ai_interface)
 				boutput(user, "<span class='notice'>You open the head's compartment and take out [src.ai_interface].</span>")
 				user.put_in_hand_or_drop(src.ai_interface)
@@ -412,7 +412,7 @@
 				W.set_loc(src)
 				src.cell = W
 				boutput(user, "<span class='notice'>You insert [W].</span>")
-				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 
 		else if(istype(W, /obj/item/cable_coil))
 			if (src.ropart_get_damage_percentage(2) > 0) ..()
@@ -425,13 +425,13 @@
 					coil.use(1)
 					src.wires = 1
 					boutput(user, "<span class='notice'>You insert some wire.</span>")
-					playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+					playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 
 		else if (iswrenchingtool(W))
 			if(!src.cell)
 				boutput(user, "<span class='alert'>There's no cell in there to remove.</span>")
 				return
-			playsound(get_turf(src), "sound/items/Ratchet.ogg", 40, 1)
+			playsound(src, "sound/items/Ratchet.ogg", 40, 1)
 			boutput(user, "<span class='notice'>You remove the cell from it's slot in the chest unit.</span>")
 			src.cell.set_loc( get_turf(src) )
 			src.cell = null
@@ -440,7 +440,7 @@
 			if(src.wires < 1)
 				boutput(user, "<span class='alert'>There's no wiring in there to remove.</span>")
 				return
-			playsound(get_turf(src), "sound/items/Wirecutter.ogg", 40, 1)
+			playsound(src, "sound/items/Wirecutter.ogg", 40, 1)
 			boutput(user, "<span class='notice'>You cut out the wires and remove them from the chest unit.</span>")
 			// i don't know why this would get abused
 			// but it probably will
@@ -957,7 +957,7 @@
 					boutput(user, "<span class='alert'>You can't seem to fit this piece anywhere on the frame.</span>")
 					return
 
-			playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 			boutput(user, "<span class='notice'>You add [P] to the frame.</span>")
 			user.drop_item()
 			P.set_loc(src)
@@ -1030,7 +1030,7 @@
 				if("Remove the Chest")
 					src.chest.set_loc( get_turf(src) )
 					src.chest = null
-			playsound(get_turf(src), "sound/items/Ratchet.ogg", 40, 1)
+			playsound(src, "sound/items/Ratchet.ogg", 40, 1)
 			src.updateicon()
 			return
 
@@ -1080,7 +1080,6 @@
 		// before it could get around to this list, so i tweaked their New() proc instead to grab all the shit out of
 		// the frame before process could go off resulting in a borg that doesn't instantly die
 
-		O.invisibility = 0
 		O.name = "Cyborg"
 		O.real_name = "Cyborg"
 
@@ -1127,7 +1126,7 @@
 			O.shell = 1
 		else if (istype(O.brain, /obj/item/organ/brain/latejoin))
 			boutput(usr, "<span class='notice'>You activate the frame and a audible beep emanates from the head.</span>")
-			playsound(get_turf(src), "sound/weapons/radxbow.ogg", 40, 1)
+			playsound(src, "sound/weapons/radxbow.ogg", 40, 1)
 		else
 			O.collapse_to_pieces()
 			src.reset_frame()

@@ -10,6 +10,7 @@
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "buttbot"
 	layer = 5.0 // Todo layer
+	bot_move_delay = BUTTBOT_MOVE_SPEED
 	density = 0
 	anchored = 0
 	on = 1
@@ -114,8 +115,7 @@
 				src.navigate_to(A, BUTTBOT_MOVE_SPEED, 0, 30)
 				break
 	else
-		SPAWN_DBG(0)
-			step_rand(src,1)
+		src.navigate_to(get_step_rand(src))
 
 /obj/machinery/bot/buttbot/process(mult)
 	if(src.exploding)
@@ -312,7 +312,7 @@
 	var/oldtransform = src.transform
 	src.visible_message("<span class='alert'><b>[src]</b>'s exhaust port clogs!</span>")
 	violent_standup_twitch(src)
-	playsound(get_turf(src), "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+	playsound(src, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
 	SPAWN_DBG(2 SECONDS)
 		var/jitters = 30
 		src.visible_message("<span class='alert'><b>[src]</b> creaks ominously!</span>")
@@ -332,7 +332,7 @@
 				var/amplitude = 5
 				if(prob(1))
 					src.robo_expel_fart_gas(1)
-					playsound(get_turf(src), pick(src.fartsounds), 35, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, pick(src.fartsounds), 35, 1, channel=VOLUME_CHANNEL_EMOTE)
 				pixel_x = old_x + rand(-amplitude, amplitude)
 				pixel_y = old_y + rand(-amplitude/3, amplitude/3)
 				sleep(0.1 SECONDS)
@@ -380,12 +380,12 @@
 		return
 
 	if(istype(src, /obj/machinery/bot/buttbot/cyber))
-		playsound(get_turf(src), "sound/voice/farts/poo2_robot.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+		playsound(src, "sound/voice/farts/poo2_robot.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 	else
 		if(narrator_mode)
-			playsound(get_turf(src), 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(src, 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 		else
-			playsound(get_turf(src), pick(src.fartsounds), 35, 1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(src, pick(src.fartsounds), 35, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 	var/fart_on_other = 0
 	for (var/atom/A as anything in src.loc)
@@ -410,7 +410,7 @@
 				fart_on_other = 1
 				src.fart_memory += A
 				new/obj/decal/implo(get_turf(src))
-				playsound(get_turf(src), 'sound/effects/suck.ogg', 100, 1)
+				playsound(src, 'sound/effects/suck.ogg', 100, 1)
 				src.set_loc(K)
 				break
 			else if(istype(A,/obj/item/photo/voodoo))
@@ -418,7 +418,7 @@
 				var/mob/M = V.cursed_dude
 				if(!M || !M.lying)
 					continue
-				playsound(get_turf(M), pick(src.fartsounds), 35, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(M, pick(src.fartsounds), 35, 1, channel=VOLUME_CHANNEL_EMOTE)
 				switch(rand(1, 7))
 					if(1) M.visible_message("<span class='emote'><b>[M]</b> suddenly radiates an unwelcoming odor.</span>")
 					if(2) M.visible_message("<span class='emote'><b>[M]</b> is visited by ethereal incontinence.</span>")

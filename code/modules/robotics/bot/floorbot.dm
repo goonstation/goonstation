@@ -510,7 +510,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		attack_twitch(master)
-		playsound(get_turf(master), "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		playsound(master, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 
 	onInterrupt()
 		. = ..()
@@ -518,7 +518,7 @@
 
 	onEnd()
 		..()
-		playsound(get_turf(master), "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		playsound(master, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 		if (new_tile)
 			// Make a new tile
 			var/obj/item/tile/T = new /obj/item/tile/steel
@@ -570,7 +570,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		attack_twitch(master)
-		playsound(get_turf(master), 'sound/items/Welder.ogg', 50, 1)
+		playsound(master, 'sound/items/Welder.ogg', 50, 1)
 
 	onInterrupt()
 		. = ..()
@@ -578,7 +578,7 @@
 
 	onEnd()
 		..()
-		playsound(get_turf(master), "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		playsound(master, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 		var/turf/simulated/floor/T = master.target
 		if(!istype(T))
 			interrupt(INTERRUPT_ALWAYS)

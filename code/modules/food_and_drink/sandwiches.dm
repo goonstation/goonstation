@@ -286,6 +286,17 @@
 	brew_result = "beepskybeer"
 	initial_reagents = list("cholesterol"=5,"nanites"=20)
 
+/obj/item/reagent_containers/food/snacks/burger/cheeseborger
+	name = "cheeseborger"
+	desc = "The cheese really helps smooth out the metallic flavor."
+	icon_state = "cheeseborger"
+	amount = 3
+	heal_amt = 1
+	food_color = "#C8C8C8"
+	brewable = 1
+	brew_result = "beepskybeer"
+	initial_reagents = list("cholesterol"=5,"nanites"=20)
+
 /obj/item/reagent_containers/food/snacks/burger/synthburger
 	name = "synthburger"
 	desc = "A thoroughly artificial snack."

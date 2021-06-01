@@ -991,9 +991,9 @@
 				setProperty("viralprot", 40)
 
 			if(material.hasProperty("density"))
-				var/prot = round(material.getProperty("density") / 17)
+				var/prot = round(material.getProperty("density") / 13)
 				setProperty("meleeprot", prot)
-				setProperty("rangedprot", (0.1 + round(prot/10)))
+				setProperty("rangedprot", (0.2 + round(prot/10, 0.1)))
 			else
 				setProperty("meleeprot", 2)
 				setProperty("rangedprot", 0.4)
@@ -1006,7 +1006,7 @@
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 
-		setProperty("space_movespeed", 0.8)
+		setProperty("space_movespeed", 0.6)
 
 /obj/item/clothing/suit/space/emerg
 	name = "emergency suit"
@@ -1019,7 +1019,7 @@
 
 	setupProperties()
 		..()
-		setProperty("space_movespeed", 2)
+		setProperty("space_movespeed", 1.5)
 
 	snow // bleh whatever!!!
 		name = "snow suit"
@@ -1047,7 +1047,7 @@
 
 	setupProperties()
 		..()
-		setProperty("space_movespeed", 0.4)
+		setProperty("space_movespeed", 0.3)
 
 	blue
 		icon_state = "spacecap-blue"
@@ -1091,7 +1091,7 @@
 			setProperty("meleeprot", 6)
 			setProperty("rangedprot", 1)
 			setProperty("exploprot", 30)
-			setProperty("space_movespeed", 1.2)
+			setProperty("space_movespeed", 0.9)
 			setProperty("disorient_resist", 65)
 
 	specialist
@@ -1255,6 +1255,7 @@
 	syndicate
 		name = "\improper Syndicate command armor"
 		desc = "An armored space suit, not for your average expendable chumps. No sir."
+		is_syndicate = 1
 		icon_state = "indusred"
 		item_state = "indusred"
 		setupProperties()
@@ -1264,6 +1265,7 @@
 
 		specialist
 			name = "specialist heavy operative combat armor"
+			is_syndicate = 0
 			desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
 			icon_state = "syndie_specialist-heavy"
 			item_state = "syndie_specialist-heavy"
@@ -1272,6 +1274,7 @@
 
 	name = "NT-SO heavy operative combat armor"
 	desc = "A Nanotrasen special forces heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
+	is_syndicate = 0
 	icon_state = "ntso_specialist-heavy"
 	item_state = "ntso_specialist-heavy"
 	cant_self_remove = 1
@@ -1295,11 +1298,34 @@
 		setProperty("meleeprot", 5)
 		setProperty("rangedprot", 2)
 
+//NT pod wars suits
 /obj/item/clothing/suit/space/nanotrasen
 	name = "Nanotrasen Heavy Armor"
 	icon_state = "ntarmor2"
 	item_state = "ntarmor2"
 	desc = "Heavy armor used by certain Nanotrasen bodyguards."
+
+	pilot
+		name = "NT space suit"
+		icon_state = "nanotrasen_pilot"
+		item_state = "nanotrasen_pilot"
+		desc = "A suit that protects against low pressure environments. Issued to nanotrasen pilots."
+
+		setupProperties()
+			..()
+			setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
+
+		commander
+			name = "commander's great coat"
+			icon_state = "ntcommander_coat"
+			item_state = "ntcommander_coat"
+			desc = "A fear-inspiring, blue-ish-leather great coat, typically worn by a NanoTrasen Pod Commander. Why does it look like it's been dyed painted blue?"
+
+			setupProperties()
+				..()
+				setProperty("exploprot", 40)
+				setProperty("meleeprot", 6)
+				setProperty("rangedprot", 3)
 
 /obj/item/clothing/suit/cultist
 	name = "cultist robe"
