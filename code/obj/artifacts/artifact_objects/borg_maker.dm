@@ -73,6 +73,7 @@
 						if ("r_leg")
 							humanuser.limbs.replace_with("r_leg", /obj/item/parts/robot_parts/leg/right/light, null, 0)
 					convertable_limbs -= limb_to_replace
+					humanuser.update_body()
 					boutput(world, "CONVERTED [limb_to_replace.slot] TO ROBOTIC")
 				sleep(0.4 SECONDS)
 
