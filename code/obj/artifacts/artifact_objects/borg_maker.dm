@@ -15,6 +15,12 @@
 	var/converting = 0
 	var/list/work_sounds = list('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/effects/airbridge_dpl.ogg','sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Slimy_Hit_3.ogg')
 	examine_hint = "It looks vaguely foreboding."
+	var/escapable = TRUE //If false, you can't be dragged out to cancel the borgifying
+
+	New()
+		..()
+		if (prob(15))
+			inescapable = TRUE
 
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())
@@ -27,14 +33,18 @@
 			if(!isalive(user) && user.ghost && user.ghost.mind && user.ghost.mind.dnr)
 				O.visible_message("<span class='alert'><b>[O]</b> refuses to process [user.name]!</span>")
 				return
-			O.visible_message("<span class='alert'><b>[O]</b> suddenly pulls [user.name] inside and slams shut!</span>")
+			O.visible_message("<span class='alert'><b>[O]</b> suddenly pulls [user.name] inside[inescapable ? " and slams shut!" : "!"]</span>")
 			user.emote("scream")
 			user.set_loc(O.loc)
+			if (!escapable)
+				user.anchored = 1 //you ain't going nowhere
 			converting = 1
-			var/loops = rand(10,20)
+			var/loops = escapable ? rand(25, 50) : rand(10, 20)
 			while (loops > 0)
+				if (escapable && user.loc != src.loc) //If they're somewhere else, cancel the borgin
+					return
 				loops--
-				random_brute_damage(user, 15)
+				random_brute_damage(user, 10)
 				user.changeStatus("paralysis", 7 SECONDS)
 				playsound(user.loc, pick(work_sounds), 50, 1, -1)
 				sleep(0.4 SECONDS)
