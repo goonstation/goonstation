@@ -412,10 +412,10 @@
 		var/mob/hostage = null
 		if(src.affecting && src.state >= 2 && P.shooter != src.affecting) //If you grab someone they can still shoot you
 			hostage = src.affecting
-		if (hostage)
+		if (hostage && (!hostage.lying || prob(P.proj_data?.hit_ground_chance)))
 			P.collide(hostage)
 			//moved here so that it displays after the bullet hit message
-			if(prob(20)) //This should probably not be bulletproof, har har
+			if(prob(25)) //This should probably not be bulletproof, har har
 				hostage.visible_message("<span class='combat bold'>[hostage] is knocked out of [owner]'s grip by the force of the [P.name]!</span>")
 				qdel(src)
 

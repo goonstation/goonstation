@@ -3410,6 +3410,18 @@
 /area/station/crew_quarters/clown{
 	name = "Clowntainment"
 	})
+"aji" = (
+/obj/stool/bed,
+/obj/decal/cleanable/dirt,
+/obj/item/paper/book/from_file/the_trial,
+/obj/landmark/start{
+	name = "Clown"
+	},
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Clowntainment"
+	})
 "ajj" = (
 /obj/machinery/light/small,
 /obj/storage/crate/clown,
@@ -6315,6 +6327,15 @@
 	icon_state = "norn-12"
 	},
 /area/station/chapel/office)
+"aqW" = (
+/obj/table/wood/auto,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/item/paper/book/from_file/monster_manual,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/arcade/dungeon)
 "aqX" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/valve{
@@ -7813,6 +7834,14 @@
 	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/fitness)
+"avp" = (
+/obj/table/wood/auto,
+/obj/item/paper/book/from_file/critter_compendium,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/arcade/dungeon)
 "avq" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/info{
@@ -18966,6 +18995,11 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/station/crew_quarters/barber_shop)
+"bbt" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/dwainedummies,
+/turf/simulated/floor/darkblue,
+/area/station/turret_protected/ai)
 "bbu" = (
 /obj/item/storage/wall/fire{
 	dir = 4;
@@ -19443,6 +19477,22 @@
 	dir = 4
 	},
 /area/station/medical/medbay)
+"bcU" = (
+/obj/storage/secure/closet/research/chemical{
+	req_access_txt = "5"
+	},
+/obj/item/paper/book/from_file/pharmacopia,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/medical/medbay/pharmacy)
 "bcV" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/darkblue,
@@ -21028,6 +21078,23 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
+"biv" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/medical_surgery_guide{
+	pixel_y = 14
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/machinery/defib_mount{
+	pixel_y = -4
+	},
+/turf/simulated/floor/redwhite{
+	dir = 5
+	},
+/area/station/medical/medbay/surgery)
 "bix" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -21211,22 +21278,6 @@
 	dir = 1
 	},
 /area/station/crew_quarters/kitchen)
-"biP" = (
-/obj/table/auto,
-/obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = 7;
-	pixel_y = 13
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = 7;
-	pixel_y = 13
-	},
-/obj/item/old_grenade/oxygen,
-/obj/item/old_grenade/oxygen,
-/turf/simulated/floor/darkblue,
-/area/station/storage/eva)
 "biS" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -26128,6 +26179,16 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
+"bzB" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/medical_surgery_guide{
+	pixel_x = 9
+	},
+/obj/machinery/defib_mount{
+	pixel_x = -6
+	},
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbooth)
 "bzC" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -26544,6 +26605,15 @@
 /area/station/mining/refinery)
 "bBi" = (
 /obj/machinery/manufacturer/general,
+/turf/simulated/floor/grey,
+/area/station/mining/refinery)
+"bBj" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/matsci_guide,
+/obj/item/paper/book/from_file/matsci_guide,
+/obj/item/device/matanalyzer,
+/obj/item/device/matanalyzer,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/grey,
 /area/station/mining/refinery)
 "bBk" = (
@@ -28055,6 +28125,19 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lobby)
+"bFd" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/dwainedummies{
+	pixel_x = -3
+	},
+/obj/item/paper/book/from_file/guardbot_guide{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/disk/data/tape,
+/obj/item/hand_labeler,
+/turf/simulated/floor/purple,
+/area/station/science/lobby)
 "bFe" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/glass_recycler{
@@ -28063,6 +28146,14 @@
 	},
 /turf/simulated/floor/purpleblack/corner{
 	dir = 8
+	},
+/area/station/science/chemistry)
+"bFf" = (
+/obj/storage/secure/closet/research/chemical,
+/obj/item/paper/book/from_file/pharmacopia,
+/obj/machinery/light,
+/turf/simulated/floor/purpleblack{
+	dir = 1
 	},
 /area/station/science/chemistry)
 "bFg" = (
@@ -30049,6 +30140,18 @@
 /obj/cable,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
+"bKa" = (
+/obj/storage/secure/closet/courtroom,
+/obj/item/paper/book/from_file/space_law,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/black/side{
+	dir = 8
+	},
+/area/station/crew_quarters/courtroom)
 "bKb" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -31491,12 +31594,6 @@
 	dir = 4
 	},
 /area/station/security/secwing)
-"bNN" = (
-/obj/decal/poster/wallsign/medal{
-	pixel_y = 28
-	},
-/turf/simulated/floor/carpet/red/fancy/edge/nw,
-/area/station/security/hos)
 "bNO" = (
 /obj/machinery/light{
 	dir = 1;
@@ -31597,6 +31694,20 @@
 	dir = 8
 	},
 /area/station/bridge)
+"bNX" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/guardbot_guide{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/box/tapebox,
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
+/turf/simulated/floor/greenblack{
+	dir = 1
+	},
+/area/station/turret_protected/Zeta)
 "bNY" = (
 /obj/machinery/conveyor{
 	name = "cargo belt - south";
@@ -41135,20 +41246,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"cGu" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/emergency,
-/obj/item/paper/book/from_file/matsci_guide,
-/obj/decal/xmas_lights/ephemeral{
-	pixel_y = 32
-	},
-/obj/item/device/matanalyzer{
-	rand_pos = 0
-	},
-/turf/simulated/floor/orangeblack/side{
-	dir = 8
-	},
-/area/station/mining/magnet)
 "cGB" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/black,
@@ -41375,11 +41472,6 @@
 /obj/storage/closet/wardrobe/red/security_gimmick,
 /turf/simulated/floor/red/side,
 /area/station/security/main)
-"cRC" = (
-/obj/table/auto,
-/obj/item/paper/book/from_file/dwainedummies,
-/turf/simulated/floor/darkblue,
-/area/station/turret_protected/ai)
 "cRL" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/inner/west)
@@ -41418,36 +41510,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
-"cUW" = (
-/obj/item/sheet/steel{
-	amount = 50
-	},
-/obj/item/storage/toolbox/mechanical,
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/storage/firstaid/oxygen{
-	pixel_y = -4
-	},
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/chem_grenade/metalfoam,
-/obj/item/chem_grenade/metalfoam,
-/obj/item/old_grenade/oxygen,
-/obj/item/old_grenade/oxygen,
-/obj/storage/cart/mechcart{
-	desc = "A big rolling supply cart equipped for handling hull breaches.";
-	name = "breach repair cart";
-	req_access_txt = "40"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
-/area/station/hangar/engine)
 "cVi" = (
 /obj/machinery/light{
 	dir = 8;
@@ -42057,12 +42119,6 @@
 	name = "landing pad plating"
 	},
 /area/station/maintenance/southeast)
-"dsG" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/book/from_file/space_law,
-/obj/machinery/light,
-/turf/simulated/floor/carpet/green/fancy/edge/se,
-/area/station/crew_quarters/courtroom)
 "duY" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -43470,15 +43526,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
-"eTN" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/book/from_file/matsci_guide,
-/obj/item/paper/book/from_file/matsci_guide,
-/obj/item/device/matanalyzer,
-/obj/item/device/matanalyzer,
-/obj/machinery/light_switch/east,
-/turf/simulated/floor/grey,
-/area/station/mining/refinery)
 "eTY" = (
 /obj/storage/closet/biohazard,
 /turf/simulated/floor/black,
@@ -43905,25 +43952,6 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
-"fpH" = (
-/obj/table/auto,
-/obj/item/disk/data/tape{
-	layer = 3.5;
-	pixel_x = -5;
-	pixel_y = -5
-	},
-/obj/item/disk/data/tape/master/readonly,
-/obj/item/paper/book/from_file/dwainedummies{
-	pixel_y = 6
-	},
-/obj/item/device/multitool,
-/obj/machinery/door_control{
-	id = "dwaine_core";
-	name = "DWAINE Core Shield";
-	pixel_x = 25
-	},
-/turf/simulated/floor/greenblack,
-/area/station/turret_protected/Zeta)
 "fpJ" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon14,
 /turf/simulated/floor,
@@ -44892,14 +44920,6 @@
 /obj/disposalpipe/trunk/south,
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary)
-"gnm" = (
-/obj/storage/secure/closet/research/chemical,
-/obj/item/paper/book/from_file/pharmacopia,
-/obj/machinery/light,
-/turf/simulated/floor/purpleblack{
-	dir = 1
-	},
-/area/station/science/chemistry)
 "gnJ" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -45905,18 +45925,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/main)
-"hjB" = (
-/obj/stool/bed,
-/obj/decal/cleanable/dirt,
-/obj/item/paper/book/from_file/the_trial,
-/obj/landmark/start{
-	name = "Clown"
-	},
-/obj/disposalpipe/segment/transport,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Clowntainment"
-	})
 "hkw" = (
 /obj/machinery/light{
 	dir = 4;
@@ -46164,6 +46172,35 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"hxo" = (
+/obj/table/auto,
+/obj/item/sheet/steel/reinforced{
+	amount = 50
+	},
+/obj/item/sheet/steel/reinforced{
+	amount = 50
+	},
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/chem_grenade/metalfoam,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -16;
+	pixel_y = 10
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -14;
+	pixel_y = 5
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -11
+	},
+/turf/simulated/floor/black,
+/area/station/engine/storage)
 "hxq" = (
 /obj/machinery/light,
 /turf/simulated/floor/stairs/wide{
@@ -46386,22 +46423,6 @@
 	dir = 8
 	},
 /area/station/medical/medbay)
-"hNx" = (
-/obj/storage/secure/closet/research/chemical{
-	req_access_txt = "5"
-	},
-/obj/item/paper/book/from_file/pharmacopia,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
-/area/station/medical/medbay/pharmacy)
 "hNB" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -46562,15 +46583,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"ice" = (
-/obj/table/wood/auto,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/item/paper/book/from_file/monster_manual,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/arcade/dungeon)
 "iee" = (
 /obj/table/auto,
 /obj/item/storage/box/evidence,
@@ -46745,11 +46757,12 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
-"iqQ" = (
+"iqe" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/from_file/space_law,
-/turf/simulated/floor/black,
-/area/station/security/interrogation)
+/obj/machinery/light,
+/turf/simulated/floor/carpet/green/fancy/edge/se,
+/area/station/crew_quarters/courtroom)
 "iro" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -48602,6 +48615,12 @@
 /obj/decal/poster/wallsign/escape_right,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/market)
+"krt" = (
+/obj/decal/poster/wallsign/framed_award/hos_medal{
+	pixel_y = 28
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/nw,
+/area/station/security/hos)
 "krQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -50259,19 +50278,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/testchamber)
-"mdm" = (
-/obj/table/auto,
-/obj/item/paper/book/from_file/dwainedummies{
-	pixel_x = -3
-	},
-/obj/item/paper/book/from_file/guardbot_guide{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/disk/data/tape,
-/obj/item/hand_labeler,
-/turf/simulated/floor/purple,
-/area/station/science/lobby)
 "mdn" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -50868,6 +50874,22 @@
 	dir = 8
 	},
 /area/station/engine/core)
+"mNo" = (
+/obj/table/auto,
+/obj/machinery/cell_charger,
+/obj/item/cell/supercell/charged,
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = 7;
+	pixel_y = 13
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = 7;
+	pixel_y = 13
+	},
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
+/turf/simulated/floor/darkblue,
+/area/station/storage/eva)
 "mOa" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -51577,34 +51599,6 @@
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/checkpoint/escape)
-"nzy" = (
-/obj/item/sheet/steel{
-	amount = 50
-	},
-/obj/item/storage/toolbox/mechanical,
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/storage/firstaid/oxygen{
-	pixel_y = -4
-	},
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/chem_grenade/metalfoam,
-/obj/item/chem_grenade/metalfoam,
-/obj/item/old_grenade/oxygen,
-/obj/item/old_grenade/oxygen,
-/obj/storage/cart/mechcart{
-	desc = "A big rolling supply cart equipped for handling hull breaches.";
-	name = "breach repair cart";
-	req_access_txt = "40"
-	},
-/turf/simulated/floor/black,
-/area/station/engine/storage)
 "nzF" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/decal/tile_edge/floorguide/hop,
@@ -52361,6 +52355,20 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
+"omS" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/emergency,
+/obj/item/paper/book/from_file/matsci_guide,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
+/obj/item/device/matanalyzer{
+	rand_pos = 0
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/station/mining/magnet)
 "onu" = (
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/showers)
@@ -53429,6 +53437,25 @@
 /obj/disposalpipe/segment/food,
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/bay)
+"pzj" = (
+/obj/table/auto,
+/obj/item/disk/data/tape{
+	layer = 3.5;
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/item/disk/data/tape/master/readonly,
+/obj/item/paper/book/from_file/dwainedummies{
+	pixel_y = 6
+	},
+/obj/item/device/multitool,
+/obj/machinery/door_control{
+	id = "dwaine_core";
+	name = "DWAINE Core Shield";
+	pixel_x = 25
+	},
+/turf/simulated/floor/greenblack,
+/area/station/turret_protected/Zeta)
 "pzZ" = (
 /obj/cable,
 /obj/machinery/power/data_terminal,
@@ -53496,18 +53523,6 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/grey,
-/area/station/bridge)
-"pDj" = (
-/obj/table/auto,
-/obj/item/paper/book/from_file/guardbot_guide{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/paper/book/from_file/dwainedummies{
-	pixel_y = 6
-	},
-/obj/item/disk/data/tape/master/readonly,
-/turf/simulated/floor/black,
 /area/station/bridge)
 "pDU" = (
 /obj/cable{
@@ -53771,16 +53786,6 @@
 	dir = 1
 	},
 /area/station/security/interrogation)
-"pQj" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/book/from_file/medical_surgery_guide{
-	pixel_x = 9
-	},
-/obj/machinery/defib_mount{
-	pixel_x = -6
-	},
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbooth)
 "pQu" = (
 /obj/machinery/light/emergency{
 	dir = 8;
@@ -53876,6 +53881,34 @@
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/red/side,
 /area/station/security/secwing)
+"pTv" = (
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/obj/item/storage/toolbox/mechanical,
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/item/storage/firstaid/oxygen{
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/chem_grenade/metalfoam,
+/obj/item/chem_grenade/metalfoam,
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
+/obj/storage/cart/mechcart{
+	desc = "A big rolling supply cart equipped for handling hull breaches.";
+	name = "breach repair cart";
+	req_access_txt = "40"
+	},
+/turf/simulated/floor/black,
+/area/station/engine/storage)
 "pUl" = (
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
@@ -54060,20 +54093,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
-"qeT" = (
-/obj/table/auto,
-/obj/item/paper/book/from_file/guardbot_guide{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/tapebox,
-/obj/machinery/ai_status_display{
-	pixel_y = 28
-	},
-/turf/simulated/floor/greenblack{
-	dir = 1
-	},
-/area/station/turret_protected/Zeta)
 "qfl" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6
@@ -54672,23 +54691,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
-"qOG" = (
-/obj/table/auto,
-/obj/item/paper/book/from_file/medical_surgery_guide{
-	pixel_y = 14
-	},
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/machinery/defib_mount{
-	pixel_y = -4
-	},
-/turf/simulated/floor/redwhite{
-	dir = 5
-	},
-/area/station/medical/medbay/surgery)
 "qON" = (
 /obj/machinery/shieldgenerator/meteorshield,
 /turf/simulated/floor/plating,
@@ -55540,21 +55542,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
-"rPD" = (
-/obj/table/auto,
-/obj/item/storage/box/beakerbox{
-	pixel_x = 12;
-	pixel_y = 4
-	},
-/obj/item/paper/book/from_file/hydroponicsguide{
-	pixel_x = -5
-	},
-/obj/item/paper/book/from_file/hydroponicsguide{
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/turf/simulated/floor/green/side,
-/area/station/hydroponics/bay)
 "rPO" = (
 /obj/machinery/computer/supplycomp,
 /obj/machinery/power/data_terminal,
@@ -55705,6 +55692,18 @@
 	dir = 6
 	},
 /area/station/hallway/primary/east)
+"rWj" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/guardbot_guide{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/paper/book/from_file/dwainedummies{
+	pixel_y = 6
+	},
+/obj/item/disk/data/tape/master/readonly,
+/turf/simulated/floor/black,
+/area/station/bridge)
 "rXB" = (
 /obj/machinery/door/airlock/pyro/security,
 /obj/disposalpipe/segment/brig{
@@ -56760,35 +56759,6 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/escape,
 /area/station/hallway/primary/east)
-"tbE" = (
-/obj/table/auto,
-/obj/item/sheet/steel/reinforced{
-	amount = 50
-	},
-/obj/item/sheet/steel/reinforced{
-	amount = 50
-	},
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/chem_grenade/metalfoam,
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = -16;
-	pixel_y = 10
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = -14;
-	pixel_y = 5
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = -11
-	},
-/turf/simulated/floor/black,
-/area/station/engine/storage)
 "tbT" = (
 /obj/stool/chair,
 /obj/cable{
@@ -57571,6 +57541,11 @@
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
+"tNc" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/space_law,
+/turf/simulated/floor/black,
+/area/station/security/interrogation)
 "tNN" = (
 /obj/cable{
 	d1 = 2;
@@ -58012,14 +57987,6 @@
 "umn" = (
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/mining/magnet)
-"uoa" = (
-/obj/table/wood/auto,
-/obj/item/paper/book/from_file/critter_compendium,
-/obj/decal/xmas_lights/ephemeral{
-	pixel_y = 32
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/arcade/dungeon)
 "uox" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/grime,
@@ -58660,6 +58627,21 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
+"uRm" = (
+/obj/table/auto,
+/obj/item/storage/box/beakerbox{
+	pixel_x = 12;
+	pixel_y = 4
+	},
+/obj/item/paper/book/from_file/hydroponicsguide{
+	pixel_x = -5
+	},
+/obj/item/paper/book/from_file/hydroponicsguide{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/turf/simulated/floor/green/side,
+/area/station/hydroponics/bay)
 "uRH" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/transport{
@@ -60048,18 +60030,6 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/south)
-"wva" = (
-/obj/storage/secure/closet/courtroom,
-/obj/item/paper/book/from_file/space_law,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/black/side{
-	dir = 8
-	},
-/area/station/crew_quarters/courtroom)
 "wwg" = (
 /obj/cable{
 	d1 = 4;
@@ -60307,6 +60277,36 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
+"wFB" = (
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/obj/item/storage/toolbox/mechanical,
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/item/storage/firstaid/oxygen{
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/chem_grenade/metalfoam,
+/obj/item/chem_grenade/metalfoam,
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
+/obj/storage/cart/mechcart{
+	desc = "A big rolling supply cart equipped for handling hull breaches.";
+	name = "breach repair cart";
+	req_access_txt = "40"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/hangar/engine)
 "wFM" = (
 /obj/machinery/computer3/terminal/zeta{
 	setup_os_string = "ZETA_MAINFRAME"
@@ -97263,7 +97263,7 @@ caj
 caj
 bfZ
 bhl
-qOG
+biv
 bjJ
 bkV
 bmn
@@ -97516,7 +97516,7 @@ gQs
 agp
 joy
 air
-hjB
+aji
 cZU
 lvb
 mep
@@ -97886,7 +97886,7 @@ bAU
 wMi
 bDd
 bEd
-mdm
+bFd
 bZZ
 bHp
 bIT
@@ -98792,7 +98792,7 @@ bAW
 oRa
 bDf
 bEg
-gnm
+bFf
 bAW
 bHr
 bIW
@@ -100278,7 +100278,7 @@ aTC
 aZw
 baM
 bxr
-hNx
+bcU
 bdS
 cqg
 bgf
@@ -102999,7 +102999,7 @@ bbS
 bwa
 bdX
 bfc
-biP
+mNo
 baQ
 baQ
 bjZ
@@ -107533,7 +107533,7 @@ gxN
 ree
 edL
 iha
-cGu
+omS
 rjP
 jOB
 ekv
@@ -107546,7 +107546,7 @@ bwQ
 bya
 bzh
 bzh
-eTN
+bBj
 bCm
 iDX
 fGA
@@ -115346,7 +115346,7 @@ aDt
 ejI
 aBo
 auT
-tbE
+hxo
 qcA
 tIS
 gGT
@@ -115699,7 +115699,7 @@ boo
 gDw
 ncI
 wVT
-rPD
+uRm
 boq
 gqX
 bDA
@@ -116557,7 +116557,7 @@ auT
 ptm
 axq
 ays
-nzy
+pTv
 aAn
 aBn
 xUY
@@ -116869,7 +116869,7 @@ utk
 pUU
 bqD
 aMp
-cUW
+wFB
 bFz
 aCh
 xXd
@@ -119035,7 +119035,7 @@ bMu
 rlV
 tiv
 fdv
-iqQ
+tNc
 hRN
 tiv
 uyf
@@ -120240,7 +120240,7 @@ bIy
 vui
 ezj
 ymh
-dsG
+iqe
 wVV
 wVV
 wVV
@@ -121436,7 +121436,7 @@ njL
 bwf
 bxs
 eMJ
-pQj
+bzB
 cpE
 bBE
 nmt
@@ -122653,7 +122653,7 @@ nzF
 chs
 maH
 ftU
-wva
+bKa
 vTU
 bMw
 bPk
@@ -123260,7 +123260,7 @@ bIE
 bLs
 sJb
 vTk
-bNN
+krt
 bQK
 lOK
 bSb
@@ -125300,8 +125300,8 @@ adv
 aha
 aij
 ajd
-uoa
-ice
+avp
+aqW
 ama
 awm
 atb
@@ -126565,7 +126565,7 @@ cxa
 wDf
 qnB
 wnH
-pDj
+rWj
 xcv
 jXu
 edV
@@ -127488,7 +127488,7 @@ pwl
 bSl
 iyd
 bHl
-qeT
+bNX
 fbA
 lSk
 pQX
@@ -128034,7 +128034,7 @@ aEy
 aFQ
 aSW
 aXf
-cRC
+bbt
 anX
 aNq
 biU
@@ -128699,7 +128699,7 @@ wIv
 sUE
 edU
 lSk
-fpH
+pzj
 bHl
 cxa
 bfO
