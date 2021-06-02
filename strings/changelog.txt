@@ -1,5 +1,8 @@
 
 (t)tue jun 01 21
+(u)Sovexe
+(e)🐛🆕|bug, feature
+(+)Chicken carriers are now safe for aquatic chicken transportation. Chicken carriers can also scoop deceased chickens for ease of cleanup.
 (u)Zonespace
 (p)4977
 (e)🆕🗺|feature, mapping
