@@ -445,10 +445,10 @@
 				boutput(user, "<span class='alert'>You have already scanned that object.</span>")
 				return
 
-		for(var/datum/electronics/scanned_item/I in mechanic_controls.scanned_items)
+		/*for(var/datum/electronics/scanned_item/I in ruck_controls.scanned_items)
 			if(final_type == I.item_type)
 				boutput(user, "<span class='alert'>That object already exists in the scanned database.</span>")
-				return
+				return*/
 		animate_scanning(O, "#FFFF00")
 		src.scanned += final_type
 		boutput(user, "<span class='notice'>Item scan successful.</span>")
@@ -470,23 +470,25 @@
 	var/datum/radio_frequency/radio_connection
 	var/no_print_spam = 1 // In relation to world.time.
 	var/olde = 0
+	var/datum/mechanic_controller/ruck_controls
 
 /obj/machinery/rkit/New()
 	..()
-	//link = mechanic_controls
+	//link = ruck_controls
+	ruck_controls = new
 	SPAWN_DBG(0.8 SECONDS)
 		if(radio_controller)
 			radio_connection = radio_controller.add_object(src, "[frequency]")
 		if(!src.net_id)
 			src.net_id = generate_net_id(src)
-			mechanic_controls.rkit_addresses += src.net_id
+			ruck_controls.rkit_addresses += src.net_id
 
 /obj/machinery/rkit/disposing()
 	radio_controller?.remove_object(src, "[frequency]")
 	radio_connection = null
 
 	if (src.net_id)
-		mechanic_controls.rkit_addresses -= src.net_id
+		ruck_controls.rkit_addresses -= src.net_id
 
 	//link = null
 
@@ -519,7 +521,7 @@
 
 	else if(signal.data["address_1"] == "TRANSRKIT" && signal.data["acc_code"] == netpass_heads && !isnull(signal.data["data"]) && !isnull(signal.data["lock"]))
 		var/targetitem = signal.data["data"]
-		for(var/datum/electronics/scanned_item/O in mechanic_controls.scanned_items)
+		for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
 			if (targetitem == O.name)
 				O.locked = signal.data["lock"]
 		return
@@ -527,7 +529,7 @@
 	//But I love making packets cryptic
 	if(signal.data["address_1"] == src.net_id && signal.data["command"] == "download" && target && !isnull(signal.data["data"]))
 		var/targetitem = signal.data["data"]
-		for(var/datum/electronics/scanned_item/O in mechanic_controls.scanned_items)
+		for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
 			if (targetitem == O.name)
 				SPAWN_DBG(0.5 SECONDS)
 					var/datum/computer/file/electronics_scan/scanFile = new
@@ -542,11 +544,11 @@
 					newsignal.data_file = scanFile
 					radio_connection.post_signal(src, newsignal)
 
-	if(signal.data["address_1"] != src.net_id || !target || signal.data["command"] != "add" || !istype(signal.data_file, /datum/computer/file/electronics_scan))
+	if(signal.data["address_1"] != "TRANSRKIT" || !target || signal.data["command"] != "add" || !istype(signal.data_file, /datum/computer/file/electronics_scan))
 		return
 
 	var/datum/computer/file/electronics_scan/scanFile = signal.data_file
-	for(var/datum/electronics/scanned_item/O in mechanic_controls.scanned_items)
+	for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
 		if(scanFile.scannedPath == O.item_type)
 			SPAWN_DBG(0.5 SECONDS)
 
@@ -563,7 +565,7 @@
 				radio_connection.post_signal(src, newsignal)
 			return
 	var/strippedName = scanFile.scannedName
-	mechanic_controls.scan_in(strippedName, scanFile.scannedPath, scanFile.scannedMats)
+
 	SPAWN_DBG(0.5 SECONDS)
 
 		var/datum/signal/newsignal = get_free_signal()
@@ -575,7 +577,7 @@
 		newsignal.data["address_1"] = target
 		newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
 		newsignal.data["sender"] = src.net_id
-
+		ruck_controls.scan_in(strippedName, scanFile.scannedPath, scanFile.scannedMats)
 		radio_connection.post_signal(src, newsignal)
 
 /obj/machinery/rkit/attackby(obj/item/W as obj, mob/user as mob)
@@ -588,14 +590,14 @@
 		var/match_check = 1
 		for(var/X in S.scanned)
 			match_check = 0
-			for(var/datum/electronics/scanned_item/O in mechanic_controls.scanned_items)
+			for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
 				if(S.scanned == O.item_type)
 					S.scanned -= X
 					match_check = 1
 					break
 			if (!match_check)
 				var/obj/tempobj = new X (src)
-				mechanic_controls.scan_in(tempobj.name,tempobj.type,tempobj.mats)
+				ruck_controls.scan_in(tempobj.name,tempobj.type,tempobj.mats)
 				SPAWN_DBG(4 SECONDS)
 					qdel(tempobj)
 				S.scanned -= X
@@ -616,7 +618,7 @@
 	dat = "<b>Ruckingenur Kit</b><HR>"
 
 	dat += "<b>Scanned Items:</b><br>"
-	for(var/datum/electronics/scanned_item/S in mechanic_controls.scanned_items)
+	for(var/datum/electronics/scanned_item/S in ruck_controls.scanned_items)
 		dat += "<u>[S.name]</u><small> "
 		//dat += "<A href='?src=\ref[src];op=\ref[S];tp=done'>Frame</A>"
 		if (S.item_mats && src.olde)
@@ -659,7 +661,7 @@
 					if (src.no_print_spam && world.time < src.no_print_spam + 25)
 						usr.show_text("[src] isn't done with the previous print job.", "red")
 					else
-						var/datum/electronics/scanned_item/O = locate(href_list["op"]) in mechanic_controls.scanned_items
+						var/datum/electronics/scanned_item/O = locate(href_list["op"]) in ruck_controls.scanned_items
 						if (istype(O.blueprint, /datum/manufacture/mechanics/))
 							usr.show_text("Print job started...", "blue")
 							var/datum/manufacture/mechanics/M = O.blueprint
@@ -671,7 +673,7 @@
 
 			if("lock")
 				if(href_list["op"])
-					var/datum/electronics/scanned_item/O = locate(href_list["op"]) in mechanic_controls.scanned_items
+					var/datum/electronics/scanned_item/O = locate(href_list["op"]) in ruck_controls.scanned_items
 					//O.locked = !O.locked
 					SPAWN_DBG(0.5 SECONDS)
 						var/datum/signal/newsignal = get_free_signal()

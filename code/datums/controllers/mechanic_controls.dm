@@ -7,12 +7,18 @@ var/datum/mechanic_controller/mechanic_controls
 	proc
 		scan_in(var/N,var/T,var/list/M)
 			var/datum/electronics/scanned_item/S = new/datum/electronics/scanned_item
+			var/matscopy
 			S.name = N
 			S.item_type = T
-			S.mats = M.Copy()
-			S.item_mats = M
-			S.create_partslist(M)
-			S.create_blueprint(M)
+			if (istype(M))
+				matscopy = M.Copy()
+				S.mats = M.Copy()
+			else
+				matscopy = M
+				S.mats = M
+			S.item_mats = matscopy
+			S.create_partslist(matscopy)
+			S.create_blueprint(matscopy)
 			src.scanned_items += S
 			return 1
 
@@ -51,9 +57,13 @@ var/datum/mechanic_controller/mechanic_controls
 			return
 
 		create_blueprint(var/mats_number = 10)
+			var/datum/manufacture/mechanics/M = new /datum/manufacture/mechanics(manuf_controls)
+			var/datum/manufacture/mechanics/cached_print = new /datum/manufacture/mechanics(manuf_controls)
 			if (istype(src.blueprint,/datum/manufacture/mechanics/))
 				return
-			if (get_schematic_from_name_in_custom(src.name))
+			cached_print = get_schematic_from_name_in_custom(src.name)
+			if (cached_print)
+				src.blueprint = cached_print
 				return
 			var/mats_types = null // null = keep default
 			if(islist(mats_number))
@@ -67,7 +77,7 @@ var/datum/mechanic_controller/mechanic_controls
 			if (!isnum(mats_number))
 				mats_number = 10
 
-			var/datum/manufacture/mechanics/M = new /datum/manufacture/mechanics(manuf_controls)
+
 			manuf_controls.custom_schematics += M
 			M.name = src.name
 			M.time = mats_number * 1.5 SECONDS
