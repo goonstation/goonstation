@@ -7587,7 +7587,7 @@
 "cjm" = (
 /obj/table/reinforced/auto,
 /obj/item/sheet/glass/fullstack,
-/turf/simulated/floor/airless/white/grime,
+/turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "cjp" = (
 /obj/machinery/recharge_station,
@@ -9554,7 +9554,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/sheet/glass/fullstack,
-/turf/simulated/floor/airless/white/grime,
+/turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "cNc" = (
 /obj/item/storage/wall/emergency{
@@ -14332,7 +14332,7 @@
 	icon_state = "pipe-c";
 	name = "factory pipe"
 	},
-/turf/simulated/floor/airless/white/grime,
+/turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "ecv" = (
 /obj/disposalpipe/segment/transport{
@@ -17918,8 +17918,11 @@
 /turf/simulated/floor/plating/jen,
 /area/ghostdrone_factory)
 "feL" = (
-/obj/machinery/power/tracker,
-/turf/simulated/floor/airless/solar,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "feS" = (
 /obj/disposalpipe/segment/mail/vertical,
@@ -20001,7 +20004,7 @@
 /obj/decal/fakeobjects/airmonitor_broken{
 	pixel_y = 20
 	},
-/turf/simulated/floor/airless/white/grime,
+/turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "fIp" = (
 /obj/wingrille_spawn/auto,
@@ -22773,6 +22776,10 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"guK" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/airless/engine/caution/corner,
+/area/ghostdrone_factory)
 "guW" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
@@ -29128,8 +29135,9 @@
 /obj/disposalpipe/segment{
 	name = "factory pipe"
 	},
-/obj/machinery/light/small/floor,
-/turf/simulated/floor/plating/jen,
+/turf/simulated/floor/stairs/quilty/wide{
+	dir = 6
+	},
 /area/ghostdrone_factory)
 "igN" = (
 /obj/machinery/door/airlock/pyro{
@@ -30106,7 +30114,7 @@
 	name = "Scrawled Note"
 	},
 /obj/random_item_spawner/desk_stuff,
-/turf/simulated/floor/airless/white/grime,
+/turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "iwp" = (
 /turf/simulated/wall/auto/supernorn,
@@ -31271,6 +31279,10 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor,
 /area/station/security/equipment)
+"iJi" = (
+/obj/machinery/power/tracker,
+/turf/simulated/floor/airless/solar,
+/area/ghostdrone_factory)
 "iJo" = (
 /obj/machinery/clone_scanner,
 /obj/machinery/light,
@@ -33726,7 +33738,7 @@
 /obj/disposalpipe/segment{
 	name = "factory pipe"
 	},
-/turf/simulated/floor/stairs/quilty/wide,
+/turf/simulated/floor/plating/jen,
 /area/ghostdrone_factory)
 "jvA" = (
 /obj/table/auto,
@@ -34865,7 +34877,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/turf/simulated/floor/airless/white/grime,
+/turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "jKq" = (
 /obj/item/storage/wall/medical,
@@ -39433,7 +39445,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/turf/simulated/floor/airless/white/grime,
+/turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "kYf" = (
 /obj/machinery/light/small,
@@ -41555,7 +41567,7 @@
 	name = "wooden table"
 	},
 /obj/item/paper/book/from_file/the_trial,
-/turf/simulated/floor/airless/white/grime,
+/turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "lCq" = (
 /obj/machinery/light/small{
@@ -52820,7 +52832,7 @@
 /obj/decal/fakeobjects/apc_broken{
 	pixel_y = 28
 	},
-/turf/simulated/floor/airless/white/grime,
+/turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "oyV" = (
 /turf/simulated/floor,
@@ -57140,7 +57152,7 @@
 /area/station/security/equipment)
 "pKU" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor/airless/white/grime,
+/turf/simulated/floor/caution/northsouth,
 /area/ghostdrone_factory)
 "pLd" = (
 /obj/decal/cleanable/cobweb{
@@ -58967,8 +58979,7 @@
 /area/station/hallway/secondary/west)
 "qmm" = (
 /obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c";
+	dir = 4;
 	name = "factory pipe"
 	},
 /turf/simulated/floor/plating/jen,
@@ -61776,7 +61787,8 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/turf/simulated/floor/airless/white/grime,
+/obj/rack,
+/turf/simulated/floor/grey,
 /area/ghostdrone_factory)
 "qXk" = (
 /obj/machinery/door/airlock/pyro{
@@ -64067,7 +64079,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment)
 "rCW" = (
-/turf/simulated/floor/airless/white/grime,
+/turf/simulated/floor/grey,
 /area/ghostdrone_factory)
 "rDa" = (
 /obj/wingrille_spawn/auto,
@@ -65188,7 +65200,7 @@
 	},
 /obj/item/plate,
 /obj/item/reagent_containers/food/snacks/burger/moldy,
-/turf/simulated/floor/airless/white/grime,
+/turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "rSe" = (
 /obj/cable{
@@ -67505,7 +67517,8 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/turf/simulated/floor/airless/white/grime,
+/obj/rack,
+/turf/simulated/floor/grey,
 /area/ghostdrone_factory)
 "sxd" = (
 /obj/npc/trader/exclown{
@@ -69829,7 +69842,7 @@
 /area/station/hangar/engine)
 "sZL" = (
 /obj/decal/fakeobjects/cpucontroller,
-/turf/simulated/floor/airless/white/grime,
+/turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "sZO" = (
 /obj/storage/crate,
@@ -71686,7 +71699,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/turf/simulated/floor/airless/white/grime,
+/turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "twg" = (
 /obj/machinery/light/small{
@@ -72238,7 +72251,7 @@
 /area/station/crew_quarters/catering)
 "tDD" = (
 /obj/decal/fakeobjects/vacuumtape,
-/turf/simulated/floor/airless/white/grime,
+/turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "tDE" = (
 /turf/simulated/floor/caution/corner/se,
@@ -72914,6 +72927,9 @@
 	},
 /turf/simulated/floor/yellow/checker,
 /area/station/engine/engineering)
+"tNJ" = (
+/turf/simulated/floor/white/grime,
+/area/ghostdrone_factory)
 "tNL" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
@@ -74353,6 +74369,12 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/grey,
 /area/station/chapel/sanctuary)
+"uhF" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/airless/engine/caution/corner{
+	dir = 8
+	},
+/area/ghostdrone_factory)
 "uhQ" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -83598,6 +83620,8 @@
 /area/station/hallway/secondary/exit)
 "wvD" = (
 /obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c";
 	name = "factory pipe"
 	},
 /turf/simulated/floor/plating/jen,
@@ -85945,7 +85969,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/sheet/steel/fullstack,
-/turf/simulated/floor/airless/white/grime,
+/turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "wXX" = (
 /obj/wingrille_spawn/auto,
@@ -86782,7 +86806,7 @@
 /obj/machinery/door/airlock/pyro/sci_alt{
 	dir = 4
 	},
-/turf/simulated/floor/airless/white/grime,
+/turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "xip" = (
 /obj/cable{
@@ -87487,7 +87511,7 @@
 	name = "factory pipe"
 	},
 /obj/stool/chair/comfy,
-/turf/simulated/floor/airless/white/grime,
+/turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "xqX" = (
 /obj/table/reinforced/bar/auto,
@@ -88977,7 +89001,7 @@
 	dir = 4;
 	name = "factory pipe"
 	},
-/turf/simulated/floor/airless/white/grime,
+/turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "xJF" = (
 /obj/table/auto,
@@ -90492,7 +90516,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/sheet/steel/fullstack,
-/turf/simulated/floor/airless/white/grime,
+/turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "ycN" = (
 /turf/simulated/floor,
@@ -90785,7 +90809,7 @@
 	dir = 4;
 	name = "factory pipe"
 	},
-/turf/simulated/floor/airless/white/grime,
+/turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
 "yfM" = (
 /obj/cable{
@@ -91087,6 +91111,10 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"yjH" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/airless/engine/caution/south,
+/area/ghostdrone_factory)
 "yjI" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
@@ -95042,13 +95070,13 @@ aJu
 aJu
 aJu
 aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
+fch
+tQq
+tQq
+iJi
+tQq
+tQq
+fch
 aJu
 aJu
 aJu
@@ -95343,15 +95371,15 @@ aJu
 aJu
 aJu
 aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
+fch
+tQq
+uhF
+jhN
+jhN
+jhN
+guK
+tQq
+fch
 aJu
 aJu
 aJu
@@ -95645,7 +95673,7 @@ aJu
 aJu
 aJu
 aJu
-aJu
+tQq
 jWJ
 jWJ
 jWJ
@@ -95653,7 +95681,7 @@ jWJ
 jWJ
 jWJ
 jWJ
-aJu
+tQq
 aJu
 aJu
 aJu
@@ -96551,13 +96579,13 @@ jhN
 jWJ
 sZL
 xJw
-ecf
-jvr
-igK
-wvD
-wvD
-igK
-wvD
+tNJ
+gSd
+aIE
+siU
+siU
+aIE
+wTG
 qmm
 mtf
 nKa
@@ -96851,16 +96879,16 @@ hLk
 nWT
 fxv
 jWJ
-swZ
+feL
 xJw
-xJw
-vma
-siU
-siU
-siU
-wTG
-siU
-siU
+ecf
+igK
+jvr
+jvr
+jvr
+jvr
+jvr
+wvD
 lhP
 dpS
 bjc
@@ -97148,7 +97176,7 @@ aJu
 aJu
 aJu
 aJu
-tQq
+aJu
 imU
 tNw
 jWJ
@@ -97170,7 +97198,7 @@ jWJ
 jWJ
 tNw
 fLM
-tQq
+aJu
 aJu
 aJu
 aJu
@@ -97450,7 +97478,7 @@ aJu
 aJu
 aJu
 aJu
-tQq
+aJu
 imU
 tNw
 jWJ
@@ -97472,7 +97500,7 @@ vdM
 jWJ
 tNw
 fLM
-tQq
+aJu
 aJu
 aJu
 aJu
@@ -97752,13 +97780,13 @@ aJu
 aJu
 aJu
 aJu
-tQq
+aJu
 mCz
 tNw
 pKU
 rCW
 pKU
-rCW
+tNJ
 xqU
 rRZ
 xZD
@@ -97772,9 +97800,9 @@ seX
 uWC
 seX
 jWJ
-fxv
-fLM
-feL
+tNw
+yjH
+aJu
 aJu
 aJu
 aJu
@@ -98054,7 +98082,7 @@ aJu
 aJu
 aJu
 aJu
-tQq
+aJu
 imU
 tNw
 jWJ
@@ -98076,7 +98104,7 @@ vdM
 jWJ
 tNw
 fLM
-tQq
+aJu
 aJu
 aJu
 aJu
@@ -98356,7 +98384,7 @@ aJu
 aJu
 aJu
 aJu
-tQq
+aJu
 imU
 tNw
 jWJ
@@ -98378,7 +98406,7 @@ jWJ
 jWJ
 tNw
 fLM
-tQq
+aJu
 aJu
 aJu
 aJu
@@ -98664,8 +98692,8 @@ oWA
 fxv
 jWJ
 twc
-rCW
-rCW
+tNJ
+tNJ
 gSd
 siU
 wTG
@@ -98966,8 +98994,8 @@ nhP
 qSG
 jWJ
 tDD
-rCW
-rCW
+tNJ
+tNJ
 vma
 aIE
 siU
