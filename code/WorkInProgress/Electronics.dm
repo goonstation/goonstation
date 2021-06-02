@@ -471,14 +471,15 @@
 	var/no_print_spam = 1 // In relation to world.time.
 	var/olde = 0
 	var/datum/mechanic_controller/ruck_controls
+	var/masterruck //net_id of the ruck that will send messages
 
 /obj/machinery/rkit/New()
 	..()
-	//link = ruck_controls
 	ruck_controls = new
 	SPAWN_DBG(0.8 SECONDS)
 		if(radio_controller)
 			radio_connection = radio_controller.add_object(src, "[frequency]")
+			send_sync() //Find the master ruck
 		if(!src.net_id)
 			src.net_id = generate_net_id(src)
 			ruck_controls.rkit_addresses += src.net_id
@@ -490,9 +491,36 @@
 	if (src.net_id)
 		ruck_controls.rkit_addresses -= src.net_id
 
-	//link = null
-
 	..()
+/obj/machinery/rkit/proc/send_sync() //Request SYNCREPLY from other rucks
+	//We're the master until someone else proves they are
+	masterruck = src.net_id
+	SPAWN_DBG(0.5 SECONDS)
+		var/datum/signal/newsignal = get_free_signal()
+		newsignal.source = src
+		newsignal.transmission_method = TRANSMISSION_RADIO
+		newsignal.data["command"] = "SYNC"
+		newsignal.data["address_1"] = "TRANSRKIT"
+		newsignal.data["sender"] = src.net_id
+		radio_connection.post_signal(src, newsignal)
+
+/obj/machinery/rkit/proc/upload_blueprint(var/datum/electronics/scanned_item/O, var/target, var/internal)
+	SPAWN_DBG(0.5 SECONDS)
+		var/datum/computer/file/electronics_scan/scanFile = new
+		scanFile.scannedName = O.name
+		scanFile.scannedPath = O.item_type
+		scanFile.scannedMats = O.mats
+		var/datum/signal/newsignal = get_free_signal()
+		newsignal.source = src
+		newsignal.transmission_method = TRANSMISSION_RADIO
+		if(!internal)
+			newsignal.data["command"] = "new"
+		else
+			newsignal.data["command"] = "upload"
+		newsignal.data["address_1"] = target
+		newsignal.data["sender"] = src.net_id
+		newsignal.data_file = scanFile
+		radio_connection.post_signal(src, newsignal)
 
 /obj/machinery/rkit/receive_signal(datum/signal/signal)
 	if(status & NOPOWER)
@@ -504,7 +532,6 @@
 	var/target = signal.data["sender"]
 	if((signal.data["address_1"] == "ping") && target)
 		SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
-
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.transmission_method = TRANSMISSION_RADIO
@@ -519,39 +546,52 @@
 
 		return
 
-	else if(signal.data["address_1"] == "TRANSRKIT" && signal.data["acc_code"] == netpass_heads && !isnull(signal.data["data"]) && !isnull(signal.data["lock"]))
+	if (signal.data["address_1"] != "TRANSRKIT" && signal.data["address_1"] != src.net_id )
+		return
+
+	if(signal.data["address_1"] == "TRANSRKIT" && signal.data["acc_code"] == netpass_heads && !isnull(signal.data["data"]) && !isnull(signal.data["lock"]))
 		var/targetitem = signal.data["data"]
 		for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
 			if (targetitem == O.name)
 				O.locked = signal.data["lock"]
 		return
+
+	if(signal.data["address_1"] == "TRANSRKIT" && signal.data["command"] == "SYNCREPLY" && target)
+		if (target > masterruck) //pick the highest net_id
+			masterruck = target
+			//Wait we're done here?
+			return
+
+	if(signal.data["address_1"] == "TRANSRKIT" && signal.data["command"] == "SYNC" && target)
+		//Got a sync time to reset this to ourselves
+		masterruck = src.net_id //We're the master!
+		SPAWN_DBG(0.5 SECONDS)
+			var/datum/signal/newsignal = get_free_signal()
+			newsignal.source = src
+			newsignal.transmission_method = TRANSMISSION_RADIO
+			newsignal.data["command"] = "SYNCREPLY"
+			newsignal.data["address_1"] = "TRANSRKIT"
+			newsignal.data["sender"] = src.net_id
+
+			radio_connection.post_signal(src, newsignal)
+		return
+
 	//I have no idea why anyone would want blueprint files
 	//But I love making packets cryptic
+	//Oh okay we have a distributed network now, THAT'S what this is for
 	if(signal.data["address_1"] == src.net_id && signal.data["command"] == "download" && target && !isnull(signal.data["data"]))
 		var/targetitem = signal.data["data"]
 		for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
 			if (targetitem == O.name)
-				SPAWN_DBG(0.5 SECONDS)
-					var/datum/computer/file/electronics_scan/scanFile = new
-					scanFile.scannedName = O.name
-					scanFile.scannedPath = O.item_type
-					scanFile.scannedMats = O.mats
-					var/datum/signal/newsignal = get_free_signal()
-					newsignal.source = src
-					newsignal.transmission_method = TRANSMISSION_RADIO
-					newsignal.data["command"] = "upload"
-					newsignal.data["address_1"] = target
-					newsignal.data_file = scanFile
-					radio_connection.post_signal(src, newsignal)
+				upload_blueprint(O, target)
 
-	if(signal.data["address_1"] != "TRANSRKIT" || !target || signal.data["command"] != "add" || !istype(signal.data_file, /datum/computer/file/electronics_scan))
+	if((signal.data["address_1"] != "TRANSRKIT" && signal.data["address_1"] != src.net_id ) || !target || (signal.data["command"] != "add" && signal.data["command"] != "upload") || !istype(signal.data_file, /datum/computer/file/electronics_scan))
 		return
 
 	var/datum/computer/file/electronics_scan/scanFile = signal.data_file
 	for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
-		if(scanFile.scannedPath == O.item_type)
+		if(scanFile.scannedPath == O.item_type && src.net_id == masterruck && signal.data["command"] != "upload")
 			SPAWN_DBG(0.5 SECONDS)
-
 				var/datum/signal/newsignal = get_free_signal()
 				newsignal.source = src
 				newsignal.transmission_method = TRANSMISSION_RADIO
@@ -564,10 +604,13 @@
 
 				radio_connection.post_signal(src, newsignal)
 			return
+
 	var/strippedName = scanFile.scannedName
+	ruck_controls.scan_in(strippedName, scanFile.scannedPath, scanFile.scannedMats)
 
+	if(src.net_id != masterruck)
+		return
 	SPAWN_DBG(0.5 SECONDS)
-
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
 		newsignal.transmission_method = TRANSMISSION_RADIO
@@ -577,7 +620,6 @@
 		newsignal.data["address_1"] = target
 		newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
 		newsignal.data["sender"] = src.net_id
-		ruck_controls.scan_in(strippedName, scanFile.scannedPath, scanFile.scannedMats)
 		radio_connection.post_signal(src, newsignal)
 
 /obj/machinery/rkit/attackby(obj/item/W as obj, mob/user as mob)
@@ -597,7 +639,9 @@
 					break
 			if (!match_check)
 				var/obj/tempobj = new X (src)
-				ruck_controls.scan_in(tempobj.name,tempobj.type,tempobj.mats)
+				var/datum/electronics/scanned_item/O = ruck_controls.scan_in(tempobj.name,tempobj.type,tempobj.mats)
+				if(O)
+					upload_blueprint(O, "TRANSRKIT", 1)
 				SPAWN_DBG(4 SECONDS)
 					qdel(tempobj)
 				S.scanned -= X
@@ -674,18 +718,18 @@
 			if("lock")
 				if(href_list["op"])
 					var/datum/electronics/scanned_item/O = locate(href_list["op"]) in ruck_controls.scanned_items
-					//O.locked = !O.locked
-					SPAWN_DBG(0.5 SECONDS)
+					O.locked = !O.locked
+					updateDialog()
+					SPAWN_DBG(0.5 SECONDS) //Lock the blueprint on the other kits
 						var/datum/signal/newsignal = get_free_signal()
 						newsignal.source = src
 						newsignal.transmission_method = TRANSMISSION_RADIO
 						newsignal.data["address_1"] = "TRANSRKIT"
 						newsignal.data["acc_code"] = netpass_heads
-						newsignal.data["lock"] = !O.locked
+						newsignal.data["lock"] = O.locked
 						newsignal.data["data"] = O.name
 						newsignal.data["sender"] = src.net_id
 						radio_connection.post_signal(src, newsignal)
-						updateDialog()
 
 	else
 		usr.Browse(null, "window=rkit")

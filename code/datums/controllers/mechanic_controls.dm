@@ -20,7 +20,7 @@ var/datum/mechanic_controller/mechanic_controls
 			S.create_partslist(matscopy)
 			S.create_blueprint(matscopy)
 			src.scanned_items += S
-			return 1
+			return S
 
 /datum/electronics/scanned_item
 	var/name = "Unknown"
