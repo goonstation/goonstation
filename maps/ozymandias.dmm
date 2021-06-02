@@ -1246,6 +1246,13 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/airless/engine,
 /area/listeningpost)
+"asc" = (
+/obj/wingrille_spawn/auto,
+/obj/disposalpipe/segment{
+	name = "factory pipe"
+	},
+/turf/simulated/floor/plating,
+/area/ghostdrone_factory)
 "asi" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -2330,6 +2337,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"aIE" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/plating/jen,
+/area/ghostdrone_factory)
 "aIF" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -4218,11 +4229,10 @@
 	},
 /area/station/maintenance/southwest)
 "bjc" = (
-/obj/disposalpipe/segment/vertical,
-/obj/decal/fakeobjects/pipe/heat{
-	dir = 10
+/obj/machinery/conveyor/north{
+	id = "ghostdrone"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/circuit/red,
 /area/ghostdrone_factory)
 "bjg" = (
 /obj/table/auto,
@@ -5975,10 +5985,6 @@
 	dir = 4
 	},
 /area/station/medical/staff)
-"bLA" = (
-/obj/disposalpipe/block_sensing_outlet/west,
-/turf/simulated/floor/plating,
-/area/ghostdrone_factory)
 "bLI" = (
 /turf/simulated/floor/carpet/blue/fancy/junction/ne_w,
 /area/station/chapel/sanctuary)
@@ -7530,6 +7536,13 @@
 	},
 /turf/simulated/floor/grey/side,
 /area/station/medical/staff)
+"cit" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	id = "drone_launcher"
+	},
+/turf/simulated/floor/caution/west,
+/area/ghostdrone_factory)
 "cix" = (
 /obj/cable{
 	d1 = 1;
@@ -7571,6 +7584,11 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
+"cjm" = (
+/obj/table/reinforced/auto,
+/obj/item/sheet/glass/fullstack,
+/turf/simulated/floor/airless/white/grime,
+/area/ghostdrone_factory)
 "cjp" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor/plating,
@@ -7840,11 +7858,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/storage)
-"cmg" = (
-/obj/machinery/launcher_loader/north,
-/obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/caution/corner/sw,
-/area/ghostdrone_factory)
 "cmm" = (
 /obj/stool/chair,
 /obj/cable{
@@ -8214,6 +8227,10 @@
 /obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
+"crA" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/engine/caution/west,
+/area/ghostdrone_factory)
 "crL" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/grey/side,
@@ -9126,6 +9143,14 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/medical)
+"cGN" = (
+/obj/wingrille_spawn/auto,
+/obj/disposalpipe/segment{
+	dir = 4;
+	name = "factory pipe"
+	},
+/turf/simulated/floor/plating,
+/area/ghostdrone_factory)
 "cGR" = (
 /obj/machinery/light{
 	dir = 4;
@@ -9521,6 +9546,16 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"cMZ" = (
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c";
+	name = "factory pipe"
+	},
+/obj/table/reinforced/auto,
+/obj/item/sheet/glass/fullstack,
+/turf/simulated/floor/airless/white/grime,
+/area/ghostdrone_factory)
 "cNc" = (
 /obj/item/storage/wall/emergency{
 	dir = 8;
@@ -10240,10 +10275,6 @@
 	},
 /turf/space,
 /area/space)
-"cWc" = (
-/obj/disposalpipe/segment/bent/south,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/ghostdrone_factory)
 "cWo" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -10380,10 +10411,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/storage/tech)
-"cXQ" = (
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/plating,
-/area/ghostdrone_factory)
 "cXW" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -11596,6 +11623,14 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/chapel/office)
+"dpS" = (
+/obj/disposalpipe/trunk{
+	dir = 8;
+	name = "factory pipe"
+	},
+/obj/machinery/floorflusher/industrial,
+/turf/simulated/floor/engine,
+/area/ghostdrone_factory)
 "dqa" = (
 /obj/machinery/light,
 /turf/simulated/floor/yellow/checker,
@@ -12847,9 +12882,16 @@
 /turf/simulated/floor,
 /area/station/security/equipment)
 "dHB" = (
-/obj/decal/fakeobjects/pipe/heat,
-/obj/machinery/door/airlock/pyro/classic,
-/turf/simulated/floor/plating,
+/obj/disposalpipe/segment{
+	name = "factory pipe"
+	},
+/obj/table/reinforced/auto,
+/obj/item/sheet/steel/reinforced/fullstack,
+/obj/item/light/tube,
+/obj/item/light/tube,
+/obj/item/light/bulb,
+/obj/item/light/bulb,
+/turf/simulated/floor/plating/jen,
 /area/ghostdrone_factory)
 "dHD" = (
 /obj/machinery/light,
@@ -13786,8 +13828,8 @@
 /area/station/hallway/primary/west)
 "dUA" = (
 /obj/machinery/chem_dispenser/alcohol,
-/obj/decal/xmas_lights/ephemeral{
-	pixel_y = 32
+/obj/decal/poster/wallsign/framed_award/mdlicense{
+	pixel_y = 26
 	},
 /turf/simulated/floor/black,
 /area/station/medical/head)
@@ -14284,6 +14326,14 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
+"ecf" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c";
+	name = "factory pipe"
+	},
+/turf/simulated/floor/airless/white/grime,
+/area/ghostdrone_factory)
 "ecv" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -17752,14 +17802,9 @@
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters/market)
 "fch" = (
-/obj/table/reinforced/auto,
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 20
-	},
-/obj/item/paper/book/from_file/pharmacopia,
-/turf/simulated/floor/white,
-/area/station/medical/cdc)
+/obj/machinery/power/solar,
+/turf/simulated/floor/airless/solar,
+/area/ghostdrone_factory)
 "fcl" = (
 /obj/cable{
 	d1 = 4;
@@ -17863,6 +17908,19 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/north)
+"feE" = (
+/obj/table/reinforced/auto,
+/obj/item/sheet/steel/fullstack,
+/obj/item/light/tube,
+/obj/item/light/tube,
+/obj/item/light/bulb,
+/obj/item/light/bulb,
+/turf/simulated/floor/plating/jen,
+/area/ghostdrone_factory)
+"feL" = (
+/obj/machinery/power/tracker,
+/turf/simulated/floor/airless/solar,
+/area/ghostdrone_factory)
 "feS" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/disposalpipe/segment/transport{
@@ -18614,6 +18672,10 @@
 /obj/machinery/navbeacon/mule/crewA_north/east,
 /turf/simulated/floor/bot,
 /area/station/hallway/primary/west)
+"fpD" = (
+/obj/machinery/launcher_loader/east,
+/turf/simulated/floor/plating/jen,
+/area/ghostdrone_factory)
 "fpO" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -19177,13 +19239,8 @@
 /turf/simulated/floor/darkblue,
 /area/station/storage/eva)
 "fxv" = (
-/obj/machinery/ghostdrone_factory,
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "ghostdrone_cuba";
-	operating = 1
-	},
-/turf/simulated/floor/circuit/red,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/airless/engine,
 /area/ghostdrone_factory)
 "fxy" = (
 /obj/roulette_table_w,
@@ -19935,6 +19992,17 @@
 	dir = 1
 	},
 /area/station/engine/elect)
+"fIe" = (
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c";
+	name = "factory pipe"
+	},
+/obj/decal/fakeobjects/airmonitor_broken{
+	pixel_y = 20
+	},
+/turf/simulated/floor/airless/white/grime,
+/area/ghostdrone_factory)
 "fIp" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/wreath/ephemeral,
@@ -20153,10 +20221,7 @@
 /turf/simulated/floor/caution/north,
 /area/station/engine/hotloop)
 "fLM" = (
-/obj/machinery/shuttle/engine/propulsion{
-	icon_state = "alt_propulsion"
-	},
-/turf/space,
+/turf/simulated/floor/airless/engine/caution/south,
 /area/ghostdrone_factory)
 "fLN" = (
 /obj/cable{
@@ -24051,6 +24116,15 @@
 	},
 /turf/simulated/floor/stairs/wood,
 /area/station/crew_quarters/arcade)
+"gMO" = (
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/item/device/radio/intercom/science,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/hor{
+	name = "Research Director's Office"
+	})
 "gMQ" = (
 /obj/stool/chair/couch{
 	desc = "It's comfortable, but has an aura of unease about it, like somebody's watching you the moment you sit down.";
@@ -24296,6 +24370,15 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/medical/staff)
+"gPL" = (
+/obj/table/reinforced/auto,
+/obj/item/sheet/glass/reinforced/fullstack,
+/obj/item/light/tube,
+/obj/item/light/tube,
+/obj/item/light/bulb,
+/obj/item/light/bulb,
+/turf/simulated/floor/plating/jen,
+/area/ghostdrone_factory)
 "gPV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -24418,6 +24501,9 @@
 	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/lobby)
+"gSd" = (
+/turf/simulated/floor/stairs/quilty/wide,
+/area/ghostdrone_factory)
 "gSh" = (
 /obj/machinery/neosmelter,
 /obj/machinery/light/small{
@@ -24706,6 +24792,11 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
+"gWj" = (
+/turf/simulated/floor/engine/caution/misc{
+	dir = 6
+	},
+/area/ghostdrone_factory)
 "gWt" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -25598,8 +25689,12 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "hhQ" = (
-/obj/machinery/drone_recharger/factory,
-/turf/simulated/floor/plating,
+/obj/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c";
+	name = "factory pipe"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/ghostdrone_factory)
 "hii" = (
 /obj/machinery/shower{
@@ -25761,16 +25856,6 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/horizontal,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
-"hjH" = (
-/obj/decal/fakeobjects{
-	density = 1;
-	desc = "This looks inordinately fancy for an abandoned ship.";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "engineoff";
-	name = "Active Particle Phase Matrix"
-	},
-/turf/simulated/floor/circuit/red,
-/area/ghostdrone_factory)
 "hjJ" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -26818,15 +26903,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
-"hxn" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "ghostboye";
-	name = "drone dispersal cannon"
-	},
-/obj/disposalpipe/segment/bent/south,
-/turf/simulated/floor/caution/west,
-/area/ghostdrone_factory)
 "hxq" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/plating,
@@ -27689,14 +27765,10 @@
 /turf/simulated/floor/white,
 /area/station/science/lobby)
 "hLk" = (
-/obj/table/reinforced/auto,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/decal/xmas_lights/ephemeral{
-	pixel_y = 32
+/turf/simulated/floor/airless/engine/caution/corner{
+	dir = 8
 	},
-/turf/simulated/floor/carpet/green/fancy/edge/nw,
-/area/station/crew_quarters/courtroom)
+/area/ghostdrone_factory)
 "hLE" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -29053,10 +29125,11 @@
 	},
 /area/station/medical/medbay/surgery)
 "igK" = (
-/obj/machinery/door/airlock/pyro/classic{
-	dir = 4
+/obj/disposalpipe/segment{
+	name = "factory pipe"
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/plating/jen,
 /area/ghostdrone_factory)
 "igN" = (
 /obj/machinery/door/airlock/pyro{
@@ -29504,11 +29577,7 @@
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/core)
 "imU" = (
-/obj/disposalpipe/segment/vertical,
-/obj/decal/fakeobjects/pipe/heat{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/airless/engine/caution/north,
 /area/ghostdrone_factory)
 "ina" = (
 /obj/grille/catwalk,
@@ -30025,6 +30094,20 @@
 "iwf" = (
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/station/crew_quarters/quartersA)
+"iwn" = (
+/obj/disposalpipe/segment{
+	name = "factory pipe"
+	},
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/item/paper{
+	info = "They won't tell us how exactly this factory works, but I swear every once and a while I feel a faint breeze on me. There's something fishy about this place. James and I are probably going to ditch this place. Backwater assignment anyways, nobody will notice.";
+	name = "Scrawled Note"
+	},
+/obj/random_item_spawner/desk_stuff,
+/turf/simulated/floor/airless/white/grime,
+/area/ghostdrone_factory)
 "iwp" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/detectives_office)
@@ -32343,6 +32426,19 @@
 /obj/machinery/atmospherics/pipe/manifold/overfloor/east,
 /turf/simulated/floor/redblack,
 /area/station/engine/hotloop)
+"jcP" = (
+/obj/disposalpipe/junction{
+	dir = 4;
+	name = "factory pipe"
+	},
+/obj/table/reinforced/auto,
+/obj/item/sheet/glass/reinforced/fullstack,
+/obj/item/light/tube,
+/obj/item/light/tube,
+/obj/item/light/bulb,
+/obj/item/light/bulb,
+/turf/simulated/floor/plating/jen,
+/area/ghostdrone_factory)
 "jcR" = (
 /turf/simulated/floor/carpet/green/fancy/innercorner/west,
 /area/station/crew_quarters/hop)
@@ -32694,12 +32790,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "jhN" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "ghostdrone_cuba";
-	operating = 1
-	},
-/turf/simulated/floor/circuit/red,
+/turf/simulated/floor/airless/engine/caution/west,
 /area/ghostdrone_factory)
 "jhT" = (
 /obj/cable{
@@ -33631,6 +33722,12 @@
 "jvc" = (
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
+"jvr" = (
+/obj/disposalpipe/segment{
+	name = "factory pipe"
+	},
+/turf/simulated/floor/stairs/quilty/wide,
+/area/ghostdrone_factory)
 "jvA" = (
 /obj/table/auto,
 /obj/item/storage/box/plates,
@@ -34756,6 +34853,20 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
+"jKp" = (
+/obj/disposalpipe/segment{
+	name = "factory pipe"
+	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	name = "factory pipe"
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/airless/white/grime,
+/area/ghostdrone_factory)
 "jKq" = (
 /obj/item/storage/wall/medical,
 /turf/simulated/wall/auto/shuttle{
@@ -34865,6 +34976,11 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/garden/aviary)
+"jLL" = (
+/turf/simulated/floor/airless/engine/caution/corner{
+	dir = 1
+	},
+/area/ghostdrone_factory)
 "jMa" = (
 /obj/lattice{
 	dir = 4;
@@ -36289,12 +36405,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
-"keL" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-L"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/ghostdrone_factory)
 "keM" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/cable{
@@ -38235,6 +38345,24 @@
 	dir = 4
 	},
 /area/station/crew_quarters/lounge/research)
+"kHx" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	id = "drone_launcher"
+	},
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "drone_launcher";
+	name = "Launcher Door"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 8;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/caution/east,
+/area/ghostdrone_factory)
 "kHz" = (
 /obj/machinery/atmospherics/binary/volume_pump{
 	dir = 1;
@@ -39295,6 +39423,18 @@
 /obj/machinery/vehicle/pod_smooth/light,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
+"kYb" = (
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c";
+	name = "factory pipe"
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/airless/white/grime,
+/area/ghostdrone_factory)
 "kYf" = (
 /obj/machinery/light/small,
 /obj/submachine/chef_sink/chem_sink{
@@ -39803,6 +39943,12 @@
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"leE" = (
+/obj/machinery/conveyor/west{
+	id = "ghostdrone"
+	},
+/turf/simulated/floor/circuit/red,
+/area/ghostdrone_factory)
 "leF" = (
 /obj/machinery/sleeper{
 	dir = 4
@@ -39961,8 +40107,7 @@
 /turf/simulated/floor/engine,
 /area/station/storage/warehouse)
 "lhP" = (
-/obj/disposalpipe/segment/vertical,
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor/engine/caution/north,
 /area/ghostdrone_factory)
 "lhV" = (
 /obj/cable{
@@ -40023,6 +40168,9 @@
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
+	},
+/obj/item/pen/crayon/golden{
+	pixel_y = -11
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/west,
 /area/station/crew_quarters/hop)
@@ -41399,6 +41547,16 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/lab)
+"lCp" = (
+/obj/disposalpipe/segment{
+	name = "factory pipe"
+	},
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/item/paper/book/from_file/the_trial,
+/turf/simulated/floor/airless/white/grime,
+/area/ghostdrone_factory)
 "lCq" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -42457,6 +42615,10 @@
 	pixel_y = -64
 	},
 /area/shuttle/arrival/station)
+"lOl" = (
+/obj/item/peripheral/videocard,
+/turf/simulated/floor/engine/caution/east,
+/area/ghostdrone_factory)
 "lOz" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor/east,
 /obj/machinery/meter,
@@ -44621,9 +44783,8 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/item/device/radio/intercom/science,
-/obj/decal/xmas_lights/ephemeral{
-	pixel_y = 32
+/obj/decal/poster/wallsign/framed_award/rddiploma{
+	pixel_y = 26
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor/horprivate)
@@ -44811,6 +44972,12 @@
 /area/station/crew_quarters/info{
 	name = "Book Nook"
 	})
+"mtf" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 8
+	},
+/area/ghostdrone_factory)
 "mth" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -45397,6 +45564,9 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"mBd" = (
+/turf/simulated/floor/airless/engine/caution/corner,
+/area/ghostdrone_factory)
 "mBp" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -45511,9 +45681,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "mCz" = (
-/obj/disposalpipe/segment/bent/west,
-/obj/decal/fakeobjects/pipe/heat,
-/turf/simulated/floor/plating,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/airless/engine/caution/north,
 /area/ghostdrone_factory)
 "mCD" = (
 /obj/machinery/light{
@@ -47577,13 +47746,9 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "nhP" = (
-/obj/machinery/ghostdrone_factory/part3,
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "ghostdrone_cuba";
-	operating = 1
+/turf/simulated/floor/airless/engine/caution/corner{
+	dir = 4
 	},
-/turf/simulated/floor/circuit/red,
 /area/ghostdrone_factory)
 "nhQ" = (
 /obj/table/auto,
@@ -47830,6 +47995,13 @@
 	},
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/engine/proto)
+"nle" = (
+/obj/machinery/conveyor/west{
+	id = "ghostdrone"
+	},
+/obj/machinery/ghostdrone_factory/part3,
+/turf/simulated/floor/circuit/red,
+/area/ghostdrone_factory)
 "nll" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/cable{
@@ -49614,20 +49786,17 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "nKa" = (
-/obj/machinery/drone_recharger/factory,
-/obj/decal/fakeobjects/pipe/heat{
-	dir = 10
+/obj/disposalpipe/segment{
+	dir = 4;
+	name = "factory pipe"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/engine/caution/west,
 /area/ghostdrone_factory)
 "nKh" = (
-/obj/decal/fakeobjects/pipe/heat{
-	dir = 4
+/obj/disposalpipe/segment{
+	name = "factory pipe"
 	},
-/obj/stool/chair{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/ghostdrone_factory)
 "nKr" = (
 /obj/machinery/door/airlock/pyro/maintenance,
@@ -49763,6 +49932,11 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
+"nMO" = (
+/turf/simulated/floor/airless/engine/caution/corner2{
+	dir = 6
+	},
+/area/ghostdrone_factory)
 "nMT" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -50016,12 +50190,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"nPN" = (
-/obj/decal/fakeobjects/pipe/heat{
-	dir = 9
-	},
-/turf/simulated/floor/plating,
-/area/ghostdrone_factory)
 "nPS" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/black/grime,
@@ -50518,9 +50686,9 @@
 /turf/simulated/floor/airless/black,
 /area/space)
 "nWT" = (
-/obj/disposalpipe/segment/horizontal,
-/obj/decal/fakeobjects/pipe/heat,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/airless/engine/caution/corner2{
+	dir = 9
+	},
 /area/ghostdrone_factory)
 "nWW" = (
 /obj/storage/secure/crate/plasma{
@@ -50671,6 +50839,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"nYQ" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	name = "factory pipe"
+	},
+/turf/simulated/floor/engine/caution/north,
+/area/ghostdrone_factory)
 "nYW" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/machinery/camera{
@@ -51753,6 +51928,19 @@
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
+"oml" = (
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "This looks inordinately fancy for an abandoned ship.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "Active Particle Phase Matrix"
+	},
+/obj/disposalpipe/segment{
+	name = "factory pipe"
+	},
+/turf/simulated/floor/plating/jen,
+/area/ghostdrone_factory)
 "omA" = (
 /obj/machinery/networked/teleconsole{
 	dir = 4
@@ -52236,13 +52424,8 @@
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "otu" = (
-/obj/table/auto,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/plating,
+/obj/disposalpipe/block_sensing_outlet/east,
+/turf/simulated/floor/plating/jen,
 /area/ghostdrone_factory)
 "otH" = (
 /obj/machinery/door/airlock/pyro/engineering{
@@ -52633,6 +52816,12 @@
 /obj/loudspeaker,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
+"oyw" = (
+/obj/decal/fakeobjects/apc_broken{
+	pixel_y = 28
+	},
+/turf/simulated/floor/airless/white/grime,
+/area/ghostdrone_factory)
 "oyV" = (
 /turf/simulated/floor,
 /area/station/hangar/qm)
@@ -53913,6 +54102,10 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/bridge)
+"oRD" = (
+/obj/disposalpipe/block_sensing_outlet/west,
+/turf/simulated/floor/plating/jen,
+/area/ghostdrone_factory)
 "oRF" = (
 /obj/stool/chair/office/yellow{
 	dir = 8
@@ -54214,8 +54407,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "oWA" = (
-/obj/disposalpipe/segment/bent/east,
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor/airless/engine/caution/corner2{
+	dir = 5
+	},
 /area/ghostdrone_factory)
 "oWB" = (
 /obj/table/reinforced/auto,
@@ -56256,6 +56450,14 @@
 	},
 /turf/simulated/floor,
 /area/listeningpost)
+"pAQ" = (
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c";
+	name = "factory pipe"
+	},
+/turf/simulated/floor/engine/caution/north,
+/area/ghostdrone_factory)
 "pAT" = (
 /obj/machinery/vending/alcohol,
 /obj/machinery/light/small{
@@ -56937,12 +57139,8 @@
 	},
 /area/station/security/equipment)
 "pKU" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "ghostdrone_cuba";
-	operating = 1
-	},
-/turf/simulated/floor/circuit/red,
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/airless/white/grime,
 /area/ghostdrone_factory)
 "pLd" = (
 /obj/decal/cleanable/cobweb{
@@ -57112,6 +57310,15 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/private)
+"pMV" = (
+/obj/table/reinforced/auto,
+/obj/item/sheet/steel/reinforced/fullstack,
+/obj/item/light/tube,
+/obj/item/light/tube,
+/obj/item/light/bulb,
+/obj/item/light/bulb,
+/turf/simulated/floor/plating/jen,
+/area/ghostdrone_factory)
 "pNh" = (
 /obj/machinery/computer/atmosphere/mixercontrol{
 	frequency = 1225;
@@ -58491,6 +58698,16 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
+"qhN" = (
+/obj/table/reinforced/auto,
+/obj/item/rods/steel/fullstack{
+	pixel_x = 6
+	},
+/obj/item/rods/steel/fullstack{
+	pixel_x = -6
+	},
+/turf/simulated/floor/caution/west,
+/area/ghostdrone_factory)
 "qix" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -58748,6 +58965,14 @@
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/west)
+"qmm" = (
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c";
+	name = "factory pipe"
+	},
+/turf/simulated/floor/plating/jen,
+/area/ghostdrone_factory)
 "qmo" = (
 /turf/simulated/floor/caution/corner/ne,
 /area/station/hangar/main)
@@ -59537,6 +59762,12 @@
 /area/station/crew_quarters/hor{
 	name = "Research Director's Office"
 	})
+"qxi" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 4
+	},
+/area/ghostdrone_factory)
 "qxn" = (
 /obj/machinery/shieldgenerator/energy_shield,
 /obj/machinery/light/small{
@@ -60625,6 +60856,14 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
+"qMf" = (
+/obj/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c";
+	name = "factory pipe"
+	},
+/turf/simulated/floor/engine/caution/north,
+/area/ghostdrone_factory)
 "qMu" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right{
@@ -61159,8 +61398,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
 "qSG" = (
-/obj/disposalpipe/junction/middle/north,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/airless/engine/caution/east,
 /area/ghostdrone_factory)
 "qSK" = (
 /obj/decal/xmas_lights/ephemeral{
@@ -61534,10 +61772,11 @@
 	},
 /area/station/quartermaster/office)
 "qWR" = (
-/obj/decal/fakeobjects/pipe/heat{
-	dir = 4
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/airless/white/grime,
 /area/ghostdrone_factory)
 "qXk" = (
 /obj/machinery/door/airlock/pyro{
@@ -62438,6 +62677,10 @@
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
 /area/station/quartermaster/office)
+"rkv" = (
+/obj/item/wrench,
+/turf/simulated/floor/engine/caution/north,
+/area/ghostdrone_factory)
 "rkB" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -63824,13 +64067,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment)
 "rCW" = (
-/obj/item/peripheral/videocard,
-/obj/item/wrench,
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/airless/white/grime,
 /area/ghostdrone_factory)
 "rDa" = (
 /obj/wingrille_spawn/auto,
@@ -64941,6 +65178,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"rRZ" = (
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 15;
+	pixel_y = 9
+	},
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/burger/moldy,
+/turf/simulated/floor/airless/white/grime,
+/area/ghostdrone_factory)
 "rSe" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -65921,6 +66170,9 @@
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"seX" = (
+/turf/simulated/floor/engine,
+/area/ghostdrone_factory)
 "sfh" = (
 /obj/machinery/computer/riotgear{
 	pixel_y = 32
@@ -66108,10 +66360,7 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "siU" = (
-/obj/machinery/door/poddoor/blast/single{
-	id = "ghostboye"
-	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/jen,
 /area/ghostdrone_factory)
 "sjo" = (
 /obj/machinery/firealarm{
@@ -67252,15 +67501,11 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "swZ" = (
-/obj/machinery/floorflusher/industrial,
-/obj/disposalpipe/trunk{
-	dir = 4
-	},
 /obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
+	dir = 4;
+	pixel_x = 12
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/airless/white/grime,
 /area/ghostdrone_factory)
 "sxd" = (
 /obj/npc/trader/exclown{
@@ -68585,6 +68830,9 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/north)
+"sOc" = (
+/turf/simulated/floor/engine/caution/east,
+/area/ghostdrone_factory)
 "sOf" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor/west,
 /obj/machinery/meter,
@@ -68743,6 +68991,10 @@
 /obj/item/tank/jetpack,
 /turf/simulated/floor/darkblue,
 /area/station/storage/eva)
+"sQd" = (
+/obj/machinery/ghost_catcher,
+/turf/simulated/floor/circuit/red,
+/area/ghostdrone_factory)
 "sQf" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -69576,8 +69828,8 @@
 /turf/simulated/floor/caution/east,
 /area/station/hangar/engine)
 "sZL" = (
-/obj/disposalpipe/block_sensing_outlet/east,
-/turf/simulated/floor/plating,
+/obj/decal/fakeobjects/cpucontroller,
+/turf/simulated/floor/airless/white/grime,
 /area/ghostdrone_factory)
 "sZO" = (
 /obj/storage/crate,
@@ -71429,10 +71681,12 @@
 	},
 /area/station/hallway/primary/east)
 "twc" = (
-/obj/disposalpipe/type_sensing_outlet/drone_factory{
-	dir = 4
+/obj/decal/fakeobjects/vacuumtape,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor/airless/white/grime,
 /area/ghostdrone_factory)
 "twg" = (
 /obj/machinery/light/small{
@@ -71828,6 +72082,9 @@
 	dir = 4;
 	pixel_x = -20
 	},
+/obj/decal/poster/wallsign/framed_award/firstbill{
+	pixel_y = 26
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hop)
 "tBB" = (
@@ -71980,8 +72237,8 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
 "tDD" = (
-/obj/machinery/door/airlock/pyro/classic,
-/turf/simulated/floor/plating,
+/obj/decal/fakeobjects/vacuumtape,
+/turf/simulated/floor/airless/white/grime,
 /area/ghostdrone_factory)
 "tDE" = (
 /turf/simulated/floor/caution/corner/se,
@@ -72641,10 +72898,7 @@
 	},
 /area/station/solar/west)
 "tNw" = (
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-R"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor/airless/engine,
 /area/ghostdrone_factory)
 "tNy" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
@@ -72841,13 +73095,7 @@
 /turf/simulated/floor/yellow/checker,
 /area/station/routing/engine)
 "tQq" = (
-/obj/machinery/ghostdrone_factory/part2,
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "ghostdrone_cuba";
-	operating = 1
-	},
-/turf/simulated/floor/circuit/red,
+/turf/simulated/floor/airless/solar,
 /area/ghostdrone_factory)
 "tQr" = (
 /obj/machinery/camera{
@@ -73148,6 +73396,11 @@
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"tUk" = (
+/turf/simulated/floor/airless/engine/caution/corner2{
+	dir = 10
+	},
+/area/ghostdrone_factory)
 "tUl" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -75592,8 +75845,8 @@
 	},
 /area/station/hallway/secondary/west)
 "uAU" = (
-/obj/decal/fakeobjects/pipe/heat,
-/turf/simulated/floor/plating,
+/obj/machinery/drone_recharger/factory,
+/turf/simulated/floor/plating/jen,
 /area/ghostdrone_factory)
 "uAV" = (
 /obj/machinery/camera/television{
@@ -77290,6 +77543,13 @@
 	dir = 1
 	},
 /area/station/science/lobby)
+"uWC" = (
+/obj/machinery/conveyor/west{
+	id = "ghostdrone"
+	},
+/obj/machinery/ghostdrone_factory/part2,
+/turf/simulated/floor/circuit/red,
+/area/ghostdrone_factory)
 "uWK" = (
 /obj/cable{
 	d2 = 8;
@@ -77887,6 +78147,12 @@
 /obj/machinery/vehicle/miniputt/indyputt/armed,
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/refinery)
+"vdM" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/engine/caution/misc{
+	dir = 6
+	},
+/area/ghostdrone_factory)
 "vdQ" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
@@ -78451,6 +78717,11 @@
 	dir = 4
 	},
 /area/station/hallway/primary/east)
+"vma" = (
+/turf/simulated/floor/stairs/quilty/wide{
+	dir = 6
+	},
+/area/ghostdrone_factory)
 "vmd" = (
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -79626,6 +79897,14 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
+"vAi" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c";
+	name = "factory pipe"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/ghostdrone_factory)
 "vAl" = (
 /obj/machinery/atmospherics/pipe/manifold/south,
 /turf/simulated/floor/grey,
@@ -80354,10 +80633,18 @@
 	name = "Chapel Reception"
 	})
 "vIq" = (
-/obj/decal/fakeobjects/pipe/heat{
-	dir = 5
+/obj/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c";
+	name = "factory pipe"
 	},
-/turf/simulated/floor/plating,
+/obj/table/reinforced/auto,
+/obj/item/sheet/steel/fullstack,
+/obj/item/light/tube,
+/obj/item/light/tube,
+/obj/item/light/bulb,
+/obj/item/light/bulb,
+/turf/simulated/floor/plating/jen,
 /area/ghostdrone_factory)
 "vIr" = (
 /obj/machinery/door/airlock/pyro{
@@ -82914,6 +83201,16 @@
 	icon_state = "3"
 	},
 /area/shuttle/arrival/station)
+"wqD" = (
+/obj/table/reinforced/auto,
+/obj/item/rods/steel/fullstack{
+	pixel_x = -6
+	},
+/obj/item/rods/steel/fullstack{
+	pixel_x = 6
+	},
+/turf/simulated/floor/caution/west,
+/area/ghostdrone_factory)
 "wqE" = (
 /obj/machinery/shower{
 	dir = 8;
@@ -83300,8 +83597,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/exit)
 "wvD" = (
-/obj/disposalpipe/segment/bent/north,
-/turf/simulated/wall/auto/reinforced/supernorn,
+/obj/disposalpipe/segment{
+	name = "factory pipe"
+	},
+/turf/simulated/floor/plating/jen,
 /area/ghostdrone_factory)
 "wvI" = (
 /obj/shrub{
@@ -85354,6 +85653,10 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/green,
 /area/station/crewquarters/garbagegarbs)
+"wTG" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating/jen,
+/area/ghostdrone_factory)
 "wTM" = (
 /obj/storage/closet/wardrobe/red/security_gimmick,
 /obj/machinery/light{
@@ -85631,11 +85934,19 @@
 /turf/simulated/floor/engine/caution/corner,
 /area/station/engine/engineering)
 "wXJ" = (
-/obj/cable{
-	icon_state = "1-4"
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c";
+	name = "factory pipe"
 	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/hor/horprivate)
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/table/reinforced/auto,
+/obj/item/sheet/steel/fullstack,
+/turf/simulated/floor/airless/white/grime,
+/area/ghostdrone_factory)
 "wXX" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -86467,6 +86778,12 @@
 /obj/machinery/optable,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
+"xif" = (
+/obj/machinery/door/airlock/pyro/sci_alt{
+	dir = 4
+	},
+/turf/simulated/floor/airless/white/grime,
+/area/ghostdrone_factory)
 "xip" = (
 /obj/cable{
 	icon_state = "5-8"
@@ -87164,6 +87481,14 @@
 "xqT" = (
 /turf/simulated/floor,
 /area/station/hangar/main)
+"xqU" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	name = "factory pipe"
+	},
+/obj/stool/chair/comfy,
+/turf/simulated/floor/airless/white/grime,
+/area/ghostdrone_factory)
 "xqX" = (
 /obj/table/reinforced/bar/auto,
 /turf/simulated/floor/specialroom/bar/edge,
@@ -87608,7 +87933,7 @@
 /area/station/engine/storage)
 "xwx" = (
 /obj/wingrille_spawn/auto,
-/obj/window_blinds/cog2/right,
+/obj/window_blinds/cog2,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hop)
 "xwM" = (
@@ -88648,10 +88973,11 @@
 	},
 /area/station/medical/medbay/pharmacy)
 "xJw" = (
-/obj/decal/fakeobjects/pipe/heat{
-	dir = 10
+/obj/disposalpipe/segment{
+	dir = 4;
+	name = "factory pipe"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/airless/white/grime,
 /area/ghostdrone_factory)
 "xJF" = (
 /obj/table/auto,
@@ -89320,6 +89646,13 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor/greenblack,
 /area/station/storage/warehouse)
+"xRQ" = (
+/obj/machinery/ghostdrone_factory,
+/obj/machinery/conveyor/west{
+	id = "ghostdrone"
+	},
+/turf/simulated/floor/circuit/red,
+/area/ghostdrone_factory)
 "xRR" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -89912,6 +90245,10 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"xZD" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/ghostdrone_factory)
 "xZL" = (
 /obj/item/storage/toilet,
 /obj/machinery/light/small{
@@ -90148,6 +90485,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
+"ycH" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/table/reinforced/auto,
+/obj/item/sheet/steel/fullstack,
+/turf/simulated/floor/airless/white/grime,
+/area/ghostdrone_factory)
 "ycN" = (
 /turf/simulated/floor,
 /area/station/storage/warehouse)
@@ -90432,8 +90778,14 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/lounge/research)
 "yfH" = (
-/obj/machinery/ghost_catcher,
-/turf/simulated/floor/circuit/red,
+/obj/machinery/door/airlock/pyro/sci_alt{
+	dir = 4
+	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	name = "factory pipe"
+	},
+/turf/simulated/floor/airless/white/grime,
 /area/ghostdrone_factory)
 "yfM" = (
 /obj/cable{
@@ -94398,10 +94750,10 @@ aJu
 aJu
 aJu
 aJu
-hYl
-qTl
-ydz
-iOi
+aJu
+aJu
+aJu
+aJu
 aJu
 aJu
 aJu
@@ -94694,16 +95046,16 @@ aJu
 aJu
 aJu
 aJu
-hYl
-ydz
-qTl
-iOi
 aJu
-jWJ
-jWJ
-jWJ
-keL
-fLM
+aJu
+aJu
+aJu
+aJu
+aJu
+aJu
+aJu
+aJu
+aJu
 aJu
 aJu
 aJu
@@ -94997,15 +95349,15 @@ aJu
 aJu
 aJu
 aJu
-jWJ
-jWJ
-jWJ
-jWJ
-jWJ
-swZ
-pKU
-tNw
-fLM
+aJu
+aJu
+aJu
+aJu
+aJu
+aJu
+aJu
+aJu
+aJu
 aJu
 aJu
 aJu
@@ -95292,24 +95644,24 @@ aJu
 aJu
 aJu
 aJu
-hYl
-qTl
-iOi
+aJu
 aJu
 jWJ
-oWA
-twc
-lhP
-sZL
-lhP
-sZL
-imU
-qSG
-nhP
 jWJ
 jWJ
-qTl
-iOi
+jWJ
+jWJ
+jWJ
+jWJ
+aJu
+aJu
+aJu
+aJu
+aJu
+aJu
+aJu
+aJu
+aJu
 aJu
 aJu
 aJu
@@ -95593,24 +95945,24 @@ aJu
 aJu
 aJu
 aJu
-aJu
-aJu
 jWJ
 jWJ
-jWJ
-jWJ
+vAi
+nKh
 otu
 nKh
-jWJ
+otu
+nKh
+otu
 hhQ
 jWJ
-hhQ
-qWR
-cXQ
-jhN
-hjH
 jWJ
-xGX
+jWJ
+aJu
+aJu
+aJu
+aJu
+aJu
 aJu
 aJu
 aJu
@@ -95891,30 +96243,30 @@ aJu
 aJu
 aJu
 aJu
-aJu
-aJu
-aJu
-hYl
-ydz
+fch
+tQq
+tQq
 jWJ
 jWJ
+wXJ
+cMZ
+jWJ
 uAU
-nPN
-tDD
-cXQ
-xJw
+jWJ
 uAU
+jWJ
 uAU
+jcP
 dHB
 vIq
-xJw
-nWT
-tQq
-hjH
 jWJ
-wCE
-ydz
-iOi
+jWJ
+tQq
+tQq
+fch
+aJu
+aJu
+aJu
 aJu
 aJu
 aJu
@@ -96192,29 +96544,29 @@ aJu
 aJu
 aJu
 aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-jWJ
-jWJ
-igK
-jWJ
-hxn
-cmg
-wvD
-hhQ
-jWJ
-nKa
-vIq
-cXQ
+fch
+tQq
+hLk
 jhN
-hjH
 jWJ
-xGX
+sZL
+xJw
+ecf
+jvr
+igK
+wvD
+wvD
+igK
+wvD
+qmm
+mtf
+nKa
+crA
+jWJ
+jhN
+mBd
+tQq
+fch
 aJu
 aJu
 aJu
@@ -96494,30 +96846,30 @@ aJu
 aJu
 aJu
 aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-hYl
-ygY
-iOi
-aJu
-jWJ
-siU
-jWJ
-cWc
-bLA
-lhP
-bLA
-bjc
-mCz
+tQq
+hLk
+nWT
 fxv
 jWJ
+swZ
+xJw
+xJw
+vma
+siU
+siU
+siU
+wTG
+siU
+siU
+lhP
+dpS
+bjc
 jWJ
-ygY
-iOi
+fxv
+tUk
+mBd
+tQq
+aJu
 aJu
 aJu
 aJu
@@ -96796,29 +97148,29 @@ aJu
 aJu
 aJu
 aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
+tQq
+imU
+tNw
 jWJ
 jWJ
 jWJ
-jWJ
-jWJ
-rCW
 yfH
-keL
+cGN
+xZD
+jWJ
+uAU
+jWJ
+uAU
+jWJ
+uAU
+lhP
+seX
+nle
+jWJ
+jWJ
+tNw
 fLM
-aJu
+tQq
 aJu
 aJu
 aJu
@@ -97098,29 +97450,29 @@ aJu
 aJu
 aJu
 aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-hYl
-ydz
-ygY
-iOi
-aJu
+tQq
+imU
+tNw
 jWJ
+qWR
 jWJ
+fIe
+jKp
+lCp
+asc
+oRD
+oml
+oRD
+oml
+oRD
+qMf
+gWj
+leE
+vdM
 jWJ
 tNw
 fLM
-aJu
+tQq
 aJu
 aJu
 aJu
@@ -97400,29 +97752,29 @@ aJu
 aJu
 aJu
 aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-hYl
-ygY
-ydz
-iOi
-aJu
+tQq
+mCz
+tNw
+pKU
+rCW
+pKU
+rCW
+xqU
+rRZ
+xZD
+aIE
+siU
+siU
+siU
+aIE
+nYQ
+seX
+uWC
+seX
+jWJ
+fxv
+fLM
+feL
 aJu
 aJu
 aJu
@@ -97702,29 +98054,29 @@ aJu
 aJu
 aJu
 aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
+tQq
+imU
+tNw
+jWJ
+swZ
+jWJ
+oyw
+kYb
+iwn
+asc
+otu
+oml
+otu
+oml
+otu
+pAQ
+gWj
+leE
+vdM
+jWJ
+tNw
+fLM
+tQq
 aJu
 aJu
 aJu
@@ -98004,29 +98356,29 @@ aJu
 aJu
 aJu
 aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
+tQq
+imU
+tNw
+jWJ
+jWJ
+jWJ
+xif
+xZD
+xZD
+jWJ
+uAU
+jWJ
+uAU
+jWJ
+uAU
+lhP
+seX
+xRQ
+jWJ
+jWJ
+tNw
+fLM
+tQq
 aJu
 aJu
 aJu
@@ -98306,29 +98658,29 @@ aJu
 aJu
 aJu
 aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
+tQq
+nhP
+oWA
+fxv
+jWJ
+twc
+rCW
+rCW
+gSd
+siU
+wTG
+siU
+siU
+siU
+siU
+rkv
+seX
+sQd
+jWJ
+fxv
+nMO
+jLL
+tQq
 aJu
 aJu
 aJu
@@ -98608,29 +98960,29 @@ aJu
 aJu
 aJu
 aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
+fch
+tQq
+nhP
+qSG
+jWJ
+tDD
+rCW
+rCW
+vma
+aIE
+siU
+siU
+aIE
+siU
+siU
+qxi
+sOc
+lOl
+jWJ
+qSG
+jLL
+tQq
+fch
 aJu
 aJu
 aJu
@@ -98911,27 +99263,27 @@ aJu
 aJu
 aJu
 aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
+fch
+tQq
+tQq
+jWJ
+jWJ
+ycH
+cjm
+jWJ
+siU
+siU
+fpD
+siU
+siU
+gPL
+pMV
+feE
+jWJ
+jWJ
+tQq
+tQq
+fch
 aJu
 aJu
 aJu
@@ -99217,19 +99569,19 @@ aJu
 aJu
 aJu
 aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
+jWJ
+jWJ
+jWJ
+jWJ
+wqD
+jWJ
+cit
+jWJ
+qhN
+jWJ
+jWJ
+jWJ
+jWJ
 aJu
 aJu
 aJu
@@ -99522,13 +99874,13 @@ aJu
 aJu
 aJu
 aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
+jWJ
+jWJ
+jWJ
+kHx
+jWJ
+jWJ
+jWJ
 aJu
 aJu
 aJu
@@ -124349,7 +124701,7 @@ djN
 rUj
 cEC
 dKB
-nEr
+gMO
 qtt
 nEr
 nEr
@@ -143669,7 +144021,7 @@ whA
 wkr
 wIP
 meD
-ooi
+ylM
 tBw
 kPC
 jOb
@@ -149073,7 +149425,7 @@ jeX
 lZH
 mBa
 qHZ
-fch
+fdg
 jtN
 vgU
 rik
