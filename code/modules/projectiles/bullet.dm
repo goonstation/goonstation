@@ -1356,3 +1356,16 @@ toxic - poisons
 	shot_sound = null
 	projectile_speed = 8
 	implanted = null
+
+/datum/projectile/bullet/foamdart
+	name = "foam dart"
+	sname = "foam dart"
+	icon_state = "foamdart"
+	shot_sound = 'sound/effects/syringeproj.ogg'
+	projectile_speed = 20
+	implanted = null
+	power = 0
+	fullauto_valid = 1
+	ks_ratio = 0
+	hit_type = DAMAGE_BLUNT
+	max_range = 60
