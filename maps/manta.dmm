@@ -8724,6 +8724,7 @@
 /obj/item/circuitboard/powermonitor,
 /obj/item/circuitboard/arcade,
 /obj/item/circuitboard/tetris,
+/obj/item/circuitboard/telescope,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;

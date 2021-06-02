@@ -10013,6 +10013,7 @@
 /obj/item/circuitboard/genetics,
 /obj/item/circuitboard/bank_data,
 /obj/item/circuitboard/arcade,
+/obj/item/circuitboard/telescope,
 /obj/machinery/light/small,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/storage/tech)

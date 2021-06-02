@@ -32808,6 +32808,7 @@
 /obj/item/circuitboard/arcade,
 /obj/item/circuitboard/powermonitor_smes,
 /obj/item/circuitboard/genetics,
+/obj/item/circuitboard/telescope,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "bqG" = (

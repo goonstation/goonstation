@@ -52505,6 +52505,7 @@
 /obj/item/circuitboard/genetics,
 /obj/item/circuitboard/bank_data,
 /obj/item/circuitboard/arcade,
+/obj/item/circuitboard/telescope,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "osY" = (

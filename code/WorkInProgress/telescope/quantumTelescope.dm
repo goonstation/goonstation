@@ -29,6 +29,42 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
 
+	attackby(obj/item/I as obj, mob/user as mob)
+		if (isscrewingtool(I))
+			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			if (do_after(user, 2 SECONDS))
+				if (src.status & BROKEN)
+					user.show_text("The broken glass falls out.", "blue")
+					var/obj/computerframe/A = new /obj/computerframe(src.loc)
+					if (src.material)
+						A.setMaterial(src.material)
+					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+					G.set_loc(src.loc)
+					var/obj/item/circuitboard/telescope/M = new /obj/item/circuitboard/telescope(A)
+					for (var/obj/C in src)
+						C.set_loc(src.loc)
+					A.circuit = M
+					A.state = 3
+					A.icon_state = "3"
+					A.anchored = 1
+					qdel(src)
+				else
+					user.show_text("You disconnect the monitor.", "blue")
+					var/obj/computerframe/A = new /obj/computerframe(src.loc)
+					if (src.material)
+						A.setMaterial(src.material)
+					var/obj/item/circuitboard/telescope/M = new /obj/item/circuitboard/telescope(A)
+					for (var/obj/C in src)
+						C.set_loc(src.loc)
+					A.circuit = M
+					A.state = 4
+					A.icon_state = "4"
+					A.anchored = 1
+					qdel(src)
+		else
+			..()
+		return
+
 	attack_hand(mob/user as mob)
 		if(status & (BROKEN|NOPOWER))
 			return

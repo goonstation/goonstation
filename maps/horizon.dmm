@@ -23076,6 +23076,7 @@
 	icon_state = "1-8"
 	},
 /obj/item/circuitboard/genetics,
+/obj/item/circuitboard/telescope,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "bfa" = (

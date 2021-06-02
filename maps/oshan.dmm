@@ -15529,6 +15529,7 @@
 /obj/item/circuitboard/powermonitor_smes,
 /obj/item/circuitboard/operating,
 /obj/item/circuitboard/genetics,
+/obj/item/circuitboard/telescope,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "aKq" = (

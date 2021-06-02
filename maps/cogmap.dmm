@@ -53035,6 +53035,10 @@
 /area/station/medical/medbay/lobby)
 "cCc" = (
 /obj/rack,
+/obj/item/circuitboard/telescope{
+	pixel_x = -5;
+	pixel_y = 1
+	},
 /obj/item/circuitboard/powermonitor{
 	pixel_x = -5;
 	pixel_y = -3

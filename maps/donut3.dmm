@@ -42202,6 +42202,10 @@
 	pixel_x = 2;
 	pixel_y = -4
 	},
+/obj/item/circuitboard/telescope{
+	pixel_x = 6;
+	pixel_y = -6
+	},
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},

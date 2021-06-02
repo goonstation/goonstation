@@ -24730,6 +24730,7 @@
 /obj/item/circuitboard/powermonitor_smes,
 /obj/item/circuitboard/operating,
 /obj/item/circuitboard/genetics,
+/obj/item/circuitboard/telescope,
 /obj/decal/cleanable/fungus,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
