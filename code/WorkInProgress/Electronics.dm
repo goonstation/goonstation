@@ -630,6 +630,7 @@
 				//And don't send a message if we're not the host
 				return //But we already had that blueprint, so we do leave
 
+			pda_messsage(target, "Notice: Item already in database.")
 
 			return
 
