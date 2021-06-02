@@ -45,7 +45,7 @@
 			var/list/obj/item/parts/convertable_limbs = list(humanuser.limbs.l_arm, humanuser.limbs.r_arm, humanuser.limbs.l_leg, humanuser.limbs.r_leg)
 			//figure out which limbs are already robotic and remove them from the list
 			for (var/obj/item/parts/limb in convertable_limbs)
-				if (limb.kind_of_limb & LIMB_ROBOT)
+				if (!limb || (limb.kind_of_limb & LIMB_ROBOT))
 					convertable_limbs -= limb
 			//people with existing robolimbs get converted faster.
 			//(loops_per_conversion_step - 1) bit adds some 'buffer time' before any limbs are converted.
