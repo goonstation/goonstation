@@ -540,6 +540,19 @@
 		newsignal.data_file = scanFile
 		radio_connection.post_signal(src, newsignal)
 
+/obj/machinery/rkit/proc/pda_messsage(var/target, var/message)
+	SPAWN_DBG(0.5 SECONDS)
+		var/datum/signal/newsignal = get_free_signal()
+		newsignal.source = src
+		newsignal.transmission_method = TRANSMISSION_RADIO
+		newsignal.data["command"] = "text_message"
+		newsignal.data["sender_name"] = "RKIT-MAILBOT"
+		newsignal.data["message"] = message
+		if (target) newsignal.data["address_1"] = target
+		newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
+		newsignal.data["sender"] = src.net_id
+		radio_connection.post_signal(src, newsignal)
+
 /obj/machinery/rkit/receive_signal(datum/signal/signal)
 	if(status & NOPOWER)
 		return
@@ -581,7 +594,7 @@
 			//Wait we're done here?
 			return
 
-	//Set the host ruck to the highet net_id we see, and if it's a DROP command, don't save that net_id
+	//Set the host ruck to the highest net_id we see, and if it's a DROP command, don't save that net_id
 	if(signal.data["address_1"] == "TRANSRKIT" && (command == "SYNC" || command == "DROP") && target)
 		//Got a sync time to reset this to ourselves
 		host_ruck = src.net_id //We're the master!
@@ -607,45 +620,26 @@
 			if (targetitem == O.name)
 				upload_blueprint(O, target)
 
-	if((signal.data["address_1"] != "TRANSRKIT" && signal.data["address_1"] != src.net_id ) || !target || (command != "add" && command != "upload") || !istype(signal.data_file, /datum/computer/file/electronics_scan))
+	if((signal.data["address_1"] != "TRANSRKIT" && signal.data["address_1"] != src.net_id ) || !target || (command != "add" && command != "UPLOAD") || !istype(signal.data_file, /datum/computer/file/electronics_scan))
 		return
 
 	var/datum/computer/file/electronics_scan/scanFile = signal.data_file
 	for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
 		if(scanFile.scannedPath == O.item_type)
-			if (command != "add" && src.net_id != host_ruck) //Don't send a message if the it's an internal transfer("UPLOAD" command)
+			if (command != "add" && src.net_id != host_ruck) //Don't send a failure message if the it's an internal transfer("UPLOAD" command)
 				//And don't send a message if we're not the host
 				return //But we already had that blueprint, so we do leave
 
-			SPAWN_DBG(0.5 SECONDS)
-				var/datum/signal/newsignal = get_free_signal()
-				newsignal.source = src
-				newsignal.transmission_method = TRANSMISSION_RADIO
-				newsignal.data["command"] = "text_message"
-				newsignal.data["sender_name"] = "RKIT-MAILBOT"
-				newsignal.data["message"] = "Notice: Item already in database."
-				newsignal.data["address_1"] = target
-				newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
-				newsignal.data["sender"] = src.net_id
-				radio_connection.post_signal(src, newsignal)
+
 			return
 
 	var/strippedName = scanFile.scannedName
 	ruck_controls.scan_in(strippedName, scanFile.scannedPath, scanFile.scannedMats)
 
-	if(src.net_id != host_ruck) //Only the host sends PDA messages
+	if(src.net_id != host_ruck || command != "add") //Only the host sends PDA messages, and we don't send them for internal transfer
 		return
-	SPAWN_DBG(0.5 SECONDS)
-		var/datum/signal/newsignal = get_free_signal()
-		newsignal.source = src
-		newsignal.transmission_method = TRANSMISSION_RADIO
-		newsignal.data["command"] = "text_message"
-		newsignal.data["sender_name"] = "RKIT-MAILBOT"
-		newsignal.data["message"] = "Notice: Item entered into database."
-		newsignal.data["address_1"] = target
-		newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
-		newsignal.data["sender"] = src.net_id
-		radio_connection.post_signal(src, newsignal)
+
+	pda_messsage(target, "Notice: Item entered into database.")
 
 /obj/machinery/rkit/attackby(obj/item/W as obj, mob/user as mob)
 	if(status & (NOPOWER|BROKEN))
@@ -658,7 +652,7 @@
 		for(var/X in S.scanned)
 			match_check = 0
 			for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
-				if(S.scanned == O.item_type)
+				if(X == O.item_type)
 					S.scanned -= X
 					match_check = 1
 					break
@@ -667,13 +661,16 @@
 				var/datum/electronics/scanned_item/O = ruck_controls.scan_in(tempobj.name,tempobj.type,tempobj.mats)
 				if(O)
 					upload_blueprint(O, "TRANSRKIT", 1)
-				SPAWN_DBG(4 SECONDS)
-					qdel(tempobj)
+					SPAWN_DBG(4 SECONDS)
+						qdel(tempobj)
 				S.scanned -= X
 				add_count++
-
-		if (add_count > 0)
+		if (add_cound ==  0)
 			boutput(user, "<span class='notice'>[add_count] new items entered into kit.</span>")
+			pda_messsage(target, "Notice: Item entered into database.")
+		else if (add_count > 0)
+			boutput(user, "<span class='notice'>[add_count] new items entered into kit.</span>")
+			pda_messsage(null, "Notice: [add_count] new items entered into database.")
 		else
 			boutput(user, "<span class='alert'>No new items entered into kit.</span>")
 
