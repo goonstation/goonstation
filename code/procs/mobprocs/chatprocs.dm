@@ -159,22 +159,6 @@
 		boutput(C, message)
 		return 1
 
-/mob/proc/try_render_chat_to_observer(client/C, message)
-	if (C.deadchatoff) return
-	if (!C.mob) return
-	var/mob/M = C.mob
-	if (istype(M, /mob/new_player)) return
-
-	if(try_render_chat_to_admin(C, message))
-		return 1
-
-	if (istype(M,/mob/dead/target_observer/hivemind_observer)) return
-	if (istype(M,/mob/dead/target_observer/mentor_mouse_observer)) return
-
-	if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/seanceghost))
-		boutput(M, message)
-		return 1
-
 /mob/proc/say_dead(var/message, wraith = 0)
 	var/name = src.real_name
 	var/alt_name = ""
