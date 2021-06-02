@@ -267,7 +267,7 @@
 	for (var/client/C in clients)
 		try_render_chat_to_admin(C, rendered)
 	for (var/mob/M in (hivemind_owner.hivemind + hivemind_owner.owner))
-		if ((M.client?.holder && M.client.deadchat && !M.client.player_mode)) continue
+		if (M.client?.holder && M.client.deadchat && !M.client.player_mode) continue
 		if (isdead(M) || istype(M,/mob/living/critter/changeling) || (M == hivemind_owner.owner))
 			boutput(M, rendered)
 
