@@ -1449,7 +1449,7 @@ datum
 						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 80 * mult))
 					else if (effect <= 7)
 						boutput(M, "<span class='alert'><b>Your heartbeat is pounding inside your head!</b></span>")
-						M.playsound_local(M.loc, 'sound/effects/heartbeat.ogg', 50, 1)
+						M.playsound_local(M.loc, "sound/effects/heartbeat.ogg", 50, 1)
 						M.emote("collapse")
 						M.take_oxygen_deprivation(8 * mult)
 						M.take_toxin_damage(3 * mult)
