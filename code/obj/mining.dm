@@ -395,7 +395,7 @@
 		proc/get_encounter(var/rarity_mod)
 			return mining_controls.select_encounter(rarity_mod)
 
-		pull_new_source()
+		pull_new_source(var/selectable_encounter_id = null)
 			if (!target)
 				return
 
@@ -427,8 +427,28 @@
 				do_malfunction()
 			sleep(sleep_time)
 
-			var/datum/mining_encounter/MC = get_encounter(rarity_mod)
-			MC.generate(target)
+			var/datum/mining_encounter/MC
+
+			if(selectable_encounter_id != null)
+				if(selectable_encounter_id in mining_controls.mining_encounters_selectable)
+					MC = mining_controls.mining_encounters_selectable[selectable_encounter_id]
+					mining_controls.remove_selectable_encounter(selectable_encounter_id)
+				else
+					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: INVALID ENCOUNTER)")
+					MC = get_encounter(rarity_mod)
+			else
+				MC = get_encounter(rarity_mod)
+
+			if(MC)
+				MC.generate(target)
+			else
+				for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
+					M.opacity = 0
+					M.set_density(0)
+					M.invisibility = 1
+				active = 0
+				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: NO ENCOUNTER)")
+				return
 
 			sleep(sleep_time)
 			if (malfunctioning && prob(20))
@@ -645,7 +665,7 @@
 		var/datum/mining_encounter/MC
 
 		if(selectable_encounter_id != null)
-			if(mining_controls.mining_encounters_selectable.Find(selectable_encounter_id))
+			if(selectable_encounter_id in mining_controls.mining_encounters_selectable)
 				MC = mining_controls.mining_encounters_selectable[selectable_encounter_id]
 				mining_controls.remove_selectable_encounter(selectable_encounter_id)
 			else
