@@ -471,7 +471,7 @@
 	var/no_print_spam = 1 // In relation to world.time.
 	var/olde = 0
 	var/datum/mechanic_controller/ruck_controls
-	var/masterruck //net_id of the ruck that will send messages
+	var/host_ruck //net_id of the ruck that will send messages
 
 /obj/machinery/rkit/New()
 	..()
@@ -479,12 +479,12 @@
 	SPAWN_DBG(0.8 SECONDS)
 		if(radio_controller)
 			radio_connection = radio_controller.add_object(src, "[frequency]")
-			send_sync() //Find the master ruck
 		if(!src.net_id)
 			src.net_id = generate_net_id(src)
 			ruck_controls.rkit_addresses += src.net_id
 
 /obj/machinery/rkit/disposing()
+	if (src.net_id == host_ruck) send_sync() //Everyone needs to find a new master
 	radio_controller?.remove_object(src, "[frequency]")
 	radio_connection = null
 
@@ -492,9 +492,23 @@
 		ruck_controls.rkit_addresses -= src.net_id
 
 	..()
+
+/obj/machinery/rkit/power_change()
+	//This will run when we're created and find a host ruck
+	if(status & (NOPOWER|BROKEN))
+		SPAWN_DBG(rand(0, 15))
+			if (src.net_id == host_ruck) send_sync()
+		return
+	if (powered())
+		SPAWN_DBG(rand(0, 15))
+			send_sync()
+	else
+		SPAWN_DBG(rand(0, 15))
+			if (src.net_id == host_ruck) send_sync()
+
 /obj/machinery/rkit/proc/send_sync() //Request SYNCREPLY from other rucks
 	//We're the master until someone else proves they are
-	masterruck = src.net_id
+	host_ruck = src.net_id
 	SPAWN_DBG(0.5 SECONDS)
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
@@ -538,10 +552,8 @@
 			newsignal.data["command"] = "ping_reply"
 			newsignal.data["device"] = "NET_RKANALZYER"
 			newsignal.data["netid"] = src.net_id
-
 			newsignal.data["address_1"] = target
 			newsignal.data["sender"] = src.net_id
-
 			radio_connection.post_signal(src, newsignal)
 
 		return
@@ -557,14 +569,16 @@
 		return
 
 	if(signal.data["address_1"] == "TRANSRKIT" && signal.data["command"] == "SYNCREPLY" && target)
-		if (target > masterruck) //pick the highest net_id
-			masterruck = target
+		if (target > host_ruck) //pick the highest net_id
+			host_ruck = target
 			//Wait we're done here?
 			return
 
 	if(signal.data["address_1"] == "TRANSRKIT" && signal.data["command"] == "SYNC" && target)
 		//Got a sync time to reset this to ourselves
-		masterruck = src.net_id //We're the master!
+		host_ruck = src.net_id //We're the master!
+		if (target > host_ruck) //Unless they are
+			host_ruck = target
 		SPAWN_DBG(0.5 SECONDS)
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
@@ -590,7 +604,10 @@
 
 	var/datum/computer/file/electronics_scan/scanFile = signal.data_file
 	for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
-		if(scanFile.scannedPath == O.item_type && src.net_id == masterruck && signal.data["command"] != "upload")
+		if(scanFile.scannedPath == O.item_type && src.net_id == host_ruck)
+			if (signal.data["command"] != "new")
+				return
+
 			SPAWN_DBG(0.5 SECONDS)
 				var/datum/signal/newsignal = get_free_signal()
 				newsignal.source = src
@@ -601,14 +618,13 @@
 				newsignal.data["address_1"] = target
 				newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
 				newsignal.data["sender"] = src.net_id
-
 				radio_connection.post_signal(src, newsignal)
 			return
 
 	var/strippedName = scanFile.scannedName
 	ruck_controls.scan_in(strippedName, scanFile.scannedPath, scanFile.scannedMats)
 
-	if(src.net_id != masterruck)
+	if(src.net_id != host_ruck)
 		return
 	SPAWN_DBG(0.5 SECONDS)
 		var/datum/signal/newsignal = get_free_signal()
