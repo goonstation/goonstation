@@ -482,9 +482,10 @@
 		if(!src.net_id)
 			src.net_id = generate_net_id(src)
 			ruck_controls.rkit_addresses += src.net_id
+			host_ruck = src.net_id
 
 /obj/machinery/rkit/disposing()
-	if (src.net_id == host_ruck) send_sync() //Everyone needs to find a new master
+	if (src.net_id == host_ruck) send_sync(1) //Everyone needs to find a new master
 	radio_controller?.remove_object(src, "[frequency]")
 	radio_connection = null
 
@@ -497,23 +498,26 @@
 	//This will run when we're created and find a host ruck
 	if(status & (NOPOWER|BROKEN))
 		SPAWN_DBG(rand(0, 15))
-			if (src.net_id == host_ruck) send_sync()
+			if (src.net_id == host_ruck) send_sync(1)
 		return
 	if (powered())
 		SPAWN_DBG(rand(0, 15))
 			send_sync()
 	else
 		SPAWN_DBG(rand(0, 15))
-			if (src.net_id == host_ruck) send_sync()
+			if (src.net_id == host_ruck) send_sync(1)
 
-/obj/machinery/rkit/proc/send_sync() //Request SYNCREPLY from other rucks
-	//We're the master until someone else proves they are
-	host_ruck = src.net_id
+/obj/machinery/rkit/proc/send_sync(var/dispose) //Request SYNCREPLY from other rucks
+	//If dispose is true we use "DROP" which won't be saved as the host
+	host_ruck = src.net_id //We're the host until someone else proves they are
 	SPAWN_DBG(0.5 SECONDS)
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
 		newsignal.transmission_method = TRANSMISSION_RADIO
-		newsignal.data["command"] = "SYNC"
+		if(!dispose)
+			newsignal.data["command"] = "SYNC"
+		else
+			newsignal.data["command"] = "DROP"
 		newsignal.data["address_1"] = "TRANSRKIT"
 		newsignal.data["sender"] = src.net_id
 		radio_connection.post_signal(src, newsignal)
@@ -528,9 +532,9 @@
 		newsignal.source = src
 		newsignal.transmission_method = TRANSMISSION_RADIO
 		if(!internal)
-			newsignal.data["command"] = "new"
+			newsignal.data["command"] = "NEW"
 		else
-			newsignal.data["command"] = "upload"
+			newsignal.data["command"] = "UPLOAD"
 		newsignal.data["address_1"] = target
 		newsignal.data["sender"] = src.net_id
 		newsignal.data_file = scanFile
@@ -540,10 +544,11 @@
 	if(status & NOPOWER)
 		return
 
-	if(!signal || signal.encryption || !signal.data["sender"])
+	if(!signal || signal.encryption || !signal.data["sender"] || !powered())
 		return
 
 	var/target = signal.data["sender"]
+	var/command = signal.data["command"]
 	if((signal.data["address_1"] == "ping") && target)
 		SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
 			var/datum/signal/newsignal = get_free_signal()
@@ -558,26 +563,29 @@
 
 		return
 
+	//Bail early if we can
 	if (signal.data["address_1"] != "TRANSRKIT" && signal.data["address_1"] != src.net_id )
 		return
 
-	if(signal.data["address_1"] == "TRANSRKIT" && signal.data["acc_code"] == netpass_heads && !isnull(signal.data["data"]) && !isnull(signal.data["lock"]))
-		var/targetitem = signal.data["data"]
+	//locking and unlocking
+	if(signal.data["address_1"] == "TRANSRKIT" && signal.data["acc_code"] == netpass_heads && !isnull(signal.data["DATA"]) && !isnull(signal.data["LOCK"]))
+		var/targetitem = signal.data["DATA"]
 		for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
 			if (targetitem == O.name)
-				O.locked = signal.data["lock"]
+				O.locked = signal.data["LOCK"]
 		return
 
-	if(signal.data["address_1"] == "TRANSRKIT" && signal.data["command"] == "SYNCREPLY" && target)
+	if(signal.data["address_1"] == "TRANSRKIT" && command == "SYNCREPLY" && target)
 		if (target > host_ruck) //pick the highest net_id
 			host_ruck = target
 			//Wait we're done here?
 			return
 
-	if(signal.data["address_1"] == "TRANSRKIT" && signal.data["command"] == "SYNC" && target)
+	//Set the host ruck to the highet net_id we see, and if it's a DROP command, don't save that net_id
+	if(signal.data["address_1"] == "TRANSRKIT" && (command == "SYNC" || command == "DROP") && target)
 		//Got a sync time to reset this to ourselves
 		host_ruck = src.net_id //We're the master!
-		if (target > host_ruck) //Unless they are
+		if (target > host_ruck && command == "SYNC") //Unless they are
 			host_ruck = target
 		SPAWN_DBG(0.5 SECONDS)
 			var/datum/signal/newsignal = get_free_signal()
@@ -593,20 +601,21 @@
 	//I have no idea why anyone would want blueprint files
 	//But I love making packets cryptic
 	//Oh okay we have a distributed network now, THAT'S what this is for
-	if(signal.data["address_1"] == src.net_id && signal.data["command"] == "download" && target && !isnull(signal.data["data"]))
-		var/targetitem = signal.data["data"]
+	if(signal.data["address_1"] == src.net_id && command == "DOWNLOAD" && target && !isnull(signal.data["DATA"]))
+		var/targetitem = signal.data["DATA"]
 		for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
 			if (targetitem == O.name)
 				upload_blueprint(O, target)
 
-	if((signal.data["address_1"] != "TRANSRKIT" && signal.data["address_1"] != src.net_id ) || !target || (signal.data["command"] != "add" && signal.data["command"] != "upload") || !istype(signal.data_file, /datum/computer/file/electronics_scan))
+	if((signal.data["address_1"] != "TRANSRKIT" && signal.data["address_1"] != src.net_id ) || !target || (command != "add" && command != "upload") || !istype(signal.data_file, /datum/computer/file/electronics_scan))
 		return
 
 	var/datum/computer/file/electronics_scan/scanFile = signal.data_file
 	for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
-		if(scanFile.scannedPath == O.item_type && src.net_id == host_ruck)
-			if (signal.data["command"] != "new")
-				return
+		if(scanFile.scannedPath == O.item_type)
+			if (command != "add" && src.net_id != host_ruck) //Don't send a message if the it's an internal transfer("UPLOAD" command)
+				//And don't send a message if we're not the host
+				return //But we already had that blueprint, so we do leave
 
 			SPAWN_DBG(0.5 SECONDS)
 				var/datum/signal/newsignal = get_free_signal()
@@ -624,7 +633,7 @@
 	var/strippedName = scanFile.scannedName
 	ruck_controls.scan_in(strippedName, scanFile.scannedPath, scanFile.scannedMats)
 
-	if(src.net_id != host_ruck)
+	if(src.net_id != host_ruck) //Only the host sends PDA messages
 		return
 	SPAWN_DBG(0.5 SECONDS)
 		var/datum/signal/newsignal = get_free_signal()
@@ -742,8 +751,8 @@
 						newsignal.transmission_method = TRANSMISSION_RADIO
 						newsignal.data["address_1"] = "TRANSRKIT"
 						newsignal.data["acc_code"] = netpass_heads
-						newsignal.data["lock"] = O.locked
-						newsignal.data["data"] = O.name
+						newsignal.data["LOCK"] = O.locked
+						newsignal.data["DATA"] = O.name
 						newsignal.data["sender"] = src.net_id
 						radio_connection.post_signal(src, newsignal)
 
