@@ -30,6 +30,7 @@
 (u)Tarmunora
 (e)⚖|balance
 (*)Port-a-brig now has a short delay before shoving someone inside
+(*)quivering contusine curare -> histamine
 (t)mon may 31 21
 (u)Flaborized
 (p)4978
