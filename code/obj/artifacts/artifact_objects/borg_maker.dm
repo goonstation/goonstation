@@ -39,7 +39,7 @@
 			O.visible_message("<span class='alert'><b>[O]</b> suddenly pulls [user.name] inside[escapable ? "!" : " and slams shut!"]</span>")
 			user.emote("scream")
 			if (!escapable)
-				user.set_loc(get_turf(O.loc))
+				user.set_loc(O)
 			else
 				user.set_loc(get_turf(O.loc))
 			converting = TRUE
@@ -57,6 +57,7 @@
 					return
 				loops--
 				random_brute_damage(humanuser, 10)
+				take_bleeding_damage(humanuser, null, 3)
 				user.changeStatus("paralysis", 7 SECONDS)
 				playsound(user.loc, pick(work_sounds), 50, 1, -1)
 				if (loops % loops_per_conversion_step == 0)
