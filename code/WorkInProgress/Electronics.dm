@@ -472,9 +472,11 @@
 	var/olde = 0
 	var/datum/mechanic_controller/ruck_controls
 	var/host_ruck //net_id of the ruck that will send messages
+	var/list/non_hosts = null
 
 /obj/machinery/rkit/New()
 	..()
+	non_hosts = new
 	ruck_controls = new
 	SPAWN_DBG(0.8 SECONDS)
 		if(radio_controller)
@@ -613,16 +615,37 @@
 	//I have no idea why anyone would want blueprint files
 	//But I love making packets cryptic
 	//Oh okay we have a distributed network now, THAT'S what this is for
-	if(signal.data["address_1"] == src.net_id && command == "DOWNLOAD" && target && !isnull(signal.data["DATA"]))
-		var/targetitem = signal.data["DATA"]
+	if(signal.data["address_1"] == src.net_id && command == "DOWNLOAD" && target && !isnull(signal.data["data"]))
+		var/targetitem = signal.data["data"]
+		if(targetitem == "INIT" && src.net_id == host_ruck && ruck_controls.scanned_items) //Send a copy of the entire database
+			var/datum/computer/file/electronics_bundle/rkitFile = new
+			rkitFile.ruckData = ruck_controls
+			SPAWN_DBG(0.5 SECONDS)
+				var/datum/signal/newsignal = get_free_signal()
+				newsignal.source = src
+				newsignal.transmission_method = TRANSMISSION_RADIO
+				newsignal.data["command"] = "UPLOAD"
+				newsignal.data["address_1"] = target
+				newsignal.data["sender"] = src.net_id
+				newsignal.data_file = rkitFile
+				radio_connection.post_signal(src, newsignal)
+			return
 		for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
 			if (targetitem == O.name)
 				upload_blueprint(O, target)
 
-	if((signal.data["address_1"] != "TRANSRKIT" && signal.data["address_1"] != src.net_id ) || !target || (command != "add" && command != "UPLOAD") || !istype(signal.data_file, /datum/computer/file/electronics_scan))
+	if((signal.data["address_1"] != "TRANSRKIT" && signal.data["address_1"] != src.net_id ) || !target || (command != "add" && command != "UPLOAD") || (!istype(signal.data_file, /datum/computer/file/electronics_scan) && !istype(signal.data_file, /datum/computer/file/electronics_bundle)))
+		return
+
+	var/datum/computer/file/electronics_bundle/rkitFile = signal.data_file
+	if (istype(rkitFile)) //Copy the database on digest so we never waste the effort
+		var/datum/mechanic_controller/originalData = rkitFile.ruckData
+		for (var/datum/electronics/scanned_item/O in originalData.scanned_items)
+			ruck_controls.scan_in(O.name, O.item_type, O.mats, O.locked)
 		return
 
 	var/datum/computer/file/electronics_scan/scanFile = signal.data_file
+
 	for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
 		if(scanFile.scannedPath == O.item_type)
 			if (command != "add" || src.net_id != host_ruck) //Don't send a failure message if the it's an internal transfer("UPLOAD" command)

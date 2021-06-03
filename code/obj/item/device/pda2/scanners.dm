@@ -125,6 +125,11 @@
 	var/scannedPath = null
 	var/scannedMats = null
 
+/datum/computer/file/electronics_bundle
+	name = "Ruckingenur Data"
+	extension = "DSCN"
+	var/datum/mechanic_controller/ruckData = null
+
 /datum/computer/file/genetics_scan
 	name = "DNA Scan"
 	extension = "GSCN"

@@ -5,7 +5,7 @@ var/datum/mechanic_controller/mechanic_controls
 	var/list/rkit_addresses = list()
 
 	proc
-		scan_in(var/N,var/T,var/list/M)
+		scan_in(var/N,var/T,var/list/M, var/locked)
 			var/datum/electronics/scanned_item/S = new/datum/electronics/scanned_item
 			var/matscopy
 			S.name = N
@@ -19,6 +19,7 @@ var/datum/mechanic_controller/mechanic_controls
 			S.item_mats = matscopy
 			S.create_partslist(matscopy)
 			S.create_blueprint(matscopy)
+			if (!isnull(locked)) S.locked = locked
 			src.scanned_items += S
 			return S
 
