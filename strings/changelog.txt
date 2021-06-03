@@ -1,4 +1,9 @@
 
+(t)thu jun 03 21
+(u)Jan.antilles
+(p)4889
+(e)🎨|sprites
+(+)Added a new Diner Waitress's Dress in two colors, a matching hat, and four colors of Mary Jane shoes. Look for them in the Clothing Booth!
 (t)tue jun 01 21
 (u)Sovexe
 (e)🐛🆕|bug, feature
