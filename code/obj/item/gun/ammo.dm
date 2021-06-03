@@ -1216,7 +1216,7 @@
 	icon_empty = "foamdarts-0"
 	amount_left = 40
 	max_amount = 40
-	caliber = 0.857 // I just hit random numbers on my keyboard
+	caliber = 0.393
 	ammo_type = new/datum/projectile/bullet/foamdart
 
 /obj/item/ammo/bullets/foamdarts/twenty

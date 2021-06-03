@@ -2215,7 +2215,7 @@
 /datum/commodity/toygun
 	comname = "Toy Gun"
 	comtype = /obj/item/gun/kinetic/foamdartgun
-	desc = "A toy gun filled with foam darts."
+	desc = "A toy gun that fires foam darts."
 	onmarket = 0
 	price = 2000
 	baseprice = 2000

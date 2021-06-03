@@ -1713,11 +1713,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic/foamdartgun
 	name = "Foam Dart Gun"
 	icon_state = "foamdartgun"
-	desc = "A toy gun that fires foam darts. Keep out of reach of clowns, staff assistants, and scientists."
+	desc = "A toy gun that fires foam darts. Keep out of reach of clowns, staff assistants and scientists."
 	shoot_delay = 3
 	w_class = W_CLASS_SMALL
 	force = 1
-	caliber = 0.857
+	caliber = 0.393
 	max_ammo_capacity = 20
 
 	New()
