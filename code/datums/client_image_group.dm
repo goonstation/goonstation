@@ -13,12 +13,12 @@ var/global/list/datum/client_image_group/client_image_groups
 		/// Associative list containing subscribed mobs and the amount of times they subscribed to the image group (to handle multiple sources).
 		subscribed_mobs_with_subcount = list()
 
-	/// Adds an image to the image list and adds it to all mobs' clients directly where appropriate. Registers a signal to track mob invisibility changes.
+	/// Adds an image to the image list and adds it to all mobs' clients directly where appropriate. Registers signal to track mob invisibility changes.
 	proc/add_image(image/img)
 		src.images.Add(img)
-		if (mob_to_associated_images_lookup[img.loc])
+		if (mob_to_associated_images_lookup[img.loc]) // mob's images already present in the group, adds the new one to the lookup list for quick access
 			mob_to_associated_images_lookup[img.loc] += img
-		else
+		else // first time a mob's image is added, on top of adding it to the lookup list a signal is registered on the mob to track invisibility changes.
 			mob_to_associated_images_lookup[img.loc] = list(img)
 			RegisterSignal(img.loc, COMSIG_MOB_PROP_INVISIBILITY, .proc/on_mob_invisibility_changed)
 
@@ -30,7 +30,7 @@ var/global/list/datum/client_image_group/client_image_groups
 	proc/remove_image(image/img)
 		src.images.Remove(img)
 		mob_to_associated_images_lookup[img.loc] -= img
-		if (!length(mob_to_associated_images_lookup[img.loc])) // no images of a mob remain, removing and unregistering invisibility update signal.
+		if (!length(mob_to_associated_images_lookup[img.loc])) // no images of a mob remain, removing from lookup and unregistering mob's invisibility update signal.
 			mob_to_associated_images_lookup.Remove(img.loc)
 			UnregisterSignal(img.loc, COMSIG_MOB_PROP_INVISIBILITY)
 		for (var/mob/iterated_mob as() in subscribed_mobs_with_subcount)
