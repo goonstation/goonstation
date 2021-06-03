@@ -264,7 +264,7 @@ var/global/list/playersSeen = list()
 
 		if (!mobRef)
 			data["ckey"] = input(usr, "Ckey (lowercase, only alphanumeric, no spaces, leave blank to skip)", "Ban") as null|text
-			var/auto = alert("Attempt to autofill IP and compID with most recent?","Yes","No")
+			var/auto = alert("Attempt to autofill IP and compID with most recent?","Autofill?","Yes","No")
 			if (auto == "No")
 				data["compID"] = input(usr, "Computer ID", "Ban") as null|text
 				data["ip"] = input(usr, "IP Address", "Ban") as null|text
