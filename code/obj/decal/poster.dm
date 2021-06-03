@@ -1102,12 +1102,11 @@
 
 		C.Browse("<img src=\"[resource("images/pw_map.png")]\">","window=Map;size=[imgw]x[imgh];title=Map")
 
-/obj/decal/poster/customizable_banner
+/obj/decal/poster/banner
 	name = "Banner"
 	desc = "An unfinished banner, try adding some color to it by using a crayon!"
 	icon = 'icons/obj/decals/banners.dmi'
 	icon_state = "banner_base"
-	color = "#ffffff"
 	popup_win = 0
 	var/state = 0
 	var/image/banner
@@ -1133,18 +1132,20 @@
 				desc = "A colored banner, try adding some drawings to it with a crayon!"
 
 		if(istool(W,TOOL_SNIPPING))
-			if(tgui_alert(usr, "Are you sure you want to clear the banner?","Confirmation",list("Yes","No")) == "Yes")
-
-				user.visible_message("<span class='notice'>[user] cuts off [src].</span>")
-				qdel(src)
-				user.put_in_hand_or_drop(new /obj/item/material_piece/cloth/cottonfabric)
+			user.visible_message("<span class='notice'>[user] cuts off [src].</span>")
+			var/obj/item/material_piece/cloth/C = new(user.loc)
+			if(src.material)
+				C.setMaterial(copyMaterial(src.material))
+			qdel(src)
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		..()
 		if (!usr || usr.stat || usr.restrained() || get_dist(src, usr) > 1)
 			return
+
 		else if(tgui_alert(usr, "Are you sure you want to clear the banner?","Confirmation",list("Yes","No")) == "Yes")
-			src.color = null
+			if(src.material)
+				src.color = src.material.color
 			src.overlays = null
 			src.state = 0
 			usr.visible_message("<span class='notice'>[usr] Clears the [src].</span>")
