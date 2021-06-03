@@ -203,20 +203,19 @@
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 	//logit( "chat", 0, "([name])", src, message )
 	for (var/client/C)
-		if (C.deadchatoff) return
-		if (!C.mob) return
+		if (C.deadchatoff) continue
+		if (!C.mob) continue
 		var/mob/M = C.mob
-		if (istype(M, /mob/new_player)) return
+		if (istype(M, /mob/new_player)) continue
 
 		if(try_render_chat_to_admin(C, rendered))
-			return 1
+			continue
 
-		if (istype(M,/mob/dead/target_observer/hivemind_observer)) return
-		if (istype(M,/mob/dead/target_observer/mentor_mouse_observer)) return
+		if (istype(M,/mob/dead/target_observer/hivemind_observer)) continue
+		if (istype(M,/mob/dead/target_observer/mentor_mouse_observer)) continue
 
 		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/seanceghost))
 			boutput(M, rendered)
-			return 1
 
 //changeling hivemind say
 /mob/proc/say_hive(var/message, var/datum/abilityHolder/changeling/hivemind_owner)
