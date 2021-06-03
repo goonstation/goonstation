@@ -486,13 +486,12 @@
 
 /obj/machinery/rkit/disposing()
 	if (src.net_id == host_ruck) send_sync(1) //Everyone needs to find a new master
-	radio_controller?.remove_object(src, "[frequency]")
-	radio_connection = null
-
-	if (src.net_id)
-		ruck_controls.rkit_addresses -= src.net_id
-
-	..()
+	SPAWN_DBG(0.8 SECONDS) //Wait for the sync to send
+		radio_controller?.remove_object(src, "[frequency]")
+		radio_connection = null
+		if (src.net_id)
+			ruck_controls.rkit_addresses -= src.net_id
+		..()
 
 /obj/machinery/rkit/power_change()
 	//This will run when we're created and find a host ruck
@@ -626,7 +625,7 @@
 	var/datum/computer/file/electronics_scan/scanFile = signal.data_file
 	for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
 		if(scanFile.scannedPath == O.item_type)
-			if (command != "add" && src.net_id != host_ruck) //Don't send a failure message if the it's an internal transfer("UPLOAD" command)
+			if (command != "add" || src.net_id != host_ruck) //Don't send a failure message if the it's an internal transfer("UPLOAD" command)
 				//And don't send a message if we're not the host
 				return //But we already had that blueprint, so we do leave
 
