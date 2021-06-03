@@ -415,7 +415,7 @@ datum
 			result = "ldmatter"
 			required_reagents = list("plasma" = 1, "radium" = 1, "carbon" = 1, "stabiliser" = 1)
 			result_amount = 4
-			mix_phrase = "The begins to glow in a dark purple."
+			mix_phrase = "The begins to glow a dark purple."
 
 		sorium
 			name = "Sorium"
@@ -746,6 +746,14 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
+		cocktail_nicotini
+			name = "Nicotini"
+			id = "nicotini"
+			result = "nicotini"
+			required_reagents = list("martini" = 1, "nicotine" = 1)
+			result_amount = 2
+			mix_phrase = "The drink fizzes and turns a bland violet color. James Bond is crying."
+
 		cocktail_radler
 			name = "Radler"
 			id = "radler"
@@ -762,7 +770,7 @@ datum
 			result = "threemileislandicedtea"
 			required_reagents = list("vodka" = 1, "gin" = 1, "tequila" = 1, "cola" = 1, "curacao" = 1)
 			result_amount = 5
-			mix_phrase = "You swear you hear the sound of a nuclear bomb pushed through an airlock."
+			mix_phrase = "You swear you hear the sound of a nuclear bomb being pushed through an airlock."
 			mix_sound = 'sound/machines/decompress.ogg'
 			drinkrecipe = 1
 
@@ -1245,7 +1253,7 @@ datum
 			result = "hunchback"
 			required_reagents = list("bourbon" = 1, "cola" = 1, "juice_tomato" = 1)
 			result_amount = 3
-			mix_phrase = "The chunks of tomato paste hang in the bourbon and cola as an emulsion. It looks as horrible as that sounds."
+			mix_phrase = "The chunks of tomato paste hang in the bourbon and cola as an emulsion. It looks as horrible as it sounds."
 			mix_sound = 'sound/impact_sounds/Slimy_Hit_4.ogg'
 
 		cocktail_pinacolada
@@ -1490,12 +1498,12 @@ datum
 			drinkrecipe = 1
 
 		bees_knees
-			name = "Bee's knees"
+			name = "Bee's Knees"
 			id = "beesknees"
 			result = "beesknees"
 			required_reagents = list("gin" = 1, "honey" = 1, "juice_lemon" = 1)
 			result_amount = 3
-			mix_phrase = "You hear a faint buzz from the solution and your knees faintly ache"
+			mix_phrase = "You hear a faint buzz from the solution and your knees slightly ache"
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
@@ -1525,7 +1533,7 @@ datum
 			result = "duckfart"
 			required_reagents = list("bourbon" = 1, "coffee" =1 , "milk" = 1)
 			result_amount = 3
-			mix_phrase = "You hear a faint quack from the solution along with a pungent stretch"
+			mix_phrase = "You hear a faint quack from the solution along with a pungent stench."
 			mix_sound = 'sound/voice/farts/fart3.ogg'
 			drinkrecipe = 1
 
@@ -3783,14 +3791,6 @@ datum
 			required_reagents = list("love" = 1,"tea" = 1, "colors" = 1)
 			result_amount = 3
 			mix_phrase = "The substance emits the sweet scent of cherryblossoms!"
-
-		cocktail_nicotini
-			name = "Nicotini"
-			id = "nicotini"
-			result = "nicotini"
-			required_reagents = list("martini" = 1, "nicotine" = 1)
-			result_amount = 2
-			mix_phrase = "The drink fizzes and turns into a bland violent color. James Bond is crying."
 
 		lime //CaCO3 -> CaO + CO2
 			name = "calcium oxide"
