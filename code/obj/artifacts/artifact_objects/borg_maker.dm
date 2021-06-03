@@ -38,9 +38,10 @@
 				return
 			O.visible_message("<span class='alert'><b>[O]</b> suddenly pulls [user.name] inside[escapable ? "!" : " and slams shut!"]</span>")
 			user.emote("scream")
-			user.set_loc(O.loc)
 			if (!escapable)
 				user.set_loc(O)
+			else
+				user.set_loc(O.loc)
 			converting = TRUE
 			var/list/obj/item/parts/convertable_limbs = list(humanuser.limbs.l_arm, humanuser.limbs.r_arm, humanuser.limbs.l_leg, humanuser.limbs.r_leg)
 			//figure out which limbs are already robotic and remove them from the list
@@ -51,7 +52,7 @@
 			//(loops_per_conversion_step - 1) bit adds some 'buffer time' before any limbs are converted.
 			var/loops = (loops_per_conversion_step * (convertable_limbs.len + 1)) + (loops_per_conversion_step - 1)
 			while (loops > 0)
-				if (escapable && user.loc != O.loc)
+				if (user.loc != O.loc) //even the inescapable version can be escaped... if you can get them out
 					converting = FALSE
 					return
 				loops--
@@ -85,6 +86,7 @@
 
 			ArtifactLogs(user, null, O, "touched", "robotizing user", 0) // Added (Convair880).
 
+			user.set_loc(O.loc)
 			if (ismonkey(user) || jobban_isbanned(user, "Cyborg"))
 				user.death()
 				user.ghostize()
