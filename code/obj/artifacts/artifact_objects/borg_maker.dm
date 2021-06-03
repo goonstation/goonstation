@@ -40,7 +40,7 @@
 			user.emote("scream")
 			user.set_loc(O.loc)
 			if (!escapable)
-				user.anchored = TRUE //you ain't going nowhere
+				user.set_loc(O)
 			converting = TRUE
 			var/list/obj/item/parts/convertable_limbs = list(humanuser.limbs.l_arm, humanuser.limbs.r_arm, humanuser.limbs.l_leg, humanuser.limbs.r_leg)
 			//figure out which limbs are already robotic and remove them from the list
