@@ -415,7 +415,7 @@ datum
 			result = "ldmatter"
 			required_reagents = list("plasma" = 1, "radium" = 1, "carbon" = 1, "stabiliser" = 1)
 			result_amount = 4
-			mix_phrase = "The begins to glow a dark purple."
+			mix_phrase = "The mix begins to glow a dim purple."
 
 		sorium
 			name = "Sorium"
@@ -1503,7 +1503,7 @@ datum
 			result = "beesknees"
 			required_reagents = list("gin" = 1, "honey" = 1, "juice_lemon" = 1)
 			result_amount = 3
-			mix_phrase = "You hear a faint buzz from the solution and your knees slightly ache"
+			mix_phrase = "You hear a faint buzz from the solution and your knees slightly ache."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
