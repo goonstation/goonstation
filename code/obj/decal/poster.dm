@@ -1102,29 +1102,52 @@
 
 		C.Browse("<img src=\"[resource("images/pw_map.png")]\">","window=Map;size=[imgw]x[imgh];title=Map")
 
-/obj/decal/poster/customizable_banners
+/obj/decal/poster/customizable_banner
 	name = "Banner"
 	desc = "An unfinished banner, try adding some color to it by using a crayon!"
 	icon = 'icons/obj/decals/banners.dmi'
 	icon_state = "banner_base"
-	color = "#f0e7e7"
+	color = "#ffffff"
 	popup_win = 0
 	var/state = 0
 	var/image/banner
-	var/static/list/choosable_overlays = list("stripes_horizontal","stripes_vertical","stripes_diagonal","ball","cross","big_x","full")
-	var/chosen_overlay = null
+	var/chosen_overlay
+	var/mutable_appearance/new_overlay
+	var/static/list/choosable_overlays = list("Horizontal Stripes","Vertical Stripes","Diagonal Stripes","Ball","Cross","Diagonal Cross","Full",
+	"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W,/obj/item/pen/crayon) && (src.state == 0))
-			src.color = W.color
-			src.state = 1
-			desc = "A colored banner, try adding some drawings to it with a crayon!"
+	attackby(obj/item/W, mob/user)
+		if(istype(W,/obj/item/pen/crayon))
+			if(src.state == 1)
+				chosen_overlay = tgui_input_list(user, "What do you want to draw?", null, choosable_overlays)
+				if (!chosen_overlay)
+					return
+				var/mutable_appearance/new_overlay = mutable_appearance('icons/obj/decals/banners.dmi', chosen_overlay)
+				new_overlay.appearance_flags = RESET_COLOR
+				new_overlay.color = W.color
+				src.overlays += new_overlay
 
-		else if(istype(W,/obj/item/pen/crayon) && (src.state == 1))
-			chosen_overlay = input(user, "What do you want to draw?", null, null) as null|anything in choosable_overlays
-			var/image/new_overlay = image('icons/obj/decals/banners.dmi', chosen_overlay)
-			new_overlay.color = W.color
-			src.overlays += new_overlay
+			if(src.state == 0)
+				src.color = W.color
+				src.state = 1
+				desc = "A colored banner, try adding some drawings to it with a crayon!"
 
+		if(istool(W,TOOL_SNIPPING))
+			if(tgui_alert(usr, "Are you sure you want to clear the banner?","Confirmation",list("Yes","No")) == "Yes")
 
+				user.visible_message("<span class='notice'>[user] cuts off [src].</span>")
+				qdel(src)
+				user.put_in_hand_or_drop(new /obj/item/material_piece/cloth/cottonfabric)
+
+	MouseDrop(atom/over_object, src_location, over_location)
+		..()
+		if (!usr || usr.stat || usr.restrained() || get_dist(src, usr) > 1)
+			return
+		else if(tgui_alert(usr, "Are you sure you want to clear the banner?","Confirmation",list("Yes","No")) == "Yes")
+			src.color = null
+			src.overlays = null
+			src.state = 0
+			usr.visible_message("<span class='notice'>[usr] Clears the [src].</span>")
+		else
+			return
 
