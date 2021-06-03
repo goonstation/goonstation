@@ -1368,3 +1368,10 @@
 	setupProperties()
 		..()
 		setProperty("coldprot", 15)
+
+/obj/item/clothing/head/waitresshat
+	name = "diner waitress's hat"
+	desc = "Still smells faintly of hairspray."
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "waitresshat"
+	item_state = "waitresshat"

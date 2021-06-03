@@ -663,3 +663,27 @@
 	name = "Pink Flats"
 	icon_state = "flatspnk"
 	desc = "Simple pink flats. So bright they almost glow! Almost."
+
+/obj/item/clothing/shoes/mjblack
+	name = "Black Mary Janes"
+	icon_state = "mjblack"
+	desc = "Dainty and formal. This pair is black."
+	step_sound = "footstep"
+
+/obj/item/clothing/shoes/mjbrown
+	name = "Brown Mary Janes"
+	icon_state = "mjbrown"
+	desc = "Dainty and formal. This pair is brown."
+	step_sound = "footstep"
+
+/obj/item/clothing/shoes/mjnavy
+	name = "Navy Mary Janes"
+	icon_state = "mjnavy"
+	desc = "Dainty and formal. This pair is navy."
+	step_sound = "footstep"
+
+/obj/item/clothing/shoes/mjwhite
+	name = "White Mary Janes"
+	icon_state = "mjwhite"
+	desc = "Dainty and formal. This pair is white."
+	step_sound = "footstep"
