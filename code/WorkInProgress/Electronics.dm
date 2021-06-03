@@ -472,11 +472,14 @@
 	var/olde = 0
 	var/datum/mechanic_controller/ruck_controls
 	var/host_ruck //net_id of the ruck that will send messages
-	var/list/non_hosts = null
+	var/old_host //the highest ruck that isn't us, we only accept 
+	var/list/known_rucks = null
+	var/boot_time = null
+	var/data_initialized = 0
 
 /obj/machinery/rkit/New()
 	..()
-	non_hosts = new
+	known_rucks = new
 	ruck_controls = new
 	SPAWN_DBG(0.8 SECONDS)
 		if(radio_controller)
@@ -503,6 +506,7 @@
 		return
 	if (powered())
 		SPAWN_DBG(rand(0, 15))
+			if(isnull(boot_time)) boot_time = world.time
 			send_sync()
 	else
 		SPAWN_DBG(rand(0, 15))
@@ -592,35 +596,20 @@
 	if(signal.data["address_1"] == "TRANSRKIT" && command == "SYNCREPLY" && target)
 		if (target > host_ruck) //pick the highest net_id
 			host_ruck = target
+			known_rucks |= target
 			//Wait we're done here?
 			return
 
+
 	//Set the host ruck to the highest net_id we see, and if it's a DROP command, don't save that net_id
 	if(signal.data["address_1"] == "TRANSRKIT" && (command == "SYNC" || command == "DROP") && target)
-		//Got a sync time to reset this to ourselves
-		host_ruck = src.net_id //We're the master!
-		if (target > host_ruck && command == "SYNC") //Unless they are
-			host_ruck = target
-		SPAWN_DBG(0.5 SECONDS)
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
-			newsignal.data["command"] = "SYNCREPLY"
-			newsignal.data["address_1"] = "TRANSRKIT"
-			newsignal.data["sender"] = src.net_id
 
-			radio_connection.post_signal(src, newsignal)
-		return
-
-	//I have no idea why anyone would want blueprint files
-	//But I love making packets cryptic
-	//Oh okay we have a distributed network now, THAT'S what this is for
-	if(signal.data["address_1"] == src.net_id && command == "DOWNLOAD" && target && !isnull(signal.data["data"]))
-		var/targetitem = signal.data["data"]
-		if(targetitem == "INIT" && src.net_id == host_ruck && ruck_controls.scanned_items) //Send a copy of the entire database
+		if(known_rucks && ruck_controls.scanned_items && src.net_id == host_ruck && !(target in known_rucks))
+			//If we have a database of items, and we're the host, and we see a new ruck
+			//Upload our database to it
 			var/datum/computer/file/electronics_bundle/rkitFile = new
 			rkitFile.ruckData = ruck_controls
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN_DBG(1 SECONDS)
 				var/datum/signal/newsignal = get_free_signal()
 				newsignal.source = src
 				newsignal.transmission_method = TRANSMISSION_RADIO
@@ -629,7 +618,29 @@
 				newsignal.data["sender"] = src.net_id
 				newsignal.data_file = rkitFile
 				radio_connection.post_signal(src, newsignal)
-			return
+
+		known_rucks |= target
+		//Got a sync time to reset this to ourselves
+		host_ruck = src.net_id //We're the master!
+		if (target > host_ruck && command == "SYNC") //Unless they are
+			host_ruck = target
+
+		SPAWN_DBG(0.5 SECONDS)
+			var/datum/signal/newsignal = get_free_signal()
+			newsignal.source = src
+			newsignal.transmission_method = TRANSMISSION_RADIO
+			newsignal.data["command"] = "SYNCREPLY"
+			newsignal.data["address_1"] = "TRANSRKIT"
+			newsignal.data["sender"] = src.net_id
+			radio_connection.post_signal(src, newsignal)
+
+		return
+
+	//I have no idea why anyone would want blueprint files
+	//But I love making packets cryptic
+	//Oh okay we have a distributed network now, THAT'S what this is for
+	if(signal.data["address_1"] == src.net_id && command == "DOWNLOAD" && target && !isnull(signal.data["data"]))
+		var/targetitem = signal.data["data"]
 		for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
 			if (targetitem == O.name)
 				upload_blueprint(O, target)
@@ -638,11 +649,13 @@
 		return
 
 	var/datum/computer/file/electronics_bundle/rkitFile = signal.data_file
-	if (istype(rkitFile)) //Copy the database on digest so we never waste the effort
+	if (istype(rkitFile) && !data_initialized) //Copy the database on digest so we never waste the effort
 		var/datum/mechanic_controller/originalData = rkitFile.ruckData
-		for (var/datum/electronics/scanned_item/O in originalData.scanned_items)
-			ruck_controls.scan_in(O.name, O.item_type, O.mats, O.locked)
-		return
+		data_initialized = 1
+		if(world.time - boot_time <= 3 SECONDS)
+			for (var/datum/electronics/scanned_item/O in originalData.scanned_items)
+				ruck_controls.scan_in(O.name, O.item_type, O.mats, O.locked)
+			return
 
 	var/datum/computer/file/electronics_scan/scanFile = signal.data_file
 
