@@ -511,20 +511,19 @@
 /obj/machinery/rkit/proc/send_sync(var/dispose) //Request SYNCREPLY from other rucks
 	//If dispose is true we use "DROP" which won't be saved as the host
 	host_ruck = src.net_id //We're the host until someone else proves they are
-	SPAWN_DBG(0.5 SECONDS)
-		var/datum/signal/newsignal = get_free_signal()
-		newsignal.source = src
-		newsignal.transmission_method = TRANSMISSION_RADIO
-		if(!dispose)
-			newsignal.data["command"] = "SYNC"
-		else
-			newsignal.data["command"] = "DROP"
-		newsignal.data["address_1"] = "TRANSRKIT"
-		newsignal.data["sender"] = src.net_id
-		radio_connection.post_signal(src, newsignal)
+	var/datum/signal/newsignal = get_free_signal()
+	newsignal.source = src
+	newsignal.transmission_method = TRANSMISSION_RADIO
+	if(!dispose)
+		newsignal.data["command"] = "SYNC"
+	else
+		newsignal.data["command"] = "DROP"
+	newsignal.data["address_1"] = "TRANSRKIT"
+	newsignal.data["sender"] = src.net_id
+	radio_connection.post_signal(src, newsignal)
 
 /obj/machinery/rkit/proc/upload_blueprint(var/datum/electronics/scanned_item/O, var/target, var/internal)
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN_DBG(0.5 SECONDS) //This proc sends responses so there must be a delay
 		var/datum/computer/file/electronics_scan/scanFile = new
 		scanFile.scannedName = O.name
 		scanFile.scannedPath = O.item_type
@@ -542,7 +541,7 @@
 		radio_connection.post_signal(src, newsignal)
 
 /obj/machinery/rkit/proc/pda_messsage(var/target, var/message)
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN_DBG(0.5 SECONDS) //response proc
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
 		newsignal.transmission_method = TRANSMISSION_RADIO
@@ -564,7 +563,8 @@
 	var/target = signal.data["sender"]
 	var/command = signal.data["command"]
 	if((signal.data["address_1"] == "ping") && target)
-		SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+		SPAWN_DBG(0.5 SECONDS)	//Send a reply for those curious jerks
+								//Any replies in receive signal need a delay
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.transmission_method = TRANSMISSION_RADIO
@@ -600,7 +600,7 @@
 	//Set the host ruck to the highest net_id we see, and if it's a DROP command, don't save that net_id
 	if(signal.data["address_1"] == "TRANSRKIT" && (command == "SYNC" || command == "DROP") && target)
 
-		if(known_rucks && ruck_controls.scanned_items && src.net_id == host_ruck && !(target in known_rucks))
+		if(length(known_rucks) && length(ruck_controls.scanned_items) && src.net_id == host_ruck && !(target in known_rucks))
 			//If we have a database of items, and we're the host, and we see a new ruck
 			//Upload our database to it
 			var/datum/computer/file/electronics_bundle/rkitFile = new
@@ -653,6 +653,8 @@
 			for (var/datum/electronics/scanned_item/O in originalData.scanned_items)
 				ruck_controls.scan_in(O.name, O.item_type, O.mats, O.locked)
 			return
+	else if(istype(rkitFile))
+		return
 
 	var/datum/computer/file/electronics_scan/scanFile = signal.data_file
 
@@ -775,16 +777,15 @@
 					var/datum/electronics/scanned_item/O = locate(href_list["op"]) in ruck_controls.scanned_items
 					O.locked = !O.locked
 					updateDialog()
-					SPAWN_DBG(0.5 SECONDS) //Lock the blueprint on the other kits
-						var/datum/signal/newsignal = get_free_signal()
-						newsignal.source = src
-						newsignal.transmission_method = TRANSMISSION_RADIO
-						newsignal.data["address_1"] = "TRANSRKIT"
-						newsignal.data["acc_code"] = netpass_heads
-						newsignal.data["LOCK"] = O.locked
-						newsignal.data["DATA"] = O.name
-						newsignal.data["sender"] = src.net_id
-						radio_connection.post_signal(src, newsignal)
+					var/datum/signal/newsignal = get_free_signal()
+					newsignal.source = src
+					newsignal.transmission_method = TRANSMISSION_RADIO
+					newsignal.data["address_1"] = "TRANSRKIT"
+					newsignal.data["acc_code"] = netpass_heads
+					newsignal.data["LOCK"] = O.locked
+					newsignal.data["DATA"] = O.name
+					newsignal.data["sender"] = src.net_id
+					radio_connection.post_signal(src, newsignal)
 
 	else
 		usr.Browse(null, "window=rkit")

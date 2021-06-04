@@ -1,3 +1,4 @@
+//The host ruck kit will replace this with it's own database so objectives and stuff can track the scanned items
 var/datum/mechanic_controller/mechanic_controls
 
 /datum/mechanic_controller
