@@ -473,16 +473,16 @@
 	var/data_initialized = 0
 
 /obj/machinery/rkit/New()
-	..()
+	. = ..()
 	known_rucks = new
 	ruck_controls = new
-	SPAWN_DBG(0.8 SECONDS)
-		if(radio_controller)
-			radio_connection = radio_controller.add_object(src, "[frequency]")
-		if(!src.net_id)
-			src.net_id = generate_net_id(src)
-			ruck_controls.rkit_addresses += src.net_id
-			host_ruck = src.net_id
+	if(isnull(mechanic_controls)) mechanic_controls = ruck_controls //For objective tracking and admin
+	if(radio_controller)
+		radio_connection = radio_controller.add_object(src, "[frequency]")
+	if(!src.net_id)
+		src.net_id = generate_net_id(src)
+		ruck_controls.rkit_addresses += src.net_id
+		host_ruck = src.net_id
 
 /obj/machinery/rkit/disposing()
 	if (src.net_id == host_ruck) send_sync(1) //Everyone needs to find a new master

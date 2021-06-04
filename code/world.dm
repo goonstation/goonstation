@@ -296,7 +296,7 @@ var/f_color_selector_handler/F_Color_Selector
 		Z_LOG_DEBUG("Preload", "  disease_controls")
 		disease_controls = new /datum/disease_controller()
 		Z_LOG_DEBUG("Preload", "  mechanic_controls")
-		mechanic_controls = new /datum/mechanic_controller()
+		mechanic_controls = null //A ruck kit will fill this in
 		Z_LOG_DEBUG("Preload", "  artifact_controls")
 		artifact_controls = new /datum/artifact_controller()
 		Z_LOG_DEBUG("Preload", "  mining_controls")
