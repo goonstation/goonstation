@@ -81045,6 +81045,11 @@
 	icon_state = "diagonalWall3"
 	},
 /area/diner/tug)
+"rPr" = (
+/obj/map/light/graveyard,
+/obj/decal/stalagtite,
+/turf/unsimulated/floor/cave,
+/area/catacombs)
 "rQC" = (
 /obj/decal/stage_edge/dojo,
 /obj/decal/stone_lamp{
@@ -139972,7 +139977,7 @@ bnW
 aTs
 aaa
 boz
-boP
+rPr
 bpp
 boz
 aaa
