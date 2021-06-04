@@ -1365,7 +1365,6 @@ toxic - poisons
 	projectile_speed = 20
 	implanted = null
 	power = 0
-	fullauto_valid = 1
 	ks_ratio = 0
 	hit_type = DAMAGE_BLUNT
 	max_range = 60

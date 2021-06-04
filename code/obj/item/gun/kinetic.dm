@@ -1714,7 +1714,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Foam Dart Gun"
 	icon_state = "foamdartgun"
 	desc = "A toy gun that fires foam darts. Keep out of reach of clowns, staff assistants and scientists."
-	shoot_delay = 3
 	w_class = W_CLASS_SMALL
 	force = 1
 	caliber = 0.393
@@ -1723,5 +1722,4 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	New()
 		ammo = new/obj/item/ammo/bullets/foamdarts/twenty
 		set_current_projectile(new/datum/projectile/bullet/foamdart)
-		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
 		..()
