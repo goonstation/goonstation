@@ -445,10 +445,6 @@
 				boutput(user, "<span class='alert'>You have already scanned that object.</span>")
 				return
 
-		/*for(var/datum/electronics/scanned_item/I in ruck_controls.scanned_items)
-			if(final_type == I.item_type)
-				boutput(user, "<span class='alert'>That object already exists in the scanned database.</span>")
-				return*/
 		animate_scanning(O, "#FFFF00")
 		src.scanned += final_type
 		boutput(user, "<span class='notice'>Item scan successful.</span>")
