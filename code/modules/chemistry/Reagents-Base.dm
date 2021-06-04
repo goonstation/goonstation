@@ -507,10 +507,10 @@ datum
 				.= 1
 
 				if (volume >= 20)
-					if (istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || istype(I,/datum/projectile/bullet/revolver_38))
+					if (istype(I, /obj/item/ammo/bullets/bullet_22HP) || istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || istype(I,/datum/projectile/bullet/revolver_38))
 						var/obj/item/ammo/bullets/bullet_holder = I
 						var/datum/projectile/ammo_type = bullet_holder.ammo_type
-						if (ammo_type && !(ammo_type.material && ammo_type.material == "silver"))
+						if (ammo_type && !(ammo_type.material && ammo_type.material.mat_id == "silver"))
 							ammo_type.material = getMaterial("silver")
 							holder.remove_reagent(src.id, 20)
 							.= 0
@@ -672,7 +672,7 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
 				var/spawncleanable = 1
-				if(covered.len > 5 && (length(volume/covered) < 1))
+				if(length(covered) > 5 && (volume/length(covered) < 1))
 					spawncleanable = prob((volume/covered.len) * 10)
 
 
