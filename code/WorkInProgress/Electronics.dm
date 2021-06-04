@@ -472,7 +472,7 @@
 	var/olde = 0
 	var/datum/mechanic_controller/ruck_controls
 	var/host_ruck //net_id of the ruck that will send messages
-	var/old_host //the highest ruck that isn't us, we only accept 
+	var/old_host //the highest ruck that isn't us, we only accept
 	var/list/known_rucks = null
 	var/boot_time = null
 	var/data_initialized = 0
@@ -609,6 +609,7 @@
 			//Upload our database to it
 			var/datum/computer/file/electronics_bundle/rkitFile = new
 			rkitFile.ruckData = ruck_controls
+			rkitFile.target = target
 			SPAWN_DBG(1 SECONDS)
 				var/datum/signal/newsignal = get_free_signal()
 				newsignal.source = src
@@ -649,7 +650,7 @@
 		return
 
 	var/datum/computer/file/electronics_bundle/rkitFile = signal.data_file
-	if (istype(rkitFile) && !data_initialized) //Copy the database on digest so we never waste the effort
+	if (istype(rkitFile) && !data_initialized && rkitFile.target == src.net_id) //Copy the database on digest so we never waste the effort
 		var/datum/mechanic_controller/originalData = rkitFile.ruckData
 		data_initialized = 1
 		if(world.time - boot_time <= 3 SECONDS)
