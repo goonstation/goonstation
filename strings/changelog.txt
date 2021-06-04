@@ -1,4 +1,8 @@
 
+(t)fri jun 04 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Booster enzyme now produces some harmless but slow-depleting leftovers when replicating chemicals.
 (t)thu jun 03 21
 (u)Jan.antilles
 (p)4889

@@ -1051,7 +1051,9 @@ datum
 				for (var/i = 1, i <= booster_enzyme_reagents_to_check.len, i++)
 					var/check_amount = holder.get_reagent_amount(booster_enzyme_reagents_to_check[i])
 					if (check_amount && check_amount < 18)
-						holder.add_reagent(booster_enzyme_reagents_to_check[i], min(2 * mult, 20-check_amount))
+						var/amt = min(2 * mult, 20-check_amount)
+						holder.add_reagent(booster_enzyme_reagents_to_check[i], amt)
+						holder.add_reagent("enzymatic_leftovers", amt/2)
 				..()
 				return
 
@@ -1322,6 +1324,17 @@ datum
 			fluid_g = 36
 			fluid_b = 19
 			transparency = 255
+
+		enzymatic_leftovers
+			name = "enzymatic leftovers"
+			id = "enzymatic_leftovers"
+			description = "Leftover chemical garbage produced as a byproduct of a beneficial enzyme."
+			reagent_state = LIQUID
+			fluid_r = 42
+			fluid_g = 36
+			fluid_b = 19
+			transparency = 255
+			depletion_rate = 0.01
 
 		// used to make fake initropidril
 		eyeofnewt
