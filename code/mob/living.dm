@@ -603,7 +603,7 @@
 
 
 /mob/living/proc/set_burning(var/new_value)
-	setStatus("burning", new_value*10)
+	setStatus("burning", new_value SECONDS)
 
 /mob/living/proc/update_burning(var/change)
 	changeStatus("burning", change SECONDS)
