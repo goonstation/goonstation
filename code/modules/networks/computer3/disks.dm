@@ -82,7 +82,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (ispulsingtool(W))
 			user.visible_message("<span class='alert'><b>[user] begins to wipe [src.name]!</b></span>")
-			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/disk/data/proc/wipe_or_zap, list(user), src.icon, src.icon_state, null)
+			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/disk/data/proc/wipe_or_zap, list(user), src.icon, src.icon_state, null, null)
 
 /obj/item/disk/data/floppy
 	var/random_color = 1

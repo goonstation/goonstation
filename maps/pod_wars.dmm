@@ -1821,10 +1821,10 @@
 /area/pod_wars/spacejunk/fstation)
 "gN" = (
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/manufacturer/general,
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
+/obj/machinery/manufacturer/general/pod_wars,
 /turf/unsimulated/floor/yellow/side{
 	dir = 1
 	},
@@ -2139,10 +2139,10 @@
 /area/pod_wars/spacejunk/fstation/mess)
 "hW" = (
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/manufacturer/general,
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
+/obj/machinery/manufacturer/general/pod_wars,
 /turf/unsimulated/floor/blue/side{
 	dir = 9
 	},
@@ -6477,10 +6477,10 @@
 	},
 /area/pod_wars/team2/hangar)
 "yj" = (
-/obj/machinery/manufacturer/general,
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
+/obj/machinery/manufacturer/general/pod_wars,
 /turf/unsimulated/floor/yellow/side{
 	dir = 4
 	},
@@ -7942,10 +7942,10 @@
 /area/pod_wars/spacejunk/reliant)
 "Ee" = (
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/manufacturer/general,
 /obj/decal/tile_edge{
 	icon_state = "mule_dropoff"
 	},
+/obj/machinery/manufacturer/general/pod_wars,
 /turf/unsimulated/floor/blue/side{
 	dir = 5
 	},
