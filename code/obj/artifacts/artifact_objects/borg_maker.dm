@@ -58,8 +58,9 @@
 					converting = FALSE
 					return
 				loops--
-				random_brute_damage(humanuser, 10)
-				take_bleeding_damage(humanuser, null, 3)
+				//inescapable version slices em up more
+				random_brute_damage(humanuser, (escapable ? 10 : 15))
+				take_bleeding_damage(humanuser, null, (escapable ? 3 : 4))
 				user.changeStatus("paralysis", 7 SECONDS)
 				playsound(user.loc, pick(work_sounds), 50, 1, -1)
 				if (loops % loops_per_conversion_step == 0)
