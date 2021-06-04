@@ -497,30 +497,28 @@
 	. = ..()
 	//This will run when we're created and find a host ruck
 	if(status & (NOPOWER|BROKEN))
-		SPAWN_DBG(rand(0, 15))
 			if (src.net_id == host_ruck) send_sync(1)
 		return
 	if (powered())
-		SPAWN_DBG(rand(0, 15))
 			if(isnull(boot_time)) boot_time = world.time
 			send_sync()
 	else
-		SPAWN_DBG(rand(0, 15))
 			if (src.net_id == host_ruck) send_sync(1)
 
 /obj/machinery/rkit/proc/send_sync(var/dispose) //Request SYNCREPLY from other rucks
 	//If dispose is true we use "DROP" which won't be saved as the host
-	host_ruck = src.net_id //We're the host until someone else proves they are
-	var/datum/signal/newsignal = get_free_signal()
-	newsignal.source = src
-	newsignal.transmission_method = TRANSMISSION_RADIO
-	if(!dispose)
-		newsignal.data["command"] = "SYNC"
-	else
-		newsignal.data["command"] = "DROP"
-	newsignal.data["address_1"] = "TRANSRKIT"
-	newsignal.data["sender"] = src.net_id
-	radio_connection.post_signal(src, newsignal)
+	SPAWN_DBG(rand(0, 15)) //Keep these out of sync a little, less spammy
+		host_ruck = src.net_id //We're the host until someone else proves they are
+		var/datum/signal/newsignal = get_free_signal()
+		newsignal.source = src
+		newsignal.transmission_method = TRANSMISSION_RADIO
+		if(!dispose)
+			newsignal.data["command"] = "SYNC"
+		else
+			newsignal.data["command"] = "DROP"
+		newsignal.data["address_1"] = "TRANSRKIT"
+		newsignal.data["sender"] = src.net_id
+		radio_connection.post_signal(src, newsignal)
 
 /obj/machinery/rkit/proc/upload_blueprint(var/datum/electronics/scanned_item/O, var/target, var/internal)
 	SPAWN_DBG(0.5 SECONDS) //This proc sends responses so there must be a delay
