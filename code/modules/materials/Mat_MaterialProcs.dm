@@ -385,12 +385,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/molitz_temp
 	var/iterations = 100
-
 	execute(var/atom/location, var/temp, var/agent_b=FALSE)
 		if(iterations <= 0) return
 		var/turf/target = get_turf(location)
 		if(temp != 1500) //Same temp that hitting it sets it too, this is so hitting it ignores cooldown, making it practical to manually farm
-			if(ON_COOLDOWN(target, "molitz_oxy_generate", 8 SECONDS)) return
+			if(ON_COOLDOWN(location, "molitz_gas_generate", 8 SECONDS)) return
 
 		var/datum/gas_mixture/air = target.return_air()
 		if(!air) return
@@ -408,6 +407,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			// Should be 100 iterations to deplete total of 19.099 mols of agent B and 100 oxygen, will take 110 iterations to hit minimum reaction rate whihch is about 7.33 minutes, (this is azruns math not mine dont blame me if wrong)
 
 			animate_flash_color_fill_inherit(location,"#ff0000",4, 2 SECONDS)
+			if(!ON_COOLDOWN(location, "sound_cooldownB", 2 SECONDS)) // Prevents ear spam
+				playsound(location, "sound/effects/leakagentb.ogg", 50, 1, 8)
 			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, location))
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(location))
 			trace_gas.moles += min(iterations/50,0.2)
@@ -417,12 +418,12 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			target.assume_air(payload)
 		else
 			animate_flash_color_fill_inherit(location,"#0000FF",4, 2 SECONDS)
+			if(!ON_COOLDOWN(location, "sound_cooldown", 2 SECONDS)) //Prevents ear spam
+				playsound(location, "sound/effects/leakoxygen.ogg", 50, 1, 5)
 			payload.oxygen = 10
 			iterations -= 1
 
 			target.assume_air(payload)
-
-		return
 
 /datum/materialProc/molitz_temp/agent_b
 	execute(var/atom/location, var/temp)
