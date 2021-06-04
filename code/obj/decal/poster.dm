@@ -1103,17 +1103,32 @@
 		C.Browse("<img src=\"[resource("images/pw_map.png")]\">","window=Map;size=[imgw]x[imgh];title=Map")
 
 /obj/decal/poster/banner
-	name = "Banner"
+	name = "banner"
 	desc = "An unfinished banner, try adding some color to it by using a crayon!"
 	icon = 'icons/obj/decals/banners.dmi'
 	icon_state = "banner_base"
 	popup_win = 0
+	flags = TGUI_INTERACTIVE
 	var/state = 0
-	var/image/banner
 	var/chosen_overlay
 	var/mutable_appearance/new_overlay
 	var/static/list/choosable_overlays = list("Horizontal Stripes","Vertical Stripes","Diagonal Stripes","Ball","Cross","Diagonal Cross","Full",
 	"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
+
+	proc/clear()
+		if(src.material)
+			src.color = src.material.color
+		else src.color = "#ffffff"
+		src.overlays = null
+		src.state = 0
+		usr.visible_message("<span class='notice'>[usr] Clears the [src].</span>")
+
+	New()
+		..()
+		var/static/image/banner_holder = image(src.icon, , "banner_holder")
+		banner_holder.appearance_flags = RESET_COLOR
+		src.underlays.Add(banner_holder)
+		return
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/pen/crayon))
@@ -1121,17 +1136,17 @@
 				chosen_overlay = tgui_input_list(user, "What do you want to draw?", null, choosable_overlays)
 				if (!chosen_overlay)
 					return
-				var/mutable_appearance/new_overlay = mutable_appearance('icons/obj/decals/banners.dmi', chosen_overlay)
+				var/mutable_appearance/new_overlay = mutable_appearance(src.icon, chosen_overlay)
 				new_overlay.appearance_flags = RESET_COLOR
 				new_overlay.color = W.color
-				src.overlays += new_overlay
+				src.overlays.Add(new_overlay)
 
 			if(src.state == 0)
 				src.color = W.color
 				src.state = 1
 				desc = "A colored banner, try adding some drawings to it with a crayon!"
 
-		if(istool(W,TOOL_SNIPPING))
+		if(istool(W,TOOL_SNIPPING| TOOL_CUTTING | TOOL_SAWING))
 			user.visible_message("<span class='notice'>[user] cuts off [src].</span>")
 			var/obj/item/material_piece/cloth/C = new(user.loc)
 			if(src.material)
@@ -1140,15 +1155,11 @@
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		..()
-		if (!usr || usr.stat || usr.restrained() || get_dist(src, usr) > 1)
+		if (usr.stat || usr.restrained() || !can_reach(usr, src))
 			return
 
 		else if(tgui_alert(usr, "Are you sure you want to clear the banner?","Confirmation",list("Yes","No")) == "Yes")
-			if(src.material)
-				src.color = src.material.color
-			src.overlays = null
-			src.state = 0
-			usr.visible_message("<span class='notice'>[usr] Clears the [src].</span>")
+			clear()
 		else
 			return
 
