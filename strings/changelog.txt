@@ -1,5 +1,9 @@
 
 (t)fri jun 04 21
+(u)BatElite
+(p)4994
+(e)🆕|feature
+(+)The Detgadget hat will now automatically light requested cigarettes if it can, so you can continue punching crime and drinking uninterrupted.
 (u)Tarmunora
 (e)⚖|balance
 (+)Booster enzyme now produces some harmless but slow-depleting leftovers when replicating chemicals.
