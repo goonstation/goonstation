@@ -1706,17 +1706,11 @@ datum/preferences
 	//DEBUG_MESSAGE("EYE final: [return_color]")
 	return return_color
 
-proc/isfem(type)
-	var/datum/customization_style/style = new type
-	. = 0
-	if (style.gender & FEMININE)
-		. = 1
+proc/isfem(datum/customization_style/style)
+	return !!(initial(style.gender) & FEMININE)
 
-proc/ismasc(type)
-	var/datum/customization_style/style = new type
-	. = 0
-	if (style.gender & MASCULINE)
-		. = 1
+proc/ismasc(datum/customization_style/style)
+	return !!(initial(style.gender) & MASCULINE)
 
 // this is weird but basically: a list of hairstyles and their appropriate detail styles, aka hair_details["80s"] would return the Hairmetal: Faded style
 // further on in the randomize_look() proc we'll see if we've got one of the styles in here and if so, we have a chance to add the detailing
