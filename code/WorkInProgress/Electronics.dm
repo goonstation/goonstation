@@ -495,6 +495,7 @@
 		..()
 
 /obj/machinery/rkit/power_change()
+	. = ..()
 	//This will run when we're created and find a host ruck
 	if(status & (NOPOWER|BROKEN))
 		SPAWN_DBG(rand(0, 15))
