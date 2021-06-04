@@ -52,7 +52,7 @@
 			//(loops_per_conversion_step - 1) bit adds some 'buffer time' before any limbs are converted.
 			var/loops = (loops_per_conversion_step * (convertable_limbs.len + 1)) + (loops_per_conversion_step - 1)
 			while (loops > 0)
-				if (user.loc != O.loc && user.loc != O)
+				if ((user.loc != O.loc && user.loc != O) || !activated)
 					converting = FALSE
 					return
 				loops--
@@ -104,3 +104,10 @@
 			boutput(user, "<span class='alert'>An imperious voice rings out in your head... \"<b>UPGRADE COMPLETE, RETURN TO ASSIGNED TASK</b>\"</span>")
 		else
 			return
+
+	effect_deactivate(obj/O)
+		if (..())
+			return
+		for (var/mob/M in contents)
+			O.visible_message("<span class='alert'><b>[O]</b> grumbles before releasing [M]!</span>")
+			M.set_loc(get_turf(O))
