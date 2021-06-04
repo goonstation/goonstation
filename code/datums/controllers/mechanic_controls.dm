@@ -8,18 +8,15 @@ var/datum/mechanic_controller/mechanic_controls
 	proc
 		scan_in(var/N,var/T,var/list/M, var/locked)
 			var/datum/electronics/scanned_item/S = new/datum/electronics/scanned_item
-			var/matscopy
 			S.name = N
 			S.item_type = T
 			if (istype(M))
-				matscopy = M.Copy()
 				S.mats = M.Copy()
 			else
-				matscopy = M
 				S.mats = M
-			S.item_mats = matscopy
-			S.create_partslist(matscopy)
-			S.create_blueprint(matscopy)
+			S.item_mats = M
+			S.create_partslist(M)
+			S.create_blueprint(M)
 			if (!isnull(locked)) S.locked = locked
 			src.scanned_items += S
 			return S
