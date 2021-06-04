@@ -251,7 +251,7 @@
 					M.visible_message("<span class='alert'><B>[M] sinks its teeth into [target]! !</B></span>")
 				HH.add_fingerprint(M) // Just put 'em on the mob itself, like pulling does. Simplifies forensic analysis a bit.
 				M.werewolf_audio_effects(HH, "feast")
-				HH.setStatus("weakened",rand(30,60))
+				HH.setStatus("weakened",rand(3 SECONDS, 6 SECONDS))
 				if (prob(70) && HH.stat != 2)
 					HH.emote("scream")
 		if ("pounce")
@@ -270,7 +270,7 @@
 				damage += rand(5,15)
 
 			if (prob(60)) playsound(M.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-			if (prob(75)) target.setStatus("weakened",30)
+			if (prob(75)) target.setStatus("weakened", 3 SECONDS)
 			if (prob(33) && target.stat != 2)
 				target.emote("scream")
 

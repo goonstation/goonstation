@@ -1214,7 +1214,7 @@ var/global/noir = 0
 					M.delStatus(effect)
 					message_admins("[key_name(usr)] removed the [effect] status-effect from [key_name(M)].")
 				else
-					M.setStatus(effect, duration * 10)	//convert to seconds
+					M.setStatus(effect, duration SECONDS)
 					message_admins("[key_name(usr)] added the [effect] status-effect to [key_name(M)] for [duration * 10] seconds.")
 
 			else
