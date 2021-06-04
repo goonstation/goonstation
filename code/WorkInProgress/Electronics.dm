@@ -468,7 +468,6 @@
 	var/olde = 0
 	var/datum/mechanic_controller/ruck_controls
 	var/host_ruck //net_id of the ruck that will send messages
-	var/old_host //the highest ruck that isn't us, we only accept
 	var/list/known_rucks = null
 	var/boot_time = null
 	var/data_initialized = 0
