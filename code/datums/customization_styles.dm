@@ -556,8 +556,8 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			name = "Heterochromia: Right"
 			id = "hetcroR"
 
-proc/select_custom_style(list/customization_types, mob/living/carbon/human/user as mob)
-	var/list/options = list()
+proc/select_custom_style(list/datum/customization_style/customization_types, mob/living/carbon/human/user as mob)
+	var/list/datum/customization_style/options = list()
 	for (var/datum/customization_style/styletype as anything in customization_types)
 		var/datum/customization_style/CS = new styletype
 		options[CS.name] = CS
