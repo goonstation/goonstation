@@ -109,9 +109,6 @@
 			signal.source = src.master
 			signal.transmission_method = 1
 
-			/*if (mechanic_controls.rkit_addresses.len)
-				last_address = pick(mechanic_controls.rkit_addresses)*/
-
 			signal.data["address_1"] = "TRANSRKIT"
 			signal.data["command"] = "add"
 
