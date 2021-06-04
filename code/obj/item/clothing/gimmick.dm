@@ -971,6 +971,18 @@
 	icon_state = "maid"
 	item_state = "maid"
 
+/obj/item/clothing/under/gimmick/dinerdress_mint
+	name = "Mint Diner Waitress's Dress"
+	desc = "Can I getcha somethin', sugar?"
+	icon_state = "dinerdress-mint"
+	item_state = "dinerdress-mint"
+
+/obj/item/clothing/under/gimmick/dinerdress_pink
+	name = "Pink Diner Waitress's Dress"
+	desc = "Y'all come back now, ya hear?"
+	icon_state = "dinerdress-pink"
+	item_state = "dinerdress-pink"
+
 /obj/item/clothing/under/gimmick/kilt
 	name = "kilt"
 	desc = "Traditional Scottish clothing. A bit drafty in here, isn't it?"

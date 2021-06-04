@@ -646,7 +646,7 @@
 			playsound(get_turf(src), "sound/machines/warning-buzzer.ogg", 150, 1, flags = SOUND_IGNORE_SPACE)	//loud
 
 			SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/control_point_computer/proc/capture, list(user),\
-			 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!")
+			 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!", null)
 		else
 			boutput(user, "You can't think of anything else to do on this console...")
 
@@ -815,7 +815,7 @@
 
 	attack_self(mob/user as mob)
 		SETUP_GENERIC_ACTIONBAR(user, src, build_duration, /obj/item/deployer/barricade/proc/deploy, list(user, get_turf(user)),\
-		 src.icon, src.icon_state, "[user] deploys \the [src]")
+		 src.icon, src.icon_state, "[user] deploys \the [src]", null)
 
 	//mostly stolen from furniture_parts/proc/construct
 	proc/deploy(mob/user as mob, turf/T as turf)
