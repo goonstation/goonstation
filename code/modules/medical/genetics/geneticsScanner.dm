@@ -352,7 +352,7 @@ var/list/genetek_hair_styles = list()
 
 		if (!genetek_hair_styles.len)
 			var/customization_types = concrete_typesof(/datum/customization_style)
-			for (var/styletype as anything in customization_types)
+			for (var/datum/customization_style/styletype as anything in customization_types)
 				var/datum/customization_style/CS = new styletype
 				genetek_hair_styles += CS.name
 

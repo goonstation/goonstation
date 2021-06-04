@@ -11,23 +11,25 @@ ABSTRACT_TYPE(/datum/customization_style/eyebrows)
 ABSTRACT_TYPE(/datum/customization_style/makeup)
 ABSTRACT_TYPE(/datum/customization_style/biological)
 
+
+#define FEMININE 1
+#define MASCULINE 2
+
 /datum/customization_style
 	var/name = null
 	var/id = null
-	var/fem = 0
-	var/masc = 0
+	var/gender = 0
 
 	none
 		name = "None"
 		id = "none"
-		masc = 1
+		gender = MASCULINE
 	hair
 		short
 			afro
 				name = "Afro"
 				id = "afro"
-				fem = 1
-				masc = 1
+				gender = MASCULINE | FEMININE
 			afroHR
 				name = "Afro: Left Half"
 				id = "afroHR"
@@ -73,37 +75,35 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			balding
 				name = "Balding"
 				id = "balding"
-				masc = 1
+				gender = MASCULINE
 			bangs
 				name = "Bangs"
 				id = "bangs"
-				masc = 1
+				gender = MASCULINE
 			bieb
 				name = "Bieber"
 				id = "bieb"
-				fem = 1
-				masc = 1
+				gender = MASCULINE | FEMININE
 			bloom
 				name = "Bloom"
 				id = "bloom"
-				fem = 1
-				masc = 1
+				gender = MASCULINE | FEMININE
 			bobcut
 				name = "Bobcut"
 				id = "bobcut"
-				fem = 1
+				gender = FEMININE
 			baum_s
 				name = "Bobcut Alt"
 				id = "baum_s"
-				fem = 1
+				gender = FEMININE
 			bowl
 				name = "Bowl Cut"
 				id = "bowl"
-				masc = 1
+				gender = MASCULINE
 			cut
 				name = "Buzzcut"
 				id = "cut"
-				masc = 1
+				gender = MASCULINE
 			clown
 				name = "Clown"
 				id = "clown"
@@ -119,47 +119,44 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			combed_s
 				name = "Combed"
 				id = "combed_s"
-				masc = 1
+				gender = MASCULINE
 			combedbob_s
 				name = "Combed Bob"
 				id = "combedbob_s"
-				fem = 1
+				gender = FEMININE
 			chop_short
 				name = "Choppy Short"
 				id = "chop_short"
-				fem = 1
-				masc = 1
+				gender = MASCULINE | FEMININE
 			einstein
 				name = "Einstein"
 				id = "einstein"
-				masc = 1
+				gender = MASCULINE
 			einalt
 				name = "Einstein: Alternating"
 				id = "einalt"
 			emo
 				name = "Emo"
 				id = "emo"
-				fem = 1
-				masc = 1
+				gender = MASCULINE | FEMININE
 			emoH
 				name = "Emo: Highlight"
 				id = "emoH"
 			flattop
 				name = "Flat Top"
 				id = "flattop"
-				masc = 1
+				gender = MASCULINE
 			floof
 				name = "Floof"
 				id = "floof"
-				fem = 1
+				gender = FEMININE
 			streak
 				name = "Hair Streak"
 				id = "streak"
 			mohawk
 				name = "Mohawk"
 				id= "mohawk"
-				fem = 1
-				masc = 1
+				gender = MASCULINE | FEMININE
 			mohawkFT
 				name = "Mohawk: Fade from End"
 				id = "mohawkFT"
@@ -172,55 +169,50 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			long
 				name = "Mullet"
 				id = "long"
-				fem = 1
-				masc = 1
+				gender = MASCULINE | FEMININE
 			part
 				name = "Parted Hair"
 				id = "part"
-				fem = 1
-				masc = 1
+				gender = MASCULINE | FEMININE
 			pomp
 				name = "Pompadour"
 				id = "pomp"
-				fem = 1
-				masc = 1
+				gender = MASCULINE | FEMININE
 			pompS
 				name = "Pompadour: Greaser Shine"
 				id = "pompS"
 			shortflip
 				name = "Punky Flip"
 				id = "shortflip"
-				fem = 1
-				masc = 1
+				gender = MASCULINE | FEMININE
 			spiky
 				name = "Spiky"
 				id = "spiky"
-				masc = 1
+				gender = MASCULINE
 			subtlespiky
 				name = "Subtle Spiky"
 				id = "subtlespiky"
-				masc = 1
+				gender = MASCULINE
 			temsik
 				name = "Temsik"
 				id = "temsik"
-				masc = 1
+				gender = MASCULINE
 			tonsure
 				name = "Tonsure"
 				id = "tonsure"
-				masc = 1
+				gender = MASCULINE
 			short
 				name = "Trimmed"
 				id = "short"
-				masc = 1
+				gender = MASCULINE
 			tulip
 				name = "Tulip"
 				id = "tulip"
-				fem = 1
-				masc = 1
+				gender = MASCULINE | FEMININE
 			visual
 				name = "Visual"
 				id = "visual"
-				masc = 1
+				gender = MASCULINE
 		long
 			chub2_s
 				name = "Bang: Left"
@@ -237,199 +229,193 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			bedhead
 				name = "Bedhead"
 				id = "bedhead"
-				fem = 1
-				masc = 1
+				gender = MASCULINE | FEMININE
 			disheveled
 				name = "Disheveled"
 				id = "disheveled"
-				fem = 1
+				gender = FEMININE
 			doublepart
 				name = "Double-Part"
 				id = "doublepart"
 			shoulders
 				name = "Draped"
 				id = "shoulders"
-				fem = 1
+				gender = FEMININE
 			dreads
 				name = "Dreadlocks"
 				id = "dreads"
-				masc = 1
+				gender = MASCULINE
 			dreadsA
 				name = "Dreadlocks: Alternating"
 				id = "dreadsA"
 			fabio
 				name = "Fabio"
 				id = "fabio"
-				fem = 1
+				gender = FEMININE
 			glammetal
 				name = "Glammetal"
 				id = "glammetal"
-				fem = 1
+				gender = FEMININE
 			glammetalO
 				name = "Glammetal: Faded"
 				id = "glammetalO"
 			eighties
 				name = "Hairmetal"
 				id = "80s"
-				fem = 1
+				gender = FEMININE
 			eightiesfade
 				name = "Hairmetal: Faded"
 				id = "80sfade"
 			halfshavedR
 				name = "Half-Shaved: Left"
 				id = "halfshavedR"
-				masc = 1
-				fem = 1
+				gender = MASCULINE | FEMININE
 			halfshaved_s
 				name = "Half-Shaved: Long"
 				id = "halfshaved_s"
-				fem = 1
+				gender = FEMININE
 			halfshavedL
 				name = "Half-Shaved: Right"
 				id = "halfshavedL"
-				fem = 1
-				masc = 1
+				gender = MASCULINE | FEMININE
 			kingofrockandroll
 				name = "Kingmetal"
 				id = "king-of-rock-and-roll"
-				masc = 1
+				gender = MASCULINE
 			froofy_long
 				name = "Long and Froofy"
 				id = "froofy_long"
-				fem = 1
+				gender = FEMININE
 			longbraid
 				name = "Long Braid"
 				id = "longbraid"
-				fem = 1
+				gender = FEMININE
 			longsidepart_s
 				name = "Long Flip"
 				id = "longsidepart_s"
-				fem = 1
+				gender = FEMININE
 			pulledb
 				name = "Pulled Back"
 				id = "pulledb"
-				fem = 1
+				gender = FEMININE
 			sage
 				name = "Sage"
 				id = "sage"
-				fem = 1
+				gender = FEMININE
 			scraggly
 				name = "Scraggly"
 				id = "scraggly"
-				masc = 1
+				gender = MASCULINE
 			pulledf
 				name = "Shoulder Drape"
 				id = "pulledf"
-				fem = 1
+				gender = FEMININE
 			shoulderl
 				name = "Shoulder-Length"
 				id = "shoulderl"
-				fem = 1
+				gender = FEMININE
 			slightlymess_s
 				name = "Shoulder-Length Mess"
 				id = "slightlymessy_s"
-				fem = 1
+				gender = FEMININE
 			smoothwave
 				name = "Smooth Waves"
 				id = "smoothwave"
-				fem = 1
+				gender = FEMININE
 			smoothwave_fade
 				name = "Smooth Waves: Faded"
 				id = "smoothwave_fade"
 			mermaid
 				name = "Mermaid"
 				id = "mermaid"
-				fem = 1
+				gender = FEMININE
 			mermaidfade
 				name = "Mermaid: Faded"
 				id = "mermaidfade"
 			midb
 				name = "Mid-Back Length"
 				id = "midb"
-				fem = 1
-				masc = 1
+				gender = MASCULINE | FEMININE
 			bluntbangs_s
 				name = "Mid-Length Curl"
 				id = "bluntbangs_s"
-				fem = 1
+				gender = FEMININE
 			vlong
 				name = "Very Long"
 				id = "vlong"
-				fem = 1
+				gender = FEMININE
 		hairup
 			bun
 				name = "Bun"
 				id = "bun"
-				fem = 1
+				gender = FEMININE
 			sakura
 				name = "Captor"
 				id = "sakura"
-				fem = 1
+				gender = FEMININE
 			croft
 				name = "Croft"
 				id = "croft"
-				fem = 1
+				gender = FEMININE
 			indian
 				name = "Double Braids"
 				id = "indian"
-				fem = 1
+				gender = FEMININE
 			doublebun
 				name = "Double Buns"
 				id = "doublebun"
-				fem = 1
+				gender = FEMININE
 			drill
 				name = "Drill"
 				id = "drill"
 			fun_bun
 				name = "Fun Bun"
 				id = "fun_bun"
-				fem = 1
+				gender = FEMININE
 			charioteers
 				name = "High Flat Top"
 				id = "charioteers"
-				masc = 1
+				gender = MASCULINE
 			spud
 				name = "High Ponytail"
 				id = "spud"
-				fem = 1
+				gender = FEMININE
 			longtailed
 				name = "Long Mini Tail"
 				id = "longtailed"
-				fem = 1
+				gender = FEMININE
 			lowpig
 				name = "Low Pigtails"
 				id = "lowpig"
-				fem = 1
+				gender = FEMININE
 			band
 				name = "Low Ponytail"
 				id = "band"
-				fem = 1
+				gender = FEMININE
 			minipig
 				name = "Mini Pigtails"
 				id = "minipig"
-				fem = 1
-				masc = 1
+				gender = MASCULINE | FEMININE
 			pig
 				name = "Pigtails"
 				id = "pig"
-				fem = 1
+				gender = FEMININE
 			ponytail
 				name = "Ponytail"
 				id = "ponytail"
-				fem = 1
-				masc = 1
+				gender = MASCULINE | FEMININE
 			geisha_s
 				name = "Shimada"
 				id = "geisha_s"
-				fem = 1
+				gender = FEMININE
 			twotail
 				name = "Split-Tails"
 				id = "twotail"
-				masc = 1
+				gender = MASCULINE
 			wavy_tail
 				name = "Wavy Ponytail"
 				id = "wavy_tail"
-				fem = 1
+				gender = FEMININE
 		gimmick
 			afroHA
 				name = "Afro: Alternating Halves"
@@ -572,21 +558,21 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 
 proc/select_custom_style(list/customization_types, mob/living/carbon/human/user as mob)
 	var/list/options = list()
-	for (var/styletype as anything in customization_types)
+	for (var/datum/customization_style/styletype as anything in customization_types)
 		var/datum/customization_style/CS = new styletype
 		options[CS.name] = CS
 	var/new_style = input(user, "Please select style", "Style")  as null|anything in options
 	return options[new_style]
 
 proc/find_style_by_name(var/target_name)
-	for (var/styletype as anything in concrete_typesof(/datum/customization_style))
+	for (var/datum/customization_style/styletype as anything in concrete_typesof(/datum/customization_style))
 		var/datum/customization_style/CS = new styletype
 		if(CS.name == target_name)
 			return CS
 	return new /datum/customization_style/none
 
 proc/find_style_by_id(var/target_id)
-	for (var/styletype as anything in concrete_typesof(/datum/customization_style))
+	for (var/datum/customization_style/styletype as anything in concrete_typesof(/datum/customization_style))
 		var/datum/customization_style/CS = new styletype
 		if(CS.id == target_id)
 			return CS

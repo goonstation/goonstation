@@ -1709,13 +1709,13 @@ datum/preferences
 proc/isfem(type)
 	var/datum/customization_style/style = new type
 	. = 0
-	if (style.fem)
+	if (style.gender & FEMININE)
 		. = 1
 
 proc/ismasc(type)
 	var/datum/customization_style/style = new type
 	. = 0
-	if (style.masc)
+	if (style.gender & MASCULINE)
 		. = 1
 
 // this is weird but basically: a list of hairstyles and their appropriate detail styles, aka hair_details["80s"] would return the Hairmetal: Faded style
