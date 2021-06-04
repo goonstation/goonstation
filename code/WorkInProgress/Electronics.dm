@@ -500,7 +500,6 @@
 		if (src.net_id == host_ruck) send_sync(1)
 		return
 	if (powered())
-		if(isnull(boot_time)) boot_time = world.time
 		send_sync()
 	else
 		if (src.net_id == host_ruck) send_sync(1)
@@ -508,6 +507,7 @@
 /obj/machinery/rkit/proc/send_sync(var/dispose) //Request SYNCREPLY from other rucks
 	//If dispose is true we use "DROP" which won't be saved as the host
 	SPAWN_DBG(rand(0, 15)) //Keep these out of sync a little, less spammy
+		if(isnull(boot_time)) boot_time = world.time
 		host_ruck = src.net_id //We're the host until someone else proves they are
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
@@ -644,7 +644,7 @@
 		return
 
 	var/datum/computer/file/electronics_bundle/rkitFile = signal.data_file
-	if (istype(rkitFile) && !data_initialized && rkitFile.target == src.net_id) //Copy the database on digest so we never waste the effort
+	if (istype(rkitFile) && !data_initialized && !isnull(boot_time) && rkitFile.target == src.net_id) //Copy the database on digest so we never waste the effort
 		var/datum/mechanic_controller/originalData = rkitFile.ruckData
 		data_initialized = 1
 		if(world.time - boot_time <= 3 SECONDS)
@@ -772,7 +772,9 @@
 
 			if("lock")
 				if(href_list["op"])
+
 					var/datum/electronics/scanned_item/O = locate(href_list["op"]) in ruck_controls.scanned_items
+					for ()
 					O.locked = !O.locked
 					updateDialog()
 					var/datum/signal/newsignal = get_free_signal()
