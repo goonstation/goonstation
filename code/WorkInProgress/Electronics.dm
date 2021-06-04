@@ -497,13 +497,13 @@
 	. = ..()
 	//This will run when we're created and find a host ruck
 	if(status & (NOPOWER|BROKEN))
-			if (src.net_id == host_ruck) send_sync(1)
+		if (src.net_id == host_ruck) send_sync(1)
 		return
 	if (powered())
-			if(isnull(boot_time)) boot_time = world.time
-			send_sync()
+		if(isnull(boot_time)) boot_time = world.time
+		send_sync()
 	else
-			if (src.net_id == host_ruck) send_sync(1)
+		if (src.net_id == host_ruck) send_sync(1)
 
 /obj/machinery/rkit/proc/send_sync(var/dispose) //Request SYNCREPLY from other rucks
 	//If dispose is true we use "DROP" which won't be saved as the host
