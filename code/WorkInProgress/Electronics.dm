@@ -604,7 +604,7 @@
 			var/datum/computer/file/electronics_bundle/rkitFile = new
 			rkitFile.ruckData = ruck_controls
 			rkitFile.target = target
-			SPAWN_DBG(1 SECONDS)
+			SPAWN_DBG(0.5 SECONDS)
 				var/datum/signal/newsignal = get_free_signal()
 				newsignal.source = src
 				newsignal.transmission_method = TRANSMISSION_RADIO
@@ -774,8 +774,10 @@
 				if(href_list["op"])
 
 					var/datum/electronics/scanned_item/O = locate(href_list["op"]) in ruck_controls.scanned_items
-					for ()
 					O.locked = !O.locked
+					for (var/datum/electronics/scanned_item/OP in ruck_controls.scanned_items) //Lock items with the same name, that's how LOCK works
+						if(O.name == OP.name)
+							OP.locked = O.locked
 					updateDialog()
 					var/datum/signal/newsignal = get_free_signal()
 					newsignal.source = src
