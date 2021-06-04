@@ -1366,5 +1366,7 @@ toxic - poisons
 	implanted = null
 	power = 0
 	ks_ratio = 0
+	damage_type = D_SPECIAL
 	hit_type = DAMAGE_BLUNT
 	max_range = 60
+	dissipation_rate = 0

@@ -1214,14 +1214,14 @@
 	name = "foam dart box"
 	icon_state = "foamdarts"
 	icon_empty = "foamdarts-0"
-	amount_left = 40
-	max_amount = 40
+	amount_left = 20
+	max_amount = 20
 	caliber = 0.393
 	ammo_type = new/datum/projectile/bullet/foamdart
 
-/obj/item/ammo/bullets/foamdarts/twenty
-	amount_left = 20
-	max_amount = 20
+/obj/item/ammo/bullets/foamdarts/ten
+	amount_left = 10
+	max_amount = 10
 
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND

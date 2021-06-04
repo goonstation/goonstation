@@ -1717,9 +1717,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = W_CLASS_SMALL
 	force = 1
 	caliber = 0.393
-	max_ammo_capacity = 20
+	max_ammo_capacity = 10
 
 	New()
-		ammo = new/obj/item/ammo/bullets/foamdarts/twenty
+		ammo = new/obj/item/ammo/bullets/foamdarts/ten
 		set_current_projectile(new/datum/projectile/bullet/foamdart)
 		..()
