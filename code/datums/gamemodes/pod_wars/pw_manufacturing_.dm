@@ -331,7 +331,7 @@
 		"salicylic_acid", "blood",\
 		"menthol", "antihistamine")
 
-	icon_state = "dispenser"
+	icon_state = "dispenser-med"
 	dispenser_name = "Medical"
 
 
