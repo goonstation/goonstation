@@ -441,14 +441,15 @@
 			return
 
 		if (proj_data.precalculated)
+			var/incidence_turf = curr_turf
 			for (var/i = 1, i < crossing.len, i++)
 				var/turf/T = crossing[i]
 				if (crossing[T] < curr_t)
 					Move(T)
 					if (disposed || pooled)
 						return
-					incidence = get_dir(curr_turf, T)
-					curr_turf = T
+					incidence = get_dir(incidence_turf, T)
+					incidence_turf = T
 					crossing.Cut(1,2)
 					i--
 				else
