@@ -38,6 +38,8 @@
 				return
 			O.visible_message("<span class='alert'><b>[O]</b> suddenly pulls [user.name] inside[escapable ? "!" : " and slams shut!"]</span>")
 			user.emote("scream")
+			user.changeStatus("paralysis", 5 SECONDS)
+			user.force_laydown_standup()
 			if (!escapable)
 				user.set_loc(O)
 			else
