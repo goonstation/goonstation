@@ -137,10 +137,10 @@
 		if (!src || !istype(src))
 			return
 
-		if (src.armed)
-			src.icon_state = "mine_armed"
+		if (src.armed && !findtext(src.icon_state, "_armed"))
+			src.icon_state = "[src.icon_state]_armed"
 		else
-			src.icon_state = "mine"
+			src.icon_state = replacetext(src.icon_state, "_armed", "")
 
 		return
 
@@ -173,15 +173,11 @@
 			return mobs
 
 		var/turf/T = get_turf(src)
-		if (T && istype(T))
-			for (var/mob/living/L in T.contents)
-				if (!istype(L) || isintangible(L) || iswraith(L))
-					continue
 
-		if (radius > 0)
-			for (var/mob/living/L2 in range(src, radius))
-				if (!istype(L2) || isintangible(L2) || iswraith(L2))
-					continue
+		for (var/mob/living/L in range(radius,T))
+			if (isintangible(L) || iswraith(L))
+				continue
+			mobs += L
 
 		return mobs
 
@@ -193,8 +189,9 @@
 		return
 
 /obj/item/mine/radiation
-	name = "land mine (radiation)"
-	desc = "An anti-personnel mine."
+	name = "radiation land mine"
+	desc = "An anti-personnel mine designed to heavily irradiate its target."
+	icon_state = "mine_radiation"
 
 	armed
 		armed = 1
@@ -217,8 +214,9 @@
 		return
 
 /obj/item/mine/incendiary
-	name = "land mine (incendiary)"
-	desc = "An anti-personnel mine."
+	name = "incendiary land mine"
+	desc = "An anti-personnel mine equipped with an incendiary payload."
+	icon_state = "mine_incendiary"
 
 	armed
 		armed = 1
@@ -232,8 +230,9 @@
 		return
 
 /obj/item/mine/stun
-	name = "land mine (stun)"
-	desc = "An anti-personnel mine."
+	name = "stun land mine"
+	desc = "An anti-personnel mine designed to stun its victim nonlethally."
+	icon_state = "mine_stun"
 
 	armed
 		armed = 1
@@ -255,8 +254,8 @@
 		return
 
 /obj/item/mine/blast
-	name = "land mine (blast)"
-	desc = "An anti-personnel mine."
+	name = "high explosive land mine"
+	desc = "An anti-personnel mine rigged with explosives."
 
 	armed
 		armed = 1

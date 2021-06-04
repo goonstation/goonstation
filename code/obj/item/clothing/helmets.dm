@@ -211,6 +211,18 @@
 	item_state = "space_helmet_syndicate"
 	desc = "The standard space helmet of the dreaded Syndicate."
 	item_function_flags = IMMUNE_TO_ACID
+	team_num = TEAM_SYNDICATE
+	#ifdef MAP_OVERRIDE_POD_WARS
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team_num)
+			..()
+		else
+			boutput(user, "<span class='alert'>The space helmet <b>explodes</b> as you reach out to grab it!</span>")
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+	#endif
 
 	setupProperties()
 		..()
@@ -227,6 +239,18 @@
 		desc = "A terrifyingly tall, black & red cap, typically worn by a Syndicate Nuclear Operative Commander. Maybe they're trying to prove something to the Head of Security?"
 		seal_hair = 0
 		see_face = 1
+		team_num = TEAM_SYNDICATE
+		#ifdef MAP_OVERRIDE_POD_WARS
+		attack_hand(mob/user)
+			if (get_pod_wars_team_num(user) == team_num)
+				..()
+			else
+				boutput(user, "<span class='alert'>The cap <b>explodes</b> as you reach out to grab it!</span>")
+				make_fake_explosion(src)
+				user.u_equip(src)
+				src.dropped(user)
+				qdel(src)
+		#endif
 
 	specialist
 		name = "specialist combat helmet"
@@ -349,14 +373,14 @@
 			icon_state = "syndie_specialist-knight" //todo
 			item_state = "syndie_specialist-knight" //todo
 
-		setupProperties()
-			..()
-			setProperty("meleeprot_head", 2)
-			setProperty("rangedprot", 1)
-			setProperty("exploprot", 10)
-			setProperty("disorient_resist_eye", 50)
-			setProperty("disorient_resist_ear", 50)
-			setProperty("space_movespeed", 0.3)
+			setupProperties()
+				..()
+				setProperty("meleeprot_head", 6)
+				setProperty("rangedprot", 1)
+				setProperty("exploprot", 10)
+				setProperty("disorient_resist_eye", 50)
+				setProperty("disorient_resist_ear", 50)
+				setProperty("space_movespeed", 0.3)
 
 
 /obj/item/clothing/head/helmet/space/ntso //recoloured nuke class suits for ntso vs syndicate specialist
@@ -385,6 +409,22 @@
 	icon_state = "nanotrasen_pilot"
 	item_state = "nanotrasen_pilot"
 	desc = "A space helmet used by certain Nanotrasen pilots."
+	team_num = TEAM_NANOTRASEN
+	#ifdef MAP_OVERRIDE_POD_WARS
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team_num)
+			..()
+		else
+			boutput(user, "<span class='alert'>The space helmet <b>explodes</b> as you reach out to grab it!</span>")
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+	#endif
+
+	setupProperties()
+		..()
+		setProperty("space_movespeed", 0)
 
 /obj/item/clothing/head/helmet/swat
 	name = "swat helmet"

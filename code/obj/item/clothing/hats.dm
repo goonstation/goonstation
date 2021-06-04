@@ -12,7 +12,7 @@
 	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
 	block_vision = 0
 	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
-
+	var/team_num
 
 	setupProperties()
 		..()
@@ -500,7 +500,25 @@
 	desc = "For the inner space commander in you."
 	icon_state = "ntberet_commander"
 	item_state = "ntberet_commander"
+	team_num = TEAM_NANOTRASEN
+	#ifdef MAP_OVERRIDE_POD_WARS
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team_num)
+			..()
+		else
+			boutput(user, "<span class='alert'>The beret <b>explodes</b> as you reach out to grab it!</span>")
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+	#endif
 	c_flags = SPACEWEAR
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 20)
+		setProperty("heatprot", 5)
+		setProperty("meleeprot_head", 4)
 
 /obj/item/clothing/head/XComHair
 	name = "rookie scalp"
@@ -1350,3 +1368,10 @@
 	setupProperties()
 		..()
 		setProperty("coldprot", 15)
+
+/obj/item/clothing/head/waitresshat
+	name = "diner waitress's hat"
+	desc = "Still smells faintly of hairspray."
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "waitresshat"
+	item_state = "waitresshat"

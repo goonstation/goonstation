@@ -550,6 +550,15 @@
 		changeIcon()
 		return
 
+/obj/torpedo_tray/random_loaded
+	icon = 'icons/obj/32x64.dmi'
+	icon_state = "emptymissiletray"
+	New()
+		..()
+		var/obj/torpedo/T = pick(new/obj/torpedo/toxic,new/obj/torpedo/incendiary,new/obj/torpedo/hiexplosive,new/obj/torpedo/explosive)
+		src.loaded = T
+		T.set_loc(src)
+		changeIcon()
 
 
 /obj/torpedo

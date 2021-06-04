@@ -36,6 +36,7 @@
 	unique = 1
 
 	onAdd(var/optional=null)
+		. = ..()
 		var/mob/living/M = owner
 		if (!istype(M)) return
 
@@ -51,6 +52,7 @@
 		return
 
 	onRemove()
+		. = ..()
 		var/mob/living/M = owner
 		if (!istype(M)) return
 
