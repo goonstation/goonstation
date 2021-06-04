@@ -790,7 +790,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_glov = /obj/item/clothing/gloves/yellow
 	slot_poc1 = /obj/item/device/pda2/engine
 	slot_ears = /obj/item/device/radio/headset/engineer
-	items_in_backpack = list(/obj/item/paper/book/from_file/pocketguide/engineering)
+	items_in_backpack = list(/obj/item/paper/book/from_file/pocketguide/engineering, /obj/item/old_grenade/oxygen)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2720,7 +2720,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			no_jobban_from_this_job = 0
 			high_priority_job = 1
 			cant_allocate_unwanted = 1
-			access = list(access_heads, access_captain, access_medical, access_medical_lockers)
+			access = list(access_heads, access_captain, access_medical, access_medical_lockers, access_engineering_power)
 
 			slot_head = /obj/item/clothing/head/NTberet/commander
 			slot_suit = /obj/item/clothing/suit/space/nanotrasen/pilot/commander
@@ -2760,7 +2760,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			no_jobban_from_this_job = 0
 			high_priority_job = 1
 			cant_allocate_unwanted = 1
-			access = list(access_syndicate_shuttle, access_syndicate_commander, access_medical, access_medical_lockers)
+			access = list(access_syndicate_shuttle, access_syndicate_commander, access_medical, access_medical_lockers, access_engineering_power)
 
 			slot_head = /obj/item/clothing/head/helmet/space/syndicate/commissar_cap
 			slot_suit = /obj/item/clothing/suit/space/syndicate/commissar_greatcoat

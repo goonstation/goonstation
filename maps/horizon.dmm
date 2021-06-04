@@ -45339,17 +45339,6 @@
 /obj/machinery/atmospherics/valve,
 /turf/simulated/floor/black,
 /area/station/engine/substation/east)
-"cjg" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0
-	},
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/emergency,
-/obj/item/wrench,
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
-/area/station/engine/coldloop)
 "cjh" = (
 /obj/machinery/atmospherics/valve,
 /turf/simulated/floor/blue,
@@ -57045,13 +57034,6 @@
 /obj/decal/poster/wallsign/stencil/right/a,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ranch)
-"nih" = (
-/obj/burning_barrel,
-/obj/decal/poster/wallsign/medal{
-	pixel_y = 27
-	},
-/turf/simulated/floor/plating/random,
-/area/station/security/hos/horizon)
 "nii" = (
 /obj/cable{
 	d1 = 4;
@@ -58913,6 +58895,28 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
+"rUT" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/emergency,
+/obj/item/wrench,
+/obj/item/old_grenade/oxygen{
+	pixel_x = 6;
+	pixel_y = 16
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -6;
+	pixel_y = 16
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_y = 11
+	},
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/engine/coldloop)
 "rVN" = (
 /obj/storage/secure/closet/command/hos,
 /turf/simulated/floor/plating/random,
@@ -60700,6 +60704,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"wHN" = (
+/obj/burning_barrel,
+/obj/decal/poster/wallsign/framed_award/hos_medal{
+	pixel_y = 27
+	},
+/turf/simulated/floor/plating/random,
+/area/station/security/hos/horizon)
 "wIm" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -121055,7 +121066,7 @@ bsi
 mPI
 ccv
 hnS
-nih
+wHN
 rVN
 wAG
 nsB
@@ -136172,7 +136183,7 @@ bKn
 chq
 cia
 ciE
-cjg
+rUT
 cjF
 cki
 ckP

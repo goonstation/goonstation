@@ -1,5 +1,59 @@
 
+(t)thu jun 03 21
+(u)Jan.antilles
+(p)4889
+(e)🎨|sprites
+(+)Added a new Diner Waitress's Dress in two colors, a matching hat, and four colors of Mary Jane shoes. Look for them in the Clothing Booth!
+(t)tue jun 01 21
+(u)Sovexe
+(e)🐛🆕|bug, feature
+(+)Chicken carriers are now safe for aquatic chicken transportation. Chicken carriers can also scoop deceased chickens for ease of cleanup.
+(u)Zonespace
+(p)4977
+(e)🆕🗺|feature, mapping
+(*)In Pod Wars, general fabricators can now produce handcuffs on RP.
+(+)In Pod Wars, moved grenades and power cells to the general fabricators.
+(u)Asche
+(p)4986
+(e)|
+(+)You can now dowse for hotspots indoors.
+(u)Sovexe
+(p)4987
+(e)🐛🆕|bug, feature
+(+)Constructing mineral magnets now displays an action bar. Corrected constructed magnets breaking fullbright space.
+(u)Jan.antilles
+(p)4997
+(e)|
+(+)Inspecting mugs, paper cups, and the skull chalice will now allow you to see what's inside.
+(u)Flappybat
+(p)4827
+(e)⚖🗺|balance, mapping
+(+)Added some new spy bounties, most significantly the Head items such as the HoS medal. Removed the Port-A-Sci bounty,
+(u)Tarmunora
+(e)⚖|balance
+(+)Lie down while being used as a meatshield and bullets may pass over you at their normal rates.
+(u)Tarmunora
+(e)⚖|balance
+(*)Port-a-brig now has a short delay before shoving someone inside
+(*)quivering contusine curare -> histamine
 (t)mon may 31 21
+(u)Flaborized
+(p)4978
+(e)|
+(+)Renamed the epilepsy mutation to 'Stupefaction'.
+(u)Azrun
+(p)4809
+(e)⚖🆕🗺🎨|balance, feature, mapping, sprites
+(*)Added experimental red oxygen grenade to station repair equipment.  Violently releases large amounts of oxygen into an area.
+(+)Red oxygen grenades are available from QM and each engineer starts with one.
+(u)Tarmunora
+(e)⚖|balance
+(*)10 degree spread on dual-wielding guns.
+(u)Penny
+(p)4940
+(e)🆕📄|feature, tgui
+(+)Multitools can now wipe storage devices
+(+)Security disks are now read only, and read only disks can be read in the cloner
 (u)DimWhat
 (p)4755
 (e)⚖|balance

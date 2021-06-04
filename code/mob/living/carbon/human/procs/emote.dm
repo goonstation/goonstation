@@ -343,7 +343,7 @@
 
 				m_type = 1
 
-			if ("nod","glare","stare","look","leer")
+			if ("nod","glare","stare","look")
 				var/M = null
 				if (param)
 					for (var/mob/A in view(null, null))
@@ -359,7 +359,7 @@
 						if ("nod")
 							message = "<B>[src]</B> [act]s to [param]."
 							maptext_out = "<I>[act]s to [param]</I>"
-						if ("glare","stare","look","leer")
+						if ("glare","stare","look")
 							message = "<B>[src]</B> [act]s at [param]."
 							maptext_out = "<I>[act]s at [param]</I>"
 				else
@@ -471,7 +471,7 @@
 				burp, fart, monologue, contemplate, custom")
 
 			if ("listtarget")
-				src.show_text("salute, bow, hug, wave, glare, stare, look, leer, nod, tweak, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive")
+				src.show_text("salute, bow, hug, wave, glare, stare, look, nod, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive")
 
 			if ("suicide")
 				src.show_text("Suicide is a command, not an emote.  Please type 'suicide' in the input bar at the bottom of the game window to kill yourself.", "red")
@@ -1038,11 +1038,6 @@
 				m_type = 1
 
 			// targeted emotes
-
-			if ("tweak","tweaknipples","tweaknips","nippletweak")
-				if (!src.restrained())
-					message = "<B>[src]</b> tweaks [his_or_her(src)] nipples."
-				m_type = 1
 
 			if ("flipoff","flipbird","middlefinger")
 				m_type = 1

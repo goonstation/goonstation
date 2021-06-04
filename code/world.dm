@@ -1701,7 +1701,5 @@ var/opt_inactive = null
 /// EXPERIMENTAL STUFF
 
 /world/Del()
-	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
-	if (debug_server)
-		call(debug_server, "auxtools_shutdown")()
+	disable_auxtools_debugger()
 	. = ..()

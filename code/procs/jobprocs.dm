@@ -451,7 +451,7 @@
 				if(ispath(X))
 					src.equip_new_if_possible(X, slot_in_backpack)
 			if(JOB.receives_disk)
-				var/obj/item/disk/data/floppy/D = new /obj/item/disk/data/floppy(src)
+				var/obj/item/disk/data/floppy/read_only/D = new /obj/item/disk/data/floppy/read_only(src)
 				src.equip_if_possible(D, slot_in_backpack)
 				var/datum/computer/file/clone/R = new
 				R.fields["ckey"] = ckey(src.key)
@@ -481,6 +481,7 @@
 					var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "SECAUTH";} (src)
 					authrec.fields = list("SEC"="[netpass_security]")
 					D.root.add_file( authrec )
+					D.read_only = 1
 
 				D.name = "data disk - '[src.real_name]'"
 

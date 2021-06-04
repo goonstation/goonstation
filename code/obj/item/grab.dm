@@ -102,7 +102,7 @@
 		..()
 		dropped += 1
 		if(src.assailant)
-			REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
+			REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src)
 			qdel(src)
 
 	process(var/mult = 1)
@@ -265,7 +265,7 @@
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck!</span>", 1)
 		src.state = GRAB_KILL
-		REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
+		REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src)
 		src.assailant.lastattacked = src.affecting
 		src.affecting.lastattacker = src.assailant
 		src.affecting.lastattackertime = world.time
@@ -304,7 +304,7 @@
 
 		if (ishuman(src.assailant))
 			var/mob/living/carbon/human/H = src.assailant
-			APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, src.type)
+			APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, src)
 			H.update_canmove()
 
 		if (isliving(src.affecting))
@@ -412,10 +412,10 @@
 		var/mob/hostage = null
 		if(src.affecting && src.state >= 2 && P.shooter != src.affecting) //If you grab someone they can still shoot you
 			hostage = src.affecting
-		if (hostage)
+		if (hostage && (!hostage.lying || prob(P.proj_data?.hit_ground_chance)))
 			P.collide(hostage)
 			//moved here so that it displays after the bullet hit message
-			if(prob(20)) //This should probably not be bulletproof, har har
+			if(prob(25)) //This should probably not be bulletproof, har har
 				hostage.visible_message("<span class='combat bold'>[hostage] is knocked out of [owner]'s grip by the force of the [P.name]!</span>")
 				qdel(src)
 

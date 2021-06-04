@@ -35167,36 +35167,6 @@
 "bKJ" = (
 /turf/simulated/floor/yellow,
 /area/station/storage/primary)
-"bKK" = (
-/obj/table/auto,
-/obj/item/sheet/glass/reinforced{
-	amount = 50;
-	pixel_x = 2;
-	pixel_y = -2
-	},
-/obj/item/sheet/glass/reinforced{
-	amount = 50;
-	pixel_x = -1;
-	pixel_y = 1
-	},
-/obj/item/storage/belt/utility{
-	pixel_x = -7;
-	pixel_y = -2
-	},
-/obj/item/storage/belt/utility{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = 7;
-	pixel_y = 7
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = 6;
-	pixel_y = -2
-	},
-/turf/simulated/floor/yellow,
-/area/station/storage/primary)
 "bKL" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -35821,36 +35791,6 @@
 	dir = 8
 	},
 /area/station/mining/staff_room)
-"bMi" = (
-/obj/table/auto,
-/obj/item/sheet/steel/reinforced{
-	amount = 50;
-	pixel_x = 2;
-	pixel_y = -1
-	},
-/obj/item/sheet/steel/reinforced{
-	amount = 50;
-	pixel_x = -1;
-	pixel_y = 2
-	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = -6;
-	pixel_y = -5
-	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = -7;
-	pixel_y = 3
-	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = -8;
-	pixel_y = 11
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = 5;
-	pixel_y = 1
-	},
-/turf/simulated/floor/yellow,
-/area/station/storage/primary)
 "bMj" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -54522,6 +54462,39 @@
 /obj/machinery/light,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"dUT" = (
+/obj/table/auto,
+/obj/item/sheet/glass/reinforced{
+	amount = 50;
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/sheet/glass/reinforced{
+	amount = 50;
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = -7;
+	pixel_y = -2
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = 7
+	},
+/turf/simulated/floor/yellow,
+/area/station/storage/primary)
 "dXg" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -54779,6 +54752,43 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"eBN" = (
+/obj/table/auto,
+/obj/item/sheet/steel/reinforced{
+	amount = 50;
+	pixel_x = 2;
+	pixel_y = -1
+	},
+/obj/item/sheet/steel/reinforced{
+	amount = 50;
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = -8;
+	pixel_y = 11
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 7
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 4;
+	pixel_y = -7
+	},
+/turf/simulated/floor/yellow,
+/area/station/storage/primary)
 "eBZ" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	name = "Power Room";
@@ -59299,18 +59309,6 @@
 /obj/machinery/space_heater,
 /turf/simulated/floor,
 /area/station/science/teleporter)
-"nbB" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/decal/poster/wallsign/medal{
-	pixel_y = 27
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/hos)
 "ncl" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -60472,6 +60470,18 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor,
 /area/station/routing/engine)
+"pjn" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/decal/poster/wallsign/framed_award/hos_medal{
+	pixel_y = 27
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/hos)
 "pjQ" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -93569,7 +93579,7 @@ aIZ
 aGx
 aGx
 aME
-nbB
+pjn
 aOQ
 aSZ
 aQV
@@ -117482,8 +117492,8 @@ bAS
 bHG
 bIC
 bJB
-bKK
-bMi
+dUT
+eBN
 bNK
 bPa
 bQs

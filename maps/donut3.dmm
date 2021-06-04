@@ -2835,6 +2835,34 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
+"axt" = (
+/obj/item/old_grenade/oxygen{
+	pixel_x = 11;
+	pixel_y = 12
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -7;
+	pixel_y = 12
+	},
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = 7
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 2;
+	pixel_y = 12
+	},
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = -5
+	},
+/obj/table/reinforced/industrial/auto,
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/station/storage/primary)
 "axC" = (
 /obj/stool/chair/blue{
 	dir = 4
@@ -10248,24 +10276,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
-"cJO" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_x = -6;
-	pixel_y = 11
-	},
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_x = 5;
-	pixel_y = 11
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = 7
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = -5
-	},
-/turf/simulated/floor/darkblue/checker,
-/area/station/ai_monitored/storage/eva)
 "cKu" = (
 /obj/reagent_dispensers/watertank/fountain,
 /obj/item/device/radio/intercom/security{
@@ -16566,6 +16576,20 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"eEh" = (
+/obj/decal/poster/wallsign/framed_award/rddiploma{
+	pixel_x = 32;
+	pixel_y = -3
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge{
+	dir = 5
+	},
+/area/station/crew_quarters/hor)
 "eEj" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -16902,6 +16926,16 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"eIF" = (
+/obj/machinery/computer/announcement{
+	name = "Security Announcement Computer";
+	req_access_txt = "19"
+	},
+/obj/decal/poster/wallsign/framed_award/hos_medal{
+	pixel_y = 25
+	},
+/turf/simulated/floor/circuit/red,
+/area/station/security/hos)
 "eIG" = (
 /obj/item/clothing/suit/bedsheet/pink,
 /obj/stool/bed,
@@ -34772,16 +34806,6 @@
 	},
 /turf/simulated/floor/dojo/sand/vertical,
 /area/station/crew_quarters/captain)
-"kiP" = (
-/obj/machinery/computer/announcement{
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
-	},
-/obj/decal/poster/wallsign/medal{
-	pixel_y = 25
-	},
-/turf/simulated/floor/circuit/red,
-/area/station/security/hos)
 "kiS" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -36836,22 +36860,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
-"kPz" = (
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = 7
-	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = 1;
-	pixel_y = 6
-	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = -5
-	},
-/obj/table/reinforced/industrial/auto,
-/turf/simulated/floor/yellowblack{
-	dir = 4
-	},
-/area/station/storage/primary)
 "kPG" = (
 /obj/cable{
 	d1 = 4;
@@ -37550,6 +37558,32 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
+"lbU" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = -6;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 5;
+	pixel_y = 11
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = 7
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -5
+	},
+/turf/simulated/floor/darkblue/checker,
+/area/station/ai_monitored/storage/eva)
 "lcf" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin{
@@ -48145,20 +48179,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/turret_protected/AIsat)
-"oiR" = (
-/obj/decal/poster/wallsign/rddiploma{
-	pixel_x = 32;
-	pixel_y = -3
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/carpet/purple/fancy/edge{
-	dir = 5
-	},
-/area/station/crew_quarters/hor)
 "oiX" = (
 /obj/table/auto,
 /obj/machinery/light/incandescent/netural,
@@ -104325,7 +104345,7 @@ gYc
 sIK
 sIK
 jhw
-kiP
+eIF
 nTS
 loz
 kPI
@@ -114592,7 +114612,7 @@ yko
 fvQ
 muC
 kUo
-cJO
+lbU
 jMF
 vxs
 saB
@@ -132798,7 +132818,7 @@ bxZ
 bxZ
 iVL
 seL
-oiR
+eEh
 vxW
 hmI
 rdj
@@ -143022,7 +143042,7 @@ tuT
 ohh
 hrV
 mrR
-kPz
+axt
 fuA
 lVy
 xcV

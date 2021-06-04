@@ -33,7 +33,7 @@
 /obj/item/plant/herb
 	name = "herb base"
 	burn_point = 330
-	burn_output = 800
+	burn_output = 9
 	burn_possible = 2
 	crop_suffix	= " leaf"
 
