@@ -78944,10 +78944,7 @@
 /area/hospital/samostrel)
 "lyg" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/reagent_containers/food/drinks/coffee{
-	pixel_x = 5;
-	pixel_y = -4
-	},
+/obj/item/reagent_containers/food/drinks/coffee,
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
 "lyh" = (
@@ -79277,8 +79274,7 @@
 "mUe" = (
 /obj/machinery/computer/shuttle/embedded/east,
 /obj/stool/chair/comfy/shuttle/pilot{
-	dir = 4;
-	name = "stolen pilot's seat"
+	dir = 4
 	},
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
@@ -81130,6 +81126,16 @@
 	icon_state = "floor6"
 	},
 /area/centcom/offices/pali)
+"rUQ" = (
+/obj/admin_plaque{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "rVy" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-37"
@@ -82414,10 +82420,7 @@
 /area/shuttle/escape/centcom/cogmap2)
 "wNz" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/drinks/coffee{
-	pixel_x = 5;
-	pixel_y = -4
-	},
+/obj/item/reagent_containers/food/drinks/coffee,
 /turf/unsimulated/floor/carpet/red/decal/outercross,
 /area/syndicate_station/battlecruiser)
 "wOC" = (
@@ -159668,7 +159671,7 @@ dvw
 dvC
 dvy
 dvy
-qJR
+rUQ
 dvy
 dvy
 dvy
@@ -159680,7 +159683,7 @@ umN
 dvy
 dvy
 dvy
-qJR
+rUQ
 dvy
 dxa
 dvy
