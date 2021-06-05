@@ -65692,7 +65692,8 @@
 "drg" = (
 /obj/machinery/computer/shuttle/embedded/east,
 /obj/stool/chair/comfy/shuttle/pilot{
-	dir = 4
+	dir = 4;
+	name = "stolen pilot's seat"
 	},
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
@@ -78179,7 +78180,8 @@
 "hRS" = (
 /obj/item/toy/plush/small/bunny/mask{
 	anchored = 1;
-	name = "Steal McSmash the staff assistant"
+	desc = "It hungers...";
+	name = "Average staff assistant #2"
 	},
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "drip5"
@@ -78537,7 +78539,8 @@
 	pixel_y = -3
 	},
 /obj/stool/chair/comfy/shuttle/pilot{
-	dir = 4
+	dir = 4;
+	name = "stolen pilot's seat"
 	},
 /turf/unsimulated/floor/void,
 /area/centcom/offices/tterc)
@@ -78656,7 +78659,8 @@
 "jIX" = (
 /obj/item/toy/plush/small/bunny/mask{
 	anchored = 1;
-	name = "Smash McSteal the staff assistant"
+	desc = "It hungers...";
+	name = "Average staff assistant #1"
 	},
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "drip5"
