@@ -1715,6 +1715,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "foamdartgun"
 	desc = "A toy gun that fires foam darts. Keep out of reach of clowns, staff assistants and scientists."
 	w_class = W_CLASS_SMALL
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "toygun"
 	force = 1
 	caliber = 0.393
 	max_ammo_capacity = 10
