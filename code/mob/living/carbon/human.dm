@@ -3072,7 +3072,8 @@
 	if(!(src.chest_item && (src.chest_item in src.contents)))
 		return
 	src.show_text("You grunt and squeeze <B>[src.chest_item]</B> in your chest.")
-	src.chest_item.attack_self(src) // Activate the item
+	SPAWN_DBG(0) //might sleep/input/etc, and we don't want to hold anything up
+		src.chest_item.attack_self(src)
 	if (src.chest_item_sewn == 0 || istype(src.chest_item, /obj/item/cloaking_device))	// If item isn't sewn in, poop it onto the ground. No fartcloaks allowed
 		// Item object is pooped out
 		if (istype(src.chest_item, /obj/item/))
