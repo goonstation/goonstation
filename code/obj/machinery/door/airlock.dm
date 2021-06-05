@@ -510,7 +510,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	operation_time = 10
 
 /obj/machinery/door/airlock/pyro/glass/windoor
-	name = "counter window"
+	name = "thin glass airlock"
 	icon_state = "windoor_closed"
 	icon_base = "windoor"
 	panel_icon_state = "windoor"
