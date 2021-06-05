@@ -2687,6 +2687,7 @@
 /area/shuttle/research/outpost)
 "ahh" = (
 /obj/machinery/computer/research_shuttle{
+	density = 0;
 	dir = 1;
 	icon_state = "shuttle-embed";
 	layer = 31;
@@ -4339,13 +4340,6 @@
 /obj/machinery/guardbot_dock,
 /turf/simulated/floor/bot,
 /area/station/science/bot_storage)
-"akr" = (
-/obj/machinery/beacon{
-	anchored = 1;
-	sname = "Zeta"
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
 "aks" = (
 /obj/machinery/atmospherics/valve{
 	dir = 4
@@ -16921,13 +16915,6 @@
 /area/station/turret_protected/ai_upload{
 	name = "AI Module Storage"
 	})
-"aND" = (
-/obj/machinery/beacon{
-	anchored = 1;
-	sname = "Station"
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
 "aNE" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/morgue)
@@ -26116,6 +26103,7 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/secdetector{
 	area_access = 99;
+	density = 0;
 	detector_id = "AI Core";
 	dir = 4
 	},
@@ -34742,11 +34730,17 @@
 /obj/disposaloutlet{
 	dir = 4
 	},
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "garbage";
+	move_lag = 15
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bBd" = (
 /obj/machinery/conveyor{
-	id = "garbage"
+	id = "garbage";
+	move_lag = 15
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -35131,10 +35125,11 @@
 /area/station/maintenance/disposal)
 "bBU" = (
 /obj/machinery/conveyor{
-	id = "garbage"
+	id = "garbage";
+	move_lag = 15
 	},
 /obj/machinery/door/poddoor/pyro{
-	dir = 2;
+	autoclose = 1;
 	id = "disp-vent";
 	name = "Disposal Vents"
 	},
@@ -35396,7 +35391,8 @@
 "bCB" = (
 /obj/machinery/crusher,
 /obj/machinery/conveyor{
-	id = "garbage"
+	id = "garbage";
+	move_lag = 15
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -35833,7 +35829,8 @@
 /area/station/maintenance/disposal)
 "bDW" = (
 /obj/machinery/conveyor{
-	id = "garbage"
+	id = "garbage";
+	move_lag = 15
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -36278,6 +36275,7 @@
 /obj/machinery/mass_driver{
 	id = "Disposal Exit"
 	},
+/obj/forcefield/energyshield/perma,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bFe" = (
@@ -39724,7 +39722,8 @@
 "ggu" = (
 /obj/machinery/conveyor{
 	dir = 4;
-	id = "garbage"
+	id = "garbage";
+	move_lag = 15
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -40014,6 +40013,7 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/secdetector{
 	area_access = 99;
+	density = 0;
 	detector_id = "AI Core";
 	dir = 8
 	},
@@ -42332,6 +42332,12 @@
 /obj/decal/tile_edge/floorguide/arrow_w,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"oCp" = (
+/obj/machinery/light,
+/turf/simulated/floor/stairs{
+	dir = 4
+	},
+/area/station/crew_quarters/stockex)
 "oDS" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -42877,6 +42883,7 @@
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/networked/secdetector{
 	area_access = 99;
+	density = 0;
 	detector_id = "AI Core"
 	},
 /obj/machinery/power/data_terminal,
@@ -45191,6 +45198,7 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/secdetector{
 	area_access = 99;
+	density = 0;
 	detector_id = "AI Core";
 	dir = 1
 	},
@@ -66787,7 +66795,7 @@ aCy
 aGx
 aCy
 aSe
-aSM
+oCp
 aCy
 aCy
 aCy
@@ -92449,7 +92457,7 @@ acG
 aLE
 acG
 acG
-aND
+acK
 anB
 aaa
 aaa
@@ -121083,7 +121091,7 @@ ahR
 bhj
 adW
 aaa
-akr
+acK
 acG
 acG
 akN
