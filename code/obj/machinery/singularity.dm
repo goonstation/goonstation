@@ -167,6 +167,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			maxradius = INFINITY
 
 
+/obj/machinery/the_singularity/emp_act()
+	return // No action required this should be the one doing the EMPing
 
 /obj/machinery/the_singularity/proc/eat()
 	for (var/X in range(grav_pull, src.get_center()))
