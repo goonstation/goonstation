@@ -1112,7 +1112,8 @@
 	var/state = 0
 	var/chosen_overlay
 	var/mutable_appearance/new_overlay
-	var/static/list/choosable_overlays = list("Horizontal Stripes","Vertical Stripes","Diagonal Stripes","Ball","Cross","Diagonal Cross","Full",
+	var/static/list/choosable_overlays = list("Horizontal Stripes","Vertical Stripes","Diagonal Stripes","Big Ball","Medium Ball","Small Ball",
+	"Northwest Line","Northeast Line","Southwest Line","Southeast Line","Cross","Diagonal Cross","Full","Full Gradient",
 	"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
 
 	proc/clear()
