@@ -10821,7 +10821,7 @@
 "avx" = (
 /obj/table/wood/auto,
 /obj/item/wrench,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /turf/simulated/grimycarpet,
 /area/ghostdrone_factory)
 "avy" = (
@@ -44994,7 +44994,7 @@
 "bKX" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/emergency,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bKY" = (

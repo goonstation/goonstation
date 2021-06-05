@@ -27,13 +27,13 @@ export const CombineGenesModal = (props, context) => {
             <Box key={g.ref}>
               {combining.indexOf(g.ref) >= 0 ? (
                 <Button
-                  icon="blank"
-                  color="grey"
+                  icon="check"
+                  color="blue"
                   onClick={() => act("togglecombine", { ref: g.ref })} />
               ) : (
                 <Button
-                  icon="check"
-                  color="blue"
+                  icon="blank"
+                  color="grey"
                   onClick={() => act("togglecombine", { ref: g.ref })} />
               )}
               {" " + g.name}

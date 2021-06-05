@@ -52,7 +52,7 @@
 				H.job = "Cluwne"
 				H.contract_disease(/datum/ailment/disability/clumsy/cluwne,null,null,1)
 				H.contract_disease(/datum/ailment/disease/cluwneing_around/cluwne,null,null,1)
-				playsound(get_turf(H), pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
+				playsound(H, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
 				H.change_misstep_chance(60)
 
 				animate_clownspell(H)

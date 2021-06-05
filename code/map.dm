@@ -36,6 +36,7 @@ var/global/list/mapNames = list(
 	"Atlas" = 			list("id" = "ATLAS", 		"settings" = "atlas", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 30),
 	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 80),
 	"Wrestlemap" = 			list("id" = "WRESTLEMAP", 	"settings" = "wrestlemap", 		"playerPickable" = ASS_JAM),
+	"pod_wars" = 			list("id" = "POD_WARS", 	"settings" = "pod_wars", 		"playerPickable" = 0),
 	"blank" = 			list("id" = "BLANK", "settings" = "", "playerPickable" = 0),
 	"blank_underwater" =  list("id" = "BLANK_UNDERWATER", "settings" = "", "playerPickable" = 0)
 )
@@ -691,7 +692,7 @@ var/global/list/mapNames = list(
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 	auto_walls = 1
 	arrivals_type = MAP_SPAWN_CRYO
-	dir_fore = WEST
+	dir_fore = NORTH
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -712,10 +713,10 @@ var/global/list/mapNames = list(
 	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
-	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
-	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
-	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
-	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+	merchant_left_centcom = null
+	merchant_left_station = null
+	merchant_right_centcom = null
+	merchant_right_station = null
 
 	valid_nuke_targets = list("the Demeter primary zone" = list(/area/station/garden/aviary),
 		"the Tenebrae primary zone" = list(/area/station/science/lobby),
@@ -944,7 +945,43 @@ var/global/list/mapNames = list(
 		"the chapel" = list(/area/station/security/secwing),
 		"the south crew quarters" = list(/area/station/crew_quarters/quarters_south))
 
+/datum/map_settings/pod_wars
+	name = "POD_WARS"
+	default_gamemode = "pod_wars"
+	goonhub_map = "https://goonhub.com/maps/pod_wars"
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+	auto_walls = 1
+	style = "spess"
 
+
+	arrivals_type = MAP_SPAWN_CRYO
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = 1
+
+	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+	airlock_style = "pyro"
+
+	escape_centcom = null
+	escape_transit = null
+	escape_station = null
+	escape_dir = NORTH
+
+	merchant_left_centcom = null
+	merchant_left_station = null
+	merchant_right_centcom = null
+	merchant_right_station = null
+
+	valid_nuke_targets = list()
 
 /area/shuttle/escape/centcom
 	icon_state = "shuttle_escape"

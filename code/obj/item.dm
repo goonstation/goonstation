@@ -653,6 +653,9 @@
 /obj/item/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
 	..()
 
+	if (!src.anchored)
+		click_drag_tk(over_object, src_location, over_location, over_control, params)
+
 	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL))
 		return
 
@@ -701,6 +704,38 @@
 						usr.click(over_object, params, src_location, over_control)
 			else
 				actions.start(new /datum/action/bar/private/icon/pickup/then_obj_click(src, over_object, params), usr)
+
+	//Click-drag tk stuff.
+/obj/item/proc/click_drag_tk(atom/over_object, src_location, over_location, over_control, params)
+	if(!src.anchored)
+		if (iswraith(usr))
+			var/mob/wraith/W = usr
+			//Basically so poltergeists need to be close to an object to send it flying far...
+			if (W.weak_tk && !IN_RANGE(src, W, 2))
+				src.throw_at(over_object, 1, 1)
+				boutput(W, "<span class='alert'>You're too far away to properly manipulate this physical item!</span>")
+				logTheThing("combat", usr, null, "moves [src] with wtk.")
+				return
+			src.throw_at(over_object, 7, 1)
+			logTheThing("combat", usr, null, "throws [src] with wtk.")
+		else if (ismegakrampus(usr))
+			src.throw_at(over_object, 7, 1)
+			logTheThing("combat", usr, null, "throws [src] with k_tk.")
+		else if(usr.bioHolder && usr.bioHolder.HasEffect("telekinesis_drag") && isturf(src.loc) && isalive(usr) && usr.canmove && get_dist(src,usr) <= 7 && !src.anchored && src.w_class < W_CLASS_GIGANTIC)
+			src.throw_at(over_object, 7, 1)
+			logTheThing("combat", usr, null, "throws [src] with tk.")
+
+#ifdef HALLOWEEN
+		else if (istype(usr, /mob/dead/observer))	//ghost
+			var/obj/item/I = src
+			if (I.w_class > W_CLASS_NORMAL)
+				return
+			if (istype(usr:abilityHolder, /datum/abilityHolder/ghost_observer))
+				var/datum/abilityHolder/ghost_observer/GH = usr:abilityHolder
+				if (GH.spooking)
+					src.throw_at(over_object, 7-I.w_class, 1)
+					logTheThing("combat", usr, null, "throws [src] with g_tk.")
+#endif
 
 //equip an item, given an inventory hud object or storage item UI thing
 /obj/item/proc/try_equip_to_inventory_object(var/mob/user, var/atom/over_object, var/params)
@@ -788,8 +823,9 @@
 			S.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
 
 /obj/item/attackby(obj/item/W as obj, mob/user as mob, params)
-	if (W.firesource)
+	if(src.material)
 		src.material.triggerTemp(src ,1500)
+	if (W.firesource)
 		if (src.burn_possible && src.burn_point <= 1500)
 			src.combust()
 		else
@@ -1255,13 +1291,13 @@
 		block_spark(M,armor=1)
 		switch(hit_type)
 			if (DAMAGE_BLUNT)
-				playsound(get_turf(M), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1, pitch=1.5)
+				playsound(M, 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1, pitch=1.5)
 			if (DAMAGE_CUT)
-				playsound(get_turf(M), 'sound/impact_sounds/block_cut.ogg', 50, 1, -1, pitch=1.5)
+				playsound(M, 'sound/impact_sounds/block_cut.ogg', 50, 1, -1, pitch=1.5)
 			if (DAMAGE_STAB)
-				playsound(get_turf(M), 'sound/impact_sounds/block_stab.ogg', 50, 1, -1, pitch=1.5)
+				playsound(M, 'sound/impact_sounds/block_stab.ogg', 50, 1, -1, pitch=1.5)
 			if (DAMAGE_BURN)
-				playsound(get_turf(M), 'sound/impact_sounds/block_burn.ogg', 50, 1, -1, pitch=1.5)
+				playsound(M, 'sound/impact_sounds/block_burn.ogg', 50, 1, -1, pitch=1.5)
 		if(power <= 0)
 			fuckup_attack_particle(user)
 			armor_blocked = 1

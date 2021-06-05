@@ -54,7 +54,7 @@
 
 
 	proc/process_big_effects()
-		playsound(get_turf(src),
+		playsound(src,
 			pick(
 				"sound/machines/mixer.ogg",
 				"sound/impact_sounds/Slimy_Splat_1.ogg",
@@ -67,7 +67,7 @@
 
 		if (prob(15))
 			visible_message("<span class='alert'>[src] sprays vomit all around itself!</span>")
-			playsound(get_turf(src), pick("sound/impact_sounds/Slimy_Splat_1.ogg","sound/misc/meat_plop.ogg"), 100, 1)
+			playsound(src, pick("sound/impact_sounds/Slimy_Splat_1.ogg","sound/misc/meat_plop.ogg"), 100, 1)
 			for (var/turf/T in range(src, rand(1, 3)))
 				if(T.density)
 					continue
@@ -96,7 +96,7 @@
 
 		if (prob(5))
 			visible_message("<span class='alert'>[occupant] pukes [his_or_her(occupant)] guts out!</span>")
-			playsound(get_turf(src), pick("sound/impact_sounds/Slimy_Splat_1.ogg","sound/misc/meat_plop.ogg"), 100, 1)
+			playsound(src, pick("sound/impact_sounds/Slimy_Splat_1.ogg","sound/misc/meat_plop.ogg"), 100, 1)
 			for (var/turf/T in range(src, rand(1, 3)))
 				if(T.density)
 					continue
@@ -157,7 +157,7 @@
 		if (iswrenchingtool(I))
 			anchored = !anchored
 			user.show_text("You [anchored ? "attach" : "release"] \the [src]'s floor clamps", "red")
-			playsound(get_turf(src), "sound/items/Ratchet.ogg", 40, 0, 0)
+			playsound(src, "sound/items/Ratchet.ogg", 40, 0, 0)
 			return
 
 		. = ..()

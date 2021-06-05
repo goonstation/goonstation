@@ -22,6 +22,7 @@
 			user.visible_message("<span class='alert'><b>[user.name] injects [himself_or_herself(user)] with [src]!</b></span>")
 			src.injected(user,user)
 		else
+			logTheThing("combat", user, M, "tries to inject [constructTarget(M,"combat")] with [src.name] at [log_loc(user)]")
 			actions.start(new/datum/action/bar/icon/genetics_injector(M,src), user)
 
 	proc/injected(var/mob/living/carbon/user,var/mob/living/carbon/target)
@@ -29,7 +30,7 @@
 			return 1
 		if(!istype(target.bioHolder))
 			return 1
-		logTheThing("combat", user, target, "injects [constructTarget(target,"combat")] with [src.name]")
+		logTheThing("combat", user, target, "injects [constructTarget(target,"combat")] with [src.name] at [log_loc(user)]")
 		return 0
 
 	proc/update_appearance()

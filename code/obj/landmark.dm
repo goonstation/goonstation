@@ -66,6 +66,9 @@ var/global/list/job_start_locations = list()
 /obj/landmark/cruiser_entrance
 	name = LANDMARK_CRUISER_ENTRANCE
 
+/obj/landmark/cruiser_center
+	name = LANDMARK_CRUISER_CENTER
+
 /obj/landmark/escape_pod_succ
 	name = LANDMARK_ESCAPE_POD_SUCCESS
 	icon_state = "xp"
@@ -266,10 +269,12 @@ var/global/list/job_start_locations = list()
 		else
 			T.appearance_flags |= KEEP_TOGETHER
 			T.vistarget = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
-			if(warptarget_modifier) T.vistarget.warptarget = T
-			T.updateVis()
-			T.vistarget.fullbright = TRUE
-			T.vistarget.RL_Init()
+			if (T.vistarget)
+				if(warptarget_modifier)
+					T.vistarget.warptarget = T
+				T.updateVis()
+				T.vistarget.fullbright = TRUE
+				T.vistarget.RL_Init()
 		..()
 
 /obj/landmark/viscontents_spawn/no_vis

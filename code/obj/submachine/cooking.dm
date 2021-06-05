@@ -421,6 +421,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/superchili(src)
 			src.recipes += new /datum/cookingrecipe/chili(src)
 			src.recipes += new /datum/cookingrecipe/queso(src)
+			src.recipes += new /datum/cookingrecipe/cheeseborger(src)
 			src.recipes += new /datum/cookingrecipe/roburger(src)
 			src.recipes += new /datum/cookingrecipe/swede_mball(src)
 			src.recipes += new /datum/cookingrecipe/honkpocket(src)
