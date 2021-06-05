@@ -1362,11 +1362,12 @@ toxic - poisons
 	sname = "foam dart"
 	icon_state = "foamdart"
 	shot_sound = 'sound/effects/syringeproj.ogg'
+	icon_turf_hit = null
 	projectile_speed = 20
 	implanted = null
 	power = 0
 	ks_ratio = 0
 	damage_type = D_SPECIAL
 	hit_type = DAMAGE_BLUNT
-	max_range = 60
+	max_range = 15
 	dissipation_rate = 0
