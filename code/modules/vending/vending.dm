@@ -1533,9 +1533,9 @@
 	desc = "Food storage unit."
 	icon_state = "food"
 	icon_panel = "standard-panel"
-	icon_off = "standard-off"
-	icon_broken = "standard-broken"
-	icon_fallen = "standard-fallen"
+	icon_off = "food-off"
+	icon_broken = "food-broken"
+	icon_fallen = "food-fallen"
 	req_access_txt = "28"
 	acceptcard = 0
 
