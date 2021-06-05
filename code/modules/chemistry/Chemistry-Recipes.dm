@@ -525,8 +525,8 @@ datum
 			name = "Cheese"
 			id = "cheese2"
 			result = "cheese"
-			required_reagents = list("milk" = 10, "acetic_acid" = 1)
-			result_amount = 10
+			required_reagents = list("milk" = 1, "acetic_acid" = 0)
+			result_amount = 1
 			mix_phrase = "The mixture curdles up."
 			on_reaction(var/datum/reagents/holder)
 				var/location = get_turf(holder.my_atom)
