@@ -400,8 +400,10 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 		if(agent_b && temp > 500 && air.toxins > MINIMUM_REACT_QUANTITY )
 			var/datum/gas/oxygen_agent_b/trace_gas = payload.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
-			payload.temperature = T0C // Greatly reduce temperature to simulate an endothermic reaction
-
+			if(temp>10000)
+				payload.temperature = temp -= 10000 // Greatly reduce temperature to simulate an endothermic reaction
+			else
+				payload.temperature = T0C
 			// Itr 1: 0.2 Agent B, 1 oxy
 			// Itr 2: 0.0605 Agent B
 			// Should be 100 iterations to deplete total of 19.099 mols of agent B and 100 oxygen, will take 110 iterations to hit minimum reaction rate whihch is about 7.33 minutes, (this is azruns math not mine dont blame me if wrong)
