@@ -196,7 +196,7 @@
 		..()
 		START_TRACKING
 		if (!src.disposed)
-			src.cust_one_state = "None"
+			src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
 			src.bioHolder.AddEffect("monkey")
 			if (src.name == "monkey" || !src.name)
 				src.name = pick_string_autokey("names/monkey.txt")

@@ -65,9 +65,6 @@
 	var/chest_item_sewn = 0			// Item is sewn in or is loose
 
 	var/cust_icon = 'icons/mob/human_hair.dmi'	// icon for hair, in case we want something else
-	var/cust_one_state = "short"
-	var/cust_two_state = "None"
-	var/cust_three_state = "none"
 	var/special_one_icon = 'icons/mob/human_hair.dmi'
 	var/special_one_state = "none"
 	var/special_two_icon = 'icons/mob/human_hair.dmi'
@@ -2760,29 +2757,29 @@
 	W.icon_state = "bald" // Let's give the actual hair a chance to shine
 /* commenting this out and making it an overlay to fix issues with colors stacking
 	W.icon = 'icons/mob/human_hair.dmi'
-	W.icon_state = cust_one_state
+	W.icon_state = H.bioHolder.mobAppearance.customization_first.id
 	W.color = src.bioHolder.mobAppearance.customization_first_color
 	W.wear_image_icon = 'icons/mob/human_hair.dmi'
 	W.wear_image = image(W.wear_image_icon, W.icon_state)
 	W.wear_image.color = src.bioHolder.mobAppearance.customization_first_color*/
 
-	if (src.bioHolder.mobAppearance.customization_first != "None" || src.bioHolder.mobAppearance.customization_first != "Bald" )
-		var/image/h_image = image('icons/mob/human_hair.dmi', cust_one_state)
+	if (!istype(src.bioHolder.mobAppearance.customization_first,/datum/customization_style/none))
+		var/image/h_image = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_first.id)
 		h_image.color = src.bioHolder.mobAppearance.customization_first_color
 		W.overlays += h_image
 		W.wear_image.overlays += h_image
 		actuallyHasHair = 1
 
-	if (src.bioHolder.mobAppearance.customization_second != "None" || src.bioHolder.mobAppearance.customization_second != "Bald" )
-		var/image/f_image = image('icons/mob/human_hair.dmi', cust_two_state)
+	if (!istype(src.bioHolder.mobAppearance.customization_second,/datum/customization_style/none))
+		var/image/f_image = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_second.id)
 		f_image.color = src.bioHolder.mobAppearance.customization_second_color
 		W.overlays += f_image
 		W.wear_image.overlays += f_image
 		actuallyHasHair = 1
 
 
-	if (src.bioHolder.mobAppearance.customization_third != "None" || src.bioHolder.mobAppearance.customization_third != "Bald" )
-		var/image/d_image = image('icons/mob/human_hair.dmi', cust_three_state)
+	if (!istype(src.bioHolder.mobAppearance.customization_third,/datum/customization_style/none))
+		var/image/d_image = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_third.id)
 		d_image.color = src.bioHolder.mobAppearance.customization_third_color
 		W.overlays += d_image
 		W.wear_image.overlays += d_image
