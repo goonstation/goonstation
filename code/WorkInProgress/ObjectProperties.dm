@@ -337,7 +337,8 @@ var/list/globalPropList = null
 			. = ..()
 			for(var/datum/objectProperty/P in owner.properties)
 				if(P.id == "enchant") continue
-				owner.setProperty(P.id, owner.getProperty(P.id)*(1+(value/10)))
+				var/val = owner.getProperty(P.id)
+				owner.setProperty(P.id, val * (1+(P.goodDirection * sign(val) * (value/10))))
 			owner.force *= (1+value/10)
 
 		onChange(obj/item/owner, oldValue, newValue)
@@ -349,7 +350,8 @@ var/list/globalPropList = null
 			. = ..()
 			for(var/datum/objectProperty/P in owner.properties)
 				if(P.id == "enchant") continue
-				owner.setProperty(P.id, owner.getProperty(P.id)/(1+(value/10)))
+				var/val = owner.getProperty(P.id)
+				owner.setProperty(P.id, val / (1+(P.goodDirection * sign(val) * (value/10))))
 			owner.force /= (1+value/10)
 
 	inline //Seriously, if anyone has a better idea, tell me.

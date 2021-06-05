@@ -662,7 +662,6 @@
 	icon_state = "bowl"
 	item_state = "zippo"
 	initial_volume = 50
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 
 	var/image/fluid_image = null
 
@@ -760,7 +759,6 @@
 	var/shatter = 0
 	initial_volume = 50
 	g_amt = 60
-	rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
 
 	New()
 		..()
@@ -961,7 +959,6 @@
 	icon_state = "glass-drink"
 	item_state = "glass-drink"
 	var/icon_style = "drink"
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 30
 	var/glass_style = "drink"
 	var/salted = 0
@@ -1186,7 +1183,7 @@
 			bladder = H.sims?.getValue("Bladder")
 			if ((!isnull(bladder) && (bladder <= 65)) || (isnull(bladder) && (H.urine >= 2)))
 				H.visible_message("<span class='alert'><B>[H] pees in [src]!</B></span>")
-				playsound(get_turf(H), "sound/misc/pourdrink.ogg", 50, 1)
+				playsound(H, "sound/misc/pourdrink.ogg", 50, 1)
 				if (!H.sims)
 					H.urine -= 2
 				else
@@ -1228,7 +1225,7 @@
 				H.losebreath += max(H.losebreath, 5)
 			else if (eat_thing.reagents && eat_thing.reagents.total_volume)
 				eat_thing.reagents.trans_to(H, eat_thing.reagents.total_volume)
-			playsound(get_turf(H), "sound/items/eatfood.ogg", rand(10,50), 1)
+			playsound(H, "sound/items/eatfood.ogg", rand(10,50), 1)
 			qdel(eat_thing)
 			src.update_icon()
 			return
@@ -1423,7 +1420,6 @@
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
 	can_recycle = FALSE
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	var/image/chem = new /image('icons/obj/foodNdrink/food.dmi',"icing_tube_chem")
 
 	on_reagent_change()
@@ -1588,7 +1584,6 @@
 	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. Considering how many holes are in skulls, this is perhaps a questionable design."
 	icon_state = "skullchalice"
 	item_state = "skullchalice"
-	rc_flags = RC_SPECTRO
 	can_recycle = FALSE
 
 /obj/item/reagent_containers/food/drinks/mug
@@ -1596,7 +1591,6 @@
 	desc = "A standard mug, for coffee or tea or whatever you wanna drink."
 	icon_state = "mug"
 	item_state = "mug"
-	rc_flags = RC_SPECTRO
 
 	dan
 		name = "odd mug"
@@ -1639,7 +1633,6 @@
 	desc = "A cup made of paper. It's not that complicated."
 	icon_state = "paper_cup"
 	item_state = "drink_glass"
-	rc_flags = RC_SPECTRO
 	initial_volume = 15
 	can_recycle = 0
 
@@ -1648,7 +1641,6 @@
 	desc = "A fancy espresso cup, for sipping in the finest establishments." //*tip
 	icon_state = "fancycoffee"
 	item_state = "coffee"
-	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE //see _setup.dm
 	initial_volume = 20
 	gulp_size = 2.5
 	g_amt = 2.5 //might be broken still, Whatever
@@ -1672,8 +1664,7 @@
 	desc = null
 	icon_state = "carafe-eng"
 	item_state = "carafe-eng"
-	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE
-	initial_volume = 80
+	initial_volume = 100
 	var/smashed = 0
 	var/shard_amt = 1
 	var/image/fluid_image
@@ -1761,7 +1752,6 @@
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	icon_state = "coconut"
 	item_state = "drink_glass"
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 30
 	initial_volume = 50
 	can_recycle = FALSE
@@ -1775,7 +1765,6 @@
 	When you are off on your long journey, who do you turn to? Brotien Shake's brand new flavor: DRAGON BALLS!"}
 	icon_state = "energy"
 	item_state = "drink_glass"
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 10
 	initial_volume = 25
 	initial_reagents = list("energydrink"=20)
@@ -1787,7 +1776,6 @@
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "detflask"
 	item_state = "detflask"
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	g_amt = 5
 	initial_volume = 40
 	can_recycle = FALSE
@@ -1808,7 +1796,7 @@
 	attack_self(mob/user)
 		if (src.reagents.total_volume > 0)
 			user.visible_message("<b>[user.name]</b> shakes the container [pick("rapidly", "thoroughly", "carefully")].")
-			playsound(get_turf(src), "sound/items/CocktailShake.ogg", 25, 1, -6)
+			playsound(src, "sound/items/CocktailShake.ogg", 25, 1, -6)
 			sleep (0.3 SECONDS)
 			src.reagents.inert = 0
 			src.reagents.physical_shock(rand(5, 20))

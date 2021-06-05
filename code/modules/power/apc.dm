@@ -142,7 +142,7 @@ var/zapLimiter = 0
 
 /obj/machinery/power/apc/New()
 	..()
-
+	START_TRACKING
 	// offset 24 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
 
@@ -186,6 +186,7 @@ var/zapLimiter = 0
 		src.update()
 
 /obj/machinery/power/apc/disposing()
+	STOP_TRACKING
 	cell = null
 	terminal?.master = null
 	terminal = null

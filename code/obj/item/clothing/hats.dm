@@ -12,7 +12,7 @@
 	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
 	block_vision = 0
 	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
-
+	var/team_num
 
 	setupProperties()
 		..()
@@ -339,6 +339,10 @@
 						M.put_in_hand_or_drop(W) //Put it in their hand
 
 					M.visible_message("<span class='alert'><b>[M]</b>'s hat snaps open and puts \the [W] in [his_or_her(M)] [boop]!</span>")
+					var/obj/item/device/light/zippo/lighter = (locate(/obj/item/device/light/zippo) in src.contents)
+					if (lighter)
+						W.light(M, "<span class='alert'><b>[M]</b>'s hat proceeds to light \the [W] with \the [lighter], whoa.</span>")
+						lighter.firesource_interact()
 			else
 				M.show_text("Requested object missing or nonexistant!", "red")
 				return
@@ -491,7 +495,7 @@
 
 /obj/item/clothing/head/NTberet
 	name = "Nanotrasen beret"
-	desc = "For the inner dictator in you."
+	desc = "For the inner space dictator in you."
 	icon_state = "ntberet"
 	item_state = "ntberet"
 
@@ -500,7 +504,25 @@
 	desc = "For the inner space commander in you."
 	icon_state = "ntberet_commander"
 	item_state = "ntberet_commander"
+	team_num = TEAM_NANOTRASEN
+	#ifdef MAP_OVERRIDE_POD_WARS
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team_num)
+			..()
+		else
+			boutput(user, "<span class='alert'>The beret <b>explodes</b> as you reach out to grab it!</span>")
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+	#endif
 	c_flags = SPACEWEAR
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 20)
+		setProperty("heatprot", 5)
+		setProperty("meleeprot_head", 4)
 
 /obj/item/clothing/head/XComHair
 	name = "rookie scalp"
@@ -741,7 +763,7 @@
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (src.active && ismob(hit_atom))
 			var/mob/M = hit_atom
-			playsound(get_turf(src), src.hitsound, 60, 1)
+			playsound(src, src.hitsound, 60, 1)
 			M.changeStatus("weakened", 2 SECONDS)
 			M.force_laydown_standup()
 			SPAWN_DBG(0) // show these messages after the "hit by" ones
@@ -1350,3 +1372,10 @@
 	setupProperties()
 		..()
 		setProperty("coldprot", 15)
+
+/obj/item/clothing/head/waitresshat
+	name = "diner waitress's hat"
+	desc = "Still smells faintly of hairspray."
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "waitresshat"
+	item_state = "waitresshat"

@@ -40,8 +40,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	examine()
 		. = ..()
 		if (src.ammo && (src.ammo.amount_left > 0))
-			var/datum/projectile/ammo_type = src.ammo
-			. += "There are [src.ammo.amount_left][(ammo_type.material && istype(ammo_type, /datum/material/metal/silver)) ? " silver " : " "]bullets of [src.ammo.sname] left!"
+			var/datum/projectile/ammo_type = src.ammo.ammo_type
+			. += "There are [src.ammo.amount_left][(ammo_type.material && istype(ammo_type.material, /datum/material/metal/silver)) ? " silver " : " "]bullets of [src.ammo.sname] left!"
 		else
 			. += "There are 0 bullets left!"
 		if (current_projectile)
@@ -161,8 +161,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.ejectcasings()
 			src.casings_to_eject = 0
 
-			src.update_icon()
 			src.ammo.amount_left = 0
+			src.update_icon()
 			src.add_fingerprint(user)
 			ammoHand.add_fingerprint(user)
 
@@ -893,7 +893,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
 				return
 			else
-				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"")
+				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"", null)
 				return
 		else
 			..()
@@ -1245,7 +1245,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
 				return
 			else
-				SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECONDS, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"")
+				SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECONDS, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"", null)
 				return
 		else
 			..()
@@ -1473,7 +1473,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		src.keys_changed(0,0xFFFF)
 		if(!src.hasOverlayComposition(/datum/overlayComposition/sniper_scope))
 			src.addOverlayComposition(/datum/overlayComposition/sniper_scope)
-		playsound(get_turf(src), "sound/weapons/scope.ogg", 50, 1)
+		playsound(src, "sound/weapons/scope.ogg", 50, 1)
 		break
 
 

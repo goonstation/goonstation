@@ -31,6 +31,10 @@
 	var/max_capacity = 100 //Won't close past this many items.
 	var/open = 0
 	var/welded = 0
+	var/image/weld_image
+	//Offsets for the weld icon, rather than make icons for every slightly off crate or closet
+	var/weld_image_offset_X = 0 //Positive is right, negative is left
+	var/weld_image_offset_Y = 0 //Positive is up, negative is down
 	var/locked = 0
 	var/emagged = 0
 	var/jiggled = 0
@@ -57,6 +61,9 @@
 	New()
 		..()
 		START_TRACKING
+		weld_image = image(src.icon, src.icon_welded)
+		weld_image.pixel_x = weld_image_offset_X
+		weld_image.pixel_y = weld_image_offset_Y
 		SPAWN_DBG(1 DECI SECOND)
 			src.update_icon()
 
@@ -92,7 +99,7 @@
 			src.icon_state = src.icon_closed
 
 		if (src.welded)
-			src.UpdateOverlays(image(src.icon, src.icon_welded), "welded")
+			src.UpdateOverlays(weld_image, "welded")
 		else
 			src.UpdateOverlays(null, "welded")
 
@@ -125,7 +132,7 @@
 				user.unlock_medal("IT'S A TRAP", 1)
 				for (var/mob/M in hearers(src, null))
 					M.show_text("<font size=[max(0, 5 - get_dist(src, M))]>THUD, thud!</font>")
-				playsound(get_turf(src), "sound/impact_sounds/Wood_Hit_1.ogg", 15, 1, -3)
+				playsound(src, "sound/impact_sounds/Wood_Hit_1.ogg", 15, 1, -3)
 				var/shakes = 5
 				while (shakes > 0)
 					shakes--
@@ -755,12 +762,12 @@
 
 	onStart()
 		..()
-		playsound(get_turf(the_storage), "sound/items/Ratchet.ogg", 50, 1)
+		playsound(the_storage, "sound/items/Ratchet.ogg", 50, 1)
 		owner.visible_message("<span class='notice'>[owner] begins taking apart [the_storage].</span>")
 
 	onEnd()
 		..()
-		playsound(get_turf(the_storage), "sound/items/Deconstruct.ogg", 50, 1)
+		playsound(the_storage, "sound/items/Deconstruct.ogg", 50, 1)
 		owner.visible_message("<span class='notice'>[owner] takes apart [the_storage].</span>")
 		var/obj/item/I = new /obj/item/sheet(get_turf(the_storage))
 		if (the_storage.material)

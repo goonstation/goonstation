@@ -169,16 +169,17 @@
 
 
 /proc/omega_hairgrownium_grow_hair(var/mob/living/carbon/human/H, var/all_hairs)
-	var/list/possible_hairstyles
-	if (all_hairs == 1)
-		possible_hairstyles = customization_styles + customization_styles_gimmick
-	else
-		possible_hairstyles = customization_styles_gimmick
-	H.bioHolder.mobAppearance.customization_first = pick(possible_hairstyles)
+	var/list/possible_hairstyles = concrete_typesof(/datum/customization_style) - concrete_typesof(/datum/customization_style/biological)
+	if (!all_hairs)
+		possible_hairstyles -= concrete_typesof(/datum/customization_style/hair/gimmick)
+	var/hair_type = pick(possible_hairstyles)
+	H.bioHolder.mobAppearance.customization_first = new hair_type
 	H.bioHolder.mobAppearance.customization_first_color = random_saturated_hex_color()
-	H.bioHolder.mobAppearance.customization_second = pick(possible_hairstyles)
+	hair_type = pick(possible_hairstyles)
+	H.bioHolder.mobAppearance.customization_second = new hair_type
 	H.bioHolder.mobAppearance.customization_second_color = random_saturated_hex_color()
-	H.bioHolder.mobAppearance.customization_third = pick(possible_hairstyles)
+	hair_type = pick(possible_hairstyles)
+	H.bioHolder.mobAppearance.customization_third = new hair_type
 	H.bioHolder.mobAppearance.customization_third_color = random_saturated_hex_color()
 	H.update_colorful_parts()
 	boutput(H, "<span class='notice'>Your entire head feels extremely itchy!</span>")
@@ -189,12 +190,9 @@
 	H.reagents.del_reagent("unstable_omega_hairgrownium")
 	var/obj/item/I = H.create_wig()
 	I.set_loc(H.loc)
-	H.bioHolder.mobAppearance.customization_first = "None"
-	H.cust_one_state = customization_styles["None"]
-	H.bioHolder.mobAppearance.customization_second = "None"
-	H.cust_two_state = customization_styles["None"]
-	H.bioHolder.mobAppearance.customization_third = "None"
-	H.cust_three_state = customization_styles["None"]
+	H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+	H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+	H.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 	H.update_colorful_parts()
 
 /proc/flashpowder_reaction(turf/center, amount)
