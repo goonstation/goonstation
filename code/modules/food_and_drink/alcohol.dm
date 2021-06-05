@@ -232,7 +232,7 @@
 	bottle_style = "barf"
 	label = "alcohol5"
 	initial_volume = 50
-	initial_reagents = list("urine"=30)
+	initial_reagents = list("vodka"=30)
 	module_research = list("vice" = 2)
 
 /obj/item/reagent_containers/food/drinks/bottle/vodka

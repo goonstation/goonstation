@@ -84,8 +84,8 @@
 			actions += "Make balloon animal"
 		if (src.reagents.total_volume > 0)
 			actions += "Inhale"
-		if (H.urine >= 2)
-			actions += "Pee in it"
+		// if (H.urine >= 2)
+		// 	actions += "Pee in it"
 		if (!actions.len)
 			user.show_text("You can't think of anything to do with [src].", "red")
 			return
@@ -152,13 +152,13 @@
 				src.reagents.trans_to(H, 40)
 				return
 
-			if ("Pee in it")
-				H.visible_message("<span class='alert'><B>[H] pees in [src]!</B></span>",\
-				"<span class='alert'><b>You pee in [src]!</b></span>")
-				playsound(H.loc, 'sound/misc/pourdrink.ogg', 50, 1)
-				H.urine -= 2
-				src.reagents.add_reagent("urine", 20)
-				return
+			// if ("Pee in it")
+			// 	H.visible_message("<span class='alert'><B>[H] pees in [src]!</B></span>",\
+			// 	"<span class='alert'><b>You pee in [src]!</b></span>")
+			// 	playsound(H.loc, 'sound/misc/pourdrink.ogg', 50, 1)
+			// 	H.urine -= 2
+			// 	src.reagents.add_reagent("urine", 20)
+			// 	return
 
 	afterattack(obj/target, mob/user)
 		if (istype(target, /obj/reagent_dispensers) || (target.is_open_container() == -1 && target.reagents)) //A dispenser. Transfer FROM it TO us.

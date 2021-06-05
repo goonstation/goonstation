@@ -416,7 +416,7 @@ obj/item/reagent_containers/food/drinks/covfefe
 		reagents.add_reagent("VHFCS", 5)
 		reagents.add_reagent(pick("methamphetamine", "crank", "space_drugs", "cat_drugs", "coffee"), 5)
 		for(var/i=0; i<3; i++)
-			reagents.add_reagent(pick("beff","ketchup","eggnog","yuck","chocolate","vanilla","cleaner","capsaicin","toxic_slurry","luminol","urine","nicotine","weedkiller","venom","jenkem","ectoplasm"), 5)
+			reagents.add_reagent(pick("beff","ketchup","eggnog","yuck","chocolate","vanilla","cleaner","capsaicin","toxic_slurry","luminol","nicotine","weedkiller","venom","jenkem","ectoplasm"), 5)
 
 /obj/item/reagent_containers/food/drinks/bottle/soda/contest
 	name = "Grones Soda Call 1-800-IMCODER flavour"

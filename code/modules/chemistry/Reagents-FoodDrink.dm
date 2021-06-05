@@ -3268,8 +3268,8 @@ datum
 				if(!M)
 					M = holder.my_atom
 
-				if(probmult(10))
-					new /obj/decal/cleanable/urine(M.loc)
+				// if(probmult(10))
+				// 	new /obj/decal/cleanable/urine(M.loc)
 
 				if(probmult(15))
 					M.visible_message("<span class='alert'>[M] pukes violently!</span>")

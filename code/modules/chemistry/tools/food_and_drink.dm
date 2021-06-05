@@ -525,9 +525,9 @@
 					if (src?.reagents && M?.reagents)
 						src.reagents.trans_to(M, min(reagents.total_volume, gulp_size))
 
-			playsound(M.loc,"sound/items/drink.ogg", rand(10,50), 1)
-			M.urine += 0.1
-			eat_twitch(M)
+			// playsound(M.loc,"sound/items/drink.ogg", rand(10,50), 1)
+			// M.urine += 0.1
+			// eat_twitch(M)
 
 			return 1
 
@@ -1158,40 +1158,40 @@
 		var/mob/living/carbon/human/H = user
 		var/list/choices = list()
 
-		var/bladder = H.sims?.getValue("Bladder")
-		if ((!isnull(bladder) && (bladder <= 65)) || (isnull(bladder) && (H.urine >= 2)))
-			choices += "pee in it"
-		if (src.in_glass)
-			choices += "remove [src.in_glass]"
-			if (!istype(src.in_glass, /obj/item/cocktail_stuff/drink_umbrella) || (H.bioHolder && (H.bioHolder.HasEffect("clumsy") || H.bioHolder.HasEffect("mattereater"))))
-				choices += "eat [src.in_glass]"
-		if (src.wedge)
-			choices += "remove [src.wedge]"
-			choices += "eat [src.wedge]"
-		if (!choices.len)
-			boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
-			return
+		// var/bladder = H.sims?.getValue("Bladder")
+		// if ((!isnull(bladder) && (bladder <= 65)) || (isnull(bladder) && (H.urine >= 2)))
+		// 	choices += "pee in it"
+		// if (src.in_glass)
+		// 	choices += "remove [src.in_glass]"
+		// 	if (!istype(src.in_glass, /obj/item/cocktail_stuff/drink_umbrella) || (H.bioHolder && (H.bioHolder.HasEffect("clumsy") || H.bioHolder.HasEffect("mattereater"))))
+		// 		choices += "eat [src.in_glass]"
+		// if (src.wedge)
+		// 	choices += "remove [src.wedge]"
+		// 	choices += "eat [src.wedge]"
+		// if (!choices.len)
+		// 	boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
+		// 	return
 
-		var/selection = input(user, "What do you want to do with [src]?") as null|anything in choices
-		if (isnull(selection) || get_dist(src, user) > 1)
-			return
+		// var/selection = input(user, "What do you want to do with [src]?") as null|anything in choices
+		// if (isnull(selection) || get_dist(src, user) > 1)
+		// 	return
 
-		var/obj/item/remove_thing
-		var/obj/item/eat_thing
+		// var/obj/item/remove_thing
+		// var/obj/item/eat_thing
 
-		if (selection == "pee in it")
-			bladder = H.sims?.getValue("Bladder")
-			if ((!isnull(bladder) && (bladder <= 65)) || (isnull(bladder) && (H.urine >= 2)))
-				H.visible_message("<span class='alert'><B>[H] pees in [src]!</B></span>")
-				playsound(H, "sound/misc/pourdrink.ogg", 50, 1)
-				if (!H.sims)
-					H.urine -= 2
-				else
-					H.sims.affectMotive("Bladder", 100)
-				src.reagents.add_reagent("urine", 20)
-			else
-				boutput(H, "<span class='alert'>You don't feel like you need to go.</span>")
-			return
+		// if (selection == "pee in it")
+		// 	bladder = H.sims?.getValue("Bladder")
+		// 	if ((!isnull(bladder) && (bladder <= 65)) || (isnull(bladder) && (H.urine >= 2)))
+		// 		H.visible_message("<span class='alert'><B>[H] pees in [src]!</B></span>")
+		// 		playsound(H, "sound/misc/pourdrink.ogg", 50, 1)
+		// 		if (!H.sims)
+		// 			H.urine -= 2
+		// 		else
+		// 			H.sims.affectMotive("Bladder", 100)
+		// 		src.reagents.add_reagent("urine", 20)
+		// 	else
+		// 		boutput(H, "<span class='alert'>You don't feel like you need to go.</span>")
+		// 	return
 
 		else if (selection == "remove [src.in_glass]")
 			remove_thing = src.in_glass

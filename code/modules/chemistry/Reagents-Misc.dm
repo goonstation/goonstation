@@ -3089,17 +3089,17 @@ datum
 						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 						make_cleanable( /obj/decal/cleanable/greenpuke,T)
 
-		urine
-			name = "urine"
-			id = "urine"
-			description = "Ewww."
-			reagent_state = LIQUID
-			fluid_r = 233
-			fluid_g = 216
-			fluid_b = 0
-			transparency = 245
-			hygiene_value = -3
-			hunger_value = -0.098
+		// urine
+		// 	name = "urine"
+		// 	id = "urine"
+		// 	description = "Ewww."
+		// 	reagent_state = LIQUID
+		// 	fluid_r = 233
+		// 	fluid_g = 216
+		// 	fluid_b = 0
+		// 	transparency = 245
+		// 	hygiene_value = -3
+		// 	hunger_value = -0.098
 
 			/*on_mob_life(var/mob/M, var/mult = 1) why
 				for (var/datum/ailment_data/disease/virus in M.ailments)
@@ -3109,16 +3109,16 @@ datum
 						boutput(M, "<span class='notice'>You feel better</span>")
 				..()
 				return*/
-			reaction_turf(var/turf/T, var/volume)
-				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
-					volume = (volume/covered.len)
-				if (volume > 10)
-					return 1
-				if (volume >= 5)
-					if (!locate(/obj/decal/cleanable/urine) in T)
-						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
-						make_cleanable( /obj/decal/cleanable/urine,T)
+			// reaction_turf(var/turf/T, var/volume)
+			// 	var/list/covered = holder.covered_turf()
+			// 	if (covered.len > 9)
+			// 		volume = (volume/covered.len)
+			// 	if (volume > 10)
+			// 		return 1
+			// 	if (volume >= 5)
+			// 		if (!locate(/obj/decal/cleanable/urine) in T)
+			// 			playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			// 			make_cleanable( /obj/decal/cleanable/urine,T)
 
 		triplepiss
 			name = "triplepiss"

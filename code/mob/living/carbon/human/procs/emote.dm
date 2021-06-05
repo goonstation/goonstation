@@ -1709,104 +1709,108 @@
 
 			if ("pee", "piss", "urinate")
 				if (src.emote_check(voluntary))
-					var/bladder = sims?.getValue("Bladder")
-					if (!isnull(bladder))
-						var/obj/item/storage/toilet/toilet = locate() in src.loc
-						var/obj/item/reagent_containers/glass/beaker = locate() in src.loc
-						if (bladder > 75)
-							boutput(src, "<span class='notice'>You don't need to go right now.</span>")
-							return
-						else if (bladder > 50)
-							if(toilet)
-								if (wear_suit || w_uniform)
-									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
-								else
-									message = "<B>[src]</B> pees in the toilet."
-								toilet.clogged += 0.10
-								sims.affectMotive("Bladder", 100)
-								sims.affectMotive("Hygiene", -5)
-							else if(beaker)
-								boutput(src, "<span class='alert'>You don't feel desperate enough to piss in the beaker.</span>")
-							else if(wear_suit || w_uniform)
-								boutput(src, "<span class='alert'>You don't feel desperate enough to piss into your [w_uniform ? "uniform" : "suit"].</span>")
-							else
-								boutput(src, "<span class='alert'>You don't feel desperate enough to piss on the floor.</span>")
-							return
-						else if (bladder > 25)
-							if(toilet)
-								if (wear_suit || w_uniform)
-									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
-								else
-									message = "<B>[src]</B> pees in the toilet."
-								toilet.clogged += 0.10
-								sims.affectMotive("Bladder", 100)
-								sims.affectMotive("Hygiene", -5)
-							else if(beaker)
-								if(wear_suit || w_uniform)
-									message = "<B>[src]</B> unzips [his_or_her(src)] pants, takes aim, and pees in the beaker."
-								else
-									message = "<B>[src]</B> takes aim and pees in the beaker."
-								beaker.reagents.add_reagent("urine", 5)
-								sims.affectMotive("Bladder", 100)
-								sims.affectMotive("Hygiene", -25)
-							else
-								if(wear_suit || w_uniform)
-									boutput(src, "<span class='alert'>You don't feel desperate enough to piss into your [w_uniform ? "uniform" : "suit"].</span>")
-									return
-								else
-									src.urinate()
-									sims.affectMotive("Bladder", 100)
-									sims.affectMotive("Hygiene", -50)
-						else
-							if (toilet)
-								if (wear_suit || w_uniform)
-									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
-								else
-									message = "<B>[src]</B> pees in the toilet."
-								toilet.clogged += 0.10
-								sims.affectMotive("Bladder", 100)
-								sims.affectMotive("Hygiene", -5)
-							else if(beaker)
-								if(wear_suit || w_uniform)
-									message = "<B>[src]</B> unzips [his_or_her(src)] pants, takes aim, and fills the beaker with pee."
-								else
-									message = "<B>[src]</B> takes aim and fills the beaker with pee."
-								sims.affectMotive("Bladder", 100)
-								sims.affectMotive("Hygiene", -25)
-								beaker.reagents.add_reagent("urine", 10)
-							else
-								if (wear_suit || w_uniform)
-									message = "<B>[src]</B> pisses all over [himself_or_herself(src)]!"
-									sims.affectMotive("Bladder", 100)
-									sims.affectMotive("Hygiene", -100)
-									if (w_uniform)
-										w_uniform.name = "piss-soaked [initial(w_uniform.name)]"
-									else
-										wear_suit.name = "piss-soaked [initial(wear_suit.name)]"
-								else
-									src.urinate()
-									sims.affectMotive("Bladder", 100)
-									sims.affectMotive("Hygiene", -50)
+					message = "<B>[src]</B> shifts around a bit. It seems they decided that its better to hold it in until they get home." //Eagle Note: look I'll take any better suggestions for a emote
+					maptext_out = "<I>grunts</I>"
 
-					else
-						var/obj/item/storage/toilet/toilet = locate() in src.loc
-						var/obj/item/reagent_containers/glass/beaker = locate() in src.loc
+			// 	if (src.emote_check(voluntary))
+			// 		var/bladder = sims?.getValue("Bladder")
+			// 		if (!isnull(bladder))
+			// 			var/obj/item/storage/toilet/toilet = locate() in src.loc
+			// 			var/obj/item/reagent_containers/glass/beaker = locate() in src.loc
+			// 			if (bladder > 75)
+			// 				boutput(src, "<span class='notice'>You don't need to go right now.</span>")
+			// 				return
+			// 			else if (bladder > 50)
+			// 				if(toilet)
+			// 					if (wear_suit || w_uniform)
+			// 						message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
+			// 					else
+			// 						message = "<B>[src]</B> pees in the toilet."
+			// 					toilet.clogged += 0.10
+			// 					sims.affectMotive("Bladder", 100)
+			// 					sims.affectMotive("Hygiene", -5)
+			// 				else if(beaker)
+			// 					boutput(src, "<span class='alert'>You don't feel desperate enough to piss in the beaker.</span>")
+			// 				else if(wear_suit || w_uniform)
+			// 					boutput(src, "<span class='alert'>You don't feel desperate enough to piss into your [w_uniform ? "uniform" : "suit"].</span>")
+			// 				else
+			// 					boutput(src, "<span class='alert'>You don't feel desperate enough to piss on the floor.</span>")
+			// 				return
+			// 			else if (bladder > 25)
+			// 				if(toilet)
+			// 					if (wear_suit || w_uniform)
+			// 						message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
+			// 					else
+			// 						message = "<B>[src]</B> pees in the toilet."
+			// 					toilet.clogged += 0.10
+			// 					sims.affectMotive("Bladder", 100)
+			// 					sims.affectMotive("Hygiene", -5)
+			// 				else if(beaker)
+			// 					if(wear_suit || w_uniform)
+			// 						message = "<B>[src]</B> unzips [his_or_her(src)] pants, takes aim, and pees in the beaker."
+			// 					else
+			// 						message = "<B>[src]</B> takes aim and pees in the beaker."
+			// 					beaker.reagents.add_reagent("urine", 5)
+			// 					sims.affectMotive("Bladder", 100)
+			// 					sims.affectMotive("Hygiene", -25)
+			// 				else
+					// 			if(wear_suit || w_uniform)
+					// 				boutput(src, "<span class='alert'>You don't feel desperate enough to piss into your [w_uniform ? "uniform" : "suit"].</span>")
+					// 				return
+					// 			else
+					// 				src.urinate()
+					// 				sims.affectMotive("Bladder", 100)
+					// 				sims.affectMotive("Hygiene", -50)
+					// 	else
+					// 		if (toilet)
+					// 			if (wear_suit || w_uniform)
+					// 				message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
+					// 			else
+					// 				message = "<B>[src]</B> pees in the toilet."
+					// 			toilet.clogged += 0.10
+					// 			sims.affectMotive("Bladder", 100)
+					// 			sims.affectMotive("Hygiene", -5)
+					// 		else if(beaker)
+					// 			if(wear_suit || w_uniform)
+					// 				message = "<B>[src]</B> unzips [his_or_her(src)] pants, takes aim, and fills the beaker with pee."
+					// 			else
+					// 				message = "<B>[src]</B> takes aim and fills the beaker with pee."
+					// 			sims.affectMotive("Bladder", 100)
+					// 			sims.affectMotive("Hygiene", -25)
+					// 			beaker.reagents.add_reagent("urine", 10)
+					// 		else
+					// 			if (wear_suit || w_uniform)
+					// 				message = "<B>[src]</B> pisses all over [himself_or_herself(src)]!"
+					// 				sims.affectMotive("Bladder", 100)
+					// 				sims.affectMotive("Hygiene", -100)
+					// 				if (w_uniform)
+					// 					w_uniform.name = "piss-soaked [initial(w_uniform.name)]"
+					// 				else
+					// 					wear_suit.name = "piss-soaked [initial(wear_suit.name)]"
+					// 			else
+					// 				src.urinate()
+					// 				sims.affectMotive("Bladder", 100)
+					// 				sims.affectMotive("Hygiene", -50)
 
-						if (src.urine < 1)
-							message = "<B>[src]</B> pees [himself_or_herself(src)] a little bit."
-						else if (toilet && (src.buckled != null) && (src.urine >= 2))
-							for (var/obj/item/storage/toilet/T in src.loc)
-								message = pick("<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet.", "<B>[src]</B> empties [his_or_her(src)] bladder.", "<span class='notice'>Ahhh, sweet relief.</span>")
-								src.urine = 0
-								T.clogged += 0.10
-								break
-						else if (beaker && (src.urine >= 1))
-							message = pick("<B>[src]</B> unzips [his_or_her(src)] pants, takes aim, and pees in the beaker.", "<B>[src]</B> takes aim and pees in the beaker!", "<B>[src]</B> fills the beaker with pee!")
-							beaker.reagents.add_reagent("urine", src.urine * 4)
-							src.urine = 0
-						else
-							src.urine--
-							src.urinate()
+					// else
+					// 	var/obj/item/storage/toilet/toilet = locate() in src.loc
+					// 	var/obj/item/reagent_containers/glass/beaker = locate() in src.loc
+
+					// 	if (src.urine < 1)
+					// 		message = "<B>[src]</B> pees [himself_or_herself(src)] a little bit."
+					// 	else if (toilet && (src.buckled != null) && (src.urine >= 2))
+					// 		for (var/obj/item/storage/toilet/T in src.loc)
+					// 			message = pick("<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet.", "<B>[src]</B> empties [his_or_her(src)] bladder.", "<span class='notice'>Ahhh, sweet relief.</span>")
+					// 			src.urine = 0
+					// 			T.clogged += 0.10
+					// 			break
+					// 	else if (beaker && (src.urine >= 1))
+					// 		message = pick("<B>[src]</B> unzips [his_or_her(src)] pants, takes aim, and pees in the beaker.", "<B>[src]</B> takes aim and pees in the beaker!", "<B>[src]</B> fills the beaker with pee!")
+					// 		beaker.reagents.add_reagent("urine", src.urine * 4)
+					// 		src.urine = 0
+					// 	else
+					// 		src.urine--
+					// 		src.urinate()
 
 			if ("poo", "poop", "shit", "crap")
 				if (src.emote_check(voluntary))
