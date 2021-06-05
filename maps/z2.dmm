@@ -80732,7 +80732,7 @@
 	icon = 'icons/obj/doors/door_office.dmi';
 	lock_dir = 8
 	},
-/turf/unsimulated/floor/wood/two,
+/turf/unsimulated/floor/setpieces/swampgrass,
 /area/centcom/offices/tterc)
 "qRA" = (
 /turf/unsimulated/floor/dream/beach{
