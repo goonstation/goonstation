@@ -58,8 +58,8 @@ var/datum/manufacturing_controller/manuf_controls
 	if (!manuf_controls.custom_schematics.len)
 		logTheThing("debug", null, null, "<b>Manufacturer:</b> Cant find schematic due to empty schematic list")
 		return null
-	for (var/datum/manufacture/M in manuf_controls.custom_schematics)
-		if (schematic_path == M.type)
+	for (var/datum/manufacture/mechanics/M in manuf_controls.custom_schematics)
+		if (schematic_path == M.frame_path)
 			return M
 	logTheThing("debug", null, null, "<b>Manufacturer:</b> Schematic \"[schematic_path]\" not found")
 	return null
