@@ -239,7 +239,7 @@
 
 		var/obj/item/W = O
 
-		if(W in user)
+		if(W in user && !W.cant_drop)
 			user.u_equip(W)
 			W.set_loc(src.loc)
 			W.dropped()
