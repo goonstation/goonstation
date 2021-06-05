@@ -405,14 +405,14 @@
 				if (M)
 					switch(act)
 						if ("nod")
-							message = "<B>[src]</B> [act]s to [param]."
-							maptext_out = "<I>[act]s to [param]</I>"
+							message = "<B>[src]</B> [act]s to [M]."
+							maptext_out = "<I>[act]s to [M]</I>"
 						if ("nodto")
-							message = "<B>[src]</B> nods to [param]."
-							maptext_out = "<I>nods to [param]</I>"
+							message = "<B>[src]</B> nods to [M]."
+							maptext_out = "<I>nods to [M]</I>"
 						if ("glare","stare","look","leer")
-							message = "<B>[src]</B> [act]s at [param]."
-							maptext_out = "<I>[act]s at [param]</I>"
+							message = "<B>[src]</B> [act]s at [M]."
+							maptext_out = "<I>[act]s at [M]</I>"
 				else
 					message = "<B>[src]</b> [act]s."
 					maptext_out = "<I>[act]s</I>"
@@ -2363,7 +2363,7 @@
 /mob/living/proc/get_targets(range = 1, kind_of_target = "mob")
 	if(!isturf(get_turf(src))) return
 
-	var/list/everything_around = list()
+	var/list/atom/movable/everything_around = list()
 
 	for(var/atom/movable/AM in view(range, get_turf(src)))
 		if(AM == src)
