@@ -1,5 +1,9 @@
 
 (t)fri jun 04 21
+(u)Asche
+(p)4984
+(e)⚖🆕|balance, feature
+(+)You can now (usually) pull people out of cyborg converter artifacts to save them. The conversion process has also been made a bit more... gradual.
 (u)BatElite
 (p)4994
 (e)🆕|feature
