@@ -1,4 +1,9 @@
 
+(t)sat jun 05 21
+(u)112358sam
+(p)5027
+(e)|
+(+)Fixes borgs dropping items on the material processor.
 (t)fri jun 04 21
 (u)Asche
 (p)4984
