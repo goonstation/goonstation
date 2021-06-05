@@ -11,6 +11,7 @@
 (u)Tarmunora
 (e)⚖|balance
 (+)Booster enzyme now produces some harmless but slow-depleting leftovers when replicating chemicals.
+(+)milk + vinegar -> cheese
 (t)thu jun 03 21
 (u)Jan.antilles
 (p)4889
