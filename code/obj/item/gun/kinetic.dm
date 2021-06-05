@@ -1717,6 +1717,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "toygun"
+	contraband = 1
 	force = 1
 	caliber = 0.393
 	max_ammo_capacity = 10
