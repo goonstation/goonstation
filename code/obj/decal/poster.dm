@@ -1103,7 +1103,7 @@
 		C.Browse("<img src=\"[resource("images/pw_map.png")]\">","window=Map;size=[imgw]x[imgh];title=Map")
 
 /obj/decal/poster/banner
-	name = "banner"
+	name = "\proper banner"
 	desc = "An unfinished banner, try adding some color to it by using a crayon!"
 	icon = 'icons/obj/decals/banners.dmi'
 	icon_state = "banner_base"
@@ -1141,6 +1141,8 @@
 				new_overlay.appearance_flags = RESET_COLOR
 				new_overlay.color = W.color
 				src.overlays.Add(new_overlay)
+				logTheThing("station", user, null, "Drew a [chosen_overlay] in [src] with [W] at [log_loc(user)].")
+				desc = "A banner, colored and decorated"
 
 			if(src.state == 0)
 				src.color = W.color

@@ -178,12 +178,15 @@
 				return ..()
 
 		afterattack(turf/simulated/A, mob/user)
-			if(istype(A, /turf/simulated/wall/))
+			if(locate(/obj/decal/poster/banner,A))
+				return
+			else if(istype(A, /turf/simulated/wall/))
 				var/obj/decal/poster/banner/B = new(A)
 				if(src.material)
 					B.setMaterial(copyMaterial(src.material))
+					logTheThing("station", user, null, "Made [B] at [log_loc(user)].")
 				src.change_stack_amount(-1)
-				user.visible_message("<span class='notice'>[user] Makes a Banner!.</span>")
+				user.visible_message("<span class='notice'>[user] Makes [B]!.</span>")
 
 /obj/item/material_piece/fart
 	icon_state = "fart"
