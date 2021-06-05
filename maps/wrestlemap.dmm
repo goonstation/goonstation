@@ -26694,7 +26694,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/lobby)
 "lnT" = (
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/item/device/radio/intercom/engineering{
 	pixel_y = 28
 	},

@@ -40887,7 +40887,7 @@
 	layer = 3.5;
 	pixel_y = 24
 	},
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/cable{
 	icon_state = "4-8";
 	d1 = 4;

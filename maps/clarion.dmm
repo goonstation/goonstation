@@ -36231,7 +36231,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
