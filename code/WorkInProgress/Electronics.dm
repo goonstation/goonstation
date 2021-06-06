@@ -598,7 +598,7 @@
 	//Set the host ruck to the highest net_id we see, and if it's a DROP command, don't save that net_id
 	if(signal.data["address_1"] == "TRANSRKIT" && (command == "SYNC" || command == "DROP") && target)
 
-		if(length(known_rucks) && length(ruck_controls.scanned_items) && src.net_id == host_ruck && !(target in known_rucks))
+		if(length(ruck_controls.scanned_items) && src.net_id == host_ruck && !(target in known_rucks))
 			//If we have a database of items, and we're the host, and we see a new ruck
 			//Upload our database to it
 			var/datum/computer/file/electronics_bundle/rkitFile = new
@@ -613,8 +613,10 @@
 				newsignal.data["sender"] = src.net_id
 				newsignal.data_file = rkitFile
 				radio_connection.post_signal(src, newsignal)
+			known_rucks |= target
+			send_sync()
+			return
 
-		known_rucks |= target
 		//Got a sync time to reset this to ourselves
 		host_ruck = src.net_id //We're the master!
 		if (target > host_ruck && command == "SYNC") //Unless they are
