@@ -9,6 +9,7 @@
 	flags = FPRINT | TABLEPASS | ONBELT
 	mats = 14
 	var/obj/item/card/id/ID_card = null
+	var/list/scanned_access = list()
 	req_access = list(access_change_ids,access_engineering_chief)
 	var/mode = 0 //0 AND, 1 OR
 
@@ -174,3 +175,14 @@
 		if (O && owner)
 			boutput(owner, "<span class='alert'>Access change of [O] interrupted!</span>")
 		..()
+
+/obj/item/device/accessgun/meh
+	name = "Access Lite"
+	req_access = list()
+	afterattack(obj/target, mob/user, reach, params)
+		var/obj/machinery/door/airlock/door_reqs = target
+		if(istype(door_reqs)target.deconstruct_flags & DECON_BUILT)
+			. = ..()
+		else
+
+			boutput(user, "<span class='notice'>[src] cannot burn programmed doors.</span>")
