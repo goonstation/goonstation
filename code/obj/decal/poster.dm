@@ -997,7 +997,7 @@
 		if(src.material) src.color = src.material.color
 		else src.color = "#ffffff" // In case the material is null
 		src.overlays = null
-		src.colored = 0
+		src.colored = FALSE
 		usr.visible_message("<span class='notice'>[usr] Clears the [src].</span>")
 
 	New()
