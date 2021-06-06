@@ -555,7 +555,7 @@
 	if(status & NOPOWER)
 		return
 
-	if(!signal || signal.encryption || !signal.data["sender"] || !powered())
+	if(!signal || signal.encryption || !signal.data["sender"])
 		return
 
 	var/target = signal.data["sender"]
