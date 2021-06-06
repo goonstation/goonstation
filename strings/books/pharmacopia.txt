@@ -157,7 +157,7 @@
 			<li>Atropine is a useful alkaloid in treating nerve agents and poisonings, and can help situationally in treating slowed heart rate from supression of the cardiac system.
 			<li>Synthesis: mix ethanol, phenol, diethylamine, and acetone in sulfuric acid.
 		</div>
-		<h3>Perfluorpdecalin</h3>
+		<h3>Perfluorodecalin</h3>
 		<div class ="Perfluorodecalin">
 		<ul>
 			<li>A fluorocarbon, Perfluorodecalin has the ability to dissolve a large molar quantity of oxygen; topical application allows it to release stored oxygen to a target location. Can be applied internally for tissue oxygenation.
