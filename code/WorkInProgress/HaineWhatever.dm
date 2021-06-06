@@ -1223,7 +1223,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 /mob/living/carbon/human/proc/sailormoon_reshape() // stolen from Spy's tommyize stuff
 	var/datum/appearanceHolder/AH = new
 	AH.gender = "female"
-	AH.customization_first = "Sailor Moon"
+	AH.customization_first = new /datum/customization_style/hair/gimmick/sailor_moon
 	AH.customization_first_color = "#FFD700"
 	AH.owner = src
 	AH.parentHolder = src.bioHolder

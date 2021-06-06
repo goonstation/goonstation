@@ -2968,9 +2968,7 @@
 "amK" = (
 /obj/table,
 /obj/item/stamp,
-/obj/noticeboard{
-	pixel_y = 32
-	},
+/obj/noticeboard,
 /turf/unsimulated/floor/black,
 /area/hospital)
 "amL" = (
@@ -3441,6 +3439,17 @@
 /obj/item/device/key/filing_cabinet,
 /turf/unsimulated/floor/grime,
 /area/moon/museum)
+"aog" = (
+/obj/item/toy/plush/small/bunny/mask{
+	anchored = 1;
+	desc = "It hungers...";
+	name = "Average staff assistant #1"
+	},
+/obj/decal/cleanable/blood/tracks{
+	icon_state = "drip5"
+	},
+/turf/unsimulated/floor/setpieces/swampgrass,
+/area/centcom/offices/tterc)
 "aoo" = (
 /obj/table/wood/round,
 /turf/unsimulated/floor/white,
@@ -5098,9 +5107,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
 "asU" = (
-/obj/noticeboard{
-	pixel_y = 32
-	},
+/obj/noticeboard,
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
 "asV" = (
@@ -11536,9 +11543,7 @@
 "aNg" = (
 /obj/table/auto,
 /obj/item/kitchen/food_box/donut_box,
-/obj/noticeboard{
-	pixel_y = 32
-	},
+/obj/noticeboard,
 /turf/unsimulated/floor/specialroom/bar,
 /area/upper_arctic/pod2)
 "aNh" = (
@@ -13449,14 +13454,6 @@
 /obj/machinery/door/window/westleft,
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
-"aSi" = (
-/obj/window/cubicle{
-	dir = 4
-	},
-/obj/table/wood/auto,
-/obj/item/paper/book/hydroponicsguide,
-/turf/unsimulated/floor/carpet/grime,
-/area/crater/biodome/research)
 "aSj" = (
 /obj/machinery/door/airlock/glass{
 	name = "Biodome"
@@ -14236,9 +14233,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/noticeboard{
-	pixel_y = 32
-	},
+/obj/noticeboard,
 /turf/unsimulated/floor/neutral/side{
 	dir = 1
 	},
@@ -32365,22 +32360,6 @@
 "bMc" = (
 /turf/unsimulated/floor/grass/leafy,
 /area/sim/racing_track)
-"bMd" = (
-/obj/storage/secure/closet/civilian/hydro{
-	desc = "The only PDAs you'll find in this locker are Plant Data Analyzers. Heh.";
-	locked = 0;
-	name = "strictly Botanical supplies locker";
-	spawn_contents = list(/obj/item/plantanalyzer,/obj/item/device/reagentscanner,/obj/item/reagent_containers/glass/wateringcan,/obj/item/paper/book/hydroponicsguide)
-	},
-/obj/decal/stage_edge{
-	layer = 2.8;
-	mouse_opacity = 0
-	},
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
-/turf/unsimulated/floor/wood/three,
-/area/afterlife/heaven/hydroponics)
 "bMe" = (
 /obj/machinery/door/poddoor/blast{
 	dir = 4;
@@ -35932,12 +35911,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/crypt/sigma/rd)
-"bWg" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/book/cookbook,
-/obj/item/reagent_containers/food/drinks/milk/rancid,
-/turf/unsimulated/floor/white/grime,
-/area/crypt/sigma/kitchen)
 "bWh" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
@@ -35999,11 +35972,6 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/crunch)
-"bWp" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/paper/book/monster_manual,
-/turf/unsimulated/floor/black,
-/area/crypt/sigma/rd)
 "bWq" = (
 /obj/machinery/deep_fryer,
 /turf/unsimulated/floor/white/grime,
@@ -38521,9 +38489,6 @@
 	},
 /turf/unsimulated/floor/caution/westeast,
 /area/owlery/staffhall)
-"cdi" = (
-/turf/unsimulated/floor/orangeblack/corner,
-/area/centcom)
 "cdj" = (
 /obj/machinery/light{
 	dir = 8
@@ -44009,16 +43974,6 @@
 	dir = 4
 	},
 /area/crunch/wtc)
-"crR" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/blueprint/destiny,
-/obj/item/paper/blueprint/clarion,
-/obj/item/paper/book/moby_dick,
-/obj/item/paper/book/deep_blue_sea,
-/turf/unsimulated/floor/black/side{
-	dir = 4
-	},
-/area/crunch/wtc)
 "crS" = (
 /obj/decal/floatingtiles{
 	dir = 8;
@@ -48538,11 +48493,6 @@
 /obj/item/reagent_containers/glass/bottle/ammonia/janitors,
 /turf/unsimulated/floor/white,
 /area/owlery/lab)
-"cCH" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/reagent_containers/food/drinks/coffee,
-/turf/unsimulated/floor/black,
-/area/owlery/lab)
 "cCI" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/card/id/owlgold{
@@ -51822,29 +51772,14 @@
 	},
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
-"cKx" = (
-/obj/table,
-/obj/item/paper/book/medical_guide,
-/turf/unsimulated/floor/blackwhite,
-/area/owlery/office)
 "cKy" = (
 /obj/stool/chair{
 	dir = 1
 	},
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
-"cKz" = (
-/obj/table,
-/obj/item/paper/book/dwainedummies,
-/turf/unsimulated/floor/blackwhite,
-/area/owlery/office)
 "cKA" = (
 /obj/reagent_dispensers/watertank/fountain,
-/turf/unsimulated/floor/blackwhite,
-/area/owlery/office)
-"cKB" = (
-/obj/table,
-/obj/item/paper/book/the_trial,
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
 "cKC" = (
@@ -52101,10 +52036,6 @@
 /turf/unsimulated/floor/yellowblack{
 	dir = 6
 	},
-/area/owlery/gangzone)
-"cLi" = (
-/obj/item/paper/book/guardbot_guide,
-/turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cLj" = (
 /obj/decal/cleanable/machine_debris,
@@ -52727,11 +52658,6 @@
 	dir = 8
 	},
 /area/owlery/gangzone)
-"cMO" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/drinks/coffee,
-/turf/unsimulated/floor/carpet/red/decal/outercross,
-/area/syndicate_station/battlecruiser)
 "cMP" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/device/t_scanner/adventure,
@@ -54244,12 +54170,6 @@
 /obj/decal/cleanable/blood/splatter,
 /turf/unsimulated/floor/redblack{
 	dir = 4
-	},
-/area/owlery/gangzone)
-"cQi" = (
-/obj/item/paper/book/space_law,
-/turf/unsimulated/floor/redblack{
-	dir = 8
 	},
 /area/owlery/gangzone)
 "cQj" = (
@@ -65661,16 +65581,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/cogmap2)
-"drg" = (
-/obj/machinery/computer/shuttle/embedded/east,
-/obj/stool/chair/comfy/shuttle/pilot{
-	dir = 4
-	},
-/turf/unsimulated/floor/shuttle{
-	dir = 8;
-	icon_state = "floor2"
-	},
-/area/shuttle/escape/centcom/cogmap2)
 "drh" = (
 /turf/unsimulated/outdoors/grass,
 /turf/simulated/shuttle/wall/cockpit,
@@ -67395,55 +67305,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
-"dvS" = (
-/obj/decal/poster/wallsign/bookcase{
-	pixel_y = 28
-	},
-/obj/item/paper/blueprint{
-	pixel_x = -4;
-	pixel_y = -8
-	},
-/obj/item/paper{
-	pixel_x = 5;
-	pixel_y = -4
-	},
-/obj/item/paper{
-	pixel_x = 7;
-	pixel_y = -9
-	},
-/obj/item/paper{
-	pixel_x = -13;
-	pixel_y = -5
-	},
-/obj/item/paper/book/deep_blue_sea,
-/obj/item/paper/Cloning{
-	pixel_x = -6;
-	pixel_y = 5
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/studenterhue)
-"dvT" = (
-/obj/decal/poster/wallsign/bookcase{
-	pixel_y = 28
-	},
-/obj/item/paper/book/pocketguide/bartending{
-	pixel_x = 4;
-	pixel_y = 1
-	},
-/obj/item/chem_hint{
-	pixel_x = -20
-	},
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 4
-	},
-/obj/item/paper{
-	pixel_x = -6;
-	pixel_y = 3
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/studenterhue)
 "dvU" = (
 /obj/admin_plaque{
 	name = "Studenterhue's Office"
@@ -67661,24 +67522,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"dwv" = (
-/obj/item/paper{
-	pixel_x = 7;
-	pixel_y = -9
-	},
-/obj/item/paper{
-	pixel_x = -4;
-	pixel_y = 9
-	},
-/obj/item/paper{
-	pixel_x = -6;
-	pixel_y = -14
-	},
-/obj/item/paper/book/monster_manual{
-	pixel_x = -9
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/studenterhue)
 "dww" = (
 /obj/stool/chair/office/blue{
 	dir = 1;
@@ -67688,34 +67531,6 @@
 /obj/item/paper{
 	pixel_x = -10;
 	pixel_y = -18
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/studenterhue)
-"dwx" = (
-/obj/item/paper/book/the_trial{
-	pixel_x = -8;
-	pixel_y = 6
-	},
-/obj/item/paper{
-	info = "\"An member of an insidious race of calcium-based beings, known to cleverly hide under of the flesh of carbon-based organisms. Their presence can only be revealed via special rays of radiation or certain medical procedures.\"";
-	name = "Skeleton.png"
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/studenterhue)
-"dwy" = (
-/obj/item/paper{
-	info = "Workin' in Botany,<br>Gonna grow a lot of peaches.<br>Be thinkin' they look like butts<br>Or maybe it's butts that looks like peaches.<br>They contain synthetic peach juice,<br>Makes me think they're not real peaches.<br>Don't heckle me from rhyming words with themselves,<br>The Presidents Of The United States Of America did in their fucking song \"Peaches\"";
-	name = "peach.png";
-	pixel_x = -10;
-	pixel_y = 15
-	},
-/obj/item/paper/book{
-	pixel_x = -12;
-	pixel_y = -2
-	},
-/obj/item/paper/book/hydroponicsguide{
-	pixel_x = 5;
-	pixel_y = -13
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
@@ -67848,49 +67663,6 @@
 /obj/item/storage/box/record/radio/host{
 	pixel_x = -3;
 	pixel_y = -1
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/studenterhue)
-"dwW" = (
-/obj/item/paper{
-	pixel_x = -13;
-	pixel_y = -5
-	},
-/obj/item/paper{
-	pixel_x = 5;
-	pixel_y = -4
-	},
-/obj/item/paper{
-	pixel_x = -13;
-	pixel_y = -5
-	},
-/obj/item/paper{
-	pixel_x = -13;
-	pixel_y = -5
-	},
-/obj/item/paper/book/guardbot_guide{
-	pixel_x = -6;
-	pixel_y = -3
-	},
-/obj/item/paper/book/player_piano{
-	pixel_x = 10;
-	pixel_y = 16
-	},
-/obj/machinery/light,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/studenterhue)
-"dwX" = (
-/obj/item/paper/book/medical_guide{
-	pixel_x = -8;
-	pixel_y = 8
-	},
-/obj/item/paper/book/pocketguide/medical{
-	pixel_x = 8;
-	pixel_y = -3
-	},
-/obj/item/paper/blueprint{
-	pixel_x = -10;
-	pixel_y = -4
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
@@ -68150,16 +67922,6 @@
 	},
 /turf/unsimulated/floor/carpet/arcade,
 /area/centcom/offices/gannets)
-"dxH" = (
-/obj/admin_plaque{
-	pixel_x = -32
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "dxI" = (
 /obj/admin_plaque{
 	name = "DrSinghs' Office";
@@ -69235,14 +68997,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hukhukhuk)
-"dAP" = (
-/obj/table/wood/auto/desk{
-	icon_state = "8"
-	},
-/obj/item/paper/book/cookbook,
-/obj/item/paper/book/medical_guide,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
 "dAQ" = (
 /obj/storage/crate/wooden{
 	desc = "Lookin cute, feelin cute.";
@@ -69938,16 +69692,6 @@
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
-"dCB" = (
-/obj/landmark/viscontents_spawn{
-	targetZ = 4
-	},
-/turf/unsimulated/floor/stairs/wide/other{
-	dir = 1
 	},
 /area/centcom/offices{
 	icon_state = "blue"
@@ -77009,6 +76753,16 @@
 /obj/machinery/door/airlock/pyro/security,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/donut3)
+"ebC" = (
+/obj/landmark/viscontents_spawn{
+	targetZ = 4
+	},
+/turf/unsimulated/floor/stairs/wide/other{
+	dir = 1
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "ecr" = (
 /obj/machinery/light{
 	dir = 1
@@ -77036,6 +76790,14 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/sealab)
+"ehl" = (
+/obj/window/cubicle{
+	dir = 4
+	},
+/obj/table/wood/auto,
+/obj/item/paper/book/from_file/hydroponicsguide,
+/turf/unsimulated/floor/carpet/grime,
+/area/crater/biodome/research)
 "eih" = (
 /obj/kudzu_marker{
 	icon_state = "kudzu-benign-3"
@@ -77058,6 +76820,28 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"eoV" = (
+/obj/decal/poster/wallsign/bookcase{
+	pixel_y = 28
+	},
+/obj/item/paper/book/from_file/pocketguide/bartending{
+	pixel_x = 4;
+	pixel_y = 1
+	},
+/obj/item/chem_hint{
+	pixel_x = -20
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 4
+	},
+/obj/item/paper{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/studenterhue)
 "epL" = (
 /obj/decal/skeleton{
 	desc = "Oh.  Gross.";
@@ -77375,6 +77159,11 @@
 	icon_state = "floor"
 	},
 /area/meat_derelict/guts)
+"fiY" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/paper/book/from_file/monster_manual,
+/turf/unsimulated/floor/black,
+/area/crypt/sigma/rd)
 "fmD" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_office.dmi';
@@ -77520,6 +77309,14 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/escape/centcom/donut3)
+"fOt" = (
+/obj/table/wood/auto/desk{
+	icon_state = "8"
+	},
+/obj/item/paper/book/from_file/cookbook,
+/obj/item/paper/book/from_file/pharmacopia,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/hukhukhuk)
 "fQJ" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
@@ -77650,6 +77447,11 @@
 	icon_state = "Stairs2_wide"
 	},
 /area/centcom)
+"gpj" = (
+/obj/table,
+/obj/item/paper/book/from_file/pharmacopia,
+/turf/unsimulated/floor/blackwhite,
+/area/owlery/office)
 "gtU" = (
 /obj/machinery/light{
 	dir = 1
@@ -77902,6 +77704,19 @@
 /turf/space,
 /turf/unsimulated/floor/caution/east,
 /area/hospital/samostrel)
+"hBd" = (
+/obj/critter/frog{
+	anchored = 1;
+	desc = "Wow, did it really steal that pilot's seat?";
+	name = "interdimensional crime frog";
+	pixel_y = -3
+	},
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 4;
+	name = "stolen pilot's seat"
+	},
+/turf/unsimulated/floor/void,
+/area/centcom/offices/tterc)
 "hBs" = (
 /obj/grille/steel,
 /obj/window/north,
@@ -77925,6 +77740,13 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"hEG" = (
+/obj/item/raw_material/shard/glass{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/setpieces/swampgrass,
+/area/centcom/offices/tterc)
 "hEL" = (
 /obj/machinery/light{
 	on = 1
@@ -77969,16 +77791,16 @@
 /obj/table/wood/auto/desk,
 /obj/item/paper{
 	icon_state = "paper";
-	name = "SQL Server nonsense";
-	pixel_x = 9;
-	pixel_y = 6
-	},
-/obj/item/paper{
-	icon_state = "paper";
 	info = "Approval for one basement";
 	name = "basement construction permit";
 	pixel_x = -4;
 	pixel_y = -2
+	},
+/obj/item/paper{
+	icon_state = "paper";
+	name = "Promotion to Double Mentor";
+	pixel_x = 3;
+	pixel_y = 4
 	},
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
@@ -78181,6 +78003,11 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"iHP" = (
+/obj/table,
+/obj/item/paper/book/from_file/the_trial,
+/turf/unsimulated/floor/blackwhite,
+/area/owlery/office)
 "iIt" = (
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/sw,
 /area/centcom/offices/rodney)
@@ -78280,6 +78107,22 @@
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/offices/urs)
+"jbA" = (
+/obj/storage/secure/closet/civilian/hydro{
+	desc = "The only PDAs you'll find in this locker are Plant Data Analyzers. Heh.";
+	locked = 0;
+	name = "strictly Botanical supplies locker";
+	spawn_contents = list(/obj/item/plantanalyzer,/obj/item/device/reagentscanner,/obj/item/reagent_containers/glass/wateringcan,/obj/item/paper/book/from_file/hydroponicsguide)
+	},
+/obj/decal/stage_edge{
+	layer = 2.8;
+	mouse_opacity = 0
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/unsimulated/floor/wood/three,
+/area/afterlife/heaven/hydroponics)
 "jdw" = (
 /obj/machinery/light/small/floor,
 /obj/stool/chair/comfy/shuttle{
@@ -78296,6 +78139,12 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"jgk" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/swampgrass,
+/area/centcom/offices/tterc)
 "jhk" = (
 /turf/space,
 /turf/cordon,
@@ -78355,6 +78204,13 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"jqT" = (
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/setpieces/swampgrass,
+/area/centcom/offices/tterc)
 "jru" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-34"
@@ -78671,6 +78527,14 @@
 	opacity = 1
 	},
 /area/adventure/channel)
+"kmZ" = (
+/obj/railing/red{
+	dir = 8;
+	name = "reinforced staffie-resistant barrier"
+	},
+/obj/machinery/light/incandescent/greenish,
+/turf/unsimulated/floor/setpieces/swampgrass,
+/area/centcom/offices/tterc)
 "koi" = (
 /obj/item/clothing/under/gimmick/princess{
 	color = "#8c0b0b"
@@ -78884,6 +78748,11 @@
 	icon_state = "shore-41"
 	},
 /area/titlescreen)
+"ldC" = (
+/obj/table,
+/obj/item/paper/book/from_file/dwainedummies,
+/turf/unsimulated/floor/blackwhite,
+/area/owlery/office)
 "leI" = (
 /obj/stool/bar{
 	pixel_y = 6
@@ -78905,6 +78774,17 @@
 	icon_state = "wall3"
 	},
 /area/diner/tug)
+"lgD" = (
+/obj/item/paper/book/from_file/the_trial{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/obj/item/paper{
+	info = "\"An member of an insidious race of calcium-based beings, known to cleverly hide under of the flesh of carbon-based organisms. Their presence can only be revealed via special rays of radiation or certain medical procedures.\"";
+	name = "Skeleton.png"
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/studenterhue)
 "lhj" = (
 /obj/decal/tile_edge/stripe{
 	dir = 6;
@@ -79054,6 +78934,11 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"lyg" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/reagent_containers/food/drinks/coffee,
+/turf/unsimulated/floor/black,
+/area/owlery/lab)
 "lyh" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-31"
@@ -79142,6 +79027,12 @@
 	},
 /turf/unsimulated/grass,
 /area/centcom/lounge)
+"lUo" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/cookbook,
+/obj/item/reagent_containers/food/drinks/milk/rancid,
+/turf/unsimulated/floor/white/grime,
+/area/crypt/sigma/kitchen)
 "lUK" = (
 /obj/decal/fakeobjects/dreambeach/seashells,
 /turf/unsimulated/floor/dream/beach{
@@ -79372,6 +79263,16 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"mUe" = (
+/obj/machinery/computer/shuttle/embedded/east,
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/cogmap2)
 "mVb" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
@@ -79391,6 +79292,14 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"mXo" = (
+/obj/item/reagent_containers/pill/methamphetamine{
+	pixel_x = -2;
+	pixel_y = -6
+	},
+/obj/map/light/green,
+/turf/unsimulated/floor/setpieces/swampgrass,
+/area/centcom/offices/tterc)
 "mYC" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
@@ -79887,6 +79796,17 @@
 /turf/space,
 /turf/unsimulated/floor/engine/caution/east,
 /area/hospital/samostrel)
+"oaR" = (
+/obj/rack,
+/obj/item/clothing/head/frog_hat{
+	pixel_x = -7
+	},
+/obj/item/clothing/under/color/green{
+	pixel_x = 6;
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/wood/five,
+/area/centcom/offices/tterc)
 "obT" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 1
@@ -80155,6 +80075,34 @@
 	icon_state = "wall3"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"oXr" = (
+/obj/item/paper{
+	pixel_x = -13;
+	pixel_y = -5
+	},
+/obj/item/paper{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/item/paper{
+	pixel_x = -13;
+	pixel_y = -5
+	},
+/obj/item/paper{
+	pixel_x = -13;
+	pixel_y = -5
+	},
+/obj/item/paper/book/from_file/guardbot_guide{
+	pixel_x = -6;
+	pixel_y = -3
+	},
+/obj/item/paper/book/from_file/player_piano{
+	pixel_x = 10;
+	pixel_y = 16
+	},
+/obj/machinery/light,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/studenterhue)
 "oYl" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
@@ -80226,6 +80174,21 @@
 	},
 /turf/unsimulated/grass,
 /area/centcom/lounge)
+"poK" = (
+/obj/item/paper/book/from_file/pharmacopia{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/item/paper/book/from_file/pocketguide/medical{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/item/paper/blueprint{
+	pixel_x = -10;
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/studenterhue)
 "pqf" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -80428,6 +80391,23 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"pVP" = (
+/obj/item/paper{
+	info = "Workin' in Botany,<br>Gonna grow a lot of peaches.<br>Be thinkin' they look like butts<br>Or maybe it's butts that looks like peaches.<br>They contain synthetic peach juice,<br>Makes me think they're not real peaches.<br>Don't heckle me from rhyming words with themselves,<br>The Presidents Of The United States Of America did in their fucking song \"Peaches\"";
+	name = "peach.png";
+	pixel_x = -10;
+	pixel_y = 15
+	},
+/obj/item/paper/book{
+	pixel_x = -12;
+	pixel_y = -2
+	},
+/obj/item/paper/book/from_file/hydroponicsguide{
+	pixel_x = 5;
+	pixel_y = -13
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/studenterhue)
 "pXI" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -80656,6 +80636,17 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"qJR" = (
+/obj/admin_plaque{
+	name = "Caroline Audibert's office";
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "qMN" = (
 /obj/machinery/light{
 	dir = 1
@@ -80727,6 +80718,13 @@
 /turf/space,
 /turf/unsimulated/floor/engine/caution/north,
 /area/hospital/samostrel)
+"qRm" = (
+/obj/machinery/door/unpowered/wood{
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 8
+	},
+/turf/unsimulated/floor/setpieces/swampgrass,
+/area/centcom/offices/tterc)
 "qRA" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-14"
@@ -81010,6 +81008,33 @@
 /turf/space,
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/hospital/samostrel)
+"rJY" = (
+/obj/decal/poster/wallsign/bookcase{
+	pixel_y = 28
+	},
+/obj/item/paper/blueprint{
+	pixel_x = -4;
+	pixel_y = -8
+	},
+/obj/item/paper{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/item/paper{
+	pixel_x = 7;
+	pixel_y = -9
+	},
+/obj/item/paper{
+	pixel_x = -13;
+	pixel_y = -5
+	},
+/obj/item/paper/book/from_file/deep_blue_sea,
+/obj/item/paper/Cloning{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/studenterhue)
 "rKt" = (
 /obj/machinery/computer3/generic/personal{
 	pixel_x = 2;
@@ -81092,6 +81117,16 @@
 	icon_state = "floor6"
 	},
 /area/centcom/offices/pali)
+"rUQ" = (
+/obj/admin_plaque{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "rVy" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-37"
@@ -81332,6 +81367,24 @@
 /obj/item/shinai_bag,
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
+"sHZ" = (
+/obj/item/paper{
+	pixel_x = 7;
+	pixel_y = -9
+	},
+/obj/item/paper{
+	pixel_x = -4;
+	pixel_y = 9
+	},
+/obj/item/paper{
+	pixel_x = -6;
+	pixel_y = -14
+	},
+/obj/item/paper/book/from_file/monster_manual{
+	pixel_x = -9
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/studenterhue)
 "sJF" = (
 /turf/unsimulated/floor/stairs{
 	dir = 8;
@@ -81369,6 +81422,16 @@
 /turf/space,
 /turf/unsimulated/floor/engine/caution/south,
 /area/hospital/samostrel)
+"tck" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/blueprint/destiny,
+/obj/item/paper/blueprint/clarion,
+/obj/item/paper/book/from_file/moby_dick,
+/obj/item/paper/book/from_file/deep_blue_sea,
+/turf/unsimulated/floor/black/side{
+	dir = 4
+	},
+/area/crunch/wtc)
 "teX" = (
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
@@ -81609,6 +81672,17 @@
 /obj/machinery/light,
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
+"ucy" = (
+/obj/item/toy/plush/small/bunny/mask{
+	anchored = 1;
+	desc = "It hungers...";
+	name = "Average staff assistant #2"
+	},
+/obj/decal/cleanable/blood/tracks{
+	icon_state = "drip5"
+	},
+/turf/unsimulated/floor/setpieces/swampgrass,
+/area/centcom/offices/tterc)
 "ukK" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-10"
@@ -81650,6 +81724,12 @@
 	dir = 4
 	},
 /area/hospital/samostrel)
+"usD" = (
+/obj/item/paper/book/from_file/space_law,
+/turf/unsimulated/floor/redblack{
+	dir = 8
+	},
+/area/owlery/gangzone)
 "usG" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-38"
@@ -81760,6 +81840,21 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"uFD" = (
+/obj/decal/fakeobjects/robotpedestal{
+	desc = "Looks fairly robust.";
+	name = "robust pedestal"
+	},
+/obj/item/reagent_containers/food/drinks/coffee{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/item/kitchen/rollingpin{
+	name = "robust rolling pin";
+	pixel_x = -2
+	},
+/turf/unsimulated/floor/void,
+/area/centcom/offices/tterc)
 "uKz" = (
 /obj/decal/fakeobjects/teleport_pad,
 /turf/unsimulated/floor/shuttle{
@@ -81780,6 +81875,16 @@
 	icon_state = "shore-17"
 	},
 /area/titlescreen)
+"uMG" = (
+/obj/railing/red{
+	dir = 8;
+	name = "reinforced staffie-resistant barrier"
+	},
+/obj/machinery/light/incandescent/greenish{
+	dir = 1
+	},
+/turf/unsimulated/floor/setpieces/swampgrass,
+/area/centcom/offices/tterc)
 "uOm" = (
 /turf/unsimulated/wall/cave,
 /area/centcom/offices{
@@ -81906,6 +82011,10 @@
 /obj/critter/cat/cathara,
 /turf/unsimulated/floor/carpet/office/other,
 /area/centcom/offices/adhara)
+"viL" = (
+/obj/item/paper/book/from_file/guardbot_guide,
+/turf/unsimulated/floor/yellow,
+/area/owlery/gangzone)
 "vjx" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 4;
@@ -81965,6 +82074,9 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
+"voQ" = (
+/turf/unsimulated/floor/orangeblack/corner,
+/area/centcom)
 "vrR" = (
 /obj/tombstone{
 	dir = 1
@@ -82281,6 +82393,13 @@
 	icon_state = "shore-26"
 	},
 /area/titlescreen)
+"wMG" = (
+/obj/railing/red{
+	dir = 8;
+	name = "reinforced staffie-resistant barrier"
+	},
+/turf/unsimulated/floor/setpieces/swampgrass,
+/area/centcom/offices/tterc)
 "wNg" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -82290,6 +82409,11 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/cogmap2)
+"wNz" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/coffee,
+/turf/unsimulated/floor/carpet/red/decal/outercross,
+/area/syndicate_station/battlecruiser)
 "wOC" = (
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans"
@@ -82398,10 +82522,7 @@
 	dir = 1
 	},
 /obj/table/wood/auto/desk,
-/obj/item/paper{
-	icon_state = "paper";
-	name = "Promotion to Double Mentor"
-	},
+/obj/item/gimmickbomb/grenyanda/inert,
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
 "xoU" = (
@@ -94838,7 +94959,7 @@ cIc
 cIt
 cJl
 cBj
-cKx
+gpj
 cLc
 cnw
 cnw
@@ -95442,7 +95563,7 @@ cGf
 cIv
 cJl
 cBj
-cKz
+ldC
 cLc
 cCS
 cCS
@@ -96033,7 +96154,7 @@ aBY
 cCu
 cBd
 cAq
-cCH
+lyg
 cBg
 cBg
 cEY
@@ -96046,7 +96167,7 @@ cAD
 cIw
 cJn
 cBj
-cKB
+iHP
 cLc
 cnw
 cnw
@@ -101414,7 +101535,7 @@ cnz
 cnC
 crz
 crJ
-crR
+tck
 crY
 csf
 csm
@@ -101483,7 +101604,7 @@ cIF
 cJv
 cSA
 cKK
-cLi
+viL
 cKc
 cMi
 cMJ
@@ -103306,7 +103427,7 @@ cCM
 cCM
 cPo
 cPI
-cQi
+usD
 cQL
 cXQ
 cCM
@@ -111132,7 +111253,7 @@ bqV
 bVe
 cGV
 aoB
-cMO
+wNz
 cNu
 dbo
 bqV
@@ -120289,7 +120410,7 @@ aPc
 aPP
 aQC
 aQx
-aSi
+ehl
 aTi
 aTS
 aUJ
@@ -123445,7 +123566,7 @@ bUB
 bVx
 dUg
 bWf
-bWp
+fiY
 bWx
 bWG
 bVy
@@ -124048,7 +124169,7 @@ bSs
 bVl
 bVz
 bVP
-bWg
+lUo
 bWq
 bWy
 bWI
@@ -127175,7 +127296,7 @@ dqf
 dpO
 dqN
 dqX
-drg
+mUe
 dqX
 drw
 drx
@@ -138240,7 +138361,7 @@ aXt
 bkT
 bkT
 bmX
-bMd
+jbA
 bNP
 bPA
 bQI
@@ -140052,7 +140173,7 @@ aXt
 bkT
 bEN
 bmX
-bMd
+jbA
 bNP
 bPA
 bQI
@@ -145601,7 +145722,7 @@ dmw
 dmw
 bwb
 dnv
-cdi
+voQ
 bwb
 dmw
 dmw
@@ -151682,7 +151803,7 @@ dDP
 dvL
 dCA
 dCA
-dCB
+ebC
 dDK
 dCA
 dvw
@@ -154115,7 +154236,7 @@ khD
 dAw
 dvw
 dvQ
-dwv
+sHZ
 dwV
 dvw
 dEm
@@ -154130,9 +154251,9 @@ nte
 njo
 mmF
 dvw
-dvW
-dvW
-dvW
+oaR
+hBd
+uFD
 dvw
 aES
 aES
@@ -154418,7 +154539,7 @@ gJV
 dvw
 dvR
 dww
-dwW
+oXr
 dvw
 dEn
 dEy
@@ -154432,9 +154553,9 @@ dYf
 jSc
 vbL
 dvw
-dvW
-dvW
-dvW
+uMG
+wMG
+kmZ
 dvw
 aES
 aES
@@ -154718,9 +154839,9 @@ dzg
 nyc
 gJV
 dvw
-dvS
-dwx
-dwX
+rJY
+lgD
+poK
 dvw
 dEo
 dEx
@@ -154734,9 +154855,9 @@ vEe
 wAT
 vbL
 dvw
-dvW
-dvW
-dvW
+aog
+hEG
+jqT
 dvw
 aES
 aES
@@ -155020,8 +155141,8 @@ oHI
 kJJ
 rXO
 dvw
-dvT
-dwy
+eoV
+pVP
 dwY
 dvw
 dEp
@@ -155036,9 +155157,9 @@ iPz
 jSc
 vbL
 dvw
-dvW
-dvW
-dvW
+jgk
+mXo
+ucy
 dvw
 aES
 aES
@@ -155339,7 +155460,7 @@ eCq
 dDP
 dvP
 dDP
-kKw
+qRm
 dDP
 dvO
 dDP
@@ -155640,7 +155761,7 @@ dvy
 dvy
 dvy
 dvy
-dxH
+qJR
 dvy
 dRL
 dvw
@@ -159538,7 +159659,7 @@ dvw
 dvC
 dvy
 dvy
-dxH
+rUQ
 dvy
 dvy
 dvy
@@ -159550,7 +159671,7 @@ umN
 dvy
 dvy
 dvy
-dxH
+rUQ
 dvy
 dxa
 dvy
@@ -166192,7 +166313,7 @@ dEa
 dvw
 dzH
 dAo
-dAP
+fOt
 dvw
 dBz
 dBZ
@@ -169500,7 +169621,7 @@ aES
 dvw
 aCZ
 aFN
-dCB
+ebC
 aHo
 aDG
 dxs

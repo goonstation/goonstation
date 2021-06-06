@@ -225,7 +225,6 @@ const Functions = (props, context) => {
           buttons={
             <>
               <Button
-                disabled={diskReadOnly}
                 icon="upload"
                 color={"blue"}
                 onClick={() => act("load")}>
@@ -243,7 +242,7 @@ const Functions = (props, context) => {
           <Box>
             <Icon
               color={diskReadOnly ? 'bad' : 'good'}
-              name={diskReadOnly ? 'times' : 'check'}
+              name={'check'}
             />
             {' '}
             {diskReadOnly ? 'Disk is read only.' : 'Disk is writeable.'}

@@ -35,3 +35,8 @@
 			else
 				message_admins("TGS: Back online")
 			attached = TRUE
+		if(TGS_EVENT_WATCHDOG_SHUTDOWN)
+			boutput(world, "<B>Server is shutting down!<B>")
+
+/datum/tgs_event_handler/impl/proc/LateOnReattach()
+	message_admins("TGS Warning: TGS hasn't notified us of it coming back for a full minute! Is there a problem?")
