@@ -135,7 +135,6 @@
 		return
 
 /obj/machinery/portable_atmospherics/canister/agent_b/update_icon()
-
 	if (src.destroyed)
 		src.icon_state = "[src.casecolor]-1"
 		ClearAllOverlays()
