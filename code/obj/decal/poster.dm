@@ -987,7 +987,7 @@
 	icon_state = "banner_base"
 	popup_win = 0
 	flags = TGUI_INTERACTIVE
-	var/colored = 0
+	var/colored = FALSE
 	var/chosen_overlay
 	var/static/list/choosable_overlays = list("Horizontal Stripes","Vertical Stripes","Diagonal Stripes","Cross","Diagonal Cross","Full","Full Gradient",
 	"Left Line","Middle Line","Right Line","Northwest Line","Northeast Line","Southwest Line","Southeast Line","Big Ball","Medium Ball","Small Ball",
@@ -1039,4 +1039,3 @@
 		else if(tgui_alert(usr, "Are you sure you want to clear the banner?","Confirmation",list("Yes","No")) == "Yes")
 			clear()
 		else return
-
