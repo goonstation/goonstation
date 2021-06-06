@@ -10,7 +10,7 @@ Singularity engine workers may encounter EMPs more frequently than others on the
 performance and special abilities. It should be noted that these limiters could also reduce the lifespan of the hardware they are used on, and are technically illegal. As such this
 text will not go into detail on built-in limiters.</p>
 <h3 id="cyberorgan-descriptions">Cyberorgan Descriptions</h3>
-<p>With that out of the way, let’s first look at [i]what[/i] you can replace! We live in an exciting time for cyberprosthetics and the following parts are regularly available from
+<p>With that out of the way, let’s first look at <i>what</i> you can replace! We live in an exciting time for cyberprosthetics and the following parts are regularly available from
 your local robotics fabricator:</p>
 <ul>
 <li>Arms        1.1</li>
@@ -104,5 +104,5 @@ you if you do this!).. </p>
 <p>Best of luck in your continued work, Roboticist!</p>
 <br>
 <h4>Additonal documentation is available at:</h4>
-<ul>><li><a href="https://wiki.ss13.co/Doctoring" target="Goonstation Wiki: Doctoring">https://wiki.ss13.co/Doctoring</a></li></ul>
+<ul><li><a href="https://wiki.ss13.co/Doctoring" target="Goonstation Wiki: Doctoring">https://wiki.ss13.co/Doctoring</a></li></ul>
 </span>
