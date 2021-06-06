@@ -58,12 +58,14 @@
 	name = "Canister: \[O2\]"
 	icon_state = "blue"
 	casecolor = "blue"
+
 /obj/machinery/portable_atmospherics/canister/agent_b
 	name = "Canister \[Oxygen Agent B\]"
 	icon_state = "bluish"
 	casecolor = "bluish"
 	desc = "A container which holds a large amount of the labelled gas. It's possible to transfer the gas to a pipe system, or the air."
 	volume = 500
+	
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "Canister \[Plasma\]"
 	icon_state = "orange"
