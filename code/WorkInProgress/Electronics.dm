@@ -660,7 +660,7 @@
 
 	for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
 		if(scanFile.scannedPath == O.item_type)
-			if (command != "add" || src.net_id != host_ruck) //Don't send a failure message if the it's an internal transfer("UPLOAD" command)
+			if (command = "UPLOAD" || src.net_id != host_ruck) //Don't send a failure message if the it's an internal transfer("UPLOAD" command)
 				//And don't send a message if we're not the host
 				return //But we already had that blueprint, so we do leave
 
