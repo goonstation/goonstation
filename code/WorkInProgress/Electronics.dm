@@ -653,6 +653,7 @@
 			for (var/datum/electronics/scanned_item/O in originalData.scanned_items)
 				ruck_controls.scan_in(O.name, O.item_type, O.mats, O.locked)
 			return
+		return
 	else if(istype(rkitFile))
 		return
 
