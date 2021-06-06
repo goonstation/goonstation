@@ -506,7 +506,7 @@
 
 /obj/machinery/rkit/proc/send_sync(var/dispose) //Request SYNCREPLY from other rucks
 	//If dispose is true we use "DROP" which won't be saved as the host
-	SPAWN_DBG(rand(0, 15)) //Keep these out of sync a little, less spammy
+	SPAWN_DBG(rand(0, 5)) //Keep these out of sync a little, less spammy
 		if(isnull(boot_time)) boot_time = world.time
 		host_ruck = src.net_id //We're the host until someone else proves they are
 		var/datum/signal/newsignal = get_free_signal()
@@ -590,7 +590,6 @@
 	if(signal.data["address_1"] == "TRANSRKIT" && command == "SYNCREPLY" && target)
 		if (target > host_ruck) //pick the highest net_id
 			host_ruck = target
-			known_rucks |= target
 			//Wait we're done here?
 			return
 
