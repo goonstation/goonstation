@@ -598,7 +598,7 @@
 	if(status & NOPOWER)
 		return
 
-	if(!signal || signal.encryption || !signal.data["sender"])
+	if(!signal || signal.encryption || !signal.data["sender"] || isnull(boot_time))
 		return
 
 	var/target = signal.data["sender"]
