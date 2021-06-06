@@ -19,6 +19,7 @@
 	burn_output = 800
 	burn_possible = 1
 	health = 50
+	var/team_num
 
 	duration_remove = 6.5 SECONDS
 
@@ -728,12 +729,36 @@
 	desc = "Non-descript, slightly suspicious civilian clothing."
 	icon_state = "syndicate"
 	item_state = "syndicate"
+	team_num = TEAM_SYNDICATE
+	#ifdef MAP_OVERRIDE_POD_WARS
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team_num)
+			..()
+		else
+			boutput(user, "<span class='alert'>The jumpsuit <b>explodes</b> as you reach out to grab it!</span>")
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+	#endif
 
 /obj/item/clothing/under/misc/turds
 	name = "NT-SO Jumpsuit"
 	desc = "A Nanotrasen Special Operations jumpsuit."
 	icon_state = "turdsuit"
 	item_state = "turdsuit"
+	team_num = TEAM_NANOTRASEN
+	#ifdef MAP_OVERRIDE_POD_WARS
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team_num)
+			..()
+		else
+			boutput(user, "<span class='alert'>The jumpsuit <b>explodes</b> as you reach out to grab it!</span>")
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+	#endif
 
 /obj/item/clothing/under/misc/NT
 	name = "nanotrasen jumpsuit"
@@ -1317,8 +1342,8 @@
 	item_state = "princess"
 
 /obj/item/clothing/under/gimmick/cosby
-	name = "cosby sweater"
-	desc = "Symbol of a legendary 80's sitcom dad."
+	name = "comfy sweater"
+	desc = "A colourful and cozy jumper."
 	icon_state = "cosby1"
 	item_state = "cosby1"
 	New()

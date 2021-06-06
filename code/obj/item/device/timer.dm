@@ -65,9 +65,9 @@
 		last_tick = TIME
 
 		if (!src.master)
-			src.updateDialog()
+			src.updateSelfDialog()
 		else
-			src.master.updateDialog()
+			src.master.updateSelfDialog()
 
 	else
 		// If it's not timing, reset the icon so it doesn't look like it's still about to go off.
@@ -105,7 +105,10 @@
 		return
 
 	if ((src in user) || (src.master && (src.master in user)) || (get_dist(src, user) <= 1 && istype(src.loc, /turf)) || src.is_detonator_trigger())
-		src.add_dialog(user)
+		if (!src.master)
+			src.add_dialog(user)
+		else
+			src.master.add_dialog(user)
 		var/second = src.time % 60
 		var/minute = (src.time - second) / 60
 		var/detonator_trigger = src.is_detonator_trigger()
@@ -117,7 +120,10 @@
 		onclose(user, "timer")
 	else
 		user.Browse(null, "window=timer")
-		src.remove_dialog(user)
+		if (!src.master)
+			src.remove_dialog(user)
+		else
+			src.master.remove_dialog(user)
 
 	return
 
@@ -138,7 +144,10 @@
 		return
 	var/can_use_detonator = src.is_detonator_trigger() && !src.timing
 	if (can_use_detonator || (src in usr) || (src.master && (src.master in usr)) || in_interact_range(src, usr) && istype(src.loc, /turf))
-		src.add_dialog(usr)
+		if (!src.master)
+			src.add_dialog(usr)
+		else
+			src.master.add_dialog(usr)
 		if (href_list["time"])
 			src.timing = text2num(href_list["time"])
 			if(timing)
@@ -168,13 +177,16 @@
 
 		if (href_list["close"])
 			usr.Browse(null, "window=timer")
-			src.remove_dialog(usr)
+			if (!src.master)
+				src.remove_dialog(usr)
+			else
+				src.master.remove_dialog(usr)
 			return
 
 		if (!src.master)
-			src.updateDialog()
+			src.updateSelfDialog()
 		else
-			src.master.updateDialog()
+			src.master.updateSelfDialog()
 
 		src.add_fingerprint(usr)
 	else

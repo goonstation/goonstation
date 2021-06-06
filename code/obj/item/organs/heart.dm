@@ -96,10 +96,9 @@
 
 /obj/item/organ/heart/synth
 	name = "synthheart"
-	desc = "A synthetic heart, made out of some odd, meaty plant thing."
+	desc = "I guess you could call this a... hearti-choke"
 	synthetic = 1
 	item_state = "plant"
-	made_from = "pharosium"
 	transplant_XP = 6
 	New()
 		..()

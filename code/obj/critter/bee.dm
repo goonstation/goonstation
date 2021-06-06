@@ -45,7 +45,7 @@
 	"butt-nc","butt-plant","butt-cyber","purplebutt","santa","yellow","blue","red","green","black","white",
 	"psyche","wizard","wizardred","wizardpurple","witch","obcrown","macrown","safari","viking","dolan",
 	"camhat","redcamhat","mailcap","paper","policehelm","bikercap","apprentice","chavcap","flatcap","ntberet",
-	"captain-fancy","rank-fancy","mime_beret","mime_bowler","buckethat")
+	"captain-fancy","rank-fancy","mime_beret","mime_bowler","buckethat", "syndicate_top", "syndicate_top_biggest")
 
 	var/sleep_y_offset = 5 // this amount removed from the hat's pixel_y on sleep or death
 	var/hat_y_offset = 0
@@ -489,6 +489,38 @@
 
 		src.hat = ourHat
 
+		// TIME. FOR. CRIME.
+		if (istype(src.hat, /obj/item/clothing/head/bighat/syndicate))
+			var/obj/item/clothing/head/bighat/syndicate/beeBigHat = src.hat
+			var/icon/workingIcon = new /icon(beeBigHat.wear_image_icon, beeBigHat.icon_state, SOUTH)
+
+			workingIcon.Shift(SOUTH, 5)
+
+			var/icon/leftIcon = new /icon()
+			leftIcon.Insert(workingIcon, "hat", SOUTH)
+			leftIcon.Insert(workingIcon, "hat", WEST)
+			leftIcon.Shift(WEST, 2)
+			hat_overlay_left = image(leftIcon, "hat")
+
+			var/icon/rightIcon = new /icon()
+			rightIcon.Insert(workingIcon, "hat", NORTH)
+			rightIcon.Insert(workingIcon, "hat", EAST)
+			rightIcon.Shift(WEST, 4)
+			hat_overlay_right = image(rightIcon, "hat")
+
+			// ANNOUNCE THE CRIME!
+
+			SPAWN_DBG(1 SECOND)
+				playsound(src.loc, "sound/vox/bees.ogg", 100, 1)
+				sleep(1 SECOND)
+				playsound(src.loc, "sound/vox/great.ogg", 100, 1)
+				sleep(1 SECOND)
+				playsound(src.loc, "sound/vox/at.ogg", 100, 1)
+				sleep(1 SECOND)
+				playsound(src.loc, "sound/vox/crime.ogg", 100, 1)
+
+			return
+
 		var/icon/newHatIcon = new /icon()
 		var/icon/workingIcon = new /icon(src.hat_icon, "bhat-[src.hat.icon_state]", SOUTH)
 		newHatIcon.Insert(workingIcon, "hat", SOUTH)
@@ -803,8 +835,10 @@
 		/obj/item/clothing/head/apprentice,
 		/obj/item/clothing/head/wizard,
 		/obj/item/clothing/head/wizard/red,
+		/obj/item/clothing/head/bighat/syndicate,
 		/obj/item/clothing/head/helmet/viking,
-		/obj/item/clothing/head/void_crown
+		/obj/item/clothing/head/void_crown,
+		/obj/item/clothing/head/bighat/syndicate/biggest
 	)
 
 	New()
@@ -1127,7 +1161,7 @@
 			if ((get_dist(src, M) <= 6) && src.alive)
 				M.visible_message("<span class='alert'><b>[M.name] clutches their temples!</b></span>")
 				M.emote("scream")
-				M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 100))
+				M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 10 SECONDS))
 				M.take_brain_damage(10)
 
 				do_teleport(M, locate((world.maxx/2) + rand(-10,10), (world.maxy/2) + rand(-10,10), 1), 0)

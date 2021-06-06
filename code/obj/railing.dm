@@ -83,6 +83,8 @@
 
 	New()
 		..()
+		if(src.is_reinforced)
+			src.flags |= ALWAYS_SOLID_FLUID
 		layerify()
 
 	Turn()
@@ -160,7 +162,6 @@
 			actions.start(new /datum/action/bar/icon/railing_jump(user, src), user)
 
 	reinforced
-		flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
 		is_reinforced = 1
 		icon_state = "railing-reinforced"
 
@@ -369,13 +370,13 @@
 		switch (interaction)
 			if (RAILING_DISASSEMBLE)
 				verbing = "to disassemble"
-				playsound(get_turf(the_railing), "sound/items/Welder.ogg", 50, 1)
+				playsound(the_railing, "sound/items/Welder.ogg", 50, 1)
 			if (RAILING_FASTEN)
 				verbing = "fastening"
-				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
 			if (RAILING_UNFASTEN)
 				verbing = "unfastening"
-				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
 		for(var/mob/O in AIviewers(ownerMob))
 			O.show_text("[owner] begins [verbing] [the_railing].", "red")
 
@@ -387,15 +388,15 @@
 				verbens = "disassembles"
 				tool:try_weld(ownerMob, 2)
 				the_railing.railing_deconstruct()
-				playsound(get_turf(the_railing), "sound/items/Welder.ogg", 50, 1)
+				playsound(the_railing, "sound/items/Welder.ogg", 50, 1)
 			if (RAILING_FASTEN)
 				verbens = "fastens"
 				the_railing.anchored = 1
-				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
 			if (RAILING_UNFASTEN)
 				verbens = "unfastens"
 				the_railing.anchored = 0
-				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
 		for(var/mob/O in AIviewers(ownerMob))
 			O.show_text("[owner] [verbens] [the_railing].", "red")
 			logTheThing("station", ownerMob, the_railing, "[verbens] [the_railing].")

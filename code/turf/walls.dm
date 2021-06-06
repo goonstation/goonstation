@@ -267,10 +267,10 @@
 			src.ReplaceWithSpace()
 			return
 		if(2)
-			if (prob(40))
+			if (prob(66))
 				dismantle_wall(1)
 		if(3)
-			if (prob(66))
+			if (prob(40))
 				dismantle_wall(1)
 		else
 	return
@@ -336,7 +336,7 @@
 
 		boutput(user, "<span class='notice'>Now disassembling the outer wall plating.</span>")
 		SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /turf/simulated/wall/proc/weld_action,\
-			list(W, user), W.icon, W.icon_state, "[user] finishes disassembling the outer wall plating.")
+			list(W, user), W.icon, W.icon_state, "[user] finishes disassembling the outer wall plating.", null)
 
 //Spooky halloween key
 	else if(istype(W,/obj/item/device/key/haunted))

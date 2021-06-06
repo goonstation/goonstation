@@ -333,8 +333,9 @@ ABSTRACT_TYPE(/obj/vehicle)
 		// i guess a borg got on a segway? maybe someone was riding one with nanites
 		if (ishuman(M))
 			if(!istype(M:shoes, /obj/item/clothing/shoes/sandal))
-				M.changeStatus("stunned", 80)
+				M.changeStatus("stunned", 8 SECONDS)
 				M.changeStatus("weakened", 5 SECONDS)
+				M.force_laydown_standup()
 				src.log_me(src.rider, M, "impact")
 			else
 				boutput(M, "<span class='alert'><B>Your magical sandals keep you upright!</B></span>")
@@ -345,7 +346,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 						continue
 					C.show_message("<span class='alert'><B>[M] is kept upright by magical sandals!</B></span>", 1)
 		else
-			M.changeStatus("stunned", 80)
+			M.changeStatus("stunned", 8 SECONDS)
 			M.changeStatus("weakened", 5 SECONDS)
 			src.log_me(src.rider, M, "impact")
 		if(prob(10))
@@ -397,8 +398,9 @@ ABSTRACT_TYPE(/obj/vehicle)
 		if(crashed == 2)
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 		boutput(rider, "<span class='alert'><B>You are flung over \the [src]'s handlebars!</B></span>")
-		rider.changeStatus("stunned", 80)
+		rider.changeStatus("stunned", 8 SECONDS)
 		rider.changeStatus("weakened", 5 SECONDS)
+		rider.force_laydown_standup()
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
@@ -767,7 +769,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			if(C == rider)
 				continue
 			C.show_message("<span class='alert'><B>[rider] crashes into [M] with \the [src]!</B></span>", 1)
-		M.changeStatus("stunned", 50)
+		M.changeStatus("stunned", 5 SECONDS)
 		M.changeStatus("weakened", 3 SECONDS)
 		in_bump = 0
 		return
@@ -804,7 +806,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		if(crashed == 2)
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 		boutput(rider, "<span class='alert'><B>You are flung over \the [src]'s handlebars!</B></span>")
-		rider.changeStatus("stunned", 80)
+		rider.changeStatus("stunned", 8 SECONDS)
 		rider.changeStatus("weakened", 5 SECONDS)
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
@@ -922,7 +924,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			src.icon_state = "buffer[FB.sprayer_active]"
 			if (FB.rider)
 				FB.icon_state = "[FB.icon_base][FB.sprayer_active]"
-			playsound(get_turf(the_mob), "sound/machines/click.ogg", 50, 1)
+			playsound(the_mob, "sound/machines/click.ogg", 50, 1)
 		return
 
 /obj/ability_button/fbuffer_status
@@ -1156,7 +1158,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			if(C == rider)
 				continue
 			C.show_message("<span class='alert'><B>[rider] crashes into [M] with the [src]!</B></span>", 1)
-		M.changeStatus("stunned", 80)
+		M.changeStatus("stunned", 8 SECONDS)
 		M.changeStatus("weakened", 5 SECONDS)
 		playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 
@@ -1191,7 +1193,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 		playsound(src.loc, "shatter", 40, 1)
 		boutput(rider, "<span class='alert'><B>You are flung through the [src]'s windshield!</B></span>")
-		rider.changeStatus("stunned", 80)
+		rider.changeStatus("stunned", 8 SECONDS)
 		rider.changeStatus("weakened", 5 SECONDS)
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
@@ -1392,7 +1394,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			if(C == rider)
 				continue
 			C.show_message("<span class='alert'><B>[rider] runs into [M] with the [src]!</B></span>", 1)
-		M.changeStatus("stunned", 80)
+		M.changeStatus("stunned", 8 SECONDS)
 		M.changeStatus("weakened", 5 SECONDS)
 		eject_rider(2)
 		in_bump = 0
@@ -1436,7 +1438,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		if(crashed == 2)
 			playsound(src.loc, "sound/voice/animal/cat.ogg", 70, 1)
 		boutput(rider, "<span class='alert'><B>You are flung over the [src]'s head!</B></span>")
-		rider.changeStatus("stunned", 80)
+		rider.changeStatus("stunned", 8 SECONDS)
 		rider.changeStatus("weakened", 5 SECONDS)
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
@@ -1816,7 +1818,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		if(src.gib_onhit)
 			M.gib()
 		else
-			M.changeStatus("stunned", 80)
+			M.changeStatus("stunned", 8 SECONDS)
 			M.changeStatus("weakened", 5 SECONDS)
 			var/turf/target = get_edge_target_turf(src, src.dir)
 			M.throw_at(target, 10, 2)
@@ -1874,7 +1876,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 		playsound(src.loc, "shatter", 40, 1)
 		boutput(rider, "<span class='alert'><B>You are flung through the [src]'s windshield!</B></span>")
-		rider.changeStatus("stunned", 80)
+		rider.changeStatus("stunned", 8 SECONDS)
 		rider.changeStatus("weakened", 5 SECONDS)
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)

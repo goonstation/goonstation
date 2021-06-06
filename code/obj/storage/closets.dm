@@ -54,6 +54,8 @@
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
 			if (prob(80))
 				new /obj/item/extinguisher(src)
+			if (prob(50))
+				new /obj/item/clothing/head/helmet/firefighter(src)
 			if (prob(30))
 				new /obj/item/clothing/suit/fire(src)
 				new /obj/item/clothing/mask/gas/emergency(src)
@@ -97,11 +99,13 @@
 	icon_closed = "coffin"
 	icon_opened = "coffin-open"
 	layer = 2.2
+	icon_welded = "welded-coffin-4dirs"
 
 	wood
 		icon_closed = "woodcoffin"
 		icon_state = "woodcoffin"
 		icon_opened = "woodcoffin-open"
+		icon_welded = "welded-coffin-1dir"
 
 /obj/storage/closet/biohazard
 	name = "\improper Level 3 Biohazard Suit closet"

@@ -196,7 +196,7 @@
 		if (!A || isarea(A) || isturf(A))
 			return
 		src.active = 1
-		playsound(get_turf(src), "rustle", 75, 1)
+		playsound(src, "rustle", 75, 1)
 		A.invisibility = 100
 		flick("bbasket1", src)
 		SPAWN_DBG(1.5 SECONDS)
@@ -271,7 +271,7 @@
 						if(V.client)
 							V.show_message("<span class='combat'>[T] gets stabbed by one of the [src.name]'s spikes.</span>", 1)
 							playsound(src.loc, "sound/impact_sounds/Flesh_Stab_2.ogg", 65, 1)
-					T.changeStatus("stunned", 50)
+					T.changeStatus("stunned", 5 SECONDS)
 					T.TakeDamageAccountArmor("chest", 30, 0)
 					take_bleeding_damage(T, null, 15, DAMAGE_STAB)
 					return

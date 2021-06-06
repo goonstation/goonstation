@@ -38,6 +38,9 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	// some semi-random turf in the area to guide spy thieves
 	var/turf/spyturf = null
 
+	// To help decided objective difficulty for spy thieves
+	var/spy_secure_area = 0
+
 	/// for escape checks
 	var/is_centcom = 0
 
@@ -1310,6 +1313,10 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Bee Sanctuary"
 	icon_state = "purple"
 
+area/prefab/torpedo_deposit
+	name = "Torpedo Deposit"
+	icon_state = "purple"
+
 // zewaka - vspace areas //
 ABSTRACT_TYPE(/area/sim)
 /area/sim
@@ -1910,6 +1917,7 @@ ABSTRACT_TYPE(/area/station/mining)
 /area/station/bridge/captain
 	name = "Captain's Office"
 	icon_state = "CAPN"
+	spy_secure_area = TRUE
 
 /area/station/bridge/hos
 	name = "Head of Personnel's Office"
@@ -1948,6 +1956,7 @@ ABSTRACT_TYPE(/area/station/crew_quarters)
 	name = "Head of Security's Quarters"
 	icon_state = "HOS"
 	sound_environment = 4
+	spy_secure_area = TRUE
 
 /area/station/crew_quarters/md
 	name = "Medical Director's Quarters"
@@ -2501,6 +2510,7 @@ ABSTRACT_TYPE(/area/station/security)
 /area/station/security
 	teleport_blocked = 1
 	workplace = 1
+	spy_secure_area = TRUE
 
 /area/station/security/main
 	name = "Security"
@@ -2547,6 +2557,7 @@ ABSTRACT_TYPE(/area/station/security)
 	name = "Bridge Security Checkpoint"
 	icon_state = "checkpoint1"
 	sound_environment = 2
+	spy_secure_area = FALSE		// Usually easy to get into
 
 /area/station/security/checkpoint/arrivals
 		name = "Arrivals Security Checkpoint"
@@ -2660,6 +2671,7 @@ ABSTRACT_TYPE(/area/station/security)
 	name = "Beepsky's House"
 	icon_state = "storage"
 	do_not_irradiate = 1
+	spy_secure_area = FALSE	// Easy to get into
 
 ABSTRACT_TYPE(/area/station/solar)
 /area/station/solar
@@ -3045,6 +3057,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 
 /area/station/routing/security
 		name = "Security Router"
+		spy_secure_area = TRUE
 
 /area/station/routing/airbridge
 		name = "Airbridge Router"
@@ -3194,6 +3207,7 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 	icon_state = "armory"
 	sound_environment = 2
 	teleport_blocked = 1
+	spy_secure_area = TRUE
 
 // // // // // //
 
@@ -3201,6 +3215,7 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 ABSTRACT_TYPE(/area/station/turret_protected)
 /area/station/turret_protected
 	name = "Turret Protected Area"
+	spy_secure_area = TRUE
 	var/list/obj/machinery/turret/turret_list = list()
 	var/obj/machinery/camera/motion/motioncamera = null
 	var/list/obj/blob/blob_list = list() //faster to cache blobs as they enter instead of searching the area for them (For turrets)
@@ -5179,3 +5194,251 @@ area/station/security/visitation
 
 
 */
+// pod_wars Areas
+/area/pod_wars/team1/hangar
+	name = "NSV Pytheas Hangar"
+	icon_state = "purple"
+
+/area/pod_wars/team1/mining
+	name = "NSV Pytheas Mining"
+	icon_state = "yellow"
+
+/area/pod_wars/team1/manufacturing
+	name = "NSV Pytheas Manufacturing"
+	icon_state = "blue"
+
+/area/pod_wars/team1/medbay
+	name = "NSV Pytheas Medbay"
+	icon_state = "medbay"
+
+/area/pod_wars/team1/bar
+	name = "NSV Pytheas Bar"
+	icon_state = "blue"
+
+/area/pod_wars/team1/powergen
+	name = "NSV Pytheas Power Station"
+	icon_state = "engine_monitoring"
+
+/area/pod_wars/team1/bridge
+	name = "NSV Pytheas Bridge"
+	icon_state = "reds"
+
+/area/pod_wars/team1/porthall
+	name = "NSV Pytheas Port Hallway"
+	icon_state = "green"
+
+/area/pod_wars/team1/starboardhall
+	name = "NSV Pytheas Starboard Hallway"
+	icon_state = "green"
+
+/area/pod_wars/team1/magnet
+	name = "NSV Pytheas Mineral Magnet"
+	icon_state = "purple"
+
+/area/pod_wars/team2/bridge
+	name = "Lodbrok Bridge"
+	icon_state = "red"
+
+/area/pod_wars/team2/medbay
+	name = "Lodbrok Medical Storage"
+	icon_state = "medbay"
+
+/area/pod_wars/team2/cloning
+	name = "Lodbrok Medical Suite"
+	icon_state = "cloner"
+
+/area/pod_wars/team2/mining
+	name = "Lodbrok Mining"
+	icon_state = "orange"
+
+/area/pod_wars/team2/central_hallway
+	name = "Lodbrok Central Hallway"
+	icon_state = "green"
+
+/area/pod_wars/team2/bar
+	name = "Lodbrok Bar"
+	icon_state = "red"
+
+/area/pod_wars/team2/power
+	name = "Lodbrok Power Station"
+	icon_state = "engine_monitoring"
+
+/area/pod_wars/team2/hangar
+	name = "Lodbrok Hangar"
+	icon_state = "yellow"
+
+/area/pod_wars/team2/storage
+	name = "Lodbrok Storage"
+	icon_state = "purple"
+
+/area/pod_wars/team2/magnet
+	name = "Lodbrok Mineral Magnet"
+	icon_state = "purple"
+
+/area/pod_wars/spacejunk/restaurant
+	name = "Cheesy Chuck's Premium Eatery"
+	icon_state = "yellow"
+
+/area/pod_wars/spacejunk/restaurant/solars
+	name = "Cheesy Chuck's Premium Solar Array"
+	icon_state = "red"
+
+/area/pod_wars/spacejunk/restaurant/landingpads
+	name = "Cheesy Chuck's Premium Landing Pads"
+	icon_state = "green"
+
+/area/pod_wars/spacejunk/reliant
+	name = "NSV Reliant"
+	icon_state = "yellow"
+
+/area/pod_wars/spacejunk/reliant/landingpads
+	name = "NSV Reliant Landing Pads"
+	icon_state = "red"
+
+/area/pod_wars/spacejunk/dorgun
+	name = "DORGUN'S GREAT SHIP 10/10"
+	icon_state = "yellow"
+
+/area/pod_wars/spacejunk/brightwell
+	name = "LS Brightwell"
+	icon_state = "yellow"
+
+/area/pod_wars/spacejunk/fstation
+	name = "Fortuna Main Hall"
+	icon_state = "blue"
+
+/area/pod_wars/spacejunk/fstation/primary
+	name = "Fortuna Primary Dock"
+	icon_state = "red"
+
+/area/pod_wars/spacejunk/fstation/secdock
+	name = "Fortuna Security Dock"
+	icon_state = "security"
+
+/area/pod_wars/spacejunk/fstation/maintdock
+	name = "Fortuna Maintenence Dock"
+	icon_state = "red"
+
+/area/pod_wars/spacejunk/fstation/computercore
+	name = "Fortuna Computer Core"
+	icon_state = "green"
+
+/area/pod_wars/spacejunk/fstation/crewquarters
+	name = "Fortuna Crew Quarters"
+	icon_state = "yellow"
+
+/area/pod_wars/spacejunk/fstation/mess
+	name = "Fortuna Mess Hall"
+	icon_state = "purple"
+
+/area/pod_wars/spacejunk/fstation/power
+	name = "Fortuna Engineering"
+	icon_state = "engine_monitoring"
+
+/area/pod_wars/spacejunk/fstation/medbay
+	name = "Fortuna Medical Bay"
+	icon_state = "medbay"
+
+/area/pod_wars/spacejunk/fstation/observatory
+	name = "Fortuna Observatory"
+	icon_state = "yellow"
+
+/area/pod_wars/spacejunk/fstation/bar
+	name = "Fortuna Bar"
+	icon_state = "green"
+
+/area/pod_wars/spacejunk/fstation/command
+	name = "Fortuna Command"
+	icon_state = "purple"
+
+/area/pod_wars/spacejunk/fstation/landingpads
+	name = "Fortuna Landing Pads"
+	icon_state = "green"
+
+/area/pod_wars/spacejunk/uvb67/power
+	name = "UVB-67 Power Station"
+	icon_state = "yellow"
+
+/area/pod_wars/spacejunk/uvb67/crew
+	name = "UVB-67 Crew Habitat"
+	icon_state = "Yellow"
+
+/area/pod_wars/spacejunk/uvb67/central
+	name = "UVB-67 Defensive Zone"
+	icon_state = "red"
+
+/area/pod_wars/spacejunk/uvb67/solars
+	name = "UVB-67 Solar Array"
+	icon_state = "Purple"
+
+/area/pod_wars/spacejunk/greatwreck
+	name = "Wreckage of LS Greater Things Await You"
+	icon_state = "yellow"
+
+/area/pod_wars/spacejunk/nancy
+	name = "Nancy's Pristine Goods"
+	icon_state = "red"
+
+/area/pod_wars/spacejunk/nancy/landingpad
+	name = "Nancy's Pristine Goods Landing Pad"
+	icon_state = "yellow"
+
+/area/pod_wars/spacejunk/nancy/warehouse
+	name = "Nancy's Warehouse"
+	icon_state = "green"
+
+/area/pod_wars/spacejunk/nancy/powergen
+	name = "Nancy's Power Generator"
+	icon_state = "engine_montioring"
+
+/area/pod_wars/spacejunk/snackstand
+	name = "Snack Shack"
+	icon_state = "yellow"
+
+/area/pod_wars/spacejunk/miningoutpost
+	name = "Abandoned Mining Outpost"
+	icon_state = "yellow"
+
+/area/pod_wars/spacejunk/miningoutpost/crewquarters
+	name = "Abandoned Mining Outpost Crew Quarters"
+	icon_state = "green"
+
+#define MAJOR_AST(num) area/pod_wars/asteroid/major/maj_##num/name = "" + "major asteroid " + #num
+
+area/pod_wars/asteroid/major/icon_state = "green"
+area/pod_wars/asteroid/minor/icon_state = "yellow"
+area/pod_wars/asteroid/minor/name = "minor asteroid"
+area/pod_wars/asteroid/minor/nospawn/icon_state = "red"
+
+MAJOR_AST(1)
+MAJOR_AST(2)
+MAJOR_AST(3)
+MAJOR_AST(4)
+MAJOR_AST(5)
+MAJOR_AST(6)
+MAJOR_AST(7)
+MAJOR_AST(8)
+MAJOR_AST(9)
+MAJOR_AST(10)
+MAJOR_AST(11)
+MAJOR_AST(12)
+MAJOR_AST(13)
+MAJOR_AST(14)
+MAJOR_AST(15)
+MAJOR_AST(16)
+MAJOR_AST(17)
+MAJOR_AST(18)
+MAJOR_AST(19)
+MAJOR_AST(20)
+MAJOR_AST(21)
+MAJOR_AST(22)
+MAJOR_AST(23)
+MAJOR_AST(24)
+MAJOR_AST(25)
+MAJOR_AST(26)
+MAJOR_AST(27)
+MAJOR_AST(28)
+MAJOR_AST(29)
+MAJOR_AST(30)
+
+#undef MAJOR_AST

@@ -212,7 +212,7 @@
 			qdel(src)
 			return
 
-		playsound(get_turf(the_mob), 'sound/effects/bamf.ogg', 100, 1)
+		playsound(the_mob, 'sound/effects/bamf.ogg', 100, 1)
 
 		if(prob(explosion_chance) || R.emagged)
 			boutput(the_mob, "<span class='alert'>The rocket shoes blow up!</span>")
@@ -282,7 +282,7 @@
 			boutput(the_mob, "<span class='alert'>You must be wearing the shoes to use them.</span>")
 			return
 
-		playsound(get_turf(the_mob), "sound/effects/bamf.ogg", 100, 1)
+		playsound(the_mob, "sound/effects/bamf.ogg", 100, 1)
 
 		SPAWN_DBG(0)
 			for(var/i=0, i<R.soniclength, i++)

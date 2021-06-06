@@ -130,6 +130,17 @@
 	temp_tolerance = T0C+500
 	var/overloading = 0
 
+/obj/item/organ/lung/synth
+	name = "synthlungs"
+	icon_state = "plant"
+	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream."
+	synthetic = 1
+	failure_disease = /datum/ailment/disease/respiratory_failure
+	var/overloading = 0
+	New()
+		..()
+		src.icon_state = pick("plant_lung_t", "plant_lung_t_bloom")
+
 	add_ability(var/datum/abilityHolder/aholder, var/abil)
 		if (!ispath(abil, /datum/targetable/organAbility/rebreather) || !aholder)
 			return ..()
@@ -176,6 +187,28 @@
 	demag(mob/user)
 		..()
 		organ_abilities = initial(organ_abilities)
+
+/obj/item/organ/lung/synth/left
+	name = "left lung"
+	organ_name = "synthlung_L"
+	icon_state = "plant"
+	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream. This is a left lung, since it has three lobes. Hopefully whoever used to have this one doesn't need it anymore."
+	synthetic = 1
+	failure_disease = /datum/ailment/disease/respiratory_failure
+	New()
+		..()
+		src.icon_state = pick("plant_lung_L", "plant_lung_L_bloom")
+
+/obj/item/organ/lung/synth/right
+	name = "right lung"
+	organ_name = "synthlung_R"
+	icon_state = "plant"
+	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream. This is a right lung, since it has two lobes and a cardiac notch, where the heart would be. Hopefully whoever used to have this one doesn't need it anymore."
+	synthetic = 1
+	failure_disease = /datum/ailment/disease/respiratory_failure
+	New()
+		..()
+		src.icon_state = pick("plant_lung_R", "plant_lung_R_bloom")
 
 /obj/item/organ/lung/cyber/left
 	name = "left lung"

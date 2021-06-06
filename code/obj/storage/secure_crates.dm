@@ -7,6 +7,7 @@
 	icon_redlight = "securecrater"
 	icon_greenlight = "securecrateg"
 	icon_sparks = "securecratesparks"
+	icon_welded = "welded-crate"
 	//var/emag = "securecrateemag"
 	density = 1
 	always_display_locks = 1
@@ -144,16 +145,20 @@
 				B3.pixel_x = -6
 				B3.pixel_y = 3
 
-				var/obj/item/paper/manufacturer_blueprint/interdictor_rod/B4 = new(src)
+				var/obj/item/paper/manufacturer_blueprint/interdictor_rod_lambda/B4 = new(src)
 				B4.pixel_x = 8
-				B4.pixel_y = -3
+				B4.pixel_y = -5
 
-				var/obj/item/paper/manufacturer_blueprint/interdictor_frame/B5 = new(src)
+				var/obj/item/paper/manufacturer_blueprint/interdictor_rod_sigma/B5 = new(src)
 				B5.pixel_x = 8
-				B5.pixel_y = 3
+				B5.pixel_y = -1
 
-				var/obj/item/paper/book/interdictor/B6 = new(src)
-				B6.pixel_y = 1
+				var/obj/item/paper/manufacturer_blueprint/interdictor_frame/B6 = new(src)
+				B6.pixel_x = 8
+				B6.pixel_y = 3
+
+				var/obj/item/paper/book/from_file/interdictor_guide/B7 = new(src)
+				B7.pixel_y = 1
 				return 1
 
 /obj/storage/secure/crate/medical
@@ -163,6 +168,7 @@
 	density = 1
 	icon_opened = "securemedicalcrateopen"
 	icon_closed = "securemedicalcrate"
+	weld_image_offset_Y = -2
 	req_access = list(access_medical_lockers)
 
 	monkey

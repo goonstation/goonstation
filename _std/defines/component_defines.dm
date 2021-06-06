@@ -145,6 +145,9 @@
 /// When a mob dies
 #define COMSIG_MOB_DEATH "mob_death"
 
+/// When a mob fakes death
+#define COMSIG_MOB_FAKE_DEATH "mob_fake_death"
+
 #define COMSIG_MOB_PICKUP "mob_pickup"
 
 #define COMSIG_MOB_DROPPED "mob_drop"
@@ -156,6 +159,10 @@
 // ---- mob/living signals ----
 /// When a Life tick occurs
 #define COMSIG_LIVING_LIFE_TICK "human_life_tick"
+
+// ---- mob property signals ----
+/// When invisibility of a mob gets updated (old_value)
+#define COMSIG_MOB_PROP_INVISIBILITY "mob_prop_invis"
 
 // ---- attack_X signals ----
 

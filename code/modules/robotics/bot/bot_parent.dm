@@ -169,7 +169,7 @@
 					UpdateOverlays(null, "bot_speech_bubble")
 			if(!src.bot_speech_color)
 				var/num = hex2num(copytext(md5("[src.name][TIME]"), 1, 7))
-				src.bot_speech_color = hsv2rgb(num % 360, (num / 360) % 10 / 100 + 0.18, num / 360 / 10 % 15 / 100 + 0.85)
+				src.bot_speech_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
 			var/singing_italics = sing ? " font-style: italic;" : ""
 			var/maptext_color
 			if (sing)
@@ -184,7 +184,7 @@
 						I.bump_up(chatbot_text.measured_height)
 
 		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"<span style=\"[src.bot_chat_style]\">[message]\"</span>", just_maptext = just_float, assoc_maptext = chatbot_text)
-		playsound(get_turf(src), src.bot_voice, 40, 1)
+		playsound(src, src.bot_voice, 40, 1)
 		if (src.text2speech)
 			SPAWN_DBG(0)
 				var/audio = dectalk("\[:nk\][message]")

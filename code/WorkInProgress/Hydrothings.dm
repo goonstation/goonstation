@@ -457,7 +457,7 @@ obj/item/gnomechompski/elf
 			if (prob(50))
 				affected_mob.make_jittery(25)
 			if (prob(15))
-				playsound(get_turf(affected_mob), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
+				playsound(affected_mob, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 				make_cleanable( /obj/decal/cleanable/vomit, affected_mob.loc)
 				new /mob/living/critter/small_animal/bird/owl(get_turf(affected_mob))
 				for(var/mob/O in viewers(affected_mob, null))
@@ -479,7 +479,7 @@ obj/item/gnomechompski/elf
 			if  (prob(35))
 				boutput(affected_mob, "<B>[pick("Oh g-HOOT", "Whats happe-ho-ing to me?", "It hurts!")]</B>")
 			if (prob(15))
-				playsound(get_turf(affected_mob), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
+				playsound(affected_mob, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 				make_cleanable( /obj/decal/cleanable/vomit, affected_mob.loc)
 				new /mob/living/critter/small_animal/bird/owl(get_turf(affected_mob))
 				for(var/mob/O in viewers(affected_mob, null))
@@ -505,7 +505,7 @@ obj/item/gnomechompski/elf
 			if(prob(25))
 				boutput(affected_mob, "<B>[pick("Who-WHO", "HOoooT", "neST!")]</B>")
 			if (prob(15))
-				playsound(get_turf(affected_mob), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
+				playsound(affected_mob, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 				make_cleanable( /obj/decal/cleanable/vomit, affected_mob.loc)
 				new /mob/living/critter/small_animal/bird/owl(get_turf(affected_mob))
 				for(var/mob/O in viewers(affected_mob, null))
@@ -1111,8 +1111,8 @@ obj/critter/madnessowl/switchblade
 			var/turf/T = get_edge_target_turf(user, get_dir(user, get_step_away(user, src)))
 			if (T && isturf(T))
 				user.throw_at(T, 3, 2)
-				user.changeStatus("weakened", 5)
-				user.changeStatus("stunned", 5)
+				user.changeStatus("weakened", 0.5 SECONDS)
+				user.changeStatus("stunned", 0.5 SECONDS)
 
 
 		if (src.alive && src.health <= 0) src.CritterDeath()
@@ -1223,7 +1223,7 @@ obj/critter/madnessowl/switchblade
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1)
 				src.visible_message("<span class='alert'><b>[src]</b> slams into [src.target]!</span>")
 				if(iscarbon(M))
-					M.changeStatus("weakened", 4)
+					M.changeStatus("weakened", 0.4 SECONDS)
 				frenzy(src.target)
 
 			if (isdead(M)) // devour corpses

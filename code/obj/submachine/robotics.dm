@@ -117,7 +117,7 @@
 						loadAmount = loadAmount + src.max_ammo - (src.metal_ammo + loadAmount)
 					src.metal_ammo += loadAmount
 					S.change_stack_amount(-loadAmount)
-					playsound(get_turf(src), "sound/machines/click.ogg", 25, 1)
+					playsound(src, "sound/machines/click.ogg", 25, 1)
 					src.inventory_counter.update_number(src.metal_ammo)
 					boutput(user, "You load the metal sheet into the lamp manufacturer.")
 			else
@@ -287,7 +287,7 @@
 				if ("Cola")
 					new /obj/item/reagent_containers/food/drinks/cola(get_turf(src))
 				if ("Water")
-					new /obj/item/reagent_containers/food/drinks/bottle/bottledwater(get_turf(src))
+					new /obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater(get_turf(src))
 				else
 					user.show_text("<b>ERROR</b> - Invalid item! Resetting...", "red")
 					logTheThing("debug", user, null, "<b>Convair880</b>: [user]'s food synthesizer was set to an invalid value.")

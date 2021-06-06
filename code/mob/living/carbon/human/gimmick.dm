@@ -114,7 +114,7 @@
 
 	initializeBioholder()
 		bioHolder.age = 400
-		bioHolder.mobAppearance.customization_first = "Pompadour"
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/short/pomp
 		bioHolder.mobAppearance.customization_first_color = "#000000"
 		bioHolder.mobAppearance.gender = "male"
 		bioHolder.mobAppearance.underwear = "boxers"
@@ -388,7 +388,8 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	initializeBioholder()
 		. = ..()
-		bioHolder.mobAppearance.customization_second = "Tramp"
+		bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/tramp
+		bioHolder.mobAppearance.customization_third = new /datum/customization_style/beard/longbeard
 		bioHolder.age = 62
 		bioHolder.bloodType = "A-"
 		bioHolder.mobAppearance.gender = "male"
@@ -795,7 +796,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		. = ..()
 		bioHolder.age = 44
 		bioHolder.bloodType = "Worchestershire"
-		bioHolder.mobAppearance.customization_first = "Pompadour"
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/short/pomp
 		bioHolder.mobAppearance.customization_first_color = "#F6D646"
 		bioHolder.mobAppearance.gender = "male"
 		bioHolder.mobAppearance.underwear = "boxers"
@@ -840,7 +841,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		src.real_name = Create_Tommyname()
 
 		src.gender = "male"
-		bioHolder.mobAppearance.customization_first = "Dreadlocks"
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/dreads
 		bioHolder.mobAppearance.gender = "male"
 		bioHolder.mobAppearance.s_tone = "#FAD7D0"
 		bioHolder.mobAppearance.s_tone_original = "#FAD7D0"
@@ -949,7 +950,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	initializeBioholder()
 		. = ..()
 		bioHolder.age = 49
-		bioHolder.mobAppearance.customization_first = "Full Beard"
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/beard/fullbeard
 		bioHolder.mobAppearance.customization_first_color = "#555555"
 		bioHolder.mobAppearance.gender = "male"
 		bioHolder.mobAppearance.underwear = "boxers"

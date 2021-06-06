@@ -5244,7 +5244,7 @@
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
 /obj/item/device/multitool,
-/obj/item/paper/book/minerals,
+/obj/item/paper/book/from_file/minerals,
 /turf/simulated/floor/caution/north,
 /area/mining/manufacturing)
 "aou" = (
@@ -5295,7 +5295,7 @@
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
 /obj/item/storage/toolbox/electrical,
-/obj/item/paper/book/minerals,
+/obj/item/paper/book/from_file/minerals,
 /turf/simulated/floor/grime,
 /area/mining/manufacturing)
 "aoD" = (
@@ -12982,10 +12982,7 @@
 /area/abandonedmedicalship)
 "aIe" = (
 /obj/storage/secure/closet/personal,
-/obj/item/clothing/under/gimmick/cosby{
-	desc = "A colourful winter jumper.";
-	name = "comfy sweater"
-	},
+/obj/item/clothing/under/gimmick/cosby,
 /obj/item/device/microphone,
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -24068,7 +24065,7 @@
 /area/space)
 "bjS" = (
 /obj/storage/crate,
-/obj/item/paper/book/deep_blue_sea,
+/obj/item/paper/book/from_file/deep_blue_sea,
 /obj/item/paper/bores_part_two,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)

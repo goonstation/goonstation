@@ -239,7 +239,7 @@
 
 		var/obj/item/W = O
 
-		if(W in user)
+		if(W in user && !W.cant_drop)
 			user.u_equip(W)
 			W.set_loc(src.loc)
 			W.dropped()
@@ -274,7 +274,7 @@
 				//	continue
 
 			M.set_loc(src)
-			playsound(get_turf(src), "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(src, "sound/items/Deconstruct.ogg", 40, 1)
 			sleep(0.5)
 			if (user.loc != staystill) break
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")

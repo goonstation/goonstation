@@ -498,7 +498,7 @@
 		if(crashed == 2)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 		boutput(rider, "<span class='combat'><B>You are flung over the [src]'s handlebars!</B></span>")
-		rider.changeStatus("stunned", 80)
+		rider.changeStatus("stunned", 8 SECONDS)
 		rider.changeStatus("weakened", 5 SECONDS)
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
@@ -659,7 +659,7 @@
 			if (!isdead(jerk))
 				if((istype(jerk:wear_suit, /obj/item/clothing/suit/armor/mars))&&(istype(jerk:head, /obj/item/clothing/head/helmet/mars))) return
 				random_brute_damage(jerk, 100)
-				jerk.changeStatus("weakened", 400)
+				jerk.changeStatus("weakened", 40 SECONDS)
 				step(jerk,EAST)
 				if(prob(50))
 					playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_2.ogg', 50, 1)

@@ -1550,7 +1550,7 @@ Returns:
 
 	attack_hand(mob/user as mob)
 		boutput(user, "[src] feels oddly warm ...")
-		user.changeStatus("radiation", 50)
+		user.changeStatus("radiation", 5 SECONDS)
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -2183,7 +2183,7 @@ Returns:
 		var/turf/trg_loc = get_turf(target)
 		var/list/sounds = list('sound/effects/elec_bigzap.ogg','sound/effects/elec_bzzz.ogg','sound/effects/electric_shock.ogg')
 		while(current != trg_loc)
-			playsound(get_turf(user), pick(sounds), 15, 1)
+			playsound(user, pick(sounds), 15, 1)
 			current = get_step(current, get_dir(current, trg_loc))
 			user.set_dir(get_dir(user, current))
 			var/obj/beam_dummy/B = showLine(get_turf(user), current, "lght", 5)
@@ -2905,7 +2905,7 @@ Returns:
 				var/mob/living/carbon/human/user = usr
 				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-				user.changeStatus("stunned", 50)
+				user.changeStatus("stunned", 5 SECONDS)
 				user.changeStatus("weakened", 3 SECONDS)
 				user.changeStatus("paralysis", 2 SECONDS)
 				user.force_laydown_standup()

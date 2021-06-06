@@ -87,7 +87,7 @@
 	set category = "Batman"
 	set name = "Batsmoke \[Support]"
 
-	playsound(get_turf(usr), "sound/weapons/launcher.ogg", 70, 0, 0)
+	playsound(usr, "sound/weapons/launcher.ogg", 70, 0, 0)
 	usr.visible_message("<span class='alert'>[usr] drops a smoke bomb!</span>", "<span class='alert'>You drop a smoke bomb!</span>")
 
 	var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
@@ -98,7 +98,7 @@
 	set category = "Batman"
 	set name = "Batarang \[Combat]"
 	usr.visible_message("<span class='alert'>[usr] tosses a batarang at [T]!</span>", "<span class='alert'>You toss a batarang at [T]!</span>")
-	playsound(get_turf(usr), pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 70, 0, 0)
+	playsound(usr, pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 70, 0, 0)
 	var/obj/overlay/A = new /obj/overlay( usr.loc )
 	A.icon_state = "batarang"
 	A.icon = 'icons/effects/effects.dmi'
@@ -109,7 +109,7 @@
 	for(i=0, i<100, i++)
 		step_to(A,T,0)
 		if (get_dist(A,T) < 1)
-			playsound(get_turf(T), "sound/impact_sounds/Blade_Small_Bloody.ogg", 70, 0, 0)
+			playsound(T, "sound/impact_sounds/Blade_Small_Bloody.ogg", 70, 0, 0)
 			random_brute_damage(T, 7)
 			take_bleeding_damage(T, usr, 5, DAMAGE_STAB, 0)
 			bleed(T, 3, 1)

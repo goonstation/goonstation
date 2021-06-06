@@ -1103,10 +1103,10 @@
 			src.output_target = O.loc
 			boutput(usr, "<span class='notice'>You set the manufacturer to output on top of [O]!</span>")
 
-		else if (istype(over_object,/turf/simulated/floor/))
+		else if (istype(over_object,/turf/simulated/floor/) || istype(over_object,/turf/unsimulated/floor/))
 			src.output_target = over_object
 			boutput(usr, "<span class='notice'>You set the manufacturer to output to [over_object]!</span>")
-
+		
 		else
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
@@ -1864,7 +1864,7 @@
 			else
 				return M.loc
 
-		else if (istype(src.output_target,/turf/simulated/floor/))
+		else if (istype(src.output_target,/turf/simulated/floor/) || istype(src.output_target,/turf/unsimulated/floor/))
 			return src.output_target
 
 		else
@@ -1973,16 +1973,22 @@
 /******************** Spatial Interdictor *******************/
 
 /obj/item/paper/manufacturer_blueprint/interdictor_frame
-	name = "Interdictor Frame"
+	name = "Interdictor Frame Kit"
 	icon = 'icons/obj/writing.dmi'
-	icon_state = "artifact_form"
+	icon_state = "interdictor_blueprint"
 	blueprint = /datum/manufacture/interdictor_frame
 
-/obj/item/paper/manufacturer_blueprint/interdictor_rod
-	name = "Interdictor Phase-Control Rod"
+/obj/item/paper/manufacturer_blueprint/interdictor_rod_lambda
+	name = "Lambda Phase-Control Rod"
 	icon = 'icons/obj/writing.dmi'
-	icon_state = "artifact_form"
-	blueprint = /datum/manufacture/interdictor_rod
+	icon_state = "interdictor_blueprint"
+	blueprint = /datum/manufacture/interdictor_rod_lambda
+
+/obj/item/paper/manufacturer_blueprint/interdictor_rod_sigma
+	name = "Sigma Phase-Control Rod"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "interdictor_blueprint"
+	blueprint = /datum/manufacture/interdictor_rod_sigma
 
 // Fabricator Defines
 

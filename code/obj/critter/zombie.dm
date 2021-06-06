@@ -111,7 +111,7 @@
 			if(iscarbon(M))
 				if(to_deal > (((punch_damage_max-punch_damage_min)/2)+punch_damage_min) && prob(50))
 					src.visible_message("<span class='alert'><B>[src] knocks down [M]!</B></span>")
-					M:changeStatus("weakened", 80)
+					M:changeStatus("weakened", 8 SECONDS)
 		//		if(prob(4) && eats_brains) //Give the gift of being a zombie (unless we eat them too fast)
 		//			M.contract_disease(/datum/ailment/disease/necrotic_degeneration, null, null, 1) // path, name, strain, bypass resist
 			if(src.hulk) //TANK!
@@ -142,7 +142,7 @@
 						playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
 						M.canmove = 0
 						M.icon = null
-						M.invisibility = 101
+						APPLY_MOB_PROPERTY(M, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 						M:death()
 						var/obj/critter/zombie/P = new(M.loc)
 						///this little bit of code prevents multiple zombies from the same victim
@@ -333,7 +333,7 @@
 
 	after_attack_special(mob/living/M)
 		boutput(M, "<span class='alert'>You are enveloped by a soft green glow emanating from [src].</span>")
-		M.changeStatus("radiation", 80, 4)
+		M.changeStatus("radiation", 8 SECONDS, 4)
 
 	CritterDeath()
 		..()
