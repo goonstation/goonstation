@@ -113,7 +113,7 @@
 			signal.data["command"] = "add"
 
 			signal.data_file = theScan
-			post_signal(signal)
+			post_signal(signal, 1467)
 
 /datum/computer/file/electronics_scan
 	name = "scanfile"

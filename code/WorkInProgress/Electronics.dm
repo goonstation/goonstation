@@ -462,7 +462,7 @@
 
 	var/processing = 0
 	var/net_id = null
-	var/frequency = 1149
+	var/frequency = 1467
 	var/datum/radio_frequency/radio_connection
 	var/no_print_spam = 1 // In relation to world.time.
 	var/olde = 0
@@ -539,6 +539,8 @@
 		radio_connection.post_signal(src, newsignal)
 
 /obj/machinery/rkit/proc/pda_message(var/target, var/message)
+	var/pda_freq = 1149
+	var/datum/radio_frequency/pda = radio_controller.return_frequency("[pda_freq]")
 	SPAWN_DBG(0.5 SECONDS) //response proc
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
@@ -549,7 +551,7 @@
 		if (target) newsignal.data["address_1"] = target
 		newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
 		newsignal.data["sender"] = src.net_id
-		radio_connection.post_signal(src, newsignal)
+		pda.post_signal(src, newsignal)
 
 /obj/machinery/rkit/receive_signal(datum/signal/signal)
 	if(status & NOPOWER)
