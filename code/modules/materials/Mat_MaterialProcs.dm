@@ -388,8 +388,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/location, var/temp, var/agent_b=FALSE)
 		if(iterations <= 0) return
 		var/turf/target = get_turf(location)
-		if(temp != 1500) //Same temp that hitting it sets it too, this is so hitting it ignores cooldown, making it practical to manually farm
-			if(ON_COOLDOWN(location, "molitz_gas_generate", 8 SECONDS)) return
+		if(ON_COOLDOWN(location, "molitz_gas_generate", 8 SECONDS)) return
 
 		var/datum/gas_mixture/air = target.return_air()
 		if(!air) return
@@ -400,13 +399,10 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 		if(agent_b && temp > 500 && air.toxins > MINIMUM_REACT_QUANTITY )
 			var/datum/gas/oxygen_agent_b/trace_gas = payload.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
-			if(temp>10000)
-				payload.temperature = temp -= 10000 // Greatly reduce temperature to simulate an endothermic reaction
-			else
-				payload.temperature = T0C
+			payload.temperature = T0C // Greatly reduce temperature to simulate an endothermic reaction
 			// Itr 1: 0.2 Agent B, 1 oxy
 			// Itr 2: 0.0605 Agent B
-			// Should be 100 iterations to deplete total of 19.099 mols of agent B and 100 oxygen, will take 110 iterations to hit minimum reaction rate whihch is about 7.33 minutes, (this is azruns math not mine dont blame me if wrong)
+			// Should be 100 iterations to deplete total of 19.099 mols of agent B and 100 oxygen, will take 110 iterations to hit minimum reaction rate whihch is about 7.33 minutes, (this math may be outdated so it may not be entirely accurate, also its azruns.)
 
 			animate_flash_color_fill_inherit(location,"#ff0000",4, 2 SECONDS)
 			if(!ON_COOLDOWN(location, "sound_cooldownB", 2 SECONDS)) // Prevents ear spam
@@ -415,7 +411,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(location))
 			trace_gas.moles += min(iterations/50,0.2)
 			iterations -= 1
-			payload.oxygen = 1
+			payload.oxygen = 5
 
 			target.assume_air(payload)
 		else
