@@ -700,7 +700,7 @@
 						qdel(tempobj)
 				S.scanned -= X
 				add_count++
-		if (add_count ==  0)
+		if (add_count==  1)
 			boutput(user, "<span class='notice'>[add_count] new items entered into kit.</span>")
 			pda_messsage(null, "Notice: Item entered into database.")
 		else if (add_count > 0)
