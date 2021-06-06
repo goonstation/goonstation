@@ -204,20 +204,10 @@
 			boutput(user, "<span class='alert'>[A] is full!</span>") // Notify the user, then exit the process.
 			return
 
-		var/T //Placeholder for total volume transferred
-
-		if ((A.reagents.total_volume + src.reagents.total_volume) > A.reagents.maximum_volume) // Check to make sure that both containers content's combined won't overfill the destination container.
-			T = (A.reagents.maximum_volume - A.reagents.total_volume) // Dump only what fills up the destination container.
-			logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // This wasn't logged. Call before trans_to (Convair880).
-			src.reagents.trans_to(A, T) // Dump the amount of reagents.
-			boutput(user, "<span class='notice'>You transfer [T] units into [A].</span>") // Tell the user they did a thing.
-			return
-		else
-			T = src.reagents.total_volume // Just make T the whole dang amount then.
-			logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // Ditto (Convair880).
-			src.reagents.trans_to(A, T) // Dump it all!
-			boutput(user, "<span class='notice'>You transfer [T] units into [A].</span>")
-			return
+		logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // Ditto (Convair880).
+		var/T = src.reagents.trans_to(A, src.reagents.total_volume) // Dump it all!
+		boutput(user, "<span class='notice'>You transfer [T] units into [A].</span>")
+		return
 
 /atom/proc/signal_event(var/event) // Right now, we only signal our container
 	if(src.loc)
