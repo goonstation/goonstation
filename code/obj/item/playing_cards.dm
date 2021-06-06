@@ -9,70 +9,70 @@
 //General Card Stuffs
 //-----------------//
 /obj/item/playing_card
-    icon = 'icons/obj/items/playing_card.dmi'
-    icon_state = "plain-1-1"
-    dir = NORTH
-    w_class = W_CLASS_TINY
-    burn_point = 220
-    burn_output = 900
-    burn_possible = 2
-    health = 10
-    ///what style of card sprite are we using?
-    var/card_style
-    ///number of cards in a full deck (used for reference when updating stack size)
-    var/total_cards
-    ///the overall name of a given card type : used to communicate with card groups (i.e. playing, tarot, hanafuda)
-    var/card_name
-    var/facedown = FALSE
-    var/foiled = FALSE
-    var/tapped = FALSE
-    var/reversed = FALSE
-    ///when solitaire stacking, how far down is the newest card pixel shifted?
-    var/solitaire_offset = 5
-    ///vital card information that is referenced when a card flips over
-    var/list/stored_info
-    contextLayout = new /datum/contextLayout/instrumental(16)
-    var/list/datum/contextAction/cardActions
+	icon = 'icons/obj/items/playing_card.dmi'
+	icon_state = "plain-1-1"
+	dir = NORTH
+	w_class = W_CLASS_TINY
+	burn_point = 220
+	burn_output = 900
+	burn_possible = 2
+	health = 10
+	///what style of card sprite are we using?
+	var/card_style
+	///number of cards in a full deck (used for reference when updating stack size)
+	var/total_cards
+	///the overall name of a given card type : used to communicate with card groups (i.e. playing, tarot, hanafuda)
+	var/card_name
+	var/facedown = FALSE
+	var/foiled = FALSE
+	var/tapped = FALSE
+	var/reversed = FALSE
+	///when solitaire stacking, how far down is the newest card pixel shifted?
+	var/solitaire_offset = 5
+	///vital card information that is referenced when a card flips over
+	var/list/stored_info
+	contextLayout = new /datum/contextLayout/instrumental(16)
+	var/list/datum/contextAction/cardActions
 
-    attack_hand(mob/user as mob)
-        ..()
-        set_dir(NORTH) //makes sure cards are always upright in the inventory (unless tapped or reversed - see later)
+	attack_hand(mob/user as mob)
+		..()
+		set_dir(NORTH) //makes sure cards are always upright in the inventory (unless tapped or reversed - see later)
 
 
-    attack_self(mob/user as mob)
-        flip() //uno reverse O.O
+	attack_self(mob/user as mob)
+		flip() //uno reverse O.O
 
-    attackby(obj/item/W as obj, mob/user as mob)
-        if(istype(W,/obj/item/playing_card)) //if a card is hit by a card, open the context menu for the player to decide what happens.
-            if(loc != user)
-                update_card_actions(TRUE)
-            else
-                update_card_actions()
-            user.showContextActions(cardActions, src)
-        else if(istype(W,/obj/item/card_group)) //when a card is hit by a card group, if it's a hand, vacuum up the card, otherwise it's a deck and the card gets sat on.
-            var/obj/item/card_group/group = W
-            if(group.card_style != card_style)
-                user.show_text("These card types don't match, silly!", "red")
-                return
-            if(src.loc == user)
-                user.u_equip(src)
-                group.add_to_group(src)
-                if(group.is_hand)
-                    user.visible_message("<b>[user.name]</b> adds a card to [his_or_her(user)] [group.name].")
-                else
-                    user.visible_message("<b>[user.name]</b> plops the [group.name] on top of a card.")
-            else
-                if(group.is_hand)
-                    group.add_to_group(src)
-                    user.visible_message("<b>[user.name]</b> adds a card to [his_or_her(user)] [group.name].")
-                else
-                    user.u_equip(group)
-                    group.set_loc(get_turf(src))
-                    group.add_to_group(src)
-                    user.visible_message("<b>[user.name]</b> plops the [group.name] on top of the [src.name].")
-            group.update_group_sprite()
-        else
-            ..()
+	attackby(obj/item/W as obj, mob/user as mob)
+		if(istype(W,/obj/item/playing_card)) //if a card is hit by a card, open the context menu for the player to decide what happens.
+			if(loc != user)
+				update_card_actions(TRUE)
+			else
+				update_card_actions()
+			user.showContextActions(cardActions, src)
+		else if(istype(W,/obj/item/card_group)) //when a card is hit by a card group, if it's a hand, vacuum up the card, otherwise it's a deck and the card gets sat on.
+			var/obj/item/card_group/group = W
+			if(group.card_style != card_style)
+				user.show_text("These card types don't match, silly!", "red")
+				return
+			if(src.loc == user)
+				user.u_equip(src)
+				group.add_to_group(src)
+				if(group.is_hand)
+					user.visible_message("<b>[user.name]</b> adds a card to [his_or_her(user)] [group.name].")
+				else
+					user.visible_message("<b>[user.name]</b> plops the [group.name] on top of a card.")
+				else
+				if(group.is_hand)
+					group.add_to_group(src)
+					user.visible_message("<b>[user.name]</b> adds a card to [his_or_her(user)] [group.name].")
+				else
+					user.u_equip(group)
+					group.set_loc(get_turf(src))
+					group.add_to_group(src)
+					user.visible_message("<b>[user.name]</b> plops the [group.name] on top of the [src.name].")
+			group.update_group_sprite()
+		else
+			..()
 
     afterattack(var/atom/A as turf, var/mob/user as mob, reach, params) //handling the ability to place cards on the floor
         if(istype(A,/turf/simulated/floor) || istype(A,/turf/unsimulated/floor))
@@ -236,18 +236,18 @@
             name += " the AI"
             icon_state_num = rand(1,NUMBER_AI)
             icon_state = "stg-ai-[icon_state_num]"
-        else
-            if(length(humans))
-                chosen_mob = pick(humans)
-            if(chosen_mob)
-                name = "[chosen_card_type.card_name] [chosen_mob.real_name]"
-                switch(his_or_her(chosen_mob))
-                    if("her")
-                        icon_state_num = rand(1,NUMBER_F)
-                        icon_state = "stg-f-[icon_state_num]"
-                    if("his")
-                        icon_state_num = rand(1,NUMBER_M)
-                        icon_state = "stg-m-[icon_state_num]"
+		else
+			if(length(humans))
+				chosen_mob = pick(humans)
+			if(chosen_mob)
+				name = "[chosen_card_type.card_name] [chosen_mob.real_name]"
+				switch(his_or_her(chosen_mob))
+					if("her")
+						icon_state_num = rand(1,NUMBER_F)
+						icon_state = "stg-f-[icon_state_num]"
+					if("his")
+						icon_state_num = rand(1,NUMBER_M)
+						icon_state = "stg-m-[icon_state_num]"
                     if("their")
                         icon_state_num = rand(1,NUMBER_N)
                         icon_state = "stg-N-[icon_state_num]"
@@ -674,16 +674,18 @@
         else
             user.show_text("These card types don't match, silly!", "red")
 
-    proc/build_stg(var/deck) //proc that handles generating either an stg preconstructed deck or stg booster pack
-        var/list/possible_humans = list()
-        for(var/mob/living/carbon/human/H in mobs)
-            if(isnpcmonkey(H))
-                continue
-            if(iswizard(H))
-                continue
-            if(isnukeop(H))
-                continue
-            possible_humans += H
+	proc/build_stg(var/deck) //proc that handles generating either an stg preconstructed deck or stg booster pack
+		var/list/possible_humans = list()
+		for(var/mob/living/carbon/human/H in mobs)
+			if(isnpcmonkey(H))
+				continue
+			if(iswizard(H))
+				continue
+			if(isnukeop(H))
+				continue
+			if(!H.mind)
+				continue
+				possible_humans += H
         var/list/possible_borgos = list()
         for(var/mob/living/silicon/robot/R in mobs)
             possible_borgos += R
@@ -816,7 +818,8 @@
 //Tarot cards
 //---------//
 /obj/item/card_group/tarot
-    desc = "Whoever drew these probably felt like the nine of swords afterward..."
+    desc = {"A type of card that originates back in the 15th century, but became popular for divination in the 18th century. There are 14 cards of each
+	of the four suit types and 22 cards without suits that are called the Major Arcana."}
     card_style = "tarot"
     total_cards = 78
     card_name = "tarot"
@@ -1110,63 +1113,20 @@
     attack_self(mob/user as mob) //the beginning of the most sadistic unboxing possible...
         switch(icon_state)
             if("stg-box")
-                actions.start(new /datum/action/bar/private/stg_open(user,src),user)
-            if("stg-box-open")
                 user.show_text("You try to tear the packaging, but it's too strong! You'll need something to cut it...","red")
-            if("stg-box-torn","stg-blister")
-                if(icon_state == "stg-blister" && !stored_deck)
-                    return
-                actions.start(new /datum/action/bar/private/stg_pry(user,src),user)
 
     attackby(obj/item/W as obj, mob/user as mob)
-        if((icon_state == "stg-box-open") && (istool(W,TOOL_CUTTING) || istool(W,TOOL_SNIPPING)))
+        if((icon_state == "stg-box") && (istool(W,TOOL_CUTTING) || istool(W,TOOL_SNIPPING)))
             if(loc != user)
                 user.show_text("You need to hold the box if you want enough leverage to rip it to pieces!","red")
                 return
             actions.start(new /datum/action/bar/private/stg_tear(user,src),user)
-        else if(istool(user.equipped(),TOOL_PRYING) && (icon_state == "stg-box-torn") || (icon_state == "stg-blister" && stored_deck))
-            if(icon_state == "stg-box-torn")
-                user.visible_message("<span class='green'><b>[user.name]</b> quickly dislodges the blister pack!</span>")
-                icon_state = "stg-blister"
-                user.put_in_hand_or_drop(new /obj/item/stg_box_waste)
-            else
                 user.visible_message("<span class='green'><b>[user.name]</b> swiftly splits the [name] in two, retrieving [his_or_her(user)] cards!</span>")
                 user.put_in_hand_or_drop(stored_deck)
                 stored_deck = null
-                name = "discarded blister packaging"
                 ClearAllOverlays()
         else
             ..()
-
-/datum/action/bar/private/stg_open //more sadism! yay!
-    duration = 10 SECONDS
-    interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-    var/mob/user
-    var/obj/item/box
-    var/list/messages = list("slips their fingers under the tab of the StG Preconstructed Deck Box and starts prying upward with all their might!",
-    "reverses the StG Preconstructed Deck Box and plants their feet against it, using the muscles of their legs to free the box's tab!",
-    "screams to the heavens as if asking for a divine entity to intervene with righteous assistance to open the infernal construct of a box!",
-    "struggles to begin opening a box...", "attempts to crack the cardboard safe that holds their precious cards.")
-
-    New(User, Box)
-        user = User
-        box = Box
-        ..()
-
-    onStart()
-        ..()
-        user.visible_message("<span class='alert'><b>[user.name]</b> [pick(messages)]</span>")
-
-    onUpdate()
-        ..()
-        if(box.loc != user)
-            user.show_text("You need to hold the box if you want enough leverage to open it!","red")
-            interrupt(INTERRUPT_ALWAYS)
-
-    onEnd()
-        ..()
-        user.visible_message("<span class='green'><b>[user.name]</b> lets out a sigh of relief as the box's tab is freed from the depths of thin cardboard packaging...</span>")
-        box.icon_state = "stg-box-open"
 
 /datum/action/bar/private/stg_tear
     duration = 10 SECONDS
@@ -1176,8 +1136,7 @@
     var/list/messages = list("brutally hacks at the package's exterior with a sharp object!",
     "desperately slashes a sharp object against the exterior of the StG Preconstructed Deck Box!",
     "becomes a blinding blur of motion as they send bits of cardboard packaging into the air like grotesque confetti!",
-    "impales the StG Preconstructed Deck Box, gripping their sharp implement with both hands, forcing the blade down the package as if disembowling it!",
-    "HAcKs aNd slAShES aND hACKs AnD sLAsHEs aNd hACkS AnD SLaSHEs aND HA...")
+    "impales the StG Preconstructed Deck Box, gripping their sharp implement with both hands, forcing the blade down the package as if disembowling it!")
 
     New(User, Box)
         user = User
@@ -1198,52 +1157,13 @@
 
     onEnd()
         ..()
-        user.visible_message("<span class='green'><b>[user.name]</b> has thoroughly mutilated the StG Preconstructed Deck Box...</span>")
+        user.visible_message("<span class='green'><b>[user.name]</b> has thoroughly mutilated the StG Preconstructed Deck Box and retrieves the cards from inside.</span>")
         box.icon_state = "stg-box-torn"
         var/obj/decal/cleanable/generic/decal = make_cleanable(/obj/decal/cleanable/generic,get_turf(user.loc))
         decal.color = pick("#000000","#6f0a0a","#a0621b")
-
-/datum/action/bar/private/stg_pry
-    duration = 15 SECONDS
-    interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-    var/mob/user
-    var/obj/item/stg_box/box
-
-    New(User, Box)
-        user = User
-        box = Box
-        ..()
-
-    onStart()
-        ..()
-        if(box.icon_state == "stg-box-torn")
-            user.visible_message("<span class='alert'><b>[user.name]</b> tries to free a blister pack from the [box.name]...</span>")
-        else
-            user.visible_message("<span class='alert'><b>[user.name]</b> awkwardly scoops cards out of the [box.name]...</span>")
-
-    onUpdate()
-        ..()
-        if(box.loc != user)
-            user.show_text("You need to hold the [box.name] if you want enough leverage to pull it apart!","red")
-            interrupt(INTERRUPT_ALWAYS)
-
-    onEnd()
-        ..()
-        if(box.icon_state == "stg-box-torn")
-            user.visible_message("<span class='green'><b>[user.name]</b> finally dislodges the blister pack! That would have been much easier with some sort of prying tool...</span>")
-            box.icon_state = "stg-blister"
-            user.put_in_hand_or_drop(new /obj/item/stg_box_waste)
-        else
-            user.visible_message("<span class='green'><b>[user.name]</b> has scooped the last card out of the blister pack! That would have been much easier with some sort of prying tool...</span>")
-            user.put_in_hand_or_drop(box.stored_deck)
-            box.stored_deck = null
-            box.name = "discarded blister packaging"
-            box.ClearAllOverlays()
-
-/obj/item/stg_box_waste
-    name = "mutilated cardboard husk"
-    icon = 'icons/obj/items/playing_card.dmi'
-    icon_state = "stg-box-empty"
+        user.put_in_hand_or_drop(box.stored_deck)
+        box.stored_deck = null
+        box.ClearAllOverlays()
 
 /obj/item/stg_booster
     name = "StG Booster Pack"
