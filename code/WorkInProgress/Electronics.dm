@@ -471,11 +471,15 @@
 	var/list/known_rucks = null
 	var/boot_time = null
 	var/data_initialized = 0
+	var/datum/radio_frequency/pda = null
+	var/pda_freq = 1149
 
 /obj/machinery/rkit/New()
 	. = ..()
 	known_rucks = new
 	ruck_controls = new
+	pda = radio_controller.return_frequency("[pda_freq]")
+
 	if(isnull(mechanic_controls)) mechanic_controls = ruck_controls //For objective tracking and admin
 	if(radio_controller)
 		radio_connection = radio_controller.add_object(src, "[frequency]")
@@ -539,8 +543,6 @@
 		radio_connection.post_signal(src, newsignal)
 
 /obj/machinery/rkit/proc/pda_message(var/target, var/message)
-	var/pda_freq = 1149
-	var/datum/radio_frequency/pda = radio_controller.return_frequency("[pda_freq]")
 	SPAWN_DBG(0.5 SECONDS) //response proc
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
