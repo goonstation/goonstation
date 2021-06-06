@@ -624,6 +624,7 @@
 			process_upload(signal)
 			return
 	else
+		//Didn't match either, we're done here
 		return
 
 	//Signals that take TRANSRKIT
