@@ -177,7 +177,7 @@
 		<div class = "spaceacillin">
 		<ul>
 			<li>An all-purpose antibiotic agent extracted from space fungus.
-			<li>Combine spage fungus with ethanol as a solvent.
+			<li>Combine space fungus with ethanol as a solvent.
 		</div>
 		<h3>Mannitol</h3>
 		<div class ="mannitol">
