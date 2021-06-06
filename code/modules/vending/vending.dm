@@ -59,7 +59,8 @@
 	var/list/slogan_list = list()//new() //List of strings
 	var/list/product_list = new() //List of datum/data/vending_product
 	var/glitchy_slogans = 0 // do they come out aLL FunKY lIKe THIs?
-	var/player_list // For the player vending machines
+	/// For player vending machines
+	var/player_list 
 	//Replies when buying
 	var/vend_reply //Thank you for shopping!
 	var/last_reply = 0
