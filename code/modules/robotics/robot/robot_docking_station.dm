@@ -340,6 +340,9 @@
 			var/ops = text2num(href_list["repair"])
 
 			if (ops == 1 && R.compborg_get_total_damage(1) > 0)
+				if (src.reagents.get_reagent_amount("fuel") < 1)
+					boutput(usr, "<span class='alert'>Not enough welding fuel for repairs.</span>")
+					return
 				var/usage = input(usr, "How much welding fuel do you want to use?", "Docking Station", 0) as num
 				if ((!issilicon(usr) && (get_dist(usr, src) > 1)) || usr.stat)
 					return
@@ -351,6 +354,9 @@
 					RP.ropart_mend_damage(usage,0)
 				src.reagents.remove_reagent("fuel", usage)
 			else if (ops == 2 && R.compborg_get_total_damage(2) > 0)
+				if (src.cabling < 1)
+					boutput(usr, "<span class='alert'>Not enough wiring for repairs.</span>")
+					return
 				var/usage = input(usr, "How much wiring do you want to use?", "Docking Station", 0) as num
 				if ((!issilicon(usr) && (get_dist(usr, src) > 1)) || usr.stat)
 					return
