@@ -55,7 +55,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			if(X == "type" || X == "parent_type" || X == "tag" || X == "vars" || X == "properties") continue
 
 			if(X in triggerVars)
-				M.vars[X] = getFusedTriggers(base.vars[X], list()) //Pass in an empty list to basically copy the first one.
+				M.vars[X] = getFusedTriggers(base.vars[X], list(), M) //Pass in an empty list to basically copy the first one.
 			else
 				if(X in M.vars)
 					if(istype(base.vars[X],/list))
@@ -235,13 +235,14 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	var/list/newList = list()
 	for(var/datum/materialProc/toCopy in L1) //Copy list 1 with new instances of trigger datum.
 		var/datum/materialProc/P = new toCopy.type()
-		P.owner = newMat
 		newList.Add(P)	//Add new instance of datum
 		newList[P] = L1[toCopy] //Set generation
 		for(var/varCopy in toCopy.vars)
 			if(varCopy == "type" || varCopy == "id" || varCopy == "parent_type" || varCopy == "tag" || varCopy == "vars") continue
 			if(!issaved(toCopy.vars[varCopy])) continue
 			P.vars[varCopy] = toCopy.vars[varCopy]
+		if(newMat)
+			P.owner = newMat
 
 	for(var/datum/materialProc/A in L2) //Go through second list
 		if((locate(A.type) in newList))	//We already have that trigger type from the other list
@@ -250,13 +251,14 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			else newList[existing] = L2[A]			//Otherwise set the generation to the generation of the second copy because it is lower.
 		else	//Trigger type isnt in the list yet.
 			var/datum/materialProc/newProc = new A.type()	//Create a new instance
-			newProc.owner = newMat
 			newList.Add(newProc)	//Add to list
 			newList[newProc] = L2[A]	//Set generation
 			for(var/varCopy in A.vars)
 				if(varCopy == "type" || varCopy == "id" || varCopy == "parent_type" || varCopy == "tag" || varCopy == "vars") continue
 				if(!issaved(A.vars[varCopy])) continue
 				newProc.vars[varCopy] = A.vars[varCopy]
+			if(newMat)
+				newProc.owner = newMat
 	return newList
 
 /// Merges two materials and returns result as new material.
