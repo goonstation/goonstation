@@ -1,4 +1,9 @@
 
+(t)sun jun 06 21
+(u)112358sam
+(p)5038
+(e)🐛|bug
+(+)Prevents cyborgs repairing at docking station when out of materials.
 (t)sat jun 05 21
 (u)Emily
 (e)🆕|feature
