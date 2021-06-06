@@ -327,7 +327,7 @@
         name = "foil [name]"
 
 /obj/item/playing_card/expensive //(¬‿¬)
-    desc = "Tap this card and sacrifice one Yourself to win target game."
+    desc = "Tap this card and sacrifice one Yourself to win the game."
     icon_state = "stg-general-0"
     var/list/prefix1 = list("Incredibly", "Strange", "Mysterious", "Suspicious", "Scary")
     var/list/prefix2 = list("Rare", "Black", "Dark", "Shadowy", "Expensive", "Fun", "Gamer")
@@ -816,8 +816,7 @@
 //Tarot cards
 //---------//
 /obj/item/card_group/tarot
-    desc = "A type of card that originates back in the 15th century, but became popular for divination in the 18th century. There are 14 cards of each
-	of the four suit types and 22 cards without suits that are called the Major Arcana."
+    desc = "Whoever drew these probably felt like the nine of swords afterward..."
     card_style = "tarot"
     total_cards = 78
     card_name = "tarot"
@@ -1147,7 +1146,7 @@
     var/list/messages = list("slips their fingers under the tab of the StG Preconstructed Deck Box and starts prying upward with all their might!",
     "reverses the StG Preconstructed Deck Box and plants their feet against it, using the muscles of their legs to free the box's tab!",
     "screams to the heavens as if asking for a divine entity to intervene with righteous assistance to open the infernal construct of a box!",
-    "struggles to begin opening the box...", "attempts to crack the cardboard safe that holds their precious cards.")
+    "struggles to begin opening a box...", "attempts to crack the cardboard safe that holds their precious cards.")
 
     New(User, Box)
         user = User
@@ -1177,7 +1176,8 @@
     var/list/messages = list("brutally hacks at the package's exterior with a sharp object!",
     "desperately slashes a sharp object against the exterior of the StG Preconstructed Deck Box!",
     "becomes a blinding blur of motion as they send bits of cardboard packaging into the air like grotesque confetti!",
-    "impales the StG Preconstructed Deck Box, gripping their sharp implement with both hands, forcing the blade down the package as if disembowling it!")
+    "impales the StG Preconstructed Deck Box, gripping their sharp implement with both hands, forcing the blade down the package as if disembowling it!",
+    "HAcKs aNd slAShES aND hACKs AnD sLAsHEs aNd hACkS AnD SLaSHEs aND HA...")
 
     New(User, Box)
         user = User
