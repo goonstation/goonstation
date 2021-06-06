@@ -348,6 +348,8 @@
 					return
 				if (usage > R.compborg_get_total_damage(1))
 					usage = R.compborg_get_total_damage(1)
+				if (usage > src.reagents.get_reagent_amount("fuel"))
+					usage = src.reagents.get_reagent_amount("fuel")
 				if (usage < 1)
 					return
 				for (var/obj/item/parts/robot_parts/RP in R.contents)
@@ -362,6 +364,8 @@
 					return
 				if (usage > R.compborg_get_total_damage(2))
 					usage = R.compborg_get_total_damage(2)
+				if (usage > src.cabling)
+					usage = src.cabling
 				if (usage < 1)
 					return
 				for (var/obj/item/parts/robot_parts/RP in R.contents)
