@@ -87,7 +87,7 @@
 			return 0
 
 	SPAWN_DBG(0)
-		var/list/region = list("First Hairea" = 1, "Second Hairea" = 2, "Third Hairea" = 3)
+		var/list/region = list("Top Hairea" = 3, "Middle Hairea" = 2, "Bottom Hairea" = 1)
 
 		var/which_part = input(user, "Which clump of hair?", "Clump") as null|anything in region
 
@@ -153,7 +153,7 @@
 
 	SPAWN_DBG(0)
 
-		var/list/region = list("First Hairea" = 1, "Second Hairea" = 2, "Third Hairea" = 3)
+		var/list/region = list("Top Hairea" = 3, "Middle Hairea" = 2, "Bottom Hairea" = 1)
 
 		var/which_part = input(user, "Which clump of hair?", "Clump") as null|anything in region
 
