@@ -1021,7 +1021,7 @@
 
 			if(src.colored == 0)
 				src.color = W.color
-				src.colored = 1
+				src.colored = TRUE
 				desc = "A colored banner, try adding some drawings to it with a crayon!"
 
 		if(istool(W,TOOL_SNIPPING| TOOL_CUTTING | TOOL_SAWING))
