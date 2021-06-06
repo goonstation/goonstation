@@ -2269,13 +2269,6 @@
 /obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/caution/south,
 /area/station/security/armory)
-"fF" = (
-/obj/machinery/weapon_stand/shotgun_rack,
-/obj/decal/poster/wallsign/medal{
-	pixel_y = 26
-	},
-/turf/simulated/floor/caution/south,
-/area/station/security/armory)
 "fG" = (
 /turf/simulated/floor/stairs/wide/other{
 	dir = 1
@@ -6612,20 +6605,6 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
-"pV" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/mechanical,
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/random_item_spawner/tools_w_igloves{
-	max_amt2spawn = 14;
-	min_amt2spawn = 6
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/engine/engineering)
 "pW" = (
 /obj/cable{
 	d1 = 2;
@@ -7339,20 +7318,6 @@
 /obj/machinery/navbeacon/tour/atlas/tour12,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"rC" = (
-/obj/table/auto,
-/obj/item/tank/jetpack,
-/obj/item/tank/jetpack,
-/obj/item/tank/jetpack,
-/obj/item/tank/jetpack,
-/obj/item/tank/jetpack,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/storage/eva)
 "rD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -12067,6 +12032,26 @@
 "Di" = (
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"Dj" = (
+/obj/table/auto,
+/obj/item/old_grenade/oxygen{
+	pixel_y = 8
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_y = 8
+	},
+/obj/item/tank/jetpack,
+/obj/item/tank/jetpack,
+/obj/item/tank/jetpack,
+/obj/item/tank/jetpack,
+/obj/item/tank/jetpack,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/storage/eva)
 "Dk" = (
 /obj/table/auto,
 /obj/machinery/light{
@@ -12906,6 +12891,22 @@
 "Fn" = (
 /turf/simulated/floor/white,
 /area/station/science/artifact)
+"Fp" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/random_item_spawner/tools_w_igloves{
+	max_amt2spawn = 14;
+	min_amt2spawn = 6
+	},
+/obj/item/old_grenade/oxygen,
+/obj/item/old_grenade/oxygen,
+/turf/simulated/floor/orangeblack,
+/area/station/engine/engineering)
 "Fr" = (
 /obj/submachine/chicken_feed_grinder,
 /obj/railing/orange/reinforced{
@@ -18566,6 +18567,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/tools)
+"UL" = (
+/obj/machinery/weapon_stand/shotgun_rack,
+/obj/decal/poster/wallsign/framed_award/hos_medal{
+	pixel_y = 26
+	},
+/turf/simulated/floor/caution/south,
+/area/station/security/armory)
 "UM" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -59048,7 +59056,7 @@ mC
 nj
 np
 ok
-pV
+Fp
 XG
 rW
 sf
@@ -74135,7 +74143,7 @@ fa
 fa
 cD
 ez
-fF
+UL
 gr
 gW
 hO
@@ -76563,7 +76571,7 @@ je
 ct
 po
 qz
-rC
+Dj
 pp
 ve
 fl

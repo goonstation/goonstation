@@ -521,6 +521,19 @@ datum
 					boutput(M, "<span class='notice'>A faint cheesy smell drifts through the air...</span>")
 				return
 
+		cheese2
+			name = "Cheese"
+			id = "cheese2"
+			result = "cheese"
+			required_reagents = list("milk" = 1, "acetic_acid" = 0)
+			result_amount = 1
+			mix_phrase = "The mixture curdles up."
+			on_reaction(var/datum/reagents/holder)
+				var/location = get_turf(holder.my_atom)
+				for(var/mob/M in all_viewers(8, location))
+					boutput(M, "<span class='notice'>A faint cheesy smell drifts through the air...</span>")
+				return
+
 		gcheese
 			name = "Weird Cheese"
 			id = "gcheese"

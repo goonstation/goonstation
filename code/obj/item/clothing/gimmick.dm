@@ -773,10 +773,8 @@
 
 			boutput(H, "<span class='alert'><b>You suddenly feel whiny and ineffectual.</b></span>")
 			H.real_name = "Mike Dawson"
-			H.bioHolder.mobAppearance.customization_first = "Bedhead"
-			H.bioHolder.mobAppearance.customization_second = "Selleck"
-			H.cust_one_state = "bedhead"
-			H.cust_two_state = "selleck"
+			H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/bedhead
+			H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/moustache/selleck
 			H.bioHolder.mobAppearance.e_color = "#321E14"
 			H.bioHolder.mobAppearance.customization_first_color = "#412819"
 			H.bioHolder.mobAppearance.customization_second_color = "#412819"
@@ -970,6 +968,18 @@
 	desc = "A little ruffle with lace, to wear on the head. It gives you super cleaning powers*!<br><small>*Does not actually bestow any powers.</small>"
 	icon_state = "maid"
 	item_state = "maid"
+
+/obj/item/clothing/under/gimmick/dinerdress_mint
+	name = "Mint Diner Waitress's Dress"
+	desc = "Can I getcha somethin', sugar?"
+	icon_state = "dinerdress-mint"
+	item_state = "dinerdress-mint"
+
+/obj/item/clothing/under/gimmick/dinerdress_pink
+	name = "Pink Diner Waitress's Dress"
+	desc = "Y'all come back now, ya hear?"
+	icon_state = "dinerdress-pink"
+	item_state = "dinerdress-pink"
 
 /obj/item/clothing/under/gimmick/kilt
 	name = "kilt"

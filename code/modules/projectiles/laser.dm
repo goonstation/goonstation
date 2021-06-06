@@ -110,15 +110,11 @@ toxic - poisons
 	color_blue = 1
 
 	on_hit(atom/hit)
-		if (isliving(hit))
-			fireflash(get_turf(hit), 0)
-		else if (isturf(hit))
-			fireflash(hit, 0)
-			SPAWN_DBG(1 DECI SECOND)
-				if(prob(40) && istype(hit, /turf/simulated))
-					hit.meteorhit(src)
+		fireflash(get_turf(hit), 0)
+		if((istype(hit, /turf/simulated) || istype(hit, /obj/structure/girder)))
+			hit.ex_act(2)
 		else
-			fireflash(get_turf(hit), 0)
+			hit.ex_act(3)
 
 /datum/projectile/laser/light // for the drones
 	name = "phaser bolt"

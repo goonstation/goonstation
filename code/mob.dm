@@ -942,7 +942,7 @@
 				mode.team_NT.members -= src.mind
 				mode.team_SY.members -= src.mind
 				message_admins("[src]([src.ckey]) just set DNR and was removed from their team. which was probably [src.mind.special_role]!")
-#else 
+#else
 	if (confirm == "Yes")
 		if (src.mind)
 			src.verbs -= list(/mob/verb/setdnr)
@@ -987,19 +987,6 @@
 	return
 
 /mob/living/get_unequippable()
-	var/list/obj/item/LI = list()
-
-	for (var/obj/item/W in src)
-		if (istype(W, /obj/item/parts) && W:holder == src)
-			continue
-
-		if (istype(W, /obj/item/reagent_containers/food/snacks/bite))
-			continue
-		LI += W
-
-	.= LI
-
-/mob/living/carbon/human/get_unequippable()
 	var/list/obj/item/LI = list()
 
 	for (var/obj/item/W in src)
@@ -1531,7 +1518,7 @@
 		if (D_BURNING)
 			TakeDamage("All", 0, damage)
 		if (D_RADIOACTIVE)
-			src.changeStatus("radiation", (damage)*1 SECOND)
+			src.changeStatus("radiation", (damage) SECONDS)
 			src.stuttering += stun
 			src.drowsyness += stun
 		if (D_TOXIC)
@@ -2062,7 +2049,7 @@
 		sleep(duration+5)
 		src.death(1)
 		var/mob/dead/observer/newmob = ghostize()
-		newmob.corpse = null
+		newmob?.corpse = null
 
 		qdel(floorcluwne)
 		qdel(src)

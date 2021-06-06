@@ -24,8 +24,8 @@ This text serves as a comprehensive overview to Materials Science. It is detaile
 <hr>
 <h2>
   Contents</h2>
-<nav><ul><li><a href="MatSci-W">Materials Science: What, Where, and Why?</a></li> <li><a href="Index-of-Properties"> <a href="">Index of Properties</a></li> <li><a href="Basic-Mats">Basic Ores</a></li> <li><a href="Advanced-Mats">Advanced Materials</a></li> <li><a href="Alloyed-Mats">Alloyed Materials</a></li><li><a href="Alloying">Alloying</a></li>
-<li><a href="Infusing">Infusing</a></li></ul></nav>
+<nav><ul><li><a href="MatSci-W">Materials Science: What, Where, and Why?</a></li><li><a href="Index-of-Properties"> <a href="">Index of Properties</a></li> <li><a href="Basic-Mats">Basic Ores</a></li> <li><a href="Advanced-Mats">Advanced Materials</a></li> <li><a href="Alloyed-Mats">Alloyed Materials</a></li><li><a href="Alloying">Alloying</a></li>
+<li>a href="Enchanting">Enchanting</a></li><li><a href="Infusing">Infusing</a></li></ul></nav>
 
   <section id="MatSci-W"><h3>Materials Science: What is it, Where is it, and Why is it?</h3></section>
 <hr>
@@ -35,6 +35,7 @@ An aspiring metallurgist requires a suitable workshop in which they can create a
 <ul><li><b>Nano-Crucible</b> - a large cuboid forge that melts two materials and reforms them as an alloyed bar
 <li><b>Slag Shovel</b> - used for removing slag buildup from impurities removed in the refining process. Modern Nano-Crucibles filter impurities with more accuracy and so the old practice of slag shovelling has fallen by the wayside.
 </li></ul><ul><li><b>Material Processer</b> - a machine with a rectangular surface and two clamps to hold bars of alloys in place; used to process raw ores and gems into more workable ingots
+</li></ul><ul><li><b>Portable Reclaimer</b> - a machine on wheels that can turn most materials into workable ingots, and is often used to restock fabricators around the station
 </li></ul><ul><li><b>Nano-Fabricator</b> - the machine with two upright arms embedded with lasers that precisely cut and mold materials into pre-loaded schematics
 <ul><li>Nano-Fabricator schematics describe needing either metal alloys, fabrics, rubber, or crystals, but it is possible for a single bar of alloyed material to possess all the properties needed for a schematic to begin working
 <li> You can store and view your stored materials under the “Storage” tab</li><br>
@@ -61,9 +62,9 @@ This section shows the different properties or materials that are of interest to
 </p><ul><li>(ex.: Copper, Claretine, Electrum)</ul></li>
 <p style="margin-right:10%; margin-left:1%"><b>Thermal Conductivity</b> - ability of material to transfer heat through it with little loss of energy; <b>more insulating materials do better at keeping heat within which can be advantageous for creating temperature differentials.</b></p>
 <ul><li>(ex.: Carbon Nanofiber, Fibrilith, Space spider silk)</ul></li>
-<p style="margin-right:10%; margin-left:1%"><b>Stability</b> - how prone a material is to degradation.
+<p style="margin-right:10%; margin-left:1%"><b>Stability</b> - how prone a material is to degradation; important for rechargable power cells, as lower stability means that with each recharge, there is a chance for the cell to explode.
 </p><ul><li>(ex.: Starstone, Carbon Nanofiber, Hauntium)</ul></li>
-<p style="margin-right:10%; margin-left:1%"><b>Density</b> -  blunt force of the material; sturdiness and ability to impact other materials when used in tools.</p>
+<p style="margin-right:10%; margin-left:1%"><b>Density</b> -  sturdiness of the material when used in things like wearables.</p>
 <ul><li>(ex.: Viscerite, Plasmasteel, Starstone)</ul></li>
 <p style="margin-right:10%; margin-left:1%"><b>Hardness</b> - blunt force of the material; sturdiness and ability to impact other materials when used in tools.</p>
 <ul><li>(ex.: Koshmarite, Dyneema, Starstone)</ul></li>
@@ -195,7 +196,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 <td align="right">n/a</td>
 <td align="right">n/a</td>
 <td align="right"><b>10</b></td>
-<td align="right"><b>50<b/></td>
+<td align="right"><b>50</b></td>
 <td align="right">n/a</td>
 <td align="right">n/a</td>
 <td align="right">n/a</td>
@@ -464,8 +465,8 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 </tr>
 <tr><td align="right">Leather</td>
 <td align="right">n/a</td>
-<td align="right"><b>32</td>
-<td align="right"><b>29</td>
+<td align="right"><b>32</b></td>
+<td align="right"><b>29</b></td>
 <td align="right">n/a</td>
 <td align="right"><b>5</b></td>
 <td align="right"><b>65</b></td>
@@ -581,7 +582,6 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 </tr>
 </table><br/>
 <table>
-<table border="1">
 <tr><th align="right">CRYSTAL</th>
 <th align="right">Rad.</th>
 <th align="right">El. Cond.</th>
@@ -826,6 +826,9 @@ Two additional notes on how <b>Melee Damage Protection</b> and <b><i>Ranged Dama
 <br>
 <br>
 You can directly transfer the stats of a material to an object by putting the material in the <b>Arc Electroplater</b> and then putting the desired object in with the plating. This process takes a few moments, and results in an object that is plated in and has the properties of your material.
+<section id="Enchanting""><h3>Enchanting</h3></section>
+Enchanting is done using rare magical crystals that can be alloyed with other materials and then made into an item or used to plate an item in the Arc Electroplater. When used on a non-wearable item, three additional damage of whatever the primary damage type is gets added.
+When used on a wearable item, three additional armor is added to the item when it is worn, though the stats on the armor itself do not reflect this.
 <section id="Infusing""><h3>Infusing</h3></section>
 As a final note, one can infuse a chemical into a material through an infusion process that utilizes starstone, and then use the material to go on and create more items in the Nano-Fabricator. These items then continuously dose the wearer or holder of the item with the chemical that was infused into the parent material.
 <br><br>

@@ -1,5 +1,5 @@
 var/list/genescanner_addresses = list()
-var/list/genetek_hair_styles = null
+var/list/genetek_hair_styles = list()
 
 /obj/machinery/genetics_scanner
 	name = "GeneTek scanner"
@@ -287,9 +287,9 @@ var/list/genetek_hair_styles = null
 	var/mob/living/carbon/human/target_mob = null
 	var/direction = SOUTH
 
-	var/customization_first = "Short Hair"
-	var/customization_second = "None"
-	var/customization_third = "None"
+	var/datum/customization_style/customization_first = new /datum/customization_style/hair/short/short
+	var/datum/customization_style/customization_second = new /datum/customization_style/none
+	var/datum/customization_style/customization_third = new /datum/customization_style/none
 
 	var/customization_first_color = "#FFFFFF"
 	var/customization_second_color = "#FFFFFF"
@@ -335,11 +335,11 @@ var/list/genetek_hair_styles = null
 				if (params["color3"])
 					src.customization_third_color = sanitize_color(params["color3"], fixColors)
 				if (params["style1"])
-					src.customization_first = sanitize_hairstyle(params["style1"])
+					src.customization_first = find_style_by_name(params["style1"])
 				if (params["style2"])
-					src.customization_second = sanitize_hairstyle(params["style2"])
+					src.customization_second = find_style_by_name(params["style2"])
 				if (params["style3"])
-					src.customization_third = sanitize_hairstyle(params["style3"])
+					src.customization_third = find_style_by_name(params["style3"])
 				if (params["apply"] || params["cancel"])
 					if (params["apply"])
 						src.copy_to_target()
@@ -350,12 +350,11 @@ var/list/genetek_hair_styles = null
 	ui_data(mob/user)
 		src.preview?.add_client(user?.client)
 
-		if (isnull(genetek_hair_styles))
-			genetek_hair_styles = list()
-			for (var/S as anything in customization_styles)
-				genetek_hair_styles += S
-			for (var/S as anything in customization_styles_gimmick)
-				genetek_hair_styles += S
+		if (!genetek_hair_styles.len)
+			var/list/datum/customization_style/customization_types = concrete_typesof(/datum/customization_style)
+			for (var/datum/customization_style/styletype as anything in customization_types)
+				var/datum/customization_style/CS = new styletype
+				genetek_hair_styles += CS.name
 
 		var/fixColors = !!(src.target_mob.mutantrace?.mutant_appearance_flags & FIX_COLORS)
 		var/hasHumanEyes = !src.target_mob.mutantrace || (src.target_mob.mutantrace.mutant_appearance_flags & HAS_HUMAN_EYES)
@@ -374,9 +373,9 @@ var/list/genetek_hair_styles = null
 			"color1" = src.customization_first_color,
 			"color2" = src.customization_second_color,
 			"color3" = src.customization_third_color,
-			"style1" = src.customization_first,
-			"style2" = src.customization_second,
-			"style3" = src.customization_third,
+			"style1" = src.customization_first.name,
+			"style2" = src.customization_second.name,
+			"style3" = src.customization_third.name,
 			"fixColors" = fixColors,
 			"hasEyes" = hasHumanEyes,
 			"hasSkin" = hasHumanSkintone,
@@ -405,14 +404,14 @@ var/list/genetek_hair_styles = null
 			src.customization_third = H.bioHolder.mobAppearance.customization_third
 			src.customization_third_color = H.bioHolder.mobAppearance.customization_third_color
 
-			if(!(customization_styles[src.customization_first] || customization_styles_gimmick[src.customization_first]))
-				src.customization_first = "None"
+			if(!istype(src.customization_first,/datum/customization_style))
+				src.customization_first = new /datum/customization_style/none
 
-			if(!(customization_styles[src.customization_second] || customization_styles_gimmick[src.customization_second]))
-				src.customization_second = "None"
+			if(!istype(src.customization_second,/datum/customization_style))
+				src.customization_second = new /datum/customization_style/none
 
-			if(!(customization_styles[src.customization_third] || customization_styles_gimmick[src.customization_third]))
-				src.customization_third = "None"
+			if(!istype(src.customization_third,/datum/customization_style))
+				src.customization_third = new /datum/customization_style/none
 
 			src.e_color = H.bioHolder.mobAppearance.e_color
 
@@ -444,24 +443,6 @@ var/list/genetek_hair_styles = null
 			target_mob.bioHolder.mobAppearance.customization_third = customization_third
 			target_mob.bioHolder.mobAppearance.customization_third_original = customization_third
 
-			target_mob.cust_one_state = customization_styles[customization_first]
-			if(!target_mob.cust_one_state)
-				target_mob.cust_one_state = customization_styles_gimmick[customization_first]
-				if(!target_mob.cust_one_state)
-					target_mob.cust_one_state = "None"
-
-			target_mob.cust_two_state = customization_styles[customization_second]
-			if(!target_mob.cust_two_state)
-				target_mob.cust_two_state = customization_styles_gimmick[customization_second]
-				if(!target_mob.cust_two_state)
-					target_mob.cust_two_state = "None"
-
-			target_mob.cust_three_state = customization_styles[customization_third]
-			if(!target_mob.cust_three_state)
-				target_mob.cust_three_state = customization_styles_gimmick[customization_third]
-				if(!target_mob.cust_three_state)
-					target_mob.cust_three_state = "None"
-
 			target_mob.update_colorful_parts()
 			target_mob.set_face_icon_dirty()
 			target_mob.set_body_icon_dirty()
@@ -473,24 +454,19 @@ var/list/genetek_hair_styles = null
 				var/list/L = hex_to_rgb_list(color)
 				. = rgb(L[1], L[2], L[3])
 
-		sanitize_hairstyle(style)
-			. = style
-			if (!customization_styles[.] && !customization_styles_gimmick[.])
-				. = "None"
-
 		sanitize_null_values()
 			if (customization_first_color == null)
 				customization_first_color = "#101010"
 			if (customization_first == null)
-				customization_first = "None"
+				customization_first = new /datum/customization_style/none
 			if (customization_second_color == null)
 				customization_second_color = "#101010"
 			if (customization_second == null)
-				customization_second = "None"
+				customization_second = new /datum/customization_style/none
 			if (customization_third_color == null)
 				customization_third_color = "#101010"
 			if (customization_third == null)
-				customization_third = "None"
+				customization_third = new /datum/customization_style/none
 			if (e_color == null)
 				e_color = "#101010"
 			if (s_tone == null || s_tone == "#ffffff")
