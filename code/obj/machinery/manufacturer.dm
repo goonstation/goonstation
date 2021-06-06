@@ -1017,6 +1017,11 @@
 					user.u_equip(W)
 					W.dropped()
 
+		else if (istype(W,/obj/item/sheet/) || (istype(W,/obj/item/cable_coil/ || (istype(W,/obj/item/raw_material/ )))))
+			boutput(user, "<span class='alert'>The fabricator rejects the [W]. You'll need to refine them in a reclaimer first.</span>")
+			playsound(src.loc, src.sound_grump, 50, 1)
+			return
+
 		else if (istype(W, src.base_material_class) && src.accept_loading(user))
 			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
 			src.load_item(W,user)
@@ -1106,7 +1111,7 @@
 		else if (istype(over_object,/turf/simulated/floor/) || istype(over_object,/turf/unsimulated/floor/))
 			src.output_target = over_object
 			boutput(usr, "<span class='notice'>You set the manufacturer to output to [over_object]!</span>")
-		
+
 		else
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
