@@ -13,4 +13,4 @@
 	head_mod = "Hard Hat"
 	fx = list(0, 255, 255)
 	painted = 1
-	paint = list(130, 90, 0)
+	paint = "#825A00"
