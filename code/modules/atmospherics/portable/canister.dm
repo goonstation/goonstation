@@ -65,7 +65,8 @@
 	casecolor = "bluish"
 	desc = "A container which holds a large amount of the labelled gas. It's possible to transfer the gas to a pipe system, or the air."
 	volume = 500
-	
+	filled = 1/16
+
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "Canister \[Plasma\]"
 	icon_state = "orange"
@@ -741,7 +742,7 @@
 	..()
 
 	var/datum/gas/oxygen_agent_b/trace_gas = air_contents.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
-	trace_gas.moles = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature*8)
+	trace_gas.moles = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 	src.update_icon()
 	return 1
