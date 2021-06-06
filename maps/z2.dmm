@@ -2968,9 +2968,7 @@
 "amK" = (
 /obj/table,
 /obj/item/stamp,
-/obj/noticeboard{
-	pixel_y = 32
-	},
+/obj/noticeboard,
 /turf/unsimulated/floor/black,
 /area/hospital)
 "amL" = (
@@ -5109,9 +5107,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
 "asU" = (
-/obj/noticeboard{
-	pixel_y = 32
-	},
+/obj/noticeboard,
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
 "asV" = (
@@ -11547,9 +11543,7 @@
 "aNg" = (
 /obj/table/auto,
 /obj/item/kitchen/food_box/donut_box,
-/obj/noticeboard{
-	pixel_y = 32
-	},
+/obj/noticeboard,
 /turf/unsimulated/floor/specialroom/bar,
 /area/upper_arctic/pod2)
 "aNh" = (
@@ -14239,9 +14233,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/noticeboard{
-	pixel_y = 32
-	},
+/obj/noticeboard,
 /turf/unsimulated/floor/neutral/side{
 	dir = 1
 	},
@@ -77799,16 +77791,16 @@
 /obj/table/wood/auto/desk,
 /obj/item/paper{
 	icon_state = "paper";
-	name = "SQL Server nonsense";
-	pixel_x = 9;
-	pixel_y = 6
-	},
-/obj/item/paper{
-	icon_state = "paper";
 	info = "Approval for one basement";
 	name = "basement construction permit";
 	pixel_x = -4;
 	pixel_y = -2
+	},
+/obj/item/paper{
+	icon_state = "paper";
+	name = "Promotion to Double Mentor";
+	pixel_x = 3;
+	pixel_y = 4
 	},
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
@@ -79302,7 +79294,6 @@
 	})
 "mXo" = (
 /obj/item/reagent_containers/pill/methamphetamine{
-	name = "methamphetamine pill";
 	pixel_x = -2;
 	pixel_y = -6
 	},
@@ -82531,10 +82522,7 @@
 	dir = 1
 	},
 /obj/table/wood/auto/desk,
-/obj/item/paper{
-	icon_state = "paper";
-	name = "Promotion to Double Mentor"
-	},
+/obj/item/gimmickbomb/grenyanda/inert,
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
 "xoU" = (
