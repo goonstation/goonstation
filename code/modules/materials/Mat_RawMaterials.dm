@@ -182,9 +182,8 @@
 				return
 			else if(istype(A, /turf/simulated/wall/))
 				var/obj/decal/poster/banner/B = new(A)
-				if(src.material)
-					B.setMaterial(copyMaterial(src.material))
-					logTheThing("station", user, null, "Made [B] at [log_loc(user)].")
+				if(src.material) B.setMaterial(src.material)
+				logTheThing("station", user, null, "Made [B] at [log_loc(user)].")
 				src.change_stack_amount(-1)
 				user.visible_message("<span class='notice'>[user] Makes [B]!.</span>")
 

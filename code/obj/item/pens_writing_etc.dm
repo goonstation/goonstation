@@ -379,13 +379,21 @@
 			else
 				src.font_color = random_saturated_hex_color(1)
 				src.color_name = hex2color_name(src.font_color)
+				src.color = src.font_color
 
 		write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
 			if (!T || !user || src.in_use || get_dist(T, user) > 1)
 				return
 			src.font_color = random_saturated_hex_color(1)
 			src.color_name = hex2color_name(src.font_color)
+			src.color = src.font_color
 			..()
+
+		afterattack(obj/target, mob/user)
+			if (istype(target, /obj/decal/poster/banner)) // so they alter color when used on a banner
+				src.font_color = random_saturated_hex_color(1)
+				src.color_name = hex2color_name(src.font_color)
+				src.color = src.font_color
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)

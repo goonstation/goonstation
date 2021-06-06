@@ -1109,19 +1109,17 @@
 	icon_state = "banner_base"
 	popup_win = 0
 	flags = TGUI_INTERACTIVE
-	var/state = 0
+	var/colored = 0
 	var/chosen_overlay
-	var/mutable_appearance/new_overlay
-	var/static/list/choosable_overlays = list("Horizontal Stripes","Vertical Stripes","Diagonal Stripes","Big Ball","Medium Ball","Small Ball",
-	"Northwest Line","Northeast Line","Southwest Line","Southeast Line","Cross","Diagonal Cross","Full","Full Gradient",
+	var/static/list/choosable_overlays = list("Horizontal Stripes","Vertical Stripes","Diagonal Stripes","Cross","Diagonal Cross","Full","Full Gradient",
+	"Left Line","Middle Line","Right Line","Northwest Line","Northeast Line","Southwest Line","Southeast Line","Big Ball","Medium Ball","Small Ball",
 	"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
 
 	proc/clear()
-		if(src.material)
-			src.color = src.material.color
-		else src.color = "#ffffff"
+		if(src.material) src.color = src.material.color
+		else src.color = "#ffffff" // In case the material is null
 		src.overlays = null
-		src.state = 0
+		src.colored = 0
 		usr.visible_message("<span class='notice'>[usr] Clears the [src].</span>")
 
 	New()
@@ -1133,10 +1131,9 @@
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/pen/crayon))
-			if(src.state == 1)
+			if(src.colored == 1)
 				chosen_overlay = tgui_input_list(user, "What do you want to draw?", null, choosable_overlays)
-				if (!chosen_overlay)
-					return
+				if (!chosen_overlay) return
 				var/mutable_appearance/new_overlay = mutable_appearance(src.icon, chosen_overlay)
 				new_overlay.appearance_flags = RESET_COLOR
 				new_overlay.color = W.color
@@ -1144,16 +1141,16 @@
 				logTheThing("station", user, null, "Drew a [chosen_overlay] in [src] with [W] at [log_loc(user)].")
 				desc = "A banner, colored and decorated"
 
-			if(src.state == 0)
+			if(src.colored == 0)
 				src.color = W.color
-				src.state = 1
+				src.colored = 1
 				desc = "A colored banner, try adding some drawings to it with a crayon!"
 
 		if(istool(W,TOOL_SNIPPING| TOOL_CUTTING | TOOL_SAWING))
-			user.visible_message("<span class='notice'>[user] cuts off [src].</span>")
+			user.visible_message("<span class='notice'>[user] cuts off [src] with [W].</span>")
 			var/obj/item/material_piece/cloth/C = new(user.loc)
-			if(src.material)
-				C.setMaterial(copyMaterial(src.material))
+			if(src.material) C.setMaterial(src.material)
+			else C.setMaterial(getMaterial("cotton")) // In case the material is null
 			qdel(src)
 
 	MouseDrop(atom/over_object, src_location, over_location)
@@ -1163,6 +1160,5 @@
 
 		else if(tgui_alert(usr, "Are you sure you want to clear the banner?","Confirmation",list("Yes","No")) == "Yes")
 			clear()
-		else
-			return
+		else return
 
