@@ -183,7 +183,7 @@
 		<div class ="mannitol">
 		<ul>
 			<li>Mannitol is a sugar alcohol that can help alleviate cranial swelling.
-			<li>Hydrolyze sugar in water,then hydrogenate.
+			<li>Hydrolyze sugar in water, then hydrogenate.
 		</div>
 		<h3>Oculine</h3>
 		<div class ="oculine">
