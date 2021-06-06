@@ -1019,7 +1019,7 @@
 				logTheThing("station", user, null, "Drew a [chosen_overlay] in [src] with [W] at [log_loc(user)].")
 				desc = "A banner, colored and decorated"
 
-			if(src.colored == 0)
+			if(src.colored == FALSE)
 				src.color = W.color
 				src.colored = TRUE
 				desc = "A colored banner, try adding some drawings to it with a crayon!"
