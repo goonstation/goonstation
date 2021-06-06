@@ -538,7 +538,7 @@
 		newsignal.data_file = scanFile
 		radio_connection.post_signal(src, newsignal)
 
-/obj/machinery/rkit/proc/pda_messsage(var/target, var/message)
+/obj/machinery/rkit/proc/pda_message(var/target, var/message)
 	SPAWN_DBG(0.5 SECONDS) //response proc
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
@@ -665,7 +665,7 @@
 				//And don't send a message if we're not the host
 				return //But we already had that blueprint, so we do leave
 
-			pda_messsage(target, "Notice: Item already in database.")
+			pda_message(target, "Notice: Item already in database.")
 
 			return
 
@@ -675,7 +675,7 @@
 	if(src.net_id != host_ruck || command != "add") //Only the host sends PDA messages, and we don't send them for internal transfer
 		return
 
-	pda_messsage(target, "Notice: Item entered into database.")
+	pda_message(target, "Notice: Item entered into database.")
 
 /obj/machinery/rkit/attackby(obj/item/W as obj, mob/user as mob)
 	if(status & (NOPOWER|BROKEN))
@@ -703,10 +703,10 @@
 				add_count++
 		if (add_count==  1)
 			boutput(user, "<span class='notice'>[add_count] new items entered into kit.</span>")
-			pda_messsage(null, "Notice: Item entered into database.")
+			pda_message(null, "Notice: Item entered into database.")
 		else if (add_count > 0)
 			boutput(user, "<span class='notice'>[add_count] new items entered into kit.</span>")
-			pda_messsage(null, "Notice: [add_count] new items entered into database.")
+			pda_message(null, "Notice: [add_count] new items entered into database.")
 		else
 			boutput(user, "<span class='alert'>No new items entered into kit.</span>")
 
