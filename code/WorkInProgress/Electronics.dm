@@ -555,97 +555,12 @@
 		newsignal.data["sender"] = src.net_id
 		pda.post_signal(src, newsignal)
 
-/obj/machinery/rkit/receive_signal(datum/signal/signal)
-	if(status & NOPOWER)
-		return
-
-	if(!signal || signal.encryption || !signal.data["sender"])
-		return
-
+//Run this if there's a file and return
+//This will either work, or you rejected a signal that had a file it didn't need
+/obj/machinery/rkit/proc/process_upload(datum/signal/signal)
 	var/target = signal.data["sender"]
 	var/command = signal.data["command"]
-	if((signal.data["address_1"] == "ping") && target)
-		SPAWN_DBG(0.5 SECONDS)	//Send a reply for those curious jerks
-								//Any replies in receive signal need a delay
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
-			newsignal.data["command"] = "ping_reply"
-			newsignal.data["device"] = "NET_RKANALZYER"
-			newsignal.data["netid"] = src.net_id
-			newsignal.data["address_1"] = target
-			newsignal.data["sender"] = src.net_id
-			radio_connection.post_signal(src, newsignal)
-
-		return
-
-	//Bail early if we can
-	if (signal.data["address_1"] != "TRANSRKIT" && signal.data["address_1"] != src.net_id )
-		return
-
-	//locking and unlocking
-	if(signal.data["address_1"] == "TRANSRKIT" && signal.data["acc_code"] == netpass_heads && !isnull(signal.data["DATA"]) && !isnull(signal.data["LOCK"]))
-		var/targetitem = signal.data["DATA"]
-		for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
-			if (targetitem == O.name)
-				O.locked = signal.data["LOCK"]
-		return
-
-	if(signal.data["address_1"] == "TRANSRKIT" && command == "SYNCREPLY" && target)
-		if (target > host_ruck) //pick the highest net_id
-			host_ruck = target
-			//Wait we're done here?
-			return
-
-
-	//Set the host ruck to the highest net_id we see, and if it's a DROP command, don't save that net_id
-	if(signal.data["address_1"] == "TRANSRKIT" && (command == "SYNC" || command == "DROP") && target)
-
-		if(length(ruck_controls.scanned_items) && src.net_id == host_ruck && !(target in known_rucks))
-			//If we have a database of items, and we're the host, and we see a new ruck
-			//Upload our database to it
-			var/datum/computer/file/electronics_bundle/rkitFile = new
-			rkitFile.ruckData = ruck_controls
-			rkitFile.target = target
-			SPAWN_DBG(0.5 SECONDS)
-				var/datum/signal/newsignal = get_free_signal()
-				newsignal.source = src
-				newsignal.transmission_method = TRANSMISSION_RADIO
-				newsignal.data["command"] = "UPLOAD"
-				newsignal.data["address_1"] = target
-				newsignal.data["sender"] = src.net_id
-				newsignal.data_file = rkitFile
-				radio_connection.post_signal(src, newsignal)
-			known_rucks |= target
-			send_sync()
-			return
-
-		//Got a sync time to reset this to ourselves
-		host_ruck = src.net_id //We're the master!
-		if (target > host_ruck && command == "SYNC") //Unless they are
-			host_ruck = target
-
-		SPAWN_DBG(0.5 SECONDS)
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
-			newsignal.data["command"] = "SYNCREPLY"
-			newsignal.data["address_1"] = "TRANSRKIT"
-			newsignal.data["sender"] = src.net_id
-			radio_connection.post_signal(src, newsignal)
-
-		return
-
-	//I have no idea why anyone would want blueprint files
-	//But I love making packets cryptic
-	//Oh okay we have a distributed network now, THAT'S what this is for
-	if(signal.data["address_1"] == src.net_id && command == "DOWNLOAD" && target && !isnull(signal.data["data"]))
-		var/targetitem = signal.data["data"]
-		for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
-			if (targetitem == O.name)
-				upload_blueprint(O, target)
-
-	if((signal.data["address_1"] != "TRANSRKIT" && signal.data["address_1"] != src.net_id ) || !target || (command != "add" && command != "UPLOAD") || (!istype(signal.data_file, /datum/computer/file/electronics_scan) && !istype(signal.data_file, /datum/computer/file/electronics_bundle)))
+	if(!target || (command != "add" && command != "UPLOAD") || (!istype(signal.data_file, /datum/computer/file/electronics_scan) && !istype(signal.data_file, /datum/computer/file/electronics_bundle)))
 		return
 
 	var/datum/computer/file/electronics_bundle/rkitFile = signal.data_file
@@ -671,7 +586,6 @@
 			pda_message(target, "Notice: Item already in database.")
 
 			return
-
 	var/strippedName = scanFile.scannedName
 	ruck_controls.scan_in(strippedName, scanFile.scannedPath, scanFile.scannedMats)
 
@@ -679,6 +593,103 @@
 		return
 
 	pda_message(target, "Notice: Item entered into database.")
+
+/obj/machinery/rkit/receive_signal(datum/signal/signal)
+	if(status & NOPOWER)
+		return
+
+	if(!signal || signal.encryption || !signal.data["sender"])
+		return
+
+	var/target = signal.data["sender"]
+	var/command = signal.data["command"]
+	if((signal.data["address_1"] == "ping") && target)
+		SPAWN_DBG(0.5 SECONDS)	//Send a reply for those curious jerks
+								//Any replies in receive signal need a delay
+			var/datum/signal/newsignal = get_free_signal()
+			newsignal.source = src
+			newsignal.transmission_method = TRANSMISSION_RADIO
+			newsignal.data["command"] = "ping_reply"
+			newsignal.data["device"] = "NET_RKANALZYER"
+			newsignal.data["netid"] = src.net_id
+			newsignal.data["address_1"] = target
+			newsignal.data["sender"] = src.net_id
+			radio_connection.post_signal(src, newsignal)
+
+		return
+
+	//Signals that take TRANSRKIT or the net_id
+	if (signal.data["address_1"] == "TRANSRKIT" || signal.data["address_1"] == src.net_id)
+		if (!isnull(signal.data_file))
+			process_upload(signal)
+			return
+	else
+		return
+
+	//Signals that take TRANSRKIT
+	if(signal.data["address_1"] == "TRANSRKIT")
+		//locking and unlocking
+		if(signal.data["acc_code"] == netpass_heads && !isnull(signal.data["DATA"]) && !isnull(signal.data["LOCK"]))
+			var/targetitem = signal.data["DATA"]
+			for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
+				if (targetitem == O.name)
+					O.locked = signal.data["LOCK"]
+			return
+
+		if(command == "SYNCREPLY" && target)
+			if (target > host_ruck) //pick the highest net_id
+				host_ruck = target
+				//Wait we're done here?
+				return
+
+
+		//Set the host ruck to the highest net_id we see, and if it's a DROP command, don't save that net_id
+		if((command == "SYNC" || command == "DROP") && target)
+
+			if(length(ruck_controls.scanned_items) && src.net_id == host_ruck && !(target in known_rucks))
+				//If we have a database of items, and we're the host, and we see a new ruck
+				//Upload our database to it
+				var/datum/computer/file/electronics_bundle/rkitFile = new
+				rkitFile.ruckData = ruck_controls
+				rkitFile.target = target
+				SPAWN_DBG(0.5 SECONDS)
+					var/datum/signal/newsignal = get_free_signal()
+					newsignal.source = src
+					newsignal.transmission_method = TRANSMISSION_RADIO
+					newsignal.data["command"] = "UPLOAD"
+					newsignal.data["address_1"] = target
+					newsignal.data["sender"] = src.net_id
+					newsignal.data_file = rkitFile
+					radio_connection.post_signal(src, newsignal)
+				known_rucks |= target
+				send_sync()
+				return
+
+			//Got a sync time to reset this to ourselves
+			host_ruck = src.net_id //We're the master!
+			if (target > host_ruck && command == "SYNC") //Unless they are
+				host_ruck = target
+
+			SPAWN_DBG(0.5 SECONDS)
+				var/datum/signal/newsignal = get_free_signal()
+				newsignal.source = src
+				newsignal.transmission_method = TRANSMISSION_RADIO
+				newsignal.data["command"] = "SYNCREPLY"
+				newsignal.data["address_1"] = "TRANSRKIT"
+				newsignal.data["sender"] = src.net_id
+				radio_connection.post_signal(src, newsignal)
+
+			return
+	//And anything down here runs if addressed by only net_id
+
+	//I have no idea why anyone would want blueprint files
+	//But I love making packets cryptic
+	//Oh okay we have a distributed network now, THAT'S what this is for
+	if(command == "DOWNLOAD" && target && !isnull(signal.data["data"]))
+		var/targetitem = signal.data["data"]
+		for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
+			if (targetitem == O.name)
+				upload_blueprint(O, target)
 
 /obj/machinery/rkit/attackby(obj/item/W as obj, mob/user as mob)
 	if(status & (NOPOWER|BROKEN))
