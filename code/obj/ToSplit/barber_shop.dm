@@ -237,35 +237,18 @@
 		if(passed_dye_roll)
 			switch(bottle.hair_group)
 				if(BOTTOM_DETAIL)
-					if(is_barber || prob(60))
-						M.bioHolder.mobAppearance.customization_first_color = bottle.customization_first_color
-					else
-						boutput(M, "<span class='alert'>Oh no, you dyed the wrong thing!</span> Maybe they won't notice?")
-						if(prob(50))
-							M.bioHolder.mobAppearance.customization_second_color = bottle.customization_first_color
-						else
-							M.bioHolder.mobAppearance.customization_third_color = bottle.customization_first_color
-
 				if(MIDDLE_DETAIL)
-					if(is_barber || prob(60))
-						M.bioHolder.mobAppearance.customization_second_color = bottle.customization_first_color
-					else
-						boutput(M, "<span class='alert'>Oh no, you dyed the wrong thing!</span> Maybe they won't notice?")
-						if(prob(50))
-							M.bioHolder.mobAppearance.customization_first_color = bottle.customization_first_color
-						else
-							M.bioHolder.mobAppearance.customization_third_color = bottle.customization_first_color
-
 				if(TOP_DETAIL)
-					if(is_barber || prob(60))
-						M.bioHolder.mobAppearance.customization_third_color = bottle.customization_first_color
-					else
+					if(!is_barber && prob(25))
 						boutput(M, "<span class='alert'>Oh no, you dyed the wrong thing!</span> Maybe they won't notice?")
-						if(prob(50))
-							M.bioHolder.mobAppearance.customization_second_color = bottle.customization_first_color
-						else
+						bottle.hair_group = pick(list(BOTTOM_DETAIL, MIDDLE_DETAIL, TOP_DETAIL) - bottle.hair_group)
+					switch(bottle.hair_group)
+						if(BOTTOM_DETAIL)
 							M.bioHolder.mobAppearance.customization_first_color = bottle.customization_first_color
-
+						if(MIDDLE_DETAIL)
+							M.bioHolder.mobAppearance.customization_second_color = bottle.customization_first_color
+						if(TOP_DETAIL)
+							M.bioHolder.mobAppearance.customization_third_color = bottle.customization_first_color
 				if(ALL_HAIR)
 					if(src.uses_left < 3)
 						boutput(M, "<span class='notice'>This dyejob's going to need a full bottle!</span>")
