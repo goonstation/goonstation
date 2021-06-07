@@ -178,9 +178,13 @@
 /obj/item/device/accessgun/lite
 	name = "Access Lite"
 	desc = "A device that sets the access requirments of newly constructed airlocks to one scanned from an existing airlock."
-	req_access = list()
+	req_access = null
 	ID_card = 1
-	var/list/scanned_access = list()
+	var/list/scanned_access = null
+
+	New()
+		scanned_access = list()
+		req_access = list()
 
 	afterattack(obj/target, mob/user, reach, params)
 		var/obj/machinery/door/airlock/door_reqs = target
