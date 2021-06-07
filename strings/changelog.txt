@@ -1,5 +1,9 @@
 
 (t)mon jun 07 21
+(u)Jan.antilles
+(p)5024
+(e)🎨|sprites
+(+)Resprite of the Chef's FoodTech vending machine.
 (u)Gannets
 (p)5057
 (e)🗺|mapping
