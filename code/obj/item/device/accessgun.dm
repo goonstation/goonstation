@@ -1,5 +1,5 @@
 /obj/item/device/accessgun
-	name = "access-pro"
+	name = "Access Pro"
 	desc = "This device can reprogram electronic access requirements. It will copy the permissions of any inserted ID. Activate it in-hand while empty to change between AND/OR modes"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "accessgun"
@@ -175,7 +175,7 @@
 			boutput(owner, "<span class='alert'>Access change of [O] interrupted!</span>")
 		..()
 
-/obj/item/device/accessgun/meh
+/obj/item/device/accessgun/lite
 	name = "Access Lite"
 	desc = "A device that sets the access requirments of newly constructed airlocks to one scanned from an existing airlock."
 	req_access = list()
@@ -196,7 +196,7 @@
 		else
 			. = ..()
 
-	reprogram(var/obj/O,var/mob/user)
+	reprogram(obj/O,mob/user)
 		if (!isnull(scanned_access))
 			O.set_access_list(scanned_access)
 		playsound(src, "sound/machines/reprog.ogg", 70, 1)

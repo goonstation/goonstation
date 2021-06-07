@@ -515,6 +515,7 @@
 	name = "\improper Mechanic's locker"
 	req_access = list(access_engineering_mechanic)
 	spawn_contents = list(/obj/item/storage/toolbox/electrical,
+	/obj/item/device/accessgun/lite,
 	/obj/item/clothing/suit/wintercoat/engineering,
 	/obj/item/storage/box/clothing/mechanic,
 	/obj/item/clothing/gloves/yellow,
