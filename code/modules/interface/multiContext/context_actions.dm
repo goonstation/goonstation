@@ -903,7 +903,7 @@
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/cards = target
 			if(cards.loc == user)
-				return
+				user.u_equip(cards)
 			user.put_in_hand_or_drop(cards)
 
 	close
