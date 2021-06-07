@@ -110,19 +110,23 @@
 			boutput(user, "<span class='notice'>[src] can't reprogram this.</span>")
 			return
 
-		if (O.object_flags & CAN_REPROGRAM_ACCESS)
-			if (istype(target,/obj/machinery/door))
-				var/obj/machinery/door/D = target
-				if (D.cant_emag || isrestrictedz(D.z))
-					playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
-					boutput(user, "<span class='notice'>[src] can't reprogram this.</span>")
-					return
-
-			actions.start(new/datum/action/bar/icon/access_reprog(O,src), user)
-		else
+		if (is_restricted(O, user))
 			playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
 			boutput(user, "<span class='notice'>[src] can't reprogram this.</span>")
+			return
 
+		actions.start(new/datum/action/bar/icon/access_reprog(O,src), user)
+
+
+	proc/is_restricted(obj/O)
+		. = FALSE
+		if (!(O.object_flags & CAN_REPROGRAM_ACCESS))
+			. = TRUE
+			return
+		if (istype(O,/obj/machinery/door))
+			var/obj/machinery/door/D = O
+			if (D.cant_emag || isrestrictedz(D.z))
+				. = TRUE
 
 
 	proc/reprogram(var/obj/O,var/mob/user)
@@ -194,14 +198,19 @@
 			return
 		if(target.deconstruct_flags & DECON_BUILT)
 			if (isnull(scanned_access))
-				boutput(user, "<span class='notice'>[src] has no access requirements loaded!</span>")
+				playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
+				boutput(user, "<span class='notice'>[src] has no access requirements loaded.</span>")
 				return
 			if (length(door_reqs.req_access))
+				playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
 				boutput(user, "<span class='notice'>[src] cannot reprogram [door_reqs.name], access requirements already set.</span>")
 				return
 			. = ..()
 			return
-
+		if(is_restricted(door_reqs))
+			playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
+			boutput(user, "<span class='notice'>[src] can't scan [door_reqs.name]</span>")
+			return
 		scanned_access = door_reqs.req_access
 		icon_state = "accessgun-x"
 		boutput(user, "<span class='notice'>[src] scans the access requirements of [door_reqs.name].</span>")
