@@ -539,11 +539,11 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 					M, "<span class='notice'>[user] [cuts] your hair.</span>",\
 					user, "<span class='notice'>You [cut] [M]'s hair.</span>")
 					switch(which_part)
-						if (1)
+						if (BOTTOM_DETAIL)
 							M.bioHolder.mobAppearance.customization_first = new_style
-						if (2)
+						if (MIDDLE_DETAIL)
 							M.bioHolder.mobAppearance.customization_second = new_style
-						if (3)
+						if (TOP_DETAIL)
 							M.bioHolder.mobAppearance.customization_third = new_style
 
 		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing
