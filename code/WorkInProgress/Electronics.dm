@@ -630,7 +630,7 @@
 	//Signals that take TRANSRKIT
 	if(signal.data["address_1"] == "TRANSRKIT")
 		//locking and unlocking
-		if(signal.data["acc_code"] == netpass_heads && !isnull(signal.data["DATA"]) && !isnull(signal.data["LOCK"]))
+		if(signal.data["acc_code"] == netpass_heads && !isnull(signal.data["DATA"]) && !isnull(signal.data["LOCK"]) && (target in known_rucks))
 			var/targetitem = signal.data["DATA"]
 			for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
 				if (targetitem == O.name)
