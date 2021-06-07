@@ -204,7 +204,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 			boutput(target, "<span><B>no no no no no no no no no no no no non&#9617;NO&#9617;NNnNNO</B></span>")
 			if (LANDMARK_SAMOSTREL_WARP in landmarks)
 				var/target_original_loc = target.loc
-				target.setStatus("paralysis", max(target.getStatusDuration("paralysis"), 100))
+				target.setStatus("paralysis", max(target.getStatusDuration("paralysis"), 10 SECONDS))
 				do_teleport(target, pick_landmark(LANDMARK_SAMOSTREL_WARP), 0)
 
 				if (ishuman(target))
@@ -274,10 +274,10 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 /obj/item/reagent_containers/food/drinks/bottle/hospital
 	name = "Ham Brandy"
 	desc = "Uh.   Uhh"
-	//icon = 'icons/obj/foodNdrink/drinks.dmi'
-	icon_state = "whiskey"
-	bottle_style = "whiskey"
-	fluid_style = "whiskey"
+	//icon = 'icons/obj/foodNdrink/bottle.dmi'
+	icon_state = "bottle-spicedrum"
+	bottle_style = "bottle-spicedrum"
+	fluid_style = "spicedrum"
 	label = "spicedrum"//"brandy"
 	heal_amt = 1
 	g_amt = 60

@@ -1,5 +1,126 @@
 
+(t)sun jun 06 21
+(u)112358sam
+(p)5038
+(e)🐛|bug
+(+)Prevents cyborgs repairing at docking station when out of materials.
+(t)sat jun 05 21
+(u)Emily
+(e)🆕|feature
+(*)Four New Chicken Breeds! See Minor Changes for hints!
+(+)Onagadori; Japanese long-tailed chickens. Peanut feed. [Gen 1] [From White Chickens]
+(+)Shieldmaidhens; these armored chickens need a high-iron diet to maintain their natural armor. [Gen 2] [From Onagadori]
+(+)Phoenix; Love will set your heart on fire. Try breeding two appropriate chickens! [Gen 3]
+(+)Dreamsicle Chickens; Sweet ice cream. Try breeding two appropriate chickens! [Gen 3] 
+(u)112358sam
+(p)5027
+(e)|
+(+)Fixes borgs dropping items on the material processor.
+(t)fri jun 04 21
+(u)Asche
+(p)4984
+(e)⚖🆕|balance, feature
+(+)You can now (usually) pull people out of cyborg converter artifacts to save them. The conversion process has also been made a bit more... gradual.
+(u)BatElite
+(p)4994
+(e)🆕|feature
+(+)The Detgadget hat will now automatically light requested cigarettes if it can, so you can continue punching crime and drinking uninterrupted.
+(u)Tarmunora
+(e)⚖|balance
+(+)Booster enzyme now produces some harmless but slow-depleting leftovers when replicating chemicals.
+(+)milk + vinegar -> cheese
+(t)thu jun 03 21
+(u)Jan.antilles
+(p)4889
+(e)🎨|sprites
+(+)Added a new Diner Waitress's Dress in two colors, a matching hat, and four colors of Mary Jane shoes. Look for them in the Clothing Booth!
+(t)tue jun 01 21
+(u)Sovexe
+(e)🐛🆕|bug, feature
+(+)Chicken carriers are now safe for aquatic chicken transportation. Chicken carriers can also scoop deceased chickens for ease of cleanup.
+(u)Zonespace
+(p)4977
+(e)🆕🗺|feature, mapping
+(*)In Pod Wars, general fabricators can now produce handcuffs on RP.
+(+)In Pod Wars, moved grenades and power cells to the general fabricators.
+(u)Asche
+(p)4986
+(e)|
+(+)You can now dowse for hotspots indoors.
+(u)Sovexe
+(p)4987
+(e)🐛🆕|bug, feature
+(+)Constructing mineral magnets now displays an action bar. Corrected constructed magnets breaking fullbright space.
+(u)Jan.antilles
+(p)4997
+(e)|
+(+)Inspecting mugs, paper cups, and the skull chalice will now allow you to see what's inside.
+(u)Flappybat
+(p)4827
+(e)⚖🗺|balance, mapping
+(+)Added some new spy bounties, most significantly the Head items such as the HoS medal. Removed the Port-A-Sci bounty,
+(u)Tarmunora
+(e)⚖|balance
+(+)Lie down while being used as a meatshield and bullets may pass over you at their normal rates.
+(u)Tarmunora
+(e)⚖|balance
+(*)Port-a-brig now has a short delay before shoving someone inside
+(*)quivering contusine curare -> histamine
+(t)mon may 31 21
+(u)Flaborized
+(p)4978
+(e)|
+(+)Renamed the epilepsy mutation to 'Stupefaction'.
+(u)Azrun
+(p)4809
+(e)⚖🆕🗺🎨|balance, feature, mapping, sprites
+(*)Added experimental red oxygen grenade to station repair equipment.  Violently releases large amounts of oxygen into an area.
+(+)Red oxygen grenades are available from QM and each engineer starts with one.
+(u)Tarmunora
+(e)⚖|balance
+(*)10 degree spread on dual-wielding guns.
+(u)Penny
+(p)4940
+(e)🆕📄|feature, tgui
+(+)Multitools can now wipe storage devices
+(+)Security disks are now read only, and read only disks can be read in the cloner
+(u)DimWhat
+(p)4755
+(e)⚖|balance
+(*)Made fanny packs (not funny packs) only have inventory 5 slots.
+(u)Flappybat
+(p)4973
+(e)⚖|balance
+(+)Scanning Syndicate command armor now requires a syndicate device analyser.
+(t)sun may 30 21
+(u)Arthur Holiday
+(p)4858
+(e)🆕🗺|feature, mapping
+(+)Added a new prefab to water maps, a torpedo deposit, it contains a few torpedoes and a cool back story. Check it out!
+(u)Flappybat
+(p)4958
+(e)🆕🎨|feature, sprites
+(+)Adds a roburger variant, the cheeseborger. Just add cheese! Sprite modification by BatElite.
+(t)sat may 29 21
+(u)Flourish
+(*)Player monkeys now must be dead in order to be monkey spiked or reclaimed, gibbers now require all victims to be dead.
+(u)Walpvrgis
+(p)4942
+(e)🎨|sprites
+(+)Resprites bread loaves/slices/toast and related recipes found in food_bread.dmi.
+(u)Blackrep
+(p)4932
+(e)🐛|bug
+(+)Fixed stun and radiation mines not applying their effects on people caught in their blast radiuses.
+(u)Walpvrgis
+(p)4853
+(e)🎨|sprites
+(+)Roach critters have had a resprite to match perspective better.
 (t)fri may 28 21
+(u)Flaborized
+(p)4925
+(e)🎨|sprites
+(+)Resprited land mines.
 (u)Kubius
 (p)4874
 (e)🐛🆕🗺|bug, feature, mapping

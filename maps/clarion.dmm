@@ -10419,7 +10419,7 @@
 /area/station/hallway/primary/central)
 "asD" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/item/plantanalyzer,
 /obj/decal/tile_edge/line/green{
 	dir = 10;
@@ -11729,7 +11729,7 @@
 	},
 /obj/storage/closet/office,
 /obj/item/clothing/under/misc/hydroponics,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /turf/simulated/floor/green/side{
 	dir = 9
 	},
@@ -13272,7 +13272,7 @@
 /area/station/crew_quarters/kitchen)
 "azH" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/item/kitchen/food_box/donut_box,
 /obj/item/instrument/bikehorn/dramatic,
 /obj/item/kitchen/food_box/donut_box,
@@ -19322,7 +19322,7 @@
 /area/station/science/lobby)
 "aMK" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -20587,7 +20587,7 @@
 	pixel_x = -7;
 	pixel_y = 1
 	},
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/redblack,
 /area/station/hallway/secondary/central)
 "aPB" = (
@@ -22557,9 +22557,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/redwhite{
-	dir = 6
-	},
+/turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "aTy" = (
 /obj/cable{
@@ -22624,18 +22622,14 @@
 	location = "tour13";
 	name = "tour beacon - medbay"
 	},
-/turf/simulated/floor/redwhite{
-	dir = 10
-	},
+/turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "aTD" = (
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/redwhite{
-	dir = 5
-	},
+/turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "aTF" = (
 /obj/cable{
@@ -23341,9 +23335,7 @@
 	location = "medbay_lobby";
 	name = "bot navigation beacon"
 	},
-/turf/simulated/floor/redwhite{
-	dir = 9
-	},
+/turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "aVc" = (
 /obj/disposalpipe/segment{
@@ -23561,17 +23553,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge/hos)
-"aVH" = (
-/obj/disposalpipe/segment/mail,
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/gps,
-/obj/item/chem_grenade/metalfoam,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/black,
-/area/station/ai_monitored/storage/eva)
 "aVI" = (
 /obj/machinery/light/emergency,
 /obj/table/reinforced/auto,
@@ -25898,7 +25879,7 @@
 	pixel_x = 4;
 	pixel_y = 8
 	},
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/item/device/radio/intercom/bridge{
 	broadcasting = 0;
 	dir = 4;
@@ -27160,7 +27141,7 @@
 /area/station/science/teleporter)
 "bdw" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/guardbot_guide,
+/obj/item/paper/book/from_file/guardbot_guide,
 /obj/decal/tile_edge/line/black{
 	dir = 8;
 	icon_state = "line1"
@@ -29744,7 +29725,7 @@
 	pixel_x = -5;
 	pixel_y = -5
 	},
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/item/device/multitool,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
@@ -30780,7 +30761,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/paper/book/medical_surgery_guide,
+/obj/item/paper/book/from_file/medical_surgery_guide,
 /turf/simulated/floor/bot/white,
 /area/station/medical/medbay/surgery)
 "bmE" = (
@@ -33896,7 +33877,7 @@
 /area/station/hallway/secondary/central)
 "bsH" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/suture,
 /obj/item/hemostat,
 /obj/decal/tile_edge/line/red{
@@ -35771,7 +35752,7 @@
 	icon_state = "2-4"
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper/book/minerals,
+/obj/item/paper/book/from_file/minerals,
 /obj/item/device/light/glowstick,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -35782,7 +35763,7 @@
 	icon_state = "4-8"
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -36242,7 +36223,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
@@ -40688,19 +40669,6 @@
 	},
 /turf/simulated/floor/caution/misc,
 /area/station/engine/core)
-"bFL" = (
-/obj/machinery/light,
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 5
-	},
-/obj/table/reinforced/auto,
-/obj/item/device/analyzer/atmospheric,
-/obj/item/device/t_scanner,
-/obj/item/extinguisher,
-/obj/item/device/light/flashlight,
-/obj/item/chem_grenade/metalfoam,
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "bFM" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
@@ -40750,7 +40718,7 @@
 "bFR" = (
 /obj/table/wood/auto,
 /obj/item/wrench,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /turf/simulated/grimycarpet,
 /area/ghostdrone_factory)
 "bFS" = (
@@ -42371,7 +42339,7 @@
 /obj/table/auto,
 /obj/machinery/recharger,
 /obj/item/cargotele,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
 "bJL" = (
@@ -47187,6 +47155,21 @@
 	dir = 5
 	},
 /area/station/hallway/secondary/exit)
+"jLe" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red"
+	},
+/obj/item/device/radio/intercom/security,
+/obj/decal/poster/wallsign/framed_award/hos_medal{
+	pixel_y = 25
+	},
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/hos)
 "jLz" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/shower{
@@ -47236,6 +47219,30 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/armory)
+"jUC" = (
+/obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 5
+	},
+/obj/table/reinforced/auto,
+/obj/item/device/analyzer/atmospheric,
+/obj/item/device/t_scanner,
+/obj/item/extinguisher,
+/obj/item/device/light/flashlight,
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "jVa" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -47280,7 +47287,7 @@
 /area/station/security/main)
 "kan" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -48242,21 +48249,6 @@
 /area/station/hallway/secondary/entry{
 	name = "Entry Hallway"
 	})
-"myH" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "red";
-	icon_state = "bedsheet-red"
-	},
-/obj/item/device/radio/intercom/security,
-/obj/decal/poster/wallsign/medal{
-	pixel_y = 25
-	},
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fred2"
-	},
-/area/station/crew_quarters/hos)
 "mBl" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -48960,11 +48952,11 @@
 /area/station/medical/medbay/treatment1)
 "oyz" = (
 /obj/table/wood/round/auto,
-/obj/item/paper/book/monster_manual_revised{
+/obj/item/paper/book/from_file/monster_manual_revised{
 	pixel_x = -3;
 	pixel_y = 1
 	},
-/obj/item/paper/book/DNDrulebook{
+/obj/item/paper/book/from_file/DNDrulebook{
 	pixel_x = 3;
 	pixel_y = 1
 	},
@@ -50003,6 +49995,28 @@
 	dir = 6
 	},
 /area/station/security/armory)
+"rUq" = (
+/obj/disposalpipe/segment/mail,
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/device/gps,
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/storage/eva)
 "rWi" = (
 /obj/item/storage/wall/emergency,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -81046,7 +81060,7 @@ bCu
 bDB
 bEx
 bJk
-bFL
+jUC
 tUJ
 jCk
 dQp
@@ -84567,7 +84581,7 @@ aik
 aiI
 ajl
 ajE
-myH
+jLe
 akE
 akV
 alw
@@ -87439,7 +87453,7 @@ aPV
 aRn
 aSK
 aUk
-aVH
+rUq
 aWV
 aYk
 aZA

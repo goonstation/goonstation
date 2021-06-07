@@ -1415,8 +1415,8 @@ About the new airlock wires panel:
 	else if (src.arePowerSystemsOn())
 		boutput(usr, "<span class='alert'>You try to pry [src]  open, but it won't budge! The power of \the [src] must be disabled first.</span>")
 
-		if(!ON_COOLDOWN(src, "playsound", 1.5 SECONDS))
-			playsound(src, 'sound/machines/airlock_pry.ogg', 35, 1)
+	if(!ON_COOLDOWN(src, "playsound", 1.5 SECONDS))
+		playsound(src, 'sound/machines/airlock_pry.ogg', 35, 1)
 
 	return
 
