@@ -65,7 +65,7 @@
 	casecolor = "bluish"
 	desc = "A container which holds a large amount of the labelled gas. It's possible to transfer the gas to a pipe system, or the air."
 	volume = 500
-	filled = 1/16
+	filled = 1/32
 
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "Canister \[Plasma\]"
