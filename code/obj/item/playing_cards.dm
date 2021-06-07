@@ -374,7 +374,7 @@
 	var/list/stored_cards = list()
 
 	attack_hand(mob/user as mob)
-		if(!is_hand) //handling the player interacting with a deck of cards with an empty hand
+		if(!is_hand && (isturf(src.loc) || src.loc == user)) //handling the player interacting with a deck of cards with an empty hand
 			update_card_actions("empty")
 			user.showContextActions(cardActions, src)
 		else
@@ -1120,8 +1120,8 @@
 			if(loc != user)
 				user.show_text("You need to hold the box if you want enough leverage to rip it to pieces!","red")
 				return
-			actions.start(new /datum/action/bar/private/stg_tear(user,src),user)
-			user.visible_message("<span class='green'><b>[user.name]</b> swiftly splits the [name] in two, retrieving [his_or_her(user)] cards!</span>")
+			else
+				actions.start(new /datum/action/bar/private/stg_tear(user,src),user)
 				user.put_in_hand_or_drop(stored_deck)
 				stored_deck = null
 				ClearAllOverlays()
@@ -1157,13 +1157,14 @@
 
 	onEnd()
 		..()
-		user.visible_message("<span class='green'><b>[user.name]</b> has thoroughly mutilated the StG Preconstructed Deck Box and retrieves the cards from inside.</span>")
-		box.icon_state = "stg-box-torn"
-		var/obj/decal/cleanable/generic/decal = make_cleanable(/obj/decal/cleanable/generic,get_turf(user.loc))
-		decal.color = pick("#000000","#6f0a0a","#a0621b")
-		user.put_in_hand_or_drop(box.stored_deck)
-		box.stored_deck = null
-		box.ClearAllOverlays()
+		if(box.icon_state == "stg-box")
+			user.visible_message("<span class='green'><b>[user.name]</b> has thoroughly mutilated the StG Preconstructed Deck Box and retrieves the cards from inside.</span>")
+			box.icon_state = "stg-box-torn"
+			user.put_in_hand_or_drop(box.stored_deck)
+			var/obj/decal/cleanable/generic/decal = make_cleanable(/obj/decal/cleanable/generic,get_turf(user.loc))
+			decal.color = pick("#000000","#6f0a0a","#a0621b")
+			box.stored_deck = null
+			box.ClearAllOverlays()
 
 /obj/item/stg_booster
 	name = "StG Booster Pack"
