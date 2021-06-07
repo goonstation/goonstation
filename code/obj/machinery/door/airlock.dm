@@ -290,7 +290,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		req_access = list(access_heads)
 
 /obj/machinery/door/airlock/glass/engineering
-		name = "command airlock"
+		name = "engineering airlock"
 		icon = 'icons/obj/doors/Dooreng-glass.dmi'
 		req_access = list(access_engineering)
 
