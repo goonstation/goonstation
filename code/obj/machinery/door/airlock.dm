@@ -314,7 +314,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	welded_icon_state = "2_welded"
 
 /obj/machinery/door/airlock/pyro/command
-	name = "Command"
+	name = "Command Airlock"
 	icon_state = "com_closed"
 	icon_base = "com"
 	req_access = list(access_heads)
@@ -348,7 +348,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 
 /obj/machinery/door/airlock/pyro/security
-	name = "Security"
+	name = "Security Airlock"
 	icon_state = "sec_closed"
 	icon_base = "sec"
 	req_access = list(access_security)
@@ -361,7 +361,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	req_access = null
 
 /obj/machinery/door/airlock/pyro/engineering
-	name = "Engineering"
+	name = "Engineering Airlock"
 	icon_state = "eng_closed"
 	icon_base = "eng"
 	req_access = list(access_engineering)
@@ -374,6 +374,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	req_access = null
 
 /obj/machinery/door/airlock/pyro/medical
+	name = "Medical Airlock"
 	icon_state = "research_closed"
 	icon_base = "research"
 	req_access = list(access_medical)
