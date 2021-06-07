@@ -106,7 +106,7 @@
 			return
 
 		if(region[which_part] != ALL_HAIR)
-			var/list/customization_types = concrete_typesof(/datum/customization_style)-concrete_typesof(/datum/customization_style/biological)
+			var/list/customization_types = concrete_typesof(/datum/customization_style/hair) + concrete_typesof(/datum/customization_style/eyebrows) + /datum/customization_style/none
 			var/new_style = select_custom_style(customization_types, user)
 
 			if (!new_style) // I'd prefer not to go through all of the hair styles and rank them based on hairiness
