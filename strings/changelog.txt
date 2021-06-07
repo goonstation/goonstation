@@ -1,5 +1,9 @@
 
 (t)mon jun 07 21
+(u)Jan.antilles
+(p)5056
+(e)|
+(+)Touching an artifact with your own robotic arm counts as a silicon touch.
 (u)112358sam
 (p)5040
 (e)|
