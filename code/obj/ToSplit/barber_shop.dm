@@ -294,8 +294,8 @@
 				src.uses_left = 0
 				src.icon_state= "dye-e"
 			else if(src.uses_left > 1 && is_barber && bottle.hair_group != ALL_HAIR)
-				boutput(user, "Hey, there's still some dye left in the bottle! Looks about ")
 				src.uses_left --
+				boutput(user, "Hey, there's still some dye left in the bottle! Looks about [get_english_num(src.uses_left)] third\s full!")
 			else
 				boutput(user, "You used the whole bottle!")
 				src.uses_left = 0
