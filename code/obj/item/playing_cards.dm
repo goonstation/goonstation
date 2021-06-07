@@ -327,28 +327,28 @@
 		name = "foil [name]"
 
 /obj/item/playing_card/expensive //(¬‿¬)
-	desc = "Tap this card and sacrifice one Yourself to win the game."
-	icon_state = "stg-general-0"
-	var/list/prefix1 = list("Incredibly", "Strange", "Mysterious", "Suspicious", "Scary")
-	var/list/prefix2 = list("Rare", "Black", "Dark", "Shadowy", "Expensive", "Fun", "Gamer")
-	var/list/names = list("Flower", "Blossom", "Tulip", "Daisy")
+    desc = "Tap this card and sacrifice one Yourself to win the game."
+    icon_state = "stg-general-0"
+    var/list/prefix1 = list("Incredibly", "Strange", "Mysterious", "Suspicious", "Scary")
+    var/list/prefix2 = list("Rare", "Black", "Dark", "Shadowy", "Expensive", "Fun", "Gamer")
+    var/list/names = list("Flower", "Blossom", "Tulip", "Daisy")
 
-	New()
-		..()
-		name = "[pick(prefix1)] [pick(prefix2)] [pick(names)]"
-		update_stored_info()
+    New()
+        ..()
+        name = "[pick(prefix1)] [pick(prefix2)] [pick(names)]"
+        update_stored_info()
 
-	MouseDrop(var/atom/target as obj|mob)
-		..()
-		if(tapped)
-			var/mob/user = usr
-			user.deathConfetti()
-			playsound(user.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50)
-			user.visible_message("<span class='combat'><b>[uppertext(user.name)] WINS THE GAME!</b></span>")
-			if(!foiled)
-				user.take_brain_damage(1000)
-			else
-				user.partygib(1)
+    MouseDrop(var/atom/target as obj|mob)
+        ..()
+        if(tapped)
+            var/mob/user = usr
+            user.deathConfetti()
+            playsound(user.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50)
+            user.visible_message("<span class='combat'><b>[uppertext(user.name)] WINS THE GAME!</b></span>")
+            if(!foiled)
+                user.take_brain_damage(1000)
+            else
+                user.partygib(1)
 
 /obj/item/card_group //since "playing_card"s are singular cards, card_groups handling groups of playing_cards in the form of either a deck or hand
 	name = "deck of cards"
@@ -385,7 +385,10 @@
 			update_card_actions("handself")
 			user.showContextActions(cardActions, src)
 		else //attack_self with deck to shuffle
-			shuffle_list(stored_cards)
+			if (length(stored_cards) < 11)
+				shuffle_list(stored_cards)
+			else
+				riffle_shuffle(stored_cards)
 			user.visible_message("<b>[user.name]</b> shuffles the [src.name].")
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1160,10 +1163,10 @@
 		if(card_box.icon_state == "stg-box")
 			user.visible_message("<span class='green'><b>[user.name]</b> has thoroughly mutilated the StG Preconstructed Deck Box and retrieves the cards from inside.</span>")
 			card_box.icon_state = "stg-box-torn"
-			user.put_in_hand_or_drop(card_box.stored_deck)
 			var/obj/decal/cleanable/generic/decal = make_cleanable(/obj/decal/cleanable/generic,get_turf(user.loc))
 			decal.color = pick("#000000","#6f0a0a","#a0621b")
 			card_box.stored_deck = null
+			user.put_in_hand_or_drop(card_box.stored_deck)
 			card_box.ClearAllOverlays()
 
 /obj/item/stg_booster

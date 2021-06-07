@@ -322,7 +322,7 @@
 		holder = user
 
 /obj/machinery/phone/wall
-	name = "phone"
+	name = "wall phone"
 	icon = 'icons/obj/machines/phones.dmi'
 	desc = "A landline phone. In space. Where there is no land. Hmm."
 	icon_state = "wallphone"

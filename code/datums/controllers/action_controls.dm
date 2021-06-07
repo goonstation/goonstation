@@ -34,6 +34,9 @@ var/datum/action_controller/actions
 		return
 
 	proc/start(var/datum/action/A, var/atom/owner) //Starts a new action.
+		if(!owner)
+			qdel(A)
+			return
 		if(!(owner in running))
 			running.Add(owner)
 			running[owner] = list(A)
