@@ -1,10 +1,13 @@
 #define HAIRCUT 1
 #define SHAVE 2
-#define HAIR_1 1
-#define HAIR_2 2
-#define HAIR_3 3
+
+// hairea options
+#define BOTTOM_DETAIL 1
+#define MIDDLE_DETAIL 2
+#define TOP_DETAIL 3
 #define ALL_HAIR 4
 #define EYES 5
+
 #define HAIR_1_FUCKED 1
 #define HAIR_2_FUCKED 2
 #define HAIR_3_FUCKED 4
@@ -130,12 +133,12 @@
 		src.hair_group = hair_group >= 5 ? 1 : hair_group + 1
 		var/which_part
 		switch (hair_group)
-			if (HAIR_1)
-				which_part = "first group of hair"
-			if (HAIR_2)
+			if (BOTTOM_DETAIL)
+				which_part = "bottom group of hair"
+			if (MIDDLE_DETAIL)
 				which_part = "middle group of hair"
-			if (HAIR_3)
-				which_part = "last group of hair"
+			if (TOP_DETAIL)
+				which_part = "top group of hair"
 			if (ALL_HAIR)
 				which_part = "entire coiffure"
 			if (EYES)
@@ -233,7 +236,7 @@
 
 		if(passed_dye_roll)
 			switch(bottle.hair_group)
-				if(HAIR_1)
+				if(BOTTOM_DETAIL)
 					if(is_barber || prob(60))
 						M.bioHolder.mobAppearance.customization_first_color = bottle.customization_first_color
 					else
@@ -243,7 +246,7 @@
 						else
 							M.bioHolder.mobAppearance.customization_third_color = bottle.customization_first_color
 
-				if(HAIR_2)
+				if(MIDDLE_DETAIL)
 					if(is_barber || prob(60))
 						M.bioHolder.mobAppearance.customization_second_color = bottle.customization_first_color
 					else
@@ -253,7 +256,7 @@
 						else
 							M.bioHolder.mobAppearance.customization_third_color = bottle.customization_first_color
 
-				if(HAIR_3)
+				if(TOP_DETAIL)
 					if(is_barber || prob(60))
 						M.bioHolder.mobAppearance.customization_third_color = bottle.customization_first_color
 					else
@@ -278,7 +281,7 @@
 					result_msg2 ="<span class='notice'>You dump the [src] in [M]'s eyes.</span>"
 					result_msg3 ="<span class='alert'>[user] dumps the [src] into your eyes!</span>"
 					if(user.mind.assigned_role == "Barber")
-						SPAWN_DBG(20)
+						SPAWN_DBG(2 SECONDS)
 							boutput(M, "Huh, that actually didn't hurt that much. What a great [pick("barber", "stylist", "bangmangler")]!")
 					else
 						M.emote("scream", 0)
@@ -426,9 +429,9 @@
 
 // Barber stuff
 
-#undef HAIR_1
-#undef HAIR_2
-#undef HAIR_3
+#undef BOTTOM_DETAIL
+#undef MIDDLE_DETAIL
+#undef TOP_DETAIL
 #undef ALL_HAIR
 #undef EYES
 #undef HAIR_1_FUCKED
