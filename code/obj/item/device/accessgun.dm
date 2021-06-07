@@ -185,22 +185,27 @@
 	New()
 		scanned_access = list()
 		req_access = list()
+		. = ..()
 
 	afterattack(obj/target, mob/user, reach, params)
 		var/obj/machinery/door/airlock/door_reqs = target
-		if(istype(door_reqs) && (target.deconstruct_flags & DECON_BUILT))
-			if (!isnull(scanned_access))
-				boutput(user, "<span class='notice'>[src] has no access requirements loaded!</span>"
-			if (!length(door_reqs.req_access))
-				. = ..()
-			else
-				boutput(user, "<span class='notice'>[src] cannot reprogram [door_reqs.name], access requirements already set.</span>")
-		else if (istype(door_reqs))
-			scanned_access = door_reqs.req_access
-			icon_state = "accessgun-x"
-			boutput(user, "<span class='notice'>[src] scans the access requirements of [door_reqs.name].</span>")
-		else
+		if (!istype(door_reqs))
 			. = ..()
+			return
+		if(target.deconstruct_flags & DECON_BUILT)
+			if (isnull(scanned_access))
+				boutput(user, "<span class='notice'>[src] has no access requirements loaded!</span>")
+				return
+			if (length(door_reqs.req_access))
+				boutput(user, "<span class='notice'>[src] cannot reprogram [door_reqs.name], access requirements already set.</span>")
+				return
+			. = ..()
+			return
+
+		scanned_access = door_reqs.req_access
+		icon_state = "accessgun-x"
+		boutput(user, "<span class='notice'>[src] scans the access requirements of [door_reqs.name].</span>")
+
 
 	reprogram(obj/O,mob/user)
 		if (!isnull(scanned_access))
