@@ -105,7 +105,7 @@
 			boutput(user, "Never mind.")
 			return
 
-		if(which_part != ALL_HAIR)
+		if(region[which_part] != ALL_HAIR)
 			var/list/customization_types = concrete_typesof(/datum/customization_style)-concrete_typesof(/datum/customization_style/biological)
 			var/new_style = select_custom_style(customization_types, user)
 
@@ -178,7 +178,7 @@
 			boutput(user, "Never mind.")
 			return
 
-		if (which_part != ALL_HAIR)
+		if (region[which_part] != ALL_HAIR)
 			var/list/facehair = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + /datum/customization_style/none
 			var/new_style = select_custom_style(facehair, user)
 
