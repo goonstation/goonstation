@@ -1024,7 +1024,7 @@
 				src.colored = TRUE
 				desc = "A colored banner, try adding some drawings to it with a crayon!"
 
-		if(istool(W,TOOL_SNIPPING| TOOL_CUTTING | TOOL_SAWING))
+		if(istool(W,TOOL_SNIPPING | TOOL_CUTTING | TOOL_SAWING))
 			user.visible_message("<span class='notice'>[user] cuts off [src] with [W].</span>")
 			var/obj/item/material_piece/cloth/C = new(user.loc)
 			if(src.material) C.setMaterial(src.material)
