@@ -1,5 +1,9 @@
 
 (t)mon jun 07 21
+(u)Gannets
+(p)5057
+(e)🗺|mapping
+(+)Added a pill bottle of mutadone to the Cairngorm medbay.
 (u)Superlagg
 (p)4712
 (e)🐛🆕|bug, feature
