@@ -177,7 +177,7 @@
 
 /obj/item/device/accessgun/lite
 	name = "Access Lite"
-	desc = "A device that sets the access requirments of newly constructed airlocks to one scanned from an existing airlock."
+	desc = "A device that sets the access requirments of newly constructed airlocks to ones scanned from an existing airlock."
 	req_access = null
 	ID_card = 1
 	var/list/scanned_access = null
