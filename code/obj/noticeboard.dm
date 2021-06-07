@@ -31,7 +31,7 @@
 
 
 /obj/noticeboard/proc/update_icon()
-	src.icon_state = "nboard0[min(src.notices,5)]"
+	src.icon_state = "nboard0[min(src.notices, 5)]"
 
 
 /obj/noticeboard/attack_hand(mob/user as mob)
