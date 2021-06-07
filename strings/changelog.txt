@@ -1,6 +1,10 @@
 
 (t)mon jun 07 21
 (u)Superlagg
+(p)4712
+(e)🐛🆕|bug, feature
+(+)Securitrons locked or welded into a locker can no longer attack people. They aren't happy about this, though.
+(u)Superlagg
 (p)3747
 (e)🆕|feature
 (+)Most targetable emotes now bring up a menu of valid targets.
