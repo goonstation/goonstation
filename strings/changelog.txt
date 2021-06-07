@@ -1,5 +1,9 @@
 
 (t)mon jun 07 21
+(u)Superlagg
+(p)3747
+(e)🆕|feature
+(+)Most targetable emotes now bring up a menu of valid targets.
 (u)Carbadox
 (p)5042
 (e)|
