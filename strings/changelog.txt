@@ -1,5 +1,9 @@
 
 (t)mon jun 07 21
+(u)Carbadox
+(p)5042
+(e)|
+(+)Raises the limit of posts on the notice board from 5 to 15. Now you can leave even more notes for your space friends, without fighting for advertising space. Hopefully.
 (u)112358sam
 (p)5046
 (e)🐛|bug
