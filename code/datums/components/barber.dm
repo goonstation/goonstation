@@ -124,6 +124,7 @@
 
 	var/non_murderous_failure = 0
 	var/mob/living/carbon/human/H = M
+	var/datum/appearanceHolder/AH = M.bioHolder.mobAppearance
 	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
 		boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
