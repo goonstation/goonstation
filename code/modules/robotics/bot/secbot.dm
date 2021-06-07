@@ -751,11 +751,10 @@
 			if(C.locked || C.welded)
 				src.weeoo()
 				if(prob(50 + (src.emagged * 15)))
-					SPAWN_DBG(0)
-						for(var/mob/M in hearers(C, null))
-							M.show_text("<font size=[max(0, 5 - get_dist(get_turf(src), M))]>THUD, thud!</font>")
-						playsound(get_turf(C), "sound/impact_sounds/Wood_Hit_1.ogg", 15, 1, -3)
-						animate_storage_thump(C)
+					for(var/mob/M in hearers(C, null))
+						M.show_text("<font size=[max(0, 5 - get_dist(get_turf(src), M))]>THUD, thud!</font>")
+					playsound(C, "sound/impact_sounds/Wood_Hit_1.ogg", 15, 1, -3)
+					animate_storage_thump(C)
 				src.container_cool_off_counter++
 				if(src.container_cool_off_counter >= src.container_cool_off_max) // Give him some time to cool off
 					src.KillPathAndGiveUp(kpagu)
@@ -879,7 +878,7 @@
 				src.speak("PREPARE FOR JUSTICE.")
 			if('sound/voice/bfreeze.ogg')
 				src.speak("FREEZE. SCUMBAG.")
-		playsound(get_turf(src), saything, 50, 0)
+		playsound(src, saything, 50, 0)
 
 	proc/weeoo()
 		if(weeooing)
@@ -887,7 +886,7 @@
 		SPAWN_DBG(0)
 			weeooing = 1
 			var/weeoo = 10
-			playsound(get_turf(src), "sound/machines/siren_police.ogg", 50, 1)
+			playsound(src, "sound/machines/siren_police.ogg", 50, 1)
 			while (weeoo)
 				add_simple_light("secbot", list(255 * 0.9, 255 * 0.1, 255 * 0.1, 0.8 * 255))
 				sleep(0.3 SECONDS)
