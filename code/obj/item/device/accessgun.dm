@@ -9,7 +9,6 @@
 	flags = FPRINT | TABLEPASS | ONBELT
 	mats = 14
 	var/obj/item/card/id/ID_card = null
-	var/list/scanned_access = list()
 	req_access = list(access_change_ids,access_engineering_chief)
 	var/mode = 0 //0 AND, 1 OR
 
@@ -178,11 +177,37 @@
 
 /obj/item/device/accessgun/meh
 	name = "Access Lite"
+	desc = "A device that sets the access requirments of newly constructed airlocks to one scanned from an existing airlock."
 	req_access = list()
+	ID_card = 1
+	var/list/scanned_access = list()
+
 	afterattack(obj/target, mob/user, reach, params)
 		var/obj/machinery/door/airlock/door_reqs = target
-		if(istype(door_reqs)target.deconstruct_flags & DECON_BUILT)
-			. = ..()
+		if(istype(door_reqs) && (target.deconstruct_flags & DECON_BUILT))
+			if (!length(door_reqs.req_access))
+				. = ..()
+			else
+				boutput(user, "<span class='notice'>[src] cannot reprogram [door_reqs.name], access requirements already set.</span>")
+		else if (istype(door_reqs))
+			scanned_access = door_reqs.req_access
+			icon_state = "accessgun-x"
+			boutput(user, "<span class='notice'>[src] scans the access requirements of [door_reqs.name].</span>")
 		else
+			. = ..()
 
-			boutput(user, "<span class='notice'>[src] cannot burn programmed doors.</span>")
+	reprogram(var/obj/O,var/mob/user)
+		if (!isnull(scanned_access))
+			O.set_access_list(scanned_access)
+		playsound(src, "sound/machines/reprog.ogg", 70, 1)
+
+	attackby(obj/item/C as obj, mob/user as mob)
+		if (istype(C, /obj/item/card/id))
+			return
+		. = ..()
+
+	attack_self(mob/user as mob)
+		boutput(user, "<span class='notice'>You clear the access requirements loaded in the [src]</span>")
+		scanned_access = null
+		icon_state = initial(icon_state)
+		return
