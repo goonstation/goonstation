@@ -93,10 +93,11 @@
 			return 0
 
 	SPAWN_DBG(0)
-		var/list/region = list("Bottom Hairea" = BOTTOM_DETAIL, "Middle Hairea" = MIDDLE_DETAIL, "Top Hairea" = TOP_DETAIL, "Full Shave" = ALL_HAIR)
-		region[BOTTOM_DETAIL] += " ([M.bioHolder.mobAppearance.customization_first.name])"
-		region[MIDDLE_DETAIL] += " ([M.bioHolder.mobAppearance.customization_second.name])"
-		region[TOP_DETAIL] += " ([M.bioHolder.mobAppearance.customization_third.name])"
+		var/list/region = list(
+			"Bottom Hairea ([M.bioHolder.mobAppearance.customization_first.name])" = BOTTOM_DETAIL,
+			"Middle Hairea ([M.bioHolder.mobAppearance.customization_second.name])" = MIDDLE_DETAIL,
+			"Top Hairea ([M.bioHolder.mobAppearance.customization_third.name])" = TOP_DETAIL,
+			"Create Wig" = ALL_HAIR)
 
 		var/which_part = input(user, "Which clump of hair?", "Clump") as null|anything in region
 
@@ -112,9 +113,9 @@
 				boutput(user, "Never mind.") // So I guess it'll be on the honor system for now not to give balding folk rockin' 'fros
 				return
 
-			actions.start(new/datum/action/bar/barber/haircut(M, user, get_barbery_conditions(M, user), new_style, which_part), user)
+			actions.start(new/datum/action/bar/barber/haircut(M, user, get_barbery_conditions(M, user), new_style, region[which_part]), user)
 		else
-			actions.start(new/datum/action/bar/barber/haircut(M, user, get_barbery_conditions(M, user), null, which_part), user)
+			actions.start(new/datum/action/bar/barber/haircut(M, user, get_barbery_conditions(M, user), null, region[which_part]), user)
 	return ATTACK_PRE_DONT_ATTACK
 
 /datum/component/barber/proc/do_shave(var/obj/item/thing, mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
@@ -165,10 +166,11 @@
 
 	SPAWN_DBG(0)
 
-		var/list/region = list("Bottom Hairea" = 1, "Middle Hairea" = 2, "Top Hairea" = 3, "Full Shave" = 4)
-		region[1] += " ([M.bioHolder.mobAppearance.customization_first.name])"
-		region[2] += " ([M.bioHolder.mobAppearance.customization_second.name])"
-		region[3] += " ([M.bioHolder.mobAppearance.customization_third.name])"
+		var/list/region = list(
+			"Bottom Hairea ([M.bioHolder.mobAppearance.customization_first.name])" = BOTTOM_DETAIL,
+			"Middle Hairea ([M.bioHolder.mobAppearance.customization_second.name])" = MIDDLE_DETAIL,
+			"Top Hairea ([M.bioHolder.mobAppearance.customization_third.name])" = TOP_DETAIL,
+			"Create Wig" = ALL_HAIR)
 
 		var/which_part = input(user, "Which clump of hair?", "Clump") as null|anything in region
 
@@ -176,13 +178,16 @@
 			boutput(user, "Never mind.")
 			return
 
-		var/list/facehair = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + /datum/customization_style/none
-		var/new_style = select_custom_style(facehair, user)
+		if (which_part != ALL_HAIR)
+			var/list/facehair = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + /datum/customization_style/none
+			var/new_style = select_custom_style(facehair, user)
 
-		if (!new_style) // otherwise it alternates between non-functional and fucking useless
-			boutput(user, "Never mind.")
-			return
-		actions.start(new/datum/action/bar/barber/shave(M, user, get_barbery_conditions(M, user), new_style, region[which_part]), user)
+			if (!new_style) // otherwise it alternates between non-functional and fucking useless
+				boutput(user, "Never mind.")
+				return
+			actions.start(new/datum/action/bar/barber/shave(M, user, get_barbery_conditions(M, user), new_style, region[which_part]), user)
+		else
+			actions.start(new/datum/action/bar/barber/shave(M, user, get_barbery_conditions(M, user), null, region[which_part]), user)
 
 	return ATTACK_PRE_DONT_ATTACK
 
