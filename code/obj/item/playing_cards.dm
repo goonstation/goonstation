@@ -1132,7 +1132,7 @@
 	duration = 10 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	var/mob/user
-	var/obj/item/box
+	var/obj/item/card_box/card_box
 	var/list/messages = list("brutally hacks at the package's exterior with a sharp object!",
 	"desperately slashes a sharp object against the exterior of the StG Preconstructed Deck Box!",
 	"becomes a blinding blur of motion as they send bits of cardboard packaging into the air like grotesque confetti!",
@@ -1140,7 +1140,7 @@
 
 	New(User, Box)
 		user = User
-		box = Box
+		card_box = Box
 		..()
 
 	onStart()
@@ -1149,7 +1149,7 @@
 
 	onUpdate()
 		..()
-		if(box.loc != user)
+		if(card_box.loc != user)
 			user.show_text("You need to hold the box if you want enough leverage to rip it to pieces!","red")
 			interrupt(INTERRUPT_ALWAYS)
 		if(!istool(user.equipped(),TOOL_CUTTING) && !istool(user.equipped(),TOOL_SNIPPING))
@@ -1157,14 +1157,14 @@
 
 	onEnd()
 		..()
-		if(box.icon_state == "stg-box")
+		if(card_box.icon_state == "stg-box")
 			user.visible_message("<span class='green'><b>[user.name]</b> has thoroughly mutilated the StG Preconstructed Deck Box and retrieves the cards from inside.</span>")
-			box.icon_state = "stg-box-torn"
-			user.put_in_hand_or_drop(box.stored_deck)
+			card_box.icon_state = "stg-box-torn"
+			user.put_in_hand_or_drop(card_box.stored_deck)
 			var/obj/decal/cleanable/generic/decal = make_cleanable(/obj/decal/cleanable/generic,get_turf(user.loc))
 			decal.color = pick("#000000","#6f0a0a","#a0621b")
-			box.stored_deck = null
-			box.ClearAllOverlays()
+			card_box.stored_deck = null
+			card_box.ClearAllOverlays()
 
 /obj/item/stg_booster
 	name = "StG Booster Pack"
