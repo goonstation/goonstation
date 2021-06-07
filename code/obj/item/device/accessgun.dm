@@ -185,6 +185,8 @@
 	afterattack(obj/target, mob/user, reach, params)
 		var/obj/machinery/door/airlock/door_reqs = target
 		if(istype(door_reqs) && (target.deconstruct_flags & DECON_BUILT))
+			if (!isnull(scanned_access))
+				boutput(user, "<span class='notice'>[src] has no access requirements loaded!</span>"
 			if (!length(door_reqs.req_access))
 				. = ..()
 			else
