@@ -300,7 +300,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		req_access = list(access_medical)
 
 /obj/machinery/door/airlock/classic
-	name = "classic airlock"
+	name = "large airlock"
 	icon = 'icons/obj/doors/Doorclassic.dmi'
 	sound_airlock = 'sound/machines/airlock.ogg'
 	operation_time = 10
