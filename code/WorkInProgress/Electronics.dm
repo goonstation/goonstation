@@ -510,7 +510,7 @@
 
 /obj/machinery/rkit/proc/send_sync(var/dispose) //Request SYNCREPLY from other rucks
 	//If dispose is true we use "DROP" which won't be saved as the host
-	SPAWN_DBG(rand(0, 5)) //Keep these out of sync a little, less spammy
+	SPAWN_DBG(rand(5, 10)) //Keep these out of sync a little, less spammy
 		if(isnull(boot_time)) boot_time = world.time
 		host_ruck = src.net_id //We're the host until someone else proves they are
 		var/datum/signal/newsignal = get_free_signal()
@@ -554,6 +554,24 @@
 		newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
 		newsignal.data["sender"] = src.net_id
 		pda.post_signal(src, newsignal)
+
+/obj/machinery/rkit/proc/transfer_database(target)
+	//If we have a database of items, and we're the host, and we see a new ruck
+	//Upload our database to it
+	var/datum/computer/file/electronics_bundle/rkitFile = new
+	rkitFile.ruckData = ruck_controls
+	rkitFile.target = target
+	SPAWN_DBG(0.5 SECONDS)
+		var/datum/signal/newsignal = get_free_signal()
+		newsignal.source = src
+		newsignal.transmission_method = TRANSMISSION_RADIO
+		newsignal.data["command"] = "UPLOAD"
+		newsignal.data["address_1"] = target
+		newsignal.data["sender"] = src.net_id
+		newsignal.data_file = rkitFile
+		radio_connection.post_signal(src, newsignal)
+	known_rucks |= target
+	send_sync()
 
 //Run this if there's a file and return
 //This will either work, or you rejected a signal that had a file it didn't need
@@ -638,6 +656,10 @@
 			return
 
 		if(command == "SYNCREPLY" && target)
+			if(length(ruck_controls.scanned_items) && src.net_id == host_ruck && !(target in known_rucks))
+				transfer_database(target)
+				return
+			known_rucks |= target
 			if (target > host_ruck) //pick the highest net_id
 				host_ruck = target
 				//Wait we're done here?
@@ -650,20 +672,7 @@
 			if(length(ruck_controls.scanned_items) && src.net_id == host_ruck && !(target in known_rucks))
 				//If we have a database of items, and we're the host, and we see a new ruck
 				//Upload our database to it
-				var/datum/computer/file/electronics_bundle/rkitFile = new
-				rkitFile.ruckData = ruck_controls
-				rkitFile.target = target
-				SPAWN_DBG(0.5 SECONDS)
-					var/datum/signal/newsignal = get_free_signal()
-					newsignal.source = src
-					newsignal.transmission_method = TRANSMISSION_RADIO
-					newsignal.data["command"] = "UPLOAD"
-					newsignal.data["address_1"] = target
-					newsignal.data["sender"] = src.net_id
-					newsignal.data_file = rkitFile
-					radio_connection.post_signal(src, newsignal)
-				known_rucks |= target
-				send_sync()
+				transfer_database(target)
 				return
 
 			known_rucks |= target
