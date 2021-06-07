@@ -1026,6 +1026,23 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 		ammo.amount_left = 0
 		update_icon()
+
+/obj/item/gun/kinetic/pistol/smart/mkII
+	name = "\improper Hydra smart pistol"
+	desc = "A pistol capable of locking onto multiple targets and firing on them in rapid sequence. \"Anderson Para-Munitions\" is engraved on the slide."
+	icon_state = "smartgun"
+	max_ammo_capacity = 30
+
+	New()
+		..()
+		ammo = new/obj/item/ammo/bullets/bullet_9mm/smartgun
+		set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smartgun)
+		AddComponent(/datum/component/holdertargeting/smartgun/nukeop, 3)
+
+
+/datum/component/holdertargeting/smartgun/nukeop/is_valid_target(mob/user, mob/M)
+	return ..() && !istype(M.get_id(), /obj/item/card/id/syndicate)
+
 /obj/item/gun/kinetic/smg
 	name = "Bellatrix submachine gun"
 	desc = "A semi-automatic, 9mm submachine gun, developed by Almagest Weapons Fabrication."
