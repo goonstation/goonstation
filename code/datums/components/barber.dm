@@ -153,6 +153,9 @@
 			M.organHolder.head.update_icon()
 		return ATTACK_PRE_DONT_ATTACK // gottem
 
+	if(istype(AH.customization_first,/datum/customization_style/none) && istype(AH.customization_second,/datum/customization_style/none) && istype(AH.customization_third,/datum/customization_style/none))
+		boutput(user, "<span class='alert'>There is nothing to cut!</span>")
+		non_murderous_failure = BARBERY_FAILURE
 
 	if(!mutant_barber_fluff(M, user, "shave"))
 		non_murderous_failure = BARBERY_FAILURE
