@@ -169,7 +169,7 @@ datum
 			if(X == "type" || X == "parent_type" || X == "tag" || X == "vars" || X == "properties") continue
 
 			if(X in triggerVars)
-				M.vars[X] = getFusedTriggers(base.vars[X], list()) //Pass in an empty list to basically copy the first one.
+				M.vars[X] = getFusedTriggers(base.vars[X], list(), M) //Pass in an empty list to basically copy the first one.
 			else
 				if(M.vars.Find(X))
 					if(istype(base.vars[X],/list))
