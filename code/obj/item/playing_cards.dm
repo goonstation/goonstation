@@ -1191,3 +1191,40 @@
 			stored_deck = null
 		else
 			..()
+
+/* Realistic Shuffling Ahoy! */
+
+// The chance to pull another card from the same stack as opposed to switching,
+// so the "stickyness" of the cards.
+#define CARD_STICK_FACTOR 0.5
+
+// Simulates a riffle shuffle using a markovian model.
+// Why? Fuck it, I have no idea.
+proc/riffle_shuffle(list/deck)
+	// Determines a location near the center of the deck to split from.
+	var/splitLoc = (deck.len / 2) + rand(-deck.len / 5, deck.len / 5)
+
+	// Makes two lists, one for each half of the deck, then clears the original deck.
+	var/list/D1 = deck.Copy(1, splitLoc)
+	var/list/D2 = deck.Copy(splitLoc)
+	deck.len = 0 // Will this work?
+
+	// Markovian model of the shuffle
+	var/currentStack = rand() > 0.5
+	while(D1.len > 0 && D2.len > 0)
+		var/item
+
+		if(currentStack)
+			item = D1[1]
+			D1 -= item
+		else
+			item = D2[1]
+			D2 -= item
+
+		deck += item
+		if(rand() > CARD_STICK_FACTOR)
+			currentStack = !currentStack
+
+	// One of these will always be empty but I'm too lazy to check which is which.
+	deck += D1
+	deck += D2
