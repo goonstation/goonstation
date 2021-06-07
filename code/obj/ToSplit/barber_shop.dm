@@ -236,9 +236,7 @@
 
 		if(passed_dye_roll)
 			switch(bottle.hair_group)
-				if(BOTTOM_DETAIL)
-				if(MIDDLE_DETAIL)
-				if(TOP_DETAIL)
+				if(BOTTOM_DETAIL, MIDDLE_DETAIL, TOP_DETAIL)
 					if(!is_barber && prob(25))
 						boutput(M, "<span class='alert'>Oh no, you dyed the wrong thing!</span> Maybe they won't notice?")
 						bottle.hair_group = pick(list(BOTTOM_DETAIL, MIDDLE_DETAIL, TOP_DETAIL) - bottle.hair_group)
