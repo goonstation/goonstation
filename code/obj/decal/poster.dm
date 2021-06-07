@@ -1036,6 +1036,6 @@
 		if (usr.stat || usr.restrained() || !can_reach(usr, src))
 			return
 
-		else if(tgui_alert(usr, "Are you sure you want to clear the banner?","Confirmation",list("Yes","No")) == "Yes")
+		else if(tgui_alert(usr, "Are you sure you want to clear the banner?", "Confirmation", list("Yes", "No")) == "Yes")
 			clear()
 		else return
