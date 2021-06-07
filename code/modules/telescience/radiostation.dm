@@ -527,6 +527,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 		..()
 		src.UpdateOverlays(new /image(src.icon, "record_6"), "recordlabel") //it should always be green because I'm so funny.
 
+ABSTRACT_TYPE(/obj/item/record/random/metal)
 /obj/item/record/random/metal
 	New()
 		. = ..()
@@ -547,6 +548,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	record_name = "Plasmageddon"
 	song = "sound/radio_station/music/maxi.ogg"
 
+ABSTRACT_TYPE(/obj/item/record/random/funk)
 /obj/item/record/random/funk
 	New()
 		. = ..()

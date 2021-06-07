@@ -1,4 +1,18 @@
 
+(t)mon jun 07 21
+(u)Jan.antilles
+(p)5056
+(e)|
+(+)Touching an artifact with your own robotic arm counts as a silicon touch.
+(u)112358sam
+(p)5040
+(e)|
+(+)Metal arms no longer bleed when picking up a rose.
+(t)sun jun 06 21
+(u)112358sam
+(p)5038
+(e)🐛|bug
+(+)Prevents cyborgs repairing at docking station when out of materials.
 (t)sat jun 05 21
 (u)Emily
 (e)🆕|feature
