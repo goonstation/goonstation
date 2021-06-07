@@ -62397,6 +62397,7 @@
 /obj/item/reagent_containers/glass/beaker/large/antitox,
 /obj/item/reagent_containers/glass/beaker/large/epinephrine,
 /obj/item/clothing/gloves/latex,
+/obj/item/storage/pill_bottle/mutadone,
 /turf/unsimulated/floor/redwhite{
 	dir = 8
 	},
