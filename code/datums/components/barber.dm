@@ -565,7 +565,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 	cutting = "cutting"
 
 	getHairStyles()
-		return concrete_typesof(/datum/customization_style)-concrete_typesof(/datum/customization_style/biological)
+		return concrete_typesof(/datum/customization_style/hair) + concrete_typesof(/datum/customization_style/eyebrows)
 
 /datum/action/bar/barber/shave
 	id = "shave"
