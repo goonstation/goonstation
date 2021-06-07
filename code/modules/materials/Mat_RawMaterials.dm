@@ -178,7 +178,7 @@
 				return ..()
 
 		afterattack(turf/simulated/A, mob/user)
-			if(locate(/obj/decal/poster/banner,A))
+			if(locate(/obj/decal/poster/banner, A))
 				return
 			else if(istype(A, /turf/simulated/wall/))
 				var/obj/decal/poster/banner/B = new(A)
