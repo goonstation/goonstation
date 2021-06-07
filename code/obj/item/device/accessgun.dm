@@ -216,4 +216,3 @@
 		boutput(user, "<span class='notice'>You clear the access requirements loaded in the [src]</span>")
 		scanned_access = null
 		icon_state = initial(icon_state)
-		return
