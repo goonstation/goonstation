@@ -666,6 +666,7 @@
 				send_sync()
 				return
 
+			known_rucks |= target
 			//Got a sync time to reset this to ourselves
 			host_ruck = src.net_id //We're the master!
 			if (target > host_ruck && command == "SYNC") //Unless they are
