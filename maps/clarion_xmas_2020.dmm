@@ -15297,12 +15297,12 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/milk,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aBw" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/breadloaf,
-/obj/item/reagent_containers/glass/bottle/icing,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aBx" = (
@@ -24710,9 +24710,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/redwhite{
-	dir = 6
-	},
+/turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "aTy" = (
 /obj/cable{
@@ -24793,18 +24791,14 @@
 	location = "tour13";
 	name = "tour beacon - medbay"
 	},
-/turf/simulated/floor/redwhite{
-	dir = 10
-	},
+/turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "aTD" = (
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/redwhite{
-	dir = 5
-	},
+/turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "aTE" = (
 /obj/cable{
@@ -25627,9 +25621,7 @@
 	location = "medbay_lobby";
 	name = "bot navigation beacon"
 	},
-/turf/simulated/floor/redwhite{
-	dir = 9
-	},
+/turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "aVc" = (
 /obj/disposalpipe/segment{
@@ -39230,7 +39222,7 @@
 	layer = 3.5;
 	pixel_y = 24
 	},
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;

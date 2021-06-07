@@ -12,4 +12,4 @@
 /datum/robot_cosmetic/engineering
 	fx = list(255, 255, 0)
 	painted = 1
-	paint = list(130, 150, 0)
+	paint = "#829600"

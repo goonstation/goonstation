@@ -1,4 +1,43 @@
 
+(t)mon jun 07 21
+(u)Jan.antilles
+(p)5056
+(e)|
+(+)Touching an artifact with your own robotic arm counts as a silicon touch.
+(u)112358sam
+(p)5040
+(e)|
+(+)Metal arms no longer bleed when picking up a rose.
+(t)sun jun 06 21
+(u)112358sam
+(p)5038
+(e)🐛|bug
+(+)Prevents cyborgs repairing at docking station when out of materials.
+(t)sat jun 05 21
+(u)Emily
+(e)🆕|feature
+(*)Four New Chicken Breeds! See Minor Changes for hints!
+(+)Onagadori; Japanese long-tailed chickens. Peanut feed. [Gen 1] [From White Chickens]
+(+)Shieldmaidhens; these armored chickens need a high-iron diet to maintain their natural armor. [Gen 2] [From Onagadori]
+(+)Phoenix; Love will set your heart on fire. Try breeding two appropriate chickens! [Gen 3]
+(+)Dreamsicle Chickens; Sweet ice cream. Try breeding two appropriate chickens! [Gen 3] 
+(u)112358sam
+(p)5027
+(e)|
+(+)Fixes borgs dropping items on the material processor.
+(t)fri jun 04 21
+(u)Asche
+(p)4984
+(e)⚖🆕|balance, feature
+(+)You can now (usually) pull people out of cyborg converter artifacts to save them. The conversion process has also been made a bit more... gradual.
+(u)BatElite
+(p)4994
+(e)🆕|feature
+(+)The Detgadget hat will now automatically light requested cigarettes if it can, so you can continue punching crime and drinking uninterrupted.
+(u)Tarmunora
+(e)⚖|balance
+(+)Booster enzyme now produces some harmless but slow-depleting leftovers when replicating chemicals.
+(+)milk + vinegar -> cheese
 (t)thu jun 03 21
 (u)Jan.antilles
 (p)4889

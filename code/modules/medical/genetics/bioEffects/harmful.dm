@@ -209,7 +209,7 @@
 			return
 		if (probmult(1) && !owner.getStatusDuration("paralysis"))
 			owner:visible_message("<span class='alert'><B>[owner] looks totally stupefied!</span>", "<span class='alert'>You feel totally stupefied!</span>")
-			owner.setStatus("paralysis", max(owner.getStatusDuration("paralysis"), 20))
+			owner.setStatus("paralysis", max(owner.getStatusDuration("paralysis"), 2 SECONDS))
 		return
 
 /datum/bioEffect/thermal_vuln

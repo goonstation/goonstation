@@ -716,9 +716,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		HS.addAbility(/datum/targetable/santa/banish)
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customization_first = "Balding"
-		bioHolder.mobAppearance.customization_second = "Full Beard"
-		bioHolder.mobAppearance.customization_third = "Eyebrows"
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/short/balding
+		bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/fullbeard
+		bioHolder.mobAppearance.customization_third = new /datum/customization_style/eyebrows/eyebrows
 		bioHolder.mobAppearance.customization_first_color = "#FFFFFF"
 		bioHolder.mobAppearance.customization_second_color = "#FFFFFF"
 		bioHolder.mobAppearance.customization_third_color = "#FFFFFF"
@@ -924,9 +924,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		bioHolder.AddEffect("cold_resist")
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customization_first = "None"
-		bioHolder.mobAppearance.customization_second = "None"
-		bioHolder.mobAppearance.customization_third = "None"
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+		bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+		bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 		. = ..()
 
 

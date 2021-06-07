@@ -210,7 +210,7 @@ datum
 								else if (ethanol_amt >= 40 && prob(ethanol_amt/2))
 									HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
 //inc_alcohol_metabolized()
-//bunch of extra logic for dumb stat tracking. This is copy pasted from proc/how_many_depletions() in Chemistry-Reagents.dm									
+//bunch of extra logic for dumb stat tracking. This is copy pasted from proc/how_many_depletions() in Chemistry-Reagents.dm
 #if defined(MAP_OVERRIDE_POD_WARS)
 						var/amt_of_alcohol_metabolized = depletion_rate
 						if (H.traitHolder?.hasTrait("slowmetabolism")) //fuck
@@ -296,8 +296,8 @@ datum
 						make_cleanable(/obj/decal/cleanable/vomit,M.loc)
 						M.nutrition -= rand(3,5)
 						M.take_toxin_damage(10) // im bad
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 30))
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 30))
+						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS))
+						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 3 SECONDS))
 
 		lithium
 			name = "lithium"

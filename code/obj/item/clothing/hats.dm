@@ -339,6 +339,10 @@
 						M.put_in_hand_or_drop(W) //Put it in their hand
 
 					M.visible_message("<span class='alert'><b>[M]</b>'s hat snaps open and puts \the [W] in [his_or_her(M)] [boop]!</span>")
+					var/obj/item/device/light/zippo/lighter = (locate(/obj/item/device/light/zippo) in src.contents)
+					if (lighter)
+						W.light(M, "<span class='alert'><b>[M]</b>'s hat proceeds to light \the [W] with \the [lighter], whoa.</span>")
+						lighter.firesource_interact()
 			else
 				M.show_text("Requested object missing or nonexistant!", "red")
 				return
