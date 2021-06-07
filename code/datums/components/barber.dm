@@ -4,6 +4,12 @@
 #define TOOLMODE_DEACTIVATED SOUTH // points the thing to its default direction when not-tool
 #define TOOLMODE_ACTIVATED WEST // flips around the grip to point this way when tool
 
+// hairea options
+#define BOTTOM_DETAIL 1
+#define MIDDLE_DETAIL 2
+#define TOP_DETAIL 3
+#define ALL_HAIR 4
+
 /datum/component/toggle_tool_use
 /datum/component/toggle_tool_use/Initialize()
 	if(!istype(parent, /obj/item))
@@ -616,3 +622,8 @@
 #undef BARBERY_FAILURE
 #undef TOOLMODE_DEACTIVATED
 #undef TOOLMODE_ACTIVATED
+
+#undef BOTTOM_DETAIL
+#undef MIDDLE_DETAIL
+#undef TOP_DETAIL
+#undef ALL_HAIR
