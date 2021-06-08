@@ -374,7 +374,7 @@
 	var/list/stored_cards = list()
 
 	attack_hand(mob/user as mob)
-		if(!is_hand && (isturf(src.loc) || src.loc == user)) //handling the player interacting with a deck of cards with an empty hand
+		if(!is_hand) //handling the player interacting with a deck of cards with an empty hand
 			update_card_actions("empty")
 			user.showContextActions(cardActions, src)
 		else
