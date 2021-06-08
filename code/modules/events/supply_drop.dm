@@ -48,7 +48,7 @@
 
 /obj/effect/supplydrop
 	name = "supply drop"
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "lootdrop"
 	density = 0
 	anchored = 1

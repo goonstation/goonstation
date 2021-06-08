@@ -317,7 +317,7 @@
 /obj/storage/closet/mantacontainerred
 	name = "shipping container"
 	desc = "It's a shipping container, they are frequently used to ship different goods securely across oceans."
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "mantacontainerleft"
 	icon_closed = "mantacontainerleft"
 	icon_opened = "mantacontainerleft-open"
@@ -489,7 +489,7 @@
 /obj/storage/closet/mantacontainerred/right
 	name = "shipping container"
 	desc = "It's a shipping container, they are frequently used to ship different goods securely across oceans."
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_closed = "mantacontainerright"
 	icon_state = "mantacontainerright"
 	icon_opened = "mantacontainerright-open"

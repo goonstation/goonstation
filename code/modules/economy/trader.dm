@@ -1295,7 +1295,7 @@
 		pickupdialoguefailure = "<i>A hand sticking out from a toilet flails around for a bit.</i>"
 
 /obj/npc/trader/twins
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "twins"
 	picture = "twins.png"
 	name = "Carol and Lynn"

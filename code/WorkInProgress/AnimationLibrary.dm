@@ -1220,7 +1220,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 
 /obj/heavenly_light
-	icon = 'icons/obj/32x192.dmi'
+	icon = 'icons/obj/large/32x192.dmi'
 	icon_state = "heavenlight"
 	layer = EFFECTS_LAYER
 	blend_mode = BLEND_ADD

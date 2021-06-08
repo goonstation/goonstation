@@ -631,7 +631,7 @@
 		desc = "A nearby Earthlike moon orbiting the gas giant. The stormy, humid atmosphere is quite breathable and the surface has been extensively seeded by terraforming efforts."
 
 	x4
-		icon = 'icons/obj/160x160.dmi'
+		icon = 'icons/obj/large/160x160.dmi'
 		icon_state = "bigasteroid_1"
 		name = "X4"
 		desc = "A jagged little moonlet or a really big asteroid. It's fairly close to your orbit, you can see the lights of Outpost Kappa."
@@ -815,7 +815,7 @@ obj/decoration/ceilingfan
 	name = "rusty krab sign"
 	desc = "It's one of those old neon signs that diners used to have."
 	icon_state = "rustykrab"
-	icon = 'icons/obj/64x32.dmi'
+	icon = 'icons/obj/large/64x32.dmi'
 	density = 0
 	opacity = 0
 	anchored = 2
@@ -841,7 +841,7 @@ obj/decoration/ceilingfan
 	name = "tabletop shelf"
 	desc = "It's a shelf full of things that you'll need to play your favourite tabletop campaigns. Mainly a lot of dice that can only roll 1's."
 	icon_state = "tabletopfull"
-	icon = 'icons/obj/64x32.dmi'
+	icon = 'icons/obj/large/64x32.dmi'
 	anchored = 2
 	density = 0
 	layer = DECAL_LAYER
@@ -948,7 +948,7 @@ obj/decoration/ceilingfan
 	anchored = 2
 	density = 1
 	desc = "Assortment of two metal crates, both of them sealed shut."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "ntcrate1"
 	layer = EFFECTS_LAYER_1
 	appearance_flags = TILE_BOUND

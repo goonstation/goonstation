@@ -1,6 +1,6 @@
 /obj/voting_box
 	name = "voting machine"
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "voting_box"
 	density = 1
 	flags = FPRINT

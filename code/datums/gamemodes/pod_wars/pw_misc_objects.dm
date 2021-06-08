@@ -1,6 +1,6 @@
 /obj/pod_base_critical_system
 	name = "Critical System"
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "critical_system"
 	anchored = 1
 	density = 1

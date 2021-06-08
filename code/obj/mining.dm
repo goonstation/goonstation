@@ -3,7 +3,7 @@
 /obj/machinery/magnet_chassis
 	name = "magnet chassis"
 	desc = "A strong metal rig designed to hold and link up magnet apparatus with other technology."
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "chassis"
 	opacity = 0
 	density = 1
@@ -320,7 +320,7 @@
 /obj/machinery/mining_magnet
 	name = "mineral magnet"
 	desc = "A piece of machinery able to generate a strong magnetic field to attract mineral sources."
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "magnet"
 	opacity = 0
 	density = 0 // collision is dealt with by the chassis
