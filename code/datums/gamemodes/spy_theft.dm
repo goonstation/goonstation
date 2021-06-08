@@ -584,7 +584,7 @@
 				valid_spy_thief_targets_by_type[Object.type] = list(Object)
 	//Add organs
 	var/list/O = organ_bounties.Copy()
-	var/found_organs = 0;
+	var/found_organs = 0
 	var/organs_length = length(O)
 	for(var/i=1, (found_organs < organ_bounty_amt) && (i <= organs_length), i++)
 		var/datum/bounty_item/B = new /datum/bounty_item(src)
