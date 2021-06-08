@@ -1391,7 +1391,6 @@
 /datum/mutantrace/ithillid
 	name = "ithillid"
 	icon_state = "squid"
-	jerk = 1
 	override_attack = 0
 	aquatic = 1
 	voice_override = "blub"
@@ -1758,7 +1757,6 @@
 	uses_human_clothes = 1
 	aquatic = 1
 	voice_name = "amphibian"
-	jerk = 1
 	head_offset = 0
 	hand_offset = -3
 	body_offset = -3
