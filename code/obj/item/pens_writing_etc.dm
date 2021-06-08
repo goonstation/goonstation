@@ -389,12 +389,6 @@
 			src.color = src.font_color
 			..()
 
-		afterattack(obj/target, mob/user)
-			if (istype(target, /obj/decal/poster/banner)) // so they alter color when used on a banner
-				src.font_color = random_saturated_hex_color(1)
-				src.color_name = hex2color_name(src.font_color)
-				src.color = src.font_color
-
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))

@@ -993,22 +993,24 @@
 	"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","0","1","2","3","4","5","6","7","8","9","+","-","=")
 
 	proc/clear()
-		if (src.material) src.color = src.material.color
-		else src.color = "#ffffff" // In case the material is null
+		if (src.material)
+			src.color = src.material.color
+		else
+			src.color = "#ffffff" // In case the material is null
 		src.overlays = null
 		src.colored = FALSE
 		usr.visible_message("<span class='alert'>[usr] clears the [src.name].</span>", "<span class='alert'>You clear the [src.name].</span>")
 
 	New()
 		. = ..()
-		var/static/image/banner_holder = image(src.icon, , "banner_holder")
+		var/static/image/banner_holder = image(src.icon, "banner_holder")
 		banner_holder.appearance_flags = RESET_COLOR
 		src.underlays.Add(banner_holder)
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/pen/crayon))
 			if(src.colored)
-				chosen_overlay = tgui_input_list(user, "What do you want to draw?", null, choosable_overlays)
+				chosen_overlay = tgui_input_list(user, "What do you want to draw?", "Drawings Options", choosable_overlays)
 				if (!chosen_overlay) return
 				var/mutable_appearance/new_overlay = mutable_appearance(src.icon, chosen_overlay)
 				new_overlay.appearance_flags = RESET_COLOR
@@ -1016,6 +1018,11 @@
 				src.overlays.Add(new_overlay)
 				logTheThing("station", user, null, "Drew a [chosen_overlay] in the [src] with [W] at [log_loc(user)].")
 				desc = "A banner, colored and decorated"
+				if(istype(W,/obj/item/pen/crayon/rainbow))
+					var/obj/item/pen/crayon/rainbow/R = W
+					R.font_color = random_saturated_hex_color(1)
+					R.color_name = hex2color_name(R.font_color)
+					R.color = R.font_color
 
 			else
 				src.color = W.color
@@ -1036,6 +1043,6 @@
 
 		else
 			if(tgui_alert(usr, "Are you sure you want to clear the banner?", "Confirmation", list("Yes", "No")) == "Yes")
-				clear()
+				clear_banner()
 			else
 				return
