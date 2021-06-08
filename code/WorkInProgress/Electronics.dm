@@ -583,19 +583,24 @@
 	var/command = signal.data["command"]
 	if(!target || (command != "add" && command != "UPLOAD") || (!istype(signal.data_file, /datum/computer/file/electronics_scan) && !istype(signal.data_file, /datum/computer/file/electronics_bundle)))
 		return
-
+	//If we get a database file, check that we just booted and that the file was made for us
+	//And also that we haven't already digested a database
 	var/datum/computer/file/electronics_bundle/rkitFile = signal.data_file
-	if (istype(rkitFile) && !data_initialized && !isnull(boot_time) && rkitFile.target == src.net_id) //Copy the database on digest so we never waste the effort
+	if (istype(rkitFile) && !data_initialized && !isnull(boot_time) && rkitFile.target == src.net_id)
 		var/datum/mechanic_controller/originalData = rkitFile.ruckData
 		data_initialized = 1
 		if(world.time - boot_time <= 3 SECONDS)
 			for (var/datum/electronics/scanned_item/O in originalData.scanned_items)
-				ruck_controls.scan_in(O.name, O.item_type, O.mats, O.locked)
+				ruck_controls.scan_in(O.name, O.item_type, O.mats, O.locked) //Copy the database on digest so we never waste the effort
 			return
 		return
 	else if(istype(rkitFile))
 		return
 
+	//And then process blueprint files
+	//Scan them in if we haven't seen them before
+	//UPLOAD is the internal command and doesn't generate PDA messages
+	//add is sent by PDA scanners and does generate messages
 	var/datum/computer/file/electronics_scan/scanFile = signal.data_file
 
 	for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
