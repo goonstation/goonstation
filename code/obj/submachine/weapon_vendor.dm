@@ -151,6 +151,7 @@
 	New()
 		..()
 		// List of avaliable objects for purchase
+		materiel_stock += new/datum/materiel/sidearm/smartgun
 		materiel_stock += new/datum/materiel/sidearm/pistol
 		materiel_stock += new/datum/materiel/sidearm/revolver
 
@@ -298,6 +299,11 @@
 	description = "One belt containing a security barrier, a forensic scanner, and a security ticket writer."
 
 //SYNDIE
+
+/datum/materiel/sidearm/smartgun
+	name = "Hydra Smart Pistol"
+	path = /obj/item/storage/belt/smartgun
+	description = "A gun-belt containing a pistol capable of locking onto multiple targets and firing on them in rapid sequence and three magazines."
 
 /datum/materiel/sidearm/pistol
 	name = "Branwen Pistol"
