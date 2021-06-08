@@ -78,7 +78,7 @@
 					has_fluid_move_gear = 1
 
 		if (!has_fluid_move_gear)
-			A.setStatus("slowed", 5, optional = 4)
+			A.setStatus("slowed", 0.5 SECONDS, optional = 4)
 
 		if (get_dir(src,A) & SOUTH || pixel_y > 0) //If we approach from underneath, fudge the layer so the drawing order doesn't break perspective
 			src.layer = 3.9

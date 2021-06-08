@@ -11791,7 +11791,7 @@
 	pixel_y = 0
 	},
 /obj/table/wood/auto,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/item/plantanalyzer,
 /obj/decal/tile_edge/line/green{
 	icon_state = "line2";
@@ -12148,7 +12148,7 @@
 "atW" = (
 /obj/disposalpipe/segment,
 /obj/table/reinforced/auto,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
@@ -14929,7 +14929,7 @@
 /area/station/crew_quarters/kitchen)
 "azH" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/item/kitchen/food_box/donut_box,
 /obj/item/instrument/bikehorn/dramatic,
 /obj/item/kitchen/food_box/donut_box,
@@ -21478,7 +21478,7 @@
 /area/station/science/lobby)
 "aMJ" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/cable{
 	icon_state = "4-8";
 	d1 = 4;
@@ -22131,7 +22131,7 @@
 "aNL" = (
 /obj/cable,
 /obj/table/wood/auto,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "S APC";
@@ -27205,7 +27205,7 @@
 	pixel_x = -7;
 	pixel_y = 1
 	},
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/a_gift/festive,
 /turf/simulated/floor/redblack,
 /area/station/hallway/secondary/central)
@@ -29584,7 +29584,7 @@
 /area/station/security/main)
 "baz" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/item/kitchen/food_box/donut_box,
 /turf/simulated/floor,
 /area/station/security/main)
@@ -29815,7 +29815,7 @@
 	pixel_x = 4;
 	pixel_y = 8
 	},
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/item/device/radio/intercom/bridge{
 	dir = 4;
 	broadcasting = 0;
@@ -31549,7 +31549,7 @@
 /area/station/science/teleporter)
 "bdH" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/guardbot_guide,
+/obj/item/paper/book/from_file/guardbot_guide,
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1";
 	dir = 8
@@ -33096,7 +33096,7 @@
 /area/station/medical/medbay/surgery)
 "bgs" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/suture,
 /obj/item/hemostat,
 /obj/decal/tile_edge/line/red{
@@ -35448,7 +35448,7 @@
 "bkn" = (
 /obj/table/wood/auto,
 /obj/machinery/computer3/generic/personal,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4";
@@ -35650,7 +35650,7 @@
 	pixel_x = -5;
 	pixel_y = -5
 	},
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/item/device/multitool,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
@@ -40887,7 +40887,7 @@
 	layer = 3.5;
 	pixel_y = 24
 	},
-/obj/storage/crate/rcd,
+/obj/storage/crate/rcd/CE,
 /obj/cable{
 	icon_state = "4-8";
 	d1 = 4;
@@ -42588,7 +42588,7 @@
 	d2 = 4
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper/book/minerals,
+/obj/item/paper/book/from_file/minerals,
 /obj/item/device/light/glowstick,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -42599,7 +42599,7 @@
 	d2 = 8
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -44062,7 +44062,7 @@
 /area/station/engine/gas)
 "bzk" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/machinery/phone,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
@@ -48691,7 +48691,7 @@
 /obj/table/auto,
 /obj/machinery/recharger,
 /obj/item/cargotele,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
 "bIt" = (

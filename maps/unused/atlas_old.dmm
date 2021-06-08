@@ -1059,19 +1059,6 @@
 /obj/machinery/chem_heater,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"dg" = (
-/obj/table/auto,
-/obj/item/paper/book/minerals{
-	pixel_x = -2;
-	pixel_y = 5
-	},
-/obj/item/paper/book/materials,
-/obj/item/device/matanalyzer,
-/turf/simulated/floor/engine{
-	allows_vehicles = 0;
-	icon_state = "engine_caution_corners"
-	},
-/area/station/mining/refinery)
 "dh" = (
 /obj/potted_plant{
 	dir = 8
@@ -1200,20 +1187,6 @@
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
-"dG" = (
-/obj/storage/crate{
-	desc = "null";
-	name = "Chemistry Supplies Crate"
-	},
-/obj/item/reagent_containers/dropper/mechanical,
-/obj/item/storage/box/patchbox,
-/obj/item/paper/book/medical_guide,
-/obj/item/storage/box/syringes,
-/obj/item/storage/box/beakerbox,
-/turf/simulated/floor/purplewhite{
-	dir = 4
-	},
-/area/station/science/chemistry)
 "dH" = (
 /obj/machinery/manufacturer/medical,
 /turf/simulated/floor/delivery,
@@ -2907,15 +2880,6 @@
 /mob/living/critter/spider/baby,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
-"hO" = (
-/obj/machinery/optable,
-/obj/item/robodefibrillator,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/item/paper/book/medical_surgery_guide,
-/turf/simulated/floor/red,
-/area/station/medical/medbay/surgery)
 "hP" = (
 /obj/cable{
 	d1 = 2;
@@ -7168,13 +7132,6 @@
 	dir = 5
 	},
 /area/station/science/teleporter)
-"rD" = (
-/obj/table/auto,
-/obj/item/paper/book/cookbook,
-/obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/glass/bottle/icing,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "rE" = (
 /obj/storage/secure/closet/medical/uniforms,
 /turf/simulated/floor/bluewhite{
@@ -9951,15 +9908,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/turret_protected/Zeta)
-"xU" = (
-/obj/table/auto,
-/obj/item/paper/book/hydroponicsguide,
-/obj/item/plantanalyzer,
-/obj/item/device/reagentscanner,
-/obj/item/device/reagentscanner,
-/obj/item/plantanalyzer,
-/turf/simulated/floor/green,
-/area/station/hydroponics/bay)
 "xV" = (
 /turf/simulated/wall/auto/supernorn/the_tuff_stuff,
 /area/station/maintenance/east)
@@ -16328,10 +16276,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"Mo" = (
-/obj/decal/poster/wallsign/medal,
-/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
-/area/station/security/armory)
 "Mp" = (
 /obj/machinery/atmospherics/binary/passive_gate{
 	on = 1;
@@ -16558,6 +16502,22 @@
 	},
 /turf/space,
 /area/space)
+"Nn" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/cookbook,
+/obj/item/kitchen/rollingpin,
+/obj/item/reagent_containers/glass/bottle/icing,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"NH" = (
+/obj/machinery/optable,
+/obj/item/robodefibrillator,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/paper/book/from_file/medical_surgery_guide,
+/turf/simulated/floor/red,
+/area/station/medical/medbay/surgery)
 "Pl" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4
@@ -16631,7 +16591,20 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"Tj" = (
+"Rb" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/minerals{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/paper/book/from_file/matsci_guide,
+/obj/item/device/matanalyzer,
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_corners"
+	},
+/area/station/mining/refinery)
+"Rc" = (
 /obj/item/device/radio/headset/multifreq,
 /obj/item/device/radio/headset/multifreq,
 /obj/item/device/radio/headset/multifreq,
@@ -16651,12 +16624,26 @@
 	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
 	name = "note from mom"
 	},
-/obj/item/paper/book/critter_compendium,
+/obj/item/paper/book/from_file/critter_compendium,
 /obj/machinery/light{
 	layer = 3
 	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
+"Re" = (
+/obj/storage/crate{
+	desc = "null";
+	name = "Chemistry Supplies Crate"
+	},
+/obj/item/reagent_containers/dropper/mechanical,
+/obj/item/storage/box/patchbox,
+/obj/item/paper/book/from_file/pharmacopia,
+/obj/item/storage/box/syringes,
+/obj/item/storage/box/beakerbox,
+/turf/simulated/floor/purplewhite{
+	dir = 4
+	},
+/area/station/science/chemistry)
 "Ue" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
@@ -16673,6 +16660,19 @@
 /obj/item/card_box/plain,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
+"YE" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/hydroponicsguide,
+/obj/item/plantanalyzer,
+/obj/item/device/reagentscanner,
+/obj/item/device/reagentscanner,
+/obj/item/plantanalyzer,
+/turf/simulated/floor/green,
+/area/station/hydroponics/bay)
+"Zz" = (
+/obj/decal/poster/wallsign/framed_award/hos_medal,
+/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
+/area/station/security/armory)
 
 (1,1,1) = {"
 aa
@@ -55735,7 +55735,7 @@ aa
 aZ
 aZ
 cE
-dg
+Rb
 dW
 eu
 fT
@@ -59089,7 +59089,7 @@ qo
 Ak
 uE
 Av
-Tj
+Rc
 tV
 as
 Cw
@@ -59688,7 +59688,7 @@ El
 zv
 ut
 Db
-dG
+Re
 ph
 uz
 rC
@@ -61187,7 +61187,7 @@ jB
 mS
 dw
 iX
-xU
+YE
 ki
 wT
 lm
@@ -64194,7 +64194,7 @@ bP
 bY
 om
 df
-rD
+Nn
 dP
 cP
 cy
@@ -64516,7 +64516,7 @@ lp
 pw
 jj
 mj
-hO
+NH
 zz
 zD
 zJ
@@ -65099,7 +65099,7 @@ ct
 bP
 gt
 cQ
-Mo
+Zz
 dS
 wk
 ef

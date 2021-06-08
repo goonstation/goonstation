@@ -37,9 +37,9 @@
 		abilityHolder.updateButtons()
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customization_first = "Trimmed"
-		bioHolder.mobAppearance.customization_second = "Full Beard"
-		bioHolder.mobAppearance.customization_third = "Eyebrows"
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/short/short
+		bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/fullbeard
+		bioHolder.mobAppearance.customization_third = new /datum/customization_style/eyebrows/eyebrows
 		bioHolder.mobAppearance.customization_first_color = "#555555"
 		bioHolder.mobAppearance.customization_second_color = "#555555"
 		bioHolder.mobAppearance.customization_third_color = "#555555"
