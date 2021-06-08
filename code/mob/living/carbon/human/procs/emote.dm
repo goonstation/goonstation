@@ -291,39 +291,71 @@
 					G.throw_at(target,5,1)
 					src.visible_message("<b>[src]</B> farts out a...glowstick?")
 
-
-			if ("salute","bow","hug","wave", "blowkiss","sidehug")
+			if ("salute","saluteto","bow","hug","wave","waveto","blowkiss","sidehug")
 				// visible targeted emotes
 				if (!src.restrained())
-					var/mob/M = null
+					var/M = null
+					var/range = 8
+					if (act == "hug" || act == "sidehug")
+						range = 1
 					if (param)
-						var/range = 8
-						if (act == "hug" || act == "sidehug")
-							range = 1
-						for (var/mob/A in view(range, src))
+						for (var/atom/movable/A in view(range, src))
 							if (ckey(param) == ckey(A.name))
 								M = A
 								break
-					if (!M)
-						param = null
+					else if(act != "wave" && act != "salute") // use *waveto to wave to someone, *saluteto too salute someone
+						var/list/target_list = src.get_targets(range, "both") // Dorko McEnginerd hugs the Thermoelectric Generator!
+						if(length(target_list))
+							var/action_phrase = "emote upon"
+							switch(act)
+								if("salute", "hug", "sidehug")
+									action_phrase = act
+								if("bow")
+									action_phrase = "bow before"
+								if("waveto")
+									action_phrase = "wave to"
+								if("blowkiss")
+									action_phrase = "to whom you'll blow a [prob(1) ? "smooch" : "kiss"]"
+							M = tgui_input_list(src, "Pick something to [action_phrase]!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
+							if (M && (range > 1 && !IN_RANGE(get_turf(src), get_turf(M), range)) || (range == 1 && !in_interact_range(src, M)) )
+								var/inaction_phrase = "emote upon"
+								switch(act)
+									if("salute")
+										inaction_phrase = "saluting"
+									if("hug","sidehug")
+										inaction_phrase = "[act]ging"
+									if("bow")
+										inaction_phrase = "[prob(1) ? "prostration" : "bowing"]"
+									if("waveto")
+										inaction_phrase = "waving"
+									if("blowkiss")
+										inaction_phrase = "[prob(1) ? "smooching" : "kissing"]"
+								boutput(src, "<span class='emote'><B>[M]</B> is not in [inaction_phrase] distance!</span>")
+								return
 
 					act = lowertext(act)
-					if (param)
+					if (M)
 						switch(act)
 							if ("bow","wave")
-								message = "<B>[src]</B> [act]s to [param]."
-								maptext_out = "<I>[act]s to [param]</I>"
+								message = "<B>[src]</B> [act]s to [M]."
+								maptext_out = "<I>[act]s to [M]</I>"
+							if ("waveto")
+								message = "<B>[src]</B> waves to [M]."
+								maptext_out = "<I>waves to [M]</I>"
+							if ("saluteto")
+								message = "<B>[src]</B> salutes [M]."
+								maptext_out = "<I>salutes [M]</I>"
 							if ("sidehug")
-								message = "<B>[src]</B> awkwardly side-hugs [param]."
-								maptext_out = "<I>awkwardly side-hugs [param]</I>"
+								message = "<B>[src]</B> awkwardly side-hugs [M]."
+								maptext_out = "<I>awkwardly side-hugs [M]</I>"
 							if ("blowkiss")
-								message = "<B>[src]</B> blows a kiss to [param]."
-								maptext_out = "<I>blows a kiss to [param]</I>"
+								message = "<B>[src]</B> blows a kiss to [M]."
+								maptext_out = "<I>blows a kiss to [M]</I>"
 								//var/atom/U = get_turf(param)
 								//shoot_projectile_ST(src, new/datum/projectile/special/kiss(), U) //I gave this all of 5 minutes of my time I give up
 							else
-								message = "<B>[src]</B> [act]s [param]."
-								maptext_out = "<I>[act]s [param]</I>"
+								message = "<B>[src]</B> [act]s [M]."
+								maptext_out = "<I>[act]s [M]</I>"
 					else
 						switch(act)
 							if ("hug", "sidehug")
@@ -334,7 +366,7 @@
 								maptext_out = "<I> blows a kiss to... [himself_or_herself(src)]?</I>"
 							else
 								message = "<B>[src]</b> [act]s."
-								maptext_out = "<I>[act]s [param]</I>"
+								maptext_out = "<I>[act]s [M]</I>"
 								src.add_karma(2)
 
 				else
@@ -342,26 +374,45 @@
 					maptext_out = "<I>struggles to move</I>"
 
 				m_type = 1
-
-			if ("nod","glare","stare","look")
+			if ("nod","nodto","glare","stare","look","leer")
 				var/M = null
 				if (param)
 					for (var/mob/A in view(null, null))
 						if (ckey(param) == ckey(A.name))
 							M = A
 							break
-				if (!M)
-					param = null
+				else if(act != "nod") // use *nodto to nod to something
+					var/list/target_list = src.get_targets(8, "both") // Chemmi Dweebus leers at the chemi-compiler!
+					if(length(target_list))
+						var/action_phrase = "emote upon"
+						switch(act)
+							if("nodat")
+								action_phrase = "nod to"
+							else
+								action_phrase = "[act] at"
+						M = tgui_input_list(src, "Pick something to [action_phrase]!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
+						if (M && !IN_RANGE(get_turf(src), get_turf(M), 8))
+							var/inaction_phrase = "emote upon"
+							switch(act)
+								if("nodto")
+									inaction_phrase = "not in acknowledgement distance"
+								if("glare", "stare", "look", "leer")
+									inaction_phrase = "[prob(1) ? "out of sight" : "not in sight"]"
+							boutput(src, "<span class='emote'><B>[M]</B> is [inaction_phrase]!</span>")
+							return
 
 				act = lowertext(act)
-				if (param)
+				if (M)
 					switch(act)
 						if ("nod")
-							message = "<B>[src]</B> [act]s to [param]."
-							maptext_out = "<I>[act]s to [param]</I>"
-						if ("glare","stare","look")
-							message = "<B>[src]</B> [act]s at [param]."
-							maptext_out = "<I>[act]s at [param]</I>"
+							message = "<B>[src]</B> [act]s to [M]."
+							maptext_out = "<I>[act]s to [M]</I>"
+						if ("nodto")
+							message = "<B>[src]</B> nods to [M]."
+							maptext_out = "<I>nods to [M]</I>"
+						if ("glare","stare","look","leer")
+							message = "<B>[src]</B> [act]s at [M]."
+							maptext_out = "<I>[act]s at [M]</I>"
 				else
 					message = "<B>[src]</b> [act]s."
 					maptext_out = "<I>[act]s</I>"
@@ -463,15 +514,15 @@
 				src.show_text("For a list of all emotes, use 'me list'. For a list of basic emotes, use 'me listbasic'. For a list of emotes that can be targeted, use 'me listtarget'.")
 
 			if ("listbasic")
-				src.show_text("smile, grin, smirk, frown, scowl, grimace, sulk, pout, blink, drool, shrug, tremble, quiver, shiver, shudder, shake, \
-				think, ponder, clap, flap, aflap, laugh, chuckle, giggle, chortle, guffaw, cough, hiccup, sigh, mumble, grumble, groan, moan, sneeze, \
+				src.show_text("smile, grin, smirk, frown, scowl, grimace, sulk, pout, nod, blink, drool, shrug, tremble, quiver, shiver, shudder, shake, \
+				think, ponder, clap, wave, salute, flap, aflap, laugh, chuckle, giggle, chortle, guffaw, cough, hiccup, sigh, mumble, grumble, groan, moan, sneeze, \
 				sniff, snore, whimper, yawn, choke, gasp, weep, sob, wail, whine, gurgle, gargle, blush, flinch, blink_r, eyebrow, shakehead, shakebutt, \
 				pale, flipout, rage, shame, raisehand, crackknuckles, stretch, rude, cry, retch, raspberry, tantrum, gesticulate, wgesticulate, smug, \
 				nosepick, flex, facepalm, panic, snap, airquote, twitch, twitch_v, faint, deathgasp, signal, wink, collapse, trip, dance, scream, \
 				burp, fart, monologue, contemplate, custom")
 
 			if ("listtarget")
-				src.show_text("salute, bow, hug, wave, glare, stare, look, nod, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive")
+				src.show_text("salute, bow, hug, wave, glare, stare, look, leer, nod, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive")
 
 			if ("suicide")
 				src.show_text("Suicide is a command, not an emote.  Please type 'suicide' in the input bar at the bottom of the game window to kill yourself.", "red")
@@ -1048,7 +1099,21 @@
 							if (ckey(param) == ckey(A.name))
 								M = A
 								break
-					if (M)
+					else
+						var/list/target_list = src.get_targets(8, "both") // Staffie Graytides flips off the cryptographic sequencer!
+						if(length(target_list))
+							var/action_phrase = "emote upon"
+							switch(act)
+								if("flipoff")
+									action_phrase = "flip off"
+								if("flipbird")
+									action_phrase = "give the bird"
+								if("middlefinger")
+									action_phrase = "raise your middle finger at"
+
+							M = tgui_input_list(src, "Pick something to [action_phrase]!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
+
+					if (M) // You can totally actively passively aggressively flip people off after they leave the room
 						message = "<B>[src]</B> flips off [M]."
 						maptext_out = "<I>flips off [M]!</I>"
 					else
@@ -1067,6 +1132,22 @@
 							if (ckey(param) == ckey(A.name))
 								M = A
 								break
+					else
+						var/list/target_list = src.get_targets(8, "both") // Staffie Graytides flips off the cryptographic sequencer!
+						if(length(target_list))
+							var/action_phrase = "emote upon"
+							switch(act)
+								if("doubleflip")
+									action_phrase = "blast the double-finger"
+								if("doubledeuce")
+									action_phrase = "give the double deuce"
+								if("doublebird")
+									action_phrase = "give both birds"
+								if("flip2")
+									action_phrase = "flip off twice"
+
+							M = tgui_input_list(src, "Pick something to [action_phrase]!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
+
 					if (M)
 						message = "<B>[src]</B> gives [M] the double deuce!"
 						maptext_out = "<I>gives [M] the double deuce!</I>"
@@ -1085,7 +1166,12 @@
 						if (ckey(param) == ckey(A.name))
 							M = A
 							break
-				if (M)
+				else
+					var/list/target_list = src.get_targets(8, "both") // Dr. Dingus boggles at robotics manufacturer's stupidity.
+					if(length(target_list))
+						M = tgui_input_list(src, "Pick something to boggle at!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
+
+				if (M) // You can totally boggle at something's stupidity without it being nearby
 					message = "<B>[src]</B> boggles at [M]'s stupidity."
 					maptext_out = "<I> boggles at [M]'s stupidity</I>"
 				else
@@ -1101,6 +1187,11 @@
 							if (ckey(param) == ckey(A.name))
 								M = A
 								break
+					else
+						var/list/target_list = src.get_targets(8, "both") // Dr. Dingus boggles at robotics manufacturer's stupidity.
+						if(length(target_list))
+							M = tgui_input_list(src, "Pick something to shake your fist at!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
+
 					if (M)
 						message = "<B>[src]</B> angrily shakes [his_or_her(src)] fist at [M]!"
 						maptext_out = "<I>angrily shakes [his_or_her(src)] fist at [M]!</I>"
@@ -1120,7 +1211,15 @@
 							if (ckey(param) == ckey(A.name))
 								M = A
 								break
-					if (M == src) M = null
+					if (M == src)
+						M = null
+					if(!M)
+						var/list/target_list = src.get_targets(1, "mob") // Bobby Boblord shakes hands with grody spacemouse!
+						if(length(target_list))
+							M = tgui_input_list(src, "Pick someone with whom to shake hands!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
+							if (M && !in_interact_range(src, M))
+								boutput(src, "<span class='emote'><B>[M]</B> is out of reach!</span>")
+								return
 
 					if (M)
 						if (M.canmove && !M.r_hand && !M.restrained())
@@ -1139,6 +1238,14 @@
 							if (ckey(param) == ckey(A.name))
 								M = A
 								break
+					else
+						var/list/target_list = src.get_targets(1, "mob")
+						if(length(target_list))
+							M = tgui_input_list(src, "Pick someone to dap!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
+							if (M && !in_interact_range(src, M))
+								boutput(src, "<span class='emote'><B>[M]</B> is not in dapping distance!</span>")
+								return
+
 					if (M)
 						message = "<B>[src]</B> gives daps to [M]."
 						maptext_out = "<I>gives daps to [M]</I>"
@@ -1161,6 +1268,14 @@
 								if (ckey(param) == ckey(A.name))
 									M = A
 									break
+						else
+							var/list/target_list = src.get_targets(1, "mob") // Funche Arnchlnm slaps shambling abomination across the face!
+							if(length(target_list))
+								M = tgui_input_list(src, "Pick someone to smack!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
+								if (M && !in_interact_range(src, M))
+									boutput(src, "<span class='emote'><B>[M]</B> is out of reach!</span>")
+									return
+
 						if (M)
 							message = "<B>[src]</B> slaps [M] across the face! Ouch!"
 							maptext_out = "<I>slaps [M] across the face!</I>"
@@ -1183,11 +1298,19 @@
 								if (ckey(param) == ckey(A.name))
 									M = A
 									break
-						if (M)
 #ifdef TWITCH_BOT_ALLOWED
 							if (IS_TWITCH_CONTROLLED(M))
 								return
 #endif
+						else
+							var/list/target_list = src.get_targets(1, "mob") // Chrunb Erbrbt and Scales To Lizard highfive!
+							if(length(target_list))
+								M = tgui_input_list(src, "Pick someone to high-five!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
+								if (M && !in_interact_range(src, M))
+									boutput(src, "<span class='emote'><B>[M]</B> is out of reach!</span>")
+									return
+
+						if (M)
 							if (!M.restrained() && M.stat != 1 && !isunconscious(M) && !isdead(M))
 								if (alert(M, "[src] offers you a highfive! Do you accept it?", "Choice", "Yes", "No") == "Yes")
 									if (M in view(1,null))
@@ -2234,3 +2357,31 @@
 					G.affecting.force_laydown_standup()
 					sleep(1 SECOND) //let us do that combo shit people like with throwing
 					src.force_laydown_standup()
+
+/// Looks for the kind_of_target movables within range, and throws the user an input
+/// Valid kinds: "mob", "obj", "both"
+/mob/living/proc/get_targets(range = 1, kind_of_target = "mob")
+	if(!isturf(get_turf(src))) return
+
+	var/list/atom/movable/everything_around = list()
+
+	for(var/atom/movable/AM in view(range, get_turf(src)))
+		if(AM == src)
+			continue
+		everything_around |= AM
+
+	switch(kind_of_target)
+		if("both")
+			return everything_around
+		if("mob")
+			. = list()
+			for(var/mob/M in everything_around)
+				if(M == src)
+					continue
+				. |= M
+		if("obj")
+			. = list()
+			for(var/obj/O in everything_around)
+				if(O == src)
+					continue
+				. |= O

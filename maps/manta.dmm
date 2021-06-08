@@ -27803,7 +27803,7 @@
 /area/station/hallway/seaturtlehallway)
 "byH" = (
 /obj/table/auto,
-/obj/item/paper/book/from_file/pocketguide/mining2,
+/obj/item/paper/book/from_file/pocketguide/mining,
 /obj/item/storage/firstaid/toxin,
 /obj/machinery/drainage/big,
 /turf/simulated/floor,

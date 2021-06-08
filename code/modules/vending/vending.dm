@@ -1505,7 +1505,6 @@
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/paper/engine, 2, cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/paper/Toxin, 2, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/cookbook, 2, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/dwainedummies, 2, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/guardbot_guide, 2, cost=PAY_UNTRAINED/5)
@@ -1533,9 +1532,9 @@
 	desc = "Food storage unit."
 	icon_state = "food"
 	icon_panel = "standard-panel"
-	icon_off = "standard-off"
-	icon_broken = "standard-broken"
-	icon_fallen = "standard-fallen"
+	icon_off = "food-off"
+	icon_broken = "food-broken"
+	icon_fallen = "food-fallen"
 	req_access_txt = "28"
 	acceptcard = 0
 
