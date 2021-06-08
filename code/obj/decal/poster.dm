@@ -1000,7 +1000,7 @@
 		usr.visible_message("<span class='alert'>[usr] clears the [src.name].</span>", "<span class='alert'>You clear the [src.name].</span>")
 
 	New()
-		..()
+		. = ..()
 		var/static/image/banner_holder = image(src.icon, , "banner_holder")
 		banner_holder.appearance_flags = RESET_COLOR
 		src.underlays.Add(banner_holder)
