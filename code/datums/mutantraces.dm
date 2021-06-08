@@ -1356,7 +1356,7 @@
 	name = "hunter"
 	icon_state = "hunter"
 	human_compatible = 0
-	jerk = 1
+	jerk = 0
 	override_attack = 0
 	mutant_folder = 'icons/mob/hunter.dmi'
 	special_head = HEAD_HUNTER //heh
@@ -1391,7 +1391,7 @@
 /datum/mutantrace/ithillid
 	name = "ithillid"
 	icon_state = "squid"
-	jerk = 1
+	jerk = 0
 	override_attack = 0
 	aquatic = 1
 	voice_override = "blub"
