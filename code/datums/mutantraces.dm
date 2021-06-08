@@ -1356,7 +1356,7 @@
 	name = "hunter"
 	icon_state = "hunter"
 	human_compatible = 0
-	jerk = 0
+	jerk = 1
 	override_attack = 0
 	mutant_folder = 'icons/mob/hunter.dmi'
 	special_head = HEAD_HUNTER //heh
