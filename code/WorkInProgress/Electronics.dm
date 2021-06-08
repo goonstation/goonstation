@@ -505,6 +505,7 @@
 	if(status & (NOPOWER|BROKEN))
 		if (src.net_id == host_ruck) send_sync(1)
 		return
+
 	if (powered())
 		send_sync()
 	else
