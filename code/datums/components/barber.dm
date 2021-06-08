@@ -105,7 +105,7 @@
 			return
 
 		if(region[which_part] != ALL_HAIR)
-			var/list/customization_types = /datum/customization_style/none + concrete_typesof(/datum/customization_style/hair) + concrete_typesof(/datum/customization_style/eyebrows)
+			var/list/customization_types = list(/datum/customization_style/none) + concrete_typesof(/datum/customization_style/hair) + concrete_typesof(/datum/customization_style/eyebrows)
 			var/new_style = select_custom_style(customization_types, user)
 
 			if (!new_style)
@@ -180,7 +180,7 @@
 			return
 
 		if (region[which_part] != ALL_HAIR)
-			var/list/facehair = /datum/customization_style/none + concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache)
+			var/list/facehair = list(/datum/customization_style/none) + concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache)
 			var/new_style = select_custom_style(facehair, user)
 
 			if (!new_style)
