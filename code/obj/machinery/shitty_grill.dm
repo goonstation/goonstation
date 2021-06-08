@@ -34,6 +34,7 @@
 			user.visible_message("<b>[user]</b> [anchored ? "unbolts the [src] from" : "secures the [src] to"] the floor.")
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 80, 1)
 			src.anchored = !src.anchored
+			return
 		if (isghostdrone(user) || isAI(user))
 			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a bus driver!</span>")
 			return
