@@ -1007,7 +1007,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/pen/crayon))
-			if(src.colored == TRUE)
+			if(src.colored)
 				chosen_overlay = tgui_input_list(user, "What do you want to draw?", null, choosable_overlays)
 				if (!chosen_overlay) return
 				var/mutable_appearance/new_overlay = mutable_appearance(src.icon, chosen_overlay)
