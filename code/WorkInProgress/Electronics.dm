@@ -472,7 +472,7 @@
 	var/list/known_rucks = null
 	///list of rucks we've seen send a SYNC or SYNCREPLY (or even DROP but that's weird)
 	var/boot_time = null
-	var/data_initialized = 0
+	var/data_initialized = FALSE
 	var/datum/radio_frequency/pda = null
 
 /obj/machinery/rkit/New()
@@ -587,7 +587,7 @@
 	var/datum/computer/file/electronics_bundle/rkitFile = signal.data_file
 	if (istype(rkitFile) && !data_initialized && !isnull(boot_time) && rkitFile.target == src.net_id)
 		var/datum/mechanic_controller/originalData = rkitFile.ruckData
-		data_initialized = 1
+		data_initialized = TRUE
 		if(world.time - boot_time <= 3 SECONDS)
 			for (var/datum/electronics/scanned_item/O in originalData.scanned_items)
 				ruck_controls.scan_in(O.name, O.item_type, O.mats, O.locked) //Copy the database on digest so we never waste the effort
