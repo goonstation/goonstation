@@ -29,7 +29,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	flags = FPRINT | TABLEPASS | CONDUCT
 	tool_flags = TOOL_SAWING
 	mats = 12
@@ -194,7 +194,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	is_syndicate = 1
 	how_dangerous_is_this_thing = 1 //it gibs differently
 	mats = 14
@@ -328,7 +328,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	mats = 12
 	sawnoise = 'sound/machines/chainsaw_red.ogg'
 	arm_icon = "chainsaw1"
@@ -343,7 +343,7 @@
 	desc = "A device which examines the genes of plant seeds."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "plantanalyzer"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	flags = ONBELT
 	mats = 4
 	module_research = list("analysis" = 4, "devices" = 4, "hydroponics" = 2)
@@ -359,7 +359,7 @@
 /////////////////////////////////////////// Seed fabricator ///////////////////////////////
 
 /obj/item/seedplanter
-	name = "Portable Seed Fabricator"
+	name = "portable seed fabricator"
 	desc = "A tool for cyborgs used to create plant seeds."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "portable_seed_fab"
@@ -413,7 +413,7 @@
 	icon_state = "trowel"
 
 	flags = FPRINT | TABLEPASS | ONBELT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	force = 5.0
 	throwforce = 5.0
@@ -460,7 +460,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "wateringcan"
 	amount_per_transfer_from_this = 60
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	module_research = list("tools" = 2, "hydroponics" = 4)
 	initial_volume = 120
@@ -502,7 +502,7 @@
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "compost"
 	amount_per_transfer_from_this = 10
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	rc_flags = 0
 	module_research = list("tools" = 1, "hydroponics" = 1)
 	initial_volume = 60
@@ -593,7 +593,7 @@
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "happyplant"
 	amount_per_transfer_from_this = 50
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	incompatible_with_chem_dispensers = 1
 	rc_flags = RC_SCALE
 	initial_volume = 250

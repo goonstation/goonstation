@@ -20,6 +20,7 @@
 	item_state = "helmet"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
 	see_face = 0
+	item_function_flags = IMMUNE_TO_ACID
 
 	New()
 		..()
@@ -38,11 +39,13 @@
 	desc = "Fishnets, bandoliers and plating? What the hell?"
 	icon_state = "hunter"
 	item_state = "hunter"
+	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/clothing/shoes/cowboy/hunter
 	name = "Space Cowboy Boots"
 	desc = "Fashionable alien footwear. The sole appears to be rubberized,  preventing slipping on wet surfaces."
 	c_flags = NOSLIP // Don't slip on gibs all the time, d'oh (Convair880).
+	item_function_flags = IMMUNE_TO_ACID
 // --------------------------------------------------
 
 /obj/item/clothing/head/helmet/space/santahat
@@ -389,6 +392,10 @@
 	cant_self_remove = 1
 	cant_other_remove = 1
 
+	New()
+		..()
+		AddComponent(/datum/component/clown_disbelief_item)
+
 /obj/item/clothing/gloves/cursedclown_gloves
 	name = "cursed white gloves"
 	desc = "These things smell terrible, and they're all lumpy. Gross."
@@ -489,7 +496,7 @@
 
 /obj/item/clothing/under/gimmick/mj_clothes
 	name = "Smooth Criminal's Jumpsuit"
-	desc = "You probably shouldn't wear this around small children."
+	desc = "You've been hit by..."
 	icon_state = "moonwalker"
 	item_state = "moonwalker"
 
@@ -541,7 +548,7 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	item_state = "vshield"
 	throwforce = 7.0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 
 	turn_off()
 		if(user)
@@ -653,7 +660,7 @@
 	desc = "This cat head was built to the highest ethical standards.  50% less child labor used in production than competing novelty cat heads."
 	icon_state = "genki"
 	permeability_coefficient = 0.01
-	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | MASKINTERNALS
+	c_flags = COVERSEYES | COVERSMOUTH | MASKINTERNALS
 
 //birdman for nieks
 
@@ -688,7 +695,7 @@
 	item_state = "adeptus"
 	permeability_coefficient = 0.50
 	body_parts_covered = TORSO|LEGS|ARMS
-	over_all = 1
+	wear_layer = MOB_OVERLAY_BASE
 
 //power armor
 
@@ -766,10 +773,8 @@
 
 			boutput(H, "<span class='alert'><b>You suddenly feel whiny and ineffectual.</b></span>")
 			H.real_name = "Mike Dawson"
-			H.bioHolder.mobAppearance.customization_first = "Bedhead"
-			H.bioHolder.mobAppearance.customization_second = "Selleck"
-			H.cust_one_state = "bedhead"
-			H.cust_two_state = "selleck"
+			H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/bedhead
+			H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/moustache/selleck
 			H.bioHolder.mobAppearance.e_color = "#321E14"
 			H.bioHolder.mobAppearance.customization_first_color = "#412819"
 			H.bioHolder.mobAppearance.customization_second_color = "#412819"
@@ -801,12 +806,14 @@
 	desc = "'ello gents! Cracking time to hunt an elephant!"
 	icon_state = "safari"
 	item_state = "safari"
+	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/clothing/head/safari
 	name = "safari hat"
 	desc = "Keeps you cool in the hot savannah."
 	icon_state = "safari"
 	item_state = "caphat"
+	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/clothing/mask/skull
 	name = "skull mask"
@@ -824,7 +831,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "robuddy"
 	item_state = "robuddy"
-	over_back = 1
+	wear_layer = MOB_BACK_LAYER + 0.2
 	body_parts_covered = TORSO|LEGS|ARMS
 
 /obj/item/clothing/suit/bee
@@ -835,7 +842,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "bee"
 	item_state = "bee"
-	over_back = 1
+	wear_layer = MOB_BACK_LAYER + 0.2
 	body_parts_covered = TORSO|ARMS
 
 /obj/item/clothing/suit/monkey
@@ -853,7 +860,7 @@
 	name = "Nicolas Cage mask"
 	desc = "An eerily realistic mask of 20th century film actor Nicolas Cage."
 	icon_state = "niccage"
-	c_flags = SPACEWEAR | COVERSMOUTH | COVERSEYES | MASKINTERNALS
+	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
 	see_face = 0.0
 
 /obj/item/clothing/mask/waltwhite
@@ -961,6 +968,18 @@
 	desc = "A little ruffle with lace, to wear on the head. It gives you super cleaning powers*!<br><small>*Does not actually bestow any powers.</small>"
 	icon_state = "maid"
 	item_state = "maid"
+
+/obj/item/clothing/under/gimmick/dinerdress_mint
+	name = "Mint Diner Waitress's Dress"
+	desc = "Can I getcha somethin', sugar?"
+	icon_state = "dinerdress-mint"
+	item_state = "dinerdress-mint"
+
+/obj/item/clothing/under/gimmick/dinerdress_pink
+	name = "Pink Diner Waitress's Dress"
+	desc = "Y'all come back now, ya hear?"
+	icon_state = "dinerdress-pink"
+	item_state = "dinerdress-pink"
 
 /obj/item/clothing/under/gimmick/kilt
 	name = "kilt"
@@ -1303,7 +1322,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "joyful"
 	body_parts_covered = TORSO|LEGS|ARMS
-	over_all = 1
+	wear_layer = MOB_OVERLAY_BASE
 
 /obj/item/clothing/head/rando
 	name = "red skull mask and cowl"
@@ -1450,7 +1469,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	name = "hotdog suit"
 	desc = "On close inspection, you notice a small collection of bones caught in the fabric of the suit. Spooky."
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
-	over_all = 1
+	wear_layer = MOB_OVERLAY_BASE
 	icon_state = "hotdogsuit"
 
 /obj/item/clothing/under/gimmick/vampire

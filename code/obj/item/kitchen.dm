@@ -17,7 +17,7 @@ TRAYS
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 7
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	desc = "A wooden tube, used to roll dough flat in order to make various edible objects. It's pretty sturdy."
 	stamina_damage = 40
 	stamina_cost = 15
@@ -39,7 +39,7 @@ TRAYS
 /obj/item/kitchen/utensil
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	force = 5.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -102,7 +102,7 @@ TRAYS
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span style='color:red'><b>[user]</b> fumbles [src] and jabs [his_or_her(user)]self.</span>")
+			user.visible_message("<span style='color:red'><b>[user]</b> fumbles [src] and jabs [himself_or_herself(user)].</span>")
 			random_brute_damage(user, 5)
 		if (!spoon_surgery(M,user))
 			return ..()
@@ -274,7 +274,7 @@ TRAYS
 	name = "package of plastic silverware"
 	desc = "These don't look very clean..."
 	icon_state = "plasticpackage"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/list/messages = list("The packaging decides to not open at this time. How rude.", "The plastic is just too strong for your fumbly fingers!", "Almost open! Wait...Nevermind.", "Almost there.....")
 
 	attack_self(mob/user as mob)
@@ -315,7 +315,7 @@ TRAYS
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	icon_state = "chop_closed"
 	item_state = "chop"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	attack_self(mob/user as mob)
 		if(src.icon_state == "chop_closed")
@@ -591,7 +591,7 @@ TRAYS
 	proc/unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
 		attack_particle(user,M)
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
-		playsound(get_turf(src), "sound/impact_sounds/plate_break.ogg", 50, 1)
+		playsound(src, "sound/impact_sounds/plate_break.ogg", 50, 1)
 
 		var/turf/shardturf = get_turf(M)
 
@@ -676,7 +676,7 @@ TRAYS
 		if(ordered_contents.len == max_food)
 			boutput(user, "That won't fit, \the [src] is too full!")
 			return
-		if(W.w_class > 3)
+		if(W.w_class > W_CLASS_NORMAL)
 			boutput(user, "You try to think of a way to put [W] on \the [src] but it's not possible! It's too large!")
 			return
 		user.drop_item()
@@ -750,7 +750,7 @@ TRAYS
 			unique_attack_garbage_fuck(M, user)
 		else
 			M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
-			playsound(get_turf(src), src.hit_sound, 30, 1)
+			playsound(src, src.hit_sound, 30, 1)
 			logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
 
 	attack_hand(mob/user as mob)
@@ -803,7 +803,7 @@ TRAYS
 	throw_speed = 3
 	throw_range = 4
 	force = 10
-	w_class = 4.0 //no trays of loaves in a backpack for you
+	w_class = W_CLASS_BULKY //no trays of loaves in a backpack for you
 	max_food = 30
 	throw_dist = 5
 	two_handed = 1 //decomment this line when porting over please
@@ -891,7 +891,7 @@ TRAYS
 
 	unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
 		M.TakeDamageAccountArmor("head", src.force, 0, 0, DAMAGE_BLUNT)
-		playsound(get_turf(src), "sound/weapons/trayhit.ogg", 50, 1)
+		playsound(src, "sound/weapons/trayhit.ogg", 50, 1)
 		src.visible_message("\The [src] falls out of [user]'s hands due to the impact!")
 		user.drop_item(src)
 
@@ -911,7 +911,7 @@ TRAYS
 	name = "rolling mat"
 	desc = "a bamboo mat for rolling sushi"
 	icon_state = "roller-0"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 	var/seaweed //0 or 1, storage variable for checking if there's a seaweed overlay without using resources pulling image files
 	var/rice //same :)
@@ -1089,7 +1089,7 @@ TRAYS
 	inhand_image_icon = 'icons/obj/foodNdrink/platestackinhand.dmi'
 	icon_state = "platestack1"
 	item_state = "platestack1"
-	w_class = 4 // why the fuck would you put a stack of plates in your backpack, also prevents shenanigans
+	w_class = W_CLASS_BULKY // why the fuck would you put a stack of plates in your backpack, also prevents shenanigans
 	var/platenum = 1 // used for targeting icon_states
 
 	var/platemax = 8

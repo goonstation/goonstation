@@ -245,7 +245,7 @@
 			if (!lights.overlays.len)
 				lights.overlays += missing
 
-	clicked(id, mob/user, list/params)
+	relay_click(id, mob/user, list/params)
 		if (user.loc != master)
 			boutput(user, "<span class='alert'>You're not in the pod doofus. (Call 1-800-CODER.)</span>")
 			remove_client(user.client)

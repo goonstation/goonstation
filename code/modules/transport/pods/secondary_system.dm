@@ -865,7 +865,7 @@
 		boutput(ship.pilot, "<span class='alert'><B>You crash into [M]!</B></span>")
 		shake_camera(M, 8, 16)
 		boutput(M, "<span class='alert'><B>The [src] crashes into [M]!</B></span>")
-		M.changeStatus("stunned", 80)
+		M.changeStatus("stunned", 8 SECONDS)
 		M.changeStatus("weakened", 5 SECONDS)
 		M.TakeDamageAccountArmor("chest", 20, damage_type = DAMAGE_BLUNT)
 		var/turf/target = get_edge_target_turf(ship, ship.dir)

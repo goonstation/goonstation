@@ -30,13 +30,13 @@
 	proc/update_icon()
 		if (!src.change_iris)
 			return
-		var/image/iris_image = image(src.icon, src, "eye-iris")
+		var/image/iris_image = image(src.icon, src, "[icon_state]-iris")
 		iris_image.color = "#0D84A8"
 		if (src.donor && src.donor.bioHolder && src.donor.bioHolder.mobAppearance) // good lord
 			var/datum/appearanceHolder/AH = src.donor.bioHolder.mobAppearance // I ain't gunna type that a billion times thanks
-			if ((src.body_side == L_ORGAN && AH.customization_second == "Heterochromia Left") || (src.body_side == R_ORGAN && AH.customization_second == "Heterochromia Right")) // dfhsgfhdgdapeiffert
+			if ((src.body_side == L_ORGAN && AH.customization_second.id == "hetrcoL") || (src.body_side == R_ORGAN && AH.customization_second.id == "hetcroR")) // dfhsgfhdgdapeiffert
 				iris_image.color = AH.customization_second_color
-			else if ((src.body_side == L_ORGAN && AH.customization_third == "Heterochromia Left") || (src.body_side == R_ORGAN && AH.customization_third == "Heterochromia Right")) // gbhjdghgfdbldf
+			else if ((src.body_side == L_ORGAN && AH.customization_third.id == "hetcroL") || (src.body_side == R_ORGAN && AH.customization_third == "hetcroR")) // gbhjdghgfdbldf
 				iris_image.color = AH.customization_third_color
 			else
 				iris_image.color = AH.e_color
@@ -105,7 +105,6 @@
 	icon_state = "eye-synth"
 	item_state = "plant"
 	synthetic = 1
-	made_from = "pharosium"
 
 /obj/item/organ/eye/cyber
 	name = "cybereye"
@@ -439,3 +438,22 @@
 				OA.eye_proj = /datum/projectile/laser/eyebeams/left
 		else // just us!
 			aholder.removeAbility(abil)
+
+/obj/item/organ/eye/lizard
+	name = "slit eye"
+	desc = "I guess its owner is just a lzard now. Ugh that pun was terrible. Not worth losing an eye over."
+	icon_state = "eye-lizard"
+
+obj/item/organ/eye/skeleton
+	name = "boney eye"
+	desc = "Yes it also has eye sockets. How this works is unknown."
+	icon_state = "eye-bone"
+	made_from = "bone" //duh
+	blood_reagent = "calcium"
+	change_iris = 0
+
+/obj/item/organ/eye/cow
+	name = "cow eye"
+	desc = "This takes 'hitting the bullseye' to another level."
+	icon_state = "eye-cow"
+	blood_reagent = "milk"

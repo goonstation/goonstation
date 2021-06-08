@@ -43,6 +43,9 @@
 		if(src.pixel_x == 0 && src.pixel_y == 0)
 			update_pixel_offset_dir(src,null,src.dir)
 
+/obj/item/device/radio/intercom/ui_state(mob/user)
+	return tgui_default_state
+
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)
 	src.add_fingerprint(user)
 	SPAWN_DBG(0)

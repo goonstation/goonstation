@@ -155,7 +155,7 @@
 		holder.owner:onAbsorb(M)
 		//Messages for everyone!
 		boutput(holder.owner, "<span class='alert'><strong>[pick("You draw the essence of death out of [M]'s corpse!", "You drain the last scraps of life out of [M]'s corpse!")]</strong></span>")
-		playsound(M, "sound/voice/wraith/wraithsoulsucc[rand(1, 2)].ogg", 75, 0)
+		playsound(M, "sound/voice/wraith/wraithsoulsucc[rand(1, 2)].ogg", 60, 0)
 		for (var/mob/living/V in viewers(7, holder.owner))
 			boutput(V, "<span class='alert'><strong>[pick("Black smoke rises from [M]'s corpse! Freaky!", "[M]'s corpse suddenly rots to nothing but bone in moments!")]</strong></span>")
 
@@ -243,7 +243,7 @@
 			var/mob/wraith/W = holder.owner
 			. = W.makeRevenant(T)		//return 0
 			if(!.)
-				playsound(W.loc, "sound/voice/wraith/reventer.ogg", 86, 0)
+				playsound(W.loc, "sound/voice/wraith/reventer.ogg", 80, 0)
 			return
 		else
 			boutput(usr, "<span class='alert'>There are no corpses here to possess!</span>")
@@ -448,7 +448,7 @@
 			boutput(W, "You can't become corporeal while inside another wraith! How would that even work?!")
 			return 1
 
-		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithhaunt.ogg", 100, 0)
+		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithhaunt.ogg", 80, 0)
 		return W.haunt()
 
 /datum/targetable/wraithAbility/spook
@@ -525,16 +525,11 @@
 			if (3)
 				boutput(holder.owner, "<span class='notice'>Smoke rises in the designated location.</span>")
 				var/turf/trgloc = get_turf(holder.owner)
-				var/list/affected = block(locate(trgloc.x - 3,trgloc.y - 3,trgloc.z), locate(trgloc.x + 3,trgloc.y + 3,trgloc.z))
-				if(!affected.len) return
-				var/list/centerview = view(4, trgloc)
-				for(var/atom/A in affected)
-					if(!(A in centerview)) continue
-					//if (A == holder.owner) continue
-					var/obj/smokeDummy/D = new(A)
-					SPAWN_DBG(15 SECONDS)
-						qdel(D)
-				particleMaster.SpawnSystem(new/datum/particleSystem/areaSmoke("#ffffff", 30, trgloc))
+				if (trgloc && isturf(trgloc))
+					var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread/(trgloc)
+					if (S)
+						S.set_up(15, 0, trgloc, null, "#000000")
+						S.start()
 				return 0
 			if (4)
 				boutput(holder.owner, "<span class='notice'>Matter from your realm appears near the designated location!</span>")

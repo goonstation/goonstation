@@ -1,5 +1,5 @@
 #define SUPPLY_OPEN_TIME 1 SECOND //Time it takes to open supply door in seconds.
-#define SUPPLY_CLOSE_TIME 13 SECONDS //Time it takes to close supply door in seconds.
+#define SUPPLY_CLOSE_TIME 15 SECONDS //Time it takes to close supply door in seconds.
 
 /datum/shipping_market
 
@@ -8,7 +8,7 @@
 	var/time_until_shift = 0.0
 	var/demand_multiplier = 2
 	var/list/active_traders = list()
-	var/max_buy_items_at_once = 20
+	var/max_buy_items_at_once = 99
 	var/last_market_update = 0
 
 	var/list/supply_requests = list() // Pending requests, of type /datum/supply_order
@@ -143,7 +143,7 @@
 		// send artifact resupply
 		if(prob(modifier*40*pap?.lastAnalysis)) // range from 0% to ~78% for fully researched t4 artifact
 			if(!src.artifact_resupply_amount)
-				SPAWN_DBG(rand(3,8) MINUTES)
+				SPAWN_DBG(rand(1,5) MINUTES)
 					// message
 					var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 					var/datum/signal/pdaSignal = get_free_signal()
@@ -240,7 +240,7 @@
 		if(transmit_connection != null)
 			transmit_connection.post_signal(null, pdaSignal)
 
-	proc/receive_crate(obj/storage/S)
+	proc/receive_crate(atom/movable/shipped_thing)
 
 		var/turf/spawnpoint
 		for(var/turf/T in get_area_turfs(/area/supply/spawn_point))
@@ -260,11 +260,11 @@
 			logTheThing("debug", null, null, "<b>Shipping: </b> No target turfs found! Can't deliver crate")
 			return
 
-		S.set_loc(spawnpoint)
+		shipped_thing.set_loc(spawnpoint)
 
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [S.name].")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [shipped_thing.name].")
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		transmit_connection.post_signal(null, pdaSignal)
 
@@ -280,7 +280,7 @@
 					if (P && !P.density)
 						P.close()
 
-		S.throw_at(target, 100, 1)
+		shipped_thing.throw_at(target, 100, 1)
 
 // Debugging and admin verbs (mostly coder)
 

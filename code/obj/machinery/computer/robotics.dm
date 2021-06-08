@@ -159,8 +159,9 @@
 							logTheThing("combat", usr, R, "has activated the robot killswitch process on [constructTarget(R,"combat")]")
 							if(R.client)
 								boutput(R, "<span class='alert'><b>Killswitch process activated.</b></span>")
-							R.killswitch = 1
-							A.killswitch_at = TIME + 1 MINUTE
+								boutput(R, "<span class='alert'><b>Killswitch will engage in 1 minute.</b></span>")
+							R.killswitch = TRUE
+							R.killswitch_at = TIME + 1 MINUTE
 						else if(istype(A))
 							var/mob/message = A.get_message_mob()
 							message_admins("<span class='alert'>[key_name(usr)] has activated the AI self destruct on [key_name(message)].</span>")
@@ -168,7 +169,7 @@
 							if(message.client)
 								boutput(message, "<span class='alert'><b>AI Killswitch process activated.</b></span>")
 								boutput(message, "<span class='alert'><b>Killswitch will engage in 3 minutes.</b></span>")
-							A.killswitch = 1
+							A.killswitch = TRUE
 							A.killswitch_at = TIME + 3 MINUTES
 					else
 						boutput(usr, "<span class='alert'>Access Denied.</span>")

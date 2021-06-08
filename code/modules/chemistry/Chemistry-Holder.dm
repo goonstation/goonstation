@@ -87,7 +87,7 @@ datum
 			covered_cache_volume = total_volume
 
 		proc/play_mix_sound(var/mix_sound)
-			playsound(get_turf(my_atom), mix_sound, 80, 1, 3)
+			playsound(my_atom, mix_sound, 80, 1, 3)
 
 		proc/copy_to(var/datum/reagents/target, var/multiplier = 1, var/do_not_react = 0, var/copy_temperature = 0)
 			if(!target || target == src) return
@@ -274,6 +274,7 @@ datum
 				target.reagents = new
 
 			var/datum/reagents/target_reagents = target.reagents
+			amount = min(amount, target_reagents.maximum_volume - target_reagents.total_volume)
 
 			if (do_fluid_react && issimulatedturf(target))
 				var/turf/simulated/T = target
@@ -406,7 +407,7 @@ datum
 					var/total_matching_reagents = 0
 					var/created_volume = src.maximum_volume
 					for(var/B in C.required_reagents)
-						var/B_required_volume = max(1, C.required_reagents[B])
+						var/B_required_volume = max(CHEM_EPSILON, C.required_reagents[B])
 
 
 						//var/amount = get_reagent_amount(B)

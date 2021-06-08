@@ -204,7 +204,7 @@
 	name = "feather"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "feather"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	p_class = 1
 	burn_point = 220
 	burn_output = 300
@@ -527,7 +527,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	throwforce = 2.0
 	throw_speed = 1
 	throw_range = 8
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	max_stack = 20
 
@@ -1139,7 +1139,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	desc = "A little golden brooch that makes you feel compelled to yell silly things."
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "moonbrooch"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/activated = 0
 
 	verb/moon_prism_power()
@@ -1175,7 +1175,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	item_state = "moonstick"
 	flags = FPRINT | TABLEPASS | ONBELT
 	force = 2.0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throwforce = 2.0
 	throw_speed = 3
 	throw_range = 5
@@ -1223,7 +1223,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 /mob/living/carbon/human/proc/sailormoon_reshape() // stolen from Spy's tommyize stuff
 	var/datum/appearanceHolder/AH = new
 	AH.gender = "female"
-	AH.customization_first = "Sailor Moon"
+	AH.customization_first = new /datum/customization_style/hair/gimmick/sailor_moon
 	AH.customization_first_color = "#FFD700"
 	AH.owner = src
 	AH.parentHolder = src.bioHolder
@@ -1265,7 +1265,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 3.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -1284,7 +1284,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		if (!AM)
 			return ..()
 		user.visible_message("<span class='alert'><b>[user] somehow cuts [AM] out of [M] with [src]!</b></span>")
-		playsound(get_turf(M), src.hitsound, 50, 1)
+		playsound(M, src.hitsound, 50, 1)
 		if (istype(AM, /obj/item))
 			user.u_equip(AM)
 		AM.set_loc(get_turf(M))
@@ -1519,21 +1519,27 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		else
 			src.bangfired = 1
 			user?.visible_message("<span class='alert'><span class='alert'>[user] fires [src][target ? " at [target]" : null]! [description]</span>")
-			playsound(get_turf(user), "sound/musical_instruments/Trombone_Failiure.ogg", 50, 1)
+			playsound(user, "sound/musical_instruments/Trombone_Failiure.ogg", 50, 1)
 			icon_state = "bangflag[icon_state]"
 			return
 
 /obj/item/bang_gun/ak47
 	name = "ak-477"
+	icon = 'icons/obj/48x32.dmi'
 	icon_state = "ak47"
+	item_state = "ak47"
 	desc = "There are 30 bullets left! Each shot will currently use 3 bullets!"
 	description = "A bang flag unfurls out of the barrel!"
+	two_handed = 1
 
 /obj/item/bang_gun/hunting_rifle
 	name = "Old Hunting Rifle"
-	icon_state = "hunting_rifle"
+	icon = 'icons/obj/48x32.dmi'
+	icon_state = "ohr"
+	item_state = "ohr"
 	desc = "There are 4 bullets left! Each shot will currently use 1 bullet!"
 	description = "A bang flag unfurls out of the barrel!"
+	two_handed = 1
 
 /*
 /obj/item // if I accidentally commit this uncommented PLEASE KILL ME tia <3
@@ -1576,7 +1582,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	desc = "How can you tell it's blessed? Well, just look at it! It's so obvious!"
 	icon = 'icons/misc/HaineSpriteDump.dmi'
 	icon_state = "ballbearing"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	force = 7
 	throwforce = 5
 	stamina_damage = 25
@@ -1614,7 +1620,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "thing"
 	flags = FPRINT | CONDUCT | TABLEPASS
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	force = 10
 	throwforce = 7
 	mats = 50
@@ -1628,7 +1634,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	desc = "A little model of the NSS Destiny. How spiffy!"
 	icon = 'icons/misc/HaineSpriteDump.dmi'
 	icon_state = "destiny"
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 /obj/test_knife_switch_switch
 	name = "knife switch switch"

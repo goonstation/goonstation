@@ -21,7 +21,7 @@
 	desc = "A decent yellow cake that seems to be glowing a bit. Is this safe?"
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "yellowcake"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	amount = 1
 	heal_amt = 2
 	initial_volume = 5
@@ -38,7 +38,7 @@
 	use_bite_mask = 0
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	initial_volume = 100
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	var/list/cake_bases //stores the name of the base types of each layer of cake i.e. ("custom","gateau","meat")
 	var/sliced = FALSE
 	var/static/list/frostingstyles = list("classic","top swirls","bottom swirls","spirals","rose spirals")
@@ -201,7 +201,7 @@
 			schild.pixel_y = rand(-6, 6)
 			for(var/food_effect in src.food_effects)
 				schild.food_effects |= food_effect
-			schild.w_class = 1
+			schild.w_class = W_CLASS_TINY
 			schild.quality = src.quality
 			schild.name = "slice of [src.name]"
 			schild.desc = "a delicious slice of cake!"

@@ -1,7 +1,6 @@
 /obj/item/clothing/head/fruithat
 	name = "fruit basket hat"
 	desc = "Where do these things even come from? It reeks of welch, and it's not the grapes."
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "fruithat"
 	var/bites = 8
 	var/list/youarebad = list("You're a liar.", "You're a cheat.","You're a fraud.") // h e h

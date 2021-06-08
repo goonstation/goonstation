@@ -95,7 +95,7 @@
 			if (!src.anchored)
 				. += "The floor bolts have been unsecured. The bomb can be moved around."
 			else
-				. += "It is firmly anchored to the floor by its floor bolts. A screwdriver could undo them."
+				. += "It is firmly anchored to the floor by its floor bolts."
 
 			switch(src._health)
 				if(80 to 125)
@@ -191,6 +191,9 @@
 					timer_modifier = src.timer_modifier_disk
 					user.visible_message("<span class='alert'><b>[user]</b> inserts [W.name], extending the bomb's timer by [src.timer_modifier_disk / 10] seconds!</span>")
 
+					if (user.mind && user.mind.assigned_role == "Captain") //the fat frog did it!
+						user.unlock_medal("Brown Pants", 1)
+
 				playsound(src.loc, "sound/machines/ping.ogg", 100, 0)
 				logTheThing("bombing", user, null, "inserted [W.name] into [src] at [log_loc(src)], modifying the timer by [timer_modifier / 10] seconds.")
 				user.u_equip(W)
@@ -228,7 +231,8 @@
 
 			if (src.armed && src.anchored && !(user.mind in NUKEMODE.syndicates))
 				if (isscrewingtool(W))
-					actions.start(new /datum/action/bar/icon/unanchorNuke(src), user)
+					// Give the player a notice so they realize what has happened
+					boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
 					return
 				//else if (istype(W,/obj/item/wirecutters/))
 				//	user.visible_message("<b>[user]</b> opens up [src]'s wiring panel and takes a look.")
@@ -236,7 +240,7 @@
 				//	return
 
 		if (istype(W, /obj/item/wrench/battle) && src._health <= src._max_health)
-			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[usr] repairs the [src]!")
+			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[usr] repairs the [src]!", null)
 			return
 
 		if (W && !(istool(W, TOOL_SCREWING | TOOL_SNIPPING) || istype(W, /obj/item/disk/data/floppy/read_only/authentication)))

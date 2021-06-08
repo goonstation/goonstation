@@ -66,12 +66,13 @@
 
 	var/non_murderous_failure = 0
 	var/mob/living/carbon/human/H = M
+	var/datum/appearanceHolder/AH = M.bioHolder.mobAppearance
 	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
 		boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
 		non_murderous_failure = BARBERY_FAILURE
 
-	if(M.bioHolder.mobAppearance.customization_first == "None")
+	if(istype(AH.customization_first,/datum/customization_style/none) && istype(AH.customization_second,/datum/customization_style/none) && istype(AH.customization_third,/datum/customization_style/none))
 		boutput(user, "<span class='alert'>There is nothing to cut!</span>")
 		non_murderous_failure = BARBERY_FAILURE
 
@@ -94,7 +95,8 @@
 			boutput(user, "Never mind.")
 			return
 
-		var/new_style = input(user, "Please select style", "Style")  as null|anything in customization_styles + customization_styles_gimmick
+		var/list/customization_types = concrete_typesof(/datum/customization_style)-concrete_typesof(/datum/customization_style/biological)
+		var/new_style = select_custom_style(customization_types, user)
 
 		if (!new_style) // I'd prefer not to go through all of the hair styles and rank them based on hairiness
 			boutput(user, "Never mind.") // So I guess it'll be on the honor system for now not to give balding folk rockin' 'fros
@@ -114,10 +116,6 @@
 		boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
 		non_murderous_failure = BARBERY_FAILURE
 
-	if(M.bioHolder.mobAppearance.customization_second == "None")
-		boutput(user, "<span class='alert'>You can't get a closer shave than that!</span>")
-		non_murderous_failure = BARBERY_FAILURE
-
 	if(issilicon(M))
 		boutput(user, "<span class='alert'>Shave a robot? Shave a robot!?? SHAVE A ROBOT?!?!??</span>")
 		non_murderous_failure = BARBERY_FAILURE
@@ -134,8 +132,7 @@
 			non_murderous_failure = BARBERY_FAILURE
 		thing.visible_message("<span class='alert'><b>[user]</b> quickly shaves off [M]'s beard!</span>")
 		M.bioHolder.AddEffect("arcane_shame", timeleft = 120)
-		M.bioHolder.mobAppearance.customization_second = "None"
-		M.cust_two_state = "None"
+		M.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
 		M.set_face_icon_dirty()
 		M.emote("cry")
 		M.emote("scream")
@@ -164,10 +161,8 @@
 			boutput(user, "Never mind.")
 			return
 
-		var/list/facehair = list("none", "Watson", "Chaplin", "Selleck", "Van Dyke", "Hogan",\
-		"Neckbeard", "Elvis", "Abe", "Chinstrap", "Hipster", "Wizard",\
-		"Goatee", "Full Beard", "Long Beard")
-		var/new_style = input(user, "Please select facial style", "Facial Style")  as null|anything in facehair
+		var/list/facehair = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + /datum/customization_style/none
+		var/new_style = select_custom_style(facehair, user)
 
 		if (!new_style) // otherwise it alternates between non-functional and fucking useless
 			boutput(user, "Never mind.")
@@ -341,9 +336,6 @@
 											M, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something on your head.",\
 									 user, "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s fishy head, knocking loose some space barnnacles.")
 				return 0
-			if("dwarf")
-				boutput(user, "You duck down slightly to cut [M]'s hair.")
-				return 1
 			if("monkey" || "sea monkey")
 				M.emote("scream")
 				playsound(M, "sound/impact_sounds/Slimy_Cut_1.ogg", 100, 1)
@@ -435,7 +427,7 @@
 	var/mob/living/carbon/human/M
 	var/mob/living/carbon/human/user
 	var/degree_of_success
-	var/new_style
+	var/datum/customization_style/new_style
 	var/which_part
 
 
@@ -464,16 +456,16 @@
 			return
 
 	onEnd()
-		var/list/hair_list = customization_styles + customization_styles_gimmick
+		var/list/hair_list = concrete_typesof(/datum/customization_style)-concrete_typesof(/datum/customization_style/biological)
 		switch (degree_of_success)
 			if (0) // cut their head up and hair off
 				playsound(M, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
 				user.tri_message("<span class='alert'>[user] mangles the absolute fuck out of [M]'s head!.</span>",\
 				M, "<span class='alert'>[user] mangles the absolute fuck out of your head!</span>",\
 				user, "<span class='alert'>You mangle the absolute fuck out of [M]'s head!</span>")
-				M.bioHolder.mobAppearance.customization_first = "None"
-				M.bioHolder.mobAppearance.customization_second = "None"
-				M.bioHolder.mobAppearance.customization_third = "None"
+				M.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+				M.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+				M.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 				M.TakeDamage("head", rand(10,20), 0)
 				take_bleeding_damage(M, user, 2, DAMAGE_CUT, 1)
 				M.emote("scream")
@@ -484,40 +476,37 @@
 				user, "<span class='alert'>You cut all of [M]'s hair off!</span>")
 				var/obj/item/wig = M.create_wig()
 				wig.set_loc(M.loc)
-				M.bioHolder.mobAppearance.customization_first = "None"
-				M.bioHolder.mobAppearance.customization_second = "None"
-				M.bioHolder.mobAppearance.customization_third = "None"
+				M.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+				M.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+				M.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 				M.TakeDamage("head", rand(5,10), 0)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				M.emote("scream")
 			if (2) // you cut their hair into something else
 				playsound(M, "sound/items/Scissor.ogg", 100, 1)
-				new_style = pick(hair_list)
-				M.cust_one_state = hair_list[new_style] || hair_list[new_style]
+				var/hair_type = pick(hair_list)
+				new_style = new hair_type
 				M.bioHolder.mobAppearance.customization_first = new_style
 				user.tri_message("[user] cuts [M]'s hair.",\
 											M, "<span class='notice'>[user] cuts your hair.</span>",\
 										user, "<span class='notice'>You cut [M]'s hair, but it doesn't quite look like what you had in mind! Maybe they wont notice?</span>")
 			if (3) // you did it !!
-				if (new_style == "None")
+				if (istype(new_style,/datum/customization_style/none))
 					var/obj/item/wig = M.create_wig()
 					wig.set_loc(M.loc)
-					M.bioHolder.mobAppearance.customization_first = "None"
-					M.bioHolder.mobAppearance.customization_second = "None"
-					M.bioHolder.mobAppearance.customization_third = "None"
+					M.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+					M.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+					M.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 				else
 					user.tri_message("[user] cuts [M]'s hair.",\
 					M, "<span class='notice'>[user] cuts your hair.</span>",\
 					user, "<span class='notice'>You cut [M]'s hair.</span>")
 					switch(which_part)
 						if (1)
-							M.cust_one_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
 							M.bioHolder.mobAppearance.customization_first = new_style
 						if (2)
-							M.cust_two_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
 							M.bioHolder.mobAppearance.customization_second = new_style
 						if (3)
-							M.cust_three_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
 							M.bioHolder.mobAppearance.customization_third = new_style
 
 		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing
@@ -535,7 +524,7 @@
 	var/mob/living/carbon/human/M
 	var/mob/living/carbon/human/user
 	var/degree_of_success
-	var/new_style
+	var/datum/customization_style/new_style
 	var/which_part
 
 	New(var/mob/living/carbon/human/barbee, var/mob/living/carbon/human/barber, var/succ, var/nustyle, var/whichp)
@@ -562,19 +551,16 @@
 			return
 
 	onEnd()
-		var/list/mustaches =list("Watson", "Chaplin", "Selleck", "Van Dyke", "Hogan")
-		var/list/beards  = list("Neckbeard", "Elvis", "Abe", "Chinstrap", "Hipster", "Wizard")
-		var/list/full = list("Goatee", "Full Beard", "Long Beard")
-		var/list/hair_list = mustaches + beards + full
+		var/list/hair_list = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache)
 		switch (degree_of_success)
 			if (0) // cut their head up and hair off
 				playsound(M, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
 				user.tri_message("<span class='alert'>[user] mangles the absolute fuck out of [M]'s head!.</span>",\
 				M, "<span class='alert'>[user] mangles the absolute fuck out of your head!</span>",\
 				user, "<span class='alert'>You mangle the absolute fuck out of [M]'s head!</span>")
-				M.bioHolder.mobAppearance.customization_first = "None"
-				M.bioHolder.mobAppearance.customization_second = "None"
-				M.bioHolder.mobAppearance.customization_third = "None"
+				M.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+				M.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+				M.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 				M.TakeDamage("head", rand(10,20), 0)
 				take_bleeding_damage(M, user, 2, DAMAGE_CUT, 1)
 				M.emote("scream")
@@ -585,16 +571,16 @@
 				user, "<span class='alert'>You cut all of [M]'s hair off!</span>")
 				var/obj/item/wig = M.create_wig()
 				wig.set_loc(M.loc)
-				M.bioHolder.mobAppearance.customization_first = "None"
-				M.bioHolder.mobAppearance.customization_second = "None"
-				M.bioHolder.mobAppearance.customization_third = "None"
+				M.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+				M.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+				M.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 				M.TakeDamage("head", rand(5,10), 0)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				M.emote("scream")
 			if (2) // you cut their hair into something else
 				playsound(user, "sound/items/Scissor.ogg", 100, 1)
-				new_style = pick(hair_list)
-				M.cust_two_state = hair_list[new_style] || hair_list[new_style]
+				var/hair_type = pick(hair_list)
+				new_style = new hair_type
 				M.bioHolder.mobAppearance.customization_second = new_style
 				user.tri_message("[user] finishes shaving [M].",\
 											M, "<span class='notice'>[user] shaves you.</span>",\
@@ -603,22 +589,19 @@
 				user.tri_message("[user] finishes shaving [M].",\
 											M, "<span class='notice'>[user] shaves you.</span>",\
 										user, "<span class='notice'>You shave [M].</span>")
-				if (new_style == "None")
+				if (istype(new_style,/datum/customization_style/none))
 					var/obj/item/wig = M.create_wig()
 					wig.set_loc(M.loc)
-					M.bioHolder.mobAppearance.customization_first = "None"
-					M.bioHolder.mobAppearance.customization_second = "None"
-					M.bioHolder.mobAppearance.customization_third = "None"
+					M.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+					M.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+					M.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 				else
 					switch(which_part)
 						if (1)
-							M.cust_one_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
 							M.bioHolder.mobAppearance.customization_first = new_style
 						if (2)
-							M.cust_two_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
 							M.bioHolder.mobAppearance.customization_second = new_style
 						if (3)
-							M.cust_three_state = customization_styles[new_style] || customization_styles_gimmick[new_style]
 							M.bioHolder.mobAppearance.customization_third = new_style
 		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing
 		M.update_colorful_parts()

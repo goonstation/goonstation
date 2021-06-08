@@ -656,7 +656,7 @@
 	icon_state = "spraycan"
 	item_state = "spraycan"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/in_use = 0
 
 	afterattack(target as turf|obj, mob/user as mob)
@@ -1186,7 +1186,7 @@
 	name = "gang recruitment flyer"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper_caution"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/datum/gang/gang = null
 
 	attack(mob/target as mob, mob/user as mob)
@@ -1258,7 +1258,7 @@
 			boutput(target, "<span class='alert'>That gang is full!</span>")
 			return
 
-		var/joingang = alert(target,"Do you wish to join [src.gang.gang_name]?", "Gang", "No", "Yes")
+		var/joingang = tgui_alert(target, "Do you wish to join [src.gang.gang_name]?", "[src]", list("Yes", "No"), timeout = 10 SECONDS)
 		if (joingang == "No") return
 
 		target.mind.gang = gang

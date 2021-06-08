@@ -4,10 +4,10 @@
 	icon = 'icons/obj/foodNdrink/food_popsicles.dmi'
 	icon_state = "stick"
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	stamina_damage = 0
 	stamina_cost = 0
 	var/broken = 0
@@ -15,7 +15,7 @@
 	attack_self(mob/user)
 		if (user.find_in_hand(src) && !src.broken)
 			user.visible_message("<b>[user]</b> bends [src] a little too far back and it snaps in half. Shoot!")
-			playsound(get_turf(user), "sound/impact_sounds/Flesh_Crush_1.ogg", 60, 1, 0, 2)
+			playsound(user, "sound/impact_sounds/Flesh_Crush_1.ogg", 60, 1, 0, 2)
 			src.name = "broken popsicle stick"
 			src.icon_state = "stick-broken"
 			src.broken = 1
@@ -26,7 +26,7 @@
 	icon = 'icons/obj/foodNdrink/food_popsicles.dmi'
 	icon_state = "popsiclewrapper"
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 6
 

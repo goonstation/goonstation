@@ -35,7 +35,7 @@
 		return
 
 	split_stack(var/toRemove)
-		if(toRemove >= amount) return 0
+		if(toRemove >= amount || toRemove < 1) return 0
 		var/obj/item/material_piece/P = unpool(src.type)
 		P.set_loc(src.loc)
 		P.setMaterial(copyMaterial(src.material))

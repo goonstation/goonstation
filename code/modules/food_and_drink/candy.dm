@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 /obj/item/reagent_containers/food/snacks/candy
 	name = "candy"
 	desc = "Man, that shit looks good. I bet it's got nougat. Fuck."
@@ -37,6 +38,9 @@
 			new /obj/item/razor_blade( get_turf(src) )
 		..()
 
+// just a non-abstract version
+/obj/item/reagent_containers/food/snacks/candy/regular
+
 /obj/item/reagent_containers/food/snacks/candy/nougat
 	name = "nougat bar"
 	desc = "Whoa, that totally has nougat. Heck yes."
@@ -49,8 +53,8 @@
 			icon_state = "nougat1"
 
 /obj/item/reagent_containers/food/snacks/candy/caramel
-	name = "Goatze's Caramel Cremes"
-	desc = "You know you've thought of this when reading the name.  Shame on you."
+	name = "'Hole Zone Layer' caramel creme"
+	desc = "You know that missing O-Zone from earth? We made it in a candy!"
 	real_name = "caramel"
 	icon_state = "caramel"
 	food_effects = list("food_energized")
@@ -164,7 +168,8 @@
 	real_name = "Hetz's Cup"
 	initial_reagents = list("chocolate" = 10)
 
-/obj/item/reagent_containers/food/snacks/candy/jellybean/
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
+/obj/item/reagent_containers/food/snacks/candy/jellybean
 	name = "jelly bean"
 	desc = "YOU SHOULDN'T SEE THIS OBJECT"
 	icon_state = "bean"

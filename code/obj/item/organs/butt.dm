@@ -11,7 +11,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "butt-nc"
 	force = 1.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 1.0
 	throw_speed = 3
 	throw_range = 5
@@ -145,7 +145,7 @@
 
 			//Commence owie
 			take_bleeding_damage(target, null, rand(4, 8), DAMAGE_BLUNT)	//My
-			playsound(get_turf(target), "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1) //head,
+			playsound(target, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1) //head,
 			target.emote("scream") 									//FUCKING
 			target.TakeDamage("head", rand(8, 16), 0) 				//OW!
 

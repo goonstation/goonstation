@@ -237,7 +237,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 
 			var/list/placed = list()
 			for(var/turf/T in solidTiles)
-				if(!isnull(T) && T.loc && ((T.loc.type == /area/space) || istype(T.loc , /area/allowGenerate)))
+				if((T?.loc?.type == /area/space) || istype(T?.loc , /area/allowGenerate))
 					var/turf/simulated/wall/asteroid/AST = T.ReplaceWith(/turf/simulated/wall/asteroid)
 					placed.Add(AST)
 					AST.quality = quality
@@ -355,7 +355,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		return P
 	else
 		if(eligible.len)
-			var/datum/generatorPrefab/P = pickweight(eligible)
+			var/datum/generatorPrefab/P = weighted_pick(eligible)
 			if(P.type in miningModifiersUsed)
 				miningModifiersUsed[P.type] = (miningModifiersUsed[P.type] + 1)
 			else

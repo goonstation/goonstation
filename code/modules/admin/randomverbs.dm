@@ -68,7 +68,7 @@
 
 			var/PLoc = pick_landmark(LANDMARK_PRISONWARP)
 			if (PLoc)
-				M.changeStatus("paralysis", 80)
+				M.changeStatus("paralysis", 8 SECONDS)
 				M.set_loc(PLoc)
 			else
 				message_admins("[key_name(usr)] couldn't send [key_name(M)] to the prison zone (no landmark found).")
@@ -99,6 +99,7 @@
 	if (!msg)
 		return
 	if (src?.holder)
+		M.playsound_local(M, "sound/misc/prayerchime.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 		boutput(Mclient.mob, __blue("You hear a voice in your head... <i>[msg]</i>"))
 
 	logTheThing("admin", src.mob, Mclient.mob, "Subtle Messaged [constructTarget(Mclient.mob,"admin")]: [msg]")
@@ -771,21 +772,24 @@
 			src.tf_holder.mobAppearance.flavor_text = new_text
 
 		else if (href_list["customization_first"])
-			var/new_style = input(usr, "Please select style", "Polymorph Menu")  as null|anything in (customization_styles + customization_styles_gimmick)
+			var/list/customization_types = concrete_typesof(/datum/customization_style)
+			var/new_style = select_custom_style(customization_types, usr)
 
 			if (new_style)
 				src.tf_holder.mobAppearance.customization_first = new_style
 				src.tf_holder.mobAppearance.customization_first_original = new_style
 
 		else if (href_list["customization_second"])
-			var/new_style = input(usr, "Please select style", "Polymorph Menu")  as null|anything in (customization_styles + customization_styles_gimmick)
+			var/list/customization_types = concrete_typesof(/datum/customization_style)
+			var/new_style = select_custom_style(customization_types, usr)
 
 			if (new_style)
 				src.tf_holder.mobAppearance.customization_second = new_style
 				src.tf_holder.mobAppearance.customization_second_original = new_style
 
 		else if (href_list["customization_third"])
-			var/new_style = input(usr, "Please select style", "Polymorph Menu")  as null|anything in (customization_styles + customization_styles_gimmick)
+			var/list/customization_types = concrete_typesof(/datum/customization_style)
+			var/new_style = select_custom_style(customization_types, usr)
 
 			if (new_style)
 				src.tf_holder.mobAppearance.customization_third = new_style
@@ -926,13 +930,13 @@
 
 		dat += "<hr><b>Bottom Detail</b><br>"
 		dat += "<a href='byond://?src=\ref[src];hair=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customization_first_color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customization_first_color]\"><tr><td>C1</td></tr></table></font>"
-		dat += "Style: <a href='byond://?src=\ref[src];customization_first=input'>[src.tf_holder.mobAppearance.customization_first]</a>"
+		dat += "Style: <a href='byond://?src=\ref[src];customization_first=input'>[src.tf_holder.mobAppearance.customization_first.name]</a>"
 		dat += "<hr><b>Mid Detail</b><br>"
 		dat += "<a href='byond://?src=\ref[src];facial=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customization_second_color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customization_second_color]\"><tr><td>C2</td></tr></table></font>"
-		dat += "Style: <a href='byond://?src=\ref[src];customization_second=input'>[src.tf_holder.mobAppearance.customization_second]</a>"
+		dat += "Style: <a href='byond://?src=\ref[src];customization_second=input'>[src.tf_holder.mobAppearance.customization_second.name]</a>"
 		dat += "<hr><b>Top Detail</b><br>"
 		dat += "<a href='byond://?src=\ref[src];detail=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customization_third_color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customization_third_color]\"><tr><td>C3</td></tr></table></font>"
-		dat += "Style: <a href='byond://?src=\ref[src];customization_third=input'>[src.tf_holder.mobAppearance.customization_third]</a>"
+		dat += "Style: <a href='byond://?src=\ref[src];customization_third=input'>[src.tf_holder.mobAppearance.customization_third.name]</a>"
 
 		dat += "<hr><b>Eyes</b><br>"
 		dat += "<a href='byond://?src=\ref[src];eyes=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.e_color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.e_color]\"><tr><td>EC</td></tr></table></font>"
@@ -1014,15 +1018,15 @@
 		if (AH.customization_first_color == null)
 			AH.customization_first_color = "#101010"
 		if (AH.customization_first == null)
-			AH.customization_first = "None"
+			AH.customization_first = new /datum/customization_style/none
 		if (AH.customization_second_color == null)
 			AH.customization_second_color = "#101010"
 		if (AH.customization_second == null)
-			AH.customization_second = "None"
+			AH.customization_second = new /datum/customization_style/none
 		if (AH.customization_third_color == null)
 			AH.customization_third_color = "#101010"
 		if (AH.customization_third == null)
-			AH.customization_third = "None"
+			AH.customization_third = new /datum/customization_style/none
 		if (AH.e_color == null)
 			AH.e_color = "#101010"
 		if (AH.u_color == null)
@@ -1068,31 +1072,25 @@
 			src.preview_icon.Blend(eyes_s, ICON_OVERLAY)
 
 		if(!src.mutantrace?.override_hair)
-			customization_first_r = customization_styles[src.tf_holder.mobAppearance.customization_first]
+			customization_first_r = src.tf_holder.mobAppearance.customization_first.id
 			if(!customization_first_r)
-				customization_first_r = customization_styles_gimmick[src.tf_holder.mobAppearance.customization_first]
-				if(!customization_first_r)
-					customization_first_r = "None"
+				customization_first_r = "none"
 			var/icon/hair_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_first_r)
 			hair_s.Blend(src.tf_holder.mobAppearance.customization_first_color, ICON_MULTIPLY)
 			eyes_s.Blend(hair_s, ICON_OVERLAY)
 
 		if(!src.mutantrace?.override_beard)
-			customization_second_r = customization_styles[src.tf_holder.mobAppearance.customization_second]
+			customization_second_r = src.tf_holder.mobAppearance.customization_second.id
 			if(!customization_second_r)
-				customization_second_r = customization_styles_gimmick[src.tf_holder.mobAppearance.customization_second]
-				if(!customization_second_r)
-					customization_second_r = "None"
+				customization_second_r = "none"
 			var/icon/facial_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_second_r)
 			facial_s.Blend(src.tf_holder.mobAppearance.customization_second_color, ICON_MULTIPLY)
 			eyes_s.Blend(facial_s, ICON_OVERLAY)
 
 		if(!src.mutantrace?.override_detail)
-			customization_third_r = customization_styles[src.tf_holder.mobAppearance.customization_third]
+			customization_third_r = src.tf_holder.mobAppearance.customization_third.id
 			if(!customization_third_r)
-				customization_third_r = customization_styles_gimmick[src.tf_holder.mobAppearance.customization_third]
-				if(!customization_third_r)
-					customization_third_r = "none"
+				customization_third_r = "none"
 			var/icon/detail_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_third_r)
 			detail_s.Blend(src.tf_holder.mobAppearance.customization_third_color, ICON_MULTIPLY)
 			eyes_s.Blend(detail_s, ICON_OVERLAY)
@@ -2826,3 +2824,38 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 				message_admins("[key_name(src)] generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
+
+/client/proc/cmd_special_shuttle()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Special Shuttle"
+	set desc = "Spawn in a special escape shuttle"
+	admin_only
+	if(src.holder.level >= LEVEL_ADMIN)
+		var/datum/prefab_shuttle/shuttle = tgui_input_list(src, "Select a shuttle", "Special Shuttle", prefab_shuttles)
+		if (!shuttle) return
+		var/loaded = file2text(shuttle.prefab_path)
+		var/turf/T = landmarks[shuttle.landmark][1]
+		if(T && loaded)
+			var/dmm_suite/D = new/dmm_suite()
+			D.read_map(loaded,T.x,T.y,T.z,shuttle.prefab_path, DMM_OVERWRITE_OBJS)
+			logTheThing("admin", src, null, "replaced the shuttle with [shuttle].")
+			logTheThing("diary", src, null, "replaced the shuttle with [shuttle].", "admin")
+			message_admins("[key_name(src)] replaced the shuttle with [shuttle].")
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+
+/client/proc/cmd_admin_ship_movable_to_cargo(atom/movable/AM)
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
+	set name = "Ship to Cargo"
+	set popup_menu = 0
+	admin_only
+
+	if (AM.anchored)
+		boutput(src, "Target is anchored and you probably shouldn't be shipping it!")
+		return
+
+	if (tgui_alert(src.mob, "Are you sure you want to ship [AM]?", "Confirmation", list("Yes", "No")) == "Yes")
+		shippingmarket.receive_crate(AM)
+		logTheThing("admin", usr, AM, "has shipped [AM] to cargo.")
+		logTheThing("diary", usr, AM, "has shipped [AM] to cargo.", "admin")
+		message_admins("[key_name(usr)] has shipped [AM] to cargo.")

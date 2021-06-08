@@ -343,6 +343,13 @@
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
+
+		//remove problem traits from people on pod_wars
+		if (istype(ticker.mode, /datum/game_mode/pod_wars))
+			H.traitHolder.removeTrait("immigrant")
+			H.traitHolder.removeTrait("pilot")
+			H.traitHolder.removeTrait("puritan")
+
 		H.Equip_Job_Slots(JOB)
 
 	var/possible_new_mob = JOB.special_setup(src, no_special_spawn) //If special_setup creates a new mob for us, it should return the new mob!
@@ -444,7 +451,7 @@
 				if(ispath(X))
 					src.equip_new_if_possible(X, slot_in_backpack)
 			if(JOB.receives_disk)
-				var/obj/item/disk/data/floppy/D = new /obj/item/disk/data/floppy(src)
+				var/obj/item/disk/data/floppy/read_only/D = new /obj/item/disk/data/floppy/read_only(src)
 				src.equip_if_possible(D, slot_in_backpack)
 				var/datum/computer/file/clone/R = new
 				R.fields["ckey"] = ckey(src.key)
@@ -474,6 +481,7 @@
 					var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "SECAUTH";} (src)
 					authrec.fields = list("SEC"="[netpass_security]")
 					D.root.add_file( authrec )
+					D.read_only = 1
 
 				D.name = "data disk - '[src.real_name]'"
 
@@ -548,7 +556,7 @@
 	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
 		trinket = new/obj/item/clothing/head/NTberet(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))
-		var/picked = pick(childrentypesof(/obj/item/clothing/head) - (typesof(/obj/item/clothing/head/bighat))) //IM A MONSTER DONT LOOK AT ME. NOOOOOOOOOOO
+		var/picked = pick(childrentypesof(/obj/item/clothing/head) - (typesof(/obj/item/clothing/head/bighat)) - (typesof(/obj/item/clothing/head/helmet/space/syndicate))) //IM A MONSTER DONT LOOK AT ME. NOOOOOOOOOOO
 		trinket = new picked(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("conspiracytheorist"))
 		trinket = new/obj/item/clothing/head/tinfoil_hat
@@ -758,6 +766,6 @@ var/list/trinket_safelist = list(/obj/item/basketball,/obj/item/instrument/bikeh
 /obj/item/clothing/head/mj_hat, /obj/item/clothing/head/red, /obj/item/clothing/head/that, /obj/item/clothing/head/wig, /obj/item/clothing/head/turban, /obj/item/dice/magic8ball,
 /obj/item/reagent_containers/food/drinks/mug/random_color, /obj/item/reagent_containers/food/drinks/skull_chalice, /obj/item/pen/marker/random, /obj/item/pen/crayon/random,
 /obj/item/clothing/gloves/yellow/unsulated, /obj/item/reagent_containers/food/snacks/fortune_cookie, /obj/item/instrument/triangle, /obj/item/instrument/tambourine, /obj/item/instrument/cowbell,
-/obj/item/toy/plush/small/bee, /obj/item/paper/book/the_trial, /obj/item/paper/book/deep_blue_sea, /obj/item/clothing/suit/bedsheet/cape/red, /obj/item/disk/data/cartridge/clown,
+/obj/item/toy/plush/small/bee, /obj/item/paper/book/from_file/the_trial, /obj/item/paper/book/from_file/deep_blue_sea, /obj/item/clothing/suit/bedsheet/cape/red, /obj/item/disk/data/cartridge/clown,
 /obj/item/clothing/mask/cigarette/cigar, /obj/item/device/light/sparkler, /obj/item/toy/sponge_capsule, /obj/item/reagent_containers/food/snacks/plant/pear, /obj/item/reagent_containers/food/snacks/donkpocket/honk/warm,
 /obj/item/seed/alien)

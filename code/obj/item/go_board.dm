@@ -197,7 +197,7 @@
 
 /obj/item/gostone
 	icon = 'icons/obj/items/items.dmi'
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 /obj/item/gostone/b
 	name = "black stone"

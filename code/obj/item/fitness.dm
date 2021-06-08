@@ -15,7 +15,7 @@
 			var/mob/living/carbon/human/H = user
 			if (H.sims)
 				H.sims.affectMotive("fun", 2)
-		user.changeStatus("fitness_stam_regen",1000)
+		user.changeStatus("fitness_stam_regen", 100 SECONDS)
 
 	wizard
 		icon_state = "punchingbagwizard"
@@ -43,7 +43,7 @@
 			else
 				playsound(src.loc, pick(sounds_punch + sounds_hit), 25, 1, -1)
 				playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
-			user.changeStatus("fitness_stam_regen",1000)
+			user.changeStatus("fitness_stam_regen", 100 SECONDS)
 
 /obj/fitness/stacklifter
 	name = "Weight Machine"
@@ -90,7 +90,7 @@
 					H.sims.affectMotive("fun", 4)
 			var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 			icon_state = "fitnesslifter"
-			user.changeStatus("fitness_stam_regen",1000)
+			user.changeStatus("fitness_stam_regen", 100 SECONDS)
 			boutput(user, "<span class='notice'>[finishmessage]</span>")
 
 /obj/fitness/weightlifter
@@ -150,7 +150,7 @@
 			icon_state = "fitnessweight"
 			qdel(W)
 			boutput(user, "<span class='notice'>[finishmessage]</span>")
-			user.changeStatus("fitness_stam_max",1000)
+			user.changeStatus("fitness_stam_max", 100 SECONDS)
 
 /obj/item/rubberduck
 	name = "rubber duck"
@@ -159,7 +159,7 @@
 	icon_state = "rubber_duck"
 	item_state = "sponge"
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 15
 	var/spam_flag = 0

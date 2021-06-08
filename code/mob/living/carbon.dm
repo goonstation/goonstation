@@ -41,7 +41,7 @@
 							return
 					if (2) //lube
 						src.pulling = null
-						src.changeStatus("weakened", 35)
+						src.changeStatus("weakened", 3.5 SECONDS)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
 						playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
 						var/atom/target = get_edge_target_turf(src, src.dir)
@@ -90,7 +90,7 @@
 		var/obj/item/reagent_containers/pee_target = src.equipped()
 		if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container())
 			src.visible_message("<span class='alert'><B>[src] pees in [pee_target]!</B></span>")
-			playsound(get_turf(src), "sound/misc/pourdrink.ogg", 50, 1)
+			playsound(src, "sound/misc/pourdrink.ogg", 50, 1)
 			pee_target.reagents.add_reagent("urine", 20)
 			return
 

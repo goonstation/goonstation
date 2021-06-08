@@ -299,7 +299,7 @@
 	var/song = ""
 	var/record_name = ""
 	var/add_overlay = 1
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throwforce = 3.0
 	throw_speed = 3
 	throw_range = 8
@@ -336,119 +336,150 @@ ABSTRACT_TYPE(/obj/item/record/random)
 /obj/item/record/random/dance_on_a_space_volcano
 	name = "record - \"Dance On A Space Volcano\""
 	record_name = "Dance On A Space Volcano"
-	song = "sound/radio_station/dance_on_a_space_volcano.ogg"
+	song = "sound/radio_station/music/dance_on_a_space_volcano.ogg"
 
 /obj/item/record/random/adventure_1
 	name = "record - \"adventure track #1\""
 	record_name = "adventure track #1"
-	song = "sound/radio_station/adventure_1.mod"
+	song = "sound/radio_station/music/adventure_1.mod"
 
 /obj/item/record/random/adventure_2
 	name = "record - \"adventure track #2\""
 	record_name = "adventure track #2"
-	song = "sound/radio_station/adventure_2.s3m"
+	song = "sound/radio_station/music/adventure_2.s3m"
 
 /obj/item/record/random/adventure_3
 	name = "record - \"adventure track #3\""
 	record_name = "adventure track #3"
-	song = "sound/radio_station/adventure_3.ogg"
+	song = "sound/radio_station/music/adventure_3.ogg"
 
 /obj/item/record/random/adventure_4
 	name = "record - \"adventure track #4\""
 	record_name = "adventure track #4"
-	song = "sound/radio_station/adventure_4.ogg"
+	song = "sound/radio_station/music/adventure_4.ogg"
 
 /obj/item/record/random/adventure_5
 	name = "record - \"adventure track #5\""
 	record_name = "adventure track #5"
-	song = "sound/radio_station/adventure_5.ogg"
+	song = "sound/radio_station/music/adventure_5.ogg"
 
 /obj/item/record/random/adventure_6
 	name = "record - \"adventure track #6\""
 	record_name = "adventure track #6"
-	song = "sound/radio_station/adventure_6.mod"
+	song = "sound/radio_station/music/adventure_6.mod"
 
 /obj/item/record/random/upbeat_1
 	name = "record - \"upbeat track #1\""
 	record_name = "upbeat track #1"
-	song = "sound/radio_station/upbeat_1.ogg"
+	song = "sound/radio_station/music/upbeat_1.ogg"
 
 /obj/item/record/random/upbeat_2
 	name = "record - \"upbeat track #2\""
 	record_name = "upbeat track #2"
-	song = "sound/radio_station/upbeat_2.ogg"
+	song = "sound/radio_station/music/upbeat_2.ogg"
 
 /obj/item/record/random/chill_1
 	name = "record - \"chill track #1\""
 	record_name = "chill track #1"
-	song = "sound/radio_station/chill_1.ogg"
+	song = "sound/radio_station/music/chill_1.ogg"
 
 /obj/item/record/random/chill_2
 	name = "record - \"chill track #2\""
 	record_name = "chill track #2"
-	song = "sound/radio_station/chill_2.ogg"
+	song = "sound/radio_station/music/chill_2.ogg"
 
 /obj/item/record/random/chill_3
 	name = "record - \"chill track #3\""
 	record_name = "chill track #3"
-	song = "sound/radio_station/chill_3.ogg"
+	song = "sound/radio_station/music/chill_3.ogg"
 
 /obj/item/record/random/chill_4
 	name = "record - \"chill track #4\""
 	record_name = "chill track #4"
-	song = "sound/radio_station/chill_4.ogg"
+	song = "sound/radio_station/music/chill_4.ogg"
 
 /obj/item/record/january
 	record_name = "january"
-	song = "sound/radio_station/january.xm"
+	song = "sound/radio_station/music/january.xm"
 
 /obj/item/record/february
 	record_name = "february"
-	song = "sound/radio_station/february.xm"
+	song = "sound/radio_station/music/february.xm"
 
 /obj/item/record/march
 	record_name = "march"
-	song = "sound/radio_station/march.xm"
+	song = "sound/radio_station/music/march.xm"
 
 /obj/item/record/april
 	record_name = "april"
-	song = "sound/radio_station/april.xm"
+	song = "sound/radio_station/music/april.xm"
 
 /obj/item/record/may
 	record_name = "may"
-	song = "sound/radio_station/may.xm"
+	song = "sound/radio_station/music/may.xm"
 
 /obj/item/record/june
 	record_name = "june"
-	song = "sound/radio_station/june.xm"
+	song = "sound/radio_station/music/june.xm"
 
 /obj/item/record/july
 	record_name = "july"
-	song = "sound/radio_station/july.xm"
+	song = "sound/radio_station/music/july.xm"
 
 /obj/item/record/august
 	record_name = "august"
-	song = "sound/radio_station/august.xm"
+	song = "sound/radio_station/music/august.xm"
 
 /obj/item/record/september
 	record_name = "september"
-	song = "sound/radio_station/september.xm"
+	song = "sound/radio_station/music/september.xm"
 
 /obj/item/record/october
 	record_name = "october"
-	song = "sound/radio_station/october.xm"
+	song = "sound/radio_station/music/october.xm"
 
 /obj/item/record/november
 	record_name = "november"
-	song = "sound/radio_station/november.xm"
+	song = "sound/radio_station/music/november.xm"
 
 /obj/item/record/december
 	record_name = "december"
-	song = "sound/radio_station/december.xm"
+	song = "sound/radio_station/music/december.xm"
 
 /obj/item/record/spacebux // Many thanks to Camryn Buttes!!
 	add_overlay = 0
 	icon_state = "record_red"
+
+ABSTRACT_TYPE(/obj/item/record/random/nostalgic)
+/obj/item/record/random/nostalgic
+	New()
+		. = ..()
+		src.desc += {" Nostalgic sounds from SS13 yesteryears."}
+
+/obj/item/record/random/nostalgic/distant
+	name = "record - \"Distant Star\""
+	record_name = "Distant Star"
+	song = "sound/radio_station/music/distant_star.ogg"
+
+/obj/item/record/random/nostalgic/technologic
+	name = "record - \"High Technologic Beat\""
+	record_name = "High Technologic Beat"
+	song = "sound/radio_station/music/high_technologic_beat.ogg"
+
+/obj/item/record/random/nostalgic/afterparty
+	name = "record - \"After Party\""
+	record_name = "After Party"
+	song = "sound/radio_station/music/after_party.ogg"
+
+/obj/item/record/random/nostalgic/soalive
+	name = "record - \"Everyone Is So Alive\""
+	record_name = "Everyone Is So Alive"
+	song = "sound/radio_station/music/everyone_is_so_alive.ogg"
+
+/obj/item/record/random/nostalgic/alivetoo
+	name = "record - \"It Feels Good To Be Alive Too\""
+	record_name = "It Feels Good To Be Alive Too"
+	song = "sound/radio_station/music/it_feels_good_to_be_alive_too.ogg"
 
 ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 /obj/item/record/random/chronoquest
@@ -459,42 +490,84 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 /obj/item/record/random/chronoquest/waystations
 	record_name = "Waystations"
 	name = "record - \"Waystations\""
-	song = "sound/radio_station/waystations.ogg"
+	song = "sound/radio_station/music/waystations.ogg"
 
 /obj/item/record/random/chronoquest/planets
 	record_name = "Planets"
 	name = "record - \"Planets\""
-	song = "sound/radio_station/planets.ogg"
+	song = "sound/radio_station/music/planets.ogg"
 
 /obj/item/record/random/chronoquest/oh_no_evil_star
 	record_name = "Oh No Evil Star"
 	name = "record - \"Oh No Evil Star\""
-	song = "sound/radio_station/oh_no_evil_star.ogg"
+	song = "sound/radio_station/music/oh_no_evil_star.ogg"
 
 /obj/item/record/random/chronoquest/cloudskymanguy
 	record_name = "Cloudskymanguy"
 	name = "record - \"Cloudskymanguy\""
-	song = "sound/radio_station/cloudskymanguy.ogg"
+	song = "sound/radio_station/music/cloudskymanguy.ogg"
 
 /obj/item/record/random/chronoquest/black_wing_interface
 	record_name = "Black Wing Interface"
 	name = "record - \"Black Wing Interface\""
-	song = "sound/radio_station/black_wing_interface.ogg"
+	song = "sound/radio_station/music/black_wing_interface.ogg"
 
 /obj/item/record/random/chronoquest/riverdancer
 	name = "record - \"Riverdancer\""
 	record_name = "Riverdancer"
-	song = "sound/radio_station/riverdancer.ogg"
+	song = "sound/radio_station/music/riverdancer.ogg"
 
 /obj/item/record/random/key_lime
 	name = "record - \"key_lime #1\""
 	record_name = "key lime #1"
-	song = "sound/radio_station/key_lime.ogg"
+	song = "sound/radio_station/music/key_lime.ogg"
 	add_overlay = FALSE
 
 	New()
 		..()
 		src.UpdateOverlays(new /image(src.icon, "record_6"), "recordlabel") //it should always be green because I'm so funny.
+
+ABSTRACT_TYPE(/obj/item/record/random/metal)
+/obj/item/record/random/metal
+	New()
+		. = ..()
+		src.desc += {" A space metal record, rock on!"}
+
+/obj/item/record/random/metal/xtra
+	name = "record - \"Radstorm Rock\""
+	record_name = "Radstorm Rock"
+	song = "sound/radio_station/music/xtra.ogg"
+
+/obj/item/record/random/metal/giga
+	name = "record - \"Punctured Spacesuit\""
+	record_name = "Punctured Spacesuit"
+	song = "sound/radio_station/music/giga.ogg"
+
+/obj/item/record/random/metal/maxi
+	name = "record - \"Plasmageddon\""
+	record_name = "Plasmageddon"
+	song = "sound/radio_station/music/maxi.ogg"
+
+ABSTRACT_TYPE(/obj/item/record/random/funk)
+/obj/item/record/random/funk
+	New()
+		. = ..()
+		src.desc += {" A space funk record to groove to!"}
+
+/obj/item/record/random/funk/funkadelic
+	name = "record - \"Fission Funk\""
+	record_name = "Fission Funk"
+	song = "sound/radio_station/music/funkadelic.ogg"
+
+/obj/item/record/random/funk/groovy
+	name = "record - \"Gaussian Groove\""
+	record_name = "Gaussian Groove"
+	song = "sound/radio_station/music/groovy.ogg"
+
+/obj/item/record/random/funk/time4lunch
+	name = "record - \"Lunch4Laika\""
+	record_name = "Lunch4Laika"
+	song = "sound/radio_station/music/lunch.ogg"
 
 /obj/item/record/spacebux/New()
 	..()
@@ -510,7 +583,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	desc = "A fairly large record. It has a scratch on one side."
 	add_overlay = 0
 	icon_state = "record_blue"
-	song = "sound/radio_station/poo.ogg"
+	song = "sound/radio_station/music/poo.ogg"
 
 /obj/item/record/poo/attackby(obj/item/P as obj, mob/user as mob)
 	if (istype(P, /obj/item/magnifying_glass))
@@ -520,49 +593,69 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 
 /obj/item/record/atlas
 	desc = "Ode to a space ship."
-	song = "sound/radio_station/atlas.ogg"
+	song = "sound/radio_station/music/atlas.ogg"
 
 /obj/item/record/honey
 	desc = "A fairly large record. It's all sticky and coated in honey!"
 	add_overlay = 0
 	icon_state = "record_honey"
-	song = "sound/radio_station/bumblebee.ogg"
+	song = "sound/radio_station/music/bumblebee.ogg"
 
 /obj/item/record/christmas
 	desc = "A truly nefarious and unholy record that has been banned in most of space."
 	add_overlay = 0
 	icon_state = "record_red"
-	song = "sound/radio_station/christmassong.ogg"
+	song = "sound/radio_station/music/christmassong.ogg"
 
 /obj/item/record/honkmas
 	desc = "Wow, this fruitcake record is almost as good as the real thing!"
 	add_overlay = 0
 	icon_state = "record_fruit"
-	song = "sound/radio_station/honkmas.ogg"
+	song = "sound/radio_station/music/honkmas.ogg"
 
 /obj/item/record/clown_collection // By Arborinus. Honk!
 	add_overlay = 0
 	icon_state = "record_yellow"
 
 /obj/item/record/clown_collection/honk
-	song = "sound/radio_station/warriors_honk.ogg"
+	song = "sound/radio_station/music/warriors_honk.ogg"
 	color = "#DED347"
 
 /obj/item/record/clown_collection/uguu
-	song = "sound/radio_station/uguu.ogg"
+	song = "sound/radio_station/music/uguu.ogg"
 	color = "#DEC647"
 
 /obj/item/record/clown_collection/eggshell
-	song = "sound/radio_station/eggshell.ogg"
+	song = "sound/radio_station/music/eggshell.ogg"
 	color = "#DEB947"
 
 /obj/item/record/clown_collection/disco
-	song = "sound/radio_station/disco_poo.ogg"
+	song = "sound/radio_station/music/disco_poo.ogg"
 	color = "#DEAC47"
 
 /obj/item/record/clown_collection/poo
-	song = "sound/radio_station/core_of_poo.ogg"
+	song = "sound/radio_station/music/core_of_poo.ogg"
 	color = "#DE9F47"
+
+/obj/item/record/notaquario_mixtape/beaches
+	record_name = "Beaches"
+	song = "sound/radio_station/music/beaches.ogg"
+
+/obj/item/record/notaquario_mixtape/graveyard
+	record_name = "Graveyard"
+	song = "sound/radio_station/music/graveyard.ogg"
+
+/obj/item/record/notaquario_mixtape/floaty
+	record_name = "I'm Floaty In Space But Thats Ok"
+	song = "sound/radio_station/music/floaty.ogg"
+
+/obj/item/record/notaquario_mixtape/repose
+	record_name = "Repose"
+	song = "sound/radio_station/music/repose.ogg"
+
+/obj/item/record/notaquario_mixtape/biodome
+	record_name = "Biodome"
+	song = "sound/radio_station/music/biodome.ogg"
 
 // Record sets
 /obj/item/storage/box/record
@@ -581,6 +674,15 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	/obj/item/record/clown_collection/eggshell,
 	/obj/item/record/clown_collection/disco,
 	/obj/item/record/clown_collection/poo)
+
+/obj/item/storage/box/record/notaquario_mixtape1
+	name = "Aquario and Not Tom's Mixtape Vol 1"
+	desc = "Woa, these are some old tunes! Made by Aquario and Not Tom way back in the early 2020s!"
+	spawn_contents = list(/obj/item/record/notaquario_mixtape/graveyard,
+	/obj/item/record/notaquario_mixtape/repose,
+	/obj/item/record/notaquario_mixtape/beaches,
+	/obj/item/record/notaquario_mixtape/floaty,
+	/obj/item/record/notaquario_mixtape/biodome)
 
 /obj/item/storage/box/record/radio
 	desc = "A sturdy record sleeve, designed to hold multiple records. The art on the cover is very lovely."
@@ -604,6 +706,27 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	/obj/item/record/october,
 	/obj/item/record/november,
 	/obj/item/record/december)
+
+/obj/item/storage/box/record/radio/nostalgic
+	name = "\improper Nostalgic Dance record sleeve"
+	desc = {"A sturdy record sleeve, designed to hold multiple records. These song titles seem familiar..."}
+	spawn_contents = list(
+		/obj/item/record/random/nostalgic/distant,
+		/obj/item/record/random/nostalgic/technologic,
+		/obj/item/record/random/nostalgic/afterparty,
+		/obj/item/record/random/nostalgic/soalive,
+		/obj/item/record/random/nostalgic/alivetoo)
+
+/obj/item/storage/box/record/radio/guitar
+	name = "\improper Space Metal N' Funk record sleeve"
+	desc = {"A sturdy record sleeve, designed to hold multiple records. It seems to have an assortment of rockin' tunes."}
+	spawn_contents = list(
+		/obj/item/record/random/metal/xtra,
+		/obj/item/record/random/metal/giga,
+		/obj/item/record/random/metal/maxi,
+		/obj/item/record/random/funk/funkadelic,
+		/obj/item/record/random/funk/groovy,
+		/obj/item/record/random/funk/time4lunch)
 
 /obj/item/storage/box/record/radio/chronoquest
 	name = "\improper Chronoquest record sleeve"
@@ -681,7 +804,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	desc = "A small audio tape. Though, it looks too big to fit in an audio log."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "tape"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/audio = null
 	var/audio_type = "Test"
 	var/name_of_thing = "Beep boop"
@@ -692,36 +815,36 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 
 /obj/item/radio_tape/advertisement/grones
 	name = "compact tape - 'Grones Soda'"
-	audio = "sound/radio_station/grones.ogg"
+	audio = "sound/radio_station/adverts/grones.ogg"
 	name_of_thing = "Grones Soda"
 
 /obj/item/radio_tape/advertisement/dans_tickets
 	name = "compact tape - 'Discount Dan's GTMs'"
-	audio = "sound/radio_station/dans_tickets.ogg"
+	audio = "sound/radio_station/adverts/dans_tickets.ogg"
 	name_of_thing = "Discount Dan's GTMs"
 
 /obj/item/radio_tape/advertisement/quik_noodles
 	name = "compact tape - 'Discount Dan's Quik Noodles'"
-	audio = "sound/radio_station/quik_noodles.ogg"
+	audio = "sound/radio_station/adverts/quik_noodles.ogg"
 	name_of_thing = "Discount Dan's Quik Noodles"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	The music is "Palast Rock by Stefan Kartenberg (CC BY-NC 3.0)"}
 
 /obj/item/radio_tape/advertisement/danitos_burritos
 	name = "compact tape - 'Descuento Danito's Burritos'"
-	audio = "sound/radio_station/danitos_burritos.ogg"
+	audio = "sound/radio_station/adverts/danitos_burritos.ogg"
 	name_of_thing = "Descuento Danito's Burritos"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	The music is "Requiem for a Fish" by The Freak Fandango Orchestra (CC BY-NC 4.0)"}
 
 /obj/item/radio_tape/advertisement/movie
 	name = "compact tape - 'Movie Ad'"
-	audio = "sound/radio_station/bill_movie.ogg"
+	audio = "sound/radio_station/adverts/bill_movie.ogg"
 	name_of_thing = "some shitty movie"
 
 /obj/item/radio_tape/advertisement/pope_crunch
 	name = "compact tape - 'Pope Crunch'"
-	audio = "sound/radio_station/pope_crunch_cereal.ogg"
+	audio = "sound/radio_station/adverts/pope_crunch_cereal.ogg"
 	name_of_thing = "Pope Crunch Cereal"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	Voiceover by Puppet Master and HeadsmanStukka of the Black Pants Legion. <br>
@@ -729,7 +852,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 
 /obj/item/radio_tape/advertisement/cloning_psa
 	name = "compact tape - 'Cloning PSA'"
-	audio = "sound/radio_station/cloning_psa.ogg"
+	audio = "sound/radio_station/adverts/cloning_psa.ogg"
 	name_of_thing = "Cloning Public Service Announcement"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	Voiceover by Cenith of the Black Pants Legion<br>
@@ -737,7 +860,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 
 /obj/item/radio_tape/advertisement/captain_psa
 	name = "compact tape - 'Captain's Training Program'"
-	audio = "sound/radio_station/captain_training.ogg"
+	audio = "sound/radio_station/adverts/captain_training.ogg"
 	name_of_thing = "Nanotrasen Captain's Training Promotional Tape"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	Voiceover by Tex of the Black Pants Legion<br>
@@ -745,19 +868,33 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 
 /obj/item/radio_tape/advertisement/security_psa
 	name = "compact tape - 'Nanotrasen Security PSA'"
-	audio = "sound/radio_station/security_psa.ogg"
+	audio = "sound/radio_station/adverts/security_psa.ogg"
 	name_of_thing = "Security Department Public Service Announcement"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	Voiceover by Squidchild of the Black Pants Legion"}
 
 /obj/item/radio_tape/advertisement/cargonia
 	name = "compact tape - 'Scuffed Compact Tape'"
-	audio = "sound/radio_station/Cargonia.ogg"
+	audio = "sound/radio_station/adverts/Cargonia.ogg"
 	name_of_thing = "Cargo Union Advertisement <VERY ILLEGAL>"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	You found this in a locked up chest in the depths. Someone went to a lot of trouble to get rid of it.<br>
 	Voiceover by Tex of the Black Pants Legion<br>
 	Musical Backing is "Valor" by David Fesliyan"}
+
+/obj/item/radio_tape/advertisement/chemistry
+	name = "charred compact tape - 'Unofficial Chemsitry Advertisment tape'"
+	audio = "sound/radio_station/adverts/Chemistry.ogg"
+	name_of_thing = "Unofficial Chemsitry Advertisment"
+	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
+	Voiceover by Brixx79 of Goonstation"}
+
+/obj/item/radio_tape/advertisement/robotics
+	name = "bloodied compact tape stained with oil - 'Unofficial Robotics Advertisment tape'"
+	audio = "sound/radio_station/adverts/Robotics.ogg"
+	name_of_thing = "Unofficial Robotics Advertisment"
+	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
+	Voiceover by Brixx79 of Goonstation"}
 
 /obj/item/radio_tape/audio_book
 	audio_type = "Audio book"
@@ -790,7 +927,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 /obj/item/radio_tape/owl
 	audio_type = "???"
 	name = "compact tape - 'Owls'"
-	audio = "sound/radio_station/owl.ogg"
+	audio = "sound/radio_station/adverts/owl.ogg"
 	name_of_thing = "Owls"
 
 // Drawer
@@ -860,140 +997,6 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	icon_state = "gannets_machine20"
 	anchored = 1
 	density = 1
-
-//Books + documents
-//this one isn't on the map, but it might be good to have.
-/obj/item/paper/book/icarus_ovid
-	name = "Mythological Stories of the Ancient Greeks"
-	desc = "An old dusty book of mythology, well worn and dog-eared."
-	info = {"<p>In tedious Exile now too long detain'd,<br>
-Daedalus languish'd for his native Land:<br>
-The Sea foreclos'd his Flight; yet thus he said;<br>
-Tho' Earth and Water in Subjection laid,<br>
-O cruel Minos, thy Dominion be,<br>
-We'll go thro' Air; for sure the Air is free.<br>
-Then to new Arts his cunning Thought applies,<br>
-And to improve the Work of Nature tries.<br>
-A Row of Quills in gradual Order plac'd,<br>
-Rise by Degrees in Length from first to last;<br>
-As on a Cliff th' ascending Thicket grows,<br>
-Or, different Reeds the rural Pipe compose.<br>
-Along the Middle runs a Twine of Flax,<br>
-The Bottom Stems are joyn'd by pliant Wax.<br>
-Thus, well compact, a hollow Bending brings<br>
-The fine Composure into real Wings.</p>
-
-<p>His Boy, young Icarus, that near him stood,<br>
-Unthinking of his Fate, with Smiles pursu'd<br>
-The floating Feathers, which the moving Air<br>
-Bore loosely from the Ground, and wafted here and there.<br>
-Or with the Wax impertinently play'd,<br>
-And with his childish Tricks the great Design delay'd.<br>
-The final Master-stroke at last impos'd,<br>
-And now, the neat Machine compleatly clos'd;<br>
-Fitting his Pinions, on a Flight he tries,<br>
-And hung self-ballanc'd in the beaten Skies.<br>
-Then thus instructs his Child; My Boy, take Care<br>
-To wing your Course along the middle Air;<br>
-If low, the Surges wet your flagging Plumes,<br>
-If high, the Sun the melting Wax consumes:<br>
-Steer between both: Nor to the Northern Skies,<br>
-Nor South Orion turn your giddy Eyes;<br>
-But follow me: Let me before you lay<br>
-Rules for the Flight, and mark the pathless Way.<br>
-Then teaching, with a fond Concern, his Son,<br>
-He took the untry'd Wings, and fix'd 'em on;<br>
-But fix'd with trembling Hands; and, as he speaks,<br>
-The Tears roul gently down his aged Cheeks.<br>
-Then kiss'd, and in his Arms embrac'd him fast,<br>
-But knew not this Embrace must be the last.<br>
-And mounting upward, as he wings his Flight,<br>
-Back on his Charge he turns his aking Sight;<br>
-As Parent Birds, when first their callow Care<br>
-Leave the high Nest to tempt the liquid Air.<br>
-Then chears him on, and oft, with fatal Art,<br>
-Reminds the Stripling to perform his Part.</p>
-
-<p>These, as the Angler at the silent Brook,<br>
-Or Mountain-Shepherd leaning on his Crook,<br>
-Or gaping Plowman from the Vale descries,<br>
-They stare, and view 'em with religious Eyes,<br>
-And strait conclude 'em Gods; since none, but they,<br>
-Thro' their own azure Skies cou'd find a Way.<br>
-Now Delos, Paros on the Left are seen,<br>
-And Samos, favour'd by Jove's haughty Queen;<br>
-Upon the Right, the Isle Lebynthos nam'd,<br>
-And fair Calymne for its Honey fam'd.<br>
-When now the Boy, whose childish Thoughts aspire<br>
-To loftier Aims, and make him ramble higher,<br>
-Grown wild and wanton, more embolden'd flies<br>
-Far from his Guide, and soars among the Skies.<br>
-The soft'ning Wax, that felt a nearer Sun,<br>
-Dissolv'd apace, and soon began to run.<br>
-The Youth in vain his melting Pinions shakes,<br>
-His Feathers gone, no longer Air he takes:<br>
-Oh! Father, Father, as he strove to cry,<br>
-Down to the Sea he tumbled from on high,<br>
-And found his Fate; yet still subsists by Fame,<br>
-Among those Waters that retain his Name.<br>
-The Father, now no more a Father, cries,<br>
-Ho Icarus! where are you? as he flies;<br>
-Where shall I seek my Boy? he cries again,<br>
-And saw his Feathers scatter'd on the Main.<br>
-Then curs'd his Art; and fun'ral Rites confer'd,<br>
-Naming the Country from the Youth interr'd.<br>
-A Partridge, from a neighb'ring Stump, beheld<br>
-The Sire his monumental Marble build;<br>
-Who, with peculiar Call, and flutt'ring Wing,<br>
-Chirpt joyful, and malicious seem'd to sing:</p>
-
-<p>The only Bird of all its Kind, and late<br>
-Transform'd in Pity to a feather'd State:<br>
-From whence, O Daedalus, thy Guilt we date.<br>
-His Sister's Son, when now twelve Years were past,<br>
-Was, with his Uncle, as a Scholar plac'd;<br>
-The unsuspecting Mother saw his Parts,<br>
-And Genius fitted for the finest Arts.<br>
-This soon appear'd; for when the spiny Bone<br>
-In Fishes Backs was by the Stripling known,<br>
-A rare Invention thence he learnt to draw,<br>
-Fil'd Teeth in Iron, and made the grating Saw.<br>
-He was the first, that from a Knob of Brass<br>
-Made two strait Arms with widening Stretch to pass;<br>
-That, while one stood upon the Center's Place,<br>
-The other round it drew a circling Space.<br>
-Daedalus envy'd this, and from the Top<br>
-Of fair Minerva's Temple let him drop;<br>
-Feigning that, as he lean'd upon the Tow'r,<br>
-Careless he stoop'd too much, and tumbled o'er.<br>
-The Goddess, who th' Ingenious still befriends,<br>
-On this Occasion her Assistance lends;<br>
-His Arms with Feathers, as he fell, she veils,<br>
-And in the Air a new-made Bird he sails.<br>
-The Quickness of his Genius, once so fleet,<br>
-Still in his Wings remains, and in his Feet:<br>
-Still, tho' transform'd, his ancient Name he keeps,<br>
-And with low Flight the new-shorn Stubble sweeps.<br>
-Declines the lofty Trees, and thinks it best<br>
-To brood in Hedge-rows o'er it's humble Nest;<br>
-And, in Remembrance of the former Ill,<br>
-Avoids the Heights and Precipices still.</p>
-
-<p>At length, fatigu'd with long laborious Flights,<br>
-On fair Sicilia's Plains the Artist lights;<br>
-Where Cocalus the King, that gave him Aid,<br>
-Was, for his Kindness, with Esteem repaid.<br>
-Athens no more her doleful Tribute sent,<br>
-That Hardship gallant Theseus did prevent;<br>
-Their Temples hung with Garlands, they adore<br>
-Each friendly God, but most Minerva's Pow'r:<br>
-To her, to Jove, to All, their Altars smoak,<br>
-They each with Victims and Perfumes invoke.<br>
-Now talking Fame, thro' every Graecian Town,<br>
-Had spread, immortal Theseus, thy Renown.<br>
-From him, the neighb'ring Nations in Distress,<br>
-In suppliant Terms implore a kind Redress.</p>
-"}
 
 //Computer, disk and files.
 

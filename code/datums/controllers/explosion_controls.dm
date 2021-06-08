@@ -155,18 +155,18 @@ var/datum/explosion_controller/explosions
 		src.angle = angle
 		src.width = width
 
-	proc/logMe()
+	proc/logMe(var/power)
 		//I do not give a flying FUCK about what goes on in the colosseum. =I
 		if(!istype(get_area(epicenter), /area/colosseum))
 			// Cannot read null.name
 			var/logmsg = "Explosion with power [power] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [source ? "[source.fingerprintslast]" : "*null*"]"
-			message_admins(logmsg)
+			if(power > 10)
+				message_admins(logmsg)
 			logTheThing("bombing", null, null, logmsg)
 			logTheThing("diary", null, null, logmsg, "combat")
 
 	proc/explode()
-		if(power > 10)
-			logMe()
+		logMe(power)
 
 		for(var/client/C in clients)
 			if(C.mob && (C.mob.z == epicenter.z) && power > 15)
@@ -232,7 +232,7 @@ var/datum/explosion_controller/explosions
 			for(var/mob/living/carbon/C in T)
 				if (!isdead(C) && C.client)
 					shake_camera(C, 3 * p, p * 4)
-				C.changeStatus("stunned", p * 10)
+				C.changeStatus("stunned", p SECONDS)
 				C.stuttering += p
 				C.lying = 1
 				C.set_clothing_icon_dirty()

@@ -79,16 +79,16 @@ proc/build_syndi_buylist_cache()
 
 /datum/syndicate_buylist/generic/empgrenades
 	name = "EMP Grenades"
-	item = /obj/item/storage/box/emp_kit
+	item = /obj/item/storage/emp_grenade_pouch
 	cost = 1
-	desc = "A pack of EMP grenades, each capable of causing havoc with the electrical and computer systems found aboard the modern space station. Shorts out power systems, causes feedback in electronic vision devices such as thermals, and causes robots to go haywire."
+	desc = "A pouch of EMP grenades, each capable of causing havoc with the electrical and computer systems found aboard the modern space station. Shorts out power systems, causes feedback in electronic vision devices such as thermals, and causes robots to go haywire."
 	blockedmode = list(/datum/game_mode/spy)
 
 /datum/syndicate_buylist/generic/tacticalgrenades
 	name = "Tactical Grenades"
-	item = /obj/item/storage/box/tactical_kit
+	item = /obj/item/storage/tactical_grenade_pouch
 	cost = 2
-	desc = "A box of assorted special-ops grenades."
+	desc = "A pouch of assorted special-ops grenades."
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/generic/voicechanger
@@ -345,9 +345,9 @@ proc/build_syndi_buylist_cache()
 
 /datum/syndicate_buylist/traitor/sonicgrenades
 	name = "Sonic Grenades"
-	item = /obj/item/storage/box/sonic_grenade_kit
+	item = /obj/item/storage/sonic_grenade_pouch
 	cost = 2
-	desc = "Each one packs enough power to shatter reinforced windows and pop eardrums. No more being cornered by an angry mob! Comes with earplugs."
+	desc = "A pouch filled with five sonic grenades, each one packs enough power to shatter reinforced windows and pop eardrums. No more being cornered by an angry mob! Comes with earplugs."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/surplus
@@ -899,6 +899,13 @@ This is basically useless for anyone but miners.
 	desc = "A small device that may be installed in a headset to grant access to all station channels."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
+/datum/syndicate_buylist/traitor/tape
+	name = "Ducktape"
+	item = /obj/item/handcuffs/tape_roll
+	cost = 1
+	desc = "A roll of duct tape for makeshift handcuffs. Lets you restrain someone 10 times before being used up."
+	blockedmode = list(/datum/game_mode/revolution)
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 /datum/syndicate_buylist/surplus
@@ -948,13 +955,6 @@ This is basically useless for anyone but miners.
 	desc = "A signal flaregun for emergency use. Or for setting jerks on fire"
 	blockedmode = list(/datum/game_mode/spy)
 
-/datum/syndicate_buylist/surplus/tape
-	name = "Ducktape"
-	item = /obj/item/handcuffs/tape_roll
-	cost = 1
-	desc = "A roll of duct tape for makeshift handcuffs. Yep."
-	blockedmode = list(/datum/game_mode/spy)
-
 /datum/syndicate_buylist/surplus/rifle
 	name = "Old Hunting Rifle"
 	item = /obj/item/gun/kinetic/hunting_rifle
@@ -964,7 +964,7 @@ This is basically useless for anyone but miners.
 
 /datum/syndicate_buylist/surplus/bananagrenades
 	name = "Banana Grenades"
-	item = /obj/item/storage/box/banana_grenade_kit
+	item = /obj/item/storage/banana_grenade_pouch
 	cost = 2
 	desc = "Honk."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft)
