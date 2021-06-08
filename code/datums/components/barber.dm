@@ -102,15 +102,13 @@
 		var/which_part = input(user, "Which clump of hair?", "Clump") as null|anything in region
 
 		if (!which_part)
-			boutput(user, "Never mind.")
 			return
 
 		if(region[which_part] != ALL_HAIR)
 			var/list/customization_types = concrete_typesof(/datum/customization_style/hair) + concrete_typesof(/datum/customization_style/eyebrows) + /datum/customization_style/none
 			var/new_style = select_custom_style(customization_types, user)
 
-			if (!new_style) // I'd prefer not to go through all of the hair styles and rank them based on hairiness
-				boutput(user, "Never mind.") // So I guess it'll be on the honor system for now not to give balding folk rockin' 'fros
+			if (!new_style)
 				return
 
 			actions.start(new/datum/action/bar/barber/haircut(M, user, get_barbery_conditions(M, user), new_style, region[which_part]), user)
@@ -179,15 +177,13 @@
 		var/which_part = input(user, "Which clump of hair?", "Clump") as null|anything in region
 
 		if (!which_part)
-			boutput(user, "Never mind.")
 			return
 
 		if (region[which_part] != ALL_HAIR)
 			var/list/facehair = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + /datum/customization_style/none
 			var/new_style = select_custom_style(facehair, user)
 
-			if (!new_style) // otherwise it alternates between non-functional and fucking useless
-				boutput(user, "Never mind.")
+			if (!new_style)
 				return
 			actions.start(new/datum/action/bar/barber/shave(M, user, get_barbery_conditions(M, user), new_style, region[which_part]), user)
 		else
