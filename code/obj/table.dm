@@ -700,7 +700,7 @@
 					if (S.material)
 						src.setMaterial(S.material)
 					src.repair()
-					return
+				return
 			else
 				return ..()
 
