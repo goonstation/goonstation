@@ -981,12 +981,11 @@
 		C.Browse("<img src=\"[resource("images/pw_map.png")]\">","window=Map;size=[imgw]x[imgh];title=Map")
 
 /obj/decal/poster/banner
-	name = "\proper banner"
+	name = "banner"
 	desc = "An unfinished banner, try adding some color to it by using a crayon!"
 	icon = 'icons/obj/decals/banners.dmi'
 	icon_state = "banner_base"
 	popup_win = 0
-	flags = TGUI_INTERACTIVE
 	var/colored = FALSE
 	var/chosen_overlay
 	var/static/list/choosable_overlays = list("Horizontal Stripes","Vertical Stripes","Diagonal Stripes","Cross","Diagonal Cross","Full","Full Gradient",
@@ -994,11 +993,11 @@
 	"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","0","1","2","3","4","5","6","7","8","9","+","-","=")
 
 	proc/clear()
-		if(src.material) src.color = src.material.color
+		if (src.material) src.color = src.material.color
 		else src.color = "#ffffff" // In case the material is null
 		src.overlays = null
 		src.colored = FALSE
-		usr.visible_message("<span class='notice'>[usr] Clears the [src].</span>")
+		usr.visible_message("<span class='alert'>[usr] clears the [src.name].</span>", "<span class='alert'>You clear the [src.name].</span>")
 
 	New()
 		..()
@@ -1016,7 +1015,7 @@
 				new_overlay.appearance_flags = RESET_COLOR
 				new_overlay.color = W.color
 				src.overlays.Add(new_overlay)
-				logTheThing("station", user, null, "Drew a [chosen_overlay] in [src] with [W] at [log_loc(user)].")
+				logTheThing("station", user, null, "Drew a [chosen_overlay] in the [src] with [W] at [log_loc(user)].")
 				desc = "A banner, colored and decorated"
 
 			if(src.colored == FALSE)
@@ -1025,9 +1024,9 @@
 				desc = "A colored banner, try adding some drawings to it with a crayon!"
 
 		if(istool(W,TOOL_SNIPPING | TOOL_CUTTING | TOOL_SAWING))
-			user.visible_message("<span class='notice'>[user] cuts off [src] with [W].</span>")
+			user.visible_message("<span class='alert'>[user] cuts off the [src.name] with [W].</span>", "<span class='alert'>You cut off the [src.name] with [W].</span>")
 			var/obj/item/material_piece/cloth/C = new(user.loc)
-			if(src.material) C.setMaterial(src.material)
+			if (src.material) C.setMaterial(src.material)
 			else C.setMaterial(getMaterial("cotton")) // In case the material is null
 			qdel(src)
 
@@ -1036,6 +1035,8 @@
 		if (usr.stat || usr.restrained() || !can_reach(usr, src))
 			return
 
-		else if(tgui_alert(usr, "Are you sure you want to clear the banner?", "Confirmation", list("Yes", "No")) == "Yes")
-			clear()
-		else return
+		else
+			if(tgui_alert(usr, "Are you sure you want to clear the banner?", "Confirmation", list("Yes", "No")) == "Yes")
+				clear()
+			else
+				return
