@@ -16,6 +16,7 @@ On the map:
 1354 for research headsets
 1356 for medical headsets
 1352 for syndicate headsets
+1467 for Ruckingenur kits
 */
 
 //moved transmission type defines to _setup.dm
