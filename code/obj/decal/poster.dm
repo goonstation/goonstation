@@ -1004,7 +1004,6 @@
 		var/static/image/banner_holder = image(src.icon, , "banner_holder")
 		banner_holder.appearance_flags = RESET_COLOR
 		src.underlays.Add(banner_holder)
-		return
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/pen/crayon))
