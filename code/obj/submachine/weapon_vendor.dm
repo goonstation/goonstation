@@ -303,7 +303,7 @@
 /datum/materiel/sidearm/smartgun
 	name = "Hydra Smart Pistol"
 	path = /obj/item/storage/belt/smartgun
-	description = "A gun-belt containing a pistol capable of locking onto multiple targets and firing on them in rapid sequence and three magazines."
+	description = "A gun-belt containing a pistol capable of locking onto multiple targets and firing on them in rapid sequence and four magazines."
 
 /datum/materiel/sidearm/pistol
 	name = "Branwen Pistol"
