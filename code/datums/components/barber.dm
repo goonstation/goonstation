@@ -94,9 +94,9 @@
 
 	SPAWN_DBG(0)
 		var/list/region = list(
-			"Bottom Hairea ([M.bioHolder.mobAppearance.customization_first.name])" = BOTTOM_DETAIL,
-			"Middle Hairea ([M.bioHolder.mobAppearance.customization_second.name])" = MIDDLE_DETAIL,
-			"Top Hairea ([M.bioHolder.mobAppearance.customization_third.name])" = TOP_DETAIL,
+			"Top Detail ([M.bioHolder.mobAppearance.customization_third.name])" = TOP_DETAIL,
+			"Middle Detail ([M.bioHolder.mobAppearance.customization_second.name])" = MIDDLE_DETAIL,
+			"Bottom Detail ([M.bioHolder.mobAppearance.customization_first.name])" = BOTTOM_DETAIL,
 			"Create Wig" = ALL_HAIR)
 
 		var/which_part = input(user, "Which clump of hair?", "Clump") as null|anything in region
@@ -169,9 +169,9 @@
 	SPAWN_DBG(0)
 
 		var/list/region = list(
-			"Bottom Hairea ([M.bioHolder.mobAppearance.customization_first.name])" = BOTTOM_DETAIL,
-			"Middle Hairea ([M.bioHolder.mobAppearance.customization_second.name])" = MIDDLE_DETAIL,
-			"Top Hairea ([M.bioHolder.mobAppearance.customization_third.name])" = TOP_DETAIL,
+			"Top Detail ([M.bioHolder.mobAppearance.customization_third.name])" = TOP_DETAIL,
+			"Middle Detail ([M.bioHolder.mobAppearance.customization_second.name])" = MIDDLE_DETAIL,
+			"Bottom Detail ([M.bioHolder.mobAppearance.customization_first.name])" = BOTTOM_DETAIL,
 			"Create Wig" = ALL_HAIR)
 
 		var/which_part = input(user, "Which clump of hair?", "Clump") as null|anything in region
