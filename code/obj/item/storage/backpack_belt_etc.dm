@@ -388,7 +388,8 @@
 	/obj/item/gun/kinetic/zipgun,
 	/obj/item/clothing/mask/gas/NTSO,
 	/obj/item/gun/energy/tasersmg,
-	/obj/item/gun/energy/signifer2) //added so the NTSO mask can be clipped to the belt, maybe good to do with all gas masks?
+	/obj/item/gun/energy/signifer2, //added so the NTSO mask can be clipped to the belt, maybe good to do with all gas masks?
+	/obj/item/device/prisoner_scanner)
 	in_list_or_max = 1
 
 // kiki's detective shoulder (holster)
