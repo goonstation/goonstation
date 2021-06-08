@@ -1,4 +1,9 @@
 
+(t)tue jun 08 21
+(u)BatElite
+(p)5073
+(e)|
+(+)Security belts now accept the RecordTrak
 (t)mon jun 07 21
 (u)Jan.antilles
 (p)5024
