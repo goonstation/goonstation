@@ -467,8 +467,10 @@
 	var/no_print_spam = 1 // In relation to world.time.
 	var/olde = 0
 	var/datum/mechanic_controller/ruck_controls
-	var/host_ruck //net_id of the ruck that will send messages
+	var/host_ruck
+	///net_id of the ruck that will send messages
 	var/list/known_rucks = null
+	///list of rucks we've seen send a SYNC or SYNCREPLY (or even DROP but that's weird)
 	var/boot_time = null
 	var/data_initialized = 0
 	var/datum/radio_frequency/pda = null
