@@ -715,7 +715,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
-		if (istype(source) && (the_tool != source.equipped() || isrobot(source)))
+		if (istype(source) && (the_tool != source.equipped()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

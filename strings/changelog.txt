@@ -1,4 +1,60 @@
 
+(t)wed jun 09 21
+(u)Gannets & Tarmunora
+(p)5071
+(e)🆕🎨|feature, sprites
+(*)Added the Hydra smart pistol to the Syndicate weapons vendor sidearm options on the Cairngorm.
+(+)The Hydra smart pistol locks on to its target and never misses unless blocked by an object or dodged.
+(+)Can be charged with the fire button up to a burst of three bullets per target.
+(+)Will not target other nuclear operatives (but may still hit them by accident).
+(u)Walpvrgis
+(p)5080
+(e)🆕🎨|feature, sprites
+(*)Three new Spacebux bags are now available to purchase; Studded Backpack, Itabag (in one of 5 random pastel shades), and a brown backpack!
+(*)Backpacks and Satchels have been resprited. You also can now turn almost all backpacks into satchels using the medal reward.
+(t)tue jun 08 21
+(u)BatElite
+(p)5073
+(e)|
+(+)Security belts now accept the RecordTrak
+(t)mon jun 07 21
+(u)Jan.antilles
+(p)5024
+(e)🎨|sprites
+(+)Resprite of the Chef's FoodTech vending machine.
+(u)Gannets
+(p)5057
+(e)🗺|mapping
+(+)Added a pill bottle of mutadone to the Cairngorm medbay.
+(u)Superlagg
+(p)4712
+(e)🐛🆕|bug, feature
+(+)Securitrons locked or welded into a locker can no longer attack people. They aren't happy about this, though.
+(u)Superlagg
+(p)3747
+(e)🆕|feature
+(+)Most targetable emotes now bring up a menu of valid targets.
+(u)Carbadox
+(p)5042
+(e)|
+(+)Raises the limit of posts on the notice board from 5 to 15. Now you can leave even more notes for your space friends, without fighting for advertising space. Hopefully.
+(u)112358sam
+(p)5046
+(e)🐛|bug
+(+)Reagents will no longer be wasted when topping off reagent containers.
+(u)Jan.antilles
+(p)5056
+(e)|
+(+)Touching an artifact with your own robotic arm counts as a silicon touch.
+(u)112358sam
+(p)5040
+(e)|
+(+)Metal arms no longer bleed when picking up a rose.
+(t)sun jun 06 21
+(u)112358sam
+(p)5038
+(e)🐛|bug
+(+)Prevents cyborgs repairing at docking station when out of materials.
 (t)sat jun 05 21
 (u)Emily
 (e)🆕|feature

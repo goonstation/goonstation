@@ -789,7 +789,7 @@
 				var/obj/item/wizard_crystal/wc = M
 				wc.setMaterial(getMaterial(wc.assoc_material),0,0,1,0)
 
-			if (!istype(M.material) || !(M.material.material_flags & MATERIAL_CRYSTAL) && !(M.material.material_flags & MATERIAL_METAL) && !(M.material.material_flags & MATERIAL_RUBBER))
+			if (!istype(M.material))
 				M.set_loc(src.loc)
 				src.reject = 1
 				continue
