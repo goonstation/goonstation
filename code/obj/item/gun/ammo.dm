@@ -836,8 +836,8 @@
 
 	smartgun
 		name = "9mm smartgun magazine"
-		amount_left = 30.0
-		max_amount = 30.0
+		amount_left = 24.0
+		max_amount = 24.0
 		ammo_type = new/datum/projectile/bullet/bullet_9mm/smartgun
 	smg
 		name = "9mm SMG magazine"

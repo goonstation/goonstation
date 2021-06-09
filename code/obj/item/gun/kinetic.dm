@@ -1031,7 +1031,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "\improper Hydra smart pistol"
 	desc = "A pistol capable of locking onto multiple targets and firing on them in rapid sequence. \"Anderson Para-Munitions\" is engraved on the slide."
 	icon_state = "smartgun"
-	max_ammo_capacity = 30
+	max_ammo_capacity = 24
 
 	New()
 		..()
