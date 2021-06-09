@@ -1078,7 +1078,7 @@ proc/create_fluff(datum/mind/target)
 			explanation_text = "Be dastardly as heck!"
 			return
 
-		explanation_text = "Ensure that [target.current.real_name], the [target.assigned_role], safely arrives at Centcom alive and not as a cyborg."
+		explanation_text = "Ensure that [target.current.real_name], the [target.assigned_role], safely arrives at Centcom alive and not as a cyborg/AI."
 		targetname = target.current.real_name
 
 	check_completion()
