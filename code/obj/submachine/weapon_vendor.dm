@@ -297,6 +297,7 @@
 	name = "RecordTrak Scannner"
 	path = /obj/item/device/prisoner_scanner
 	description = "A device used to scan in prisoners and update their security records."
+
 /datum/materiel/assistant/basic
 	name = "Assistant"
 	path = /obj/item/storage/belt/security/assistant
