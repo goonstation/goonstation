@@ -654,6 +654,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_lhan = /obj/item/tank/air
 	slot_ears = /obj/item/device/radio/headset/research
 	slot_eyes = /obj/item/clothing/glasses/spectro
+	slot_poc1 = /obj/item/pen
 
 	New()
 		..()
