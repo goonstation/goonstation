@@ -619,6 +619,14 @@
 	if (!src.bioHolder)
 		return // fuck u
 
+	UpdateOverlays(null, "hair_one", 1, 1)
+	UpdateOverlays(null, "hair_two", 1, 1)
+	UpdateOverlays(null, "hair_three", 1, 1)
+
+	UpdateOverlays(null, "hair_special_one", 1, 1)
+	UpdateOverlays(null, "hair_special_two", 1, 1)
+	UpdateOverlays(null, "hair_special_three", 1, 1)
+
 	var/seal_hair = (src.head && src.head.seal_hair)
 	var/obj/item/organ/head/my_head
 	if (src?.organHolder?.head)
