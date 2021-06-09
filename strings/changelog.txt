@@ -1,5 +1,9 @@
 
 (t)wed jun 09 21
+(u)Flappybat
+(p)5085
+(e)⚖|balance
+(+)Killer tomatoes now actually do damage (4-6) when biting you.
 (u)Gannets & Tarmunora
 (p)5071
 (e)🆕🎨|feature, sprites
