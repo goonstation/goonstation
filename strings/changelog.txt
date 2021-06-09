@@ -1,5 +1,12 @@
 
 (t)wed jun 09 21
+(u)Gannets & Tarmunora
+(p)5071
+(e)🆕🎨|feature, sprites
+(*)Added the Hydra smart pistol to the Syndicate weapons vendor sidearm options on the Cairngorm.
+(+)The Hydra smart pistol locks on to its target and never misses unless blocked by an object or dodged.
+(+)Can be charged with the fire button up to a burst of three bullets per target.
+(+)Will not target other nuclear operatives (but may still hit them by accident).
 (u)Walpvrgis
 (p)5080
 (e)🆕🎨|feature, sprites
