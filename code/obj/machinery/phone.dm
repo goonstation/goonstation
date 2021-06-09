@@ -84,6 +84,11 @@
 	// Attempt to pick up the handset
 	attack_hand(mob/living/user as mob)
 		..(user)
+
+		if(isghostcritter(user) || issmallanimal(user))
+			boutput(user, "<span class='alert'><b>You try to use [src], but this is way too complicated for your small brain to comprehend!</b></span>")
+			return
+
 		if(src.answered == 1)
 			return
 
