@@ -274,6 +274,7 @@
 	var/obj/machinery/phone/parent = null
 	var/mob/holder = null //GC WOES (just dont use this var, get holder using loc)
 	flags = TALK_INTO_HAND
+	w_class = 1
 
 	New(var/obj/machinery/phone/parent_phone, var/mob/living/picker_upper)
 		if(!parent_phone)
