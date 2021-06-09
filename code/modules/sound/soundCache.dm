@@ -443,6 +443,7 @@ var/global/list/soundCache = list(
  	"sound/items/pickup_gun.ogg" = 'sound/items/pickup_gun.ogg',\
  	"sound/items/pickup_plate.ogg" = 'sound/items/pickup_plate.ogg',\
  	"sound/items/plate_tap.ogg" = 'sound/items/plate_tap.ogg',\
+	"sound/items/plunger_pop.ogg" = 'sound/items/plunger_pop.ogg',\
  	"sound/items/polaroid1.ogg" = 'sound/items/polaroid1.ogg',\
  	"sound/items/polaroid2.ogg" = 'sound/items/polaroid2.ogg',\
  	"sound/items/police_whistle1.ogg" = 'sound/items/police_whistle1.ogg',\
