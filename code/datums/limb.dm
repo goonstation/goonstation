@@ -1289,6 +1289,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	/obj/machinery/weapon_stand,\
 	/obj/dummy/chameleon,\
 	/obj/machinery/light,\
+	/obj/machinery/phone,\
 	/obj/machinery/vending,\
 	/obj/machinery/nuclearbomb,\
 	/obj/item/gun/kinetic/airzooka,\
