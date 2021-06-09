@@ -1476,7 +1476,7 @@
 					mob.layer = target.layer - 0.01
 					mob.visible_message("[mob] hides under [target]!")
 
-	emote(var/act)
+	emote(var/act, var/voluntary)
 		. = null
 		var/muzzled = istype(mob.wear_mask, /obj/item/clothing/mask/muzzle)
 		switch(act)
@@ -1511,16 +1511,9 @@
 			if("jump")
 				. = "<B>[mob.name]</B> jumps!"
 			if ("scream")
-				if(mob.emote_allowed)
-					if(!(mob.client && mob.client.holder))
-						mob.emote_allowed = 0
-
+				if (mob.emote_check(voluntary, 50))
 					. = "<B>[mob]</B> screams!"
 					playsound(mob, src.sound_monkeyscream, 80, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-
-					SPAWN_DBG(5 SECONDS)
-						if (mob)
-							mob.emote_allowed = 1
 			if ("fart")
 				if(farting_allowed && mob.emote_allowed && (!mob.reagents || !mob.reagents.has_reagent("anti_fart")))
 					mob.emote_allowed = 0
