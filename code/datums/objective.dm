@@ -72,7 +72,7 @@ ABSTRACT_TYPE(/datum/objective)
 			explanation_text = "Be dastardly as heck!"
 			return
 		var/objective_text = "Assassinate [target.current.real_name], the [target.assigned_role == "MODE" ? target.special_role : target.assigned_role]"
-		objective_text += " [create_fluff(target)]. It doesn't count if they get revived, unless it's as a cyborg/AI."
+		objective_text += " [create_fluff(target)]. It doesn't count if they get revived unless it's as a cyborg/AI."
 
 		explanation_text = objective_text
 		targetname = target.current.real_name
@@ -209,7 +209,7 @@ proc/create_fluff(datum/mind/target)
 				steal_target = /obj/item/pen/crayon/golden
 #endif
 
-		explanation_text = "Steal the [target_name] and have it anywhere on your person at the end of the shift."
+		explanation_text = "Steal the [target_name] and have it anywhere on you at the end of the shift."
 		return steal_target
 
 	check_completion()
@@ -295,9 +295,9 @@ proc/create_fluff(datum/mind/target)
 				multigrab_num = rand(2, 5)
 
 		if (target_name == "hearts")
-			explanation_text = "You're a real Romeo! Steal the (literal) hearts of [multigrab_num] crewmembers and have them all anywhere on your person at the end of the shift."
+			explanation_text = "You're a real Romeo! Steal the actual hearts of [multigrab_num] crewmembers and have them all anywhere on you at the end of the shift."
 		else
-			explanation_text = "Steal [multigrab_num] [target_name] and have them all anywhere on your person at the end of the shift."
+			explanation_text = "Steal [multigrab_num] [target_name] and have them all anywhere on you at the end of the shift."
 
 		return multigrab_target
 
@@ -995,7 +995,7 @@ proc/create_fluff(datum/mind/target)
 		return in_centcom(src.owner.current)
 
 /datum/objective/escape/hijack
-	explanation_text = "Hijack the emergency shuttle by escaping alone. If someone else did sneak on, make sure they are dead before reaching Centcom."
+	explanation_text = "Hijack the emergency shuttle by escaping alone. If someone else does sneak on, make sure they're dead before reaching Centcom."
 #ifdef RP_MODE
 	enabled = FALSE
 #endif
@@ -1024,7 +1024,7 @@ proc/create_fluff(datum/mind/target)
 		return 1
 
 /datum/objective/escape/survive
-	explanation_text = "Stay alive until the end of the shift no matter if you're on station or not."
+	explanation_text = "Stay alive until the end of the shift. It doesn't matter whether you're on station or not."
 
 	check_completion()
 		if(!owner.current || isdead(owner.current))
@@ -1087,7 +1087,7 @@ proc/create_fluff(datum/mind/target)
 		return 0
 
 /datum/objective/escape/hijack_group
-	explanation_text = "Hijack the emergency shuttle by escaping alone or with your accomplices. Anyone else who snuck on needs to be dead before reaching Centcom."
+	explanation_text = "Hijack the emergency shuttle by escaping alone or with your accomplices. Anyone else who snuck on needs to die before you reach Centcom."
 	var/list/datum/mind/accomplices = list()
 
 	check_completion()
