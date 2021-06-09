@@ -54533,8 +54533,8 @@
 "dYb" = (
 /obj/cable,
 /obj/wingrille_spawn/auto,
-/obj/decal/poster/wallsign/space,
 /obj/decal/xmas_lights/ephemeral,
+/obj/decal/poster/wallsign/hazard_caution,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
 "dYf" = (
@@ -56935,8 +56935,8 @@
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/auto,
-/obj/decal/poster/wallsign/space,
 /obj/decal/xmas_lights/ephemeral,
+/obj/decal/poster/wallsign/hazard_caution,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "ilc" = (
