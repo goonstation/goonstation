@@ -1,4 +1,10 @@
 
+(t)wed jun 09 21
+(u)Walpvrgis
+(p)5080
+(e)🆕🎨|feature, sprites
+(*)Three new Spacebux bags are now available to purchase; Studded Backpack, Itabag (in one of 5 random pastel shades), and a brown backpack!
+(*)Backpacks and Satchels have been resprited. You also can now turn almost all backpacks into satchels using the medal reward.
 (t)tue jun 08 21
 (u)BatElite
 (p)5073
