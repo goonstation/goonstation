@@ -766,6 +766,7 @@ datum/projectile/tele_bolt
 
 datum/projectile/rad_bolt
 	impact_range = 0
+	ie_type = null // Probably not the best way to make sure these don't generate an impact effect but oh well.
 
 datum/projectile/wavegun
 	impact_range = 4
