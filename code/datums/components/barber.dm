@@ -180,7 +180,7 @@
 			return
 
 		if (region[which_part] != ALL_HAIR)
-			var/list/facehair = list(/datum/customization_style/none) + concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache)
+			var/list/facehair = list(/datum/customization_style/none) + concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns)
 			var/new_style = select_custom_style(facehair, user)
 
 			if (!new_style)
@@ -570,7 +570,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 	cutting = "shaving"
 
 	getHairStyles()
-		return concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache)
+		return concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns)
 
 #undef HAIRCUT
 #undef SHAVE
