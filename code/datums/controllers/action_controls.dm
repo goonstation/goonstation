@@ -1097,7 +1097,36 @@ var/datum/action_controller/actions
 					O.show_message("<span class='alert'><B>[H] manages to remove the shackles!</B></span>", 1)
 				H.show_text("You successfully remove the shackles.", "blue")
 
+/datum/action/bar/private/icon/straightjacket_removal //This is used when you try to resist out of a straightjacket.
+	duration = 90 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "straightjacket"
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	icon_state = "straight_jacket"
 
+	New(var/dur)
+		duration = dur
+		..()
+
+	onStart()
+		..()
+		owner.visible_message("<span class='alert'><B>[owner] attempts to remove the straightjacket!</B></span>")
+
+	onInterrupt(var/flag)
+		..()
+		boutput(owner, "<span class='alert'>Your attempt to remove your straightjacket was interrupted!</span>")
+
+	onEnd()
+		..()
+		if(owner != null && ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.wear_suit)
+				var/obj/item/clothing/suit/straight_jacket = H.wear_suit
+				H.u_equip(straight_jacket)
+				straight_jacket.set_loc(H.loc)
+				H.update_clothing()
+				H.visible_message("<span class='alert'><B>[H] attempts to remove the straightjacket!</B></span>")
+				boutput(H, "<span class='notice'>You successfully remove your straightjacket.</span>")
 //CLASSES & OBJS
 
 /obj/actions //These objects are mostly used for the attached_objs var on mobs to attach progressbars to mobs.

@@ -2571,6 +2571,14 @@
 			if (src.handcuffs:material) //This is a bit hacky.
 				src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
 			actions.start(new/datum/action/bar/private/icon/handcuffRemoval(calcTime), src)
+
+	if (src.wear_suit.restrain_wearer)
+	//handle werewolf/borg arm/ling/hulk interactions - do that later
+	//ok everything after this assumes we are a Normal Human With No Powers
+		src.last_resist = world.time + 100
+		var/time = 90 SECONDS
+		boutput(src, "<span class='alert'>You attempt to remove your straightjacket. (This will take around 90 seconds and you need to stand still)</span>")
+		actions.start(new/datum/action/bar/private/icon/straightjacket_removal(time), src)
 	return 0
 
 /mob/living/carbon/human/proc/spidergib()
