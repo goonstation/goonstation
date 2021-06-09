@@ -88,6 +88,9 @@ toxic - poisons
 	caliber = 0.355
 	icon_turf_hit = "bhole-small"
 
+	smartgun
+		power = 15
+
 	smg
 		power = 15
 		cost = 3

@@ -596,6 +596,17 @@
 	can_hold = list(/obj/item/gun/kinetic/pistol, /obj/item/ammo/bullets/bullet_9mm)
 	spawn_contents = list(/obj/item/gun/kinetic/pistol, /obj/item/ammo/bullets/bullet_9mm = 4)
 
+/obj/item/storage/belt/smartgun
+	name = "smartpistol belt"
+	desc = "A rugged belt fitted with a smart pistol holster and some magazine pouches."
+	icon_state = "smartgun_belt"
+	item_state = "smartgun_belt"
+	slots = 5
+	in_list_or_max = 0
+	can_hold = list(/obj/item/gun/kinetic/pistol/smart/mkII, /obj/item/ammo/bullets/bullet_9mm/smartgun)
+	spawn_contents = list(/obj/item/gun/kinetic/pistol/smart/mkII, /obj/item/ammo/bullets/bullet_9mm/smartgun = 4)
+
+
 // fancy shoulder sling for grenades
 
 /obj/item/storage/backpack/grenade_bandolier
