@@ -80,7 +80,7 @@ datum
 			fluid_b = 44
 			transparency = 255
 			taste = "chocolatey"
-			description = "Chocolate-flavored milk, tastes like being a kid again."
+			description = "Chocolate-flavored milk; tastes like being a kid again."
 			reagent_state = LIQUID
 			thirst_value = 0.75
 			value = 3 // 1 2
@@ -93,7 +93,7 @@ datum
 			fluid_b = 196
 			transparency = 255
 			taste = "like strawberries"
-			description = "Strawberry-flavored milk, tastes like being a kid again."
+			description = "Strawberry-flavored milk; tastes like being a kid again."
 			reagent_state = LIQUID
 			thirst_value = 0.75
 			value = 3 // 1 2
@@ -294,7 +294,7 @@ datum
 			fluid_g = 171
 			fluid_b = 121
 			alch_strength = 0.6
-			description = "An alcoholic beverage derived from maize.  Also ghosts."
+			description = "An alcoholic beverage derived from maize. Also ghosts."
 			taste = "spooky"
 			viscosity = 0.4
 
@@ -3887,7 +3887,7 @@ datum
 			fluid_g = 245
 			fluid_b = 230
 			alch_strength = 0.6
-			description = "An eccentric 'trio cocktail', in which the 3 ingredients have been layered on top one another."
+			description = "An eccentric 'trio cocktail', in which the three ingredients have been layered on top one another."
 			reagent_state = LIQUID
 
 		fooddrink/alcoholic/philcollins
