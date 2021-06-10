@@ -295,7 +295,7 @@ proc/create_fluff(datum/mind/target)
 				multigrab_num = rand(2, 5)
 
 		if (target_name == "hearts")
-			explanation_text = "You're a real Romeo! Steal the actual hearts of [multigrab_num] crewmembers and have them all anywhere on you at the end of the shift."
+			explanation_text = "You're a real Romeo! Steal the hearts of [multigrab_num] crewmembers and have them all anywhere on you at the end of the shift."
 		else
 			explanation_text = "Steal [multigrab_num] [target_name] and have them all anywhere on you at the end of the shift."
 
