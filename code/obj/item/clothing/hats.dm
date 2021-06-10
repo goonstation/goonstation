@@ -484,6 +484,18 @@
 		..()
 		setProperty("meleeprot_head", 2)
 
+	unequipped(mob/user)
+		..()
+		if(ON_COOLDOWN(src, "plunger_sound", 2 SECONDS)) return
+		playsound(src.loc, "sound/items/plunger_pop.ogg", 100, 1)
+		return
+
+
+	equipped(var/mob/user, var/slot)
+		..()
+		if(ON_COOLDOWN(src, "plunger_sound", 2 SECONDS)) return
+		playsound(src.loc, "sound/items/plunger_pop.ogg", 100, 1)
+
 /obj/item/clothing/head/hosberet
 	name = "HoS Beret"
 	desc = "This makes you feel like Che Guevara."
