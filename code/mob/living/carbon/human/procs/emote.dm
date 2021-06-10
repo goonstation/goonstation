@@ -1795,7 +1795,6 @@
 
 					else
 						var/obj/item/storage/toilet/toilet = locate() in src.loc
-						var/obj/item/reagent_containers/glass/beaker = locate() in src.loc
 
 						if (toilet && (src.buckled != null))
 							if (src.urine >= 1)
