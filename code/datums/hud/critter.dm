@@ -79,8 +79,7 @@
 	*
 	*		"vertical_offset" = num // offset for the horizontal placement of elements, used when placing new elements so they dont overlap
 	**/
-
-	var/list/hud_zones = null
+	var/list/list/list/hud_zones = null
 
 /datum/hud/critter/New(M)
 	..()
@@ -574,10 +573,18 @@
 		if (equipmentHolder.item)
 			src.add_object(equipmentHolder.item)
 
-/** defines a hud zone within the bounds of the screen at the supplied coordinates
+/**
+* defines a hud zone within the bounds of the screen at the supplied coordinates
 *
+* coords: assoc list with format list(x_low = num, y_low = num, x_high = num, y_high = num)
+* 	x_low and y_low are the x and y coordinates of the bottom left corner of the zone
+* 	x_high and y_high are the x and y coordinates of the top right corner of the zone
 *
+* alias: string, key for the hud zone, used like this: src.hud_zones["[alias]"]
 *
+* horizontal_edge:
+*
+* vertical_edge:
 **/
 
 /datum/hud/critter/proc/add_hud_zone(var/list/coords, var/alias, var/horizontal_edge, var/vertical_edge)
@@ -589,8 +596,15 @@
 
 /// removes the zone
 /datum/hud/critter/proc/remove_hud_zone(var/alias)
-	var/to_remove = src.hud_zones[alias]
-	src.hud_zones -= to_remove
+	var/list/to_remove = src.hud_zones[alias]
+
+	// remove elements
+	var/list/elements = to_remove["elements"]
+	for (var/atom/movable/screen/hud/element as anything in elements)
+		elements.Remove(element)
+		qdel(element)
+
+	src.hud_zones.Remove(to_remove)
 
 /// adds a hud element (which will be associated with elem_alias) to the elements list of the hud zone associated with zone_alias.
 /datum/hud/critter/proc/register_element(var/zone_alias, var/atom/movable/screen/hud/element, var/elem_alias)
@@ -610,10 +624,83 @@
 	if (!elem_alias)
 		return
 
-	var/atom/movable/screen/hud/to_remove = src.hud_zones["[zone_alias]"]["elements"]["[elem_alias]"]
-	src.hud_zones["[zone_alias]"]["elements"] -= to_remove
+	// i know the code sucks shut up
 
+	var/atom/movable/screen/hud/to_remove = src.hud_zones["[zone_alias]"]["elements"]["[elem_alias]"]
+	var/remove_index = src.hud_zones["[zone_alias]"]["elements"].Find("[elem_alias]")
+	var/list/loc_update_cache = list() // need references to every element in the list AFTER the one were removing
+
+	for (var/i in (remove_index + 1) to length(src.hud_zones["[zone_alias]"]["elements"])) // loops thru elements after the one were removing
+
+		/*
+		this is awful syntax sorry
+		the end result of the above line is that we add the the element at elements[i] to loc_update_cache
+		we cant do it directly because its an assoc list, and elements[i] is the key, so you have to do elements[elements[i]] to get a value
+		*/
+		loc_update_cache += src.hud_zones["[zone_alias]"]["elements"][src.hud_zones["[zone_alias]"]["elements"][i]]
+
+	src.hud_zones["[zone_alias]"]["elements"] -= to_remove
 	qdel(to_remove)
+
+	// more idiot math ew
+	/*
+	goal here is just to basically redo all the offsets that will change after the element is removed, fun!
+	btw ive completely abandoned readability now so its time for ternary hell and copy pastes
+	*/
+	var/decrease_amt = length(loc_update_cache)
+	var/zone_length = HUD_ZONE_LENGTH(src.hud_zones["[zone_alias]"]["coords"])
+	var/horizontal_offset = src.hud_zones["[zone_alias]"]["horizontal_offset"]
+	var/dir_horizontal = src.hud_zones["[zone_alias]"]["vertical_edge"]
+	var/east_west_mod = (dir_horizontal == "EAST" ? -1 : 1)
+
+
+	if (decrease_amt > horizontal_offset) // if we need to wrap around, but like... unwrap around. negative wraparound
+
+		var/vertical_offset = src.hud_zones["[zone_alias]"]["vertical_offset"]
+		var/dir_vertical = src.hud_zones["[zone_alias]"]["vertical_edge"]
+		var/north_south_mod = (dir_vertical == "NORTH" ? -1 : 1)
+
+		var/overhang = decrease_amt - horizontal_offset
+		horizontal_offset = zone_length
+		vertical_offset -= north_south_mod
+		horizontal_offset -= (east_west_mod * overhang)
+
+	else // just minus that bad boy
+		horizontal_offset -= (east_west_mod * decrease_amt)
+
+	for (var/atom/movable/screen/hud/cached_element as anything in loc_update_cache)
+		src.adjust_offset(hud_zones["[zone_alias]"], cached_element)
+
+/// used to manually set the position of an element relative to the BOTTOM LEFT corner of a hud zone. no safety checks so BEWARE.
+/datum/hud/critter/proc/set_elem_position(var/atom/movable/screen/hud/element, var/list/zone_coords, var/pos_x, var/pos_y)
+	if (!element || !zone_coords)
+		return
+
+	var/x_low = zone_coords["x_low"]
+	var/y_low = zone_coords["y_low"]
+
+	var/x_loc = "WEST+[x_low + pos_x]" //set loc relative to hud boundary
+	var/y_loc = "SOUTH+[y_low + pos_y]" //set loc relative to hud boundary
+
+	var/new_loc = "[x_loc], [y_loc]"
+	element.screen_loc = new_loc
+
+/// adds an element without adjusting positions automatically - manually set instead. no safety checking
+/datum/hud/critter/proc/non_auto_add_elem(var/zone_alias, var/elem_alias, var/atom/movable/screen/hud/element, var/pos_x, var/pos_y)
+	if (!zone_alias || !src.hud_zones["[zone_alias]"] || !elem_alias || !element)
+		return
+
+	src.hud_zones["[zone_alias]"]["elements"]["[elem_alias]"] = element //registered element
+	src.set_elem_position(element, src.hud_zones["[zone_alias]"]["coords"], pos_x, pos_y) //set pos
+
+/// removes an element without adjusting positions automatically - will probably fuck stuff up if theres any dynamically positioned elements
+/datum/hud/critter/proc/non_auto_del_elem(var/zone_alias, var/elem_alias)
+	if (!zone_alias || !elem_alias)
+		return
+
+	var/atom/movable/screen/hud/to_remove = src.hud_zones["[zone_alias]"]["elements"]["[elem_alias]"]
+	src.hud_zones["[zone_alias]"]["elements"]["[elem_alias]"] -= to_remove //unregister element
+	qdel(to_remove) //delete
 
 /// checks if the provided coordinates are within the boundaries of the screen, returns true if true, false if false
 /datum/hud/critter/proc/boundary_check(var/list/coords)
@@ -639,28 +726,43 @@
 	return true
 
 /datum/hud/critter/proc/adjust_offset(var/list/hud_zone, var/atom/movable/screen/hud/element)
-	var/dir_horizontal = hud_zone["horizontal_edge"]
-	var/dir_vertical = hud_zone["vertical_edge"]
-	var/curr_horizontal = hud_zone["horizontal_offset"]
-	var/curr_vertical = hud_zone["vertical_offset"]
+	var/dir_horizontal = hud_zone["horizontal_edge"] // what direction elements are added from horizontally (east or west)
+	var/dir_vertical = hud_zone["vertical_edge"] // what direction elements are added from when wrapping around horizontally (north or south)
+	var/curr_horizontal = hud_zone["horizontal_offset"] // current horizontal offset relative to the hud zone
+	var/curr_vertical = hud_zone["vertical_offset"] // current vertical offset relative to the hud zone
+	var/east_west_mod = 0 // adding elements starting from the east means that they move to the left, starting from west moves right
+	var/north_south_mod = 0 // adding elements starting from the north means that they move down, starting from south moves up
+	var/absolute_pos_horizontal = 0 // absolute horizontal position on the whole screen, added to offsets relative to hud
+	var/absolute_pos_vertical = 0 // absolute vertical position on the whole screen, added to offsets relative to hud
 
-	var/east_west_mod = (dir_horizontal == "EAST" ? -1 : 1) // if it starts at the east edge, we add new elements to the left. west edge, right
-	var/north_south_mod = (dir_vertical == "NORTH" ? -1 : 1) // if it starts at the north edge, we add new elements downwards. south edge, upwards
+	if (dir_horizontal == "EAST") // east specific
+		east_west_mod = -1 // if it starts at the east edge, we add new elements to the left
+		absolute_pos_horizontal = hud_zone["coords"]["x_high"] // if it starts at the east edge, we take the x loc of the top right corner
+	else // west specific
+		east_west_mod = 1 // if it starts at the west edge, we add new elements to the right
+		absolute_pos_horizontal = hud_zone["coords"]["x_low"] // if it starts at the west edge, we take the x loc of the bottom left corner
+
+	if (dir_vertical ==  "NORTH") // north specific
+		north_south_mod = -1 // if it starts at the north edge, we add new elements downwards on wraparound
+		absolute_pos_vertical = hud_zone["coords"]["y_high"] // if it starts at the north edge, we take the y loc of the top right corner
+	else // south specific
+		north_south_mod = 1 // if it starts at the south edge, we add new elements upwards on wraparound
+		absolute_pos_vertical = hud_zone["coords"]["y_low"] // if it starts at the north edge, we take the y loc of the bottom left corner
+
+	var/spaghetti_flag = false // set to true if we had to wraparound, otherwise its false
 
 	if ((curr_horizontal + east_west_mod) > HUD_ZONE_LENGTH(hud_zone["coords"])) // we need to wrap around
 		curr_horizontal = 0 // realign with edge
-		curr_vertical += (north_south_mod) // wrap vertically
+		curr_vertical += north_south_mod // wrap vertically
+		spaghetti_flag = true
 
-	else //just add on normally
-		curr_horizontal += (east_west_mod) //increment offset
-
-	var/screen_loc_horizontal = "[dir_horizontal]"
+	var/screen_loc_horizontal = "[dir_horizontal + absolute_pos_horizontal]"
 	if (east_west_mod >= 0) //if its positive or 0
 		screen_loc_horizontal += "+[curr_horizontal]"
 	else //its negative
 		screen_loc_horizontal += "[curr_horizontal]]"
 
-	var/screen_loc_vertical = "[dir_vertical]"
+	var/screen_loc_vertical = "[dir_vertical + absolute_pos_vertical]"
 	if (north_south_mod >= 0) //if its positive or 0
 		screen_loc_vertical += "+[curr_vertical]"
 	else //its negative
@@ -669,6 +771,10 @@
 	var/screen_loc = "[screen_loc_horizontal], [screen_loc_vertical]"
 
 	element.screen_loc = screen_loc
+
+	// increment horizontal offset
+	if (!spaghetti_flag)
+		curr_horizontal += east_west_mod
 
 	hud_zone["horizontal_offset"] = curr_horizontal
 	hud_zone["vertical_offset"] = curr_vertical

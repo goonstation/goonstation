@@ -5,4 +5,4 @@
 #define HUD_ZONE_HEIGHT(coords) ((coords["y_high"] - coords["y_low"]) != 0 ? (coords["y_high"] - coords["y_low"]) : 1)
 
 /// returns the area of a hud zone (total amount of 32x32 tiles in the hud zone)
-#define HUD_ZONE_AREA(coords) ((hud_zone_length(coords)) * (hud_zone_height(coords)))
+#define HUD_ZONE_AREA(coords) ((HUD_ZONE_LENGTH(coords)) * (HUD_ZONE_HEIGHT(coords)))
