@@ -981,6 +981,7 @@ var/global/list/soundCache = list(
  	"sound/musical_instruments/Fiddle_4.ogg" = 'sound/musical_instruments/Fiddle_4.ogg',\
  	"sound/musical_instruments/Fiddle_5.ogg" = 'sound/musical_instruments/Fiddle_5.ogg',\
  	"sound/musical_instruments/Gong_Rumbling.ogg" = 'sound/musical_instruments/Gong_Rumbling.ogg',\
+	"sound/musical_instruments/Guitar_bonk.ogg" = 'sound/musical_instruments/Guitar_bonk.ogg',\
  	"sound/musical_instruments/Harmonica_1.ogg" = 'sound/musical_instruments/Harmonica_1.ogg',\
  	"sound/musical_instruments/Harmonica_2.ogg" = 'sound/musical_instruments/Harmonica_2.ogg',\
  	"sound/musical_instruments/Harmonica_3.ogg" = 'sound/musical_instruments/Harmonica_3.ogg',\
