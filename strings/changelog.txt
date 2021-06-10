@@ -1,4 +1,9 @@
 
+(t)thu jun 10 21
+(u)eX.n0x
+(p)5087
+(e)🐛|bug
+(+)Radbow no longer shows an impact effect.
 (t)wed jun 09 21
 (u)Tarmunora
 (e)⚖|balance
