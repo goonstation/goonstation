@@ -6960,9 +6960,13 @@
 /turf/simulated/floor/plating/jen,
 /area/station/science/gen_storage)
 "bJe" = (
-/obj/item/reagent_containers/glass/wateringcan{
-	pixel_x = -1;
-	pixel_y = 7
+/obj/machinery/door/airlock/pyro/external,
+/obj/access_spawn/maint,
+/obj/decal/mule/dropoff,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
@@ -9187,15 +9191,9 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
 "cqV" = (
-/obj/machinery/door/airlock/pyro/external,
-/obj/access_spawn/maint,
-/obj/decal/mule/dropoff,
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
+/turf/simulated/floor/grime{
+	dir = 8
 	},
-/turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "cqZ" = (
 /obj/lattice{
@@ -9765,11 +9763,10 @@
 /turf/simulated/floor/black,
 /area/station/medical/medbay/pharmacy)
 "czN" = (
-/obj/item/storage/wall/emergency{
-	pixel_y = 32
+/obj/storage/closet/emergency,
+/turf/simulated/floor/grime{
+	dir = 8
 	},
-/obj/decal/cleanable/dirt/jen,
-/turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "czQ" = (
 /obj/disposalpipe/segment/transport{
@@ -19409,14 +19406,10 @@
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "fsc" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
+/obj/item/storage/wall/emergency{
+	pixel_y = 32
 	},
-/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "fse" = (
@@ -24686,9 +24679,9 @@
 /area/station/ranch)
 "gYk" = (
 /obj/machinery/drone_recharger,
-/obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "gYo" = (
@@ -26303,10 +26296,10 @@
 	name = "Genetic Research"
 	})
 "hwl" = (
-/obj/machinery/drone_recharger,
-/obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
-/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/machinery/light/small/sticky{
+	dir = 8
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "hwr" = (
@@ -29100,6 +29093,19 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/wood/six,
 /area/station/library/reading2)
+"imq" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/access_spawn/maint,
+/obj/decal/mule/dropoff,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/ne)
 "imD" = (
 /obj/cable{
 	d1 = 2;
@@ -30067,10 +30073,10 @@
 /turf/simulated/floor/plating/jen,
 /area/station/quartermaster/office)
 "iCK" = (
-/obj/submachine/chef_sink{
-	dir = 8
+/obj/item/reagent_containers/glass/wateringcan{
+	pixel_x = -1;
+	pixel_y = 7
 	},
-/obj/machinery/light/small/sticky,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "iCN" = (
@@ -33680,10 +33686,15 @@
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/exit)
 "jKD" = (
-/obj/storage/closet/emergency,
-/turf/simulated/floor/grime{
-	dir = 8
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
 	},
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "jKR" = (
 /obj/decal/mule/dropoff,
@@ -35858,9 +35869,10 @@
 /turf/simulated/floor/plating/jen,
 /area/listeningpost)
 "kvH" = (
-/turf/simulated/floor/grime{
-	dir = 8
-	},
+/obj/machinery/door/airlock/pyro/external,
+/obj/access_spawn/maint,
+/obj/decal/mule/dropoff,
+/turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "kvO" = (
 /obj/lattice{
@@ -38722,6 +38734,14 @@
 	icon_state = "red2"
 	},
 /area/station/maintenance/outer/west)
+"loh" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/access_spawn/maint,
+/obj/decal/mule/dropoff,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/ne)
 "loj" = (
 /obj/lrteleporter,
 /obj/landmark{
@@ -43870,6 +43890,15 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/green/side,
 /area/station/hallway/primary/west)
+"mOP" = (
+/obj/grille/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/space)
 "mPa" = (
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/glass,
@@ -48467,6 +48496,11 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/storage/primary)
+"ohs" = (
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/machinery/drone_recharger,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/ne)
 "oht" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -77322,9 +77356,10 @@
 	},
 /area/station/science/lobby)
 "wwj" = (
-/obj/machinery/door/airlock/pyro/external,
-/obj/access_spawn/maint,
-/obj/decal/mule/dropoff,
+/obj/submachine/chef_sink{
+	dir = 8
+	},
+/obj/machinery/light/small/sticky,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "wwu" = (
@@ -126588,8 +126623,8 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
+aUm
+aUm
 aUm
 tot
 ofw
@@ -126885,14 +126920,14 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
 jqD
 aUm
 kyD
 aUm
 aUm
 aUm
+hwl
+ofw
 seV
 ofw
 seV
@@ -127187,15 +127222,15 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
 xJk
 kyD
-jKD
-jKD
+czN
+czN
 kyD
-fsc
+jKD
+seV
 ofw
+seV
 mTh
 ofw
 oHX
@@ -127489,13 +127524,13 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
 xJk
+bJe
+cqV
 cqV
 kvH
-kvH
-wwj
+ofw
+ofw
 ofw
 ofw
 ofw
@@ -127791,13 +127826,13 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
 xJk
 kyD
-kvH
-kvH
+cqV
+cqV
 kyD
+ofw
+ofw
 ofw
 ofw
 ofw
@@ -128093,14 +128128,14 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
 vPw
 aUm
 kyD
 kyD
 aUm
-czN
+fsc
+ofw
+ofw
 mTh
 seV
 ofw
@@ -128399,10 +128434,10 @@ rdj
 rdj
 rdj
 rdj
-rdj
 aUm
-aUm
-hwl
+gYk
+ofw
+seV
 aRI
 ofw
 ofw
@@ -128701,7 +128736,7 @@ rdj
 rdj
 rdj
 rdj
-rdj
+aUm
 aUm
 xrP
 ofw
@@ -128709,7 +128744,7 @@ ofw
 kkV
 kkV
 voK
-gYk
+bzZ
 umX
 qGq
 gJt
@@ -137163,7 +137198,7 @@ kOo
 ofw
 ofw
 ofw
-ofw
+kkV
 kkV
 ofw
 mkU
@@ -137464,9 +137499,9 @@ aUm
 aUm
 qMn
 ofw
-ofw
-ofw
+iCK
 kkV
+ohs
 ofw
 mkU
 bzi
@@ -137766,9 +137801,9 @@ rdj
 aUm
 rxW
 ofw
-ofw
-bJe
+wwj
 kkV
+ofw
 ofw
 aRI
 bzi
@@ -138067,12 +138102,12 @@ rdj
 rdj
 aUm
 aUm
+kyD
 aUm
 aUm
-iCK
-kkV
-ofw
-bzZ
+loh
+kyD
+aUm
 tvN
 dyw
 aUm
@@ -138370,10 +138405,10 @@ rdj
 rdj
 rdj
 rdj
-aUm
+rdj
 kyD
-aUm
-aUm
+cqV
+czN
 aUm
 xna
 bzZ
@@ -138673,9 +138708,9 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
+kyD
+cqV
+czN
 aUm
 kyD
 kyD
@@ -138975,10 +139010,10 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
+aUm
+imq
+kyD
+aUm
 rdj
 rdj
 rdj
@@ -139277,10 +139312,10 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
+vPw
+oXv
+oXv
+mOP
 rdj
 rdj
 rdj
