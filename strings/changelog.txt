@@ -3,6 +3,7 @@
 (u)Tarmunora
 (e)⚖|balance
 (+)Beepsky's baton, if stolen, will get exactly 4 uses, and cannot be recharged or cell-swapped.
+(+)Nerf non-knockback side-effects of pulse projectile
 (u)Flappybat
 (p)5085
 (e)⚖|balance
