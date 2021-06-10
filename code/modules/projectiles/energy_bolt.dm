@@ -364,6 +364,9 @@ toxic - poisons
 			for(var/atom/movable/O in tile.contents)
 				if(!istype(O, /obj/machinery/nuclearbomb)) //emp does not affect nuke
 					O.emp_act()
+		if (ishuman(hit))
+			var/mob/living/carbon/human/H = hit
+			H.do_disorient(stamina_damage = 30, weakened = 0, stunned = 0, disorient = 6 SECONDS, remove_stamina_below_zero = 0)
 		elecflash(T)
 
 /datum/projectile/energy_bolt/signifer_tase
