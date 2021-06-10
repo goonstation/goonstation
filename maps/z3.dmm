@@ -2979,7 +2979,7 @@
 /area/mining/refinery)
 "aiF" = (
 /mob/living/critter/spider,
-/obj/item/storage/box/record/notaquario_mixtape1,
+/obj/item/storage/box/record/notaquario,
 /turf/simulated/floor/wood/two,
 /area/space)
 "aiG" = (

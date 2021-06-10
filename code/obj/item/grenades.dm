@@ -939,6 +939,9 @@ PIPE BOMBS + CONSTRUCTION
 			src.beep(10)
 		return ..()
 
+//dummy type for compile
+/obj/item/gimmickbomb/grenyanda/inert
+
 /////////////////////////////// Fireworks ///////////////////////////////////////
 
 /obj/item/firework

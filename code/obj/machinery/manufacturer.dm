@@ -879,8 +879,15 @@
 				playsound(src.loc, src.sound_grump, 50, 1)
 				boutput(user, "<span class='alert'>The manufacturer rejects the blueprint. Is something wrong with it?</span>")
 				return
-			for (var/datum/manufacture/M in (src.available + src.download))
-				if (BP.blueprint.name == M.name)
+			for (var/datum/manufacture/mechanics/M in (src.available + src.download))
+				if(istype(M) && istype(BP.blueprint, /datum/manufacture/mechanics))
+					var/datum/manufacture/mechanics/BPM = BP.blueprint
+					if(M.frame_path == BPM.frame_path)
+						src.visible_message("<span class='alert'>[src] emits an irritable buzz!</span>")
+						playsound(src.loc, src.sound_grump, 50, 1)
+						boutput(user, "<span class='alert'>The manufacturer rejects the blueprint, as it already knows it.</span>")
+						return
+				else if (BP.blueprint.name == M.name)
 					src.visible_message("<span class='alert'>[src] emits an irritable buzz!</span>")
 					playsound(src.loc, src.sound_grump, 50, 1)
 					boutput(user, "<span class='alert'>The manufacturer rejects the blueprint, as it already knows it.</span>")
@@ -1106,7 +1113,7 @@
 		else if (istype(over_object,/turf/simulated/floor/) || istype(over_object,/turf/unsimulated/floor/))
 			src.output_target = over_object
 			boutput(usr, "<span class='notice'>You set the manufacturer to output to [over_object]!</span>")
-		
+
 		else
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return

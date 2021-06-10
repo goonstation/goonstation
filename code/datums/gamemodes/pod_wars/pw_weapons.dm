@@ -223,7 +223,7 @@
 			var/mob/living/L = locate(/mob/living) in get_turf(src)
 			if (istype(L))
 				L.do_disorient(stamina_damage = 120, weakened = 60, stunned = 0, disorient = 0, remove_stamina_below_zero = 0)
-				L.TakeDamage("chest", rand(20, 40)/L.get_melee_protection(), 0, 0, DAMAGE_BLUNT)
+				L.TakeDamage("chest", rand(20, 40)/max(1, L.get_melee_protection()), 0, 0, DAMAGE_BLUNT)
 				L.emote("twitch_v")
 			else
 

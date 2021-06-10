@@ -1518,7 +1518,7 @@
 		if (D_BURNING)
 			TakeDamage("All", 0, damage)
 		if (D_RADIOACTIVE)
-			src.changeStatus("radiation", (damage)*1 SECOND)
+			src.changeStatus("radiation", (damage) SECONDS)
 			src.stuttering += stun
 			src.drowsyness += stun
 		if (D_TOXIC)
@@ -2049,7 +2049,7 @@
 		sleep(duration+5)
 		src.death(1)
 		var/mob/dead/observer/newmob = ghostize()
-		newmob.corpse = null
+		newmob?.corpse = null
 
 		qdel(floorcluwne)
 		qdel(src)

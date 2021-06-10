@@ -116,7 +116,6 @@
 #include "plane.dm"
 #include "rust_g.dm"
 #include "text.dm"
-#include "tgs.config.dm" // this needs to be above tgs.dm in the compile order, ugh. can we fix this?
 #include "tgs.dm"
 #include "tgui.dm"
 #include "types.dm"

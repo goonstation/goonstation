@@ -210,7 +210,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_PREGAME))
 #warn Profiler enabled at start of init
-		world.Profile(PROFILE_START, "sendmaps", "json")
+		world.Profile(PROFILE_START | PROFILE_AVERAGE, "sendmaps", "json")
 #endif
 		server_start_time = world.timeofday
 
@@ -687,10 +687,10 @@ var/f_color_selector_handler/F_Color_Selector
 #warn Profiler enabled at end of game (full)
 	var/profile_out = file("data/profile/[time2text(world.realtime, "YYYY-MM-DD hh-mm-ss")]-full.log")
 #endif
-	profile_out << world.Profile(PROFILE_START, "sendmaps", "json")
+	profile_out << world.Profile(PROFILE_START | PROFILE_AVERAGE, "sendmaps", "json")
 	world.log << "Dumped profiler data."
 	// not gonna need this again
-	world.Profile(PROFILE_STOP, "sendmaps", "json")
+	world.Profile(PROFILE_STOP | PROFILE_AVERAGE, "sendmaps", "json")
 #endif
 
 	lagcheck_enabled = 0
@@ -1701,7 +1701,5 @@ var/opt_inactive = null
 /// EXPERIMENTAL STUFF
 
 /world/Del()
-	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
-	if (debug_server)
-		call(debug_server, "auxtools_shutdown")()
+	disable_auxtools_debugger()
 	. = ..()

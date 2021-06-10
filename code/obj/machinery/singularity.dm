@@ -648,7 +648,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if(!W:try_weld(user, 1, noisy = 2))
 				return
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/field_generator/proc/weld_action,\
-			list(user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the field generator.")
+			list(user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the field generator.", null)
 		if(state == WRENCHED)
 			boutput(user, "You start to weld the field generator to the floor.")
 			return
@@ -1055,7 +1055,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if(!W:try_weld(user, 1, noisy = 2))
 				return
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/emitter/proc/weld_action,\
-			list(user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the emitter.")
+			list(user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the emitter.", null)
 		if(state == WRENCHED)
 			boutput(user, "You start to weld the emitter to the floor.")
 			return

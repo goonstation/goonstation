@@ -582,6 +582,17 @@
 		processing_items -= src
 		..()
 
+	afterattack(var/turf/T, var/mob/user)
+		if (istype(T) && !T.density)
+			processing_items |= src
+
+			user.drop_item()
+			src.set_loc(T)
+			src.deploy()
+
+			return
+		..()
+
 
 	proc/deploy()
 		processing_items |= src
@@ -605,18 +616,6 @@
 		H.attack_hand(user)
 
 /turf/space/fluid/attackby(var/obj/item/W, var/mob/user)
-	if (istype(W,/obj/item/heat_dowsing))
-		processing_items |= W
-
-		var/obj/item/heat_dowsing/H = W
-
-		user.drop_item()
-		W.set_loc(src)
-
-		H.deploy()
-
-		return
-
 	if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))
 		actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
 		return

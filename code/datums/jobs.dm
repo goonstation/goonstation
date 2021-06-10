@@ -738,8 +738,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_foot = /obj/item/clothing/shoes/orange
 	slot_glov = /obj/item/clothing/gloves/black
 	slot_ears = /obj/item/device/radio/headset/engineer
-	slot_poc1 = /obj/item/paper/book/from_file/pocketguide/mining1
-	slot_poc2 = /obj/item/paper/book/from_file/pocketguide/mining2 // fuck it i'll merge these later
+	slot_poc1 = /obj/item/paper/book/from_file/pocketguide/mining
 	items_in_backpack = list(/obj/item/crowbar)
 
 	New()
