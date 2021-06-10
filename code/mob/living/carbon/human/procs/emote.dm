@@ -1869,7 +1869,7 @@
 									message = "<B>[src]</B> unzips [his_or_her(src)] pants, takes aim, and pees in the beaker."
 								else
 									message = "<B>[src]</B> takes aim and pees in the beaker."
-								beaker.reagents.add_reagent("urine", 5)
+								beaker.reagents.add_reagent("urine", 4)
 								sims.affectMotive("Bladder", 100)
 								sims.affectMotive("Hygiene", -25)
 							else
@@ -1896,7 +1896,7 @@
 									message = "<B>[src]</B> takes aim and fills the beaker with pee."
 								sims.affectMotive("Bladder", 100)
 								sims.affectMotive("Hygiene", -25)
-								beaker.reagents.add_reagent("urine", 10)
+								beaker.reagents.add_reagent("urine", 4)
 							else
 								if (wear_suit || w_uniform)
 									message = "<B>[src]</B> pisses all over [himself_or_herself(src)]!"

@@ -1188,7 +1188,7 @@
 					H.urine -= 2
 				else
 					H.sims.affectMotive("Bladder", 100)
-				src.reagents.add_reagent("urine", 20)
+				src.reagents.add_reagent("urine", 8)
 			else
 				boutput(H, "<span class='alert'>You don't feel like you need to go.</span>")
 			return

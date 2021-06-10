@@ -1,4 +1,27 @@
 
+(t)wed jun 09 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Beepsky's baton, if stolen, will get exactly 4 uses, and cannot be recharged or cell-swapped.
+(+)Nerf non-knockback side-effects of pulse projectile
+(+)Added small stamina damage and long disorient to EMP projectile
+(+)Lawbringer detain no longer has special-cased slow status, affected by range falloff
+(u)Flappybat
+(p)5085
+(e)⚖|balance
+(+)Killer tomatoes now actually do damage (4-6) when biting you.
+(u)Gannets & Tarmunora
+(p)5071
+(e)🆕🎨|feature, sprites
+(*)Added the Hydra smart pistol to the Syndicate weapons vendor sidearm options on the Cairngorm.
+(+)The Hydra smart pistol locks on to its target and never misses unless blocked by an object or dodged.
+(+)Can be charged with the fire button up to a burst of three bullets per target.
+(+)Will not target other nuclear operatives (but may still hit them by accident).
+(u)Walpvrgis
+(p)5080
+(e)🆕🎨|feature, sprites
+(*)Three new Spacebux bags are now available to purchase; Studded Backpack, Itabag (in one of 5 random pastel shades), and a brown backpack!
+(*)Backpacks and Satchels have been resprited. You also can now turn almost all backpacks into satchels using the medal reward.
 (t)tue jun 08 21
 (u)BatElite
 (p)5073
