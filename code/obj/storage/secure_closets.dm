@@ -9,11 +9,17 @@
 	name = "personal locker"
 	desc = "The first card swiped gains control."
 	personal = 1
-	spawn_contents = list(/obj/item/storage/backpack,
-	/obj/item/storage/backpack/satchel,
-	/obj/item/device/radio/signaler,
+	spawn_contents = list(/obj/item/device/radio/signaler,
 	/obj/item/pen,
 	/obj/item/device/radio/headset)
+
+	make_my_stuff() //Let's spawn the backpack/satchel in random colours!
+		. = ..()
+		if (. == 1) //if we've not spawned stuff before
+			var/backwear = pick(/obj/item/storage/backpack,/obj/item/storage/backpack/blue,/obj/item/storage/backpack/red,/obj/item/storage/backpack/green)
+			new backwear(src)
+			backwear = pick(/obj/item/storage/backpack/satchel,/obj/item/storage/backpack/satchel/blue,/obj/item/storage/backpack/satchel/red,/obj/item/storage/backpack/satchel/green)
+			new backwear(src)
 
 /obj/storage/secure/closet/personal/empty
 	spawn_contents = list()
