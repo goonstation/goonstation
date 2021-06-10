@@ -1649,7 +1649,7 @@ datum
 			fluid_g = 53
 			fluid_b = 8
 			alch_strength = 0.1
-			description = "Una cerveza preparada de perfecta para los sedientos habitantes de la estación espacial que quieren algo con un bocado!"
+			description = "¡Una cerveza preparada de perfecta para los sedientos habitantes de la estación espacial que quieren algo con un bocado!"
 			reagent_state = LIQUID
 
 		fooddrink/alcoholic/espressomartini
