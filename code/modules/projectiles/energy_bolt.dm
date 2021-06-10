@@ -351,7 +351,7 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
 
-	on_hit(atom/H, angle, var/obj/projectile/P)
+	on_hit(atom/hit, angle, var/obj/projectile/P)
 		var/turf/T = get_turf(H)
 		for(var/turf/tile in range(1, T))
 			for(var/atom/movable/O in tile.contents)
