@@ -817,6 +817,7 @@ The properties in full and in order are Radioactivity, Neutron Radiation, Electr
 
 <section id="Alloying"><h3>Alloying</h3></section>
 Alloying is done in the Nano-Crucible using processed materials. When you alloy two materials together, the stats of the created alloy is an average of the two progenitor materials. So, if you were looking to create a dense material and you alloyed Plasmasteel (density 75) with Viscerite (density 65), the resulting alloy would have a density of 70.
+However, if one material being alloyed lacks a certain property (indicated in the table by an "n/a"), then it will simply inherit the full value of the material that <b><i>does</i></ib> have the stat.
 When you alloy a material, the material passes on any unique properties to the resulting alloy.<br><br>
 
 Two additional notes on how <b>Melee Damage Protection</b> and <b><i>Ranged Damage Protection</i></b> are determined on wearables. Melee Damage Protection is equal to the density of the material the piece is made from divided by 13.
