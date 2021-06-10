@@ -774,7 +774,20 @@ The properties in full and in order are Radioactivity, Neutron Radiation, Electr
 <td align="right">n/a</td>
 <td align="right">n/a</td>
 </tr>
-<tr><td align="right">Plasmasteel</td>
+<tr><td align="right">Plasma Glass</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right"><b>75</b></td>
+<td align="right"><b>30</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+<tr><td align="right">Plasma Steel</td>
 <td align="right">n/a</td>
 <td align="right">n/a</td>
 <td align="right">n/a</td>
@@ -823,7 +836,7 @@ When you alloy a material, the material passes on any unique properties to the r
 Two additional notes on how <b>Melee Damage Protection</b> and <b><i>Ranged Damage Protection</i></b> are determined on wearables. Melee Damage Protection is equal to the density of the material the piece is made from divided by 13.
 <b><i>Ranged Damage Protection</i></b> is equal to (material density divided by 13) divided by 10, and then 0.2 is added to the resulting number.
 
-<br><br>So if you had a Plasmasteel alloy at 70 density, it would provide 5 <b><i>Melee Damage Protection</b></i> (70/13 = 5.3) when made into a wearable, and 0.7 <b><i>Ranged Damage Protection</b></i> (0.5+0.2) when made into a wearable.
+<br><br>So if you had a Plasma Steel alloy at 70 density, it would provide 5 <b><i>Melee Damage Protection</b></i> (70/13 = 5.3) when made into a wearable, and 0.7 <b><i>Ranged Damage Protection</b></i> (0.5+0.2) when made into a wearable.
 <br>
 <br>
 You can directly transfer the stats of a material to an object by putting the material in the <b>Arc Electroplater</b> and then putting the desired object in with the plating. This process takes a few moments, and results in an object that is plated in and has the properties of your material.
