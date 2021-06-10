@@ -5,6 +5,7 @@
 (+)Beepsky's baton, if stolen, will get exactly 4 uses, and cannot be recharged or cell-swapped.
 (+)Nerf non-knockback side-effects of pulse projectile
 (+)Added small stamina damage and long disorient to EMP projectile
+(+)Lawbringer detain no longer has special-cased slow status, affected by range falloff
 (u)Flappybat
 (p)5085
 (e)⚖|balance

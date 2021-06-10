@@ -245,16 +245,9 @@ toxic - poisons
 	color_green = 165
 	color_blue = 0
 	max_range = 7 //slight range boost
-	damage_type = D_SPECIAL
+	damage_type = D_ENERGY
 
 	on_hit(atom/O, angle, var/obj/projectile/P)
-		//lets make getting hit by the projectile a bit worse than getting the shockwave
-		//tasers have changed in production code, I'm not really sure what value is good to give it here...
-		if (isliving(O))
-			var/mob/living/L = O
-			L.changeStatus("slowed", 2 SECONDS)
-			L.do_disorient(stamina_damage = 60, weakened = 30, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
-			L.emote("twitch_v")
 		detonate(O, P)
 
 	on_max_range_die(obj/projectile/O)
