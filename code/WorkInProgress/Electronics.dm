@@ -632,11 +632,16 @@
 	var/command = signal.data["command"]
 
 	//LOCK can come in encrypted
-	if(signal.data["acc_code"] == netpass_heads && !isnull(signal.data["DATA"]) && !isnull(signal.data["LOCK"]))
+	if(signal.data["address_1"] == "TRANSRKIT" && signal.data["acc_code"] == netpass_heads && !isnull(signal.data["DATA"]) && !isnull(signal.data["LOCK"]))
 		var/targetitem = signal.data["DATA"]
+		var/targetlock = signal.data["LOCK"]
+		if (istext(targetlock))
+			targetlock = text2num(targetlock)
+
 		for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
 			if (targetitem == O.name)
-				O.locked = signal.data["LOCK"]
+				O.locked = targetlock
+				updateDialog()
 		return
 
 	if(signal.encryption)
