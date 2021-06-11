@@ -589,6 +589,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\processSchedulerView.dm"
 #include "code\modules\admin\randomverbs.dm"
 #include "code\modules\admin\reference_tracking.dm"
+#include "code\modules\admin\tgs_commands.dm"
 #include "code\modules\admin\ticklag.dm"
 #include "code\modules\admin\toggles.dm"
 #include "code\modules\admin\buildmodes\adventure.dm"
