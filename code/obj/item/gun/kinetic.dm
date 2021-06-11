@@ -1726,3 +1726,20 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			icon_state="guncase"
 		else
 			icon_state="secure"
+
+/obj/item/gun/kinetic/foamdartgun
+	name = "Foam Dart Gun"
+	icon_state = "foamdartgun"
+	desc = "A toy gun that fires foam darts. Keep out of reach of clowns, staff assistants and scientists."
+	w_class = W_CLASS_SMALL
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "toygun"
+	contraband = 1
+	force = 1
+	caliber = 0.393
+	max_ammo_capacity = 10
+
+	New()
+		ammo = new/obj/item/ammo/bullets/foamdarts/ten
+		set_current_projectile(new/datum/projectile/bullet/foamdart)
+		..()
