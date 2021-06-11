@@ -1374,3 +1374,4 @@ toxic - poisons
 	hit_type = DAMAGE_BLUNT
 	max_range = 15
 	dissipation_rate = 0
+	ie_type = null
