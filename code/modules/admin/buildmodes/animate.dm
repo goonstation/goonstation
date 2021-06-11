@@ -46,6 +46,8 @@ Left Mouse Button on turf/mob/obj      = Animate!<br>
 		/proc/animate_storage_thump,
 		/proc/animate_open_from_floor,
 		/proc/animate_close_into_floor,
+		/proc/animate_wave,
+		/proc/animate_ripple
 	)
 
 	New()

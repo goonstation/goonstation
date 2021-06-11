@@ -95,7 +95,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(ismob(entering))
 			var/mob/M = entering
 			if(owner.material)
-				M.changeStatus("radiation", max(round(owner.material.getProperty("radioactive") / 15),1)*10, 3)
+				M.changeStatus("radiation", max(round(owner.material.getProperty("radioactive") / 15),1) SECONDS, 3)
 		return
 
 /datum/materialProc/n_radioactive_on_enter
@@ -105,7 +105,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(ismob(entering))
 			var/mob/M = entering
 			if(owner.material)
-				M.changeStatus("n_radiation", max(round(owner.material.getProperty("n_radioactive") / 15),1)*10, 3)
+				M.changeStatus("n_radiation", max(round(owner.material.getProperty("n_radioactive") / 15),1) SECONDS, 3)
 		return
 
 /datum/materialProc/generic_reagent_onattacked
@@ -147,13 +147,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		explode_limit = limit
 		..()
 
-	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked, var/obj/attackobj, var/meleeorthrow)
+	execute(var/obj/item/owner)
 		if(explode_limit && explode_count >= explode_limit) return
 		if(world.time - lastTrigger < 50) return
 		lastTrigger = world.time
 		if(prob(trigger_chance))
 			explode_count++
-			var/turf/tloc = get_turf(attacked)
+			var/turf/tloc = get_turf(owner)
 			explosion(owner, tloc, 0, 1, 2, 3, 1)
 			tloc.visible_message("<span class='alert'>[owner] explodes!</span>")
 			qdel(owner)
@@ -358,7 +358,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 	execute(var/location) //exp and temp both have the location as first argument so i can use this for both.
 		var/turf/T = get_turf(location)
-		if(T.density)
+		if(!T || T.density)
 			return
 		if(total_plasma <= 0)
 			if(prob(2) && src.owner.owner)
@@ -451,13 +451,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/radioactive_life
 	execute(var/mob/M, var/obj/item/I, mult)
 		if(I.material)
-			M.changeStatus("radiation", (max(round(I.material.getProperty("radioactive") / 20),1))*10 * mult, 2)
+			M.changeStatus("radiation", (max(round(I.material.getProperty("radioactive") / 20),1)) SECONDS * mult, 2)
 		return
 
 /datum/materialProc/radioactive_pickup
 	execute(var/mob/M, var/obj/item/I)
 		if(I.material)
-			M.changeStatus("radiation", (max(round(I.material.getProperty("radioactive") / 5),1))*10, 4)
+			M.changeStatus("radiation", (max(round(I.material.getProperty("radioactive") / 5),1)) SECONDS, 4)
 		return
 
 /datum/materialProc/n_radioactive_add
@@ -468,13 +468,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/n_radioactive_life
 	execute(var/mob/M, var/obj/item/I, mult)
 		if(I.material)
-			M.changeStatus("n_radiation", (max(round(I.material.getProperty("n_radioactive") / 20),1))*10 * mult, 2)
+			M.changeStatus("n_radiation", (max(round(I.material.getProperty("n_radioactive") / 20),1)) SECONDS * mult, 2)
 		return
 
 /datum/materialProc/n_radioactive_pickup
 	execute(var/mob/M, var/obj/item/I)
 		if(I.material)
-			M.changeStatus("n_radiation", (max(round(I.material.getProperty("n_radioactive") / 5),1))*10, 4)
+			M.changeStatus("n_radiation", (max(round(I.material.getProperty("n_radioactive") / 5),1)) SECONDS, 4)
 		return
 
 /datum/materialProc/erebite_flash
@@ -527,7 +527,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			var/mob/living/L = entering
 			if(L.slip())
 				boutput(L, "You slip on the icy floor!")
-				playsound(get_turf(owner), "sound/misc/slip.ogg", 30, 1)
+				playsound(owner, "sound/misc/slip.ogg", 30, 1)
 		return
 
 /datum/materialProc/ice_life
@@ -607,7 +607,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				wall_owner.dismantle_wall(1)
 
 /datum/materialProc/cardboard_on_hit // MARK: add to ignorant children
-	execute(var/atom/owner, var/mob/attacker, var/obj/attackobj, var/meleeorthrow)
+	execute(var/atom/owner, var/obj/attackobj, var/mob/attacker, var/meleeorthrow)
 		if (meleeorthrow == 1) //if it was a melee attack
 			if (issnippingtool(attackobj)||iscuttingtool(attackobj))
 				if (isExploitableObject(owner))
@@ -633,6 +633,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(crumple)
 			if (istype(owner, /obj))
 				owner.visible_message("<span class='alert'>[owner] crumples!</span>", "<span class='alert'>You hear a crumpling sound.</span>")
+				if(istype(owner, /obj/storage))
+					var/obj/storage/S = owner
+					S.dump_contents()
 				qdel(owner)
 			else if (istype(owner, /turf))
 				if (istype(owner, /turf/simulated/wall))

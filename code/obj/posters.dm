@@ -500,7 +500,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			boutput(user, "<span class='alert'>\The [src] buzzes grumpily!</span>")
 			return
 		src.papers --
-		playsound(get_turf(src), "sound/machines/printer_dotmatrix.ogg", 30, 1)
+		playsound(src, "sound/machines/printer_dotmatrix.ogg", 30, 1)
 		var/obj/item/poster/titled_photo/P = new (src.loc)
 		P.name = "Wanted: [src.plist["name"]]"
 		P.line_title = "NAME: [src.plist["name"]]"

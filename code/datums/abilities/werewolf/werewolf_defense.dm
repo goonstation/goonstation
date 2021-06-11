@@ -24,7 +24,7 @@
 		if (!iswerewolf(M))
 			return 1
 
-		H.changeStatus("werewolf_defense_howl", 150)
+		H.changeStatus("werewolf_defense_howl", 15 SECONDS)
 
 /datum/statusEffect/defensive_howl
 	id = "werewolf_defense_howl"
@@ -35,6 +35,7 @@
 	unique = 1
 
 	onAdd(var/optional=null)
+		. = ..()
 		var/mob/living/carbon/human/H = owner
 		if (!istype(H)) return
 
@@ -54,6 +55,7 @@
 		return
 
 	onRemove()
+		. = ..()
 		var/mob/living/carbon/human/H = owner
 		if (!istype(H)) return
 		H.stance = "normal"

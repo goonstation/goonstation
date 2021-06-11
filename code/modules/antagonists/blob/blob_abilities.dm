@@ -268,7 +268,7 @@
 		var/g = hex2num(copytext(owner.color, 4, 6))
 		var/b = hex2num(copytext(owner.color, 6))
 		var/hsv = rgb2hsv(r,g,b)
-		owner.organ_color = hsv2rgb( hsv[1], hsv[2], 1 )
+		owner.organ_color = hsv2rgb( hsv[1], hsv[2], 100 )
 
 		owner.my_material.color = owner.color
 

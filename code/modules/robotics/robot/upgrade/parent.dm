@@ -21,7 +21,7 @@ ABSTRACT_TYPE(/obj/item/roboupgrade)
 	// Used for cyborg update_appearance proc
 	var/borg_overlay = null
 
-/obj/item/roboupgrade/attack_self(var/mob/user as mob)
+/obj/item/roboupgrade/attack_self(mob/user as mob)
 	if (!isrobot(user))
 		boutput(user, "<span class='alert'>Only cyborgs can activate this item.</span>")
 	else
@@ -30,13 +30,13 @@ ABSTRACT_TYPE(/obj/item/roboupgrade)
 		else
 			src.upgrade_deactivate()
 
-/obj/item/roboupgrade/proc/upgrade_activate(var/mob/living/silicon/robot/user as mob)
+/obj/item/roboupgrade/proc/upgrade_activate(mob/living/silicon/robot/user as mob)
 	if (!user)
 		return 1
 	if (!src.activated)
 		src.activated = 1
 
-/obj/item/roboupgrade/proc/upgrade_deactivate(var/mob/living/silicon/robot/user as mob)
+/obj/item/roboupgrade/proc/upgrade_deactivate(mob/living/silicon/robot/user as mob)
 	if (!user)
 		return 1
 	src.activated = 0

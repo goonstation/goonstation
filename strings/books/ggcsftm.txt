@@ -1,0 +1,51 @@
+<html><body class="c17"><p class="c10 title" id="h.c79n657bcepp"><h1><span class="c6">The Goon Geothermal Capture System Field Training Manual</span></h1></p>
+<p class="c9 subtitle" id="h.bhgihtleap1h"><span class="c5">Prepared by Sov Extant</span></p>
+<p class="c2"><span class="c1">Thank you for your purchase of the Goon Geothermal Capture system (GCS). </span>
+<span class="c1">Included with your purchase you will find the various pieces of equipment required for the successful harvesting of geothermal energy along with this field training manual.</p>
+<p class="c2"><span class="c1">This field training manual covers how to properly utilize your purchased equipment for the efficient harvesting of Safe™ and renewable geothermal energy.</p>
+<br>
+<h1>Equipment Checklist</span></h1>
+<p class="c2"><span class="c1">The following is a list of essential equipment </span><span>required </span><span class="c0">for the safe harvesting of geothermal energy in accordance with Nanotrasen safety standards and guidelines:</span></p>
+<p class="c2 c4"><span class="c0"></span></p><ul class="c14 lst-kix_5z83a9fnvot4-0 start"><li class="c2 c7"><span class="c0">Dowsing Rods (at least 3 suggested for ease of field surveying)</span></li>
+<li class="c2 c7"><span class="c0">Unbuilt Vent Capture Units</span></li>
+<li class="c2 c7"><span class="c0">Stomper Unit</span></li>
+<li class="c2 c7"><span class="c0">Shovel</span></li><li class="c2 c7"><span class="c0">Synthblubber-insulated pharosium-cables</span></li>
+<li class="c2 c7"><span class="c0">Appropriate protective diving gear complete with flippers</span></li>
+<li class="c2 c7"><span class="c0">Adequate oxygen supply for extended field work</span></li></ul>
+<h1 class="c13" id="h.i3ogysiiwprb"><span class="c11">Hotspots</span></h1><p class="c2">
+<span class="c1">Hot spots exist in the form of unseen pointsthat each output a constant flow of heat. Survey results have
+determined that hotspots are warmest at their center-most point, with heat levels quickly dropping in a radius around the center.</span>
+</p><p class="c2 c4"><span class="c0"></span></p><p class="c2"><span class="c0">In their naturally occurring state, hotspots have been observed to be in constant motion in any one of the cardinal or intercardinal directions. Upon contact with the seemingly impenetrable trench walls however they will be reflected off resulting in a change in direction. </span></p>
+<h2 class="c3" id="h.fmgodj4ic5rs"><span class="c8">Detecting Hotspots</span></h2>
+<p class="c2"><span class="c1">Utilizing the provided standard issue dowsing rods hotspots can be quickly located. Repeatedly place the rods into different areas of the ocean floor and observe their readings. By default the rods exist in an unlit state. Once brought into the range of a hotspot</span>
+<span>&nbsp;the</span><span class="c0">&nbsp;rods will become somewhere between a light orange color to a deep red indicating the heat of the current location. The rods will also beep out numbers indicating the approximate distance to the center of a hotspot. By utilizing both the color of the rods, and the guidance of the distance readouts the center of a hotspot can be located for manipulation and harvest.</span></p>
+<p class="c2 c4"><span class="c0"></span></p><p class="c2"><span class="c1">It should be noted that in the event of overlapping hotspots the proper </span><span>interpretation</span>
+<span class="c0">&nbsp;of results will require some intuition. Rods will read out increased heat readings from overlapping sections, and distance readouts will be summed together resulting in unusually high results.</span></p>
+<h2 class="c3" id="h.t1elnpz55uzt"><span class="c8">Manipulating Hotspots</span></h2>
+<p class="c2"><span class="c0">Utilizing the Stomper Unit hotspots can be pushed, redirected, and even frozen in place for more effective harvesting by engineering personnel.</span></p>
+<p class="c2 c4"><span class="c0"></span></p>
+<p class="c2"><span class="c1">The stomper will only affect a hotspot if utilized within </span><span>a limited radius</span><span class="c1">&nbsp;around the hotspot</span><span>&rsquo;s </span><span class="c0">center. Striking the outer edges of the hotspot will push said hotspot away from stomper, and set it to further drift in that direction over time.
+Striking the center area of a hotspot will freeze the hotspot in place preventing further drift unless otherwise acted upon by striking the outer border once more.</span></p>
+<p class="c2 c4"><span class="c0"></span></p><p class="c2"><span class="c15">WARNING:</span>
+<span class="c0">&nbsp;Ensure the area below the Stomper Unit is clear of hands, feet, etc. prior to activation to avoid severe injury or death.</span></p>
+<h2 class="c3" id="h.q66xvo29ubmi"><span class="c8">Harvesting Hotspots</span></h2>
+<p class="c2"><span class="c0">Utilizing a digging apparatus such as a shovel dig a hole in the ocean floor on the direct center of a hotspot. Construct a vent capture unit on top of this hole to begin harvesting the geothermal energy from below. Utilizing your Synthblubber-insulated pharosium-cables run a wire back to the station and connect it to the external power hookups.
+Using a multitool you can easily verify that you have correctly connected your vent capture unit to the engineering power grid.</span></p>
+<p class="c2 c4"><span class="c0"></span></p><p class="c2"><span class="c0">Field teams have found that additional vent capture units may also be connected adjacent to the center to harvest additional geothermal energy. The output of each will be lowered somewhat, however the total amount of power gathered is still an overall net gain versus a single vent capture unit.</span></p>
+<h1 class="c13" id="h.nuyqi5onr0jt"><span class="c11">Advanced Topics</span></h1>
+<h2 class="c3" id="h.7uggfbubxcay"><span class="c8">Doppler Shift</span></h2>
+<p class="c2"><span class="c1">Field teams have reported inconsistencies between</span><span>&nbsp;the</span><span class="c1">&nbsp;dowsing </span><span>distance readout</span><span class="c1">&nbsp;and </span><span>heat indicator</span><span class="c1">.
+This is due to the doppler effect </span><span>linked to the movement of the hotspots c</span><span class="c1">ausing a shift in the numeric</span><span>&nbsp;distance readings reported by the rods</span><span class="c0">. A stationary hotspot however is not affected by doppler shift, and as such its readings will accurately reflect the distance to the center of the spot unless acted upon by an additional outside hotspot.</span></p>
+<h2 class="c3" id="h.ju7lv8j20d3n"><span class="c8">Stacking Hotspots</span></h2>
+<p class="c2"><span>Engineering personnel may find it advantageous to attempt freezing multiple hotspots directly on top of one another. This allows for the concentration of a significant amount of geothermal energy for harvest at a single point. The more spots that engineering personnel are able to stack together the greater the output harvestable by a single vent unit.</span></p>
+<h2 class="c3" id="h.4fmut0g49f"><span class="c8">Increasing Energy Output</span></h2>
+<p class="c2"><span class="c15">WARNING: </span><span class="c0">The following techniques require venturing deep into the area below the surface. There is significant danger for those unprepared. Protection against the extreme heat is required, and a submersible tank is strongly recommended. Personnel are also advised to avoid any strange facilities that they may encounter for safety reasons.</span></p><p class="c2 c4"><span class="c0"></span></p>
+<p class="c2"><span class="c1">Field research has determined that releasing the</span><span>&nbsp;energy</span><span class="c1">&nbsp;stored in rocks directly </span><span>below </span><span class="c1">a hotspot can significantly boost it&rsquo;s temperature and thus the amount of </span><span>energy for harvest.</span>
+<span class="c1">&nbsp;This is easily accomplished by mining out the rock directly below the</span><span>&nbsp;</span><span class="c0">hotspot. The rock will spark as energy is released so personnel should be careful around volatile ore deposits.</span></p>
+<p class="c2 c4"><span class="c0"></span></p><p class="c2"><span class="c1">Utilizing the aid of a Space GPS the location of a hotspot or even stack of hotspots on the surface can </span><span>radioed to a trench mining team</span><span class="c1">. The </span><span>m</span><span class="c1">ining personnel below can then be instructed to mine out the area directly below the surface at the same coordinates in the trench to release the en</span><span>ergy</span>
+<span class="c1">.</span><span>&nbsp;Advanced teams may make use of the Stomper Unit to move a hotspot enabling them to take advantage of the huge tracts of asteroid rock below. &nbsp;This can lead</span><span class="c0">&nbsp;into untold amounts of energy for harvest.</span></p><p class="c2 c4"><span class="c0"></span></p><p class="c2"><span class="c1">While this process can</span><span>&nbsp;also </span><span class="c0">be completed alone; it is far more effective when done as a team.</span></p></body></html>
+<br>
+<p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at:
+<ul><li><a href="https://wiki.ss13.co/Powering_the_Station" target="Goonstation Wiki: Powering the Station">https://wiki.ss13.co/Powering_the_Station</a>
+<li><a href="https://wiki.ss13.co/Engineer" target="Goonstation Wiki: Engineer">https://wiki.ss13.co/Engineer</a></li></ul>
+Thank you for your service to Nanotrasen.</i></p>

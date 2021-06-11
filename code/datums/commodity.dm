@@ -2189,6 +2189,29 @@
 	upperfluc = 100
 	lowerfluc = -20
 
+/datum/commodity/sticker/
+	onmarket = 0
+
+/datum/commodity/sticker/googly_eyes
+	comname = "box of googly eyes"
+	comtype = /obj/item/item_box/googly_eyes
+	desc = "A box of googly eyes! Sweet!"
+	onmarket = 0
+	price = 50
+	baseprice = 50
+	upperfluc = 100
+	lowerfluc = -20
+
+/datum/commodity/sticker/googly_eyes_angry
+	comname = "box of angry googly eyes"
+	comtype = /obj/item/item_box/googly_eyes/angry
+	desc = "A box of angry googly eyes! Aaaaargh!"
+	onmarket = 0
+	price = 50
+	baseprice = 50
+	upperfluc = 100
+	lowerfluc = -20
+
 /*
 /datum/commodity/screamshoes
 	comname = "scream shoes"

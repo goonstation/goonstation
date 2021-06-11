@@ -90,23 +90,23 @@
 	afterattack(atom/target, mob/user, reach, params)
 		..()
 		if (!src.ID_card)
-			playsound(get_turf(src), 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
+			playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
 			boutput(user, "<span class='notice'>[src] refuses to turn on without an ID inserted.</span>")
 			return
 		if (!isobj(target))
-			playsound(get_turf(src), 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
+			playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
 			boutput(user, "<span class='notice'>[src] can't reprogram this.</span>")
 			return
 
 		if (!allowed(user))
-			playsound(get_turf(src), 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
+			playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
 			boutput(user, "<span class='notice'>Your worn ID fails [src]'s check!</span>")
 			return
 
 		var/obj/O = target
 
 		if (access_maxsec in O.req_access)
-			playsound(get_turf(src), 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
+			playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
 			boutput(user, "<span class='notice'>[src] can't reprogram this.</span>")
 			return
 
@@ -114,13 +114,13 @@
 			if (istype(target,/obj/machinery/door))
 				var/obj/machinery/door/D = target
 				if (D.cant_emag || isrestrictedz(D.z))
-					playsound(get_turf(src), 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
+					playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
 					boutput(user, "<span class='notice'>[src] can't reprogram this.</span>")
 					return
 
 			actions.start(new/datum/action/bar/icon/access_reprog(O,src), user)
 		else
-			playsound(get_turf(src), 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
+			playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
 			boutput(user, "<span class='notice'>[src] can't reprogram this.</span>")
 
 
@@ -130,7 +130,7 @@
 			O.set_access_list(list(ID_card.access))
 		else
 			O.set_access_list(ID_card.access)
-		playsound(get_turf(src), "sound/machines/reprog.ogg", 70, 1)
+		playsound(src, "sound/machines/reprog.ogg", 70, 1)
 
 
 /datum/action/bar/icon/access_reprog

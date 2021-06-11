@@ -67,8 +67,12 @@
 							items += /obj/item/roboupgrade/jetpack
 							item_amounts += 1
 							picker = rand(1,4)
-							items += pick(/obj/item/roboupgrade/physshield,/obj/item/roboupgrade/teleport,/*
-							/obj/item/roboupgrade/opticthermal,*//obj/item/roboupgrade/speed)
+							items += pick(
+								/obj/item/roboupgrade/physshield,
+								/obj/item/roboupgrade/teleport,
+								// /obj/item/roboupgrade/opticthermal,
+								/obj/item/roboupgrade/speed,
+							)
 							item_amounts += 1
 						if(2)
 							items += /obj/item/reagent_containers/glass/beaker/large/antitox

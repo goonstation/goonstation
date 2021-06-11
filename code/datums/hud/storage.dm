@@ -28,7 +28,7 @@
 		master = null
 		..()
 
-	clicked(id, mob/user, params)
+	relay_click(id, mob/user, params)
 		switch (id)
 			if ("boxes")
 				if (params && islist(src.obj_locs))

@@ -130,15 +130,35 @@
 	icon_state = "class-a"
 	muzzle_flash = "muzzle_flash_phaser"
 
+/obj/item/shipcomponent/mainweapon/phaser/short
+	name = "Mk 1.45 Light Phaser"
+	desc = "A basic, light weight phaser designed for close quarters space fights..."
+	weapon_score = 0.2
+	appearanceString = "pod_weapon_ltlaser"
+	current_projectile = new/datum/projectile/laser/light
+	icon_state = "class-a"
+	muzzle_flash = "muzzle_flash_phaser"
+
 /obj/item/shipcomponent/mainweapon/laser
 	name = "Mk.2 Scout Laser"
 	desc = "An upgraded variant of the stock MK 1.5 phaser. Due to the concentration of energy, a higher quality engine might be neccesary."
 	weapon_score = 0.4
 	appearanceString = "pod_weapon_laser"
 	power_used = 100
+	current_projectile = new/datum/projectile/laser/pod
+	icon_state = "mk-2-scout"
+	muzzle_flash = "muzzle_flash_laser"
+
+/obj/item/shipcomponent/mainweapon/laser/short
+	name = "Mk.2 CQ Laser"
+	desc = "A downgraded variant of the upgraded MK 2.0 laser. Doesn't shoot quite as far, but doesn't use quite as much energy either."
+	weapon_score = 0.35
+	appearanceString = "pod_weapon_laser"
+	power_used = 75
 	current_projectile = new/datum/projectile/laser
 	icon_state = "mk-2-scout"
 	muzzle_flash = "muzzle_flash_laser"
+
 
 /obj/item/shipcomponent/mainweapon/russian
 	name = "Svet-Oruzhiye Mk.4"

@@ -96,7 +96,7 @@
 		botreagents[currentreagent] = botreagents[currentreagent] - amt_prop
 		tooltip_rebuild = 1
 		update_icon()
-		playsound(get_turf(M), src.sound_inject, 80, 0)
+		playsound(M, src.sound_inject, 80, 0)
 		return 0
 
 	process()

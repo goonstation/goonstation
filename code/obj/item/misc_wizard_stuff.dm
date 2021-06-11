@@ -116,7 +116,7 @@
 				affected_mob.visible_message("<span class='alert'>The curse upon [src] rebukes [affected_mob]!</span>")
 				boutput(affected_mob, "<span class='alert'>Horrible visions of depravity and terror flood your mind!</span>")
 				affected_mob.emote("scream")
-				affected_mob.changeStatus("paralysis", 80)
+				affected_mob.changeStatus("paralysis", 8 SECONDS)
 				affected_mob.changeStatus("stunned", 10 SECONDS)
 				affected_mob.stuttering += 20
 				affected_mob.take_brain_damage(25)

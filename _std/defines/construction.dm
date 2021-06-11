@@ -43,6 +43,3 @@
 #define DECON_BUILT 128
 /// can only be deconstructed if access required is null
 #define DECON_ACCESS 256
-
-//interdictor range define
-#define INTERDICT_RANGE 7

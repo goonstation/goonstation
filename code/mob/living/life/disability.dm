@@ -45,7 +45,7 @@
 				//consumes 250 units of charge per person per life tick
 				var/interdictor_influence = 0
 				for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-					if (IN_RANGE(IX,owner,INTERDICT_RANGE) && IX.expend_interdict(250))
+					if (IN_RANGE(IX,owner,IX.interdict_range) && IX.expend_interdict(250))
 						interdictor_influence = 1
 						break
 				if(!interdictor_influence)

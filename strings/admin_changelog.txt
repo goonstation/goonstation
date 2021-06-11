@@ -1,3 +1,7 @@
+(t)tue may 25 21
+(u)Virva, Yass, Sord, Kyle
+(*)Add a new admin gimmick game mode called Pod Wars. It's like NT vs Syndicate with two small bases on either side and control points to capture.
+(*)Requires a specific map that is 500x500 and not normally loaded, so you have to set and compile the next map to be pod wards for the mdoe to work.
 (t)fri may 14 21
 (u)Gerhazo
 (*)"Ship to Cargo" functionality on tilde-click admin menu when targetting objects or mobs.

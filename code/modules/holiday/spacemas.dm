@@ -716,9 +716,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		HS.addAbility(/datum/targetable/santa/banish)
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customization_first = "Balding"
-		bioHolder.mobAppearance.customization_second = "Full Beard"
-		bioHolder.mobAppearance.customization_third = "Eyebrows"
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/short/balding
+		bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/fullbeard
+		bioHolder.mobAppearance.customization_third = new /datum/customization_style/eyebrows/eyebrows
 		bioHolder.mobAppearance.customization_first_color = "#FFFFFF"
 		bioHolder.mobAppearance.customization_second_color = "#FFFFFF"
 		bioHolder.mobAppearance.customization_third_color = "#FFFFFF"
@@ -924,9 +924,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		bioHolder.AddEffect("cold_resist")
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customization_first = "None"
-		bioHolder.mobAppearance.customization_second = "None"
-		bioHolder.mobAppearance.customization_third = "None"
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+		bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+		bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 		. = ..()
 
 
@@ -951,7 +951,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				for (var/mob/C in viewers(src))
 					shake_camera(C, 8, 16)
 					C.show_message("<span class='alert'><B>[src] tramples right over [M]!</B></span>", 1)
-				M.changeStatus("stunned", 80)
+				M.changeStatus("stunned", 8 SECONDS)
 				M.changeStatus("weakened", 5 SECONDS)
 				random_brute_damage(M, 10,1)
 				M.take_brain_damage(rand(5,10))
@@ -1156,7 +1156,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 							src.verbs += /mob/living/carbon/human/krampus/verb/krampus_crush
 							return
 						random_brute_damage(H, 10,1)
-						H.changeStatus("stunned", 80)
+						H.changeStatus("stunned", 8 SECONDS)
 						H.changeStatus("weakened", 5 SECONDS)
 						if (H.health < 0)
 							src.visible_message("<span class='alert'><B>[H] bursts like a ripe melon! Holy shit!</B></span>")

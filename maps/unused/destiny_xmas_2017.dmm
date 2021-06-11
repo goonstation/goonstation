@@ -642,7 +642,7 @@
 	icon_state = "0-8"
 	},
 /obj/item/device/radio/intercom/security{
-	
+
 	},
 /obj/machinery/light/emergency{
 	icon_state = "ebulb1";
@@ -667,7 +667,7 @@
 	name = "table"
 	},
 /obj/machinery/recharger,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2";
 	dir = 8
@@ -5906,7 +5906,7 @@
 	pixel_y = 3;
 	switchon = 1
 	},
-/obj/item/reagent_containers/food/drinks/bottle/xmas,
+/obj/item/reagent_containers/food/drinks/bottle/soda/xmas,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_west)
 "akz" = (
@@ -9213,7 +9213,7 @@
 	},
 /obj/table/wood/round/auto,
 /obj/disposalpipe/segment/mail,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/item/storage/box/trackimp_kit2,
 /obj/item/storage/box/PDAbox,
 /obj/item/kitchen/food_box/donut_box,
@@ -9256,7 +9256,7 @@
 	id = "crematorium"
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
@@ -9272,7 +9272,7 @@
 "aqn" = (
 /obj/storage/closet/coffin,
 /obj/item/device/radio/intercom/security{
-	
+
 	},
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -10152,7 +10152,7 @@
 	dir = 1
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/item/kitchen/food_box/donut_box,
 /obj/item/instrument/bikehorn/dramatic,
 /obj/machinery/disposal/small{
@@ -10199,7 +10199,7 @@
 	pixel_x = 6
 	},
 /obj/item/device/radio/intercom/catering{
-	
+
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -10919,7 +10919,7 @@
 "atk" = (
 /obj/table/reinforced/auto,
 /obj/machinery/glass_recycler,
-/obj/item/reagent_containers/food/drinks/bottle/xmas,
+/obj/item/reagent_containers/food/drinks/bottle/soda/xmas,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "atl" = (
@@ -11505,7 +11505,7 @@
 	icon_state = "line1";
 	dir = 1
 	},
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /turf/simulated/floor/blue/side{
 	dir = 1
 	},
@@ -13720,7 +13720,7 @@
 	req_access_txt = "35"
 	},
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
@@ -13905,7 +13905,7 @@
 	icon_state = "line3"
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -13975,7 +13975,7 @@
 	pixel_x = -4;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/drinks/bottle/xmas,
+/obj/item/reagent_containers/food/drinks/bottle/soda/xmas,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -17463,7 +17463,7 @@
 	pixel_y = -5
 	},
 /obj/item/disk/data/tape/master/readonly,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/item/device/multitool,
 /obj/decal/tile_edge/line/green{
 	icon_state = "line3";
@@ -17769,7 +17769,7 @@
 /area/station/medical/robotics)
 "aFk" = (
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/stairs{
 	dir = 8;
@@ -18963,7 +18963,7 @@
 /obj/shrub,
 /obj/item/cigpacket,
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /obj/machinery/light/emergency{
 	dir = 8
@@ -19002,7 +19002,7 @@
 	d2 = 2
 	},
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /obj/item/reagent_containers/food/drinks/eggnog,
 /turf/simulated/floor/white/checker,
@@ -19947,7 +19947,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/red,
@@ -21087,7 +21087,7 @@
 	dir = 1
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper/book/guardbot_guide,
+/obj/item/paper/book/from_file/guardbot_guide,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "aKq" = (
@@ -22746,7 +22746,7 @@
 	name = "autoname - SS13"
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /obj/machinery/autoclave,
 /turf/simulated/floor/purplewhite/corner{
@@ -23080,7 +23080,7 @@
 /obj/machinery/door/window/westleft{
 	req_access_txt = "5|33"
 	},
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -23634,7 +23634,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/purple,
 /area/station/science/research_director{
@@ -23689,7 +23689,7 @@
 	network = "Zeta"
 	},
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /turf/simulated/floor/purple,
 /area/station/science/research_director{
@@ -23911,7 +23911,7 @@
 "aOu" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/bed,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /obj/landmark/start{
 	name = "Clown"
 	},
@@ -25216,7 +25216,7 @@
 	icon_state = "line3"
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/surgical_spoon{
 	pixel_y = 4
 	},
@@ -25646,7 +25646,7 @@
 	d1 = 2;
 	d2 = 4
 	},
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/item/paper{
 	desc = "";
 	info = "We are very sorry, but the system upgrade is taking longer than expected.  Some systems may not be accesable. Please take enclosed $BAKED_GOOD as a token of our sincere regret.";
@@ -27660,7 +27660,7 @@
 	pltanks = 15
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
@@ -27817,7 +27817,7 @@
 /obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet,
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /obj/landmark/start{
 	name = "Geneticist"
@@ -31459,7 +31459,7 @@
 	icon_state = "stripe-edge";
 	tag = ""
 	},
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
 	pixel_y = 8
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass{
@@ -31646,8 +31646,8 @@
 	},
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
-/obj/item/paper/book/minerals,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/minerals,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/item/cargotele,
 /obj/machinery/firealarm{
 	dir = 8;
@@ -32140,7 +32140,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
@@ -32322,7 +32322,7 @@
 /area/station/security/main)
 "bcD" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/item/storage/wall/office,
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -32433,7 +32433,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom/brig{
-	
+
 	},
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1";
@@ -33105,7 +33105,7 @@
 	d2 = 4
 	},
 /obj/item/device/radio/intercom/science{
-	
+
 	},
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
@@ -33401,7 +33401,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /obj/item/storage/wall/office{
 	pixel_x = -32;
 	pixel_y = 0
@@ -34689,7 +34689,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/device/audio_log,
 /obj/item/audio_tape{
 	pixel_y = 5
@@ -34697,7 +34697,7 @@
 /obj/item/audio_tape{
 	pixel_y = 5
 	},
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "bgK" = (
@@ -37434,11 +37434,11 @@
 	},
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /turf/simulated/floor/purplewhite/corner,
 /area/station/science/chemistry)
 "bkX" = (
@@ -39062,7 +39062,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom/medical{
-	
+
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
@@ -39963,7 +39963,7 @@
 	},
 /obj/machinery/light_switch/west,
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/engine{
@@ -40965,7 +40965,7 @@
 	network = "SS13"
 	},
 /obj/item/device/radio/intercom/cargo{
-	
+
 	},
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/black,
@@ -41601,8 +41601,8 @@
 	icon_state = "line1";
 	dir = 8
 	},
-/obj/item/paper/book/minerals,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/minerals,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/item/cargotele,
 /obj/item/device/light/glowstick,
 /turf/simulated/floor/caution/east,
@@ -42914,7 +42914,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /turf/simulated/floor/white/checker{
 	dir = 5
 	},
@@ -44825,7 +44825,7 @@
 	icon_state = "0-8"
 	},
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
@@ -45000,7 +45000,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/item/device/radio/intercom/engineering{
-	
+
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)

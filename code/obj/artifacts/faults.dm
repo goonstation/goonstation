@@ -42,7 +42,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		if (..())
 			return
 		boutput(user, "<span class='alert'>You feel strange.</span>")
-		user.changeStatus("radiation", (src.rads_amount)*10, 3)
+		user.changeStatus("radiation", (src.rads_amount) SECONDS, 3)
 
 /datum/artifact_fault/shutdown
 	// deactivates the artifact

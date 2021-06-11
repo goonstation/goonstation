@@ -81,31 +81,32 @@
 				else
 					if (!(locate(/obj/machinery/optable, M.loc) && M.lying) && !(locate(/obj/table, M.loc) && (M.getStatusDuration("paralysis") || M.stat)) && !(M.reagents && M.reagents.get_reagent_amount("ethanol") > 10 && M == user))
 						return ..()
-					// TODO: what is this line?
-					if (istype(H.limbs.l_leg, /obj/item/parts/robot_parts/leg/treads)) attach_robopart("treads")
-					else
-						switch (user.zone_sel.selecting)
-							if ("l_arm")
-								if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts) && H.limbs.l_arm.remove_stage > 0) attach_robopart("l_arm")
-								else
-									boutput(user, "<span class='alert'>[H.name]'s left arm doesn't need welding on!</span>")
-									return
-							if ("r_arm")
-								if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts) && H.limbs.r_arm.remove_stage > 0) attach_robopart("r_arm")
-								else
-									boutput(user, "<span class='alert'>[H.name]'s right arm doesn't need welding on!</span>")
-									return
-							if ("l_leg")
-								if (istype(H.limbs.l_leg,/obj/item/parts/robot_parts) && H.limbs.l_leg.remove_stage > 0) attach_robopart("l_leg")
-								else
-									boutput(user, "<span class='alert'>[H.name]'s left leg doesn't need welding on!</span>")
-									return
-							if ("r_leg")
-								if (istype(H.limbs.r_leg,/obj/item/parts/robot_parts) && H.limbs.r_leg.remove_stage > 0) attach_robopart("r_leg")
-								else
-									boutput(user, "<span class='alert'>[H.name]'s right leg doesn't need welding on!</span>")
-									return
-							else return ..()
+					switch (user.zone_sel.selecting)
+						if ("l_arm")
+							if (istype(H.limbs.l_arm, /obj/item/parts/robot_parts) && H.limbs.l_arm.remove_stage > 0)
+								attach_robopart("l_arm")
+							else
+								boutput(user, "<span class='alert'>[H.name]'s left arm doesn't need welding on!</span>")
+								return
+						if ("r_arm")
+							if (istype(H.limbs.r_arm, /obj/item/parts/robot_parts) && H.limbs.r_arm.remove_stage > 0)
+								attach_robopart("r_arm")
+							else
+								boutput(user, "<span class='alert'>[H.name]'s right arm doesn't need welding on!</span>")
+								return
+						if ("l_leg")
+							if (istype(H.limbs.l_leg, /obj/item/parts/robot_parts) && H.limbs.l_leg.remove_stage > 0)
+								attach_robopart("l_leg")
+							else
+								boutput(user, "<span class='alert'>[H.name]'s left leg doesn't need welding on!</span>")
+								return
+						if ("r_leg")
+							if (istype(H.limbs.r_leg, /obj/item/parts/robot_parts) && H.limbs.r_leg.remove_stage > 0)
+								attach_robopart("r_leg")
+							else
+								boutput(user, "<span class='alert'>[H.name]'s right leg doesn't need welding on!</span>")
+								return
+						else return ..()
 			else return ..()
 
 	attackby(obj/item/W as obj, mob/user as mob)

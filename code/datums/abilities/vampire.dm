@@ -298,13 +298,13 @@
 
 			src.removeAbility(/datum/targetable/vampire/phaseshift_vampire)
 			src.addAbility(/datum/targetable/vampire/phaseshift_vampire/mk2)
+			src.addAbility(/datum/targetable/vampire/plague_touch)
 
 		if (src.last_power == 4 && src.vamp_blood >= src.level5)
 			src.last_power = 5
 
 			src.removeAbility(/datum/targetable/vampire/vampire_scream)
 			src.addAbility(/datum/targetable/vampire/vampire_scream/mk2)
-			src.addAbility(/datum/targetable/vampire/plague_touch)
 
 		if (src.last_power == 5 && src.vamp_blood >= src.level6)
 			src.last_power = 6
