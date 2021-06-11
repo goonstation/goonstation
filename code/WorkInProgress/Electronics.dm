@@ -593,8 +593,11 @@
 		if(world.time - boot_time <= 3 SECONDS)
 			for (var/datum/electronics/scanned_item/O in originalData.scanned_items)
 				ruck_controls.scan_in(O.name, O.item_type, O.mats, O.locked) //Copy the database on digest so we never waste the effort
+			updateDialog()
 			return
+
 		return
+
 	else if(istype(rkitFile))
 		return
 
@@ -615,6 +618,7 @@
 			return
 	var/strippedName = scanFile.scannedName
 	ruck_controls.scan_in(strippedName, scanFile.scannedPath, scanFile.scannedMats)
+	updateDialog()
 
 	if(src.net_id != host_ruck || command != "add") //Only the host sends PDA messages, and we don't send them for internal transfer
 		return
