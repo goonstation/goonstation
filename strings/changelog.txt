@@ -1,5 +1,9 @@
 
 (t)fri jun 11 21
+(u)DisturbHerb
+(p)5083
+(e)|
+(*)RecordTrak scanners are now available from Security weapons vendors.
 (u)UnfunnyPerson
 (p)5008
 (e)🆕🎨|feature, sprites
