@@ -261,6 +261,15 @@
 	/obj/item/clothing/under/gimmick/chaps= 1,
 	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
 
+/obj/item/storage/wall/clothingrack/clothes_shooting_range //for the shooting range prefab; huntin' clothes!
+	spawn_contents = list(/obj/item/clothing/under/gimmick/utena = 1,
+	/obj/item/clothing/suit/hoodie = 1,
+	/obj/item/clothing/under/gimmick/dolan = 1,
+	/obj/item/clothing/under/gimmick/butler = 1,
+	/obj/item/clothing/under/gimmick/hunter = 1,
+	/obj/item/clothing/under/gimmick/chaps= 1,
+	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
+
 obj/item/storage/wall/clothingrack/hatrack
 	name = "hat shelf"
 	desc = "It's a shelf designed for many hats."
