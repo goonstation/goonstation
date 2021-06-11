@@ -1,5 +1,9 @@
 
 (t)fri jun 11 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Robot legs counteract damage slowdown for humans as opposed to direct speed buff.
+(+)Humans with tread legs will not fall over when resting, matching behavior when stunned etc.
 (u)DisturbHerb
 (p)5083
 (e)|
