@@ -1540,7 +1540,6 @@
 
 // HOWIZTER GUN
 // dumb meme admin item. not remotely fair, will probably kill person firing it.
-
 /obj/item/gun/energy/howitzer
 	name = "man-portable plasma howitzer"
 	desc = "How can you even lift this?"
@@ -1566,7 +1565,6 @@
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer
 	can_swap_cell = 0
 	var/shotcount = 0
-
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt/signifer_tase)
@@ -1665,3 +1663,29 @@
 		else
 			spread_angle = 2
 		update_icon()
+
+///////////////////////////////////////Ray Gun
+/obj/item/gun/energy/raygun
+	name = "Experimental Ray Gun"
+	icon_state = "raygun"
+	desc = "A weapon that looks vaugely like a cheap toy and definitely unsafe."
+	item_state = "raygun"
+	force = 5.0
+	can_dual_wield = 0
+	muzzle_flash = "muzzle_flash_laser"
+
+	New()
+		set_current_projectile(new/datum/projectile/energy_bolt/raybeam)
+		projectiles = list(new/datum/projectile/energy_bolt/raybeam)
+		..()
+
+	update_icon()
+		..()
+		return
+
+	shoot(var/target,var/start,var/mob/user) //it's experimental for a reason; use at your own risk!
+		if (canshoot())
+			if (prob(100))
+				take_damage(0, 30)
+				boutput(src, "<span class='alert'>This piece of junk Ray Gun backfired! Ouch!</span>")
+		return ..(target, start, user)
