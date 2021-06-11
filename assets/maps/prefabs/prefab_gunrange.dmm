@@ -22,13 +22,15 @@
 "iM" = (/obj/item/casing/grenade{dir = 6},/obj/item/casing/small{dir = 4; pixel_x = -9; pixel_y = -4},/obj/item/casing/shotgun/blue{dir = 6; pixel_x = 4},/obj/decal/cleanable/eggsplat,/obj/item/casing/cannon{dir = 6; pixel_x = -5; pixel_y = -3},/turf/simulated/floor/racing,/area/prefab/shooting_range)
 "iP" = (/obj/item/casing/cannon,/turf/simulated/floor/racing,/area/prefab/shooting_range)
 "ji" = (/obj/decal/tile_edge/stripe{dir = 10; icon_state = "xtra_bigstripe-edge"},/turf/simulated/floor/engine/caution,/area/prefab/shooting_range)
-"jn" = (/obj/table/reinforced,/obj/item/clothing/ears/earmuffs/yeti,/obj/item/clothing/ears/earmuffs/earplugs,/obj/item/clothing/glasses/sunglasses/tanning,/obj/item/storage/secure/ssafe/shooting_range{pixel_y = 32},/obj/machinery/light/incandescent/cool/very{dir = 4; pixel_x = 10},/turf/simulated/floor/wood/three,/area/prefab/shooting_range)
+"jn" = (/obj/table/reinforced,/obj/item/clothing/ears/earmuffs/yeti,/obj/item/clothing/glasses/sunglasses/tanning{pixel_y = 12},/obj/item/item_box/assorted/stickers,/obj/item/clothing/ears/earmuffs/earplugs{pixel_x = -10; pixel_y = -1},/obj/item/storage/secure/ssafe/shooting_range{pixel_y = 32},/obj/machinery/light/incandescent/cool/very{dir = 4; pixel_x = 10},/obj/item/sticker/postit{pixel_x = -13; pixel_y = 28},/turf/simulated/floor/wood/three,/area/prefab/shooting_range)
 "lC" = (/obj/machinery/light/incandescent/cool/very{dir = 8; pixel_x = -10},/turf/simulated/floor/wood/three,/area/prefab/shooting_range)
 "lP" = (/obj/decal/tile_edge/stripe{icon_state = "xtra_bigstripe-edge"},/turf/simulated/floor/engine/caution,/area/prefab/shooting_range)
 "mE" = (/obj/decal/tile_edge/stripe{dir = 9; icon_state = "xtra_bigstripe-edge"},/obj/machinery/light/incandescent/cool/very{dir = 8; pixel_x = -10},/turf/simulated/floor/engine/caution,/area/prefab/shooting_range)
 "rA" = (/obj/decal/tile_edge/stripe{dir = 8; icon_state = "xtra_bigstripe-edge"},/turf/simulated/floor/wood/three,/area/prefab/shooting_range)
 "sy" = (/obj/decal/tile_edge/stripe{dir = 5; icon_state = "xtra_bigstripe-edge"},/turf/simulated/floor/engine/caution,/area/prefab/shooting_range)
+"te" = (/obj/item/sticker/clover,/turf/simulated/wall/auto/reinforced/jen/dark4,/area/prefab/shooting_range)
 "tp" = (/obj/decoration/bullethole{pixel_x = 5; pixel_y = 7},/obj/item/casing/shotgun,/obj/item/casing/grenade{dir = 5; pixel_x = 3; pixel_y = 3},/obj/item/casing/grenade{dir = 6},/obj/item/casing/small{dir = 5; pixel_x = -9; pixel_y = -4},/obj/item/casing/shotgun/blue{dir = 10; pixel_x = -9},/obj/item/casing/cannon{dir = 5; pixel_x = -5; pixel_y = -3},/obj/item/casing/cannon{dir = 6; pixel_x = -5; pixel_y = -3},/obj/item/casing/cannon{dir = 10; pixel_x = 15},/turf/simulated/floor/racing,/area/prefab/shooting_range)
+"tW" = (/obj/item/sticker/horseshoe,/turf/simulated/wall/auto/reinforced/jen/dark4,/area/prefab/shooting_range)
 "uN" = (/obj/machinery/light/incandescent/cool/very{dir = 8; pixel_x = -10},/turf/simulated/floor/racing,/area/prefab/shooting_range)
 "vz" = (/obj/decal/fakeobjects/plantpot,/turf/simulated/floor/wood/three,/area/prefab/shooting_range)
 "vO" = (/obj/machinery/light/incandescent/cool/very,/turf/simulated/floor/engine/glow/blue,/area/prefab/shooting_range)
@@ -52,6 +54,7 @@
 "JB" = (/obj/item_dispenser/perscription_glasses,/turf/simulated/floor/wood/three,/area/prefab/shooting_range)
 "JH" = (/obj/decoration/bullethole{pixel_x = -2; pixel_y = -4},/obj/decoration/bullethole{pixel_x = 5; pixel_y = -4},/obj/decoration/bullethole{pixel_x = -6; pixel_y = 5},/turf/simulated/wall/auto/reinforced/jen/dark4,/area/prefab/shooting_range)
 "JQ" = (/obj/table/reinforced,/obj/item/gun/kinetic/foamdartgun,/obj/decal/tile_edge/stripe{icon_state = "xtra_bigstripe-edge"},/turf/simulated/floor/racing,/area/prefab/shooting_range)
+"Lu" = (/obj/item/storage/wall/clothingrack/clothes_shooting_range,/turf/simulated/floor/wood/three,/area/prefab/shooting_range)
 "Lz" = (/obj/item/clothing/under/trash_bag/biohazard,/obj/machinery/light/incandescent/cool/very{dir = 4; pixel_x = 10},/turf/simulated/floor/racing,/area/prefab/shooting_range)
 "MH" = (/obj/window/auto/bulletproof,/turf/simulated/floor/plating,/area/prefab/shooting_range)
 "Nk" = (/turf/simulated/floor/bot/caution,/area/prefab/shooting_range)
@@ -90,9 +93,9 @@ VYXoJQeyRXaaJQXolCFeFeicXodAUEUEUEOOVY
 VYXoNkaYfqArNkXoEBFeFevzXoUEUEUEUEOOVY
 VYXomEgMgMgMsywtrAFeFeFecPUEUEUEUEOOVY
 VYXojilPlPlPgVMHxlFeFeFecPUEUEUEUEOOVY
-VYXoXoMHXoXoXoXoFeFeFevzXoUEUEUEUEOOVY
+VYXoteMHXoXoXotWFeFeFevzXoUEUEUEUEOOVY
 VYXoawEkVjeOFeFeFeFeFeFeXovOUEUEUEOOVY
-VYXowIFeFeFeFebLbLbLFeRSXoXofDfDfDEQVY
+VYXowIFeFeFeFebLLubLFeRSXoXofDfDfDEQVY
 VYXoXoFeFeFeFeFeFeFeFeDjXoVYVYVYVYVYVY
 VYVYXoXoFEFeFebLbLbLFeDjXoVYVYVYVYVYVY
 VYVYVYXoXoFeFeFeRsFeFeFeXoVYVYVYVYVYVY

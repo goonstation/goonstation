@@ -190,7 +190,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 	shooting_range // Nef's shooting range with an experimental ray gun
 		maxNum = 1
 		probability = 15
-		prefabPath = "assets/maps/prefabs/prefab_candy_shop.dmm"
+		prefabPath = "assets/maps/prefabs/prefab_gunrange.dmm"
 		prefabSizeX = 19
 		prefabSizeY = 22
 
