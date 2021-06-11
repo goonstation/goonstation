@@ -126,7 +126,8 @@
 	name = "Ruckingenur Data"
 	extension = "DSCN"
 	var/datum/mechanic_controller/ruckData = null
-	var/target
+	var/target = null
+	var/known_rucks = null
 
 /datum/computer/file/genetics_scan
 	name = "DNA Scan"

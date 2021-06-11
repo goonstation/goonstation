@@ -563,6 +563,7 @@
 	var/datum/computer/file/electronics_bundle/rkitFile = new
 	rkitFile.ruckData = ruck_controls
 	rkitFile.target = target
+	rkitFile.known_rucks = src.known_rucks.Copy()
 	SPAWN_DBG(0.5 SECONDS)
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
@@ -573,7 +574,6 @@
 		newsignal.data_file = rkitFile
 		radio_connection.post_signal(src, newsignal)
 	known_rucks |= target
-	send_sync()
 
 //Run this if there's a file and return
 //This will either work, or you rejected a signal that had a file it didn't need
@@ -587,6 +587,8 @@
 	var/datum/computer/file/electronics_bundle/rkitFile = signal.data_file
 	if (istype(rkitFile) && !data_initialized && !isnull(boot_time) && rkitFile.target == src.net_id)
 		var/datum/mechanic_controller/originalData = rkitFile.ruckData
+		src.known_rucks = rkitFile.known_rucks
+		known_rucks |= target
 		data_initialized = TRUE
 		if(world.time - boot_time <= 3 SECONDS)
 			for (var/datum/electronics/scanned_item/O in originalData.scanned_items)
@@ -623,11 +625,24 @@
 	if(status & NOPOWER)
 		return
 
-	if(!signal || signal.encryption || !signal.data["sender"] || isnull(boot_time))
+	if(!signal || !signal.data["sender"] || isnull(boot_time))
 		return
 
 	var/target = signal.data["sender"]
 	var/command = signal.data["command"]
+
+	//LOCK can come in encrypted
+	if(signal.data["acc_code"] == netpass_heads && !isnull(signal.data["DATA"]) && !isnull(signal.data["LOCK"]))
+		var/targetitem = signal.data["DATA"]
+		for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
+			if (targetitem == O.name)
+				O.locked = signal.data["LOCK"]
+		return
+
+	if(signal.encryption)
+		return
+
+
 	if((signal.data["address_1"] == "ping") && target)
 		SPAWN_DBG(0.5 SECONDS)	//Send a reply for those curious jerks
 								//Any replies in receive signal need a delay
@@ -654,19 +669,8 @@
 
 	//Signals that take TRANSRKIT
 	if(signal.data["address_1"] == "TRANSRKIT")
-		//locking and unlocking
-		if(signal.data["acc_code"] == netpass_heads && !isnull(signal.data["DATA"]) && !isnull(signal.data["LOCK"]) && (target in known_rucks))
-			var/targetitem = signal.data["DATA"]
-			for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
-				if (targetitem == O.name)
-					O.locked = signal.data["LOCK"]
-			return
 
 		if(command == "SYNCREPLY" && target)
-			if(length(ruck_controls.scanned_items) && src.net_id == host_ruck && !(target in known_rucks))
-				transfer_database(target)
-				return
-			known_rucks |= target
 			if (target > host_ruck) //pick the highest net_id
 				host_ruck = target
 				//Wait we're done here?
@@ -822,6 +826,7 @@
 					newsignal.data["LOCK"] = O.locked
 					newsignal.data["DATA"] = O.name
 					newsignal.data["sender"] = src.net_id
+					newsignal.encryption = "RKITKEY"
 					radio_connection.post_signal(src, newsignal)
 
 	else
