@@ -153,6 +153,7 @@ datum/signal
 	//1 = radio transmission
 
 	var/data = list()
+	///Set to the error message displayed when sniffing the encrypted packet
 	var/encryption
 	//We can carry a computer file around, why not.
 	var/datum/computer/file/data_file

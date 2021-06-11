@@ -274,7 +274,7 @@
 
 		// ruck kit lock packets use this
 		if(signal.encryption)
-			t += "ERR_12845_NT_SECURE_PACKET:"
+			t += "[signal.encryption]"
 			t2 = stars(t2, 15)
 
 		result += "[t][t2]"

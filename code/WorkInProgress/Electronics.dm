@@ -835,7 +835,7 @@
 					newsignal.data["LOCK"] = O.locked
 					newsignal.data["DATA"] = O.name
 					newsignal.data["sender"] = src.net_id
-					newsignal.encryption = "RKITKEY"
+					newsignal.encryption = "ERR_12845_NT_SECURE_PACKET:"
 					radio_connection.post_signal(src, newsignal)
 
 	else

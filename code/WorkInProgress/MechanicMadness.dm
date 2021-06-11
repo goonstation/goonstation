@@ -1864,7 +1864,7 @@
 				var/packets = ""
 				for(var/d in signal.data)
 					packets += "[d]=[signal.data[d]]; "
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode("ERR_12845_NT_SECURE_PACKET:" + stars(packets, 15)), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode("[signal.encryption]" + stars(packets, 15)), null)
 				animate_flash_color_fill(src,"#ff0000",2, 2)
 				return
 
