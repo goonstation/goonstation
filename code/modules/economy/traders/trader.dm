@@ -195,6 +195,7 @@
 				new C.comtype(S)
 
 		invoice.info += "<br>Final Cost of Goods: [total_price] credits."
+
 		wagesystem.shipping_budget -= total_price
 
 		src.wipe_cart(1) //This tells wipe_cart to not increase the amount in stock when clearing it out.
