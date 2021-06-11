@@ -590,6 +590,14 @@
 		src.known_rucks = rkitFile.known_rucks
 		known_rucks |= target
 		data_initialized = TRUE
+		SPAWN_DBG(0.5 SECONDS)
+			var/datum/signal/newsignal = get_free_signal()
+			newsignal.source = src
+			newsignal.transmission_method = TRANSMISSION_RADIO
+			newsignal.data["command"] = "SYNCREPLY"
+			newsignal.data["address_1"] = "TRANSRKIT"
+			newsignal.data["sender"] = src.net_id
+			radio_connection.post_signal(src, newsignal)
 		if(world.time - boot_time <= 3 SECONDS)
 			for (var/datum/electronics/scanned_item/O in originalData.scanned_items)
 				ruck_controls.scan_in(O.name, O.item_type, O.mats, O.locked) //Copy the database on digest so we never waste the effort
