@@ -1599,3 +1599,15 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 	desc = "Somebody took whatever was in here."
 	icon_state = "postit-writing"
 	info = {"<h2>IOU</h2>"}
+
+/obj/item/paper/shooting_range_note1 //shooting range prefab junk
+	name = "secure safe note"
+	desc = "Someone left a reminder in neat cursive."
+	icon_state = "postit-writing"
+	info = {"*Experimental ray gun - DO NOT FIRE IN A CLOSED SPACE. Waiting for Olwen to fix...<br><u><b>*Dinner Date is on Tuesday.</u></b>"}
+
+/obj/item/paper/shooting_range_note2
+	name = "secure safe note"
+	desc = "A note of the safe contents, scribbled in near-indecipherable chickenscratch."
+	icon_state = "postit-writing"
+	info = {"-non-stable battery; keeps popping on use.<br>-design work (not final)<br>-battery capacity??? maybe?<br>Cheers,<br>O"}

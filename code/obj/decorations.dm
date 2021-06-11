@@ -1008,13 +1008,17 @@ obj/decoration/ceilingfan
 
 //fake guns for shooting range prefab
 
-/obj/decoration/laser_pistol
+/obj/item/gun/laser_pistol
 	name = "laser pistol"
 	icon = 'icons/obj/decoration.dmi'
 	desc = "A terribly cheap and discontinued old model of laser pistol."
 	icon_state = "laser_pistol"
-	var/inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	var/item_state = "protopistol"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "protopistol"
+	stamina_damage = 0
+	stamina_cost = 4
+	stamina_crit_chance = 0
+	throwforce = 0
 
 	attack_hand(mob/user as mob)
 		if ((user.r_hand == src || user.l_hand == src) && src.contents && length(src.contents))
@@ -1023,7 +1027,7 @@ obj/decoration/ceilingfan
 		else
 			return ..()
 
-/obj/decoration/laser_pistol/prototype
+/obj/item/gun/laser_pistol/prototype
 	name = "prototype laser pistol"
 	icon = 'icons/obj/decoration.dmi'
 	desc = "You've never heard of this pistol before...who made it?"
