@@ -387,7 +387,7 @@
 			if (src.id && K.id == src.id)
 				src.locked = !src.locked
 				user.visible_message("[user] [!src.locked ? "un" : null]locks [src].")
-				playsound(get_turf(src), "sound/items/Screwdriver2.ogg", 50, 1)
+				playsound(src, "sound/items/Screwdriver2.ogg", 50, 1)
 			else
 				boutput(user, "<span class='alert'>[K] doesn't seem to fit in [src]'s lock.</span>")
 			return

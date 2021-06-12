@@ -8049,7 +8049,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/paper/book/critter_compendium,
+/obj/item/paper/book/from_file/critter_compendium,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
@@ -16265,7 +16265,7 @@
 /area/station/medical/research)
 "biP" = (
 /obj/table/auto,
-/obj/item/paper/book/materials{
+/obj/item/paper/book/from_file/matsci_guide{
 	pixel_x = 7;
 	pixel_y = 5
 	},
@@ -18650,7 +18650,7 @@
 "brJ" = (
 /obj/stool/bed,
 /obj/decal/cleanable/dirt,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -24843,8 +24843,8 @@
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/paper/book/hydroponicsguide,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "iBE" = (
@@ -25703,7 +25703,7 @@
 /obj/item/paper_bin{
 	pixel_x = -5
 	},
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/access_spawn/medical,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
@@ -27113,7 +27113,7 @@
 /area/station/turret_protected/AIsat)
 "luj" = (
 /obj/table/auto,
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /turf/simulated/floor/black,
 /area/station/security/detectives_office)
 "lul" = (
@@ -29170,7 +29170,7 @@
 "ogt" = (
 /obj/rack,
 /obj/random_item_spawner/tools,
-/obj/item/paper/book/mechanicbook,
+/obj/item/paper/book/from_file/mechanicbook,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "ogC" = (
@@ -30621,11 +30621,11 @@
 	pixel_x = -6;
 	pixel_y = -2
 	},
-/obj/item/paper/book/guardbot_guide{
+/obj/item/paper/book/from_file/guardbot_guide{
 	pixel_x = -8;
 	pixel_y = 16
 	},
-/obj/item/paper/book/dwainedummies{
+/obj/item/paper/book/from_file/dwainedummies{
 	pixel_x = 4;
 	pixel_y = 13
 	},
@@ -32591,7 +32591,7 @@
 /area/station/engine/engineering/breakroom)
 "rOY" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /turf/simulated/floor/purplewhite{
 	dir = 6
 	},
@@ -35506,11 +35506,11 @@
 	icon_state = "pipe-c"
 	},
 /obj/table/wood/auto,
-/obj/item/paper/book/guardbot_guide{
+/obj/item/paper/book/from_file/guardbot_guide{
 	pixel_x = 6;
 	pixel_y = 5
 	},
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "uXc" = (
@@ -36315,7 +36315,7 @@
 	pixel_x = -7;
 	pixel_y = 6
 	},
-/obj/item/paper/book/cookbook{
+/obj/item/paper/book/from_file/cookbook{
 	pixel_y = 3
 	},
 /turf/simulated/floor/specialroom/cafeteria,

@@ -260,7 +260,7 @@
 
 			activating = 1
 
-			playsound(get_turf(src), "sound/effects/singsuck.ogg", 40, 1)
+			playsound(src, "sound/effects/singsuck.ogg", 40, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(user))
 			O.name = "Energy"
 			O.anchored = 1

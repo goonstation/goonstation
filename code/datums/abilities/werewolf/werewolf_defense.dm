@@ -35,6 +35,7 @@
 	unique = 1
 
 	onAdd(var/optional=null)
+		. = ..()
 		var/mob/living/carbon/human/H = owner
 		if (!istype(H)) return
 
@@ -54,6 +55,7 @@
 		return
 
 	onRemove()
+		. = ..()
 		var/mob/living/carbon/human/H = owner
 		if (!istype(H)) return
 		H.stance = "normal"

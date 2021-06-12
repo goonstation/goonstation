@@ -101,7 +101,7 @@ var/datum/event_controller/random_events
 			message_admins("<span class='internal'>A spawn event would have happened now, but there is not enough players!</span>")
 			do_event = 0
 
-		if (do_event)
+		if (do_event && ticker?.mode?.do_random_events)
 			var/aap = get_alive_antags_percentage()
 			var/dcp = get_dead_crew_percentage()
 			if (aap < alive_antags_threshold && (ticker?.mode?.do_antag_random_spawns))
@@ -118,6 +118,9 @@ var/datum/event_controller/random_events
 	proc/do_random_event(var/list/event_bank, var/source = null)
 		if (!event_bank || event_bank.len < 1)
 			logTheThing("debug", null, null, "<b>Random Events:</b> do_random_event proc was passed a bad event bank")
+			return
+		if (!ticker?.mode?.do_random_events)
+			logTheThing("debug", null, null, "<b>Random Events:</b> Random events are turned off on this game mode.")
 			return
 		var/list/eligible = list()
 		var/list/weights = list()

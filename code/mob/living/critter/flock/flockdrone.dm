@@ -280,16 +280,16 @@
 	switch (act)
 		if ("whistle", "beep", "burp")
 			if (src.emote_check(voluntary, 50))
-				playsound(get_turf(src), "sound/misc/flockmind/flockdrone_beep[pick("1","2","3","4")].ogg", 60, 1)
+				playsound(src, "sound/misc/flockmind/flockdrone_beep[pick("1","2","3","4")].ogg", 60, 1)
 				return "<b>[src]</b> beeps."
 		if ("scream", "growl", "abeep", "grump")
 			if (src.emote_check(voluntary, 50))
-				playsound(get_turf(src), "sound/misc/flockmind/flockdrone_grump[pick("1","2","3")].ogg", 60, 1)
+				playsound(src, "sound/misc/flockmind/flockdrone_grump[pick("1","2","3")].ogg", 60, 1)
 				return "<b>[src]</b> beeps grumpily!"
 		if ("fart") // i cannot ignore my heritage any longer
 			if (src.emote_check(voluntary, 50))
 				var/fart_message = pick_string("flockmind.txt", "flockdrone_fart")
-				playsound(get_turf(src), "sound/misc/flockmind/flockdrone_fart.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src, "sound/misc/flockmind/flockdrone_fart.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 				return "<b>[src]</b> [fart_message]"
 		if ("laugh") //no good sound for it - moon
 			if (src.emote_check(voluntary, 50))
@@ -311,9 +311,9 @@
 		var/absorb = min(src.absorb_rate, max(0, I.health))
 		I.health -= absorb
 		src.resources += src.absorb_per_health * absorb
-		playsound(get_turf(src), "sound/effects/sparks[rand(1,6)].ogg", 50, 1)
+		playsound(src, "sound/effects/sparks[rand(1,6)].ogg", 50, 1)
 		if(I && I.health <= 0) // fix runtime Cannot read null.health
-			playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_1.ogg", 50, 1)
+			playsound(src, "sound/impact_sounds/Energy_Hit_1.ogg", 50, 1)
 			I.dropped(src)
 			if(I.contents.len > 0)
 				var/anything_tumbled = 0
@@ -348,7 +348,7 @@
 		// someone is grabbing us, and we want to move
 		++src.antigrab_counter
 		if(src.antigrab_counter >= src.antigrab_fires_at)
-			playsound(get_turf(src), "sound/effects/electric_shock.ogg", 40, 1, -3)
+			playsound(src, "sound/effects/electric_shock.ogg", 40, 1, -3)
 			boutput(src, "<span class='flocksay'><b>\[SYSTEM: Anti-grapple countermeasures deployed.\]</b></span>")
 			for(var/obj/item/grab/G in src.grabbed_by)
 				var/mob/living/L = G.assailant
@@ -370,7 +370,7 @@
 /mob/living/critter/flock/drone/proc/start_floorrunning()
 	if(src.floorrunning)
 		return
-	playsound(get_turf(src), "sound/misc/flockmind/flockdrone_floorrun.ogg", 50, 1, -3)
+	playsound(src, "sound/misc/flockmind/flockdrone_floorrun.ogg", 50, 1, -3)
 	src.floorrunning = 1
 	src.set_density(0)
 	animate_flock_floorrun_start(src)
@@ -378,7 +378,7 @@
 /mob/living/critter/flock/drone/proc/end_floorrunning()
 	if(!src.floorrunning)
 		return
-	playsound(get_turf(src), "sound/misc/flockmind/flockdrone_floorrun.ogg", 50, 1, -3)
+	playsound(src, "sound/misc/flockmind/flockdrone_floorrun.ogg", 50, 1, -3)
 	src.floorrunning = 0
 	src.set_density(1)
 	animate_flock_floorrun_end(src)
@@ -533,7 +533,7 @@
 	src.flock?.removeDrone(src)
 	..()
 	src.icon_state = "drone-dead"
-	playsound(get_turf(src), "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
+	playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
 	src.set_density(0)
 	desc = "[initial(desc)]<br><span class='alert'>\The [src] is a dead, broken heap.</span>"
 
@@ -561,7 +561,7 @@
 			if(91 to 100)
 				B = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock(my_turf)
 
-	playsound(get_turf(src), "sound/impact_sounds/Glass_Shatter_2.ogg", 50, 1)
+	playsound(src, "sound/impact_sounds/Glass_Shatter_2.ogg", 50, 1)
 	if (src.organHolder)
 		src.organHolder.drop_organ("brain",src.loc)
 		src.organHolder.drop_organ("heart",src.loc)

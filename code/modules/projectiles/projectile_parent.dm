@@ -169,10 +169,7 @@
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 				if (proj_data.hit_mob_sound)
 					playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
-			for (var/obj/item/cloaking_device/S in A.contents)
-				if (S.active)
-					S.deactivate(A)
-					src.visible_message("<span class='notice'><b>[A]'s cloak is disrupted!</b></span>")
+			SEND_SIGNAL(A, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 			for (var/obj/item/device/disguiser/D in A.contents)
 				if (D.on)
 					D.disrupt(A)
@@ -352,7 +349,7 @@
 			if (y32 < 0)
 				ys = -1
 				y32 = -y32
-		var/max_t = src.max_range + 1 // why not  --- off by one error is why not apparently
+		var/max_t = src.max_range * (32/proj_data.projectile_speed)
 		var/next_x = x32 / 2
 		var/next_y = y32 / 2
 		var/ct = 0
@@ -441,14 +438,15 @@
 			return
 
 		if (proj_data.precalculated)
+			var/incidence_turf = curr_turf
 			for (var/i = 1, i < crossing.len, i++)
 				var/turf/T = crossing[i]
 				if (crossing[T] < curr_t)
 					Move(T)
 					if (disposed || pooled)
 						return
-					incidence = get_dir(curr_turf, T)
-					curr_turf = T
+					incidence = get_dir(incidence_turf, T)
+					incidence_turf = T
 					crossing.Cut(1,2)
 					i--
 				else

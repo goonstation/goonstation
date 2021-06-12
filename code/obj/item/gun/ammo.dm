@@ -212,7 +212,7 @@
 
 		K.add_fingerprint(usr)
 		A.add_fingerprint(usr)
-		playsound(get_turf(K), sound_load, 50, 1)
+		playsound(K, sound_load, 50, 1)
 
 		if (K.ammo.amount_left < 0)
 			K.ammo.amount_left = 0
@@ -272,9 +272,6 @@
 			src.amount_left = 0
 		inventory_counter.update_number(src.amount_left)
 
-	// src.desc = text("There are [] [] bullet\s left!", src.amount_left, (ammo_type.material && istype(ammo_type, /datum/material/metal/silver)))
-		src.desc = "There are [src.amount_left][ammo_type.material && istype(ammo_type, /datum/material/metal/silver) ? " silver " : " "]bullet\s left!"
-
 		if (src.amount_left > 0)
 			if (src.icon_dynamic && src.icon_short)
 				src.icon_state = text("[src.icon_short]-[src.amount_left]")
@@ -287,6 +284,9 @@
 
 	proc/after_unload(mob/user)
 		return
+
+	get_desc()
+		return . += "There are [src.amount_left][ammo_type.material && istype(ammo_type.material, /datum/material/metal/silver) ? " silver " : " "]bullet\s left!"
 
 /obj/item/ammo/bullets/derringer
 	sname = ".41 RF"
@@ -622,11 +622,11 @@
 	name = "12ga flares"
 	amount_left = 8
 	max_amount = 8
-	icon_state = "12"
+	icon_state = "flare"
 	ammo_type = new/datum/projectile/bullet/flare
 	caliber = 0.72
 	icon_dynamic = 0
-	icon_empty = "12-0"
+	icon_empty = "flare-0"
 
 	single
 		amount_left = 1
@@ -834,6 +834,11 @@
 	five_shots
 		amount_left = 5.0
 
+	smartgun
+		name = "9mm smartgun magazine"
+		amount_left = 24.0
+		max_amount = 24.0
+		ammo_type = new/datum/projectile/bullet/bullet_9mm/smartgun
 	smg
 		name = "9mm SMG magazine"
 		amount_left = 30.0
@@ -874,17 +879,6 @@
 	module_research_type = /obj/item/ammo/power_cell
 	var/sound_load = 'sound/weapons/gunload_click.ogg'
 	var/unusualCell = 0
-
-	onMaterialChanged()
-		..()
-		if(istype(src.material))
-			if(src.material.hasProperty("electrical"))
-				max_charge = round(material.getProperty("electrical") ** 1.33)
-			else
-				max_charge =  40
-
-		charge = max_charge
-		return
 
 	New()
 		..()
@@ -973,7 +967,7 @@
 		swapped_cell.update_icon()
 		src.update_icon()
 
-		playsound(get_turf(src), sound_load, 50, 1)
+		playsound(src, sound_load, 50, 1)
 		return 1
 
 	proc/charge(var/amt = 0)
@@ -1030,16 +1024,6 @@
 	var/cycle = 0 //Recharge every other tick.
 	var/recharge_rate = 5.0
 
-	onMaterialChanged()
-		..()
-		if(istype(src.material))
-			recharge_rate = 0
-			if(src.material.hasProperty("radioactive"))
-				recharge_rate += ((src.material.getProperty("radioactive") / 10) / 2.5) //55(cerenkite) should give around 2.2, slightly less than a slow charge cell.
-			if(src.material.hasProperty("n_radioactive"))
-				recharge_rate += ((src.material.getProperty("n_radioactive") / 10) / 2)
-		return
-
 	New()
 		processing_items |= src
 		..()
@@ -1076,6 +1060,23 @@
 /obj/item/ammo/power_cell/self_charging/custom
 	name = "Power Cell"
 	desc = "A custom-made power cell."
+
+	onMaterialChanged()
+		..()
+		if(istype(src.material))
+			if(src.material.hasProperty("electrical"))
+				max_charge = round(material.getProperty("electrical") ** 1.33)
+			else
+				max_charge =  40
+
+			recharge_rate = 0
+			if(src.material.hasProperty("radioactive"))
+				recharge_rate += ((src.material.getProperty("radioactive") / 10) / 2.5) //55(cerenkite) should give around 2.2, slightly less than a slow charge cell.
+			if(src.material.hasProperty("n_radioactive"))
+				recharge_rate += ((src.material.getProperty("n_radioactive") / 10) / 2)
+
+		charge = max_charge
+		return
 
 /obj/item/ammo/power_cell/self_charging/slowcharge
 	name = "Power Cell - Atomic Slowcharge"
@@ -1213,6 +1214,19 @@
 	desc = "A box containg a single inert meowitzer. It appears to be softly purring. Wait is that a cat?"
 	ammo_type = new/datum/projectile/special/meowitzer/inert
 
+/obj/item/ammo/bullets/foamdarts
+	sname = "foam darts"
+	name = "foam dart box"
+	icon_state = "foamdarts"
+	icon_empty = "foamdarts-0"
+	amount_left = 20
+	max_amount = 20
+	caliber = 0.393
+	ammo_type = new/datum/projectile/bullet/foamdart
+
+/obj/item/ammo/bullets/foamdarts/ten
+	amount_left = 10
+	max_amount = 10
 
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND

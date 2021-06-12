@@ -155,6 +155,49 @@ GAUNTLET CARDS
 		access = get_access("Captain")
 		..()
 
+//ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
+/obj/item/card/id/pod_wars
+	desc = "An ID card to help open doors, lock pods, and identify your body."
+	var/team = 0
+#if defined(MAP_OVERRIDE_POD_WARS)
+	//You can only pick this up if you're on the correct team, otherwise it explodes.
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team)
+			..()
+		else
+			var/flavor = pick("doesn't like you", "can tell you don't deserve it", "saw into your very soul and found you wanting", "hates you", "thinks you stink", "thinks you two should start seeing other people", "doesn't trust you", "finds your lack of faith disturbing", "is just not that into you", "gently weeps")
+			//stolen from Captain's Explosive Spare ID down below...
+			boutput(user, "<span class='alert'>The ID card [flavor] and <b>explodes!</b></span>")
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+#endif
+
+	nanotrasen
+		name = "NanoTrasen Pilot"
+		icon_state = "polaris"
+		assignment = "NanoTrasen Pilot"
+		access = list(access_heads)
+		team = 1
+			
+		commander
+			name = "NanoTrasen Commander"
+			assignment = "NanoTrasen Commander"
+			access = list(access_heads, access_captain)
+
+	syndicate
+		name = "Syndicate Pilot"
+		icon_state = "id_syndie"
+		assignment = "Syndicate Pilot"
+		access = list(access_syndicate_shuttle)
+		team = 2
+
+		commander
+			name = "Syndicate Commander"
+			assignment = "Syndicate Commander"
+			access = list(access_syndicate_shuttle, access_syndicate_commander)
+
 /obj/item/card/id/dabbing_license
 	name = "Dabbing License"
 	icon_state = "id_dab"

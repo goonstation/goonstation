@@ -184,7 +184,7 @@
 						I.bump_up(chatbot_text.measured_height)
 
 		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"<span style=\"[src.bot_chat_style]\">[message]\"</span>", just_maptext = just_float, assoc_maptext = chatbot_text)
-		playsound(get_turf(src), src.bot_voice, 40, 1)
+		playsound(src, src.bot_voice, 40, 1)
 		if (src.text2speech)
 			SPAWN_DBG(0)
 				var/audio = dectalk("\[:nk\][message]")

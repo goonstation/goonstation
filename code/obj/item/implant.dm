@@ -570,7 +570,8 @@ THROWING DARTS
 					throwjunk += I
 
 			SPAWN_DBG(0) //Delete the overlay when finished with it.
-				source?.gib()
+				if(!QDELETED(source))
+					source?.gib()
 
 				for(var/obj/O in throwjunk) //Throw this junk around
 					var/edge = get_edge_target_turf(T, pick(alldirs))

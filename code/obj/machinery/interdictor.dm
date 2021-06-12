@@ -210,6 +210,12 @@
 
 	src.canInterdict = 1
 	playsound(src.loc, src.sound_interdict_on, 40, 0)
+	SPAWN_DBG(rand(30,40)) //after it's been on for a little bit, check for tears
+		if(src.canInterdict)
+			for (var/obj/forcefield/event/tear in by_type[/obj/forcefield/event])
+				SPAWN_DBG(rand(8,22)) //stagger stabilizations, since it's getting stabilized post-formation
+					if (!tear.stabilized && IN_RANGE(src,tear,src.interdict_range) && src.expend_interdict(800))
+						tear.stabilize()
 	src.updateicon()
 
 
@@ -236,109 +242,6 @@
 
 
 //assembly zone
-
-//interdictor guide: how to make it and use it
-//engineering should start with one of these
-//adjacent to the rod/frame blueprint and the mainboards
-
-/obj/item/paper/book/interdictor
-	name = "Spatial Interdictor Assembly and Use, 3rd Edition"
-	icon_state = "engiguide"
-	info = {"<h1>SPATIAL INTERDICTOR ASSEMBLY AND USE</h1>
-	<p><i>3rd Edition - Compiled for Nanotrasen by Servin Underwriting, LTD - (C) 2049 All Rights Reserved</i></p>
-	<h2>PLEASE READ CAREFULLY</h2>
-	<br>
-	Congratulations on your recent acquisition or allocation of cutting-edge interdiction technology!
-	<br>
-	<br>
-	Using the power of yottahertz-range electromagnetic counter-interference, the Spatial Interdictor provides robust protection against a wide array of stellar phenomena:
-	<br>
-	<br>
-	Biomagnetic fields nulled on discharge
-	<br>
-	Black holes semi-stabilized, increasing time to respond**
-	<br>
-	Radiation pulses safely remodulated within field range
-	<br>
-	Radiation storms interdicted on a per-individual basis*
-	<br>
-	Solar flare disruptions reduced per onboard interdictor
-	<br>
-	Spatial tears stabilized, permitting limited traversal**
-	<br>
-	Unstable wormholes nulled when entry is attempted
-	<br>
-	<br>
-	<i>*ADVISORY: heavy interdiction cost. Multiple interdictors or powerful cell recommended for crowds.</i>
-	<br>
-	<i>**WARNING: total interdiction impossible, and device must be active beforehand.</i>
-	<br>
-	<br>
-	In just a few short steps, worrying about the myriad hazards of space will be a thing of the past!^
-	<br>
-	<br>
-	<i>^Please be aware that no liability is assumed for failure to interdict any events absent from or present within the aforementioned list. Physical hazards such as meteor storms will not be interdicted.</i>
-	<br>
-	<br>
-	<hr>
-	<h3>ASSEMBLING THE DEVICE</h3>
-	<br>
-	(I) Assemble the frame kit and phase-control rod at any manufacturer using the blueprints included with your Spatial Interdictor Starter Kit. Materials not provided.
-	<br>
-	Phase control rods may be manufactured in Lambda or Sigma configurations. Lambda rods cover a three-unit radius, while the advanced but more materially complex Sigma rods cover a seven-unit radius.
-	<br>
-	<i>Use of non-standard phase-control rods is not supported in this guide. Please consult a Nanotrasen certified engineer for a custom interdiction solution, including appropriate power cell.</i>
-	<br>
-	<br>
-	(II) Gather the following equipment before assembly:
-	<br>
-	- Interdictor frame kit
-	<br>
-	- Interdictor mainboard
-	<br>
-	- Interdictor phase-control rod
-	<br>
-	- Industry-compliant power cell (high-capacity heavily recommended, as installation is permanent)
-	<br>
-	- Four lengths of industry-compliant electrical cable
-	<br>
-	- Soldering iron
-	<br>
-	- Four sheets of industry-compliant steel
-	<br>
-	<br>
-	(III) Assemble objects in the sequence they are listed in the enumeration. Once assembled, the device may be transported to the site of utilisation to be connected and activated.
-	<br>
-	<br>
-	<hr>
-	<h3>USING THE DEVICE</h3>
-	<br>
-	Due to the advanced technologies incorporated into the Spatial Interdictor's mainboard, it will automatically begin operating when conditions are suitable.
-	<br>
-	<br>
-	Suitable conditions are: Adequate internal cell charge, direct link to an electrical grid cable, active magnetic anchoring.
-	<br>
-	<br>
-	To activate magnetic anchoring, simply touch the control pad located on the front side of the rectangular regulator unit.
-	<br>
-	<br>
-	For safety purposes, activating or deactivating magnetic anchoring requires the user to possess an identification card with at least base-level Engineering access.
-	<br>
-	<br>
-	The Spatial Interdictor is equipped with three distinct indicators, each representing a different aspect of its functionality:
-	<br>
-	<br>
-	- The charge meter, located on the side of the interdiction pillar. This represents the current capacity of the buffer cell, and <b>must be full for interdiction to begin.</b>
-	<br>
-	<br>
-	- The interdiction emitter, located on the top of the interdiction pillar. While illuminated, the Interdictor is currently active and protecting its surroundings.
-	<br>
-	<br>
-	- The grid-tie indicator, located on the front of the regulator unit. Illumination means the Interdictor is correctly installed, and able to charge, or activate if charged.
-	<br>
-	<hr>
-	<p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base. Thank you for your service to Nanotrasen.</i></p>
-	"}
 
 //interdictor rod: the doohickey that lets the interdictor do its thing
 //the blueprint to create this should be in engineering along with guide, frame blueprint and mainboards
@@ -431,7 +334,7 @@
 			src.state = 3
 			src.icon_state = "interframe-3"
 			boutput(user, "<span class='notice'>You remove \the [intcap] from the interdictor's cell compartment.</span>")
-			playsound(get_turf(src), "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(src, "sound/items/Deconstruct.ogg", 40, 1)
 
 			user.put_in_hand_or_drop(src.intcap)
 			src.intcap = null
@@ -461,7 +364,7 @@
 					src.state = 4
 					src.icon_state = "interframe-4"
 					boutput(user, "<span class='notice'>You install \the [I] into the interdictor's cell compartment.</span>")
-					playsound(get_turf(src), "sound/items/Deconstruct.ogg", 40, 1)
+					playsound(src, "sound/items/Deconstruct.ogg", 40, 1)
 
 					user.u_equip(I)
 					I.set_loc(src)
@@ -541,22 +444,22 @@
 	onStart()
 		..()
 		if (itdr.state == 0)
-			playsound(get_turf(itdr), "sound/items/Ratchet.ogg", 40, 1)
+			playsound(itdr, "sound/items/Ratchet.ogg", 40, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins assembling \the [itdr].")
 		if (itdr.state == 1)
-			playsound(get_turf(itdr), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins installing a mainboard into \the [itdr].")
 		if (itdr.state == 2)
-			playsound(get_turf(itdr), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins installing a phase-control rod into \the [itdr].")
 		if (itdr.state == 4)
-			playsound(get_turf(itdr), "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(itdr, "sound/items/Deconstruct.ogg", 40, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins connecting \the [itdr]'s electrical systems.")
 		if (itdr.state == 5)
-			playsound(get_turf(itdr), "sound/effects/zzzt.ogg", 30, 1)
+			playsound(itdr, "sound/effects/zzzt.ogg", 30, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins soldering \the [itdr]'s wiring into place.")
 		if (itdr.state == 6)
-			playsound(get_turf(itdr), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins installing a casing onto \the [itdr].")
 	onEnd()
 		..()
@@ -564,14 +467,14 @@
 			itdr.state = 1
 			itdr.icon_state = "interframe-1"
 			boutput(owner, "<span class='notice'>You assemble and secure the frame components.</span>")
-			playsound(get_turf(itdr), "sound/items/Ratchet.ogg", 40, 1)
+			playsound(itdr, "sound/items/Ratchet.ogg", 40, 1)
 			itdr.desc = "A frame for a spatial interdictor. It's missing its mainboard."
 			return
 		if (itdr.state == 1) //no components > mainboard
 			itdr.state = 2
 			itdr.icon_state = "interframe-2"
 			boutput(owner, "<span class='notice'>You install the interdictor mainboard.</span>")
-			playsound(get_turf(itdr), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 
 			var/mob/source = owner
 			source.u_equip(the_tool)
@@ -583,7 +486,7 @@
 			itdr.state = 3
 			itdr.icon_state = "interframe-3"
 			boutput(owner, "<span class='notice'>You install the phase-control rod.</span>")
-			playsound(get_turf(itdr), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 
 			var/mob/source = owner
 			source.u_equip(the_tool)
@@ -596,7 +499,7 @@
 			itdr.state = 5
 			itdr.icon_state = "interframe-5"
 			boutput(owner, "<span class='notice'>You finish wiring together the interdictor's systems.</span>")
-			playsound(get_turf(itdr), "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(itdr, "sound/items/Deconstruct.ogg", 40, 1)
 
 			the_tool.amount -= 4
 			if (the_tool.amount < 1)
@@ -612,12 +515,12 @@
 			itdr.state = 6
 			itdr.icon_state = "interframe-5"
 			boutput(owner, "<span class='notice'>You solder the wiring into place. The internal systems are now fully installed.</span>")
-			playsound(get_turf(itdr), "sound/effects/zzzt.ogg", 40, 1)
+			playsound(itdr, "sound/effects/zzzt.ogg", 40, 1)
 			itdr.desc = "A nearly-complete frame for a spatial interdictor. It's missing a casing."
 			return
 		if (itdr.state == 6)
 			boutput(owner, "<span class='notice'>You install a metal casing onto the interdictor, completing its construction.</span>")
-			playsound(get_turf(itdr), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 
 			//setting up for custom interdictor casing
 			var/obj/item/sheet/S = the_tool

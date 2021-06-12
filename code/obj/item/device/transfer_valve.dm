@@ -268,7 +268,7 @@
 					return
 				else if (power < 0.50)
 					visible_message("<span class='combat'>\The [src] farts [pick_string("descriptors.txt", "mopey")]</span>")
-					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 30, 2, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/farts/poo2.ogg', 30, 2, channel=VOLUME_CHANNEL_EMOTE)
 					return
 
 				var/stun_time = 6 * power
@@ -277,7 +277,7 @@
 				var/throw_repeat = 6 * power
 				var/sound_volume = 100 * power
 
-				playsound(get_turf(src), 'sound/voice/farts/superfart.ogg', sound_volume, 2, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src, 'sound/voice/farts/superfart.ogg', sound_volume, 2, channel=VOLUME_CHANNEL_EMOTE)
 				visible_message("<span class='combat bold' style='font-size:[100 + (100*(power-0.5))]%;'>\The [src] farts loudly!</span>")
 
 				for(var/mob/living/L in hearers(get_turf(src), fart_range))

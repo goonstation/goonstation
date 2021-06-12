@@ -116,6 +116,7 @@
 		materiel_stock += new/datum/materiel/utility/firstaidsec
 		materiel_stock += new/datum/materiel/utility/nightvisiongoggles
 		materiel_stock += new/datum/materiel/utility/riotrounds
+		materiel_stock += new/datum/materiel/utility/prisonerscanner
 		materiel_stock += new/datum/materiel/assistant/basic
 
 	vended(var/atom/A)
@@ -151,6 +152,7 @@
 	New()
 		..()
 		// List of avaliable objects for purchase
+		materiel_stock += new/datum/materiel/sidearm/smartgun
 		materiel_stock += new/datum/materiel/sidearm/pistol
 		materiel_stock += new/datum/materiel/sidearm/revolver
 
@@ -292,12 +294,22 @@
 	path = /obj/item/ammo/bullets/pbr
 	description = "One case of 40mm Riot Rounds, totalling 2 shots, for the Riot Launcher."
 
+/datum/materiel/utility/prisonerscanner
+	name = "RecordTrak Scannner"
+	path = /obj/item/device/prisoner_scanner
+	description = "A device used to scan in prisoners and update their security records."
+
 /datum/materiel/assistant/basic
 	name = "Assistant"
 	path = /obj/item/storage/belt/security/assistant
 	description = "One belt containing a security barrier, a forensic scanner, and a security ticket writer."
 
 //SYNDIE
+
+/datum/materiel/sidearm/smartgun
+	name = "Hydra Smart Pistol"
+	path = /obj/item/storage/belt/smartgun
+	description = "A gun-belt containing a pistol capable of locking onto multiple targets and firing on them in rapid sequence and four magazines."
 
 /datum/materiel/sidearm/pistol
 	name = "Branwen Pistol"

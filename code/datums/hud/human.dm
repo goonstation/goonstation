@@ -844,7 +844,7 @@
 			var/datum/bioEffect/power/P
 			for(var/ID in master.bioHolder.effects)
 				P = master.bioHolder.GetEffect(ID)
-				if (!istype(P, /datum/bioEffect/power/) || !istype(P.ability) || !istype(P.ability.object))
+				if (!istype(P, /datum/bioEffect/power/) || !istype(P.ability) || !istype(P.ability.object) || P.removed)
 					continue
 				var/datum/targetable/geneticsAbility/POWER = P.ability
 				var/atom/movable/screen/ability/topBar/genetics/BUTTON = POWER.object

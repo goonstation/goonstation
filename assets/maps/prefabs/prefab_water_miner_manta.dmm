@@ -158,7 +158,7 @@
 "aI" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
-/obj/item/paper/book/minerals,
+/obj/item/paper/book/from_file/minerals,
 /turf/simulated/floor/caution/north,
 /area/prefab/sea_mining)
 "aJ" = (

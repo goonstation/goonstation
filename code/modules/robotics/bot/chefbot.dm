@@ -29,7 +29,7 @@
 				yell()
 
 /obj/machinery/bot/chefbot/proc/drama()
-	playsound(get_turf(src),'sound/effects/dramatic.ogg', vol = 100) // F U C K temporary measure
+	playsound(src,'sound/effects/dramatic.ogg', vol = 100) // F U C K temporary measure
 
 /obj/machinery/bot/chefbot/speak(var/message)
 	if (message)

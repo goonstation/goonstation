@@ -241,8 +241,9 @@
 /obj/item/reagent_containers/food/drinks/cola
 	name = "space cola"
 	desc = "Cola. in space."
-	icon_state = "cola"
-	item_state = "cola"
+	icon = 'icons/obj/foodNdrink/can.dmi'
+	icon_state = "cola-1"
+	item_state = "cola-1"
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
 	initial_volume = 50
@@ -253,7 +254,7 @@
 	New()
 		..()
 		if (prob(50))
-			src.icon_state = "cola-blue"
+			src.icon_state = "cola-2"
 
 	attack(mob/M as mob, mob/user as mob)
 		if (is_sealed)
@@ -278,7 +279,7 @@
 				user.visible_message("[user] crushes \the [src][pick(" one-handed!", ".", ".", ".")] [pick("Lame.", "Eh.", "Meh.", "Whatevs.", "Weirdo.")]", "You crush the can!")
 			var/obj/item/crushed_can/C = new(get_turf(user))
 			playsound(src.loc, "sound/items/can_crush-[rand(1,3)].ogg", 50, 1)
-			C.set_stuff(src.name, src.icon_state)
+			C.crush_can(src.name, src.icon_state)
 			user.u_equip(src)
 			user.drop_item(src)
 			if (!drop_this_shit) //see?
@@ -290,16 +291,15 @@
 	desc = "This can's been totally crushed!"
 	icon = 'icons/obj/foodNdrink/can.dmi'
 
-	proc/set_stuff(var/name, var/icon_state)
+	proc/crush_can(var/name, var/icon_state)
 		src.name = "crushed [name]"
-		if (icon_state == "cola" || "cola-blue")
-			switch(icon_state)
-				if ("cola")
-					src.icon_state = "crushed-1"
-					return
-				if ("cola-blue")
-					src.icon_state = "crushed-2"
-					return
+		switch(icon_state)
+			if ("cola-1")
+				src.icon_state = "crushed-1"
+				return
+			if ("cola-2")
+				src.icon_state = "crushed-2"
+				return
 		var/list/iconsplit = splittext("[icon_state]", "-")
 		src.icon_state = "crushed-[iconsplit[2]]"
 
@@ -323,6 +323,7 @@
 /obj/item/reagent_containers/food/drinks/peach
 	name = "Delightful Dan's Peachy Punch"
 	desc = "A vibrantly colored can of 100% all natural peach juice."
+	icon = 'icons/obj/foodNdrink/can.dmi'
 	icon_state = "peach"
 	rc_flags = RC_FULLNESS
 	initial_volume = 50
@@ -332,10 +333,34 @@
 	name = "Creaca's Space Milk"
 	desc = "A bottle of fresh space milk from happy, free-roaming space cows."
 	icon_state = "milk"
+	item_state = "milk"
+	var/icon_style = "milk"
+	var/glass_style = "milk"
+	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = "milk"
 	var/canbequilty = 1
+
+	var/image/fluid_image
+
+	on_reagent_change()
+		src.update_icon()
+
+	proc/update_icon()
+		src.underlays = null
+		if (reagents.total_volume)
+			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 3 + 1), 1, 3))
+			if (!src.fluid_image)
+				src.fluid_image = image(src.icon, "fluid-milk[fluid_state]", -1)
+			else
+				src.fluid_image.icon_state = "fluid-milk[fluid_state]"
+			src.icon_state = "milk[fluid_state]"
+			var/datum/color/average = reagents.get_average_color()
+			src.fluid_image.color = average.to_rgba()
+			src.underlays += fluid_image
+		else
+			src.icon_state = "milk"
 
 	New()
 		..()

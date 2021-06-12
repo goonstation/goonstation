@@ -1,5 +1,282 @@
 
+(t)fri jun 11 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Robot legs counteract damage slowdown for humans as opposed to direct speed buff.
+(+)Humans with tread legs will not fall over when resting, matching behavior when stunned etc.
+(u)DisturbHerb
+(p)5083
+(e)|
+(*)RecordTrak scanners are now available from Security weapons vendors.
+(u)UnfunnyPerson
+(p)5008
+(e)🆕🎨|feature, sprites
+(+)Added toy guns! You can purchase ammo and the gun from Geoff Honkington.
+(t)thu jun 10 21
+(u)eX.n0x
+(p)5087
+(e)🐛|bug
+(+)Radbow no longer shows an impact effect.
+(t)wed jun 09 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Beepsky's baton, if stolen, will get exactly 4 uses, and cannot be recharged or cell-swapped.
+(+)Nerf non-knockback side-effects of pulse projectile
+(+)Added small stamina damage and long disorient to EMP projectile
+(+)Lawbringer detain no longer has special-cased slow status, affected by range falloff
+(u)Flappybat
+(p)5085
+(e)⚖|balance
+(+)Killer tomatoes now actually do damage (4-6) when biting you.
+(u)Gannets & Tarmunora
+(p)5071
+(e)🆕🎨|feature, sprites
+(*)Added the Hydra smart pistol to the Syndicate weapons vendor sidearm options on the Cairngorm.
+(+)The Hydra smart pistol locks on to its target and never misses unless blocked by an object or dodged.
+(+)Can be charged with the fire button up to a burst of three bullets per target.
+(+)Will not target other nuclear operatives (but may still hit them by accident).
+(u)Walpvrgis
+(p)5080
+(e)🆕🎨|feature, sprites
+(*)Three new Spacebux bags are now available to purchase; Studded Backpack, Itabag (in one of 5 random pastel shades), and a brown backpack!
+(*)Backpacks and Satchels have been resprited. You also can now turn almost all backpacks into satchels using the medal reward.
+(t)tue jun 08 21
+(u)BatElite
+(p)5073
+(e)|
+(+)Security belts now accept the RecordTrak
+(t)mon jun 07 21
+(u)Jan.antilles
+(p)5024
+(e)🎨|sprites
+(+)Resprite of the Chef's FoodTech vending machine.
+(u)Gannets
+(p)5057
+(e)🗺|mapping
+(+)Added a pill bottle of mutadone to the Cairngorm medbay.
+(u)Superlagg
+(p)4712
+(e)🐛🆕|bug, feature
+(+)Securitrons locked or welded into a locker can no longer attack people. They aren't happy about this, though.
+(u)Superlagg
+(p)3747
+(e)🆕|feature
+(+)Most targetable emotes now bring up a menu of valid targets.
+(u)Carbadox
+(p)5042
+(e)|
+(+)Raises the limit of posts on the notice board from 5 to 15. Now you can leave even more notes for your space friends, without fighting for advertising space. Hopefully.
+(u)112358sam
+(p)5046
+(e)🐛|bug
+(+)Reagents will no longer be wasted when topping off reagent containers.
+(u)Jan.antilles
+(p)5056
+(e)|
+(+)Touching an artifact with your own robotic arm counts as a silicon touch.
+(u)112358sam
+(p)5040
+(e)|
+(+)Metal arms no longer bleed when picking up a rose.
+(t)sun jun 06 21
+(u)112358sam
+(p)5038
+(e)🐛|bug
+(+)Prevents cyborgs repairing at docking station when out of materials.
+(t)sat jun 05 21
+(u)Emily
+(e)🆕|feature
+(*)Four New Chicken Breeds! See Minor Changes for hints!
+(+)Onagadori; Japanese long-tailed chickens. Peanut feed. [Gen 1] [From White Chickens]
+(+)Shieldmaidhens; these armored chickens need a high-iron diet to maintain their natural armor. [Gen 2] [From Onagadori]
+(+)Phoenix; Love will set your heart on fire. Try breeding two appropriate chickens! [Gen 3]
+(+)Dreamsicle Chickens; Sweet ice cream. Try breeding two appropriate chickens! [Gen 3] 
+(u)112358sam
+(p)5027
+(e)|
+(+)Fixes borgs dropping items on the material processor.
+(t)fri jun 04 21
+(u)Asche
+(p)4984
+(e)⚖🆕|balance, feature
+(+)You can now (usually) pull people out of cyborg converter artifacts to save them. The conversion process has also been made a bit more... gradual.
+(u)BatElite
+(p)4994
+(e)🆕|feature
+(+)The Detgadget hat will now automatically light requested cigarettes if it can, so you can continue punching crime and drinking uninterrupted.
+(u)Tarmunora
+(e)⚖|balance
+(+)Booster enzyme now produces some harmless but slow-depleting leftovers when replicating chemicals.
+(+)milk + vinegar -> cheese
+(t)thu jun 03 21
+(u)Jan.antilles
+(p)4889
+(e)🎨|sprites
+(+)Added a new Diner Waitress's Dress in two colors, a matching hat, and four colors of Mary Jane shoes. Look for them in the Clothing Booth!
+(t)tue jun 01 21
+(u)Sovexe
+(e)🐛🆕|bug, feature
+(+)Chicken carriers are now safe for aquatic chicken transportation. Chicken carriers can also scoop deceased chickens for ease of cleanup.
+(u)Zonespace
+(p)4977
+(e)🆕🗺|feature, mapping
+(*)In Pod Wars, general fabricators can now produce handcuffs on RP.
+(+)In Pod Wars, moved grenades and power cells to the general fabricators.
+(u)Asche
+(p)4986
+(e)|
+(+)You can now dowse for hotspots indoors.
+(u)Sovexe
+(p)4987
+(e)🐛🆕|bug, feature
+(+)Constructing mineral magnets now displays an action bar. Corrected constructed magnets breaking fullbright space.
+(u)Jan.antilles
+(p)4997
+(e)|
+(+)Inspecting mugs, paper cups, and the skull chalice will now allow you to see what's inside.
+(u)Flappybat
+(p)4827
+(e)⚖🗺|balance, mapping
+(+)Added some new spy bounties, most significantly the Head items such as the HoS medal. Removed the Port-A-Sci bounty,
+(u)Tarmunora
+(e)⚖|balance
+(+)Lie down while being used as a meatshield and bullets may pass over you at their normal rates.
+(u)Tarmunora
+(e)⚖|balance
+(*)Port-a-brig now has a short delay before shoving someone inside
+(*)quivering contusine curare -> histamine
+(t)mon may 31 21
+(u)Flaborized
+(p)4978
+(e)|
+(+)Renamed the epilepsy mutation to 'Stupefaction'.
+(u)Azrun
+(p)4809
+(e)⚖🆕🗺🎨|balance, feature, mapping, sprites
+(*)Added experimental red oxygen grenade to station repair equipment.  Violently releases large amounts of oxygen into an area.
+(+)Red oxygen grenades are available from QM and each engineer starts with one.
+(u)Tarmunora
+(e)⚖|balance
+(*)10 degree spread on dual-wielding guns.
+(u)Penny
+(p)4940
+(e)🆕📄|feature, tgui
+(+)Multitools can now wipe storage devices
+(+)Security disks are now read only, and read only disks can be read in the cloner
+(u)DimWhat
+(p)4755
+(e)⚖|balance
+(*)Made fanny packs (not funny packs) only have inventory 5 slots.
+(u)Flappybat
+(p)4973
+(e)⚖|balance
+(+)Scanning Syndicate command armor now requires a syndicate device analyser.
+(t)sun may 30 21
+(u)Arthur Holiday
+(p)4858
+(e)🆕🗺|feature, mapping
+(+)Added a new prefab to water maps, a torpedo deposit, it contains a few torpedoes and a cool back story. Check it out!
+(u)Flappybat
+(p)4958
+(e)🆕🎨|feature, sprites
+(+)Adds a roburger variant, the cheeseborger. Just add cheese! Sprite modification by BatElite.
+(t)sat may 29 21
+(u)Flourish
+(*)Player monkeys now must be dead in order to be monkey spiked or reclaimed, gibbers now require all victims to be dead.
+(u)Walpvrgis
+(p)4942
+(e)🎨|sprites
+(+)Resprites bread loaves/slices/toast and related recipes found in food_bread.dmi.
+(u)Blackrep
+(p)4932
+(e)🐛|bug
+(+)Fixed stun and radiation mines not applying their effects on people caught in their blast radiuses.
+(u)Walpvrgis
+(p)4853
+(e)🎨|sprites
+(+)Roach critters have had a resprite to match perspective better.
+(t)fri may 28 21
+(u)Flaborized
+(p)4925
+(e)🎨|sprites
+(+)Resprited land mines.
+(u)Kubius
+(p)4874
+(e)🐛🆕🗺|bug, feature, mapping
+(+)Kondaru mini fix-batch - Test Chamber control room no longer partially depressurized, toxins a bit bigger, market a bit spiffier.
+(t)thu may 27 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Synthflesh/styptic/sulfazdine consumed from fluid puddles on touch reactions.
+(u)Flappybat
+(p)4911
+(e)🔄|rework
+(+)Segway crashes now knock you down instantly, instead of waiting a few seconds to think about it.
+(u)Flourish
+(e)🆕|feature
+(*)You can now use GPSes to track beacons, tracking implants, and other GPSes. Select your tracking target in the menu and your GPS will point you in the right direction!
+(t)wed may 26 21
+(u)DimWhat
+(p)4860
+(e)🎨|sprites
+(*)Added a new medal "Brown Pants" which has the reward of the red captain set.
+(+)Made a red version of the captain's fancy uniform.
+(u)Kubius
+(p)4872
+(e)🆕|feature
+(+)Spatial Interdictors may now interdict spatial tears after they form, requiring a fresh initialization within range of the tear.
+(u)Vaskritaya
+(p)4877
+(e)|
+(+)Salesman and tourists can now change their name on spawn, in case they spawn as a mutantrace or just if they feel like it.
+(u)DimWhat
+(p)4888
+(e)|
+(+)Made satchels layer under tails.
+(u)virvatuli
+(e)🎶|sound
+(*)Added six new songs to the random record pool, 3 metal and 3 funky for some more diverse tunes over the radio!
+(t)tue may 25 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Synthflesh/styptic/sulfazdine topical healing capped to 10u at a time.
+(u)Blackrep
+(p)4865
+(e)⚖|balance
+(+)Arc plating small / large power cells no longer changes their capacity or recharge rate.
+(u)Walpvrgis
+(p)4843
+(e)🎨|sprites
+(+)Resprites donut boxes, and various cooking ingredients; check PR for a list and preview images.
+(u)COOLVAPE
+(p)4799
+(e)|
+(+)Added vocal translators as a hidden item in Valuchimp Machines.
+(t)mon may 24 21
+(u)Zonespace
+(p)4851
+(e)🆕|feature
+(+)Getting splashed with Black Powder now gives gunshot residue.
+(u)Arthur Holiday
+(p)4575
+(e)⚖|balance
+(*)The HoS can now unauthorize the armory.
+(t)sun may 23 21
+(u)edwardly
+(p)4773
+(e)🆕|feature
+(+)Sure, use a spoon to eat mashed potatoes, why not?
 (t)sat may 22 21
+(u)Tarmunora
+(*)Swapped out a certain pressure tank by a certain cenote.
+(u)TDHooligan
+(p)4490
+(e)⚖|balance
+(+)Increased frequency of gene strains when infusing with the PlantMaster.
+(u)Disturbherb
+(p)4819
+(e)🎨|sprites
+(*)Added googly eyes to the game, and you can buy them from a certain trader! 🤡
 (u)edwardly
 (p)4821
 (e)🐛|bug

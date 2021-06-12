@@ -1,0 +1,105 @@
+<html>
+<head>
+<style type="text/css">
+div.code
+{
+padding:5px;
+border:1px solid black;
+margin:1px;
+font-family:"courier";
+font-size:12px;
+background-color:lightgray;
+}
+body
+{
+color:black;
+background-color:white;
+}
+h1
+{
+font-family:"Arial Black";
+text-align:center;
+font-size:24px;
+font-weight:bold;
+}
+h2
+{
+font-family:"Arial Black";
+text-align:left;
+font-size:18px;
+}
+p
+{
+font-family:"Arial";
+font-size:14px;
+}
+</style>
+</head>
+
+<body>
+<h1>The Robuddy Book</h1>
+
+<h2>Introduction</h2>
+<p>Since their introduction twenty years ago, the PR (For Personal Robot) Robuddy series has grown to become the most popular robotics platform produced by Thinktronic Data Systems.
+The Model 6 is the most recent version at the time of this writing, largely acting as a refinement of the PR-5.  The PR-6 has a number of submodels, covering fields ranging from medical care (The PR-6RN), security (PR-6S), and engineering (PR-6E) </p>
+<h2>Charge Dock</h2>
+<p>Though it features the longest standard battery life of all Robuddy models, the PR-6 still requires a periodic recharge in the provided docking station.
+The dock serves as more than just a battery charger, however: It is also allows new software (Tasks) to be uploaded, or the unit's current task software to be cleared.</p>
+<h2>Tasks</h2>
+<ul>
+<li><b>GUARD:</b> This will direct the Robuddy to serve as a trusty bodyguard, exacting buddy-vengence on anyone attempting to harm their charge.</li>
+<li><b>SYNC:</b> The sync task is employed when the Robuddy has been instructed to connect to a charge dock.  It directs the unit through radio identification of a free dock and then guides it there.</li>
+<li><b>SECURE:</b> In this mode, the Robuddy will remain stationary and scan its surrounding environment for hostile agents, based on the same criteria as the "Securitron" series.</li>
+<li><b>PATROL:</b> Identical to the Secure task, with one exception: The Robuddy will patrol a set path based on navigational radio beacons.</li>
+</ul>
+<h2>Buddy Configuration</h2>
+<p>As previously stated, the PR-6 is configured and programmed through its charge dock, which is itself typically controlled by a networked Thinktronic mainframe running the DWAINE operating system.
+"PRMAN" control software, with accompanying control driver and support scripts, is supplied with a standard Robuddy installation.
+PRMAN requires system operator privileges to operate, which may be granted through use of the "su" command.
+</p>
+For example, if the provided tape was mounted at the default databank "control"
+<div class="code">
+cd /mnt/control<br>
+su<br>
+prman list
+</div>
+This would list all connected units by the 8-digit system IDs of their current docks.
+
+<p><b>Checking a Robuddy's Status:</b><br>
+PRMAN's "stat" command will list the current task, equipment, and charge information for a Robuddy. To check a Robuddy with example ID 02001122:
+<div class="code">
+prman stat 02001122
+</div>
+</p>
+
+<p><b>Bodyguarding:</b><br>
+If it was desired to program a buddy with ID "02001122" to guard someone named (As stated on their company ID) "Dr. Roger Tuppkins," the provided guard script could be employed in this manner:
+<div class="code">
+guard_script 02001122 drrogertuppkins
+</div>
+If successful, a message will appear indicating that the unit has been deployed.
+</p>
+<p><b>Patrolling:</b><br>
+Use of the included patrol script is also straightforward:
+<div class="code">
+patrol_script 02001122
+</div>
+This would wake the unit and send them trundling off to patrol their environment.
+</p>
+<p><b>Waking and Recalling Robuddies:</b><br>
+Waking a docked Robuddy is very simple.
+<div class="code">
+prman wake 02001122
+</div>
+PRMAN is also able to recall deployed buddies to docks, though not necessarily the same dock they initially deployed from.
+Both the ID of the buddy itself and that of its last dock (Provided no other buddies have since used it) may be used.
+<div class="code">
+prman recall 02001122
+</div>
+Units may be recalled en masse by using "all" in place of the ID
+<div class="code">
+prman recall all
+</div>
+</p>
+</body>
+</html>
