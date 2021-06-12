@@ -23,7 +23,7 @@
 "jh" = (/obj/decoration/decorativeplant/plant5,/turf/simulated/floor/wood/three,/area/prefab/furniture_store)
 "jq" = (/obj/potted_plant/potted_plant2,/turf/simulated/grass,/area/prefab/furniture_store)
 "jD" = (/obj/rack,/obj/random_item_spawner/furniture_parts/some,/turf/simulated/floor/industrial,/area/prefab/furniture_store)
-"kG" = (/obj/item/decoration/flower_vase/vase7,/obj/machinery/light/small/floor/netural,/obj/table/reinforced/bar/auto,/turf/simulated/floor/wood,/area/prefab/furniture_store)
+"kG" = (/obj/item/decoration/flower_vase/vase7{name = "växt"},/obj/machinery/light/small/floor/netural,/obj/table/reinforced/bar/auto,/turf/simulated/floor/wood,/area/prefab/furniture_store)
 "lb" = (/obj/machinery/vending/snack,/turf/simulated/floor/wood/three,/area/prefab/furniture_store)
 "li" = (/obj/table/reinforced/industrial,/obj/item/reagent_containers/food/snacks/burger/moldy,/turf/simulated/floor/industrial,/area/prefab/furniture_store)
 "lw" = (/obj/stool/chair/pew,/turf/simulated/floor/blackwhite,/area/prefab/furniture_store)

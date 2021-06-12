@@ -189,7 +189,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 
 	furniture_store //Danger Noodle's very swedish, legally distinct furniture store
 		maxNum = 1
-		probability = 20
+		probability = 25
 		prefabPath = "assets/maps/prefabs/prefab_furniture_store.dmm"
 		prefabSizeX = 25
 		prefabSizeY = 25
