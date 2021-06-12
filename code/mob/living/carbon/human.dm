@@ -2571,7 +2571,7 @@
 			calcTime = clamp(calcTime, 0, 50 SECONDS)
 			if (!src.canmove)
 				calcTime *= 1.5
-			boutput(src, "<span class='alert'>You attempt to remove your handcuffs. (This will take around [round(calcTime) / 10] seconds and you need to stand still)</span>")
+			boutput(src, "<span class='alert'>You attempt to remove your handcuffs. (This will take around [round(calcTime / 10)] seconds and you need to stand still)</span>")
 			if (src.handcuffs:material) //This is a bit hacky.
 				src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
 			actions.start(new/datum/action/bar/private/icon/handcuffRemoval(calcTime), src)
