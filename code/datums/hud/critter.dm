@@ -71,7 +71,7 @@
 	*		"elements" = list( // list of all visible hud elements in the hud zone
 	*			"elem_alias" = screenobj // screenobj is the hud object that is visible on the players screen
 	*
-	*		"horizontal_edge" = "" // what horizontal edge of the zone elements are initially added from. should be EAST or WEST or CENTER.
+	*		"horizontal_edge" = "" // what horizontal edge of the zone elements are initially added from. should be EAST or WEST.
 	*
 	*		"vertical_edge" = "" // what vertical edge of the zone elements are intially added from. should be NORTH or SOUTH.
 	*
@@ -84,7 +84,7 @@
 /datum/hud/critter/New(M)
 	..()
 	src.master = M
-
+/*
 	// element load order determines position in the hud
 	src.create_hand_element()
 	src.create_health_element()
@@ -111,6 +111,7 @@
 	src.create_rest_element()
 	src.create_resist_element()
 	src.create_equipment_element()
+*/
 
 /// clears owner mob
 /datum/hud/critter/clear_master()
@@ -778,3 +779,37 @@
 
 	hud_zone["horizontal_offset"] = curr_horizontal
 	hud_zone["vertical_offset"] = curr_vertical
+
+/// debug purposes only, call this to print ALL of the information you could ever need (maybe)
+/datum/hud/critter/proc/debug_print_all()
+	if (!length(src.hud_zones))
+		boutput(world, "no hud zones, aborting")
+		return
+
+	for (var/zone_index in 1 to length(src.hud_zones))
+		var/zone_alias = src.hud_zones[zone_index]
+		var/list/hud_zone = src.hud_zones[zone_alias]
+		boutput(world, "ZONE [zone_index] alias: [zone_alias]")
+
+		var/list/coords = hud_zone["coords"]
+		boutput(world, "ZONE [zone_index] bottom left corner coordinates: ([coords["x_low"], [coords["y_low"]])")
+		boutput(world, "ZONE [zone_index] top right corner coordinates: ([coords["x_high"], [coords["y_high"]])")
+
+		boutput(world, "ZONE [zone_index] horizontal edge: [hud_zone["horizontal_edge"]]")
+		boutput(world, "ZONE [zone_index] vertical edge: [hud_zone["vertical_edge"]]")
+
+		boutput(world, "ZONE [zone_index] current horizontal offset: [hud_zone["horizontal_offset"]]")
+		boutput(world, "ZONE [zone_index] current vertical offset: [hud_zone["vertical_offset"]]")
+
+		var/list/elements = hud_zone["elements"]
+
+		if (!length(elements))
+			boutput(world, "ZONE [zone_index] has no elements")
+			continue
+
+		for (var/element_index in 1 to length(elements))
+			var/element_alias = elements[element_index]
+			var/atom/movable/screen/hud/element = elements[element_alias]
+			boutput(world, "ZONE [zone_index] ELEMENT [element_index] alias: [element_alias]")
+			boutput(world, "ZONE [zone_index] ELEMENT [element_index] icon_state: [element.icon_state]")
+			boutput(world, "ZONE [zone_index] ELEMENT [element_index] alias: [element.screen_loc]")
