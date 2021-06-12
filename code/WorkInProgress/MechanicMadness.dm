@@ -1829,7 +1829,7 @@
 		return
 
 	receive_signal(datum/signal/signal)
-		if(!signal || signal.encryption || level == 2)
+		if(!signal || level == 2)
 			return
 
 		if((only_directed && signal.data["address_1"] == src.net_id) || !only_directed || (signal.data["address_1"] == "ping"))
@@ -1857,6 +1857,14 @@
 				for(var/d in signal.data)
 					packets += "[d]=[signal.data[d]]; "
 				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode("ERR_12939_CORRUPT_PACKET:" + stars(packets, 15)), null)
+				animate_flash_color_fill(src,"#ff0000",2, 2)
+				return
+
+			if(signal.encryption)
+				var/packets = ""
+				for(var/d in signal.data)
+					packets += "[d]=[signal.data[d]]; "
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode("[signal.encryption]" + stars(packets, 15)), null)
 				animate_flash_color_fill(src,"#ff0000",2, 2)
 				return
 
