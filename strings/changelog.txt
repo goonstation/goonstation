@@ -1,5 +1,10 @@
 
 (t)sat jun 12 21
+(u)Penny
+(p)4989
+(e)🆕|feature
+(*)Ruck kits now use Wi-Fi for all their networked functionality. Jab them with your multitools and start hacking!
+(+)Airlocks can now be properly scanned with device analyzers and PDAs will now upload scans reliably
 (u)Tarmunora
 (e)⚖|balance
 (*)Various blob balance changes -- check minor changes for details
