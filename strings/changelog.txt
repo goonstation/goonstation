@@ -1,5 +1,9 @@
 
 (t)sat jun 12 21
+(u)zjdtmkhzt
+(p)4900
+(e)🆕|feature
+(+)Instrument player components can now choose which note to play via their input.
 (u)Penny
 (p)4989
 (e)🆕|feature
