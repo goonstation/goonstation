@@ -781,14 +781,15 @@
 	hud_zone["vertical_offset"] = curr_vertical
 
 /// debug purposes only, call this to print ALL of the information you could ever need (maybe)
+
 /datum/hud/critter/proc/debug_print_all()
 	if (!length(src.hud_zones))
 		boutput(world, "no hud zones, aborting")
 		return
 
 	for (var/zone_index in 1 to length(src.hud_zones))
-		var/zone_alias = src.hud_zones[zone_index]
-		var/list/hud_zone = src.hud_zones[zone_alias]
+		var/zone_alias = src.hud_zones["[zone_index]"]
+		var/list/hud_zone = src.hud_zones["[zone_alias]"]
 		boutput(world, "ZONE [zone_index] alias: [zone_alias]")
 
 		var/list/coords = hud_zone["coords"]
