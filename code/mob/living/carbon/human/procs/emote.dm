@@ -1869,7 +1869,7 @@
 									message = "<B>[src]</B> unzips [his_or_her(src)] pants, takes aim, and pees in the beaker."
 								else
 									message = "<B>[src]</B> takes aim and pees in the beaker."
-								beaker.reagents.add_reagent("urine", 5)
+								beaker.reagents.add_reagent("urine", 4)
 								sims.affectMotive("Bladder", 100)
 								sims.affectMotive("Hygiene", -25)
 							else
@@ -1896,7 +1896,7 @@
 									message = "<B>[src]</B> takes aim and fills the beaker with pee."
 								sims.affectMotive("Bladder", 100)
 								sims.affectMotive("Hygiene", -25)
-								beaker.reagents.add_reagent("urine", 10)
+								beaker.reagents.add_reagent("urine", 4)
 							else
 								if (wear_suit || w_uniform)
 									message = "<B>[src]</B> pisses all over [himself_or_herself(src)]!"
@@ -1913,20 +1913,18 @@
 
 					else
 						var/obj/item/storage/toilet/toilet = locate() in src.loc
-						var/obj/item/reagent_containers/glass/beaker = locate() in src.loc
 
-						if (src.urine < 1)
+						if (toilet && (src.buckled != null))
+							if (src.urine >= 1)
+								for (var/obj/item/storage/toilet/T in src.loc)
+									message = pick("<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet.", "<B>[src]</B> empties [his_or_her(src)] bladder.", "<span class='notice'>Ahhh, sweet relief.</span>")
+									src.urine = 0
+									T.clogged += 0.10
+									break
+							else
+								message = "<B>[src]</B> unzips [his_or_her(src)] pants but, try as [he_or_she(src)] might, [he_or_she(src)] can't pee in the toilet!"
+						else if (src.urine < 1)
 							message = "<B>[src]</B> pees [himself_or_herself(src)] a little bit."
-						else if (toilet && (src.buckled != null) && (src.urine >= 2))
-							for (var/obj/item/storage/toilet/T in src.loc)
-								message = pick("<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet.", "<B>[src]</B> empties [his_or_her(src)] bladder.", "<span class='notice'>Ahhh, sweet relief.</span>")
-								src.urine = 0
-								T.clogged += 0.10
-								break
-						else if (beaker && (src.urine >= 1))
-							message = pick("<B>[src]</B> unzips [his_or_her(src)] pants, takes aim, and pees in the beaker.", "<B>[src]</B> takes aim and pees in the beaker!", "<B>[src]</B> fills the beaker with pee!")
-							beaker.reagents.add_reagent("urine", src.urine * 4)
-							src.urine = 0
 						else
 							src.urine--
 							src.urinate()

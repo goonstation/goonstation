@@ -88,6 +88,9 @@ toxic - poisons
 	caliber = 0.355
 	icon_turf_hit = "bhole-small"
 
+	smartgun
+		power = 15
+
 	smg
 		power = 15
 		cost = 3
@@ -1356,3 +1359,19 @@ toxic - poisons
 	shot_sound = null
 	projectile_speed = 8
 	implanted = null
+
+/datum/projectile/bullet/foamdart
+	name = "foam dart"
+	sname = "foam dart"
+	icon_state = "foamdart"
+	shot_sound = 'sound/effects/syringeproj.ogg'
+	icon_turf_hit = null
+	projectile_speed = 20
+	implanted = null
+	power = 0
+	ks_ratio = 0
+	damage_type = D_SPECIAL
+	hit_type = DAMAGE_BLUNT
+	max_range = 15
+	dissipation_rate = 0
+	ie_type = null

@@ -1100,10 +1100,7 @@
 				return
 		else
 			if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
-				for (var/obj/item/cloaking_device/I in src)
-					if (I.active)
-						I.deactivate(src)
-						src.visible_message("<span class='notice'><b>[src]'s cloak is disrupted!</b></span>")
+				SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 				src.throw_item(target, params)
 				return
 

@@ -169,10 +169,7 @@
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 				if (proj_data.hit_mob_sound)
 					playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
-			for (var/obj/item/cloaking_device/S in A.contents)
-				if (S.active)
-					S.deactivate(A)
-					src.visible_message("<span class='notice'><b>[A]'s cloak is disrupted!</b></span>")
+			SEND_SIGNAL(A, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 			for (var/obj/item/device/disguiser/D in A.contents)
 				if (D.on)
 					D.disrupt(A)
