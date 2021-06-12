@@ -5077,6 +5077,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/item/crowbar,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -13569,6 +13570,7 @@
 	dir = 4
 	},
 /obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "aMm" = (
@@ -18132,6 +18134,9 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "aZw" = (
@@ -20213,6 +20218,7 @@
 /obj/decal/poster/wallsign/poster_borg{
 	pixel_y = 32
 	},
+/obj/item/crowbar,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "beP" = (
@@ -20241,6 +20247,7 @@
 /obj/item/clothing/suit/bio_suit/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/glasses/healthgoggles,
+/obj/item/crowbar,
 /turf/simulated/floor/yellow/checker{
 	dir = 1
 	},
@@ -20680,6 +20687,7 @@
 	dir = 5;
 	icon_state = "line2"
 	},
+/obj/item/crowbar,
 /turf/simulated/floor/yellow/checker{
 	dir = 1
 	},
@@ -40974,6 +40982,16 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
+"olu" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/disposalpipe/segment,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/simulated/floor,
+/area/station/hallway/starboardlowerhallway)
 "olF" = (
 /obj/item/raw_material/rock,
 /obj/disposalpipe/trunk,
@@ -43266,18 +43284,6 @@
 	},
 /turf/simulated/floor,
 /area/station/construction)
-"tEZ" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
-/turf/simulated/floor,
-/area/station/hallway/starboardlowerhallway)
 "tHn" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
@@ -43865,6 +43871,18 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
+"uTh" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/simulated/floor,
+/area/station/hallway/starboardlowerhallway)
 "uTW" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 8;
@@ -44003,15 +44021,6 @@
 	dir = 8
 	},
 /area/station/security/interrogation)
-"vot" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
-/turf/simulated/floor,
-/area/station/hallway/starboardlowerhallway)
 "vqB" = (
 /obj/disposalpipe/segment/mineral{
 	dir = 4
@@ -44936,16 +44945,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
-"xtM" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/disposalpipe/segment,
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
-/turf/simulated/floor,
-/area/station/hallway/starboardlowerhallway)
 "xuW" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
@@ -45223,6 +45222,15 @@
 	},
 /turf/simulated/floor/damaged2,
 /area/station/engine/inner)
+"xTC" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/simulated/floor,
+/area/station/hallway/starboardlowerhallway)
 "xVb" = (
 /obj/machinery/vending/security,
 /obj/machinery/light/incandescent/warm{
@@ -97505,7 +97513,7 @@ bmS
 boh
 bhp
 bmt
-tEZ
+uTh
 bsj
 aFO
 aFO
@@ -103544,7 +103552,7 @@ bmd
 bnf
 dFF
 bpz
-xtM
+olu
 brb
 deY
 nkZ
@@ -108980,7 +108988,7 @@ bli
 bnv
 kWs
 bli
-vot
+xTC
 bsx
 aKB
 buM
