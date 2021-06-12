@@ -17,14 +17,9 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			src.add_fingerprint(H)
-			switch (alert("Which eye would you like to operate on with [src]?","Both Eyes","Left Eye","Right Eye","Cancel"))
+			switch (alert("Which eye would you like to operate on with [src]?","Left Eye","Right Eye","Cancel"))
 				if ("Cancel")
 					return
-				if ("Both Eyes")
-					if ((implants_available & EYE_LEFT) && (implants_available & EYE_RIGHT))
-						start_replace_eye(EYE_BOTH, H)
-					else
-						user.show_text("This implanter doesn't contain both implants.")
 				if ("Right Eye")
 					if (implants_available & EYE_RIGHT)
 						start_replace_eye(EYE_RIGHT, H)
