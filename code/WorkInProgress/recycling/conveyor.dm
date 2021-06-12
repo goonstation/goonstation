@@ -406,6 +406,7 @@
 	if(connect_switch)
 		C.connect_to_switch(connect_switch)
 	C.welded = FALSE
+	C.deconstruct_flags = DECON_NONE
 	src.consumeConveyors(1, M)
 
 /obj/item/conveyor_parts/proc/walkConveyors(mob/M, newLoc, direct)
