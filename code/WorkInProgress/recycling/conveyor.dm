@@ -18,6 +18,7 @@
 	machine_registry_idx = MACHINES_CONVEYORS
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
+	var/welded = TRUE 	// newly constructed conveyors need welding before being operational
 	var/startdir = null // the default direction
 	var/altdir = null	 // the reverse direction
 
@@ -161,7 +162,7 @@
 		icon_state = "conveyor-b"
 		operating = 0
 
-	if(!operable)
+	if(!operable || !welded)
 		operating = 0
 	if(!operating || (status & NOPOWER))
 		for(var/atom/movable/A in loc.contents)
@@ -221,7 +222,7 @@
 	..()
 	if(status & (BROKEN | NOPOWER))
 		return
-	if(!operating)
+	if(!operating || !welded)
 		return
 	if(!loc)
 		return
@@ -231,7 +232,7 @@
 	..()
 	if(status & (BROKEN | NOPOWER))
 		return
-	if(!operating)
+	if(!operating || !welded)
 		return
 	if(!loc)
 		return
@@ -293,11 +294,24 @@
 				src.visible_message("<span class='notice'>[M] had been cut free from the conveyor by [user].</span>")
 			return
 	else if (iswrenchingtool(I))
-		src.startdir = turn(src.startdir, -90)
-		src.setdir()
+		if(src.welded)
+			boutput(user, "<span class='alert'>You can't modify the conveyor belt while it is welded to the floor!</span>")
+		else
+			src.startdir = turn(src.startdir, -90)
+			src.setdir()
 	else if (isscrewingtool(I))
-		src.altdir = turn(src.altdir, -90)
-		src.setdir()
+		if(src.welded)
+			boutput(user, "<span class='alert'>You can't modify the conveyor belt while it is welded to the floor!</span>")
+		else
+			src.altdir = turn(src.altdir, -90)
+			src.setdir()
+	else if (isweldingtool(I))
+		if(I:try_weld(user, 1))
+			src.welded = !src.welded
+			if(src.welded)
+				boutput(user, "<span class='notice'>You weld the conveyor belt to the floor. It is now operable.</span>")
+			else
+				boutput(user, "<span class='notice'>You unweld the conveyor belt from the floor. It can now be modified.</span>")
 
 // attack with hand, move pulled object onto conveyor
 
@@ -360,7 +374,7 @@
 
 /obj/item/conveyor_parts
 	name = "conveyor parts"
-	desc = "A collection of parts that can be used to construct a conveyor belt."
+	desc = "A collection of parts that can be used to construct a conveyor belt. They will need to be welded before being operational."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "conveyor_parts"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -391,6 +405,7 @@
 	C.connect_to_nearby()
 	if(connect_switch)
 		C.connect_to_switch(connect_switch)
+	C.welded = FALSE
 	src.consumeConveyors(1, M)
 
 /obj/item/conveyor_parts/proc/walkConveyors(mob/M, newLoc, direct)
