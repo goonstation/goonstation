@@ -58,10 +58,10 @@
 			bodypart = H.get_organ(part_loc)
 			if(!bodypart)
 				parts_to_remove += part_loc
-		SETUP_GENERIC_ACTIONBAR(H, src, 5 SECONDS, /obj/item/device/ocular_implanter/proc/end_replace_eye, src.icon, src.icon_state,"[src] finishes working")
+		SETUP_GENERIC_ACTIONBAR(H, src, 10 SECONDS, /obj/item/device/ocular_implanter/proc/end_replace_eye, src.icon, src.icon_state,"[src] finishes working")
 
 	proc/end_replace_eye()
-		//playsound(H.loc, ""pick(work_sounds)"", 50, 1, -1)
+		playsound(H.loc, "sound/items/ocular_implanter", 50, 1, -1)
 		var/mob/living/carbon/human/H = src
 		var/turf/T = src.loc
 		for(var/part_loc in parts_to_remove)
@@ -84,3 +84,7 @@
 			icon_state = "ocular_implanter-LR"
 		parts_to_remove = list()
 		parts_to_add = list()
+
+#undef EYE_LEFT
+#undef EYE_RIGHT
+#undef EYE_BOTH

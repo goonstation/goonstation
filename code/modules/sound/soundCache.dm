@@ -435,6 +435,7 @@ var/global/list/soundCache = list(
  	"sound/items/mining_drill.ogg" = 'sound/items/mining_drill.ogg',\
  	"sound/items/mining_hammer.ogg" = 'sound/items/mining_hammer.ogg',\
  	"sound/items/mining_pick.ogg" = 'sound/items/mining_pick.ogg',\
+	"sound/items/ocular_implanter" = 'sound/items/ocular_implanter.ogg',\
  	"sound/items/penclick.ogg" = 'sound/items/penclick.ogg',\
  	"sound/items/pickup_1.ogg" = 'sound/items/pickup_1.ogg',\
  	"sound/items/pickup_2.ogg" = 'sound/items/pickup_2.ogg',\
