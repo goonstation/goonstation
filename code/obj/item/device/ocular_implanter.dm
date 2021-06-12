@@ -63,6 +63,8 @@
 			SETUP_GENERIC_ACTIONBAR(H, src, 10 SECONDS, /obj/item/device/ocular_implanter/proc/end_replace_eye, list(target, H), src.icon, src.icon_state,"[src] finishes replacing your eye.", null)
 
 	proc/end_replace_eye(var/target, var/mob/living/carbon/human/H)
+		if(!H)
+			return
 		var/turf/T = H.loc
 		for(var/part_loc in parts_to_remove)
 			if (T)
