@@ -1213,14 +1213,14 @@
 	name = "Passive: Fire Resistance"
 	icon_state = "blob-fireresist"
 	desc = "Makes your blob become more resistant to fire and heat based attacks."
-	evo_point_cost = 3
+	evo_point_cost = 2
 	upgradename = "fireres"
 
 /datum/blob_upgrade/poison_resist
 	name = "Passive: Poison Resistance"
 	icon_state = "blob-poisonresist"
 	desc = "Makes your blob become more resistant to chemical attacks."
-	evo_point_cost = 3
+	evo_point_cost = 2
 	upgradename = "poisonres"
 
 /datum/blob_upgrade/devour_item
@@ -1256,7 +1256,7 @@
 	name = "Passive: Reinforced Spread"
 	icon_state = "blob-global-reinforce"
 	desc = "Reinforces the blob with material permanently. All existing blob tiles are reinforced with the average of the used materials, and all future blob bits will be created with the infusion. This upgrade requires 60 material deposits to be on your current tile."
-	evo_point_cost = 2
+	evo_point_cost = 1
 	initially_disabled = 1
 	scaling_cost_add = 2
 	repeatable = -1
@@ -1336,7 +1336,7 @@
 	name = "Structure: Reclaimer"
 	icon_state = "blob-reclaimer"
 	desc = "Unlocks the Reclaimer blob bit, which can be placed on reagent deposits. The reclaimer produces biopoints over time using reagents. Once the deposit depletes, the blob piece is transformed into a lipid."
-	evo_point_cost = 2
+	evo_point_cost = 1
 	initially_disabled = 1
 	upgradename = "reclaimer"
 
@@ -1349,7 +1349,7 @@
 	name = "Structure: Replicator"
 	icon_state = "blob-replicator"
 	desc = "Unlocks the Replicator blob bit, which can be placed on reagent deposits. The replicator replicates the highest volume reagent in the deposit using reagents from other deposits, at the cost of biopoints."
-	evo_point_cost = 3
+	evo_point_cost = 2
 	initially_disabled = 1
 	upgradename = "replicator"
 
@@ -1362,7 +1362,7 @@
 	name = "Structure: Bridge"
 	icon_state = "blob-bridge"
 	desc = "Unlocks the Bridge blob bit, which can be placed on space tiles. Bridges are floor tiles, you still need to spread onto them, and cannot spread from them."
-	evo_point_cost = 2
+	evo_point_cost = 1
 	initially_disabled = 0
 	upgradename = "bridge"
 
@@ -1377,7 +1377,7 @@
 	desc = "Unlocks the Slime Launcher blob bit, which fires at nearby mobs at the cost of biopoints. Slime inflicts a short stun and minimal damage."
 	upgradename = "launcher"
 
-	evo_point_cost = 2
+	evo_point_cost = 1
 
 	take_upgrade()
 		if (..())
@@ -1388,7 +1388,7 @@
 	name = "Structural: Plasmaphyll"
 	icon_state = "blob-plasmaphyll"
 	desc = "Unlocks the plasmaphyll blob bit, which passively protects an area from plasma by converting it to biopoints."
-	evo_point_cost = 2
+	evo_point_cost = 1
 	upgradename = "plasmaphyll"
 
 	take_upgrade()
@@ -1400,7 +1400,7 @@
 	name = "Structural: Ectothermid"
 	icon_state = "blob-ectothermid"
 	desc = "Unlocks the ectothermid blob bit, which passively an protects area from temperature. This protection consumes biopoints."
-	evo_point_cost = 3
+	evo_point_cost = 2
 	upgradename = "ectothermid"
 
 	take_upgrade()
