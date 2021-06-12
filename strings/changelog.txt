@@ -7,6 +7,7 @@
 (+)Blob tiles have an internal 6 second cooldown before the blob repair ability can repair them again after being repaired. Spread the Love! (change does not interact with mitochondria)
 (+)Halved blob evo points from absorbing humans (4 -> 2)
 (+)Cost of most (all with cost >=2) single-purchase blob unlocks reduced by 1 evo point
+(+)Reinforced spread upgrade requires half as many material deposits (60 -> 30)
 (t)fri jun 11 21
 (u)Tarmunora
 (e)⚖|balance

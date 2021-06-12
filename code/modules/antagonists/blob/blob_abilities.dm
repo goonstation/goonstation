@@ -1261,7 +1261,7 @@
 	scaling_cost_add = 2
 	repeatable = -1
 	upgradename = "reinforce_spread"
-	var/required_deposits = 60
+	var/required_deposits = 30
 	var/taking = 0
 
 	take_upgrade()
