@@ -2,6 +2,7 @@
 set -euo pipefail
 
 DreamDaemon goonstation.dmb -once -quiet -close -trusted -verbose -invisible
+ls
 if [ ! -s ./errors.log ]
 then
 	echo "Errors detected!"
