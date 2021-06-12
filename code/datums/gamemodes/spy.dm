@@ -38,7 +38,7 @@
 	var/i = rand(5)
 	var/num_teams = max(setup_min_teams, min(round((num_players + i) / 7), setup_max_teams))
 	if (num_teams > leaders_possible.len)
-		num_teams = leaders_possible.len
+		num_teams = length(leaders_possible)
 
 	var/list/chosen_spies = antagWeighter.choose(pool = leaders_possible, role = "spy", amount = num_teams, recordChosen = 1)
 	for (var/datum/mind/spy in chosen_spies)
@@ -243,7 +243,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/charges = 4
 
 	proc/update_icon()

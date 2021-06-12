@@ -36,7 +36,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
-			if (src && istype(src) && (!src.items_general.len && !src.items_job.len && !src.items_objective.len))
+			if (src && istype(src) && (!src.items_general.len && !src.items_job.len && !length(src.items_objective)))
 				src.setup()
 
 	proc/generate_code()
@@ -71,13 +71,13 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			else
 				var/blocked = 0
 				if (ticker?.mode)
-					if (S.blockedmode && islist(S.blockedmode) && S.blockedmode.len)
+					if (S.blockedmode && islist(S.blockedmode) && length(S.blockedmode))
 						for (var/V in S.blockedmode)
 							if (ispath(V) && istype(ticker.mode, V)) // No meta by checking VR uplinks.
 								blocked = 1
 								continue
 
-					if (S.exclusivemode && islist(S.exclusivemode) && S.exclusivemode.len)
+					if (S.exclusivemode && islist(S.exclusivemode) && length(S.exclusivemode))
 						for (var/V in S.exclusivemode)
 							if (ispath(V) && !istype(ticker.mode, V)) // No meta by checking VR uplinks.
 								blocked = 1
@@ -231,17 +231,17 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					dat += "<HR>"
 					dat += "<B>Request item:</B><BR>"
 					dat += "<I>Each item costs a number of [syndicate_currency] as indicated by the number following their name.</I><BR><table cellspacing=5>"
-				if (src.items_objective && islist(src.items_objective) && src.items_objective.len)
+				if (src.items_objective && islist(src.items_objective) && length(src.items_objective))
 					dat += "</table><B>Objective specific:</B><BR><table cellspacing=5>"
 					for (var/O in src.items_objective)
 						var/datum/syndicate_buylist/I3 = src.items_objective[O]
 						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_objective[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_objective[O]]'>About</A></td>"
-				if (src.items_job && islist(src.items_job) && src.items_job.len)
+				if (src.items_job && islist(src.items_job) && length(src.items_job))
 					dat += "</table><B>Job specific:</B><BR><table cellspacing=5>"
 					for (var/J in src.items_job)
 						var/datum/syndicate_buylist/I2 = src.items_job[J]
 						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_job[J]]'>[I2.name]</A> ([I2.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_job[J]]'>About</A></td>"
-				if (src.items_general && islist(src.items_general) && src.items_general.len)
+				if (src.items_general && islist(src.items_general) && length(src.items_general))
 					dat += "</table><B>Standard Equipment:</B><BR><table cellspacing=5>"
 					for (var/G in src.items_general)
 						var/datum/syndicate_buylist/I1 = src.items_general[G]
@@ -350,6 +350,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				src.uses = max(0, src.uses - I.cost)
 				if (usr.mind)
 					usr.mind.purchased_traitor_items += I
+				logTheThing("debug", usr, null, "bought this from uplink: [I.name]")
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src))
@@ -388,7 +389,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "radio"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "radio"
 	throw_speed = 4
 	throw_range = 20
@@ -499,16 +500,16 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		src.menu_message += "<B>Request item:</B><BR>"
 		src.menu_message += "<I>Each item costs a number of [syndicate_currency] as indicated by the number following their name.</I><BR><table cellspacing=5>"
 
-		if (src.items_general && islist(src.items_general) && src.items_general.len)
+		if (src.items_general && islist(src.items_general) && length(src.items_general))
 			for (var/G in src.items_general)
 				var/datum/syndicate_buylist/I1 = src.items_general[G]
 				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_general[G]]'>[I1.name]</A> ([I1.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_general[G]]'>About</A></td>"
-		if (src.items_job && islist(src.items_job) && src.items_job.len)
+		if (src.items_job && islist(src.items_job) && length(src.items_job))
 			src.menu_message += "</table><B>Job specific:</B><BR><table cellspacing=5>"
 			for (var/J in src.items_job)
 				var/datum/syndicate_buylist/I2 = src.items_job[J]
 				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_job[J]]'>[I2.name]</A> ([I2.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_job[J]]'>About</A></td>"
-		if (src.items_objective && islist(src.items_objective) && src.items_objective.len)
+		if (src.items_objective && islist(src.items_objective) && length(src.items_objective))
 			src.menu_message += "</table><B>Objective specific:</B><BR><table cellspacing=5>"
 			for (var/O in src.items_objective)
 				var/datum/syndicate_buylist/I3 = src.items_objective[O]
@@ -548,6 +549,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				src.uses = max(0, src.uses - I.cost)
 				if (usr.mind)
 					usr.mind.purchased_traitor_items += I
+				logTheThing("debug", usr, null, "bought this from uplink: [I.name]")
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src.hostpda))
@@ -677,7 +679,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			var/organ_succ = (B.item && delivery == B.item)
 			var/everythingelse_succ = ( (B.path && istype(delivery,B.path)) || B.item && delivery == B.item || (B.photo_containing && istype(delivery,/obj/item/photo) && findtext(delivery.name, B.photo_containing)) )
-			if ((B.organ && organ_succ) || (!B.organ && everythingelse_succ))
+			if (((B.bounty_type == BOUNTY_TYPE_ORGAN) && organ_succ) || ((B.bounty_type != BOUNTY_TYPE_ORGAN) && everythingelse_succ))
 				if (B.delivery_area && B.delivery_area != get_area(src.hostpda))
 					return 0
 				return delivery
@@ -785,7 +787,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		var/image/photo_image
 		var/icon/photo_icon
 		var/atom/A = null
-		if (B.organ && B.item)
+		if ((B.bounty_type == BOUNTY_TYPE_ORGAN) && B.item)
 			var/obj/item/parts/O = B.item
 			if (O.holder)
 				A = O.holder
@@ -832,7 +834,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		var/obj/item/photo/P = new(src, photo_image, photo_icon, title, detail)
 		user.put_in_hand_or_drop(P)
-		playsound(get_turf(src), "sound/machines/scan.ogg", 10, 1)
+		playsound(src, "sound/machines/scan.ogg", 10, 1)
 		last_photo_print = TIME
 
 	generate_menu()
@@ -864,7 +866,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					var/rtext = ""
 					if (B.reward)
 						if (req_bounties() <= 1)
-							rtext = "<br><b>Reward</b> : [B.reward.name]"
+							rtext = "<br><b>Reward</b> : [B.reward.name] [(B.hot_bounty) ? "<b>**HOT**</b>" : ""]"
 						else
 							rtext = "<br><b>Reward</b> : Not available. Deliver [req_bounties()] more bounties."
 
@@ -911,7 +913,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/list/spells = list()
 	flags = FPRINT | ONBELT | TABLEPASS
 	throwforce = 5
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 100

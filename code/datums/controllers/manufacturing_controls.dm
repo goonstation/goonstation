@@ -29,7 +29,7 @@ var/datum/manufacturing_controller/manuf_controls
 	if (!istext(schematic_name))
 		logTheThing("debug", null, null, "<b>Manufacturer:</b> Attempt to find schematic with non-string")
 		return null
-	if (!manuf_controls.normal_schematics.len && !manuf_controls.custom_schematics.len)
+	if (!manuf_controls.normal_schematics.len && !length(manuf_controls.custom_schematics))
 		logTheThing("debug", null, null, "<b>Manufacturer:</b> Cant find schematic due to empty schematic lists")
 		return null
 	for (var/datum/manufacture/M in (manuf_controls.normal_schematics + manuf_controls.custom_schematics))

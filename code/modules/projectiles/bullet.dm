@@ -88,8 +88,13 @@ toxic - poisons
 	caliber = 0.355
 	icon_turf_hit = "bhole-small"
 
+	smartgun
+		power = 15
+
 	smg
-		power = 20
+		power = 15
+		cost = 3
+		shot_number = 3
 
 /datum/projectile/bullet/custom
 	name = "bullet"
@@ -940,60 +945,6 @@ toxic - poisons
 			explosion_new(null, T, 36, 0.45)
 		return
 
-/obj/smokeDummy
-	name = ""
-	desc = ""
-	invisibility = 101
-	anchored = 1
-	density = 0
-	opacity = 0
-	var/list/affected = list()
-
-	disposing()
-		remove()
-		return ..()
-
-	New(var/atom/sloc)
-		if(!sloc) return
-		src.set_loc(sloc)
-		for(var/mob/M in src.loc)
-			Crossed(M)
-		return ..()
-
-	proc/remove()
-		for(var/mob/M in affected)
-			M.removeOverlayComposition(/datum/overlayComposition/smoke)
-			M.updateOverlaysClient(M.client)
-		affected.Cut()
-		return
-
-	Crossed(atom/movable/O)
-		if(ishuman(O) && prob(30))
-			var/mob/living/carbon/human/H = O
-			if (H.internal != null && H.wear_mask && (H.wear_mask.c_flags & MASKINTERNALS))
-			else
-				H.emote("cough")
-				if (prob(20))	//remove this maybe. it shoudla been stunning, but has been broken since the status system updates.
-					H.setStatus("stunned",max(H.getStatusDuration("stunned"), 20))
-
-		if(ismob(O))
-			var/mob/M = O
-			if (M.client && !isobserver(M) && !iswraith(M) && !isintangible(M)) // fuck you stop affecting ghosts FUCK YOU
-				M.addOverlayComposition(/datum/overlayComposition/smoke)
-				M.updateOverlaysClient(M.client)
-				affected.Add(O)
-		return ..()
-
-	Uncrossed(atom/movable/O)
-		if(ismob(O))
-			var/mob/M = O
-			if (M.client && !isobserver(M) && !iswraith(M) && !isintangible(M)) // FUCK YOU
-				if(!(locate(/obj/smokeDummy) in M.loc))
-					M.removeOverlayComposition(/datum/overlayComposition/smoke)
-					M.updateOverlaysClient(M.client)
-					affected.Remove(M)
-		return ..()
-
 /datum/projectile/bullet/smoke
 	name = "smoke grenade"
 	sname = "smokeshot"
@@ -1183,7 +1134,7 @@ toxic - poisons
 	power = 25
 	dissipation_delay = 20
 	cost = 1
-	shot_sound = 'sound/weapons/rocket.ogg'
+	shot_sound = 'sound/weapons/launcher.ogg'
 	ks_ratio = 1.0
 	caliber = 1.57 // 40mm grenade shell
 	icon_turf_hit = "bhole-large"
@@ -1408,3 +1359,19 @@ toxic - poisons
 	shot_sound = null
 	projectile_speed = 8
 	implanted = null
+
+/datum/projectile/bullet/foamdart
+	name = "foam dart"
+	sname = "foam dart"
+	icon_state = "foamdart"
+	shot_sound = 'sound/effects/syringeproj.ogg'
+	icon_turf_hit = null
+	projectile_speed = 20
+	implanted = null
+	power = 0
+	ks_ratio = 0
+	damage_type = D_SPECIAL
+	hit_type = DAMAGE_BLUNT
+	max_range = 15
+	dissipation_rate = 0
+	ie_type = null

@@ -106,6 +106,18 @@
 	degrade_to = "radioactive"
 	icon_state  = "rad_res"
 
+	OnAdd()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, 100)
+
+	OnRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			REMOVE_MOB_PROPERTY(M, PROP_RADPROT, src)
+
 /datum/bioEffect/alcres
 	name = "Alcohol Resistance"
 	desc = "Strongly reinforces the subject's nervous system against alcoholic intoxication."
@@ -224,17 +236,25 @@
 	msgLose = "Your skin tightens."
 	var/heal_per_tick = 1
 	var/regrow_prob = 250
+	var/roundedmultremainder
 	degrade_to = "mutagenic_field"
 	icon_state  = "regen"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/L = owner
-		L.HealDamage("All", heal_per_tick, heal_per_tick)
-		if (rand(1,regrow_prob) == 1 && ishuman(L))
-			var/mob/living/carbon/human/H = L
-			if (H.limbs)
-				H.limbs.mend(1)
+		L.HealDamage("All", heal_per_tick * mult, heal_per_tick * mult)
+		var/roundedmult = round(mult)
+		roundedmultremainder += (mult % 1)
+		if (roundedmultremainder >= 1)
+			roundedmult += round(roundedmultremainder)
+			roundedmultremainder = roundedmultremainder % 1
+		for (roundedmult = roundedmult, roundedmult > 0, roundedmult --)
+			if (rand(1, regrow_prob) == 1)
+				if (ishuman(L))
+					var/mob/living/carbon/human/H = L
+					if (H.limbs)
+						H.limbs.mend(1)
 
 /datum/bioEffect/regenerator/super
 	name = "Super Regeneration"
@@ -476,7 +496,7 @@ var/list/radio_brains = list()
 			H.set_body_icon_dirty()
 			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/carbon/human/H = owner
 		if (H.health <= 25)
@@ -580,13 +600,13 @@ var/list/radio_brains = list()
 	stability_loss = 15
 	icon_state  = "regen"
 
-	OnLife()
+	OnLife(var/mult)
 
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 
 			if (H.blood_volume < 500 && H.blood_volume > 0)
-				H.blood_volume += 6
+				H.blood_volume += 6*mult
 
 
 ///////////////////////////
@@ -641,9 +661,14 @@ var/list/radio_brains = list()
 	stability_loss = 15
 	icon_state  = "haze"
 
-	OnLife()
-		if (prob(20))
+	OnLife(var/mult)
+		if (probmult(20))
 			src.active = !src.active
 		if (src.active)
-			owner.invisibility = 1
-		return
+			APPLY_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src, INVIS_INFRA)
+		else
+			REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
+
+	OnRemove()
+		REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
+		. = ..()

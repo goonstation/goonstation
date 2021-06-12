@@ -8,6 +8,7 @@ var/list/occupations = list(
 //	"Vice Officer",
 	"Detective",
 	"Geneticist",
+	"Pathologist",
 	"Scientist","Scientist", "Scientist",
 	"Medical Doctor", "Medical Doctor",
 	"Head of Personnel",
@@ -49,6 +50,7 @@ var/list/job_mailgroup_list = list(
 	"Medical Director" = MGD_MEDRESEACH,
 	"Roboticist" = MGD_MEDRESEACH,
 	"Geneticist" = MGD_MEDRESEACH,
+	"Pathologist" = MGD_MEDRESEACH,
 	"Medical Doctor" = MGD_MEDBAY,
 	"Chaplain" = MGD_SPIRITUALAFFAIRS)
 
@@ -67,7 +69,7 @@ var/list/page_departments = list(
 
 /proc/get_all_jobs()
 	return list("Assistant", "Detective", "Medical Doctor", "Captain", "Security Officer",
-				"Geneticist", "Scientist", "Head of Personnel",
+				"Geneticist","Pathologist", "Scientist", "Head of Personnel",
 				"Chaplain", "Bartender", "Janitor", "Chef", "Roboticist", "Quartermaster",
 				"Chief Engineer","Engineer", "Miner", "Mechanic",
 				"Research Director", "Medical Director", "Botanist", "Clown")

@@ -4,7 +4,7 @@
 	uses_multiple_icon_states = 1
 	icon_state = "flash"
 	throwforce = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 10
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
@@ -126,7 +126,7 @@
 			sleep(0.5 SECONDS)
 			qdel(animation)
 
-	playsound(get_turf(src), "sound/weapons/flash.ogg", 100, 1)
+	playsound(src, "sound/weapons/flash.ogg", 100, 1)
 	flick(src.animation_type, src)
 	src.l_time = world.time
 	if (!src.turboflash)
@@ -163,7 +163,7 @@
 	if (!blind_success)
 		blind_msg_target = " but your eyes are protected!"
 		blind_msg_others = " but [his_or_her(M)] eyes are protected!"
-	M.visible_message("<span class='alert'>[user] blinds [M] with \the [src][blind_msg_others]</span>", "<span class='alert'>You are blinded by \the [src][blind_msg_target]</span>")
+	M.visible_message("<span class='alert'>[user] blinds [M] with \the [src][blind_msg_others]</span>", "<span class='alert'>[user] blinds you with \the [src][blind_msg_target]</span>")
 	logTheThing("combat", user, M, "blinds [constructTarget(M,"combat")] with [src] at [log_loc(user)].")
 	if (src.emagged)
 		logTheThing("combat", user, user, "blinds themself with [src] at [log_loc(user)].")
@@ -220,7 +220,7 @@
 			return
 
 	// Play animations.
-	playsound(get_turf(src), "sound/weapons/flash.ogg", 100, 1)
+	playsound(src, "sound/weapons/flash.ogg", 100, 1)
 	flick(src.animation_type, src)
 	src.l_time = world.time
 
@@ -264,7 +264,7 @@
 	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 		var/datum/game_mode/revolution/R = ticker.mode
 		if (ishuman(M))
-			//playsound(get_turf(src), "sound/weapons/rev_flash_startup.ogg", 40, 1 , 0, 0.6) //moved to rev flash only
+			//playsound(src, "sound/weapons/rev_flash_startup.ogg", 40, 1 , 0, 0.6) //moved to rev flash only
 
 			var/mob/living/carbon/human/H = M
 			var/safety = 0
@@ -431,7 +431,7 @@
 					user.show_text("[src] refuses to flash!", "red") //lol
 					return
 		else if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			playsound(get_turf(src), "sound/weapons/rev_flash_startup.ogg", 60, 1 , 0, 0.6)
+			playsound(src, "sound/weapons/rev_flash_startup.ogg", 60, 1 , 0, 0.6)
 			var/convert_result = convert(M,user)
 			if (convert_result == 0.5)
 				user.show_text("Hold still to override . . . ", "red")

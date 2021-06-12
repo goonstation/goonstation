@@ -84,6 +84,8 @@
 	if(mmouse) // mouse in your pocket takes precedence over mhelps
 		var/msg = input("Please enter your whispers to the mouse:") as null|text
 		msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN)
+		if (!msg)
+			return
 		var/class = mmouse.is_admin ? "adminooc" : "mhelp"
 		boutput(mmouse, "<span class='[class]'><b>[client.mob]</b> whispers: \"<i>[msg]</i>\"</span>")
 		boutput(client.mob, "<span class='[class]'>You whisper to \the [mmouse]: \"<i>[msg]</i>\"</span>")
@@ -133,6 +135,9 @@
 	boutput(client.mob, "<span class='mhelp'><b>MENTORHELP: You</b>: [msg]</span>")
 	logTheThing("mentor_help", client.mob, null, "MENTORHELP: [msg]")
 	logTheThing("diary", client.mob, null, "MENTORHELP: [msg]", "mhelp")
+#ifdef DATALOGGER
+	game_stats.Increment("mentorhelps")
+#endif
 	var/dead = isdead(client.mob) ? "Dead" : ""
 	var/ircmsg[] = new()
 	ircmsg["key"] = client.key
@@ -183,7 +188,9 @@
 	if (client.mob.mind)
 		src.add_karma(-1)
 
-	if (client.mob.traitHolder?.hasTrait("atheist"))
+	var/is_atheist = client.mob.traitHolder?.hasTrait("atheist")
+
+	if (is_atheist)
 		boutput(client.mob, "You feel ridiculous doing it, but manage to get through a silent prayer,</B> <I>\"[msg]\"</I>")
 		client.mob.take_oxygen_deprivation(10)
 		logTheThing("admin_help", client.mob, null, "PRAYER (atheist): [msg]")
@@ -192,6 +199,11 @@
 		boutput(client.mob, "<B>You whisper a silent prayer,</B> <I>\"[msg]\"</I>")
 		logTheThing("admin_help", client.mob, null, "PRAYER: [msg]")
 		logTheThing("diary", client.mob, null, "PRAYER: [msg]", "ahelp")
+
+#ifdef DATALOGGER
+	game_stats.Increment("prayers")
+#endif
+
 	var/audio
 
 	for (var/client/C)
@@ -201,7 +213,7 @@
 			if (!M.client.holder.hear_prayers || (M.client.player_mode == 1 && M.client.player_mode_ahelp == 0)) //XOR for admin prayer setting and player mode w/ no ahelps
 				continue
 			else
-				boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.5em'":""]><B>PRAYER: </B><a href='?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.ckey]'>[client.key]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'>: <I>[msg]</I></span>")
+				boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.1em'":""]><B>PRAYER: [is_atheist ? "(ATHEIST)" : ""]</B><a href='?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.ckey]'>[client.key]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'>: <I>[msg]</I></span>")
 				if(M.client.holder.audible_prayers == 1)
 					M << sound("sound/misc/boing/[rand(1,6)].ogg", volume=50, wait=0)
 				else if(M.client.holder.audible_prayers == 2) // this is a terrible idea

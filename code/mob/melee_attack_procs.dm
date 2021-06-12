@@ -57,9 +57,9 @@
 	target.sleeping = 0
 	target.delStatus("resting")
 
-	target.changeStatus("stunned", -50)
-	target.changeStatus("paralysis", -50)
-	target.changeStatus("weakened", -50)
+	target.changeStatus("stunned", -5 SECONDS)
+	target.changeStatus("paralysis", -5 SECONDS)
+	target.changeStatus("weakened", -5 SECONDS)
 
 	playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 	if (src == target)
@@ -162,7 +162,7 @@
 		if (target.health < 0 || target.find_ailment_by_type(/datum/ailment/malady/flatline))
 			target.take_oxygen_deprivation(-15)
 			target.losebreath = 0
-			target.changeStatus("paralysis", -20)
+			target.changeStatus("paralysis", -2 SECONDS)
 
 			if(target.find_ailment_by_type(/datum/ailment/malady/flatline) && target.health > -50)
 				if ((target.reagents?.has_reagent("epinephrine") || target.reagents?.has_reagent("atropine")) ? prob(5) : prob(2))
@@ -266,10 +266,15 @@
 			playsound(target.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, 1)
 			return
 		else
-			if (target.do_block(src, null, show_msg = 0))
+			var/obj/item/grab/block/B = target.check_block()
+			if (target.do_dodge(src, null, show_msg = 0))
+				src.visible_message("<span class='alert'><B>[target] dodges [src]'s attempt to grab [him_or_her(target)]!</span>")
+				playsound(target.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, 1)
+				return
+			else if(B)
 				src.visible_message("<span class='alert'><B>[target] blocks [src]'s attempt to grab [him_or_her(target)]!</span>")
 				playsound(target.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, 1)
-
+				qdel(B)
 				target.remove_stamina(STAMINA_DEFAULT_BLOCK_COST)
 				return
 
@@ -336,6 +341,12 @@
 	else
 		def_zone = "All"
 		msgs.affecting = def_zone
+
+	if(prob(target.get_deflection())) //chance to deflect disarm attempts entirely
+		msgs.played_sound = 'sound/impact_sounds/Generic_Swing_1.ogg'
+		msgs.base_attack_message = "<span class='alert'><B>[src] shoves at [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
+		fuckup_attack_particle(src)
+		return msgs
 
 	if (target.lying == 1) //roll lying bodies
 		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
@@ -413,7 +424,7 @@
 	if (I)
 		var/disarm_item_prob = 37
 		if (target.check_block() && !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)))
-			disarm_item_prob = 8
+			disarm_item_prob = 5
 
 		if (I.temp_flags & IS_LIMB_ITEM)
 			if (prob(disarm_item_prob * mult))
@@ -454,6 +465,7 @@
 #undef DISARM_WITH_ITEM_TEXT
 
 /mob/proc/check_block(ignoreStuns = 0) //am i blocking?
+	RETURN_TYPE(/obj/item/grab/block)
 	if (ignoreStuns || (isalive(src) && !getStatusDuration("paralysis")))
 		var/obj/item/I = src.equipped()
 		if (I)
@@ -462,28 +474,12 @@
 			else if (I.c_flags & HAS_GRAB_EQUIP)
 				for (var/obj/item/grab/block/G in I)
 					return G
+	return null
+
+/mob/proc/do_dodge(var/mob/attacker, var/obj/item/W, var/show_msg = 1)
 	return 0
 
-/mob/proc/do_block(var/mob/attacker, var/obj/item/W, var/show_msg = 1)
-	var/obj/item/grab/block/G = check_block()
-	if (G)
-		if (G.can_block(W?.hit_type))
-			if (prob(STAMINA_BLOCK_CHANCE + get_deflection()))
-				if (show_msg)
-					if (G != src.equipped())
-						visible_message("<span class='alert'><B>[src] blocks [attacker]'s attack with [G.loc]!</span>")
-					else
-						visible_message("<span class='alert'><B>[src] blocks [attacker]'s attack!</span>")
-
-				playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1, 1)
-				remove_stamina(STAMINA_DEFAULT_BLOCK_COST)
-				fuckup_attack_particle(attacker)
-				return 1
-			block_spark(src)
-			fuckup_attack_particle(attacker)
-	return 0
-
-/mob/living/do_block(var/mob/attacker, var/obj/item/W, var/show_msg = 1)
+/mob/living/do_dodge(var/mob/attacker, var/obj/item/W, var/show_msg = 1)
 	if (stance == "dodge")
 		if (show_msg)
 			visible_message("<span class='alert'><B>[src] narrowly dodges [attacker]'s attack!</span>")
@@ -506,7 +502,7 @@
 	if(getStatusDuration("stonerit"))
 		ret += 20
 
-	for (var/obj/item/C as() in src.get_equipped_items())
+	for (var/obj/item/C as anything in src.get_equipped_items())
 		ret += C.getProperty("block")
 
 	return ret
@@ -681,7 +677,7 @@
 		damage -= armor_mod
 		if(damage/pre_armor_damage <= 0.66)
 			block_spark(target,armor=1)
-			playsound(get_turf(target), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1, pitch=1.5)
+			playsound(target, 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1, pitch=1.5)
 		if(damage <= 0)
 			fuckup_attack_particle(src)
 
@@ -694,7 +690,7 @@
 
 		msgs.stamina_target -= max(stam_power, 0)
 
-		if (can_crit && prob(crit_chance))
+		if (can_crit && prob(crit_chance) && !target.check_block()?.can_block(DAMAGE_BLUNT, 0))
 			msgs.stamina_crit = 1
 			msgs.played_sound = pick(sounds_punch)
 			//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
@@ -703,7 +699,7 @@
 
 		if(pre_armor_damage > 0 && damage/pre_armor_damage <= 0.66)
 			block_spark(target,armor=1)
-			playsound(get_turf(target), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1,pitch=1.5)
+			playsound(target, 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1,pitch=1.5)
 			if(damage <= 0)
 				fuckup_attack_particle(src)
 				armor_blocked = 1
@@ -909,8 +905,22 @@
 				else
 					logs = list("punches [constructTarget(target,"combat")]")
 
+//Pod wars friendly fire check
+#if defined(MAP_OVERRIDE_POD_WARS)
+			var/friendly_fire = 0
+			if (owner != target && get_pod_wars_team_num(owner) == get_pod_wars_team_num(target))
+				friendly_fire = 1
+				if (istype(ticker.mode, /datum/game_mode/pod_wars))
+					var/datum/game_mode/pod_wars/mode = ticker.mode
+					mode.stats_manager?.inc_friendly_fire(owner)
+				// message_admins("[owner] just committed friendly fire against [target]!")
+
+			for (var/message in logs)
+				logTheThing("combat", owner, target, "[friendly_fire ? "<span class='alert'>Friendly Fire!</span>":""][message] at [log_loc(owner)].")
+#else
 			for (var/message in logs)
 				logTheThing("combat", owner, target, "[message] at [log_loc(owner)].")
+#endif
 
 		if (stamina_self)
 			if (stamina_self > 0)
@@ -986,8 +996,8 @@
 				goto process_stamina
 
 			if (damage > 0 && target != owner)
-				target.changeStatus("staggered", 50)
-				owner.changeStatus("staggered", 50)
+				target.changeStatus("staggered", 5 SECONDS)
+				owner.changeStatus("staggered", 5 SECONDS)
 			// important
 
 			if (damage_type == DAMAGE_BLUNT && prob(25 + (damage * 2)) && damage >= 8)
@@ -1068,30 +1078,11 @@
 
 	return 1
 
-/mob/living/silicon/robot/melee_attack_test(var/mob/attacker, var/obj/item/I, var/def_zone, var/disarm_check = 0)
-	if (!..())
-		return 0
-
-	if (I)
-		var/hit_chance = 50
-		if (def_zone == "chest")
-			hit_chance = 90
-		else if (def_zone == "head")
-			hit_chance = 70
-		if(!client || is_incapacitated(src))
-			hit_chance = 100
-		if (!prob(hit_chance))
-			playsound(loc, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 1, 1)
-			src.visible_message("<span class='alert'><b>[attacker] swings at [src], but misses!</b></span>")
-			return 0
-
-	return 1
-
 /mob/living/melee_attack_test(var/mob/attacker, var/obj/item/I, var/def_zone, var/disarm_check = 0)
 	if (!..())
 		return 0
 
-	if (src.do_block(attacker, I))
+	if (src.do_dodge(attacker, I))
 		return 0
 
 	return 1
@@ -1185,7 +1176,7 @@
 	return null
 
 /mob/living/check_attack_resistance(var/obj/item/I)
-	if (reagents?.get_reagent_amount("ethanol") >= 100 && prob(40) && (!I || I.force <= 15))
+	if (reagents?.get_reagent_amount("ethanol") >= 100 && prob(40) && !I)
 		return "<span class='alert'>You drunkenly shrug off the blow!</span>"
 	return null
 

@@ -28,10 +28,12 @@
 		src.icon_state = "wrap_paper-[src.style]"
 
 /obj/item/wrapping_paper/attackby(obj/item/W as obj, mob/user as mob)
+	if(W.cant_drop || W.cant_self_remove)
+		return
 	if (!( locate(/obj/table, src.loc) ))
 		boutput(user, "<span class='notice'>You MUST put the paper on a table!</span>")
 		return
-	if (W.w_class < 4)
+	if (W.w_class < W_CLASS_BULKY)
 		if ((istool(user.l_hand, TOOL_CUTTING | TOOL_SNIPPING) && user.l_hand != W) || (istool(user.r_hand, TOOL_CUTTING | TOOL_SNIPPING) && user.r_hand != W))
 			var/a_used = 2 ** (src.w_class - 1)
 			if (src.amount < a_used)
@@ -93,7 +95,7 @@
 	item_state = "gift"
 	var/size = 3.0
 	var/obj/item/gift = null
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
@@ -144,7 +146,7 @@
 	festive
 		icon_state = "gift2-g"
 		attack_self(mob/M as mob)
-			if (!islist(giftpaths) || !giftpaths.len)
+			if (!islist(giftpaths) || !length(giftpaths))
 				src.giftpaths = generic_gift_paths + xmas_gift_paths
 			..()
 
@@ -160,18 +162,18 @@
 		icon_state = "easter_egg"
 		random_icons = 0
 		attack_self(mob/M as mob)
-			if (!islist(giftpaths) || !giftpaths.len)
+			if (!islist(giftpaths) || !length(giftpaths))
 				src.giftpaths = generic_gift_paths
 			..()
 
 	easter/dangerous
 		attack_self(mob/M as mob)
-			if (!islist(giftpaths) || !giftpaths.len)
+			if (!islist(giftpaths) || !length(giftpaths))
 				src.giftpaths = generic_gift_paths + questionable_generic_gift_paths
 			..()
 
 /obj/item/a_gift/attack_self(mob/M as mob)
-	if (!islist(giftpaths) || !giftpaths.len)
+	if (!islist(giftpaths) || !length(giftpaths))
 		boutput(M, "<span class='notice'>[src] was empty!</span>")
 		qdel(src)
 		return
@@ -221,6 +223,9 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/clothing/head/cakehat,
 	/obj/item/clothing/mask/melons,
 	/obj/item/old_grenade/banana,
+	/obj/item/old_grenade/banana/cheese_sandwich,
+	/obj/item/old_grenade/banana/banana_corndog,
+	/obj/item/gimmickbomb/butt,
 	/obj/item/instrument/bikehorn,
 	/obj/item/instrument/bikehorn/dramatic,
 	/obj/item/instrument/bikehorn/airhorn,
@@ -230,11 +235,15 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/instrument/fiddle,
 	/obj/item/instrument/trumpet,
 	/obj/item/instrument/whistle,
+	/obj/item/instrument/guitar,	
+	/obj/item/instrument/triangle,	
+	/obj/item/instrument/tambourine,
+	/obj/item/instrument/cowbell,
 	/obj/item/horseshoe,
 	/obj/item/clothing/glasses/monocle,
 	/obj/item/dice/coin,
 	/obj/item/dice/magic8ball,
-	/obj/item/dice/d100,
+	/obj/item/storage/dicepouch,
 	/obj/item/clothing/gloves/fingerless,
 	/obj/item/clothing/mask/spiderman,
 	/obj/item/clothing/shoes/flippers,
@@ -253,13 +262,29 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/bang_gun,
 	/obj/item/bee_egg_carton,
 	/obj/item/brick,
+	/obj/item/rubber_chicken,
 	/obj/item/clothing/ears/earmuffs,
 	/obj/item/clothing/glasses/macho,
+	/obj/item/clothing/glasses/noir,
+	/obj/item/clothing/glasses/sunglasses/tanning,
 	/obj/item/clothing/head/cowboy,
 	/obj/item/clothing/head/apprentice,
 	/obj/item/clothing/head/crown,
+	/obj/item/clothing/head/dramachefhat,
+	/obj/item/clothing/head/XComHair,
+	/obj/item/clothing/head/snake,
+	/obj/item/clothing/head/bigtex,
+	/obj/item/clothing/head/aviator,
+	/obj/item/clothing/head/pinwheel_hat,
+	/obj/item/clothing/head/frog_hat,
+	/obj/item/clothing/head/helmet/jetson,
+	/obj/item/clothing/head/longtophat,
 	/obj/item/clothing/suit/bedsheet/cape/royal,
 	/obj/item/clothing/mask/moustache,
+	/obj/item/clothing/mask/moustache/safe,
+	/obj/item/clothing/mask/chicken,
+	/obj/item/clothing/gloves/fingerless,	
+	/obj/item/clothing/gloves/yellow/unsulated,
 	/obj/item/clothing/suit/bee,
 	/obj/item/clothing/shoes/cowboy,
 	/obj/item/clothing/shoes/dress_shoes,
@@ -282,7 +307,7 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/storage/firstaid/regular,
 	/obj/item/storage/pill_bottle/cyberpunk,
 	/obj/item/toy/sword,
-	/obj/item/card_box/trading,
+	/obj/item/stg_box,
 	/obj/item/clothing/suit/jacket/plastic/random_color)
 
 var/global/list/questionable_generic_gift_paths = list(/obj/item/relic,

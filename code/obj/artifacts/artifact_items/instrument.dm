@@ -26,7 +26,7 @@
 			spam_flag = 1
 			src.add_fingerprint(user)
 			show_play_message(user)
-			playsound(get_turf(src), islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
+			playsound(src, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
 			SPAWN_DBG(src.spam_timer)
 				spam_flag = 0
 		return
@@ -41,6 +41,7 @@
 
 /datum/artifact/instrument
 	associated_object = /obj/item/artifact/instrument
+	type_name = "Instrument"
 	automatic_activation = 1
 	rarity_weight = 450
 	validtypes = list("wizard","eldritch","precursor","martian","ancient")

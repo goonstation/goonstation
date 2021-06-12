@@ -57,6 +57,7 @@ datum
 					if(volume >= 5)
 						if(!locate(/obj/decal/cleanable/dirt) in T)
 							make_cleanable(/obj/decal/cleanable/dirt,T)
+						T.wet = 0
 
 		chlorine
 			name = "chlorine"
@@ -155,27 +156,29 @@ datum
 					var/mob/living/H = M
 					if(H?.reagents.has_reagent("moonshine"))
 						mult *= 3
+					var/ethanol_amt = holder.get_reagent_amount(src.id)
 					var/liver_damage = 0
 					if (!isalcoholresistant(H) || H?.reagents.has_reagent("moonshine"))
-						if (holder.get_reagent_amount(src.id) >= 15)
+						if (ethanol_amt >= 15)
 							if(probmult(10)) H.emote(pick("hiccup", "burp", "mumble", "grumble"))
 							H.stuttering += 1
 							if (H.canmove && isturf(H.loc) && probmult(10))
 								step(H, pick(cardinal))
 							if (prob(20)) H.make_dizzy(rand(3,5) * mult)
-						if (holder.get_reagent_amount(src.id) >= 25)
+						if (ethanol_amt >= 25)
+							//Though this var is set when ethanol_amt >= 25, that damage is not dealt until ethanol_amt > 40 (which is checked at the end of the proc)
 							liver_damage = 0.25
 							if(probmult(10)) H.emote(pick("hiccup", "burp"))
 							if (probmult(10)) H.stuttering += rand(1,10)
-						if (holder.get_reagent_amount(src.id) >= 45)
+						if (ethanol_amt >= 45)
 							if(probmult(10))
 								H.emote(pick("hiccup", "burp"))
 							if (probmult(15))
 								H.stuttering += rand(1,10)
 							if (H.canmove && isturf(H.loc) && probmult(8))
 								step(H, pick(cardinal))
-						if (holder.get_reagent_amount(src.id) >= 55)
-							liver_damage = 0.5
+						if (ethanol_amt >= 55)
+							liver_damage = 0.4
 							if(probmult(10))
 								H.emote(pick("hiccup", "fart", "mumble", "grumble"))
 							H.stuttering += 1
@@ -190,7 +193,7 @@ datum
 								H.vomit()
 							if(prob(15))
 								H.make_dizzy(5 * mult)
-						if (holder.get_reagent_amount(src.id) >= 60)
+						if (ethanol_amt >= 60)
 							H.change_eye_blurry(10 , 50)
 							if(probmult(6)) H.drowsyness += 5
 							if(prob(5)) H.take_toxin_damage(rand(1,2) * mult)
@@ -200,9 +203,30 @@ datum
 						if (HH.organHolder && HH.organHolder.liver)			//Hax here, lazy. currently only organ is liver. fix when adding others. -kyle
 							if (HH.organHolder.liver.robotic)
 								M.take_toxin_damage(-liver_damage * 3 * mult)
+								HH.organHolder.heal_organ(liver_damage *mult, liver_damage *mult, liver_damage *mult, "liver")
 							else
-								HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
+								if (ethanol_amt < 40 && HH.organHolder.liver.get_damage() < 10)
+									HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
+								else if (ethanol_amt >= 40 && prob(ethanol_amt/2))
+									HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
+//inc_alcohol_metabolized()
+//bunch of extra logic for dumb stat tracking. This is copy pasted from proc/how_many_depletions() in Chemistry-Reagents.dm
+#if defined(MAP_OVERRIDE_POD_WARS)
+						var/amt_of_alcohol_metabolized = depletion_rate
+						if (H.traitHolder?.hasTrait("slowmetabolism")) //fuck
+							amt_of_alcohol_metabolized/= 2
+						if (H.organHolder)
+							if (!H.organHolder.liver || H.organHolder.liver.broken)	//if no liver or liver is dead, deplete slower
+								amt_of_alcohol_metabolized /= 2
+							if (H.organHolder.get_working_kidney_amt() == 0)	//same with kidneys
+								amt_of_alcohol_metabolized /= 2
+
+						if (istype(ticker.mode, /datum/game_mode/pod_wars))
+							var/datum/game_mode/pod_wars/mode = ticker.mode
+							mode.stats_manager?.inc_alcohol_metabolized(H, amt_of_alcohol_metabolized * mult)
+#endif
 					..()
+
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				//Maybe add a bit that gives you a stamina buff if OD-ing on ethanol and you have a cyberliver.
@@ -213,12 +237,12 @@ datum
 					if (prob(50))
 						if (H.organHolder)
 							var/damage = rand(1,3)
-							if (H.organHolder.left_kidney && prob(30))
-								H.organHolder.damage_organ(0,0,damage * mult * (!H.organHolder.left_kidney.robotic), "left_kidney")
-							if (H.organHolder.right_kidney && prob(30))
-								H.organHolder.damage_organ(0,0,damage * mult * (!H.organHolder.right_kidney.robotic), "right_kidney")
-							if (H.organHolder.liver && prob(30))
+							if (H.organHolder.liver && prob(10))
 								H.organHolder.damage_organ(0,0,damage * mult * (!H.organHolder.liver.robotic), "liver")
+							if (H.organHolder.left_kidney && prob(15))
+								H.organHolder.damage_organ(0,0,damage * mult * (!H.organHolder.left_kidney.robotic), "left_kidney")
+							if (H.organHolder.right_kidney && prob(35))
+								H.organHolder.damage_organ(0,0,damage * mult * (!H.organHolder.right_kidney.robotic), "right_kidney")
 
 					if (prob(1))
 						H.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
@@ -272,8 +296,8 @@ datum
 						make_cleanable(/obj/decal/cleanable/vomit,M.loc)
 						M.nutrition -= rand(3,5)
 						M.take_toxin_damage(10) // im bad
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 30))
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 30))
+						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS))
+						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 3 SECONDS))
 
 		lithium
 			name = "lithium"
@@ -416,7 +440,7 @@ datum
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", 300)
+						L.changeStatus("burning", 30 SECONDS)
 				return 1
 
 			reaction_obj(var/obj/O, var/volume)
@@ -483,10 +507,10 @@ datum
 				.= 1
 
 				if (volume >= 20)
-					if (istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || istype(I,/datum/projectile/bullet/revolver_38))
+					if (istype(I, /obj/item/ammo/bullets/bullet_22HP) || istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || istype(I,/datum/projectile/bullet/revolver_38))
 						var/obj/item/ammo/bullets/bullet_holder = I
 						var/datum/projectile/ammo_type = bullet_holder.ammo_type
-						if (ammo_type && !(ammo_type.material && ammo_type.material == "silver"))
+						if (ammo_type && !(ammo_type.material && ammo_type.material.mat_id == "silver"))
 							ammo_type.material = getMaterial("silver")
 							holder.remove_reagent(src.id, 20)
 							.= 0
@@ -575,7 +599,7 @@ datum
 						boutput(M, "<span class='alert'>You pass out from hyperglycemic shock!</span>")
 						M.emote("collapse")
 						//M.changeStatus("paralysis", ((2 * severity)*15) * mult)
-						M.changeStatus("weakened", ((4 * severity)*15) * mult)
+						M.changeStatus("weakened", ((4 * severity)*1.5 SECONDS) * mult)
 
 					if (prob(8))
 						M.take_toxin_damage(severity * mult)
@@ -641,14 +665,14 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.changeStatus("radiation", 30*mult, 1)
+				M.changeStatus("radiation", 3 SECONDS * mult, 1)
 				..()
 				return
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
 				var/spawncleanable = 1
-				if(covered.len > 5 && (volume/covered.len) < 1)
+				if(length(covered) > 5 && (volume/length(covered) < 1))
 					spawncleanable = prob((volume/covered.len) * 10)
 
 
@@ -682,7 +706,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1 )
 				if(!M) M = holder.my_atom
-				M.changeStatus("radiation", 30 * mult, 1)
+				M.changeStatus("radiation", 3 SECONDS * mult, 1)
 				..()
 				return
 
@@ -778,8 +802,8 @@ datum
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", -10 * volume)
-						playsound(get_turf(L), "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
+						L.changeStatus("burning", -1 * volume SECONDS)
+						playsound(L, "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
 				return 1
 
 		water/water_holy
@@ -795,7 +819,7 @@ datum
 				var/reacted = 0
 				var/mob/living/M = target
 				if(istype(M))
-					if(by_type[/obj/machinery/playerzoldorf] && by_type[/obj/machinery/playerzoldorf].len)
+					if(by_type[/obj/machinery/playerzoldorf] && length(by_type[/obj/machinery/playerzoldorf]))
 						var/obj/machinery/playerzoldorf/pz = by_type[/obj/machinery/playerzoldorf][1]
 						if(M in pz.brandlist)
 							pz.brandlist -= M
@@ -817,7 +841,7 @@ datum
 							boutput(M, "<span class='notice'>You feel insulted... and wet.</span>")
 						else
 							boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
-							M.take_brain_damage(-10)
+							M.take_brain_damage(0 - clamp(volume, 0, 10))
 						for (var/datum/ailment_data/disease/V in M.ailments)
 							if(prob(1))
 								M.cure_disease(V)
@@ -825,7 +849,7 @@ datum
 				if(method == TOUCH)
 					var/mob/living/L = target
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", -200)
+						L.changeStatus("burning", -20 SECONDS)
 				return !reacted
 
 		water/tonic

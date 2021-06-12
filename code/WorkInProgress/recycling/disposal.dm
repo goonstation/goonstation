@@ -7,6 +7,7 @@
 #define PIPEC_PRODUCE "#b2ff4f"
 #define PIPEC_TRANSPORT "#ffbef6"
 #define PIPEC_MINERAL "#a5fffc"
+#define PIPEC_CARGO "#f4ff53"
 
 // virtual disposal object
 // travels through pipes in lieu of actual items
@@ -150,7 +151,7 @@
 		if(!istype(P))
 			return
 		user.show_text("<span class='alert'>You leap and slam against the inside of [P]! Ouch!</span>")
-		user.changeStatus("paralysis", 40)
+		user.changeStatus("paralysis", 4 SECONDS)
 		user.changeStatus("weakened", 4 SECONDS)
 		src.visible_message("<span class='alert'><b>[P]</b> emits a loud thump and rattles a bit.</span>")
 
@@ -539,6 +540,11 @@
 		name = "mineral pipe"
 		desc = "An underfloor mineral pipe."
 		color = PIPEC_MINERAL
+
+	cargo
+		name = "cargo pipe"
+		desc = "An underfloor cargo pipe."
+		color = PIPEC_CARGO
 
 	New()
 		..()
@@ -1846,7 +1852,12 @@
 	src.streak_cleanable(dirs)
 
 
-
+/obj/disposaloutlet/random_range
+	var/min_range = 1
+	var/max_range = 6
+	expel(obj/disposalholder/H)
+		src.throw_range = rand(min_range, max_range)
+		. = ..()
 
 /obj/disposaloutlet/artifact
 	throw_range = 10

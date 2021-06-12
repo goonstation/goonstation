@@ -2,7 +2,7 @@
 	desc = "Fun for the whole family!"
 	name = "\improper Russian revolver"
 	icon_state = "revolver"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
 	m_amt = 2000

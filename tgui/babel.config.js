@@ -5,13 +5,20 @@
  */
 
 const createBabelConfig = options => {
-  const { mode, presets = [], plugins = [] } = options;
+  const {
+    // mode, // uncomment if future config needs to depend on environment
+    presets = [],
+    plugins = [],
+  } = options;
   return {
     presets: [
-      ['@babel/preset-env', {
+      [require.resolve('@babel/preset-typescript'), {
+        allowDeclareFields: true,
+      }],
+      [require.resolve('@babel/preset-env'), {
         modules: 'commonjs',
         useBuiltIns: 'entry',
-        corejs: '3.8',
+        corejs: '3.10',
         spec: false,
         loose: true,
         targets: [],
@@ -19,16 +26,19 @@ const createBabelConfig = options => {
       ...presets,
     ],
     plugins: [
-      '@babel/plugin-transform-jscript',
-      'babel-plugin-inferno',
-      'babel-plugin-transform-remove-console',
-      'common/string.babel-plugin.cjs',
+      [require.resolve('@babel/plugin-proposal-class-properties'), {
+        loose: true,
+      }],
+      require.resolve('@babel/plugin-transform-jscript'),
+      require.resolve('babel-plugin-inferno'),
+      require.resolve('babel-plugin-transform-remove-console'),
+      require.resolve('common/string.babel-plugin.cjs'),
       ...plugins,
     ],
   };
 };
 
-module.exports = (api) => {
+module.exports = api => {
   api.cache(true);
   const mode = process.env.NODE_ENV;
   return createBabelConfig({ mode });

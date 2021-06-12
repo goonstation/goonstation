@@ -6,6 +6,7 @@
 	icon_state = "fb_blue"
 	//same values as captain armor
 	var/in_rush = 0
+	item_function_flags = IMMUNE_TO_ACID
 	setupProperties()
 		..()
 		setProperty("meleeprot", 8)
@@ -20,6 +21,7 @@
 	desc = "Gotta protect your head! This helmet will certainly do the job. It has a Spacecow Wobbegongs logo printed on it!"
 	icon_state = "fb_blue"
 	c_flags = COVERSEYES | COVERSMOUTH
+	item_function_flags = IMMUNE_TO_ACID
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 6)
@@ -34,6 +36,7 @@
 	icon = 'icons/obj/clothing/uniforms/item_js_athletic.dmi'
 	wear_image_icon = 'icons/mob/jumpsuits/worn_js_athletic.dmi'
 	icon_state = "fb_blue"
+	item_function_flags = IMMUNE_TO_ACID
 
 	red
 		desc = "These are athletic pants bearing the colors of the Spacissippi Timberdoodles. The fabric smells like rivalry."
@@ -47,6 +50,7 @@
 	kick_bonus = 4
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
+	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/clothing/suit/armor/football/equipped(var/mob/user, var/slot)
 	..()
@@ -167,7 +171,7 @@
 	icon_state = "football"
 	uses_multiple_icon_states = 1
 	item_state = "football"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 0
 	throw_range = 10
 	throwforce = 0
@@ -181,7 +185,7 @@
 	c_flags = EQUIPPED_WHILE_HELD
 	throw_range = 15
 	throwforce = 10
-	w_class = 5
+	w_class = W_CLASS_HUGE
 	// look it is VERY IMPORTANT
 	plane = PLANE_HUD - 1
 	var/obj/maptext_junk/indicator

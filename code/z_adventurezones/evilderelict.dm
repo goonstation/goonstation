@@ -178,6 +178,9 @@ var/maniac_previous_victim = "Unknown"
 	icon_state = "derelict"
 	teleport_blocked = 1
 	sound_loop = 'sound/ambience/spooky/Evilreaver_Ambience.ogg'
+#ifdef MAP_OVERRIDE_OSHAN
+	requires_power = FALSE
+#endif
 
 /area/evilreaver/medical
 	icon_state = "medbay"

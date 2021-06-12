@@ -48,6 +48,7 @@
 		M.unequip_all()
 
 		var/obj/item/implant/microbomb/hunter/B = new /obj/item/implant/microbomb/hunter(M)
+		M.implant.Add(B)
 		B.implanted = 1
 		B.implanted(M)
 

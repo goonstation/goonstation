@@ -50,7 +50,7 @@
 				return
 
 			master.path = thePath
-			if(adjacent && master.path && master.path.len) //Make sure to check it isn't null!!
+			if(adjacent && master.path && length(master.path)) //Make sure to check it isn't null!!
 				master.path.len-- //Only go UP to the target, not the same tile.
 			if(!master.path || !master.path.len || !the_target || (ismob(the_target) && master.path.len >= 21))
 				master.task?.task_input("path_error")
@@ -1917,44 +1917,49 @@
 //Buddy handcuff bar thing
 /datum/action/bar/icon/buddy_cuff
 	duration = 30 // zippy zipcuffs
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	interrupt_flags = INTERRUPT_MOVE
 	id = "buddy_cuff"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
 	var/obj/machinery/bot/guardbot/master
 	var/datum/computer/file/guardbot_task/security/task
 
-	New(var/the_bot, var/the_task)
+	New(the_bot, the_task)
 		src.master = the_bot
 		src.task = the_task
 		..()
 
 	onUpdate()
 		..()
-		if (!master || !master.on || master.idle || master.stunned || !IN_RANGE(master, task.arrest_target, 1) || !task.arrest_target || task.arrest_target.hasStatus("handcuffed") || master.moving)
+		if (src.failchecks())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		task.cuffing = 1
-		if (!master || !master.on || master.idle || master.stunned || !IN_RANGE(master, task.arrest_target, 1) || !task.arrest_target || task.arrest_target.hasStatus("handcuffed") || master.moving)
+		if (src.failchecks())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		playsound(master, "sound/weapons/handcuffs.ogg", 30, 1, -2)
 		master.visible_message("<span class='alert'><B>[master] is trying to put handcuffs on [task.arrest_target]!</B></span>")
 
-	onInterrupt()
-		..()
-		task.cuffing = 0
+	onInterrupt(flag)
+		. = ..(flag)
+		if (task.arrest_target?.hasStatus("handcuffed"))
+			task.drop_arrest_target()
 
 	onEnd()
 		..()
-		if (!master || !master.on || master.idle || master.stunned || !IN_RANGE(master, task.arrest_target, 1) || !task.arrest_target || task.arrest_target.hasStatus("handcuffed") || master.moving)
+		if (src.failchecks())
+			// One of the possible failed checks is that they're cuffed so
+			// we can stop trying to arrest them.
+			if (task.arrest_target?.hasStatus("handcuffed"))
+				task.drop_arrest_target()
+
 			return
 
-		if (task.arrest_target.hasStatus("handcuffed") || !isturf(task.arrest_target.loc))
+		if (!isturf(task.arrest_target.loc))
 			task.drop_arrest_target()
 			return
 
@@ -1978,8 +1983,6 @@
 			var/arrest_message = pick(task.arrested_messages)
 			master.speak(arrest_message)
 
-		task.cuffing = 0
-
 		var/bot_location = get_area(master)
 		var/last_target = task.arrest_target
 		var/turf/LT_loc = get_turf(last_target)
@@ -2000,6 +2003,13 @@
 		if(transmit_connection != null)
 			transmit_connection.post_signal(master, pdaSignal)
 
+	/// Interrupts the action if the bot cant (or shouldnt be able to) continue cuffing
+	proc/failchecks()
+		if (!master || !master.on || master.idle || master.stunned || master.moving)
+			return 1
+		if (!IN_RANGE(master, task.arrest_target, 1) || !task.arrest_target || task.arrest_target.hasStatus("handcuffed"))
+			return 1
+
 //Robot tools.  Flash boards, batons, etc
 /obj/item/device/guardbot_tool
 	name = "Tool module"
@@ -2007,7 +2017,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "tool_generic"
 	mats = 6
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/is_stun = 0 //Can it be non-lethal?
 	var/is_lethal = 0 //Can it be lethal?
 	var/tool_id = "GENERIC" //Identification ID.
@@ -2302,7 +2312,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "tool_generic"
 	mats = 6
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/tool_id = "MOD"
 	is_syndicate = 1
 
@@ -2380,7 +2390,7 @@
 			return 0
 
 		configure(var/list/confList)
-			if (!confList || !confList.len)
+			if (!confList || !length(confList))
 				return 1
 
 			return 0
@@ -2697,7 +2707,6 @@
 		var/list/target_names = list() //Dudes we are preprogrammed to arrest.
 		var/tmp/mode = 0 //0: Patrol, 1: Arresting somebody
 		var/tmp/arrest_attempts = 0
-		var/tmp/cuffing = 0
 		var/tmp/last_cute_action = 0
 
 		var/weapon_access = access_carrypermit //These guys can use guns, ok!
@@ -2809,42 +2818,47 @@
 
 					if(!master.moving)
 						find_patrol_target()
+				/*
+				Hunt and arrest mode. Like an angry secbot, but cuter and sometimes has a gun
+				Script should go as follows:
+					Check if the bot is cuffing someone, and don't do anything else if they are (otherwise they just stunlock people like dorks)
+					Check if the bot has a valid target (living, and not dead, and also existing) Done second since the cuffbar implies it has a target already
+					Check if the bot can see the target.
+						If it can, shoot them, then check if they're in cuffing range.
+							If in cuffing range, cuff em, then stand still until they're done.
+							If not, go after them!
+						If it can't, go after them! And get a little frustrated too.
+				*/
 				if(1)
-					if(!arrest_target || !master.tool)
-						src.mode = 0
+					// First, check if we're already cuffing someone. Quit getting sidetracked, you scatterbrained rectangles
+					if(actions.hasAction(src.master, "buddy_cuff"))
 						return
 
-					if(arrest_target)
+					// Next check if they have someone to arrest, and that they're alive. And that they're living.
+					if(!src.arrest_target || !isliving(src.arrest_target) || isdead(src.arrest_target))
+						src.mode = 0
+						src.drop_arrest_target()
+						return // target doesnt exist, is a ghost, or has given up the ghost
 
-						if(!(arrest_target in view(7,master)) && !master.moving)
-							//qdel(master.mover)
-							master.frustration += 2
-							if (master.mover)
-								master.mover.master = null
-								master.mover = null
-							master.navigate_to(arrest_target,ARREST_DELAY, 0, 0)
-							return
+					// Can we /see/ them?
+					if(src.arrest_target in view(7,get_turf(master)))
+						// Shoot them!
+						master.bot_attack(arrest_target, src.lethal)
+					else
+						// Otherwise get frustrated
+						master.frustration += 2
 
-						else
-							var/targdist = get_dist(master, arrest_target)
-							if((targdist <= 1) || master.tool && master.tool.is_gun || master.budgun || (master.tool == /obj/item/device/guardbot_tool/gun))	// If you have a gun, USE IT AAA
-								if (!isliving(arrest_target) || isdead(arrest_target))
-									mode = 0
-									drop_arrest_target()
-									return
-
-								master.bot_attack(arrest_target, src.lethal)
-								if(targdist <= 1 && !cuffing && (arrest_target.getStatusDuration("weakened") || arrest_target.getStatusDuration("stunned")))
-									actions.start(new/datum/action/bar/icon/buddy_cuff(src.master, src), src.master)
-									return
-							if(!master.path || !master.path.len || (4 < get_dist(arrest_target,master.path[master.path.len])) )
-								master.moving = 0
-								//master.current_movepath = "HEH" //Stop any current movement.
-								master.navigate_to(arrest_target,ARREST_DELAY, 0,0)
-
-					return
-
-			return
+					// Right up against them? Book em!
+					if(IN_RANGE(src.master, src.arrest_target, 1) && is_incapacitated(src.arrest_target))
+						actions.start(new/datum/action/bar/icon/buddy_cuff(src.master, src), src.master)
+					// Otherwise, go get them!
+					else
+						if (master.mover)
+							master.mover.master = null
+							master.mover = null
+						master.moving = 0
+						master.navigate_to(arrest_target,ARREST_DELAY, 0, 0)
+						//master.current_movepath = "HEH" //Stop any current movement.
 
 		task_input(input)
 			if(..()) return 1
@@ -2860,14 +2874,14 @@
 						src.arrest_target = null
 						src.last_found = world.time
 					src.arrest_attempts = 0
-					src.cuffing = 0
+					actions.stopId("buddy_cuff", src.master)
 
 					return 1
 
 				if("path_error","path_blocked")
 					src.arrest_attempts++
 					if(src.arrest_attempts >= 2)
-						src.cuffing = 0
+						actions.stopId("buddy_cuff", src.master)
 						src.target = null
 						if(arrest_target)
 							src.arrest_target = null
@@ -3070,7 +3084,7 @@
 			drop_arrest_target()
 				src.arrest_target = null
 				src.last_found = world.time
-				src.cuffing = 0
+				actions.stopId("buddy_cuff", src.master)
 				src.master.frustration = 0
 				master.set_emotion()
 				return
@@ -3314,7 +3328,6 @@
 		var/tmp/mob/living/carbon/arrest_target = null
 		var/tmp/arrest_attempts = 0
 		var/tmp/follow_attempts = 0
-		var/tmp/cuffing = 0
 		var/tmp/mode = 0 //0: Following protectee, 1: Arresting threat
 
 		var/lethal = 0 //Do we use lethal force (if possible) ?
@@ -3393,7 +3406,7 @@
 					src.protected = null
 					src.arrest_attempts = 0
 					src.follow_attempts = 0
-					src.cuffing = 0
+					actions.stopId("buddy_cuff", src.master)
 				if("path_error","path_blocked")
 
 					if (src.protected)
@@ -3457,7 +3470,7 @@
 
 			drop_arrest_target()
 				src.arrest_target = null
-				src.cuffing = 0
+				actions.stopId("buddy_cuff", src.master)
 				return
 
 			check_buddy()
@@ -3544,21 +3557,25 @@
 #define STATE_POST_TOUR_IDLE 3
 
 //Neat things we've seen on this trip
-#define NT_WIZARD 1
-#define NT_CAPTAIN 2
-#define NT_JONES 4
-#define NT_BEE 8
-#define NT_SECBOT 16
-#define NT_BEEPSKY 32
-#define NT_OTHERBUDDY 64
-#define NT_SPACE 128
-#define NT_DORK 256
-#define NT_CLOAKER 1024
-#define NT_GEORGE 2048
-#define NT_DRONE 4096
-#define NT_AUTOMATON 8192
-#define NT_CHEGET 16384
-#define NT_GAFFE 32768 //Note: this is the last one the bitfield can fit.  Thanks, byond!!
+#define NT_WIZARD (1<<1)
+#define NT_CAPTAIN (1<<2)
+#define NT_JONES (1<<3)
+#define NT_BEE (1<<4)
+#define NT_SECBOT (1<<5)
+#define NT_BEEPSKY (1<<6)
+#define NT_OTHERBUDDY (1<<7)
+#define NT_SPACE (1<<8)
+#define NT_DORK (1<<9)
+#define NT_CLOAKER (1<<10)
+#define NT_GEORGE (1<<11)
+#define NT_DRONE (1<<12)
+#define NT_AUTOMATON (1<<13)
+#define NT_CHEGET (1<<14)
+#define NT_GAFFE (1<<15)
+
+#define MAPTEXT_PAUSE (4.5 SECONDS)
+#define FOUND_NEAT(FLAG) src.distracted = TRUE; src.neat_things |= FLAG; SPAWN_DBG(0)
+#define END_NEAT sleep(MAPTEXT_PAUSE*2); src.distracted = FALSE
 
 	tourguide
 		name = "tourguide"
@@ -3579,6 +3596,7 @@
 		var/tmp/tour_delay = 0
 		var/tmp/neat_things = 0		//Bitfield to mark neat things seen on a tour.
 		var/tmp/recent_nav_attempts = 0
+		var/tmp/distracted = FALSE
 
 		New()
 			..()
@@ -3616,7 +3634,10 @@
 					if (!next_beacon_id)
 						next_beacon_id = initial(next_beacon_id)
 
-					awaiting_beacon = 10
+					awaiting_beacon = 4
+
+					if (src.distracted)
+						awaiting_beacon += 2
 
 					master.post_status("!BEACON!", "findbeacon", "tour")
 					return
@@ -3626,7 +3647,7 @@
 						state = STATE_FINDING_BEACON
 						return
 
-					if (prob(20))
+					if (!src.distracted && prob(20))
 						src.look_for_neat_thing()
 
 					if (!master.moving)
@@ -3644,23 +3665,11 @@
 					if (wait_for_guests && !locate(/mob/living/carbon) in view(src.master)) //Maybe we shouldn't speak to no-one??
 						return	//I realize this doesn't check if they're dead.  Buddies can't always tell, ok!! Maybe if people had helpful power lights too
 
-					if (ckey(current_tour_text))
-						if (findtext(current_tour_text, "|p")) //There are pauses present! So, um, pause.
-							var/list/tour_text_with_pauses = splittext(current_tour_text, "|p")
-							SPAWN_DBG(0)
-								sleep(1 SECOND)
-								for (var/tour_line in tour_text_with_pauses)
-									if (!ckey(tour_line) || !master)
-										break
-
-									master.speak( copytext( html_encode(tour_line), 1, MAX_MESSAGE_LEN ) )
-									sleep(1 SECOND)
-						else
-							master.speak( copytext(html_encode(current_tour_text), 1, MAX_MESSAGE_LEN))
+					speak_with_pause(current_tour_text, yield_to_neat=TRUE)
 
 					if (next_beacon_id)
 						state = STATE_FINDING_BEACON
-						awaiting_beacon = 3 //This will just serve as a delay so the buddy isn't zipping around at light speed between stops.
+						awaiting_beacon = max(awaiting_beacon, 1) //This will just serve as a delay so the buddy isn't zipping around at light speed between stops.
 					else
 						state = STATE_POST_TOUR_IDLE
 						tour_delay = 30
@@ -3677,12 +3686,78 @@
 
 			return
 
+		// take a text string and parse out pauses
+		proc/speak_with_pause(text, yield_to_neat=FALSE)
+			var/delays = 0
+			var/proc_delay = master.base_tick_spacing*(2**(master.processing_tier-1))
+
+			SPAWN_DBG(0) // do not delay doWork
+				//Delay for active destraction
+				while(yield_to_neat && distracted)
+					awaiting_beacon++
+					sleep(5 SECONDS)
+					delays++
+					if( delays > 10 )
+						distracted = FALSE
+						break
+
+				if (ckey(text))
+					if (findtext(text, "|p")) //There are pauses present! So, um, pause.
+						var/list/text_with_pauses = splittext(text, "|p")
+						if(yield_to_neat)
+							awaiting_beacon = round(length(text_with_pauses)*(MAPTEXT_PAUSE/proc_delay))+1 //factor in delay on pauses in speech
+
+							for (var/tour_line in text_with_pauses)
+								if (!ckey(tour_line) || !master)
+									break
+
+								//Delay for sudden destraction
+								while(yield_to_neat && distracted)
+									awaiting_beacon++
+									sleep(5 SECONDS)
+									delays++
+									if( delays > 10 )
+										distracted = FALSE
+										break
+
+								speak_with_maptext(copytext(html_encode(tour_line), 1, MAX_MESSAGE_LEN), TRUE)
+								sleep(5 SECONDS)
+					else
+						speak_with_maptext(copytext(html_encode(current_tour_text), 1, MAX_MESSAGE_LEN), TRUE)
+
+
+#define MAPTEXT_SLICE_SIZE 100 // Reduce maptext slice size to avoid 4 rows
+		proc/speak_with_maptext(text, pause_for_beacon=FALSE)
+			var/start = 0
+			var/slice = 0
+			var/remaining = length(text)
+			var/proc_delay = master.base_tick_spacing*(2**(master.processing_tier-1))
+
+			if(remaining <= MAPTEXT_SLICE_SIZE)
+				master.speak(text)
+				return
+
+			if(pause_for_beacon)
+				src.awaiting_beacon += round((remaining / MAPTEXT_SLICE_SIZE)*(MAPTEXT_PAUSE/proc_delay))
+
+			master.speak(text, just_chat=TRUE)
+			while(remaining - slice > MAPTEXT_SLICE_SIZE)
+				slice = findlasttext(text," ", slice+MAPTEXT_SLICE_SIZE, slice+1)
+				if(!slice)
+					break
+				master.speak(copytext(text,start+1,slice), just_float = TRUE)
+				start = slice
+				sleep(MAPTEXT_PAUSE)
+
+			master.speak(copytext(text,start), just_float = TRUE)
+#undef MAPTEXT_SLICE_SIZE
+
 		attack_response(mob/attacker as mob)
 			if(..())
 				return
 
 			src.master.set_emotion(ANGRY_FACE)
-			src.master.speak(pick("Rude!","That is not acceptable behavior!","This is a tour, not a fight factory!","You have been ejected from the tourgroup for: Roughhousing.  Please be aware that tour sessions are non-refundable."))
+			src.speak_with_maptext(pick("Rude!","That is not acceptable behavior!","This is a tour, not a fight factory!","You have been ejected from the tourgroup for: Roughhousing.  Please be aware that tour sessions are non-refundable."))
 			var/datum/computer/file/guardbot_task/security/single_use/beatdown = new
 			beatdown.arrest_target = attacker
 			beatdown.mode = 1
@@ -3732,26 +3807,28 @@
 		proc/look_for_neat_thing()
 			var/area/spaceArea = get_area(src.master)
 			if (!(src.neat_things & NT_SPACE) && spaceArea && spaceArea.name == "Space" && !istype(get_turf(src.master), /turf/simulated/shuttle))
-				src.neat_things |= NT_SPACE
-				src.master.speak(pick("While you find yourself surrounded by space, please try to avoid the temptation to inhale any of it.  That doesn't work.",\
-				 "Space: the final frontier.  Oh, except for time travel and any other dimensions.  And frontiers on other planets, including other planets in those other dimensions and times.  Maybe I should stick with \"space: a frontier.\"",\
-				 "Those worlds in space are as countless as all the grains of sand on all the beaches of the earth. Each of those worlds is as real as ours and every one of them is a succession of incidents, events, occurrences which influence its future. Countless worlds, numberless moments, an immensity of space and time.  This Sagan quote and others like it are available on mugs at the gift shop.",\
-				 "Please keep hold of the station at all times while in an exposed area.  The same principle does not apply to your breath without a mask.  Your lungs will pop like bubblegum.  Just a heads up."))
+				FOUND_NEAT(NT_SPACE)
+					src.speak_with_maptext(pick("While you find yourself surrounded by space, please try to avoid the temptation to inhale any of it.  That doesn't work.",\
+					"Space: the final frontier.  Oh, except for time travel and any other dimensions.  And frontiers on other planets, including other planets in those other dimensions and times.  Maybe I should stick with \"space: a frontier.\"",\
+					"Those worlds in space are as countless as all the grains of sand on all the beaches of the earth. Each of those worlds is as real as ours and every one of them is a succession of incidents, events, occurrences which influence its future. Countless worlds, numberless moments, an immensity of space and time.  This Sagan quote and others like it are available on mugs at the gift shop.",\
+					"Please keep hold of the station at all times while in an exposed area.  The same principle does not apply to your breath without a mask.  Your lungs will pop like bubblegum.  Just a heads up."))
+					END_NEAT
 				return
 
 			for (var/atom/movable/AM in view(7, master))
 				if (ishuman(AM))
 					var/mob/living/carbon/human/H = AM
 					if (!(src.neat_things & NT_GAFFE) && !isdead(H) && !H.sight_check(1))
-						src.neat_things |= NT_GAFFE
-						src.master.speak("Ah! As you can see here--")
+						FOUND_NEAT(NT_GAFFE)
+							var/emotion
+							src.speak_with_maptext("Ah! As you can see here--")
 
-						SPAWN_DBG(1 SECOND)
-							. = desired_emotion //We're going to make him sad until the end of this spawn, ok.
+							sleep(4 SECOND)
+							emotion = desired_emotion //We're going to make him sad until the end of this spawn, ok.
 							desired_emotion = "sad"
 							master.set_emotion(desired_emotion)
-							src.master.speak("OH! Sorry! Sorry, [H.name]! I didn't mean it that way!")
-							sleep(0.5 SECONDS)
+							src.speak_with_maptext("OH! Sorry! Sorry, [H.name]! I didn't mean it that way!")
+							sleep(4.5 SECONDS)
 							var/mob/living/carbon/human/deaf_person = null
 							for (var/mob/living/carbon/human/maybe_deaf in view(7, master))
 								if (!isdead(maybe_deaf) && !maybe_deaf.hearing_check(1))
@@ -3759,178 +3836,187 @@
 									break
 
 							if (deaf_person)
-								src.master.speak("I'll just narrate things so you can all hear it--")
-								sleep(1 SECOND)
+								src.speak_with_maptext("I'll just narrate things so you can all hear it--")
+								sleep(4 SECONDS)
 								if (deaf_person == H)
-									src.master.speak("SORRY [H] I DIDN'T MEAN THAT EITHER AAAA")
-
+									src.speak_with_maptext("SORRY [H] I DIDN'T MEAN THAT EITHER AAAA")
 								else
-									src.master.speak("Oh! Sorry! Sorry, [deaf_person.name]!! I didn't mean that that way eith-wait um.")
+									src.speak_with_maptext("Oh! Sorry! Sorry, [deaf_person.name]!! I didn't mean that that way eith-wait um.")
 									sleep(1 SECOND)
 									src.master.visible_message("<b>[src.master]</b> begins signing frantically!  Despite, um, robot hands not really being equipped for sign language.")
 
-							sleep(10 SECONDS)
-							desired_emotion = .
+							sleep(5 SECONDS)
+							src.distracted = FALSE
+							sleep(5 SECONDS)
+							desired_emotion = emotion
 							master.set_emotion(desired_emotion)
+							END_NEAT
 
 					if (!(src.neat_things & NT_CLOAKER) && H.invisibility > 0)
-						src.master.speak("As a courtesy to other tourgroup members, you are requested, though not required, to deactivate any cloaking devices, stealth suits, light redirection field packs, and/or unholy blood magic.")
-						src.neat_things |= NT_CLOAKER
+						FOUND_NEAT(NT_CLOAKER)
+							src.speak_with_maptext("As a courtesy to other tourgroup members, you are requested, though not required, to deactivate any cloaking devices, stealth suits, light redirection field packs, and/or unholy blood magic.")
+							END_NEAT
 						return
 
 					if (!(src.neat_things & NT_WIZARD) && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe) )
-						src.master.speak( pick("Look, group, a wizard!  Please be careful, space wizards can be dangerous.","Ooh, a real space wizard!  Look but don't touch, folks!","Space wizards are highly secretive, especially regarding the nature of their abilities.  Current speculation is that their \"magic\" is really the application of advanced technologies or artifacts.") )
-						src.neat_things |= NT_WIZARD
+						FOUND_NEAT(NT_WIZARD)
+							src.speak_with_maptext( pick("Look, group, a wizard!  Please be careful, space wizards can be dangerous.","Ooh, a real space wizard!  Look but don't touch, folks!","Space wizards are highly secretive, especially regarding the nature of their abilities.  Current speculation is that their \"magic\" is really the application of advanced technologies or artifacts.") )
+							END_NEAT
 						return
 
 					if (!(src.neat_things & NT_CAPTAIN) && istype(H.head, /obj/item/clothing/head/caphat))
-						src.neat_things |= NT_CAPTAIN
-						src.master.speak("Good day, Captain!  You're looking [pick("spiffy","good","swell","proper","professional","prim and proper", "spiffy", "ultra-spiffy")] today.")
+						FOUND_NEAT(NT_CAPTAIN)
+							src.speak_with_maptext("Good day, Captain!  You're looking [pick("spiffy","good","swell","proper","professional","prim and proper", "spiffy", "ultra-spiffy")] today.")
+							END_NEAT
 						return
 
 					if (!(src.neat_things & NT_DORK) && (H.client && H.client.IsByondMember() && prob(5)))// || (H.ckey in Dorks))) //If this is too mean to clarks, remove that part I guess
-						src.neat_things |= NT_DORK
+						FOUND_NEAT(NT_DORK)
+							var/insult = pick("dork","nerd","weenie","doofus","loser","dingus","dorkus")
+							var/insultphrase = "And if you look to--[insult] alert!  [pick("Huge","Total","Mega","Complete")] [insult] detected! Alert! Alert! [capitalize(insult)]! "
 
-						var/insult = pick("dork","nerd","weenie","doofus","loser","dingus","dorkus")
-						var/insultphrase = "And if you look to--[insult] alert!  [pick("Huge","Total","Mega","Complete")] [insult] detected! Alert! Alert! [capitalize(insult)]! "
+							insultphrase += copytext(insult,1,2)
+							var/i = rand(3,7)
+							while (i-- > 0)
+								insultphrase += copytext(insult,2,3)
+							insultphrase += "[copytext(insult,3)]!!"
 
-						insultphrase += copytext(insult,1,2)
-						var/i = rand(3,7)
-						while (i-- > 0)
-							insultphrase += copytext(insult,2,3)
-						insultphrase += "[copytext(insult,3)]!!"
-
-						src.master.speak(insultphrase)
-						master.point(H)
+							src.speak_with_maptext(insultphrase)
+							master.point(H)
+							END_NEAT
 						return
 
 				else if (!(src.neat_things & NT_JONES) && istype(AM, /obj/critter/cat) && AM.name == "Jones")
-					src.neat_things |= NT_JONES
-					var/obj/critter/cat/jones = AM
-					src.master.speak("And over here is the ship's cat, J[jones.alive ? "ones! No spacecraft is complete without a cat!" : "-oh mercy, MOVING ON, MOVING ON"]")
+					FOUND_NEAT(NT_JONES)
+						var/obj/critter/cat/jones = AM
+						src.speak_with_maptext("And over here is the ship's cat, J[jones.alive ? "ones! No spacecraft is complete without a cat!" : "-oh mercy, MOVING ON, MOVING ON"]")
+						END_NEAT
 					return
 
 				else if (istype(AM, /obj/critter/domestic_bee) && AM:alive && !(src.neat_things & NT_BEE))
-					src.neat_things |= NT_BEE
-					if (istype(AM, /obj/critter/domestic_bee/trauma))
-						src.master.speak("Look, team, a domestic space bee!  This happy creature--oh dear.  Hold on, please.")
-						var/datum/computer/file/guardbot_task/security/single_use/emergency_hug = new
-						emergency_hug.hug_target = AM
-						src.master.add_task(emergency_hug, 1, 0)
-						return
+					FOUND_NEAT(NT_BEE)
+						if (istype(AM, /obj/critter/domestic_bee/trauma))
+							src.speak_with_maptext("Look, team, a domestic space bee!  This happy creature--oh dear.  Hold on, please.")
+							var/datum/computer/file/guardbot_task/security/single_use/emergency_hug = new
+							emergency_hug.hug_target = AM
+							src.master.add_task(emergency_hug, 1, 0)
+							END_NEAT
+							return
 
+						sleep(5)
+						src.speak_with_maptext("Look, team, a domestic space bee!  This happy creature is the result of decades of genetic research!")
+						sleep(5)
+						switch (rand(1,5))
+							if (1)
+								src.speak_with_maptext("Fun fact: Domestic space bee DNA is [rand(1,17)]% [pick("dog", "human", "cat", "honeybee")]")
 
-					src.master.speak("Look, team, a domestic space bee!  This happy creature is the result of decades of genetic research!")
+							if (2)
+								src.speak_with_maptext("Fun fact: Domestic space bees are responsible for over [rand(45,67)]% of all honey production outside of Earth!")
 
-					switch (rand(1,5))
-						if (1)
-							src.master.speak("Fun fact: Domestic space bee DNA is [rand(1,17)]% [pick("dog", "human", "cat", "honeybee")]")
+							if (3)
+								src.speak_with_maptext("Fun fact: Domestic space bees are very well adapted to accidental space exposure, and can survive in that environment for upwards of [pick("ten hours", "two days", "42 minutes", "three-score ke", "one-and-one-half nychthemeron")].")
 
-						if (2)
-							src.master.speak("Fun fact: Domestic space bees are responsible for over [rand(45,67)]% of all honey production outside of Earth!")
+							if (4)
+								src.speak_with_maptext("Fun fact: Domestic space bee DNA is protected by U.S. patent number [rand(111,999)],[rand(111,999)],[rand(555,789)].")
 
-						if (3)
-							src.master.speak("Fun fact: Domestic space bees are very well adapted to accidental space exposure, and can survive in that environment for upwards of [pick("ten hours", "two days", "42 minutes", "three-score ke", "one-and-one-half nychthemeron")].")
-
-						if (4)
-							src.master.speak("Fun fact: Domestic space bee DNA is protected by U.S. patent number [rand(111,999)],[rand(111,999)],[rand(555,789)].")
-
-						if (5)
-							src.master.speak("Fun fact: The average weight of a domestic space bee is about [pick("10 pounds","4.54 kilograms", "25600 drams", "1.42857143 cloves", "145.833333 troy ounces")].")
-
-					return
+							if (5)
+								src.speak_with_maptext("Fun fact: The average weight of a domestic space bee is about [pick("10 pounds","4.54 kilograms", "25600 drams", "1.42857143 cloves", "145.833333 troy ounces")].")
+						END_NEAT
 
 				else if (istype(AM, /obj/critter/dog/george) && !(src.neat_things & NT_GEORGE))
-					src.neat_things |= NT_GEORGE
-					src.master.speak("Why, if it isn't beloved station canine, George!  Who's a good doggy?  You are!  Yes, you!")
+					FOUND_NEAT(NT_GEORGE)
+						src.speak_with_maptext("Why, if it isn't beloved station canine, George!  Who's a good doggy?  You are!  Yes, you!")
+						END_NEAT
 
 				else if (istype(AM, /obj/critter/gunbot/drone) && !(src.neat_things & NT_DRONE))
-					src.neat_things |= NT_DRONE
-					src.master.speak( pick("Oh dear, a syndicate autonomous drone!  These nasty things have been shooting up innocent space-folk for a couple of years now.", "Watch out, folks!  That's a syndicate drone, they're nasty buggers!", "Ah, a syhndicate drone!  They're made in a secret factory, one located at--oh dear, we better get hurrying before it becomes upset.", "Watch out, that's a syndicate drone!  They're made in a secret factory. There was a guy who knew where it was on my first tour, but he took the secret...to his grave!!  Literally.  It's with him.  In his crypt.") )
+					FOUND_NEAT(NT_DRONE)
+						src.speak_with_maptext( pick("Oh dear, a syndicate autonomous drone!  These nasty things have been shooting up innocent space-folk for a couple of years now.", "Watch out, folks!  That's a syndicate drone, they're nasty buggers!", "Ah, a syhndicate drone!  They're made in a secret factory, one located at--oh dear, we better get hurrying before it becomes upset.", "Watch out, that's a syndicate drone!  They're made in a secret factory. There was a guy who knew where it was on my first tour, but he took the secret...to his grave!!  Literally.  It's with him.  In his crypt.") )
+						END_NEAT
 
 				else if (!(src.neat_things & NT_AUTOMATON) && istype(AM, /obj/critter/automaton))
-					src.neat_things |= NT_AUTOMATON
-					src.master.speak("This here is some kind of automaton.  This, uh, porcelain-faced, click-clackity metal man.")
-					. = "Why [istype(get_area(AM), /area/solarium) ? "am I" : "is this"] here?"
-					SPAWN_DBG(2 SECONDS)
-						src.master.speak(.)
+					FOUND_NEAT(NT_AUTOMATON)
+						src.speak_with_maptext("This here is some kind of automaton.  This, uh, porcelain-faced, click-clackity metal man.")
+						. = "Why [istype(get_area(AM), /area/solarium) ? "am I" : "is this"] here?"
+						sleep(6 SECONDS)
+						src.speak_with_maptext(.)
+						END_NEAT
 
 				else if (istype(AM, /obj/machinery/bot))
 					if (istype(AM, /obj/machinery/bot/secbot))
 						if (AM.name == "Officer Beepsky" && !(src.neat_things & NT_BEEPSKY))
-							src.neat_things |= NT_BEEPSKY
-							src.master.speak("And here comes Officer Beepsky, the proud guard of this station. Proud.")
-							src.master.speak("Not at all terrible.  No Sir.  Not at all.")
-							if (prob(10))
-								SPAWN_DBG(1.5 SECONDS)
-									src.master.speak("Well okay, maybe a little.")
-
-							return
+							FOUND_NEAT(NT_BEEPSKY)
+								src.speak_with_maptext("And here comes Officer Beepsky, the proud guard of this station. Proud.")
+								sleep(5 SECONDS)
+								src.speak_with_maptext("Not at all terrible.  No Sir.  Not at all.")
+								if (prob(10))
+									sleep(6.5 SECONDS)
+									src.speak_with_maptext("Well okay, maybe a little.")
+								END_NEAT
 
 						else if (!(src.neat_things & NT_SECBOT))
-							src.neat_things |= NT_SECBOT
-							src.master.speak("And if you look over now, you'll see a securitron, an ace security robot originally developed \"in the field\" from spare parts in a security office!")
-
-							return
+							FOUND_NEAT(NT_SECBOT)
+								src.speak_with_maptext("And if you look over now, you'll see a securitron, an ace security robot originally developed \"in the field\" from spare parts in a security office!")
+								END_NEAT
 
 					else if (istype(AM, /obj/machinery/bot/guardbot) && AM != src.master)
 						var/obj/machinery/bot/guardbot/otherBuddy = AM
 						if (!(src.neat_things & NT_CAPTAIN) && istype(otherBuddy.hat, /obj/item/clothing/head/caphat))
-							src.neat_things |= NT_CAPTAIN
-							src.master.speak("Good day, Captain!  You look a little different today, did you get a haircut?")
-							var/otherBuddyID = otherBuddy.net_id
-							//Notify other buddy
-							SPAWN_DBG(1 SECOND)
+							FOUND_NEAT(NT_CAPTAIN)
+								src.speak_with_maptext("Good day, Captain!  You look a little different today, did you get a haircut?")
+								var/otherBuddyID = otherBuddy.net_id
+								//Notify other buddy
+								sleep(1 SECOND)
 								if (src.master)
 									src.master.post_status("[otherBuddyID]", "command", "captain_greet")
-							return
+								END_NEAT
 
 						else if (!(src.neat_things & NT_WIZARD) && istype(otherBuddy.hat, /obj/item/clothing/head/wizard))
-							src.neat_things |= NT_WIZARD
-							src.master.speak("Look, a space wizard!  Please stand back, I am going to attempt to communicate with it.")
-							src.master.speak("Hello, Mage, Seer, Wizard, Wizzard, or other magic-user.  We mean you no harm!  We ask you humbly for your WIZARDLY WIZ-DOM.")
-							if (prob(25))
-								src.master.speak("We hope that we aren't disrupting any sort of wiz-biz or wizness deal.")
-							//As before, notify the other buddy
-							var/otherBuddyID = otherBuddy.net_id
-							SPAWN_DBG(1 SECOND)
+							FOUND_NEAT(NT_WIZARD)
+								src.speak_with_maptext("Look, a space wizard!  Please stand back, I am going to attempt to communicate with it.")
+								sleep(5 SECONDS)
+								src.speak_with_maptext("Hello, Mage, Seer, Wizard, Wizzard, or other magic-user.  We mean you no harm!  We ask you humbly for your WIZARDLY WIZ-DOM.")
+								if (prob(25))
+									sleep(6 SECONDS)
+									src.speak_with_maptext("We hope that we aren't disrupting any sort of wiz-biz or wizness deal.")
+								//As before, notify the other buddy
+								var/otherBuddyID = otherBuddy.net_id
 								if (src.master)
 									src.master.post_status("[otherBuddyID]", "command", "wizard_greet")
+								END_NEAT
 
 						else if (!(src.neat_things & NT_OTHERBUDDY))
-							src.neat_things |= NT_OTHERBUDDY
-							if (istype(otherBuddy, /obj/machinery/bot/guardbot/future))
-								src.master.speak("The PR line of personal robot has been--wait! Hold the phone! Is that a PR-7? Oh man, I feel old!")
-								return
+							FOUND_NEAT(NT_OTHERBUDDY)
+								if (istype(otherBuddy, /obj/machinery/bot/guardbot/future))
+									src.speak_with_maptext("The PR line of personal robot has been--wait! Hold the phone! Is that a PR-7? Oh man, I feel old!")
 
-							if (istype(otherBuddy, /obj/machinery/bot/guardbot/old/tourguide))
-								src.master.visible_message("<b>[master]</b> waves at [otherBuddy].")
-								return
+								else if (istype(otherBuddy, /obj/machinery/bot/guardbot/old/tourguide))
+									src.master.visible_message("<b>[master]</b> waves at [otherBuddy].")
 
-							if (istype(otherBuddy, /obj/machinery/bot/guardbot/soviet))
-								src.master.speak("That's...that's one of those eastern bloc robuddies.  Um...hello?")
-								src.master.visible_message("<b>[master]</b> gives [otherBuddy] a slow, confused wave.")
-								return
+								else if (istype(otherBuddy, /obj/machinery/bot/guardbot/soviet))
+									src.speak_with_maptext("That's...that's one of those eastern bloc robuddies.  Um...hello?")
+									src.master.visible_message("<b>[master]</b> gives [otherBuddy] a slow, confused wave.")
 
-							src.master.speak("The PR line of personal robot has been Thinktronic Data Systems' flagship robot line for over 15 years.  It's easy to see their appeal!")
-							switch (rand(1,4))
-								if (1)
-									src.master.speak("Buddy Fact: In 2051, Robuddies were conclusively determined to have a[prob(40) ? "t least three-fourths of a" : ""] soul.")
-								if (2)
-									src.master.speak("Buddy Fact: Robuddies cannot jump.  We just can't, sorry!")
-								if (3)
-									src.master.speak("Buddy Fact: Our hug protocols have been extensively revised through thousands of rounds of testing and simulation to deliver Peak Cuddle.")
-								if (4)
-									src.master.speak("Buddy Fact: Robuddies are programmed to be avid fans of hats and similar headgear.")
+								else
+									src.speak_with_maptext("The PR line of personal robot has been Thinktronic Data Systems' flagship robot line for over 15 years.  It's easy to see their appeal!")
+									sleep(5 SECONDS)
+									switch (rand(1,4))
+										if (1)
+											src.speak_with_maptext("Buddy Fact: In 2051, Robuddies were conclusively determined to have a[prob(40) ? "t least three-fourths of a" : ""] soul.")
+										if (2)
+											src.speak_with_maptext("Buddy Fact: Robuddies cannot jump.  We just can't, sorry!")
+										if (3)
+											src.speak_with_maptext("Buddy Fact: Our hug protocols have been extensively revised through thousands of rounds of testing and simulation to deliver Peak Cuddle.")
+										if (4)
+											src.speak_with_maptext("Buddy Fact: Robuddies are programmed to be avid fans of hats and similar headgear.")
+									sleep(5 SECONDS)
+								END_NEAT
 
 				else if ((istype(AM, /obj/item/luggable_computer/cheget) || istype(AM, /obj/machinery/computer3/luggable/cheget)) && !(src.neat_things & NT_CHEGET))
-					src.neat_things |= NT_CHEGET
-					src.master.speak( pick("And over there is--NOTHING.  Not a thing.  Let's continue on with the tour.", "Please ignore the strange briefcase, is what I would say, were there a strange briefcase.  But there is not, and even if there was you should ignore it.","This is just a reminder that station crew are not to handle Soviet materials, per a whole bunch of treaties and negotiations.") )
-
-					AM.visible_message("<b>[AM]</b> bloops sadly.")
-					playsound(AM.loc, prob(50) ? 'sound/machines/cheget_sadbloop.ogg' : 'sound/machines/cheget_somberbloop.ogg', 50, 1)
-
-
+					FOUND_NEAT(NT_CHEGET)
+						src.speak_with_maptext( pick("And over there is--NOTHING.  Not a thing.  Let's continue on with the tour.", "Please ignore the strange briefcase, is what I would say, were there a strange briefcase.  But there is not, and even if there was you should ignore it.","This is just a reminder that station crew are not to handle Soviet materials, per a whole bunch of treaties and negotiations.") )
+						AM.visible_message("<b>[AM]</b> bloops sadly.")
+						playsound(AM.loc, prob(50) ? 'sound/machines/cheget_sadbloop.ogg' : 'sound/machines/cheget_somberbloop.ogg', 50, 1)
+						END_NEAT
 			return
 
 //Be kind, undefine...d
@@ -3957,6 +4043,10 @@
 #undef NT_AUTOMATON
 #undef NT_CHEGET
 #undef NT_GAFFE
+
+#undef MAPTEXT_PAUSE
+#undef FOUND_NEAT
+#undef END_NEAT
 
 	bedsheet_handler
 		name = "confusion"
@@ -4067,7 +4157,7 @@
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddy_core-6"
 	mats = 6
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/created_default_task = null //Default task path of result
 	var/datum/computer/file/guardbot_task/created_model_task = null
 	var/created_name = "Guardbuddy" //Name of resulting guardbot
@@ -4739,9 +4829,10 @@
 	no_camera = 1
 	setup_charge_maximum = 800
 	setup_default_tool_path = /obj/item/device/guardbot_tool/flash
+	bot_chat_style = "font-family: 'Consolas', monospace;"
 
-	speak(var/message)
-		return ..("<font face=Consolas>[uppertext(message)]</font>")
+	speak(var/message, var/sing, var/just_float, var/just_chat)
+		return ..("[uppertext(message)]", just_float=just_float, just_chat=just_chat)
 
 	interacted(mob/user as mob)
 		var/dat = "<tt><B>PR-4 Robuddy v0.8</B></tt><br><br>"
@@ -4906,7 +4997,7 @@
 
 			W.set_loc(src)
 			src.created_cell = W
-			src.stage = 3
+			src.stage = 2
 			src.icon_state = "goldbuddy_frame-[buddy_model]-2"
 			boutput(user, "You add the power cell to [src]!")
 
@@ -5022,7 +5113,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "coin"
 	item_state = "coin"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
 		playsound(src.loc, "sound/items/coindrop.ogg", 100, 1)

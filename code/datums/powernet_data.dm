@@ -8,6 +8,13 @@
 	/// associated list of various data fields
 	var/list/fields = list(  )
 
+proc/FindRecordByFieldValue(var/list/datum/data/record/L, var/field, var/value)
+	if (!value) return
+	for(var/datum/data/record/R in L)
+		if(R.fields[field] == value)
+			return R
+	return
+
 /datum/powernet
 	/// all cables & junctions
 	var/list/obj/cable/cables = list()

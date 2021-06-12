@@ -49,7 +49,7 @@ rcd light flash thingy on matter drain
 	set category = "AI Modules"
 	set name = "Upgrade Turrets"
 	usr.verbs -= /client/proc/upgrade_turrets
-	for(var/obj/machinery/turret/turret as() in machine_registry[MACHINES_TURRETS])
+	for(var/obj/machinery/turret/turret as anything in machine_registry[MACHINES_TURRETS])
 		turret.health += 30
 		turret.shot_delay = 20
 

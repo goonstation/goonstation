@@ -435,6 +435,7 @@
 		return
 
 	proc/smash()
+		logTheThing("station", usr, null, "smashes a [src] in [src.loc?.loc] ([showCoords(src.x, src.y, src.z)])")
 		if (src.health < (src.health_max * -0.75))
 			// You managed to destroy it so hard you ERASED it.
 			qdel(src)
@@ -724,7 +725,7 @@
 			var/turf/T = get_step(src, dir)
 			if (T && (T.type in connects_to))
 				builtdir |= dir
-			else if (islist(connects_to) && connects_to.len)
+			else if (islist(connects_to) && length(connects_to))
 				for (var/i=1, i <= connects_to.len, i++)
 					var/atom/A = locate(connects_to[i]) in T
 					if (!isnull(A))

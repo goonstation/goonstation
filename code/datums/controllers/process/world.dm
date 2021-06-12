@@ -1,19 +1,25 @@
-// handles various global init and the position of the sun.
-datum/controller/process/world
+
+/// Handles various global init and the position of the sun.
+/datum/controller/process/world
 	var/shuttle
 
 	setup()
 		name = "World"
-		schedule_interval = 23
+		schedule_interval = 2.3 SECONDS
 
+		last_object = "genResearch.setup"
 		if(genResearch) genResearch.setup()
 
+		last_object = "setup_radiocodes"
 		setup_radiocodes()
+		last_object = "setup_organ_thresholds"
 		setup_organ_thresholds()
 
+		last_object = "emergency_shuttle"
 		emergency_shuttle = new /datum/shuttle_controller/emergency_shuttle()
 		src.shuttle = emergency_shuttle
 
+		last_object = "generate_access_name_lookup"
 		generate_access_name_lookup()
 
 	copyStateFrom(datum/controller/process/target)
@@ -21,11 +27,14 @@ datum/controller/process/world
 		src.shuttle = old_world.shuttle
 
 	doWork()
+		last_object = "sun.calc_position"
 		sun.calc_position()
 
+		last_object = "genResearch.progress"
 		if(genResearch) genResearch.progress()
 
 		for (var/byondkey in muted_keys)
+			last_object = "muted_keys[byondkey]"
 			var/value = muted_keys[byondkey]
 			if (value > 1)
 				muted_keys[byondkey] = value - 1

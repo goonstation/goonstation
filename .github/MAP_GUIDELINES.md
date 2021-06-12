@@ -1,5 +1,6 @@
 # Goonstation Mapping Guidelines
 
+{%hackmd @ZeWaka/dark-theme %}
 
 ## :heavy_exclamation_mark:Required:heavy_exclamation_mark: 
 

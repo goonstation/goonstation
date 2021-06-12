@@ -5,10 +5,9 @@
  * Copyright (c) 2020 Aleksej Komarov & ZeWaka (minor porting changes)
  * SPDX-License-Identifier: MIT
  */
-
 var/global/datum/controller/process/tgui/tgui_process
 
-// handles tgui interfaces
+/// handles tgui interfaces
 /datum/controller/process/tgui
 
 	/// A list of UIs scheduled to process
@@ -22,7 +21,7 @@ var/global/datum/controller/process/tgui/tgui_process
 
 	setup()
 		name = "tgui"
-		schedule_interval = 9 DECI SECONDS
+		schedule_interval = 0.9 SECONDS
 		basehtml = grabResource("tgui/tgui.html") // |GOONSTATION-ADD|
 		tgui_process = src
 

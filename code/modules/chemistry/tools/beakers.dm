@@ -146,7 +146,7 @@
 	desc = "A specialized reserve tank."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "largebottle"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	initial_volume = 400
 	amount_per_transfer_from_this = 25
 	incompatible_with_chem_dispensers = 1

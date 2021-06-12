@@ -4,6 +4,7 @@
 
 /datum/artifact/darkness_field
 	associated_object = /obj/artifact/darkness_field
+	type_name = "Darkness Generator"
 	rarity_weight = 350
 	max_triggers = 3
 	validtypes = list("wizard","eldritch","precursor")
@@ -37,7 +38,7 @@
 		if(..())
 			return
 		O.anchored = 0
-		for(var/obj/overlay/darkness_field/D as() in darkfields)
+		for(var/obj/overlay/darkness_field/D as anything in darkfields)
 			D.deactivate()
 
 /obj/overlay/darkness_field

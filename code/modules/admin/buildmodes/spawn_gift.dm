@@ -59,7 +59,7 @@ change the direction of created objects.<br>
 			G.icon_state = "strange-[random_style]"
 		else
 			G.size = 3
-			G.w_class = 4
+			G.w_class = W_CLASS_BULKY
 			//style selection copied from wrapping paper's New()
 			if(giftwrap_style == "Regular")
 				random_style = rand(1,8)

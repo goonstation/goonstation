@@ -75,6 +75,11 @@
 	id = "vampire_enthrall"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "enthrall"
+	bar_icon_state = "bar-vampire"
+	border_icon_state = "border-vampire"
+	color_active = "#3c6dc3"
+	color_success = "#3fb54f"
+	color_failure = "#8d1422"
 	var/mob/living/carbon/human/target
 	var/datum/targetable/vampire/enthrall/enslave
 

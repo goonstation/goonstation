@@ -4,6 +4,7 @@
 
 /datum/artifact/wish_granter
 	associated_object = /obj/artifact/wish_granter
+	type_name = "Wishgranter"
 	rarity_weight = 90
 	validtypes = list("wizard","eldritch")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
@@ -33,6 +34,9 @@
 		var/list/wishes = list("I wish to become rich!","I wish for great power!")
 
 		var/wish = input("Make a wish?","[O]") as null|anything in wishes
+		if (user.key in wish_granted)
+			boutput(user, "<b>[O]</b> resonates, \"<big>FOOLISH MORTAL, YOU TRY TO FOOL ME???</big>\"")
+			return
 		if (!wish)
 			boutput(user, "You say nothing.")
 			boutput(user, "<b>[O]</b> resonates, \"<big>YOU MAY RETURN LATER...</big>\"")

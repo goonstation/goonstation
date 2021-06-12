@@ -104,7 +104,7 @@
 				var/basetype = /obj
 				if (src.holder.rank in list("Host", "Coder", "Administrator"))
 					basetype = /datum
-				var/match = get_one_match(typename, basetype)
+				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE)
 				if (match)
 					var_value = new match()
 
@@ -179,7 +179,7 @@
 				var/basetype = /obj
 				if (src.holder.rank in list("Host", "Coder", "Administrator"))
 					basetype = /datum
-				var/match = get_one_match(typename, basetype)
+				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE)
 				if (match)
 					var_value = new match()
 
@@ -332,7 +332,7 @@
 			boutput(usr, "<span class='notice'>Type part of the path of the type.</span>")
 			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 			if (typename)
-				var/match = get_one_match(typename, /datum)
+				var/match = get_one_match(typename, /datum, use_concrete_types = FALSE)
 				if (match)
 					L[variable_index] = match
 
@@ -373,7 +373,7 @@
 				var/basetype = /obj
 				if (src.holder.rank in list("Host", "Coder", "Administrator"))
 					basetype = /datum
-				var/match = get_one_match(typename, basetype)
+				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE)
 				if (match)
 					L[variable_index] = new match()
 
@@ -557,7 +557,7 @@
 			boutput(usr, "If a direction, direction is: [dir]")
 
 	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-		"num","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list","restore to default")
+		"num","num adjust","type","ref","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list","restore to default")
 
 	if(!class)
 		return
@@ -599,9 +599,20 @@
 			O.vars[variable] = input("Enter new number:","Num",\
 				O.vars[variable]) as num
 
+		if("num adjust")
+			if(!isnum(oldVal)) return
+			O.vars[variable] += input("Enter value to adjust by:","Num Adjust",\
+				O.vars[variable]) as null|num
+
 		if("type")
 			O.vars[variable] = input("Enter type:","Type",O.vars[variable]) \
 				in typesof(/obj,/mob,/area,/turf)
+
+		if("ref")
+			var/input = input("Enter ref:") as null|text
+			var/target = locate(input)
+			if (!target) target = locate("\[[input]\]")
+			O.vars[variable] = target
 
 		if("reference")
 			O.vars[variable] = input("Select reference:","Reference",\
@@ -640,7 +651,7 @@
 				var/basetype = /obj
 				if (src.holder.rank in list("Host", "Coder", "Administrator"))
 					basetype = /datum
-				var/match = get_one_match(typename, basetype)
+				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE)
 				if (match)
 					O.vars[variable] = new match(O)
 

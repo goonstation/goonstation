@@ -269,6 +269,7 @@
 		setProperty("meleeprot", 4)
 		setProperty("rangedprot", 0.8)
 		setProperty("movespeed", 0.5)
+		setProperty("disorient_resist", 20)
 
 /obj/item/clothing/suit/armor/captain
 	name = "captain's armor"
@@ -345,7 +346,7 @@
 		setProperty("rangedprot", 3)
 		setProperty("pierceprot",25)
 		setProperty("disorient_resist", 45)
-		setProperty("movespeed", 2)
+		setProperty("movespeed", 1.5)
 
 /obj/item/clothing/suit/armor/death_commando
 	name = "death commando armor"
@@ -413,13 +414,13 @@
 	desc = "A suit designed to absorb explosive force; very bulky and unwieldy to maneuver in."
 	icon_state = "eod"
 	item_state = "eod"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	setupProperties()
 		..()
 		setProperty("meleeprot", 9)
 		setProperty("rangedprot", 2)
 		setProperty("disorient_resist", 10)
-		setProperty("movespeed", 0.6)
+		setProperty("movespeed", 0.45)
 		setProperty("exploprot", 60)
 
 /obj/item/clothing/suit/armor/hoscape

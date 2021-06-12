@@ -113,7 +113,7 @@
 
 
 			if("view")
-				if(!src.working_signal || !src.working_signal.len)
+				if(!src.working_signal || !length(src.working_signal))
 					src.print_text("Error, no signal loaded.")
 					return
 				else
@@ -257,7 +257,7 @@
 				src.peripheral_command("ping", null, "\ref[src.ping_card]")
 
 			if("view")
-				if(!src.replies || !src.replies.len)
+				if(!src.replies || !length(src.replies))
 					src.print_text("Error, no reply data found.")
 					return
 				else

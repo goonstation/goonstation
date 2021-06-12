@@ -100,6 +100,8 @@
 		if (!A) return // you never know ok??
 		if (disposed || pooled) return // if disposed = true, pooled or set for garbage collection and shouldn't process bumps
 		if (!proj_data) return // this apparently happens sometimes!! (more than you think!)
+		if (proj_data?.on_pre_hit(A, src.angle, src))
+			return // Our bullet doesnt want to hit this
 		if (A in hitlist)
 			return
 		else
@@ -167,10 +169,7 @@
 			if (src.proj_data) //ZeWaka: Fix for null.ticks_between_mob_hits
 				if (proj_data.hit_mob_sound)
 					playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
-			for (var/obj/item/cloaking_device/S in A.contents)
-				if (S.active)
-					S.deactivate(A)
-					src.visible_message("<span class='notice'><b>[A]'s cloak is disrupted!</b></span>")
+			SEND_SIGNAL(A, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 			for (var/obj/item/device/disguiser/D in A.contents)
 				if (D.on)
 					D.disrupt(A)
@@ -350,7 +349,7 @@
 			if (y32 < 0)
 				ys = -1
 				y32 = -y32
-		var/max_t = src.max_range + 1 // why not  --- off by one error is why not apparently
+		var/max_t = src.max_range * (32/proj_data.projectile_speed)
 		var/next_x = x32 / 2
 		var/next_y = y32 / 2
 		var/ct = 0
@@ -439,14 +438,15 @@
 			return
 
 		if (proj_data.precalculated)
+			var/incidence_turf = curr_turf
 			for (var/i = 1, i < crossing.len, i++)
 				var/turf/T = crossing[i]
 				if (crossing[T] < curr_t)
 					Move(T)
 					if (disposed || pooled)
 						return
-					incidence = get_dir(curr_turf, T)
-					curr_turf = T
+					incidence = get_dir(incidence_turf, T)
+					incidence_turf = T
 					crossing.Cut(1,2)
 					i--
 				else
@@ -603,6 +603,9 @@ datum/projectile
 	var/ie_type = "T"	//K, E, T
 	// var/type = "K"					//3 types, K = Kinetic, E = Energy, T = Taser
 
+	/// for on_pre_hit. Causes it to early-return TRUE if the thing checked was already cleared for pass-thru
+	var/atom/last_thing_hit
+
 	proc
 		impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)		//3 types, K = Kinetic, E = Energy, T = Taser
 			var/obj/itemspecialeffect/impact/E = null
@@ -645,6 +648,10 @@ datum/projectile
 		on_end(var/obj/projectile/O)
 			return
 		on_max_range_die(var/obj/projectile/O)
+			return
+		/// Check if we want to do something before actually hitting the thing we hit
+		/// Return TRUE for it to more or less skip collide()
+		on_pre_hit(atom/hit, angle, var/obj/projectile/O)
 			return
 
 		on_canpass(var/obj/projectile/O, atom/movable/passing_thing)
@@ -898,6 +905,8 @@ datum/projectile/snowball
 		return
 	var/turf/Q1 = get_turf(S)
 	var/turf/Q2 = get_turf(T)
+	if (!(Q1 && Q2))
+		return
 	return initialize_projectile(Q1, DATA, Q2.x - Q1.x, Q2.y - Q1.y, S, remote_sound_source, alter_proj = alter_proj)
 
 /proc/initialize_projectile_pixel(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/datum/callback/alter_proj = null)
@@ -907,6 +916,8 @@ datum/projectile/snowball
 		return
 	var/turf/Q1 = get_turf(S)
 	var/turf/Q2 = get_turf(T)
+	if (!(Q1 && Q2))
+		return
 	return initialize_projectile(Q1, DATA, (Q2.x - Q1.x) * 32 + pox, (Q2.y - Q1.y) * 32 + poy, S, alter_proj = alter_proj)
 
 /proc/initialize_projectile_pixel_spread(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/spread_angle, var/datum/callback/alter_proj = null)

@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/unary/cryo_cell
-	name = "cryo cell"
+	name = "cryogenic healing pod"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "celltop-P"
 	density = 1
@@ -70,8 +70,9 @@
 
 					process_occupant()
 				else
-					src.go_out()
-					playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+					if(occupant.mind)
+						src.go_out()
+						playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
 
 		if(air_contents)
 			ARCHIVED(temperature) = air_contents.temperature
@@ -325,7 +326,7 @@
 				return
 			occupant.bodytemperature += 50*(air_contents.temperature - occupant.bodytemperature)*current_heat_capacity/(current_heat_capacity + HEAT_CAPACITY(air_contents))
 			occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
-			occupant.changeStatus("burning",-100)
+			occupant.changeStatus("burning", -10 SECONDS)
 			var/mob/living/carbon/human/H = 0
 			if (ishuman(occupant))
 				H = occupant

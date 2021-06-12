@@ -9,9 +9,6 @@
 	RegisterSignal(parent, list(COMSIG_PROJ_COLLIDE), .proc/update_pierces)
 
 /datum/component/pierce_non_opaque/proc/update_pierces(var/obj/projectile/P, var/atom/hit)
-	var/turf/T = get_turf(hit)
-	if(isrestrictedz(T.z))
-		return 0
 	if(!hit.opacity)
 		return PROJ_ATOM_PASSTHROUGH
 

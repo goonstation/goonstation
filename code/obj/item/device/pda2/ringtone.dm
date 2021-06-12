@@ -224,7 +224,8 @@
 									 "ring6" = new/datum/ringtone/basic/ring6,\
 									 "ring7" = new/datum/ringtone/basic/ring7,\
 									 "ring8" = new/datum/ringtone/basic/ring8,\
-									 "ring9" = new/datum/ringtone/basic/ring9)
+									 "ring8" = new/datum/ringtone/basic/ring9,\
+									 "ring9" = new/datum/ringtone/basic/ring10)
 	topText = "<h4>Celestial Soultones</h4>"
 	bottomText = "A collection of bold PDA ringtones to set your spirit at ease..."
 	selectText = "Discover your destiny..."

@@ -23,7 +23,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 /obj/machinery/playerzoldorf/proc/updateui(var/mob/exclude,var/item_path) //opening a zoldorf ui adds a player to a list (they are removed on close). this proc references
 	var/wasnull = 0														  //a list of all players currently viewing the interface and dynamically updates everyone for full syncing
 	// TODO: this should use updateUsrDialog instead
-	var/staticiterations = src.openwindows.len
+	var/staticiterations = length(src.openwindows)
 	for(var/i=1,i<=staticiterations,i++)
 		if((src.openwindows[i] == exclude) || (src.openwindows[i] == null) || !(src.openwindows[i] in range(1,src)))
 			if(src.openwindows[i]==null) //checking for nulls
@@ -41,7 +41,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 				staticiterations--
 				i--
 	if(wasnull == 1) //if any nulls were found, declog the list
-		staticiterations = src.openwindows.len
+		staticiterations = length(src.openwindows)
 		for(var/i=1,i<=staticiterations,i++)
 			if(src.openwindows[i] == null)
 				src.openwindows -= src.openwindows[i]

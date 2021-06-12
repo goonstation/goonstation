@@ -15,7 +15,7 @@
 	item_state = "brain"
 	flags = TABLEPASS
 	force = 1.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 1.0
 	throw_speed = 3
 	throw_range = 5
@@ -102,7 +102,7 @@
 			user.lastattacked = src
 			attack_particle(user,src)
 			hit_twitch(src)
-			playsound(get_turf(src), "sound/impact_sounds/Flesh_Stab_2.ogg", 100, 1)
+			playsound(src, "sound/impact_sounds/Flesh_Stab_2.ogg", 100, 1)
 			src.splat(get_turf(src))
 			if(W.hit_type == DAMAGE_BURN)
 				src.take_damage(0, W.force, 0, W.hit_type)
@@ -215,7 +215,7 @@
 			if (!src.broken  && failure_disease)
 				src.donor.cure_disease(failure_disease)
 
-		if (!broken && islist(src.organ_abilities) && src.organ_abilities.len)
+		if (!broken && islist(src.organ_abilities) && length(src.organ_abilities))
 			var/datum/abilityHolder/organ/A = M.get_ability_holder(/datum/abilityHolder/organ)
 			if (!istype(A))
 				A = M.add_ability_holder(/datum/abilityHolder/organ)
@@ -239,7 +239,7 @@
 			src.blood_type = src.donor.bioHolder?.bloodType
 		src.blood_color = src.donor?.bioHolder?.bloodColor
 		src.blood_reagent = src.donor?.blood_id
-		if (islist(src.organ_abilities) && src.organ_abilities.len)// && src.donor.abilityHolder)
+		if (islist(src.organ_abilities) && length(src.organ_abilities))// && src.donor.abilityHolder)
 			var/datum/abilityHolder/aholder
 			if (src.donor && src.donor.abilityHolder)
 				aholder = src.donor.abilityHolder
@@ -372,7 +372,7 @@
 			return 0
 
 	proc/breakme()
-		if (!broken && islist(src.organ_abilities) && src.organ_abilities.len)// remove abilities when broken
+		if (!broken && islist(src.organ_abilities) && length(src.organ_abilities))// remove abilities when broken
 			var/datum/abilityHolder/aholder
 			if (src.donor && src.donor.abilityHolder)
 				aholder = src.donor.abilityHolder
@@ -384,7 +384,7 @@
 		src.broken = 1
 
 	proc/unbreakme()
-		if (broken && islist(src.organ_abilities) && src.organ_abilities.len) //put them back if fixed (somehow)
+		if (broken && islist(src.organ_abilities) && length(src.organ_abilities)) //put them back if fixed (somehow)
 			var/datum/abilityHolder/organ/A = donor?.get_ability_holder(/datum/abilityHolder/organ)
 			if (!istype(A))
 				A = donor?.add_ability_holder(/datum/abilityHolder/organ)

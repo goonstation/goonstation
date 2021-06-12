@@ -17,15 +17,23 @@
 		..()
 
 	proc/update_maptext()
-		if(!src.current)
-			src.maptext = "<span class='pixel ol c vb'>--</span>"
+		if (!src.current)
+			src.maptext = "<span class='pixel ol c vb'></span>"
 		maptext_width = 96
 		maptext_y = 32
 		maptext_x = -32
 		var/datum/plant/growing = src.current
 		var/datum/plantgenes/DNA = src.plantgenes
 		var/growth_pct = round(src.growth / (growing.harvtime - (DNA ? DNA.harvtime : 0)) * 100)
-		var/hp_pct = round(health / growing.starthealth * 100)
+		var/hp_pct = 0
+		var/hp_text = ""
+		if (growing.starthealth != 0)
+			hp_pct = round(health / growing.starthealth * 100)
+			hp_text = "[hp_pct]%"
+		else
+			hp_pct = round(health / 10 * 100)
+			hp_text = "[health]*"
+
 		var/hp_col = "#ffffff"
 		switch (hp_pct)
 			if(400 to INFINITY)
@@ -41,7 +49,7 @@
 			else
 				hp_col = "#ff0000"
 
-		src.maptext = "<span class='ps2p sh c vt'>GR [growth_pct]%\n<span style='color: [hp_col];'>HP [hp_pct]%</span></span>"
+		src.maptext = "<span class='pixel ol sh c vt'>GR [growth_pct]%\n<span style='color: [hp_col];'>HP [hp_text]</span></span>"
 
 	get_desc()
 		if(!src.current)
@@ -50,7 +58,7 @@
 		var/datum/plant/growing = src.current
 		var/datum/plantgenes/DNA = src.plantgenes
 		var/growthlimit = growing.harvtime - DNA.harvtime
-		return "Generation: [src.generation] - Health: [src.health] / [growing.starthealth] - Growth: [src.growth] / [growthlimit] - Harvests: [src.harvests] left."
+		return "Generation [src.generation] - Health: [src.health] / [growing.starthealth] - Growth: [src.growth] / [growthlimit] - Harvests: [src.harvests] left."
 
 	process()
 		..()
@@ -585,7 +593,7 @@
 				return
 			else
 				user.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
-				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 100, 1)
+				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
 				if(!(user in src.contributors))
 					src.contributors += user
@@ -1005,7 +1013,7 @@
 			// with greater chances for an extra harvest if this is the case.
 			// The cap is defined in hydro_controls and can be edited by coders on the fly.
 
-		getamount = max(getamount, 0)
+		getamount = round(max(getamount, 0))
 
 		if(getamount < 1)
 			boutput(user, "<span class='alert'>You aren't able to harvest anything worth salvaging.</span>")
@@ -1229,6 +1237,7 @@
 							seedname = "[MUT.name_prefix][growing.name][MUT.name_suffix]"
 
 					S.name = "[seedname] seed"
+					S.plant_seed_color(growing.seedcolor)
 					HYPpassplantgenes(HDNA,SDNA)
 					S.generation = src.generation
 					if(growing.hybrid)
@@ -1252,8 +1261,10 @@
 			// +10: if HP >= 400% w/ 30% chance
 			// Mutations can add or remove this, of course
 			// @TODO adjust this later, this is just to fix runtimes and make it slightly consistent
-			if (base_quality_score >= 1 && prob(10))
+			if (base_quality_score >= 1 && prob(30))
 				if (base_quality_score >= 11)
+					JOB_XP(user, "Botanist", 4)
+				else if (base_quality_score >= 6)
 					JOB_XP(user, "Botanist", 2)
 				else
 					JOB_XP(user, "Botanist", 1)
@@ -1328,7 +1339,6 @@
 			// Severity is basically a multiplier to odds and amounts.
 		var/datum/plant/growing = src.current
 		var/datum/plantgenes/DNA = src.plantgenes
-
 		if(!istype(growing) || !istype(DNA))
 			return
 
@@ -1534,7 +1544,7 @@ proc/HYPadd_harvest_reagents(var/obj/item/I,var/datum/plant/growing,var/datum/pl
 	if(putreagents.len && I.reagents.maximum_volume)
 		var/putamount = round(to_add / putreagents.len)
 		for(var/X in putreagents)
-			I.reagents.add_reagent(X,putamount,,, 1)
+			I?.reagents?.add_reagent(X,putamount,,, 1) // ?. runtime fix
 	// And finally put them in there. We figure out the max volume and add an even amount of
 	// all reagents into the item.
 
@@ -1637,7 +1647,7 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 	boutput(user, message)
 	return
 
-proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/machinery/plantpot/PP)
+proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/machinery/plantpot/PP, var/frequencymult = 1)
 	// The check to see if a new mutation will be generated. The criteria check for whether
 	// or not the mutation will actually appear is HYPmutationcheck_full.
 	if(!P || !DNA)
@@ -1653,7 +1663,7 @@ proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/mach
 						chance -= M.chance_mod
 					else
 						chance += M.chance_mod
-			chance = max(0,min(chance,100))
+			chance = max(0,min(chance*frequencymult,100))
 			if(prob(chance))
 				if(HYPmutationcheck_full(P,DNA,MUT))
 					DNA.mutation = HY_get_mutation_from_path(MUT.type)
@@ -1670,7 +1680,7 @@ proc/HYPCheckCommut(var/datum/plantgenes/DNA,var/searchtype)
 			if(X.type == searchtype) return 1
 	return 0
 
-proc/HYPnewcommutcheck(var/datum/plant/P,var/datum/plantgenes/DNA)
+proc/HYPnewcommutcheck(var/datum/plant/P,var/datum/plantgenes/DNA, var/frequencymult = 1)
 	// This is the proc for checking if a new random gene strain will appear in the plant.
 	if(!P || !DNA) return
 	if(HYPCheckCommut(DNA,/datum/plant_gene_strain/stabilizer))
@@ -1680,7 +1690,7 @@ proc/HYPnewcommutcheck(var/datum/plant/P,var/datum/plantgenes/DNA)
 		for (var/datum/plant_gene_strain/X in P.commuts)
 			if(HYPCheckCommut(DNA,X.type))
 				continue
-			if(prob(X.chance))
+			if(prob(X.chance*frequencymult))
 				MUT = X
 				break
 		if(MUT)
@@ -1842,7 +1852,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 				return
 			else
 				user.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
-				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 100, 1)
+				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
 				if(!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
 
@@ -1866,7 +1876,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 				src.visible_message("\The [src] goes quiet.")
 
 		src.icon_state = "fogmachine[src.active]"
-		playsound(get_turf(src), "sound/misc/lightswitch.ogg", 50, 1)
+		playsound(src, "sound/misc/lightswitch.ogg", 50, 1)
 
 	is_open_container()
 		return 1 // :I

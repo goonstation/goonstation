@@ -13,7 +13,8 @@
 	cast()
 		if(!holder)
 			return
-		holder.owner.say("RAMI TIN")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("RAMI TIN")
 		..()
 
 		var/list/path = list()

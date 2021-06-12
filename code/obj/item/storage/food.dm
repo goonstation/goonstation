@@ -109,15 +109,13 @@
 
 	make_my_stuff()
 		..()
-		for (var/i=6,i>0,i--)
-			new /obj/item/reagent_containers/food/snacks/ingredient/cheese(src)
-
-		if (prob(10))
-			new /obj/item/sponge/cheese(src)
-		else
-			new /obj/item/reagent_containers/food/snacks/ingredient/cheese(src)
-
-		shuffle_list(src.contents)
+		var/made_sponge = FALSE
+		for (var/i = 1 to 7)
+			if(prob(5) && !made_sponge)
+				new /obj/item/sponge/cheese(src)
+				made_sponge = TRUE
+			else
+				new /obj/item/reagent_containers/food/snacks/ingredient/cheese(src)
 
 /obj/item/storage/goodybag
 	name = "goodybag"
@@ -126,7 +124,7 @@
 
 	make_my_stuff()
 		..()
-		var/list/candytypes = typesof(/obj/item/reagent_containers/food/snacks/candy)
+		var/list/candytypes = concrete_typesof(/obj/item/reagent_containers/food/snacks/candy)
 		for (var/i=6, i>0, i--)
 			var/newcandy_path = pick(candytypes)
 			var/obj/item/reagent_containers/food/snacks/candy/newcandy = new newcandy_path(src)

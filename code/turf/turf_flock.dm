@@ -80,7 +80,7 @@
 	splitgroup()
 	for(var/obj/flock_structure/f in src)
 		if(f.usesgroups)
-			f.group.removestructure(f)
+			f.group?.removestructure(f)
 			f.group = null
 
 
@@ -193,8 +193,11 @@
 	for(var/turf/simulated/floor/feather/F in getneighbours(get_turf(src)))
 		count++ //enumerate nearby tiles
 //TODO: fail safe for if there are more then 1 group.
+	if(!src) return
 	src.group.removetile(src)
 	src.group = null
+	for(var/obj/flock_structure/s in src)
+		s.group = null
 
 	if(count <= 1) //if theres only one tile nearby or it by itself dont bother splitting
 		if(count <=0) qdel(oldgroup)

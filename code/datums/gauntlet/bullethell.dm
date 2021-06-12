@@ -5,7 +5,7 @@
 	else if (O.special_data["lastloc"] != O.loc)
 		update = 1
 	if (update)
-		var/ocl = O.crossing.len
+		var/ocl = length(O.crossing)
 		if (!ocl)
 			return
 		if ("1" in O.special_data)

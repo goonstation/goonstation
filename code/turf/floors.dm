@@ -18,6 +18,9 @@
 	var/has_material = TRUE
 	var/plate_mat = null
 	var/reinforced = FALSE
+	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
+	var/roundstart_icon_state
+	var/roundstart_dir
 
 	New()
 		..()
@@ -25,6 +28,8 @@
 			if (isnull(plate_mat))
 				plate_mat = getMaterial("steel")
 			setMaterial(plate_mat)
+		roundstart_icon_state = icon_state
+		roundstart_dir = dir
 		var/obj/plan_marker/floor/P = locate() in src
 		if (P)
 			src.icon = P.icon
@@ -1291,6 +1296,9 @@
 /turf/simulated/floor/proc/dismantle_wall()//can get called due to people spamming weldingtools on walls
 	return
 
+/turf/simulated/floor/proc/take_hit()// can get called due to people crumpling cardboard walls
+	return
+
 /turf/simulated/floor/proc/break_tile_to_plating()
 	if(intact) to_plating()
 	break_tile()
@@ -1339,7 +1347,7 @@
 /turf/simulated/floor/var/global/girder_egg = 0
 
 //basically the same as walls.dm sans the
-/turf/simulated/floor/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W)
+/turf/simulated/floor/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W, var/instantly)
 	if (!user || !istype(W, /obj/item/light_parts/floor))
 		return
 
@@ -1347,19 +1355,20 @@
 	var/obj/item/light_parts/parts = W
 	var/turf/target = src
 
+	if(!instantly)
+		playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
+		boutput(user, "You begin to attach the light fixture to [src]...")
 
-	playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
-	boutput(user, "You begin to attach the light fixture to [src]...")
 
-	if (!do_after(user, 4 SECONDS))
-		user.show_text("You were interrupted!", "red")
-		return
+		if (!do_after(user, 4 SECONDS))
+			user.show_text("You were interrupted!", "red")
+			return
 
-	if (!parts) //ZeWaka: Fix for null.fixture_type
-		return
+		if (!parts) //ZeWaka: Fix for null.fixture_type
+			return
 
-	// if they didn't move, put it up
-	boutput(user, "You attach the light fixture to [src].")
+		// if they didn't move, put it up
+		boutput(user, "You attach the light fixture to [src].")
 
 	var/obj/machinery/light/newlight = new parts.fixture_type(target)
 	newlight.icon_state = parts.installed_icon_state
@@ -1440,7 +1449,7 @@
 					ReplaceWithEngineFloor()
 
 					if (C)
-						C:amount -= 2
+						C.change_stack_amount(-2)
 						if (C:amount <= 0)
 							qdel(C) //wtf
 
@@ -1601,6 +1610,8 @@
 		if (K)
 			K.attackby(C, user, params)
 
+	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1)) // this seemed like the neatest way to make attack_hand still trigger when needed
+		src?.material.triggerOnHit(src, C, user, 1)
 	else
 		return attack_hand(user)
 
@@ -1722,6 +1733,13 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		icon = 'icons/turf/walls.dmi'
 		icon_state = "hive"
 
+	stranger
+		name = "stranger wall"
+		desc = "A weird jet black metal wall indented with strange grooves and lines."
+		icon = 'icons/turf/walls.dmi'
+		icon_state = "ancient"
+
+
 // -------------------- VR --------------------
 /turf/unsimulated/floor/setpieces/gauntlet
 	name = "Gauntlet Floor"
@@ -1748,7 +1766,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 				if(H.gender == MALE) playsound(H.loc, "sound/voice/screams/male_scream.ogg", 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 				else playsound(H.loc, "sound/voice/screams/female_scream.ogg", 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			random_brute_damage(M, 50)
-			M.changeStatus("paralysis", 70)
+			M.changeStatus("paralysis", 7 SECONDS)
 			SPAWN_DBG(0)
 				playsound(M.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Flesh_Break_1.ogg'), 75, 1)
 		A.set_loc(T)
@@ -1782,6 +1800,19 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 				if (istype(A, /mob) && !istype(A, /mob/dead))
 					bioele_accident()
 				return ..()
+
+		hole_xy
+			name = "deep pit"
+			target_landmark = LANDMARK_FALL_DEBUG
+			Entered(atom/A as mob|obj)
+				if (isobserver(A) || (istype(A, /obj/critter) && A:flying))
+					return ..()
+
+				if(warptarget)
+					fall_to(warptarget, A)
+					return
+				else ..()
+
 
 	bloodfloor
 		name = "bloody floor"

@@ -8,7 +8,7 @@
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	is_syndicate = 1
 	mats = 8
 	var/datum/appearanceHolder/oldAH = new

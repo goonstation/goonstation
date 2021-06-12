@@ -78,7 +78,7 @@
 		if (..())
 			return 1
 		if (prob(33))
-			playsound(get_turf(src), "sound/voice/babynoise.ogg", 50, 1)
+			playsound(src, "sound/voice/babynoise.ogg", 50, 1)
 			src.visible_message("<span class='notice'><b>[src]</b> coos!</span>",\
 			"<span class='notice'>You coo!</span>")
 
@@ -86,11 +86,11 @@
 		switch (act)
 			if ("scream","hiss")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/animal/cat_hiss.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, "sound/voice/animal/cat_hiss.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> hisses!"
 			if ("smile","coo")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/babynoise.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, "sound/voice/babynoise.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> coos!"
 		return null
 
@@ -105,14 +105,14 @@
 	death(var/gibbed)
 		if (!gibbed)
 			src.unequip_all()
-			playsound(get_turf(src), src.deathsound, 50, 0)
+			playsound(src, src.deathsound, 50, 0)
 			src.reagents.add_reagent(venom1, 50, null)
 			src.reagents.add_reagent(venom2, 50, null)
 		return ..()
 
 	proc/venom_bite(mob/M)
 		if (src.reagents && istype(M) && M.reagents)
-			playsound(get_turf(src), src.bitesound, 50, 1)
+			playsound(src, src.bitesound, 50, 1)
 			if (issilicon(M))
 				var/mob/living/silicon/robot/R = M
 				R.compborg_take_critter_damage("[pick("l","r")]_[pick("arm","leg")]", rand(2,4))

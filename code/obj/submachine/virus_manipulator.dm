@@ -70,7 +70,7 @@
 				src.icon_state = "DAn-on"
 				for(var/mob/O in hearers(src, null))
 					O.show_message(text("<b>[]</b> states, 'Commencing work.'", src), 1)
-				if(src.active_vial.reagents && src.active_vial.reagents.reagent_list.len)
+				if(src.active_vial.reagents && length(src.active_vial.reagents.reagent_list))
 					for(var/current_id in src.active_vial.reagents.reagent_list)
 						var/datum/reagent/disease/current_disease = src.active_vial.reagents.reagent_list[current_id]
 						if(istype(current_disease))

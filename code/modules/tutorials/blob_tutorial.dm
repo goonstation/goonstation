@@ -427,7 +427,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			if (action == "clickmove" && context == target)
 				finished = 1
 				return 1
-			return 0
+			return 1 // bad but prevents chat spam which leads to crashes
 
 		TearDown()
 			target.UpdateOverlays(null,"marker")

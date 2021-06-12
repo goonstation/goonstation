@@ -701,7 +701,7 @@ var/global/datum/simsControl/simsController = new()
 		..()
 
 	proc/updateHudIcons(var/icon/I)
-		if (!I || !src.motives.len)
+		if (!I || !length(src.motives))
 			return
 		for (var/name in motives)
 			var/datum/simsMotive/M = motives[name]
@@ -709,7 +709,7 @@ var/global/datum/simsControl/simsController = new()
 				M.updateHudIcon(I)
 
 	proc/getMoodActionMultiplier()
-		if (!motives || !motives.len)
+		if (!motives || !length(motives))
 			return 1
 		if (!base_mood_value)
 			base_mood_value = 1

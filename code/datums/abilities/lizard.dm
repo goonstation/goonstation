@@ -6,6 +6,7 @@
 		var/datum/abilityHolder/lizard/W = src.add_ability_holder(/datum/abilityHolder/lizard)
 		W.addAbility(/datum/targetable/lizardAbility/colorshift)
 		W.addAbility(/datum/targetable/lizardAbility/colorchange)
+		W.addAbility(/datum/targetable/lizardAbility/regrow_tail)
 	else return
 
 /mob/living/carbon/human/proc/remove_lizard_powers()
@@ -14,6 +15,7 @@
 		if (W && istype(W))
 			W.removeAbility(/datum/targetable/lizardAbility/colorshift)
 			W.removeAbility(/datum/targetable/lizardAbility/colorchange)
+			W.removeAbility(/datum/targetable/lizardAbility/regrow_tail)
 			src.remove_ability_holder(/datum/abilityHolder/lizard)
 	else return
 
@@ -69,6 +71,30 @@
 		if(ishuman(holder.owner))
 			L = holder.owner
 		return
+
+/datum/targetable/lizardAbility/regrow_tail
+	name = "Regrow Tail"
+	desc = "Regrow your tail... (If cast while you have a tail, shoot off your tail and regrow a new one)"
+	cooldown = 5 MINUTES
+	targeted = 0
+	pointCost = 2
+
+	cast()
+		if (..())
+			return 1
+
+		if (L.mutantrace && !istype(L.mutantrace, /datum/mutantrace/lizard) || !L.organHolder)
+			boutput(L, "<span class='notice'>You don't have any chromatophores.</span>")
+			return 1
+
+		//shoot off tail
+		if (L.organHolder?.tail)
+			L.drop_and_throw_organ("tail", dist = 2, speed = 1, showtext = 1)
+
+		//simply make a new tail
+		L.visible_message("<span class='notice'><b>[L.name]</b> visibly exerts [himself_or_herself(L)] and a new tail starts to sprout!</span>")
+		L.organHolder.receive_organ(new/obj/item/organ/tail/lizard, "tail", 0.0, 1)
+
 
 /datum/targetable/lizardAbility/colorshift
 	name = "Chromatophore Shift"

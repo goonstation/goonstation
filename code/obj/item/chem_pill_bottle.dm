@@ -2,7 +2,7 @@
 	name = "Pill bottle"
 	icon_state = "pill_canister"
 	icon = 'icons/obj/chemical.dmi'
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
@@ -34,7 +34,7 @@
 
 	// spawn a pill, returns a pill or null if there aren't any left in the bottle
 	proc/create_pill()
-		var/totalpills = src.pcount + src.contents.len
+		var/totalpills = src.pcount + length(src.contents)
 
 		if(totalpills <= 0)
 			return null
@@ -68,7 +68,7 @@
 		return P
 
 	proc/rebuild_desc()
-		var/totalpills = src.pcount + src.contents.len
+		var/totalpills = src.pcount + length(src.contents)
 		if(totalpills > 15)
 			src.desc = "A [src.pname] pill bottle. There are too many to count."
 			src.inventory_counter.update_text("**")

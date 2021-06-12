@@ -14,7 +14,8 @@
 	cast(mob/target)
 		if(!holder)
 			return
-		holder.owner.say("YSTIGG MITAZIM")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("YSTIGG MITAZIM")
 		..()
 
 		elecflash(target)

@@ -62,8 +62,8 @@
 	// DESCRIBE VITALS (do this last so we can report list lengths)
 	var/list/vitals = list()
 	vitals["name"] = src.name
-	vitals["drones"] = dronelist.len
-	vitals["partitions"] = tracelist.len
+	vitals["drones"] = length(dronelist)
+	vitals["partitions"] = length(tracelist)
 	state["vitals"] = vitals
 
 	return state

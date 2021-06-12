@@ -54,6 +54,7 @@ export const StorageTab = (props, context) => {
             <BioEffect
               key={g.ref}
               gene={g}
+              showSequence
               isStorage />
           )) : "There are no mutations in storage."}
         </Section>

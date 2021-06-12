@@ -6,7 +6,7 @@
  */
 
 import { Button, Section } from '../../../components';
-import Tools from './Tools';
+import { Tools } from './Tools';
 
 const resetOptions = [
   {
@@ -30,7 +30,7 @@ const resetOptions = [
   },
 ];
 
-const Module = props => {
+export const Module = props => {
   const {
     onMoveToolDown,
     onMoveToolUp,
@@ -71,5 +71,3 @@ const Module = props => {
     </>
   );
 };
-
-export default Module;

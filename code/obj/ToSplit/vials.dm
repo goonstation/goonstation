@@ -23,7 +23,7 @@
 	throw_speed = 1
 	throw_range = 8
 	force = 3.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	initial_volume = 30
 
 	amount_per_transfer_from_this = 5

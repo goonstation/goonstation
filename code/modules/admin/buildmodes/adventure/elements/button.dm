@@ -51,7 +51,7 @@
 					selected_triggerable -= object
 				else
 					var/list/actions = object:trigger_actions()
-					if (islist(actions) && actions.len)
+					if (islist(actions) && length(actions))
 						var/act_name = input("Do what?", "Do what?", actions[1]) in actions
 						var/act = actions[act_name]
 						object.overlays += selection

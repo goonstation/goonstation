@@ -174,7 +174,7 @@ var/linenums = 0
 // build the pipelines (THIS HAPPENS ONCE!)
 /proc/makepipelines()
 
-	for(var/obj/machinery/pipes/P as() in machine_registry[MACHINES_PIPES])		// look for a pipe
+	for(var/obj/machinery/pipes/P as anything in machine_registry[MACHINES_PIPES])		// look for a pipe
 
 		if(!P.plnum)							// if not already part of a line
 			P.buildnodes(++linenums)			// add it, and spread to all connected pipes
@@ -189,7 +189,7 @@ var/linenums = 0
 
 
 
-	for(var/obj/machinery/pipes/P as() in machine_registry[MACHINES_PIPES])		// look for pipes
+	for(var/obj/machinery/pipes/P as anything in machine_registry[MACHINES_PIPES])		// look for pipes
 
 		if(P.termination)						// true if pipe is terminated (ends in blank or a machine)
 			var/obj/machinery/pipeline/PL = plines[P.plnum]		// get the pipeline from the pipe's pl-number
@@ -202,7 +202,7 @@ var/linenums = 0
 
 
 
-	for(var/obj/machinery/pipes/P as() in machine_registry[MACHINES_PIPES])		// all pipes
+	for(var/obj/machinery/pipes/P as anything in machine_registry[MACHINES_PIPES])		// all pipes
 		P.setline()								// 	set the pipeline object for this pipe
 
 		if(P.tag == "dbg")		//add debug tag to line containing debug pipe

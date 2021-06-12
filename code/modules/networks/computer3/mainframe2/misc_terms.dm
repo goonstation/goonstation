@@ -1642,7 +1642,7 @@
 
 				var/newFreq = round(max(1000, min(text2num(data["_freq"]), 1500)))
 				data -= "_freq"
-				if (!newFreq || !radio_controller || !data.len)
+				if (!newFreq || !radio_controller || !length(data))
 					src.post_status(target,"command","term_message","data","command=status&status=failure")
 					return
 				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("[newFreq]")
@@ -1883,7 +1883,7 @@
 				src.timeout_alert = 1
 				src.post_status(src.host_id, "command","term_ping","data","reply")
 
-		if(!printing && print_buffer.len)
+		if(!printing && length(print_buffer))
 			src.print()
 
 		return
@@ -2011,7 +2011,7 @@
 				return 0
 			if(!src.host_id)
 				return 0
-			if(src.printing || !print_buffer.len)
+			if(src.printing || !length(print_buffer))
 				return 0
 
 			var/print_text = print_buffer[1]
@@ -3311,7 +3311,7 @@
 				if (1 to 3)
 					//telehop + radiation
 					if (iscarbon(hitMob))
-						hitMob.changeStatus("radiation", 1000)
+						hitMob.changeStatus("radiation", 100 SECONDS)
 						hitMob.changeStatus("weakened", 2 SECONDS)
 					telehop(hitMob, src.power, src.power > 2)
 					return
@@ -3319,7 +3319,7 @@
 				if (4)
 					//big telehop + might leave parts behind.
 					if (iscarbon(hitMob))
-						hitMob.changeStatus("radiation", 1000)
+						hitMob.changeStatus("radiation", 100 SECONDS)
 
 						random_brute_damage(hitMob, 25)
 						hitMob.changeStatus("weakened", 2 SECONDS)
@@ -3460,6 +3460,7 @@
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!istype(O,/obj/) || O.anchored) return
 		if (get_dist(src,O) > 1 || !isturf(O.loc)) return
+		if (!in_interact_range(user, O) || !in_interact_range(user, src) || !isalive(user)) return
 		if (src.dragload)
 			if (src.contents.len)
 				boutput(user, "<span class='alert'>[src.name] is already loaded!</span>")
@@ -3470,16 +3471,25 @@
 		else return
 
 	MouseDrop(obj/over_object as obj, src_location, over_location)
-		var/mob/M = usr
-		if (!istype(over_object, /turf/)) return
-		if (!src.dragload) return
-		if (get_dist(src,over_object) > 1) return
-		if ((get_dist(src, M) > 1) || M.stat) return
+		ejectContents(usr, over_object)
+
+	verb/eject()
+		set name = "Eject"
+		set src in oview(1)
+		set category = "Local"
+
+		ejectContents(usr, get_turf(src))
+		return
+
+	proc/ejectContents(var/mob/unloader, var/target_location)
+		if (!istype(target_location, /turf/)) return
+		if (get_dist(src,target_location) > 1) return
+		if (!in_interact_range(unloader, target_location) || !in_interact_range(unloader, src) || !isalive(unloader)) return
 		if (src.active)
-			boutput(usr, "<span class='alert'>You can't unload it while it's active!</span>")
+			boutput(unloader, "<span class='alert'>You can't unload it while it's active!</span>")
 			return
-		for (var/atom/movable/O in src.contents) O.set_loc(over_object)
-		src.visible_message("<b>[M.name]</b> unloads [src.name]!")
+		for (var/atom/movable/O in src.contents) O.set_loc(target_location)
+		src.visible_message("<b>[unloader.name]</b> unloads [src.name]!")
 		src.update_icon()
 
 	Topic(href, href_list)
@@ -3720,7 +3730,7 @@
 
 			if ("activate")
 				if (src.contents.len)
-					active = src.contents.len
+					active = length(src.contents)
 					message_host("command=ack")
 					src.update_icon()
 				else
@@ -3787,7 +3797,7 @@
 			else
 				return
 
-		if (I.w_class < 4)
+		if (I.w_class < W_CLASS_BULKY)
 			if (src.contents.len < src.setup_max_objects)
 				if(I.cant_drop)
 					return
@@ -3938,7 +3948,7 @@
 			var/stimforce = M.throwforce
 			src.sensed[1] = stimforce * ARTDATA.react_mpct[1]
 			src.sensed[2] = stimforce * ARTDATA.react_mpct[2]
-			if (src.sensed[2] != 0 && ARTDATA.faults.len)
+			if (src.sensed[2] != 0 && length(ARTDATA.faults))
 				src.sensed[2] += rand(ARTDATA.faults.len / 2,ARTDATA.faults.len * 2)
 			var/datum/artifact_trigger/AT = ARTDATA.get_trigger_by_string("force")
 			if (AT)
@@ -3957,7 +3967,7 @@
 			src.sensed[1] = stimforce * ARTDATA.react_mpct[1]
 			src.sensed[2] = stimforce * ARTDATA.react_mpct[2]
 
-			if (src.sensed[2] != 0 && ARTDATA.faults.len)
+			if (src.sensed[2] != 0 && length(ARTDATA.faults))
 				src.sensed[2] += rand(ARTDATA.faults.len / 2,ARTDATA.faults.len * 2)
 
 			var/datum/artifact_trigger/AT = ARTDATA.get_trigger_by_string("force")
@@ -4024,18 +4034,21 @@
 				playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
 				src.update_icon()
 				return
-			var/current = src.wattage * src.voltage
-			if (locate(/mob/living/) in src.contents)
-				for (var/mob/living/carbon/OUCH in src.contents)
-					OUCH.TakeDamage("All",0,current / 500)
-			else
-				var/obj/M = pick(src.contents)
-				if (istype(M.artifact,/datum/artifact/))
-					M.ArtifactStimulus("elec", current)
+			src.electrify_contents()
 
 		else use_power(20)
 
 		return
+
+	proc/electrify_contents()
+		var/current = src.wattage * src.voltage
+		if (locate(/mob/living/) in src.contents)
+			for (var/mob/living/carbon/OUCH in src.contents)
+				OUCH.TakeDamage("All",0,current / 500)
+		else if(length(src.contents))
+			var/obj/O = pick(src.contents)
+			if (istype(O.artifact,/datum/artifact/))
+				O.ArtifactStimulus("elec", current)
 
 	attackby(var/obj/item/I, mob/user)
 		if (src.status & (NOPOWER|BROKEN))
@@ -4091,6 +4104,8 @@
 						return
 					src.wattage = pokeval
 
+				if (src.active)
+					src.electrify_contents()
 				message_host("command=ack")
 				return
 
@@ -4155,6 +4170,7 @@
 				if (src.contents.len && !src.active)
 					active = 1
 					src.timer = -1
+					src.electrify_contents()
 					message_host("command=ack")
 					src.update_icon()
 				else
@@ -4171,6 +4187,7 @@
 
 				src.active = 1
 				src.timer = duration
+				src.electrify_contents()
 				message_host("command=ack")
 				src.update_icon()
 
@@ -4751,7 +4768,7 @@
 
 					var/tgmoles = 0
 					if(length(air_sample.trace_gases))
-						for(var/datum/gas/trace_gas as() in air_sample.trace_gases)
+						for(var/datum/gas/trace_gas as anything in air_sample.trace_gases)
 							tgmoles += trace_gas.moles
 					sensed.Add(round(100*tgmoles/total_moles, 0.1))
 				else

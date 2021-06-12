@@ -10,7 +10,7 @@ Ctrl + Right Mouse Button on build mode  = Spawn for every living player<br>
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if(ctrl && src.copied_object && alert("Are you sure you want to give everyone \a [src.copied_object]?", "Give stuff???", "Yes", "No") == "Yes")
-			for (var/client/cl as() in clients)
+			for (var/client/cl as anything in clients)
 				var/mob/living/L = cl.mob
 				if(!istype(L) || isdead(L))
 					continue

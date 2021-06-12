@@ -24,6 +24,16 @@
 				holder.liver = null
 		..()
 
+/obj/item/organ/liver/synth
+	name = "synthliver"
+	organ_name = "synthliver"
+	icon_state = "plant"
+	desc = "For all you vegan Hannibal Lecters."
+	synthetic = 1
+	New()
+		..()
+		src.icon_state = pick("plant_liver", "plant_liver_bloom")
+
 /obj/item/organ/liver/cyber
 	name = "cyberliver"
 	desc = "A fancy robotic liver to replace one that someone's lost!"

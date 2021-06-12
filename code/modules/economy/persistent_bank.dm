@@ -131,7 +131,10 @@
 		if (purchase.Create(src))
 			boutput( src, "<span class='notice'><b>[purchase.name] equipped successfully.</b></span>" )
 		else
-			boutput( src, "<span class='notice'><b>[purchase.name] is not available for the job you rolled. It will remain as your held item if possible.</b></span>" )
+			boutput( src, "<span class='notice'><b>[purchase.name] is not available for the job you rolled. It has been refunded.</b></span>" )
+			src.client.add_to_bank(purchase.cost)
+			src.client.set_last_purchase(null)
+			return
 	else
 		boutput( src, "<span class='notice'><b>The thing you previously purchased has been removed from your inventory due to it no longer existing.</b></span>")
 		src.client.set_last_purchase(null)

@@ -4,8 +4,6 @@
 
 //this is the home for checks of mob types
 
-/// Returns true if the given x is a mob
-#define ismob(x) istype(x, /mob)
 /// Returns true if the given x is an observer
 #define isobserver(x) istype(x, /mob/dead)
 /// Returns true if the given x is an observer and an admin
@@ -16,6 +14,7 @@
 
 #define iscarbon(x) istype(x, /mob/living/carbon)
 #define ismonkey(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/monkey))
+#define isnpc(x) istype(x, /mob/living/carbon/human/npc)
 #define isnpcmonkey(x) (istype(x,/mob/living/carbon/human/npc/monkey) && istype(x:mutantrace, /datum/mutantrace/monkey))
 #define ishuman(x) istype(x, /mob/living/carbon/human)
 #define iscow(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/cow))
@@ -34,6 +33,7 @@
 #define isghostdrone(x) istype(x, /mob/living/silicon/ghostdrone)
 
 #define iscube(x) (istype(x, /mob/living/carbon/cube))
+#define ismegakrampus(x) (istype(x, /mob/living/carbon/cube/meat/krampus/telekinetic))
 #define isvirtual(x) istype(x, /mob/living/carbon/human/virtual)
 #define isVRghost(x) (istype(x, /mob/living/carbon/human/virtual) && x:isghost)
 #define issmallanimal(x) istype(x, /mob/living/critter/small_animal)
@@ -44,4 +44,4 @@
 #define isnewplayer(x) (istype(x, /mob/new_player))
 
 /// Returns true if this mob immune to breathing in smoke?
-#define issmokeimmune(x) (ismob(x) && ((x?.wear_mask && (x.wear_mask.c_flags & BLOCKSMOKE || (x.wear_mask.c_flags & MASKINTERNALS && x.internal))) || ischangeling(x) || HAS_MOB_PROPERTY(x, PROP_REBREATHING) || HAS_MOB_PROPERTY(x, PROP_BREATHLESS) || isdead(x)))
+#define issmokeimmune(x) (isobserver(x) || isintangible(x) || issilicon(x) || (ismob(x) && ((x?.wear_mask && (x.wear_mask.c_flags & BLOCKSMOKE || (x.wear_mask.c_flags & MASKINTERNALS && x.internal))) || ischangeling(x) || HAS_MOB_PROPERTY(x, PROP_REBREATHING) || HAS_MOB_PROPERTY(x, PROP_BREATHLESS) || isdead(x))))

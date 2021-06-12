@@ -34,7 +34,7 @@
 	icon_state = "railgun"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
 		if(target == user) return
@@ -284,7 +284,7 @@ proc/DrawLine(atom/Start,atom/End,LineType,Icon,Whole_Icon_State = "",CenterOfIc
 		NewLineEnd.set_loc(CurrentLoc)
 		line_PixelOffset(NewLineEnd,ReturnedDir,Angle,CoorCounter,startpx2,startpy2)
 		LineList.Add(NewLineEnd)
-	var/EndCount = LineList.len
+	var/EndCount = length(LineList)
 	for(var/obj/L in LineList)
 		if(LineList.Find(L) > EndCount)
 			break

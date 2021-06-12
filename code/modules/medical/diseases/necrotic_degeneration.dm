@@ -28,7 +28,7 @@
 				affected_mob.take_brain_damage(10)
 			if (prob(4))
 				boutput(affected_mob, "<span class='alert'>You pass out momentarily.</span>")
-				affected_mob.changeStatus("paralysis", 40)
+				affected_mob.changeStatus("paralysis", 4 SECONDS)
 			if (prob(5))
 				affected_mob.emote(pick("shiver","pale","drool"))
 
@@ -49,7 +49,8 @@
 				affected_mob.say(pick("Hungry...", "Must... kill...", "Brains..."))
 		if(4)
 			boutput(affected_mob, "<span class='alert'>Your heart seems to have stopped...</span>")
-			affected_mob.set_mutantrace(zombie_mutantrace)
+			if (zombie_mutantrace)
+				affected_mob.set_mutantrace(zombie_mutantrace)
 			if (ishuman(affected_mob))
 				affected_mob:update_face()
 				affected_mob:update_body()

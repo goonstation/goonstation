@@ -11,7 +11,7 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	health = 100
 	//var/emagged = 0 removing all emag stuff because it's a bad idea in retrospect
 	var/damage_words = "fully operational!"
@@ -168,6 +168,7 @@
 
 
 	attackby(obj/item/W, mob/user)
+		user.lastattacked = src
 		if (isweldingtool(W) && !(src.active))
 			var/turf/T = user.loc
 			if(!W:try_weld(user, 1))
@@ -292,6 +293,8 @@
 
 		else
 			src.health = src.health - W.force
+			playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 25, 1)
+			attack_particle(user,src)
 			src.check_health()
 			..()
 
@@ -302,7 +305,7 @@
 			return
 		src.quick_deploy_fuel--
 		src.visible_message("<span class='alert'>[src]'s quick deploy system engages, automatically securing it!</span>")
-		playsound(src.loc, "sound/items/Welder2.ogg", 50, 1)
+		playsound(src.loc, "sound/items/Welder2.ogg", 30, 1)
 		set_projectile()
 		src.anchored = 1
 		src.active = 1
@@ -539,7 +542,7 @@
 	name = "N.A.R.C.S. Deployer"
 	desc = "A Nanotrasen Automatic Riot Control System Deployer. Use it in your hand to deploy."
 	icon_state = "st_deployer"
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	health = 125
 	icon_tag = "nt"
 	quick_deploy_fuel = 0

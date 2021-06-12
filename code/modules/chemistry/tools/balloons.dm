@@ -19,10 +19,10 @@
 
 	New()
 		..()
-		if (prob(1) && islist(rare_colors) && rare_colors.len)
+		if (prob(1) && islist(rare_colors) && length(rare_colors))
 			balloon_color = pick(rare_colors)
 			update_icon()
-		else if (islist(available_colors) && available_colors.len)
+		else if (islist(available_colors) && length(available_colors))
 			balloon_color = pick(available_colors)
 			update_icon()
 
@@ -157,7 +157,7 @@
 				"<span class='alert'><b>You pee in [src]!</b></span>")
 				playsound(H.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 				H.urine -= 2
-				src.reagents.add_reagent("urine", 20)
+				src.reagents.add_reagent("urine", 8)
 				return
 
 	afterattack(obj/target, mob/user)
@@ -212,7 +212,7 @@
 	icon_state = "animal-bee"
 	inhand_image_icon = 'icons/mob/inhand/hand_balloon.dmi'
 	item_state = "balloon"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 /obj/item/balloon_animal/random
 	New()

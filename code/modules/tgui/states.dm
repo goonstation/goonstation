@@ -112,6 +112,9 @@
  * return UI_state The state of the UI.
  */
 /mob/living/proc/shared_living_ui_distance(atom/movable/src_object, viewcheck = TRUE)
+	if (istype(src_object.loc, /obj/item/storage)) // If the object is in a storage item, like a backpack.
+		return UI_CLOSE
+
 	var/dist = get_dist(src_object, src)
 
 	if(viewcheck && !(dist <= 1 || (src_object in view(src)))) // If the object is obscured, close it.

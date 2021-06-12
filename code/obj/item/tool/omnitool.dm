@@ -47,6 +47,8 @@
 		if (src.omni_mode == "prying")
 			if (!pry_surgery(M, user))
 				return ..()
+		else
+			..()
 
 	get_desc(var/dist)
 		if (dist < 3)
@@ -55,7 +57,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] stabs and beats [his_or_her(user)]self with each tool in the [src] in rapid succession.</b></span>")
+		user.visible_message("<span class='alert'><b>[user] stabs and beats [himself_or_herself(user)] with each tool in the [src] in rapid succession.</b></span>")
 		take_bleeding_damage(user, null, 25, DAMAGE_STAB)
 		user.TakeDamage("head", 160, 0)
 		return 1
@@ -232,7 +234,7 @@
 				return 0 //welding, doesnt have fuel
 			src.use_fuel(use_amt)
 			if(noisy)
-				playsound(user.loc, list('sound/items/Welder.ogg', 'sound/items/Welder2.ogg')[noisy], 50, 1)
+				playsound(user.loc, list('sound/items/Welder.ogg', 'sound/items/Welder2.ogg')[noisy], 40, 1)
 			if(burn_eyes)
 				src.eyecheck(user)
 			return 1 //welding, has fuel

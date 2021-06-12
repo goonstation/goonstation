@@ -13,7 +13,7 @@
 	name = "seashell"
 	icon = 'icons/obj/sealab_objects.dmi'
 	desc = "Hey, you remember collecting these things as a kid! Wait - you didn't grow up here!"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	rand_pos = 1
 	var/database_id = null
 
@@ -78,7 +78,7 @@
 					has_fluid_move_gear = 1
 
 		if (!has_fluid_move_gear)
-			A.setStatus("slowed", 5, optional = 4)
+			A.setStatus("slowed", 0.5 SECONDS, optional = 4)
 
 		if (get_dir(src,A) & SOUTH || pixel_y > 0) //If we approach from underneath, fudge the layer so the drawing order doesn't break perspective
 			src.layer = 3.9

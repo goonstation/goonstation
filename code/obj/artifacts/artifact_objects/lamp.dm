@@ -20,6 +20,7 @@
 
 /datum/artifact/lamp
 	associated_object = /obj/artifact/lamp
+	type_name = "Lamp"
 	rarity_weight = 450
 	validtypes = list("martian","wizard","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,

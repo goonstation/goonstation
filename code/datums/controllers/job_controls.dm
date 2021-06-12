@@ -629,7 +629,7 @@ var/datum/job_controller/job_controls
 					// Ditto (Convair880).
 					if (picker)
 						var/obj/item/check = new picker
-						if (check.w_class > 2)
+						if (check.w_class > W_CLASS_SMALL)
 							usr.show_text("This item is too large to fit in a jumpsuit pocket.", "red")
 							qdel(check)
 							return
@@ -665,7 +665,7 @@ var/datum/job_controller/job_controls
 					// Ditto (Convair880).
 					if (picker)
 						var/obj/item/check = new picker
-						if (check.w_class > 2)
+						if (check.w_class > W_CLASS_SMALL)
 							usr.show_text("This item is too large to fit in a jumpsuit pocket.", "red")
 							qdel(check)
 							return
@@ -822,14 +822,14 @@ var/datum/job_controller/job_controls
 
 		if(href_list["GetAccess"])
 			var/picker = input("Make this job's access comparable to which job?","Job Creator") in list("Captain","Head of Security",
-			"Head of Personnel","Chief Engineer","Research Director","Security Officer","Detective","Geneticist","Roboticist","Scientist",
+			"Head of Personnel","Chief Engineer","Research Director","Security Officer","Detective","Geneticist","Pathologist","Roboticist","Scientist",
 			"Medical Doctor","Quartermaster","Miner","Mechanic","Engineer","Chef","Bartender","Botanist","Janitor","Chaplain","Staff Assistant","No Access")
 			src.job_creator.access = get_access(picker)
 			src.job_creator()
 
 		if(href_list["AddAccess"])
 			var/picker = input("Make this job's access comparable to which job?","Job Creator") in list("Captain","Head of Security",
-			"Head of Personnel","Chief Engineer","Research Director","Security Officer","Detective","Geneticist","Roboticist","Scientist",
+			"Head of Personnel","Chief Engineer","Research Director","Security Officer","Detective","Geneticist","Pathologist","Roboticist","Scientist",
 			"Medical Doctor","Quartermaster","Miner","Mechanic","Engineer","Chef","Bartender","Botanist","Janitor","Chaplain","Staff Assistant","No Access")
 			src.job_creator.access |= get_access(picker)
 			src.job_creator()
@@ -984,7 +984,7 @@ var/datum/job_controller/job_controls
 		logTheThing("debug", null, null, "<b>Job Controller:</b> Attempt to find job with bad string in controller detected")
 		return null
 	var/list/excluded_strings = list("Special Respawn","Custom Names","Everything Except Assistant",
-	"Engineering Department","Security Department","Heads of Staff")
+	"Engineering Department","Security Department","Heads of Staff", "Pod_Wars")
 	if (string in excluded_strings)
 		return null
 	for (var/datum/job/J in job_controls.staple_jobs)

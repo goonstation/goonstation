@@ -76,6 +76,7 @@
 //		jobs["Vice Officer"] = PAY_TRADESMAN
 		jobs["Detective"] = PAY_TRADESMAN
 		jobs["Geneticist"] = PAY_DOCTORATE
+		jobs["Pathologist"] = PAY_DOCTORATE
 		jobs["Scientist"] = PAY_DOCTORATE
 		jobs["Medical Doctor"] = PAY_DOCTORATE
 		jobs["Medical Director"] = PAY_IMPORTANT
@@ -471,7 +472,7 @@
 					boutput(usr, "<span class='alert'>No.</span>")
 					src.updateUsrDialog()
 					return
-				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as() in clients|null
+				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as anything in clients|null
 				if(alert("You are about to send [amount] to [C]. Are you sure?",,"Yes","No") == "Yes")
 					if(!usr.client.bank_can_afford(amount))
 						boutput(usr, "<span class='alert'>Insufficient Funds</span>")
@@ -745,6 +746,7 @@
 		if(istype(I, /obj/item/card/id))
 			boutput(user, "<span class='notice'>You swipe your ID card in the ATM.</span>")
 			src.scan = I
+			attack_hand(user)
 			return
 		if(istype(I, /obj/item/spacecash/))
 			if (afterlife)
@@ -755,6 +757,7 @@
 				src.accessed_record.fields["current_money"] += I.amount
 				I.amount = 0
 				pool(I)
+				attack_hand(user)
 			else boutput(user, "<span class='alert'>You need to log in before depositing cash!</span>")
 			return
 		if(istype(I, /obj/item/lotteryTicket))
@@ -964,7 +967,7 @@
 					boutput(usr, "<span class='alert'>No.</span>")
 					src.updateUsrDialog()
 					return
-				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as() in clients|null
+				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as anything in clients|null
 				if(alert("You are about to send [amount] to [C]. Are you sure?",,"Yes","No") == "Yes")
 					if(!usr.client.bank_can_afford(amount))
 						boutput(usr, "<span class='alert'>Insufficient Funds</span>")
@@ -1032,7 +1035,7 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper"
 
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	// 4 numbers between 1 and 3 gives a one in 81 chance of winning. It's 3^4 possible combinations.
 	var/list/numbers = new/list(4)

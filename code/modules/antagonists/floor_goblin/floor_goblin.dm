@@ -77,9 +77,10 @@
 		return
 
 /datum/targetable/hide_between_floors
-	icon_state = "doppelganger"
 	name = "Toggle Reveal"
 	desc = "Toggle your ability to hide between the floor tiles."
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "floorgoblin_hide"
 	targeted = 0
 	cooldown = 0
 

@@ -24,8 +24,8 @@
 
 
 /obj/item/device/speechtotext
-	name = "dumb microphone"
-	desc = "This is really stupid."
+	name = "prototype flying chat device"
+	desc = "This is a microphone that was a prototype of the floating chat that pali added. It doesn't work that great, but hey."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "mic"
 	item_state = "mic"
@@ -423,7 +423,7 @@
 					qdel(I)
 
 			for (var/atom/S in gunsim)
-				if(istype(S, /obj/storage) || istype(S, /obj/artifact) || istype(S, /obj/critter) || istype(S, /obj/machinery/bot) || istype(S, /obj/decal) || istype(S, /mob/living/carbon/human/tdummy))
+				if(istype(S, /obj/storage) || istype(S, /obj/artifact) || istype(S, /obj/critter) || istype(S, /obj/machinery) || istype(S, /obj/decal) || istype(S, /mob/living/carbon/human/tdummy))
 					qdel(S)
 
 
@@ -519,7 +519,7 @@
 	uses_multiple_icon_states = 1
 	flags = FPRINT | TABLEPASS | ONBELT
 	force = 0
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 1
 	throw_speed = 3
 	throw_range = 8
@@ -535,7 +535,7 @@
 			src.desc = "Hoeeeh!? This is only useful if you're decked out."
 			src.icon_state = "clowwand"
 			src.item_state = "clowwand"
-			src.w_class = 4
+			src.w_class = W_CLASS_BULKY
 		else
 			src.name = initial(src.name)
 			src.desc = initial(src.desc)
@@ -796,13 +796,13 @@
 				if (src.ding_on_change)
 					playsound(src, src.ding_sound, 33, 0)
 		catch(var/exception/e)
-			src.maptext = "(Err: [e])"
+			src.maptext = "<span class='c pixel sh'>(Err: [e])</span>"
 
 
 	proc/get_value()
 		if (src.monitored_list && !src.monitored_var)
 			var/list/monlist = monitored.vars[src.monitored_list]
-			. = monlist.len
+			. = length(monlist)
 		else if (src.monitored_list)
 			. = monitored.vars[src.monitored_list][src.monitored_var]
 		else
@@ -858,10 +858,34 @@
 			maptext_prefix = "<span class='c pixel sh'>Deaths:\n<span class='vga'>"
 			ding_sound = "sound/misc/lose.ogg"
 
+			players
+				monitored_var = "playerdeaths"
+				maptext_prefix = "<span class='c pixel sh'>Deaths:\n<span class='vga'>"
+				ding_sound = "sound/misc/lose.ogg"
+
 		adminhelps
 			monitored_var = "adminhelps"
 			maptext_prefix = "<span class='c pixel sh'>Adminhelps:\n<span class='vga'>"
 			ding_sound = "sound/voice/screams/mascream6.ogg"
+
+		mentorhelps
+			monitored_var = "mentorhelps"
+			maptext_prefix = "<span class='c pixel sh'>Mentorhelps:\n<span class='vga'>"
+			ding_sound = "sound/voice/animal/mouse_squeak.ogg"
+
+		prayers
+			monitored_var = "prayers"
+			maptext_prefix = "<span class='c pixel sh'>Prayers:\n<span class='vga'>"
+			ding_sound = "sound/voice/heavenly.ogg"
+
+		violence
+			monitored_var = "violence"
+			maptext_prefix = "<span class='c pixel sh'>Acts of violence:\n<span class='vga'>"
+			update_delay = 1 SECOND
+
+		clones
+			monitored_var = "clones"
+			maptext_prefix = "<span class='c pixel sh'>Clones:\n<span class='vga'>"
 
 	budget
 		New()
@@ -889,6 +913,49 @@
 		get_value()
 			. = total_clients()
 
+	players
+		maptext_prefix = "<span class='c pixel sh'>Players:\n<span class='vga'>"
+		var/what_group = "total"
+		validate_monitored()
+			return 1
+		get_value()
+			. = get_crew_stats()[what_group]
+
+		alive
+			maptext_prefix = "<span class='c pixel sh'>Living players:\n<span class='vga'>"
+			what_group = "alive"
+		dead
+			maptext_prefix = "<span class='c pixel sh'>Dead players:\n<span class='vga'>"
+			what_group = "dead"
+		observers
+			maptext_prefix = "<span class='c pixel sh'>Observers:\n<span class='vga'>"
+			what_group = "observer"
+
+
+
+		// shamefully stolen from get_dead_crew_percentage()
+		proc/get_crew_stats()
+			var/list/results = list()
+			results["total"] = 0
+			results["alive"] = 0
+			results["dead"] = 0
+			results["observer"] = 0
+
+			for(var/client/C)
+				var/mob/M = C.mob
+				if(!M || isnewplayer(M)) continue
+				if (isdead(M) && !isliving(M))
+					if (M.mind?.joined_observer)
+						results["observer"]++
+					else
+						results["dead"]++
+				else
+					results["alive"]++
+				results["total"]++
+
+			return results
+
+
 	load
 		maptext_prefix = "<span class='c pixel sh'>Server Load:\n<span class='vga'>"
 		update_delay = 1 SECOND
@@ -907,7 +974,7 @@
 				if (0.8 to INFINITY)
 					lagc = "#ff0000; -dm-text-outline: 1px #000000 solid"
 
-			. = "<span style='color: [lagc];'>[world.cpu]% @ [world.tick_lag]s</span>"
+			. = "<span style='color: [lagc];'>[round(world.cpu)]% @ [world.tick_lag / 10]s</span>"
 
 
 /obj/overlay/zamujasa/football_wave_timer
@@ -1087,6 +1154,65 @@ Other Goonstation servers:[serverList]</span>"})
 
 
 
+
+/obj/item/rcd/construction/safe/admin_crimes
+	// do not put this anywhere anyone can get it. it is for crime.
+	name = "ultra hyper super rapid construction device 2 turbo: championship edition hd remix now with NEW funky mode"
+	desc = "Also known as the ultimate in grief technology, this is capable of rapidly (de)constructing walls, flooring, windows, and doors. This admin crime edition features no cooldowns and extremely reduced matter costs. Does not, in fact, have a funky mode."
+
+	matter = 999999
+	max_matter = 999999
+
+	// lol
+	matter_create_floor = 1
+	time_create_floor = 0
+
+	matter_create_wall = 1
+	time_create_wall = 0
+
+	matter_reinforce_wall = 1
+	time_reinforce_wall = 0
+
+	matter_create_wall_girder = 1
+	time_create_wall_girder = 0
+
+	matter_create_door = 1
+	time_create_door = 0
+
+	matter_create_window = 1
+	time_create_window = 0
+
+	matter_create_light_fixture = 1
+	time_create_light_fixture = 0
+
+	matter_remove_door = 1
+	time_remove_door = 0
+
+	matter_remove_floor = 1
+	time_remove_floor = 0
+
+	matter_remove_lattice = 1
+	time_remove_lattice = 0
+
+	matter_remove_wall = 1
+	time_remove_wall = 0
+
+	matter_unreinforce_wall = 1
+	time_unreinforce_wall = 0
+
+	matter_remove_girder = 1
+	time_remove_girder = 0
+
+	matter_remove_window = 1
+	time_remove_window = 0
+
+	matter_remove_light_fixture = 1
+	time_remove_light_fixture = 0
+
+
+
+
+
 /mob/living/critter/small_animal/bee/zombee/zambee
 	name = "zambee"
 	real_name = "zambee"
@@ -1107,3 +1233,17 @@ Other Goonstation servers:[serverList]</span>"})
 	amt1 = 15
 	venom2 = "omnizine"
 	amt2 = 5
+
+
+
+
+// i am not sorry for this
+/obj/machinery/shower/cowbrush
+	name = "\improper PLEASEDMOO cattle cleaner"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "cowbrush"
+	desc = "A huge rotary brush attached to a wall. Supposedly, cows love it."
+
+	attack_hand(mob/user as mob)
+		..()
+		src.icon_state = "cowbrush[src.on ? "_on" : ""]"

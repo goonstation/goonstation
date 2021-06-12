@@ -87,7 +87,7 @@ datum
 			covered_cache_volume = total_volume
 
 		proc/play_mix_sound(var/mix_sound)
-			playsound(get_turf(my_atom), mix_sound, 80, 1, 3)
+			playsound(my_atom, mix_sound, 80, 1, 3)
 
 		proc/copy_to(var/datum/reagents/target, var/multiplier = 1, var/do_not_react = 0, var/copy_temperature = 0)
 			if(!target || target == src) return
@@ -274,6 +274,7 @@ datum
 				target.reagents = new
 
 			var/datum/reagents/target_reagents = target.reagents
+			amount = min(amount, target_reagents.maximum_volume - target_reagents.total_volume)
 
 			if (do_fluid_react && issimulatedturf(target))
 				var/turf/simulated/T = target
@@ -351,7 +352,7 @@ datum
 
 		//multiplier is used to handle realtime metabolizations over byond time
 		proc/metabolize(var/mob/target, var/multiplier = 1)
-			if (islist(src.addiction_tally) && src.addiction_tally.len) // if we got some addictions to process
+			if (islist(src.addiction_tally) && length(src.addiction_tally)) // if we got some addictions to process
 				//DEBUG_MESSAGE("metabolize([target]) addiction_tally processing")
 				for (var/rid in src.addiction_tally) // look at each addiction tally
 					if (src.reagent_list.Find(rid)) // if we find that we've got that reagent in us right now
@@ -406,7 +407,7 @@ datum
 					var/total_matching_reagents = 0
 					var/created_volume = src.maximum_volume
 					for(var/B in C.required_reagents)
-						var/B_required_volume = max(1, C.required_reagents[B])
+						var/B_required_volume = max(CHEM_EPSILON, C.required_reagents[B])
 
 
 						//var/amount = get_reagent_amount(B)
@@ -566,9 +567,10 @@ datum
 			for(var/current_id in reagent_list)
 				var/datum/reagent/current_reagent = reagent_list[current_id]
 				if(current_reagent)
-					if(current_reagent.volume <= 0)
+					if(current_reagent.volume <= 0.001)
 						del_reagent(current_id)
 					else
+						current_reagent.volume = max(round(current_reagent.volume, 0.001), 0.001)
 						total_volume += current_reagent.volume
 			if(isitem(my_atom))
 				var/obj/item/I = my_atom
@@ -726,10 +728,11 @@ datum
 			var/added_new = 0
 			if (!donotupdate)
 				update_total()
+			amount = round(amount, CHEM_EPSILON)
+			if(amount < CHEM_EPSILON)
+				return 0
 			if(total_volume + amount > maximum_volume)
 				amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
-			if(amount <= CHEM_EPSILON)
-				return 0
 
 			var/datum/reagent/current_reagent = reagent_list[reagent]
 

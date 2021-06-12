@@ -53,6 +53,9 @@
 /datum/movement_modifier/reagent/salicylic_acid
 	health_deficiency_adjustment = -25
 
+/datum/movement_modifier/reagent/epinepherine
+	health_deficiency_adjustment = -15
+
 /datum/movement_modifier/reagent/cocktail_triple
 	multiplicative_slowdown = 0.333
 
@@ -66,15 +69,17 @@
 
 // robot legs
 /datum/movement_modifier/robotleg_right
-	additive_slowdown = -0.20
+	health_deficiency_adjustment = -25
 
 /datum/movement_modifier/robotleg_left
-	additive_slowdown = -0.20
+	health_deficiency_adjustment = -25
 
 /datum/movement_modifier/robottread_right
+	health_deficiency_adjustment = -25
 	additive_slowdown = -0.25
 
 /datum/movement_modifier/robottread_left
+	health_deficiency_adjustment = -25
 	additive_slowdown = -0.25
 
 // robot modifiers

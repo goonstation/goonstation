@@ -285,7 +285,7 @@ obj/machinery/atmospherics/retrofilter
 					removed.carbon_dioxide = 0
 			if (filter_mode & MODE_TRACE)
 				if(removed && length(removed.trace_gases))
-					for(var/datum/gas/trace_gas as() in removed.trace_gases)
+					for(var/datum/gas/trace_gas as anything in removed.trace_gases)
 						if(trace_gas)
 							var/datum/gas/filtered_gas = filtered_out.get_or_add_trace_gas_by_type(trace_gas.type)
 							filtered_gas.moles = trace_gas.moles

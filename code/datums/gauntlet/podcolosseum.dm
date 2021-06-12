@@ -544,7 +544,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 	proc/add_overlay(value, max_value, r0, g0, b0, r1, g1, b1)
 		var/percentage = value / max_value
 		var/remaining = round(percentage * 100)
-		var/bars = barBits.len
+		var/bars = length(barBits)
 		var/eachBar = 100 / bars
 		var/missingBars = 0
 		health_overlay.color = rgb(lerp(r0, r1, percentage), lerp(g0, g1, percentage), lerp(b0, b1, percentage))

@@ -4,6 +4,7 @@
 
 /datum/artifact/augmentor
 	associated_object = /obj/artifact/augmentor
+	type_name = "Surgery machine"
 	rarity_weight = 350
 	validtypes = list("ancient","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
@@ -88,7 +89,7 @@
 
 			working = 1
 			T.visible_message("<span class='alert'><b>[O]</b> suddenly lashes out at [H.name] with a flurry of sharp implements!</span>")
-			H.changeStatus("paralysis", 40)
+			H.changeStatus("paralysis", 4 SECONDS)
 			playsound(H.loc, pick(work_sounds), 50, 1, -1)
 			random_brute_damage(user, 10)
 			sleep(1 SECOND)

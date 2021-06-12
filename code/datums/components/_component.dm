@@ -341,7 +341,7 @@
 		var/proctype = C.signal_procs[src][sigtype]
 		return 0 | CallAsync(C, proctype, arguments)
 	. = 0
-	for (var/datum/C as() in target)
+	for (var/datum/C as anything in target)
 		if(!C.signal_enabled)
 			continue
 		var/proctype = C.signal_procs[src][sigtype]
@@ -464,7 +464,7 @@
 					var/list/arguments = raw_args.Copy()
 					arguments[1] = new_comp
 					var/make_new_component = TRUE
-					for (var/datum/component/C as() in GetComponents(new_type))
+					for (var/datum/component/C as anything in GetComponents(new_type))
 						if(C.CheckDupeComponent(arglist(arguments)))
 							make_new_component = FALSE
 							qdel(new_comp)

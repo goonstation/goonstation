@@ -60,7 +60,7 @@ var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/list/falloff_cache = list()
 
 //default volumes
-var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1)
+var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 //volumous hair with l'orial paris
 /client/var/list/volumes
@@ -68,7 +68,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1)
 
 /// Returns a list of friendly names for available sound channels
 /client/proc/getVolumeNames()
-	return list("Game", "Ambient", "Radio", "Admin", "Emote")
+	return list("Game", "Ambient", "Radio", "Admin", "Emote", "Mentor PM")
 
 /// Returns the default volume for a channel, unattenuated for the master channel (0-1)
 /client/proc/getDefaultVolume(channel)
@@ -76,7 +76,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1)
 
 /// Returns a list of friendly descriptions for available sound channels
 /client/proc/getVolumeDescriptions()
-	return list("Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.", "Screams and farts.")
+	return list("Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.", "Screams and farts.", "Mentor PM notification sound.")
 
 /// Returns the volume to set /sound/var/volume to for the given channel(so 0-100)
 /client/proc/getVolume(id)
@@ -115,13 +115,15 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1)
 	if( channel == VOLUME_CHANNEL_ADMIN )
 		src.chatOutput.adjustVolumeRaw( getMasterVolume() * volume )
 
-/proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
+/proc/playsound(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
 	// don't play if over the per-tick sound limit
 	if (!limiter || !limiter.canISpawn(/sound))
 		return
 
+	var/turf/source_turf = get_turf(source)
+
 	// don't play if the sound is happening nowhere
-	if (!source || !source.loc || source.z <= 0)
+	if (isnull(source_turf))
 		return
 
 	EARLY_RETURN_IF_QUIET(vol)
@@ -133,7 +135,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1)
 
 	var/spaced_source = 0
 	var/spaced_env = 0
-	var/atten_temp = attenuate_for_location(source)
+	var/atten_temp = attenuate_for_location(source_turf)
 	SOURCE_ATTEN(atten_temp)
 	//message_admins("volume: [vol]")
 	EARLY_RETURN_IF_QUIET(vol)
@@ -147,7 +149,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1)
 	var/scaled_dist
 	var/storedVolume
 
-	for (var/mob/M in GET_NEARBY(source,MAX_SOUND_RANGE + extrarange))
+	for (var/mob/M in GET_NEARBY(source_turf, MAX_SOUND_RANGE + extrarange))
 		var/client/C = M.client
 		if (!C)
 			continue
@@ -161,7 +163,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1)
 			continue
 
 		//Hard attentuation
-		dist = max(GET_MANHATTAN_DIST(Mloc, source), 1)
+		dist = max(GET_MANHATTAN_DIST(Mloc, source_turf), 1)
 		if (dist > MAX_SOUND_RANGE + extrarange)
 			continue
 
@@ -212,7 +214,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1)
 
 			S.volume = ourvolume
 
-			if (spaced_env)
+			if (spaced_env && !(flags & SOUND_IGNORE_SPACE))
 				S.environment = SPACED_ENV
 				S.echo = SPACED_ECHO
 			else
@@ -223,14 +225,14 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1)
 					//boutput(M, "You hear a [source] at [source_location]!")
 					S.echo = ECHO_CLOSE
 
-			S.x = source.x - Mloc.x
-			S.z = source.y - Mloc.y //Since sound coordinates are 3D, z for sound falls on y for the map.  BYOND.
+			S.x = source_turf.x - Mloc.x
+			S.z = source_turf.y - Mloc.y //Since sound coordinates are 3D, z for sound falls on y for the map.  BYOND.
 			S.y = 0
 
 			C << S
 
 
-/mob/proc/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
+/mob/proc/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
 	if(!src.client)
 		return
 
@@ -238,11 +240,13 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1)
 	if (!limiter || !limiter.canISpawn(/sound))
 		return
 
+	var/turf/source_turf = get_turf(source)
+
 	// don't play if the sound is happening nowhere
-	if (!source || !source.loc)
+	if (isnull(source_turf))
 		return
 
-	var/dist = max(GET_MANHATTAN_DIST(get_turf(src), get_turf(source)), 1)
+	var/dist = max(GET_MANHATTAN_DIST(get_turf(src), source_turf), 1)
 	if (dist > MAX_SOUND_RANGE + extrarange)
 		return
 
@@ -282,11 +286,10 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1)
 	client.sound_playing[ S.channel ][2] = channel
 
 	if (S)
-		if (spaced_env)
+		if (spaced_env && !(flags & SOUND_IGNORE_SPACE))
 			S.environment = SPACED_ENV
 			S.echo = SPACED_ECHO
 
-		var/turf/source_turf = get_turf(source)
 		if (istype(source_turf))
 			var/dx = source_turf.x - src.x
 			S.pan = max(-100, min(100, dx/8.0 * 100))
@@ -302,9 +305,71 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1)
 
 					M << S
 
+/**
+	Plays a sound to some clients without caring about its source location and stuff.
+	`target` can be either a list of clients or a list of mobs or `world` or an area.
+*/
+/proc/playsound_global(target, soundin, vol as num, vary, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
+	// don't play if over the per-tick sound limit
+	if (!limiter || !limiter.canISpawn(/sound))
+		return
 
+	EARLY_RETURN_IF_QUIET(vol)
 
-/mob/living/silicon/ai/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
+	var/list/clients = null
+	if(islist(target))
+		if(!length(target))
+			return
+		if(isclient(target[1]))
+			clients = target
+		else if(ismob(target[1]))
+			clients = list()
+			for(var/mob/M as anything in target)
+				if(M.client)
+					clients += M.client
+		else
+			CRASH("Incorrect object in target list `[target[1]]` in playsound_global.")
+	else if(target == world)
+		clients = global.clients
+	else if(isarea(target))
+		clients = list()
+		for(var/mob/M in target)
+			if(M.client)
+				clients += M.client
+	else
+		CRASH("Incorrect argument `[target]` in playsound_global.")
+
+	var/source = null
+	if(isatom(target))
+		source = target
+	var/sound/S
+	var/ourvolume
+	var/storedVolume
+
+	for(var/client/C as anything in clients)
+		if (!C)
+			continue
+
+		if (CLIENT_IGNORES_SOUND(C))
+			continue
+
+		ourvolume = vol
+
+		storedVolume = ourvolume
+		ourvolume *= C.getVolume(channel) / 100
+
+		EARLY_CONTINUE_IF_QUIET(ourvolume)
+
+		if (!S) S = generate_sound(source, soundin, vol, vary, extrarange=0, pitch=pitch)
+		if (!S) CRASH("Did not manage to generate sound \"[soundin]\" with source [source].")
+		C.sound_playing[ S.channel ][1] = storedVolume
+		C.sound_playing[ S.channel ][2] = channel
+
+		S.volume = ourvolume
+
+		C << S
+
+/mob/living/silicon/ai/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
 	..()
 	if (deployed_to_eyecam && src.eyecam)
 		src.eyecam.playsound_local(source, soundin, vol, vary, extrarange, pitch, ignore_flag, channel)
@@ -539,6 +604,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1)
  		"skelly" = sound('sound/misc/talk/skelly.ogg'),	"skelly!" = sound('sound/misc/talk/skelly_exclaim.ogg'),"skelly?" = sound('sound/misc/talk/skelly_ask.ogg'), \
 		"blub" = sound('sound/misc/talk/blub.ogg'),	"blub!" = sound('sound/misc/talk/blub_exclaim.ogg'),"blub?" = sound('sound/misc/talk/blub_ask.ogg'), \
 		"cow" = sound('sound/misc/talk/cow.ogg'),	"cow!" = sound('sound/misc/talk/cow_exclaim.ogg'),"cow?" = sound('sound/misc/talk/cow_ask.ogg'), \
+		"roach" = sound('sound/misc/talk/roach.ogg'),	"roach!" = sound('sound/misc/talk/roach_exclaim.ogg'),"roach?" = sound('sound/misc/talk/roach_ask.ogg'), \
  		"radio" = sound('sound/misc/talk/radio.ogg')\
  		)
 

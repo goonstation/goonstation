@@ -151,7 +151,11 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 									html += "th, "
 					html += "20[copytext(line, 15, 17)]</li>"
 				if("(u)")
+					#ifdef APRIL_FOOLS
+					author = "CodeDude"
+					#else
 					author = copytext(line, 4, 0)
+					#endif
 					added_collapsible_author = 0
 					added_author = 0
 					pr_num = null
@@ -161,7 +165,14 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 						html += "<li class=\"admin\"><span><i class=\"icon-check\"></i> [author]</span> updated:"
 						if(emoji_labels)
 							var/list/emoji_parts = splittext(emoji_labels, "|")
+							#ifdef APRIL_FOOLS
+							var/random_em = ""
+							for(var/i in 1 to rand(1, 4))
+								random_em += random_emoji()
+							html += "<span class='emoji'>[random_em]"
+							#else
 							html += "<span class='emoji'>[emoji_parts[1]]"
+							#endif
 							if(emoji_parts.len > 1)
 								html += "<span class='tooltiptext'>[emoji_parts[2]]</span>"
 							html += "</span>"

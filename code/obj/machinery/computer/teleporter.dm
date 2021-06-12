@@ -63,15 +63,14 @@
 	var/list/areaindex = list()
 
 	for_by_tcl(R, /obj/item/device/radio/beacon)
-		if (!istype(R, /obj/item/device/radio/beacon/jones))
-			var/turf/T = get_turf(R)
-			if (!T)	continue
-			var/tmpname = T.loc.name
-			if(areaindex[tmpname])
-				tmpname = "[tmpname] ([++areaindex[tmpname]])"
-			else
-				areaindex[tmpname] = 1
-			L[tmpname] = R
+		var/turf/T = get_turf(R)
+		if (!T)	continue
+		var/tmpname = T.loc.name
+		if(areaindex[tmpname])
+			tmpname = "[tmpname] ([++areaindex[tmpname]])"
+		else
+			areaindex[tmpname] = 1
+		L[tmpname] = R
 
 	for_by_tcl(I, /obj/item/implant/tracking)
 		if (!I.implanted || !ismob(I.loc))

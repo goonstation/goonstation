@@ -12,9 +12,11 @@
 	if(!istype(G, /obj/item/grab))
 		return
 	if(!ismonkey(G.affecting))
-		boutput(user, "<span class='alert'>They are too big for the spike, try something smaller!</span>")
+		boutput(user, "<span class='alert'>[G.affecting] is too big for the spike, try something smaller!</span>")
 		return
-
+	if((!isnpcmonkey(G.affecting) || G.affecting.client) && !isdead(G.affecting))
+		boutput(user, "<span class='alert'>[G.affecting] looks sentient and is struggling too much!</span>")
+		return
 	if(src.occupied == 0)
 		src.icon_state = "spikebloody"
 		src.occupied = 1
@@ -27,6 +29,7 @@
 		G.affecting.unequip_all()
 		qdel(G.affecting)
 		qdel(G)
+		JOB_XP(user, "Chef", 2)
 
 	else
 		boutput(user, "<span class='alert'>The spike already has a monkey on it, finish collecting his meat first!</span>")

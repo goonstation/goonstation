@@ -95,7 +95,6 @@ var/datum/particleMaster/particleMaster = new
 					particleSystems -= system
 				else
 					count++
-			LAGCHECK(LAG_MED)
 
 		if (count <= 0)
 			location?.temp_flags &= ~HAS_PARTICLESYSTEM

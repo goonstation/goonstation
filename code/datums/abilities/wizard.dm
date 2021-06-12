@@ -23,7 +23,8 @@
 
 	wizard_mob.bioHolder.mobAppearance.customization_first_color = "#FFFFFF"
 	wizard_mob.bioHolder.mobAppearance.customization_second_color = "#FFFFFF"
-	wizard_mob.cust_two_state = "wiz"
+	wizard_mob.bioHolder.mobAppearance.customization_third_color = "#FFFFFF"
+	wizard_mob.bioHolder.mobAppearance.customization_second = new /datum/customization_style/hair/gimmick/wiz
 	wizard_mob.update_colorful_parts()
 
 	var/obj/item/SWF_uplink/SB = new /obj/item/SWF_uplink(wizard_mob, in_vr = vr)
@@ -299,7 +300,7 @@
 		object.owner = src
 
 	castcheck()
-		return !istype(src, /datum/targetable/spell/prismatic_spray/admin) && holder.owner.wizard_castcheck(src)
+		return holder.owner.wizard_castcheck(src)
 
 	cast(atom/target)
 		if(ishuman(holder.owner))

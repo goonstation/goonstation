@@ -202,7 +202,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Glass Bottle"
 	item_paths = list("CRY-1")
 	item_amounts = list(1)
-	item_outputs = list(/obj/item/reagent_containers/food/drinks/bottle)
+	item_outputs = list(/obj/item/reagent_containers/food/drinks/bottle/soda)
 	time = 4 SECONDS
 	create = 1
 	category = "Miscellaneous"
@@ -620,22 +620,8 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A,var/list/materials)
 		..()
 		var/obj/item/cable_coil/coil = A
-		var/min_cond = 1
-		var/max_cond = 0
-		var/min_cond_mat = null
-		var/max_cond_mat = null
-		for (var/pattern in materials)
-			var/datum/material/cand = getMaterial(materials[pattern])
-			if (!cand)
-				continue
-			if (cand.getProperty("electrical") < min_cond)
-				min_cond = cand.getProperty("electrical")
-				min_cond_mat = cand
-			else if (cand.getProperty("electrical") > max_cond)
-				max_cond = cand.getProperty("electrical")
-				max_cond_mat = cand
-		coil.setInsulator(min_cond_mat)
-		coil.setConductor(max_cond_mat)
+		coil.setInsulator(getMaterial(materials["INS-1"]))
+		coil.setConductor(getMaterial(materials["CON-1"]))
 		return 1
 
 /datum/manufacture/RCD
@@ -673,6 +659,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	time = 30 SECONDS
 	create = 1
 	category = "Resource"
+
+/datum/manufacture/sds
+	name = "Syndicate Destruction System"
+	item_paths = list("MET-3","DEN-1","CON-1")
+	item_amounts = list(16,12,8)
+	item_outputs = list(/obj/item/syndicate_destruction_system)
+	time = 90 SECONDS
+	create = 1
+	category = "Tool"
 
 /datum/manufacture/jumpsuit
 	name = "Grey Jumpsuit"
@@ -1172,7 +1167,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	name = "Cyborg Treads"
 	item_paths = list("MET-2","CON-1")
 	item_amounts = list(12,6)
-	item_outputs = list(/obj/item/parts/robot_parts/leg/left/treads, /obj/item/parts/robot_parts/leg/right/treads)//list(/obj/item/parts/robot_parts/leg/treads)
+	item_outputs = list(/obj/item/parts/robot_parts/leg/left/treads, /obj/item/parts/robot_parts/leg/right/treads)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
@@ -2184,7 +2179,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Clothing"
 
 /datum/manufacture/scrubs_blue
-	name = "Blue Scrubs"
+	name = "Navy Scrubs"
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/scrub/blue)
@@ -2193,7 +2188,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Clothing"
 
 /datum/manufacture/scrubs_purple
-	name = "Purple Scrubs"
+	name = "Violet Scrubs"
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/scrub/purple)
@@ -2211,10 +2206,19 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Clothing"
 
 /datum/manufacture/scrubs_pink
-	name = "Pink Scrubs"
+	name = "Hot Pink Scrubs"
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/scrub/pink)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/medical_backpack
+	name = "Medical Backpack"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/storage/backpack/medic)
 	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2243,6 +2247,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/clothing/mask/surgical_shield)
 	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/eyepatch
+	name = "Medical Eyepatch"
+	item_paths = list("FAB-1")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/clothing/glasses/eyepatch)
+	time = 15 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2378,8 +2391,8 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 /datum/manufacture/pod/weapon/mining
 	name = "Plasma Cutter System"
-	item_paths = list("POW-1","MET-3")
-	item_amounts = list(10,10)
+	item_paths = list("POW-1","MET-3","DEN-3")
+	item_amounts = list(10,10,20)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/mining)
 	time = 20 SECONDS
 	create = 1
@@ -2387,8 +2400,8 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 /datum/manufacture/pod/weapon/mining/drill
 	name = "Rock Drilling Rig"
-	item_paths = list("POW-1","MET-3", "DEN-3")
-	item_amounts = list(10,10,20)
+	item_paths = list("POW-1","MET-3","DEN-3")
+	item_amounts = list(10,10,10)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/rockdrills)
 	time = 20 SECONDS
 	create = 1
@@ -2412,6 +2425,23 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/pod/sps
+	name = "Syndicate Purge System"
+	item_paths = list("MET-1","CON-1","CRY-1")
+	item_amounts = list(8,12,16)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/syndicate_purge_system)
+	time = 90 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/pod/srs
+	name = "Syndicate Rewind System"
+	item_paths = list("MET-1","CON-1","CRY-1")
+	item_amounts = list(16,12,8)
+	item_outputs = list(/obj/item/shipcomponent/secondary_system/syndicate_rewind_system)
+	time = 90 SECONDS
+	create = 1
+	category = "Tool"
 //// deployable warp beacon
 
 /datum/manufacture/beaconkit
@@ -2538,6 +2568,35 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	time = 30 SECONDS
 	create = 1
 	category = "Tool"
+
+/************ INTERDICTOR STUFF ************/
+
+/datum/manufacture/interdictor_frame
+	name = "Interdictor Frame Kit"
+	item_paths = list("MET-2")
+	item_amounts = list(10)
+	item_outputs = list(/obj/item/interdictor_frame_kit)
+	time = 15 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/interdictor_rod_lambda
+	name = "Lambda Phase-Control Rod"
+	item_paths = list("MET-2","CON-1","CRY-1","INS-1")
+	item_amounts = list(10,20,10,5)
+	item_outputs = list(/obj/item/interdictor_rod)
+	time = 20 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/interdictor_rod_sigma
+	name = "Sigma Phase-Control Rod"
+	item_paths = list("MET-2","CON-2","INS-1","POW-1")
+	item_amounts = list(10,25,10,5)
+	item_outputs = list(/obj/item/interdictor_rod/sigma)
+	time = 20 SECONDS
+	create = 1
+	category = "Machinery"
 
 //////////////////////UBER-EXTREME SURVIVAL////////////////////////////////
 /datum/manufacture/armor_vest	//

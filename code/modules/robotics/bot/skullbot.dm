@@ -57,7 +57,7 @@
 		var/m_id = (lang_id == "english" || lang_id == "") ? messages[1] : messages[2]
 		if (prob(25))
 			var/list/speech_list = splittext(messages[m_id], " ")
-			if(!speech_list || !speech_list.len)
+			if(!speech_list || !length(speech_list))
 				return
 
 			var/num_claks = rand(1,4)

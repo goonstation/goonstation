@@ -59,10 +59,10 @@
 	New(atom/loc, var/obj_path, var/no_lootbox)
 		pixel_y = 480
 		animate(src, pixel_y = 0, time = dropTime)
-		playsound(src.loc, 'sound/effects/flameswoosh.ogg', 100, 0)
+		playsound(src.loc, 'sound/effects/flameswoosh.ogg', 75, 0)
 		SPAWN_DBG(dropTime)
 			new/obj/effect/supplyexplosion(src.loc)
-			playsound(src.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
+			playsound(src.loc, 'sound/effects/ExplosionFirey.ogg', 50, 1)
 			for(var/mob/M in view(7, src.loc))
 				shake_camera(M, 20, 8)
 				if(gib_mobs && M.loc == src.loc)

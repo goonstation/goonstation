@@ -233,7 +233,7 @@
 		if(src.traitHolder)
 			for(var/T in src.traitHolder.traits)
 				var/obj/trait/O = getTraitById(T)
-				O.onLife(src)
+				O.onLife(src, life_mult)
 
 		update_icons_if_needed()
 
@@ -472,7 +472,7 @@
 		if (src.getStatusDuration("burning"))
 
 			if (src.getStatusDuration("burning") > 200)
-				for (var/atom/A as() in src.contents)
+				for (var/atom/A as anything in src.contents)
 					if (A.event_handler_flags & HANDLE_STICKER)
 						if (A:active)
 							src.visible_message("<span class='alert'><b>[A]</b> is burnt to a crisp and destroyed!</span>")
@@ -531,13 +531,13 @@
 						if (!spotted_by_mob)
 							O:score++
 
-	proc/update_canmove()
-		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/canmove]
+	proc/update_sight()
+		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/sight]
 		if (L)
 			L.process()
 
-	proc/update_sight()
-		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/sight]
+	update_canmove()
+		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/canmove]
 		if (L)
 			L.process()
 
@@ -614,16 +614,11 @@
 
 		var/thermal_protection = 10 // base value
 
-		// Resistance from Bio Effects
-		if (src.bioHolder)
-			if (src.bioHolder.HasEffect("dwarf"))
-				thermal_protection += 10
-
 		// Resistance from Clothing
 		thermal_protection += GET_MOB_PROPERTY(src, PROP_COLDPROT)
 
 /*
-		for (var/obj/item/C as() in src.get_equipped_items())
+		for (var/obj/item/C as anything in src.get_equipped_items())
 			thermal_protection += C.getProperty("coldprot")*/
 
 		/*
@@ -671,7 +666,7 @@
 					if (src.eyes_protected_from_light())
 						resist_prob += 190
 
-		for (var/obj/item/C as() in src.get_equipped_items())
+		for (var/obj/item/C as anything in src.get_equipped_items())
 			resist_prob += C.getProperty("viralprot")
 
 		if(src.getStatusDuration("food_disease_resist"))
@@ -684,17 +679,7 @@
 		// calculate 0-100% insulation from rads
 		if (!src)
 			return 0
-
-		var/rad_protection = 0
-
-		// Resistance from Clothing
-		rad_protection += GET_MOB_PROPERTY(src, PROP_RADPROT)
-
-		if (bioHolder?.HasEffect("food_rad_resist"))
-			rad_protection += 100
-
-		rad_protection = clamp(rad_protection, 0, 100)
-		return rad_protection
+		return clamp(GET_MOB_PROPERTY(src, PROP_RADPROT), 0, 100)
 
 	get_ranged_protection()
 		if (!src)
@@ -714,23 +699,18 @@
 		var/a_zone = zone
 		if (a_zone in list("l_leg", "r_arm", "l_leg", "r_leg"))
 			a_zone = "chest"
-		if(a_zone=="All")
-			protection=(5*get_melee_protection("chest",damage_type)+get_melee_protection("head",damage_type))/6
-
-		else
-
 			//protection from clothing
-			if (a_zone == "chest")
-				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_BODY)
-			else //can only be head
-				protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_HEAD)
-			protection += GET_MOB_PROPERTY(src, PROP_ENCHANT_ARMOR)/2
-			//protection from blocks
-			var/obj/item/grab/block/G = src.check_block()
-			if (G)
-				protection += 1
-				if (G != src.equipped()) // bare handed block is less protective
-					protection += G.can_block(damage_type)
+		if(a_zone == "All")
+			protection = (5 * GET_MOB_PROPERTY(src, PROP_MELEEPROT_BODY) + GET_MOB_PROPERTY(src, PROP_MELEEPROT_HEAD))/6
+		if (a_zone == "chest")
+			protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_BODY)
+		else //can only be head
+			protection = GET_MOB_PROPERTY(src, PROP_MELEEPROT_HEAD)
+		protection += GET_MOB_PROPERTY(src, PROP_ENCHANT_ARMOR)/2
+		//protection from blocks
+		var/obj/item/grab/block/G = src.check_block()
+		if (G && damage_type)
+			protection += G.can_block(damage_type)
 
 		if (isnull(protection)) //due to GET_MOB_PROPERTY returning null if it doesnt exist
 			protection = 0
@@ -743,7 +723,7 @@
 		var/protection = 0
 
 		// Resistance from Clothing
-		for (var/obj/item/C as() in src.get_equipped_items())
+		for (var/obj/item/C as anything in src.get_equipped_items())
 			if(C.hasProperty("deflection"))
 				var/curr = C.getProperty("deflection")
 				protection += curr

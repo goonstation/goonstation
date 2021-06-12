@@ -44,6 +44,8 @@
 #define TGUI_INTERACTIVE		 (1<<19)
 /// Has a click delay for attack_self()
 #define ATTACK_SELF_DELAY		 (1<<20)
+/// Is currently scaled by bubsium
+#define IS_BUBSIUM_SCALED		 (1<<21)
 
 
 //Item function flags
@@ -54,6 +56,8 @@
 #define USE_SPECIALS_ON_ALL_INTENTS 2
 /// prevents items from creating smoke while burning
 #define SMOKELESS 4
+/// makes items immune to acid
+#define IMMUNE_TO_ACID 8
 
 //tool flags
 #define TOOL_CLAMPING 1
@@ -169,3 +173,11 @@
                        HAS_FLAG(x:kind_of_limb, LIMB_HEAVY) |\
                        HAS_FLAG(x:kind_of_limb, LIMB_HEAVIER) |\
                        HAS_FLAG(x:kind_of_limb, LIMB_TREADS))
+
+#define W_CLASS_TINY 1
+#define W_CLASS_SMALL 2
+#define W_CLASS_NORMAL 3
+#define W_CLASS_BULKY 4
+#define W_CLASS_HUGE 5
+#define W_CLASS_GIGANTIC 6
+#define W_CLASS_BUBSIAN 10
