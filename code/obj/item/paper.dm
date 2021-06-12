@@ -1599,3 +1599,8 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 	desc = "Somebody took whatever was in here."
 	icon_state = "postit-writing"
 	info = {"<h2>IOU</h2>"}
+
+/obj/item/paper/ikea
+	desc = "Somebody took whatever was in here."
+	icon_state = "postit-writing"
+	info = {"<h2>IOU</h2>"}
