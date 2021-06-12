@@ -707,19 +707,20 @@ var/f_color_selector_handler/F_Color_Selector
 
 	logTheThing("diary", null, "Shutting down after testing for runtimes.", "admin")
 	if (isnull(runtimeDetails))
-		world.log << "Runtime checking failed due to missing runtimeDetails global list"
+		text2file("Runtime checking failed due to missing runtimeDetails global list", "./errors.log")
 	else if (length(runtimeDetails) > 0)
-		var/errorlog = file("./errors.log")
-		errorlog << "[length(runtimeDetails)] runtimes generated:"
+		text2file("[length(runtimeDetails)] runtimes generated:", "./errors.log")
 		for (var/idx in runtimeDetails)
 			var/list/details = runtimeDetails[idx]
 			var/timestamp = details["seen"]
 			var/file = details["file"]
 			var/line = details["line"]
 			var/name = details["name"]
-			errorlog << "\[[timestamp]\] [file],[line]: [name]"
+			text2file("\[[timestamp]\] [file],[line]: [name]", "./errors.log")
 #ifndef PREFAB_CHECKING
-	text2file(debug_map_apc_count("\n", zlim=Z_LEVEL_STATION), "no_runtimes.txt")
+	var/apc_error_str = debug_map_apc_count("\n", zlim=Z_LEVEL_STATION)
+	if (!is_blank_string(apc_error_str))
+		text2file(apc_error_str, "./errors.log")
 #endif
 	shutdown()
 #endif
