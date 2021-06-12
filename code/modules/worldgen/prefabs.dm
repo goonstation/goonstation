@@ -187,6 +187,12 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 20
 		prefabSizeY = 20
 
+	furniture_store //Danger Noodle's very swedish, legally distinct furniture store
+		maxNum = 1
+		probability = 20
+		prefabPath = "assets/maps/prefabs/prefab_furniture_store.dmm"
+		prefabSizeX = 25
+		prefabSizeY = 25
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit
