@@ -8,11 +8,8 @@
 		"tgui/.pnp.*": true
 	},
 	// Lets you preview .dmi files in the editor
-	"workbench.editorAssociations": [
-		{
-				"filenamePattern": "*.dmi",
-				"viewType": "imagePreview.previewEditor"
-		}
-	]
+	"workbench.editorAssociations": {
+		"*.dmi": "imagePreview.previewEditor"
+	}
 
 }
