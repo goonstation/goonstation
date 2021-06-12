@@ -2977,11 +2977,6 @@
 /obj/item/device/matanalyzer,
 /turf/simulated/floor/grime,
 /area/mining/refinery)
-"aiF" = (
-/mob/living/critter/spider,
-/obj/item/storage/box/record/notaquario,
-/turf/simulated/floor/wood/two,
-/area/space)
 "aiG" = (
 /obj/grille/catwalk,
 /turf/space{
@@ -5240,13 +5235,6 @@
 "aos" = (
 /turf/simulated/floor/caution/north,
 /area/mining/manufacturing)
-"aot" = (
-/obj/table/auto,
-/obj/item/clothing/gloves/yellow,
-/obj/item/device/multitool,
-/obj/item/paper/book/from_file/minerals,
-/turf/simulated/floor/caution/north,
-/area/mining/manufacturing)
 "aou" = (
 /obj/rail{
 	dir = 1;
@@ -5290,13 +5278,6 @@
 /area/mining/manufacturing)
 "aoB" = (
 /turf/simulated/floor/scorched2,
-/area/mining/manufacturing)
-"aoC" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/electrical,
-/obj/item/paper/book/from_file/minerals,
-/turf/simulated/floor/grime,
 /area/mining/manufacturing)
 "aoD" = (
 /obj/cable{
@@ -11127,21 +11108,6 @@
 	},
 /turf/space,
 /area/timewarp)
-"aDc" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 9
-	},
-/area/timewarp/ship)
-"aDd" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 4
-	},
-/area/timewarp/ship)
-"aDe" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 5
-	},
-/area/timewarp/ship)
 "aDf" = (
 /obj/decal/timeplug{
 	dir = 4
@@ -11266,14 +11232,6 @@
 	icon_state = "diagonalWall"
 	},
 /area/evilreaver/bridge)
-"aDu" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 8
-	},
-/area/timewarp/ship)
-"aDv" = (
-/turf/unsimulated/wall/setpieces/leadwall,
-/area/timewarp/ship)
 "aDw" = (
 /obj/table/auto,
 /obj/decal/fakeobjects{
@@ -11296,11 +11254,6 @@
 "aDy" = (
 /obj/storage/secure/closet/fridge/kitchen,
 /turf/unsimulated/floor/black,
-/area/timewarp/ship)
-"aDz" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 10
-	},
 /area/timewarp/ship)
 "aDA" = (
 /turf/simulated/martian/wall,
@@ -11440,11 +11393,6 @@
 /obj/storage/crate/loot,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
-"aDQ" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 6
-	},
-/area/timewarp/ship)
 "aDR" = (
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
@@ -12980,15 +12928,6 @@
 /turf/simulated/floor/plating/airless,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedmedicalship)
-"aIe" = (
-/obj/storage/secure/closet/personal,
-/obj/item/clothing/under/gimmick/cosby,
-/obj/item/device/microphone,
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fred2"
-	},
-/area/radiostation/bedroom)
 "aIf" = (
 /obj/overlay{
 	density = 1;
@@ -24063,12 +24002,6 @@
 /obj/item/record/poo,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"bjS" = (
-/obj/storage/crate,
-/obj/item/paper/book/from_file/deep_blue_sea,
-/obj/item/paper/bores_part_two,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "bjV" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/shuttle{
@@ -25326,6 +25259,18 @@
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
+"hOL" = (
+/obj/item/storage/secure/ssafe{
+	configure_mode = 0;
+	desc = "A tough, airtight safe.";
+	name = "hermetically-sealed safe";
+	pixel_x = -4;
+	pixel_y = 30;
+	random_code = 1;
+	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006,/obj/item/reagent_containers/food/snacks/pizza/mushroom,/obj/item/reagent_containers/food/snacks/pizza/pepperoni)
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
 "hUW" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
@@ -25354,6 +25299,13 @@
 	},
 /turf/simulated/floor/red/side,
 /area/radiostation/hallway)
+"lbt" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
+/obj/item/paper/book/from_file/minerals,
+/turf/simulated/floor/grime,
+/area/mining/manufacturing)
 "lwM" = (
 /obj/table/auto,
 /obj/item/camera{
@@ -25368,6 +25320,18 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
+"oNd" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/yellow,
+/obj/item/device/multitool,
+/obj/item/paper/book/from_file/minerals,
+/turf/simulated/floor/caution/north,
+/area/mining/manufacturing)
+"oWB" = (
+/mob/living/critter/spider,
+/obj/item/storage/box/record/notaquario,
+/turf/simulated/floor/wood/two,
+/area/space)
 "qmR" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left,
@@ -25399,18 +25363,15 @@
 	stone_color = "#575A5E"
 	},
 /area/space)
-"uGt" = (
-/obj/item/storage/secure/ssafe{
-	configure_mode = 0;
-	desc = "A tough, airtight safe.";
-	name = "hermetically-sealed safe";
-	pixel_x = -4;
-	pixel_y = 30;
-	random_code = 1;
-	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006, /obj/item/reagent_containers/food/snacks/pizza/mushroom, /obj/item/reagent_containers/food/snacks/pizza/pepperoni)
-	},
-/turf/simulated/martian/floor,
-/area/evilreaver/bridge)
+"sFV" = (
+/turf/unsimulated/wall/auto/lead/blue,
+/area/timewarp/ship)
+"uto" = (
+/obj/storage/crate,
+/obj/item/paper/book/from_file/deep_blue_sea,
+/obj/item/paper/bores_part_two,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "uIh" = (
 /turf/simulated/wall/asteroid{
 	name = "weak compacted stone";
@@ -25421,6 +25382,15 @@
 /obj/stool/chair,
 /turf/simulated/floor/black,
 /area/mining/quarters)
+"wfJ" = (
+/obj/storage/secure/closet/personal,
+/obj/item/clothing/under/gimmick/cosby,
+/obj/item/device/microphone,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred2"
+	},
+/area/radiostation/bedroom)
 "xOl" = (
 /turf/simulated/floor/plating/airless/asteroid{
 	stone_color = "#D1E6FF"
@@ -46407,7 +46377,7 @@ aCh
 aCh
 aCF
 aCF
-uGt
+hOL
 aDM
 aDp
 aCF
@@ -52075,7 +52045,7 @@ aab
 aab
 aab
 aab
-bjS
+uto
 aab
 aab
 aab
@@ -58386,7 +58356,7 @@ acR
 acS
 acS
 afR
-aiF
+oWB
 ajt
 ajW
 alg
@@ -78643,8 +78613,8 @@ ahy
 ajz
 anX
 aof
-aot
-aoC
+oNd
+lbt
 aoR
 apf
 aps
@@ -104685,14 +104655,14 @@ aCj
 ars
 aCs
 aCs
-aDc
-aDz
+sFV
+sFV
 atI
-aDc
-aDz
+sFV
+sFV
 atI
-aDc
-aDz
+sFV
+sFV
 aCs
 aCs
 aDb
@@ -104986,16 +104956,16 @@ aCi
 aCr
 aCs
 aCs
-aDc
-aDQ
-aDc
-aDv
-aDv
-aDv
-aDv
-aDz
-aDe
-aDz
+sFV
+sFV
+sFV
+sFV
+sFV
+sFV
+sFV
+sFV
+sFV
+sFV
 aCs
 aCs
 aaa
@@ -105288,16 +105258,16 @@ aCj
 aCs
 aCs
 aCs
-aDu
-aDc
-aDQ
+sFV
+sFV
+sFV
 aEI
 aFf
 aFu
 aEq
-aDe
-aDz
-aDu
+sFV
+sFV
+sFV
 aCs
 aCs
 aaa
@@ -105590,16 +105560,16 @@ aCj
 aCs
 aCs
 aCs
-aDu
-aDu
+sFV
+sFV
 aEl
 aEJ
-aDc
-aDz
+sFV
+sFV
 aEq
 aFW
-aDu
-aDu
+sFV
+sFV
 aCs
 aCs
 aDb
@@ -105891,18 +105861,18 @@ aaa
 aCj
 aCs
 aCs
-aDc
-aDv
-aDv
-aDz
+sFV
+sFV
+sFV
+sFV
 aEK
-aDd
-aDd
+sFV
+sFV
 aEK
-aDc
-aDv
-aDv
-aDz
+sFV
+sFV
+sFV
+sFV
 aCs
 aCs
 aFV
@@ -106193,18 +106163,18 @@ aaa
 aCj
 aCs
 aCs
-aDd
+sFV
 aDw
 aDR
 aEm
 aDR
-aDd
-aDd
+sFV
+sFV
 aDR
 aEm
 aDR
 aGn
-aDd
+sFV
 aCs
 aCs
 aFV
@@ -106495,18 +106465,18 @@ aaa
 aCj
 aCs
 aCs
-aDd
+sFV
 aDx
 aDR
-aDd
+sFV
 aDR
-aDd
-aDd
+sFV
+sFV
 aDR
-aDd
+sFV
 aGi
 aGo
-aDd
+sFV
 aCs
 aCs
 aFV
@@ -106797,18 +106767,18 @@ aaa
 aCj
 aCs
 aCs
-aDd
+sFV
 aDy
 aDS
-aDd
+sFV
 aEL
-aDe
-aDQ
+sFV
+sFV
 aEL
-aDd
+sFV
 aGj
 aGp
-aDd
+sFV
 aCs
 aCs
 aFV
@@ -107099,18 +107069,18 @@ aaa
 aCj
 aCs
 aCs
-aDe
-aDz
-aDc
-aDQ
+sFV
+sFV
+sFV
+sFV
 aEM
 aFg
 aEM
 aFg
-aDe
-aDv
-aDv
-aDQ
+sFV
+sFV
+sFV
+sFV
 aCs
 aCs
 aFV
@@ -107402,15 +107372,15 @@ aCj
 aCs
 aCs
 aCs
-aDd
-aDv
-aDv
-aDz
+sFV
+sFV
+sFV
+sFV
 aFh
 aFv
 aFh
 aFX
-aDd
+sFV
 aCs
 aCs
 aCs
@@ -107704,16 +107674,16 @@ aaa
 aCj
 aCs
 aCs
-aDd
+sFV
 aDT
 aEn
 aEN
 aFg
 aFw
-aDc
-aDv
-aDv
-aDz
+sFV
+sFV
+sFV
+sFV
 aCs
 aCs
 ars
@@ -108006,16 +107976,16 @@ aaa
 aCt
 aCJ
 aCs
-aDd
+sFV
 aDU
 aDV
 aEO
 aFh
 aFv
-aDd
+sFV
 aFY
 aGk
-aDd
+sFV
 aCs
 aCs
 aCs
@@ -108308,16 +108278,16 @@ aaa
 aaa
 aCj
 aCs
-aDd
+sFV
 aDV
 aEo
 aEN
 aFg
 aEM
-aDd
+sFV
 aFZ
 aGl
-aDd
+sFV
 aCs
 aCs
 aCs
@@ -108610,7 +108580,7 @@ aaa
 aaa
 aCj
 aCs
-aDd
+sFV
 aDW
 aEp
 aEN
@@ -108619,7 +108589,7 @@ aFv
 aFI
 aGa
 aGm
-aDd
+sFV
 aCs
 aCs
 aCs
@@ -108912,16 +108882,16 @@ aaa
 aaa
 aCj
 aCs
-aDe
-aDv
-aDv
-aDQ
+sFV
+sFV
+sFV
+sFV
 aFg
 aFx
-aDe
-aDv
-aDv
-aDQ
+sFV
+sFV
+sFV
+sFV
 aCs
 aCs
 aCs
@@ -109222,7 +109192,7 @@ aFi
 aFv
 aFJ
 aGb
-aDd
+sFV
 aCs
 aCs
 aCs
@@ -109517,14 +109487,14 @@ aCj
 aCs
 aCs
 aCs
-aDd
+sFV
 aEr
-aDd
+sFV
 aFg
 aEM
-aDd
+sFV
 aGc
-aDd
+sFV
 aCs
 aCs
 aCs
@@ -109734,7 +109704,7 @@ adg
 agJ
 arc
 atq
-aIe
+wfJ
 biV
 ahQ
 boO
@@ -109819,14 +109789,14 @@ aCj
 aCs
 aCs
 aCs
-aDe
-aDv
-aDz
+sFV
+sFV
+sFV
 aFh
 aFy
-aDd
-aDv
-aDQ
+sFV
+sFV
+sFV
 aCs
 aCs
 aCs
@@ -110123,10 +110093,10 @@ aCs
 aCs
 aCs
 aCs
-aDd
+sFV
 aFg
 aEM
-aDd
+sFV
 aCs
 aCs
 aCs
@@ -110424,12 +110394,12 @@ aCj
 aCs
 aCs
 aCs
-aDc
-aDQ
+sFV
+sFV
 aFj
 aFz
-aDe
-aDz
+sFV
+sFV
 aCs
 aCs
 aCs
@@ -110725,14 +110695,14 @@ aaa
 aCj
 aCs
 aCs
-aDc
-aDQ
+sFV
+sFV
 aDR
 aDR
 aDR
 aDR
-aDe
-aDz
+sFV
+sFV
 aCs
 aCs
 ars
@@ -111027,14 +110997,14 @@ aaa
 aCj
 aCs
 aCs
-aDd
+sFV
 aEs
 aEP
 aDR
 aDR
 aDR
 aGd
-aDd
+sFV
 aCs
 aCs
 aCs
@@ -111329,14 +111299,14 @@ aaa
 aaa
 aCj
 aCs
-aDd
+sFV
 aDR
 aDR
 aDR
 aDR
 aFK
 aGe
-aDd
+sFV
 aCs
 aCs
 aCs
@@ -111631,14 +111601,14 @@ aaa
 aaa
 aCj
 aCs
-aDd
+sFV
 aEt
 aEQ
 aEQ
 aFA
 aEQ
 aGf
-aDd
+sFV
 aCs
 aCs
 aCs
@@ -111933,14 +111903,14 @@ aCj
 aCs
 aCs
 aCs
-aDe
-aDz
+sFV
+sFV
 aER
 aFk
 aFB
 aFk
-aDc
-aDQ
+sFV
+sFV
 aCs
 aCs
 aCs
@@ -112236,12 +112206,12 @@ aCs
 aCs
 aCs
 aCs
-aDe
+sFV
 aES
 aES
 aES
 aES
-aDQ
+sFV
 aCs
 aCs
 aCs

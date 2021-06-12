@@ -28,5 +28,19 @@
 	"workbench.editorAssociations": {
 		"*.dmi": "imagePreview.previewEditor"
 	},
+<<<<<<< HEAD
 	"gitlens.advanced.blame.customArguments": ["-w"],
+=======
+	// Ignore whitespace for blame
+	"gitlens.advanced.blame.customArguments": [
+		"-w"
+	],
+	"diffEditor.codeLens": true,
+	"vscode-as-git-mergetool.settingsAssistantOnStartup": false,
+	"errorLens.enabledDiagnosticLevels": [
+		"error",
+		"warning",
+		"info"
+	],
+>>>>>>> 4a40c6a2365b8062a557d4a30139bae0eeadccd6
 }
