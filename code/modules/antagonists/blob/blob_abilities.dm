@@ -341,13 +341,17 @@
 		B2.setOvermind(owner)
 
 		if (owner.blobs.len < 100)
-			cooldown_time = max(15 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
+			cooldown_time = 15
 		else if (owner.blobs.len < 200)
-			cooldown_time = max(20 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
+			cooldown_time = 20
 		else
-			cooldown_time = max(25 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
+			cooldown_time = 25
+		var/mindist = 127
+		for_by_tcl(nucleus, /obj/blob/nucleus)
+			if(nucleus.overmind == owner)
+				mindist = min(mindist, get_dist(T, get_turf(nucleus)))
 
-		cooldown_time = max(cooldown_time, 6)
+		cooldown_time = max(cooldown_time + mindist * 0.5 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 6)
 
 		var/extra_spreads = round(owner.multi_spread / 100) + (prob(owner.multi_spread % 100) ? 1 : 0)
 		if (extra_spreads)
@@ -1165,8 +1169,8 @@
 	name = "Passive: Quicker Spread"
 	icon_state = "blob-quickspread"
 	desc = "Reduces the cooldown of your Spread ability by 1 second. Can be repeated. The cooldown of Spread cannot go below 1 second."
-	evo_point_cost = 2
-	scaling_cost_add = 3
+	evo_point_cost = 3
+	scaling_cost_add = 4
 	repeatable = -1
 	upgradename = "spread"
 
