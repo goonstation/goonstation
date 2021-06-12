@@ -1346,7 +1346,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			AM.vis_contents -= src.chat_text
 
 			//Fixes spooky floating text dup with spooky code
-			if(istype(AM, /obj/machinery) && src.client)
+			if((istype(AM, /obj/machinery) || istype(AM, /obj/artifact)) && src.client)
 				AM.invisibility = 101
 				AM.invisibility = 0
 		if(istype(src.loc, /turf))
