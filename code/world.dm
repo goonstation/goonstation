@@ -709,14 +709,15 @@ var/f_color_selector_handler/F_Color_Selector
 	if (isnull(runtimeDetails))
 		world.log << "Runtime checking failed due to missing runtimeDetails global list"
 	else if (length(runtimeDetails) > 0)
-		world.log << "[length(runtimeDetails)] runtimes generated:"
+		var/errorlog = file("./errors.log")
+		errorlog << "[length(runtimeDetails)] runtimes generated:"
 		for (var/idx in runtimeDetails)
 			var/list/details = runtimeDetails[idx]
 			var/timestamp = details["seen"]
 			var/file = details["file"]
 			var/line = details["line"]
 			var/name = details["name"]
-			world.log << "\[[timestamp]\] [file],[line]: [name]"
+			errorlog << "\[[timestamp]\] [file],[line]: [name]"
 #ifndef PREFAB_CHECKING
 	text2file(debug_map_apc_count("\n", zlim=Z_LEVEL_STATION), "no_runtimes.txt")
 #endif
