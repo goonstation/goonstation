@@ -2565,7 +2565,7 @@
 			src.last_resist = world.time + 100
 			var/calcTime
 			if (src.handcuffs.material)
-				calcTime = max((src.handcuffs.material.getProperty("hard") + src.handcuffs.material.getProperty("density")) * 1 SECOND, 20 SECONDS)
+				calcTime = max((src.handcuffs.material.getProperty("hard") + src.handcuffs.material.getProperty("density")) SECONDS, 20 SECONDS)
 			else
 				calcTime = istype(src.handcuffs, /obj/item/handcuffs/guardbot) ? rand(15 SECONDS, 18 SECONDS) : rand(40 SECONDS, 50 SECONDS)
 			calcTime = clamp(calcTime, 0, 50 SECONDS)
