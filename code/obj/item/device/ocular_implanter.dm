@@ -5,7 +5,7 @@
 /obj/item/device/ocular_implanter
 	name = "eye implanter"
 	icon_state = "ocular_implanter-full"
-	desc = "A worrying looking medical device for eye implants. The suction cup eye pieces fill you with dread."
+	desc = "A worrying looking medical device for eye implants. The suction cup fill you with dread."
 	w_class = 2
 	is_syndicate = 1
 	var/implant = /obj/item/organ/eye/cyber/sechud
@@ -38,9 +38,8 @@
 
 
 	proc/start_replace_eye(var/target, var/mob/living/carbon/human/H)
-		message_admins("replace eye!")
-		if(!H.can_equip(src, SLOT_GLASSES))
-			boutput(src, "<span class='alert'>You need to remove your eyewear first.</span>")
+		if(H.glasses)
+			boutput(H, "<span class='alert'>You need to remove your eyewear first.</span>")
 			return
 		//
 		if (target == EYE_BOTH)
@@ -58,11 +57,10 @@
 			bodypart = H.get_organ(part_loc)
 			if(!bodypart)
 				parts_to_remove += part_loc
-		SETUP_GENERIC_ACTIONBAR(H, src, 10 SECONDS, /obj/item/device/ocular_implanter/proc/end_replace_eye, src.icon, src.icon_state,"[src] finishes working")
-
-	proc/end_replace_eye()
 		playsound(H.loc, "sound/items/ocular_implanter", 50, 1, -1)
-		var/mob/living/carbon/human/H = src
+		SETUP_GENERIC_ACTIONBAR(H, src, 10 SECONDS, /obj/item/device/ocular_implanter/proc/end_replace_eye, list(H), src.icon, src.icon_state,"[src] finishes working", null)
+
+	proc/end_replace_eye(var/mob/living/carbon/human/H)
 		var/turf/T = src.loc
 		for(var/part_loc in parts_to_remove)
 			message_admins("removing [part_loc]")
