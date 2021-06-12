@@ -5,6 +5,7 @@
 (+)Blob spread cooldown affected slightly by distance from closest owned nucleus (1 second/20 tiles distance).
 (+)Blob spread speed upgrade more expensive (+1 base cost, +1 cost-scaling)
 (+)Blob tiles have an internal 6 second cooldown before the blob repair ability can repair them again after being repaired. Spread the Love! (change does not interact with mitochondria)
+(+)Halved blob evo points from absorbing humans (4 -> 2)
 (t)fri jun 11 21
 (u)Tarmunora
 (e)⚖|balance

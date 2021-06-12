@@ -636,10 +636,8 @@
 		if (blob_o?.mind) //ahem ahem AI blobs exist
 			blob_o.mind.blob_absorb_victims += H
 
-		if (isnpcmonkey(H))
-			blob_o.evo_points += 1
-		else
-			blob_o.evo_points += 4
+		if (!isnpcmonkey(H) || prob(50))
+			blob_o.evo_points += 2
 			playsound(H.loc, "sound/voice/blob/blobsucced.ogg", 100, 1)
 		//This is all the animation and stuff making the effect look good crap. Not much to see here.
 
