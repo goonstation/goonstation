@@ -2565,10 +2565,9 @@
 			src.last_resist = world.time + 100
 			var/calcTime
 			if (src.handcuffs.material)
-				calcTime = max((src.handcuffs.material.getProperty("hard") + src.handcuffs.material.getProperty("density")) SECONDS, 20 SECONDS)
+				calcTime = clamp(max((src.handcuffs.material.getProperty("hard") + src.handcuffs.material.getProperty("density")) SECONDS, 20 SECONDS), 0, 50 SECONDS)
 			else
 				calcTime = istype(src.handcuffs, /obj/item/handcuffs/guardbot) ? rand(15 SECONDS, 18 SECONDS) : rand(40 SECONDS, 50 SECONDS)
-			calcTime = clamp(calcTime, 0, 50 SECONDS)
 			if (!src.canmove)
 				calcTime *= 1.5
 			boutput(src, "<span class='alert'>You attempt to remove your handcuffs. (This will take around [round(calcTime / 10)] seconds and you need to stand still)</span>")
