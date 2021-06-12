@@ -1,5 +1,5 @@
 
-(t)sat jun 11 21
+(t)sat jun 12 21
 (u)Tarmunora
 (e)⚖|balance
 (+)Blob spread cooldown affected slightly by distance from closest owned nucleus (1 second/20 tiles distance past 20 tiles).
