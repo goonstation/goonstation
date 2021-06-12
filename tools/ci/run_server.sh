@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-DreamDaemon goonstation.dmb -once -quiet -close -trusted -verbose -invisible -log errors.txt
+DreamDaemon goonstation.dmb -once -quiet -close -trusted -verbose -invisible
 if [ ! -f ./no_runtimes.txt ]
 then
 	echo "Runtimes detected!"
