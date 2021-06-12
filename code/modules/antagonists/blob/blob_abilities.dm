@@ -508,6 +508,10 @@
 		var/obj/blob/B = T.get_blob_on_this_turf()
 
 		if (B)
+			if(ON_COOLDOWN(B, "manual_blob_heal", 6 SECONDS))
+				boutput(owner, "<span class='alert'>That blob tile needs time before it can be repaired again.</span>")
+				return
+
 			B.heal_damage(20)
 			B.update_icon()
 			owner.playsound_local(owner.loc, "sound/voice/blob/blobheal[rand(1, 3)].ogg", 50, 1)
