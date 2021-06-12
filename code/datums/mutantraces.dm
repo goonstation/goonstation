@@ -1515,8 +1515,9 @@
 					. = "<B>[mob]</B> screams!"
 					playsound(mob, src.sound_monkeyscream, 80, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("fart")
-				if(farting_allowed && mob.emote_allowed && (!mob.reagents || !mob.reagents.has_reagent("anti_fart")))
-					mob.emote_allowed = 0
+				if(farting_allowed && (!mob.reagents || !mob.reagents.has_reagent("anti_fart")))
+					if (!mob.emote_check(voluntary, 10))
+						return
 					var/fart_on_other = 0
 					for(var/mob/living/M in mob.loc)
 						if(M == src || !M.lying)
@@ -1562,8 +1563,6 @@
 	#endif
 					mob.expel_fart_gas(0)
 					mob.add_karma(0.5)
-					SPAWN_DBG(1 SECOND)
-						mob.emote_allowed = 1
 
 
 /datum/mutantrace/monkey/seamonkey
