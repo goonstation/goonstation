@@ -1,4 +1,8 @@
 
+(t)sun jun 13 21
+(u)Tarmunora
+(e)⚖|balance
+(+)25% increased evo-point gain from blob size
 (t)sat jun 12 21
 (u)Tarmunora
 (e)⚖|balance
