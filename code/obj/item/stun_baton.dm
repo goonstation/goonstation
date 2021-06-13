@@ -41,8 +41,6 @@
 	var/cost_cyborg = 500 // Battery charge to drain when user is a cyborg.
 	var/uses_charges = 1 // Does it deduct charges when used? Distinct from...
 	var/uses_electricity = 1 // Does it use electricity? Certain interactions don't work with a wooden baton.
-	///if rechargers can charge the baton (if applicable)
-	var/chargeable = 1
 	var/status = 1 //1 is on, 0 is off
 
 	var/stun_normal_weakened = 15
@@ -203,7 +201,7 @@
 		return
 
 	proc/charge(var/amt)
-		if(src.cell && chargeable)
+		if(src.cell)
 			return src.cell.charge(amt)
 		else
 			//No cell. Tell anything trying to charge it.
@@ -473,9 +471,11 @@
 /obj/item/baton/beepsky
 	name = "securitron stun baton"
 	desc = "A stun baton that's been modified to be used more effectively by security robots. There's a small parallel port on the bottom of the handle."
-	chargeable = 0
 	can_swap_cell = 0
 	cell_type = /obj/item/ammo/power_cell
+
+	charge(var/amt)
+		return -1 //no
 
 /obj/item/baton/stamina
 	stamina_based_stun = 1
