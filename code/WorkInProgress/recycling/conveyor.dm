@@ -159,7 +159,6 @@
 
 /obj/machinery/conveyor/proc/update()
 	if(status & BROKEN)
-		icon_state = "conveyor-b"
 		operating = 0
 
 	if(!operable || !welded)
@@ -185,8 +184,13 @@
 	else if(angle_dir == 90)
 		bendy_dir = "right"
 
+	var/image_end = (operating != 0) && !(status & NOPOWER)
+	if(!welded)
+		image_end = "-uw"
+	if(status & BROKEN)
+		image_end = "-b"
 
-	icon_state = "conveyor[bendy_dir][(operating != 0) && !(status & NOPOWER)]"
+	icon_state = "conveyor[bendy_dir][image_end]"
 
 
 /obj/machinery/conveyor/proc/move_thing(var/atom/movable/A)
