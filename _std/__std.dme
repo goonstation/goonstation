@@ -97,6 +97,7 @@
 #include "macros\movable.dm"
 #include "macros\movement_modifiers.dm"
 #include "macros\procs.dm"
+#include "macros\qdel.dm"
 #include "macros\spawn.dm"
 #include "macros\strings.dm"
 #include "macros\time.dm"

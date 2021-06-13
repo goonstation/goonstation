@@ -117,6 +117,9 @@ var/global/list/statusGroupLimits = list("Food"=4)
 	*/
 /atom/proc/changeStatus(statusId, duration, optional)
 	. = null
+	if (QDELETED(src)) // If we're being destroyed, we don't care about statuses
+		return
+
 	var/datum/statusEffect/globalInstance = null
 	for(var/datum/statusEffect/status as anything in globalStatusPrototypes)
 		if(status.id == statusId)
