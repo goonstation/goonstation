@@ -15,6 +15,7 @@
 	var/list/rare_items2spawn = list() // things that only rarely appear, independent of how big or small the main item list is
 	var/list/guaranteed = list() // things that will always spawn from this - set to a number to spawn that many of the thing
 
+	// TODO: initialize
 	New()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
