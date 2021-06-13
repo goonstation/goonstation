@@ -454,10 +454,12 @@
 		SPAWN_DBG(src.cooldown SECONDS)
 		inuse = 0
 
-		SPAWN_DBG(1.5 SECONDS)
-			if(!(status & NOPOWER))
-				icon_state = "doorctrl0"
-		src.add_fingerprint(user)
+	SPAWN_DBG(1.5 SECONDS)
+		if(!(status & NOPOWER))
+			icon_state = "doorctrl0"
+	src.add_fingerprint(user)
+
+
 
 /obj/machinery/door_control/power_change()
 	..()
