@@ -1082,4 +1082,4 @@ obj/decoration/ceilingfan
 		src.proj_image.overlays = null
 		for (var/image/i in src.proj_impacts)
 			src.proj_image.overlays += i
-		src.UpdateOverlays(src.proj_image, "projectiles", src.layer + 0.1)
+		src.UpdateOverlays(src.proj_image, "projectiles")

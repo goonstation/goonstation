@@ -53,7 +53,7 @@
 "Dj" = (/obj/table/reinforced,/turf/simulated/floor/wood/three,/area/prefab/shooting_range)
 "Ek" = (/obj/decal/tile_edge/stripe{dir = 1; icon_state = "xtra_bigstripe-edge"},/turf/simulated/floor/wood/three,/area/prefab/shooting_range)
 "EB" = (/obj/table/reinforced,/obj/item/clothing/ears/earmuffs/earplugs{pixel_x = -3; pixel_y = 3},/obj/item/clothing/ears/earmuffs/earplugs,/obj/item/clothing/ears/earmuffs/earplugs{pixel_x = -3; pixel_y = 3},/obj/decal/tile_edge/stripe{dir = 10; icon_state = "xtra_bigstripe-corner2"},/obj/item/clothing/glasses/sunglasses/tanning,/turf/simulated/floor/wood/three,/area/prefab/shooting_range)
-"EQ" = (/obj/machinery/r_door_control,/turf/simulated/wall/auto/reinforced/jen/dark4,/area/prefab/shooting_range)
+"EQ" = (/obj/machinery/r_door_control{id = "shooting_range"},/turf/simulated/wall/auto/reinforced/jen/dark4,/area/prefab/shooting_range)
 "Fe" = (/turf/simulated/floor/wood/three,/area/prefab/shooting_range)
 "FE" = (/obj/displaycase,/turf/simulated/floor/wood/three,/area/prefab/shooting_range)
 "FZ" = (/turf/simulated/floor/damaged2,/area/prefab/shooting_range)
