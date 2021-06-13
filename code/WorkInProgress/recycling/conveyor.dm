@@ -560,12 +560,13 @@
 		return 1
 	return(direct != divert_from)
 
+// running counter for new conveyor switch network ids
+var/static/conv_network_id = 10000
+
 // the conveyor control switch
 //
 //
-
 /obj/machinery/conveyor_switch
-
 	name = "conveyor switch"
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
@@ -604,6 +605,42 @@
 		C.owner = null
 	conveyors = null
 	..()
+
+// click drag to connect conveyors or link with other switches using multitool
+/obj/machinery/conveyor_switch/MouseDrop(obj/copyobj, null)
+	var/mob/living/user = usr
+	if (!istype(user))
+		return
+	if (user.stat)
+		return
+	if (!user.find_tool_in_hand(TOOL_PULSING))
+		boutput(usr, "<span class='alert'>You need a multitool to link conveyor belts to levers!</span>")
+		return
+	var/obj/machinery/conveyor/conveyor
+	if(istype(copyobj, /obj/machinery/conveyor)) // connect conveyor to this switch
+		var/obj/machinery/conveyor/conv = copyobj
+		conv.connect_to_switch(src)
+		boutput(usr, "<span class='notice'>You connect the [conv] to the [src].</spawn>")
+	else if(istype(copyobj, /obj/machinery/conveyor_switch) && copyobj != src) // form or join network with other switch
+		var/obj/machinery/conveyor_switch/otherswitch = copyobj
+		var/network = src.id
+		if (otherswitch.id != "")
+			network = otherswitch.id
+		if (network) // at least one of the switches has a network, the one you drag from is dominant if both have one, I guess
+			src.id = network
+			otherswitch.id = network
+		else // make new network
+			src.id = "conveyornet [conv_network_id]"
+			otherswitch.id = "conveyornet [conv_network_id]"
+			conv_network_id++
+
+// reset network using multitool
+/obj/machinery/conveyor_switch/attackby(obj/item/I, mob/user)
+	if(istool(I, TOOL_PULSING))
+		var/confirm = alert("Reset the [src]'s network settings?", "Reset Switch", "Yes", "No")
+		if(confirm == "Yes")
+			src.id = ""
+			boutput(user, "<span class='notice'>You reset the [src]'s network settings using the [I].")
 
 /obj/machinery/conveyor_switch/was_deconstructed_to_frame(mob/user)
 	for(var/obj/machinery/conveyor/C as() in conveyors)
