@@ -1,4 +1,64 @@
 
+(t)sat jun 12 21
+(u)zjdtmkhzt
+(p)4900
+(e)🆕|feature
+(+)Instrument player components can now choose which note to play via their input.
+(u)Penny
+(p)4989
+(e)🆕|feature
+(*)Ruck kits now use Wi-Fi for all their networked functionality. Jab them with your multitools and start hacking!
+(+)Airlocks can now be properly scanned with device analyzers and PDAs will now upload scans reliably
+(u)Tarmunora
+(e)⚖|balance
+(*)Various blob balance changes -- check minor changes for details
+(+)Blob spread cooldown affected slightly by distance from closest owned nucleus (1 second/20 tiles distance past 20 tiles).
+(+)Blob spread speed upgrade more expensive (+1 base cost, +1 cost-scaling)
+(+)Blob tiles have an internal 6 second cooldown before the blob repair ability can repair them again after being repaired. Spread the Love! (change does not interact with mitochondria)
+(+)Halved blob evo points from absorbing humans (4 -> 2)
+(+)Cost of most (all with cost >=2) single-purchase blob unlocks reduced by 1 evo point
+(+)Reinforced spread upgrade requires half as many material deposits (60 -> 30)
+(t)fri jun 11 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Robot legs counteract damage slowdown for humans as opposed to direct speed buff.
+(+)Humans with tread legs will not fall over when resting, matching behavior when stunned etc.
+(u)DisturbHerb
+(p)5083
+(e)|
+(*)RecordTrak scanners are now available from Security weapons vendors.
+(u)UnfunnyPerson
+(p)5008
+(e)🆕🎨|feature, sprites
+(+)Added toy guns! You can purchase ammo and the gun from Geoff Honkington.
+(t)thu jun 10 21
+(u)eX.n0x
+(p)5087
+(e)🐛|bug
+(+)Radbow no longer shows an impact effect.
+(t)wed jun 09 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Beepsky's baton, if stolen, will get exactly 4 uses, and cannot be recharged or cell-swapped.
+(+)Nerf non-knockback side-effects of pulse projectile
+(+)Added small stamina damage and long disorient to EMP projectile
+(+)Lawbringer detain no longer has special-cased slow status, affected by range falloff
+(u)Flappybat
+(p)5085
+(e)⚖|balance
+(+)Killer tomatoes now actually do damage (4-6) when biting you.
+(u)Gannets & Tarmunora
+(p)5071
+(e)🆕🎨|feature, sprites
+(*)Added the Hydra smart pistol to the Syndicate weapons vendor sidearm options on the Cairngorm.
+(+)The Hydra smart pistol locks on to its target and never misses unless blocked by an object or dodged.
+(+)Can be charged with the fire button up to a burst of three bullets per target.
+(+)Will not target other nuclear operatives (but may still hit them by accident).
+(u)Walpvrgis
+(p)5080
+(e)🆕🎨|feature, sprites
+(*)Three new Spacebux bags are now available to purchase; Studded Backpack, Itabag (in one of 5 random pastel shades), and a brown backpack!
+(*)Backpacks and Satchels have been resprited. You also can now turn almost all backpacks into satchels using the medal reward.
 (t)tue jun 08 21
 (u)BatElite
 (p)5073

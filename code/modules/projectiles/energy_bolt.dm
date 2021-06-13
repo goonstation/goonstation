@@ -245,16 +245,9 @@ toxic - poisons
 	color_green = 165
 	color_blue = 0
 	max_range = 7 //slight range boost
-	damage_type = D_SPECIAL
+	damage_type = D_ENERGY
 
 	on_hit(atom/O, angle, var/obj/projectile/P)
-		//lets make getting hit by the projectile a bit worse than getting the shockwave
-		//tasers have changed in production code, I'm not really sure what value is good to give it here...
-		if (isliving(O))
-			var/mob/living/L = O
-			L.changeStatus("slowed", 2 SECONDS)
-			L.do_disorient(stamina_damage = 60, weakened = 30, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
-			L.emote("twitch_v")
 		detonate(O, P)
 
 	on_max_range_die(obj/projectile/O)
@@ -331,10 +324,9 @@ toxic - poisons
 		if (ishuman(hit))
 			O.die()
 			var/mob/living/carbon/human/H = hit
-			H.do_disorient(stamina_damage = pow*3, weakened = 0, stunned = 0, disorient = pow*4, remove_stamina_below_zero = 0)
+			H.do_disorient(stamina_damage = pow*1.5, weakened = 0, stunned = 0, disorient = pow*2, remove_stamina_below_zero = 0)
 			H.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = THROW_GUNIMPACT)
 			H.emote("twitch_v")
-			H.changeStatus("slowed", 3 SECONDS)
 
 	impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)
 		return
@@ -359,12 +351,15 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
 
-	on_hit(atom/H, angle, var/obj/projectile/P)
-		var/turf/T = get_turf(H)
+	on_hit(atom/hit, angle, var/obj/projectile/P)
+		var/turf/T = get_turf(hit)
 		for(var/turf/tile in range(1, T))
 			for(var/atom/movable/O in tile.contents)
 				if(!istype(O, /obj/machinery/nuclearbomb)) //emp does not affect nuke
 					O.emp_act()
+		if (ishuman(hit))
+			var/mob/living/carbon/human/H = hit
+			H.do_disorient(stamina_damage = 30, weakened = 0, stunned = 0, disorient = 6 SECONDS, remove_stamina_below_zero = 0)
 		elecflash(T)
 
 /datum/projectile/energy_bolt/signifer_tase
