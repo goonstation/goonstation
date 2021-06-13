@@ -1685,7 +1685,9 @@
 
 	shoot(var/target,var/start,var/mob/user) //it's experimental for a reason; use at your own risk!
 		if (canshoot())
-			if (prob(100))
-				take_damage(0, 30)
-				boutput(src, "<span class='alert'>This piece of junk Ray Gun backfired! Ouch!</span>")
+			if (prob(30))
+				user.TakeDamage("chest", 0, rand(5, 15), 0, DAMAGE_BURN, 1)
+				boutput(user, "<span class='alert'>This piece of junk Ray Gun backfired! Ouch!</span>")
+				user.do_disorient(stamina_damage = 20, disorient = 3 SECONDS)
+		else (ON_COOLDOWN(src, "raygun_cooldown", 2 SECONDS))
 		return ..(target, start, user)
