@@ -620,7 +620,6 @@ var/static/conv_network_id = 10000
 	if (!user.find_tool_in_hand(TOOL_PULSING))
 		boutput(usr, "<span class='alert'>You need a multitool to link conveyor belts to levers!</span>")
 		return
-	var/obj/machinery/conveyor/conveyor
 	if(istype(copyobj, /obj/machinery/conveyor)) // connect conveyor to this switch
 		var/obj/machinery/conveyor/conv = copyobj
 		conv.connect_to_switch(src)
