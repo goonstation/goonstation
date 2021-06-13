@@ -24,6 +24,7 @@
 	"[dm]": {
 		"editor.rulers": [150]
 	},
+	// Lets you preview .dmi files in the editor
 	"workbench.editorAssociations": {
 		"*.dmi": "imagePreview.previewEditor"
 	},
@@ -37,4 +38,5 @@
 		"error",
 		"warning",
 		"info"
+	],
 }
