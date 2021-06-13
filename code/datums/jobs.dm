@@ -156,9 +156,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY_EXECUTIVE
 	high_priority_job = 1
 	recieves_miranda = 1
-#ifdef RP_MODE
 	allow_traitors = 0
-#endif
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 	allow_spy_theft = 0
