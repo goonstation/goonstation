@@ -1033,7 +1033,7 @@ obj/decoration/ceilingfan
 	desc = "You've never heard of this pistol before...who made it?"
 	icon_state = "e_laser_pistol"
 
-//stolen code for anchorable and movable target sheets. cannot get projectile tracking on them to work right now so. oh well.
+//stolen code for anchorable and movable target sheets. cannot get projectile tracking on them to work right now so. oh well. help appreciated!
 /obj/item/caution/target_sheet
 	desc = "A paper sheet of a figure on a cardboard backing."
 	name = "paper target"
@@ -1082,4 +1082,4 @@ obj/decoration/ceilingfan
 		src.proj_image.overlays = null
 		for (var/image/i in src.proj_impacts)
 			src.proj_image.overlays += i
-		src.UpdateOverlays(src.proj_image, "projectiles")
+		src.UpdateOverlays(src.proj_image, "projectiles", src.layer + 0.1)
