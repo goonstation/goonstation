@@ -571,6 +571,10 @@
 /* ---------------------------------------- */
 /* ======================================== */
 
+#define GLASS_INTACT 0
+#define GLASS_BROKEN 1
+#define GLASS_REFORMING 2
+
 /obj/table/glass
 	name = "glass table"
 	desc = "A table made of glass. It looks like it might shatter if you set something down on it too hard."
@@ -578,7 +582,7 @@
 	mat_appearances_to_ignore = list("glass")
 	parts_type = /obj/item/furniture_parts/table/glass
 	auto_type = /obj/table/glass // has to be the base type here or else regular glass tables won't connect to reinforced ones
-	var/glass_broken = 0
+	var/glass_broken = GLASS_INTACT
 	var/reinforced = 0
 	var/default_material = "glass"
 
@@ -588,7 +592,7 @@
 	frame
 		name = "glass table frame"
 		parts_type = /obj/item/furniture_parts/table/glass/frame
-		glass_broken = 1
+		glass_broken = GLASS_BROKEN
 
 		auto
 			auto = 1
@@ -624,19 +628,32 @@
 			return
 		src.visible_message("<span class='alert'>\The [src] shatters!</span>")
 		playsound(src, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
-		for (var/i=rand(3,4), i>0, i--)
-			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-			G.set_loc(src.loc)
-			if (src.material)
-				G.setMaterial(src.material)
-		src.glass_broken = 1
-		src.removeMaterial()
-		src.parts_type = /obj/item/furniture_parts/table/glass/frame
-		src.set_density(0)
-		src.set_up()
+		if (src.material?.mat_id in list("gnesis", "gnesisglass"))
+			src.glass_broken = GLASS_REFORMING
+			src.set_density(0)
+			src.set_up()
+			SPAWN_DBG(rand(2 SECONDS, 3 SECONDS))
+				src.set_density(initial(src.density))
+				src.visible_message("<span class='alert'>\The [src] starts to reform!</span>")
+				sleep(rand(8 SECONDS, 12 SECONDS))
+				src.glass_broken = GLASS_INTACT
+				src.set_up()
+				src.visible_message("<span class='alert'>\The [src] fully reforms!</span>")
+		else
+			for (var/i=rand(3,4), i>0, i--)
+				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+				G.set_loc(src.loc)
+				if (src.material)
+					G.setMaterial(src.material)
+			src.glass_broken = GLASS_BROKEN
+			src.removeMaterial()
+			src.parts_type = /obj/item/furniture_parts/table/glass/frame
+			src.set_density(0)
+			src.set_up()
+
 
 	proc/repair()
-		src.glass_broken = 0
+		src.glass_broken = GLASS_INTACT
 		src.UpdateName()
 		src.parts_type = src.reinforced ? /obj/item/furniture_parts/table/glass/reinforced : /obj/item/furniture_parts/table/glass
 		src.set_density(initial(src.density))
@@ -688,7 +705,7 @@
 			src.smash()
 
 	attackby(obj/item/W as obj, mob/user as mob, params)
-		if (src.glass_broken)
+		if (src.glass_broken == GLASS_BROKEN)
 			if (istype(W, /obj/item/sheet))
 				var/obj/item/sheet/S = W
 				if (!S.material || !(S.material.material_flags & MATERIAL_CRYSTAL))
@@ -876,6 +893,10 @@
 				src.UpdateOverlays(working_image, "NWcorner")
 		else
 			src.UpdateOverlays(null, "NWcorner")
+
+#undef GLASS_INTACT
+#undef GLASS_BROKEN
+#undef GLASS_REFORMING
 
 /* ======================================== */
 /* ---------------------------------------- */
