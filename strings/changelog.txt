@@ -1,6 +1,10 @@
 
 (t)sun jun 13 21
 (u)eX.n0x
+(p)5084
+(e)|
+(+)Reworded some traitor objectives for clarity.
+(u)eX.n0x
 (p)5077
 (e)🐛📄|bug, tgui
 (+)Forklifts can now pick up/load restricted crates.
