@@ -1,5 +1,8 @@
 
 (t)sun jun 13 21
+(u)Tarmunora
+(e)⚖|balance
+(+)25% increased evo-point gain from blob size
 (u)Nefarious6th
 (p)5088
 (e)🆕|feature
