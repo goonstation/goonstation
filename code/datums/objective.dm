@@ -6,7 +6,7 @@ ABSTRACT_TYPE(/datum/objective)
 	var/medal_name = null // Called by ticker.mode.declare_completion().
 	var/medal_announce = 1
 
-	New(var/text)
+	New(text)
 		..()
 		if(text)
 			src.explanation_text = text
@@ -49,7 +49,7 @@ ABSTRACT_TYPE(/datum/objective)
 
 		return target
 
-	proc/find_target_by_role(var/role)
+	proc/find_target_by_role(role)
 		for(var/datum/mind/possible_target in ticker.minds)
 			if((possible_target != owner) && ishuman(possible_target.current) && (possible_target.assigned_role == role || (possible_target.assigned_role == "MODE" && possible_target.special_role == role)))
 				target = possible_target
@@ -67,12 +67,12 @@ ABSTRACT_TYPE(/datum/objective)
 				return 0
 		else
 			return 1
-	proc/create_objective_string(var/datum/mind/target)
+	proc/create_objective_string(datum/mind/target)
 		if(!(target?.current))
 			explanation_text = "Be dastardly as heck!"
 			return
 		var/objective_text = "Assassinate [target.current.real_name], the [target.assigned_role == "MODE" ? target.special_role : target.assigned_role]"
-		objective_text += " [create_fluff(target)]."
+		objective_text += " [create_fluff(target)]. It doesn't count if they get revived unless it's as a cyborg/AI."
 
 		explanation_text = objective_text
 		targetname = target.current.real_name
@@ -90,7 +90,7 @@ ABSTRACT_TYPE(/datum/objective)
 		else
 			return 0
 
-	create_objective_string(var/datum/mind/target)
+	create_objective_string(datum/mind/target)
 		if(!(target?.current))
 			explanation_text = "Be dastardly as heck!"
 			return
@@ -101,7 +101,7 @@ ABSTRACT_TYPE(/datum/objective)
 
 
 
-proc/create_fluff(var/datum/mind/target)
+proc/create_fluff(datum/mind/target)
 	if(!istype(target)) return ""
 
 	var/job = target.assigned_role == "MODE" ? target.special_role : target.assigned_role
@@ -209,7 +209,7 @@ proc/create_fluff(var/datum/mind/target)
 				steal_target = /obj/item/pen/crayon/golden
 #endif
 
-		explanation_text = "Steal the [target_name]."
+		explanation_text = "Steal the [target_name] and have it anywhere on you at the end of the shift."
 		return steal_target
 
 	check_completion()
@@ -295,9 +295,9 @@ proc/create_fluff(var/datum/mind/target)
 				multigrab_num = rand(2, 5)
 
 		if (target_name == "hearts")
-			explanation_text = "You're a real Romeo! Steal the hearts of [multigrab_num] crewmembers."
+			explanation_text = "You're a real Romeo! Steal the hearts of [multigrab_num] crewmembers and have them all anywhere on you at the end of the shift."
 		else
-			explanation_text = "Steal [multigrab_num] [target_name]."
+			explanation_text = "Steal [multigrab_num] [target_name] and have them all anywhere on you at the end of the shift."
 
 		return multigrab_target
 
@@ -800,7 +800,7 @@ proc/create_fluff(var/datum/mind/target)
 /datum/objective/specialist/wraith
 	explanation_text = "Be dastardly as heck!"
 
-	proc/onAbsorb(var/mob/M)
+	proc/onAbsorb(mob/M)
 		return
 	proc/onWeakened()
 		return
@@ -816,7 +816,7 @@ proc/create_fluff(var/datum/mind/target)
 	var/absorbs = 0
 	var/absorb_target
 
-	onAbsorb(var/mob/M)
+	onAbsorb(mob/M)
 		absorbs++
 	onWeakened()
 		absorbs = 0
@@ -857,7 +857,7 @@ proc/create_fluff(var/datum/mind/target)
 
 		return target
 
-	proc/find_target_by_role(var/role)
+	proc/find_target_by_role(role)
 		for(var/datum/mind/possible_target in ticker.minds)
 			if((possible_target != owner) && ishuman(possible_target.current) && (possible_target.assigned_role == role || (possible_target.assigned_role == "MODE" && possible_target.special_role == role)))
 				target = possible_target
@@ -886,7 +886,7 @@ proc/create_fluff(var/datum/mind/target)
 		explanation_text = "[target.current.real_name], the [target.assigned_role == "MODE" ? target.special_role : target.assigned_role] is a vessel for astral energies we haven't detected before. Absorb and retain their essence at all costs!"
 		targetname = target.current.real_name
 
-	onAbsorb(var/mob/M)
+	onAbsorb(mob/M)
 		if (M == target.current)
 			success = 1
 		else if (isobserver(target.current))
@@ -995,7 +995,7 @@ proc/create_fluff(var/datum/mind/target)
 		return in_centcom(src.owner.current)
 
 /datum/objective/escape/hijack
-	explanation_text = "Hijack the emergency shuttle by escaping alone."
+	explanation_text = "Hijack the emergency shuttle by escaping alone. If someone else does sneak on, make sure they're dead before reaching Centcom."
 #ifdef RP_MODE
 	enabled = FALSE
 #endif
@@ -1024,7 +1024,7 @@ proc/create_fluff(var/datum/mind/target)
 		return 1
 
 /datum/objective/escape/survive
-	explanation_text = "Stay alive until the end."
+	explanation_text = "Stay alive until the end of the shift. It doesn't matter whether you're on station or not."
 
 	check_completion()
 		if(!owner.current || isdead(owner.current))
@@ -1078,7 +1078,7 @@ proc/create_fluff(var/datum/mind/target)
 			explanation_text = "Be dastardly as heck!"
 			return
 
-		explanation_text = "Ensure that [target.current.real_name], the [target.assigned_role], safely arrives at Centcom."
+		explanation_text = "Ensure that [target.current.real_name], the [target.assigned_role], safely arrives at Centcom alive and not as a cyborg/AI."
 		targetname = target.current.real_name
 
 	check_completion()
@@ -1087,7 +1087,7 @@ proc/create_fluff(var/datum/mind/target)
 		return 0
 
 /datum/objective/escape/hijack_group
-	explanation_text = "Hijack the emergency shuttle by escaping alone or with your accomplices."
+	explanation_text = "Hijack the emergency shuttle by escaping alone or with your accomplices. Anyone else who snuck on needs to die before you reach Centcom."
 	var/list/datum/mind/accomplices = list()
 
 	check_completion()
@@ -1278,7 +1278,7 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 	/datum/objective/escape/hijack,
 	/datum/objective/escape/kamikaze)
 
-	New(var/datum/mind/enemy)
+	New(datum/mind/enemy)
 		..()
 		if(!istype(enemy))
 			return 1

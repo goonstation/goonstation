@@ -1,4 +1,21 @@
 
+(t)sun jun 13 21
+(u)Nefarious6th
+(p)5088
+(e)🆕|feature
+(+)Added 5 new cocktail drink recipes: Bellini, Rossini, Appletini, Lemon Drop, and Pisco Sour
+(+)Bellini: white wine + peach juice. Rossini: white wine + strawberry juice.
+(+)Appletini: vodka + apple juice + cider
+(+)Lemon Drop: vodka + orange juice + lemon juice + simple syrup
+(+)Pisco Sour: egg + white wine + lime juice + bitters + simple syrup
+(u)eX.n0x
+(p)5084
+(e)|
+(+)Reworded some traitor objectives for clarity.
+(u)eX.n0x
+(p)5077
+(e)🐛📄|bug, tgui
+(+)Forklifts can now pick up/load restricted crates.
 (t)sat jun 12 21
 (u)Tarmunora
 (e)⚖|balance
