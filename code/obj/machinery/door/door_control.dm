@@ -459,8 +459,6 @@
 			icon_state = "doorctrl0"
 	src.add_fingerprint(user)
 
-
-
 /obj/machinery/door_control/power_change()
 	..()
 	if(status & NOPOWER)
