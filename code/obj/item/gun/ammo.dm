@@ -1214,6 +1214,19 @@
 	desc = "A box containg a single inert meowitzer. It appears to be softly purring. Wait is that a cat?"
 	ammo_type = new/datum/projectile/special/meowitzer/inert
 
+/obj/item/ammo/bullets/foamdarts
+	sname = "foam darts"
+	name = "foam dart box"
+	icon_state = "foamdarts"
+	icon_empty = "foamdarts-0"
+	amount_left = 20
+	max_amount = 20
+	caliber = 0.393
+	ammo_type = new/datum/projectile/bullet/foamdart
+
+/obj/item/ammo/bullets/foamdarts/ten
+	amount_left = 10
+	max_amount = 10
 
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND

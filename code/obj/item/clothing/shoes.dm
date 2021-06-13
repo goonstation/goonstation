@@ -77,7 +77,7 @@
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 1)
+		setProperty("movespeed", 0.5)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged)
@@ -496,7 +496,7 @@
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.9)
+		setProperty("movespeed", 0.3)
 
 	proc/toggle()
 		src.on = !(src.on)
