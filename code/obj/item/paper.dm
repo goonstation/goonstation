@@ -1604,7 +1604,8 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 	name = "secure safe note"
 	desc = "Someone left a reminder in neat cursive. The post-it looks nearly new."
 	icon_state = "postit-writing"
-	info = {"*Experimental ray gun - DO NOT FIRE IN A CLOSED SPACE. Waiting for Olwen to fix...whenever she's back..."}
+	info = {"*Experimental ray gun - DO NOT FIRE IN A CLOSED SPACE. Waiting for Olwen to fix...whenever she's back...<br><b><u>*Dinner date is on <s>Tuesday</s>  <s>Fri.</s></s><br>
+<s>Thurs.</s><br><s>Sunday</s><br></u><br>???"}
 
 /obj/item/paper/shooting_range_note2
 	name = "secure safe note"
