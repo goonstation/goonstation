@@ -1,5 +1,9 @@
 
 (t)sat jun 12 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Wizard Empower spell now grants mild stamina regeneration and passive wrestler bonuses (improved suplex, punch, etc) instead of oldTK
+(+)innate wrestlers (non-belt, non-empower) get some mild stat bonuses
 (u)zjdtmkhzt
 (p)4900
 (e)🆕|feature
