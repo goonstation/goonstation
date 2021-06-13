@@ -566,7 +566,7 @@
 
 				honeycube.set_loc(holder.owner.loc)
 				holder.owner.visible_message("<b>[holder.owner] regurgitates [MT]!</b>")
-				playsound(get_turf(holder.owner), "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(holder.owner, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 		return 0
 
 /datum/targetable/critter/bee_teleport
@@ -598,14 +598,14 @@
 			return 1
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner]</b> stares at [MT]!</span>")
 		if(do_buzz)
-			playsound(get_turf(holder.owner), 'sound/voice/animal/buzz.ogg', 100, 1)
+			playsound(holder.owner, 'sound/voice/animal/buzz.ogg', 100, 1)
 		boutput(MT, "<span class='combat'>You feel a horrible pain in your head!</span>")
 		MT.changeStatus("stunned", 2 SECONDS)
 		SPAWN_DBG(2.5 SECONDS)
 			if ((get_dist(holder.owner, MT) <= 6) && !isdead(holder.owner))
 				MT.visible_message("<span class='combat'><b>[MT] clutches their temples!</b></span>")
 				MT.emote("scream")
-				MT.setStatus("paralysis", max(MT.getStatusDuration("paralysis"), 200))
+				MT.setStatus("paralysis", max(MT.getStatusDuration("paralysis"), 20 SECONDS))
 				MT.take_brain_damage(10)
 
 				do_teleport(MT, locate((world.maxx/2) + rand(-10,10), (world.maxy/2) + rand(-10,10), 1), 0)
@@ -785,9 +785,9 @@
 			return
 		else
 			setunconscious(src)
-			src.setStatus("paralysis", 100)
-			src.setStatus("stunned", 100)
-			src.setStatus("weakened", 100)
+			src.setStatus("paralysis", 10 SECONDS)
+			src.setStatus("stunned", 10 SECONDS)
+			src.setStatus("weakened", 10 SECONDS)
 			src.sleeping = 10
 			src.playing_dead--
 			src.hud.update_health()

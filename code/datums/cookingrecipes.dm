@@ -129,6 +129,13 @@
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/roburger
 
+/datum/cookingrecipe/cheeseborger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/parts/robot_parts/head
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/cheeseborger
+
 /datum/cookingrecipe/baconburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon

@@ -181,6 +181,7 @@ var/list/list/by_cat = list()
 #define TR_CAT_LIGHT_GENERATING_TURFS "light_generating_turfs"
 #define TR_CAT_CRITTERS "critters"
 #define TR_CAT_PETS "pets"
+#define TR_CAT_PW_PETS "pod_wars_pets"
 #define TR_CAT_PODS_AND_CRUISERS "pods_and_cruisers"
 #define TR_CAT_NERVOUS_MOBS "nervous_mobs"
 #define TR_CAT_SHITTYBILLS "shittybills"

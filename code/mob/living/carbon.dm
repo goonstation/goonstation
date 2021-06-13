@@ -90,8 +90,8 @@
 		var/obj/item/reagent_containers/pee_target = src.equipped()
 		if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container())
 			src.visible_message("<span class='alert'><B>[src] pees in [pee_target]!</B></span>")
-			playsound(get_turf(src), "sound/misc/pourdrink.ogg", 50, 1)
-			pee_target.reagents.add_reagent("urine", 20)
+			playsound(src, "sound/misc/pourdrink.ogg", 50, 1)
+			pee_target.reagents.add_reagent("urine", 4)
 			return
 
 		// possibly change the text colour to the gray emote text

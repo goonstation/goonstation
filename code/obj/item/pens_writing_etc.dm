@@ -73,7 +73,7 @@
 		..()
 		if (!src.spam_flag_sound && src.clicknoise)
 			src.spam_flag_sound = 1
-			playsound(get_turf(user), "sound/items/penclick.ogg", 50, 1)
+			playsound(user, "sound/items/penclick.ogg", 50, 1)
 			if (!src.spam_flag_message)
 				src.spam_flag_message = 1
 				user.visible_message("<span style='color:#888888;font-size:80%'>[user] clicks [src].</span>")

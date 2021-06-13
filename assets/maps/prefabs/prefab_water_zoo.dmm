@@ -21,7 +21,7 @@
 "u" = (/obj/machinery/drainage/big,/turf/simulated/floor/plating,/area/prefab/zoo)
 "v" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/simulated/floor/plating,/area/prefab/zoo)
 "w" = (/obj/table/wood/auto,/obj/machinery/light/lamp{icon_state = "lamp-burned"},/turf/simulated/floor/plating,/area/prefab/zoo)
-"x" = (/obj/table/wood/auto,/obj/item/paper/book/zoo_diary,/obj/decal/cleanable/molten_item,/turf/simulated/floor/plating,/area/prefab/zoo)
+"x" = (/obj/table/wood/auto,/obj/item/paper/book/from_file/zoo_diary,/obj/decal/cleanable/molten_item,/turf/simulated/floor/plating,/area/prefab/zoo)
 "y" = (/obj/stool/chair/comfy{icon_state = "chair_comfy"; dir = 8},/turf/simulated/floor/plating,/area/prefab/zoo)
 "z" = (/obj/decal/skeleton,/obj/item/clothing/shoes/clown_shoes/blue,/obj/item/clothing/under/misc/clown/blue,/obj/item/clothing/mask/clown_hat/blue,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/zoo)
 "A" = (/obj/item/raw_material/erebite,/obj/item/raw_material/plasmastone{pixel_y = 4},/obj/item/raw_material/gemstone{pixel_x = -6; pixel_y = 5},/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/zoo)

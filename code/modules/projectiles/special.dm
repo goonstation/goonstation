@@ -742,7 +742,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				else
 					playsound(T, src.hit_sound, 60, 1)
 		else
-			playsound(get_turf(A), 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
+			playsound(A, 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
 
 /datum/projectile/special/homing/magicmissile/weak
 	name = "magic minimissile"

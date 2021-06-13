@@ -34,9 +34,9 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/U = user
 			if (U.gender == MALE)
-				playsound(get_turf(U), pick(src.sound_attackM1, src.sound_attackM2), 100, 0, 0, U.get_age_pitch())
+				playsound(U, pick(src.sound_attackM1, src.sound_attackM2), 100, 0, 0, U.get_age_pitch())
 			else
-				playsound(get_turf(U), pick(src.sound_attackF1, src.sound_attackF2), 100, 0, 0, U.get_age_pitch())
+				playsound(U, pick(src.sound_attackF1, src.sound_attackF2), 100, 0, 0, U.get_age_pitch())
 
 /obj/item/toy/judge_gavel
 	name = "judge's gavel"
@@ -114,7 +114,7 @@
 		var/mob/living/L = user
 		if (L.mind && L.mind.assigned_role == "Clown")
 			L.visible_message("<span class='alert'><B>[L] bonks [M] [pick("kindly", "graciously", "helpfully", "sympathetically")].</B></span>")
-			playsound(get_turf(M), "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
+			playsound(M, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
 			M.say("[pick("Wow", "Gosh dangit", "Aw heck", "Oh gosh", "Damnit")], [L], [pick("why are you so", "it's totally unfair that you're so", "how come you're so", "tell me your secrets to being so")] [pick("cool", "smart", "worldly", "funny", "wise", "drop dead hilarious", "incredibly likeable", "beloved by everyone", "straight up amazing", "devilishly handsome")]!")
 
 /obj/item/toy/gooncode

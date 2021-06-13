@@ -550,6 +550,15 @@
 		changeIcon()
 		return
 
+/obj/torpedo_tray/random_loaded
+	icon = 'icons/obj/32x64.dmi'
+	icon_state = "emptymissiletray"
+	New()
+		..()
+		var/obj/torpedo/T = pick(new/obj/torpedo/toxic,new/obj/torpedo/incendiary,new/obj/torpedo/hiexplosive,new/obj/torpedo/explosive)
+		src.loaded = T
+		T.set_loc(src)
+		changeIcon()
 
 
 /obj/torpedo
@@ -621,7 +630,7 @@
 		if(launched) return
 		else launched = 1
 		var/flying = 1
-		playsound(get_turf(src), "sound/effects/torpedolaunch.ogg", 100, 1)
+		playsound(src, "sound/effects/torpedolaunch.ogg", 100, 1)
 		src.changeIcon()
 		var/aboutToBlow = 0
 		var/steps = 0

@@ -18,6 +18,7 @@
 	w_class = W_CLASS_NORMAL
 	var/restrain_wearer = 0
 	var/bloodoverlayimage = 0
+	var/team_num
 
 
 	setupProperties()
@@ -1063,6 +1064,18 @@
 	item_state = "space_suit_syndicate"
 	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives."
 	contraband = 3
+	team_num = TEAM_SYNDICATE
+	#ifdef MAP_OVERRIDE_POD_WARS
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team_num)
+			..()
+		else
+			boutput(user, "<span class='alert'>The space suit <b>explodes</b> as you reach out to grab it!</span>")
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+	#endif
 	item_function_flags = IMMUNE_TO_ACID
 
 	setupProperties()
@@ -1073,6 +1086,18 @@
 		name = "commander's great coat"
 		icon_state = "commissar_greatcoat"
 		desc = "A fear-inspiring, black-leather great coat, typically worn by a Syndicate Nuclear Operative Commander. So scary even the vacuum of space doesn't dare claim the wearer."
+		team_num = TEAM_SYNDICATE
+		#ifdef MAP_OVERRIDE_POD_WARS
+		attack_hand(mob/user)
+			if (get_pod_wars_team_num(user) == team_num)
+				..()
+			else
+				boutput(user, "<span class='alert'>The coat <b>explodes</b> as you reach out to grab it!</span>")
+				make_fake_explosion(src)
+				user.u_equip(src)
+				src.dropped(user)
+				qdel(src)
+		#endif
 
 		setupProperties()
 			..()
@@ -1255,6 +1280,7 @@
 	syndicate
 		name = "\improper Syndicate command armor"
 		desc = "An armored space suit, not for your average expendable chumps. No sir."
+		is_syndicate = 1
 		icon_state = "indusred"
 		item_state = "indusred"
 		setupProperties()
@@ -1264,6 +1290,7 @@
 
 		specialist
 			name = "specialist heavy operative combat armor"
+			is_syndicate = 0
 			desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
 			icon_state = "syndie_specialist-heavy"
 			item_state = "syndie_specialist-heavy"
@@ -1272,6 +1299,7 @@
 
 	name = "NT-SO heavy operative combat armor"
 	desc = "A Nanotrasen special forces heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
+	is_syndicate = 0
 	icon_state = "ntso_specialist-heavy"
 	item_state = "ntso_specialist-heavy"
 	cant_self_remove = 1
@@ -1295,11 +1323,58 @@
 		setProperty("meleeprot", 5)
 		setProperty("rangedprot", 2)
 
+//NT pod wars suits
 /obj/item/clothing/suit/space/nanotrasen
 	name = "Nanotrasen Heavy Armor"
 	icon_state = "ntarmor2"
 	item_state = "ntarmor2"
 	desc = "Heavy armor used by certain Nanotrasen bodyguards."
+
+	pilot
+		name = "NT space suit"
+		icon_state = "nanotrasen_pilot"
+		item_state = "nanotrasen_pilot"
+		desc = "A suit that protects against low pressure environments. Issued to nanotrasen pilots."
+		team_num = TEAM_NANOTRASEN
+		#ifdef MAP_OVERRIDE_POD_WARS
+		attack_hand(mob/user)
+			if (get_pod_wars_team_num(user) == team_num)
+				..()
+			else
+				boutput(user, "<span class='alert'>The space suit <b>explodes</b> as you reach out to grab it!</span>")
+				make_fake_explosion(src)
+				user.u_equip(src)
+				src.dropped(user)
+				qdel(src)
+		#endif
+
+		setupProperties()
+			..()
+			setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
+
+		commander
+			name = "commander's great coat"
+			icon_state = "ntcommander_coat"
+			item_state = "ntcommander_coat"
+			desc = "A fear-inspiring, blue-ish-leather great coat, typically worn by a NanoTrasen Pod Commander. Why does it look like it's been dyed painted blue?"
+			team_num = TEAM_NANOTRASEN
+			#ifdef MAP_OVERRIDE_POD_WARS
+			attack_hand(mob/user)
+				if (get_pod_wars_team_num(user) == team_num)
+					..()
+				else
+					boutput(user, "<span class='alert'>The coat <b>explodes</b> as you reach out to grab it!</span>")
+					make_fake_explosion(src)
+					user.u_equip(src)
+					src.dropped(user)
+					qdel(src)
+			#endif
+
+			setupProperties()
+				..()
+				setProperty("exploprot", 40)
+				setProperty("meleeprot", 6)
+				setProperty("rangedprot", 3)
 
 /obj/item/clothing/suit/cultist
 	name = "cultist robe"
