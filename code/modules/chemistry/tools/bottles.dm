@@ -347,9 +347,9 @@
 	amount_per_transfer_from_this = 10
 
 /obj/item/reagent_containers/glass/bottle/cleaner
-	name = "cleaner bottle"
-	desc = "A bottle filled with cleaning fluid."
+	name = "bottle of space cleaner "
+	desc = "This a bottle filled with space cleaner fluid. The label reads 'Poo-Be-Gone! As used by the space-renowned Janitor, Zooblar Skrippus!' There seems to be a cartoonish rendition of woman with golden bangs, thick eyebrows and toothy smile giving a thumbs up in the corner."
 	icon_state = "largebottle-labeled"
-	initial_volume = 50
+	initial_volume = 100
 	initial_reagents = "cleaner"
 	amount_per_transfer_from_this = 10
