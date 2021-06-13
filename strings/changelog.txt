@@ -1,5 +1,28 @@
 
+(t)sat jun 12 21
+(u)zjdtmkhzt
+(p)4900
+(e)🆕|feature
+(+)Instrument player components can now choose which note to play via their input.
+(u)Penny
+(p)4989
+(e)🆕|feature
+(*)Ruck kits now use Wi-Fi for all their networked functionality. Jab them with your multitools and start hacking!
+(+)Airlocks can now be properly scanned with device analyzers and PDAs will now upload scans reliably
+(u)Tarmunora
+(e)⚖|balance
+(*)Various blob balance changes -- check minor changes for details
+(+)Blob spread cooldown affected slightly by distance from closest owned nucleus (1 second/20 tiles distance past 20 tiles).
+(+)Blob spread speed upgrade more expensive (+1 base cost, +1 cost-scaling)
+(+)Blob tiles have an internal 6 second cooldown before the blob repair ability can repair them again after being repaired. Spread the Love! (change does not interact with mitochondria)
+(+)Halved blob evo points from absorbing humans (4 -> 2)
+(+)Cost of most (all with cost >=2) single-purchase blob unlocks reduced by 1 evo point
+(+)Reinforced spread upgrade requires half as many material deposits (60 -> 30)
 (t)fri jun 11 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Robot legs counteract damage slowdown for humans as opposed to direct speed buff.
+(+)Humans with tread legs will not fall over when resting, matching behavior when stunned etc.
 (u)DisturbHerb
 (p)5083
 (e)|
