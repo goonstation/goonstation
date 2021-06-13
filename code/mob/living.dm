@@ -1347,7 +1347,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 			//Fixes spooky floating text dup with spooky code
 			if((istype(AM, /obj/machinery) || istype(AM, /obj/artifact)) && src.client)
-				var/atom/movable/invtemp = AM.invisibility
+				var/invtemp = AM.invisibility
 				AM.invisibility = 101
 				AM.invisibility = invtemp
 		if(istype(src.loc, /turf))
