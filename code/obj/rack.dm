@@ -1,12 +1,26 @@
 /obj/rack
 	name = "rack"
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "rack"
+	icon_state = "rack_base"
 	density = 1
 	flags = FPRINT | NOSPLASH
 	anchored = 1.0
 	desc = "A metal frame used to hold objects. Can be wrenched and made portable."
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	proc/rackbreak()
+		icon_state += "-broken"
+
+/obj/rack/bronze
+	icon_state = "rack_bronze"
+
+/obj/rack/nickel
+	icon_state = "rack_nickel"
+
+/obj/rack/cobalt
+	icon_state = "rack_cobalt"
+
+/obj/rack/lattice
+	icon_state = "rack_lattice"
 
 /obj/rack/New()
 	..()
@@ -34,8 +48,9 @@
 				return
 		if(3.0)
 			if (prob(25))
-				src.icon_state = "rackbroken"
+				src.icon_state = "-broken"
 				src.set_density(0)
+				src.update_icon()
 		else
 	return
 
@@ -44,8 +59,9 @@
 		src.deconstruct()
 		return
 	else if(prob(power * 2.5))
-		src.icon_state = "rackbroken"
+		src.icon_state = "-broken"
 		src.set_density(0)
+		src.update_icon()
 		return
 
 /obj/rack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -107,8 +123,9 @@
 		qdel(src)
 		return
 	else
-		src.icon_state = "rackbroken"
+		src.icon_state = "-broken"
 		src.set_density(0)
+		src.update_icon()
 	return
 
 /datum/action/bar/icon/rack_tool_interact

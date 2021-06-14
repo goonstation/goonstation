@@ -228,12 +228,28 @@ RACK PARTS
 	name = "rack parts"
 	desc = "A collection of parts that can be used to make a rack."
 	icon = 'icons/obj/metal.dmi'
-	icon_state = "rack_parts"
+	icon_state = "rack_base_parts"
 	stamina_damage = 25
 	stamina_cost = 22
 	stamina_crit_chance = 15
 	furniture_type = /obj/rack
 	furniture_name = "rack"
+
+/obj/item/furniture_parts/rack/bronze
+	icon_state = "rack_bronze_parts"
+	furniture_type = /obj/rack/bronze
+
+/obj/item/furniture_parts/rack/nickel
+	icon_state = "rack_nickel_parts"
+	furniture_type = /obj/rack/nickel
+
+/obj/item/furniture_parts/rack/cobalt
+	icon_state = "rack_cobalt_parts"
+	furniture_type = /obj/rack/cobalt
+
+/obj/item/furniture_parts/rack/lattice
+	icon_state = "rack_nickel_parts"
+	furniture_type = /obj/rack/lattice
 
 //bookshelf part construction
 	attackby(obj/item/W as obj, mob/user as mob)
