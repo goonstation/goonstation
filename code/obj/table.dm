@@ -629,39 +629,7 @@
 		src.visible_message("<span class='alert'>\The [src] shatters!</span>")
 		playsound(src, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		if (src.material?.mat_id in list("gnesis", "gnesisglass"))
-			src.glass_broken = GLASS_BROKEN
-			src.set_density(0)
-			src.set_up()
-			SPAWN_DBG(rand(2 SECONDS, 3 SECONDS))
-				if(src.glass_broken == GLASS_BROKEN)
-					src.glass_broken = GLASS_REFORMING
-					src.set_up()
-					src.set_density(initial(src.density))
-					src.visible_message("<span class='alert'>\The [src] starts to reform!</span>")
-
-					var/color = "#fff"
-					if(src.color)
-						color = src.color
-					var/filter,size,duration
-
-					size=rand()*2.5+2
-					var/regrow_duration = rand(8 SECONDS, 12 SECONDS)
-					var/loops = 5
-					duration= round(regrow_duration / loops, 2)
-					///obj/table/glass
-
-					src.filters += filter(type="ripple", x=0, y=0, size=size, repeat=rand()*2.5+3, radius=0, flags=WAVE_BOUNDED)
-					filter = src.filters[src.filters.len]
-					animate(filter, size=0, time=0, loop=loops, radius=rand()*10+10, flags=ANIMATION_PARALLEL)
-					animate(size=size, radius=0, time=duration)
-
-					animate(src, color = "#2ca", time = duration/2, loop = loops, easing = SINE_EASING, flags=ANIMATION_PARALLEL)
-					animate(color = "#298", time = duration/2, loop = loops, easing = SINE_EASING)
-					sleep(regrow_duration)
-					src.filters -= filter
-					animate(src, loop=0, color=color, time=duration/2)
-					src.visible_message("<span class='alert'>\The [src] fully reforms!</span>")
-					src.glass_broken = GLASS_INTACT
+			gnesis_smash()
 		else
 			for (var/i=rand(3,4), i>0, i--)
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
@@ -674,6 +642,42 @@
 			src.set_density(0)
 			src.set_up()
 
+	proc/gnesis_smash()
+		var/color = "#fff"
+		if(src.color)
+			color = src.color
+		src.glass_broken = GLASS_BROKEN
+		src.set_density(0)
+		src.set_up()
+		SPAWN_DBG(rand(2 SECONDS, 3 SECONDS))
+			if(src.glass_broken == GLASS_BROKEN)
+				src.glass_broken = GLASS_REFORMING
+				src.set_up()
+				src.set_density(initial(src.density))
+				src.visible_message("<span class='alert'>\The [src] starts to reform!</span>")
+
+				var/filter
+				var/size=rand()*2.5+4
+				var/regrow_duration = rand(8 SECONDS, 12 SECONDS)
+				var/loops = 5
+				var/duration= round(regrow_duration / loops, 2)
+
+				// Ripple inwards
+				src.filters += filter(type="ripple", x=0, y=0, size=size, repeat=rand()*2.5+3, radius=0, flags=WAVE_BOUNDED)
+				filter = src.filters[src.filters.len]
+				animate(filter, size=0, time=0, loop=loops, radius=12, flags=ANIMATION_PARALLEL)
+				animate(size=size, radius=0, time=duration)
+
+				// Flash
+				animate(src, color = "#2ca", time = duration/2, loop = loops, easing = SINE_EASING, flags=ANIMATION_PARALLEL)
+				animate(color = "#298", time = duration/2, loop = loops, easing = SINE_EASING)
+				sleep(regrow_duration)
+
+				// Remove filter and reset color
+				src.filters -= filter
+				animate(src, loop=0, color=color, time=duration/2)
+				src.visible_message("<span class='alert'>\The [src] fully reforms!</span>")
+				src.glass_broken = GLASS_INTACT
 
 	proc/repair()
 		src.glass_broken = GLASS_INTACT
