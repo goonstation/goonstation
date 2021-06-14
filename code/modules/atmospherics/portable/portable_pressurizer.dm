@@ -1,6 +1,6 @@
 /// Fan Off
 #define FAN_OFF 0
-// Fan On and pulling in from enviroment
+/// Fan On and pulling in from enviroment
 #define FAN_ON_INLET 1
 /// Fan On and pushing air out to enviroment
 #define FAN_ON_OUTLET 2
