@@ -32,7 +32,7 @@
 	var/process_rate = 2
 	var/powconsumption = 0
 	var/emagged = 0
-	mats = list("MET-1"=15,"MET-2"=3, "INS-1" = 3, "CON-1" = 10)
+	mats = list("MET-1" = 15, "MET-2" = 3, "INS-1" = 3, "CON-1" = 10)
 
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
 
