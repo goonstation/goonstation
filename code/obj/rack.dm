@@ -9,6 +9,7 @@
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 	proc/rackbreak()
 		icon_state += "-broken"
+		src.set_density(0)
 
 /obj/rack/bronze
 	icon_state = "rack_bronze"
@@ -48,9 +49,7 @@
 				return
 		if(3.0)
 			if (prob(25))
-				src.icon_state = "-broken"
-				src.set_density(0)
-				src.update_icon()
+				rackbreak()
 		else
 	return
 
@@ -59,9 +58,7 @@
 		src.deconstruct()
 		return
 	else if(prob(power * 2.5))
-		src.icon_state = "-broken"
-		src.set_density(0)
-		src.update_icon()
+		rackbreak()
 		return
 
 /obj/rack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -123,9 +120,7 @@
 		qdel(src)
 		return
 	else
-		src.icon_state = "-broken"
-		src.set_density(0)
-		src.update_icon()
+		rackbreak()
 	return
 
 /datum/action/bar/icon/rack_tool_interact
