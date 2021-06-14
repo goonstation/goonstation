@@ -382,7 +382,7 @@
 
 		if("eject-materials")
 			src.eject()
-			.= TRUE
+			. = TRUE
 
 		if("set-blast-delay")
 			var/target_delay = params["blastDelay"]
