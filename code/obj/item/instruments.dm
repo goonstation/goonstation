@@ -287,6 +287,11 @@
 	show_play_message(mob/user as mob)
 		return
 
+	attack(mob/M as mob, mob/user as mob)
+		if(ismob(M))
+			playsound(src, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
+		..()
+
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (!istype(W, /obj/item/parts/robot_parts/arm))
 			..()

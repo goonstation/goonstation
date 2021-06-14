@@ -1,4 +1,9 @@
 
+(t)mon jun 14 21
+(u)Ikea
+(p)4765
+(e)⚖|balance
+(*)EMP blast from the singularity has been removed, radiation damage has been buffed from singularities. Wear radsuits people!
 (t)sun jun 13 21
 (u)Tarmunora
 (e)⚖|balance
