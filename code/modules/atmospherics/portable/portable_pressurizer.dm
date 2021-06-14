@@ -181,7 +181,7 @@
 			return 0
 		if (user)
 			user.show_text("You repair [src]'s material processor.", "blue")
-		src.emagged = 0
+		src.emagged = FALSE
 		src.process_rate = min(src.process_rate, 3)
 		whitelist = initial(whitelist)
 		return 1
