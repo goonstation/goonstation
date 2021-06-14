@@ -172,7 +172,7 @@
 			src.audible_message("<span class='combat'><B>[src] buzzes oddly!</B></span>")
 			playsound(src.loc, "sparks", 50, 1, -1)
 			whitelist += blacklist
-			src.emagged = 1
+			src.emagged = TRUE
 			return 1
 		return 0
 
