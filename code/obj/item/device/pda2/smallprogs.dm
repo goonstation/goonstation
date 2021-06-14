@@ -975,6 +975,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			T.issuer_byond_key = usr.key
 			data_core.tickets += T
 
+			logTheThing("admin", usr, null, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
 			playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
 			SPAWN_DBG(3 SECONDS)
 				var/obj/item/paper/p = unpool(/obj/item/paper)
@@ -1029,6 +1030,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			F.issuer_byond_key = usr.key
 			data_core.fines += F
 
+			logTheThing("admin", usr, null, "fines <b>[ticket_target]</b> with the reason: [ticket_reason].")
 			if(PDAownerjob in list("Head of Security","Head of Personnel","Captain"))
 				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
 				playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
