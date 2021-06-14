@@ -143,7 +143,7 @@
 			var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
 			GM.temperature = T20C
 			if(target_material.material?.name in src.whitelist)
-				switch(target_material.material?.name)
+				switch(target_material.material.name)
 					if("molitz")
 						GM.oxygen += 1500 * progress / 100
 					if("viscerite")
