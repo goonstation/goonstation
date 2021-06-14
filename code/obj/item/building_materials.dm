@@ -993,7 +993,7 @@ MATERIAL
 		src.pixel_y = rand(0, 14)
 		SPAWN_DBG(0)
 			update_stack_appearance()
-			src.inventory_counter.update_number(amount)
+			src.inventory_counter?.update_number(amount)
 		return
 
 	check_valid_stack(atom/movable/O as obj)

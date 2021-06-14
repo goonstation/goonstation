@@ -15,6 +15,7 @@
 	var/list/rare_items2spawn = list() // things that only rarely appear, independent of how big or small the main item list is
 	var/list/guaranteed = list() // things that will always spawn from this - set to a number to spawn that many of the thing
 
+	// TODO: initialize
 	New()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
@@ -77,7 +78,7 @@
 	icon_state = "rand_snacks"
 	min_amt2spawn = 1
 	max_amt2spawn = 1
-	items2spawn = list(/obj/item/reagent_containers/food/snacks/candy,
+	items2spawn = list(/obj/item/reagent_containers/food/snacks/candy/regular,
 	/obj/item/reagent_containers/food/snacks/candy/chocolate,
 	/obj/item/reagent_containers/food/snacks/candy/nougat,
 	/obj/item/reagent_containers/food/snacks/candy/butterscotch,

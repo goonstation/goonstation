@@ -917,6 +917,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_dry = 1
 	slippery = 80
 	can_sample = 1
+	sample_amt = 4
 	sample_reagent = "urine"
 	stain = "piss-soaked"
 
@@ -956,7 +957,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 					if (4)
 						W.reagents.add_reagent("triplepiss",1)
 
-				if (prob(20))
+				if (prob(25))
 					pool(src)
 
 				W.reagents.handle_reactions()
