@@ -1,13 +1,27 @@
+/// Fan Off
 #define FAN_OFF 0
+// Fan On and pulling in from enviroment
 #define FAN_ON_INLET 1
+/// Fan On and pushing air out to enviroment
 #define FAN_ON_OUTLET 2
+/// No active material processing
 #define PROCESS_OFF 0
+/// Actively processing an item
 #define PROCESS_ACTIVE 1
+/// Material Processing Paused...
 #define PROCESS_PAUSED 2
+/// Minimum delay for armed blast
 #define MIN_BLAST_DELAY (5 SECONDS)
+/// Maximum delay for armed blast
 #define MAX_BLAST_DELAY (30 SECONDS)
+/// Minimum % pressure where visual effect and sonic boom
 #define BLAST_EFFECT_RATIO (0.7)
 
+/** Portable Pressurization Device
+ *  Acts as a [/obj/machinery/portable_atmospherics/pump] + [/obj/machinery/manufacturer/gas]
+ * 	Allows for input/output of enviromental air and will convert objects made of materials that produce gas to.. gas.
+ * 	Once sufficient pressure has been reached it can be released spreading it across the current airgroup with a minor stun explosion.
+  */
 /obj/machinery/portable_atmospherics/pressurizer
 	name = "Extreme-Pressure Pressurization Device"
 	desc = "Some kind of nightmare contraption to make a lot of noise or pressurize rooms."
@@ -24,11 +38,14 @@
 	var/blast_delay = 5 SECONDS
 	var/blast_armed = FALSE
 	var/material_progress = 0
+	/// Object actively being processed
 	var/obj/item/target_material = null
-	var/inlet_flow = 100 // percentage
+	/// Default processable materials
 	var/whitelist = list("molitz", "viscerite")
+	/// Items enabled by emag
 	var/blacklist = list("char", "plasmastone")
 	var/release_pressure = ONE_ATMOSPHERE
+	/// Rate at which materials will be processed
 	var/process_rate = 2
 	var/powconsumption = 0
 	var/emagged = 0
@@ -307,11 +324,14 @@
 			if(pressure > (maximum_pressure * BLAST_EFFECT_RATIO))
 				for(var/mob/living/HH in range(8, src))
 					var/checkdist = get_dist(HH.loc, T)
+
+					// Reduced sonic boom effect with increased misstep from shockwave
 					var/misstep = clamp(1 + 10 * (5 - checkdist), 0, 40)
-					var/ear_damage = max(0, 5 * 0.2 * (3 - checkdist))
-					var/ear_tempdeaf = max(0, 5 * 0.2 * (5 - checkdist))
-					var/stamina = clamp(5 * (5 + 1 * (7 - checkdist)), 0, 120)
+					var/ear_damage = max(0, (3 - checkdist))
+					var/ear_tempdeaf = max(0, (5 - checkdist))
+					var/stamina = clamp(30 * (7 - checkdist), 0, 120)
 					HH.apply_sonic_stun(0, 0, misstep, 0, 2, ear_damage, ear_tempdeaf, stamina)
+
 		src.blast_armed = FALSE
 		update_icon()
 
