@@ -83,6 +83,7 @@ proc/qdel(var/datum/O)
 /datum/proc/disposing()
 	PROTECTED_PROC(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
 
 	src.tag = null // not part of components but definitely should happen
 
