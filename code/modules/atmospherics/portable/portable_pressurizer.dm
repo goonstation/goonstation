@@ -193,7 +193,7 @@
 		if(iswrenchingtool(I) || istype(I,/obj/item/device/analyzer/atmospheric) || istype(I,/obj/item/card/emag))
 			..()
 			return
-		if(istype(I,/obj/item/electronics/scanner) || istype(I,/obj/item/deconstructor) || (istype(I, /obj/item/device/pda2)))
+		if(istype(I,/obj/item/electronics/scanner) || istype(I,/obj/item/deconstructor) || (istype(I,/obj/item/device/pda2)))
 			user.visible_message("<span class='alert'><B>[user] hits [src] with [I]!</B></span>")
 			return
 		if (istype(I,/obj/item/satchel/) && I.contents.len)
