@@ -1028,6 +1028,13 @@ This is basically useless for anyone but miners.
 	desc = "A terrifying grenade containing a potent nerve gas. Try not to get caught in the smoke."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
+/datum/syndicate_buylist/surplus/ak
+	name = "AK 744"
+	item = /obj/item/gun/kinetic/ak47
+	cost = 9
+	desc = "Powerful rifle that fires in 3 round bursts. Try not to miss as you cant get more ammo for it."
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+
 /////////////////////////////////////////////// Disabled items /////////////////////////////////////////////////////
 
 /datum/syndicate_buylist/traitor/fogmaster
