@@ -25,7 +25,8 @@
 					continue
 				if (!(istype(A, /obj/machinery/door/airlock/maintenance) || istype(A, /obj/machinery/door/airlock/pyro/maintenance) || istype(A, /obj/machinery/door/airlock/gannets/maintenance) || istype(A, /obj/machinery/door/airlock/gannets/glass/maintenance)))
 					continue
-				A.req_access = null
+				if (access_maint_tunnels in A.req_access)
+					A.req_access = null
 
 			sleep(actualtime)
 
@@ -55,8 +56,6 @@
 				LAGCHECK(LAG_LOW)
 				if (S.z == Z_LEVEL_STATION)
 					S.color = src.space_color
-				else
-					break
 	#endif
 
 			world << siren
@@ -97,8 +96,6 @@
 				LAGCHECK(LAG_LOW)
 				if (S.z == Z_LEVEL_STATION)
 					S.color = null
-				else
-					break
 	#endif
 			for (var/mob/N in mobs)
 				N.flash(3 SECONDS)
@@ -107,7 +104,8 @@
 
 			for_by_tcl(A, /obj/machinery/door/airlock)
 				if (A.z != Z_LEVEL_STATION)
-					break
+					continue
 				if (!(istype(A, /obj/machinery/door/airlock/maintenance) || istype(A, /obj/machinery/door/airlock/pyro/maintenance) || istype(A, /obj/machinery/door/airlock/gannets/maintenance) || istype(A, /obj/machinery/door/airlock/gannets/glass/maintenance)))
 					continue
-				A.req_access = list(access_maint_tunnels)
+				if (isnull(A.req_access))
+					A.req_access = list(access_maint_tunnels)
