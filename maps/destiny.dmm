@@ -44196,6 +44196,8 @@
 /obj/item/circuitboard/powermonitor_smes,
 /obj/item/circuitboard/operating,
 /obj/item/circuitboard/genetics,
+/obj/item/circuitboard/qmorder,
+/obj/item/circuitboard/qmsupply,
 /obj/cable,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)

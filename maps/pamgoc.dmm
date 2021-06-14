@@ -52349,6 +52349,10 @@
 /area/station/storage/warehouse)
 "bVf" = (
 /obj/rack,
+/obj/item/circuitboard/qmorder{
+	pixel_x = 5;
+	pixel_y = 5
+	},
 /obj/item/circuitboard/powermonitor{
 	pixel_x = 5;
 	pixel_y = -3
@@ -52373,6 +52377,10 @@
 /area/station/storage/tech)
 "bVg" = (
 /obj/rack,
+/obj/item/circuitboard/qmsupply{
+	pixel_x = 5;
+	pixel_y = 5
+	},
 /obj/item/circuitboard/barcode_qm{
 	pixel_x = 5;
 	pixel_y = 1

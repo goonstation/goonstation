@@ -10408,6 +10408,7 @@
 /obj/item/circuitboard/genetics,
 /obj/item/circuitboard/bank_data,
 /obj/item/circuitboard/arcade,
+/obj/item/circuitboard/qmsupply,
 /obj/machinery/light/small,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/storage/tech)
@@ -44034,6 +44035,7 @@
 /obj/item/circuitboard/cloning,
 /obj/item/circuitboard/barcode_qm,
 /obj/item/circuitboard/barcode,
+/obj/item/circuitboard/qmorder,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "mgj" = (

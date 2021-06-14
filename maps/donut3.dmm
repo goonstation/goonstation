@@ -27445,6 +27445,10 @@
 	pixel_x = 7;
 	pixel_y = -6
 	},
+/obj/item/circuitboard/qmsupply{
+	pixel_x = 5;
+	pixel_y = -9
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/storage/tech)
 "hPR" = (
@@ -42201,6 +42205,10 @@
 /obj/item/circuitboard/genetics{
 	pixel_x = 2;
 	pixel_y = -4
+	},
+/obj/item/circuitboard/qmorder{
+	pixel_x = 6;
+	pixel_y = -8
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 1
