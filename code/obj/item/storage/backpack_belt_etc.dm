@@ -258,6 +258,12 @@
 		icon_state = "sat_itabag_black"
 		item_state = "sat_itabag_black"
 
+/obj/item/storage/backpack/satchel/studdedblack
+	name = "studded satchel"
+	desc = "Made of sturdy synthleather and covered in metal studs. Much edgier than the standard issue bag."
+	icon_state = "sat_studded"
+	item_state = "sat_studded"
+
 /obj/item/storage/backpack/satchel/studdedwhite
 	name = "white studded satchel"
 	desc = "Made of sturdy white synthleather and covered in metal studs. Much edgier than the standard issue bag."

@@ -21,7 +21,7 @@
 	/obj/item/toy/plush/small/kitten/wizard,\
 	/obj/item/toy/plush/small/monkey/assistant,\
 	/obj/item/toy/plush/small/bunny/mask,\
-	/obj/item/toy/plush/small/penguin/cool,)
+	/obj/item/toy/plush/small/penguin/cool)
 	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca,\
 	/obj/item/toy/plush/small/tuba,\
 	/obj/item/toy/plush/small/chris,\
