@@ -1208,7 +1208,7 @@
 // Why? Fuck it, I have no idea.
 proc/riffle_shuffle(list/deck)
 	// Determines a location near the center of the deck to split from.
-	var/splitLoc = (deck.len / 2) + rand(-deck.len / 5, deck.len / 5)
+	var/splitLoc = (deck.len / 2) + rand(-(deck.len) / 5, deck.len / 5)
 
 	// Makes two lists, one for each half of the deck, then clears the original deck.
 	var/list/D1 = deck.Copy(1, splitLoc)
