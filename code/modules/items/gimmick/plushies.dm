@@ -21,14 +21,16 @@
 	/obj/item/toy/plush/small/kitten/wizard,\
 	/obj/item/toy/plush/small/monkey/assistant,\
 	/obj/item/toy/plush/small/bunny/mask,\
-	/obj/item/toy/plush/small/penguin/cool)
+	/obj/item/toy/plush/small/penguin/cool,)
 	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca,\
 	/obj/item/toy/plush/small/tuba,\
 	/obj/item/toy/plush/small/chris,\
 	/obj/item/toy/plush/small/fancyflippers,\
 	/obj/item/toy/plush/small/billy,\
 	/obj/item/toy/plush/small/arthur,\
-	/obj/item/toy/plush/small/deneb)
+	/obj/item/toy/plush/small/deneb,\
+	/obj/item/storage/backpack/breadpack,\
+	/obj/item/storage/backpack/bearpack)
 
 /obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
 	src.add_dialog(user)
