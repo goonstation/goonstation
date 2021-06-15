@@ -44,13 +44,13 @@ ABSTRACT_TYPE(/datum/mail_order/audiovideo)
 		name = "Handheld Photo Camera"
 		desc = "Captures high-fidelity images with insta-develop film."
 		order_items = list(/obj/item/camera)
-		cost = PAY_TRADESMAN
+		cost = PAY_TRADESMAN * 1.2
 
 	photofilm
 		name = "Photo Film Cartridge"
 		desc = "A replacement film cartridge for handheld photo cameras."
 		order_items = list(/obj/item/camera_film)
-		cost = PAY_TRADESMAN / 3
+		cost = PAY_TRADESMAN
 
 	stickynotes
 		name = "Sticky Notes"
@@ -243,13 +243,13 @@ ABSTRACT_TYPE(/datum/mail_order/produce)
 //Survival Mart: primarily medical, but not exclusively
 ABSTRACT_TYPE(/datum/mail_order/survmart)
 /datum/mail_order/survmart
-
+/* //alternate non-pressurized tank to be added at later point
 	oxytank
 		name = "Emergency Oxygen Tank"
 		desc = "An easy-to-use compact gas tank pre-loaded with pure oxygen."
 		order_items = list(/obj/item/tank/emergency_oxygen)
 		cost = PAY_TRADESMAN
-
+*/
 	wintercoat
 		name = "Winterized Overcoat"
 		desc = "Beat the cold of space with your very own cozy coat."
@@ -261,13 +261,6 @@ ABSTRACT_TYPE(/datum/mail_order/survmart)
 		desc = "Contains latex gloves and sterile mask."
 		order_items = list(/obj/item/clothing/gloves/latex,/obj/item/clothing/mask/surgical)
 		cost = PAY_UNTRAINED / 2
-
-	medbelt
-		name = "Medical Belt"
-		desc = "Top-quality belt for rapid medical equipment access."
-		order_items = list(/obj/item/storage/belt/medical)
-		cost = PAY_DOCTORATE
-		order_perm = list(access_medical)
 
 	analyze_kit
 		name = "Analyzer Triage Bundle"
