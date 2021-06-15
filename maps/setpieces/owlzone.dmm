@@ -9701,7 +9701,7 @@
 	name = "table"
 	},
 /obj/item/device/radio/intercom/adventure/syndcommand{
-
+	
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/office)
@@ -10187,12 +10187,6 @@
 	dir = 1
 	},
 /obj/structure/woodwall,
-/turf/unsimulated/floor/yellowblack{
-	icon_state = "yellowblack";
-	dir = 1
-	},
-/area/owlery/gangzone)
-"wD" = (
 /turf/unsimulated/floor/yellowblack{
 	icon_state = "yellowblack";
 	dir = 1
@@ -27020,7 +27014,7 @@ uS
 qm
 nz
 wo
-wD
+qI
 qZ
 xg
 xB
