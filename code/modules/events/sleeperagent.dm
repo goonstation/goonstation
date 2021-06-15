@@ -195,7 +195,7 @@
 				if (M.client.ignore_sound_flags)
 					if (M.client.ignore_sound_flags & SOUND_ALL)
 						continue
-				M << sound(soundfile, volume = 50, channel = sound_channel, wait = 1)
+				M << sound(soundfile, volume = 30, channel = sound_channel, wait = 1)
 
 
 	proc/play_all_numbers()

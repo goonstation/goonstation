@@ -205,7 +205,7 @@
 	for(var/obj/machinery/power/pt_laser/P in L)
 		.["units"] += list(list(
 			"\ref[P]",
-			round(100.0*P.charge/P.output, 0.1),
+			P.output ? round(100.0*P.charge/P.output, 0.1) : 0,
 			P.charging,
 			P.chargelevel,
 			P.output,

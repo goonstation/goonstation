@@ -258,31 +258,83 @@
 	            /obj/item/parts/human_parts/leg/left/synth, /obj/item/parts/human_parts/leg/right/synth,
 	            /obj/item/parts/human_parts/arm/left/synth/bloom, /obj/item/parts/human_parts/arm/right/synth/bloom,
 	            /obj/item/parts/human_parts/leg/left/synth/bloom, /obj/item/parts/human_parts/leg/right/synth/bloom)
+	chance = 15
 
 /datum/plantmutation/synthmeat/heart
 	name = "Synthheart"
 	dont_rename_crop = true
 	iconmod = "SynthHearts"
-	crop = list(/obj/item/organ/heart/synth)
+	crop = /obj/item/organ/heart/synth
+	chance = 10
 
 /datum/plantmutation/synthmeat/eye
-	name = "Synthorgan"
+	name = "Syntheye"
 	dont_rename_crop = true
 	iconmod = "SynthEyes"
-	crop = list(/obj/item/organ/eye/synth)
-
+	crop = /obj/item/organ/eye/synth
+	chance = 8
 
 /datum/plantmutation/synthmeat/brain
 	name = "Synthbrain"
 	dont_rename_crop = true
 	iconmod = "SynthBrains"
-	crop = list(/obj/item/organ/brain/synth)
+	crop = /obj/item/organ/brain/synth
+	chance = 4
 
 /datum/plantmutation/synthmeat/butt/buttbot
 	name = "Synthbuttbot"
 	dont_rename_crop = true
 	iconmod = "SynthButts"
 	crop = /obj/machinery/bot/buttbot
+
+/datum/plantmutation/synthmeat/lung
+	name = "Synthlung"
+	dont_rename_crop = true
+	iconmod = "SynthLungs"
+	crop = list(/obj/item/organ/lung/synth/left, /obj/item/organ/lung/synth/right)
+	chance = 6
+
+/datum/plantmutation/synthmeat/appendix
+	name = "Synthappendix"
+	dont_rename_crop = true
+	iconmod = "SynthAppendixes"
+	crop = /obj/item/organ/appendix/synth
+	chance = 6
+
+/datum/plantmutation/synthmeat/pancreas
+	name = "Synthpancreas"
+	dont_rename_crop = true
+	iconmod = "SynthPancreata"
+	crop = /obj/item/organ/pancreas/synth
+	chance = 4
+
+/datum/plantmutation/synthmeat/liver
+	name = "Synthliver"
+	dont_rename_crop = true
+	iconmod = "SynthLivers"
+	crop = /obj/item/organ/liver/synth
+	chance = 6
+
+/datum/plantmutation/synthmeat/kidney
+	name = "Synthkidney"
+	dont_rename_crop = true
+	iconmod = "SynthKidneys"
+	crop = list(/obj/item/organ/kidney/synth/left, /obj/item/organ/kidney/synth/right)
+	chance = 7
+
+/datum/plantmutation/synthmeat/spleen
+	name = "Synthspleen"
+	dont_rename_crop = true
+	iconmod = "SynthSpleens"
+	crop = /obj/item/organ/spleen/synth
+	chance = 5
+
+/datum/plantmutation/synthmeat/stomach
+	name = "Synthstomach"
+	dont_rename_crop = true
+	iconmod = "SynthStomachs"
+	crop = list(/obj/item/organ/stomach/synth, /obj/item/organ/intestines/synth)
+	chance = 5
 
 // Soy Mutations
 
@@ -305,7 +357,7 @@
 	name = "Quivering Contusine"
 	name_prefix = "Quivering "
 	iconmod = "ContusineShivering"
-	assoc_reagents = list("curare")
+	assoc_reagents = list("histamine")
 	chance = 10
 
 // Nureous Mutations
@@ -397,7 +449,7 @@
 					continue
 			if (nerds.len >= 1)
 				POT.visible_message("<span class='alert'><b>[POT.name]</b> slaps [pick(nerds)] with a fish!</span>")
-				playsound(get_turf(POT), pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)
+				playsound(POT, pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)
 
 // Cannabis Mutations
 
@@ -591,7 +643,7 @@
 
 		if (POT.growth > (P.growtime + DNA.growtime) && prob(5))
 			POT.visible_message("<span class='combat'><b>[POT.name]</b> [pick("howls","bays","whines","barks","croons")]!</span>")
-			playsound(get_turf(POT), pick("sound/voice/animal/howl1.ogg","sound/voice/animal/howl2.ogg","sound/voice/animal/howl3.ogg","sound/voice/animal/howl4.ogg","sound/voice/animal/howl5.ogg","sound/voice/animal/howl6.ogg"), 30, 1,-1)
+			playsound(POT, pick("sound/voice/animal/howl1.ogg","sound/voice/animal/howl2.ogg","sound/voice/animal/howl3.ogg","sound/voice/animal/howl4.ogg","sound/voice/animal/howl5.ogg","sound/voice/animal/howl6.ogg"), 30, 1,-1)
 
 	HYPattacked_proc_M(var/obj/machinery/plantpot/POT,var/mob/user)
 		..()
@@ -600,7 +652,7 @@
 		var/datum/plantgenes/DNA = POT.plantgenes
 
 		if (POT.growth < (P.growtime + DNA.growtime)) return 0
-		playsound(get_turf(POT), pick("sound/voice/animal/howl1.ogg","sound/voice/animal/howl2.ogg","sound/voice/animal/howl3.ogg","sound/voice/animal/howl4.ogg","sound/voice/animal/howl5.ogg","sound/voice/animal/howl6.ogg"), 30, 1,-1)
+		playsound(POT, pick("sound/voice/animal/howl1.ogg","sound/voice/animal/howl2.ogg","sound/voice/animal/howl3.ogg","sound/voice/animal/howl4.ogg","sound/voice/animal/howl5.ogg","sound/voice/animal/howl6.ogg"), 30, 1,-1)
 		boutput(user, "<span class='alert'>[POT.name] angrily bites you!</span>")
 		random_brute_damage(user, 3)
 		return prob(50) // fights back, but doesn't always succeed

@@ -168,7 +168,7 @@
 		dismantle_wall(1)
 	return
 
-/turf/simulated/wall/proc/dismantle_wall(devastated=0)
+/turf/simulated/wall/proc/dismantle_wall(devastated=0, keep_material = 1)
 	if (istype(src, /turf/simulated/wall/r_wall) || istype(src, /turf/simulated/wall/auto/reinforced))
 		if (!devastated)
 			playsound(src, "sound/items/Welder.ogg", 100, 1)
@@ -252,7 +252,7 @@
 						C.setMaterial(M)
 
 	var/atom/D = ReplaceWithFloor()
-	if (src.material)
+	if (src.material && keep_material)
 		D.setMaterial(src.material)
 	else
 		var/datum/material/M = getMaterial("steel")
@@ -267,10 +267,10 @@
 			src.ReplaceWithSpace()
 			return
 		if(2)
-			if (prob(40))
+			if (prob(66))
 				dismantle_wall(1)
 		if(3)
-			if (prob(66))
+			if (prob(40))
 				dismantle_wall(1)
 		else
 	return
@@ -336,7 +336,7 @@
 
 		boutput(user, "<span class='notice'>Now disassembling the outer wall plating.</span>")
 		SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /turf/simulated/wall/proc/weld_action,\
-			list(W, user), W.icon, W.icon_state, "[user] finishes disassembling the outer wall plating.")
+			list(W, user), W.icon, W.icon_state, "[user] finishes disassembling the outer wall plating.", null)
 
 //Spooky halloween key
 	else if(istype(W,/obj/item/device/key/haunted))

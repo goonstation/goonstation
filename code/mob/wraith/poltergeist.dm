@@ -10,6 +10,7 @@
 	var/obj/spookMarker/marker = null
 	haunt_duration = 150
 	death_icon_state = "derangedghost"
+	weak_tk = TRUE
 	var/max_dist_marker = 15
 	var/max_dist_master = 12
 	var/following_master = 0
@@ -66,7 +67,7 @@
 		if (!marker && !master)
 			death()
 			boutput(src, "Your portal and master have been destroyed, you return to the nether.")
-		
+
 		update_well_dist(TRUE, TRUE)
 
 		if (loc == master && src.health < src.max_health)
@@ -121,7 +122,7 @@
 	makeCorporeal()
 		if (!src.density)
 			src.set_density(1)
-			src.invisibility = 0
+			REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
 			src.icon_state = "poltergeist-corp"
 			src.see_invisible = 0
 			src.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
@@ -131,7 +132,7 @@
 		if (src.density)
 			src.visible_message(pick("<span class='alert'>[src] vanishes!</span>", "<span class='alert'>The poltergeist dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
 			src.set_density(0)
-			src.invisibility = 10
+			APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 			src.icon_state = "poltergeist"
 			src.see_invisible = 16
 		update_body()

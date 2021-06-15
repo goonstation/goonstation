@@ -28,7 +28,7 @@
 				affected_mob.take_brain_damage(10)
 			if (prob(4))
 				boutput(affected_mob, "<span class='alert'>You pass out momentarily.</span>")
-				affected_mob.changeStatus("paralysis", 40)
+				affected_mob.changeStatus("paralysis", 4 SECONDS)
 			if (prob(5))
 				affected_mob.emote(pick("shiver","pale","drool"))
 

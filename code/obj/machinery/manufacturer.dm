@@ -879,8 +879,15 @@
 				playsound(src.loc, src.sound_grump, 50, 1)
 				boutput(user, "<span class='alert'>The manufacturer rejects the blueprint. Is something wrong with it?</span>")
 				return
-			for (var/datum/manufacture/M in (src.available + src.download))
-				if (BP.blueprint.name == M.name)
+			for (var/datum/manufacture/mechanics/M in (src.available + src.download))
+				if(istype(M) && istype(BP.blueprint, /datum/manufacture/mechanics))
+					var/datum/manufacture/mechanics/BPM = BP.blueprint
+					if(M.frame_path == BPM.frame_path)
+						src.visible_message("<span class='alert'>[src] emits an irritable buzz!</span>")
+						playsound(src.loc, src.sound_grump, 50, 1)
+						boutput(user, "<span class='alert'>The manufacturer rejects the blueprint, as it already knows it.</span>")
+						return
+				else if (BP.blueprint.name == M.name)
 					src.visible_message("<span class='alert'>[src] emits an irritable buzz!</span>")
 					playsound(src.loc, src.sound_grump, 50, 1)
 					boutput(user, "<span class='alert'>The manufacturer rejects the blueprint, as it already knows it.</span>")
@@ -1103,7 +1110,7 @@
 			src.output_target = O.loc
 			boutput(usr, "<span class='notice'>You set the manufacturer to output on top of [O]!</span>")
 
-		else if (istype(over_object,/turf/simulated/floor/))
+		else if (istype(over_object,/turf/simulated/floor/) || istype(over_object,/turf/unsimulated/floor/))
 			src.output_target = over_object
 			boutput(usr, "<span class='notice'>You set the manufacturer to output to [over_object]!</span>")
 
@@ -1864,7 +1871,7 @@
 			else
 				return M.loc
 
-		else if (istype(src.output_target,/turf/simulated/floor/))
+		else if (istype(src.output_target,/turf/simulated/floor/) || istype(src.output_target,/turf/unsimulated/floor/))
 			return src.output_target
 
 		else
@@ -1973,16 +1980,22 @@
 /******************** Spatial Interdictor *******************/
 
 /obj/item/paper/manufacturer_blueprint/interdictor_frame
-	name = "Interdictor Frame"
+	name = "Interdictor Frame Kit"
 	icon = 'icons/obj/writing.dmi'
-	icon_state = "artifact_form"
+	icon_state = "interdictor_blueprint"
 	blueprint = /datum/manufacture/interdictor_frame
 
-/obj/item/paper/manufacturer_blueprint/interdictor_rod
-	name = "Interdictor Phase-Control Rod"
+/obj/item/paper/manufacturer_blueprint/interdictor_rod_lambda
+	name = "Lambda Phase-Control Rod"
 	icon = 'icons/obj/writing.dmi'
-	icon_state = "artifact_form"
-	blueprint = /datum/manufacture/interdictor_rod
+	icon_state = "interdictor_blueprint"
+	blueprint = /datum/manufacture/interdictor_rod_lambda
+
+/obj/item/paper/manufacturer_blueprint/interdictor_rod_sigma
+	name = "Sigma Phase-Control Rod"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "interdictor_blueprint"
+	blueprint = /datum/manufacture/interdictor_rod_sigma
 
 // Fabricator Defines
 

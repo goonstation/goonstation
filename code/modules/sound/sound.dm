@@ -120,8 +120,10 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	if (!limiter || !limiter.canISpawn(/sound))
 		return
 
+	var/turf/source_turf = get_turf(source)
+
 	// don't play if the sound is happening nowhere
-	if (!source || !source.loc || source.z <= 0)
+	if (isnull(source_turf))
 		return
 
 	EARLY_RETURN_IF_QUIET(vol)
@@ -133,7 +135,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 	var/spaced_source = 0
 	var/spaced_env = 0
-	var/atten_temp = attenuate_for_location(source)
+	var/atten_temp = attenuate_for_location(source_turf)
 	SOURCE_ATTEN(atten_temp)
 	//message_admins("volume: [vol]")
 	EARLY_RETURN_IF_QUIET(vol)
@@ -147,7 +149,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	var/scaled_dist
 	var/storedVolume
 
-	for (var/mob/M in GET_NEARBY(source,MAX_SOUND_RANGE + extrarange))
+	for (var/mob/M in GET_NEARBY(source_turf, MAX_SOUND_RANGE + extrarange))
 		var/client/C = M.client
 		if (!C)
 			continue
@@ -161,7 +163,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 			continue
 
 		//Hard attentuation
-		dist = max(GET_MANHATTAN_DIST(Mloc, source), 1)
+		dist = max(GET_MANHATTAN_DIST(Mloc, source_turf), 1)
 		if (dist > MAX_SOUND_RANGE + extrarange)
 			continue
 
@@ -223,8 +225,8 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 					//boutput(M, "You hear a [source] at [source_location]!")
 					S.echo = ECHO_CLOSE
 
-			S.x = source.x - Mloc.x
-			S.z = source.y - Mloc.y //Since sound coordinates are 3D, z for sound falls on y for the map.  BYOND.
+			S.x = source_turf.x - Mloc.x
+			S.z = source_turf.y - Mloc.y //Since sound coordinates are 3D, z for sound falls on y for the map.  BYOND.
 			S.y = 0
 
 			C << S
@@ -238,11 +240,13 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	if (!limiter || !limiter.canISpawn(/sound))
 		return
 
+	var/turf/source_turf = get_turf(source)
+
 	// don't play if the sound is happening nowhere
-	if (!source || !source.loc)
+	if (isnull(source_turf))
 		return
 
-	var/dist = max(GET_MANHATTAN_DIST(get_turf(src), get_turf(source)), 1)
+	var/dist = max(GET_MANHATTAN_DIST(get_turf(src), source_turf), 1)
 	if (dist > MAX_SOUND_RANGE + extrarange)
 		return
 
@@ -286,7 +290,6 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 			S.environment = SPACED_ENV
 			S.echo = SPACED_ECHO
 
-		var/turf/source_turf = get_turf(source)
 		if (istype(source_turf))
 			var/dx = source_turf.x - src.x
 			S.pan = max(-100, min(100, dx/8.0 * 100))

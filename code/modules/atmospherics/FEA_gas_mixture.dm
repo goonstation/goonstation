@@ -136,7 +136,8 @@ What are the archived variables for?
 		// has already been asserted above instead of utilizing get_trace_gas_by_type()
 		var/datum/gas/sleeping_agent = src.trace_gas_refs[/datum/gas/sleeping_agent]
 		var/datum/gas/rad_particles = src.trace_gas_refs[/datum/gas/rad_particles]
-		UPDATE_GAS_MIXTURE_GRAPHIC(graphic, GAS_IMG_N2O, sleeping_agent?.moles + rad_particles?.moles)
+		UPDATE_GAS_MIXTURE_GRAPHIC(graphic, GAS_IMG_N2O, sleeping_agent?.moles)
+		UPDATE_GAS_MIXTURE_GRAPHIC(graphic, GAS_IMG_RAD, rad_particles?.moles)
 	. = graphic != graphic_archived
 	graphic_archived = graphic
 

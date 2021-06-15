@@ -1991,6 +1991,8 @@ var/list/fun_images = list()
 			C.cmd_admin_delete(A)
 		if("Copy Here")
 			semi_deep_copy(A, src.loc)
+		if("Ship to Cargo")
+			C.cmd_admin_ship_movable_to_cargo(A)
 
 		if("Player Options")
 			C.cmd_admin_playeropt(A)

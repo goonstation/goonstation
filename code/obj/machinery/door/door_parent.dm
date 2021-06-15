@@ -563,7 +563,7 @@
 			for(var/mob/living/L in get_turf(src))
 				var/mob_layer = L.layer	//Make it look like we're inside the door
 				L.layer = src.layer - 0.01
-				playsound(get_turf(src), 'sound/impact_sounds/Flesh_Break_1.ogg', 100, 1)
+				playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 100, 1)
 				L.emote("scream")
 
 				L.TakeDamageAccountArmor("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
@@ -822,20 +822,20 @@
 			return
 		if (prob(5) || (!the_door.simple_lock && prob(5)))
 			owner.visible_message("<span class='alert'>[owner] messes up while picking [the_door]'s lock!</span>")
-			playsound(get_turf(the_door), "sound/items/Screwdriver2.ogg", 50, 1)
+			playsound(the_door, "sound/items/Screwdriver2.ogg", 50, 1)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
 		owner.visible_message("<span class='alert'>[owner] begins picking [the_door]'s lock!</span>")
-		playsound(get_turf(the_door), "sound/items/Screwdriver2.ogg", 50, 1)
+		playsound(the_door, "sound/items/Screwdriver2.ogg", 50, 1)
 
 	onEnd()
 		..()
 		the_door.locked = 0
 		owner.visible_message("<span class='alert'>[owner] jimmies [the_door]'s lock open!</span>")
-		playsound(get_turf(the_door), "sound/items/Screwdriver2.ogg", 50, 1)
+		playsound(the_door, "sound/items/Screwdriver2.ogg", 50, 1)
 
 /obj/machinery/door/unpowered/bulkhead
 	name = "bulkhead door"

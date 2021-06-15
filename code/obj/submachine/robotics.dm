@@ -117,7 +117,7 @@
 						loadAmount = loadAmount + src.max_ammo - (src.metal_ammo + loadAmount)
 					src.metal_ammo += loadAmount
 					S.change_stack_amount(-loadAmount)
-					playsound(get_turf(src), "sound/machines/click.ogg", 25, 1)
+					playsound(src, "sound/machines/click.ogg", 25, 1)
 					src.inventory_counter.update_number(src.metal_ammo)
 					boutput(user, "You load the metal sheet into the lamp manufacturer.")
 			else
@@ -126,7 +126,7 @@
 			..()
 
 /obj/item/robot_chemaster
-	name = "mini-ChemMaster"
+	name = "mini-CheMaster"
 	desc = "A cybernetic tool designed for chemistry cyborgs to do their work with. Use a beaker on it to begin."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "minichem"
@@ -141,15 +141,15 @@
 			boutput(user, "<span class='alert'>That beaker is empty! There are no reagents for the [src.name] to process!</span>")
 			return
 		if (working)
-			boutput(user, "<span class='alert'>Chemmaster is working, be patient</span>")
+			boutput(user, "<span class='alert'>CheMaster is working, be patient</span>")
 			return
 
 		working = 1
 		var/holder = src.loc
-		var/the_reagent = input("Which reagent do you want to manipulate?","Mini-ChemMaster",null,null) in B.reagents.reagent_list
+		var/the_reagent = input("Which reagent do you want to manipulate?","Mini-CheMaster",null,null) in B.reagents.reagent_list
 		if (src.loc != holder || !the_reagent)
 			return
-		var/action = input("What do you want to do with the [the_reagent]?","Mini-ChemMaster",null,null) in list("Isolate","Purge","Remove One Unit","Remove Five Units","Create Pill","Create Pill Bottle","Create Bottle","Create Patch","Create Ampoule","Do Nothing")
+		var/action = input("What do you want to do with the [the_reagent]?","Mini-CheMaster",null,null) in list("Isolate","Purge","Remove One Unit","Remove Five Units","Create Pill","Create Pill Bottle","Create Bottle","Create Patch","Create Ampoule","Do Nothing")
 		if (src.loc != holder || !action || action == "Do Nothing")
 			working = 0
 			return
@@ -287,7 +287,7 @@
 				if ("Cola")
 					new /obj/item/reagent_containers/food/drinks/cola(get_turf(src))
 				if ("Water")
-					new /obj/item/reagent_containers/food/drinks/bottle/bottledwater(get_turf(src))
+					new /obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater(get_turf(src))
 				else
 					user.show_text("<b>ERROR</b> - Invalid item! Resetting...", "red")
 					logTheThing("debug", user, null, "<b>Convair880</b>: [user]'s food synthesizer was set to an invalid value.")
@@ -486,7 +486,7 @@ ported and crapped up by: haine
 
 			var/trans = src.active_tank.reagents.trans_to(target, amt_to_transfer)
 			user.show_text("You transfer [trans] unit\s of the solution to [target]. [active_tank.reagents.total_volume] unit\s remain.", "blue")
-			playsound(loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 0) // Play a sound effect.
+			playsound(loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 0) // Play a sound effect.
 			processing_items |= src
 		else
 			return ..() // call your parents!!

@@ -106,7 +106,7 @@
 		//spatial interdictor: when something would enter a wormhole, it doesn't
 		//consumes 400 units of charge per wormhole interdicted
 		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-			if (IN_RANGE(IX,src,INTERDICT_RANGE) && IX.expend_interdict(400))
+			if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(400))
 				icon = 'icons/effects/effects.dmi'
 				icon_state = "sparks_attack"
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)

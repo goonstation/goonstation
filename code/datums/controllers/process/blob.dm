@@ -1,12 +1,13 @@
-//Handles blobs without being pissy about it
-datum/controller/process/blob
+
+/// Handles blobs without being pissy about it
+/datum/controller/process/blob
 	var/list/blobs = list()
 
 	var/tmp/list/detailed_count
 
 	setup()
 		name = "Blob"
-		schedule_interval = 31 // 3.1 SECOND
+		schedule_interval = 3.1 SECONDS
 
 		detailed_count = new
 

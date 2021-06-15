@@ -306,7 +306,7 @@ var/mutable_appearance/fluid_ma
 		if (src.pooled) return
 
 		if (sfx)
-			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 1)
+			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 
 		if (src.group)
 			if (!src.group.remove(src))
@@ -752,7 +752,7 @@ var/mutable_appearance/fluid_ma
 						"<span class='alert'>You slip on [F]!</span>")
 				if(-1) //space lube. this code bit is shit but i'm too lazy to make it Real right now. the proper implementation should also make exceptions for ice and stuff.
 					src.pulling = null
-					src.changeStatus("weakened", 35)
+					src.changeStatus("weakened", 3.5 SECONDS)
 					boutput(src, "<span class='notice'>You slipped on [F]!</span>")
 					playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
 					var/atom/target = get_edge_target_turf(src, src.dir)

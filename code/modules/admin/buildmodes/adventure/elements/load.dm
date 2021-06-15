@@ -46,6 +46,7 @@
 				// fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck
 				// fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck
 				if (!target)
+					pasting = 0
 					return
 				var/savefile/F = new /savefile("adventure/ADV_LOAD_[user.client.ckey]")
 				// fuck you

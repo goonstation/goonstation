@@ -27,14 +27,15 @@
 		if(A.type_name == src.artifactType)
 			lastAnalysis++
 
-		// check if trigger is one of the correct ones
-		for(var/datum/artifact_trigger/T as anything in A.triggers)
-			if(T.type_name == src.artifactTriggers)
-				lastAnalysis++
-				break
-		// if a trigger would e redundant, let's just say it's cool!
-		if(!length(A.triggers) || A.automatic_activation)
+		// if a trigger would be redundant, let's just say it's cool!
+		if(A.automatic_activation)
 			lastAnalysis++
+		else
+			// check if trigger is one of the correct ones
+			for(var/datum/artifact_trigger/T as anything in A.triggers)
+				if(T.type_name == src.artifactTriggers)
+					lastAnalysis++
+					break
 
 		// ok, let's make a name
 		// start with obscured name
@@ -58,10 +59,12 @@
 		O.UpdateName()
 
 	attack_hand(mob/user)
-		user.lastattacked = src.attached
-		if(src.attached)
+		var/obj/attachedobj = src.attached
+		if(istype(attachedobj) && attachedobj.artifact) // touch artifact we are attached to
 			src.attached.attack_hand(user)
-			user.lastattacked = src.attached
+			user.lastattacked = user
+		else // do sticker things
+			..()
 
 	stick_to(atom/A, pox, poy)
 		. = ..()
@@ -69,16 +72,20 @@
 			checkArtifactVars(A)
 
 	attackby(obj/item/W, mob/living/user)
-		if(istype(W, /obj/item/pen))
+		if(istype(W, /obj/item/pen)) // write on it
 			ui_interact(user)
-		else if((iscuttingtool(W) || issnippingtool(W)) && user.a_intent == INTENT_HELP)
+		else if((iscuttingtool(W) || issnippingtool(W)) && user.a_intent == INTENT_HELP && src.attached) // remove attached paper from artifact
 			boutput(user, "You manage to scrape \the [src] off of \the [src.attached].")
 			src.remove_from_attached()
 			src.add_fingerprint(user)
 			user.put_in_hand_or_drop(src)
-		else if (src.attached)
-			src.attached.attackby(W, user)
-			user.lastattacked = user
+		else
+			var/obj/attachedobj = src.attached
+			if(istype(attachedobj) && attachedobj.artifact) // hit artifact we are attached to
+				src.attached.attackby(W, user)
+				user.lastattacked = user
+			else // just sticker things
+				..()
 
 	get_desc()
 		. = src.artifactType!=""?"This one seems to be describing a [src.artifactType] type artifact.":""

@@ -2243,7 +2243,7 @@
 "fb" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/bed,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /obj/landmark/start{
 	name = "Clown"
 	},
@@ -5569,10 +5569,10 @@
 	},
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "lH" = (
@@ -6018,7 +6018,7 @@
 /area/station/medical/cdc)
 "mD" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/hemostat,
 /obj/item/suture,
 /turf/simulated/floor/white,

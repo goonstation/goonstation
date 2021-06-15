@@ -141,10 +141,10 @@
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.changeStatus("radiation", 50, 2)
+			L.changeStatus("radiation", 5 SECONDS, 2)
 
 	onExcavate(var/turf/simulated/wall/asteroid/AST)
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.changeStatus("radiation", 100, 2)
+			L.changeStatus("radiation", 10 SECONDS, 2)

@@ -94,7 +94,14 @@
 			SPAWN_DBG(1 DECI SECOND)
 				O.attack_hand(user)
 		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored)
-			src.attackby(O, user, O.loc)
+			user.swap_hand()
+			if(user.equipped() == null)
+				O.attack_hand(user)
+				if(O in user.equipped_list())
+					src.attackby(O, user, O.loc)
+			else
+				boutput(user, __blue("Your hands are full!"))
+			user.swap_hand()
 
 	//failure returns 0 or lower for diff messages - sorry
 	proc/check_can_hold(obj/item/W)
@@ -380,7 +387,7 @@
 			if (src.id && K.id == src.id)
 				src.locked = !src.locked
 				user.visible_message("[user] [!src.locked ? "un" : null]locks [src].")
-				playsound(get_turf(src), "sound/items/Screwdriver2.ogg", 50, 1)
+				playsound(src, "sound/items/Screwdriver2.ogg", 50, 1)
 			else
 				boutput(user, "<span class='alert'>[K] doesn't seem to fit in [src]'s lock.</span>")
 			return

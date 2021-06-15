@@ -758,7 +758,7 @@ SYNDICATE DRONE FACTORY AREAS
 				if(prob(15))
 					active = 1
 					SPAWN_DBG(5 SECONDS) active = 0
-					playsound(get_turf(AM), pick('sound/effects/thunder.ogg','sound/ambience/nature/Rain_ThunderDistant.ogg'), 75, 1)
+					playsound(AM, pick('sound/effects/thunder.ogg','sound/ambience/nature/Rain_ThunderDistant.ogg'), 75, 1)
 
 					for(var/mob/M in view(src, 5))
 						M.flash(3 SECONDS)
