@@ -1426,8 +1426,7 @@
 	icon_state = "rand_mask"
 	min_amt2spawn = 5
 	max_amt2spawn = 10
-	items2spawn = list(/obj/item/clothing/mask/hunter,
-						/obj/item/clothing/mask/owl_mask,
+	items2spawn = list(/obj/item/clothing/mask/owl_mask,
 						/obj/item/clothing/mask/smile,
 						/obj/item/clothing/mask/batman,
 						/obj/item/clothing/mask/clown_hat,
