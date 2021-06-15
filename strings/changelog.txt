@@ -1,5 +1,9 @@
 
 (t)tue jun 15 21
+(u)UnfunnyPerson
+(p)5156
+(e)|
+(+)You can no longer become a werewolf through mutini.
 (u)DimWhat
 (p)5129
 (e)🎨|sprites
