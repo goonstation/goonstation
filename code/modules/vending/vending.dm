@@ -60,7 +60,7 @@
 	var/list/product_list = new() //List of datum/data/vending_product
 	var/glitchy_slogans = 0 // do they come out aLL FunKY lIKe THIs?
 	/// For player vending machines
-	var/player_list 
+	var/player_list
 	//Replies when buying
 	var/vend_reply //Thank you for shopping!
 	var/last_reply = 0
@@ -1767,20 +1767,20 @@
 			if (!wrenched)
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
-				list("WRENCHED", user), target.icon, target.icon_state, null)
+				list("WRENCHED", user), target.icon, target.icon_state, null, null)
 			else if (!boardinstalled && wrenched)
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
-				list("UNWRENCHED", user), target.icon, target.icon_state, null)
+				list("UNWRENCHED", user), target.icon, target.icon_state, null, null)
 		else if (istype(target, /obj/item/machineboard/vending))
 			if (wrenched && !boardinstalled)
 				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
-				list("BOARDINSTALLED", user, target), target.icon, target.icon_state, null)
+				list("BOARDINSTALLED", user, target), target.icon, target.icon_state, null, null)
 		else if (istype(target, /obj/item/cable_coil) && boardinstalled && !wiresinstalled)
 			var/obj/item/cable_coil/targetcoil = target
 			if (targetcoil.amount >= 5)
 				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
-				list("WIRESINSTALLED", user, target), target.icon, target.icon_state, null)
+				list("WIRESINSTALLED", user, target), target.icon, target.icon_state, null, null)
 			else if (!wiresinstalled && boardinstalled)
 				boutput(user, "<span class='alert'>You need at least five pieces of cable to wire the vending machine.</span>")
 		else if (istype(target, /obj/item/sheet) && wiresinstalled && !glassed)
@@ -1804,7 +1804,7 @@
 			var/obj/item/weldingtool/T = target
 			if (T.try_weld(user,0,-1,0,1))
 				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
-				list("DECONSTRUCTED", user, target), target.icon, target.icon_state, null)
+				list("DECONSTRUCTED", user, target), target.icon, target.icon_state, null, null)
 		else . = ..()
 
 /obj/machinery/vending/player
