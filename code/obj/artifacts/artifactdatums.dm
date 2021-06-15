@@ -24,6 +24,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 
 	var/activated = 0            // Is the artifact currently switched on?
 	var/automatic_activation = 0 // Does the artifact switch itself on on spawn?
+	var/no_activation = FALSE	 // Does the artifact not need activation? (for instance, reagent containers)
 	var/activ_sound = null       // What noise the artifact makes when it activates
 	var/activ_text = null        // What message the artifact transmits when it activates
 	var/deact_sound = null       // Guess.
