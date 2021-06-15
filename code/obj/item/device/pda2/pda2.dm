@@ -620,12 +620,17 @@
 		. += "[ID_card] has been inserted into it."
 
 /obj/item/device/pda2/receive_signal(datum/signal/signal, rx_method, rx_freq)
-	if(!signal || signal.encryption || !src.owner) return
+
+	//let programs receive encrypted signals
+	if(!signal || !src.owner) return
 
 	src.host_program?.network_hook(signal, rx_method, rx_freq)
 
 	if(src.active_program && (src.active_program != src.host_program))
 		src.active_program.network_hook(signal, rx_method, rx_freq)
+
+	if(signal.encryption) return
+
 
 
 	if(signal.data["address_1"] && signal.data["address_1"] != src.net_id)
