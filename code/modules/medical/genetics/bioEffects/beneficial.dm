@@ -293,6 +293,7 @@
 	msgLose = "You feel more comfortable in your own skin."
 	heal_per_tick = 2
 	regrow_prob = 50
+	acceptable_in_mutini = 0 // fun is banned
 
 	OnAdd()
 		. = ..()
