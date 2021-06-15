@@ -15,10 +15,15 @@ var/datum/preMapLoad/preMapLoad = new
 #define DEBUG
 // END_PREFERENCES
 
-//Standard Library Inclusions
+// Compatibility Check
+#include "_std\compatibility.dm"
+// Compatibility START
+#ifdef BYOND_VERSION_OK
+
+// Standard Library Inclusions
 #include "_std\__std.dme"
 
-//Secret Code Handling
+// Secret Code Handling
 #ifndef FASTDMM
 #include "+secret\__secret.dme"
 #endif
@@ -1797,6 +1802,5 @@ var/datum/preMapLoad/preMapLoad = new
 #include "+secret\_secretAfter.dme"
 #endif
 
-#ifdef INCLUDE_BUGGY_LUA_SHIT
-#include "code\WorkInProgress\LuaJIT.dm"
+// Compatibility END
 #endif
