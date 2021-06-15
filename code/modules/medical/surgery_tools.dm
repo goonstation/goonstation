@@ -358,6 +358,7 @@ CONTAINS:
 	icon_state = "defib-on"
 	item_state = "defib"
 	pickup_sfx = "sound/items/pickup_defib.ogg"
+	w_class = W_CLASS_TINY
 	var/icon_base = "defib"
 	var/charged = 1
 	var/charge_time = 100
