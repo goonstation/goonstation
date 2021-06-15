@@ -31554,14 +31554,12 @@
 /area/station/security/detectives_office)
 "bAi" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
-/obj/machinery/door/airlock/pyro/security/alt{
-	id = "detoffice";
-	name = "Detective's Office"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/security,
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Detective's Office"
+	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "bAj" = (
@@ -33695,6 +33693,9 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment,
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
 /turf/simulated/floor/carpet/red/standard/edge/south,
 /area/station/security/detectives_office)
 "bFL" = (
@@ -35969,11 +35970,6 @@
 	desc = "The VR representation of a security software package.";
 	require_login = 0;
 	screen = 1
-	},
-/obj/machinery/door_control{
-	id = "detoffice";
-	pixel_x = 24;
-	req_access = list(1)
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
