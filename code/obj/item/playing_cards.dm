@@ -386,7 +386,10 @@
 			update_card_actions("handself")
 			user.showContextActions(cardActions, src)
 		else //attack_self with deck to shuffle
-			shuffle_list(stored_cards)
+			if (length(stored_cards) < 11)
+				shuffle_list(stored_cards)
+			else
+				riffle_shuffle(stored_cards)
 			user.visible_message("<b>[user.name]</b> shuffles the [src.name].")
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -524,12 +527,6 @@
 		else
 			group.is_hand = FALSE
 		if(istype(from,/obj/item/playing_card))
-		/*
-		This is where that bug was coming from
-		Breakpoints are your friend
-		The F var from the first group overrode the second group
-		So the code made F#1 which doesn't get checked on the else if since that's still just F
-		*/
 			var/obj/item/playing_card/FA = from
 			group.total_cards = FA.total_cards
 			group.card_style = FA.card_style
@@ -1208,6 +1205,7 @@
 // Why? Fuck it, I have no idea.
 proc/riffle_shuffle(list/deck)
 	// Determines a location near the center of the deck to split from.
+  
 	var/splitLoc = (deck.len / 2) + rand(-(deck.len) / 5, deck.len / 5)
 
 	// Makes two lists, one for each half of the deck, then clears the original deck.
