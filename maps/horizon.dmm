@@ -6923,7 +6923,7 @@
 /obj/grille/steel,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/medical/dome)
 "asA" = (
 /turf/space,
 /area/shuttle/escape/station/cogmap2)
@@ -7171,7 +7171,7 @@
 /obj/machinery/computer/genetics,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/green,
-/area/space)
+/area/station/medical/dome)
 "ato" = (
 /turf/simulated/floor/purpleblack{
 	dir = 5
@@ -7380,7 +7380,7 @@
 /obj/machinery/genetics_scanner,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/green,
-/area/space)
+/area/station/medical/dome)
 "atR" = (
 /obj/item/storage/toilet,
 /obj/decal/cleanable/dirt/dirt2,
@@ -8856,7 +8856,8 @@
 /area/station/medical/dome)
 "axs" = (
 /obj/machinery/door/airlock/pyro/glass{
-	name = "Chimpnasium"
+	name = "Chimpnasium";
+	req_access = list(9)
 	},
 /obj/access_spawn/medical,
 /turf/simulated/floor/black,
@@ -10185,7 +10186,7 @@
 /obj/item/aiModule/makeCaptain,
 /obj/random_item_spawner/ai_experimental,
 /turf/simulated/floor/darkblue/checker,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload)
 "aBe" = (
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -11535,15 +11536,6 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/east)
-"aEB" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/table/reinforced/auto,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating/random,
-/area/station/storage/tools)
 "aEC" = (
 /obj/table/reinforced/auto,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/northeast,
@@ -11962,7 +11954,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
-/area/station/hallway/secondary/north)
+/area/station/maintenance/northeast)
 "aFN" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southeast,
 /obj/disposalpipe/segment/morgue{
@@ -12007,7 +11999,7 @@
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 4
 	},
-/area/station/medical/medbay)
+/area/station/maintenance/northeast)
 "aFT" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -12018,7 +12010,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/medical/medbay/lobby)
+/area/station/maintenance/northeast)
 "aFU" = (
 /obj/decal/poster/wallsign/stencil/left/s,
 /obj/decal/poster/wallsign/stencil/right/e,
@@ -12447,7 +12439,7 @@
 /obj/table/reinforced/auto,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/random,
-/area/station/hallway/secondary/east)
+/area/station/maintenance/east)
 "aHa" = (
 /obj/morgue{
 	dir = 2
@@ -12812,11 +12804,13 @@
 /area/station/maintenance/northeast)
 "aHN" = (
 /obj/machinery/door/airlock/pyro/maintenance{
-	req_access = list(5)
+	req_access = list(9)
 	},
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
+/area/station/medical/research{
+	name = "Genetic Research"
+	})
 "aHO" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/emergency,
@@ -12850,7 +12844,7 @@
 	},
 /obj/decal/poster/wallsign/escape_right,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload)
 "aHT" = (
 /obj/decal/poster/wallsign/escape_right,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -13474,7 +13468,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/hallway/secondary/exit)
+/area/station/maintenance/south)
 "aJw" = (
 /obj/machinery/ore_cloud_storage_container,
 /obj/decal/cleanable/dirt,
@@ -15450,7 +15444,7 @@
 /area/station/storage/tech)
 "aOl" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload_foyer)
 "aOm" = (
 /obj/cable{
 	d1 = 1;
@@ -16552,9 +16546,7 @@
 /obj/machinery/power/apc/autoname_north,
 /obj/machinery/computer3/luggable,
 /turf/simulated/floor/plating/random,
-/area/station/crew_quarters/info{
-	name = "Net Cafe"
-	})
+/area/station/storage/tech)
 "aQH" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -16605,14 +16597,14 @@
 	tag = ""
 	},
 /turf/simulated/floor/airless/circuit/green,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload_foyer)
 "aQM" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/airless/circuit/green,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload_foyer)
 "aQN" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -16626,7 +16618,7 @@
 	text = "NF"
 	},
 /turf/simulated/floor/airless/circuit/green,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload_foyer)
 "aQO" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -16634,7 +16626,7 @@
 	},
 /obj/machinery/computer3/terminal/zeta,
 /turf/simulated/floor/airless/circuit/green,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload_foyer)
 "aQP" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -16642,7 +16634,7 @@
 	},
 /obj/machinery/networked/radio,
 /turf/simulated/floor/airless/circuit/green,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload_foyer)
 "aQQ" = (
 /obj/shrub{
 	dir = 10
@@ -18005,7 +17997,7 @@
 /obj/item/disk/data/floppy/read_only/network_progs,
 /obj/item/disk/data/floppy/read_only/research_progs,
 /turf/simulated/floor/airless/circuit/green,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload_foyer)
 "aTH" = (
 /obj/machinery/computer3/generic/med_data,
 /obj/machinery/power/data_terminal,
@@ -18047,7 +18039,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload_foyer)
 "aTJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -18068,7 +18060,7 @@
 /obj/item/disk/data/floppy/read_only/security_progs,
 /obj/item/disk/data/floppy/read_only/terminal_os,
 /turf/simulated/floor/airless/circuit/green,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload_foyer)
 "aTL" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -18820,7 +18812,7 @@
 /area/station/mining/staff_room)
 "aVx" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hallway/secondary/north)
+/area/station/turret_protected/ai_upload)
 "aVy" = (
 /obj/lattice,
 /obj/cable{
@@ -19352,7 +19344,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/airless/circuit/green,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload_foyer)
 "aWH" = (
 /obj/decal/tile_edge/line/green{
 	dir = 8;
@@ -19362,7 +19354,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload_foyer)
 "aWI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19371,7 +19363,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload_foyer)
 "aWJ" = (
 /obj/decal/tile_edge/line/green{
 	dir = 8;
@@ -19385,7 +19377,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload_foyer)
 "aWK" = (
 /obj/machinery/turret{
 	dir = 9
@@ -19394,7 +19386,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/airless/circuit/green,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload_foyer)
 "aWL" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -19951,9 +19943,6 @@
 "aXN" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/surgery)
-"aXO" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/medbay/lobby)
 "aXP" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/teleporter)
@@ -20136,7 +20125,7 @@
 "aYm" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/vertical,
 /turf/simulated/wall/auto/supernorn,
-/area/station/hallway/secondary/exit)
+/area/station/crew_quarters/pool)
 "aYn" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -20856,7 +20845,7 @@
 /obj/grille/steel,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload_foyer)
 "aZZ" = (
 /obj/cable{
 	d1 = 4;
@@ -20866,7 +20855,7 @@
 /obj/grille/steel,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload_foyer)
 "baa" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -20879,7 +20868,7 @@
 /obj/grille/steel,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload_foyer)
 "bab" = (
 /obj/machinery/door/airlock/pyro/glass/command{
 	name = "Core"
@@ -20887,12 +20876,12 @@
 /obj/machinery/door/firedoor/pyro,
 /obj/access_spawn/heads,
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload)
 "bac" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload_foyer)
 "bad" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -22229,14 +22218,14 @@
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload)
 "bcR" = (
 /obj/item/device/radio/intercom/AI,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload)
 "bcS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -22248,10 +22237,10 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload)
 "bcT" = (
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload)
 "bcU" = (
 /obj/table/auto,
 /obj/item/aiModule/freeform,
@@ -22260,7 +22249,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload)
 "bcV" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -23430,13 +23419,13 @@
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload)
 "bfR" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload)
 "bfS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -23453,7 +23442,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload)
 "bfT" = (
 /obj/cable{
 	d1 = 4;
@@ -23465,7 +23454,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload)
 "bfU" = (
 /obj/cable{
 	d1 = 4;
@@ -23478,7 +23467,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload)
 "bfV" = (
 /obj/cable{
 	d1 = 4;
@@ -23494,7 +23483,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/darkblue/checker,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload)
 "bfW" = (
 /obj/cable{
 	d1 = 4;
@@ -23521,7 +23510,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/darkblue/checker,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload)
 "bfX" = (
 /obj/machinery/turretid{
 	layer = 9.1;
@@ -23536,7 +23525,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/darkblue/checker,
-/area/station/turret_protected/Zeta)
+/area/station/bridge)
 "bfY" = (
 /obj/machinery/light{
 	dir = 1;
@@ -24779,7 +24768,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 10
 	},
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload)
 "biQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -24788,7 +24777,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/blueblack,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload)
 "biR" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -24802,14 +24791,14 @@
 	dir = 4
 	},
 /turf/simulated/floor/blueblack,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload)
 "biS" = (
 /obj/disposalpipe/segment/transport{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/blueblack,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload)
 "biT" = (
 /obj/table/auto,
 /obj/item/aiModule/oneHuman,
@@ -24819,7 +24808,7 @@
 /turf/simulated/floor/blueblack{
 	dir = 6
 	},
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload)
 "biU" = (
 /obj/machinery/atmospherics/valve,
 /obj/disposalpipe/segment{
@@ -26053,7 +26042,7 @@
 "blJ" = (
 /obj/decal/poster/wallsign/medbay_right,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload)
 "blK" = (
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
@@ -31105,7 +31094,7 @@
 	},
 /mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload_foyer)
 "bzc" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
 /obj/machinery/light{
@@ -33521,7 +33510,7 @@
 	},
 /mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/black,
-/area/station/turret_protected/Zeta)
+/area/station/turret_protected/ai_upload_foyer)
 "bFl" = (
 /obj/machinery/light{
 	dir = 1;
@@ -33690,9 +33679,6 @@
 /area/station/security/detectives_office)
 "bFK" = (
 /obj/stool/chair/red,
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -58761,7 +58747,8 @@
 	},
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8;
-	name = "Chimpnasium"
+	name = "Chimpnasium";
+	req_access = list(9)
 	},
 /obj/access_spawn/pathology,
 /turf/simulated/floor/white,
@@ -103544,7 +103531,7 @@ aZY
 bcQ
 bfQ
 biP
-aOl
+aVx
 bov
 bwi
 ePs
@@ -103846,7 +103833,7 @@ aZZ
 bcR
 bfR
 biQ
-aOl
+aVx
 bow
 bwk
 ePs
@@ -104450,7 +104437,7 @@ bab
 bcT
 bfT
 biS
-aOl
+aVx
 boy
 bwk
 ePs
@@ -105054,7 +105041,7 @@ aMf
 aMf
 bfV
 aBd
-aOl
+aVx
 boA
 bwk
 ePs
@@ -105355,8 +105342,8 @@ aWL
 bad
 aMf
 bfW
-aOl
-aOl
+aVx
+aVx
 boB
 bwg
 ePs
@@ -118328,7 +118315,7 @@ aaa
 aaa
 aaa
 aaa
-aVx
+aCg
 aFM
 aHl
 aAZ
@@ -121650,7 +121637,7 @@ aaa
 aaa
 aaa
 aaa
-aIO
+aCg
 aFS
 aHv
 aIO
@@ -121952,7 +121939,7 @@ aaa
 aaa
 aaa
 aaa
-aXO
+aCg
 aFT
 aHw
 aIO
@@ -131913,8 +131900,8 @@ aaa
 aaa
 aaa
 aaa
-asp
-aEB
+arH
+aGZ
 aBx
 asv
 aFi
@@ -132215,7 +132202,7 @@ aaa
 aaa
 aaa
 aaa
-aHQ
+arH
 aGZ
 aBy
 aVS
