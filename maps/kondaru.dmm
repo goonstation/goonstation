@@ -10337,11 +10337,9 @@
 	},
 /area/station/security/detectives_office)
 "aBL" = (
-/obj/machinery/door/airlock/pyro/security{
+/obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
-	id = "det_entry";
-	name = "Detective's Office";
-	req_access = null
+	name = "Detective's Office"
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
@@ -10349,7 +10347,6 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/obj/access_spawn/forensics,
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "aBM" = (
