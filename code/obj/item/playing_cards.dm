@@ -127,9 +127,10 @@
 		stored_info = list(name,desc,icon_state)
 
 	proc/flip()
+		tooltip_rebuild = 1 //makes sure the card tooltips get updated everytime
 		if(!facedown)
 			name = "playing card"
-			desc = "a face-down card."
+			desc = "A face-down card."
 			icon_state = "[card_style]-back"
 			facedown = TRUE
 		else
@@ -164,9 +165,9 @@
 		cardActions = list()
 		if(card_outside)
 			cardActions += new /datum/contextAction/card/solitaire
-		cardActions += new /datum/contextAction/card/fan
-		cardActions += new /datum/contextAction/card/stack
-		cardActions += new /datum/contextAction/card/close
+			cardActions += new /datum/contextAction/card/fan
+			cardActions += new /datum/contextAction/card/stack
+			cardActions += new /datum/contextAction/card/close
 
 	proc/deck_or_hand(var/mob/user,var/is_hand) //used by context actions to handle creating a hand or deck of cards
 		if(!istype(user.equipped(),/obj/item/playing_card))
@@ -324,31 +325,31 @@
 	proc/add_foil() //makes the card shiiiiiny
 		UpdateOverlays(image(icon,"stg-foil"),"foil")
 		foiled = TRUE
-		name = "foil [name]"
+		name = "Foil [name]"
 
 /obj/item/playing_card/expensive //(¬‿¬)
-    desc = "Tap this card and sacrifice one Yourself to win the game."
-    icon_state = "stg-general-0"
-    var/list/prefix1 = list("Incredibly", "Strange", "Mysterious", "Suspicious", "Scary")
-    var/list/prefix2 = list("Rare", "Black", "Dark", "Shadowy", "Expensive", "Fun", "Gamer")
-    var/list/names = list("Flower", "Blossom", "Tulip", "Daisy")
+	desc = "Tap this card and sacrifice one of yourselves to win the game."
+	icon_state = "stg-general-0"
+	var/list/prefix1 = list("Incredibly", "Strange", "Mysterious", "Suspicious", "Scary")
+	var/list/prefix2 = list("Rare", "Black", "Dark", "Shadowy", "Expensive", "Fun", "Gamer")
+	var/list/names = list("Flower", "Blossom", "Tulip", "Daisy")
 
-    New()
-        ..()
-        name = "[pick(prefix1)] [pick(prefix2)] [pick(names)]"
-        update_stored_info()
+	New()
+		..()
+		name = "[pick(prefix1)] [pick(prefix2)] [pick(names)]"
+		update_stored_info()
 
-    MouseDrop(var/atom/target as obj|mob)
-        ..()
-        if(tapped)
-            var/mob/user = usr
-            user.deathConfetti()
-            playsound(user.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50)
-            user.visible_message("<span class='combat'><b>[uppertext(user.name)] WINS THE GAME!</b></span>")
-            if(!foiled)
-                user.take_brain_damage(1000)
-            else
-                user.partygib(1)
+	MouseDrop(var/atom/target as obj|mob)
+		..()
+		if(tapped)
+			var/mob/user = usr
+			user.deathConfetti()
+			playsound(user.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50)
+			user.visible_message("<span class='combat'><b>[uppertext(user.name)] WINS THE GAME!</b></span>")
+			if(!foiled)
+				user.take_brain_damage(1000)
+			else
+				user.partygib(1)
 
 /obj/item/card_group //since "playing_card"s are singular cards, card_groups handling groups of playing_cards in the form of either a deck or hand
 	name = "deck of cards"
@@ -526,15 +527,15 @@
 		else
 			group.is_hand = FALSE
 		if(istype(from,/obj/item/playing_card))
-			var/obj/item/playing_card/F = from
-			group.total_cards = F.total_cards
-			group.card_style = F.card_style
-			group.card_name = F.card_name
+			var/obj/item/playing_card/FA = from
+			group.total_cards = FA.total_cards
+			group.card_style = FA.card_style
+			group.card_name = FA.card_name
 		else if(istype(from,/obj/item/card_group))
-			var/obj/item/card_group/F = from
-			group.total_cards = F.total_cards
-			group.card_style = F.card_style
-			group.card_name = F.card_name
+			var/obj/item/card_group/FB = from
+			group.total_cards = FB.total_cards
+			group.card_style = FB.card_style
+			group.card_name = FB.card_name
 
 	proc/update_card_actions(var/hitby) //generates card actions based on which interaction is causing the list to be updated
 		cardActions = list()
@@ -545,14 +546,15 @@
 			cardActions += new /datum/contextAction/card/bottomdeck
 			cardActions += new /datum/contextAction/card/close
 		//empty to deck
-		else if(hitby == "empty")
-			cardActions += new /datum/contextAction/card/draw
-			cardActions += new /datum/contextAction/card/draw_facedown
-			cardActions += new /datum/contextAction/card/draw_multiple
-			cardActions += new /datum/contextAction/card/search
+		else if(hitby == "empty") //reordered this a bit to prevent overdrawing and have the correct actions avaliable
+			cardActions += new /datum/contextAction/card/pickup
+			if(!(usr.find_in_hand(/obj/item/card_group)) || length(usr.contents.Find(/obj/item/card_group)) < max_hand_size)
+				cardActions += new /datum/contextAction/card/draw
+				cardActions += new /datum/contextAction/card/draw_facedown
+				cardActions += new /datum/contextAction/card/draw_multiple
+				cardActions += new /datum/contextAction/card/search
 			if(length(stored_cards) <= max_hand_size)
 				cardActions += new /datum/contextAction/card/fan
-			cardActions += new /datum/contextAction/card/pickup
 			cardActions += new /datum/contextAction/card/close
 		//hand to self
 		else if(hitby == "handself")
@@ -593,8 +595,8 @@
 			var/obj/item/card_group/hand = new /obj/item/card_group
 			update_group_information(hand,src,TRUE)
 			for(var/i in 1 to card_number)
-			hand.add_to_group(stored_cards[1])
-			stored_cards -= stored_cards[1]
+				hand.add_to_group(stored_cards[1])
+				stored_cards -= stored_cards[1]
 			hand.update_group_sprite()
 			user.put_in_hand_or_drop(hand)
 			user.visible_message("<b>[user.name]</b> draws [card_number] cards from the [src.name].")
@@ -688,7 +690,7 @@
 				continue
 			if(!H.mind)
 				continue
-				possible_humans += H
+			possible_humans += H
 		var/list/possible_borgos = list()
 		for(var/mob/living/silicon/robot/R in mobs)
 			possible_borgos += R
@@ -1114,20 +1116,17 @@
 				UpdateOverlays(image(icon,"stg-foil",-1,chosen_card.dir),"foil")
 
 	attack_self(mob/user as mob) //must cut open packaging before getting cards out
-		switch(icon_state)
-			if("stg-box")
-				user.show_text("You try to tear the packaging, but it's too strong! You'll need something to cut it...","red")
+		if(icon_state == "stg-box")
+			user.show_text("You try to tear the packaging, but it's too strong! You'll need something to cut it...","red")
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if((icon_state == "stg-box") && (istool(W,TOOL_CUTTING) || istool(W,TOOL_SNIPPING)))
 			if(loc != user)
 				user.show_text("You need to hold the box if you want enough leverage to rip it to pieces!","red")
 				return
-			else
+			else //dropping cards here means the user doesnt have to go through the entire action to get them
 				actions.start(new /datum/action/bar/private/stg_tear(user,src),user)
-				user.put_in_hand_or_drop(stored_deck)
-				stored_deck = null
-				ClearAllOverlays()
+				ClearAllOverlays() //is all good now :D
 		else
 			..()
 
@@ -1163,10 +1162,10 @@
 		if(card_box.icon_state == "stg-box")
 			user.visible_message("<span class='green'><b>[user.name]</b> has thoroughly mutilated the StG Preconstructed Deck Box and retrieves the cards from inside.</span>")
 			card_box.icon_state = "stg-box-torn"
+			user.put_in_hand_or_drop(card_box.stored_deck)
 			var/obj/decal/cleanable/generic/decal = make_cleanable(/obj/decal/cleanable/generic,get_turf(user.loc))
 			decal.color = pick("#000000","#6f0a0a","#a0621b")
 			card_box.stored_deck = null
-			user.put_in_hand_or_drop(card_box.stored_deck)
 			card_box.ClearAllOverlays()
 
 /obj/item/stg_booster
@@ -1206,12 +1205,13 @@
 // Why? Fuck it, I have no idea.
 proc/riffle_shuffle(list/deck)
 	// Determines a location near the center of the deck to split from.
-	var/splitLoc = (deck.len / 2) + rand(-deck.len / 5, deck.len / 5)
+  
+	var/splitLoc = (deck.len / 2) + rand(-(deck.len) / 5, deck.len / 5)
 
 	// Makes two lists, one for each half of the deck, then clears the original deck.
 	var/list/D1 = deck.Copy(1, splitLoc)
 	var/list/D2 = deck.Copy(splitLoc)
-	deck.len = 0 // Will this work?
+	del(deck)
 
 	// Markovian model of the shuffle
 	var/currentStack = rand() > 0.5

@@ -1391,7 +1391,7 @@
 /datum/mutantrace/ithillid
 	name = "ithillid"
 	icon_state = "squid"
-	jerk = 1
+	jerk = 0
 	override_attack = 0
 	aquatic = 1
 	voice_override = "blub"
@@ -1476,7 +1476,7 @@
 					mob.layer = target.layer - 0.01
 					mob.visible_message("[mob] hides under [target]!")
 
-	emote(var/act)
+	emote(var/act, var/voluntary)
 		. = null
 		var/muzzled = istype(mob.wear_mask, /obj/item/clothing/mask/muzzle)
 		switch(act)
@@ -1511,19 +1511,13 @@
 			if("jump")
 				. = "<B>[mob.name]</B> jumps!"
 			if ("scream")
-				if(mob.emote_allowed)
-					if(!(mob.client && mob.client.holder))
-						mob.emote_allowed = 0
-
+				if (mob.emote_check(voluntary, 50))
 					. = "<B>[mob]</B> screams!"
 					playsound(mob, src.sound_monkeyscream, 80, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-
-					SPAWN_DBG(5 SECONDS)
-						if (mob)
-							mob.emote_allowed = 1
 			if ("fart")
-				if(farting_allowed && mob.emote_allowed && (!mob.reagents || !mob.reagents.has_reagent("anti_fart")))
-					mob.emote_allowed = 0
+				if(farting_allowed && (!mob.reagents || !mob.reagents.has_reagent("anti_fart")))
+					if (!mob.emote_check(voluntary, 10))
+						return
 					var/fart_on_other = 0
 					for(var/mob/living/M in mob.loc)
 						if(M == src || !M.lying)
@@ -1569,8 +1563,6 @@
 	#endif
 					mob.expel_fart_gas(0)
 					mob.add_karma(0.5)
-					SPAWN_DBG(1 SECOND)
-						mob.emote_allowed = 1
 
 
 /datum/mutantrace/monkey/seamonkey
@@ -1758,7 +1750,7 @@
 	uses_human_clothes = 1
 	aquatic = 1
 	voice_name = "amphibian"
-	jerk = 1
+	jerk = 0
 	head_offset = 0
 	hand_offset = -3
 	body_offset = -3

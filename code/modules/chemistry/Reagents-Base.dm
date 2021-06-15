@@ -841,7 +841,7 @@ datum
 							boutput(M, "<span class='notice'>You feel insulted... and wet.</span>")
 						else
 							boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
-							M.take_brain_damage(-10)
+							M.take_brain_damage(0 - clamp(volume, 0, 10))
 						for (var/datum/ailment_data/disease/V in M.ailments)
 							if(prob(1))
 								M.cure_disease(V)

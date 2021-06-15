@@ -44,6 +44,8 @@
 #define TGUI_INTERACTIVE		 (1<<19)
 /// Has a click delay for attack_self()
 #define ATTACK_SELF_DELAY		 (1<<20)
+/// Is currently scaled by bubsium
+#define IS_BUBSIUM_SCALED		 (1<<21)
 
 
 //Item function flags
