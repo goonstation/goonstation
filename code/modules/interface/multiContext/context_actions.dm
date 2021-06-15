@@ -896,13 +896,13 @@
 			group.reveal(user)
 
 	pickup
-		name = "pick up"
+		name = "Pick Up"
 		desc = "Pick up cards."
 		icon_state = "up_arrow"
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/cards = target
-			if(cards.loc == user)
+			if(user.find_in_hand(cards)) //checks hand for card to allow taking from pockets/storage
 				return
 			user.put_in_hand_or_drop(cards)
 
