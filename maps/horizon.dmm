@@ -11599,6 +11599,9 @@
 	pixel_x = -6
 	},
 /obj/machinery/light,
+/obj/item/implantcase/sec{
+	pixel_x = 5
+	},
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "aEE" = (
@@ -37601,7 +37604,21 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/implantcase/sec,
+/obj/item/ammo/bullets/tranq_darts/anti_mutant{
+	pixel_x = -10;
+	pixel_y = -6
+	},
+/obj/item/ammo/bullets/tranq_darts{
+	pixel_x = 10;
+	pixel_y = -6
+	},
+/obj/item/ammo/bullets/tranq_darts{
+	pixel_x = 6;
+	pixel_y = -6
+	},
+/obj/item/gun/kinetic/dart_rifle{
+	pixel_y = -8
+	},
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "bQw" = (
