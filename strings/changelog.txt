@@ -1,4 +1,10 @@
 
+(t)tue jun 15 21
+(u)DimWhat
+(p)5129
+(e)🎨|sprites
+(*)Added LOTS more monkey clothing items. Bonk into walls with style.
+(+)Added a small zipper to the back of the human monkey suit sprite.
 (t)mon jun 14 21
 (u)Ikea
 (p)4765
