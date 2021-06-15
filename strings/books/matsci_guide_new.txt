@@ -507,7 +507,18 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 <td align="right">n/a</td>
 <td align="right">n/a</td>
 </tr>
-</table><br/>
+<tr><td align="right">King Wendigo Hide</td>
+<td align="right">n/a</td>
+<td align="right"><b>45</b></td>
+<td align="right"><b>10</b></td>
+<td align="right">n/a</td>
+<td align="right"><b>30</b></td>
+<td align="right"><b>30</b></td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+<td align="right">n/a</td>
+</tr>
+</table><br>
 <table>
 <tr><th align="right">METAL</th>
 <th align="right">Rad.</th>
