@@ -1,6 +1,5 @@
-
-/// handles machines processing
-/datum/controller/process/machines
+// handles machines
+datum/controller/process/machines
 	var/tmp/list/machines
 	var/tmp/list/pipe_networks
 	var/tmp/list/powernets
@@ -10,7 +9,7 @@
 
 	setup()
 		name = "Machine"
-		schedule_interval = 0.4 SECONDS
+		schedule_interval = 4
 
 		Station_VNet = new /datum/v_space/v_space_network()
 

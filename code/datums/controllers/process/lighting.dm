@@ -1,8 +1,6 @@
 
-/// List of items that want to be deleted
-var/datum/circular_queue/light_update_queue = new /datum/circular_queue(500)
+var/datum/circular_queue/light_update_queue = new /datum/circular_queue(500) //List of items that want to be deleted
 
-/// Controls the LIGHTS
 datum/controller/process/lighting
 
 	var/max_chunk_size = 6 //20 prev
@@ -14,7 +12,7 @@ datum/controller/process/lighting
 
 	setup()
 		name = "Lighting"
-		schedule_interval = 0.1 SECONDS
+		schedule_interval = 1
 		tick_allowance = 90
 
 	copyStateFrom(datum/controller/process/target)

@@ -31,8 +31,8 @@
 	var/datum/action/bar/blob_health/healthbar //Hack.
 	var/static/image/poisoned_image
 	var/fire_coefficient = 1
-	var/poison_coefficient = 1
-	var/poison_spread_coefficient = 0.5
+	var/poison_coefficient = 0.5
+	var/poison_spread_coefficient = 1
 	var/poison_depletion = 1
 	var/heat_divisor = 15
 	var/temp_tolerance = 40
@@ -347,14 +347,13 @@
 				amount *= poison_coefficient
 				//handle poison overlay
 				if (amount && damtype == "poison")
-					src.poison += amount * damage_mult
+					src.poison += amount
 					updatePoisonOverlay()
 					if (!overmind)
 						SPAWN_DBG(1 SECOND)
 							while (poison)
 								Life()
 								sleep(1 SECOND)
-					return
 			if ("chaos")
 				ignore_armor = 1
 		if (!ignore_armor && armor_value > 0)
@@ -472,7 +471,7 @@
 			if (!overmind.tutorial.PerformSilentAction("blob-life", src))
 				return 0
 		if (src.poison)
-			var/damage_taken = min(10, src.poison)
+			var/damage_taken = min(5, src.poison)
 			take_damage(damage_taken, 1, "self_poison")
 			src.poison -= damage_taken * poison_depletion
 			src.poison = max(src.poison, 0)
@@ -523,15 +522,12 @@
 			src.name = "[material.name] [initial(src.name)]"
 
 			// ARBITRARY MATH TIME! WOO!
-			var/om_tough = max(overmind.initial_material.getProperty("density"), 1) * max(overmind.initial_material.getProperty("hard"), 1)
-			var/c_tough = max(material.getProperty("density"), 1) * max(material.getProperty("hard"), 1)
+			var/om_tough = overmind.initial_material.getProperty("density")
+			var/c_tough = material.getProperty("density")
 			var/hm_orig = initial(health_max)
-			var/new_tough = (c_tough/om_tough)
-			if(new_tough > 2)
-				new_tough = 1 + sqrt(new_tough-1)
 
 			if (om_tough)
-				var/hm_new = hm_orig * new_tough
+				var/hm_new = hm_orig * (c_tough / om_tough)
 				var/perc_change = hm_new / health_max
 				health_max = hm_new
 				health *= perc_change
@@ -1037,8 +1033,6 @@
 	gen_rate_value = 0
 	can_absorb = 0
 	runOnLife = 1
-	poison_coefficient = 2
-	poison_spread_coefficient = 1
 	var/heal_range = 2
 	var/heal_amount = 4
 
@@ -1133,7 +1127,6 @@
 	gen_rate_value = 1
 	can_absorb = 0
 	runOnLife = 1
-	poison_coefficient = 0.5
 	var/protect_range = 3
 	var/consume_per_tick = 5.5
 	var/plasma_per_point = 2
@@ -1160,8 +1153,6 @@
 	desc = "It's an energy storage cell. It stores biopoints."
 	armor = 0
 	can_absorb = 0
-	poison_coefficient = 0
-	poison_spread_coefficient = 3
 
 	onAttach(var/mob/living/intangible/blob_overmind/O)
 		..()
@@ -1184,7 +1175,6 @@
 	state_overlay = "ribosome"
 	special_icon = 1
 	desc = "It's a protein sequencing cell. It enhances the blob's ability to spread."
-	poison_spread_coefficient = 1
 	armor = 0
 	can_absorb = 0
 	var/added = 0

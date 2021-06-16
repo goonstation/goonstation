@@ -27,15 +27,14 @@
 		if(A.type_name == src.artifactType)
 			lastAnalysis++
 
-		// if a trigger would be redundant, let's just say it's cool!
-		if(A.automatic_activation)
+		// check if trigger is one of the correct ones
+		for(var/datum/artifact_trigger/T as anything in A.triggers)
+			if(T.type_name == src.artifactTriggers)
+				lastAnalysis++
+				break
+		// if a trigger would e redundant, let's just say it's cool!
+		if(!length(A.triggers) || A.automatic_activation)
 			lastAnalysis++
-		else
-			// check if trigger is one of the correct ones
-			for(var/datum/artifact_trigger/T as anything in A.triggers)
-				if(T.type_name == src.artifactTriggers)
-					lastAnalysis++
-					break
 
 		// ok, let's make a name
 		// start with obscured name
@@ -59,12 +58,10 @@
 		O.UpdateName()
 
 	attack_hand(mob/user)
-		var/obj/attachedobj = src.attached
-		if(istype(attachedobj) && attachedobj.artifact) // touch artifact we are attached to
+		user.lastattacked = src.attached
+		if(src.attached)
 			src.attached.attack_hand(user)
-			user.lastattacked = user
-		else // do sticker things
-			..()
+			user.lastattacked = src.attached
 
 	stick_to(atom/A, pox, poy)
 		. = ..()
@@ -72,20 +69,16 @@
 			checkArtifactVars(A)
 
 	attackby(obj/item/W, mob/living/user)
-		if(istype(W, /obj/item/pen)) // write on it
+		if(istype(W, /obj/item/pen))
 			ui_interact(user)
-		else if((iscuttingtool(W) || issnippingtool(W)) && user.a_intent == INTENT_HELP && src.attached) // remove attached paper from artifact
+		else if((iscuttingtool(W) || issnippingtool(W)) && user.a_intent == INTENT_HELP)
 			boutput(user, "You manage to scrape \the [src] off of \the [src.attached].")
 			src.remove_from_attached()
 			src.add_fingerprint(user)
 			user.put_in_hand_or_drop(src)
-		else
-			var/obj/attachedobj = src.attached
-			if(istype(attachedobj) && attachedobj.artifact) // hit artifact we are attached to
-				src.attached.attackby(W, user)
-				user.lastattacked = user
-			else // just sticker things
-				..()
+		else if (src.attached)
+			src.attached.attackby(W, user)
+			user.lastattacked = user
 
 	get_desc()
 		. = src.artifactType!=""?"This one seems to be describing a [src.artifactType] type artifact.":""

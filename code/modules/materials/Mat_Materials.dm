@@ -240,7 +240,7 @@
 
 	proc/triggerOnHit(var/atom/owner, var/obj/attackobj, var/mob/attacker, var/meleeorthrow)
 		for(var/datum/materialProc/X in triggersOnHit)
-			call(X,  "execute")(owner, attackobj, attacker, meleeorthrow)
+			call(X,  "execute")(owner, attacker = attacker, attackobj = attackobj, meleeorthrow = meleeorthrow)
 		return
 
 
@@ -920,10 +920,10 @@
 	edible = 1
 
 	New()
-		setProperty("corrosion", 30)
-		setProperty("density", 45)
-		setProperty("hard", 5)
-		setProperty("flammable", 120)
+		setProperty("corrosion", 1)
+		setProperty("density", 80)
+		setProperty("hard", 1)
+		setProperty("flammable", 80)
 		addTrigger(triggersOnEat, new /datum/materialProc/oneat_blob())
 		return ..()
 

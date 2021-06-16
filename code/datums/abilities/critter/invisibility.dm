@@ -13,8 +13,7 @@
 	onUpdate()
 		..()
 		if (ability && owner && state == ACTIONSTATE_RUNNING)
-			var/mob/M = owner
-			APPLY_MOB_PROPERTY(M, PROP_INVISIBILITY, ability, ability.inv_level)
+			owner.invisibility = ability.inv_level
 
 	onInterrupt(var/flag = 0)
 		..()
@@ -27,8 +26,7 @@
 		if (ability)
 			ability.fade_in()
 		else if (owner)
-			var/mob/M = owner
-			REMOVE_MOB_PROPERTY(M, PROP_INVISIBILITY, ability)
+			owner.invisibility = initial(owner.invisibility)
 		if (iicon)
 			del iicon
 		qdel(src)
@@ -84,7 +82,7 @@
 		else
 			animate(holder.owner, alpha=64, time=5)
 		SPAWN_DBG (wait)
-			APPLY_MOB_PROPERTY(holder.owner, PROP_INVISIBILITY, src, inv_level)
+			holder.owner.invisibility = inv_level
 			holder.owner.alpha = 64
 			actions.start(I, holder.owner)
 		return 0
@@ -95,7 +93,7 @@
 			disabled = 0
 			doCooldown()
 			SPAWN_DBG(linger_time)
-				REMOVE_MOB_PROPERTY(holder.owner, PROP_INVISIBILITY, src)
+				holder.owner.invisibility = 0
 				if (fade_in_icon_state)
 					flick(fade_in_icon_state, holder.owner)
 					holder.owner.alpha = 255

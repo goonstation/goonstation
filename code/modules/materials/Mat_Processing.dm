@@ -133,10 +133,6 @@
 			boutput(user, "<span class='alert'>[W] has already been processed.</span>")
 			return
 
-		if(istype(W, /obj/item/ore_scoop))
-			var/obj/item/ore_scoop/O = W
-			if (O.satchel) W = O.satchel
-
 		if(istype(W, /obj/item/satchel))
 			var/obj/item/satchel/S = W
 			boutput(user, "<span class='notice'>You empty \the [W] into \the [src].</span>")
@@ -243,7 +239,7 @@
 
 		var/obj/item/W = O
 
-		if(W in user && !W.cant_drop)
+		if(W in user)
 			user.u_equip(W)
 			W.set_loc(src.loc)
 			W.dropped()
@@ -278,7 +274,7 @@
 				//	continue
 
 			M.set_loc(src)
-			playsound(src, "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(get_turf(src), "sound/items/Deconstruct.ogg", 40, 1)
 			sleep(0.5)
 			if (user.loc != staystill) break
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")

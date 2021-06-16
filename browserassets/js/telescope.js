@@ -135,11 +135,14 @@ function byondFound(x,y,size,id)
 {
     clearMap(null);
     addPing(x ,y,60,"green",0.3,10);
+    var audio = new Audio('{{resource("sounds/found.mp3")}}');
+    audio.volume = 0.25;
+    audio.play();
 }
 
 function addMark(x, y, size, color, fromColor)
 {
-    marks.push({x: x, y: y, size: size, currentSize: 0, color: color, fromColor: fromColor, animationLength: 2000, currentStep: 0});
+    marks.push({x: x, y: y, size: size, currentSize: 0, color: color, fromColor: fromColor, animationLength: 2000, currentStep: 0, soundPlayed: false});
 }
 
 function addPing(x, y, size, color, growSpeed, width)
@@ -154,6 +157,13 @@ function update()
         var curr = marks[i];
         var totalSteps = (curr.animationLength / timerDelay);
         var progress = curr.currentStep / totalSteps;
+        if(progress >= 0.55 && !curr.soundPlayed)
+        {
+            curr.soundPlayed = true;
+            var audio = new Audio('{{resource("sounds/sweep.mp3")}}');
+            audio.volume = 0.25;
+            audio.play();
+        }
         if(curr.currentStep <= totalSteps)
         {
             var x;

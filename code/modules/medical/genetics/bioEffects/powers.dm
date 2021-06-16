@@ -327,7 +327,7 @@
 		if (istype(owner.loc,/obj/))
 			var/obj/container = owner.loc
 			boutput(owner, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
-			owner.changeStatus("paralysis", 5 SECONDS)
+			owner.changeStatus("paralysis", 50)
 			owner.changeStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[owner.loc]</b> emits a loud thump and rattles a bit.</span>")
 			playsound(owner.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
@@ -369,7 +369,7 @@
 			var/prevLayer = owner.layer
 			owner.layer = EFFECTS_LAYER_BASE
 			owner.changeStatus("weakened", 10 SECONDS)
-			owner.changeStatus("stunned", 5 SECONDS)
+			owner.changeStatus("stunned", 50)
 
 			SPAWN_DBG(0)
 				for(var/i=0, i < jump_tiles, i++)
@@ -386,7 +386,7 @@
 		if (istype(owner.loc,/obj/))
 			var/obj/container = owner.loc
 			boutput(owner, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
-			owner.changeStatus("paralysis", 5 SECONDS)
+			owner.changeStatus("paralysis", 50)
 			owner.changeStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[owner.loc]</b> emits a loud thump and rattles a bit.</span>")
 			playsound(owner.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
@@ -790,7 +790,7 @@
 		boutput(read, "<span class='alert'>Somehow, you sense <b>[owner]</b> trying and failing to read your mind!</span>")
 		boutput(owner, "<span class='alert'>You are mentally overwhelmed by a huge barrage of worthless data!</span>")
 		owner.emote("scream")
-		owner.changeStatus("paralysis", 5 SECONDS)
+		owner.changeStatus("paralysis", 50)
 		owner.changeStatus("stunned", 7 SECONDS)
 		return
 
@@ -991,7 +991,7 @@
 					continue
 				boutput(V, "<span class='alert'>You are sent flying!</span>")
 
-				V.changeStatus("weakened", stun_time SECONDS)
+				V.changeStatus("weakened", stun_time * 10)
 				// why the hell was this set to 12 christ
 				while (throw_repeat > 0)
 					throw_repeat--
@@ -1830,11 +1830,13 @@
 
 		var/mob/living/L = owner
 		if (which_way == 1)
-			APPLY_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src, INVIS_INFRA)
+			L.invisibility = 1
 			L.UpdateOverlays(overlay_image, id)
 		else
-			REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
+			L.invisibility = 0
 			L.UpdateOverlays(null, id)
+
+		return
 
 	OnAdd()
 		if (ishuman(owner))
@@ -1845,7 +1847,7 @@
 
 	OnRemove()
 		..()
-		src.cloak_decloak(0)
+		src.cloak_decloak(2)
 		return
 
 	OnLife(var/mult)
@@ -1923,7 +1925,7 @@
 		if (isliving(owner))
 			var/mob/living/L = owner
 			L.UpdateOverlays(null, id)
-			REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
+			L.invisibility = 0
 		if (src.active)
 			src.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
 		return
@@ -1935,14 +1937,14 @@
 			var/mob/living/L = owner
 			if (TIME - last_moved >= 3 SECONDS && can_act(owner))
 				L.UpdateOverlays(overlay_image, id)
-				APPLY_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src, INVIS_INFRA)
+				L.invisibility = 1
 
 	proc/decloak()
 		if(isliving(owner))
 			var/mob/living/L = owner
 			last_moved = TIME
 			L.UpdateOverlays(null, id)
-			REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
+			L.invisibility = 0
 
 /datum/targetable/geneticsAbility/chameleon
 	name = "Chameleon"
@@ -2177,8 +2179,8 @@
 
 	proc/hit_callback(var/datum/thrown_thing/thr)
 		for(var/mob/living/carbon/hit in get_turf(thr.thing))
-			hit.changeStatus("weakened", 15 SECONDS)
-			hit.changeStatus("stunned", 5 SECONDS)
+			hit.changeStatus("weakened", 150)
+			hit.changeStatus("stunned", 50)
 			break
 		return 0
 

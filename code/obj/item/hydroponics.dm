@@ -172,9 +172,6 @@
 		if (!src.user_can_suicide(user))
 			return 0
 		user.visible_message("<span class='alert'><b>[user] shoves the chainsaw into [his_or_her(user)] chest!</b></span>")
-		blood_slash(user, 25)
-		playsound(user.loc, 'sound/machines/chainsaw_red.ogg', 50, 1)
-		playsound(user.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 		user.u_equip(src)
 		src.set_loc(user.loc)
 		user.gib()
@@ -362,7 +359,7 @@
 /////////////////////////////////////////// Seed fabricator ///////////////////////////////
 
 /obj/item/seedplanter
-	name = "portable seed fabricator"
+	name = "Portable Seed Fabricator"
 	desc = "A tool for cyborgs used to create plant seeds."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "portable_seed_fab"

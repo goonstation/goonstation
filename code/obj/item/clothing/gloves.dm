@@ -436,7 +436,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "horseshoe"
 	force = 6.5
-	throwforce = 15
+	throwforce = 25
 	throw_speed = 3
 	throw_range = 6
 	w_class = W_CLASS_TINY
@@ -499,7 +499,10 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 			playsound(user, "sound/effects/elec_bigzap.ogg", 40, 1)
 
-			SEND_SIGNAL(user, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+			for (var/obj/item/cloaking_device/I in user)
+				if (I.active)
+					I.deactivate(user)
+					user.visible_message("<span class='notice'><b>[user]'s cloak is disrupted!</b></span>")
 
 			if(isturf(target))
 				target_r = new/obj/elec_trg_dummy(target)

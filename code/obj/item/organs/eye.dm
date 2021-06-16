@@ -34,9 +34,9 @@
 		iris_image.color = "#0D84A8"
 		if (src.donor && src.donor.bioHolder && src.donor.bioHolder.mobAppearance) // good lord
 			var/datum/appearanceHolder/AH = src.donor.bioHolder.mobAppearance // I ain't gunna type that a billion times thanks
-			if ((src.body_side == L_ORGAN && AH.customization_second.id == "hetrcoL") || (src.body_side == R_ORGAN && AH.customization_second.id == "hetcroR")) // dfhsgfhdgdapeiffert
+			if ((src.body_side == L_ORGAN && AH.customization_second == "Heterochromia Left") || (src.body_side == R_ORGAN && AH.customization_second == "Heterochromia Right")) // dfhsgfhdgdapeiffert
 				iris_image.color = AH.customization_second_color
-			else if ((src.body_side == L_ORGAN && AH.customization_third.id == "hetcroL") || (src.body_side == R_ORGAN && AH.customization_third == "hetcroR")) // gbhjdghgfdbldf
+			else if ((src.body_side == L_ORGAN && AH.customization_third == "Heterochromia Left") || (src.body_side == R_ORGAN && AH.customization_third == "Heterochromia Right")) // gbhjdghgfdbldf
 				iris_image.color = AH.customization_third_color
 			else
 				iris_image.color = AH.e_color
@@ -105,6 +105,7 @@
 	icon_state = "eye-synth"
 	item_state = "plant"
 	synthetic = 1
+	made_from = "pharosium"
 
 /obj/item/organ/eye/cyber
 	name = "cybereye"

@@ -13,5 +13,5 @@
 	if (prob(10))
 		M.emote("cough")
 	if (prob(2))
-		M.changeStatus("stunned", 5 SECONDS)
+		M.changeStatus("stunned", 50)
 		M.visible_message("<span class='alert'><B>[M.name]</B> suffers a coughing fit</span>")

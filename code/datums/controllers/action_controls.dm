@@ -34,9 +34,6 @@ var/datum/action_controller/actions
 		return
 
 	proc/start(var/datum/action/A, var/atom/owner) //Starts a new action.
-		if(!owner)
-			qdel(A)
-			return
 		if(!(owner in running))
 			running.Add(owner)
 			running[owner] = list(A)
@@ -382,7 +379,7 @@ var/datum/action_controller/actions
 	/// a list of args for the proc thats called once the action bar finishes, if needed.
 	var/list/proc_args = null
 
-	New(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message, interrupt_flags)
+	New(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message)
 		..()
 		if (owner)
 			src.owner = owner
@@ -408,13 +405,10 @@ var/datum/action_controller/actions
 			CRASH("icon state set for action bar, but no icon was set")
 		if (end_message)
 			src.end_message = end_message
-		if (interrupt_flags)
-			src.interrupt_flags = interrupt_flags
+
 		//generate a id
 		if (src.proc_path)
 			src.id = "[src.proc_path]"
-
-		src.proc_args = proc_args
 
 	onStart()
 		..()
@@ -572,14 +566,6 @@ var/datum/action_controller/actions
 
 	onStart()
 		..()
-//You can't build! The if is to stop compiler warnings
-#if defined(MAP_OVERRIDE_POD_WARS)
-		if (owner)
-			boutput(owner, "<span class='alert'>What are you gonna do with this? You have a very particular set of skills, and building is not one of them...</span>")
-			interrupt(INTERRUPT_ALWAYS)
-			return
-#endif
-
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			if(H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
@@ -594,14 +580,11 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		. = ..()
-		if(QDELETED(sheet) || sheet.amount < cost)
+		if(QDELETED(sheet))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()
 		..()
-		if(QDELETED(sheet) || sheet.amount < cost)
-			interrupt(INTERRUPT_ALWAYS)
-			return
 		owner.visible_message("<span class='notice'>[owner] assembles [objname]!</span>")
 		var/obj/item/R = new objtype(get_turf(spot || owner))
 		R.setMaterial(mat)
@@ -1606,11 +1589,11 @@ var/datum/action_controller/actions
 	onStart()
 		..()
 		if(iswrenchingtool(tool))
-			playsound(target, "sound/items/Ratchet.ogg", 50, 1)
+			playsound(get_turf(target), "sound/items/Ratchet.ogg", 50, 1)
 		else if(isweldingtool(tool))
-			playsound(target, "sound/items/Welder.ogg", 50, 1)
+			playsound(get_turf(target), "sound/items/Welder.ogg", 50, 1)
 		else if(isscrewingtool(tool))
-			playsound(target, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(get_turf(target), "sound/items/Screwdriver.ogg", 50, 1)
 		owner.visible_message("<span class='notice'>[owner] begins [unanchor ? "un" : ""]anchoring [target].</span>")
 
 	onEnd()

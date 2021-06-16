@@ -9,7 +9,6 @@
 	w_class = W_CLASS_TINY
 	force = 0
 	throwforce = 0
-	vis_flags = VIS_INHERIT_DIR
 	var/dont_make_an_overlay = 0
 	var/active = 0
 	var/overlay_key
@@ -68,7 +67,7 @@
 		src.active = 1
 		src.set_loc(A)
 
-		playsound(src, 'sound/items/sticker.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/items/sticker.ogg', 50, 1)
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
@@ -324,15 +323,6 @@
 	name = "holly ornament"
 	icon_state = "holly"
 
-/obj/item/sticker/googly_eye
-	name = "googly eye sticker"
-	icon_state = "googly1"
-	random_icons = list("googly1", "googly2")
-
-	angry
-		name = "angry googly eye sticker"
-		random_icons = list("googly_angerL", "googly_angerR")
-
 /obj/item/sticker/ribbon
 	name = "award ribbon"
 	desc = "You're an award winner! You came in, uh... Well it looks like this doesn't say what place you came in, or what it's for. That's weird. But hey, it's an award for something! Maybe it was for being the #1 Farter, or maybe the #8 Ukelele Soloist. Truly, with an award as vague as this, you could be anything!"
@@ -548,7 +538,7 @@
 	radio_path = /obj/item/device/radio/spy/det_only
 
 /obj/item/device/camera_viewer/sticker
-	name = "camera monitor"
+	name = "Camera monitor"
 	desc = "A portable video monitor connected to a network of spy cameras."
 	icon_state = "monitor"
 	item_state = "electronic"

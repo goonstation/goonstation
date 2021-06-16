@@ -281,7 +281,7 @@
 						if ("bible")
 							book_cover = "bible"
 						if ("old")
-							book_cover = "oldbook"
+							book_cover = "bookkiy"
 						else
 							book_cover = "book0"
 				boutput(user, "Book cover set.")

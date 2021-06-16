@@ -398,9 +398,8 @@ datum
 					return
 
 				if (probmult(8) && (M.gender == "male"))
-					if (M.bioHolder.mobAppearance.customization_second.id != "gt" && M.bioHolder.mobAppearance.customization_second.id != "neckbeard" && M.bioHolder.mobAppearance.customization_second.id != "fullbeard" && M.bioHolder.mobAppearance.customization_second.id != "longbeard")
-						var/second_type = pick(/datum/customization_style/beard/gt,/datum/customization_style/beard/neckbeard,/datum/customization_style/beard/fullbeard,/datum/customization_style/beard/longbeard)
-						M.bioHolder.mobAppearance.customization_second = new second_type
+					if (M.cust_two_state != "gt" && M.cust_two_state != "neckbeard" && M.cust_two_state != "fullbeard" && M.cust_two_state != "longbeard")
+						M.cust_two_state = pick("gt","neckbeard","fullbeard","longbeard")
 						M.set_face_icon_dirty()
 						boutput(M, "<span class='notice'>You feel manly!</span>")
 
@@ -441,7 +440,7 @@ datum
 								M.visible_message("<span class='alert'>[M] pukes everywhere and passes out!</span>")
 								M.vomit()
 								M.reagents.del_reagent("bojack")
-								M.changeStatus("paralysis", 3 SECONDS)
+								M.changeStatus("paralysis", 30)
 
 		fooddrink/alcoholic/cocktail_screwdriver
 			name = "Screwdriver"
@@ -573,10 +572,12 @@ datum
 						new /obj/item/clothing/mask/moustache(get_turf(H))
 						H.gib()
 						return
-					if(H.bioHolder.mobAppearance.customization_first.id != "dreads" || H.bioHolder.mobAppearance.customization_second.id != "fullbeard")
+					if(H.cust_one_state != "dreads" || H.cust_two_state != "fullbeard")
 						boutput(H, "<b>You feel more piratey! Arr!</b>")
-						H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/dreads
-						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/fullbeard
+						H.cust_one_state = "dreads"
+						H.cust_two_state = "fullbeard"
+						H.bioHolder.mobAppearance.customization_first = "Dreadlocks"
+						H.bioHolder.mobAppearance.customization_second = "Full Beard"
 						H.real_name = "Captain [H.real_name]"
 						if (H.wear_id)
 							if (istype(H.wear_id, /obj/item/card/id))
@@ -1000,7 +1001,7 @@ datum
 				if(method == INGEST && prob(20))
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", 30 SECONDS)
+						L.changeStatus("burning", 300)
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1025,7 +1026,7 @@ datum
 					boutput(M, "<span class='alert'><b>OH GOD OH GOD PLEASE NO!!</b></span>")
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", 100 SECONDS * mult)
+						L.changeStatus("burning", 1000 * mult)
 					if (prob(50))
 						SPAWN_DBG(2 SECONDS)
 							//Roast up the player
@@ -1427,7 +1428,7 @@ datum
 				if(probmult(15))
 					M.emote(pick("cough","sneeze","gasp"))
 				if(probmult(20))
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS * mult))
+					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 30 * mult))
 				if(prob(40))
 					random_burn_damage(M, 2 * mult)
 				if(probmult(0.2 * volume))
@@ -1763,9 +1764,9 @@ datum
 							M.reagents.add_reagent("psilocybin", 30)
 						if(5)
 							boutput(M, "<span class='alert'>What stunning texture!</span>")
-							M.changeStatus("paralysis", 6 SECONDS)
+							M.changeStatus("paralysis", 60)
 							M.changeStatus("stunned", 7 SECONDS)
-							M.changeStatus("weakened", 8 SECONDS)
+							M.changeStatus("weakened", 80)
 							M.stuttering += 20
 
 		fooddrink/capsaicin
@@ -1791,14 +1792,14 @@ datum
 					M.stuttering += rand(0,5)
 					if(prob(10))
 						M.emote(pick("choke","gasp","cough"))
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 1 SECOND * mult))
+						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 10 * mult))
 						M.take_oxygen_deprivation(rand(0,10) * mult)
 						M.bodytemperature += rand(5,20) * mult
 				M.stuttering += rand(0,2)
 				M.bodytemperature += rand(0,3) * mult
 				if(prob(10))
 					M.emote(pick("cough"))
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 1 SECOND * mult))
+					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 10 * mult))
 				..()
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
@@ -2662,8 +2663,8 @@ datum
 					if (prob(5))
 						boutput(M, "<span class='alert'>You feel a sharp pain in your chest!</span>")
 						M.take_oxygen_deprivation(25 * mult)
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 10 SECONDS * mult))
-						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 6 SECONDS * mult))
+						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 100 * mult))
+						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 60 * mult))
 				else
 					depletion_rate = 0.2 * mult
 				..()
@@ -2767,7 +2768,7 @@ datum
 						M.take_toxin_damage(rand(2.4) * mult)
 					if (prob(7))
 						boutput(M, "<span class='alert'>A horrible migraine overpowers you.</span>")
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 4 SECONDS * mult))
+						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 40 * mult))
 				..()
 
 		fooddrink/egg
@@ -2862,10 +2863,10 @@ datum
 						M.visible_message("<span class='alert'><b>[M.name]</b> suddenly starts salivating.</span>")
 						M.emote("drool")
 						M.change_misstep_chance(10 * mult)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 2 SECONDS * mult))
+						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 20 * mult))
 					else if(effect <= 3)
 						M.visible_message("<span class='alert'><b>[M.name]</b> begins to reminisce about food.</span>")
-						M.changeStatus("stunned", 2 SECONDS * mult)
+						M.changeStatus("stunned", 20 * mult)
 					else if(effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> pouts and sniffles a bit.</span>")
 					else if(effect <= 7)
@@ -2875,16 +2876,16 @@ datum
 					if(effect <= 2)
 						M.visible_message("<span class='alert'><b>[M.name]</b> enters a food coma!</span>")
 						M.emote("faint")
-						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 6 SECONDS * mult))
+						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 60 * mult))
 					else if(effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> wants more delicious food!</span>")
 						M.emote("scream")
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 5 SECONDS * mult))
+						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 50 * mult))
 					else if(effect <= 8)
 						M.visible_message("<span class='alert'><b>[M.name]</b> appears extremely depressed.</span>")
 						M.emote("moan")
 						M.change_misstep_chance(25 * mult)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 7 SECONDS * mult))
+						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 70 * mult))
 
 		fooddrink/pepperoni //Hukhukhuk presents. pepperoni and acetone
 			name = "pepperoni"
@@ -3612,7 +3613,7 @@ datum
 				if(prob(50))
 					boutput(M, "<span class='alert'>Your throat burns furiously!</span>")
 					M.emote(pick("scream","cry","choke","gasp"))
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS * mult))
+					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 20 * mult))
 				if(probmult(8))
 					boutput(M, "<span class='alert'>Why!? WHY!?</span>")
 				if(probmult(8))
@@ -3626,7 +3627,7 @@ datum
 					boutput(M, "<span class='alert'><b>OH GOD OH GOD PLEASE NO!!</b></span>")
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", 100 SECONDS * mult)
+						L.changeStatus("burning", 1000 * mult)
 					if(prob(50))
 						SPAWN_DBG(2 SECONDS)
 							//Roast up the player

@@ -151,17 +151,6 @@ To remove:
 
 */
 
-/// Defines of property update actions
-
-/// Sends a debug action about the property changing whenever it changes
-#define PROP_UPDATE_DEBUG(target, prop, old_val) DEBUG_MESSAGE("[target].[prop]: [old_val] -> [GET_MOB_PROPERTY_RAW(target, prop)]")
-
-#define PROP_UPDATE_INVISIBILITY(target, prop, old_val) do { \
-	target.invisibility = GET_MOB_PROPERTY_RAW(target, prop); \
-	SEND_SIGNAL(target, COMSIG_MOB_PROP_INVISIBILITY, old_val); \
-	} while(0)
-
-
 // Property defines
 //
 // These must be defined as macros in the format PROP_<yourproperty>(x) x("property key name", MACRO TO APPLY THE PROPERTY, MACRO TO REMOVE THE PROPERTY)
@@ -179,7 +168,6 @@ To remove:
 #define PROP_CANTSPRINT(x) x("cantsprint", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
 #define PROP_NO_MOVEMENT_PUFFS(x) x("nomovementpuffs", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
 #define PROP_NEVER_DENSE(x) x("neverdense", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
-#define PROP_INVISIBILITY(x) x("invisibility", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX, PROP_UPDATE_INVISIBILITY)
 //armour properties
 #define PROP_MELEEPROT_HEAD(x) x("meleeprot_head", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
 #define PROP_MELEEPROT_BODY(x) x("meleeprot_body", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
@@ -201,29 +189,24 @@ To remove:
 // In lieu of comments, these are the indexes used for list access in the macros below.
 #define MOB_PROPERTY_ACTIVE_VALUE 1
 #define MOB_PROPERTY_SOURCES_LIST 2
-#define MOB_PROPERTY_ACTIVE_PRIO 3
 #define MOB_PROPERTY_PRIORITY_PRIO 1
 #define MOB_PROPERTY_PRIORITY_VALUE 2
 
 #define GET_PROP_NAME TUPLE_GET_1
 #define GET_PROP_ADD TUPLE_GET_2
 #define GET_PROP_REMOVE TUPLE_GET_3
-#define GET_PROP_UPDATE TUPLE_GET_4_OR_DUMMY
-#define HAS_PROP_UPDATE(prop) (UNLINT(TUPLE_LENGTH(prop) >= 4))
 
-#define APPLY_MOB_PROPERTY(target, property, etc...) GET_PROP_ADD(property)(target, GET_PROP_NAME(property), HAS_PROP_UPDATE(property), GET_PROP_UPDATE(property), ##etc)
+#define APPLY_MOB_PROPERTY(target, property, etc...) GET_PROP_ADD(property)(target, GET_PROP_NAME(property), ##etc)
 
-#define REMOVE_MOB_PROPERTY(target, property, source) GET_PROP_REMOVE(property)(target, GET_PROP_NAME(property), HAS_PROP_UPDATE(property), GET_PROP_UPDATE(property), source)
+#define REMOVE_MOB_PROPERTY(target, property, source) GET_PROP_REMOVE(property)(target, GET_PROP_NAME(property), source)
 
 #define GET_MOB_PROPERTY(target, property) (target.mob_properties[GET_PROP_NAME(property)] ? target.mob_properties[GET_PROP_NAME(property)][MOB_PROPERTY_ACTIVE_VALUE] : null)
-
-#define GET_MOB_PROPERTY_RAW(target, property_name) (target.mob_properties[property_name] ? target.mob_properties[property_name][MOB_PROPERTY_ACTIVE_VALUE] : null)
 
 // sliiiiiiiightly faster if you don't care about the value
 #define HAS_MOB_PROPERTY(target, property) (target.mob_properties[GET_PROP_NAME(property)] ? TRUE : FALSE)
 
 
-#define APPLY_MOB_PROPERTY_MAX(target, property, do_update, update_macro, source, value) \
+#define APPLY_MOB_PROPERTY_MAX(target, property, source, value) \
 	do { \
 		var/list/_L = target.mob_properties; \
 		var/_V = value; \
@@ -231,42 +214,33 @@ To remove:
 		if (_L[property]) { \
 			_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
 			if (_L[property][MOB_PROPERTY_ACTIVE_VALUE] < _V) { \
-				var/_OLD_VAL = _L[property][MOB_PROPERTY_ACTIVE_VALUE]; \
 				_L[property][MOB_PROPERTY_ACTIVE_VALUE] = _V; \
-				if(do_update) { update_macro(target, property, _OLD_VAL); } \
 			} \
 		} else { \
 			_L[property] = list(_V, list()); \
 			_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
-			if(do_update) { update_macro(target, property, null); } \
 		} \
 	} while (0)
 
-#define REMOVE_MOB_PROPERTY_MAX(target, property, do_update, update_macro, source) \
+#define REMOVE_MOB_PROPERTY_MAX(target, property, source) \
 	do { \
 		var/list/_L = target.mob_properties; \
 		if (_L[property]) { \
-			var/_V = _L[property][MOB_PROPERTY_SOURCES_LIST][source]; \
 			_L[property][MOB_PROPERTY_SOURCES_LIST] -= source; \
 			if (!length(_L[property][MOB_PROPERTY_SOURCES_LIST])) { \
-				var/_OLD_VAL = _L[property][MOB_PROPERTY_ACTIVE_VALUE]; \
 				_L -= property; \
-				if(do_update && _OLD_VAL) { update_macro(target, property, _OLD_VAL); } \
-			} else if(_L[property][MOB_PROPERTY_ACTIVE_VALUE] == _V) { \
-				var/_OLD_VAL = _L[property][MOB_PROPERTY_ACTIVE_VALUE]; \
+			} else { \
 				_L[property][MOB_PROPERTY_ACTIVE_VALUE] = -INFINITY; \
 				for(var/_S in _L[property][MOB_PROPERTY_SOURCES_LIST]) { \
 					if (_L[property][MOB_PROPERTY_ACTIVE_VALUE] < _L[property][MOB_PROPERTY_SOURCES_LIST][_S]) { \
 						_L[property][MOB_PROPERTY_ACTIVE_VALUE] = _L[property][MOB_PROPERTY_SOURCES_LIST][_S]; \
 					} \
 				} \
-				if(do_update && _OLD_VAL != _L[property][MOB_PROPERTY_ACTIVE_VALUE]) \
-					{ update_macro(target, property, _OLD_VAL); } \
 			} \
 		} \
 	} while (0)
 
-#define APPLY_MOB_PROPERTY_SIMPLE(target, property, do_update, update_macro, source) \
+#define APPLY_MOB_PROPERTY_SIMPLE(target, property, source) \
 	do { \
 		var/list/_L = target.mob_properties; \
 		var/_S = source; \
@@ -274,94 +248,80 @@ To remove:
 			_L[property][MOB_PROPERTY_SOURCES_LIST] |= source; \
 		} else { \
 			_L[property] = list(1, list(_S)); \
-			if(do_update) { update_macro(target, property, null); } \
 		} \
 	} while (0)
 
-#define REMOVE_MOB_PROPERTY_SIMPLE(target, property, do_update, update_macro, source) \
+#define REMOVE_MOB_PROPERTY_SIMPLE(target, property, source) \
 	do { \
 		var/list/_L = target.mob_properties; \
 		if (_L[property]) { \
 			_L[property][MOB_PROPERTY_SOURCES_LIST] -= source; \
 			if (!length(_L[property][MOB_PROPERTY_SOURCES_LIST])) { \
 				_L -= property; \
-				if(do_update) { update_macro(target, property, 1); } \
 			} \
 		} \
 	} while (0)
 
-#define APPLY_MOB_PROPERTY_SUM(target, property, do_update, update_macro, source, value) \
+#define APPLY_MOB_PROPERTY_SUM(target, property, source, value) \
 	do { \
 		var/list/_L = target.mob_properties; \
 		var/_V = value; \
 		var/_S = source; \
 		if (_L[property]) { \
 			if (_L[property][MOB_PROPERTY_SOURCES_LIST][_S]) { \
-				var/_OLD_VAL = _L[property][MOB_PROPERTY_ACTIVE_VALUE]; \
 				_L[property][MOB_PROPERTY_ACTIVE_VALUE] -= _L[property][MOB_PROPERTY_SOURCES_LIST][_S]; \
 				_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
 				_L[property][MOB_PROPERTY_ACTIVE_VALUE] += _V; \
-				if(do_update) { update_macro(target, property, _OLD_VAL); } \
 			} else { \
 				_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
 				_L[property][MOB_PROPERTY_ACTIVE_VALUE] += _V; \
-				if(do_update) { update_macro(target, property, _L[property][MOB_PROPERTY_ACTIVE_VALUE] - _V); } \
 			} \
 		} else { \
 			_L[property] = list(_V, list()); \
 			_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
-			if(do_update) { update_macro(target, property, null); } \
 		} \
 	} while (0)
 
-#define REMOVE_MOB_PROPERTY_SUM(target, property, do_update, update_macro, source) \
+#define REMOVE_MOB_PROPERTY_SUM(target, property, source) \
 	do { \
 		var/list/_L = target.mob_properties; \
 		var/_S = source; \
 		if (_L[property]) { \
-			var/_OLD_VAL = _L[property][MOB_PROPERTY_ACTIVE_VALUE]; \
 			if (_L[property][MOB_PROPERTY_SOURCES_LIST][_S]) { \
 				_L[property][MOB_PROPERTY_ACTIVE_VALUE] -= _L[property][MOB_PROPERTY_SOURCES_LIST][_S]; \
 				_L[property][MOB_PROPERTY_SOURCES_LIST] -= _S; \
-				if(do_update) { update_macro(target, property, _OLD_VAL); } \
 			} \
 			if (!length(_L[property][MOB_PROPERTY_SOURCES_LIST])) { \
 				_L -= property; \
 			} \
-			if(do_update) { update_macro(target, property, _OLD_VAL); } \
 		} \
 	} while (0)
 
-#define APPLY_MOB_PROPERTY_PRODUCT(target, property, do_update, update_macro, source, value) \
+#define APPLY_MOB_PROPERTY_PRODUCT(target, property, source, value) \
 	do { \
 		var/list/_L = target.mob_properties; \
 		var/_V = value; \
 		var/_S = source; \
 		if (_L[property]) { \
 			if (_L[property][MOB_PROPERTY_SOURCES_LIST][_S]) { \
-				var/_OLD_VAL = _L[property][MOB_PROPERTY_ACTIVE_VALUE]; \
 				_L[property][MOB_PROPERTY_ACTIVE_VALUE] /= _L[property][MOB_PROPERTY_SOURCES_LIST][_S]; \
 				_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
 				_L[property][MOB_PROPERTY_ACTIVE_VALUE] *= _V; \
-				if(do_update) { update_macro(target, property, _OLD_VAL); } \
 			} else { \
 				_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
 				_L[property][MOB_PROPERTY_ACTIVE_VALUE] *= _V; \
-				if(do_update) { update_macro(target, property, _L[property][MOB_PROPERTY_ACTIVE_VALUE] / _V); } \
 			} \
 		} else { \
 			_L[property] = list(_V, list()); \
 			_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
-			if(do_update) { update_macro(target, property, null); } \
 		} \
 	} while (0)
 
-#define REMOVE_MOB_PROPERTY_PRODUCT(target, property, do_update, update_macro, source) \
+#define REMOVE_MOB_PROPERTY_PRODUCT(target, property, source) \
 	do { \
 		var/list/_L = target.mob_properties; \
 		var/_S = source; \
 		if (_L[property]) { \
-			var/_OLD_VAL = _L[property][MOB_PROPERTY_ACTIVE_VALUE]; \
 			if (_L[property][MOB_PROPERTY_SOURCES_LIST][_S]) { \
 				_L[property][MOB_PROPERTY_ACTIVE_VALUE] /= _L[property][MOB_PROPERTY_SOURCES_LIST][_S]; \
 				_L[property][MOB_PROPERTY_SOURCES_LIST] -= _S; \
@@ -369,12 +329,11 @@ To remove:
 			if (!length(_L[property][MOB_PROPERTY_SOURCES_LIST])) { \
 				_L -= property; \
 			} \
-			if(do_update) { update_macro(target, property, _OLD_VAL); } \
 		} \
 	} while (0)
 
 
-#define APPLY_MOB_PROPERTY_PRIORITY(target, property, source, do_update, update_macro, value, priority) \
+#define APPLY_MOB_PROPERTY_PRIORITY(target, property, source, value, priority) \
 	do { \
 		var/list/_L = target.mob_properties; \
 		var/_V = value; \
@@ -382,21 +341,25 @@ To remove:
 		var/_S = source; \
 		if (_L[property]) { \
 			_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = list(_P, _V); \
-			if (_L[property][MOB_PROPERTY_ACTIVE_PRIO] < _P) { \
-				var/_OLD_VAL = _L[property][MOB_PROPERTY_ACTIVE_VALUE]; \
-				_L[property][MOB_PROPERTY_ACTIVE_VALUE] = _V; \
-				if(do_update) { update_macro(target, property, _OLD_VAL); } \
-				_L[property][MOB_PROPERTY_ACTIVE_PRIO] = _P; \
+			if (_L[property][MOB_PROPERTY_ACTIVE_VALUE] != _V) { \
+				var/_TO_APPLY_PRIO = -INFINITY; \
+				var/_TO_APPLY_VALUE; \
+				for (var/_SOURCE in _L[property][MOB_PROPERTY_SOURCES_LIST]) { \
+					var/list/_PRIOLIST = _L[property][MOB_PROPERTY_SOURCES_LIST][_SOURCE]; \
+					if (_PRIOLIST[MOB_PROPERTY_PRIORITY_PRIO] >= _TO_APPLY_PRIO) { \
+						_TO_APPLY_PRIO = _PRIOLIST[MOB_PROPERTY_PRIORITY_PRIO]; \
+						_TO_APPLY_VALUE = _PRIOLIST[MOB_PROPERTY_PRIORITY_VALUE]; \
+					} \
+				} \
+				_L[property][MOB_PROPERTY_ACTIVE_VALUE] = _TO_APPLY_VALUE; \
 			} \
 		} else { \
 			_L[property] = list(_V, list()); \
 			_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = list(_P, _V); \
-			_L[property][MOB_PROPERTY_ACTIVE_PRIO] = _P; \
-			if(do_update) { update_macro(target, property, null); } \
 		}; \
 	} while (0)
 
-#define REMOVE_MOB_PROPERTY_PRIORITY(target, property, do_update, update_macro, source) \
+#define REMOVE_MOB_PROPERTY_PRIORITY(target, property, source) \
 	do { \
 		var/list/_L = target.mob_properties; \
 		var/_S = source; \
@@ -404,9 +367,7 @@ To remove:
 			var/_S_V = _L[property][MOB_PROPERTY_SOURCES_LIST][_S][MOB_PROPERTY_PRIORITY_VALUE];\
 			_L[property][MOB_PROPERTY_SOURCES_LIST] -= source; \
 			if (!length(_L[property][MOB_PROPERTY_SOURCES_LIST])) { \
-				var/_OLD_VAL = _L[property][MOB_PROPERTY_ACTIVE_VALUE]; \
 				_L -= property; \
-				if(do_update) { update_macro(target, property, _OLD_VAL); } \
 			} else if (_L[property][MOB_PROPERTY_ACTIVE_VALUE] == _S_V) { \
 				var/_TO_APPLY_PRIO = -INFINITY; \
 				var/_TO_APPLY_VALUE; \
@@ -417,10 +378,7 @@ To remove:
 						_TO_APPLY_VALUE = _PRIOLIST[MOB_PROPERTY_PRIORITY_VALUE]; \
 					} \
 				} \
-				var/_OLD_VAL = _L[property][MOB_PROPERTY_ACTIVE_VALUE]; \
 				_L[property][MOB_PROPERTY_ACTIVE_VALUE] = _TO_APPLY_VALUE; \
-				_L[property][MOB_PROPERTY_ACTIVE_PRIO] = _TO_APPLY_PRIO; \
-				if(do_update) { update_macro(target, property, _OLD_VAL); } \
 			} \
 		} \
 	} while (0)

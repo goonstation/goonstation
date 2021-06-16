@@ -34,13 +34,16 @@
 
 				// SCIENCE GOODS LOOT TABLE
 				if (tier == 3)
-					picker = rand(1,3)
+					picker = rand(1,4)
 					switch(picker)
 						if(1)
 							items += /obj/item/clothing/gloves/psylink_bracelet
 							item_amounts += 1
 						if(2)
 							items += /obj/item/artifact/teleport_wand
+							item_amounts += 1
+						if(3)
+							items += /obj/item/clothing/shoes/hermes
 							item_amounts += 1
 						else
 							items += /obj/item/device/voltron
@@ -64,12 +67,8 @@
 							items += /obj/item/roboupgrade/jetpack
 							item_amounts += 1
 							picker = rand(1,4)
-							items += pick(
-								/obj/item/roboupgrade/physshield,
-								/obj/item/roboupgrade/teleport,
-								// /obj/item/roboupgrade/opticthermal,
-								/obj/item/roboupgrade/speed,
-							)
+							items += pick(/obj/item/roboupgrade/physshield,/obj/item/roboupgrade/teleport,/*
+							/obj/item/roboupgrade/opticthermal,*//obj/item/roboupgrade/speed)
 							item_amounts += 1
 						if(2)
 							items += /obj/item/reagent_containers/glass/beaker/large/antitox
@@ -267,13 +266,10 @@
 
 				// CIVILIAN GOODS LOOT TABLE
 				if (tier == 3)
-					picker = rand(1,3)
+					picker = rand(1,2)
 					switch(picker)
 						if(1)
 							items += /obj/item/clothing/under/gimmick/frog
-							item_amounts += 1
-						if(2)
-							items += /obj/item/clothing/shoes/sandal
 							item_amounts += 1
 						else
 							items += /obj/vehicle/skateboard

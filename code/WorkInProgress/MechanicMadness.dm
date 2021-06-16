@@ -82,7 +82,7 @@
 		user.visible_message("<span class='alert'><b>[user] stares into the [src], trying to make sense of its function!</b></span>")
 		SPAWN_DBG(3 SECONDS)
 			user.visible_message("<span class='alert'><b>[user]'s brain melts!</b></span>")
-			playsound(user, "sound/weapons/phaseroverload.ogg", 100)
+			playsound(get_turf(user), "sound/weapons/phaseroverload.ogg", 100)
 			user.take_brain_damage(69*420)
 		SPAWN_DBG(20 SECONDS)
 			if (user && !isdead(user))
@@ -315,7 +315,7 @@
 				src.updateIcon()
 			LIGHT_UP_HOUSING
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG)
-			playsound(src,'sound/machines/keypress.ogg',30)
+			playsound(get_turf(src),'sound/machines/keypress.ogg',30)
 		else
 			qdel(src) // it's somehow been unanchored or something, kill it
 		return
@@ -1820,7 +1820,7 @@
 		SPAWN_DBG(0)
 			if(src.noise_enabled)
 				src.noise_enabled = false
-				playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
+				playsound(get_turf(src), "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
 				SPAWN_DBG(WIFI_NOISE_COOLDOWN)
 					src.noise_enabled = true
 			src.radio_connection.post_signal(src, sendsig, src.range)
@@ -1847,7 +1847,7 @@
 				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
 					if(src.noise_enabled)
 						src.noise_enabled = false
-						playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
+						playsound(get_turf(src), "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
 						SPAWN_DBG(WIFI_NOISE_COOLDOWN)
 							src.noise_enabled = true
 					src.radio_connection.post_signal(src, pingsignal, src.range)
@@ -2587,7 +2587,6 @@
 			flick(icon_down, src)
 			LIGHT_UP_HOUSING
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
-			logTheThing("station", user, null, "presses the mechcomp button at [log_loc(src)].")
 			return 1
 		return ..(user)
 
@@ -2672,7 +2671,6 @@
 				LIGHT_UP_HOUSING
 				flick(icon_down, src)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, src.active_buttons[selected_button])
-				logTheThing("station", user, null, "presses the mechcomp button [selected_button] at [log_loc(src)].")
 				return 1
 			else
 				boutput(user, "<span class='alert'>[src] has no active buttons - there's nothing to press!</span>")
@@ -2918,11 +2916,11 @@
 				mod_delay /= abs(signum)
 			unReady(mod_delay)
 			flick("comp_instrument1", src)
-			playsound(src, sounds, volume, 0, 0, signum)
+			playsound(get_turf(src), sounds, volume, 0, 0, signum)
 		else
 			unReady(delay)
 			flick("comp_instrument1", src)
-			playsound(src, sounds, volume, 1)
+			playsound(get_turf(src), sounds, volume, 1)
 			return
 
 	updateIcon()

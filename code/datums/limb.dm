@@ -84,13 +84,18 @@
 	proc/attack_range(atom/target, var/mob/user, params)
 		if(user.a_intent == "disarm")
 			if(disarm_special)
-				SEND_SIGNAL(user, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+				for (var/obj/item/cloaking_device/I in user)
+					if (I.active)
+						I.deactivate(user)
+						user.visible_message("<span class='notice'><b>[user]'s cloak is disrupted!</b></span>")
 				disarm_special.pixelaction(target,params,user)
 				.= 1
 		else if (user.a_intent == "harm")
 			if(harm_special)
 				for (var/obj/item/cloaking_device/I in user)
-					SEND_SIGNAL(user, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+					if (I.active)
+						I.deactivate(user)
+						user.visible_message("<span class='notice'><b>[user]'s cloak is disrupted!</b></span>")
 				harm_special.pixelaction(target,params,user)
 				.= 1
 		else
@@ -626,7 +631,7 @@
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(60))
-			target.changeStatus("weakened", 2 SECONDS)
+			target.changeStatus("weakened",20)
 		user.lastattacked = target
 
 /datum/limb/wendigo
@@ -703,7 +708,7 @@
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(35 * quality))
-			target.changeStatus("weakened", (4 * quality) SECONDS)
+			target.changeStatus("weakened", (4 * quality)*10)
 		user.lastattacked = target
 
 // Currently used by the High Fever disease which is obtainable from the "Too Much" chem which only shows up in sickly pears, which are currently commented out. Go there to make use of this.
@@ -1284,7 +1289,6 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	/obj/machinery/weapon_stand,\
 	/obj/dummy/chameleon,\
 	/obj/machinery/light,\
-	/obj/machinery/phone,\
 	/obj/machinery/vending,\
 	/obj/machinery/nuclearbomb,\
 	/obj/item/gun/kinetic/airzooka,\

@@ -1,11 +1,10 @@
-
-/// handles timed player actions
-/datum/controller/process/actions
-	var/datum/controller/process/actions/action_controller
+// handles timed player actions
+datum/controller/process/actions
+	var/action_controller
 
 	setup()
 		name = "Actions"
-		schedule_interval = 0.5 SECONDS
+		schedule_interval = 5
 
 		action_controller = actions
 
@@ -14,4 +13,4 @@
 		src.action_controller = old_actions.action_controller
 
 	doWork()
-		action_controller.process()
+		actions.process()

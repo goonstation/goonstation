@@ -205,7 +205,7 @@
 			if(dy < 0) items_screen++
 			else items_screen--
 			update_equipment()
-	relay_click(id)
+	clicked(id)
 		if (!master)
 			return
 		switch (id)

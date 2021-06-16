@@ -5,8 +5,7 @@ var/global/ocean_reagent_id = "water"
 var/global/ocean_name = "ocean"
 var/global/datum/color/ocean_color = 0
 
-/// Processes fluid turfs
-/datum/controller/process/fluid_turfs
+datum/controller/process/fluid_turfs
 	var/tmp/list/processing_fluid_turfs
 	var/add_reagent_amount = 500
 	var/do_light_gen = 1
@@ -38,7 +37,7 @@ var/global/datum/color/ocean_color = 0
 
 	setup()
 		name = "Fluid_Turfs"
-		schedule_interval = 5 SECONDS
+		schedule_interval = 50
 
 		src.processing_fluid_turfs = global.processing_fluid_turfs
 

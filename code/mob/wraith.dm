@@ -40,7 +40,6 @@
 	//probably will change these around, but these might be alright to start. -kyle
 	var/holy_water_tol = 0		//unused presently
 	var/formaldehyde_tol = 25
-	var/weak_tk = FALSE			//if their click-drag TK is strong or not. Poltergeists prolly should not have strong tk, mebe one day.
 
 	var/datum/movement_controller/movement_controller
 
@@ -72,7 +71,7 @@
 	New(var/mob/M)
 		. = ..()
 		src.poltergeists = list()
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
+		src.invisibility = 16
 		//src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.sight |= SEE_SELF // let's not make it see through walls
 		src.see_invisible = 16
@@ -192,7 +191,7 @@
 			src.transforming = 1
 			src.canmove = 0
 			src.icon = null
-			APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+			src.invisibility = 101
 
 			if (client) client.color = null
 
@@ -515,7 +514,7 @@
 		makeCorporeal()
 			if (!src.density)
 				src.set_density(1)
-				REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
+				src.invisibility = 0
 				src.alpha = 255
 				src.see_invisible = 0
 				src.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
@@ -524,7 +523,7 @@
 			if (src.density)
 				src.visible_message(pick("<span class='alert'>[src] vanishes!</span>", "<span class='alert'>The wraith dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
 				src.set_density(0)
-				APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
+				src.invisibility = 10
 				src.alpha = 160
 				src.see_invisible = 16
 

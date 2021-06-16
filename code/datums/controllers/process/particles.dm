@@ -1,11 +1,9 @@
-
-/// Controls the particle system
-/datum/controller/process/particles
+datum/controller/process/particles
 	var/datum/particleMaster/master
 
 	setup()
 		name = "Particles"
-		schedule_interval = 1 SECOND
+		schedule_interval = 10
 
 		// putting this in a var so main loop varedit can get into the particleMaster
 		master = particleMaster

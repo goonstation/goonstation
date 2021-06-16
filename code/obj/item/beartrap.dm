@@ -64,8 +64,9 @@
 		..()
 		return
 
-	proc/arm(mob/M)
+	proc/arm(var/proc_args)
 		if (!src.armed)
+			var/mob/M = proc_args[1]
 			logTheThing("combat", src, null, "armed a beartrap at [src.loc]")
 			set_icon_state("bear_trap-open")
 			M.drop_item(src)
@@ -74,7 +75,7 @@
 			playsound(src.loc, "sound/weapons/handcuffs.ogg", 30, 1, -3)
 		return
 
-	proc/disarm(mob/M)
+	proc/disarm(var/proc_args)
 		if (src.armed)
 			playsound(src.loc, "sound/weapons/handcuffs.ogg", 30, 1, -3)
 			set_icon_state("bear_trap-close")

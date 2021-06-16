@@ -327,7 +327,8 @@
 		if (src.alive && (user.a_intent != INTENT_HARM))
 			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
 			if(prob(10))
-				src.audible_message("[src] purrs!",2)
+				for(var/mob/O in hearers(src, null))
+					O.show_message("[src] purrs!",2)
 			return
 		else
 			..()
@@ -510,7 +511,8 @@
 			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
 			if(prob(30))
 				src.icon_state = "[src.doggy]-lying"
-				src.visible_message("<span class='notice'><B>[src]</B> flops on his back! Scratch that belly!</span>",2)
+				for(var/mob/O in hearers(src, null))
+					O.show_message("<span class='notice'><B>[src]</B> flops on his back! Scratch that belly!</span>",2)
 				SPAWN_DBG(3 SECONDS)
 				src.icon_state = "[src.doggy]"
 			return
@@ -522,9 +524,11 @@
 	CritterDeath()
 		..()
 		src.icon_state = "[src.doggy]-lying"
-		src.visible_message("<span class='combat'><b>[src]</b> [pick("tires","tuckers out","gets pooped")] and lies down!</span>")
+		for(var/mob/O in hearers(src, null))
+			O.show_message("<span class='combat'><b>[src]</b> [pick("tires","tuckers out","gets pooped")] and lies down!</span>")
 		SPAWN_DBG(1 MINUTE)
-			src.visible_message("<span class='notice'><b>[src]</b> wags his tail and gets back up!</span>")
+			for(var/mob/O in hearers(src, null))
+				O.show_message("<span class='notice'><b>[src]</b> wags his tail and gets back up!</span>")
 			src.alive = 1
 			set_density(1)
 			src.health = 100
@@ -532,8 +536,10 @@
 		return
 
 	proc/howl()
-		src.audible_message("<span class='combat'><b>[src]</b> [pick("howls","bays","whines","barks","croons")] to the music! He thinks he's singing!</span>")
-		playsound(src, "sound/voice/animal/howl[rand(1,6)].ogg", 100, 0)
+		if(prob(60))
+			for(var/mob/O in hearers(src, null))
+				O.show_message("<span class='combat'><b>[src]</b> [pick("howls","bays","whines","barks","croons")] to the music! He thinks he's singing!</span>")
+			playsound(get_turf(src), pick("sound/voice/animal/howl1.ogg","sound/voice/animal/howl2.ogg","sound/voice/animal/howl3.ogg","sound/voice/animal/howl4.ogg","sound/voice/animal/howl5.ogg","sound/voice/animal/howl6.ogg"), 100, 0)
 
 /obj/critter/dog/george/blair
 	name = "Blair"
@@ -626,7 +632,8 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	on_pet(mob/user)
 		..()
 		if(prob(10))
-			src.audible_message("[src] purrs!",2)
+			for(var/mob/O in hearers(src, null))
+				O.show_message("[src] purrs!",2)
 
 /obj/critter/owl
 	name = "space owl"
@@ -686,12 +693,12 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 			SPAWN_DBG(1 MINUTE)
 				src.visible_message("<span class='alert'><B>The [src] suddenly regurgitates something!</B></span>")
-				playsound(src, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
+				playsound(get_turf(src), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 				make_cleanable( /obj/decal/cleanable/greenpuke,src.loc)
 
 				for(var/turf/T in range(src, 2))
 					if(prob(20))
-						playsound(src, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
+						playsound(get_turf(src), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 						make_cleanable( /obj/decal/cleanable/greenpuke,T)
 
 				new /obj/item/power_stones/Owl(src.loc)
@@ -758,7 +765,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		if (task == "thinking" || task == "wandering")
 			if (prob(20))
 				if (!src.muted)
-					src.audible_message("<b>[src]</b> honks!")
+					src.visible_message("<b>[src]</b> honks!")
 				playsound(src.loc, "sound/voice/animal/goose.ogg", 70, 1)
 		else
 			if (prob(20))
@@ -789,7 +796,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	on_pet(mob/user)
 		..()
 		if(prob(10))
-			src.audible_message("<b>[src]</b> honks!",2)
+			src.visible_message("<b>[src]</b> honks!",2)
 			playsound(src.loc, "sound/voice/animal/goose.ogg", 50, 1)
 
 	patrol_to(var/turf/towhat)
@@ -964,7 +971,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 	proc/say(var/text) // mehhh
 		var/my_verb = pick("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles")
-		src.audible_message("<span class='game say'><span class='name'>[src]</span> [my_verb], [text]</span>")
+		src.visible_message("<span class='game say'><span class='name'>[src]</span> [my_verb], [text]</span>")
 
 	proc/take_stuff()
 		if (src.treasure)
@@ -1085,7 +1092,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			if (prob(src.chatter_chance) && !src.muted)
 				src.chatter(rand(1))
 			if (prob(5) && !src.muted)
-				src.audible_message("<span class='notice'><b>[src]</b> [pick("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles", "fusses", "preens", "clicks its beak", "fluffs up", "poofs up")]!</span>")
+				src.visible_message("<span class='notice'><b>[src]</b> [pick("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles", "fusses", "preens", "clicks its beak", "fluffs up", "poofs up")]!</span>")
 			if (prob(15))
 				flick("[src.species]-flaploop", src)
 			//if (prob(1) && prob(22) && (src.last_feather_time + 3000) <= world.time)
@@ -1723,7 +1730,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 					if (E)
 						src.visible_message("<span class='combat'><B>[src] [pick("tears","yanks","rips")] [M]'s eye out! <i>Holy shit!!</i></B></span>")
 						E = H.drop_organ(chosen_eye)
-						playsound(M, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
+						playsound(get_turf(M), "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 						E.set_loc(src.loc)
 			if (isliving(M))
 				var/mob/living/H = M
@@ -1938,8 +1945,8 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			var/toweak = rand(0,3)
 			if (toweak)
 				M.visible_message("<span class='combat'><B>[M]</B> trips!</span>")
-			M.changeStatus("stunned", tostun SECONDS)
-			M.changeStatus("weakened", toweak SECONDS)
+			M.changeStatus("stunned", tostun * 10)
+			M.changeStatus("weakened", toweak * 10)
 
 	CritterAttack(mob/M)
 		..()
@@ -1960,7 +1967,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				src.lying = 0
 				src.wanderer = initial(src.wanderer)
 			src.visible_message("<span class='combat'><b>[user]</b> swings at [src], but misses!</span>")
-			playsound(src, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 0)
+			playsound(get_turf(src), "sound/impact_sounds/Generic_Swing_1.ogg", 50, 0)
 			return
 		else
 			return ..()

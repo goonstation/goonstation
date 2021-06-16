@@ -266,11 +266,18 @@
 	if(subject.traitHolder && length(subject.traitHolder.traits))
 		R.fields["traits"] = subject.traitHolder.traits.Copy()
 
-	var/obj/item/implant/cloner/imp = new(subject)
-	imp.implanted = TRUE
-	imp.owner = subject
-	subject.implant.Add(imp)
-	R.fields["imp"] = "\ref[imp]"
+	//Add an implant if needed
+	var/obj/item/implant/health/imp = locate(/obj/item/implant/health, subject)
+	if (isnull(imp))
+		imp = new /obj/item/implant/health(subject)
+		imp.implanted = 1
+		imp.owner = subject
+		subject.implant.Add(imp)
+//		imp.implanted = subject // this isn't how this works with new implants sheesh
+		R.fields["imp"] = "\ref[imp]"
+	//Update it if needed
+	else
+		R.fields["imp"] = "\ref[imp]"
 
 	if (!isnull(subjMind)) //Save that mind so traitors can continue traitoring after cloning.
 		R.fields["mind"] = subjMind
@@ -570,11 +577,11 @@ proc/find_ghost_by_key(var/find_key)
 	proc/set_lock(var/lock_status)
 		if(lock_status && !locked)
 			locked = 1
-			playsound(src, 'sound/machines/click.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			bo(occupant, "<span class='alert'>\The [src] locks shut!</span>")
 		else if(!lock_status && locked)
 			locked = 0
-			playsound(src, 'sound/machines/click.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
 			bo(occupant, "<span class='notice'>\The [src] unlocks!</span>")
 
 	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -623,7 +630,7 @@ proc/find_ghost_by_key(var/find_key)
 		process_timer = timer_length
 		set_lock(1)
 		bo(occupant, "<span style='color:red;font-weight:bold'>A whirling blade slowly begins descending upon you!</span>")
-		playsound(src, 'sound/machines/mixer.ogg', 50, 1)
+		playsound(get_turf(src), 'sound/machines/mixer.ogg', 50, 1)
 		SubscribeToProcess()
 
 	proc/start_strip()
@@ -662,7 +669,7 @@ proc/find_ghost_by_key(var/find_key)
 		src.occupant.TakeDamage(zone="All", brute=damage)
 		bleed(occupant, damage * 2, 0)
 		if(prob(50))
-			playsound(src, 'sound/machines/mixer.ogg', 50, 1)
+			playsound(get_turf(src), 'sound/machines/mixer.ogg', 50, 1)
 		if(prob(30))
 			SPAWN_DBG(0.3 SECONDS)
 				playsound(src.loc, pick('sound/impact_sounds/Flesh_Stab_1.ogg', \
@@ -682,7 +689,7 @@ proc/find_ghost_by_key(var/find_key)
 		if(to_remove)
 			if(prob(70))
 				bo(occupant, "<span class='alert'>\The arms [pick("snatch", "grab", "steal", "remove", "nick", "blag")] your [to_remove.name]!</span>")
-				playsound(src, "sound/misc/rustle[rand(1,5)].ogg", 50, 1)
+				playsound(get_turf(src), "sound/misc/rustle[rand(1,5)].ogg", 50, 1)
 			to_remove.set_loc(src.loc)
 		else
 			if(automatic_sequence)
@@ -764,6 +771,10 @@ proc/find_ghost_by_key(var/find_key)
 				src.diskette = null
 				. = TRUE
 		if("load")
+			if (src.diskette.read_only)
+				// The file needs to be deleted from the disk after loading the record
+				show_message("Load error - cannot transfer clone records from a disk in read only mode.", "warning")
+				. = TRUE
 
 			var/loaded = 0
 
@@ -774,10 +785,7 @@ proc/find_ghost_by_key(var/find_key)
 					src.records += R
 					loaded++
 					show_message("Load successful, [loaded] [loaded > 1 ? "records" : "record"] transferred.", "success")
-					var/read_only = src.diskette.read_only
-					src.diskette.read_only = 0
 					src.diskette.root.remove_file(cloneRecord)
-					src.diskette.read_only = read_only
 					. = TRUE
 
 			if(!loaded)
@@ -840,10 +848,10 @@ proc/find_ghost_by_key(var/find_key)
 	var/list/recordsTemp = list()
 	for (var/r in records)
 		var/saved = FALSE
-		var/obj/item/implant/cloner/implant = locate(r["fields"]["imp"])
+		var/obj/item/implant/health/H = locate(r["fields"]["imp"])
 		var/currentHealth = ""
-		if(istype(implant))
-			currentHealth = implant.getHealthList()
+		if ((H) && istype(H))
+			currentHealth = H.getHealthList()
 		if(src.diskette) // checks if saved to disk
 			for (var/datum/computer/file/clone/F in src.diskette.root.contents)
 				if(F.fields["ckey"] == r["fields"]["ckey"])
@@ -854,7 +862,7 @@ proc/find_ghost_by_key(var/find_key)
 			id = r["fields"]["id"],
 			ckey = r["fields"]["ckey"],
 			health = currentHealth,
-			implant = !isnull(implant),
+			implant = !isnull(H),
 			saved = saved
 		)))
 

@@ -1,6 +1,5 @@
 
-/// Controls mob UI, like stamina and abilityholders
-/datum/controller/process/mob_ui
+datum/controller/process/mob_ui
 	setup()
 		name = "Mob UI"
 		schedule_interval = 1 SECOND

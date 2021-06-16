@@ -239,7 +239,7 @@
 							if (A == src || A == pushing)
 								continue
 							if (!isturf(A.loc) || A.anchored)
-								continue // whoops
+								return // whoops
 							A.animate_movement = SYNC_STEPS
 							A.glide_size = glide
 							step(A, get_dir(A, old_loc))

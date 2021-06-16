@@ -180,7 +180,6 @@ var/datum/respawn_controls/respawn_controller
 
 			return
 
-		logTheThing("debug", usr, null, "used a timed respawn.")
 		logTheThing("diary", usr, null, "used a timed respawn.", "game")
 
 		var/mob/new_player/M = new()

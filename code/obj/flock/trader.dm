@@ -368,7 +368,7 @@
 	trader.greet(user)
 
 /obj/flock_reclaimer/attackby(obj/item/W as obj, mob/user as mob)
-	if(!W || !user || W.cant_drop)
+	if(!W || !user)
 		return
 	if(istype(W, /obj/item/grab))
 		boutput(user, "<span class='alert'>You can't fit them into this, sadly.</span>")

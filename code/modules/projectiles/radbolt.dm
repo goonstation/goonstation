@@ -36,5 +36,3 @@ toxic - poisons
 	window_pass = 1
 	//no visible message upon bullet_act and no armor block message
 	silentshot = 1
-	//Prevent impact effect
-	ie_type = null

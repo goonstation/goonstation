@@ -138,7 +138,7 @@
 					if (HH.blood_volume < 300 && prob(15))
 						if (!HH.getStatusDuration("paralysis"))
 							boutput(HH, __red("Your vision fades to blackness."))
-						HH.changeStatus("paralysis", 10 SECONDS)
+						HH.changeStatus("paralysis", 100)
 					else
 						if (prob(65))
 							HH.changeStatus("weakened", 1 SECOND)
@@ -296,7 +296,7 @@
 					if (HH.blood_volume < 300 && prob(15))
 						if (!HH.getStatusDuration("paralysis"))
 							boutput(HH, __red("Your vision fades to blackness."))
-						HH.changeStatus("paralysis", 10 SECONDS)
+						HH.changeStatus("paralysis", 100)
 					else
 						if (prob(65))
 							HH.changeStatus("weakened", 1 SECOND)

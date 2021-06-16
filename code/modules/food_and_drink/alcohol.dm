@@ -1,6 +1,6 @@
 
 /obj/item/reagent_containers/food/drinks/bottle/beer
-	name = "space beer"
+	name = "Space Beer"
 	desc = "Beer. in space."
 	icon_state = "bottle-brown"
 	item_state = "beer"
@@ -17,7 +17,7 @@
 	unbreakable = 1
 
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer
-	name = "fancy beer"
+	name = "Fancy Beer"
 	desc = "Some kind of fancy-pants IPA or lager or ale. Some sort of beer-type thing."
 	icon_state = "bottle-green"
 	initial_volume = 50
@@ -49,7 +49,7 @@
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
 /obj/item/reagent_containers/food/drinks/bottle/wine
-	name = "wine"
+	name = "Wine"
 	desc = "Not to be confused with pubbie tears."
 	icon_state = "bottle-wine"
 	heal_amt = 1
@@ -119,7 +119,6 @@
 	initial_reagents = list("champagne"=30)
 	module_research = list("vice" = 5)
 	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
-	var/makes_shards_on_break = 1
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if (istype(O, /obj/machinery/vehicle) || istype(O, /obj/vehicle) && user.a_intent == "harm")
@@ -130,9 +129,8 @@
 			if (prob(50))
 				user.visible_message("<span class='alert'><b>[user]</b> hits [O] with [src], shattering it open!</span>")
 				playsound(U, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
-				if (makes_shards_on_break)
-					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-					G.set_loc(U)
+				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+				G.set_loc(U)
 				src.broken = 1
 				src.reagents.reaction(U)
 				src.create_reagents(0)
@@ -162,11 +160,9 @@
 		module_research = list("vice" = 5)
 		module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
-	breakaway_glass
-		makes_shards_on_break = 0
 
 /obj/item/reagent_containers/food/drinks/bottle/cider
-	name = "cider"
+	name = "Cider"
 	desc = "Made from apples."
 	icon_state = "bottle-green"
 	heal_amt = 1
@@ -179,7 +175,7 @@
 	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/bottle/rum
-	name = "rum"
+	name = "Rum"
 	desc = "Yo ho ho and all that."
 	bottle_style = "spicedrum"
 	fluid_style = "spicedrum"
@@ -192,7 +188,7 @@
 	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/rum_spaced
-	name = "spaced rum"
+	name = "Spaced Rum"
 	desc = "Rum which has been exposed to cosmic radiation. Don't worry, radiation does everything!"
 	icon_state = "rum"
 	heal_amt = 1
@@ -211,7 +207,7 @@
 	module_research = list("vice" = 5)
 
 /obj/item/reagent_containers/food/drinks/bottle/mead
-	name = "mead"
+	name = "Mead"
 	desc = "A pillager's tipple."
 	icon_state = "bottle-barf"
 	heal_amt = 1
@@ -236,7 +232,7 @@
 	module_research = list("vice" = 2)
 
 /obj/item/reagent_containers/food/drinks/bottle/vodka
-	name = "vodka"
+	name = "Vodka"
 	desc = "Russian stuff. Pretty good quality."
 	icon_state = "bottle-vodka"
 	bottle_style = "vodka"
@@ -254,7 +250,7 @@
 	bottle_style = "vr_vodka"
 
 /obj/item/reagent_containers/food/drinks/bottle/tequila
-	name = "tequila"
+	name = "Tequila"
 	desc = "Guadalajara is a crazy place, man, lemme tell you."
 	icon_state = "bottle-tequila"
 	bottle_style = "tequila"
@@ -269,7 +265,7 @@
 	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/bottle/gin
-	name = "gin"
+	name = "Gin"
 	desc = "Gin is technically just a kind of alcohol that tastes strongly of juniper berries. Would juniper-flavored vodka count as a gin?"
 	icon_state = "bottle-gin"
 	bottle_style = "gin"
@@ -327,7 +323,7 @@
 	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/moonshine
-	name = "jug of moonshine"
+	name = "Jug of Moonshine"
 	desc = "A jug of an illegaly brewed alchoholic beverage, which is quite potent."
 	icon_state = "moonshine"
 	heal_amt = 1
@@ -337,8 +333,8 @@
 	module_research = list("vice" = 100)
 
 /obj/item/reagent_containers/food/drinks/curacao
-	name = "curaçao liqueur"
-	desc = "A bottle of curaçao liqueur, made from the dried peels of the bitter orange Lahara."
+	name = "Curacao Liqueur"
+	desc = "A bottle of curacao liqueur, made from the dried peels of the bitter orange Lahara."
 	icon_state = "curacao"
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
@@ -462,5 +458,6 @@
 	heal_amt = 1
 	g_amt = 60
 	initial_volume = 50
+
 
 

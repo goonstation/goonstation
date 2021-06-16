@@ -268,7 +268,7 @@
 		var/g = hex2num(copytext(owner.color, 4, 6))
 		var/b = hex2num(copytext(owner.color, 6))
 		var/hsv = rgb2hsv(r,g,b)
-		owner.organ_color = hsv2rgb( hsv[1], hsv[2], 100 )
+		owner.organ_color = hsv2rgb( hsv[1], hsv[2], 1 )
 
 		owner.my_material.color = owner.color
 
@@ -341,17 +341,13 @@
 		B2.setOvermind(owner)
 
 		if (owner.blobs.len < 100)
-			cooldown_time = 15
+			cooldown_time = max(15 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
 		else if (owner.blobs.len < 200)
-			cooldown_time = 20
+			cooldown_time = max(20 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
 		else
-			cooldown_time = 25
-		var/mindist = 127
-		for_by_tcl(nucleus, /obj/blob/nucleus)
-			if(nucleus.overmind == owner)
-				mindist = min(mindist, get_dist(T, get_turf(nucleus)))
+			cooldown_time = max(25 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
 
-		cooldown_time = max(cooldown_time + mindist * 0.5 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 6)
+		cooldown_time = max(cooldown_time, 6)
 
 		var/extra_spreads = round(owner.multi_spread / 100) + (prob(owner.multi_spread % 100) ? 1 : 0)
 		if (extra_spreads)
@@ -508,10 +504,6 @@
 		var/obj/blob/B = T.get_blob_on_this_turf()
 
 		if (B)
-			if(ON_COOLDOWN(B, "manual_blob_heal", 6 SECONDS))
-				boutput(owner, "<span class='alert'>That blob tile needs time before it can be repaired again.</span>")
-				return
-
 			B.heal_damage(20)
 			B.update_icon()
 			owner.playsound_local(owner.loc, "sound/voice/blob/blobheal[rand(1, 3)].ogg", 50, 1)
@@ -636,8 +628,10 @@
 		if (blob_o?.mind) //ahem ahem AI blobs exist
 			blob_o.mind.blob_absorb_victims += H
 
-		if (!isnpcmonkey(H) || prob(50))
-			blob_o.evo_points += 2
+		if (isnpcmonkey(H))
+			blob_o.evo_points += 1
+		else
+			blob_o.evo_points += 4
 			playsound(H.loc, "sound/voice/blob/blobsucced.ogg", 100, 1)
 		//This is all the animation and stuff making the effect look good crap. Not much to see here.
 
@@ -1171,8 +1165,8 @@
 	name = "Passive: Quicker Spread"
 	icon_state = "blob-quickspread"
 	desc = "Reduces the cooldown of your Spread ability by 1 second. Can be repeated. The cooldown of Spread cannot go below 1 second."
-	evo_point_cost = 3
-	scaling_cost_add = 4
+	evo_point_cost = 2
+	scaling_cost_add = 3
 	repeatable = -1
 	upgradename = "spread"
 

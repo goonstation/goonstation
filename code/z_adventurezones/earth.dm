@@ -253,9 +253,6 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	tarmunora
 		ckey = "tarmunora"
 		name = "Office of yass"
-	tterc
-		ckey = "tterc"
-		name = "Office of Caroline Audibert"
 	urs
 		ckey = "ursulamajor"
 		name = "Office of UrsulaMajor"

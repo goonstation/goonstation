@@ -200,15 +200,20 @@ THROWING DARTS
 /* ------------------------- Implants ------------------------- */
 /* ============================================================ */
 
-/obj/item/implant/cloner
-	name = "cloner record implant"
+/obj/item/implant/health
+	name = "health implant"
 	icon_state = "implant-b"
 	impcolor = "b"
-	var/area/scanned_here
+	//life_tick_energy = 0.1
+	var/healthstring = ""
+	uses_radio = 1
+	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
 
-	New()
+
+	implanted(mob/M, mob/I)
 		..()
-		src.scanned_here = get_area(src)
+		if (!isdead(M) && M.client)
+			JOB_XP(I, "Medical Doctor", 5)
 
 	proc/getHealthList()
 		var/healthlist = list()
@@ -227,20 +232,6 @@ THROWING DARTS
 				healthlist["BRUTE"] = round(L.get_brute_damage())
 		return healthlist
 
-
-/obj/item/implant/health
-	name = "health implant"
-	icon_state = "implant-b"
-	impcolor = "b"
-	var/healthstring = ""
-	uses_radio = 1
-	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
-
-	implanted(mob/M, mob/I)
-		..()
-		if (!isdead(M) && M.client)
-			JOB_XP(I, "Medical Doctor", 5)
-
 	proc/sensehealth()
 		if (!src.implanted)
 			return "ERROR"
@@ -252,6 +243,11 @@ THROWING DARTS
 			if (!src.healthstring)
 				src.healthstring = "ERROR"
 			return src.healthstring
+
+	// add gps info proc here if tracker exists
+
+	//implanted(var/mob/M, var/mob/I)
+		//..()
 
 	activate()
 		..()
@@ -299,9 +295,13 @@ THROWING DARTS
 		death_alert()
 		..()
 
+//	on_remove(var/mob/living/carbon/human/H)
+//		..()
+
 	proc/health_alert()
 		if (!src.owner)
 			return
+		//DEBUG_MESSAGE("implant reporting crit")
 		src.send_message("HEALTH ALERT: [src.owner][src.get_coords()] in [get_area(src)]: [src.sensehealth()]", MGA_MEDCRIT, "HEALTH-MAILBOT")
 
 	proc/death_alert()
@@ -309,18 +309,23 @@ THROWING DARTS
 			return
 		var/coords = src.get_coords()
 		var/myarea = get_area(src)
-		var/list/cloner_areas = list()
-		for(var/obj/item/implant/cloner/cl_implant in src.owner)
-			if(cl_implant.owner != src.owner)
-				continue
-			cloner_areas += "[cl_implant.scanned_here]"
+		var/has_record = src.check_for_valid_record()
 		var/message = "DEATH ALERT: [src.owner][coords] in [myarea], " //youre lucky im not onelining this
-		if (he_or_she(src.owner) == "they")
-			message += "they " + (length(cloner_areas) ? "have been clone-scanned in [jointext(cloner_areas, ", ")]." : "do not have a cloning record.")
-		else
-			message += he_or_she(src.owner) + " " + (length(cloner_areas) ? "has been clone-scanned in [jointext(cloner_areas, ", ")]." : "does not have a cloning record.")
+		if (has_record) //the title for this next section of code is grammar sucks
+			if (he_or_she(src.owner) == "they")
+				message += "they [has_record ? "have a record in the cloner at [has_record]" : "do not have a cloning record." ]"
+			else
+				message += "[has_record ? "genetic record detected in cloning console at [has_record]" : "genetic record not detected."]"
 
+		//DEBUG_MESSAGE("implant reporting death")
 		src.send_message(message, MGA_DEATH, "HEALTH-MAILBOT")
+
+	proc/check_for_valid_record() //returns the area of the cloner where we found our valid record - jank, but idk
+		if (src.owner && src.owner.ckey)
+			for_by_tcl(comp, /obj/machinery/computer/cloning)
+				if (comp.find_record(src.owner.ckey))
+					return get_area(comp)
+		return null
 
 /obj/item/implant/health/security
 	name = "health implant - security issue"
@@ -570,8 +575,7 @@ THROWING DARTS
 					throwjunk += I
 
 			SPAWN_DBG(0) //Delete the overlay when finished with it.
-				if(!QDELETED(source))
-					source?.gib()
+				source?.gib()
 
 				for(var/obj/O in throwjunk) //Throw this junk around
 					var/edge = get_edge_target_turf(T, pick(alldirs))
@@ -1631,7 +1635,6 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	hit_type = DAMAGE_STAB
 	casing = /obj/item/casing/small
 	icon_turf_hit = "bhole-small"
-	shot_number = 1
 	//silentshot = 1
 	var/obj/item/implant/my_implant = null
 	var/mob/implant_master = null

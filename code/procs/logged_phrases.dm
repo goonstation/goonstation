@@ -35,7 +35,7 @@ var/global/datum/phrase_log/phrase_log = new
 	var/list/original_lengths
 	var/list/cached_api_phrases
 	var/regex/uncool_words
-	var/api_cache_size = 40
+	var/api_cache_size = 20
 	var/static/regex/non_freeform_laws
 	var/static/regex/name_regex = new(@"\b[A-Z][a-z]* [A-Z][a-z]*\b", "g")
 
@@ -59,12 +59,7 @@ var/global/datum/phrase_log/phrase_log = new
 			"daddy",
 			"uwu",
 			"owo",
-			"non.?human",
-			"overrides.*1",
-			"\\bkill\\b",
-			"suicide",
-			"turn yourself",
-			"murder")
+			"non.?human")
 		non_freeform_laws = regex(jointext(non_freeform_laws_list, "|"))
 
 	proc/load()
@@ -172,7 +167,7 @@ var/global/datum/phrase_log/phrase_log = new
 		var/datum/data/record/record = pick(data_core.general)
 		return record.fields["name"]
 
-	proc/random_custom_ai_law(max_tries=20, replace_names=FALSE)
+	proc/random_custom_ai_law(max_tries=10, replace_names=FALSE)
 		while(max_tries-- > 0)
 			. = src.random_api_phrase("ai_laws")
 			if(length(.) && !findtext(., src.non_freeform_laws))

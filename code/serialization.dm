@@ -2,8 +2,7 @@
 	var/list/context = list()
 
 /proc/icon_serializer(var/savefile/F, var/path, var/datum/sandbox/sandbox, var/icon, var/icon_state)
-	var/iname = "[icon]" || "ref[copytext(ref(icon), 4, 11)]"
-	// the ref bit is for procedurally generated icons
+	var/iname = "[icon]"
 	F["[path].icon"] << iname
 	F["[path].icon_state"] << icon_state
 	if (!("icon" in sandbox.context))

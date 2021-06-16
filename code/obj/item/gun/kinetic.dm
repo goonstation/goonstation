@@ -40,8 +40,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	examine()
 		. = ..()
 		if (src.ammo && (src.ammo.amount_left > 0))
-			var/datum/projectile/ammo_type = src.ammo.ammo_type
-			. += "There are [src.ammo.amount_left][(ammo_type.material && istype(ammo_type.material, /datum/material/metal/silver)) ? " silver " : " "]bullets of [src.ammo.sname] left!"
+			var/datum/projectile/ammo_type = src.ammo
+			. += "There are [src.ammo.amount_left][(ammo_type.material && istype(ammo_type, /datum/material/metal/silver)) ? " silver " : " "]bullets of [src.ammo.sname] left!"
 		else
 			. += "There are 0 bullets left!"
 		if (current_projectile)
@@ -161,8 +161,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.ejectcasings()
 			src.casings_to_eject = 0
 
-			src.ammo.amount_left = 0
 			src.update_icon()
+			src.ammo.amount_left = 0
 			src.add_fingerprint(user)
 			ammoHand.add_fingerprint(user)
 
@@ -893,7 +893,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
 				return
 			else
-				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"", null)
+				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"")
 				return
 		else
 			..()
@@ -1026,23 +1026,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 		ammo.amount_left = 0
 		update_icon()
-
-/obj/item/gun/kinetic/pistol/smart/mkII
-	name = "\improper Hydra smart pistol"
-	desc = "A pistol capable of locking onto multiple targets and firing on them in rapid sequence. \"Anderson Para-Munitions\" is engraved on the slide."
-	icon_state = "smartgun"
-	max_ammo_capacity = 24
-
-	New()
-		..()
-		ammo = new/obj/item/ammo/bullets/bullet_9mm/smartgun
-		set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smartgun)
-		AddComponent(/datum/component/holdertargeting/smartgun/nukeop, 3)
-
-
-/datum/component/holdertargeting/smartgun/nukeop/is_valid_target(mob/user, mob/M)
-	return ..() && !istype(M.get_id(), /obj/item/card/id/syndicate)
-
 /obj/item/gun/kinetic/smg
 	name = "Bellatrix submachine gun"
 	desc = "A semi-automatic, 9mm submachine gun, developed by Almagest Weapons Fabrication."
@@ -1262,7 +1245,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
 				return
 			else
-				SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECONDS, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"", null)
+				SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECONDS, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"")
 				return
 		else
 			..()
@@ -1490,7 +1473,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		src.keys_changed(0,0xFFFF)
 		if(!src.hasOverlayComposition(/datum/overlayComposition/sniper_scope))
 			src.addOverlayComposition(/datum/overlayComposition/sniper_scope)
-		playsound(src, "sound/weapons/scope.ogg", 50, 1)
+		playsound(get_turf(src), "sound/weapons/scope.ogg", 50, 1)
 		break
 
 
@@ -1726,20 +1709,3 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			icon_state="guncase"
 		else
 			icon_state="secure"
-
-/obj/item/gun/kinetic/foamdartgun
-	name = "Foam Dart Gun"
-	icon_state = "foamdartgun"
-	desc = "A toy gun that fires foam darts. Keep out of reach of clowns, staff assistants and scientists."
-	w_class = W_CLASS_SMALL
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	item_state = "toygun"
-	contraband = 1
-	force = 1
-	caliber = 0.393
-	max_ammo_capacity = 10
-
-	New()
-		ammo = new/obj/item/ammo/bullets/foamdarts/ten
-		set_current_projectile(new/datum/projectile/bullet/foamdart)
-		..()

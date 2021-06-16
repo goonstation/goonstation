@@ -50,7 +50,6 @@
 	var/sleeping = 0
 	var/waking = 0
 	var/datum/sea_hotspot/my_hotspot = null
-	exclude_from_mobs_list = 1
 
 /datum/aiHolder/aquatic/fish/New()
 	..()

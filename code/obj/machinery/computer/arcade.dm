@@ -101,10 +101,7 @@
 	onclose(user, "arcade")
 
 /obj/machinery/computer/arcade/Topic(href, href_list)
-	//Just check if we're in range for handhelds
-	if(..() && (!istype(src, /obj/machinery/computer/arcade/handheld)))
-		return
-	else if (!in_interact_range(src, usr))
+	if(..())
 		return
 
 	if (!src.blocked)

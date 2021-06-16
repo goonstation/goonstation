@@ -1,15 +1,14 @@
 #!/bin/bash
 set -euo pipefail
 
-touch errors.log
 DreamDaemon goonstation.dmb -once -quiet -close -trusted -verbose -invisible
-if [ -s "errors.log" ]
+touch ./no_runtimes.txt
+sed -i '/^[[:space:]]*$/d' ./no_runtimes.txt
+if [ -s ./no_runtimes.txt ]
 then
-	echo "Errors detected!"
-	sed -i '/^[[:space:]]*$/d' ./errors.log
-	cat errors.log
+	cat ./no_runtimes.txt
 	exit 1
 else
-	echo "No errors detected."
+	echo "No runtimes!"
 	exit 0
 fi

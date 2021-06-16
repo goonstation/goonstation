@@ -665,10 +665,5 @@ var/list/radio_brains = list()
 		if (probmult(20))
 			src.active = !src.active
 		if (src.active)
-			APPLY_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src, INVIS_INFRA)
-		else
-			REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
-
-	OnRemove()
-		REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
-		. = ..()
+			owner.invisibility = 1
+		return

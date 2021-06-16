@@ -412,9 +412,6 @@
 
 /turf/simulated/wall/auto/reinforced/supernorn/yellow
 	icon = 'icons/turf/walls_manta.dmi'
-#ifdef IN_MAP_EDITOR
-	icon_state = "mapwall_r-Y"
-#endif
 	mod = "norn-Y-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -428,9 +425,6 @@
 
 /turf/simulated/wall/auto/reinforced/supernorn/orange
 	icon = 'icons/turf/walls_manta.dmi'
-#ifdef IN_MAP_EDITOR
-	icon_state = "mapwall_r-O"
-#endif
 	mod = "norn-O-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -445,9 +439,6 @@
 
 /turf/simulated/wall/auto/reinforced/supernorn/blackred
 	icon = 'icons/turf/walls_manta.dmi'
-#ifdef IN_MAP_EDITOR
-	icon_state = "mapwall_r-BR"
-#endif
 	mod = "norn-BR-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -678,30 +669,6 @@
 		..()
 		setMaterial(getMaterial("coral"))
 
-// lead wall resprite by skeletonman0.... hooray for smoothwalls!
-ABSTRACT_TYPE(turf/unsimulated/wall/auto/lead)
-/turf/unsimulated/wall/auto/lead
-	name = "lead wall"
-	icon = 'icons/turf/walls_lead.dmi'
-	light_mod = "wall-"
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-	connect_overlay = 1
-	connect_diagonal = 1
-	connects_to = list(/turf/unsimulated/wall/auto/lead,
-	 /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/)
-	connects_with_overlay = list(/obj/machinery/door, /obj/window)
-
-/turf/unsimulated/wall/auto/lead/blue
-	icon_state = "mapiconb"
-	mod = "leadb-"
-
-/turf/unsimulated/wall/auto/lead/gray
-	icon_state = "mapicong"
-	mod = "leadg-"
-
-/turf/unsimulated/wall/auto/lead/white
-	icon_state = "mapiconw"
-	mod = "leadw-"
 
 /datum/action/bar/icon/wall_tool_interact
 	id = "wall_tool_interact"
@@ -739,7 +706,7 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/lead)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
-		if (istype(source) && (the_tool != source.equipped()))
+		if (istype(source) && (the_tool != source.equipped() || isrobot(source)))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -749,22 +716,22 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/lead)
 		switch (interaction)
 			if (WALL_REMOVERERODS)
 				message = "Removing some reinforcing rods."
-				playsound(the_wall, "sound/items/Wirecutter.ogg", 100, 1)
+				playsound(get_turf(the_wall), "sound/items/Wirecutter.ogg", 100, 1)
 			if (WALL_REMOVESUPPORTLINES)
 				message = "Removing support lines."
-				playsound(the_wall, "sound/items/Screwdriver.ogg", 100, 1)
+				playsound(get_turf(the_wall), "sound/items/Screwdriver.ogg", 100, 1)
 			if (WALL_SLICECOVER)
 				message = "Slicing metal cover."
 			if (WALL_REMOVESUPPORTRODS)
 				message = "Removing support rods."
 			if (WALL_PRYCOVER)
 				message = "Prying cover off."
-				playsound(the_wall, "sound/items/Crowbar.ogg", 100, 1)
+				playsound(get_turf(the_wall), "sound/items/Crowbar.ogg", 100, 1)
 			if (WALL_PRYSHEATH)
 				message = "Prying outer sheath off."
-				playsound(the_wall, "sound/items/Crowbar.ogg", 100, 1)
+				playsound(get_turf(the_wall), "sound/items/Crowbar.ogg", 100, 1)
 			if (WALL_DETATCHSUPPORTRODS)
-				playsound(the_wall, "sound/items/Ratchet.ogg", 100, 1)
+				playsound(get_turf(the_wall), "sound/items/Ratchet.ogg", 100, 1)
 				message = "Detaching support rods."
 		owner.visible_message("<span class='notice'>[message].</span>")
 

@@ -69,17 +69,15 @@
 
 // robot legs
 /datum/movement_modifier/robotleg_right
-	health_deficiency_adjustment = -25
+	additive_slowdown = -0.20
 
 /datum/movement_modifier/robotleg_left
-	health_deficiency_adjustment = -25
+	additive_slowdown = -0.20
 
 /datum/movement_modifier/robottread_right
-	health_deficiency_adjustment = -25
 	additive_slowdown = -0.25
 
 /datum/movement_modifier/robottread_left
-	health_deficiency_adjustment = -25
 	additive_slowdown = -0.25
 
 // robot modifiers

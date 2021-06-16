@@ -30,7 +30,11 @@
 		if(check_target_immunity( HH ))
 			M.visible_message("<span class='alert'>You seem to attack [M]!</span>")
 			return 1
-		SEND_SIGNAL(M, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+		if (M.invisibility > 0)
+			for (var/obj/item/cloaking_device/I in M)
+				if (I.active)
+					I.deactivate(M)
+					M.visible_message("<span class='notice'><b>[M]'s cloak is disrupted!</b></span>")
 
 		HH.set_loc(M.loc)
 		M.set_dir(get_dir(M, HH))

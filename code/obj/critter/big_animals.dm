@@ -215,7 +215,7 @@ obj/critter/bear/care
 		M.transforming = 1
 		M.canmove = 0
 		M.icon = null
-		APPLY_MOB_PROPERTY(M, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+		M.invisibility = 101
 		if(ishuman(M))
 			animation = new(src.loc)
 			animation.icon_state = "blank"

@@ -32,6 +32,22 @@
 			APC.cell = null
 		..()
 
+	onMaterialChanged()
+		..()
+		if (istype(src.material))
+			genrate = 0
+			if(src.material.hasProperty("radioactive"))
+				genrate += round((material.getProperty("radioactive") / 6.33))
+			if(src.material.hasProperty("n_radioactive"))
+				genrate += round((material.getProperty("n_radioactive") / 4.33))
+			if(src.material.hasProperty("electrical"))
+				maxcharge = round((src.material.getProperty("electrical") ** 2) * 3.333)
+			else
+				maxcharge = 2500
+
+			charge = maxcharge
+		return
+
 /obj/item/cell/supercell
 	maxcharge = 15000
 
@@ -64,22 +80,6 @@
 	New()
 		..()
 		processing_items |= src
-
-	onMaterialChanged()
-		..()
-		if (istype(src.material))
-			genrate = 0
-			if(src.material.hasProperty("radioactive"))
-				genrate += round((material.getProperty("radioactive") / 6.33))
-			if(src.material.hasProperty("n_radioactive"))
-				genrate += round((material.getProperty("n_radioactive") / 4.33))
-			if(src.material.hasProperty("electrical"))
-				maxcharge = round((src.material.getProperty("electrical") ** 2) * 3.333)
-			else
-				maxcharge = 2500
-
-			charge = maxcharge
-		return
 
 /obj/item/cell/charged
 	charge = 7500

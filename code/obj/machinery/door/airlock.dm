@@ -216,27 +216,24 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	.= ..()
 
 /obj/machinery/door/airlock/command
-	name = "command airlock"
 	icon = 'icons/obj/doors/Doorcom.dmi'
 	req_access = list(access_heads)
 
 /obj/machinery/door/airlock/security
-	name = "security airlock"
 	icon = 'icons/obj/doors/Doorsec.dmi'
 	req_access = list(access_security)
 
 /obj/machinery/door/airlock/engineering
-	name = "engineering airlock"
+	name = "Engineering"
 	icon = 'icons/obj/doors/Dooreng.dmi'
 	req_access = list(access_engineering)
 
 /obj/machinery/door/airlock/medical
-	name = "medical airlock"
 	icon = 'icons/obj/doors/doormed.dmi'
 	req_access = list(access_medical)
 
 /obj/machinery/door/airlock/maintenance
-	name = "maintenance airlock"
+	name = "Maintenance Access"
 	icon = 'icons/obj/doors/Doormaint.dmi'
 	req_access = list(access_maint_tunnels)
 
@@ -285,22 +282,18 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	visible = 0
 
 /obj/machinery/door/airlock/glass/command
-		name = "command airlock"
 		icon = 'icons/obj/doors/Doorcom-glass.dmi'
 		req_access = list(access_heads)
 
 /obj/machinery/door/airlock/glass/engineering
-		name = "engineering airlock"
 		icon = 'icons/obj/doors/Dooreng-glass.dmi'
 		req_access = list(access_engineering)
 
 /obj/machinery/door/airlock/glass/medical
-		name = "medical airlock"
 		icon = 'icons/obj/doors/Doormed-glass.dmi'
 		req_access = list(access_medical)
 
 /obj/machinery/door/airlock/classic
-	name = "large airlock"
 	icon = 'icons/obj/doors/Doorclassic.dmi'
 	sound_airlock = 'sound/machines/airlock.ogg'
 	operation_time = 10
@@ -321,7 +314,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	welded_icon_state = "2_welded"
 
 /obj/machinery/door/airlock/pyro/command
-	name = "command airlock"
+	name = "Command"
 	icon_state = "com_closed"
 	icon_base = "com"
 	req_access = list(access_heads)
@@ -355,7 +348,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 
 /obj/machinery/door/airlock/pyro/security
-	name = "security airlock"
+	name = "Security"
 	icon_state = "sec_closed"
 	icon_base = "sec"
 	req_access = list(access_security)
@@ -368,7 +361,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	req_access = null
 
 /obj/machinery/door/airlock/pyro/engineering
-	name = "engineering airlock"
+	name = "Engineering"
 	icon_state = "eng_closed"
 	icon_base = "eng"
 	req_access = list(access_engineering)
@@ -381,7 +374,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	req_access = null
 
 /obj/machinery/door/airlock/pyro/medical
-	name = "medical airlock"
 	icon_state = "research_closed"
 	icon_base = "research"
 	req_access = list(access_medical)
@@ -408,7 +400,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	req_access = null
 
 /obj/machinery/door/airlock/pyro/mining
-	name = "mining airlock"
 	icon_state = "mining_closed"
 	icon_base = "mining"
 	panel_icon_state = "2_panel_open"
@@ -416,7 +407,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	req_access = null
 
 /obj/machinery/door/airlock/pyro/maintenance
-	name = "maintenance airlock"
+	name = "maintenance access"
 	icon_state = "maint_closed"
 	icon_base = "maint"
 	req_access = list(access_maint_tunnels)
@@ -471,55 +462,46 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	req_access_txt = "2"
 
 /obj/machinery/door/airlock/pyro/glass/command
-	name = "command airlock"
 	icon_state = "com_glass_closed"
 	icon_base = "com_glass"
 	req_access = list(access_heads)
 
 /obj/machinery/door/airlock/pyro/glass/engineering
-	name = "engineering airlock"
 	icon_state = "eng_glass_closed"
 	icon_base = "eng_glass"
 	req_access = list(access_engineering)
 
 /obj/machinery/door/airlock/pyro/glass/security //Shitty Azungar recolor, no need to thank me.
-	name = "security airlock"
 	icon_state = "sec_glass_closed"
 	icon_base = "sec_glass"
 	req_access = list(access_security)
 
 /obj/machinery/door/airlock/pyro/glass/med
-	name = "medical airlock"
 	icon_state = "med_glass_closed"
 	icon_base = "med_glass"
 	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/sci
-	name = "research airlock"
 	icon_state = "sci_glass_closed"
 	icon_base = "sci_glass"
 	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/toxins
-	name = "toxins airlock"
 	icon_state = "toxins_glass_closed"
 	icon_base = "toxins_glass"
 	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/mining
-	name = "mining airlock"
 	icon_state = "mining_glass_closed"
 	icon_base = "mining_glass"
 	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/botany
-	name = "botany airlock"
 	icon_state = "botany_glass_closed"
 	icon_base = "botany_glass"
 	req_access = null
 
 /obj/machinery/door/airlock/pyro/classic
-	name = "old airlock"
 	icon_state = "old_closed"
 	icon_base = "old"
 	panel_icon_state = "old_panel_open"
@@ -528,7 +510,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	operation_time = 10
 
 /obj/machinery/door/airlock/pyro/glass/windoor
-	name = "thin glass airlock"
 	icon_state = "windoor_closed"
 	icon_base = "windoor"
 	panel_icon_state = "windoor"
@@ -559,7 +540,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	layer = 3.5
 
 /obj/machinery/door/airlock/pyro/sci_alt
-	name = "research airlock"
 	icon_state = "sci_closed"
 	icon_base = "sci"
 	panel_icon_state = "2_panel_open"
@@ -567,7 +547,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	req_access = null
 
 /obj/machinery/door/airlock/pyro/toxins_alt
-	name = "toxins airlock"
 	icon_state = "toxins2_closed"
 	icon_base = "toxins2"
 	panel_icon_state = "2_panel_open"
@@ -586,7 +565,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		welded_icon_state = "fgen_welded"
 
 	command
-		name = "command airlock"
 		icon_state = "com_closed"
 		icon_base = "com"
 		req_access = list(access_heads)
@@ -597,7 +575,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		welded_icon_state = "fcom_welded"
 
 	security
-		name = "security airlock"
 		icon_state = "sec_closed"
 		icon_base = "sec"
 		req_access = list(access_security)
@@ -608,7 +585,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		welded_icon_state = "fsec_welded"
 
 	engineering
-		name = "engineering airlock"
 		icon_state = "eng_closed"
 		icon_base = "eng"
 		req_access = list(access_engineering)
@@ -619,7 +595,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		welded_icon_state = "feng_welded"
 
 	medical
-		name = "medical airlock"
 		icon_state = "med_closed"
 		icon_base = "med"
 		req_access = list(access_medical)
@@ -630,7 +605,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		welded_icon_state = "fmed_welded"
 
 	morgue
-		name = "morgue airlock"
 		icon_state = "morg_closed"
 		icon_base = "morg"
 		req_access = list(access_morgue)
@@ -641,7 +615,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		welded_icon_state = "fmorg_welded"
 
 	chemistry
-		name = "chemistry airlock"
 		icon_state = "chem_closed"
 		icon_base = "chem"
 		req_access = list(access_research)
@@ -652,7 +625,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		welded_icon_state = "fchem_welded"
 
 	toxins
-		name = "toxins airlock"
 		icon_state = "tox_closed"
 		icon_base = "tox"
 		req_access = list(access_research)
@@ -663,7 +635,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		welded_icon_state = "ftox_welded"
 
 	maintenance
-		name = "maintenance airlock"
 		icon_state = "maint_closed"
 		icon_base = "maint"
 		welded_icon_state = "maint_welded"
@@ -683,7 +654,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		welded_icon_state = "fgen_welded"
 
 	command
-		name = "glass command airlock"
 		icon_state = "tcom_closed"
 		icon_base = "tcom"
 		req_access = list(access_heads)
@@ -694,7 +664,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		welded_icon_state = "fcom_welded"
 
 	security
-		name = "glass security airlock"
 		icon_state = "tsec_closed"
 		icon_base = "tsec"
 		req_access = list(access_security)
@@ -705,7 +674,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		welded_icon_state = "fsec_welded"
 
 	engineering
-		name = "glass engineering airlock"
 		icon_state = "teng_closed"
 		icon_base = "teng"
 		req_access = list(access_engineering)
@@ -716,7 +684,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		welded_icon_state = "feng_welded"
 
 	medical
-		name = "glass medical airlock"
 		icon_state = "tmed_closed"
 		icon_base = "tmed"
 		req_access = list(access_medical)
@@ -727,7 +694,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		welded_icon_state = "fmed_welded"
 
 	morgue
-		name = "glass morgue airlock"
 		icon_state = "tmorg_closed"
 		icon_base = "tmorg"
 		req_access = list(access_morgue)
@@ -738,7 +704,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		welded_icon_state = "fmorg_welded"
 
 	chemistry
-		name = "glass chemistry airlock"
 		icon_state = "tchem_closed"
 		icon_base = "tchem"
 		req_access = list(access_research)
@@ -749,7 +714,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		welded_icon_state = "fchem_welded"
 
 	toxins
-		name = "glass toxins airlock"
 		icon_state = "ttox_closed"
 		icon_base = "ttox"
 		req_access = list(access_research)
@@ -760,7 +724,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		welded_icon_state = "ftox_welded"
 
 	maintenance
-		name = "glass maintenance airlock"
 		icon_state = "tmaint_closed"
 		icon_base = "tmaint"
 		welded_icon_state = "tmaint_welded"
@@ -779,7 +742,7 @@ About the new airlock wires panel:
 */
 /obj/machinery/door/airlock/proc/play_deny()
 	play_animation("deny")
-	playsound(src, src.sound_deny_temp, 100, 0)
+	playsound(get_turf(src), src.sound_deny_temp, 100, 0)
 
 /obj/machinery/door/airlock/proc/try_pulse(var/wire_color, mob/user)
 	if (!user.find_tool_in_hand(TOOL_PULSING))
@@ -1173,8 +1136,8 @@ About the new airlock wires panel:
 		L.Virus_ShockCure(33)
 		L.shock_cyberheart(33)
 	sleep(0.1 SECONDS)
-	if(user.getStatusDuration("stunned") < shock_damage * 10) user.changeStatus("stunned", shock_damage SECONDS)
-	if(user.getStatusDuration("weakened") < shock_damage * 10) user.changeStatus("weakened", prot SECONDS)
+	if(user.getStatusDuration("stunned") < shock_damage * 10) user.changeStatus("stunned", shock_damage * 10)
+	if(user.getStatusDuration("weakened") < shock_damage * 10) user.changeStatus("weakened", 10 * prot)
 	for(var/mob/M in AIviewers(src))
 		if(M == user)	continue
 		M.show_message("<span class='alert'>[user.name] was shocked by the [src.name]!</span>", 3, "<span class='alert'>You hear a heavy electrical crack</span>", 2)
@@ -1359,7 +1322,7 @@ About the new airlock wires panel:
 				boutput(user, "<span class='notice'>[bicon(C)] Regular electrical response received from access panel.</span>")
 		return
 
-	if (!issilicon(user) && IN_RANGE(src, user, 1))
+	if (!issilicon(user))
 		if (src.isElectrified())
 			if(src.shock(user, 75))
 				return
@@ -1452,8 +1415,7 @@ About the new airlock wires panel:
 	else if (src.arePowerSystemsOn())
 		boutput(usr, "<span class='alert'>You try to pry [src]  open, but it won't budge! The power of \the [src] must be disabled first.</span>")
 
-	if(!ON_COOLDOWN(src, "playsound", 1.5 SECONDS))
-		playsound(src, 'sound/machines/airlock_pry.ogg', 35, 1)
+	playsound(src, 'sound/machines/airlock_pry.ogg', 50, 1)
 
 	return
 

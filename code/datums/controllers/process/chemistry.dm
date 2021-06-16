@@ -1,10 +1,8 @@
-
-/// Handles chemistry reactions
-/datum/controller/process/chemistry
+datum/controller/process/chemistry
 
 	setup()
 		name = "Chemistry"
-		schedule_interval = 1 SECOND
+		schedule_interval = 10
 
 	doWork()
 		for(var/datum/d in active_reagent_holders)

@@ -35,7 +35,11 @@
 		HH.set_loc(M.loc)
 		HH.set_dir(get_dir(HH, M))
 
-		SEND_SIGNAL(M, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+		if (M.invisibility > 0)
+			for (var/obj/item/cloaking_device/I in M)
+				if (I.active)
+					I.deactivate(M)
+					M.visible_message("<span class='notice'><b>[M]'s cloak is disrupted!</b></span>")
 
 		HH.changeStatus("stunned", 4 SECONDS)
 		M.visible_message("<span class='alert'><B>[M] starts spinning around with [HH]!</B></span>")

@@ -16,7 +16,7 @@
 		master = null
 		..()
 
-	relay_click(id, mob/user, list/params)
+	clicked(id, mob/user, list/params)
 		if (id == "release")
 			if (master)
 				master.death(0)

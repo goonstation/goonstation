@@ -79,11 +79,10 @@
 			return
 		if (istype(I, /obj/item/handheld_vacuum))
 			return
-		if (istype(I,/obj/item/satchel/) && I.contents.len)
-			var/action = input(user, "What do you want to do with the satchel?") in list("Place it in the Chute","Empty it into the Chute","Never Mind")
-			if (!action || action == "Never Mind")
-				return
-			if (!in_interact_range(src, user))
+		if (istype(I,/obj/item/satchel/))
+			var/action = input(user, "What do you want to do with the satchel?") in list("Empty it into the Chute","Place it in the Chute","Never Mind")
+			if (!action || action == "Never Mind") return
+			if (get_dist(src,user) > 1)
 				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
 				return
 			if (action == "Empty it into the Chute")
@@ -92,10 +91,8 @@
 				S.satchel_updateicon()
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
-		if (istype(I,/obj/item/storage/) && I.contents.len)
-			var/action = input(user, "What do you want to do with [I]?") as null|anything in list("Place it in the Chute","Empty it into the chute","Never Mind")
-			if (!action || action == "Never Mind")
-				return
+		if (istype(I,/obj/item/storage/))
+			var/action = input(user, "What do you want to do with [I]?") as null|anything in list("Empty it into the chute","Place it in the Chute")
 			if (!in_interact_range(src, user))
 				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
 				return
@@ -106,6 +103,7 @@
 					S.hud.remove_object(O)
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
+			if (isnull(action)) return
 		var/obj/item/magtractor/mag
 		if (istype(I.loc, /obj/item/magtractor))
 			mag = I.loc
@@ -281,7 +279,7 @@
 						SubscribeToProcess()
 						src.is_processing = 1
 				update()
-				playsound(src, "sound/misc/handle_click.ogg", 50, 1)
+				playsound(get_turf(src), "sound/misc/handle_click.ogg", 50, 1)
 				. = TRUE
 			if("togglePump")
 				if (src.mode)
@@ -645,7 +643,7 @@
 			SubscribeToProcess()
 			is_processing = 1
 
-		playsound(src, "sound/misc/handle_click.ogg", 50, 1)
+		playsound(get_turf(src), "sound/misc/handle_click.ogg", 50, 1)
 
 		update()
 		return

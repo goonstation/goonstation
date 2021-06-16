@@ -2977,6 +2977,11 @@
 /obj/item/device/matanalyzer,
 /turf/simulated/floor/grime,
 /area/mining/refinery)
+"aiF" = (
+/mob/living/critter/spider,
+/obj/item/storage/box/record/notaquario_mixtape1,
+/turf/simulated/floor/wood/two,
+/area/space)
 "aiG" = (
 /obj/grille/catwalk,
 /turf/space{
@@ -5235,6 +5240,13 @@
 "aos" = (
 /turf/simulated/floor/caution/north,
 /area/mining/manufacturing)
+"aot" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/yellow,
+/obj/item/device/multitool,
+/obj/item/paper/book/minerals,
+/turf/simulated/floor/caution/north,
+/area/mining/manufacturing)
 "aou" = (
 /obj/rail{
 	dir = 1;
@@ -5278,6 +5290,13 @@
 /area/mining/manufacturing)
 "aoB" = (
 /turf/simulated/floor/scorched2,
+/area/mining/manufacturing)
+"aoC" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
+/obj/item/paper/book/minerals,
+/turf/simulated/floor/grime,
 /area/mining/manufacturing)
 "aoD" = (
 /obj/cable{
@@ -11108,6 +11127,21 @@
 	},
 /turf/space,
 /area/timewarp)
+"aDc" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 9
+	},
+/area/timewarp/ship)
+"aDd" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/timewarp/ship)
+"aDe" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5
+	},
+/area/timewarp/ship)
 "aDf" = (
 /obj/decal/timeplug{
 	dir = 4
@@ -11232,6 +11266,14 @@
 	icon_state = "diagonalWall"
 	},
 /area/evilreaver/bridge)
+"aDu" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 8
+	},
+/area/timewarp/ship)
+"aDv" = (
+/turf/unsimulated/wall/setpieces/leadwall,
+/area/timewarp/ship)
 "aDw" = (
 /obj/table/auto,
 /obj/decal/fakeobjects{
@@ -11254,6 +11296,11 @@
 "aDy" = (
 /obj/storage/secure/closet/fridge/kitchen,
 /turf/unsimulated/floor/black,
+/area/timewarp/ship)
+"aDz" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 10
+	},
 /area/timewarp/ship)
 "aDA" = (
 /turf/simulated/martian/wall,
@@ -11393,6 +11440,11 @@
 /obj/storage/crate/loot,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
+"aDQ" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 6
+	},
+/area/timewarp/ship)
 "aDR" = (
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
@@ -12928,6 +12980,18 @@
 /turf/simulated/floor/plating/airless,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedmedicalship)
+"aIe" = (
+/obj/storage/secure/closet/personal,
+/obj/item/clothing/under/gimmick/cosby{
+	desc = "A colourful winter jumper.";
+	name = "comfy sweater"
+	},
+/obj/item/device/microphone,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred2"
+	},
+/area/radiostation/bedroom)
 "aIf" = (
 /obj/overlay{
 	density = 1;
@@ -24002,6 +24066,12 @@
 /obj/item/record/poo,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
+"bjS" = (
+/obj/storage/crate,
+/obj/item/paper/book/deep_blue_sea,
+/obj/item/paper/bores_part_two,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "bjV" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/shuttle{
@@ -24109,7 +24179,7 @@
 /area/salyut)
 "bkp" = (
 /obj/storage/crate,
-/obj/item/storage/box/record/radio/chronoquest,
+/obj/item/storage/box/record/clown_collection,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bkq" = (
@@ -25259,18 +25329,6 @@
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
-"hOL" = (
-/obj/item/storage/secure/ssafe{
-	configure_mode = 0;
-	desc = "A tough, airtight safe.";
-	name = "hermetically-sealed safe";
-	pixel_x = -4;
-	pixel_y = 30;
-	random_code = 1;
-	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006,/obj/item/reagent_containers/food/snacks/pizza/mushroom,/obj/item/reagent_containers/food/snacks/pizza/pepperoni)
-	},
-/turf/simulated/martian/floor,
-/area/evilreaver/bridge)
 "hUW" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
@@ -25299,13 +25357,6 @@
 	},
 /turf/simulated/floor/red/side,
 /area/radiostation/hallway)
-"lbt" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/electrical,
-/obj/item/paper/book/from_file/minerals,
-/turf/simulated/floor/grime,
-/area/mining/manufacturing)
 "lwM" = (
 /obj/table/auto,
 /obj/item/camera{
@@ -25320,18 +25371,6 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
-"oNd" = (
-/obj/table/auto,
-/obj/item/clothing/gloves/yellow,
-/obj/item/device/multitool,
-/obj/item/paper/book/from_file/minerals,
-/turf/simulated/floor/caution/north,
-/area/mining/manufacturing)
-"oWB" = (
-/mob/living/critter/spider,
-/obj/item/storage/box/record/notaquario,
-/turf/simulated/floor/wood/two,
-/area/space)
 "qmR" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left,
@@ -25363,15 +25402,18 @@
 	stone_color = "#575A5E"
 	},
 /area/space)
-"sFV" = (
-/turf/unsimulated/wall/auto/lead/blue,
-/area/timewarp/ship)
-"uto" = (
-/obj/storage/crate,
-/obj/item/paper/book/from_file/deep_blue_sea,
-/obj/item/paper/bores_part_two,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
+"uGt" = (
+/obj/item/storage/secure/ssafe{
+	configure_mode = 0;
+	desc = "A tough, airtight safe.";
+	name = "hermetically-sealed safe";
+	pixel_x = -4;
+	pixel_y = 30;
+	random_code = 1;
+	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006, /obj/item/reagent_containers/food/snacks/pizza/mushroom, /obj/item/reagent_containers/food/snacks/pizza/pepperoni)
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
 "uIh" = (
 /turf/simulated/wall/asteroid{
 	name = "weak compacted stone";
@@ -25382,15 +25424,6 @@
 /obj/stool/chair,
 /turf/simulated/floor/black,
 /area/mining/quarters)
-"wfJ" = (
-/obj/storage/secure/closet/personal,
-/obj/item/clothing/under/gimmick/cosby,
-/obj/item/device/microphone,
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fred2"
-	},
-/area/radiostation/bedroom)
 "xOl" = (
 /turf/simulated/floor/plating/airless/asteroid{
 	stone_color = "#D1E6FF"
@@ -46377,7 +46410,7 @@ aCh
 aCh
 aCF
 aCF
-hOL
+uGt
 aDM
 aDp
 aCF
@@ -52045,7 +52078,7 @@ aab
 aab
 aab
 aab
-uto
+bjS
 aab
 aab
 aab
@@ -58356,7 +58389,7 @@ acR
 acS
 acS
 afR
-oWB
+aiF
 ajt
 ajW
 alg
@@ -78613,8 +78646,8 @@ ahy
 ajz
 anX
 aof
-oNd
-lbt
+aot
+aoC
 aoR
 apf
 aps
@@ -104655,14 +104688,14 @@ aCj
 ars
 aCs
 aCs
-sFV
-sFV
+aDc
+aDz
 atI
-sFV
-sFV
+aDc
+aDz
 atI
-sFV
-sFV
+aDc
+aDz
 aCs
 aCs
 aDb
@@ -104956,16 +104989,16 @@ aCi
 aCr
 aCs
 aCs
-sFV
-sFV
-sFV
-sFV
-sFV
-sFV
-sFV
-sFV
-sFV
-sFV
+aDc
+aDQ
+aDc
+aDv
+aDv
+aDv
+aDv
+aDz
+aDe
+aDz
 aCs
 aCs
 aaa
@@ -105258,16 +105291,16 @@ aCj
 aCs
 aCs
 aCs
-sFV
-sFV
-sFV
+aDu
+aDc
+aDQ
 aEI
 aFf
 aFu
 aEq
-sFV
-sFV
-sFV
+aDe
+aDz
+aDu
 aCs
 aCs
 aaa
@@ -105560,16 +105593,16 @@ aCj
 aCs
 aCs
 aCs
-sFV
-sFV
+aDu
+aDu
 aEl
 aEJ
-sFV
-sFV
+aDc
+aDz
 aEq
 aFW
-sFV
-sFV
+aDu
+aDu
 aCs
 aCs
 aDb
@@ -105861,18 +105894,18 @@ aaa
 aCj
 aCs
 aCs
-sFV
-sFV
-sFV
-sFV
+aDc
+aDv
+aDv
+aDz
 aEK
-sFV
-sFV
+aDd
+aDd
 aEK
-sFV
-sFV
-sFV
-sFV
+aDc
+aDv
+aDv
+aDz
 aCs
 aCs
 aFV
@@ -106163,18 +106196,18 @@ aaa
 aCj
 aCs
 aCs
-sFV
+aDd
 aDw
 aDR
 aEm
 aDR
-sFV
-sFV
+aDd
+aDd
 aDR
 aEm
 aDR
 aGn
-sFV
+aDd
 aCs
 aCs
 aFV
@@ -106465,18 +106498,18 @@ aaa
 aCj
 aCs
 aCs
-sFV
+aDd
 aDx
 aDR
-sFV
+aDd
 aDR
-sFV
-sFV
+aDd
+aDd
 aDR
-sFV
+aDd
 aGi
 aGo
-sFV
+aDd
 aCs
 aCs
 aFV
@@ -106767,18 +106800,18 @@ aaa
 aCj
 aCs
 aCs
-sFV
+aDd
 aDy
 aDS
-sFV
+aDd
 aEL
-sFV
-sFV
+aDe
+aDQ
 aEL
-sFV
+aDd
 aGj
 aGp
-sFV
+aDd
 aCs
 aCs
 aFV
@@ -107069,18 +107102,18 @@ aaa
 aCj
 aCs
 aCs
-sFV
-sFV
-sFV
-sFV
+aDe
+aDz
+aDc
+aDQ
 aEM
 aFg
 aEM
 aFg
-sFV
-sFV
-sFV
-sFV
+aDe
+aDv
+aDv
+aDQ
 aCs
 aCs
 aFV
@@ -107372,15 +107405,15 @@ aCj
 aCs
 aCs
 aCs
-sFV
-sFV
-sFV
-sFV
+aDd
+aDv
+aDv
+aDz
 aFh
 aFv
 aFh
 aFX
-sFV
+aDd
 aCs
 aCs
 aCs
@@ -107674,16 +107707,16 @@ aaa
 aCj
 aCs
 aCs
-sFV
+aDd
 aDT
 aEn
 aEN
 aFg
 aFw
-sFV
-sFV
-sFV
-sFV
+aDc
+aDv
+aDv
+aDz
 aCs
 aCs
 ars
@@ -107976,16 +108009,16 @@ aaa
 aCt
 aCJ
 aCs
-sFV
+aDd
 aDU
 aDV
 aEO
 aFh
 aFv
-sFV
+aDd
 aFY
 aGk
-sFV
+aDd
 aCs
 aCs
 aCs
@@ -108278,16 +108311,16 @@ aaa
 aaa
 aCj
 aCs
-sFV
+aDd
 aDV
 aEo
 aEN
 aFg
 aEM
-sFV
+aDd
 aFZ
 aGl
-sFV
+aDd
 aCs
 aCs
 aCs
@@ -108580,7 +108613,7 @@ aaa
 aaa
 aCj
 aCs
-sFV
+aDd
 aDW
 aEp
 aEN
@@ -108589,7 +108622,7 @@ aFv
 aFI
 aGa
 aGm
-sFV
+aDd
 aCs
 aCs
 aCs
@@ -108882,16 +108915,16 @@ aaa
 aaa
 aCj
 aCs
-sFV
-sFV
-sFV
-sFV
+aDe
+aDv
+aDv
+aDQ
 aFg
 aFx
-sFV
-sFV
-sFV
-sFV
+aDe
+aDv
+aDv
+aDQ
 aCs
 aCs
 aCs
@@ -109192,7 +109225,7 @@ aFi
 aFv
 aFJ
 aGb
-sFV
+aDd
 aCs
 aCs
 aCs
@@ -109487,14 +109520,14 @@ aCj
 aCs
 aCs
 aCs
-sFV
+aDd
 aEr
-sFV
+aDd
 aFg
 aEM
-sFV
+aDd
 aGc
-sFV
+aDd
 aCs
 aCs
 aCs
@@ -109704,7 +109737,7 @@ adg
 agJ
 arc
 atq
-wfJ
+aIe
 biV
 ahQ
 boO
@@ -109789,14 +109822,14 @@ aCj
 aCs
 aCs
 aCs
-sFV
-sFV
-sFV
+aDe
+aDv
+aDz
 aFh
 aFy
-sFV
-sFV
-sFV
+aDd
+aDv
+aDQ
 aCs
 aCs
 aCs
@@ -110093,10 +110126,10 @@ aCs
 aCs
 aCs
 aCs
-sFV
+aDd
 aFg
 aEM
-sFV
+aDd
 aCs
 aCs
 aCs
@@ -110394,12 +110427,12 @@ aCj
 aCs
 aCs
 aCs
-sFV
-sFV
+aDc
+aDQ
 aFj
 aFz
-sFV
-sFV
+aDe
+aDz
 aCs
 aCs
 aCs
@@ -110695,14 +110728,14 @@ aaa
 aCj
 aCs
 aCs
-sFV
-sFV
+aDc
+aDQ
 aDR
 aDR
 aDR
 aDR
-sFV
-sFV
+aDe
+aDz
 aCs
 aCs
 ars
@@ -110997,14 +111030,14 @@ aaa
 aCj
 aCs
 aCs
-sFV
+aDd
 aEs
 aEP
 aDR
 aDR
 aDR
 aGd
-sFV
+aDd
 aCs
 aCs
 aCs
@@ -111299,14 +111332,14 @@ aaa
 aaa
 aCj
 aCs
-sFV
+aDd
 aDR
 aDR
 aDR
 aDR
 aFK
 aGe
-sFV
+aDd
 aCs
 aCs
 aCs
@@ -111601,14 +111634,14 @@ aaa
 aaa
 aCj
 aCs
-sFV
+aDd
 aEt
 aEQ
 aEQ
 aFA
 aEQ
 aGf
-sFV
+aDd
 aCs
 aCs
 aCs
@@ -111903,14 +111936,14 @@ aCj
 aCs
 aCs
 aCs
-sFV
-sFV
+aDe
+aDz
 aER
 aFk
 aFB
 aFk
-sFV
-sFV
+aDc
+aDQ
 aCs
 aCs
 aCs
@@ -112206,12 +112239,12 @@ aCs
 aCs
 aCs
 aCs
-sFV
+aDe
 aES
 aES
 aES
 aES
-sFV
+aDQ
 aCs
 aCs
 aCs

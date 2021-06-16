@@ -1,11 +1,9 @@
-
-/// Controls railway movement
-/datum/controller/process/railway
+datum/controller/process/railway
 	var/tmp/list/vehicles
 
 	setup()
 		name = "Railways"
-		schedule_interval = 0.5 SECONDS
+		schedule_interval = 5
 		vehicles = global.railway_vehicles
 
 	copyStateFrom(datum/controller/process/target)

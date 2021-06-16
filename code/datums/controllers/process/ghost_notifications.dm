@@ -1,11 +1,9 @@
-
-/// Handles sending ghost notifications to players
-/datum/controller/process/ghost_notifications
+datum/controller/process/ghost_notifications
 	var/datum/ghost_notification_controller/notifier
 
 	setup()
 		name = "Ghost Notifications"
-		schedule_interval = 5 SECONDS // it really does not need to update that often
+		schedule_interval = 30 // it really does not need to update that often
 		notifier = ghost_notifier
 
 	copyStateFrom(datum/controller/process/target)

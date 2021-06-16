@@ -137,10 +137,10 @@
 		if (!src || !istype(src))
 			return
 
-		if (src.armed && !findtext(src.icon_state, "_armed"))
-			src.icon_state = "[src.icon_state]_armed"
+		if (src.armed)
+			src.icon_state = "mine_armed"
 		else
-			src.icon_state = replacetext(src.icon_state, "_armed", "")
+			src.icon_state = "mine"
 
 		return
 
@@ -173,11 +173,15 @@
 			return mobs
 
 		var/turf/T = get_turf(src)
+		if (T && istype(T))
+			for (var/mob/living/L in T.contents)
+				if (!istype(L) || isintangible(L) || iswraith(L))
+					continue
 
-		for (var/mob/living/L in range(radius,T))
-			if (isintangible(L) || iswraith(L))
-				continue
-			mobs += L
+		if (radius > 0)
+			for (var/mob/living/L2 in range(src, radius))
+				if (!istype(L2) || isintangible(L2) || iswraith(L2))
+					continue
 
 		return mobs
 
@@ -189,9 +193,8 @@
 		return
 
 /obj/item/mine/radiation
-	name = "radiation land mine"
-	desc = "An anti-personnel mine designed to heavily irradiate its target."
-	icon_state = "mine_radiation"
+	name = "land mine (radiation)"
+	desc = "An anti-personnel mine."
 
 	armed
 		armed = 1
@@ -204,7 +207,7 @@
 		if (mobs.len)
 			for (var/mob/living/L in mobs)
 				if (istype(L))
-					L.changeStatus("radiation", 80 SECONDS)
+					L.changeStatus("radiation", 800)
 					if (L.bioHolder && ishuman(L))
 						L.bioHolder.RandomEffect("bad")
 					if (L != M)
@@ -214,9 +217,8 @@
 		return
 
 /obj/item/mine/incendiary
-	name = "incendiary land mine"
-	desc = "An anti-personnel mine equipped with an incendiary payload."
-	icon_state = "mine_incendiary"
+	name = "land mine (incendiary)"
+	desc = "An anti-personnel mine."
 
 	armed
 		armed = 1
@@ -230,9 +232,8 @@
 		return
 
 /obj/item/mine/stun
-	name = "stun land mine"
-	desc = "An anti-personnel mine designed to stun its victim nonlethally."
-	icon_state = "mine_stun"
+	name = "land mine (stun)"
+	desc = "An anti-personnel mine."
 
 	armed
 		armed = 1
@@ -245,7 +246,7 @@
 		if (mobs.len)
 			for (var/mob/living/L in mobs)
 				if (istype(L))
-					L.changeStatus("weakened", 15 SECONDS)
+					L.changeStatus("weakened", 150)
 					L.stuttering += 15
 					if (L != M)
 						src.log_me(null, L)
@@ -254,8 +255,8 @@
 		return
 
 /obj/item/mine/blast
-	name = "high explosive land mine"
-	desc = "An anti-personnel mine rigged with explosives."
+	name = "land mine (blast)"
+	desc = "An anti-personnel mine."
 
 	armed
 		armed = 1

@@ -12,7 +12,7 @@
 		src.close = create_screen("close", "Close Panel", 'icons/mob/screen1.dmi', "x", "10, 11", HUD_LAYER+1)
 		update()
 
-	relay_click(id, mob/user)
+	clicked(id, mob/user)
 		switch (id)
 			if ("close")
 				user.detach_hud(src)

@@ -1,6 +1,7 @@
 var/list/observers = list()
 
 /mob/dead/target_observer
+	invisibility = 10
 	density = 1
 	name = "spooky ghost"
 	icon = null
@@ -11,15 +12,12 @@ var/list/observers = list()
 
 	New()
 		..()
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 		observers += src
 		mobs += src
 		//set_observe_target(target)
 
 	unpooled()
 		..()
-		src.mob_properties = list()
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 		observers += src
 		mobs += src
 		src.move_dir = 0

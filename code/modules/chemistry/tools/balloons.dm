@@ -157,7 +157,7 @@
 				"<span class='alert'><b>You pee in [src]!</b></span>")
 				playsound(H.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 				H.urine -= 2
-				src.reagents.add_reagent("urine", 8)
+				src.reagents.add_reagent("urine", 20)
 				return
 
 	afterattack(obj/target, mob/user)

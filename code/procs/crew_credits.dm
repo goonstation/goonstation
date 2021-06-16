@@ -24,7 +24,7 @@ var/global/crew_creds = null
 		for(var/datum/mind/M in ticker.minds)
 
 			// Antagonist?
-			if(M.special_role && !("Faustian" in M.special_role))
+			if(M.special_role)
 				round_antags.Add(M)
 				continue
 			if(!M.assigned_role)
