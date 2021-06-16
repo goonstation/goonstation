@@ -81,7 +81,7 @@
 		src.setup()
 		if(proj_data)
 			proj_data.post_setup(src)
-		if (!disposed && !QDELETED(src))
+		if (!QDELETED(src))
 			SPAWN_DBG(0)
 				if (!is_processing)
 					process()
@@ -90,7 +90,7 @@
 		if(hitlist.len)
 			hitlist.len = 0
 		is_processing = 1
-		while (!disposed && !QDELETED(src))
+		while (!QDELETED(src))
 
 			do_step()
 			sleep(0.75) //Changed from 1, minor proj. speed buff
@@ -98,7 +98,7 @@
 
 	proc/collide(atom/A as mob|obj|turf|area, first = 1)
 		if (!A) return // you never know ok??
-		if (disposed || QDELETED(src)) return // if disposed = true, QDELETED(src) or set for garbage collection and shouldn't process bumps
+		if (QDELETED(src)) return // if disposed = true, QDELETED(src) or set for garbage collection and shouldn't process bumps
 		if (!proj_data) return // this apparently happens sometimes!! (more than you think!)
 		if (proj_data?.on_pre_hit(A, src.angle, src))
 			return // Our bullet doesnt want to hit this
@@ -358,7 +358,7 @@
 			return
 		src.ticks_until_can_hit_mob--
 		proj_data.tick(src)
-		if (disposed || QDELETED(src))
+		if (QDELETED(src))
 			return
 
 		var/turf/curr_turf = loc
@@ -388,7 +388,7 @@
 				var/turf/T = crossing[i]
 				if (crossing[T] < curr_t)
 					Move(T)
-					if (disposed || QDELETED(src))
+					if (QDELETED(src))
 						return
 					incidence = get_dir(incidence_turf, T)
 					incidence_turf = T
@@ -413,7 +413,7 @@
 				else
 					set_loc(Dest) //set loc so we can cross walls etc properly
 					collide_with_applicable_in_tile(Dest)
-				if (disposed || QDELETED(src))
+				if (QDELETED(src))
 					return
 
 				incidence = get_dir(curr_turf, Dest)
