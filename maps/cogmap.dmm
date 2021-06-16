@@ -1445,7 +1445,7 @@
 	dir = 1;
 	status = 2
 	},
-/obj/item/paper/book/from_file/the_trial,
+/obj/item/paper/book/the_trial,
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/clown)
 "aeG" = (
@@ -5006,7 +5006,7 @@
 /area/station/crew_quarters/showers)
 "aoh" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater,
+/obj/item/reagent_containers/food/drinks/bottle/bottledwater,
 /obj/item/item_box/medical_patches/mini_styptic,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -8003,7 +8003,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/item/paper/book/from_file/hydroponicsguide,
+/obj/item/paper/book/hydroponicsguide,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -8575,7 +8575,7 @@
 /area/station/hydroponics/bay)
 "axW" = (
 /obj/table/auto,
-/obj/item/paper/book/from_file/hydroponicsguide{
+/obj/item/paper/book/hydroponicsguide{
 	pixel_x = 7;
 	pixel_y = 3
 	},
@@ -10237,7 +10237,7 @@
 	})
 "aCh" = (
 /obj/table/auto,
-/obj/item/paper/book/from_file/minerals{
+/obj/item/paper/book/minerals{
 	pixel_x = -8;
 	pixel_y = 7
 	},
@@ -11175,7 +11175,7 @@
 /obj/item/pen{
 	pixel_x = 3
 	},
-/obj/item/paper/book/from_file/space_law{
+/obj/item/paper/book/space_law{
 	pixel_x = 12
 	},
 /obj/window/reinforced{
@@ -13870,7 +13870,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/item/paper/book/from_file/pharmacopia{
+/obj/item/paper/book/medical_guide{
 	pixel_x = 11;
 	pixel_y = 5
 	},
@@ -15823,7 +15823,7 @@
 	pixel_x = -7;
 	pixel_y = 11
 	},
-/obj/item/paper/book/from_file/medical_surgery_guide{
+/obj/item/paper/book/medical_surgery_guide{
 	pixel_x = 9;
 	pixel_y = 6
 	},
@@ -15930,7 +15930,7 @@
 /obj/shrub{
 	dir = 10
 	},
-/obj/item/paper/book/from_file/player_piano,
+/obj/item/paper/book/player_piano,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fred2"
@@ -16165,7 +16165,7 @@
 	pixel_x = 9;
 	pixel_y = 1
 	},
-/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
+/obj/item/reagent_containers/food/drinks/bottle/bottledwater{
 	pixel_y = 9
 	},
 /turf/simulated/floor/black,
@@ -29211,7 +29211,7 @@
 "bvv" = (
 /obj/table/wood/auto,
 /obj/item/wrench,
-/obj/item/paper/book/from_file/the_trial,
+/obj/item/paper/book/the_trial,
 /turf/simulated/grimycarpet,
 /area/ghostdrone_factory)
 "bvw" = (
@@ -31685,7 +31685,7 @@
 	pixel_x = -8;
 	pixel_y = 6
 	},
-/obj/item/paper/book/from_file/pharmacopia{
+/obj/item/paper/book/medical_guide{
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -32794,11 +32794,11 @@
 /area/station/quartermaster/office)
 "bEJ" = (
 /obj/table/auto,
-/obj/item/paper/book/from_file/dwainedummies{
+/obj/item/paper/book/dwainedummies{
 	pixel_x = -7;
 	pixel_y = 9
 	},
-/obj/item/paper/book/from_file/guardbot_guide{
+/obj/item/paper/book/guardbot_guide{
 	pixel_x = 5;
 	pixel_y = 1
 	},
@@ -37437,7 +37437,7 @@
 /area/station/quartermaster/office)
 "bPn" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/from_file/minerals{
+/obj/item/paper/book/minerals{
 	pixel_x = 9;
 	pixel_y = 2
 	},
@@ -40023,7 +40023,7 @@
 /obj/stool/chair/couch{
 	dir = 8
 	},
-/obj/item/paper/book/from_file/dwainedummies,
+/obj/item/paper/book/dwainedummies,
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
@@ -42590,7 +42590,7 @@
 /area/station/science/lobby)
 "cbK" = (
 /obj/table/auto,
-/obj/item/paper/book/from_file/guardbot_guide{
+/obj/item/paper/book/guardbot_guide{
 	pixel_x = -12;
 	pixel_y = 7
 	},
@@ -43341,7 +43341,7 @@
 	name = "S light switch";
 	pixel_y = -24
 	},
-/obj/item/paper/book/from_file/pharmacopia{
+/obj/item/paper/book/medical_guide{
 	pixel_x = 8;
 	pixel_y = 6
 	},
@@ -46516,7 +46516,7 @@
 /area/station/quartermaster/refinery)
 "clK" = (
 /obj/table/auto,
-/obj/item/paper/book/from_file/matsci_guide{
+/obj/item/paper/book/materials{
 	pixel_x = 7;
 	pixel_y = 5
 	},
@@ -51002,7 +51002,7 @@
 	pixel_x = -13;
 	pixel_y = 15
 	},
-/obj/item/paper/book/from_file/pharmacopia{
+/obj/item/paper/book/medical_guide{
 	pixel_x = 8;
 	pixel_y = 2
 	},
@@ -53507,7 +53507,7 @@
 "cCX" = (
 /obj/machinery/optable,
 /obj/item/robodefibrillator,
-/obj/item/paper/book/from_file/medical_surgery_guide,
+/obj/item/paper/book/medical_surgery_guide,
 /turf/simulated/floor/bot,
 /area/station/medical/medbay/surgery)
 "cCZ" = (
@@ -57052,7 +57052,7 @@
 /area/station/security/hos)
 "iqw" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/from_file/DNDrulebook{
+/obj/item/paper/book/DNDrulebook{
 	pixel_x = -2;
 	pixel_y = 3
 	},
@@ -57912,7 +57912,7 @@
 	desc = "Only distantly related to the Adventure Closet.";
 	name = "Adventure Crate"
 	},
-/obj/item/paper/book/from_file/critter_compendium{
+/obj/item/paper/book/critter_compendium{
 	pixel_x = 10;
 	pixel_y = 5
 	},
@@ -58608,7 +58608,7 @@
 /area/listeningpost)
 "lmG" = (
 /obj/table/wood/auto,
-/obj/item/paper/book/from_file/monster_manual_revised{
+/obj/item/paper/book/monster_manual_revised{
 	pixel_x = -2;
 	pixel_y = 3
 	},
@@ -59420,7 +59420,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/decal/poster/wallsign/framed_award/hos_medal{
+/obj/decal/poster/wallsign/medal{
 	pixel_y = 27
 	},
 /turf/simulated/floor/carpet/grime,
