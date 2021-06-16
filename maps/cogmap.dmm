@@ -33642,7 +33642,14 @@
 "bHi" = (
 /obj/storage/secure/closet/engineering/mechanic,
 /obj/machinery/light/small{
-	dir = 1
+	dir = 1;
+	pixel_y = 10
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	tag = ""
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
@@ -34013,12 +34020,6 @@
 	},
 /area/station/crew_quarters/supplylobby)
 "bIg" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	tag = ""
-	},
 /obj/landmark/start{
 	name = "Mechanic"
 	},
@@ -34458,6 +34459,13 @@
 	charge = 1e+006;
 	chargelevel = 15000;
 	output = 10000
+	},
+/obj/machinery/light_switch{
+	name = "W light switch";
+	pixel_x = -24
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor,
 /area/station/engine/power)
@@ -35052,8 +35060,7 @@
 /area/station/engine/elect)
 "bKt" = (
 /obj/blind_switch{
-	pixel_x = -27;
-	pixel_y = 7
+	pixel_x = -24
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -36267,6 +36274,10 @@
 /obj/item/device/multitool{
 	pixel_x = -2;
 	pixel_y = 6
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 10
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
@@ -37762,6 +37773,11 @@
 /obj/table/auto,
 /obj/item/plate,
 /obj/random_item_spawner/snacks/maybe_few,
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10;
+	tag = ""
+	},
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bQi" = (
@@ -38455,6 +38471,10 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/device/radio/intercom/engineering{
 	dir = 1
+	},
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
@@ -41043,13 +41063,6 @@
 "bYe" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/toilets)
-"bYg" = (
-/obj/machinery/light{
-	dir = 8;
-	tag = ""
-	},
-/turf/simulated/floor,
-/area/station/engine/elect)
 "bYh" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -55336,6 +55349,9 @@
 /area/station/turret_protected/armory_outside)
 "fkS" = (
 /obj/machinery/manufacturer/mechanic,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/station/engine/elect)
 "flp" = (
@@ -56622,19 +56638,6 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"hzw" = (
-/obj/landmark/start{
-	name = "Engineer"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/item/clothing/gloves/yellow{
-	pixel_x = -7;
-	pixel_y = 10
-	},
-/turf/simulated/floor,
-/area/station/engine/engineering)
 "hzO" = (
 /obj/stool/chair,
 /obj/cable{
@@ -56663,6 +56666,15 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor/bot,
 /area/station/hallway/secondary/exit)
+"hCt" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/station/engine/elect)
 "hFf" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -58283,6 +58295,26 @@
 	dir = 6
 	},
 /area/station/medical/medbay)
+"kzn" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/electrical{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/item/device/multitool{
+	pixel_x = 9;
+	pixel_y = 8
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/obj/machinery/light_switch{
+	name = "W light switch";
+	pixel_x = -24
+	},
+/turf/simulated/floor/yellow,
+/area/station/storage/primary)
 "kzw" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -61570,6 +61602,20 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
+"qYj" = (
+/obj/machinery/power/smes{
+	charge = 1e+006;
+	chargelevel = 15000;
+	output = 10000
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor,
+/area/station/engine/power)
 "rae" = (
 /obj/machinery/light{
 	dir = 4
@@ -109460,7 +109506,7 @@ bIg
 bJe
 bKt
 bLN
-bYg
+bNn
 bNn
 bQh
 bRA
@@ -110967,10 +111013,10 @@ dGA
 bGw
 bHm
 sJa
-bJi
-qMI
+qYj
+bKu
 fkS
-bNq
+hCt
 bNn
 bQi
 tWU
@@ -111275,7 +111321,7 @@ bLT
 bNq
 bNn
 bNn
-bRG
+bNn
 dyY
 qVb
 bVW
@@ -111577,7 +111623,7 @@ bLU
 clf
 bOQ
 fFs
-bNn
+bRG
 bTf
 bUG
 bKp
@@ -112476,7 +112522,7 @@ bEV
 bsN
 oxf
 cML
-hzw
+bIo
 bJo
 bLM
 jkD
@@ -117007,7 +117053,7 @@ bFS
 bGP
 bHC
 bIC
-bJz
+kzn
 bJz
 bNJ
 bNJ
