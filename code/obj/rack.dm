@@ -11,18 +11,6 @@
 		icon_state += "-broken"
 		src.set_density(0)
 
-/obj/rack/bronze
-	icon_state = "rack_bronze"
-
-/obj/rack/nickel
-	icon_state = "rack_nickel"
-
-/obj/rack/cobalt
-	icon_state = "rack_cobalt"
-
-/obj/rack/lattice
-	icon_state = "rack_lattice"
-
 /obj/rack/New()
 	..()
 	var/bonus = 0
