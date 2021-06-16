@@ -3,7 +3,7 @@
 /obj/item/gun/kinetic/g11
 	name = "\improper Manticore assault rifle"
 	desc = "An assault rifle capable of firing single precise bursts. The magazines holders are embossed with \"Anderson Para-Munitions\""
-	icon = 'icons/obj/48x32.dmi'
+	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "g11"
 	item_state = "g11"
 	has_empty_state = 1
@@ -321,7 +321,7 @@
 //Suggestion box
 /obj/suggestion_box
 	name = "suggestion box"
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "voting_box"
 	density = 1
 	flags = FPRINT

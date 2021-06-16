@@ -338,7 +338,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/howitzer
 	name = "plasma howitzer"
 	sname = "plasma howitzer"
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "howitzer-shot"
 	shot_sound = 'sound/weapons/energy/howitzer_shot.ogg'
 	power = 10000 // blam = INF
