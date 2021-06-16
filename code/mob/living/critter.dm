@@ -171,6 +171,9 @@
 		if (src.is_npc)
 			src.registered_area?.registered_mob_critters -= src
 			src.registered_area = null
+		if (ai)
+			qdel(ai)
+			ai = null
 		..()
 
 	///enables mob ai that was disabled by a hibernation task
