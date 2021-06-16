@@ -450,16 +450,12 @@
 		if (!dx && !dy) 	//smooth movement within a tile
 			animate(src,pixel_x = wx-dpx, pixel_y = wy-dpy, time = 0.75, flags = ANIMATION_END_NOW)
 		else
-			if (dx && dy) 	//diagonals are too fucky and i cant figure out why yet :(
-				pixel_x = wx - dpx
-				pixel_y = wy - dpy
-			else			//smooth movement cross-tile
-				if ((loc.x - curr_turf.x))
-					pixel_x += 32 * -(loc.x - curr_turf.x)
-				if ((loc.y - curr_turf.y))
-					pixel_y += 32 * -(loc.y - curr_turf.y)
+			if ((loc.x - curr_turf.x))
+				pixel_x += 32 * -(loc.x - curr_turf.x)
+			if ((loc.y - curr_turf.y))
+				pixel_y += 32 * -(loc.y - curr_turf.y)
 
-				animate(src,pixel_x = wx-dpx, pixel_y = wy-dpy, time = 0.75, flags = ANIMATION_END_NOW) //todo figure out later
+			animate(src,pixel_x = wx-dpx, pixel_y = wy-dpy, time = 0.75, flags = ANIMATION_END_NOW) //todo figure out later
 
 	track_blood()
 		src.tracked_blood = null
