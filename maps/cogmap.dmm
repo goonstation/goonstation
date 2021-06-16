@@ -34026,6 +34026,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "bIh" = (
+/obj/machinery/disposal/small/south,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "bIj" = (
