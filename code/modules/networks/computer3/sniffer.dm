@@ -15,7 +15,9 @@
 	var/list/packet_data = list()
 	var/max_logs = 8
 
-	attack_ai()
+	attack_ai(mob/user as mob)
+		if(mode)
+			src.interacted(user)
 		return
 
 	attack_hand(mob/user as mob)
@@ -85,21 +87,23 @@
 	Topic(href, href_list)
 		..()
 
-		if (usr.contents.Find(src) || usr.contents.Find(src.master) || (istype(src.loc, /turf) && get_dist(src, usr) <= 1))
+		if (!issilicon(usr))
+			if (!usr.contents.Find(src) && !usr.contents.Find(src.master) && !(istype(src.loc, /turf) && get_dist(src, usr) <= 1))
+				return
 			if (usr.stat || usr.restrained())
 				return
 
 			src.add_fingerprint(usr)
-			src.add_dialog(usr)
+		src.add_dialog(usr)
 
-			if(href_list["filtid"])
-				var/t = input(usr, "Please enter new filter net id", src.name, src.filter_id) as text
+		if(href_list["filtid"])
+			var/t = input(usr, "Please enter new filter net id", src.name, src.filter_id) as text
 				if (!t)
 					src.filter_id = null
 					src.updateIntDialog()
 					return
 
-				if (!in_interact_range(src, usr) || usr.stat || usr.restrained())
+				if (!issilicon && (!in_interact_range(src, usr) || usr.stat || usr.restrained()))
 					return
 
 				if(length(t) != 8 || !is_hex(t))
