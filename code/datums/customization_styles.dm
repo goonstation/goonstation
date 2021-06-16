@@ -19,7 +19,7 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 	var/name = null
 	var/id = null
 	var/gender = 0
-	//Which mob icon layer this should go on (under or over glasses)
+	/// Which mob icon layer this should go on (under or over glasses)
 	var/default_layer = MOB_HAIR_LAYER1 //Under by default, more direct subtypes where that makes sense
 
 	none
