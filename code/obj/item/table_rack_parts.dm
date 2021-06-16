@@ -235,22 +235,6 @@ RACK PARTS
 	furniture_type = /obj/rack
 	furniture_name = "rack"
 
-/obj/item/furniture_parts/rack/bronze
-	icon_state = "rack_bronze_parts"
-	furniture_type = /obj/rack/bronze
-
-/obj/item/furniture_parts/rack/nickel
-	icon_state = "rack_nickel_parts"
-	furniture_type = /obj/rack/nickel
-
-/obj/item/furniture_parts/rack/cobalt
-	icon_state = "rack_cobalt_parts"
-	furniture_type = /obj/rack/cobalt
-
-/obj/item/furniture_parts/rack/lattice
-	icon_state = "rack_nickel_parts"
-	furniture_type = /obj/rack/lattice
-
 //bookshelf part construction
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/plank))
