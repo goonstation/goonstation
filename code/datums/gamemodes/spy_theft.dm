@@ -584,7 +584,9 @@
 				valid_spy_thief_targets_by_type[Object.type] = list(Object)
 	//Add organs
 	var/list/O = organ_bounties.Copy()
-	for(var/i=1, i<=organ_bounty_amt && O.len, i++)
+	var/found_organs = 0
+	var/organs_length = length(O)
+	for(var/i=1, (found_organs < organ_bounty_amt) && (i <= organs_length), i++)
 		var/datum/bounty_item/B = new /datum/bounty_item(src)
 		var/list/pair = pick(O)
 		B.item = pair[1]
@@ -593,16 +595,14 @@
 		if (istype(B.item, /obj/item/parts))
 			var/obj/item/parts/P = B.item
 			if (!P || P.qdeled || !P.holder || P.holder.qdeled)
-				// "this seems really stupid"
-				// well, yes; the idea is that this grants a retry
-				// (up to ~4 times) to pick a valid solution
-				// is it dumb? hell yeah. do i care? naaaaah.
-				i -= 0.75
+				// Not found, next organ
+				O -= list(pair)
 				continue
 			B.name = P.holder.real_name + "'s " + P.name
 		B.reveal_area = 1
 		O -= list(pair)
 
+		found_organs++
 		B.bounty_type = BOUNTY_TYPE_ORGAN
 		active_bounties += B
 

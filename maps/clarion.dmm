@@ -22557,9 +22557,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/redwhite{
-	dir = 6
-	},
+/turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "aTy" = (
 /obj/cable{
@@ -22624,18 +22622,14 @@
 	location = "tour13";
 	name = "tour beacon - medbay"
 	},
-/turf/simulated/floor/redwhite{
-	dir = 10
-	},
+/turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "aTD" = (
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/redwhite{
-	dir = 5
-	},
+/turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "aTF" = (
 /obj/cable{
@@ -23341,9 +23335,7 @@
 	location = "medbay_lobby";
 	name = "bot navigation beacon"
 	},
-/turf/simulated/floor/redwhite{
-	dir = 9
-	},
+/turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "aVc" = (
 /obj/disposalpipe/segment{

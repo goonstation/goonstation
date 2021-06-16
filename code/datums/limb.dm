@@ -84,18 +84,13 @@
 	proc/attack_range(atom/target, var/mob/user, params)
 		if(user.a_intent == "disarm")
 			if(disarm_special)
-				for (var/obj/item/cloaking_device/I in user)
-					if (I.active)
-						I.deactivate(user)
-						user.visible_message("<span class='notice'><b>[user]'s cloak is disrupted!</b></span>")
+				SEND_SIGNAL(user, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 				disarm_special.pixelaction(target,params,user)
 				.= 1
 		else if (user.a_intent == "harm")
 			if(harm_special)
 				for (var/obj/item/cloaking_device/I in user)
-					if (I.active)
-						I.deactivate(user)
-						user.visible_message("<span class='notice'><b>[user]'s cloak is disrupted!</b></span>")
+					SEND_SIGNAL(user, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 				harm_special.pixelaction(target,params,user)
 				.= 1
 		else
@@ -1289,6 +1284,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	/obj/machinery/weapon_stand,\
 	/obj/dummy/chameleon,\
 	/obj/machinery/light,\
+	/obj/machinery/phone,\
 	/obj/machinery/vending,\
 	/obj/machinery/nuclearbomb,\
 	/obj/item/gun/kinetic/airzooka,\

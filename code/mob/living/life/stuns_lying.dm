@@ -9,7 +9,7 @@
 
 		var/list/statusList = owner.getStatusList()
 
-		var/must_lie = statusList["resting"] || (!cant_lie && human_owner && human_owner.limbs && !human_owner.limbs.l_leg && !human_owner.limbs.r_leg) //hasn't got a leg to stand on... haaa
+		var/must_lie = !cant_lie && (statusList["resting"] || (human_owner && human_owner.limbs && !human_owner.limbs.l_leg && !human_owner.limbs.r_leg)) //hasn't got a leg to stand on... haaa
 
 		if (!owner.can_lie)
 			cant_lie = 1

@@ -6851,18 +6851,18 @@
 	},
 /area/station/medical/medbay)
 "apT" = (
-/obj/decal/tile_edge/line/red{
-	dir = 6;
-	icon_state = "line1"
-	},
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/decal/tile_edge/line/blue{
+	dir = 6;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "apU" = (
-/obj/decal/tile_edge/line/red{
+/obj/decal/tile_edge/line/blue{
 	dir = 10;
 	icon_state = "line1"
 	},
@@ -7415,23 +7415,19 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "ari" = (
-/obj/decal/tile_edge/line/red{
-	dir = 6;
-	icon_state = "line1"
-	},
 /obj/disposalpipe/segment,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/decal/tile_edge/line/blue{
+	dir = 6;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "arj" = (
-/obj/decal/tile_edge/line/red{
-	dir = 6;
-	icon_state = "line2"
-	},
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "1-2"
@@ -7441,10 +7437,14 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/decal/tile_edge/line/blue{
+	dir = 6;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "ark" = (
-/obj/decal/tile_edge/line/red{
+/obj/decal/tile_edge/line/blue{
 	dir = 10;
 	icon_state = "line2"
 	},
@@ -7936,28 +7936,28 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "ass" = (
-/obj/decal/tile_edge/line/red{
+/obj/disposalpipe/segment,
+/obj/decal/tile_edge/line/blue{
 	dir = 5;
 	icon_state = "line1"
 	},
-/obj/disposalpipe/segment,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
 /area/station/medical/medbay)
 "ast" = (
-/obj/decal/tile_edge/line/red{
-	dir = 5;
-	icon_state = "line2"
-	},
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/decal/tile_edge/line/blue{
+	dir = 5;
+	icon_state = "line2"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "asu" = (
-/obj/decal/tile_edge/line/red{
+/obj/decal/tile_edge/line/blue{
 	dir = 9;
 	icon_state = "line2"
 	},
@@ -8487,18 +8487,18 @@
 	},
 /area/station/medical/medbay)
 "atJ" = (
-/obj/decal/tile_edge/line/red{
-	dir = 5;
-	icon_state = "line1"
-	},
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/decal/tile_edge/line/blue{
+	dir = 5;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "atK" = (
-/obj/decal/tile_edge/line/red{
+/obj/decal/tile_edge/line/blue{
 	dir = 9;
 	icon_state = "line1"
 	},
