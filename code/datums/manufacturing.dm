@@ -598,11 +598,11 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 ////////////////////////////////
 
-/datum/manufacture/circuit_board
-	name = "Circuit Board"
+/datum/manufacture/player_module
+	name = "Vending Module"
 	item_paths = list("CON-1")
 	item_amounts = list(2)
-	item_outputs = list(/obj/item/electronics/board)
+	item_outputs = list(/obj/item/machineboard/vending/player)
 	time = 5 SECONDS
 	create = 1
 	category = "Component"
