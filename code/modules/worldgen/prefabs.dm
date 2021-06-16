@@ -187,6 +187,13 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 20
 		prefabSizeY = 20
 
+	ranch // A tiny little ranch in space
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_ranch.dmm"
+		prefabSizeX = 12
+		prefabSizeY = 12
+
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit
