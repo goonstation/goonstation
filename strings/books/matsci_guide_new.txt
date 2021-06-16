@@ -25,7 +25,7 @@ This text serves as a comprehensive overview to Materials Science. It is detaile
 <h2>
   Contents</h2>
 <nav><ul><li><a href="MatSci-W">Materials Science: What, Where, and Why?</a></li><li><a href="Index-of-Properties"> <a href="">Index of Properties</a></li> <li><a href="Basic-Mats">Basic Ores</a></li> <li><a href="Advanced-Mats">Advanced Materials</a></li> <li><a href="Alloyed-Mats">Alloyed Materials</a></li><li><a href="Alloying">Alloying</a></li>
-<li>a href="Enchanting">Enchanting</a></li><li><a href="Infusing">Infusing</a></li></ul></nav>
+<li><a href="Enchanting">Enchanting</a></li><li><a href="Infusing">Infusing</a></li></ul></nav>
 
   <section id="MatSci-W"><h3>Materials Science: What is it, Where is it, and Why is it?</h3></section>
 <hr>
@@ -837,7 +837,7 @@ Two additional notes on how <b>Melee Damage Protection</b> and <b><i>Ranged Dama
 <br>
 <br>
 You can directly transfer the stats of a material to an object by putting the material in the <b>Arc Electroplater</b> and then putting the desired object in with the plating. This process takes a few moments, and results in an object that is plated in and has the properties of your material.
-<section id="Enchanting""><h3>Enchanting</h3></section>
+<section id="Enchanting"><h3>Enchanting</h3></section>
 Enchanting is done using rare magical crystals that can be alloyed with other materials and then made into an item or used to plate an item in the Arc Electroplater. When used on a non-wearable item, three additional damage of whatever the primary damage type is gets added.
 When used on a wearable item, three additional armor is added to the item when it is worn, though the stats on the armor itself do not reflect this.
 <section id="Infusing""><h3>Infusing</h3></section>
