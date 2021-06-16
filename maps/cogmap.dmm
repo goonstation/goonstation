@@ -61593,7 +61593,6 @@
 /area/station/bridge)
 "rhb" = (
 /obj/machinery/recharge_station,
-/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor,
 /area/station/engine/power)
 "rjE" = (
