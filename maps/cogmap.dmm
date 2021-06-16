@@ -33641,10 +33641,6 @@
 /area/station/turret_protected/Zeta)
 "bHi" = (
 /obj/storage/secure/closet/engineering/mechanic,
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 10
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -34024,10 +34020,12 @@
 	name = "Mechanic"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "bIh" = (
-/obj/machinery/disposal/small/south,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "bIj" = (
@@ -34402,6 +34400,9 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 8;
 	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
@@ -35653,11 +35654,10 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "bLT" = (
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
 /obj/machinery/rkit,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bLU" = (
@@ -36275,9 +36275,8 @@
 	pixel_x = -2;
 	pixel_y = 6
 	},
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 10
+/obj/machinery/light/small/sticky{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
@@ -37105,9 +37104,6 @@
 	pixel_x = 2
 	},
 /obj/table/auto,
-/obj/machinery/light{
-	dir = 4
-	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -37773,10 +37769,8 @@
 /obj/table/auto,
 /obj/item/plate,
 /obj/random_item_spawner/snacks/maybe_few,
-/obj/machinery/light{
-	dir = 8;
-	pixel_x = -10;
-	tag = ""
+/obj/machinery/light/incandescent{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
@@ -37786,6 +37780,9 @@
 	codes_txt = "delivery;dir=4";
 	location = "Mechlab #2"
 	},
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bQk" = (
@@ -37793,10 +37790,11 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/shrub{
+/obj/shrub/syndicateplant{
 	dir = 1;
 	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
+	icon_state = "plant";
+	net_id = "D:E:A:D:B:E:E:F"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -38442,12 +38440,6 @@
 /obj/stool/chair/yellow,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
-"bRG" = (
-/obj/machinery/light{
-	tag = ""
-	},
-/turf/simulated/floor,
-/area/station/engine/elect)
 "bRI" = (
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
@@ -38472,9 +38464,8 @@
 /obj/item/device/radio/intercom/engineering{
 	dir = 1
 	},
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10
+/obj/machinery/light/incandescent{
+	dir = 4
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
@@ -55532,6 +55523,10 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
+"fDy" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor,
+/area/station/engine/elect)
 "fDN" = (
 /obj/machinery/disposal/brig,
 /obj/disposalpipe/trunk/brig{
@@ -57562,6 +57557,9 @@
 "jlQ" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 10
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
@@ -63034,6 +63032,9 @@
 /obj/cable/brown{
 	icon_state = "0-4"
 	},
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "txq" = (
@@ -64050,6 +64051,9 @@
 /area/station/turret_protected/armory_outside)
 "vko" = (
 /obj/storage/secure/closet/engineering/mechanic,
+/obj/machinery/light/small/sticky{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "vkt" = (
@@ -110109,7 +110113,7 @@ bHj
 bIh
 bJg
 bKs
-bLM
+bLN
 ndi
 neb
 neb
@@ -111017,7 +111021,7 @@ qYj
 bKu
 fkS
 hCt
-bNn
+fDy
 bQi
 tWU
 bTd
@@ -111623,7 +111627,7 @@ bLU
 clf
 bOQ
 fFs
-bRG
+bNn
 bTf
 bUG
 bKp
