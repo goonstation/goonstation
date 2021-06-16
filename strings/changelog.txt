@@ -1,5 +1,9 @@
 
 (t)tue jun 15 21
+(u)Penny & Ludolf
+(p)4231
+(e)🆕🎨|feature, sprites
+(*)Players can now construct vending machines to sell their own items. Find the frames in the steel sheet menu and vending modules in your local general manufacturer! Sprites and animations by Ludolf!
 (u)UnfunnyPerson
 (p)5156
 (e)|
