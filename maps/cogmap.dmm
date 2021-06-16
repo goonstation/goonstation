@@ -34435,6 +34435,22 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/item/clothing/gloves/yellow{
+	pixel_x = -7;
+	pixel_y = 10
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_x = -7;
+	pixel_y = 10
+	},
+/obj/item/device/multitool{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/device/multitool{
+	pixel_x = -2;
+	pixel_y = 6
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "bJi" = (
@@ -35015,6 +35031,22 @@
 /obj/random_item_spawner/tools_w_igloves/maybe_few,
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_x = -7;
+	pixel_y = 10
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_x = -7;
+	pixel_y = 10
+	},
+/obj/item/device/multitool{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/device/multitool{
+	pixel_x = -2;
+	pixel_y = 6
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
@@ -35635,6 +35667,10 @@
 	pixel_x = -4;
 	pixel_y = -2
 	},
+/obj/item/clothing/gloves/yellow{
+	pixel_x = -7;
+	pixel_y = 10
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -35652,6 +35688,10 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_x = -7;
+	pixel_y = 10
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -36231,12 +36271,16 @@
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bNp" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/table/reinforced/auto,
 /obj/machinery/computer3/generic/personal{
-	setup_drive_type = null
+	setup_drive_type = /obj/item/disk/data/fixed_disk/techcomputer3
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
@@ -38348,6 +38392,7 @@
 	pixel_x = 4;
 	pixel_y = 6
 	},
+/obj/random_item_spawner/tools_w_igloves/maybe_few,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
@@ -56577,6 +56622,19 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"hzw" = (
+/obj/landmark/start{
+	name = "Engineer"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_x = -7;
+	pixel_y = 10
+	},
+/turf/simulated/floor,
+/area/station/engine/engineering)
 "hzO" = (
 /obj/stool/chair,
 /obj/cable{
@@ -112418,7 +112476,7 @@ bEV
 bsN
 oxf
 cML
-bIo
+hzw
 bJo
 bLM
 jkD
