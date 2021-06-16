@@ -215,7 +215,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	announce_on_join = 1
 
 
-#ifdef SUBMARINE_MAP
+#ifdef FLEET_MAP
 	slot_suit = /obj/item/clothing/suit/armor/hopcoat
 	slot_back = /obj/item/storage/backpack/withO2
 	slot_belt = /obj/item/device/pda2/heads

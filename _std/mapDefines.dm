@@ -3,6 +3,7 @@
 
 #elif defined(MAP_OVERRIDE_DESTINY)
 
+#define FLEET_MAP 1
 
 #elif defined(MAP_OVERRIDE_CLARION)
 
@@ -36,9 +37,11 @@
 
 #define UNDERWATER_MAP 1
 #define SCIENCE_PATHO_MAP 1
+#define FLEET_MAP 1
 
 #elif defined(MAP_OVERRIDE_HORIZON)
 
+#define FLEET_MAP 1
 
 #elif defined(MAP_OVERRIDE_ATLAS)
 
@@ -48,6 +51,7 @@
 #define UNDERWATER_MAP 1
 #define MOVING_SUB_MAP 1
 #define SUBMARINE_MAP 1
+#define FLEET_MAP 1
 #define SCIENCE_PATHO_MAP 1
 #elif defined(SPACE_PREFAB_RUNTIME_CHECKING)
 #define RUNTIME_CHECKING 1
