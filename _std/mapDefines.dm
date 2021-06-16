@@ -7,6 +7,7 @@
 
 #elif defined(MAP_OVERRIDE_CLARION)
 
+#define FLEET_MAP 1
 
 #elif defined(MAP_OVERRIDE_COGMAP)
 
