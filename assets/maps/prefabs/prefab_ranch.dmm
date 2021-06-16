@@ -112,11 +112,22 @@
 "G" = (
 /obj/rack,
 /obj/item/fishing_rod,
+/obj/item/fish_portal{
+	pixel_x = 5;
+	pixel_y = -1
+	},
 /turf/simulated/floor/green,
 /area/prefab/ranch)
 "H" = (
 /obj/table/auto,
-/obj/item/satchel/hydro,
+/obj/item/satchel/hydro{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/wrapping_paper{
+	pixel_x = 3;
+	pixel_y = -1
+	},
 /turf/simulated/floor/green,
 /area/prefab/ranch)
 "J" = (
@@ -135,6 +146,13 @@
 /obj/item/clothing/mask/chicken,
 /obj/machinery/light{
 	dir = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/prefab/ranch)
+"P" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -4
 	},
 /turf/simulated/floor/grass/leafy,
 /area/prefab/ranch)
@@ -257,12 +275,12 @@ a
 F
 F
 O
-E
+P
 X
 U
 U
 b
-E
+P
 l
 F
 F
