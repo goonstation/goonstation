@@ -1,5 +1,9 @@
 
 (t)tue jun 15 21
+(u)Yellow-Mushroom
+(p)5123
+(e)🗺|mapping
+(*)Reworks Cogmap2's robotics to increase player interaction
 (u)Penny & Ludolf
 (p)4231
 (e)🆕🎨|feature, sprites
