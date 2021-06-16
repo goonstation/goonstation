@@ -1481,7 +1481,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /*/obj/item/gun/kinetic/sniper/antimateriel
 	name = "M20-S antimateriel cannon"
 	desc = "A ruthlessly powerful rifle chambered for a 20mm cannon round. Built to destroy vehicles and infrastructure at range."
-	icon = 'icons/obj/64x32.dmi'
+	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "antimateriel"
 	item_state = "cannon"
 	wear_image_icon = 'icons/mob/back.dmi'

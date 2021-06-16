@@ -16,8 +16,8 @@
 	code/WorkInProgress/radioship.dm
 	maps/radiostation2.dmm
 	icon/obj/radiostation.dmi
-	icon/obj/64x64.dmi
-	icon/obj/32x64.dmi
+	icon/obj/large/64x64.dmi
+	icon/obj/large/32x64.dmi
 	icon/obj/decoration.dmi
 	strings/radioship/radioship_records.txt */
 
