@@ -1,9 +1,4 @@
 
-(t)sat jun 11 21
-(u)Tarmunora
-(e)⚖|balance
-(+)Blob spread cooldown affected slightly by distance from closest owned nucleus (1 second/20 tiles distance).
-(+)Blob spread speed upgrade more expensive (+1 base cost, +1 cost-scaling)
 (t)fri jun 11 21
 (u)Tarmunora
 (e)⚖|balance
