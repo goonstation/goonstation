@@ -1585,8 +1585,8 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 	name = "Ranch Field Guide"
 	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About chickens."
 	icon_state = "ranch_guide"
-	sizex = 970
-	sizey = 690
+	sizex = 1100
+	sizey = 800
 
 	New()
 		..()
