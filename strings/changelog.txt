@@ -1,4 +1,10 @@
 
+(t)thu jun 17 21
+(u)eX.n0x
+(p)5148
+(e)🐛🗺|bug, mapping
+(*)Horizon genetics/monkey dome are completely restricted to geneticists.
+(*)Horizon/Kondaru detective receiving office is now open to the general public.
 (t)wed jun 16 21
 (u)Penny
 (p)5152
