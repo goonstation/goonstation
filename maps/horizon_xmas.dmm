@@ -7978,9 +7978,9 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8;
 	name = "Chimpnasium";
-	req_access = list(9)
+	req_access = null
 	},
-/obj/access_spawn/medical,
+/obj/access_spawn/medlab,
 /obj/decal/garland{
 	dir = 8;
 	pixel_x = -20
@@ -9439,9 +9439,9 @@
 "axs" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Chimpnasium";
-	req_access = list(9)
+	req_access = null
 	},
-/obj/access_spawn/medical,
+/obj/access_spawn/medlab,
 /obj/decal/garland,
 /turf/simulated/floor/black,
 /area/station/medical/dome)
@@ -13844,9 +13844,10 @@
 /area/station/maintenance/northeast)
 "aHN" = (
 /obj/machinery/door/airlock/pyro/maintenance{
-	req_access = list(9)
+	req_access = null
 	},
 /obj/decal/garland,
+/obj/access_spawn/medlab,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "aHO" = (

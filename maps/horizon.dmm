@@ -8857,9 +8857,9 @@
 "axs" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Chimpnasium";
-	req_access = list(9)
+	req_access = null
 	},
-/obj/access_spawn/medical,
+/obj/access_spawn/medlab,
 /turf/simulated/floor/black,
 /area/station/medical/dome)
 "axu" = (
@@ -12813,9 +12813,10 @@
 /area/station/maintenance/northeast)
 "aHN" = (
 /obj/machinery/door/airlock/pyro/maintenance{
-	req_access = list(9)
+	req_access = null
 	},
 /obj/disposalpipe/segment/transport,
+/obj/access_spawn/medlab,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "aHO" = (
@@ -58756,9 +58757,9 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8;
 	name = "Chimpnasium";
-	req_access = list(9)
+	req_access = null
 	},
-/obj/access_spawn/pathology,
+/obj/access_spawn/medlab,
 /turf/simulated/floor/white,
 /area/station/medical/dome)
 "rHb" = (
