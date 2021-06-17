@@ -3,9 +3,7 @@
 /turf/space,
 /area/space)
 "b" = (
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
+/obj/railing/orange/reinforced,
 /turf/simulated/floor/grasstodirt,
 /area/prefab/ranch)
 "e" = (
@@ -181,7 +179,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/ranch)
 "X" = (
-/obj/railing/orange/reinforced,
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
