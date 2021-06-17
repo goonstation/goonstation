@@ -438,6 +438,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
+/obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "aba" = (
@@ -485,6 +486,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
+/obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "abh" = (
@@ -3448,6 +3450,7 @@
 /area/station/medical/robotics)
 "ahO" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "ahP" = (
@@ -3578,6 +3581,7 @@
 /area/station/maintenance/north)
 "aie" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "aif" = (
@@ -16571,6 +16575,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/engine/glow/blue{
 	dir = 10
 	},
@@ -17062,6 +17067,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "aOs" = (
@@ -45250,6 +45256,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "cjL" = (
@@ -47438,6 +47445,15 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/black,
 /area/research_outpost)
+"oID" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/machinery/light/small/floor/cool,
+/turf/simulated/floor/blue/checker{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 "oIU" = (
 /turf/simulated/floor/stairs/wide/middle,
 /area/station/hallway/secondary/exit)
@@ -47610,6 +47626,13 @@
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"qcQ" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/machinery/light/small/floor/cool,
+/turf/simulated/floor/shuttlebay,
+/area/shuttle/sea_elevator_room)
 "qju" = (
 /obj/cable{
 	d2 = 4;
@@ -48277,6 +48300,11 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"wJj" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/light/small/floor/cool,
+/turf/simulated/floor,
+/area/station/crew_quarters/lounge/port)
 "wJK" = (
 /obj/table/round/auto,
 /obj/item/storage/firstaid/fire{
@@ -80942,7 +80970,7 @@ bVy
 aUp
 bXO
 bXb
-bXP
+wJj
 bYk
 bYk
 bYk
@@ -82754,7 +82782,7 @@ bXQ
 aUp
 bXO
 bXb
-bXP
+wJj
 clQ
 clQ
 clQ
@@ -82950,7 +82978,7 @@ aqn
 aqn
 aqn
 ahb
-ahb
+agm
 ahb
 ahb
 bmu
@@ -83554,7 +83582,7 @@ aqn
 aqn
 aqn
 ahb
-ahb
+agm
 ahb
 ahb
 agY
@@ -89942,8 +89970,8 @@ aqn
 aqn
 aqn
 aLV
-aaM
-aaM
+qcQ
+qcQ
 aLV
 aLV
 aLV
@@ -90546,8 +90574,8 @@ aqn
 aqn
 aqn
 aLV
-aaM
-aaM
+qcQ
+qcQ
 aLV
 aqn
 aqn
@@ -104097,7 +104125,7 @@ aqn
 aqn
 aqn
 anx
-anx
+any
 anx
 anx
 aoj
@@ -104701,7 +104729,7 @@ aqn
 aqn
 aqn
 anx
-anx
+any
 anx
 anx
 aoj
@@ -117456,8 +117484,8 @@ byq
 bEc
 byq
 bze
-bAm
-bAm
+oID
+oID
 bze
 byq
 bEc
