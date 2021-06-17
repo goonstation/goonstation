@@ -93,8 +93,8 @@
 		"<span class='alert'>[changer ? "Our" : "Your"] [magical ? "arse" : "ass"] tears itself away from [changer ? "our" : "your"] body[magical ? " in a magical explosion" : null]!</span>")
 		if (!magical)
 			H.changeStatus("weakened", 2 SECONDS)
+			H.force_laydown_standup()
 		severed_something = TRUE
-		H.force_laydown_standup()
 
 	/// If that didn't work, try severing a limb or tail
 	else if (!is_bot && prob(limbloss_prob)) // It'll try to sever an arm, then a leg, then an arm, then a leg
@@ -160,7 +160,7 @@
 	"<span class='alert'>[nobutt_phrase[assmagic]]</span>")
 	if(!magical)
 		H.changeStatus("weakened", 3 SECONDS)
-	H.force_laydown_standup()
+		H.force_laydown_standup()
 	if(!severed_something)
 		H.emote("scream")
 
