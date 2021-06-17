@@ -33678,9 +33678,23 @@
 	dir = 8;
 	tag = ""
 	},
+/obj/machinery/power/data_terminal,
+/obj/cable/brown{
+	icon_state = "0-4"
+	},
+/obj/cable/brown{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/monitor{
+	dir = 4;
+	name = "Station Power Grid Monitoring"
+	},
 /turf/simulated/floor,
 /area/station/engine/power)
 "bHm" = (
+/obj/cable/brown{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor,
 /area/station/engine/power)
 "bHo" = (
@@ -34095,18 +34109,19 @@
 	dir = 1;
 	icon_state = "xtra_bigstripe-edge"
 	},
+/obj/cable/brown,
 /turf/simulated/floor/plating,
 /area/station/engine/power)
 "bIk" = (
-/obj/cable/brown{
-	icon_state = "2-8"
-	},
 /obj/decal/tile_edge/stripe/big{
 	dir = 1;
 	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/power)
@@ -34474,14 +34489,11 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/plating,
 /area/station/engine/power)
 "bJk" = (
-/obj/cable/brown,
-/obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor{
-	dir = 1;
-	name = "Station Power Grid Monitoring"
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/power)
@@ -36245,9 +36257,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light/small/sticky{
-	dir = 1
-	},
 /obj/stool/chair/yellow{
 	dir = 1
 	},
@@ -37731,9 +37740,6 @@
 /obj/table/auto,
 /obj/item/plate,
 /obj/random_item_spawner/snacks/maybe_few,
-/obj/machinery/light/incandescent{
-	dir = 8
-	},
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bQi" = (
@@ -54255,6 +54261,9 @@
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
 /obj/decal/garland/ephemeral,
+/obj/cable/brown{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
 "dHa" = (
@@ -57382,6 +57391,12 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/engine/core)
+"iZi" = (
+/obj/cable/brown{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/engine/power)
 "jbg" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -61178,6 +61193,10 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/stockex)
+"qnA" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor,
+/area/station/engine/elect)
 "qoa" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -61433,6 +61452,9 @@
 	pixel_x = 4;
 	pixel_y = -2
 	},
+/obj/machinery/light/small/sticky{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/engine/elect)
 "qMI" = (
@@ -61536,6 +61558,12 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
+"qXL" = (
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/engine/elect)
 "qYj" = (
 /obj/machinery/power/smes{
 	charge = 1e+006;
@@ -61548,7 +61576,11 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
 /area/station/engine/power)
 "rae" = (
 /obj/machinery/light{
@@ -62603,9 +62635,6 @@
 /obj/machinery/power/terminal,
 /obj/cable/brown{
 	icon_state = "0-8"
-	},
-/obj/cable/brown{
-	icon_state = "0-4"
 	},
 /obj/decal/tile_edge/stripe/big{
 	dir = 1;
@@ -109447,7 +109476,7 @@ bIg
 bJe
 bLN
 bNn
-bNn
+qXL
 bNn
 bQh
 bRA
@@ -110351,7 +110380,7 @@ bUK
 bUK
 bIJ
 bUK
-bUK
+bLM
 qMw
 bNo
 bNn
@@ -110951,7 +110980,7 @@ nXC
 bEk
 bET
 dGA
-bHm
+iZi
 bHm
 sJa
 qYj
@@ -111564,7 +111593,7 @@ bLU
 clf
 bOQ
 fFs
-bNn
+qnA
 bTf
 bUG
 bKp
