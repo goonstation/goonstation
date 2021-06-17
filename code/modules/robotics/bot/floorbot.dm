@@ -1,4 +1,6 @@
 //Floorbot assemblies
+#define FLOORBOT_MOVE_SPEED 7
+#define FLOORBOT_CLEARTARGET_COOLDOWN "clearinvalidfloorbotlist"
 /obj/item/toolbox_tiles
 	desc = "It's a toolbox with tiles sticking out the top"
 	name = "tiles and toolbox"
@@ -8,7 +10,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = TABLEPASS
 
 /obj/item/toolbox_tiles_sensor
@@ -20,7 +22,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = TABLEPASS
 
 //Floorbot
@@ -32,13 +34,14 @@
 	layer = 5.0 //TODO LAYER
 	density = 0
 	anchored = 0
+	bot_move_delay = FLOORBOT_MOVE_SPEED
 	//weight = 1.0E7
 	var/amount = 50
-	on = 1
+	on = 0 // Don't start running around eating everything and puking it all over the cold loop, at least till someone pokes you
 	var/repairing = 0
 	var/improvefloors = 0
-	var/eattiles = 0
-	var/maketiles = 0
+	var/eattiles = 1
+	var/maketiles = 1
 	locked = 1
 	health = 25
 	var/const/max_tiles = 500
@@ -47,42 +50,42 @@
 	var/oldloc = null
 	req_access = list(access_engineering)
 	access_lookup = "Chief Engineer"
-	var/list/path = null
 	no_camera = 1
 	var/search_range = 1
 	var/max_search_range = 7
+	/// Favor scanning from this spot, so that they'll tend to build out from here, and not just a bunch of metal spaghetti
+	var/turf/scan_origin
+	/// They're designed to work best while nobody's looking
+	/// and they lag to shit at higher processing levels (i actually fixed that lag, but theyre kinda good at this rate sooo)
+	dynamic_processing = 0
+	PT_idle = PROCESSING_QUARTER
+
+	var/static/list/floorbottargets = list()
 
 	// this is from cleanbot.dm, which should really be like. part of all bots, later.
 	var/list/targets_invalid = list() // Targets we weren't able to reach.
 	var/clear_invalid_targets = 1 // In relation to world time. Clear list periodically.
-	var/clear_invalid_targets_interval = 1800 // How frequently?
+	var/clear_invalid_targets_interval = 30 SECONDS // How frequently?
 
 
 /obj/machinery/bot/floorbot/New()
 	..()
-	SPAWN_DBG (5)
+	SPAWN_DBG(0.5 SECONDS)
 		if (src)
-			src.botcard = new /obj/item/card/id(src)
-			src.botcard.access = get_access(src.access_lookup)
 			src.updateicon()
 	return
 
 /obj/machinery/bot/floorbot/attack_hand(mob/user as mob, params)
 	var/dat
-	dat += text({"
-<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>
-Status: []<BR>
-Tiles left: [src.amount]<BR>
-Behaviour controls are [src.locked ? "locked" : "unlocked"]"},
-text("<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>"))
+	dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
+	dat += "Status: \[<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>\]<BR>"
+	dat += "Tiles left: [src.amount]<BR>"
+	dat += "Behaviour controls are [src.locked ? "locked" : "unlocked"]<BR>"
 	if (!src.locked)
-		dat += text({"<hr>
-Improves floors: []<BR>
-Finds tiles: []<BR>
-Make single pieces of metal into tiles when empty: []"},
-text("<A href='?src=\ref[src];operation=improve'>[src.improvefloors ? "Yes" : "No"]</A>"),
-text("<A href='?src=\ref[src];operation=tiles'>[src.eattiles ? "Yes" : "No"]</A>"),
-text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>"))
+		dat += "<hr>"
+		dat += "Improves floors: \[<A href='?src=\ref[src];operation=improve'>[src.improvefloors ? "Yes" : "No"]</A>\]<BR>"
+		dat += "Finds tiles: \[<A href='?src=\ref[src];operation=tiles'>[src.eattiles ? "Yes" : "No"]</A>\]<BR>"
+		dat += "Make single pieces of metal into tiles when empty: \[<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>\]"
 
 	if (user.client.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(src, list(
@@ -97,12 +100,8 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 	if (!src.emagged)
 		if (user)
 			boutput(user, "<span class='alert'>You short out [src]'s target assessment circuits.</span>")
-		SPAWN_DBG(0)
-			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='alert'><B>[src] buzzes oddly!</B></span>", 1)
-		src.target = null
-		src.oldtarget = null
-		src.anchored = 0
+		src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>", 1)
+		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1
 		src.icon_state = "floorbot[src.on]"
@@ -122,9 +121,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 	..()
 	if (!src.emagged && prob(75))
 		src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
-		src.target = null
-		src.oldtarget = null
-		src.anchored = 0
+		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1
 		src.icon_state = "floorbot[src.on]"
@@ -150,16 +147,18 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		boutput(user, "<span class='alert'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles!</span>")
 		src.updateicon()
 	//Regular ID
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
-	if (istype(W, /obj/item/card/id))
-		if (src.allowed(usr))
-			src.locked = !src.locked
-			boutput(user, "You [src.locked ? "lock" : "unlock"] the [src] behaviour controls.")
+	else
+		if (istype(W, /obj/item/device/pda2) && W:ID_card)
+			W = W:ID_card
+		if (istype(W, /obj/item/card/id))
+			if (src.allowed(user))
+				src.locked = !src.locked
+				boutput(user, "You [src.locked ? "lock" : "unlock"] the [src] behaviour controls.")
+			else
+				boutput(user, "The [src] doesn't seem to accept your authority.")
+			src.updateUsrDialog()
 		else
-			boutput(user, "The [src] doesn't seem to accept your authority.")
-		src.updateUsrDialog()
-
+			..()
 
 
 /obj/machinery/bot/floorbot/Topic(href, href_list)
@@ -170,11 +169,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 	switch(href_list["operation"])
 		if ("start")
 			src.on = !src.on
-			src.target = null
-			src.oldtarget = null
-			src.oldloc = null
-			src.updateicon()
-			src.path = null
+			src.KillPathAndGiveUp(1)
 			src.updateUsrDialog()
 		if ("improve")
 			src.improvefloors = !src.improvefloors
@@ -188,269 +183,228 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 
 /obj/machinery/bot/floorbot/attack_ai()
 	src.on = !src.on
-	src.target = null
-	src.oldtarget = null
-	src.oldloc = null
-	src.updateicon()
-	src.path = null
-
+	src.KillPathAndGiveUp(1)
 
 /obj/machinery/bot/floorbot/proc/find_target(var/force = 0)
 	if (!force && src.target && src.target != null)
 		// you already have a target you clown get out of here
 		return
 
-	// Don't target things other floorbots are targetting
-	var/list/floorbottargets = list()
-	if (!src.target || src.target == null)
-		for(var/obj/machinery/bot/floorbot/bot in machine_registry[MACHINES_BOTS])
-			if (bot != src)
-				floorbottargets += bot.target
-
+	if(!src.scan_origin || !isturf(src.scan_origin))
+		src.scan_origin = get_turf(src)
 
 	// Find thing to do
-	if (!src.emagged && src.amount > 0)
-		// We can only do these things while we have tiles...
+	if (!src.emagged)
+		if(src.amount > 0)
+			// We can only do these things while we have tiles...
 
-	    // Search for space turf
-		for (var/turf/space/D in view(src.search_range, src))
-			if (D != src.oldtarget && (D.loc.name != "Space" && D.loc.name != "Ocean") && !(D in floorbottargets) && !should_ignore_tile(D))
-				return D
+			// Search for space turf
+			for (var/turf/space/D in view(src.search_range, src.scan_origin))
+				if(!istype(D, /turf/space))
+					continue
+				var/coord = turf2coordinates(D)
+				if((coord in floorbottargets) || (coord in targets_invalid))
+					continue
+				else if (D == src.oldtarget || should_ignore_tile(D))
+					continue
+				// Floorbot doesnt like space, so it won't accept space tiles without some kind of not-space next to it. Or they're right up against it. Or already on space.
+				else if (IN_RANGE(get_turf(src), get_turf(D), 1) || get_pathable_turf(D)) // silly little things
+					src.floorbottargets |= coord
+					return D
 
-		// Search for incomplete/damaged floor
-		if (src.improvefloors)
-			for (var/turf/simulated/floor/F in view(src.search_range, src))
-				if (F != src.oldtarget && (!F.intact || F.burnt || F.broken || istype(F, /turf/simulated/floor/metalfoam)) && !(F in floorbottargets) && !should_ignore_tile(F))
-					return F
-
+			// Search for incomplete/damaged floor
+			if (src.improvefloors)
+				for (var/turf/simulated/floor/F in view(src.search_range, src.scan_origin))
+					var/coord = turf2coordinates(F)
+					if((coord in floorbottargets) || (coord in targets_invalid))
+						continue
+					else if (F == src.oldtarget || should_ignore_tile(F))
+						continue
+					else if (!F.intact || F.burnt || F.broken || istype(F, /turf/simulated/floor/metalfoam))
+						src.floorbottargets |= coord
+						return F
 
 	if (src.emagged)
-		for (var/turf/simulated/floor/F in view(src.search_range, src))
-			if (F != src.oldtarget && !(F in floorbottargets) && !should_ignore_tile(F))
+		for (var/turf/simulated/floor/F in view(src.search_range, src.scan_origin))
+			var/coord = turf2coordinates(F)
+			if((coord in floorbottargets) || (coord in targets_invalid))
+				continue
+			else if (F == src.oldtarget || should_ignore_tile(F))
+				continue
+			else
+				src.floorbottargets |= coord
 				return F
 
 	// Only do this if we don't have our max already
 	if (src.amount < max_tiles)
 		if (src.eattiles)
-			for (var/obj/item/tile/T in view(src.search_range, src))
-				// T is /var/turf, not. tiles. does this even work? does BYOND care?
-				if (T != src.oldtarget && !(target in floorbottargets) && !should_ignore_tile(get_turf(T)))
+			for (var/obj/item/tile/T in view(src.search_range, src.scan_origin))
+				var/coord = turf2coordinates(get_turf(T))
+				if((coord in floorbottargets) || (coord in targets_invalid))
+					continue
+				else if (T == src.oldtarget || should_ignore_tile(T))
+					continue
+				else
+					src.floorbottargets |= coord
 					return T
+					// T is /var/turf, not. tiles. does this even work? does BYOND care? no, not really
 
 		if (src.maketiles)
 			if (src.target == null || !src.target)
-				for (var/obj/item/sheet/M in view(src.search_range, src))
-					if (M != src.oldtarget && !(M in floorbottargets) && M.amount >= 1 && !(istype(M.loc, /turf/simulated/wall)) && !should_ignore_tile(get_turf(M)))
+				for (var/obj/item/sheet/M in view(src.search_range, src.scan_origin))
+					var/coord = turf2coordinates(get_turf(M))
+					if((coord in floorbottargets) || (coord in targets_invalid))
+						continue
+					else if (M == src.oldtarget || should_ignore_tile(M))
+						continue
+					else if (M.amount >= 1 && !(istype(M.loc, /turf/simulated/wall)) && !should_ignore_tile(get_turf(M)))
+						src.floorbottargets |= coord
 						return M
 
 	return null
 
 /obj/machinery/bot/floorbot/proc/should_ignore_tile(var/turf/T)
-	if (T in targets_invalid)
-		return true
-
 	for (var/atom/A in T.contents)
 		if (A.density && !(A.flags & ON_BORDER) && !istype(A, /obj/machinery/door) && !ismob(A))
-			targets_invalid += T
+			var/coord = turf2coordinates(get_turf(A))
+			targets_invalid |= coord
 			return true
 
 
 
 /obj/machinery/bot/floorbot/process()
+	. = ..()
 	// checks to see if robot is on / busy already
 	if (!src.on || src.repairing || !isturf(src.loc))
 		return
 
 	// Invalid targets may not be unreachable anymore. Clear list periodically.
-	if (src.clear_invalid_targets && world.time > src.clear_invalid_targets + src.clear_invalid_targets_interval)
+	if (src.clear_invalid_targets && !ON_COOLDOWN(src, FLOORBOT_CLEARTARGET_COOLDOWN, src.clear_invalid_targets_interval))
 		src.targets_invalid = list()
-		src.clear_invalid_targets = world.time
-
-
-	if (prob(5))
-		src.visible_message("[src] makes an excited booping beeping sound!")
+		src.floorbottargets = list()
 
 	if (!src.target)
-		do
-			src.target	= src.find_target()
-			src.search_range++
-		while (!src.target && src.search_range <= 3)
-		// basically: try to find a target within 3 tiles
-		// if that doesn't work: just give up, go slower as search expands
-		// will help keep a bot "focused" on an area
-		src.search_range = min(src.max_search_range, src.target ? 1 : src.search_range)
-
-		if (src.target)
-			var/obj/decal/point/P = new(get_turf(src.target))
-			P.pixel_x = target.pixel_x
-			P.pixel_y = target.pixel_y
-			SPAWN_DBG (20)
-				P.invisibility = 101
-				qdel(P)
-
-		src.oldtarget = null
+		for(var/i in 1 to src.max_search_range)
+			// basically: focus on scanning tiles near to a set area
+			// scan in a small area, and if nothing's found, scan a larger area
+			// will help keep a bot "focused" on an area
+			if(!src.scan_origin || !isturf(src.scan_origin) || !IN_RANGE(get_turf(src), src.scan_origin, 7))
+				src.scan_origin = get_turf(src)
+			src.search_range = i
+			src.target = src.find_target()
+			if(src.target)
+				break
+			if(!src.target && src.search_range++ >= src.max_search_range)
+				src.KillPathAndGiveUp(1)
 
 	if (src.target)
-
 		// are we there yet
-		if (get_turf(src.loc) == get_turf(src.target))
+		if (IN_RANGE(get_turf(src), get_turf(src.target), 1))
 			do_the_thing()
 			return
 
 		// we are not there. how do we get there
-		if (!src.path || !src.path.len)
-			src.path = AStar(src.loc, get_turf(src.target), /turf/proc/CardinalTurfsSpace, /turf/proc/Distance, 120)
-			if (!src.path || !src.path.len)
+		if (!src.path || !length(src.path))
+			src.navigate_to(get_turf(src.target), FLOORBOT_MOVE_SPEED, max_dist = 120)
+			if (!src.path || !length(src.path))
 				// answer: we don't. try to find something else then.
-				src.oldtarget = src.target
-				targets_invalid += src.target
-				src.target = null
-
-		SPAWN_DBG(0)
-			for (var/i = 4, i > 0, i--)
-				if (src.path && src.path.len)
-					step_to(src, src.path[1])
-					src.path -= src.path[1]
-					sleep(0.3 SECONDS)
-
-			if (get_turf(src.loc) == get_turf(src.target))
-				do_the_thing()
+				src.targets_invalid |= turf2coordinates(src.target)
+				src.KillPathAndGiveUp(1)
 				return
+		src.point(src.target)
+		src.doing_something = 1
+		src.search_range = 1
+	else
+		src.targets_invalid |= turf2coordinates(src.target)
+		src.KillPathAndGiveUp(1)
 
+/obj/machinery/bot/floorbot/KillPathAndGiveUp(var/give_up)
+	. = ..()
+	if(give_up)
+		src.floorbottargets -= turf2coordinates(src.target)
+		src.target = null
+		src.anchored = 0
+		src.updateicon()
+		src.repairing = 0
+		src.oldtarget = null
+		src.oldloc = null
+		src.search_range = 1
+		src.scan_origin = null
 
 /obj/machinery/bot/floorbot/proc/do_the_thing()
 	// we are there, hooray
+	if (prob(80))
+		src.visible_message("[src] makes an excited booping beeping sound!")
 	if (istype(src.target, /obj/item/tile))
 		src.eattile(src.target)
 	else if (istype(src.target, /obj/item/sheet))
 		src.maketile(src.target)
 	else if (istype(src.target, /turf/))
-		repair(src.target)
-
-	src.path = null
-
-
+		src.repair(src.target)
 
 /obj/machinery/bot/floorbot/proc/repair(var/turf/target)
 	if (src.repairing)
 		return
 	if (!src.emagged)
 		// are we doin this normally?
-
 		if (src.amount < 0)
 			// uh. buddy. you aint got no floor tiles.
-			src.target = null
+			src.KillPathAndGiveUp(1)
 			return
-
-		src.anchored = 1
-		src.icon_state = "floorbot-c"
-		src.repairing = 1
-		var/new_tile = 0
-
-		if (istype(target, /turf/space/) || istype(target, /turf/simulated/floor/metalfoam))
-			src.visible_message("<span class='notice'>[src] begins building flooring.</span>")
-			new_tile = 1
-
-		else if (istype(target, /turf/simulated/floor))
-			src.visible_message("<span class='notice'>[src] begins to fix the floor.</span>")
-
-		else
-			// how the fucking jesus did you get here
-			src.target = null
-			return
-
-		SPAWN_DBG(0.4 SECONDS)
-			if (new_tile)
-				// Make a new tile
-				var/obj/item/tile/T = new /obj/item/tile/steel
-				T.build(src.loc)
-			else
-				// Fix yo shit
-				var/turf/simulated/floor/F = target
-				if (F.intact)
-					F.to_plating()
-					sleep(0.5 SECONDS)
-				F.restore_tile()
-
-			src.repairing = 0
-			src.amount -= 1
-			src.updateicon()
-			src.anchored = 0
-			src.target = find_target(1)
-			return
+		actions.start(new/datum/action/bar/icon/floorbot_repair(src, target), src)
 
 	else if (src.emagged && istype(target, /turf/simulated/floor))
 		// Emagged "repair"
-
-		src.visible_message("<span class='alert'>[src] starts ripping up the flooring!</span>")
-		src.anchored = 1
-		src.repairing = 1
-		SPAWN_DBG(1 SECOND)
-			// literally rip up the floor tile. honk.
-			var/turf/simulated/floor/T = target
-			var/atom/A = new /obj/item/tile(T)
-			if (T.material)
-				A.setMaterial(T.material)
-			else
-				var/datum/material/M = getMaterial("steel")
-				A.setMaterial(M)
-
-			T.ReplaceWithSpace()
-			src.repairing = 0
-			src.updateicon()
-			src.anchored = 0
-			src.target = find_target(1)
-		return
-
+		actions.start(new/datum/action/bar/icon/floorbot_disrepair(src, target), src)
 
 /obj/machinery/bot/floorbot/proc/eattile(var/obj/item/tile/T)
 	if (!istype(T, /obj/item/tile))
 		return
-	src.visible_message("<span class='alert'>[src] begins to collect tiles.</span>")
+	src.visible_message("<span class='alert'>[src] gathers up [T] into its hopper.</span>")
 	src.repairing = 1
-	SPAWN_DBG(0.2 SECONDS)
-		if (isnull(T))
-			src.target = null
-			src.repairing = 0
-			return
-		if (src.amount + T.amount > max_tiles)
-			var/i = max_tiles - src.amount
-			src.amount += i
-			T.amount -= i
-		else
-			src.amount += T.amount
-			qdel(T)
-		src.updateicon()
+	if (isnull(T))
 		src.target = null
 		src.repairing = 0
+		return
+	if (src.amount + T.amount > max_tiles)
+		var/i = max_tiles - src.amount
+		src.amount += i
+		T.amount -= i
+	else
+		src.amount += T.amount
+		qdel(T)
+	src.updateicon()
+	src.floorbottargets -= turf2coordinates(src.target)
+	src.target = null
+	src.repairing = 0
 
 /obj/machinery/bot/floorbot/proc/maketile(var/obj/item/sheet/M)
 	if (!istype(M, /obj/item/sheet))
 		return
-	src.visible_message("<span class='alert'>[src] begins to create tiles.</span>")
+	src.visible_message("<span class='alert'>[src] converts [M] into usable floor tiles.</span>")
 	src.repairing = 1
 	M.set_loc(src)
-	SPAWN_DBG(0.2 SECONDS)
-		if (isnull(M))
-			src.target = null
-			src.repairing = 0
-			return
-
-		var/sheets_to_use = 1
-		if (src.amount + (M.amount * 4) > src.max_tiles)
-			sheets_to_use = round((src.max_tiles - src.amount) / 4)
-		else
-			sheets_to_use = M.amount
-
-		var/obj/item/tile/T = new /obj/item/tile/steel
-		T.set_loc(get_turf(src))
-		M.set_loc(get_turf(src))
-		T.amount = sheets_to_use * 4
-		M.amount -= sheets_to_use
-		if (M.amount < 1)
-			qdel(M)
+	if (isnull(M))
 		src.target = null
 		src.repairing = 0
+		return
+
+	var/sheets_to_use = 1
+	if (src.amount + (M.amount * 4) > src.max_tiles)
+		sheets_to_use = round((src.max_tiles - src.amount) / 4)
+	else
+		sheets_to_use = M.amount
+
+	var/obj/item/tile/T = new /obj/item/tile/steel
+	T.set_loc(get_turf(src))
+	M.set_loc(get_turf(src))
+	T.amount = sheets_to_use * 4
+	M.amount -= sheets_to_use
+	if (M.amount < 1)
+		qdel(M)
+	src.floorbottargets -= turf2coordinates(src.target)
+	src.target = null
+	src.repairing = 0
 
 /obj/machinery/bot/floorbot/proc/updateicon()
 	if (src.amount > 0)
@@ -495,6 +449,7 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 		A.set_loc(user.loc)
 	else
 		A.set_loc(src.loc)
+	A.on = 1 // let's just pretend they flipped the switch
 	boutput(user, "You add the robot arm to the odd looking toolbox assembly! Boop beep!")
 	qdel(P)
 	qdel(src)
@@ -503,8 +458,141 @@ text("<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	for (var/mob/O in hearers(src, null))
-		O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 	qdel(src)
 	return
+
+/datum/action/bar/icon/floorbot_repair
+	duration = 10
+	interrupt_flags = INTERRUPT_STUNNED
+	id = "floorbot_build"
+	icon = 'icons/obj/metal.dmi'
+	icon_state = "tile"
+	var/obj/machinery/bot/floorbot/master
+	var/new_tile
+
+	New(var/the_bot, var/_target)
+		src.master = the_bot
+		if(!istype(src.master))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		master.anchored = 1
+		master.icon_state = "floorbot-c"
+		master.repairing = 1
+		src.new_tile = 0
+
+		if (istype(master.target, /turf/space/) || istype(master.target, /turf/simulated/floor/metalfoam))
+			master.visible_message("<span class='notice'>[master] begins building flooring.</span>")
+			src.new_tile = 1
+
+		else if (istype(master.target, /turf/simulated/floor))
+			master.visible_message("<span class='notice'>[master] begins to fix the floor.</span>")
+
+		else
+			// how the fucking jesus did you get here
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		..()
+
+	onUpdate()
+		..()
+		if (!master.on)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if (!master.on)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		attack_twitch(master)
+		playsound(master, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+
+	onInterrupt()
+		. = ..()
+		master.KillPathAndGiveUp(1)
+
+	onEnd()
+		..()
+		playsound(master, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		if (new_tile)
+			// Make a new tile
+			var/obj/item/tile/T = new /obj/item/tile/steel
+			T.build(get_turf(master.target))
+		else
+			// Fix yo shit
+			var/turf/simulated/floor/F = master.target
+			if (F.intact)
+				F.to_plating()
+			F.restore_tile()
+
+		master.repairing = 0
+		master.amount -= 1
+		master.updateicon()
+		master.anchored = 0
+		master.floorbottargets -= master.turf2coordinates(master.target)
+		master.target = master.find_target(1)
+
+/datum/action/bar/icon/floorbot_disrepair
+	duration = 10
+	interrupt_flags = INTERRUPT_STUNNED
+	id = "floorbot_ripup"
+	icon = 'icons/obj/metal.dmi'
+	icon_state = "tile"
+	var/obj/machinery/bot/floorbot/master
+
+	New(var/the_bot, var/_target)
+		src.master = the_bot
+
+		master.anchored = 1
+		master.icon_state = "floorbot-c"
+		master.repairing = 1
+
+		..()
+
+	onUpdate()
+		..()
+		if (!master.on)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/turf/simulated/floor/T = master.target
+		if(!istype(T))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if (!master.on)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		attack_twitch(master)
+		playsound(master, 'sound/items/Welder.ogg', 50, 1)
+
+	onInterrupt()
+		. = ..()
+		master.KillPathAndGiveUp(1)
+
+	onEnd()
+		..()
+		playsound(master, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		var/turf/simulated/floor/T = master.target
+		if(!istype(T))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/atom/A = new /obj/item/tile(T)
+		if (T.material)
+			A.setMaterial(T.material)
+		else
+			var/datum/material/M = getMaterial("steel")
+			A.setMaterial(M)
+
+		T.ReplaceWithSpace()
+		master.repairing = 0
+		master.updateicon()
+		master.anchored = 0
+		master.floorbottargets -= master.turf2coordinates(master.target)
+		master.target = master.find_target(1)

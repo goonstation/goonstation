@@ -36,8 +36,7 @@
 
 	/* new disposing() pattern should handle this. -singh
 	disposing()
-		if(master)
-			master.processing_programs.Remove(src)
+		master?.processing_programs.Remove(src)
 		..()
 	*/
 

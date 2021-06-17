@@ -9,7 +9,7 @@
 /obj/machinery/shield_generator
 	name = "shield generator"
 	desc = "Some kinda thing what generates a big ol' shield around everything."
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "shieldgen0"
 	anchored = 1
 	density = 1
@@ -130,14 +130,15 @@
 		var/diff = world.timeofday - lastuse
 		if(diff < 0) diff += 864000 //Wrapping protection.
 
-
 		if(diff > 1500)
 			lastuse = world.timeofday
-			user.show_text("You flip the switch on [src].")
+			visible_message("[src] beeps loudly.","You hear a loud beep.")
 			if (src.active)
 				src.deactivate()
+				user.show_text("Shields Deactivated.")
 			else
 				src.activate()
+				user.show_text("Shields Activated.")
 			message_admins("<span class='internal'>[key_name(user)] [src.active ? "activated" : "deactivated"] shields</span>")
 			logTheThing("station", null, null, "[key_name(user)] [src.active ? "activated" : "deactivated"] shields")
 		else

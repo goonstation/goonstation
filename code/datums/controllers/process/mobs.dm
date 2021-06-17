@@ -1,5 +1,6 @@
-// handles mobs
-datum/controller/process/mobs
+
+/// handles mobs
+/datum/controller/process/mobs
 	var/tmp/list/detailed_count
 	var/tmp/tick_counter
 	var/list/mobs
@@ -11,12 +12,18 @@ datum/controller/process/mobs
 
 	setup()
 		name = "Mob"
-		schedule_interval = 40
+		schedule_interval = 4 SECONDS
 		detailed_count = new
 		src.mobs = global.mobs
 
-	copyStateFrom(var/datum/controller/process/mobs/other)
-		detailed_count = other.detailed_count
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/mobs/old_mobs = target
+		src.detailed_count = old_mobs.detailed_count
+		src.tick_counter = old_mobs.tick_counter
+		src.mobs = old_mobs.mobs
+		src.wraiths = old_mobs.wraiths
+		src.adminghosts = old_mobs.adminghosts
+		src.nextpopcheck = old_mobs.nextpopcheck
 
 	doWork()
 		src.mobs = global.mobs
@@ -26,16 +33,17 @@ datum/controller/process/mobs
 			nextpopcheck = TIME + 4 MINUTES
 			var/clients_num = total_clients()
 			if (clients_num >= SLOWEST_LIFE_PLAYERCOUNT)
-				schedule_interval = 80
+				schedule_interval = 8 SECONDS
 				footstep_extrarange = -10
 			else if (clients_num >= SLOW_LIFE_PLAYERCOUNT)  //hacky lag saving measure
-				schedule_interval = 65
+				schedule_interval = 6.5 SECONDS
 				footstep_extrarange = 0
 			else
-				schedule_interval = 40
+				schedule_interval = 4 SECONDS
 				footstep_extrarange = 0
 
 		for(var/X in src.mobs)
+			last_object = X
 			if(istype(X, /mob/living))
 				var/mob/living/M = X
 				if( M.z == 4 && !Z4_ACTIVE ) continue
@@ -57,7 +65,7 @@ datum/controller/process/mobs
 					scheck()
 
 	tickDetail()
-		if (detailed_count && detailed_count.len)
+		if (length(detailed_count))
 			var/stats = "<b>[name] ticks:</b><br>"
 			var/count
 			for (var/thing in detailed_count)

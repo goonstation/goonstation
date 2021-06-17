@@ -111,32 +111,29 @@
 	{
 		switch(element.id)
 		{
-			case "helpMutativeness":
-				$("#manipHelp").html("Mutativeness determines the probability that your pathogen will mutate. The rolls for this happen when the pathogens stats are manipulated, or every time it infects a new person. Suggested range: 0-100");
-				break;
-			case "helpMutSpeed":
-				$("#manipHelp").html("Mutation Speed determines how many different mutations your pathogen will undergo whenever it mutates. This scales very diminishingly the higher you go. Suggested range: 0-50");
-				break;
 			case "helpAdvSpeed":
-				$("#manipHelp").html("Advance Speed determines how quickly your pathogen will advance through its stages. Beware, this also makes it go down more quickly when suppressed or remissive. It is capped at 4 when advancing, but uncapped when receding. Suggested range: 0-10");
-				break;
-			case "helpMaliciousness":
-				$("#manipHelp").html("Maliciousness determines what kind of mutations will occur. Higher values will lead to things like gaining symptoms or even stages while negative ones will lead to things like losing symptoms or stages. High values on this will make the manipulator take longer to adjust stats! Suggested range: 0-40");
+				$("#manipHelp").html("Advance Speed determines how quickly your pathogen will advance through its stages.");
 				break;
 			case "helpSupThreshold":
-				$("#manipHelp").html("Suppression Threshold determines how hard your pathogen is to suppress. Higher values will require more of the suppressant chem or higher external suppression factors. This is capped at 50 for most purposes. Suggested range: 0-50");
+				$("#manipHelp").html("Suppression Threshold determines how hard your pathogen is to suppress. Higher values will require more of the suppressant chem or higher external suppression factors.");
+				break;
+			case "helpSpread":
+				$("#manipHelp").html("Spread determines how easily your pathogen will spread. How this expresses itself depends on the symptoms, for instance, a symptom that spreads via pathogen clouds might make clouds more often, while a symptom that spreads on hugs might have a higher chance per hug.");
 				break;
 			case "helpStages":
 				$("#manipHelp").html("This determines how many stages your pathogen can go through. This largely depends on the microbody, though rarely a pathogen can mutate to have less or more stages. This ranges from 1-5. At higher stages a pathogen's symptoms will generally have stronger effects. Different microbody types also trigger their symptoms at different rates depending on the stage.");
 				break;
 			case "helpSymptomaticity":
-				$("#manipHelp").html("If this is 0 your pathogen will not trigger its symptoms. Pathogens start out with this as 1, but it can sometimes mutate to become 0. If this happens, you may be able to get it back to 1 by making your pathogen mutate some more.");
+				$("#manipHelp").html("If this is 0 your pathogen will not trigger its symptoms.");
 				break;
 			case "helpSupCode":
 				$("#manipHelp").html("This code determines what the pathogen is supressed by. If you see two pathogens with the same code, you know that they will have the same suppressant.");
 				break;
 			case "helpCapacity":
 				$("#manipHelp").html("This determines how many symptom segments you can splice onto a pathogen without it collapsing. For instance, a tier 5 symptom would cost 5 capacity, since it is made of 5 segments.");
+				break;
+			case "helpMaxStats":
+				$("#manipHelp").html("This determines the total amount of points that can be spread among the various stats like Advance Rate, Suppression Threshold, and Spread.");
 				break;
 			case "btnClrAnalysisCurr":
 				$("#analyzerHelp").html("Clear the currently assembled sequence of segments in Current Analysis");
@@ -223,19 +220,7 @@
 
 	/* WORKERS */
 
-	function mutationHolder(mut, mts, adv, mal, sth) {
-
-		if (mut === undefined) {
-			this.mut = 0;
-		} else {
-			this.mut = mut;
-		}
-
-		if (mts === undefined) {
-			this.mts = 0;
-		} else {
-			this.mts = mts;
-		}
+	function mutationHolder(adv, sth, spr) {
 
 		if (adv === undefined) {
 			this.adv = 0;
@@ -243,16 +228,16 @@
 			this.adv = adv;
 		}
 
-		if (mal === undefined) {
-			this.mal = 0;
-		} else {
-			this.mal = mal;
-		}
-
 		if (sth === undefined) {
 			this.sth = 0;
 		} else {
 			this.sth = sth;
+		}
+
+		if (spr === undefined) {
+			this.spr = 0;
+		} else {
+			this.spr = spr;
 		}
 	}
 
@@ -358,25 +343,9 @@
 
 	function updateManipReady() {
 		var bReady = true;
-
-		if(!loadedDna || loadedDna.isSplicing) {
-			setAnnunciator("#aMutSample", true);
-			bReady=false;
-		} else {
-			setAnnunciator("#aMutSample", false);
-		}
-		if(exposedSlot > 0) {
-			setAnnunciator("#aMutOpen", true);
-			bReady=false;
-		} else {
-			setAnnunciator("#aMutOpen", false);
-		}
 		manipBusy = manipBusy && bReady; //Can't be busy if it's not ready.
 		setButtonEnabled("#manipHolder .button", bReady);
 		bReady = bReady && !manipBusy;	//Can't be ready if it's busy
-		setAnnunciator("#aMutRdy", bReady);
-		setAnnunciator("#aMutIrr", manipBusy);
-
 	}
 
 
@@ -848,6 +817,7 @@
 			$("#txtSymp").text(loadedDna.pathogenSymptomaticity);
 			$("#txtSupCode").text(loadedDna.pathogenSupCode);
 			$("#txtCap").text(loadedDna.pathogenCap==-1?"∞":loadedDna.pathogenCap);
+			$("#txtMaxStats").text(loadedDna.pathogenMaxStats);
 		} else {
 			$("#txtPName").text("");
 			$("#txtPType").text("");
@@ -856,6 +826,7 @@
 			$("#txtSymp").text("");
 			$("#txtSupCode").text("");
 			$("#txtCap").text("");
+			$("#txtMaxStats").text("");
 		}
 		annunciatorHolder.setLoadAnn(loadedDna);
 		if(!cancGlobalUpdate) {
@@ -1635,7 +1606,6 @@
 			btn.removeClass("button-disabled");
 		} else {
 			safeAddClass(btn, "button-disabled");
-
 		}
 	};
 	remoteHandlers.setUIState = setUIState;

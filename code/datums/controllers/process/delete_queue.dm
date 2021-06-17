@@ -5,8 +5,10 @@
 // hi i fucked up this file p bad. if it ends up being as bad as
 // it looks pls do "git revert (whatever hash this has)"
 // otherwise this will stink up everything forever
+var/global/harddel_count = 0
 
-datum/controller/process/delete_queue
+/// The process controller for queued deletion
+/datum/controller/process/delete_queue
 	var/tmp/delcount = 0
 	var/tmp/gccount = 0
 	var/tmp/deleteChunkSize = MIN_DELETE_CHUNK_SIZE
@@ -30,11 +32,10 @@ datum/controller/process/delete_queue
 		name = "DeleteQueue"
 
 #ifdef HARD_DELETIONS_DISABLED
-		schedule_interval = 10 //ha ha whatever
+		schedule_interval = 1 SECOND //ha ha whatever
 #else
-		schedule_interval = 5
+		schedule_interval = 0.5 SECONDS
 #endif
-
 
 		tick_allowance = 25
 
@@ -94,6 +95,7 @@ datum/controller/process/delete_queue
 #endif
 
 			delcount++
+			harddel_count++
 #ifndef AUTO_REFERENCE_TRACKING_ON_HARD_DEL
 			D.qdeled = 0
 
@@ -172,7 +174,7 @@ datum/controller/process/delete_queue
 
 	tickDetail()
 		#ifdef DELETE_QUEUE_DEBUG
-		if (detailed_delete_count && detailed_delete_count.len)
+		if (length(detailed_delete_count))
 			var/stats = "<b>Delete Stats:</b><br>"
 			var/count
 			for (var/thing in detailed_delete_count)

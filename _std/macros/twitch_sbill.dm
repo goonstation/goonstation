@@ -1,5 +1,5 @@
 //#define TWITCH_BOT_ALLOWED
-#define TWITCH_BOT_ADDR "142.93.72.14"
+#define TWITCH_BOT_ADDR "xxx.xxx.xxx.xxx"
 #define TWITCH_BOT_CKEY "twitchbill"
 
 #define IS_TWITCH_CONTROLLED(M) (M.client && M.client.ckey == TWITCH_BOT_CKEY)

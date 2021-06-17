@@ -13,7 +13,7 @@ HAND_TELE
 	var/broadcasting = null
 	var/listening = 1.0
 	flags = FPRINT | TABLEPASS| CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
@@ -42,7 +42,7 @@ Frequency:
 	..()
 	if (usr.stat || usr.restrained())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 		if (href_list["refresh"])
 			src.temp = "<B>Persistent Signal Locator</B><HR>"
@@ -51,9 +51,7 @@ Frequency:
 			if (sr)
 				src.temp += "<B>Located Beacons:</B><BR>"
 
-				for(var/obj/item/device/radio/beacon/W in by_type[/obj/item/device/radio/beacon])
-					if (istype(src, /obj/item/locator/jones) && istype(W, /obj/item/device/radio/beacon/jones)) //For Jones City
-						src.temp += "Unknown Location-[W.x], [W.y], [W.z]<BR>"
+				for_by_tcl(W, /obj/item/device/radio/beacon)
 					if (W.frequency == src.frequency)
 						var/turf/tr = get_turf(W)
 						if (tr.z == sr.z && tr)
@@ -71,7 +69,7 @@ Frequency:
 							src.temp += "[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
 				src.temp += "<B>Extranneous Signals:</B><BR>"
-				for (var/obj/item/implant/tracking/W in by_type[/obj/item/implant/tracking])
+				for_by_tcl(W, /obj/item/implant/tracking)
 					if (W.frequency == src.frequency)
 						if (!W.implanted || !ismob(W.loc))
 							continue
@@ -120,7 +118,7 @@ Frequency:
 	icon_state = "hand_tele"
 	item_state = "electronic"
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000
@@ -178,10 +176,10 @@ Frequency:
 			if (tele_check.teleport_blocked)
 				continue
 			random_turfs += T
-		if (random_turfs && random_turfs.len)
+		if (length(random_turfs))
 			L["None (Dangerous)"] += pick(random_turfs)
 
-		for(var/obj/machinery/teleport/portal_generator/PG in machine_registry[MACHINES_PORTALGENERATORS])
+		for(var/obj/machinery/teleport/portal_generator/PG as anything in machine_registry[MACHINES_PORTALGENERATORS])
 			if (!PG.linked_computer || !PG.linked_rings)
 				continue
 			var/turf/PG_loc = get_turf(PG)
@@ -207,7 +205,11 @@ Frequency:
 			return
 
 		users += user // We're about to show the UI
-		var/t1 = input(user, "Please select a teleporter to lock in on.", "Target Selection") in L
+		var/t1
+		if(user.client)
+			t1 = input(user, "Please select a teleporter to lock in on.", "Target Selection") in L
+		else
+			t1 = pick(L)
 		users -= user // We're done showing the UI
 
 		if (user.stat || user.restrained())
@@ -267,7 +269,7 @@ Frequency:
 		user.visible_message("<span class='notice'>Portal opened.</span>")
 		logTheThing("station", user, null, "creates a hand tele portal (<b>Destination:</b> [src.our_target ? "[log_loc(src.our_target)]" : "*random coordinates*"]) at [log_loc(user)].")
 
-		SPAWN_DBG (300)
+		SPAWN_DBG(30 SECONDS)
 			if (P)
 				portals -= P
 				pool(P)

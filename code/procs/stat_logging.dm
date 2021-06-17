@@ -150,7 +150,7 @@
 			if ("werewolf")
 				for (var/datum/objective/specialist/werewolf/feed/O in M.objectives)
 					if (O && istype(O, /datum/objective/specialist/werewolf/feed/))
-						special = O.mobs_fed_on.len
+						special = length(O.mobs_fed_on)
 			if ("vampthrall")
 				if (M.master)
 					var/mob/mymaster = whois_ckey_to_mob_reference(M.master)
@@ -229,7 +229,7 @@
 		return 1
 	//For end of round laws
 	else
-		for (var/mob/living/silicon/ai/aiPlayer in by_type[/mob/living/silicon/ai])
+		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			var/laws[] = new()
 			if (ticker.centralized_ai_laws.zeroth)
 				laws["0"] = ticker.centralized_ai_laws.zeroth
@@ -257,3 +257,27 @@
 				hublog << list2params(message)
 
 		return 1
+
+#ifdef HALLOWEEN
+/proc/statlog_spookpoints()//(/datum/spooktober_ghost_handler/SGH)
+	var/groupedPoints[] = new()
+
+	for (var/i in spooktober_GH.earned_points)
+		if (!groupedPoints[i]) groupedPoints[i] = list("earned" = 0, "spent" = 0)
+		groupedPoints[i]["earned"] = spooktober_GH.earned_points[i]
+	for (var/i in spooktober_GH.spent_points)
+		if (!groupedPoints[i]) groupedPoints[i] = list("earned" = 0, "spent" = 0)
+		groupedPoints[i]["spent"] = spooktober_GH.spent_points[i]
+
+	for (var/ckey in groupedPoints)
+		var/message[] = new()
+		message["data_type"] = "ghostpoints"
+		message["data_status"] = "insert"
+		message["data_timestamp"] = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
+
+		message["ckey"] = ckey
+		message["earned"] = groupedPoints[ckey]["earned"]
+		message["spent"] = groupedPoints[ckey]["spent"]
+
+		hublog << list2params(message)
+#endif

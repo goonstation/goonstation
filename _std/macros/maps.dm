@@ -1,4 +1,5 @@
 
+/// Given a map type, returns true if it is that map.
 #define ismap(x) (map_setting == x)
 
 #ifdef UNDERWATER_MAP //should this be using z level defines? maybe not
@@ -10,7 +11,7 @@
 #endif
 
 /// Returns true if the atom is inside of centcom
-#define in_centcom(x) (isarea(x) ? x?:is_centcom : get_step(x, 0)?.loc:is_centcom)
+#define in_centcom(x) (isarea(x) ? (x?:is_centcom) : (get_step(x, 0)?.loc:is_centcom))
 
 /// areas where we will skip searching for shit like APCs and that do not have innate power
-#define area_space_nopower(x) (x.type == /area || x.type == /area/allowGenerate || x.type == /area/allowGenerate/trench)
+#define area_space_nopower(x) (x.type == /area/space || x.type == /area/allowGenerate || x.type == /area/allowGenerate/trench)

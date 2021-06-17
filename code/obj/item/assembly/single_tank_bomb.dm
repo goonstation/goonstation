@@ -92,7 +92,6 @@
 		src.part1 = null
 		src.part2 = null
 		src.part3 = null
-		//SN src = null
 		qdel(src)
 		return
 	if (!(isweldingtool(W) && W:try_weld(user,0,-1,0,0)))
@@ -221,7 +220,6 @@
 		src.part1 = null
 		src.part2 = null
 		src.part3 = null
-		//SN src = null
 		qdel(src)
 		return
 	if (!(isweldingtool(W) && W:try_weld(user,0,-1,0,0)))
@@ -306,7 +304,6 @@
 		src.part1 = null
 		src.part2 = null
 		src.part3 = null
-		//SN src = null
 		qdel(src)
 		return
 	if (!(isweldingtool(W) && W:try_weld(user,0,-1,0,0)))

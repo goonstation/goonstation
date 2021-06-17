@@ -114,7 +114,7 @@
 
 	Move(var/turf/new_loc,direction)
 		var/old_loc = loc
-		..()
+		. = ..()
 		if(!(direction in cardinal)) // cardinal sin
 			return
 		if(old_loc != loc)
@@ -161,7 +161,7 @@
 		var/obj/disposalpipe/junction/junction = locate(/obj/disposalpipe/junction) in new_loc
 		if(junction)
 			if(new_dir & junction.dpdir)
-				junction.dir = new_dir
+				junction.set_dir(new_dir)
 				junction.fix_sprite()
 				return
 
@@ -187,7 +187,7 @@
 			new_pipe = backup_backup_pipe
 		if(!new_pipe && is_first)
 			new_pipe = new/obj/disposalpipe/trunk(new_loc)
-			new_pipe.dir = new_dir
+			new_pipe.set_dir(new_dir)
 			new_pipe.dpdir = new_pipe.dir
 			var/obj/disposalpipe/trunk/trunk = new_pipe
 			trunk.getlinked()
@@ -199,7 +199,7 @@
 			if((new_pipe_dirs & free_dirs) != new_pipe_dirs) // subset of free dirs
 				return
 			new_pipe = new/obj/disposalpipe/segment(new_loc)
-			new_pipe.dir = new_dir
+			new_pipe.set_dir(new_dir)
 			new_pipe.dpdir = new_pipe_dirs
 
 		if(new_dir & free_dirs)
@@ -227,7 +227,7 @@
 					if(istype(pipe))
 						qdel(pipe)
 					var/obj/disposalpipe/trunk/trunk = new(src.loc)
-					trunk.dir = final_dir
+					trunk.set_dir(final_dir)
 					trunk.dpdir = trunk.dir
 					trunk.getlinked()
 			src.attack_hand(usr)

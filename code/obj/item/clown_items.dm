@@ -13,7 +13,7 @@ VUVUZELA
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
 	icon_state = "banana-peel"
 	item_state = "banana-peel"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
@@ -67,12 +67,18 @@ VUVUZELA
 		icon_state = "crushed-5"
 		playsound(user.loc, "sound/items/can_open.ogg", 50, 0)
 
-		SPAWN_DBG(5)
+		SPAWN_DBG(0.5 SECONDS)
 			// Wow your joke sucks
 			if(prob(5))
 				playsound(user.loc,"sound/misc/laughter/boo.ogg",50,0)
 			else
-				playsound(user.loc,"sound/misc/laughter/laughtrack[pick("1","2","3","4")].ogg",50,0)
+				playsound(user.loc,"sound/misc/laughter/laughtrack[rand(1, 5)].ogg",50,0)
+
+	crushed
+		name = "used up Canned laughter"
+		opened = 1
+		icon_state = "crushed-5"
+		desc = "Someone had a good laugh - that is for certain!"
 
 /obj/item/storage/box/box_o_laughs
 	name = "Box o' Laughs"

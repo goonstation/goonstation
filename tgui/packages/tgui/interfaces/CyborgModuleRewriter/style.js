@@ -7,9 +7,9 @@
 
 import { block, element } from 'common/bem';
 
-export const BlockCn = 'cyborg-module-rewriter-interface';
+export const Block = 'cyborg-module-rewriter-interface';
 
-export const ModuleViewCn = block(BlockCn, 'module-view');
-export const ToolLabelCn = element(ModuleViewCn, 'tool-label');
+export const ModuleView = block(Block, 'module-view');
+export const ToolLabel = element(ModuleView, 'tool-label');
 
-export const EmptyPlaceholderCn = block(BlockCn, 'empty-placeholder');
+export const EmptyPlaceholder = block(Block, 'empty-placeholder');

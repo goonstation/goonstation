@@ -4,15 +4,6 @@
 /proc/chs(var/str, var/i)
 	return ascii2text(text2ascii(str,i))
 
-/**
- * BASH explode:
- * Splits a string into string pieces the same way BASH handles this.
- * - Process quoted strings LTR: Apostrophized strings are unparsed. Quoted strings are parsed.
- * - Insert parsed strings back into the string by using a placeholder for spaces.
- * - Split the string with the usual space separation method.
- * - Return list.
- */
-
 // TODO: Variable processing.
 
 #define NONE 0
@@ -21,6 +12,14 @@
 
 #define ESCAPE "\\"
 
+/**
+ * BASH explode: Splits a string into string pieces the same way BASH handles this.
+ *
+ * - Process quoted strings LTR: Apostrophized strings are unparsed. Quoted strings are parsed.
+ * - Insert parsed strings back into the string by using a placeholder for spaces.
+ * - Split the string with the usual space separation method.
+ * - Return list.
+ */
 /proc/bash_explode(var/str)
 	var/fin = 0
 	var/state = NONE
@@ -254,7 +253,7 @@
 
 	onStart()
 		..()
-		playsound(get_turf(owner), 'sound/effects/bow_aim.ogg', 75, 1)
+		playsound(owner, 'sound/effects/bow_aim.ogg', 75, 1)
 		owner.visible_message("<span class='alert'>[owner] pulls the string on [bow]!</span>", "<span class='notice'>You pull the string on [bow]!</span>")
 
 	onDelete()
@@ -300,7 +299,8 @@
 	var/image/head
 	amount = 1
 	max_stack = 50
-	appearance_flags = RESET_COLOR | RESET_ALPHA
+	appearance_flags = RESET_COLOR | RESET_ALPHA | LONG_GLIDE | PIXEL_SCALE
+	move_triggered = 1
 
 	New()
 		..()
@@ -349,7 +349,7 @@
 			amount--
 			var/obj/item/arrow/O = clone(loc)
 			user.put_in_hand_or_drop(O, user.hand)
-			boutput(usr, "<span class='notice'>You take \a [src] from the stack of [src]s. [amount] remaining on the stack.")
+			boutput(user, "<span class='notice'>You take \a [src] from the stack of [src]s. [amount] remaining on the stack.")
 		else
 			..()
 */
@@ -372,6 +372,10 @@
 	update_stack_appearance()
 		setName()
 		return
+
+	move_trigger(var/mob/M, kindof)
+		if (..() && reagents)
+			reagents.move_trigger(M, kindof)
 
 	proc/setName()
 		if (head_material && shaft_material)
@@ -414,16 +418,17 @@
 		if (isliving(target))
 			if (prob(50))
 				user.visible_message("<span class='alert'><b>[user] tries to stab [target] with [src] but misses!</b></span>")
-				playsound(get_turf(user), 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, 1)
+				playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, 1)
 				return
 			user.visible_message("<span class='alert'><b>[user] stabs [target] with [src]!</b></span>")
 			user.u_equip(src)
-			playsound(get_turf(user), 'sound/impact_sounds/Flesh_Stab_1.ogg', 75, 1)
+			playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 75, 1)
+			var/datum/material/fusedmaterial = getFusedMaterial(head_material,shaft_material)//uses a fused material to get the effects of both the shaft and head material as an implant as the lifeloop only accepts one material per implant
 			if (ishuman(target))
 				var/mob/living/carbon/human/H = target
 				var/obj/item/implant/projectile/arrow/A = new
-				A.material = head_material
-				A.setMaterial(head_material, appearance = 0, setname = 0)
+				A.material = fusedmaterial
+				A.setMaterial(fusedmaterial, appearance = 0, setname = 0)
 				A.arrow = src
 				A.name = name
 				set_loc(A)
@@ -434,8 +439,8 @@
 			reagents.reaction(target, 2)
 			reagents.trans_to(target, reagents.total_volume)
 			take_bleeding_damage(target, null, 8, DAMAGE_STAB)
-			if (head_material)
-				head_material.triggerOnAttack(src, user, target)
+			if (fusedmaterial)
+				fusedmaterial.triggerOnAttack(src, user, target)
 			return 1
 		else
 			var/obj/item/I = target
@@ -485,6 +490,7 @@
 	wear_image_icon = 'icons/mob/back.dmi'
 	item_state = "quiver"
 	flags = FPRINT | TABLEPASS | ONBACK | ONBELT
+	move_triggered = 1
 
 	attackby(var/obj/item/arrow/I, var/mob/user)
 		if (!istype(I))
@@ -530,7 +536,7 @@
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		..()
-		var/obj/screen/hud/S = over_object
+		var/atom/movable/screen/hud/S = over_object
 		if (istype(S))
 			playsound(src.loc, "rustle", 50, 1, -5)
 			if (!usr.restrained() && !usr.stat && src.loc == usr)
@@ -560,6 +566,12 @@
 						I.set_loc(T)
 						I.layer = initial(I.layer)
 
+	move_trigger(var/mob/M, kindof)
+		if (..())
+			for (var/obj/O in contents)
+				if (O.move_triggered)
+					O.move_trigger(M, kindof)
+
 /datum/projectile/arrow
 	name = "arrow"
 	power = 17
@@ -575,13 +587,13 @@
 
 	on_hit(var/atom/A, angle, var/obj/projectile/P)
 		if (ismob(A))
-			playsound(get_turf(A), 'sound/impact_sounds/Flesh_Stab_1.ogg', 75, 1)
+			playsound(A, 'sound/impact_sounds/Flesh_Stab_1.ogg', 75, 1)
 			var/obj/item/implant/projectile/arrow/B = P.implanted
 			if (istype(B))
 				if (B.material)
 					B.material.triggerOnAttack(B, null, A)
-				B.arrow.reagents.reaction(A, 2)
-				B.arrow.reagents.trans_to(A, B.arrow.reagents.total_volume)
+				B.arrow.reagents?.reaction(A, 2)
+				B.arrow.reagents?.trans_to(A, B.arrow.reagents.total_volume)
 			take_bleeding_damage(A, null, round(src.power / 2), src.hit_type)
 
 
@@ -593,11 +605,15 @@
 	item_state = "bow"
 	var/obj/item/arrow/loaded = null
 	var/datum/action/bar/aim/aim = null
-	current_projectile = new/datum/projectile/arrow
 	spread_angle = 40
 	force = 5
 	can_dual_wield = 0
 	contraband = 0
+	move_triggered = 1
+
+	New()
+		set_current_projectile(new/datum/projectile/arrow)
+		. = ..()
 
 	proc/loadFromQuiver(var/mob/user)
 		if(ishuman(user))
@@ -632,6 +648,9 @@
 		else
 			..()
 
+	move_trigger(var/mob/M, kindof)
+		if (istype(loaded))
+			loaded.move_trigger(M, kindof)
 
 
 	attack(var/mob/target, var/mob/user)
@@ -659,7 +678,7 @@
 	onMouseDown(atom/target,location,control,params)
 		var/mob/user = usr
 		var/list/parameters = params2list(params)
-		if(ismob(target.loc) || istype(target, /obj/screen)) return
+		if(ismob(target.loc) || istype(target, /atom/movable/screen)) return
 		if(parameters["left"])
 			if (!aim && !loaded)
 				loadFromQuiver(user)
@@ -710,7 +729,7 @@
 
 		if (!aim)
 			//var/list/parameters = params2list(params)
-			if(ismob(target.loc) || istype(target, /obj/screen)) return
+			if(ismob(target.loc) || istype(target, /atom/movable/screen)) return
 			if (!loaded)//removed redundant check
 				loadFromQuiver(user)
 				if(loaded)

@@ -25,5 +25,5 @@
 #define RC_FULLNESS 4		// can estimate fullness of container
 #define RC_SPECTRO	8		// spectroscopic glasses can analyse contents
 
-//macro for lag-compensated probability
-#define probmult(x) (prob(percentmult((x), mult))) //assumes lag-compensation multiplier is always called mult
+//macro for lag-compensated probability - assumes lag-compensation multiplier is always called mult
+#define probmult(x) (prob(percentmult((x), mult)))

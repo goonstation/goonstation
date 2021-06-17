@@ -21,7 +21,7 @@
 	var/gen_rate_bonus = 0
 	var/gen_rate_used = 0
 	var/evo_points = 0
-	var/next_evo_point = 25
+	var/next_evo_point = 20
 	var/spread_upgrade = 0
 	var/spread_mitigation = 0
 	var/list/upgrades = list()
@@ -80,7 +80,7 @@
 		src.add_ability(/datum/blob_ability/set_color)
 		src.add_ability(/datum/blob_ability/tutorial)
 		src.add_ability(/datum/blob_ability/help)
-		src.invisibility = 10
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.see_invisible = 15
 		src.see_in_dark = SEE_DARK_FULL
@@ -265,9 +265,9 @@
 			return 0.75 + movement_delay_modifier
 
 	click(atom/target, params)
-		if (istype(target,/obj/screen/blob/))
+		if (istype(target,/atom/movable/screen/blob/))
 			if (params["middle"])
-				var/obj/screen/blob/B = target
+				var/atom/movable/screen/blob/B = target
 				if (B.ability)
 					B.ability.onUse()
 					return
@@ -435,7 +435,7 @@
 			return
 
 		//src.client.screen -= src.item_abilities
-		for(var/obj/screen/blob/B in src.client.screen)
+		for(var/atom/movable/screen/blob/B in src.client.screen)
 			src.client.screen -= B
 
 		var/pos_x = 1
@@ -574,7 +574,7 @@
 		hat.set_loc(src)
 
 
-/obj/screen/blob
+/atom/movable/screen/blob
 	plane = PLANE_HUD
 	var/datum/blob_ability/ability = null
 	var/datum/blob_upgrade/upgrade = null
@@ -584,8 +584,8 @@
 	var/image/cooldown = null
 	var/image/darkener = null
 
-	var/obj/screen/pseudo_overlay/point_overlay
-	var/obj/screen/pseudo_overlay/cooldown_overlay
+	var/atom/movable/screen/pseudo_overlay/point_overlay
+	var/atom/movable/screen/pseudo_overlay/cooldown_overlay
 
 	New()
 		..()
@@ -596,10 +596,10 @@
 		var/image/I = image('icons/mob/blob_ui.dmi',"darkener")
 		I.alpha = 100
 		darkener = I
-		//var/obj/screen/pseudo_overlay/T = new /obj/screen/pseudo_overlay(src)
-		//var/obj/screen/pseudo_overlay/S = new /obj/screen/pseudo_overlay(src)
-		point_overlay = new /obj/screen/pseudo_overlay()
-		cooldown_overlay = new /obj/screen/pseudo_overlay()
+		//var/atom/movable/screen/pseudo_overlay/T = new /atom/movable/screen/pseudo_overlay(src)
+		//var/atom/movable/screen/pseudo_overlay/S = new /atom/movable/screen/pseudo_overlay(src)
+		point_overlay = new /atom/movable/screen/pseudo_overlay()
+		cooldown_overlay = new /atom/movable/screen/pseudo_overlay()
 		src.vis_contents += point_overlay
 		src.vis_contents += cooldown_overlay
 		cooldown_overlay.icon = 'icons/mob/spell_buttons.dmi'
@@ -622,9 +622,9 @@
 
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (!istype(O,/obj/screen/blob/) || !isblob(user))
+		if (!istype(O,/atom/movable/screen/blob/) || !isblob(user))
 			return
-		var/obj/screen/blob/source = O
+		var/atom/movable/screen/blob/source = O
 		if (!istype(src.ability) || !istype(source.ability))
 			boutput(user, "<span class='alert'>You may only switch the places of ability buttons.</span>")
 			return
@@ -658,7 +658,7 @@
 					return
 				var/my_upgrade_id = user.upgrade_id
 				user.upgrading = my_upgrade_id
-				SPAWN_DBG (20)
+				SPAWN_DBG(2 SECONDS)
 					if (user.upgrading <= my_upgrade_id)
 						user.upgrading = 0
 					else
@@ -756,6 +756,10 @@
 		if (usr.client.tooltipHolder)
 			usr.client.tooltipHolder.hideHover()
 
+/mob/living/intangible/blob_overmind/checkContextActions(atom/target)
+	// a bit oh a hack, no multicontext for blobs now because it keeps overriding attacking pods :/
+	return list()
+
 /mob/proc/make_blob()
 	if (!src.client && !src.mind)
 		return null
@@ -778,6 +782,7 @@
 		if (src.client)
 			src.client.mob = W
 		W.mind = new /datum/mind()
+		W.mind.ckey = ckey
 		W.mind.key = key
 		W.mind.current = W
 		ticker.minds += W.mind

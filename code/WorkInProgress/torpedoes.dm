@@ -30,7 +30,7 @@
 	icon_state_on_tray = "torped_hiexp_tray"
 	icon_state_off_tray = "torped_hiexp_notray"
 	icon_state_fired = "torped_hiexp_fired"
-	numPierce = 6 //Max amount of steps that can pierce before it blows up instantly.
+	numPierce = 0 //Max amount of steps that can pierce before it blows up instantly.
 	stepsAfterPierce = 12 //Will blow up this many steps after first pierce at most.
 	sleepPerStep = 2 //How long to sleep between steps.
 
@@ -106,7 +106,7 @@
 /obj/machinery/torpedo_console
 	desc = ""
 	name = "torpedo console"
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "periscope"
 	anchored = 1.0
 	appearance_flags = TILE_BOUND
@@ -191,8 +191,7 @@
 		return
 
 	proc/fire()
-		if(tube)
-			tube.launch()
+		tube?.launch()
 		return
 
 /obj/machinery/torpedo_switch
@@ -218,7 +217,7 @@
 /obj/machinery/torpedo_tube
 	name = "torpedo tube"
 	desc = ""
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "base"
 	density = 1
 	anchored = 1
@@ -243,17 +242,17 @@
 
 	New()
 		. =..()
-		light = image('icons/obj/32x96.dmi')
+		light = image('icons/obj/large/32x96.dmi')
 
-		tray = image('icons/obj/32x96.dmi')
+		tray = image('icons/obj/large/32x96.dmi')
 		tray.pixel_y = -16
 
-		tube = image('icons/obj/32x96.dmi',icon_state_tube)
+		tube = image('icons/obj/large/32x96.dmi',icon_state_tube)
 		tube.pixel_y = 16
 		underlays.Add(tube)
 
 		SPAWN_DBG(1 SECOND) //You might wonder what is going on here. IF I DON'T SPAWN THIS THE DIRECTION IS NOT SET IS WHAT'S GOING ON HERE.
-			dir = NORTH
+			set_dir(NORTH)
 
 		rebuildOverlays()
 		return .
@@ -323,20 +322,20 @@
 			if(ismob(loaded))
 				var/mob/M = loaded
 				M.set_loc(start)
-				M.dir = src.dir
+				M.set_dir(src.dir)
 				M.throw_at(target, 600, 2)
 
 
 			else if(istype(loaded, /obj/storage/closet))
 				var/obj/storage/closet/C = loaded
 				C.set_loc(start)
-				C.dir = src.dir
+				C.set_dir(src.dir)
 				C.throw_at(target, 600, 2)
 
 			else if(istype(loaded, /obj/torpedo))
 				var/obj/torpedo/T = loaded
 				T.set_loc(start)
-				T.dir = src.dir
+				T.set_dir(src.dir)
 				T.lockdir = src.dir
 				T.fired = 1
 				SPAWN_DBG(0)
@@ -353,7 +352,7 @@
 /obj/torpedo_tube_tray
 	name = "torpedo tube tray"
 	desc = ""
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "tray"
 	dir = NORTH
 	density = 1
@@ -363,17 +362,16 @@
 	var/obj/machinery/torpedo_tube/parent = null
 
 	attack_hand(mob/living/carbon/human/M as mob)
-		if(parent)
-			parent.close()
+		parent?.close()
 		return
 
 	MouseDrop_T(atom/target, mob/user)
-		if(ismob(target) && get_dist(src,target) <= 1 && can_act(usr) && can_reach(usr, src) && can_reach(usr, target))
-			if (istype(target, /obj/storage/closet) && get_dist(src,target) <= 1 && can_act(usr) && can_reach(usr, src) && can_reach(usr, target))
+		if(ismob(target) && get_dist(src,target) <= 1 && can_act(user) && can_reach(user, src) && can_reach(user, target))
+			if (istype(target, /obj/storage/closet) && get_dist(src,target) <= 1 && can_act(user) && can_reach(user, src) && can_reach(user, target))
 				var/obj/storage/closet/O = target
 				O.set_loc(src.loc)
-				logTheThing("combat", usr, null, " loads \a [O] into \the [src] at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", usr, null, " loads \a [O] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
+				logTheThing("combat", user, null, " loads \a [O] into \the [src] at [showCoords(src.x, src.y, src.z)]")
+				logTheThing("diary", user, null, " loads \a [O] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
 			var/mob/M = target
 			if (ishuman(M))
 				M.setStatus("resting", INFINITE_STATUS)
@@ -384,8 +382,8 @@
 				user.visible_message("<span class='alert'><b>[user.name] shoves [target.name] onto [src]!</b></span>")
 			else
 				M.set_loc(src.loc)
-				logTheThing("combat", usr, target, " loads [constructTarget(target,"combat")] into \the [src] at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", usr, target, " loads [constructTarget(target,"diary")] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
+				logTheThing("combat", user, target, " loads [constructTarget(target,"combat")] into \the [src] at [showCoords(src.x, src.y, src.z)]")
+				logTheThing("diary", user, target, " loads [constructTarget(target,"diary")] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
 				user.visible_message("<span class='alert'><b>[user.name] shoves [target.name] onto \the [src]!</b></span>")
 				return
 
@@ -398,8 +396,8 @@
 				GM.setStatus("resting", INFINITE_STATUS)
 				GM.force_laydown_standup()
 				user.visible_message("<span class='alert'><b>[user.name] shoves [GM.name] onto [src]!</b></span>")
-				logTheThing("combat", usr, GM, " loads [constructTarget(GM,"combat")] into \the [src] at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", usr, GM, " loads [constructTarget(GM,"diary")] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
+				logTheThing("combat", user, GM, " loads [constructTarget(GM,"combat")] into \the [src] at [showCoords(src.x, src.y, src.z)]")
+				logTheThing("diary", user, GM, " loads [constructTarget(GM,"diary")] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
 				qdel(G)
 		else
 			return ..(I,user)
@@ -407,7 +405,7 @@
 /obj/torpedo_tray
 	name = "torpedo tray"
 	desc = "A tray for wheeling around torpedos."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 	density = 1
 	pixel_y = 0
@@ -421,8 +419,8 @@
 	var/lastdir = null
 
 	New()
-		northsouth = icon('icons/obj/32x64.dmi')
-		eastwest = icon('icons/obj/64x32.dmi')
+		northsouth = icon('icons/obj/large/32x64.dmi')
+		eastwest = icon('icons/obj/large/64x32.dmi')
 		changeIcon()
 		..()
 
@@ -456,11 +454,12 @@
 		if(..(NewLoc, Dir, step_x, step_y))
 			if(dir != lastdir)
 				if(dir == NORTHEAST || dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST)
-					dir = lastdir
+					set_dir(lastdir)
 					changeIcon()
 				else
 					lastdir = dir
 					changeIcon()
+			return TRUE
 
 	set_loc(var/newloc as turf|mob|obj in world)
 		..(newloc)
@@ -483,7 +482,7 @@
 		if(!can_act(usr) || !can_reach(usr, src) || !can_reach(usr, target)) return
 		var/obj/torpedo/T = loaded
 		loaded = null
-		T.dir = (direction ? direction : src.dir)
+		T.set_dir((direction ? direction : src.dir))
 		T.set_loc(target)
 		changeIcon()
 		return
@@ -504,7 +503,7 @@
 				remove(get_turf(over_object), trg.dir)
 
 /obj/torpedo_tray/explosive_loaded
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 
 	New()
@@ -516,7 +515,7 @@
 		return
 
 /obj/torpedo_tray/hiexp_loaded
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 
 	New()
@@ -528,7 +527,7 @@
 		return
 
 /obj/torpedo_tray/incendiary_loaded
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 
 	New()
@@ -540,7 +539,7 @@
 		return
 
 /obj/torpedo_tray/toxic_loaded
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 
 	New()
@@ -551,6 +550,15 @@
 		changeIcon()
 		return
 
+/obj/torpedo_tray/random_loaded
+	icon = 'icons/obj/large/32x64.dmi'
+	icon_state = "emptymissiletray"
+	New()
+		..()
+		var/obj/torpedo/T = pick(new/obj/torpedo/toxic,new/obj/torpedo/incendiary,new/obj/torpedo/hiexplosive,new/obj/torpedo/explosive)
+		src.loaded = T
+		T.set_loc(src)
+		changeIcon()
 
 
 /obj/torpedo
@@ -582,8 +590,8 @@
 	var/sleepPerStep = 2 //How long to sleep between steps.
 
 	New()
-		northsouth = icon('icons/obj/32x64.dmi')
-		eastwest = icon('icons/obj/64x32.dmi')
+		northsouth = icon('icons/obj/large/32x64.dmi')
+		eastwest = icon('icons/obj/large/64x32.dmi')
 		changeIcon()
 		dmg_threshold = rand(20,60)
 		..()
@@ -622,7 +630,7 @@
 		if(launched) return
 		else launched = 1
 		var/flying = 1
-		playsound(get_turf(src), "sound/effects/torpedolaunch.ogg", 100, 1)
+		playsound(src, "sound/effects/torpedolaunch.ogg", 100, 1)
 		src.changeIcon()
 		var/aboutToBlow = 0
 		var/steps = 0
@@ -662,6 +670,7 @@
 		else
 			for(var/atom/movable/M in T)
 				if(M == src) continue
+				if(istype(M, /obj/machinery/the_singularity)) numPierce = 0 //detonate instantly on the singularity
 				if(!M.CanPass(src, T)) return 1
 				if(M.density) return 1
 		return 0

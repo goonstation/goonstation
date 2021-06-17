@@ -7,14 +7,30 @@
 #endif
 	anchored = 1.0
 	plane = PLANE_NOSHADOW_ABOVE
-	mats = 0
+	mats = 3
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 	chat_class = RADIOCL_INTERCOM
 	var/number = 0
 	rand_pos = 0
 	desc = "A wall-mounted radio intercom, used to communicate with the specified frequency. Usually turned off except during emergencies."
+	hardened = 0
+
+/obj/item/device/radio/intercom/proc/update_pixel_offset_dir(obj/item/AM, old_dir, new_dir)
+	src.pixel_x = 0
+	src.pixel_y = 0
+	switch(new_dir)
+		if(NORTH)
+			src.pixel_y = -21
+		if(SOUTH)
+			src.pixel_y = 24
+		if(EAST)
+			src.pixel_x = -21
+		if(WEST)
+			src.pixel_x = 21
 
 /obj/item/device/radio/intercom/New()
 	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGED, .proc/update_pixel_offset_dir)
 	if(src.icon_state == "intercom") // if something overrides the icon we don't want this
 		var/image/screen_image = image(src.icon, "intercom-screen")
 		screen_image.color = src.device_color
@@ -25,24 +41,19 @@
 		screen_image.alpha = 180
 		src.UpdateOverlays(screen_image, "screen")
 		if(src.pixel_x == 0 && src.pixel_y == 0)
-			switch(src.dir)
-				if(NORTH)
-					pixel_y = -21
-				if(SOUTH)
-					pixel_y = 24
-				if(EAST)
-					pixel_x = -21
-				if(WEST)
-					pixel_x = 21
+			update_pixel_offset_dir(src,null,src.dir)
+
+/obj/item/device/radio/intercom/ui_state(mob/user)
+	return tgui_default_state
 
 /obj/item/device/radio/intercom/attack_ai(mob/user as mob)
 	src.add_fingerprint(user)
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		attack_self(user)
 
 /obj/item/device/radio/intercom/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
-	SPAWN_DBG (0)
+	SPAWN_DBG(0)
 		attack_self(user)
 
 /obj/item/device/radio/intercom/send_hear()
@@ -72,7 +83,7 @@
 	name = "Medical Intercom"
 	frequency = R_FREQ_INTERCOM_MEDICAL
 	broadcasting = 0
-	device_color = "#0050FF"
+	device_color = "#0093FF"
 
 	initialize()
 		set_frequency(frequency)
@@ -99,7 +110,7 @@
 	name = "Research Intercom"
 	frequency = R_FREQ_INTERCOM_RESEARCH
 	broadcasting = 0
-	device_color = "#153E9E"
+	device_color = "#C652CE"
 
 	initialize()
 		set_frequency(frequency)
@@ -131,11 +142,20 @@
 	initialize()
 		set_frequency(frequency)
 
+/obj/item/device/radio/intercom/botany
+	name = "Botany Intercom"
+	frequency = R_FREQ_INTERCOM_BOTANY
+	broadcasting = 0
+	device_color = "#78ee48"
+
+	initialize()
+		set_frequency(frequency)
+
 /obj/item/device/radio/intercom/AI
 	name = "AI Intercom"
 	frequency = R_FREQ_INTERCOM_AI
 	broadcasting = 1
-	device_color = "#333399"
+	device_color = "#7F7FE2"
 
 	initialize()
 		set_frequency(frequency)

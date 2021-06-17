@@ -45,11 +45,37 @@
 
 	return
 
+/proc/equip_conspirator(mob/living/carbon/human/traitor_mob)
+	if (!(traitor_mob && ishuman(traitor_mob)))
+		return
+
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/conspiracy))
+		var/datum/game_mode/conspiracy/C = ticker.mode
+		var/the_frequency = C.agent_radiofreq
+
+		var/obj/item/device/radio/headset/H
+		if (istype(traitor_mob.ears, /obj/item/device/radio/headset))
+			H = traitor_mob.ears
+		else
+			H = new /obj/item/device/radio/headset(traitor_mob)
+			if (!traitor_mob.r_store)
+				traitor_mob.equip_if_possible(H, traitor_mob.slot_r_store)
+			else if (!traitor_mob.l_store)
+				traitor_mob.equip_if_possible(H, traitor_mob.slot_l_store)
+			else if (istype(traitor_mob.back, /obj/item/storage/) && traitor_mob.back.contents.len < 7)
+				traitor_mob.equip_if_possible(H, traitor_mob.slot_in_backpack)
+			else
+				traitor_mob.put_in_hand_or_drop(H)
+		H.secure_classes["z"] = RADIOCL_SYNDICATE
+		H.set_secure_frequency("z",the_frequency)
+
+	SHOW_CONSPIRACY_TIPS(traitor_mob)
+
 /proc/equip_traitor(mob/living/carbon/human/traitor_mob)
 	if (!(traitor_mob && ishuman(traitor_mob)))
 		return
 
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/assday))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/assday))
 		boutput(traitor_mob, "The Syndicate have clearly forgotten to give you a Syndicate Uplink. Lazy idiots.")
 		SHOW_TRAITOR_HARDMODE_TIPS(traitor_mob)
 		return
@@ -128,8 +154,8 @@
 			T.setup(traitor_mob.mind, P)
 			pda_pass = T.lock_code
 
-			boutput(traitor_mob, "The Syndicate have cunningly disguised a Syndicate Uplink as your [P.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
-			traitor_mob.mind.store_memory("<B>Set your ringtone to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
+			boutput(traitor_mob, "The Syndicate have cunningly disguised a Syndicate Uplink as your [P.name] [loc]. Simply enter the code \"[pda_pass]\" into the ring message select to unlock its hidden features.")
+			traitor_mob.mind.store_memory("<B>Set your ring message to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
 
 		else
 			var/obj/item/uplink/syndicate/T = new(get_turf(traitor_mob))
@@ -147,13 +173,13 @@
 		return
 
 	if (!traitor_mob.r_store)
-		traitor_mob.equip_if_possible(new /obj/item/device/flash(traitor_mob), traitor_mob.slot_r_store)
+		traitor_mob.equip_if_possible(new /obj/item/camera/spy(traitor_mob), traitor_mob.slot_r_store)
 	else if (!traitor_mob.l_store)
-		traitor_mob.equip_if_possible(new /obj/item/device/flash(traitor_mob), traitor_mob.slot_l_store)
+		traitor_mob.equip_if_possible(new /obj/item/camera/spy(traitor_mob), traitor_mob.slot_l_store)
 	else if (istype(traitor_mob.back, /obj/item/storage/) && traitor_mob.back.contents.len < 7)
-		traitor_mob.equip_if_possible(new /obj/item/device/flash(traitor_mob), traitor_mob.slot_in_backpack)
+		traitor_mob.equip_if_possible(new /obj/item/camera/spy(traitor_mob), traitor_mob.slot_in_backpack)
 	else
-		var/obj/F2 = new /obj/item/device/flash(get_turf(traitor_mob))
+		var/obj/F2 = new /obj/item/camera/spy(get_turf(traitor_mob))
 		traitor_mob.put_in_hand_or_drop(F2)
 
 	var/pda_pass = null
@@ -161,36 +187,53 @@
 	//find a PDA, hide the uplink inside
 	var/loc = ""
 	var/obj/item/device/R = null
-	if (!R && istype(traitor_mob.belt, /obj/item/device/pda2))
+	if (istype(traitor_mob.belt, /obj/item/device/pda2))
 		R = traitor_mob.belt
 		loc = "on your belt"
-	if (!R && istype(traitor_mob.r_store, /obj/item/device/pda2))
+	else if (istype(traitor_mob.wear_id, /obj/item/device/pda2))
+		R = traitor_mob.wear_id
+		loc = "in your ID slot"
+	else if (istype(traitor_mob.r_store, /obj/item/device/pda2))
 		R = traitor_mob.r_store
-		loc = "In your pocket"
-	if (!R && istype(traitor_mob.l_store, /obj/item/device/pda2))
+		loc = "in your right pocket"
+	else if (istype(traitor_mob.l_store, /obj/item/device/pda2))
 		R = traitor_mob.l_store
-		loc = "In your pocket"
-	if (!R && istype(traitor_mob.l_hand, /obj/item/storage))
-		var/obj/item/storage/S = traitor_mob.l_hand
-		var/list/L = S.get_contents()
-		for (var/obj/item/device/pda2/foo in L)
-			R = foo
-			loc = "in the [S.name] in your left hand"
-			break
-	if (!R && istype(traitor_mob.r_hand, /obj/item/storage))
-		var/obj/item/storage/S = traitor_mob.r_hand
-		var/list/L = S.get_contents()
-		for (var/obj/item/device/pda2/foo in L)
-			R = foo
-			loc = "in the [S.name] in your right hand"
-			break
-	if (!R && istype(traitor_mob.back, /obj/item/storage))
-		var/obj/item/storage/S = traitor_mob.back
-		var/list/L = S.get_contents()
-		for (var/obj/item/device/pda2/foo in L)
-			R = foo
-			loc = "in the [S.name] in your backpack"
-			break
+		loc = "in your left pocket"
+	else if (istype(traitor_mob.l_hand, /obj/item/device/pda2))
+		R = traitor_mob.l_hand
+		loc = "in your left hand"
+	else if (istype(traitor_mob.r_hand, /obj/item/device/pda2))
+		R = traitor_mob.r_hand
+		loc = "in your right hand"
+	else
+		if (istype(traitor_mob.l_hand, /obj/item/storage))
+			var/obj/item/storage/S = traitor_mob.l_hand
+			var/list/L = S.get_contents()
+			for (var/obj/item/device/pda2/foo in L)
+				R = foo
+				loc = "in the [S.name] in your left hand"
+				break
+		if (istype(traitor_mob.r_hand, /obj/item/storage))
+			var/obj/item/storage/S = traitor_mob.r_hand
+			var/list/L = S.get_contents()
+			for (var/obj/item/device/pda2/foo in L)
+				R = foo
+				loc = "in the [S.name] in your right hand"
+				break
+		if (istype(traitor_mob.back, /obj/item/storage))
+			var/obj/item/storage/S = traitor_mob.back
+			var/list/L = S.get_contents()
+			for (var/obj/item/device/pda2/foo in L)
+				R = foo
+				loc = "in the [S.name] on your back"
+				break
+		if (istype(traitor_mob.belt, /obj/item/storage))
+			var/obj/item/storage/S = traitor_mob.belt
+			var/list/L = S.get_contents()
+			for (var/obj/item/device/pda2/foo in L)
+				R = foo
+				loc = "in the [S.name] on your belt"
+				break
 
 	if (!R) //They have no PDA. Make one!
 		R = new /obj/item/device/pda2(traitor_mob)
@@ -206,8 +249,8 @@
 		pda_pass = T.lock_code
 
 		SHOW_SPY_THIEF_TIPS(traitor_mob)
-		boutput(traitor_mob, "The Syndicate have cunningly disguised a Spy Uplink as your [P.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
-		traitor_mob.mind.store_memory("<B>Set your ringtone to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
+		boutput(traitor_mob, "The Syndicate have cunningly disguised a Spy Uplink as your [P.name] [loc]. Simply enter the code \"[pda_pass]\" into the ring message select to unlock its hidden features.")
+		traitor_mob.mind.store_memory("<B>Set your ring message to:</B> [pda_pass] (In the Messenger menu in the [P.name] [loc]).")
 	else
 		boutput(traitor_mob, "Something is BUGGED and we couldn't find you a PDA. Tell a coder.")
 
@@ -221,20 +264,21 @@
 		synd_mob.equip_if_possible(new /obj/item/clothing/suit/space/syndicate/commissar_greatcoat(synd_mob), synd_mob.slot_wear_suit)
 		synd_mob.equip_if_possible(new /obj/item/device/radio/headset/syndicate/leader(synd_mob), synd_mob.slot_ears)
 		synd_mob.equip_if_possible(new /obj/item/katana_sheath/nukeop(synd_mob), synd_mob.slot_l_hand)
+		synd_mob.equip_if_possible(new /obj/item/remote/nuke_summon_remote(synd_mob), synd_mob.slot_r_hand)
 	else
-		synd_mob.equip_if_possible(new /obj/item/clothing/head/helmet/swat(synd_mob), synd_mob.slot_head)
-		synd_mob.equip_if_possible(new /obj/item/clothing/suit/armor/vest(synd_mob), synd_mob.slot_wear_suit)
+		//synd_mob.equip_if_possible(new /obj/item/clothing/head/helmet/swat(synd_mob), synd_mob.slot_head)
+		//synd_mob.equip_if_possible(new /obj/item/clothing/suit/armor/vest(synd_mob), synd_mob.slot_wear_suit)
 		synd_mob.equip_if_possible(new /obj/item/device/radio/headset/syndicate(synd_mob), synd_mob.slot_ears)
 
+	//synd_mob.equip_if_possible(new /obj/item/reagent_containers/pill/tox(synd_mob), synd_mob.slot_in_backpack)
 	synd_mob.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(synd_mob), synd_mob.slot_w_uniform)
 	synd_mob.equip_if_possible(new /obj/item/clothing/shoes/swat(synd_mob), synd_mob.slot_shoes)
 	synd_mob.equip_if_possible(new /obj/item/clothing/gloves/swat(synd_mob), synd_mob.slot_gloves)
 	synd_mob.equip_if_possible(new /obj/item/storage/backpack/syndie/tactical(synd_mob), synd_mob.slot_back)
-	//synd_mob.equip_if_possible(new /obj/item/ammo/bullets/a357(synd_mob), synd_mob.slot_in_backpack)
-	synd_mob.equip_if_possible(new /obj/item/reagent_containers/pill/tox(synd_mob), synd_mob.slot_in_backpack)
-	synd_mob.equip_if_possible(new /obj/item/remote/syndicate_teleporter(synd_mob), synd_mob.slot_l_store)
-	//synd_mob.equip_if_possible(new /obj/item/gun/kinetic/revolver(synd_mob), synd_mob.slot_belt)
+	synd_mob.equip_if_possible(new /obj/item/clothing/mask/breath(synd_mob), synd_mob.slot_wear_mask)
+	synd_mob.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(synd_mob), synd_mob.slot_glasses)
 	synd_mob.equip_if_possible(new /obj/item/requisition_token/syndicate(synd_mob), synd_mob.slot_r_store)
+	synd_mob.equip_if_possible(new /obj/item/tank/emergency_oxygen(synd_mob), synd_mob.slot_l_store)
 /*
 	var/obj/item/uplink/syndicate/U = new /obj/item/uplink/syndicate/alternate(synd_mob)
 	if (synd_mob.mind && istype(synd_mob.mind))
@@ -243,6 +287,8 @@
 */
 
 	var/obj/item/card/id/syndicate/I = new /obj/item/card/id/syndicate(synd_mob) // for whatever reason, this is neccessary
+	if(leader)
+		I = new /obj/item/card/id/syndicate/commander(synd_mob)
 	I.icon_state = "id"
 	I.icon = 'icons/obj/items/card.dmi'
 	synd_mob.equip_if_possible(I, synd_mob.slot_wear_id)
@@ -253,7 +299,7 @@
 	M.implanted(synd_mob)
 
 	var/the_frequency = R_FREQ_SYNDICATE
-	if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 		var/datum/game_mode/nuclear/N = ticker.mode
 		the_frequency = N.agent_radiofreq
 
@@ -265,3 +311,50 @@
 		R.frequency = the_frequency // let's see if this stops rounds from being ruined every fucking time
 
 	return
+
+/// returns a decimal representing the percentage of alive crew that are also antags
+/proc/get_alive_antags_percentage()
+	var/alive = 0
+	var/alive_antags = ticker.mode.traitors.len + length(ticker.mode.Agimmicks)
+
+	for (var/datum/mind/antag in ticker.mode.traitors)
+		var/mob/M = antag.current
+		if (!M) continue
+		if (!M.client || isdead(M))
+			alive_antags--
+	for (var/datum/mind/antag in ticker.mode.Agimmicks)
+		var/mob/M = antag.current
+		if (!M) continue
+		if (!M.client || isdead(M))
+			alive_antags--
+
+	for(var/client/C)
+		var/mob/M = C.mob
+		if(!M) continue
+		if (!isdead(M) && isliving(M))
+			alive++
+
+	if (!alive)
+		return 0
+	else
+		return (alive_antags / alive)
+
+/// returns a decimal representing the percentage of dead crew (non-observers) to all crew
+/proc/get_dead_crew_percentage()
+	var/all = 0
+	var/dead = 0
+	var/observer = 0
+
+	for(var/client/C)
+		var/mob/M = C.mob
+		if(!M || isnewplayer(M)) continue
+		if (isdead(M) && !isliving(M))
+			dead++
+			if (M.mind?.joined_observer)
+				observer++
+		all++
+
+	if (!all)
+		return 0
+	else
+		return ((dead - observer) / all)

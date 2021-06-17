@@ -204,9 +204,12 @@
 	src.visible_message("<span class='alert'>[user] is attempting to pry open [src].</span>")
 	user.show_text("You have to stand still...", "red")
 
+#ifdef HALLOWEEN
+	user.emote("scream")
+#endif
 	if (do_after(user, 100) && !(user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user) || user.restrained()))
 		var/success = 0
-		SPAWN_DBG (6)
+		SPAWN_DBG(0.6 SECONDS)
 			success = try_force_open(user)
 			if (success != 0)
 				src.operating = -1 // It's broken now.
@@ -297,6 +300,7 @@
 				attack_particle(user,src)
 				playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
 				src.take_damage(I.force*4, user)
+			..()
 
 		return
 	if (src.operating)
@@ -559,7 +563,7 @@
 			for(var/mob/living/L in get_turf(src))
 				var/mob_layer = L.layer	//Make it look like we're inside the door
 				L.layer = src.layer - 0.01
-				playsound(get_turf(src), 'sound/impact_sounds/Flesh_Break_1.ogg', 100, 1)
+				playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 100, 1)
 				L.emote("scream")
 
 				L.TakeDamageAccountArmor("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
@@ -719,6 +723,8 @@
 	. += " It's [!src.locked ? "un" : null]locked."
 
 /obj/machinery/door/unpowered/wood/attackby(obj/item/I as obj, mob/user as mob)
+	if (I) // eh, this'll work well enough.
+		src.material?.triggerOnHit(src, I, user, 1)
 	if (src.operating)
 		return
 	src.add_fingerprint(user)
@@ -816,20 +822,20 @@
 			return
 		if (prob(5) || (!the_door.simple_lock && prob(5)))
 			owner.visible_message("<span class='alert'>[owner] messes up while picking [the_door]'s lock!</span>")
-			playsound(get_turf(the_door), "sound/items/Screwdriver2.ogg", 50, 1)
+			playsound(the_door, "sound/items/Screwdriver2.ogg", 50, 1)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
 		owner.visible_message("<span class='alert'>[owner] begins picking [the_door]'s lock!</span>")
-		playsound(get_turf(the_door), "sound/items/Screwdriver2.ogg", 50, 1)
+		playsound(the_door, "sound/items/Screwdriver2.ogg", 50, 1)
 
 	onEnd()
 		..()
 		the_door.locked = 0
 		owner.visible_message("<span class='alert'>[owner] jimmies [the_door]'s lock open!</span>")
-		playsound(get_turf(the_door), "sound/items/Screwdriver2.ogg", 50, 1)
+		playsound(the_door, "sound/items/Screwdriver2.ogg", 50, 1)
 
 /obj/machinery/door/unpowered/bulkhead
 	name = "bulkhead door"

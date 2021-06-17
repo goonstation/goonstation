@@ -1,0 +1,35 @@
+/**
+  * @file
+  * @copyright 2020
+  * @author ThePotato97 (https://github.com/ThePotato97)
+  * @license ISC
+  */
+
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+
+.paper {
+  &__stamp {
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+    &-text {
+      @extend .paper__stamp;
+      overflow: hidden;
+      height: 40px;
+      padding: 0.55rem 0.5rem;
+      box-shadow:inset 0px 0px 0px 3px rgb(82, 82, 82);
+      color: rgb(92, 92, 92);
+      font-family: 'Anton';
+      font-size: 1.5rem;
+      font-weight: 500;
+      text-align: center;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+  }
+  &__page {
+    word-break: break-word;
+    word-wrap: break-word;
+  }
+}

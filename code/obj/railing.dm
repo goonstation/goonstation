@@ -7,11 +7,12 @@
 	icon_state = "railing"
 	layer = OBJ_LAYER
 	color = "#ffffff"
-	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
+	flags = FPRINT | USEDELAY | ON_BORDER
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
 	dir = SOUTH
 	custom_suicide = 1
 	var/broken = 0
+	var/is_reinforced = 0
 
 	proc/layerify()
 		SPAWN_DBG(3 DECI SECONDS)
@@ -45,6 +46,14 @@
 		S = new (src.loc)
 		if (S && src.material)
 			S.setMaterial(src.material)
+		if(src.is_reinforced)
+			var/obj/item/rods/R = new /obj/item/rods(get_turf(src))
+			R.amount = 1
+			if(src.material)
+				R.setMaterial(src.material)
+			else
+				var/datum/material/M = getMaterial("steel")
+				R.setMaterial(M)
 		qdel(src)
 
 	ex_act(severity)
@@ -74,6 +83,8 @@
 
 	New()
 		..()
+		if(src.is_reinforced)
+			src.flags |= ALWAYS_SOLID_FLUID
 		layerify()
 
 	Turn()
@@ -81,27 +92,24 @@
 		layerify()
 
 	CanPass(atom/movable/O as mob|obj, turf/target, height=0, air_group=0)
-		if (O == null)
-			//logTheThing("debug", src, O, "Target is null! CanPass failed.")
-			return 0
-		if (!src.density || (O.flags & TABLEPASS) || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
+		if(air_group)
 			return 1
-		if (air_group || (height==0))
+		if (O == null)
+			return 0
+		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced) || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
+			return 1
+		if(height==0)
 			return 1
 		if (get_dir(loc, O) == dir)
 			return !density
-		else
-			return 1
+		return 1
 
 	CheckExit(atom/movable/O as mob|obj, target as turf)
-		if (!src.density)
+		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced)  || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
 			return 1
-		else if (!src.density || (O.flags & TABLEPASS || istype(O, /obj/newmeteor)) || istype(O, /obj/lpt_laser) )
-			return 1
-		else if (get_dir(O.loc, target) == src.dir)
+		if (get_dir(O.loc, target) == src.dir)
 			return 0
-		else
-			return 1
+		return 1
 
 	attackby(obj/item/W as obj, mob/user)
 		if (isweldingtool(W))
@@ -114,33 +122,90 @@
 				actions.start(new /datum/action/bar/icon/railing_tool_interact(user, src, W, RAILING_UNFASTEN, 2 SECONDS), user)
 			else
 				actions.start(new /datum/action/bar/icon/railing_tool_interact(user, src, W, RAILING_FASTEN, 2 SECONDS), user)
+		else if (issnippingtool(W))
+			if(src.is_reinforced)
+				user.show_text("You cut off the reinforcement on [src].", "blue")
+				src.icon_state = "railing"
+				src.is_reinforced = 0
+				var/obj/item/rods/R = new /obj/item/rods(get_turf(src))
+				R.amount = 1
+				if(src.material)
+					R.setMaterial(src.material)
+				else
+					var/datum/material/M = getMaterial("steel")
+					R.setMaterial(M)
+			else
+				user.show_text("There's no reinforcment on [src] to cut off!", "blue")
+		else if (istype(W,/obj/item/rods))
+			if(!src.is_reinforced)
+				var/obj/item/rods/R = W
+				if(R.change_stack_amount(-1))
+					user.show_text("You reinforce [src] with the rods.", "blue")
+					src.is_reinforced = 1
+					src.icon_state = "railing-reinforced"
+			else
+				user.show_text("[src] is already reinforced!", "red")
 
 	attack_hand(mob/user)
+		src.try_vault(user)
+
+	Bumped(var/mob/AM as mob)
+		. = ..()
+		if(!istype(AM)) return
+		if(AM.client?.check_key(KEY_RUN))
+			src.try_vault(AM)
+
+	proc/try_vault(mob/user)
 		if (railing_is_broken(src))
 			user.show_text("[src] is broken! All you can really do is break it down...", "red")
 		else
 			actions.start(new /datum/action/bar/icon/railing_jump(user, src), user)
 
+	reinforced
+		is_reinforced = 1
+		icon_state = "railing-reinforced"
+
 	orange
 		color = "#ff7b00"
+		reinforced
+			is_reinforced = 1
+			icon_state = "railing-reinforced"
 
 	red
 		color = "#ff0000"
+		reinforced
+			is_reinforced = 1
+			icon_state = "railing-reinforced"
 
 	green
 		color = "#09ff00"
+		reinforced
+			is_reinforced = 1
+			icon_state = "railing-reinforced"
 
 	yellow
 		color = "#ffe600"
+		reinforced
+			is_reinforced = 1
+			icon_state = "railing-reinforced"
 
 	cyan
 		color = "#00f7ff"
+		reinforced
+			is_reinforced = 1
+			icon_state = "railing-reinforced"
 
 	purple
 		color = "#cc00ff"
+		reinforced
+			is_reinforced = 1
+			icon_state = "railing-reinforced"
 
 	blue
 		color = "#0026ff"
+		reinforced
+			is_reinforced = 1
+			icon_state = "railing-reinforced"
 
 
 /datum/action/bar/icon/railing_jump
@@ -280,7 +345,7 @@
 		if (ishuman(owner))
 			//carpenter people can fiddle with railings faster!
 			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter"))
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 		if (The_Interaction)
 			interaction = The_Interaction
@@ -305,13 +370,13 @@
 		switch (interaction)
 			if (RAILING_DISASSEMBLE)
 				verbing = "to disassemble"
-				playsound(get_turf(the_railing), "sound/items/Welder.ogg", 50, 1)
+				playsound(the_railing, "sound/items/Welder.ogg", 50, 1)
 			if (RAILING_FASTEN)
 				verbing = "fastening"
-				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
 			if (RAILING_UNFASTEN)
 				verbing = "unfastening"
-				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
 		for(var/mob/O in AIviewers(ownerMob))
 			O.show_text("[owner] begins [verbing] [the_railing].", "red")
 
@@ -323,15 +388,15 @@
 				verbens = "disassembles"
 				tool:try_weld(ownerMob, 2)
 				the_railing.railing_deconstruct()
-				playsound(get_turf(the_railing), "sound/items/Welder.ogg", 50, 1)
+				playsound(the_railing, "sound/items/Welder.ogg", 50, 1)
 			if (RAILING_FASTEN)
 				verbens = "fastens"
 				the_railing.anchored = 1
-				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
 			if (RAILING_UNFASTEN)
 				verbens = "unfastens"
 				the_railing.anchored = 0
-				playsound(get_turf(the_railing), "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
 		for(var/mob/O in AIviewers(ownerMob))
 			O.show_text("[owner] [verbens] [the_railing].", "red")
 			logTheThing("station", ownerMob, the_railing, "[verbens] [the_railing].")

@@ -5,7 +5,7 @@ SERVER_SPECIFIC_CONFIGS
 # log OOC channel
 LOG_OOC
 
-# log client Say 
+# log client Say
 LOG_SAY
 
 # log admin actions
@@ -18,7 +18,7 @@ LOG_ACCESS
 LOG_GAME
 
 # probabilities for game modes chosen in "secret" and "random" modes
-# 
+#
 # default probability is 1, increase to make that mode more likely to be picked
 # set to 0 to disable that mode
 PROBABILITY ALIEN 0

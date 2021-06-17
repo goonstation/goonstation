@@ -17,6 +17,8 @@ proc/qdel(var/datum/O)
 		O.dispose(qdel_instead=0)
 		if (istype(O, /atom/movable))
 			O:set_loc(null)
+		if (istype(O, /image))
+			O:loc = null
 
 		if (isloc(O) && O:contents:len > 0)
 			for (var/C in O:contents)
@@ -76,10 +78,12 @@ proc/qdel(var/datum/O)
 /datum/var/tmp/disposed = 0
 /datum/var/tmp/qdeled = 0
 
+
 // override this in children for your type specific disposing implementation, make sure to call ..() so the root disposing runs too
 /datum/proc/disposing()
 	PROTECTED_PROC(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
 
 	src.tag = null // not part of components but definitely should happen
 
@@ -88,8 +92,7 @@ proc/qdel(var/datum/O)
 	if(dc)
 		var/all_components = dc[/datum/component]
 		if(length(all_components))
-			for(var/I in all_components)
-				var/datum/component/C = I
+			for (var/datum/component/C as anything in all_components)
 				qdel(C, FALSE, TRUE)
 		else
 			var/datum/component/C = all_components
@@ -101,8 +104,7 @@ proc/qdel(var/datum/O)
 		for(var/sig in lookup)
 			var/list/comps = lookup[sig]
 			if(length(comps))
-				for(var/i in comps)
-					var/datum/component/comp = i
+				for (var/datum/component/comp as anything in comps)
 					comp.UnregisterSignal(src, sig)
 			else
 				var/datum/component/comp = comps

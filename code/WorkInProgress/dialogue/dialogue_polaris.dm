@@ -15,7 +15,7 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
@@ -59,7 +59,7 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
@@ -94,7 +94,7 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
@@ -138,7 +138,7 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
@@ -201,7 +201,7 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
@@ -246,7 +246,7 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
@@ -290,7 +290,7 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
@@ -341,7 +341,7 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
@@ -385,7 +385,7 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
@@ -429,7 +429,7 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
@@ -474,7 +474,7 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
@@ -519,7 +519,7 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
@@ -565,7 +565,7 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
@@ -682,7 +682,7 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
@@ -737,7 +737,7 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
@@ -789,7 +789,7 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
@@ -890,7 +890,7 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
@@ -958,7 +958,7 @@
 		..()
 
 	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(get_dist(user, src) > 1 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 

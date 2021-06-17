@@ -11,14 +11,14 @@
 	wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
 	icon_state = "ljacket"
 	item_state = "ljacket"
+	wear_layer = MOB_ARMOR_LAYER
 	var/fire_resist = T0C+100
 	var/over_hair = 0
-	var/over_all = 0 // shows up over all other clothes/hair/etc on people
-	var/over_back = 0
 	flags = FPRINT | TABLEPASS
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	var/restrain_wearer = 0
 	var/bloodoverlayimage = 0
+	var/team_num
 
 
 	setupProperties()
@@ -116,6 +116,12 @@
 		icon_state = "jacket_yellow"
 		item_state = "jacket_yellow"
 
+	sparkly
+		name = "sparkly jacket"
+		desc = "No glitter. No LEDs. Just magic!"
+		icon_state = "jacket_sparkly"
+		item_state = "jacket_sparkly"
+
 	design
 		name = "jacket"
 		desc = "A colorful jacket with a neat design on the back."
@@ -187,9 +193,9 @@
 		setProperty("rangedprot", 0.5)
 
 /obj/item/clothing/suit/bio_suit/attackby(obj/item/W, mob/user)
-	var/turf/T = usr.loc
+	var/turf/T = user.loc
 	if(istype(W, /obj/item/clothing/suit/armor/vest))
-		boutput(usr, "<span class='notice'>You attach [W] to [src].</span>")
+		boutput(user, "<span class='notice'>You attach [W] to [src].</span>")
 		if (istype(src, /obj/item/clothing/suit/bio_suit/paramedic))
 			new/obj/item/clothing/suit/bio_suit/paramedic/armored(T)
 		else
@@ -231,33 +237,30 @@
 	desc = "A suit that protects against biological contamination. Somebody slapped some armor onto the chest."
 	icon_state = "armorbio"
 	item_state = "armorbio"
-	c_flags = ONESIZEFITSALL
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
-		setProperty("rangedprot", 1.5)
+		setProperty("rangedprot", 1)
 
 /obj/item/clothing/suit/bio_suit/armored/nt
 	name = "\improper NT bio suit"
 	desc = "An armored biosuit that protects against biological contamination and toolboxes."
 	icon_state = "ntbio"
 	item_state = "ntbio"
-	c_flags = ONESIZEFITSALL
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
-		setProperty("rangedprot", 1.5)
+		setProperty("rangedprot", 1)
 
 /obj/item/clothing/suit/bio_suit/paramedic/armored
 	name = "armored paramedic suit"
 	desc = "A protective padded suit for emergency response personnel. Offers limited thermal and biological protection. Somebody slapped some armor onto the chest."
 	icon_state = "para_armor"
 	item_state = "paramedic"
-	c_flags = ONESIZEFITSALL
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
-		setProperty("rangedprot", 1.9)
+		setProperty("rangedprot", 1)
 
 
 	para_troop
@@ -281,7 +284,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "hev"
 	item_state = "hev"
-	c_flags = ONESIZEFITSALL | SPACEWEAR
+	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 
 	setupProperties()
@@ -290,6 +293,7 @@
 		setProperty("meleeprot", 4)
 		setProperty("rangedprot", 2)
 		setProperty("movespeed", 1)
+		setProperty("disorient_resist", 35) //it's a special item
 
 /obj/item/clothing/suit/rad // re-added for Russian Station as there is a permarads area there!
 	name = "\improper Class II radiation suit"
@@ -299,10 +303,13 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
-	c_flags = ONESIZEFITSALL
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.005
 	over_hair = 1
+
+	New()
+		. = ..()
+		AddComponent(/datum/component/wearertargeting/geiger, list(SLOT_WEAR_SUIT))
 
 	setupProperties()
 		..()
@@ -312,6 +319,7 @@
 		setProperty("heatprot", 15)
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
+		setProperty("disorient_resist", 15)
 
 /obj/item/clothing/suit/det_suit
 	name = "coat"
@@ -338,7 +346,7 @@
 		setProperty("rangedprot", 0.5)
 
 /obj/item/clothing/suit/det_suit/hos
-	name = "HoS jacket"
+	name = "Head of Security's jacket"
 	desc = "A slightly armored jacket favored by security personnel. It looks cozy and warm; you could probably sleep in this if you wanted to!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_armor.dmi'
@@ -375,6 +383,12 @@
 	body_parts_covered = TORSO
 	permeability_coefficient = 0.70
 
+/obj/item/clothing/suit/apron/botanist
+	name = "blue apron"
+	desc = "This will keep you safe from tomato stains. Unless they're the exploding ones"
+	icon_state = "apron-botany"
+	item_state = "apron-botany"
+
 /obj/item/clothing/suit/labcoat
 	name = "labcoat"
 	desc = "A suit that protects against minor chemical spills and biohazards."
@@ -399,18 +413,10 @@
 
 	attack_self()
 		..()
-		if (src.coat_style)
-			usr.set_clothing_icon_dirty()
-			if (buttoned)
-				src.icon_state = "[src.coat_style]_o"
-				usr.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
-				"You unbutton your [src.name].")
-			else
-				src.icon_state = src.coat_style
-				usr.visible_message("[usr] buttons [his_or_her(usr)] [src.name].",\
-				"You button your [src.name].")
-
-		buttoned = !buttoned
+		if (buttoned)
+			src.unbutton()
+		else
+			src.button()
 
 	proc/button()
 		if (src.coat_style)
@@ -418,6 +424,7 @@
 			usr.set_clothing_icon_dirty()
 		usr.visible_message("[usr] buttons [his_or_her(usr)] [src.name].",\
 		"You button your [src.name].")
+		src.buttoned = TRUE
 
 	proc/unbutton()
 		if (src.coat_style)
@@ -425,6 +432,7 @@
 			usr.set_clothing_icon_dirty()
 		usr.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
 		"You unbutton your [src.name].")
+		src.buttoned = FALSE
 
 
 /obj/item/clothing/suit/labcoat/genetics
@@ -462,6 +470,18 @@
 		icon_state = "MDlabcoat-alt"
 		item_state = "MDlabcoat-alt"
 		coat_style = "MDlabcoat-alt"
+
+/obj/item/clothing/suit/labcoat/pathology
+	name = "pathologist's labcoat"
+	desc = "A protective laboratory coat with the orange markings of a Pathologist."
+	icon_state = "PTlabcoat"
+	item_state = "PTlabcoat"
+	coat_style = "PTlabcoat"
+
+	april_fools
+		icon_state = "PTlabcoat-alt"
+		item_state = "PTlabcoat-alt"
+		coat_style = "PTlabcoat-alt"
 
 /obj/item/clothing/suit/labcoat/science
 	name = "scientist's labcoat"
@@ -518,14 +538,14 @@
 	item_state = "bedsheet"
 	layer = MOB_LAYER
 	throwforce = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throw_speed = 2
 	throw_range = 10
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|ARMS
 	see_face = 0
 	over_hair = 1
-	over_all = 1
+	wear_layer = MOB_OVERLAY_BASE
 	var/eyeholes = 0 //Did we remember to cut eyes in the thing?
 	var/cape = 0
 	var/obj/stool/bed/Bed = null
@@ -573,7 +593,7 @@
 				return
 			if ("Rip up")
 				boutput(user, "You begin ripping up [src].")
-				if (!do_after(user, 30))
+				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
 				else
@@ -605,7 +625,7 @@
 			switch (action)
 				if ("Make bandages")
 					boutput(user, "You begin cutting up [src].")
-					if (!do_after(user, 30))
+					if (!do_after(user, 3 SECONDS))
 						boutput(user, "<span class='alert'>You were interrupted!</span>")
 						return
 					else
@@ -635,15 +655,13 @@
 			src.item_state = src.icon_state
 			see_face = 1
 			over_hair = 0
-			over_all = 0
-			over_back = 1
+			wear_layer = MOB_BACK_LAYER + 0.2
 		else
 			src.icon_state = "bedsheet[src.bcolor ? "-[bcolor]" : null][src.eyeholes ? "1" : null]"
 			src.item_state = src.icon_state
 			see_face = 0
 			over_hair = 1
-			over_all = 1
-			over_back = 0
+			wear_layer = MOB_OVERLAY_BASE
 
 	proc/cut_eyeholes()
 		if (src.cape || src.eyeholes)
@@ -743,7 +761,7 @@
 	icon_state = "bedcape"
 	item_state = "bedcape"
 	cape = 1
-	over_back = 1
+	wear_layer = MOB_BACK_LAYER + 0.2
 	block_vision = 0
 
 /obj/item/clothing/suit/bedsheet/cape/red
@@ -818,10 +836,11 @@
 	setupProperties()
 		..()
 		setProperty("coldprot", 20)
-		setProperty("heatprot", 50)
+		setProperty("heatprot", 45)
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 		setProperty("movespeed", 1)
+		setProperty("disorient_resist", 15)
 
 /obj/item/clothing/suit/fire/armored
 	name = "armored firesuit"
@@ -831,7 +850,7 @@
 	setupProperties()
 		..()
 		setProperty("meleeprot", 6)
-		setProperty("rangedprot", 1.5)
+		setProperty("rangedprot", 1)
 
 /obj/item/clothing/suit/fire/attackby(obj/item/W, mob/user)
 	var/turf/T = user.loc
@@ -859,6 +878,7 @@
 		setProperty("meleeprot", 4)
 		setProperty("rangedprot", 0.8)
 		setProperty("movespeed", 2)
+		setProperty("disorient_resist", 25)
 
 /obj/item/clothing/suit/fire/old
 	name = "old firesuit"
@@ -948,6 +968,13 @@
 	protective_temperature = 1000
 	over_hair = 1
 
+	New()
+		..()
+		if(!istype(get_area(src), /area/station))
+			var/nt_wear_state = "[src.wear_state || src.icon_state]-nt"
+			if(nt_wear_state in icon_states(src.wear_image_icon))
+				src.wear_state = nt_wear_state
+
 	onMaterialChanged()
 		if(src.material)
 			if(material.hasProperty("thermal"))
@@ -965,9 +992,9 @@
 				setProperty("viralprot", 40)
 
 			if(material.hasProperty("density"))
-				var/prot = round(material.getProperty("density") / 17)
+				var/prot = round(material.getProperty("density") / 13)
 				setProperty("meleeprot", prot)
-				setProperty("rangedprot", (0.1 + round(prot/10)))
+				setProperty("rangedprot", (0.2 + round(prot/10, 0.1)))
 			else
 				setProperty("meleeprot", 2)
 				setProperty("rangedprot", 0.4)
@@ -980,7 +1007,7 @@
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 
-		setProperty("space_movespeed", 0.8)
+		setProperty("space_movespeed", 0.6)
 
 /obj/item/clothing/suit/space/emerg
 	name = "emergency suit"
@@ -993,7 +1020,7 @@
 
 	setupProperties()
 		..()
-		setProperty("space_movespeed", 2)
+		setProperty("space_movespeed", 1.5)
 
 	snow // bleh whatever!!!
 		name = "snow suit"
@@ -1021,7 +1048,7 @@
 
 	setupProperties()
 		..()
-		setProperty("space_movespeed", 0.4)
+		setProperty("space_movespeed", 0.3)
 
 	blue
 		icon_state = "spacecap-blue"
@@ -1037,6 +1064,19 @@
 	item_state = "space_suit_syndicate"
 	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives."
 	contraband = 3
+	team_num = TEAM_SYNDICATE
+	#ifdef MAP_OVERRIDE_POD_WARS
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team_num)
+			..()
+		else
+			boutput(user, "<span class='alert'>The space suit <b>explodes</b> as you reach out to grab it!</span>")
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+	#endif
+	item_function_flags = IMMUNE_TO_ACID
 
 	setupProperties()
 		..()
@@ -1046,6 +1086,18 @@
 		name = "commander's great coat"
 		icon_state = "commissar_greatcoat"
 		desc = "A fear-inspiring, black-leather great coat, typically worn by a Syndicate Nuclear Operative Commander. So scary even the vacuum of space doesn't dare claim the wearer."
+		team_num = TEAM_SYNDICATE
+		#ifdef MAP_OVERRIDE_POD_WARS
+		attack_hand(mob/user)
+			if (get_pod_wars_team_num(user) == team_num)
+				..()
+			else
+				boutput(user, "<span class='alert'>The coat <b>explodes</b> as you reach out to grab it!</span>")
+				make_fake_explosion(src)
+				user.u_equip(src)
+				src.dropped(user)
+				qdel(src)
+		#endif
 
 		setupProperties()
 			..()
@@ -1053,17 +1105,19 @@
 			setProperty("meleeprot", 6)
 			setProperty("rangedprot", 3)
 
-	heavy // nukie melee class armor
-		name = "citadel heavy combat armor"
-		desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
-		icon_state = "syndie_specialist-heavy"
-		item_state = "syndie_specialist-heavy"
+	knight // nukie melee class armor
+		name = "citadel heavy combat cuirass"
+		desc = "A syndicate issue super-heavy combat armor suit, pressurized for space travel and reinforced for superior staying-power in extended battle."
+		icon_state = "syndie_specialist-knight"
+		item_state = "syndie_specialist-knight"
 
 		setupProperties()
 			..()
-			setProperty("meleeprot", 8)
-			setProperty("rangedprot", 2)
-			setProperty("movespeed", 0.5)
+			setProperty("meleeprot", 6)
+			setProperty("rangedprot", 1)
+			setProperty("exploprot", 30)
+			setProperty("space_movespeed", 0.9)
+			setProperty("disorient_resist", 65)
 
 	specialist
 		name = "specialist operative combat dress"
@@ -1083,11 +1137,23 @@
 			icon_state = "syndie_specialist-medic"
 			item_state = "syndie_specialist-medic"
 
+		body_parts_covered = TORSO|LEGS|ARMS
+		permeability_coefficient = 0.01
+
+		setupProperties()
+			..()
+			setProperty("viralprot", 50)
+
 		infiltrator
 			name = "specialist operative espionage suit"
 			desc = "A syndicate issue combat dress system, pressurized for space travel."
 			icon_state = "syndie_specialist-infiltrator"
 			item_state = "syndie_specialist-infiltrator"
+
+		setupProperties()
+			..()
+			setProperty("space_movespeed", -0.25)
+
 
 		firebrand
 			name = "specialist operative firesuit"
@@ -1214,6 +1280,7 @@
 	syndicate
 		name = "\improper Syndicate command armor"
 		desc = "An armored space suit, not for your average expendable chumps. No sir."
+		is_syndicate = 1
 		icon_state = "indusred"
 		item_state = "indusred"
 		setupProperties()
@@ -1223,6 +1290,7 @@
 
 		specialist
 			name = "specialist heavy operative combat armor"
+			is_syndicate = 0
 			desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
 			icon_state = "syndie_specialist-heavy"
 			item_state = "syndie_specialist-heavy"
@@ -1231,6 +1299,7 @@
 
 	name = "NT-SO heavy operative combat armor"
 	desc = "A Nanotrasen special forces heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
+	is_syndicate = 0
 	icon_state = "ntso_specialist-heavy"
 	item_state = "ntso_specialist-heavy"
 	cant_self_remove = 1
@@ -1254,11 +1323,58 @@
 		setProperty("meleeprot", 5)
 		setProperty("rangedprot", 2)
 
+//NT pod wars suits
 /obj/item/clothing/suit/space/nanotrasen
 	name = "Nanotrasen Heavy Armor"
 	icon_state = "ntarmor2"
 	item_state = "ntarmor2"
 	desc = "Heavy armor used by certain Nanotrasen bodyguards."
+
+	pilot
+		name = "NT space suit"
+		icon_state = "nanotrasen_pilot"
+		item_state = "nanotrasen_pilot"
+		desc = "A suit that protects against low pressure environments. Issued to nanotrasen pilots."
+		team_num = TEAM_NANOTRASEN
+		#ifdef MAP_OVERRIDE_POD_WARS
+		attack_hand(mob/user)
+			if (get_pod_wars_team_num(user) == team_num)
+				..()
+			else
+				boutput(user, "<span class='alert'>The space suit <b>explodes</b> as you reach out to grab it!</span>")
+				make_fake_explosion(src)
+				user.u_equip(src)
+				src.dropped(user)
+				qdel(src)
+		#endif
+
+		setupProperties()
+			..()
+			setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
+
+		commander
+			name = "commander's great coat"
+			icon_state = "ntcommander_coat"
+			item_state = "ntcommander_coat"
+			desc = "A fear-inspiring, blue-ish-leather great coat, typically worn by a NanoTrasen Pod Commander. Why does it look like it's been dyed painted blue?"
+			team_num = TEAM_NANOTRASEN
+			#ifdef MAP_OVERRIDE_POD_WARS
+			attack_hand(mob/user)
+				if (get_pod_wars_team_num(user) == team_num)
+					..()
+				else
+					boutput(user, "<span class='alert'>The coat <b>explodes</b> as you reach out to grab it!</span>")
+					make_fake_explosion(src)
+					user.u_equip(src)
+					src.dropped(user)
+					qdel(src)
+			#endif
+
+			setupProperties()
+				..()
+				setProperty("exploprot", 40)
+				setProperty("meleeprot", 6)
+				setProperty("rangedprot", 3)
 
 /obj/item/clothing/suit/cultist
 	name = "cultist robe"
@@ -1270,6 +1386,7 @@
 	item_state = "cultist"
 	see_face = 0
 	magical = 1
+	over_hair = TRUE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.01
@@ -1289,8 +1406,15 @@
 		desc = "For those who have seen the yellow sign and answered its call.."
 		icon_state = "hasturcultist"
 		item_state = "hasturcultist"
-		over_all = 1
+		wear_layer = MOB_OVERLAY_BASE
 
+	nerd
+		name = "robes of dungeon mastery"
+		desc = "Neeeeerds."
+
+		New()
+			. = ..()
+			src.enchant(min(rand(1, 5), rand(1, 5)))
 
 /obj/item/clothing/suit/flockcultist
 	name = "weird cultist robe"
@@ -1301,7 +1425,7 @@
 	icon_state = "flockcultist"
 	item_state = "flockcultistt"
 	see_face = 0
-	over_all = 1
+	wear_layer = MOB_OVERLAY_BASE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.01
@@ -1357,7 +1481,6 @@
 	icon_state = "bathrobe"
 	item_state = "bathrobe"
 	body_parts_covered = TORSO|ARMS
-	c_flags = ONESIZEFITSALL //allows for obese to wear
 	burn_possible = 1
 	burn_point = 450
 	burn_output = 800
@@ -1469,21 +1592,11 @@
 	permeability_coefficient = 0
 	over_hair = 1
 
-/obj/item/clothing/suit/nursedress
-	name = "nurse dress"
-	desc = "A traditional dress worn by a nurse."
-	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
-	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
-	icon_state = "nursedress"
-	item_state = "nursedress"
-	body_parts_covered = TORSO|LEGS|ARMS
-
 /obj/item/clothing/suit/security_badge
 	name = "Security Badge"
 	desc = "An official badge for a Nanotrasen Security Worker."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "security_badge"
@@ -1498,3 +1611,18 @@
 
 	attack_self(mob/user as mob)
 		user.visible_message("[user] flashes the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].</span>", "You show off the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].</span>")
+
+/obj/item/clothing/suit/hosmedal
+	name = "war medal"
+	desc = ""
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	w_class = W_CLASS_TINY
+	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "hosmedal"
+	icon_state = "hosmedal"
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind?.assigned_role == "Head of Security")
+			. = "It's your war medal, you remember when you got this for saving a man's life during the war."
+		else
+			. = "It's the HoS's old war medal, you heard they got it for their acts of heroism in the war."

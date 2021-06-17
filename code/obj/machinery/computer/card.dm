@@ -12,9 +12,9 @@
 	desc = "A computer that allows an authorized user to change the identification of other ID cards."
 
 	deconstruct_flags = DECON_MULTITOOL
-	lr = 0.7
-	lg = 1
-	lb = 0.1
+	light_r =0.7
+	light_g = 1
+	light_b = 0.1
 
 
 /obj/machinery/computer/card/console_upper
@@ -80,9 +80,9 @@
 			body += "PIN: <a href='?src=\ref[src];pin=1'>****</a>"
 
 			//Jobs organised into sections
-			var/list/civilianjobs = list("Staff Assistant", "Barman", "Chef", "Botanist", "Chaplain", "Janitor", "Clown")
+			var/list/civilianjobs = list("Staff Assistant", "Bartender", "Chef", "Botanist", "Rancher", "Chaplain", "Janitor", "Clown")
 			var/list/maintainencejobs = list("Engineer", "Mechanic", "Miner", "Quartermaster")
-			var/list/researchjobs = list("Scientist", "Medical Doctor", "Geneticist", "Roboticist")
+			var/list/researchjobs = list("Scientist", "Medical Doctor", "Geneticist", "Roboticist", "Pathologist")
 			var/list/securityjobs = list("Security Officer", "Detective")
 			var/list/commandjobs = list("Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Captain")
 
@@ -112,7 +112,7 @@
 
 			//Organised into sections
 			var/civilian_access = list("<br>Staff:")
-			var/list/civilian_access_list = list(access_morgue, access_maint_tunnels, access_chapel_office, access_tech_storage, access_bar, access_janitor, access_crematorium, access_kitchen, access_hydro)
+			var/list/civilian_access_list = list(access_morgue, access_maint_tunnels, access_chapel_office, access_tech_storage, access_bar, access_janitor, access_crematorium, access_kitchen, access_hydro, access_ranch)
 			var/engineering_access = list("<br>Engineering:")
 			/* Conor12: I removed some unused accesses as the page is large enough, add these if they ever get used:
 			3 (access_armory). Replaced by HoS-exclusive access_maxsec.
@@ -121,9 +121,9 @@
 			42 (access_engineering_eva)*/
 			var/list/engineering_access_list = list(access_external_airlocks, access_construction, access_engineering, access_engineering_storage, access_engineering_power, access_engineering_engine, access_engineering_mechanic, access_engineering_atmos, access_engineering_control)
 			var/supply_access = list("<br>Supply:")
-			var/list/supply_access_list = list(access_hangar, access_cargo, access_mining, access_mining_shuttle, access_mining_outpost)
+			var/list/supply_access_list = list(access_hangar, access_cargo, access_supply_console, access_mining, access_mining_shuttle, access_mining_outpost)
 			var/research_access = list("<br>Science and Medical:")
-			var/list/research_access_list = list(access_medical, access_tox, access_tox_storage, access_medlab, access_medical_lockers, access_research, access_robotics, access_chemistry)
+			var/list/research_access_list = list(access_medical, access_tox, access_tox_storage, access_medlab, access_medical_lockers, access_research, access_robotics, access_chemistry, access_pathology)
 			var/security_access = list("<br>Security:")
 			var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_securitylockers, access_carrypermit, access_contrabandpermit)
 			var/command_access = list("<br>Command:")
@@ -279,7 +279,7 @@
 			var/t1 = input(usr, "What name?", "ID computer", null)
 			t1 = strip_html(t1, 100, 1)
 
-			if ((src.authenticated && src.modify == t2 && (in_range(src, usr) || (issilicon(usr) || isAI(usr))) && istype(src.loc, /turf)))
+			if ((src.authenticated && src.modify == t2 && (in_interact_range(src, usr) || (issilicon(usr) || isAI(usr))) && istype(src.loc, /turf)))
 				logTheThing("station", usr, null, "changes the registered name on the ID card from [src.modify.registered] to [t1]")
 				src.modify.registered = t1
 
@@ -291,7 +291,7 @@
 
 			var/newpin = input(usr, "Enter a new PIN.", "ID computer", 0) as null|num
 
-			if ((src.authenticated && src.modify == currentcard && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(src.loc, /turf)))
+			if ((src.authenticated && src.modify == currentcard && (in_interact_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(src.loc, /turf)))
 				if(newpin < 1000)
 					src.modify.pin = 1000
 				else if(newpin > 9999)
@@ -320,7 +320,7 @@
 		src.scan_access = null
 		src.mode = text2num(href_list["mode"])
 	if (href_list["colour"])
-		if(src.modify && src.modify.icon_state != "gold" && src.modify.icon_state != "id_clown" && src.modify.icon_state != "id_dab")
+		if(src.modify.keep_icon == FALSE) // ids that are FALSE will update their icon if the job changes
 			var/newcolour = href_list["colour"]
 			if (newcolour == "none")
 				src.modify.icon_state = "id"
@@ -353,7 +353,7 @@
 /obj/machinery/computer/card/attackby(obj/item/I as obj, mob/user as mob)
 	if (isscrewingtool(I))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 20))
+		if(do_after(user, 2 SECONDS))
 			if (src.status & BROKEN)
 				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/computerframe/A = new /obj/computerframe( src.loc )

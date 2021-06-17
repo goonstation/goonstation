@@ -2,6 +2,8 @@
 /datum/lifeprocess/statusupdate
 	//april fools stuff
 	var/blinktimer = 0
+	var/blinktimerstage = 0
+	var/blinktimernotifredundant = 0
 	var/blinkstate = 0
 
 	process(var/datum/gas_mixture/environment)
@@ -17,15 +19,17 @@
 
 		if (owner.sleeping)
 			if (owner.hasStatus("resting"))
-				owner.sleeping = 4
+				owner.sleeping = 2
 			else
-				owner.sleeping--
-			owner.changeStatus("paralysis", 4 SECONDS * mult)
+				owner.sleeping = max(owner.sleeping - mult, 0)
+			owner.changeStatus("paralysis", 3 SECONDS * mult)
 			if (prob(10) && (owner.health > 0))
 				owner.emote("snore")
 			if (!owner.last_sleep) // we are asleep but weren't previously
 				owner.last_sleep = 1
 				owner.UpdateOverlays(owner.sleep_bubble, "sleep_bubble")
+				if (critter_owner)
+					critter_owner.on_sleep()
 		else
 			if (owner.last_sleep) // we were previously asleep but aren't anymore
 				owner.last_sleep = 0
@@ -56,46 +60,69 @@
 			if (owner.find_ailment_by_type(/datum/ailment/disability/blind))
 				showmessages = 0
 
-			src.blinktimer++
+			src.blinktimer += mult
 			switch(src.blinktimer)
-				if (20)
-					if (showmessages) boutput(owner, "<span class='alert'>Your eyes feel slightly uncomfortable!</span>")
-				if (30)
-					if (showmessages) boutput(owner, "<span class='alert'>Your eyes feel quite dry!</span>")
-				if (40)
-					if (showmessages) boutput(owner, "<span class='alert'>Your eyes feel very dry and uncomfortable, it's getting difficult to see!</span>")
+				if (0 to 20)
+					src.blinktimerstage = 0
+					src.blinktimernotifredundant = 0
+				if (20 to 30)
+					if (!src.blinktimernotifredundant)
+						src.blinktimerstage = 1
+				if (30 to 40)
+					if (src.blinktimernotifredundant < 2)
+						src.blinktimerstage = 2
+				if (40 to 60)
 					owner.change_eye_blurry(3, 3)
-				if (41 to 59)
-					owner.change_eye_blurry(3, 3)
-				if (60)
-					if (showmessages) boutput(owner, "<span class='alert'>Your eyes are so dry that you can't see a thing!</span>")
+					if (src.blinktimernotifredundant < 3)
+						src.blinktimerstage = 3
+				if (60 to 100)
 					owner.take_eye_damage(max(0, min(3, 3 - tempblind)), 1)
-				if (61 to 99)
-					owner.take_eye_damage(max(0, min(3, 3 - tempblind)), 1)
-				if (100) //blinking won't save you now, buddy
-					if (showmessages) boutput(owner, "<span class='alert'>You feel a horrible pain in your eyes. That can't be good.</span>")
+					if (src.blinktimernotifredundant < 4)
+						src.blinktimerstage = 4
+				if (100 to INFINITY)
 					owner.contract_disease(/datum/ailment/disability/blind,null,null,1)
+					if (src.blinktimernotifredundant < 5)
+						src.blinktimerstage = 5
+			switch(src.blinktimerstage)
+				if (0)
+					// this statement is intentionally left blank
+				if (1)
+					if (showmessages) boutput(owner, "<span class='alert'>Your eyes feel slightly uncomfortable!</span>")
+					src.blinktimernotifredundant = 1
+				if (2)
+					if (showmessages) boutput(owner, "<span class='alert'>Your eyes feel quite dry!</span>")
+					src.blinktimernotifredundant = 2
+				if (3)
+					if (showmessages) boutput(owner, "<span class='alert'>Your eyes feel very dry and uncomfortable, it's getting difficult to see!</span>")
+					src.blinktimernotifredundant = 3
+				if (4)
+					if (showmessages) boutput(owner, "<span class='alert'>Your eyes are so dry that you can't see a thing!</span>")
+					src.blinktimernotifredundant = 4
+				if (5) //blinking won't save you now, buddy
+					if (showmessages) boutput(owner, "<span class='alert'>You feel a horrible pain in your eyes. That can't be good.</span>")
+					src.blinktimernotifredundant = 5
+			src.blinktimerstage = 0
 
 			if (src.blinkstate) owner.take_eye_damage(max(0, min(1, 1 - tempblind)), 1)
 
 		if (owner.get_eye_damage(1)) // Temporary blindness.
-			owner.take_eye_damage(-1, 1)
+			owner.take_eye_damage(-mult, 1)
 			owner.blinded = 1
 
 		if (owner.stuttering)
-			owner.stuttering--
+			owner.stuttering = max(owner.stuttering - mult, 0)
 
 		if (owner.get_ear_damage(1)) // Temporary deafness.
-			owner.take_ear_damage(-1, 1)
+			owner.take_ear_damage(-mult, 1)
 
 		if (owner.get_ear_damage() && (owner.get_ear_damage() <= owner.get_ear_damage_natural_healing_threshold()))
-			owner.take_ear_damage(-0.05)
+			owner.take_ear_damage(-0.05*mult)
 
 		if (owner.get_eye_blurry())
-			owner.change_eye_blurry(-1)
+			owner.change_eye_blurry(-mult)
 
 		if (owner.druggy)
-			owner.druggy = max(owner.druggy-1, 0)
+			owner.druggy = max(owner.druggy-mult, 0)
 
 		if (owner.nodamage)
 			owner.HealDamage("All", 10000, 10000)
@@ -172,7 +199,7 @@
 					var/mob/dead/observer/newmob = robot_owner.ghostize()
 					if (newmob)
 						newmob.corpse = null
-				
+
 				new /obj/item/parts/robot_parts/robot_frame(get_turf(robot_owner))
 
 				qdel(robot_owner)

@@ -22,8 +22,8 @@
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		var/turf/T = get_turf(object)
-		if (pa.Find("left"))
-			if (pa.Find("ctrl"))
+		if ("left" in pa)
+			if ("ctrl" in pa)
 				finished = 1
 				clear_markers()
 				return
@@ -31,7 +31,7 @@
 			if (istype(object, /obj/adventurepuzzle/triggerer) || istype(object, /obj/item/adventurepuzzle/triggerer))
 				clear_markers()
 				selected = object
-				boutput(usr, "Selected [object].")
+				boutput(user, "Selected [object].")
 				equip_markers()
 				typesel = null
 				namesel = null
@@ -56,16 +56,16 @@
 					for (var/actname in add)
 						newname = input("Set [actname] action for [selected] on [typesel].", "Set action", act) in acts
 						add_acts += acts[newname]
-				boutput(usr, "Triggerable type set.")
+				boutput(user, "Triggerable type set.")
 			else if (istype(object, /obj/adventurepuzzle/triggerable))
-				boutput(usr, "<span class='alert'>You must select a triggerer first!</span>")
-		else if (pa.Find("right"))
+				boutput(user, "<span class='alert'>You must select a triggerer first!</span>")
+		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerer) || istype(object, /obj/item/adventurepuzzle/triggerer))
 				var/obj/adventurepuzzle/triggerer/Tr = object //hack
 				Tr.triggered.len = 0 // hack hack hack
 				Tr.special_trigger_clear() // HACK HACK HACK
 			if (!selected || !typesel)
-				boutput(usr, "<span class='alert'>Select a triggerer and a triggerable type first!</span>")
+				boutput(user, "<span class='alert'>Select a triggerer and a triggerable type first!</span>")
 			if (A && T == A)
 				A.overlays -= selection
 				A = null
@@ -85,7 +85,7 @@
 							selected.special_trigger_set(W, add_acts)
 				A.overlays -= selection
 				A = null
-				boutput(usr, "<span class='notice'>[count] objects added to [selected].</span>")
+				boutput(user, "<span class='notice'>[count] objects added to [selected].</span>")
 			else
 				A = T
 				A.overlays += selection

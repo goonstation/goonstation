@@ -1,6 +1,6 @@
 var triggerError = attachErrorHandler('tooltipDebug', true, function(msg) {
 	//I am sick and tired of the billions of absolutely useless error messages tooltips produce
-	if (msg === 'Script error') {
+	if (msg === 'Script error.') {
 		return true;
 	}
 });

@@ -136,17 +136,17 @@
 			owner.set_mutantrace(null)
 		return
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		if(!istype(owner:mutantrace, /datum/mutantrace/premature_clone))
 			holder.RemoveEffect(id)
 
 		if (outOfPod)
-			if (prob(6))
+			if (probmult(6))
 				owner.visible_message("<span class='alert'>[owner.name] suddenly and violently vomits!</span>")
 				owner.vomit()
 
-			else if (prob(2))
+			else if (probmult(2))
 				owner.visible_message("<span class='alert'>[owner.name] vomits blood!</span>")
 				playsound(owner.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 				random_brute_damage(owner, rand(5,8))
@@ -189,9 +189,9 @@
 		if (prob(5))
 			src.variant = 2
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
-		if (prob(10))
+		if (probmult(10))
 			for(var/mob/living/carbon/C in view(6,get_turf(owner)))
 				if (C == owner)
 					continue

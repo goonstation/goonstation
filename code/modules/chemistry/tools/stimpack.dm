@@ -4,7 +4,7 @@
 	icon_state = "stims"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/empty = 0
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if(empty)
@@ -16,8 +16,7 @@
 		src.empty = 1
 		src.icon_state = "stims0"
 		boutput(user, "<span class='notice'>Ah! That's the stuff!</span>")
-		if(user.reagents)
-			user.reagents.add_reagent("stimulants", 50)
+		user.changeStatus("stimulants", 4 MINUTES)
 		return
 
 /obj/item/stimpack/large_dose
@@ -26,7 +25,6 @@
 			boutput(user, "<span class='alert'>You can only use this item on yourself.</span>")
 			return
 		boutput(user, "<span class='notice'>Ah! That's the stuff!</span>")
-		if(user.reagents)
-			user.reagents.add_reagent("stimulants", 200)
+		user.changeStatus("stimulants", 15 MINUTES)
 		qdel(src)
 		return

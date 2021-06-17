@@ -53,8 +53,7 @@
 			holder.owner.visible_message(__red("<b>[holder.owner] stings [target]!</b>"))
 		else
 			holder.owner.show_message(__blue("We stealthily sting [target]."))
-		if(MT.reagents)
-			MT.reagents.add_reagent(venom_id, inject_amount)
+		MT.reagents?.add_reagent(venom_id, inject_amount)
 
 		if (isliving(MT))
 			MT:was_harmed(holder.owner, special = "ling")
@@ -65,6 +64,14 @@
 		desc = "Transfer some neurotoxin into your target."
 		icon_state = "stingneuro"
 		venom_id = "neurotoxin"
+
+	//neuro replacement for RP
+	capulettium
+		name = "Capulettium Sting"
+		desc = "Transfer some capulettium into your target."
+		icon_state = "stingneuro"
+		venom_id = "capulettium"
+		inject_amount = 20
 
 	lsd
 		name = "Hallucinogenic Sting"

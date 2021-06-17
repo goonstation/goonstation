@@ -1,12 +1,18 @@
-// handles status effects
-datum/controller/process/statusEffects
+
+/// handles status effects
+/datum/controller/process/statusEffects
 	var/lastUpdate = null
 	var/lastProcessLength = 1
 
 	setup()
 		name = "StatusEffects"
-		schedule_interval = 3 //Adjust as needed; Wouldnt go over 10.
+		schedule_interval = 0.3 //Adjust as needed; Wouldnt go over 10.
 		lastUpdate = world.timeofday
+
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/statusEffects/old_statusEffects = target
+		src.lastUpdate = old_statusEffects.lastUpdate
+		src.lastProcessLength = old_statusEffects.lastProcessLength
 
 	doWork()
 		lastProcessLength = world.timeofday
@@ -16,8 +22,7 @@ datum/controller/process/statusEffects
 
 		var/list/notifyUiUpdate = list() //List of objects that need to update their status ui.
 
-		for(var/statuseffect in globalStatusInstances)
-			var/datum/statusEffect/S = statuseffect
+		for (var/datum/statusEffect/S as anything in globalStatusInstances)
 			if(S == null) continue
 			if(S.owner)
 				S.onUpdate(actual)
@@ -27,11 +32,11 @@ datum/controller/process/statusEffects
 						if(S.owner)
 							S.owner.delStatus(S)
 					else
-						if(!notifyUiUpdate.Find(S.owner))
+						if(!(S.owner in notifyUiUpdate))
 							notifyUiUpdate.Add(S.owner)
 				else
 					//if it's a permanent one, you can still update the icon
-					if(!notifyUiUpdate.Find(S.owner))
+					if(!(S.owner in notifyUiUpdate))
 						notifyUiUpdate.Add(S.owner)
 			else
 				logTheThing("debug", null, null, "Deleting orphaned status effect - type:[S.type], duration:[S.duration], OwnerInfo(was):[S.archivedOwnerInfo]")
@@ -39,10 +44,10 @@ datum/controller/process/statusEffects
 					S.onRemove()
 				catch()
 					logTheThing("debug", null, null, "Orphaned onRemove failed - type:[S.type]")
-				if(globalStatusInstances.Find(S)) globalStatusInstances.Remove(S)
+				globalStatusInstances -= S
 
 		for(var/atom/A in notifyUiUpdate)
-			SPAWN_DBG(0) if(A && A.statusEffects) A.updateStatusUi()
+			SPAWN_DBG(0) if(A?.statusEffects) A.updateStatusUi()
 
 		lastUpdate = world.timeofday
 		lastProcessLength =  (world.timeofday - lastProcessLength)

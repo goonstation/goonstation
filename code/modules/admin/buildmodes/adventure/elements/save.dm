@@ -28,23 +28,23 @@
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/turf/T = get_turf(object)
-			if (pa.Find("ctrl"))
+			if ("ctrl" in pa)
 				finished = 1
 				return
 			if (T)
 				if (!A)
 					A = T
-					boutput(usr, "<span class='notice'>Corner #1 set.</span>")
+					boutput(user, "<span class='notice'>Corner #1 set.</span>")
 				else
 					if (A.z != T.z)
-						boutput(usr, "<span class='alert'>Z-level mismatch.</span>")
+						boutput(user, "<span class='alert'>Z-level mismatch.</span>")
 						return
 					if (saving)
-						boutput(usr, "<span class='alert'>Already saving.</span>")
+						boutput(user, "<span class='alert'>Already saving.</span>")
 						return
-					var/fname = "adventure/ADV_SAVE_[usr.client.ckey]_[world.time]"
+					var/fname = "adventure/ADV_SAVE_[user.client.ckey]_[world.time]"
 					if (fexists(fname))
 						fdel(fname)
 					saving = 1
@@ -53,7 +53,7 @@
 					var/datum/puzzlewizard/save/this = src
 					A = null
 					src = null
-					boutput(usr, "<span class='notice'>Corner #2 set. Now beginning saving. Modifying the area may have unexpected results. DO NOT LOG OUT OR CHANGE MOB UNTIL THE SAVING IS FINISHED.</span>")
+					boutput(user, "<span class='notice'>Corner #2 set. Now beginning saving. Modifying the area may have unexpected results. DO NOT LOG OUT OR CHANGE MOB UNTIL THE SAVING IS FINISHED.</span>")
 					AS.overlays -= selection
 					var/datum/sandbox/sandbox = new /datum/sandbox()
 					sandbox.context["max_x"] = max(AS.x, B.x)
@@ -62,7 +62,7 @@
 					sandbox.context["min_y"] = min(AS.y, B.y)
 					sandbox.context["z"] = AS.z
 					SPAWN_DBG(0)
-						usr.client.Export()
+						user.client.Export()
 						var/savefile/F = new /savefile(fname)
 						// fuck you
 						F.dir.len = 0
@@ -74,7 +74,7 @@
 						var/h = abs(AS.y - B.y) + 1
 						var/mx = min(AS.x, B.x)
 						var/my = min(AS.y, B.y)
-						message_admins("[key_name(usr)] initiated saving an adventure (size: [w]x[h], estimated saving duration: [w*h/30] seconds).")
+						message_admins("[key_name(user)] initiated saving an adventure (size: [w]x[h], estimated saving duration: [w*h/30] seconds).")
 						F["w"] << w
 						F["h"] << h
 						F["version"] << ADV_SAVE_VERSION_LATEST
@@ -88,7 +88,7 @@
 							Q.serialize(F, "[base].TURF", sandbox)
 							var/objc = 0
 							for (var/obj/O in Q)
-								if (!istype(O, /obj/overlay) && !istype(O, /obj/screen))
+								if (!istype(O, /obj/overlay) && !istype(O, /atom/movable/screen))
 									O:serialize(F, "[base].OBJ.[objc]", sandbox)
 									objc++
 							F["[base].OBJC"] << objc
@@ -97,13 +97,13 @@
 							if (workgroup_curr >= workgroup_size)
 								workgroup_curr = 0
 								sleep(0.1 SECONDS)
-						if (usr && usr.client)
-							if (fexists("adventure/adventure_save_[usr.client.ckey].dat"))
-								fdel("adventure/adventure_save_[usr.client.ckey].dat")
-							var/target = file("adventure/adventure_save_[usr.client.ckey].dat")
+						if (user?.client)
+							if (fexists("adventure/adventure_save_[user.client.ckey].dat"))
+								fdel("adventure/adventure_save_[user.client.ckey].dat")
+							var/target = file("adventure/adventure_save_[user.client.ckey].dat")
 							F.ExportText("/", target)
-							boutput(usr, "<span class='notice'>Saving finished.</span>")
-							usr << ftp(target)
+							boutput(user, "<span class='notice'>Saving finished.</span>")
+							user << ftp(target)
 							if (fexists(fname))
 								fdel(fname)
 						if (this)

@@ -34,16 +34,13 @@
 
 				// SCIENCE GOODS LOOT TABLE
 				if (tier == 3)
-					picker = rand(1,4)
+					picker = rand(1,3)
 					switch(picker)
 						if(1)
 							items += /obj/item/clothing/gloves/psylink_bracelet
 							item_amounts += 1
 						if(2)
 							items += /obj/item/artifact/teleport_wand
-							item_amounts += 1
-						if(3)
-							items += /obj/item/clothing/shoes/hermes
 							item_amounts += 1
 						else
 							items += /obj/item/device/voltron
@@ -67,8 +64,12 @@
 							items += /obj/item/roboupgrade/jetpack
 							item_amounts += 1
 							picker = rand(1,4)
-							items += pick(/obj/item/roboupgrade/physshield,/obj/item/roboupgrade/teleport,/*
-							/obj/item/roboupgrade/opticthermal,*//obj/item/roboupgrade/speed)
+							items += pick(
+								/obj/item/roboupgrade/physshield,
+								/obj/item/roboupgrade/teleport,
+								// /obj/item/roboupgrade/opticthermal,
+								/obj/item/roboupgrade/speed,
+							)
 							item_amounts += 1
 						if(2)
 							items += /obj/item/reagent_containers/glass/beaker/large/antitox
@@ -101,9 +102,12 @@
 				if (tier == 3)
 					picker = rand(1,3)
 					switch(picker)
-						if(1 to 2)
+						if(1)
 							items += /obj/item/clothing/shoes/jetpack
 							item_amounts += 1
+						if(2)
+							items += pick(concrete_typesof(/obj/item/wizard_crystal))
+							item_amounts += 10
 						else
 							items += /obj/item/shipcomponent/mainweapon/rockdrills
 							item_amounts += 1
@@ -118,7 +122,7 @@
 							items += /obj/critter/fermid
 							item_amounts += 1
 				else
-					picker = rand(1,6)
+					picker = rand(1,7)
 					switch(picker)
 						if(1)
 							items += /obj/item/breaching_charge/mining
@@ -141,6 +145,13 @@
 							items += pick(/obj/item/raw_material/syreline,/obj/item/raw_material/bohrum,
 							/obj/item/raw_material/claretine,/obj/item/raw_material/cerenkite)
 							item_amounts += 40
+						if(6)
+							items += /obj/item/radio_tape/advertisement/cargonia
+							item_amounts += 1
+							items += /obj/item/clothing/under/rank/cargo
+							item_amounts += 1
+							items += /obj/decal/skeleton
+							item_amounts += 1
 						else
 							items += /obj/critter/rockworm
 							item_amounts += 3
@@ -256,10 +267,13 @@
 
 				// CIVILIAN GOODS LOOT TABLE
 				if (tier == 3)
-					picker = rand(1,2)
+					picker = rand(1,3)
 					switch(picker)
 						if(1)
 							items += /obj/item/clothing/under/gimmick/frog
+							item_amounts += 1
+						if(2)
+							items += /obj/item/clothing/shoes/sandal
 							item_amounts += 1
 						else
 							items += /obj/vehicle/skateboard
@@ -279,7 +293,7 @@
 							items += /obj/item/cigpacket/random
 							item_amounts += rand(2,4)
 				else
-					picker = rand(1,4)
+					picker = rand(1,5)
 					switch(picker)
 						if(1)
 							items += /obj/item/clothing/shoes/moon
@@ -296,6 +310,11 @@
 							item_amounts += 5
 						if(4)
 							items += /obj/critter/cat
+							item_amounts += 1
+						if(5)
+							items += /obj/item/device/flyswatter
+							item_amounts += 1
+							items += /obj/item/storage/box/mousetraps
 							item_amounts += 1
 
 		var/trap_prob = 100
@@ -422,7 +441,7 @@
 		attempts_remaining--
 		if (attempts_remaining <= 0)
 			boutput(opener, "<span class='alert'>The crate's anti-tamper system activates!</span>")
-			if (holder && holder.trap)
+			if (holder?.trap)
 				holder.trap.trigger_trap(opener)
 				if (!holder.trap.destroys_crate)
 					src.scramble_code()
@@ -638,7 +657,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bracelet"
 	material_prints = "patterned scratches"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/primary = TRUE
 	var/image/gemstone = null
 	var/obj/item/clothing/gloves/psylink_bracelet/twin

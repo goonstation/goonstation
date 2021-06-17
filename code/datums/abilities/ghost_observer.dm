@@ -6,13 +6,22 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	var/points = 0
 	var/cur_meter_location = 0
 	var/last_meter_location = 0			//the amount of points at the last update. Used for deciding when to redraw the sprite to have less progress
-	var/net_points = list()				//assoc list of ckeys to their net points.
+	var/earned_points = list()				//assoc list of ckeys to their gained points.
+	var/spent_points = list()				//assoc list of ckeys to their spent points.
+	var/maxed_out = 0					//set to 1 if the points get up to MAX_POINTS so we can play the special event/thing
 
-	var/obj/screen/spooktober_meter/meter = new()
+	var/atom/movable/screen/spooktober_meter/meter = new()
 
 	proc/change_points(var/ckey, var/added as num)
-		net_points[ckey] += added
+		if (ckey)
+			if (added > 0)
+				earned_points[ckey] += added
+			else
+				spent_points[ckey] += added
 		src.points += added
+		if (src.points >= MAX_POINTS)
+			do_event()
+
 
 	proc/update()
 
@@ -27,7 +36,14 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 		last_meter_location = cur_meter_location
 
-/obj/screen/spooktober_meter
+	proc/do_event()
+		//Only 1 per round
+		if (maxed_out)
+			return
+		maxed_out = 1
+
+
+/atom/movable/screen/spooktober_meter
 	icon = 'icons/mob/spooktober_ghost_hud160x32.dmi'
 	icon_state = "empty"
 	name = "Spooktober Spookpoints Meter"
@@ -51,7 +67,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 #endif
 
-/obj/screen/ability/topBar/ghost_observer
+/atom/movable/screen/ability/topBar/ghost_observer
 	clicked(params)
 		var/datum/targetable/ghost_observer/abil = owner
 		if (!istype(abil))
@@ -61,6 +77,12 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		SPAWN_DBG(0)
 			abil.handleCast()
 
+#ifdef HALLOWEEN
+	//total hack here, but lazy and in a hurry. -Kyle
+	update_cooldown_cost()
+		owner?.holder.points = spooktober_GH.points
+		..()
+#endif
 /datum/abilityHolder/ghost_observer
 	usesPoints = 0
 	regenRate = 0
@@ -71,14 +93,18 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 #ifdef HALLOWEEN
 	usesPoints = 1
 	var/points_since_last_tick = 0		//resets every life tick, prevents you from getting more than 10 points a tick from spam nonsense.
+	var/spooking = 0		//if they're in their extra spooky form where they're visible and blurry.
 
 	proc/change_points(var/amt as num)
 		if (owner.client)
 			if (points_since_last_tick < 50)
+				var/k = 1
 				if (amt > 0)
 					points_since_last_tick += amt
+					k = 1 //3 //when ready with event.
 
-				spooktober_GH.change_points(owner.client.ckey, amt*3)
+				spooktober_GH.change_points(owner.client.ckey, amt*k)		//idk why I did this with the multiplying by a constant, but I'll keep it
+				src.points = spooktober_GH.points
 
 	pointCheck(cost)
 		// if (!usesPoints)
@@ -93,7 +119,8 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	deductPoints(cost)
 		..()
-		spooktober_GH.change_points(owner.client.ckey, -abs(cost))	//idk what format this comes in, I'll be safe
+		if (owner.client)
+			spooktober_GH.change_points(owner.client.ckey, -abs(cost))	//idk what format this comes in, I'll be safe
 
 
 #endif
@@ -128,9 +155,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		// src.addAbility(/datum/targetable/ghost_observer/respawn_animal)	//moved to respawn_options menu
 		src.addAbility(/datum/targetable/ghost_observer/respawn_options)
 
-#if ASS_JAM
-		src.addAbility(/datum/targetable/ghost_observer/ass_day_arena)
-#endif
+
 #ifdef HALLOWEEN
 		src.addAbility(/datum/targetable/ghost_observer/spooktober_hud)
 
@@ -139,6 +164,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		// src.addAbility(/datum/targetable/ghost_observer/levitate_chair)
 		src.addAbility(/datum/targetable/ghost_observer/spooky_sounds)
 		src.addAbility(/datum/targetable/ghost_observer/summon_bat)
+		src.addAbility(/datum/targetable/ghost_observer/manifest)
 
 		src.addAbility(/datum/targetable/ghost_observer/spooktober_writing)
 #endif
@@ -163,10 +189,20 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		// src.removeAbility(/datum/targetable/ghost_observer/levitate_chair)
 		src.removeAbility(/datum/targetable/ghost_observer/spooky_sounds)
 		src.removeAbility(/datum/targetable/ghost_observer/summon_bat)
+		src.removeAbility(/datum/targetable/ghost_observer/manifest)
 		src.removeAbility(/datum/targetable/ghost_observer/decorate)
 		src.removeAbility(/datum/targetable/ghost_observer/spooktober_writing)
 #endif
 		src.updateButtons()
+
+#ifdef HALLOWEEN
+
+/datum/abilityHolder/ghost_observer/proc/stop_spooking()
+	var/datum/targetable/ghost_observer/manifest/ability = getAbility(/datum/targetable/ghost_observer/manifest)
+	if (istype(ability))
+		ability.stop_spooking()
+
+#endif
 
 /datum/targetable/ghost_observer
 	cooldown = 0
@@ -302,7 +338,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	cast(atom/target)
 		displaying_buttons = !displaying_buttons
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/football))
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
 			boutput(holder.owner, "Sorry, respawn options aren't availbale during football mode.")
 			displaying_buttons = 0
 		if (!displaying_buttons)
@@ -465,7 +501,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	cooldown = 3 MINUTES
 	start_on_cooldown = 1
 	target_anything = 1
-	var/in_use = 0
 	special_screen_loc = "SOUTH,CENTER+1"
 	pointCost = 300
 
@@ -474,32 +509,32 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (..())
 			return 1
 
-		var/turf/T = get_turf(target)
-		if (isturf(T))
-			write_on_turf(T, holder.owner, params)
-
-
-	proc/write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
-		if (!T || !user || src.in_use)
-			return
-		src.in_use = 1
 		var/list/c_default = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
 		"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Exclamation Point", "Question Mark", "Period", "Comma", "Colon", "Semicolon", "Ampersand", "Left Parenthesis", "Right Parenthesis",
 		"Left Bracket", "Right Bracket", "Percent", "Plus", "Minus", "Times", "Divided", "Equals", "Less Than", "Greater Than")
 		var/list/c_symbol = list("Dollar", "Euro", "Arrow North", "Arrow East", "Arrow South", "Arrow West",
 		"Square", "Circle", "Triangle", "Heart", "Star", "Smile", "Frown", "Neutral Face", "Bee", "Pentagram")
 
-		var/t = input(user, "What do you want to write?", null, null) as null|anything in (c_default + c_symbol)
+		var/string = input(holder.owner, "What do you want to write?", null, null) as null|anything in (c_default + c_symbol)
 
-		if (!t)
-			src.in_use = 0
+		if (!string)
 			return 1
+
+		var/turf/T = get_turf(target)
+		if (isturf(T) && holder.owner)
+			write_on_turf(T, holder.owner, params, string)
+
+
+	proc/write_on_turf(var/turf/T as turf, var/mob/user as mob, params, string)
+		if (!T && !user && !string)
+			return
+
 		var/obj/decal/cleanable/writing/spooky/G = make_cleanable(/obj/decal/cleanable/writing/spooky,T)
 		G.artist = user.key
 
-		logTheThing("station", user, null, "writes on [T] with [src] [log_loc(T)]: [t]")
-		G.icon_state = t
-		G.words = t
+		logTheThing("station", user, null, "writes on [T] with [src] [log_loc(T)]: [string]")
+		G.icon_state = string
+		G.words = string
 		if (islist(params) && params["icon-y"] && params["icon-x"])
 			// playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 
@@ -508,7 +543,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		else
 			G.pixel_x = rand(-4,4)
 			G.pixel_y = rand(-4,4)
-		src.in_use = 0
 
 /datum/targetable/ghost_observer/summon_bat
 	name = "Summon Bat"
@@ -519,7 +553,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	max_range = 0
 	cooldown = 10 MINUTES
 	start_on_cooldown = 1
-	pointCost = 30
 	special_screen_loc = "SOUTH,CENTER+2"
 	pointCost = 1000
 
@@ -536,5 +569,54 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			boutput(holder.owner, "<span class='alert'>You call forth a bat!</span>")
 		else
 			boutput(holder.owner, "<span class='alert'>You can't put a bat there!</span>")
+
+/datum/targetable/ghost_observer/manifest
+	name = "Manifest"
+	desc = "Push yourself more fully into the material realm and be a bit more powerful for 30 seconds."
+	icon_state = "manifest"
+	targeted = 0
+	target_anything = 0
+	max_range = 0
+	cooldown = 7 MINUTES
+	start_on_cooldown = 1
+	special_screen_loc = "SOUTH,CENTER+3"
+	pointCost = 1500
+	var/time_to_manifest = 1 MINUTES		//How much time should they spend in the form if left uninterrupted.
+	var/applied_filter_index
+
+
+	cast()
+		if (!holder)
+			return 1
+
+		start_spooking()
+		//////////////////////////////////////////////////////////////////////
+		sleep(time_to_manifest)
+		//////////////////////////////////////////////////////////////////////
+		stop_spooking()
+
+
+
+	proc/start_spooking()
+		src.holder.owner.color = rgb(170, 0, 0)
+		anim_f_ghost_blur(src.holder.owner)
+		applied_filter_index = length(src.holder.owner.filters)
+
+		if (istype(holder, /datum/abilityHolder/ghost_observer))
+			var/datum/abilityHolder/ghost_observer/GAH = holder
+			GAH.spooking = 1
+		src.holder.owner.invisibility = 0
+		boutput(holder.owner, "<span class='notice'>You start being spooky! The living can all see you!</span>")
+
+	//remove the filter animation when we're done.
+	proc/stop_spooking()
+		src.holder.owner.color = null
+		src.holder.owner.filters[applied_filter_index] = null
+		applied_filter_index = 0
+		if (istype(holder, /datum/abilityHolder/ghost_observer))
+			var/datum/abilityHolder/ghost_observer/GAH = holder
+			GAH.spooking = 0
+		src.holder.owner.invisibility = initial(src.holder.owner.invisibility)
+		boutput(holder.owner, "<span class='alert'>You stop being spooky!</span>")
 
 #endif

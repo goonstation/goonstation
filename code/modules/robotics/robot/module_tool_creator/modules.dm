@@ -8,28 +8,31 @@
  * - mining
  */
 
+// security officer. bartender. clown.
 /datum/robot/module_tool_creator/recursive/module/brobocop
 	definitions = list(
 		/obj/item/noisemaker,
 		/obj/item/robot_foodsynthesizer,
 		/obj/item/reagent_containers/food/drinks/bottle/beer/borg,
-		/obj/item/reagent_containers/food/drinks/drinkingglass,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+		/obj/item/pen/crayon/random/robot,
 		/obj/item/coin_bot,
-		/obj/item/dice_bot,
+		/obj/item/dice/robot,
 		/obj/item/device/light/zippo/borg,
 		/obj/item/pen, // TODO: make more versatile version
 		/obj/item/device/prisoner_scanner,
 		/obj/item/item_box/assorted/stickers/robot,
 		// TODO: security grenade fabricator?!
-		// TODO: nerfed/limited cuffs/zip-ties?
+		// /obj/item/handcuffs/tape_roll/crappy,
 		/obj/item/c_tube, // TODO: make slightly buffed version?
 		/obj/item/device/detective_scanner,
 		/obj/item/device/audio_log, // TODO: make larger and non-ejectable version?
 		/obj/item/device/camera_viewer,
 		/obj/item/hand_labeler,
-		// TODO: make ticketting machine?
+		/obj/item/device/ticket_writer,
 	)
 
+// scientist.
 /datum/robot/module_tool_creator/recursive/module/chemistry
 	definitions = list(
 		/obj/item/robot_chemaster,
@@ -46,6 +49,7 @@
 		/obj/item/extinguisher, // TODO: make large version?
 	)
 
+// botanist. chef. janitor.
 /datum/robot/module_tool_creator/recursive/module/civilian
 	definitions = list(
 		/obj/item/extinguisher, // TODO: make large version
@@ -55,16 +59,18 @@
 		/obj/item/device/igniter,
 		/obj/item/saw/cyborg,
 		/obj/item/satchel/hydro, // TODO: make more versatile version
+		/obj/item/paper_bin/robot,
 		/obj/item/reagent_containers/glass/bucket, // TODO: make large version
-		/obj/item/spraybottle/cleaner,
+		/obj/item/spraybottle/cleaner/robot,
+		/obj/item/sponge,
 		/obj/item/mop,
 		/obj/item/lamp_manufacturer,
 		/obj/item/device/camera_viewer,
 		// TODO: some sort of nutrient dispenser?
 		/obj/item/kitchen/utensil/knife/bread,
+		/obj/item/ladle,
 		/obj/item/kitchen/rollingpin/light,
-		/obj/item/reagent_containers/glass/bottle/icing,
-		// TODO: portable oven
+		/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 	)
 
 /datum/robot/module_tool_creator/recursive/module/common
@@ -75,6 +81,7 @@
 		/obj/item/device/reagentscanner,
 		/obj/item/device/analyzer/atmospheric/upgraded,
 		/obj/item/robojumper,
+		/obj/item/portable_typewriter/borg,
 	)
 
 /datum/robot/module_tool_creator/recursive/module/construction_ai
@@ -104,6 +111,7 @@
 		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
 	)
 
+// engineer. mechanic.
 /datum/robot/module_tool_creator/recursive/module/engineering
 	definitions = list(
 		/obj/item/atmosporter,
@@ -122,6 +130,7 @@
 		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
 	)
 
+// medical doctor.
 /datum/robot/module_tool_creator/recursive/module/medical
 	definitions = list(
 		/obj/item/robodefibrillator,
@@ -133,20 +142,18 @@
 		/obj/item/suture,
 		/obj/item/staple_gun,
 		/obj/item/reagent_containers/iv_drip/blood,
-		///obj/item/reagent_containers/patch/burn/medbot,
-		///obj/item/reagent_containers/patch/bruise/medbot,
 		/obj/item/reagent_containers/mender/brute/medbot,
 		/obj/item/reagent_containers/mender/burn/medbot,
-		/obj/item/reagent_containers/hypospray, // TODO: make large version
+		/obj/item/robospray, // TODO: make large version
 		/obj/item/reagent_containers/hypospray, // TODO: make large version
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/glass/beaker/large/epinephrine,
-		/obj/item/reagent_containers/glass/beaker/large/antitox,
+		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/reagent_containers/dropper,
 	)
 
+// miner.
 /datum/robot/module_tool_creator/recursive/module/mining
 	definitions = list(
 		// TODO: make versatile satchel (same as civilian module's satchel)

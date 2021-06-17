@@ -1,51 +1,49 @@
 ////////////////////////////////////////////////// Cyalume knight stuff /////////////////////////////////////////////
 
 /mob/living/carbon/human/cyalume_knight
+	gender = "male"
 	var/obj/item/sword/my_sword
 	New()
 		..()
-		SPAWN_DBG(0)
-			bioHolder.mobAppearance.customization_first = "Trimmed"
-			bioHolder.mobAppearance.customization_second = "Full Beard"
-			bioHolder.mobAppearance.customization_third = "Eyebrows"
-			bioHolder.mobAppearance.customization_first_color = "#555555"
-			bioHolder.mobAppearance.customization_second_color = "#555555"
-			bioHolder.mobAppearance.customization_third_color = "#555555"
 
-			real_name = "Cyalume Knight"
-			desc = "A knight of modern times."
-			gender = "male"
+		real_name = "Cyalume Knight"
+		desc = "A knight of modern times."
 
-			src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/clothing/suit/armor/cknight_robe, slot_wear_suit)
-			src.equip_new_if_possible(/obj/item/clothing/shoes/swat, slot_shoes)
-			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
-			src.equip_new_if_possible(/obj/item/clothing/head/helmet/cknight_hood, slot_head)
-			src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
-			src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
-			src.equip_new_if_possible(/obj/item/card/id/syndicate, slot_wear_id)
-			var/obj/item/clothing/mask/gas/my_mask = new /obj/item/clothing/mask/gas/swat(src)
-			my_mask.vchange = new(src) // apply voice changer on the mask
-			src.equip_if_possible(my_mask, slot_wear_mask)
-			src.equip_new_if_possible(/obj/item/storage/belt/security, slot_belt)
+		src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/clothing/suit/armor/cknight_robe, slot_wear_suit)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/swat, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
+		src.equip_new_if_possible(/obj/item/clothing/head/helmet/cknight_hood, slot_head)
+		src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
+		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
+		src.equip_new_if_possible(/obj/item/card/id/syndicate, slot_wear_id)
+		var/obj/item/clothing/mask/gas/my_mask = new /obj/item/clothing/mask/gas/swat(src)
+		my_mask.vchange = new(src) // apply voice changer on the mask
+		src.equip_if_possible(my_mask, slot_wear_mask)
+		src.equip_new_if_possible(/obj/item/storage/belt/security, slot_belt)
 
-			src.equip_new_if_possible(/obj/item/tank/emergency_oxygen, slot_r_store)
+		src.equip_new_if_possible(/obj/item/tank/emergency_oxygen, slot_r_store)
 
-			my_sword = new /obj/item/sword(src)
-			my_sword.bladecolor = "P"
-			src.equip_if_possible(my_sword, slot_l_store)
+		my_sword = new /obj/item/sword(src)
+		my_sword.bladecolor = "P"
+		src.equip_if_possible(my_sword, slot_l_store)
 
-			src.add_ability_holder(/datum/abilityHolder/cyalume_knight)
-			abilityHolder.addAbility(/datum/targetable/cyalume_knight/recall_sword)
-			abilityHolder.addAbility(/datum/targetable/cyalume_knight/push)
-			abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_heal)
-			abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_lightning)
-			abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_choke)
+		src.add_ability_holder(/datum/abilityHolder/cyalume_knight)
+		abilityHolder.addAbility(/datum/targetable/cyalume_knight/recall_sword)
+		abilityHolder.addAbility(/datum/targetable/cyalume_knight/push)
+		abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_heal)
+		abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_lightning)
+		abilityHolder.addAbility(/datum/targetable/cyalume_knight/force_choke)
+		abilityHolder.updateButtons()
 
-			sleep(1 SECOND)
-
-			bioHolder.mobAppearance.UpdateMob()
-			abilityHolder.updateButtons()
+	initializeBioholder()
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/short/short
+		bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/fullbeard
+		bioHolder.mobAppearance.customization_third = new /datum/customization_style/eyebrows/eyebrows
+		bioHolder.mobAppearance.customization_first_color = "#555555"
+		bioHolder.mobAppearance.customization_second_color = "#555555"
+		bioHolder.mobAppearance.customization_third_color = "#555555"
+		. = ..()
 
 	bullet_act(obj/projectile/P, mob/meatshield) // deflect energy projectiles, cut bullets
 		var/obj/item/sword/deflecting_sword
@@ -94,7 +92,7 @@
 	icon_state = "cknight_hood"
 	see_face = 0
 
-/obj/screen/ability/topBar/cyalume_knight
+/atom/movable/screen/ability/topBar/cyalume_knight
 	clicked(params)
 		var/datum/targetable/cyalume_knight/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
@@ -140,7 +138,7 @@
 	// notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
 	points = 100
 	pointName = "force"
-	//var/obj/screen/kudzu/meter/nutrients_meter = null
+	//var/atom/movable/screen/kudzu/meter/nutrients_meter = null
 	var/const/MAX_POINTS = 100
 
 	onLife(var/mult = 1)
@@ -159,7 +157,7 @@
 
 	New(datum/abilityHolder/holder)
 		..(holder)
-		var/obj/screen/ability/topBar/cyalume_knight/B = new /obj/screen/ability/topBar/cyalume_knight(null)
+		var/atom/movable/screen/ability/topBar/cyalume_knight/B = new /atom/movable/screen/ability/topBar/cyalume_knight(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -223,7 +221,7 @@
 			return 1
 
 		my_mob.visible_message("<span class='alert'><b>[holder.owner] raises his hand into the air wide open!</b></span>")
-		playsound(get_turf(sword), 'sound/effects/gust.ogg', 70, 1)
+		playsound(sword, 'sound/effects/gust.ogg', 70, 1)
 
 		if (ismob(sword.loc))
 			if(sword.loc == my_mob)
@@ -245,7 +243,7 @@
 		for(var/i=0, i<100, i++)
 			step_to(sword, my_mob)
 			if (get_dist(sword,my_mob) <= 1)
-				playsound(get_turf(my_mob), 'sound/effects/throw.ogg', 50, 1)
+				playsound(my_mob, 'sound/effects/throw.ogg', 50, 1)
 				sword.set_loc(get_turf(my_mob))
 				if (my_mob.put_in_hand(sword))
 					my_mob.visible_message("<span class='alert'><b>[my_mob] catches the [sword]!</b></span>")
@@ -305,7 +303,7 @@
 
 		var/mob/owner_mob = holder.owner
 		owner_mob.visible_message("<span class='alert'><b>[holder.owner] thrusts the palm of his hand forward, releasing an overwhelming gust of wind!</b></span>")
-		playsound(get_turf(holder.owner), 'sound/effects/gust.ogg', 50, 1)
+		playsound(holder.owner, 'sound/effects/gust.ogg', 50, 1)
 		var/increment_value = (end_angle - start_angle) / (num_projectiles - 1)
 		var/current_angle = start_angle
 		var/i
@@ -456,7 +454,7 @@
 		var/original_pixel_y = mob_target.pixel_y
 
 		M.visible_message("<span class='alert'><b>[M] extends his open hand forward in a grasping motion, freezing [mob_target] in place!</b></span>")
-		mob_target.changeStatus("stunned", 150)
+		mob_target.changeStatus("stunned", 15 SECONDS)
 		mob_target.force_laydown_standup()
 
 		sleep(1.5 SECONDS)
@@ -601,7 +599,7 @@
 			M.take_oxygen_deprivation(-15)
 			M.losebreath = max(0, M.losebreath - 10)
 			M.visible_message("<span class='alert'>Some of [M]'s wounds slowly fade away!</span>", "<span class='alert'>Your wounds begin to fade away.</span>")
-			playsound(get_turf(M), 'sound/items/mender.ogg', 50, 1)
+			playsound(M, 'sound/items/mender.ogg', 50, 1)
 		else
 			..()
 			boutput(M, "<span class='alert'>You don't have any lingering wounds to heal.</span>")

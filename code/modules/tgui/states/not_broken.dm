@@ -16,7 +16,7 @@ var/global/datum/ui_state/tgui_broken_state/tgui_broken_state = new /datum/ui_st
 	. = user.shared_ui_interaction(src)
 	if (status & BROKEN)
 		return min(., UI_CLOSE)
-	else if (status & (NOPOWER | POWEROFF))
+	else if (requires_power && status & (NOPOWER | POWEROFF))
 		return min(., UI_DISABLED)
 	else if (status & MAINT)
 		return min(., UI_UPDATE)

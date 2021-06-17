@@ -74,13 +74,16 @@
 	attackby(var/obj/item/I, var/mob/user)
 		if(status & BROKEN)
 			return
-		if (istype(I,/obj/item/electronics/scanner))
+		if (istype(I,/obj/item/electronics/scanner) || istype(I,/obj/item/deconstructor))
 			user.visible_message("<span class='alert'><B>[user] hits [src] with [I]!</B></span>")
 			return
-		if (istype(I,/obj/item/satchel/))
-			var/action = input(usr, "What do you want to do with the satchel?") in list("Empty it into the Chute","Place it in the Chute","Never Mind")
-			if (!action || action == "Never Mind") return
-			if (get_dist(src,user) > 1)
+		if (istype(I, /obj/item/handheld_vacuum))
+			return
+		if (istype(I,/obj/item/satchel/) && I.contents.len)
+			var/action = input(user, "What do you want to do with the satchel?") in list("Place it in the Chute","Empty it into the Chute","Never Mind")
+			if (!action || action == "Never Mind")
+				return
+			if (!in_interact_range(src, user))
 				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
 				return
 			if (action == "Empty it into the Chute")
@@ -89,9 +92,11 @@
 				S.satchel_updateicon()
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
-		if (istype(I,/obj/item/storage/))
-			var/action = input(user, "What do you want to do with [I]?") as null|anything in list("Empty it into the chute","Place it in the Chute")
-			if (!in_range(src, user))
+		if (istype(I,/obj/item/storage/) && I.contents.len)
+			var/action = input(user, "What do you want to do with [I]?") as null|anything in list("Place it in the Chute","Empty it into the chute","Never Mind")
+			if (!action || action == "Never Mind")
+				return
+			if (!in_interact_range(src, user))
 				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
 				return
 			if (action == "Empty it into the chute")
@@ -101,7 +106,6 @@
 					S.hud.remove_object(O)
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
-			if (isnull(action)) return
 		var/obj/item/magtractor/mag
 		if (istype(I.loc, /obj/item/magtractor))
 			mag = I.loc
@@ -134,7 +138,7 @@
 	//
 	MouseDrop_T(mob/target, mob/user)
 		//jesus fucking christ
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.hasStatus(list("weakened", "paralysis", "stunned")) || isAI(user) || isAI(target) || isghostcritter(user))
+		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user) || isAI(target) || isghostcritter(user))
 			return
 
 		if (istype(src, /obj/machinery/disposal/mail) && isliving(target))
@@ -223,15 +227,16 @@
 			ui.open()
 
 	ui_data(mob/user)
-		var/list/data = list()
-		data["flush"] = src.flush
-		data["mode"] = src.mode
-		data["name"] = src.name
-		data["pressure"] = MIXTURE_PRESSURE(air_contents) / (2*ONE_ATMOSPHERE)
-		return data
+		. = list(
+			"flush" = src.flush,
+			"mode" = src.mode,
+			"name" = src.name,
+			"pressure" = MIXTURE_PRESSURE(air_contents) / (2*ONE_ATMOSPHERE),
+		)
 
 	ui_act(action, params)
-		if(..())
+		. = ..()
+		if (.)
 			return
 		switch(action)
 			if("eject")
@@ -244,7 +249,7 @@
 						SubscribeToProcess()
 						src.is_processing = 1
 				update()
-				playsound(get_turf(src), "sound/misc/handle_click.ogg", 50, 1)
+				playsound(src, "sound/misc/handle_click.ogg", 50, 1)
 				. = TRUE
 			if("togglePump")
 				if (src.mode)
@@ -548,9 +553,8 @@
 			newsignal.data["command"] = "text_message"
 			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
 			newsignal.data["message"] = "[message]"
-
 			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = mailgroup
+			newsignal.data["group"] = list(mailgroup, MGA_MAIL)
 			newsignal.data["sender"] = src.net_id
 
 			radio_connection.post_signal(src, newsignal)
@@ -566,7 +570,7 @@
 	plane = PLANE_NOSHADOW_BELOW
 
 	MouseDrop_T(obj/storage/cart/target, mob/user)
-		if (!istype(target) || target.loc != src.loc || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || isAI(user))
+		if (!istype(target) || target.loc != src.loc || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
 			return ..()
 
 		if (!target.contents.len)
@@ -575,7 +579,7 @@
 		src.visible_message("[user] begins depositing [target]'s contents into [src].")
 		playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
 		for (var/atom/movable/AM in target)
-			if (get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened"))
+			if (get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user))
 				break
 			if (AM.anchored || AM.loc != target)
 				continue
@@ -600,7 +604,7 @@
 		return
 
 	MouseDrop_T(mob/target, mob/user)
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || user.hasStatus(list("weakened", "paralysis", "stunned")) || isAI(user) || isAI(target) || isghostcritter(user))
+		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user) || isAI(target) || isghostcritter(user))
 			return
 		..()
 		flush = 1
@@ -609,7 +613,7 @@
 			SubscribeToProcess()
 			is_processing = 1
 
-		playsound(get_turf(src), "sound/misc/handle_click.ogg", 50, 1)
+		playsound(src, "sound/misc/handle_click.ogg", 50, 1)
 
 		update()
 		return
@@ -659,7 +663,7 @@
 		if(!checkStillValid()) return
 		var/diff_x = (chute.x - target.x) * 32
 		var/diff_y = (chute.y - target.y) * 32
-		var/fade = max(target.alpha - 178, 0) 
+		var/fade = max(target.alpha - 178, 0)
 		var/matrix/t_size = matrix()
 		t_size.Scale(1,0.4)
 		animate(target, transform = t_size, alpha = fade, pixel_x = diff_x, pixel_y = diff_y, time = duration, easing = LINEAR_EASING)
@@ -668,10 +672,10 @@
 	onUpdate()
 		..()
 		if(!checkStillValid()) return
-	
+
 	onEnd()
-		if(checkStillValid()) 
-			if (target.buckled || get_dist(user, chute) > 1 || get_dist(user, target) > 1 || ((user.stat || user.hasStatus(list("weakened", "paralysis", "stunned"))) && user != target))
+		if(checkStillValid())
+			if (target.buckled || get_dist(user, chute) > 1 || get_dist(user, target) > 1 || ((is_incapacitated(user) && user != target))
 				..()
 				return
 
@@ -697,7 +701,7 @@
 
 			chute.update()
 		..()
-	
+
 	onDelete()
 		animate(target) //force-complete the current animation
 		target.pixel_x = target_old_pixel_x
@@ -707,7 +711,7 @@
 		..()
 
 	proc/checkStillValid()
-		if(isnull(user) || isnull(target) || isnull(chute)) 
+		if(isnull(user) || isnull(target) || isnull(chute))
 			interrupt(INTERRUPT_ALWAYS)
 			return false
 		if(target_old_loc != target.loc)

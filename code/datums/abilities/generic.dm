@@ -77,7 +77,7 @@
 			var/obj/stool/chair/C = M.buckled
 			M.buckled.unbuckle()
 			C.buckledIn = 0
-			C.buckled_guy = 0
+			C.buckled_guy = null
 		M.pixel_y = 0
 		M.buckled = null
 		reset_anchored(M)

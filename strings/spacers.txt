@@ -1,0 +1,1109 @@
+honorifics@=
+	Eminence
+	Supreme
+	The Notorious
+	Handsome
+	Sidesguy
+	Double
+	Triple
+	Ultra
+	Captain
+	Chief
+	Sir
+	Lord
+	Sergeant 
+	Old
+	Right Honorable
+	Sailor
+	Ensign
+	
+firstnames@=
+	Abby
+	Ace
+	Aeon
+	Aero
+	Ainsley
+	Al
+	Alabama
+	Alex
+	Alexi
+	Ali
+	Almond
+	Ames
+	Ange
+	Aoki
+	Arden
+	Arizona
+	Ash
+	Avery
+	Avi
+	Baker
+	Bandit
+	Bane
+	Bao 
+	Bardou
+	Barry
+	Bates
+	Baz
+	Bean
+	Beauregard
+	Bee
+	Berne
+	Bill
+	Billy
+	Bingo
+	Blake
+	Blair
+	Blue
+	Bobby
+	Borton
+	Brampton
+	Briggs
+	Brody
+	Bronx
+	Brooklyn
+	Brotus
+	Buddy	
+	Cactus
+	Caelan
+	Cage
+	Camryn
+	Canada
+	Cappy
+	Carmo
+	Carol
+	Carson
+	Cassidy
+	Cat
+	Cato
+	Cedar
+	Ceres
+	Chang
+	Charlie
+	Chas
+	Chevis
+	Chi
+	Chicago
+	Chris
+	Christmas
+	Clove
+	Colby
+	Corbin
+	Cosmo
+	Cranston
+	Cricket
+	Cruz
+	Dabney
+	Dakota
+	Dallas
+	Dana
+	December
+	Dee
+	Del
+	Denny
+	Denver
+	Diamond
+	Disco
+	Doc
+	Drew
+	Dublin
+	Dunkus
+	Dylan
+	Echo
+	Ed
+	Edge
+	Eko
+	Eli
+	Ellis
+	England
+	Eridian
+	Essa
+	Evans
+	Everix
+	Fabian
+	Fabrice
+	Falcon
+	Fargo
+	Farmer
+	February
+	Fenix
+	Fizzy
+	Flash
+	Flynn
+	France
+	Franston
+	Freddie
+	Freedom
+	Friday
+	Frost
+	Galaxy
+	Garnet
+	Gene
+	George
+	Ghost
+	Gi
+	Gianni
+	Gil
+	Glen
+	Glenn
+	Goose
+	Gravy
+	Gray
+	Green
+	Guitain
+	Guo 
+	Gurjeet
+	Hadley
+	Ham
+	Hamilton
+	Hao
+	Harper
+	Helle
+	Higgs
+	Hitomi
+	Holland
+	Hollis
+	Hogg
+	Hooper
+	Horse
+	Huan
+	Hunter
+	Ibis
+	Ille
+	Illinois
+	Indiana 
+	Indigo
+	Indy
+	Inge
+	Innes
+	Io
+	Iron
+	Italy
+	Izzy
+	Jace
+	Jack
+	Jade
+	Jaime
+	Jain
+	Jaffe
+	Jam
+	Jan
+	January
+	Janus
+	Jasbinder
+	Java
+	Jax
+	Jazz
+	Jem
+	Jenski
+	Jerry
+	Jeven
+	Ji
+	Jo
+	Joe
+	Jojo
+	Jude
+	Jules
+	Jupiter
+	Justice
+	Jyler
+	Kai
+	Kane
+	Kansas
+	Keegan
+	Kel
+	Kelly
+	Kentucky
+	Ki
+	Kim
+	Kimball
+	Kingsley
+	Kinsey
+	Kipp
+	Kit
+	Knife
+	Kris
+	Kyler
+	Lacey
+	Layton
+	Lebeau
+	Lee
+	Lem
+	Lex
+	Li
+	Ling
+	Locke
+	Logan
+	London
+	Lou
+	Lucky
+	Lux
+	Mack
+	Mads
+	Magic
+	Mancuso
+	Manny
+	Mars
+	Matty
+	Meatball
+	Memphis
+	Mercury
+	Merle
+	Mick
+	Midnight
+	Milne
+	Mint
+	Moe
+	Moon
+	Monaco
+	Morgan
+	Mountain
+	Nat
+	Neo
+	Neptune
+	Nevada
+	Nicky
+	Nikita
+	Niko
+	Norris
+	Noor
+	Nova
+	Nox
+	Oakes 
+	Ocean
+	October
+	Odell
+	Oklahoma
+	Ollie
+	Omega
+	Orion
+	Oxide
+	Oz
+	Park
+	Pasha
+	Patsy
+	Peanut
+	Pepper
+	Petya
+	Phobos
+	Phoenix
+	Piccolo
+	Pilaf
+	Pisces
+	Pizza
+	Pluto
+	Posh	
+	Puck
+	Qi
+	Quincy
+	Quinn
+	Randy
+	Rani
+	Raven
+	Raz
+	Red
+	Reed
+	Reese
+	Rei
+	Remy
+	Reyes
+	Rider
+	Ridley
+	Riley
+	Riggs
+	Rimbo
+	Rizzo
+	Rocket
+	Rollo 
+	Rowan
+	Royal
+	Rudy
+	Rusty
+	Sailor
+	Sage
+	Sam
+	Santana
+	Sasha
+	Saturday
+	Saturn
+	Scoop
+	Scout
+	September
+	Silver
+	Sky
+	Sloane
+	Stabs
+	Star
+	Steel 
+	Suave
+	Sunday
+	Sully
+	Sunny
+	Syd
+	Tachyon
+	Tandy
+	Tanner
+	Taurus
+	Taylor
+	Tennessee
+	Tex
+	Texas
+	Thu
+	Theo
+	Tiger
+	Tony
+	Topaz
+	Trace
+	Tuesday
+	Twain
+	Tyler
+	Udo
+	Ulf
+	Urbain
+	Uri
+	Utah
+	Uttara
+	Val
+	Valentine
+	Vasha
+	Vermont
+	Vic
+	Vinh
+	Virgo
+	Volta
+	Voss
+	Wallace
+	Wei
+	Wil
+	Winter
+	Whitney
+	Wobbe
+	Wrigley
+	Wyatt
+	Xanadu
+	Xandy
+	Xerxes
+	Xiao
+	Yael
+	Yank
+	Yankee
+	Yang
+	Yates
+	Yoshi
+	Yun
+	Zane
+	Zenith
+	Zenon
+	Zeppelin
+	Zhou
+	
+lastnames@=
+	Abbots
+	Adams
+	Ahmed
+	Alberts
+	Ali
+	Ames
+	Arnolds
+	Augustin
+	Aziz
+	Babcock
+	Bacon
+	Baker	
+	Bangoman
+	Banks
+	Baptiste
+	Barbosa
+	Barnes
+	Bates
+	Batista
+	Beasley
+	Bhatti
+	Bielski
+	Biggs
+	Birdwell
+	Bishop
+	Bill
+	Billips
+	Blanton
+	Bobkin
+	Boggs
+	Bologna
+	Boone
+	Boyd
+	Braun
+	Briscoe
+	Brown
+	Burtons
+	Burgle
+	Butler
+	Carlson
+	Cash
+	Castle
+	Castro
+	Chang
+	Chaves
+	Cho
+	Chung
+	Clarks
+	Cliftons
+	Cobb
+	Collins
+	Coe
+	Conway
+	Cranston
+	Crook
+	Crum
+	Crump
+	Curtis
+	Daniels
+	Dang
+	Davies
+	Davis
+	Delgado
+	Denton
+	Diaz
+	Deitz
+	Diggs
+	Dions
+	Domingo
+	Donnely
+	Dubois
+	Dudley
+	Dunbar
+	Dunn
+	Edwards
+	Ellis
+	Ellison
+	Eng
+	Etienne
+	Eubanks
+	Fernando
+	Finch
+	Flanagan
+	Fleming
+	Flynn
+	Fong
+	Fonseca
+	Fox
+	Franklins
+	Gary
+	Gauthier
+	Gee
+	Gibbs
+	Gilberts
+	Gilliam
+	Goff
+	Gomez
+	Goodman
+	Goolsby
+	Graves
+	Gregg
+	Gross
+	Guillory
+	Gunn
+	Gupta
+	Gurkin
+	Guthrie
+	Guy
+	Guzman
+	Haas
+	Hahn
+	Hamilton
+	Hamm
+	Hammer
+	Hammond
+	Hankins
+	Hatfield
+	Hayes
+	Hendrix
+	Henries
+	Henson
+	Higgins
+	Hill
+	Hinkle
+	Hobbs
+	Holliday
+	Hootens
+	Howards
+	Hsu
+	Huang
+	Hudson
+	Hubbard
+	Huff
+	Huggins
+	Huygens
+	Jackson
+	Jacques
+	Jaglowski
+	Johnson
+	Jones
+	Kaminski
+	Kang
+	Katz
+	Kaur
+	Kay
+	Key
+	Khan
+	Khoury
+	Kidd
+	Kilgore
+	Klein
+	Kline
+	Knapp
+	Knox
+	Kurtz
+	Kwon
+	Lang
+	Law
+	Lawson
+	Leblanc
+	Lee
+	Lewis
+	Licorice
+	Lightfoot
+	Lilly
+	Lloyd
+	Lobo
+	Logans
+	Lucas
+	Lum
+	Luna
+	Lutz
+	Malone
+	Mann
+	Mason
+	Mathis
+	Matsumoto
+	Maxwell
+	Mayo
+	Mcclelland
+	Mccoy
+	Mcginnis
+	Mcgruder
+	Mcqueen
+	Melvins
+	Mendoza
+	Miller
+	Monahan
+	Moon
+	Moses
+	Moss
+	Mortons
+	Murphies
+	Mustard
+	Nakamura
+	Nassar
+	Nesvitt
+	Neugat
+	Ngo
+	Nguyen
+	Nicholson
+	Nino
+	Norelli
+	Novak
+	Novikoff
+	Oakley
+	Oates
+	Oberto
+	Oliviera
+	Onion
+	Orloff
+	Ortega
+	Ott
+	Owens
+	Paccione
+	Pappalardo
+	Pappas
+	Patel
+	Park
+	Parker
+	Payne
+	Peppercorn
+	Pepperoni
+	Perko
+	Phipps
+	Pitts
+	Pluchino
+	Popov
+	Punp
+	Quaddros
+	Quatrucci
+	Raab
+	Radice
+	Radovan
+	Rathens
+	Rao
+	Rashid
+	Ravioli
+	Ribiero
+	Rossi
+	Ruffin
+	Rush
+	Russo
+	Saechao
+	Saeed
+	Salami
+	Salazar
+	Saleh
+	Sanders
+	Santos
+	Schweet
+	Schmidt
+	Schultz
+	Scigliano
+	Shah
+	Sharif
+	Shaw
+	Silva
+	Simmons
+	Sinclair
+	Singh
+	Skaggs
+	Smallwood
+	Smith
+	Souza
+	Stevens
+	Stockton
+	Stromboulopoulos
+	Stromboli
+	Stubbs
+	Sun
+	Tabarnac
+	Tagliente
+	Tan
+	Tanaka
+	Tang
+	Teague
+	The Third
+	Tibbets
+	Timko
+	Tompkins
+	Thorne
+	Tolbert
+	Torres
+	Toussaint
+	Tran
+	Tsai
+	Ucci
+	Uchida
+	Udo
+	Uffe
+	Umphries
+	Underberg
+	Underwood
+	Untz
+	Vargas
+	Vasko
+	Vaughn
+	Velasquez
+	Vicente
+	Vinson
+	Vo
+	Volkov
+	Vorbis
+	Wallo
+	Walton
+	Wang
+	Washington
+	Watanabe
+	Webb
+	Whitman
+	Williams
+	Willis
+	Witko
+	Wilkins
+	Wilson
+	Wolff
+	Wong
+	Wu
+	Wyatts
+	Xiong
+	Yang
+	Yee
+	Youngblood
+	Yusuf
+	Zambo
+	Zbigbiev
+	Zogby
+	
+nicknames@=
+	"The Juice"
+	"The Flagship"
+	"Freight Train"
+	"Passenger Train"
+	"Different Kind of Train"
+	"Model Train"
+	"Big Truck"
+	"Dump Truck" 
+	"Cargo Truck"
+	"Lorry" 
+	"Dumpster"
+	"Grumpy"
+	"Lil"
+	"Parking Violations"
+	"Bathtub"
+	"Horse Trough"
+	"Horse Friend"
+	"Boats"
+	"Tugboat"
+	"Punchout"
+	"Knockout"
+	"Big Money"
+	"Confetti"
+	"Goddamn"
+	"Unlicensed"
+	"The Best" 
+	"The Worst"
+	"Blueberry"
+	"Banana"
+	"Banana Bread"
+	"Bananadog"
+	"Brass Knuckles"
+	"Tin Hat"
+	"The Loaf"
+	"Rummy"
+	"Bottle of Gin"
+	"Endless" 
+	"Saxophone"
+	"The Widest"
+	"Extra Bones"
+	"Regular Face"
+	"Normal Legs"
+	"Quality"
+	"Dance Anarchist"
+	"The Swede"
+	"Finland"
+	"Friggin"
+	"Basement"
+	"Tugboat"
+	"Beefpile"
+	"Grustler"
+	"Zesty" 
+	"Lousy"
+	"A Real Jerk"
+	"The Funny One"
+	"No Bones"
+	"No Nonsense" 
+	"No Good" 
+	"Hard Knocks" 
+	"Trouble" 
+	"Hogg Mild" 
+	"Hogg Wild" 
+	"Yep"
+	"Ace" 
+	"Champ" 
+	"Zapper"
+	"Whizbang"
+	"Kaboom" 
+	"Fancypants"
+	"Wee-Ooo"
+	"Imaginary"
+	"The Greatest"
+	"As Advertised"
+	"Makeouts"
+	"Magic"
+	"Junkyard"
+	"The Skull"
+	"Boneyard"
+	"Scrappy"
+	"Scrapyard"
+	"Miami"
+	"Vegas" 
+	"Texas"
+	"Montana"
+	"Quebec"
+	"Viva"
+	"Saskatchewan"
+	"Wyoming"
+	"Donut"
+	"Poutine"
+	"The Cursed"
+	"Well How Do Ya Do"
+	"Monday" 
+	"Not Bad" 
+	"All About It"
+	"How About That"
+	"Par Excellance!"
+	"Who Cares"
+	"Brass Tacks"
+	"Pickle Jar"
+	"Chuckle Time"
+	"So What"
+	"Bad Attitude"
+	"King of the Ring"
+	"Hoo Boy"
+	"The Destroyer"
+	"A Big Disgrace"
+	"Gumdrop"
+	"Gumshoe"
+	"Gravy"
+	"Gravy Boat"
+	"Texas"
+	"Montana"
+	"California"
+	"Alaska"
+	"Zut Alors!"
+	"Tabarnac!"
+	"Campfire"
+	"Campervan"
+	"Firetruck"
+	"Not A Cop"
+	"Tuesday"
+	"Thursday"
+	"The Mom Friend"
+	"The Dad Friend"
+	"Employee of the Week" 
+	"Really Into Anime"
+	"Clownshow"
+	"Ringmaster"
+	"Most Likely" 
+	"Double Dollar"
+	"Bingo"
+	"Lasergun"
+	"Lasertag"
+	"Skeeball"
+	"Wrecking Ball"
+	"Bowling Ball"
+	"Cannon Ball"
+	"Canned Ham"
+	"Fine Holiday Ham" 
+	"Extruded Meats"
+	"Salted Meats"
+	"Smoked Meats"
+	"Spaghetti"
+	"Ham and Cheese"
+	"The Big Cheese"
+	"Submariner"
+	"A Real Downer"
+	"A Lousy Time"
+	"An Okay Time"
+	"Big Nerd"
+	"Deadeye"
+	"A Real Bargain"
+	"Fixer Upper"
+	"Tuba"
+	"Trombone"
+	"Harmonica"
+	"Kazoo"
+	"Sad Trumpet"
+	"Creepy Piano"
+	"Bees"
+	"Downtown"
+	"Rockabilly"
+	"The Toolman"
+	"Incoherent Yelling"
+	"Definitely Human"
+	"Zipgun"
+	"Guisarme"
+	"Flamberge"
+	"Hey Now"
+	"Battle Boat" 
+	"Knife Collection"
+	"Butterknife"
+	"Needles"
+	"Shrapnel"
+	"Pom de Terre" 
+	"Tobacco"
+	"Bumpercar"
+	"Tophat"
+	"Sunglasses"
+	"Football"
+	"Frisbee"
+	"Bloodbath"
+	"Crime Time"
+	"Doot Doot"
+	"Bumblebee"
+	"Bumblefoot"
+	"Old Tyme"
+	"Picante" 
+	"Scrapper"
+	"Inferno"
+	"The Weirdo" 
+	"Cargonia"
+	"Really Lousy" 
+	"Dadgold"
+	"Greasy Fingers"
+	"Microwave"
+	"X-Ray" 
+	"Laserbeam"
+	"Bullet"
+	"Slingshot"
+	"Pew Pew"
+	"Soupcan" 
+	"Hockeystick"
+	"Cricketbat"
+	"Whaddayu, a Cop?"
+	"Lockpick"
+	"Bayonet"
+	"Toolbox"
+	"Crowbar"
+	"Hardhat"
+	"Safety First"
+	"Warehouse"
+	"Honey Mustard"
+	"Horseradish"
+	"Ketchup"
+	"Butt Jokes"
+	"Taters"
+	"Flapjack"
+	"Bardiche"
+	"Harquebus"
+	"Have a Nice Day"
+	"Buzzsaw"
+	"Buzzkill"
+	"Circuitboard"
+	"Angry All the Time"
+	"Circuitbreaker"
+	"Overload"
+	"Fusebox"
+	"El Tigre"
+	"Switchgear"
+	"Barnacle Party"
+	"Paying Customer"
+	"Wheelbarrow"
+	"A Big Mistake"
+	"Two Hands"
+	"Left Foot"
+	"Elbow"
+	"Spaceship"
+	"Hot Damn"
+	"The Robust"
+	"Jams and Jellies"
+	"Whoopsie Daisey"
+	"My Goodness"
+	"Shotgun"
+	"Railgun"
+	"Outcrop"
+	"Depth Charge"
+	"Whiskey Barrel"
+	"Tech Support"
+	"Rough and Tumble"
+	"Loud and Proud"
+	"The Oaf"
+	"Big Deal"
+	"Buckshot"
+	"Grapeshot"
+	"Gunpowder"
+	"Sputnik"
+	"Moonman"
+	"Sour Milk"
+	"Old Soup"
+	"Skillet"
+	"Skeleton"
+	"Washtub"
+	"Lousy Shot" 
+	"Snapshot"
+	"Sports"
+	"Frypan"
+	"Soup Bowl" 
+	"Soup Spoon"
+	"Aw Shucks"
+	"Apple Pie"
+	"Trickshot"
+	"Razzle Dazzle"
+	"Jazz Hands"
+	"Bread Bowl"
+	"Salad Bowl"
+	"Rotunda"
+	"Minigolf"
+	"Hockeypuck"
+	"B-Ball"
+	"Meteor"
+	"Igneous"
+	"Lemonade"
+	"The Smelter"
+	"Reactor-Grade"
+	"Weapons-Grade"
+	"Full-Auto"
+	"Scrimshaw"
+	"Rum Raisin"
+		
+pejoratives@=
+	Loathesome
+	Not-Great
+	Smelly
+	Garbage
+	Lazy
+	Rubbish
+	Lousy
+	Awful
+	Grotesque
+	Pretty-Bad
+	Gross-Ass
+	Grody
+	Greasy
+	Grizzly
+	Gassy
+	Gross
+	Sloppy
+	Ugly
+	Nasty
+	Bumbling
+	Sweaty
+	Disappointing
+	Over-Rated
+	Moist
+	Stale
+	Lonesome
+	Hollerin'
+	Ornery
+	Ill-Tempered
+	Horrible
+
+superlatives@=
+	Gorgeous
+	Handsome
+	Beautiful
+	Badass
+	Delicious
+	Thundering
+	Beefy
+	Juiced-Up
+	Zesty
+	Creamy
+	Heavenly
+	Vorpal
+	Tough
+	Nice
+	Awesome
+	Gnarly
+	Wild
+	Spicy
+	Jazzy
+	Cute
+	Top-Notch
+	Primo
+	Huge
+
+stuff@=
+	Mountain
+	Grill
+	Toaster
+	Barbeque
+	Handshake
+	Juicebox
+	Subway
+	Trench
+	Knife
+	Spoon
+	Loaf
+	Ocean
+	Sea
+	Burger
+	Pizza
+	Wharf
+	Shipyard
+	Landfill
+	Dumpster 
+	Space
+	Train
+	Truck
+	Meat
+	Banjo
+	Pickaxe
+	Chainsaw
+	Saloon
+
+
+

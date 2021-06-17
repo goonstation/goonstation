@@ -30,9 +30,6 @@ html, body {
 .categories, .two {
 	height: 100%;
 }
-.two {
-	position: relative;
-}
 p {
 	display: table-cell;
 	position: relative;
@@ -63,14 +60,6 @@ p {
 	padding-bottom: 10px;
 	cursor: pointer;
 }
-img {
-	display: block;
-	height: 100%;
-	width: auto;
-	margin-left: auto;
-	margin-right: auto;
-	-ms-interpolation-mode: nearest-neighbor;
-}
 .itemcolor1{background: #8E0C1C;}
 /*.itemcolor1:hover{background: #9EBCA6;}*/
 .itemcolor2{background: #720A18;}
@@ -86,14 +75,9 @@ img {
 
 .categories {background: #89381C;}
 .two {background: #89381C;}
-.items {background: #89381C;} 
+.items {background: #89381C;}
 
-.preview {
-	position:absolute;
-	top:0;
-	left:0;
-}
-
-#image_overlay {
-	z-index: 10;
+#preview {
+	width: 100%;
+	height: 100%;
 }

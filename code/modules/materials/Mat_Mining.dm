@@ -1,4 +1,4 @@
-//Pick(1 tile), hammer(line across), drill(line in front), blaster(cone),
+/// Pick(1 tile), hammer(line across), drill(line in front), blaster(cone),
 /obj/item/mining_head
 	name = "mining tool head"
 	desc = "A mining tool head."
@@ -172,8 +172,8 @@
 		var/obj/meleeeffect/blasterline/EA = new/obj/meleeeffect/blasterline(user.loc)
 		var/obj/meleeeffect/blasterline/EB = new/obj/meleeeffect/blasterline(start)
 
-		EA.dir = attackDir
-		EB.dir = turn(attackDir, 180)
+		EA.set_dir(attackDir)
+		EB.set_dir(turn(attackDir, 180))
 
 		animate(EA,alpha=0, time=5)
 		animate(EB,alpha=0, time=5)
@@ -308,7 +308,7 @@
 				anim_y = 0
 
 		var/obj/meleeeffect/drill/D = new/obj/meleeeffect/drill(start)
-		D.dir = attackDir
+		D.set_dir(attackDir)
 
 		animate(D, pixel_x = anim_x, pixel_y = anim_y, time = 5, easing = QUAD_EASING)
 		SPAWN_DBG(2 SECONDS) qdel(D)

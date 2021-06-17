@@ -48,8 +48,7 @@
 		logTheThing("debug", null, null, "Starting SwapDelete (size : [props.maxX - props.sourceX]x - [props.maxY - props.sourceY]y) at [time2text(world.timeofday)]")
 		var/count = 0
 		var/list/block = block(locate(props.sourceX, props.sourceY, props.sourceZ),locate(props.maxX, props.maxY, props.sourceZ))
-		for(var/x in block)
-			var/turf/T = x
+		for(var/turf/T as anything in block)
 			for(var/Y in T)
 				if(isobj(Y) && !istype(Y, /obj/overlay/tile_effect))
 					qdel(Y)

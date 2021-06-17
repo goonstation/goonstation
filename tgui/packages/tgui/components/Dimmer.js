@@ -8,11 +8,12 @@ import { classes } from 'common/react';
 import { Box } from './Box';
 
 export const Dimmer = props => {
-  const { className, children, ...rest } = props;
+  const { className, children, full, ...rest } = props;
   return (
     <Box
       className={classes([
         'Dimmer',
+        !!full && 'Dimmer--full',
         ...className,
       ])}
       {...rest}>

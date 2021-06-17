@@ -5,7 +5,7 @@
 #define S_DRAW 0
 #define S_INJECT 1
 /obj/item/reagent_containers/syringe
-	name = "Syringe"
+	name = "syringe"
 	desc = "A syringe."
 	icon = 'icons/obj/syringe.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
@@ -34,14 +34,12 @@
 		var/rounded_vol = reagents ? round(reagents.total_volume,5) : 0;
 		icon_state = "[rounded_vol]"
 		item_state = "syringe_[rounded_vol]"
-		//src.overlays = null
 		src.underlays = null
 		if (ismob(loc))
 			if (!src.image_inj_dr)
 				src.image_inj_dr = image(src.icon)
 			src.image_inj_dr.icon_state = src.mode ? "inject" : "draw"
 			src.UpdateOverlays(src.image_inj_dr, "inj_dr")
-			//src.overlays += mode == S_INJECT ? "inject" : "draw"
 		else
 			src.UpdateOverlays(null, "inj_dr")
 		if (!src.fluid_image)
@@ -188,8 +186,8 @@
 						boutput(user, "<span class='alert'>You break [P]'s tamper-proof seal!</span>")
 						P.medical = 0
 
-				SPAWN_DBG (5)
-					if (src && src.reagents && target && target.reagents)
+				SPAWN_DBG(0.5 SECONDS)
+					if (src?.reagents && target?.reagents)
 						logTheThing("combat", user, target, "injects [constructTarget(target,"combat")] with a syringe [log_reagents(src)] at [log_loc(user)].")
 						// Convair880: Seems more efficient than separate calls. I believe this shouldn't clutter up the logs, as the number of targets you can inject is limited.
 						// Also wraps up injecting food (advertised in the 'Tip of the Day' list) and transferring chems to other containers (i.e. brought in line with beakers and droppers).

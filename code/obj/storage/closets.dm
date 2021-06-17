@@ -54,6 +54,8 @@
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
 			if (prob(80))
 				new /obj/item/extinguisher(src)
+			if (prob(50))
+				new /obj/item/clothing/head/helmet/firefighter(src)
 			if (prob(30))
 				new /obj/item/clothing/suit/fire(src)
 				new /obj/item/clothing/mask/gas/emergency(src)
@@ -75,8 +77,10 @@
 							/obj/item/device/light/flashlight,
 							/obj/item/clothing/shoes/galoshes,
 							/obj/item/reagent_containers/glass/bottle/cleaner,
+							/obj/item/storage/box/body_bag,
 							/obj/item/caution = 6,
-							/obj/item/clothing/gloves/long)
+							/obj/item/clothing/gloves/long,
+							/obj/item/handheld_vacuum)
 
 /obj/storage/closet/law
 	name = "\improper Legal closet"
@@ -95,11 +99,13 @@
 	icon_closed = "coffin"
 	icon_opened = "coffin-open"
 	layer = 2.2
+	icon_welded = "welded-coffin-4dirs"
 
 	wood
 		icon_closed = "woodcoffin"
 		icon_state = "woodcoffin"
 		icon_opened = "woodcoffin-open"
+		icon_welded = "welded-coffin-1dir"
 
 /obj/storage/closet/biohazard
 	name = "\improper Level 3 Biohazard Suit closet"
@@ -231,7 +237,7 @@
 			B2.pixel_y = 6
 			B2.pixel_x = 5
 
-			new /obj/item/postit_stack(src)
+			new /obj/item/item_box/postit(src)
 			new /obj/item/hand_labeler(src)
 
 			var/obj/item/pen/B3 = new /obj/item/pen(src)
@@ -311,7 +317,7 @@
 /obj/storage/closet/mantacontainerred
 	name = "shipping container"
 	desc = "It's a shipping container, they are frequently used to ship different goods securely across oceans."
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "mantacontainerleft"
 	icon_closed = "mantacontainerleft"
 	icon_opened = "mantacontainerleft-open"
@@ -368,7 +374,7 @@
 #ifdef HALLOWEEN
 			if (halloween_mode && prob(5)) //remove the prob() if you want, it's just a little broken if dudes are constantly teleporting
 				var/list/obj/storage/myPals = list()
-				for (var/obj/storage/O in by_type[/obj/storage])
+				for_by_tcl(O, /obj/storage)
 					LAGCHECK(LAG_LOW)
 					if (O.z != src.z || O.open || !O.can_open())
 						continue
@@ -402,7 +408,7 @@
 			return
 
 		else if (istype(W, /obj/item/satchel/))
-			var/amt = W.contents.len
+			var/amt = length(W.contents)
 			if (amt)
 				user.visible_message("<span class='notice'>[user] dumps out [W]'s contents into [src]!</span>")
 				var/amtload = 0
@@ -483,7 +489,7 @@
 /obj/storage/closet/mantacontainerred/right
 	name = "shipping container"
 	desc = "It's a shipping container, they are frequently used to ship different goods securely across oceans."
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_closed = "mantacontainerright"
 	icon_state = "mantacontainerright"
 	icon_opened = "mantacontainerright-open"
@@ -508,11 +514,27 @@
 /obj/storage/closet/medicalclothes
 	name = "medical clothing locker"
 	icon = 'icons/obj/large_storage.dmi'
-	icon_closed = "medicalclothes"
-	icon_state = "medicalclothes"
+	icon_closed = "medical_clothes"
+	icon_state = "medical_clothes"
 	icon_opened = "secure_white-open"
 	desc = "A handy medical locker for storing your doctoring apparel."
-	spawn_contents = list(/obj/item/clothing/head/nursehat = 1,
-					/obj/item/clothing/suit/nursedress = 1,
-					/obj/item/clothing/head/headmirror = 1,
-					/obj/item/clothing/suit/labcoat/medical = 2)
+	spawn_contents = list(/obj/item/clothing/head/nursehat = 3,
+					/obj/item/clothing/suit/nursedress = 3,
+					/obj/item/clothing/suit/wintercoat/medical = 3,
+					/obj/item/clothing/head/headmirror = 3,
+					/obj/item/clothing/suit/labcoat/medical = 3)
+
+/obj/storage/closet/command/ruined //replacements for azones and mining level flavor
+	name = "Dented command locker"
+	desc = "This thing looks ransacked."
+	icon = 'icons/obj/large_storage.dmi'
+	icon_state = "dented_c"
+	icon_closed = "dented_c"
+	icon_opened = "dented_c-open"
+	spawn_contents = list()
+
+/obj/storage/closet/command/ruined/hos //rejoice HoS players
+	name = "Dented Head of Security's locker"
+	desc = "A banged up Head of Security locker. Looks like somebody took the law into their own hands."
+	spawn_contents = list(/obj/item/clothing/shoes/brown,
+	/obj/item/paper/iou)

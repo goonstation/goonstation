@@ -38,12 +38,8 @@
  */
 /datum/tgui_panel/proc/initialize(force = FALSE)
 	set waitfor = FALSE
-	// BYOND skin is broken
-	if(!winexists(client, "browseroutput"))
-		broken = TRUE
-		message_admins("Couldn't start chat for [key_name_admin(client)]!")
-		alert(client.mob, "Updated chat window does not exist. If you are using a custom skin file please allow the game to update.")
-		return
+	// Minimal sleep to defer initialization to after client constructor
+	sleep(1)
 	initialized_at = world.time
 	// Perform a clean initialization
 	window.initialize(inline_assets = list(
@@ -52,8 +48,9 @@
 	))
 	window.send_asset(get_asset_datum(/datum/asset/simple/fontawesome))
 	window.send_asset(get_asset_datum(/datum/asset/spritesheet/chat))
+	// Other setup
 	request_telemetry()
-	addtimer(CALLBACK(src, .proc/on_initialize_timed_out), 2 SECONDS)
+	addtimer(CALLBACK(src, .proc/on_initialize_timed_out), 5 SECONDS)
 
 /**
  * private

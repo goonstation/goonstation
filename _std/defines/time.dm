@@ -37,7 +37,7 @@
 	#define OCEAN_LIGHT  rgb(0.160 *  18, 0.60 *  18, 1.00 *  18, 0.65 * 255)
 #endif
 
-//trench has no light cycle! all dark, all the time
+/// trench has no light cycle! all dark, all the time
 #define TRENCH_LIGHT rgb(0.025 * 255, 0.05 * 255, 0.15 * 255, 0.70 * 255)
 
 //TODO: MOVE EARTH LIGHTCYCLE TO THIS SYSTEM

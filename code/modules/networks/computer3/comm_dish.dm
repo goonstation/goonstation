@@ -212,7 +212,7 @@
 					return
 
 				var/list/commandList = params2list(signal.data["data"])
-				if (!commandList || !commandList.len)
+				if (!commandList || !length(commandList))
 					return
 
 				switch (commandList["command"])

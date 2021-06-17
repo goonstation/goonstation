@@ -44,8 +44,8 @@
 		system
 			name = "Atlas Survey Mission chart X0"
 			desc = "A chart of nearby moons and Nanotrasen assets around . Not to scale."
-			sizex = 1024
-			sizey = 683
+			sizex = 1033
+			sizey = 724
 
 			New()
 				..()

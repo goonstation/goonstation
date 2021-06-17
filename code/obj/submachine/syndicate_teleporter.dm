@@ -18,8 +18,7 @@
 		STOP_TRACKING
 
 	proc/teleport(mob/user)
-		for(var/X in by_type[/obj/submachine/syndicate_teleporter])
-			var/obj/submachine/syndicate_teleporter/S = X
+		for_by_tcl(S, /obj/submachine/syndicate_teleporter)
 			if(S.id == src.id && S != src)
 				if(recharging == 1)
 					return 1
@@ -41,7 +40,7 @@
 	item_state = "electronic"
 	density = 0
 	anchored = 0.0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	attack_self(mob/user as mob)
 		for(var/obj/submachine/syndicate_teleporter/S in get_turf(src))

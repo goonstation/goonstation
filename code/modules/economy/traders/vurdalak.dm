@@ -65,17 +65,9 @@
 
 /datum/commodity/trader/vurdalak/artifact
 	comname = "Alien Artifacts"
-	comtype = /obj/item/artifact
+	comtype = /obj/artifact_type_spawner/vurdalak
 	amount = 4
 	price_boundary = list(4000,6000)
-	possible_alt_types = list(/obj/item/artifact/activator_key,/obj/item/artifact/forcewall_wand,
-	/obj/item/artifact/melee_weapon,/obj/item/artifact/teleport_wand,
-	/obj/item/cell/artifact,/obj/item/gun/energy/artifact,
-	/obj/machinery/artifact/bio_damage_field_generator,/obj/machinery/artifact/gravity_well_generator/,
-	/obj/machinery/artifact/noisy_thing,/obj/machinery/artifact/plant_helper,
-	/obj/artifact/bomb,/obj/artifact/borgifier,/obj/artifact/forcefield_generator,
-	/obj/artifact/healer_bio,/obj/artifact/teleport_recaller)
-	alt_type_chance = 95
 	possible_names = list("We are selling artifacts of alien origin. We cannot verify their purpose.",
 	"We have a collection of alien artifacts you may be interested in.")
 

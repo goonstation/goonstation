@@ -54,6 +54,11 @@
 	density = 1
 	opacity = 0 // this causes some of the super ugly lighting issues too
 
+	elm_random
+		New()
+			. = ..()
+			src.dir = pick(cardinal - SOUTH)
+
 // what the hell is all this and why wasn't it just using a big icon? the lighting system gets all fucked up with this stuff
 
 /*
@@ -112,6 +117,11 @@
 	anchored = 1
 	density=1
 
+	random
+		New()
+			. = ..()
+			src.dir = pick(alldirs)
+
 /obj/shrub
 	name = "shrub"
 	icon = 'icons/misc/worlds.dmi'
@@ -162,7 +172,7 @@
 		if (max_uses > 0 && ((last_use + time_between_uses) < world.time) && prob(spawn_chance))
 			var/something = null
 
-			if (override_default_behaviour && islist(additional_items) && additional_items.len)
+			if (override_default_behaviour && islist(additional_items) && length(additional_items))
 				something = pick(additional_items)
 			else
 				something = pick(trinket_safelist)
@@ -207,6 +217,11 @@
 			qdel(src)
 			return
 
+	random
+		New()
+			. = ..()
+			src.dir = pick(alldirs)
+
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"
 	icon = 'icons/misc/worlds.dmi'
@@ -220,7 +235,7 @@
 	// Added ex_act and meteorhit handling here (Convair880).
 	proc/update_icon()
 		if (!src) return
-		src.dir = NORTHEAST
+		src.set_dir(NORTHEAST)
 		src.destroyed = 1
 		src.set_density(0)
 		src.desc = "The scattered remains of a once-beautiful bonsai tree."
@@ -240,7 +255,7 @@
 		if (!W) return
 		if (!user) return
 		if (inafterlife(user))
-			boutput(usr, "You can't bring yourself to hurt such a beautiful thing!")
+			boutput(user, "You can't bring yourself to hurt such a beautiful thing!")
 			return
 		if (src.destroyed) return
 		if (user.mind && user.mind.assigned_role == "Captain")
@@ -297,7 +312,7 @@
 		if (!W) return
 		if (!user) return
 		if (inafterlife(user))
-			boutput(usr, "You can't bring yourself to hurt such a beautiful thing!")
+			boutput(user, "You can't bring yourself to hurt such a beautiful thing!")
 			return
 		if (src.destroyed) return
 		if (user.mind && user.mind.assigned_role == "Captain")
@@ -472,8 +487,7 @@
 				if(prob(50))
 					qdel(src)
 	proc/locate_blinds()
-		for (var/X in by_type[/obj/window_blinds])
-			var/obj/window_blinds/blind = X
+		for_by_tcl(blind, /obj/window_blinds)
 			if (blind.id == src.id)
 				if (!(blind in src.myBlinds))
 					src.myBlinds += blind
@@ -482,7 +496,7 @@
 	proc/toggle()
 		src.on = !(src.on)
 		src.icon_state = "light[!(src.on)]"
-		if (!islist(myBlinds) || !myBlinds.len)
+		if (!islist(myBlinds) || !length(myBlinds))
 			return
 		for (var/obj/window_blinds/blind in myBlinds)
 			blind.toggle(src.on)
@@ -515,8 +529,7 @@
 /obj/blind_switch/area
 	locate_blinds()
 		var/area/A = get_area(src)
-		for (var/X in by_type[/obj/window_blinds])
-			var/obj/window_blinds/blind = X
+		for_by_tcl(blind, /obj/window_blinds)
 			var/area/blind_area = get_area(blind)
 			if(blind_area != A)
 				continue
@@ -590,6 +603,12 @@
 		name = "electrified super high-security mk. X-22 edition chain-link fence"
 		desc = "Whoa."
 
+		ex_act(severity)
+			return
+
+		meteorhit(obj/meteor)
+			return
+
 /obj/effects/background_objects
 	icon = 'icons/misc/512x512.dmi'
 	icon_state = "moon-dark"
@@ -612,7 +631,7 @@
 		desc = "A nearby Earthlike moon orbiting the gas giant. The stormy, humid atmosphere is quite breathable and the surface has been extensively seeded by terraforming efforts."
 
 	x4
-		icon = 'icons/obj/160x160.dmi'
+		icon = 'icons/obj/large/160x160.dmi'
 		icon_state = "bigasteroid_1"
 		name = "X4"
 		desc = "A jagged little moonlet or a really big asteroid. It's fairly close to your orbit, you can see the lights of Outpost Kappa."
@@ -796,7 +815,7 @@ obj/decoration/ceilingfan
 	name = "rusty krab sign"
 	desc = "It's one of those old neon signs that diners used to have."
 	icon_state = "rustykrab"
-	icon = 'icons/obj/64x32.dmi'
+	icon = 'icons/obj/large/64x32.dmi'
 	density = 0
 	opacity = 0
 	anchored = 2
@@ -822,7 +841,7 @@ obj/decoration/ceilingfan
 	name = "tabletop shelf"
 	desc = "It's a shelf full of things that you'll need to play your favourite tabletop campaigns. Mainly a lot of dice that can only roll 1's."
 	icon_state = "tabletopfull"
-	icon = 'icons/obj/64x32.dmi'
+	icon = 'icons/obj/large/64x32.dmi'
 	anchored = 2
 	density = 0
 	layer = DECAL_LAYER
@@ -929,7 +948,7 @@ obj/decoration/ceilingfan
 	anchored = 2
 	density = 1
 	desc = "Assortment of two metal crates, both of them sealed shut."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "ntcrate1"
 	layer = EFFECTS_LAYER_1
 	appearance_flags = TILE_BOUND

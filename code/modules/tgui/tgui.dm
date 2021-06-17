@@ -49,7 +49,7 @@
 /datum/tgui/New(mob/user, datum/src_object, interface, title)
 	..()
 	log_tgui(user,
-		"new [interface] fancy [user.client.preferences.tgui_fancy]",
+		"new [interface] fancy [user?.client?.preferences.tgui_fancy]",
 		src_object = src_object) // |GOONSTATION-CHANGE| (client.preferences)
 	src.user = user
 	src.src_object = src_object
@@ -78,9 +78,11 @@
 	opened_at = world.time
 	window.acquire_lock(src)
 	if(!window.is_ready())
-		window.initialize(inline_assets = list(
-			get_assets(/datum/asset/basic/tgui_common),
-			get_assets(/datum/asset/group/base_tgui)
+		window.initialize(
+			fancy = user.client.preferences.tgui_fancy,
+			inline_assets = list(
+				get_assets(/datum/asset/basic/tgui_common),
+				get_assets(/datum/asset/group/base_tgui)
 			))
 	else
 		window.send_message("ping")

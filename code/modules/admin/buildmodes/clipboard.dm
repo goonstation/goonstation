@@ -15,7 +15,7 @@ Right Mouse Button                     = Select object to copy<br>
 			var/obj/O = cloned:clone()
 			O.set_loc(T)
 			O.appearance = cloned.appearance
-			O.dir = cloned.dir
+			O.set_dir(cloned.dir)
 		else if (isturf(cloned))
 			var/turf/t = new cloned.type(T)
 			t.appearance = cloned.appearance

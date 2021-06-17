@@ -11,7 +11,7 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	health = 100
 	//var/emagged = 0 removing all emag stuff because it's a bad idea in retrospect
 	var/damage_words = "fully operational!"
@@ -98,7 +98,7 @@
 
 	New(var/direction)
 		..()
-		src.dir = direction
+		src.set_dir(direction)
 		src.set_initial_angle()
 
 		src.icon_state = "[src.icon_tag]_base"
@@ -162,12 +162,13 @@
 					SPAWN_DBG(0)
 						for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
 							flick("[src.icon_tag]_fire",src)
+							muzzle_flash_any(src, 0, "muzzle_flash")
 							sleep(src.current_projectile.shot_delay)
-							muzzle_flash_any(src, get_angle(src,target), "muzzle_flash")
 					shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0 , spread)
 
 
 	attackby(obj/item/W, mob/user)
+		user.lastattacked = src
 		if (isweldingtool(W) && !(src.active))
 			var/turf/T = user.loc
 			if(!W:try_weld(user, 1))
@@ -292,6 +293,8 @@
 
 		else
 			src.health = src.health - W.force
+			playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 25, 1)
+			attack_particle(user,src)
 			src.check_health()
 			..()
 
@@ -302,7 +305,7 @@
 			return
 		src.quick_deploy_fuel--
 		src.visible_message("<span class='alert'>[src]'s quick deploy system engages, automatically securing it!</span>")
-		playsound(src.loc, "sound/items/Welder2.ogg", 50, 1)
+		playsound(src.loc, "sound/items/Welder2.ogg", 30, 1)
 		set_projectile()
 		src.anchored = 1
 		src.active = 1
@@ -345,7 +348,7 @@
 
 
 	proc/die()
-		playsound(src.loc, "sound/effects/robogib.ogg", 50, 1)
+		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
 		new /obj/decal/cleanable/robot_debris(src.loc)
 		qdel(src)
 
@@ -390,11 +393,13 @@
 
 
 	proc/target_valid(var/mob/living/C)
-		var/distance = get_dist(C.loc,src.loc)
+		var/distance = get_dist(get_turf(C),get_turf(src))
 
 		if(distance > src.range)
 			return 0
 		if (!C)
+			return 0
+		if(!isliving(C) || isintangible(C))
 			return 0
 		if (C.health < 0)
 			return 0
@@ -416,7 +421,7 @@
 				return 0 */
 
 
-		var/angle = get_angle(src,C)
+		var/angle = get_angle(get_turf(src),get_turf(C))
 
 
 		var/anglemod = (-(angle < 180 ? angle : angle - 360) + 90) //Blatant Code Theft from showLine(), checks to see if there's something in the way of us and the target
@@ -537,7 +542,7 @@
 	name = "N.A.R.C.S. Deployer"
 	desc = "A Nanotrasen Automatic Riot Control System Deployer. Use it in your hand to deploy."
 	icon_state = "st_deployer"
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	health = 125
 	icon_tag = "nt"
 	quick_deploy_fuel = 0
@@ -553,6 +558,7 @@
 /obj/deployable_turret/riot
 	name = "N.A.R.C.S."
 	desc = "A Nanotrasen Automatic Riot Control System."
+	icon_state = "nt_off"
 	health = 125
 	max_health = 125
 	wait_time = 20 //wait if it can't find a target

@@ -9,6 +9,7 @@
 	anchored = 1
 	density = 0
 	layer = OBJ_LAYER + 0.9
+	plane = PLANE_NOSHADOW_BELOW
 	mouse_opacity = 0
 	event_handler_flags = USE_HASENTERED | USE_CANPASS
 	var/foamcolor
@@ -96,8 +97,8 @@
 		reagents.inert = 0 //It's go time!
 		reagents.postfoam = 1
 		reagents.handle_reactions()
-		for(var/atom/A in oview(1,src))
-			if(A == src)
+		for(var/atom/A in src.loc)
+			if(A == src || istype(A, /obj/overlay) || istype(A, /obj/effects))
 				continue
 			if(isliving(A))
 				var/mob/living/L = A
@@ -105,6 +106,7 @@
 			if (reagents)
 				reagents.reaction(A, TOUCH, 5, 0)
 		if (reagents)
+			reagents.reaction(src.loc, TOUCH, 5, 0)
 			reagents.postfoam = 0
 	pool(src)
 
@@ -189,7 +191,7 @@
 				for(var/reagent_id in src.reagents.reagent_list)
 					var/amount = M.reagents.get_reagent_amount(reagent_id)
 					if(amount < 25)
-						M.reagents.add_reagent(reagent_id, min(round(amount / 2),15))
+						M.reagents.add_reagent(reagent_id, 5)
 
 			logTheThing("combat", M, null, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
 			reagents.reaction(M, TOUCH, 5)

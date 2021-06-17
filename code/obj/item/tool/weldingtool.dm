@@ -18,7 +18,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	m_amt = 30
 	g_amt = 30
 	stamina_damage = 30
@@ -81,31 +81,32 @@
 				else
 					if (!(locate(/obj/machinery/optable, M.loc) && M.lying) && !(locate(/obj/table, M.loc) && (M.getStatusDuration("paralysis") || M.stat)) && !(M.reagents && M.reagents.get_reagent_amount("ethanol") > 10 && M == user))
 						return ..()
-					// TODO: what is this line?
-					if (istype(H.limbs.l_leg, /obj/item/parts/robot_parts/leg/treads)) attach_robopart("treads")
-					else
-						switch (user.zone_sel.selecting)
-							if ("l_arm")
-								if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts) && H.limbs.l_arm.remove_stage > 0) attach_robopart("l_arm")
-								else
-									boutput(user, "<span class='alert'>[H.name]'s left arm doesn't need welding on!</span>")
-									return
-							if ("r_arm")
-								if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts) && H.limbs.r_arm.remove_stage > 0) attach_robopart("r_arm")
-								else
-									boutput(user, "<span class='alert'>[H.name]'s right arm doesn't need welding on!</span>")
-									return
-							if ("l_leg")
-								if (istype(H.limbs.l_leg,/obj/item/parts/robot_parts) && H.limbs.l_leg.remove_stage > 0) attach_robopart("l_leg")
-								else
-									boutput(user, "<span class='alert'>[H.name]'s left leg doesn't need welding on!</span>")
-									return
-							if ("r_leg")
-								if (istype(H.limbs.r_leg,/obj/item/parts/robot_parts) && H.limbs.r_leg.remove_stage > 0) attach_robopart("r_leg")
-								else
-									boutput(user, "<span class='alert'>[H.name]'s right leg doesn't need welding on!</span>")
-									return
-							else return ..()
+					switch (user.zone_sel.selecting)
+						if ("l_arm")
+							if (istype(H.limbs.l_arm, /obj/item/parts/robot_parts) && H.limbs.l_arm.remove_stage > 0)
+								attach_robopart("l_arm")
+							else
+								boutput(user, "<span class='alert'>[H.name]'s left arm doesn't need welding on!</span>")
+								return
+						if ("r_arm")
+							if (istype(H.limbs.r_arm, /obj/item/parts/robot_parts) && H.limbs.r_arm.remove_stage > 0)
+								attach_robopart("r_arm")
+							else
+								boutput(user, "<span class='alert'>[H.name]'s right arm doesn't need welding on!</span>")
+								return
+						if ("l_leg")
+							if (istype(H.limbs.l_leg, /obj/item/parts/robot_parts) && H.limbs.l_leg.remove_stage > 0)
+								attach_robopart("l_leg")
+							else
+								boutput(user, "<span class='alert'>[H.name]'s left leg doesn't need welding on!</span>")
+								return
+						if ("r_leg")
+							if (istype(H.limbs.r_leg, /obj/item/parts/robot_parts) && H.limbs.r_leg.remove_stage > 0)
+								attach_robopart("r_leg")
+							else
+								boutput(user, "<span class='alert'>[H.name]'s right leg doesn't need welding on!</span>")
+								return
+						else return ..()
 			else return ..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -152,7 +153,7 @@
 		else if (src.welding)
 			use_fuel(0.2)
 			if (get_fuel() <= 0)
-				boutput(usr, "<span class='notice'>Need more fuel!</span>")
+				boutput(user, "<span class='notice'>Need more fuel!</span>")
 				src.welding = 0
 				src.force = 3
 				hit_type = DAMAGE_BLUNT
@@ -163,13 +164,14 @@
 			if (istype(location, /turf))
 				location.hotspot_expose(700, 50, 1)
 			if (O && !ismob(O) && O.reagents)
-				boutput(usr, "<span class='notice'>You heat \the [O.name]</span>")
+				boutput(user, "<span class='notice'>You heat \the [O.name]</span>")
 				O.reagents.temperature_reagents(2500,10)
 		return
 
 	attack_self(mob/user as mob)
 		if (status > 1) return
 		src.welding = !(src.welding)
+		src.firesource = !(src.firesource)
 		if (src.welding)
 			if (get_fuel() <= 0)
 				boutput(user, "<span class='notice'>Need more fuel!</span>")
@@ -181,6 +183,8 @@
 			set_icon_state("weldingtool-on" + src.icon_state_variant_suffix)
 			src.item_state = "weldingtool-on" + src.item_state_variant_suffix
 			processing_items |= src
+			if(user && !ON_COOLDOWN(src, "playsound", 1.3 SECONDS))
+				playsound(src.loc, "sound/effects/welder_ignite.ogg", 65, 1)
 		else
 			boutput(user, "<span class='notice'>Not welding anymore.</span>")
 			src.force = 3
@@ -198,6 +202,10 @@
 		if (exposed_temperature > 1000)
 			return ..()
 		return
+
+	firesource_interact()
+		if (reagents.get_reagent_amount("fuel"))
+			reagents.remove_reagent("fuel", 1)
 
 	process()
 		if(!welding)
@@ -254,13 +262,13 @@
 				safety = 1
 		switch (safety)
 			if (1)
-				boutput(usr, "<span class='alert'>Your eyes sting a little.</span>")
+				boutput(user, "<span class='alert'>Your eyes sting a little.</span>")
 				user.take_eye_damage(rand(1, 2))
 			if (0)
-				boutput(usr, "<span class='alert'>Your eyes burn.</span>")
+				boutput(user, "<span class='alert'>Your eyes burn.</span>")
 				user.take_eye_damage(rand(2, 4))
 			if (-1)
-				boutput(usr, "<span class='alert'><b>Your goggles intensify the welder's glow. Your eyes itch and burn severely.</b></span>")
+				boutput(user, "<span class='alert'><b>Your goggles intensify the welder's glow. Your eyes itch and burn severely.</b></span>")
 				user.change_eye_blurry(rand(12, 20))
 				user.take_eye_damage(rand(12, 16))
 
@@ -324,7 +332,7 @@
 				return 0 //welding, doesnt have fuel
 			src.use_fuel(use_amt)
 			if(noisy)
-				playsound(user.loc, list('sound/items/Welder.ogg', 'sound/items/Welder2.ogg')[noisy], 50, 1)
+				playsound(user.loc, list('sound/items/Welder.ogg', 'sound/items/Welder2.ogg')[noisy], 40, 1)
 			if(burn_eyes)
 				src.eyecheck(user)
 			return 1 //welding, has fuel

@@ -1,6 +1,6 @@
 /datum/hud/roundend
 	click_check = 0
-	var/obj/screen/countdown
+	var/atom/movable/screen/countdown
 
 	New()
 

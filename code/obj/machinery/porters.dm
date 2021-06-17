@@ -19,7 +19,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	item_state = "electronic"
 	density = 0
 	anchored = 0
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	mats = 4
 	var/list/machinerylist = list()
 	var/machinery_name = "" // For user prompt stuff.
@@ -167,6 +167,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 						var/obj/machinery/sleeper/port_a_medbay/PM = P
 						if (PM.occupant)
 							PM.occupant.set_loc(PM)
+							PM.PDA_alert_check()
 				if (istype(P, /obj/storage/closet/port_a_sci/))
 					var/obj/storage/closet/port_a_sci/PS = P
 					PS.on_teleport()
@@ -286,7 +287,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 /obj/machinery/port_a_brig
 	name = "Port-A-Brig"
 	icon = 'icons/obj/cloning.dmi'
-	icon_state = "pod_0"
+	icon_state = "port_a_brig_0"
 	desc = "A portable holding cell with teleporting capabilites."
 	density = 1
 	anchored = 0
@@ -377,7 +378,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		return 0
 
 	relaymove(mob/user as mob)
-		if(!usr || !isalive(usr) || usr.getStatusDuration("stunned") != 0)
+		if(!user || !isalive(user) || user.getStatusDuration("stunned") != 0)
 			return
 		src.go_out()
 		return
@@ -386,7 +387,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if (istype(W, /obj/item/card/id))
-			if (src.allowed(usr))
+			if (src.allowed(user))
 				src.locked = !src.locked
 				boutput(user, "You [ src.locked ? "lock" : "unlock"] the [src].")
 				if (src.occupant)
@@ -407,14 +408,8 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			if (src.locked)
 				boutput(user, "<span class='alert'>The Port-A-Brig is locked!</span>")
 				return
-			var/mob/living/carbon/human/H = G.affecting
-			H.set_loc(src)
-			src.occupant = H
-			for(var/obj/O in src)
-				O.set_loc(src.loc)
 			src.add_fingerprint(user)
-			build_icon()
-			qdel(W)
+			actions.start(new /datum/action/bar/portabrig_shove_in(src, user, G.affecting, G), user)
 
 		else if (ispryingtool(W))
 			var/turf/T = user.loc
@@ -430,9 +425,9 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 	proc/build_icon()
 		if(src.occupant)
-			icon_state = "pod_1"
+			icon_state = "port_a_brig_1"
 		else
-			icon_state = "pod_0"
+			icon_state = "port_a_brig_0"
 
 	proc/go_out()
 		if (!src.occupant)
@@ -461,26 +456,50 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		add_fingerprint(usr)
 		return
 
-	verb/move_inside()
-		set src in oview(1)
-		set category = "Local"
-		if (!ishuman(usr))
-			boutput(usr, "<span class='alert'>You can't seem to fit into \the [src].</span>")
-			return
-		if (src.occupant)
-			boutput(usr, "<span class='alert'>The Port-A-Brig is already occupied!</span>")
-			return
-		if (src.locked)
-			boutput(usr, "<span class='alert'>The Port-A-Brig is locked!</span>")
-			return
-		if (!isalive(usr) || usr.getStatusDuration("stunned") != 0)
-			return
-		usr.pulling = null
-		usr.set_loc(src)
-		src.occupant = usr
-		src.add_fingerprint(usr)
-		build_icon()
-		return
+/datum/action/bar/portabrig_shove_in
+	duration = 1 SECOND
+	var/mob/victim
+	var/obj/item/grab/G
+	var/obj/machinery/port_a_brig/brig
+	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+
+	New(obj/machinery/port_a_brig/brig, mob/user, mob/victim, obj/item/grab/G)
+		..()
+		src.owner = user
+		src.brig = brig
+		src.victim = victim
+		src.G = G
+
+	onStart()
+		..()
+		if (!src.owner || !src.victim || QDELETED(G))
+			interrupt(INTERRUPT_ALWAYS)
+		if (!IN_RANGE(src.owner, src.brig, 1) || !IN_RANGE(src.victim, src.brig, 1))
+			interrupt(INTERRUPT_ALWAYS)
+		src.brig.visible_message("<span class='alert'>[owner] begins shoving [victim] into [src.brig]!</span>")
+
+
+	onUpdate()
+		..()
+		if (!src.owner || !src.victim || QDELETED(G))
+			interrupt(INTERRUPT_ALWAYS)
+		if (!IN_RANGE(src.owner, src.brig, 1) || !IN_RANGE(src.victim, src.brig, 1))
+			interrupt(INTERRUPT_ALWAYS)
+
+	onEnd()
+		..()
+		if (!src.owner || !src.victim || QDELETED(G))
+			interrupt(INTERRUPT_ALWAYS)
+		if (!IN_RANGE(src.owner, src.brig, 1) || !IN_RANGE(src.victim, src.brig, 1))
+			interrupt(INTERRUPT_ALWAYS)
+		src.brig.visible_message("<span class='alert'>[owner] shoves [victim] into [src.brig]!</span>")
+		victim.set_loc(src.brig)
+		src.brig.occupant = victim
+		for(var/obj/O in src.brig)
+			O.set_loc(src.brig.loc)
+		src.brig.build_icon()
+		qdel(G)
+
 
 /obj/item/paper/Port_A_Brig
 	name = "paper - 'A-97 Port-A-Brig Manual"
@@ -729,7 +748,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			//Body swapping
 			if((force_body_swap || prob(1)) && has_mob)
 				var/list/mob/body_list = list()
-				for(var/mob/living/M in src.contents) //Don't think you're gonna get lucky, ghosts!
+				for(var/mob/living/carbon/M in src.contents) //Don't think you're gonna get lucky, ghosts!
 					if(!isdead(M)) body_list += M
 				if(body_list.len > 1)
 
@@ -757,15 +776,15 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 					if(51 to 70) //A nice tan
 						for(var/mob/living/carbon/M in src.contents)
-							M.changeStatus("radiation", 200, 1)
+							M.changeStatus("radiation", 20 SECONDS, 1)
 							M.show_text("\The [src] buzzes oddly.", "red")
 					if(31 to 50) //A very nice tan
 						for(var/mob/living/carbon/M in src.contents)
-							M.changeStatus("radiation", 300, 2)
+							M.changeStatus("radiation", 30 SECONDS, 2)
 							M.show_text("You feel a warm tingling sensation.", "red")
 					if(21 to 30) //The nicest tan
 						for(var/mob/living/carbon/human/M in src.contents)
-							M.changeStatus("radiation", 400, 3)
+							M.changeStatus("radiation", 40 SECONDS, 3)
 							M.show_text("<B>You feel a wave of searing heat wash over you!</B>", "red")
 							//if(M.bioHolder && M.bioHolder.mobAppearance) //lol
 								// s_tone now an RGB rather than a numeric value so disabling this for the moment
@@ -795,7 +814,6 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 					if(1 to 2) //Hilarious accident
 						for(var/mob/living/carbon/human/M in src.contents)
 							M.set_mutantrace(/datum/mutantrace/roach)
-							M.bioHolder.mobAppearance.UpdateMob()
 							M.show_text("You feel different...", "red")
 
 
@@ -820,9 +838,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	New()
 		..()
 
-#if ASS_JAM
-		ADD_MORTY(8, 12, 10, 10)
-#endif
+
 
 		UnsubscribeProcess()
 		if (!islist(portable_machinery))

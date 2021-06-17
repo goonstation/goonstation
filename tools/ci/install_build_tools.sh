@@ -6,4 +6,3 @@ source buildByond.conf
 source ~/.nvm/nvm.sh
 nvm install $NODE_VERSION
 nvm use $NODE_VERSION
-npm install --global yarn

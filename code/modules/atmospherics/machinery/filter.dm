@@ -194,28 +194,19 @@ Filter types:
 				if(4) //removing trace gases
 					if(removed)
 						if(length(removed.trace_gases))
-							for(var/datum/gas/trace_gas in removed.trace_gases)
-								if(trace_gas)
-									removed.trace_gases -= trace_gas
-									if(!removed.trace_gases.len)
-										removed.trace_gases = null
-									if(!filtered_out.trace_gases)
-										filtered_out.trace_gases = list()
-									filtered_out.trace_gases += trace_gas
-
-
+							for(var/datum/gas/trace_gas as anything in removed.trace_gases)
+								var/datum/gas/filter_gas = filtered_out.get_or_add_trace_gas_by_type(trace_gas.type)
+								filter_gas.moles = trace_gas.moles
+								removed.remove_trace_gas(trace_gas)
 
 			air_out1.merge(filtered_out)
 			air_out2.merge(removed)
 
-		if(network_out1)
-			network_out1.update = 1
+		network_out1?.update = 1
 
-		if(network_out2)
-			network_out2.update = 1
+		network_out2?.update = 1
 
-		if(network_in)
-			network_in.update = 1
+		network_in?.update = 1
 		return 1
 
 // Housekeeping and pipe network stuff below
@@ -229,7 +220,7 @@ Filter types:
 		else if(reference == node_in)
 			network_in = new_network
 
-		if(new_network.normal_members.Find(src))
+		if(src in new_network.normal_members)
 			return 0
 
 		new_network.normal_members += src

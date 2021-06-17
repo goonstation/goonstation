@@ -51,6 +51,8 @@
 				return 0 // It's not a Port-a-Sci, okay.
 
 		var/turf/our_loc = get_turf(src.master)
+		if(istype(test_mob, /mob/dead/aieye))
+			our_loc = get_turf(test_mob)
 		if (our_loc.loc:teleport_blocked == 2) return 0
 
 		// We don't have to loop through the PDA.loc checks as well if we send the device back to its home turf.
@@ -149,7 +151,6 @@
 
 				. += "Location: [get_area(P2)] (Home: [P2.homeloc ? "[get_area(P2.homeloc)]" : "N/A"])"
 
-				. += "<BR>\[<A href='byond://?src=\ref[src];op=summon'>Summon</A>\] "
 				. += "\[<A href='byond://?src=\ref[src];op=return'>Send to home turf</A>\]<BR>"
 				. += "<HR><A href='byond://?src=\ref[src];op=machinerylist'>Return to list</A>"
 
@@ -196,7 +197,7 @@
 				var/turf/our_loc = get_turf(PDA)
 				if (isAIeye(usr))
 					our_loc = get_turf(usr)
-					if (!(our_loc.cameras && our_loc.cameras.len))
+					if (!(our_loc.cameras && length(our_loc.cameras)))
 						boutput(usr, "<span class='alert'>This area is not within your range of influence.</span>")
 						return
 
@@ -276,6 +277,7 @@
 								var/obj/machinery/sleeper/port_a_medbay/PM2 = P5
 								if (PM2.occupant)
 									PM2.occupant.set_loc(PM2)
+									PM2.PDA_alert_check()
 						if (istype(P5, /obj/storage/closet/port_a_sci/))
 							var/obj/storage/closet/port_a_sci/PS2 = P5
 							PS2.on_teleport()

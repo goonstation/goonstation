@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 			M.take_brain_damage(7)
 			blood_slash(M, 3)
 			M.TakeDamage("head", 10, 0)
-			boutput(M, "<span class='alert'>The gaze seems to almost burrow into your skill. You feel like your head is going to split open.</span>")
+			boutput(M, "<span class='alert'>The gaze seems to almost burrow into your skull. You feel like your head is going to split open.</span>")
 		else if(focus_level <= 5)
 			M.do_disorient(80, weakened = 3 SECONDS, stunned = 0, paralysis = 1 SECONDS, disorient = 3 SECONDS, remove_stamina_below_zero = 0)
 			blood_slash(M, 5)
@@ -82,8 +82,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		else
 			if (M.organHolder)
 				var/obj/brain = M.organHolder.drop_organ("brain")
-				if(brain)
-					brain.throw_at(get_edge_cheap(get_turf(M), pick(cardinal)), 16, 3)
+				brain?.throw_at(get_edge_cheap(get_turf(M), pick(cardinal)), 16, 3)
 				var/obj/head = M.organHolder.drop_organ("head")
 				if(head)
 					qdel(head)
@@ -121,7 +120,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 				if(stare_extreme(focused, POT))
 					return
 
-			var/extreme_start = prob(1 + max(0, DNA.potency / 30))
+			var/extreme_start = prob(max(0, DNA.potency / 30))
 			var/list/stuffnearby = list()
 			for (var/mob/living/X in view(7,POT)) stuffnearby.Add(X)
 			if(!extreme_start)
@@ -219,7 +218,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		var/datum/plantgenes/DNA = POT.plantgenes
 
 		if (POT.growth > (P.growtime + DNA.growtime) && prob(16))
-			playsound(get_turf(POT),'sound/voice/animal/cat.ogg',30,1,-1)
+			playsound(POT,'sound/voice/animal/cat.ogg',30,1,-1)
 			POT.visible_message("<span class='alert'><b>[POT.name]</b> meows!</span>")
 
 		if (POT.growth > (P.harvtime + DNA.harvtime + 10))
@@ -237,7 +236,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 
 		if (POT.growth < (P.growtime + DNA.growtime)) return 0
 
-		playsound(get_turf(POT),'sound/voice/animal/cat_hiss.ogg',30,1,-1)
+		playsound(POT,'sound/voice/animal/cat_hiss.ogg',30,1,-1)
 		POT.visible_message("<span class='alert'><b>[POT.name]</b> hisses!</span>")
 
 // Weird Shit

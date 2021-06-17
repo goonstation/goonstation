@@ -120,7 +120,7 @@ atom/movable/proc/set_pos_px(px, py)
 		src.vx = dx / dr * src.velocity
 		src.vy = dy / dr * src.velocity
 
-		src.dir = get_dir_adv(src, target)
+		src.set_dir(get_dir_adv(src, target))
 
 		//that's it
 
@@ -247,7 +247,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 	m_amt = 2000
 	force = 10.0
 	throwforce = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 4
 	throw_range = 6
 	contraband = 0
@@ -439,7 +439,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 			..()
 
 	attack_hand(mob/user as mob)
-		if ((user.r_hand == src || user.l_hand == src) && src.contents && src.contents.len)
+		if ((user.r_hand == src || user.l_hand == src) && src.contents && length(src.contents))
 			if (src.cell&&!src.rechargeable)
 				user.put_in_hand_or_drop(src.cell)
 				src.cell = null

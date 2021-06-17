@@ -56,7 +56,7 @@
 						mainframe_prog_exit
 						return
 
-		if (!initparams || !initlist.len)
+		if (!initparams || !length(initlist))
 			message_user("Invalid commmand argument.|nValid Commands:|n \"List\" to list known devices.|n \"Info (Device ID)\"  to list device information.|n \"Poke (Device ID) (Field Name) (Value)\" to configure device variables.|n \"Peek (Device ID) (Field Name)\" to view device variables.|n \"(De)Activate (Device ID)\" to activate/deactivate device.|n \"Pulse (Device ID) (Duration)\" to activate device for specified duration.|n \"Sense (Device ID)\" to take sensor readings.|n \"Read (Device ID)\" to read sense results.|n Device name may be used in place of ID.","multiline")
 			mainframe_prog_exit
 			return
@@ -391,21 +391,17 @@
 					message_user("[formatted]", "multiline")
 
 				if ("field")	//Single value from a peeked field. fieldname-fieldvalue
-					var/separatorPosition = findtext(data["data"],"-")
-					if (!separatorPosition)
+					var/list/splitData = splittext(data["data"], "-")
+					if (length(splitData) < 2)
 						return ESIG_GENERIC
 
-					var/fieldValue = copytext(data["data"], separatorPosition+1, separatorPosition+65)
-					if (!fieldValue)
-						return ESIG_GENERIC
-
-					message_user("Value: \[[fieldValue]]")
+					message_user("[splitData[1]]: \[[splitData[2]]]")
 
 
 				if ("info")
 					var/formatted = "+---------------|Status|---------------+|n"
 					var/list/rawDataList = splittext(data["data"], ",")
-					if (rawDataList && rawDataList.len > 3)
+					if (length(rawDataList) > 3)
 						formatted += "| Active: [(rawDataList[1] == "1") ? "YES" : "NO"]|n| ID: [rawDataList[2]]|n| Enactor: [(rawDataList[3] == "1") ? "YES" : "NO"]|n| Sensor: [(rawDataList[4] == "1") ? "YES" : "NO"]|n+--------|Configuration Values|--------+|n"
 
 						. = ""
@@ -473,7 +469,7 @@
 		if (..())
 			return 1
 
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			update_known_devices()
 
 
@@ -757,7 +753,7 @@
 					var/formatted = ""//"+---------------|Status|---------------+|n"
 					var/list/rawDataList = splittext(data["data"], ",")
 					if (mode == MODE_DEVICE_INFO)
-						if (rawDataList && rawDataList.len > 3)
+						if (length(rawDataList) > 3)
 							formatted += "| Active: [(rawDataList[1] == "1") ? "YES" : "NO"]|n| ID: [rawDataList[2]]|n| Enactor: [(rawDataList[3] == "1") ? "YES" : "NO"]|n| Sensor: [(rawDataList[4] == "1") ? "YES" : "NO"]|n"
 
 
@@ -854,7 +850,7 @@
 			return
 
 		var/driver_id = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dnetid"=current_device_id))
-		if (!driver_id & ESIG_DATABIT)
+		if (!(driver_id & ESIG_DATABIT))
 			return
 
 		driver_id &= ~ESIG_DATABIT

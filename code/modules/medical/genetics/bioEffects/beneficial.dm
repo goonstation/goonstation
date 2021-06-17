@@ -88,7 +88,7 @@
 
 	OnAdd()
 		if (ishuman(owner))
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "elec[owner.bioHolder?.HasEffect("fat") ? "fat" :""]", layer = MOB_EFFECT_LAYER)
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "elec", layer = MOB_EFFECT_LAYER)
 		..()
 		if (istype(owner, /mob/living) && owner:organHolder && owner:organHolder:heart && owner:organHolder:heart:robotic)
 			owner:organHolder:heart:broken = 1
@@ -105,6 +105,18 @@
 	stability_loss = 15
 	degrade_to = "radioactive"
 	icon_state  = "rad_res"
+
+	OnAdd()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			APPLY_MOB_PROPERTY(M, PROP_RADPROT, src, 100)
+
+	OnRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			REMOVE_MOB_PROPERTY(M, PROP_RADPROT, src)
 
 /datum/bioEffect/alcres
 	name = "Alcohol Resistance"
@@ -168,7 +180,12 @@
 		var/mob/living/carbon/human/H = owner
 		H.oxyloss = 0
 		H.losebreath = 0
+		APPLY_MOB_PROPERTY(H, PROP_BREATHLESS, src.type)
 		health_update_queue |= H
+
+	OnRemove()
+		. = ..()
+		REMOVE_MOB_PROPERTY(owner, PROP_BREATHLESS, src.type)
 
 /datum/bioEffect/breathless/contract
 	name = "Airless Breathing"
@@ -219,17 +236,25 @@
 	msgLose = "Your skin tightens."
 	var/heal_per_tick = 1
 	var/regrow_prob = 250
+	var/roundedmultremainder
 	degrade_to = "mutagenic_field"
 	icon_state  = "regen"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/L = owner
-		L.HealDamage("All", heal_per_tick, heal_per_tick)
-		if (rand(1,regrow_prob) == 1 && ishuman(L))
-			var/mob/living/carbon/human/H = L
-			if (H.limbs)
-				H.limbs.mend(1)
+		L.HealDamage("All", heal_per_tick * mult, heal_per_tick * mult)
+		var/roundedmult = round(mult)
+		roundedmultremainder += (mult % 1)
+		if (roundedmultremainder >= 1)
+			roundedmult += round(roundedmultremainder)
+			roundedmultremainder = roundedmultremainder % 1
+		for (roundedmult = roundedmult, roundedmult > 0, roundedmult --)
+			if (rand(1, regrow_prob) == 1)
+				if (ishuman(L))
+					var/mob/living/carbon/human/H = L
+					if (H.limbs)
+						H.limbs.mend(1)
 
 /datum/bioEffect/regenerator/super
 	name = "Super Regeneration"
@@ -250,6 +275,32 @@
 	heal_per_tick = 7 // decrease to 5 if extreme narcolepsy doesn't counterbalance this enough
 	regrow_prob = 50 //increase to 100 if not counterbalanced
 
+/datum/bioEffect/regenerator/wolf
+	name = "Lupine Regeneration"
+	desc = "Subject's cells are programmed to reshape itself into a canine form."
+	id = "regenerator_wolf"
+	occur_in_genepools = 0
+	probability = 0
+	scanner_visibility = 0
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	can_reclaim = 0
+	can_scramble = 0
+	curable_by_mutadone = 0
+	stability_loss = 0
+	msgGain = "You feel oddly feral."
+	msgLose = "You feel more comfortable in your own skin."
+	heal_per_tick = 2
+	regrow_prob = 50
+	acceptable_in_mutini = 0 // fun is banned
+
+	OnAdd()
+		. = ..()
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if(!istype(H.mutantrace, /datum/mutantrace/werewolf))
+				H.contract_disease(/datum/ailment/disease/lycanthropy,null,null,0) // awoo
 
 /datum/bioEffect/detox
 	name = "Natural Anti-Toxins"
@@ -309,6 +360,28 @@
 	stability_loss = 5
 	icon_state  = "dead"
 	isBad = 1
+
+/datum/bioEffect/noir
+	name = "Noir"
+	desc = "The subject generates a light-defying aura, equalizing photons in such a way that make them look completely grayscale."
+	id = "noir"
+	probability = 99
+	stability_loss = 5
+	icon_state  = "noir"
+	msgGain = "You feel chromatic pain."
+	msgLose = "Colors around you begin returning to normal."
+
+	OnAdd()
+		..()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			animate_fade_grayscale(H, 5)
+
+	OnRemove()
+		..()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			animate_fade_from_grayscale(H, 5)
 
 ///////////////////
 // General buffs //
@@ -381,37 +454,57 @@ var/list/radio_brains = list()
 	lockedChars = list("G","C","A","T")
 	lockedTries = 8
 	stability_loss = 25
-	degrade_to = "fat"
+	degrade_to = "strong"
 	icon_state  = "hulk"
 
 	OnAdd()
 		owner.unlock_medal("It's not easy being green", 1)
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			H.set_body_icon_dirty()
 			APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
+			if(H?.bioHolder?.mobAppearance)
+				var/datum/appearanceHolder/HAH = H.bioHolder.mobAppearance
+				HAH.customization_first_color_original = HAH.customization_first_color
+				HAH.customization_second_color_original = HAH.customization_second_color
+				HAH.customization_third_color_original = HAH.customization_third_color
+				HAH.s_tone_original = HAH.s_tone
+				var/hulk_skin = "#4CBB17" // a striking kelly green
+				if(prob(1)) // just the classics
+					var/gray_af = rand(60, 150) // as consistent as the classics too
+					hulk_skin = rgb(gray_af, gray_af, gray_af)
+				HAH.customization_first_color = "#4F7942" // a pleasant fern green
+				HAH.customization_second_color = "#3F704D" // a bold hunter green
+				HAH.customization_third_color = "#0B6623" // a vibrant forest green
+				HAH.s_tone = hulk_skin
+			H.update_colorful_parts()
+			H.set_body_icon_dirty()
 		..()
-
-	OnMobDraw()
-		if(disposed)
-			return
-
-		if(ishuman(owner))
-			owner:body_standing:overlays += image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "hulk[owner.bioHolder?.HasEffect("fat") ? "fat" :""]", layer = MOB_LAYER)
 
 	OnRemove()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
+			if(H?.bioHolder?.mobAppearance) // colorize, but backwards
+				var/datum/appearanceHolder/HAH = H.bioHolder.mobAppearance
+				HAH.customization_first_color = HAH.customization_first_color_original
+				HAH.customization_second_color = HAH.customization_second_color_original
+				HAH.customization_third_color = HAH.customization_third_color_original
+				HAH.s_tone = HAH.s_tone_original
+				if(HAH.mob_appearance_flags & FIX_COLORS) // human -> hulk -> lizard -> nothulk is *bright*
+					HAH.customization_first_color = fix_colors(HAH.customization_first_color)
+					HAH.customization_second_color = fix_colors(HAH.customization_second_color)
+					HAH.customization_third_color = fix_colors(HAH.customization_third_color)
+			H.update_colorful_parts()
 			H.set_body_icon_dirty()
 			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
-		if (owner:health <= 25)
+		var/mob/living/carbon/human/H = owner
+		if (H.health <= 25)
 			timeLeft = 1
 			boutput(owner, "<span class='alert'>You suddenly feel very weak.</span>")
-			owner:changeStatus("weakened", 3 SECONDS)
-			owner:emote("collapse")
+			H.changeStatus("weakened", 3 SECONDS)
+			H.emote("collapse")
 
 /datum/bioEffect/xray
 	name = "X-Ray Vision"
@@ -490,11 +583,11 @@ var/list/radio_brains = list()
 	icon_state  = "strong"
 
 	OnAdd()
-		src.owner.add_stam_mod_regen("g-fitness-buff", 2)
+		APPLY_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff", 2)
 		src.owner.add_stam_mod_max("g-fitness-buff", 30)
 
 	OnRemove()
-		src.owner.remove_stam_mod_regen("g-fitness-buff")
+		REMOVE_MOB_PROPERTY(src.owner, PROP_STAMINA_REGEN_BONUS, "g-fitness-buff")
 		src.owner.remove_stam_mod_max("g-fitness-buff")
 
 /datum/bioEffect/blood_overdrive
@@ -508,13 +601,13 @@ var/list/radio_brains = list()
 	stability_loss = 15
 	icon_state  = "regen"
 
-	OnLife()
+	OnLife(var/mult)
 
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 
 			if (H.blood_volume < 500 && H.blood_volume > 0)
-				H.blood_volume += 6
+				H.blood_volume += 6*mult
 
 
 ///////////////////////////
@@ -543,7 +636,7 @@ var/list/radio_brains = list()
 
 	OnAdd()
 		if (ishuman(owner))
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "telekinesishead[owner.bioHolder?.HasEffect("fat") ? "fat" :""]", layer = MOB_LAYER)
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "telekinesishead", layer = MOB_LAYER)
 		..()
 
 /datum/bioEffect/uncontrollable_cloak
@@ -569,9 +662,14 @@ var/list/radio_brains = list()
 	stability_loss = 15
 	icon_state  = "haze"
 
-	OnLife()
-		if (prob(20))
+	OnLife(var/mult)
+		if (probmult(20))
 			src.active = !src.active
 		if (src.active)
-			owner.invisibility = 1
-		return
+			APPLY_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src, INVIS_INFRA)
+		else
+			REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
+
+	OnRemove()
+		REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
+		. = ..()

@@ -75,7 +75,16 @@
 	spawn_contents = list(/obj/item/clothing/under/rank/hydroponics,\
 	/obj/item/clothing/shoes/brown,\
 	/obj/item/device/radio/headset/civilian,\
-	/obj/item/device/pda2/botanist)
+	/obj/item/device/pda2/botanist,\
+	/obj/item/clothing/gloves/black)
+
+/obj/item/storage/box/clothing/rancher
+	name = "\improper Rancher's equipment"
+	spawn_contents = list(/obj/item/clothing/under/rank/rancher,\
+	/obj/item/clothing/shoes/brown,\
+	/obj/item/device/radio/headset/civilian,\
+	/obj/item/device/pda2/botanist,\
+	/obj/item/clothing/gloves/black)
 
 /obj/item/storage/box/clothing/chef
 	name = "\improper Chef's equipment"
@@ -88,19 +97,19 @@
 
 /obj/item/storage/box/clothing/souschef
 	name = "\improper Sous-Chef's equipment"
-	spawn_contents = list(/obj/item/clothing/under/rank/chef,\
+	spawn_contents = list(/obj/item/clothing/under/misc/souschef,\
 	/obj/item/clothing/shoes/chef,\
 	/obj/item/clothing/head/souschefhat,\
-	/obj/item/clothing/suit/chef,\
+	/obj/item/clothing/suit/apron,\
 	/obj/item/device/radio/headset/civilian,\
 	/obj/item/device/pda2/chef)
 
-/obj/item/storage/box/clothing/barman
-	name = "\improper Barman's equipment"
+/obj/item/storage/box/clothing/bartender
+	name = "\improper Bartender's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/bartender,\
 	/obj/item/clothing/shoes/black,\
 	/obj/item/device/radio/headset/civilian,\
-	/obj/item/device/pda2/barman)
+	/obj/item/device/pda2/bartender)
 
 /obj/item/storage/box/clothing/waiter
 	name = "\improper Waiter's equipment"
@@ -108,7 +117,7 @@
 	/obj/item/clothing/shoes/black,\
 	/obj/item/clothing/suit/wcoat,\
 	/obj/item/device/radio/headset/civilian,\
-	/obj/item/device/pda2/barman)
+	/obj/item/device/pda2/bartender)
 
 /obj/item/storage/box/clothing/chaplain
 	name = "\improper Chaplain's equipment"
@@ -122,7 +131,7 @@
 /obj/item/storage/box/clothing/security
 	name = "\improper Security Officer's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/security,\
-	/obj/item/clothing/shoes/brown,\
+	/obj/item/clothing/shoes/swat,\
 	/obj/item/device/radio/headset/security,\
 	/obj/item/device/pda2/security)
 
@@ -160,7 +169,8 @@
 	/obj/item/clothing/shoes/black,\
 	/obj/item/clothing/suit/labcoat/robotics,\
 	/obj/item/device/radio/headset/medical,\
-	/obj/item/device/pda2/medical/robotics)
+	/obj/item/device/pda2/medical/robotics,\
+	/obj/item/clothing/gloves/latex)
 
 // Research Equipment
 
@@ -201,7 +211,7 @@
 	spawn_contents = list(/obj/item/clothing/under/rank/cargo,\
 	/obj/item/clothing/shoes/black,\
 	/obj/item/clothing/gloves/black,\
-	/obj/item/device/radio/headset/engineer,\
+	/obj/item/device/radio/headset/shipping,\
 	/obj/item/device/pda2/quartermaster)
 
 /obj/item/storage/box/clothing/wedding_dress
@@ -255,6 +265,31 @@
 		/obj/item/device/pda2/clown,
 	)
 
+/obj/item/storage/box/costume/mime
+	name = "mime costume"
+	icon_state = "mime"
+	item_state = "box-mime"
+	desc = "There's a mime trapped in this box! Wait... no it's just a bunch of mime clothes."
+	spawn_contents = list(
+		/obj/item/clothing/head/mime_bowler,
+		/obj/item/clothing/mask/mime,
+		/obj/item/clothing/gloves/latex,
+		/obj/item/clothing/under/misc/mime/alt,
+		/obj/item/clothing/suit/scarf,
+		/obj/item/clothing/shoes/black,
+	)
+
+/obj/item/storage/box/costume/mime/alt //people can have either the normal clothes or the other clothes
+	spawn_contents = list(
+		/obj/item/clothing/head/mime_beret,
+		/obj/item/clothing/mask/mime,
+		/obj/item/clothing/gloves/latex,
+		/obj/item/clothing/under/misc/mime,
+		/obj/item/clothing/suit/suspenders,
+		/obj/item/clothing/shoes/black,
+	)
+
+
 /obj/item/storage/box/costume/robuddy
 	name = "guardbuddy costume"
 	spawn_contents = list(/obj/item/clothing/suit/robuddy)
@@ -297,7 +332,7 @@
 
 /obj/item/storage/box/costume/crap/wonka
 	name = "victorian confectionery factory owner costume"
-	spawn_contents = list(/obj/item/reagent_containers/food/snacks/candy)
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/candy/regular)
 
 	make_my_stuff()
 		..()

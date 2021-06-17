@@ -50,7 +50,7 @@ obj/machinery/air_vendor
 
 	proc/fill_cost()
 		if(!holding) return 0
-		return round(src.target_pressure * src.holding.air_contents.volume * src.air_cost)
+		return clamp(round((src.target_pressure - MIXTURE_PRESSURE(src.holding.air_contents)) * src.holding.air_contents.volume * src.air_cost), 0, INFINITY)
 
 	proc/fill()
 		if(!holding) return
@@ -134,7 +134,7 @@ obj/machinery/air_vendor
 			return
 		if (usr.stat || usr.restrained())
 			return
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
 			src.add_dialog(usr)
 			src.add_fingerprint(usr)
 
@@ -155,7 +155,7 @@ obj/machinery/air_vendor
 			if(href_list["fill"])
 				if (holding)
 					var/cost = fill_cost()
-					if(credits > cost)
+					if(credits >= cost)
 						src.credits -= cost
 						src.fill()
 						boutput(usr, "<span class='notice'>You fill up the [src.holding].</span>")
@@ -163,7 +163,7 @@ obj/machinery/air_vendor
 						return
 					else if(scan)
 						var/datum/data/record/account = FindBankAccountByName(src.scan.registered)
-						if (account && account.fields["current_money"] > cost)
+						if (account && account.fields["current_money"] >= cost)
 							account.fields["current_money"] -= cost
 							src.fill()
 							boutput(usr, "<span class='notice'>You fill up the [src.holding].</span>")

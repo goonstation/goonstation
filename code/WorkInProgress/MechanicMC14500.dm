@@ -59,7 +59,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 
 	proc/setROM(obj/item/W as obj, mob/user as mob)
 		. = adminscrub(strip_html(input(user, "What should the ROM be set to?  This better be hexadecimal and an even number of characters!!", "Terrible debug ROM panel", src.ROM) as text))
-		if(!in_range(src, user) || user.stat)
+		if(!in_interact_range(src, user) || user.stat)
 			return
 		. = uppertext(copytext(ckey(.), 1, 1+MAX_ROM_SIZE))
 		if (length(.)%2 || !is_hex(.))
@@ -327,7 +327,7 @@ function update_mem_lights(mem)
 			if(level == 2)
 				return
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				ioPins |= 2
 
 			else
@@ -339,7 +339,7 @@ function update_mem_lights(mem)
 			if(level == 2)
 				return
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				ioPins |= 4
 
 			else
@@ -351,7 +351,7 @@ function update_mem_lights(mem)
 			if(level == 2)
 				return
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				ioPins |= 8
 
 			else
@@ -363,7 +363,7 @@ function update_mem_lights(mem)
 			if(level == 2)
 				return
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				ioPins |= 16
 
 			else
@@ -375,7 +375,7 @@ function update_mem_lights(mem)
 			if(level == 2)
 				return
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				ioPins |= 32
 
 			else
@@ -387,7 +387,7 @@ function update_mem_lights(mem)
 			if(level == 2)
 				return
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				ioPins |= 64
 
 			else
@@ -399,7 +399,7 @@ function update_mem_lights(mem)
 			if(level == 2)
 				return
 
-			if (anInput && anInput.isTrue())
+			if (anInput?.isTrue())
 				ioPins |= 128
 
 			else

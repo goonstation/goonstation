@@ -19,7 +19,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 		fxlist = hospital_fx_sounds
 		if (ambientSound)
 
-			SPAWN_DBG (60)
+			SPAWN_DBG(6 SECONDS)
 				var/sound/S = new/sound()
 				S.file = ambientSound
 				S.repeat = 0
@@ -34,12 +34,9 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 				process()
 
 	Entered(atom/movable/Obj,atom/OldLoc)
-		..()
+		. = ..()
 		if(ambientSound && ismob(Obj))
-			if (!soundSubscribers:Find(Obj))
-				soundSubscribers += Obj
-
-		return
+			soundSubscribers |= Obj
 
 	proc/process()
 		if (!soundSubscribers)
@@ -168,7 +165,6 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	invisibility = 101
 	anchored = 1
 	density = 0
-	var/obj/chaser/master/master = null
 	event_handler_flags = USE_HASENTERED
 
 	HasEntered(atom/movable/AM as mob|obj)
@@ -208,7 +204,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 			boutput(target, "<span><B>no no no no no no no no no no no no non&#9617;NO&#9617;NNnNNO</B></span>")
 			if (LANDMARK_SAMOSTREL_WARP in landmarks)
 				var/target_original_loc = target.loc
-				target.setStatus("paralysis", max(target.getStatusDuration("paralysis"), 100))
+				target.setStatus("paralysis", max(target.getStatusDuration("paralysis"), 10 SECONDS))
 				do_teleport(target, pick_landmark(LANDMARK_SAMOSTREL_WARP), 0)
 
 				if (ishuman(target))
@@ -278,10 +274,10 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 /obj/item/reagent_containers/food/drinks/bottle/hospital
 	name = "Ham Brandy"
 	desc = "Uh.   Uhh"
-	//icon = 'icons/obj/foodNdrink/drinks.dmi'
-	icon_state = "whiskey"
-	bottle_style = "whiskey"
-	fluid_style = "whiskey"
+	//icon = 'icons/obj/foodNdrink/bottle.dmi'
+	icon_state = "bottle-spicedrum"
+	bottle_style = "bottle-spicedrum"
+	fluid_style = "spicedrum"
 	label = "spicedrum"//"brandy"
 	heal_amt = 1
 	g_amt = 60
@@ -489,7 +485,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 #ifndef SAMOSTREL_LIVE
 		del(src)
 #endif
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (src.botcard)
 				src.botcard.access += 1917
 

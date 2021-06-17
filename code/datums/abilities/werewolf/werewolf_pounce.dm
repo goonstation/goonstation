@@ -49,19 +49,13 @@
 
 			usr.pixel_y = 0
 
-			if (M.bioHolder && M.bioHolder.HasEffect("fat") && prob(66))
-				M.visible_message("<span class='alert'><b>[M]</b> crashes due to their heavy weight!</span>")
-				playsound(usr.loc, "sound/effects/zhit.ogg", 50, 1)
-				M.changeStatus("weakened",70)
-				M.changeStatus("stunned",40)
-
 			M.layer = prevLayer
 
 		if (istype(M.loc,/obj/))
 			var/obj/container = M.loc
 			boutput(M, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
-			M.setStatus("paralysis",30)
-			M.setStatus("weakened",50)
+			M.setStatus("paralysis", 3 SECONDS)
+			M.setStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[M.loc]</b> emits a loud thump and rattles a bit.</span>")
 			playsound(M.loc, "sound/effects/bang.ogg", 50, 1)
 			var/wiggle = 6
