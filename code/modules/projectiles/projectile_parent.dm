@@ -93,7 +93,7 @@
 		while (!QDELETED(src))
 
 			do_step()
-			sleep(0.75) //Changed from 1, minor proj. speed buff
+			sleep(1 DECI SECOND) //Changed from 1, minor proj. speed buff
 		is_processing = 0
 
 	proc/collide(atom/A as mob|obj|turf|area, first = 1)
@@ -362,7 +362,6 @@
 			return
 
 		var/turf/curr_turf = loc
-
 		var/dwx
 		var/dwy
 		if (!isnull(internal_speed))
@@ -448,14 +447,14 @@
 		var/dpy = dy * 32
 
 		if (!dx && !dy) 	//smooth movement within a tile
-			animate(src,pixel_x = wx-dpx, pixel_y = wy-dpy, time = 0.75, flags = ANIMATION_END_NOW)
+			animate(src,pixel_x = wx-dpx, pixel_y = wy-dpy, time = 1 DECI SECOND, flags = ANIMATION_END_NOW)
 		else
 			if ((loc.x - curr_turf.x))
 				pixel_x += 32 * -(loc.x - curr_turf.x)
 			if ((loc.y - curr_turf.y))
 				pixel_y += 32 * -(loc.y - curr_turf.y)
 
-			animate(src,pixel_x = wx-dpx, pixel_y = wy-dpy, time = 0.75, flags = ANIMATION_END_NOW) //todo figure out later
+			animate(src,pixel_x = wx-dpx, pixel_y = wy-dpy, time = 1 DECI SECOND, flags = ANIMATION_END_NOW) //todo figure out later
 
 	track_blood()
 		src.tracked_blood = null
@@ -520,7 +519,7 @@ datum/projectile
 	// Determines the amount of length units the projectile travels each tick
 	// A tile is 32 wide, 32 long, and 32 * sqrt(2) across.
 	// Setting this to 32 will mimic the old behaviour for shots travelling in one of the cardinal directions.
-	var/projectile_speed = 28
+	var/projectile_speed = 36
 
 	// Determines the impact range of the projectile. Should ideally be half the length of the sprite
 	// for line-based stuff (lasers), or the radius for circular projectiles.
