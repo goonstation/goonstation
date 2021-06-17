@@ -34063,7 +34063,7 @@
 	req_access = null
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/engineering_mechanic,
+/obj/access_spawn/engineering_power,
 /turf/simulated/floor/grime,
 /area/station/engine/power)
 "bIn" = (
@@ -56532,7 +56532,7 @@
 /obj/disposalpipe/segment/mail,
 /obj/firedoor_spawn,
 /obj/decal/garland/ephemeral,
-/obj/access_spawn/engineering_lobby,
+/obj/access_spawn/engineering_control,
 /turf/simulated/floor/delivery,
 /area/station/engine/engineering)
 "hpR" = (
@@ -61239,7 +61239,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/decal/garland/ephemeral,
-/obj/access_spawn/engineering_lobby,
+/obj/access_spawn/public,
 /turf/simulated/floor/delivery,
 /area/station/engine/engineering)
 "qme" = (
@@ -64931,7 +64931,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/decal/garland/ephemeral,
-/obj/access_spawn/engineering_lobby,
+/obj/access_spawn/engineering_control,
 /turf/simulated/floor/delivery,
 /area/station/engine/engineering)
 "xbi" = (
@@ -65224,7 +65224,7 @@
 /obj/disposalpipe/segment/mail,
 /obj/firedoor_spawn,
 /obj/decal/garland/ephemeral,
-/obj/access_spawn/engineering_lobby,
+/obj/access_spawn/public,
 /turf/simulated/floor/delivery,
 /area/station/engine/engineering)
 "xFa" = (
