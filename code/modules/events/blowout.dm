@@ -52,9 +52,10 @@
 				N.flash(3 SECONDS)
 
 	#ifndef UNDERWATER_MAP
-			for (var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+			for (var/turf/space/S in world)
 				LAGCHECK(LAG_LOW)
-				S.color = src.space_color
+				if (S.z == Z_LEVEL_STATION)
+					S.color = src.space_color
 	#endif
 
 			world << siren
@@ -91,9 +92,10 @@
 			command_alert("All radiation alerts onboard [station_name(1)] have been cleared. You may now leave the tunnels freely. Maintenance doors will regain their normal access requirements shortly.", "All Clear")
 
 	#ifndef UNDERWATER_MAP
-			for (var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+			for (var/turf/space/S in world)
 				LAGCHECK(LAG_LOW)
-				S.color = null
+				if (S.z == Z_LEVEL_STATION)
+					S.color = null
 	#endif
 			for (var/mob/N in mobs)
 				N.flash(3 SECONDS)
@@ -105,5 +107,5 @@
 					continue
 				if (!(istype(A, /obj/machinery/door/airlock/maintenance) || istype(A, /obj/machinery/door/airlock/pyro/maintenance) || istype(A, /obj/machinery/door/airlock/gannets/maintenance) || istype(A, /obj/machinery/door/airlock/gannets/glass/maintenance)))
 					continue
-				if (access_maint_tunnels in initial(A.req_access))
+				if (isnull(A.req_access))
 					A.req_access = list(access_maint_tunnels)
