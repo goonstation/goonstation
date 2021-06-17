@@ -119,7 +119,7 @@
 		for(var/dir in (cardinal + 0))
 			var/turf/thing = get_step(src, dir)
 			var/area/fuck_everything = thing?.loc
-			if(fuck_everything?.expandable && (fuck_everything.type != /area))
+			if(fuck_everything?.expandable && (fuck_everything.type != /area/space))
 				fuck_everything.contents += src
 				return
 
@@ -995,7 +995,7 @@
 
 #if defined(MAP_OVERRIDE_POD_WARS)
 /turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
-	
+
 	//testing pali's solution for getting the direction opposite of the map edge you are nearest to.
 	// A.set_loc(A.loc)
 	var/atom/target = get_edge_target_turf(A, (A.x + A.y > world.maxx ? SOUTH | WEST : NORTH | EAST) & (A.x - A.y > 0 ? NORTH | WEST : SOUTH | EAST))
