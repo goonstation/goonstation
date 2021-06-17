@@ -49,7 +49,6 @@
 #define access_engineering_engine 44 // Engine room.
 #define access_engineering_mechanic 45 // Electronics lab.
 #define access_engineering_atmos 46 // Engineering's supply of gas canisters.
-#define access_engineering_lobby 47 // Engineering lobby access for mechanics and engineers.
 #define access_engineering_control 48 // Engine control room.
 #define access_engineering_chief 49 // CE's office.
 

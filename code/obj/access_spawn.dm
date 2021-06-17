@@ -297,12 +297,6 @@
 	req_access = list(access_engineering_control)
 	color = ENGINEERING
 
-/obj/access_spawn/engineering_lobby
-	name = "engineering lobby access spawn"
-	req_access = list(access_engineering_lobby)
-	color = ENGINEERING
-
-
 /obj/access_spawn/engineering_chief
 	name = "CE access spawn"
 	req_access = list(access_engineering_chief)
