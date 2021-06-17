@@ -78,7 +78,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 /client/proc/getVolumeDescriptions()
 	return list("This will affect all sounds.", "Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.", "Screams and farts.", "Mentor PM notification sound.")
 
-// Get the friendly description for a specific sound channel.
+/// Get the friendly description for a specific sound channel.
 /client/proc/getVolumeChannelDescription(channel)
 	// +1 since master channel is 0, while byond arrays start at 1
 	return getVolumeDescriptions()[channel+1]
