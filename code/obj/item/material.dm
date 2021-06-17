@@ -763,6 +763,7 @@
 	anchored = 0
 	density = 1
 	event_handler_flags = NO_MOUSEDROP_QOL
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
 	var/active = 0
 	var/reject = 0
 	var/insufficient = 0
