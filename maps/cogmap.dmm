@@ -55434,6 +55434,10 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
+"ftU" = (
+/obj/disposalpipe/segment,
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/elect)
 "fuX" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
@@ -109813,7 +109817,7 @@ rzC
 bNn
 egs
 bRB
-bLM
+ftU
 khL
 wfH
 bWZ
