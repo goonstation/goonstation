@@ -61955,6 +61955,12 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
+"rGB" = (
+/obj/stool/chair/yellow{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/engine/elect)
 "rHA" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -64844,6 +64850,10 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
+"wRG" = (
+/obj/machinery/vending/standard,
+/turf/simulated/floor,
+/area/station/engine/elect)
 "wRI" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights/ephemeral,
@@ -109477,7 +109487,7 @@ bJe
 bLN
 bNn
 qXL
-bNn
+wRG
 bQh
 bRA
 bLM
@@ -109780,7 +109790,7 @@ bNv
 neb
 rzC
 bNn
-bNn
+rGB
 bRB
 ftU
 khL
