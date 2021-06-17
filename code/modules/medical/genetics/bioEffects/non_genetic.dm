@@ -11,6 +11,7 @@
 	can_research = 0
 	can_make_injector = 0
 	reclaim_fail = 100
+	acceptable_in_mutini = 0
 	effectType = EFFECT_TYPE_POWER
 
 	//Moved special job stuff (chaplain, medical) over to traits system.
