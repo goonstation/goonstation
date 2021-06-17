@@ -17,7 +17,7 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			src.add_fingerprint(H)
-			switch (alert("Which eye would you like to operate on with [src]?","Left Eye","Right Eye","Cancel"))
+			switch (alert("Which eye would you like to operate on with [src]?",,"Left Eye","Right Eye","Cancel"))
 				if ("Cancel")
 					return
 				if ("Right Eye")
@@ -54,12 +54,13 @@
 				parts_to_remove += part_loc
 		boutput(H, "<span class='alert'>Caution! Remain stationary!</span>")
 		SPAWN_DBG(1 SECOND)
-			playsound(H.loc, "sound/items/ocular_implanter", 50, 0, -1)
+			playsound(H.loc, "sound/items/ocular_implanter_start", 50, 0, -1)
 			SETUP_GENERIC_ACTIONBAR(H, src, 10 SECONDS, /obj/item/device/ocular_implanter/proc/end_replace_eye, list(target, H), src.icon, src.icon_state,"[src] finishes replacing your eye.", null)
 
 	proc/end_replace_eye(var/target, var/mob/living/carbon/human/H)
 		if(!H)
 			return
+		playsound(H.loc, "sound/items/ocular_implanter_end", 50, 0, -1)
 		var/turf/T = H.loc
 		for(var/part_loc in parts_to_remove)
 			if (T)
@@ -75,8 +76,9 @@
 		else
 			implants_available = implants_available ^ EYE_LEFT
 		boutput(H, "<span class='alert'><b>[pick("IT HURTS!", "OH GOD!", "JESUS FUCK!")]</b></span>")
-		H.emote("scream")
 		bleed(H, 5, 5)
+		SPAWN_DBG(5 DECI SECOND)
+			H.emote("scream")
 		if (implants_available & EYE_RIGHT)
 			icon_state = "ocular_implanter-R"
 		else if (implants_available & EYE_LEFT)
