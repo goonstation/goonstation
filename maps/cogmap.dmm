@@ -37780,9 +37780,6 @@
 	codes_txt = "delivery;dir=4";
 	location = "Mechlab #2"
 	},
-/obj/machinery/light/incandescent{
-	dir = 1
-	},
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bQk" = (
@@ -56534,8 +56531,8 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/firedoor_spawn,
-/obj/access_spawn/engineering,
 /obj/decal/garland/ephemeral,
+/obj/access_spawn/engineering_lobby,
 /turf/simulated/floor/delivery,
 /area/station/engine/engineering)
 "hpR" = (
@@ -61241,8 +61238,8 @@
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/engineering,
 /obj/decal/garland/ephemeral,
+/obj/access_spawn/engineering_lobby,
 /turf/simulated/floor/delivery,
 /area/station/engine/engineering)
 "qme" = (
@@ -64933,8 +64930,8 @@
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/engineering,
 /obj/decal/garland/ephemeral,
+/obj/access_spawn/engineering_lobby,
 /turf/simulated/floor/delivery,
 /area/station/engine/engineering)
 "xbi" = (
@@ -65226,8 +65223,8 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/firedoor_spawn,
-/obj/access_spawn/engineering,
 /obj/decal/garland/ephemeral,
+/obj/access_spawn/engineering_lobby,
 /turf/simulated/floor/delivery,
 /area/station/engine/engineering)
 "xFa" = (
