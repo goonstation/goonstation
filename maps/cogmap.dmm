@@ -38412,8 +38412,8 @@
 /obj/stool/chair/yellow{
 	dir = 8
 	},
-/obj/disposalpipe/trunk,
 /obj/machinery/disposal/small/south,
+/obj/disposalpipe/trunk,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "bRC" = (
@@ -53617,15 +53617,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quartersA)
-"cML" = (
-/obj/stool/chair/yellow{
-	dir = 1
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/engine/engineering)
 "cNC" = (
 /obj/overlay{
 	icon = 'icons/misc/beach2.dmi';
@@ -58294,26 +58285,6 @@
 	dir = 6
 	},
 /area/station/medical/medbay)
-"kzn" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/electrical{
-	pixel_x = -5;
-	pixel_y = 9
-	},
-/obj/item/device/multitool{
-	pixel_x = 9;
-	pixel_y = 8
-	},
-/obj/item/clothing/gloves/yellow{
-	pixel_x = -2;
-	pixel_y = -1
-	},
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
-/turf/simulated/floor/yellow,
-/area/station/storage/primary)
 "kzw" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -112526,7 +112497,7 @@ bEo
 bEV
 bsN
 oxf
-cML
+bHr
 bIo
 bJo
 bLM
@@ -117058,7 +117029,7 @@ bFS
 bGP
 bHC
 bIC
-kzn
+bJz
 bJz
 bNJ
 bNJ
