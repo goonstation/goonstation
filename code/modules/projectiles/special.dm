@@ -348,7 +348,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_rate = 300
 	ks_ratio = 0.8
 	brightness = 2
-	projectile_speed = 28
+	projectile_speed = 32
 	impact_range = 32
 	caliber = 40
 	pierces = -1
@@ -398,7 +398,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	icon_state = "cat1"
 	dissipation_delay = 75
 	dissipation_rate = 300
-	projectile_speed = 20
+	projectile_speed = 26
 	cost = 1
 
 	var/explosive_hits = 1
@@ -691,7 +691,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_rate = 0
 	ks_ratio = 1
 	brightness = 2
-	projectile_speed = 1.5
+	projectile_speed = 2
 	is_magical = 1 // It passes right through them, but just for consistency
 	auto_find_targets = 0
 	min_speed = 2
@@ -748,7 +748,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "magic minimissile"
 	sname = "magic minimissile"
 	power = 10
-	projectile_speed = 1
+	projectile_speed = 1.5
 	min_speed = 2
 	max_speed = 2
 	max_bounce_count = 2 // putting the Y in ICEE BEEYEM

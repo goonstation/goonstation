@@ -174,7 +174,7 @@
 
 /datum/projectile/bullet/gyrojet
 	name = "gyrojet bullet"
-	projectile_speed = 5
+	projectile_speed = 6
 	max_range = 500
 	dissipation_rate = 0
 	power = 10
@@ -189,7 +189,7 @@
 		O.internal_speed = projectile_speed
 
 	tick(obj/projectile/O)
-		O.internal_speed = min(O.internal_speed * 1.25, 28)
+		O.internal_speed = min(O.internal_speed * 1.25, 32)
 
 	get_power(obj/projectile/P, atom/A)
 		return 15 + P.internal_speed
