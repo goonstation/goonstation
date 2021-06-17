@@ -72,7 +72,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 /// Returns the default volume for a channel, unattenuated for the master channel (0-1)
 /client/proc/getDefaultVolume(channel)
-	return volumes[channel + 1]
+	return default_channel_volumes[channel + 1]
 
 /// Returns a list of friendly descriptions for available sound channels
 /client/proc/getVolumeDescriptions()
