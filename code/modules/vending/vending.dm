@@ -1760,7 +1760,7 @@
 			else
 				var/datum/material/M = getMaterial("steel")
 				A.setMaterial(M)
-				qdel(src)
+			qdel(src)
 		else
 			setFrameState("UNWRENCHED")
 			CRASH("Invalid state \"[state]\" set in [src] construction process at [log_loc(src)]")
