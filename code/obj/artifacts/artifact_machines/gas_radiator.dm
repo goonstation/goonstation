@@ -1,10 +1,10 @@
-/obj/machinery/artifact/gast_radiator
+/obj/machinery/artifact/gas_radiator
 	name = "artifact gas radiator"
-	associated_datum = /datum/artifact/gast_radiator
+	associated_datum = /datum/artifact/gas_radiator
 	pressure_resistance = 1000 * ONE_ATMOSPHERE // please do not move
 
-/datum/artifact/gast_radiator
-	associated_object = /obj/machinery/artifact/gast_radiator
+/datum/artifact/gas_radiator
+	associated_object = /obj/machinery/artifact/gas_radiator
 	type_name = "Gas radiator"
 	rarity_weight = 450
 	validtypes = list("ancient","martian","eldritch","precursor")
