@@ -1,4 +1,14 @@
 
+(t)thu jun 17 21
+(u)Azrun
+(p)5130
+(e)🆕|feature
+(+)Gnesis and Gnesisglass tables will reform when smashed.
+(u)eX.n0x
+(p)5148
+(e)🐛🗺|bug, mapping
+(*)Horizon genetics/monkey dome are completely restricted to geneticists.
+(*)Horizon/Kondaru detective receiving office is now open to the general public.
 (t)wed jun 16 21
 (u)Penny
 (p)5152

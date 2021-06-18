@@ -8856,9 +8856,10 @@
 /area/station/medical/dome)
 "axs" = (
 /obj/machinery/door/airlock/pyro/glass{
-	name = "Chimpnasium"
+	name = "Chimpnasium";
+	req_access = null
 	},
-/obj/access_spawn/medical,
+/obj/access_spawn/medlab,
 /turf/simulated/floor/black,
 /area/station/medical/dome)
 "axu" = (
@@ -12815,9 +12816,10 @@
 /area/station/maintenance/northeast)
 "aHN" = (
 /obj/machinery/door/airlock/pyro/maintenance{
-	req_access = list(5)
+	req_access = null
 	},
 /obj/disposalpipe/segment/transport,
+/obj/access_spawn/medlab,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "aHO" = (
@@ -31556,14 +31558,12 @@
 /area/station/security/detectives_office)
 "bAi" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
-/obj/machinery/door/airlock/pyro/security/alt{
-	id = "detoffice";
-	name = "Detective's Office"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/security,
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Detective's Office"
+	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "bAj" = (
@@ -33693,13 +33693,13 @@
 /area/station/security/detectives_office)
 "bFK" = (
 /obj/stool/chair/red,
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment,
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
 /turf/simulated/floor/carpet/red/standard/edge/south,
 /area/station/security/detectives_office)
 "bFL" = (
@@ -35974,11 +35974,6 @@
 	desc = "The VR representation of a security software package.";
 	require_login = 0;
 	screen = 1
-	},
-/obj/machinery/door_control{
-	id = "detoffice";
-	pixel_x = 24;
-	req_access = list(1)
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
@@ -58778,9 +58773,10 @@
 	},
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8;
-	name = "Chimpnasium"
+	name = "Chimpnasium";
+	req_access = null
 	},
-/obj/access_spawn/pathology,
+/obj/access_spawn/medlab,
 /turf/simulated/floor/white,
 /area/station/medical/dome)
 "rHb" = (
