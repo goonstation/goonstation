@@ -1892,6 +1892,7 @@
 	icon_state = "blueprint"
 	item_state = "sheet"
 	var/datum/manufacture/blueprint = null
+	var/override_name_desc = 1
 
 
 
@@ -1915,9 +1916,9 @@
 		if (!src.blueprint)
 			qdel(src)
 			return 0
-
-		src.name = "Manufacturer Blueprint: [src.blueprint.name]"
-		src.desc = "This blueprint will allow a manufacturer unit to build a [src.blueprint.name]"
+		if(src.override_name_desc)
+			src.name = "Manufacturer Blueprint: [src.blueprint.name]"
+			src.desc = "This blueprint will allow a manufacturer unit to build a [src.blueprint.name]"
 
 		src.pixel_x = rand(-4,4)
 		src.pixel_y = rand(-4,4)
@@ -2001,6 +2002,16 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "interdictor_blueprint"
 	blueprint = /datum/manufacture/interdictor_rod_sigma
+
+/******************** Phaser Drone *******************/
+/obj/item/paper/manufacturer_blueprint/gunbot
+	name = "Security Robot blueprint"
+	icon = 'icons/obj/electronics.dmi'
+	info = "<h3>AP-Class Security Robot</h3><i>A schematic blueprint for a security robot, modified to fit a station-grade manufacturer.</i>"
+	icon_state = "blueprint"
+	item_state = "sheet"
+	blueprint = /datum/manufacture/mechanics/gunbot
+	override_name_desc = 0
 
 // Fabricator Defines
 
