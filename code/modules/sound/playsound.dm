@@ -155,7 +155,8 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	var/channel_id = audio_channel_name_to_id[channel_name]
 	if(isnull(channel_id))
 		alert(usr, "Invalid channel.")
-	var/vol = input("Goes from 0-100. Default is [getDefaultVolume(channel_id) * 100]", "[channel_name] Volume", src.getRealVolume(channel_id) * 100) as num
+	var/vol = input("Goes from 0-100. Default is [getDefaultVolume(channel_id) * 100]\n[src.getVolumeChannelDescription(channel_id)]", \
+	 "[capitalize(channel_name)] Volume", src.getRealVolume(channel_id) * 100) as num
 	vol = max(0,min(vol,100))
 	src.setVolume(channel_id, vol/100 )
 	boutput(usr, "<span class='notice'>You have changed [channel_name] Volume to [vol].</span>")
