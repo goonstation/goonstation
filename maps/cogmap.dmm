@@ -35701,9 +35701,6 @@
 	pixel_x = -4;
 	pixel_y = -2
 	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/item/clothing/gloves/yellow{
 	pixel_x = -7;
 	pixel_y = 10
@@ -36284,9 +36281,6 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
@@ -38406,6 +38400,9 @@
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "bRI" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "bRJ" = (
@@ -43637,9 +43634,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/cable{
-	icon_state = "2-4"
-	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -43659,9 +43653,6 @@
 	print_id = "Engineering"
 	},
 /obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
@@ -46169,6 +46160,9 @@
 	},
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
@@ -56122,6 +56116,9 @@
 /obj/access_spawn/engineering_mechanic,
 /obj/firedoor_spawn,
 /obj/decal/garland/ephemeral,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/station/engine/elect)
 "gwd" = (
@@ -58998,6 +58995,14 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/mining/staff_room)
+"mpF" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/hallway/primary/south)
 "mpZ" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights/ephemeral,
@@ -111900,7 +111905,7 @@ rpD
 cfe
 cff
 cfj
-bKu
+qMI
 bLV
 bNt
 bOR
@@ -112209,8 +112214,8 @@ bOS
 clh
 bRI
 gvH
-bUA
-bKp
+mpF
+bCb
 bWU
 bYy
 tNK
