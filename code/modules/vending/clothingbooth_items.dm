@@ -395,7 +395,6 @@
 	path = /obj/item/clothing/suit/dressb
 	slot = SLOT_WEAR_SUIT
 	category = "Formal"
-	amount = 2
 	cost = PAY_DOCTORATE/3
 
 /datum/clothingbooth_item/weddingdress
@@ -659,7 +658,6 @@
 	path = /obj/item/clothing/head/nyan/white
 	slot = SLOT_HEAD
 	category = "Headwear"
-	amount = 3
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_gray
@@ -667,7 +665,6 @@
 	path = /obj/item/clothing/head/nyan/gray
 	slot = SLOT_HEAD
 	category = "Headwear"
-	amount = 3
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_black
@@ -675,7 +672,6 @@
 	path = /obj/item/clothing/head/nyan/black
 	slot = SLOT_HEAD
 	category = "Headwear"
-	amount = 3
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_red
@@ -683,7 +679,6 @@
 	path = /obj/item/clothing/head/nyan/red
 	slot = SLOT_HEAD
 	category = "Headwear"
-	amount = 3
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_orange
@@ -691,7 +686,6 @@
 	path = /obj/item/clothing/head/nyan/orange
 	slot = SLOT_HEAD
 	category = "Headwear"
-	amount = 3
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_yellow
@@ -699,7 +693,6 @@
 	path = /obj/item/clothing/head/nyan/yellow
 	slot = SLOT_HEAD
 	category = "Headwear"
-	amount = 3
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_green
@@ -707,7 +700,6 @@
 	path = /obj/item/clothing/head/nyan/green
 	slot = SLOT_HEAD
 	category = "Headwear"
-	amount = 3
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_blue
@@ -715,7 +707,6 @@
 	path = /obj/item/clothing/head/nyan/blue
 	slot = SLOT_HEAD
 	category = "Headwear"
-	amount = 3
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_purple
@@ -723,15 +714,20 @@
 	path = /obj/item/clothing/head/nyan/purple
 	slot = SLOT_HEAD
 	category = "Headwear"
-	amount = 3
 	cost = PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/maid_headwear
+	name = "Maid Headwear"
+	path = /obj/item/clothing/head/maid
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN/3
 
 /datum/clothingbooth_item/tophat
 	name = "Top Hat"
 	path = /obj/item/clothing/head/that
 	slot = SLOT_HEAD
 	category = "Headwear"
-	amount = 3
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/whtophat
