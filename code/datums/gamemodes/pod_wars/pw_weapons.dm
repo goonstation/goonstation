@@ -51,6 +51,8 @@
 		current_projectile = new initial_proj
 		projectiles = list(current_projectile)
 		src.indicator_display = image('icons/obj/items/gun.dmi', "")
+		if(istype(loc, /mob/living))
+			RegisterSignal(loc, COMSIG_MOB_DEATH, .proc/stop_charging)
 		..()
 
 
@@ -67,6 +69,16 @@
 			indicator_display.icon_state = "pw_pistol_power-[ratio]"
 			indicator_display.color = display_color
 			UpdateOverlays(indicator_display, "ind_dis")
+
+	proc/stop_charging()
+		var/turf/T = get_turf(src)
+		var/fluff = pick("boop", "beep", "warble", "buzz", "bozzle", "wali", "hum", "whistle")
+		T.visible_message("<span class='notice'>[src] lets out a sad [fluff]</span>", "<span class='notice'>You hear a sad [fluff]</span>")
+		src.can_swap_cell = 0
+		src.rechargeable = 0
+		if(istype(src.cell, /obj/item/ammo/power_cell/self_charging))
+			var/obj/item/ammo/power_cell/self_charging/P = src.cell
+			P.recharge_rate = 0
 
 	nanotrasen
 		muzzle_flash = "muzzle_flash_plaser"
