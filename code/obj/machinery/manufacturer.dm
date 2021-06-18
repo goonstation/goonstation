@@ -467,16 +467,16 @@
 
 			var/icon_text = "<img class='icon'>"
 			// @todo probably refactor this since it's copy pasted twice now.
-			// if (A.item_outputs)
-			// 	var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
-			// 	// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-			// 	icon_text = "<img class='icon' src='[icon_rsc]'>"
+			if (A.item_outputs)
+				var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
+				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
-			// if (istype(A, /datum/manufacture/mechanics))
-			// 	var/datum/manufacture/mechanics/F = A
-			// 	var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
-			// 	// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-			// 	icon_text = "<img class='icon' src='[icon_rsc]'>"
+			if (istype(A, /datum/manufacture/mechanics))
+				var/datum/manufacture/mechanics/F = A
+				var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
+				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
 			var/list/material_text = list()
 			var/list/material_count = 0
@@ -1023,6 +1023,11 @@
 				if (user && W)
 					user.u_equip(W)
 					W.dropped()
+
+		else if (istype(W,/obj/item/sheet/) || (istype(W,/obj/item/cable_coil/ || (istype(W,/obj/item/raw_material/ )))))
+			boutput(user, "<span class='alert'>The fabricator rejects the [W]. You'll need to refine them in a reclaimer first.</span>")
+			playsound(src.loc, src.sound_grump, 50, 1)
+			return
 
 		else if (istype(W, src.base_material_class) && src.accept_loading(user))
 			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
@@ -1739,16 +1744,16 @@
 				remove_link = "&#8987; Working..."
 
 			var/icon_text = "<img class='icon'>"
-			// if (A.item_outputs)
-			// 	var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
-			// 	// usr << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-			// 	icon_text = "<img class='icon' src='[icon_rsc]'>"
+			if (A.item_outputs)
+				var/icon_rsc = getItemIcon(A.item_outputs[1], C = usr.client)
+				// usr << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
-			// if (istype(A, /datum/manufacture/mechanics))
-			// 	var/datum/manufacture/mechanics/F = A
-			// 	var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
-			// 	// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
-			// 	icon_text = "<img class='icon' src='[icon_rsc]'>"
+			if (istype(A, /datum/manufacture/mechanics))
+				var/datum/manufacture/mechanics/F = A
+				var/icon_rsc = getItemIcon(F.frame_path, C = usr.client)
+				// user << browse_rsc(browse_item_icons[icon_rsc], icon_rsc)
+				icon_text = "<img class='icon' src='[icon_rsc]'>"
 
 
 			dat += {"
@@ -2022,7 +2027,7 @@
 		/datum/manufacture/glass,
 		/datum/manufacture/glassR,
 		/datum/manufacture/atmos_can,
-		/datum/manufacture/circuit_board,
+		/datum/manufacture/player_module,
 		/datum/manufacture/cable,
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,

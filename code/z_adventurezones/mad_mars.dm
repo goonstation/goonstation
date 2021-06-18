@@ -182,7 +182,7 @@
 
 /obj/decal/fakeobjects/robotarm
 	name = "robot arm"
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "marsfactory_arm"
 	anchored = 1
 	density = 1

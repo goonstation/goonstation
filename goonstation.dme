@@ -15,10 +15,15 @@ var/datum/preMapLoad/preMapLoad = new
 #define DEBUG
 // END_PREFERENCES
 
-//Standard Library Inclusions
+// Compatibility Check
+#include "_std\compatibility.dm"
+// Compatibility START
+#ifdef BYOND_VERSION_OK
+
+// Standard Library Inclusions
 #include "_std\__std.dme"
 
-//Secret Code Handling
+// Secret Code Handling
 #ifndef FASTDMM
 #include "+secret\__secret.dme"
 #endif
@@ -51,7 +56,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\atom\throwing.dm"
 #include "code\atom\UpdateOverlays.dm"
 #include "code\chui\chui.dm"
-#include "code\chui\cprof.dm"
 #include "code\chui\tab.dm"
 #include "code\chui\template.dm"
 #include "code\chui\theme.dm"
@@ -1007,6 +1011,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\power\stats_meter.dm"
 #include "code\modules\power\switchgear.dm"
 #include "code\modules\power\sword_engine.dm"
+#include "code\modules\power\TEG.dm"
 #include "code\modules\power\terminal.dm"
 #include "code\modules\power\turbine.dm"
 #include "code\modules\power\nuke\centrifuge.dm"
@@ -1719,7 +1724,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\SpyGuyStuff.dm"
 #include "code\WorkInProgress\StationMap.dm"
 #include "code\WorkInProgress\tarmStuff.dm"
-#include "code\WorkInProgress\TempEngine.dm"
 #include "code\WorkInProgress\torpedoes.dm"
 #include "code\WorkInProgress\tug.dm"
 #include "code\WorkInProgress\UrsStuff.dm"
@@ -1741,7 +1745,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\dialogue\dialogue_polaris.dm"
 #include "code\WorkInProgress\dialogue\dialogueSystem.dm"
 #include "code\WorkInProgress\dialogue\dialogueTraders.dm"
-#include "code\WorkInProgress\fluid_pipes\fluid_pipe.dm"
 #include "code\WorkInProgress\griffening\griffening_cards.dm"
 #include "code\WorkInProgress\nuclear_engine\nuclear_engine.dm"
 #include "code\WorkInProgress\optics\beamline.dm"
@@ -1799,6 +1802,5 @@ var/datum/preMapLoad/preMapLoad = new
 #include "+secret\_secretAfter.dme"
 #endif
 
-#ifdef INCLUDE_BUGGY_LUA_SHIT
-#include "code\WorkInProgress\LuaJIT.dm"
+// Compatibility END
 #endif
