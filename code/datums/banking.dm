@@ -341,11 +341,7 @@
 
 					if (src.scan)
 						dat += "<BR><BR>Your balance is: $ [src.accessed_record.fields["current_money"]]."
-						dat += "<BR>Your balance on your card is: $ [src.scan.money]"
-						dat += "<BR><BR><A HREF='?src=\ref[src];operation=withdraw'>Withdraw to Card</A>"
 						dat += "<BR><A HREF='?src=\ref[src];operation=withdrawcash'>Withdraw Cash</A>"
-						dat += "<BR><A HREF='?src=\ref[src];operation=deposit'>Deposit from Card</A>"
-
 						dat += "<BR><BR><A HREF='?src=\ref[src];operation=buy'>Buy Lottery Ticket (100 credits)</A>"
 						dat += "<BR>To claim your winnings you'll need to insert your lottery ticket."
 					else
@@ -407,20 +403,6 @@
 				src.accessed_record = null
 				src.scan = null
 
-			if("withdraw")
-				if (scan.registered in FrozenAccounts)
-					boutput(usr, "<span class='alert'>This account is frozen!</span>")
-					return
-				var/amount = round(input(usr, "How much would you like to withdraw?", "Withdrawal", 0) as null|num)
-				if(amount < 1)
-					boutput(usr, "<span class='alert'>Invalid amount!</span>")
-					return
-				if(amount > src.accessed_record.fields["current_money"])
-					boutput(usr, "<span class='alert'>Insufficient funds in account.</span>")
-				else
-					src.scan.money += amount
-					src.accessed_record.fields["current_money"] -= amount
-
 			if("withdrawcash")
 				if (scan.registered in FrozenAccounts)
 					boutput(usr, "<span class='alert'>This account is frozen!</span>")
@@ -436,17 +418,6 @@
 					var/obj/item/spacecash/S = unpool(/obj/item/spacecash)
 					S.setup(src.loc, amount)
 					usr.put_in_hand_or_drop(S)
-
-			if("deposit")
-				var/amount = round(input(usr, "How much would you like to deposit?", "Deposit", 0) as null|num)
-				if(amount < 1)
-					boutput(usr, "<span class='alert'>Invalid amount!</span>")
-					return
-				if(amount > src.scan.money)
-					boutput(usr, "<span class='alert'>Insufficient funds on card.</span>")
-				else
-					src.scan.money -= amount
-					src.accessed_record.fields["current_money"] += amount
 
 			if("buy")
 				if(accessed_record.fields["current_money"] >= 100)
@@ -832,12 +803,7 @@
 
 					if (src.scan)
 						dat += "<BR><BR>Your balance is: $ [src.accessed_record.fields["current_money"]]."
-						dat += "<BR>Your balance on your card is: $ [src.scan.money]"
-						dat += "<BR><BR><A HREF='?src=\ref[src];operation=withdraw'>Withdraw to Card</A>"
 						dat += "<BR><A HREF='?src=\ref[src];operation=withdrawcash'>Withdraw Cash</A>"
-						if(!afterlife)
-							dat += "<BR><A HREF='?src=\ref[src];operation=deposit'>Deposit from Card</A>"
-
 						dat += "<BR><BR><A HREF='?src=\ref[src];operation=buy'>Buy Lottery Ticket (100 credits)</A>"
 						dat += "<BR>To claim your winnings you'll need to insert your lottery ticket."
 					else
@@ -902,20 +868,6 @@
 				src.accessed_record = null
 				src.scan = null
 
-			if("withdraw")
-				if (scan.registered in FrozenAccounts)
-					boutput(usr, "<span class='alert'>This account is frozen!</span>")
-					return
-				var/amount = round(input(usr, "How much would you like to withdraw?", "Withdrawal", 0) as null|num)
-				if(amount < 1)
-					boutput(usr, "<span class='alert'>Invalid amount!</span>")
-					return
-				if(amount > src.accessed_record.fields["current_money"])
-					boutput(usr, "<span class='alert'>Insufficient funds in account.</span>")
-				else
-					src.scan.money += amount
-					src.accessed_record.fields["current_money"] -= amount
-
 			if("withdrawcash")
 				if (scan.registered in FrozenAccounts)
 					boutput(usr, "<span class='alert'>This account is frozen!</span>")
@@ -931,17 +883,6 @@
 					var/obj/item/spacecash/S = unpool(/obj/item/spacecash)
 					S.setup(src.loc, amount)
 					usr.put_in_hand_or_drop(S)
-
-			if("deposit")
-				var/amount = round(input(usr, "How much would you like to deposit?", "Deposit", 0) as null|num)
-				if(amount < 1)
-					boutput(usr, "<span class='alert'>Invalid amount!</span>")
-					return
-				if(amount > src.scan.money)
-					boutput(usr, "<span class='alert'>Insufficient funds on card.</span>")
-				else
-					src.scan.money -= amount
-					src.accessed_record.fields["current_money"] += amount
 
 			if("buy")
 				if(accessed_record.fields["current_money"] >= 100)
