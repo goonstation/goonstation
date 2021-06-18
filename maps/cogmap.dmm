@@ -20720,7 +20720,12 @@
 	setup_drive_type = /obj/item/disk/data/fixed_disk/techcomputer3
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor,
+/obj/decal/poster/wallsign/teaparty{
+	pixel_y = 32
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
 /area/station/engine/elect)
 "bbh" = (
 /obj/critter/nicespider{
@@ -34050,7 +34055,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/elect)
 "bIh" = (
 /obj/rack,
@@ -34110,7 +34115,7 @@
 	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/cable/brown,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/power)
 "bIk" = (
 /obj/decal/tile_edge/stripe/big{
@@ -34123,7 +34128,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/power)
 "bIl" = (
 /obj/cable{
@@ -34136,6 +34141,9 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/engineering_power,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/grime,
 /area/station/engine/power)
 "bIn" = (
@@ -34458,7 +34466,7 @@
 	icon_state = "0-4"
 	},
 /obj/item/device/net_sniffer,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/elect)
 "bJf" = (
 /obj/cable{
@@ -34482,20 +34490,20 @@
 	chargelevel = 15000;
 	output = 10000
 	},
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/power)
 "bJk" = (
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/light_switch{
+	name = "W light switch";
+	pixel_y = -24
+	},
+/turf/simulated/floor/plating/jen,
 /area/station/engine/power)
 "bJl" = (
 /obj/cable{
@@ -35662,33 +35670,21 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "bLT" = (
-/obj/machinery/rkit,
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/elect)
 "bLU" = (
-/obj/storage/cart/mechcart,
-/obj/item/electronics/scanner,
-/obj/item/deconstructor,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
-/obj/disposalpipe/trunk/mail{
-	dir = 2
+/obj/cable{
+	icon_state = "0-2"
 	},
-/obj/item/electronics/soldering{
-	pixel_x = -4;
-	pixel_y = -2
+/obj/machinery/power/data_terminal,
+/obj/machinery/light_switch{
+	name = "W light switch";
+	pixel_y = 24
 	},
-/obj/item/clothing/gloves/yellow{
-	pixel_x = -7;
-	pixel_y = 10
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
+/turf/simulated/floor/plating/jen,
 /area/station/engine/elect)
 "bLV" = (
 /obj/storage/cart/mechcart,
@@ -35705,17 +35701,11 @@
 	pixel_x = -7;
 	pixel_y = 10
 	},
-/turf/simulated/floor/yellow/side{
-	dir = 1
+/obj/cable{
+	icon_state = "0-2"
 	},
-/area/station/engine/elect)
-"bLW" = (
-/obj/landmark/start{
-	name = "Mechanic"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/elect)
 "bLY" = (
 /obj/securearea,
@@ -36260,6 +36250,9 @@
 /obj/landmark/start{
 	name = "Mechanic"
 	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bNp" = (
@@ -36269,32 +36262,26 @@
 /obj/stool/chair/yellow{
 	dir = 1
 	},
+/obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bNq" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
-/area/station/engine/elect)
-"bNt" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/elect)
 "bNu" = (
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 10
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating/jen,
 /area/station/engine/elect)
 "bNv" = (
 /obj/cable{
@@ -37021,14 +37008,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
-"bOP" = (
-/obj/decal/mule/beacon/no_auto_dropoff_spawn,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	location = "Mechlab #1"
-	},
-/turf/simulated/floor,
-/area/station/engine/elect)
 "bOQ" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 4;
@@ -37043,12 +37022,12 @@
 /turf/simulated/floor/delivery,
 /area/station/engine/elect)
 "bOS" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 8;
-	icon_state = "xtra_bigstripe-edge"
-	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge"
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
@@ -37069,6 +37048,9 @@
 	pixel_x = 2
 	},
 /obj/table/auto,
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -37737,10 +37719,8 @@
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bQi" = (
-/obj/decal/mule/beacon/no_auto_dropoff_spawn,
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	location = "Mechlab #2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
@@ -38373,9 +38353,6 @@
 "bRB" = (
 /obj/disposalpipe/trunk,
 /obj/machinery/disposal/small/south,
-/obj/stool/chair/yellow{
-	dir = 8
-	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "bRC" = (
@@ -38402,6 +38379,12 @@
 "bRI" = (
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
@@ -39712,24 +39695,16 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/south)
-"bUG" = (
-/obj/machinery/light/emergency{
-	dir = 8
-	},
-/obj/noticeboard/persistent{
-	name = "Mechanics Workshop persistent notice board";
-	persistent_id = "mechanics"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/hallway/primary/south)
 "bUH" = (
 /obj/table/auto,
 /obj/machinery/networked/storage/scanner,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
@@ -46134,13 +46109,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "clf" = (
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 6
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating/jen,
 /area/station/engine/elect)
 "clg" = (
 /obj/cable{
@@ -46155,9 +46130,6 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "clh" = (
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 9
-	},
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -54719,6 +54691,16 @@
 /obj/machinery/power/solar/west,
 /turf/simulated/floor/airless/solar,
 /area/station/solar/west)
+"exJ" = (
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=4";
+	location = "Mechlab #1"
+	},
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/turf/simulated/floor/yellow/side{
+	dir = 9
+	},
+/area/station/engine/elect)
 "eyn" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer{
 	dir = 4
@@ -54821,6 +54803,12 @@
 /area/station/science/bot_storage)
 "eEl" = (
 /obj/storage/secure/closet/engineering/mechanic,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "eED" = (
@@ -55484,6 +55472,13 @@
 /area/station/maintenance/solar/west)
 "fDy" = (
 /obj/landmark/gps_waypoint,
+/obj/decal/tile_edge/stripe/big{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
 /turf/simulated/floor,
 /area/station/engine/elect)
 "fDN" = (
@@ -56104,22 +56099,14 @@
 	},
 /area/station/quartermaster/refinery)
 "gvH" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	name = "Mechanics Lab";
-	req_access = null;
-	req_access_txt = null
-	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
 	dir = 4
 	},
-/obj/access_spawn/engineering_mechanic,
-/obj/firedoor_spawn,
-/obj/decal/garland/ephemeral,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor,
+/turf/simulated/wall/auto/supernorn,
 /area/station/engine/elect)
 "gwd" = (
 /obj/cable/yellow{
@@ -56265,14 +56252,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/space)
-"gIz" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/power)
 "gJj" = (
 /obj/item/device/radio/beacon,
 /obj/machinery/light{
@@ -56629,6 +56608,13 @@
 	},
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
@@ -57616,6 +57602,17 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hydroponics/lobby)
+"jvA" = (
+/obj/landmark/start{
+	name = "Mechanic"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor,
+/area/station/engine/elect)
 "jvO" = (
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
@@ -58724,6 +58721,19 @@
 /obj/cable/brown,
 /turf/simulated/floor/plating,
 /area/station/engine/core)
+"lMT" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/machinery/manufacturer/mechanic,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/engine/elect)
 "lOr" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -58998,6 +59008,10 @@
 "mpF" = (
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/noticeboard/persistent{
+	name = "Mechanics Workshop persistent notice board";
+	persistent_id = "mechanics"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -59749,6 +59763,13 @@
 /obj/machinery/meter,
 /turf/simulated/floor/delivery,
 /area/station/engine/inner)
+"nST" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor,
+/area/station/engine/elect)
 "nUE" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -59839,6 +59860,21 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
+"ocL" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/engineering{
+	name = "Mechanics Lab";
+	req_access = null;
+	req_access_txt = null
+	},
+/obj/access_spawn/engineering_mechanic,
+/obj/firedoor_spawn,
+/obj/decal/garland/ephemeral,
+/turf/simulated/floor,
+/area/station/engine/elect)
 "ocZ" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -61213,6 +61249,11 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
+	},
 /turf/simulated/floor,
 /area/station/engine/power)
 "qoZ" = (
@@ -61460,7 +61501,9 @@
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
 /area/station/engine/elect)
 "qMI" = (
 /obj/wingrille_spawn/auto,
@@ -61567,7 +61610,14 @@
 /obj/machinery/light/incandescent{
 	dir = 8
 	},
-/turf/simulated/floor,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=4";
+	location = "Mechlab #2"
+	},
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
 /area/station/engine/elect)
 "qYj" = (
 /obj/machinery/power/smes{
@@ -61585,7 +61635,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/power)
 "rae" = (
 /obj/machinery/light{
@@ -61963,6 +62013,9 @@
 "rGB" = (
 /obj/stool/chair/yellow{
 	dir = 8
+	},
+/obj/landmark/start{
+	name = "Mechanic"
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
@@ -62651,7 +62704,7 @@
 	dir = 1;
 	icon_state = "xtra_bigstripe-edge"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/power)
 "sKB" = (
 /obj/cable/brown{
@@ -64857,7 +64910,9 @@
 /area/station/crew_quarters/locker)
 "wRG" = (
 /obj/machinery/vending/standard,
-/turf/simulated/floor,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
 /area/station/engine/elect)
 "wRI" = (
 /obj/wingrille_spawn/auto,
@@ -109188,7 +109243,7 @@ bUK
 twD
 bUK
 bUK
-bUK
+bLM
 bLM
 lWO
 bLM
@@ -109490,7 +109545,7 @@ bHi
 bIg
 bJe
 bLN
-bNn
+exJ
 qXL
 wRG
 bQh
@@ -110096,7 +110151,7 @@ bKs
 bLN
 oJd
 ndi
-neb
+nST
 neb
 bRC
 iej
@@ -110398,8 +110453,8 @@ bUK
 bLM
 qMw
 bNo
-bNn
-bNn
+bOQ
+fFs
 bRD
 iej
 bUA
@@ -110700,8 +110755,8 @@ bJi
 bLM
 bbg
 bNp
-bNn
-bOP
+bOR
+sZa
 bRF
 bTc
 bVz
@@ -111000,7 +111055,7 @@ bHm
 sJa
 qYj
 bKu
-neb
+lMT
 hCt
 fDy
 bQi
@@ -111304,9 +111359,9 @@ bJk
 bLM
 bLT
 bNq
+sZa
 bNn
-bNn
-bNn
+qnA
 dyY
 qVb
 bVW
@@ -111599,18 +111654,18 @@ bDv
 bEl
 chH
 xRX
-gIz
+bGw
 bHo
 bIl
 bHo
 bLM
 bLU
 clf
-bOQ
-fFs
-qnA
-bTf
-bUG
+jvA
+bNn
+bNn
+ocL
+bUw
 bKp
 bWU
 bYw
@@ -111907,9 +111962,9 @@ cff
 cfj
 qMI
 bLV
-bNt
-bOR
+clf
 sZa
+bNn
 lYJ
 bTg
 bUI
@@ -112208,7 +112263,7 @@ bHq
 bIn
 txE
 qMI
-bLW
+bLV
 bNu
 bOS
 clh
