@@ -20723,6 +20723,10 @@
 /obj/decal/poster/wallsign/teaparty{
 	pixel_y = 32
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -36263,6 +36267,9 @@
 	dir = 1
 	},
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bNq" = (
