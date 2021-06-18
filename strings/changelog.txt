@@ -1,5 +1,9 @@
 
 (t)fri jun 18 21
+(u)DimWhat
+(p)5200
+(e)⚖|balance
+(*)Made fabricating a nuclear charge take more difficult materials
 (u)Tarmunora
 (+)add a tranq rifle and a mag of halop darts to surplus crates when safari kit is rolled
 (+)once their owner dies, podwars blasters stop charging, are non-rechargeable, and cannot have their cell swapped
