@@ -28,7 +28,7 @@
 	"workbench.editorAssociations": {
 		"*.dmi": "imagePreview.previewEditor"
 	},
-	//Ignore whitespace for blame
+	// Ignore whitespace for blame
 	"gitlens.advanced.blame.customArguments": [
 		"-w"
 	],
