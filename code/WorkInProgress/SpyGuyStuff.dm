@@ -129,7 +129,7 @@ proc/Create_Tommyname()
 	//Set up the new appearance
 	var/datum/appearanceHolder/AH = new
 	AH.gender = "male"
-	AH.customization_first = "Dreadlocks"
+	AH.customization_first = new /datum/customization_style/hair/long/dreads
 	AH.gender = "male"
 	AH.s_tone = "#FAD7D0"
 	AH.owner = src
@@ -396,8 +396,7 @@ proc/Create_Tommyname()
 			var/mob/living/carbon/human/H = hit
 			if(!istype(H.head, /obj/item/clothing/head/wig))
 				var/obj/item/clothing/head/wig/W = H.create_wig()
-				H.bioHolder.mobAppearance.customization_first = "None"
-				H.cust_one_state = customization_styles["None"]
+				H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
 				H.drop_from_slot(H.head)
 				H.force_equip(W, H.slot_head)
 				H.update_colorful_parts()

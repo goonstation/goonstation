@@ -168,7 +168,7 @@ proc/EndSpacePush(var/atom/movable/A)
 					if (isghostdrone(B) && MagneticTether)
 						continue
 
-					M.setStatus("slowed", 20, 20)
+					M.setStatus("slowed", 2 SECONDS, 20)
 
 				if(!step(M, SOUTH))
 					var/dirMod = pick(1, -1)

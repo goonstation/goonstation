@@ -192,38 +192,43 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/poy = text2num(params["icon-y"]) - 16
 	var/turf/user_turf = get_turf(user)
 	var/turf/target_turf = get_turf(target)
-	if(charge_up && !can_dual_wield && canshoot())
-		actions.start(new/datum/action/bar/icon/guncharge(src, pox, poy, user_turf, target_turf, charge_up, icon, icon_state), user)
-	else
-		if(canshoot())
-			user.next_click = max(user.next_click, world.time + src.shoot_delay)
-		shoot(target_turf, user_turf, user, pox, poy)
 
 	//if they're holding a gun in each hand... why not shoot both!
+	var/is_dual_wield = 0
 	if (can_dual_wield && (!charge_up))
 		if(ishuman(user))
 			if(user.hand && istype(user.r_hand, /obj/item/gun) && user.r_hand:can_dual_wield)
 				if (user.r_hand:canshoot())
+					is_dual_wield = 1
 					user.next_click = max(user.next_click, world.time + user.r_hand:shoot_delay)
 				SPAWN_DBG(0.2 SECONDS)
-					user.r_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
+					user.r_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield)
 			else if(!user.hand && istype(user.l_hand, /obj/item/gun)&& user.l_hand:can_dual_wield)
 				if (user.l_hand:canshoot())
+					is_dual_wield = 1
 					user.next_click = max(user.next_click, world.time + user.l_hand:shoot_delay)
 				SPAWN_DBG(0.2 SECONDS)
-					user.l_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
+					user.l_hand:shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield)
 		else if(ismobcritter(user))
 			var/mob/living/critter/M = user
 			var/list/obj/item/gun/guns = list()
 			for(var/datum/handHolder/H in M.hands)
 				if(H.item && H.item != src && istype(H.item, /obj/item/gun) && H.item:can_dual_wield)
+					is_dual_wield = 1
 					if (H.item:canshoot())
 						guns += H.item
 						user.next_click = max(user.next_click, world.time + H.item:shoot_delay)
 			SPAWN_DBG(0)
 				for(var/obj/item/gun/gun in guns)
 					sleep(0.2 SECONDS)
-					gun.shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2))
+					gun.shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield)
+
+	if(charge_up && !can_dual_wield && canshoot())
+		actions.start(new/datum/action/bar/icon/guncharge(src, pox, poy, user_turf, target_turf, charge_up, icon, icon_state), user)
+	else
+		if(canshoot())
+			user.next_click = max(user.next_click, world.time + src.shoot_delay)
+		shoot(target_turf, user_turf, user, pox, poy, is_dual_wield)
 
 
 	return 1
@@ -258,7 +263,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (isghostdrone(user))
 		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
 		return FALSE
-
+	var/is_dual_wield = 0
 	//Ok. i know it's kind of dumb to add this param 'second_shot' to the shoot_point_blank proc just to make sure pointblanks don't repeat forever when we could just move these checks somewhere else.
 	//but if we do the double-gun checks here, it makes stuff like double-hold-at-gunpoint-pointblanks easier!
 	if (can_dual_wield && !second_shot)
@@ -266,19 +271,26 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		if (ishuman(user))
 			if(user.hand && istype(user.r_hand, /obj/item/gun) && user.r_hand:can_dual_wield)
 				var/target_turf = get_turf(M)
+				is_dual_wield = 1
 				SPAWN_DBG(0.2 SECONDS)
 					if (get_dist(user,M)<=1)
 						user.r_hand:shoot_point_blank(M,user,second_shot = 1)
 					else
-						user.r_hand:shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5))
+						user.r_hand:shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5), is_dual_wield)
 			else if(!user.hand && istype(user.l_hand, /obj/item/gun) && user.l_hand:can_dual_wield)
 				var/target_turf = get_turf(M)
+				is_dual_wield = 1
 				SPAWN_DBG(0.2 SECONDS)
 					if (get_dist(user,M)<=1)
 						user.l_hand:shoot_point_blank(M,user,second_shot = 11)
 					else
-						user.l_hand:shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5))
+						user.l_hand:shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5), is_dual_wield)
 
+
+	if (src.artifact && istype(src.artifact, /datum/artifact))
+		var/datum/artifact/art_gun = src.artifact
+		if (!art_gun.activated)
+			return
 
 	if (!canshoot())
 		if (!silenced)
@@ -357,7 +369,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/proc/alter_projectile(var/obj/projectile/P)
 	return
 
-/obj/item/gun/proc/shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
+/obj/item/gun/proc/shoot(var/target,var/start,var/mob/user,var/POX,var/POY,var/is_dual_wield)
 	if (isghostdrone(user))
 		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
 		return FALSE
@@ -391,7 +403,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				sleep(slowdown_time)
 				M.movement_delay_modifier -= slowdown
 
-	var/spread = 0
+	var/spread = is_dual_wield*10
 	if (user.reagents)
 		var/how_drunk = 0
 		var/amt = user.reagents.get_reagent_amount("ethanol")
@@ -418,6 +430,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 		var/turf/T = target
 		src.log_shoot(user, T, P)
+
+	SEND_SIGNAL(user, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 
 	if (ismob(user))
 		var/mob/M = user

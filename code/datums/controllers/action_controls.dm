@@ -34,6 +34,9 @@ var/datum/action_controller/actions
 		return
 
 	proc/start(var/datum/action/A, var/atom/owner) //Starts a new action.
+		if(!owner)
+			qdel(A)
+			return
 		if(!(owner in running))
 			running.Add(owner)
 			running[owner] = list(A)
@@ -379,7 +382,7 @@ var/datum/action_controller/actions
 	/// a list of args for the proc thats called once the action bar finishes, if needed.
 	var/list/proc_args = null
 
-	New(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message)
+	New(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message, interrupt_flags)
 		..()
 		if (owner)
 			src.owner = owner
@@ -405,7 +408,8 @@ var/datum/action_controller/actions
 			CRASH("icon state set for action bar, but no icon was set")
 		if (end_message)
 			src.end_message = end_message
-
+		if (interrupt_flags)
+			src.interrupt_flags = interrupt_flags
 		//generate a id
 		if (src.proc_path)
 			src.id = "[src.proc_path]"

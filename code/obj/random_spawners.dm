@@ -15,6 +15,7 @@
 	var/list/rare_items2spawn = list() // things that only rarely appear, independent of how big or small the main item list is
 	var/list/guaranteed = list() // things that will always spawn from this - set to a number to spawn that many of the thing
 
+	// TODO: initialize
 	New()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
@@ -77,7 +78,7 @@
 	icon_state = "rand_snacks"
 	min_amt2spawn = 1
 	max_amt2spawn = 1
-	items2spawn = list(/obj/item/reagent_containers/food/snacks/candy,
+	items2spawn = list(/obj/item/reagent_containers/food/snacks/candy/regular,
 	/obj/item/reagent_containers/food/snacks/candy/chocolate,
 	/obj/item/reagent_containers/food/snacks/candy/nougat,
 	/obj/item/reagent_containers/food/snacks/candy/butterscotch,
@@ -1425,8 +1426,7 @@
 	icon_state = "rand_mask"
 	min_amt2spawn = 5
 	max_amt2spawn = 10
-	items2spawn = list(/obj/item/clothing/mask/hunter,
-						/obj/item/clothing/mask/owl_mask,
+	items2spawn = list(/obj/item/clothing/mask/owl_mask,
 						/obj/item/clothing/mask/smile,
 						/obj/item/clothing/mask/batman,
 						/obj/item/clothing/mask/clown_hat,
@@ -1606,18 +1606,15 @@
 						/obj/item/clothing/shoes/dress_shoes,
 						/obj/item/clothing/shoes/flippers,
 						/obj/item/clothing/shoes/fuzzy,
-						/obj/item/clothing/shoes/galoshes,
 						/obj/item/clothing/shoes/gogo,
 						/obj/item/clothing/shoes/heels,
 						/obj/item/clothing/shoes/jetpack,
 						/obj/item/clothing/shoes/macho,
-						/obj/item/clothing/shoes/magnetic,
 						/obj/item/clothing/shoes/mj_shoes,
 						/obj/item/clothing/shoes/moon,
 						/obj/item/clothing/shoes/rocket,
 						/obj/item/clothing/shoes/rollerskates,
 						/obj/item/clothing/shoes/sailormoon,
-						/obj/item/clothing/shoes/sandal,
 						/obj/item/clothing/shoes/swat,
 						/obj/item/clothing/shoes/thong,
 						/obj/item/clothing/shoes/tourist,

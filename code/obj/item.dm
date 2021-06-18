@@ -1042,10 +1042,7 @@
 		return
 
 	.= 1
-	for (var/obj/item/cloaking_device/I in M)
-		if (I.active)
-			I.deactivate(M)
-			M.visible_message("<span class='notice'><b>[M]'s cloak is disrupted!</b></span>")
+	SEND_SIGNAL(M, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 	if (issmallanimal(M))
 		var/mob/living/critter/small_animal = M
 
