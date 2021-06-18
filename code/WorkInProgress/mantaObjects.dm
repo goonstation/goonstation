@@ -355,7 +355,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 
 /obj/machinery/mantapropulsion/big
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "bigsea_propulsion"
 	important = 1
 	bound_height = 64
@@ -394,7 +394,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		icon_state = "seaheater"
 
 /obj/machinery/power/seaheater/big
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "bigheater"
 	var/lastpower = 0
 
@@ -546,7 +546,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	iconclosed = "junctionbox2"
 
 /obj/machinery/communicationstower
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	name = "Communications Tower"
 	icon_state = "commstower"
 	density = 0
@@ -588,7 +588,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			random_events.force_event("Communications Malfunction")
 
 /obj/machinery/magneticbeacon
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	name = "Magnetic Tether"
 	icon_state = "magbeacon"
 	desc = "A rather delicate magnetic tether array. It allows people to safely explore the ocean around NSS Manta while carrying a magnetic attachment point."
@@ -1603,7 +1603,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/vaultdoor
 	name = "vault door"
-	icon = 'icons/obj/96x32.dmi'
+	icon = 'icons/obj/large/96x32.dmi'
 	icon_state = "vaultdoor_closed"
 	density = 1
 	anchored = 2

@@ -65,6 +65,18 @@
 		if (M)
 			data["compID"] = M.computer_id
 			data["ip"] = M.lastKnownIP
+		else
+			var/list/response
+			try
+				response = apiHandler.queryAPI("playerInfo/get", list("ckey" = data["ckey"]), forceResponse = 1)
+			catch ()
+				var/ircmsg[] = new()
+				ircmsg["name"] = user
+				ircmsg["msg"] = "Failed to query API, try again later."
+				ircbot.export("admin", ircmsg)
+				return
+			data["ip"] = response["last_ip"]
+			data["compID"] = response["last_compID"]
 		data["reason"] = reason
 		if (length == "hour")
 			length = 60

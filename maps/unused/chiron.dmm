@@ -2769,7 +2769,7 @@
 /obj/machinery/glass_recycler{
 	density = 1
 	},
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/storage/toolbox/emergency,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
@@ -5514,7 +5514,7 @@
 /area/station/science/chemistry)
 "ajJ" = (
 /obj/table/auto,
-/obj/item/paper/book/dwainedummies{
+/obj/item/paper/book/from_file/dwainedummies{
 	pixel_y = 6
 	},
 /obj/item/device/multitool,
@@ -6185,11 +6185,11 @@
 	pixel_x = -24;
 	pixel_y = 0
 	},
-/obj/item/paper/book/guardbot_guide{
+/obj/item/paper/book/from_file/guardbot_guide{
 	pixel_x = -2;
 	pixel_y = 1
 	},
-/obj/item/paper/book/dwainedummies{
+/obj/item/paper/book/from_file/dwainedummies{
 	pixel_x = 3
 	},
 /turf/simulated/floor/carpet/grime,
@@ -6961,7 +6961,7 @@
 /area/space)
 "amq" = (
 /obj/table/auto,
-/obj/item/paper/book/guardbot_guide{
+/obj/item/paper/book/from_file/guardbot_guide{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -7079,7 +7079,7 @@
 "amG" = (
 /obj/stool/bed,
 /obj/decal/cleanable/dirt,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /obj/machinery/light/small{
 	icon_state = "bulb1";
 	dir = 1
@@ -8983,7 +8983,7 @@
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
 /obj/item/stamp,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/storage/box/patchbox,
 /obj/item/clipboard,
 /obj/item/hand_labeler,
@@ -9873,7 +9873,7 @@
 	dir = 1;
 	name = "light fixture"
 	},
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/item/reagent_containers/glass/bottle/eyedrops,
 /turf/simulated/floor/green/side{
 	dir = 1
@@ -11062,7 +11062,7 @@
 	dir = 1
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/item/kitchen/food_box/donut_box,
 /obj/item/instrument/bikehorn/dramatic,
 /obj/machinery/disposal/small{
@@ -23227,7 +23227,7 @@
 "aTY" = (
 /obj/table/reinforced/auto,
 /obj/item/hand_labeler,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/storage/box/patchbox,
 /obj/machinery/door/window/eastright{
 	name = "Medbay";
@@ -27615,7 +27615,7 @@
 	name = "N light switch";
 	pixel_y = 24
 	},
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/item/device/matanalyzer,
 /obj/item/device/matanalyzer,
 /turf/simulated/floor/orangeblack/side{
@@ -33701,7 +33701,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
-	icon = 'icons/obj/64x96.dmi';
+	icon = 'icons/obj/large/64x96.dmi';
 	icon_state = "air_gizmo";
 	name = "damaged vaporator unit"
 	},
@@ -34122,7 +34122,7 @@
 /area/station/engine/core)
 "bqi" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/item/device/matanalyzer,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
@@ -34247,7 +34247,7 @@
 	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
 	name = "note from mom"
 	},
-/obj/item/paper/book/critter_compendium,
+/obj/item/paper/book/from_file/critter_compendium,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},

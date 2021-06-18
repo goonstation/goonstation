@@ -131,10 +131,9 @@
 		HTML += "<hr>"
 
 		HTML += "<div class='gps group'><b>Beacons</b></div>"
-		for (var/obj/machinery/beacon/B as anything in machine_registry[MACHINES_BEACONS])
-			if (B.enabled == 1)
-				var/turf/T = get_turf(B.loc)
-				HTML += "<div class='buttons gps'><A href='byond://?src=\ref[src];dest_cords=1;x=[T.x];y=[T.y];z=[T.z];name=[B.sname]'><span><b>[B.sname]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></A></div>"
+		for (var/obj/B in by_type[/obj/warp_beacon])
+			var/turf/T = get_turf(B.loc)
+			HTML += "<div class='buttons gps'><A href='byond://?src=\ref[src];dest_cords=1;x=[T.x];y=[T.y];z=[T.z];name=[B.name]'><span><b>[B.name]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></A></div>"
 		HTML += "<br></div>"
 
 		user.Browse(HTML, "window=gps_[src];title=GPS;size=400x540;override_setting=1")
@@ -344,32 +343,3 @@
 			pingsignal.transmission_method = TRANSMISSION_RADIO
 
 			radio_control.post_signal(src, pingsignal)
-
-// coordinate beacons. pretty useless but whatever you never know
-
-/obj/machinery/beacon
-	name = "coordinate beacon"
-	desc = "A coordinate beacon used for space GPSes."
-	icon = 'icons/obj/ship.dmi'
-	icon_state = "beacon"
-	machine_registry_idx = MACHINES_BEACONS
-	var/sname = "unidentified"
-	var/enabled = 1
-
-	process()
-		if(enabled == 1)
-			use_power(50)
-
-	attack_hand()
-		enabled = !enabled
-		boutput(usr, "<span class='notice'>You switch the beacon [src.enabled ? "on" : "off"].</span>")
-
-	attack_ai(mob/user as mob)
-		var/t = input(user, "Enter new beacon identification name", src.sname) as null|text
-		if (isnull(t))
-			return
-		t = strip_html(replacetext(t, "'",""))
-		t = copytext(t, 1, 45)
-		if (!t)
-			return
-		src.sname = t

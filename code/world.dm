@@ -210,7 +210,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_PREGAME))
 #warn Profiler enabled at start of init
-		world.Profile(PROFILE_START, "sendmaps", "json")
+		world.Profile(PROFILE_START | PROFILE_AVERAGE, "sendmaps", "json")
 #endif
 		server_start_time = world.timeofday
 
@@ -296,7 +296,7 @@ var/f_color_selector_handler/F_Color_Selector
 		Z_LOG_DEBUG("Preload", "  disease_controls")
 		disease_controls = new /datum/disease_controller()
 		Z_LOG_DEBUG("Preload", "  mechanic_controls")
-		mechanic_controls = new /datum/mechanic_controller()
+		mechanic_controls = null //A ruck kit will fill this in
 		Z_LOG_DEBUG("Preload", "  artifact_controls")
 		artifact_controls = new /datum/artifact_controller()
 		Z_LOG_DEBUG("Preload", "  mining_controls")
@@ -574,7 +574,7 @@ var/f_color_selector_handler/F_Color_Selector
 	build_supply_pack_cache()
 	build_syndi_buylist_cache()
 	build_camera_network()
-	//build_manufacturer_icons()
+	build_manufacturer_icons()
 	clothingbooth_setup()
 
 	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
@@ -687,10 +687,10 @@ var/f_color_selector_handler/F_Color_Selector
 #warn Profiler enabled at end of game (full)
 	var/profile_out = file("data/profile/[time2text(world.realtime, "YYYY-MM-DD hh-mm-ss")]-full.log")
 #endif
-	profile_out << world.Profile(PROFILE_START, "sendmaps", "json")
+	profile_out << world.Profile(PROFILE_START | PROFILE_AVERAGE, "sendmaps", "json")
 	world.log << "Dumped profiler data."
 	// not gonna need this again
-	world.Profile(PROFILE_STOP, "sendmaps", "json")
+	world.Profile(PROFILE_STOP | PROFILE_AVERAGE, "sendmaps", "json")
 #endif
 
 	lagcheck_enabled = 0
@@ -707,18 +707,20 @@ var/f_color_selector_handler/F_Color_Selector
 
 	logTheThing("diary", null, "Shutting down after testing for runtimes.", "admin")
 	if (isnull(runtimeDetails))
-		world.log << "Runtime checking failed due to missing runtimeDetails global list"
+		text2file("Runtime checking failed due to missing runtimeDetails global list", "errors.log")
 	else if (length(runtimeDetails) > 0)
-		world.log << "[length(runtimeDetails)] runtimes generated:"
+		text2file("[length(runtimeDetails)] runtimes generated:", "errors.log")
 		for (var/idx in runtimeDetails)
 			var/list/details = runtimeDetails[idx]
 			var/timestamp = details["seen"]
 			var/file = details["file"]
 			var/line = details["line"]
 			var/name = details["name"]
-			world.log << "\[[timestamp]\] [file],[line]: [name]"
+			text2file("\[[timestamp]\] [file],[line]: [name]", "errors.log")
 #ifndef PREFAB_CHECKING
-	text2file(debug_map_apc_count("\n", zlim=Z_LEVEL_STATION), "no_runtimes.txt")
+	var/apc_error_str = debug_map_apc_count("\n", zlim=Z_LEVEL_STATION)
+	if (!is_blank_string(apc_error_str))
+		text2file(apc_error_str, "errors.log")
 #endif
 	shutdown()
 #endif
@@ -1701,7 +1703,5 @@ var/opt_inactive = null
 /// EXPERIMENTAL STUFF
 
 /world/Del()
-	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
-	if (debug_server)
-		call(debug_server, "auxtools_shutdown")()
+	disable_auxtools_debugger()
 	. = ..()

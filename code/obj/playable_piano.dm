@@ -321,7 +321,7 @@
 			src.visible_message("\The [src] has nothing in its item box to take! Drat!")
 			return
 		new /obj/item/piano_key(get_turf(src))
-		new /obj/item/paper/book/player_piano(get_turf(src))
+		new /obj/item/paper/book/from_file/player_piano(get_turf(src))
 		items_claimed = 1
 		src.visible_message("\The [src] spills out a key and a booklet! Nifty!")
 		src.desc = "A piano that can take raw text and turn it into music! The future is now! The free user essentials box has been raided!" //jaaaaaaaank

@@ -709,12 +709,12 @@
 
 			onAdd(optional=null)
 				. = ..()
-				if (ismob(owner))
+				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
 					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 
 			onRemove()
-				if (ismob(owner))
+				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
 					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 				. = ..()
@@ -729,12 +729,12 @@
 
 			onAdd(optional=null)
 				. = ..()
-				if (ismob(owner))
+				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
 					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 
 			onRemove()
-				if (ismob(owner))
+				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
 					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 				. = ..()
@@ -786,12 +786,12 @@
 
 			onAdd(optional=null)
 				. = ..()
-				if (ismob(owner))
+				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
 					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 
 			onRemove()
-				if (ismob(owner))
+				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
 					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 				. = ..()

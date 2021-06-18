@@ -272,9 +272,6 @@
 			src.amount_left = 0
 		inventory_counter.update_number(src.amount_left)
 
-	// src.desc = text("There are [] [] bullet\s left!", src.amount_left, (ammo_type.material && istype(ammo_type, /datum/material/metal/silver)))
-		src.desc = "There are [src.amount_left][ammo_type.material && istype(ammo_type, /datum/material/metal/silver) ? " silver " : " "]bullet\s left!"
-
 		if (src.amount_left > 0)
 			if (src.icon_dynamic && src.icon_short)
 				src.icon_state = text("[src.icon_short]-[src.amount_left]")
@@ -287,6 +284,9 @@
 
 	proc/after_unload(mob/user)
 		return
+
+	get_desc()
+		return . += "There are [src.amount_left][ammo_type.material && istype(ammo_type.material, /datum/material/metal/silver) ? " silver " : " "]bullet\s left!"
 
 /obj/item/ammo/bullets/derringer
 	sname = ".41 RF"
@@ -834,6 +834,11 @@
 	five_shots
 		amount_left = 5.0
 
+	smartgun
+		name = "9mm smartgun magazine"
+		amount_left = 24.0
+		max_amount = 24.0
+		ammo_type = new/datum/projectile/bullet/bullet_9mm/smartgun
 	smg
 		name = "9mm SMG magazine"
 		amount_left = 30.0
@@ -1209,6 +1214,19 @@
 	desc = "A box containg a single inert meowitzer. It appears to be softly purring. Wait is that a cat?"
 	ammo_type = new/datum/projectile/special/meowitzer/inert
 
+/obj/item/ammo/bullets/foamdarts
+	sname = "foam darts"
+	name = "foam dart box"
+	icon_state = "foamdarts"
+	icon_empty = "foamdarts-0"
+	amount_left = 20
+	max_amount = 20
+	caliber = 0.393
+	ammo_type = new/datum/projectile/bullet/foamdart
+
+/obj/item/ammo/bullets/foamdarts/ten
+	amount_left = 10
+	max_amount = 10
 
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND

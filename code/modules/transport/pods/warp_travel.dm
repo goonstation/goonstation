@@ -1,8 +1,6 @@
 ///Warp Beacons and Wormholes
 ///Used by spaceships to travel to other Z-planes
 
-var/global/list/warp_beacons = list() //wow you should've made one for warp beacons when you made one for normal tracking beacons huh
-
 /obj/warp_beacon
 	name = "warp beacon"
 	desc = "Part of an elaborate small-ship teleportation network recently deployed by Nanotrasen.  Probably won't cause you to die."
@@ -98,21 +96,11 @@ var/global/list/warp_beacons = list() //wow you should've made one for warp beac
 
 /obj/warp_beacon/New()
 	..()
-	SPAWN_DBG(0)
-		if (!islist(warp_beacons))
-			warp_beacons = list()
-		warp_beacons.Add(src)
+	START_TRACKING
 
 /obj/warp_beacon/disposing()
 	..()
-	if (islist(warp_beacons))
-		warp_beacons.Remove(src)
-
-/obj/warp_beacon/disposing()
-	if (islist(warp_beacons))
-		warp_beacons.Remove(src)
-	..()
-
+	STOP_TRACKING
 
 /obj/warp_portal
 	name = "particularly buff portal"

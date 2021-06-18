@@ -120,7 +120,7 @@
 					if(prob(50))
 						holder.ownhuman.emote("scream")
 						if(prob(50))
-							holder.ownhuman.setStatus("resting", 5)
+							holder.ownhuman.setStatus("resting", 0.5 SECONDS)
 							holder.ownhuman.force_laydown_standup()
 							holder.ownhuman.hud.update_resting()
 							holder.ownhuman.resist()

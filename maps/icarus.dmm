@@ -7287,7 +7287,7 @@
 /area/station/hallway/primary/central)
 "aqn" = (
 /obj/table/wood/round/auto,
-/obj/item/paper/book/monster_manual,
+/obj/item/paper/book/from_file/monster_manual,
 /turf/simulated/floor/carpet/purple,
 /area/station/hallway/primary/central)
 "aqo" = (
@@ -7627,7 +7627,7 @@
 /obj/item/clothing/mask/skull,
 /obj/item/clothing/head/apprentice,
 /obj/item/clothing/suit/cultist/nerd,
-/obj/item/paper/book/critter_compendium,
+/obj/item/paper/book/from_file/critter_compendium,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "arc" = (
@@ -18921,7 +18921,7 @@
 /area/station/maintenance/east)
 "aOP" = (
 /obj/table/auto,
-/obj/item/paper/book/guardbot_guide{
+/obj/item/paper/book/from_file/guardbot_guide{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -19247,7 +19247,7 @@
 	pixel_y = -5
 	},
 /obj/item/disk/data/tape/master/readonly,
-/obj/item/paper/book/dwainedummies{
+/obj/item/paper/book/from_file/dwainedummies{
 	pixel_y = 6
 	},
 /obj/item/device/multitool,
@@ -19808,7 +19808,7 @@
 /area/station/medical/medbay/pharmacy)
 "aQM" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/clothing/glasses/spectro,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -20571,7 +20571,7 @@
 "aSf" = (
 /obj/table/auto,
 /obj/item/device/radio/beacon,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/storage/toolbox/emergency,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -20844,7 +20844,7 @@
 	name = "Clown"
 	},
 /obj/decal/cleanable/dirt,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "aSH" = (
@@ -21914,7 +21914,7 @@
 "aUB" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/item/device/matanalyzer,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -26165,7 +26165,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
-	icon = 'icons/obj/64x96.dmi';
+	icon = 'icons/obj/large/64x96.dmi';
 	icon_state = "air_gizmo";
 	name = "damaged vaporator unit"
 	},

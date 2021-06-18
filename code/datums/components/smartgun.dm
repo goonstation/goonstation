@@ -144,7 +144,7 @@
 						targeting_images[M].maptext_y = 3
 					targeting_images[M].maptext = "<span class='pixel c ol'>[tracked_targets[M]]</span>"
 
-		sleep(0.8 SECONDS)
+		sleep(0.6 SECONDS)
 
 	stopping = 0
 	tracking = 0
