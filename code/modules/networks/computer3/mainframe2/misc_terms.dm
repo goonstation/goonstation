@@ -4434,7 +4434,7 @@
 				heat_overlay.icon_state = "heat-1"
 			if (250 to 269)
 				heat_overlay.icon_state = "heat-2"
-			if (249 to -99)
+			if (-INFINITY to 249)
 				heat_overlay.icon_state = "heat-3"
 			else
 				heat_overlay.icon_state = ""

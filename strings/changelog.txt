@@ -1,5 +1,9 @@
 
 (t)thu jun 17 21
+(u)Azrun
+(p)5130
+(e)🆕|feature
+(+)Gnesis and Gnesisglass tables will reform when smashed.
 (u)eX.n0x
 (p)5148
 (e)🐛🗺|bug, mapping

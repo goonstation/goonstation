@@ -89,6 +89,8 @@ toxic - poisons
 	icon_turf_hit = "bhole-small"
 
 	smartgun
+		dissipation_delay = 6
+		dissipation_rate = 3
 		power = 15
 
 	smg
