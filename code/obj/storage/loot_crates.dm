@@ -288,7 +288,7 @@
 							items += /obj/item/clothing/ears/earmuffs/yeti
 							item_amounts += 1
 						if(3)
-							items += /obj/item/device/light/zippo/dan
+							items += /obj/item/device/light/zippo/gold
 							item_amounts += 1
 							items += /obj/item/cigpacket/random
 							item_amounts += rand(2,4)
