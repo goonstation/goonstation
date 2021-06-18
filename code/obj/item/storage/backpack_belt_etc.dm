@@ -150,7 +150,7 @@
 
 /obj/item/storage/backpack/breadpack
 	name = "bag-uette"
-	desc = "It kind of smells like bread too! Definitely not edible, sadly."
+	desc = "It kind of smells like bread too! Unfortunately inedible."
 	icon_state = "bp_breadpack"
 	item_state = "bp_breadpack"
 
@@ -272,7 +272,7 @@
 
 /obj/item/storage/backpack/satchel/breadpack
 	name = "bag-uette satchel"
-	desc = "It kind of smells like bread too! Definitely not edible, sadly."
+	desc = "It kind of smells like bread too! Unfortunately inedible."
 	icon_state = "sat_breadpack"
 	item_state = "sat_breadpack"
 
