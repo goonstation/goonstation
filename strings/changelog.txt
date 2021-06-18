@@ -1,4 +1,10 @@
 
+(t)fri jun 18 21
+(u)Tarmunora
+(p)5201
+(e)⚖🗺|balance, mapping
+(+)Replaced a certain syndicate device analyzer with a certain specific manufacturing blueprint
+(+)Added syndicate device analyzers to surplus crate pool
 (t)thu jun 17 21
 (u)Azrun
 (p)5130
