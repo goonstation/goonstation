@@ -384,11 +384,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		owner.material.triggerTemp(locate(owner))
 
 /datum/materialProc/molitz_temp
-	var/iterations = 50
+	var/iterations = 4 // big issue I had was that with the strat that Im designing this for (teleporting crystals in and out of engine) one crystal could last you for like, 50 minutes, I didnt want to keep on reducing total amount as itd nerf agent b collection hard. So instead I drastically reduced amount and drastically upped output. This would speed up farming agent b to 3 minutes per crystal, which Im fine with
 	execute(var/atom/location, var/temp, var/agent_b=FALSE)
 		if(iterations <= 0) return
 		var/turf/target = get_turf(location)
-		if(ON_COOLDOWN(location, "molitz_gas_generate", 8 SECONDS)) return
+		if(ON_COOLDOWN(location, "molitz_gas_generate", 3 SECONDS)) return // Reminder, swap this back to 30 when done playtesting
 
 		var/datum/gas_mixture/air = target.return_air()
 		if(!air) return
@@ -400,25 +400,23 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(agent_b && temp > 500 && air.toxins > MINIMUM_REACT_QUANTITY )
 			var/datum/gas/oxygen_agent_b/trace_gas = payload.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
 			payload.temperature = T0C // Greatly reduce temperature to simulate an endothermic reaction
-			// Itr 1: 0.2 Agent B, 5 oxy
-			// Final Itr: 0.0605 Agent B, 5 oxy
-			// Should be 50 iterations to deplete total of 9.099 mols of agent B and 100 oxygen, will take 55 iterations to hit minimum reaction rate whihch is about 3.665 minutes, (Note I changed iterations to be half the amount so I just divided this by half, likely wrong!) (this math may be outdated so it may not be entirely accurate, also its azruns.)
+			// Itr: 1.6 Agent B, 20 oxy, likely around two minutes for it to get below minimum amount in chamber. That means about 12 minutes per crystal.
 
 			animate_flash_color_fill_inherit(location,"#ff0000",4, 2 SECONDS)
 			if(!ON_COOLDOWN(location, "sound_cooldownB", 2 SECONDS)) // Prevents ear spam
 				playsound(location, "sound/effects/leakagentb.ogg", 50, 1, 8)
 			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, location))
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(location))
-			trace_gas.moles += min(iterations/50,0.2)
+			trace_gas.moles += 1.6
 			iterations -= 1
-			payload.oxygen = 5
+			payload.oxygen = 20
 
 			target.assume_air(payload)
 		else
 			animate_flash_color_fill_inherit(location,"#0000FF",4, 2 SECONDS)
 			if(!ON_COOLDOWN(location, "sound_cooldown", 2 SECONDS)) //Prevents ear spam
 				playsound(location, "sound/effects/leakoxygen.ogg", 50, 1, 5)
-			payload.oxygen = 20
+			payload.oxygen = 80
 			iterations -= 1
 
 			target.assume_air(payload)
@@ -429,15 +427,16 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/molitz_exp
+	var/maxexplode = 1
 	execute(var/atom/location, var/sev)
+		if(maxexplode <= 0) return
 		var/turf/target = get_turf(location)
-		if(sev > 0 && sev < 4)
+		if(sev > 0 && sev < 4) // Use pipebombs not canbombs!
 			var/datum/gas_mixture/payload = unpool(/datum/gas_mixture)
-			payload.oxygen = 25
+			payload.oxygen = 50
 			payload.temperature = T20C
-			payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 			target.assume_air(payload)
-
+			maxexplode -= 1
 /datum/materialProc/molitz_on_hit
 	execute(var/atom/owner, var/obj/attackobj)
 		owner.material.triggerTemp(owner, 1500)
