@@ -1600,17 +1600,20 @@
 	icon_state = "rand_shoes"
 	min_amt2spawn = 5
 	max_amt2spawn = 10
-	items2spawn = list(/obj/item/clothing/shoes/cleats,
+	items2spawn = list(/obj/item/clothing/shoes/bootsblk,
+						/obj/item/clothing/shoes/bootsblu,
 						/obj/item/clothing/shoes/cowboy,
 						/obj/item/clothing/shoes/cyborg,
 						/obj/item/clothing/shoes/dress_shoes,
+						/obj/item/clothing/shoes/heels/dancin,
 						/obj/item/clothing/shoes/flippers,
 						/obj/item/clothing/shoes/fuzzy,
 						/obj/item/clothing/shoes/gogo,
 						/obj/item/clothing/shoes/heels,
-						/obj/item/clothing/shoes/jetpack,
 						/obj/item/clothing/shoes/macho,
 						/obj/item/clothing/shoes/mj_shoes,
+						/obj/item/clothing/shoes/mjblack,
+						/obj/item/clothing/shoes/mjwhite,
 						/obj/item/clothing/shoes/moon,
 						/obj/item/clothing/shoes/rocket,
 						/obj/item/clothing/shoes/rollerskates,
@@ -1620,6 +1623,7 @@
 						/obj/item/clothing/shoes/tourist,
 						/obj/item/clothing/shoes/utenashoes,
 						/obj/item/clothing/shoes/virtual,
+						/obj/item/clothing/shoes/witchfinder,
 						/obj/item/clothing/shoes/ziggy)
 
 	one
