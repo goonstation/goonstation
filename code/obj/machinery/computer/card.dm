@@ -8,6 +8,12 @@
 	var/mode = 0.0
 	var/printing = null
 	var/list/scan_access = null
+	var/custom1_name = "Custom 1"
+	var/custom2_name = "Custom 2"
+	var/custom3_name = "Custom 3"
+	var/list/custom1_list = list()
+	var/list/custom2_list = list()
+	var/list/custom3_list = list()
 	req_access = list(access_change_ids)
 	desc = "A computer that allows an authorized user to change the identification of other ID cards."
 
@@ -83,7 +89,7 @@
 			var/list/civilianjobs = list("Staff Assistant", "Bartender", "Chef", "Botanist", "Rancher", "Chaplain", "Janitor", "Clown")
 			var/list/maintainencejobs = list("Engineer", "Mechanic", "Miner", "Quartermaster")
 			var/list/researchjobs = list("Scientist", "Medical Doctor", "Geneticist", "Roboticist", "Pathologist")
-			var/list/securityjobs = list("Security Officer", "Detective")
+			var/list/securityjobs = list("Security Officer", "Security Assistant", "Detective")
 			var/list/commandjobs = list("Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Captain")
 
 			body += "<br><br><u>Jobs</u>"
@@ -106,6 +112,11 @@
 			body += "<br>Command:"
 			for(var/job in commandjobs)
 				body += " <a href='?src=\ref[src];assign=[job];colour=green'>[replacetext(job, " ", "&nbsp")]</a>"
+
+			body += "<br>Custom:"
+			body += " [src.custom1_name] <a href='?src=\ref[src];save=custom1'>save</a> <a href='?src=\ref[src];apply=custom1'>apply</a>"
+			body += " [src.custom2_name] <a href='?src=\ref[src];save=custom2'>save</a> <a href='?src=\ref[src];apply=custom2'>apply</a>"
+			body += " [src.custom3_name] <a href='?src=\ref[src];save=custom3'>save</a> <a href='?src=\ref[src];apply=custom3'>apply</a>"
 
 			//Change access to individual areas
 			body += "<br><br><u>Access</u>"
@@ -334,6 +345,37 @@
 				src.modify.icon_state = "id_sec"
 			if (newcolour == "green")
 				src.modify.icon_state = "id_com"
+	if (href_list["save"])
+		var/slot = href_list["save"]
+		if (slot == "custom1")
+			if (!src.modify.assignment)
+				src.custom1_name = "Custom 1"
+			else
+				src.custom1_name = src.modify.assignment
+			src.custom1_list = src.modify.access.Copy()
+		else if (slot == "custom2")
+			if (!src.modify.assignment)
+				src.custom1_name = "Custom 2"
+			else
+				src.custom2_name = src.modify.assignment
+			src.custom2_list = src.modify.access.Copy()
+		else
+			if (!src.modify.assignment)
+				src.custom3_name = "Custom 3"
+			else
+				src.custom3_name = src.modify.assignment
+			src.custom3_list = src.modify.access.Copy()
+	if (href_list["apply"])
+		var/slot = href_list["apply"]
+		if (slot == "custom1")
+			src.modify.assignment = src.custom1_name
+			src.modify.access = src.custom1_list.Copy()
+		else if (slot == "custom2")
+			src.modify.assignment = src.custom2_name
+			src.modify.access = src.custom2_list.Copy()
+		else
+			src.modify.assignment = src.custom3_name
+			src.modify.access = src.custom3_list.Copy()
 	if (src.modify)
 		src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
 	if (src.eject)
