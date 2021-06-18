@@ -167,6 +167,7 @@
 	validtypes = list("martian","wizard","precursor")
 	min_triggers = 0
 	max_triggers = 0
+	no_activation = TRUE
 	react_xray = list(2,90,15,11,"HOLLOW")
 	module_research = list("medicine" = 5, "science" = 5, "miniaturization" = 15)
 	module_research_insight = 3

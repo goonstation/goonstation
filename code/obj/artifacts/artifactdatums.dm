@@ -31,6 +31,8 @@ ABSTRACT_TYPE(/datum/artifact/)
 	var/activated = 0
 	/// Does the artifact switch itself on on spawn?
 	var/automatic_activation = 0
+  	/// Does the artifact not need activation? (for instance, reagent containers)
+	var/no_activation = FALSE
 	/// What noise the artifact makes when activated
 	var/activ_sound = null
 	/// What message the artifact gives when activated
@@ -46,7 +48,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 
 	/// the list of all the artifacts faults
 	var/list/faults = list()
-	///	a weighted list of possible faults
+	/// a weighted list of possible faults
 	/// it should be the possible fault types of the origin minus the fault types in the artifact type's fault_blacklist
 	var/list/fault_types = list()
 	/// fault types that are not allowed on this type of artifact (usually due to not working properly/making sense)
