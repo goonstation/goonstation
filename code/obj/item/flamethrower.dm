@@ -547,7 +547,9 @@ A Flamethrower in various states of assembly
 		src.gastank = F
 	else
 		src.fueltank = F
-	src.inventory_counter.update_percent(src.fueltank.reagents.total_volume, src.fueltank.reagents.maximum_volume)
+
+	if (src.fueltank)
+		src.inventory_counter.update_percent(src.fueltank.reagents.total_volume, src.fueltank.reagents.maximum_volume)
 
 	var/fuel = "_no_fuel"
 	if(src.fueltank)
