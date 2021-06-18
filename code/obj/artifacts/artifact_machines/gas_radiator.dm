@@ -18,6 +18,7 @@
 	var/gas_amount = 100 MOLES
 	var/gas_amount_current = 0 MOLES
 	var/gas_amount_growth = 5 MOLES
+	var/temp_text = "lukewarm"
 	examine_hint = "It is covered in very conspicuous markings."
 
 	post_setup()
@@ -65,14 +66,18 @@
 		gas_amount = rand(50 MOLES, 200 MOLES)
 
 		// text
-		var/tempText = ""
 		if (gas_temp > 310 KELVIN)
-			tempText = "hot "
+			temp_text = "hot"
 		else if (gas_temp < 310 KELVIN)
-			tempText = "cold "
+			temp_text = "cold"
 
-		src.activ_text = "begins to emit [tempText] gas!"
-		src.deact_text = "stops emitting [tempText] gas."
+		src.activ_text = "begins to emit [temp_text] gas!"
+		src.deact_text = "stops emitting [temp_text] gas."
+
+	effect_activate(obj/O)
+		if(..())
+			return
+		ArtifactLogs(usr, null, O, "activated", "making it radiate [temp_text] [gas_type]", 1)
 
 	effect_process(var/obj/O)
 		if (..())
