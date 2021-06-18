@@ -1,6 +1,8 @@
 
 (t)fri jun 18 21
 (u)Tarmunora
+(+)add a tranq rifle and a mag of halop darts to surplus crates when safari kit is rolled
+(u)Tarmunora
 (p)5201
 (e)⚖🗺|balance, mapping
 (+)Replaced a certain syndicate device analyzer with a certain specific manufacturing blueprint

@@ -661,6 +661,11 @@ This is basically useless for anyone but miners.
 	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
+	run_on_spawn(obj/item, mob/living/owner, in_surplus_crate)
+		if(in_surplus_crate)
+			new /obj/item/gun/kinetic/dart_rifle(item.loc)
+			new /obj/item/ammo/bullets/tranq_darts(item.loc)
+
 /datum/syndicate_buylist/traitor/powergloves
 	name = "Power Gloves"
 	item = /obj/item/clothing/gloves/powergloves
