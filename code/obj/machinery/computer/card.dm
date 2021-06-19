@@ -353,21 +353,21 @@
 			else
 				src.custom1_name = src.modify.assignment
 			src.custom1_list = src.modify.access.Copy()
-			src.custom1_list -= 37 //prevent saving armory access
+			src.custom1_list -= access_maxsec //prevent saving armory access
 		else if (slot == "custom2")
 			if (!src.modify.assignment)
 				src.custom2_name = "Custom 2"
 			else
 				src.custom2_name = src.modify.assignment
 			src.custom2_list = src.modify.access.Copy()
-			src.custom2_list -= 37 //prevent saving armory access
+			src.custom2_list -= access_maxsec //prevent saving armory access
 		else
 			if (!src.modify.assignment)
 				src.custom3_name = "Custom 3"
 			else
 				src.custom3_name = src.modify.assignment
 			src.custom3_list = src.modify.access.Copy()
-			src.custom3_list -= 37 //prevent saving armory access
+			src.custom3_list -= access_maxsec //prevent saving armory access
 	if (href_list["apply"])
 		var/slot = href_list["apply"]
 		if (slot == "custom1")
