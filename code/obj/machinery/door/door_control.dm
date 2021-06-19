@@ -5,8 +5,8 @@
 	desc = "A remote control switch for a door."
 	var/id = null
 	var/timer = 0
-	var/cooldown = 0
-	var/inuse = 0
+	var/cooldown = 0 SECONDS
+	var/inuse = FALSE
 	anchored = 1.0
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
@@ -450,9 +450,9 @@
 			M.setdir()
 
 	if(src.cooldown)
-		inuse = 1
+		inuse = TRUE
 		sleep(src.cooldown SECONDS)
-		inuse = 0
+		inuse = FALSE
 
 	SPAWN_DBG(1.5 SECONDS)
 		if(!(status & NOPOWER))
