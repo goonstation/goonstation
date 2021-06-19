@@ -254,6 +254,39 @@
 			/obj/item/clothing/under/football/red,/obj/item/clothing/shoes/cleats, /obj/item/football = 2)
 		..()
 
+/obj/item/storage/box/mechanic_syndicate_kit
+	name = "Syndicate Mechanics Kit"
+	icon_state = "box"
+	desc = "A box magically containing everything needed to create your own Syndicate branded mechanics lab! Somehow!"
+
+	make_my_stuff()
+		..()
+		new /obj/item/electronics/scanner/syndicate(src)
+		new /obj/item/electronics/soldering(src)
+
+		// Stolen, with thanks, from the mindslave cloner kit
+
+		var/obj/item/electronics/frame/F1 = new/obj/item/electronics/frame(src)
+		F1.name = "Deconstructed Ruckingenur Kit"
+		F1.store_type = /obj/machinery/rkit
+		F1.viewstat = 2
+		F1.secured = 2
+		F1.icon_state = "dbox"
+
+		var/obj/item/electronics/frame/F2 = new/obj/item/electronics/frame(src)
+		F2.name = "Extra-Portable Reclaimer"
+		F2.store_type = /obj/machinery/portable_reclaimer
+		F2.viewstat = 2
+		F2.secured = 2
+		F2.icon_state = "dbox"
+
+		var/obj/item/electronics/frame/F3 = new/obj/item/electronics/frame(src)
+		F3.name = "Reverse Engineered Mechanics Fabricator"
+		F3.store_type = /obj/machinery/manufacturer/mechanic
+		F3.viewstat = 2
+		F3.secured = 2
+		F3.icon_state = "dbox"
+
 /obj/item/storage/box/syndibox
 	name = "stealth storage"
 	desc = "Can take on the appearance of another item. Creates a small dimensional rift in space-time, allowing it to hold multiple items."

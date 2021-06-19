@@ -936,7 +936,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/cost = 1
 	var/cooldown = null
 	var/assoc_spell = null
-	var/vr_allowed = 1
+	var/vr_allowed = TRUE
 	var/obj/item/assoc_item = null
 
 	proc/SWFspell_CheckRequirements(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
@@ -966,7 +966,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 /datum/SWFuplinkspell/soulguard
 	name = "Soulguard"
 	eqtype = "Enchantment"
-	vr_allowed = 0
+	vr_allowed = FALSE
 	desc = "Soulguard is basically a one-time do-over that teleports you back to the wizard shuttle and restores your life in the event that you die. However, the enchantment doesn't trigger if your body has been gibbed or otherwise destroyed. Also note that you will respawn completely naked."
 
 	SWFspell_CheckRequirements(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
@@ -1043,7 +1043,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	name = "Baleful Polymorph"
 	eqtype = "Offensive"
 	desc = "This spell turns an adjacent target into some kind of an animal."
-	vr_allowed = 0
+	vr_allowed = FALSE
 	assoc_spell = /datum/targetable/spell/animal
 
 /datum/SWFuplinkspell/rathensecret
@@ -1067,7 +1067,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 /datum/SWFuplinkspell/blink
 	name = "Blink"
 	eqtype = "Defensive"
-	vr_allowed = 0
+	vr_allowed = FALSE
 	desc = "This spell teleports you a short distance forwards. Useful for evasion or getting into areas."
 	assoc_spell = /datum/targetable/spell/blink
 
@@ -1075,14 +1075,14 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	name = "Teleport"
 	eqtype = "Defensive"
 	desc = "This spell teleports you to an area of your choice, but requires a short time to charge up."
-	vr_allowed = 0
+	vr_allowed = FALSE
 	assoc_spell = /datum/targetable/spell/teleport
 
 /datum/SWFuplinkspell/warp
 	name = "Warp"
 	eqtype = "Defensive"
 	desc = "This spell teleports a visible foe away from you."
-	vr_allowed = 0
+	vr_allowed = FALSE
 	assoc_spell = /datum/targetable/spell/warp
 
 /datum/SWFuplinkspell/spellshield
@@ -1131,7 +1131,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	name = "Pandemonium"
 	eqtype = "Miscellaneous"
 	desc = "This spell causes random effects to happen. Best used only by skilled wizards."
-	vr_allowed = 0
+	vr_allowed = FALSE
 	assoc_spell = /datum/targetable/spell/pandemonium
 
 
