@@ -1444,3 +1444,42 @@
 	item_state = "antennae"
 	w_class = W_CLASS_TINY
 	throwforce = 0
+
+// BARRETTES
+
+/obj/item/clothing/head/barrette
+	name = "barrettes"
+	desc = "Not to be confused with a beret."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "barrette-blue"
+	item_state = "barrette-blue"
+	w_class = W_CLASS_TINY
+	throwforce = 0
+
+	butterflyblu
+		name = "blue butterfly hairclip"
+		desc = "A fashionable hair clip shaped like a butterfly to keep your hair from fly-ing all over the place."
+		icon_state = "barrette-butterflyblu"
+		item_state = "barrette-butterflyblu"
+	butterflyorg
+		name = "orange butterfly hairclip"
+		desc = "A fashionable hair clip shaped like a butterfly to keep your hair from fly-ing all over the place."
+		icon_state = "barrette-butterflyorg"
+		item_state = "barrette-butterflyorg"
+	blue
+		name = "blue barrettes"
+		icon_state = "barrette-blue"
+		item_state = "barrette-blue"
+	green
+		name = "green barrettes"
+		icon_state = "barrette-green"
+		item_state = "barrette-green"
+	pink
+		name = "pink barrettes"
+		icon_state = "barrette-pink"
+		item_state = "barrette-pink"
+	gold
+		name = "gold barrettes"
+		icon_state = "barrette-gold"
+		item_state = "barrette-gold"

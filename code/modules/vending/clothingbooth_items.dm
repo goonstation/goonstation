@@ -835,6 +835,55 @@
 	category = "Headwear"
 	cost = PAY_TRADESMAN/2
 
+/datum/clothingbooth_item/redhairclips
+	name = "Red Hairclip"
+	path = /obj/item/clothing/head/sailormoon
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/butterflyclip_bl
+	name = "Blue Butterfly Hairclip"
+	path = /obj/item/clothing/head/barrette/butterflyblu
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/butterflyclip_o
+	name = "Orange Butterfly Hairclip"
+	path = /obj/item/clothing/head/barrette/butterflyorg
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/barrette_blue
+	name = "Blue Hairclips"
+	path = /obj/item/clothing/head/barrette/blue
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/barrette_green
+	name = "Green Hairclips"
+	path = /obj/item/clothing/head/barrette/green
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/barrette_pink
+	name = "Pink Hairclips"
+	path = /obj/item/clothing/head/barrette/pink
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/barrette_gold
+	name = "Gold Hairclips"
+	path = /obj/item/clothing/head/barrette/gold
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN/2
+
 /datum/clothingbooth_item/ushanka
 	name = "Ushanka"
 	path = /obj/item/clothing/head/ushanka
