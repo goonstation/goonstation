@@ -5,6 +5,7 @@
 (e)⚖|balance
 (*)Made fabricating a nuclear charge take more difficult materials
 (u)Tarmunora
+(+)buff concussive gauntlet block-special-thingy
 (+)add a tranq rifle and a mag of halop darts to surplus crates when safari kit is rolled
 (+)once their owner dies, podwars blasters stop charging, are non-rechargeable, and cannot have their cell swapped
 (u)Tarmunora

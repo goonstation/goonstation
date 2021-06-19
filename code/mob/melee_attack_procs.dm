@@ -1154,7 +1154,7 @@
 /mob/living/carbon/human/calculate_bonus_damage(var/datum/attackResults/msgs)
 	. = ..()
 	if (src.gloves)
-		. += src.gloves.damage_bonus()
+		. += src.gloves.punch_damage_modifier
 
 	if (src.reagents && (src.reagents.get_reagent_amount("ethanol") >= 100) && prob(40))
 		. += rand(3,5)
