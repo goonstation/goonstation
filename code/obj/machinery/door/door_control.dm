@@ -451,7 +451,7 @@
 
 	if(src.cooldown)
 		inuse = TRUE
-		sleep(src.cooldown SECONDS)
+		sleep(src.cooldown)
 		inuse = FALSE
 
 	SPAWN_DBG(1.5 SECONDS)
