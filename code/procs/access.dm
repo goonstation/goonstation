@@ -321,10 +321,10 @@
 			return list(access_maint_tunnels, access_external_airlocks, access_engineering_control,
 						access_tech_storage,access_engineering_mechanic,access_engineering_power)
 		if("Atmospheric Technician")
-			return list(access_maint_tunnels, access_external_airlocks, access_construction,
+			return list(access_maint_tunnels, access_external_airlocks, access_construction, access_engineering_control,
 						access_eva, access_engineering, access_engineering_storage, access_engineering_eva, access_engineering_atmos)
 		if("Engineer")
-			return list(access_engineering,access_maint_tunnels,access_external_airlocks,
+			return list(access_engineering,access_maint_tunnels,access_external_airlocks, access_engineering_control,
 						access_engineering_storage,access_engineering_atmos,access_engineering_engine,access_engineering_power)
 		if("Miner")
 			return list(access_maint_tunnels, access_external_airlocks,
@@ -333,7 +333,7 @@
 		if("Quartermaster")
 			return list(access_maint_tunnels, access_cargo, access_supply_console, access_hangar)
 		if("Construction Worker")
-			return list(access_engineering,access_maint_tunnels,access_external_airlocks,
+			return list(access_engineering,access_maint_tunnels,access_external_airlocks, access_engineering_control,
 						access_engineering_storage,access_engineering_atmos,access_engineering_engine,access_engineering_power)
 
 		///////////////////////////// Civilian

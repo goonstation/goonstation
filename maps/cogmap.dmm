@@ -34088,9 +34088,6 @@
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/item/clothing/gloves/yellow{
 	pixel_x = -7;
 	pixel_y = 10
@@ -34475,9 +34472,6 @@
 "bJf" = (
 /obj/cable{
 	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "2-4"
 	},
 /obj/decal/tile_edge/stripe/big{
 	dir = 8;
@@ -43614,6 +43608,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -43633,6 +43630,7 @@
 	print_id = "Engineering"
 	},
 /obj/machinery/power/data_terminal,
+/obj/cable,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
