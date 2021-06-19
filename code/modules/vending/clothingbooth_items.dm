@@ -823,7 +823,7 @@
 
 /datum/clothingbooth_item/antlers
 	name = "Antlers"
-	path = /obj/item/clothing/head/antlers
+	path = /obj/item/clothing/head/headband/antlers
 	slot = SLOT_HEAD
 	category = "Headwear"
 	cost = PAY_TRADESMAN/2

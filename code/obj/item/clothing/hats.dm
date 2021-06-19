@@ -1426,7 +1426,7 @@
 	throwforce = 0
 
 /obj/item/clothing/head/headband/giraffe
-	name = "antlers"
+	name = "giraffe ears"
 	desc = "Wearing these will take your fashion to another level."
 	icon = 'icons/obj/clothing/item_ears.dmi'
 	wear_image_icon = 'icons/mob/ears.dmi'
