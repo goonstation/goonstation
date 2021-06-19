@@ -37029,12 +37029,12 @@
 /turf/simulated/floor/delivery,
 /area/station/engine/elect)
 "bOS" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/decal/tile_edge/stripe/big{
 	dir = 1;
 	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
@@ -38384,9 +38384,6 @@
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "bRI" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
@@ -46141,7 +46138,7 @@
 	icon_state = "1-4"
 	},
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
@@ -56105,16 +56102,6 @@
 	dir = 10
 	},
 /area/station/quartermaster/refinery)
-"gvH" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/engine/elect)
 "gwd" = (
 /obj/cable/yellow{
 	icon_state = "2-8"
@@ -56387,6 +56374,12 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor/black,
 /area/station/bridge)
+"gZR" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/station/engine/elect)
 "hbw" = (
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/red/side{
@@ -56484,6 +56477,7 @@
 /obj/firedoor_spawn,
 /obj/decal/garland/ephemeral,
 /obj/access_spawn/engineering_control,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/delivery,
 /area/station/engine/engineering)
 "hpR" = (
@@ -58852,6 +58846,17 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
+"lZE" = (
+/obj/machinery/light/emergency{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/hallway/primary/south)
 "lZY" = (
 /obj/overlay{
 	icon = 'icons/misc/beach2.dmi';
@@ -59013,9 +59018,6 @@
 /turf/simulated/floor/delivery,
 /area/station/mining/staff_room)
 "mpF" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/noticeboard/persistent{
 	name = "Mechanics Workshop persistent notice board";
 	persistent_id = "mechanics"
@@ -59880,6 +59882,9 @@
 /obj/access_spawn/engineering_mechanic,
 /obj/firedoor_spawn,
 /obj/decal/garland/ephemeral,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/station/engine/elect)
 "ocZ" = (
@@ -64752,6 +64757,12 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
+"wtl" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/engine/elect)
 "wul" = (
 /obj/cable/yellow{
 	icon_state = "1-8"
@@ -111669,11 +111680,11 @@ bLM
 bLU
 clf
 jvA
-bNn
-bNn
+gZR
+neb
 ocL
-bUw
-bKp
+lZE
+bCb
 bWU
 bYw
 cCN
@@ -111971,7 +111982,7 @@ qMI
 bLV
 clf
 sZa
-bNn
+wtl
 lYJ
 bTg
 bUI
@@ -112275,9 +112286,9 @@ bNu
 bOS
 clh
 bRI
-gvH
+bTf
 mpF
-bCb
+bKp
 bWU
 bYy
 tNK
