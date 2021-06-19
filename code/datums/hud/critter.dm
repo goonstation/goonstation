@@ -623,7 +623,7 @@
 
 	src.adjust_offset(hud_zone, element) // sets it correctly (and automatically) on screen
 
-/// removes a hud element associated with eleument_alias from the hud zone associated with zone_alias and deletes it, then readjusts offsets
+/// removes hud element "element_alias" from the hud zone "zone_alias" and deletes it, then readjusts offsets
 /datum/hud/critter/proc/unregister_element(var/zone_alias, var/elem_alias)
 	if (!zone_alias || !elem_alias)
 		return
@@ -640,61 +640,10 @@
 	hud_zone["vertical_offset"] = 0
 
 	// recalculate all positions
-	for (var/atom/movable/screen/hud/element in elements)
-		element.screen_loc = null
-		src.adjust_offset(hud_zone, element)
-
-/*
-/// removes a hud element associated with eleument_alias from the elements list of the hud zone associated with zone_alias and deletes it
-/datum/hud/critter/proc/unregister_element(var/zone_alias, var/elem_alias)
-	if (!elem_alias)
-		return
-
-	// i know the code sucks shut up
-
-	var/atom/movable/screen/hud/to_remove = src.hud_zones[zone_alias]["elements"][elem_alias]
-	var/remove_index = src.hud_zones[zone_alias]["elements"].Find(elem_alias)
-	var/list/loc_update_cache = list() // need references to every element in the list AFTER the one were removing
-
-	for (var/i in (remove_index + 1) to length(src.hud_zones[zone_alias]["elements"])) // loops thru elements after the one were removing
-
-		/*
-		this is awful syntax sorry
-		the end result of the above line is that we add the the element at elements[i] to loc_update_cache
-		we cant do it directly because its an assoc list, and elements[i] is the key, so you have to do elements[elements[i]] to get a value
-		*/
-		loc_update_cache += src.hud_zones[zone_alias]["elements"][src.hud_zones[zone_alias]["elements"][i]]
-
-	src.hud_zones[zone_alias]["elements"] -= to_remove
-	qdel(to_remove)
-
-	// more idiot math ew
-	/*
-	goal here is just to basically redo all the offsets that will change after the element is removed, fun!
-	btw ive completely abandoned readability now so its time for ternary hell and copy pastes
-	*/
-	var/decrease_amt = length(loc_update_cache)
-	var/zone_length = HUD_ZONE_LENGTH(src.hud_zones[zone_alias]["coords"])
-	var/horizontal_offset = src.hud_zones[zone_alias]["horizontal_offset"]
-	var/dir_horizontal = src.hud_zones[zone_alias]["vertical_edge"]
-	var/east_west_mod = (dir_horizontal == "EAST" ? -1 : 1)
-
-	if (decrease_amt > abs(horizontal_offset)) // if we need to wrap around, but like... unwrap around. negative wraparound
-
-		var/vertical_offset = src.hud_zones[zone_alias]["vertical_offset"]
-		var/dir_vertical = src.hud_zones[zone_alias]["vertical_edge"]
-		var/north_south_mod = (dir_vertical == "NORTH" ? -1 : 1)
-
-		var/overhang = decrease_amt - horizontal_offset
-		horizontal_offset = zone_length
-		vertical_offset -= north_south_mod
-		horizontal_offset -= (east_west_mod * overhang)
-
-	else // just minus that bad boy
-		horizontal_offset -= (east_west_mod * decrease_amt)
-
-	for (var/atom/movable/screen/hud/cached_element as anything in loc_update_cache)
-		src.adjust_offset(hud_zones[zone_alias], cached_element)*/
+	for (var/adjust_index in 1 to length(elements))
+		var/adjust_alias = elements[adjust_index]
+		var/atom/movable/screen/hud/to_adjust = elements[adjust_alias]
+		src.adjust_offset(hud_zone, to_adjust)
 
 /// used to manually set the position of an element relative to the BOTTOM LEFT corner of a hud zone. no safety checks so BEWARE.
 /datum/hud/critter/proc/set_elem_position(var/atom/movable/screen/hud/element, var/list/zone_coords, var/pos_x, var/pos_y)
