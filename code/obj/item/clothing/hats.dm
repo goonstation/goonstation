@@ -1429,7 +1429,7 @@
 	name = "giraffe ears"
 	desc = "Wearing these will take your fashion to another level."
 	icon = 'icons/obj/clothing/item_ears.dmi'
-	wear_image_icon = 'icons/mob/ears.dmi'
+	wear_image_icon = 'icons/mob/bighat.dmi'
 	icon_state = "giraffe"
 	item_state = "giraffe"
 	w_class = W_CLASS_TINY
@@ -1439,7 +1439,7 @@
 	name = "bee antennae"
 	desc = "These antennae will make you look BEE-autiful!"
 	icon = 'icons/obj/clothing/item_ears.dmi'
-	wear_image_icon = 'icons/mob/ears.dmi'
+	wear_image_icon = 'icons/mob/bighat.dmi'
 	icon_state = "antennae"
 	item_state = "antennae"
 	w_class = W_CLASS_TINY
