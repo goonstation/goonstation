@@ -346,8 +346,6 @@
 			if (newcolour == "green")
 				src.modify.icon_state = "id_com"
 	if (href_list["save"])
-		if (src.modify.assignment == "Head of Security")
-			return
 		var/slot = href_list["save"]
 		if (slot == "custom1")
 			if (!src.modify.assignment)
