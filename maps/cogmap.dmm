@@ -59778,6 +59778,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small/floor/warm,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor,
 /area/station/engine/elect)
 "nUE" = (
@@ -64929,6 +64932,9 @@
 /area/station/crew_quarters/locker)
 "wRG" = (
 /obj/machinery/vending/standard,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -109868,7 +109874,7 @@ cWC
 bNv
 neb
 rzC
-bNn
+wtl
 rGB
 bRB
 ftU
