@@ -314,7 +314,11 @@
 		)
 
 /obj/artifact_type_spawner/war_engine
-	types = list(/datum/artifact/bomb/explosive,
-		/datum/artifact/bomb/explosive/devastating,
-		/datum/artifact/power_gen
-		)
+	New()
+		src.types = weighted_pick(list(/datum/artifact/bomb/explosive = 40, \
+									 /datum/artifact/bomb/explosive/devastating = 5, \
+									 /datum/artifact/power_gen = 5, \
+									 /datum/artifact/lamp = 5, \
+									 /datum/artifact/forcefield_gen = 40, \
+									 /datum/artifact/noisy_thing = 5 ))
+		..()
