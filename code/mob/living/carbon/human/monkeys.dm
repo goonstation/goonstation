@@ -163,6 +163,7 @@
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/rank/hydroponics, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/suit/apron/botanist, slot_wear_suit)
 
 /mob/living/carbon/human/npc/monkey/stirstir
 	name = "Monsieur Stirstir"

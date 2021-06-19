@@ -1811,6 +1811,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	name = "WannaBEE"
 	wages = PAY_UNTRAINED
 	limit = 1
+	slot_head = /obj/item/clothing/head/headband/bee
 	slot_suit = /obj/item/clothing/suit/bee
 	slot_ears = /obj/item/device/radio/headset
 	slot_jump = /obj/item/clothing/under/rank/beekeeper
