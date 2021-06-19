@@ -1,4 +1,27 @@
 
+(t)fri jun 18 21
+(u)DimWhat
+(p)5200
+(e)⚖|balance
+(*)Made fabricating a nuclear charge take more difficult materials
+(u)Tarmunora
+(+)add a tranq rifle and a mag of halop darts to surplus crates when safari kit is rolled
+(+)once their owner dies, podwars blasters stop charging, are non-rechargeable, and cannot have their cell swapped
+(u)Tarmunora
+(p)5201
+(e)⚖🗺|balance, mapping
+(+)Replaced a certain syndicate device analyzer with a certain specific manufacturing blueprint
+(+)Added syndicate device analyzers to surplus crate pool
+(t)thu jun 17 21
+(u)Azrun
+(p)5130
+(e)🆕|feature
+(+)Gnesis and Gnesisglass tables will reform when smashed.
+(u)eX.n0x
+(p)5148
+(e)🐛🗺|bug, mapping
+(*)Horizon genetics/monkey dome are completely restricted to geneticists.
+(*)Horizon/Kondaru detective receiving office is now open to the general public.
 (t)wed jun 16 21
 (u)Penny
 (p)5152

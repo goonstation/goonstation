@@ -18033,14 +18033,13 @@
 "aKs" = (
 /obj/cable{
 	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable{
-	d2 = 4;
 	dir = 0;
 	icon_state = "0-4"
 	},
 /obj/machinery/power/solar/east,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/airless{
 	icon_state = "solarbase";
 	name = "solar paneling"
@@ -44748,6 +44747,20 @@
 	icon_state = "fpurple1"
 	},
 /area/station/science/research_director)
+"cWO" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/solar/east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/station/solar/east)
 "dap" = (
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/snacks/chips{
@@ -49931,6 +49944,21 @@
 	dir = 1
 	},
 /area/station/security/hos)
+"rHU" = (
+/obj/cable{
+	d2 = 4;
+	dir = 0;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/solar/west,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/station/solar/west)
 "rIp" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -51650,6 +51678,20 @@
 	dir = 4
 	},
 /area/station/science/lobby)
+"wBY" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/solar/west,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/station/solar/west)
 "wDo" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -70739,35 +70781,35 @@ aaa
 aay
 aay
 aHR
-aJb
+wBY
+aaa
+wBY
+aaa
+wBY
+aaa
+rHU
+aaa
+rHU
+aaa
+wBY
+aaa
+rHU
+aaa
+rHU
+aaa
+rHU
+aaa
+wBY
+aaa
+wBY
 aaa
 aJb
 aaa
-aJb
+rHU
 aaa
-aJb
+wBY
 aaa
-aJb
-aaa
-aJb
-aaa
-aJb
-aaa
-aJb
-aaa
-aJb
-aaa
-aJb
-aaa
-aJb
-aaa
-aJb
-aaa
-aJb
-aaa
-aJb
-aaa
-aJb
+wBY
 bsF
 aay
 aaa
@@ -96957,31 +96999,31 @@ aKs
 aaa
 aKs
 aaa
-aKs
+cWO
 aaa
 aKs
 aaa
-aKs
+cWO
 aaa
 aKs
 aaa
-aKs
+cWO
+aaa
+cWO
 aaa
 aKs
 aaa
-aKs
+cWO
+aaa
+cWO
+aaa
+cWO
+aaa
+cWO
 aaa
 aKs
 aaa
-aKs
-aaa
-aKs
-aaa
-aKs
-aaa
-aKs
-aaa
-aKs
+cWO
 bMU
 aay
 aaa
