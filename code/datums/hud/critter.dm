@@ -84,7 +84,7 @@
 /datum/hud/critter/New(M)
 	..()
 	src.master = M
-/*
+
 	// element load order determines position in the hud
 	src.create_hand_element()
 	src.create_health_element()
@@ -111,7 +111,7 @@
 	src.create_rest_element()
 	src.create_resist_element()
 	src.create_equipment_element()
-*/
+
 
 /// clears owner mob
 /datum/hud/critter/clear_master()
@@ -501,6 +501,9 @@
 	src.health = src.create_screen("health", "health", src.hud_icon, "health0",\
 	"EAST[src.next_topright()],NORTH", HUD_LAYER)
 
+/datum/hud/critter/proc/create_health_element_new()
+	return src.create_screen("health", "health", src.hud_icon, "health0", null, HUD_LAYER)
+
 /datum/hud/critter/proc/create_stamina_element()
 	if (src.master.use_stamina)
 		var/stamloc = "EAST[src.next_topright()], NORTH"
@@ -589,7 +592,7 @@
 **/
 
 /datum/hud/critter/proc/add_hud_zone(var/list/coords, var/alias, var/horizontal_edge, var/vertical_edge)
-	if (!coords || !alias || !src.hud_zones || !src.master?.client || src.boundary_check() == false)
+	if (!coords || !alias || !src.hud_zones || !horizontal_edge || !vertical_edge/* || src.boundary_check(coords) == false*/)
 		return
 
 	src.hud_zones[alias] = list("coords" = coords, "elements" = list(), "horizontal_edge" = "[horizontal_edge]",\
@@ -609,17 +612,39 @@
 
 /// adds a hud element (which will be associated with elem_alias) to the elements list of the hud zone associated with zone_alias.
 /datum/hud/critter/proc/register_element(var/zone_alias, var/atom/movable/screen/hud/element, var/elem_alias)
-	if (!zone_alias || !src.hud_zones[zone_alias] || !elem_alias || !element)
+	if (!zone_alias || !src.hud_zones.Find(zone_alias) || !elem_alias || !element)
 		return
 
-	var/hud_zone = src.hud_zones["[zone_alias]"]
-	if ((length(hud_zone["elements"]) < HUD_ZONE_AREA(hud_zone["coords"]))) // if the amount of hud elements in the zone dont exceed its max
-		return
+	var/hud_zone = src.hud_zones[zone_alias]
+	if ((length(hud_zone["elements"]) >= HUD_ZONE_AREA(hud_zone["coords"]))) // if the amount of hud elements in the zone is greater than its max
+		CRASH("Couldn't add element [elem_alias] to zone [zone_alias] because [zone_alias] was full.")
 
 	hud_zone["elements"]["[elem_alias]"] = element // adds element to internal list
 
 	src.adjust_offset(hud_zone, element) // sets it correctly (and automatically) on screen
 
+/// removes a hud element associated with eleument_alias from the hud zone associated with zone_alias and deletes it, then readjusts offsets
+/datum/hud/critter/proc/unregister_element(var/zone_alias, var/elem_alias)
+	if (!zone_alias || !elem_alias)
+		return
+
+	// remove target element
+	var/list/hud_zone = src.hud_zones[zone_alias]
+	var/list/elements = hud_zone["elements"]
+	var/atom/movable/screen/hud/to_remove = elements[elem_alias]
+	elements.Remove(elem_alias)
+	qdel(to_remove)
+
+	// reset offsets
+	hud_zone["horizontal_offset"] = 0
+	hud_zone["vertical_offset"] = 0
+
+	// recalculate all positions
+	for (var/atom/movable/screen/hud/element in elements)
+		element.screen_loc = null
+		src.adjust_offset(hud_zone, element)
+
+/*
 /// removes a hud element associated with eleument_alias from the elements list of the hud zone associated with zone_alias and deletes it
 /datum/hud/critter/proc/unregister_element(var/zone_alias, var/elem_alias)
 	if (!elem_alias)
@@ -627,20 +652,20 @@
 
 	// i know the code sucks shut up
 
-	var/atom/movable/screen/hud/to_remove = src.hud_zones["[zone_alias]"]["elements"]["[elem_alias]"]
-	var/remove_index = src.hud_zones["[zone_alias]"]["elements"].Find("[elem_alias]")
+	var/atom/movable/screen/hud/to_remove = src.hud_zones[zone_alias]["elements"][elem_alias]
+	var/remove_index = src.hud_zones[zone_alias]["elements"].Find(elem_alias)
 	var/list/loc_update_cache = list() // need references to every element in the list AFTER the one were removing
 
-	for (var/i in (remove_index + 1) to length(src.hud_zones["[zone_alias]"]["elements"])) // loops thru elements after the one were removing
+	for (var/i in (remove_index + 1) to length(src.hud_zones[zone_alias]["elements"])) // loops thru elements after the one were removing
 
 		/*
 		this is awful syntax sorry
 		the end result of the above line is that we add the the element at elements[i] to loc_update_cache
 		we cant do it directly because its an assoc list, and elements[i] is the key, so you have to do elements[elements[i]] to get a value
 		*/
-		loc_update_cache += src.hud_zones["[zone_alias]"]["elements"][src.hud_zones["[zone_alias]"]["elements"][i]]
+		loc_update_cache += src.hud_zones[zone_alias]["elements"][src.hud_zones[zone_alias]["elements"][i]]
 
-	src.hud_zones["[zone_alias]"]["elements"] -= to_remove
+	src.hud_zones[zone_alias]["elements"] -= to_remove
 	qdel(to_remove)
 
 	// more idiot math ew
@@ -649,16 +674,15 @@
 	btw ive completely abandoned readability now so its time for ternary hell and copy pastes
 	*/
 	var/decrease_amt = length(loc_update_cache)
-	var/zone_length = HUD_ZONE_LENGTH(src.hud_zones["[zone_alias]"]["coords"])
-	var/horizontal_offset = src.hud_zones["[zone_alias]"]["horizontal_offset"]
-	var/dir_horizontal = src.hud_zones["[zone_alias]"]["vertical_edge"]
+	var/zone_length = HUD_ZONE_LENGTH(src.hud_zones[zone_alias]["coords"])
+	var/horizontal_offset = src.hud_zones[zone_alias]["horizontal_offset"]
+	var/dir_horizontal = src.hud_zones[zone_alias]["vertical_edge"]
 	var/east_west_mod = (dir_horizontal == "EAST" ? -1 : 1)
 
+	if (decrease_amt > abs(horizontal_offset)) // if we need to wrap around, but like... unwrap around. negative wraparound
 
-	if (decrease_amt > horizontal_offset) // if we need to wrap around, but like... unwrap around. negative wraparound
-
-		var/vertical_offset = src.hud_zones["[zone_alias]"]["vertical_offset"]
-		var/dir_vertical = src.hud_zones["[zone_alias]"]["vertical_edge"]
+		var/vertical_offset = src.hud_zones[zone_alias]["vertical_offset"]
+		var/dir_vertical = src.hud_zones[zone_alias]["vertical_edge"]
 		var/north_south_mod = (dir_vertical == "NORTH" ? -1 : 1)
 
 		var/overhang = decrease_amt - horizontal_offset
@@ -670,7 +694,7 @@
 		horizontal_offset -= (east_west_mod * decrease_amt)
 
 	for (var/atom/movable/screen/hud/cached_element as anything in loc_update_cache)
-		src.adjust_offset(hud_zones["[zone_alias]"], cached_element)
+		src.adjust_offset(hud_zones[zone_alias], cached_element)*/
 
 /// used to manually set the position of an element relative to the BOTTOM LEFT corner of a hud zone. no safety checks so BEWARE.
 /datum/hud/critter/proc/set_elem_position(var/atom/movable/screen/hud/element, var/list/zone_coords, var/pos_x, var/pos_y)
@@ -726,6 +750,7 @@
 
 	return true
 
+/// awful spaghetti
 /datum/hud/critter/proc/adjust_offset(var/list/hud_zone, var/atom/movable/screen/hud/element)
 	var/dir_horizontal = hud_zone["horizontal_edge"] // what direction elements are added from horizontally (east or west)
 	var/dir_vertical = hud_zone["vertical_edge"] // what direction elements are added from when wrapping around horizontally (north or south)
@@ -733,8 +758,8 @@
 	var/curr_vertical = hud_zone["vertical_offset"] // current vertical offset relative to the hud zone
 	var/east_west_mod = 0 // adding elements starting from the east means that they move to the left, starting from west moves right
 	var/north_south_mod = 0 // adding elements starting from the north means that they move down, starting from south moves up
-	var/absolute_pos_horizontal = 0 // absolute horizontal position on the whole screen, added to offsets relative to hud
-	var/absolute_pos_vertical = 0 // absolute vertical position on the whole screen, added to offsets relative to hud
+	var/absolute_pos_horizontal = 0 // absolute horizontal position (whole screen) where new elements are added, used with offsets relative to hud
+	var/absolute_pos_vertical = 0 // absolute vertical position (whole screen) where new elements are added, used with offsets relative to hud
 
 	if (dir_horizontal == "EAST") // east specific
 		east_west_mod = -1 // if it starts at the east edge, we add new elements to the left
@@ -750,32 +775,28 @@
 		north_south_mod = 1 // if it starts at the south edge, we add new elements upwards on wraparound
 		absolute_pos_vertical = hud_zone["coords"]["y_low"] // if it starts at the north edge, we take the y loc of the bottom left corner
 
-	var/spaghetti_flag = false // set to true if we had to wraparound, otherwise its false
-
-	if ((curr_horizontal + east_west_mod) > HUD_ZONE_LENGTH(hud_zone["coords"])) // we need to wrap around
+	if (abs((curr_horizontal + east_west_mod)) > HUD_ZONE_LENGTH(hud_zone["coords"])) // we need to wrap around
 		curr_horizontal = 0 // realign with edge
 		curr_vertical += north_south_mod // wrap vertically
-		spaghetti_flag = true
 
-	var/screen_loc_horizontal = "[dir_horizontal + absolute_pos_horizontal]"
+	var/screen_loc_horizontal = "[dir_horizontal]"//+[absolute_pos_horizontal]"
 	if (east_west_mod >= 0) //if its positive or 0
-		screen_loc_horizontal += "+[curr_horizontal]"
+		screen_loc_horizontal += "+[abs(curr_horizontal + absolute_pos_horizontal)]"
 	else //its negative
-		screen_loc_horizontal += "[curr_horizontal]]"
+		screen_loc_horizontal += "-[abs(curr_horizontal + absolute_pos_horizontal)]"
 
-	var/screen_loc_vertical = "[dir_vertical + absolute_pos_vertical]"
+	var/screen_loc_vertical = "[dir_vertical]"//+[absolute_pos_vertical]"
 	if (north_south_mod >= 0) //if its positive or 0
-		screen_loc_vertical += "+[curr_vertical]"
+		screen_loc_vertical += "+[abs(curr_vertical + absolute_pos_vertical)]"
 	else //its negative
-		screen_loc_vertical += "[curr_vertical]"
+		screen_loc_vertical += "-[abs(curr_vertical + absolute_pos_vertical)]"
 
 	var/screen_loc = "[screen_loc_horizontal], [screen_loc_vertical]"
 
 	element.screen_loc = screen_loc
 
 	// increment horizontal offset
-	if (!spaghetti_flag)
-		curr_horizontal += east_west_mod
+	curr_horizontal += east_west_mod
 
 	hud_zone["horizontal_offset"] = curr_horizontal
 	hud_zone["vertical_offset"] = curr_vertical
@@ -787,14 +808,16 @@
 		boutput(world, "no hud zones, aborting")
 		return
 
+	boutput(world, "-------------------------------------------")
+
 	for (var/zone_index in 1 to length(src.hud_zones))
-		var/zone_alias = src.hud_zones["[zone_index]"]
+		var/zone_alias = src.hud_zones[zone_index]
 		var/list/hud_zone = src.hud_zones["[zone_alias]"]
 		boutput(world, "ZONE [zone_index] alias: [zone_alias]")
 
 		var/list/coords = hud_zone["coords"]
-		boutput(world, "ZONE [zone_index] bottom left corner coordinates: ([coords["x_low"], [coords["y_low"]])")
-		boutput(world, "ZONE [zone_index] top right corner coordinates: ([coords["x_high"], [coords["y_high"]])")
+		boutput(world, "ZONE [zone_index] bottom left corner coordinates: ([coords["x_low"]], [coords["y_low"]])")
+		boutput(world, "ZONE [zone_index] top right corner coordinates: ([coords["x_high"]], [coords["y_high"]])")
 
 		boutput(world, "ZONE [zone_index] horizontal edge: [hud_zone["horizontal_edge"]]")
 		boutput(world, "ZONE [zone_index] vertical edge: [hud_zone["vertical_edge"]]")
@@ -813,4 +836,46 @@
 			var/atom/movable/screen/hud/element = elements[element_alias]
 			boutput(world, "ZONE [zone_index] ELEMENT [element_index] alias: [element_alias]")
 			boutput(world, "ZONE [zone_index] ELEMENT [element_index] icon_state: [element.icon_state]")
-			boutput(world, "ZONE [zone_index] ELEMENT [element_index] alias: [element.screen_loc]")
+			boutput(world, "ZONE [zone_index] ELEMENT [element_index] screenloc: [element.screen_loc]")
+
+	boutput(world, "-------------------------------------------")
+
+/datum/hud/critter/zone_test
+
+	New(M)
+		..()
+		src.master = M
+		src.hud_zones = list()
+
+		src.add_hud_zone(list("x_low" = 13, "y_low" = 7, "x_high" = 15, "y_high" = 8), "test_zone", "EAST", "NORTH")
+
+		var/atom/movable/screen/hud/health_element = src.create_health_element_new()
+		src.register_element("test_zone", health_element, "health")
+
+		var/atom/movable/screen/hud/health_element_2 = src.create_health_element_new()
+		health_element_2.color = "#FF0000"
+		src.register_element("test_zone", health_element_2, "health_2")
+
+		var/atom/movable/screen/hud/health_element_3 = src.create_health_element_new()
+		health_element_3.color = "#00FF00"
+		src.register_element("test_zone", health_element_3, "health_3")
+
+		var/atom/movable/screen/hud/health_element_4 = src.create_health_element_new()
+		health_element_4.color = "#0000FF"
+		src.register_element("test_zone", health_element_4, "health_4")
+
+		var/atom/movable/screen/hud/health_element_5 = src.create_health_element_new()
+		health_element_5.color = "#00FFFF"
+		src.register_element("test_zone", health_element_5, "health_5")
+
+		var/atom/movable/screen/hud/health_element_6 = src.create_health_element_new()
+		health_element_6.color = "#FF00FF"
+		src.register_element("test_zone", health_element_6, "health_6")
+
+		SPAWN_DBG(5 SECONDS)
+			src.unregister_element("test_zone", "health_5")
+
+		src.debug_print_all()
+
+/mob/living/critter/small_animal/zone_test
+	custom_hud_type = /datum/hud/critter/zone_test
