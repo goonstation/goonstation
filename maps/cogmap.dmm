@@ -33739,7 +33739,6 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/storage/secure/closet/engineering/electrical,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -34508,6 +34507,7 @@
 	name = "W light switch";
 	pixel_y = -24
 	},
+/obj/storage/secure/closet/engineering/electrical,
 /turf/simulated/floor/plating/jen,
 /area/station/engine/power)
 "bJl" = (
