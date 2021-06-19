@@ -501,9 +501,6 @@
 	src.health = src.create_screen("health", "health", src.hud_icon, "health0",\
 	"EAST[src.next_topright()],NORTH", HUD_LAYER)
 
-/datum/hud/critter/proc/create_health_element_new()
-	return src.create_screen("health", "health", src.hud_icon, "health0", null, HUD_LAYER)
-
 /datum/hud/critter/proc/create_stamina_element()
 	if (src.master.use_stamina)
 		var/stamloc = "EAST[src.next_topright()], NORTH"
@@ -703,50 +700,57 @@
 /datum/hud/critter/proc/adjust_offset(var/list/hud_zone, var/atom/movable/screen/hud/element)
 	var/dir_horizontal = hud_zone["horizontal_edge"] // what direction elements are added from horizontally (east or west)
 	var/dir_vertical = hud_zone["vertical_edge"] // what direction elements are added from when wrapping around horizontally (north or south)
-	var/curr_horizontal = hud_zone["horizontal_offset"] // current horizontal offset relative to the hud zone
-	var/curr_vertical = hud_zone["vertical_offset"] // current vertical offset relative to the hud zone
-	var/east_west_mod = 0 // adding elements starting from the east means that they move to the left, starting from west moves right
-	var/north_south_mod = 0 // adding elements starting from the north means that they move down, starting from south moves up
-	var/absolute_pos_horizontal = 0 // absolute horizontal position (whole screen) where new elements are added, used with offsets relative to hud
-	var/absolute_pos_vertical = 0 // absolute vertical position (whole screen) where new elements are added, used with offsets relative to hud
+	var/curr_horizontal = hud_zone["horizontal_offset"] // current horizontal offset inside of the hud zone, not relative to edges
+	var/curr_vertical = hud_zone["vertical_offset"] // current vertical offset inside of the hud zone, not relative to edges
+//	var/horizontal_neg_flag = 0 // adding elements from east sets this to true, west needs a positive one
+//	var/vertical_neg_flag = 0 // adding elements from north needs a negative multiplier, south needs a positive one
+	var/absolute_pos_horizontal = 0 // absolute horizontal position (whole screen) where new elements are added, used with hud offsets
+	var/absolute_pos_vertical = 0 // absolute vertical position (whole screen) where new elements are added, used with hud offsets
 
-	if (dir_horizontal == "EAST") // east specific
-		east_west_mod = -1 // if it starts at the east edge, we add new elements to the left
-		absolute_pos_horizontal = hud_zone["coords"]["x_high"] // if it starts at the east edge, we take the x loc of the top right corner
-	else // west specific
-		east_west_mod = 1 // if it starts at the west edge, we add new elements to the right
-		absolute_pos_horizontal = hud_zone["coords"]["x_low"] // if it starts at the west edge, we take the x loc of the bottom left corner
+	// prework
 
-	if (dir_vertical ==  "NORTH") // north specific
-		north_south_mod = -1 // if it starts at the north edge, we add new elements downwards on wraparound
-		absolute_pos_vertical = hud_zone["coords"]["y_high"] // if it starts at the north edge, we take the y loc of the top right corner
-	else // south specific
-		north_south_mod = 1 // if it starts at the south edge, we add new elements upwards on wraparound
-		absolute_pos_vertical = hud_zone["coords"]["y_low"] // if it starts at the north edge, we take the y loc of the bottom left corner
+	if (dir_horizontal == "EAST")
+		absolute_pos_horizontal = 21 - hud_zone["coords"]["x_high"] // take x loc of right corner (east edge), adjust to be on west edge
+	else // west
+		absolute_pos_horizontal = 1 - hud_zone["coords"]["x_low"] // take x loc of left corner (west edge)
 
-	if (abs((curr_horizontal + east_west_mod)) > HUD_ZONE_LENGTH(hud_zone["coords"])) // we need to wrap around
-		curr_horizontal = 0 // realign with edge
-		curr_vertical += north_south_mod // wrap vertically
+	if (dir_vertical == "NORTH")
+		absolute_pos_vertical = 15 - hud_zone["coords"]["y_high"] // take y loc of top corner (north edge), adjust to be on south edge
+	else // south
+		absolute_pos_vertical = 1 - hud_zone["coords"]["y_low"] // take y loc of bottom corner (south edge)
 
-	var/screen_loc_horizontal = "[dir_horizontal]"//+[absolute_pos_horizontal]"
-	if (east_west_mod >= 0) //if its positive or 0
-		screen_loc_horizontal += "+[abs(curr_horizontal + absolute_pos_horizontal)]"
-	else //its negative
-		screen_loc_horizontal += "-[abs(curr_horizontal + absolute_pos_horizontal)]"
+	// wraparound handling
 
-	var/screen_loc_vertical = "[dir_vertical]"//+[absolute_pos_vertical]"
-	if (north_south_mod >= 0) //if its positive or 0
-		screen_loc_vertical += "+[abs(curr_vertical + absolute_pos_vertical)]"
-	else //its negative
-		screen_loc_vertical += "-[abs(curr_vertical + absolute_pos_vertical)]"
+	if ((curr_horizontal + 1) > HUD_ZONE_LENGTH(hud_zone["coords"])) // if adding 1 more element exceeds the length of the zone, try to wraparound
+		if ((curr_vertical + 1) > HUD_ZONE_HEIGHT(hud_zone["coords"])) // if adding 1 more element exceeds the height of the zone, its full up
+			CRASH("Tried to add an element to a full hud zone")
+		else // we can wrap around
+			curr_horizontal = 0
+			curr_vertical++
+
+	// screenloc figuring outing
+
+	var/screen_loc_horizontal = "[dir_horizontal]"
+	var/horizontal_offset_adjusted = (absolute_pos_horizontal + curr_horizontal)
+	if (dir_horizontal == "EAST") // elements added with an east bound move left, elements with a west bound move right
+		screen_loc_horizontal += "-[horizontal_offset_adjusted]"
+	else
+		screen_loc_horizontal += "+[horizontal_offset_adjusted]"
+
+	var/screen_loc_vertical = "[dir_vertical]"
+	var/vertical_offset_adjusted = (absolute_pos_vertical + curr_vertical)
+	if (dir_vertical == "NORTH") // elements added with an east bound move left, elements with a west bound move right
+		screen_loc_vertical += "-[vertical_offset_adjusted]"
+	else
+		screen_loc_vertical += "+[vertical_offset_adjusted]"
+
+	// set new screen loc
 
 	var/screen_loc = "[screen_loc_horizontal], [screen_loc_vertical]"
-
 	element.screen_loc = screen_loc
 
-	// increment horizontal offset
-	curr_horizontal += east_west_mod
-
+	// increment and update offsets
+	curr_horizontal++
 	hud_zone["horizontal_offset"] = curr_horizontal
 	hud_zone["vertical_offset"] = curr_vertical
 
@@ -796,33 +800,29 @@
 		src.master = M
 		src.hud_zones = list()
 
-		src.add_hud_zone(list("x_low" = 13, "y_low" = 7, "x_high" = 15, "y_high" = 8), "test_zone", "EAST", "NORTH")
+		src.add_hud_zone(list("x_low" = 1, "y_low" = 1, "x_high" = 3, "y_high" = 2), "test_zone", "WEST", "SOUTH")
 
-		var/atom/movable/screen/hud/health_element = src.create_health_element_new()
-		src.register_element("test_zone", health_element, "health")
+		var/atom/movable/screen/hud/test_1 = src.create_screen("test_1", "test_1", src.hud_icon, "health0", null, HUD_LAYER)
+		src.register_element("test_zone", test_1, "test_1")
 
-		var/atom/movable/screen/hud/health_element_2 = src.create_health_element_new()
-		health_element_2.color = "#FF0000"
-		src.register_element("test_zone", health_element_2, "health_2")
+		var/atom/movable/screen/hud/test_2 = src.create_screen("test_2", "test_2", src.hud_icon, "health1", null, HUD_LAYER)
+		src.register_element("test_zone", test_2, "test_2")
 
-		var/atom/movable/screen/hud/health_element_3 = src.create_health_element_new()
-		health_element_3.color = "#00FF00"
-		src.register_element("test_zone", health_element_3, "health_3")
+		var/atom/movable/screen/hud/test_3 = src.create_screen("test_3", "test_3", src.hud_icon, "health2", null, HUD_LAYER)
+		src.register_element("test_zone", test_3, "test_3")
 
-		var/atom/movable/screen/hud/health_element_4 = src.create_health_element_new()
-		health_element_4.color = "#0000FF"
-		src.register_element("test_zone", health_element_4, "health_4")
+		var/atom/movable/screen/hud/test_4 = src.create_screen("test_4", "test_4", src.hud_icon, "health3", null, HUD_LAYER)
+		src.register_element("test_zone", test_4, "test_4")
 
-		var/atom/movable/screen/hud/health_element_5 = src.create_health_element_new()
-		health_element_5.color = "#00FFFF"
-		src.register_element("test_zone", health_element_5, "health_5")
+		var/atom/movable/screen/hud/test_5 = src.create_screen("test_5", "test_5", src.hud_icon, "health4", null, HUD_LAYER)
+		src.register_element("test_zone", test_5, "test_5")
 
-		var/atom/movable/screen/hud/health_element_6 = src.create_health_element_new()
-		health_element_6.color = "#FF00FF"
-		src.register_element("test_zone", health_element_6, "health_6")
+		var/atom/movable/screen/hud/test_6 = src.create_screen("test_6", "test_6", src.hud_icon, "health5", null, HUD_LAYER)
+		src.register_element("test_zone", test_6, "test_6")
 
-		SPAWN_DBG(5 SECONDS)
+/*		SPAWN_DBG(5 SECONDS)
 			src.unregister_element("test_zone", "health_5")
+*/
 
 		src.debug_print_all()
 
