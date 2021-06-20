@@ -76,8 +76,8 @@
 					src.icon_state = src.filled_icon_state
 				else
 					src.icon_state = src.empty_icon_state
-				
-			else 
+
+			else
 				src.icon_state = src.filled_icon_state
 
 ///////////////////
@@ -133,6 +133,8 @@
 /obj/item_dispenser/icedispenser
 	name = "ice dispenser"
 	desc = "It's a small freezer unit that produces ice. Looks like it's hooked into the station water mains."
+	mats = list("MET-1"=10, "CRY-1"=15, "ice"=5)
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 	icon_state = "dispenser_ice"
 	filled_icon_state = "dispenser_ice"
 	withdraw_type = /obj/item/raw_material/ice
