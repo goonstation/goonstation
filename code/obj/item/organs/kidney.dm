@@ -187,7 +187,7 @@
 		if(ispulsingtool(W)) //TODO kyle's robotics configuration console/machine/thing
 			var/new_modifier = input(user, \
 			"Enter a percentage to clock the cyberkidney at, from [src.min_chem_metabolism_modifier] to [src.max_chem_metabolism_modifier].",\
-			 "Organ clocking", "100") as num
+			 "Organ clocking", src.chem_metabolism_modifier*100) as num
 			src.set_chem_metabolism_modifier(new_modifier)
 		else
 			. = ..()
