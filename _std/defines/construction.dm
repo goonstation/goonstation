@@ -43,5 +43,5 @@
 #define DECON_BUILT 128
 /// can only be deconstructed if access required is null
 #define DECON_ACCESS 256
-/// item will be destroyed and remade on re-deployment
+/// item will be saved by path instead of stored in the frame
 #define DECON_DESTRUCT 512
