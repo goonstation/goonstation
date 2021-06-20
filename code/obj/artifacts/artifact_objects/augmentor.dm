@@ -75,17 +75,17 @@
 			augment = new /datum/artifact_augmentation/borg()
 		// which body parts should be augmented?
 
-		if(prob(35))
+		if(prob(augment.area_chance))
 			augment_location += "limbs"
-		if(prob(35))
+		if(prob(augment.area_chance))
 			augment_location += "eyes"
-		if(prob(25))
+		if(prob(augment.area_chance))
 			augment_location += "organs_1"
-		if(prob(25))
+		if(prob(augment.area_chance))
 			augment_location += "organs_2"
-		if(prob(25))
+		if(prob(augment.area_chance))
 			augment_location += "organs_3"
-		if(prob(25))
+		if(prob(augment.area_chance))
 			augment_location += "organs_4"
 		if(!length(augment_location)) // just to be sure
 			augment_location += "limbs"
@@ -187,6 +187,8 @@
 	var/list/organs_2 = list("pancreas", "liver", "spleen")
 	var/list/organs_3 = list("left_lung", "right_lung", "heart")
 	var/list/organs_4 = list("left_kidney", "right_kidney", "appendix")
+
+	var/area_chance = 25
 
 	New()
 		..()
