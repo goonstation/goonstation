@@ -384,6 +384,7 @@
 	name = "soldering iron"
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "solderingiron"
+	mats = list("MET-2"=1, "CON-1"=2)
 	force = 10
 	hit_type = DAMAGE_BURN
 	throwforce = 5
