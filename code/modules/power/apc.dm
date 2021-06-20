@@ -541,7 +541,6 @@ var/zapLimiter = 0
 	playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 	src.repair_status = 3
 
-
 /obj/machinery/power/apc/attack_ai(mob/user)
 	if (src.aidisabled && !src.wiresexposed)
 		boutput(user, "AI control for this APC interface has been disabled.")
