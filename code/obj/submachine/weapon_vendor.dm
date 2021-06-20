@@ -100,6 +100,7 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "weapon-sec"
 	desc = "An automated quartermaster service for supplying your security team with weapons and gear."
+	mats = list("MET-3"=20, "CON-1"=10, "POW-1"=5, "CRY-1"=5)
 	token_accepted = /obj/item/requisition_token/security
 	New()
 		..()
