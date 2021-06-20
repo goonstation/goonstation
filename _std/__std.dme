@@ -87,6 +87,7 @@
 #include "macros\image.dm"
 #include "macros\ismob.dm"
 #include "macros\genetics_traits.dm"
+#include "macros\hud.dm"
 #include "macros\items.dm"
 #include "macros\job_xp.dm"
 #include "macros\list.dm"
