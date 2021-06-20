@@ -667,7 +667,8 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	density = 1
 	anchored = 0
 	p_class = 6
-	//mats = 30 // Nope! We don't need multiple personal teleporters without any z-level restrictions (Convair880).
+	mats = list("telecrystal"=30, "MET-2"=15, "INS-1"=20, "CON-2"=15) // Nope! We don't need multiple personal teleporters without any z-level restrictions (Convair880).
+																	// But what if we DID have z-level restrictions? Because we do...z-levels can't be saved as home
 	var/homeloc = null
 
 	var/unsafe_mode = 1 //Hilarious accident mode, more like
