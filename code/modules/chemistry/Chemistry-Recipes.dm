@@ -511,9 +511,7 @@ datum
 			drinkrecipe = 1
 
 		milk_punch/milk_punch/2
-			name = "Milk Punch"
-			id = "milk_punch"
-			result = "milk_punch"
+			id = "milk_punch2"
 			required_reagents = list("fruit_punch" = 5, "milk" = 1)
 			result_amount = 2
 
