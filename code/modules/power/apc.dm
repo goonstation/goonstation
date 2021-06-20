@@ -196,6 +196,17 @@ var/zapLimiter = 0
 	. = ..()
 
 	if(status & BROKEN)
+		switch(repair_status)
+			if(0)
+				. += "<br>It's completely busted! It seems you need to use a screwdriver and disconnect the control board first, to begin the repair process.</br>"
+			if(1)
+				. += "<br>The control board has been disconnected. The autotransformer's wiring is all messed up! You need to grab some cables and fix it.</br>"
+			if(2)
+				. += "<br>The control panel is disconnected and the autotransformer seems to be in a good condition. You just need to tune it with a wrench now.</br>"
+			if(3)
+				. += "<br>The autotransformer seems to be working fine now. The next step is resetting the control board with a multitool.</br>"
+			if(4)
+				. += "<br>The autotransformer is working fine and the control board has been reset! Now you just need to reconnect it with a screwdriver, to finish the repair process.</br>"
 		return
 
 	if(user && !user.stat)
