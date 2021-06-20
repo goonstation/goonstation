@@ -5,6 +5,8 @@
 	var/id = 0.0 // who are we?
 	var/partner_range = 3 // how far away should we look?
 	var/find_in_range = 1
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WRENCH | DECON_CROWBAR | DECON_DESTRUCT
+	mats = list("INS-1"=3,"CON-1"=4,"MET-2"=2,"CRY-1"=5)
 
 	New()
 		..()
@@ -78,6 +80,7 @@
 	name = "health scanner"
 	desc = "An in-floor health scanner that sends its data to connected status screens."
 	icon_state = "floorscan1"
+
 	var/time_between_scans = 3 SECONDS
 	var/on_cooldown = FALSE
 
