@@ -1,5 +1,9 @@
 
 (t)sun jun 20 21
+(u)eX.n0x, Sovexe, & ZeWaka
+(p)5141
+(e)🐛|bug
+(+)The rad blowout event no longer changes access levels on non-maintenance doors.
 (u)Sasskp
 (p)5214
 (e)🐛|bug
