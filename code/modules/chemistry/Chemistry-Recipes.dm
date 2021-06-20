@@ -510,7 +510,7 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
-		milk_punch/milk_punch/2
+		milk_punch/milk_punch2
 			id = "milk_punch2"
 			required_reagents = list("fruit_punch" = 5, "milk" = 1)
 			result_amount = 2
