@@ -122,6 +122,7 @@
 			var/remove_action = "removes"
 			var/replace_action = "appends something else"
 			if(part)
+				src.augment.modify_part(part)
 				if(istype(part, /obj/item/parts)) // LIMBS
 					var/obj/item/parts/old_limb = H.limbs.get_limb(part_loc)
 					if(old_limb)
@@ -286,6 +287,9 @@
 				. = 1
 				return // early interrupt the for loop, we don't need to check further
 
+	proc/modify_part(var/obj/item/bodypart)
+		return
+
 /datum/artifact_augmentation/borg
 	left_arm = list(/obj/item/parts/robot_parts/arm/left/light, /obj/item/parts/robot_parts/arm/left)
 	right_arm = list(/obj/item/parts/robot_parts/arm/right/light, /obj/item/parts/robot_parts/arm/right)
@@ -305,6 +309,11 @@
 	left_kidney = list(/obj/item/organ/kidney/cyber/left)
 	right_kidney = list(/obj/item/organ/kidney/cyber/right)
 	appendix = list(/obj/item/organ/appendix/cyber)
+
+	modify_part(var/obj/item/bodypart)
+		if(istype(bodypart, /obj/item/organ/kidney/cyber))
+			var/obj/item/organ/kidney/cyber/kidney = bodypart
+			kidney.randomize_modifier()
 
 /datum/artifact_augmentation/synth
 	left_arm = list(/obj/item/parts/human_parts/arm/left/synth, /obj/item/parts/human_parts/arm/left/synth/bloom)
