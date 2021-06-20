@@ -1324,5 +1324,3 @@
 
 	src.TakeDamage("All", damage, 0)
 	return
-
-/mob/
