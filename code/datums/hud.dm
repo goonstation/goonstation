@@ -187,3 +187,35 @@
 	proc/MouseExited(id)
 	proc/MouseDrop(var/atom/movable/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
 	proc/MouseDrop_T(var/atom/movable/screen/hud/H, atom/movable/O as obj, mob/user as mob)
+
+/*
+	dynamic hud stuff
+	if you want to use this i strongly recommend looking at existing examples of how it's used
+	i also strongly recommend copying the hud_layout_template.png file
+	it is 21x15 (like widescreen mode) and you can colour in cells to show different hud zones
+	this makes it easier to see where things are in relation to eachother, since codewise its all coordinate pairs
+	and coordinate pairs are harder to intuit
+*/
+	/**
+	* assoc list of hud zones with the format:
+	*
+	* list(
+	*
+	*	"zone_alias" = list(
+	*
+	*		"coords" = list( // list of 2 coordinate pairs for the lower left corner and the upper right corner of the hud zone
+	*			x_low = num, y_low = num, x_high = num, y_high = num
+	*
+	*		"elements" = list( // list of all visible hud elements in the hud zone
+	*			"elem_alias" = screenobj // screenobj is the hud object that is visible on the players screen
+	*
+	*		"horizontal_edge" = "" // what horizontal edge of the zone elements are initially added from. should be EAST or WEST.
+	*
+	*		"vertical_edge" = "" // what vertical edge of the zone elements are intially added from. should be NORTH or SOUTH.
+	*
+	*		"horizontal_offset" = num // offset for the horizontal placement of elements, used when placing new elements so they dont overlap
+	*
+	*		"vertical_offset" = num // offset for the horizontal placement of elements, used when placing new elements so they dont overlap
+	**/
+//	var/list/list/list/hud_zones = null
+

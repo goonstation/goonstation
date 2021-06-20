@@ -56,8 +56,6 @@
 	/// status effect right offset
 	var/wraparound_offset_right = 0
 
-	// why doesnt byond have structs ...  you made me do this !!
-
 	/**
 	* assoc list of hud zones with the format:
 	*
@@ -583,29 +581,36 @@
 *
 * alias: string, key for the hud zone, used like this: src.hud_zones["[alias]"]
 *
-* horizontal_edge:
+* horizontal_edge: what horizontal side of the hud zone are new elements added from? can be EAST or WEST
+*	for example, if its EAST then the first element is added at the right edge of the zone
+*	the second element is added to the left side of the first element
+* 	the third element is added to the left side of the second element, etc.
 *
-* vertical_edge:
+* vertical_edge: what vertical side of the hud zone are new elements added from? can be NORTH or SOUTH
+*	for example, if its NORTH then the first element is added at the top edge of the zone
+*	the second element is added to the bottom side of the first element
+* 	the third element is added to the bottom side of the second element, etc.
 **/
 
-/datum/hud/critter/proc/add_hud_zone(var/list/coords, var/alias, var/horizontal_edge, var/vertical_edge)
-	if (!coords || !alias || !src.hud_zones || !horizontal_edge || !vertical_edge/* || src.boundary_check(coords) == false*/)
+/datum/hud/critter/proc/add_hud_zone(var/list/coords, var/alias, var/horizontal_edge = "WEST", var/vertical_edge = "SOUTH")
+	if (!coords || !alias || !src.hud_zones || !horizontal_edge || !vertical_edge)
 		return
 
 	src.hud_zones[alias] = list("coords" = coords, "elements" = list(), "horizontal_edge" = "[horizontal_edge]",\
 	"vertical_edge" = "[vertical_edge]", "horizontal_offset" = 0, "vertical_offset" = 0)
 
-/// removes the zone
+/// removes a hud zone and deletes all elements inside of it
 /datum/hud/critter/proc/remove_hud_zone(var/alias)
-	var/list/to_remove = src.hud_zones[alias]
+	var/list/hud_zone = src.hud_zones[alias]
 
 	// remove elements
-	var/list/elements = to_remove["elements"]
-	for (var/atom/movable/screen/hud/element as anything in elements)
-		elements.Remove(element)
-		qdel(element)
+	var/list/elements = hud_zone["elements"]
+	for (var/element_alias in elements)
+		var/atom/movable/screen/hud/to_delete = elements[element_alias]
+		elements.Remove(to_delete)
+		qdel(to_delete)
 
-	src.hud_zones.Remove(to_remove)
+	src.hud_zones.Remove(hud_zone)
 
 /// adds a hud element (which will be associated with elem_alias) to the elements list of the hud zone associated with zone_alias.
 /datum/hud/critter/proc/register_element(var/zone_alias, var/atom/movable/screen/hud/element, var/elem_alias)
@@ -616,7 +621,7 @@
 	if ((length(hud_zone["elements"]) >= HUD_ZONE_AREA(hud_zone["coords"]))) // if the amount of hud elements in the zone is greater than its max
 		CRASH("Couldn't add element [elem_alias] to zone [zone_alias] because [zone_alias] was full.")
 
-	hud_zone["elements"]["[elem_alias]"] = element // adds element to internal list
+	hud_zone["elements"][elem_alias] = element // adds element to internal list
 
 	src.adjust_offset(hud_zone, element) // sets it correctly (and automatically) on screen
 
@@ -642,68 +647,57 @@
 		var/atom/movable/screen/hud/to_adjust = elements[adjust_alias]
 		src.adjust_offset(hud_zone, to_adjust)
 
-/// used to manually set the position of an element relative to the BOTTOM LEFT corner of a hud zone. no safety checks so BEWARE.
+/// adds an element without adjusting positions automatically - manually set instead. no safety checking
+/datum/hud/critter/proc/add_elem_no_adjust(var/zone_alias, var/elem_alias, var/atom/movable/screen/hud/element, var/pos_x, var/pos_y)
+	if (!zone_alias || !src.hud_zones[zone_alias] || !elem_alias || !element)
+		return
+
+	src.hud_zones[zone_alias]["elements"][elem_alias] = element //registered element
+	src.set_elem_position(element, src.hud_zones[zone_alias]["coords"], pos_x, pos_y) //set pos
+
+/// removes an element without adjusting positions automatically - will probably fuck stuff up if theres any dynamically positioned elements
+/datum/hud/critter/proc/del_elem_no_adjust(var/zone_alias, var/elem_alias)
+	if (!zone_alias || !elem_alias)
+		return
+
+	var/atom/movable/screen/hud/to_remove = src.hud_zones[zone_alias]["elements"][elem_alias] // grab elem ref
+	src.hud_zones[zone_alias]["elements"] -= to_remove // unregister element
+	qdel(to_remove) // delete
+
+/// used to manually set the position of an element relative to the BOTTOM LEFT corner of a hud zone. no safety checks
 /datum/hud/critter/proc/set_elem_position(var/atom/movable/screen/hud/element, var/list/zone_coords, var/pos_x, var/pos_y)
 	if (!element || !zone_coords)
 		return
 
 	var/x_low = zone_coords["x_low"]
-	var/y_low = zone_coords["y_low"]
+	var/x_loc = "WEST"
+	var/adjusted_pos_x = ((x_low + pos_x) - 1)
 
-	var/x_loc = "WEST+[x_low + pos_x]" //set loc relative to hud boundary
-	var/y_loc = "SOUTH+[y_low + pos_y]" //set loc relative to hud boundary
+	// we have to manually add a + sign
+	if (adjusted_pos_x < 0)
+		x_loc += "[adjusted_pos_x]"
+	else
+		x_loc += "+[adjusted_pos_x]"
+
+	var/y_low = zone_coords["y_low"]
+	var/y_loc = "SOUTH"
+	var/adjusted_pos_y = ((y_low + pos_y) - 1)
+
+	// manually add +
+	if (adjusted_pos_y < 0)
+		y_loc += "[adjusted_pos_y]"
+	else
+		y_loc += "+[adjusted_pos_y]"
 
 	var/new_loc = "[x_loc], [y_loc]"
 	element.screen_loc = new_loc
 
-/// adds an element without adjusting positions automatically - manually set instead. no safety checking
-/datum/hud/critter/proc/non_auto_add_elem(var/zone_alias, var/elem_alias, var/atom/movable/screen/hud/element, var/pos_x, var/pos_y)
-	if (!zone_alias || !src.hud_zones["[zone_alias]"] || !elem_alias || !element)
-		return
-
-	src.hud_zones["[zone_alias]"]["elements"]["[elem_alias]"] = element //registered element
-	src.set_elem_position(element, src.hud_zones["[zone_alias]"]["coords"], pos_x, pos_y) //set pos
-
-/// removes an element without adjusting positions automatically - will probably fuck stuff up if theres any dynamically positioned elements
-/datum/hud/critter/proc/non_auto_del_elem(var/zone_alias, var/elem_alias)
-	if (!zone_alias || !elem_alias)
-		return
-
-	var/atom/movable/screen/hud/to_remove = src.hud_zones["[zone_alias]"]["elements"]["[elem_alias]"]
-	src.hud_zones["[zone_alias]"]["elements"]["[elem_alias]"] -= to_remove //unregister element
-	qdel(to_remove) //delete
-
-/// checks if the provided coordinates are within the boundaries of the screen, returns true if true, false if false
-/datum/hud/critter/proc/boundary_check(var/list/coords)
-	if (!coords || !src.master?.client)
-		return false
-
-	// why hardcode simple screen size values when you can just write ugly code instead
-	var/x_dim = 0
-	var/y_dim = 0
-	var/list/dimensions = splittext(src.master.client.view, "x")
-	x_dim = text2num(dimensions[1])
-	y_dim = text2num(dimensions[2])
-
-	if (coords["x_low"] < 1 || coords["x_low"] > x_dim)
-		return false
-	if (coords["y_low"] < 1 || coords["y_low"] > y_dim)
-		return false
-	if (coords["x_high"] < 1 || coords["x_high"] > x_dim)
-		return false
-	if (coords["y_high"] < 1 || coords["y_high"] > y_dim)
-		return false
-
-	return true
-
-/// awful spaghetti
+/// internal use only. accepts a zone and an element, and then tries to position that element in the zone based on current element positions.
 /datum/hud/critter/proc/adjust_offset(var/list/hud_zone, var/atom/movable/screen/hud/element)
 	var/dir_horizontal = hud_zone["horizontal_edge"] // what direction elements are added from horizontally (east or west)
 	var/dir_vertical = hud_zone["vertical_edge"] // what direction elements are added from when wrapping around horizontally (north or south)
 	var/curr_horizontal = hud_zone["horizontal_offset"] // current horizontal offset inside of the hud zone, not relative to edges
 	var/curr_vertical = hud_zone["vertical_offset"] // current vertical offset inside of the hud zone, not relative to edges
-//	var/horizontal_neg_flag = 0 // adding elements from east sets this to true, west needs a positive one
-//	var/vertical_neg_flag = 0 // adding elements from north needs a negative multiplier, south needs a positive one
 	var/absolute_pos_horizontal = 0 // absolute horizontal position (whole screen) where new elements are added, used with hud offsets
 	var/absolute_pos_vertical = 0 // absolute vertical position (whole screen) where new elements are added, used with hud offsets
 
@@ -755,7 +749,6 @@
 	hud_zone["vertical_offset"] = curr_vertical
 
 /// debug purposes only, call this to print ALL of the information you could ever need (maybe)
-
 /datum/hud/critter/proc/debug_print_all()
 	if (!length(src.hud_zones))
 		boutput(world, "no hud zones, aborting")
@@ -793,12 +786,16 @@
 
 	boutput(world, "-------------------------------------------")
 
+
 /datum/hud/critter/zone_test
 
 	New(M)
 		..()
 		src.master = M
 		src.hud_zones = list()
+
+
+
 
 		src.add_hud_zone(list("x_low" = 1, "y_low" = 1, "x_high" = 3, "y_high" = 2), "test_zone", "WEST", "SOUTH")
 
@@ -820,11 +817,32 @@
 		var/atom/movable/screen/hud/test_6 = src.create_screen("test_6", "test_6", src.hud_icon, "health5", null, HUD_LAYER)
 		src.register_element("test_zone", test_6, "test_6")
 
-/*		SPAWN_DBG(5 SECONDS)
-			src.unregister_element("test_zone", "health_5")
+
+		SPAWN_DBG(5 SECONDS)
+			src.remove_hud_zone("test_zone")
+
+/*
+		src.add_hud_zone(list("x_low" = 1, "y_low" = 1, "x_high" = 2, "y_high" = 1), "zone_test_2")
+
+		var/atom/movable/screen/hud/mintent = src.create_screen("mintent", "movement mode", 'icons/mob/critter_ui.dmi', "move-run", null,\
+		HUD_LAYER_1)
+		src.add_elem_no_adjust("zone_test_2", "mintent", mintent, 0, 0)
+
+		var/atom/movable/screen/hud/resist = src.create_screen("resist", "resist", 'icons/mob/critter_ui.dmi', "resist_critter",\
+		null, HUD_LAYER_1)
+		src.add_elem_no_adjust("zone_test_2", "resist", resist, 1, 0)
+
+		var/atom/movable/screen/hud/pull = src.create_screen("pull", "pulling", 'icons/mob/critter_ui.dmi', "pull0", null, HUD_LAYER_1)
+		src.add_elem_no_adjust("zone_test_2", "pull", pull, 0, 0)
+
+		var/atom/movable/screen/hud/rest = src.create_screen("rest", "resting", 'icons/mob/critter_ui.dmi', "rest0", null, HUD_LAYER_1)
+		src.add_elem_no_adjust("zone_test_2", "rest", rest, 1, 0)
+
+		SPAWN_DBG(5 SECONDS)
+			src.del_elem_no_adjust("zone_test_2", "mintent")
 */
 
-		src.debug_print_all()
+//		src.debug_print_all()
 
 /mob/living/critter/small_animal/zone_test
 	custom_hud_type = /datum/hud/critter/zone_test
