@@ -34,6 +34,8 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "tetris"
 	desc = "Instructions: Left/Right Arrows: Move, Up Arrow/W/R: Turn CW, Q: Turn CCW, Down Arrow/S: Soft Drop, Space: Hard Drop | HIGHSCORE: 0"
+	mats = list("MET-1"=3,"CON-1"=4, "CRY-1"=3)
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 	machine_registry_idx = MACHINES_MISC
 	var/datum/game/tetris
 
