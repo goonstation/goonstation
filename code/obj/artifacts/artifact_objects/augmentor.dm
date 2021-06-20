@@ -123,7 +123,9 @@
 			var/replace_action = "appends something else"
 			if(part)
 				if(istype(part, /obj/item/parts)) // LIMBS
-					//var/obj/item/parts/limb = part
+					var/obj/item/parts/old_limb = H.limbs.get_limb(part_loc)
+					if(old_limb)
+						old_limb.remove(FALSE)
 					H.limbs.replace_with(part_loc, part_type, null , 0)
 					H.update_body()
 					remove_action = pick("tears off", "yanks off", "chops off")
@@ -131,6 +133,7 @@
 					ArtifactLogs(user, null, O, "touched by [H.real_name]", "given limb [part] as [part_loc]", 0)
 				else // ORGANS
 					var/obj/item/organ = part
+					H.drop_organ(part_loc)
 					H.receive_organ(organ, part_loc, 0, 1)
 					H.update_body()
 					remove_action = pick("rips out", "tears out", "swiftly removes")
