@@ -54231,7 +54231,7 @@
 /obj/firedoor_spawn,
 /obj/decal/garland/ephemeral,
 /obj/cable/brown{
-	icon_state = "0-2"
+	icon_state = "2-4"
 	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
