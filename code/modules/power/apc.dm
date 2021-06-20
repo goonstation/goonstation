@@ -407,14 +407,8 @@ var/zapLimiter = 0
 					else
 						boutput(user, "<span class='alert'>Not enough cable! <I>(Requires four pieces)</I></span>")
 						return
-					if(!do_after(user, 100))
-						return
-					theCoil.use(4)
-					boutput(user, "You repair the autotransformer.")
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-
-					src.repair_status = 2
-
+					SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /obj/machinery/power/apc/proc/fix_wiring,\
+					list(theCoil, user), W.icon, W.icon_state, null, null)
 					return
 				if (2)
 					boutput(user, "The autotransformer is already in good condition, it just needs tuning.")
@@ -430,11 +424,8 @@ var/zapLimiter = 0
 					boutput(user, "<span class='alert'>You must repair the autotransformer's windings prior to tuning it.</span>")
 				if (2)
 					boutput(user, "You begin to carefully tune the autotransformer.  This might take a little while.")
-					if (!do_after(user, 6 SECONDS))
-						return
-					boutput(user, "You tune the autotransformer.")
-					playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-					src.repair_status = 3
+					SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, /obj/machinery/power/apc/proc/fix_autotransformer,\
+					list(user), W.icon, W.icon_state, null, null)
 				else
 					boutput(user, "The autotransformer is already tuned.")
 
@@ -538,6 +529,17 @@ var/zapLimiter = 0
 				updateicon()
 			else
 				boutput(user, "<span class='alert'>Access denied.</span>")
+
+/obj/machinery/power/apc/proc/fix_wiring(obj/item/W, mob/user)
+	W.change_stack_amount(-4)
+	boutput(user, "You repair the autotransformer.")
+	playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+	src.repair_status = 2
+
+/obj/machinery/power/apc/proc/fix_autotransformer(mob/user)
+	boutput(user, "You tune the autotransformer.")
+	playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+	src.repair_status = 3
 
 
 /obj/machinery/power/apc/attack_ai(mob/user)
