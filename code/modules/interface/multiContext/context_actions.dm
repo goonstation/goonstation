@@ -902,8 +902,8 @@
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/cards = target
-			if(user.find_in_hand(cards)) //checks hand for card to allow taking from pockets/storage
-				return
+			if(cards.loc == user) //checks hand for card to allow taking from pockets/storage
+				user.u_equip(cards)
 			user.put_in_hand_or_drop(cards)
 
 	close

@@ -375,7 +375,7 @@
 	var/list/stored_cards = list()
 
 	attack_hand(mob/user as mob)
-		if(!is_hand) //handling the player interacting with a deck of cards with an empty hand
+		if(!is_hand && (isturf(src.loc) || src.loc == user)) //handling the player interacting with a deck of cards with an empty hand
 			update_card_actions("empty")
 			user.showContextActions(cardActions, src)
 		else
@@ -1205,7 +1205,7 @@
 // Why? Fuck it, I have no idea.
 proc/riffle_shuffle(list/deck)
 	// Determines a location near the center of the deck to split from.
-  
+
 	var/splitLoc = (deck.len / 2) + rand(-(deck.len) / 5, deck.len / 5)
 
 	// Makes two lists, one for each half of the deck, then clears the original deck.
