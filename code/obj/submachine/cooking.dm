@@ -387,12 +387,12 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/sandwich_mb(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_egg(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_bm(src)
-			//src.recipes += new /datum/cookingrecipe/sandwich_m_h(src)
-			//src.recipes += new /datum/cookingrecipe/sandwich_m_m(src)
-			//src.recipes += new /datum/cookingrecipe/sandwich_m_s(src)
-			//src.recipes += new /datum/cookingrecipe/sandwich_c(src)
-			//src.recipes += new /datum/cookingrecipe/sandwich_p_h(src)
-			//src.recipes += new /datum/cookingrecipe/sandwich_p(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_m_h(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_m_m(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_m_s(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_c(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_p_h(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_p(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_custom(src)
 			src.recipes += new /datum/cookingrecipe/onionchips(src)
 			src.recipes += new /datum/cookingrecipe/mint_chutney(src)
@@ -578,7 +578,7 @@ table#cooktime a#start {
 				// Enforce GIGO and prevent infinite reuse
 				var/contentsok = 1
 				for(var/obj/item/I in src.contents)
-					if(istype(I, /obj/item/reagent_containers/food/snacks/yuck))
+					if(istype(I, /obj/item/reagent_containers/food/snacks/yuck))c
 						contentsok = 0
 						break
 					if(istype(I, /obj/item/reagent_containers/food/snacks/yuckburn))
