@@ -5,6 +5,7 @@
 	desc = "An electronic device designed to intercept network transmissions."
 	icon_state = "sniffer0"
 	item_state = "electronic"
+	mats = list("INS-1"=10, "CON-1"=15, "CRY-1"=3, "MET-2"=2)
 	w_class = W_CLASS_BULKY
 	rand_pos = 0
 	var/mode = 0
