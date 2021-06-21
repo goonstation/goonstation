@@ -746,7 +746,7 @@
 		landscape
 			desc = "A beautiful painting of a landscape that is engulfed by flames."
 			name = "painting"
-			icon = 'icons/obj/64x32.dmi'
+			icon = 'icons/obj/large/64x32.dmi'
 			icon_state = "landscape"
 
 		garbagegarbssign

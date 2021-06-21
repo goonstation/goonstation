@@ -10337,11 +10337,9 @@
 	},
 /area/station/security/detectives_office)
 "aBL" = (
-/obj/machinery/door/airlock/pyro/security{
+/obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
-	id = "det_entry";
-	name = "Detective's Office";
-	req_access = null
+	name = "Detective's Office"
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
@@ -10349,7 +10347,6 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/obj/access_spawn/forensics,
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "aBM" = (
@@ -39779,7 +39776,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
-	icon = 'icons/obj/64x96.dmi';
+	icon = 'icons/obj/large/64x96.dmi';
 	icon_state = "air_gizmo";
 	name = "damaged vaporator unit"
 	},

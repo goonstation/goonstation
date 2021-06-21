@@ -6,7 +6,7 @@
 	desc = "A great way to deliver humans to a research station. Trust me."
 	anchored = 1
 	density = 0
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "arrival_missile"
 	bound_width = 32
 	bound_height = 64

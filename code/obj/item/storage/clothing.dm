@@ -332,7 +332,7 @@
 
 /obj/item/storage/box/costume/crap/wonka
 	name = "victorian confectionery factory owner costume"
-	spawn_contents = list(/obj/item/reagent_containers/food/snacks/candy)
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/candy/regular)
 
 	make_my_stuff()
 		..()

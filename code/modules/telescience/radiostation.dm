@@ -16,8 +16,8 @@
 	code/WorkInProgress/radioship.dm
 	maps/radiostation2.dmm
 	icon/obj/radiostation.dmi
-	icon/obj/64x64.dmi
-	icon/obj/32x64.dmi
+	icon/obj/large/64x64.dmi
+	icon/obj/large/32x64.dmi
 	icon/obj/decoration.dmi
 	strings/radioship/radioship_records.txt */
 
@@ -527,6 +527,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 		..()
 		src.UpdateOverlays(new /image(src.icon, "record_6"), "recordlabel") //it should always be green because I'm so funny.
 
+ABSTRACT_TYPE(/obj/item/record/random/metal)
 /obj/item/record/random/metal
 	New()
 		. = ..()
@@ -547,6 +548,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	record_name = "Plasmageddon"
 	song = "sound/radio_station/music/maxi.ogg"
 
+ABSTRACT_TYPE(/obj/item/record/random/funk)
 /obj/item/record/random/funk
 	New()
 		. = ..()
@@ -566,6 +568,32 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	name = "record - \"Lunch4Laika\""
 	record_name = "Lunch4Laika"
 	song = "sound/radio_station/music/lunch.ogg"
+
+ABSTRACT_TYPE(/obj/item/record/random/notaquario)
+/obj/item/record/random/notaquario
+	New()
+		. = ..()
+		src.desc += {" A record from the Aquario and Not Tom Mixtape, looks pretty old!"}
+
+/obj/item/record/random/notaquario/beaches
+	record_name = "Beaches"
+	song = "sound/radio_station/music/beaches.ogg"
+
+/obj/item/record/random/notaquario/graveyard
+	record_name = "Graveyard"
+	song = "sound/radio_station/music/graveyard.ogg"
+
+/obj/item/record/random/notaquario/floaty
+	record_name = "I'm Floaty In Space But Thats Ok"
+	song = "sound/radio_station/music/floaty.ogg"
+
+/obj/item/record/random/notaquario/repose
+	record_name = "Repose"
+	song = "sound/radio_station/music/repose.ogg"
+
+/obj/item/record/random/notaquario/biodome
+	record_name = "Biodome"
+	song = "sound/radio_station/music/biodome.ogg"
 
 /obj/item/record/spacebux/New()
 	..()
@@ -635,26 +663,6 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	song = "sound/radio_station/music/core_of_poo.ogg"
 	color = "#DE9F47"
 
-/obj/item/record/notaquario_mixtape/beaches
-	record_name = "Beaches"
-	song = "sound/radio_station/music/beaches.ogg"
-
-/obj/item/record/notaquario_mixtape/graveyard
-	record_name = "Graveyard"
-	song = "sound/radio_station/music/graveyard.ogg"
-
-/obj/item/record/notaquario_mixtape/floaty
-	record_name = "I'm Floaty In Space But Thats Ok"
-	song = "sound/radio_station/music/floaty.ogg"
-
-/obj/item/record/notaquario_mixtape/repose
-	record_name = "Repose"
-	song = "sound/radio_station/music/repose.ogg"
-
-/obj/item/record/notaquario_mixtape/biodome
-	record_name = "Biodome"
-	song = "sound/radio_station/music/biodome.ogg"
-
 // Record sets
 /obj/item/storage/box/record
 	name = "record sleeve"
@@ -672,15 +680,6 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	/obj/item/record/clown_collection/eggshell,
 	/obj/item/record/clown_collection/disco,
 	/obj/item/record/clown_collection/poo)
-
-/obj/item/storage/box/record/notaquario_mixtape1
-	name = "Aquario and Not Tom's Mixtape Vol 1"
-	desc = "Woa, these are some old tunes! Made by Aquario and Not Tom way back in the early 2020s!"
-	spawn_contents = list(/obj/item/record/notaquario_mixtape/graveyard,
-	/obj/item/record/notaquario_mixtape/repose,
-	/obj/item/record/notaquario_mixtape/beaches,
-	/obj/item/record/notaquario_mixtape/floaty,
-	/obj/item/record/notaquario_mixtape/biodome)
 
 /obj/item/storage/box/record/radio
 	desc = "A sturdy record sleeve, designed to hold multiple records. The art on the cover is very lovely."
@@ -736,6 +735,15 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 		/obj/item/record/random/chronoquest/cloudskymanguy,
 		/obj/item/record/random/chronoquest/black_wing_interface,
 		/obj/item/record/random/chronoquest/riverdancer)
+
+/obj/item/storage/box/record/notaquario
+	name = "\improper Aquario and Not Tom's Mixtape Vol 1"
+	desc = "Woa, these are some old tunes! Made by Aquario and Not Tom way back in the early 2020s!"
+	spawn_contents = list(/obj/item/record/random/notaquario/graveyard,
+	/obj/item/record/random/notaquario/repose,
+	/obj/item/record/random/notaquario/beaches,
+	/obj/item/record/random/notaquario/floaty,
+	/obj/item/record/random/notaquario/biodome)
 
 /obj/item/storage/box/record/radio/host
 	desc = "A sleeve of exclusive radio station songs."
@@ -955,7 +963,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 /obj/decal/fakeobjects/cpucontroller
 	name = "central processing unit"
 	desc = "The computing core of the mainframe."
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "gannets_machine1"
 	bound_width = 64
 	bound_height = 64
@@ -965,7 +973,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 /obj/decal/fakeobjects/vacuumtape
 	name = "vacuum column tape drive"
 	desc = "A large 9 track magnetic tape storage unit."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "gannets_machine2"
 	bound_width = 32
 	bound_height = 64
@@ -975,7 +983,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 /obj/decal/fakeobjects/operatorconsole
 	name = "operator's console"
 	desc = "The computer operating console, covered in fancy toggle swtiches and register value lamps."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "gannets_machine1"
 	bound_width = 32
 	bound_height = 64

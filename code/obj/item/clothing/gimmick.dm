@@ -773,10 +773,8 @@
 
 			boutput(H, "<span class='alert'><b>You suddenly feel whiny and ineffectual.</b></span>")
 			H.real_name = "Mike Dawson"
-			H.bioHolder.mobAppearance.customization_first = "Bedhead"
-			H.bioHolder.mobAppearance.customization_second = "Selleck"
-			H.cust_one_state = "bedhead"
-			H.cust_two_state = "selleck"
+			H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/bedhead
+			H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/moustache/selleck
 			H.bioHolder.mobAppearance.e_color = "#321E14"
 			H.bioHolder.mobAppearance.customization_first_color = "#412819"
 			H.bioHolder.mobAppearance.customization_second_color = "#412819"
@@ -1526,7 +1524,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 /obj/item/clothing/shoes/rollerskates
 	name = "rollerskates"
 	desc = "A pair of rollerskates, invented when experimental teleportation technology fused a pair of tacky boots and a shopping cart."
-	c_flags = NOSLIP
 	icon_state = "rollerskates"
 
 /obj/item/clothing/under/gimmick/itsyourcousin

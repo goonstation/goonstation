@@ -54,8 +54,8 @@
 		if (istype(M.loc,/obj/))
 			var/obj/container = M.loc
 			boutput(M, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
-			M.setStatus("paralysis",30)
-			M.setStatus("weakened",50)
+			M.setStatus("paralysis", 3 SECONDS)
+			M.setStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[M.loc]</b> emits a loud thump and rattles a bit.</span>")
 			playsound(M.loc, "sound/effects/bang.ogg", 50, 1)
 			var/wiggle = 6

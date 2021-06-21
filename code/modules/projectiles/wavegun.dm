@@ -23,7 +23,7 @@
 	//Can we pass windows
 	window_pass = 0
 
-	projectile_speed = 42
+	projectile_speed = 56
 
 	brightness = 1
 	color_red = 1
@@ -38,7 +38,7 @@
 	shot_number = 1
 	power = 10 //half the power of a taser at range 1-3, delivers a nasty punch at the 4-tile sweetspot
 	max_range = 5 //super short. about 4 tile max range
-	projectile_speed = 28
+	projectile_speed = 36
 	cost = 50
 	hit_ground_chance = 100 //no escape
 	pierces = -1 //no limits
@@ -58,7 +58,7 @@
 /datum/projectile/wavegun/bouncy
 	sname = "reflection wave"
 	power = 10
-	projectile_speed = 28
+	projectile_speed = 36
 	cost = 50
 	max_range = 7
 	icon_state = "wave-emp"
