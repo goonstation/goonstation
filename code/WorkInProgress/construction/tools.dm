@@ -1,17 +1,3 @@
-// hack of the century
-/obj/smes_spawner
-	name = "power storage unit"
-	icon = 'icons/obj/power.dmi'
-	icon_state = "smes"
-	density = 1
-	anchored = 1
-	New()
-		..()
-		SPAWN_DBG(1 SECOND)
-			var/obj/term = new /obj/machinery/power/terminal(get_step(get_turf(src), dir))
-			term.set_dir(get_dir(get_turf(term), src))
-			new /obj/machinery/power/smes(get_turf(src))
-			qdel(src)
 
 /obj/ai_frame
 	name = "\improper Asimov 5 Artifical Intelligence"

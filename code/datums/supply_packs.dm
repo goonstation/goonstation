@@ -1402,7 +1402,7 @@
 	name = "Basic Power Kit"
 	desc = "Frames: 1x SMES cell, 2x Furnace"
 	category = "Engineering Department"
-	frames = list(/obj/smes_spawner,
+	frames = list(/obj/machinery/power/smes/construction,
 					/obj/machinery/power/furnace = 2)
 	cost = 20000
 	containertype = /obj/storage/crate
