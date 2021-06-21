@@ -39,7 +39,6 @@
 		. = {"It's [online ? "on" : "off"]line. [charging ? "It's charging, and it" : "It"] looks about [round(charge / capacity * 100, 20)]% full."}
 
 /obj/machinery/power/smes/construction
-	deconstruct_flags = DECON_DESTRUCT
 	New()
 		var/obj/term = new /obj/machinery/power/terminal(get_step(get_turf(src), dir))
 		term.set_dir(get_dir(get_turf(term), src))
@@ -48,6 +47,18 @@
 	disposing()
 		qdel(terminal)
 		. = ..()
+
+	was_deconstructed_to_frame()
+		qdel(terminal)
+		terminal = null
+		. = ..()
+
+	was_built_from_frame(mob/user, newly_built)
+		if(!newly_built)
+			var/obj/term = new /obj/machinery/power/terminal(get_step(get_turf(src), dir))
+			term.set_dir(get_dir(get_turf(term), src))
+			terminal = term
+			terminal.master = src
 
 
 /obj/machinery/power/smes/emp_act()
