@@ -2329,6 +2329,7 @@ var/global/list/cargopads = list()
 	anchored = 1
 	plane = PLANE_FLOOR
 	mats = 10 //I don't see the harm in re-adding this. -ZeWaka
+	mechanics_type_override = /obj/submachine/cargopad
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/active = 1
 	var/group
