@@ -37,7 +37,7 @@
 			boutput(H, "<span class='alert'>You need to remove your eyewear first.</span>")
 			return
 		if (H.head && H.head.c_flags & COVERSEYES)
-			boutput(H, "<span class='alert'>Your headware covers your eyes, you need to remove it first.</span>")
+			boutput(H, "<span class='alert'>Your headwear covers your eyes, you need to remove it first.</span>")
 			return
 		//
 		if (target == EYE_BOTH)
