@@ -14,6 +14,7 @@
 	var/list/custom1_list = list()
 	var/list/custom2_list = list()
 	var/list/custom3_list = list()
+	var/list/banned_access_list = list(access_maxsec,access_syndicate_shuttle,access_owlerymaint,access_owlerysec,access_owlerycommand,access_syndicate_4,access_syndicate_8,access_syndicate_16,access_syndicate_32,access_syndicate_64,access_syndicate_128,access_syndicate_256,access_syndicate_512,access_polariscargo,access_polarisimportant,access_contrabandpermit,access_syndicate_commander,access_retention_blue,access_retention_green,access_retention_yellow,access_retention_orange,access_retention_red,access_retention_black)
 	req_access = list(access_change_ids)
 	desc = "A computer that allows an authorized user to change the identification of other ID cards."
 
@@ -353,21 +354,21 @@
 			else
 				src.custom1_name = src.modify.assignment
 			src.custom1_list = src.modify.access.Copy()
-			src.custom1_list -= access_maxsec //prevent saving armory access
+			src.custom1_list -= banned_access_list //prevent saving armory access
 		else if (slot == "custom2")
 			if (!src.modify.assignment)
 				src.custom2_name = "Custom 2"
 			else
 				src.custom2_name = src.modify.assignment
 			src.custom2_list = src.modify.access.Copy()
-			src.custom2_list -= access_maxsec //prevent saving armory access
+			src.custom2_list -= banned_access_list //prevent saving armory access
 		else
 			if (!src.modify.assignment)
 				src.custom3_name = "Custom 3"
 			else
 				src.custom3_name = src.modify.assignment
 			src.custom3_list = src.modify.access.Copy()
-			src.custom3_list -= access_maxsec //prevent saving armory access
+			src.custom3_list -= banned_access_list //prevent saving armory access
 	if (href_list["apply"])
 		var/slot = href_list["apply"]
 		if (slot == "custom1")
