@@ -1,5 +1,9 @@
 
 (t)mon jun 21 21
+(u)TTerc
+(p)5219
+(e)|
+(+)You can now examine the broken APC to learn how to fix it. Also added actionbars for all the APC fixing steps that require the player to stand still.
 (u)Flourish
 (e)🆕|feature, mapping
 (*)Rearranged Oshan a little, primarily the area surrounding the bar. Let me know what you think.
