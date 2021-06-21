@@ -236,6 +236,8 @@
 				src.color = "#ffffff"
 
 	proc/setup()
+		if(QDELETED(src))
+			return
 		if (src.proj_data == null || (xo == 0 && yo == 0) || proj_data.projectile_speed == 0)
 			die()
 			return
@@ -250,6 +252,7 @@
 
 		if (len == 0)
 			die()
+			return
 		src.xo = src.xo / len
 		src.yo = src.yo / len
 
