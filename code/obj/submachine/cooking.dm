@@ -578,7 +578,7 @@ table#cooktime a#start {
 				// Enforce GIGO and prevent infinite reuse
 				var/contentsok = 1
 				for(var/obj/item/I in src.contents)
-					if(istype(I, /obj/item/reagent_containers/food/snacks/yuck))c
+					if(istype(I, /obj/item/reagent_containers/food/snacks/yuck))
 						contentsok = 0
 						break
 					if(istype(I, /obj/item/reagent_containers/food/snacks/yuckburn))
