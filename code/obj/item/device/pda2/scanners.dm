@@ -89,6 +89,7 @@
 				return
 
 			var/obj/O = A
+			var/obj/scanneditem = null
 			if(istype(O,/obj/machinery/rkit) || istype(O, /obj/item/electronics/frame))
 				return
 
@@ -101,9 +102,11 @@
 			animate_scanning(O, "#FFFF00")
 
 			var/datum/computer/file/electronics_scan/theScan = new
-			theScan.scannedName = initial(O.name)
-			theScan.scannedPath = O.mechanics_type_override ? O.mechanics_type_override : O.type
 			theScan.scannedMats = O.mats
+			theScan.scannedPath = O.mechanics_type_override ? O.mechanics_type_override : O.type
+			scanneditem = theScan.scannedPath
+			theScan.scannedName = initial(scanneditem.name)
+
 
 			var/datum/signal/signal = get_free_signal()
 			signal.source = src.master
