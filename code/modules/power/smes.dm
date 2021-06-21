@@ -19,6 +19,8 @@
 	density = 1
 	anchored = 1
 	requires_power = FALSE
+	mechanics_type_override = /obj/machinery/power/smes/construction
+	mats = list("CON-2"=30,"INS-2"=50,"MET-3"=30,"CRY-1"=10)
 	var/output = 30000
 	var/lastout = 0
 	var/loaddemand = 0
@@ -37,16 +39,16 @@
 		. = {"It's [online ? "on" : "off"]line. [charging ? "It's charging, and it" : "It"] looks about [round(charge / capacity * 100, 20)]% full."}
 
 /obj/machinery/power/smes/construction
-	New(var/turf/iloc, var/idir = 2)
-		if (!isturf(iloc))
-			qdel(src)
-		set_dir(idir)
-		var/turf/Q = get_step(iloc, idir)
-		if (!Q)
-			qdel(src)
-			var/obj/machinery/power/terminal/term = new /obj/machinery/power/terminal(Q)
-			term.set_dir(get_dir(Q, iloc))
-		..()
+	deconstruct_flags = DECON_DESTRUCT
+	New()
+		var/obj/term = new /obj/machinery/power/terminal(get_step(get_turf(src), dir))
+		term.set_dir(get_dir(get_turf(term), src))
+		. = ..()
+
+	disposing()
+		qdel(terminal)
+		. = ..()
+
 
 /obj/machinery/power/smes/emp_act()
 	..()
