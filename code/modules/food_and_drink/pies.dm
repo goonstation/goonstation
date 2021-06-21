@@ -12,7 +12,7 @@
 		if (ismob(hit_atom) && src.splat)
 			var/mob/M = hit_atom
 			src.visible_message("<span class='alert'>[src] splats in [M]'s face!</span>")
-			playsound(get_turf(src), "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 			M.change_eye_blurry(rand(5,10))
 			M.take_eye_damage(rand(0, 2), 1)
 			if (prob(40))

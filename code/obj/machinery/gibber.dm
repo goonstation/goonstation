@@ -53,10 +53,12 @@
 	if(src.occupant)
 		boutput(user, "<span class='alert'>The gibber is full, empty it first!</span>")
 		return
-	if (!( istype(G, /obj/item/grab)) || !(ishuman(G.affecting)))
+	if (!(istype(G, /obj/item/grab)) || !ishuman(G.affecting))
 		boutput(user, "<span class='alert'>This item is not suitable for the gibber!</span>")
 		return
-
+	if (!isdead(G.affecting))
+		boutput(user, "<span class='alert'>[G.affecting] needs to be dead first!</span>")
+		return
 	user.visible_message("<span class='alert'>[user] starts to put [G.affecting] into the gibber!</span>")
 	src.add_fingerprint(user)
 	sleep(3 SECONDS)

@@ -144,7 +144,7 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 		prev_data[P_INDEX] = 0
 		for(var/ikey in overlay_refs) //Because we're storing the position of each overlay in the list we need to shift our indices down to stay synched
 			var/list/L = overlay_refs[ikey]
-			if(!isnull(L) && L.len > 0 && L[P_INDEX] >= index) L[P_INDEX]--
+			if(L?.len > 0 && L[P_INDEX] >= index) L[P_INDEX]--
 
 	if(I)
 		src.overlays += I

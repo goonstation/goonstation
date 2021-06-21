@@ -21,7 +21,7 @@
 	var/gen_rate_bonus = 0
 	var/gen_rate_used = 0
 	var/evo_points = 0
-	var/next_evo_point = 25
+	var/next_evo_point = 20
 	var/spread_upgrade = 0
 	var/spread_mitigation = 0
 	var/list/upgrades = list()
@@ -80,7 +80,7 @@
 		src.add_ability(/datum/blob_ability/set_color)
 		src.add_ability(/datum/blob_ability/tutorial)
 		src.add_ability(/datum/blob_ability/help)
-		src.invisibility = 10
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.see_invisible = 15
 		src.see_in_dark = SEE_DARK_FULL

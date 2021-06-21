@@ -114,7 +114,7 @@
 					ArtifactLogs(user, M, O, "weapon", "zapping them with electricity", 0)
 
 			if("sonic")
-				playsound(T, "sound/effects/screech.ogg", 100, 1, 0)
+				playsound(T, "sound/effects/screech.ogg", 50, 1, 0)
 				particleMaster.SpawnSystem(new /datum/particleSystem/sonic_burst(T))
 
 				for (var/mob/living/M in all_hearers(world.view, T))

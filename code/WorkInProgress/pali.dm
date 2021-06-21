@@ -327,7 +327,7 @@
 			src.transforming = 1
 			src.canmove = 0
 			src.icon = null
-			src.invisibility = 101
+			APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 			if (src.mind || src.client)
 				src.ghostize()
 			qdel(src)
@@ -344,7 +344,7 @@
 		else
 			M.Turn(-90)
 		animate(src, transform=M, time=src.base_move_delay)
-		if(size > 70 && istype(new_turf, /turf/simulated/floor))
+		if(size > 120 && istype(new_turf, /turf/simulated/floor))
 			var/turf/simulated/floor/floor = new_turf
 			floor.pry_tile(src.equipped(), src)
 		var/found = 0
@@ -354,9 +354,9 @@
 			if(O.invisibility > 10)
 				continue
 			var/obj/item/I = O
-			if(size < 40 && (!istype(O, /obj/item) || I.w_class > size / 10 + 1))
+			if(size < 60 && (!istype(O, /obj/item) || I.w_class > size / 10 + 1))
 				continue
-			if(size < 60 && O.anchored)
+			if(size < 90 && O.anchored)
 				continue
 			if(istype(I, /obj/item/card/id))
 				var/obj/item/card/id/id = I
@@ -373,7 +373,7 @@
 			size += 0.3
 			found = 1
 			break
-		if(size > 80 && !found && new_turf.density && !isrestrictedz(new_turf.z) && prob(20))
+		if(size > 140 && !found && new_turf.density && !isrestrictedz(new_turf.z) && prob(20))
 			new_turf.ex_act(prob(1) ? 1 : 2)
 		. = ..()
 
@@ -413,8 +413,8 @@
 	New()
 		. = ..()
 		var/h = rand(360)
-		var/s = rand() * 0.2 + 0.8
-		var/v = rand() * 0.5 + 0.5
+		var/s = rand() * 20 + 80
+		var/v = rand() * 50 + 50
 		var/suit_color = hsv2rgb(h, s, v)
 		var/boots_color = hsv2rgb(h + rand(-30, 30), s, v * 0.8)
 		var/col = color_mapping_matrix(

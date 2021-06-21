@@ -82,7 +82,7 @@
 		user.visible_message("<span class='alert'><b>[user] stares into the [src], trying to make sense of its function!</b></span>")
 		SPAWN_DBG(3 SECONDS)
 			user.visible_message("<span class='alert'><b>[user]'s brain melts!</b></span>")
-			playsound(get_turf(user), "sound/weapons/phaseroverload.ogg", 100)
+			playsound(user, "sound/weapons/phaseroverload.ogg", 100)
 			user.take_brain_damage(69*420)
 		SPAWN_DBG(20 SECONDS)
 			if (user && !isdead(user))
@@ -315,7 +315,7 @@
 				src.updateIcon()
 			LIGHT_UP_HOUSING
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG)
-			playsound(get_turf(src),'sound/machines/keypress.ogg',30)
+			playsound(src,'sound/machines/keypress.ogg',30)
 		else
 			qdel(src) // it's somehow been unanchored or something, kill it
 		return
@@ -1820,7 +1820,7 @@
 		SPAWN_DBG(0)
 			if(src.noise_enabled)
 				src.noise_enabled = false
-				playsound(get_turf(src), "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
+				playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
 				SPAWN_DBG(WIFI_NOISE_COOLDOWN)
 					src.noise_enabled = true
 			src.radio_connection.post_signal(src, sendsig, src.range)
@@ -1829,7 +1829,7 @@
 		return
 
 	receive_signal(datum/signal/signal)
-		if(!signal || signal.encryption || level == 2)
+		if(!signal || level == 2)
 			return
 
 		if((only_directed && signal.data["address_1"] == src.net_id) || !only_directed || (signal.data["address_1"] == "ping"))
@@ -1847,7 +1847,7 @@
 				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
 					if(src.noise_enabled)
 						src.noise_enabled = false
-						playsound(get_turf(src), "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
+						playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
 						SPAWN_DBG(WIFI_NOISE_COOLDOWN)
 							src.noise_enabled = true
 					src.radio_connection.post_signal(src, pingsignal, src.range)
@@ -1857,6 +1857,14 @@
 				for(var/d in signal.data)
 					packets += "[d]=[signal.data[d]]; "
 				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode("ERR_12939_CORRUPT_PACKET:" + stars(packets, 15)), null)
+				animate_flash_color_fill(src,"#ff0000",2, 2)
+				return
+
+			if(signal.encryption)
+				var/packets = ""
+				for(var/d in signal.data)
+					packets += "[d]=[signal.data[d]]; "
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode("[signal.encryption]" + stars(packets, 15)), null)
 				animate_flash_color_fill(src,"#ff0000",2, 2)
 				return
 
@@ -2587,6 +2595,7 @@
 			flick(icon_down, src)
 			LIGHT_UP_HOUSING
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
+			logTheThing("station", user, null, "presses the mechcomp button at [log_loc(src)].")
 			return 1
 		return ..(user)
 
@@ -2671,6 +2680,7 @@
 				LIGHT_UP_HOUSING
 				flick(icon_down, src)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, src.active_buttons[selected_button])
+				logTheThing("station", user, null, "presses the mechcomp button [selected_button] at [log_loc(src)].")
 				return 1
 			else
 				boutput(user, "<span class='alert'>[src] has no active buttons - there's nothing to press!</span>")
@@ -2910,17 +2920,22 @@
 		if (level == 2 || !isReady() || !instrument) return
 		LIGHT_UP_HOUSING
 		var/signum = text2num(input.signal)
-		if (signum &&((signum >= 0.1 && signum <= 2) ||(signum <= -0.1 && signum >= -2) || pitchUnlocked))
+		var/index = round(signum)
+		if (length(sounds) > 1 && index > 0 && index <= length(sounds))
+			unReady(delay)
+			flick("comp_instrument1", src)
+			playsound(get_turf(src), sounds[index], volume, 0)
+		else if (signum &&((signum >= 0.1 && signum <= 2) || (signum <= -0.1 && signum >= -2) || pitchUnlocked))
 			var/mod_delay = delay
 			if(abs(signum) < 1)
 				mod_delay /= abs(signum)
 			unReady(mod_delay)
 			flick("comp_instrument1", src)
-			playsound(get_turf(src), sounds, volume, 0, 0, signum)
+			playsound(src, sounds, volume, 0, 0, signum)
 		else
 			unReady(delay)
 			flick("comp_instrument1", src)
-			playsound(get_turf(src), sounds, volume, 1)
+			playsound(src, sounds, volume, 1)
 			return
 
 	updateIcon()

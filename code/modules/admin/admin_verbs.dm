@@ -735,6 +735,8 @@ var/list/special_pa_observing_verbs = list(
 	else
 		src.owner:fakekey = null
 		src.owner:stealth_hide_fakekey = 0
+		if (src.auto_alt_key)
+			src.set_alt_key(src.auto_alt_key_name)
 
 	logTheThing("admin", src.owner, null, "has turned stealth mode [src.owner:stealth ? "ON using key \"[src.owner:fakekey]\"" : "OFF"]")
 	logTheThing("diary", src.owner, null, "has turned stealth mode [src.owner:stealth ? "ON using key \"[src.owner:fakekey]\"" : "OFF"]", "admin")
@@ -1991,6 +1993,8 @@ var/list/fun_images = list()
 			C.cmd_admin_delete(A)
 		if("Copy Here")
 			semi_deep_copy(A, src.loc)
+		if("Ship to Cargo")
+			C.cmd_admin_ship_movable_to_cargo(A)
 
 		if("Player Options")
 			C.cmd_admin_playeropt(A)

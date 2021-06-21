@@ -1,7 +1,7 @@
 
 /obj/machinery/drone_recharger
 	name = "Drone Recharger"
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	desc = "A wall-mounted station for drones to recharge at. Automatically activated on approach."
 	icon_state = "drone-charger-idle"
 	density = 0

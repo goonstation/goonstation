@@ -365,7 +365,8 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 		src.equip_new_if_possible(/obj/item/device/key {name = "futuristic key"; desc = "It appears to be made of some kind of space-age material.  Like really fancy aluminium or something.";} , slot_l_store)
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customization_second = "Tramp"
+		bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/tramp
+		bioHolder.mobAppearance.customization_third = new /datum/customization_style/beard/longbeard
 		bioHolder.mobAppearance.underwear = "briefs"
 		bioHolder.age = 3500
 		. = ..()

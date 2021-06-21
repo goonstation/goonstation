@@ -1,6 +1,6 @@
 
-/// closer then enough
-#define INFINITY 1e31
+/// Evaluates to an actual IEEE 754 infinity!
+#define INFINITY 1e69
 
 // SI UNIT DEFINES
 

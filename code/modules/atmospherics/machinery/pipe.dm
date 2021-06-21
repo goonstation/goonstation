@@ -414,9 +414,7 @@ obj/machinery/atmospherics/pipe
 				list(user, S), W.icon, W.icon_state, "[user] finishes working with \the [src].")
 				actions.start(action_bar, user)
 
-		proc/reconstruct_pipe(proc_args)
-			var/mob/M = proc_args[1]
-			var/obj/item/rods/R = proc_args[2]
+		proc/reconstruct_pipe(mob/M, obj/item/rods/R)
 			if(istype(R) && istype(M))
 				R.change_stack_amount(-1)
 				src.setMaterial(R.material)
@@ -731,6 +729,30 @@ obj/machinery/atmospherics/pipe
 				trace_gas.moles = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 
 				..()
+
+		rad_particles
+			icon = 'icons/obj/atmospherics/tanks/green_pipe_tank.dmi'
+			name = "Pressure Tank (Nuclear Exhaust)"
+
+			north
+				dir = NORTH
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+			New()
+				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary.volume = volume
+				air_temporary.temperature = T0C
+
+				var/datum/gas/rad_particles/trace_gas = air_temporary.get_or_add_trace_gas_by_type(/datum/gas/rad_particles)
+				trace_gas.moles = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
+
+				..()
+
 
 		oxygen
 			icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi'

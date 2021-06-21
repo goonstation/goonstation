@@ -12,7 +12,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box-red"
 	spawn_contents = list(
-		/obj/item/paper/book/DNDrulebook,
+		/obj/item/paper/book/from_file/DNDrulebook,
 		/obj/item/dice,
 		/obj/item/dice/d4,
 		/obj/item/dice/d8,

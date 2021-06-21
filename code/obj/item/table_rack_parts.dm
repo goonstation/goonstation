@@ -228,7 +228,7 @@ RACK PARTS
 	name = "rack parts"
 	desc = "A collection of parts that can be used to make a rack."
 	icon = 'icons/obj/metal.dmi'
-	icon_state = "rack_parts"
+	icon_state = "rack_base_parts"
 	stamina_damage = 25
 	stamina_cost = 22
 	stamina_crit_chance = 15
@@ -519,11 +519,11 @@ RACK PARTS
 
 	onStart()
 		..()
-		playsound(get_turf(the_furniture), "sound/items/Ratchet.ogg", 50, 1)
+		playsound(the_furniture, "sound/items/Ratchet.ogg", 50, 1)
 		owner.visible_message("<span class='notice'>[owner] begins disassembling [the_furniture].</span>")
 
 	onEnd()
 		..()
-		playsound(get_turf(the_furniture), "sound/items/Deconstruct.ogg", 50, 1)
+		playsound(the_furniture, "sound/items/Deconstruct.ogg", 50, 1)
 		the_furniture:deconstruct() // yes a colon, bite me
 		owner.visible_message("<span class='notice'>[owner] disassembles [the_furniture].</span>")

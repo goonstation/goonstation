@@ -3,13 +3,11 @@
  * 90 101 87 97 107 97 39 115 83 116 117 102 102
  */
 
-//foo 43: bodacious grandiose bargaloo mambo prime preceed wow github cdn sub jekyll docs rsc ci2 rename
+//foo 44: bodacious grandiose bargaloo mambo prime preceed wow github cdn sub jekyll docs rsc ci2 rename profile rat
 
 
 /* 514 checklist
-	`as anything in` -> `as anything in`
 	?[] experimentation perhaps
-	hsv/hsl/hcy destruction
 	make some lib animate stuff better with spaces? (better rainbow anyone?)
 	world.map_cpu hookin (fuck why i delete the old code)
 	enable TILE_MOVEMENT_MODE and see if break

@@ -325,6 +325,35 @@ var/list/globalPropList = null
 			if(istype(owner))
 				owner.force -= value
 
+	genericenchant
+		hidden = 1
+		name = "Enchantment"
+		id = "enchant"
+		desc = "Magic!"
+		tooltipImg = "block.png"
+		defaultValue = 1
+
+		onAdd(obj/item/owner, value)
+			. = ..()
+			for(var/datum/objectProperty/P in owner.properties)
+				if(P.id == "enchant") continue
+				var/val = owner.getProperty(P.id)
+				owner.setProperty(P.id, val * (1+(P.goodDirection * sign(val) * (value/10))))
+			owner.force *= (1+value/10)
+
+		onChange(obj/item/owner, oldValue, newValue)
+			. = ..()
+			onRemove(owner, oldValue)
+			onAdd(owner, newValue)
+
+		onRemove(obj/item/owner, value)
+			. = ..()
+			for(var/datum/objectProperty/P in owner.properties)
+				if(P.id == "enchant") continue
+				var/val = owner.getProperty(P.id)
+				owner.setProperty(P.id, val / (1+(P.goodDirection * sign(val) * (value/10))))
+			owner.force /= (1+value/10)
+
 	inline //Seriously, if anyone has a better idea, tell me.
 		inline = 1
 		hidden = 1

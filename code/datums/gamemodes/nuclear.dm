@@ -19,6 +19,7 @@
 	var/token_players_assigned = 0
 
 	do_antag_random_spawns = 0
+	escape_possible = 0
 
 /datum/game_mode/nuclear/announce()
 	boutput(world, "<B>The current game mode is - Nuclear Emergency!</B>")
@@ -437,7 +438,7 @@ var/syndicate_name = null
 
 /obj/cairngorm_stats/
 	name = "Mission Memorial"
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_mid"
 	anchored = 1.0
 	opacity = 0

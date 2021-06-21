@@ -130,15 +130,35 @@
 	icon_state = "class-a"
 	muzzle_flash = "muzzle_flash_phaser"
 
+/obj/item/shipcomponent/mainweapon/phaser/short
+	name = "Mk 1.45 Light Phaser"
+	desc = "A basic, light weight phaser designed for close quarters space fights..."
+	weapon_score = 0.2
+	appearanceString = "pod_weapon_ltlaser"
+	current_projectile = new/datum/projectile/laser/light
+	icon_state = "class-a"
+	muzzle_flash = "muzzle_flash_phaser"
+
 /obj/item/shipcomponent/mainweapon/laser
 	name = "Mk.2 Scout Laser"
 	desc = "An upgraded variant of the stock MK 1.5 phaser. Due to the concentration of energy, a higher quality engine might be neccesary."
 	weapon_score = 0.4
 	appearanceString = "pod_weapon_laser"
 	power_used = 100
+	current_projectile = new/datum/projectile/laser/pod
+	icon_state = "mk-2-scout"
+	muzzle_flash = "muzzle_flash_laser"
+
+/obj/item/shipcomponent/mainweapon/laser/short
+	name = "Mk.2 CQ Laser"
+	desc = "A downgraded variant of the upgraded MK 2.0 laser. Doesn't shoot quite as far, but doesn't use quite as much energy either."
+	weapon_score = 0.35
+	appearanceString = "pod_weapon_laser"
+	power_used = 75
 	current_projectile = new/datum/projectile/laser
 	icon_state = "mk-2-scout"
 	muzzle_flash = "muzzle_flash_laser"
+
 
 /obj/item/shipcomponent/mainweapon/russian
 	name = "Svet-Oruzhiye Mk.4"
@@ -191,7 +211,7 @@
 	weapon_score = 1.0
 	current_projectile = new/datum/projectile/laser/drill
 	appearanceString = "pod_weapon_drills"
-	firerate = 5
+	firerate = 10
 	icon_state = "rock-drill"
 
 /obj/item/shipcomponent/mainweapon/disruptor
@@ -434,7 +454,7 @@
 							purge_sps(destruction_point_x, destruction_point_y)
 							destruction_point_y = ship.loc.y + 1
 						purge_sps(destruction_point_x, destruction_point_y)
-				
+
 				else boutput(ship.pilot, "<span class='alert'><B>Shooting diagonally is unsupported.</B></span>")
 
 
@@ -478,20 +498,20 @@
 /datum/projectile/laser/pod
 	dissipation_rate = 2
 	dissipation_delay = 16
-	projectile_speed = 32
+	projectile_speed = 42
 
 /datum/projectile/laser/light/pod
 	impact_range = 2
 	dissipation_rate = 1
 	dissipation_delay = 14
-	projectile_speed = 32
+	projectile_speed = 42
 
 /datum/projectile/disruptor
 	impact_range = 4
 	dissipation_delay = 16
-	projectile_speed = 32
+	projectile_speed = 42
 
 /datum/projectile/disruptor/high
 	impact_range = 4
 	dissipation_delay = 16
-	projectile_speed = 32
+	projectile_speed = 42

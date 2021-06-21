@@ -211,6 +211,45 @@
 				else
 					boutput(C, "<span class='alert'>[stinkString()]</span>")
 
+
+/obj/effect/distort/dwarf
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "distort-dwarf"
+
+/datum/bioEffect/dwarf
+	name = "Dwarfism"
+	desc = "Greatly reduces the overall size of the subject, resulting in markedly dimished height."
+	id = "dwarf"
+	msgGain = "Did everything just get bigger?"
+	msgLose = "You feel tall!"
+	icon_state  = "dwarf"
+	var/filter = null
+	var/obj/effect/distort/dwarf/distort = new
+	var/size = 127
+
+	OnAdd()
+		. = ..()
+		owner.filters += filter(type="displace", size=0, render_source = src.distort.render_target)
+		owner.vis_contents += src.distort
+		src.filter = owner.filters[length(owner.filters)]
+		animate(src.filter, size=src.size, time=0.7 SECONDS, easing=SINE_EASING, flags=ANIMATION_PARALLEL)
+
+	OnRemove()
+		owner.filters -= filter
+		owner.vis_contents -= src.distort
+		src.filter = null
+		. = ..()
+
+	disposing()
+		qdel(src.distort)
+		src.distort = null
+		. = ..()
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "size" && src.filter)
+			animate(src.filter, size=newval, time=0.7 SECONDS, easing=SINE_EASING, flags=ANIMATION_PARALLEL)
+
 /datum/bioEffect/drunk
 	name = "Ethanol Production"
 	desc = "Encourages growth of ethanol-producing symbiotic fungus in the subject's body."

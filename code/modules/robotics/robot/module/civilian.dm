@@ -10,4 +10,4 @@
 /datum/robot_cosmetic/civilian
 	fx = list(255, 0, 0)
 	painted = 1
-	paint = list(0, 0, 0)
+	paint = "#000000"

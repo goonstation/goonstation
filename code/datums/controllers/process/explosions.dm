@@ -1,10 +1,11 @@
-// handles timed player actions
-datum/controller/process/explosions
+
+/// handles EXPLOSIONS
+/datum/controller/process/explosions
 	var/datum/explosion_controller/explosion_controller
 
 	setup()
 		name = "Explosions"
-		schedule_interval = 5
+		schedule_interval = 0.5 SECONDS
 
 		explosion_controller = explosions
 

@@ -234,7 +234,7 @@
 				return 0 //welding, doesnt have fuel
 			src.use_fuel(use_amt)
 			if(noisy)
-				playsound(user.loc, list('sound/items/Welder.ogg', 'sound/items/Welder2.ogg')[noisy], 50, 1)
+				playsound(user.loc, list('sound/items/Welder.ogg', 'sound/items/Welder2.ogg')[noisy], 40, 1)
 			if(burn_eyes)
 				src.eyecheck(user)
 			return 1 //welding, has fuel

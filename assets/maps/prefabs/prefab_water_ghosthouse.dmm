@@ -38,7 +38,7 @@
 "aL" = (/obj/map/light/void,/obj/rack/precursor,/obj/item/clothing/head/void_crown,/turf/unsimulated/floor/void,/area/prefab/ghost_house)
 "aM" = (/obj/machinery/door/unpowered/wood/pyro{dir = 1; icon_state = "wood1"; tag = "icon-wood1 (NORTH)"},/turf/simulated/floor/grey,/area/prefab/ghost_house)
 "aN" = (/turf/unsimulated/wall/setpieces/leadwall/gray{dir = 6; icon_state = "leadwall_gray"},/area/prefab/ghost_house)
-"aO" = (/obj/table/wood/round/auto,/obj/item/paper/book/monster_manual,/obj/decal/cleanable/cobweb,/turf/simulated/floor/wood,/area/prefab/ghost_house)
+"aO" = (/obj/table/wood/round/auto,/obj/item/paper/book/from_file/monster_manual,/obj/decal/cleanable/cobweb,/turf/simulated/floor/wood,/area/prefab/ghost_house)
 "aP" = (/obj/stool/chair/couch{dir = 8; icon_state = "chair_couch-brown"},/obj/machinery/light/incandescent/warm{dir = 1; icon_state = "tube1"},/turf/simulated/floor/wood,/area/prefab/ghost_house)
 "aQ" = (/obj/stool/chair/couch,/turf/simulated/floor/wood,/area/prefab/ghost_house)
 "aR" = (/obj/stool/chair/couch{dir = 4; icon_state = "chair_couch-brown"},/turf/simulated/floor/wood,/area/prefab/ghost_house)
@@ -50,7 +50,7 @@
 "aX" = (/turf/simulated/floor/carpet/red/standard/narrow/east,/area/prefab/ghost_house)
 "aY" = (/obj/critter/spider/baby,/turf/simulated/floor/wood,/area/prefab/ghost_house)
 "aZ" = (/obj/critter/ancient_repairbot/security,/turf/unsimulated/floor/void,/area/prefab/ghost_house)
-"ba" = (/obj/table/wood/round/auto,/obj/item/paper/book/critter_compendium,/obj/decal/cleanable/cobweb{icon_state = "cobweb"},/turf/simulated/floor/wood,/area/prefab/ghost_house)
+"ba" = (/obj/table/wood/round/auto,/obj/item/paper/book/from_file/critter_compendium,/obj/decal/cleanable/cobweb{icon_state = "cobweb"},/turf/simulated/floor/wood,/area/prefab/ghost_house)
 "bb" = (/obj/stool/chair/comfy{dir = 4; icon_state = "chair_comfy"},/turf/simulated/floor/wood,/area/prefab/ghost_house)
 "bc" = (/obj/table/wood/round/auto,/obj/item/game_kit,/turf/simulated/floor/wood,/area/prefab/ghost_house)
 "bd" = (/obj/stool/chair/comfy{dir = 8; icon_state = "chair_comfy"},/turf/simulated/floor/wood,/area/prefab/ghost_house)
@@ -170,7 +170,7 @@
 "dn" = (/turf/simulated/floor/carpet/red/fancy/edge/se,/area/prefab/ghost_house)
 "do" = (/turf/unsimulated/wall/setpieces/leadwindow/gray{dir = 4; icon_state = "leadwindow_gray_1"},/area/prefab/ghost_house)
 "dp" = (/obj/item/reagent_containers/food/drinks/drinkingglass/wine,/obj/machinery/light/incandescent/warm{dir = 4; icon_state = "tube1"},/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"dq" = (/obj/table/wood/round/auto,/obj/machinery/light/incandescent/warm{dir = 1; icon_state = "tube1"},/obj/item/storage/box/record/notaquario_mixtape1,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
+"dq" = (/obj/table/wood/round/auto,/obj/machinery/light/incandescent/warm{dir = 1; icon_state = "tube1"},/obj/item/storage/box/record/notaquario,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
 "dr" = (/obj/machinery/light/incandescent/warm{dir = 4; icon_state = "tube1"},/turf/simulated/floor/stairs/wood/wide{dir = 6; icon_state = "wood_stairs2"},/area/prefab/ghost_house)
 
 (1,1,1) = {"

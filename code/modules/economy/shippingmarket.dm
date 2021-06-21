@@ -240,7 +240,7 @@
 		if(transmit_connection != null)
 			transmit_connection.post_signal(null, pdaSignal)
 
-	proc/receive_crate(obj/storage/S)
+	proc/receive_crate(atom/movable/shipped_thing)
 
 		var/turf/spawnpoint
 		for(var/turf/T in get_area_turfs(/area/supply/spawn_point))
@@ -260,11 +260,11 @@
 			logTheThing("debug", null, null, "<b>Shipping: </b> No target turfs found! Can't deliver crate")
 			return
 
-		S.set_loc(spawnpoint)
+		shipped_thing.set_loc(spawnpoint)
 
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [S.name].")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [shipped_thing.name].")
 		pdaSignal.transmission_method = TRANSMISSION_RADIO
 		transmit_connection.post_signal(null, pdaSignal)
 
@@ -280,7 +280,7 @@
 					if (P && !P.density)
 						P.close()
 
-		S.throw_at(target, 100, 1)
+		shipped_thing.throw_at(target, 100, 1)
 
 // Debugging and admin verbs (mostly coder)
 

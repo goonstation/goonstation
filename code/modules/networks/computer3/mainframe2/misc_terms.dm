@@ -1037,7 +1037,7 @@
 
 #define DISARM_CUTOFF 10 //Can't disarm past this point! OH NO!
 
-	mats = 80 //haha this is a bad idea
+	mats = list("POW-3" = 27, "MET-3" = 25, "CON-2" = 13, "DEN-3" = 15) //haha this is a bad idea
 	deconstruct_flags = DECON_NONE
 	is_syndicate = 1 //^ Agreed
 
@@ -3311,7 +3311,7 @@
 				if (1 to 3)
 					//telehop + radiation
 					if (iscarbon(hitMob))
-						hitMob.changeStatus("radiation", 1000)
+						hitMob.changeStatus("radiation", 100 SECONDS)
 						hitMob.changeStatus("weakened", 2 SECONDS)
 					telehop(hitMob, src.power, src.power > 2)
 					return
@@ -3319,7 +3319,7 @@
 				if (4)
 					//big telehop + might leave parts behind.
 					if (iscarbon(hitMob))
-						hitMob.changeStatus("radiation", 1000)
+						hitMob.changeStatus("radiation", 100 SECONDS)
 
 						random_brute_damage(hitMob, 25)
 						hitMob.changeStatus("weakened", 2 SECONDS)
@@ -4434,7 +4434,7 @@
 				heat_overlay.icon_state = "heat-1"
 			if (250 to 269)
 				heat_overlay.icon_state = "heat-2"
-			if (249 to -99)
+			if (-INFINITY to 249)
 				heat_overlay.icon_state = "heat-3"
 			else
 				heat_overlay.icon_state = ""

@@ -169,7 +169,7 @@ var/global/the_automaton = null
 				//Oh, you've done it now.
 				src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a while, then <B>forcefully grabs [user]!</B>.</span>")
 				playsound(src.loc, "sound/misc/automaton_scratch.ogg", 60, 1)
-				user.changeStatus("stunned", 50)
+				user.changeStatus("stunned", 5 SECONDS)
 				user.canmove = 0
 				user.anchored = 1
 				user.set_loc(src.loc)

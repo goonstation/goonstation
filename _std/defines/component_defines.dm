@@ -65,6 +65,8 @@
 #define COMSIG_ATOM_HITBY_PROJ "atom_hitby_proj"
 /// when an atom is hit by a thrown thing (thrown_atom, /datum/thrown_thing)
 #define COMSIG_ATOM_HITBY_THROWN "atom_hitby_thrown"
+/// when an atom is examined (/mob/examiner, /list/lines), append to lines for more description
+#define COMSIG_ATOM_EXAMINE "atom_examine"
 
 // ---- atom/movable signals ----
 
@@ -106,6 +108,9 @@
 /// After an item's itemspecial is used (user)
 #define COMSIG_ITEM_SPECIAL_POST "itm_special_post"
 
+// ---- cloaking device signal ----
+/// Make cloaking devices turn off
+#define COMSIG_CLOAKING_DEVICE_DEACTIVATE "cloak_deactivate"
 
 // ---- implant signals ----
 /// When implanted
@@ -134,10 +139,17 @@
 
 // ---- mob signals ----
 
+/// When a client logs into a mob
+#define COMSIG_MOB_LOGIN "mob_login"
+/// When a client logs out of a mob
+#define COMSIG_MOB_LOGOUT "mob_logout"
 /// At the beginning of when an attackresults datum is being set up
 #define COMSIG_MOB_ATTACKED_PRE "attacked_pre"
 /// When a mob dies
 #define COMSIG_MOB_DEATH "mob_death"
+
+/// When a mob fakes death
+#define COMSIG_MOB_FAKE_DEATH "mob_fake_death"
 
 #define COMSIG_MOB_PICKUP "mob_pickup"
 
@@ -150,6 +162,10 @@
 // ---- mob/living signals ----
 /// When a Life tick occurs
 #define COMSIG_LIVING_LIFE_TICK "human_life_tick"
+
+// ---- mob property signals ----
+/// When invisibility of a mob gets updated (old_value)
+#define COMSIG_MOB_PROP_INVISIBILITY "mob_prop_invis"
 
 // ---- attack_X signals ----
 

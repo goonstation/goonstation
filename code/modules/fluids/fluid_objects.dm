@@ -270,7 +270,7 @@
 				if (T.active_liquid && T.active_liquid.group && T.active_liquid.group.reagents)
 					T.active_liquid.group.drain(T.active_liquid,slurp,src)
 					if (prob(80))
-						playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 0.1, 0.7)
+						playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 0.1, 0.7)
 				update_icon()
 
 		else if (pissing)
