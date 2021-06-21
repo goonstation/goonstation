@@ -1,5 +1,9 @@
 
 (t)mon jun 21 21
+(u)Flappybat & Gannets
+(p)5125
+(e)🆕🎨|feature, sprites
+(*)Replaced the ocular prothesis (SecHUD) kit from surplus crates with a fully automatic implanter.
 (u)TTerc
 (p)5219
 (e)|
