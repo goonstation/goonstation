@@ -342,6 +342,7 @@
 
 /// internal use only. accepts a zone and an element, and then tries to position that element in the zone based on current element positions.
 /datum/hud/proc/adjust_offset(var/list/hud_zone, var/atom/movable/screen/hud/element)
+	PRIVATE_PROC(TRUE)
 	var/dir_horizontal = hud_zone["horizontal_edge"] // what direction elements are added from horizontally (east or west)
 	var/dir_vertical = hud_zone["vertical_edge"] // what direction elements are added from when wrapping around horizontally (north or south)
 	var/curr_horizontal = hud_zone["horizontal_offset"] // current horizontal offset inside of the hud zone, not relative to edges
