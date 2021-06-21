@@ -147,7 +147,8 @@
 		// is it time for combo checks?
 		if (direction in ordinal) // fuck.
 			if (source?.blocked_dirs && T.blocked_dirs)
-				// check for blocks caused by alternating opposing blocks (like moving NE with source blocking North entry and destination blocking South exit forming a wall)
+				// check for "wall" blocks
+				// ex. trying to move NE source blocking north exit and destination (T) blocking south entry
 				if (HAS_FLAG(source.blocked_dirs, turn(direction, 45)) && HAS_FLAG(T.blocked_dirs, turn(direction, -135)))
 					return FALSE
 				else if (HAS_FLAG(source.blocked_dirs, turn(direction, -45)) && HAS_FLAG(T.blocked_dirs, turn(direction, 135)))
@@ -158,17 +159,18 @@
 
 			// check for potential blocks form the two corners
 			if (corner_1.blocked_dirs && corner_2.blocked_dirs)
-				// entry to dest blocked by corners
-				if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -45)) && HAS_FLAG(corner_2.blocked_dirs, turn(direction, 45)))
-					return FALSE
-				// exit from source blocked by corners
-				else if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -135)) && HAS_FLAG(corner_2.blocked_dirs, turn(direction, 135)))
-					return FALSE
-				// check for blocks caused by corners with alternating opposing blocks (like moving NE with one blocking North exit and the other South entry forming a wall)
-				else if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -45)) && HAS_FLAG(corner_2.blocked_dirs, turn(direction, 135)))
-					return FALSE
-				else if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -135)) && HAS_FLAG(corner_2.blocked_dirs, turn(direction, 45)))
-					return FALSE
+				if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -45)))
+					if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 45)))
+						return FALSE // entry to dest blocked by corners
+					else if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 135)))
+						// check for "wall" blocks
+						// ex. trying to move NE with C1 blocking south entry and C2 blocking north exit forming a wall
+						return FALSE
+				if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -135)))
+					if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 135)))
+						return FALSE // exit from source blocked by corners
+					else if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 45)))
+						return FALSE // "wall" block
 
 			// we got past the combinations of the two corners ok, but what about the corners combined with the source and destination?
 			// entry blocked by an object in destination and in one or more of the corners
