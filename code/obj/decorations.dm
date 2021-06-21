@@ -968,6 +968,7 @@ obj/decoration/ceilingfan
 	anchored = 2
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "frontwalldamage"
+	mouse_opacity = 0
 
 /obj/decoration/damagedchair
 	anchored = 2

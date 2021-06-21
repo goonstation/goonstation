@@ -1193,6 +1193,7 @@
 	desc = "It can clean a bloodied katana, and also allows for easier storage of a katana"
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "katana_sheathed"
+	wear_layer = MOB_SHEATH_LAYER
 	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "sheathedhand"
