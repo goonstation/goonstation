@@ -92,12 +92,8 @@
 				return
 			boutput(user, "<span class='notice'>Removing fitting...</span>")
 			playsound(user, "sound/machines/click.ogg", 50, 1)
-			if(do_after(user, 3 SECONDS))
-				qdel(A) //RIP
-				if (!isghostdrone(user))
-					elecflash(user)
-				take_ammo(user, cost_removal)
-				return
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/remove_light, list(A, user), null, null, null, null)
+
 
 		if (!istype(A, /turf/simulated) && !istype(A, /obj/window) || !check_ammo(user, cost_fitting))
 			..()
@@ -106,12 +102,7 @@
 		if (istype(A, /turf/simulated/floor))
 			boutput(user, "<span class='notice'>Installing a floor bulb...</span>")
 			playsound(user, "sound/machines/click.ogg", 50, 1)
-			if(do_after(user, 3 SECONDS))
-				var/obj/machinery/light/newfitting = new /obj/machinery/light/small/floor(A)
-				newfitting.attackby(src, user) //plop in an appropriate colour lamp
-				if (!isghostdrone(user))
-					elecflash(user)
-				take_ammo(user, cost_fitting)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_floor_light, list(A, user), null, null, null, null)
 
 
 		else if (istype(A, /turf/simulated/wall) || istype(A, /obj/window))
@@ -124,14 +115,7 @@
 				return
 			boutput(user, "<span class='notice'>Installing a wall [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"]...</span>")
 			playsound(user, "sound/machines/click.ogg", 50, 1)
-			if(do_after(user, 3 SECONDS))
-				var/obj/machinery/light/newfitting = new dispensing_fitting(B)
-				newfitting.nostick = 0 //regular tube lights don't do autoposition for some reason.
-				newfitting.autoposition(get_dir(B,A)) //Also this might
-				newfitting.attackby(src, user) //plop in an appropriate colour lamp
-				if (!isghostdrone(user))
-					elecflash(user)
-				take_ammo(user, cost_fitting)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_wall_light, list(A, B, user), null, null, null, null)
 
 
 /obj/item/lamp_manufacturer/attackby(obj/item/W, mob/user)
@@ -161,38 +145,29 @@
 		else
 			..()
 
-/// Returns the turf facing the fab for cardinal directions (which should also be the user's turf), but for diagonals it returns a neighbouring turf depending on where you click
-/// Just in case you're attacking a corner diagonally.
-/obj/item/lamp_manufacturer/proc/get_adjacent_floor(atom/W, mob/user, px, py)
-	var/dir_temp = get_dir(user, W) //Our W is to the ___ of the user
-	//These two expressions divide a 32*32 turf into diagonal halves
-	var/diag1 = (px > py) //up-left vs down-right
-	var/diag2 = ((px + py) > 32) //up-right vs down-left
-	switch(dir_temp)
-		if (NORTH)
-			return get_turf(get_step(W,SOUTH))
-		if (NORTHEAST)
-			if (diag1)
-				return get_turf(get_step(W,SOUTH))
-			return get_turf(get_step(W,WEST))
-		if (EAST)
-			return get_turf(get_step(W,WEST))
-		if (SOUTHEAST)
-			if (diag2)
-				return get_turf(get_step(W,NORTH))
-			return get_turf(get_step(W,WEST))
-		if (SOUTH)
-			return get_turf(get_step(W,NORTH))
-		if (SOUTHWEST)
-			if (diag1)
-				return get_turf(get_step(W,EAST))
-			return get_turf(get_step(W,NORTH))
-		if (WEST)
-			return get_turf(get_step(W,EAST))
-		if (NORTHWEST)
-			if (diag2)
-				return get_turf(get_step(W,EAST))
-			return get_turf(get_step(W,SOUTH))
+/// Procs for the action bars
+/obj/item/lamp_manufacturer/proc/add_wall_light(atom/A, turf/B, mob/user)
+	var/obj/machinery/light/newfitting = new dispensing_fitting(B)
+	newfitting.nostick = 0 //regular tube lights don't do autoposition for some reason.
+	newfitting.autoposition(get_dir(B,A))
+	newfitting.attackby(src, user) //plop in an appropriate colour lamp
+	if (!isghostdrone(user))
+		elecflash(user)
+	take_ammo(user, cost_fitting)
+
+/obj/item/lamp_manufacturer/proc/add_floor_light(turf/A, mob/user)
+	var/obj/machinery/light/newfitting = new /obj/machinery/light/small/floor(A)
+	newfitting.attackby(src, user) //plop in an appropriate colour lamp
+	if (!isghostdrone(user))
+		elecflash(user)
+	take_ammo(user, cost_fitting)
+
+/obj/item/lamp_manufacturer/proc/remove_light(obj/machinery/light/A, mob/user)
+	qdel(A) //RIP
+	if (!isghostdrone(user))
+		elecflash(user)
+	take_ammo(user, cost_removal)
+	return
 
 /obj/item/lamp_manufacturer/proc/check_ammo(mob/user, cost)
 	if (issilicon(user))
