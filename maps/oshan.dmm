@@ -16943,6 +16943,7 @@
 	dir = 8
 	},
 /obj/access_spawn/hydro,
+/obj/machinery/cashreg,
 /turf/simulated/floor,
 /area/station/ranch)
 "aOm" = (
@@ -46637,6 +46638,19 @@
 /obj/machinery/vending/coffee,
 /turf/simulated/floor,
 /area/research_outpost)
+"iDf" = (
+/obj/table/reinforced/auto{
+	icon_state = "3"
+	},
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/obj/access_spawn/hydro,
+/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+	rand_pos = 1
+	},
+/turf/simulated/floor,
+/area/station/ranch)
 "iHN" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
@@ -47108,6 +47122,15 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/baroffice)
+"miT" = (
+/obj/item/storage/backpack/satchel/fjallraven,
+/obj/item/reagent_containers/food/drinks/hairgrowth,
+/obj/item/reagent_containers/pill/hairgrownium{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/turf/simulated/floor/plating/random,
+/area/station/hallway/primary/west)
 "mka" = (
 /turf/space/fluid,
 /area/space{
@@ -47390,6 +47413,16 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"odD" = (
+/obj/item/reagent_containers/pill/hairgrownium{
+	pixel_x = 17;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/pill/hairgrownium{
+	pixel_x = -6
+	},
+/turf/simulated/floor/plating/random,
+/area/station/hallway/primary/west)
 "oiZ" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/firedoor_spawn,
@@ -48206,6 +48239,10 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/research_outpost)
+"uoX" = (
+/obj/item/toy/handheld/robustris,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "uss" = (
 /obj/machinery/drainage/big,
 /turf/simulated/floor/shuttlebay,
@@ -84172,7 +84209,7 @@ ciZ
 ciZ
 ciZ
 aOl
-aOl
+iDf
 ciZ
 exU
 bhi
@@ -84495,7 +84532,7 @@ xNc
 xNc
 mQr
 fJg
-brk
+miT
 cjv
 pxv
 btq
@@ -84797,7 +84834,7 @@ xNc
 bpf
 gYh
 fJg
-brk
+odD
 cjv
 bsH
 btr
@@ -87806,7 +87843,7 @@ aqn
 aqn
 aCD
 cHH
-aDr
+uoX
 vcK
 xzT
 jMq
