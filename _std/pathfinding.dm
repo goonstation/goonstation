@@ -190,13 +190,13 @@
 				continue // we already handled these above with the blocked_dirs
 			if (istype(A, /obj/overlay) || istype(A, /obj/effects)) continue
 		if (heuristic) // Only use a custom hueristic if we were passed one
-			. = min(., call(heuristic)(A, source, heuristic_args))
+			. = min(., call(heuristic)(A, heuristic_args))
 			if (!.) // early return if we encountered a failing atom
 				return
 		else if (A.density)
 			return FALSE // not a special case, so this is a blocking object
 
-/proc/hueristic_IsPassableMob(atom/A, turf/source, mob/M)
+/proc/hueristic_IsPassableMob(atom/A, mob/M)
 	. = FALSE
 	if (!A.density) // Not dense? Don't care!
 		return TRUE
