@@ -9,6 +9,7 @@
 	color = "#ffffff"
 	flags = FPRINT | USEDELAY | ON_BORDER
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
+	object_flags = HAS_DIRECTIONAL_BLOCKING
 	dir = SOUTH
 	custom_suicide = 1
 	var/broken = 0

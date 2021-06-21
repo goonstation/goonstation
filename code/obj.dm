@@ -23,6 +23,34 @@
 	var/_health = 100
 	var/_max_health = 100
 
+	New()
+		. = ..()
+		SPAWN_DBG(0) // needs a chance to set dir apparently
+			if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
+				var/turf/T = get_turf(src)
+				T?.UpdateDirBlocks()
+		src.update_access_from_txt()
+
+	Move(NewLoc, direct)
+		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
+			var/turf/old_loc = get_turf(src)
+			. = ..()
+			var/turf/T = get_turf(NewLoc)
+			T?.UpdateDirBlocks()
+			old_loc?.UpdateDirBlocks()
+		else
+			. = ..()
+
+	set_loc(newloc)
+		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
+			var/turf/old_loc = get_turf(src)
+			. = ..()
+			var/turf/T = get_turf(newloc)
+			T?.UpdateDirBlocks()
+			old_loc?.UpdateDirBlocks()
+		else
+			. = ..()
+
 	proc/setHealth(var/value)
 		var/prevHealth = _health
 		_health = min(value, _max_health)
