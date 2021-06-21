@@ -749,6 +749,9 @@
 	sound_load = 'sound/weapons/gunload_40mm.ogg'
 	force_new_current_projectile = 1
 
+	rigil
+		max_amount = 4
+
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if(!W || !user)
@@ -762,6 +765,9 @@
 				src.update_icon()
 				boutput(user, "You load [W] into the [src].")
 				return
+			else if(src.amount_left < src.max_amount && W.type == AMMO.get_nade()?.type)
+				src.amount_left++
+				boutput(user, "You load [W] into the [src].")
 			else
 				boutput(user, "<span class='alert'>For <i>some reason</i>, you are unable to place [W] into an already filled chamber.</span>")
 				return
@@ -773,9 +779,10 @@
 		if(!user)
 			return
 		if (src.loc == user && AMMO.has_grenade != 0)
-			user.put_in_hand_or_drop(AMMO.get_nade())
+			for(var/i in 1 to amount_left)
+				user.put_in_hand_or_drop(SEMI_DEEP_COPY(AMMO.get_nade()))
 			AMMO.unload_nade()
-			boutput(user, "You pry the grenade out of [src].")
+			boutput(user, "You pry the grenade[amount_left>1?"s":""] out of [src].")
 			src.add_fingerprint(user)
 			src.update_icon()
 			return
@@ -792,9 +799,10 @@
 	after_unload(mob/user)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if(AMMO.has_grenade && src.delete_on_reload)
-			qdel(src)
-			user.put_in_hand_or_drop(AMMO.get_nade())
+			for(var/i in 1 to amount_left)
+				user.put_in_hand_or_drop(SEMI_DEEP_COPY(AMMO.get_nade()))
 			AMMO.unload_nade()
+			qdel(src)
 
 // Ported from old, non-gun RPG-7 object class (Convair880).
 /obj/item/ammo/bullets/rpg

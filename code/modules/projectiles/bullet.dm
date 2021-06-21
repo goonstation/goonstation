@@ -1148,6 +1148,7 @@ toxic - poisons
 	var/has_det = 0 //have we detonated a grenade yet?
 
 	proc/get_nade()
+		RETURN_TYPE(/obj/item)
 		if (src.has_grenade != 0)
 			if (src.CHEM != null)
 				return src.CHEM
