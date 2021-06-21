@@ -5,7 +5,7 @@
 /obj/item/device/ocular_implanter
 	name = "Ocular Implanter (SecHUD)"
 	icon_state = "ocular_implanter-full"
-	desc = "A worrying looking medical device for automated eye implants, this model is for SecHUDs. The suction cup fill you with dread."
+	desc = "A worrying looking medical device for automated eye implants, this model is for SecHUDs. The suction cup fills you with dread."
 	w_class = 2
 	is_syndicate = 1
 	var/implant = /obj/item/organ/eye/cyber/sechud
