@@ -1,4 +1,8 @@
 
+(t)mon jun 21 21
+(u)Flourish
+(e)🆕|feature, mapping
+(*)Rearranged Oshan a little, primarily the area surrounding the bar. Let me know what you think.
 (t)sun jun 20 21
 (u)eX.n0x, Sovexe, & ZeWaka
 (p)5141
@@ -194,7 +198,7 @@
 (+)Onagadori; Japanese long-tailed chickens. Peanut feed. [Gen 1] [From White Chickens]
 (+)Shieldmaidhens; these armored chickens need a high-iron diet to maintain their natural armor. [Gen 2] [From Onagadori]
 (+)Phoenix; Love will set your heart on fire. Try breeding two appropriate chickens! [Gen 3]
-(+)Dreamsicle Chickens; Sweet ice cream. Try breeding two appropriate chickens! [Gen 3] 
+(+)Dreamsicle Chickens; Sweet ice cream. Try breeding two appropriate chickens! [Gen 3]
 (u)112358sam
 (p)5027
 (e)|
