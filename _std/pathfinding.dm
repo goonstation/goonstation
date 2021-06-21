@@ -144,7 +144,6 @@
 		else if (source && HAS_FLAG(source.blocked_dirs, direction))
 			return FALSE
 
-		// is it time for combo checks?
 		if (direction in ordinal) // ordinal? That complicates things...
 			if (source?.blocked_dirs && T.blocked_dirs)
 				// check for "wall" blocks
