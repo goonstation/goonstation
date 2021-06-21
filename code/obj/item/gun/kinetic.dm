@@ -1807,6 +1807,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	attack_hand(mob/user as mob)
 		if (src.broke_open == FALSE && user.find_in_hand(src))
-			boutput(user, "<span class='alert'>You cant reach through the [src] to take shells out! You'll have to open [src] first!</span>")
+			boutput(user, "<span class='alert'>The [src] is still closed, you need to open the action to take the shells out!</span>")
 			return
 		..()
