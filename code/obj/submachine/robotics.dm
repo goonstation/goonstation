@@ -161,8 +161,8 @@
 		else
 			..()
 
-//Returns the turf facing the fab for cardinal directions (which should also be the user's turf), but for diagonals it returns a neighbouring turf depending on where you click
-//Just in case you're attacking a corner diagonally.
+/// Returns the turf facing the fab for cardinal directions (which should also be the user's turf), but for diagonals it returns a neighbouring turf depending on where you click
+/// Just in case you're attacking a corner diagonally.
 /obj/item/lamp_manufacturer/proc/get_adjacent_floor(atom/W, mob/user, px, py)
 	var/dir_temp = get_dir(user, W) //Our W is to the ___ of the user
 	//These two expressions divide a 32*32 turf into diagonal halves
