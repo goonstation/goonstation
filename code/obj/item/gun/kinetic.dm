@@ -1743,3 +1743,70 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		ammo = new/obj/item/ammo/bullets/foamdarts/ten
 		set_current_projectile(new/datum/projectile/bullet/foamdart)
 		..()
+
+/obj/item/gun/kinetic/bargun
+	name = "Double Barreled Shotgun"
+	desc = "A double barreled sawn-off break-action shotgun, mostly used by people who think it looks cool."
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "bargun"
+	icon_state = "bargun-closed"
+	force = MELEE_DMG_RIFLE
+	contraband = 4
+	caliber = 0.72
+	max_ammo_capacity = 2
+	auto_eject = 0
+	can_dual_wield = 0
+	two_handed = 0
+	has_empty_state = 0
+	gildable = 0
+	add_residue = 1
+	var/broke_open = FALSE
+	var/shells_to_eject = 0
+
+	New() //uses a special box of ammo that only starts with 2 shells to prevent issues with overloading
+		if(prob(25))
+			name = pick ("Bessie", "Mule", "Loud Louis", "Boomstick", "Coach Gun", "Shorty", "Sawn-off Shotgun", "Street Sweeper", "Street Hoitzer", "Big Boy", "Slugger", "Closing time", "Garbage day", "Rooty Tooty Point and Shooty", "Twin 12 Guage", "Master Blaster", "Ass Blaster", "Blunderbuss", "Dr. Bullous' Tunder-clapper", "Super Shotgun", "Insurance policy", "Last Call", "Super-Duper Shotgun")
+		ammo = new/obj/item/ammo/bullets/abg/two
+		set_current_projectile(new/datum/projectile/bullet/abg)
+		..()
+
+	canshoot()
+		if (src.broke_open == FALSE)
+			return 1
+		..()
+
+	shoot(var/target,var/start ,var/mob/user)
+		if(src.broke_open == TRUE)
+			boutput(user, "<span class='notice'>You need to close [src] before you can fire!</span>")
+		if (src.broke_open == FALSE && src.ammo.amount_left > 0)
+			src.shells_to_eject += 1
+		..()
+
+	attack_self(mob/user as mob)
+		if (src.broke_open == TRUE)
+			src.icon_state = "bargun-closed"
+			src.broke_open = FALSE
+			playsound(user.loc, "sound/weapons/gunload_click.ogg", 15, 1)
+
+		else  if (src.broke_open == FALSE)
+			src.icon_state = "bargun-open"
+			src.broke_open = TRUE
+			playsound(user.loc, "sound/weapons/gunload_click.ogg", 15, 1)
+			src.casings_to_eject = src.shells_to_eject
+
+			if (src.casings_to_eject > 0)
+				src.ejectcasings()
+				src.shells_to_eject = 0
+		..()
+
+	attackby(obj/item/b as obj, mob/user as mob)
+		if (istype(b, /obj/item/ammo/bullets) && src.broke_open == FALSE)
+			boutput(user, "<span class='alert'>You can't shove shells down the barrel! You'll have to open the [src] first!</span>")
+			return
+		..()
+
+	attack_hand(mob/user as mob)
+		if (src.broke_open == FALSE && user.find_in_hand(src))
+			boutput(user, "<span class='alert'>You cant reach through the [src] to take shells out! You'll have to open [src] first!</span>")
+			return
+		..()
