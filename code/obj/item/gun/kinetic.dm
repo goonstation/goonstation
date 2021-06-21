@@ -1765,7 +1765,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	New() //uses a special box of ammo that only starts with 2 shells to prevent issues with overloading
 		if(prob(25))
-			name = pick ("Bessie", "Mule", "Loud Louis", "Boomstick", "Coach Gun", "Shorty", "Sawn-off Shotgun", "Street Sweeper", "Street Howitzer", "Big Boy", "Slugger", "Closing time", "Garbage day", "Rooty Tooty Point and Shooty", "Twin 12 Gauge","Master Blaster", "Ass Blaster", "Blunderbuss", "Dr. Bullous' Tunder-Clapper", "Super Shotgun", "Insurance policy", "Last Call", "Super-Duper Shotgun")
+			name = pick ("Bessie", "Mule", "Loud Louis", "Boomstick", "Coach Gun", "Shorty", "Sawn-off Shotgun", "Street Sweeper", "Street Howitzer", "Big Boy", "Slugger", "Closing Time", "Garbage day", "Rooty Tooty Point and Shooty", "Twin 12 Gauge","Master Blaster", "Ass Blaster", "Blunderbuss", "Dr. Bullous' Tunder-Clapper", "Super Shotgun", "Insurance Policy", "Last Call", "Super-Duper Shotgun")
 		ammo = new/obj/item/ammo/bullets/abg/two
 		set_current_projectile(new/datum/projectile/bullet/abg)
 		..()
@@ -1807,6 +1807,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	attack_hand(mob/user as mob)
 		if (src.broke_open == FALSE && user.find_in_hand(src))
-			boutput(user, "<span class='alert'>You cant reach through the [src] to take shells out! You'll have to open [src] first!</span>")
+			boutput(user, "<span class='alert'>The [src] is still closed, you need to open the action to take the shells out!</span>")
 			return
 		..()
