@@ -1,5 +1,9 @@
 
 (t)mon jun 21 21
+(u)Zonespace
+(p)5225
+(e)⚖🆕|balance, feature
+(+)NARCS can now be scanned by a Syndicate Device Analyzer.
 (u)Flappybat & Gannets
 (p)5125
 (e)🆕🎨|feature, sprites
