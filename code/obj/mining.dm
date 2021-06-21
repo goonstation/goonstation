@@ -2361,7 +2361,9 @@ var/global/list/cargopads = list()
 		..()
 		src.overlays += image('icons/obj/objects.dmi', "cpad-rec")
 		if (src.name == "Cargo Pad")
-			src.name += " ([rand(100,999)])"
+			var/turf/T = src.loc
+			if(isturf(T))
+				src.name = "[T.loc] ([rand(100,999)])"
 		if (src.active && !cargopads.Find(src))
 			cargopads.Add(src)
 
@@ -2377,6 +2379,9 @@ var/global/list/cargopads = list()
 		..()
 
 	was_built_from_frame(mob/user, newly_built)
+		var/turf/T = src.loc
+		if(isturf(T) && !newly_built)
+			src.name = "[T.loc] ([rand(100,999)])"
 		if (!cargopads.Find(src))
 			cargopads.Add(src)
 		..()
