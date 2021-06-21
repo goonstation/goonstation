@@ -145,7 +145,7 @@
 			return FALSE
 
 		// is it time for combo checks?
-		if (direction in ordinal) // fuck.
+		if (direction in ordinal) // ordinal? That complicates things...
 			if (source?.blocked_dirs && T.blocked_dirs)
 				// check for "wall" blocks
 				// ex. trying to move NE source blocking north exit and destination (T) blocking south entry
@@ -164,7 +164,7 @@
 						return FALSE // entry to dest blocked by corners
 					else if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 135)))
 						// check for "wall" blocks
-						// ex. trying to move NE with C1 blocking south entry and C2 blocking north exit forming a wall
+						// ex. trying to move NE with C1 blocking south entry and C2 blocking north exit
 						return FALSE
 				if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -135)))
 					if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 135)))
