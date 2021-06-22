@@ -603,7 +603,8 @@
 					transformedFilling.transform = matrix(0.75, MATRIX_SCALE)
 					fillingColors += transformedFilling
 
-				customSandwich.heal_amt += snack.heal_amt
+				// spread the total healing left for the added food among the sandwich bites
+				customSandwich.heal_amt += snack.heal_amt * snack.amount / customSandwich.amount
 
 				qdel(snack)
 
