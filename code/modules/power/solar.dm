@@ -167,7 +167,7 @@
 
 	if(!obscured)
 		var/sgen = SOLARGENRATE * sunfrac
-		sgen *= 1<<(current_processing_tier-1) // twice the power for half processing, 4 times for quarter etc.
+		sgen *= PROCESSING_TIER_MULTI(src) * MACHINE_LEGACY_SCALE_ADJ
 		add_avail(sgen)
 		if(powernet && control && powernet == control.powernet)
 			control.gen += sgen
