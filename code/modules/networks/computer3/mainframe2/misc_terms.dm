@@ -3532,7 +3532,8 @@
 		if (status & NOPOWER)
 			return 1
 
-		use_power(200)
+		if(active)
+			use_power(power_usage)
 
 		return 0
 
@@ -4730,6 +4731,7 @@
 	setup_device_name = "Gas Sensor"
 	setup_capability_value = "S"
 	active = 1
+	power_usage = 20
 
 	var/setup_tag = null
 			//Pressure, Temperature, gases, trace gases sum

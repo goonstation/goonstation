@@ -131,7 +131,7 @@
 	..()
 	if(status & NOPOWER)
 		return
-	use_power(250)
+	use_power(power_usage)
 
 /obj/machinery/computer/proc/set_broken()
 	if (status & BROKEN) return

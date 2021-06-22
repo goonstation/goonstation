@@ -190,8 +190,8 @@ obj/machinery/recharger
 			charge_status = STATUS_ERRORED
 			update_icon()
 
-
-
+	if(src.charging)
+		use_power(power_usage)
 	..()
 
 #undef CHARGE_AMOUNT

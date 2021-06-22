@@ -885,6 +885,7 @@
 			BAR.set_loc(output_location)
 
 		playsound(src.loc, sound_process, 40, 1)
+		use_power(10)
 
 	proc/load_reclaim(obj/item/W as obj, mob/user as mob)
 		. = FALSE

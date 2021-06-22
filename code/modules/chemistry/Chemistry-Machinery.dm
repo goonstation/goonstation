@@ -199,6 +199,10 @@
 		return ..(AM)
 	*/
 
+	process()
+		..()
+		use_power(power_usage)
+
 	proc/active()
 		if (!active) return
 		if (status & (NOPOWER|BROKEN) || !beaker || !beaker.reagents.total_volume)
