@@ -341,13 +341,17 @@
 		B2.setOvermind(owner)
 
 		if (owner.blobs.len < 100)
-			cooldown_time = max(15 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
+			cooldown_time = 15
 		else if (owner.blobs.len < 200)
-			cooldown_time = max(20 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
+			cooldown_time = 20
 		else
-			cooldown_time = max(25 - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 0)
+			cooldown_time = 25
+		var/mindist = 127
+		for_by_tcl(nucleus, /obj/blob/nucleus)
+			if(nucleus.overmind == owner)
+				mindist = min(mindist, get_dist(T, get_turf(nucleus)))
 
-		cooldown_time = max(cooldown_time, 6)
+		cooldown_time = max(cooldown_time + max(mindist * 0.4 - 1, 0) - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 6)
 
 		var/extra_spreads = round(owner.multi_spread / 100) + (prob(owner.multi_spread % 100) ? 1 : 0)
 		if (extra_spreads)
@@ -504,6 +508,10 @@
 		var/obj/blob/B = T.get_blob_on_this_turf()
 
 		if (B)
+			if(ON_COOLDOWN(B, "manual_blob_heal", 6 SECONDS))
+				boutput(owner, "<span class='alert'>That blob tile needs time before it can be repaired again.</span>")
+				return
+
 			B.heal_damage(20)
 			B.update_icon()
 			owner.playsound_local(owner.loc, "sound/voice/blob/blobheal[rand(1, 3)].ogg", 50, 1)
@@ -628,10 +636,8 @@
 		if (blob_o?.mind) //ahem ahem AI blobs exist
 			blob_o.mind.blob_absorb_victims += H
 
-		if (isnpcmonkey(H))
-			blob_o.evo_points += 1
-		else
-			blob_o.evo_points += 4
+		if (!isnpcmonkey(H) || prob(50))
+			blob_o.evo_points += 2
 			playsound(H.loc, "sound/voice/blob/blobsucced.ogg", 100, 1)
 		//This is all the animation and stuff making the effect look good crap. Not much to see here.
 
@@ -1165,8 +1171,8 @@
 	name = "Passive: Quicker Spread"
 	icon_state = "blob-quickspread"
 	desc = "Reduces the cooldown of your Spread ability by 1 second. Can be repeated. The cooldown of Spread cannot go below 1 second."
-	evo_point_cost = 2
-	scaling_cost_add = 3
+	evo_point_cost = 3
+	scaling_cost_add = 4
 	repeatable = -1
 	upgradename = "spread"
 
@@ -1207,14 +1213,14 @@
 	name = "Passive: Fire Resistance"
 	icon_state = "blob-fireresist"
 	desc = "Makes your blob become more resistant to fire and heat based attacks."
-	evo_point_cost = 3
+	evo_point_cost = 2
 	upgradename = "fireres"
 
 /datum/blob_upgrade/poison_resist
 	name = "Passive: Poison Resistance"
 	icon_state = "blob-poisonresist"
 	desc = "Makes your blob become more resistant to chemical attacks."
-	evo_point_cost = 3
+	evo_point_cost = 2
 	upgradename = "poisonres"
 
 /datum/blob_upgrade/devour_item
@@ -1250,12 +1256,12 @@
 	name = "Passive: Reinforced Spread"
 	icon_state = "blob-global-reinforce"
 	desc = "Reinforces the blob with material permanently. All existing blob tiles are reinforced with the average of the used materials, and all future blob bits will be created with the infusion. This upgrade requires 60 material deposits to be on your current tile."
-	evo_point_cost = 2
+	evo_point_cost = 1
 	initially_disabled = 1
 	scaling_cost_add = 2
 	repeatable = -1
 	upgradename = "reinforce_spread"
-	var/required_deposits = 60
+	var/required_deposits = 30
 	var/taking = 0
 
 	take_upgrade()
@@ -1330,7 +1336,7 @@
 	name = "Structure: Reclaimer"
 	icon_state = "blob-reclaimer"
 	desc = "Unlocks the Reclaimer blob bit, which can be placed on reagent deposits. The reclaimer produces biopoints over time using reagents. Once the deposit depletes, the blob piece is transformed into a lipid."
-	evo_point_cost = 2
+	evo_point_cost = 1
 	initially_disabled = 1
 	upgradename = "reclaimer"
 
@@ -1343,7 +1349,7 @@
 	name = "Structure: Replicator"
 	icon_state = "blob-replicator"
 	desc = "Unlocks the Replicator blob bit, which can be placed on reagent deposits. The replicator replicates the highest volume reagent in the deposit using reagents from other deposits, at the cost of biopoints."
-	evo_point_cost = 3
+	evo_point_cost = 2
 	initially_disabled = 1
 	upgradename = "replicator"
 
@@ -1356,7 +1362,7 @@
 	name = "Structure: Bridge"
 	icon_state = "blob-bridge"
 	desc = "Unlocks the Bridge blob bit, which can be placed on space tiles. Bridges are floor tiles, you still need to spread onto them, and cannot spread from them."
-	evo_point_cost = 2
+	evo_point_cost = 1
 	initially_disabled = 0
 	upgradename = "bridge"
 
@@ -1371,7 +1377,7 @@
 	desc = "Unlocks the Slime Launcher blob bit, which fires at nearby mobs at the cost of biopoints. Slime inflicts a short stun and minimal damage."
 	upgradename = "launcher"
 
-	evo_point_cost = 2
+	evo_point_cost = 1
 
 	take_upgrade()
 		if (..())
@@ -1382,7 +1388,7 @@
 	name = "Structural: Plasmaphyll"
 	icon_state = "blob-plasmaphyll"
 	desc = "Unlocks the plasmaphyll blob bit, which passively protects an area from plasma by converting it to biopoints."
-	evo_point_cost = 2
+	evo_point_cost = 1
 	upgradename = "plasmaphyll"
 
 	take_upgrade()
@@ -1394,7 +1400,7 @@
 	name = "Structural: Ectothermid"
 	icon_state = "blob-ectothermid"
 	desc = "Unlocks the ectothermid blob bit, which passively an protects area from temperature. This protection consumes biopoints."
-	evo_point_cost = 3
+	evo_point_cost = 2
 	upgradename = "ectothermid"
 
 	take_upgrade()

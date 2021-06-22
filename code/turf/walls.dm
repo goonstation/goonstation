@@ -267,10 +267,10 @@
 			src.ReplaceWithSpace()
 			return
 		if(2)
-			if (prob(40))
+			if (prob(66))
 				dismantle_wall(1)
 		if(3)
-			if (prob(66))
+			if (prob(40))
 				dismantle_wall(1)
 		else
 	return

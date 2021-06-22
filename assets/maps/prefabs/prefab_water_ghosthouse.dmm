@@ -170,7 +170,7 @@
 "dn" = (/turf/simulated/floor/carpet/red/fancy/edge/se,/area/prefab/ghost_house)
 "do" = (/turf/unsimulated/wall/setpieces/leadwindow/gray{dir = 4; icon_state = "leadwindow_gray_1"},/area/prefab/ghost_house)
 "dp" = (/obj/item/reagent_containers/food/drinks/drinkingglass/wine,/obj/machinery/light/incandescent/warm{dir = 4; icon_state = "tube1"},/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
-"dq" = (/obj/table/wood/round/auto,/obj/machinery/light/incandescent/warm{dir = 1; icon_state = "tube1"},/obj/item/storage/box/record/notaquario_mixtape1,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
+"dq" = (/obj/table/wood/round/auto,/obj/machinery/light/incandescent/warm{dir = 1; icon_state = "tube1"},/obj/item/storage/box/record/notaquario,/turf/simulated/floor/wood/two,/area/prefab/ghost_house)
 "dr" = (/obj/machinery/light/incandescent/warm{dir = 4; icon_state = "tube1"},/turf/simulated/floor/stairs/wood/wide{dir = 6; icon_state = "wood_stairs2"},/area/prefab/ghost_house)
 
 (1,1,1) = {"

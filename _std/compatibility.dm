@@ -1,23 +1,11 @@
 
-// dummy stuff so the linter doesn't compile on 514
-#if DM_VERSION < 514
+// Compatibility checks
+#if DM_VERSION < 514 && !defined(SPACEMAN_DMM)
 
-#ifndef SPACEMAN_DMM
-#warn Please update your BYOND version to the version in /buildByond.conf in order to host the game properly.
-#endif
+#error =======================================================================================
+#error Please update your BYOND to the version in /buildByond.conf in order to build the game.
+#error =======================================================================================
 
-#define NORMAL_RAND 69
-proc/generator(type, A, B, rand)
-	var/generator/gen = new
-	gen.lower = A
-	gen.upper = B
-	return gen
-
-/generator
-	parent_type = /datum
-	var/lower
-	var/upper
-
-	proc/Rand()
-		return rand() * (upper - lower) + lower
+#else
+#define BYOND_VERSION_OK
 #endif

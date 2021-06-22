@@ -88,6 +88,11 @@ toxic - poisons
 	caliber = 0.355
 	icon_turf_hit = "bhole-small"
 
+	smartgun
+		dissipation_delay = 6
+		dissipation_rate = 3
+		power = 15
+
 	smg
 		power = 15
 		cost = 3
@@ -166,7 +171,7 @@ toxic - poisons
 	hit_ground_chance = 75
 	dissipation_rate = 2
 	dissipation_delay = 8
-	projectile_speed = 36
+	projectile_speed = 48
 	caliber = 0.355
 	icon_turf_hit = "bhole-small"
 	hit_type = DAMAGE_BLUNT
@@ -230,7 +235,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/railgun.ogg'
 	dissipation_delay = 10
 	dissipation_rate = 0 //70 damage AP at all-ranges is fine, come to think of it
-	projectile_speed = 56
+	projectile_speed = 72
 	max_range = 100
 	casing = /obj/item/casing/rifle_loud
 	caliber = 0.308
@@ -1354,5 +1359,21 @@ toxic - poisons
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_STAB
 	shot_sound = null
-	projectile_speed = 8
+	projectile_speed = 12
 	implanted = null
+
+/datum/projectile/bullet/foamdart
+	name = "foam dart"
+	sname = "foam dart"
+	icon_state = "foamdart"
+	shot_sound = 'sound/effects/syringeproj.ogg'
+	icon_turf_hit = null
+	projectile_speed = 26
+	implanted = null
+	power = 0
+	ks_ratio = 0
+	damage_type = D_SPECIAL
+	hit_type = DAMAGE_BLUNT
+	max_range = 15
+	dissipation_rate = 0
+	ie_type = null

@@ -3,7 +3,7 @@
 /obj/item/gun/kinetic/g11
 	name = "\improper Manticore assault rifle"
 	desc = "An assault rifle capable of firing single precise bursts. The magazines holders are embossed with \"Anderson Para-Munitions\""
-	icon = 'icons/obj/48x32.dmi'
+	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "g11"
 	item_state = "g11"
 	has_empty_state = 1
@@ -174,7 +174,7 @@
 
 /datum/projectile/bullet/gyrojet
 	name = "gyrojet bullet"
-	projectile_speed = 5
+	projectile_speed = 6
 	max_range = 500
 	dissipation_rate = 0
 	power = 10
@@ -189,7 +189,7 @@
 		O.internal_speed = projectile_speed
 
 	tick(obj/projectile/O)
-		O.internal_speed = min(O.internal_speed * 1.25, 28)
+		O.internal_speed = min(O.internal_speed * 1.25, 32)
 
 	get_power(obj/projectile/P, atom/A)
 		return 15 + P.internal_speed
@@ -321,7 +321,7 @@
 //Suggestion box
 /obj/suggestion_box
 	name = "suggestion box"
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "voting_box"
 	density = 1
 	flags = FPRINT
