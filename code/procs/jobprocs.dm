@@ -344,7 +344,7 @@
 	else if (length(JOB.slot_suit))
 		H.equip_new_if_possible(JOB.slot_suit[1], H.slot_wear_suit)
 	// Ears
-	if (JOB.slot_ears)
+	if (length(JOB.slot_ears))
 		if (!(H.traitHolder && H.traitHolder.hasTrait("allears") && ispath(JOB.slot_ears,/obj/item/device/radio/headset)))
 			H.equip_new_if_possible(JOB.slot_ears[1], H.slot_ears)
 	// Mask
