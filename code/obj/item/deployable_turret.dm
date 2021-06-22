@@ -483,7 +483,7 @@
 			return
 		src.emagged = 1
 		boutput(user,"You short out the the targeting software on the turret.")
-		src.damage_words += "<br><span class='alert'>Its safety indicator is off!</span>"
+		src.damage_words += "<br><span class='alert'>Its targeting computer is damaged!</span>"
 
 
 /////////////////////////////
@@ -582,7 +582,6 @@
 		*/
 
 	is_friend(var/mob/living/C)
-		if (src.emagged)
 		var/obj/item/card/id/I = C.get_id()
 		if(!istype(I))
 			return 0
