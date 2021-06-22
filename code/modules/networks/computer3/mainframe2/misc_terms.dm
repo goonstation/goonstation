@@ -1029,7 +1029,7 @@
 	desc = "A nuclear charge used as a self-destruct device. Uh oh!"
 	device_tag = "PNET_NUCCHARGE"
 	var/timing = 0
-	var/time = 60
+	var/time = 180
 	power_usage = 120
 
 	var/status_display_freq = "1435"
@@ -1262,7 +1262,7 @@
 						if(isnull(thetime))
 							src.post_status(target,"command","term_message","data","command=status&status=noparam&session=[sessionid]")
 							return
-						thetime = max( min(thetime,440), 30)
+						thetime = max( min(thetime,600), 120)
 						src.time = thetime
 						src.post_status(target,"command","term_message","data","command=status&status=success&session=[sessionid]")
 						return

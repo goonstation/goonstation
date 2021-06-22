@@ -1064,7 +1064,7 @@
 				if (!isnum(data["time"]))
 					return ESIG_GENERIC
 
-				var/newtime = max(0, min(data["time"], 440))
+				var/newtime = max(0, min(data["time"], 600))
 
 				var/sessionid = "[world.timeofday%100][rand(0,9)]"
 				message_device("command=settime&time=[newtime]&session=[sessionid]")
@@ -1255,7 +1255,7 @@
 			if ("time")
 				if (initlist.len >= 2)
 					var/newtime = text2num(initlist[2])
-					if (isnum(newtime) && (newtime <= 440) && (newtime >= 30))
+					if (isnum(newtime) && (newtime <= 600) && (newtime >= 120))
 						var/success = signal_program( 1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="settime","time"=newtime))
 						switch(success)
 							if (ESIG_SUCCESS)
@@ -1266,9 +1266,9 @@
 								message_user("Error: Could not associate with charge driver.")
 
 					else
-						message_user("Error: Invalid time argument supplied (Must be between 30 and 440).")
+						message_user("Error: Invalid time argument supplied (Must be between 120 and 600).")
 				else
-					message_user("Error: No time argument supplied (Must be between 30 and 440).")
+					message_user("Error: No time argument supplied (Must be between 120 and 600).")
 
 
 			else
