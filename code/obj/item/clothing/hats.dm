@@ -1316,6 +1316,7 @@
 
 // HEADBANDS
 
+ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 /obj/item/clothing/head/headband
 	name = "headband"
 	desc = "A band. For your head."
