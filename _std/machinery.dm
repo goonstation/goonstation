@@ -42,7 +42,7 @@
 #define DATA_TERMINAL_IS_VALID_MASTER(terminal, master) (master && (get_turf(master) == terminal.loc))
 
 #define PROCESSING_TIER_MULTI(target) (1<<(target.current_processing_tier-1)) //! Scalar to behave as if it were running at full speed
-#define MACHINE_LEGACY_SCALE_ADJ (MACHINE_PROC_INTERVAL / ( 3.3 SECONDS )) //! Scalar to achieve pre #743 behavior to account for proc rate change
+#define MACHINE_PROCS_PER_SEC (MACHINE_PROC_INTERVAL / (1 SECOND))
 
 #define PROCESSING_FULL      1
 #define PROCESSING_HALF      2
