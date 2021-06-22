@@ -1448,6 +1448,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 
 // BARRETTES
 
+ABSTRACT_TYPE(/obj/item/clothing/head/barrette)
 /obj/item/clothing/head/barrette
 	name = "barrettes"
 	desc = "Not to be confused with a beret."
