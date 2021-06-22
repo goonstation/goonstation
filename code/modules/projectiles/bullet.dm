@@ -1148,6 +1148,7 @@ toxic - poisons
 	var/has_det = 0 //have we detonated a grenade yet?
 
 	proc/get_nade()
+		RETURN_TYPE(/obj/item)
 		if (src.has_grenade != 0)
 			if (src.CHEM != null)
 				return src.CHEM
@@ -1198,18 +1199,18 @@ toxic - poisons
 	proc/det(var/turf/T)
 		if (T && src.has_det == 0 && src.has_grenade != 0)
 			if (src.CHEM != null)
-				src.CHEM.set_loc(T)
+				var/obj/item/chem_grenade/C = SEMI_DEEP_COPY(CHEM)
+				C.set_loc(T)
 				src.has_det = 1
 				SPAWN_DBG(1 DECI SECOND)
-					src.CHEM.explode()
-				src.has_grenade = 0
+					C.explode()
 				return
 			else if (src.OLD != null)
-				src.OLD.set_loc(T)
+				var/obj/item/old_grenade/O = SEMI_DEEP_COPY(OLD)
+				O.set_loc(T)
 				src.has_det = 1
 				SPAWN_DBG(1 DECI SECOND)
-					src.OLD.prime()
-				src.has_grenade = 0
+					O.prime()
 				return
 			else //what the hell happened
 				return
