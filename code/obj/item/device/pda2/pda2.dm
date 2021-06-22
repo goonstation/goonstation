@@ -624,6 +624,8 @@
 	. += "The back cover is [src.closed ? "closed" : "open"]."
 	if (src.ID_card)
 		. += "[ID_card] has been inserted into it."
+	if (src.pen)
+		. += "[pen] is sticking out of the pen slot."
 
 /obj/item/device/pda2/receive_signal(datum/signal/signal, rx_method, rx_freq)
 	if(!signal || signal.encryption || !src.owner) return
@@ -873,6 +875,7 @@
 			return
 		if (user)
 			user.u_equip(insertedPen)
+			insertedPen.set_loc(src)
 			src.pen = insertedPen
 			if(istype(insertedPen, /obj/item/clothing/mask/cigarette))
 				src.UpdateOverlays(image(src.icon, "cig"), "pen")
@@ -889,8 +892,7 @@
 			animate(time=2, icon_state=original_icon_state)
 			animate(time=2, transform=matrix(null, 0, -1, MATRIX_TRANSLATE))
 			animate(time=3, transform=null)
-		insertedPen.set_loc(src)
-		boutput(user, "<span class='notice'>You insert [insertedPen] into [src].</span>")
+			boutput(user, "<span class='notice'>You insert [insertedPen] into [src].</span>")
 
 /*
 	//Toggle the built-in flashlight
