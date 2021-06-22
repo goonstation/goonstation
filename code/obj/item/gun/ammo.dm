@@ -719,12 +719,25 @@
 		amount_left = 1
 		max_amount = 1
 
+/obj/item/ammo/bullets/marker
+	sname = "40mm Paint Marker Rounds"
+	name = "40mm paint marker rounds"
+	ammo_type = new/datum/projectile/bullet/marker
+	amount_left = 5
+	max_amount = 5
+	icon_state = "40mmR"
+	caliber = 1.57
+	w_class = W_CLASS_NORMAL
+	icon_dynamic = 0
+	icon_empty = "40mmR-0"
+	sound_load = 'sound/weapons/gunload_40mm.ogg'
+
 /obj/item/ammo/bullets/pbr
 	sname = "40mm Plastic Baton Rounds"
 	name = "40mm plastic baton rounds"
 	ammo_type = new/datum/projectile/bullet/pbr
-	amount_left = 2
-	max_amount = 2
+	amount_left = 5
+	max_amount = 5
 	icon_state = "40mmB"
 	caliber = 1.57
 	w_class = W_CLASS_NORMAL

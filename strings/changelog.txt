@@ -1,4 +1,10 @@
 
+(t)tue jun 22 21
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Replaced 40mmPBR ammo from sec utility purchases with a 40mm Paint Marker round, which will paint the target orange and cause them to leave a trail of paint behind them. 5 rounds/box.
+(+)Ammotech has more 40mmPBR ammo (5 boxes of 5 rounds each)
+(+)Drinking space cleaner no longer washes off blood/etc (?????)
 (t)mon jun 21 21
 (u)Zonespace
 (p)5225

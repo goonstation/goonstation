@@ -1083,7 +1083,9 @@ datum
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 				..()
-				M.clean_forensic()
+				if(method == TOUCH)
+					M.clean_forensic()
+					M.delStatus("marker_painted")
 
 		luminol // OOC. Weaseldood. oh that stuff from CSI, the glowy blue shit that they spray on blood
 			name = "luminol"

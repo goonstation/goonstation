@@ -992,6 +992,28 @@ toxic - poisons
 		startSmoke(hit, dirflag, projectile)
 		return
 
+/datum/projectile/bullet/marker
+	name = "marker grenade"
+	sname = "paint"
+	window_pass = 0
+	icon_state = "40mmR"
+	damage_type = D_KINETIC
+	power = 15
+	dissipation_delay = 10
+	cost = 1
+	shot_sound = 'sound/weapons/launcher.ogg'
+	ks_ratio = 1.0
+	caliber = 1.57 // 40mm grenade shell
+	icon_turf_hit = "bhole-large"
+	casing = /obj/item/casing/grenade
+	hit_type = DAMAGE_BLUNT
+	hit_mob_sound = "sound/misc/splash_1.ogg"
+	hit_object_sound = "sound/misc/splash_1.ogg"
+
+	on_hit(atom/hit, dirflag, atom/projectile)
+		..()
+		hit.setStatus("marker_painted", 30 SECONDS)
+
 /datum/projectile/bullet/pbr //direct less-lethal 40mm option
 	name = "plastic baton round"
 	shot_sound = 'sound/weapons/launcher.ogg'
