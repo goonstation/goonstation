@@ -13,7 +13,7 @@
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
 	health = 100
-	//var/emagged = 0 removing all emag stuff because it's a bad idea in retrospect
+	var/emagged = 0 //emagging is back, but less lethally!
 	var/damage_words = "fully operational!"
 	var/icon_tag = "st"
 	var/quick_deploy_fuel = 2
@@ -37,19 +37,19 @@
 	proc/spawn_turret(var/direct)
 		var/obj/deployable_turret/turret = new /obj/deployable_turret(src.loc,direction=direct)
 		turret.health = src.health // NO FREE REPAIRS, ASSHOLES
-		//turret.emagged = src.emagged
+		turret.emagged = src.emagged
 		turret.damage_words = src.damage_words
 		turret.quick_deploy_fuel = src.quick_deploy_fuel
 		return turret
 
-	/*
+
 	emag_act(var/user, var/emag)
 		if(src.emagged)
 			return
 		src.emagged = 1
-		boutput(user,"You short out the safeties on the turret.")
-		src.damage_words += "<br><span class='alert'>Its safety indicator is off!</span>"
-	*/
+		boutput(user,"You short out the targeting software on the turret.")
+		src.damage_words += "<br><span class='alert'>Its targeting computer is damaged!</span>"
+
 
 	throw_end(list/params, turf/thrown_from)
 		if(src.quick_deploy_fuel > 0)
@@ -88,7 +88,7 @@
 	var/fire_rate = 3 // rate of fire in shots per second
 	var/angle_arc_size = 45
 	var/active = 0 // are we gonna shoot some peeps?
-	//var/emagged = 0
+	var/emagged = 0
 	var/damage_words = "fully operational!"
 	var/waiting = 0 // tracks whether or not the turret is waiting
 	var/shooting = 0 // tracks whether we're currently in the process of shooting someone
@@ -244,10 +244,10 @@
 					src.target = null
 					src.spawn_deployer()
 					qdel(src)
-		/*
+
 		else if (istype(W, /obj/item/card/emag))
 			return
-		*/
+
 
 		else if (istype(W, /obj/item/screwdriver))
 
@@ -341,10 +341,10 @@
 			if(0 to 29)
 				damage_words = "to be on the verge of falling apart!"
 
-		/*
+
 		if(src.emagged)
-			damage_words += "<br><span class='alert'>Its safety indicator is off!</span>"
-		*/
+			damage_words += "<br><span class='alert'>Its targeting computer is damaged!</span>"
+
 
 
 	proc/die()
@@ -356,7 +356,7 @@
 	proc/spawn_deployer()
 		var/obj/item/turret_deployer/deployer = new /obj/item/turret_deployer(src.loc)
 		deployer.health = src.health // NO FREE REPAIRS, ASSHOLES
-		//deployer.emagged = src.emagged
+		deployer.emagged = src.emagged
 		deployer.damage_words = src.damage_words
 		deployer.quick_deploy_fuel = src.quick_deploy_fuel
 		deployer.tooltip_rebuild = 1
@@ -478,14 +478,12 @@
 		animate(transform = matrix(transform_original, ang/3, MATRIX_ROTATE | MATRIX_MODIFY), time = 10/3, loop = 0) // needs to do in multiple steps because byond takes shortcuts
 		animate(transform = matrix(transform_original, ang/3, MATRIX_ROTATE | MATRIX_MODIFY), time = 10/3, loop = 0) // :argh:
 
-	/*
 	emag_act(var/user, var/emag)
 		if(src.emagged)
 			return
 		src.emagged = 1
-		boutput(user,"You short out the safeties on the turret.")
+		boutput(user,"You short out the the targeting software on the turret.")
 		src.damage_words += "<br><span class='alert'>Its safety indicator is off!</span>"
-	*/
 
 
 /////////////////////////////
@@ -546,14 +544,13 @@
 	health = 125
 	icon_tag = "nt"
 	quick_deploy_fuel = 0
-	mats = list("INS-1"=10, "CON-1"=10, "CRY-1"=3, "MET-2"=2)
+	mats = list("INS-1"=10, "CON-1"=10, "CRY-1"=10, "MET-2"=10)
 	is_syndicate = 1
-	
 
 	spawn_turret(var/direct)
 		var/obj/deployable_turret/riot/turret = new /obj/deployable_turret/riot(src.loc,direction=direct)
 		turret.health = src.health
-		//turret.emagged = src.emagged
+		turret.emagged = src.emagged
 		turret.damage_words = src.damage_words
 		turret.quick_deploy_fuel = src.quick_deploy_fuel
 		return turret
@@ -585,13 +582,15 @@
 		*/
 
 	is_friend(var/mob/living/C)
-		/*
 		if (src.emagged)
-			return 0
-		*/
 		var/obj/item/card/id/I = C.get_id()
 		if(!istype(I))
 			return 0
+		if (src.emagged)
+			if (istype(C.get_id(), /obj/item/card/id/syndicate))
+				return 1
+			else
+				return 0
 		switch(I.icon_state)
 			if("id_sec")
 				return 1
@@ -605,7 +604,7 @@
 	spawn_deployer()
 		var/obj/item/turret_deployer/riot/deployer = new /obj/item/turret_deployer/riot(src.loc)
 		deployer.health = src.health
-		//deployer.emagged = src.emagged
+		deployer.emagged = src.emagged
 		deployer.damage_words = src.damage_words
 		deployer.quick_deploy_fuel = src.quick_deploy_fuel
 		return deployer
