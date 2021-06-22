@@ -2972,7 +2972,8 @@
 /area/station/maintenance/north)
 "agy" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4
+	dir = 4;
+	req_access = null
 	},
 /obj/cable{
 	d1 = 4;
@@ -47452,10 +47453,6 @@
 /obj/item/spacecash/random/small,
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
-"osl" = (
-/obj/forcefield/energyshield/perma,
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
 "oDh" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable{
@@ -104773,7 +104770,7 @@ bME
 bNR
 bOT
 bPS
-osl
+bLw
 bLw
 bLw
 bLw
