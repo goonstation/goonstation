@@ -344,8 +344,10 @@
 	else if (length(JOB.slot_suit))
 		H.equip_new_if_possible(JOB.slot_suit[1], H.slot_wear_suit)
 	// Ears
-	if (length(JOB.slot_ears))
-		if (!(H.traitHolder && H.traitHolder.hasTrait("allears") && ispath(JOB.slot_ears,/obj/item/device/radio/headset)))
+	if (JOB.slot_ears && length(JOB.slot_ears) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_ears), H.slot_ears)
+	else if (length(JOB.slot_ears))
+		if (!(H.traitHolder && H.traitHolder.hasTrait("allears") && ispath(JOB.slot_ears[1],/obj/item/device/radio/headset)))
 			H.equip_new_if_possible(JOB.slot_ears[1], H.slot_ears)
 	// Mask
 	if (JOB.slot_mask && length(JOB.slot_mask) > 1)
