@@ -45849,10 +45849,9 @@
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "cTx" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/firedoor_spawn,
-/turf/simulated/floor/plating/random,
-/area/space)
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/inner/central)
 "cXA" = (
 /obj/item/storage/wall/emergency{
 	dir = 4;
@@ -46013,9 +46012,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
 "edf" = (
-/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
+/obj/machinery/vending/pizza,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/station/maintenance/inner/central)
 "edL" = (
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade)
@@ -46929,9 +46928,12 @@
 /turf/simulated/floor/green,
 /area/research_outpost/maint)
 "kjH" = (
-/obj/item/clothing/under/misc/barber,
+/obj/machinery/light/incandescent/blueish,
+/obj/storage/crate,
+/obj/item/kitchen/utensil/knife,
+/obj/item/kitchen/utensil/fork,
 /turf/simulated/floor/plating/random,
-/area/space)
+/area/station/maintenance/inner/central)
 "knq" = (
 /obj/table/reinforced,
 /obj/item/reagent_containers/food/snacks/cookie{
@@ -47559,9 +47561,9 @@
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "phM" = (
-/obj/machinery/vending/pizza,
-/turf/simulated/floor/plating/random,
-/area/space)
+/obj/item/reagent_containers/food/drinks/eggnog,
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/inner/central)
 "prZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -47964,11 +47966,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
-"rRL" = (
-/obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/eggnog,
-/turf/simulated/floor/plating/random,
-/area/space)
 "rUH" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/west)
@@ -48464,12 +48461,6 @@
 /obj/item/clothing/ears/earmuffs,
 /turf/simulated/floor,
 /area/station/storage/eeva)
-"wca" = (
-/obj/storage/crate,
-/obj/item/kitchen/utensil/knife,
-/obj/item/kitchen/utensil/fork,
-/turf/simulated/floor/plating/random,
-/area/space)
 "wfi" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -48577,9 +48568,6 @@
 	name = "Mining Dock"
 	},
 /turf/space/fluid,
-/area/space)
-"xef" = (
-/turf/simulated/wall/auto/supernorn,
 /area/space)
 "xhN" = (
 /obj/machinery/power/apc/autoname_north,
@@ -86035,8 +86023,8 @@ cjr
 fJg
 fJg
 fJg
-aDr
-abs
+edf
+kjH
 aDr
 cjP
 giE
@@ -86640,7 +86628,7 @@ ciW
 ciW
 ciW
 ciW
-ciW
+phM
 ciW
 ciW
 cjb
@@ -86937,7 +86925,7 @@ ckv
 ciW
 ciW
 ckv
-ciW
+cTx
 ciW
 ckv
 ciW
@@ -94180,13 +94168,13 @@ cgl
 cgl
 aqn
 aqn
-xef
-bPE
-rRL
-phM
-wca
-edf
-bPE
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
 ckk
 cjV
 bsI
@@ -94482,13 +94470,13 @@ cgl
 cgl
 aqn
 aqn
-cTx
-bPE
-bPE
-bPE
-edf
-bPE
-kjH
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
 ckk
 cjV
 bsI
@@ -94784,13 +94772,13 @@ cgl
 cgl
 aqn
 aqn
-xef
-aEt
-xef
-xef
-xef
-xef
-aEt
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
+aqn
 ckk
 cjV
 bsI
