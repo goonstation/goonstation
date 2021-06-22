@@ -1219,7 +1219,8 @@
 //					SPAWN_DBG(0.3 SECONDS)
 //						src.post_status(target, "command","term_disconnect")
 //					return
-
+#define MIN_NUKE_TIME 120
+#define MAX_NUKE_TIME 600
 				if(src.host_id && src.host_id != target)
 					return
 
@@ -1262,7 +1263,7 @@
 						if(isnull(thetime))
 							src.post_status(target,"command","term_message","data","command=status&status=noparam&session=[sessionid]")
 							return
-						thetime = max( min(thetime,600), 120)
+						thetime = clamp(thetime, MIN_NUKE_TIME, MAX_NUKE_TIME)
 						src.time = thetime
 						src.post_status(target,"command","term_message","data","command=status&status=success&session=[sessionid]")
 						return
@@ -1294,7 +1295,7 @@
 							return
 
 						src.timing = 0
-						src.time = max(src.time,30) //so we don't have some jerk letting it tick down to 11 and then saving it for later.
+						src.time = max(src.time,MIN_NUKE_TIME) //so we don't have some jerk letting it tick down to 11 and then saving it for later.
 						src.icon_state = "net_nuke0"
 						src.post_status(target,"command","term_message","data","command=status&status=success&session=[sessionid]")
 						//World announcement.
