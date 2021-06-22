@@ -1340,6 +1340,7 @@
 			H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
 			qdel(src)
 
+ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 /obj/item/clothing/head/headband/nyan
 	name = "gray cat ears"
 	desc = "Aww, cute and fuzzy."
