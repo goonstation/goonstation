@@ -135,7 +135,8 @@
 	. = TRUE
 	if(T.density || !T.pathable) // simplest case
 		return FALSE
-	if (T.blocked_dirs || source?.blocked_dirs)
+	// if a source turf was included check for directional blocks between the two turfs
+	if (source && T.blocked_dirs || source.blocked_dirs)
 		var/direction = get_dir(source, T)
 
 		// do either of these turfs explicitly block entry or exit to the other?
@@ -145,7 +146,7 @@
 			return FALSE
 
 		if (direction in ordinal) // ordinal? That complicates things...
-			if (source?.blocked_dirs && T.blocked_dirs)
+			if (source.blocked_dirs && T.blocked_dirs)
 				// check for "wall" blocks
 				// ex. trying to move NE source blocking north exit and destination (T) blocking south entry
 				if (HAS_FLAG(source.blocked_dirs, turn(direction, 45)) && HAS_FLAG(T.blocked_dirs, turn(direction, -135)))
@@ -179,7 +180,7 @@
 				else if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 45)) && HAS_FLAG(T.blocked_dirs, turn(direction, 135)))
 					return FALSE
 			// entry blocked by an object in source and in one or more of the corners
-			if (source?.blocked_dirs && (corner_1.blocked_dirs || corner_2.blocked_dirs))
+			if (source.blocked_dirs && (corner_1.blocked_dirs || corner_2.blocked_dirs))
 				if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -135)) && HAS_FLAG(source.blocked_dirs, turn(direction, -45)))
 					return FALSE
 				else if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 135)) && HAS_FLAG(source.blocked_dirs, turn(direction, 45)))
@@ -187,7 +188,8 @@
 	for(var/atom/A in T.contents)
 		if (isobj(A))
 			var/obj/O = A
-			if (HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING))
+			// only skip if we did the source check, otherwise fall back to normal density checks
+			if (source && HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING))
 				continue // we already handled these above with the blocked_dirs
 			if (istype(A, /obj/overlay) || istype(A, /obj/effects)) continue
 		if (heuristic) // Only use a custom hueristic if we were passed one
