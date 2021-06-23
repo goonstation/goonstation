@@ -1,3 +1,5 @@
+#ifdef ENABLE_ARTEMIS
+
 /datum/galactic_object/ship
 	var/rotation = 0
 	var/body_icon = null
@@ -117,3 +119,5 @@
 
 		x_old = src.actual_x
 		y_old = src.actual_y
+
+#endif

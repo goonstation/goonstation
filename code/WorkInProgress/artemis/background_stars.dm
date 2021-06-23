@@ -1,3 +1,5 @@
+#ifdef ENABLE_ARTEMIS
+
 var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 
 /obj/background_star
@@ -186,3 +188,5 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 
 		if(state<7)
 			parallax_multi = 2 + (0.5*((rand()*2)-1))
+
+#endif

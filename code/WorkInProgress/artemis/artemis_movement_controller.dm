@@ -1,3 +1,5 @@
+#ifdef ENABLE_ARTEMIS
+
 /datum/movement_controller/artemis
 
 	var/obj/artemis/ship
@@ -7,7 +9,7 @@
 		ship = A
 
 	keys_changed(mob/owner, keys, changed)
-		owner.attempt_move()
+		attempt_move(owner)
 		..()
 
 	process_move(mob/owner, keys)
@@ -252,3 +254,5 @@
 					M.rotating = 0
 
 		return ship.animation_speed
+
+#endif

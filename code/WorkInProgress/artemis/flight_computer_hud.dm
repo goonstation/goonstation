@@ -1,3 +1,5 @@
+#ifdef ENABLE_ARTEMIS
+
 /datum/hud/flight_computer
 	var/atom/movable/screen/hud
 		leave
@@ -36,6 +38,7 @@
 	var/coffee_level = 3
 
 	New(P)
+		..()
 		var/throttle_slide_xy = "[round(17/32)+1]:[17%32],[round(2/32)+1]:[2%32]"
 		var/throttle_stick_xy = "[round(2/32)+1]:[2%32],[round(6/32)+1]:[6%32]"
 		var/engine_health_xy = "[round(97/32)+1]:[97%32],[round(4/32)+1]:[4%32]"
@@ -100,8 +103,7 @@
 			if (M.loc != master)
 				remove_client(C)
 
-
-	clicked(id, mob/user, list/params)
+	proc/clicked(id, mob/user, list/params)
 		if (user.loc != master)
 			boutput(user, "<span class='alert'>You're not in the pod doofus. (Call 1-800-CODER.)</span>")
 			remove_client(user.client)
@@ -254,3 +256,5 @@
 					control_lock.icon_state = "key_locked"
 					control_light.icon_state = "control_locked"
 				master.ship.control_lock = !master.ship.control_lock
+
+#endif

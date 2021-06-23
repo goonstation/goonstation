@@ -1,3 +1,5 @@
+#ifdef ENABLE_ARTEMIS
+
 /obj/lrteleporter/planetary_teleporter
 	name = "Planetary Teleporter"
 	desc = "A pad used for teleportation to nearby bodies"
@@ -157,3 +159,5 @@
 				SPAWN_DBG(1 SECOND)
 					busy = 0
 					qdel(S)
+
+#endif

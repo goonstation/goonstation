@@ -1,3 +1,5 @@
+#ifdef ENABLE_ARTEMIS
+
 /datum/galactic_object/nav_sat
 	name = "Navigation Satellite"
 	body_path_map = /obj/background_star/galactic_object/nav_sat
@@ -35,3 +37,5 @@
 		animate(src, transform = matrix(), alpha = 255, time = 5)
 		return
 	*/
+
+#endif

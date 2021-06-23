@@ -1,3 +1,4 @@
+#ifdef ENABLE_ARTEMIS
 /datum/game_mode/artemis_freeroam
 	name = "free roam"
 	config_tag = "freeroam"
@@ -13,3 +14,4 @@
 		ship.link_landmark()
 		GALAXY.bodies += ship.background_ship_datum
 	return 1
+#endif

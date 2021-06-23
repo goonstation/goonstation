@@ -1,5 +1,5 @@
 // stuff for debugging Artemis, definitely don't use in real code lol
-
+#ifdef DEBUG_ARTEMUS
 /world/load_mode()
 	. = ..()
 	master_mode = "freeroam"
@@ -9,3 +9,6 @@
 	SPAWN_DBG(4 SECONDS)
 		if(src.client)
 			src.set_loc(locate(26, 34, 1))
+
+
+#endif

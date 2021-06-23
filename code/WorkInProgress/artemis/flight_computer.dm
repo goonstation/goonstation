@@ -1,3 +1,5 @@
+#ifdef ENABLE_ARTEMIS
+
 #define HAS_ARTEMIS_SCAN (1 << 19) //the object has an artemis scan
 
 /obj/machinery/sim/vr_bed/flight_chair
@@ -148,3 +150,5 @@
 				M.show_message("<span class='alert'>Target shows no response to active scanning.</span>")
 
 			return 0
+
+#endif

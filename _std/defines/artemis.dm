@@ -1,0 +1,3 @@
+//Artemus REMOVAL
+#define ENABLE_ARTEMIS 1
+#define DEBUG_ARTEMUS 1

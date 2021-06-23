@@ -1,3 +1,5 @@
+#ifdef ENABLE_ARTEMIS
+
 #define ARTEMIS_ANIMATION_SPEED 2 // 2/10ths of a second. used to calculate various displacements
 #define ARTEMIS_MAX_R 951
 #define ARTEMIS_MAX_R_SQUARED 904401 //951^2 - sqrt(2)*672; radius of circle with the boundary box inscribed in it
@@ -237,7 +239,7 @@
 
 			if(navigating && (G == src.navigation_target))
 				src.navigating = 0
-				if(my_pilot && src.nav_arrow in my_pilot.client.images)
+				if(my_pilot && (src.nav_arrow in my_pilot.client.images))
 					my_pilot.show_message("<span class='notice'>Navigation target reached.</span>")
 					my_pilot.client.images -= src.nav_arrow
 
@@ -521,3 +523,5 @@
 		if(src.rot_mag)
 			return 1
 		return 0
+
+#endif

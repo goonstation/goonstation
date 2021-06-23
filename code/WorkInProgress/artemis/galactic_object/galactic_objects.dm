@@ -1,3 +1,4 @@
+#ifdef ENABLE_ARTEMIS
 /datum/galactic_object/test
 	name = "F1X-M3"
 	body_path_map = /obj/background_star/galactic_object/test
@@ -81,3 +82,5 @@
 			flick("eh_intro",src.my_map_body)
 			E.intro_played = 1
 			src.my_map_body.icon_state = "eh_idle_open"
+
+#endif

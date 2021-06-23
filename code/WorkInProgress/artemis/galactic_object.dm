@@ -1,9 +1,12 @@
+#ifdef ENABLE_ARTEMIS
+
 var/global/datum/galaxy/GALAXY = new
 
 /datum/galaxy
 	var/list/bodies = list()
 
 	New()
+		..()
 		src.bodies += new/datum/galactic_object/test()
 		src.bodies += new/datum/galactic_object/eyesenhower()
 
@@ -204,3 +207,5 @@ var/global/datum/galaxy/GALAXY = new
 
 /obj/landmark/destination_landmark
 	var/destination_name = null
+
+#endif
