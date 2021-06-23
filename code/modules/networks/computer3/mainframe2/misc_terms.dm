@@ -1036,7 +1036,13 @@
 
 
 #define DISARM_CUTOFF 10 //Can't disarm past this point! OH NO!
-
+//#define NUKE_ALERT_ONE 540 //Points where the nuke alerts the station
+//#define NUKE_ALERT_TWO 480
+//#define NUKE_ALERT_THREE 420
+//#define NUKE_ALERT_FOUR 360
+//#define NUKE_ALERT_FIVE 300
+//#define NUKE_ALERT_SIX 240
+//#define NUKE_ALERT_SIX 180
 	mats = list("POW-3" = 27, "MET-3" = 25, "CON-2" = 13, "DEN-3" = 15) //haha this is a bad idea
 	deconstruct_flags = DECON_NONE
 	is_syndicate = 1 //^ Agreed
@@ -1145,6 +1151,9 @@
 				src.detonate()
 				return
 			if(src.time == DISARM_CUTOFF)
+				src.icon_state = "net_nuke2"
+				boutput(world, "<span class='alert'><b>[src.time] seconds until nuclear charge detonation.</b></span>")
+			if(src.time == DISARM_CUTOFF)
 				world << sound('sound/misc/airraid_loop_short.ogg')
 			if(src.time <= DISARM_CUTOFF)
 				src.icon_state = "net_nuke2"
@@ -1219,8 +1228,7 @@
 //					SPAWN_DBG(0.3 SECONDS)
 //						src.post_status(target, "command","term_disconnect")
 //					return
-#define MIN_NUKE_TIME 120
-#define MAX_NUKE_TIME 600
+
 				if(src.host_id && src.host_id != target)
 					return
 
