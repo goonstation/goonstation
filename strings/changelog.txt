@@ -1,6 +1,10 @@
 
 (t)tue jun 22 21
 (u)Sovexe
+(p)5246
+(e)🆕|feature
+(+)Repairing ruptured atmos pipes now only ever takes one successful weld, and has an action bar.
+(u)Sovexe
 (p)5231
 (e)🐛🆕|bug, feature
 (+)Made changes to pathfinding procs to resolve the chicken fence issues.
