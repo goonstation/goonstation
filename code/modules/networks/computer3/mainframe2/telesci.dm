@@ -56,7 +56,6 @@ proc/is_teleportation_allowed(var/turf/T)
 	desc = "Stand on this to have your wildest dreams come true!"
 	device_tag = "PNET_S_TELEPAD"
 	plane = PLANE_NOSHADOW_BELOW
-	deconstruct_flags = DECON_DESTRUCT
 	var/recharging = 0
 	var/realx = 0
 	var/realy = 0
@@ -808,7 +807,6 @@ proc/is_teleportation_allowed(var/turf/T)
 	device_tag = "SRV_TERMINAL"
 	timeout = 10
 	mats = 14
-	deconstruct_flags = DECON_DESTRUCT
 	var/xtarget = 0
 	var/ytarget = 0
 	var/ztarget = 0
