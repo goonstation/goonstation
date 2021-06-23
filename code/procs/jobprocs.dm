@@ -310,6 +310,11 @@
 	return picks
 
 /proc/equip_job_items(var/datum/job/JOB, var/mob/living/carbon/human/H)
+	// Jumpsuit - Important! Must be equipped early to provide valid slots for other items
+	if (JOB.slot_jump && length(JOB.slot_jump) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_jump), H.slot_w_uniform)
+	else if (length(JOB.slot_jump))
+		H.equip_new_if_possible(JOB.slot_jump[1], H.slot_w_uniform)
 	// Backpack and contents
 	if (JOB.slot_back && length(JOB.slot_back) > 1)
 		H.equip_new_if_possible(weighted_pick(JOB.slot_back), H.slot_back)
@@ -328,11 +333,6 @@
 		for (var/X in JOB.items_in_belt)
 			if(ispath(X))
 				H.equip_new_if_possible(X, H.slot_in_belt)
-	// Jumpsuit
-	if (JOB.slot_jump && length(JOB.slot_jump) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_jump), H.slot_w_uniform)
-	else if (length(JOB.slot_jump))
-		H.equip_new_if_possible(JOB.slot_jump[1], H.slot_w_uniform)
 	// Footwear
 	if (JOB.slot_foot && length(JOB.slot_foot) > 1)
 		H.equip_new_if_possible(weighted_pick(JOB.slot_foot), H.slot_shoes)
