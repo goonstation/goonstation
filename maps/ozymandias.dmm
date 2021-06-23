@@ -1312,7 +1312,7 @@
 "atk" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/wall/auto/supernorn,
-/area/space)
+/area/station/hallway/primary/south)
 "ats" = (
 /obj/machinery/light,
 /turf/simulated/floor/wood,
