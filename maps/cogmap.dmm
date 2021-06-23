@@ -54718,7 +54718,7 @@
 	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/yellow/side{
-	dir = 9
+	dir = 8
 	},
 /area/station/engine/elect)
 "eyn" = (
@@ -60299,7 +60299,9 @@
 /area/station/engine/core)
 "oJd" = (
 /obj/machinery/vending/mechanics,
-/turf/simulated/floor,
+/turf/simulated/floor/yellow/side{
+	dir = 9
+	},
 /area/station/engine/elect)
 "oJk" = (
 /obj/machinery/door/airlock/pyro/external{
