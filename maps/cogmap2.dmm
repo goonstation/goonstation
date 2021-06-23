@@ -39139,15 +39139,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/maintenance/inner/central)
-"bIL" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/vertical,
-/turf/simulated/floor/orangeblack,
-/area/station/maintenance/inner/central)
 "bIM" = (
 /obj/cable{
 	d1 = 4;
@@ -132169,7 +132160,7 @@ bBh
 bhI
 bEX
 bGT
-bIL
+bnn
 bKz
 bMn
 bNU
