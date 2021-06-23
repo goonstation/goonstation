@@ -1,5 +1,9 @@
 
 (t)tue jun 22 21
+(u)Penny
+(p)5218
+(e)🐛|bug
+(+)Networked equipment can finally now be re-deployed onto new data terminals
 (u)Flappybat
 (p)5082
 (e)|
