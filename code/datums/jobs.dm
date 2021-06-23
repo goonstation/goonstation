@@ -29,7 +29,7 @@
 	var/list/alt_names = list()
 	var/slot_card = /obj/item/card/id
 	var/spawn_id = 1 // will override slot_card if 1
-	// Following slots support single item or weighted list for random pick
+	// Following slots support single item list or weighted list - Do not use regular lists or it will error!
 	var/list/slot_head = list()
 	var/list/slot_mask = list()
 	var/list/slot_ears = list(/obj/item/device/radio/headset) // cogwerks experiment - removing default headsets
@@ -653,7 +653,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_lhan = list(/obj/item/tank/air)
 	slot_ears = list(/obj/item/device/radio/headset/research)
 	slot_eyes = list(/obj/item/clothing/glasses/spectro)
-	slot_poc1 = list(/obj/item/pen)
+	slot_poc1 = list(/obj/item/pen = 50, /obj/item/pen/fancy = 25, /obj/item/pen/red = 5, /obj/item/pen/pencil = 20)
 
 	New()
 		..()
