@@ -5103,7 +5103,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "atX" = (
-/obj/machinery/atmospherics/pipe/simple/junction,
 /obj/table/reinforced/auto,
 /obj/item/kitchen/utensil/knife,
 /obj/item/kitchen/utensil/knife,
@@ -6990,7 +6989,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "aBU" = (
-/obj/disposalpipe/segment,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
@@ -11376,9 +11374,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple{
-	level = 2
-	},
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor/plating/random,
@@ -12055,9 +12050,6 @@
 	icon_state = "pipe-sj2";
 	mail_tag = "pharmacy";
 	name = "pharmacy mail router"
-	},
-/obj/disposalpipe/segment/food{
-	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
@@ -18501,7 +18493,6 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "ccN" = (
-/obj/disposalpipe/trunk,
 /obj/stool/chair/couch{
 	dir = 8;
 	icon_state = "chair_couch-blue";
@@ -21679,9 +21670,6 @@
 /area/station/science/research_director)
 "dxa" = (
 /obj/machinery/door/firedoor/border_only,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/door/airlock/gannets/maintenance{
 	name = "airlock-'Maintenance'"
 	},
@@ -26967,6 +26955,12 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
+"fOw" = (
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/gannets,
+/area/station/security/interrogation)
 "fPF" = (
 /obj/potted_plant/potted_plant4{
 	dir = 1;
@@ -27056,18 +27050,10 @@
 /turf/simulated/floor/white,
 /area/station/maintenance/inner/south)
 "fSF" = (
-/obj/wingrille_spawn/reinforced,
-/obj/window_blinds/cog2/right{
-	dir = 8
-	},
-/obj/disposalpipe/segment/food{
-	dir = 4
-	},
-/obj/cable,
-/turf/simulated/floor/plating/random,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
+/obj/decal/poster/wallsign/fire,
+/obj/disposalpipe/segment/mail,
+/turf/simulated/wall/auto/reinforced/gannets,
+/area/station/science/lab)
 "fST" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -29153,10 +29139,6 @@
 /turf/simulated/floor/purple/checker,
 /area/station/janitor/office)
 "gTE" = (
-/obj/disposalpipe/junction{
-	dir = 8;
-	name = "brig pipe"
-	},
 /obj/stool/chair/red,
 /obj/landmark/start{
 	name = "Security Officer"
@@ -31300,9 +31282,6 @@
 /obj/window_blinds/cog2/right{
 	dir = 8
 	},
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -32708,7 +32687,6 @@
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
 "iWm" = (
-/obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -36221,7 +36199,6 @@
 	},
 /area/station/crew_quarters/observatory)
 "kXs" = (
-/obj/disposalpipe/segment/brig,
 /obj/submachine/poster_creator,
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1"
@@ -39942,7 +39919,6 @@
 	pixel_x = 13;
 	pixel_y = -3
 	},
-/obj/disposalpipe/segment/morgue,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -44763,7 +44739,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/junction{
+/obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
@@ -48355,10 +48331,6 @@
 /obj/machinery/door/airlock/gannets/security/alt{
 	name = "airlock-'Interrogation Room'"
 	},
-/obj/disposalpipe/segment/brig{
-	dir = 4
-	},
-/obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "rEX" = (
@@ -55941,7 +55913,6 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "vDh" = (
-/obj/disposalpipe/segment,
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/glass/engineering{
 	name = "glass airlock-'Cargo Bay'";
@@ -56096,7 +56067,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
 "vHG" = (
-/obj/disposalpipe/segment,
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/glass/security/alt{
 	name = "glass airlock-'Security'"
@@ -97749,7 +97719,7 @@ vty
 lvN
 fIF
 rER
-fIF
+fOw
 ltO
 gca
 bEs
@@ -100155,7 +100125,7 @@ qEd
 ckK
 xxS
 cmz
-fSF
+wqY
 eKA
 iRZ
 fmJ
@@ -118261,10 +118231,10 @@ aaa
 nyt
 fIK
 pHa
-pUT
-pUT
-pUT
-pUT
+esr
+esr
+esr
+esr
 iWm
 aHo
 aSz
@@ -121900,7 +121870,7 @@ dgX
 dnU
 dCq
 kgh
-poI
+fSF
 eNz
 wdv
 eri
