@@ -537,6 +537,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	has_panel = 0
 	has_crush = 0
 	layer = 3.5
+	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS | HAS_DIRECTIONAL_BLOCKING
 
 	bumpopen(mob/user as mob)
 		if (src.density)
