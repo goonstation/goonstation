@@ -1,5 +1,9 @@
 
 (t)tue jun 22 21
+(u)BatElite
+(p)5089
+(e)🆕|feature
+(+)The backpacks and satchels in personal lockers now come in a small variety of random colours!
 (u)Penny
 (p)5218
 (e)🐛|bug
