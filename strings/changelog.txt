@@ -1,5 +1,9 @@
 
 (t)tue jun 22 21
+(u)Flappybat
+(p)5082
+(e)|
+(+)Every scientist now starts with a pen.
 (u)Tarmunora
 (e)⚖🆕|balance, feature
 (*)Replaced 40mmPBR ammo from sec utility purchases with a 40mm Paint Marker round, which will paint the target orange and cause them to leave a trail of paint behind them. 5 rounds/box.
