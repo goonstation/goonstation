@@ -556,7 +556,7 @@
 	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
 		trinket = new/obj/item/clothing/head/NTberet(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))
-		var/picked = pick(childrentypesof(/obj/item/clothing/head) - (typesof(/obj/item/clothing/head/barrette/)) - (typesof(/obj/item/clothing/head/headband/bee)) - (typesof(/obj/item/clothing/head/headband/giraffe)) - (typesof(/obj/item/clothing/head/headband/nyan/leopard)) - (typesof(/obj/item/clothing/head/headband/nyan/snowleopard)) - (typesof(/obj/item/clothing/head/headband/nyan/tiger)) - (typesof(/obj/item/clothing/head/bighat)) - (typesof(/obj/item/clothing/head/helmet/space/syndicate))) //IM A MONSTER DONT LOOK AT ME. NOOOOOOOOOOO
+		var/picked = pick(childrentypesof(/obj/item/clothing/head) - (typesof(/obj/item/clothing/head/barrette/)) - (typesof(/obj/item/clothing/head/bighat)) - (typesof(/obj/item/clothing/head/helmet/space/syndicate))) //IM A MONSTER DONT LOOK AT ME. NOOOOOOOOOOO
 		trinket = new picked(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("conspiracytheorist"))
 		trinket = new/obj/item/clothing/head/tinfoil_hat

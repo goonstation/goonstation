@@ -1497,9 +1497,7 @@
 	icon_state = "rand_hat"
 	min_amt2spawn = 5
 	max_amt2spawn = 10
-	items2spawn = list(/obj/item/clothing/head/headband/bee,
-						/obj/item/clothing/head/headband/giraffe,
-						/obj/item/clothing/head/helmet/bobby,
+	items2spawn = list(/obj/item/clothing/head/helmet/bobby,
 						/obj/item/clothing/head/helmet/batman,
 						/obj/item/clothing/head/helmet/viking,
 						/obj/item/clothing/head/helmet/turd,

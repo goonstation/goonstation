@@ -2599,8 +2599,6 @@
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/headband/nyan/green, 3, cost = PAY_TRADESMAN)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/headband/nyan/blue, 3, cost = PAY_TRADESMAN)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/headband/nyan/purple, 3, cost = PAY_TRADESMAN)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/headband/nyan/leopard, 3, cost = PAY_TRADESMAN)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/headband/nyan/snowleopard, 3, cost = PAY_TRADESMAN)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/pokervisor, 3, cost = PAY_TRADESMAN/5)
 
 

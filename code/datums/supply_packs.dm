@@ -1043,6 +1043,18 @@
 	containertype = /obj/storage/crate/packing
 	containername = "Haberdasher's Crate"
 
+/datum/supply_packs/headbands
+	name = "Bargain Bows and Bands Box"
+	desc = "Headbands for all occasions."
+	cost = 2000
+	contains = list(/obj/item/clothing/head/headband/giraffe = 2,
+					/obj/item/clothing/head/headband/antlers = 2,
+					/obj/item/clothing/head/headband/tiger = 1,
+					/obj/item/clothing/head/headband/nyan/leopard = 1,
+					/obj/item/clothing/head/headband/nyan/sleopard = 1,
+					/obj/item/clothing/head/headband/bee = 2,
+					/obj/item/clothing/head/headband/nyan/random = 2)
+
 /datum/supply_packs/mask
 	name = "Masquerade Crate"
 	desc = "For hosting a masked ball in the bar."

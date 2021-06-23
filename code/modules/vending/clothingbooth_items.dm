@@ -716,41 +716,6 @@
 	category = "Headwear"
 	cost = PAY_TRADESMAN/2
 
-/datum/clothingbooth_item/catears_leopard
-	name = "Leoprad Ears"
-	path = /obj/item/clothing/head/headband/nyan/leopard
-	slot = SLOT_HEAD
-	category = "Headwear"
-	cost = PAY_TRADESMAN/2
-
-/datum/clothingbooth_item/catears_leopardw
-	name = "Snow Leopard Ears"
-	path = /obj/item/clothing/head/headband/nyan/snowleopard
-	slot = SLOT_HEAD
-	category = "Headwear"
-	cost = PAY_TRADESMAN/2
-
-/datum/clothingbooth_item/catears_tiger
-	name = "Tiger Ears"
-	path = /obj/item/clothing/head/headband/nyan/tiger
-	slot = SLOT_HEAD
-	category = "Headwear"
-	cost = PAY_TRADESMAN/2
-
-/datum/clothingbooth_item/giraffe_ears
-	name = "Giraffe Ears"
-	path = /obj/item/clothing/head/headband/giraffe
-	slot = SLOT_HEAD
-	category = "Headwear"
-	cost = PAY_TRADESMAN/2
-
-/datum/clothingbooth_item/bee_antennae
-	name = "Bee Antennae"
-	path = /obj/item/clothing/head/headband/bee
-	slot = SLOT_HEAD
-	category = "Headwear"
-	cost = PAY_TRADESMAN/2
-
 /datum/clothingbooth_item/maid_headwear
 	name = "Maid Headwear"
 	path = /obj/item/clothing/head/maid
@@ -820,13 +785,6 @@
 	slot = SLOT_HEAD
 	category = "Headwear"
 	cost = PAY_TRADESMAN/5
-
-/datum/clothingbooth_item/antlers
-	name = "Antlers"
-	path = /obj/item/clothing/head/headband/antlers
-	slot = SLOT_HEAD
-	category = "Headwear"
-	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/headsprout
 	name = "Leaf Hairclip"
