@@ -25,10 +25,9 @@
 
 	New()
 		. = ..()
-		SPAWN_DBG(0) // needs a chance to set dir apparently
-			if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
-				var/turf/T = get_turf(src)
-				T?.UpdateDirBlocks()
+		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
+			var/turf/T = get_turf(src)
+			T?.UpdateDirBlocks()
 		src.update_access_from_txt()
 
 	Move(NewLoc, direct)
@@ -50,6 +49,12 @@
 			old_loc?.UpdateDirBlocks()
 		else
 			. = ..()
+
+	set_dir(new_dir)
+		. = ..()
+		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
+			var/turf/T = get_turf(src)
+			T?.UpdateDirBlocks()
 
 	proc/setHealth(var/value)
 		var/prevHealth = _health
