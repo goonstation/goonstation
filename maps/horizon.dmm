@@ -12395,12 +12395,12 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/chapel/office)
 "aGT" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/obj/window_blinds/cog2/middle,
-/turf/simulated/floor/plating/random,
-/area/station/chapel/office)
+/obj/disposalpipe/broken{
+	color = "#f2a673";
+	dir = 8
+	},
+/turf/space,
+/area/space)
 "aGU" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -43552,6 +43552,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment/mineral,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
@@ -47607,7 +47608,6 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north)
 "coj" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -48352,7 +48352,6 @@
 /obj/table/wood/auto,
 /obj/item/dye_bottle,
 /obj/item/clothing/suit/space/emerg,
-/obj/machinery/atmospherics/pipe/simple/horizontal,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/barber_shop)
 "cqj" = (
@@ -51700,11 +51699,6 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "cAl" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
-	},
 /obj/table/reinforced/chemistry/auto,
 /obj/item/paper_bin,
 /obj/item/reagent_containers/dropper/mechanical,
@@ -57487,6 +57481,13 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/hallway/secondary/west)
+"ojo" = (
+/obj/disposalpipe/broken{
+	color = "#f2a673";
+	dir = 4
+	},
+/turf/space,
+/area/space)
 "ojv" = (
 /turf/simulated/floor/yellow,
 /area/station/hallway/secondary/west)
@@ -59411,6 +59412,15 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/storage/auxillary)
+"tiY" = (
+/obj/grille/catwalk,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mineral,
+/turf/space,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/space)
 "tjs" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -61259,6 +61269,7 @@
 	id = "hangar_sec";
 	name = "Security Hangar"
 	},
+/obj/disposalpipe/segment/mineral,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/southeast)
 "xQS" = (
@@ -89393,7 +89404,7 @@ bJm
 bJm
 bSd
 bUL
-aaa
+ojo
 aaa
 aaa
 aaa
@@ -110809,7 +110820,7 @@ aaa
 aaa
 arE
 aaa
-aGT
+aGU
 aIv
 aKb
 aMk
@@ -120205,10 +120216,10 @@ ceR
 cfT
 xQx
 ceU
-blh
-blh
-blh
-blh
+tiY
+tiY
+tiY
+tiY
 cmM
 clg
 clg
@@ -127708,7 +127719,7 @@ aaa
 aaa
 aaa
 aal
-aaa
+aGT
 aaa
 aaa
 aaa
@@ -143439,9 +143450,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aGT
 fgn
-aaa
+aGT
 aaa
 aaa
 aaa
@@ -144648,7 +144659,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aGT
 aaa
 aaa
 aaa
