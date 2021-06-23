@@ -116,7 +116,7 @@
 		materiel_stock += new/datum/materiel/utility/medcappowercell
 		materiel_stock += new/datum/materiel/utility/firstaidsec
 		materiel_stock += new/datum/materiel/utility/nightvisiongoggles
-		materiel_stock += new/datum/materiel/utility/riotrounds
+		materiel_stock += new/datum/materiel/utility/markerrounds
 		materiel_stock += new/datum/materiel/utility/prisonerscanner
 		materiel_stock += new/datum/materiel/assistant/basic
 
@@ -290,10 +290,10 @@
 	path = /obj/item/clothing/glasses/nightvision
 	description = "A pair of Night Vision Goggles. Helps you see in the dark, but doesn't give you any protection from flashes or a SecHud."
 
-/datum/materiel/utility/riotrounds
-	name = "40mm Riot Rounds"
-	path = /obj/item/ammo/bullets/pbr
-	description = "One case of 40mm Riot Rounds, totalling 2 shots, for the Riot Launcher."
+/datum/materiel/utility/markerrounds
+	name = "40mm Paint Marker Rounds"
+	path = /obj/item/ammo/bullets/marker
+	description = "One case of 40mm Paint Marker Rounds, totalling 5 rounds, for the Riot Launcher."
 
 /datum/materiel/utility/prisonerscanner
 	name = "RecordTrak Scannner"

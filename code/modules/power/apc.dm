@@ -196,6 +196,17 @@ var/zapLimiter = 0
 	. = ..()
 
 	if(status & BROKEN)
+		switch(repair_status)
+			if(0)
+				. += "<br>It's completely busted! It seems you need to use a screwdriver and disconnect the control board first, to begin the repair process.</br>"
+			if(1)
+				. += "<br>The control board has been disconnected. The autotransformer's wiring is all messed up! You need to grab some cables and fix it.</br>"
+			if(2)
+				. += "<br>The control panel is disconnected and the autotransformer seems to be in a good condition. You just need to tune it with a wrench now.</br>"
+			if(3)
+				. += "<br>The autotransformer seems to be working fine now. The next step is resetting the control board with a multitool.</br>"
+			if(4)
+				. += "<br>The autotransformer is working fine and the control board has been reset! Now you just need to reconnect it with a screwdriver, to finish the repair process.</br>"
 		return
 
 	if(user && !user.stat)
@@ -396,14 +407,8 @@ var/zapLimiter = 0
 					else
 						boutput(user, "<span class='alert'>Not enough cable! <I>(Requires four pieces)</I></span>")
 						return
-					if(!do_after(user, 100))
-						return
-					theCoil.use(4)
-					boutput(user, "You repair the autotransformer.")
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-
-					src.repair_status = 2
-
+					SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /obj/machinery/power/apc/proc/fix_wiring,\
+					list(theCoil, user), W.icon, W.icon_state, null, null)
 					return
 				if (2)
 					boutput(user, "The autotransformer is already in good condition, it just needs tuning.")
@@ -419,11 +424,8 @@ var/zapLimiter = 0
 					boutput(user, "<span class='alert'>You must repair the autotransformer's windings prior to tuning it.</span>")
 				if (2)
 					boutput(user, "You begin to carefully tune the autotransformer.  This might take a little while.")
-					if (!do_after(user, 6 SECONDS))
-						return
-					boutput(user, "You tune the autotransformer.")
-					playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-					src.repair_status = 3
+					SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, /obj/machinery/power/apc/proc/fix_autotransformer,\
+					list(user), W.icon, W.icon_state, null, null)
 				else
 					boutput(user, "The autotransformer is already tuned.")
 
@@ -528,6 +530,16 @@ var/zapLimiter = 0
 			else
 				boutput(user, "<span class='alert'>Access denied.</span>")
 
+/obj/machinery/power/apc/proc/fix_wiring(obj/item/W, mob/user)
+	W.change_stack_amount(-4)
+	boutput(user, "You repair the autotransformer.")
+	playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+	src.repair_status = 2
+
+/obj/machinery/power/apc/proc/fix_autotransformer(mob/user)
+	boutput(user, "You tune the autotransformer.")
+	playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+	src.repair_status = 3
 
 /obj/machinery/power/apc/attack_ai(mob/user)
 	if (src.aidisabled && !src.wiresexposed)

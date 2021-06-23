@@ -992,6 +992,28 @@ toxic - poisons
 		startSmoke(hit, dirflag, projectile)
 		return
 
+/datum/projectile/bullet/marker
+	name = "marker grenade"
+	sname = "paint"
+	window_pass = 0
+	icon_state = "40mmR"
+	damage_type = D_KINETIC
+	power = 15
+	dissipation_delay = 10
+	cost = 1
+	shot_sound = 'sound/weapons/launcher.ogg'
+	ks_ratio = 1.0
+	caliber = 1.57 // 40mm grenade shell
+	icon_turf_hit = "bhole-large"
+	casing = /obj/item/casing/grenade
+	hit_type = DAMAGE_BLUNT
+	hit_mob_sound = "sound/misc/splash_1.ogg"
+	hit_object_sound = "sound/misc/splash_1.ogg"
+
+	on_hit(atom/hit, dirflag, atom/projectile)
+		..()
+		hit.setStatus("marker_painted", 30 SECONDS)
+
 /datum/projectile/bullet/pbr //direct less-lethal 40mm option
 	name = "plastic baton round"
 	shot_sound = 'sound/weapons/launcher.ogg'
@@ -1148,6 +1170,7 @@ toxic - poisons
 	var/has_det = 0 //have we detonated a grenade yet?
 
 	proc/get_nade()
+		RETURN_TYPE(/obj/item)
 		if (src.has_grenade != 0)
 			if (src.CHEM != null)
 				return src.CHEM
@@ -1198,18 +1221,18 @@ toxic - poisons
 	proc/det(var/turf/T)
 		if (T && src.has_det == 0 && src.has_grenade != 0)
 			if (src.CHEM != null)
-				src.CHEM.set_loc(T)
+				var/obj/item/chem_grenade/C = SEMI_DEEP_COPY(CHEM)
+				C.set_loc(T)
 				src.has_det = 1
 				SPAWN_DBG(1 DECI SECOND)
-					src.CHEM.explode()
-				src.has_grenade = 0
+					C.explode()
 				return
 			else if (src.OLD != null)
-				src.OLD.set_loc(T)
+				var/obj/item/old_grenade/O = SEMI_DEEP_COPY(OLD)
+				O.set_loc(T)
 				src.has_det = 1
 				SPAWN_DBG(1 DECI SECOND)
-					src.OLD.prime()
-				src.has_grenade = 0
+					O.prime()
 				return
 			else //what the hell happened
 				return
