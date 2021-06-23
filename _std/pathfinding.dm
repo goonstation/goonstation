@@ -136,7 +136,7 @@
 	if(T.density || !T.pathable) // simplest case
 		return FALSE
 	// if a source turf was included check for directional blocks between the two turfs
-	if (source && T.blocked_dirs || source.blocked_dirs)
+	if (source && (T.blocked_dirs || source.blocked_dirs))
 		var/direction = get_dir(source, T)
 
 		// do either of these turfs explicitly block entry or exit to the other?
