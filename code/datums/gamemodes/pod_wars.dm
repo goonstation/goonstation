@@ -389,13 +389,13 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		sy_death = 0
 	if (get_pod_wars_team_num(M) == TEAM_NANOTRASEN)
 		world.save_intra_round_value("nt_death", nt_death + 1)
-	if (get_pod_wars_team_num(M) == TEAM_NANOTRASEN)
+	if (get_pod_wars_team_num(M) == TEAM_SYNDICATE)
 		world.save_intra_round_value("sy_death", sy_death + 1)
 	if (M.mind == our_team.commander)
 		our_team.change_points(-2)
 		if (get_pod_wars_team_num(M) == TEAM_NANOTRASEN)
 			world.save_intra_round_value("nt_death", nt_death + 1)
-		if (get_pod_wars_team_num(M) == TEAM_NANOTRASEN)
+		if (get_pod_wars_team_num(M) == TEAM_SYNDICATE)
 			world.save_intra_round_value("sy_death", sy_death + 1)
 		if (!our_team.first_commander_death)
 			our_team.first_commander_death = 1
@@ -971,17 +971,19 @@ proc/setup_pw_crate_lists()
 		src.add_dialog(user)
 		user.Browse(src.desc, "title=Mission Log;window=pod_war_stats_[src];size=300x300")
 		onclose(user, "pod_war_stats_[src]")
-		return
 
-/obj/pod_war_stats_sy/
-	name = "Syndicate Mission Log"
+/obj/decoration/memorial/
+	name = "Generic Memorial"
 	icon = 'icons/obj/32x64.dmi'
-	icon_state = "memorial_mid" //placeholder, i'm not good at spriting
+	icon_state = "memorial_mid"
 	anchored = 1.0
 	opacity = 0
 	density = 1
 
-
+/obj/decoration/memorial/pod_war_stats_sy/
+	name = "Syndicate Mission Log"
+	icon = 'icons/obj/32x64.dmi'
+	icon_state = "memorial_mid"
 
 	New()
 		..()
@@ -1012,15 +1014,14 @@ proc/setup_pw_crate_lists()
 		src.add_dialog(user)
 		user.Browse(src.desc, "title=Mission Log;window=pod_war_stats_[src];size=300x300")
 		onclose(user, "pod_war_stats_[src]")
-		return
 
-/obj/memorial_left
+/obj/decoration/memorial/memorial_left
 	name = "Memorial Inscription"
 	desc = "A memorial to those dead, but not forgotten."
 	icon = 'icons/obj/32x64.dmi'
 	icon_state = "memorial_left"
 
-/obj/memorial_right
+/obj/decoration/memorial/memorial_right
 	name = "Memorial Inscription"
 	desc = "A memorial to those dead, but not forgotten."
 	icon = 'icons/obj/32x64.dmi'
