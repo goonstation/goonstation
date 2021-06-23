@@ -312,7 +312,7 @@ obj/item/storage/wall/clothingrack/hatrack
 
 /obj/item/storage/wall/toolshelf
 	name = "tool shelf"
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	density = 0
 	slots = 7
 	anchored = 1
@@ -335,7 +335,7 @@ obj/item/storage/wall/clothingrack/hatrack
 
 /obj/item/storage/wall/mineralshelf
 	name = "mineral shelf"
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	density = 0
 	slots = 7
 	anchored = 1

@@ -871,6 +871,16 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
+		cocktail_piscosour
+			name = "Pisco Sour"
+			id = "piscosour"
+			result = "piscosour"
+			required_reagents = list("egg" = 1, "simplesyrup" = 1, "bitters"= 1, "juice_lime" = 1, "white_wine" = 1)
+			result_amount = 5
+			mix_phrase = "The egg white foams and floats atop the lime-colored drink."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
 		cocktail_diesel
 			name = "Diesel"
 			id = "diesel"
@@ -966,6 +976,15 @@ datum
 			required_reagents = list("vodka" = 1, "vermouth" = 1)
 			result_amount = 2
 			mix_phrase = "James Bond would be ashamed."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		cocktail_appletini
+			name = "Appletini"
+			id = "appletini"
+			result = "appletini"
+			required_reagents = list("vodka" = 1, "cider" = 1, "juice_apple" = 1)
+			result_amount = 3
+			mix_phrase = "James Bond probably wouldn't know what this is."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
 		cocktail_murdini
@@ -1171,6 +1190,20 @@ datum
 			mix_phrase = "A little pink umbrella magically appears in the drink."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		cocktail_lemondrop
+			name = "Lemon Drop"
+			id = "lemondrop"
+			result = "lemondrop"
+			required_reagents = list("simplesyrup" = 1, "juice_lemon" = 1, "juice_orange" = 1, "vodka" = 1)
+			result_amount = 4
+			mix_phrase = "The sweet and sour contents mix together nicely to make a pastel yellow drink."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		cocktail_lemondrop/lemondrop2
+			id = "lemondrop2"
+			required_reagents = list("simplesyrup" = 1, "juice_lemon" = 1, "screwdriver" = 2)
+			result_amount = 4
+
 		cocktail_harlow
 			name = "Jean Harlow"
 			id = "harlow"
@@ -1331,6 +1364,24 @@ datum
 			required_reagents = list("vodka" = 1, "juice_peach" = 1)
 			result_amount = 2
 			mix_phrase = "The vodka and peach juice fizz into a pleasantly pink hue."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		cocktail_bellini
+			name = "Peach Bellini"
+			id = "peachbellini"
+			result = "peachbellini"
+			required_reagents = list("white_wine" = 2, "juice_peach" = 1)
+			result_amount = 3
+			mix_phrase = "You contemplate Renaissance paintings as the peach purée suspends in the white wine."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		cocktail_rossini
+			name = "Rossini"
+			id = "rossini"
+			result = "rossini"
+			required_reagents = list("white_wine" = 2, "juice_strawberry" = 1)
+			result_amount = 3
+			mix_phrase = "Faint opera music echoes from the glass."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
 		cocktail_moscowmule

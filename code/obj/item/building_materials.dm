@@ -120,6 +120,8 @@ MATERIAL
 	attack_hand(mob/user as mob)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
+			if(src.loc != user)
+				return
 			splitnum = round(clamp(splitnum, 0, src.amount))
 			if(amount == 0)
 				return
@@ -268,6 +270,7 @@ MATERIAL
 				L["tcomputer"] = "Computer Terminal Frame (3 Sheets)"
 				L["computer"] = "Console Frame (5 Sheets)"
 				L["hcomputer"] = "Computer Frame (5 Sheets)"
+				L["vending"] = "Vending Machine Frame (3 Sheets)"
 		if (src?.material.material_flags & MATERIAL_CRYSTAL)
 			L["smallwindow"] = "Thin Window"
 			L["bigwindow"] = "Large Window (2 Sheets)"
@@ -488,6 +491,14 @@ MATERIAL
 					a_icon_state = "0"
 					a_name = "a terminal frame"
 
+				if("vending")
+					if (!amount_check(3,usr)) return
+					a_type = /obj/machinery/vendingframe
+					a_amount = 1
+					a_cost = 3
+					a_icon = 'icons/obj/vending.dmi'
+					a_icon_state = "standard-frame"
+					a_name = "a vending machine frame"
 				if("construct")
 					var/turf/T = get_turf(usr)
 					var/area/A = get_area (usr)
@@ -993,7 +1004,7 @@ MATERIAL
 		src.pixel_y = rand(0, 14)
 		SPAWN_DBG(0)
 			update_stack_appearance()
-			src.inventory_counter.update_number(amount)
+			src.inventory_counter?.update_number(amount)
 		return
 
 	check_valid_stack(atom/movable/O as obj)
