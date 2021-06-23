@@ -934,7 +934,7 @@ proc/setup_pw_crate_lists()
 
 /obj/decoration/memorial/
 	name = "Generic Memorial"
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_mid"
 	anchored = 1.0
 	opacity = 0
@@ -942,8 +942,8 @@ proc/setup_pw_crate_lists()
 
 /obj/decoration/memorial/pod_war_stats_nt/
 	name = "Nanotrasen Mission Log"
-	icon = 'icons/obj/32x64.dmi'
-	icon_state = "memorial_mid" //placeholder, i'm not good at spriting
+	icon = 'icons/obj/large/32x64.dmi'
+	icon_state = "memorial_mid"
 	anchored = 1.0
 	opacity = 0
 	density = 1
@@ -982,7 +982,7 @@ proc/setup_pw_crate_lists()
 
 /obj/decoration/memorial/pod_war_stats_sy/
 	name = "Syndicate Mission Log"
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_mid"
 
 	New()
@@ -1018,13 +1018,13 @@ proc/setup_pw_crate_lists()
 /obj/decoration/memorial/memorial_left
 	name = "Memorial Inscription"
 	desc = "A memorial to those dead, but not forgotten."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_left"
 
 /obj/decoration/memorial/memorial_right
 	name = "Memorial Inscription"
 	desc = "A memorial to those dead, but not forgotten."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_right"
 
 #undef PW_COMMANDER_DIES
