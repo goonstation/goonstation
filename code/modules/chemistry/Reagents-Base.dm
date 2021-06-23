@@ -203,7 +203,8 @@ datum
 						if (HH.organHolder && HH.organHolder.liver)			//Hax here, lazy. currently only organ is liver. fix when adding others. -kyle
 							if (HH.organHolder.liver.robotic)
 								M.take_toxin_damage(-liver_damage * 3 * mult)
-								HH.organHolder.heal_organ(liver_damage *mult, liver_damage *mult, liver_damage *mult, "liver")
+								if(!HH.organHolder.liver.emagged)
+									HH.organHolder.heal_organ(liver_damage *mult, liver_damage *mult, liver_damage *mult, "liver")
 							else
 								if (ethanol_amt < 40 && HH.organHolder.liver.get_damage() < 10)
 									HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
@@ -841,7 +842,7 @@ datum
 							boutput(M, "<span class='notice'>You feel insulted... and wet.</span>")
 						else
 							boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
-							M.take_brain_damage(-10)
+							M.take_brain_damage(0 - clamp(volume, 0, 10))
 						for (var/datum/ailment_data/disease/V in M.ailments)
 							if(prob(1))
 								M.cure_disease(V)

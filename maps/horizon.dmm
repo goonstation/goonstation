@@ -8186,6 +8186,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/caution/north,
 /area/station/hangar/arrivals)
 "avT" = (
@@ -8856,9 +8857,10 @@
 /area/station/medical/dome)
 "axs" = (
 /obj/machinery/door/airlock/pyro/glass{
-	name = "Chimpnasium"
+	name = "Chimpnasium";
+	req_access = null
 	},
-/obj/access_spawn/medical,
+/obj/access_spawn/medlab,
 /turf/simulated/floor/black,
 /area/station/medical/dome)
 "axu" = (
@@ -11599,6 +11601,9 @@
 	pixel_x = -6
 	},
 /obj/machinery/light,
+/obj/item/implantcase/sec{
+	pixel_x = 5
+	},
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "aEE" = (
@@ -11628,6 +11633,7 @@
 "aEJ" = (
 /obj/machinery/door_control/podbay/research/new_walls/west,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor,
 /area/station/hangar/escape)
 "aEK" = (
@@ -12812,9 +12818,10 @@
 /area/station/maintenance/northeast)
 "aHN" = (
 /obj/machinery/door/airlock/pyro/maintenance{
-	req_access = list(5)
+	req_access = null
 	},
 /obj/disposalpipe/segment/transport,
+/obj/access_spawn/medlab,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "aHO" = (
@@ -20349,7 +20356,7 @@
 /turf/simulated/floor/plating/airless/random,
 /area/station/mining/magnet)
 "aYG" = (
-/obj/machinery/computer/mining_shuttle,
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -20685,6 +20692,8 @@
 /obj/rack,
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/mop,
+/obj/item/reagent_containers/glass/bottle/cleaner,
+/obj/item/sponge,
 /turf/simulated/floor/purple/checker{
 	dir = 4
 	},
@@ -22091,9 +22100,7 @@
 	},
 /area/station/janitor/office)
 "bcB" = (
-/obj/rack,
-/obj/item/sponge,
-/obj/item/reagent_containers/glass/bottle/cleaner,
+/obj/machinery/vending/janitor,
 /turf/simulated/floor/purple/checker{
 	dir = 4
 	},
@@ -23642,8 +23649,6 @@
 /turf/simulated/floor/darkblue/checker,
 /area/station/teleporter)
 "bgj" = (
-/obj/table/auto,
-/obj/item/extinguisher,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -23651,6 +23656,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "bgl" = (
@@ -24940,6 +24946,7 @@
 	},
 /obj/table/auto,
 /obj/item/storage/toolbox/emergency,
+/obj/item/extinguisher,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "bji" = (
@@ -30135,6 +30142,7 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /obj/machinery/door_control/podbay/qm/new_walls/west,
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/yellow,
 /area/station/hangar/qm)
 "bwX" = (
@@ -30274,6 +30282,7 @@
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
+/obj/machinery/computer/mining_shuttle,
 /turf/simulated/floor/wood/two,
 /area/station/hallway/secondary/west)
 "bxo" = (
@@ -31172,6 +31181,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "bzo" = (
@@ -31553,14 +31563,12 @@
 /area/station/security/detectives_office)
 "bAi" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
-/obj/machinery/door/airlock/pyro/security/alt{
-	id = "detoffice";
-	name = "Detective's Office"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/security,
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Detective's Office"
+	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "bAj" = (
@@ -32049,6 +32057,7 @@
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating/random,
 /area/station/quartermaster/storage)
 "bBM" = (
@@ -33690,13 +33699,13 @@
 /area/station/security/detectives_office)
 "bFK" = (
 /obj/stool/chair/red,
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment,
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
 /turf/simulated/floor/carpet/red/standard/edge/south,
 /area/station/security/detectives_office)
 "bFL" = (
@@ -35972,11 +35981,6 @@
 	require_login = 0;
 	screen = 1
 	},
-/obj/machinery/door_control{
-	id = "detoffice";
-	pixel_x = 24;
-	req_access = list(1)
-	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "bLS" = (
@@ -37116,6 +37120,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "bPj" = (
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "bPk" = (
@@ -37601,7 +37606,21 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/implantcase/sec,
+/obj/item/ammo/bullets/tranq_darts/anti_mutant{
+	pixel_x = -10;
+	pixel_y = -6
+	},
+/obj/item/ammo/bullets/tranq_darts{
+	pixel_x = 10;
+	pixel_y = -6
+	},
+/obj/item/ammo/bullets/tranq_darts{
+	pixel_x = 6;
+	pixel_y = -6
+	},
+/obj/item/gun/kinetic/dart_rifle{
+	pixel_y = -8
+	},
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "bQw" = (
@@ -53129,6 +53148,11 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/morgue)
+"cLE" = (
+/obj/disposalpipe/segment/bent/east,
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northwest)
 "cNT" = (
 /obj/disposalpipe/segment/transport,
 /obj/disposalpipe/segment/mineral{
@@ -58761,9 +58785,10 @@
 	},
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8;
-	name = "Chimpnasium"
+	name = "Chimpnasium";
+	req_access = null
 	},
-/obj/access_spawn/pathology,
+/obj/access_spawn/medlab,
 /turf/simulated/floor/white,
 /area/station/medical/dome)
 "rHb" = (
@@ -58967,6 +58992,10 @@
 	dir = 1
 	},
 /area/station/security/main)
+"sdY" = (
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "sgp" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	autoclose = 1;
@@ -95382,7 +95411,7 @@ aaa
 aaa
 uav
 aLS
-xqi
+cLE
 mGz
 aTs
 aWl
@@ -135251,7 +135280,7 @@ vOD
 fEt
 cAG
 aGD
-cBL
+sdY
 fbK
 cBK
 bgt

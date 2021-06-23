@@ -169,6 +169,7 @@
 				explode()
 
 	proc/explode()
+		src.reagents.my_atom = src //hax
 		var/has_reagents = 0
 		for (var/obj/item/reagent_containers/glass/G in beakers)
 			if (G.reagents.total_volume) has_reagents = 1

@@ -1063,10 +1063,9 @@ obj/trait/pilot
 	isPositive = 0
 
 /obj/trait/allears
-	name = "All Ears (0) \[Trinkets\]"
+	name = "All Ears (0)"
 	cleanName="All ears"
 	desc = "You lost your headset on the way to work."
-	category = "trinkets"
 	id = "allears"
 	points = 0
 	isPositive = 0
