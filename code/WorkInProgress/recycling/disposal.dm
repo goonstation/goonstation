@@ -1023,7 +1023,7 @@
 
 		return P
 
-	welded()
+	/*welded()
 
 		/*var/obj/disposalconstruct/C = new (src.loc)
 		C.ptype = 10
@@ -1036,7 +1036,7 @@
 
 		src.nugget_mode = !src.nugget_mode
 		src.update()
-		return
+		return*/
 
 	update()
 		..()
