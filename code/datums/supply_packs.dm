@@ -1049,9 +1049,9 @@
 	cost = 2000
 	contains = list(/obj/item/clothing/head/headband/giraffe = 1,
 					/obj/item/clothing/head/headband/antlers = 1,
-					/obj/item/clothing/head/headband/tiger = 1,
+					/obj/item/clothing/head/headband/nyan/tiger = 1,
 					/obj/item/clothing/head/headband/nyan/leopard = 1,
-					/obj/item/clothing/head/headband/nyan/sleopard = 1,
+					/obj/item/clothing/head/headband/nyan/snowleopard = 1,
 					/obj/item/clothing/head/headband/bee = 2,
 					/obj/item/clothing/head/headband/nyan/random = 1)
 
