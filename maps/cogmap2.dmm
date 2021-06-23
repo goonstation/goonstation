@@ -25750,9 +25750,6 @@
 	},
 /area/station/maintenance/east)
 "bhn" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -27929,9 +27926,6 @@
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access_txt = "40"
-	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
 	},
 /obj/cable{
 	d1 = 1;
@@ -48739,9 +48733,6 @@
 	},
 /area/station/catwalk/south)
 "cbJ" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -49821,18 +49812,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "cec" = (
-/obj/grille/catwalk{
-	dir = 4
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
 	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/obj/disposalpipe/segment/mail/vertical,
-/turf/space,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/station/catwalk/south)
+/turf/simulated/floor/grey/blackgrime,
+/area/station/hangar/catering)
 "ced" = (
 /obj/cable{
 	d1 = 2;
@@ -56058,7 +56043,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "csL" = (
-/obj/machinery/atmospherics/pipe/simple,
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
 	req_access_txt = "45"
@@ -56212,18 +56196,6 @@
 	dir = 9
 	},
 /area/station/science/lobby)
-"cte" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/turf/space,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/station/catwalk/south)
 "ctf" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -108233,7 +108205,7 @@ afE
 afE
 afE
 afE
-aiP
+cec
 ajN
 alb
 alA
@@ -125825,7 +125797,7 @@ bgA
 ccL
 aaa
 aam
-cte
+cyV
 aaI
 aaa
 cfm
@@ -129449,7 +129421,7 @@ cca
 ccQ
 aaa
 aam
-cte
+cyV
 aaI
 aaa
 cft
@@ -130052,7 +130024,7 @@ caQ
 ccc
 bgF
 bgr
-cec
+cdD
 ceK
 cdD
 bgr
