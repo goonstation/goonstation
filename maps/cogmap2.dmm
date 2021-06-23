@@ -18314,6 +18314,9 @@
 	dir = 1;
 	tag = "icon-pool (NORTH)"
 	},
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "aPW" = (
@@ -79550,19 +79553,6 @@
 	icon_state = "blue6"
 	},
 /area/station/crew_quarters/arcade/dungeon)
-"tal" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "tat" = (
 /obj/storage/closet{
 	name = "rancher's supply closet"
@@ -135513,7 +135503,7 @@ cjK
 cls
 cmZ
 cnE
-tal
+cnE
 cnM
 cnE
 cnT
