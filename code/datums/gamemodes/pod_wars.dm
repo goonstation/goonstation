@@ -381,22 +381,8 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars_team/our_team, var/datum/pod_wars_team/enemy_team)
 	our_team.change_points(-1)
-	var/nt_death = world.load_intra_round_value("nt_death")
-	var/sy_death = world.load_intra_round_value("sy_death")
-	if(isnull(nt_death))
-		nt_death = 0
-	if(isnull(sy_death))
-		sy_death = 0
-	if (get_pod_wars_team_num(M) == TEAM_NANOTRASEN)
-		world.save_intra_round_value("nt_death", nt_death + 1)
-	if (get_pod_wars_team_num(M) == TEAM_NANOTRASEN)
-		world.save_intra_round_value("sy_death", sy_death + 1)
 	if (M.mind == our_team.commander)
 		our_team.change_points(-2)
-		if (get_pod_wars_team_num(M) == TEAM_NANOTRASEN)
-			world.save_intra_round_value("nt_death", nt_death + 1)
-		if (get_pod_wars_team_num(M) == TEAM_NANOTRASEN)
-			world.save_intra_round_value("sy_death", sy_death + 1)
 		if (!our_team.first_commander_death)
 			our_team.first_commander_death = 1
 			src.playsound_to_team(our_team, "sound/voice/pod_wars_voices/{PWTN}Commander_Dies{ALTS}.ogg", sound_type=PW_COMMANDER_DIES)
@@ -498,17 +484,6 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 	else
 		winner = team_SY
 		loser = team_NT
-
-	if(winner == team_NT) //putting this in a seperate code block for cleanliness
-		var/value = world.load_intra_round_value("nt_win")
-		if(isnull(value))
-			value = 0
-		world.save_intra_round_value("nt_win", value + 1)
-	else if(winner == team_SY)
-		var/value = world.load_intra_round_value("sy_win")
-		if(isnull(value))
-			value = 0
-		world.save_intra_round_value("sy_win", value + 1)
 
 	// var/text = ""
 	boutput(world, "<FONT size = 3><B>The winner was the [winner.name], commanded by [winner.commander?.current] ([winner.commander?.current?.ckey]):</B></FONT><br>")
@@ -931,100 +906,6 @@ proc/setup_pw_crate_lists()
 	O.icon_state = "explosion"
 	SPAWN_DBG(3.5 SECONDS)
 		qdel(O)
-
-/obj/pod_war_stats_nt/
-	name = "Nanotrasen Mission Log"
-	icon = 'icons/obj/32x64.dmi'
-	icon_state = "memorial_mid" //placeholder, i'm not good at spriting
-	anchored = 1.0
-	opacity = 0
-	density = 1
-
-
-
-	New()
-		..()
-		var/nt_wins = world.load_intra_round_value("nt_win")
-		var/nt_deaths = world.load_intra_round_value("nt_death")
-		if(isnull(nt_wins))
-			nt_wins = 0
-		if(isnull(nt_deaths))
-			nt_deaths = 0
-		var/last_reset_date = world.load_intra_round_value("pod_wars_last_reset")
-		var/last_reset_text = null
-		if(!isnull(last_reset_date))
-			var/days_passed = round((world.realtime - last_reset_date) / (1 DAY))
-			last_reset_text = "<h4>(mission log reset [days_passed] days ago)</h4>"
-		src.desc = "<center><h2><b>Pod Wars Mission Log</b></h2><br> <h3>Nanotrasen Victories: [nt_wins]<br>\nNanotrasen Deaths: [nt_deaths]</h3><br>[last_reset_text]</center>"
-
-	attack_hand(var/mob/user as mob)
-		if (..(user))
-			return
-
-		var/nt_wins = world.load_intra_round_value("nt_win")
-		var/nt_deaths = world.load_intra_round_value("nt_death")
-		if(isnull(nt_wins))
-			nt_wins = 0
-		if(isnull(nt_deaths))
-			nt_deaths = 0
-
-		src.add_dialog(user)
-		user.Browse(src.desc, "title=Mission Log;window=pod_war_stats_[src];size=300x300")
-		onclose(user, "pod_war_stats_[src]")
-		return
-
-/obj/pod_war_stats_sy/
-	name = "Syndicate Mission Log"
-	icon = 'icons/obj/32x64.dmi'
-	icon_state = "memorial_mid" //placeholder, i'm not good at spriting
-	anchored = 1.0
-	opacity = 0
-	density = 1
-
-
-
-	New()
-		..()
-		var/sy_wins = world.load_intra_round_value("sy_win")
-		var/sy_deaths = world.load_intra_round_value("sy_death")
-		if(isnull(sy_wins))
-			sy_wins = 0
-		if(isnull(sy_deaths))
-			sy_deaths = 0
-		var/last_reset_date = world.load_intra_round_value("pod_wars_last_reset")
-		var/last_reset_text = null
-		if(!isnull(last_reset_date))
-			var/days_passed = round((world.realtime - last_reset_date) / (1 DAY))
-			last_reset_text = "<h4>(mission log reset [days_passed] days ago)</h4>"
-		src.desc = "<center><h2><b>Pod Wars Mission Log</b></h2><br> <h3>Syndicate Victories: [sy_wins]<br>\nSyndicate Deaths: [sy_deaths]</h3><br>[last_reset_text]</center>"
-
-	attack_hand(var/mob/user as mob)
-		if (..(user))
-			return
-
-		var/sy_wins = world.load_intra_round_value("sy_win")
-		var/sy_deaths = world.load_intra_round_value("sy_death")
-		if(isnull(sy_wins))
-			sy_wins = 0
-		if(isnull(sy_deaths))
-			sy_deaths = 0
-
-		src.add_dialog(user)
-		user.Browse(src.desc, "title=Mission Log;window=pod_war_stats_[src];size=300x300")
-		onclose(user, "pod_war_stats_[src]")
-		return
-
-/obj/memorial_left
-	name = "Memorial Inscription"
-	desc = "A memorial to those dead, but not forgotten."
-	icon = 'icons/obj/32x64.dmi'
-	icon_state = "memorial_left"
-
-/obj/memorial_right
-	name = "Memorial Inscription"
-	desc = "A memorial to those dead, but not forgotten."
-	icon = 'icons/obj/32x64.dmi'
-	icon_state = "memorial_right"
 
 #undef PW_COMMANDER_DIES
 #undef PW_CRIT_SYSTEM_DESTORYED

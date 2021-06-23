@@ -5299,10 +5299,6 @@ area/station/security/visitation
 	name = "DORGUN'S GREAT SHIP 10/10"
 	icon_state = "yellow"
 
-/area/pod_wars/spacejunk/memorial_stats
-	name = "Mission Memorial Ruins"
-	icon_state = "yellow"
-
 /area/pod_wars/spacejunk/brightwell
 	name = "LS Brightwell"
 	icon_state = "yellow"
