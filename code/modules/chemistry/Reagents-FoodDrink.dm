@@ -111,7 +111,7 @@ datum
 			thirst_value = 0.3
 			value = 3
 
-			on_mob_life(var/mob/M, var/mult = 1)
+			on_add(var/mob/M, var/mult = 1)
 				if(probmult(20))
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
@@ -119,9 +119,9 @@ datum
 		fooddrink/cocktail_fruit_punch
 			name = "fruit punch"
 			id = "fruit_punch"
-			fluid_r = 255
-			fluid_g = 87
-			fluid_b = 51
+			fluid_r = 235
+			fluid_g = 64
+			fluid_b = 52
 			transparency = 190
 			taste = "sugary"
 			description = "A mix of fruit juices and sugar; tastes like being a kid again."
