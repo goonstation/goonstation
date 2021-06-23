@@ -7,7 +7,7 @@
 "eH" = (/obj/table/auto{name = "tabell"},/turf/simulated/floor/blackwhite{dir = 1},/area/prefab/furniture_store)
 "eQ" = (/obj/decoration/decorativeplant/plant5,/turf/simulated/floor/grey,/area/prefab/furniture_store)
 "fw" = (/obj/machinery/vending/cola/red,/obj/machinery/light/worn{dir = 4},/turf/simulated/floor/wood/three,/area/prefab/furniture_store)
-"fz" = (/obj/table/round/auto{name = "An almost circular table"},/turf/simulated/floor/blackwhite{dir = 1},/area/prefab/furniture_store)
+"fz" = (/obj/table/round{name = "An almost circular table"},/turf/simulated/floor/blackwhite{dir = 1},/area/prefab/furniture_store)
 "fK" = (/turf/simulated/floor/wood,/area/prefab/furniture_store)
 "gj" = (/obj/decoration/decorativeplant/plant3,/obj/machinery/light/small/floor/harsh/very,/turf/simulated/floor/grey,/area/prefab/furniture_store)
 "gK" = (/obj/decoration/decorativeplant/plant2,/obj/railing/orange,/obj/railing/orange{dir = 4},/turf/simulated/floor/wood,/area/prefab/furniture_store)
@@ -32,7 +32,6 @@
 "mf" = (/obj/railing/yellow/reinforced{dir = 1},/turf/simulated/floor/setpieces/hivefloor,/area/prefab/furniture_store)
 "mL" = (/turf/space,/area/allowGenerate)
 "nm" = (/obj/item/clothing/suit/cardboard_box,/obj/machinery/light/incandescent/warm,/turf/simulated/floor/industrial,/area/prefab/furniture_store)
-"nI" = (/obj/machinery/light/small/floor/greenish,/obj/machinery/door/airlock/pyro/glass/windoor{dir = 8},/turf/simulated/grass,/area/prefab/furniture_store)
 "oo" = (/turf/simulated/floor/specialroom/cafeteria,/area/prefab/furniture_store)
 "op" = (/turf/space,/area/noGenerate)
 "oL" = (/obj/rack/lunar,/obj/item/lamp_manufacturer/organic,/turf/simulated/floor/industrial,/area/prefab/furniture_store)
@@ -47,7 +46,7 @@
 "tp" = (/obj/machinery/light/worn{dir = 8},/turf/simulated/floor/grey,/area/prefab/furniture_store)
 "tq" = (/obj/table/folding,/obj/machinery/light/worn,/turf/simulated/floor/blackwhite{dir = 1},/area/prefab/furniture_store)
 "tz" = (/obj/lattice{dir = 9; icon_state = "lattice-dir"},/turf/space,/area/prefab/furniture_store)
-"tH" = (/obj/table/glass/reinforced/auto{desc = "The swedish energy allowed this table to be see-through. It looks kinda sturdy, but I wouldn't go slamming things onto it."},/obj/machinery/light/incandescent/harsh/very{dir = 4},/turf/simulated/floor/blackwhite,/area/prefab/furniture_store)
+"tH" = (/obj/machinery/light/incandescent/harsh/very{dir = 4},/obj/table/glass/reinforced,/turf/simulated/floor/blackwhite,/area/prefab/furniture_store)
 "ua" = (/obj/stool/chair/comfy/barber_chair,/obj/machinery/light/worn{dir = 1},/turf/simulated/floor/blackwhite,/area/prefab/furniture_store)
 "um" = (/obj/stool/chair/wooden,/turf/simulated/floor/wood,/area/prefab/furniture_store)
 "un" = (/obj/machinery/light/small/floor/cool/very,/turf/simulated/floor/specialroom/cafeteria,/area/prefab/furniture_store)
@@ -99,7 +98,7 @@
 "LW" = (/obj/stool/chair/office,/obj/railing/purple{dir = 4},/turf/simulated/floor/carpet/purple/standard/edge/east,/area/prefab/furniture_store)
 "Mt" = (/obj/stool/chair/comfy/green,/turf/simulated/floor/blackwhite,/area/prefab/furniture_store)
 "MC" = (/obj/lattice{dir = 5; icon_state = "lattice-dir"},/turf/space,/area/prefab/furniture_store)
-"MV" = (/obj/table/reinforced/chemistry,/obj/item/item_box/swedish_bag,/obj/railing/cyan{dir = 1},/turf/simulated/floor/specialroom/cafeteria,/area/prefab/furniture_store)
+"MV" = (/obj/item/item_box/swedish_bag,/obj/railing/cyan{dir = 1},/obj/table/reinforced/chemistry/auto,/turf/simulated/floor/specialroom/cafeteria,/area/prefab/furniture_store)
 "Nv" = (/obj/table/hibachi{name = "A totally swedish table!"},/turf/simulated/floor/blackwhite{dir = 1},/area/prefab/furniture_store)
 "Nw" = (/obj/railing/cyan{dir = 8},/obj/table/reinforced/chemistry/auto,/turf/simulated/floor/specialroom/cafeteria,/area/prefab/furniture_store)
 "Ny" = (/mob/living/critter/small_animal/bee/beestation,/obj/stool/bee_bed,/obj/railing/yellow/reinforced{dir = 8},/turf/simulated/floor/setpieces/hivefloor,/area/prefab/furniture_store)
@@ -117,15 +116,15 @@
 "Rj" = (/obj/table/reinforced/industrial,/obj/random_item_spawner/furniture_parts/lots,/turf/simulated/floor/industrial,/area/prefab/furniture_store)
 "Se" = (/obj/rack,/obj/item/reagent_containers/food/snacks/swedishmeatball,/turf/simulated/floor/industrial,/area/prefab/furniture_store)
 "Sm" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/furniture_store)
-"Sv" = (/obj/table/wood/auto/desk/lily,/turf/simulated/floor/blackwhite,/area/prefab/furniture_store)
-"Sy" = (/obj/machinery/floorflusher/bathtub,/obj/railing{dir = 1},/obj/railing{dir = 4},/turf/simulated/floor/sanitary/blue,/area/prefab/furniture_store)
+"Sv" = (/obj/table/wood,/turf/simulated/floor/blackwhite,/area/prefab/furniture_store)
+"Sy" = (/obj/railing{dir = 1},/obj/railing{dir = 4},/obj/submachine/laundry_machine,/turf/simulated/floor/sanitary/blue,/area/prefab/furniture_store)
 "SB" = (/obj/rack,/obj/random_item_spawner/furniture_parts/one,/turf/simulated/floor/industrial,/area/prefab/furniture_store)
 "SC" = (/obj/machinery/light/small/floor/greenish,/obj/item/storage/box/plates,/obj/table/reinforced/bar/auto,/turf/simulated/floor/wood,/area/prefab/furniture_store)
 "SJ" = (/obj/decoration/decorativeplant/plant7,/turf/simulated/floor/grey,/area/prefab/furniture_store)
 "SM" = (/obj/item/storage/toilet,/obj/railing{dir = 1},/turf/simulated/floor/sanitary/blue,/area/prefab/furniture_store)
 "SS" = (/obj/random_item_spawner/tableware,/obj/railing/cyan{dir = 8},/obj/table/reinforced/chemistry/auto,/turf/simulated/floor/specialroom/cafeteria,/area/prefab/furniture_store)
 "Tw" = (/obj/stool/bed,/obj/item/clothing/suit/bedsheet/black,/obj/railing/purple{dir = 8},/obj/railing/purple,/turf/simulated/floor/carpet/purple/standard/edge/sw,/area/prefab/furniture_store)
-"Uf" = (/obj/railing{dir = 4},/obj/window/cubicle{dir = 8},/turf/simulated/floor/sanitary/blue,/area/prefab/furniture_store)
+"Uf" = (/obj/railing{dir = 4},/obj/machinery/bathtub{anchored = 1; dir = 4},/turf/simulated/floor/sanitary/blue,/area/prefab/furniture_store)
 "Uv" = (/obj/table/reinforced/industrial,/obj/random_item_spawner/furniture_parts/some,/turf/simulated/floor/industrial,/area/prefab/furniture_store)
 "UX" = (/obj/table/reinforced/auto{name = "A table reinforced with swedium"},/obj/machinery/light/incandescent/harsh/very{dir = 8},/turf/simulated/floor/blackwhite,/area/prefab/furniture_store)
 "Vc" = (/obj/machinery/recharge_station,/turf/simulated/floor/wood/three,/area/prefab/furniture_store)
@@ -141,7 +140,6 @@
 "WI" = (/obj/decoration/bookcase{pixel_y = 28},/obj/machinery/light/small/floor/warm/very,/turf/simulated/floor/carpet/purple,/area/prefab/furniture_store)
 "WN" = (/turf/space,/area/prefab/furniture_store)
 "Xw" = (/obj/rack,/turf/simulated/floor/industrial,/area/prefab/furniture_store)
-"XF" = (/obj/machinery/door/airlock/pyro/glass/windoor{dir = 1},/turf/simulated/floor/sanitary/blue,/area/prefab/furniture_store)
 "Yg" = (/obj/table/wood/auto/desk,/obj/item/paper/ikea_catalogue,/turf/simulated/floor/wood/three,/area/prefab/furniture_store)
 "YR" = (/obj/machinery/door/airlock/pyro/glass,/turf/simulated/floor/white,/area/prefab/furniture_store)
 "Za" = (/obj/stool/chair/yellow,/turf/simulated/floor/blackwhite,/area/prefab/furniture_store)
@@ -157,13 +155,13 @@ mLopopSmWjAYrjrjAYrjrjrjAYrjrjAYrjSmopopmLmLmLmLmL
 mLopopSmirGcRjJNrjVEUvIfrjtaliGciRSmopopopopopopop
 mLopSmSmSmSmSmSmKnGdGdGdKnSmSmSmSmSmSmSmSmSmSmSmSm
 mLopSmumumfKfKiiPGbMWIyQPGBNKdrNBkjqSmMtlwuaWlZaSm
-mLopSmJVxqfKZeSJPGlDrlcTPGnIjaZsjaBuSmVSVSVSVSVSSm
+mLopSmJVxqfKZeSJPGlDrlcTPGBujaZsjaBuSmVSVSVSVSVSSm
 mLopSmSCkGfKBAPdPGdAixLWPGhNyLKmNCCxSmyPzPQGwhdjSm
 mLopSmBCBCNSgKPdPGTwvxzUPGPGPGPGPGPGykPGPGVWPGPGSm
 mLopSmtpPdPdpMPdNMPGPGPGNMPdpMPdPdGSSmUXzNQwSvtHSm
 mLopSmSMSyPdPdPdPGPdPGPdPGPdyxFWMVxuSmVSVSVSVSVSSm
 mLopSmHNznOYPdPdPGeQPGIpPGgjNwooooDJSmfzdbtqeHNvSm
-mLopSmXFdYPGPGPGPGWbmfAxPGPGoooounLsSmSmSmSmSmSmSm
+mLopSmdYdYPGPGPGPGWbmfAxPGPGoooounLsSmSmSmSmSmSmSm
 mLopSmQlUfPdPdpMPGNylIHePGpMSSWdvXPwSmopopopopopop
 mLopSmSmSmSmSmSmYRSmSmSmYRSmSmSmSmSmSmopopopopopop
 mLopopopopopSmVcpXpXpHYgpXlbSmopopopopopopmLmLmLmL
