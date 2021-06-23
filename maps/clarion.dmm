@@ -1725,36 +1725,8 @@
 /area/station/crew_quarters/quartersA{
 	name = "Crew Quarters S01"
 	})
-"adH" = (
-/obj/disposalpipe/switch_junction{
-	dir = 2;
-	icon_state = "pipe-sj2";
-	mail_tag = "janitor";
-	name = "janitor mail router"
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
-"adI" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
 "adJ" = (
 /obj/disposalpipe/segment,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -1765,9 +1737,6 @@
 	name = "Entry Hallway"
 	})
 "adK" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -7350,6 +7319,7 @@
 /area/station/hallway/secondary/exit)
 "amE" = (
 /obj/voting_box,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/entry{
 	name = "Entry Hallway"
@@ -11518,6 +11488,9 @@
 /obj/window_blinds/cog2/right{
 	dir = 8
 	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "avv" = (
@@ -12398,15 +12371,13 @@
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "axv" = (
-/obj/disposalpipe/junction{
-	dir = 8;
-	icon_state = "pipe-j2";
-	name = "brig pipe"
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/green/side{
 	dir = 8
@@ -12661,7 +12632,6 @@
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "ayj" = (
-/obj/disposalpipe/segment,
 /turf/simulated/floor/green/side{
 	dir = 10
 	},
@@ -15650,9 +15620,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aFd" = (
-/obj/disposalpipe/junction{
-	dir = 4
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -15660,6 +15627,9 @@
 	},
 /obj/item/storage/wall/emergency{
 	pixel_y = 32
+	},
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
@@ -17078,7 +17048,6 @@
 	anchored = 1;
 	name = "costume dresser"
 	},
-/obj/disposalpipe/segment,
 /obj/machinery/light{
 	dir = 8;
 	pixel_x = -10
@@ -21008,9 +20977,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aQz" = (
-/obj/disposalpipe/trunk/mail{
-	dir = 4
-	},
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "N APC";
@@ -29342,7 +29308,6 @@
 	},
 /area/station/science/chemistry)
 "bjj" = (
-/obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -35957,6 +35922,9 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/morgue,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "bwp" = (
@@ -46242,6 +46210,9 @@
 	},
 /obj/access_spawn/medical_director,
 /obj/firedoor_spawn,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
@@ -50616,7 +50587,6 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "tFs" = (
-/obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -83423,7 +83393,7 @@ bHQ
 bNl
 anI
 bNz
-bNz
+anI
 bJd
 bJj
 bJq
@@ -87179,7 +87149,7 @@ abC
 abZ
 act
 ada
-adH
+abZ
 aec
 abZ
 abZ
@@ -87436,7 +87406,7 @@ abD
 aca
 acu
 adb
-adI
+pIs
 acu
 acu
 acu
