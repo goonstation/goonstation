@@ -1316,6 +1316,7 @@
 
 // HEADBANDS
 
+ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 /obj/item/clothing/head/headband
 	name = "headband"
 	desc = "A band. For your head."
@@ -1340,6 +1341,7 @@
 			H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
 			qdel(src)
 
+ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 /obj/item/clothing/head/headband/nyan
 	name = "gray cat ears"
 	desc = "Aww, cute and fuzzy."
@@ -1447,6 +1449,7 @@
 
 // BARRETTES
 
+ABSTRACT_TYPE(/obj/item/clothing/head/barrette)
 /obj/item/clothing/head/barrette
 	name = "barrettes"
 	desc = "Not to be confused with a beret."
