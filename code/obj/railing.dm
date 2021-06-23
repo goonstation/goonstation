@@ -101,14 +101,14 @@
 			return 1
 		if(height==0)
 			return 1
-		if (get_dir(loc, O) == dir)
+		if (dir & get_dir(loc, O))
 			return !density
 		return 1
 
 	CheckExit(atom/movable/O as mob|obj, target as turf)
 		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced)  || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
 			return 1
-		if (get_dir(O.loc, target) == src.dir)
+		if (dir & get_dir(O.loc, target))
 			return 0
 		return 1
 
@@ -154,13 +154,13 @@
 		. = ..()
 		if(!istype(AM)) return
 		if(AM.client?.check_key(KEY_RUN))
-			src.try_vault(AM)
+			src.try_vault(AM, TRUE)
 
-	proc/try_vault(mob/user)
+	proc/try_vault(mob/user, use_owner_dir = FALSE)
 		if (railing_is_broken(src))
 			user.show_text("[src] is broken! All you can really do is break it down...", "red")
 		else
-			actions.start(new /datum/action/bar/icon/railing_jump(user, src), user)
+			actions.start(new /datum/action/bar/icon/railing_jump(user, src, use_owner_dir), user)
 
 	reinforced
 		is_reinforced = 1
@@ -221,12 +221,14 @@
 	var/is_athletic_jump //if the user has the athletic trait, and therefore does the BEEG HARDCORE PARKOUR YUMP
 	var/no_no_zone //if the user is trying to jump over railing onto somewhere they couldn't otherwise move through...
 	var/do_bunp = TRUE
+	var/use_owner_dir = FALSE
 
-	New(The_Owner, The_Railing)
+	New(The_Owner, The_Railing, use_owner_dir = FALSE)
 		..()
 		if (The_Owner)
 			owner = The_Owner
 			ownerMob = The_Owner
+			src.use_owner_dir = use_owner_dir
 			if (ishuman(owner))
 				var/mob/living/carbon/human/H = owner
 				if (H.traitHolder.hasTrait("athletic"))
@@ -238,7 +240,11 @@
 
 	proc/getLandingLoc()
 		if (get_dist(ownerMob, the_railing) == 0)
-			return get_step(the_railing, the_railing.dir)
+			if (use_owner_dir)
+				// for handling the multiple ways top hop a corner railing
+				return get_step(the_railing, owner.dir)
+			else
+				return get_step(the_railing, the_railing.dir)
 		else
 			return get_turf(the_railing)
 
