@@ -79305,11 +79305,6 @@
 	icon_state = "blue2"
 	},
 /area/station/crew_quarters/arcade/dungeon)
-"pKW" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
-/turf/space,
-/area/station/medical/robotics)
 "pTS" = (
 /obj/item/storage/wall/random,
 /obj/machinery/vending/janitor,
@@ -115588,7 +115583,7 @@ ciq
 chp
 ciZ
 ckq
-ceC
+coE
 cqn
 cqn
 coG
@@ -117409,7 +117404,7 @@ csd
 csd
 csd
 cAP
-pKW
+wGP
 cDG
 cFB
 ddb

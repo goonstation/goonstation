@@ -1,4 +1,34 @@
 
+(t)tue jun 22 21
+(u)Sovexe
+(p)5246
+(e)🆕|feature
+(+)Repairing ruptured atmos pipes now only ever takes one successful weld, and has an action bar.
+(u)Sovexe
+(p)5231
+(e)🐛🆕|bug, feature
+(+)Made changes to pathfinding procs to resolve the chicken fence issues.
+(u)Zonespace
+(p)4933
+(e)🆕🗺|feature, mapping
+(*)Pod Wars team wins and deaths are now tracked, with a structure containing the stats being half-buried in an asteroid, near the Reliant.
+(u)BatElite
+(p)5089
+(e)🆕|feature
+(+)The backpacks and satchels in personal lockers now come in a small variety of random colours!
+(u)Penny
+(p)5218
+(e)🐛|bug
+(+)Networked equipment can finally now be re-deployed onto new data terminals
+(u)Flappybat
+(p)5082
+(e)|
+(+)Every scientist now starts with a pen.
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Replaced 40mmPBR ammo from sec utility purchases with a 40mm Paint Marker round, which will paint the target orange and cause them to leave a trail of paint behind them. 5 rounds/box.
+(+)Ammotech has more 40mmPBR ammo (5 boxes of 5 rounds each)
+(+)Drinking space cleaner no longer washes off blood/etc (?????)
 (t)mon jun 21 21
 (u)Zonespace
 (p)5225

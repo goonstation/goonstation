@@ -43,6 +43,8 @@
 	var/tmp/checkingcanpass = 0 // "" how many implement canpass()
 	var/tmp/checkinghasentered = 0 // "" hasproximity as well as items with a mat that hasproximity
 	var/tmp/checkinghasproximity = 0
+	/// directions of this turf being blocked by directional blocking objects. So we don't need to loop through the entire contents
+	var/tmp/blocked_dirs = 0
 	var/wet = 0
 	throw_unlimited = 0 //throws cannot stop on this tile if true (also makes space drift)
 
@@ -133,6 +135,12 @@
 		else
 			src.intact = FALSE
 			src.layer = PLATING_LAYER
+
+	proc/UpdateDirBlocks()
+		src.blocked_dirs = 0
+		for (var/obj/O in src.contents)
+			if (HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING))
+				ADD_FLAG(src.blocked_dirs, O.dir)
 
 /obj/overlay/tile_effect
 	name = ""
@@ -524,6 +532,7 @@
 	var/old_checkingexit = src.checkingexit
 	var/old_checkingcanpass = src.checkingcanpass
 	var/old_checkinghasentered = src.checkinghasentered
+	var/old_blocked_dirs = src.blocked_dirs
 	var/old_checkinghasproximity = src.checkinghasproximity
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
@@ -596,6 +605,7 @@
 	new_turf.checkingexit = old_checkingexit
 	new_turf.checkingcanpass = old_checkingcanpass
 	new_turf.checkinghasentered = old_checkinghasentered
+	new_turf.blocked_dirs = old_blocked_dirs
 	new_turf.checkinghasproximity = old_checkinghasproximity
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
