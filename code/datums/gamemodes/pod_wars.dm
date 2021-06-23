@@ -932,7 +932,15 @@ proc/setup_pw_crate_lists()
 	SPAWN_DBG(3.5 SECONDS)
 		qdel(O)
 
-/obj/pod_war_stats_nt/
+/obj/decoration/memorial/
+	name = "Generic Memorial"
+	icon = 'icons/obj/32x64.dmi'
+	icon_state = "memorial_mid"
+	anchored = 1.0
+	opacity = 0
+	density = 1
+
+/obj/decoration/memorial/pod_war_stats_nt/
 	name = "Nanotrasen Mission Log"
 	icon = 'icons/obj/32x64.dmi'
 	icon_state = "memorial_mid" //placeholder, i'm not good at spriting
@@ -971,14 +979,6 @@ proc/setup_pw_crate_lists()
 		src.add_dialog(user)
 		user.Browse(src.desc, "title=Mission Log;window=pod_war_stats_[src];size=300x300")
 		onclose(user, "pod_war_stats_[src]")
-
-/obj/decoration/memorial/
-	name = "Generic Memorial"
-	icon = 'icons/obj/32x64.dmi'
-	icon_state = "memorial_mid"
-	anchored = 1.0
-	opacity = 0
-	density = 1
 
 /obj/decoration/memorial/pod_war_stats_sy/
 	name = "Syndicate Mission Log"

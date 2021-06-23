@@ -3019,7 +3019,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team2/hangar)
 "lF" = (
-/obj/memorial_right{
+/obj/decoration/memorial/memorial_right{
 	pixel_x = 3
 	},
 /turf/simulated/floor/blueblack{
@@ -3501,7 +3501,7 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "np" = (
-/obj/pod_war_stats_sy,
+/obj/decoration/memorial/pod_war_stats_sy,
 /turf/simulated/floor/airless/circuit,
 /area/pod_wars/spacejunk/memorial_stats)
 "nq" = (
@@ -6259,7 +6259,7 @@
 	},
 /area/pod_wars/spacejunk/uvb67/solars)
 "xl" = (
-/obj/memorial_left{
+/obj/decoration/memorial/memorial_left{
 	pixel_x = -4
 	},
 /turf/simulated/floor/blueblack{
@@ -9892,7 +9892,7 @@
 /turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/restaurant/landingpads)
 "Li" = (
-/obj/pod_war_stats_nt,
+/obj/decoration/memorial/pod_war_stats_nt,
 /turf/simulated/floor/airless/circuit,
 /area/pod_wars/spacejunk/memorial_stats)
 "Lj" = (

@@ -1952,17 +1952,17 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	admin_only
 
-	var/nt_win_value = input("Enter new Nanotrasen death value.") as num
-	world.save_intra_round_value("nt_death", nt_win_value)
+	var/nt_death_value = input("Enter new Nanotrasen death value.") as num
+	world.save_intra_round_value("nt_death", nt_death_value)
 
-	var/sy_win_value = input("Enter new Syndicate death value.") as num
-	world.save_intra_round_value("sy_death", sy_win_value)
+	var/sy_death_value = input("Enter new Syndicate death value.") as num
+	world.save_intra_round_value("sy_death", sy_death_value)
 
 	world.save_intra_round_value("pod_wars_last_reset", world.realtime)
 
-	logTheThing("admin", usr ? usr : src, null, "set pod war death values to [nt_win_value] Nanotrasen deaths and [sy_win_value] Syndicate deaths.")
-	logTheThing("diary", usr ? usr : src, null, "set pod war death values to [nt_win_value] Nanotrasen deaths and [sy_win_value] Syndicate deaths.", "admin")
-	message_admins("[key_name(usr ? usr : src)] set pod war death values to [nt_win_value] Nanotrasen deaths and [sy_win_value] Syndicate deaths.")
+	logTheThing("admin", usr ? usr : src, null, "set pod war death values to [nt_death_value] Nanotrasen deaths and [sy_death_value] Syndicate deaths.")
+	logTheThing("diary", usr ? usr : src, null, "set pod war death values to [nt_death_value] Nanotrasen deaths and [sy_death_value] Syndicate deaths.", "admin")
+	message_admins("[key_name(usr ? usr : src)] set pod war death values to [nt_death_value] Nanotrasen deaths and [sy_death_value] Syndicate deaths.")
 
 
 /mob/verb/admin_interact_verb()
