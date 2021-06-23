@@ -825,6 +825,16 @@ proc/debug_map_apc_count(delim,zlim)
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			img.app.color = theTurf.checkinghasentered ? "#0f0" : "#f00"
 
+	blocked_dirs
+		name = "blocked dirs"
+		help = "Displays dir flags of blocked turf exits"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if (theTurf.blocked_dirs)
+				img.app.overlays = list(src.makeText(theTurf.blocked_dirs))
+				img.app.color = "#0000ff"
+			else
+				img.app.alpha = 0
+
 	checkinghasproximity
 		name = "checkinghasproximity"
 		help = "Green = yes."
