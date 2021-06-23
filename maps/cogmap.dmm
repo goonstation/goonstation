@@ -54244,7 +54244,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/delivery,
-/area/station/engine/hotloop)
+/area/station/engine/power)
 "dHa" = (
 /obj/lattice{
 	dir = 6;
@@ -54621,7 +54621,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/hotloop)
+/area/station/engine/elect)
 "ert" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -56433,7 +56433,7 @@
 "hfr" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor,
-/area/station/engine/hotloop)
+/area/station/engine/power)
 "hfP" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -59215,7 +59215,7 @@
 "mLQ" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/plating,
-/area/station/engine/hotloop)
+/area/station/engine/elect)
 "mOl" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -61476,7 +61476,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/hotloop)
+/area/station/engine/elect)
 "qJs" = (
 /obj/machinery/door/airlock/pyro/security{
 	name = "Brig Visitation Area";
@@ -63088,9 +63088,6 @@
 "twD" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/wreath/ephemeral,
-/obj/cable/brown{
-	icon_state = "0-4"
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -109287,13 +109284,13 @@ eNy
 eNy
 osF
 eNy
-eNy
 bqk
 bUK
 bUK
+bUK
 twD
-bUK
-bUK
+bLM
+bLM
 bLM
 bLM
 lWO
@@ -110496,11 +110493,11 @@ cfi
 bDr
 eLo
 bqk
-bqk
+bUK
 bUK
 bUK
 bIJ
-bUK
+bLM
 bLM
 qMw
 bNo
@@ -111402,7 +111399,7 @@ bCp
 cGw
 bqk
 bqk
-bqk
+bGw
 pSx
 qog
 bIk
