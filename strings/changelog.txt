@@ -1,5 +1,9 @@
 
 (t)tue jun 22 21
+(u)Sovexe
+(p)5231
+(e)🐛🆕|bug, feature
+(+)Made changes to pathfinding procs to resolve the chicken fence issues.
 (u)Zonespace
 (p)4933
 (e)🆕🗺|feature, mapping
