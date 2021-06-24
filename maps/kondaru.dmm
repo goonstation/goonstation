@@ -53723,6 +53723,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/testchamber)
+"pKT" = (
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "pLb" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8;
@@ -96709,7 +96713,7 @@ oGg
 aZm
 baC
 bbC
-bGb
+pKT
 bGb
 ceH
 bfZ
