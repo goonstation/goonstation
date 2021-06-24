@@ -291,15 +291,13 @@
 
 	if (src.isblocked() == 1)
 		if (src.density && !src.operating && I)
+			if (I.tool_flags & TOOL_CHOPPING)
+				src.take_damage(I.force*4, user)
+			else
+				src.take_damage(I.force, user)
 			user.lastattacked = src
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
-			src.take_damage(I.force, user)
-			if (I.tool_flags & TOOL_CHOPPING)
-				user.lastattacked = src
-				attack_particle(user,src)
-				playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
-				src.take_damage(I.force*4, user)
 			..()
 
 		return
@@ -394,11 +392,11 @@
 			if(prob(25))
 				qdel(src)
 			else
-				take_damage(health_max/2)
+				take_damage(health_max/4)
 		if(3.0)
 			if(prob(80))
 				elecflash(src,power=2)
-			take_damage(health_max/6)
+			take_damage(health_max/12)
 
 /obj/machinery/door/proc/break_me_complitely()
 	set waitfor = 0
@@ -454,15 +452,15 @@
 
 	switch(P.proj_data.damage_type)
 		if(D_KINETIC)
-			take_damage(damage * 3)
+			take_damage(round(damage * 1.5))
 		if(D_PIERCING)
-			take_damage(damage * 4)
-		if(D_ENERGY)
 			take_damage(damage * 2)
-		if(D_BURNING)
+		if(D_ENERGY)
 			take_damage(damage)
-		if(D_RADIOACTIVE)
+		if(D_BURNING)
 			take_damage(damage/2)
+		if(D_RADIOACTIVE)
+			take_damage(damage/4)
 	return
 
 /obj/machinery/door/proc/update_icon(var/toggling = 0)
