@@ -26,7 +26,7 @@
 		actions.start(new /datum/action/bar/crusher(O), src)
 
 /datum/action/bar/crusher
-	duration = 9 SECONDS
+	duration = 10 SECONDS
 	interrupt_flags = INTERRUPT_MOVE
 	var/atom/movable/target
 
@@ -43,7 +43,7 @@
 		target.temp_flags |= BEING_CRUSHERED
 		target.set_loc(owner.loc)
 		walk(target, 0)
-		target.changeStatus("stunned", 2 SECONDS)
+		target.changeStatus("stunned", 5 SECONDS)
 
 
 	onUpdate()
