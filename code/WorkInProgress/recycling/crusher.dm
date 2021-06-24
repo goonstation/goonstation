@@ -29,19 +29,25 @@
 	duration = 10 SECONDS
 	interrupt_flags = INTERRUPT_MOVE
 	var/atom/movable/target
+	var/classic
 
 	New(atom/movable/target)
 		. = ..()
+		var/turf/T = get_turf(target)
 		src.target = target
+		src.classic = isrestrictedz(T.z)
 		if(!ismob(target))
 			duration = 3 SECONDS
-
+		if(src.classic)
+			duration = 0 SECONDS
 	onStart()
 		. = ..()
 		if (!ON_COOLDOWN(owner, "crusher_sound", 1 SECOND))
 			playsound(owner, 'sound/items/mining_drill.ogg', 40, 1,0,0.8)
 		target.temp_flags |= BEING_CRUSHERED
-		target.set_loc(owner.loc)
+		var/turf/T = get_turf(owner)
+		if(!src.classic)
+			target.set_loc(owner.loc)
 		walk(target, 0)
 		target.changeStatus("stunned", 5 SECONDS)
 
@@ -53,7 +59,8 @@
 			return
 		if (!ON_COOLDOWN(owner, "crusher_sound", rand(0.5, 2.5) SECONDS))
 			playsound(owner, 'sound/items/mining_drill.ogg', 40, 1,0,0.8)
-		target.set_loc(owner.loc)
+		if(!src.classic)
+			target.set_loc(owner.loc)
 
 		if(ismob(target))
 			var/mob/M = target
