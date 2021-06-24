@@ -50,7 +50,7 @@
 	var/mob/living/target
 	var/datum/targetable/werewolf/werewolf_feast/feast
 	var/times_attacked = 0
-	var/do_we_get_points = 0 // For the specialist objective. Did we feed on the target enough times?
+	var/do_we_get_points = FALSE // For the specialist objective. Did we feed on the target enough times?
 
 	New(Target, Feast)
 		target = Target
