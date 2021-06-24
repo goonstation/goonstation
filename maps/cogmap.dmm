@@ -64941,6 +64941,9 @@
 	name = "The Snip"
 	},
 /obj/decal/garland/ephemeral,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "red2"
