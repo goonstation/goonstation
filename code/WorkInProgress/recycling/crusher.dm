@@ -55,7 +55,6 @@
 			target.set_loc(owner.loc)
 		walk(target, 0)
 		target.changeStatus("stunned", 5 SECONDS)
-		boutput(world, "grinding: [target] - [target.type]")
 
 
 	onUpdate()
