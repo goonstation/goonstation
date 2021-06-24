@@ -2394,7 +2394,6 @@
 "aeW" = (
 /obj/machinery/light/incandescent/harsh,
 /obj/shrub,
-/obj/disposalpipe/segment,
 /obj/item/seed/alien,
 /turf/simulated/floor/green/side{
 	dir = 1
@@ -5303,7 +5302,6 @@
 /obj/access_spawn/medical,
 /obj/item/storage/firstaid/toxin,
 /obj/item/reagent_containers/emergency_injector/calomel,
-/obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/medical/medbay/pharmacy)
 "amf" = (
@@ -5993,7 +5991,6 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/disposalpipe/segment,
 /obj/stool/chair/office/blue,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
@@ -6452,7 +6449,6 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "aoW" = (
-/obj/disposalpipe/segment/mail,
 /obj/storage/secure/closet/security/equipment,
 /turf/simulated/floor/red/side{
 	dir = 10
@@ -6683,11 +6679,12 @@
 	},
 /area/station/medical/medbay/lobby)
 "apy" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
@@ -7307,7 +7304,6 @@
 /obj/machinery/glass_recycler{
 	pixel_y = -3
 	},
-/obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -8191,10 +8187,6 @@
 	},
 /area/station/science/research_director)
 "asV" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
@@ -8380,7 +8372,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment,
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
@@ -10662,9 +10653,9 @@
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "ayQ" = (
-/obj/disposalpipe/segment/mail,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/lobby)
+/obj/disposalpipe/segment,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
 "ayR" = (
 /obj/machinery/door/airlock/pyro/sci_alt,
 /obj/access_spawn/research,
@@ -10680,6 +10671,7 @@
 	icon_state = "1-2"
 	},
 /obj/access_spawn/security,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "ayT" = (
@@ -11283,9 +11275,8 @@
 /area/station/hallway/primary/east)
 "azY" = (
 /obj/machinery/light/incandescent/netural,
-/obj/disposalpipe/switch_junction/left/west{
-	mail_tag = "research director's office";
-	name = "research director mail router"
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
 /turf/simulated/floor/purple/side{
 	dir = 1
@@ -11300,11 +11291,12 @@
 	},
 /area/station/hallway/primary/east)
 "aAa" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/disposalpipe/switch_junction/left/west{
+	mail_tag = "research director's office";
+	name = "research director mail router"
 	},
 /turf/simulated/floor/purple/side{
 	dir = 5
@@ -13704,6 +13696,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "aGk" = (
@@ -16730,7 +16723,6 @@
 /obj/landmark/start{
 	name = "Botanist"
 	},
-/obj/disposalpipe/segment,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "aNK" = (
@@ -23905,7 +23897,6 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "bhw" = (
-/obj/disposalpipe/segment,
 /turf/simulated/floor/stairs/wide{
 	dir = 4
 	},
@@ -41334,13 +41325,6 @@
 /obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
-"bYs" = (
-/obj/wingrille_spawn/auto/crystal,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10
-	},
-/turf/simulated/floor/plating/random,
-/area/research_outpost/toxins)
 "bYt" = (
 /obj/item/reagent_containers/food/snacks/donut/custom/robust{
 	pixel_y = 4;
@@ -43116,7 +43100,6 @@
 	},
 /area/station/hallway/primary/east)
 "ceu" = (
-/obj/disposalpipe/segment,
 /turf/simulated/floor/stairs/wide/middle{
 	dir = 4
 	},
@@ -43150,7 +43133,6 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/disposalpipe/segment,
 /turf/simulated/floor/stairs/wide/middle{
 	dir = 4
 	},
@@ -43170,7 +43152,9 @@
 /area/station/hydroponics/bay)
 "ceA" = (
 /obj/machinery/light/incandescent/harsh,
-/obj/disposalpipe/junction/right/east,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/stairs/wide/other{
 	dir = 4
 	},
@@ -43491,7 +43475,6 @@
 /area/station/medical/medbay/lobby)
 "cfi" = (
 /obj/machinery/chem_dispenser,
-/obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -45743,7 +45726,7 @@
 /obj/item/paper_bin,
 /obj/item/stamp,
 /obj/item/pen,
-/obj/disposalpipe/segment/mail,
+/obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/medical/medbay/pharmacy)
 "cmg" = (
@@ -46838,13 +46821,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"jKn" = (
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/grass,
-/area/station/hydroponics/bay)
 "jKq" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_krimpus"
@@ -47030,9 +47006,6 @@
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "lmk" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -47249,7 +47222,6 @@
 /turf/simulated/floor,
 /area/station/maintenance/south)
 "mZL" = (
-/obj/disposalpipe/segment/horizontal,
 /obj/machinery/door/airlock/pyro/external,
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
@@ -47389,12 +47361,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/inner/central)
-"nOT" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/grass,
-/area/station/hydroponics/bay)
 "nSl" = (
 /obj/table/round/auto,
 /obj/item/hand_labeler,
@@ -47520,9 +47486,6 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "peW" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/noticeboard/persistent{
 	name = "Detective's Office persistent notice board";
 	persistent_id = "detectives office";
@@ -48366,10 +48329,6 @@
 "vIJ" = (
 /turf/simulated/floor/caution/south,
 /area/station/hangar/sec)
-"vIY" = (
-/obj/disposalpipe/segment,
-/turf/simulated/floor/grass,
-/area/station/hydroponics/bay)
 "vKP" = (
 /obj/storage/crate,
 /obj/item/firework/bootleg,
@@ -48688,9 +48647,6 @@
 /turf/simulated/floor/caution/west,
 /area/station/maintenance/south)
 "yiF" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
@@ -78747,7 +78703,7 @@ agY
 agY
 aLL
 bgj
-nOT
+aMf
 gpP
 aLF
 aLF
@@ -79049,7 +79005,7 @@ agY
 agY
 aLL
 aLF
-nOT
+aMf
 aMf
 aMf
 aMf
@@ -79351,7 +79307,7 @@ cfW
 cfW
 aLL
 nkh
-nOT
+aMf
 aMf
 aMf
 aMf
@@ -79653,7 +79609,7 @@ aia
 aia
 aLL
 aLH
-nOT
+aMf
 aMf
 aMf
 aMf
@@ -79955,7 +79911,7 @@ agY
 agY
 ubH
 aLF
-nOT
+aMf
 aMf
 aMH
 aMf
@@ -80257,7 +80213,7 @@ agY
 agY
 ubH
 aLF
-nOT
+aMf
 aMf
 aMf
 bfx
@@ -80559,8 +80515,8 @@ fRB
 aKE
 ubH
 bgj
-jKn
-vIY
+aMf
+aMf
 aNJ
 aeW
 bhw
@@ -90499,9 +90455,9 @@ aMU
 bWj
 apy
 aGj
-bWj
-bWj
-bWj
+ayQ
+ayQ
+ayQ
 cmf
 cmb
 cmc
@@ -106509,7 +106465,7 @@ aub
 avC
 awJ
 axM
-ayQ
+ayO
 azY
 aBc
 aBV
@@ -130639,7 +130595,7 @@ bcV
 aSF
 aSF
 aSF
-bYs
+aSF
 aSF
 aSF
 aSF
@@ -133659,7 +133615,7 @@ bcV
 aSF
 aSF
 aSF
-bYs
+aSF
 aSF
 aSF
 aSF
