@@ -30,8 +30,8 @@
 	var/has_crush = 1 //flagged to true when the door has a secret admirer. also if the var == 1 then the door doesn't have the ability to crush items.
 	var/close_trys = 0
 
-	var/health = 600
-	var/health_max = 600
+	var/health = 400
+	var/health_max = 400
 	var/hitsound = "sound/impact_sounds/Generic_Hit_Heavy_1.ogg"
 	var/knocksound = 'sound/impact_sounds/Door_Metal_Knock_1.ogg' //knock knock
 
