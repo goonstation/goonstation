@@ -1274,7 +1274,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO,3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/flare, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/smoke, 3)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/pbr, 3)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/pbr, 5)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
@@ -1760,7 +1760,7 @@
 			else
 				var/datum/material/M = getMaterial("steel")
 				A.setMaterial(M)
-				qdel(src)
+			qdel(src)
 		else
 			setFrameState("UNWRENCHED")
 			CRASH("Invalid state \"[state]\" set in [src] construction process at [log_loc(src)]")

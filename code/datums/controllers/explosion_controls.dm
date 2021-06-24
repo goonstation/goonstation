@@ -24,8 +24,7 @@ var/datum/explosion_controller/explosions
 			return
 		if (epicenter.loc:sanctuary)
 			return//no boom boom in sanctuary
-
-		queued_explosions += new/datum/explosion(source, epicenter, power, brisance, angle, width)
+		queued_explosions += new/datum/explosion(source, epicenter, power, brisance, angle, width, usr)
 
 	proc/queue_damage(var/list/new_turfs)
 		var/c = 0
@@ -145,8 +144,9 @@ var/datum/explosion_controller/explosions
 	var/brisance
 	var/angle
 	var/width
+	var/user
 
-	New(atom/source, turf/epicenter, power, brisance, angle, width)
+	New(atom/source, turf/epicenter, power, brisance, angle, width, user)
 		..()
 		src.source = source
 		src.epicenter = epicenter
@@ -154,12 +154,13 @@ var/datum/explosion_controller/explosions
 		src.brisance = brisance
 		src.angle = angle
 		src.width = width
+		src.user = user
 
 	proc/logMe(var/power)
 		//I do not give a flying FUCK about what goes on in the colosseum. =I
 		if(!istype(get_area(epicenter), /area/colosseum))
 			// Cannot read null.name
-			var/logmsg = "Explosion with power [power] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [source ? "[source.fingerprintslast]" : "*null*"]"
+			var/logmsg = "Explosion with power [power] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [source?.fingerprintslast ? "[source.fingerprintslast]" : "*null*"] (usr: [ismob(user) ? key_name(user) : user])"
 			if(power > 10)
 				message_admins(logmsg)
 			logTheThing("bombing", null, null, logmsg)

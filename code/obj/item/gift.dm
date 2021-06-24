@@ -35,6 +35,9 @@
 		return
 	if (W.w_class < W_CLASS_BULKY)
 		if ((istool(user.l_hand, TOOL_CUTTING | TOOL_SNIPPING) && user.l_hand != W) || (istool(user.r_hand, TOOL_CUTTING | TOOL_SNIPPING) && user.r_hand != W))
+			if(istype(W, /obj/item/phone_handset/))
+				boutput(user, "<span class='notice'>You can't wrap that, it has a cord attached!</span>")
+				return
 			var/a_used = 2 ** (src.w_class - 1)
 			if (src.amount < a_used)
 				boutput(user, "<span class='notice'>You need more paper!</span>")
@@ -235,8 +238,8 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/instrument/fiddle,
 	/obj/item/instrument/trumpet,
 	/obj/item/instrument/whistle,
-	/obj/item/instrument/guitar,	
-	/obj/item/instrument/triangle,	
+	/obj/item/instrument/guitar,
+	/obj/item/instrument/triangle,
 	/obj/item/instrument/tambourine,
 	/obj/item/instrument/cowbell,
 	/obj/item/horseshoe,
@@ -283,7 +286,7 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/clothing/mask/moustache,
 	/obj/item/clothing/mask/moustache/safe,
 	/obj/item/clothing/mask/chicken,
-	/obj/item/clothing/gloves/fingerless,	
+	/obj/item/clothing/gloves/fingerless,
 	/obj/item/clothing/gloves/yellow/unsulated,
 	/obj/item/clothing/suit/bee,
 	/obj/item/clothing/shoes/cowboy,

@@ -20753,8 +20753,9 @@
 /area/drone)
 "bmq" = (
 /obj/table/reinforced/auto,
-/obj/item/electronics/scanner/syndicate,
+/obj/item/electronics/scanner,
 /obj/item/electronics/soldering,
+/obj/item/paper/manufacturer_blueprint/gunbot,
 /turf/unsimulated/floor/red/side{
 	dir = 8
 	},

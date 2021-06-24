@@ -43,6 +43,8 @@
 	var/tmp/checkingcanpass = 0 // "" how many implement canpass()
 	var/tmp/checkinghasentered = 0 // "" hasproximity as well as items with a mat that hasproximity
 	var/tmp/checkinghasproximity = 0
+	/// directions of this turf being blocked by directional blocking objects. So we don't need to loop through the entire contents
+	var/tmp/blocked_dirs = 0
 	var/wet = 0
 	throw_unlimited = 0 //throws cannot stop on this tile if true (also makes space drift)
 
@@ -119,7 +121,7 @@
 		for(var/dir in (cardinal + 0))
 			var/turf/thing = get_step(src, dir)
 			var/area/fuck_everything = thing?.loc
-			if(fuck_everything?.expandable && (fuck_everything.type != /area))
+			if(fuck_everything?.expandable && (fuck_everything.type != /area/space))
 				fuck_everything.contents += src
 				return
 
@@ -133,6 +135,12 @@
 		else
 			src.intact = FALSE
 			src.layer = PLATING_LAYER
+
+	proc/UpdateDirBlocks()
+		src.blocked_dirs = 0
+		for (var/obj/O in src.contents)
+			if (HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING))
+				ADD_FLAG(src.blocked_dirs, O.dir)
 
 /obj/overlay/tile_effect
 	name = ""
@@ -524,6 +532,7 @@
 	var/old_checkingexit = src.checkingexit
 	var/old_checkingcanpass = src.checkingcanpass
 	var/old_checkinghasentered = src.checkinghasentered
+	var/old_blocked_dirs = src.blocked_dirs
 	var/old_checkinghasproximity = src.checkinghasproximity
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
@@ -596,6 +605,7 @@
 	new_turf.checkingexit = old_checkingexit
 	new_turf.checkingcanpass = old_checkingcanpass
 	new_turf.checkinghasentered = old_checkinghasentered
+	new_turf.blocked_dirs = old_blocked_dirs
 	new_turf.checkinghasproximity = old_checkinghasproximity
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
@@ -995,7 +1005,7 @@
 
 #if defined(MAP_OVERRIDE_POD_WARS)
 /turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
-	
+
 	//testing pali's solution for getting the direction opposite of the map edge you are nearest to.
 	// A.set_loc(A.loc)
 	var/atom/target = get_edge_target_turf(A, (A.x + A.y > world.maxx ? SOUTH | WEST : NORTH | EAST) & (A.x - A.y > 0 ? NORTH | WEST : SOUTH | EAST))

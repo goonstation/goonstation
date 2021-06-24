@@ -34,8 +34,6 @@
 	var/clothing_dirty = 0
 
 	var/image/body_standing = null
-	var/image/hair_standing = null
-	var/image/hair_special_standing = null
 	var/image/tail_standing = null
 	var/image/tail_standing_oversuit = null
 	var/image/detail_standing_oversuit = null
@@ -3066,8 +3064,6 @@
 	if(!(src.chest_item && (src.chest_item in src.contents)))
 		return
 	src.show_text("You grunt and squeeze <B>[src.chest_item]</B> in your chest.")
-	SPAWN_DBG(0) //might sleep/input/etc, and we don't want to hold anything up
-		src.chest_item.attack_self(src)
 	if (src.chest_item_sewn == 0 || istype(src.chest_item, /obj/item/cloaking_device))	// If item isn't sewn in, poop it onto the ground. No fartcloaks allowed
 		// Item object is pooped out
 		if (istype(src.chest_item, /obj/item/))
@@ -3104,7 +3100,7 @@
 			if (cutOffButt)
 				src.TakeDamage("chest", 15, 0, 0, src.chest_item.hit_type)
 				take_bleeding_damage(src, src, 15)
-				src.show_text("<span class='alert'><B>[src.chest_item] cut your butt off on the way out!</B></span>")
+				src.show_text("<span class='alert'><B>[src.chest_item] cuts your butt off on the way out!</B></span>")
 				src.organHolder.drop_organ("butt")
 		// Other object is pooped out
 		else
@@ -3118,7 +3114,10 @@
 		// Make copy of item on ground
 		var/obj/item/outChestItem = src.chest_item
 		outChestItem.set_loc(get_turf(src))
+		src.chest_item.attack_self(src)
 		src.chest_item = null
+		return
+	src.chest_item.attack_self(src)
 
 /mob/living/carbon/human/attackby(obj/item/W, mob/M)
 	if (src.parry_or_dodge(M))
