@@ -1035,7 +1035,7 @@ obj/decoration/ceilingfan
 
 //stolen code for anchorable and movable target sheets. cannot get projectile tracking on them to work right now so. oh well. help appreciated!
 /obj/item/caution/target_sheet
-	desc = "A paper sheet of a figure on a cardboard backing."
+	desc = "A paper silhouette target sheet with a cardboard backing."
 	name = "paper target"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "target_paper"
