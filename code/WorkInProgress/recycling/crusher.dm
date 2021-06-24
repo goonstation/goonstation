@@ -28,7 +28,8 @@
 	New(atom/movable/target)
 		. = ..()
 		src.target = target
-
+		if(!ismob(target))
+			duration = 3 SECONDS
 
 	onStart()
 		. = ..()
@@ -37,20 +38,21 @@
 			return
 		if (!ON_COOLDOWN(owner, "crusher_sound", 1 SECOND))
 			playsound(owner, 'sound/items/mining_drill.ogg', 40, 1,0,0.8)
+		if(ismob(target))
+			target.set_loc(owner.loc)
 
-		target.set_loc(owner.loc)
 
 	onUpdate()
 		. = ..()
 		if(!IN_RANGE(owner, target, 1))
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		target.set_loc(owner.loc)
 		if (!ON_COOLDOWN(owner, "crusher_sound", rand(0.5, 2.5) SECONDS))
 			playsound(owner, 'sound/items/mining_drill.ogg', 40, 1,0,0.8)
 
 		if(ismob(target))
 			var/mob/M = target
+			target.set_loc(owner.loc)
 			random_brute_damage(M, rand(5, 10), TRUE)
 			take_bleeding_damage(M, null, 10, DAMAGE_CRUSH)
 			playsound(M, pick("sound/impact_sounds/Flesh_Stab_1.ogg","sound/impact_sounds/Metal_Clang_1.ogg","sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Flesh_Tear_2.ogg","sound/impact_sounds/Slimy_Hit_3.ogg"), 66)
