@@ -1030,7 +1030,7 @@ obj/decoration/ceilingfan
 /obj/item/gun/laser_pistol/prototype
 	name = "prototype laser pistol"
 	icon = 'icons/obj/decoration.dmi'
-	desc = "You've never heard of this pistol before...who made it?"
+	desc = "You've never heard of this pistol before... who made it?"
 	icon_state = "e_laser_pistol"
 
 //stolen code for anchorable and movable target sheets. cannot get projectile tracking on them to work right now so. oh well. help appreciated!
