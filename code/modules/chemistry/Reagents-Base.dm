@@ -155,7 +155,7 @@ datum
 				if (isliving(M))
 					var/mob/living/H = M
 					if(H?.reagents.has_reagent("moonshine"))
-						mult *= 3
+						mult *= 7
 					var/ethanol_amt = holder.get_reagent_amount(src.id)
 					var/liver_damage = 0
 					if (!isalcoholresistant(H) || H?.reagents.has_reagent("moonshine"))
