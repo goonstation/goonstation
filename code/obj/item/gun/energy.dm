@@ -1668,7 +1668,7 @@
 /obj/item/gun/energy/raygun
 	name = "Experimental Ray Gun"
 	icon_state = "raygun"
-	desc = "A weapon that looks vaugely like a cheap toy and definitely unsafe."
+	desc = "A weapon that looks vaguely like a cheap toy and is definitely unsafe."
 	item_state = "raygun"
 	force = 5.0
 	can_dual_wield = 0
