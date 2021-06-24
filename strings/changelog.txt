@@ -1,4 +1,12 @@
 
+(t)wed jun 23 21
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Crusher now has an actionbar
+(u)Walpvrgis
+(p)5155
+(e)🆕🎨|feature, sprites
+(+)Two new backpacks are now able to be purchased from Geoff Honkington; one is a teddy bear and one is Bread.
 (t)tue jun 22 21
 (u)Sovexe
 (p)5246

@@ -2169,6 +2169,24 @@
 	comtype = /obj/item/storage/box/costume/mime/alt
 	desc = "This stuff will give you an edge in charades."
 
+/datum/commodity/backpack/breadpack
+	comname = "Bag-uette"
+	comtype = /obj/item/storage/backpack/breadpack
+	desc = "A bread-themed backpack...? It kind of smells like bread too! Unfortunately inedible."
+	price = 600
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
+/datum/commodity/backpack/bearpack
+	comname = "Bearpack"
+	comtype = /obj/item/storage/backpack/bearpack
+	desc = "A teddy bear backpack; perfect for hugs AND carries your gear for you, how helpful!"
+	price = 500
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
 /datum/commodity/balloons //no it ain't a costume kit but it's going in Geoff's wares so idgaf tOt fite me
 	comname = "box of balloons"
 	comtype = /obj/item/storage/box/balloonbox
