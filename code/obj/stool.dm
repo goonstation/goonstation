@@ -284,7 +284,7 @@
 		scoot_sounds = list( 'sound/misc/chair/office/scoot1.ogg', 'sound/misc/chair/office/scoot2.ogg', 'sound/misc/chair/office/scoot3.ogg', 'sound/misc/chair/office/scoot4.ogg', 'sound/misc/chair/office/scoot5.ogg' )
 
 	Move()
-		if(src.buckled_guy.loc != src.loc)
+		if(src.buckled_guy?.loc != src.loc)
 			src.unbuckle()
 		. = ..()
 		if (. && src.buckled_guy)
@@ -325,6 +325,9 @@
 
 		if (!ticker)
 			user.show_text("You can't buckle anyone in before the game starts.", "red")
+			return 0
+		if (C.buckled)
+			boutput(user, "They're already buckled into something!", "red")
 			return 0
 		if (src.security)
 			user.show_text("There's nothing you can buckle them to!", "red")
@@ -674,6 +677,9 @@
 		if (!ticker)
 			boutput(user, "You can't buckle anyone in before the game starts.")
 			return 0
+		if (M.buckled)
+			boutput(user, "They're already buckled into something!", "red")
+			return 0
 		if (!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || !isalive(user))
 			return 0
 		if(src.buckled_guy && src.buckled_guy.buckled == src && src.buckled_guy != M)
@@ -896,10 +902,13 @@
 		return
 
 /obj/item/chair/folded/attack(atom/target, mob/user as mob)
+	var/oldcrit = src.stamina_crit_chance
+	if(iswrestler(user))
+		src.stamina_crit_chance = 100
 	if (ishuman(target))
-		//M.TakeDamage("chest", 5, 0) //what???? we have 'force' var
 		playsound(src.loc, pick(sounds_punch), 100, 1)
 	..()
+	src.stamina_crit_chance = oldcrit
 
 /* ====================================================== */
 /* -------------------- Comfy Chairs -------------------- */

@@ -407,7 +407,7 @@
 		name = "whoopie pie"
 		desc = "A confection infamous for being especially terrible for you, in a culture noted for having nothing but foods that are terrible for you."
 		icon_state = "moonpie-chocolate"
-		heal_amt = 250 //oh jesus
+		heal_amt = 25 //oh jesus
 		food_effects = list("food_refreshed_big")
 
 	spooky

@@ -901,7 +901,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "ace" = (
@@ -3127,7 +3127,7 @@
 "ahf" = (
 /obj/table/wood/auto,
 /obj/item/wrench,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /turf/simulated/grimycarpet,
 /area/space)
 "ahg" = (
@@ -13157,7 +13157,7 @@
 /obj/item/storage/firstaid,
 /obj/item/storage/firstaid,
 /obj/item/storage/firstaid,
-/obj/item/paper/book/minerals,
+/obj/item/paper/book/from_file/minerals,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "aEj" = (
@@ -13533,7 +13533,7 @@
 /area/space)
 "aFm" = (
 /obj/machinery/manufacturer/mining,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "aFn" = (
@@ -16975,7 +16975,7 @@
 	icon_state = "security";
 	dir = 4
 	},
-/obj/item/paper/book/space_law,
+/obj/item/paper/book/from_file/space_law,
 /turf/simulated/floor,
 /area/station/security/main)
 "aNL" = (
@@ -28401,7 +28401,7 @@
 /area/station/medical/medbay/surgery)
 "boi" = (
 /obj/machinery/computer3/generic/med_data,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "boj" = (
@@ -31891,7 +31891,7 @@
 /area/station/science/artifact)
 "bvU" = (
 /obj/machinery/computer3/terminal/zeta,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/cable{
@@ -32427,7 +32427,7 @@
 /obj/item/storage/box/diskbox,
 /obj/item/storage/box/tapebox,
 /obj/item/disk/data/tape/master/readonly,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/item/device/multitool,
 /obj/item/disk/data/tape{
 	layer = 3.5;
@@ -35146,7 +35146,7 @@
 	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
 	name = "note from mom"
 	},
-/obj/item/paper/book/critter_compendium,
+/obj/item/paper/book/from_file/critter_compendium,
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "slg" = (

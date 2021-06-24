@@ -264,8 +264,21 @@ var/global/list/playersSeen = list()
 
 		if (!mobRef)
 			data["ckey"] = input(usr, "Ckey (lowercase, only alphanumeric, no spaces, leave blank to skip)", "Ban") as null|text
-			data["compID"] = input(usr, "Computer ID (leave blank to skip)", "Ban") as null|text
-			data["ip"] = input(usr, "IP Address (leave blank to skip)", "Ban") as null|text
+			var/auto = alert("Attempt to autofill IP and compID with most recent?","Autofill?","Yes","No")
+			if (auto == "No")
+				data["compID"] = input(usr, "Computer ID", "Ban") as null|text
+				data["ip"] = input(usr, "IP Address", "Ban") as null|text
+			else if (data["ckey"])
+				var/list/response
+				try
+					response = apiHandler.queryAPI("playerInfo/get", list("ckey" = data["ckey"]), forceResponse = 1)
+				catch ()
+					boutput(usr, "<span class='alert'>Failed to query API, try again later.</span>")
+					return
+				if (text2num(response["seen"]) < 1)
+					boutput(usr, "<span class='alert'>No data found for target, IP and/or compID will be left blank.</span>")
+				data["ip"] = response["last_ip"]
+				data["compID"] = response["last_compID"]
 		else
 			data["ckey"] = M.ckey
 			data["compID"] = M.computer_id

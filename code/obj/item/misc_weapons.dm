@@ -1193,6 +1193,7 @@
 	desc = "It can clean a bloodied katana, and also allows for easier storage of a katana"
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "katana_sheathed"
+	wear_layer = MOB_SHEATH_LAYER
 	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "sheathedhand"
@@ -1313,7 +1314,7 @@
 		ih_sheath_state = "blue_scabbard-cap0"
 		sword_path = /obj/item/katana/captain/blue
 
-	red //not used yet but should be used if a medal is ever made for the red cap stuff
+	red //for brown pants medal reward
 		icon_state = "red_cap_sword_scabbard"
 		item_state = "red_scabbard-cap1"
 
@@ -1454,7 +1455,7 @@ obj/item/whetstone
 /obj/item/heavy_power_sword
 	name = "Hadar heavy power-sword"
 	desc = "A heavy cyalume saber variant, builds generator charge when used in combat & supports multiple attack types."
-	icon = 'icons/obj/64x32.dmi'
+	icon = 'icons/obj/large/64x32.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	wear_image_icon = 'icons/mob/back.dmi'
 	icon_state = "hadar_sword2"

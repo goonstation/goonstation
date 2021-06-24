@@ -764,10 +764,6 @@ proc/find_ghost_by_key(var/find_key)
 				src.diskette = null
 				. = TRUE
 		if("load")
-			if (src.diskette.read_only)
-				// The file needs to be deleted from the disk after loading the record
-				show_message("Load error - cannot transfer clone records from a disk in read only mode.", "warning")
-				. = TRUE
 
 			var/loaded = 0
 
@@ -778,7 +774,10 @@ proc/find_ghost_by_key(var/find_key)
 					src.records += R
 					loaded++
 					show_message("Load successful, [loaded] [loaded > 1 ? "records" : "record"] transferred.", "success")
+					var/read_only = src.diskette.read_only
+					src.diskette.read_only = 0
 					src.diskette.root.remove_file(cloneRecord)
+					src.diskette.read_only = read_only
 					. = TRUE
 
 			if(!loaded)

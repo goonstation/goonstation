@@ -76,14 +76,17 @@
 		.buttons a:hover {
 			background: #6BC7E8;
 		}
-		.gps {
+		.buttons.gps a {
+			display: block;
+			width: calc(100% - 7px);
+  			text-transform: none;
 			border-top: 1px solid #58B4DC;
 			background: #21272C;
 			padding: 3px;
 			margin: 0 0 1px 0;
 			font-size: 11px;
 		}
-		.gps.distress {
+		.buttons.gps.distress a {
 			border-top: 2px solid #BE3737;
 			background: #2C2121;
 		}
@@ -112,9 +115,10 @@
 				var/turf/T = get_turf(G.loc)
 				if (!T)
 					continue
-				HTML += "<div class='gps [G.distress ? "distress" : ""]'><span><b>[G.serial]-[G.identifier]</b>"
-				HTML += "<span style='font-size:85%;float: right'>[G.distress ? "<font color=\"red\">(DISTRESS)</font>" : "<font color=666666>(DISTRESS)</font>"]</span>"
-				HTML += "<br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></div>"
+				var/name = "[G.serial]-[G.identifier]"
+				HTML += "<div class='buttons gps [G.distress ? "distress" : ""]'><A href='byond://?src=\ref[src];dest_cords=1;x=[T.x];y=[T.y];z=[T.z];name=[name]'><span><b>[name]</b>"
+				HTML += "<span style='font-size:85%;float:right'>[G.distress ? "<font color=\"red\">(DISTRESS)</font>" : "<font color=666666>(DISTRESS)</font>"]</span><br>"
+				HTML += "Located at: [T.x], [T.y]<span style='float:right'>[src.get_z_info(T)]</span></span></A></div>"
 
 		HTML += "<div class='gps group'><b>Tracking Implants</b></div>"
 		for_by_tcl(imp, /obj/item/implant/tracking)
@@ -123,14 +127,13 @@
 				var/turf/T = get_turf(imp.loc)
 				if (!T)
 					continue
-				HTML += "<div class='gps'><span><b>[imp.loc.name]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></div>"
+				HTML += "<div class='buttons gps'><A href='byond://?src=\ref[src];dest_cords=1;x=[T.x];y=[T.y];z=[T.z];name=[imp.loc.name]'><span><b>[imp.loc.name]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></A></div>"
 		HTML += "<hr>"
 
 		HTML += "<div class='gps group'><b>Beacons</b></div>"
-		for (var/obj/machinery/beacon/B as anything in machine_registry[MACHINES_BEACONS])
-			if (B.enabled == 1)
-				var/turf/T = get_turf(B.loc)
-				HTML += "<div class='gps'><span><b>[B.sname]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></div>"
+		for (var/obj/B in by_type[/obj/warp_beacon])
+			var/turf/T = get_turf(B.loc)
+			HTML += "<div class='buttons gps'><A href='byond://?src=\ref[src];dest_cords=1;x=[T.x];y=[T.y];z=[T.z];name=[B.name]'><span><b>[B.name]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></A></div>"
 		HTML += "<br></div>"
 
 		user.Browse(HTML, "window=gps_[src];title=GPS;size=400x540;override_setting=1")
@@ -235,7 +238,7 @@
 			//Set located turf to be the tracking_target
 			if (isturf(T))
 				src.tracking_target = T
-				boutput(usr, "<span class='notice'>Now tracking: <b>X</b>: [T.x], <b>Y</b>: [T.y]</span>")
+				boutput(usr, "<span class='notice'>Now tracking: <b>[href_list["name"]]</b> at <b>X</b>: [T.x], <b>Y</b>: [T.y]</span>")
 
 				begin_tracking()
 			else
@@ -249,7 +252,7 @@
 				return
 			active = 1
 			process()
-			boutput(usr, "<span class='notice'>You activate the gps</span>")
+			boutput(usr, "<span class='notice'>You activate the gps.</span>")
 
 	proc/send_distress_signal(distress)
 		var/distressAlert = distress ? "help" : "clear"
@@ -340,32 +343,3 @@
 			pingsignal.transmission_method = TRANSMISSION_RADIO
 
 			radio_control.post_signal(src, pingsignal)
-
-// coordinate beacons. pretty useless but whatever you never know
-
-/obj/machinery/beacon
-	name = "coordinate beacon"
-	desc = "A coordinate beacon used for space GPSes."
-	icon = 'icons/obj/ship.dmi'
-	icon_state = "beacon"
-	machine_registry_idx = MACHINES_BEACONS
-	var/sname = "unidentified"
-	var/enabled = 1
-
-	process()
-		if(enabled == 1)
-			use_power(50)
-
-	attack_hand()
-		enabled = !enabled
-		boutput(usr, "<span class='notice'>You switch the beacon [src.enabled ? "on" : "off"].</span>")
-
-	attack_ai(mob/user as mob)
-		var/t = input(user, "Enter new beacon identification name", src.sname) as null|text
-		if (isnull(t))
-			return
-		t = strip_html(replacetext(t, "'",""))
-		t = copytext(t, 1, 45)
-		if (!t)
-			return
-		src.sname = t

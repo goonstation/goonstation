@@ -721,6 +721,7 @@ that cannot be itched
 		T.issuer_byond_key = user.key
 		data_core.tickets += T
 
+		logTheThing("admin", user, null, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
 		playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
 		SPAWN_DBG(3 SECONDS)
 			var/obj/item/paper/p = unpool(/obj/item/paper)

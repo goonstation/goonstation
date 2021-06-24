@@ -100,8 +100,8 @@
 		src.addAbility(/datum/targetable/zoldorfAbility/color)
 
 		the_zoldorf = list()
-
-		src << browse(grabResource("html/traitorTips/souldorfTips.htm"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+		spawn(0)
+			src << browse(grabResource("html/traitorTips/souldorfTips.htm"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
 
 	Login()
 		..()

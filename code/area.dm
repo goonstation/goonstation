@@ -1317,6 +1317,10 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Bee Sanctuary"
 	icon_state = "purple"
 
+area/prefab/torpedo_deposit
+	name = "Torpedo Deposit"
+	icon_state = "purple"
+
 // zewaka - vspace areas //
 ABSTRACT_TYPE(/area/sim)
 /area/sim

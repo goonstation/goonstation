@@ -66,7 +66,7 @@
 		boutput(usr, "[ship.ship_message("No sensors detected! Unable to calculate warp trajectory!")]")
 		return
 
-	//brake the pod, we must stop to calculate warp trajectory. 
+	//brake the pod, we must stop to calculate warp trajectory.
 	if (istype(ship.movement_controller, /datum/movement_controller/pod))
 		var/datum/movement_controller/pod/MCP = ship.movement_controller
 		if (MCP.velocity_x != 0 || MCP.velocity_y != 0)
@@ -82,15 +82,15 @@
 
 
 	var/list/beacons = list()
-	//This is bad and dumb. I should turn the warp_beacons list into a manager datum, but this is already taking too long. -kyle
+	//This is bad and dumb. I should turn the by_type[/obj/warp_beacon] list into a manager datum, but this is already taking too long. -kyle
 	//I realize the possiblity of a bug where if you sit here ready to warp when it's about to change and then warp, but whatever
 #if defined(MAP_OVERRIDE_POD_WARS)
 	var/pilot_team = get_pod_wars_team_num(ship?.pilot)
-	for(var/obj/warp_beacon/pod_wars/W in warp_beacons)
-		if (W.current_owner == pilot_team) 
+	for(var/obj/warp_beacon/pod_wars/W in by_type[/obj/warp_beacon])
+		if (W.current_owner == pilot_team)
 			beacons += W
 #else
-	for(var/obj/warp_beacon/W in warp_beacons)
+	for(var/obj/warp_beacon/W in by_type[/obj/warp_beacon])
 		beacons += W
 #endif
 	for (var/obj/machinery/tripod/T in machine_registry[MACHINES_MISC])

@@ -67,7 +67,7 @@
 
 					map.DrawBox(map_colors[turf_color], x * 2, y * 2, x * 2 + 1, y * 2 + 1)
 
-			for (var/beacon in warp_beacons)
+			for (var/beacon in by_type[/obj/warp_beacon])
 				if (istype(beacon, /obj/warp_beacon/miningasteroidbelt))
 					var/turf/T = get_turf(beacon)
 					map.DrawBox(map_colors["station"], T.x * 2 - 2, T.y * 2 - 2, T.x * 2 + 2, T.y * 2 + 2)
@@ -582,6 +582,17 @@
 		processing_items -= src
 		..()
 
+	afterattack(var/turf/T, var/mob/user)
+		if (istype(T) && !T.density)
+			processing_items |= src
+
+			user.drop_item()
+			src.set_loc(T)
+			src.deploy()
+
+			return
+		..()
+
 
 	proc/deploy()
 		processing_items |= src
@@ -605,18 +616,6 @@
 		H.attack_hand(user)
 
 /turf/space/fluid/attackby(var/obj/item/W, var/mob/user)
-	if (istype(W,/obj/item/heat_dowsing))
-		processing_items |= W
-
-		var/obj/item/heat_dowsing/H = W
-
-		user.drop_item()
-		W.set_loc(src)
-
-		H.deploy()
-
-		return
-
 	if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))
 		actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
 		return
@@ -716,7 +715,7 @@
 /obj/machinery/power/vent_capture
 	name = "vent capture unit"
 	desc = "A piece of machinery that converts vent output into electricity."
-	icon = 'icons/obj/32x48.dmi'
+	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "hydrovent_1"
 	density = 1
 	anchored = 1
@@ -825,7 +824,7 @@
 /obj/machinery/power/stomper
 	name = "stomper unit"
 	desc = "This machine is used to disturb the flow of underground magma and redirect it."
-	icon = 'icons/obj/32x48.dmi'
+	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "stomper0"
 	density = 1
 	anchored = 0

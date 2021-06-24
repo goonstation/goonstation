@@ -210,6 +210,12 @@
 
 	src.canInterdict = 1
 	playsound(src.loc, src.sound_interdict_on, 40, 0)
+	SPAWN_DBG(rand(30,40)) //after it's been on for a little bit, check for tears
+		if(src.canInterdict)
+			for (var/obj/forcefield/event/tear in by_type[/obj/forcefield/event])
+				SPAWN_DBG(rand(8,22)) //stagger stabilizations, since it's getting stabilized post-formation
+					if (!tear.stabilized && IN_RANGE(src,tear,src.interdict_range) && src.expend_interdict(800))
+						tear.stabilize()
 	src.updateicon()
 
 
@@ -236,109 +242,6 @@
 
 
 //assembly zone
-
-//interdictor guide: how to make it and use it
-//engineering should start with one of these
-//adjacent to the rod/frame blueprint and the mainboards
-
-/obj/item/paper/book/interdictor
-	name = "Spatial Interdictor Assembly and Use, 3rd Edition"
-	icon_state = "engiguide"
-	info = {"<h1>SPATIAL INTERDICTOR ASSEMBLY AND USE</h1>
-	<p><i>3rd Edition - Compiled for Nanotrasen by Servin Underwriting, LTD - (C) 2049 All Rights Reserved</i></p>
-	<h2>PLEASE READ CAREFULLY</h2>
-	<br>
-	Congratulations on your recent acquisition or allocation of cutting-edge interdiction technology!
-	<br>
-	<br>
-	Using the power of yottahertz-range electromagnetic counter-interference, the Spatial Interdictor provides robust protection against a wide array of stellar phenomena:
-	<br>
-	<br>
-	Biomagnetic fields nulled on discharge
-	<br>
-	Black holes semi-stabilized, increasing time to respond**
-	<br>
-	Radiation pulses safely remodulated within field range
-	<br>
-	Radiation storms interdicted on a per-individual basis*
-	<br>
-	Solar flare disruptions reduced per onboard interdictor
-	<br>
-	Spatial tears stabilized, permitting limited traversal**
-	<br>
-	Unstable wormholes nulled when entry is attempted
-	<br>
-	<br>
-	<i>*ADVISORY: heavy interdiction cost. Multiple interdictors or powerful cell recommended for crowds.</i>
-	<br>
-	<i>**WARNING: total interdiction impossible, and device must be active beforehand.</i>
-	<br>
-	<br>
-	In just a few short steps, worrying about the myriad hazards of space will be a thing of the past!^
-	<br>
-	<br>
-	<i>^Please be aware that no liability is assumed for failure to interdict any events absent from or present within the aforementioned list. Physical hazards such as meteor storms will not be interdicted.</i>
-	<br>
-	<br>
-	<hr>
-	<h3>ASSEMBLING THE DEVICE</h3>
-	<br>
-	(I) Assemble the frame kit and phase-control rod at any manufacturer using the blueprints included with your Spatial Interdictor Starter Kit. Materials not provided.
-	<br>
-	Phase control rods may be manufactured in Lambda or Sigma configurations. Lambda rods cover a three-unit radius, while the advanced but more materially complex Sigma rods cover a seven-unit radius.
-	<br>
-	<i>Use of non-standard phase-control rods is not supported in this guide. Please consult a Nanotrasen certified engineer for a custom interdiction solution, including appropriate power cell.</i>
-	<br>
-	<br>
-	(II) Gather the following equipment before assembly:
-	<br>
-	- Interdictor frame kit
-	<br>
-	- Interdictor mainboard
-	<br>
-	- Interdictor phase-control rod
-	<br>
-	- Industry-compliant power cell (high-capacity heavily recommended, as installation is permanent)
-	<br>
-	- Four lengths of industry-compliant electrical cable
-	<br>
-	- Soldering iron
-	<br>
-	- Four sheets of industry-compliant steel
-	<br>
-	<br>
-	(III) Assemble objects in the sequence they are listed in the enumeration. Once assembled, the device may be transported to the site of utilisation to be connected and activated.
-	<br>
-	<br>
-	<hr>
-	<h3>USING THE DEVICE</h3>
-	<br>
-	Due to the advanced technologies incorporated into the Spatial Interdictor's mainboard, it will automatically begin operating when conditions are suitable.
-	<br>
-	<br>
-	Suitable conditions are: Adequate internal cell charge, direct link to an electrical grid cable, active magnetic anchoring.
-	<br>
-	<br>
-	To activate magnetic anchoring, simply touch the control pad located on the front side of the rectangular regulator unit.
-	<br>
-	<br>
-	For safety purposes, activating or deactivating magnetic anchoring requires the user to possess an identification card with at least base-level Engineering access.
-	<br>
-	<br>
-	The Spatial Interdictor is equipped with three distinct indicators, each representing a different aspect of its functionality:
-	<br>
-	<br>
-	- The charge meter, located on the side of the interdiction pillar. This represents the current capacity of the buffer cell, and <b>must be full for interdiction to begin.</b>
-	<br>
-	<br>
-	- The interdiction emitter, located on the top of the interdiction pillar. While illuminated, the Interdictor is currently active and protecting its surroundings.
-	<br>
-	<br>
-	- The grid-tie indicator, located on the front of the regulator unit. Illumination means the Interdictor is correctly installed, and able to charge, or activate if charged.
-	<br>
-	<hr>
-	<p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base. Thank you for your service to Nanotrasen.</i></p>
-	"}
 
 //interdictor rod: the doohickey that lets the interdictor do its thing
 //the blueprint to create this should be in engineering along with guide, frame blueprint and mainboards

@@ -12,9 +12,6 @@
  * To not affect requirements, this should be null.
  */
 /obj/var/req_access_txt = null
-/obj/New()
-	..()
-	src.update_access_from_txt()
 /*
  * Override all access requirements if user is an administrator
  */
