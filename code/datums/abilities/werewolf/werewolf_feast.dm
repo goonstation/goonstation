@@ -100,7 +100,7 @@
 			times_attacked += 1
 
 		if (HH.decomp_stage <= 2 && !(isnpcmonkey(HH)) && (times_attacked >= 7)) // Can't farm npc monkeys.
-			src.do_we_get_points = 1
+			src.do_we_get_points = TRUE
 
 	onEnd()
 		..()
