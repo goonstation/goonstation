@@ -28,7 +28,7 @@
 
 		if (istype(M.loc,/turf))
 			playsound(M.loc, "sound/voice/animal/werewolf_attack2.ogg", 50, 1, 0, 1.4)
-			playsound(M.loc, 'sound/effects/swoosh.ogg', 50, 1)
+			playsound(M.loc, "sound/effects/swoosh.ogg", 50, 1)
 
 			var/prevLayer = M.layer
 			M.layer = EFFECTS_LAYER_BASE
