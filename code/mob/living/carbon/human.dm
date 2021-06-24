@@ -2561,7 +2561,13 @@
 			src.handcuffs.destroy_handcuffs(src)
 		else
 			src.last_resist = world.time + 100
-			var/calcTime = src.handcuffs.material ? max((src.handcuffs.material.getProperty("hard") + src.handcuffs.material.getProperty("density")) * 10, 200) : (istype(src.handcuffs, /obj/item/handcuffs/guardbot) ? rand(150, 180) : (src.canmove ? rand(400,500) : rand(600,750)))
+			var/calcTime
+			if (src.handcuffs.material)
+				calcTime = clamp((src.handcuffs.material.getProperty("hard") + src.handcuffs.material.getProperty("density")) SECONDS, 20 SECONDS, 50 SECONDS)
+			else
+				calcTime = istype(src.handcuffs, /obj/item/handcuffs/guardbot) ? rand(15 SECONDS, 18 SECONDS) : rand(40 SECONDS, 50 SECONDS)
+			if (!src.canmove)
+				calcTime *= 1.5
 			boutput(src, "<span class='alert'>You attempt to remove your handcuffs. (This will take around [round(calcTime / 10)] seconds and you need to stand still)</span>")
 			if (src.handcuffs:material) //This is a bit hacky.
 				src.handcuffs:material:triggerOnAttacked(src.handcuffs, src, src, src.handcuffs)
