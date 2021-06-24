@@ -9,6 +9,7 @@
 	var/obj/artemis/ship = null
 	var/datum/hud/flight_computer/myhud = null
 	var/list/datum/hud/human/stored_huds = list()
+	processing_tier = PROCESSING_HALF
 
 	New()
 		..()
@@ -88,6 +89,7 @@
 
 		if(do_set_loc)
 			src.occupant.set_loc(src.loc)
+			return
 
 		ship.remove_arrows(src.occupant)
 		ship.remove_nav_arrow(src.occupant)
@@ -113,6 +115,9 @@
 	process()
 		if(!(src.occupant in src))
 			src.go_out(0)
+
+		if(src.occupant)
+			myhud.update()
 		return
 
 	done()
@@ -124,6 +129,7 @@
 	cooldown = 0
 	targeted = 1
 	target_anything = 1
+	check_range = FALSE // Targeting based off of mob click
 	max_range = 3000
 	var/obj/machinery/sim/vr_bed/flight_chair/my_chair = null
 	var/obj/artemis/my_ship = null

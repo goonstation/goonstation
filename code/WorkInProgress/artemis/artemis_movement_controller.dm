@@ -18,7 +18,7 @@
 		if (is_incapacitated(user))
 			return
 
-		if(ship.control_lock)
+		if(ship.control_lock && keys)
 			user.show_message("<span class='alert'>The controls are locked!</span>")
 			return
 

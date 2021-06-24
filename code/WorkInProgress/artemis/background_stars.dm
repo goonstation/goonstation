@@ -169,8 +169,10 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 /obj/landmark/ship_marker
 	var/ship_id = "artemis"
 	var/num_stars = 200
+	name_override = LANDMARK_SHIPS
 
 	New()
+		src.data = src.ship_id
 		var/obj/background_star/S = null
 		for(var/i=0,i<num_stars,i++)
 			S = new/obj/background_star()

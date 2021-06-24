@@ -4,11 +4,15 @@ var/global/datum/galaxy/GALAXY = new
 
 /datum/galaxy
 	var/list/bodies = list()
+	var/list/available_planets = list("planet1", "planet2", "planet3", "planet4")
 
 	New()
 		..()
 		src.bodies += new/datum/galactic_object/test()
 		src.bodies += new/datum/galactic_object/eyesenhower()
+		src.bodies += new/datum/galactic_object/random(src)
+		src.bodies += new/datum/galactic_object/random(src)
+		src.bodies += new/datum/galactic_object/random(src)
 
 /datum/galactic_object
 	var/name
@@ -71,7 +75,7 @@ var/global/datum/galaxy/GALAXY = new
 
 		return map_body
 
-	proc/load_ship_body(var/obj/artemis/ship,var/obj/background_star/galactic_object/G)
+	proc/load_ship_body(var/obj/artemis/ship, var/obj/background_star/galactic_object/G)
 
 		if(!body_path_ship)
 			return
@@ -116,7 +120,7 @@ var/global/datum/galaxy/GALAXY = new
 	name = "TEST OBJECT"
 	icon = 'icons/misc/galactic_objects.dmi'
 	icon_state = "generic"
-	var/obj/landmark/destination_landmark/landing_zone = null
+	var/turf/landing_zone = null
 	var/destination_name = null
 	var/has_ship_body = 0
 	var/obj/background_star/galactic_object/my_ship_body = null
@@ -131,9 +135,9 @@ var/global/datum/galaxy/GALAXY = new
 		..()
 		if(src.destination_name)
 			SPAWN_DBG(1 SECOND)
-				for(var/obj/landmark/destination_landmark/D in world)
-					if(D.destination_name == src.destination_name)
-						src.landing_zone = D
+				for(var/turf/T in landmarks[LANDMARK_PLANETS])
+					if(landmarks[LANDMARK_PLANETS][T] == src.destination_name)
+						src.landing_zone = T
 						return
 
 	set_vars(var/theta, var/dist)
@@ -207,5 +211,10 @@ var/global/datum/galaxy/GALAXY = new
 
 /obj/landmark/destination_landmark
 	var/destination_name = null
+	name_override = LANDMARK_PLANETS
+
+	New()
+		src.data = src.destination_name
+		..()
 
 #endif

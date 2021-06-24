@@ -16,7 +16,7 @@
 	var/stars_id = "artemis"
 	var/list/obj/background_star/my_stars = list()
 	var/list/obj/background_star/galactic_object/my_galactic_objects = list() // stores nearby galactic objects and references to their tracking images
-	var/obj/landmark/ship_marker/ship_marker
+	var/turf/ship_marker
 
 	var/mob/my_pilot = null
 
@@ -134,9 +134,9 @@
 		return controller
 
 	proc/link_landmark()
-		for(var/obj/landmark/ship_marker/L in world)
-			if(L.ship_id == src.stars_id)
-				src.ship_marker = L
+		for(var/turf/T in landmarks[LANDMARK_SHIPS])
+			if(landmarks[LANDMARK_SHIPS][T] == src.stars_id)
+				src.ship_marker = T
 
 	proc/engine_check()
 		return 1
@@ -235,7 +235,7 @@
 	proc/load_body(var/datum/galactic_object/G, var/force_tracking_update = 0)
 		if(!(src in G.nearby_ships))
 			var/obj/background_star/galactic_object/map_body = G.load_map_body(src)
-			my_galactic_objects += map_body
+			src.my_galactic_objects += map_body
 
 			if(navigating && (G == src.navigation_target))
 				src.navigating = 0

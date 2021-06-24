@@ -103,7 +103,14 @@
 			if (M.loc != master)
 				remove_client(C)
 
-	proc/clicked(id, mob/user, list/params)
+	proc/update()
+		var/tele_locked = FALSE
+		for(var/obj/background_star/galactic_object/G in src.master.ship.my_galactic_objects)
+			if(G.has_ship_body && G.my_ship_body?.landing_zone)
+				tele_locked = TRUE
+		src.tele_ok.icon_state = "lrt-[tele_locked ? "ok" : "nok"]"
+
+	relay_click(id, mob/user, list/params)
 		if (user.loc != master)
 			boutput(user, "<span class='alert'>You're not in the pod doofus. (Call 1-800-CODER.)</span>")
 			remove_client(user.client)

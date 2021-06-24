@@ -1,4 +1,74 @@
 #ifdef ENABLE_ARTEMIS
+/datum/galactic_object/random
+	name = "Randomized Planet"
+	body_path_map = /obj/background_star/galactic_object/random
+	body_path_ship = /obj/background_star/galactic_object/large/random
+	sector = "A"
+	navigable = 1
+	var/color = null
+	var/scale = 1
+	var/destination_name = null
+	var/icon_state = null
+
+	New(datum/galaxy/G)
+		galactic_x = rand()*2+1 //19?
+		galactic_y = rand()*2+1 //19?
+		scale = rand()*0.5+ 0.75
+		color = pick("#fffb00", "#FF5D06", "#009ae7", "#03c53d", "#9b59b6", "#272e30", "#FF69B4", "#633221", "#ffffff")
+		icon_state = weighted_pick(list("planet_1"=10,"planet_2"=3,"planet_3"=2))
+
+		if(G)
+			destination_name = pick(G.available_planets)
+			G.available_planets -= destination_name
+		generate_name()
+		..()
+
+	proc/generate_name()
+		if (prob(50))
+			name = pick_string("station_name.txt", "greek")
+		else
+			name = pick_string("station_name.txt", "militaryLetters")
+		name += " "
+
+		if (prob(30))
+			name += pick_string("station_name.txt", "romanNum")
+		else name += "[rand(2, 99)]"
+
+/obj/background_star/galactic_object/random
+	name = "F1X-M3"
+	icon = 'icons/misc/artemis/galactic_object_map.dmi'
+	icon_state = "planet_1"
+
+	New()
+		..()
+		flags |= HAS_ARTEMIS_SCAN
+
+	proc/artemis_scan(var/mob/pilot, var/obj/artemis/ship)
+		var/dat = {"<span class='alert'><b>DON'T <i>FUCKING</i> TOUCH ME.</b></span>"}
+
+		pilot << browse("<HEAD><TITLE>[name]</TITLE></HEAD><TT>[dat]</TT>", "window=artemis_scan")
+
+		return
+
+	on_load()
+		var/datum/galactic_object/random/R = master
+		color = R.color
+		name = R.name
+		transform = src.transform.Scale(R.scale)
+		icon_state = R.icon_state
+
+
+/obj/background_star/galactic_object/large/random
+	name = "F1X-M3"
+	icon = 'icons/misc/galactic_objects_large.dmi'
+	icon_state = "generic"
+	destination_name = "3rr0r"
+
+	on_load()
+		var/datum/galactic_object/random/R = master
+		destination_name = R.destination_name
+		name = R.name
+
 /datum/galactic_object/test
 	name = "F1X-M3"
 	body_path_map = /obj/background_star/galactic_object/test
