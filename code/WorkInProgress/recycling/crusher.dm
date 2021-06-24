@@ -26,7 +26,7 @@
 		actions.start(new /datum/action/bar/crusher(O), src)
 
 /datum/action/bar/crusher
-	duration = 10 SECONDS
+	duration = 12 SECONDS
 	interrupt_flags = INTERRUPT_MOVE
 	var/atom/movable/target
 	var/classic
