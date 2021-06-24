@@ -1765,7 +1765,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	New() //uses a special box of ammo that only starts with 2 shells to prevent issues with overloading
 		if(prob(25))
-			name = pick ("Bessie", "Mule", "Loud Louis", "Boomstick", "Coach Gun", "Shorty", "Sawn-off Shotgun", "Street Sweeper", "Street Howitzer", "Big Boy", "Slugger", "Closing Time", "Garbage Day", "Rooty Tooty Point and Shooty", "Twin 12 Gauge", "Master Blaster", "Ass Blaster", "Blunderbuss", "Dr. Bullous' Tunder-Clapper", "Super Shotgun", "Insurance Policy", "Last Call", "Super-Duper Shotgun")
+			name = pick ("Bessie", "Mule", "Loud Louis", "Boomstick", "Coach Gun", "Shorty", "Sawn-off Shotgun", "Street Sweeper", "Street Howitzer", "Big Boy", "Slugger", "Closing Time", "Garbage Day", "Rooty Tooty Point and Shooty", "Twin 12 Gauge", "Master Blaster", "Ass Blaster", "Blunderbuss", "Dr. Bullous' Thunder-Clapper", "Super Shotgun", "Insurance Policy", "Last Call", "Super-Duper Shotgun")
 
 		ammo = new/obj/item/ammo/bullets/abg/two
 		set_current_projectile(new/datum/projectile/bullet/abg)
@@ -1802,7 +1802,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	attackby(obj/item/b as obj, mob/user as mob)
 		if (istype(b, /obj/item/ammo/bullets) && src.broke_open == FALSE)
-			boutput(user, "<span class='alert'>You can't shove shells down the barrel! You'll have to open the [src] first!</span>")
+			boutput(user, "<span class='alert'>You can't load shells into the chambers! You'll have to open the [src] first!</span>")
 			return
 		..()
 
