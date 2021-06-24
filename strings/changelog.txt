@@ -1,5 +1,8 @@
 
 (t)wed jun 23 21
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Crusher now has a 5s actionbar
 (u)Walpvrgis
 (p)5155
 (e)🆕🎨|feature, sprites
