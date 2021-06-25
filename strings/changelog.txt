@@ -1,5 +1,17 @@
 
+(t)thu jun 24 21
+(u)zjdtmkhzt
+(p)5237
+(e)⚖🆕|balance, feature
+(+)Custom sandwiches now combine the healing and hunger restore of their ingredients.
+(u)Zonespace
+(p)5263
+(e)⚖⛔|balance, removal
+(*)Prison Loafers no longer have nugget mode.
 (t)wed jun 23 21
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Crusher now has an actionbar
 (u)Walpvrgis
 (p)5155
 (e)🆕🎨|feature, sprites
