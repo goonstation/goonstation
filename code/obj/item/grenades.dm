@@ -1189,8 +1189,9 @@ PIPE BOMBS + CONSTRUCTION
 				return
 
 			location.hotspot_expose(700, 125)
-
+			playsound(src.loc, pick(sounds_explosion), 75, 1)
 			explosion(src, location, src.expl_devas, src.expl_heavy, src.expl_light, src.expl_flash)
+			new /obj/effects/explosion (src.loc)
 
 			// Breaching charges should be, you know, actually be decent at breaching walls and windows (Convair880).
 			for (var/turf/simulated/wall/W in range(src.expl_range, location))
@@ -1271,7 +1272,7 @@ PIPE BOMBS + CONSTRUCTION
 				qdel(src)
 				return
 
-			playsound(location, "sound/effects/bamf.ogg", 50, 1)
+			playsound(location, "sound/effects/bamf.ogg", 100, 0.5)
 			src.invisibility = 101
 
 			for (var/turf/T in range(src.expl_range, location))
