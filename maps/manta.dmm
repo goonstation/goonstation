@@ -42047,6 +42047,9 @@
 /obj/item/device/radio/headset/command,
 /obj/item/pen/fancy,
 /obj/item/stamp,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "qBC" = (
@@ -43587,9 +43590,6 @@
 "ujF" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/field_generator,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
@@ -44546,6 +44546,15 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"wnn" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
 "wnp" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker,
@@ -45038,9 +45047,6 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "xyW" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/table/reinforced/auto,
 /obj/item/kitchen/food_box/donut_box{
 	pixel_y = 2
@@ -90831,7 +90837,7 @@ fwO
 aaU
 abr
 abr
-abr
+wnn
 bMG
 abd
 aPj
