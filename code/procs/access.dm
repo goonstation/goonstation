@@ -228,7 +228,7 @@
 						access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 						access_crematorium, access_kitchen, access_robotics, access_cargo,
 						access_research, access_dwaine_superuser, access_hydro, access_ranch, access_mail, access_ai_upload,
-						access_engineering, access_teleporter, access_engineering_engine, access_engineering_power,
+						access_engineering, access_teleporter, access_engineering_engine, access_engineering_power, access_engineering_control,
 						access_mining, access_pathology)
 #endif
 		if("Research Director")
@@ -273,7 +273,7 @@
 				access_research, access_engineering_atmos, access_hangar, access_ranch, access_pathology)
 #else
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_securitylockers, access_brig, access_maint_tunnels,
-			access_medical, access_morgue, access_crematorium, access_research, access_cargo, access_engineering,
+			access_medical, access_morgue, access_crematorium, access_research, access_cargo, access_engineering, access_engineering_control,
 			access_chemistry, access_bar, access_kitchen, access_hydro, access_pathology)
 #endif
 		if("Vice Officer")
