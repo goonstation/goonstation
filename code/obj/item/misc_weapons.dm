@@ -1542,7 +1542,7 @@ obj/item/whetstone
 	two_handed = 1
 	click_delay = 30
 
-	force = 25 //this number is multiplied by 4 when attacking doors.
+	force = 30 //this number is multiplied by 4 when attacking doors.
 	stamina_damage = 60
 	stamina_cost = 30
 

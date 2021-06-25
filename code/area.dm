@@ -1199,6 +1199,10 @@ ABSTRACT_TYPE(/area/prefab)
 	name ="Space Casino"
 	icon_state = "blue"
 
+/area/prefab/shooting_range
+	name = "Shooting Range"
+	icon_state = "purple"
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room

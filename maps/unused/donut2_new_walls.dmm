@@ -29966,10 +29966,10 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "bpX" = (
-/obj/disposalpipe/segment/mail,
 /obj/wingrille_spawn/auto,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/market)
+/area/station/hangar/arrivals)
 "bpY" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/storage)
@@ -41537,6 +41537,14 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"lIT" = (
+/obj/wingrille_spawn/auto,
+/obj/disposalpipe/segment/morgue{
+	dir = 4;
+	name = "crematorium pipe"
+	},
+/turf/simulated/floor/plating,
+/area/station/chapel/sanctuary)
 "lKq" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail,
@@ -43455,6 +43463,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "sih" = (
@@ -43746,6 +43758,17 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"sMh" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/detectives_office)
 "sMr" = (
 /obj/cable,
 /obj/cable{
@@ -71361,7 +71384,7 @@ bki
 bki
 boC
 bpo
-bpX
+bkj
 bqK
 bhm
 bhm
@@ -74617,7 +74640,7 @@ ath
 atK
 aur
 auV
-mNB
+bpX
 awo
 axX
 axT
@@ -82175,7 +82198,7 @@ awN
 awN
 awN
 awN
-aFi
+lIT
 aDs
 aEm
 aFi
@@ -85814,7 +85837,7 @@ aLt
 aMi
 tGI
 aNv
-eAZ
+sMh
 aNv
 aNv
 eAZ

@@ -184,7 +184,6 @@
 			if(src.custom_projectile_type)
 				PJ.spread_projectile_type = src.custom_projectile_type
 				PJ.pellet_shot_volume = 75 / PJ.pellets_to_fire
-			message_admins(initial(custom_projectile_type.power))
 			//if you're on top of it, eat all the shots. Deal 1/4 damage per shot. Doesn't make sense logically, but w/e.
 			var/mob/living/L = locate(/mob/living) in get_turf(src)
 			if (istype(L))
