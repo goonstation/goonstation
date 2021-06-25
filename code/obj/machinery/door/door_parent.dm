@@ -392,11 +392,11 @@
 			if(prob(25))
 				qdel(src)
 			else
-				take_damage(health_max/4)
+				take_damage(health_max/2)
 		if(3.0)
 			if(prob(80))
 				elecflash(src,power=2)
-			take_damage(health_max/12)
+			take_damage(health_max/6)
 
 /obj/machinery/door/proc/break_me_complitely()
 	set waitfor = 0
