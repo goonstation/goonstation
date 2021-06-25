@@ -220,11 +220,14 @@
 	var/turf/jump_target //where the mob will move to when they complete the jump!
 	var/is_athletic_jump //if the user has the athletic trait, and therefore does the BEEG HARDCORE PARKOUR YUMP
 	var/no_no_zone //if the user is trying to jump over railing onto somewhere they couldn't otherwise move through...
-	var/do_bunp = TRUE
+	var/do_bump = TRUE
 	var/use_owner_dir = FALSE
+	/// list of types exempt from bump checks when checking landing turf validity
+	var/list/collision_whitelist = list()
 
 	New(The_Owner, The_Railing, use_owner_dir = FALSE)
 		..()
+		collision_whitelist = typesof(/obj/railing, /obj/decal/stage_edge)
 		if (The_Owner)
 			owner = The_Owner
 			ownerMob = The_Owner
@@ -266,52 +269,51 @@
 
 	onEnd()
 		..()
-		if(do_bunp())
+		if(do_bump())
 			return
 		// otherwise, the user jumps over without issue!
 		sendOwner()
 
-	proc/do_bunp()
-		var/bunp //the name of the thing we have bunp'd into when trying to jump the railing
-		var/list/bunp_whitelist = list(/obj/railing, /obj/decal/stage_edge) // things that we cannot bunp into
-		if (jump_target.density)
-			bunp = jump_target.name
-			no_no_zone = 1
+	proc/do_bump()
+		/// obstacle blocking the destination turf
+		var/obj/obstacle = null
+		var/direction = get_dir(get_turf(owner), jump_target)
+
+		if (jump_target.density) // is it a wall?
+			obstacle = jump_target.name
 		else
-			for (var/obj/o in jump_target.contents)
-				for (var/i=1, i <= bunp_whitelist.len + 1, i++) //+1 so we can actually go past the whitelist len check
-					if (!(i > bunp_whitelist.len))
-						// if it's an exception to the bunp rule...
-						if (istype (o, bunp_whitelist[i]))
-							break
+			obstacle = check_turf_obstacles(jump_target) // is the dest blocked?
+			if (!obstacle && (direction in ordinal)) // dest was ok, if we are moving in an ordinal what about the corners?
+				var/turf/T1 = get_step(get_turf(owner), turn(direction, 45))
+				obstacle = check_turf_obstacles(T1)
+				if (obstacle) // T1 was blocked, but was T2 also blocked?
+					var/turf/T2 = get_step(get_turf(owner), turn(direction, -45))
+					obstacle = check_turf_obstacles(T2)
 
-					// don't proceed just yet if we aren't done going through the whitelist!
-					else if (i <= bunp_whitelist.len)
-						continue
 
-					// otherwise, if it's a dense thing...
-					else if (o.density)
-						bunp = o.name
-						no_no_zone = 1
-						break
-
-		if(no_no_zone)
+		if(obstacle) // did we end up ever bumping the dest or two corners?
 			// if they are a living mob, make them TASTE THE PAIN
 			if (istype(ownerMob, /mob/living))
 				if (!ownerMob.hasStatus("weakened"))
 					ownerMob.changeStatus("weakened", 4 SECONDS)
 					playsound(the_railing, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1, -1)
 					for(var/mob/O in AIviewers(ownerMob))
-						O.show_text("[ownerMob] tries to climb straight into \the [bunp].[prob(30) ? pick(" What a goof!!", " A silly [ownerMob.name].", " <b>HE HOO HE HA</b>", " Good thing [he_or_she(ownerMob)] didn't bump [his_or_her(ownerMob)] head!") : null]", "red")
-				// HE HE U BUNPED YOUR HEAD
+						O.show_text("[ownerMob] tries to climb straight into \the [obstacle].[prob(30) ? pick(" What a goof!!", " A silly [ownerMob.name].", " <b>HE HOO HE HA</b>", " Good thing [he_or_she(ownerMob)] didn't bump [his_or_her(ownerMob)] head!") : null]", "red")
+				// chance for additional head bump damage
 				if (prob(25))
 					ownerMob.changeStatus("weakened", 4 SECONDS)
 					ownerMob.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
 					playsound(the_railing, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, -1)
 					for(var/mob/O in AIviewers(ownerMob))
-						O.show_text("[ownerMob] bumps [his_or_her(ownerMob)] head on \the [bunp].[prob(30) ? pick(" Oof, that looked like it hurt!", " Is [he_or_she(ownerMob)] okay?", " Maybe that wasn't the wisest idea...", " Don't do that!") : null]", "red")
+						O.show_text("[ownerMob] bumps [his_or_her(ownerMob)] head on \the [obstacle].[prob(30) ? pick(" Oof, that looked like it hurt!", " Is [he_or_she(ownerMob)] okay?", " Maybe that wasn't the wisest idea...", " Don't do that!") : null]", "red")
 			return TRUE
 		return FALSE
+
+	proc/check_turf_obstacles(turf/T)
+		for (var/obj/O in T.contents)
+			if (!O.density) continue // don't care.
+			if (O.type in collision_whitelist) continue
+			return O
 
 	proc/sendOwner()
 		ownerMob.set_loc(jump_target)
