@@ -1,5 +1,9 @@
 
 (t)fri jun 25 21
+(u)Azrun
+(p)5244
+(e)⚖🐛|balance, bug
+(+)Reduced power output from solar panels.
 (u)Arthur Holiday
 (p)5265
 (e)⚖🐛|balance, bug
