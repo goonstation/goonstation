@@ -1197,8 +1197,9 @@ PIPE BOMBS + CONSTRUCTION
 					for(var/client/C in clients)
 						if(C.mob && (C.mob.z == src.z))
 							shake_camera(C.mob, 8, 24) // remove if this is too laggy
-							C << sound(explosions.distant_sound)
-				playsound(src.loc, pick(sounds_explosion), 75, 1)
+							playsound(C.mob, explosions.distant_sound, 100, 0)
+				else
+					playsound(src.loc, pick(sounds_explosion), 75, 1)
 				new /obj/effects/explosion (src.loc)
 			else
 				playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
