@@ -15,7 +15,7 @@
 
 var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blob/tutorial_zone_2, /area/blob/tutorial_zone_3)
 
-/datum/tutorial/blob
+/datum/tutorial_base/blob
 	name = "Blob tutorial"
 	var/tutorial_area_type = null
 	var/area/tutorial_area = null
@@ -111,7 +111,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			must_deploy = locate(MT.initial_turf.x, MT.initial_turf.y + 1, MT.initial_turf.z)
 			must_deploy.UpdateOverlays(marker,"marker")
 
@@ -136,7 +136,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/turf/T = locate(tx, ty, MT.initial_turf.z)
@@ -170,7 +170,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/turf/T = locate(tx, ty, MT.initial_turf.z)
@@ -241,7 +241,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/turf/T = locate(tx, ty, MT.initial_turf.z)
@@ -280,7 +280,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 		SetUp()
 			..()
 			SPAWN_DBG(0)
-				var/datum/tutorial/blob/MT = tutorial
+				var/datum/tutorial_base/blob/MT = tutorial
 				var/tx = MT.initial_turf.x
 				var/ty = MT.initial_turf.y + 1
 				var/tz = MT.initial_turf.z
@@ -315,7 +315,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/turf/T = locate(tx, ty, MT.initial_turf.z)
@@ -357,7 +357,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 		SetUp()
 			..()
 			SPAWN_DBG(0)
-				var/datum/tutorial/blob/MT = tutorial
+				var/datum/tutorial_base/blob/MT = tutorial
 				var/tx = MT.initial_turf.x
 				var/ty = MT.initial_turf.y + 1
 				var/tz = MT.initial_turf.z
@@ -389,7 +389,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/tz = MT.initial_turf.z
@@ -416,7 +416,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/tz = MT.initial_turf.z
@@ -442,7 +442,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/tz = MT.initial_turf.z
@@ -470,7 +470,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			MT.bowner.evo_points = 500
 
 		PerformAction(var/action, var/context)
@@ -483,11 +483,11 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			return 0
 
 		TearDown()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			MT.bowner.evo_points = 0
 
 		MayAdvance()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			return MT.bowner.has_upgrade(/datum/blob_upgrade/launcher) && MT.bowner.has_upgrade(/datum/blob_upgrade/replicator) && MT.bowner.has_upgrade(/datum/blob_upgrade/devour_item) && MT.bowner.has_upgrade(/datum/blob_upgrade/reflective)
 
 	digestation
@@ -497,7 +497,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x + 1
 			var/ty = MT.initial_turf.y + 2
 			var/tz = MT.initial_turf.z
@@ -518,7 +518,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 				return 1
 			if (I.disposed)
 				return 1
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			if (locate(/obj/blob/deposit) in MT.tutorial_area)
 				return 1
 			return 0
@@ -530,7 +530,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x + 1
 			var/ty = MT.initial_turf.y + 1
 			var/tz = MT.initial_turf.z
@@ -582,7 +582,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x + 1
 			var/ty = MT.initial_turf.y + 2
 			var/tz = MT.initial_turf.z
@@ -617,7 +617,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 3
 			var/tz = MT.initial_turf.z
@@ -684,7 +684,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x - 3
 			var/ty = MT.initial_turf.y + 3
 			var/tz = MT.initial_turf.z
@@ -716,7 +716,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			sleep(5 SECONDS)
 			tutorial.Advance()
 
-proc/AddBlobSteps(var/datum/tutorial/blob/T)
+proc/AddBlobSteps(var/datum/tutorial_base/blob/T)
 	T.AddStep(new /datum/tutorialStep/blob/deploy)
 	T.AddStep(new /datum/tutorialStep/blob/spread)
 	T.AddStep(new /datum/tutorialStep/blob/attack)
