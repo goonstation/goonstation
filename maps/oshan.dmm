@@ -18925,9 +18925,6 @@
 /obj/item/cable_coil/cut{
 	icon_state = "coil1"
 	},
-/obj/cable{
-	icon_state = "2-8"
-	},
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "aTl" = (
@@ -42871,9 +42868,6 @@
 "cdH" = (
 /obj/item/cable_coil/cut{
 	icon_state = "coil1"
-	},
-/obj/cable{
-	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/tech_outpost)
