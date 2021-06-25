@@ -223,7 +223,7 @@
 	var/do_bump = TRUE
 	var/use_owner_dir = FALSE
 	/// list of types exempt from bump checks when checking landing turf validity
-	var/list/collision_whitelist = list()
+	var/list/collision_whitelist = null
 
 	New(The_Owner, The_Railing, use_owner_dir = FALSE)
 		..()
