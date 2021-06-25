@@ -1200,6 +1200,8 @@ PIPE BOMBS + CONSTRUCTION
 							C << sound(explosions.distant_sound)
 				playsound(src.loc, pick(sounds_explosion), 75, 1)
 				new /obj/effects/explosion (src.loc)
+			else
+				playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
 
 			explosion(src, location, src.expl_devas, src.expl_heavy, src.expl_light, src.expl_flash)
 			// Breaching charges should be, you know, actually be decent at breaching walls and windows (Convair880).
