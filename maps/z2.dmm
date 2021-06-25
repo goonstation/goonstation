@@ -46228,10 +46228,6 @@
 /area/owlery/Owlmait)
 "cBW" = (
 /obj/decal/fakeobjects/pipe,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /obj/rack,
 /obj/item/storage/box/trash_bags,
 /obj/item/storage/toolbox/mechanical,
