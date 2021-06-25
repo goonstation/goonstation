@@ -1,5 +1,9 @@
 
 (t)fri jun 25 21
+(u)Kubius
+(p)5274
+(e)🐛🗺|bug, mapping
+(*)Kondaru detective's office front door is once again detective-only with remote open. Also made maintenance near the Foundry more construction-friendly and added a sink/drain to the Morgue.
 (u)Flappybat
 (p)5262
 (e)⚖|balance
