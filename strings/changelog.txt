@@ -1,5 +1,9 @@
 
 (t)fri jun 25 21
+(u)Flappybat
+(p)5267
+(e)⚖|balance
+(*)Made doors half as strong, you can now break them this century. Explosive/fire/projectile scaling is adjusted so it will still take the same number of bullets to destroy a door.
 (u)Azrun
 (p)5244
 (e)⚖🐛|balance, bug
