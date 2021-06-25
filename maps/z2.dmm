@@ -75519,9 +75519,7 @@
 	name = "Varshie's Office"
 	},
 /turf/unsimulated/wall/auto/lead/blue,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/area/space)
 "hVt" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "8"
@@ -76538,10 +76536,8 @@
 /turf/unsimulated/floor/engine/caution/south,
 /area/hospital/samostrel)
 "lkL" = (
-/obj/machinery/door/airlock/pyro/glass/command,
-/obj/access_spawn/owlcommand,
-/turf/unsimulated/floor/black,
-/area/owlery/office)
+/turf/unsimulated/wall/auto/lead/blue,
+/area/space)
 "lkO" = (
 /obj/machinery/door/airlock/gannets/maintenance,
 /turf/unsimulated/floor/plating,
@@ -94865,7 +94861,7 @@ cAD
 cFV
 cHm
 cBh
-lkL
+cIv
 cJl
 cBj
 cKD
@@ -153538,7 +153534,7 @@ ePc
 wel
 hVs
 dzS
-wel
+lkL
 wel
 mUi
 dwz
