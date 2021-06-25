@@ -43,7 +43,10 @@
 		src.target = target
 		src.classic = isrestrictedz(T.z)
 		if(!ismob(target))
-			duration = 3 SECONDS
+			duration = rand(0, 20) DECI SECONDS
+			src.bar_icon_state = ""
+			src.border_icon_state = ""
+
 		if(src.classic)
 			duration = 0 SECONDS
 	onStart()
