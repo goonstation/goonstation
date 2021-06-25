@@ -1637,3 +1637,4 @@
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 		setProperty("movespeed", 0.5)
+		setProperty("disorient_resist", 15)
