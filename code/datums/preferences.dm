@@ -559,16 +559,22 @@ datum/preferences
 						src.profile_modified = TRUE
 						return TRUE
 			if ("decrease-skinTone")
+				var/units = 1
+				if (params["alot"])
+					units = 8
 				var/list/L = hex_to_rgb_list(AH.s_tone)
-				AH.s_tone = rgb(max(L[1]-1, 61), max(L[2]-1, 8), max(L[3]-1, 0))
+				AH.s_tone = rgb(max(L[1]-units, 61), max(L[2]-units, 8), max(L[3]-units, 0))
 				AH.s_tone_original = AH.s_tone
 
 				update_preview_icon()
 				src.profile_modified = TRUE
 				return TRUE
 			if ("increase-skinTone")
+				var/units = 1
+				if (params["alot"])
+					units = 8
 				var/list/L = hex_to_rgb_list(AH.s_tone)
-				AH.s_tone = rgb(min(L[1]+1, 255), min(L[2]+1, 236), min(L[3]+1, 183))
+				AH.s_tone = rgb(min(L[1]+units, 255), min(L[2]+units, 236), min(L[3]+units, 183))
 				AH.s_tone_original = AH.s_tone
 
 				update_preview_icon()
