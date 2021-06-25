@@ -558,7 +558,22 @@ datum/preferences
 						update_preview_icon()
 						src.profile_modified = TRUE
 						return TRUE
+			if ("decrease-skinTone")
+				var/list/L = hex_to_rgb_list(AH.s_tone)
+				AH.s_tone = rgb(max(L[1]-1, 61), max(L[2]-1, 8), max(L[3]-1, 0))
+				AH.s_tone_original = AH.s_tone
 
+				update_preview_icon()
+				src.profile_modified = TRUE
+				return TRUE
+			if ("increase-skinTone")
+				var/list/L = hex_to_rgb_list(AH.s_tone)
+				AH.s_tone = rgb(min(L[1]+1, 255), min(L[2]+1, 236), min(L[3]+1, 183))
+				AH.s_tone_original = AH.s_tone
+
+				update_preview_icon()
+				src.profile_modified = TRUE
+				return TRUE
 			if ("update-eyeColor")
 				var/new_color = input(usr, "Please select an eye color.", "Character Generation", AH.e_color) as null|color
 				if (new_color)
