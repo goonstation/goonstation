@@ -1,5 +1,8 @@
 
 (t)fri jun 25 21
+(u)Tarmunora
+(e)⚖|balance
+(+)pill bottles and patch boxes from chemmasters cannot fit more items than they spawn with
 (u)Kubius
 (p)5274
 (e)🐛🗺|bug, mapping

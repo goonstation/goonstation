@@ -564,6 +564,9 @@
 					P.medical = med
 					P.on_reagent_change()
 					R.trans_to(P, patchvol)
+			if(use_box)
+				var/obj/item/item_box/medical_patches/B = patchloc
+				B.max_item_amount = B.item_amount
 			else
 				boutput(usr, "[src] makes a weird grinding noise. That can't be good.")
 				return
