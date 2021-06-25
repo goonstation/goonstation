@@ -25,7 +25,7 @@
 
 /obj/machinery/crusher/HasEntered(atom/movable/AM, atom/OldLoc)
 	. = ..()
-	if(istype(AM,/obj/item/scrap) || istype(AM, /obj/fluid) || istype(AM, /obj/decal) || isobserver(AM) || isintangible(AM) || istype(/obj/machinery/conveyor))
+	if(istype(AM,/obj/item/scrap) || istype(AM, /obj/fluid) || istype(AM, /obj/decal) || isobserver(AM) || isintangible(AM) || istype(AM, /obj/machinery/conveyor))
 		return
 
 	if(!(AM.temp_flags & BEING_CRUSHERED))
