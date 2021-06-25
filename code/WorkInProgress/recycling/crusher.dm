@@ -83,7 +83,7 @@
 		if(ismob(target) && target.temp_flags & BEING_CRUSHERED)
 			var/mob/M = target
 			random_brute_damage(M, rand(15, 45))
-			take_bleeding_damage(M, null, 20, DAMAGE_CRUSH)
+			take_bleeding_damage(M, null, 10, DAMAGE_CRUSH)
 			playsound(M, pick("sound/impact_sounds/Flesh_Stab_1.ogg","sound/impact_sounds/Metal_Clang_1.ogg","sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Flesh_Tear_2.ogg","sound/impact_sounds/Slimy_Hit_3.ogg"), 100)
 			M.emote("scream", FALSE)
 			if(ishuman(M))
