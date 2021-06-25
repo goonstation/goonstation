@@ -1189,16 +1189,19 @@ PIPE BOMBS + CONSTRUCTION
 				return
 
 			location.hotspot_expose(700, 125)
-			// NT charge shake
-			if (expl_heavy)
-				for(var/client/C in clients)
-					if(C.mob && (C.mob.z == src.z))
-						shake_camera(C.mob, 8, 24) // remove if this is too laggy
-						C << sound(explosions.distant_sound)
-			playsound(src.loc, pick(sounds_explosion), 75, 1)
-			explosion(src, location, src.expl_devas, src.expl_heavy, src.expl_light, src.expl_flash)
-			new /obj/effects/explosion (src.loc)
 
+			//Explosive effect for breaching charges only
+			if (!(istype(src, /obj/item/breaching_charge/mining)))
+				// NT charge shake
+				if (expl_heavy)
+					for(var/client/C in clients)
+						if(C.mob && (C.mob.z == src.z))
+							shake_camera(C.mob, 8, 24) // remove if this is too laggy
+							C << sound(explosions.distant_sound)
+				playsound(src.loc, pick(sounds_explosion), 75, 1)
+				new /obj/effects/explosion (src.loc)
+
+			explosion(src, location, src.expl_devas, src.expl_heavy, src.expl_light, src.expl_flash)
 			// Breaching charges should be, you know, actually be decent at breaching walls and windows (Convair880).
 			for (var/turf/simulated/wall/W in range(src.expl_range, location))
 				if (W && istype(W) && !location.loc:sanctuary)
