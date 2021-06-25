@@ -2383,6 +2383,9 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/radio/commentators_desk)
 "aWB" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/delivery,
 /area/station/science/lab)
 "aWK" = (
@@ -3067,6 +3070,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/processing)
+"boi" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
+	name = "Construction Area"
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "boq" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -5403,6 +5414,9 @@
 /obj/disposalpipe/segment/horizontal,
 /obj/firedoor_spawn,
 /obj/access_spawn/engineering,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/monitoring)
 "ckO" = (
@@ -8334,6 +8348,9 @@
 	dir = 4
 	},
 /obj/machinery/light,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "dwD" = (
@@ -8958,6 +8975,12 @@
 	},
 /turf/simulated/floor/orange,
 /area/station/engine/power)
+"dIH" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "dII" = (
 /turf/space,
 /area/shuttle/arrival/station)
@@ -10014,6 +10037,9 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/tox_storage,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "ebT" = (
@@ -15574,6 +15600,11 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/engineering,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/orange,
 /area/station/engine/power)
 "gyz" = (
@@ -20950,6 +20981,9 @@
 "iNh" = (
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "iNj" = (
@@ -22577,9 +22611,6 @@
 	dir = 5;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload_foyer)
 "jxy" = (
@@ -22825,6 +22856,9 @@
 	},
 /obj/access_spawn/chapel_office,
 /obj/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
 "jEh" = (
@@ -23322,6 +23356,9 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
 	name = "Toxins Emergency Catwalk"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/science/lab)
@@ -26865,6 +26902,9 @@
 	tag = ""
 	},
 /obj/machinery/light,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "ltz" = (
@@ -28662,9 +28702,6 @@
 "mdu" = (
 /obj/table/reinforced/auto,
 /obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -29246,6 +29283,9 @@
 	dir = 6;
 	icon_state = "delivery2"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge/luxury_seating)
 "msM" = (
@@ -29764,6 +29804,9 @@
 	color_r = 0.5;
 	invisibility = 101;
 	name = "glow - PURPLE"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
@@ -36757,6 +36800,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "pOX" = (
@@ -36867,6 +36913,9 @@
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
@@ -39078,9 +39127,6 @@
 /obj/item/clothing/gloves/boxing,
 /obj/item/reagent_containers/food/drinks/water,
 /obj/disposalpipe/segment/vertical,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor,
 /area/station/security/main)
 "qJu" = (
@@ -39579,6 +39625,9 @@
 /area/station/crew_quarters/clown)
 "qSq" = (
 /obj/machinery/drainage,
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "qSA" = (
@@ -41769,9 +41818,6 @@
 	},
 /obj/firedoor_spawn,
 /obj/machinery/atmospherics/pipe/simple,
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/access_spawn/engineering,
 /obj/cable{
 	icon_state = "4-8"
@@ -44218,6 +44264,12 @@
 /area/abandonedship{
 	name = "Crashed Limo"
 	})
+"sSo" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "sSN" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9
@@ -48371,6 +48423,9 @@
 "uLm" = (
 /obj/machinery/manufacturer/uniform,
 /obj/disposalpipe/junction/left/west,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker{
 	name = "Laundry Room"
@@ -51940,9 +51995,6 @@
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/horizontal,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
@@ -52132,9 +52184,6 @@
 /obj/machinery/phone,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /obj/access_spawn/medical,
 /turf/simulated/floor/white,
@@ -55337,6 +55386,12 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/west)
+"xFg" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "xFp" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/plating,
@@ -56342,6 +56397,9 @@
 	req_access = null
 	},
 /obj/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "yeh" = (
@@ -80173,7 +80231,7 @@ pqG
 qQJ
 wHP
 cdT
-edG
+ujX
 vnX
 vnX
 vnX
@@ -80475,7 +80533,7 @@ xnT
 vdy
 wio
 wbY
-edG
+ujX
 vnX
 vnX
 vnX
@@ -80777,7 +80835,7 @@ sfl
 vdy
 gjT
 wbY
-edG
+ujX
 gcW
 vnX
 vnX
@@ -82895,7 +82953,7 @@ rHl
 rHl
 rHl
 ubA
-skJ
+boi
 jxU
 jxU
 jxU
@@ -83197,7 +83255,7 @@ rKP
 ybg
 qSq
 ebC
-bkb
+xFg
 jxU
 dEi
 wFU
@@ -83499,7 +83557,7 @@ bkr
 bkr
 ltx
 ubA
-bkb
+wwh
 jxU
 wXm
 cts
@@ -83799,9 +83857,9 @@ lPn
 iAc
 eih
 wJq
-rHl
+sSo
 ubA
-bkb
+wwh
 gqT
 ffB
 wFU
@@ -84103,7 +84161,7 @@ wSf
 hKv
 iNh
 ubA
-bkb
+wwh
 rSm
 wFU
 cts
@@ -84405,7 +84463,7 @@ fwW
 uoI
 bjg
 ubA
-bkb
+wwh
 pHB
 wXm
 wFU
@@ -84707,7 +84765,7 @@ ubA
 ubA
 ubA
 ubA
-bkb
+wwh
 ohy
 wFU
 wFU
@@ -85006,10 +85064,10 @@ vqQ
 dWs
 sYZ
 bkb
-bkb
-bkb
-bkb
-bkb
+bhv
+aRr
+aRr
+dIH
 jxU
 bZf
 bZf
@@ -85308,7 +85366,7 @@ vqQ
 rwV
 bkb
 bkb
-bkb
+wwh
 cmi
 cmi
 mIs
