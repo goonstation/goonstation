@@ -2004,8 +2004,8 @@
 /area/station/crew_quarters/kitchen)
 "eF" = (
 /obj/storage/secure/closet/fridge/kitchen,
-/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
-/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/glass/bottle/icing,
 /obj/item/reagent_containers/food/snacks/ingredient/meat{
 	desc = "Ew.";
 	name = "meat of questionable origin"
@@ -3829,6 +3829,10 @@
 	frequency = 1229
 	},
 /obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
@@ -3897,6 +3901,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "ix" = (
+/obj/disposalpipe/segment,
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
@@ -3955,6 +3960,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "iz" = (
+/obj/disposalpipe/segment,
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
@@ -5010,6 +5016,10 @@
 /area/station/crew_quarters/garden)
 "kF" = (
 /obj/machinery/light,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /obj/machinery/clonegrinder,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/research)
@@ -5751,6 +5761,9 @@
 /obj/table/reinforced/auto,
 /obj/item/hand_labeler,
 /obj/item/clothing/glasses/healthgoggles,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /obj/item/clothing/glasses/visor,
 /obj/item/device/radio/headset/deaf,
 /obj/item/remote/porter/port_a_nanomed,
@@ -5950,6 +5963,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay/surgery)
 "mw" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -6283,10 +6299,13 @@
 	name = "autoname - SS13"
 	},
 /obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /obj/machinery/sleeper{
 	dir = 4
 	},
-/obj/cable,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "ng" = (
@@ -6666,7 +6685,7 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/turf/simulated/floor/airless/plating/catwalk,
+/turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/mining/magnet)
 "nX" = (
@@ -6695,6 +6714,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "oa" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /obj/machinery/light{
 	dir = 1;
 	icon_state = "tube1";
@@ -6887,10 +6915,7 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
-	intact = 0
-	},
+/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -6924,10 +6949,7 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 6;
-	layer = 2
-	},
+/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -7102,18 +7124,6 @@
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/security/main)
-"uG" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "vP" = (
 /obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor/red,
@@ -7140,6 +7150,19 @@
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "Ct" = (
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /obj/machinery/clonepod,
 /turf/simulated/floor/white,
 /area/station/medical/research)
@@ -55343,7 +55366,7 @@ mb
 mp
 my
 mJ
-uG
+mT
 nf
 nm
 ns
