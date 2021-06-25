@@ -3342,6 +3342,10 @@
 /area/station/medical/medbay/psychiatrist)
 "ahA" = (
 /obj/wingrille_spawn/auto,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -3457,9 +3461,6 @@
 	req_access_txt = "9"
 	},
 /obj/firedoor_spawn,
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/access_spawn/medlab,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/green,
@@ -3887,6 +3888,9 @@
 /obj/machinery/disposal/mail/small/autoname{
 	dir = 8;
 	mail_tag = "therapist"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
@@ -4824,9 +4828,6 @@
 /obj/item/robodefibrillator,
 /obj/item/item_box/medical_patches/styptic,
 /obj/item/spraybottle/cleaner,
-/obj/cable{
-	icon_state = "0-2"
-	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery/storage)
 "ali" = (
@@ -5050,17 +5051,13 @@
 /area/station/medical/medbay/surgery/storage)
 "alB" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "1-2"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	icon_state = "2-8"
 	},
-/turf/simulated/floor/red/checker,
-/area/station/medical/medbay/surgery/storage)
+/turf/simulated/floor/engine,
+/area/research_outpost/chamber)
 "alC" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -9061,6 +9058,9 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "avc" = (
@@ -9772,6 +9772,9 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "awM" = (
@@ -10232,6 +10235,9 @@
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line1"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
@@ -18140,6 +18146,9 @@
 /area/station/maintenance/west)
 "aRq" = (
 /obj/machinery/shieldgenerator/energy_shield,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "aRr" = (
@@ -18915,6 +18924,9 @@
 /obj/machinery/drone_recharger,
 /obj/item/cable_coil/cut{
 	icon_state = "coil1"
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
 /area/tech_outpost)
@@ -25069,11 +25081,6 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "bkt" = (
@@ -26077,17 +26084,11 @@
 /turf/simulated/floor/bot/caution,
 /area/station/engine/engineering)
 "bmQ" = (
-/obj/wingrille_spawn/auto,
-/obj/window_blinds/cog2/right{
-	dir = 4
-	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/wood/two,
-/area/station/crew_quarters/radio/lab)
+/turf/simulated/floor/darkblue,
+/area/station/medical/medbay/psychiatrist)
 "bmR" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
@@ -28808,11 +28809,6 @@
 	icon_state = "4-8"
 	},
 /obj/access_spawn/engineering,
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /turf/simulated/floor,
 /area/station/engine/storage)
 "btE" = (
@@ -42876,6 +42872,9 @@
 /obj/item/cable_coil/cut{
 	icon_state = "coil1"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "cdI" = (
@@ -47587,11 +47586,11 @@
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "pJY" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/decal/xmas_lights{
 	pixel_y = 32
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
@@ -48537,11 +48536,6 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Arcade"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor,
@@ -91651,7 +91645,7 @@ agB
 afI
 afJ
 xOo
-ahz
+bmQ
 aiT
 aiR
 aja
@@ -98298,8 +98292,8 @@ afx
 afx
 ajQ
 ait
-ajS
-alB
+akS
+alA
 alh
 anu
 aog
@@ -106840,7 +106834,7 @@ bMI
 bLB
 bOY
 bKe
-bmQ
+bQe
 bRZ
 bQe
 bUr
@@ -132415,7 +132409,7 @@ bct
 oDh
 bcV
 bdl
-beh
+alB
 beh
 bdC
 bZn
