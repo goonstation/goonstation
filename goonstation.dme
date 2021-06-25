@@ -1040,6 +1040,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\projectiles\syringe.dm"
 #include "code\modules\projectiles\teleport.dm"
 #include "code\modules\projectiles\wavegun.dm"
+#include "code\modules\robotics\bot\barbot.dm"
 #include "code\modules\robotics\bot\bot_parent.dm"
 #include "code\modules\robotics\bot\buttbot.dm"
 #include "code\modules\robotics\bot\cambot.dm"
