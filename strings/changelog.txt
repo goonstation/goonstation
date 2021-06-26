@@ -1,5 +1,9 @@
 
 (t)fri jun 25 21
+(u)Arthur Holiday
+(p)5036
+(e)🆕🎨|feature, sprites
+(*)Added Customizable banners, use cloth on a wall to make one, color and draw on it with crayons.
 (u)Flourish
 (+)There are now buttons for adjusting skintone in character setup.
 (u)Flappybat
