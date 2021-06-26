@@ -52,7 +52,7 @@
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.bleeding || (H.butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
-				if (!src.cautery_surgery(H, user, 15, src.welding))
+				if (!src.cautery_surgery(H, user, 10, src.welding))
 					return ..()
 			else if (user.zone_sel.selecting != "chest" && user.zone_sel.selecting != "head")
 				if (!H.limbs.vars[user.zone_sel.selecting])
