@@ -735,10 +735,16 @@
 	return language
 
 /mob/proc/process_language(var/message, var/forced_language = null)
+	// Separate the radio prefix (if it exists) and message so the language can't destroy the prefix
+	var/prefixAndMessage = separate_radio_prefix_and_message(message)
+	var/prefix = prefixAndMessage[1]
+	message = prefixAndMessage[2]
+
 	var/datum/language/L = languages.language_cache[get_language_id(forced_language)]
 	if (!L)
 		L = languages.language_cache["english"]
-	return L.get_messages(message)
+
+	return prefix + L.get_messages(message)
 
 /mob/proc/get_special_language(var/secure_mode)
 	return null
