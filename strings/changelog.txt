@@ -1,4 +1,9 @@
 
+(t)sat jun 26 21
+(u)Penny
+(p)5168
+(e)🗺|mapping
+(*)Improves the layout of cog1 mechanic's lab and adds equipment and a data closet
 (t)fri jun 25 21
 (u)Arthur Holiday
 (p)5036
