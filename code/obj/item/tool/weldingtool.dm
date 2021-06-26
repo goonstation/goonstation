@@ -178,7 +178,7 @@
 				src.welding = 0
 				return 0
 			boutput(user, "<span class='notice'>You will now weld when you attack.</span>")
-			src.force = 15
+			src.force = 10
 			hit_type = DAMAGE_BURN
 			set_icon_state("weldingtool-on" + src.icon_state_variant_suffix)
 			src.item_state = "weldingtool-on" + src.item_state_variant_suffix
