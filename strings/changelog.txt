@@ -1,6 +1,9 @@
 
 (t)sat jun 26 21
 (u)Penny
+(u)Tarmunora
+(e)⚖|balance
+(+)Weldingtools now use 2 fuel each time you hit someone and have an improved special attack.
 (p)5168
 (e)🗺|mapping
 (*)Improves the layout of cog1 mechanic's lab and adds equipment and a data closet
