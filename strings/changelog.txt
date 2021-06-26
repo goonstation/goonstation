@@ -1,5 +1,7 @@
 
 (t)fri jun 25 21
+(u)Flourish
+(+)There are now buttons for adjusting skintone in character setup.
 (u)Flappybat
 (p)5267
 (e)⚖|balance
