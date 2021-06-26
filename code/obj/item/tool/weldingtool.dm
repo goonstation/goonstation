@@ -151,7 +151,7 @@
 			else
 				boutput(user, "<span class='alert'>The [O.name] is empty!</span>")
 		else if (src.welding)
-			use_fuel(ismob(O) ? 1 : 0.2)
+			use_fuel(ismob(O) ? 2 : 0.2)
 			if (get_fuel() <= 0)
 				boutput(user, "<span class='notice'>Need more fuel!</span>")
 				src.welding = 0
