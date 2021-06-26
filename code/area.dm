@@ -1848,11 +1848,14 @@ ABSTRACT_TYPE(/area/station/hallway/secondary)
 	name = "Main Hallway"
 	icon_state = "entry"
 
+/area/station/hallway/secondary/oshan_arrivals
+	name = "Oshan Arrivals"
+	icon_state = "blue"
+	do_not_irradiate = 1
+
 /area/station/hallway/secondary/shuttle
 	name = "Shuttle Bay"
 	icon_state = "shuttle3"
-
-
 
 /area/station/mailroom
 	name = "Mailroom"
@@ -2228,6 +2231,7 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crewquarters/cryotron
 	name ="Cryogenic Crew Storage"
 	icon_state = "blue"
+	do_not_irradiate = 1
 
 ABSTRACT_TYPE(/area/station/com_dish)
 /area/station/com_dish
