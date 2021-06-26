@@ -172,6 +172,7 @@
 		if (status > 1) return
 		src.welding = !(src.welding)
 		src.firesource = !(src.firesource)
+		tooltip_rebuild = 1
 		if (src.welding)
 			if (get_fuel() <= 0)
 				boutput(user, "<span class='notice'>Need more fuel!</span>")
