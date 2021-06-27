@@ -44599,6 +44599,9 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "ciB" = (
@@ -44928,6 +44931,9 @@
 /obj/machinery/firealarm{
 	pixel_y = 24;
 	text = "NF"
+	},
+/obj/railing/orange/reinforced{
+	dir = 4
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -45885,6 +45891,12 @@
 	dir = 1
 	},
 /area/station/crew_quarters/kitchen)
+"doC" = (
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "doK" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor,
@@ -86254,9 +86266,9 @@ gMW
 aDr
 ciZ
 cjH
-ciQ
+doC
 ciA
-ciQ
+doC
 ciC
 ggJ
 vfw
