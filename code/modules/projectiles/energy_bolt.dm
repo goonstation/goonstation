@@ -301,7 +301,7 @@ toxic - poisons
 	cost = 35
 	sname = "kinetic pulse"
 	shot_sound = 'sound/weapons/pulse.ogg'
-	damage_type = D_ENERGY
+	damage_type = D_SPECIAL
 	hit_ground_chance = 30
 	brightness = 1
 	color_red = 0.18
