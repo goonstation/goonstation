@@ -9,7 +9,22 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	"Mad" = "ai_mad",\
 	"BSOD" = "ai_bsod",\
 	"Text" = "ai_text",\
-	"Blank" = "ai_blank")
+	"Blank" = "ai_blank",\
+	"Unimpressed" = "ai_unimpressed",\
+	"Baffled" = "ai_baffled",\
+	"Cheeky" = "ai_cheeky",\
+	"Silly" = "ai_silly",\
+	"Annoyed" = "ai_annoyed",\
+	"Pensive" = "ai_pensive",\
+	"Heart" = "ai_heart",\
+	"Triangle" = "ai_triangle",\
+	"Spooky" = "ai_spooky",\
+	"Suspicious" = "ai_eyesemoji",\
+	"Glitch" = "ai_glitch",\
+	"Eye" = "ai_eye",\
+	"Loading Bar" = "ai_loading",\
+	"Exclamation" = "ai_exclamation",\
+	"Question" = "ai_question")
 
 /mob/living/silicon/ai
 	name = "AI"
