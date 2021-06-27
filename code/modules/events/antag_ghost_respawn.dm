@@ -168,7 +168,7 @@
 
 		var/role = null
 		var/objective_path = null
-		var/send_to = 1 // 1: arrival shuttle | 2: wizard shuttle
+		var/send_to = 1 // 1: arrival shuttle/latejoin missile | 2: wizard shuttle | 3: safe start for incorporeal antags
 		var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 		var/WSLoc = job_start_locations["wizard"] ? pick(job_start_locations["wizard"]) : null
 		var/failed = 0
@@ -180,6 +180,7 @@
 					M3 = B
 					role = "blob"
 					objective_path = /datum/objective_set/blob
+					send_to = 3
 
 					SPAWN_DBG(0)
 						var/newname = input(B, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
@@ -199,6 +200,7 @@
 					M3 = F
 					role = "flockmind"
 					//objective_path = /datum/objective_set/blob
+					send_to = 3
 				else
 					failed = 1
 
@@ -208,6 +210,7 @@
 					M3 = W
 					role = "wraith"
 					generate_wraith_objectives(lucky_dude)
+					send_to = 3
 				else
 					failed = 1
 
@@ -345,13 +348,17 @@
 
 		switch (send_to)
 			if (1)
-				M3.set_loc(ASLoc)
+				if (map_settings?.arrivals_type == MAP_SPAWN_MISSILE)
+					latejoin_missile_spawn(M3)
+				else
+					M3.set_loc(ASLoc)
 			if (2)
 				if (!WSLoc)
 					M3.set_loc(ASLoc)
 				else
 					M3.set_loc(WSLoc)
-
+			if (3)
+				M3.set_loc(ASLoc)
 		//nah
 		/*
 		if (src.centcom_headline && src.centcom_message && random_events.announce_events)

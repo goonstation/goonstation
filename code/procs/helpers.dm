@@ -2193,7 +2193,7 @@ var/global/list/allowed_restricted_z_areas
 	if (new_tone == "Custom...")
 		var/tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Skin tone picker") as null|num
 		if (!isnull(tone))
-			tone = 35 - min(max(tone, 1), 220)
+			tone = 35 - min(max(tone, 1), 220) // range is 34 to -194
 			//new_tone = rgb(220 + tone, 220 + tone, 220 + tone)
 			new_tone = blend_skintone(tone,tone,tone)
 		else
@@ -2208,9 +2208,9 @@ var/global/list/allowed_restricted_z_areas
   */
 /proc/blend_skintone(var/r1, var/g1, var/b1)
 	//I expect we will only need to darken the already pale white image.
-	var/r = min(r1 + 255, 255) //ff
-	var/g = min(g1 + 202, 255) //ca
-	var/b = min(b1 + 149, 255) //95
+	var/r = min(r1 + 255, 255) //ff min 61 max 255
+	var/g = min(g1 + 202, 255) //ca min 8 max 236
+	var/b = min(b1 + 149, 255) //95 min 0 max 183
 	return rgb(r,g,b)
 
 /**

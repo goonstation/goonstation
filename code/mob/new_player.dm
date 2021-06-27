@@ -349,11 +349,7 @@ mob/new_player
 					starting_loc = pick_landmark(LANDMARK_LATEJOIN, locate(1, 1, 1))
 					character.set_loc(starting_loc)
 			else if (map_settings?.arrivals_type == MAP_SPAWN_MISSILE)
-				var/obj/arrival_missile/M = unpool(/obj/arrival_missile)
-				var/turf/T = pick_landmark(LANDMARK_LATEJOIN_MISSILE)
-				var/missile_dir = landmarks[LANDMARK_LATEJOIN_MISSILE][T]
-				M.set_loc(T)
-				SPAWN_DBG(0) M.lunch(character, missile_dir)
+				latejoin_missile_spawn(character)
 			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
 				var/datum/game_mode/battle_royale/battlemode = ticker.mode
 				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
