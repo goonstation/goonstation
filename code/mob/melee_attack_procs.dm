@@ -319,7 +319,7 @@
 	//	return
 
 	var/obj/item/affecting = target.get_affecting(src)
-	var/datum/attackResults/disarm/msgs = calculate_disarm_attack(target, affecting, 0, 0, extra_damage, is_special)
+	var/datum/attackResults/disarm/msgs = calculate_disarm_attack(target, affecting, 0, 0, extra_damage)
 	msgs.damage_type = damtype
 	msgs.flush(suppress_flags)
 	return
@@ -328,7 +328,7 @@
 // I needed a harm intent-like attack datum for some limbs (Convair880).
 // is_shove flag removes the possibility of slapping the item out of someone's hand. instead there is a chance to shove them backwards. The 'shove to the ground' chance remains unchanged. (mbc)
 // mbc also added disarming_item flag - for when a disarm is performed BY something. Doesn't do anything but change text currently.
-/mob/proc/calculate_disarm_attack(var/mob/target, var/obj/item/affecting, var/base_damage_low = 0, var/base_damage_high = 0, var/extra_damage = 0, var/is_shove = 0, var/obj/item/disarming_item = 0)
+/mob/proc/calculate_disarm_attack(var/mob/target, var/obj/item/affecting, var/base_damage_low = 0, var/base_damage_high = 0, var/extra_damage = 0, var/obj/item/disarming_item = 0)
 	var/datum/attackResults/disarm/msgs = new(src)
 	msgs.clear(target)
 	msgs.valid = 1
@@ -393,12 +393,11 @@
 			mult *= H.sims.getMoodActionMultiplier()
 
 	var/stampart = round( ((STAMINA_MAX - target_stamina) / 3) )
-	if (is_shove)
-		msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
-		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
-		if (prob((stampart + 70) * mult))
-			msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target] backwards[DISARM_WITH_ITEM_TEXT]!</B></span>"
-			msgs.disarm_RNG_result = "shoved"
+	msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
+	msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
+	if (prob((stampart + 70) * mult))
+		msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target] backwards[DISARM_WITH_ITEM_TEXT]!</B></span>"
+		msgs.disarm_RNG_result = "shoved"
 
 	if (prob((stampart + 5) * mult))
 		if (ishuman(src))
@@ -415,50 +414,6 @@
 		var/obj/item/I = target.equipped()
 		if (I && I.temp_flags & IS_LIMB_ITEM)
 			msgs.disarm_RNG_result = "attack_self_with_item_shoved_down"
-
-		return msgs
-
-	if (is_shove) return msgs
-
-	var/obj/item/I = target.equipped()
-	if (I)
-		var/disarm_item_prob = 37
-		if (target.check_block() && !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)))
-			disarm_item_prob = 5
-
-		if (I.temp_flags & IS_LIMB_ITEM)
-			if (prob(disarm_item_prob * mult))
-				msgs.base_attack_message = "<span class='alert'><B>[src] shoves [I.loc] and forces [target]'s to hit themselves[DISARM_WITH_ITEM_TEXT]!</B></span>"
-				msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
-				msgs.disarm_RNG_result = "attack_self_with_item"
-			else
-				msgs.base_attack_message = "<span class='alert'><B>[src] shoves at [I.loc][DISARM_WITH_ITEM_TEXT]!</B></span>"
-				msgs.played_sound = 'sound/impact_sounds/Generic_Swing_1.ogg'
-
-		else if (I.cant_other_remove)
-			msgs.played_sound = 'sound/impact_sounds/Generic_Swing_1.ogg'
-			msgs.base_attack_message = "<span class='alert'><B>[src] vainly tries to knock [I] out of [target]'s hand[DISARM_WITH_ITEM_TEXT]!</B></span>"
-			msgs.show_self.Add("<span class='alert'>Something is binding [I] to [target]. You won't be able to disarm [him_or_her(target)].</span>")
-			msgs.show_target.Add("<span class='alert'>Something is binding [I] to you. It cannot be knocked out of your hands.</span>")
-
-		else if (prob(disarm_item_prob * mult))
-			if (ishuman(src))
-				var/mob/living/carbon/human/H2 = src
-				for (var/uid in H2.pathogens)
-					var/datum/pathogen/P = H2.pathogens[uid]
-					var/ret = P.ondisarm(target, 1)
-					if (!ret)
-						msgs.base_attack_message = "<span class='alert'><B>[src] tries to knock [I] out of [target]'s hand[DISARM_WITH_ITEM_TEXT]!</B></span>"
-						return msgs
-			msgs.base_attack_message = "<span class='alert'><B>[src] knocks [I] out of [target]'s hand[DISARM_WITH_ITEM_TEXT]!</B></span>"
-			msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
-			msgs.disarm_RNG_result = "drop_item"
-		else
-			msgs.base_attack_message = "<span class='alert'><B>[src] tries to knock [I] out of [target]'s hand[DISARM_WITH_ITEM_TEXT]!</B></span>"
-			msgs.played_sound = 'sound/impact_sounds/Generic_Swing_1.ogg'
-	else
-		msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
-		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 
 	return msgs
 
@@ -936,11 +891,7 @@
 
 			if (!isnull(src.disarm_RNG_result))
 				switch (src.disarm_RNG_result)
-					if ("drop_item")
-						target.deliver_move_trigger("bump")
-						target.drop_item_throw()
-
-					if ("attack_self_with_item", "attack_self_with_item_shoved_down", "attack_self_with_item_shoved")
+					if ("attack_self_with_item_shoved_down", "attack_self_with_item_shoved")
 						var/obj/item/I = target.equipped()
 						if (I)
 							var/old_zone_sel = 0

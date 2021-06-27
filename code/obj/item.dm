@@ -1301,7 +1301,7 @@
 			armor_blocked = 1
 
 	if (can_disarm)
-		msgs = user.calculate_disarm_attack(M, M.get_affecting(user), 0, 0, 0, is_shove = 1, disarming_item = src)
+		msgs = user.calculate_disarm_attack(M, M.get_affecting(user), 0, 0, 0, disarming_item = src)
 	else
 		msgs.msg_group = "[usr]_attacks_[M]_with_[src]"
 		msgs.visible_message_target(user.item_attack_message(M, src, hit_area, msgs.stamina_crit, armor_blocked))
