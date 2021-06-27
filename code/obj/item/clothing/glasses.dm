@@ -345,7 +345,7 @@
 					user.show_message("<span class='alert'>Um. Wow. Thats kinda grode.<span>")
 					return ..()
 				theEye.appearance_flags |= RESET_COLOR
-				user.show_message("<span class='alert'>You stab a hole in [src].  Unfortunately, you also stab a hole in your [theEye] and when you pull [W] away your eye comes with it!!</span>")
+				user.show_message("<span class='alert'>You stab a hole in [src].  Unfortunately, you also stab a hole in your eye and when you pull [W] away your eye comes with it!!</span>")
 				return
 			else
 				pinhole = 1
