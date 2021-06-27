@@ -7,6 +7,7 @@
 	anchored = 1
 	var/meat = 0
 	var/occupied = 0
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
 
 /obj/kitchenspike/attackby(obj/item/grab/G as obj, mob/user as mob)
 	if(!istype(G, /obj/item/grab))
