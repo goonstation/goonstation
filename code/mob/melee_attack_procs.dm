@@ -31,24 +31,23 @@
 		src.shake_awake(M)
 
 /mob/proc/help_put_out_fire(var/mob/living/M)
-	M.update_burning(-1.2)
 	playsound(M.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, 0 , 0.7)
 	src.visible_message("<span class='notice'>[src] pats down [M] wildly, trying to put out the fire!</span>")
-	var/glove_protection = FALSE
 
-	if (ishuman(src)) // glove heat resistance check
+	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		var/obj/item/clothing/gloves/G = H.gloves
-		if (G && G.hasProperty("heatprot"))
-			if (G.getProperty("heatprot") >= 7)
-				glove_protection = 1
-				boutput(src, "<span class='notice'>Your [G] protect you from the flames!</span>")
-
-	if (!glove_protection)
-		if (ishuman(src))
-			src.TakeDamage(prob(50) ? "l_arm" : "r_arm", 0, rand(1,2))
+		if (G && G.hasProperty("heatprot") && (G.getProperty("heatprot") >= 7))
+			M.update_burning(-2.5)
+			boutput(H, "<span class='notice'>Your [G] protect you from the flames!</span>")
 		else
-			src.TakeDamage("All", 0, rand(1,2))
+			M.update_burning(-1.2)
+			H.TakeDamage(prob(50) ? "l_arm" : "r_arm", 0, rand(1,2))
+			playsound(src, "sound/impact_sounds/burn_sizzle.ogg", 30, 1)
+			boutput(src, "<span class='alert'>Your hands burn from patting the flames!</span>")
+	else
+		M.update_burning(-1.2)
+		src.TakeDamage("All", 0, rand(1,2))
 		playsound(src, "sound/impact_sounds/burn_sizzle.ogg", 30, 1)
 		boutput(src, "<span class='alert'>Your hands burn from patting the flames!</span>")
 
