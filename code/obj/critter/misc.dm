@@ -992,6 +992,9 @@
 
 			src.attacking = 0
 
+	blob_act(power)
+		return
+
 	attack_hand(var/mob/user as mob)
 		if (src.alive)
 			boutput(user, "<span class='combat'><b>Your hand passes right through! It's so cold...</b></span>")

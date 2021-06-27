@@ -709,12 +709,12 @@
 
 			onAdd(optional=null)
 				. = ..()
-				if (ismob(owner))
+				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
 					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 
 			onRemove()
-				if (ismob(owner))
+				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
 					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 				. = ..()
@@ -729,12 +729,12 @@
 
 			onAdd(optional=null)
 				. = ..()
-				if (ismob(owner))
+				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
 					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 
 			onRemove()
-				if (ismob(owner))
+				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
 					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 				. = ..()
@@ -786,12 +786,12 @@
 
 			onAdd(optional=null)
 				. = ..()
-				if (ismob(owner))
+				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
 					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 
 			onRemove()
-				if (ismob(owner))
+				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
 					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
 				. = ..()
@@ -1587,3 +1587,47 @@
 				if(how_miasma > 4)
 					. += " You might get sick."
 				#endif
+
+/datum/statusEffect/dripping_paint
+	id = "marker_painted"
+	name = "Dripping with Paint"
+	desc = "You're leaving behind a trail of paint!"
+	icon_state = "painted"
+
+
+	onAdd(optional)
+		. = ..()
+		var/color2 = list(
+			0.5, 0, 0,
+			0, 0.5, 0,
+			0, 0, 0.5,
+			0.5, 0.25, 0.0625)
+		var/oldcol = owner.color
+		owner.color = color2
+		owner.onVarChanged("color", oldcol, color2)
+		if(istype(owner, /mob/living))
+			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/track_paint)
+
+	onRemove()
+		. = ..()
+		if(istype(owner, /mob/living))
+			UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+
+
+	proc/track_paint(mob/living/M, oldLoc, direct)
+		var/turf/T = get_turf(M)
+		var/obj/decal/cleanable/paint/P
+		if (T.messy > 0)
+			P = locate(/obj/decal/cleanable/paint) in T
+		if(!P)
+			P = make_cleanable(/obj/decal/cleanable/paint, T)
+
+		var/list/states = M.get_step_image_states()
+
+		if (states[1] || states[2])
+			if (states[1])
+				P.create_overlay(states[1], "#ff8820", direct, 'icons/effects/blood.dmi')
+			if (states[2])
+				P.create_overlay(states[2], "#ff8820", direct, 'icons/effects/blood.dmi')
+		else
+			P.create_overlay("smear2", "#ff8820", direct, 'icons/effects/blood.dmi')

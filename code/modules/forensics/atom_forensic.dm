@@ -320,7 +320,15 @@
 		B = make_cleanable( /obj/decal/cleanable/blood/dynamic/tracks,get_turf(src))
 		B.set_sample_reagent_custom(src.tracked_blood["sample_reagent"],0)
 
-	B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 1, 0, src.tracked_blood, "footprints[rand(1,2)]", src.last_move, 0)
+	var/list/states = src.get_step_image_states()
+
+	if (states[1] || states[2])
+		if (states[1])
+			B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 0.5, 0.5, src.tracked_blood, states[1], src.last_move, 0)
+		if (states[2])
+			B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 0.5, 0.5, src.tracked_blood, states[2], src.last_move, 0)
+	else
+		B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 1, 1, src.tracked_blood, "smear2", src.last_move, 0)
 
 	if (src.tracked_blood && isnum(src.tracked_blood["count"])) // mirror from below
 		src.tracked_blood["count"] --
@@ -333,83 +341,11 @@
 		src.set_clothing_icon_dirty()
 		return
 
-/mob/living/carbon/human/track_blood()
-	if (!islist(src.tracked_blood))
-		return
+/mob/living/proc/get_step_image_states()
+	return list("footprints[rand(1,2)]", null)
 
-	var/turf/T = get_turf(src)
-	var/obj/decal/cleanable/blood/dynamic/tracks/B = null
-	if (T.messy > 0)
-		B = locate(/obj/decal/cleanable/blood/dynamic) in T
+/mob/living/carbon/human/get_step_image_states()
+	return src.limbs ? list(istype(src.limbs.l_leg) ? src.limbs.l_leg.step_image_state : null, istype(src.limbs.r_leg) ? src.limbs.r_leg.step_image_state : null) : list(null, null)
 
-	var/blood_color_to_pass = src.tracked_blood["color"] ? src.tracked_blood["color"] : DEFAULT_BLOOD_COLOR
-
-	if (!B)
-		if (T.active_liquid)
-			return
-		B = make_cleanable( /obj/decal/cleanable/blood/dynamic/tracks,get_turf(src))
-		if (B)
-			B.set_sample_reagent_custom(src.tracked_blood["sample_reagent"],0)
-		else
-			return //must have been consumed by a fluid? this might be unnecessary...
-
-	if (src.limbs)
-		var/Lstate = istype(src.limbs.l_leg) ? src.limbs.l_leg.step_image_state : null
-		var/Rstate = istype(src.limbs.r_leg) ? src.limbs.r_leg.step_image_state : null
-		if (Lstate || Rstate)
-			if (Lstate)
-				B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 0.5, 0.5, src.tracked_blood, Lstate, src.last_move, 0)
-			if (Rstate)
-				B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 0.5, 0.5, src.tracked_blood, Rstate, src.last_move, 0)
-		else
-			B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 1, 1, src.tracked_blood, "smear2", src.last_move, 0)
-
-	if (src.tracked_blood && isnum(src.tracked_blood["count"])) // maybe this will fix the bad index runtime PART
-		src.tracked_blood["count"] --
-		if (src.tracked_blood["count"] <= 0)
-			src.tracked_blood = null
-			src.set_clothing_icon_dirty()
-			return
-	else
-		src.tracked_blood = null
-		src.set_clothing_icon_dirty()
-		return
-
-/mob/living/silicon/robot/track_blood()
-	if (!islist(src.tracked_blood))
-		return
-
-	var/turf/T = get_turf(src)
-	var/obj/decal/cleanable/blood/dynamic/tracks/B = T.messy ? (locate(/obj/decal/cleanable/blood/dynamic/tracks) in T) : 0
-	var/blood_color_to_pass = src.tracked_blood["color"] ? src.tracked_blood["color"] : DEFAULT_BLOOD_COLOR
-
-	if (!B)
-		if (T.active_liquid)
-			return
-		B = make_cleanable( /obj/decal/cleanable/blood/dynamic/tracks,get_turf(src))
-		if (B)
-			B.set_sample_reagent_custom(src.tracked_blood["sample_reagent"],0)
-		else
-			return
-
-	var/Lstate = istype(src.part_leg_l) ? src.part_leg_l.step_image_state : null
-	var/Rstate = istype(src.part_leg_r) ? src.part_leg_r.step_image_state : null
-
-	if (Lstate || Rstate)
-		if (Lstate)
-			B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 0.5, 0.5, src.tracked_blood, Lstate, src.last_move, 0)
-		if (Rstate)
-			B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 0.5, 0.5, src.tracked_blood, Rstate, src.last_move, 0)
-	else
-		B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 1, 1, src.tracked_blood, "smear2", src.last_move, 0)
-
-	if (src.tracked_blood && isnum(src.tracked_blood["count"])) //mirror from above
-		src.tracked_blood["count"] --
-		if (src.tracked_blood["count"] <= 0)
-			src.tracked_blood = null
-			src.set_clothing_icon_dirty()
-			return
-	else
-		src.tracked_blood = null
-		src.set_clothing_icon_dirty()
-		return
+/mob/living/silicon/robot/get_step_image_states()
+	return list(istype(src.part_leg_l) ? src.part_leg_l.step_image_state : null, istype(src.part_leg_r) ? src.part_leg_r.step_image_state : null)

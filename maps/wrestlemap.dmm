@@ -1131,15 +1131,9 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/catwalk/north)
 "ati" = (
-/obj/stool/chair{
-	dir = 1
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold,
-/turf/simulated/floor/grey,
-/area/station/security/interrogation)
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/area/station/security/main)
 "ato" = (
 /obj/decal/cleanable/fungus,
 /obj/cable{
@@ -2097,10 +2091,6 @@
 /obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/surgery/storage)
-"aPQ" = (
-/obj/disposalpipe/segment/mail/vertical,
-/turf/space,
-/area/space)
 "aPU" = (
 /obj/cable{
 	d1 = 2;
@@ -2855,6 +2845,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/engineering,
+/obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/plating,
 /area/station/engine/storage)
 "bih" = (
@@ -2890,7 +2881,6 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
-/obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "bja" = (
@@ -5400,7 +5390,6 @@
 	dir = 4;
 	req_access = null
 	},
-/obj/disposalpipe/segment/horizontal,
 /obj/firedoor_spawn,
 /obj/access_spawn/engineering,
 /turf/simulated/floor/plating,
@@ -9862,8 +9851,6 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
 "dXY" = (
-/obj/machinery/disposal,
-/obj/machinery/disposal,
 /turf/simulated/floor/neutral/side{
 	dir = 10
 	},
@@ -17107,7 +17094,6 @@
 /obj/item/storage/toolbox/mechanical,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
-/obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "hhr" = (
@@ -22078,7 +22064,6 @@
 	req_access = null
 	},
 /obj/firedoor_spawn,
-/obj/disposalpipe/segment,
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
@@ -28235,7 +28220,6 @@
 	name = "Escape Hallway"
 	},
 /obj/firedoor_spawn,
-/obj/disposalpipe/segment/horizontal,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "delivery2"
@@ -31693,6 +31677,7 @@
 "nzw" = (
 /obj/table/auto,
 /obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/secondary/exit)
 "nzK" = (
@@ -34686,7 +34671,6 @@
 	},
 /area/station/catwalk/south)
 "oQb" = (
-/obj/machinery/atmospherics/pipe/simple,
 /obj/grille/catwalk{
 	dir = 5
 	},
@@ -41693,6 +41677,7 @@
 /obj/item/reagent_containers/syringe{
 	pixel_y = 9
 	},
+/obj/disposalpipe/segment/transport,
 /turf/simulated/floor/greenwhite,
 /area/station/medical/medbay)
 "rOF" = (
@@ -41768,7 +41753,6 @@
 	name = "North Solar Panels"
 	},
 /obj/firedoor_spawn,
-/obj/machinery/atmospherics/pipe/simple,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -42414,9 +42398,6 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "scs" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
 /obj/table/glass/auto,
 /obj/item/storage/toolbox/electrical,
 /obj/item/device/gps,
@@ -51939,12 +51920,8 @@
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
-/obj/disposalpipe/segment/horizontal,
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
@@ -52000,11 +51977,11 @@
 /turf/space,
 /area/space)
 "wpj" = (
-/obj/disposalpipe/junction/left/south,
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
 	dir = 6
 	},
+/obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "wpk" = (
@@ -52165,7 +52142,6 @@
 	name = "Custodial Closet"
 	},
 /obj/firedoor_spawn,
-/obj/disposalpipe/segment/horizontal,
 /obj/access_spawn/janitor,
 /obj/cable{
 	d1 = 2;
@@ -56551,7 +56527,6 @@
 	name = "Escape Hallway"
 	},
 /obj/firedoor_spawn,
-/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/central{
 	name = "Ringside Hallway"
@@ -75311,7 +75286,7 @@ vnX
 vnX
 vnX
 vnX
-aPQ
+vnX
 vnX
 vnX
 vnX
@@ -100089,7 +100064,7 @@ vgY
 vuZ
 oSw
 eDe
-ati
+ilr
 fUm
 kvM
 mBH
@@ -102821,7 +102796,7 @@ uIm
 uIm
 xKB
 qsA
-sdS
+ati
 voH
 wON
 kHd

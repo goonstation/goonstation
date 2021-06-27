@@ -177,6 +177,16 @@
 			else
 				return ..()
 
+		afterattack(turf/simulated/A, mob/user)
+			if(locate(/obj/decal/poster/banner, A))
+				return
+			else if(istype(A, /turf/simulated/wall/))
+				var/obj/decal/poster/banner/B = new(A)
+				if (src.material) B.setMaterial(src.material)
+				logTheThing("station", user, null, "Hangs up a banner (<b>Material:</b> [B.material && B.material.mat_id ? "[B.material.mat_id]" : "*UNKNOWN*"]) in [A] at [log_loc(user)].")
+				src.change_stack_amount(-1)
+				user.visible_message("<span class='notice'>[user] hangs up a [B.name] in [A]!.</span>", "<span class='notice'>You hang up a [B.name] in [A]!</span>")
+
 /obj/item/material_piece/fart
 	icon_state = "fart"
 	name = "frozen fart"

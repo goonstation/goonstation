@@ -3254,7 +3254,6 @@
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "if" = (
-/obj/disposalpipe/segment,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -3715,13 +3714,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
-"ji" = (
-/obj/wingrille_spawn/auto,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/mining/staff_room)
 "jj" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	name = "Mechanics"
@@ -3852,11 +3844,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
-"jv" = (
-/obj/disposalpipe/segment,
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/engine/elect)
 "jw" = (
 /obj/cable{
 	d1 = 4;
@@ -4306,7 +4293,6 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "kz" = (
-/obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -4713,7 +4699,6 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -5320,7 +5305,6 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -5765,7 +5749,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment,
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
@@ -6133,7 +6116,6 @@
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
-/obj/disposalpipe/segment,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -6444,7 +6426,6 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/disposalpipe/segment,
 /obj/cable,
 /obj/cable{
 	d2 = 4;
@@ -7282,7 +7263,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -7645,7 +7625,6 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/disposalpipe/segment,
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -8387,15 +8366,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
-"tM" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/junction/right/east,
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
 "tN" = (
 /obj/securearea{
 	desc = "";
@@ -8583,7 +8553,6 @@
 	icon_state = "1-2"
 	},
 /obj/access_spawn/security,
-/obj/disposalpipe/segment,
 /obj/machinery/door/airlock/pyro/security/alt,
 /turf/simulated/floor,
 /area/station/security/secwing)
@@ -17573,7 +17542,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "QZ" = (
-/obj/disposalpipe/segment,
 /obj/cable{
 	d1 = 2;
 	d2 = 8;
@@ -60256,7 +60224,7 @@ gc
 gc
 hq
 Ye
-ji
+jh
 Uh
 jp
 mU
@@ -61464,7 +61432,7 @@ xd
 xf
 ht
 is
-jv
+jk
 xp
 ke
 xw
@@ -73554,7 +73522,7 @@ pD
 rx
 so
 uh
-tM
+ta
 mg
 hV
 yh

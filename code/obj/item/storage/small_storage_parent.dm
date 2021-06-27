@@ -32,6 +32,7 @@
 		. += "<br>Holding [length(L)]/[slots] objects"
 		lastTooltipContent = .
 
+	// TODO: initalize
 	New()
 		hud = new(src)
 		..()
