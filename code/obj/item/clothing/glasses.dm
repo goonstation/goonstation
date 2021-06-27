@@ -340,11 +340,11 @@
 				var/obj/item/organ/eye/theEye = equipper.drop_organ((src.icon_state == "eyepatch-L") ? "left_eye" : "right_eye")
 				pinhole = 1
 				block_eye = null
+				appearance_flags |= RESET_COLOR
 				if(!theEye)
 					user.show_message("<span class='alert'>Um. Wow. Thats kinda grode.<span>")
 					return ..()
 				theEye.appearance_flags |= RESET_COLOR
-				appearance_flags |= RESET_COLOR
 				user.show_message("<span class='alert'>You stab a hole in [src].  Unfortunately, you also stab a hole in your [theEye] and when you pull [W] away your eye comes with it!!</span>")
 				return
 			else
