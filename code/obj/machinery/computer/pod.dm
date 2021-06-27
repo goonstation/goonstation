@@ -94,6 +94,7 @@
 					C.set_loc(src.loc)
 				M.id = src.id
 				A.circuit = M
+				A.set_dir(src.dir)
 				A.state = 3
 				A.icon_state = "3"
 				A.anchored = 1
@@ -117,6 +118,7 @@
 					C.set_loc(src.loc)
 				M.id = src.id
 				A.circuit = M
+				A.set_dir(src.dir)
 				A.state = 4
 				A.icon_state = "4"
 				A.anchored = 1
@@ -124,9 +126,6 @@
 	else
 		src.attack_hand(user)
 	return
-
-/obj/machinery/computer/pod/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
 
 /obj/machinery/computer/pod/attack_hand(var/mob/user as mob)
 	if(..())

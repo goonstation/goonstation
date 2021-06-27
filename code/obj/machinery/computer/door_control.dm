@@ -20,8 +20,6 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/computer/door_control/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
 /obj/machinery/computer/door_control/attack_hand(var/mob/user as mob)
 	if(..())
 		return

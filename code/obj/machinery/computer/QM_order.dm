@@ -26,9 +26,6 @@
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "qmreq1"
 
-/obj/machinery/computer/ordercomp/attackby(I as obj, user as mob)
-	return src.attack_hand(user)
-
 /obj/machinery/computer/ordercomp/attack_ai(var/mob/user as mob)
 	boutput(user, "<span class='alert'>AI Interfacing with this computer has been disabled.</span>")
 	return
@@ -79,7 +76,7 @@
 		else
 			boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 			src.scan = null
-	else src.attack_hand(user)
+	else ..()
 	return
 
 /obj/machinery/computer/ordercomp/proc/view_requests()

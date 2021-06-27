@@ -13,6 +13,7 @@
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_CLONINGCONSOLES
 	can_reconnect = 1
+	circuit_type = /obj/item/circuitboard/cloning
 	var/obj/machinery/clone_scanner/scanner = null //Linked scanner. For scanning.
 	var/max_pods = 3
 	var/list/linked_pods = list() // /obj/machinery/clonepod
@@ -150,6 +151,7 @@
 				src.BE = null
 			A.circuit = M
 			A.state = 3
+			A.set_dir(src.dir)
 			A.icon_state = "3"
 			A.anchored = 1
 			qdel(src)

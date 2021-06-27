@@ -12,19 +12,77 @@
 	/// does it have a glow in the dark screen? see computer_screens.dmi
 	var/glow_in_dark_screen = TRUE
 	var/image/screen_image
+
+	var/can_reconnect = 0 //Set to 1 to make multitools call connection_scan. For consoles with associated equipment (cloner, genetek etc)
+	var/obj/item/circuitboard/circuit_type = null
+	Topic(href, href_list)
+		if (..(href, href_list))
+			return 1
+		playsound(src.loc, 'sound/machines/keypress.ogg', 30, 1, -15)
+
+	attack_hand(var/mob/user)
+		..()
+		if (!user.literate)
+			boutput(user, "<span class='alert'>You don't know how to read or write, operating a computer isn't going to work!</span>")
+			return 1
+		interact_particle(user,src)
+
+	attack_ai(mob/user as mob)
+		src.attack_hand(user)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (can_reconnect)
+			if (istype(W, /obj/item/device/multitool) && !(status & (BROKEN|NOPOWER)))
+				boutput(user, "<span class='notice'>You pulse [src.name] to re-scan for equipment.</span>")
+				connection_scan()
+				return
+		if (isscrewingtool(W) && src.circuit_type)
+			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			if (do_after(user, 2 SECONDS))
+				if (src.status & BROKEN)
+					user.show_text("The broken glass falls out.", "blue")
+					var/obj/computerframe/A = new /obj/computerframe(src.loc)
+					if (src.material)
+						A.setMaterial(src.material)
+					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+					G.set_loc(src.loc)
+					var/obj/item/circuitboard/M = new src.circuit_type(A)
+					for (var/obj/C in src)
+						C.set_loc(src.loc)
+					A.set_dir(src.dir)
+					A.circuit = M
+					A.state = 3
+					A.icon_state = "3"
+					A.anchored = 1
+					qdel(src)
+				else
+					user.show_text("You disconnect the monitor.", "blue")
+					var/obj/computerframe/A = new /obj/computerframe(src.loc)
+					if (src.material)
+						A.setMaterial(src.material)
+					var/obj/item/circuitboard/M = new src.circuit_type(A)
+					for (var/obj/C in src)
+						C.set_loc(src.loc)
+					A.set_dir(src.dir)
+					A.circuit = M
+					A.state = 4
+					A.icon_state = "4"
+					A.anchored = 1
+					qdel(src)
+		else
+			src.attack_hand(user)
+
+	proc/connection_scan()
+		//Placeholder so the multitool probing thing can go on this parent
+		//Put the code for finding the stuff your computer needs in this proc
+		return
+
 /*
 /obj/machinery/computer/airtunnel
 	name = "Air Tunnel Control"
 	icon = 'airtunnelcomputer.dmi'
 	icon_state = "console00"
 */
-
-/obj/machinery/computer/attack_hand(mob/user as mob)
-	. = ..()
-	if (!user.literate)
-		boutput(user, "<span class='alert'>You don't know how to read or write, operating a computer isn't going to work!</span>")
-		return 1
-
 /obj/machinery/computer/aiupload
 	name = "AI Upload"
 	desc = "A computer that accepts modules, and uploads the commands to the AI."

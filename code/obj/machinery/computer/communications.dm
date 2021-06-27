@@ -6,6 +6,7 @@
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_COMMSCONSOLES
+	circuit_type = /obj/item/circuitboard/communications
 	var/prints_intercept = 1
 	var/authenticated = 0
 	var/list/messagetitle = list()
@@ -180,46 +181,6 @@
 			if(AL.canAIControl() && AL.lockdownbyai == 1)
 				AL.open()
 				AL.lockdownbyai = 0
-
-/obj/machinery/computer/communications/attackby(var/obj/item/I as obj, user as mob)
-	if (isscrewingtool(I))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 2 SECONDS))
-			if (src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/communications/M = new /obj/item/circuitboard/communications( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				logTheThing("station", user, null, "disassembles [src] (broken) [log_loc(src)]")
-				qdel(src)
-			else
-				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/circuitboard/communications/M = new /obj/item/circuitboard/communications( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				logTheThing("station", user, null, "disassembles [src] [log_loc(src)]")
-				qdel(src)
-
-	else
-		src.attack_hand(user)
-	return
-
-/obj/machinery/computer/communications/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
 
 /obj/machinery/computer/communications/attack_hand(var/mob/user as mob)
 	if(..())

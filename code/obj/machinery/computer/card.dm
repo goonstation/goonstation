@@ -1,6 +1,7 @@
 /obj/machinery/computer/card
 	name = "Identification Computer"
 	icon_state = "id"
+	circuit_type = /obj/item/circuitboard/card
 	var/obj/item/card/id/scan = null
 	var/obj/item/card/id/modify = null
 	var/obj/item/eject = null //Overrides modify slot set_loc. sometimes we want to eject something that's not a card. like an implant!
@@ -30,9 +31,6 @@
 /obj/machinery/computer/card/console_lower
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "id2"
-
-/obj/machinery/computer/card/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
 
 /obj/machinery/computer/card/attack_hand(var/mob/user as mob)
 	if(..())
@@ -397,63 +395,33 @@
 	return
 
 /obj/machinery/computer/card/attackby(obj/item/I as obj, mob/user as mob)
-	if (isscrewingtool(I))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 2 SECONDS))
-			if (src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/card/M = new /obj/item/circuitboard/card( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
+	//grab the ID card from an access implant if this is one
+	var/modify_only = 0
+	if (!istype(I,/obj/item/card/id))
+		I = get_card_from(I)
+		modify_only = 1
+
+	if (modify_only && src.eject && !src.scan && src.modify)
+		boutput(user, "<span class='notice'>[src.eject] will not work in the authentication card slot.</span>")
+		return
+	else if (istype(I, /obj/item/card/id))
+		if (!src.scan && !modify_only)
+			boutput(user, "<span class='notice'>You insert [I] into the authentication card slot.</span>")
+			user.drop_item()
+			I.set_loc(src)
+			src.scan = I
+		else if (!src.modify)
+			boutput(user, "<span class='notice'>You insert [src.eject ? src.eject : I] into the target card slot.</span>")
+			user.drop_item()
+			if (src.eject)
+				src.eject.set_loc(src)
 			else
-				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/circuitboard/card/M = new /obj/item/circuitboard/card( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				qdel(src)
-	else
-		//grab the ID card from an access implant if this is one
-		var/modify_only = 0
-		if (!istype(I,/obj/item/card/id))
-			I = get_card_from(I)
-			modify_only = 1
-
-		if (modify_only && src.eject && !src.scan && src.modify)
-			boutput(user, "<span class='notice'>[src.eject] will not work in the authentication card slot.</span>")
-			return
-		else if (istype(I, /obj/item/card/id))
-			if (!src.scan && !modify_only)
-				boutput(user, "<span class='notice'>You insert [I] into the authentication card slot.</span>")
-				user.drop_item()
 				I.set_loc(src)
-				src.scan = I
-			else if (!src.modify)
-				boutput(user, "<span class='notice'>You insert [src.eject ? src.eject : I] into the target card slot.</span>")
-				user.drop_item()
-				if (src.eject)
-					src.eject.set_loc(src)
-				else
-					I.set_loc(src)
-				src.modify = I
-			src.updateUsrDialog()
-			return
-
-	src.attack_hand(user)
+			src.modify = I
+		src.updateUsrDialog()
+		return
+	else
+		..()
 	return
 
 /obj/machinery/computer/card/proc/get_card_from(obj/item/I as obj)

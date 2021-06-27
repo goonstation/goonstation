@@ -142,12 +142,6 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		radio_controller.remove_object(src, "1435")
 		..()
 
-/obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/computer/supplycomp/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
-
 /obj/machinery/computer/supplycomp/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(!hacked)
 		if(user)
@@ -168,7 +162,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	if(istype(I,/obj/item/card/emag))
 		//I guess you'll wanna put the emag away now instead of getting a massive popup
 	else
-		return src.attack_hand(user)
+		return ..()
 
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
 	if(!src.allowed(user))

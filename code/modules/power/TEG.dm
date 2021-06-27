@@ -1485,11 +1485,6 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 			return
 		//src.updateUsrDialog()
 
-	attackby(I as obj, user as mob)
-			//Readd construction code + boards
-		src.attack_hand(user)
-		return
-
 	receive_signal(datum/signal/signal)
 		if(!signal || signal.encryption)
 			return
