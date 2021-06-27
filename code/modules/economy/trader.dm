@@ -139,11 +139,9 @@
 		///////Generate Purchase List//
 		///////////////////////////////
 		var/list/goods_for_purchase = goods_sell.Copy()
-		message_admins("Illegal [illegal] - Mind: [usr.mind.special_role]")
 		// Illegal goods for syndicate traitors
 		if (illegal)
 			if(usr.mind && (usr.mind.special_role == "traitor" || usr.mind.special_role == "spy_thief" || usr.mind.special_role == "nukeop" ||	usr.mind.special_role == "sleeper agent" || usr.mind.special_role == "hard-mode traitor" ||	usr.mind.special_role == "omnitraitor"))
-				message_admins("Adding illegal goods")
 				goods_for_purchase += goods_illegal
 		if (href_list["purchase"])
 			src.temp =buy_dialogue + "<HR><BR>"
