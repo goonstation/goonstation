@@ -58836,8 +58836,8 @@
 /turf/simulated/floor/carpet,
 /area/station/security/main)
 "lYJ" = (
-/obj/machinery/disposal/mail/small/autoname,
 /obj/disposalpipe/trunk/mail,
+/obj/machinery/disposal/mail/small/autoname/mechanics/south,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "lZa" = (
