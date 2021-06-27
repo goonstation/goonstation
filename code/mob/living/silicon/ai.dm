@@ -16,12 +16,17 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	"Silly" = "ai_silly",\
 	"Annoyed" = "ai_annoyed",\
 	"Pensive" = "ai_pensive",\
+	"Content" = "ai_content",\
+	"Tired" = "ai_tired",\
+	"Smug" = "ai_smug",\
+	"Wink" = "ai_wink",\
 	"Heart" = "ai_heart",\
 	"Triangle" = "ai_triangle",\
 	"Spooky" = "ai_spooky",\
 	"Suspicious" = "ai_eyesemoji",\
 	"Glitch" = "ai_glitch",\
 	"Eye" = "ai_eye",\
+	"Snoozing" = "ai_zzz",\
 	"Loading Bar" = "ai_loading",\
 	"Exclamation" = "ai_exclamation",\
 	"Question" = "ai_question")
