@@ -8861,6 +8861,9 @@
 	req_access = null
 	},
 /obj/access_spawn/medlab,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/medical/dome)
 "axu" = (
@@ -13480,6 +13483,9 @@
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "aJw" = (
@@ -14417,6 +14423,9 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/vertical,
 /obj/disposalpipe/segment/produce{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
@@ -20547,11 +20556,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
 "aZj" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 8;
@@ -29402,18 +29406,12 @@
 /turf/space,
 /area/station/com_dish/comdish)
 "buQ" = (
+/obj/wingrille_spawn/auto,
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	icon_state = "4-8"
 	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "1-6"
-	},
-/turf/simulated/floor/plating/airless/random,
-/area/station/mining/magnet)
+/turf/simulated/floor/plating/random,
+/area/station/security/main)
 "buR" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -30317,9 +30315,6 @@
 "bxq" = (
 /obj/cable{
 	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "2-4"
 	},
 /obj/cable{
 	d1 = 4;
@@ -31535,9 +31530,6 @@
 /turf/simulated/floor/wood/two,
 /area/station/hallway/secondary/west)
 "bAf" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
 /obj/disposalpipe/junction/left/east,
 /turf/simulated/floor/wood/two,
@@ -32562,9 +32554,6 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/north,
 /area/station/hallway/secondary/west)
 "bCV" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/stool/chair/wooden{
 	desc = "An antique chair.";
 	dir = 8;
@@ -33393,6 +33382,9 @@
 "bER" = (
 /obj/machinery/weapon_stand/rifle_rack/recharger,
 /obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "bES" = (
@@ -35592,9 +35584,6 @@
 	},
 /area/space)
 "bLb" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /obj/decal/tile_edge/line/yellow{
 	dir = 8;
@@ -35610,9 +35599,6 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/vertical,
 /obj/disposalpipe/segment/cargo,
@@ -46641,12 +46627,6 @@
 "cmq" = (
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"cmr" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "cms" = (
 /obj/cable{
 	d2 = 8;
@@ -54614,6 +54594,9 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "hbB" = (
@@ -55354,6 +55337,9 @@
 /obj/item/pen,
 /obj/item/pen/crayon/red,
 /obj/item/paper/book/from_file/space_law,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "iUz" = (
@@ -56943,6 +56929,9 @@
 "mVN" = (
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/security/main)
@@ -58779,17 +58768,21 @@
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
 "rGC" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8;
 	name = "Chimpnasium";
 	req_access = null
 	},
 /obj/access_spawn/medlab,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/dome)
 "rHb" = (
@@ -60889,6 +60882,9 @@
 "wUH" = (
 /obj/item/chair/folded,
 /obj/machinery/light/incandescent/harsh/very,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/security/main)
 "wUP" = (
@@ -73690,7 +73686,7 @@ bkr
 bne
 bne
 bne
-buQ
+aEj
 aVz
 bzY
 bCM
@@ -95761,7 +95757,7 @@ cjP
 cky
 cku
 clK
-cmr
+cmq
 cno
 coq
 cph
@@ -122280,7 +122276,7 @@ arN
 aaa
 aaa
 ati
-atT
+axr
 avi
 avi
 axq
@@ -125646,7 +125642,7 @@ sAa
 udg
 mGp
 roN
-roN
+buQ
 mGp
 dEu
 cgl
