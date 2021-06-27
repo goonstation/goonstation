@@ -45892,12 +45892,6 @@
 	dir = 1
 	},
 /area/station/crew_quarters/kitchen)
-"doC" = (
-/obj/railing/orange/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "doK" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor,
