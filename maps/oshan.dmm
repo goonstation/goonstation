@@ -16252,9 +16252,13 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "aMr" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /obj/railing/orange/reinforced,
-/obj/machinery/light/incandescent/harsh,
-/turf/simulated/floor/grass/leafy,
+/turf/simulated/floor/grasstodirt{
+	dir = 9
+	},
 /area/station/ranch)
 "aMs" = (
 /obj/machinery/computer/tetris,
@@ -16483,10 +16487,10 @@
 /area/listeningpost)
 "aMX" = (
 /obj/railing/orange/reinforced{
-	dir = 4
+	dir = 1
 	},
 /turf/simulated/floor/grasstodirt{
-	dir = 4
+	dir = 1
 	},
 /area/station/ranch)
 "aMY" = (
@@ -16924,8 +16928,8 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/obj/access_spawn/hydro,
 /obj/machinery/cashreg,
+/obj/access_spawn/rancher,
 /turf/simulated/floor,
 /area/station/ranch)
 "aOm" = (
@@ -16960,7 +16964,8 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/grasstodirt{
-	dir = 4
+	icon_state = "dirt";
+	name = "not grass"
 	},
 /area/station/ranch)
 "aOq" = (
@@ -17391,7 +17396,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/grasstodirt{
-	dir = 4
+	dir = 6
 	},
 /area/station/ranch)
 "aPD" = (
@@ -17693,20 +17698,20 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/machinery/disposal/small/south,
+/obj/disposalpipe/trunk/west,
 /turf/simulated/floor/grasstodirt{
 	icon_state = "dirt";
 	name = "not grass"
 	},
 /area/station/ranch)
 "aQp" = (
-/obj/railing/orange/reinforced{
-	dir = 4
-	},
 /obj/submachine/chicken_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn,
 /obj/machinery/light/incandescent/harsh,
 /turf/simulated/floor/grasstodirt{
-	dir = 4
+	icon_state = "dirt";
+	name = "not grass"
 	},
 /area/station/ranch)
 "aQr" = (
@@ -23557,6 +23562,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bgA" = (
@@ -43896,7 +43902,10 @@
 /area/station/crew_quarters/bar)
 "cgx" = (
 /obj/railing/orange/reinforced,
-/turf/simulated/floor/grass/leafy,
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "cgy" = (
 /obj/cable{
@@ -44572,10 +44581,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/railing/orange/reinforced{
-	dir = 1
+/turf/simulated/floor/grasstodirt{
+	dir = 6
 	},
-/turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "ciz" = (
 /obj/table/wood/auto,
@@ -44595,9 +44603,6 @@
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
-	},
-/obj/railing/orange/reinforced{
-	dir = 1
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -44681,14 +44686,15 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "ciN" = (
-/obj/machinery/plantpot,
-/turf/simulated/floor/grass/leafy,
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grasstodirt,
 /area/station/ranch)
 "ciO" = (
 /obj/shrub{
 	dir = 8
 	},
 /obj/machinery/camera/ranch,
+/obj/machinery/light/incandescent/harsh,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "ciP" = (
@@ -44707,10 +44713,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
 "ciT" = (
-/obj/railing/orange/reinforced{
-	dir = 4
-	},
-/obj/machinery/plantpot,
+/obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "ciU" = (
@@ -44857,9 +44860,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/inner/central)
 "cjx" = (
-/obj/railing/orange/reinforced,
-/obj/railing/orange/reinforced{
-	dir = 4
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -44876,10 +44880,9 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
 "cjz" = (
-/obj/shrub{
+/turf/simulated/floor/grasstodirt{
 	dir = 8
 	},
-/turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "cjB" = (
 /obj/cable/reinforced{
@@ -44904,11 +44907,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "cjE" = (
-/obj/submachine/chicken_incubator,
-/obj/item/reagent_containers/food/snacks/ingredient/egg{
-	rand_pos = 0
-	},
-/obj/machinery/camera/ranch,
+/obj/chicken_nesting_box,
+/obj/machinery/light/incandescent/harsh,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "cjF" = (
@@ -44917,26 +44917,33 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "cjG" = (
-/obj/chicken_nesting_box,
 /obj/machinery/light/incandescent/harsh,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
-"cjH" = (
-/obj/shrub{
+/obj/machinery/plantpot,
+/obj/railing/orange/reinforced{
 	dir = 8
 	},
+/turf/simulated/floor/grasstodirt{
+	icon_state = "dirt";
+	name = "not grass"
+	},
+/area/station/ranch)
+"cjH" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
 	text = "NF"
 	},
-/turf/simulated/floor/grass/leafy,
+/obj/machinery/plantpot,
+/turf/simulated/floor/grasstodirt{
+	icon_state = "dirt";
+	name = "not grass"
+	},
 /area/station/ranch)
 "cjI" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/hydro,
+/obj/access_spawn/rancher,
 /turf/simulated/floor/plating/random,
 /area/station/ranch)
 "cjJ" = (
@@ -45890,7 +45897,12 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "dtX" = (
-/obj/chicken_nesting_box,
+/obj/machinery/camera/ranch{
+	dir = 10
+	},
+/obj/shrub{
+	dir = 6
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "duw" = (
@@ -46015,13 +46027,13 @@
 	},
 /area/station/hydroponics/bay)
 "euS" = (
-/obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/disposalpipe/junction/right/south,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "exU" = (
@@ -46035,12 +46047,13 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/hydro,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/rancher,
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
 /area/station/ranch)
 "ezU" = (
@@ -46087,6 +46100,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/grasstodirt{
 	icon_state = "dirt";
 	name = "not grass"
@@ -46621,10 +46635,10 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/obj/access_spawn/hydro,
 /obj/item/reagent_containers/food/snacks/chicken_feed_bag{
 	rand_pos = 1
 	},
+/obj/access_spawn/rancher,
 /turf/simulated/floor,
 /area/station/ranch)
 "iHN" = (
@@ -47818,6 +47832,16 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"rdb" = (
+/obj/disposalpipe/segment/mail,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "rdX" = (
 /obj/machinery/door/airlock/pyro/alt{
 	name = "Catering Hangar"
@@ -83539,7 +83563,7 @@ aMp
 aMR
 cfV
 aDT
-bgy
+rdb
 aDT
 bfQ
 bpL
@@ -84440,9 +84464,9 @@ aSd
 aDr
 chc
 ciZ
-ciN
-aMr
-aOo
+ciB
+ciQ
+aMX
 aOn
 aPy
 eIq
@@ -84743,8 +84767,8 @@ aDr
 chc
 ciP
 ciO
-cgx
-aOo
+ciQ
+aMX
 aOo
 ckn
 aQo
@@ -85045,7 +85069,7 @@ aDr
 chc
 ciZ
 ciT
-cjx
+ciQ
 aMX
 aOp
 aPC
@@ -85348,7 +85372,7 @@ chc
 ciZ
 ciZ
 cjz
-ciQ
+aMr
 ciy
 ciQ
 ciC
@@ -85649,9 +85673,9 @@ aDr
 chc
 cgn
 ciP
-cjE
-ciQ
-ciy
+aOo
+cgx
+cjx
 ciB
 ciC
 ciD
@@ -85952,8 +85976,8 @@ ckY
 aDr
 ciP
 cjG
-ciQ
-ciy
+ciN
+cjx
 dtX
 ciC
 ciE
@@ -86254,9 +86278,9 @@ gMW
 aDr
 ciZ
 cjH
-ciQ
+ciN
 ciA
-ciQ
+cjE
 ciC
 ggJ
 vfw
