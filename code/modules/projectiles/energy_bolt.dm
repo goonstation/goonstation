@@ -324,7 +324,7 @@ toxic - poisons
 		if (ishuman(hit))
 			O.die()
 			var/mob/living/carbon/human/H = hit
-			H.do_disorient(stamina_damage = pow*1.5, weakened = 0, stunned = 0, disorient = pow*2, remove_stamina_below_zero = 0)
+			H.do_disorient(stamina_damage = pow*1.5, weakened = 0, stunned = 0, disorient = pow, remove_stamina_below_zero = 0)
 			H.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = THROW_GUNIMPACT)
 			H.emote("twitch_v")
 
