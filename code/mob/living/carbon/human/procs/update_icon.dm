@@ -619,65 +619,76 @@
 	if (!src.bioHolder)
 		return // fuck u
 
-	src.hair_standing = SafeGetOverlayImage("hair", 'icons/mob/human_hair.dmi', "none", MOB_HAIR_LAYER2)
-	src.hair_standing.overlays.len = 0
-	src.hair_special_standing = SafeGetOverlayImage("hair", 'icons/mob/human_hair.dmi', "none", MOB_HAIR_LAYER2)
-	src.hair_special_standing.overlays.len = 0
-	src.hair_standing.pixel_y = 0
-	src.hair_special_standing.pixel_y = 0
+	UpdateOverlays(null, "hair_one", 1, 1)
+	UpdateOverlays(null, "hair_two", 1, 1)
+	UpdateOverlays(null, "hair_three", 1, 1)
 
+	UpdateOverlays(null, "hair_special_one", 1, 1)
+	UpdateOverlays(null, "hair_special_two", 1, 1)
+	UpdateOverlays(null, "hair_special_three", 1, 1)
 
 	var/seal_hair = (src.head && src.head.seal_hair)
 	var/obj/item/organ/head/my_head
 	if (src?.organHolder?.head)
 		var/datum/appearanceHolder/AHH = src.bioHolder?.mobAppearance
 		my_head = src.organHolder.head
-		src.hair_standing.pixel_y = AHH.customization_first_offset_y
-		src.hair_special_standing.pixel_y = AHH.customization_first_offset_y
+		var/y_to_offset = AHH.customization_first_offset_y
 
 		src.image_eyes = my_head.head_image_eyes
 		if (src.image_eyes)
 			src.image_eyes.pixel_y = AHH.e_offset_y
 			src.image_eyes.color = AHH.e_color
 		UpdateOverlays(image_eyes, "eyes", 1, 1)
-
+		//Previously we shoved all the hair images into the overlays of two images (one for normal hair and one for special) 'cause of identical vars
+		//But now we need hairstyle-specific layering so RIP to that approach and time to do things manually
 		src.image_cust_one = my_head.head_image_cust_one
-
+		src.image_cust_one?.pixel_y = y_to_offset
 		src.image_cust_two = my_head.head_image_cust_two
-
+		src.image_cust_two?.pixel_y = y_to_offset
 		src.image_cust_three = my_head.head_image_cust_three
+		src.image_cust_three?.pixel_y = y_to_offset
 
 		src.image_special_one = my_head.head_image_special_one
-		src.special_one_state = my_head.head_image_special_one?.icon_state
-
+		src.image_special_one?.pixel_y = y_to_offset
 		src.image_special_two = my_head.head_image_special_two
-		src.special_two_state = my_head.head_image_special_two?.icon_state
-
+		src.image_special_two?.pixel_y = y_to_offset
 		src.image_special_three = my_head.head_image_special_three
-		src.special_three_state = my_head.head_image_special_three?.icon_state
+		src.image_special_three?.pixel_y = y_to_offset
 
 		if(!seal_hair)
 			if (AHH.mob_appearance_flags & HAS_HUMAN_HAIR || src.hair_override)
-				src.hair_standing.overlays += image_cust_one
-				src.hair_standing.overlays += image_cust_two
-				src.hair_standing.overlays += image_cust_three
-				UpdateOverlays(hair_standing, "hair", 1, 1)
+				UpdateOverlays(image_cust_one, "hair_one", 1, 1)
+				UpdateOverlays(image_cust_two, "hair_two", 1, 1)
+				UpdateOverlays(image_cust_three, "hair_three", 1, 1)
 			else
-				UpdateOverlays(null, "hair", 1, 1)
+				UpdateOverlays(null, "hair_one", 1, 1)
+				UpdateOverlays(null, "hair_two", 1, 1)
+				UpdateOverlays(null, "hair_three", 1, 1)
 
 			if (AHH.mob_appearance_flags & HAS_SPECIAL_HAIR || src.special_hair_override)
-				src.hair_special_standing.overlays += image_special_one
-				src.hair_special_standing.overlays += image_special_two
-				src.hair_special_standing.overlays += image_special_three
-				UpdateOverlays(hair_special_standing, "hair_special", 1, 1)
+				UpdateOverlays(image_special_one, "hair_special_one", 1, 1)
+				UpdateOverlays(image_special_two, "hair_special_two", 1, 1)
+				UpdateOverlays(image_special_three, "hair_special_three", 1, 1)
 			else
-				UpdateOverlays(null, "hair_special", 1, 1)
+				UpdateOverlays(null, "hair_special_one", 1, 1)
+				UpdateOverlays(null, "hair_special_two", 1, 1)
+				UpdateOverlays(null, "hair_special_three", 1, 1)
 		else
-			UpdateOverlays(null, "hair", 1, 1)
-			UpdateOverlays(null, "hair_special", 1, 1)
+			UpdateOverlays(null, "hair_one", 1, 1)
+			UpdateOverlays(null, "hair_two", 1, 1)
+			UpdateOverlays(null, "hair_three", 1, 1)
+
+			UpdateOverlays(null, "hair_special_one", 1, 1)
+			UpdateOverlays(null, "hair_special_two", 1, 1)
+			UpdateOverlays(null, "hair_special_three", 1, 1)
 	else
-		UpdateOverlays(null, "hair", 1, 1)
-		UpdateOverlays(null, "hair_special", 1, 1)
+		UpdateOverlays(null, "hair_one", 1, 1)
+		UpdateOverlays(null, "hair_two", 1, 1)
+		UpdateOverlays(null, "hair_three", 1, 1)
+
+		UpdateOverlays(null, "hair_special_one", 1, 1)
+		UpdateOverlays(null, "hair_special_two", 1, 1)
+		UpdateOverlays(null, "hair_special_three", 1, 1)
 
 
 /mob/living/carbon/human/update_burning_icon(var/force_remove=0, var/datum/statusEffect/simpledot/burning/B = 0)
@@ -788,9 +799,9 @@
 		src.image_cust_two?.layer = MOB_HAIR_LAYER1
 		src.image_cust_three?.layer = MOB_HAIR_LAYER1
 	else
-		src.image_cust_one?.layer = MOB_HAIR_LAYER2
-		src.image_cust_two?.layer = MOB_HAIR_LAYER2
-		src.image_cust_three?.layer = MOB_HAIR_LAYER2
+		src.image_cust_one?.layer = src.bioHolder.mobAppearance.customization_first.default_layer
+		src.image_cust_two?.layer = src.bioHolder.mobAppearance.customization_second.default_layer
+		src.image_cust_three?.layer = src.bioHolder.mobAppearance.customization_third.default_layer
 
 
 var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_arm_left", "r_leg" = "stump_leg_right", "l_leg" = "stump_leg_left")

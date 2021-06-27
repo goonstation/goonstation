@@ -688,7 +688,7 @@
 			if(!isturf(target.loc) && !isturf(target)) return
 			if(!usable(user)) return
 
-			if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+			if(params["left"] && (master || user) && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 				preUse(user)
 				var/direction = get_dir_pixel(user, target, params)
 				if(direction == NORTHEAST || direction == NORTHWEST || direction == SOUTHEAST || direction == SOUTHWEST)
@@ -696,7 +696,7 @@
 
 				var/list/attacked = list()
 
-				var/turf/one = get_step(master, direction)
+				var/turf/one = get_step((master || user), direction)
 
 				var/turf/two = get_step(one, direction)
 				var/turf/twoB = get_step(two, direction)
@@ -720,7 +720,10 @@
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							if(master)
+								A.attackby(master, user, params, 1)
+							else
+								A.attack_hand(user, params)
 							attacked += A
 							A.throw_at(get_edge_target_turf(A,direction), 5, 3)
 

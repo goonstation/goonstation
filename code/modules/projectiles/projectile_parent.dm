@@ -81,7 +81,7 @@
 		src.setup()
 		if(proj_data)
 			proj_data.post_setup(src)
-		if (!disposed && !pooled)
+		if (!QDELETED(src))
 			SPAWN_DBG(0)
 				if (!is_processing)
 					process()
@@ -90,15 +90,15 @@
 		if(hitlist.len)
 			hitlist.len = 0
 		is_processing = 1
-		while (!disposed && !pooled)
+		while (!QDELETED(src))
 
 			do_step()
-			sleep(0.75) //Changed from 1, minor proj. speed buff
+			sleep(1 DECI SECOND) //Changed from 1, minor proj. speed buff
 		is_processing = 0
 
 	proc/collide(atom/A as mob|obj|turf|area, first = 1)
 		if (!A) return // you never know ok??
-		if (disposed || pooled) return // if disposed = true, pooled or set for garbage collection and shouldn't process bumps
+		if (QDELETED(src)) return // if disposed = true, QDELETED(src) or set for garbage collection and shouldn't process bumps
 		if (!proj_data) return // this apparently happens sometimes!! (more than you think!)
 		if (proj_data?.on_pre_hit(A, src.angle, src))
 			return // Our bullet doesnt want to hit this
@@ -126,14 +126,14 @@
 
 		var/sigreturn = SEND_SIGNAL(src, COMSIG_PROJ_COLLIDE, A)
 		sigreturn |= SEND_SIGNAL(A, COMSIG_ATOM_HITBY_PROJ, src)
-		if(pooled) //maybe a signal proc pooled us
+		if(QDELETED(src)) //maybe a signal proc QDELETED(src) us
 			return
 		// also run the atom's general bullet act
 		var/atom/B = A.bullet_act(src) //If bullet_act returns an atom, do all bad stuff to that atom instead
 		if(istype(B))
 			A = B
 
-		if (pooled) //maybe bullet_act pooled us. (MBC : SORRY THIS IS THE THING THAT FIXES REFLECTION RACE CONDITIONS)
+		if (QDELETED(src)) //maybe bullet_act QDELETED(src) us. (MBC : SORRY THIS IS THE THING THAT FIXES REFLECTION RACE CONDITIONS)
 			return
 
 		// if we made it this far this is a valid bump, run the specific projectile's hit code
@@ -186,7 +186,7 @@
 					if(!(X in src.hitlist))
 						if (!X.CanPass(src, get_step(src, X.dir), 1, 0))
 							src.collide(X, first = 0)
-					if(src.pooled)
+					if(QDELETED(src))
 						return
 			if(!(sigreturn & PROJ_ATOM_PASSTHROUGH))
 				if (pierces_left == 0 || (sigreturn & PROJ_ATOM_CANNOT_PASS))
@@ -208,71 +208,16 @@
 					if(!(X in src.hitlist))
 						if (!X.CanPass(src, get_step(src, X.dir), 1, 0))
 							src.collide(X, first = 0)
-					if(src.pooled)
+					if(QDELETED(src))
 						return
 		else
 			die()
 
-	pooled()
-		name = "projectile"
-		src.remove_simple_light()
-		xo = 0
-		yo = 0
-		pixel_x = 0
-		pixel_y = 0
-		power = 0
-		initial_power = 0
-		max_range = 0
-		travelled = 0
-		target = null
-		proj_data = null
-		//o_shooter = null
-		shooter = null
-		mob_shooter = null
-		implanted = null
-		forensic_ID = null
-		targets = null
-		angle = 0
-		was_setup = 0
-		was_pointblank = 0
-		data = 0
-		crossing.len = 0
-		curr_t = 0
-		wx = 0
-		wy = 0
-		color = null
-		incidence = 0
-		special_data.len = 0
-		overlays = null
-		overlay_refs = null
-		hitlist.len = 0
-		transform = null
-		internal_speed = null
-		orig_turf = null
-		pierces_left = 0
-		goes_through_walls = 0
-		goes_through_mobs = 0
-		ticks_until_can_hit_mob = 0
-		removeMaterial()
-		collide_with_other_projectiles = 0
-		is_processing = 0
-		facing_dir = 1
-		reflectcount = 0
-		..()
-
-	//just in fuck in case
-	unpooled()
-		//mbc hacky fix that prob doesnt work for shitty bug where unpooled projs get unpooled -- its even worse now :)
-		special_data.len = 0
-		for (var/atom/movable/A in src.contents)
-			A.set_loc(src.loc)
-
-		..()
 
 	proc/die()
 		if (proj_data)
 			proj_data.on_end(src)
-		pool(src)
+		qdel(src)
 
 	proc/max_range_fail()
 
@@ -291,6 +236,8 @@
 				src.color = "#ffffff"
 
 	proc/setup()
+		if(QDELETED(src))
+			return
 		if (src.proj_data == null || (xo == 0 && yo == 0) || proj_data.projectile_speed == 0)
 			die()
 			return
@@ -305,6 +252,7 @@
 
 		if (len == 0)
 			die()
+			return
 		src.xo = src.xo / len
 		src.yo = src.yo / len
 
@@ -328,28 +276,22 @@
 		Turn(angle)
 		if (!proj_data.precalculated)
 			return
-
+		var/speed = internal_speed || proj_data.projectile_speed
 		var/x32 = 0
 		var/xs = 1
 		var/y32 = 0
 		var/ys = 1
 		if (xo)
-			if (!isnull(internal_speed))
-				x32 = 32 / (internal_speed * xo)
-			else
-				x32 = 32 / (proj_data.projectile_speed * xo)
+			x32 = 32 / (speed * xo)
 			if (x32 < 0)
 				xs = -1
 				x32 = -x32
 		if (yo)
-			if (!isnull(internal_speed))
-				y32 = 32 / (internal_speed * yo)
-			else
-				y32 = 32 / (proj_data.projectile_speed * yo)
+			y32 = 32 / (speed * yo)
 			if (y32 < 0)
 				ys = -1
 				y32 = -y32
-		var/max_t = src.max_range * (32/proj_data.projectile_speed)
+		var/max_t = src.max_range * (32/speed)
 		var/next_x = x32 / 2
 		var/next_y = y32 / 2
 		var/ct = 0
@@ -413,11 +355,10 @@
 			return
 		src.ticks_until_can_hit_mob--
 		proj_data.tick(src)
-		if (disposed || pooled)
+		if (QDELETED(src))
 			return
 
 		var/turf/curr_turf = loc
-
 		var/dwx
 		var/dwy
 		if (!isnull(internal_speed))
@@ -443,7 +384,7 @@
 				var/turf/T = crossing[i]
 				if (crossing[T] < curr_t)
 					Move(T)
-					if (disposed || pooled)
+					if (QDELETED(src))
 						return
 					incidence = get_dir(incidence_turf, T)
 					incidence_turf = T
@@ -468,7 +409,7 @@
 				else
 					set_loc(Dest) //set loc so we can cross walls etc properly
 					collide_with_applicable_in_tile(Dest)
-				if (disposed || pooled)
+				if (QDELETED(src))
 					return
 
 				incidence = get_dir(curr_turf, Dest)
@@ -490,7 +431,7 @@
 					else
 						incidence &= NORTH | SOUTH
 
-			if (!loc && !pooled)
+			if (!loc && !QDELETED(src))
 				die()
 				return
 
@@ -503,18 +444,14 @@
 		var/dpy = dy * 32
 
 		if (!dx && !dy) 	//smooth movement within a tile
-			animate(src,pixel_x = wx-dpx, pixel_y = wy-dpy, time = 0.75, flags = ANIMATION_END_NOW)
+			animate(src,pixel_x = wx-dpx, pixel_y = wy-dpy, time = 1 DECI SECOND, flags = ANIMATION_END_NOW)
 		else
-			if (dx && dy) 	//diagonals are too fucky and i cant figure out why yet :(
-				pixel_x = wx - dpx
-				pixel_y = wy - dpy
-			else			//smooth movement cross-tile
-				if ((loc.x - curr_turf.x))
-					pixel_x += 32 * -(loc.x - curr_turf.x)
-				if ((loc.y - curr_turf.y))
-					pixel_y += 32 * -(loc.y - curr_turf.y)
+			if ((loc.x - curr_turf.x))
+				pixel_x += 32 * -(loc.x - curr_turf.x)
+			if ((loc.y - curr_turf.y))
+				pixel_y += 32 * -(loc.y - curr_turf.y)
 
-				animate(src,pixel_x = wx-dpx, pixel_y = wy-dpy, time = 0.75, flags = ANIMATION_END_NOW) //todo figure out later
+			animate(src,pixel_x = wx-dpx, pixel_y = wy-dpy, time = 1 DECI SECOND, flags = ANIMATION_END_NOW) //todo figure out later
 
 	track_blood()
 		src.tracked_blood = null
@@ -579,7 +516,7 @@ datum/projectile
 	// Determines the amount of length units the projectile travels each tick
 	// A tile is 32 wide, 32 long, and 32 * sqrt(2) across.
 	// Setting this to 32 will mimic the old behaviour for shots travelling in one of the cardinal directions.
-	var/projectile_speed = 28
+	var/projectile_speed = 36
 
 	// Determines the impact range of the projectile. Should ideally be half the length of the sprite
 	// for line-based stuff (lasers), or the radius for circular projectiles.
@@ -932,7 +869,7 @@ datum/projectile/snowball
 /proc/initialize_projectile(var/turf/S, var/datum/projectile/DATA, var/xo, var/yo, var/shooter = null, var/turf/remote_sound_source, var/play_shot_sound = TRUE, var/datum/callback/alter_proj = null)
 	if (!S)
 		return
-	var/obj/projectile/P = unpool(/obj/projectile)
+	var/obj/projectile/P = new
 	if(!P)
 		return
 

@@ -14,6 +14,7 @@
 	var/pcount
 	var/datum/reagents/reagents_internal
 	var/average
+	var/maxpills
 
 	// setup this pill bottle from some reagents
 	proc/create_from_reagents(var/datum/reagents/R, var/pillname, var/pillvol, var/pillcount)
@@ -31,6 +32,7 @@
 		src.pname = pillname
 		src.pvol = pillvol
 		src.pcount = pillcount
+		src.maxpills = pillcount
 
 	// spawn a pill, returns a pill or null if there aren't any left in the bottle
 	proc/create_pill()
@@ -81,11 +83,14 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/pill))
-			user.u_equip(W)
-			W.set_loc(src)
-			W.dropped()
-			boutput(user, "<span class='notice'>You put [W] in [src].</span>")
-			rebuild_desc()
+			if(src.pcount + length(src.contents) < src.maxpills)
+				user.u_equip(W)
+				W.set_loc(src)
+				W.dropped()
+				boutput(user, "<span class='notice'>You put [W] in [src].</span>")
+				rebuild_desc()
+			else
+				boutput(user, "<span class='notice'>[src] is full!</span>")
 		else ..()
 
 	attack_self(var/mob/user as mob)
@@ -133,6 +138,10 @@
 		user.visible_message("<span class='notice'>[user] begins quickly filling [src]!</span>")
 		var/staystill = user.loc
 		for (var/obj/item/reagent_containers/pill/P in view(1,user))
+			if(src.pcount + length(src.contents) >= src.maxpills)
+				boutput(user, "<span class='notice'>[src] is full!</span>")
+				return
+
 			if (P in user)
 				continue
 			P.set_loc(src)

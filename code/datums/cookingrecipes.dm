@@ -531,6 +531,7 @@
 			return null
 
 		var/obj/item/reagent_containers/food/snacks/sandwich/customSandwich = new /obj/item/reagent_containers/food/snacks/sandwich (ourCooker)
+		customSandwich.heal_amt = 1 // no filling yet, so less than regular sandwich
 		customSandwich.reagents = new /datum/reagents(100)
 		customSandwich.reagents.my_atom = customSandwich
 
@@ -601,6 +602,9 @@
 					var/obj/transformedFilling = image(snack.icon, snack.icon_state)
 					transformedFilling.transform = matrix(0.75, MATRIX_SCALE)
 					fillingColors += transformedFilling
+
+				// spread the total healing left for the added food among the sandwich bites
+				customSandwich.heal_amt += snack.heal_amt * snack.amount / customSandwich.amount
 
 				qdel(snack)
 

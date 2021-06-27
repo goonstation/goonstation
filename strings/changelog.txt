@@ -1,5 +1,142 @@
 
+(t)fri jun 25 21
+(u)Flappybat
+(p)5267
+(e)⚖|balance
+(*)Made doors half as strong, you can now break them this century. Explosive/fire/projectile scaling is adjusted so it will still take the same number of bullets to destroy a door.
+(u)Azrun
+(p)5244
+(e)⚖🐛|balance, bug
+(+)Reduced power output from solar panels.
+(u)Arthur Holiday
+(p)5265
+(e)⚖🐛|balance, bug
+(+)The werewolf feast ability now gets interrupted if the target stands up.
+(u)Tarmunora
+(e)⚖|balance
+(+)pill bottles and patch boxes from chemmasters cannot fit more items than they spawn with
+(u)Kubius
+(p)5274
+(e)🐛🗺|bug, mapping
+(*)Kondaru detective's office front door is once again detective-only with remote open. Also made maintenance near the Foundry more construction-friendly and added a sink/drain to the Morgue.
+(u)Flappybat
+(p)5262
+(e)⚖|balance
+(+)Nuclear bomb is now EMP proof.
+(t)thu jun 24 21
+(u)zjdtmkhzt
+(p)5237
+(e)⚖🆕|balance, feature
+(+)Custom sandwiches now combine the healing and hunger restore of their ingredients.
+(u)Zonespace
+(p)5263
+(e)⚖⛔|balance, removal
+(*)Prison Loafers no longer have nugget mode.
+(t)wed jun 23 21
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Crusher now has an actionbar
+(u)Walpvrgis
+(p)5155
+(e)🆕🎨|feature, sprites
+(+)Two new backpacks are now able to be purchased from Geoff Honkington; one is a teddy bear and one is Bread.
+(t)tue jun 22 21
+(u)Sovexe
+(p)5246
+(e)🆕|feature
+(+)Repairing ruptured atmos pipes now only ever takes one successful weld, and has an action bar.
+(u)Sovexe
+(p)5231
+(e)🐛🆕|bug, feature
+(+)Made changes to pathfinding procs to resolve the chicken fence issues.
+(u)Zonespace
+(p)4933
+(e)🆕🗺|feature, mapping
+(*)Pod Wars team wins and deaths are now tracked, with a structure containing the stats being half-buried in an asteroid, near the Reliant.
+(u)BatElite
+(p)5089
+(e)🆕|feature
+(+)The backpacks and satchels in personal lockers now come in a small variety of random colours!
+(u)Penny
+(p)5218
+(e)🐛|bug
+(+)Networked equipment can finally now be re-deployed onto new data terminals
+(u)Flappybat
+(p)5082
+(e)|
+(+)Every scientist now starts with a pen.
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Replaced 40mmPBR ammo from sec utility purchases with a 40mm Paint Marker round, which will paint the target orange and cause them to leave a trail of paint behind them. 5 rounds/box.
+(+)Ammotech has more 40mmPBR ammo (5 boxes of 5 rounds each)
+(+)Drinking space cleaner no longer washes off blood/etc (?????)
+(t)mon jun 21 21
+(u)Zonespace
+(p)5225
+(e)⚖🆕|balance, feature
+(+)NARCS can now be scanned by a Syndicate Device Analyzer.
+(u)Flappybat & Gannets
+(p)5125
+(e)🆕🎨|feature, sprites
+(*)Replaced the ocular prothesis (SecHUD) kit from surplus crates with a fully automatic implanter.
+(u)TTerc
+(p)5219
+(e)|
+(+)You can now examine the broken APC to learn how to fix it. Also added actionbars for all the APC fixing steps that require the player to stand still.
+(u)Flourish
+(e)🆕|feature, mapping
+(*)Rearranged Oshan a little, primarily the area surrounding the bar. Let me know what you think.
+(t)sun jun 20 21
+(u)eX.n0x, Sovexe, & ZeWaka
+(p)5141
+(e)🐛|bug
+(+)The rad blowout event no longer changes access levels on non-maintenance doors.
+(u)Sasskp
+(p)5214
+(e)🐛|bug
+(+)Added new layer for sheaths so they appear above overcoats
+(t)fri jun 18 21
+(u)DimWhat
+(p)5200
+(e)⚖|balance
+(*)Made fabricating a nuclear charge take more difficult materials
+(u)Tarmunora
+(+)buff concussive gauntlet block-special-thingy
+(+)add a tranq rifle and a mag of halop darts to surplus crates when safari kit is rolled
+(+)once their owner dies, podwars blasters stop charging, are non-rechargeable, and cannot have their cell swapped
+(u)Tarmunora
+(p)5201
+(e)⚖🗺|balance, mapping
+(+)Replaced a certain syndicate device analyzer with a certain specific manufacturing blueprint
+(+)Added syndicate device analyzers to surplus crate pool
+(t)thu jun 17 21
+(u)Azrun
+(p)5130
+(e)🆕|feature
+(+)Gnesis and Gnesisglass tables will reform when smashed.
+(u)eX.n0x
+(p)5148
+(e)🐛🗺|bug, mapping
+(*)Horizon genetics/monkey dome are completely restricted to geneticists.
+(*)Horizon/Kondaru detective receiving office is now open to the general public.
+(t)wed jun 16 21
+(u)Penny
+(p)5152
+(e)|
+(+)SoftTech vendors now sell data disks
 (t)tue jun 15 21
+(u)Yellow-Mushroom
+(p)5123
+(e)🗺|mapping
+(*)Reworks Cogmap2's robotics to increase player interaction
+(u)Penny & Ludolf
+(p)4231
+(e)🆕🎨|feature, sprites
+(*)Players can now construct vending machines to sell their own items. Find the frames in the steel sheet menu and vending modules in your local general manufacturer! Sprites and animations by Ludolf!
+(u)UnfunnyPerson
+(p)5156
+(e)|
+(+)You can no longer become a werewolf through mutini.
 (u)DimWhat
 (p)5129
 (e)🎨|sprites
@@ -144,7 +281,7 @@
 (+)Onagadori; Japanese long-tailed chickens. Peanut feed. [Gen 1] [From White Chickens]
 (+)Shieldmaidhens; these armored chickens need a high-iron diet to maintain their natural armor. [Gen 2] [From Onagadori]
 (+)Phoenix; Love will set your heart on fire. Try breeding two appropriate chickens! [Gen 3]
-(+)Dreamsicle Chickens; Sweet ice cream. Try breeding two appropriate chickens! [Gen 3] 
+(+)Dreamsicle Chickens; Sweet ice cream. Try breeding two appropriate chickens! [Gen 3]
 (u)112358sam
 (p)5027
 (e)|

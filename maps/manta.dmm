@@ -15146,6 +15146,15 @@
 	tag = ""
 	},
 /obj/storage/secure/closet/security/armory,
+/obj/item/gun/kinetic/dart_rifle,
+/obj/item/ammo/bullets/tranq_darts,
+/obj/item/ammo/bullets/tranq_darts,
+/obj/item/ammo/bullets/tranq_darts/anti_mutant{
+	pixel_y = 5
+	},
+/obj/item/ammo/bullets/tranq_darts/anti_mutant{
+	pixel_y = 5
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "aRq" = (

@@ -1194,7 +1194,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "alastor100"
 	item_state = "alastor"
-	icon = 'icons/obj/38x38.dmi'
+	icon = 'icons/obj/large/38x38.dmi'
 	uses_multiple_icon_states = 1
 	force = 7.0
 	can_dual_wield = 0
@@ -1540,7 +1540,6 @@
 
 // HOWIZTER GUN
 // dumb meme admin item. not remotely fair, will probably kill person firing it.
-
 /obj/item/gun/energy/howitzer
 	name = "man-portable plasma howitzer"
 	desc = "How can you even lift this?"
@@ -1566,7 +1565,6 @@
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer
 	can_swap_cell = 0
 	var/shotcount = 0
-
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt/signifer_tase)
@@ -1665,3 +1663,33 @@
 		else
 			spread_angle = 2
 		update_icon()
+
+///////////////////////////////////////Ray Gun
+/obj/item/gun/energy/raygun
+	name = "Experimental Ray Gun"
+	icon_state = "raygun"
+	desc = "A weapon that looks vaguely like a cheap toy and is definitely unsafe."
+	item_state = "raygun"
+	force = 5.0
+	can_dual_wield = 0
+	muzzle_flash = "muzzle_flash_laser"
+
+	New()
+		set_current_projectile(new/datum/projectile/energy_bolt/raybeam)
+		projectiles = list(new/datum/projectile/energy_bolt/raybeam)
+		..()
+
+	update_icon()
+		..()
+		return
+
+	shoot(var/target,var/start,var/mob/user) //it's experimental for a reason; use at your own risk!
+		if (canshoot())
+			if (GET_COOLDOWN(src, "raygun_cooldown"))
+				return
+			if (prob(30))
+				user.TakeDamage("chest", 0, rand(5, 15), 0, DAMAGE_BURN, 1)
+				boutput(user, "<span class='alert'>This piece of junk Ray Gun backfired! Ouch!</span>")
+				user.do_disorient(stamina_damage = 20, disorient = 3 SECONDS)
+				ON_COOLDOWN(src, "raygun_cooldown", 2 SECONDS)
+		return ..(target, start, user)
