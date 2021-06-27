@@ -1198,9 +1198,10 @@ PIPE BOMBS + CONSTRUCTION
 						if(C.mob && (C.mob.z == src.z))
 							shake_camera(C.mob, 8, 24) // remove if this is too laggy
 							playsound(C.mob, explosions.distant_sound, 100, 0)
+							new /obj/effects/explosion (src.loc)
 				else
 					playsound(src.loc, pick(sounds_explosion), 75, 1)
-				new /obj/effects/explosion (src.loc)
+					new/obj/effect/supplyexplosion(src.loc)
 			else
 				playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
 
