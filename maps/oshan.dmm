@@ -46209,6 +46209,13 @@
 "fJg" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/barber_shop)
+"fML" = (
+/obj/lattice,
+/obj/machinery/conveyor/oshan_carousel{
+	dir = 8
+	},
+/turf/space/fluid,
+/area/space)
 "fQs" = (
 /obj/rack,
 /obj/item/tank/emergency_oxygen,
@@ -88694,7 +88701,7 @@ aqn
 aqn
 aqn
 ckk
-iqQ
+fML
 cke
 cke
 cke
