@@ -1262,7 +1262,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				return
 			else
 				var/datum/projectile/bullet/grenade_shell/custom_shell = src.current_projectile
-				if(src.ammo.ammo_left > 0 && istype(custom_shell) && custom_shell.get_nade().type != b.type)
+				if(src.ammo.amount_left > 0 && istype(custom_shell) && custom_shell.get_nade().type != b.type)
 					boutput(user, "<span class='alert'>The [src] has a different kind of grenade in the conversion chamber, and refuses to mix and match!</span>")
 					return
 				else
