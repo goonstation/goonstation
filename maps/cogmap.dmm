@@ -32933,7 +32933,7 @@
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
 /obj/decal/garland/ephemeral,
-/turf/space,
+/turf/simulated/floor,
 /area/station/engine/hotloop)
 "bEU" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
