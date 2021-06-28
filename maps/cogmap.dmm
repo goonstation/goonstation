@@ -35070,9 +35070,6 @@
 /obj/item/storage/toolbox/electrical,
 /obj/item/deconstructor,
 /obj/random_item_spawner/tools_w_igloves/maybe_few,
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/item/clothing/gloves/yellow{
 	pixel_x = -7;
 	pixel_y = 10
@@ -65179,6 +65176,9 @@
 	name = "The Snip"
 	},
 /obj/decal/garland/ephemeral,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "red2"
