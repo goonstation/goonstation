@@ -1061,6 +1061,7 @@
 	uses_multiple_icon_states = 1
 	force = 5.0
 	muzzle_flash = "muzzle_flash_plaser"
+	is_syndicate = TRUE
 
 	New()
 		..()
