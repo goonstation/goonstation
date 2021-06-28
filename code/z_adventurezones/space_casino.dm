@@ -2,7 +2,6 @@
     Lythine's space casino prefab
 	Contents:
 	 Item slot machine
-	 Barbuddy
 	 Misc props
 */
 

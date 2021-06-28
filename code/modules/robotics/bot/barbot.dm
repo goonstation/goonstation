@@ -54,7 +54,7 @@
 
 	New()
 		..()
-		src.setEmotion(src.emotion)
+		src.setEmotion("happy")
 		// Start by getting a few initial things
 		if (!src.home || !isturf(src.home))
 			src.home = get_turf(src)
