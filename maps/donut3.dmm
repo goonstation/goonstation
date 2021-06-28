@@ -638,6 +638,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/blueblack,
 /area/station/security/checkpoint/customs)
 "aaX" = (
@@ -7041,6 +7042,22 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
+"bJO" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/grille/catwalk/jen/twosides{
+	dir = 4
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/sw)
 "bJQ" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/blood/tracks{
@@ -9173,6 +9190,7 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bathroom)
 "cqA" = (
@@ -10795,6 +10813,13 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
+"cRn" = (
+/obj/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/wall/auto/reinforced/jen/blue,
+/area/station/security/checkpoint/customs)
 "cRr" = (
 /obj/access_spawn/maint,
 /obj/decal/mule/dropoff,
@@ -11381,6 +11406,17 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
+"cZQ" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/grille/catwalk/jen/side{
+	dir = 1
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/sw)
 "cZT" = (
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -12657,8 +12693,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "dta" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
+/obj/disposalpipe/switch_junction/left/east{
+	mail_tag = "testchamber"
 	},
 /turf/simulated/wall/auto/jen/blue,
 /area/station/maintenance/inner/sw)
@@ -15333,6 +15369,10 @@
 /obj/machinery/light/small/sticky,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
+"eie" = (
+/obj/disposalpipe/segment/mail,
+/turf/simulated/wall/auto/jen/blue,
+/area/station/crew_quarters/bathroom)
 "eiv" = (
 /obj/machinery/disposal/small,
 /obj/disposalpipe/trunk{
@@ -20684,6 +20724,14 @@
 /obj/bookshelf/long,
 /turf/simulated/floor/wood/six,
 /area/station/library)
+"fJU" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/disposalpipe/segment/mail,
+/turf/space,
+/area/space)
 "fKa" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 10;
@@ -21458,9 +21506,6 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -28349,6 +28394,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/bathroom)
 "ibR" = (
@@ -38216,6 +38262,7 @@
 /obj/machinery/disposal/small{
 	pixel_x = 6
 	},
+/obj/disposalpipe/trunk,
 /turf/simulated/floor/blueblack,
 /area/station/security/checkpoint/customs)
 "lhi" = (
@@ -39649,6 +39696,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
+"lCC" = (
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bathroom)
 "lCL" = (
 /obj/stool/chair{
 	dir = 1
@@ -43644,9 +43695,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/access_spawn/maint,
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
@@ -43834,6 +43882,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "mOw" = (
+/obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/customs)
 "mOD" = (
@@ -44043,6 +44092,7 @@
 	dir = 6;
 	icon_state = "xtra_bigstripe-corner2"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/purple/side,
 /area/station/hallway/primary/south)
 "mSA" = (
@@ -44458,6 +44508,18 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
+"mXc" = (
+/obj/decal/cleanable/rust/jen,
+/obj/decal/cleanable/dirt/jen,
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "4-9"
+	},
+/obj/grille/catwalk/jen/side,
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/sw)
 "mXe" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	dir = 4;
@@ -46371,6 +46433,10 @@
 "nzQ" = (
 /turf/simulated/floor/white/checker,
 /area/station/hallway/primary/south)
+"nzR" = (
+/obj/disposalpipe/segment/mail,
+/turf/space,
+/area/space)
 "nzY" = (
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -49421,6 +49487,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -54020,6 +54087,13 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
+"pMt" = (
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/wall/auto/reinforced/jen/blue,
+/area/station/security/checkpoint/customs)
 "pMv" = (
 /obj/cable{
 	d1 = 4;
@@ -54970,6 +55044,7 @@
 "qar" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2/left,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/airless/plating,
 /area/station/crew_quarters/bathroom)
 "qaz" = (
@@ -56841,6 +56916,7 @@
 /area/station/maintenance/outer/se)
 "qwT" = (
 /obj/blind_switch/area/west,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bathroom)
 "qxb" = (
@@ -62618,6 +62694,13 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
+"sdn" = (
+/obj/disposalpipe/segment/mail{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/wall/auto/reinforced/jen/purple,
+/area/station/science/testchamber)
 "sdA" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 1
@@ -65245,6 +65328,13 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/medical/robotics)
+"sVF" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "sVG" = (
 /obj/grille/catwalk/cross{
 	dir = 9
@@ -67099,6 +67189,7 @@
 	pixel_y = 24;
 	text = "NF"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/blue/side{
 	dir = 1
 	},
@@ -67198,6 +67289,9 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/delivery,
 /area/station/security/checkpoint/customs)
@@ -68066,6 +68160,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/disposal/mail/small/autoname/research/testchamber/east,
+/obj/disposalpipe/trunk/mail{
+	dir = 8
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -69692,6 +69789,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/breakroom)
+"uoS" = (
+/obj/disposalpipe/segment/mail,
+/turf/simulated/wall/auto/reinforced/jen/purple,
+/area/station/science/testchamber)
 "uoX" = (
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/glass,
@@ -71004,6 +71105,10 @@
 	},
 /turf/simulated/floor/sanitary/blue,
 /area/station/crew_quarters/captain)
+"uHU" = (
+/obj/disposalpipe/segment/mail,
+/turf/simulated/wall/auto/reinforced/jen/blue,
+/area/station/maintenance/inner/sw)
 "uHV" = (
 /obj/stool/chair/couch/green,
 /turf/simulated/floor/wood,
@@ -71965,10 +72070,6 @@
 /area/station/turret_protected/AIsat)
 "uUJ" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 4
-	},
 /obj/decal/mule/dropoff,
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -77197,6 +77298,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 8
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bathroom)
 "wvd" = (
@@ -78399,6 +78501,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bathroom)
 "wNq" = (
@@ -80803,6 +80906,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/AIsat)
 "xxa" = (
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/carpet/green/decal/outercross,
 /area/station/crew_quarters/bathroom)
 "xxd" = (
@@ -116958,7 +117062,7 @@ iLV
 beu
 kQB
 lhg
-iLV
+cRn
 hWZ
 hWZ
 nMc
@@ -117562,7 +117666,7 @@ fDP
 otE
 mOw
 aaW
-iLV
+pMt
 tGr
 eTk
 nMc
@@ -119109,31 +119213,31 @@ rEa
 ksg
 ksg
 dta
-wYh
-jpQ
-jpQ
-jpQ
-jpQ
-kjM
-jKe
-ogJ
-jYm
-rdj
-rdj
+bJO
+uHU
+uHU
+uHU
+uHU
+cZQ
+mXc
+jmr
+fJU
+nzR
+nzR
 qar
 cqn
 wuV
 qwT
-ibc
+lCC
 xxa
 wNn
 ibF
-nlU
+eie
 tyI
-pyL
+sVF
 mSc
-aZz
-aZz
+uoS
+sdn
 jzw
 nOR
 fyr

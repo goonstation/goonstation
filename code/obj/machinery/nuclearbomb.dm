@@ -275,11 +275,6 @@
 		src.take_damage(power)
 		return
 
-	emp_act()
-		src.take_damage(rand(25,35))
-		if (armed && det_time)
-			det_time += rand(-300,600)
-
 	meteorhit()
 		src.take_damage(rand(30,60))
 

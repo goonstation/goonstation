@@ -457,10 +457,11 @@
 		icon_state = "weld"
 
 		execute(atom/target, mob/user)
-			for (var/obj/item/weldingtool/W in user.equipped_list())
-				if(W.try_weld(user, 2))
-					user.show_text("You weld [target] carefully.", "blue")
-					return ..()
+			for (var/obj/item/I in user.equipped_list())
+				if (isweldingtool(I))
+					if (I:try_weld(user, 2))
+						user.show_text("You weld [target] carefully.", "blue")
+						return ..()
 
 	pry
 		name = "Pry"

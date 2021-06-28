@@ -363,21 +363,6 @@ TRAYS
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 
-	attack(mob/living/carbon/human/target as mob, mob/user as mob)
-		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts \himself.</span>")
-			random_brute_damage(user, 20)
-			JOB_XP(user, "Clown", 1)
-		if(prob(5))
-			user.changeStatus("weakened", 4 SECONDS)
-			user.visible_message("<span class='alert'><b>[user]</b>'s hand slips from the [src] and accidentally cuts [himself_or_herself(user)]. </span>")
-			random_brute_damage(user, 20)
-			take_bleeding_damage(user, null, 10, DAMAGE_CUT)
-			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
-		else
-			return ..()
-
-
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
