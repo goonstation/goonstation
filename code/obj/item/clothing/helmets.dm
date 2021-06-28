@@ -134,6 +134,7 @@
 	name = "paramedic space helmet"
 	icon_state = "paraspace"
 	item_state = "paraspace"
+	desc = "Helps protect against vacuum. This helmet also contains sensors to detect the health of people from a distance."
 	var/client/assigned = null
 
 	setupProperties()
