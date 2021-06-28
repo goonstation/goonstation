@@ -1061,7 +1061,7 @@
 	uses_multiple_icon_states = 1
 	force = 5.0
 	muzzle_flash = "muzzle_flash_plaser"
-	is_syndicate = TRUE
+	mats = list("MET-3"=7, "CRY-1"=13, "POW-2"=10)
 
 	New()
 		..()
