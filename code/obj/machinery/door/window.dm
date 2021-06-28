@@ -13,6 +13,8 @@
 	var/base_state = "left"
 	visible = 0
 	flags = ON_BORDER
+	health = 500
+	health_max = 500
 	opacity = 0
 	brainloss_stumble = 1
 	autoclose = 1
