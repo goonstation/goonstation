@@ -1058,6 +1058,14 @@
 		icon_state = "spacecap-red"
 		item_state = "spacecap-red"
 
+/obj/item/clothing/suit/space/paramedic
+	name = "paramedic space suit"
+	icon_state = "paraspace"
+	item_state = "paraspace"
+
+	setupProperties()
+		..()
+		setProperty("space_movespeed", 0.3)
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"
 	icon_state = "syndicate"

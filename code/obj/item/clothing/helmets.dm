@@ -130,6 +130,55 @@
 		item_state = "space-captain-red"
 		desc = "Helps protect against vacuum. Comes in a fasionable red befitting a commander."
 
+/obj/item/clothing/head/helmet/space/paramedic
+	name = "paramedic space helmet"
+	icon_state = "paraspace"
+	item_state = "paraspace"
+	var/client/assigned = null
+
+	setupProperties()
+		..()
+		setProperty("space_movespeed", 0.1)
+
+	process()
+		if (assigned)
+			assigned.images.Remove(health_mon_icons)
+			src.addIcons()
+
+			if (loc != assigned.mob)
+				assigned.images.Remove(health_mon_icons)
+				assigned = null
+
+			//sleep(2 SECONDS)
+		else
+			processing_items.Remove(src)
+
+	proc/addIcons()
+		if (assigned)
+			for (var/image/I in health_mon_icons)
+				if (!I || !I.loc || !src)
+					continue
+				if (I.loc.invisibility && I.loc != src.loc)
+					continue
+				else
+					assigned.images.Add(I)
+
+	equipped(var/mob/user, var/slot)
+		..()
+		if (slot == SLOT_HEAD)
+			assigned = user.client
+			SPAWN_DBG(-1)
+				//updateIcons()
+				processing_items |= src
+		return
+
+	unequipped(var/mob/user)
+		..()
+		if (assigned)
+			assigned.images.Remove(health_mon_icons)
+			assigned = null
+			processing_items.Remove(src)
+		return
 // Sealab helmets
 
 /obj/item/clothing/head/helmet/space/engineer/diving //hijacking engiehelms for the flashlight

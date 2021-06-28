@@ -2207,6 +2207,7 @@
 		/datum/manufacture/latex_gloves,
 		/datum/manufacture/surgical_mask,
 		/datum/manufacture/surgical_shield,
+		/datum/manufacture/paraspacesuit,
 		/datum/manufacture/scrubs_white,
 		/datum/manufacture/scrubs_teal,
 		/datum/manufacture/scrubs_maroon,
