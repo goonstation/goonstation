@@ -4,15 +4,15 @@ var/global/datum/galaxy/GALAXY = new
 
 /datum/galaxy
 	var/list/bodies = list()
-	var/list/available_planets = list("planet1", "planet2", "planet3", "planet4")
+	var/list/available_planets = list("planet1", "planet2", "planet3", "planet4", "planet5", "planet6", "planet7")
 
 	New()
 		..()
 		src.bodies += new/datum/galactic_object/test()
 		src.bodies += new/datum/galactic_object/eyesenhower()
-		src.bodies += new/datum/galactic_object/random(src)
-		src.bodies += new/datum/galactic_object/random(src)
-		src.bodies += new/datum/galactic_object/random(src)
+
+		for(var/i in 1 to 10)
+			src.bodies += new/datum/galactic_object/random(src)
 
 /datum/galactic_object
 	var/name

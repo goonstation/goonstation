@@ -1742,6 +1742,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\artemis\flight_computer.dm"
 #include "code\WorkInProgress\artemis\flight_computer_hud.dm"
 #include "code\WorkInProgress\artemis\galactic_object.dm"
+#include "code\WorkInProgress\artemis\GeneratePlanets.dm"
 #include "code\WorkInProgress\artemis\planetary_teleporter.dm"
 #include "code\WorkInProgress\artemis\galactic_object\galactic_objects.dm"
 #include "code\WorkInProgress\artemis\galactic_object\navigation_satellite.dm"

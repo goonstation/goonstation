@@ -16,6 +16,8 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		place()
 
 	proc/place()
+		if(src.z == planetZLevel)
+			new /area/allowGenerate(src)
 		if (map_currently_underwater)
 			src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 		else
@@ -25,7 +27,9 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		name = "variable floor"
 		icon_state = "floor"
 		place()
-			if (map_currently_underwater)
+			if(src.z == planetZLevel)
+				src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid/dark, FALSE, TRUE, FALSE, TRUE)
+			else if (map_currently_underwater)
 				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 			else
 				src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, FALSE, TRUE, FALSE, TRUE)
@@ -34,12 +38,17 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		name = "variable wall"
 		icon_state = "wall"
 		place()
-			src.ReplaceWith(/turf/simulated/wall/asteroid, FALSE, TRUE, FALSE, TRUE)
+			if(src.z == planetZLevel)
+				src.ReplaceWith(/turf/simulated/wall/asteroid/dark, FALSE, TRUE, FALSE, TRUE)
+			else
+				src.ReplaceWith(/turf/simulated/wall/asteroid, FALSE, TRUE, FALSE, TRUE)
 
 	clear //Replaced with map appropriate clear tile for mining level (asteroid floor on oshan, space on other maps)
 		name = "variable clear"
 		icon_state = "clear"
 		place()
+			if(src.z == planetZLevel)
+				new /area/allowGenerate(src)
 			if (map_currently_underwater)
 				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 			else

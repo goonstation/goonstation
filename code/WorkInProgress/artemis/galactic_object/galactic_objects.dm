@@ -17,22 +17,30 @@
 		color = pick("#fffb00", "#FF5D06", "#009ae7", "#03c53d", "#9b59b6", "#272e30", "#FF69B4", "#633221", "#ffffff")
 		icon_state = weighted_pick(list("planet_1"=10,"planet_2"=3,"planet_3"=2))
 
-		if(G)
+		if(prob(10))
+			navigable = 0
+
+		if(G && length(G.available_planets))
 			destination_name = pick(G.available_planets)
 			G.available_planets -= destination_name
+
 		generate_name()
 		..()
 
 	proc/generate_name()
+		. = ""
 		if (prob(50))
-			name = pick_string("station_name.txt", "greek")
+			. += pick_string("station_name.txt", "greek")
 		else
-			name = pick_string("station_name.txt", "militaryLetters")
-		name += " "
+			. += pick_string("station_name.txt", "militaryLetters")
+		. += " "
 
 		if (prob(30))
-			name += pick_string("station_name.txt", "romanNum")
-		else name += "[rand(2, 99)]"
+			. += pick_string("station_name.txt", "romanNum")
+		else
+			. += "[rand(2, 99)]"
+
+		src.name = .
 
 /obj/background_star/galactic_object/random
 	name = "F1X-M3"

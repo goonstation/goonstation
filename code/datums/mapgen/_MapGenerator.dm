@@ -11,7 +11,7 @@ proc/initialize_biomes()
 /datum/map_generator
 
 ///This proc will be ran by areas on world/proc/init(), and provides the areas turfs as argument to allow for generation.
-/datum/map_generator/proc/generate_terrain(var/list/turfs)
+/datum/map_generator/proc/generate_terrain(var/list/turfs, height_seed=null, humidity_seed=null, heat_seed=null)
 	return
 
 ABSTRACT_TYPE(area/map_gen)

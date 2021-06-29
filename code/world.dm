@@ -334,6 +334,13 @@ var/f_color_selector_handler/F_Color_Selector
 			var/datum/generatorPrefab/R = new A()
 			miningModifiers.Add(R)
 
+#ifdef ENABLE_ARTEMIS
+		Z_LOG_DEBUG("Preload", "  /datum/generatorPlanetPrefab")
+		for(var/A in childrentypesof(/datum/generatorPlanetPrefab))
+			var/datum/generatorPlanetPrefab/R = new A()
+			planetModifiers.Add(R)
+#endif
+
 		Z_LOG_DEBUG("Preload", "  /datum/faction")
 		for(var/A in childrentypesof(/datum/faction))
 			var/datum/faction/R = new A()
@@ -591,6 +598,12 @@ var/f_color_selector_handler/F_Color_Selector
 	UPDATE_TITLE_STATUS("Building mining level")
 	Z_LOG_DEBUG("World/Init", "Setting up mining level...")
 	makeMiningLevel()
+	#endif
+
+	#ifdef ENABLE_ARTEMIS
+	UPDATE_TITLE_STATUS("Building planet level")
+	Z_LOG_DEBUG("World/Init", "Setting up planet level...")
+	makePlanetLevel()
 	#endif
 
 	UPDATE_TITLE_STATUS("Initializing biomes")
