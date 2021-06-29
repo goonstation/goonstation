@@ -434,6 +434,7 @@ A Flamethrower in various states of assembly
 		var/obj/item/device/igniter/I = W
 		if (!( I.status ))
 			return
+		user.show_message("<span class='notice'>You put the igniter in place, it still needs to be firmly attached.</span>", 1)
 		var/obj/item/assembly/weld_rod/S = src
 		var/obj/item/assembly/w_r_ignite/R = new /obj/item/assembly/w_r_ignite( user )
 		R.welder = S.welder
@@ -554,11 +555,10 @@ A Flamethrower in various states of assembly
 	var/fuel = "_no_fuel"
 	if(src.fueltank)
 		fuel = "_fuel"
-	src.icon_state = "flamethrower_oxy[fuel]"
 	var/oxy = "_no_oxy"
 	if(src.gastank)
 		oxy = "_oxy"
-	src.icon_state = "flamethrower[oxy]_fuel"
+	src.icon_state = "flamethrower[oxy][fuel]"
 
 	src.updateSelfDialog()
 	SPAWN_DBG(0.5 SECONDS)
