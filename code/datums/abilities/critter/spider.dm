@@ -33,7 +33,7 @@
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites [MT]!</b></span>",\
 		"<span class='combat'><b>You bite [MT]!</b></span>")
 		if (istype(S))
-			S.venom_bite(MT, 2)
+			S.venom_bite(MT, 1.5)
 		else // no venom, very sad
 			playsound(holder.owner, "sound/weapons/handcuffs.ogg", 50, 1, pitch = 1.6)
 			if (issilicon(MT))
@@ -63,12 +63,14 @@
 
 		if (isobj(target))
 			target = get_turf(target)
-
 		if (isturf(target))
 			for (var/mob/living/M in target)
 				if (M != src && M.getStatusDuration("weakened"))
 					target = M
 					break
+			if (!ismob(target))
+				boutput(holder.owner, __red("Nothing to flail at there."))
+				return 1
 
 		if (target == S)
 			return 1
@@ -78,25 +80,28 @@
 			return 1
 
 		logTheThing("combat", S, target, "starts to flail [constructTarget(target,"combat")] at [log_loc(S)].")
-		actions.start(new/datum/action/bar/spider_flail(target, src), S)
+		actions.start(new/datum/action/bar/private/spider_flail(target, src), S)
 
-/datum/action/bar/spider_flail
+/datum/action/bar/private/spider_flail
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "spider_flail"
 	var/mob/living/target
 	var/datum/targetable/critter/spider_flail/flail
-	var/mob/living/S = owner
-	var/datum/abilityHolder/A = flail.holder
-	var/mob/living/T = target
+	var/times_attacked = null
 
 	New(Target, Flail)
+
 		target = Target
 		flail = Flail
 		..()
 
 	onStart()
 		..()
+
+		var/mob/living/S = owner
+		var/datum/abilityHolder/A = flail.holder
+		var/mob/living/T = target
 
 		if (!flail || get_dist(S, T) > flail.max_range || T == null || S == null || !A || !istype(A))
 			interrupt(INTERRUPT_ALWAYS)
@@ -112,6 +117,10 @@
 
 	onUpdate()
 		..()
+
+		var/mob/living/S = owner
+		var/datum/abilityHolder/A = flail.holder
+		var/mob/living/T = target
 
 		if (!flail || get_dist(S, T) > flail.max_range || T == null || S == null || !A || !istype(A))
 			interrupt(INTERRUPT_ALWAYS)
@@ -146,6 +155,10 @@
 	onEnd()
 		..()
 
+		var/mob/living/S = owner
+		var/datum/abilityHolder/A = flail.holder
+		var/mob/living/T = target
+
 		S.visible_message("[times_attacked]")
 		boutput(S, "<span class='alert'><b>You finish flailing [T]!</b></span>")
 		T.changeStatus("weakened", 4 SECONDS)
@@ -157,6 +170,10 @@
 
 	onInterrupt()
 		..()
+
+		var/mob/living/S = owner
+		var/datum/abilityHolder/A = flail.holder
+		var/mob/living/T = target
 
 		S.visible_message("[times_attacked]")
 		boutput(S, "<span class='alert'><b>You got interrupted while flailing [T]!</b></span>")
