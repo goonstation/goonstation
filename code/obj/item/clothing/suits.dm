@@ -1066,6 +1066,8 @@
 	setupProperties()
 		..()
 		setProperty("space_movespeed", 0.3)
+		setProperty("meleeprot", 2)
+		setProperty("rangedprot", 0)
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"
 	icon_state = "syndicate"

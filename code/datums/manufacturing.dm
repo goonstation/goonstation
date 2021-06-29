@@ -1715,8 +1715,8 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 /datum/manufacture/paraspacesuit
 	name = "Paramedic Space Suit Set"
-	item_paths = list("FAB-1","MET-3","CON-2") // Similar ish pricing to indy spacesuit per what materials you need (as in met-3 and con-2), bit cheaper because it isnt quite as big as an industrial spacesuit nor nearly as good.
-	item_amounts = list(3,5,8)
+	item_paths = list("FAB-1","MET-1","CON-2")
+	item_amounts = list(3,3,4)
 	item_outputs = list(/obj/item/clothing/suit/space/paramedic,/obj/item/clothing/head/helmet/space/paramedic)
 	time = 15 SECONDS
 	create = 1

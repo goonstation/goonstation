@@ -140,6 +140,7 @@
 	setupProperties()
 		..()
 		setProperty("space_movespeed", 0.1)
+		setProperty("meleeprot_head", 2)
 
 	process()
 		if (assigned)
