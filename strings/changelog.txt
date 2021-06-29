@@ -1,8 +1,5 @@
 
 (t)tue jun 29 21
-(u)Tarmunora
-(e)⚖|balance
-(*)Smoke and foam reactions will only succeed when reacted from "open" containers (e.g.: beakers, drinkss, puddles, etc) and will fail from closed containers (pills, mobs, foam-tiles, etc)
 (u)Arthur Holiday
 (p)5307
 (e)⚖|balance

@@ -258,11 +258,7 @@ datum
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/datum/reagents/myholder = holder
-				if(!holder?.my_atom?.is_open_container())
-					if(holder.my_atom)
-						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
-							boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
-				else if(!ignited)
+				if(!ignited)
 					ignited = 1
 					var/vol = volume
 					SPAWN_DBG(1 DECI SECOND)
@@ -287,11 +283,7 @@ datum
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/datum/reagents/myholder = holder
-				if(!holder?.my_atom?.is_open_container())
-					if(holder.my_atom)
-						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
-							boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
-				else if(!ignited)
+				if(!ignited)
 					ignited = TRUE
 					var/vol = volume
 					SPAWN_DBG(1 DECI SECOND)
