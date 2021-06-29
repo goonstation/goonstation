@@ -490,6 +490,7 @@
 		processing_items.Add(src)
 
 /obj/item/proc/combust_ended()
+	STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 	processing_items.Remove(src)
 	burning = null
 	firesource = FALSE

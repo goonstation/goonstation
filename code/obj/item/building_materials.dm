@@ -120,6 +120,8 @@ MATERIAL
 	attack_hand(mob/user as mob)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
+			if(src.loc != user)
+				return
 			splitnum = round(clamp(splitnum, 0, src.amount))
 			if(amount == 0)
 				return

@@ -93,7 +93,7 @@
 
 
 /obj/machinery/conveyor/proc/move_thing(var/atom/movable/A)
-	if (A.anchored)
+	if (A.anchored || A.temp_flags & BEING_CRUSHERED)
 		return
 	if(isobserver(A))
 		return
@@ -603,5 +603,5 @@
 				break
 
 	proc/update_icon()
-		var/ico = (speedup / speedup_max) * icon_levels
+		var/ico = clamp(((speedup / speedup_max) * icon_levels), 0, 6)
 		icon_state = "[icon_base][round(ico)]"

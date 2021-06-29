@@ -123,6 +123,14 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	frame_path = /obj/machinery/ai_status_display
 
+/datum/manufacture/mechanics/gunbot
+	name = "Security Robot"
+	item_paths = list("POW-1","MET-2","CON-1")
+	item_amounts = list(1,10,10,10)
+	frame_path = /obj/critter/gunbot/heavy
+	time = 15 SECONDS
+	create = 1
+
 /*
 /datum/manufacture/iron
 	// purely a test

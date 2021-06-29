@@ -191,6 +191,12 @@ proc/build_syndi_buylist_cache()
 	not_in_crates = 1
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
+	run_on_spawn(obj/item/sword/stabby, mob/living/owner, in_surplus_crate=FALSE) //Nukies get red ones
+		if (isnukeop(owner))
+			stabby.light_c.set_color(255, 0, 0)
+			stabby.bladecolor = "R"
+		return
+
 /datum/syndicate_buylist/generic/katana
 	name = "Katana"
 	item = /obj/item/katana_sheath
@@ -642,7 +648,6 @@ This is basically useless for anyone but miners.
 	cost = 4
 	vr_allowed = 0
 	desc = "The shell of a standard Nanotrasen mechanic's analyzer with cutting-edge Syndicate internals. This baby can scan almost anything!"
-	not_in_crates = 1
 	job = list("Mechanic")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
@@ -661,6 +666,7 @@ This is basically useless for anyone but miners.
 	desc = "This stainless-steel, revolving wonder fires needles. Perfect for today's safari-loving Syndicate doctor! Loaded by transferring reagents to the gun's internal reservoir."
 	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+
 
 /datum/syndicate_buylist/traitor/powergloves
 	name = "Power Gloves"
@@ -730,7 +736,12 @@ This is basically useless for anyone but miners.
 	cost = 7
 	desc = "Almost everything you need to hunt the most dangerous game. Tranquilizer rifle not included."
 	job = list("Medical Director")
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
+
+	run_on_spawn(obj/item, mob/living/owner, in_surplus_crate)
+		if(in_surplus_crate)
+			new /obj/item/gun/kinetic/dart_rifle(item.loc)
+			new /obj/item/ammo/bullets/tranq_darts(item.loc)
 
 /datum/syndicate_buylist/traitor/pizza_sharpener
 	name = "Pizza Sharpener"
@@ -1002,9 +1013,9 @@ This is basically useless for anyone but miners.
 // changed to sechuds cause why not - haine
 /datum/syndicate_buylist/surplus/cybereye_kit_sechud
 	name = "Ocular Prosthesis Kit (SecHUD)"
-	item = /obj/item/storage/box/prosthesis_kit/eye_sechud
+	item = /obj/item/device/ocular_implanter
 	cost = 1
-	desc = "A pair of surplus cybereyes that can access the Security HUD system. Operating table not included."
+	desc = "A pair of surplus cybereyes that can access the Security HUD system. Comes with a convenient but terrifying implanter."
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/surplus/holographic_disguiser

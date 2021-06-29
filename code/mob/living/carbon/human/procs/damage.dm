@@ -430,6 +430,8 @@
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		src.TakeDamage(zone, brute, burn, tox, null, FALSE, TRUE)
 
+	src.take_toxin_damage(-tox)
+
 	if (zone == "All")
 		var/bruteOrganCount = 0.0 		//How many organs have brute damage?
 		var/burnOrganCount = 0.0		//How many organs have burn damage?
