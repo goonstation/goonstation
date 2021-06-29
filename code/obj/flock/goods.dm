@@ -47,7 +47,7 @@
 	amount = 2
 	initial_volume = 20
 
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock/on_bite(obj/item/I, mob/M, mob/user)
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock/heal(var/mob/M)
 	if (icon_state == "flocknugget0")
 		icon_state = "flocknugget1"
 	return ..()

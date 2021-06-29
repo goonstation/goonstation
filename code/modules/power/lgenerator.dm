@@ -4,7 +4,7 @@
 /obj/machinery/power/lgenerator
 	name = "Experimental Local Generator"
 	desc = "This machine generates power through the combustion of plasma, charging either the local APC or an inserted power cell."
-	icon_state = "ggenoff"
+	icon_state = "ggen0"
 	anchored = 0
 	density = 1
 	//layer = FLOOR_EQUIP_LAYER1 //why was this set to this
@@ -25,11 +25,17 @@
 	var/last_APC_check = 1 // In relation to world time. Ideally, we don't want to run this every tick.
 	var/datum/light/light
 
+
+	var/image/spin_sprite = null
+	var/image/tank_sprite = null
+
 	New()
 		..()
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(0.8)
+		src.spin_sprite = new /image(src.icon,"ggen-spin")
+		src.tank_sprite = new /image(src.icon,"ggen-tank")
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tank/))
@@ -43,6 +49,7 @@
 			user.u_equip(W)
 			W.set_loc(src)
 			src.P = W
+			src.update_icon()
 
 		else if (istype(W, /obj/item/cell))
 			if (src.CL)
@@ -60,12 +67,20 @@
 		return
 
 	proc/update_icon()
+
 		if (src.active)
-			src.icon_state = "ggen"
+			src.UpdateOverlays(spin_sprite, "spin")
 			light.enable()
 		else
-			src.icon_state = "ggenoff"
+			src.UpdateOverlays(null, "spin")
 			light.disable()
+
+		if (src.P)
+			tank_sprite.icon_state = "ggen-tank"
+			src.UpdateOverlays(tank_sprite, "tank")
+		else
+			src.UpdateOverlays(null, "tank")
+
 		return
 
 	proc/APC_check()
@@ -207,6 +222,8 @@
 						src.P.air_contents.toxins = max(0, (P.air_contents.toxins - src.P_drain_rate))
 						// Call proc to trigger rigged cell and log entries.
 
+		src.icon_state = "ggen[src.anchored]"
+
 		src.update_icon()
 		src.updateDialog()
 		return
@@ -292,13 +309,16 @@
 				if (!istype(src.loc, /turf/simulated/floor/))
 					usr.show_text("You can't secure the generator here.", "red")
 					src.anchored = 0 // It might have happened, I guess?
+					src.update_icon()
 					return
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 				if (src.anchored)
 					src.anchored = 0
+					src.update_icon()
 					src.our_APC = null // It's just gonna cause trouble otherwise.
 				else
 					src.anchored = 1
+					src.update_icon()
 				src.visible_message("<span class='alert'>[usr] [src.anchored ? "bolts" : "unbolts"] [src] [src.anchored ? "to" : "from"] the floor.</span>")
 			else
 				usr.show_text("Turn the generator off first!", "red")

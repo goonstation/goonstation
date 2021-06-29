@@ -4,7 +4,7 @@
 	icon_state = "handcuff"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 2
 	throw_range = 5
 	m_amt = 500
@@ -36,7 +36,7 @@
 		return 0
 	user.canmove = 0
 	user.visible_message("<span class='alert'><b>[user] jams one end of [src] into one of [his_or_her(user)] eye sockets, closing the loop through the other!")
-	playsound(get_turf(user), "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
+	playsound(user, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 	user.emote("scream")
 	SPAWN_DBG(1 SECOND)
 		user.visible_message("<span class='alert'><b>[user] yanks the other end of [src] as hard as [he_or_she(user)] can, ripping [his_or_her(user)] skull clean out of [his_or_her(user)] head! [pick("Jesus christ!","Holy shit!","What the fuck!?","Oh my god!")]</b></span>")
@@ -44,7 +44,7 @@
 		if (skull)
 			skull.set_loc(user.loc)
 		make_cleanable( /obj/decal/cleanable/blood,user.loc)
-		playsound(get_turf(user), "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
+		playsound(user, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 		health_update_queue |= user
 
 /* do not do this thing here:
@@ -142,7 +142,7 @@
 
 /obj/item/handcuffs/tape_roll
 	name = "ducktape"
-	desc = "Our new top of the line high-tech handcuffs"
+	desc = "A convenient and illegal source of makeshift handcuffs."
 	icon_state = "ducktape"
 	flags = FPRINT | TABLEPASS | ONBELT
 	m_amt = 200

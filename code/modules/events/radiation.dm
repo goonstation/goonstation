@@ -46,7 +46,7 @@
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/rads_warning(src))
 		sleep(lifespan)
-		playsound(get_turf(src),pulse_sound,50,1)
+		playsound(src,pulse_sound,50,1)
 		irradiate_turf(get_turf(src))
 		for (var/turf/T in circular_range(src,pulse_range))
 			irradiate_turf(T)
@@ -62,9 +62,15 @@
 	proc/irradiate_turf(var/turf/T)
 		if (!isturf(T))
 			return
+		//spatial interdictor: nullify radiation pulses
+		//consumes 100 units of charge per tile protected
+		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
+			if (IN_RANGE(IX,T,IX.interdict_range) && IX.expend_interdict(100,1))
+				animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
+				return
 		animate_flash_color_fill_inherit(T,"#00FF00",1,5)
 		for (var/mob/living/carbon/M in T.contents)
-			M.changeStatus("radiation", (rad_strength)*10, 3)
+			M.changeStatus("radiation", (rad_strength) SECONDS, 3)
 			if (prob(mutate_prob) && M.bioHolder)
 				if (prob(bad_mut_prob))
 					M.bioHolder.RandomEffect("bad")
@@ -92,7 +98,7 @@
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/rads_warning(src))
 		sleep(lifespan)
-		playsound(get_turf(src),pulse_sound,50,1)
+		playsound(src,pulse_sound,50,1)
 		irradiate_turf(get_turf(src))
 		for (var/turf/T in circular_range(src,pulse_range))
 			irradiate_turf(T)
@@ -108,9 +114,15 @@
 	proc/irradiate_turf(var/turf/T)
 		if (!isturf(T))
 			return
+		//spatial interdictor: nullify radiation pulses
+		//consumes 150 units of charge per tile protected
+		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
+			if (IN_RANGE(IX,T,IX.interdict_range) && IX.expend_interdict(150,1))
+				animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
+				return
 		animate_flash_color_fill_inherit(T,"#0084ff",1,5)
 		for (var/atom/A in T.contents)
-			A.changeStatus("n_radiation", (rad_strength)*10, 3)
+			A.changeStatus("n_radiation", (rad_strength) SECONDS, 3)
 			if(iscarbon(A))
 				var/mob/living/carbon/M = A
 				if (prob(mutate_prob) && M.bioHolder)

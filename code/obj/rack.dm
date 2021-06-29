@@ -1,12 +1,15 @@
 /obj/rack
 	name = "rack"
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "rack"
+	icon_state = "rack_base"
 	density = 1
 	flags = FPRINT | NOSPLASH
 	anchored = 1.0
 	desc = "A metal frame used to hold objects. Can be wrenched and made portable."
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	proc/rackbreak()
+		icon_state += "-broken"
+		src.set_density(0)
 
 /obj/rack/New()
 	..()
@@ -34,8 +37,7 @@
 				return
 		if(3.0)
 			if (prob(25))
-				src.icon_state = "rackbroken"
-				src.set_density(0)
+				rackbreak()
 		else
 	return
 
@@ -44,8 +46,7 @@
 		src.deconstruct()
 		return
 	else if(prob(power * 2.5))
-		src.icon_state = "rackbroken"
-		src.set_density(0)
+		rackbreak()
 		return
 
 /obj/rack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -107,8 +108,7 @@
 		qdel(src)
 		return
 	else
-		src.icon_state = "rackbroken"
-		src.set_density(0)
+		rackbreak()
 	return
 
 /datum/action/bar/icon/rack_tool_interact
@@ -147,11 +147,11 @@
 
 	onStart()
 		..()
-		playsound(get_turf(the_rack), "sound/items/Ratchet.ogg", 50, 1)
+		playsound(the_rack, "sound/items/Ratchet.ogg", 50, 1)
 		owner.visible_message("<span class='notice'>[owner] begins disassembling [the_rack].</span>")
 
 	onEnd()
 		..()
-		playsound(get_turf(the_rack), "sound/items/Deconstruct.ogg", 50, 1)
+		playsound(the_rack, "sound/items/Deconstruct.ogg", 50, 1)
 		owner.visible_message("<span class='notice'>[owner] disassembles [the_rack].</span>")
 		the_rack.deconstruct()

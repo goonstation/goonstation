@@ -73,6 +73,12 @@
 				if (C.tooltipHolder)
 					C.tooltipHolder.inPod = 0
 
+	proc/check_hud_layout(mob/user)
+		if (user.client.tg_layout)
+			leave.screen_loc = "SOUTH,EAST-6"
+		else
+			leave.screen_loc = "SOUTH,EAST"
+
 	proc/update_health()
 		check_clients()
 		health_bar.update_health_overlay(master.health, master.maxhealth, 0, 0)
@@ -239,7 +245,7 @@
 			if (!lights.overlays.len)
 				lights.overlays += missing
 
-	clicked(id, mob/user, list/params)
+	relay_click(id, mob/user, list/params)
 		if (user.loc != master)
 			boutput(user, "<span class='alert'>You're not in the pod doofus. (Call 1-800-CODER.)</span>")
 			remove_client(user.client)

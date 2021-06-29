@@ -9,7 +9,7 @@
 
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_PRYING
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	force = 7.0
 	throwforce = 7.0
@@ -44,7 +44,7 @@
 
 /obj/item/crowbar/red
 	name = "crowbar"
-	desc = "A tool used as a lever to pry objects. This one appears to have been painted red as an indicator of it's important emergency tool status, or maybe someone forgot to clean the blood off."
+	desc = "A tool used as a lever to pry objects. This one appears to have been painted red as an indicator of its important emergency tool status, or maybe someone forgot to clean the blood off."
 	icon_state = "crowbar-red"
 
 /obj/item/crowbar/yellow

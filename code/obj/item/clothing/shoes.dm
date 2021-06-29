@@ -77,7 +77,7 @@
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 1)
+		setProperty("movespeed", 0.5)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged)
@@ -148,29 +148,28 @@
 	uses_multiple_icon_states = 1
 	desc = "Shoes, now in prisoner orange! Can be made into shackles."
 
+	attack_self(mob/user as mob)
+		if (src.chained)
+			src.chained = null
+			src.cant_self_remove = 0
+			new /obj/item/handcuffs(get_turf(user))
+			src.name = "orange shoes"
+			src.icon_state = "orange"
+			src.desc = "Shoes, now in prisoner orange! Can be made into shackles."
+
+	attackby(H as obj, loc)
+		if (istype(H, /obj/item/handcuffs) && !src.chained)
+			qdel(H)
+			src.chained = 1
+			src.cant_self_remove = 1
+			src.name = "shackles"
+			src.desc = "Used to restrain prisoners."
+			src.icon_state = "orange1"
+		..()
+
 /obj/item/clothing/shoes/pink
 	name = "pink shoes"
 	icon_state = "pink"
-
-/obj/item/clothing/shoes/orange/attack_self(mob/user as mob)
-	if (src.chained)
-		src.chained = null
-		src.cant_self_remove = 0
-		new /obj/item/handcuffs(get_turf(user))
-		src.name = "orange shoes"
-		src.icon_state = "orange"
-		src.desc = "Shoes, now in prisoner orange! Can be made into shackles."
-	return
-
-/obj/item/clothing/shoes/orange/attackby(H as obj, loc)
-	if (istype(H, /obj/item/handcuffs) && !src.chained)
-		qdel(H)
-		src.chained = 1
-		src.cant_self_remove = 1
-		src.name = "shackles"
-		src.desc = "Used to restrain prisoners."
-		src.icon_state = "orange1"
-	return
 
 /obj/item/clothing/shoes/magnetic
 	name = "magnetic shoes"
@@ -353,6 +352,7 @@
 	color = "#FF0000"
 	step_sound = "explosion"
 	contraband = 10
+	step_priority = 999
 	is_syndicate = 1
 
 /obj/item/clothing/shoes/ziggy
@@ -446,6 +446,13 @@
 			. = "Looks like some big shoes to fill!"
 		. = ..()
 
+/obj/item/clothing/shoes/swat/knight // so heavy you can't get shoved!
+	name = "combat sabatons"
+	desc = "Massive, armored footwear for syndicate super-heavies."
+	icon_state = "swatheavy"
+	magnetic = 1
+	c_flags = NOSLIP
+
 /obj/item/clothing/shoes/fuzzy //not boolean slippers
 	name = "fuzzy slippers"
 	desc = "A pair of cute little pink rabbit slippers."
@@ -488,7 +495,7 @@
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.9)
+		setProperty("movespeed", 0.3)
 
 	proc/toggle()
 		src.on = !(src.on)
@@ -655,3 +662,27 @@
 	name = "Pink Flats"
 	icon_state = "flatspnk"
 	desc = "Simple pink flats. So bright they almost glow! Almost."
+
+/obj/item/clothing/shoes/mjblack
+	name = "Black Mary Janes"
+	icon_state = "mjblack"
+	desc = "Dainty and formal. This pair is black."
+	step_sound = "footstep"
+
+/obj/item/clothing/shoes/mjbrown
+	name = "Brown Mary Janes"
+	icon_state = "mjbrown"
+	desc = "Dainty and formal. This pair is brown."
+	step_sound = "footstep"
+
+/obj/item/clothing/shoes/mjnavy
+	name = "Navy Mary Janes"
+	icon_state = "mjnavy"
+	desc = "Dainty and formal. This pair is navy."
+	step_sound = "footstep"
+
+/obj/item/clothing/shoes/mjwhite
+	name = "White Mary Janes"
+	icon_state = "mjwhite"
+	desc = "Dainty and formal. This pair is white."
+	step_sound = "footstep"

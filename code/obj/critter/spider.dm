@@ -31,10 +31,10 @@
 				return ..()
 			else
 				src.visible_message("<span class='alert'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
-				if (prob(15))
+				if (prob(15) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
 					for (var/mob/O in hearers(src, null))
 						O.show_message("[src] coos[prob(50) ? " happily!" : ""]!",2)
-						playsound(src.loc, "sound/voice/babynoise.ogg", 40, 0)
+						playsound(src.loc, "sound/voice/babynoise.ogg", 30, 0)
 				return
 		else
 			..()
@@ -256,9 +256,11 @@
 		else src.visible_message("<span class='alert'><B>[src]</B> dives at [M], but misses!</span>")
 
 	on_pet(mob/user)
-		..()
-		playsound(src.loc, 'sound/voice/babynoise.ogg', 50, 1)
-		src.visible_message("<span class='alert'><b>[src] coos!</b></span>", 1)
+		if (..())
+			return 1
+		if (prob(15) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
+			playsound(src.loc, 'sound/voice/babynoise.ogg', 30, 1)
+			src.visible_message("<span class='alert'><b>[src] coos!</b></span>", 1)
 
 	proc/spiderflail(mob/M)
 		if (flailing)
@@ -388,7 +390,7 @@
 	atkcarbon = 0
 	atksilicon = 0
 	venom1 = "hugs"
-	venom2 = "glitter_harmless"
+	venom2 = "sparkles"
 
 /obj/critter/spider/ice/queen/nice
 	name = "queen nice spider"
@@ -399,7 +401,7 @@
 	atkcarbon = 0
 	atksilicon = 0
 	venom1 = "hugs"
-	venom2 = "glitter_harmless"
+	venom2 = "sparkles"
 
 /obj/critter/spider/spacerachnid // you get to be in here TOO
 	name = "spacerachnid"

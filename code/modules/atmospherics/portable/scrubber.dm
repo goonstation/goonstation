@@ -43,7 +43,7 @@
 
 		if(length(removed.trace_gases))
 			var/datum/gas/filtered_gas
-			for(var/datum/gas/trace_gas as() in removed.trace_gases)
+			for(var/datum/gas/trace_gas as anything in removed.trace_gases)
 				filtered_gas = filtered_out.get_or_add_trace_gas_by_type(trace_gas.type)
 				filtered_gas.moles = trace_gas.moles
 				removed.remove_trace_gas(trace_gas)

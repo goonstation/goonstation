@@ -22,7 +22,7 @@ Whatever, it's been cleaned up a lot and it's no longer quite so awful.
 	total_souls_value = max(0, (total_souls_value + to_adjust))
 	total_souls_sold = max(total_souls_sold, (total_souls_sold + to_adjust)) //total souls sold can never go down
 	if (length(by_cat[TR_CAT_SOUL_TRACKING_ITEMS]))
-		for (var/obj/item/Q as() in by_cat[TR_CAT_SOUL_TRACKING_ITEMS])
+		for (var/obj/item/Q as anything in by_cat[TR_CAT_SOUL_TRACKING_ITEMS])
 			soulbuff(Q)
 	return 1
 
@@ -90,7 +90,7 @@ proc/is_weak_rollable_contract(type)
 		H.stuttering = 120
 		H.mind?.assigned_role = "Horse"
 		H.contract_disease(/datum/ailment/disability/clumsy,null,null,1)
-		playsound(get_turf(H), pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
+		playsound(H, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
 		H.change_misstep_chance(66)
 		animate_clownspell(H)
 		H.drop_from_slot(H.wear_suit)
@@ -136,7 +136,7 @@ proc/is_weak_rollable_contract(type)
 /mob/proc/satanclownize()
 	src.transforming = 1
 	src.canmove = 0
-	src.invisibility = 101
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 	for(var/obj/item/clothing/Q in src)
 		src.u_equip(Q)
 		if (Q)
@@ -161,11 +161,11 @@ proc/is_weak_rollable_contract(type)
 		else
 			asize++
 		acount++
-	src.playsound_local(C.loc,"sound/effects/screech.ogg", 100, 1)
+	src.playsound_local(C.loc,"sound/effects/screech.ogg", 50, 1)
 	if(C.mind)
 		shake_camera(C, 20, 16)
 		boutput(C, "<font color=red>[screamstring]</font>")
-		boutput(C, "<i><b><font face = Tempus Sans ITC>You have sold your soul and become an avatar of evil! Spread darkness across the land!</font></b></i>")
+		boutput(C, "<span style=\"color:purple; font-size:150%\"><i><b><font face = Tempus Sans ITC>You have sold your soul and become an antagonist and an avatar of evil! Spread darkness across the land!</font></b></i></span>")
 		C.mind.special_role = "Faustian Cluwne"
 		logTheThing("admin", src, null, "has transformed into a demonic cluwne at [log_loc(C)]!")
 		ticker.mode.Agimmicks.Add(C)
@@ -254,7 +254,8 @@ proc/is_weak_rollable_contract(type)
 	throw_speed = 1
 	throw_range = 8
 	burn_possible = 0 //Only makes sense since it's from hell.
-	w_class = 4.0
+	item_function_flags = IMMUNE_TO_ACID // we don't get a spare, better make sure it lasts.
+	w_class = W_CLASS_BULKY
 	max_wclass = 3
 	desc = "A diabolical human leather-bound briefcase, capable of holding a number of small objects and tormented souls. All those tormented souls give it a good deal of heft; you could use it as a great improvised bludgeoning weapon."
 	stamina_damage = 80 //buffed from 40
@@ -365,7 +366,7 @@ END GUIDE
 	icon_state = "scroll_seal"
 	var/uses = 4.0
 	flags = FPRINT | TABLEPASS
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	color = "#FF0000"
@@ -491,9 +492,11 @@ obj/item/contract/satan
 		if(!..())
 			return 0
 		SPAWN_DBG(1 DECI SECOND)
+			user.unequip_all()
 			user.satanclownize()
-			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
-
+			//boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
+			//this didn't actually render for the user due to the order in which these procs were called, so most people never saw this alert
+			//given the content of the OTHER big, highly visible text message, I think that moving this up would break with the current precident
 		return 1
 
 obj/item/contract/macho
@@ -506,8 +509,9 @@ obj/item/contract/macho
 		if(!..())
 			return 0
 		SPAWN_DBG(1 DECI SECOND)
-			user.machoize(1)
+			user.unequip_all()
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
+			user.machoize(1)
 
 		return 1
 
@@ -532,7 +536,7 @@ obj/item/contract/wrestle
 			boutput(user, "<span class='notice'>Oh cripes, looks like your years of drug abuse caught up with you! </span>")
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 			user.visible_message("<span class='alert'>[user]'s pupils dilate.</span>")
-			user.changeStatus("stunned", 1000)
+			user.changeStatus("stunned", 100 SECONDS)
 			ticker.mode.Agimmicks.Add(user)
 
 		return 1
@@ -547,6 +551,7 @@ obj/item/contract/yeti
 		if(!..())
 			return 0
 		SPAWN_DBG(1 DECI SECOND)
+			user.unequip_all()
 			user.makesuperyeti()
 			// UNNEEDED UNTIL YETI CRITTER MOB IMPLEMENTED boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 
@@ -762,6 +767,18 @@ obj/item/contract/hair
 			return 0
 		SPAWN_DBG(1 DECI SECOND)
 			user.traitHolder.addTrait("contract_hair")
+
+		return 1
+
+obj/item/contract/limbs
+	desc = "This contract is really just a sketch of one of those inflatable air tube dancer things you see near used pod dealerships with some signature fields tacked onto the bottom."
+
+
+	MagicEffect(var/mob/user as mob, var/mob/badguy as mob)
+		if(!..())
+			return 0
+		SPAWN_DBG(1 DECI SECOND)
+			user.traitHolder.addTrait("contract_limbs")
 
 		return 1
 

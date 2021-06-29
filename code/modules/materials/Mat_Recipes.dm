@@ -174,9 +174,11 @@
 		var/one = 0
 		var/two = 0
 
+		var/regex/R = regex("rubber")
+
 		for(var/datum/material/CM in M.parent_materials)
 			if(CM.mat_id == "coral") one = 1
-			if(CM.mat_id == "synthrubber") two = 1
+			if(R.Find(CM.mat_id)) two = 1
 
 		if(one && two) return 1
 		else return 0

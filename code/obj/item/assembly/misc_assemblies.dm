@@ -23,7 +23,7 @@ Contains:
 	item_state = "assembly"
 	var/status = 0.0
 	throwforce = 10
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 4
 	throw_range = 10
 	force = 2

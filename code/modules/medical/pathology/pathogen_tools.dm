@@ -162,9 +162,9 @@
 						if (RE.pathogen_nutrition)
 							for (var/N in RE.pathogen_nutrition)
 								if (N in nutrition)
-									nutrition[N] += RE.volume / RE.pathogen_nutrition.len
+									nutrition[N] += RE.volume / length(RE.pathogen_nutrition)
 								else
-									nutrition[N] = RE.volume / RE.pathogen_nutrition.len
+									nutrition[N] = RE.volume / length(RE.pathogen_nutrition)
 						src.reagents.reagent_list -= R
 						src.reagents.update_total()
 					else
@@ -173,9 +173,9 @@
 				else if (RE.pathogen_nutrition)
 					for (var/N in RE.pathogen_nutrition)
 						if (N in nutrition)
-							nutrition[N] += RE.volume / RE.pathogen_nutrition.len
+							nutrition[N] += RE.volume / length(RE.pathogen_nutrition)
 						else
-							nutrition[N] = RE.volume / RE.pathogen_nutrition.len
+							nutrition[N] = RE.volume / length(RE.pathogen_nutrition)
 					src.reagents.reagent_list -= R
 					src.reagents.update_total()
 				else
@@ -197,9 +197,9 @@
 						if (RE.pathogen_nutrition)
 							for (var/N in RE.pathogen_nutrition)
 								if (N in nutrition)
-									nutrition[N] += RE.volume / RE.pathogen_nutrition.len
+									nutrition[N] += RE.volume / length(RE.pathogen_nutrition)
 								else
-									nutrition[N] = RE.volume / RE.pathogen_nutrition.len
+									nutrition[N] = RE.volume / length(RE.pathogen_nutrition)
 						src.reagents.reagent_list -= R
 						src.reagents.update_total()
 						if (src.reagents.has_reagent("pathogen"))
@@ -208,17 +208,17 @@
 						if (RE.pathogen_nutrition)
 							for (var/N in RE.pathogen_nutrition)
 								if (N in nutrition)
-									nutrition[N] += RE.volume / RE.pathogen_nutrition.len
+									nutrition[N] += RE.volume / length(RE.pathogen_nutrition)
 								else
-									nutrition[N] = RE.volume / RE.pathogen_nutrition.len
+									nutrition[N] = RE.volume / length(RE.pathogen_nutrition)
 						src.reagents.reagent_list -= R
 						src.reagents.update_total()
 				else if (RE.pathogen_nutrition)
 					for (var/N in RE.pathogen_nutrition)
 						if (N in nutrition)
-							nutrition[N] += RE.volume / RE.pathogen_nutrition.len
+							nutrition[N] += RE.volume / length(RE.pathogen_nutrition)
 						else
-							nutrition[N] = RE.volume / RE.pathogen_nutrition.len
+							nutrition[N] = RE.volume / length(RE.pathogen_nutrition)
 					src.reagents.reagent_list -= R
 					src.reagents.update_total()
 				else

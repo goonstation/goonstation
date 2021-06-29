@@ -276,7 +276,7 @@
 
 /obj/machinery/sim/vr_bed/Click(location,control,params)
 	var/lpm = params2list(params)
-	if(isobserver(usr) && !lpm["ctrl"] && !lpm["shift"] && !lpm["alt"])
+	if(isobserver(usr) && !lpm["ctrl"] && !lpm["shift"] && !lpm["alt"] && alert("Are you sure you want to enter VR?","Are you sure?","Yes","No") == "Yes")
 		src.move_inside()
 	else return ..()
 

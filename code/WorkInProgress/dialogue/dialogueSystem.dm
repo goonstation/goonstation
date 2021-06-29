@@ -122,7 +122,7 @@ proc/getGlobalFlag(var/client/C, var/flag="")
 		if(C.dialogueNodePath)					//Optionally goes [steps] steps back and gets that node instead of the last one.
 			if(C.dialogueNodePath["\ref[src]"])
 				if(C.dialogueNodePath["\ref[src]"].len)
-					var/length = C.dialogueNodePath["\ref[src]"].len
+					var/length = length(C.dialogueNodePath["\ref[src]"])
 					if(steps > 0)
 						if(length > steps)
 							return C.dialogueNodePath["\ref[src]"][length - steps]

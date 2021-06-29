@@ -3,13 +3,16 @@
 	icon = 'icons/obj/items/pinpointers.dmi'
 	icon_state = "disk_pinoff"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 500
 	var/atom/target = null
+	/// target type to search for in world
 	var/target_criteria = null
+	/// exact target reference
+	var/target_ref = null
 	var/active = 0
 	var/icon_type = "disk"
 	mats = 4
@@ -25,7 +28,7 @@
 
 	attack_self()
 		if(!active)
-			if (!src.target_criteria)
+			if (!(src.target_criteria || src.target_ref))
 				usr.show_text("No target criteria specified, cannot activate the pinpointer.", "red")
 				return
 			active = 1
@@ -33,19 +36,19 @@
 			boutput(usr, "<span class='notice'>You activate the pinpointer</span>")
 		else
 			active = 0
-			arrow.icon_state = ""
-			UpdateOverlays(arrow, "arrow")
+			ClearSpecificOverlays("arrow")
 			boutput(usr, "<span class='notice'>You deactivate the pinpointer</span>")
 
 	proc/work()
 		if(!active) return
 		if(!target)
-			if (target_criteria)
+			if (target_ref)
+				target = locate(target_ref)
+			else if (target_criteria)
 				target = locate(target_criteria)
 			if(!target || target.qdeled)
 				active = 0
-				arrow.icon_state = ""
-				UpdateOverlays(arrow, "arrow")
+				ClearSpecificOverlays("arrow")
 				return
 		src.set_dir(get_dir(src,target))
 		switch(get_dist(src,target))
@@ -81,12 +84,31 @@
 	icon_type = "semi"
 	target_criteria = /obj/item/teg_semiconductor
 
+/obj/item/pinpointer/trench
+	name = "pinpointer (sea elevator)"
+	desc = "Points in the direction of the sea elevator."
+	icon_state = "trench_pinoff"
+	icon_type = "trench"
+	var/target_area = /area/shuttle/sea_elevator/lower
+	target_ref = null
+
+	New()
+		. = ..()
+		var/area/A = locate(target_area)
+		target_ref = "\ref[A.find_middle()]"
+
+	attack_self()
+		if(!target_ref)
+			. = ..()
+			var/area/A = locate(target_area)
+			target_ref = "\ref[A.find_middle()]"
+
 /obj/item/idtracker
 	name = "ID tracker"
 	icon = 'icons/obj/items/pinpointers.dmi'
 	icon_state = "id_pinoff"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
@@ -201,7 +223,7 @@
 	icon = 'icons/obj/items/pinpointers.dmi'
 	icon_state = "blood_pinoff"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20

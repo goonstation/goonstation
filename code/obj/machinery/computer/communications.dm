@@ -170,7 +170,7 @@
 /proc/disablelockdown(var/mob/usr)
 	boutput(world, "<span class='alert'>Lockdown cancelled by [usr.name]!</span>")
 
-	for(var/obj/machinery/firealarm/FA as() in machine_registry[MACHINES_FIREALARMS]) //deactivate firealarms
+	for(var/obj/machinery/firealarm/FA as anything in machine_registry[MACHINES_FIREALARMS]) //deactivate firealarms
 		SPAWN_DBG(0)
 			if(FA.lockdownbyai == 1)
 				FA.lockdownbyai = 0

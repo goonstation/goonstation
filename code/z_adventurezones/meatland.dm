@@ -409,7 +409,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 				return 1
 
 		var/list/exploded_sentence = splittext(message, " ")
-		if (!exploded_sentence || !exploded_sentence.len)
+		if (!exploded_sentence || !length(exploded_sentence))
 			return 1
 
 		if (exploded_sentence.len > 1)
@@ -1626,7 +1626,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	pickup(var/mob/user)
 		if (ishuman(user))
 			boutput(user, "<span class='alert'>[src] clamps down on your arm!  Mercy sakes!</span>")
-			src.w_class = 10
+			src.w_class = W_CLASS_BUBSIAN
 		return ..()
 
 	dropped()

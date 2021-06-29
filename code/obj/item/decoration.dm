@@ -2,7 +2,7 @@
 /obj/item/decoration
 	icon = 'icons/obj/decoration.dmi'
 	flags = FPRINT | TABLEPASS
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 /obj/item/decoration/flower_vase
 	name = "flower vase"
@@ -24,7 +24,7 @@
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "ashtray"
 	uses_multiple_icon_states = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/butts = 0 // heh
 
 	New()

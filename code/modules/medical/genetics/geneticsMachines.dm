@@ -219,7 +219,7 @@
 			scanner.icon_state = "scanner_0"
 			return null
 		else
-			for (var/D as() in scanner.occupant.bioHolder.effects)
+			for (var/D as anything in scanner.occupant.bioHolder.effects)
 				var/datum/bioEffect/BE = scanner.occupant.bioHolder.effects[D]
 				var/datum/bioEffect/GBE = BE.get_global_instance()
 				if (GBE.research_level == EFFECT_RESEARCH_DONE)
@@ -242,23 +242,12 @@
 		return null
 	if (!src.scanner.occupant_preview)
 		src.scanner.occupant_preview = new()
+		src.scanner.occupant_preview.add_background("#092426")
 		src.scanner.update_occupant()
 	return src.scanner.occupant_preview
 
 /obj/machinery/computer/genetics/proc/update_occupant_preview()
 	src.scanner?.update_occupant()
-
-/obj/machinery/computer/genetics/power_change()
-	if(status & BROKEN)
-		icon_state = "commb"
-	else
-		if( powered() )
-			icon_state = initial(icon_state)
-			status &= ~NOPOWER
-		else
-			SPAWN_DBG(rand(0, 15))
-				src.icon_state = "c_unpowered"
-				status |= NOPOWER
 
 // There weren't any (Convair880)!
 /obj/machinery/computer/genetics/proc/log_me(var/mob/M, var/action = "", var/datum/bioEffect/BE)
@@ -587,7 +576,7 @@
 			if (addEffect) // re-mutantify if we would have been able to anyway
 				subject.bioHolder.AddEffect(addEffect)
 			if (genResearch.emitter_radiation > 0)
-				subject.changeStatus("radiation", (genResearch.emitter_radiation*10), 3)
+				subject.changeStatus("radiation", (genResearch.emitter_radiation) SECONDS, 3)
 			src.equipment_cooldown(GENETICS_EMITTERS, 1200)
 			scanner_alert(ui.user, "Genes successfully scrambled.")
 			on_ui_interacted(ui.user)
@@ -606,7 +595,7 @@
 				return
 			src.log_me(subject, "gene scrambled", E)
 			if (genResearch.emitter_radiation > 0)
-				subject.changeStatus("radiation", (genResearch.emitter_radiation*10), 3)
+				subject.changeStatus("radiation", (genResearch.emitter_radiation) SECONDS, 3)
 			subject.bioHolder.RemovePoolEffect(E)
 			subject.bioHolder.AddRandomNewPoolEffect()
 			src.equipment_cooldown(GENETICS_EMITTERS, 600)
@@ -638,8 +627,8 @@
 			booth_effect_desc = strip_html(booth_effect_desc, 280)
 			for_by_tcl(GB, /obj/machinery/genetics_booth)
 				var/already_has = 0
-				for (var/datum/geneboothproduct/P as() in GB.offered_genes)
-					if (P.id == E.id)
+				for (var/datum/geneboothproduct/P as anything in GB.offered_genes)
+					if (P.id == E.id && P.name == E.name)
 						already_has = P
 						P.uses += 5
 						P.desc = booth_effect_desc
@@ -787,7 +776,7 @@
 				if (GR.required_effects.len != src.combining.len)
 					continue
 				var/list/temp = GR.required_effects.Copy()
-				for (var/datum/bioEffect/BE as() in src.combining)
+				for (var/datum/bioEffect/BE as anything in src.combining)
 					if (BE.wildcard)
 						matches++
 					if (BE.id in temp)
@@ -799,7 +788,7 @@
 					var/datum/bioEffect/GBE = NEWBE.get_global_instance()
 					NEWBE.dnaBlocks.blockList = GBE.dnaBlocks.blockList
 					GBE.research_level = max(GBE.research_level, EFFECT_RESEARCH_ACTIVATED) // counts as researching it
-					for (var/datum/bioEffect/X as() in src.combining)
+					for (var/datum/bioEffect/X as anything in src.combining)
 						src.saved_mutations -= X
 						src.combining -= X
 						qdel(X)
@@ -873,42 +862,45 @@
 			scanner_alert(ui.user, "Decryption code \"[code]\" failed.", error = TRUE)
 			on_ui_interacted(ui.user)
 
-/obj/machinery/computer/genetics/proc/serialize_bioeffect_for_tgui(datum/bioEffect/BE, active = FALSE, potential = FALSE)
+/obj/machinery/computer/genetics/proc/serialize_bioeffect_for_tgui(datum/bioEffect/BE, active = FALSE, potential = FALSE, full_data = TRUE)
 	var/datum/bioEffect/GBE = BE.get_global_instance()
 	var/research_level = GBE.research_level
-
-	var/list/blockList = active || (research_level >= EFFECT_RESEARCH_ACTIVATED && !potential) ? GBE.dnaBlocks.blockList : BE.dnaBlocks.blockListCurr
-	if (!length(blockList)) // stable mutagen doesn't generate messed-up DNA for genes :(
-		BE.dnaBlocks.ModBlocks()
-		blockList = BE.dnaBlocks.blockListCurr
-
-	var/list/dna = list()
-	for (var/datum/basePair/BP as() in blockList)
-		dna += list(list(
-			"upper" = BP.bpp1,
-			"lower" = BP.bpp2,
-			"style" = BP.style,
-			"marker" = BP.marker,
-		))
 
 	. = list(
 		"ref" = "\ref[BE]",
 		"name" = research_level >= EFFECT_RESEARCH_DONE ? BE.name \
 			: "Unknown Mutation",
-		"desc" = research_level >= EFFECT_RESEARCH_ACTIVATED && !isnull(BE.researched_desc) ? BE.researched_desc \
-			: research_level >= EFFECT_RESEARCH_DONE ? BE.desc \
-			: research_level >= EFFECT_RESEARCH_IN_PROGRESS ? "Research on this gene is currently in progress." \
-			: "Research on a non-active instance of this gene is required.",
-		"icon" = research_level >= EFFECT_RESEARCH_DONE ? BE.icon_state : "unknown",
-		"research" = research_level,
-		"time" = GBE.research_finish_time,
-		"canResearch" = BE.can_research,
-		"canInject" = BE.can_make_injector,
-		"canScramble" = BE.can_scramble,
-		"canReclaim" = BE.can_reclaim,
-		"spliceError" = src.to_splice?.check_apply(BE),
-		"dna" = dna,
-	)
+		"research" = research_level
+		)
+	// The following items are only applicable for currently selected gene or list of mutations
+	if(full_data)
+		var/list/blockList = active || (research_level >= EFFECT_RESEARCH_ACTIVATED && !potential) ? GBE.dnaBlocks.blockList : BE.dnaBlocks.blockListCurr
+		if (!length(blockList)) // stable mutagen doesn't generate messed-up DNA for genes :(
+			BE.dnaBlocks.ModBlocks()
+			blockList = BE.dnaBlocks.blockListCurr
+
+		var/list/dna = list()
+		for (var/datum/basePair/BP as anything in blockList)
+			dna += list(list(
+				"pair" = "[BP.bpp1][BP.bpp2]",
+				"style" = BP.style,
+				"marker" = BP.marker,
+			))
+
+		. += list(
+			"desc" = research_level >= EFFECT_RESEARCH_ACTIVATED && !isnull(BE.researched_desc) ? BE.researched_desc \
+				: research_level >= EFFECT_RESEARCH_DONE ? BE.desc \
+				: research_level >= EFFECT_RESEARCH_IN_PROGRESS ? "Research on this gene is currently in progress." \
+				: "Research on a non-active instance of this gene is required.",
+			"icon" = research_level >= EFFECT_RESEARCH_DONE ? BE.icon_state : "unknown",
+			"time" = GBE.research_finish_time,
+			"canResearch" = BE.can_research,
+			"canInject" = BE.can_make_injector,
+			"canScramble" = BE.can_scramble,
+			"canReclaim" = BE.can_reclaim,
+			"spliceError" = src.to_splice?.check_apply(BE),
+			"dna" = dna,
+			)
 
 /obj/machinery/computer/genetics/ui_data(mob/user)
 	var/mut_research_cost = genResearch.mut_research_cost
@@ -923,16 +915,11 @@
 	. = list(
 		"haveScanner" = !isnull(get_scanner()),
 		"materialCur" = genResearch.researchMaterial,
-		"materialMax" = genResearch.max_material,
 		"mutationsResearched" = genResearch.mutations_researched,
 		"autoDecryptors" = genResearch.lock_breakers,
 		"budget" = wagesystem.research_budget,
 		"costPerMaterial" = 50,
 		"researchCost" = mut_research_cost,
-		"boothCost" = genResearch.isResearched(/datum/geneticsResearchEntry/genebooth) ? genResearch.genebooth_cost : -1,
-		"injectorCost" = genResearch.isResearched(/datum/geneticsResearchEntry/injector) ? genResearch.injector_cost : -1,
-		"saveSlots" = genResearch.isResearched(/datum/geneticsResearchEntry/saver) ? genResearch.max_save_slots : 0,
-		"precisionEmitter" = genResearch.isResearched(/datum/geneticsResearchEntry/rad_precision),
 		"toSplice" = src.to_splice?.name,
 		"activeGene" = "\ref[src.currently_browsing]",
 		"scannerAlert" = src.last_scanner_alert,
@@ -945,15 +932,10 @@
 		"savedMutations" = list(),
 		"savedChromosomes" = list(),
 		"combining" = list(),
-		"mutantRaces" = list(list(
-			"name" = "Human",
-			"icon" = "template",
-			"ref" = "\ref[null]",
-		)),
 		"unlock" = null,
 	)
 
-	for(var/datum/data/record/R as() in data_core.medical)
+	for(var/datum/data/record/R as anything in data_core.medical)
 		var/datum/computer/file/genetics_scan/S = R.fields["dnasample"]
 		if (!istype(S))
 			continue
@@ -963,27 +945,18 @@
 			"uid" = S.subject_uID,
 		))
 
-	for(var/datum/bioEffect/BE as() in saved_mutations)
+	for(var/datum/bioEffect/BE as anything in saved_mutations)
 		.["savedMutations"] += list(serialize_bioeffect_for_tgui(BE))
 
-	for(var/datum/dna_chromosome/C as() in saved_chromosomes)
+	for(var/datum/dna_chromosome/C as anything in saved_chromosomes)
 		.["savedChromosomes"] += list(list(
 			"ref" = "\ref[C]",
 			"name" = C.name,
 			"desc" = C.desc,
 		))
 
-	for (var/datum/bioEffect/BE as() in combining)
+	for (var/datum/bioEffect/BE as anything in combining)
 		.["combining"] += "\ref[BE]"
-
-	for (var/X as() in bioEffectList)
-		var/datum/bioEffect/BE = bioEffectList[X]
-		if (BE.effectType == EFFECT_TYPE_MUTANTRACE && BE.research_level >= EFFECT_RESEARCH_DONE && BE.mutantrace_option)
-			.["mutantRaces"] += list(list(
-				"name" = BE.mutantrace_option,
-				"icon" = BE.icon_state,
-				"ref" = "\ref[BE]",
-			))
 
 	if (!src.decrypt_sanity_check())
 		.["unlock"] = list(
@@ -996,11 +969,11 @@
 
 	if (istype(selected_record))
 		var/list/genes = list()
-		for (var/datum/bioEffect/BE as() in selected_record.dna_pool)
+		for (var/datum/bioEffect/BE as anything in selected_record.dna_pool)
 			var/datum/bioEffect/GBE = BE.get_global_instance()
 			if (GBE.secret && !genResearch.see_secret)
 				continue
-			genes += list(serialize_bioeffect_for_tgui(BE))
+			genes += list(serialize_bioeffect_for_tgui(BE, full_data=(BE == src.currently_browsing)))
 		.["record"] = list(
 			"ref" = "\ref[selected_record]",
 			"name" = selected_record.subject_name,
@@ -1015,20 +988,21 @@
 		var/mob/living/carbon/human/H = subject
 		var/datum/character_preview/multiclient/P = src.get_occupant_preview()
 		P?.add_client(user?.client)
-		.["haveSubject"] = TRUE
-		.["subjectPreview"] = P?.preview_id
-		.["subjectName"] = subject.name
-		.["subjectStat"] = subject.stat
-		.["subjectHealth"] = subject.health / subject.max_health
-		.["subjectStability"] = subject.bioHolder.genetic_stability
-		.["subjectHuman"] = istype(H)
-		.["subjectBloodType"] = subject.bioHolder.bloodType
-		.["subjectAge"] = subject.bioHolder.age
-		.["subjectMutantRace"] = istype(H) ? capitalize(H.mutantrace?.name || "human") : "Unknown"
-		.["subjectCanAppearance"] = istype(H) && (!H.mutantrace || length(H.mutantrace.color_channel_names) || H.mutantrace.mutant_appearance_flags & (HAS_HUMAN_SKINTONE | HAS_HUMAN_EYES | HAS_HUMAN_HAIR))
-		.["subjectPremature"] = isprematureclone(subject)
-		.["subjectPotential"] = list()
-		.["subjectActive"] = list()
+		.["subject"] = list(
+			"preview" = P?.preview_id,
+			"name" = subject.name,
+			"stat" = subject.stat,
+			"health" = subject.health / subject.max_health,
+			"stability" = subject.bioHolder.genetic_stability,
+			"human" = istype(H),
+			"bloodType" = subject.bioHolder.bloodType,
+			"age" = subject.bioHolder.age,
+			"mutantRace" = istype(H) ? capitalize(H.mutantrace?.name || "human") : "Unknown",
+			"canAppearance" = istype(H) && (!H.mutantrace || length(H.mutantrace.color_channel_names) || H.mutantrace.mutant_appearance_flags & (HAS_HUMAN_SKINTONE | HAS_HUMAN_EYES | HAS_HUMAN_HAIR)),
+			"premature" = isprematureclone(subject),
+			"potential" = list(),
+			"active" = list()
+			)
 		for (var/D in subject.bioHolder.effectPool)
 			var/datum/bioEffect/BE = subject.bioHolder.effectPool[D]
 			var/datum/bioEffect/GBE = BE.get_global_instance()
@@ -1036,7 +1010,7 @@
 				continue
 			if (GBE.secret && !genResearch.see_secret)
 				continue
-			.["subjectPotential"] += list(serialize_bioeffect_for_tgui(BE, potential = TRUE))
+			.["subject"]["potential"] += list(serialize_bioeffect_for_tgui(BE, potential = TRUE, full_data=(BE == src.currently_browsing)))
 		for (var/D in subject.bioHolder.effects)
 			var/datum/bioEffect/BE = subject.bioHolder.effects[D]
 			var/datum/bioEffect/GBE = BE.get_global_instance()
@@ -1044,22 +1018,22 @@
 				continue
 			if (GBE.secret && !genResearch.see_secret)
 				continue
-			.["subjectActive"] += list(serialize_bioeffect_for_tgui(BE, active = TRUE))
+			.["subject"]["active"] += list(serialize_bioeffect_for_tgui(BE, active = TRUE, full_data=(BE == src.currently_browsing)))
 		if (src.modify_appearance)
 			.["modifyAppearance"] = src.modify_appearance.ui_data(user)
 		else
 			.["modifyAppearance"] = null
 	else
-		.["haveSubject"] = FALSE
+		.["subject"] = null
 
-	for(var/R as() in genResearch.researchTreeTiered)
+	for(var/R as anything in genResearch.researchTreeTiered)
 		if (text2num(R) == 0)
 			continue
 		var/list/availTier = list()
 		var/list/finishedTier = list()
 		var/list/tierList = genResearch.researchTreeTiered[R]
 
-		for (var/datum/geneticsResearchEntry/C as() in tierList)
+		for (var/datum/geneticsResearchEntry/C as anything in tierList)
 			if (C.meetsRequirements())
 				var/research_cost = C.researchCost
 				if (genResearch.cost_discount)
@@ -1072,21 +1046,18 @@
 
 				availTier += list(list(
 					"ref" = "\ref[C]",
-					"name" = C.name,
-					"desc" = C.desc,
 					"cost" = research_cost,
 					"time" = research_time,
 				))
 			else if (C.isResearched == 1)
 				finishedTier += list(list(
-					"name" = C.name,
-					"desc" = C.desc,
+					"ref" = "\ref[C]",
 				))
 
 		.["availableResearch"][text2num(R)] = availTier
 		.["finishedResearch"][text2num(R)] = finishedTier
 
-	for(var/datum/geneticsResearchEntry/R as() in genResearch.currentResearch)
+	for(var/datum/geneticsResearchEntry/R as anything in genResearch.currentResearch)
 		.["currentResearch"] += list(list(
 			"ref" = "\ref[R]",
 			"name" = R.name,
@@ -1116,16 +1087,44 @@
 		))
 
 /obj/machinery/computer/genetics/ui_static_data(mob/user)
-	var/to_send = list()
-	for (var/id as() in bioEffectList)
+	. = list("research"=list(),
+					"boothCost" = genResearch.isResearched(/datum/geneticsResearchEntry/genebooth) ? genResearch.genebooth_cost : -1,
+					"injectorCost" = genResearch.isResearched(/datum/geneticsResearchEntry/injector) ? genResearch.injector_cost : -1,
+					"saveSlots" = genResearch.isResearched(/datum/geneticsResearchEntry/saver) ? genResearch.max_save_slots : 0,
+					"precisionEmitter" = genResearch.isResearched(/datum/geneticsResearchEntry/rad_precision),
+					"materialMax" = genResearch.max_material,
+					"mutantRaces" = list(list(
+						"name" = "Human",
+						"icon" = "template",
+						"ref" = "\ref[null]",
+						)),
+					)
+
+	var/bioEffects = list()
+	for (var/id as anything in bioEffectList)
 		var/datum/bioEffect/BE = bioEffectList[id]
 		if (!BE.scanner_visibility || BE.research_level < EFFECT_RESEARCH_IN_PROGRESS)
 			continue
-		to_send += list(serialize_bioeffect_for_tgui(BE))
+		bioEffects += list(serialize_bioeffect_for_tgui(BE))
 
-	. = list(
-		"bioEffects" = to_send
-	)
+		if (BE.effectType == EFFECT_TYPE_MUTANTRACE && BE.research_level >= EFFECT_RESEARCH_DONE && BE.mutantrace_option)
+			.["mutantRaces"] += list(list(
+				"name" = BE.mutantrace_option,
+				"icon" = BE.icon_state,
+				"ref" = "\ref[BE]",
+			))
+	.["bioEffects"] = bioEffects
+
+	for(var/key as anything in genResearch.researchTree)
+		var/datum/geneticsResearchEntry/R = genResearch.researchTree[key]
+
+		//Only need name/description for available and completed research items
+		if ((R.isResearched == 1) || R.meetsRequirements())
+			.["research"]["\ref[R]"] = list(
+				"name" = R.name,
+				"desc" = R.desc
+				)
+
 
 /obj/machinery/computer/genetics/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)

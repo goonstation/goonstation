@@ -403,11 +403,11 @@
 		back_image = image('icons/obj/status_display.dmi', icon_state = "ai_white")
 
 
-
-		if (map_settings.walls ==/turf/simulated/wall/auto/jen)
-			pixel_y = 32
-		else
-			pixel_y = 29
+		if(pixel_y == 0 && pixel_x == 0)
+			if (map_settings.walls ==/turf/simulated/wall/auto/jen)
+				pixel_y = 32
+			else
+				pixel_y = 29
 
 		screen_glow = new /datum/light/point
 		screen_glow.set_brightness(0.45)
@@ -446,7 +446,10 @@
 				face_color = owner.faceColor
 				back_image.color = face_color
 				UpdateOverlays(back_image, "back_img")
-				UpdateOverlays(glow_image, "glow_img", 1) //forced so it displays on top
+				if (face_image.icon_state != "ai-tetris")
+					UpdateOverlays(glow_image, "glow_img", 1) //forced so it displays on top
+				else
+					UpdateOverlays(null, "glow_img", 1)
 				UpdateOverlays(face_image, "emotion_img", 1) //idem
 
 				var/colors = GetColors(face_color)
@@ -466,6 +469,10 @@
 			return //Hoooly balls why was this not here before argh
 		face_image.icon_state = state
 		UpdateOverlays(face_image, "emotion_img")
+		if (face_image.icon_state != "ai-tetris")
+			UpdateOverlays(glow_image, "glow_img", 1) //forced so it displays on top
+		else
+			UpdateOverlays(null, "glow_img", 1)
 
 	get_desc()
 		..()

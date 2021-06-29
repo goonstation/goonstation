@@ -45,6 +45,8 @@
 
 // ---- global signals ----
 #define COMSIG_GLOBAL_REBOOT "global_reboot"
+//When a drone dies. Y'know, the critter ones.
+#define COMSIG_GLOBAL_DRONE_DEATH "global_drone_death"
 
 //  ---- datum signals ----
 
@@ -61,6 +63,10 @@
 #define COMSIG_ATOM_DIR_CHANGED "atom_dir_changed"
 /// when an atom is collided by a projectile (/obj/projectile)
 #define COMSIG_ATOM_HITBY_PROJ "atom_hitby_proj"
+/// when an atom is hit by a thrown thing (thrown_atom, /datum/thrown_thing)
+#define COMSIG_ATOM_HITBY_THROWN "atom_hitby_thrown"
+/// when an atom is examined (/mob/examiner, /list/lines), append to lines for more description
+#define COMSIG_ATOM_EXAMINE "atom_examine"
 
 // ---- atom/movable signals ----
 
@@ -85,6 +91,8 @@
 #define COMSIG_ITEM_ATTACK_POST "itm_atk_post"
 /// Just before an item is eaten
 #define COMSIG_ITEM_CONSUMED_PRE "itm_atk_consumed_pre"
+/// When an item is eaten
+#define COMSIG_ITEM_CONSUMED "itm_atk_consumed"
 /// After an item's been eaten, but there's still some left
 #define COMSIG_ITEM_CONSUMED_PARTIAL "itm_atk_consumed_partial"
 /// After we've consumed an item
@@ -97,6 +105,12 @@
 #define COMSIG_ITEM_SWAP_TO "itm_swap_to"
 /// When an item is swapped away from [does not include being picked up/taken out of bags/etc] (user)
 #define COMSIG_ITEM_SWAP_AWAY "itm_swap_away"
+/// After an item's itemspecial is used (user)
+#define COMSIG_ITEM_SPECIAL_POST "itm_special_post"
+
+// ---- cloaking device signal ----
+/// Make cloaking devices turn off
+#define COMSIG_CLOAKING_DEVICE_DEACTIVATE "cloak_deactivate"
 
 // ---- implant signals ----
 /// When implanted
@@ -119,15 +133,23 @@
 #define COMSIG_UNARMED_BLOCK_BEGIN "unarmed_block_begin"
 /// When an item block is created
 #define COMSIG_UNARMED_BLOCK_END "unarmed_block_end"
-
+/// When a block blocks damage at all
+#define COMSIG_BLOCK_BLOCKED "blockblock"
 // ---- human signals ----
 
 // ---- mob signals ----
 
+/// When a client logs into a mob
+#define COMSIG_MOB_LOGIN "mob_login"
+/// When a client logs out of a mob
+#define COMSIG_MOB_LOGOUT "mob_logout"
 /// At the beginning of when an attackresults datum is being set up
 #define COMSIG_MOB_ATTACKED_PRE "attacked_pre"
 /// When a mob dies
 #define COMSIG_MOB_DEATH "mob_death"
+
+/// When a mob fakes death
+#define COMSIG_MOB_FAKE_DEATH "mob_fake_death"
 
 #define COMSIG_MOB_PICKUP "mob_pickup"
 
@@ -140,6 +162,10 @@
 // ---- mob/living signals ----
 /// When a Life tick occurs
 #define COMSIG_LIVING_LIFE_TICK "human_life_tick"
+
+// ---- mob property signals ----
+/// When invisibility of a mob gets updated (old_value)
+#define COMSIG_MOB_PROP_INVISIBILITY "mob_prop_invis"
 
 // ---- attack_X signals ----
 
@@ -206,3 +232,10 @@
 #define COMSIG_FULLAUTO_MOUSEDOWN "fullauto_mousedown"
 #define COMSIG_FULLAUTO_MOUSEDRAG "fullauto_mousedrag"
 #define COMSIG_GUN_PROJECTILE_CHANGED "gun_proj_changed"
+
+
+// ---- area signals ----
+/// area's active var set to true (when a client enters)
+#define COMSIG_AREA_ACTIVATED "area_activated"
+/// area's active var set to false (when all clients leave)
+#define COMSIG_AREA_DEACTIVATED "area_deactivated"

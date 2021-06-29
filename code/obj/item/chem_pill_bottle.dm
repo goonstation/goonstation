@@ -2,7 +2,7 @@
 	name = "Pill bottle"
 	icon_state = "pill_canister"
 	icon = 'icons/obj/chemical.dmi'
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
@@ -14,6 +14,7 @@
 	var/pcount
 	var/datum/reagents/reagents_internal
 	var/average
+	var/maxpills
 
 	// setup this pill bottle from some reagents
 	proc/create_from_reagents(var/datum/reagents/R, var/pillname, var/pillvol, var/pillcount)
@@ -31,10 +32,11 @@
 		src.pname = pillname
 		src.pvol = pillvol
 		src.pcount = pillcount
+		src.maxpills = pillcount
 
 	// spawn a pill, returns a pill or null if there aren't any left in the bottle
 	proc/create_pill()
-		var/totalpills = src.pcount + src.contents.len
+		var/totalpills = src.pcount + length(src.contents)
 
 		if(totalpills <= 0)
 			return null
@@ -68,7 +70,7 @@
 		return P
 
 	proc/rebuild_desc()
-		var/totalpills = src.pcount + src.contents.len
+		var/totalpills = src.pcount + length(src.contents)
 		if(totalpills > 15)
 			src.desc = "A [src.pname] pill bottle. There are too many to count."
 			src.inventory_counter.update_text("**")
@@ -81,11 +83,14 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/pill))
-			user.u_equip(W)
-			W.set_loc(src)
-			W.dropped()
-			boutput(user, "<span class='notice'>You put [W] in [src].</span>")
-			rebuild_desc()
+			if(src.pcount + length(src.contents) < src.maxpills)
+				user.u_equip(W)
+				W.set_loc(src)
+				W.dropped()
+				boutput(user, "<span class='notice'>You put [W] in [src].</span>")
+				rebuild_desc()
+			else
+				boutput(user, "<span class='notice'>[src] is full!</span>")
 		else ..()
 
 	attack_self(var/mob/user as mob)
@@ -133,6 +138,10 @@
 		user.visible_message("<span class='notice'>[user] begins quickly filling [src]!</span>")
 		var/staystill = user.loc
 		for (var/obj/item/reagent_containers/pill/P in view(1,user))
+			if(src.pcount + length(src.contents) >= src.maxpills)
+				boutput(user, "<span class='notice'>[src] is full!</span>")
+				return
+
 			if (P in user)
 				continue
 			P.set_loc(src)

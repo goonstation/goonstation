@@ -100,6 +100,7 @@
 
 		..()
 
+
 /obj/machinery/networked/storage
 	name = "Databank"
 	desc = "A networked data storage device."
@@ -108,7 +109,7 @@
 	icon_state = "tapedrive0"
 	device_tag = "PNET_DATA_BANK"
 	mats = 12
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	var/base_icon_state = "tapedrive"
 	var/bank_id = null //Unique Identifier for this databank.
 	var/locked = 1
@@ -1037,7 +1038,7 @@
 
 #define DISARM_CUTOFF 10 //Can't disarm past this point! OH NO!
 
-	mats = 80 //haha this is a bad idea
+	mats = list("POW-3" = 27, "MET-3" = 25, "CON-2" = 13, "DEN-3" = 15) //haha this is a bad idea
 	deconstruct_flags = DECON_NONE
 	is_syndicate = 1 //^ Agreed
 
@@ -1362,7 +1363,7 @@
 	device_tag = "PNET_PR6_RADIO"
 	//var/freq = 1219
 	mats = 8
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	var/list/frequencies = list()
 	var/datum/radio_frequency/radio_connection
 	var/transmission_range = 100 //How far does our signal reach?
@@ -1642,7 +1643,7 @@
 
 				var/newFreq = round(max(1000, min(text2num(data["_freq"]), 1500)))
 				data -= "_freq"
-				if (!newFreq || !radio_controller || !data.len)
+				if (!newFreq || !radio_controller || !length(data))
 					src.post_status(target,"command","term_message","data","command=status&status=failure")
 					return
 				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("[newFreq]")
@@ -1690,7 +1691,7 @@
 	desc = "A networked printer.  It's designed to print."
 	anchored = 1
 	density = 1
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	icon_state = "printer0"
 	device_tag = "PNET_PRINTDEVC"
 	mats = 6
@@ -1883,7 +1884,7 @@
 				src.timeout_alert = 1
 				src.post_status(src.host_id, "command","term_ping","data","reply")
 
-		if(!printing && print_buffer.len)
+		if(!printing && length(print_buffer))
 			src.print()
 
 		return
@@ -2011,7 +2012,7 @@
 				return 0
 			if(!src.host_id)
 				return 0
-			if(src.printing || !print_buffer.len)
+			if(src.printing || !length(print_buffer))
 				return 0
 
 			var/print_text = print_buffer[1]
@@ -2153,6 +2154,7 @@
 	anchored = 1
 	density = 1
 	icon_state = "scanner0"
+	deconstruct_flags = DECON_DESTRUCT
 	//device_tag = "PNET_SCANDEVC"
 	var/scanning = 0 //Are we scanning RIGHT NOW?
 	var/obj/item/scanned_thing //Ideally, this would be a paper or photo.
@@ -3311,7 +3313,7 @@
 				if (1 to 3)
 					//telehop + radiation
 					if (iscarbon(hitMob))
-						hitMob.changeStatus("radiation", 1000)
+						hitMob.changeStatus("radiation", 100 SECONDS)
 						hitMob.changeStatus("weakened", 2 SECONDS)
 					telehop(hitMob, src.power, src.power > 2)
 					return
@@ -3319,7 +3321,7 @@
 				if (4)
 					//big telehop + might leave parts behind.
 					if (iscarbon(hitMob))
-						hitMob.changeStatus("radiation", 1000)
+						hitMob.changeStatus("radiation", 100 SECONDS)
 
 						random_brute_damage(hitMob, 25)
 						hitMob.changeStatus("weakened", 2 SECONDS)
@@ -3392,6 +3394,7 @@
 	//Don't forget to give devices unique device_tag values of the form "PNET_XXXXXXXXX"
 	device_tag = "PNET_TEST_APPT" //This is the device tag used to interface with the mainframe GTPIO driver.
 	mats = 8
+	deconstruct_flags = DECON_DESTRUCT
 
 	power_usage = 200
 	var/dragload = 0 // can we click-drag a machinery-type artifact into this machine?
@@ -3730,7 +3733,7 @@
 
 			if ("activate")
 				if (src.contents.len)
-					active = src.contents.len
+					active = length(src.contents)
 					message_host("command=ack")
 					src.update_icon()
 				else
@@ -3797,7 +3800,7 @@
 			else
 				return
 
-		if (I.w_class < 4)
+		if (I.w_class < W_CLASS_BULKY)
 			if (src.contents.len < src.setup_max_objects)
 				if(I.cant_drop)
 					return
@@ -3948,7 +3951,7 @@
 			var/stimforce = M.throwforce
 			src.sensed[1] = stimforce * ARTDATA.react_mpct[1]
 			src.sensed[2] = stimforce * ARTDATA.react_mpct[2]
-			if (src.sensed[2] != 0 && ARTDATA.faults.len)
+			if (src.sensed[2] != 0 && length(ARTDATA.faults))
 				src.sensed[2] += rand(ARTDATA.faults.len / 2,ARTDATA.faults.len * 2)
 			var/datum/artifact_trigger/AT = ARTDATA.get_trigger_by_string("force")
 			if (AT)
@@ -3967,7 +3970,7 @@
 			src.sensed[1] = stimforce * ARTDATA.react_mpct[1]
 			src.sensed[2] = stimforce * ARTDATA.react_mpct[2]
 
-			if (src.sensed[2] != 0 && ARTDATA.faults.len)
+			if (src.sensed[2] != 0 && length(ARTDATA.faults))
 				src.sensed[2] += rand(ARTDATA.faults.len / 2,ARTDATA.faults.len * 2)
 
 			var/datum/artifact_trigger/AT = ARTDATA.get_trigger_by_string("force")
@@ -4104,7 +4107,8 @@
 						return
 					src.wattage = pokeval
 
-				src.electrify_contents()
+				if (src.active)
+					src.electrify_contents()
 				message_host("command=ack")
 				return
 
@@ -4433,7 +4437,7 @@
 				heat_overlay.icon_state = "heat-1"
 			if (250 to 269)
 				heat_overlay.icon_state = "heat-2"
-			if (249 to -99)
+			if (-INFINITY to 249)
 				heat_overlay.icon_state = "heat-3"
 			else
 				heat_overlay.icon_state = ""
@@ -4767,7 +4771,7 @@
 
 					var/tgmoles = 0
 					if(length(air_sample.trace_gases))
-						for(var/datum/gas/trace_gas as() in air_sample.trace_gases)
+						for(var/datum/gas/trace_gas as anything in air_sample.trace_gases)
 							tgmoles += trace_gas.moles
 					sensed.Add(round(100*tgmoles/total_moles, 0.1))
 				else

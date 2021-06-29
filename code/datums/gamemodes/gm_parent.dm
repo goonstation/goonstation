@@ -1,6 +1,6 @@
 /datum/game_mode
 	var/name = "invalid" // Don't implement ticker.mode.name or .config_tag checks again, okay? I've had to swap them all to get game mode children to work.
-	var/config_tag = null // Use istype(ticker.mode, /datum/game_mode/whatever) instead.
+	var/config_tag = null // Use istype(ticker.mode, /datum/game_mode/whatever) when checking instead, but this must be set in new game mode
 	var/votable = 1
 	var/probability = 0 // Overridden by the server config. If you don't have access to that repo, keep it 0.
 	var/crew_shortage_enabled = 1
@@ -23,6 +23,8 @@
 	var/datum/game_mode/spy_theft/spy_market = 0	//In case any spies are spawned into a round that is NOT spy_theft, we need a place to hold their spy market.
 
 	var/do_antag_random_spawns = 1
+	var/do_random_events = 1
+	var/escape_possible = 1		//for determining if players lose their held spacebux item on round end if they are able to "escape" in this mode.
 
 /datum/game_mode/proc/announce()
 	boutput(world, "<B>[src] did not define announce()</B>")
@@ -124,7 +126,7 @@
 							stuff_to_output += "<B>Combined trophy value:</b> [S]"
 
 				if (traitor.special_role == "blob")
-					var/victims = traitor.blob_absorb_victims.len
+					var/victims = length(traitor.blob_absorb_victims)
 					stuff_to_output += "<b>\ [victims <= 0 ? "Not a single person was" : "[victims] lifeform[s_es(victims)] were"] absorbed by them  <span class='success'>Players in Green</span></b>"
 					if (victims)
 						var/absorbed_announce = "They absorbed: "
@@ -136,8 +138,8 @@
 						stuff_to_output += absorbed_announce
 
 				if (traitor.special_role == "traitor")
-					var/purchases = traitor.purchased_traitor_items.len
-					var/surplus = traitor.traitor_crate_items.len
+					var/purchases = length(traitor.purchased_traitor_items)
+					var/surplus = length(traitor.traitor_crate_items)
 					stuff_to_output += "<b>They purchased [purchases <= 0 ? "nothing" : "[purchases] item[s_es(purchases)]"] with their [syndicate_currency]![purchases <= 0 ? " [pick("Wow", "Dang", "Gosh", "Good work", "Good job")]!" : null]</b>"
 					if (purchases)
 						var/item_detail = "They purchased: "
@@ -152,8 +154,8 @@
 						stuff_to_output += item_detail
 
 				if (traitor.special_role == "spy_thief")
-					var/purchases = traitor.purchased_traitor_items.len
-					var/stolen = traitor.spy_stolen_items.len
+					var/purchases = length(traitor.purchased_traitor_items)
+					var/stolen = length(traitor.spy_stolen_items)
 					stuff_to_output += "<b>They stole [stolen <= 0 ? "nothing" : "[stolen] items"]!</b>"
 					if (purchases)
 						var/stolen_detail = "Items Thieved: "
@@ -238,6 +240,9 @@
 ////////////////////////////
 // Objective related code //
 ////////////////////////////
+
+//what do we do when a mob dies
+/datum/game_mode/proc/on_human_death(var/mob/M)
 
 /datum/game_mode/proc/bestow_objective(var/datum/mind/traitor,var/objective_path)
 	if (!istype(traitor) || !ispath(objective_path))

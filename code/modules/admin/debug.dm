@@ -30,7 +30,7 @@ var/global/debug_messages = 0
 	var/total = 0
 	for (var/b = 1; b <= DELQUEUE_SIZE; b++)
 		buckets += "<li style='[b == dp ? "background-color: #fcc;": ( b == cp ? "background-color: #bbf;" : "")]'><span style='display: inline-block; width: 6em; text-align: right;'>[global.delete_queue_2[b].len]</span><span style='display: inline-block; height: 1em; width: [round(global.delete_queue_2[b].len / 2.5)]px; background: black;'></span></li>"
-		total += global.delete_queue_2[b].len
+		total += length(global.delete_queue_2[b])
 
 	deletedJson += "]"
 	var/html = {"<!doctype html><html>
@@ -309,12 +309,12 @@ var/global/debug_messages = 0
 	for(var/actual_proc in name_list)
 		try
 			if (target)
-				if(islist(listargs) && listargs.len)
+				if(islist(listargs) && length(listargs))
 					returnval = call(target,actual_proc)(arglist(listargs))
 				else
 					returnval = call(target,actual_proc)()
 			else
-				if(islist(listargs) && listargs.len)
+				if(islist(listargs) && length(listargs))
 					returnval = call(actual_proc)(arglist(listargs))
 				else
 					returnval = call(actual_proc)()
@@ -343,7 +343,7 @@ var/global/debug_messages = 0
 	if (!argnum)
 		return listargs
 	for (var/i=0, i<argnum, i++)
-		var/class = input("Type of Argument #[i]","Variable Type", null) as null|anything in list("text","num","type","reference","mob reference","reference atom at current turf","icon","color","file","the turf of which you are on top of right now")
+		var/class = input("Type of Argument #[i]","Variable Type", null) as null|anything in list("text","num","type","ref","reference","mob reference","reference atom at current turf","icon","color","file","the turf of which you are on top of right now")
 		if(!class)
 			break
 		switch(class)
@@ -362,6 +362,12 @@ var/global/debug_messages = 0
 					var/match = get_one_match(typename, /datum, use_concrete_types = FALSE)
 					if (match)
 						listargs += match
+
+			if ("ref")
+				var/input = input("Enter ref:") as null|text
+				var/target = locate(input)
+				if (!target) target = locate("\[[input]\]")
+				listargs += target
 
 			if ("reference")
 				listargs += input("Select reference:","Reference", null) as null|mob|obj|turf|area in world
@@ -518,7 +524,7 @@ var/global/debug_messages = 0
 		var/numdeleted = 0
 		for(var/atom/O in world)
 			if(istype(O, hsbitem))
-				del(O)
+				qdel(O)
 				numdeleted++
 				if(background == "Yes (Low)")
 					LAGCHECK(LAG_LOW)
@@ -856,7 +862,7 @@ body
 	set popup_menu = 0
 	admin_only
 
-	var/new_level = input(src, null, "Choose New Rank", "Coder") as() in null|list("Host", "Coder", "Shit Guy", "Primary Admin", "Admin", "Secondary Admin", "Mod", "Babby")
+	var/new_level = input(src, null, "Choose New Rank", "Coder") as anything in null|list("Host", "Coder", "Shit Guy", "Primary Admin", "Admin", "Secondary Admin", "Mod", "Babby")
 	if (!new_level)
 		return
 	src.holder.rank = new_level
@@ -1168,7 +1174,7 @@ var/datum/flock/testflock
 	admin_only
 
 	if(alert("Really clear the string cache?","Invalidate String Cache","OK","Cancel") == "OK")
-		var/length = string_cache.len
+		var/length = length(string_cache)
 		string_cache = new
 		logTheThing("admin", usr, null, "cleared the string cache, clearing [length] existing list(s).")
 		logTheThing("diary", usr, null, "cleared the string cache, clearing [length] existing list(s).", "admin")

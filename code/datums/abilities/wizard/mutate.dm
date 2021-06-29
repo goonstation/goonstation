@@ -13,7 +13,8 @@
 	cast()
 		if(!holder)
 			return
-		holder.owner.say("BIRUZ BENNAR")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("BIRUZ BENNAR")
 		..()
 
 		boutput(holder.owner, "<span class='notice'>Your mind and muscles are magically empowered!</span>")
@@ -21,15 +22,16 @@
 
 		if (!holder.owner.bioHolder.HasEffect("hulk"))
 			holder.owner.bioHolder.AddEffect("hulk", 0, 0, 0, 1)
-		if (!holder.owner.bioHolder.HasEffect("telekinesis") && holder.owner.wizard_spellpower(src))
-			holder.owner.bioHolder.AddEffect("telekinesis", 0, 0, 0, 1)
+		APPLY_MOB_PROPERTY(holder.owner, PROP_PASSIVE_WRESTLE, "empower")
+		APPLY_MOB_PROPERTY(holder.owner, PROP_STAMINA_REGEN_BONUS, "empower", 5)
 		var/SPtime = 150
 		if (holder.owner.wizard_spellpower(src))
 			SPtime = 300
 		else
 			boutput(holder.owner, "<span class='alert'>Your spell doesn't last as long without a staff to focus it!</span>")
 		SPAWN_DBG (SPtime)
-			if (holder.owner.bioHolder.HasEffect("telekinesis"))
-				holder.owner.bioHolder.RemoveEffect("telekinesis")
 			if (holder.owner.bioHolder.HasEffect("hulk"))
 				holder.owner.bioHolder.RemoveEffect("hulk")
+			if(!QDELETED(holder.owner))
+				REMOVE_MOB_PROPERTY(holder.owner, PROP_PASSIVE_WRESTLE, "empower")
+				REMOVE_MOB_PROPERTY(holder.owner, PROP_STAMINA_REGEN_BONUS, "empower")

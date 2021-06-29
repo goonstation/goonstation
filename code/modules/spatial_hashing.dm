@@ -1,7 +1,6 @@
 //this is designed for sounds - but maybe could be adapted for more collision / range checking stuff in the future
 
-
-#define GET_NEARBY(A,range) spatial_z_maps[A.z].get_nearby(A,range)
+#define GET_NEARBY(A,range) (A.z <= 0 || A.z > length(spatial_z_maps)) ? null : spatial_z_maps[A.z].get_nearby(A,range)
 
 #define CELL_POSITION(X,Y) clamp(((round(X / cellsize)) + (round(Y / cellsize)) * cellwidth) + 1,1,hashmap.len)
 
@@ -61,7 +60,7 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 		cellwidth = width/cellsize
 
 		buckets_holding_atom = list()
-		buckets_holding_atom.len = hashmap.len
+		buckets_holding_atom.len = length(hashmap)
 
 		my_z = z
 	/* unused, could be useful later idk

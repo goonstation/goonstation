@@ -369,6 +369,8 @@
 				user.show_text("[target] is currently occupied. Wait until it's done.", "blue")
 				spamt = world.time
 				. = FALSE
+			if(.)
+				GB.show_admin_panel(user)
 
 	buildBackgroundIcon(atom/target, mob/user)
 		var/image/background = image('icons/ui/context32x32.dmi', src, "[getBackground(target, user)]0")
@@ -435,7 +437,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (iswrenchingtool(I))
 					user.show_text("You wrench [target]'s bolts.", "blue")
-					playsound(get_turf(target), "sound/items/Ratchet.ogg", 50, 1)
+					playsound(target, "sound/items/Ratchet.ogg", 50, 1)
 					return ..()
 
 	cut
@@ -447,7 +449,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (iscuttingtool(I) || issnippingtool(I))
 					user.show_text("You cut some vestigial wires from [target].", "blue")
-					playsound(get_turf(target), "sound/items/Wirecutter.ogg", 50, 1)
+					playsound(target, "sound/items/Wirecutter.ogg", 50, 1)
 					return ..()
 	weld
 		name = "Weld"
@@ -455,10 +457,11 @@
 		icon_state = "weld"
 
 		execute(atom/target, mob/user)
-			for (var/obj/item/weldingtool/W in user.equipped_list())
-				if(W.try_weld(user, 2))
-					user.show_text("You weld [target] carefully.", "blue")
-					return ..()
+			for (var/obj/item/I in user.equipped_list())
+				if (isweldingtool(I))
+					if (I:try_weld(user, 2))
+						user.show_text("You weld [target] carefully.", "blue")
+						return ..()
 
 	pry
 		name = "Pry"
@@ -469,7 +472,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (ispryingtool(I))
 					user.show_text("You pry on [target] without remorse.", "blue")
-					playsound(get_turf(target), "sound/items/Crowbar.ogg", 50, 1)
+					playsound(target, "sound/items/Crowbar.ogg", 50, 1)
 					return ..()
 
 	screw
@@ -481,7 +484,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (isscrewingtool(I))
 					user.show_text("You unscrew some of the screws on [target].", "blue")
-					playsound(get_turf(target), "sound/items/Screwdriver.ogg", 50, 1)
+					playsound(target, "sound/items/Screwdriver.ogg", 50, 1)
 					return ..()
 
 	pulse
@@ -493,7 +496,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (ispulsingtool(I))
 					user.show_text("You pulse [target]. In a general sense.", "blue")
-					playsound(get_turf(target), "sound/items/penclick.ogg", 50, 1)
+					playsound(target, "sound/items/penclick.ogg", 50, 1)
 					return ..()
 
 /datum/contextAction/vehicle
@@ -755,7 +758,7 @@
 	icon_state = "wrench"
 
 	checkRequirements(var/atom/target, var/mob/user)
-		return 1
+		return TRUE
 
 	unstack
 		name = "Remove Layer"
@@ -782,7 +785,135 @@
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/c = target
+			if(c.loc == user)
+				user.u_equip(c)
 			user.put_in_hand_or_drop(c)
+
+/datum/contextAction/card
+	icon = 'icons/ui/context16x16.dmi'
+	name = "Card action"
+	desc = "You shouldn't be reading this, bug."
+	icon_state = "wrench"
+
+	checkRequirements(var/atom/target, var/mob/user)
+		return TRUE
+
+	solitaire
+		name = "solitaire stack"
+		desc = "stacks cards with a slight offset."
+		icon_state = "solitaire"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/playing_card/card = target
+			card.solitaire(user)
+
+	fan
+		name = "fan"
+		desc = "spreads the cards into an easily readable fan."
+		icon_state = "fan"
+
+		execute(var/atom/target, var/mob/user)
+			if(istype(target,/obj/item/playing_card))
+				var/obj/item/playing_card/card = target
+				card.deck_or_hand(user,TRUE)
+			else if(istype(target,/obj/item/card_group))
+				var/obj/item/card_group/group = target
+				group.fan(user)
+
+	stack
+		name = "stack"
+		desc = "gather the cards into a deck."
+		icon_state = "stack"
+
+		execute(var/atom/target, var/mob/user)
+			if(istype(target,/obj/item/playing_card))
+				var/obj/item/playing_card/card = target
+				card.deck_or_hand(user)
+			else if(istype(target,/obj/item/card_group))
+				var/obj/item/card_group/group = target
+				group.stack(user)
+
+	draw
+		name = "draw"
+		desc = "add a card to your hand."
+		icon_state = "draw"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/card_group/card = target
+			card.draw(user)
+
+	draw_facedown
+		name = "draw face-down"
+		desc = "add a card to your hand face-down."
+		icon_state = "draw_facedown"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/card_group/card = target
+			card.draw(user,1)
+
+	draw_multiple
+		name = "draw multiple cards"
+		desc = "add many cards to your hand."
+		icon_state = "multiple"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/card_group/card = target
+			card.draw_multiple(user)
+
+	topdeck
+		name = "add to top of deck"
+		desc = "add cards to the top of the deck."
+		icon_state = "deck_top"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/card_group/group = target
+			group.top_or_bottom(user,user.equipped(),"top")
+
+	bottomdeck
+		name = "add to bottom of deck"
+		desc = "add cards to the top of the deck."
+		icon_state = "deck_bottom"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/card_group/card = target
+			card.top_or_bottom(user,user.equipped(),"bottom")
+
+	search
+		name = "search"
+		desc = "search for a card."
+		icon_state = "search"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/card_group/group = target
+			group.search(user)
+
+	reveal
+		name = "reveal"
+		desc = "reveal the cards to all players nearby."
+		icon_state = "eye"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/card_group/group = target
+			group.reveal(user)
+
+	pickup
+		name = "pick up"
+		desc = "do the thing."
+		icon_state = "up_arrow"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/cards = target
+			if(cards.loc == user)
+				return
+			user.put_in_hand_or_drop(cards)
+
+	close
+		name = "close"
+		desc = "close this menu."
+		icon_state = "close"
+
+		execute(var/atom/target, var/mob/user)
+			user.closeContextActions()
 
 /*
 	offered

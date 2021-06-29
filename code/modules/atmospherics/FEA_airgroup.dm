@@ -76,14 +76,14 @@
 		var/datum/gas_mixture/sample_air = sample_member:air
 
 		air.copy_from(sample_air)
-		air.group_multiplier = members.len
+		air.group_multiplier = length(members)
 
 	return 1
 
 //Copy group air information to individual tile air
 //Used right before turning off group processing
 /datum/air_group/proc/update_tiles_from_group()
-	for(var/turf/simulated/member as() in members)
+	for(var/turf/simulated/member as anything in members)
 		if (member.air) member.air.copy_from(air)
 
 #ifdef ATMOS_ARCHIVING
@@ -106,7 +106,7 @@
 		return 0
 
 	var/turf/simulated/sample = pick(members)
-	for(var/turf/simulated/member as() in members)
+	for(var/turf/simulated/member as anything in members)
 		if(member.active_hotspot)
 			return 0
 		if(member.air && member.air.compare(sample.air))
@@ -144,7 +144,7 @@
 				//But only if another group didn't store it for us
 #endif
 
-		for(var/turf/simulated/border_tile as() in src.borders)
+		for(var/turf/simulated/border_tile as anything in src.borders)
 			ATMOS_TILE_OPERATION_DEBUG(border_tile)
 			for(var/direction in cardinal) //Go through all border tiles and get bordering groups and individuals
 				if(border_tile.group_border&direction)
@@ -189,7 +189,7 @@
 		// Process connections to adjacent groups
 		var/border_index = 1
 		if(border_group)
-			for(var/datum/air_group/AG as() in border_group)
+			for(var/datum/air_group/AG as anything in border_group)
 #ifdef ATMOS_ARCHIVING
 				if(AG.archived_cycle < archived_cycle)
 					//archive other groups information if it has not been archived yet this cycle
@@ -235,7 +235,7 @@
 		// Process connections to adjacent tiles
 		border_index = 1
 		if(!abort_group && border_individual)
-			for(var/turf/enemy_tile as() in border_individual)
+			for(var/turf/enemy_tile as anything in border_individual)
 				ATMOS_TILE_OPERATION_DEBUG(enemy_tile)
 
 				var/connection_difference = 0
@@ -307,7 +307,7 @@
 			suspend_group_processing()
 		else
 			if(air?.check_tile_graphic())
-				for(var/turf/simulated/member as() in members)
+				for(var/turf/simulated/member as anything in members)
 					ATMOS_TILE_OPERATION_DEBUG(member)
 					member.update_visuals(air)
 
@@ -325,7 +325,7 @@
 
 		var/totalPressure = 0
 		var/maxTemperature = 0
-		for(var/turf/simulated/member as() in members)
+		for(var/turf/simulated/member as anything in members)
 			ATMOS_TILE_OPERATION_DEBUG(member)
 			member.process_cell()
 			ADD_MIXTURE_PRESSURE(member.air, totalPressure)
@@ -337,7 +337,7 @@
 			return
 	else
 		if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-			for(var/turf/simulated/member as() in members)
+			for(var/turf/simulated/member as anything in members)
 				ATMOS_TILE_OPERATION_DEBUG(member)
 				member.hotspot_expose(air.temperature, CELL_VOLUME)
 				member.consider_superconductivity(starting=1)
@@ -365,7 +365,7 @@
 
 	var/totalPressure = 0
 
-	for(var/turf/simulated/member as() in members)
+	for(var/turf/simulated/member as anything in members)
 		ATMOS_TILE_OPERATION_DEBUG(member)
 /* // commented out temporarily, it will probably have to be reenabled later
 		minDist = null
@@ -404,7 +404,7 @@
 			return 1
 
 /datum/air_group/proc/space_group()
-	for(var/turf/simulated/member as() in members)
+	for(var/turf/simulated/member as anything in members)
 		member.air?.zero()
 	if (length_space_border)
 		spaced = TRUE

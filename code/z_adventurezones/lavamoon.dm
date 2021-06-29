@@ -1359,13 +1359,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		if (src.broken) return
 		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1)
 			return
-
-		var/obj/ladder/otherLadder = locate("ladder_[id][src.icon_state == "ladder"]")
-		if (!istype(otherLadder))
-			return
-
-		user.visible_message("", "You climb [src.icon_state == "ladder" ? "down" : "up"] the ladder.")
-		user.set_loc(get_turf(otherLadder))
+		src.climb(user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (src.broken) return
@@ -1374,6 +1368,14 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			user.lastattacked = src
 			src.visible_message("<span class='alert'><b>[user] is trying to shove [W:affecting] [icon_state == "ladder"?"down":"up"] [src]!</b></span>")
 			return attack_hand(W:affecting)
+
+	proc/climb(mob/user as mob)
+		var/obj/ladder/otherLadder = locate("ladder_[id][src.icon_state == "ladder"]")
+		if (!istype(otherLadder))
+			boutput(user, "You try to climb [src.icon_state == "ladder" ? "down" : "up"] the ladder, but seriously fail! Perhaps there's nowhere to go?")
+			return
+		boutput(user, "You climb [src.icon_state == "ladder" ? "down" : "up"] the ladder.")
+		user.set_loc(get_turf(otherLadder))
 
 //Puzzle elements
 
@@ -1542,6 +1544,9 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		active = (opened != default_state)
 
 		playsound(src.loc, "sound/effects/mag_iceburstimpact.ogg", 25, 1)
+
+		for(var/mob/living/L in get_turf(src))
+			L.gib()
 
 		set_density(1)
 		invisibility = 0
@@ -1714,7 +1719,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	desc = "This is obviously an ancient unlocking gizmo of some sort.  Clearly."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "robotkey-blue"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/keytype = 0 //0: blue, 1: red
 
 	red

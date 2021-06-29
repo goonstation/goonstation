@@ -19,7 +19,7 @@
 	return
 
 /obj/machinery/bot/goosebot/proc/wakka_wakka()
-	step_rand(src,1)
+	src.navigate_to(get_step_rand(src))
 
 /obj/machinery/bot/goosebot/process()
 	. = ..()

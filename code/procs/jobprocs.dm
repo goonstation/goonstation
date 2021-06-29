@@ -257,7 +257,7 @@
 			//Promote Chief Engineer
 			if (istype(JOB, /datum/job/command/chief_engineer))
 				var/list/picks = FindPromotionCandidates(engineering_staff, JOB)
-				if (!picks || !picks.len)
+				if (!picks || !length(picks))
 					continue
 				var/mob/new_player/candidate = pick(picks)
 				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
@@ -267,7 +267,7 @@
 			//Promote Research Director
 			else if (istype(JOB, /datum/job/command/research_director))
 				var/list/picks = FindPromotionCandidates(research_staff, JOB)
-				if (!picks || !picks.len)
+				if (!picks || !length(picks))
 					continue
 				var/mob/new_player/candidate = pick(picks)
 				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
@@ -277,7 +277,7 @@
 			//Promote Medical Director
 			else if (istype(JOB, /datum/job/command/medical_director))
 				var/list/picks = FindPromotionCandidates(medical_staff, JOB)
-				if (!picks || !picks.len)
+				if (!picks || !length(picks))
 					continue
 				var/mob/new_player/candidate = pick(picks)
 				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
@@ -292,6 +292,7 @@
 		// we really need to fix this or it'll be some kinda weird inf loop shit
 		low_priority_jobs += "Staff Assistant"
 	for (var/mob/new_player/player in unassigned)
+		if(!player?.mind) continue
 		logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [player] given a low priority role")
 		player.mind.assigned_role = pick(low_priority_jobs)
 		logTheThing("debug", player, null, "assigned job: [player.mind.assigned_role]")
@@ -307,6 +308,87 @@
 	if (!picks.len)
 		picks = FindOccupationCandidates(staff,JOB.name,3)
 	return picks
+
+/proc/equip_job_items(var/datum/job/JOB, var/mob/living/carbon/human/H)
+	// Jumpsuit - Important! Must be equipped early to provide valid slots for other items
+	if (JOB.slot_jump && length(JOB.slot_jump) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_jump), H.slot_w_uniform)
+	else if (length(JOB.slot_jump))
+		H.equip_new_if_possible(JOB.slot_jump[1], H.slot_w_uniform)
+	// Backpack and contents
+	if (JOB.slot_back && length(JOB.slot_back) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_back), H.slot_back)
+	else if (length(JOB.slot_back))
+		H.equip_new_if_possible(JOB.slot_back[1], H.slot_back)
+	if (JOB.slot_back && length(JOB.items_in_backpack))
+		for (var/X in JOB.items_in_backpack)
+			if(ispath(X))
+				H.equip_new_if_possible(X, H.slot_in_backpack)
+	// Belt and contents
+	if (JOB.slot_belt && length(JOB.slot_belt) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_belt), H.slot_belt)
+	else if (length(JOB.slot_belt))
+		H.equip_new_if_possible(JOB.slot_belt[1], H.slot_belt)
+	if (JOB.slot_belt && length(JOB.items_in_belt) && istype(H.belt, /obj/item/storage))
+		for (var/X in JOB.items_in_belt)
+			if(ispath(X))
+				H.equip_new_if_possible(X, H.slot_in_belt)
+	// Footwear
+	if (JOB.slot_foot && length(JOB.slot_foot) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_foot), H.slot_shoes)
+	else if (length(JOB.slot_foot))
+		H.equip_new_if_possible(JOB.slot_foot[1], H.slot_shoes)
+	// Suit
+	if (JOB.slot_suit && length(JOB.slot_suit) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_suit), H.slot_wear_suit)
+	else if (length(JOB.slot_suit))
+		H.equip_new_if_possible(JOB.slot_suit[1], H.slot_wear_suit)
+	// Ears
+	if (JOB.slot_ears && length(JOB.slot_ears) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_ears), H.slot_ears)
+	else if (length(JOB.slot_ears))
+		if (!(H.traitHolder && H.traitHolder.hasTrait("allears") && ispath(JOB.slot_ears[1],/obj/item/device/radio/headset)))
+			H.equip_new_if_possible(JOB.slot_ears[1], H.slot_ears)
+	// Mask
+	if (JOB.slot_mask && length(JOB.slot_mask) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_mask), H.slot_wear_mask)
+	else if (length(JOB.slot_mask))
+		H.equip_new_if_possible(JOB.slot_mask[1], H.slot_wear_mask)
+	// Gloves
+	if (JOB.slot_glov && length(JOB.slot_glov) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_glov), H.slot_gloves)
+	else if (length(JOB.slot_glov))
+		H.equip_new_if_possible(JOB.slot_glov[1], H.slot_gloves)
+	// Eyes
+	if (JOB.slot_eyes && length(JOB.slot_eyes) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_eyes), H.slot_glasses)
+	else if (length(JOB.slot_eyes))
+		H.equip_new_if_possible(JOB.slot_eyes[1], H.slot_glasses)
+	// Head
+	if (JOB.slot_head && length(JOB.slot_head) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_head), H.slot_head)
+	else if (length(JOB.slot_head))
+		H.equip_new_if_possible(JOB.slot_head[1], H.slot_head)
+	// Left pocket
+	if (JOB.slot_poc1 && length(JOB.slot_poc1) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), H.slot_l_store)
+	else if (length(JOB.slot_poc1))
+		H.equip_new_if_possible(JOB.slot_poc1[1], H.slot_l_store)
+	// Right pocket
+	if (JOB.slot_poc2 && length(JOB.slot_poc2) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_poc2), H.slot_r_store)
+	else if (length(JOB.slot_poc2))
+		H.equip_new_if_possible(JOB.slot_poc2[1], H.slot_r_store)
+	// Left hand
+	if (JOB.slot_lhan && length(JOB.slot_lhan) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), H.slot_l_hand)
+	else if (length(JOB.slot_lhan))
+		H.equip_new_if_possible(JOB.slot_lhan[1], H.slot_l_hand)
+	// Right hand
+	if (JOB.slot_rhan && length(JOB.slot_rhan) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), H.slot_r_hand)
+	else if (length(JOB.slot_rhan))
+		H.equip_new_if_possible(JOB.slot_rhan[1], H.slot_r_hand)
 
 //hey i changed this from a /human/proc to a /living/proc so that critters (from the job creator) would latejoin properly	-- MBC
 /mob/living/proc/Equip_Rank(rank, joined_late, no_special_spawn)
@@ -342,6 +424,13 @@
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
+
+		//remove problem traits from people on pod_wars
+		if (istype(ticker.mode, /datum/game_mode/pod_wars))
+			H.traitHolder.removeTrait("immigrant")
+			H.traitHolder.removeTrait("pilot")
+			H.traitHolder.removeTrait("puritan")
+
 		H.Equip_Job_Slots(JOB)
 
 	var/possible_new_mob = JOB.special_setup(src, no_special_spawn) //If special_setup creates a new mob for us, it should return the new mob!
@@ -354,7 +443,7 @@
 		src = possible_new_mob // let's hope this breaks nothing
 
 
-	if (ishuman(src) && JOB.add_to_manifest)
+	if (ishuman(src) && JOB.add_to_manifest && !src.traitHolder.hasTrait("immigrant"))
 		// Manifest stuff
 		var/sec_note = ""
 		var/med_note = ""
@@ -401,7 +490,7 @@
 					qdel(snappedDrone)
 				V.finish_board_pod(src)
 
-			if (prob(10) && islist(random_pod_codes) && random_pod_codes.len)
+			if (prob(10) && islist(random_pod_codes) && length(random_pod_codes))
 				var/obj/machinery/vehicle/V = pick(random_pod_codes)
 				random_pod_codes -= V
 				if (V?.lock?.code)
@@ -419,7 +508,7 @@
 
 		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO && JOB.radio_announcement)
 			if (src.mind && src.mind.assigned_role) //ZeWaka: I'm adding this back here because hell if I know where it goes.
-				for (var/obj/machinery/computer/announcement/A as() in machine_registry[MACHINES_ANNOUNCEMENTS])
+				for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
 					if (!A.status && A.announces_arrivals)
 						if (src.mind.assigned_role == "MODE") //ZeWaka: Fix for alien invasion dudes. Possibly not needed now.
 							return
@@ -436,14 +525,11 @@
 	return
 
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
+	equip_job_items(JOB, src)
 	if (JOB.slot_back)
-		src.equip_new_if_possible(JOB.slot_back, slot_back)
 		if (istype(src.back, /obj/item/storage))
-			for (var/X in JOB.items_in_backpack)
-				if(ispath(X))
-					src.equip_new_if_possible(X, slot_in_backpack)
 			if(JOB.receives_disk)
-				var/obj/item/disk/data/floppy/D = new /obj/item/disk/data/floppy(src)
+				var/obj/item/disk/data/floppy/read_only/D = new /obj/item/disk/data/floppy/read_only(src)
 				src.equip_if_possible(D, slot_in_backpack)
 				var/datum/computer/file/clone/R = new
 				R.fields["ckey"] = ckey(src.key)
@@ -461,7 +547,7 @@
 					R.fields["abilities"] = A
 
 				SPAWN_DBG(0)
-					if(src.traitHolder && src.traitHolder.traits.len)
+					if(src.traitHolder && length(src.traitHolder.traits))
 						R.fields["traits"] = src.traitHolder.traits.Copy()
 
 				R.fields["imp"] = null
@@ -473,6 +559,7 @@
 					var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "SECAUTH";} (src)
 					authrec.fields = list("SEC"="[netpass_security]")
 					D.root.add_file( authrec )
+					D.read_only = 1
 
 				D.name = "data disk - '[src.real_name]'"
 
@@ -500,40 +587,6 @@
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
 		src.force_equip(GPSDEVICE, slot_in_backpack)
 
-	if (JOB.slot_jump)
-		src.equip_new_if_possible(JOB.slot_jump, slot_w_uniform)
-
-	if (JOB.slot_belt)
-		src.equip_new_if_possible(JOB.slot_belt, slot_belt)
-		if (JOB?.items_in_belt.len && istype(src.belt, /obj/item/storage))
-			for (var/X in JOB.items_in_belt)
-				if(ispath(X))
-					src.equip_new_if_possible(X, slot_in_belt)
-
-	if (JOB.slot_foot)
-		src.equip_new_if_possible(JOB.slot_foot, slot_shoes)
-	if (JOB.slot_suit)
-		src.equip_new_if_possible(JOB.slot_suit, slot_wear_suit)
-	if (JOB.slot_ears)
-		if (!(src.traitHolder && src.traitHolder.hasTrait("allears") && ispath(JOB.slot_ears,/obj/item/device/radio/headset)))
-			src.equip_new_if_possible(JOB.slot_ears, slot_ears)
-	if (JOB.slot_mask)
-		src.equip_new_if_possible(JOB.slot_mask, slot_wear_mask)
-	if (JOB.slot_glov)
-		src.equip_new_if_possible(JOB.slot_glov, slot_gloves)
-	if (JOB.slot_eyes)
-		src.equip_new_if_possible(JOB.slot_eyes, slot_glasses)
-	if (JOB.slot_head)
-		src.equip_new_if_possible(JOB.slot_head, slot_head)
-	if (JOB.slot_poc1)
-		src.equip_new_if_possible(JOB.slot_poc1, slot_l_store)
-	if (JOB.slot_poc2)
-		src.equip_new_if_possible(JOB.slot_poc2, slot_r_store)
-	if (JOB.slot_rhan)
-		src.equip_new_if_possible(JOB.slot_rhan, slot_r_hand)
-	if (JOB.slot_lhan)
-		src.equip_new_if_possible(JOB.slot_lhan, slot_l_hand)
-
 	if (src.traitHolder?.hasTrait("immigrant") || src.traitHolder?.hasTrait("pilot"))
 		var/obj/item/device/pda2/pda = locate() in src
 		src.u_equip(pda)
@@ -547,7 +600,7 @@
 	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
 		trinket = new/obj/item/clothing/head/NTberet(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))
-		var/picked = pick(childrentypesof(/obj/item/clothing/head) - (typesof(/obj/item/clothing/head/bighat))) //IM A MONSTER DONT LOOK AT ME. NOOOOOOOOOOO
+		var/picked = pick(childrentypesof(/obj/item/clothing/head) - (typesof(/obj/item/clothing/head/bighat)) - (typesof(/obj/item/clothing/head/helmet/space/syndicate))) //IM A MONSTER DONT LOOK AT ME. NOOOOOOOOOOO
 		trinket = new picked(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("conspiracytheorist"))
 		trinket = new/obj/item/clothing/head/tinfoil_hat
@@ -665,39 +718,7 @@
 		boutput(src, "<span class='alert'><b>UH OH, the game couldn't find your job to set it up! Report this to a coder.</b></span>")
 		return
 
-	if (JOB.slot_back)
-		src.equip_new_if_possible(JOB.slot_back, slot_back)
-	if (JOB.slot_back && JOB?.items_in_backpack.len)
-		for (var/X in JOB.items_in_backpack)
-			if(ispath(X))
-				src.equip_new_if_possible(X, slot_in_backpack)
-	if (JOB.slot_jump)
-		src.equip_new_if_possible(JOB.slot_jump, slot_w_uniform)
-	if (JOB.slot_belt)
-		src.equip_new_if_possible(JOB.slot_belt, slot_belt)
-	if (JOB.slot_foot)
-		src.equip_new_if_possible(JOB.slot_foot, slot_shoes)
-	if (JOB.slot_suit)
-		src.equip_new_if_possible(JOB.slot_suit, slot_wear_suit)
-	if (JOB.slot_ears)
-		if (!(src.traitHolder && src.traitHolder.hasTrait("allears") && ispath(JOB.slot_ears,/obj/item/device/radio/headset)))
-			src.equip_new_if_possible(JOB.slot_ears, slot_ears)
-	if (JOB.slot_mask)
-		src.equip_new_if_possible(JOB.slot_mask, slot_wear_mask)
-	if (JOB.slot_glov)
-		src.equip_new_if_possible(JOB.slot_glov, slot_gloves)
-	if (JOB.slot_eyes)
-		src.equip_new_if_possible(JOB.slot_eyes, slot_glasses)
-	if (JOB.slot_head)
-		src.equip_new_if_possible(JOB.slot_head, slot_head)
-	if (JOB.slot_poc1)
-		src.equip_new_if_possible(JOB.slot_poc1, slot_l_store)
-	if (JOB.slot_poc2)
-		src.equip_new_if_possible(JOB.slot_poc2, slot_r_store)
-	if (JOB.slot_rhan)
-		src.equip_new_if_possible(JOB.slot_rhan, slot_r_hand)
-	if (JOB.slot_lhan)
-		src.equip_new_if_possible(JOB.slot_lhan, slot_l_hand)
+	equip_job_items(JOB, src)
 
 	if (ishuman(src) && JOB.spawn_id)
 		src.spawnId(rank)
@@ -757,6 +778,6 @@ var/list/trinket_safelist = list(/obj/item/basketball,/obj/item/instrument/bikeh
 /obj/item/clothing/head/mj_hat, /obj/item/clothing/head/red, /obj/item/clothing/head/that, /obj/item/clothing/head/wig, /obj/item/clothing/head/turban, /obj/item/dice/magic8ball,
 /obj/item/reagent_containers/food/drinks/mug/random_color, /obj/item/reagent_containers/food/drinks/skull_chalice, /obj/item/pen/marker/random, /obj/item/pen/crayon/random,
 /obj/item/clothing/gloves/yellow/unsulated, /obj/item/reagent_containers/food/snacks/fortune_cookie, /obj/item/instrument/triangle, /obj/item/instrument/tambourine, /obj/item/instrument/cowbell,
-/obj/item/toy/plush/small/bee, /obj/item/paper/book/the_trial, /obj/item/paper/book/deep_blue_sea, /obj/item/clothing/suit/bedsheet/cape/red, /obj/item/disk/data/cartridge/clown,
+/obj/item/toy/plush/small/bee, /obj/item/paper/book/from_file/the_trial, /obj/item/paper/book/from_file/deep_blue_sea, /obj/item/clothing/suit/bedsheet/cape/red, /obj/item/disk/data/cartridge/clown,
 /obj/item/clothing/mask/cigarette/cigar, /obj/item/device/light/sparkler, /obj/item/toy/sponge_capsule, /obj/item/reagent_containers/food/snacks/plant/pear, /obj/item/reagent_containers/food/snacks/donkpocket/honk/warm,
 /obj/item/seed/alien)

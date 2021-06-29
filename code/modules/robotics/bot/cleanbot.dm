@@ -12,7 +12,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = TABLEPASS
 	var/created_cleanbot_type = /obj/machinery/bot/cleanbot
 
@@ -239,9 +239,9 @@
 				return
 
 			// we are not there. how do we get there
-			if (!src.path || !src.path.len)
+			if (!src.path || !length(src.path))
 				src.navigate_to(get_turf(src.target), CLEANBOT_MOVE_SPEED, max_dist = 120)
-				if (!src.path || !src.path.len)
+				if (!src.path || !length(src.path))
 					// answer: we don't. try to find something else then.
 					src.KillPathAndGiveUp(1)
 		else // No targets found in range? Increase the range!
@@ -380,7 +380,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		playsound(get_turf(master), "sound/impact_sounds/Liquid_Slosh_2.ogg", 25, 1)
+		playsound(master, "sound/impact_sounds/Liquid_Slosh_2.ogg", 25, 1)
 		master.anchored = 1
 		master.icon_state = "[master.icon_state_base]-c"
 		master.visible_message("<span class='alert'>[master] begins to clean the [T.name].</span>")
@@ -424,3 +424,8 @@
 		..()
 
 #undef CLEANBOT_MOVE_SPEED
+
+/mob/living/critter/bot/cleanbot
+	name = "cleanbot"
+
+	emagged

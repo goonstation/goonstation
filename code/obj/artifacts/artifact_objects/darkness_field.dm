@@ -38,7 +38,7 @@
 		if(..())
 			return
 		O.anchored = 0
-		for(var/obj/overlay/darkness_field/D as() in darkfields)
+		for(var/obj/overlay/darkness_field/D as anything in darkfields)
 			D.deactivate()
 
 /obj/overlay/darkness_field

@@ -40,7 +40,7 @@
 		src.cream_image.color = src.food_color
 		src.UpdateOverlays(src.cream_image, "cream")
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		..()
 		src.update_cone()
 		M.bodytemperature = min(M.base_body_temp, M.bodytemperature-20)
@@ -65,7 +65,7 @@
 			return
 		user.visible_message("<span class='alert'><b>[user] eats the ice cream in one bite and collapses from brainfreeze!</b></span>")
 		user.TakeDamage("head", 0, 50 * icecount)
-		user.changeStatus("paralysis", icecount*10) //in case the damage isn't enough to crit
+		user.changeStatus("paralysis", icecount SECONDS) //in case the damage isn't enough to crit
 		user.bodytemperature -= 100
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))

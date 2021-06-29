@@ -182,7 +182,7 @@ datum/mind
 		output += memory
 
 		if (objectives.len>0)
-			output += "<HR><B>Objectives:</B>"
+			output += "<HR><B>Objectives:</B><br>"
 
 			var/obj_count = 1
 			for (var/datum/objective/objective in objectives)
@@ -219,3 +219,4 @@ datum/mind
 
 /datum/mind/proc/add_karma(how_much)
 	src.karma += how_much
+	src.karma = clamp(src.karma, karma_min, karma_max)

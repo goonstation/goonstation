@@ -125,7 +125,7 @@ datum/pipe_network
 			#undef _RECONCILE_AIR
 
 			if(length(gas.trace_gases))
-				for(var/datum/gas/trace_gas as() in gas.trace_gases)
+				for(var/datum/gas/trace_gas as anything in gas.trace_gases)
 					var/datum/gas/corresponding = air_transient.get_or_add_trace_gas_by_type(trace_gas.type)
 					corresponding.moles += trace_gas.moles
 
@@ -179,7 +179,7 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 		#undef _EQUALIZE_GASES_ADD_TO_TOTAL
 
 		if(length(gas.trace_gases))
-			for(var/datum/gas/trace_gas as() in gas.trace_gases)
+			for(var/datum/gas/trace_gas as anything in gas.trace_gases)
 				var/datum/gas/corresponding
 				if(length(total_trace_gases))
 					corresponding = locate(trace_gas.type) in total_trace_gases

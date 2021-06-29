@@ -8,53 +8,55 @@ This table of contents must be manually maintained.
 Make sure to add new items to this list if you document new components.
 -->
 
-- [General Concepts](#general-concepts)
-- [`tgui/components`](#tguicomponents)
-  - [`AnimatedNumber`](#animatednumber)
-  - [`BlockQuote`](#blockquote)
-  - [`Box`](#box)
-  - [`Button`](#button)
-  - [`Button.Checkbox`](#buttoncheckbox)
-  - [`Button.Confirm`](#buttonconfirm)
-  - [`Button.Input`](#buttoninput)
-  - [`ByondUi`](#byondui)
-  - [`Collapsible`](#collapsible)
-  - [`ColorBox`](#colorbox)
-  - [`Dimmer`](#dimmer)
-  - [`Divider`](#divider)
-  - [`Dropdown`](#dropdown)
-  - [`Flex`](#flex)
-  - [`Flex.Item`](#flexitem)
-  - [`Grid`](#grid)
-  - [`Grid.Column`](#gridcolumn)
-  - [`Icon`](#icon)
-  - [`Icon.Stack`](#iconstack)
-  - [`Input`](#input)
-  - [`Knob`](#knob)
-  - [`LabeledControls`](#labeledcontrols)
-  - [`LabeledControls.Item`](#labeledcontrolsitem)
-  - [`LabeledList`](#labeledlist)
-  - [`LabeledList.Item`](#labeledlistitem)
-  - [`LabeledList.Divider`](#labeledlistdivider)
-  - [`Modal`](#modal)
-  - [`NoticeBox`](#noticebox)
-  - [`NumberInput`](#numberinput)
-  - [`ProgressBar`](#progressbar)
-  - [`RoundGauge`](#roundgauge)
-  - [`Section`](#section)
-  - [`Slider`](#slider)
-  - [`Stack`](#stack)
-  - [`Table`](#table)
-  - [`Table.Row`](#tablerow)
-  - [`Table.Cell`](#tablecell)
-  - [`Tabs`](#tabs)
-  - [`Tabs.Tab`](#tabstab)
-  - [`Tooltip`](#tooltip)
-- [`tgui/interfaces/common`](#tguiinterfacescommon)
-  - [`HealthStat`](#healthstat)
-- [`tgui/layouts`](#tguilayouts)
-  - [`Window`](#window)
-  - [`Window.Content`](#windowcontent)
+- [Component Reference](#component-reference)
+  - [General Concepts](#general-concepts)
+  - [`tgui/components`](#tguicomponents)
+    - [`AnimatedNumber`](#animatednumber)
+    - [`BlockQuote`](#blockquote)
+    - [`Box`](#box)
+    - [`Button`](#button)
+    - [`Button.Checkbox`](#buttoncheckbox)
+    - [`Button.Confirm`](#buttonconfirm)
+    - [`Button.Input`](#buttoninput)
+    - [`ByondUi`](#byondui)
+    - [`Collapsible`](#collapsible)
+    - [`ColorBox`](#colorbox)
+    - [`Dimmer`](#dimmer)
+    - [`Divider`](#divider)
+    - [`Dropdown`](#dropdown)
+    - [`Flex`](#flex)
+    - [`Flex.Item`](#flexitem)
+    - [`Grid`](#grid)
+    - [`Grid.Column`](#gridcolumn)
+    - [`Icon`](#icon)
+    - [`Icon.Stack`](#iconstack)
+    - [`Input`](#input)
+    - [`Knob`](#knob)
+    - [`LabeledControls`](#labeledcontrols)
+    - [`LabeledControls.Item`](#labeledcontrolsitem)
+    - [`LabeledList`](#labeledlist)
+    - [`LabeledList.Item`](#labeledlistitem)
+    - [`LabeledList.Divider`](#labeledlistdivider)
+    - [`Modal`](#modal)
+    - [`NoticeBox`](#noticebox)
+    - [`NumberInput`](#numberinput)
+    - [`ProgressBar`](#progressbar)
+    - [`RoundGauge`](#roundgauge)
+    - [`Section`](#section)
+    - [`Slider`](#slider)
+    - [`Stack`](#stack)
+    - [`Stack.Item`](#stackitem)
+    - [`Table`](#table)
+    - [`Table.Row`](#tablerow)
+    - [`Table.Cell`](#tablecell)
+    - [`Tabs`](#tabs)
+    - [`Tabs.Tab`](#tabstab)
+    - [`Tooltip`](#tooltip)
+  - [`tgui/interfaces/common`](#tguiinterfacescommon)
+    - [`HealthStat`](#healthstat)
+  - [`tgui/layouts`](#tguilayouts)
+    - [`Window`](#window)
+    - [`Window.Content`](#windowcontent)
 
 ## General Concepts
 
@@ -188,6 +190,7 @@ all available horizontal space.
 - `bold: boolean` - Make text bold.
 - `italic: boolean` - Make text italic.
 - `nowrap: boolean` - Stops text from wrapping.
+- `preserveWhitespace: boolean` - Preserves line-breaks and spacing in text.
 - `textAlign: string` - Align text inside the box.
   - `left` (default)
   - `center`
@@ -367,12 +370,16 @@ and displays selected entry.
 **Props:**
 
 - See inherited props: [Box](#box)
+- See inherited props: [Icon](#icon)
 - `options: string[]` - An array of strings which will be displayed in the
 dropdown when open
 - `selected: string` - Currently selected entry
 - `width: number` - Width of dropdown button and resulting menu
-- `over: boolean` - dropdown renders over instead of below
-- `color: string` - color of dropdown button
+- `over: boolean` - Dropdown renders over instead of below
+- `color: string` - Color of dropdown button
+- `nochevron: boolean` - Whether or not the arrow on the right hand side of the dropdown button is visible
+- `noscroll: boolean` - Whether or not the dropdown menu should have a scroll bar
+- `displayText: string` - Text to always display in place of the selected text
 - `onClick: (e) => void` - Called when dropdown button is clicked
 - `onSelected: (value) => void` - Called when a value is picked from the list, `value` is the value that was picked
 
@@ -1155,6 +1162,7 @@ Example:
 - `title: string` - Window title.
 - `width: number` - Window width.
 - `height: number` - Window height.
+- `canClose: boolean` - Controls the ability to close the window.
 - `children: any` - Child elements, which are rendered directly inside the
 window. If you use a [Dimmer](#dimmer) or [Modal](#modal) in your UI,
 they should be put as direct childs of a Window, otherwise you should be

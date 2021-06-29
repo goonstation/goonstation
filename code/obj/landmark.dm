@@ -66,6 +66,9 @@ var/global/list/job_start_locations = list()
 /obj/landmark/cruiser_entrance
 	name = LANDMARK_CRUISER_ENTRANCE
 
+/obj/landmark/cruiser_center
+	name = LANDMARK_CRUISER_CENTER
+
 /obj/landmark/escape_pod_succ
 	name = LANDMARK_ESCAPE_POD_SUCCESS
 	icon_state = "xp"
@@ -74,6 +77,28 @@ var/global/list/job_start_locations = list()
 	New()
 		src.data = src.shuttle// save dir
 		..()
+
+	north
+		dir = NORTH
+		shuttle = SHUTTLE_NORTH
+
+		donut3
+			shuttle = SHUTTLE_DONUT3
+
+	south
+		dir = SOUTH
+		shuttle = SHUTTLE_SOUTH
+
+	east
+		dir = EAST
+		shuttle = SHUTTLE_EAST
+
+		oshan
+			shuttle = SHUTTLE_OSHAN
+
+	west
+		dir = WEST
+		shuttle = SHUTTLE_WEST
 
 /obj/landmark/tutorial_start
 	name = LANDMARK_TUTORIAL_START
@@ -139,9 +164,9 @@ var/global/list/job_start_locations = list()
 	var/type_to_spawn = null
 	var/spawnchance = 100
 	var/static/list/name_to_type = list(
+		"juicer_gene" = /mob/living/carbon/human/geneticist,
 		"shitty_bill" = /mob/living/carbon/human/biker,
 		"john_bill" = /mob/living/carbon/human/john,
-		"pariah" = /mob/living/carbon/human/pariah,
 		"big_yank" = /mob/living/carbon/human/big_yank,
 		"father_jack" = /mob/living/carbon/human/fatherjack,
 		"don_glab" = /mob/living/carbon/human/don_glab,
@@ -215,16 +240,23 @@ var/global/list/job_start_locations = list()
 /obj/landmark/lrt/workshop
 	name = "Hidden Workshop"
 
+/obj/landmark/character_preview_spawn
+	name = LANDMARK_CHARACTER_PREVIEW_SPAWN
+
 /obj/landmark/viscontents_spawn
 	name = "visual mirror spawn"
 	desc = "Links a pair of corresponding turfs in holy Viscontent Matrimony. You shouldnt be seeing this."
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "landmark"
-	color = "#D1CFAE"
-	var/targetZ = 1 // target z-level to push it's contents to
-	var/xOffset = 0 // use only for pushing to the same z-level
-	var/yOffset = 0 // use only for pushing to the same z-level
+	color = "#FF0000"
+	/// target z-level to push it's contents to
+	var/targetZ = 1
+	/// x offset relative to the landmark, will cause visual jump effect due to set_loc not gliding
+	var/xOffset = 0
+	/// /y offset relative to the landmark, will cause visual jump effect due to set_loc not gliding
+	var/yOffset = 0
 	add_to_landmarks = FALSE
+	/// modifier for restricting criteria of what gets warped by mirror
 	var/warptarget_modifier = LANDMARK_VM_WARP_ALL
 	var/novis = FALSE
 
@@ -241,10 +273,12 @@ var/global/list/job_start_locations = list()
 		else
 			T.appearance_flags |= KEEP_TOGETHER
 			T.vistarget = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
-			if(warptarget_modifier) T.vistarget.warptarget = T
-			T.updateVis()
-			T.vistarget.fullbright = TRUE
-			T.vistarget.RL_Init()
+			if (T.vistarget)
+				if(warptarget_modifier)
+					T.vistarget.warptarget = T
+				T.updateVis()
+				T.vistarget.fullbright = TRUE
+				T.vistarget.RL_Init()
 		..()
 
 /obj/landmark/viscontents_spawn/no_vis
@@ -254,10 +288,12 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/viscontents_spawn/no_warp
 	warptarget_modifier = LANDMARK_VM_WARP_NONE
-
-/turf/var/turf/vistarget = null	// target turf for projecting its contents elsewhere
-/turf/var/turf/warptarget = null // target turf for teleporting its contents elsewhere
-/turf/var/turf/warptarget_modifier = null // control who gets warped
+/// target turf for projecting its contents elsewhere
+/turf/var/turf/vistarget = null
+/// target turf for teleporting its contents elsewhere
+/turf/var/turf/warptarget = null
+/// control who gets warped to warptarget
+/turf/var/turf/warptarget_modifier = null
 
 /turf/proc/updateVis()
 	if(vistarget)
@@ -266,3 +302,25 @@ var/global/list/job_start_locations = list()
 		var/obj/overlay/tile_effect/lighting/L = locate() in vistarget.vis_contents
 		if(L)
 			vistarget.vis_contents -= L
+
+/obj/landmark/load_prefab_shuttledmm
+	name = "custom shuttle dmm loading location"
+	desc = "Tells the dmm loader where to put the bottom left corner of the shuttle prefab."
+	icon = 'icons/effects/mapeditor.dmi'
+	icon_state = "landmark"
+	color = "#ff0000"
+
+	cog1
+		name = LANDMARK_SHUTTLE_COG1
+	cog2
+		name = LANDMARK_SHUTTLE_COG2
+	sealab
+		name = LANDMARK_SHUTTLE_SEALAB
+	manta
+		name = LANDMARK_SHUTTLE_MANTA
+	donut2
+		name = LANDMARK_SHUTTLE_DONUT2
+	donut3
+		name = LANDMARK_SHUTTLE_DONUT3
+	destiny
+		name = LANDMARK_SHUTTLE_DESTINY

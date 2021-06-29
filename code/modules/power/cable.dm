@@ -328,8 +328,8 @@
 		var/datum/powernet/PN = new()
 		powernets += PN
 		PN.cables += src
-		PN.number = powernets.len
-		src.netnum = powernets.len
+		PN.number = length(powernets)
+		src.netnum = length(powernets)
 
 	else if (cable_d1)
 		var/datum/powernet/PN = powernets[cable_d1.netnum]

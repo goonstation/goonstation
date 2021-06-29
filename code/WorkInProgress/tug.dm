@@ -213,7 +213,7 @@
 			if (crashed == 2)
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 			boutput(rider, "<span class='alert'><B>You are flung off of [src]!</B></span>")
-			rider.changeStatus("stunned", 80)
+			rider.changeStatus("stunned", 8 SECONDS)
 			rider.changeStatus("weakened", 5 SECONDS)
 			for (var/mob/C in AIviewers(src))
 				if (C == rider)
@@ -320,18 +320,6 @@
 				else
 					playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 25, 1, -1)
 					src.visible_message("<span class='alert'><B>[M] has attempted to shove [rider] off of [src]!</B></span>")
-		return
-
-	bullet_act(flag, A as obj)
-		if (rider)
-			rider.bullet_act(flag, A)
-			eject_rider()
-		return
-
-	meteorhit()
-		if (rider)
-			rider.meteorhit()
-			eject_rider()
 		return
 
 	disposing()

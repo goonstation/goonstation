@@ -75,7 +75,7 @@
 	..()
 	//boutput(world, "ccpt [charging] [stat]")
 	if(status & NOPOWER)
-		if(src.overlays && src.overlays.len)
+		if(src.overlays && length(src.overlays))
 			src.updateicon()
 		return
 	if(!charging)

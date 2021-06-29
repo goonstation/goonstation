@@ -8,7 +8,7 @@
 	icon = 'icons/mob/hud_human_new.dmi'
 	icon_state = "reinforce"
 	name = "grab"
-	w_class = 5
+	w_class = W_CLASS_HUGE
 	anchored = 1
 	var/break_prob = 45
 	var/assailant_stam_drain = 30
@@ -102,7 +102,7 @@
 		..()
 		dropped += 1
 		if(src.assailant)
-			REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
+			REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src)
 			qdel(src)
 
 	process(var/mult = 1)
@@ -201,7 +201,7 @@
 						src.affecting.end_chair_flip_targeting()
 					src.affecting.buckled = null
 
-				else if (user.is_hulk() || prob(75))
+				else
 					logTheThing("combat", src.assailant, src.affecting, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 					for(var/mob/O in AIviewers(src.assailant, null))
 						O.show_message("<span class='alert'>[src.assailant] has grabbed [src.affecting] aggressively (now hands)!</span>", 1)
@@ -211,10 +211,6 @@
 						set_affected_loc()
 
 					user.next_click = world.time + user.combat_click_delay //+ rand(6,11) //this was utterly disgusting, leaving it here in memorial
-				else
-					for(var/mob/O in AIviewers(src.assailant, null))
-						O.show_message("<span class='alert'>[src.assailant] has failed to grab [src.affecting] aggressively!</span>", 1)
-					user.next_click = world.time + user.combat_click_delay
 			if (GRAB_AGGRESSIVE)
 				if (ishuman(src.affecting))
 					var/mob/living/carbon/human/H = src.affecting
@@ -265,7 +261,7 @@
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck!</span>", 1)
 		src.state = GRAB_KILL
-		REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
+		REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src)
 		src.assailant.lastattacked = src.affecting
 		src.affecting.lastattacker = src.assailant
 		src.affecting.lastattackertime = world.time
@@ -304,7 +300,7 @@
 
 		if (ishuman(src.assailant))
 			var/mob/living/carbon/human/H = src.assailant
-			APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, src.type)
+			APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, src)
 			H.update_canmove()
 
 		if (isliving(src.affecting))
@@ -412,10 +408,10 @@
 		var/mob/hostage = null
 		if(src.affecting && src.state >= 2 && P.shooter != src.affecting) //If you grab someone they can still shoot you
 			hostage = src.affecting
-		if (hostage)
+		if (hostage && (!hostage.lying || prob(P.proj_data?.hit_ground_chance)))
 			P.collide(hostage)
 			//moved here so that it displays after the bullet hit message
-			if(prob(20)) //This should probably not be bulletproof, har har
+			if(prob(25)) //This should probably not be bulletproof, har har
 				hostage.visible_message("<span class='combat bold'>[hostage] is knocked out of [owner]'s grip by the force of the [P.name]!</span>")
 				qdel(src)
 
@@ -429,6 +425,7 @@
 	id = "strangle_target"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "neck_over"
+	color_active = "#d37610"
 	var/mob/living/target
 	var/obj/item/grab/G
 
@@ -474,6 +471,7 @@
 	id = "pin_target"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "pin"
+	color_active = "#d37610"
 	var/mob/living/target
 	var/obj/item/grab/G
 	var/turf/T
@@ -739,7 +737,7 @@
 			var/obj/item/I = src.loc
 			I.c_flags |= HAS_GRAB_EQUIP
 			I.tooltip_rebuild = 1
-		setProperty("I_disorient_resist", 15)
+		setProperty("I_disorient_resist", 20)
 
 	disposing()
 		for(var/datum/objectProperty/equipment/P in src.properties)
@@ -787,27 +785,31 @@
 		if(istype(P))
 			P.removeFromMob(src, src.assailant, propVal)
 
-	proc/can_block(var/hit_type = null)
-		.= DEFAULT_BLOCK_PROTECTION_BONUS
+	proc/can_block(var/hit_type = null, real_hit = 1)
+		.= UNARMED_BLOCK_PROTECTION_BONUS
 		if (isitem(src.loc) && hit_type)
-			.= 0
 			var/obj/item/I = src.loc
 
 			var/prop = DAMAGE_TYPE_TO_STRING(hit_type)
-			if(prop == "burn" && I?.reagents)
+			if(real_hit && prop == "burn" && I?.reagents)
 				I.reagents.temperature_reagents(2000,10)
 			.= src.getProperty("I_block_[prop]")
+		if(real_hit)
+			SEND_SIGNAL(src, COMSIG_BLOCK_BLOCKED)
+			block_spark(src.assailant)
+			fuckup_attack_particle()
+
 
 	proc/play_block_sound(var/hit_type = DAMAGE_BLUNT)
 		switch(hit_type)
 			if (DAMAGE_BLUNT)
-				playsound(get_turf(src), 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1)
+				playsound(src, 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1)
 			if (DAMAGE_CUT)
-				playsound(get_turf(src), 'sound/impact_sounds/block_cut.ogg', 50, 1, -1)
+				playsound(src, 'sound/impact_sounds/block_cut.ogg', 50, 1, -1)
 			if (DAMAGE_STAB)
-				playsound(get_turf(src), 'sound/impact_sounds/block_stab.ogg', 50, 1, -1)
+				playsound(src, 'sound/impact_sounds/block_stab.ogg', 50, 1, -1)
 			if (DAMAGE_BURN)
-				playsound(get_turf(src), 'sound/impact_sounds/block_burn.ogg', 50, 1, -1)
+				playsound(src, 'sound/impact_sounds/block_burn.ogg', 50, 1, -1)
 
 	handle_throw(var/mob/living/user,var/atom/target)
 		if (isturf(user.loc) && target)
@@ -839,7 +841,7 @@
 							damage += H.limbs.l_leg.limb_hit_bonus
 
 					dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
-					playsound(get_turf(user), 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
+					playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
 					for (var/mob/O in AIviewers(user))
 						O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
 					logTheThing("combat", user, dive_attack_hit, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")

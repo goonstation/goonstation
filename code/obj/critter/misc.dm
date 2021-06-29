@@ -786,7 +786,7 @@
 			if(iscarbon(M))
 				if(to_deal > (((sword_damage_max-sword_damage_min)/2)+sword_damage_min) && prob(50))
 					src.visible_message("<span class='combat'><B>[src] knocks down [M]!</B></span>")
-					M:changeStatus("weakened", 80)
+					M:changeStatus("weakened", 8 SECONDS)
 			SPAWN_DBG(2.5 SECONDS)
 				src.attacking = 0
 		else
@@ -991,6 +991,9 @@
 				qdel(M)
 
 			src.attacking = 0
+
+	blob_act(power)
+		return
 
 	attack_hand(var/mob/user as mob)
 		if (src.alive)
@@ -1396,7 +1399,7 @@
 			return
 
 	proc/contents_check()
-		if(!src.allow_empty && !src.contents.len)
+		if(!src.allow_empty && !length(src.contents))
 			src.visible_message("<span class='notice'><B>[src]</B> realizes that its material essence is missing and vanishes in a puff of logic!</span>")
 			qdel(src)
 

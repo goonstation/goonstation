@@ -116,7 +116,6 @@
 	.= list()
 
 	for(var/mob/living/C in mobs)
-		LAGCHECK(LAG_HIGH)
 		if (!C)
 			continue
 		if (!iscarbon(C) && !ismobcritter(C))
@@ -135,7 +134,6 @@
 		var/area/station/turret_protected/T = A
 		if (T.blob_list.len)
 			for(var/obj/blob/B in T.blob_list)
-				LAGCHECK(LAG_HIGH)
 				if (!B)
 					continue
 				if (!istype(B.loc,/turf))
@@ -303,7 +301,7 @@
 						src.post_status(sender, "command", "device_reply", status_string)
 				if("setmode")
 					var/list/L = params2list(signal.data["data"])
-					if(!L || !L.len) return
+					if(!L || !length(L)) return
 					var/new_lethal_state = text2num(L["lethal"])
 					var/new_enabled_state = text2num(L["active"])
 					if(!isnull(new_lethal_state))

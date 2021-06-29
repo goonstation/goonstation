@@ -578,7 +578,7 @@
 			return ""
 
 		var/list/speech_list = splittext(message, " ")
-		if(!speech_list || !speech_list.len)
+		if(!speech_list || !length(speech_list))
 			return ""
 
 		var/num_butts = rand(1,4)
@@ -669,7 +669,7 @@
 			return ""
 
 		var/list/speech_list = splittext(message, " ")
-		if(!speech_list || !speech_list.len)
+		if(!speech_list || !length(speech_list))
 			return ""
 
 		var/o = 1

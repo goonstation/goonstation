@@ -66,7 +66,7 @@
 		if (prob(3))
 			reagents.add_reagent("liquid spacetime", 25)
 		if (prob(1))
-			reagents.add_reagent("fuzz", 5)
+			reagents.add_reagent("rat_venom", 5)
 		if (prob(3))
 			reagents.add_reagent("loose_screws", 25)
 		if (prob(1))
@@ -186,6 +186,7 @@
 	validtypes = list("martian","wizard","eldritch")
 	min_triggers = 0
 	max_triggers = 0
+	no_activation = TRUE
 	react_xray = list(2,85,12,8,"HOLLOW")
 	module_research = list("medicine" = 5, "science" = 5, "miniaturization" = 15)
 	module_research_insight = 3

@@ -79,7 +79,7 @@
 			else if (T.active_liquid)
 				var/obj/fluid/F = T.active_liquid
 
-				var/depth_to_breathe_from = depth_levels.len
+				var/depth_to_breathe_from = length(depth_levels)
 				if (owner.lying)
 					depth_to_breathe_from = depth_levels.len-1
 
@@ -136,7 +136,7 @@
 		if (breathtimer > 15)
 			owner.losebreath += (0.7 * mult)
 
-		if (owner.grabbed_by && owner.grabbed_by.len)
+		if (owner.grabbed_by && length(owner.grabbed_by))
 			breath = get_breath_grabbed_by(BREATH_VOLUME)
 
 		if (!breath)
@@ -288,7 +288,7 @@
 			if (!owner.co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
 				owner.co2overloadtime = world.time
 			else if (world.time - owner.co2overloadtime > 120)
-				owner.changeStatus("paralysis", (4 * mult) SECONDS)
+				owner.changeStatus("paralysis", 4 SECONDS * mult)
 				owner.take_oxygen_deprivation(1.8 * mult) // Lets hurt em a little, let them know we mean business
 				if (world.time - owner.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 					owner.take_oxygen_deprivation(7 * mult)
@@ -330,11 +330,13 @@
 					boutput(owner, "<span class='alert'>Oh god it's so bad you could choke to death in here!</span>")
 
 
-			//cyber lungs beat radiation. Is there anything they can't do?
-			if (!has_cyberlungs)
-				var/datum/gas/rad_particles/RV = breath.get_trace_gas_by_type(/datum/gas/rad_particles)
-				if (RV)
-					owner.changeStatus("radiation", RV.moles, 2 SECONDS)
+		//cyber lungs beat radiation. Is there anything they can't do?
+		if (!has_cyberlungs)
+			var/datum/gas/rad_particles/RV = breath.get_trace_gas_by_type(/datum/gas/rad_particles)
+			if (RV)
+				var/RV_pp = (RV.moles/TOTAL_MOLES(breath))*breath_pressure
+				if(RV_pp >= 1)
+					owner.changeStatus("radiation", (1 + RV_pp) * mult)
 
 		if (human_owner?.organHolder)
 			if (breath.temperature > min(human_owner.organHolder.left_lung ? human_owner.organHolder.left_lung.temp_tolerance : INFINITY, human_owner.organHolder.right_lung ? human_owner.organHolder.right_lung.temp_tolerance : INFINITY) && !human_owner.is_heat_resistant()) // Hot air hurts :(

@@ -15,7 +15,7 @@ MATERIAL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "rods"
 	flags = FPRINT | TABLEPASS| CONDUCT
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 9.0
 	throwforce = 15.0
 	throw_speed = 5
@@ -151,7 +151,7 @@ MATERIAL
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | CONDUCT
 	desc = "A collection of thick metal, from which one can construct a multitude of objects."
 		//cogwerks - burn vars
@@ -404,7 +404,7 @@ MATERIAL
 	throwforce = 15.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | CONDUCT
 	desc = "A collection of reinforced metal, used for making thicker walls and stronger metal objects."
 		//cogwerks - burn vars

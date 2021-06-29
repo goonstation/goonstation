@@ -38,13 +38,13 @@
 	src.poweruse = ((length(connectedto) * 5) / -1) //(5 power per tile)
 
 /obj/flock_structure/collector/disposing()
-	for(var/turf/simulated/floor/feather/flocktile as() in connectedto)
+	for(var/turf/simulated/floor/feather/flocktile as anything in connectedto)
 		flocktile.off()
 	connectedto.len = 0
 	..()
 
 /obj/flock_structure/collector/proc/calcconnected()
-	for(var/turf/simulated/floor/feather/flocktile as() in connectedto)
+	for(var/turf/simulated/floor/feather/flocktile as anything in connectedto)
 		flocktile.off()
 		flocktile.connected = 0
 	connectedto.len = 0
@@ -67,7 +67,7 @@
 			distance++
 			connectedto |= floor
 
-	for(var/turf/simulated/floor/feather/flocktile as() in connectedto)
+	for(var/turf/simulated/floor/feather/flocktile as anything in connectedto)
 		flocktile.connected = 1
 		flocktile.on() //make it glo
 

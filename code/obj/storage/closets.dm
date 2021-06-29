@@ -54,6 +54,8 @@
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
 			if (prob(80))
 				new /obj/item/extinguisher(src)
+			if (prob(50))
+				new /obj/item/clothing/head/helmet/firefighter(src)
 			if (prob(30))
 				new /obj/item/clothing/suit/fire(src)
 				new /obj/item/clothing/mask/gas/emergency(src)
@@ -97,11 +99,13 @@
 	icon_closed = "coffin"
 	icon_opened = "coffin-open"
 	layer = 2.2
+	icon_welded = "welded-coffin-4dirs"
 
 	wood
 		icon_closed = "woodcoffin"
 		icon_state = "woodcoffin"
 		icon_opened = "woodcoffin-open"
+		icon_welded = "welded-coffin-1dir"
 
 /obj/storage/closet/biohazard
 	name = "\improper Level 3 Biohazard Suit closet"
@@ -233,7 +237,7 @@
 			B2.pixel_y = 6
 			B2.pixel_x = 5
 
-			new /obj/item/postit_stack(src)
+			new /obj/item/item_box/postit(src)
 			new /obj/item/hand_labeler(src)
 
 			var/obj/item/pen/B3 = new /obj/item/pen(src)
@@ -313,7 +317,7 @@
 /obj/storage/closet/mantacontainerred
 	name = "shipping container"
 	desc = "It's a shipping container, they are frequently used to ship different goods securely across oceans."
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "mantacontainerleft"
 	icon_closed = "mantacontainerleft"
 	icon_opened = "mantacontainerleft-open"
@@ -404,7 +408,7 @@
 			return
 
 		else if (istype(W, /obj/item/satchel/))
-			var/amt = W.contents.len
+			var/amt = length(W.contents)
 			if (amt)
 				user.visible_message("<span class='notice'>[user] dumps out [W]'s contents into [src]!</span>")
 				var/amtload = 0
@@ -485,7 +489,7 @@
 /obj/storage/closet/mantacontainerred/right
 	name = "shipping container"
 	desc = "It's a shipping container, they are frequently used to ship different goods securely across oceans."
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_closed = "mantacontainerright"
 	icon_state = "mantacontainerright"
 	icon_opened = "mantacontainerright-open"
@@ -514,10 +518,11 @@
 	icon_state = "medical_clothes"
 	icon_opened = "secure_white-open"
 	desc = "A handy medical locker for storing your doctoring apparel."
-	spawn_contents = list(/obj/item/clothing/head/nursehat = 1,
-					/obj/item/clothing/suit/nursedress = 1,
-					/obj/item/clothing/head/headmirror = 1,
-					/obj/item/clothing/suit/labcoat/medical = 2)
+	spawn_contents = list(/obj/item/clothing/head/nursehat = 3,
+					/obj/item/clothing/suit/nursedress = 3,
+					/obj/item/clothing/suit/wintercoat/medical = 3,
+					/obj/item/clothing/head/headmirror = 3,
+					/obj/item/clothing/suit/labcoat/medical = 3)
 
 /obj/storage/closet/command/ruined //replacements for azones and mining level flavor
 	name = "Dented command locker"

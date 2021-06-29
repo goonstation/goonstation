@@ -303,7 +303,7 @@
 
 	New()
 		..()
-		if (!src.emagged && islist(chem_whitelist) && chem_whitelist.len)
+		if (!src.emagged && islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist
 		output_target = src.loc
 
@@ -357,15 +357,15 @@
 		src.add_dialog(usr)
 
 		if (href_list["close"])
-			usr.Browse(null, "window=chem_master;title=Chemmaster 3000")
+			usr.Browse(null, "window=chem_master;title=CheMaster 3000")
 			return
 
 		if (!beaker) return
 		var/datum/reagents/R = beaker.reagents
 
 		if (href_list["analyze"])
-			var/dat = "<TITLE>Chemmaster 3000</TITLE>Chemical infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
-			usr.Browse(dat, "window=chem_master;size=575x400;title=Chemmaster 3000")
+			var/dat = "<TITLE>CheMaster 3000</TITLE>Chemical infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
+			usr.Browse(dat, "window=chem_master;size=575x400;title=CheMaster 3000")
 			return
 		else if (href_list["isolate"])
 			beaker.reagents.isolate_reagent(href_list["isolate"])
@@ -564,6 +564,9 @@
 					P.medical = med
 					P.on_reagent_change()
 					R.trans_to(P, patchvol)
+			if(use_box)
+				var/obj/item/item_box/medical_patches/B = patchloc
+				B.max_item_amount = B.item_amount
 			else
 				boutput(usr, "[src] makes a weird grinding noise. That can't be good.")
 				return
@@ -572,7 +575,7 @@
 			return
 
 		else
-			usr.Browse(null, "window=chem_master;title=Chemmaster 3000")
+			usr.Browse(null, "window=chem_master;title=CheMaster 3000")
 			return
 
 	attack_ai(mob/user as mob)
@@ -602,7 +605,7 @@
 				dat += "<A href='?src=\ref[src];createpatch=1'>Create patch (30 units max)</A><BR>"
 				dat += "<A href='?src=\ref[src];multipatch=1'>Create multiple patches (5 units min)</A> Box: <A href='?src=\ref[src];togglepatchbox=1'>[src.patch_box ? "Yes" : "No"]</A><BR>"
 				dat += "<A href='?src=\ref[src];createampoule=1'>Create ampoule (5 units max)</A>"
-		user.Browse("<TITLE>Chemmaster 3000</TITLE>Chemmaster menu:<BR><BR>[dat]", "window=chem_master;size=575x400;title=Chemmaster 3000")
+		user.Browse("<TITLE>CheMaster 3000</TITLE>CheMaster menu:<BR><BR>[dat]", "window=chem_master;size=575x400;title=CheMaster 3000")
 		onclose(user, "chem_master")
 		return
 
@@ -623,7 +626,7 @@
 		return 1
 
 	proc/check_whitelist(var/datum/reagents/R)
-		if (src.emagged || !R || !src.whitelist || (islist(src.whitelist) && !src.whitelist.len))
+		if (src.emagged || !R || !src.whitelist || (islist(src.whitelist) && !length(src.whitelist)))
 			return 1
 		var/all_safe = 1
 		for (var/reagent_id in R.reagent_list)
@@ -758,3 +761,125 @@ datum/chemicompiler_core/stationaryCore
 
 		statusChange(oldStatus, newStatus)
 			power_change()
+
+
+// ORGONEIC CHAMISTREY FOR MUSTY JEANS
+/obj/item/reagent_containers/glass/beaker/extractor_tank/thick
+	initial_volume = 1000
+
+/obj/machinery/chem_fractioning_still/ //a huge column boiler for separating chems by boiling point
+	name = "fractional still"
+	desc = "A towering piece of industrial equipment. It reeks of hydrocarbons."
+	density = 1
+	anchored = 1
+	power_usage = 500
+	var/active = 0
+	var/overall_temp = T20C
+	var/target_temp = T20C
+	var/heating = 0
+	var/distilling = 0
+	var/cracking = 0
+	var/obj/item/reagent_containers/glass/beaker/extractor_tank/thick/bottoms = null
+	var/obj/item/reagent_containers/glass/beaker/extractor_tank/tops = null
+	var/obj/item/reagent_containers/glass/beaker/extractor_tank/feed = null
+	var/obj/item/reagent_containers/glass/beaker/extractor_tank/overflow = null
+	var/obj/item/reagent_containers/user_beaker = null
+
+	New()
+		..()
+		src.bottoms = new
+		src.tops = new
+		src.feed = new
+		src.overflow = new
+
+	disposing()
+		if (src.bottoms)
+			qdel(src.bottoms)
+			src.bottoms = null
+		if (src.tops)
+			qdel(src.tops)
+			src.tops = null
+		if (src.feed)
+			qdel(src.feed)
+			src.feed = null
+		if (src.overflow)
+			qdel(src.overflow)
+			src.overflow = null
+		if (src.user_beaker)
+			qdel(src.user_beaker)
+			src.user_beaker = null
+		UnsubscribeProcess()
+		..()
+
+	process(var/mult)
+		if(!active)
+			UnsubscribeProcess()
+		if(heating)
+			heat_up()
+		if(distilling)
+			distill(mult)
+		if(cracking)
+			do_cracking(bottoms,mult)
+		bottoms.reagents.temperature_reagents(T20C, 1)
+		..()
+
+	proc/check_tank(var/obj/item/reagent_containers/tank,var/headroom)
+		if(tank.reagents.total_volume >= tank.reagents.maximum_volume - headroom)
+			tank.reagents.trans_to(overflow,(headroom*0.1))
+		if(overflow.reagents.total_volume >= overflow.reagents.maximum_volume - headroom)
+			src.visible_message("<span class='alert'>The internal overflow safety dumps its contents all over the floor!.</span>","<span class='alert'>You hear a tremendous gushing sound.</span>")
+			var/turf/T = get_turf(src)
+			overflow.reagents.reaction(T)
+
+	proc/do_cracking(var/obj/item/reagent_containers/R, var/amount)
+		if(R && R.reagents)
+			for(var/datum/reagent/reggie in R)
+				if(reggie.can_crack)
+					reggie.crack(amount)
+
+	proc/distill(var/amount)
+		var/vapour_list = get_vapours(bottoms)
+		if(vapour_list)
+			heating = 0
+			for(var/datum/reagent/R in vapour_list)
+				bottoms.reagents.remove_reagent(R.id,amount)
+				tops.reagents.add_reagent(R.id,amount)
+				check_tank(tops,50)
+				feed.reagents.trans_to(bottoms,amount)
+				check_tank(bottoms,100)
+		else
+			if(bottoms.reagents && length(bottoms.reagents.reagent_list))
+				heating = 1
+
+	proc/heat_up()
+		var/vapor_temp = min(get_lowest_temp(bottoms),target_temp)
+		bottoms.reagents.temperature_reagents(vapor_temp, 10)
+		src.power_usage = 1000
+
+	proc/get_vapours(var/obj/item/reagent_containers/R)
+		var/datum/reagent/reg = list()
+		if(R && R.reagents)
+			for(var/datum/reagent/reggie in R)
+				if(reggie.boiling_point <= overall_temp)
+					reg += reggie
+			return reg
+		else return null
+
+	proc/get_lowest_temp(var/obj/item/reagent_containers/R)
+		var/top_temp = INFINITY
+		if(R && R.reagents)
+			for(var/datum/reagent/reggie in R)
+				if(reggie.boiling_point<top_temp)
+					top_temp=reggie.boiling_point
+			return top_temp
+		else return T0C
+
+	proc/get_lowest_temp_chem(var/obj/item/reagent_containers/R)
+		var/top_temp = INFINITY
+		if(R && R.reagents)
+			for(var/datum/reagent/reggie in R)
+				if(reggie.boiling_point<top_temp)
+					top_temp=reggie.boiling_point
+					. = reggie
+			return
+		else return null

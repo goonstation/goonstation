@@ -1,4 +1,6 @@
-datum/controller/process/kudzu
+
+/// Controlls the kudzu process
+/datum/controller/process/kudzu
 	var/list/kudzu = list()
 
 	var/tmp/list/detailed_count

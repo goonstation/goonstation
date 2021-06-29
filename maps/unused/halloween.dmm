@@ -11044,7 +11044,9 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "avq" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /turf/simulated/floor,
 /area/station/bridge)
 "avr" = (

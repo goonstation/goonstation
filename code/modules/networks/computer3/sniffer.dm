@@ -5,7 +5,7 @@
 	desc = "An electronic device designed to intercept network transmissions."
 	icon_state = "sniffer0"
 	item_state = "electronic"
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	rand_pos = 0
 	var/mode = 0
 	var/obj/machinery/power/data_terminal/link = null
@@ -130,7 +130,7 @@
 		if(signal.transmission_method != TRANSMISSION_WIRE) //No radio for us thanks
 			return
 
-		var/target = signal.data["address_1"]
+		var/target = signal.data["sender"]
 		if(src.filter_id && src.filter_id != target)
 			return
 

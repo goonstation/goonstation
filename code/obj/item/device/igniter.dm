@@ -7,7 +7,7 @@
 	item_state = "electronic"
 	m_amt = 100
 	throwforce = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 10
 	mats = 2

@@ -2,6 +2,8 @@
 
 [ToC]
 
+{%hackmd @ZeWaka/dark-theme %}
+
 ## :question: So, how do I get started?
 
 ### Step 1: Downloading Visual Studio Code :arrow_down: 
@@ -12,7 +14,7 @@ Visit https://code.visualstudio.com/ to download the appropriate installation fo
 
 You should be greeted with a screen that looks like this:![](https://i.imgur.com/HjDKDqj.png)
 
-Now, we need to create our own repository to contribute to! :rocket: 
+Now, we need to create our own repository to contribute to! :rocket:
 
 ### Step 2: Forking :fork_and_knife: 
 
@@ -42,16 +44,12 @@ Next, we're going to need to get some necessary extensions!
 
 ### Step 4: Extension-O-Rama :gear: 
 
-Click the Extensions button on the left bar or press `Ctrl+Shift+X`. It looks like a bunch of squares. You should see 6 recommended extensions. If you don't, type `@recommended` into the search bar. You'll want to install all of these.
+Click the Extensions button on the left bar or press `Ctrl+Shift+X`. It looks like a bunch of squares. You should see 2 recommended extensions. If you don't, type `@recommended` into the search bar. You'll want to install all of these.
 
 :::warning
 If this does not work, search for the following extensions:
- - BYOND DM Language Support - syntax highlighting for the DM language
- - DreamMaker Language Client - fancy features like debugging and jumping to definitions
- - EditorConfig for VS Code - loads the standardized editor configuration for the codebase
- - GitHub Pull Requests - lets you make a pull request directly from the editor
- - Bracket Pair Colorizer 2 - paints matching brackets the same color
- - Git Graph - lets you work with branches visually for ease of use
+ - Goonstation Extension Pack - Extension pack with all the extensions we recommend using.
+ - GitHub Pull Requests - Lets you make a pull request directly from the editor for the purposes of this tutorial.
 :::
 
 For the GitHub Pull Requests extension, you'll have to sign in to GitHub to link it properly. Also, sometime is just breaks. :shrug:
@@ -59,6 +57,14 @@ For the GitHub Pull Requests extension, you'll have to sign in to GitHub to link
 :::warning
 If it errors, try again by launching `Sign in to GitHub` from the command palette.
 :::
+
+For the ESLint extension, you may need to select a Node environment (e.g. if you already have one installed on your computer). A box like the below may appear in the bottom right of your VS Code window.
+
+![](https://i.imgur.com/nKaS47A.png)
+
+If that happens, click `Select Node Path` in it, then `Use NODE_PATH value defined via setting ./tgui/.yarn/sdks` in the dropdown that appears.
+
+If you navigate to a `.js` or `.tsx` file (e.g. `tgui/packages/tgui/components/Section.tsx`) the word `ESLINT` should appear in the bottom right of your window, along the bar at the bottom. Simply click it and choose `Allow` in the popup to let it loose on your Goonstation files.
 
 Now, let's connect the main goonstation repository to your client.
 

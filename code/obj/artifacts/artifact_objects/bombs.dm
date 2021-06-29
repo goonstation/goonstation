@@ -176,8 +176,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 	New()
 		..()
-		src.exp_deva *= rand(3,5)
-		src.exp_hevy *= rand(4,6)
+		src.exp_deva *= rand(2,4)
+		src.exp_hevy *= rand(3,5)
 		src.exp_lite *= rand(5,7)
 		src.explode_delay *= 2 // I added some more stuff so hopefully people will know it's a bomb now!
 
@@ -457,7 +457,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			var/range_squared = range**2
 			var/turf/T = get_turf(O)
 			for(var/atom/G in range(range, T))
-				if(istype(G, /obj/overlay) || istype(G, /obj/effects) || istype(G, /turf/space))
+				if(istype(G, /obj/overlay) || istype(G, /obj/effects) || istype(G, /turf/space) || istype(G, /obj/fluid))
 					continue
 				var/dist = GET_SQUARED_EUCLIDEAN_DIST(O, G)
 				var/distPercent = (dist/range_squared)*100

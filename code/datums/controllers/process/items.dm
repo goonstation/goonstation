@@ -1,12 +1,13 @@
-// handles items
-datum/controller/process/items
+
+/// handles item/process()
+/datum/controller/process/items
 	var/tmp/list/detailed_count
 	var/tmp/tick_counter
 	var/tmp/list/processing_items
 
 	setup()
 		name = "Item"
-		schedule_interval = 29
+		schedule_interval = 2.9 SECONDS
 		// this probably lags some but it helps give the sign to people that the game
 		// is in fact still doing something, which i feel is important
 		// plus i like watching number go up

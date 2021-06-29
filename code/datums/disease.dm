@@ -295,7 +295,7 @@
 		var/mob/living/carbon/human/H = src
 		resist_prob = H.get_disease_protection(ailment_path, ailment_name)
 	else
-		for (var/obj/item/C as() in src.get_equipped_items())
+		for (var/obj/item/C as anything in src.get_equipped_items())
 			resist_prob += C.getProperty("viralprot")
 
 	if (ispath(ailment_path) || istext(ailment_name))
@@ -465,7 +465,7 @@
 	if (!src || !target || !istext(spread_type))
 		return
 
-	if (!src.ailments || !src.ailments.len)
+	if (!src.ailments || !length(src.ailments))
 		return
 
 	for (var/datum/ailment_data/disease/AD in src.ailments)
@@ -527,7 +527,7 @@
 	return null
 
 /mob/living/proc/Virus_ShockCure(var/probcure = 50)
-	src.changeStatus("defibbed", (12 SECONDS * (probcure * 0.1))) // also makes it *slightly* harder to shitsec someone to death
+	src.changeStatus("defibbed", (12 * (probcure * 0.1)) SECONDS) // also makes it *slightly* harder to shitsec someone to death
 	for (var/datum/ailment_data/V in src.ailments)
 		if (V.cure == "Electric Shock" && prob(probcure))
 			src.cure_disease(V)

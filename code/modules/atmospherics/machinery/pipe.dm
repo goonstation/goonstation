@@ -392,18 +392,7 @@ obj/machinery/atmospherics/pipe
 					return
 
 				boutput(user, "You start to repair the [src.name].")
-
-				if (do_after(user, 2 SECONDS))
-					ruptured --
-				else
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				if(!ruptured)
-					boutput(user, "You have fully repaired the [src.name].")
-					icon_state = initial_icon_state
-					desc = initial(desc)
-				else boutput(user, "You have partially repaired the [src.name].")
-				return
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe, list(), W.icon, W.icon_state, "You repair the [src.name].", null)
 
 			else if(destroyed && istype(W, /obj/item/rods))
 				var/duration = 15 SECONDS
@@ -411,19 +400,17 @@ obj/machinery/atmospherics/pipe
 					duration = round(duration / 2)
 				var/obj/item/rods/S = W
 				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, duration, /obj/machinery/atmospherics/pipe/simple/proc/reconstruct_pipe,\
-				W.icon, W.icon_state, "[user] finishes working with \the [src].")
-				action_bar.proc_args = list(user,S)
+				list(user, S), W.icon, W.icon_state, "[user] finishes working with \the [src].")
 				actions.start(action_bar, user)
 
-		proc/reconstruct_pipe(proc_args)
-			var/mob/M = proc_args[1]
-			var/obj/item/rods/R = proc_args[2]
+		proc/repair_pipe()
+			src.ruptured = 0
+			icon_state = initial_icon_state
+			desc = initial(desc)
+
+		proc/reconstruct_pipe(mob/M, obj/item/rods/R)
 			if(istype(R) && istype(M))
-				R.amount -= 1
-				if(R.amount <= 0)
-					qdel(R)
-				else
-					R.update_icon()
+				R.change_stack_amount(-1)
 				src.setMaterial(R.material)
 				src.destroyed = FALSE
 				src.icon_state = "disco"
@@ -736,6 +723,30 @@ obj/machinery/atmospherics/pipe
 				trace_gas.moles = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 
 				..()
+
+		rad_particles
+			icon = 'icons/obj/atmospherics/tanks/green_pipe_tank.dmi'
+			name = "Pressure Tank (Nuclear Exhaust)"
+
+			north
+				dir = NORTH
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+			New()
+				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary.volume = volume
+				air_temporary.temperature = T0C
+
+				var/datum/gas/rad_particles/trace_gas = air_temporary.get_or_add_trace_gas_by_type(/datum/gas/rad_particles)
+				trace_gas.moles = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
+
+				..()
+
 
 		oxygen
 			icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi'

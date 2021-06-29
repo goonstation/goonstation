@@ -45,7 +45,7 @@
 		if (dist > src.examine_range && !issilicon(usr))
 			. += "<br>It's too far away to see what it says.[prob(10) ? " Who decided the text should be <i>that</i> small?!" : null]"
 		else
-			if (!src.partners || !src.partners.len)
+			if (!src.partners || !length(src.partners))
 				return . += "<font color='red'>ERROR: NO CONNECTED SCANNERS</font>"
 			var/data = null
 			for (var/obj/health_scanner/floor/my_partner in src.partners)
@@ -103,6 +103,7 @@
 			on_cooldown = TRUE
 			for (var/mob/living/carbon/human/H in get_turf(src))
 				data += "[scan_health(H, 1, 1, 1, 1)]"
+				scan_health_overhead(H, H)
 				if (alert && H.health < 0)
 					src.crit_alert(H)
 			playsound(src.loc, "sound/machines/scan2.ogg", 30, 0)

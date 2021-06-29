@@ -14,6 +14,7 @@
 	soundproofing = 0
 	on = 1
 	locked = 1
+	access_lookup = "Captain"
 	var/atom/movable/load = null		// the loaded crate (usually)
 
 	var/beacon_freq = 1445
@@ -70,8 +71,6 @@
 
 	New()
 		..()
-		botcard = new(src)
-		botcard.access = get_access("Captain")
 
 		var/global/mulecount = 0
 		if(!suffix)
@@ -701,7 +700,7 @@
 				else
 					src.visible_message("<span class='alert'>[src] knocks over [M]!</span>")
 					M.pulling = null
-					M.changeStatus("stunned", 80)
+					M.changeStatus("stunned", 8 SECONDS)
 					M.changeStatus("weakened", 5 SECONDS)
 					M.lying = 1
 					M.set_clothing_icon_dirty()

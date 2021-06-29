@@ -106,8 +106,8 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_ICARUS
 //#define MAP_OVERRIDE_GEHENNA			// Warcrimes WIP do not use
 //#define MAP_OVERRIDE_PAMGOC			// Pamgoc
-//#define MAP_OVERRIDE_WRESTLEMAP		// Wrestlemap by Overtone
-
+//#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap by Overtone
+//#define MAP_OVERRIDE_POD_WARS   // 500x500 Pod Wars map
 
 //////////// HOLIDAYS AND OTHER SUCH TOGGLES
 
@@ -137,6 +137,8 @@ var/global/ci_dm_version_minor = "100"
 #define BUILD_TIME_MINUTE 31
 #define BUILD_TIME_SECOND 30
 #define BUILD_TIME_UNIX 1234567890 // Unix epoch, second precision
+
+#define SERVER_NUMBER 0
 
 // Uncomment and set to a URL with a zip of the RSC to offload RSC sending to an external webserver/CDN.
 //#define PRELOAD_RSC_URL ""

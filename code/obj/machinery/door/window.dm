@@ -13,6 +13,8 @@
 	var/base_state = "left"
 	visible = 0
 	flags = ON_BORDER
+	health = 500
+	health_max = 500
 	opacity = 0
 	brainloss_stumble = 1
 	autoclose = 1
@@ -22,7 +24,7 @@
 	New()
 		..()
 
-		if (src.req_access && src.req_access.len)
+		if (src.req_access && length(src.req_access))
 			src.icon_state = "[src.icon_state]"
 			src.base_state = src.icon_state
 		return
@@ -102,6 +104,13 @@
 				return 1
 
 		if (get_dir(loc, target) == dir) // Check for appropriate border.
+			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
+				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
+					// If they're pulling something and the door would open anyway,
+					// just let the door open instead.
+					return 0
+				animate_door_squeeze(mover)
+				return 1 // they can pass through a closed door
 			return !density
 		else
 			return 1
@@ -113,6 +122,13 @@
 				return 1
 
 		if (get_dir(loc, target) == dir)
+			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
+				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
+					// If they're pulling something and the door would open anyway,
+					// just let the door open instead.
+					return 0
+				animate_door_squeeze(mover)
+				return 1 // they can pass through a closed door
 			return !density
 		else
 			return 1

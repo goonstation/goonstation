@@ -1,5 +1,6 @@
-// handles machines
-datum/controller/process/machines
+
+/// handles machines processing
+/datum/controller/process/machines
 	var/tmp/list/machines
 	var/tmp/list/pipe_networks
 	var/tmp/list/powernets
@@ -9,7 +10,7 @@ datum/controller/process/machines
 
 	setup()
 		name = "Machine"
-		schedule_interval = 4
+		schedule_interval = MACHINE_PROC_INTERVAL
 
 		Station_VNet = new /datum/v_space/v_space_network()
 
@@ -31,7 +32,7 @@ datum/controller/process/machines
 
 		if (ticker % 8 == 0)
 			src.atmos_machines = by_cat[TR_CAT_ATMOS_MACHINES]
-			for (var/obj/machinery/machine as() in atmos_machines)
+			for (var/obj/machinery/machine as anything in atmos_machines)
 				if( !machine || machine.z == 4 && !Z4_ACTIVE ) continue
 	#ifdef MACHINE_PROCESSING_DEBUG
 				var/t = world.time

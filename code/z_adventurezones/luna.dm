@@ -1659,7 +1659,7 @@ datum/computer/file/embedded_program/maintpanel
 
 	proc/do_setup(var/setupString)
 		var/list/setupList = splittext(setupString, ";")
-		if (!setupList || !setupList.len)
+		if (!setupList || !length(setupList))
 			return
 
 		for (var/setupEntry in setupList)

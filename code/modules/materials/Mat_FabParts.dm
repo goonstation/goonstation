@@ -185,7 +185,7 @@
 /datum/matfab_part/chemical
 	name = "Chemical"
 	checkMatch(var/obj/item/I)
-		if(!I.reagents || !I.reagents.total_volume || !I.reagents.reagent_list.len) return 0
+		if(!I.reagents || !I.reagents.total_volume || !length(I.reagents.reagent_list)) return 0
 		return ..()
 
 /datum/matfab_part/starstone

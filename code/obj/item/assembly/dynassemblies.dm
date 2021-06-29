@@ -23,7 +23,7 @@ For hairball DynAssemblies see: jonescity.dm
 
 /obj/item/dynassembly/
 	name = "assembly"
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	var/list/partnames = list() //the names of the parts we have, individually
 	var/parts = "" //the string version of the parts we have, all together and w/ "ands", probably some way to generate from partnames
 	var/validate = 1 //Do you want to be able to add any kind of part? Turn off if so.

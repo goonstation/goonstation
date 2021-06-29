@@ -137,7 +137,7 @@ var/const/PHASER_SNIPER = 256
 	item_state = "gun"
 	m_amt = 2000
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 10
 
@@ -156,7 +156,7 @@ var/const/PHASER_SNIPER = 256
 	name = "phaser"
 	icon_state = "phaser"
 	desc = "Set phasers to 'Robust'"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	item_state = "gun"
 	force = 10.0
 	throw_speed = 2

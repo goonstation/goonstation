@@ -265,6 +265,8 @@
 	var/maximum_poison = 5
 	var/inject_poison = 2.5
 
+	var/allow_self_service = 1
+
 	New()
 		..()
 		src.update_icon()
@@ -542,7 +544,10 @@
 			return
 
 		if (target == user)
-			move_inside()
+			if(allow_self_service)
+				move_inside()
+			else
+				return
 		else if (can_operate(user))
 			var/previous_user_intent = user.a_intent
 			user.a_intent = INTENT_GRAB
@@ -671,6 +676,7 @@
 	mats = 30
 	p_class = 1.2
 	var/homeloc = null
+	allow_self_service = 0
 	/// Mailgroups it'll try to send PDA notifications to
 	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
 
@@ -728,6 +734,10 @@
 			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
 			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
+		return
+
+	move_inside()
+		boutput(usr, "<span class='notice'>You can't seem to shove yourself into the [src] without it tipping over as you climb in.</span>")
 		return
 
 /// Yells at doctors to check the thing when it's sent home

@@ -1,3 +1,10 @@
+/*
+
+	Unused, dead code, saved here for posterity
+
+*/
+
+#error DO NOT INCLUDE THIS FILE IT IS JUST FOR HISTORICAL PURPOSES IN CASE SOMEONE WANTS TO ADD IT thanks bye
 #define HOLDER_ROLE_UNUSED 0
 #define HOLDER_ROLE_CREATURE 1
 #define HOLDER_ROLE_EFFECT 2
@@ -92,7 +99,7 @@
 				if (phase == PHASE_DRAW)
 					var/obj/item/playing_cards/stack = holder.card
 					for (var/i = 1, i <= phase_arguments, i++)
-						if (!stack || !stack.cards.len)
+						if (!stack || !length(stack.cards))
 							boutput(M, "<span class='alert'>You lose.</span>")
 							// @todo
 							return

@@ -320,7 +320,7 @@
 				if (src.m_w_system)
 					m_w_system.deactivate()
 					components -= m_w_system
-					if (uses_weapon_overlays)
+					if (uses_weapon_overlays && m_w_system.appearanceString)
 						src.overlays -= image('icons/effects/64x64.dmi', "[m_w_system.appearanceString]")
 					m_w_system.set_loc(src.loc)
 					m_w_system = null
@@ -798,7 +798,7 @@
 					boutput(usr, "Weapons cannot be installed in this ship!")
 					return
 				m_w_system = S
-				if(uses_weapon_overlays)
+				if(uses_weapon_overlays && m_w_system.appearanceString)
 					src.overlays += image('icons/effects/64x64.dmi', "[m_w_system.appearanceString]")
 
 				m_w_system.activate()
@@ -1007,6 +1007,8 @@
 	src.find_pilot()
 	if (M.client)
 		M.attach_hud(myhud)
+		if(ishuman(M))
+			myhud.check_hud_layout(M)
 		if (M.client.tooltipHolder)
 			M.client.tooltipHolder.inPod = 1
 
@@ -1051,7 +1053,7 @@
 
 /datum/action/bar/icon/board_pod
 	duration = 20
-	interrupt_flags = INTERRUPT_STUNNED
+	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_MOVE
 	id = "board_pod"
 	icon = 'icons/ui/actions.dmi'
 	//icon_state = "working"

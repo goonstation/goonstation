@@ -1,17 +1,19 @@
 /obj/machinery/cruiser/test
 	name = "Experimental BX-1 Cruiser"
 	desc = "An experimental type of syndicate cruiser based on drone technology."
-	interior_type = /area/ship_interior/cruisertest
+	interior_area = /area/cruiser/syndicate
+	upper_area = /area/cruiser/syndicate/upper
 
 /obj/machinery/cruiser/test2
 	name = "Experimental BX-2 Cruiser"
 	desc = "An experimental type of syndicate cruiser based on drone technology."
-	interior_type = /area/ship_interior/cruisertest2
+	interior_area = /area/cruiser/nanotrasen
+	upper_area = /area/cruiser/nanotrasen/upper
 
 /obj/cruiser_shield_visual//This is dumb but required because icons and images don't animate properly as overlays AND their icon_state cannot be changed properly once added (images)
 	name = ""
 	desc = ""
-	icon = 'icons/obj/160x160.dmi'
+	icon = 'icons/obj/large/160x160.dmi'
 	icon_state = "shield"
 	mouse_opacity = 0
 	bound_width = 160
@@ -27,7 +29,7 @@
 		return
 
 /obj/machinery/cruiser
-	icon = 'icons/obj/160x160.dmi'
+	icon = 'icons/obj/large/160x160.dmi'
 	icon_state = "placeholder"
 	name = "Experimental someone-didnt-give-me-a-name cruiser"
 	desc = "Ruh-roh"
@@ -90,8 +92,8 @@
 
 	var/ramming = 0 //How many ramming hits we have left.
 
-	var/interior_type //interior area to use for this cruiser
-	var/area/ship_interior/interior_area //Instance of the area assigned to this.
+	var/area/cruiser/interior_area //interior area to use for this cruiser
+	var/area/cruiser/upper_area // upper deck area
 	var/obj/cruiser_camera_dummy/camera //used to control camera position
 
 	var/datum/particleSystem/barrelSmoke/smokeParticles
@@ -189,44 +191,33 @@
 
 	New()
 		..()
-		if(interior_type)
-			interior_area = locate(interior_type)
+		if(interior_area)
+			interior_area = locate(interior_area)
 			interior_area.ship = src
-		if(!interior_area)
+		else
 			del(src)
 
 		shield_obj = new(src.loc)
 		var/matrix/mtx = new
-		var/scale = 0.75
 		var/turf/center
-		for(var/turf/T in landmarks[LANDMARK_CRUISER_ENTRANCE])
-			if(T.loc == interior_area)
+		for(var/turf/T in landmarks[LANDMARK_CRUISER_CENTER])
+			if(istype(T.loc, upper_area))
 				center = T
 				break
-		var/turf/wow
-		for(var/turf/t in interior_area.contents)
-			if(!wow || (t.x < wow.x || t.y < wow.y))
-				wow = t
-		var/turf/woa
-		for(var/turf/t in interior_area.contents)
-			if(!woa || (t.x > woa.x || t.y > woa.y))
-				woa = t//todo rewrite this, a relic from a more optimal fix that encounted a byond bug
-		for(var/turf/t in block(wow, woa))
+		for(var/turf/T in get_area_turfs(upper_area))
 			var/obj/overlay/pooObj = new
 			pooObj.screen_loc = "CENTER,CENTER"
 			mtx.Reset()
-			mtx.Scale(scale, scale)
-			mtx.Translate( (t.x - center.x + 2) * world.icon_size * scale, (t.y - center.y) * world.icon_size * scale )
-			pooObj.vis_contents = list(t)
+			mtx.Translate( (T.x - center.x) * world.icon_size, (T.y - center.y) * world.icon_size)
+			pooObj.vis_contents = list(T)
 			pooObj.transform = mtx
 			pooList += pooObj
-		//pooser.vis_contents += block(wow, woa)
 
-		frames = image('icons/obj/160x160.dmi',src,"frames",src.layer+1)
-		overframes = image('icons/obj/160x160.dmi',src,"overframes",src.layer+2)
-		bar_top = image('icons/obj/160x160.dmi',src,"bartop",src.layer+1)
-		bar_middle = image('icons/obj/160x160.dmi',src,"barmiddle",src.layer+1)
-		bar_bottom = image('icons/obj/160x160.dmi',src,"barbottom",src.layer+1)
+		frames = image('icons/obj/large/160x160.dmi',src,"frames",src.layer+1)
+		overframes = image('icons/obj/large/160x160.dmi',src,"overframes",src.layer+2)
+		bar_top = image('icons/obj/large/160x160.dmi',src,"bartop",src.layer+1)
+		bar_middle = image('icons/obj/large/160x160.dmi',src,"barmiddle",src.layer+1)
+		bar_bottom = image('icons/obj/large/160x160.dmi',src,"barbottom",src.layer+1)
 
 		bar_top.color = "#8A1919"
 		bar_middle.color = "#19688A"
@@ -237,7 +228,7 @@
 
 		turret_left = new/obj/item/shipcomponent/mainweapon/light_longrange(src)
 		turret_right = new/obj/item/shipcomponent/mainweapon/light_longrange(src)
-		engine = new/obj/item/shipcomponent/engine(src)
+		engine = new/obj/item/shipcomponent/engine/hermes(src)
 		life_support = new/obj/item/shipcomponent/life_support(src)
 
 		START_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
@@ -359,7 +350,7 @@
 		src.addPowerUse("shieldOverload", 90, -1)
 		src.shield_regen_always += 1
 		src.shield_regen_boost += 10
-		var/image/I = image('icons/obj/160x160.dmi',shield_obj,"shieldoverload",shield_obj.layer+1)
+		var/image/I = image('icons/obj/large/160x160.dmi',shield_obj,"shieldoverload",shield_obj.layer+1)
 		I.alpha = 150
 		shield_obj.overlays += I
 		internal_sound(src.loc, 'sound/machines/shieldoverload.ogg', 80, 0, -1)
@@ -523,7 +514,7 @@
 		if (!src.engine)
 			message_coders("ZeWaka/CruiserWarp: No engine but warp was called.")
 		var/list/beacons = list()
-		for(var/obj/warp_beacon/W in warp_beacons)
+		for(var/obj/warp_beacon/W in by_type[/obj/warp_beacon])
 			beacons += W
 		for (var/obj/machinery/tripod/T in machine_registry[MACHINES_MISC])
 			if (istype(T.bulb, /obj/item/tripod_bulb/beacon))
@@ -536,7 +527,7 @@
 			return
 
 		internal_sound(src.loc, 'sound/machines/cruiser_warp.ogg', 85, 0, 1)
-		var/image/warpOverlay = image('icons/obj/160x160.dmi',"warp")
+		var/image/warpOverlay = image('icons/obj/large/160x160.dmi',"warp")
 		overlays.Add(warpOverlay)
 		animate(src, alpha = 0, time = 10)
 		shield_obj.invisibility = 101
@@ -775,9 +766,6 @@
 		if(!blocked)
 			user.set_loc(getExitLoc())
 			if(ismob(user)) crew.Remove(user)
-			if(user.client)
-				unsubscribe_interior(user)
-				user.set_eye(user)
 		else
 			boutput(user, "<span class='alert'>The exit is blocked.</span>")
 		return
@@ -795,9 +783,6 @@
 				O.set_loc(entrance)
 				if(ismob(O))
 					crew.Add(O)
-					if(O:client)
-						subscribe_interior(O)
-						O:set_eye(src)
 				boutput(user, "<span class='alert'>You put [O] into [src].</span>")
 			else
 				boutput(user, "<span class='alert'>[O] is too far away from [src]'s airlock.</span>")
@@ -819,18 +804,25 @@
 			if(WEST)
 				return locate(src.x + 5, src.y + 2, src.z)
 
-/area/ship_interior/cruisertest
-	name = "Cruiser interior"
-	sound_group = "cruiser_1"
-/area/ship_interior/cruisertest2
-	name = "Cruiser interior"
-	sound_group = "cruiser_2"
-/area/ship_interior
+/area/cruiser
 	name = "cruiser interior"
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "eshuttle_transit"
 	var/obj/machinery/cruiser/ship
 	requires_power = 1
+/area/cruiser/syndicate/lower
+	name = "Syndicate cruiser interior"
+	sound_group = "cruiser_syndicate"
+/area/cruiser/syndicate/upper
+	name = "Syndicate cruiser interior"
+	sound_group = "cruiser_syndicate"
+/area/cruiser/nanotrasen/lower
+	name = "Nanotrasen cruiser interior"
+	sound_group = "cruiser_nanotrasen"
+/area/cruiser/nanotrasen/upper
+	name = "Nanotrasen cruiser interior"
+	sound_group = "cruiser_nanotrasen"
+
 
 /obj/cruiser_camera_dummy
 	name = ""
@@ -974,7 +966,7 @@
 		if(broken) return
 		broken = 1
 		setIcon()
-		var/area/ship_interior/I = get_area(src)
+		var/area/cruiser/I = get_area(src)
 		if(istype(I) && I.ship)
 			I.ship.shakeCruiser(4, 5, 0.4)
 			I.ship.degradation = min(I.ship.degradation + 2, 100)
@@ -1102,7 +1094,7 @@
 /obj/machinery/cruiser_destroyable/cruiser_component_slot/weapon/left
 	name = "Left turret slot"
 	install_component()
-		var/area/ship_interior/interior = get_area(src)
+		var/area/cruiser/interior = get_area(src)
 		if(interior?.ship)
 			for(var/atom/movable/A in src.loc)
 				if(istype(A, container_type))
@@ -1111,7 +1103,7 @@
 					break
 		return
 	uninstall_component()
-		var/area/ship_interior/interior = get_area(src)
+		var/area/cruiser/interior = get_area(src)
 		if(interior?.ship?.turret_left)
 			interior.ship.turret_left.set_loc(src.loc)
 			interior.ship.turret_left = null
@@ -1120,7 +1112,7 @@
 /obj/machinery/cruiser_destroyable/cruiser_component_slot/weapon/right
 	name = "Right turret slot"
 	install_component()
-		var/area/ship_interior/interior = get_area(src)
+		var/area/cruiser/interior = get_area(src)
 		if(interior?.ship)
 			for(var/atom/movable/A in src.loc)
 				if(istype(A, container_type))
@@ -1129,7 +1121,7 @@
 					break
 		return
 	uninstall_component()
-		var/area/ship_interior/interior = get_area(src)
+		var/area/cruiser/interior = get_area(src)
 		if(interior?.ship?.turret_right)
 			interior.ship.turret_right.set_loc(src.loc)
 			interior.ship.turret_right = null
@@ -1141,7 +1133,7 @@
 	health = 75
 	health_max = 75
 	install_component()
-		var/area/ship_interior/interior = get_area(src)
+		var/area/cruiser/interior = get_area(src)
 		if(interior?.ship)
 			for(var/atom/movable/A in src.loc)
 				if(istype(A, container_type))
@@ -1150,7 +1142,7 @@
 					break
 		return
 	uninstall_component()
-		var/area/ship_interior/interior = get_area(src)
+		var/area/cruiser/interior = get_area(src)
 		if(interior?.ship?.engine)
 			interior.ship.engine.set_loc(src.loc)
 			interior.ship.engine = null
@@ -1166,7 +1158,7 @@
 	check_blocked = 0
 
 	install_component()
-		var/area/ship_interior/interior = get_area(src)
+		var/area/cruiser/interior = get_area(src)
 		if(interior?.ship)
 			for(var/atom/movable/A in src.loc)
 				if(istype(A, container_type))
@@ -1176,7 +1168,7 @@
 		return
 
 	uninstall_component()
-		var/area/ship_interior/interior = get_area(src)
+		var/area/cruiser/interior = get_area(src)
 		if(interior?.ship?.life_support)
 			interior.ship.life_support.set_loc(src.loc)
 			interior.ship.life_support = null
@@ -1197,7 +1189,7 @@
 		return
 
 	attack_hand(mob/user as mob)
-		var/area/ship_interior/interior = get_area(src)
+		var/area/cruiser/interior = get_area(src)
 		if(interior.ship)
 			interior.ship.leaveShip(user)
 
@@ -1208,7 +1200,7 @@
 			boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 			return
 		var/mob/M = G.affecting
-		var/area/ship_interior/interior = get_area(src)
+		var/area/cruiser/interior = get_area(src)
 		if(interior.ship)
 			user.visible_message("<span class='alert'><b>[user] throws [M] out of \the [src]!", "<span class='alert'><b>You throw [M] out of \the [src]!</b></span>")
 			interior.ship.leaveShip(M)
@@ -1231,15 +1223,15 @@
 			C.addHolder(/datum/abilityHolder/cruiser)
 			C.addAbility(/datum/targetable/cruiser/cancel_camera)
 			user.client.view = 11
-			var/area/ship_interior/I = get_area(src)
+			var/area/cruiser/I = get_area(src)
 			user.set_eye(I.ship)*/
 		return
 
 /obj/machinery/cruiser_destroyable/cruiser_pod
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "pod_command_0"
 	var/mob/using = null
-	var/area/ship_interior/interior
+	var/area/cruiser/interior
 	var/icon_state_full = "pod_command_1"
 	var/icon_state_empty = "pod_command_0"
 	var/datum/abilityHolder/cruiser/AbHolder
@@ -1328,6 +1320,7 @@
 			var/datum/abilityHolder/composite/H = user.abilityHolder
 			H.addHolderInstance(AbHolder)
 			AbHolder.resumeAllAbilities()
+			user.attach_hud(AbHolder.hud)
 		if(C)
 			user.client.images += C.frames
 			user.client.images += C.overframes
@@ -1348,6 +1341,7 @@
 		if(ishuman(using) && istype(using.abilityHolder, /datum/abilityHolder/composite))
 			using.targeting_ability = null
 			using.update_cursor()
+			using.detach_hud(AbHolder.hud)
 			var/datum/abilityHolder/composite/H = using.abilityHolder
 			AbHolder.suspendAllAbilities()
 			H.removeHolder(/datum/abilityHolder/cruiser)
@@ -1372,7 +1366,7 @@
 	name = "Navigation pod"
 	icon_state_full = "pod_command_1"
 	icon_state_empty = "pod_command_0"
-	abilities = list(/datum/targetable/cruiser/ram)
+	abilities = list(/datum/targetable/cruiser/ram, /datum/targetable/cruiser/warp)
 
 	relaymove(mob/user, direction)
 		var/obj/machinery/cruiser/C = interior.ship
@@ -1385,11 +1379,38 @@
 	icon_state = "pod_security_0"
 	icon_state_full = "pod_security_1"
 	icon_state_empty = "pod_security_0"
-	abilities = list(/datum/targetable/cruiser/fire_weapons, /datum/targetable/cruiser/firemode, /datum/targetable/cruiser/weapon_overload)
+	abilities = list(/datum/targetable/cruiser/fire_weapons, /datum/targetable/cruiser/firemode, /datum/targetable/cruiser/weapon_overload, /datum/targetable/cruiser/shield_overload, /datum/targetable/cruiser/shield_modulation)
 
+// currently unused pod
 /obj/machinery/cruiser_destroyable/cruiser_pod/engineering
 	name = "Engineering pod"
 	icon_state = "pod_engineer_0"
 	icon_state_full = "pod_engineer_1"
 	icon_state_empty = "pod_engineer_0"
-	abilities = list(/datum/targetable/cruiser/warp, /datum/targetable/cruiser/shield_overload, /datum/targetable/cruiser/shield_modulation)
+
+/obj/ladder/cruiser
+	id = "cruiser"
+	var/obj/machinery/cruiser/ship
+
+	New()
+		..()
+		var/area/cruiser/A = get_area(src)
+		if (istype(A, /area/cruiser))
+			ship = A.ship
+		else
+			qdel(src)
+
+	climb(mob/user as mob)
+		..()
+		if (src.icon_state == "ladder") // going down to lower deck
+			ship.unsubscribe_interior(user)
+			user.set_eye(user)
+		else // going up to upper deck
+			ship.subscribe_interior(user)
+			user.set_eye(ship)
+
+/obj/ladder/cruiser/syndicate
+	id = "cruiser_syndicate"
+
+/obj/ladder/cruiser/nanotrasen
+	id = "cruiser_nanotrasen"

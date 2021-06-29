@@ -240,7 +240,7 @@
 		wrap_pathogen(reagents, generate_cold_pathogen(), 8)
 		#endif
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 		..()
 		#else
@@ -258,15 +258,38 @@
 	heal_amt = 1
 	initial_volume = 15
 	initial_reagents = null
+	var/roundstart_pathogens = 1
 
 	New()
 		..()
-		wrap_pathogen(reagents, generate_random_pathogen(), 15)
+		if(roundstart_pathogens)
+			wrap_pathogen(reagents, generate_random_pathogen(), 15)
+
+	fishstick
+		roundstart_pathogens = 0
+		pickup(mob/user)
+			if(isadmin(user) || current_state == GAME_STATE_FINISHED)
+				wrap_pathogen(reagents, generate_random_pathogen(), 15)
+			else
+				boutput(user, "<span class='notice'>You feel that it was too soon for this...</span>")
+			. = ..()
+
 
 /obj/item/reagent_containers/food/snacks/burger/roburger
 	name = "roburger"
 	desc = "The lettuce is the only organic component. Beep."
 	icon_state = "roburger"
+	amount = 3
+	heal_amt = 1
+	food_color = "#C8C8C8"
+	brewable = 1
+	brew_result = "beepskybeer"
+	initial_reagents = list("cholesterol"=5,"nanites"=20)
+
+/obj/item/reagent_containers/food/snacks/burger/cheeseborger
+	name = "cheeseborger"
+	desc = "The cheese really helps smooth out the metallic flavor."
+	icon_state = "cheeseborger"
 	amount = 3
 	heal_amt = 1
 	food_color = "#C8C8C8"
@@ -291,7 +314,7 @@
 	initial_reagents = list("cholesterol"=5,"porktonium"=45)
 	food_effects = list("food_hp_up_big", "food_sweaty")
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		if(prob(25))
 			M.nutrition += 100
 		..()
@@ -304,7 +327,7 @@
 	heal_amt = 2
 	food_effects = list("food_hp_up_big", "food_sweaty")
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		if(prob(20))
 			var/obj/decal/cleanable/blood/gibs/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(src) )
 			gib.streak_cleanable(M.dir)
@@ -323,7 +346,7 @@
 	heal_amt = 1
 	food_effects = list("food_bad_breath", "food_hp_up_big")
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		if(prob(8))
 			var/effect = rand(1,4)
 			switch(effect)
@@ -357,7 +380,7 @@
 	amount = 6
 	heal_amt = 2
 
-	on_bite(obj/item/I, mob/M, mob/user)
+	heal(var/mob/M)
 		if(prob(3) && ishuman(M))
 			boutput(M, "<span class='alert'>You wackily and randomly turn into a lizard.</span>")
 			M.set_mutantrace(/datum/mutantrace/lizard)

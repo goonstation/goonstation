@@ -54,7 +54,6 @@
 		for (var/obj/machinery/power/solar_control/C in powernet.nodes)
 			if (!isnull(src.id) && src.id == C.id)
 				C.tracker_update(angle)
-			LAGCHECK(LAG_HIGH)
 
 	// override power change to do nothing since we don't care about area power
 	// (and it would be pointless anyway given that solar panels and the associated tracker are usually on a separate powernet)
@@ -159,7 +158,9 @@
 
 	sunfrac = cos(p_angle) ** 2
 
-#define SOLARGENRATE 1500
+// Previous SOLARGENRATE was 1500 WATTS processed every 3.3 SECONDS.  This provides 454.54 WATTS every second
+// Adjust accordingly based on machine proc rate
+#define SOLARGENRATE (454.54 * MACHINE_PROCS_PER_SEC)
 
 /obj/machinery/power/solar/process()
 
@@ -168,7 +169,7 @@
 
 	if(!obscured)
 		var/sgen = SOLARGENRATE * sunfrac
-		sgen *= 1<<(current_processing_tier-1) // twice the power for half processing, 4 times for quarter etc.
+		sgen *= PROCESSING_TIER_MULTI(src)
 		add_avail(sgen)
 		if(powernet && control && powernet == control.powernet)
 			control.gen += sgen
@@ -266,15 +267,16 @@
 			updateicon()
 
 /obj/machinery/power/solar_control/proc/updateicon()
-	if(status & BROKEN)
+	if(status & BROKEN && icon_state != "broken")
 		icon_state = "broken"
 		return
-	if(status & NOPOWER)
+
+	if(status & NOPOWER && icon_state != "c_unpowered")
 		icon_state = "c_unpowered"
 		return
 
-	icon_state = "solar"
-	return
+	if(icon_state != "solar")
+		icon_state = "solar"
 
 /obj/machinery/power/solar_control/attack_ai(mob/user)
 	add_fingerprint(user)
@@ -394,7 +396,6 @@
 		if(S.id != id) continue
 		S.control = src
 		S.ndir = cdir
-		LAGCHECK(LAG_HIGH)
 
 /obj/machinery/power/solar_control/power_change()
 	if(powered())

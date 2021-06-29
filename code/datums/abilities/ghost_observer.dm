@@ -600,7 +600,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	proc/start_spooking()
 		src.holder.owner.color = rgb(170, 0, 0)
 		anim_f_ghost_blur(src.holder.owner)
-		applied_filter_index = src.holder.owner.filters.len
+		applied_filter_index = length(src.holder.owner.filters)
 
 		if (istype(holder, /datum/abilityHolder/ghost_observer))
 			var/datum/abilityHolder/ghost_observer/GAH = holder

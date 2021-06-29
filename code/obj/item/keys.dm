@@ -7,7 +7,7 @@
 	icon_state = "key"
 	item_state = "pen"
 	force = null
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	burn_possible = 0 // too important to burn!
 	var/id = null
 	var/dodgy = 0 //Woe be upon the poor fool who tries to give a dodgy key to the automaton

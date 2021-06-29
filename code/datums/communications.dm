@@ -16,6 +16,7 @@ On the map:
 1354 for research headsets
 1356 for medical headsets
 1352 for syndicate headsets
+1467 for Ruckingenur kits
 */
 
 //moved transmission type defines to _setup.dm
@@ -68,7 +69,7 @@ var/global/list/datum/signal/reusable_signals = list()
 
 proc/get_free_signal()
 	if (length(reusable_signals))
-		while (. == null && reusable_signals.len)
+		while (. == null && length(reusable_signals))
 			. = reusable_signals[reusable_signals.len]
 			reusable_signals.len--
 		if (. == null)
@@ -125,14 +126,11 @@ datum/radio_frequency
 					else
 						device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
 
-				LAGCHECK(LAG_REALTIME)
-
 			if (!reusable_signals || reusable_signals.len > 10)
 				signal.dispose()
 			else if (signal)
 				signal.wipe()
 				reusable_signals |= signal
-			LAGCHECK(LAG_MED)
 
 		//assumes that list radio_controller.active_jammers is not null or empty.
 		check_for_jammer(obj/source)
@@ -155,6 +153,7 @@ datum/signal
 	//1 = radio transmission
 
 	var/data = list()
+	///Set to the error message displayed when sniffing the encrypted packet
 	var/encryption
 	//We can carry a computer file around, why not.
 	var/datum/computer/file/data_file

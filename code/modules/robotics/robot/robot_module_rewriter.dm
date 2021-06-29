@@ -12,7 +12,7 @@
 
 /obj/machinery/computer/robot_module_rewriter/attackby(obj/item/I as obj, mob/user as mob)
 	if (isscrewingtool(I))
-		playsound(get_turf(src), "sound/items/Screwdriver.ogg", 50, 1)
+		playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
 		if (do_after(user, 2 SECONDS))
 			var/obj/computerframe/computer = new /obj/computerframe(src.loc)
 			var/obj/item/circuitboard/robot_module_rewriter/circuitboard = new /obj/item/circuitboard/robot_module_rewriter(computer)
@@ -37,15 +37,13 @@
 		user.drop_item()
 		I.set_loc(src)
 		LAZYLISTADD(src.modules, I)
-		boutput(user, "<span class=\"notice\">You insert [I] into the [src].</span>")
+		boutput(user, "<span class=\"notice\">You insert [I] into \the [src].</span>")
 		tgui_process.update_uis(src)
 	else
 		src.attack_hand(user)
 
 /obj/machinery/computer/robot_module_rewriter/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
-
-// INTERFACE
 
 /obj/machinery/computer/robot_module_rewriter/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)

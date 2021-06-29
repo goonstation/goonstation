@@ -39,7 +39,7 @@
 		if (can_reach(user,src))
 			src.add_fingerprint(user)
 			if (src.cupinside == 1) //freaking spacing errors made me waste hours on this
-				if(!status & (NOPOWER|BROKEN))
+				if(!(status & (NOPOWER|BROKEN)))
 					switch(alert("What would you like to do with [src]?",,"Make espresso","Remove cup","Nothing"))
 						if ("Make espresso")
 							var/drink_choice = input(user, "What kind of espresso do you want to make?", "Selection") as null|anything in list("Espresso","Latte","Mocha","Cappuchino","Americano", "Decaf", "Flat White")
@@ -220,11 +220,11 @@
 		if (can_reach(user,src))
 			src.add_fingerprint(user)
 			if (src.my_carafe) //freaking spacing errors made me waste hours on this
-				if (!status & (NOPOWER|BROKEN))
+				if (!(status & (NOPOWER|BROKEN)))
 					switch (alert("What would you like to do with [src]?",,"Brew coffee","Remove carafe","Nothing"))
 						if ("Brew coffee")
 							for(var/obj/item/reagent_containers/food/drinks/carafe/C in src.contents)
-								C.reagents.add_reagent("coffee_fresh",40)
+								C.reagents.add_reagent("coffee_fresh",100)
 								playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 						if ("Remove carafe")
 							if (!src.my_carafe)
@@ -233,7 +233,7 @@
 							if (get_dist(src, user) > 1 || isAI(user))
 								user.show_text("You can not do that remotely.")
 								return
-							src.my_carafe.set_loc(src.loc)
+							user.put_in_hand_or_drop(src.my_carafe)
 							src.my_carafe = null
 							user.show_text("You have removed the [src.carafe_name] from the [src].")
 							src.update()

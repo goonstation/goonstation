@@ -798,7 +798,8 @@
 			if ("print_record")
 				if (!( src.printing ))
 					src.printing = 1
-					sleep(5 SECONDS)
+					playsound(src.loc, "sound/machines/printer_press.ogg", 50, 0)
+					sleep(3 SECONDS)
 					var/obj/item/paper/P = new /obj/item/paper( src.loc )
 					P.info = "<center><b>Security Record</b></center><br>"
 					src.validate_records()

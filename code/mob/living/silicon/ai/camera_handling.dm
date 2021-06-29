@@ -121,7 +121,7 @@
 	src.tracker.begin_track(target)
 
 /proc/camera_sort(var/list/L, var/start=1, var/end=-1)
-	if(!L || !L.len) return //Fucka you
+	if(!L || !length(L)) return //Fucka you
 	if(end == -1) end = L.len	//Called without start / end parameters
 	if( start < end)
 		var/obj/machinery/camera/C
@@ -248,7 +248,7 @@
 		if(!failedToTrack) //We don't have a premature failure
 			failedToTrack = 1 //Assume failure
 			var/turf/T = get_turf(tracking)
-			if (T.cameras && T.cameras.len)
+			if (T.cameras && length(T.cameras))
 				failedToTrack = 0
 
 		if (failedToTrack)

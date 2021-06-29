@@ -194,7 +194,7 @@ Filter types:
 				if(4) //removing trace gases
 					if(removed)
 						if(length(removed.trace_gases))
-							for(var/datum/gas/trace_gas as() in removed.trace_gases)
+							for(var/datum/gas/trace_gas as anything in removed.trace_gases)
 								var/datum/gas/filter_gas = filtered_out.get_or_add_trace_gas_by_type(trace_gas.type)
 								filter_gas.moles = trace_gas.moles
 								removed.remove_trace_gas(trace_gas)

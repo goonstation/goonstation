@@ -7,7 +7,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	mats = 10
 	module_research = list("energy" = 10, "efficiency" = 10, "protection" = 10)
 

@@ -113,17 +113,6 @@
 
 /obj/machinery/door/firedoor/attackby(obj/item/C as obj, mob/user as mob)
 	src.add_fingerprint(user)
-	if ((isweldingtool(C) && !( src.operating ) && src.density))
-		if(!C:try_weld(user, 1))
-			return
-		if (!( src.blocked ))
-			src.blocked = 1
-		else
-			src.blocked = 0
-		src.heal_damage()
-		update_icon()
-
-		return
 	if (!ispryingtool(C))
 		if (src.density && !src.operating)
 			user.lastattacked = src

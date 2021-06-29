@@ -109,7 +109,7 @@
 			randomMails -= mailName
 /*		var/list/randomMailTypes = childrentypesof(/datum/computer/file/record/random_email)
 		var/typeCount = 5
-		while (typeCount-- > 0 && randomMailTypes.len)
+		while (typeCount-- > 0 && length(randomMailTypes))
 			var/mailType = pick(randomMailTypes)
 			var/datum/computer/file/record/mailfile = new mailType
 			subfolder.add_file( mailfile )

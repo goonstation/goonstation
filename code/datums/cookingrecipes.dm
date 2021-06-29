@@ -129,6 +129,13 @@
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/roburger
 
+/datum/cookingrecipe/cheeseborger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/parts/robot_parts/head
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/cheeseborger
+
 /datum/cookingrecipe/baconburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
@@ -243,6 +250,13 @@
 	item2 = /obj/item/reagent_containers/food/snacks/meatball
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti/meatball
+
+/datum/cookingrecipe/lasagna
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	cookbonus = 16
+	output = /obj/item/reagent_containers/food/snacks/lasagna
 
 /datum/cookingrecipe/spaghetti_pg
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
@@ -517,6 +531,7 @@
 			return null
 
 		var/obj/item/reagent_containers/food/snacks/sandwich/customSandwich = new /obj/item/reagent_containers/food/snacks/sandwich (ourCooker)
+		customSandwich.heal_amt = 1 // no filling yet, so less than regular sandwich
 		customSandwich.reagents = new /datum/reagents(100)
 		customSandwich.reagents.my_atom = customSandwich
 
@@ -559,7 +574,6 @@
 					if (snack.reagents)
 						snack.reagents.trans_to(customSandwich, 25)
 					customSandwich.food_effects += snack.food_effects
-					customSandwich.AddComponent(/datum/component/consume/food_effects, customSandwich.food_effects)
 
 					//fillings += snack.name
 					if (snack.food_color)
@@ -580,7 +594,6 @@
 				if (snack.reagents)
 					snack.reagents.trans_to(customSandwich, 25)
 				customSandwich.food_effects += snack.food_effects
-				customSandwich.AddComponent(/datum/component/consume/food_effects, customSandwich.food_effects)
 
 				fillings += snack.name
 				if (snack.food_color && !istype(snack, /obj/item/reagent_containers/food/snacks/ingredient) && prob(50))
@@ -589,6 +602,9 @@
 					var/obj/transformedFilling = image(snack.icon, snack.icon_state)
 					transformedFilling.transform = matrix(0.75, MATRIX_SCALE)
 					fillingColors += transformedFilling
+
+				// spread the total healing left for the added food among the sandwich bites
+				customSandwich.heal_amt += snack.heal_amt * snack.amount / customSandwich.amount
 
 				qdel(snack)
 
@@ -690,8 +706,6 @@
 			customPizza.heal_amt = P.heal_amt
 			P.reagents.trans_to(customPizza, P.reagents.total_volume)
 			customPizza.food_effects += P.food_effects
-			customPizza.AddComponent(/datum/component/consume/food_effects, customPizza.food_effects)
-			customPizza.AddComponent(/datum/component/consume/foodheal, customPizza.heal_amt)
 
 		return customPizza
 
@@ -1285,7 +1299,6 @@
 		if(S)
 			S.reagents.trans_to(B, 50)
 			B.food_effects += S.food_effects
-			B.AddComponent(/datum/component/consume/food_effects, B.food_effects)
 			if(S.real_name)
 				B.name = "[S.real_name] cake"
 				for(var/food_effect in S.food_effects)
@@ -1571,3 +1584,14 @@
 	item2 = /obj/item/item_box/figure_capsule
 	cookbonus = 10
 	output = /obj/item/pen/crayon/lipstick
+
+	specialOutput(obj/submachine/ourCooker)
+		if (!ourCooker)
+			return null
+		var/obj/item/pen/crayon/lipstick/lipstick = new /obj/item/pen/crayon/lipstick
+		for (var/obj/item/pen/crayon/C in ourCooker.contents)
+			lipstick.font_color = C.font_color
+			lipstick.color_name = hex2color_name(lipstick.font_color)
+			lipstick.name = "[lipstick.color_name] lipstick"
+			lipstick.update_icon()
+		return lipstick

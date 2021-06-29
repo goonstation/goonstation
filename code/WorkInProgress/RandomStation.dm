@@ -86,7 +86,7 @@ proc/should_copy_room(var/obj/room_props/source, var/turf/target)
 		var/diff_x = T.x - target.x
 		var/diff_y = T.y - target.y
 		var/turf/source_turf = locate(source.loc.x + diff_x, source.loc.y + diff_y, RANDOM_Z_LEVEL_SOURCE)
-		if(istype(source_turf, /turf/space) && !source_turf.contents.len) continue
+		if(istype(source_turf, /turf/space) && !length(source_turf.contents)) continue
 		if(!istype(T, /turf/space))
 			return 0
 		if(T.contents.len)
@@ -95,7 +95,7 @@ proc/should_copy_room(var/obj/room_props/source, var/turf/target)
 
 proc/copy_room_to(var/obj/room_props/source, var/turf/target)
 	for(var/turf/T in range(source.room_range, source.loc))
-		if(istype(T, /turf/space) && !T.contents.len) continue //No need to copy this. This is the default state.
+		if(istype(T, /turf/space) && !length(T.contents)) continue //No need to copy this. This is the default state.
 		var/diff_x = T.x - source.x
 		var/diff_y = T.y - source.y
 		var/turf/target_turf = locate(target.x + diff_x, target.y + diff_y, RANDOM_Z_LEVEL_TARGET)
@@ -254,7 +254,7 @@ proc/create_random_station()
 
 	var/rooms_left = RANDOM_Z_LEVEL_MAXROOMS
 
-	while(rooms_left > 0 && unconnected.len && multi_rooms.len)
+	while(rooms_left > 0 && unconnected.len && length(multi_rooms))
 		LAGCHECK(LAG_LOW)
 		var/obj/room_connection/newcon = pick(unconnected)
 		unconnected.Remove(newcon)

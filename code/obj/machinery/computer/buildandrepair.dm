@@ -15,7 +15,7 @@
 /obj/item/circuitboard
 	density = 0
 	anchored = 0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	name = "Circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
@@ -137,32 +137,19 @@
 	qdel(src)
 
 /obj/computerframe/attackby(obj/item/P as obj, mob/user as mob)
+	var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/computerframe/proc/state_actions,\
+	list(P,user), P.icon, P.icon_state, null)
 	switch(state)
 		if (0)
 			if (iswrenchingtool(P))
+				actions.start(action_bar, user)
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-				if (do_after(user, 2 SECONDS))
-					boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
-					src.anchored = 1
-					src.state = 1
 			if (isweldingtool(P) && P:try_weld(user,0,-1,0,1))
-				if (do_after(user, 2 SECONDS))
-					boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
-					var/obj/item/sheet/A = new /obj/item/sheet( src.loc )
-					A.amount = 5
-					if (src.material)
-						A.setMaterial(src.material)
-					else
-						var/datum/material/M = getMaterial("steel")
-						A.setMaterial(M)
-					qdel(src)
+				actions.start(action_bar, user)
 		if (1)
 			if (iswrenchingtool(P))
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-				if (do_after(user, 2 SECONDS))
-					boutput(user, "<span class='notice'>You unfasten the frame.</span>")
-					src.anchored = 0
-					src.state = 0
+				actions.start(action_bar, user)
 			if (istype(P, /obj/item/circuitboard) && !circuit)
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 				boutput(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
@@ -189,14 +176,9 @@
 				src.state = 1
 				src.icon_state = "1"
 			if (istype(P, /obj/item/cable_coil))
-				if (P:amount >= 5)
+				if (P.amount >= 5)
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-					if (do_after(user, 2 SECONDS) && P) //Wire: fix for Cannot read null.amount (&& P)
-						//my_cable = P:take(5, src) // Haine: fix for Cannot execute null.set loc()
-						P:use(5)
-						boutput(user, "<span class='notice'>You add cables to the frame.</span>")
-						src.state = 3
-						src.icon_state = "3"
+					actions.start(action_bar, user)
 				else
 					boutput(user, "<span class='alert'>You need at least five pieces of cable to wire the computer.</span>")
 
@@ -210,17 +192,13 @@
 				//my_cable = null
 				var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 				C.amount = 5
-
+				C.updateicon()
 			if (istype(P, /obj/item/sheet))
 				var/obj/item/sheet/S = P
 				if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
 					if (S.amount >= 2)
 						playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-						if (do_after(user, 2 SECONDS))
-							S.change_stack_amount(-2)
-							boutput(user, "<span class='notice'>You put in the glass panel.</span>")
-							src.state = 4
-							src.icon_state = "4"
+						actions.start(action_bar, user)
 					else
 						boutput(user, "<span class='alert'>You need at least two sheets of glass to install the screen.</span>")
 				else
@@ -243,3 +221,38 @@
 				if (circuit.frequency) B:frequency = circuit.frequency
 				logTheThing("station", user, null, "assembles [B] [log_loc(B)]")
 				qdel(src)
+
+/obj/computerframe/proc/state_actions(obj/item/P, mob/user)
+	switch(state)
+		if(0)
+			if(user.equipped(P) && iswrenchingtool(P))
+				boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
+				src.anchored = 1
+				src.state = 1
+			if(user.equipped(P) && isweldingtool(P))
+				boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
+				var/obj/item/sheet/A = new /obj/item/sheet( src.loc )
+				A.amount = 5
+				if (src.material)
+					A.setMaterial(src.material)
+				else
+					var/datum/material/M = getMaterial("steel")
+					A.setMaterial(M)
+				qdel(src)
+		if(1)
+			if(user.equipped(P) && iswrenchingtool(P))
+				boutput(user, "<span class='notice'>You unfasten the frame.</span>")
+				src.anchored = 0
+				src.state = 0
+		if(2)
+			if(user.equipped(P) && istype(P, /obj/item/cable_coil))
+				boutput(user, "<span class='notice'>You add cables to the frame.</span>")
+				P.change_stack_amount(-5)
+				src.state = 3
+				src.icon_state = "3"
+		if(3)
+			if(user.equipped(P) && istype(P, /obj/item/sheet))
+				boutput(user, "<span class='notice'>You put in the glass panel.</span>")
+				P.change_stack_amount(-2)
+				src.state = 4
+				src.icon_state = "4"

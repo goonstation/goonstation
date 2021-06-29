@@ -385,3 +385,97 @@
 	cast(mob/target)
 		usr.plane = PLANE_UNDERFLOOR
 		target.cluwnegib(grabtime)
+
+//// Crayon-related stuff ////
+
+/datum/targetable/gimmick/scribble // some hacky crayon ability
+	icon = 'icons/mob/wraith_ui.dmi'
+	icon_state = "bloodwriting"
+	name = "Scribble"
+	desc = "Write on a tile with questionable intent."
+	targeted = 1
+	target_anything = 1
+	cooldown = 0
+	max_range = 5
+	var/in_use = 0
+	var/list/symbol_setting = list()
+	var/list/c_default = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+		"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Exclamation Point", "Question Mark", "Period", "Comma", "Colon", "Semicolon", "Ampersand", "Left Parenthesis", "Right Parenthesis",
+		"Left Bracket", "Right Bracket", "Percent", "Plus", "Minus", "Times", "Divided", "Equals", "Less Than", "Greater Than")
+	var/list/c_char_to_symbol = list(
+		"!" = "Exclamation Point",
+		"?" = "Question Mark",
+		"." = "Period",
+		"," = "Comma",
+		":" = "Colon",
+		";" = "Semicolon",
+		"&" = "Ampersand",
+		"(" = "Left Parenthesis",
+		")" = "Right Parenthesis",
+		"\[" = "Left Bracket",
+		"]" = "Right Bracket",
+		"%" = "Percent",
+		"+" = "Plus",
+		"-" = "Minus",
+		"*" = "Times",
+		"/" = "Divided",
+		"=" = "Equals",
+		"<" = "Less Than",
+		">" = "Greater Than"
+	)
+
+	// cast(turf/target, params)
+	cast(atom/target, params)
+		if (..())
+			return 1
+
+		var/turf/T = get_turf(target)
+		if (isturf(T))
+			write_on_turf(T, holder.owner, params)
+
+	proc/write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
+		if (!T || !user)
+			return
+		var/list/t // t is for what we're drawing
+
+		if (!length(src.symbol_setting))
+			var/inp = input(user, "Type letters you want to write.", "Letter Queue", null)
+			inp = uppertext(inp)
+			t = list()
+			for(var/i = 1 to min(length(inp), 100))
+				var/c = copytext(inp, i, i + 1)
+				if(c != " " || (c in src.c_default) || (c in src.c_char_to_symbol))
+					t += c
+
+			if(!isnull(t) || !length(t))
+				src.symbol_setting = t
+		
+		t = src.symbol_setting
+
+		if(isnull(t) || !length(t))
+			return
+		
+		if(length(t) == 1)
+			src.symbol_setting = null
+			t = t[1]
+		else
+			src.symbol_setting = t.Copy(2) // remove first
+			t = t[1]
+		
+		if(t in src.c_char_to_symbol)
+			t = src.c_char_to_symbol[t]
+		
+		var/obj/decal/cleanable/writing/spooky/G = make_cleanable(/obj/decal/cleanable/writing/spooky,T)
+		G.artist = user.key
+
+		logTheThing("station", user, null, "writes on [T] with [src] [log_loc(T)]: [t]")
+		G.icon_state = t
+		G.words = t
+		if (islist(params) && params["icon-y"] && params["icon-x"])
+			// playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 0)
+
+			G.pixel_x = text2num(params["icon-x"]) - 16
+			G.pixel_y = text2num(params["icon-y"]) - 16
+		else
+			G.pixel_x = rand(-4,4)
+			G.pixel_y = rand(-4,4)
