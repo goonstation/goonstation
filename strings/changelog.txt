@@ -1,4 +1,9 @@
 
+(t)tue jun 29 21
+(u)Arthur Holiday
+(p)5307
+(e)⚖|balance
+(+)If your gloves have atleast 7% heat resistance, patting out people on fire won't damage you and you will be 2x more effective at it
 (t)mon jun 28 21
 (u)Flappybat
 (p)5245
