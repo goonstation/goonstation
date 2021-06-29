@@ -60,12 +60,14 @@
 	cast(atom/target)
 
 		var/mob/living/S = holder.owner
+		if (..())
+			return 1
 
 		if (isobj(target))
 			target = get_turf(target)
 		if (isturf(target))
 			for (var/mob/living/M in target)
-				if (M != src && M.getStatusDuration("weakened"))
+				if (M != src)
 					target = M
 					break
 			if (!ismob(target))
@@ -88,7 +90,6 @@
 	id = "spider_flail"
 	var/mob/living/target
 	var/datum/targetable/critter/spider_flail/flail
-	var/times_attacked = null
 
 	New(Target, Flail)
 
@@ -127,7 +128,6 @@
 			return
 
 		if (!GET_COOLDOWN(S, "spider flail"))
-			times_attacked += 1
 
 			T.changeStatus("weakened", 2 SECOND)
 			playsound(S, "sound/weapons/handcuffs.ogg", 50, 1)
@@ -159,7 +159,6 @@
 		var/datum/abilityHolder/A = flail.holder
 		var/mob/living/T = target
 
-		S.visible_message("[times_attacked]")
 		boutput(S, "<span class='alert'><b>You finish flailing [T]!</b></span>")
 		T.changeStatus("weakened", 4 SECONDS)
 		S.pixel_x = 0
@@ -175,7 +174,6 @@
 		var/datum/abilityHolder/A = flail.holder
 		var/mob/living/T = target
 
-		S.visible_message("[times_attacked]")
 		boutput(S, "<span class='alert'><b>You got interrupted while flailing [T]!</b></span>")
 		S.pixel_x = 0
 		S.pixel_y = 0
