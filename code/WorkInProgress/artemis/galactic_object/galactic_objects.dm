@@ -68,14 +68,16 @@
 
 /obj/background_star/galactic_object/large/random
 	name = "F1X-M3"
-	icon = 'icons/misc/galactic_objects_large.dmi'
+	icon = 'icons/misc/artemis/galactic_object_ship.dmi'
 	icon_state = "generic"
 	destination_name = "3rr0r"
 
 	on_load()
 		var/datum/galactic_object/random/R = master
 		destination_name = R.destination_name
+		color = R.color
 		name = R.name
+		icon_state = R.icon_state
 
 /datum/galactic_object/test
 	name = "F1X-M3"
