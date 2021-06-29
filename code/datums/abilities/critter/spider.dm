@@ -55,16 +55,12 @@
 	cooldown = 300
 	targeted = 1
 	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	max_range = 1
 
 	cast(atom/target)
-		if (disabled && world.time > last_cast)
-			disabled = 0 // break the deadlock
-		if (disabled)
-			return 1
-		if (..())
-			return 1
+
+		var/mob/living/S = holder.owner
+
 		if (isobj(target))
 			target = get_turf(target)
 		if (isturf(target))
@@ -73,56 +69,118 @@
 					target = M
 					break
 			if (!ismob(target))
-				boutput(holder.owner, __red("Nothing to flail at there."))
+				boutput(S, __red("Nothing to flail at there."))
 				return 1
-		if (target == holder.owner)
+		if (target == S)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
-			boutput(holder.owner, __red("That is too far away to flail at."))
+		if (get_dist(S, target) > 1)
+			boutput(S, __red("That is too far away to flail at."))
 			return 1
-		var/mob/MT = target
-		var/mob/living/critter/spider/S = holder.owner
-		holder.owner.visible_message("<span class='combat'><b>[holder.owner] dives on [MT]!</b></span>",\
-		"<span class='combat'><b>You dive on [MT]!</b></span>")
-		playsound(holder.owner, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 0, pitch = 1.6)
-		MT.TakeDamageAccountArmor("All", rand(4,10), 0, 0, DAMAGE_STAB)
-		if (!isdead(MT))
-			MT.emote("scream")
-		disabled = 1
-		SPAWN_DBG(0)
-			var/flail = rand(10, 15)
-			holder.owner.canmove = 0
-			while (flail > 0 && MT && !MT.disposed)
-				MT.changeStatus("weakened", 2 SECONDS)
-				MT.canmove = 0
-				if (MT.loc)
-					holder.owner.set_loc(MT.loc)
-				if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
-					break
-				if (istype(S))
-					S.venom_bite(MT)
-				else // no venom, very sad
-					playsound(holder.owner, "sound/weapons/handcuffs.ogg", 50, 1)
-					if (issilicon(MT))
-						var/mob/living/silicon/robot/R = MT
-						R.compborg_take_critter_damage("[pick("l","r")]_[pick("arm","leg")]", rand(2,4))
-					else
-						MT.TakeDamageAccountArmor("All", rand(1,3), 0, 0, DAMAGE_STAB)
-				if (prob(30))
-					holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites [MT]!</b></span>",\
-					"<span class='combat'><b>You bite [MT]!</b></span>")
-				holder.owner.set_dir(pick(cardinal))
-				holder.owner.pixel_x = rand(-2,2) * 2
-				holder.owner.pixel_y = rand(-2,2) * 2
-				sleep(0.4 SECONDS)
-				flail--
-			if (MT)
-				MT.canmove = 1
-			doCooldown()
-			disabled = 0
-			holder.owner.pixel_x = 0
-			holder.owner.pixel_y = 0
-			holder.owner.canmove = 1
+		// actions.start(new/datum/action/bar/spider_flail(target, src), S)
+
+/datum/action/bar/spider_flail
+	duration = 5 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "spider_flail"
+	var/mob/living/target
+	var/datum/targetable/critter/spider_flail/flail
+
+
+	New(Target, Flail)
+		target = Target
+		flail = Flail
+		..()
+
+
+	onStart()
+		..()
+
+		var/mob/living/S = owner
+		var/datum/abilityHolder/A = flail.holder
+		var/mob/living/T = target
+
+		S.visible_message("<span class='combat'><b>[A] dives on [T]!</b></span>",\
+		"<span class='combat'><b>You dive on [T]!</b></span>")
+		playsound(A, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 0, pitch = 1.6)
+
+		if (!flail || get_dist(S, T) > flail.max_range || T == null || S == null || !A || !istype(A))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onUpdate()
+		..()
+
+		var/mob/living/S = owner
+		var/datum/abilityHolder/A = flail.holder
+		var/mob/living/T = target
+
+		if (!flail || get_dist(S, T) > flail.max_range || T == null || S == null || !A || !istype(A))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if (!GET_COOLDOWN(S, "spider flail"))
+			ON_COOLDOWN(S, "spider flail", 1.3 SECONDS)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//	var/mob/MT = target
+	//	var/mob/living/critter/spider/S = holder.owner
+	//	holder.owner.visible_message("<span class='combat'><b>[holder.owner] dives on [MT]!</b></span>",\
+	//	"<span class='combat'><b>You dive on [MT]!</b></span>")
+	//	playsound(holder.owner, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 0, pitch = 1.6)
+	//	MT.TakeDamageAccountArmor("All", rand(4,10), 0, 0, DAMAGE_STAB)
+	//	if (!isdead(MT))
+	//		MT.emote("scream")
+	//	disabled = 1
+	//	SPAWN_DBG(0)
+	//		var/flail = rand(10, 15)
+	//		holder.owner.canmove = 0
+	//		while (flail > 0 && MT && !MT.disposed)
+	//			MT.changeStatus("weakened", 2 SECONDS)
+	//			MT.canmove = 0
+	//			if (MT.loc)
+	//				holder.owner.set_loc(MT.loc)
+	//			if (holder.owner.getStatusDuration("stunned") || holder.owner.getStatusDuration("weakened") || holder.owner.getStatusDuration("paralysis"))
+	//				break
+	//			if (istype(S))
+	//				S.venom_bite(MT)
+	//			else // no venom, very sad
+	//				playsound(holder.owner, "sound/weapons/handcuffs.ogg", 50, 1)
+	//				if (issilicon(MT))
+	//					var/mob/living/silicon/robot/R = MT
+	//					R.compborg_take_critter_damage("[pick("l","r")]_[pick("arm","leg")]", rand(2,4))
+	//				else
+	//					MT.TakeDamageAccountArmor("All", rand(1,3), 0, 0, DAMAGE_STAB)
+	//			if (prob(30))
+	//				holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites [MT]!</b></span>",\
+	//				"<span class='combat'><b>You bite [MT]!</b></span>")
+	//			holder.owner.set_dir(pick(cardinal))
+	//			holder.owner.pixel_x = rand(-2,2) * 2
+	//			holder.owner.pixel_y = rand(-2,2) * 2
+	//			sleep(0.4 SECONDS)
+	//			flail--
+	//		if (MT)
+	//			MT.canmove = 1
+	//		doCooldown()
+	//		disabled = 0
+	//		holder.owner.pixel_x = 0
+	//		holder.owner.pixel_y = 0
+	//		holder.owner.canmove = 1
 
 // -----------------
 // Spider drain skill
