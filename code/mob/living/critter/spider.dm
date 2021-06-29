@@ -110,7 +110,7 @@
 			src.reagents.add_reagent(venom2, 50, null)
 		return ..()
 
-	proc/venom_bite(mob/M)
+	proc/venom_bite(mob/M, var/reagent_amt_modifier)
 		if (src.reagents && istype(M) && M.reagents)
 			playsound(src, src.bitesound, 50, 1)
 			if (issilicon(M))
@@ -119,8 +119,8 @@
 			else
 				M.TakeDamageAccountArmor("All", rand(1,3), 0, 0, DAMAGE_STAB)
 			// now spiders won't poison themselves - cirr
-			M.reagents.add_reagent(src.venom1, bite_transfer_amt)
-			M.reagents.add_reagent(src.venom2, bite_transfer_amt)
+			M.reagents.add_reagent(src.venom1, bite_transfer_amt * reagent_amt_modifier)
+			M.reagents.add_reagent(src.venom2, bite_transfer_amt * reagent_amt_modifier)
 
 
 	proc/grow_up()
