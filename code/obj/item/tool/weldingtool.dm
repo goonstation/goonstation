@@ -122,6 +122,7 @@
 			if (src.loc != user)
 				boutput(user, "<span class='alert'>You need to be holding [src] to work on it!</span>")
 				return
+			boutput(user, "<span class='notice'>You attach the rod to the welding tool.</span>")
 			var/obj/item/rods/R = new /obj/item/rods
 			R.amount = 1
 			var/obj/item/rods/S = W
