@@ -123,6 +123,26 @@
 	done()
 		return
 
+	MouseDrop_T(mob/living/target, mob/user)
+		if (!istype(target) || isAI(user))
+			return
+
+		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
+			return
+
+		if (target == user)
+			src.log_in(usr)
+			src.add_fingerprint(usr)
+		else
+			var/previous_user_intent = user.a_intent
+			user.a_intent = INTENT_GRAB
+			user.drop_item()
+			target.attack_hand(user)
+			user.a_intent = previous_user_intent
+			SPAWN_DBG(user.combat_click_delay + 2)
+				if (istype(user.equipped(), /obj/item/grab))
+					src.log_in(usr)
+
 /datum/targetable/artemis_active_scanning
 	name = "Active Scanning"
 	desc = "You are scanning an object in space."
