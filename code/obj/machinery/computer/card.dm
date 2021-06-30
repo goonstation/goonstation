@@ -9,13 +9,6 @@
 	var/mode = 0.0
 	var/printing = null
 	var/list/scan_access = null
-	var/custom1_name = "Custom 1"
-	var/custom2_name = "Custom 2"
-	var/custom3_name = "Custom 3"
-	var/list/custom1_list = list()
-	var/list/custom2_list = list()
-	var/list/custom3_list = list()
-	var/list/banned_access_list = list(access_maxsec,access_syndicate_shuttle,access_owlerymaint,access_owlerysec,access_owlerycommand,access_syndicate_4,access_syndicate_8,access_syndicate_16,access_syndicate_32,access_syndicate_64,access_syndicate_128,access_syndicate_256,access_syndicate_512,access_polariscargo,access_polarisimportant,access_contrabandpermit,access_syndicate_commander,access_retention_blue,access_retention_green,access_retention_yellow,access_retention_orange,access_retention_red,access_retention_black)
 	req_access = list(access_change_ids)
 	desc = "A computer that allows an authorized user to change the identification of other ID cards."
 
@@ -88,7 +81,7 @@
 			var/list/civilianjobs = list("Staff Assistant", "Bartender", "Chef", "Botanist", "Rancher", "Chaplain", "Janitor", "Clown")
 			var/list/maintainencejobs = list("Engineer", "Mechanic", "Miner", "Quartermaster")
 			var/list/researchjobs = list("Scientist", "Medical Doctor", "Geneticist", "Roboticist", "Pathologist")
-			var/list/securityjobs = list("Security Officer", "Security Assistant", "Detective")
+			var/list/securityjobs = list("Security Officer", "Detective")
 			var/list/commandjobs = list("Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Captain")
 
 			body += "<br><br><u>Jobs</u>"
@@ -111,11 +104,6 @@
 			body += "<br>Command:"
 			for(var/job in commandjobs)
 				body += " <a href='?src=\ref[src];assign=[job];colour=green'>[replacetext(job, " ", "&nbsp")]</a>"
-
-			body += "<br>Custom:"
-			body += " [src.custom1_name] <a href='?src=\ref[src];save=custom1'>save</a> <a href='?src=\ref[src];apply=custom1'>apply</a>"
-			body += " [src.custom2_name] <a href='?src=\ref[src];save=custom2'>save</a> <a href='?src=\ref[src];apply=custom2'>apply</a>"
-			body += " [src.custom3_name] <a href='?src=\ref[src];save=custom3'>save</a> <a href='?src=\ref[src];apply=custom3'>apply</a>"
 
 			//Change access to individual areas
 			body += "<br><br><u>Access</u>"
