@@ -1,5 +1,9 @@
 
 (t)wed jun 30 21
+(u)UnfunnyPerson
+(p)5318
+(e)⚖|balance
+(+)Laser Rifles now require more difficult materials.
 (u)Ryumi
 (p)5093
 (e)🗺|mapping
