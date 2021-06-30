@@ -103,8 +103,9 @@
 				src.updateIntDialog()
 				return
 
-			if (!issilicon(usr) && !isAIeye(usr) && (!in_interact_range(src, usr) || usr.stat || usr.restrained()))
-				return
+			if (!issilicon(usr) && !isAIeye(usr))//Only check range for organics
+				if (!in_interact_range(src, usr) || usr.stat || usr.restrained())
+					return
 
 			if(length(t) != 8 || !is_hex(t))
 				src.filter_id = null
