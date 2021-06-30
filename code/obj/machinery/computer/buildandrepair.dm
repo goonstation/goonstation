@@ -132,6 +132,9 @@
 /obj/item/circuitboard/mining_magnet
 	name = "Circuit board (Mining Magnet Computer)"
 	computertype = "/obj/machinery/computer/magnet"
+/obj/item/circuitboard/telescope
+	name = "Circuit board (Quantum Telescope)"
+	computertype = "/obj/machinery/computer/telescope"
 
 /obj/computerframe/meteorhit(obj/O as obj)
 	qdel(src)
