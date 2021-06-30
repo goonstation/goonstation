@@ -1227,10 +1227,7 @@
 							continue
 						if(ismob(A))
 							var/mob/M = A
-							if (M.getStatusDuration("burning"))
-								M.changeStatus("burning", tiny_time)
-							else
-								M.changeStatus("burning", flame_succ ? time : tiny_time)
+							M.changeStatus("burning", flame_succ ? time : tiny_time)
 						else if(iscritter(A))
 							var/obj/critter/crit = A
 							crit.blob_act(8) //REMOVE WHEN WE ADD BURNING OBJCRITTERS

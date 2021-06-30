@@ -301,7 +301,7 @@ toxic - poisons
 	cost = 35
 	sname = "kinetic pulse"
 	shot_sound = 'sound/weapons/pulse.ogg'
-	damage_type = D_ENERGY
+	damage_type = D_SPECIAL
 	hit_ground_chance = 30
 	brightness = 1
 	color_red = 0.18
@@ -324,7 +324,7 @@ toxic - poisons
 		if (ishuman(hit))
 			O.die()
 			var/mob/living/carbon/human/H = hit
-			H.do_disorient(stamina_damage = pow*1.5, weakened = 0, stunned = 0, disorient = pow*2, remove_stamina_below_zero = 0)
+			H.do_disorient(stamina_damage = pow*1.5, weakened = 0, stunned = 0, disorient = pow, remove_stamina_below_zero = 0)
 			H.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = THROW_GUNIMPACT)
 			H.emote("twitch_v")
 
@@ -418,5 +418,24 @@ toxic - poisons
 	fullauto_valid = 1
 
 	disruption = 8
+
+	hit_mob_sound = 'sound/effects/sparks6.ogg'
+
+/datum/projectile/energy_bolt/raybeam
+	name = "energy bolt"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "green_spark"
+	power = 5
+	cost = 25
+	max_range = 6
+	ks_ratio = 1.0
+	sname = "burst"
+	shot_sound = 'sound/weapons/Taser.ogg'
+	shot_sound_extrarange = 3
+	shot_number = 1
+	damage_type = D_ENERGY
+	fullauto_valid = 1
+
+	disruption = 2
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'

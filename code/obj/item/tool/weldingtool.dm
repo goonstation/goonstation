@@ -21,9 +21,9 @@
 	w_class = W_CLASS_SMALL
 	m_amt = 30
 	g_amt = 30
-	stamina_damage = 30
+	stamina_damage = 10
 	stamina_cost = 18
-	stamina_crit_chance = 5
+	stamina_crit_chance = 0
 	module_research = list("tools" = 4, "metals" = 1, "fuels" = 5)
 	rand_pos = 1
 	inventory_counter_enabled = 1
@@ -122,6 +122,7 @@
 			if (src.loc != user)
 				boutput(user, "<span class='alert'>You need to be holding [src] to work on it!</span>")
 				return
+			boutput(user, "<span class='notice'>You attach the rod to the welding tool.</span>")
 			var/obj/item/rods/R = new /obj/item/rods
 			R.amount = 1
 			var/obj/item/rods/S = W
@@ -151,7 +152,7 @@
 			else
 				boutput(user, "<span class='alert'>The [O.name] is empty!</span>")
 		else if (src.welding)
-			use_fuel(0.2)
+			use_fuel(ismob(O) ? 2 : 0.2)
 			if (get_fuel() <= 0)
 				boutput(user, "<span class='notice'>Need more fuel!</span>")
 				src.welding = 0
@@ -172,6 +173,7 @@
 		if (status > 1) return
 		src.welding = !(src.welding)
 		src.firesource = !(src.firesource)
+		tooltip_rebuild = 1
 		if (src.welding)
 			if (get_fuel() <= 0)
 				boutput(user, "<span class='notice'>Need more fuel!</span>")

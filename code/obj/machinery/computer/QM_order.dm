@@ -5,6 +5,7 @@
 	var/temp = null
 	var/obj/item/card/id/scan = null
 	var/console_location = null
+	circuit_type = /obj/item/circuitboard/qmorder
 
 	light_r =1
 	light_g = 0.7
@@ -59,7 +60,7 @@
 	onclose(user, "computer_[src]")
 	return
 
-/obj/machinery/computer/ordercomp/attackby(var/obj/item/I as obj, user as mob)
+/obj/machinery/computer/ordercomp/attackby(var/obj/item/I as obj, mob/user as mob)
 	if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 		if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 		boutput(user, "<span class='notice'>You swipe the ID card.</span>")
@@ -77,7 +78,6 @@
 			boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 			src.scan = null
 	else ..()
-	return
 
 /obj/machinery/computer/ordercomp/proc/view_requests()
 	. = "<B>Current Requests:</B><BR><BR>"

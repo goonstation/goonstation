@@ -122,6 +122,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	req_access = list(access_supply_console)
 	object_flags = CAN_REPROGRAM_ACCESS
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
+	circuit_type = /obj/item/circuitboard/qmsupply
 	var/temp = null
 	var/last_cdc_message = null
 	var/hacked = 0
@@ -158,11 +159,11 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	src.hacked = 0
 	return 1
 
-/obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
+/obj/machinery/computer/supplycomp/attackby(I as obj, mob/user as mob)
 	if(istype(I,/obj/item/card/emag))
 		//I guess you'll wanna put the emag away now instead of getting a massive popup
 	else
-		return ..()
+		..()
 
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
 	if(!src.allowed(user))

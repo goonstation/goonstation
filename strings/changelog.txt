@@ -1,5 +1,99 @@
 
+(t)wed jun 30 21
+(u)112358sam
+(p)5140
+(e)🆕🗺|feature, mapping
+(+)QM consoles and supply request consoles are now constructable.
+(+)Added QM console and supply request circuitboards to tech storage for current maps.
+(u)UnfunnyPerson
+(p)5318
+(e)⚖|balance
+(+)Laser Rifles now require more difficult materials.
+(u)Ryumi
+(p)5093
+(e)🗺|mapping
+(+)Significantly expanded Donut 3's Ranch
+(u)112358sam
+(p)5194
+(e)|
+(+)Borgs and AI can now see packet sniffer device output and set filters.
+(u)112358sam
+(p)5003
+(e)🆕🗺|feature, mapping
+(+)Makes the quantum telescope console constructable.
+(+)Adds the new quantum telescope circuit board to tech storage and the mining outpost.
+(u)DimWhat
+(p)5286
+(e)⚖🗺|balance, mapping
+(+)Removed the space proofness of the snow suit and altered its stats.
+(u)Walpvrgis and BatElite
+(p)5300
+(e)🎨|sprites
+(*)AI players now have 20 new faces to choose from, so you can more effectively simulate just how disappointed you are in the crew.
+(t)tue jun 29 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Smoke and foam reactions will only succeed when reacted from "open" containers (e.g.: beakers, drinkss, puddles, etc) and will fail from closed containers (pills, mobs, foam-tiles, etc)
+(u)Arthur Holiday
+(p)5307
+(e)⚖|balance
+(+)If your gloves have atleast 7% heat resistance, patting out people on fire won't damage you and you will be 2x more effective at it
+(t)mon jun 28 21
+(u)Flappybat
+(p)5245
+(e)🆕|feature
+(+)Scientists now start with a random pen or pencil. See if you get the rare red pen!
+(t)sat jun 26 21
+(u)Penny
+(u)Tarmunora
+(e)⚖|balance
+(+)Weldingtools now use 2 fuel each time you hit someone and have an improved special attack.
+(p)5168
+(e)🗺|mapping
+(*)Improves the layout of cog1 mechanic's lab and adds equipment and a data closet
+(t)fri jun 25 21
+(u)Arthur Holiday
+(p)5036
+(e)🆕🎨|feature, sprites
+(*)Added Customizable banners, use cloth on a wall to make one, color and draw on it with crayons.
+(u)Flourish
+(+)There are now buttons for adjusting skintone in character setup.
+(u)Flappybat
+(p)5267
+(e)⚖|balance
+(*)Made doors half as strong, you can now break them this century. Explosive/fire/projectile scaling is adjusted so it will still take the same number of bullets to destroy a door.
+(u)Azrun
+(p)5244
+(e)⚖🐛|balance, bug
+(+)Reduced power output from solar panels.
+(u)Arthur Holiday
+(p)5265
+(e)⚖🐛|balance, bug
+(+)The werewolf feast ability now gets interrupted if the target stands up.
+(u)Tarmunora
+(e)⚖|balance
+(+)pill bottles and patch boxes from chemmasters cannot fit more items than they spawn with
+(u)Kubius
+(p)5274
+(e)🐛🗺|bug, mapping
+(*)Kondaru detective's office front door is once again detective-only with remote open. Also made maintenance near the Foundry more construction-friendly and added a sink/drain to the Morgue.
+(u)Flappybat
+(p)5262
+(e)⚖|balance
+(+)Nuclear bomb is now EMP proof.
+(t)thu jun 24 21
+(u)zjdtmkhzt
+(p)5237
+(e)⚖🆕|balance, feature
+(+)Custom sandwiches now combine the healing and hunger restore of their ingredients.
+(u)Zonespace
+(p)5263
+(e)⚖⛔|balance, removal
+(*)Prison Loafers no longer have nugget mode.
 (t)wed jun 23 21
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Crusher now has an actionbar
 (u)Walpvrgis
 (p)5155
 (e)🆕🎨|feature, sprites

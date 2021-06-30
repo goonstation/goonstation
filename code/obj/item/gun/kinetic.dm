@@ -1255,15 +1255,19 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		ammo.amount_left = max_ammo_capacity
 		set_current_projectile(new/datum/projectile/bullet/grenade_round/explosive)
 		..()
-
 	attackby(obj/item/b as obj, mob/user as mob)
 		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/old_grenade))
-			if(src.ammo.amount_left > 0 && !istype(current_projectile, /datum/projectile/bullet/grenade_shell) || src.ammo.amount_left >= src.max_ammo_capacity)
+			if((src.ammo.amount_left > 0 && !istype(current_projectile, /datum/projectile/bullet/grenade_shell)) || src.ammo.amount_left >= src.max_ammo_capacity)
 				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
 				return
 			else
-				SETUP_GENERIC_ACTIONBAR(user, src, 0.3 SECONDS, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"", null)
-				return
+				var/datum/projectile/bullet/grenade_shell/custom_shell = src.current_projectile
+				if(src.ammo.amount_left > 0 && istype(custom_shell) && custom_shell.get_nade().type != b.type)
+					boutput(user, "<span class='alert'>The [src] has a different kind of grenade in the conversion chamber, and refuses to mix and match!</span>")
+					return
+				else
+					SETUP_GENERIC_ACTIONBAR(user, src, 0.3 SECONDS, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"", null)
+					return
 		else
 			..()
 

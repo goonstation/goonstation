@@ -506,8 +506,6 @@ datum
 					M = holder.my_atom
 				if(M.get_oxygen_deprivation())
 					M.take_oxygen_deprivation(-1 * mult)
-				if(M.get_toxin_damage())
-					M.take_toxin_damage(-1 * mult)
 				if(M.losebreath && prob(50))
 					M.lose_breath(-1 * mult)
 				M.HealDamage("All", 2 * mult, 2 * mult, 1 * mult)
@@ -813,8 +811,6 @@ datum
 				if(M.get_oxygen_deprivation() > 35)
 					M.take_oxygen_deprivation(-10 * mult)
 				if(M.health < -10 && M.health > -65)
-					if(M.get_toxin_damage())
-						M.take_toxin_damage(-1 * mult)
 					M.HealDamage("All", 1 * mult, 1 * mult, 1 * mult)
 				..()
 				return
@@ -1150,9 +1146,8 @@ datum
 					if (reagent_id != id)
 						M.reagents.remove_reagent(reagent_id, 4 * mult)
 				M.changeStatus("radiation", -7 SECONDS, 1)
-				if (M.get_toxin_damage() && prob(75))
-					M.take_toxin_damage(-4 * mult)
-					M.HealDamage("All", 0, 0, 2 * mult)
+				if (prob(75))
+					M.HealDamage("All", 0, 0, 4 * mult)
 				if (prob(33))
 					M.TakeDamage("chest", 1 * mult, 1 * mult, 0, DAMAGE_BLUNT)
 				if (ishuman(M))
@@ -1478,8 +1473,7 @@ datum
 				for(var/reagent_id in M.reagents.reagent_list)
 					if(reagent_id != id && prob(50)) // slow this down a bit
 						M.reagents.remove_reagent(reagent_id, 1 * mult)
-				M.take_toxin_damage(-1.5 * mult)
-				M.HealDamage("All", 0, 0, 1 * mult)
+				M.HealDamage("All", 0, 0, 1.5 * mult)
 
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M

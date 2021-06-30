@@ -453,6 +453,15 @@
 	// no overlaps ever :]
 	return true
 
+/// returns /atom/movable/screen/hud with in zone_alias with alias elem_alias
+/datum/hud/proc/get_element(var/zone_alias, var/elem_alias)
+	if (!zone_alias || !elem_alias)
+		return null
+
+	var/list/elements = src.hud_zones[zone_alias]["elements"]
+	var/atom/movable/screen/hud/element = elements[elem_alias]
+	return element
+
 /// debug purposes only, call this to print ALL of the information you could ever need
 /datum/hud/proc/debug_print_all()
 	if (!length(src.hud_zones))
