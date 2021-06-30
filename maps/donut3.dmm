@@ -7405,14 +7405,14 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "bOF" = (
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/redwhite{
 	dir = 8
@@ -19770,11 +19770,10 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
 /turf/simulated/floor/white,
 /area/station/security/brig/north_side)
 "fwE" = (
@@ -23010,6 +23009,11 @@
 /obj/decal/mule/dropoff,
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/red,
 /area/station/security/hos)
@@ -43702,11 +43706,6 @@
 	req_access = null
 	},
 /obj/decal/mule/dropoff,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/access_spawn/maint,
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
@@ -43856,11 +43855,6 @@
 /obj/access_spawn/research,
 /obj/firedoor_spawn,
 /obj/decal/mule/dropoff,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/engine,
 /area/station/science/artifact)
 "mNt" = (
@@ -44357,6 +44351,7 @@
 	d2 = 8;
 	icon_state = "0-4"
 	},
+/obj/cable,
 /turf/simulated/floor/plating,
 /area/station/medical/asylum/kitchen)
 "mVp" = (
@@ -49879,6 +49874,9 @@
 /obj/grille/catwalk{
 	dir = 6
 	},
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/airless/plating/catwalk{
 	icon_state = "catwalk_cross"
 	},
@@ -53025,6 +53023,9 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/circuit/red,
 /area/station/security/hos)
 "pwN" = (
@@ -54615,6 +54616,11 @@
 	layer = 3.1;
 	name = "Bar Shutter"
 	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 9
 	},
@@ -56055,11 +56061,6 @@
 "qmI" = (
 /obj/access_spawn/maint,
 /obj/decal/mule/dropoff,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -60164,6 +60165,9 @@
 /area/station/medical/medbay)
 "rsq" = (
 /obj/disposalpipe/junction/right/east,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/carpet/red/fancy/narrow/eastwest,
 /area/station/security/hos)
 "rss" = (
@@ -68277,6 +68281,11 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
 /obj/access_spawn,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/asylum/rec)
 "tOD" = (
@@ -70094,6 +70103,9 @@
 	dir = 8
 	},
 /obj/disposalpipe/trunk,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/circuit/red,
 /area/station/security/hos)
 "uug" = (
@@ -71357,6 +71369,11 @@
 /obj/disposalpipe/segment,
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access = null
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
@@ -74268,6 +74285,9 @@
 "vCx" = (
 /obj/cable,
 /obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/circuit/red,
 /area/station/security/hos)
 "vCz" = (
@@ -81692,6 +81712,14 @@
 "xJc" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/garden/owlery)
+"xJi" = (
+/obj/machinery/power/solar/small_backup1,
+/obj/cable,
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/station/solar/small_backup1)
 "xJk" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -150786,11 +150814,11 @@ rdj
 rdj
 xtI
 aWZ
-xtI
+xJi
 rdj
 xtI
 aWZ
-xtI
+xJi
 rdj
 rdj
 rdj
@@ -151088,11 +151116,11 @@ rdj
 rdj
 xtI
 wej
-xtI
+xJi
 dPQ
 xtI
 wej
-xtI
+xJi
 rdj
 rdj
 rdj
@@ -151390,11 +151418,11 @@ rdj
 rdj
 xtI
 wej
-xtI
+xJi
 fdQ
 xtI
 wej
-xtI
+xJi
 rdj
 rdj
 rdj
@@ -151692,11 +151720,11 @@ rdj
 rdj
 xtI
 wej
-xtI
+xJi
 fVF
 xtI
 wej
-xtI
+xJi
 rdj
 rdj
 rdj
@@ -151994,11 +152022,11 @@ rdj
 rdj
 xtI
 drC
-xtI
+xJi
 fVF
 xtI
 drC
-xtI
+xJi
 rdj
 rdj
 rdj
