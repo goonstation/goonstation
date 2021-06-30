@@ -228,7 +228,7 @@ RACK PARTS
 	name = "rack parts"
 	desc = "A collection of parts that can be used to make a rack."
 	icon = 'icons/obj/metal.dmi'
-	icon_state = "rack_parts"
+	icon_state = "rack_base_parts"
 	stamina_damage = 25
 	stamina_cost = 22
 	stamina_crit_chance = 15

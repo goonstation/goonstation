@@ -800,6 +800,8 @@
 	special_hair_1_icon = 'icons/mob/lizard.dmi'
 	special_hair_1_state = "head-detail_1"
 	special_hair_1_color = CUST_3
+	special_hair_1_layer = MOB_HAIR_LAYER1
+	special_hair_1_layer_f = MOB_HAIR_LAYER1
 	detail_1_icon = 'icons/mob/lizard.dmi'
 	detail_1_state = "lizard_detail-1"
 	detail_1_color = CUST_2
@@ -1400,6 +1402,8 @@
 	special_hair_1_icon = 'icons/mob/ithillid.dmi'
 	special_hair_1_state = "head_detail_1"
 	special_hair_1_color = null
+	special_hair_1_layer = MOB_HAIR_LAYER1
+	special_hair_1_layer_f = MOB_HAIR_LAYER1
 	race_mutation = /datum/bioEffect/mutantrace/ithillid
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/ithillid/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/ithillid/left

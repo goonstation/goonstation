@@ -1193,6 +1193,7 @@
 	desc = "It can clean a bloodied katana, and also allows for easier storage of a katana"
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "katana_sheathed"
+	wear_layer = MOB_SHEATH_LAYER
 	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "sheathedhand"
@@ -1454,7 +1455,7 @@ obj/item/whetstone
 /obj/item/heavy_power_sword
 	name = "Hadar heavy power-sword"
 	desc = "A heavy cyalume saber variant, builds generator charge when used in combat & supports multiple attack types."
-	icon = 'icons/obj/64x32.dmi'
+	icon = 'icons/obj/large/64x32.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	wear_image_icon = 'icons/mob/back.dmi'
 	icon_state = "hadar_sword2"
@@ -1541,7 +1542,7 @@ obj/item/whetstone
 	two_handed = 1
 	click_delay = 30
 
-	force = 25 //this number is multiplied by 4 when attacking doors.
+	force = 30 //this number is multiplied by 4 when attacking doors.
 	stamina_damage = 60
 	stamina_cost = 30
 

@@ -193,6 +193,51 @@
 			activator.set_clothing_icon_dirty()
 			M.wear_layer = MOB_BACK_LAYER_SATCHEL
 
+		else if (istype(activator.back, /obj/item/storage/backpack/studdedwhite) || activator.back.icon_state == "bp_studdedw")
+			var/obj/item/storage/backpack/M = activator.back
+			M.icon = 'icons/obj/items/storage.dmi'
+			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
+			M.wear_image_icon = 'icons/mob/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.icon_state = "sat_studdedw"
+			M.item_state = "sat_studdedw"
+			M.name = "white studded satchel"
+			M.real_name = "white studded satchel"
+			M.desc = "Made of sturdy white synthleather and covered in metal studs. Much edgier than the standard issue bag. (Base Item: white studded backpack)"
+			activator.set_clothing_icon_dirty()
+			M.wear_layer = MOB_BACK_LAYER_SATCHEL
+
+		else if (istype(activator.back, /obj/item/storage/backpack/bearpack) || activator.back.icon_state == "bp_bear")
+			var/obj/item/storage/backpack/M = activator.back
+			M.icon = 'icons/obj/items/storage.dmi'
+			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
+			M.wear_image_icon = 'icons/mob/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.icon_state = "sat_bear"
+			M.item_state = "sat_bear"
+			M.name = "bear-satchel"
+			M.real_name = "bear-satchel"
+			M.desc = "An adorable friend that is perfect for hugs AND carries your gear for you, how helpful! (Base Item: bearpack)"
+			activator.set_clothing_icon_dirty()
+			M.wear_layer = MOB_BACK_LAYER_SATCHEL
+
+		else if (istype(activator.back, /obj/item/storage/backpack/breadpack) || activator.back.icon_state == "bp_breadpack")
+			var/obj/item/storage/backpack/M = activator.back
+			M.icon = 'icons/obj/items/storage.dmi'
+			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
+			M.wear_image_icon = 'icons/mob/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.icon_state = "sat_breadpack"
+			M.item_state = "sat_breadpack"
+			M.name = "bag-uette satchel"
+			M.real_name = "bag-uette satchel"
+			M.desc = "It kind of smells like bread too! Definitely not edible, sadly. (Base Item: bag-uette)"
+			activator.set_clothing_icon_dirty()
+			M.wear_layer = MOB_BACK_LAYER_SATCHEL
+
 		else if (istype(activator.back, /obj/item/storage/backpack/itabag/blue) || activator.back.icon_state == "bp_itabag_blue")
 			var/obj/item/storage/backpack/M = activator.back
 			var/dprev1 = M.desc

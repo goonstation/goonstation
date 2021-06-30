@@ -1,7 +1,7 @@
 
 /obj/machinery/drone_recharger
 	name = "Drone Recharger"
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	desc = "A wall-mounted station for drones to recharge at. Automatically activated on approach."
 	icon_state = "drone-charger-idle"
 	density = 0
@@ -13,6 +13,7 @@
 	var/mob/living/silicon/ghostdrone/occupant = null
 	var/transition = 0 //For when closing
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_MULTITOOL
 
 	New()
 		..()

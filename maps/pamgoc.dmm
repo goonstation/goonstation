@@ -3926,7 +3926,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/stairs{
 	icon_state = "stairs_middle"
 	},
@@ -34434,9 +34433,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bmJ" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 8
-	},
 /obj/machinery/door/airlock/pyro/engineering{
 	name = "Mining";
 	req_access = null;
@@ -52353,6 +52349,10 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
+/obj/item/circuitboard/telescope{
+	pixel_x = 5;
+	pixel_y = 1
+	},
 /obj/item/circuitboard/powermonitor{
 	pixel_x = 5;
 	pixel_y = -3
@@ -53398,14 +53398,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/medical/robotics)
-"bVX" = (
-/obj/rack,
-/obj/item/tank/jetpack,
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 6
-	},
-/turf/simulated/floor/bot,
-/area/station/ai_monitored/storage/eva)
 "bVY" = (
 /obj/rack,
 /obj/item/tank/jetpack,
@@ -120396,7 +120388,7 @@ bxq
 aZK
 aWK
 aZK
-aWK
+aZK
 cut
 cut
 cut
@@ -122147,7 +122139,7 @@ cqk
 bVY
 bVY
 asO
-bVX
+bVY
 bVY
 apc
 bbq

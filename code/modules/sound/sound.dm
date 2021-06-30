@@ -72,11 +72,16 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 /// Returns the default volume for a channel, unattenuated for the master channel (0-1)
 /client/proc/getDefaultVolume(channel)
-	return volumes[channel + 1]
+	return default_channel_volumes[channel + 1]
 
 /// Returns a list of friendly descriptions for available sound channels
 /client/proc/getVolumeDescriptions()
-	return list("Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.", "Screams and farts.", "Mentor PM notification sound.")
+	return list("This will affect all sounds.", "Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.", "Screams and farts.", "Mentor PM notification sound.")
+
+/// Get the friendly description for a specific sound channel.
+/client/proc/getVolumeChannelDescription(channel)
+	// +1 since master channel is 0, while byond arrays start at 1
+	return getVolumeDescriptions()[channel+1]
 
 /// Returns the volume to set /sound/var/volume to for the given channel(so 0-100)
 /client/proc/getVolume(id)

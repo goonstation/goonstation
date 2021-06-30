@@ -102,7 +102,9 @@ toxic - poisons
 	power = 75
 	cost = 65
 	dissipation_delay = 5
-	dissipation_rate = 5
+	dissipation_rate = 0
+	max_range = 30
+	projectile_speed = 20
 	sname = "assault laser"
 	shot_sound = 'sound/weapons/Laser.ogg'
 	color_red = 0
@@ -251,7 +253,7 @@ toxic - poisons
 	color_green = 0
 	color_blue = 1
 	icon_turf_hit = "burn2"
-	projectile_speed = 32
+	projectile_speed = 42
 
 /datum/projectile/laser/precursor // for precursor traps
 	name = "energy bolt"

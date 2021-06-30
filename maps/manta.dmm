@@ -1892,6 +1892,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "agu" = (
@@ -4896,6 +4897,7 @@
 	req_access = null
 	},
 /obj/access_spawn/medical_director,
+/obj/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/medical/head)
 "apl" = (
@@ -5072,6 +5074,10 @@
 	},
 /obj/disposalpipe/segment,
 /obj/storage/closet/medicalclothes,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/obj/item/crowbar,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -8726,6 +8732,7 @@
 /obj/item/circuitboard/tetris,
 /obj/item/circuitboard/qmorder,
 /obj/item/circuitboard/qmsupply,
+/obj/item/circuitboard/telescope,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -11822,6 +11829,8 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access = null
 	},
+/obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating/random,
 /area/station/medical/research)
 "aHB" = (
@@ -12946,6 +12955,7 @@
 	icon_state = "1-2"
 	},
 /obj/access_spawn/maint,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/medical/robotics)
 "aKz" = (
@@ -13563,6 +13573,7 @@
 	dir = 4
 	},
 /obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "aMm" = (
@@ -15138,6 +15149,15 @@
 	tag = ""
 	},
 /obj/storage/secure/closet/security/armory,
+/obj/item/gun/kinetic/dart_rifle,
+/obj/item/ammo/bullets/tranq_darts,
+/obj/item/ammo/bullets/tranq_darts,
+/obj/item/ammo/bullets/tranq_darts/anti_mutant{
+	pixel_y = 5
+	},
+/obj/item/ammo/bullets/tranq_darts/anti_mutant{
+	pixel_y = 5
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "aRq" = (
@@ -17916,6 +17936,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "aYX" = (
@@ -18111,6 +18132,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/medbay/restroom)
 "aZv" = (
@@ -18123,6 +18145,9 @@
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -18435,6 +18460,9 @@
 /area/station/medical/medbay/surgery)
 "bat" = (
 /obj/storage/secure/closet/medical/medicine,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor/redwhite{
 	dir = 9
 	},
@@ -18522,6 +18550,7 @@
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor,
 /area/station/maintenance/upperport)
 "baG" = (
@@ -19481,6 +19510,10 @@
 	dir = 1;
 	icon_state = "line3"
 	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor/greenwhite{
 	dir = 8
 	},
@@ -20120,6 +20153,7 @@
 	req_access = null
 	},
 /obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/medical/medbay/surgery/storage)
 "beF" = (
@@ -20196,6 +20230,7 @@
 /obj/decal/poster/wallsign/poster_borg{
 	pixel_y = 32
 	},
+/obj/item/crowbar,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "beP" = (
@@ -20224,6 +20259,7 @@
 /obj/item/clothing/suit/bio_suit/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/glasses/healthgoggles,
+/obj/item/crowbar,
 /turf/simulated/floor/yellow/checker{
 	dir = 1
 	},
@@ -20663,6 +20699,7 @@
 	dir = 5;
 	icon_state = "line2"
 	},
+/obj/item/crowbar,
 /turf/simulated/floor/yellow/checker{
 	dir = 1
 	},
@@ -21675,6 +21712,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
 "biw" = (
@@ -21688,6 +21726,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/firedoor_spawn,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
 "biy" = (
@@ -22381,6 +22420,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
 "bkm" = (
@@ -23539,6 +23579,7 @@
 	id = "medbay_door"
 	},
 /obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "bmT" = (
@@ -24051,6 +24092,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "boi" = (
@@ -24146,6 +24188,10 @@
 	pixel_y = 11
 	},
 /obj/disposalpipe/segment/mail,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -24388,6 +24434,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
 "bpb" = (
@@ -24605,6 +24652,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/door/airlock/pyro/glass,
 /obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
 "bpF" = (
@@ -24666,6 +24714,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
 "bpN" = (
@@ -24682,6 +24731,7 @@
 	icon_state = "1-2"
 	},
 /obj/access_spawn/maint,
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/maintenance/upperstarboard)
 "bpQ" = (
@@ -25159,6 +25209,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
 "bqP" = (
@@ -25349,6 +25400,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
 "brl" = (
@@ -25445,6 +25497,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor,
 /area/station/maintenance/upperport)
 "brx" = (
@@ -25745,6 +25798,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
 "bsj" = (
@@ -26093,6 +26147,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/maintenance/upperstarboard)
 "btw" = (
@@ -40939,6 +40994,16 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
+"olu" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/disposalpipe/segment,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/simulated/floor,
+/area/station/hallway/starboardlowerhallway)
 "olF" = (
 /obj/item/raw_material/rock,
 /obj/disposalpipe/trunk,
@@ -41985,6 +42050,9 @@
 /obj/item/device/radio/headset/command,
 /obj/item/pen/fancy,
 /obj/item/stamp,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "qBC" = (
@@ -43525,9 +43593,6 @@
 "ujF" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/field_generator,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
@@ -43818,6 +43883,18 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
+"uTh" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/simulated/floor,
+/area/station/hallway/starboardlowerhallway)
 "uTW" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 8;
@@ -44472,6 +44549,15 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"wnn" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
 "wnp" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker,
@@ -44964,9 +45050,6 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "xyW" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/table/reinforced/auto,
 /obj/item/kitchen/food_box/donut_box{
 	pixel_y = 2
@@ -45157,6 +45240,15 @@
 	},
 /turf/simulated/floor/damaged2,
 /area/station/engine/inner)
+"xTC" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/simulated/floor,
+/area/station/hallway/starboardlowerhallway)
 "xVb" = (
 /obj/machinery/vending/security,
 /obj/machinery/light/incandescent/warm{
@@ -90748,7 +90840,7 @@ fwO
 aaU
 abr
 abr
-abr
+wnn
 bMG
 abd
 aPj
@@ -97439,7 +97531,7 @@ bmS
 boh
 bhp
 bmt
-bsx
+uTh
 bsj
 aFO
 aFO
@@ -103478,7 +103570,7 @@ bmd
 bnf
 dFF
 bpz
-bkM
+olu
 brb
 deY
 nkZ
@@ -108914,7 +109006,7 @@ bli
 bnv
 kWs
 bli
-bkN
+xTC
 bsx
 aKB
 buM
