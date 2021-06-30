@@ -675,7 +675,7 @@
 
 	onEnd()
 		if(checkStillValid())
-			if (target.buckled || get_dist(user, chute) > 1 || get_dist(user, target) > 1 || ((is_incapacitated(user) && user != target))
+			if (target.buckled || get_dist(user, chute) > 1 || get_dist(user, target) > 1 || ((is_incapacitated(user) && user != target)))
 				..()
 				return
 
