@@ -1,5 +1,10 @@
 
 (t)wed jun 30 21
+(u)112358sam
+(p)5003
+(e)🆕🗺|feature, mapping
+(+)Makes the quantum telescope console constructable.
+(+)Adds the new quantum telescope circuit board to tech storage and the mining outpost.
 (u)DimWhat
 (p)5286
 (e)⚖🗺|balance, mapping
