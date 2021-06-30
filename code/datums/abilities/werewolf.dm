@@ -272,7 +272,6 @@
 		if ("pounce")
 			if(isobserver(target) || isintangible(target))
 				return
-			else
 				wrestler_knockdown(M, target, 1)
 				M.visible_message("<span class='alert'><B>[M] barrels through the air, slashing [target]!</B></span>")
 				damage += rand(2,8)
