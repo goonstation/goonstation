@@ -33023,6 +33023,7 @@
 	name = "autoname - SS13"
 	},
 /obj/machinery/door_control{
+	cooldown = 1.5;
 	id = "cargo_shutter";
 	name = "Safety Shutters";
 	pixel_y = 24
