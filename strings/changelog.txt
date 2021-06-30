@@ -1,4 +1,9 @@
 
+(t)wed jun 30 21
+(u)Walpvrgis and BatElite
+(p)5300
+(e)🎨|sprites
+(*)AI players now have 20 new faces to choose from, so you can more effectively simulate just how disappointed you are in the crew.
 (t)tue jun 29 21
 (u)Tarmunora
 (e)⚖|balance
