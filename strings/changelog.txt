@@ -1,5 +1,9 @@
 
 (t)wed jun 30 21
+(u)DimWhat
+(p)5286
+(e)⚖🗺|balance, mapping
+(+)Removed the space proofness of the snow suit and altered its stats.
 (u)Walpvrgis and BatElite
 (p)5300
 (e)🎨|sprites
