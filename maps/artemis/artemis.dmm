@@ -121,6 +121,9 @@
 /area)
 "av" = (
 /obj/lrteleporter/planetary_teleporter,
+/obj/landmark/lrt{
+	name = "Artemis-"
+	},
 /turf/simulated/floor/engine,
 /area)
 "aw" = (

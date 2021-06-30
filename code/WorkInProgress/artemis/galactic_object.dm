@@ -10,6 +10,7 @@ var/global/datum/galaxy/GALAXY = new
 		..()
 		src.bodies += new/datum/galactic_object/test()
 		src.bodies += new/datum/galactic_object/eyesenhower()
+		src.bodies += new/datum/galactic_object/station()
 
 		for(var/i in 1 to 10)
 			src.bodies += new/datum/galactic_object/random(src)

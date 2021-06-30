@@ -18,6 +18,11 @@ var/list/magnet_locations = list()
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", "mechcompsend")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"recieve", "mechcomprecieve")
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 	attack_ai(mob/user as mob)
 		return attack_hand(user)

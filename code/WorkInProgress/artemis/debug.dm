@@ -8,7 +8,7 @@
 	. = ..()
 	SPAWN_DBG(4 SECONDS)
 		if(src.client)
-			src.set_loc(locate(26, 34, 1))
-
-
+			for(var/turf/T in landmarks[LANDMARK_SHIPS])
+				if(landmarks[LANDMARK_SHIPS][T] == "artemis")
+					src.set_loc(locate(26, 34, T.z))
 #endif

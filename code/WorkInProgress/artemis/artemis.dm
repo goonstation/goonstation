@@ -138,6 +138,9 @@
 			if(landmarks[LANDMARK_SHIPS][T] == src.stars_id)
 				src.ship_marker = T
 
+		if(!is_syndicate && !special_places.Find(src.name))
+			special_places.Add(src.name)
+
 	proc/engine_check()
 		return 1
 
@@ -205,11 +208,6 @@
 
 
 	proc/process() //slow processing
-		if(!old_x)
-			old_x = galactic_x
-		if(!old_y)
-			old_y = galactic_y
-
 		calc_new_coords()
 
 		if(old_x == galactic_x && old_y == galactic_y)
@@ -431,6 +429,7 @@
 	galactic_y = 30
 	vel_angle = 180
 	has_back = 0
+	is_syndicate = TRUE
 
 /obj/artemis/manta
 	name = "Manta-"

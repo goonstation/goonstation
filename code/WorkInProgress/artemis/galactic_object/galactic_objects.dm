@@ -79,6 +79,47 @@
 		name = R.name
 		icon_state = R.icon_state
 
+/datum/galactic_object/station
+	name = "SS13"
+	body_path_map = /obj/background_star/galactic_object/station
+	body_path_ship = /obj/background_star/galactic_object/large/station
+	sector = "A"
+	navigable = 1
+	galactic_x = 0.01
+	galactic_y = 0.05
+
+/obj/background_star/galactic_object/station
+	name = "SS13"
+	icon = 'icons/misc/artemis/galactic_object_map.dmi'
+	icon_state = "station"
+
+	New()
+		..()
+		flags |= HAS_ARTEMIS_SCAN
+
+	proc/artemis_scan(var/mob/pilot, var/obj/artemis/ship)
+		var/dat = {"<span class='alert'><b>Home sweet home.  For some definition of sweet and some definition of home.</b></span>"}
+
+		pilot << browse("<HEAD><TITLE>[station_name()]</TITLE></HEAD><TT>[dat]</TT>", "window=artemis_scan")
+
+		return
+
+/obj/background_star/galactic_object/large/station
+	icon = 'icons/misc/artemis/galactic_object_ship.dmi'
+	icon_state = "station"
+
+	New()
+		..()
+		for_by_tcl(L, /obj/lrteleporter)
+			if(L.z == Z_LEVEL_STATION)
+				src.landing_zone = get_turf(L)
+				return
+
+	on_load()
+		var/datum/galactic_object/random/R = master
+		destination_name = R.name
+
+
 /datum/galactic_object/test
 	name = "F1X-M3"
 	body_path_map = /obj/background_star/galactic_object/test
