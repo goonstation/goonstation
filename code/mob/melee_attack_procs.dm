@@ -340,11 +340,18 @@
 	msgs.clear(target)
 	msgs.valid = 1
 	msgs.disarm = 1
-
+	var/item/I
 	var/def_zone = null
 	if (zone_sel)
 		def_zone = zone_sel.selecting
 		msgs.affecting = def_zone
+		switch(zone_sel)
+			if("l_arm")
+				I = target.l_hand
+			if("r_arm")
+				I = target.r_hand
+			else
+				I = target.equipped
 	else
 		def_zone = "All"
 		msgs.affecting = def_zone
@@ -359,7 +366,6 @@
 		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 		msgs.base_attack_message = "<span class='alert'><B>[src] rolls [target] backwards[DISARM_WITH_ITEM_TEXT]!</B></span>"
 		msgs.disarm_RNG_result = "shoved"
-		var/obj/item/I = target.equipped()
 		if (I && I.temp_flags & IS_LIMB_ITEM)
 			msgs.disarm_RNG_result = "attack_self_with_item_shoved"
 
@@ -419,7 +425,6 @@
 		msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target] to the ground[DISARM_WITH_ITEM_TEXT]!</B></span>"
 		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 		msgs.disarm_RNG_result = "shoved_down"
-		var/obj/item/I = target.equipped()
 		if (I && I.temp_flags & IS_LIMB_ITEM)
 			msgs.disarm_RNG_result = "attack_self_with_item_shoved_down"
 
@@ -427,7 +432,6 @@
 
 	if (is_shove) return msgs
 
-	var/obj/item/I = target.equipped()
 	if (I)
 		var/disarm_item_prob = 37 * lerp(clamp(200 - target_stamina, 0, 100)/100, 1, 0.5)
 		if (target.check_block() && !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)))
