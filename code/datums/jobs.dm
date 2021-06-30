@@ -252,6 +252,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	receives_security_disk = 1
 	receives_badge = 1
 	recieves_implant = /obj/item/implant/health/security/anti_mindslave
+	items_in_backpack = list(/obj/item/device/flash)
 
 
 #ifdef SUBMARINE_MAP
