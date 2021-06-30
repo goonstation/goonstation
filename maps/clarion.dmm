@@ -32764,6 +32764,7 @@
 /obj/item/circuitboard/arcade,
 /obj/item/circuitboard/powermonitor_smes,
 /obj/item/circuitboard/genetics,
+/obj/item/circuitboard/qmorder,
 /obj/item/circuitboard/telescope,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -32775,6 +32776,7 @@
 /obj/item/circuitboard/barcode,
 /obj/item/circuitboard/powermonitor,
 /obj/item/circuitboard/operating,
+/obj/item/circuitboard/qmsupply,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;

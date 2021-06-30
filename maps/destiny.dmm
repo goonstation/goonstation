@@ -43854,6 +43854,8 @@
 /obj/item/circuitboard/powermonitor_smes,
 /obj/item/circuitboard/operating,
 /obj/item/circuitboard/genetics,
+/obj/item/circuitboard/qmorder,
+/obj/item/circuitboard/qmsupply,
 /obj/item/circuitboard/telescope,
 /obj/cable,
 /turf/simulated/floor/plating/random,

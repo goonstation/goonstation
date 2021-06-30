@@ -15376,6 +15376,7 @@
 /obj/item/circuitboard/cloning,
 /obj/item/circuitboard/barcode_qm,
 /obj/item/circuitboard/barcode,
+/obj/item/circuitboard/qmsupply,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "aJY" = (
@@ -15490,6 +15491,7 @@
 /obj/item/circuitboard/powermonitor_smes,
 /obj/item/circuitboard/operating,
 /obj/item/circuitboard/genetics,
+/obj/item/circuitboard/qmorder,
 /obj/item/circuitboard/telescope,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)

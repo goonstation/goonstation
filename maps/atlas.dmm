@@ -20306,6 +20306,8 @@
 /obj/item/circuitboard/powermonitor_smes,
 /obj/item/circuitboard/powermonitor,
 /obj/item/circuitboard/arcade,
+/obj/item/circuitboard/qmsupply,
+/obj/item/circuitboard/qmorder,
 /obj/item/circuitboard/telescope,
 /obj/item/disk/data/tape,
 /obj/item/disk/data/tape/guardbot_tools,

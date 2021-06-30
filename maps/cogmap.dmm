@@ -47066,13 +47066,17 @@
 /area/station/storage/tech)
 "cnN" = (
 /obj/rack,
-/obj/item/circuitboard/barcode_qm{
+/obj/item/circuitboard/qmorder{
 	pixel_x = -5;
-	pixel_y = 1
+	pixel_y = 5
 	},
 /obj/item/circuitboard/robot_module_rewriter{
 	pixel_x = -5;
 	pixel_y = -3
+	},
+/obj/item/circuitboard/barcode_qm{
+	pixel_x = -5;
+	pixel_y = 1
 	},
 /obj/item/circuitboard/barcode{
 	pixel_x = 5;
@@ -52997,6 +53001,10 @@
 /area/station/medical/medbay/lobby)
 "cCc" = (
 /obj/rack,
+/obj/item/circuitboard/qmsupply{
+	pixel_x = -5;
+	pixel_y = 5
+	},
 /obj/item/circuitboard/telescope{
 	pixel_x = -5;
 	pixel_y = 1
@@ -53013,13 +53021,13 @@
 	pixel_x = 5;
 	pixel_y = 3
 	},
-/obj/item/circuitboard/operating{
-	pixel_x = 5;
-	pixel_y = -1
-	},
 /obj/item/circuitboard/arcade{
 	pixel_x = 5;
 	pixel_y = -5
+	},
+/obj/item/circuitboard/operating{
+	pixel_x = 5;
+	pixel_y = -1
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)

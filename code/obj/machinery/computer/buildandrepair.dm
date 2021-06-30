@@ -129,6 +129,12 @@
 /obj/item/circuitboard/operating
 	name = "Circuit board (Operating Computer)"
 	computertype = "/obj/machinery/computer/operating"
+/obj/item/circuitboard/qmorder
+	name = "Circuit board (Supply Request Console)"
+	computertype = "/obj/machinery/computer/ordercomp"
+/obj/item/circuitboard/qmsupply
+	name = "Circuit board (Quartermaster's Console)"
+	computertype = "/obj/machinery/computer/supplycomp"
 /obj/item/circuitboard/mining_magnet
 	name = "Circuit board (Mining Magnet Computer)"
 	computertype = "/obj/machinery/computer/magnet"
