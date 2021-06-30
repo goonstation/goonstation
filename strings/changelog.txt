@@ -1,5 +1,10 @@
 
 (t)wed jun 30 21
+(u)112358sam
+(p)5140
+(e)🆕🗺|feature, mapping
+(+)QM consoles and supply request consoles are now constructable.
+(+)Added QM console and supply request circuitboards to tech storage for current maps.
 (u)UnfunnyPerson
 (p)5318
 (e)⚖|balance
