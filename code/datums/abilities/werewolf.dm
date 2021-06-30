@@ -270,7 +270,7 @@
 				if (prob(70) && HH.stat != 2)
 					HH.emote("scream")
 		if ("pounce")
-			if(isobserver(target))
+			if(isobserver(target) || isintangible(target))
 				return
 			else
 				wrestler_knockdown(M, target, 1)
