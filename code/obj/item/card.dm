@@ -77,7 +77,7 @@ GAUNTLET CARDS
 	flags = FPRINT | TABLEPASS | ATTACK_SELF_DELAY
 	click_delay = 0.4 SECONDS
 	wear_layer = MOB_BELT_LAYER
-	var/list/access = list()
+	var/access = list()
 	var/registered = null
 	var/assignment = null
 	var/title = null
