@@ -429,7 +429,7 @@
 
 	var/obj/item/I = target.equipped()
 	if (I)
-		var/disarm_item_prob = 37
+		var/disarm_item_prob = 37 * lerp(clamp(200 - target_stamina, 0, 100)/100, 1, 0.5)
 		if (target.check_block() && !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)))
 			disarm_item_prob = 5
 
