@@ -1,6 +1,10 @@
 
 (t)wed jun 30 21
 (u)112358sam
+(p)5194
+(e)|
+(+)Borgs and AI can now see packet sniffer device output and set filters.
+(u)112358sam
 (p)5003
 (e)🆕🗺|feature, mapping
 (+)Makes the quantum telescope console constructable.
