@@ -340,7 +340,7 @@
 	msgs.clear(target)
 	msgs.valid = 1
 	msgs.disarm = 1
-	var/item/I
+	var/obj/item/I
 	var/def_zone = null
 	if (zone_sel)
 		def_zone = zone_sel.selecting
@@ -351,7 +351,7 @@
 			if("r_arm")
 				I = target.r_hand
 			else
-				I = target.equipped
+				I = target.equipped()
 	else
 		def_zone = "All"
 		msgs.affecting = def_zone
