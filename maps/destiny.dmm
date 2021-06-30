@@ -416,6 +416,9 @@
 	name = "N APC";
 	pixel_y = 24
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "acb" = (
@@ -16670,7 +16673,7 @@
 	icon_state = "1-2"
 	},
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/red,
 /area/listeningpost)
@@ -20647,15 +20650,13 @@
 	},
 /area/station/science/teleporter)
 "dkK" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Utility Room'"
-	},
+/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/cable,
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-8"
 	},
-/turf/simulated/floor/white,
-/area/station/maintenance/inner/south)
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/southwest)
 "dkN" = (
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
@@ -26458,6 +26459,9 @@
 "fRk" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
@@ -36732,15 +36736,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/equipment)
-"lvl" = (
-/obj/disposalpipe/segment/brig{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/wall/auto/reinforced/gannets,
-/area/station/security/interrogation)
 "lvC" = (
 /obj/disposalpipe/trunk/mail{
 	dir = 8
@@ -39609,9 +39604,6 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/firealarm{
 	layer = 3.5;
 	pixel_y = 28
@@ -39942,6 +39934,9 @@
 /obj/cable,
 /obj/window_blinds/cog2{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/security/hos)
@@ -44506,9 +44501,6 @@
 /area/station/crew_quarters/courtroom)
 "pJD" = (
 /obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor/border_only,
@@ -44979,6 +44971,9 @@
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
@@ -48367,6 +48362,9 @@
 	layer = 3
 	},
 /obj/machinery/door/airlock/gannets/security,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/security/beepsky)
 "rMl" = (
@@ -50467,9 +50465,6 @@
 /obj/item/reagent_containers/food/drinks/mug/random_color{
 	pixel_x = -5;
 	pixel_y = 14
-	},
-/obj/cable{
-	icon_state = "1-2"
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -93187,7 +93182,7 @@ hWT
 vXY
 vNk
 ros
-kUp
+dkK
 aaa
 aaa
 aag
@@ -96797,7 +96792,7 @@ vty
 lvN
 xCl
 owq
-lvl
+fOw
 ltO
 mNk
 pSX
@@ -105711,7 +105706,7 @@ abi
 abm
 aGV
 abW
-aMy
+aeu
 abr
 aff
 abr
@@ -111892,7 +111887,7 @@ ijn
 dGS
 jcL
 jcL
-dkK
+fRQ
 wCG
 shk
 wJh
