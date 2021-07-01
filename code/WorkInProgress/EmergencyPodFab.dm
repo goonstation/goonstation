@@ -58,7 +58,7 @@
 /obj/machinery/macrofab
 	name = "Macro-Fabricator"
 	desc = "A sophisticated machine that fabricates large objects from a nearby reserve of supplies."
-	icon = 'icons/obj/machines/podfab.dmi'
+	icon = 'icons/obj/machinery/podfab.dmi'
 	icon_state = "fab-still"
 	anchored = 1
 	density = 0

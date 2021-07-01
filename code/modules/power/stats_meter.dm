@@ -1,6 +1,6 @@
 /obj/machinery/power/stats_meter
 	name = "Gas Meter"
-	icon = 'icons/obj/reactorstats_meter.dmi'
+	icon = 'icons/obj/machinery/reactorstats_meter.dmi'
 	icon_state = "meter_anim"
 	var/obj/machinery/atmospherics/pipe/target = null
 	anchored = 1.0

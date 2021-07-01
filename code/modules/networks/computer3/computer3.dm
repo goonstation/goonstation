@@ -3,7 +3,7 @@
 /obj/machinery/computer3
 	name = "computer"
 	desc = "A computer workstation."
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "computer_generic"
 	density = 1
 	anchored = 1.0
@@ -70,13 +70,13 @@
 
 
 			console_upper
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "medicalcomputer1"
 				base_icon_state = "azungarcomputer_upper"
 				setup_frame_type = /obj/computer3frame/azungarcomputer_upper
 
 			console_lower
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "medicalcomputer2"
 				base_icon_state = "azungarcomputer_lower"
 				setup_frame_type = /obj/computer3frame/azungarcomputer_lower
@@ -90,11 +90,11 @@
 			setup_starting_program = /datum/computer/file/terminal_program/secure_records
 
 			console_upper
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "securitycomputer1"
 				base_icon_state = "securitycomputer1"
 			console_lower
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "securitycomputer2"
 				base_icon_state = "securitycomputer2"
 
@@ -107,11 +107,11 @@
 			setup_drive_size = 80
 
 			console_upper
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "communications1"
 				base_icon_state = "communications1"
 			console_lower
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "communications2"
 				base_icon_state = "communications2"
 
@@ -160,11 +160,11 @@
 			setup_drive_size = 48
 
 			console_upper
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "engine1"
 				base_icon_state = "engine1"
 			console_lower
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "engine2"
 				base_icon_state = "engine2"
 			manta_computer
@@ -198,11 +198,11 @@
 		setup_starting_os = /datum/computer/file/terminal_program/os/terminal_os
 
 		console_upper
-			icon = 'icons/obj/computerpanel.dmi'
+			icon = 'icons/obj/machinery/computerpanel.dmi'
 			icon_state = "dwaine1"
 			base_icon_state = "dwaine1"
 		console_lower
-			icon = 'icons/obj/computerpanel.dmi'
+			icon = 'icons/obj/machinery/computerpanel.dmi'
 			icon_state = "dwaine2"
 			base_icon_state = "dwaine2"
 
@@ -212,11 +212,11 @@
 			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card/terminal
 
 			console_upper
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "dwaine1"
 				base_icon_state = "dwaine1"
 			console_lower
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "dwaine2"
 				base_icon_state = "dwaine2"
 
@@ -226,11 +226,11 @@
 			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card/terminal
 
 			console_upper
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "dwaine1"
 				base_icon_state = "dwaine1"
 			console_lower
-				icon = 'icons/obj/computerpanel.dmi'
+				icon = 'icons/obj/machinery/computerpanel.dmi'
 				icon_state = "dwaine2"
 				base_icon_state = "dwaine2"
 
@@ -319,7 +319,7 @@
 		src.base_icon_state = src.icon_state
 
 		if(glow_in_dark_screen)
-			src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
+			src.screen_image = image('icons/obj/machinery/computer_screens.dmi', src.icon_state, -1)
 			screen_image.plane = PLANE_LIGHTING
 			screen_image.blend_mode = BLEND_ADD
 			screen_image.layer = LIGHTING_LAYER_BASE
@@ -986,7 +986,7 @@ function lineEnter (ev)
 //Special overrides and what-not for luggables.
 /obj/item/luggable_computer
 	name = "briefcase"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "briefcase"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase"

@@ -2,7 +2,7 @@
 	density = 1
 	anchored = 0
 	name = "Console-frame"
-	icon = 'icons/obj/computer_frame.dmi'
+	icon = 'icons/obj/machinery/computer_frame.dmi'
 	icon_state = "0"
 	var/state = 0
 	var/obj/item/circuitboard/circuit = null
@@ -17,7 +17,7 @@
 	anchored = 0
 	w_class = W_CLASS_SMALL
 	name = "Circuit board"
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/machinery/module.dmi'
 	icon_state = "id_mod"
 	item_state = "electronic"
 	var/id = null

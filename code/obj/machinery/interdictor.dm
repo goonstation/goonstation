@@ -4,7 +4,7 @@
 /obj/machinery/interdictor
 	name = "spatial interdictor"
 	desc = "A sophisticated device that lessens or nullifies the effects of assorted stellar phenomena."
-	icon = 'icons/obj/machines/interdictor.dmi'
+	icon = 'icons/obj/machinery/interdictor.dmi'
 	icon_state = "interdictor"
 	power_usage = 1250 //drawn while interdiction field is active; charging is a separate usage value that can be concurrent
 	density = 1
@@ -120,18 +120,18 @@
 /obj/machinery/interdictor/proc/updateicon()
 	var/ratio = max(0, src.intcap.charge / src.intcap.maxcharge)
 	ratio = round(ratio, 0.33) * 100
-	var/image/I_chrg = SafeGetOverlayImage("charge", 'icons/obj/machines/interdictor.dmi', "idx-charge-[ratio]")
+	var/image/I_chrg = SafeGetOverlayImage("charge", 'icons/obj/machinery/interdictor.dmi', "idx-charge-[ratio]")
 	I_chrg.plane = PLANE_OVERLAY_EFFECTS
 	I_chrg.appearance_flags |= RESET_COLOR
 	UpdateOverlays(I_chrg, "charge", 0, 1)
 
 	var/gridtie = src.connected && powered()
-	var/image/I_grid = SafeGetOverlayImage("grid", 'icons/obj/machines/interdictor.dmi', "idx-grid-[gridtie]")
+	var/image/I_grid = SafeGetOverlayImage("grid", 'icons/obj/machinery/interdictor.dmi', "idx-grid-[gridtie]")
 	I_grid.plane = PLANE_OVERLAY_EFFECTS
 	I_grid.appearance_flags |= RESET_COLOR
 	UpdateOverlays(I_grid, "grid", 0, 1)
 
-	var/image/I_actv = SafeGetOverlayImage("active", 'icons/obj/machines/interdictor.dmi', "idx-active-[canInterdict]")
+	var/image/I_actv = SafeGetOverlayImage("active", 'icons/obj/machinery/interdictor.dmi', "idx-active-[canInterdict]")
 	I_actv.plane = PLANE_OVERLAY_EFFECTS
 	I_actv.appearance_flags |= RESET_COLOR
 	UpdateOverlays(I_actv, "active", 0, 1)
@@ -141,7 +141,7 @@
 /obj/machinery/interdictor/proc/updatecharge()
 	var/ratio = max(0, src.intcap.charge / src.intcap.maxcharge)
 	ratio = round(ratio, 0.33) * 100
-	var/image/I_chrg = SafeGetOverlayImage("charge", 'icons/obj/machines/interdictor.dmi', "idx-charge-[ratio]")
+	var/image/I_chrg = SafeGetOverlayImage("charge", 'icons/obj/machinery/interdictor.dmi', "idx-charge-[ratio]")
 	I_chrg.plane = PLANE_OVERLAY_EFFECTS
 	I_chrg.appearance_flags |= RESET_COLOR
 	UpdateOverlays(I_chrg, "charge", 0, 1)
@@ -233,7 +233,7 @@
 /obj/interdict_edge
 	name = "interdiction barrier"
 	desc = "Delineates the functional area of a nearby spatial interdictor."
-	icon = 'icons/obj/machines/interdictor.dmi'
+	icon = 'icons/obj/machinery/interdictor.dmi'
 	icon_state = "interdict-edge"
 	anchored = 1
 	density = 0
@@ -251,7 +251,7 @@
 /obj/item/interdictor_rod
 	name = "Lambda phase-control rod"
 	desc = "A large, narrow cylinder with a standard core and inbuilt control circuitry. Grants a lower range to interdictors."
-	icon = 'icons/obj/machines/interdictor.dmi'
+	icon = 'icons/obj/machinery/interdictor.dmi'
 	icon_state = "interdict-rod"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "rods"
@@ -278,7 +278,7 @@
 /obj/item/interdictor_board
 	name = "spatial interdictor mainboard"
 	desc = "A custom-fabricated circuit board with a cutting-edge miniaturized retro-encabulator."
-	icon = 'icons/obj/machines/interdictor.dmi'
+	icon = 'icons/obj/machinery/interdictor.dmi'
 	icon_state = "interdict-board"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "electronic"
@@ -293,7 +293,7 @@
 /obj/item/interdictor_frame_kit
 	name = "spatial interdictor frame kit"
 	desc = "You can hear an awful lot of junk rattling around in this box."
-	icon = 'icons/obj/machines/interdictor.dmi'
+	icon = 'icons/obj/machinery/interdictor.dmi'
 	icon_state = "interdict-kit"
 	w_class = W_CLASS_BULKY
 
@@ -322,7 +322,7 @@
 /obj/interdictor_frame
 	name = "spatial interdictor frame"
 	desc = "An unassembled frame for a spatial interdictor. Several bolts are sticking out."
-	icon = 'icons/obj/machines/interdictor.dmi'
+	icon = 'icons/obj/machinery/interdictor.dmi'
 	icon_state = "interframe-0"
 	density = 1
 	var/state = 0

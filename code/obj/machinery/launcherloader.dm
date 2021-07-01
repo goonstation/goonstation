@@ -104,7 +104,7 @@
 	var/delivery_destination = null
 
 /obj/machinery/cargo_router
-	icon = 'icons/obj/delivery.dmi'
+	icon = 'icons/obj/machinery/delivery.dmi'
 	icon_state = "amdl_0"
 	name = "Cargo Router"
 	desc = "Scans the barcode on objects and reroutes them accordingly."
@@ -306,7 +306,7 @@
 	name = "Barcode Computer"
 	desc = "Used to print barcode stickers for the cargo routing system."
 
-	icon = 'icons/obj/delivery.dmi'
+	icon = 'icons/obj/machinery/delivery.dmi'
 	icon_state = "barcode_comp"
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 
@@ -428,7 +428,7 @@
 /obj/item/sticker/barcode
 	name = "barcode sticker"
 	desc = "A barcode sticker used in the cargo routing system."
-	icon = 'icons/obj/delivery.dmi'
+	icon = 'icons/obj/machinery/delivery.dmi'
 	icon_state = "barcode"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"

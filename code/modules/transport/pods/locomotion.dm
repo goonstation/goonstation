@@ -4,7 +4,7 @@
 	desc = "Y'all shouldn't be seeing this."
 	power_used = 0
 	system = "Locomotion"
-	icon = 'icons/obj/machines/8dirvehicles.dmi'
+	icon = 'icons/obj/machinery/8dirvehicles.dmi'
 	icon_state = "treads"
 
 	var/appearanceString = "minisub_treads"

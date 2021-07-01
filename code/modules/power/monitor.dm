@@ -3,7 +3,7 @@
 
 /obj/machinery/power/monitor
 	name = "Power Monitoring Computer"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "power2"
 	density = 1
 	anchored = 1
@@ -29,7 +29,7 @@
 	light.set_color(light_r, light_g, light_b)
 	light.attach(src)
 	if(glow_in_dark_screen)
-		src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
+		src.screen_image = image('icons/obj/machinery/computer_screens.dmi', src.icon_state, -1)
 		screen_image.plane = PLANE_LIGHTING
 		screen_image.blend_mode = BLEND_ADD
 		screen_image.layer = LIGHTING_LAYER_BASE
@@ -109,11 +109,11 @@
 	))
 
 /obj/machinery/power/monitor/console_upper
-	icon = 'icons/obj/computerpanel.dmi'
+	icon = 'icons/obj/machinery/computerpanel.dmi'
 	icon_state = "power1"
 
 /obj/machinery/power/monitor/console_lower
-	icon = 'icons/obj/computerpanel.dmi'
+	icon = 'icons/obj/machinery/computerpanel.dmi'
 	icon_state = "power2"
 
 /obj/machinery/power/monitor/power_change()
@@ -145,7 +145,7 @@
 // tweaked version to hook up to the engine->smes powernet and show SMES usage stats and power produced
 /obj/machinery/power/monitor/smes
 	name = "SMES Monitoring Computer"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "power"
 	density = 1
 	anchored = 1

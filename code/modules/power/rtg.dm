@@ -84,7 +84,7 @@
 			icon_state = "rtg_empty"
 			src.UpdateOverlays(null, "rtg")
 			return
-		src.UpdateOverlays(image('icons/obj/power.dmi', "rtg-f[min(1 + ceil(fuel_pellet.material.getProperty("radioactive") / 2), 5)]"), "rtg")
+		src.UpdateOverlays(image('icons/obj/machinery/power.dmi', "rtg-f[min(1 + ceil(fuel_pellet.material.getProperty("radioactive") / 2), 5)]"), "rtg")
 
 /obj/item/fuel_pellet
 	name = "fuel pellet"

@@ -9,7 +9,7 @@
 
 /obj/machinery/security_monitor
 	name = "Security Monitor"
-	icon = 'icons/obj/sec_tv.dmi'
+	icon = 'icons/obj/machinery/sec_tv.dmi'
 	icon_state = "wall-monitor"
 	anchored = 1.0
 	pixel_y = 30
@@ -101,7 +101,7 @@
 		pixel_x = owner.pixel_x
 		pixel_y = owner.pixel_y
 		layer = owner.layer
-		blank = image('icons/obj/sec_tv.dmi',"wall-screen")
+		blank = image('icons/obj/machinery/sec_tv.dmi',"wall-screen")
 		underlays += blank
 
 	disposing()

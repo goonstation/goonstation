@@ -89,10 +89,10 @@
 		ClearAllOverlays()
 		return
 
-	var/image/I = SafeGetOverlayImage("operating", 'icons/obj/power.dmi', "smes-op[online]")
+	var/image/I = SafeGetOverlayImage("operating", 'icons/obj/machinery/power.dmi', "smes-op[online]")
 	UpdateOverlays(I, "operating")
 
-	I = SafeGetOverlayImage("chargemode",'icons/obj/power.dmi', "smes-oc1")
+	I = SafeGetOverlayImage("chargemode",'icons/obj/machinery/power.dmi', "smes-oc1")
 	if (charging)
 		I.icon_state = "smes-oc1"
 
@@ -105,7 +105,7 @@
 
 	var/clevel = chargedisplay()
 	if (clevel>0)
-		I = SafeGetOverlayImage("chargedisp",'icons/obj/power.dmi',"smes-og[clevel]")
+		I = SafeGetOverlayImage("chargedisp",'icons/obj/machinery/power.dmi',"smes-og[clevel]")
 		UpdateOverlays(I, "chargedisp")
 
 /obj/machinery/power/smes/proc/chargedisplay()

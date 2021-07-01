@@ -1704,8 +1704,8 @@ Returns:
 		name = "[core.name]-[head.name] spear"
 		desc = "It's an improvised spear. The handle is made from \a [core.name] and the head is \a [head.name]."
 		//literally turning the used items into the parts of the spear. Im not sure what i will use this for.
-		core.icon = icon('icons/obj/crafting.dmi',"spearbody")
-		head.icon = icon('icons/obj/crafting.dmi',"spearhead")
+		core.icon = icon('icons/obj/machinery/crafting.dmi',"spearbody")
+		head.icon = icon('icons/obj/machinery/crafting.dmi',"spearhead")
 
 		core.pixel_x = 0
 		core.pixel_y = 0

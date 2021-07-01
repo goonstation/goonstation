@@ -32,7 +32,7 @@
 /obj/death_button/VR_logout_button
 	name = "Leave VR"
 	desc = "Press this button to log out of virtual reality."
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/machinery/monitors.dmi'
 	icon_state = "party"
 
 	attack_hand(mob/user as mob)

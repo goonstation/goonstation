@@ -1,6 +1,6 @@
 /obj/machinery/power
 	name = null
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machinery/power.dmi'
 	anchored = 1.0
 	machine_registry_idx = MACHINES_POWER
 	var/datum/powernet/powernet = null

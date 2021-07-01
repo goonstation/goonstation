@@ -120,7 +120,7 @@ CONTENTS:
 	density = 1
 	anchored = 1
 
-	icon = 'icons/obj/machines/mindswap.dmi'
+	icon = 'icons/obj/machinery/mindswap.dmi'
 	icon_state = "mindswap"
 
 	var/obj/stool/chair/e_chair/chair1 = null
@@ -147,27 +147,27 @@ CONTENTS:
 		SPAWN_DBG(0.5 SECONDS)
 			update_chairs()
 
-		overlays_list["cables"] = new /image('icons/obj/machines/mindswap.dmi', "mindswap-cables")
+		overlays_list["cables"] = new /image('icons/obj/machinery/mindswap.dmi', "mindswap-cables")
 
-		overlays_list["topcable"] =  new /image('icons/obj/machines/mindswap.dmi', "mindswap-topcable")
+		overlays_list["topcable"] =  new /image('icons/obj/machinery/mindswap.dmi', "mindswap-topcable")
 
-		overlays_list["lscreen0"] = new/image('icons/obj/machines/mindswap.dmi', "mindswap-screenY")
-		overlays_list["lscreen1"] = new/image('icons/obj/machines/mindswap.dmi', "mindswap-screenY-bright")
+		overlays_list["lscreen0"] = new/image('icons/obj/machinery/mindswap.dmi', "mindswap-screenY")
+		overlays_list["lscreen1"] = new/image('icons/obj/machinery/mindswap.dmi', "mindswap-screenY-bright")
 
-		overlays_list["rscreen0"] = new /image('icons/obj/machines/mindswap.dmi', "mindswap-screenT")
-		overlays_list["rscreen1"] = new /image('icons/obj/machines/mindswap.dmi', "mindswap-screenT-bright")
+		overlays_list["rscreen0"] = new /image('icons/obj/machinery/mindswap.dmi', "mindswap-screenT")
+		overlays_list["rscreen1"] = new /image('icons/obj/machinery/mindswap.dmi', "mindswap-screenT-bright")
 
-		overlays_list["mainindicator_off"] = new /image('icons/obj/machines/mindswap.dmi', "mindswap-dial-off")
-		overlays_list["mainindicator"] = new /image('icons/obj/machines/mindswap.dmi', "mindswap-dial")
-		overlays_list["mainindicator_on"] = new /image('icons/obj/machines/mindswap.dmi', "mindswap-dial-on")
+		overlays_list["mainindicator_off"] = new /image('icons/obj/machinery/mindswap.dmi', "mindswap-dial-off")
+		overlays_list["mainindicator"] = new /image('icons/obj/machinery/mindswap.dmi', "mindswap-dial")
+		overlays_list["mainindicator_on"] = new /image('icons/obj/machinery/mindswap.dmi', "mindswap-dial-on")
 
-		overlays_list["l_dial_idle"] = new /image('icons/obj/machines/mindswap.dmi', "mindswap-dial-L-idle")
-		overlays_list["l_dial_0"] = new /image('icons/obj/machines/mindswap.dmi', "mindswap-dial-L-on")
-		overlays_list["l_dial_1"] = new /image('icons/obj/machines/mindswap.dmi', "mindswap-dial-L-jitter")
+		overlays_list["l_dial_idle"] = new /image('icons/obj/machinery/mindswap.dmi', "mindswap-dial-L-idle")
+		overlays_list["l_dial_0"] = new /image('icons/obj/machinery/mindswap.dmi', "mindswap-dial-L-on")
+		overlays_list["l_dial_1"] = new /image('icons/obj/machinery/mindswap.dmi', "mindswap-dial-L-jitter")
 
-		overlays_list["r_dial_idle"] = new /image('icons/obj/machines/mindswap.dmi', "mindswap-dial-R-idle")
-		overlays_list["r_dial_0"] = new /image('icons/obj/machines/mindswap.dmi', "mindswap-dial-R-on")
-		overlays_list["r_dial_1"] = new /image('icons/obj/machines/mindswap.dmi', "mindswap-dial-R-jitter")
+		overlays_list["r_dial_idle"] = new /image('icons/obj/machinery/mindswap.dmi', "mindswap-dial-R-idle")
+		overlays_list["r_dial_0"] = new /image('icons/obj/machinery/mindswap.dmi', "mindswap-dial-R-on")
+		overlays_list["r_dial_1"] = new /image('icons/obj/machinery/mindswap.dmi', "mindswap-dial-R-jitter")
 
 		update_icons()
 

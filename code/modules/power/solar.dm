@@ -12,7 +12,7 @@
 /obj/machinery/power/tracker
 	name = "solar tracker"
 	desc = "A solar directional tracker."
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machinery/power.dmi'
 	icon_state = "tracker"
 	anchored = 1
 	density = 1
@@ -66,7 +66,7 @@
 /obj/machinery/power/solar
 	name = "solar panel"
 	desc = "A solar electrical generator."
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machinery/power.dmi'
 	icon_state = "solar_panel"
 	anchored = 1
 	density = 1
@@ -221,7 +221,7 @@
 /obj/machinery/power/solar_control
 	name = "solar panel control"
 	desc = "A controller for solar panel arrays."
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "solar"
 	anchored = 1
 	density = 1

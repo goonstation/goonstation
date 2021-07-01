@@ -4,7 +4,7 @@
 
 /obj/machinery/alarm
 	name = "Air Monitor"
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/machinery/monitors.dmi'
 	icon_state = "alarm0"
 	anchored = 1.0
 	var/skipprocess = 0 //Experimenting

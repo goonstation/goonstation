@@ -534,7 +534,7 @@
 
 /obj/item/press_upgrade //parent just to i dont have to set name and icon a bunch i am PEAK lazy
 	name = "printing press upgrade module"
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/machinery/module.dmi'
 
 /obj/item/press_upgrade/colors //custom font color upgrade
 	desc = "Looks like this upgrade module is for letting your press use colored ink!"

@@ -1,6 +1,6 @@
 /obj/machinery/teleport
 	name = "teleport"
-	icon = 'icons/obj/teleporter.dmi'
+	icon = 'icons/obj/machinery/teleporter.dmi'
 	density = 1
 	anchored = 1.0
 	mats = 10

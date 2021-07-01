@@ -6,7 +6,7 @@
 /obj/item/mechanics/networkcomp
 	name = "Powernet-networking component"
 	desc = ""
-	icon = 'icons/obj/networked.dmi'
+	icon = 'icons/obj/machinery/networked.dmi'
 	icon_state = "generic-p"
 	cabinet_banned = 1 // non-functional, abuse potential. B&
 	plane = PLANE_DEFAULT

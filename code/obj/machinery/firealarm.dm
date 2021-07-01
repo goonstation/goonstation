@@ -4,7 +4,7 @@
 
 /obj/machinery/firealarm
 	name = "Fire Alarm"
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/machinery/monitors.dmi'
 	icon_state = "fire0"
 	plane = PLANE_NOSHADOW_ABOVE
 	deconstruct_flags = DECON_WIRECUTTERS | DECON_MULTITOOL

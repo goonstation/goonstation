@@ -3,7 +3,7 @@
 	desc = "This machine uses paper to copy photos, work documents... anything paper-based, really. "
 	density = 1
 	anchored = 1
-	icon = 'icons/obj/machines/photocopier.dmi'
+	icon = 'icons/obj/machinery/photocopier.dmi'
 	icon_state = "close_sesame"
 	pixel_x = 2 //its just a bit limited by sprite width, needs a small offset
 	mats = 16 //just to make photocopiers mech copyable, how could this possibly go wrong?

@@ -9,7 +9,7 @@
 		fields = list("logdir" = DEFAULT_LOG_PATH)
 
 /obj/machinery/networked/logreader
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "computer_generic"
 	name = "door access logs"
 	density = 1

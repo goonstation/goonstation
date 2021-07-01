@@ -531,7 +531,7 @@ datum/pump_ui/circulator_ui
 
 /obj/machinery/power/monitor
 	name = "Power Monitoring Computer"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "power"
 	density = 1
 	anchored = 1
@@ -694,15 +694,15 @@ datum/pump_ui/circulator_ui
 		if(status & (NOPOWER))
 			UpdateOverlays(null, "power")
 		else if(status & (BROKEN))
-			UpdateOverlays(image('icons/obj/power.dmi', "teg-err"), "power")
+			UpdateOverlays(image('icons/obj/machinery/power.dmi', "teg-err"), "power")
 		else
 			if(lastgenlev != 0)
-				UpdateOverlays(image('icons/obj/power.dmi', "teg-op[lastgenlev]"), "power")
+				UpdateOverlays(image('icons/obj/machinery/power.dmi', "teg-op[lastgenlev]"), "power")
 			else
 				UpdateOverlays(null, "power")
 
 		if(src.variant_b)
-			UpdateOverlays(image('icons/obj/power.dmi', "teg_var"), "variant")
+			UpdateOverlays(image('icons/obj/machinery/power.dmi', "teg_var"), "variant")
 		else
 			UpdateOverlays(null, "variant")
 
@@ -721,7 +721,7 @@ datum/pump_ui/circulator_ui
 
 			// Use single light if we are variant b (only has one light) OR if we are ONLY in the APC draining state
 			var/one_light = src.variant_b || ( max_warning == WARNING_APC_DRAINING )
-			var/image/warning = image('icons/obj/power.dmi', one_light ? "tegv_lights" : "teg_lights", dir=warning_side)
+			var/image/warning = image('icons/obj/machinery/power.dmi', one_light ? "tegv_lights" : "teg_lights", dir=warning_side)
 			if(max_warning > WARNING_5MIN)
 				warning.color = "#ff0000"
 				warning_light_desc = "<br><span class='alert'>The power emergency lights are flashing.</span>"
@@ -1323,7 +1323,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 /obj/item/teg_semiconductor
 	name = "Prototype Semiconductor"
 	desc = "A large rectangulr plate stamped with 'Prototype Thermo-Electric Generator Semiconductor.  If found please return to NanoTrasen.'"
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machinery/power.dmi'
 	icon_state = "semi"
 
 /obj/machinery/atmospherics/unary/furnace_connector
@@ -1455,7 +1455,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 	req_access = list() //Change
 	req_access_txt = ""
 
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "computer_generic"
 
 	name = "Pump control computer"

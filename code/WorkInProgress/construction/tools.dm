@@ -1,7 +1,7 @@
 // hack of the century
 /obj/smes_spawner
 	name = "power storage unit"
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machinery/power.dmi'
 	icon_state = "smes"
 	density = 1
 	anchored = 1
@@ -96,7 +96,7 @@
 
 /obj/machinery/turretid/computer
 	var/list/turrets = list()
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "turret3"
 	density = 1
 	var/firesat = "humanoids"

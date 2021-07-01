@@ -28,7 +28,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 
 /obj/item/mechanics/mc14500
 	name = "Control Unit"
-	icon = 'icons/obj/networked.dmi'
+	icon = 'icons/obj/machinery/networked.dmi'
 	icon_state = "genericsmall0"
 	plane = PLANE_DEFAULT
 	var/ROM = ""

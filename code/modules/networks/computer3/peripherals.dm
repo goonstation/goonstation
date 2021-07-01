@@ -19,7 +19,7 @@
 /obj/item/peripheral
 	name = "Peripheral card"
 	desc = "A computer circuit board."
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/machinery/module.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "id_mod"
 	item_state = "electronic"

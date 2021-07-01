@@ -426,7 +426,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 /obj/item/uplink/integrated
 	name = "uplink module"
 	desc = "An electronic uplink system of unknown origin."
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/machinery/module.dmi'
 	icon_state = "power_mod"
 	can_selfdestruct = 0
 

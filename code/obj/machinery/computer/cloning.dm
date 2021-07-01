@@ -7,7 +7,7 @@
 /obj/machinery/computer/cloning
 	name = "Cloning Console"
 	desc = "Use this console to operate a cloning scanner and pod. There is a slot to insert modules - they can be removed with a screwdriver."
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "dna"
 	req_access = list(access_heads) //Only used for record deletion right now.
 	object_flags = CAN_REPROGRAM_ACCESS
@@ -67,7 +67,7 @@
 /obj/item/cloner_upgrade
 	name = "\improper NecroScan II cloner upgrade module"
 	desc = "A circuit module designed to improve cloning machine scanning capabilities to the point where even the deceased may be scanned."
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/machinery/module.dmi'
 	icon_state = "cloner_upgrade"
 	w_class = W_CLASS_TINY
 	throwforce = 1
@@ -75,7 +75,7 @@
 /obj/item/grinder_upgrade
 	name = "\improper ProBlender X enzymatic reclaimer upgrade module"
 	desc = "A circuit module designed to improve enzymatic reclaimer capabilities so that the machine will be able to reclaim more matter, faster."
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/machinery/module.dmi'
 	icon_state = "grinder_upgrade"
 	w_class = W_CLASS_TINY
 	throwforce = 1
@@ -396,7 +396,7 @@ proc/find_ghost_by_key(var/find_key)
 /obj/machinery/clone_scanner
 	name = "cloning machine scanner"
 	desc = "Some sort of weird machine that you stuff people into to scan their genetic DNA for cloning."
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machinery/Cryogenic2.dmi'
 	icon_state = "scanner_0"
 	density = 1
 	mats = 15

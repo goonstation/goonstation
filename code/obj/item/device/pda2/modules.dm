@@ -7,7 +7,7 @@
 /obj/item/device/pda_module
 	name = "PDA module"
 	desc = "A piece of expansion circuitry for PDAs."
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/machinery/module.dmi'
 	icon_state = "pdamod"
 	w_class = W_CLASS_SMALL
 	mats = 4.0

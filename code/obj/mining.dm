@@ -113,7 +113,7 @@
 /obj/item/magnet_parts
 	name = "mineral magnet parts"
 	desc = "Used to construct a new magnet on a magnet chassis."
-	icon = 'icons/obj/electronics.dmi'
+	icon = 'icons/obj/machinery/electronics.dmi'
 	icon_state = "dbox"
 	var/constructed_magnet = /obj/machinery/mining_magnet
 
@@ -858,7 +858,7 @@
 
 /obj/machinery/computer/magnet
 	name = "mineral magnet controls"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "mmagnet"
 	var/temp = null
 	var/list/linked_magnets = list()

@@ -464,7 +464,7 @@
 		status |= BROKEN
 
 /obj/machinery/computer/airbr/emergency_shuttle
-	icon = 'icons/obj/airtunnel.dmi'
+	icon = 'icons/obj/machinery/airtunnel.dmi'
 	emergency = 1
 
 /* -------------------- Button -------------------- */

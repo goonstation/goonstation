@@ -4,7 +4,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 
 /obj/machinery/computer/telescope
 	name = "quantum telescope"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "computer_generic"
 
 	var/mob/using = null

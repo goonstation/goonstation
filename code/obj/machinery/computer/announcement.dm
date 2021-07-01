@@ -210,10 +210,10 @@
 		return 1
 
 /obj/machinery/computer/announcement/console_upper
-	icon = 'icons/obj/computerpanel.dmi'
+	icon = 'icons/obj/machinery/computerpanel.dmi'
 	icon_state = "announcement1"
 /obj/machinery/computer/announcement/console_lower
-	icon = 'icons/obj/computerpanel.dmi'
+	icon = 'icons/obj/machinery/computerpanel.dmi'
 	icon_state = "announcement2"
 
 /obj/machinery/computer/announcement/syndie

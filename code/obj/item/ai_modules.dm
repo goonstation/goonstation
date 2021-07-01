@@ -8,7 +8,7 @@ AI MODULES
 
 /obj/item/aiModule
 	name = "AI Module"
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/machinery/module.dmi'
 	icon_state = "std_mod"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "electronic"

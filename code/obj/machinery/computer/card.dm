@@ -18,10 +18,10 @@
 
 
 /obj/machinery/computer/card/console_upper
-	icon = 'icons/obj/computerpanel.dmi'
+	icon = 'icons/obj/machinery/computerpanel.dmi'
 	icon_state = "id1"
 /obj/machinery/computer/card/console_lower
-	icon = 'icons/obj/computerpanel.dmi'
+	icon = 'icons/obj/machinery/computerpanel.dmi'
 	icon_state = "id2"
 
 /obj/machinery/computer/card/attack_ai(var/mob/user as mob)

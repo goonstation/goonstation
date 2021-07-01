@@ -1,7 +1,7 @@
 /obj/machinery/power/nuke/nuke_turbine
 	name = "Large Turbine"
 	desc = "A large assembly of fan blades rotated by steam pressure to generate electricity."
-	icon = 'icons/obj/machines/fusion.dmi'
+	icon = 'icons/obj/machinery/fusion.dmi'
 	icon_state = "cab3"
 	anchored = 1
 	density = 1

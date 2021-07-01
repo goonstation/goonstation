@@ -254,7 +254,7 @@ obj/decal/fakeobjects/cargopad
 /obj/decal/fakeobjects/apc_broken
 	name = "broken APC"
 	desc = "A smashed local power unit."
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machinery/power.dmi'
 	icon_state = "apc-b"
 	anchored = 1
 
@@ -269,7 +269,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/firealarm_broken
 	name = "broken fire alarm"
 	desc = "This fire alarm is burnt out, ironically."
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/machinery/monitors.dmi'
 	icon_state = "firex"
 	anchored = 1
 
@@ -297,7 +297,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/airmonitor_broken
 	name = "broken air monitor"
 	desc = "Something has broken this air monitor."
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/machinery/monitors.dmi'
 	icon_state = "alarmx"
 	anchored = 1
 
@@ -366,7 +366,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/sealedsleeper
 	name = "sleeper"
 	desc = "This one appears to still be sealed. Who's in there?"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machinery/Cryogenic2.dmi'
 	icon_state = "sealedsleeper"
 	anchored = 1
 	density = 1
@@ -376,7 +376,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/pcb
 	name = "PCB constructor"
 	desc = "A combination pick and place machine and wave soldering gizmo.  For making boards.  Buddy boards.   Well, it would if the interface wasn't broken."
-	icon = 'icons/obj/manufacturer.dmi'
+	icon = 'icons/obj/machinery/manufacturer.dmi'
 	icon_state = "fab"
 	anchored = 1
 	density = 1
@@ -392,7 +392,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/brokenportal
 	name = "broken portal ring"
 	desc = "This portal ring looks completely fried."
-	icon = 'icons/obj/teleporter.dmi'
+	icon = 'icons/obj/machinery/teleporter.dmi'
 	icon_state = "tele_fuzz"
 	anchored = 1
 	density = 1

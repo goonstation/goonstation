@@ -5,7 +5,7 @@
 /obj/machinery/light_switch
 	desc = "A light switch"
 	name = null
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machinery/power.dmi'
 	icon_state = "light1"
 	anchored = 1.0
 	plane = PLANE_NOSHADOW_ABOVE

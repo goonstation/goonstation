@@ -70,7 +70,7 @@
 /obj/machinery/power/nuke/fchamber
 	name = "Nuclear Reactor Fission Chamber"
 	desc = "todo"
-	icon = 'icons/obj/machines/nuclear.dmi'
+	icon = 'icons/obj/machinery/nuclear.dmi'
 	icon_state = "enginepoweredworking"
 	anchored = 1
 	density = 1

@@ -558,7 +558,7 @@
 /obj/machinery/computer/special_supply
 	// This is a grade 1 workstation. Contains bare-bones supplies.
 	name = "Special Supply Computer"
-	icon = 'icons/obj/computer.dmi'
+	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "QMcom"
 	density = 1
 	anchored = 1

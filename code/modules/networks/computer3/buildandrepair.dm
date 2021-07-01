@@ -2,7 +2,7 @@
 /obj/item/motherboard
 	name = "Computer mainboard"
 	desc = "A computer motherboard."
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/machinery/module.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "mainboard"
 	item_state = "electronic"
@@ -15,7 +15,7 @@
 	density = 1
 	anchored = 0
 	name = "Computer-frame"
-	icon = 'icons/obj/computer_frame.dmi'
+	icon = 'icons/obj/machinery/computer_frame.dmi'
 	icon_state = "0"
 	var/state = 0
 	var/obj/item/motherboard/mainboard = null
@@ -37,7 +37,7 @@
 
 	desktop //Those old desktop computers
 		name = "Desktop Computer-frame"
-		icon = 'icons/obj/computer_frame_desk.dmi'
+		icon = 'icons/obj/machinery/computer_frame_desk.dmi'
 		created_icon_state = "old"
 		max_peripherals = 3
 		metal_given = 3
@@ -46,7 +46,7 @@
 
 	azungarcomputer_upper
 		name = "Terminal Frame"
-		icon = 'icons/obj/computerpanel_upper.dmi'
+		icon = 'icons/obj/machinery/computerpanel_upper.dmi'
 		created_icon_state = "4"
 		max_peripherals = 3
 		metal_given = 3
@@ -54,7 +54,7 @@
 
 	azungarcomputer_lower
 		name = "Terminal Frame"
-		icon = 'icons/obj/computerpanel_lower.dmi'
+		icon = 'icons/obj/machinery/computerpanel_lower.dmi'
 		created_icon_state = "4"
 		max_peripherals = 3
 		metal_given = 3

@@ -67,7 +67,7 @@
 /obj/machinery/nanofab
 	name = "Nano-fabricator"
 	desc = "'Nano' means it's high-tech stuff."
-	icon = 'icons/obj/manufacturer.dmi'
+	icon = 'icons/obj/machinery/manufacturer.dmi'
 	icon_state = "fab2-on"
 	anchored = 1
 	density = 1
@@ -370,7 +370,7 @@
 	name = "Nanofab Blueprint"
 	desc = "It's a blueprint to allow a nanofab unit to build something."
 	info = "There's all manner of confusing diagrams and instructions on here. It's meant for a machine to read."
-	icon = 'icons/obj/electronics.dmi'
+	icon = 'icons/obj/machinery/electronics.dmi'
 	icon_state = "blueprint"
 	item_state = "sheet"
 

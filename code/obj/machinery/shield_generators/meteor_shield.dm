@@ -1,7 +1,7 @@
 /obj/machinery/shieldgenerator/meteorshield
 	name = "meteor shield generator"
 	desc = "Generates a force field that stops meteors."
-	icon = 'icons/obj/meteor_shield.dmi'
+	icon = 'icons/obj/machinery/meteor_shield.dmi'
 	icon_state = "shieldgen"
 
 	shield_on()

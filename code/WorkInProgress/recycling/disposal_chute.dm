@@ -12,7 +12,7 @@
 /obj/machinery/disposal
 	name = "disposal unit"
 	desc = "A pneumatic waste disposal unit."
-	icon = 'icons/obj/disposal.dmi'
+	icon = 'icons/obj/machinery/disposal.dmi'
 	icon_state = "disposal"
 	anchored = 1
 	density = 1
@@ -490,7 +490,7 @@
 		return 1
 
 /obj/machinery/disposal/small
-	icon = 'icons/obj/disposal_small.dmi'
+	icon = 'icons/obj/machinery/disposal_small.dmi'
 	handle_normal_state = "disposal-handle"
 	density = 0
 
@@ -510,7 +510,7 @@
 	icon_style = "brig"
 
 /obj/machinery/disposal/brig/small
-	icon = 'icons/obj/disposal_small.dmi'
+	icon = 'icons/obj/machinery/disposal_small.dmi'
 	handle_normal_state = "brig-handle"
 	density = 0
 
@@ -542,7 +542,7 @@
 	icon_style = "ore"
 
 /obj/machinery/disposal/ore/small
-	icon = 'icons/obj/disposal_small.dmi'
+	icon = 'icons/obj/machinery/disposal_small.dmi'
 	handle_normal_state = "ore-handle"
 	density = 0
 
@@ -622,7 +622,7 @@
 
 /obj/machinery/disposal/transport
 	name = "transportation unit"
-	icon = 'icons/obj/disposal.dmi'
+	icon = 'icons/obj/machinery/disposal.dmi'
 	icon_state = "scichute"
 	desc = "A pneumatic delivery chute for transporting people. Ever see Futurama? It's like that."
 	icon_style = "sci"

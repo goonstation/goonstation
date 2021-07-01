@@ -927,7 +927,7 @@
 	anchored = 1
 	device_tag = "PNET_ARTCONSOL"
 	timeout = 10
-	icon = 'icons/obj/networked.dmi'
+	icon = 'icons/obj/machinery/networked.dmi'
 	icon_state = "generic0"
 	var/list/entries
 	var/screen_title = "Devices"

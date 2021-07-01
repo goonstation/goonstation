@@ -7,7 +7,7 @@ Modules to do things with cloning modules
 
 // This one makes clones come out faster. Nice!
 /obj/item/cloneModule/speedyclone
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/machinery/module.dmi'
 	icon_state = "speedyclone"
 	name = "SpeedyClone2000"
 	desc = "An experimental cloning module. Greatly speeds up the cloning process. Also voids the cloning pod warranty."
@@ -15,7 +15,7 @@ Modules to do things with cloning modules
 
 // This one makes the pod more efficient. For filthy space hippies who are into that recycling stuff.
 /obj/item/cloneModule/efficientclone
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/machinery/module.dmi'
 	icon_state = "efficientclone"
 	name = "Biomatter recycling unit"
 	desc = "An experimental cloning module. Lowers the amount of biomatter a cloning pod needs by recycling old biomatter."
@@ -23,13 +23,13 @@ Modules to do things with cloning modules
 
 // A spooky module. Zaps the memories of anyone who gets cloned in a machine using this
 /obj/item/cloneModule/minderaser
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/machinery/module.dmi'
 	icon_state = "mindwipe"
 	name = "Prototype Rehabilitation Module #17"
 	desc = "An experimental treatment device meant for only the worst of criminals. Fires a barrage of electrical signals to the brain during medical procedues. It looks like it has some cloning goop and blood smeared on it - yuck."
 
 /obj/item/cloneModule/mindslave_module
-	icon = 'icons/obj/cloning.dmi'
+	icon = 'icons/obj/machinery/cloning.dmi'
 	icon_state = "slavemodule"
 	name = "Mindslave cloning module"
 	desc = "A powerful device that remaps people's brains when they get cloned to make them completely loyal to the owner of this module"
@@ -77,7 +77,7 @@ Modules to do things with cloning modules
 		F4.icon_state = "dbox"
 
 /obj/item/cloneModule/genepowermodule
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/machinery/module.dmi'
 	icon_state = "genemodule"
 	name = "Gene power module"
 	desc = "A module that automatically inserts a gene into clones. It has a slot in the back that looks like it would hold a DNA injector."

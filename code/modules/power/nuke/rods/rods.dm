@@ -1,6 +1,6 @@
 /obj/item/nuke/rod
 
-	icon = 'icons/obj/machines/nuclear.dmi'
+	icon = 'icons/obj/machinery/nuclear.dmi'
 	icon_state = "fr0"
 
 	var

@@ -1391,7 +1391,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "dwaine";
 	name = "old mainframe"
 	},
@@ -1402,7 +1402,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "tapedrive-p";
 	name = "downed server"
 	},
@@ -5469,7 +5469,7 @@
 "alU" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	id = "aiupload";
 	pixel_x = 32;
 	starts_established = 1
@@ -10136,7 +10136,7 @@
 	},
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	id = "aiupload";
 	pixel_y = 32;
 	starts_established = 1
@@ -23491,7 +23491,7 @@
 "bcb" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	id = "aftport";
 	pixel_x = 32
 	},
@@ -23888,7 +23888,7 @@
 "bcY" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	id = "foreport";
 	pixel_x = 32
 	},
@@ -25207,7 +25207,7 @@
 "bgc" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	id = "aftport";
 	pixel_x = 32;
 	starts_established = 1
@@ -26167,7 +26167,7 @@
 "bin" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	id = "foreport";
 	pixel_x = 32;
 	starts_established = 1
@@ -35869,7 +35869,7 @@
 	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
 	dir = 8;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	name = "smashed computer"
 	},
@@ -45587,7 +45587,7 @@
 "bUG" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	id = "aftstarboard";
 	pixel_x = 32;
 	starts_established = 1
@@ -49844,7 +49844,7 @@
 "cek" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	id = "forestarboard";
 	pixel_x = 32;
 	starts_established = 1
@@ -51341,7 +51341,7 @@
 "cip" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	id = "aftstarboard";
 	pixel_x = 32
 	},
@@ -51720,7 +51720,7 @@
 "cjn" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	id = "forestarboard";
 	pixel_x = 32
 	},
@@ -77100,7 +77100,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "dwaine";
 	name = "old mainframe"
 	},
@@ -77194,7 +77194,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "server0";
 	name = "downed server"
 	},

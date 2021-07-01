@@ -1,7 +1,7 @@
 /obj/item/cell
 	name = "power cell"
 	desc = "A rechargable electrochemical power cell."
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machinery/power.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "cell"
 	item_state = "cell"
@@ -124,7 +124,7 @@
 	else icon_state = "hpcell"
 
 	var/image/I = GetOverlayImage("charge_indicator")
-	if(!I) I = image('icons/obj/power.dmi', "cell-o2")
+	if(!I) I = image('icons/obj/machinery/power.dmi', "cell-o2")
 
 	if(charge < 0.01)
 		UpdateOverlays(null, "charge_indicator", 0, 1)

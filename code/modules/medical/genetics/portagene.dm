@@ -1,7 +1,7 @@
 /obj/machinery/computer/genetics/portable
 	name = "Port-A-Gene"
 	desc = "A mobile scanner and computer in one unit for genetics work."
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machinery/Cryogenic2.dmi'
 	icon_state = "PAG_0"
 	anchored = 0
 	var/mob/occupant = null

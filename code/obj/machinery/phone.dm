@@ -1,6 +1,6 @@
 /obj/machinery/phone
 	name = "phone"
-	icon = 'icons/obj/machines/phones.dmi'
+	icon = 'icons/obj/machinery/phones.dmi'
 	desc = "A landline phone. In space. Where there is no land. Hmm."
 	icon_state = "phone"
 	anchored = 1
@@ -47,7 +47,7 @@
 			src.color = "#0000ff"
 		else
 			src.color = "#663300"
-		src.overlays += image('icons/obj/machines/phones.dmi',"[dialicon]")
+		src.overlays += image('icons/obj/machinery/phones.dmi',"[dialicon]")
 		// Generate a name for the phone.
 
 		if(isnull(src.phone_id))
@@ -269,7 +269,7 @@
 /obj/item/phone_handset
 
 	name = "phone handset"
-	icon = 'icons/obj/machines/phones.dmi'
+	icon = 'icons/obj/machinery/phones.dmi'
 	desc = "I wonder if the last crewmember to use this washed their hands before touching it."
 	var/obj/machinery/phone/parent = null
 	var/mob/holder = null //GC WOES (just dont use this var, get holder using loc)
@@ -324,7 +324,7 @@
 
 /obj/machinery/phone/wall
 	name = "wall phone"
-	icon = 'icons/obj/machines/phones.dmi'
+	icon = 'icons/obj/machinery/phones.dmi'
 	desc = "A landline phone. In space. Where there is no land. Hmm."
 	icon_state = "wallphone"
 	anchored = 1

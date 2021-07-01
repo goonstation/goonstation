@@ -1,7 +1,7 @@
 /obj/machinery/cell_charger
 	name = "cell charger"
 	desc = "A charging unit for power cells."
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machinery/power.dmi'
 	icon_state = "ccharger0"
 	var/obj/item/cell/charging = null
 	var/chargerate = 250 // power per tick
@@ -41,7 +41,7 @@
 		if(chargelevel != newlevel)
 
 			overlays = null
-			overlays += image('icons/obj/power.dmi', "ccharger-o[newlevel]")
+			overlays += image('icons/obj/machinery/power.dmi', "ccharger-o[newlevel]")
 
 			chargelevel = newlevel
 	else

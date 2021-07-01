@@ -9,7 +9,7 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 
 /obj/machinery/shipalert
 	name = "Ship Alert Button"
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/machinery/monitors.dmi'
 	icon_state = "shipalert0"
 	desc = ""
 	anchored = 1.0

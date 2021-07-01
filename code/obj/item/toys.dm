@@ -121,7 +121,7 @@
 	name = "gooncode hard disk drive"
 	desc = "The prized, sought after spaghetti and pooballs code, and the only known cure to apiphobia. Conveniently on a fancy hard drive that connects to PDAs. \
 	The most stealable thing in the universe."
-	icon = 'icons/obj/cloning.dmi' // sprite is an altered harddisk
+	icon = 'icons/obj/machinery/cloning.dmi' // sprite is an altered harddisk
 	icon_state = "gooncode"
 	flags = SUPPRESSATTACK
 	throwforce = 3
@@ -159,7 +159,7 @@
 /obj/item/toy/cellphone
 	name = "flip phone"
 	desc = "Wow! You've always wanted one of these charmingly clunky doodads!"
-	icon = 'icons/obj/cellphone.dmi'
+	icon = 'icons/obj/machinery/cellphone.dmi'
 	icon_state = "cellphone-on"
 	w_class = W_CLASS_SMALL
 	var/datum/game/tetris

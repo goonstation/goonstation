@@ -42,7 +42,7 @@
 			last_active = active
 			if(src.active)
 				var/image/I = GetOverlayImage("active")
-				if(!I) I = image('icons/obj/power.dmi', "furn-burn")
+				if(!I) I = image('icons/obj/machinery/power.dmi', "furn-burn")
 				UpdateOverlays(I, "active")
 			else
 				UpdateOverlays(null, "active", 0, 1) //Keep it in cache for when it's toggled
@@ -55,7 +55,7 @@
 				var/okey = "fuel[i]"
 				if(fuel_state >= i) //Add the overlay
 					var/image/I = GetOverlayImage(okey)
-					if(!I) I = image('icons/obj/power.dmi', "furn-c[i]")
+					if(!I) I = image('icons/obj/machinery/power.dmi', "furn-c[i]")
 					UpdateOverlays(I, okey)
 				else //Clear the overlay
 					UpdateOverlays(null, okey, 0, 1)

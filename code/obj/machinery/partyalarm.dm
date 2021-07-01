@@ -4,7 +4,7 @@
 
 /obj/machinery/partyalarm
 	name = "Party Button"
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/machinery/monitors.dmi'
 	icon_state = "party"
 	desc = "WOOP WOOP PARTY ALARM WOOP WOOP"
 	var/working = 1.0

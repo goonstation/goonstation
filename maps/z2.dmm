@@ -26,7 +26,7 @@
 /area/adventure/channel/teleport)
 "abj" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "cloaking field"
 	},
@@ -1560,7 +1560,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of machine that is assuredly important.  It is also assuredly covered in words you cannot read.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "neutinj";
 	layer = 3.1;
 	name = "soviet shuttle doodad"
@@ -1701,7 +1701,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "old0";
 	name = "inactive computer";
 	pixel_x = 4
@@ -2115,7 +2115,7 @@
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
 	dir = 4;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "offbroken";
 	name = "broken computer";
 	tag = "icon-offbroken (EAST)"
@@ -2177,7 +2177,7 @@
 	density = 1;
 	desc = "Filing cabinets. The locking mechanism is jammed.";
 	dir = 4;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "messyfilesb";
 	name = "facility records";
 	tag = "icon-messyfilesb (EAST)"
@@ -2205,7 +2205,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? Yes?  Oh, good...wait, where's the outlet?.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "old0";
 	name = "inactive computer";
 	pixel_y = 8
@@ -2293,7 +2293,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "old0";
 	name = "inactive computer";
 	pixel_x = 4
@@ -2890,7 +2890,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "offbroken";
 	name = "broken computer"
 	},
@@ -3031,7 +3031,7 @@
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -3706,7 +3706,7 @@
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
 	dir = 4;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "offbroken";
 	name = "broken computer";
 	tag = "icon-offbroken (EAST)"
@@ -3871,7 +3871,7 @@
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -4042,7 +4042,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "offbroken";
 	name = "broken computer"
 	},
@@ -4926,7 +4926,7 @@
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
 	dir = 1;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "offbroken";
 	name = "broken computer";
 	tag = "icon-offbroken (NORTH)"
@@ -5081,7 +5081,7 @@
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -5442,7 +5442,7 @@
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -6678,7 +6678,7 @@
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
 	dir = 1;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "offbroken";
 	name = "broken computer";
 	tag = "icon-offbroken (NORTH)"
@@ -6818,7 +6818,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -7689,7 +7689,7 @@
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -7932,7 +7932,7 @@
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -8059,7 +8059,7 @@
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -8388,7 +8388,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -8789,7 +8789,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This particular geegaw is probably related to power control or fire systems or something.  It could also be a really elaborate light switch.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "generic-p";
 	name = "strange machine"
 	},
@@ -8959,7 +8959,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -9096,7 +9096,7 @@
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -9203,7 +9203,7 @@
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
 	dir = 4;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "offbroken";
 	name = "broken computer";
 	tag = "icon-offbroken (EAST)"
@@ -9281,7 +9281,7 @@
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -9313,7 +9313,7 @@
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -9542,7 +9542,7 @@
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -9916,7 +9916,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "aiuploadb";
 	name = "broken computer"
 	},
@@ -10016,7 +10016,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "aiuploadb";
 	name = "broken computer"
 	},
@@ -10027,7 +10027,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "dterm0";
 	name = "broken computer"
 	},
@@ -10237,7 +10237,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "offbroken";
 	name = "broken computer"
 	},
@@ -12374,7 +12374,7 @@
 /obj/computerframe{
 	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	name = "smashed computer"
 	},
@@ -12395,7 +12395,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "It probably has something to do with the elevator.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "neutinj";
 	name = "strange machine"
 	},
@@ -13905,7 +13905,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "server0";
 	name = "downed server"
 	},
@@ -13916,7 +13916,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "It's some sort of power plant control doodad of some sort.  Probably.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "pathmanip-p";
 	name = "strange machine"
 	},
@@ -14272,7 +14272,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "It probably has something to do with the elevator.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "neutinj";
 	name = "strange machine"
 	},
@@ -14647,7 +14647,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "old0";
 	name = "broken computer"
 	},
@@ -14667,7 +14667,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "oldb";
 	name = "broken computer"
 	},
@@ -15117,7 +15117,7 @@
 /obj/computerframe{
 	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	name = "smashed computer"
 	},
@@ -16683,14 +16683,14 @@
 "bcs" = (
 /obj/decal/fakeobjects{
 	desc = "It's probably broken.";
-	icon = 'icons/obj/power.dmi';
+	icon = 'icons/obj/machinery/power.dmi';
 	icon_state = "sp_base";
 	name = "solar panel"
 	},
 /obj/decal/fakeobjects{
 	desc = "It's probably broken.";
 	dir = 10;
-	icon = 'icons/obj/power.dmi';
+	icon = 'icons/obj/machinery/power.dmi';
 	icon_state = "solar_panel";
 	name = "solar panel"
 	},
@@ -16704,13 +16704,13 @@
 "bct" = (
 /obj/decal/fakeobjects{
 	desc = "It's probably broken.";
-	icon = 'icons/obj/power.dmi';
+	icon = 'icons/obj/machinery/power.dmi';
 	icon_state = "sp_base";
 	name = "solar panel"
 	},
 /obj/decal/fakeobjects{
 	desc = "It's probably broken.";
-	icon = 'icons/obj/power.dmi';
+	icon = 'icons/obj/machinery/power.dmi';
 	icon_state = "solar_panel-b";
 	name = "solar panel"
 	},
@@ -16724,14 +16724,14 @@
 "bcu" = (
 /obj/decal/fakeobjects{
 	desc = "It's probably broken.";
-	icon = 'icons/obj/power.dmi';
+	icon = 'icons/obj/machinery/power.dmi';
 	icon_state = "sp_base";
 	name = "solar panel"
 	},
 /obj/decal/fakeobjects{
 	desc = "It's probably broken.";
 	dir = 6;
-	icon = 'icons/obj/power.dmi';
+	icon = 'icons/obj/machinery/power.dmi';
 	icon_state = "solar_panel";
 	name = "solar panel"
 	},
@@ -16990,7 +16990,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "aiuploadb";
 	name = "broken computer"
 	},
@@ -17083,14 +17083,14 @@
 "bdi" = (
 /obj/decal/fakeobjects{
 	desc = "It's probably broken.";
-	icon = 'icons/obj/power.dmi';
+	icon = 'icons/obj/machinery/power.dmi';
 	icon_state = "sp_base";
 	name = "solar panel"
 	},
 /obj/decal/fakeobjects{
 	desc = "It's probably broken.";
 	dir = 6;
-	icon = 'icons/obj/power.dmi';
+	icon = 'icons/obj/machinery/power.dmi';
 	icon_state = "solar_panel";
 	name = "solar panel"
 	},
@@ -17105,13 +17105,13 @@
 "bdj" = (
 /obj/decal/fakeobjects{
 	desc = "It's probably broken.";
-	icon = 'icons/obj/power.dmi';
+	icon = 'icons/obj/machinery/power.dmi';
 	icon_state = "sp_base";
 	name = "solar panel"
 	},
 /obj/decal/fakeobjects{
 	desc = "It's probably broken.";
-	icon = 'icons/obj/power.dmi';
+	icon = 'icons/obj/machinery/power.dmi';
 	icon_state = "solar_panel-b";
 	name = "solar panel"
 	},
@@ -19424,7 +19424,7 @@
 	},
 /obj/table/wood/auto,
 /obj/item/paper{
-	icon = 'icons/obj/electronics.dmi';
+	icon = 'icons/obj/machinery/electronics.dmi';
 	icon_state = "blueprint";
 	info = "<h3>Project IRIDIUM</h3><i>It depicts a gigantic automated drone. Many of the details have been blacked out by a marker.</i>";
 	item_state = "sheet";
@@ -19480,7 +19480,7 @@
 	},
 /obj/table/wood/auto,
 /obj/item/paper{
-	icon = 'icons/obj/electronics.dmi';
+	icon = 'icons/obj/machinery/electronics.dmi';
 	icon_state = "blueprint";
 	info = "<h3>AR-Class Automated Drone</h3><i>A schematic blueprint for a heavily-armed artillery drone.</i>";
 	item_state = "sheet";
@@ -20321,7 +20321,7 @@
 	},
 /obj/table/wood/auto,
 /obj/item/paper{
-	icon = 'icons/obj/electronics.dmi';
+	icon = 'icons/obj/machinery/electronics.dmi';
 	icon_state = "blueprint";
 	info = "<h3>X-Class Automated Drone</h3><i>A schematic blueprint for a railgun-equipped experimental automated drone.</i>";
 	item_state = "sheet";
@@ -20369,7 +20369,7 @@
 	},
 /obj/table/wood/auto,
 /obj/item/paper{
-	icon = 'icons/obj/electronics.dmi';
+	icon = 'icons/obj/machinery/electronics.dmi';
 	icon_state = "blueprint";
 	info = "<h3>SC-Class Automated Drone</h3><i>A schematic blueprint for a basic scout drone.</i>";
 	item_state = "sheet";
@@ -21006,7 +21006,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "dterm0";
 	name = "broken computer"
 	},
@@ -21039,7 +21039,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "server0";
 	name = "downed server"
 	},
@@ -21050,7 +21050,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "It's some sort of power plant control doodad of some sort.  Probably.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "generic-p";
 	name = "strange machine"
 	},
@@ -21407,7 +21407,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "You have no idea what this does.";
-	icon = 'icons/obj/recycling.dmi';
+	icon = 'icons/obj/machinery/recycling.dmi';
 	icon_state = "grinder-o1";
 	name = "assembly machine"
 	},
@@ -21417,7 +21417,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "You have no idea what this does.";
-	icon = 'icons/obj/recycling.dmi';
+	icon = 'icons/obj/machinery/recycling.dmi';
 	icon_state = "grinder-b1";
 	name = "assembly machine"
 	},
@@ -21427,7 +21427,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "You have no idea what this does.";
-	icon = 'icons/obj/recycling.dmi';
+	icon = 'icons/obj/machinery/recycling.dmi';
 	icon_state = "separator-AO1";
 	name = "assembly machine"
 	},
@@ -21472,7 +21472,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "offbroken";
 	name = "broken computer"
 	},
@@ -21488,7 +21488,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "dwaine";
 	name = "old mainframe"
 	},
@@ -22181,7 +22181,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 9;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -22198,7 +22198,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -22215,7 +22215,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 5;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -22326,7 +22326,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 6;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -22348,7 +22348,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 10;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -22548,7 +22548,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 9;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -22563,7 +22563,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 5;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -22747,7 +22747,7 @@
 	color_g = 1;
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	name = "power conduit"
 	},
 /turf/unsimulated/iomoon/ancient_floor,
@@ -22785,7 +22785,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 10;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -22964,7 +22964,7 @@
 	color_g = 1;
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	name = "power conduit"
 	},
 /obj/decal/fakeobjects{
@@ -22985,7 +22985,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -23000,7 +23000,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -23021,7 +23021,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 6;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -23283,7 +23283,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "offbroken";
 	name = "broken computer"
 	},
@@ -23363,7 +23363,7 @@
 	color_g = 1;
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	name = "power conduit"
 	},
 /turf/unsimulated/iomoon/ancient_floor{
@@ -23991,7 +23991,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A thermoelectric generator that appears to have fallen into disrepair.";
-	icon = 'icons/obj/power.dmi';
+	icon = 'icons/obj/machinery/power.dmi';
 	icon_state = "teg-broken";
 	name = "broken generator"
 	},
@@ -24343,7 +24343,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "offbroken";
 	name = "broken computer"
 	},
@@ -24356,7 +24356,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "It's some sort of power plant control doodad of some sort.  Probably.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "pathmanip-p";
 	name = "strange machine"
 	},
@@ -24767,7 +24767,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "It's some sort of power plant control doodad of some sort.  Probably.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "pathmanip-p";
 	name = "strange machine"
 	},
@@ -25214,7 +25214,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "old0";
 	name = "broken computer"
 	},
@@ -25272,7 +25272,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "This appears to be a control panel for that blast door.  It doesn't seem to work.  Maybe there is an override or something?";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "wallterm0";
 	name = "broken computer"
 	},
@@ -25405,7 +25405,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -25847,7 +25847,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "It's some sort of power plant control doodad of some sort.  Probably.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "pathmanip-p";
 	name = "strange machine"
 	},
@@ -26026,7 +26026,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "old0";
 	name = "broken computer"
 	},
@@ -26166,7 +26166,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "It's some sort of power plant control doodad of some sort.  Probably.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "generic-p";
 	name = "strange machine"
 	},
@@ -26422,7 +26422,7 @@
 	color_g = 1;
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	name = "power conduit"
 	},
 /turf/unsimulated/iomoon/ancient_floor{
@@ -26595,7 +26595,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "tapedrive-p";
 	name = "broken databank"
 	},
@@ -26697,7 +26697,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 9;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -26714,7 +26714,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 6;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -26737,7 +26737,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 10;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -26754,7 +26754,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 5;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -26800,7 +26800,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "tapedrive-p";
 	name = "broken databank"
 	},
@@ -27220,7 +27220,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "server0";
 	name = "downed server"
 	},
@@ -27914,7 +27914,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "This appears to be a control panel for that furance gizmo.  The screen is off and there isn't any visible power switch.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "wallterm0";
 	name = "broken computer"
 	},
@@ -27978,7 +27978,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "server0";
 	name = "downed server"
 	},
@@ -28378,7 +28378,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 5;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -28594,7 +28594,7 @@
 	color_g = 1;
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	name = "power conduit"
 	},
 /obj/iomoon_puzzle/lock{
@@ -28614,7 +28614,7 @@
 	color_g = 1;
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	name = "power conduit"
 	},
 /obj/iomoon_puzzle/lock/red{
@@ -28633,7 +28633,7 @@
 	color_g = 1;
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	name = "power conduit"
 	},
 /obj/critter/ancient_repairbot/security,
@@ -28800,7 +28800,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 9;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -28817,7 +28817,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -28837,7 +28837,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 6;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -28857,7 +28857,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 10;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -28872,7 +28872,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -28887,7 +28887,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 5;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -29028,7 +29028,7 @@
 	color_g = 1;
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	name = "power conduit"
 	},
 /turf/unsimulated/iomoon/ancient_floor,
@@ -29282,7 +29282,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "offbroken";
 	name = "broken computer"
 	},
@@ -29368,7 +29368,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 10;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -29383,7 +29383,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -29400,7 +29400,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 5;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -29412,7 +29412,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 9;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -29430,7 +29430,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -29671,7 +29671,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 9;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -29686,7 +29686,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -29714,7 +29714,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 10;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -29726,7 +29726,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 6;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -29743,7 +29743,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 5;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -29944,7 +29944,7 @@
 /obj/computerframe{
 	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	name = "smashed computer"
 	},
@@ -29969,7 +29969,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "You have no idea what this does.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "neutinj";
 	name = "peculiar machine"
 	},
@@ -30211,7 +30211,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 10;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -30227,7 +30227,7 @@
 	color_r = 0;
 	desc = "Some manner of glowing power conveyor.";
 	dir = 6;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon = 'icons/obj/machinery/heavy_fiber.dmi';
 	icon_state = "";
 	name = "power conduit"
 	},
@@ -30417,7 +30417,7 @@
 "bKh" = (
 /obj/table/reinforced/auto,
 /obj/item/paper{
-	icon = 'icons/obj/electronics.dmi';
+	icon = 'icons/obj/machinery/electronics.dmi';
 	icon_state = "blueprint";
 	info = "<h3>Project HELIOS</h3><i>The blueprint depicts hundreds of ornately-designed cogs and gears, surrounded by completely unreadable script.</i>";
 	item_state = "sheet";
@@ -30432,7 +30432,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "You have no idea what this does.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "neutinj";
 	name = "unusual machine"
 	},
@@ -30914,7 +30914,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "tapedrive-p";
 	name = "broken databank"
 	},
@@ -30929,7 +30929,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "old0";
 	name = "inactive computer";
 	pixel_x = 4
@@ -31332,7 +31332,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "dterm0";
 	name = "broken computer"
 	},
@@ -31937,7 +31937,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "old0";
 	name = "broken computer"
 	},
@@ -32148,7 +32148,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "It would not be surprising if this was rusty when it WAS in operation, as well.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "neutinj";
 	name = "rusty industrial oven"
 	},
@@ -32271,7 +32271,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "dterm0";
 	name = "broken computer"
 	},
@@ -32379,7 +32379,7 @@
 "bQc" = (
 /obj/decal/fakeobjects{
 	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "broken machine"
 	},
@@ -32398,7 +32398,7 @@
 "bQe" = (
 /obj/decal/fakeobjects{
 	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "broken machine"
 	},
@@ -32444,7 +32444,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "old0";
 	name = "broken computer"
 	},
@@ -32599,7 +32599,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "This appears to be a control panel for that big microwave array thing?  It doesn't seem to work.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "wallterm0";
 	name = "broken computer"
 	},
@@ -32648,7 +32648,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "old0";
 	name = "inactive computer";
 	pixel_x = 4
@@ -32826,7 +32826,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "dwaine";
 	name = "old mainframe"
 	},
@@ -33027,7 +33027,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "aiuploadb";
 	name = "broken computer"
 	},
@@ -33580,7 +33580,7 @@
 /area/afterlife/heaven/hydroponics)
 "bTY" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "Wall"
 	},
@@ -33660,7 +33660,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "It probably has something to do with the elevator.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "neutinj";
 	name = "strange machine"
 	},
@@ -35755,7 +35755,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "old0";
 	name = "broken computer"
 	},
@@ -35910,7 +35910,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "A computer that is obviously completely broken, more so than previous obviously broken computers.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "oldb";
 	name = "broken computer"
 	},
@@ -36224,7 +36224,7 @@
 /area/syndicate_station/battlecruiser)
 "cbF" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "v-space"
 	},
@@ -36569,7 +36569,7 @@
 "ccN" = (
 /obj/table/auto,
 /obj/item/paper{
-	icon = 'icons/obj/electronics.dmi';
+	icon = 'icons/obj/machinery/electronics.dmi';
 	icon_state = "blueprint";
 	info = "<h3>Project Apeiron Initial Design Specifications</h3><i>Most of the blueprint is faded or smeared, but it appears to describe an early version of the RCD.</i>";
 	item_state = "sheet";
@@ -36642,7 +36642,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "server0";
 	name = "downed server"
 	},
@@ -36816,7 +36816,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "tapedrive-p";
 	name = "broken databank"
 	},
@@ -36826,7 +36826,7 @@
 /obj/overlay{
 	density = 1;
 	desc = "A networked tape drive.  It looks to be in fairly poor condition.  I bet the vacuum columns don't work worth a damn.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "tapedrive-p";
 	name = "broken databank"
 	},
@@ -37034,7 +37034,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "old0";
 	name = "broken computer"
 	},
@@ -37481,7 +37481,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "It's some sort of teleporter part.  In all likelihood.  It might just be an industrial arcade cabinet.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "pathmanip-p";
 	name = "strange machine"
 	},
@@ -37495,7 +37495,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This particular gizmo relates to teleportation in some way.  Alternatively, it might mix drinks.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "generic-p";
 	name = "strange machine"
 	},
@@ -38138,7 +38138,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "offbroken";
 	name = "broken computer"
 	},
@@ -38639,7 +38639,7 @@
 /area/sim/gunsim)
 "ciz" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "v-space"
 	},
@@ -38678,14 +38678,14 @@
 /area/meat_derelict/boss)
 "ciF" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "v-space"
 	},
 /area/blob/tutorial_zone_1)
 "ciG" = (
 /turf/unsimulated/wall{
-	icon = 'icons/obj/singularity.dmi';
+	icon = 'icons/obj/machinery/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "v-space"
 	},
@@ -39791,7 +39791,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of machine that is assuredly important.  It is also assuredly covered in words you cannot read.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "neutinj";
 	layer = 3.1;
 	name = "soviet shuttle doodad"
@@ -40256,7 +40256,7 @@
 "cmn" = (
 /obj/decal/fakeobjects{
 	desc = "It's probably broken.";
-	icon = 'icons/obj/power.dmi';
+	icon = 'icons/obj/machinery/power.dmi';
 	icon_state = "solar_panel-b";
 	name = "solar panel"
 	},
@@ -43903,7 +43903,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "This appears to be a control panel for that big microwave array thing?  It doesn't seem to work.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "wallterm0";
 	name = "broken computer"
 	},
@@ -44324,7 +44324,7 @@
 /obj/computerframe{
 	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	name = "smashed computer"
 	},
@@ -44804,7 +44804,7 @@
 	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
 	dir = 4;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	name = "smashed computer"
 	},
@@ -46416,7 +46416,7 @@
 	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
 	dir = 8;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	name = "smashed computer"
 	},
@@ -46816,7 +46816,7 @@
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -47952,7 +47952,7 @@
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -48242,7 +48242,7 @@
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
 	dir = 8;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "offbroken";
 	name = "broken computer"
 	},
@@ -48456,7 +48456,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -48727,7 +48727,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "A computer that is obviously completely broken, more so than previous obviously broken computers.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "oldb";
 	name = "broken computer"
 	},
@@ -50284,7 +50284,7 @@
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -51749,7 +51749,7 @@
 	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
 	dir = 4;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	name = "smashed computer"
 	},
@@ -52444,7 +52444,7 @@
 	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
 	dir = 4;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	name = "smashed computer"
 	},
@@ -52512,7 +52512,7 @@
 	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
 	dir = 8;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	name = "smashed computer"
 	},
@@ -52787,7 +52787,7 @@
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -53024,7 +53024,7 @@
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -54896,7 +54896,7 @@
 	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
 	dir = 4;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	name = "smashed computer"
 	},
@@ -55100,7 +55100,7 @@
 	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
 	dir = 4;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	name = "smashed computer"
 	},
@@ -55146,7 +55146,7 @@
 	anchored = 1;
 	desc = "It is highly unlikely that this still works.";
 	dir = 8;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	name = "smashed computer"
 	},
@@ -56722,7 +56722,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -56821,7 +56821,7 @@
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
-	icon = 'icons/obj/monitors.dmi';
+	icon = 'icons/obj/machinery/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
@@ -62907,7 +62907,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "This is some kind of status terminal for a nuclear reactor.  Probably.  It may be a status panel for a vending machine, that just so happens to be next to a nuclear reactor.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "wallterm0";
 	name = "broken computer"
 	},
@@ -62929,7 +62929,7 @@
 "dpr" = (
 /obj/decal/fakeobjects{
 	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "broken machine"
 	},
@@ -63972,7 +63972,7 @@
 "dsr" = (
 /obj/decal/fakeobjects/core{
 	desc = "It looks inactive.  Hope there isn't any fuel left in there...";
-	icon = 'icons/obj/machines/nuclear64x32.dmi';
+	icon = 'icons/obj/machinery/nuclear64x32.dmi';
 	icon_state = "reactoroff"
 	},
 /obj/decal/fakeobjects{
@@ -65823,7 +65823,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "server0";
 	name = "idle server"
 	},
@@ -65844,7 +65844,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "server0";
 	name = "downed server"
 	},
@@ -66588,7 +66588,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "dterm0";
 	name = "broken computer"
 	},
@@ -67087,7 +67087,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "server0";
 	name = "idle server"
 	},
@@ -67106,7 +67106,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "server0";
 	name = "downed server"
 	},
@@ -67537,7 +67537,7 @@
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
 	dir = 1;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "offbroken";
 	name = ". . .";
 	tag = "icon-offbroken (NORTH)"
@@ -67935,7 +67935,7 @@
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
 	dir = 8;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "offbroken";
 	name = "busted computer"
 	},
@@ -68232,7 +68232,7 @@
 "dED" = (
 /obj/adventurepuzzle/triggerable/speaker{
 	desc = "A rather large mainframe computer. It almost seems like it's staring at you.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "dwaine";
 	id = "emily_office_mainframe";
 	message = "Hm? Oh. It's you. Emily's not here right now, but go ahead and make yourself at home.";
@@ -74106,7 +74106,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "server0";
 	name = "downed server"
 	},
@@ -74137,7 +74137,7 @@
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
 	dir = 8;
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "offbroken";
 	name = "busted computer"
 	},
@@ -75849,7 +75849,7 @@
 "jiO" = (
 /obj/decal/fakeobjects/core{
 	desc = "It looks inactive.  Hope there isn't any fuel left in there...";
-	icon = 'icons/obj/machines/nuclear64x32.dmi';
+	icon = 'icons/obj/machinery/nuclear64x32.dmi';
 	icon_state = "reactoroff"
 	},
 /turf/space,
@@ -79123,7 +79123,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A giant server dedicated to intercepting and answering mhelps. Looks like it's disabled.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "server0";
 	name = "mhelp interceptor"
 	},

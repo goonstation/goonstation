@@ -33,9 +33,9 @@
 		PCEL = new /obj/item/cell/supercell(src)
 		PCEL.charge = PCEL.maxcharge
 
-		src.display_active = image('icons/obj/meteor_shield.dmi', "on")
-		src.display_battery = image('icons/obj/meteor_shield.dmi', "")
-		src.display_panel = image('icons/obj/meteor_shield.dmi', "")
+		src.display_active = image('icons/obj/machinery/meteor_shield.dmi', "on")
+		src.display_battery = image('icons/obj/machinery/meteor_shield.dmi', "")
+		src.display_panel = image('icons/obj/machinery/meteor_shield.dmi', "")
 		..()
 
 	disposing()
@@ -332,7 +332,7 @@
 /obj/forcefield/meteorshield
 	name = "Impact Forcefield"
 	desc = "A force field deployed to stop meteors and other high velocity masses."
-	icon = 'icons/obj/meteor_shield.dmi'
+	icon = 'icons/obj/machinery/meteor_shield.dmi'
 	icon_state = "shield"
 	var/sound/sound_shieldhit = "sound/effects/shieldhit2.ogg"
 	var/obj/machinery/shieldgenerator/meteorshield/deployer = null
@@ -388,7 +388,7 @@
 /obj/forcefield/energyshield
 	name = "Forcefield"
 	desc = "A force field that can block various states of matter."
-	icon = 'icons/obj/meteor_shield.dmi'
+	icon = 'icons/obj/machinery/meteor_shield.dmi'
 	icon_state = "shieldw"
 	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 	var/powerlevel //Stores the power level of the deployer

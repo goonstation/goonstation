@@ -197,7 +197,7 @@
 /obj/machinery/torpedo_switch
 	desc = ""
 	name = "torpedo button"
-	icon = 'icons/obj/power.dmi'
+	icon = 'icons/obj/machinery/power.dmi'
 	icon_state = "light1"
 	anchored = 1.0
 	var/id = "torp1"
