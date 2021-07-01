@@ -147,8 +147,8 @@
 			if  (!O.reagents.total_volume)
 				boutput(user, "<span class='alert'>The [O.name] is empty!</span>")
 				return
-			if (O.reagents.reagent_list.len == 1 && O.reagents.reagent_list[1] == "fuel")
-				O.reagents.trans_to(src, capacity)
+			if ("fuel" in O.reagents.reagent_list)
+				O.reagents.trans_to(src, capacity, 1, 1, O.reagents.reagent_list.Find("fuel"))
 				src.inventory_counter.update_number(get_fuel())
 				boutput(user, "<span class='notice'>Welder refueled</span>")
 				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
