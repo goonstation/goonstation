@@ -16,7 +16,7 @@
 	desc = "The terminus of a large underfloor cryogenic storage complex."
 	anchored = 1
 	density = 1
-	icon = 'icons/obj/64x96.dmi'
+	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "cryotron_up"
 	bound_width = 96
 	bound_x = -32

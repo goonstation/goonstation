@@ -73,22 +73,17 @@ Custom Books
 		name = "Medbay Pocket Guide"
 		icon_state = "mediguide"
 		file_path = "strings/books/medbay_pocket_guide.txt"
-	//note in jobs.dm says both pocket guides can be combined; something to work on later
-	mining1
-		name = "Mining Pocket Guide No.1"
-		icon_state = "minerguide"
-		file_path = "strings/books/mining_pocket_guide_1.txt"
 
-	mining2
-		name = "Mining Pocket Guide No.2"
+	mining
+		name = "Mining Pocket Guide"
 		icon_state = "minerguide"
-		file_path = "strings/books/mining_pocket_guide_2.txt"
+		file_path = "strings/books/mining_pocket_guide.txt"
 
 	bartending
 		name = "Bartending Pocket Guide"
 		icon_state = "barguide"
 		file_path = "strings/books/bartending_pocket_guide.txt"
-	//i personally would like to re-do the pockt guide to be a little more comprehensive
+	//i personally would like to re-do the pocket guide to be a little more comprehensive
 	//since it says to refer to the engine start-up documentation paper, which the sing doesn't even have - nefarious
 	engineering
 		name = "Engineering Pocket Guide"
@@ -208,7 +203,7 @@ Custom Books
 	name = "Elective Prosthetics for Dummies"
 	icon_state = "roboticsbook"
 	file_path = "strings/books/elective_prosthetics_for_dummies.txt"
-//rev
+
 /obj/item/paper/book/from_file/pharmacopia //medical_guide
 	name = "Pharmacopia"
 	icon_state = "pharmacopia"

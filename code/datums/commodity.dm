@@ -2169,6 +2169,24 @@
 	comtype = /obj/item/storage/box/costume/mime/alt
 	desc = "This stuff will give you an edge in charades."
 
+/datum/commodity/backpack/breadpack
+	comname = "Bag-uette"
+	comtype = /obj/item/storage/backpack/breadpack
+	desc = "A bread-themed backpack...? It kind of smells like bread too! Unfortunately inedible."
+	price = 600
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
+/datum/commodity/backpack/bearpack
+	comname = "Bearpack"
+	comtype = /obj/item/storage/backpack/bearpack
+	desc = "A teddy bear backpack; perfect for hugs AND carries your gear for you, how helpful!"
+	price = 500
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
 /datum/commodity/balloons //no it ain't a costume kit but it's going in Geoff's wares so idgaf tOt fite me
 	comname = "box of balloons"
 	comtype = /obj/item/storage/box/balloonbox
@@ -2211,6 +2229,26 @@
 	baseprice = 50
 	upperfluc = 100
 	lowerfluc = -20
+
+/datum/commodity/toygun
+	comname = "Toy Gun"
+	comtype = /obj/item/gun/kinetic/foamdartgun
+	desc = "A toy gun that fires foam darts."
+	onmarket = 0
+	price = 2000
+	baseprice = 2000
+	upperfluc = 100
+	lowerfluc = -100
+
+/datum/commodity/toygunammo
+	comname = "Foam Darts"
+	comtype = /obj/item/ammo/bullets/foamdarts
+	desc = "A box of foam darts for toy guns."
+	onmarket = 0
+	price = 200
+	baseprice = 200
+	upperfluc = 40
+	lowerfluc = -40
 
 /*
 /datum/commodity/screamshoes

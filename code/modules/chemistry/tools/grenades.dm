@@ -24,6 +24,7 @@
 	stamina_cost = 0
 	stamina_crit_chance = 0
 	move_triggered = 1
+	var/detonating = 0
 
 
 	New()
@@ -31,6 +32,9 @@
 		fluid_image1 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid1", -1)
 		fluid_image2 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid2", -1)
 		src.create_reagents(150000)
+
+	is_open_container()
+		return src.detonating
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/grenade_fuse) && !stage)
@@ -169,7 +173,9 @@
 				explode()
 
 	proc/explode()
+		src.reagents.my_atom = src //hax
 		var/has_reagents = 0
+		src.detonating = 1
 		for (var/obj/item/reagent_containers/glass/G in beakers)
 			if (G.reagents.total_volume) has_reagents = 1
 

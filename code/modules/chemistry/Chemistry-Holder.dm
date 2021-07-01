@@ -274,6 +274,7 @@ datum
 				target.reagents = new
 
 			var/datum/reagents/target_reagents = target.reagents
+			amount = min(amount, target_reagents.maximum_volume - target_reagents.total_volume)
 
 			if (do_fluid_react && issimulatedturf(target))
 				var/turf/simulated/T = target

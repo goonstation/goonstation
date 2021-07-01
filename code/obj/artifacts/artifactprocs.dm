@@ -454,9 +454,16 @@
 
 	var/datum/artifact/A = src.artifact
 	if (istype(A,/datum/artifact/))
-		if (iscarbon(user))
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			var/obj/item/parts/arm = H.hand ? H.limbs.l_arm : H.limbs.r_arm
+			if(istype(arm, /obj/item/parts/robot_parts))
+				src.ArtifactStimulus("silitouch", 1)
+			else
+				src.ArtifactStimulus("carbtouch", 1)
+		else if (iscarbon(user))
 			src.ArtifactStimulus("carbtouch", 1)
-		if (issilicon(user))
+		else if (issilicon(user))
 			src.ArtifactStimulus("silitouch", 1)
 		src.ArtifactStimulus("force", 1)
 		user.visible_message("<b>[user.name]</b> touches [src].")

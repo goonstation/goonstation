@@ -28,7 +28,7 @@
 			lastAnalysis++
 
 		// if a trigger would be redundant, let's just say it's cool!
-		if(A.automatic_activation)
+		if(A.automatic_activation || A.no_activation)
 			lastAnalysis++
 		else
 			// check if trigger is one of the correct ones

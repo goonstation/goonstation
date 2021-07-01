@@ -59,9 +59,13 @@ datum/character_preview
 	proc/add_background(color)
 		if(isnull(src.background))
 			src.background = new()
-		src.background.icon = 'icons/effects/white.dmi'
-		src.background.color = color
-		src.background.transform = matrix(1, 0, 0, 0, 2, 16) // make it 2 tiles tall
+		if (color)
+			src.background.icon = 'icons/effects/white.dmi'
+			src.background.color = color
+			src.background.transform = matrix(1, 0, 0, 0, 2, 16) // make it 2 tiles tall
+		else
+			src.background.icon = 'icons/misc/32x64.dmi'
+			src.background.icon_state = "floor"
 		src.background.screen_loc = "[src.preview_id]:1,1"
 		src.background.mouse_opacity = 0
 		src.handler.vis_contents |= src.background

@@ -168,7 +168,7 @@
 				icon_state = "engine2"
 				base_icon_state = "engine2"
 			manta_computer
-				icon = 'icons/obj/32x96.dmi'
+				icon = 'icons/obj/large/32x96.dmi'
 				icon_state = "nuclearcomputer"
 				anchored = 2
 				density = 1

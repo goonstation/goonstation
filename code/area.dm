@@ -1195,6 +1195,10 @@ ABSTRACT_TYPE(/area/prefab)
 	sound_loop = 'sound/ambience/music/shoptheme.ogg'
 	sound_environment = 2
 
+/area/prefab/shooting_range
+	name = "Shooting Range"
+	icon_state = "purple"
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room

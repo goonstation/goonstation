@@ -930,13 +930,13 @@
 
 		dat += "<hr><b>Bottom Detail</b><br>"
 		dat += "<a href='byond://?src=\ref[src];hair=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customization_first_color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customization_first_color]\"><tr><td>C1</td></tr></table></font>"
-		dat += "Style: <a href='byond://?src=\ref[src];customization_first.name=input'>[src.tf_holder.mobAppearance.customization_first.name]</a>"
+		dat += "Style: <a href='byond://?src=\ref[src];customization_first=input'>[src.tf_holder.mobAppearance.customization_first.name]</a>"
 		dat += "<hr><b>Mid Detail</b><br>"
 		dat += "<a href='byond://?src=\ref[src];facial=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customization_second_color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customization_second_color]\"><tr><td>C2</td></tr></table></font>"
-		dat += "Style: <a href='byond://?src=\ref[src];customization_second.name=input'>[src.tf_holder.mobAppearance.customization_second.name]</a>"
+		dat += "Style: <a href='byond://?src=\ref[src];customization_second=input'>[src.tf_holder.mobAppearance.customization_second.name]</a>"
 		dat += "<hr><b>Top Detail</b><br>"
 		dat += "<a href='byond://?src=\ref[src];detail=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customization_third_color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customization_third_color]\"><tr><td>C3</td></tr></table></font>"
-		dat += "Style: <a href='byond://?src=\ref[src];customization_third.name=input'>[src.tf_holder.mobAppearance.customization_third.name]</a>"
+		dat += "Style: <a href='byond://?src=\ref[src];customization_third=input'>[src.tf_holder.mobAppearance.customization_third.name]</a>"
 
 		dat += "<hr><b>Eyes</b><br>"
 		dat += "<a href='byond://?src=\ref[src];eyes=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.e_color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.e_color]\"><tr><td>EC</td></tr></table></font>"

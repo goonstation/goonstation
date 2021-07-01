@@ -119,7 +119,7 @@ datum/preferences
 	ui_data(mob/user)
 		if (isnull(src.preview))
 			src.preview = new(user.client, "preferences", "preferences_character_preview")
-			src.preview.add_background("#191919")
+			src.preview.add_background()
 			src.update_preview_icon()
 
 		var/client/client = ismob(user) ? user.client : user
@@ -486,7 +486,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-securityNote")
-				var/new_text = input(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.security_note) as null|text
+				var/new_text = input(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", src.security_note) as null|text
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -498,7 +498,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-medicalNote")
-				var/new_text = input(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.medical_note) as null|text
+				var/new_text = input(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", src.medical_note) as null|text
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -558,7 +558,28 @@ datum/preferences
 						update_preview_icon()
 						src.profile_modified = TRUE
 						return TRUE
+			if ("decrease-skinTone")
+				var/units = 1
+				if (params["alot"])
+					units = 8
+				var/list/L = hex_to_rgb_list(AH.s_tone)
+				AH.s_tone = rgb(max(L[1]-units, 61), max(L[2]-units, 8), max(L[3]-units, 0))
+				AH.s_tone_original = AH.s_tone
 
+				update_preview_icon()
+				src.profile_modified = TRUE
+				return TRUE
+			if ("increase-skinTone")
+				var/units = 1
+				if (params["alot"])
+					units = 8
+				var/list/L = hex_to_rgb_list(AH.s_tone)
+				AH.s_tone = rgb(min(L[1]+units, 255), min(L[2]+units, 236), min(L[3]+units, 183))
+				AH.s_tone_original = AH.s_tone
+
+				update_preview_icon()
+				src.profile_modified = TRUE
+				return TRUE
 			if ("update-eyeColor")
 				var/new_color = input(usr, "Please select an eye color.", "Character Generation", AH.e_color) as null|color
 				if (new_color)
