@@ -1,5 +1,9 @@
 
 (t)thu jul 01 21
+(u)BatElite
+(p)5294
+(e)|
+(+)Emagging cyborgs no longer randomly fails.
 (u)Tarmunora
 (p)5337
 (e)⚖|balance
