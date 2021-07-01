@@ -1,5 +1,48 @@
 
+(t)thu jul 01 21
+(u)Tarmunora
+(p)5337
+(e)⚖|balance
+(*)Disarm changes. See minor changes for details. To be reverted by Sat, July 3 for further review
+(+)disarm stam cost 10 -> 30
+(+)disarm stam damage 20 -> 10
+(+)Disarm chance scaled down to 50% of current (18.5%) at targets with 200 or more stamina, and linerally scaled to current value (37%) on targets with 100 or less. Disarm chances on blocks is reduced by 80% (multiplicative)
+(+)Disarm targets all held items at once
+(t)wed jun 30 21
+(u)112358sam
+(p)5140
+(e)🆕🗺|feature, mapping
+(+)QM consoles and supply request consoles are now constructable.
+(+)Added QM console and supply request circuitboards to tech storage for current maps.
+(u)UnfunnyPerson
+(p)5318
+(e)⚖|balance
+(+)Laser Rifles now require more difficult materials.
+(u)Ryumi
+(p)5093
+(e)🗺|mapping
+(+)Significantly expanded Donut 3's Ranch
+(u)112358sam
+(p)5194
+(e)|
+(+)Borgs and AI can now see packet sniffer device output and set filters.
+(u)112358sam
+(p)5003
+(e)🆕🗺|feature, mapping
+(+)Makes the quantum telescope console constructable.
+(+)Adds the new quantum telescope circuit board to tech storage and the mining outpost.
+(u)DimWhat
+(p)5286
+(e)⚖🗺|balance, mapping
+(+)Removed the space proofness of the snow suit and altered its stats.
+(u)Walpvrgis and BatElite
+(p)5300
+(e)🎨|sprites
+(*)AI players now have 20 new faces to choose from, so you can more effectively simulate just how disappointed you are in the crew.
 (t)tue jun 29 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Smoke and foam reactions will only succeed when reacted from "open" containers (e.g.: beakers, drinkss, puddles, etc) and will fail from closed containers (pills, mobs, foam-tiles, etc)
 (u)Arthur Holiday
 (p)5307
 (e)⚖|balance
