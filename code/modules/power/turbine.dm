@@ -252,7 +252,8 @@
 	onclose(user, "computer")
 	return
 
-
+/obj/machinery/computer/turbine_computer/attack_ai(mob/user as mob)
+	return //Delete this proc to allow silicon access to this computer
 
 /obj/machinery/computer/turbine_computer/Topic(href, href_list)
 	if(..())

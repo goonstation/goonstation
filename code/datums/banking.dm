@@ -252,7 +252,7 @@
 			user.client.add_to_bank(SB.amount)
 			boutput(user, "<span class='alert'>You deposit [SB.amount] spacebux into your account!</span>")
 			qdel(SB)
-		if(istype(I, /obj/item/spacecash/))
+		else if(istype(I, /obj/item/spacecash/))
 			if (src.accessed_record)
 				boutput(user, "<span class='notice'>You insert the cash into the ATM.</span>")
 
@@ -264,7 +264,7 @@
 				I.amount = 0
 				pool(I)
 			else boutput(user, "<span class='alert'>You need to log in before depositing cash!</span>")
-		if(istype(I, /obj/item/lotteryTicket))
+		else if(istype(I, /obj/item/lotteryTicket))
 			if (src.accessed_record)
 				boutput(user, "<span class='notice'>You insert the lottery ticket into the ATM.</span>")
 				if(I:winner)
