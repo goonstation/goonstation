@@ -77,7 +77,8 @@
 		else
 			boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 			src.scan = null
-	else ..()
+	else
+		..()
 
 /obj/machinery/computer/ordercomp/proc/view_requests()
 	. = "<B>Current Requests:</B><BR><BR>"
