@@ -1022,13 +1022,6 @@
 		..()
 		setProperty("space_movespeed", 1.5)
 
-	snow // bleh whatever!!!
-		name = "snow suit"
-		desc = "A thick padded suit that protects against extreme cold temperatures."
-		icon_state = "snowcoat"
-		item_state = "snowcoat"
-		rip = -1
-
 /obj/item/clothing/suit/space/emerg/proc/ripcheck(var/mob/user)
 	if(rip >= 36 && rip != -1 && prob(10))  //upped from rip >= 14 by Buttes
 		boutput(user, "<span class='alert'>The emergency suit tears off!</span>")
@@ -1626,3 +1619,22 @@
 			. = "It's your war medal, you remember when you got this for saving a man's life during the war."
 		else
 			. = "It's the HoS's old war medal, you heard they got it for their acts of heroism in the war."
+
+/obj/item/clothing/suit/snow
+	name = "snow suit"
+	desc = "A thick padded suit that protects against extreme cold temperatures."
+	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
+	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
+	icon_state = "snowcoat"
+	item_state = "snowcoat"
+	body_parts_covered = TORSO|LEGS|ARMS
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 50)
+		setProperty("heatprot", 10)
+		setProperty("meleeprot", 3)
+		setProperty("rangedprot", 0.5)
+		setProperty("movespeed", 0.5)
+		setProperty("disorient_resist", 15)

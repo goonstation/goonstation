@@ -15,7 +15,7 @@
 
 var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blob/tutorial_zone_2, /area/blob/tutorial_zone_3)
 
-/datum/tutorial/blob
+/datum/tutorial_base/blob
 	name = "Blob tutorial"
 	var/tutorial_area_type = null
 	var/area/tutorial_area = null
@@ -111,7 +111,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			must_deploy = locate(MT.initial_turf.x, MT.initial_turf.y + 1, MT.initial_turf.z)
 			must_deploy.UpdateOverlays(marker,"marker")
 
@@ -136,7 +136,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/turf/T = locate(tx, ty, MT.initial_turf.z)
@@ -163,21 +163,21 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 	attack
 		name = "Destroying obstacles"
 		instructions = "You appear to have an inconveniently placed object next to you! While you cannot reliably tear down walls initially, you can get rid of a myriad of objects: doors, fuel tanks, computers. You can attack by using the attack button, the second button from the left by default. Break the various objects around your blob to proceed."
-		var/obj/machinery/door/airlock/external/comp
+		var/obj/storage/closet/closet
 		var/obj/machinery/door/airlock/external/door
-		var/obj/reagent_dispensers/fueltank/tank
+		var/obj/storage/crate/crate
 		var/obj/window/window
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/turf/T = locate(tx, ty, MT.initial_turf.z)
 
-			comp = new(get_step(get_step(T, NORTH), NORTH))
+			closet = new(get_step(get_step(T, NORTH), NORTH))
 			door = new(get_step(get_step(T, WEST), WEST))
-			tank = new(get_step(get_step(T, EAST), EAST))
+			crate = new(get_step(get_step(T, EAST), EAST))
 			window = new(get_step(get_step(T, SOUTH), SOUTH))
 
 		PerformAction(var/action, var/context)
@@ -186,14 +186,14 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			if (action != "attack")
 				return 0
 			var/allowed = 0
-			if (tank)
-				if (context == get_turf(tank))
+			if (crate)
+				if (context == get_turf(crate))
 					allowed = 1
 			if (door)
 				if (context == get_turf(door))
 					allowed = 1
-			if (comp)
-				if (context == get_turf(comp))
+			if (closet)
+				if (context == get_turf(closet))
 					allowed = 1
 			if (window)
 				if (context == get_turf(window))
@@ -204,9 +204,9 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		MayAdvance()
 			var/destroyed = 0
-			if (!comp)
+			if (!closet)
 				destroyed++
-			else if (!comp.density || comp.disposed)
+			else if (closet.disposed)
 				destroyed++
 			if (!window)
 				destroyed++
@@ -216,19 +216,19 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 				destroyed++
 			else if (door.disposed)
 				destroyed++
-			if (!tank)
+			if (!crate)
 				destroyed++
-			else if (tank.disposed)
+			else if (crate.disposed)
 				destroyed++
 			if (destroyed >= 3)
 				return 1
 			return 0
 
 		TearDown()
-			qdel(comp)
+			qdel(closet)
 			qdel(window)
 			qdel(door)
-			qdel(tank)
+			qdel(crate)
 
 	spread2
 		name = "Continuing on"
@@ -241,7 +241,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/turf/T = locate(tx, ty, MT.initial_turf.z)
@@ -280,7 +280,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 		SetUp()
 			..()
 			SPAWN_DBG(0)
-				var/datum/tutorial/blob/MT = tutorial
+				var/datum/tutorial_base/blob/MT = tutorial
 				var/tx = MT.initial_turf.x
 				var/ty = MT.initial_turf.y + 1
 				var/tz = MT.initial_turf.z
@@ -315,7 +315,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/turf/T = locate(tx, ty, MT.initial_turf.z)
@@ -357,7 +357,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 		SetUp()
 			..()
 			SPAWN_DBG(0)
-				var/datum/tutorial/blob/MT = tutorial
+				var/datum/tutorial_base/blob/MT = tutorial
 				var/tx = MT.initial_turf.x
 				var/ty = MT.initial_turf.y + 1
 				var/tz = MT.initial_turf.z
@@ -389,7 +389,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/tz = MT.initial_turf.z
@@ -416,7 +416,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/tz = MT.initial_turf.z
@@ -442,7 +442,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/tz = MT.initial_turf.z
@@ -470,7 +470,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			MT.bowner.evo_points = 500
 
 		PerformAction(var/action, var/context)
@@ -483,11 +483,11 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			return 0
 
 		TearDown()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			MT.bowner.evo_points = 0
 
 		MayAdvance()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			return MT.bowner.has_upgrade(/datum/blob_upgrade/launcher) && MT.bowner.has_upgrade(/datum/blob_upgrade/replicator) && MT.bowner.has_upgrade(/datum/blob_upgrade/devour_item) && MT.bowner.has_upgrade(/datum/blob_upgrade/reflective)
 
 	digestation
@@ -497,7 +497,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x + 1
 			var/ty = MT.initial_turf.y + 2
 			var/tz = MT.initial_turf.z
@@ -518,7 +518,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 				return 1
 			if (I.disposed)
 				return 1
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			if (locate(/obj/blob/deposit) in MT.tutorial_area)
 				return 1
 			return 0
@@ -530,7 +530,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x + 1
 			var/ty = MT.initial_turf.y + 1
 			var/tz = MT.initial_turf.z
@@ -582,7 +582,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x + 1
 			var/ty = MT.initial_turf.y + 2
 			var/tz = MT.initial_turf.z
@@ -617,7 +617,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 3
 			var/tz = MT.initial_turf.z
@@ -684,7 +684,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x - 3
 			var/ty = MT.initial_turf.y + 3
 			var/tz = MT.initial_turf.z
@@ -716,7 +716,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			sleep(5 SECONDS)
 			tutorial.Advance()
 
-proc/AddBlobSteps(var/datum/tutorial/blob/T)
+proc/AddBlobSteps(var/datum/tutorial_base/blob/T)
 	T.AddStep(new /datum/tutorialStep/blob/deploy)
 	T.AddStep(new /datum/tutorialStep/blob/spread)
 	T.AddStep(new /datum/tutorialStep/blob/attack)

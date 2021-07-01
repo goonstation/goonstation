@@ -13,7 +13,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	var/uses = 0
 	var/max_uses = 0 // If can_be_charged == 1, how many charges can these gloves store?
 	var/stunready = 0
-	var/weighted = 0
+	///additive modifier to punch damage
+	var/punch_damage_modifier = 0
 	var/atom/movable/overlay/overl = null
 	var/activeweapon = 0 // Used for gloves that can be toggled to turn into a weapon (example, bladed gloves)
 
@@ -104,7 +105,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				return
 			boutput(user, "<span class='notice'>You attach the wires to the [src.name].</span>")
 			src.stunready = 1
-			src.setSpecialOverride(/datum/item_special/spark, 0)
+			src.setSpecialOverride(/datum/item_special/spark, src, 0)
 			src.material_prints += ", electrically charged"
 			return
 
@@ -140,11 +141,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 		..()
 
-	proc/damage_bonus()
-		if (weighted)
-			return 3
-		return 0
-
 	proc/distort_prints(var/prints as text, var/get_glove_ID = 1) // Ditto (Convair880).
 
 		var/data = null
@@ -173,7 +169,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		boutput(usr, "Your gloves do nothing special")
 		return
 
-	proc/setSpecialOverride(var/type = null, active = 1)
+	proc/setSpecialOverride(var/type = null, master = null, active = 1)
 		if(!ispath(type))
 			if(isnull(type))
 				src.specialoverride?.onRemove()
@@ -183,7 +179,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		src.specialoverride?.onRemove()
 
 		var/datum/item_special/S = new type
-		S.master = src
+		S.master = master
 		src.overridespecial = active
 		S.onAdd()
 		src.specialoverride = S
@@ -362,7 +358,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("conductivity", 0)
 	New()
 		..()
-		setSpecialOverride(/datum/item_special/spark)
+		setSpecialOverride(/datum/item_special/spark, src)
 
 
 /obj/item/clothing/gloves/yellow
@@ -404,6 +400,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	crit_override = 1
 	bonus_crit_chance = 0
 	stamina_dmg_mult = 0.35
+	var/weighted
 
 	setupProperties()
 		..()
@@ -425,6 +422,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			return
 		boutput(user, "You slip the horseshoe inside one of the gloves.")
 		src.weighted = 1
+		src.punch_damage_modifier += 3
 		tooltip_rebuild = 1
 		qdel(W)
 	else
@@ -561,7 +559,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	desc = "A strange gauntlet made of cogs and brass machinery. It has seven slots along the side."
 	icon_state = "brassgauntlet"
 	item_state = "brassgauntlet"
-	weighted = 1
+	punch_damage_modifier = 3
 	burn_possible = 0
 	cant_self_remove = 1
 	cant_other_remove = 1
