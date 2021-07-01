@@ -198,17 +198,17 @@
 			return
 		if(target.deconstruct_flags & DECON_BUILT)
 			if (isnull(scanned_access))
-				playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
+				playsound(src, "sound/machines/airlock_deny.ogg", 35, 1, 0, 2)
 				boutput(user, "<span class='notice'>[src] has no access requirements loaded.</span>")
 				return
 			if (length(door_reqs.req_access))
-				playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
+				playsound(src, "sound/machines/airlock_deny.ogg", 35, 1, 0, 2)
 				boutput(user, "<span class='notice'>[src] cannot reprogram [door_reqs.name], access requirements already set.</span>")
 				return
 			. = ..()
 			return
 		if(is_restricted(door_reqs))
-			playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
+			playsound(src, "sound/machines/airlock_deny.ogg", 35, 1, 0, 2)
 			boutput(user, "<span class='notice'>[src] can't scan [door_reqs.name]</span>")
 			return
 		scanned_access = door_reqs.req_access
