@@ -200,4 +200,3 @@
 	icon_state += "b"
 	light.disable()
 	status |= BROKEN
-
