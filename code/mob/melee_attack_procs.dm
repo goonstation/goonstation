@@ -427,6 +427,7 @@
 
 	if (is_shove) return msgs
 
+
 	var/obj/item/I = target.equipped()
 	if (I)
 		var/disarm_item_prob = 37
