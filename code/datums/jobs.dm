@@ -251,6 +251,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	receives_security_disk = 1
 	receives_badge = 1
 	recieves_implant = /obj/item/implant/health/security/anti_mindslave
+	items_in_backpack = list(/obj/item/device/flash)
 
 
 #ifdef SUBMARINE_MAP
@@ -278,9 +279,6 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_ears = list(/obj/item/device/radio/headset/command/hos)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
 #endif
-
-	items_in_backpack = list(/obj/item/gun/energy/taser_gun)
-
 
 	New()
 		..()
