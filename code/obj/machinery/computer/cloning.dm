@@ -123,23 +123,36 @@
 
 	else if (isscrewingtool(W))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 2 SECONDS))
-			if(src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
+		if (do_after(user, 2 SECONDS))
+			logTheThing("station", user, null, "disconnects the cloning console at [log_loc(src)].")
+			if (src.status & BROKEN)
+				user.show_text("The broken glass falls out.", "blue")
+				var/obj/computerframe/A = new /obj/computerframe(src.loc)
+				if (src.material) A.setMaterial(src.material)
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
 				G.set_loc(src.loc)
+				var/obj/item/circuitboard/cloning/M = new /obj/item/circuitboard/cloning( A )
+				for (var/obj/C in src)
+					C.set_loc(src.loc)
+				M.records = src.records
+				A.set_dir(src.dir)
+				A.circuit = M
+				A.state = 3
+				A.icon_state = "3"
+				A.anchored = 1
 			else
-				boutput(user, "<span class='notice'>The glass pane falls out.</span>")
-				var/obj/item/sheet/glass/glass = new/obj/item/sheet/glass(src.loc)
-				glass.amount = 6
-				glass.inventory_counter.update_number(glass.amount)
-			logTheThing("station", user, null, "disconnects the cloning console at [log_loc(src)].")
-			var/obj/computerframe/A = new /obj/computerframe( src.loc )
-			if(src.material) A.setMaterial(src.material)
-			var/obj/item/circuitboard/cloning/M = new /obj/item/circuitboard/cloning( A )
-			for (var/obj/C in src)
-				C.set_loc(src.loc)
-			M.records = src.records
+				user.show_text("You disconnect the monitor.", "blue")
+				var/obj/computerframe/A = new /obj/computerframe(src.loc)
+				if (src.material) A.setMaterial(src.material)
+				var/obj/item/circuitboard/cloning/M = new /obj/item/circuitboard/cloning( A )
+				for (var/obj/C in src)
+					C.set_loc(src.loc)
+				M.records = src.records
+				A.set_dir(src.dir)
+				A.circuit = M
+				A.state = 4
+				A.icon_state = "4"
+				A.anchored = 1
 			if (src.allow_dead_scanning)
 				new /obj/item/cloner_upgrade (src.loc)
 				src.allow_dead_scanning = 0
@@ -149,11 +162,6 @@
 			if(src.BE)
 				new /obj/item/cloneModule/genepowermodule(src.loc)
 				src.BE = null
-			A.circuit = M
-			A.state = 3
-			A.set_dir(src.dir)
-			A.icon_state = "3"
-			A.anchored = 1
 			qdel(src)
 
 	else if (istype(W, /obj/item/cloner_upgrade))
