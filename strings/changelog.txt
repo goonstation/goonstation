@@ -1,5 +1,9 @@
 
 (t)thu jul 01 21
+(u)Arthur Holiday
+(p)5311
+(e)⚖|balance
+(+)The Head of Security does not get a taser at roundstart anymore.
 (u)BatElite
 (p)5294
 (e)|
