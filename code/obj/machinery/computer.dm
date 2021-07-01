@@ -32,7 +32,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (can_reconnect)
-			if (istype(W, /obj/item/device/multitool) && !(status & (BROKEN|NOPOWER)))
+			if (ispulsingtool(W) && !(status & (BROKEN|NOPOWER)))
 				boutput(user, "<span class='notice'>You pulse [src.name] to re-scan for equipment.</span>")
 				connection_scan()
 				return
