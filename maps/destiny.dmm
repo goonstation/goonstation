@@ -24831,7 +24831,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/gannets/maintenance{
-	name = "airlock-'Crew Lounge'";
+	name = "airlock-'Janitor's Supply Closet'";
 	req_access_txt = "26"
 	},
 /turf/simulated/floor/plating/random,
