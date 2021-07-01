@@ -144,14 +144,16 @@
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && get_dist(src,O) <= 1)
-			if (O.reagents.total_volume)
+			if  (!O.reagents.total_volume)
+				boutput(user, "<span class='alert'>The [O.name] is empty!</span>")
+				return
+			if (O.reagents.reagent_list.len == 1 && O.reagents.reagent_list[1] == "fuel")
 				O.reagents.trans_to(src, capacity)
 				src.inventory_counter.update_number(get_fuel())
 				boutput(user, "<span class='notice'>Welder refueled</span>")
 				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
-			else
-				boutput(user, "<span class='alert'>The [O.name] is empty!</span>")
-		else if (src.welding)
+				return
+		if (src.welding)
 			use_fuel(ismob(O) ? 2 : 0.2)
 			if (get_fuel() <= 0)
 				boutput(user, "<span class='notice'>Need more fuel!</span>")
