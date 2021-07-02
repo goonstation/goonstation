@@ -163,7 +163,6 @@
 	name = "\improper Security HUD"
 	desc = "Sunglasses with a high tech sheen."
 	icon_state = "sec"
-	var/client/assigned = null
 	color_r = 0.95 // darken a little, kinda red
 	color_g = 0.9
 	color_b = 0.9
@@ -180,37 +179,16 @@
 					H.bioHolder.RemoveEffect("bad_eyesight")
 		return
 
-	process()
-		if (assigned)
-			assigned.images.Remove(arrestIconsAll)
-			addIcons()
-			if (loc != assigned.mob)
-				assigned.images.Remove(arrestIconsAll)
-				assigned = null
-
-	proc/addIcons()
-		if (assigned)
-			for (var/image/I in arrestIconsAll)
-				if (!I || !I.loc || !src)
-					continue
-				if (I.loc.invisibility && I.loc != src.loc)
-					continue
-				else
-					assigned.images.Add(I)
-
 	equipped(var/mob/user, var/slot)
 		..()
 		if (slot == SLOT_GLASSES)
-			assigned = user.client
-			processing_items |= src
+			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(user)
 		return
 
 	unequipped(var/mob/user)
+		if(src.equipped_in_slot == SLOT_GLASSES)
+			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(user)
 		..()
-		if (assigned)
-			assigned.images.Remove(arrestIconsAll)
-			assigned = null
-		processing_items.Remove(src)
 		return
 
 /obj/item/clothing/glasses/sunglasses/sechud/superhero
@@ -433,7 +411,6 @@
 	desc = "Fitted with an advanced miniature sensor array that allows the user to quickly determine the physical condition of others."
 	icon_state = "prodocs"
 	uses_multiple_icon_states = 1
-	var/client/assigned = null
 	var/scan_upgrade = 0
 	var/health_scan = 0
 	mats = 8
@@ -445,39 +422,16 @@
 		..()
 		setProperty("disorient_resist_eye", 15)
 
-	//proc/updateIcons() //I wouldve liked to avoid this but i dont want to put this inside the mobs life proc as that would be more code.
-	process()
-		if (assigned)
-			assigned.images.Remove(health_mon_icons)
-			addIcons()
-
-			if (loc != assigned.mob)
-				assigned.images.Remove(health_mon_icons)
-				assigned = null
-
-	proc/addIcons()
-		if (assigned)
-			for (var/image/I in health_mon_icons)
-				if (!I || !I.loc || !src)
-					continue
-				if (I.loc.invisibility && I.loc != src.loc)
-					continue
-				else
-					assigned.images.Add(I)
-
 	equipped(var/mob/user, var/slot)
 		..()
 		if (slot == SLOT_GLASSES)
-			assigned = user.client
-		processing_items |= src
+			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(user)
 		return
 
 	unequipped(var/mob/user)
+		if(src.equipped_in_slot == SLOT_GLASSES)
+			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
 		..()
-		if (assigned)
-			assigned.images.Remove(health_mon_icons)
-			assigned = null
-		processing_items.Remove(src)
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
