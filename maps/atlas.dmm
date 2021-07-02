@@ -1028,6 +1028,10 @@
 	pixel_y = 21
 	},
 /obj/machinery/light_switch/north,
+/obj/machinery/recharger/wall{
+	dir = 4;
+	pixel_x = 23
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -2296,10 +2300,6 @@
 /area/station/storage/tools)
 "fV" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/south)
 "fX" = (
@@ -3124,7 +3124,6 @@
 /turf/space,
 /area/space)
 "io" = (
-/obj/machinery/manufacturer/mining,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -11656,7 +11655,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor,
 /area/station/maintenance/southeast)
 "Cw" = (
 /obj/disposalpipe/segment{
@@ -16734,6 +16733,10 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -17910,6 +17913,10 @@
 /turf/simulated/floor/orangeblack,
 /area/station/hangar/arrivals)
 "Sn" = (
+/obj/storage/crate/wooden,
+/obj/item/device/matanalyzer,
+/obj/item/item_box/medical_patches/mini_styptic,
+/obj/item/cargotele,
 /turf/simulated/floor/stairs/wide/other{
 	dir = 4
 	},
@@ -18047,6 +18054,12 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
+"SK" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8
+	},
+/turf/simulated/floor/grey,
+/area/station/mining/refinery)
 "SL" = (
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/white,
@@ -20314,9 +20327,10 @@
 /area/space)
 "Zk" = (
 /obj/machinery/neosmelter,
-/obj/machinery/firealarm{
+/obj/machinery/light{
 	dir = 8;
-	pixel_x = -24
+	layer = 9.1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/engine,
 /area/station/mining/refinery)
@@ -54233,7 +54247,7 @@ aa
 PS
 PS
 PS
-aa
+PS
 aa
 aa
 aa
@@ -54820,7 +54834,7 @@ aa
 aa
 aa
 aa
-aa
+Of
 iW
 iW
 iW
@@ -54836,7 +54850,7 @@ qd
 iW
 iW
 iW
-aa
+Of
 aa
 aa
 aa
@@ -55118,7 +55132,7 @@ aa
 aa
 aa
 aa
-aa
+Of
 iW
 iW
 iW
@@ -55142,7 +55156,7 @@ Bd
 iW
 iW
 iW
-aa
+Of
 aa
 aa
 aa
@@ -55415,11 +55429,11 @@ aa
 aa
 aa
 aa
-aa
+Of
 iW
 iW
 iW
-aa
+Of
 ii
 iX
 jW
@@ -55445,11 +55459,11 @@ wz
 wE
 An
 Bd
-aa
+Of
 iW
 iW
 iW
-aa
+Of
 aa
 aa
 PS
@@ -55715,7 +55729,7 @@ aa
 aa
 aa
 aa
-aa
+nB
 cJ
 cJ
 dp
@@ -55753,7 +55767,7 @@ WC
 zQ
 Eq
 Eq
-aa
+yf
 aa
 aa
 aa
@@ -56016,7 +56030,7 @@ aa
 aa
 aa
 aa
-aa
+aq
 Wk
 cJ
 bQ
@@ -56056,7 +56070,7 @@ Sr
 TI
 Eq
 jh
-aa
+KS
 aa
 aa
 aa
@@ -57526,7 +57540,7 @@ aa
 aa
 aa
 aa
-aa
+aq
 TB
 GF
 ru
@@ -57566,7 +57580,7 @@ Sr
 Sr
 BQ
 Bs
-aa
+KS
 aa
 aa
 aa
@@ -57827,7 +57841,7 @@ aa
 aa
 aa
 aa
-aa
+aq
 cJ
 cJ
 fn
@@ -58431,7 +58445,7 @@ aa
 aa
 aa
 aa
-aa
+aq
 cN
 Fo
 fn
@@ -58737,7 +58751,7 @@ aa
 cJ
 fn
 fn
-xi
+fn
 fn
 PY
 QP
@@ -59035,7 +59049,7 @@ aa
 aa
 aa
 aa
-aa
+aq
 Dz
 bk
 Zk
@@ -59639,7 +59653,7 @@ aa
 aa
 aa
 aa
-aa
+aq
 Dz
 bk
 bk
@@ -60249,7 +60263,7 @@ FF
 FF
 Jq
 Jq
-FF
+SK
 Jq
 Jq
 FF
