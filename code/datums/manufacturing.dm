@@ -1915,6 +1915,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
+
 /datum/manufacture/shoes_brown
 	name = "Brown Shoes"
 	item_paths = list("FAB-1")
