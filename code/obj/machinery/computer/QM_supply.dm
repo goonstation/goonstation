@@ -142,9 +142,6 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		radio_controller.remove_object(src, "1435")
 		..()
 
-/obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
-	return src.attack_hand(user)
-
 /obj/machinery/computer/supplycomp/attack_ai(var/mob/user as mob)
 	return src.attack_hand(user)
 
@@ -164,9 +161,40 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	src.hacked = 0
 	return 1
 
-/obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
+/obj/machinery/computer/supplycomp/attackby(I as obj, mob/user as mob)
 	if(istype(I,/obj/item/card/emag))
 		//I guess you'll wanna put the emag away now instead of getting a massive popup
+	else if (isscrewingtool(I))
+		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+		if (do_after(user, 2 SECONDS))
+			if (src.status & BROKEN)
+				user.show_text("The broken glass falls out.", "blue")
+				var/obj/computerframe/A = new /obj/computerframe(src.loc)
+				if (src.material)
+					A.setMaterial(src.material)
+				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+				G.set_loc(src.loc)
+				var/obj/item/circuitboard/qmsupply/M = new /obj/item/circuitboard/qmsupply(A)
+				for (var/obj/C in src)
+					C.set_loc(src.loc)
+				A.circuit = M
+				A.state = 3
+				A.icon_state = "3"
+				A.anchored = 1
+				qdel(src)
+			else
+				user.show_text("You disconnect the monitor.", "blue")
+				var/obj/computerframe/A = new /obj/computerframe(src.loc)
+				if (src.material)
+					A.setMaterial(src.material)
+				var/obj/item/circuitboard/qmsupply/M = new /obj/item/circuitboard/qmsupply(A)
+				for (var/obj/C in src)
+					C.set_loc(src.loc)
+				A.circuit = M
+				A.state = 4
+				A.icon_state = "4"
+				A.anchored = 1
+				qdel(src)
 	else
 		return src.attack_hand(user)
 

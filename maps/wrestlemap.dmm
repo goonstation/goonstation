@@ -790,6 +790,8 @@
 /obj/item/circuitboard/cloning,
 /obj/item/circuitboard/teleporter,
 /obj/item/circuitboard/tetris,
+/obj/item/circuitboard/qmsupply,
+/obj/item/circuitboard/qmorder,
 /obj/decal/cleanable/rust,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -24752,6 +24754,7 @@
 /obj/item/circuitboard/powermonitor_smes,
 /obj/item/circuitboard/operating,
 /obj/item/circuitboard/genetics,
+/obj/item/circuitboard/telescope,
 /obj/decal/cleanable/fungus,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)

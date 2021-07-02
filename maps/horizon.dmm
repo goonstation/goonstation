@@ -23083,10 +23083,13 @@
 /obj/item/circuitboard/arcade,
 /obj/item/circuitboard/powermonitor,
 /obj/item/circuitboard/powermonitor_smes,
+/obj/item/circuitboard/qmsupply,
+/obj/item/circuitboard/qmorder,
 /obj/cable{
 	icon_state = "1-8"
 	},
 /obj/item/circuitboard/genetics,
+/obj/item/circuitboard/telescope,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "bfa" = (
