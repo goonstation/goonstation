@@ -1,5 +1,9 @@
 
 (t)thu jul 01 21
+(u)MarkNstein
+(p)2152
+(e)⚖🎨|balance, sprites
+(*)Entering chutes now has an animation and action bar. Chute-entry has been made faster.
 (u)BatElite
 (p)5293
 (e)⚖|balance
