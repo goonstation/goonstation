@@ -185,7 +185,7 @@
 		return
 
 	UpdateName()
-		src.name = "[src.amount] [name_prefix(null, 1)][pick("bit","butt","cosby ","bart", "bat", "bet", "bot")]coin[s_es(src.amount)][name_suffix(null, 1)]"
+		src.name = "[src.amount] [name_prefix(null, 1)][pick("bit","butt","shitty-bill ","bart", "bat", "bet", "bot")]coin[s_es(src.amount)][name_suffix(null, 1)]"
 
 	process()
 		src.amount = rand(1, 1000) / rand(10, 1000)

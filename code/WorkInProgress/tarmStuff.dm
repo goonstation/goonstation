@@ -3,7 +3,7 @@
 /obj/item/gun/kinetic/g11
 	name = "\improper Manticore assault rifle"
 	desc = "An assault rifle capable of firing single precise bursts. The magazines holders are embossed with \"Anderson Para-Munitions\""
-	icon = 'icons/obj/48x32.dmi'
+	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "g11"
 	item_state = "g11"
 	has_empty_state = 1
@@ -112,8 +112,7 @@
 			return
 		..()
 
-//TODO fix this to be better
-/*
+
 /obj/item/gun/kinetic/pistol/smart
 	name = "\improper Hydra smart pistol"
 	desc = "A silenced pistol capable of locking onto multiple targets and firing on them in rapid sequence. \"Anderson Para-Munitions\" is engraved on the slide."
@@ -122,87 +121,33 @@
 	New()
 		..()
 		ammo.amount_left = 30
-		AddComponent(/datum/component/holdertargeting/smartgun, 3)
+		AddComponent(/datum/component/holdertargeting/smartgun/nukeop, 3)
 
-/datum/component/holdertargeting/smartgun
-	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	signals = list(COMSIG_LIVING_SPRINT_START)
-	mobtype = /mob/living
-	proctype = .proc/begin_targetloop
-	var/turf/target
-	var/list/targets = list()
-	var/targetting = 0
-	var/shooting = 0
-	var/maxlocks
-	var/obj/item/gun/G
 
-	Initialize(_maxlocks = 3)
-		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))
-			return COMPONENT_INCOMPATIBLE
-		else
-			G = parent
-		maxlocks = _maxlocks
+/datum/component/holdertargeting/smartgun/nukeop/is_valid_target(mob/user, mob/M)
+	return ..() && !istype(M.get_id(), /obj/item/card/id/syndicate)
 
-	on_dropped(datum/source, mob/user)
+//smart extinguisher
+/obj/item/gun/flamethrower/assembled/loaded/extinguisher
+	name = "smart fire extinguisher"
+	desc = "An advanced fire extinguisher that locks onto nearby burning personnel and sprays them down with fire-fighting foam."
+	icon = 'icons/obj/items/items.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	icon_state = "fire_extinguisher0"
+	item_state = "fireextinguisher0"
+
+	New()
 		. = ..()
-		src.shooting = 0
-		src.targetting = 0
-		src.targets.len = 0
+		src.fueltank.reagents.remove_any(400)
+		src.fueltank.reagents.add_reagent("fffoam", 400)
+		src.amt_chem = 10
+		AddComponent(/datum/component/holdertargeting/smartgun/extinguisher, 1)
 
-/datum/component/holdertargeting/smartgun/proc/begin_targetloop(mob/living/user)
-	if(!targetting)
-		targetting = 1
-		targets.len = 0
-		APPLY_MOB_PROPERTY(user, PROP_CANTSPRINT, src)
-		RegisterSignal(user, COMSIG_MOB_CLICK, .proc/shootemall)
-		SPAWN_DBG(0)
-			src.targetloop(user)
+	attack_hand()
+		return//:shelterfrog:
 
-/datum/component/holdertargeting/smartgun/proc/shootemall(mob/user, atom/target, params)
-	if(targetting && !shooting)
-		SPAWN_DBG(0)
-			shooting = 1
-			shootloop:
-				for(var/mob/M in targets)
-					for(var/i in 1 to targets[M])
-						if(!shooting || !G.canshoot())
-							break shootloop
-						G.shoot(get_turf(M),get_turf(user),user)
-						sleep(1)
-			targets.len = 0
-			shooting = 0
-		return RETURN_CANCEL_CLICK
-
-/datum/component/holdertargeting/smartgun/proc/targetloop(mob/living/user)
-	var/ding = 0
-	var/shotcount = 0
-	while(targetting)
-		sleep(1 SECOND)
-		ding = 0
-		for(var/mob/M in mobs)
-			if(!G || !(user?.client.check_key(KEY_RUN)))
-				targetting = 0
-				break
-			if(IN_RANGE(user, M, 7) && isliving(M) && in_cone_of_vision(user, M) && !(targets[M] >= maxlocks || istype(M.get_id(), /obj/item/card/id/syndicate)) && shotcount < checkshots(G))
-				targets[M] = targets[M] ? targets[M] + 1 : 1
-				ding = 1
-				shotcount++
-				continue
-		if(ding)
-			user.playsound_local(user, "sound/machines/chime.ogg", 5, 0)
-	//loop ended - reset values
-	REMOVE_MOB_PROPERTY(user, PROP_CANTSPRINT, src)
-	UnregisterSignal(user, COMSIG_MOB_CLICK)
-
-/datum/component/holdertargeting/smartgun/proc/checkshots(obj/item/gun/G)
-	if(istype(G, /obj/item/gun/kinetic))
-		var/obj/item/gun/kinetic/K = G
-		return round(K.ammo.amount_left * K.current_projectile.cost)
-	else if(istype(G, /obj/item/gun/energy))
-		var/obj/item/gun/energy/E = G
-		return round(E.cell.charge * E.current_projectile.cost)
-	else return G.canshoot() * INFINITY //idk, just let it happen
-*/
+/datum/component/holdertargeting/smartgun/extinguisher/is_valid_target(mob/user, mob/M)
+	return (M.hasStatus("burning"))
 
 /obj/item/gun/kinetic/gyrojet
 	name = "Amaethon gyrojet pistol"
@@ -229,7 +174,7 @@
 
 /datum/projectile/bullet/gyrojet
 	name = "gyrojet bullet"
-	projectile_speed = 5
+	projectile_speed = 6
 	max_range = 500
 	dissipation_rate = 0
 	power = 10
@@ -244,7 +189,7 @@
 		O.internal_speed = projectile_speed
 
 	tick(obj/projectile/O)
-		O.internal_speed = min(O.internal_speed * 1.25, 28)
+		O.internal_speed = min(O.internal_speed * 1.25, 32)
 
 	get_power(obj/projectile/P, atom/A)
 		return 15 + P.internal_speed
@@ -376,7 +321,7 @@
 //Suggestion box
 /obj/suggestion_box
 	name = "suggestion box"
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "voting_box"
 	density = 1
 	flags = FPRINT

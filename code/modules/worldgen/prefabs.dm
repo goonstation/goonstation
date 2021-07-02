@@ -180,12 +180,19 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 42
 		prefabSizeY = 40
 
-	candy_shop //Ryn's store from out of time and out of place
+	candy_shop // Ryn's store from out of time and out of place
 		maxNum = 1
 		probability = 25
 		prefabPath = "assets/maps/prefabs/prefab_candy_shop.dmm"
 		prefabSizeX = 20
 		prefabSizeY = 20
+
+	shooting_range // Nef's shooting range with an experimental ray gun
+		maxNum = 1
+		probability = 15
+		prefabPath = "assets/maps/prefabs/prefab_gunrange.dmm"
+		prefabSizeX = 19
+		prefabSizeY = 22
 
 	//UNDERWATER AREAS FOR OSHAN
 
@@ -394,6 +401,13 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 10
 		prefabSizeY = 10
 
+	torpedo_deposit // Torpedo deposit
+		underwater = 1
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_water_torpedo_deposit.dmm"
+		prefabSizeX = 21
+		prefabSizeY = 21
 
 
 #if defined(MAP_OVERRIDE_OSHAN)

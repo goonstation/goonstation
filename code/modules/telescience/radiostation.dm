@@ -16,8 +16,8 @@
 	code/WorkInProgress/radioship.dm
 	maps/radiostation2.dmm
 	icon/obj/radiostation.dmi
-	icon/obj/64x64.dmi
-	icon/obj/32x64.dmi
+	icon/obj/large/64x64.dmi
+	icon/obj/large/32x64.dmi
 	icon/obj/decoration.dmi
 	strings/radioship/radioship_records.txt */
 
@@ -527,6 +527,74 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 		..()
 		src.UpdateOverlays(new /image(src.icon, "record_6"), "recordlabel") //it should always be green because I'm so funny.
 
+ABSTRACT_TYPE(/obj/item/record/random/metal)
+/obj/item/record/random/metal
+	New()
+		. = ..()
+		src.desc += {" A space metal record, rock on!"}
+
+/obj/item/record/random/metal/xtra
+	name = "record - \"Radstorm Rock\""
+	record_name = "Radstorm Rock"
+	song = "sound/radio_station/music/xtra.ogg"
+
+/obj/item/record/random/metal/giga
+	name = "record - \"Punctured Spacesuit\""
+	record_name = "Punctured Spacesuit"
+	song = "sound/radio_station/music/giga.ogg"
+
+/obj/item/record/random/metal/maxi
+	name = "record - \"Plasmageddon\""
+	record_name = "Plasmageddon"
+	song = "sound/radio_station/music/maxi.ogg"
+
+ABSTRACT_TYPE(/obj/item/record/random/funk)
+/obj/item/record/random/funk
+	New()
+		. = ..()
+		src.desc += {" A space funk record to groove to!"}
+
+/obj/item/record/random/funk/funkadelic
+	name = "record - \"Fission Funk\""
+	record_name = "Fission Funk"
+	song = "sound/radio_station/music/funkadelic.ogg"
+
+/obj/item/record/random/funk/groovy
+	name = "record - \"Gaussian Groove\""
+	record_name = "Gaussian Groove"
+	song = "sound/radio_station/music/groovy.ogg"
+
+/obj/item/record/random/funk/time4lunch
+	name = "record - \"Lunch4Laika\""
+	record_name = "Lunch4Laika"
+	song = "sound/radio_station/music/lunch.ogg"
+
+ABSTRACT_TYPE(/obj/item/record/random/notaquario)
+/obj/item/record/random/notaquario
+	New()
+		. = ..()
+		src.desc += {" A record from the Aquario and Not Tom Mixtape, looks pretty old!"}
+
+/obj/item/record/random/notaquario/beaches
+	record_name = "Beaches"
+	song = "sound/radio_station/music/beaches.ogg"
+
+/obj/item/record/random/notaquario/graveyard
+	record_name = "Graveyard"
+	song = "sound/radio_station/music/graveyard.ogg"
+
+/obj/item/record/random/notaquario/floaty
+	record_name = "I'm Floaty In Space But Thats Ok"
+	song = "sound/radio_station/music/floaty.ogg"
+
+/obj/item/record/random/notaquario/repose
+	record_name = "Repose"
+	song = "sound/radio_station/music/repose.ogg"
+
+/obj/item/record/random/notaquario/biodome
+	record_name = "Biodome"
+	song = "sound/radio_station/music/biodome.ogg"
+
 /obj/item/record/spacebux/New()
 	..()
 	var/obj/item/record/record_type = pick(concrete_typesof(/obj/item/record/random))
@@ -595,26 +663,6 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	song = "sound/radio_station/music/core_of_poo.ogg"
 	color = "#DE9F47"
 
-/obj/item/record/notaquario_mixtape/beaches
-	record_name = "Beaches"
-	song = "sound/radio_station/music/beaches.ogg"
-
-/obj/item/record/notaquario_mixtape/graveyard
-	record_name = "Graveyard"
-	song = "sound/radio_station/music/graveyard.ogg"
-
-/obj/item/record/notaquario_mixtape/floaty
-	record_name = "I'm Floaty In Space But Thats Ok"
-	song = "sound/radio_station/music/floaty.ogg"
-
-/obj/item/record/notaquario_mixtape/repose
-	record_name = "Repose"
-	song = "sound/radio_station/music/repose.ogg"
-
-/obj/item/record/notaquario_mixtape/biodome
-	record_name = "Biodome"
-	song = "sound/radio_station/music/biodome.ogg"
-
 // Record sets
 /obj/item/storage/box/record
 	name = "record sleeve"
@@ -632,15 +680,6 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	/obj/item/record/clown_collection/eggshell,
 	/obj/item/record/clown_collection/disco,
 	/obj/item/record/clown_collection/poo)
-
-/obj/item/storage/box/record/notaquario_mixtape1
-	name = "Aquario and Not Tom's Mixtape Vol 1"
-	desc = "Woa, these are some old tunes! Made by Aquario and Not Tom way back in the early 2020s!"
-	spawn_contents = list(/obj/item/record/notaquario_mixtape/graveyard,
-	/obj/item/record/notaquario_mixtape/repose,
-	/obj/item/record/notaquario_mixtape/beaches,
-	/obj/item/record/notaquario_mixtape/floaty,
-	/obj/item/record/notaquario_mixtape/biodome)
 
 /obj/item/storage/box/record/radio
 	desc = "A sturdy record sleeve, designed to hold multiple records. The art on the cover is very lovely."
@@ -675,6 +714,17 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 		/obj/item/record/random/nostalgic/soalive,
 		/obj/item/record/random/nostalgic/alivetoo)
 
+/obj/item/storage/box/record/radio/guitar
+	name = "\improper Space Metal N' Funk record sleeve"
+	desc = {"A sturdy record sleeve, designed to hold multiple records. It seems to have an assortment of rockin' tunes."}
+	spawn_contents = list(
+		/obj/item/record/random/metal/xtra,
+		/obj/item/record/random/metal/giga,
+		/obj/item/record/random/metal/maxi,
+		/obj/item/record/random/funk/funkadelic,
+		/obj/item/record/random/funk/groovy,
+		/obj/item/record/random/funk/time4lunch)
+
 /obj/item/storage/box/record/radio/chronoquest
 	name = "\improper Chronoquest record sleeve"
 	desc = {"A sturdy record sleeve, designed to hold multiple records made by <a href="https://soundcloud.com/wizardofthewestside">Chronoquest</a>."}
@@ -685,6 +735,15 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 		/obj/item/record/random/chronoquest/cloudskymanguy,
 		/obj/item/record/random/chronoquest/black_wing_interface,
 		/obj/item/record/random/chronoquest/riverdancer)
+
+/obj/item/storage/box/record/notaquario
+	name = "\improper Aquario and Not Tom's Mixtape Vol 1"
+	desc = "Woa, these are some old tunes! Made by Aquario and Not Tom way back in the early 2020s!"
+	spawn_contents = list(/obj/item/record/random/notaquario/graveyard,
+	/obj/item/record/random/notaquario/repose,
+	/obj/item/record/random/notaquario/beaches,
+	/obj/item/record/random/notaquario/floaty,
+	/obj/item/record/random/notaquario/biodome)
 
 /obj/item/storage/box/record/radio/host
 	desc = "A sleeve of exclusive radio station songs."
@@ -737,13 +796,19 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 /obj/submachine/tape_deck/attack_hand(mob/user as mob)
 	if(has_tape)
 		if(!is_playing)
-			boutput(user, "You remove the tape from the tape deck.")
-			src.visible_message("<span class='notice'><b>[user] removes the tape from the tape deck.</b></span>")
-			user.put_in_hand_or_drop(src.tape_inside)
-			src.tape_inside = null
-			src.has_tape = 0
+			if(istype(src.tape_inside,/obj/item/radio_tape/advertisement))
+				src.visible_message("<span class='alert'><b>[src.tape_inside]'s copyright preserving self destruct feature activates!</b></span>")
+				qdel(src.tape_inside)
+				src.tape_inside = null
+				src.has_tape = 0
+			else
+				boutput(user, "You remove the tape from the tape deck.")
+				src.visible_message("<span class='notice'><b>[user] removes the tape from the tape deck.</b></span>")
+				user.put_in_hand_or_drop(src.tape_inside)
+				src.tape_inside = null
+				src.has_tape = 0
 		else
-			boutput(user, "It looks like the tape is still being rewinded. You should wait a bit more before taking it out.")
+			boutput(user, "It looks like the tape is still being rewound. You should wait a bit more before taking it out.")
 
 // Tapes
 /obj/item/radio_tape
@@ -904,7 +969,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 /obj/decal/fakeobjects/cpucontroller
 	name = "central processing unit"
 	desc = "The computing core of the mainframe."
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "gannets_machine1"
 	bound_width = 64
 	bound_height = 64
@@ -914,7 +979,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 /obj/decal/fakeobjects/vacuumtape
 	name = "vacuum column tape drive"
 	desc = "A large 9 track magnetic tape storage unit."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "gannets_machine2"
 	bound_width = 32
 	bound_height = 64
@@ -924,7 +989,7 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 /obj/decal/fakeobjects/operatorconsole
 	name = "operator's console"
 	desc = "The computer operating console, covered in fancy toggle swtiches and register value lamps."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "gannets_machine1"
 	bound_width = 32
 	bound_height = 64
@@ -944,140 +1009,6 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	icon_state = "gannets_machine20"
 	anchored = 1
 	density = 1
-
-//Books + documents
-//this one isn't on the map, but it might be good to have.
-/obj/item/paper/book/icarus_ovid
-	name = "Mythological Stories of the Ancient Greeks"
-	desc = "An old dusty book of mythology, well worn and dog-eared."
-	info = {"<p>In tedious Exile now too long detain'd,<br>
-Daedalus languish'd for his native Land:<br>
-The Sea foreclos'd his Flight; yet thus he said;<br>
-Tho' Earth and Water in Subjection laid,<br>
-O cruel Minos, thy Dominion be,<br>
-We'll go thro' Air; for sure the Air is free.<br>
-Then to new Arts his cunning Thought applies,<br>
-And to improve the Work of Nature tries.<br>
-A Row of Quills in gradual Order plac'd,<br>
-Rise by Degrees in Length from first to last;<br>
-As on a Cliff th' ascending Thicket grows,<br>
-Or, different Reeds the rural Pipe compose.<br>
-Along the Middle runs a Twine of Flax,<br>
-The Bottom Stems are joyn'd by pliant Wax.<br>
-Thus, well compact, a hollow Bending brings<br>
-The fine Composure into real Wings.</p>
-
-<p>His Boy, young Icarus, that near him stood,<br>
-Unthinking of his Fate, with Smiles pursu'd<br>
-The floating Feathers, which the moving Air<br>
-Bore loosely from the Ground, and wafted here and there.<br>
-Or with the Wax impertinently play'd,<br>
-And with his childish Tricks the great Design delay'd.<br>
-The final Master-stroke at last impos'd,<br>
-And now, the neat Machine compleatly clos'd;<br>
-Fitting his Pinions, on a Flight he tries,<br>
-And hung self-ballanc'd in the beaten Skies.<br>
-Then thus instructs his Child; My Boy, take Care<br>
-To wing your Course along the middle Air;<br>
-If low, the Surges wet your flagging Plumes,<br>
-If high, the Sun the melting Wax consumes:<br>
-Steer between both: Nor to the Northern Skies,<br>
-Nor South Orion turn your giddy Eyes;<br>
-But follow me: Let me before you lay<br>
-Rules for the Flight, and mark the pathless Way.<br>
-Then teaching, with a fond Concern, his Son,<br>
-He took the untry'd Wings, and fix'd 'em on;<br>
-But fix'd with trembling Hands; and, as he speaks,<br>
-The Tears roul gently down his aged Cheeks.<br>
-Then kiss'd, and in his Arms embrac'd him fast,<br>
-But knew not this Embrace must be the last.<br>
-And mounting upward, as he wings his Flight,<br>
-Back on his Charge he turns his aking Sight;<br>
-As Parent Birds, when first their callow Care<br>
-Leave the high Nest to tempt the liquid Air.<br>
-Then chears him on, and oft, with fatal Art,<br>
-Reminds the Stripling to perform his Part.</p>
-
-<p>These, as the Angler at the silent Brook,<br>
-Or Mountain-Shepherd leaning on his Crook,<br>
-Or gaping Plowman from the Vale descries,<br>
-They stare, and view 'em with religious Eyes,<br>
-And strait conclude 'em Gods; since none, but they,<br>
-Thro' their own azure Skies cou'd find a Way.<br>
-Now Delos, Paros on the Left are seen,<br>
-And Samos, favour'd by Jove's haughty Queen;<br>
-Upon the Right, the Isle Lebynthos nam'd,<br>
-And fair Calymne for its Honey fam'd.<br>
-When now the Boy, whose childish Thoughts aspire<br>
-To loftier Aims, and make him ramble higher,<br>
-Grown wild and wanton, more embolden'd flies<br>
-Far from his Guide, and soars among the Skies.<br>
-The soft'ning Wax, that felt a nearer Sun,<br>
-Dissolv'd apace, and soon began to run.<br>
-The Youth in vain his melting Pinions shakes,<br>
-His Feathers gone, no longer Air he takes:<br>
-Oh! Father, Father, as he strove to cry,<br>
-Down to the Sea he tumbled from on high,<br>
-And found his Fate; yet still subsists by Fame,<br>
-Among those Waters that retain his Name.<br>
-The Father, now no more a Father, cries,<br>
-Ho Icarus! where are you? as he flies;<br>
-Where shall I seek my Boy? he cries again,<br>
-And saw his Feathers scatter'd on the Main.<br>
-Then curs'd his Art; and fun'ral Rites confer'd,<br>
-Naming the Country from the Youth interr'd.<br>
-A Partridge, from a neighb'ring Stump, beheld<br>
-The Sire his monumental Marble build;<br>
-Who, with peculiar Call, and flutt'ring Wing,<br>
-Chirpt joyful, and malicious seem'd to sing:</p>
-
-<p>The only Bird of all its Kind, and late<br>
-Transform'd in Pity to a feather'd State:<br>
-From whence, O Daedalus, thy Guilt we date.<br>
-His Sister's Son, when now twelve Years were past,<br>
-Was, with his Uncle, as a Scholar plac'd;<br>
-The unsuspecting Mother saw his Parts,<br>
-And Genius fitted for the finest Arts.<br>
-This soon appear'd; for when the spiny Bone<br>
-In Fishes Backs was by the Stripling known,<br>
-A rare Invention thence he learnt to draw,<br>
-Fil'd Teeth in Iron, and made the grating Saw.<br>
-He was the first, that from a Knob of Brass<br>
-Made two strait Arms with widening Stretch to pass;<br>
-That, while one stood upon the Center's Place,<br>
-The other round it drew a circling Space.<br>
-Daedalus envy'd this, and from the Top<br>
-Of fair Minerva's Temple let him drop;<br>
-Feigning that, as he lean'd upon the Tow'r,<br>
-Careless he stoop'd too much, and tumbled o'er.<br>
-The Goddess, who th' Ingenious still befriends,<br>
-On this Occasion her Assistance lends;<br>
-His Arms with Feathers, as he fell, she veils,<br>
-And in the Air a new-made Bird he sails.<br>
-The Quickness of his Genius, once so fleet,<br>
-Still in his Wings remains, and in his Feet:<br>
-Still, tho' transform'd, his ancient Name he keeps,<br>
-And with low Flight the new-shorn Stubble sweeps.<br>
-Declines the lofty Trees, and thinks it best<br>
-To brood in Hedge-rows o'er it's humble Nest;<br>
-And, in Remembrance of the former Ill,<br>
-Avoids the Heights and Precipices still.</p>
-
-<p>At length, fatigu'd with long laborious Flights,<br>
-On fair Sicilia's Plains the Artist lights;<br>
-Where Cocalus the King, that gave him Aid,<br>
-Was, for his Kindness, with Esteem repaid.<br>
-Athens no more her doleful Tribute sent,<br>
-That Hardship gallant Theseus did prevent;<br>
-Their Temples hung with Garlands, they adore<br>
-Each friendly God, but most Minerva's Pow'r:<br>
-To her, to Jove, to All, their Altars smoak,<br>
-They each with Victims and Perfumes invoke.<br>
-Now talking Fame, thro' every Graecian Town,<br>
-Had spread, immortal Theseus, thy Renown.<br>
-From him, the neighb'ring Nations in Distress,<br>
-In suppliant Terms implore a kind Redress.</p>
-"}
 
 //Computer, disk and files.
 

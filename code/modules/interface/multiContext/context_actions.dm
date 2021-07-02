@@ -437,7 +437,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (iswrenchingtool(I))
 					user.show_text("You wrench [target]'s bolts.", "blue")
-					playsound(get_turf(target), "sound/items/Ratchet.ogg", 50, 1)
+					playsound(target, "sound/items/Ratchet.ogg", 50, 1)
 					return ..()
 
 	cut
@@ -449,7 +449,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (iscuttingtool(I) || issnippingtool(I))
 					user.show_text("You cut some vestigial wires from [target].", "blue")
-					playsound(get_turf(target), "sound/items/Wirecutter.ogg", 50, 1)
+					playsound(target, "sound/items/Wirecutter.ogg", 50, 1)
 					return ..()
 	weld
 		name = "Weld"
@@ -457,10 +457,11 @@
 		icon_state = "weld"
 
 		execute(atom/target, mob/user)
-			for (var/obj/item/weldingtool/W in user.equipped_list())
-				if(W.try_weld(user, 2))
-					user.show_text("You weld [target] carefully.", "blue")
-					return ..()
+			for (var/obj/item/I in user.equipped_list())
+				if (isweldingtool(I))
+					if (I:try_weld(user, 2))
+						user.show_text("You weld [target] carefully.", "blue")
+						return ..()
 
 	pry
 		name = "Pry"
@@ -471,7 +472,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (ispryingtool(I))
 					user.show_text("You pry on [target] without remorse.", "blue")
-					playsound(get_turf(target), "sound/items/Crowbar.ogg", 50, 1)
+					playsound(target, "sound/items/Crowbar.ogg", 50, 1)
 					return ..()
 
 	screw
@@ -483,7 +484,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (isscrewingtool(I))
 					user.show_text("You unscrew some of the screws on [target].", "blue")
-					playsound(get_turf(target), "sound/items/Screwdriver.ogg", 50, 1)
+					playsound(target, "sound/items/Screwdriver.ogg", 50, 1)
 					return ..()
 
 	pulse
@@ -495,7 +496,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (ispulsingtool(I))
 					user.show_text("You pulse [target]. In a general sense.", "blue")
-					playsound(get_turf(target), "sound/items/penclick.ogg", 50, 1)
+					playsound(target, "sound/items/penclick.ogg", 50, 1)
 					return ..()
 
 /datum/contextAction/vehicle
@@ -793,7 +794,7 @@
 	name = "Card action"
 	desc = "You shouldn't be reading this, bug."
 	icon_state = "wrench"
-	
+
 	checkRequirements(var/atom/target, var/mob/user)
 		return TRUE
 

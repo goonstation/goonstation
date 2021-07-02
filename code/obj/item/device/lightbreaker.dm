@@ -93,7 +93,7 @@
 		if (istype(source) && the_tool != source.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		playsound(get_turf(the_breaker), "sound/misc/winding.ogg", 50, 1,3)
+		playsound(the_breaker, "sound/misc/winding.ogg", 50, 1,3)
 
 	onStart()
 		..()

@@ -1830,13 +1830,11 @@
 
 		var/mob/living/L = owner
 		if (which_way == 1)
-			L.invisibility = 1
+			APPLY_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src, INVIS_INFRA)
 			L.UpdateOverlays(overlay_image, id)
 		else
-			L.invisibility = 0
+			REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
 			L.UpdateOverlays(null, id)
-
-		return
 
 	OnAdd()
 		if (ishuman(owner))
@@ -1847,7 +1845,7 @@
 
 	OnRemove()
 		..()
-		src.cloak_decloak(2)
+		src.cloak_decloak(0)
 		return
 
 	OnLife(var/mult)
@@ -1925,7 +1923,7 @@
 		if (isliving(owner))
 			var/mob/living/L = owner
 			L.UpdateOverlays(null, id)
-			L.invisibility = 0
+			REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
 		if (src.active)
 			src.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
 		return
@@ -1937,14 +1935,14 @@
 			var/mob/living/L = owner
 			if (TIME - last_moved >= 3 SECONDS && can_act(owner))
 				L.UpdateOverlays(overlay_image, id)
-				L.invisibility = 1
+				APPLY_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src, INVIS_INFRA)
 
 	proc/decloak()
 		if(isliving(owner))
 			var/mob/living/L = owner
 			last_moved = TIME
 			L.UpdateOverlays(null, id)
-			L.invisibility = 0
+			REMOVE_MOB_PROPERTY(src.owner, PROP_INVISIBILITY, src)
 
 /datum/targetable/geneticsAbility/chameleon
 	name = "Chameleon"

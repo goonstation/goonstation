@@ -214,14 +214,14 @@
 						G.affecting.changeStatus("weakened", 4 SECONDS)
 						G.affecting.force_laydown_standup()
 					src.visible_message("<span class='alert'><b>[G.assailant] slams [G.affecting] onto \the [src], collapsing it instantly!</b></span>")
-					playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+					playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 					deconstruct()
 				else
 					if (!G.affecting.hasStatus("weakened"))
 						G.affecting.changeStatus("weakened", 3 SECONDS)
 						G.affecting.force_laydown_standup()
 					src.visible_message("<span class='alert'><b>[G.assailant] slams [G.affecting] onto \the [src]!</b></span>")
-					playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+					playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 					if (src.material)
 						src.material.triggerOnAttacked(src, G.assailant, G.affecting, src)
 			else
@@ -388,7 +388,7 @@
 			duration += 1 SECOND
 		return target
 
-	do_bunp()
+	do_bump()
 		return FALSE // no bunp
 
 	proc/unset_tablepass_callback(datum/thrown_thing/thr)
@@ -571,6 +571,10 @@
 /* ---------------------------------------- */
 /* ======================================== */
 
+#define GLASS_INTACT 0
+#define GLASS_BROKEN 1
+#define GLASS_REFORMING 2
+
 /obj/table/glass
 	name = "glass table"
 	desc = "A table made of glass. It looks like it might shatter if you set something down on it too hard."
@@ -578,7 +582,7 @@
 	mat_appearances_to_ignore = list("glass")
 	parts_type = /obj/item/furniture_parts/table/glass
 	auto_type = /obj/table/glass // has to be the base type here or else regular glass tables won't connect to reinforced ones
-	var/glass_broken = 0
+	var/glass_broken = GLASS_INTACT
 	var/reinforced = 0
 	var/default_material = "glass"
 
@@ -588,7 +592,7 @@
 	frame
 		name = "glass table frame"
 		parts_type = /obj/item/furniture_parts/table/glass/frame
-		glass_broken = 1
+		glass_broken = GLASS_BROKEN
 
 		auto
 			auto = 1
@@ -623,20 +627,60 @@
 		if (src.glass_broken)
 			return
 		src.visible_message("<span class='alert'>\The [src] shatters!</span>")
-		playsound(get_turf(src), "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
-		for (var/i=rand(3,4), i>0, i--)
-			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-			G.set_loc(src.loc)
-			if (src.material)
-				G.setMaterial(src.material)
-		src.glass_broken = 1
-		src.removeMaterial()
-		src.parts_type = /obj/item/furniture_parts/table/glass/frame
+		playsound(src, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
+		if (src.material?.mat_id in list("gnesis", "gnesisglass"))
+			gnesis_smash()
+		else
+			for (var/i=rand(3,4), i>0, i--)
+				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+				G.set_loc(src.loc)
+				if (src.material)
+					G.setMaterial(src.material)
+			src.glass_broken = GLASS_BROKEN
+			src.removeMaterial()
+			src.parts_type = /obj/item/furniture_parts/table/glass/frame
+			src.set_density(0)
+			src.set_up()
+
+	proc/gnesis_smash()
+		var/color = "#fff"
+		if(src.color)
+			color = src.color
+		src.glass_broken = GLASS_BROKEN
 		src.set_density(0)
 		src.set_up()
+		SPAWN_DBG(rand(2 SECONDS, 3 SECONDS))
+			if(src.glass_broken == GLASS_BROKEN)
+				src.glass_broken = GLASS_REFORMING
+				src.set_up()
+				src.set_density(initial(src.density))
+				src.visible_message("<span class='alert'>\The [src] starts to reform!</span>")
+
+				var/filter
+				var/size=rand()*2.5+4
+				var/regrow_duration = rand(8 SECONDS, 12 SECONDS)
+				var/loops = 5
+				var/duration= round(regrow_duration / loops, 2)
+
+				// Ripple inwards
+				src.filters += filter(type="ripple", x=0, y=0, size=size, repeat=rand()*2.5+3, radius=0, flags=WAVE_BOUNDED)
+				filter = src.filters[src.filters.len]
+				animate(filter, size=0, time=0, loop=loops, radius=12, flags=ANIMATION_PARALLEL)
+				animate(size=size, radius=0, time=duration)
+
+				// Flash
+				animate(src, color = "#2ca", time = duration/2, loop = loops, easing = SINE_EASING, flags=ANIMATION_PARALLEL)
+				animate(color = "#298", time = duration/2, loop = loops, easing = SINE_EASING)
+				sleep(regrow_duration)
+
+				// Remove filter and reset color
+				src.filters -= filter
+				animate(src, loop=0, color=color, time=duration/2)
+				src.visible_message("<span class='alert'>\The [src] fully reforms!</span>")
+				src.glass_broken = GLASS_INTACT
 
 	proc/repair()
-		src.glass_broken = 0
+		src.glass_broken = GLASS_INTACT
 		src.UpdateName()
 		src.parts_type = src.reinforced ? /obj/item/furniture_parts/table/glass/reinforced : /obj/item/furniture_parts/table/glass
 		src.set_density(initial(src.density))
@@ -688,7 +732,7 @@
 			src.smash()
 
 	attackby(obj/item/W as obj, mob/user as mob, params)
-		if (src.glass_broken)
+		if (src.glass_broken == GLASS_BROKEN)
 			if (istype(W, /obj/item/sheet))
 				var/obj/item/sheet/S = W
 				if (!S.material || !(S.material.material_flags & MATERIAL_CRYSTAL))
@@ -700,6 +744,7 @@
 					if (S.material)
 						src.setMaterial(S.material)
 					src.repair()
+				return
 			else
 				return ..()
 
@@ -715,7 +760,7 @@
 				G.affecting.set_loc(src.loc)
 				G.affecting.changeStatus("weakened", 4 SECONDS)
 				src.visible_message("<span class='alert'><b>[G.assailant] slams [G.affecting] onto \the [src]!</b></span>")
-				playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+				playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 				if (src.material)
 					src.material.triggerOnAttacked(src, G.assailant, G.affecting, src)
 				if ((prob(src.reinforced ? 60 : 80)) || (G.assailant.bioHolder.HasEffect("clumsy") && (!src.reinforced || prob(90))))
@@ -760,7 +805,7 @@
 				smashprob = round(smashprob / 2, 1)
 
 			if (src.place_on(W, user, params))
-				playsound(get_turf(src), "sound/impact_sounds/Crystal_Hit_1.ogg", 100, 1)
+				playsound(src, "sound/impact_sounds/Crystal_Hit_1.ogg", 100, 1)
 			else if (W && user.a_intent != "help")
 				DEBUG_MESSAGE("[src] smashprob = ([smashprob] * 1.5) (result [(smashprob * 1.5)])")
 				smashprob = (smashprob * 1.5)
@@ -782,7 +827,7 @@
 			var/mob/M = AM
 			if ((prob(src.reinforced ? 60 : 80)))
 				src.visible_message("<span class='alert'>[M] smashes through [src]!</span>")
-				playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+				playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 				src.smash()
 				if (M.loc != src.loc)
 					step(M, get_dir(M, src))
@@ -794,7 +839,7 @@
 	place_on(obj/item/W as obj, mob/user as mob, params)
 		..()
 		if (. == 1) // successfully put thing on table, make a noise because we are a fancy special glass table
-			playsound(get_turf(src), "sound/impact_sounds/Crystal_Hit_1.ogg", 100, 1)
+			playsound(src, "sound/impact_sounds/Crystal_Hit_1.ogg", 100, 1)
 			return 1
 
 	set_up()
@@ -807,7 +852,7 @@
 				dirs |= direction
 		icon_state = num2text(dirs)
 
-		if (src.glass_broken)
+		if (src.glass_broken == GLASS_BROKEN)
 			src.UpdateOverlays(null, "tabletop")
 			src.UpdateOverlays(null, "SWcorner")
 			src.UpdateOverlays(null, "SEcorner")
@@ -876,6 +921,10 @@
 		else
 			src.UpdateOverlays(null, "NWcorner")
 
+#undef GLASS_INTACT
+#undef GLASS_BROKEN
+#undef GLASS_REFORMING
+
 /* ======================================== */
 /* ---------------------------------------- */
 /* ======================================== */
@@ -941,7 +990,7 @@
 				return
 			else if (prob(8))
 				owner.visible_message("<span class='alert'>[owner] messes up while picking [the_table]'s lock!</span>")
-				playsound(get_turf(the_table), "sound/items/Screwdriver2.ogg", 50, 1)
+				playsound(the_table, "sound/items/Screwdriver2.ogg", 50, 1)
 				interrupt(INTERRUPT_ALWAYS)
 				return
 
@@ -951,19 +1000,19 @@
 		switch (interaction)
 			if (TABLE_DISASSEMBLE)
 				verbing = "disassembling"
-				playsound(get_turf(the_table), "sound/items/Ratchet.ogg", 50, 1)
+				playsound(the_table, "sound/items/Ratchet.ogg", 50, 1)
 			if (TABLE_WEAKEN)
 				verbing = "weakening"
-				playsound(get_turf(the_table), "sound/items/Welder.ogg", 50, 1)
+				playsound(the_table, "sound/items/Welder.ogg", 50, 1)
 			if (TABLE_STRENGTHEN)
 				verbing = "strengthening"
-				playsound(get_turf(the_table), "sound/items/Welder.ogg", 50, 1)
+				playsound(the_table, "sound/items/Welder.ogg", 50, 1)
 			if (TABLE_ADJUST)
 				verbing = "adjusting the shape of"
-				playsound(get_turf(the_table), "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(the_table, "sound/items/Screwdriver.ogg", 50, 1)
 			if (TABLE_LOCKPICK)
 				verbing = "picking the lock on"
-				playsound(get_turf(the_table), "sound/items/Screwdriver2.ogg", 50, 1)
+				playsound(the_table, "sound/items/Screwdriver2.ogg", 50, 1)
 		owner.visible_message("<span class='notice'>[owner] begins [verbing] [the_table].</span>")
 
 	onEnd()
@@ -972,7 +1021,7 @@
 		switch (interaction)
 			if (TABLE_DISASSEMBLE)
 				verbens = "disassembles"
-				playsound(get_turf(the_table), "sound/items/Deconstruct.ogg", 50, 1)
+				playsound(the_table, "sound/items/Deconstruct.ogg", 50, 1)
 				the_table.deconstruct()
 			if (TABLE_WEAKEN)
 				verbens = "weakens"
@@ -987,7 +1036,7 @@
 				verbens = "picks the lock on"
 				if (the_table.desk_drawer)
 					the_table.desk_drawer.locked = 0
-				playsound(get_turf(the_table), "sound/items/Screwdriver2.ogg", 50, 1)
+				playsound(the_table, "sound/items/Screwdriver2.ogg", 50, 1)
 		owner.visible_message("<span class='notice'>[owner] [verbens] [the_table].</span>")
 
 /datum/action/bar/icon/fold_folding_table
@@ -1022,13 +1071,13 @@
 	onStart()
 		..()
 		if (the_tool)
-			playsound(get_turf(the_table), "sound/items/Ratchet.ogg", 50, 1)
+			playsound(the_table, "sound/items/Ratchet.ogg", 50, 1)
 		else
-			playsound(get_turf(the_table), "sound/items/Screwdriver2.ogg", 50, 1)
+			playsound(the_table, "sound/items/Screwdriver2.ogg", 50, 1)
 		owner.visible_message("<span class='notice'>[owner] begins disassembling [the_table].</span>")
 
 	onEnd()
 		..()
-		playsound(get_turf(the_table), "sound/items/Deconstruct.ogg", 50, 1)
+		playsound(the_table, "sound/items/Deconstruct.ogg", 50, 1)
 		owner.visible_message("<span class='notice'>[owner] disassembles [the_table].</span>")
 		the_table.deconstruct()

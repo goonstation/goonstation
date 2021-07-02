@@ -23,6 +23,39 @@
 	var/_health = 100
 	var/_max_health = 100
 
+	New()
+		. = ..()
+		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
+			var/turf/T = get_turf(src)
+			T?.UpdateDirBlocks()
+		src.update_access_from_txt()
+
+	Move(NewLoc, direct)
+		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
+			var/turf/old_loc = get_turf(src)
+			. = ..()
+			var/turf/T = get_turf(NewLoc)
+			T?.UpdateDirBlocks()
+			old_loc?.UpdateDirBlocks()
+		else
+			. = ..()
+
+	set_loc(newloc)
+		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
+			var/turf/old_loc = get_turf(src)
+			. = ..()
+			var/turf/T = get_turf(newloc)
+			T?.UpdateDirBlocks()
+			old_loc?.UpdateDirBlocks()
+		else
+			. = ..()
+
+	set_dir(new_dir)
+		. = ..()
+		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
+			var/turf/T = get_turf(src)
+			T?.UpdateDirBlocks()
+
 	proc/setHealth(var/value)
 		var/prevHealth = _health
 		_health = min(value, _max_health)
@@ -200,37 +233,6 @@
 				return ..(I, user)
 			else return
 		return ..(I, user)
-
-
-	MouseDrop(atom/over_object as mob|obj|turf)
-		..()
-		if (iswraith(usr))
-			if(!src.anchored && isitem(src))
-				src.throw_at(over_object, 7, 1)
-				logTheThing("combat", usr, null, "throws [src] with wtk.")
-		else if (ismegakrampus(usr))
-			if(!src.anchored && isitem(src))
-				src.throw_at(over_object, 7, 1)
-				logTheThing("combat", usr, null, "throws [src] with k_tk.")
-		else if(usr.bioHolder && usr.bioHolder.HasEffect("telekinesis_drag") && istype(src, /obj) && isturf(src.loc) && isalive(usr)  && usr.canmove && get_dist(src,usr) <= 7 )
-			var/datum/bioEffect/TK = usr.bioHolder.GetEffect("telekinesis_drag")
-
-			if(!src.anchored && (isitem(src) || TK.variant == 2))
-				src.throw_at(over_object, 7, 1)
-				logTheThing("combat", usr, null, "throws [src] with tk.")
-
-#ifdef HALLOWEEN
-		else if (istype(usr, /mob/dead/observer))	//ghost
-			if(!src.anchored && isitem(src))
-				var/obj/item/I = src
-				if (I.w_class > W_CLASS_NORMAL)
-					return
-				if (istype(usr:abilityHolder, /datum/abilityHolder/ghost_observer))
-					var/datum/abilityHolder/ghost_observer/GH = usr:abilityHolder
-					if (GH.spooking)
-						src.throw_at(over_object, 7-I.w_class, 1)
-						logTheThing("combat", usr, null, "throws [src] with g_tk.")
-#endif
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		F["[path].type"] << type

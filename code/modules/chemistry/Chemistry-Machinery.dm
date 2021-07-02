@@ -357,15 +357,15 @@
 		src.add_dialog(usr)
 
 		if (href_list["close"])
-			usr.Browse(null, "window=chem_master;title=Chemmaster 3000")
+			usr.Browse(null, "window=chem_master;title=CheMaster 3000")
 			return
 
 		if (!beaker) return
 		var/datum/reagents/R = beaker.reagents
 
 		if (href_list["analyze"])
-			var/dat = "<TITLE>Chemmaster 3000</TITLE>Chemical infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
-			usr.Browse(dat, "window=chem_master;size=575x400;title=Chemmaster 3000")
+			var/dat = "<TITLE>CheMaster 3000</TITLE>Chemical infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
+			usr.Browse(dat, "window=chem_master;size=575x400;title=CheMaster 3000")
 			return
 		else if (href_list["isolate"])
 			beaker.reagents.isolate_reagent(href_list["isolate"])
@@ -564,6 +564,9 @@
 					P.medical = med
 					P.on_reagent_change()
 					R.trans_to(P, patchvol)
+			if(use_box)
+				var/obj/item/item_box/medical_patches/B = patchloc
+				B.max_item_amount = B.item_amount
 			else
 				boutput(usr, "[src] makes a weird grinding noise. That can't be good.")
 				return
@@ -572,7 +575,7 @@
 			return
 
 		else
-			usr.Browse(null, "window=chem_master;title=Chemmaster 3000")
+			usr.Browse(null, "window=chem_master;title=CheMaster 3000")
 			return
 
 	attack_ai(mob/user as mob)
@@ -602,7 +605,7 @@
 				dat += "<A href='?src=\ref[src];createpatch=1'>Create patch (30 units max)</A><BR>"
 				dat += "<A href='?src=\ref[src];multipatch=1'>Create multiple patches (5 units min)</A> Box: <A href='?src=\ref[src];togglepatchbox=1'>[src.patch_box ? "Yes" : "No"]</A><BR>"
 				dat += "<A href='?src=\ref[src];createampoule=1'>Create ampoule (5 units max)</A>"
-		user.Browse("<TITLE>Chemmaster 3000</TITLE>Chemmaster menu:<BR><BR>[dat]", "window=chem_master;size=575x400;title=Chemmaster 3000")
+		user.Browse("<TITLE>CheMaster 3000</TITLE>CheMaster menu:<BR><BR>[dat]", "window=chem_master;size=575x400;title=CheMaster 3000")
 		onclose(user, "chem_master")
 		return
 

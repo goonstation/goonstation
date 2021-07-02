@@ -128,7 +128,7 @@
 	if(!istype(A))
 		return
 	if(prob(10))
-		playsound(get_turf(A), "sound/effects/creaking_metal[pick("1", "2")].ogg", 40, 1)
+		playsound(A, "sound/effects/creaking_metal[pick("1", "2")].ogg", 40, 1)
 	var/image/underneath = image('icons/effects/white.dmi')
 	underneath.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
 	A.underlays += underneath
@@ -1072,7 +1072,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(transform = MD, time = 1, loop = -1, easing = LINEAR_EASING)
 
 // these don't use animate but they're close enough, idk
-/proc/showswirl(var/atom/target)
+/proc/showswirl(var/atom/target, var/play_sound = TRUE)
 	if (!target)
 		return
 	var/turf/target_turf = get_turf(target)
@@ -1081,7 +1081,8 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
-	playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
+	if (play_sound)
+		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
 	SPAWN_DBG(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
@@ -1219,7 +1220,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 
 /obj/heavenly_light
-	icon = 'icons/obj/32x192.dmi'
+	icon = 'icons/obj/large/32x192.dmi'
 	icon_state = "heavenlight"
 	layer = EFFECTS_LAYER
 	blend_mode = BLEND_ADD
@@ -1311,7 +1312,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_storage_thump(var/atom/A, wiggle=6)
 	if(!istype(A))
 		return
-	playsound(get_turf(A), "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+	playsound(A, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
 	var/orig_x = A.pixel_x
 	var/orig_y = A.pixel_y
 	animate(A, pixel_x=orig_x, pixel_y=orig_y, flags=ANIMATION_PARALLEL, time=0.01 SECONDS)
@@ -1453,10 +1454,43 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	animate(A.filters[A.filters.len], time = 10, size=size_max, loop=-1,easing = SINE_EASING, flags=ANIMATION_PARALLEL)
 	animate(time = 10, size=size_min, loop=-1,easing = SINE_EASING)
 
-/proc/animate_bouncy(var/atom/A) // little bouncy dance for admin and mentor mice, could be used for other stuff
+/proc/animate_bouncy(atom/A) // little bouncy dance for admin and mentor mice, could be used for other stuff
 	if (!istype(A))
 		return
 	animate(A, pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = EAST, flags=ANIMATION_PARALLEL)
 	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = EAST)
 	animate(pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = WEST)
 	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = WEST)
+
+/proc/animate_wave(atom/A, waves=7) // https://secure.byond.com/docs/ref/info.html#/{notes}/filters/wave
+	if (!istype(A))
+		return
+	var/start = A.filters.len
+	var/X,Y,rsq,i,f
+	for(i=1, i<=waves, ++i)
+		// choose a wave with a random direction and a period between 10 and 30 pixels
+		do
+			X = 60*rand() - 30
+			Y = 60*rand() - 30
+			rsq = X*X + Y*Y
+		while(rsq<100 || rsq>900)   // keep trying if we don't like the numbers
+		// keep distortion (size) small, from 0.5 to 3 pixels
+		// choose a random phase (offset)
+		A.filters += filter(type="wave", x=X, y=Y, size=rand()*2.5+0.5, offset=rand())
+	for(i=1, i<=waves, ++i)
+		// animate phase of each wave from its original phase to phase-1 and then reset;
+		// this moves the wave forward in the X,Y direction
+		f = A.filters[start+i]
+		animate(f, offset=f:offset, time=0, loop=-1, flags=ANIMATION_PARALLEL)
+		animate(offset=f:offset-1, time=rand()*20+10)
+
+/proc/animate_ripple(atom/A, ripples=1)
+	if (!istype(A))
+		return
+	var/filter,size
+	for(var/i=1, i<=ripples, ++i)
+		size=rand()*2.5+1
+		A.filters += filter(type="ripple", x=0, y=0, size=size, repeat=rand()*2.5+1, radius=0)
+		filter = A.filters[A.filters.len]
+		animate(filter, size=size, time=0, loop=-1, radius=0, flags=ANIMATION_PARALLEL)
+		animate(size=0, radius=rand()*10+10, time=rand()*20+10)

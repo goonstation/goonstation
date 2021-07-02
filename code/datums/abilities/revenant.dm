@@ -123,7 +123,7 @@
 			owner.ghost.corpse = null
 			owner.ghost = null
 		src.wraith = W
-		W.invisibility = 50
+		APPLY_MOB_PROPERTY(W, PROP_INVISIBILITY, W, INVIS_WRAITH_VERY)
 		W.set_loc(src.owner)
 		W.abilityHolder.suspendAllAbilities()
 
@@ -153,13 +153,13 @@
 			return
 
 		message_admins("Revenant [key_name(owner)] died at [showCoords(owner.x, owner.y, owner.z)].")
-		playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 100, 0)
+		playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 60, 0)
 		logTheThing("combat", usr, null, "died as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
 		if (owner.mind)
 			owner.mind.transfer_to(src.wraith)
 		else if (owner.client)
 			owner.client.mob = src.wraith
-		src.wraith.invisibility = 10
+		APPLY_MOB_PROPERTY(src.wraith, PROP_INVISIBILITY, src.wraith, INVIS_GHOST)
 		src.wraith.set_loc(get_turf(owner))
 		src.wraith.abilityHolder.resumeAllAbilities()
 		src.wraith.abilityHolder.regenRate /= 3
@@ -202,7 +202,7 @@
 
 		if (owner.health < -50 || owner.max_health < -50) // Makes revenants have a definite time limit, instead of being able to just spam abilities in deepcrit.
 			boutput(owner, "<span class='alert'><strong>This vessel has grown too weak to maintain your presence.</strong></span>")
-			playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 100, 0)
+			playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 60, 0)
 			owner.death(0) // todo: add custom death
 			return
 
@@ -282,7 +282,7 @@
 	cooldown = 30 SECONDS
 
 	cast(atom/target)
-		playsound(target.loc, "sound/voice/wraith/wraithlivingobject.ogg", 90, 0)
+		playsound(target.loc, "sound/voice/wraith/wraithlivingobject.ogg", 60, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -403,7 +403,7 @@
 	special_screen_loc = "NORTH-1,WEST+2"
 
 	cast()
-		playsound(usr.loc, "sound/voice/wraith/revtouch.ogg", 85, 0)
+		playsound(usr.loc, "sound/voice/wraith/revtouch.ogg", 70, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -424,7 +424,7 @@
 	special_screen_loc = "NORTH-1,WEST+3"
 
 	cast(atom/target)
-		playsound(target.loc, "sound/voice/wraith/revpush[rand(1, 2)].ogg", 90, 0)
+		playsound(target.loc, "sound/voice/wraith/revpush[rand(1, 2)].ogg", 70, 0)
 		if (isturf(target))
 			holder.owner.show_message("<span class='alert'>You must target an object or mob with this ability.</span>")
 			return 1
@@ -463,7 +463,7 @@
 	special_screen_loc = "NORTH-1,WEST+4"
 
 	cast(atom/target)
-		playsound(target.loc, "sound/voice/wraith/revfocus.ogg", 120, 0)
+		playsound(target.loc, "sound/voice/wraith/revfocus.ogg", 80, 0)
 		if (!ishuman(target))
 			holder.owner.show_message("<span class='alert'>You must target a human with this ability.</span>")
 			return 1

@@ -212,7 +212,7 @@
 
 		K.add_fingerprint(usr)
 		A.add_fingerprint(usr)
-		playsound(get_turf(K), sound_load, 50, 1)
+		playsound(K, sound_load, 50, 1)
 
 		if (K.ammo.amount_left < 0)
 			K.ammo.amount_left = 0
@@ -272,9 +272,6 @@
 			src.amount_left = 0
 		inventory_counter.update_number(src.amount_left)
 
-	// src.desc = text("There are [] [] bullet\s left!", src.amount_left, (ammo_type.material && istype(ammo_type, /datum/material/metal/silver)))
-		src.desc = "There are [src.amount_left][ammo_type.material && istype(ammo_type, /datum/material/metal/silver) ? " silver " : " "]bullet\s left!"
-
 		if (src.amount_left > 0)
 			if (src.icon_dynamic && src.icon_short)
 				src.icon_state = text("[src.icon_short]-[src.amount_left]")
@@ -287,6 +284,9 @@
 
 	proc/after_unload(mob/user)
 		return
+
+	get_desc()
+		return . += "There are [src.amount_left][ammo_type.material && istype(ammo_type.material, /datum/material/metal/silver) ? " silver " : " "]bullet\s left!"
 
 /obj/item/ammo/bullets/derringer
 	sname = ".41 RF"
@@ -622,11 +622,11 @@
 	name = "12ga flares"
 	amount_left = 8
 	max_amount = 8
-	icon_state = "12"
+	icon_state = "flare"
 	ammo_type = new/datum/projectile/bullet/flare
 	caliber = 0.72
 	icon_dynamic = 0
-	icon_empty = "12-0"
+	icon_empty = "flare-0"
 
 	single
 		amount_left = 1
@@ -719,12 +719,25 @@
 		amount_left = 1
 		max_amount = 1
 
+/obj/item/ammo/bullets/marker
+	sname = "40mm Paint Marker Rounds"
+	name = "40mm paint marker rounds"
+	ammo_type = new/datum/projectile/bullet/marker
+	amount_left = 5
+	max_amount = 5
+	icon_state = "40mmR"
+	caliber = 1.57
+	w_class = W_CLASS_NORMAL
+	icon_dynamic = 0
+	icon_empty = "40mmR-0"
+	sound_load = 'sound/weapons/gunload_40mm.ogg'
+
 /obj/item/ammo/bullets/pbr
 	sname = "40mm Plastic Baton Rounds"
 	name = "40mm plastic baton rounds"
 	ammo_type = new/datum/projectile/bullet/pbr
-	amount_left = 2
-	max_amount = 2
+	amount_left = 5
+	max_amount = 5
 	icon_state = "40mmB"
 	caliber = 1.57
 	w_class = W_CLASS_NORMAL
@@ -749,6 +762,9 @@
 	sound_load = 'sound/weapons/gunload_40mm.ogg'
 	force_new_current_projectile = 1
 
+	rigil
+		max_amount = 4
+
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if(!W || !user)
@@ -762,6 +778,9 @@
 				src.update_icon()
 				boutput(user, "You load [W] into the [src].")
 				return
+			else if(src.amount_left < src.max_amount && W.type == AMMO.get_nade()?.type)
+				src.amount_left++
+				boutput(user, "You load [W] into the [src].")
 			else
 				boutput(user, "<span class='alert'>For <i>some reason</i>, you are unable to place [W] into an already filled chamber.</span>")
 				return
@@ -773,9 +792,10 @@
 		if(!user)
 			return
 		if (src.loc == user && AMMO.has_grenade != 0)
-			user.put_in_hand_or_drop(AMMO.get_nade())
+			for(var/i in 1 to amount_left)
+				user.put_in_hand_or_drop(SEMI_DEEP_COPY(AMMO.get_nade()))
 			AMMO.unload_nade()
-			boutput(user, "You pry the grenade out of [src].")
+			boutput(user, "You pry the grenade[amount_left>1?"s":""] out of [src].")
 			src.add_fingerprint(user)
 			src.update_icon()
 			return
@@ -792,9 +812,10 @@
 	after_unload(mob/user)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if(AMMO.has_grenade && src.delete_on_reload)
-			qdel(src)
-			user.put_in_hand_or_drop(AMMO.get_nade())
+			for(var/i in 1 to amount_left)
+				user.put_in_hand_or_drop(SEMI_DEEP_COPY(AMMO.get_nade()))
 			AMMO.unload_nade()
+			qdel(src)
 
 // Ported from old, non-gun RPG-7 object class (Convair880).
 /obj/item/ammo/bullets/rpg
@@ -834,6 +855,11 @@
 	five_shots
 		amount_left = 5.0
 
+	smartgun
+		name = "9mm smartgun magazine"
+		amount_left = 24.0
+		max_amount = 24.0
+		ammo_type = new/datum/projectile/bullet/bullet_9mm/smartgun
 	smg
 		name = "9mm SMG magazine"
 		amount_left = 30.0
@@ -874,17 +900,6 @@
 	module_research_type = /obj/item/ammo/power_cell
 	var/sound_load = 'sound/weapons/gunload_click.ogg'
 	var/unusualCell = 0
-
-	onMaterialChanged()
-		..()
-		if(istype(src.material))
-			if(src.material.hasProperty("electrical"))
-				max_charge = round(material.getProperty("electrical") ** 1.33)
-			else
-				max_charge =  40
-
-		charge = max_charge
-		return
 
 	New()
 		..()
@@ -973,7 +988,7 @@
 		swapped_cell.update_icon()
 		src.update_icon()
 
-		playsound(get_turf(src), sound_load, 50, 1)
+		playsound(src, sound_load, 50, 1)
 		return 1
 
 	proc/charge(var/amt = 0)
@@ -1030,16 +1045,6 @@
 	var/cycle = 0 //Recharge every other tick.
 	var/recharge_rate = 5.0
 
-	onMaterialChanged()
-		..()
-		if(istype(src.material))
-			recharge_rate = 0
-			if(src.material.hasProperty("radioactive"))
-				recharge_rate += ((src.material.getProperty("radioactive") / 10) / 2.5) //55(cerenkite) should give around 2.2, slightly less than a slow charge cell.
-			if(src.material.hasProperty("n_radioactive"))
-				recharge_rate += ((src.material.getProperty("n_radioactive") / 10) / 2)
-		return
-
 	New()
 		processing_items |= src
 		..()
@@ -1076,6 +1081,23 @@
 /obj/item/ammo/power_cell/self_charging/custom
 	name = "Power Cell"
 	desc = "A custom-made power cell."
+
+	onMaterialChanged()
+		..()
+		if(istype(src.material))
+			if(src.material.hasProperty("electrical"))
+				max_charge = round(material.getProperty("electrical") ** 1.33)
+			else
+				max_charge =  40
+
+			recharge_rate = 0
+			if(src.material.hasProperty("radioactive"))
+				recharge_rate += ((src.material.getProperty("radioactive") / 10) / 2.5) //55(cerenkite) should give around 2.2, slightly less than a slow charge cell.
+			if(src.material.hasProperty("n_radioactive"))
+				recharge_rate += ((src.material.getProperty("n_radioactive") / 10) / 2)
+
+		charge = max_charge
+		return
 
 /obj/item/ammo/power_cell/self_charging/slowcharge
 	name = "Power Cell - Atomic Slowcharge"
@@ -1213,6 +1235,19 @@
 	desc = "A box containg a single inert meowitzer. It appears to be softly purring. Wait is that a cat?"
 	ammo_type = new/datum/projectile/special/meowitzer/inert
 
+/obj/item/ammo/bullets/foamdarts
+	sname = "foam darts"
+	name = "foam dart box"
+	icon_state = "foamdarts"
+	icon_empty = "foamdarts-0"
+	amount_left = 20
+	max_amount = 20
+	caliber = 0.393
+	ammo_type = new/datum/projectile/bullet/foamdart
+
+/obj/item/ammo/bullets/foamdarts/ten
+	amount_left = 10
+	max_amount = 10
 
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND

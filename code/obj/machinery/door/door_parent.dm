@@ -30,8 +30,8 @@
 	var/has_crush = 1 //flagged to true when the door has a secret admirer. also if the var == 1 then the door doesn't have the ability to crush items.
 	var/close_trys = 0
 
-	var/health = 600
-	var/health_max = 600
+	var/health = 400
+	var/health_max = 400
 	var/hitsound = "sound/impact_sounds/Generic_Hit_Heavy_1.ogg"
 	var/knocksound = 'sound/impact_sounds/Door_Metal_Knock_1.ogg' //knock knock
 
@@ -291,15 +291,13 @@
 
 	if (src.isblocked() == 1)
 		if (src.density && !src.operating && I)
+			if (I.tool_flags & TOOL_CHOPPING)
+				src.take_damage(I.force*4, user)
+			else
+				src.take_damage(I.force, user)
 			user.lastattacked = src
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
-			src.take_damage(I.force, user)
-			if (I.tool_flags & TOOL_CHOPPING)
-				user.lastattacked = src
-				attack_particle(user,src)
-				playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
-				src.take_damage(I.force*4, user)
 			..()
 
 		return
@@ -454,15 +452,15 @@
 
 	switch(P.proj_data.damage_type)
 		if(D_KINETIC)
-			take_damage(damage * 3)
+			take_damage(round(damage * 1.5))
 		if(D_PIERCING)
-			take_damage(damage * 4)
-		if(D_ENERGY)
 			take_damage(damage * 2)
-		if(D_BURNING)
+		if(D_ENERGY)
 			take_damage(damage)
-		if(D_RADIOACTIVE)
+		if(D_BURNING)
 			take_damage(damage/2)
+		if(D_RADIOACTIVE)
+			take_damage(damage/4)
 	return
 
 /obj/machinery/door/proc/update_icon(var/toggling = 0)
@@ -563,7 +561,7 @@
 			for(var/mob/living/L in get_turf(src))
 				var/mob_layer = L.layer	//Make it look like we're inside the door
 				L.layer = src.layer - 0.01
-				playsound(get_turf(src), 'sound/impact_sounds/Flesh_Break_1.ogg', 100, 1)
+				playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 100, 1)
 				L.emote("scream")
 
 				L.TakeDamageAccountArmor("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
@@ -822,20 +820,20 @@
 			return
 		if (prob(5) || (!the_door.simple_lock && prob(5)))
 			owner.visible_message("<span class='alert'>[owner] messes up while picking [the_door]'s lock!</span>")
-			playsound(get_turf(the_door), "sound/items/Screwdriver2.ogg", 50, 1)
+			playsound(the_door, "sound/items/Screwdriver2.ogg", 50, 1)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
 		owner.visible_message("<span class='alert'>[owner] begins picking [the_door]'s lock!</span>")
-		playsound(get_turf(the_door), "sound/items/Screwdriver2.ogg", 50, 1)
+		playsound(the_door, "sound/items/Screwdriver2.ogg", 50, 1)
 
 	onEnd()
 		..()
 		the_door.locked = 0
 		owner.visible_message("<span class='alert'>[owner] jimmies [the_door]'s lock open!</span>")
-		playsound(get_turf(the_door), "sound/items/Screwdriver2.ogg", 50, 1)
+		playsound(the_door, "sound/items/Screwdriver2.ogg", 50, 1)
 
 /obj/machinery/door/unpowered/bulkhead
 	name = "bulkhead door"

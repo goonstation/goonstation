@@ -16,7 +16,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/human_item/gold_zippo,\
 	new /datum/bank_purchaseable/human_item/toy_sword,\
 	new /datum/bank_purchaseable/human_item/sound_synth,\
-	new /datum/bank_purchaseable/human_item/food_synth,\
 	new /datum/bank_purchaseable/human_item/record,\
 	new /datum/bank_purchaseable/human_item/sparkler_box,\
 	new /datum/bank_purchaseable/human_item/dabbing_license,\
@@ -27,7 +26,10 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/bp_fjallraven,\
 	new /datum/bank_purchaseable/bp_randoseru,\
 	new /datum/bank_purchaseable/bp_anello,\
+	new /datum/bank_purchaseable/bp_brown,\
 	new /datum/bank_purchaseable/nt_backpack,\
+	new /datum/bank_purchaseable/bp_studded,\
+	new /datum/bank_purchaseable/bp_itabag,\
 
 	new /datum/bank_purchaseable/limbless,\
 	new /datum/bank_purchaseable/legless,\
@@ -174,7 +176,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			name = "Plaid Paint Can"
 			cost = 3000
 			path = /obj/item/paint_can/rainbow/plaid
-		
+
 		crayon_box
 			name = "Crayon Creator"
 			cost = 2500
@@ -234,11 +236,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			name = "Sound Synthesizer"
 			cost = 14000
 			path = /obj/item/noisemaker
-
-		food_synth
-			name = "Food Synthesizer"
-			cost = 8000
-			path = /obj/item/robot_foodsynthesizer
 
 		record
 			name = "Record"
@@ -481,6 +478,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					var/color = pick("red","yellow")
 					H.back.name = "rucksack"
 					H.back.icon_state = H.back.item_state = "bp_fjallraven_[color]"
+					H.back.desc = "A thick, wearable container made of synthetic fibers, perfectly suited for outdoorsy, adventure-loving staff."
 					return 1
 			return 0
 
@@ -494,6 +492,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				if (H.back)
 					H.back.name = "randoseru"
 					H.back.icon_state = H.back.item_state = "bp_randoseru"
+					H.back.desc = "Inconspicuous, nostalgic and quintessentially Space Japanese."
 					return 1
 			return 0
 
@@ -507,6 +506,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				if (H.back)
 					H.back.name = "travel pack"
 					H.back.icon_state = H.back.item_state = "bp_anello"
+					H.back.desc = "A thick, wearable container made of synthetic fibers, often seen carried by tourists and travelers."
 				return 1
 			return 0
 
@@ -519,7 +519,52 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				var/mob/living/carbon/human/H = M
 				if (H.back)
 					H.back.name = "\improper NT backpack"
-					H.back.icon_state = "NTbackpack"
+					H.back.icon_state = H.back.item_state = "NTbackpack"
+					H.back.desc = "A stylish blue, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
+					return 1
+				return 0
+
+	bp_studded
+		name = "Studded Backpack"
+		cost = 1500
+
+		Create(var/mob/living/M)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (H.back)
+					H.back.name = "studded backpack"
+					H.back.icon_state = H.back.item_state = "bp_studded"
+					H.back.desc = "Made of sturdy synthleather and covered in metal studs. Much edgier than the standard issue bag."
+					return 1
+				return 0
+
+	bp_itabag
+		name = "Itabag"
+		cost = 1600
+
+		Create(var/mob/living/M)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (H.back)
+					var/color = pick("pink","blue","purple","mint","black")
+					var/itabagmascot = pick("Heisenbee","Bombini","Morty","Sylvester","Dr. Acula","a clown","a mime","Jones the cat","Stir Stir","a bumblespider","a space bee","the Amusing Duck")
+					H.back.name = "[color] itabag"
+					H.back.icon_state = H.back.item_state = "bp_itabag_[color]"
+					H.back.desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of [itabagmascot]!"
+					return 1
+			return 0
+
+	bp_brown
+		name = "Brown Backpack"
+		cost = 500
+
+		Create(var/mob/living/M)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (H.back)
+					H.back.name = "backpack"
+					H.back.icon_state = H.back.item_state = "backpackbr"
+					H.back.desc = "A thick, wearable container made of synthetic fibers. This brown variation is both rustic and adventurous!"
 					return 1
 				return 0
 

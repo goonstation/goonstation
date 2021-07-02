@@ -196,7 +196,7 @@
 		if (!A || isarea(A) || isturf(A))
 			return
 		src.active = 1
-		playsound(get_turf(src), "rustle", 75, 1)
+		playsound(src, "rustle", 75, 1)
 		A.invisibility = 100
 		flick("bbasket1", src)
 		SPAWN_DBG(1.5 SECONDS)

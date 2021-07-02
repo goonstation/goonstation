@@ -798,6 +798,7 @@ var/global/noir = 0
 							<A href='?src=\ref[src];action=[cmd];type=revolution'>Revolution</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=revolution_extended'>Revolution (no time limit)</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=gang'>Gang War (Beta)</A><br>
+							<A href='?src=\ref[src];action=[cmd];type=pod_wars'>Pod Wars (Beta)(only works if current map is pod_wars.dmm)</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=battle_royale'>Battle Royale</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=assday'>Ass Day Classic (For testing only.)</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=construction'>Construction (For testing only. Don't select this!)</A><br>
@@ -818,7 +819,13 @@ var/global/noir = 0
 				var/list/valid_modes = list("secret","action","intrigue","random","traitor","meteor","extended","monkey",
 				"nuclear","blob","restructuring","wizard","revolution", "revolution_extended","malfunction",
 				"spy","gang","disaster","changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft","battle_royale", "vampire","assday", "football", "flock")
-
+#if defined(MAP_OVERRIDE_POD_WARS)
+				valid_modes += "pod_wars"
+#else
+				if (href_list["type"] == "pod_wars")
+					boutput(usr, "<span class='alert'><b>You can only set the mode to Pod Wars if the current map is a Pod Wars map!<br>If you want to play Pod Wars, you have to set the next map for compile to be pod_wars.dmm!</b></span>")
+					return
+#endif
 				var/requestedMode = href_list["type"]
 				if (requestedMode in valid_modes)
 					logTheThing("admin", usr, null, "set the mode as [requestedMode].")
@@ -1207,7 +1214,7 @@ var/global/noir = 0
 					M.delStatus(effect)
 					message_admins("[key_name(usr)] removed the [effect] status-effect from [key_name(M)].")
 				else
-					M.setStatus(effect, duration * 10)	//convert to seconds
+					M.setStatus(effect, duration SECONDS)
 					message_admins("[key_name(usr)] added the [effect] status-effect to [key_name(M)] for [duration * 10] seconds.")
 
 			else
@@ -1828,8 +1835,7 @@ var/global/noir = 0
 			if (length(matches) == 1)
 				CT = matches[1]
 			else
-				CT = input("Select a match", "matches for pattern", null) as null|anything in matches
-
+				CT = tgui_input_list(owner, "Select a match", "matches for pattern", matches)
 			if (CT && M)
 				M.critterize(CT)
 			return
@@ -2615,7 +2621,7 @@ var/global/noir = 0
 						if (src.level >= LEVEL_PA)
 
 							var/adding = href_list["type"] == "add_ability_one"
-							var/mob/M = input("Which player?","[adding ? "Give" : "Remove"] Abilities") as null|mob in world
+							var/mob/M = tgui_input_list(owner, "Which player?","[adding ? "Give" : "Remove"] Abilities", sortNames(mobs))
 
 							if (!istype(M))
 								return
@@ -2624,7 +2630,7 @@ var/global/noir = 0
 								alert("No ability holder detected. Create a holder first!")
 								return
 
-							var/ab_to_do = input("Which ability?", "[adding ? "Give" : "Remove"] Ability", null) as anything in childrentypesof(/datum/targetable)
+							var/ab_to_do = tgui_input_list(owner, "Which ability?", "[adding ? "Give" : "Remove"] Ability", childrentypesof(/datum/targetable))
 							if (adding)
 								M.abilityHolder.addAbility(ab_to_do)
 							else
@@ -2718,7 +2724,7 @@ var/global/noir = 0
 						if (src.level >= LEVEL_PA)
 							var/adding = href_list["type"] == "add_ability_all"
 
-							var/ab_to_do = input("Which ability?", "[adding ? "Give" : "Remove"] ability [adding ? "to" : "from"] every human.", null) as null|anything in childrentypesof(/datum/targetable)
+							var/ab_to_do = tgui_input_list(owner, "Which ability?", "[adding ? "Give" : "Remove"] ability [adding ? "to" : "from"] every human.", childrentypesof(/datum/targetable))
 							if (!ab_to_do)
 								return
 							// var/humans = input("[adding ? "Add" : "Remove"] ability [adding ? "to" : "from"] Humans or mob/living?", "Humans or Living?", "Humans") as null|anything in list("Humans", "Living")

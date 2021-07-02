@@ -106,7 +106,7 @@
 /obj/machinery/torpedo_console
 	desc = ""
 	name = "torpedo console"
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "periscope"
 	anchored = 1.0
 	appearance_flags = TILE_BOUND
@@ -217,7 +217,7 @@
 /obj/machinery/torpedo_tube
 	name = "torpedo tube"
 	desc = ""
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "base"
 	density = 1
 	anchored = 1
@@ -242,12 +242,12 @@
 
 	New()
 		. =..()
-		light = image('icons/obj/32x96.dmi')
+		light = image('icons/obj/large/32x96.dmi')
 
-		tray = image('icons/obj/32x96.dmi')
+		tray = image('icons/obj/large/32x96.dmi')
 		tray.pixel_y = -16
 
-		tube = image('icons/obj/32x96.dmi',icon_state_tube)
+		tube = image('icons/obj/large/32x96.dmi',icon_state_tube)
 		tube.pixel_y = 16
 		underlays.Add(tube)
 
@@ -352,7 +352,7 @@
 /obj/torpedo_tube_tray
 	name = "torpedo tube tray"
 	desc = ""
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "tray"
 	dir = NORTH
 	density = 1
@@ -405,7 +405,7 @@
 /obj/torpedo_tray
 	name = "torpedo tray"
 	desc = "A tray for wheeling around torpedos."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 	density = 1
 	pixel_y = 0
@@ -419,8 +419,8 @@
 	var/lastdir = null
 
 	New()
-		northsouth = icon('icons/obj/32x64.dmi')
-		eastwest = icon('icons/obj/64x32.dmi')
+		northsouth = icon('icons/obj/large/32x64.dmi')
+		eastwest = icon('icons/obj/large/64x32.dmi')
 		changeIcon()
 		..()
 
@@ -503,7 +503,7 @@
 				remove(get_turf(over_object), trg.dir)
 
 /obj/torpedo_tray/explosive_loaded
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 
 	New()
@@ -515,7 +515,7 @@
 		return
 
 /obj/torpedo_tray/hiexp_loaded
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 
 	New()
@@ -527,7 +527,7 @@
 		return
 
 /obj/torpedo_tray/incendiary_loaded
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 
 	New()
@@ -539,7 +539,7 @@
 		return
 
 /obj/torpedo_tray/toxic_loaded
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 
 	New()
@@ -550,6 +550,15 @@
 		changeIcon()
 		return
 
+/obj/torpedo_tray/random_loaded
+	icon = 'icons/obj/large/32x64.dmi'
+	icon_state = "emptymissiletray"
+	New()
+		..()
+		var/obj/torpedo/T = pick(new/obj/torpedo/toxic,new/obj/torpedo/incendiary,new/obj/torpedo/hiexplosive,new/obj/torpedo/explosive)
+		src.loaded = T
+		T.set_loc(src)
+		changeIcon()
 
 
 /obj/torpedo
@@ -581,8 +590,8 @@
 	var/sleepPerStep = 2 //How long to sleep between steps.
 
 	New()
-		northsouth = icon('icons/obj/32x64.dmi')
-		eastwest = icon('icons/obj/64x32.dmi')
+		northsouth = icon('icons/obj/large/32x64.dmi')
+		eastwest = icon('icons/obj/large/64x32.dmi')
 		changeIcon()
 		dmg_threshold = rand(20,60)
 		..()
@@ -621,7 +630,7 @@
 		if(launched) return
 		else launched = 1
 		var/flying = 1
-		playsound(get_turf(src), "sound/effects/torpedolaunch.ogg", 100, 1)
+		playsound(src, "sound/effects/torpedolaunch.ogg", 100, 1)
 		src.changeIcon()
 		var/aboutToBlow = 0
 		var/steps = 0

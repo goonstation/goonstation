@@ -154,9 +154,10 @@ datum
 				if(!M) M = holder.my_atom
 				if (isliving(M))
 					var/mob/living/H = M
-					if(H?.reagents.has_reagent("moonshine"))
-						mult *= 3
 					var/ethanol_amt = holder.get_reagent_amount(src.id)
+					if(H?.reagents.has_reagent("moonshine"))
+						mult *= 7
+						ethanol_amt *= 2
 					var/liver_damage = 0
 					if (!isalcoholresistant(H) || H?.reagents.has_reagent("moonshine"))
 						if (ethanol_amt >= 15)
@@ -203,13 +204,31 @@ datum
 						if (HH.organHolder && HH.organHolder.liver)			//Hax here, lazy. currently only organ is liver. fix when adding others. -kyle
 							if (HH.organHolder.liver.robotic)
 								M.take_toxin_damage(-liver_damage * 3 * mult)
-								HH.organHolder.heal_organ(liver_damage *mult, liver_damage *mult, liver_damage *mult, "liver")
+								if(!HH.organHolder.liver.emagged)
+									HH.organHolder.heal_organ(liver_damage *mult, liver_damage *mult, liver_damage *mult, "liver")
 							else
 								if (ethanol_amt < 40 && HH.organHolder.liver.get_damage() < 10)
 									HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
 								else if (ethanol_amt >= 40 && prob(ethanol_amt/2))
 									HH.organHolder.damage_organ(0, 0, liver_damage*mult, "liver")
+//inc_alcohol_metabolized()
+//bunch of extra logic for dumb stat tracking. This is copy pasted from proc/how_many_depletions() in Chemistry-Reagents.dm
+#if defined(MAP_OVERRIDE_POD_WARS)
+						var/amt_of_alcohol_metabolized = depletion_rate
+						if (H.traitHolder?.hasTrait("slowmetabolism")) //fuck
+							amt_of_alcohol_metabolized/= 2
+						if (H.organHolder)
+							if (!H.organHolder.liver || H.organHolder.liver.broken)	//if no liver or liver is dead, deplete slower
+								amt_of_alcohol_metabolized /= 2
+							if (H.organHolder.get_working_kidney_amt() == 0)	//same with kidneys
+								amt_of_alcohol_metabolized /= 2
+
+						if (istype(ticker.mode, /datum/game_mode/pod_wars))
+							var/datum/game_mode/pod_wars/mode = ticker.mode
+							mode.stats_manager?.inc_alcohol_metabolized(H, amt_of_alcohol_metabolized * mult)
+#endif
 					..()
+
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				//Maybe add a bit that gives you a stamina buff if OD-ing on ethanol and you have a cyberliver.
@@ -279,8 +298,8 @@ datum
 						make_cleanable(/obj/decal/cleanable/vomit,M.loc)
 						M.nutrition -= rand(3,5)
 						M.take_toxin_damage(10) // im bad
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 30))
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 30))
+						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS))
+						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 3 SECONDS))
 
 		lithium
 			name = "lithium"
@@ -490,10 +509,10 @@ datum
 				.= 1
 
 				if (volume >= 20)
-					if (istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || istype(I,/datum/projectile/bullet/revolver_38))
+					if (istype(I, /obj/item/ammo/bullets/bullet_22HP) || istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || istype(I,/datum/projectile/bullet/revolver_38))
 						var/obj/item/ammo/bullets/bullet_holder = I
 						var/datum/projectile/ammo_type = bullet_holder.ammo_type
-						if (ammo_type && !(ammo_type.material && ammo_type.material == "silver"))
+						if (ammo_type && !(ammo_type.material && ammo_type.material.mat_id == "silver"))
 							ammo_type.material = getMaterial("silver")
 							holder.remove_reagent(src.id, 20)
 							.= 0
@@ -655,7 +674,7 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
 				var/spawncleanable = 1
-				if(covered.len > 5 && (length(volume/covered) < 1))
+				if(length(covered) > 5 && (volume/length(covered) < 1))
 					spawncleanable = prob((volume/covered.len) * 10)
 
 
@@ -786,7 +805,7 @@ datum
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", -1 * volume SECONDS)
-						playsound(get_turf(L), "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
+						playsound(L, "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
 				return 1
 
 		water/water_holy
@@ -824,7 +843,7 @@ datum
 							boutput(M, "<span class='notice'>You feel insulted... and wet.</span>")
 						else
 							boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
-							M.take_brain_damage(-10)
+							M.take_brain_damage(0 - clamp(volume, 0, 10))
 						for (var/datum/ailment_data/disease/V in M.ailments)
 							if(prob(1))
 								M.cure_disease(V)

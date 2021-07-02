@@ -44,7 +44,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	[pick("big", "wriggly", "fat", "slimy", "fishy", "large", "high-quality", "nasty", "chompy", "real", "wily")] \
 	[prob(80) ? "[fish.name]" : pick("one", "catch", "chomper", "wriggler", "sunovabitch", "sucker")]!")
 	fish.set_loc(get_turf(user))
-	playsound(get_turf(user), "sound/items/fishing_rod_reel.ogg", 50, 1)
+	playsound(user, "sound/items/fishing_rod_reel.ogg", 50, 1)
 	fishing_rod.last_fished = TIME //set the last fished time
 	return 1
 

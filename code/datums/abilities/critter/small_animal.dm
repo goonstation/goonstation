@@ -47,7 +47,7 @@
 		var/mob/MT = target
 		if (iscarbon(MT) && prob(60))
 			holder.owner.visible_message("<span class='combat'><B>[holder.owner]</B> pecks [MT] in the eyes!</span>")
-			playsound(get_turf(target), "sound/impact_sounds/Flesh_Stab_2.ogg", 30, 1)
+			playsound(target, "sound/impact_sounds/Flesh_Stab_2.ogg", 30, 1)
 			MT.take_eye_damage(rand(5,10)) //High variance because the bird might not hit well
 			if (!isdead(MT))
 				MT.emote("scream")
@@ -64,7 +64,7 @@
 				if (E)
 					holder.owner.visible_message("<span class='combat'><B>[holder.owner] [pick("tears","yanks","rips")] [MT]'s eye out! <i>Holy shit!!</i></B></span>")
 					E = H.drop_organ(chosen_eye)
-					playsound(get_turf(target), "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
+					playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 					if (holder.owner.put_in_hand_or_drop(E))
 						E.set_loc(holder.owner)
 					else
@@ -214,7 +214,7 @@
 			return 1
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] hoots seductively!</b></span>",\
 		"<span class='combat'>You hoot seductively!</span>")
-		playsound(get_turf(holder.owner), "sound/voice/animal/hoot.ogg", 90, 0)
+		playsound(holder.owner, "sound/voice/animal/hoot.ogg", 90, 0)
 		flick("bhooty-flap", holder.owner)
 		var/obj/decal/D = new/obj/decal(holder.owner.loc)
 		D.name = ""

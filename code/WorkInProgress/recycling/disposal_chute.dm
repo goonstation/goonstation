@@ -79,10 +79,11 @@
 			return
 		if (istype(I, /obj/item/handheld_vacuum))
 			return
-		if (istype(I,/obj/item/satchel/))
-			var/action = input(user, "What do you want to do with the satchel?") in list("Empty it into the Chute","Place it in the Chute","Never Mind")
-			if (!action || action == "Never Mind") return
-			if (get_dist(src,user) > 1)
+		if (istype(I,/obj/item/satchel/) && I.contents.len)
+			var/action = input(user, "What do you want to do with the satchel?") in list("Place it in the Chute","Empty it into the Chute","Never Mind")
+			if (!action || action == "Never Mind")
+				return
+			if (!in_interact_range(src, user))
 				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
 				return
 			if (action == "Empty it into the Chute")
@@ -91,8 +92,10 @@
 				S.satchel_updateicon()
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
-		if (istype(I,/obj/item/storage/))
-			var/action = input(user, "What do you want to do with [I]?") as null|anything in list("Empty it into the chute","Place it in the Chute")
+		if (istype(I,/obj/item/storage/) && I.contents.len)
+			var/action = input(user, "What do you want to do with [I]?") as null|anything in list("Place it in the Chute","Empty it into the chute","Never Mind")
+			if (!action || action == "Never Mind")
+				return
 			if (!in_interact_range(src, user))
 				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
 				return
@@ -103,7 +106,6 @@
 					S.hud.remove_object(O)
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
-			if (isnull(action)) return
 		var/obj/item/magtractor/mag
 		if (istype(I.loc, /obj/item/magtractor))
 			mag = I.loc
@@ -118,12 +120,8 @@
 				if (istype(src, /obj/machinery/disposal/mail) && !GM.canRideMailchutes())
 					boutput(user, "<span class='alert'>That won't fit!</span>")
 					return
-				GM.set_loc(src)
-				user.visible_message("<span class='alert'><b>[user.name] stuffs [GM.name] into [src]!</b></span>")
+				actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, GM, user), user)
 				qdel(G)
-				logTheThing("combat", user, GM, "places [constructTarget(GM,"combat")] into [src] at [log_loc(src)].")
-				actions.interrupt(G.affecting, INTERRUPT_MOVE)
-				actions.interrupt(user, INTERRUPT_ACT)
 		else
 			if (istype(mag))
 				actions.stopId("magpickerhold", user)
@@ -149,35 +147,7 @@
 				boutput(user, "<span class='alert'>That won't fit!</span>")
 				return
 
-		var/msg
-		var/turf/Q = target.loc
-		sleep (5)
-		//heyyyy maybe we should check distance AFTER the sleep??											//If you get stunned while *climbing* into a chute, you can still go in
-		if (target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || (is_incapacitated(user) && user != target))
-			return
-
-		if(target == user && !user.stat)	// if drop self, then climbed in
-												// must be awake
-			msg = "[user.name] climbs into the [src]."
-			boutput(user, "You climb into the [src].")
-		else if(target != user && !user.restrained() && Q == target.loc)
-			msg = "[user.name] stuffs [target.name] into the [src]!"
-			boutput(user, "You stuff [target.name] into the [src]!")
-			logTheThing("combat", user, target, "places [constructTarget(target,"combat")] into [src] at [log_loc(src)].")
-		else
-			return
-		actions.interrupt(target, INTERRUPT_MOVE)
-		actions.interrupt(user, INTERRUPT_ACT)
-		target.set_loc(src)
-
-		if (msg)
-			src.visible_message(msg)
-
-		if (target == user && !istype(src,/obj/machinery/disposal/transport))
-			src.ui_interact(user)
-
-		update()
-		return
+		actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, target, user), user)
 
 	hitby(atom/movable/MO, datum/thrown_thing/thr)
 		// This feature interferes with mail delivery, i.e. objects bouncing back into the chute.
@@ -279,7 +249,7 @@
 						SubscribeToProcess()
 						src.is_processing = 1
 				update()
-				playsound(get_turf(src), "sound/misc/handle_click.ogg", 50, 1)
+				playsound(src, "sound/misc/handle_click.ogg", 50, 1)
 				. = TRUE
 			if("togglePump")
 				if (src.mode)
@@ -643,7 +613,7 @@
 			SubscribeToProcess()
 			is_processing = 1
 
-		playsound(get_turf(src), "sound/misc/handle_click.ogg", 50, 1)
+		playsound(src, "sound/misc/handle_click.ogg", 50, 1)
 
 		update()
 		return
@@ -658,6 +628,95 @@
 
 	attack_hand(mob/user as mob)
 		return
+
+
+/datum/action/bar/icon/shoveMobIntoChute
+	duration = 0.2 SECONDS
+	interrupt_flags =  INTERRUPT_STUNNED | INTERRUPT_ACT
+	id = "shoveMobIntoChute"
+	icon = 'icons/obj/disposal.dmi'
+	icon_state = "shoveself-disposal" //varies, see below
+	var/obj/machinery/disposal/chute
+	var/mob/user
+	var/mob/target
+	var/target_old_loc
+	var/target_old_pixel_x
+	var/target_old_pixel_y
+	var/target_old_transform
+	var/target_old_alpha
+
+	New(var/obj/machinery/disposal/chute, var/mob/target, var/mob/user)
+		..()
+		src.chute = chute
+		src.user = user
+		src.target = target
+		icon_state = "shoveself-[chute.icon_style]"
+		if(target != user) icon_state = "shoveother-[chute.icon_style]"
+		target_old_loc = target.loc
+		target_old_pixel_x = target.pixel_x
+		target_old_pixel_y = target.pixel_y
+		target_old_transform = target.transform
+		target_old_alpha = target.alpha
+
+	onStart()
+		..()
+		if(!checkStillValid()) return
+		var/diff_x = (chute.x - target.x) * 32
+		var/diff_y = (chute.y - target.y) * 32
+		var/fade = max(target.alpha - 178, 0)
+		var/matrix/t_size = matrix()
+		t_size.Scale(1,0.4)
+		animate(target, transform = t_size, alpha = fade, pixel_x = diff_x, pixel_y = diff_y, time = duration, easing = LINEAR_EASING)
+
+
+	onUpdate()
+		..()
+		if(!checkStillValid()) return
+
+	onEnd()
+		if(checkStillValid())
+			if (target.buckled || get_dist(user, chute) > 1 || get_dist(user, target) > 1 || ((is_incapacitated(user) && user != target)))
+				..()
+				return
+
+			var/msg
+			if(target == user)
+				msg = "[user.name] climbs into the [chute]."
+				boutput(user, "You climb into the [chute].")
+			else if(target != user && !user.restrained())
+				msg = "[user.name] stuffs [target.name] into the [chute]!"
+				boutput(user, "You stuff [target.name] into the [chute]!")
+				logTheThing("combat", user, target, "places [constructTarget(target,"combat")] into [chute] at [log_loc(chute)].")
+			else
+				..()
+				return
+			actions.interrupt(target, INTERRUPT_MOVE)
+			target.set_loc(chute)
+
+			if (msg)
+				chute.visible_message(msg)
+
+			chute.ui_interact(user)
+
+			chute.update()
+		..()
+
+	onDelete()
+		animate(target) //force-complete the current animation
+		target.pixel_x = target_old_pixel_x
+		target.pixel_y = target_old_pixel_y
+		target.transform = target_old_transform
+		target.alpha = target_old_alpha
+		..()
+
+	proc/checkStillValid()
+		if(isnull(user) || isnull(target) || isnull(chute))
+			interrupt(INTERRUPT_ALWAYS)
+			return false
+		if(target_old_loc != target.loc)
+			interrupt(INTERRUPT_ALWAYS)
+			return false
+		return true
 
 #undef DISPOSAL_CHUTE_OFF
 #undef DISPOSAL_CHUTE_CHARGING

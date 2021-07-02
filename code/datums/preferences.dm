@@ -119,7 +119,7 @@ datum/preferences
 	ui_data(mob/user)
 		if (isnull(src.preview))
 			src.preview = new(user.client, "preferences", "preferences_character_preview")
-			src.preview.add_background("#191919")
+			src.preview.add_background()
 			src.update_preview_icon()
 
 		var/client/client = ismob(user) ? user.client : user
@@ -176,11 +176,11 @@ datum/preferences
 			"skinTone" = src.AH.s_tone,
 			"eyeColor" = src.AH.e_color,
 			"customColor1" = src.AH.customization_first_color,
-			"customStyle1" = src.AH.customization_first,
+			"customStyle1" = src.AH.customization_first.name,
 			"customColor2" = src.AH.customization_second_color,
-			"customStyle2" = src.AH.customization_second,
+			"customStyle2" = src.AH.customization_second.name,
 			"customColor3" = src.AH.customization_third_color,
-			"customStyle3" = src.AH.customization_third,
+			"customStyle3" = src.AH.customization_third.name,
 			"underwearColor" = src.AH.u_color,
 			"underwearStyle" = src.AH.underwear,
 			"randomAppearance" = src.be_random_look,
@@ -486,7 +486,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-securityNote")
-				var/new_text = input(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.security_note) as null|text
+				var/new_text = input(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", src.security_note) as null|text
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -498,7 +498,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-medicalNote")
-				var/new_text = input(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.medical_note) as null|text
+				var/new_text = input(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", src.medical_note) as null|text
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -558,7 +558,28 @@ datum/preferences
 						update_preview_icon()
 						src.profile_modified = TRUE
 						return TRUE
+			if ("decrease-skinTone")
+				var/units = 1
+				if (params["alot"])
+					units = 8
+				var/list/L = hex_to_rgb_list(AH.s_tone)
+				AH.s_tone = rgb(max(L[1]-units, 61), max(L[2]-units, 8), max(L[3]-units, 0))
+				AH.s_tone_original = AH.s_tone
 
+				update_preview_icon()
+				src.profile_modified = TRUE
+				return TRUE
+			if ("increase-skinTone")
+				var/units = 1
+				if (params["alot"])
+					units = 8
+				var/list/L = hex_to_rgb_list(AH.s_tone)
+				AH.s_tone = rgb(min(L[1]+units, 255), min(L[2]+units, 236), min(L[3]+units, 183))
+				AH.s_tone_original = AH.s_tone
+
+				update_preview_icon()
+				src.profile_modified = TRUE
+				return TRUE
 			if ("update-eyeColor")
 				var/new_color = input(usr, "Please select an eye color.", "Character Generation", AH.e_color) as null|color
 				if (new_color)
@@ -604,7 +625,8 @@ datum/preferences
 				var/new_style
 				switch(params["id"])
 					if ("custom1", "custom2", "custom3")
-						new_style = input(usr, "Select a hair style", "Character Generation") as null|anything in customization_styles
+						var/list/customization_types = concrete_typesof(/datum/customization_style) - concrete_typesof(/datum/customization_style/hair/gimmick)
+						new_style = select_custom_style(customization_types, usr)
 					if ("underwear")
 						new_style = input(usr, "Select an underwear style", "Character Generation") as null|anything in underwear_styles
 
@@ -631,11 +653,11 @@ datum/preferences
 
 				switch(params["id"])
 					if ("custom1")
-						current_style = src.AH.customization_first
+						current_style = src.AH.customization_first.type
 					if ("custom2")
-						current_style = src.AH.customization_second
+						current_style = src.AH.customization_second.type
 					if ("custom3")
-						current_style = src.AH.customization_third
+						current_style = src.AH.customization_third.type
 					if ("underwear")
 						current_style = src.AH.underwear
 
@@ -644,7 +666,7 @@ datum/preferences
 
 				switch(params["id"])
 					if ("custom1", "custom2", "custom3")
-						style_list = customization_styles
+						style_list = concrete_typesof(/datum/customization_style) - concrete_typesof(/datum/customization_style/hair/gimmick)
 					if ("underwear")
 						style_list = underwear_styles
 
@@ -660,11 +682,11 @@ datum/preferences
 				if (new_style)
 					switch(params["id"])
 						if ("custom1")
-							src.AH.customization_first = new_style
+							src.AH.customization_first = new new_style
 						if ("custom2")
-							src.AH.customization_second = new_style
+							src.AH.customization_second = new new_style
 						if ("custom3")
-							src.AH.customization_third = new_style
+							src.AH.customization_third = new new_style
 						if ("underwear")
 							src.AH.underwear = new_style
 
@@ -818,9 +840,9 @@ datum/preferences
 				AH.gender = MALE
 				randomize_name()
 
-				AH.customization_first = "Trimmed"
-				AH.customization_second = "None"
-				AH.customization_third = "None"
+				AH.customization_first = new /datum/customization_style/hair/short/short
+				AH.customization_second = new /datum/customization_style/none
+				AH.customization_third = new /datum/customization_style/none
 				AH.underwear = "No Underwear"
 
 				AH.customization_first_color = initial(AH.customization_first_color)
@@ -1042,11 +1064,25 @@ datum/preferences
 					if (removed_jobs[job])
 						src.jobs_unwanted |= removed_jobs[job]
 			// add missing jobs
+
+//pod wars only special jobs
+#if defined(MAP_OVERRIDE_POD_WARS)
+			for (var/datum/job/J in job_controls.special_jobs)
+				if (istype(J, /datum/job/special/pod_wars))
+					if (src.job_favorite != J.name && !(J.name in src.jobs_med_priority) && !(J.name in src.jobs_low_priority))
+						if (J.cant_allocate_unwanted)
+							src.jobs_low_priority |= J.name
+						else
+							src.jobs_unwanted |= J.name
+
+#else
 			for (var/datum/job/J in job_controls.staple_jobs)
 				if (istype(J, /datum/job/daily))
 					continue
 				if (src.job_favorite != J.name && !(J.name in src.jobs_med_priority) && !(J.name in src.jobs_low_priority))
 					src.jobs_unwanted |= J.name
+#endif
+
 			// remove duplicate jobs
 			var/list/seen_jobs = list()
 			if (src.job_favorite)
@@ -1302,7 +1338,13 @@ datum/preferences
 					return
 			else
 				return
+				//
+		//works for now, maybe move this to something on game mode to decide proper jobs... -kyle
+#if defined(MAP_OVERRIDE_POD_WARS)
+		if (!find_job_in_controller_by_string(job,0))
+#else
 		if (!find_job_in_controller_by_string(job,1))
+#endif
 			boutput(user, "<span class='alert'><b>The game could not find that job in the internal list of jobs.</b></span>")
 			switch(occ)
 				if (1) src.job_favorite = null
@@ -1330,7 +1372,12 @@ datum/preferences
 				src.jobs_unwanted += job
 			return
 
+//pod wars only special jobs
+#if defined(MAP_OVERRIDE_POD_WARS)
+		var/datum/job/temp_job = find_job_in_controller_by_string(job,0)
+#else
 		var/datum/job/temp_job = find_job_in_controller_by_string(job,1)
+#endif
 		if (temp_job.rounds_needed_to_play && (user.client && user.client.player))
 			var/round_num = user.client.player.get_rounds_participated()
 			if (!isnull(round_num) && round_num < temp_job.rounds_needed_to_play) //they havent played enough rounds!
@@ -1588,15 +1635,15 @@ datum/preferences
 		if (AH.customization_first_color == null)
 			AH.customization_first_color = "#101010"
 		if (AH.customization_first == null)
-			AH.customization_first = "None"
+			AH.customization_first = new  /datum/customization_style/none
 		if (AH.customization_second_color == null)
 			AH.customization_second_color = "#101010"
 		if (AH.customization_second == null)
-			AH.customization_second = "None"
+			AH.customization_second = new /datum/customization_style/none
 		if (AH.customization_third_color == null)
 			AH.customization_third_color = "#101010"
 		if (AH.customization_third == null)
-			AH.customization_third = "None"
+			AH.customization_third = new /datum/customization_style/none
 		if (AH.e_color == null)
 			AH.e_color = "#101010"
 		if (AH.u_color == null)
@@ -1680,137 +1727,27 @@ datum/preferences
 	//DEBUG_MESSAGE("EYE final: [return_color]")
 	return return_color
 
-var/global/list/feminine_hstyles = list("Mohawk" = "mohawk",
-	"Pompadour" = "pomp",
-	"Ponytail" = "ponytail",
-	"Mullet" = "long",
-	"Emo" = "emo",
-	"Bun" = "bun",
-	"Bieber" = "bieb",
-	"Parted Hair" = "part",
-	"Draped" = "shoulders",
-	"Bedhead" = "bedhead",
-	"Afro" = "afro",
-	"Long Braid" = "longbraid",
-	"Very Long" = "vlong",
-	"Hairmetal" = "80s",
-	"Glammetal" = "glammetal",
-	"Fabio" = "fabio",
-	"Right Half-Shaved" = "halfshavedL",
-	"Left Half-Shaved" = "halfshavedR",
-	"Long Half-Shaved" = "halfshaved_s",
-	"High Ponytail" = "spud",
-	"Low Ponytail" = "band",
-	"Double Braids" = "indian",
-	"Shoulder Drape" = "pulledf",
-	"Punky Flip" = "shortflip",
-	"Pigtails" = "pig",
-	"Low Pigtails" = "lowpig",
-	"Mini Pigtails" = "minipig",
-	"Double Buns" = "doublebun",
-	"Shimada" = "geisha_s",
-	"Mid-Back Length" = "midb",
-	"Shoulder Length" = "shoulderl",
-	"Shoulder-Length Mess" = "slightlymessy_s",
-	"Pulled Back" = "pulledb",
-	"Choppy Short" = "chop_short",
-	"Long and Froofy" = "froofy_long",
-	"Mid-Length Curl" = "bluntbangs_s",
-	"Long Flip" = "longsidepart_s",
-	"Wavy Ponytail" = "wavy_tail",
-	"Bobcut" = "bobcut",
-	"Bobcut Alt" = "baum_s",
-	"Combed Bob" = "combedbob_s",
-	"Mermaid" = "mermaid",
-	"Captor" = "sakura",
-	"Sage" = "sage",
-	"Fun Bun" = "fun_bun",
-	"Croft" = "croft",
-	"Disheveled" = "disheveled",
-	"Tulip" = "tulip",
-	"Floof" = "floof",
-	"Bloom" = "bloom",
-	"Smooth Waves" = "smoothwave",
-	"Long Mini Tail" = "longtailed")
+proc/isfem(datum/customization_style/style)
+	return !!(initial(style.gender) & FEMININE)
 
-var/global/list/masculine_hstyles = list("None" = "None",
-	"Balding" = "balding",
-	"Tonsure" = "tonsure",
-	"Buzzcut" = "cut",
-	"Trimmed" = "short",
-	"Combed" = "combed_s",
-	"Mohawk" = "mohawk",
-	"Flat Top" = "flattop",
-	"Pompadour" = "pomp",
-	"Ponytail" = "ponytail",
-	"Mullet" = "long",
-	"Emo" = "emo",
-	"Bieber" = "bieb",
-	"Persh Cut" = "bowl",
-	"Parted Hair" = "part",
-	"Einstein" = "einstein",
-	"Bedhead" = "bedhead",
-	"Dreadlocks" = "dreads",
-	"Afro" = "afro",
-	"Kingmetal" = "king-of-rock-and-roll",
-	"Scraggly" = "scraggly",
-	"Right Half-Shaved" = "halfshavedL",
-	"Left Half-Shaved" = "halfshavedR",
-	"High Flat Top" = "charioteers",
-	"Punky Flip" = "shortflip",
-	"Mid-Back Length" = "midb",
-	"Split-Tails" = "twotail",
-	"Choppy Short" = "chop_short",
-	"Bangs" = "bangs",
-	"Mini Pigtails" = "minipig",
-	"Temsik" = "temsik",
-	"Visual" = "visual",
-	"Tulip" = "tulip",
-	"Spiky" = "spiky",
-	"Subtle Spiky" = "subtlespiky",
-	"Bloom" = "bloom")
-
-var/global/list/facial_hair = list("None" = "none",
-	"Chaplin" = "chaplin",
-	"Selleck" = "selleck",
-	"Watson" = "watson",
-	"Old Nick" = "devil",
-	"Biker" = "fu",
-	"Twirly" = "villain",
-	"Dali" = "dali",
-	"Hogan" = "hogan",
-	"Van Dyke" = "vandyke",
-	"Hipster" = "hip",
-	"Robotnik" = "robo",
-	"Elvis" = "elvis",
-	"Goatee" = "gt",
-	"Chinstrap" = "chin",
-	"Neckbeard" = "neckbeard",
-	"Abe" = "abe",
-	"Full Beard" = "fullbeard",
-	"Braided Beard" = "braided",
-	"Puffy Beard" = "puffbeard",
-	"Long Beard" = "longbeard",
-	"Tramp" = "tramp",
-	"Motley" = "motley",
-	"Eyebrows" = "eyebrows",
-	"Huge Eyebrows" = "thufir")
+proc/ismasc(datum/customization_style/style)
+	return !!(initial(style.gender) & MASCULINE)
 
 // this is weird but basically: a list of hairstyles and their appropriate detail styles, aka hair_details["80s"] would return the Hairmetal: Faded style
 // further on in the randomize_look() proc we'll see if we've got one of the styles in here and if so, we have a chance to add the detailing
 // if it's a list then we'll pick from the options in the list
-var/global/list/hair_details = list("einstein" = "einalt",\
-	"80s" = "80sfade",\
-	"glammetal" = "glammetalO",\
-	"mermaid" = "mermaidfade",\
-	"smoothwave" = "smoothwave_fade",\
-	"longbeard" = "longbeardfade",\
-	"pomp" = "pompS",\
-	"mohawk" = list("mohawkFT", "mohawkFB", "mohawkS"),\
-	"emo" = "emoH",\
-	"clown" = list("clownT", "clownM", "clownB"),\
-	"dreads" = "dreadsA",\
-	"afro" = list("afroHR", "afroHL", "afroST", "afroSM", "afroSB", "afroSL", "afroSR", "afroSC", "afroCNE", "afroCNW", "afroCSE", "afroCSW", "afroSV", "afroSH"))
+var/global/list/hair_details = list("einstein" = /datum/customization_style/hair/short/einalt,\
+	"80s" = /datum/customization_style/hair/long/eightiesfade,\
+	"glammetal" = /datum/customization_style/hair/long/glammetalO,\
+	"mermaid" = /datum/customization_style/hair/long/mermaidfade,\
+	"smoothwave" = /datum/customization_style/hair/long/smoothwave_fade,\
+	"longbeard" = /datum/customization_style/beard/longbeardfade,\
+	"pomp" = /datum/customization_style/hair/short/pompS,\
+	"mohawk" = list(/datum/customization_style/hair/short/mohawkFT, /datum/customization_style/hair/short/mohawkFB, /datum/customization_style/hair/short/mohawkS),\
+	"emo" = /datum/customization_style/hair/short/emoH,\
+	"clown" = list(/datum/customization_style/hair/short/clownT, /datum/customization_style/hair/short/clownM, /datum/customization_style/hair/short/clownB),\
+	"dreads" = /datum/customization_style/hair/long/dreadsA,\
+	"afro" = list(/datum/customization_style/hair/short/afroHR, /datum/customization_style/hair/short/afroHL, /datum/customization_style/hair/short/afroST, /datum/customization_style/hair/short/afroSM, /datum/customization_style/hair/short/afroSB, /datum/customization_style/hair/short/afroSL, /datum/customization_style/hair/short/afroSR, /datum/customization_style/hair/short/afroSC, /datum/customization_style/hair/short/afroCNE, /datum/customization_style/hair/short/afroCNW, /datum/customization_style/hair/short/afroCSE, /datum/customization_style/hair/short/afroCSW, /datum/customization_style/hair/short/afroSV, /datum/customization_style/hair/short/afroSH))
 
 // all these icon state names are ridiculous
 var/global/list/feminine_ustyles = list("No Underwear" = "none",\
@@ -1913,54 +1850,62 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	AH.e_color = randomize_eye_color(pick(eye_colors))
 
 	var/has_second = 0
+	var/type_first
 	if (AH.gender == MALE)
 		if (prob(5)) // small chance to have a hairstyle more geared to the other gender
-			AH.customization_first = pick(feminine_hstyles)
+			type_first = pick(filtered_concrete_typesof(/datum/customization_style,.proc/isfem))
+			AH.customization_first = new type_first
 		else // otherwise just use one standard to the current gender
-			AH.customization_first = pick(masculine_hstyles)
+			type_first = pick(filtered_concrete_typesof(/datum/customization_style,.proc/ismasc))
+			AH.customization_first = new type_first
 
 		if (prob(33)) // since we're a guy, a chance for facial hair
-			AH.customization_second = pick(facial_hair)
+			var/type_second = pick(concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache))
+			AH.customization_second = new type_second
 			has_second = 1 // so the detail check doesn't do anything - we already got a secondary thing!!
 
 	else // if FEMALE
 		if (prob(8)) // same as above for guys, just reversed and with a slightly higher chance since it's ~more appropriate~ for ladies to have guy haircuts than vice versa  :I
-			AH.customization_first = pick(masculine_hstyles)
+			type_first = pick(filtered_concrete_typesof(/datum/customization_style,.proc/ismasc))
+			AH.customization_first = new type_first
 		else // ss13 is coded with gender stereotypes IN ITS VERY CORE
-			AH.customization_first = pick(feminine_hstyles)
+			type_first = pick(filtered_concrete_typesof(/datum/customization_style,.proc/isfem))
+			AH.customization_first = new type_first
 
 	if (!has_second)
-		var/hair_detail = hair_details[AH.customization_first] // check for detail styles for our chosen style
+		var/hair_detail = hair_details[AH.customization_first.name] // check for detail styles for our chosen style
 
 		if (hair_detail && prob(50)) // found something in the list
-			AH.customization_second = hair_detail // default to being whatever we found
+			AH.customization_second = new hair_detail // default to being whatever we found
 
 			if (islist(hair_detail)) // if we found a bunch of things in the list
-				AH.customization_second = pick(hair_detail) // let's choose just one (we don't need to assign a list as someone's hair detail)
-
+				var/type_second = pick(hair_detail) // let's choose just one (we don't need to assign a list as someone's hair detail)
+				AH.customization_second = new type_second
 				if (prob(20)) // with a small chance for another detail thing
-					AH.customization_third = pick(hair_detail)
+					var/type_third = pick(hair_detail)
+					AH.customization_third = new type_third
 					AH.customization_third_color = random_saturated_hex_color()
 					if (prob(5))
 						AH.customization_third_color = randomize_hair_color(pick(hair_colors))
 				else
-					AH.customization_third = "none"
+					AH.customization_third = new /datum/customization_style/none
 
 			AH.customization_second_color = random_saturated_hex_color() // if you have a detail style you're likely to want a crazy color
 			if (prob(15))
 				AH.customization_second_color = randomize_hair_color(pick(hair_colors)) // but have a chance to be a normal hair color
 
 		else if (prob(5)) // chance for a special eye color
-			AH.customization_second = pick("hetcroL", "hetcroR")
+			var/type_second = pick(/datum/customization_style/biological/hetcroL, /datum/customization_style/biological/hetcroR)
+			AH.customization_second = new type_second
 			if (prob(75))
 				AH.customization_second_color = random_saturated_hex_color()
 			else
 				AH.customization_second_color = randomize_eye_color(pick(eye_colors))
-			AH.customization_third = "none"
+			AH.customization_third = new /datum/customization_style/none
 
 		else // otherwise, nada
-			AH.customization_second = "none"
-			AH.customization_third = "none"
+			AH.customization_second = new /datum/customization_style/none
+			AH.customization_third = new /datum/customization_style/none
 
 	if (change_underwear)
 		if (AH.gender == MALE)

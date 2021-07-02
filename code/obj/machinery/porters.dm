@@ -180,6 +180,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 /obj/item/remote/porter/port_a_brig
 	name = "Port-A-Brig Remote"
+	icon_state = "pbrig"
 	desc = "A remote that summons a Port-A-Brig."
 	machinery_name = "Port-a-Brig"
 
@@ -408,14 +409,8 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			if (src.locked)
 				boutput(user, "<span class='alert'>The Port-A-Brig is locked!</span>")
 				return
-			var/mob/living/carbon/human/H = G.affecting
-			H.set_loc(src)
-			src.occupant = H
-			for(var/obj/O in src)
-				O.set_loc(src.loc)
 			src.add_fingerprint(user)
-			build_icon()
-			qdel(W)
+			actions.start(new /datum/action/bar/portabrig_shove_in(src, user, G.affecting, G), user)
 
 		else if (ispryingtool(W))
 			var/turf/T = user.loc
@@ -461,6 +456,51 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		src.go_out()
 		add_fingerprint(usr)
 		return
+
+/datum/action/bar/portabrig_shove_in
+	duration = 1 SECOND
+	var/mob/victim
+	var/obj/item/grab/G
+	var/obj/machinery/port_a_brig/brig
+	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+
+	New(obj/machinery/port_a_brig/brig, mob/user, mob/victim, obj/item/grab/G)
+		..()
+		src.owner = user
+		src.brig = brig
+		src.victim = victim
+		src.G = G
+
+	onStart()
+		..()
+		if (!src.owner || !src.victim || QDELETED(G))
+			interrupt(INTERRUPT_ALWAYS)
+		if (!IN_RANGE(src.owner, src.brig, 1) || !IN_RANGE(src.victim, src.brig, 1))
+			interrupt(INTERRUPT_ALWAYS)
+		src.brig.visible_message("<span class='alert'>[owner] begins shoving [victim] into [src.brig]!</span>")
+
+
+	onUpdate()
+		..()
+		if (!src.owner || !src.victim || QDELETED(G))
+			interrupt(INTERRUPT_ALWAYS)
+		if (!IN_RANGE(src.owner, src.brig, 1) || !IN_RANGE(src.victim, src.brig, 1))
+			interrupt(INTERRUPT_ALWAYS)
+
+	onEnd()
+		..()
+		if (!src.owner || !src.victim || QDELETED(G))
+			interrupt(INTERRUPT_ALWAYS)
+		if (!IN_RANGE(src.owner, src.brig, 1) || !IN_RANGE(src.victim, src.brig, 1))
+			interrupt(INTERRUPT_ALWAYS)
+		src.brig.visible_message("<span class='alert'>[owner] shoves [victim] into [src.brig]!</span>")
+		victim.set_loc(src.brig)
+		src.brig.occupant = victim
+		for(var/obj/O in src.brig)
+			O.set_loc(src.brig.loc)
+		src.brig.build_icon()
+		qdel(G)
+
 
 /obj/item/paper/Port_A_Brig
 	name = "paper - 'A-97 Port-A-Brig Manual"

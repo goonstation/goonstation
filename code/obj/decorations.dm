@@ -222,6 +222,16 @@
 			. = ..()
 			src.dir = pick(alldirs)
 
+
+//It'll show up on multitools
+/obj/shrub/syndicateplant
+	var/net_id
+	New()
+		. = ..()
+		var/turf/T = get_turf(src.loc)
+		var/obj/machinery/power/data_terminal/link = locate() in T
+		link.master = src
+
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"
 	icon = 'icons/misc/worlds.dmi'
@@ -631,7 +641,7 @@
 		desc = "A nearby Earthlike moon orbiting the gas giant. The stormy, humid atmosphere is quite breathable and the surface has been extensively seeded by terraforming efforts."
 
 	x4
-		icon = 'icons/obj/160x160.dmi'
+		icon = 'icons/obj/large/160x160.dmi'
 		icon_state = "bigasteroid_1"
 		name = "X4"
 		desc = "A jagged little moonlet or a really big asteroid. It's fairly close to your orbit, you can see the lights of Outpost Kappa."
@@ -815,7 +825,7 @@ obj/decoration/ceilingfan
 	name = "rusty krab sign"
 	desc = "It's one of those old neon signs that diners used to have."
 	icon_state = "rustykrab"
-	icon = 'icons/obj/64x32.dmi'
+	icon = 'icons/obj/large/64x32.dmi'
 	density = 0
 	opacity = 0
 	anchored = 2
@@ -841,7 +851,7 @@ obj/decoration/ceilingfan
 	name = "tabletop shelf"
 	desc = "It's a shelf full of things that you'll need to play your favourite tabletop campaigns. Mainly a lot of dice that can only roll 1's."
 	icon_state = "tabletopfull"
-	icon = 'icons/obj/64x32.dmi'
+	icon = 'icons/obj/large/64x32.dmi'
 	anchored = 2
 	density = 0
 	layer = DECAL_LAYER
@@ -948,7 +958,7 @@ obj/decoration/ceilingfan
 	anchored = 2
 	density = 1
 	desc = "Assortment of two metal crates, both of them sealed shut."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "ntcrate1"
 	layer = EFFECTS_LAYER_1
 	appearance_flags = TILE_BOUND
@@ -968,6 +978,7 @@ obj/decoration/ceilingfan
 	anchored = 2
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "frontwalldamage"
+	mouse_opacity = 0
 
 /obj/decoration/damagedchair
 	anchored = 2
@@ -978,7 +989,7 @@ obj/decoration/ceilingfan
 	anchored = 2
 	name = "syndicate corpse"
 	icon = 'icons/obj/decoration.dmi'
-	desc = "Whoever this was, you're pretty sure they've had better days. Makes you wonder where the other half is.."
+	desc = "Whoever this was, you're pretty sure they've had better days. Makes you wonder where the other half is..."
 	icon_state = "syndcorpse5"
 
 /obj/decoration/syndcorpse10
@@ -1005,3 +1016,81 @@ obj/decoration/ceilingfan
 
 	examine()
 		return list()
+
+//fake guns for shooting range prefab
+
+/obj/item/gun/laser_pistol
+	name = "laser pistol"
+	icon = 'icons/obj/decoration.dmi'
+	desc = "A terribly cheap and discontinued old model of laser pistol."
+	icon_state = "laser_pistol"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "protopistol"
+	stamina_damage = 0
+	stamina_cost = 4
+	stamina_crit_chance = 0
+	throwforce = 0
+
+	attack_hand(mob/user as mob)
+		if ((user.r_hand == src || user.l_hand == src) && src.contents && length(src.contents))
+			user.visible_message("The cell on this is corroded. Good luck getting this thing to fire ever again!")
+			src.add_fingerprint(user)
+		else
+			return ..()
+
+/obj/item/gun/laser_pistol/prototype
+	name = "prototype laser pistol"
+	icon = 'icons/obj/decoration.dmi'
+	desc = "You've never heard of this pistol before... who made it?"
+	icon_state = "e_laser_pistol"
+
+//stolen code for anchorable and movable target sheets. cannot get projectile tracking on them to work right now so. oh well. help appreciated!
+/obj/item/caution/target_sheet
+	desc = "A paper silhouette target sheet with a cardboard backing."
+	name = "paper target"
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "target_paper"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "table_parts"
+	density = 1
+	force = 1.0
+	throwforce = 3.0
+	throw_speed = 1
+	throw_range = 5
+	w_class = W_CLASS_SMALL
+	flags = FPRINT | TABLEPASS
+	stamina_damage = 0
+	stamina_cost = 4
+	stamina_crit_chance = 0
+	var/list/proj_impacts = list()
+	var/image/proj_image = null
+	var/last_proj_update_time = null
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_SOFT)
+
+	attackby(obj/item/W, mob/user, params)
+		if(iswrenchingtool(W))
+			actions.start(new /datum/action/bar/icon/anchor_or_unanchor(src, W, duration=2 SECONDS), user)
+			return
+		. = ..()
+
+	get_desc()
+		if (islist(src.proj_impacts) && length(src.proj_impacts))
+			var/shots_taken = 0
+			for (var/i in src.proj_impacts)
+				shots_taken ++
+			. += "<br>[src] has [shots_taken] hole[s_es(shots_taken)] in it."
+
+	proc/update_projectile_image(var/update_time)
+		if (src.proj_impacts.len > 10)
+			return
+		if (src.last_proj_update_time && (src.last_proj_update_time + 1) < ticker.round_elapsed_ticks)
+			return
+		if (!src.proj_image)
+			src.proj_image = image('icons/obj/projectiles.dmi', "bhole-small")
+		src.proj_image.overlays = null
+		for (var/image/i in src.proj_impacts)
+			src.proj_image.overlays += i
+		src.UpdateOverlays(src.proj_image, "projectiles")

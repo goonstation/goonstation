@@ -240,7 +240,7 @@
 
 	proc/triggerOnHit(var/atom/owner, var/obj/attackobj, var/mob/attacker, var/meleeorthrow)
 		for(var/datum/materialProc/X in triggersOnHit)
-			call(X,  "execute")(owner, attacker = attacker, attackobj = attackobj, meleeorthrow = meleeorthrow)
+			call(X,  "execute")(owner, attackobj, attacker, meleeorthrow)
 		return
 
 

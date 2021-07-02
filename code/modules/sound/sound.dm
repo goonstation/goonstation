@@ -72,11 +72,16 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 /// Returns the default volume for a channel, unattenuated for the master channel (0-1)
 /client/proc/getDefaultVolume(channel)
-	return volumes[channel + 1]
+	return default_channel_volumes[channel + 1]
 
 /// Returns a list of friendly descriptions for available sound channels
 /client/proc/getVolumeDescriptions()
-	return list("Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.", "Screams and farts.", "Mentor PM notification sound.")
+	return list("This will affect all sounds.", "Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.", "Screams and farts.", "Mentor PM notification sound.")
+
+/// Get the friendly description for a specific sound channel.
+/client/proc/getVolumeChannelDescription(channel)
+	// +1 since master channel is 0, while byond arrays start at 1
+	return getVolumeDescriptions()[channel+1]
 
 /// Returns the volume to set /sound/var/volume to for the given channel(so 0-100)
 /client/proc/getVolume(id)
@@ -120,8 +125,10 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	if (!limiter || !limiter.canISpawn(/sound))
 		return
 
+	var/turf/source_turf = get_turf(source)
+
 	// don't play if the sound is happening nowhere
-	if (!source || !source.loc || source.z <= 0)
+	if (isnull(source_turf))
 		return
 
 	EARLY_RETURN_IF_QUIET(vol)
@@ -133,7 +140,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 	var/spaced_source = 0
 	var/spaced_env = 0
-	var/atten_temp = attenuate_for_location(source)
+	var/atten_temp = attenuate_for_location(source_turf)
 	SOURCE_ATTEN(atten_temp)
 	//message_admins("volume: [vol]")
 	EARLY_RETURN_IF_QUIET(vol)
@@ -147,7 +154,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	var/scaled_dist
 	var/storedVolume
 
-	for (var/mob/M in GET_NEARBY(source,MAX_SOUND_RANGE + extrarange))
+	for (var/mob/M in GET_NEARBY(source_turf, MAX_SOUND_RANGE + extrarange))
 		var/client/C = M.client
 		if (!C)
 			continue
@@ -161,7 +168,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 			continue
 
 		//Hard attentuation
-		dist = max(GET_MANHATTAN_DIST(Mloc, source), 1)
+		dist = max(GET_MANHATTAN_DIST(Mloc, source_turf), 1)
 		if (dist > MAX_SOUND_RANGE + extrarange)
 			continue
 
@@ -223,8 +230,8 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 					//boutput(M, "You hear a [source] at [source_location]!")
 					S.echo = ECHO_CLOSE
 
-			S.x = source.x - Mloc.x
-			S.z = source.y - Mloc.y //Since sound coordinates are 3D, z for sound falls on y for the map.  BYOND.
+			S.x = source_turf.x - Mloc.x
+			S.z = source_turf.y - Mloc.y //Since sound coordinates are 3D, z for sound falls on y for the map.  BYOND.
 			S.y = 0
 
 			C << S
@@ -238,11 +245,13 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	if (!limiter || !limiter.canISpawn(/sound))
 		return
 
+	var/turf/source_turf = get_turf(source)
+
 	// don't play if the sound is happening nowhere
-	if (!source || !source.loc)
+	if (isnull(source_turf))
 		return
 
-	var/dist = max(GET_MANHATTAN_DIST(get_turf(src), get_turf(source)), 1)
+	var/dist = max(GET_MANHATTAN_DIST(get_turf(src), source_turf), 1)
 	if (dist > MAX_SOUND_RANGE + extrarange)
 		return
 
@@ -286,7 +295,6 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 			S.environment = SPACED_ENV
 			S.echo = SPACED_ECHO
 
-		var/turf/source_turf = get_turf(source)
 		if (istype(source_turf))
 			var/dx = source_turf.x - src.x
 			S.pan = max(-100, min(100, dx/8.0 * 100))

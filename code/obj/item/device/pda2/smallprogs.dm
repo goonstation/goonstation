@@ -975,7 +975,8 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			T.issuer_byond_key = usr.key
 			data_core.tickets += T
 
-			playsound(get_turf(src.master), "sound/machines/printer_thermal.ogg", 50, 1)
+			logTheThing("admin", usr, null, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
+			playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
 			SPAWN_DBG(3 SECONDS)
 				var/obj/item/paper/p = unpool(/obj/item/paper)
 				p.set_loc(get_turf(src.master))
@@ -1029,9 +1030,10 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			F.issuer_byond_key = usr.key
 			data_core.fines += F
 
+			logTheThing("admin", usr, null, "fines <b>[ticket_target]</b> with the reason: [ticket_reason].")
 			if(PDAownerjob in list("Head of Security","Head of Personnel","Captain"))
 				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
-				playsound(get_turf(src.master), "sound/machines/printer_thermal.ogg", 50, 1)
+				playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
 				SPAWN_DBG(3 SECONDS)
 					F.approve(PDAowner,PDAownerjob)
 					var/obj/item/paper/p = unpool(/obj/item/paper)
@@ -1052,7 +1054,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 
 			var/datum/fine/F = locate(href_list["approve"])
 
-			playsound(get_turf(src.master), "sound/machines/printer_thermal.ogg", 50, 1)
+			playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
 			SPAWN_DBG(3 SECONDS)
 				F.approve(PDAowner,PDAownerjob)
 				var/ticket_text = "[F.target] has been fined [F.amount] credits by Nanotrasen Corporate Security for [F.reason] on [time2text(world.realtime, "DD/MM/53")].<br>Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [PDAowner] - [PDAownerjob]<br>"

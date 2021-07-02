@@ -24,6 +24,7 @@
 	stamina_cost = 0
 	stamina_crit_chance = 0
 	move_triggered = 1
+	var/detonating = 0
 
 
 	New()
@@ -32,10 +33,13 @@
 		fluid_image2 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid2", -1)
 		src.create_reagents(150000)
 
+	is_open_container()
+		return src.detonating
+
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/grenade_fuse) && !stage)
 			boutput(user, "<span class='notice'>You add [W] to the metal casing.</span>")
-			playsound(get_turf(src), "sound/items/Screwdriver2.ogg", 25, -3)
+			playsound(src, "sound/items/Screwdriver2.ogg", 25, -3)
 			qdel(W) //Okay so we're not really adding anything here. cheating.
 			icon_state = "grenade-chem2"
 			name = "unsecured grenade"
@@ -43,7 +47,7 @@
 		else if (isscrewingtool(W) && stage == 1)
 			if (beakers.len)
 				boutput(user, "<span class='notice'>You lock the assembly.</span>")
-				playsound(get_turf(src), "sound/items/Screwdriver.ogg", 25, -3)
+				playsound(src, "sound/items/Screwdriver.ogg", 25, -3)
 				name = "grenade"
 				icon_state = "grenade-chem3"
 				stage = 2
@@ -161,7 +165,7 @@
 		boutput(user, "<span class='alert'>You prime the grenade! 3 seconds!</span>")
 		src.state = 1
 		src.icon_state = icon_state_armed
-		playsound(get_turf(src), "sound/weapons/armbomb.ogg", 75, 1, -3)
+		playsound(src, "sound/weapons/armbomb.ogg", 75, 1, -3)
 		SPAWN_DBG(3 SECONDS)
 			if (src && !src.disposed)
 				a = get_area(src)
@@ -169,7 +173,9 @@
 				explode()
 
 	proc/explode()
+		src.reagents.my_atom = src //hax
 		var/has_reagents = 0
+		src.detonating = 1
 		for (var/obj/item/reagent_containers/glass/G in beakers)
 			if (G.reagents.total_volume) has_reagents = 1
 

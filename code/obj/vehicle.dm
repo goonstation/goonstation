@@ -335,6 +335,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			if(!istype(M:shoes, /obj/item/clothing/shoes/sandal))
 				M.changeStatus("stunned", 8 SECONDS)
 				M.changeStatus("weakened", 5 SECONDS)
+				M.force_laydown_standup()
 				src.log_me(src.rider, M, "impact")
 			else
 				boutput(M, "<span class='alert'><B>Your magical sandals keep you upright!</B></span>")
@@ -399,6 +400,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		boutput(rider, "<span class='alert'><B>You are flung over \the [src]'s handlebars!</B></span>")
 		rider.changeStatus("stunned", 8 SECONDS)
 		rider.changeStatus("weakened", 5 SECONDS)
+		rider.force_laydown_standup()
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
 				continue
@@ -922,7 +924,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			src.icon_state = "buffer[FB.sprayer_active]"
 			if (FB.rider)
 				FB.icon_state = "[FB.icon_base][FB.sprayer_active]"
-			playsound(get_turf(the_mob), "sound/machines/click.ogg", 50, 1)
+			playsound(the_mob, "sound/machines/click.ogg", 50, 1)
 		return
 
 /obj/ability_button/fbuffer_status
@@ -2316,7 +2318,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		return
 
 	//pick up crates with forklift
-	if((istype(A, /obj/storage/crate) || istype(A, /obj/storage/cart)) && get_dist(A, src) <= 1 && src.rider == user && helditems.len != helditems_maximum && !broken)
+	if((istype(A, /obj/storage/crate) || istype(A, /obj/storage/cart) || istype(A, /obj/storage/secure/crate)) && get_dist(A, src) <= 1 && src.rider == user && helditems.len != helditems_maximum && !broken)
 		A.set_loc(src)
 		helditems.Add(A)
 		update_overlays()

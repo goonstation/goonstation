@@ -340,22 +340,32 @@
 			var/ops = text2num(href_list["repair"])
 
 			if (ops == 1 && R.compborg_get_total_damage(1) > 0)
+				if (src.reagents.get_reagent_amount("fuel") < 1)
+					boutput(usr, "<span class='alert'>Not enough welding fuel for repairs.</span>")
+					return
 				var/usage = input(usr, "How much welding fuel do you want to use?", "Docking Station", 0) as num
 				if ((!issilicon(usr) && (get_dist(usr, src) > 1)) || usr.stat)
 					return
 				if (usage > R.compborg_get_total_damage(1))
 					usage = R.compborg_get_total_damage(1)
+				if (usage > src.reagents.get_reagent_amount("fuel"))
+					usage = src.reagents.get_reagent_amount("fuel")
 				if (usage < 1)
 					return
 				for (var/obj/item/parts/robot_parts/RP in R.contents)
 					RP.ropart_mend_damage(usage,0)
 				src.reagents.remove_reagent("fuel", usage)
 			else if (ops == 2 && R.compborg_get_total_damage(2) > 0)
+				if (src.cabling < 1)
+					boutput(usr, "<span class='alert'>Not enough wiring for repairs.</span>")
+					return
 				var/usage = input(usr, "How much wiring do you want to use?", "Docking Station", 0) as num
 				if ((!issilicon(usr) && (get_dist(usr, src) > 1)) || usr.stat)
 					return
 				if (usage > R.compborg_get_total_damage(2))
 					usage = R.compborg_get_total_damage(2)
+				if (usage > src.cabling)
+					usage = src.cabling
 				if (usage < 1)
 					return
 				for (var/obj/item/parts/robot_parts/RP in R.contents)
@@ -887,6 +897,6 @@
 	if (iswrenchingtool(W))
 		src.anchored = !src.anchored
 		user.show_text("You [src.anchored ? "attach" : "release"] \the [src]'s floor clamps", "red")
-		playsound(get_turf(src), "sound/items/Ratchet.ogg", 40, 0, 0)
+		playsound(src, "sound/items/Ratchet.ogg", 40, 0, 0)
 		return
 	..()

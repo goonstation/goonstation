@@ -37,7 +37,7 @@
 		master = null
 		..()
 
-	clicked(id)
+	relay_click(id)
 		if (!master)
 			return
 

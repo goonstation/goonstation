@@ -40,8 +40,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	examine()
 		. = ..()
 		if (src.ammo && (src.ammo.amount_left > 0))
-			var/datum/projectile/ammo_type = src.ammo
-			. += "There are [src.ammo.amount_left][(ammo_type.material && istype(ammo_type, /datum/material/metal/silver)) ? " silver " : " "]bullets of [src.ammo.sname] left!"
+			var/datum/projectile/ammo_type = src.ammo.ammo_type
+			. += "There are [src.ammo.amount_left][(ammo_type.material && istype(ammo_type.material, /datum/material/metal/silver)) ? " silver " : " "]bullets of [src.ammo.sname] left!"
 		else
 			. += "There are 0 bullets left!"
 		if (current_projectile)
@@ -161,8 +161,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.ejectcasings()
 			src.casings_to_eject = 0
 
-			src.update_icon()
 			src.ammo.amount_left = 0
+			src.update_icon()
 			src.add_fingerprint(user)
 			ammoHand.add_fingerprint(user)
 
@@ -638,7 +638,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic/riotgun
 	name = "Riot Shotgun"
 	desc = "A police-issue shotgun meant for suppressing riots."
-	icon = 'icons/obj/48x32.dmi'
+	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "shotty-empty"
 	item_state = "shotty"
 	force = MELEE_DMG_RIFLE
@@ -717,7 +717,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic/ak47
 	name = "AK-744 Rifle"
 	desc = "Based on an old Cold War relic, often used by paramilitary organizations and space terrorists."
-	icon = 'icons/obj/48x32.dmi' // big guns get big icons
+	icon = 'icons/obj/large/48x32.dmi' // big guns get big icons
 	icon_state = "ak47"
 	item_state = "ak47"
 	force = MELEE_DMG_RIFLE
@@ -737,7 +737,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic/hunting_rifle
 	name = "Old Hunting Rifle"
 	desc = "A powerful antique hunting rifle."
-	icon = 'icons/obj/48x32.dmi'
+	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "ohr"
 	item_state = "ohr"
 	force = MELEE_DMG_RIFLE
@@ -758,7 +758,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic/dart_rifle
 	name = "Tranquilizer Rifle"
 	desc = "A veterinary tranquilizer rifle chambered in .308 caliber."
-	icon = 'icons/obj/48x32.dmi'
+	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "tranq"
 	item_state = "tranq"
 	force = MELEE_DMG_RIFLE
@@ -893,7 +893,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
 				return
 			else
-				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"")
+				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"", null)
 				return
 		else
 			..()
@@ -908,7 +908,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic/rpg7
 	desc = "A rocket-propelled grenade launcher licensed by the Space Irish Republican Army."
 	name = "MPRT-7"
-	icon = 'icons/obj/64x32.dmi'
+	icon = 'icons/obj/large/64x32.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "rpg7"
 	uses_multiple_icon_states = 1
@@ -1026,10 +1026,27 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 		ammo.amount_left = 0
 		update_icon()
+
+/obj/item/gun/kinetic/pistol/smart/mkII
+	name = "\improper Hydra smart pistol"
+	desc = "A pistol capable of locking onto multiple targets and firing on them in rapid sequence. \"Anderson Para-Munitions\" is engraved on the slide."
+	icon_state = "smartgun"
+	max_ammo_capacity = 24
+
+	New()
+		..()
+		ammo = new/obj/item/ammo/bullets/bullet_9mm/smartgun
+		set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smartgun)
+		AddComponent(/datum/component/holdertargeting/smartgun/nukeop, 3)
+
+
+/datum/component/holdertargeting/smartgun/nukeop/is_valid_target(mob/user, mob/M)
+	return ..() && !istype(M.get_id(), /obj/item/card/id/syndicate)
+
 /obj/item/gun/kinetic/smg
 	name = "Bellatrix submachine gun"
 	desc = "A semi-automatic, 9mm submachine gun, developed by Almagest Weapons Fabrication."
-	icon = 'icons/obj/48x32.dmi'
+	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "mp52"
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_SMG
@@ -1094,7 +1111,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic/assault_rifle
 	name = "Sirius assault rifle"
 	desc = "A bullpup assault rifle capable of semi-automatic and burst fire modes, developed by Almagest Weapons Fabrication."
-	icon = 'icons/obj/64x32.dmi'
+	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "assault_rifle"
 	item_state = "assault_rifle"
 	force = MELEE_DMG_RIFLE
@@ -1149,7 +1166,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic/light_machine_gun
 	name = "Antares light machine gun"
 	desc = "A 100 round light machine gun, developed by Almagest Weapons Fabrication."
-	icon = 'icons/obj/64x32.dmi'
+	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "lmg"
 	item_state = "lmg"
 	wear_image_icon = 'icons/mob/back.dmi'
@@ -1183,7 +1200,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic/cannon
 	name = "M20-CV tactical cannon"
 	desc = "A shortened conversion of a 20mm military cannon. Slow but enormously powerful."
-	icon = 'icons/obj/64x32.dmi'
+	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "cannon"
 	item_state = "cannon"
 	wear_image_icon = 'icons/mob/back.dmi'
@@ -1221,7 +1238,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic/grenade_launcher
 	name = "Rigil grenade launcher"
 	desc = "A 40mm hand-held grenade launcher, developed by Almagest Weapons Fabrication."
-	icon = 'icons/obj/64x32.dmi'
+	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "grenade_launcher"
 	item_state = "grenade_launcher"
 	force = MELEE_DMG_RIFLE
@@ -1238,20 +1255,24 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		ammo.amount_left = max_ammo_capacity
 		set_current_projectile(new/datum/projectile/bullet/grenade_round/explosive)
 		..()
-
 	attackby(obj/item/b as obj, mob/user as mob)
 		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/old_grenade))
-			if(src.ammo.amount_left > 0)
+			if((src.ammo.amount_left > 0 && !istype(current_projectile, /datum/projectile/bullet/grenade_shell)) || src.ammo.amount_left >= src.max_ammo_capacity)
 				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
 				return
 			else
-				SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECONDS, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"")
-				return
+				var/datum/projectile/bullet/grenade_shell/custom_shell = src.current_projectile
+				if(src.ammo.amount_left > 0 && istype(custom_shell) && custom_shell.get_nade().type != b.type)
+					boutput(user, "<span class='alert'>The [src] has a different kind of grenade in the conversion chamber, and refuses to mix and match!</span>")
+					return
+				else
+					SETUP_GENERIC_ACTIONBAR(user, src, 0.3 SECONDS, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"", null)
+					return
 		else
 			..()
 
 	proc/convert_grenade(obj/item/nade, mob/user)
-		var/obj/item/ammo/bullets/grenade_shell/TO_LOAD = new /obj/item/ammo/bullets/grenade_shell
+		var/obj/item/ammo/bullets/grenade_shell/TO_LOAD = new /obj/item/ammo/bullets/grenade_shell/rigil
 		TO_LOAD.attackby(nade, user)
 		src.attackby(TO_LOAD, user)
 
@@ -1386,7 +1407,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic/sniper
 	name = "Betelgeuse sniper rifle"
 	desc = "A semi-automatic bullpup sniper rifle, developed by Almagest Weapons Fabrication."
-	icon = 'icons/obj/64x32.dmi' // big guns get big icons
+	icon = 'icons/obj/large/64x32.dmi' // big guns get big icons
 	icon_state = "sniper"
 	item_state = "sniper"
 	wear_image_icon = 'icons/mob/back.dmi'
@@ -1473,7 +1494,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		src.keys_changed(0,0xFFFF)
 		if(!src.hasOverlayComposition(/datum/overlayComposition/sniper_scope))
 			src.addOverlayComposition(/datum/overlayComposition/sniper_scope)
-		playsound(get_turf(src), "sound/weapons/scope.ogg", 50, 1)
+		playsound(src, "sound/weapons/scope.ogg", 50, 1)
 		break
 
 
@@ -1481,7 +1502,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /*/obj/item/gun/kinetic/sniper/antimateriel
 	name = "M20-S antimateriel cannon"
 	desc = "A ruthlessly powerful rifle chambered for a 20mm cannon round. Built to destroy vehicles and infrastructure at range."
-	icon = 'icons/obj/64x32.dmi'
+	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "antimateriel"
 	item_state = "cannon"
 	wear_image_icon = 'icons/mob/back.dmi'
@@ -1548,7 +1569,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic/antisingularity
 	desc = "An experimental rocket launcher designed to deliver various payloads in rocket format."
 	name = "Singularity Buster rocket launcher"
-	icon = 'icons/obj/64x32.dmi'
+	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "ntlauncher"
 	item_state = "ntlauncher"
 	w_class = W_CLASS_BULKY
@@ -1709,3 +1730,20 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			icon_state="guncase"
 		else
 			icon_state="secure"
+
+/obj/item/gun/kinetic/foamdartgun
+	name = "Foam Dart Gun"
+	icon_state = "foamdartgun"
+	desc = "A toy gun that fires foam darts. Keep out of reach of clowns, staff assistants and scientists."
+	w_class = W_CLASS_SMALL
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "toygun"
+	contraband = 1
+	force = 1
+	caliber = 0.393
+	max_ammo_capacity = 10
+
+	New()
+		ammo = new/obj/item/ammo/bullets/foamdarts/ten
+		set_current_projectile(new/datum/projectile/bullet/foamdart)
+		..()

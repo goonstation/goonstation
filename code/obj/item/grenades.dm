@@ -13,9 +13,9 @@ PIPE BOMBS + CONSTRUCTION
 	desc = "You shouldn't be able to see this!"
 	name = "old grenade"
 	var/state = 0
-	var/det_time = 30
-	var/org_det_time = 30
-	var/alt_det_time = 60
+	var/det_time = 3 SECONDS
+	var/org_det_time = 3 SECONDS
+	var/alt_det_time = 6 SECONDS
 	w_class = W_CLASS_SMALL
 	icon = 'icons/obj/items/grenade.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
@@ -103,9 +103,9 @@ PIPE BOMBS + CONSTRUCTION
 /obj/item/old_grenade/banana
 	desc = "It is set to detonate in 3 seconds."
 	name = "banana grenade"
-	det_time = 30
-	org_det_time = 30
-	alt_det_time = 60
+	det_time = 3 SECONDS
+	org_det_time = 3 SECONDS
+	alt_det_time = 6 SECONDS
 	icon_state = "banana"
 	item_state = "banana"
 	is_syndicate = 1
@@ -129,9 +129,9 @@ PIPE BOMBS + CONSTRUCTION
 /obj/item/old_grenade/thing_thrower
 	desc = "It is set to detonate in 3 seconds."
 	name = "banana grenade"
-	det_time = 30
-	org_det_time = 30
-	alt_det_time = 60
+	det_time = 3 SECONDS
+	org_det_time = 3 SECONDS
+	alt_det_time = 6 SECONDS
 	icon_state = "banana"
 	item_state = "banana"
 	is_syndicate = 1
@@ -173,9 +173,9 @@ PIPE BOMBS + CONSTRUCTION
 /obj/item/old_grenade/graviton //ITS SPELT GRAVITON
 	desc = "It is set to detonate in 10 seconds."
 	name = "graviton grenade"
-	det_time = 100
-	org_det_time = 100
-	alt_det_time = 60
+	det_time = 10 SECONDS
+	org_det_time = 10 SECONDS
+	alt_det_time = 6 SECONDS
 	icon_state = "graviton"
 	item_state = "emp" //TODO: grenades REALLY need custom inhands, but I'm not submitting them in this PR
 	is_syndicate = 1
@@ -238,9 +238,9 @@ PIPE BOMBS + CONSTRUCTION
 /obj/item/old_grenade/singularity
 	desc = "It is set to detonate in 10 seconds."
 	name = "singularity grenade"
-	det_time = 100
-	org_det_time = 100
-	alt_det_time = 60
+	det_time = 10 SECONDS
+	org_det_time = 10 SECONDS
+	alt_det_time = 6 SECONDS
 	icon_state = "graviton"
 	item_state = "emp"
 	is_syndicate = 1
@@ -307,9 +307,9 @@ PIPE BOMBS + CONSTRUCTION
 	desc = "It is set to detonate in 2 seconds."
 	name = "smoke grenade"
 	icon_state = "smoke"
-	det_time = 20.0
-	org_det_time = 20
-	alt_det_time = 60
+	det_time = 2 SECONDS
+	org_det_time = 2 SECONDS
+	alt_det_time = 6 SECONDS
 	item_state = "flashbang"
 	is_syndicate = 1
 	sound_armed = "sound/weapons/armbomb.ogg"
@@ -380,9 +380,9 @@ PIPE BOMBS + CONSTRUCTION
 	name = "stinger grenade"
 	desc = "It is set to detonate in 3 seconds."
 	icon_state = "fragnade"
-	det_time = 30.0
-	org_det_time = 30
-	alt_det_time = 60
+	det_time = 3 SECONDS
+	org_det_time = 3 SECONDS
+	alt_det_time = 6 SECONDS
 	item_state = "fragnade"
 	is_syndicate = 0
 	sound_armed = "sound/weapons/pindrop.ogg"
@@ -444,9 +444,9 @@ PIPE BOMBS + CONSTRUCTION
 	desc = "A high-explosive grenade. It is set to detonate in 3 seconds."
 	icon_state = "fragnade-alt"
 	icon_state_armed = "fragnade-alt1"
-	det_time = 30.0
-	org_det_time = 30
-	alt_det_time = 60
+	det_time = 3 SECONDS
+	org_det_time = 3 SECONDS
+	alt_det_time = 6 SECONDS
 	item_state = "fragnade"
 	is_syndicate = 0
 	sound_armed = "sound/weapons/pindrop.ogg"
@@ -473,9 +473,9 @@ PIPE BOMBS + CONSTRUCTION
 	name = "sonic grenade"
 	desc = "It is set to detonate in 3 seconds."
 	icon_state = "sonic"
-	det_time = 30.0
-	org_det_time = 30
-	alt_det_time = 60
+	det_time = 3 SECONDS
+	org_det_time = 3 SECONDS
+	alt_det_time = 6 SECONDS
 	item_state = "flashbang"
 	is_syndicate = 1
 	sound_armed = "sound/effects/screech.ogg"
@@ -513,9 +513,9 @@ PIPE BOMBS + CONSTRUCTION
 /obj/item/old_grenade/emp
 	desc = "It is set to detonate in 5 seconds."
 	name = "emp grenade"
-	det_time = 50.0
-	org_det_time = 50
-	alt_det_time = 30
+	det_time = 5 SECONDS
+	org_det_time = 5 SECONDS
+	alt_det_time = 3 SECONDS
 	icon_state = "emp"
 	item_state = "emp"
 	is_syndicate = 1
@@ -550,12 +550,80 @@ PIPE BOMBS + CONSTRUCTION
 			qdel(src)
 		return
 
+/obj/item/old_grenade/oxygen
+	name = "red oxygen grenade"
+	desc = "It is set to detonate in 3 seconds."
+	det_time = 3 SECONDS
+	org_det_time = 3 SECONDS
+	alt_det_time = 6 SECONDS
+	icon_state = "oxy"
+	item_state = "flashbang"
+	mats = list("MET-2"=2, "CON-1"=2, "molitz"=10, "char"=1 )
+	sound_armed = "sound/weapons/armbomb.ogg"
+	icon_state_armed = "oxy1"
+
+	prime()
+		var/turf/simulated/T = ..()
+		var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
+		GM.temperature = T20C + 15
+		GM.oxygen = 1500
+		GM.carbon_dioxide = 100
+
+		var/obj/effects/explosion/E = new /obj/effects/explosion(T)
+		// Uses existing animated icon adjust coloration of explosion to lighter cyan to match oxygen items
+		// scaling it to cover a turf, adjusting plane to avoid casting shadows, and wave animation to
+		// help differentiate it from a standard explosion (also makes it wispy)
+		E.color = list(0,0,0.6,0.2,0, 0.3,0,-0.8,0,0, 0,0.33,0,0,0, 0.9,0.8,0.8,0.7,0)
+		E.plane = PLANE_NOSHADOW_ABOVE
+		E.transform = matrix(0.75, MATRIX_SCALE)
+		animate_wave(E,4)
+
+		if (T && istype(T))
+			if (T.air)
+				if (T.parent?.group_processing)
+					T.parent.air.merge(GM)
+				else
+					var/count = length(T.parent?.members)
+					if (count)
+						for (var/turf/simulated/MT as() in T.parent.members)
+							if (GM.disposed)
+								GM = unpool(/datum/gas_mixture)
+							GM.temperature = T20C + 15
+							GM.oxygen = 1500 / count
+							GM.carbon_dioxide = 100 / count
+							MT.assume_air(GM)
+					else
+						T.assume_air(GM)
+
+			for (var/mob/living/HH in range(8, src))
+				var/checkdist = get_dist(HH.loc, T)
+				var/misstep = clamp(1 + 10 * (5 - checkdist), 0, 40)
+				var/ear_damage = max(0, 5 * 0.2 * (3 - checkdist))
+				var/ear_tempdeaf = max(0, 5 * 0.2 * (5 - checkdist))
+				var/stamina = clamp(5 * (5 + 1 * (7 - checkdist)), 0, 120)
+				HH.apply_sonic_stun(0, 0, misstep, 0, 2, ear_damage, ear_tempdeaf, stamina)
+
+			animate(E, alpha=0, time=2.5 SECONDS)
+			playsound(T, "sound/weapons/flashbang.ogg", 30, 1)
+			var/datum/effects/system/steam_spread/steam = unpool(/datum/effects/system/steam_spread)
+			steam.set_up(10, 0, get_turf(src), color="#0ff", plane=PLANE_NOSHADOW_ABOVE)
+			steam.attach(src.loc)
+			steam.start()
+
+		else
+			animate(E, alpha=0, time=2 SECONDS)
+			playsound(T, "sound/weapons/flashbang.ogg", 15, 1)
+
+		E.fingerprintslast = src.fingerprintslast
+		qdel(src)
+		return
+
 /obj/item/old_grenade/moustache
 	name = "moustache grenade"
 	desc = "It is set to detonate in 3 seconds."
-	det_time = 30.0
-	org_det_time = 30
-	alt_det_time = 60
+	det_time = 3 SECONDS
+	org_det_time = 3 SECONDS
+	alt_det_time = 6 SECONDS
 	icon_state = "moustache"
 	item_state = "flashbang"
 	is_syndicate = 1
@@ -658,7 +726,7 @@ PIPE BOMBS + CONSTRUCTION
 								W.layer = HUD_LAYER
 						else
 							qdel(W)
-				else
+				else if (!issilicon(user)) //borgs could drop all their tools/internal items trying to pull one
 					user.unequip_all()
 
 				for (var/mob/N in viewers(user, null))
@@ -870,6 +938,9 @@ PIPE BOMBS + CONSTRUCTION
 		SPAWN_DBG(0)
 			src.beep(10)
 		return ..()
+
+//dummy type for compile
+/obj/item/gimmickbomb/grenyanda/inert
 
 /////////////////////////////// Fireworks ///////////////////////////////////////
 
@@ -1488,7 +1559,7 @@ PIPE BOMBS + CONSTRUCTION
 
 		if (sound_effect)
 			SPAWN_DBG(4 SECONDS) //you can use a sound effect to hold a bomb in hand and throw it at the very last moment!
-				playsound(get_turf(src), sound_effect, 50, 1)
+				playsound(src, sound_effect, 50, 1)
 		SPAWN_DBG(5 SECONDS)
 			do_explode()
 
@@ -1582,7 +1653,7 @@ PIPE BOMBS + CONSTRUCTION
 							boutput(M, "<span class='alert'>You suddenly teleport ...</span>")
 							M.set_loc(warp_to)
 			if (rcd)
-				playsound(get_turf(src), "sound/items/Deconstruct.ogg", 70, 1)
+				playsound(src, "sound/items/Deconstruct.ogg", 70, 1)
 				for (var/turf/T in view(rcd,src.loc))
 					if (istype(T, /turf/space))
 						var/turf/simulated/floor/F = T:ReplaceWithFloor()

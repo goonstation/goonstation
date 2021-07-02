@@ -73,7 +73,7 @@
 		..()
 		if (!src.spam_flag_sound && src.clicknoise)
 			src.spam_flag_sound = 1
-			playsound(get_turf(user), "sound/items/penclick.ogg", 50, 1)
+			playsound(user, "sound/items/penclick.ogg", 50, 1)
 			if (!src.spam_flag_message)
 				src.spam_flag_message = 1
 				user.visible_message("<span style='color:#888888;font-size:80%'>[user] clicks [src].</span>")
@@ -379,12 +379,14 @@
 			else
 				src.font_color = random_saturated_hex_color(1)
 				src.color_name = hex2color_name(src.font_color)
+				src.color = src.font_color
 
 		write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
 			if (!T || !user || src.in_use || get_dist(T, user) > 1)
 				return
 			src.font_color = random_saturated_hex_color(1)
 			src.color_name = hex2color_name(src.font_color)
+			src.color = src.font_color
 			..()
 
 	custom_suicide = 1

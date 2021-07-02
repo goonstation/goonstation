@@ -9,6 +9,7 @@
 
 	var/static/list/product_name_cache = list(/obj/item/reagent_containers/mender/brute = "brute auto-mender", /obj/item/reagent_containers/mender/burn = "burn auto-mender")
 
+
 	New(productpath, amount=0, cost=0, hidden=0, logged_on_vend=FALSE)
 		..()
 		if (istext(productpath))
@@ -58,7 +59,8 @@
 	var/list/slogan_list = list()//new() //List of strings
 	var/list/product_list = new() //List of datum/data/vending_product
 	var/glitchy_slogans = 0 // do they come out aLL FunKY lIKe THIs?
-
+	/// For player vending machines
+	var/player_list
 	//Replies when buying
 	var/vend_reply //Thank you for shopping!
 	var/last_reply = 0
@@ -85,10 +87,11 @@
 	var/shoot_inventory_chance = 5
 	var/ai_control_enabled = 1
 
-	var/extended_inventory = 0 //can we access the hidden inventory?
-	var/can_fall = 1 //Can this machine be knocked over?
+	var/extended_inventory = FALSE //can we access the hidden inventory?
+	var/can_fall = TRUE //Can this machine be knocked over?
+	var/can_hack = TRUE //Can this machine have it's panel open?
 
-	var/panel_open = 0 //Hacking that vending machine. Gonna get a free candy bar.
+	var/panel_open = FALSE //Hacking that vending machine. Gonna get a free candy bar.
 	var/wires = 15
 
 	// Paid vendor variables
@@ -322,7 +325,7 @@
 		else
 			html_parts += "<B>Current ID:</B> None<BR>"
 
-	if (src.product_list.len == 0)
+	if (!length(src.product_list) && !length(src.player_list))
 		html_parts += "<font color = 'red'>No product loaded!</font>"
 
 	else if (src.paying_for)
@@ -338,7 +341,17 @@
 				html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.product_name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
 			else
 				html_parts += "<tr><td>[R.product_name]</a></td><td colspan='2' style='text-align: center;'><strong>SOLD OUT</strong></td></tr>"
-
+		if (player_list)
+			var/obj/machinery/vending/player/T = src
+			for (var/datum/data/vending_product/player_product/R in src.player_list)
+				var/obj/item/productholder = R.contents[1]
+				var/nextproduct = html_encode(sanitize(productholder.name))
+				if (!T.unlocked)
+					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[nextproduct]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
+					//Player vending machines don't have "out of stock" items
+				else if (T.unlocked)
+					//Links for setting prices when player vending machines are unlocked
+					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[nextproduct]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'><a href='byond://?src=\ref[src];setprice=\ref[R]'>$[R.product_cost]</a> (<a href='byond://?src=\ref[src];icon=\ref[R]'>*</a>)</td></tr>"
 		html_parts += "</table>";
 
 		if (src.pay)
@@ -377,6 +390,8 @@
 	src.wire_HTML = jointext(html_parts, "")
 
 /obj/machinery/vending/attackby(obj/item/W as obj, mob/user as mob)
+	if (istype(W,/obj/item/electronics/scanner) || istype(W,/obj/item/deconstructor)) // So people don't end up making the vending machines fall on them when they try to scan/deconstruct it
+		return
 	if (istype(W, /obj/item/spacecash))
 		if (src.pay)
 			src.credit += W.amount
@@ -411,7 +426,7 @@
 		else
 			boutput(user, "<span class='alert'>This machine does not accept ID cards.</span>")
 			return
-	else if (isscrewingtool(W))
+	else if (isscrewingtool(W) && (src.can_hack))
 		src.panel_open = !src.panel_open
 		boutput(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
 		src.UpdateOverlays(src.panel_open ? src.panel_image : null, "panel")
@@ -510,6 +525,7 @@
 		return
 
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
+		var/isplayer = 0
 		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 		if ((href_list["vend"]) && (src.vend_ready))
@@ -522,7 +538,9 @@
 			src.vend_ready = 0 //One thing at a time!!
 
 			var/datum/data/vending_product/R = locate(href_list["vend"]) in src.product_list
-
+			if (!R)
+				R = locate(href_list["vend"]) in src.player_list
+				isplayer = TRUE
 			if (!R || !istype(R))
 				src.vend_ready = 1
 				return
@@ -534,7 +552,7 @@
 			if (istext(product_path))
 				product_path = text2path(product_path)
 
-			if (!product_path)
+			if (!product_path && !isplayer)
 				src.vend_ready = 1
 				return
 
@@ -543,7 +561,7 @@
 				return
 
 			//Wire: Fix for href exploit allowing for vending of arbitrary items
-			if (!(R in src.product_list))
+			if (!(R in src.product_list) && !(R in src.player_list))
 				src.vend_ready = 1
 
 				trigger_anti_cheat(usr, "tried to href exploit [src] to spawn an invalid item.")
@@ -593,8 +611,21 @@
 					account.fields["current_money"] -= R.product_cost
 				else
 					src.credit -= R.product_cost
-				wagesystem.shipping_budget += round(R.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
-
+				if (!isplayer)
+					wagesystem.shipping_budget += round(R.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
+				else
+					//Players get 90% of profit from player vending machines QMs get 10%
+					var/obj/machinery/vending/player/T = src
+					T.owneraccount.fields["current_money"] += round(R.product_cost * profit)
+					wagesystem.shipping_budget += round(R.product_cost * (1 - profit))
+				if(R.product_amount <= 0 && !isplayer == 0)
+					src.player_list -= R
+			//Gotta do this before the SPAWN_DBG
+			var/obj/item/playervended
+			if (player_list)
+				var/datum/data/vending_product/player_product/T = R
+				playervended = T.contents[1]
+				T.contents -= playervended
 			SPAWN_DBG(src.vend_delay)
 				src.vend_ready = 1 // doin this at the top here just in case something goes fucky and the proc crashes
 
@@ -604,6 +635,9 @@
 					if(isitem(vended))
 						usr.put_in_hand_or_eject(vended) // try to eject it into the users hand, if we can
 					// else, just let it spawn where it is
+				else if (player_list)
+					playervended.layer = src.layer + 0.3 //To get over the CRT layer
+					usr.put_in_hand_or_eject(playervended)
 				else if (isicon(R.product_path))
 					var/icon/welp = icon(R.product_path)
 					if (welp.Width() > 32 || welp.Height() > 32)
@@ -628,7 +662,8 @@
 
 			if(R.logged_on_vend)
 				logTheThing("station", usr, null, "vended a logged product ([R.product_name]) from [src] at [log_loc(src)].")
-
+			if(player_list)
+				logTheThing("station", usr, null, "vended a player product ([R.product_name]) from [src] at [log_loc(src)].")
 		if (href_list["logout"])
 			src.scan = null
 			src.generate_HTML(1)
@@ -754,7 +789,7 @@
 	if (istype(victim) && vicTurf && (get_dist(vicTurf, src) <= 1))
 		victim.changeStatus("weakened", 30 SECONDS)
 		src.visible_message("<b><font color=red>[src.name] tips over onto [victim]!</font></b>")
-		victim.lying = 1
+		victim.force_laydown_standup()
 		victim.set_loc(vicTurf)
 		if (src.layer < victim.layer)
 			src.layer = victim.layer+1
@@ -1035,7 +1070,7 @@
 
 	create_products()
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/candy, 10, cost=PAY_UNTRAINED/20)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/candy/regular, 10, cost=PAY_UNTRAINED/20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/chips, 10, cost=PAY_UNTRAINED/15)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/donut, 10, cost=PAY_TRADESMAN/20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/fries, 10, cost=PAY_TRADESMAN/15)
@@ -1131,7 +1166,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer, 4)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_upgrade, 4)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_organ_upgrade, 3)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/medical_surgery_guide, 2)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/medical_surgery_guide, 2)
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/sulfonal, rand(1, 2), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/pancuronium, 1, hidden=1)
@@ -1215,7 +1250,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/implantcase/antirev, 3)
 		product_list += new/datum/data/vending_product(/obj/item/implanter, 1)
 #ifdef RP_MODE
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/space_law, 1)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/space_law, 1)
 #endif
 		product_list += new/datum/data/vending_product(/obj/item/device/flash/turbo, rand(1, 6), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, rand(1, 2), hidden=1) // Obtaining a backpack full of lethal ammo required no effort whatsoever, hence why nobody ordered AP speedloaders from the Syndicate (Convair880).
@@ -1241,7 +1276,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO,3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/flare, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/smoke, 3)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/pbr, 3)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/pbr, 5)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
@@ -1343,7 +1378,7 @@
 
 	create_products()
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/mechanicbook, 30)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/mechanicbook, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/andcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/association, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/math, 30)
@@ -1441,6 +1476,9 @@
 
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/security_progs, 2, cost=PAY_TRADESMAN/2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/communications, 2, cost=PAY_TRADESMAN, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/diskbox, rand(2,3), cost=PAY_UNTRAINED/2)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy, rand(5,8), cost=PAY_UNTRAINED/5)
+
 
 /obj/machinery/vending/pda //cogwerks: vendor to clean up the pile of PDA carts a bit
 	name = "CartyParty"
@@ -1504,18 +1542,17 @@
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/paper/engine, 2, cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/paper/Toxin, 2, cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/cookbook, 2, cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/dwainedummies, 2, cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/guardbot_guide, 2, cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/hydroponicsguide, 2, cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/monster_manual, 2, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/cookbook, 2, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/dwainedummies, 2, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/guardbot_guide, 2, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/hydroponicsguide, 2, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/monster_manual, 2, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/Cloning, 2, cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/medical_guide, 2, cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/minerals, 2, cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/player_piano, 2, cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/DNDrulebook, 2, cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/monster_manual_revised, 2, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/pharmacopia, 2, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/minerals, 2, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/player_piano, 2, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/DNDrulebook, 2, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/monster_manual_revised, 2, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/ai_programming_101, 2, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/captaining_101, 2, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/dealing_with_clonelieness, 2, cost=PAY_UNTRAINED/5)
@@ -1523,8 +1560,8 @@
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/fun_facts_about_shelterfrogs, 2, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/teg_guide, 2, cost=PAY_UNTRAINED/5)
 
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/the_trial, 1, cost=PAY_UNTRAINED/5, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/critter_compendium, 1, cost=PAY_UNTRAINED/5, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/the_trial, 1, cost=PAY_UNTRAINED/5, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/critter_compendium, 1, cost=PAY_UNTRAINED/5, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/syndies_guide, 1, cost=PAY_UNTRAINED/5, hidden=1)
 
 /obj/machinery/vending/kitchen
@@ -1532,9 +1569,9 @@
 	desc = "Food storage unit."
 	icon_state = "food"
 	icon_panel = "standard-panel"
-	icon_off = "standard-off"
-	icon_broken = "standard-broken"
-	icon_fallen = "standard-fallen"
+	icon_off = "food-off"
+	icon_broken = "food-broken"
+	icon_fallen = "food-fallen"
 	req_access_txt = "28"
 	acceptcard = 0
 
@@ -1587,6 +1624,426 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/breakfast, rand(2, 4), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/snack_cake, rand(1, 3), hidden=1)
 
+//The burden of these machinations weighs on my shoulders
+//And thus you will be burdened
+/datum/data/vending_product/player_product
+	var/contents
+	var/product_type
+	var/real_name
+	var/image/icon
+	var/label
+	product_amount = 1
+	New(obj/item/product,price)
+		. = ..()
+		contents = list()
+		if (!product)
+			return
+		product_type = product.type
+		product_name = product.name
+		real_name = product.real_name
+		contents += product
+		product_cost = price
+
+/obj/item/machineboard
+	name = "machine module"
+	desc = "A circuit board assembly used in the construction of machinery."
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "board1"
+	mats = 2
+	var/machinepath = null
+
+/obj/item/machineboard/vending
+	name = "vending machine module"
+	desc = "An assembly used in the construction of a vending machine."
+	machinepath = "/obj/machinery/vending/player"
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "base-module"
+
+/obj/item/machineboard/vending/player
+	icon_state = "player-module"
+
+/obj/item/machineboard/vending/monkeys
+	name = "Valuchimp module"
+	machinepath = "/obj/machinery/vending/monkey"
+	icon_state = "monkey-module"
+	mats = 0 //No!!
+
+/obj/machinery/vendingframe
+	name = "vending machine frame"
+	desc = "A generic vending machine frame."
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "standard-frame"
+	density = 1
+	var/wrenched = FALSE
+	var/glassed = FALSE
+	var/boardinstalled = FALSE
+	var/wiresinstalled = FALSE
+	var/vendingtype = null
+	var/basedesc
+	var/boarddesc
+	var/wiresdesc
+	var/glassdesc
+	var/readydesc
+	New()
+		. = ..()
+		basedesc = desc
+		boarddesc = "[desc] Seems to be missing the module, and everything else."
+		wiresdesc = "[desc] Nothing has been wired up."
+		glassdesc = "[desc] Isn't there usually glass?"
+		readydesc = "[desc] Just needs a few screws tightened."
+
+	proc/setFrameState(state, mob/user, obj/item/target)
+		if (state == "WRENCHED")
+			wrenched = TRUE
+			anchored = TRUE
+			desc = boarddesc
+			boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
+		else if (state == "UNWRENCHED")
+			wrenched = FALSE
+			anchored = FALSE
+			desc = basedesc
+			boutput(user, "<span class='notice'>You unfasten the frame.</span>")
+		else if (state == "BOARDINSTALLED")
+			var/obj/item/machineboard/vending/V = target
+			vendingtype = V.machinepath
+			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			icon_state = "standard-frame-electronics"
+			desc = wiresdesc
+			boutput(user, "<span class='notice'>You install the module inside the frame.</span>")
+			user.u_equip(target)
+			target.set_loc(target)
+			boardinstalled = TRUE
+		else if (state == "WIRESINSTALLED")
+			var/obj/item/cable_coil/targetcoil = target
+			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			targetcoil.use(5)
+			wiresinstalled = TRUE
+			icon_state = "standard-frame-wired"
+			desc = glassdesc
+			boutput(user, "<span class='notice'>You add cables to the frame.</span>")
+		else if (state == "GLASSINSTALLED")
+			var/obj/item/sheet/glass/S = target
+			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			S.change_stack_amount(-2)
+			glassed = TRUE
+			icon_state = "standard-frame-glassed"
+			desc = readydesc
+			boutput(user, "<span class='notice'>You put in the glass panel.</span>")
+		else if (state == "GLASSREMOVED")
+			var/obj/item/sheet/glass/A = new /obj/item/sheet/glass(src.loc)
+			A.amount = 2
+			glassed = FALSE
+			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			icon_state = "standard-frame-wired"
+			desc = glassdesc
+			boutput(user, "<span class='notice'>You remove the glass panel.</span>")
+		else if (state == "BOARDREMOVED")
+			icon_state = "standard-frame"
+			desc = boarddesc
+			boutput(user, "<span class='notice'>You remove the vending module.</span>")
+			var/obj/item/machineboard/vending/E = locate()
+			E.set_loc(src.loc)
+			boardinstalled = FALSE
+		else if (state == "WIRESREMOVED")
+			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
+			icon_state = "standard-frame-electronics"
+			desc = wiresdesc
+			boutput(user, "<span class='notice'>You remove the cables.</span>")
+			var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
+			C.amount = 5
+			C.updateicon()
+			wiresinstalled = FALSE
+		else if (state == "DECONSTRUCTED")
+			boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
+			var/obj/item/sheet/A = new /obj/item/sheet(src.loc)
+			A.amount = 3
+			if (src.material)
+				A.setMaterial(src.material)
+			else
+				var/datum/material/M = getMaterial("steel")
+				A.setMaterial(M)
+			qdel(src)
+		else
+			setFrameState("UNWRENCHED")
+			CRASH("Invalid state \"[state]\" set in [src] construction process at [log_loc(src)]")
+
+	attackby(obj/item/target, mob/user)
+		if (iswrenchingtool(target))
+			if (!wrenched)
+				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
+				list("WRENCHED", user), target.icon, target.icon_state, null, null)
+			else if (!boardinstalled && wrenched)
+				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
+				list("UNWRENCHED", user), target.icon, target.icon_state, null, null)
+		else if (istype(target, /obj/item/machineboard/vending))
+			if (wrenched && !boardinstalled)
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
+				list("BOARDINSTALLED", user, target), target.icon, target.icon_state, null, null)
+		else if (istype(target, /obj/item/cable_coil) && boardinstalled && !wiresinstalled)
+			var/obj/item/cable_coil/targetcoil = target
+			if (targetcoil.amount >= 5)
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
+				list("WIRESINSTALLED", user, target), target.icon, target.icon_state, null, null)
+			else if (!wiresinstalled && boardinstalled)
+				boutput(user, "<span class='alert'>You need at least five pieces of cable to wire the vending machine.</span>")
+		else if (istype(target, /obj/item/sheet) && wiresinstalled && !glassed)
+			var/obj/item/sheet/glass/S = target
+			if (!(S.material && S.amount >= 2))
+				return
+			setFrameState("GLASSINSTALLED", user, target)
+		else if (isscrewingtool(target) && glassed)
+			boutput(user, "<span class='notice'>You connect the screen.</span>")
+			var/obj/machinery/vending/B = new vendingtype(src.loc)
+			logTheThing("station", user, null, "assembles [B] [log_loc(B)]")
+			qdel(src)
+		else if (ispryingtool(target))
+			if (glassed)
+				setFrameState("GLASSREMOVED", user)
+			else if (!wiresinstalled && boardinstalled)
+				setFrameState("BOARDREMOVED", user)
+		else if (issnippingtool(target) && wiresinstalled && !glassed)
+			setFrameState("WIRESREMOVED", user)
+		else if (isweldingtool(target) && !wrenched)
+			var/obj/item/weldingtool/T = target
+			if (T.try_weld(user,0,-1,0,1))
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
+				list("DECONSTRUCTED", user, target), target.icon, target.icon_state, null, null)
+		else . = ..()
+
+/obj/machinery/vending/player
+	name = "Build-A-Vend" // Thanks Eagletanker
+	icon_state = "player"
+	desc = "A vending machine offering presumably legal goods sold by other crewmembers."
+	pay = 1
+	layer = OBJ_LAYER - 0.3
+	//Product loading chute
+	var/loading = FALSE
+	var/unlocked = FALSE
+	//Registered owner
+	var/owner = null
+	//card display name
+	var/cardname
+	//Bank account
+	var/datum/data/record/owneraccount = null
+	var/image/crtoverlay = null
+	var/image/promoimage = null
+	player_list = list()
+
+	New()
+		. = ..()
+		crtoverlay = SafeGetOverlayImage("screen", src.icon, "player-crt")
+		crtoverlay.layer = src.layer + 0.2
+		crtoverlay.plane = PLANE_DEFAULT
+		//These stop the overlay from being selected instead of the item by your mouse?
+		crtoverlay.appearance_flags = NO_CLIENT_COLOR
+		crtoverlay.mouse_opacity = 0
+		updateAppearance()
+
+	proc/pick_product_name()
+		var/datum/data/vending_product/player_product/R = pick(src.player_list)
+		var/itemPromo = sanitize(html_encode(R.product_name))
+		return itemPromo
+
+	proc/generate_slogans()
+		if (!length(player_list) <= 0)
+			slogan_list = list("By popular demand: [pick_product_name()]!",
+		"[src.name]. The better vending machine.",
+		"Potentially well stocked!",
+		"Buy my stuff!",
+		"Don't miss out on [pick_product_name()]!",
+		"[src.name]. What else were you going to buy?",
+		"New and improved [pick_product_name()]!")
+
+	proc/getScaledIcon(obj/item/target)
+		var/image/itemoverlay = null
+		itemoverlay = SafeGetOverlayImage(null, target, target.icon_state)
+		itemoverlay.transform = matrix(null, 0.45, 0.45, MATRIX_SCALE)
+		itemoverlay.pixel_x = -3
+		itemoverlay.pixel_y = -4
+		itemoverlay.layer = src.layer + 0.1
+		itemoverlay.plane = PLANE_DEFAULT
+		return itemoverlay
+
+	proc/updateAppearance()
+		if (status & BROKEN)
+			setCrtOverlayStatus(FALSE)
+			setItemOverlay(null)
+			return FALSE
+		else if (powered())
+			setCrtOverlayStatus(TRUE)
+			if (promoimage)
+				icon_state = "[initial(icon_state)]-display"
+				setItemOverlay(promoimage)
+			else
+				icon_state = initial(icon_state)
+		else
+			setCrtOverlayStatus(FALSE)
+			setItemOverlay(null)
+			return FALSE
+
+	proc/setItemOverlay(image/target)
+		UpdateOverlays(null, "item", 1, 1)
+		UpdateOverlays(target, "item", 0, 1)
+
+	proc/setCrtOverlayStatus(status)
+		if (status)
+			UpdateOverlays(crtoverlay, "screen", 0, 1)
+		else
+			UpdateOverlays(null, "screen", 0, 1)
+
+	proc/addProduct(obj/item/target, mob/user)
+		var/obj/item/storage/targetContainer = target
+		if (!istype(targetContainer))
+			productListUpdater(target, user)
+			user.visible_message("<b>[user.name]</b> loads [target] into [src].")
+			return
+		var/action = input(user, "What do you want to do with [targetContainer]?") as null|anything in list("Empty it into the vending machine","Place it in the vending machine")
+		var/cantuse
+		if (action)
+			cantuse = ((isdead(user) || !can_act(user) || !in_interact_range(src, user)))
+		if (action == "Place it in the vending machine" && !cantuse)
+			productListUpdater(target, user)
+			user.visible_message("<b>[user.name]</b> loads [target] into [src].")
+			return
+		else if (cantuse || !action)
+			return
+		user.visible_message("<b>[user.name]</b> dumps out [targetContainer] into [src].")
+		for (var/obj/item/R in targetContainer)
+			targetContainer.hud.remove_object(R)
+			productListUpdater(R, user)
+		generate_HTML(1, 0)
+
+	proc/productListUpdater(obj/item/target, mob/user)
+		if (!target)
+			return
+		user.u_equip(target)
+		target.set_loc(src)
+		target.layer = (initial(target.layer))
+		var/existed = FALSE
+		//Finds items that have been labeled
+		var/regex/labelFinder = new("\\*? \\(.*?\\)")
+		//Extracts label contents via regex replace
+		var/regex/labelExtractor = new("(?:.*?\\()(.*?)\\)")
+		var/label = null
+		if ((target.real_name != target.name) && labelFinder.Find(target.name))
+			label = labelExtractor.Replace(target.name, "$1")
+		//Add the item to an existing entry if there is one
+		for (var/datum/data/vending_product/player_product/R in src.player_list)
+			if (label && label == R.label)
+				R.contents += target
+				R.product_amount += 1
+				existed = TRUE
+				break
+			else if (istype(target,R.product_type) && R.real_name == target.real_name)
+				R.contents += target
+				R.product_amount += 1
+				existed = TRUE
+				break
+		if (!existed)
+			var/datum/data/vending_product/player_product/itemEntry = new/datum/data/vending_product/player_product(target, 15)
+			itemEntry.icon = getScaledIcon(target)
+			player_list += itemEntry
+			if (label) itemEntry.label = label
+			logTheThing("station", user, null, "added player product ([target.name]) to [src] at [log_loc(src)].")
+			generate_slogans()
+
+	power_change()
+		. = ..()
+		updateAppearance()
+
+	process()
+		. = ..()
+		//Don't update if we're working, always handle that in power_change()
+		if ((status & BROKEN) || status & NOPOWER)
+			updateAppearance()
+
+	generate_wire_HTML()
+		. = ..()
+		var/list/html_parts = list()
+		html_parts += "<table border=\"1\" style=\"width:100%\"><tbody><tr><td><small>"
+		html_parts += "Registered Owner: "
+		if (!owner)
+			html_parts += "<a href='?src=\ref[src];unlock=true'>Unregistered (locked)</a></br>"
+		else
+			html_parts += "<a href='?src=\ref[src];unlock=true'>[src.cardname] "
+			if (!unlocked) html_parts += "(locked) </a></br>"
+			else html_parts += "(unlocked) </a></br>"
+		html_parts += "Loading Chute:  "
+		if (loading)
+			html_parts += "<a href='?src=\ref[src];loading=false'>Open</a></br> "
+		else
+			html_parts += "<a href='?src=\ref[src];loading=true'>Closed</a></br> "
+		html_parts += "Vendor Name:  "
+		html_parts += "<a href='?src=\ref[src];rename=true'>[src.name]</a> "
+		html_parts += "</small></td></tr></tbody></table></TT><br>"
+		src.wire_HTML += jointext(html_parts, "")
+
+	attackby(obj/item/target, mob/user)
+		if (loading && panel_open)
+			addProduct(target, user)
+		else
+			. = ..()
+		if (!panel_open) //lock up if the service panel is closed
+			loading = FALSE
+			unlocked = FALSE
+		src.generate_HTML(1)
+
+	Topic(href, href_list)
+		. = ..()
+		if (updateAppearance()) //updateAppearance returns FALSE if we're broken/off
+			return
+		if ((isdead(usr) || !can_act(usr) || !in_interact_range(src, usr)))
+			return
+
+		if (href_list["loading"])
+			if (src.panel_open && src.unlocked)
+				loading = !loading
+				src.generate_HTML(0, 1)
+		else if (href_list["unlock"] && src.panel_open)
+			if (!owner && src.scan?.registered)
+				owneraccount = FindBankAccountByName(src.scan.registered)
+				owner = src.scan.registered
+				cardname = src.scan.name
+				unlocked = TRUE
+				loading = TRUE
+			else if (src.scan?.registered && owner == src.scan.registered)
+				unlocked = !unlocked
+				if (!unlocked && loading) loading = FALSE
+			else
+				unlocked = FALSE
+				loading = FALSE
+			src.generate_HTML(0, 1)
+		else if (href_list["rename"] && src.panel_open && src.unlocked)
+			var/inp
+			inp = html_encode(sanitize(input(usr,"Enter new name:","Vendor Name", "") as text))
+			if (inp && inp != "" && !(isdead(usr) || !can_act(usr) || !in_interact_range(src, usr)))
+				src.name = inp
+				src.generate_HTML(0, 1)
+				generate_slogans()
+		else if (href_list["setprice"] && src.panel_open && src.unlocked)
+			var/inp
+			inp = input(usr,"Enter the new price:","Item Price", "") as num
+			if (inp && inp >= 0 && !(isdead(usr) || !can_act(usr) || !in_interact_range(src, usr)))
+				var/datum/data/vending_product/player_product/R = locate(href_list["setprice"]) in src.player_list
+				R.product_cost = inp
+				src.generate_HTML(1, 0)
+		else if (href_list["vend"] && !length(player_list))
+			promoimage = null
+			updateAppearance()
+		else if (href_list["icon"] && src.panel_open && src.unlocked)
+			var/datum/data/vending_product/player_product/R = locate(href_list["icon"]) in src.player_list
+			promoimage = R.icon
+			updateAppearance()
+		if (href_list["vend"])
+			//Vends can change the name of list entries so generate HTML
+			src.generate_HTML(1, 0)
+
+/obj/machinery/vending/player/fallen
+	New()
+		. = ..()
+		src.fall()
 //Somewhere out in the vast nothingness of space, a chef (and an admin) is crying.
 
 /obj/machinery/vending/pizza
@@ -1716,7 +2173,9 @@
 		..()
 		product_list += new/datum/data/vending_product(/mob/living/carbon/human/npc/monkey, rand(10, 15), logged_on_vend=TRUE)
 
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/monkey_translator, rand(1,2), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/banana, rand(1,20), hidden=1)
+
 
 /obj/machinery/vending/magivend
 	name = "MagiVend"
@@ -2066,7 +2525,7 @@
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/paper/yachtdice, 20, cost=PAY_UNTRAINED/8)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/grifening, 10, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/grifening, 10, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/stg_box, 5, cost=PAY_UNTRAINED/2)
 		product_list += new/datum/data/vending_product(/obj/item/stg_booster, 20, cost=PAY_UNTRAINED/10)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/plain, 10, cost=PAY_UNTRAINED/5)
@@ -2074,8 +2533,8 @@
 		product_list += new/datum/data/vending_product(/obj/item/card_box/hanafuda, 5, cost=PAY_TRADESMAN/2)
 		product_list += new/datum/data/vending_product(/obj/item/card_box, 5, cost=PAY_UNTRAINED/4)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/red, 5, cost=PAY_UNTRAINED/4)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/DNDrulebook, 2, cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/monster_manual_revised, 2, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/DNDrulebook, 2, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/monster_manual_revised, 2, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/diceholder/dicebox, 5, cost=PAY_TRADESMAN/2)
 		product_list += new/datum/data/vending_product(/obj/item/storage/dicepouch, 5, cost=PAY_TRADESMAN/3)
 		product_list += new/datum/data/vending_product(/obj/item/diceholder/dicecup, 5, cost=PAY_TRADESMAN/10)
@@ -2185,3 +2644,132 @@
 
 		product_list += new/datum/data/vending_product(/obj/item/sponge/cheese, 2, hidden=1)
 
+/obj/machinery/vending/air_vendor
+	name = "Oxygen Vending Machine"
+	desc = "Here, you can buy the oxygen that you need to live."
+	icon_state = "O2vend"
+	icon_panel = "O2vend-panel"
+	icon_off = "O2vend-off"
+	icon_broken = "O2vend-broken"
+	icon_fallen = "O2vend-fallen"
+	deconstruct_flags = DECON_CROWBAR | DECON_WRENCH | DECON_MULTITOOL
+	can_hack = FALSE
+	pay = TRUE
+	acceptcard = TRUE
+	vend_delay = 0
+	slogan_list = list("Come get a breath of fresh air",
+	"You NEED this to live!.",
+	"Breathing is GOOD!",
+	"Contains only 2% farts!")
+	var/global/image/holding_overlay_image = image('icons/obj/vending.dmi', "O2vend-slot")
+
+	// Currently installed tank
+	var/obj/item/tank/holding = null
+
+	// Gas mix to be copied into the target tank
+	var/datum/gas_mixture/gas_prototype = null
+
+	var/target_pressure = ONE_ATMOSPHERE
+	var/air_cost = 0.1 // units: credits / ( kPa * L )
+
+	light_r =0.4
+	light_g = 0.4
+	light_b = 1
+
+	New()
+		..()
+		gas_prototype = unpool(/datum/gas_mixture)
+
+	proc/fill_cost()
+		if(!holding) return 0
+		return clamp(round((src.target_pressure - MIXTURE_PRESSURE(src.holding.air_contents)) * src.holding.air_contents.volume * src.air_cost), 0, INFINITY)
+
+	proc/fill()
+		if(!holding) return
+		gas_prototype.volume = holding.air_contents.volume
+		gas_prototype.temperature = T20C
+
+		gas_prototype.oxygen = (target_pressure)*gas_prototype.volume/(R_IDEAL_GAS_EQUATION*gas_prototype.temperature)
+
+		holding.air_contents.copy_from(gas_prototype)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/tank))
+			if (!src.holding)
+				boutput(user, "You insert the [W] into the the [src].</span>")
+				UpdateOverlays(holding_overlay_image, "o2_vend_tank_overlay")
+				user.drop_item()
+				W.set_loc(src)
+				src.holding = W
+				src.updateUsrDialog()
+			else
+				boutput(user, "You try to insert the [W] into the the [src], but there's already a tank there!</span>")
+				return
+		else
+			..()
+
+	attack_hand(mob/user as mob)
+		if (status & (BROKEN|NOPOWER))
+			return
+		if (usr.stat || usr.restrained())
+			return
+
+		src.add_dialog(user)
+		var/html = ""
+		html += "<TT><b>Welcome!</b><br>"
+		html += "<b>Current balance: <a href='byond://?src=\ref[src];return_credits=1'>[src.credit] credits</a></b><br>"
+		if (src.scan)
+			var/datum/data/record/account = null
+			account = FindBankAccountByName(src.scan.registered)
+			html += "<b>Current ID:</b> <a href='?src=\ref[src];logout=1'>[src.scan]</a><br />"
+			html += "<b>Credits on Account: [account.fields["current_money"]] Credits</b> <br>"
+		else
+			html += "<b>Current ID:</b> None<br>"
+		if(src.holding)
+			html += "<font color = 'blue'>Current tank:</font> <a href='?src=\ref[src];eject=1'>[holding]</a><br />"
+			html += "<font color = 'red'>Pressure:</font> [MIXTURE_PRESSURE(holding.air_contents)] kPa<br />"
+		else
+			html += "<font color = 'blue'>Current tank:</font> none<br />"
+
+		html += "<font color = 'green'>Desired pressure:</font> <a href='?src=\ref[src];changepressure=1'>[src.target_pressure] kPa</a><br/>"
+		html += (holding) ? "<a href='?src=\ref[src];fill=1'>Fill ([src.fill_cost()] credits)</a>" : "<font color = 'red'>Fill (unavailable)</red>"
+
+		user.Browse(html, "window=o2_vending")
+		onclose(user, "vending")
+
+	Topic(href, href_list)
+		..()
+
+		if(href_list["eject"])
+			if(holding)
+				usr.put_in_hand_or_eject(holding)
+				holding = null
+				UpdateOverlays(null, "o2_vend_tank_overlay")
+				src.updateUsrDialog()
+
+		if(href_list["changepressure"])
+			var/change = input(usr,"Target Pressure (10.1325-1013.25):","Enter target pressure",target_pressure) as num
+			if(isnum(change))
+				target_pressure = min(max(10.1325, change),1013.25)
+				src.updateUsrDialog()
+
+		if(href_list["fill"])
+			if (holding)
+				var/cost = fill_cost()
+				if(credit >= cost)
+					src.credit -= cost
+					src.fill()
+					boutput(usr, "<span class='notice'>You fill up the [src.holding].</span>")
+					src.updateUsrDialog()
+					return
+				else if(scan)
+					var/datum/data/record/account = FindBankAccountByName(src.scan.registered)
+					if (account && account.fields["current_money"] >= cost)
+						account.fields["current_money"] -= cost
+						src.fill()
+						boutput(usr, "<span class='notice'>You fill up the [src.holding].</span>")
+						src.updateUsrDialog()
+						return
+				boutput(usr, "<span class='alert'>Insufficient funds.</span>")
+			else
+				boutput(usr, "<span class='alert'>There is no tank to fill up!</span>")

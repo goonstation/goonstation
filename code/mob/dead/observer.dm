@@ -10,7 +10,6 @@
 	canmove = 1
 	blinded = 0
 	anchored = 1	//  don't get pushed around
-	var/invisibility_old = 0
 	var/mob/corpse = null	//	observer mode
 	var/observe_round = 0
 	var/health_shown = 0
@@ -74,7 +73,7 @@
 	// heres a thought: maybe ghostize() could look for your ghost or smth
 	// and put you in it instead of just making a new one.
 	// idk this codebase is an eldritch horror and i dont wanna try rn
-	src.invisibility = src.invisibility_old
+	REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, "clientless")
 
 
 /mob/dead/observer/point_at(var/atom/target)
@@ -104,9 +103,9 @@
 	if (!P.AH)
 		return
 
-	var/cust_one_state = customization_styles[P.AH.customization_first]
-	var/cust_two_state = customization_styles[P.AH.customization_second]
-	var/cust_three_state = customization_styles[P.AH.customization_third]
+	var/cust_one_state = P.AH.customization_first.id
+	var/cust_two_state = P.AH.customization_second.id
+	var/cust_three_state = P.AH.customization_third.id
 
 	var/image/hair = image('icons/mob/human_hair.dmi', cust_one_state)
 	hair.color = P.AH.customization_first_color
@@ -223,8 +222,7 @@
 
 /mob/dead/observer/New(mob/corpse)
 	. = ..()
-	src.invisibility = 10
-	src.invisibility_old = 10
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	src.see_invisible = 16
 	src.see_in_dark = SEE_DARK_FULL
@@ -354,17 +352,17 @@
 		O.overlays += glass
 
 	if (src.bioHolder) //Not necessary for ghost appearance, but this will be useful if the ghost decides to respawn as critter.
-		var/image/hair = image('icons/mob/human_hair.dmi', cust_one_state)
+		var/image/hair = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_first.id)
 		hair.color = src.bioHolder.mobAppearance.customization_first_color
 		hair.alpha = 192
 		O.overlays += hair
 
-		var/image/beard = image('icons/mob/human_hair.dmi', src.cust_two_state)
+		var/image/beard = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_second.id)
 		beard.color = src.bioHolder.mobAppearance.customization_second_color
 		beard.alpha = 192
 		O.overlays += beard
 
-		var/image/detail = image('icons/mob/human_hair.dmi', src.cust_three_state)
+		var/image/detail = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_third.id)
 		detail.color = src.bioHolder.mobAppearance.customization_third_color
 		detail.alpha = 192
 		O.overlays += detail
@@ -376,7 +374,7 @@
 		O.wig.setMaterial(wigmat)
 		O.wig.name = "[O.name]'s hair"
 		O.wig.icon = 'icons/mob/human_hair.dmi'
-		O.wig.icon_state = cust_one_state
+		O.wig.icon_state = src.bioHolder.mobAppearance.customization_first.id
 		O.wig.color = src.bioHolder.mobAppearance.customization_first_color
 		O.wig.wear_image_icon = 'icons/mob/human_hair.dmi'
 		O.wig.wear_image = image(O.wig.wear_image_icon, O.wig.icon_state)
@@ -460,8 +458,7 @@
 		// but that's way too much effort to fix and i do not feel like debugging
 		// 2000 different "use after free" issues.
 		// so. your ghost doesnt go away. it just, uh. it takes a break for a while.
-		src.invisibility_old = src.invisibility
-		src.invisibility = 101
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_ALWAYS)
 	return
 
 /mob/dead/observer/Move(NewLoc, direct)

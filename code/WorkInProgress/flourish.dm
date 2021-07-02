@@ -1,6 +1,7 @@
 /obj/item/device/ticket_writer/odd
 	name = "Security TicketWriter 3000"
 	desc = "This new and improved edition features upgraded hardware and extra crime-deterring features."
+	icon_state = "ticketwriter-odd"
 
 	ticket(mob/user)
 		var/target_key = ..()

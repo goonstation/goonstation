@@ -123,6 +123,14 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	frame_path = /obj/machinery/ai_status_display
 
+/datum/manufacture/mechanics/gunbot
+	name = "Security Robot"
+	item_paths = list("POW-1","MET-2","CON-1")
+	item_amounts = list(1,10,10,10)
+	frame_path = /obj/critter/gunbot/heavy
+	time = 15 SECONDS
+	create = 1
+
 /*
 /datum/manufacture/iron
 	// purely a test
@@ -598,11 +606,11 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 
 ////////////////////////////////
 
-/datum/manufacture/circuit_board
-	name = "Circuit Board"
+/datum/manufacture/player_module
+	name = "Vending Module"
 	item_paths = list("CON-1")
 	item_amounts = list(2)
-	item_outputs = list(/obj/item/electronics/board)
+	item_outputs = list(/obj/item/machineboard/vending/player)
 	time = 5 SECONDS
 	create = 1
 	category = "Component"
@@ -620,22 +628,8 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A,var/list/materials)
 		..()
 		var/obj/item/cable_coil/coil = A
-		var/min_cond = 1
-		var/max_cond = 0
-		var/min_cond_mat = null
-		var/max_cond_mat = null
-		for (var/pattern in materials)
-			var/datum/material/cand = getMaterial(materials[pattern])
-			if (!cand)
-				continue
-			if (cand.getProperty("electrical") < min_cond)
-				min_cond = cand.getProperty("electrical")
-				min_cond_mat = cand
-			else if (cand.getProperty("electrical") > max_cond)
-				max_cond = cand.getProperty("electrical")
-				max_cond_mat = cand
-		coil.setInsulator(min_cond_mat)
-		coil.setConductor(max_cond_mat)
+		coil.setInsulator(getMaterial(materials["INS-1"]))
+		coil.setConductor(getMaterial(materials["CON-1"]))
 		return 1
 
 /datum/manufacture/RCD
@@ -2224,6 +2218,15 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/scrub/pink)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/medical_backpack
+	name = "Medical Backpack"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/storage/backpack/medic)
 	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
