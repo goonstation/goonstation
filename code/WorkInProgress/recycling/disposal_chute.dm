@@ -631,8 +631,8 @@
 
 
 /datum/action/bar/icon/shoveMobIntoChute
-	duration = 0.4 SECONDS
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACT
+	duration = 0.2 SECONDS
+	interrupt_flags =  INTERRUPT_STUNNED | INTERRUPT_ACT
 	id = "shoveMobIntoChute"
 	icon = 'icons/obj/disposal.dmi'
 	icon_state = "shoveself-disposal" //varies, see below
@@ -696,8 +696,7 @@
 			if (msg)
 				chute.visible_message(msg)
 
-			if (target == user && !istype(chute,/obj/machinery/disposal/transport))
-				chute.ui_interact(user)
+			chute.ui_interact(user)
 
 			chute.update()
 		..()
