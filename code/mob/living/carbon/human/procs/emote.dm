@@ -291,7 +291,7 @@
 					G.throw_at(target,5,1)
 					src.visible_message("<b>[src]</B> farts out a...glowstick?")
 
-			if ("salute","saluteto","bow","hug","wave","waveto","blowkiss","sidehug")
+			if ("salute","saluteto","bow","hug","wave","waveto","blowkiss","sidehug","fingerguns")
 				// visible targeted emotes
 				if (!src.restrained())
 					var/M = null
@@ -316,6 +316,8 @@
 									action_phrase = "wave to"
 								if("blowkiss")
 									action_phrase = "to whom you'll blow a [prob(1) ? "smooch" : "kiss"]"
+								if("fingerguns")
+									action_phrase = "point finger guns at"
 							M = tgui_input_list(src, "Pick something to [action_phrase]!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 							if (M && (range > 1 && !IN_RANGE(get_turf(src), get_turf(M), range)) || (range == 1 && !in_interact_range(src, M)) )
 								var/inaction_phrase = "emote upon"
@@ -353,6 +355,9 @@
 								maptext_out = "<I>blows a kiss to [M]</I>"
 								//var/atom/U = get_turf(param)
 								//shoot_projectile_ST(src, new/datum/projectile/special/kiss(), U) //I gave this all of 5 minutes of my time I give up
+							if ("fingerguns")
+								message = "<B>[src]</B> points finger guns at [M]!"
+								maptext_out = "<I>points finger guns at [M]!</I>"
 							else
 								message = "<B>[src]</B> [act]s [M]."
 								maptext_out = "<I>[act]s [M]</I>"
@@ -364,6 +369,9 @@
 							if ("blowkiss")
 								message = "<B>[src]</b> blows a kiss to... [himself_or_herself(src)]?"
 								maptext_out = "<I> blows a kiss to... [himself_or_herself(src)]?</I>"
+							if ("fingerguns")
+								message = "<B>[src]</b> points finger guns at... [himself_or_herself(src)]?"
+								maptext_out = "<I> points finger guns at... [himself_or_herself(src)]?</I>"
 							else
 								message = "<B>[src]</b> [act]s."
 								maptext_out = "<I>[act]s [M]</I>"
