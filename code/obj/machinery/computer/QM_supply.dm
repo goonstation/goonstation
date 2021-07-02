@@ -160,9 +160,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	return 1
 
 /obj/machinery/computer/supplycomp/attackby(I as obj, mob/user as mob)
-	if(istype(I,/obj/item/card/emag))
+	if(!istype(I,/obj/item/card/emag))
 		//I guess you'll wanna put the emag away now instead of getting a massive popup
-	else
 		..()
 
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
