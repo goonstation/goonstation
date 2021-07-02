@@ -512,9 +512,17 @@
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/sandwich/eggsalad
 
-/datum/cookingrecipe/sandwich_bm
+/datum/cookingrecipe/sandwich_bm //Original banh mi recipe
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
 	item2 = /obj/item/reagent_containers/food/snacks/breadloaf/honeywheat
+	item3 = /obj/item/reagent_containers/food/snacks/plant/carrot
+	item4 = /obj/item/reagent_containers/food/snacks/plant/cucumber
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/sandwich/banhmi
+
+/datum/cookingrecipe/sandwich_bmalt //Secondary recipe that uses the baguette
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
+	item2 = /obj/item/baguette
 	item3 = /obj/item/reagent_containers/food/snacks/plant/carrot
 	item4 = /obj/item/reagent_containers/food/snacks/plant/cucumber
 	cookbonus = 12
@@ -1595,3 +1603,25 @@
 			lipstick.name = "[lipstick.color_name] lipstick"
 			lipstick.update_icon()
 		return lipstick
+
+// Some pastries and breads
+
+/datum/cookingrecipe/baguette
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_strip
+	amt1 = 2
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/flour
+	cookbonus = 7
+	output = /obj/item/baguette
+
+/datum/cookingrecipe/painauchocolat
+	item1 = /obj/item/reagent_containers/food/snacks/condiment/chocchips
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	cookbonus = 13
+	output = /obj/item/reagent_containers/food/snacks/painauchocolat
+
+/datum/cookingrecipe/croissant
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
+	cookbonus = 13
+	output = /obj/item/reagent_containers/food/snacks/croissant

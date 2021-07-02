@@ -387,6 +387,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/sandwich_mb(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_egg(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_bm(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_bmalt(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_m_h(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_m_m(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_m_s(src)
@@ -527,6 +528,9 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/sushi_roll(src)
 			src.recipes += new /datum/cookingrecipe/nigiri_roll(src)
 			src.recipes += new /datum/cookingrecipe/porridge(src)
+			src.recipes += new /datum/cookingrecipe/baguette(src)
+			src.recipes += new /datum/cookingrecipe/painauchocolat(src)
+			src.recipes += new /datum/cookingrecipe/croissant(src)
 			// Put all single-ingredient recipes after this point
 			src.recipes += new /datum/cookingrecipe/pizza(src)
 			src.recipes += new /datum/cookingrecipe/cake_custom_item(src)

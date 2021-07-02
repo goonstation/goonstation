@@ -2525,3 +2525,21 @@
 		..()
 		reagents.add_reagent("epinephrine",8)
 		reagents.add_reagent("synaptizine",8)
+
+/obj/item/reagent_containers/food/snacks/croissant
+	name = "croissant"
+	desc = "Flakey and buttery. Often eaten for breakfast."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "croissant"
+	amount = 2
+	heal_amt = 2
+	food_effects = list("food_brute")
+
+/obj/item/reagent_containers/food/snacks/painauchocolat
+	name = "pain au chocolat"
+	desc = "A delicious little parcel of pastry and chocolate."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "painauchoc"
+	amount = 2
+	heal_amt = 2
+	food_effects = list("food_hp_up","food_energized")

@@ -351,3 +351,53 @@
 		..()
 		src.pixel_x += rand(-3,3)
 		src.pixel_y += rand(-3,3)
+
+/obj/item/baguette
+	name = "baguette"
+	icon = 'icons/obj/foodNdrink/food_bread.dmi'
+	icon_state = "baguette"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	throwforce = 1
+	w_class = W_CLASS_NORMAL
+	throw_speed = 4
+	throw_range = 5
+	desc = "A crusty, long stick of bread. Hon hon hon, oui oui! Needs to be sliced before eating."
+	stamina_damage = 5
+	stamina_cost = 1
+	var/slicetype = /obj/item/reagent_containers/food/snacks/breadslice
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_SETUP(BLOCK_ROD)
+
+//	attackby(obj/item/W as obj, mob/user as mob)
+//		if (src == target) // :I
+//			boutput(src, "<span class='alert'>TEST TEST TEST TEST!</span>")
+//			return
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/knife/butcher))
+			if(user.bioHolder.HasEffect("clumsy") && prob(50))
+				user.visible_message("<span class='alert'><b>[user]</b> fumbles and jabs \himself in the eye with [W].</span>")
+				user.change_eye_blurry(5)
+				user.changeStatus("weakened", 3 SECONDS)
+				JOB_XP(user, "Clown", 2)
+				return
+
+			var/turf/T = get_turf(src)
+			user.visible_message("[user] cuts [src] into slices. Magnifique!", "You cut [src] into slices. Magnifique!")
+			var/makeslices = 6
+			while (makeslices > 0)
+				new slicetype (T)
+				makeslices -= 1
+			qdel (src)
+		else ..()
+
+	custom_suicide = 1
+	suicide(var/mob/user as mob)
+		if (!src.user_can_suicide(user))
+			return 0
+		user.visible_message("<span class='alert'><b>[user] attempts to beat [him_or_her(user)]self to death with the baguette, oui oui, but fails! Hon hon hon!</b></span>")
+		user.suiciding = 0
+		return 1
