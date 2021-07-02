@@ -10,5 +10,5 @@
 		if(src.client)
 			for(var/turf/T in landmarks[LANDMARK_SHIPS])
 				if(landmarks[LANDMARK_SHIPS][T] == "artemis")
-					src.set_loc(locate(26, 34, T.z))
+					src.set_loc(locate(26, 289, T.z))
 #endif

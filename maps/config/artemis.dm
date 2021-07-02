@@ -6,10 +6,10 @@
 
 #ifdef ENABLE_ARTEMIS
 #warn ARTEMIS ARTEMIS ARTEMIS ARTEMIS ARTEMIS ARTEMIS ARTEMIS ARTEMIS ARTEMIS ARTEMIS
-#include "..\artemis\artemis.dmm"
-#include "..\artemis\arjuna.dmm"
-#include "..\artemis\test2.dmm"
-#include "..\artemis\test3.dmm"
+//#include "..\artemis\artemis.dmm"
+//#include "..\artemis\arjuna.dmm"
+//#include "..\artemis\test2.dmm"
+//#include "..\artemis\test3.dmm"
 #include "..\artemis\planets.dmm"
 #else
 #error ARTEMIS IS NOT ENABLED!!!!!!

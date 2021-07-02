@@ -28,7 +28,7 @@ var/list/planetModifiersUsed = list()//Assoc list, type:times used
 			var/count= 0
 			var/maxTries = (M.required ? 200:33)
 			while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
-				var/turf/target = locate(rand(1+PLANET_MAPBORDER, maxX), rand(1+PLANET_MAPBORDER,maxY), AST_ZLEVEL)
+				var/turf/target = locate(rand(1+PLANET_MAPBORDER, maxX), rand(1+PLANET_MAPBORDER,maxY), planetZLevel)
 				var/ret = M.applyTo(target)
 				if (ret == 0)
 					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [showCoords(target.x, target.y, target.z)]")

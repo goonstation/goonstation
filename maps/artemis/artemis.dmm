@@ -5,47 +5,42 @@
 "ab" = (
 /turf/unsimulated/wall/void,
 /area)
-"ac" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction{
-	dir = 4
-	},
-/area)
 "ad" = (
 /turf/unsimulated/wall/setpieces/leadwall/junction,
-/area)
+/area/ship/artemis)
 "ae" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 6;
 	icon_state = "leadwall"
 	},
-/area)
+/area/ship/artemis)
 "af" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 10;
-	icon_state = "leadwall"
+/turf/unsimulated/wall/auto/lead/blue{
+	desc = "Seems pretty sturdy.";
+	name = "shield wall"
 	},
-/area)
+/area/ship/artemis)
 "ag" = (
 /turf/unsimulated/wall/setpieces/leadwall,
-/area)
+/area/ship/artemis)
 "ah" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 8;
 	icon_state = "leadwall"
 	},
-/area)
+/area/ship/artemis)
 "aj" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 4;
 	icon_state = "leadwall"
 	},
-/area)
+/area/ship/artemis)
 "ak" = (
 /turf/unsimulated/wall/setpieces/leadwindow{
 	dir = 4;
 	icon_state = "leadwindow_1"
 	},
-/area)
+/area/ship/artemis)
 "al" = (
 /obj/machinery/computer/communications,
 /obj/machinery/power/data_terminal,
@@ -53,7 +48,7 @@
 	dir = 8;
 	icon_state = "fblue4"
 	},
-/area)
+/area/ship/artemis)
 "am" = (
 /obj/machinery/computer/announcement,
 /obj/machinery/power/data_terminal,
@@ -61,13 +56,13 @@
 	dir = 4;
 	icon_state = "fblue4"
 	},
-/area)
+/area/ship/artemis)
 "an" = (
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fblue2"
 	},
-/area)
+/area/ship/artemis)
 "ao" = (
 /obj/stool/chair/office/blue{
 	dir = 1;
@@ -77,13 +72,13 @@
 	dir = 1;
 	icon_state = "fblue2"
 	},
-/area)
+/area/ship/artemis)
 "ap" = (
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fblue2"
 	},
-/area)
+/area/ship/artemis)
 "aq" = (
 /obj/stool/chair/comfy/blue{
 	dir = 4
@@ -92,21 +87,21 @@
 	dir = 8;
 	icon_state = "fblue2"
 	},
-/area)
+/area/ship/artemis)
 "ar" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue3"
 	},
-/area)
+/area/ship/artemis)
 "as" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fblue3"
 	},
-/area)
+/area/ship/artemis)
 "at" = (
 /obj/stool/chair/comfy/blue{
 	dir = 8
@@ -115,202 +110,202 @@
 	dir = 4;
 	icon_state = "fblue2"
 	},
-/area)
+/area/ship/artemis)
 "au" = (
 /turf/simulated/floor/engine,
-/area)
+/area/ship/artemis)
 "av" = (
 /obj/lrteleporter/planetary_teleporter,
 /obj/landmark/lrt{
 	name = "Artemis-"
 	},
 /turf/simulated/floor/engine,
-/area)
+/area/ship/artemis)
 "aw" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fblue3"
 	},
-/area)
+/area/ship/artemis)
 "ax" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fblue2"
 	},
-/area)
+/area/ship/artemis)
 "ay" = (
 /turf/simulated/floor/carpet{
 	dir = 2;
 	icon_state = "fblue2"
 	},
-/area)
+/area/ship/artemis)
 "az" = (
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
 	},
-/area)
+/area/ship/artemis)
 "aA" = (
 /turf/simulated/floor/black,
-/area)
+/area/ship/artemis)
 "aB" = (
 /turf/simulated/floor/bluegreen,
-/area)
+/area/ship/artemis)
 "aC" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	dir = 1;
 	icon_state = "propulsion"
 	},
 /turf/background_canvas,
-/area)
+/area/ship/artemis)
 "aD" = (
 /turf/simulated/floor/blue/checker,
-/area)
+/area/ship/artemis)
 "aE" = (
 /turf/simulated/floor/specialroom/medbay,
-/area)
+/area/ship/artemis)
 "aF" = (
 /obj/rack,
 /obj/item/clothing/suit/rad,
 /obj/item/clothing/head/rad_hood,
 /turf/simulated/floor/black,
-/area)
+/area/ship/artemis)
 "aG" = (
 /turf/simulated/floor/circuit/off,
-/area)
+/area/ship/artemis)
 "aH" = (
 /turf/simulated/floor/purple,
-/area)
+/area/ship/artemis)
 "aI" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fblue3"
 	},
-/area)
+/area/ship/artemis)
 "aJ" = (
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "red2"
 	},
-/area)
+/area/ship/artemis)
 "aK" = (
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "green2"
 	},
-/area)
+/area/ship/artemis)
 "aL" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
 	pixel_x = -8
 	},
 /turf/simulated/floor/blue/checker,
-/area)
+/area/ship/artemis)
 "aM" = (
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "red2"
 	},
-/area)
+/area/ship/artemis)
 "aN" = (
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "red3"
 	},
-/area)
+/area/ship/artemis)
 "aO" = (
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "red2"
 	},
-/area)
+/area/ship/artemis)
 "aP" = (
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "green2"
 	},
-/area)
+/area/ship/artemis)
 "aQ" = (
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "green3"
 	},
-/area)
+/area/ship/artemis)
 "aR" = (
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "green2"
 	},
-/area)
+/area/ship/artemis)
 "aS" = (
 /obj/machinery/door/airlock/gannets/glass/toxins,
 /turf/simulated/floor/engine,
-/area)
+/area/ship/artemis)
 "aT" = (
 /obj/machinery/door/airlock/gannets/glass/command/alt,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue4"
 	},
-/area)
+/area/ship/artemis)
 "aU" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "red3"
 	},
-/area)
+/area/ship/artemis)
 "aV" = (
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "red2"
 	},
-/area)
+/area/ship/artemis)
 "aW" = (
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "green2"
 	},
-/area)
+/area/ship/artemis)
 "aX" = (
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "green3"
 	},
-/area)
+/area/ship/artemis)
 "aY" = (
 /obj/machinery/door/airlock/gannets/glass/command/alt,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue4"
 	},
-/area)
+/area/ship/artemis)
 "aZ" = (
 /obj/machinery/clonegrinder,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/bluegreen,
-/area)
+/area/ship/artemis)
 "ba" = (
 /turf/unsimulated/wall/setpieces/leadwindow{
 	dir = 8;
 	icon_state = "leadwindow_1"
 	},
-/area)
+/area/ship/artemis)
 "bb" = (
 /obj/storage/closet/biohazard,
 /turf/simulated/floor/engine,
-/area)
+/area/ship/artemis)
 "bc" = (
 /obj/machinery/clonepod,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/bluegreen,
-/area)
+/area/ship/artemis)
 "bd" = (
 /turf/simulated/floor/stairs{
 	dir = 1
 	},
-/area)
+/area/ship/artemis)
 "be" = (
 /obj/ladder{
 	desc = "A ladder.";
@@ -319,14 +314,14 @@
 	pixel_y = -12
 	},
 /turf/simulated/floor/black,
-/area)
+/area/ship/artemis)
 "bf" = (
 /obj/stool/chair/office{
 	dir = 4;
 	icon_state = "office_chair"
 	},
 /turf/simulated/floor/bluegreen,
-/area)
+/area/ship/artemis)
 "bg" = (
 /obj/machinery/computer/cloning{
 	dir = 8;
@@ -334,7 +329,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/bluegreen,
-/area)
+/area/ship/artemis)
 "bh" = (
 /obj/ladder{
 	desc = "A ladder.";
@@ -344,32 +339,32 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/black,
-/area)
+/area/ship/artemis)
 "bi" = (
 /obj/machinery/clone_scanner,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/bluegreen,
-/area)
+/area/ship/artemis)
 "bj" = (
 /obj/landmark/ship_marker,
 /turf/simulated/floor/black,
-/area)
+/area/ship/artemis)
 "bl" = (
 /obj/machinery/door/airlock/gannets/glass,
 /turf/simulated/floor/black,
-/area)
+/area/ship/artemis)
 "bm" = (
 /obj/machinery/door/airlock/gannets/glass/medical,
 /turf/simulated/floor/bluegreen,
-/area)
+/area/ship/artemis)
 "bn" = (
 /obj/storage/secure/closet/fridge,
 /turf/simulated/floor/blue/checker,
-/area)
+/area/ship/artemis)
 "bo" = (
 /obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/specialroom/medbay,
-/area)
+/area/ship/artemis)
 "bp" = (
 /obj/table/auto,
 /obj/machinery/chem_master,
@@ -377,48 +372,48 @@
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/medbay,
-/area)
+/area/ship/artemis)
 "bq" = (
 /obj/table/auto,
 /obj/machinery/chem_dispenser,
 /turf/simulated/floor/specialroom/medbay,
-/area)
+/area/ship/artemis)
 "br" = (
 /obj/table/auto,
 /obj/machinery/chem_heater,
 /turf/simulated/floor/specialroom/medbay,
-/area)
+/area/ship/artemis)
 "bt" = (
 /obj/storage/secure/closet/research/chemical,
 /turf/simulated/floor/specialroom/medbay,
-/area)
+/area/ship/artemis)
 "bu" = (
 /obj/stool/chair/office{
 	dir = 1;
 	icon_state = "office_chair"
 	},
 /turf/simulated/floor/specialroom/medbay,
-/area)
+/area/ship/artemis)
 "bv" = (
 /obj/machinery/communications_dish,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit/off,
-/area)
+/area/ship/artemis)
 "bw" = (
 /obj/submachine/chef_oven{
 	dir = 4;
 	icon_state = "oven_off"
 	},
 /turf/simulated/floor/blue/checker,
-/area)
+/area/ship/artemis)
 "bx" = (
 /obj/stool/chair,
 /turf/simulated/floor/blue/checker,
-/area)
+/area/ship/artemis)
 "by" = (
 /obj/storage/secure/closet/medical,
 /turf/simulated/floor/specialroom/medbay,
-/area)
+/area/ship/artemis)
 "bz" = (
 /obj/machinery/optable,
 /obj/item/surgical_spoon,
@@ -426,15 +421,15 @@
 /obj/item/scalpel,
 /obj/item/circular_saw,
 /turf/simulated/floor/specialroom/medbay,
-/area)
+/area/ship/artemis)
 "bA" = (
 /obj/machinery/door/airlock/gannets/glass/medical,
 /turf/simulated/floor/black,
-/area)
+/area/ship/artemis)
 "bE" = (
 /obj/machinery/vending/kitchen,
 /turf/simulated/floor/blue/checker,
-/area)
+/area/ship/artemis)
 "bF" = (
 /obj/table/auto,
 /obj/item/storage/box/cutlery,
@@ -443,52 +438,52 @@
 	dir = 4
 	},
 /turf/simulated/floor/blue/checker,
-/area)
+/area/ship/artemis)
 "bG" = (
 /obj/machinery/door/airlock/gannets/chemistry,
 /turf/simulated/floor/black,
-/area)
+/area/ship/artemis)
 "bH" = (
 /obj/table/auto,
 /obj/item/storage/box/iv_box,
 /obj/item/storage/box/patchbox,
 /obj/item/kitchen/food_box/lollipop,
 /turf/simulated/floor/specialroom/medbay,
-/area)
+/area/ship/artemis)
 "bI" = (
 /obj/table/auto,
 /obj/item/storage/box/syringes,
 /obj/item/remote/porter/port_a_nanomed,
 /turf/simulated/floor/specialroom/medbay,
-/area)
+/area/ship/artemis)
 "bJ" = (
 /obj/table/auto,
 /obj/item/storage/box/beakerbox,
 /turf/simulated/floor/specialroom/medbay,
-/area)
+/area/ship/artemis)
 "bK" = (
 /obj/machinery/networked/mainframe,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit/off,
-/area)
+/area/ship/artemis)
 "bL" = (
 /obj/stool/chair{
 	dir = 1;
 	icon_state = "chair"
 	},
 /turf/simulated/floor/blue/checker,
-/area)
+/area/ship/artemis)
 "bM" = (
 /obj/machinery/bathtub{
 	anchored = 1;
 	dir = 4
 	},
 /turf/simulated/floor/purple,
-/area)
+/area/ship/artemis)
 "bN" = (
 /obj/submachine/laundry_machine,
 /turf/simulated/floor/purple,
-/area)
+/area/ship/artemis)
 "bO" = (
 /obj/stool/chair/couch/red{
 	dir = 8;
@@ -498,7 +493,7 @@
 	dir = 9;
 	icon_state = "red2"
 	},
-/area)
+/area/ship/artemis)
 "bP" = (
 /obj/stool/chair/couch/red{
 	dir = 4;
@@ -508,7 +503,7 @@
 	dir = 5;
 	icon_state = "red2"
 	},
-/area)
+/area/ship/artemis)
 "bQ" = (
 /obj/stool/chair/couch/green{
 	dir = 8;
@@ -518,7 +513,7 @@
 	dir = 9;
 	icon_state = "green2"
 	},
-/area)
+/area/ship/artemis)
 "bR" = (
 /obj/stool/chair/couch/green{
 	dir = 4;
@@ -528,35 +523,35 @@
 	dir = 5;
 	icon_state = "green2"
 	},
-/area)
+/area/ship/artemis)
 "bS" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/blue/checker,
-/area)
+/area/ship/artemis)
 "bT" = (
 /obj/item/storage/toilet{
 	dir = 4;
 	icon_state = "toilet"
 	},
 /turf/simulated/floor/purple,
-/area)
+/area/ship/artemis)
 "bU" = (
 /obj/machinery/door/airlock/gannets/chemistry,
 /turf/simulated/floor/purple,
-/area)
+/area/ship/artemis)
 "bV" = (
 /obj/machinery/door/airlock/gannets/glass/security,
 /turf/simulated/floor/black,
-/area)
+/area/ship/artemis)
 "bW" = (
 /obj/machinery/door/airlock/gannets/glass,
 /turf/simulated/floor/blue/checker,
-/area)
+/area/ship/artemis)
 "bX" = (
 /obj/table/auto,
 /obj/submachine/mixer,
 /turf/simulated/floor/blue/checker,
-/area)
+/area/ship/artemis)
 "bY" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -567,7 +562,7 @@
 	dir = 10;
 	icon_state = "red2"
 	},
-/area)
+/area/ship/artemis)
 "bZ" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -578,7 +573,7 @@
 	dir = 2;
 	icon_state = "red2"
 	},
-/area)
+/area/ship/artemis)
 "ca" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -589,7 +584,7 @@
 	dir = 2;
 	icon_state = "green2"
 	},
-/area)
+/area/ship/artemis)
 "cb" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -600,74 +595,74 @@
 	dir = 6;
 	icon_state = "green2"
 	},
-/area)
+/area/ship/artemis)
 "cc" = (
 /obj/machinery/vending/cola/red,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "red2"
 	},
-/area)
+/area/ship/artemis)
 "cd" = (
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "red2"
 	},
-/area)
+/area/ship/artemis)
 "ce" = (
 /obj/machinery/door/airlock/gannets/engineering/alt,
 /turf/simulated/floor/black,
-/area)
+/area/ship/artemis)
 "cf" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "green2"
 	},
-/area)
+/area/ship/artemis)
 "cg" = (
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "green2"
 	},
-/area)
+/area/ship/artemis)
 "ch" = (
 /obj/machinery/power/rtg,
 /turf/simulated/floor/engine,
-/area)
+/area/ship/artemis)
 "ci" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/engine,
-/area)
+/area/ship/artemis)
 "ck" = (
 /obj/storage/secure/closet/engineering,
 /turf/simulated/floor/engine,
-/area)
+/area/ship/artemis)
 "cl" = (
 /obj/machinery/power/smes,
 /turf/simulated/floor/engine,
-/area)
+/area/ship/artemis)
 "cm" = (
 /obj/decal/fakeobjects/shuttlethruster,
 /turf/space,
-/area)
+/area/ship/artemis)
 "cn" = (
 /obj/decal/fakeobjects/shuttlethruster,
 /obj/decal/fakeobjects/shuttlethruster,
 /turf/space,
-/area)
+/area/ship/artemis)
 "co" = (
 /obj/machinery/sim/vr_bed/flight_chair,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fblue1"
 	},
-/area)
+/area/ship/artemis)
 "cp" = (
 /turf/unsimulated/wall/setpieces/leadwindow,
-/area)
+/area/ship/artemis)
 "jZ" = (
 /obj/machinery/light/incandescent{
 	dir = 1
@@ -676,27 +671,19 @@
 	dir = 1;
 	icon_state = "red2"
 	},
-/area)
-"lB" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction{
-	dir = 1
-	},
-/area)
-"rS" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction_four,
-/area)
+/area/ship/artemis)
 "sV" = (
 /obj/machinery/light/incandescent{
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area)
+/area/ship/artemis)
 "wM" = (
 /obj/machinery/light/incandescent{
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area)
+/area/ship/artemis)
 "xa" = (
 /obj/stool/chair/comfy/blue{
 	dir = 8
@@ -708,29 +695,29 @@
 	dir = 4;
 	icon_state = "fblue2"
 	},
-/area)
+/area/ship/artemis)
 "Ca" = (
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area)
+/area/ship/artemis)
 "CL" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 5;
 	icon_state = "leadwall"
 	},
-/area)
+/area/ship/artemis)
 "Eh" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/blue/checker,
-/area)
+/area/ship/artemis)
 "GR" = (
 /obj/machinery/light/incandescent{
 	dir = 8
 	},
 /turf/simulated/floor/engine,
-/area)
+/area/ship/artemis)
 "GZ" = (
 /obj/stool/chair/comfy/blue{
 	dir = 4
@@ -742,26 +729,27 @@
 	dir = 8;
 	icon_state = "fblue2"
 	},
-/area)
+/area/ship/artemis)
+"HJ" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 10;
+	icon_state = "leadwall"
+	},
+/area/ship/artemis)
 "Kl" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/bluegreen,
-/area)
+/area/ship/artemis)
 "PT" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 9;
 	icon_state = "leadwall"
 	},
-/area)
-"TY" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction{
-	dir = 8
-	},
-/area)
+/area/ship/artemis)
 "VN" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/purple,
-/area)
+/area/ship/artemis)
 
 (1,1,1) = {"
 ab
@@ -1354,7 +1342,7 @@ aa
 aa
 aa
 aa
-PT
+af
 cp
 cp
 af
@@ -1398,13 +1386,13 @@ aa
 aa
 aa
 aa
-PT
+af
 cp
-ag
-ae
+af
+af
 bM
 bT
-ah
+af
 cm
 aa
 aa
@@ -1443,15 +1431,15 @@ aa
 aa
 aa
 aa
-PT
+af
 cp
-ae
+af
 aA
 aA
 bG
 aH
 VN
-ah
+af
 cm
 aa
 aa
@@ -1488,17 +1476,17 @@ aa
 aa
 aa
 aa
-PT
+af
 cp
-ae
+af
 aA
 aA
 aA
-PT
+af
 af
 bN
 aH
-ah
+af
 cm
 aa
 aa
@@ -1534,18 +1522,18 @@ aa
 aa
 aa
 aa
-PT
-ae
+af
+af
 aA
 aA
 aA
-PT
-ag
-TY
-rS
-ag
+af
+af
+af
+af
+af
 bU
-CL
+af
 af
 aa
 aa
@@ -1580,16 +1568,16 @@ aa
 aa
 aa
 aa
-PT
-ae
+af
+af
 aA
 aA
-PT
-ac
-ae
+af
+af
+af
 bt
 by
-ah
+af
 bO
 aM
 bY
@@ -1626,17 +1614,17 @@ aa
 aa
 aa
 aa
-PT
-ae
+af
+af
 aA
 aA
-PT
-TY
-ae
+af
+af
+af
 bo
 aE
 bz
-ah
+af
 bP
 aN
 bZ
@@ -1672,22 +1660,22 @@ aa
 aa
 aa
 aa
-PT
-ae
+af
+af
 aA
 aA
-PT
-ae
+af
+af
 aB
 bm
 aE
 aE
 aE
-CL
+af
 af
 aO
 bZ
-CL
+af
 af
 aa
 aa
@@ -1716,22 +1704,22 @@ aa
 aa
 aa
 aa
-PT
+af
 cp
-ag
-ae
+af
+af
 aA
 aA
-PT
-ae
+af
+af
 aB
 Kl
-ah
+af
 bp
 aE
 aE
 bH
-ah
+af
 jZ
 aU
 cc
@@ -1762,29 +1750,29 @@ aa
 aa
 aa
 aa
-PT
-ae
+af
+af
 av
 GR
 aS
 aA
-PT
-ae
+af
+af
 aB
 bf
 aB
-ah
+af
 bq
 bu
 aE
 bI
-ah
+af
 aJ
 aV
 cd
-ad
+af
 cp
-ag
+af
 af
 aa
 aa
@@ -1808,31 +1796,31 @@ aa
 aa
 aa
 aa
-PT
-TY
-ag
+af
+af
+af
 cp
-ag
+af
 af
 aA
-ah
+af
 aZ
 bc
 bg
 bi
-ah
+af
 br
 aE
 aE
 bJ
-ad
+af
 bV
-ag
-ac
-ae
+af
+af
+af
 aA
 wM
-ah
+af
 cm
 aa
 aa
@@ -1854,32 +1842,32 @@ aa
 aa
 aa
 aa
-PT
-ae
+af
+af
 an
 GZ
 aq
 ax
-ah
+af
 Ca
-CL
-ag
-ag
+af
+af
+af
 cp
-ag
-TY
-ag
+af
+af
+af
 cp
 bA
-ag
-ae
+af
+af
 aA
 aA
-aj
+af
 aA
 aA
 aA
-ah
+af
 cm
 aa
 aa
@@ -1926,7 +1914,7 @@ ce
 aA
 aA
 aA
-ah
+af
 cm
 aa
 aa
@@ -1973,7 +1961,7 @@ ce
 aA
 aA
 aA
-ah
+af
 cm
 aa
 aa
@@ -2020,7 +2008,7 @@ ce
 aA
 aA
 aA
-ah
+af
 cm
 aa
 aa
@@ -2042,13 +2030,13 @@ aa
 aa
 aa
 aa
-CL
+af
 af
 ap
 xa
 at
 az
-ah
+af
 Ca
 aA
 aA
@@ -2063,11 +2051,11 @@ aA
 sV
 aA
 aA
-aj
+af
 aA
 aA
 aA
-ah
+af
 cn
 aa
 aa
@@ -2090,12 +2078,12 @@ aa
 aa
 aa
 aa
-CL
-ac
+af
+af
 af
 aG
 aG
-ah
+af
 aA
 aA
 aA
@@ -2107,14 +2095,14 @@ aA
 aA
 aA
 aA
-PT
+af
 bl
-ag
-TY
+af
+af
 af
 aA
 sV
-ah
+af
 cm
 aa
 aa
@@ -2138,11 +2126,11 @@ aa
 aa
 aa
 aa
-CL
-lB
+af
+af
 bv
 bK
-ah
+af
 aA
 aA
 aA
@@ -2154,14 +2142,14 @@ aA
 aA
 aA
 aA
-ah
+af
 aK
 aW
 cf
-ad
+af
 cp
-ag
-ae
+af
+af
 aa
 aa
 aa
@@ -2186,9 +2174,9 @@ aa
 aa
 aa
 aa
-CL
+af
 cp
-ag
+af
 af
 be
 aA
@@ -2201,7 +2189,7 @@ aA
 aA
 aA
 aA
-ah
+af
 aP
 aX
 cg
@@ -2236,7 +2224,7 @@ aa
 aa
 aa
 aa
-CL
+af
 af
 sV
 aA
@@ -2247,8 +2235,8 @@ aA
 aA
 aA
 aA
-PT
-ae
+af
+af
 aP
 ca
 PT
@@ -2284,7 +2272,7 @@ aa
 aa
 aa
 aa
-CL
+af
 af
 aA
 aA
@@ -2294,7 +2282,7 @@ aA
 aA
 aA
 sV
-ah
+af
 bQ
 aQ
 ca
@@ -2332,16 +2320,16 @@ aa
 aa
 aa
 aa
-CL
+af
 af
 aA
 aA
-PT
-ag
-ag
-ag
-ag
-lB
+af
+af
+af
+af
+af
+af
 bR
 aR
 cb
@@ -2380,7 +2368,7 @@ aa
 aa
 aa
 aa
-CL
+af
 af
 aA
 bl
@@ -2388,11 +2376,11 @@ aD
 aL
 bw
 bE
-CL
-ag
+af
+af
 bW
-ac
-ae
+af
+af
 aa
 aa
 aa
@@ -2428,9 +2416,9 @@ aa
 aa
 aa
 aa
-CL
+af
 cp
-lB
+af
 bn
 aD
 aD
@@ -2438,7 +2426,7 @@ aD
 aD
 aD
 aD
-ah
+af
 cm
 aa
 aa
@@ -2477,7 +2465,7 @@ aa
 aa
 aa
 aa
-CL
+af
 cp
 af
 bx
@@ -2485,7 +2473,7 @@ bF
 bL
 aD
 Eh
-ah
+af
 cm
 aa
 aa
@@ -2526,13 +2514,13 @@ aa
 aa
 aa
 aa
-CL
+af
 cp
-ag
+af
 af
 bS
 bX
-ah
+af
 cm
 aa
 aa
@@ -2576,10 +2564,10 @@ aa
 aa
 aa
 aa
-CL
+af
 cp
 cp
-ae
+af
 aa
 aa
 aa
@@ -4085,7 +4073,7 @@ ag
 ag
 ag
 ag
-af
+HJ
 aa
 aa
 aa
@@ -4182,7 +4170,7 @@ aF
 ad
 ag
 ag
-af
+HJ
 aa
 aa
 aa
@@ -4440,7 +4428,7 @@ aa
 aa
 aa
 CL
-af
+HJ
 aA
 aA
 aA
@@ -4488,7 +4476,7 @@ aa
 aa
 aa
 CL
-af
+HJ
 aA
 aA
 aA
@@ -4508,7 +4496,7 @@ aA
 aA
 aA
 CL
-af
+HJ
 bb
 ck
 ah
@@ -4539,7 +4527,7 @@ CL
 ag
 ag
 ag
-af
+HJ
 aA
 aA
 aA
