@@ -12266,7 +12266,6 @@
 "DR" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Research Wing";
-	req_access_txt = null
 	},
 /obj/access_spawn/research,
 /obj/firedoor_spawn,
