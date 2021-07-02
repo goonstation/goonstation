@@ -1,5 +1,9 @@
 
 (t)thu jul 01 21
+(u)112358sam
+(p)5345
+(e)🐛|bug
+(+)Welding fuel tanks only refill welding tools if they contain welding fuel.
 (u)MarkNstein
 (p)2152
 (e)⚖🎨|balance, sprites
