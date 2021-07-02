@@ -375,6 +375,8 @@ var/datum/action_controller/actions
 	onDelete()
 		if (owner)
 			owner.overlays -= icon_image
+		if (icon_on_target && place_to_put_bar)
+			place_to_put_bar.overlays -= icon_image
 		if (icon_image)
 			del(icon_image)
 		..()
