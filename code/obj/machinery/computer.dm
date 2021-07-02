@@ -33,7 +33,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (can_reconnect)
 			if (ispulsingtool(W) && !(status & (BROKEN|NOPOWER)))
-				boutput(user, "<span class='notice'>You pulse [src.name] to re-scan for equipment.</span>")
+				boutput(user, "<span class='notice'>You pulse the [name] to re-scan for equipment.</span>")
 				connection_scan()
 				return
 		if (isscrewingtool(W) && src.circuit_type)
