@@ -18054,12 +18054,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
-"SK" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 8
-	},
-/turf/simulated/floor/grey,
-/area/station/mining/refinery)
 "SL" = (
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/white,
@@ -19237,6 +19231,13 @@
 	dir = 8
 	},
 /area/station/crew_quarters/kitchen)
+"Wj" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor/grey,
+/area/station/mining/refinery)
 "Wk" = (
 /obj/machinery/r_door_control/podbay/mining,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -60263,7 +60264,7 @@ FF
 FF
 Jq
 Jq
-SK
+Wj
 Jq
 Jq
 FF
