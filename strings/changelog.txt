@@ -1,5 +1,9 @@
 
 (t)sat jul 03 21
+(u)Flappybat
+(p)5374
+(e)⚖|balance
+(+)Allow walking in clown shoes without slipping and added a cooldown to prevent chain slips.
 (u)zjdtmkhzt
 (p)5217
 (e)⚖🆕|balance, feature
