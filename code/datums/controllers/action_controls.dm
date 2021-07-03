@@ -137,8 +137,10 @@ var/datum/action_controller/actions
 	var/color_active = "#4444FF"
 	var/color_success = "#00CC00"
 	var/color_failure = "#CC0000"
-	var/atom/movable/place_to_put_bar = null // By default the bar is put on the owner, define this on the progress bar as the place you want to put it on.
-	var/bar_on_owner = TRUE // In case we want the owner to have no visible action bar but still want to make the bar.
+	/// By default the bar is put on the owner, define this on the progress bar as the place you want to put it on.
+	var/atom/movable/place_to_put_bar = null
+	/// In case we want the owner to have no visible action bar but still want to make the bar.
+	var/bar_on_owner = TRUE
 
 	onStart()
 		..()
@@ -358,7 +360,8 @@ var/datum/action_controller/actions
 	var/icon_x_off = 0
 	var/image/icon_image
 	var/icon_plane = PLANE_HUD + 2
-	var/icon_on_target = TRUE // Is the icon also on the target if we have one?
+	/// Is the icon also on the target if we have one?
+	var/icon_on_target = TRUE
 
 	onStart()
 		..()
