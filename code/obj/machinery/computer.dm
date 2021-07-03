@@ -25,7 +25,7 @@
 		playsound(src.loc, 'sound/machines/keypress.ogg', 30, 1, -15)
 
 	attack_hand(var/mob/user)
-		..()
+		. = ..()
 		if (!user.literate)
 			boutput(user, "<span class='alert'>You don't know how to read or write, operating a computer isn't going to work!</span>")
 			return 1
