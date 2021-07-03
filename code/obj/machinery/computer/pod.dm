@@ -4,8 +4,8 @@
 	circuit_type = /obj/item/circuitboard/pod
 	id = 1
 	var/obj/machinery/mass_driver/connected = null
- 	var/timing = 0
- 	var/time = 30
+	var/timing = 0
+	var/time = 30
 	//var/TPR = 0
 
 	light_r =0.6
