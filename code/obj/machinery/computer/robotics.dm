@@ -22,6 +22,9 @@
 	..()
 	return
 
+/obj/machinery/computer/robotics/special_deconstruct(obj/computerframe/frame as obj)
+	frame.circuit.id = src.id
+
 /obj/machinery/computer/robotics/process()
 	..()
 	if(status & (NOPOWER|BROKEN))

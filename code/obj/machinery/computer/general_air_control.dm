@@ -21,6 +21,9 @@ obj/machinery/computer/general_air_control
 		radio_controller.remove_object(src, "[frequency]")
 		..()
 
+	special_deconstruct(obj/computerframe/frame as obj)
+		frame.circuit.frequency = src.frequency
+
 	attack_hand(mob/user)
 		user.Browse(return_text(),"window=computer")
 		src.add_dialog(user)
@@ -249,6 +252,9 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 
 		var/cutoff_temperature = 2000
 		var/on_temperature = 1200
+
+		special_deconstruct(obj/computerframe/frame as obj)
+			frame.circuit.frequency = src.frequency
 
 		process()
 			if(automation)
@@ -497,6 +503,10 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 
 	var/frequency = 1439
 	var/datum/radio_frequency/radio_connection
+
+	special_deconstruct(obj/computerframe/frame as obj)
+		frame.circuit.frequency = src.frequency
+
 	attack_hand(mob/user)
 		if(status & (BROKEN | NOPOWER))
 			return

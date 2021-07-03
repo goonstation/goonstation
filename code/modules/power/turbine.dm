@@ -252,6 +252,9 @@
 	onclose(user, "computer")
 	return
 
+/obj/machinery/computer/robotics/special_deconstruct(obj/computerframe/frame as obj)
+	frame.circuit.id = src.id
+
 /obj/machinery/computer/turbine_computer/attack_ai(mob/user as mob)
 	// overridden to prevent AI from accessing
 	return
