@@ -710,25 +710,24 @@ PIPE BOMBS + CONSTRUCTION
 		else
 			SPAWN_DBG(0.1 SECONDS)
 				playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1)
-				if (!isrobot(user))
-					if (old_light_grenade)
-						for (var/obj/item/W in user)
-							if (istype(W,/obj/item/clothing))
-								user.u_equip(W)
-								if (W)
-									W.set_loc(user.loc)
-									W.dropped(user)
-									W.layer = initial(user.layer)
-							else if (istype(W,/obj/item/old_grenade/light_gimmick))
-								user.u_equip(W)
-								if (W)
-									W.set_loc(user.loc)
-									W.dropped(user)
-									W.layer = HUD_LAYER
-							else
-								qdel(W)
-					else
-						user.unequip_all()
+				if (old_light_grenade)
+					for (var/obj/item/W in user)
+						if (istype(W,/obj/item/clothing))
+							user.u_equip(W)
+							if (W)
+								W.set_loc(user.loc)
+								W.dropped(user)
+								W.layer = initial(user.layer)
+						else if (istype(W,/obj/item/old_grenade/light_gimmick))
+							user.u_equip(W)
+							if (W)
+								W.set_loc(user.loc)
+								W.dropped(user)
+								W.layer = HUD_LAYER
+						else
+							qdel(W)
+				else if (!issilicon(user)) //borgs could drop all their tools/internal items trying to pull one
+					user.unequip_all()
 
 				for (var/mob/N in viewers(user, null))
 					if (get_dist(N, user) <= 6)
