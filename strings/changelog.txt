@@ -1,6 +1,10 @@
 
 (t)sat jul 03 21
 (u)zjdtmkhzt
+(p)5217
+(e)⚖🆕|balance, feature
+(+)Surgery type artifacts can now replace all kinds of organs.
+(u)zjdtmkhzt
 (p)5367
 (e)|
 (+)Buddies should be able to rack the riot shotgun now.
