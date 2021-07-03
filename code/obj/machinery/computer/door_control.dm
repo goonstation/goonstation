@@ -4,7 +4,7 @@
 	icon_state = "sec_computer"
 	req_access_txt = "2"
 //	var/authenticated = 0.0		if anyone wants to make it so you need to log in in future go ahead.
-	id = 1.0
+	id = 1
 
 /obj/machinery/computer/door_control/proc/alarm()
 	if(status & (NOPOWER|BROKEN))
