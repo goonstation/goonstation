@@ -28,14 +28,6 @@
 (p)5294
 (e)|
 (+)Emagging cyborgs no longer randomly fails.
-(u)Tarmunora
-(p)5337
-(e)⚖|balance
-(*)Disarm changes. See minor changes for details. To be reverted by Sat, July 3 for further review
-(+)disarm stam cost 10 -> 30
-(+)disarm stam damage 20 -> 10
-(+)Disarm chance scaled down to 50% of current (18.5%) at targets with 200 or more stamina, and linerally scaled to current value (37%) on targets with 100 or less. Disarm chances on blocks is reduced by 80% (multiplicative)
-(+)Disarm targets all held items at once
 (t)wed jun 30 21
 (u)112358sam
 (p)5140
