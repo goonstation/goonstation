@@ -39,42 +39,37 @@
 		if (isscrewingtool(W) && src.circuit_type)
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			if (do_after(user, 2 SECONDS))
+				var/obj/computerframe/A = new /obj/computerframe(src.loc)
 				if (src.status & BROKEN)
 					user.show_text("The broken glass falls out.", "blue")
-					var/obj/computerframe/A = new /obj/computerframe(src.loc)
-					if (src.material)
-						A.setMaterial(src.material)
 					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
 					G.set_loc(src.loc)
-					var/obj/item/circuitboard/M = new src.circuit_type(A)
-					for (var/obj/C in src)
-						C.set_loc(src.loc)
-					A.set_dir(src.dir)
-					A.circuit = M
 					A.state = 3
 					A.icon_state = "3"
-					A.anchored = 1
-					qdel(src)
 				else
 					user.show_text("You disconnect the monitor.", "blue")
-					var/obj/computerframe/A = new /obj/computerframe(src.loc)
-					if (src.material)
-						A.setMaterial(src.material)
-					var/obj/item/circuitboard/M = new src.circuit_type(A)
-					for (var/obj/C in src)
-						C.set_loc(src.loc)
-					A.set_dir(src.dir)
-					A.circuit = M
 					A.state = 4
 					A.icon_state = "4"
-					A.anchored = 1
-					qdel(src)
+				var/obj/item/circuitboard/M = new src.circuit_type(A)
+				if (src.material)
+					A.setMaterial(src.material)
+				for (var/obj/C in src)
+					C.set_loc(src.loc)
+				A.set_dir(src.dir)
+				A.circuit = M
+				A.anchored = 1
+				src.special_deconstruct(A)
+				qdel(src)
 		else
 			src.attack_hand(user)
 
 	proc/connection_scan()
 		//Placeholder so the multitool probing thing can go on this parent
 		//Put the code for finding the stuff your computer needs in this proc
+		return
+
+	proc/special_deconstruct(var/obj/computerframe/frame as obj)
+		//Special changes for deconstruction can be added by overriding this
 		return
 
 /*

@@ -104,6 +104,19 @@
 		if (src.linked_pods.len >= src.max_pods)
 			break
 
+/obj/machinery/computer/cloning/special_deconstruct(var/obj/computerframe/frame as obj)
+	frame.circuit.records = src.records
+	if (src.allow_dead_scanning)
+		new /obj/item/cloner_upgrade (src.loc)
+		src.allow_dead_scanning = 0
+	if(src.allow_mind_erasure)
+		new /obj/item/cloneModule/minderaser(src.loc)
+		src.allow_mind_erasure = 0
+	if(src.BE)
+		new /obj/item/cloneModule/genepowermodule(src.loc)
+		src.BE = null
+
+
 /obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)
 	if (wagesystem.clones_for_cash && istype(W, /obj/item/spacecash))
 		var/obj/item/spacecash/cash = W
@@ -120,49 +133,6 @@
 			boutput(user, "You insert [W].")
 			src.updateUsrDialog()
 			return
-
-	else if (isscrewingtool(W))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if (do_after(user, 2 SECONDS))
-			logTheThing("station", user, null, "disconnects the cloning console at [log_loc(src)].")
-			if (src.status & BROKEN)
-				user.show_text("The broken glass falls out.", "blue")
-				var/obj/computerframe/A = new /obj/computerframe(src.loc)
-				if (src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/cloning/M = new /obj/item/circuitboard/cloning( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				M.records = src.records
-				A.set_dir(src.dir)
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-			else
-				user.show_text("You disconnect the monitor.", "blue")
-				var/obj/computerframe/A = new /obj/computerframe(src.loc)
-				if (src.material) A.setMaterial(src.material)
-				var/obj/item/circuitboard/cloning/M = new /obj/item/circuitboard/cloning( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				M.records = src.records
-				A.set_dir(src.dir)
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-			if (src.allow_dead_scanning)
-				new /obj/item/cloner_upgrade (src.loc)
-				src.allow_dead_scanning = 0
-			if(src.allow_mind_erasure)
-				new /obj/item/cloneModule/minderaser(src.loc)
-				src.allow_mind_erasure = 0
-			if(src.BE)
-				new /obj/item/cloneModule/genepowermodule(src.loc)
-				src.BE = null
-			qdel(src)
 
 	else if (istype(W, /obj/item/cloner_upgrade))
 		if (allow_dead_scanning || allow_mind_erasure)
