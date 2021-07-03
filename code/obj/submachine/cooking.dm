@@ -385,6 +385,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/elviswich_p_h(src)
 			src.recipes += new /datum/cookingrecipe/elviswich_p(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_mb(src)
+			src.recipes += new /datum/cookingrecipe/sandwich_mbalt(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_egg(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_bm(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_bmalt(src)

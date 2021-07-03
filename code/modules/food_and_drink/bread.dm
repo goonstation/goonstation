@@ -371,11 +371,6 @@
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_ROD)
 
-//	attackby(obj/item/W as obj, mob/user as mob)
-//		if (src == target) // :I
-//			boutput(src, "<span class='alert'>TEST TEST TEST TEST!</span>")
-//			return
-
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/knife/butcher))
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
@@ -401,3 +396,39 @@
 		user.visible_message("<span class='alert'><b>[user] attempts to beat [him_or_her(user)]self to death with the baguette, oui oui, but fails! Hon hon hon!</b></span>")
 		user.suiciding = 0
 		return 1
+
+/obj/item/reagent_containers/food/snacks/garlicbread
+	name = "garlic bread"
+	desc = "Garlic, butter and bread. Usually seen alongside pasta and pizza."
+	icon = 'icons/obj/foodNdrink/food_bread.dmi'
+	icon_state = "garlicbread"
+	amount = 2
+	heal_amt = 4
+	food_color = "#ffe87a"
+	initial_volume = 20
+	initial_reagents = list("water_holy"=20)
+	food_effects = list("food_tox","food_hp_up","food_bad_breath")
+
+/obj/item/reagent_containers/food/snacks/garlicbread_ch
+	name = "cheesy garlic bread"
+	desc = "Garlic, butter, bread AND cheese. Usually seen alongside pasta and pizza."
+	icon = 'icons/obj/foodNdrink/food_bread.dmi'
+	icon_state = "garlicbread_ch"
+	amount = 2
+	heal_amt = 4
+	food_color = "#ffe87a"
+	initial_volume = 20
+	initial_reagents = list("water_holy"=10,"cheese"=10)
+	food_effects = list("food_tox","food_hp_up","food_bad_breath","food_energized")
+
+/obj/item/reagent_containers/food/snacks/fairybread
+	name = "fairy bread"
+	desc = "A traditional delicacy of Australian origin."
+	icon = 'icons/obj/foodNdrink/food_bread.dmi'
+	icon_state = "fairybread"
+	amount = 2
+	heal_amt = 2
+	food_color = "#ffcdfb"
+	initial_volume = 10
+	initial_reagents = list("bread"=5,"sugar"=5)
+	food_effects = list("food_refreshed_big")

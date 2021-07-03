@@ -497,9 +497,17 @@
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/sandwich/spooky_meat_s
 
-/datum/cookingrecipe/sandwich_mb
+/datum/cookingrecipe/sandwich_mb //Original meatball sub recipe
 	item1 = /obj/item/reagent_containers/food/snacks/meatball
 	item2 = /obj/item/reagent_containers/food/snacks/breadloaf
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	item4 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/sandwich/meatball
+
+/datum/cookingrecipe/sandwich_mbalt //Secondary recipe that uses the baguette
+	item1 = /obj/item/reagent_containers/food/snacks/meatball
+	item2 = /obj/item/baguette
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
 	item4 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
 	cookbonus = 12
@@ -1613,8 +1621,23 @@
 	cookbonus = 7
 	output = /obj/item/baguette
 
+/datum/cookingrecipe/garlicbread
+	item1 = /obj/item/baguette
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
+	item3 = /obj/item/reagent_containers/food/snacks/plant/garlic
+	cookbonus = 7
+	output = /obj/item/reagent_containers/food/snacks/garlicbread
+
+/datum/cookingrecipe/garlicbread_ch
+	item1 = /obj/item/baguette
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
+	item3 = /obj/item/reagent_containers/food/snacks/plant/garlic
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	cookbonus = 7
+	output = /obj/item/reagent_containers/food/snacks/garlicbread_ch
+
 /datum/cookingrecipe/painauchocolat
-	item1 = /obj/item/reagent_containers/food/snacks/condiment/chocchips
+	item1 = /obj/item/reagent_containers/food/snacks/candy/chocolate
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
 	cookbonus = 13
@@ -1625,3 +1648,38 @@
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
 	cookbonus = 13
 	output = /obj/item/reagent_containers/food/snacks/croissant
+
+/datum/cookingrecipe/danish_apple
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
+	item3 = /obj/item/reagent_containers/food/snacks/plant/apple
+	cookbonus = 13
+	output = /obj/item/reagent_containers/food/snacks/danish_apple
+
+/datum/cookingrecipe/danish_cherry
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
+	item3 = /obj/item/reagent_containers/food/snacks/plant/cherry
+	cookbonus = 13
+	output = /obj/item/reagent_containers/food/snacks/danish_cherry
+
+/datum/cookingrecipe/danish_blueb
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
+	item3 = /obj/item/reagent_containers/food/snacks/plant/blueberry
+	cookbonus = 13
+	output = /obj/item/reagent_containers/food/snacks/danish_blueb
+
+/datum/cookingrecipe/danish_weed
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
+	item3 = /obj/item/plant/herb/cannabis
+	cookbonus = 13
+	output = /obj/item/reagent_containers/food/snacks/danish_weed
+
+/datum/cookingrecipe/fairybread
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
+	item3 = /obj/item/plant/herb/cannabis
+	cookbonus = 13
+	output = /obj/item/reagent_containers/food/snacks/fairybread
