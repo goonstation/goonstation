@@ -1,5 +1,9 @@
 
 (t)sat jul 03 21
+(u)Kubius
+(p)5365
+(e)🆕🗺|feature, mapping
+(*)Atlas' mining department and main pod bay have received a significant overhaul, including the opening of the main pod bay, the arc smelter, and the merchant docks to public access.
 (u)Flappybat
 (p)5374
 (e)⚖|balance
