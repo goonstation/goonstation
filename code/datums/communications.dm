@@ -125,12 +125,14 @@ datum/radio_frequency
 								device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
 					else
 						device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
+					LAGCHECK(LAG_REALTIME)
 
 			if (!reusable_signals || reusable_signals.len > 10)
 				signal.dispose()
 			else if (signal)
 				signal.wipe()
 				reusable_signals |= signal
+			LAGCHECK(LAG_MED)
 
 		//assumes that list radio_controller.active_jammers is not null or empty.
 		check_for_jammer(obj/source)
