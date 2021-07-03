@@ -69,7 +69,6 @@
 
 	///Put the code for finding the stuff your computer needs in this proc
 	proc/connection_scan()
-
 	//Placeholder so the multitool probing thing can go on this parent
 
 	///Special changes for deconstruction can be added by overriding this
