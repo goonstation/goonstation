@@ -1,13 +1,42 @@
 
-(t)thu jul 01 21
-(u)Tarmunora
-(p)5337
+(t)sat jul 03 21
+(u)zjdtmkhzt
+(p)5217
+(e)⚖🆕|balance, feature
+(+)Surgery type artifacts can now replace all kinds of organs.
+(u)zjdtmkhzt
+(p)5367
+(e)|
+(+)Buddies should be able to rack the riot shotgun now.
+(t)fri jul 02 21
+(u)UnfunnyPerson
+(p)5305
 (e)⚖|balance
-(*)Disarm changes. See minor changes for details. To be reverted by Sat, July 3 for further review
-(+)disarm stam cost 10 -> 30
-(+)disarm stam damage 20 -> 10
-(+)Disarm chance scaled down to 50% of current (18.5%) at targets with 200 or more stamina, and linerally scaled to current value (37%) on targets with 100 or less. Disarm chances on blocks is reduced by 80% (multiplicative)
-(+)Disarm targets all held items at once
+(+)Frog Flu progresses much slower
+(u)Tarmunora
+(e)⚖|balance
+(*)Single tread leg blocks lying too
+(t)thu jul 01 21
+(u)112358sam
+(p)5345
+(e)🐛|bug
+(+)Welding fuel tanks only refill welding tools if they contain welding fuel.
+(u)MarkNstein
+(p)2152
+(e)⚖🎨|balance, sprites
+(*)Entering chutes now has an animation and action bar. Chute-entry has been made faster.
+(u)BatElite
+(p)5293
+(e)⚖|balance
+(+)Miniature bibles are no longer visible in-hand, nor will they spare atheists.
+(u)Arthur Holiday
+(p)5311
+(e)⚖|balance
+(+)The Head of Security does not get a taser at roundstart anymore.
+(u)BatElite
+(p)5294
+(e)|
+(+)Emagging cyborgs no longer randomly fails.
 (t)wed jun 30 21
 (u)112358sam
 (p)5140
