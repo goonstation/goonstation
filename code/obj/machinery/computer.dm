@@ -17,7 +17,7 @@
 	var/glow_in_dark_screen = TRUE
 	var/image/screen_image
 
-	var/can_reconnect = 0 //Set to 1 to make multitools call connection_scan. For consoles with associated equipment (cloner, genetek etc)
+	var/can_reconnect = FALSE //Set to TRUE to make multitools call connection_scan. For consoles with associated equipment (cloner, genetek etc)
 	var/obj/item/circuitboard/circuit_type = null
 	Topic(href, href_list)
 		if (..(href, href_list))
@@ -70,11 +70,9 @@
 	proc/connection_scan()
 		//Placeholder so the multitool probing thing can go on this parent
 		//Put the code for finding the stuff your computer needs in this proc
-		return
 
 	proc/special_deconstruct(var/obj/computerframe/frame as obj)
 		//Special changes for deconstruction can be added by overriding this
-		return
 
 /*
 /obj/machinery/computer/airtunnel
