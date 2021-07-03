@@ -6,7 +6,7 @@
 	icon_state = "operating"
 	desc = "Shows information on a patient laying on an operating table."
 	power_usage = 500
-	can_reconnect = 1
+	can_reconnect = TRUE
 	circuit_type = /obj/item/circuitboard/operating
 
 	var/mob/living/carbon/human/victim = null

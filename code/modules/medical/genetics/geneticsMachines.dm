@@ -10,7 +10,7 @@
 	icon_state = "scanner"
 	req_access = list(access_heads) //Only used for record deletion right now.
 	object_flags = CAN_REPROGRAM_ACCESS
-	can_reconnect = 1
+	can_reconnect = TRUE
 	circuit_type = /obj/item/circuitboard/genetics
 	/// Linked scanner. For scanning.
 	var/obj/machinery/genetics_scanner/scanner = null

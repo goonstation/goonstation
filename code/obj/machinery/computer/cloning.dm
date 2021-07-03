@@ -12,7 +12,7 @@
 	req_access = list(access_heads) //Only used for record deletion right now.
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_CLONINGCONSOLES
-	can_reconnect = 1
+	can_reconnect = TRUE
 	circuit_type = /obj/item/circuitboard/cloning
 	records = list()
 	var/obj/machinery/clone_scanner/scanner = null //Linked scanner. For scanning.

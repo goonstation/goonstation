@@ -17,7 +17,8 @@
 	var/glow_in_dark_screen = TRUE
 	var/image/screen_image
 
-	var/can_reconnect = FALSE //Set to TRUE to make multitools call connection_scan. For consoles with associated equipment (cloner, genetek etc)
+	///Set to TRUE to make multitools call connection_scan. For consoles with associated equipment (cloner, genetek etc)
+	var/can_reconnect = FALSE
 	var/obj/item/circuitboard/circuit_type = null
 	Topic(href, href_list)
 		if (..(href, href_list))
