@@ -67,12 +67,13 @@
 		else
 			src.attack_hand(user)
 
+	///Put the code for finding the stuff your computer needs in this proc
 	proc/connection_scan()
-		//Placeholder so the multitool probing thing can go on this parent
-		//Put the code for finding the stuff your computer needs in this proc
 
+	//Placeholder so the multitool probing thing can go on this parent
+
+	///Special changes for deconstruction can be added by overriding this
 	proc/special_deconstruct(var/obj/computerframe/frame as obj)
-		//Special changes for deconstruction can be added by overriding this
 
 /*
 /obj/machinery/computer/airtunnel
