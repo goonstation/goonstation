@@ -25183,25 +25183,12 @@
 /obj/item/clothing/under/misc/colmob,
 /turf/simulated/floor/plating/damaged3,
 /area/spyshack)
-"bwd" = (
-/obj/decal/cleanable/machine_debris{
-	icon_state = "gib7"
-	},
-/obj/item/cable_coil/cut{
-	icon_state = "coil1"
-	},
-/turf/simulated/floor/plating/damaged1,
-/area/salyut)
 "bAg" = (
 /obj/decal/cleanable/dirt,
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/breakfast,
 /turf/simulated/floor/caution/west,
 /area/mining/quarters)
-"cKF" = (
-/obj/storage/crate/loot,
-/turf/simulated/floor/plating/airless,
-/area/salyut)
 "cSD" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
@@ -25209,70 +25196,33 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
-"cTZ" = (
-/obj/item/raw_material/shard/glass,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/salyut)
-"cVc" = (
-/obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "Due to what must be a substantial amount of neglect, this air scrubber seems to be out of working condition.";
-	icon = 'icons/obj/atmospherics/atmos.dmi';
-	icon_state = "scrubber:0";
-	name = "Air Scrubber"
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/salyut)
-"dWE" = (
-/obj/decal/cleanable/machine_debris{
-	icon_state = "gib7"
-	},
-/turf/simulated/floor/plating/damaged1,
-/area/salyut)
-"efu" = (
-/obj/decal/cleanable/machine_debris,
+"etA" = (
 /obj/decal/cleanable/oil,
-/obj/machinery/chem_master,
 /turf/simulated/floor/plating/damaged1,
 /area/salyut)
-"feu" = (
-/obj/decal/cleanable/machine_debris,
-/obj/window{
-	dir = 8;
-	icon_state = "rwindow";
-	reinf = 1
-	},
-/obj/random_item_spawner/tools,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
+"eDx" = (
+/obj/machinery/r_door_control/podbay/soviet,
+/turf/simulated/shuttle/wall,
 /area/salyut)
 "fkT" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
-"fIs" = (
+"gpn" = (
 /obj/item/shipcomponent/mainweapon/disruptor_light,
 /turf/space,
 /area/space)
-"fKo" = (
-/obj/machinery/r_door_control/podbay/soviet,
-/turf/simulated/shuttle/wall,
-/area/salyut)
-"hbF" = (
-/obj/landmark/artifact,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
+"hnV" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
 	},
-/area/salyut)
+/obj/item/cable_coil/cut{
+	color = "#DD0000"
+	},
+/turf/space,
+/area/space)
 "hOL" = (
 /obj/item/storage/secure/ssafe{
 	configure_mode = 0;
@@ -25299,13 +25249,6 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
-"ipr" = (
-/obj/rack,
-/obj/random_item_spawner/tools,
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/salyut)
 "ivG" = (
 /obj/noticeboard{
 	pixel_x = 10;
@@ -25313,13 +25256,48 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/radiostation/bedroom)
-"jJm" = (
+"iKu" = (
 /obj/storage/crate{
 	name = "Dented Crate"
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
+/area/salyut)
+"iOG" = (
+/obj/decal/cleanable/machine_debris,
+/obj/window{
+	dir = 8;
+	icon_state = "rwindow";
+	reinf = 1
+	},
+/obj/random_item_spawner/tools,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/salyut)
+"jrb" = (
+/obj/rack,
+/obj/random_item_spawner/tools,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/salyut)
+"jQT" = (
+/obj/item/raw_material/shard/glass,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/salyut)
+"jUw" = (
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib7"
+	},
+/obj/item/cable_coil/cut{
+	icon_state = "coil1"
+	},
+/turf/simulated/floor/plating/damaged1,
 /area/salyut)
 "kag" = (
 /obj/decal/tile_edge/stripe{
@@ -25342,6 +25320,32 @@
 	},
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
+"lFm" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent.  A rather decrepit one, at that.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "defunct vent"
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/salyut)
+"ndC" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Due to what must be a substantial amount of neglect, this air scrubber seems to be out of working condition.";
+	icon = 'icons/obj/atmospherics/atmos.dmi';
+	icon_state = "scrubber:0";
+	name = "Air Scrubber"
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/salyut)
 "npm" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left{
@@ -25349,6 +25353,26 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
+"nMc" = (
+/obj/decal/cleanable/machine_debris,
+/obj/decal/cleanable/oil,
+/obj/machinery/chem_master,
+/turf/simulated/floor/plating/damaged1,
+/area/salyut)
+"oia" = (
+/obj/item/cable_coil/cut{
+	icon_state = "coil1"
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/salyut)
+"onk" = (
+/obj/landmark/artifact,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/salyut)
 "oNd" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
@@ -25361,14 +25385,6 @@
 /obj/item/storage/box/record/notaquario,
 /turf/simulated/floor/wood/two,
 /area/space)
-"pIN" = (
-/obj/item/cable_coil/cut{
-	icon_state = "coil1"
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/salyut)
 "qmR" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left,
@@ -25384,9 +25400,11 @@
 	},
 /turf/space,
 /area/space)
-"qTf" = (
-/obj/item/skull/strange,
-/turf/simulated/floor/plating,
+"qJt" = (
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib7"
+	},
+/turf/simulated/floor/plating/damaged1,
 /area/salyut)
 "rdq" = (
 /obj/decal/cleanable/gangtag{
@@ -25404,24 +25422,23 @@
 	stone_color = "#575A5E"
 	},
 /area/space)
-"sfF" = (
-/obj/decal/cleanable/oil,
-/turf/simulated/floor/plating/damaged1,
+"rBl" = (
+/obj/decal/fakeobjects/lightbulb_broken,
+/obj/reagent_dispensers/watertank/big,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/salyut)
+"scK" = (
+/obj/item/skull/strange,
+/turf/simulated/floor/plating,
 /area/salyut)
 "sFV" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/timewarp/ship)
-"teE" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "A vent.  A rather decrepit one, at that.";
-	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "hvent";
-	name = "defunct vent"
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
+"sYD" = (
+/obj/storage/crate/loot,
+/turf/simulated/floor/plating/airless,
 /area/salyut)
 "uto" = (
 /obj/storage/crate,
@@ -25439,6 +25456,12 @@
 /obj/stool/chair,
 /turf/simulated/floor/black,
 /area/mining/quarters)
+"wfe" = (
+/obj/storage/crate{
+	name = "Dented Crate"
+	},
+/turf/space,
+/area/space)
 "wfJ" = (
 /obj/storage/secure/closet/personal,
 /obj/item/clothing/under/gimmick/cosby,
@@ -25448,29 +25471,6 @@
 	icon_state = "fred2"
 	},
 /area/radiostation/bedroom)
-"wgc" = (
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
-/turf/space,
-/area/space)
-"wQe" = (
-/obj/decal/fakeobjects/lightbulb_broken,
-/obj/reagent_dispensers/watertank/big,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/salyut)
-"wQr" = (
-/obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir"
-	},
-/obj/item/cable_coil/cut{
-	color = "#DD0000"
-	},
-/turf/space,
-/area/space)
 "xOl" = (
 /turf/simulated/floor/plating/airless/asteroid{
 	stone_color = "#D1E6FF"
@@ -38663,7 +38663,7 @@ aau
 aau
 aaa
 aaa
-aaa
+gpn
 aaa
 aaa
 aaa
@@ -44125,7 +44125,7 @@ aaa
 aaa
 aaa
 aaa
-fIs
+aaa
 aaa
 aad
 aaa
@@ -50103,7 +50103,7 @@ aHR
 aHQ
 aJo
 bks
-ipr
+jrb
 aHR
 aaa
 aaa
@@ -50405,7 +50405,7 @@ ayG
 aBk
 aJp
 aHR
-fKo
+eDx
 aHP
 aaa
 aaa
@@ -51311,7 +51311,7 @@ aHR
 aIo
 bfJ
 bkv
-efu
+nMc
 aHO
 aaa
 aaa
@@ -51616,7 +51616,7 @@ bkw
 biQ
 biQ
 axN
-wQr
+hnV
 aJj
 aaa
 aaa
@@ -51915,13 +51915,13 @@ aHR
 aIq
 biQ
 bkw
-bwd
-sfF
+jUw
+etA
 aaa
 aaa
 aNH
 aaa
-aaa
+bkx
 aaa
 aaa
 aaa
@@ -52217,7 +52217,7 @@ aHR
 aIM
 bjM
 bkw
-dWE
+qJt
 aHO
 aaa
 aaa
@@ -52522,7 +52522,7 @@ bkw
 aHR
 aHP
 aaa
-bkx
+aaa
 aaa
 aaa
 aaa
@@ -53726,7 +53726,7 @@ ayY
 aAB
 aHT
 aHT
-teE
+lFm
 aHT
 aHT
 aIt
@@ -54030,8 +54030,8 @@ aHT
 bkb
 bkb
 aHT
-cTZ
-hbF
+jQT
+onk
 aHR
 aaa
 aGZ
@@ -54332,8 +54332,8 @@ aHT
 bkc
 bkb
 aHT
-cTZ
-jJm
+jQT
+iKu
 aHR
 aGE
 aaa
@@ -54633,9 +54633,9 @@ aHR
 aHT
 bkb
 bkb
-pIN
+oia
 aHT
-feu
+iOG
 aHR
 aaa
 aaa
@@ -54934,7 +54934,7 @@ azH
 ayF
 aHT
 bkg
-teE
+lFm
 aHT
 bka
 bka
@@ -55237,11 +55237,11 @@ aHR
 aJl
 aHT
 aHT
-wQe
+rBl
 aHR
-cVc
+ndC
 aHR
-wgc
+wfe
 aaa
 aaa
 aaa
@@ -55840,7 +55840,7 @@ aAy
 ayG
 aBk
 bkl
-cKF
+sYD
 aBk
 aHP
 aAy
@@ -56142,7 +56142,7 @@ aaa
 aaa
 aHR
 bkm
-qTf
+scK
 aHR
 aaa
 aaa
