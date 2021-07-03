@@ -423,10 +423,9 @@
 		return msgs
 
 	if (is_shove) return msgs
-	var/disarm_prob = 37 * lerp(clamp(200 - target_stamina, 0, 100)/100, 1, 0.5) * mult
-	message_admins("[disarm_prob]")
-	var/disarm_success = prob(disarm_prob)
-	if (target.check_block() && !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)) && prob(80))
+	var/disarm_prob = 
+	var/disarm_success = prob(40 * lerp(clamp(200 - target_stamina, 0, 100)/100, 1, 0.5) * mult)
+	if (target.check_block() && !(HAS_MOB_PROPERTY(target, PROP_CANTMOVE)))
 		disarm_success = 0
 	var/list/obj/item/limbs = list()
 	var/list/obj/item/loose = list()
