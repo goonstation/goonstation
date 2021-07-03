@@ -494,7 +494,6 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 /obj/machinery/computer/atmosphere/mixercontrol
 	var/obj/machinery/atmospherics/mixer/mixerid
 	var/mixer_information
-	id
 	req_access = list(access_engineering_engine, access_tox_storage)
 	object_flags = CAN_REPROGRAM_ACCESS
 	circuit_type = /obj/item/circuitboard/air_management
