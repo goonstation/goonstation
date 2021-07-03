@@ -14,13 +14,13 @@
 	machine_registry_idx = MACHINES_CLONINGCONSOLES
 	can_reconnect = 1
 	circuit_type = /obj/item/circuitboard/cloning
+	records = list()
 	var/obj/machinery/clone_scanner/scanner = null //Linked scanner. For scanning.
 	var/max_pods = 3
 	var/list/linked_pods = list() // /obj/machinery/clonepod
 	var/currentStatusMessage = list()
 	var/currentMessageNumber = 0
 	var/menu = 1 //Which menu screen to display
-	var/list/records = list()
 	var/obj/item/disk/data/floppy/diskette = null //Mostly so the geneticist can steal somebody's identity while pretending to give them a handy backup profile.
 	var/held_credit = 5000 // one free clone
 	var/allow_dead_scanning = 0 //Can the dead be scanned in the cloner?
@@ -115,6 +115,10 @@
 	if(src.BE)
 		new /obj/item/cloneModule/genepowermodule(src.loc)
 		src.BE = null
+	if(src.status & BROKEN)
+		logTheThing("station", usr, null, "disassembles [src] (broken) [log_loc(src)]")
+	else
+		logTheThing("station", usr, null, "disassembles [src] [log_loc(src)]")
 
 
 /obj/machinery/computer/cloning/attackby(obj/item/W as obj, mob/user as mob)

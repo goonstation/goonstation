@@ -8,6 +8,10 @@
 	var/light_r = 1
 	var/light_g = 1
 	var/light_b = 1
+	var/powernet = null
+	var/list/records = null
+	var/id = null
+	var/frequency = null
 
 	/// does it have a glow in the dark screen? see computer_screens.dmi
 	var/glow_in_dark_screen = TRUE

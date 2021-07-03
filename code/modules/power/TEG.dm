@@ -1459,13 +1459,13 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 	icon_state = "computer_generic"
 
 	name = "Pump control computer"
+	frequency = 1225
 
 	var/list/pump_infos
 
 	var/last_change = 0
 	var/message_delay = 1 MINUTE
 
-	var/frequency = 1225
 	var/datum/radio_frequency/radio_connection
 
 	New()

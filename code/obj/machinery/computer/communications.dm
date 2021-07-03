@@ -37,11 +37,11 @@
 		radio_controller.remove_object(src, status_display_freq)
 		..()
 
-/obj/machinery/computer/robotics/special_deconstruct(obj/computerframe/frame as obj)
+/obj/machinery/computer/communications/special_deconstruct(obj/computerframe/frame as obj)
 	if(src.status & BROKEN)
-		logTheThing("station", user, null, "disassembles [src] (broken) [log_loc(src)]")
+		logTheThing("station", usr, null, "disassembles [src] (broken) [log_loc(src)]")
 	else
-		logTheThing("station", user, null, "disassembles [src] [log_loc(src)]")
+		logTheThing("station", usr, null, "disassembles [src] [log_loc(src)]")
 
 
 /obj/machinery/computer/communications/process()

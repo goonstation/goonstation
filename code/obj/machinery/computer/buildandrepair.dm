@@ -224,12 +224,16 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 			if (isscrewingtool(P))
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				boutput(user, "<span class='notice'>You connect the monitor.</span>")
-				var/obj/B = new src.circuit.computertype ( src.loc )
+				var/obj/machinery/computer/B = new src.circuit.computertype ( src.loc )
 				B.set_dir(src.dir)
-				if (circuit.powernet) B:powernet = circuit.powernet
-				if (circuit.id) B:id = circuit.id
-				if (circuit.records) B:records = circuit.records
-				if (circuit.frequency) B:frequency = circuit.frequency
+				if (circuit.powernet)
+					B.powernet = circuit.powernet
+				if (circuit.id)
+					B.id = circuit.id
+				if (circuit.records)
+					B.records = circuit.records
+				if (circuit.frequency)
+					B.frequency = circuit.frequency
 				logTheThing("station", user, null, "assembles [B] [log_loc(B)]")
 				qdel(src)
 

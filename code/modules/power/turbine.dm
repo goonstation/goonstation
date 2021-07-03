@@ -35,9 +35,9 @@
 	anchored = 1
 	density = 1
 	circuit_type = /obj/item/circuitboard/turbine_control
+	id = 0
 	var/obj/machinery/compressor/compressor
 	var/list/obj/machinery/door/poddoor/doors
-	var/id = 0
 	var/door_status = 0
 
 // the inlet stage of the gas turbine electricity generator

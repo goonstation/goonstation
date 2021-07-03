@@ -6,8 +6,8 @@ obj/machinery/computer/general_air_control
 	icon_state = "computer_generic"
 	circuit_type = /obj/item/circuitboard/air_management
 	name = "Computer"
+	frequency = 1439
 
-	var/frequency = 1439
 	var/list/sensors = list()
 
 	var/list/sensor_information = list()
@@ -494,14 +494,14 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 /obj/machinery/computer/atmosphere/mixercontrol
 	var/obj/machinery/atmospherics/mixer/mixerid
 	var/mixer_information
-	var/id
+	id
 	req_access = list(access_engineering_engine, access_tox_storage)
 	object_flags = CAN_REPROGRAM_ACCESS
 	circuit_type = /obj/item/circuitboard/air_management
 	var/last_change = 0
 	var/message_delay = 600
 
-	var/frequency = 1439
+	frequency = 1439
 	var/datum/radio_frequency/radio_connection
 
 	special_deconstruct(obj/computerframe/frame as obj)

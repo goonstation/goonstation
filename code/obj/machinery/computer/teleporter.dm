@@ -4,7 +4,7 @@
 	circuit_type = /obj/item/circuitboard/teleporter
 	var/obj/item/locked = null
 	var/obj/machinery/teleport/portal_generator/linkedportalgen = null
-	var/id = null
+	id = null
 	desc = "A computer that sets which beacon the connected teleporter attempts to create a portal to."
 
 	light_r =1

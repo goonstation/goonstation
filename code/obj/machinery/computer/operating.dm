@@ -12,7 +12,7 @@
 	var/mob/living/carbon/human/victim = null
 
 	var/obj/machinery/optable/table = null
-	var/id = 0.0
+	id = 0.0
 
 /obj/machinery/computer/operating/New()
 	..()
