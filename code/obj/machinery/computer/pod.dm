@@ -2,7 +2,7 @@
 	name = "Pod Launch Control"
 	icon_state = "computer_generic"
 	circuit_type = /obj/item/circuitboard/pod
-	id = 1.0
+	id = 1
 	var/obj/machinery/mass_driver/connected = null
 	var/timing = 0.0
 	var/time = 30.0
