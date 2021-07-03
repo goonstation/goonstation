@@ -1,4 +1,64 @@
 
+(t)fri jul 02 21
+(u)UnfunnyPerson
+(p)5305
+(e)⚖|balance
+(+)Frog Flu progresses much slower
+(u)Tarmunora
+(e)⚖|balance
+(*)Single tread leg blocks lying too
+(t)thu jul 01 21
+(u)112358sam
+(p)5345
+(e)🐛|bug
+(+)Welding fuel tanks only refill welding tools if they contain welding fuel.
+(u)MarkNstein
+(p)2152
+(e)⚖🎨|balance, sprites
+(*)Entering chutes now has an animation and action bar. Chute-entry has been made faster.
+(u)BatElite
+(p)5293
+(e)⚖|balance
+(+)Miniature bibles are no longer visible in-hand, nor will they spare atheists.
+(u)Arthur Holiday
+(p)5311
+(e)⚖|balance
+(+)The Head of Security does not get a taser at roundstart anymore.
+(u)BatElite
+(p)5294
+(e)|
+(+)Emagging cyborgs no longer randomly fails.
+(t)wed jun 30 21
+(u)112358sam
+(p)5140
+(e)🆕🗺|feature, mapping
+(+)QM consoles and supply request consoles are now constructable.
+(+)Added QM console and supply request circuitboards to tech storage for current maps.
+(u)UnfunnyPerson
+(p)5318
+(e)⚖|balance
+(+)Laser Rifles now require more difficult materials.
+(u)Ryumi
+(p)5093
+(e)🗺|mapping
+(+)Significantly expanded Donut 3's Ranch
+(u)112358sam
+(p)5194
+(e)|
+(+)Borgs and AI can now see packet sniffer device output and set filters.
+(u)112358sam
+(p)5003
+(e)🆕🗺|feature, mapping
+(+)Makes the quantum telescope console constructable.
+(+)Adds the new quantum telescope circuit board to tech storage and the mining outpost.
+(u)DimWhat
+(p)5286
+(e)⚖🗺|balance, mapping
+(+)Removed the space proofness of the snow suit and altered its stats.
+(u)Walpvrgis and BatElite
+(p)5300
+(e)🎨|sprites
+(*)AI players now have 20 new faces to choose from, so you can more effectively simulate just how disappointed you are in the crew.
 (t)tue jun 29 21
 (u)Tarmunora
 (e)⚖|balance

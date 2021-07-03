@@ -15130,9 +15130,9 @@
 	on = 0;
 	pixel_x = -24
 	},
-/obj/item/clothing/suit/space/emerg/snow,
-/obj/item/clothing/suit/space/emerg/snow,
-/obj/item/clothing/suit/space/emerg/snow,
+/obj/item/clothing/suit/snow,
+/obj/item/clothing/suit/snow,
+/obj/item/clothing/suit/snow,
 /obj/item/tank/air,
 /obj/item/tank/air,
 /obj/item/tank/air,
