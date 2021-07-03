@@ -13,7 +13,7 @@
 	if (prob(0.5) && !H.lying)
 		if (!GET_COOLDOWN(H, "clown_trip"))
 			if (H.slip())
-				ON_COOLDOWN(H, "clown_trip", rand(30,60) SECONDS)
+				ON_COOLDOWN(H, "clown_trip", 6 SECONDS)
 				if(istype(H.head, /obj/item/clothing/head))
 					if(istype(H.head, /obj/item/clothing/head/helmet))
 						boutput(H, "<span class='alert'>You stumble and fall to the ground. Thankfully, that helmet protected you.</span>")
