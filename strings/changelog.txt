@@ -1,5 +1,9 @@
 
 (t)sat jul 03 21
+(u)TTerc
+(p)5362
+(e)🆕|feature
+(+)Added colorful backpacks and satchels to uniform manufacturer.
 (u)Kubius
 (p)5365
 (e)🆕🗺|feature, mapping
