@@ -1,5 +1,12 @@
 
 (t)sat jul 03 21
+(u)Tarmunora
+(p)5368
+(e)⚖|balance
+(+)disarm stam cost 10 -> 30
+(+)base disarm chance 37% -> 40%
+(+)Disarm chance scaled down to 50% of current (20%) at targets with 200 or more stamina, and linerally scaled to current value (40%) on targets with 100 or less.  Blocking prevents disarm (not shovedown though), at the cost of (10) stamina if the disarm would have succeeded
+(+)Disarm targets all held items at once
 (u)DimWhat
 (p)5166
 (e)🎨|sprites
