@@ -28,7 +28,22 @@
 			boutput(activator, "<span class='alert'>You can't reskin a backpack if you're not wearing one!</span>")
 			return
 
-		if (istype(activator.back, /obj/item/storage/backpack/medic))
+		if (istype(activator.back, /obj/item/storage/backpack/medic/blue))
+			var/obj/item/storage/backpack/medic/M = activator.back
+			M.icon = 'icons/obj/items/storage.dmi'
+			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
+			M.wear_image_icon = 'icons/mob/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.icon_state = "satchel_blumedic"
+			M.item_state = "satchel_blumedic"
+			M.name = "medic's satchel"
+			M.real_name = "medic's satchel"
+			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a medical doctor's shoulder. (Base Item: medic's backpack)"
+			activator.set_clothing_icon_dirty()
+			M.wear_layer = MOB_BACK_LAYER_SATCHEL
+
+		else if (istype(activator.back, /obj/item/storage/backpack/medic))
 			var/obj/item/storage/backpack/medic/M = activator.back
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'

@@ -824,6 +824,7 @@
 			if(4) // medical
 				src.goods_sell += new /datum/commodity/medical/injectorbelt(src)
 				src.goods_sell += new /datum/commodity/medical/strange_reagent(src)
+				src.goods_sell += new /datum/commodity/medical/paraspacesuit
 				src.goods_sell += new /datum/commodity/medical/firstaidR(src)
 				src.goods_sell += new /datum/commodity/medical/firstaidBr(src)
 				src.goods_sell += new /datum/commodity/medical/firstaidB(src)

@@ -142,6 +142,10 @@
 	name = "blue shoes"
 	icon_state = "blu"
 
+/obj/item/clothing/shoes/lightblue
+	name = "light blue shoes"
+	icon_state = "lightblu"
+
 /obj/item/clothing/shoes/orange
 	name = "orange shoes"
 	icon_state = "orange"

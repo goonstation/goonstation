@@ -86,6 +86,11 @@
 	item_state = "bp-medic"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
+	blue
+		icon_state = "bp_blumedic"
+		item_state = "bp_blumedic"
+		spawn_contents = list(/obj/item/clothing/head/helmet/space/paramedic, /obj/item/clothing/suit/space/paramedic, /obj/item/clothing/under/rank/medical/april_fools, /obj/item/clothing/shoes/lightblue)
+
 /obj/item/storage/backpack/randoseru
 	name = "randoseru"
 	desc = "Inconspicuous, nostalgic and quintessentially Space Japanese."
@@ -195,6 +200,9 @@
 	name = "medic's satchel"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a Medical Doctor's shoulder."
 	icon_state = "satchel_medic"
+	blue
+		icon_state = "satchel_blumedic"
+		item_state = "satchel_blumedic"
 
 /obj/item/storage/backpack/satchel/randoseru
 	name = "randoseru satchel"

@@ -1920,6 +1920,15 @@
 	upperfluc = 4500
 	lowerfluc = -2500
 
+/datum/commodity/medical/paraspacesuit
+	comname = "Space Based Paramedic Clothing Backpack"
+	comtype = /obj/item/storage/backpack/medic/blue
+	desc = "Previous work clothing from the doctor who this unit replaced, all in a nice backpack. Comes with a paramedic spacesuit, an alternative medical jumpsuit, and a pair of light blue shoes."
+	price = 3000
+	baseprice = 3000
+	upperfluc = 1000
+	lowerfluc = -1000
+
 /datum/commodity/medical/strange_reagent
 	comname = "Strange Reagent"
 	comtype = /obj/item/reagent_containers/glass/beaker/strange_reagent
