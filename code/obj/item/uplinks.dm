@@ -210,9 +210,6 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				else
 					boutput(user, "You insert [crystal_amount] telecrystals into the [src].")
 				qdel(W)
-			else if (src.locked && !isnull(src.lock_code))
-				return
-		return
 
 	proc/generate_menu()
 		if (src.uses < 0)

@@ -624,9 +624,6 @@
 			else
 				boutput(user, "You insert [crystal_amount] telecrystals into the [src].")
 			qdel(C)
-		else if (!src.uplink.active && !isnull(src.uplink.lock_code))
-			return
-		//return ..()
 
 /obj/item/device/pda2/examine()
 	. = ..()
