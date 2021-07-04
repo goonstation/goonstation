@@ -1313,6 +1313,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\decorative_pot.dm"
 #include "code\obj\item\deployable_turret.dm"
 #include "code\obj\item\dice.dm"
+#include "code\obj\item\explosives.dm"
 #include "code\obj\item\fitness.dm"
 #include "code\obj\item\flamethrower.dm"
 #include "code\obj\item\football.dm"

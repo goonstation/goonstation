@@ -613,6 +613,21 @@
 				src.insert_id_card(ID, user)
 				boutput(user, "<span class='notice'>You insert [ID] into [src].</span>")
 
+	else if (istype(C, /obj/item/raw_material/telecrystal_ref))
+		if (!C || !C.material)
+			return
+		if (src.uplink.active)
+			var/crystal_amount = C.amount
+			src.uplink.uses = src.uplink.uses + crystal_amount
+			if (crystal_amount == 1)
+				boutput(user, "You insert [crystal_amount] telecrystal into the [src].")
+			else
+				boutput(user, "You insert [crystal_amount] telecrystals into the [src].")
+			qdel(C)
+		else if (!src.uplink.active && !isnull(src.uplink.lock_code))
+			return
+		//return ..()
+
 /obj/item/device/pda2/examine()
 	. = ..()
 	. += "The back cover is [src.closed ? "closed" : "open"]."

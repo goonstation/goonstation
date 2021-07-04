@@ -198,6 +198,22 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			src.generate_menu()
 		return
 
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/raw_material/telecrystal_ref))
+			if (!W || !W.material)
+				return
+			if (!src.locked)
+				var/crystal_amount = W.amount
+				uses = uses + crystal_amount
+				if (crystal_amount == 1)
+					boutput(user, "You insert [crystal_amount] telecrystal into the [src].")
+				else
+					boutput(user, "You insert [crystal_amount] telecrystals into the [src].")
+				qdel(W)
+			else if (src.locked && !isnull(src.lock_code))
+				return
+		return
+
 	proc/generate_menu()
 		if (src.uses < 0)
 			src.uses = 0

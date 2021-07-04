@@ -459,6 +459,18 @@
 		name = "Blue Telecrystal"
 		desc = "[desc] It's all shiny and blue now."
 
+/obj/item/raw_material/telecrystal_ref
+	name = "refined telecrystal"
+	desc = "A refined telecrystal, useful for creating small, precise warps in space."
+	icon_state = "telecrystal_ref"
+	material_name = "Refined Telecrystal"
+	crystal = 2
+	powersource = 2
+
+	setup_material()
+		src.setMaterial(getMaterial("telecrystal_ref"), appearance = 0, setname = 0)
+		return ..()
+
 /obj/item/raw_material/miracle
 	name = "miracle matter"
 	desc = "Miracle Matter is a bizarre substance known to metamorphosise into other minerals when processed."
@@ -727,6 +739,11 @@
 /obj/item/material_piece/telecrystal
 	desc = "A cut block of Telecrystal."
 	default_material = "telecrystal"
+	icon_state = "martian-bar"
+
+/obj/item/material_piece/telecrystal_ref
+	desc = "A cut block of Refined Telecrystal."
+	default_material = "telecrystal_ref"
 	icon_state = "martian-bar"
 
 /obj/item/material_piece/fibrilith

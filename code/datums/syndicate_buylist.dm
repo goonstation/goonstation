@@ -1039,6 +1039,22 @@ This is basically useless for anyone but miners.
 	desc = "A terrifying grenade containing a potent nerve gas. Try not to get caught in the smoke."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
+/////////////////////////////////////////// Telecrystals //////////////////////////////////////////////////
+
+/datum/syndicate_buylist/generic/telecrystal
+	name = "Refined Telecrystal"
+	item = /obj/item/raw_material/telecrystal_ref
+	cost = 1
+	desc = "A refined Telecrystal, to be inserted into an uplink as currency."
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft)
+
+/datum/syndicate_buylist/generic/trick_telecrystal
+	name = "Trick Refined Telecrystal"
+	item = /obj/item/explosive_telecrystal
+	cost = 1
+	desc = "A small, highly volatile explosive designed to look like a refined Telecrystal."
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/nuclear)
+
 /////////////////////////////////////////////// Disabled items /////////////////////////////////////////////////////
 
 /datum/syndicate_buylist/traitor/fogmaster

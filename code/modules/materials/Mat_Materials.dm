@@ -801,6 +801,20 @@
 		addTrigger(triggersOnAttack, new /datum/materialProc/telecrystal_onattack())
 		return ..()
 
+/datum/material/crystal/telecrystal_ref
+	mat_id = "telecrystal_ref"
+	name = "refined telecrystal"
+	desc = "Refined Telecrystals are noted for their use in high-precision teleportation."
+	color = "#a90748"
+	material_flags = MATERIAL_CRYSTAL | MATERIAL_ENERGY
+	alpha = 100
+
+	New()
+		setProperty("density", 20)
+		setProperty("hard", 10)
+		setProperty("reflective", 90)
+		return ..()
+
 /datum/material/crystal/miracle
 	mat_id = "miracle"
 	name = "miraclium"
