@@ -2409,8 +2409,6 @@ datum
 
 					if(M.get_oxygen_deprivation())
 						M.take_oxygen_deprivation(-1)
-					if(M.get_toxin_damage())
-						M.take_toxin_damage(-1)
 					if(M.losebreath)
 						M.lose_breath(-1)
 					M.HealDamage("All", 2, 2, 1)

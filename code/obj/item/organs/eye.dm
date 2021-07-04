@@ -358,10 +358,9 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
-			src.camera = new /obj/machinery/camera(src)
-			src.camera.c_tag = src.camera_tag
-			src.camera.network = src.camera_network
+		src.camera = new /obj/machinery/camera(src)
+		src.camera.c_tag = src.camera_tag
+		src.camera.network = src.camera_network
 
 	on_transplant(var/mob/M as mob)
 		..()
