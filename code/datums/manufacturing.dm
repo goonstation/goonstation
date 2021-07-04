@@ -2115,7 +2115,7 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	category = "Clothing"
 
 /datum/manufacture/pride_poly
-	name = "Polyamorous Pride Jumpsuit"
+	name = "Polysexual Pride Jumpsuit"
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
 	item_outputs = list(/obj/item/clothing/under/pride/poly)
