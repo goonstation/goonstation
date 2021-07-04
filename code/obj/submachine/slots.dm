@@ -12,6 +12,7 @@
 	var/working = 0
 	var/obj/item/card/id/scan = null
 	var/datum/data/record/accessed_record = null
+	var/available_funds = 0
 
 	New()
 		AddComponent(/datum/component/mechanics_holder)
@@ -29,7 +30,8 @@
 	. = list(
 		"busy" = working,
 		"scannedCard" = src.scan,
-		"money" = src.accessed_record?.fields["current_money"],
+		"money" = available_funds,
+		"account_funds" = src.accessed_record?.fields["current_money"],
 		"plays" = plays,
 	)
 
@@ -56,10 +58,10 @@
 		if ("play")
 			if (src.working || !src.accessed_record)
 				return TRUE
-			if (src.accessed_record.fields["current_money"] < 20)
+			if (src.available_funds < 20)
 				src.visible_message("<span class='subtle'><b>[src]</b> says, 'Insufficient money to play!'</span>")
 				return TRUE
-			src.accessed_record.fields["current_money"] -= 20
+			src.available_funds -= 20
 			src.plays++
 			src.working = 1
 			src.icon_state = "slots-on"
@@ -76,12 +78,28 @@
 			if(!src.accessed_record)
 				return TRUE // jerks doing that "hide in a chute to glitch auto-update windows out" exploit caused a wall of runtime errors
 			usr.put_in_hand_or_eject(src.scan)
+			src.accessed_record.fields["current_money"] += src.available_funds
+			src.available_funds = 0
 			src.scan = null
 			src.accessed_record = null
 			src.working = FALSE
 			src.icon_state = "slots-off" // just in case, some fucker broke it earlier
-			src.visible_message("<span class='subtle'><b>[src]</b> says, 'Thank you for playing!'</span>")
+			src.visible_message("<span class='subtle'><b>[src]</b> says, 'Winnings transferred, thank you for playing!'</span>")
 			. = TRUE
+
+		if("cashin")
+			var/transfer_amount = input(usr, "Enter how much to transfer from your account.", "Deposit Credits", 0) as null|num
+			transfer_amount = clamp(transfer_amount,0,src.accessed_record.fields["current_money"])
+			src.accessed_record.fields["current_money"] -= transfer_amount
+			src.available_funds += transfer_amount
+			boutput(usr, "<span class='notice'>Funds transferred.</span>")
+
+		if("cashout")
+			src.accessed_record.fields["current_money"] += src.available_funds
+			src.available_funds = 0
+			boutput(usr, "<span class='notice'>Funds transferred.</span>")
+
+
 
 	src.add_fingerprint(usr)
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "machineUsed")
@@ -161,7 +179,7 @@
 	if (amount > 0)
 		src.visible_message("<span class='subtle'><b>[src]</b> says, '[exclamation][src.scan.registered] has won [amount_text]!'</span>")
 		playsound(src, "[win_sound]", 55, 1)
-		src.accessed_record.fields["current_money"] += amount
+		src.available_funds += amount
 
 /obj/submachine/slot_machine_manta
 	name = "Slot Machine"
