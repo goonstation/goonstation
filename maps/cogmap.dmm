@@ -33715,10 +33715,7 @@
 /obj/cable/brown{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/monitor{
-	dir = 4;
-	name = "Station Power Grid Monitoring"
-	},
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor,
 /area/station/engine/power)
 "bHm" = (
@@ -34505,11 +34502,11 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/power)
 "bJk" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/power)
 "bJl" = (
@@ -47066,13 +47063,17 @@
 /area/station/storage/tech)
 "cnN" = (
 /obj/rack,
-/obj/item/circuitboard/barcode_qm{
+/obj/item/circuitboard/qmorder{
 	pixel_x = -5;
-	pixel_y = 1
+	pixel_y = 5
 	},
 /obj/item/circuitboard/robot_module_rewriter{
 	pixel_x = -5;
 	pixel_y = -3
+	},
+/obj/item/circuitboard/barcode_qm{
+	pixel_x = -5;
+	pixel_y = 1
 	},
 /obj/item/circuitboard/barcode{
 	pixel_x = 5;
@@ -52997,6 +52998,14 @@
 /area/station/medical/medbay/lobby)
 "cCc" = (
 /obj/rack,
+/obj/item/circuitboard/qmsupply{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/circuitboard/telescope{
+	pixel_x = -5;
+	pixel_y = 1
+	},
 /obj/item/circuitboard/powermonitor{
 	pixel_x = -5;
 	pixel_y = -3
@@ -53009,13 +53018,13 @@
 	pixel_x = 5;
 	pixel_y = 3
 	},
-/obj/item/circuitboard/operating{
-	pixel_x = 5;
-	pixel_y = -1
-	},
 /obj/item/circuitboard/arcade{
 	pixel_x = 5;
 	pixel_y = -5
+	},
+/obj/item/circuitboard/operating{
+	pixel_x = 5;
+	pixel_y = -1
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -54555,6 +54564,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/core)
+"dZY" = (
+/obj/stool/chair/yellow{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/engine/engineering)
 "ebe" = (
 /obj/item/device/radio/intercom/cargo{
 	dir = 8
@@ -55468,6 +55486,18 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
+"fDa" = (
+/obj/landmark/start{
+	name = "Engineer"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/engine/engineering)
 "fDy" = (
 /obj/landmark/gps_waypoint,
 /obj/decal/tile_edge/stripe/big{
@@ -56606,6 +56636,7 @@
 /obj/item/device/radio/intercom/engineering{
 	dir = 1
 	},
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "hCk" = (
@@ -62821,9 +62852,6 @@
 	dir = 5
 	},
 /obj/cable/brown{
-	icon_state = "4-8"
-	},
-/obj/cable/brown{
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
@@ -63359,12 +63387,6 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/cafeteria)
 "tSs" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "engineering";
-	mailgroup = "engineer";
-	message = "1";
-	name = "mail chute-'Engineering'"
-	},
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -63376,9 +63398,7 @@
 	can_rupture = 0;
 	dir = 10
 	},
-/obj/cable/brown{
-	icon_state = "4-8"
-	},
+/obj/machinery/disposal/mail/autoname/engineering,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -64790,14 +64810,18 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/reagent_dispensers/watertank/fountain,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
 	dir = 6
 	},
+/obj/machinery/power/data_terminal,
 /obj/cable/brown{
-	icon_state = "4-8"
+	icon_state = "0-4"
 	},
+/obj/cable/brown{
+	icon_state = "0-8"
+	},
+/obj/machinery/computer/atmosphere/pumpcontrol,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -65138,10 +65162,10 @@
 /area/station/security/main)
 "xpg" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/atmosphere/pumpcontrol,
-/obj/cable/brown{
-	icon_state = "0-8"
+/obj/cable{
+	icon_state = "0-2"
 	},
+/obj/machinery/power/monitor,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -114422,8 +114446,8 @@ bEo
 rEe
 bsN
 xpg
-bHr
-bIo
+dZY
+fDa
 bJu
 bMc
 jbi

@@ -445,6 +445,25 @@ proc/get_angle(atom/a, atom/b)
 		. = findtext(text, suffix, start, null) //was findtextEx
 
 /**
+ * Given a message, returns a list containing the radio prefix and the message,
+ * so that the message can be manipulated seperately in various functions.
+ */
+/proc/separate_radio_prefix_and_message(var/message)
+	var/prefix = null
+
+	if (dd_hasprefix(message, ":lh") || dd_hasprefix(message, ":rh") || dd_hasprefix(message, ":in"))
+		prefix = copytext(message, 1, 4)
+		message = copytext(message, 4)
+	else if (dd_hasprefix(message, ":"))
+		prefix = copytext(message, 1, 3)
+		message = copytext(message, 3)
+	else if (dd_hasprefix(message, ";"))
+		prefix = ";"
+		message = copytext(message, 2)
+
+	return list(prefix, message)
+
+/**
 	* Given a list, returns a text string representation of the list's contents.
 	*/
 /proc/english_list(var/list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "," )
