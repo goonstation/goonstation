@@ -37,7 +37,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
-			if (src && istype(src) && (!src.items_general.len && !src.items_job.len && !length(src.items_objective) && !src.items_telecrystal.len))
+			if (src && istype(src) && (!length(src.items_general) && !length(src.items_job) && !length(src.items_objective) && !length(src.items_telecrystal)))
 				src.setup()
 
 	proc/generate_code()
@@ -125,7 +125,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		var/list/names = list()
 		var/list/namecounts = list()
 
-		if (src.items_general.len)
+		if (length(src.items_general))
 			var/list/sort1 = list()
 
 			for (var/datum/syndicate_buylist/S1 in src.items_general)
@@ -141,7 +141,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			src.items_general = sortList(sort1)
 
-		if (src.items_job.len)
+		if (length(src.items_job))
 			var/list/sort2 = list()
 
 			for (var/datum/syndicate_buylist/S2 in src.items_job)
@@ -157,7 +157,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			src.items_job = sortList(sort2)
 
-		if (src.items_objective.len)
+		if (length(src.items_objective))
 			var/list/sort3 = list()
 
 			for (var/datum/syndicate_buylist/S3 in src.items_objective)
@@ -173,7 +173,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			src.items_objective = sortList(sort3)
 
-		if (src.items_telecrystal.len)
+		if (length(src.items_telecrystal))
 			var/list/sort4 = list()
 
 			for (var/datum/syndicate_buylist/S4 in src.items_telecrystal)
@@ -648,7 +648,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			freq += 2
 			if ((freq % 2) == 0)
 				freq += 1
-		freq = freqlist[rand(1, freqlist.len)]
+		freq = freqlist[rand(1, length(freqlist))]
 		return freq
 
 	setup(var/datum/mind/ownermind, var/obj/item/device/master)
