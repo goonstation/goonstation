@@ -158,7 +158,6 @@
 		if (src.broken)
 			processing_items.Remove(src)
 			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(donor)
-			return
 
 	on_transplant(var/mob/M as mob)
 		..()
@@ -166,13 +165,11 @@
 			return
 		processing_items |= src
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(donor)
-		return
 
 	on_removal()
 		..()
 		processing_items.Remove(src)
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(donor)
-		return
 
 /obj/item/organ/eye/cyber/thermal
 	name = "thermal imager cybereye"
@@ -270,7 +267,6 @@
 		if (src.broken)
 			processing_items.Remove(src)
 			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(donor)
-			return
 
 	on_transplant(var/mob/M as mob)
 		..()

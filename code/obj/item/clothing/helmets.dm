@@ -325,13 +325,11 @@
 				..()
 				if (slot == SLOT_HEAD)
 					get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(user)
-				return
 
 			unequipped(var/mob/user)
 				if(src.equipped_in_slot == SLOT_HEAD)
 					get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
 				..()
-				return
 
 		sniper
 			name = "specialist combat cover"
@@ -835,4 +833,3 @@
 		setProperty("heatprot", 15)
 		setProperty("disorient_resist_eye", 8)
 		setProperty("disorient_resist_ear", 8)
-

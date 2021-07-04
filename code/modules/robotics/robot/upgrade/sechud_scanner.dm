@@ -13,4 +13,3 @@
 		if (..())
 			return
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(user)
-		return

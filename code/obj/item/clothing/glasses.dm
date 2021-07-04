@@ -177,19 +177,16 @@
 				H.bioHolder.AddEffect("bad_eyesight")
 				SPAWN_DBG(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
-		return
 
 	equipped(var/mob/user, var/slot)
 		..()
 		if (slot == SLOT_GLASSES)
 			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(user)
-		return
 
 	unequipped(var/mob/user)
 		if(src.equipped_in_slot == SLOT_GLASSES)
 			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(user)
 		..()
-		return
 
 /obj/item/clothing/glasses/sunglasses/sechud/superhero
 	name = "superhero mask"
@@ -426,13 +423,11 @@
 		..()
 		if (slot == SLOT_GLASSES)
 			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(user)
-		return
 
 	unequipped(var/mob/user)
 		if(src.equipped_in_slot == SLOT_GLASSES)
 			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
 		..()
-		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/device/analyzer/healthanalyzer_upgrade))
