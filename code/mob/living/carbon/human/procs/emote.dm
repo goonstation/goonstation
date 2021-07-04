@@ -667,7 +667,6 @@
 			if ("tip")
 				if (!src.restrained() && !src.stat)
 					if (istype(src.head, /obj/item/clothing/head/mj_hat || /obj/item/clothing/head/det_hat/))
-						src.show_text("This hat just isn't euphoric enough for that!")
 						src.say (pick("M'lady", "M'lord", "M'liege")) //male, female and non-binary variants with alliteration
 						//maptext_out = "<I>tips their fedora</I>"
 					if (istype(src.head, /obj/item/clothing/head/fedora))
