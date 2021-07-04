@@ -1,5 +1,9 @@
 
 (t)sat jul 03 21
+(u)DimWhat
+(p)5166
+(e)🎨|sprites
+(+)Made some sprite changes to the HoP uniform and dress as well as the HoS Dress.
 (u)TTerc
 (p)5362
 (e)🆕|feature
