@@ -720,10 +720,17 @@ datum
 				return 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
-
-				var/mob/living/L = M
-				if(istype(L) && L.getStatusDuration("burning"))
-					L.changeStatus("burning", 2 SECONDS * mult)
+				if (!M)
+					M = holder.my_atom
+				if(istype(M, /mob/living/) && M.getStatusDuration("burning"))
+					M.changeStatus("burning", 2 SECONDS * mult)
+				if(holder.has_reagent("welding fuel"))
+					holder.remove_reagent("welding fuel", 1 * mult)
+				if((M.health > 20) && (probmult(33)))
+					M.take_toxin_damage(1 * mult)
+				if(probmult(4))
+					M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+					M.vomit()
 				..()
 
 			on_plant_life(var/obj/machinery/plantpot/P)
