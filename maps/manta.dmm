@@ -3825,8 +3825,8 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "amF" = (
-/obj/machinery/sleeper{
-	dir = 8
+/obj/machinery/sleeper/compact{
+	dir = 4
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
@@ -24574,20 +24574,11 @@
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "bps" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay/lobby)
-"bpt" = (
-/obj/machinery/sleep_console{
+/obj/machinery/sleeper/compact{
 	dir = 8
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
@@ -24607,10 +24598,10 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "bpx" = (
-/obj/machinery/sleeper{
+/obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/disposalpipe/segment/mail{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/simulated/floor/bluewhite,
@@ -39331,15 +39322,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/visitation)
-"khe" = (
-/obj/machinery/sleep_console{
-	dir = 4
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay/lobby)
 "kkK" = (
 /obj/machinery/light_switch/auto{
 	pixel_y = 24
@@ -95717,7 +95699,7 @@ bhq
 blR
 biq
 bkh
-bpt
+bpu
 bhq
 bsx
 bsl
@@ -96623,7 +96605,7 @@ bkT
 arp
 kpZ
 bkh
-khe
+bpu
 bhq
 bsx
 bkN

@@ -29482,9 +29482,6 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/machinery/sleep_console{
-	dir = 4
-	},
 /turf/simulated/floor/greenwhite{
 	dir = 10
 	},
@@ -34444,9 +34441,6 @@
 	name = "autoname  - SS13";
 	pixel_y = 21
 	},
-/obj/machinery/sleep_console{
-	dir = 4
-	},
 /obj/item/device/radio/intercom/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
@@ -37551,7 +37545,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail,
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -44669,15 +44663,15 @@
 	},
 /area/station/storage/tools)
 "cSl" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/cable,
+/obj/machinery/sleeper/compact{
+	dir = 4
+	},
 /turf/simulated/floor/greenwhite{
 	dir = 6
 	},
