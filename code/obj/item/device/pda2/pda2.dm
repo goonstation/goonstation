@@ -616,7 +616,7 @@
 	else if (istype(C, /obj/item/raw_material/telecrystal_ref))
 		if (!C || !C.material)
 			return
-		if (src.uplink.active)
+		if (src.uplink && src.uplink.active)
 			var/crystal_amount = C.amount
 			src.uplink.uses = src.uplink.uses + crystal_amount
 			if (crystal_amount == 1)
