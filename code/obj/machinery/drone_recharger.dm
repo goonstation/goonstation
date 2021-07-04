@@ -13,6 +13,7 @@
 	var/mob/living/silicon/ghostdrone/occupant = null
 	var/transition = 0 //For when closing
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_MULTITOOL
 
 	New()
 		..()

@@ -236,6 +236,8 @@
 				src.color = "#ffffff"
 
 	proc/setup()
+		if(QDELETED(src))
+			return
 		if (src.proj_data == null || (xo == 0 && yo == 0) || proj_data.projectile_speed == 0)
 			die()
 			return
@@ -250,6 +252,7 @@
 
 		if (len == 0)
 			die()
+			return
 		src.xo = src.xo / len
 		src.yo = src.yo / len
 
@@ -273,28 +276,22 @@
 		Turn(angle)
 		if (!proj_data.precalculated)
 			return
-
+		var/speed = internal_speed || proj_data.projectile_speed
 		var/x32 = 0
 		var/xs = 1
 		var/y32 = 0
 		var/ys = 1
 		if (xo)
-			if (!isnull(internal_speed))
-				x32 = 32 / (internal_speed * xo)
-			else
-				x32 = 32 / (proj_data.projectile_speed * xo)
+			x32 = 32 / (speed * xo)
 			if (x32 < 0)
 				xs = -1
 				x32 = -x32
 		if (yo)
-			if (!isnull(internal_speed))
-				y32 = 32 / (internal_speed * yo)
-			else
-				y32 = 32 / (proj_data.projectile_speed * yo)
+			y32 = 32 / (speed * yo)
 			if (y32 < 0)
 				ys = -1
 				y32 = -y32
-		var/max_t = src.max_range * (32/proj_data.projectile_speed)
+		var/max_t = src.max_range * (32/speed)
 		var/next_x = x32 / 2
 		var/next_y = y32 / 2
 		var/ct = 0

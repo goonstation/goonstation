@@ -475,10 +475,6 @@
 		if (!W:brewable || !W:brew_result)
 			return 0
 
-		if (istype(W,/obj/item/reagent_containers/food/snacks/snack_cake) || istype(W,/obj/item/reagent_containers/food/snacks/burrito))
-			if (islist(W:brew_result) && W:brew_result:len)
-				W:brew_result += W.reagents.reagent_list
-
 		//var/brewed_name = null
 		if (islist(W:brew_result) && W:brew_result:len)
 			for (var/i in W:brew_result)

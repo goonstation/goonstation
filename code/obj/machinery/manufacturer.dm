@@ -801,7 +801,7 @@
 
 					////////////
 
-					if(OCD.amount >= quantity)
+					if(OCD.amount >= quantity && quantity > 0)
 						var/subtotal = round(price * quantity)
 						var/sum_taxes = round(taxes * quantity)
 						var/rockbox_fees = (!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0) * quantity
@@ -843,7 +843,10 @@
 						else
 							src.temp = {"You don't have enough dosh, bucko.<BR>"}
 					else
-						src.temp = {"I don't have that many for sale, champ.<BR>"}
+						if(quantity > 0)
+							src.temp = {"I don't have that many for sale, champ.<BR>"}
+						else
+							src.temp = {"Enter some actual valid number, you doofus!<BR>"}
 				else
 					src.temp = {"That card doesn't have an account anymore, you might wanna get that checked out.<BR>"}
 
@@ -1892,6 +1895,7 @@
 	icon_state = "blueprint"
 	item_state = "sheet"
 	var/datum/manufacture/blueprint = null
+	var/override_name_desc = 1
 
 
 
@@ -1915,9 +1919,9 @@
 		if (!src.blueprint)
 			qdel(src)
 			return 0
-
-		src.name = "Manufacturer Blueprint: [src.blueprint.name]"
-		src.desc = "This blueprint will allow a manufacturer unit to build a [src.blueprint.name]"
+		if(src.override_name_desc)
+			src.name = "Manufacturer Blueprint: [src.blueprint.name]"
+			src.desc = "This blueprint will allow a manufacturer unit to build a [src.blueprint.name]"
 
 		src.pixel_x = rand(-4,4)
 		src.pixel_y = rand(-4,4)
@@ -2001,6 +2005,16 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "interdictor_blueprint"
 	blueprint = /datum/manufacture/interdictor_rod_sigma
+
+/******************** Phaser Drone *******************/
+/obj/item/paper/manufacturer_blueprint/gunbot
+	name = "Security Robot blueprint"
+	icon = 'icons/obj/electronics.dmi'
+	info = "<h3>AP-Class Security Robot</h3><i>A schematic blueprint for a security robot, modified to fit a station-grade manufacturer.</i>"
+	icon_state = "blueprint"
+	item_state = "sheet"
+	blueprint = /datum/manufacture/mechanics/gunbot
+	override_name_desc = 0
 
 // Fabricator Defines
 
@@ -2363,7 +2377,13 @@
 	/datum/manufacture/hat_orange,
 	/datum/manufacture/hat_tophat,
 	/datum/manufacture/backpack,
-	/datum/manufacture/satchel)
+	/datum/manufacture/backpack_red,
+	/datum/manufacture/backpack_green,
+	/datum/manufacture/backpack_blue,
+	/datum/manufacture/satchel,
+	/datum/manufacture/satchel_red,
+	/datum/manufacture/satchel_green,
+	/datum/manufacture/satchel_blue)
 
 	hidden = list(/datum/manufacture/breathmask,
 	/datum/manufacture/patch,

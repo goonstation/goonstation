@@ -158,7 +158,9 @@
 
 	sunfrac = cos(p_angle) ** 2
 
-#define SOLARGENRATE 1500
+// Previous SOLARGENRATE was 1500 WATTS processed every 3.3 SECONDS.  This provides 454.54 WATTS every second
+// Adjust accordingly based on machine proc rate
+#define SOLARGENRATE (454.54 * MACHINE_PROCS_PER_SEC)
 
 /obj/machinery/power/solar/process()
 
@@ -167,7 +169,7 @@
 
 	if(!obscured)
 		var/sgen = SOLARGENRATE * sunfrac
-		sgen *= 1<<(current_processing_tier-1) // twice the power for half processing, 4 times for quarter etc.
+		sgen *= PROCESSING_TIER_MULTI(src)
 		add_avail(sgen)
 		if(powernet && control && powernet == control.powernet)
 			control.gen += sgen

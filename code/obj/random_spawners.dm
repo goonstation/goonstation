@@ -1097,8 +1097,7 @@
 	/obj/item/parts/robot_parts/leg/right/treads,
 	/obj/item/parts/robot_parts/leg/left/treads,
 	/obj/item/organ/eye/cyber/prodoc,
-	/obj/item/organ/eye/cyber/nightvision,
-	/obj/item/organ/eye/cyber/sechud)
+	/obj/item/organ/eye/cyber/nightvision)
 
 /obj/random_item_spawner/critter
 	name = "random critter spawner"
