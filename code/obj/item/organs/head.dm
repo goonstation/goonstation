@@ -171,9 +171,9 @@
 		src.head_image_special_three = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
 
 		// Then apply whatever hair things they should have
-		src.head_image_cust_one = image(icon = 'icons/mob/human_hair.dmi', icon_state = AHead.customization_first.id, layer = MOB_HAIR_LAYER2)
-		src.head_image_cust_two = image(icon = 'icons/mob/human_hair.dmi', icon_state = AHead.customization_second.id, layer = MOB_HAIR_LAYER2)
-		src.head_image_cust_three = image(icon = 'icons/mob/human_hair.dmi', icon_state = AHead.customization_third.id, layer = MOB_HAIR_LAYER2)
+		src.head_image_cust_one = image(icon = 'icons/mob/human_hair.dmi', icon_state = AHead.customization_first.id, layer = AHead.customization_first.default_layer)
+		src.head_image_cust_two = image(icon = 'icons/mob/human_hair.dmi', icon_state = AHead.customization_second.id, layer = AHead.customization_second.default_layer)
+		src.head_image_cust_three = image(icon = 'icons/mob/human_hair.dmi', icon_state = AHead.customization_third.id, layer = AHead.customization_third.default_layer)
 
 		src.head_image_cust_one.color = AHead.customization_first_color
 		src.head_image_cust_two.color = AHead.customization_second_color
@@ -231,16 +231,16 @@
 		src.overlays += src.head_image_eyes
 
 		if (src.glasses && src.glasses.wear_image_icon)
-			src.overlays += image(src.glasses.wear_image_icon, src.glasses.icon_state)
+			src.overlays += image(src.glasses.wear_image_icon, src.glasses.icon_state, layer = MOB_GLASSES_LAYER)
 
 		if (src.wear_mask && src.wear_mask.wear_image_icon)
-			src.overlays += image(src.wear_mask.wear_image_icon, src.wear_mask.icon_state)
+			src.overlays += image(src.wear_mask.wear_image_icon, src.wear_mask.icon_state, layer = MOB_HEAD_LAYER2)
 
 		if (src.ears && src.ears.wear_image_icon)
-			src.overlays += image(src.ears.wear_image_icon, src.ears.icon_state)
+			src.overlays += image(src.ears.wear_image_icon, src.ears.icon_state, layer = MOB_EARS_LAYER)
 
 		if (src.head && src.head.wear_image_icon)
-			src.overlays += image(src.head.wear_image_icon, src.head.icon_state)
+			src.overlays += image(src.head.wear_image_icon, src.head.icon_state, layer = MOB_HEAD_LAYER2)
 
 		if(!(src.head && src.head.seal_hair))
 			if(src.donor_appearance?.mob_appearance_flags & HAS_HUMAN_HAIR || src.donor?.hair_override)

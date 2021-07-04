@@ -1083,7 +1083,9 @@ datum
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
 				..()
-				M.clean_forensic()
+				if(method == TOUCH)
+					M.clean_forensic()
+					M.delStatus("marker_painted")
 
 		luminol // OOC. Weaseldood. oh that stuff from CSI, the glowy blue shit that they spray on blood
 			name = "luminol"
@@ -1538,9 +1540,11 @@ datum
 				else
 					boutput(M, "<span class='alert'>Oh god! It smells horrific! What the fuck IS this?!</span>")
 					if (prob(50))
-						SPAWN_DBG(1 SECOND)
-							M.visible_message("<span class='alert'>[M] pukes violently!</span>")
-							M.vomit()
+						boutput(M, "<span class='alert'>Ah fuck! Some got into your mouth!</span>")
+						var/amt = min(volume/100,1)
+						src.holder.remove_reagent("sewage",amt)
+						M.reagents.add_reagent("sewage",amt)
+						src.reaction_mob(M,INGEST,amt)
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)

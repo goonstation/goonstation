@@ -889,7 +889,7 @@ proc/setup_pw_crate_lists()
 		/obj/item/shipcomponent/mainweapon/mining = 2, /obj/item/shipcomponent/mainweapon/laser = 4, /obj/item/shipcomponent/mainweapon/disruptor_light = 4,/obj/item/ammo/power_cell/higher_power = 3, /obj/item/ammo/power_cell/self_charging/pod_wars_standard = 3,
 		/obj/item/material_piece/cerenkite{amount=5} = 1, /obj/item/material_piece/claretine{amount=5} = 1, /obj/item/material_piece/bohrum{amount=10} = 1, /obj/item/material_piece/plasmastone{amount=10} = 1, /obj/item/material_piece/uqill{amount=10} = 1, /obj/item/material_piece/telecrystal{amount=10})
 
-	pw_rewards_tier3 = list(/obj/item/gun/energy/crossbow = 1, /obj/item/cloak_gen = 1, /obj/item/device/chameleon = 1,
+	pw_rewards_tier3 = list(/obj/item/gun/energy/crossbow = 1, /obj/item/device/chameleon = 1,
 		/obj/item/gun/flamethrower/backtank/napalm = 3, /obj/item/ammo/power_cell/self_charging/pod_wars_high = 2,
 		/obj/item/shipcomponent/mainweapon/russian = 3, /obj/item/shipcomponent/mainweapon/disruptor = 3, /obj/item/shipcomponent/mainweapon/laser_ass = 4, /obj/item/shipcomponent/mainweapon/rockdrills = 4,
 		/obj/item/material_piece/iridiumalloy{amount=4} = 1, /obj/item/material_piece/erebite{amount=10} = 1, /obj/item/raw_material/starstone{amount=2} = 1, /obj/item/raw_material/miracle{amount=10} = 1)

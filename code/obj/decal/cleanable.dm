@@ -27,6 +27,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	var/can_dry = 0
 	var/dry = 0 // if it's slippery to start, is it dry now?
 	var/stain = null // clothing will be stained with this message if the decal is created in the same tile as them
+	var/last_color = null
 
 	var/can_fluid_absorb = 1
 	//var/turf/last_turf //unset 'messy' on my last turf after a move
@@ -234,6 +235,35 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 						C.add_stain(src.stain)
 						LAGCHECK(LAG_REALTIME)
 
+	proc/create_overlay(var/list/icons_to_choose, var/add_color, var/direction, var/overlay_icon)
+		var/overlay_icon_state
+		if (islist(icons_to_choose) && length(icons_to_choose))
+			overlay_icon_state = pick(icons_to_choose)
+		else if (istext(icons_to_choose))
+			overlay_icon_state = icons_to_choose
+		else
+			return
+		if (overlay_icon_state)
+			var/image/new_overlay// = image(overlay_icon, overlay_icon_state)
+			if (direction)
+				new_overlay = image(overlay_icon, overlay_icon_state, dir = direction)
+				new_overlay.pixel_x += rand(-1,1)
+				new_overlay.pixel_y += rand(-1,1)
+			else
+				new_overlay = image(overlay_icon, overlay_icon_state)
+				new_overlay.transform = turn(new_overlay.transform, pick(0, 180)) // gets funky with 0,90,180,-90
+				new_overlay.pixel_x += rand(-4,4)
+				new_overlay.pixel_y += rand(-4,4)
+			if (new_overlay)
+				if (add_color)
+					new_overlay.color = add_color
+					src.last_color = add_color
+
+				if (src.overlays.len >= 4) //stop adding more overlays you're lagging client FPS!!!!
+					src.UpdateOverlays(new_overlay, "cleanablefinal")
+				else
+					src.UpdateOverlays(new_overlay, "cleanble[length(src.overlays)]")
+
 #define DRY_BLOOD 1
 #define FRESH_BLOOD -1
 
@@ -402,7 +432,6 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	random_icon_states = null // I swear to god I will fucking end you
 	slippery = 0 // increases as blood volume does
 	color = null
-	var/last_color = null
 	var/last_volume = 1
 	reagents_max = 100
 
@@ -477,33 +506,33 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		*/
 
 		if (i_state)
-			create_overlay(i_state, add_color, direction)
+			create_overlay(i_state, add_color, direction, 'icons/effects/blood.dmi')
 		else if (isnum(vis_amount))
 			switch (vis_amount)
 				if (1)
 					if (!list_and_len(blood_decal_low_icon_states))
 						return
-					create_overlay(blood_decal_low_icon_states, add_color, direction)
+					create_overlay(blood_decal_low_icon_states, add_color, direction, 'icons/effects/blood.dmi')
 					// no increase in slipperiness if there's just a little bit of blood being added
 				if (2)
 					if (!list_and_len(blood_decal_med_icon_states))
 						return
-					create_overlay(blood_decal_med_icon_states, add_color, direction)
+					create_overlay(blood_decal_med_icon_states, add_color, direction, 'icons/effects/blood.dmi')
 					src.slippery = min(src.slippery+1, 10)
 				if (3)
 					if (!list_and_len(blood_decal_high_icon_states))
 						return
-					create_overlay(blood_decal_high_icon_states, add_color, direction)
+					create_overlay(blood_decal_high_icon_states, add_color, direction, 'icons/effects/blood.dmi')
 					src.slippery = min(src.slippery+2, 10)
 				if (4)
 					if (!list_and_len(blood_decal_max_icon_states))
 						return
-					create_overlay(blood_decal_max_icon_states, add_color, direction)
+					create_overlay(blood_decal_max_icon_states, add_color, direction, 'icons/effects/blood.dmi')
 					src.slippery = min(src.slippery+5, 10)
 				if (5)
 					if (!list_and_len(blood_decal_violent_icon_states))
 						return
-					create_overlay(blood_decal_violent_icon_states, add_color, direction) // for when you wanna create a BIG MESS
+					create_overlay(blood_decal_violent_icon_states, add_color, direction, 'icons/effects/blood.dmi') // for when you wanna create a BIG MESS
 					src.slippery = 10
 
 		src.Dry(rand(vis_amount*80,vis_amount*120))
@@ -512,35 +541,6 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			if (prob(vis_amount*10))
 				I.add_blood(src)
 			if(counter++>25)break
-
-	proc/create_overlay(var/list/icons_to_choose, var/add_color, var/direction)
-		var/blood_addition
-		if (islist(icons_to_choose) && length(icons_to_choose))
-			blood_addition = pick(icons_to_choose)
-		else if (istext(icons_to_choose))
-			blood_addition = icons_to_choose
-		else
-			return
-		if (blood_addition)
-			var/image/blood_overlay// = image('icons/effects/blood.dmi', blood_addition)
-			if (direction)
-				blood_overlay = image('icons/effects/blood.dmi', blood_addition, dir = direction)
-				blood_overlay.pixel_x += rand(-1,1)
-				blood_overlay.pixel_y += rand(-1,1)
-			else
-				blood_overlay = image('icons/effects/blood.dmi', blood_addition)
-				blood_overlay.transform = turn(blood_overlay.transform, pick(0, 180)) // gets funky with 0,90,180,-90
-				blood_overlay.pixel_x += rand(-4,4)
-				blood_overlay.pixel_y += rand(-4,4)
-			if (blood_overlay)
-				if (add_color)
-					blood_overlay.color = add_color
-					src.last_color = add_color
-
-				if (src.overlays.len >= 1) //stop adding more overlays you're lagging client FPS!!!!
-					src.UpdateOverlays(blood_overlay, "bloodfinal")
-				else
-					src.UpdateOverlays(blood_overlay, "blood[src.reagents.total_volume]")
 
 /obj/decal/cleanable/blood/dynamic/tracks
 	//name = "bloody footprints"
@@ -1415,6 +1415,17 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/oil/streak
 	random_icon_states = list("streak1", "streak2", "streak3", "streak4", "streak5")
 
+/obj/decal/cleanable/paint
+	name = "marker paint"
+	desc = "It's a fluorescent orange"
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "blank"
+	random_icon_states = null
+	slippery = 0
+	can_dry = 0
+	can_sample = 0
+	sample_reagent = "juice_orange"
+	stain = "painted"
 
 /obj/decal/cleanable/greenglow
 	name = "green glow"

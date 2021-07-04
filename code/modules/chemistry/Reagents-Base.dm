@@ -154,9 +154,10 @@ datum
 				if(!M) M = holder.my_atom
 				if (isliving(M))
 					var/mob/living/H = M
-					if(H?.reagents.has_reagent("moonshine"))
-						mult *= 3
 					var/ethanol_amt = holder.get_reagent_amount(src.id)
+					if(H?.reagents.has_reagent("moonshine"))
+						mult *= 7
+						ethanol_amt *= 2
 					var/liver_damage = 0
 					if (!isalcoholresistant(H) || H?.reagents.has_reagent("moonshine"))
 						if (ethanol_amt >= 15)
