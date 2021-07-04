@@ -613,7 +613,7 @@
 				src.insert_id_card(ID, user)
 				boutput(user, "<span class='notice'>You insert [ID] into [src].</span>")
 
-	else if (istype(C, /obj/item/raw_material/telecrystal_ref))
+	else if (istype(C, /obj/item/raw_material/telecrystal_pure))
 		if (!C || !C.material)
 			return
 		if (src.uplink && src.uplink.active)

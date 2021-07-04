@@ -225,7 +225,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		return
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/raw_material/telecrystal_ref))
+		if (istype(W, /obj/item/raw_material/telecrystal_pure))
 			if (!W || !W.material)
 				return
 			if (!src.locked)

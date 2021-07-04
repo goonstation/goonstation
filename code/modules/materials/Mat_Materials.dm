@@ -801,10 +801,10 @@
 		addTrigger(triggersOnAttack, new /datum/materialProc/telecrystal_onattack())
 		return ..()
 
-/datum/material/crystal/telecrystal_ref
-	mat_id = "telecrystal_ref"
-	name = "refined telecrystal"
-	desc = "Refined Telecrystals are noted for their use in high-precision teleportation."
+/datum/material/crystal/telecrystal_pure
+	mat_id = "telecrystal_pure"
+	name = "pure telecrystal"
+	desc = "Pure Telecrystals are noted for their rarity and use in high-precision teleportation."
 	color = "#a90748"
 	material_flags = MATERIAL_CRYSTAL | MATERIAL_ENERGY
 	alpha = 100

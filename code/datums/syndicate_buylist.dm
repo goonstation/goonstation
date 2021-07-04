@@ -1043,19 +1043,19 @@ This is basically useless for anyone but miners.
 /////////////////////////////////////////// Telecrystals //////////////////////////////////////////////////
 
 /datum/syndicate_buylist/generic/telecrystal
-	name = "Refined Telecrystal"
-	item = /obj/item/raw_material/telecrystal_ref
+	name = "Pure Telecrystal"
+	item = /obj/item/raw_material/telecrystal_pure
 	cost = 1
-	desc = "A refined Telecrystal, to be inserted into an uplink as currency."
+	desc = "A pure Telecrystal, only able to be found miles deep underground, on Earth. Used as currency in Syndicate Uplinks."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft)
 	telecrystal = TRUE
 	vr_allowed = 0
 
 /datum/syndicate_buylist/generic/trick_telecrystal
-	name = "Trick Refined Telecrystal"
+	name = "Trick Pure Telecrystal"
 	item = /obj/item/explosive_telecrystal
 	cost = 1
-	desc = "A small, highly volatile explosive designed to look like a refined Telecrystal."
+	desc = "A small, highly volatile explosive designed to look like a pure Telecrystal."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/nuclear)
 	telecrystal = TRUE
 	vr_allowed = 0
