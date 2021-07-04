@@ -1,5 +1,8 @@
 
 (t)sun jul 04 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Sec loadout weapons all start with 200u cells, and sec pouch contains a 200u cell. Power costs of wavegun, tasershotgun, taser SMG adjusted to compensate
 (u)Lythine
 (p)5172
 (e)🆕🗺🎨|feature, mapping, sprites
