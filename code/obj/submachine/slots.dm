@@ -52,23 +52,7 @@
 				return TRUE
 			var/obj/O = usr.equipped()
 			if (istype(O, /obj/item/card/id))
-				var/obj/item/card/id/idcard = O
-				usr.drop_item()
-				O.set_loc(src)
-				boutput(usr, "<span class='notice'>You insert your ID card.</span>")
-				if(!idcard.registered)
-					boutput(usr, "<span class='alert'>No account data found!</span>")
-					usr.put_in_hand_or_eject(O)
-					return TRUE
-				var/enterpin = input(usr, "Please enter your PIN number.", "Enter PIN", 0) as null|num
-				if (enterpin != idcard.pin)
-					boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
-					usr.put_in_hand_or_eject(O)
-					return TRUE
-				boutput(usr, "<span class='notice'>Card authorized.</span>")
-				src.scan = O
-				src.accessed_record = FindBankAccountByName(src.scan.registered)
-				. = TRUE
+				. = attackby(O, usr)
 		if ("play")
 			if (src.working || !src.accessed_record)
 				return TRUE
@@ -115,17 +99,18 @@
 				boutput(usr, "<span class='alert'>No account data found!</span>")
 				usr.put_in_hand_or_eject(I)
 				ui_interact(user)
-				return
+				return TRUE
 			var/enterpin = input(user, "Please enter your PIN number.", "Enter PIN", 0) as null|num
 			if (enterpin != idcard.pin)
 				boutput(user, "<span class='alert'>Pin number incorrect.</span>")
 				usr.put_in_hand_or_eject(I)
 				ui_interact(user)
-				return
+				return TRUE
 			boutput(user, "<span class='notice'>Card authorized.</span>")
 			src.scan = I
 			src.accessed_record = FindBankAccountByName(src.scan.registered)
 			ui_interact(user)
+			. = TRUE
 	else
 		. = ..()
 
