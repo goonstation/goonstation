@@ -361,7 +361,7 @@
 	w_class = W_CLASS_NORMAL
 	throw_speed = 4
 	throw_range = 5
-	desc = "A crusty, long stick of bread. Hon hon hon, oui oui! Needs to be sliced before eating."
+	desc = "Hon hon hon, oui oui! Needs to be cut into slices before eating."
 	stamina_damage = 5
 	stamina_cost = 1
 	var/slicetype = /obj/item/reagent_containers/food/snacks/breadslice
@@ -407,7 +407,7 @@
 	food_color = "#ffe87a"
 	initial_volume = 20
 	initial_reagents = list("water_holy"=20)
-	food_effects = list("food_tox","food_hp_up","food_bad_breath")
+	food_effects = list("food_tox","food_hp_up_big","food_bad_breath")
 
 /obj/item/reagent_containers/food/snacks/garlicbread_ch
 	name = "cheesy garlic bread"
@@ -419,7 +419,7 @@
 	food_color = "#ffe87a"
 	initial_volume = 20
 	initial_reagents = list("water_holy"=10,"cheese"=10)
-	food_effects = list("food_tox","food_hp_up","food_bad_breath","food_energized")
+	food_effects = list("food_tox","food_hp_up_big","food_bad_breath","food_energized")
 
 /obj/item/reagent_containers/food/snacks/fairybread
 	name = "fairy bread"

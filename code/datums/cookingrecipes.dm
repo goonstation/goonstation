@@ -795,70 +795,70 @@
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_strip
 	amt1 = 2
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/flour
-	cookbonus = 7
+	cookbonus = 8
 	output = /obj/item/baguette
+
+/datum/cookingrecipe/garlicbread
+	item1 = /obj/item/baguette
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
+	item3 = /obj/item/reagent_containers/food/snacks/plant/garlic
+	cookbonus = 6
+	output = /obj/item/reagent_containers/food/snacks/garlicbread
 
 /datum/cookingrecipe/garlicbread_ch
 	item1 = /obj/item/baguette
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
 	item3 = /obj/item/reagent_containers/food/snacks/plant/garlic
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/butter
-	cookbonus = 7
+	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/garlicbread_ch
-
-/datum/cookingrecipe/garlicbread
-	item1 = /obj/item/baguette
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
-	item3 = /obj/item/reagent_containers/food/snacks/plant/garlic
-	cookbonus = 7
-	output = /obj/item/reagent_containers/food/snacks/garlicbread
 
 /datum/cookingrecipe/painauchocolat
 	item1 = /obj/item/reagent_containers/food/snacks/candy/chocolate
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
-	cookbonus = 13
+	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/painauchocolat
 
 /datum/cookingrecipe/croissant
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
-	cookbonus = 13
+	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/croissant
 
 /datum/cookingrecipe/danish_apple
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
 	item3 = /obj/item/reagent_containers/food/snacks/plant/apple
-	cookbonus = 13
+	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/danish_apple
 
 /datum/cookingrecipe/danish_cherry
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
 	item3 = /obj/item/reagent_containers/food/snacks/plant/cherry
-	cookbonus = 13
+	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/danish_cherry
 
 /datum/cookingrecipe/danish_blueb
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
 	item3 = /obj/item/reagent_containers/food/snacks/plant/blueberry
-	cookbonus = 13
+	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/danish_blueb
 
 /datum/cookingrecipe/danish_weed
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
 	item3 = /obj/item/plant/herb/cannabis
-	cookbonus = 13
+	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/danish_weed
 
 /datum/cookingrecipe/fairybread
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/sugar
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/butter
-	cookbonus = 13
+	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/fairybread
 
 //Cookies

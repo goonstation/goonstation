@@ -2526,7 +2526,7 @@
 		reagents.add_reagent("epinephrine",8)
 		reagents.add_reagent("synaptizine",8)
 
-// Some pastries
+// Pastries
 
 /obj/item/reagent_containers/food/snacks/croissant
 	name = "croissant"
@@ -2546,7 +2546,7 @@
 	amount = 2
 	heal_amt = 2
 	food_color = "#cd692b"
-	food_effects = list("food_hp_up","food_energized")
+	food_effects = list("food_brute","food_energized")
 
 /obj/item/reagent_containers/food/snacks/danish_apple
 	name = "apple danish"
@@ -2566,7 +2566,7 @@
 	amount = 2
 	heal_amt = 2
 	food_color = "#CC0000"
-	food_effects = list("food_hp_up","food_refreshed")
+	food_effects = list("food_burn","food_refreshed")
 
 /obj/item/reagent_containers/food/snacks/danish_blueb
 	name = "blueberry danish"
@@ -2576,7 +2576,7 @@
 	amount = 2
 	heal_amt = 2
 	food_color = "#0000FF"
-	food_effects = list("food_brute","food_energized")
+	food_effects = list("food_burn","food_energized")
 
 /obj/item/reagent_containers/food/snacks/danish_weed
 	name = "cannadanish"
@@ -2588,4 +2588,4 @@
 	food_color = "#a4c215"
 	initial_volume = 20
 	initial_reagents = list("THC"=10,"CBD"=10)
-	food_effects = list("food_hp_up","food_energized")
+	food_effects = list("food_brute","food_burn")
