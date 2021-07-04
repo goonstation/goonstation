@@ -15,6 +15,10 @@
 			cant_lie = 1
 			must_lie = 0
 
+		if(cant_lie && statusList["resting"])
+			owner.delStatus("resting")
+			statusList -= "resting"
+
 		if (!isdead(owner)) //Alive.
 			var/changeling_fakedeath = 0
 			var/datum/abilityHolder/changeling/C = owner.get_ability_holder(/datum/abilityHolder/changeling)
