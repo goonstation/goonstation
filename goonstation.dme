@@ -15,10 +15,15 @@ var/datum/preMapLoad/preMapLoad = new
 #define DEBUG
 // END_PREFERENCES
 
-//Standard Library Inclusions
+// Compatibility Check
+#include "_std\compatibility.dm"
+// Compatibility START
+#ifdef BYOND_VERSION_OK
+
+// Standard Library Inclusions
 #include "_std\__std.dme"
 
-//Secret Code Handling
+// Secret Code Handling
 #ifndef FASTDMM
 #include "+secret\__secret.dme"
 #endif
@@ -51,7 +56,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\atom\throwing.dm"
 #include "code\atom\UpdateOverlays.dm"
 #include "code\chui\chui.dm"
-#include "code\chui\cprof.dm"
 #include "code\chui\tab.dm"
 #include "code\chui\template.dm"
 #include "code\chui\theme.dm"
@@ -884,7 +888,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\medical\disabilities\clumsy.dm"
 #include "code\modules\medical\disabilities\cough.dm"
 #include "code\modules\medical\disabilities\deaf.dm"
-#include "code\modules\medical\disabilities\epilepsy.dm"
 #include "code\modules\medical\disabilities\tourettes.dm"
 #include "code\modules\medical\diseases\addiction.dm"
 #include "code\modules\medical\diseases\avian_flu.dm"
@@ -1007,6 +1010,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\power\stats_meter.dm"
 #include "code\modules\power\switchgear.dm"
 #include "code\modules\power\sword_engine.dm"
+#include "code\modules\power\TEG.dm"
 #include "code\modules\power\terminal.dm"
 #include "code\modules\power\turbine.dm"
 #include "code\modules\power\nuke\centrifuge.dm"
@@ -1140,7 +1144,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\transport\shuttle\shuttle_controller.dm"
 #include "code\modules\transport\shuttle\shuttle_misc.dm"
 #include "code\modules\transport\shuttle\shuttle_turfobjs.dm"
-#include "code\modules\tutorials\beginner.dm"
 #include "code\modules\tutorials\blob_tutorial.dm"
 #include "code\modules\tutorials\tutorial_base.dm"
 #include "code\modules\vending\clothingbooth.dm"
@@ -1222,9 +1225,9 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\artifacts\artifact_items\teleport_wand.dm"
 #include "code\obj\artifacts\artifact_items\wall_wand.dm"
 #include "code\obj\artifacts\artifact_items\watering_can.dm"
+#include "code\obj\artifacts\artifact_machines\gas_radiator.dm"
 #include "code\obj\artifacts\artifact_machines\grav_well.dm"
 #include "code\obj\artifacts\artifact_machines\heal_field.dm"
-#include "code\obj\artifacts\artifact_machines\heater.dm"
 #include "code\obj\artifacts\artifact_machines\noise_maker.dm"
 #include "code\obj\artifacts\artifact_machines\plant_helper.dm"
 #include "code\obj\artifacts\artifact_machines\turret.dm"
@@ -1412,6 +1415,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\device\monkey_barrel.dm"
 #include "code\obj\item\device\multitool.dm"
 #include "code\obj\item\device\nuke_summon_remote.dm"
+#include "code\obj\item\device\ocular_implanter.dm"
 #include "code\obj\item\device\pocketbuddy.dm"
 #include "code\obj\item\device\powersink.dm"
 #include "code\obj\item\device\prox_sensor.dm"
@@ -1528,6 +1532,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\machinery\phone.dm"
 #include "code\obj\machinery\photocopier.dm"
 #include "code\obj\machinery\plantpot.dm"
+#include "code\obj\machinery\portapuke.dm"
 #include "code\obj\machinery\porters.dm"
 #include "code\obj\machinery\printing_press.dm"
 #include "code\obj\machinery\recharger.dm"
@@ -1719,12 +1724,10 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\SpyGuyStuff.dm"
 #include "code\WorkInProgress\StationMap.dm"
 #include "code\WorkInProgress\tarmStuff.dm"
-#include "code\WorkInProgress\TempEngine.dm"
 #include "code\WorkInProgress\torpedoes.dm"
 #include "code\WorkInProgress\tug.dm"
 #include "code\WorkInProgress\UrsStuff.dm"
 #include "code\WorkInProgress\warcrimes.dm"
-#include "code\WorkInProgress\what-the-fuck-am-i-doing.dm"
 #include "code\WorkInProgress\WiresStuff.dm"
 #include "code\WorkInProgress\wizardset.dm"
 #include "code\WorkInProgress\zamujasa.dm"
@@ -1741,7 +1744,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\dialogue\dialogue_polaris.dm"
 #include "code\WorkInProgress\dialogue\dialogueSystem.dm"
 #include "code\WorkInProgress\dialogue\dialogueTraders.dm"
-#include "code\WorkInProgress\fluid_pipes\fluid_pipe.dm"
 #include "code\WorkInProgress\griffening\griffening_cards.dm"
 #include "code\WorkInProgress\nuclear_engine\nuclear_engine.dm"
 #include "code\WorkInProgress\optics\beamline.dm"
@@ -1799,6 +1801,5 @@ var/datum/preMapLoad/preMapLoad = new
 #include "+secret\_secretAfter.dme"
 #endif
 
-#ifdef INCLUDE_BUGGY_LUA_SHIT
-#include "code\WorkInProgress\LuaJIT.dm"
+// Compatibility END
 #endif

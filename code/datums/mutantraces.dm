@@ -800,6 +800,8 @@
 	special_hair_1_icon = 'icons/mob/lizard.dmi'
 	special_hair_1_state = "head-detail_1"
 	special_hair_1_color = CUST_3
+	special_hair_1_layer = MOB_HAIR_LAYER1
+	special_hair_1_layer_f = MOB_HAIR_LAYER1
 	detail_1_icon = 'icons/mob/lizard.dmi'
 	detail_1_state = "lizard_detail-1"
 	detail_1_color = CUST_2
@@ -1400,6 +1402,8 @@
 	special_hair_1_icon = 'icons/mob/ithillid.dmi'
 	special_hair_1_state = "head_detail_1"
 	special_hair_1_color = null
+	special_hair_1_layer = MOB_HAIR_LAYER1
+	special_hair_1_layer_f = MOB_HAIR_LAYER1
 	race_mutation = /datum/bioEffect/mutantrace/ithillid
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/ithillid/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/ithillid/left
@@ -1476,7 +1480,7 @@
 					mob.layer = target.layer - 0.01
 					mob.visible_message("[mob] hides under [target]!")
 
-	emote(var/act)
+	emote(var/act, var/voluntary)
 		. = null
 		var/muzzled = istype(mob.wear_mask, /obj/item/clothing/mask/muzzle)
 		switch(act)
@@ -1511,19 +1515,13 @@
 			if("jump")
 				. = "<B>[mob.name]</B> jumps!"
 			if ("scream")
-				if(mob.emote_allowed)
-					if(!(mob.client && mob.client.holder))
-						mob.emote_allowed = 0
-
+				if (mob.emote_check(voluntary, 50))
 					. = "<B>[mob]</B> screams!"
 					playsound(mob, src.sound_monkeyscream, 80, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-
-					SPAWN_DBG(5 SECONDS)
-						if (mob)
-							mob.emote_allowed = 1
 			if ("fart")
-				if(farting_allowed && mob.emote_allowed && (!mob.reagents || !mob.reagents.has_reagent("anti_fart")))
-					mob.emote_allowed = 0
+				if(farting_allowed && (!mob.reagents || !mob.reagents.has_reagent("anti_fart")))
+					if (!mob.emote_check(voluntary, 10))
+						return
 					var/fart_on_other = 0
 					for(var/mob/living/M in mob.loc)
 						if(M == src || !M.lying)
@@ -1569,8 +1567,6 @@
 	#endif
 					mob.expel_fart_gas(0)
 					mob.add_karma(0.5)
-					SPAWN_DBG(1 SECOND)
-						mob.emote_allowed = 1
 
 
 /datum/mutantrace/monkey/seamonkey

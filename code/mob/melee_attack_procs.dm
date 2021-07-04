@@ -31,16 +31,23 @@
 		src.shake_awake(M)
 
 /mob/proc/help_put_out_fire(var/mob/living/M)
-	M.update_burning(-1.2)
 	playsound(M.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, 0 , 0.7)
 	src.visible_message("<span class='notice'>[src] pats down [M] wildly, trying to put out the fire!</span>")
 
-	if (prob(50))
-		if (ishuman(src))
-			src.TakeDamage(prob(50) ? "l_arm" : "r_arm", 0, rand(1,2))
+	if (ishuman(src))
+		var/mob/living/carbon/human/H = src
+		var/obj/item/clothing/gloves/G = H.gloves
+		if (G && G.hasProperty("heatprot") && (G.getProperty("heatprot") >= 7))
+			M.update_burning(-2.5)
+			boutput(H, "<span class='notice'>Your [G] protect you from the flames!</span>")
 		else
-			src.TakeDamage("All", 0, rand(1,2))
-
+			M.update_burning(-1.2)
+			H.TakeDamage(prob(50) ? "l_arm" : "r_arm", 0, rand(1,2))
+			playsound(src, "sound/impact_sounds/burn_sizzle.ogg", 30, 1)
+			boutput(src, "<span class='alert'>Your hands burn from patting the flames!</span>")
+	else
+		M.update_burning(-1.2)
+		src.TakeDamage("All", 0, rand(1,2))
 		playsound(src, "sound/impact_sounds/burn_sizzle.ogg", 30, 1)
 		boutput(src, "<span class='alert'>Your hands burn from patting the flames!</span>")
 
@@ -271,7 +278,7 @@
 				src.visible_message("<span class='alert'><B>[target] dodges [src]'s attempt to grab [him_or_her(target)]!</span>")
 				playsound(target.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, 1)
 				return
-			else if(B)
+			else if(B && !target.lying)
 				src.visible_message("<span class='alert'><B>[target] blocks [src]'s attempt to grab [him_or_her(target)]!</span>")
 				playsound(target.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, 1)
 				qdel(B)
@@ -419,6 +426,7 @@
 		return msgs
 
 	if (is_shove) return msgs
+
 
 	var/obj/item/I = target.equipped()
 	if (I)
@@ -1154,7 +1162,7 @@
 /mob/living/carbon/human/calculate_bonus_damage(var/datum/attackResults/msgs)
 	. = ..()
 	if (src.gloves)
-		. += src.gloves.damage_bonus()
+		. += src.gloves.punch_damage_modifier
 
 	if (src.reagents && (src.reagents.get_reagent_amount("ethanol") >= 100) && prob(40))
 		. += rand(3,5)

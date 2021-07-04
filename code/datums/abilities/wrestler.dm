@@ -35,6 +35,11 @@
 						A2 = C.add_ability_holder(/datum/abilityHolder/wrestler)
 					if (!A2 || !istype(A2, /datum/abilityHolder/))
 						return
+				if(make_inherent)
+					src.add_stam_mod_max("wrestler", 50)
+					APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "wrestler", 5)
+					src.max_health += 50
+					health_update_queue |= src
 				C.abilityHolder.addAbility("/datum/targetable/wrestler/kick[fake_wrestler ? "/fake" : ""]")
 				C.abilityHolder.addAbility("/datum/targetable/wrestler/strike[fake_wrestler ? "/fake" : ""]")
 				C.abilityHolder.addAbility("/datum/targetable/wrestler/drop[fake_wrestler ? "/fake" : ""]")
@@ -89,6 +94,11 @@
 
 				if (make_inherent == 1)
 					A5.is_inherent = 1
+					src.add_stam_mod_max("wrestler", 50)
+					APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "wrestler", 5)
+					src.max_health += 50
+					health_update_queue |= src
+
 
 		if (belt_check != 1 && (src.mind && src.mind.special_role != "omnitraitor" && src.mind.special_role != "Faustian Wrestler"))
 			SHOW_WRESTLER_TIPS(src)

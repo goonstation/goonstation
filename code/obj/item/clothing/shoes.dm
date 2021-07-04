@@ -77,7 +77,7 @@
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 1)
+		setProperty("movespeed", 0.5)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged)
@@ -148,29 +148,28 @@
 	uses_multiple_icon_states = 1
 	desc = "Shoes, now in prisoner orange! Can be made into shackles."
 
+	attack_self(mob/user as mob)
+		if (src.chained)
+			src.chained = null
+			src.cant_self_remove = 0
+			new /obj/item/handcuffs(get_turf(user))
+			src.name = "orange shoes"
+			src.icon_state = "orange"
+			src.desc = "Shoes, now in prisoner orange! Can be made into shackles."
+
+	attackby(H as obj, loc)
+		if (istype(H, /obj/item/handcuffs) && !src.chained)
+			qdel(H)
+			src.chained = 1
+			src.cant_self_remove = 1
+			src.name = "shackles"
+			src.desc = "Used to restrain prisoners."
+			src.icon_state = "orange1"
+		..()
+
 /obj/item/clothing/shoes/pink
 	name = "pink shoes"
 	icon_state = "pink"
-
-/obj/item/clothing/shoes/orange/attack_self(mob/user as mob)
-	if (src.chained)
-		src.chained = null
-		src.cant_self_remove = 0
-		new /obj/item/handcuffs(get_turf(user))
-		src.name = "orange shoes"
-		src.icon_state = "orange"
-		src.desc = "Shoes, now in prisoner orange! Can be made into shackles."
-	return
-
-/obj/item/clothing/shoes/orange/attackby(H as obj, loc)
-	if (istype(H, /obj/item/handcuffs) && !src.chained)
-		qdel(H)
-		src.chained = 1
-		src.cant_self_remove = 1
-		src.name = "shackles"
-		src.desc = "Used to restrain prisoners."
-		src.icon_state = "orange1"
-	return
 
 /obj/item/clothing/shoes/magnetic
 	name = "magnetic shoes"
@@ -496,7 +495,7 @@
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.9)
+		setProperty("movespeed", 0.3)
 
 	proc/toggle()
 		src.on = !(src.on)

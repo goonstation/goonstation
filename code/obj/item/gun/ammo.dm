@@ -719,12 +719,25 @@
 		amount_left = 1
 		max_amount = 1
 
+/obj/item/ammo/bullets/marker
+	sname = "40mm Paint Marker Rounds"
+	name = "40mm paint marker rounds"
+	ammo_type = new/datum/projectile/bullet/marker
+	amount_left = 5
+	max_amount = 5
+	icon_state = "40mmR"
+	caliber = 1.57
+	w_class = W_CLASS_NORMAL
+	icon_dynamic = 0
+	icon_empty = "40mmR-0"
+	sound_load = 'sound/weapons/gunload_40mm.ogg'
+
 /obj/item/ammo/bullets/pbr
 	sname = "40mm Plastic Baton Rounds"
 	name = "40mm plastic baton rounds"
 	ammo_type = new/datum/projectile/bullet/pbr
-	amount_left = 2
-	max_amount = 2
+	amount_left = 5
+	max_amount = 5
 	icon_state = "40mmB"
 	caliber = 1.57
 	w_class = W_CLASS_NORMAL
@@ -749,6 +762,9 @@
 	sound_load = 'sound/weapons/gunload_40mm.ogg'
 	force_new_current_projectile = 1
 
+	rigil
+		max_amount = 4
+
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if(!W || !user)
@@ -762,6 +778,9 @@
 				src.update_icon()
 				boutput(user, "You load [W] into the [src].")
 				return
+			else if(src.amount_left < src.max_amount && W.type == AMMO.get_nade()?.type)
+				src.amount_left++
+				boutput(user, "You load [W] into the [src].")
 			else
 				boutput(user, "<span class='alert'>For <i>some reason</i>, you are unable to place [W] into an already filled chamber.</span>")
 				return
@@ -773,9 +792,10 @@
 		if(!user)
 			return
 		if (src.loc == user && AMMO.has_grenade != 0)
-			user.put_in_hand_or_drop(AMMO.get_nade())
+			for(var/i in 1 to amount_left)
+				user.put_in_hand_or_drop(SEMI_DEEP_COPY(AMMO.get_nade()))
 			AMMO.unload_nade()
-			boutput(user, "You pry the grenade out of [src].")
+			boutput(user, "You pry the grenade[amount_left>1?"s":""] out of [src].")
 			src.add_fingerprint(user)
 			src.update_icon()
 			return
@@ -792,9 +812,10 @@
 	after_unload(mob/user)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if(AMMO.has_grenade && src.delete_on_reload)
-			qdel(src)
-			user.put_in_hand_or_drop(AMMO.get_nade())
+			for(var/i in 1 to amount_left)
+				user.put_in_hand_or_drop(SEMI_DEEP_COPY(AMMO.get_nade()))
 			AMMO.unload_nade()
+			qdel(src)
 
 // Ported from old, non-gun RPG-7 object class (Convair880).
 /obj/item/ammo/bullets/rpg
@@ -1214,6 +1235,19 @@
 	desc = "A box containg a single inert meowitzer. It appears to be softly purring. Wait is that a cat?"
 	ammo_type = new/datum/projectile/special/meowitzer/inert
 
+/obj/item/ammo/bullets/foamdarts
+	sname = "foam darts"
+	name = "foam dart box"
+	icon_state = "foamdarts"
+	icon_empty = "foamdarts-0"
+	amount_left = 20
+	max_amount = 20
+	caliber = 0.393
+	ammo_type = new/datum/projectile/bullet/foamdart
+
+/obj/item/ammo/bullets/foamdarts/ten
+	amount_left = 10
+	max_amount = 10
 
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND

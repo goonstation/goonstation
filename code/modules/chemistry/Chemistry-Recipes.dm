@@ -871,6 +871,16 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
+		cocktail_piscosour
+			name = "Pisco Sour"
+			id = "piscosour"
+			result = "piscosour"
+			required_reagents = list("egg" = 1, "simplesyrup" = 1, "bitters"= 1, "juice_lime" = 1, "white_wine" = 1)
+			result_amount = 5
+			mix_phrase = "The egg white foams and floats atop the lime-colored drink."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
 		cocktail_diesel
 			name = "Diesel"
 			id = "diesel"
@@ -966,6 +976,15 @@ datum
 			required_reagents = list("vodka" = 1, "vermouth" = 1)
 			result_amount = 2
 			mix_phrase = "James Bond would be ashamed."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		cocktail_appletini
+			name = "Appletini"
+			id = "appletini"
+			result = "appletini"
+			required_reagents = list("vodka" = 1, "cider" = 1, "juice_apple" = 1)
+			result_amount = 3
+			mix_phrase = "James Bond probably wouldn't know what this is."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
 		cocktail_murdini
@@ -1171,6 +1190,20 @@ datum
 			mix_phrase = "A little pink umbrella magically appears in the drink."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		cocktail_lemondrop
+			name = "Lemon Drop"
+			id = "lemondrop"
+			result = "lemondrop"
+			required_reagents = list("simplesyrup" = 1, "juice_lemon" = 1, "juice_orange" = 1, "vodka" = 1)
+			result_amount = 4
+			mix_phrase = "The sweet and sour contents mix together nicely to make a pastel yellow drink."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		cocktail_lemondrop/lemondrop2
+			id = "lemondrop2"
+			required_reagents = list("simplesyrup" = 1, "juice_lemon" = 1, "screwdriver" = 2)
+			result_amount = 4
+
 		cocktail_harlow
 			name = "Jean Harlow"
 			id = "harlow"
@@ -1331,6 +1364,24 @@ datum
 			required_reagents = list("vodka" = 1, "juice_peach" = 1)
 			result_amount = 2
 			mix_phrase = "The vodka and peach juice fizz into a pleasantly pink hue."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		cocktail_bellini
+			name = "Peach Bellini"
+			id = "peachbellini"
+			result = "peachbellini"
+			required_reagents = list("white_wine" = 2, "juice_peach" = 1)
+			result_amount = 3
+			mix_phrase = "You contemplate Renaissance paintings as the peach purée suspends in the white wine."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		cocktail_rossini
+			name = "Rossini"
+			id = "rossini"
+			result = "rossini"
+			required_reagents = list("white_wine" = 2, "juice_strawberry" = 1)
+			result_amount = 3
+			mix_phrase = "Faint opera music echoes from the glass."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
 		cocktail_moscowmule
@@ -1781,19 +1832,19 @@ datum
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in all_viewers(null, location))
 					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
-
-				// A slightly less stupid way of smoking contents. Maybe.
-				var/datum/reagents/smokeContents = new/datum/reagents/
-				smokeContents.add_reagent("sarin", holder.reagent_list["sarin"].volume / 6)
-				//particleMaster.SpawnSystem(new /datum/particleSystem/chemSmoke(location, smokeContents, 10, 2))
-				smoke_reaction(smokeContents, 2, location)
-				/*
-				for(var/mob/living/carbon/human/H in range(location, 2)) // nurfed.
-					if(ishuman(H))
-						if(!H.wear_mask)
-							H.reagents.add_reagent("sarin",4) // griff
-				*/
-				return
+				if(holder?.my_atom?.is_open_container())
+					// A slightly less stupid way of smoking contents. Maybe.
+					var/datum/reagents/smokeContents = new/datum/reagents/
+					smokeContents.add_reagent("sarin", holder.reagent_list["sarin"].volume / 6)
+					//particleMaster.SpawnSystem(new /datum/particleSystem/chemSmoke(location, smokeContents, 10, 2))
+					smoke_reaction(smokeContents, 2, location)
+					/*
+					for(var/mob/living/carbon/human/H in range(location, 2)) // nurfed.
+						if(ishuman(H))
+							if(!H.wear_mask)
+								H.reagents.add_reagent("sarin",4) // griff
+					*/
+					return
 
 
 
@@ -2601,11 +2652,17 @@ datum
 			priority = 9
 #endif
 			on_reaction(var/datum/reagents/holder, var/created_volume) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
+
 				if (holder)
-					holder.smoke_start(created_volume)
 					holder.del_reagent("potassium")
 					holder.del_reagent("sugar")
 					holder.del_reagent("phosphorus")
+					if(!holder?.my_atom?.is_open_container())
+						if(holder.my_atom)
+							for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
+								boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
+							return
+					holder.smoke_start(created_volume)
 
 		blackpowder // oh no
 			name = "Black Powder"
@@ -2864,6 +2921,11 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				if (holder.postfoam)
 					return
+				if(!holder?.my_atom?.is_open_container())
+					if(holder.my_atom)
+						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
+							boutput(M, "<span class='notice'>With nowhere to go, the bubbles settle.</span>")
+						return
 				var/turf/location = 0
 				if (holder.my_atom && holder.covered_cache.len <= 1)
 					location = get_turf(holder.my_atom)
@@ -2900,6 +2962,12 @@ datum
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = 0
+				if(!holder?.my_atom?.is_open_container())
+					if(holder.my_atom)
+						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
+							boutput(M, "<span class='notice'>With nowhere to go, the metal settles.</span>")
+						return
+
 				if (holder.my_atom && holder.covered_cache.len <= 1)
 					location = get_turf(holder.my_atom)
 					for(var/mob/M in AIviewers(5, location))
@@ -2929,6 +2997,12 @@ datum
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = 0
+				if(!holder?.my_atom?.is_open_container())
+					if(holder.my_atom)
+						for(var/mob/M in AIviewers(5, location))
+							boutput(M, "<span class='notice'>With nowhere to go, the metal settles.</span>")
+						return
+
 				if (holder?.my_atom)
 					location = get_turf(holder.my_atom)
 					for(var/mob/M in AIviewers(5, location))

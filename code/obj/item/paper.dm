@@ -1585,8 +1585,8 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 	name = "Ranch Field Guide"
 	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About chickens."
 	icon_state = "ranch_guide"
-	sizex = 970
-	sizey = 690
+	sizex = 1100
+	sizey = 800
 
 	New()
 		..()
@@ -1599,3 +1599,16 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 	desc = "Somebody took whatever was in here."
 	icon_state = "postit-writing"
 	info = {"<h2>IOU</h2>"}
+
+/obj/item/paper/shooting_range_note1 //shooting range prefab junk
+	name = "secure safe note"
+	desc = "Someone left a reminder in neat cursive. The post-it looks nearly new."
+	icon_state = "postit-writing"
+	info = {"*Experimental ray gun - DO NOT FIRE IN A CLOSED SPACE. Waiting for Olwen to fix... whenever she's back...<br><b><u>*Dinner date is on <s>Tuesday</s>  <s>Fri.</s></s><br>
+<s>Thurs.</s><br><s>Sunday</s><br></u><br>???"}
+
+/obj/item/paper/shooting_range_note2
+	name = "secure safe note"
+	desc = "This note is creased and ripped and tattered. The writing on it is scribbled in near-indecipherable chickenscratch."
+	icon_state = "postit-writing"
+	info = {"-non-stable battery; keeps popping on use.<br>-design work (not final)<br>-battery capacity??? maybe?<br>Cheers,<br>O"}
