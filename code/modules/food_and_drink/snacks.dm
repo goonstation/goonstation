@@ -2559,7 +2559,7 @@
 	food_effects = list("food_brute","food_refreshed")
 
 /obj/item/reagent_containers/food/snacks/danish_cherry
-	name = "apple danish"
+	name = "cherry danish"
 	desc = "A delicious little parcel of pastry and sweet cherries."
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "danish_cherry"
@@ -2569,7 +2569,7 @@
 	food_effects = list("food_hp_up","food_refreshed")
 
 /obj/item/reagent_containers/food/snacks/danish_blueb
-	name = "apple danish"
+	name = "blueberry danish"
 	desc = "A delicious little parcel of pastry and sweet blueberries."
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "danish_blueb"
@@ -2579,7 +2579,7 @@
 	food_effects = list("food_brute","food_energized")
 
 /obj/item/reagent_containers/food/snacks/danish_weed
-	name = "apple danish"
+	name = "cannadanish"
 	desc = "A delicious little parcel of pastry and sweetened...Weed. Huh."
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "danish_weed"
