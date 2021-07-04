@@ -157,8 +157,6 @@ var/datum/action_controller/actions
 				A.vis_contents += bar
 				A.vis_contents += border
 			if (place_to_put_bar)
-				bar.on_target = 1
-				border.on_target = 1
 				place_to_put_bar.vis_contents += bar
 				place_to_put_bar.vis_contents += border
 
@@ -1135,7 +1133,6 @@ var/datum/action_controller/actions
 	name = ""
 	desc = ""
 	mouse_opacity = 0
-	var/on_target = FALSE
 
 /obj/actions/bar
 	icon_state = "bar"
