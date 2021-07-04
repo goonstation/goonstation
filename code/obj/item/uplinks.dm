@@ -21,6 +21,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/list/datum/syndicate_buylist/items_general = list() // See setup().
 	var/list/datum/syndicate_buylist/items_job = list()
 	var/list/datum/syndicate_buylist/items_objective = list()
+	var/list/datum/syndicate_buylist/items_telecrystal = list()
 	var/is_VR_uplink = 0
 	var/lock_code = null
 	var/lock_code_autogenerate = 0
@@ -36,7 +37,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
-			if (src && istype(src) && (!src.items_general.len && !src.items_job.len && !length(src.items_objective)))
+			if (src && istype(src) && (!src.items_general.len && !src.items_job.len && !length(src.items_objective) && !src.items_telecrystal.len))
 				src.setup()
 
 	proc/generate_code()
@@ -56,6 +57,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			src.items_job = list()
 		if (!islist(src.items_objective))
 			src.items_objective = list()
+		if (!islist(src.items_telecrystal))
+			src.items_telecrystal = list()
 
 		for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
 			if (src.is_VR_uplink)
@@ -65,6 +68,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					src.items_objective.Add(S)
 				else if (S.job)
 					src.items_job.Add(S)
+				else if (S.telecrystal)
+					src.items_telecrystal.Add(S)
+					src.items_general.Remove(S)
 				else
 					src.items_general.Add(S)
 
@@ -110,6 +116,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						for (var/allowedjob in S.job)
 							if (ownermind.assigned_role && ownermind.assigned_role == allowedjob && !src.items_job.Find(S))
 								src.items_job.Add(S)
+
+					if (S.telecrystal)
+						src.items_telecrystal.Add(S)
+						src.items_general.Remove(S)
 
 		// Sort alphabetically by item name.
 		var/list/names = list()
@@ -162,6 +172,22 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				sort3[name] = S3
 
 			src.items_objective = sortList(sort3)
+
+		if (src.items_telecrystal.len)
+			var/list/sort4 = list()
+
+			for (var/datum/syndicate_buylist/S4 in src.items_telecrystal)
+				var/name = S4.name
+				if (name in names)
+					namecounts[name]++
+					name = text("[] ([])", name, namecounts[name])
+				else
+					names.Add(name)
+					namecounts[name] = 1
+
+				sort4[name] = S4
+
+			src.items_telecrystal = sortList(sort4)
 
 		return
 
@@ -244,6 +270,11 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					dat += "<HR>"
 					dat += "<B>Request item:</B><BR>"
 					dat += "<I>Each item costs a number of [syndicate_currency] as indicated by the number following their name.</I><BR><table cellspacing=5>"
+				if (src.items_telecrystal && islist(src.items_telecrystal) && length(src.items_telecrystal))
+					dat += "</table><B>Telecrystals:</B><BR><table cellspacing=5>"
+					for (var/T in src.items_telecrystal)
+						var/datum/syndicate_buylist/I4 = src.items_telecrystal[T]
+						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_telecrystal[T]]'>[I4.name]</A> ([I4.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_telecrystal[T]]'>About</A></td>"
 				if (src.items_objective && islist(src.items_objective) && length(src.items_objective))
 					dat += "</table><B>Objective specific:</B><BR><table cellspacing=5>"
 					for (var/O in src.items_objective)
@@ -292,6 +323,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		for(var/S in items_objective)
 			if(SB == items_objective[S])
+				return 1
+
+		for(var/S in items_telecrystal)
+			if(SB == items_telecrystal[S])
 				return 1
 
 		return 0
@@ -527,6 +562,11 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			for (var/O in src.items_objective)
 				var/datum/syndicate_buylist/I3 = src.items_objective[O]
 				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_objective[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_objective[O]]'>About</A></td>"
+		if (src.items_telecrystal && islist(src.items_telecrystal) && length(src.items_telecrystal))
+			src.menu_message += "</table><B>Telecrystals:</B><BR><table cellspacing=5>"
+			for (var/O in src.items_telecrystal)
+				var/datum/syndicate_buylist/I3 = src.items_telecrystal[O]
+				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_telecrystal[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_telecrystal[O]]'>About</A></td>"
 
 		src.menu_message += "</table><HR>"
 		return

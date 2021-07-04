@@ -21,6 +21,7 @@ proc/build_syndi_buylist_cache()
 	var/desc = null
 	var/list/job = null // For job-specific items.
 	var/datum/objective/objective = null // For objective-specific items. Needs to be a type e.g. /datum/objective/assassinate.
+	var/telecrystal = null //for the telecrystal-only category
 	var/list/blockedmode = null // For items that can't show up in certain modes (affects uplink and surplus crates). Defined by the game mode datum (checks for children too).
 	var/list/exclusivemode = null
 	var/vr_allowed = 1
@@ -1047,6 +1048,8 @@ This is basically useless for anyone but miners.
 	cost = 1
 	desc = "A refined Telecrystal, to be inserted into an uplink as currency."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft)
+	telecrystal = TRUE
+	vr_allowed = 0
 
 /datum/syndicate_buylist/generic/trick_telecrystal
 	name = "Trick Refined Telecrystal"
@@ -1054,6 +1057,9 @@ This is basically useless for anyone but miners.
 	cost = 1
 	desc = "A small, highly volatile explosive designed to look like a refined Telecrystal."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/nuclear)
+	telecrystal = TRUE
+	vr_allowed = 0
+	not_in_crates = 1
 
 /////////////////////////////////////////////// Disabled items /////////////////////////////////////////////////////
 
