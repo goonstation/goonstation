@@ -1055,6 +1055,7 @@
 	name = "paramedic space suit"
 	icon_state = "paraspace"
 	item_state = "paraspace"
+	desc = "An old spacesuit from a time when nanotrasen relied heavily upon well trained travelling doctors to provide aid to there various outposts. Designed to be fast moving and lightweight, despite its age the spacesuit holds up well."
 
 	setupProperties()
 		..()
