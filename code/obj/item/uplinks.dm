@@ -68,9 +68,6 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					src.items_objective.Add(S)
 				else if (S.job)
 					src.items_job.Add(S)
-				else if (S.telecrystal)
-					src.items_telecrystal.Add(S)
-					src.items_general.Remove(S)
 				else
 					src.items_general.Add(S)
 
@@ -96,7 +93,11 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					continue
 
 				if (istype(S, /datum/syndicate_buylist/generic) && !src.items_general.Find(S))
-					src.items_general.Add(S)
+					if (S.telecrystal)
+						src.items_telecrystal.Add(S)
+						src.items_general.Remove(S)
+					else
+						src.items_general.Add(S)
 
 				if (ownermind || istype(ownermind))
 					if (ownermind.special_role != "nukeop" && istype(S, /datum/syndicate_buylist/traitor))
@@ -116,10 +117,6 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						for (var/allowedjob in S.job)
 							if (ownermind.assigned_role && ownermind.assigned_role == allowedjob && !src.items_job.Find(S))
 								src.items_job.Add(S)
-
-					if (S.telecrystal)
-						src.items_telecrystal.Add(S)
-						src.items_general.Remove(S)
 
 		// Sort alphabetically by item name.
 		var/list/names = list()
@@ -231,10 +228,16 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			if (!src.locked)
 				var/crystal_amount = W.amount
 				uses = uses + crystal_amount
-				if (crystal_amount == 1)
-					boutput(user, "You insert [crystal_amount] telecrystal into the [src].")
-				else
-					boutput(user, "You insert [crystal_amount] telecrystals into the [src].")
+				boutput(user, "You insert [crystal_amount] [syndicate_currency] into the [src].")
+				qdel(W)
+		if (istype(W, /obj/item/explosive_telecrystal))
+			if (!src.locked)
+				boutput(user, "<span class='alert'>The [W] explodes!</span>")
+				var/turf/T = get_turf(W.loc)
+				if(T)
+					T.hotspot_expose(700,125)
+					explosion(W, T, -1, -1, 2, 3) //about equal to a PDA bomb
+				W.set_loc(user.loc)
 				qdel(W)
 
 	proc/generate_menu()

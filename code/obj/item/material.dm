@@ -461,7 +461,7 @@
 
 /obj/item/raw_material/telecrystal_pure
 	name = "pure telecrystal"
-	desc = "A pure telecrystal, useful for creating small, precise warps in space."
+	desc = "A pure Telecrystal, useful for creating small, precise warps in space."
 	icon_state = "telecrystal_pure"
 	material_name = "Pure Telecrystal"
 	crystal = 2

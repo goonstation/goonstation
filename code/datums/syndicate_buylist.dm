@@ -1050,6 +1050,11 @@ This is basically useless for anyone but miners.
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft)
 	telecrystal = TRUE
 	vr_allowed = 0
+	New()
+		. = ..()
+		name = "[syndicate_currency]"
+	run_on_spawn(var/obj/item/raw_material/telecrystal_pure/tc, mob/living/owner, in_surplus_crate)
+		tc.name = "[syndicate_currency]"
 
 /datum/syndicate_buylist/generic/trick_telecrystal
 	name = "Trick Pure Telecrystal"
@@ -1060,6 +1065,11 @@ This is basically useless for anyone but miners.
 	telecrystal = TRUE
 	vr_allowed = 0
 	not_in_crates = 1
+	New()
+		. = ..()
+		name = "Trick [syndicate_currency]"
+	run_on_spawn(var/obj/item/raw_material/telecrystal_pure/tc, mob/living/owner, in_surplus_crate=FALSE)
+		tc.name = "[syndicate_currency]"
 
 /////////////////////////////////////////////// Disabled items /////////////////////////////////////////////////////
 
