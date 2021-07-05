@@ -1340,7 +1340,7 @@
 					master.KillPathAndGiveUp(KPAGU_RETURN_TO_GUARD)
 				else
 					master.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
-	
+
 	proc/failchecks()
 		if (!IN_RANGE(master, master.target, 1))
 			return 1
@@ -1389,7 +1389,7 @@
 	onEnd()
 		..()
 		master.baton_charging = 0
-		if(IN_RANGE(master, master.target, 1))
+		if(locate(master) && IN_RANGE(master, master.target, 1))
 			master.baton_attack(master.target, 1)
 		else
 			master.charge_baton()
