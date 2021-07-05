@@ -2543,6 +2543,15 @@
 	/datum/manufacture/fireaxe,
 	/datum/manufacture/shovel)
 
+/obj/machinery/manufacturer/artemis
+	name = "Scout Vessel Manufacturer"
+	desc = "A manufacturing unit that can produce equipment for scouting vessels."
+	icon_state = "fab-hangar"
+	icon_base = "hangar"
+	accept_blueprints = 0
+	available = list(
+	/datum/manufacture/nav_sat)
+
 #undef WIRE_EXTEND
 #undef WIRE_POWER
 #undef WIRE_MALF

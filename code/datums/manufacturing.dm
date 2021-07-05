@@ -1021,6 +1021,17 @@ proc/get_nice_mat_name_for_manufacturers(mat)
 	create = 1
 	category = "Resource"
 
+/******************** Artemis **************************/
+
+/datum/manufacture/nav_sat
+	name = "Navigation Satellite"
+	item_paths = list("MET-2")
+	item_amounts = list(1) // Azrun ADJUST POST TESTING, NEED BALANCE PASS
+	item_outputs = list(/obj/nav_sat)
+	time = 45 SECONDS
+	create = 1
+	category = "Component"
+
 /******************** Robotics **************************/
 
 /datum/manufacture/robo_frame

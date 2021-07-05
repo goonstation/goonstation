@@ -38,4 +38,46 @@
 		return
 	*/
 
+/obj/nav_sat
+	name = "Navigation Satellite"
+	icon = 'icons/misc/artemis/temps.dmi'
+	icon_state = "nav_sat"
+
+/obj/machinery/equipment_chute
+	name = "Equipment Chute"
+	desc = "Loading site for ship equipment."
+
+	icon = 'icons/misc/artemis/temps.dmi'
+	icon_state = "chute"
+
+	var/obj/artemis/ship = null
+	var/stars_id = "artemis"
+
+	New()
+		..()
+		SPAWN_DBG(1 SECOND)
+			for(var/obj/artemis/S in world)
+				if(S.stars_id == src.stars_id)
+					src.ship = S
+					break
+
+	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
+		if((!in_interact_range(src,user)) || (!in_interact_range(O,user)))
+			boutput(user, "<span class='alert'>You are too far away to do that.</span>")
+			return
+
+		if(istype(O, /obj/nav_sat))
+			if(ship)
+				if(ship.buoy_count < initial(ship.buoy_count))
+					src.visible_message("<span class='alert'>The [O] slowly slides down \the [src].</span>")
+					ship.buoy_count++
+					qdel(O)
+				else
+					boutput(user, "<span class='alert'>The ship seems to refuse the [O].</span>")
+			else
+				boutput(user, "<span class='alert'>[src] leads to nowhere. Errors have been made.</span>")
+		else
+			boutput(user, "<span class='alert'>Hmmm that doesn't seem right.</span>")
+
+
 #endif

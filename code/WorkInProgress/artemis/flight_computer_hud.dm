@@ -109,6 +109,7 @@
 			if(G.has_ship_body && G.my_ship_body?.landing_zone)
 				tele_locked = TRUE
 		src.tele_ok.icon_state = "lrt-[tele_locked ? "ok" : "nok"]"
+		src.buoy_counter.icon_state = "buoy-[master.ship.buoy_count]"
 
 	relay_click(id, mob/user, list/params)
 		if (user.loc != master)

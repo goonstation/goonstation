@@ -91,7 +91,11 @@
 /obj/background_star/galactic_object/station
 	name = "SS13"
 	icon = 'icons/misc/artemis/galactic_object_map.dmi'
+#ifdef UNDERWATER_MAP
+	icon_state = "abzu"
+#else
 	icon_state = "station"
+#endif
 
 	New()
 		..()

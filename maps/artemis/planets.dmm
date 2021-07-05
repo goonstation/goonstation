@@ -736,6 +736,10 @@
 	icon_state = "green2"
 	},
 /area/ship/artemis)
+"AJ" = (
+/obj/machinery/manufacturer/artemis,
+/turf/simulated/floor/black,
+/area/ship/artemis)
 "By" = (
 /obj/artemis/manta,
 /turf/background_canvas{
@@ -967,6 +971,10 @@
 	dir = 8;
 	icon_state = "leadwindow_1"
 	},
+/area/ship/artemis)
+"HM" = (
+/obj/machinery/equipment_chute,
+/turf/simulated/floor/black,
 /area/ship/artemis)
 "HR" = (
 /obj/machinery/sim/vr_bed/flight_chair{
@@ -26227,7 +26235,7 @@ gP
 Tt
 Tt
 Tt
-Tt
+HM
 Tt
 Tt
 Tt
@@ -26831,7 +26839,7 @@ Xw
 dj
 Tt
 Tt
-Tt
+AJ
 Tt
 Tt
 Tt
