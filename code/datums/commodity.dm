@@ -1921,7 +1921,7 @@
 	lowerfluc = -2500
 
 /datum/commodity/medical/paraspacesuit
-	comname = "Space Based Paramedic Clothing Backpack"
+	comname = "Space Based Paramedic Clothing Bundle"
 	comtype = /obj/item/storage/backpack/medic/blue
 	desc = "Previous work clothing from the doctor who this unit replaced, all in a nice blue medic backpack. Comes with a paramedic spacesuit, an alternative medical jumpsuit, and a pair of light blue shoes."
 	price = 5000
