@@ -656,6 +656,7 @@ datum
 			transparency = 230
 			viscosity = 0.2
 			minimum_reaction_temperature = T0C + 200
+			depletion_rate = 0.6
 
 			var/max_radius = 7
 			var/min_radius = 0
@@ -724,8 +725,6 @@ datum
 					M = holder.my_atom
 				if(istype(M, /mob/living/) && M.getStatusDuration("burning"))
 					M.changeStatus("burning", 2 SECONDS * mult)
-				if(holder.has_reagent("welding fuel"))
-					holder.remove_reagent("welding fuel", 1 * mult)
 				if((M.health > 20) && (probmult(33)))
 					M.take_toxin_damage(1 * mult)
 				if(probmult(4))
