@@ -103,7 +103,8 @@ datum
 				if (isitem(O) && prob(40))
 					var/obj/item/toMelt
 					if (!(toMelt.item_function_flags & IMMUNE_TO_ACID))
-						O.changeStatus("acid", 5 SECONDS, list("leave_cleanable" = 1))
+						if(!O.hasStatus("acid"))
+							O.changeStatus("acid", 5 SECONDS, list("leave_cleanable" = 1))
 					else
 						O.visible_message("The acidic substance slides off \the [O] harmlessly.")
 
@@ -783,8 +784,9 @@ datum
 							if (H.head)
 								var/obj/item/clothing/head/D = H.head
 								if (!(D.item_function_flags & IMMUNE_TO_ACID))
-									boutput(M, "<span class='alert'>Your [H.head] begins to melt!</span>")
-									D.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
+									if(!D.hasStatus("acid"))
+										boutput(M, "<span class='alert'>Your [H.head] begins to melt!</span>")
+										D.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
 								else
 									H.visible_message("<span class='alert>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
 								blocked = 1
@@ -792,8 +794,9 @@ datum
 								if (H.wear_mask)
 									var/obj/item/clothing/mask/K = H.wear_mask
 									if (!(K.item_function_flags & IMMUNE_TO_ACID))
-										boutput(M, "<span class='alert'>Your [H.wear_mask] begins to melt away!</span>")
-										K.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
+										if(!K.hasStatus("acid"))
+											boutput(M, "<span class='alert'>Your [H.wear_mask] begins to melt away!</span>")
+											K.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
 									else
 										H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [K] harmlessly.</span>", "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
 									blocked = 1
@@ -810,8 +813,9 @@ datum
 							if (H.head)
 								var/obj/item/clothing/head/D = H.head
 								if (!(D.item_function_flags & IMMUNE_TO_ACID))
-									boutput(M, "<span class='alert'>Your [H.head] begins to melt!</span>")
-									D.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
+									if(!D.hasStatus("acid"))
+										boutput(M, "<span class='alert'>Your [H.head] begins to melt!</span>")
+										D.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
 								else
 									H.visible_message("<span class='alert>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
 								blocked = 1
@@ -819,8 +823,9 @@ datum
 								if (H.wear_mask)
 									var/obj/item/clothing/mask/K = H.wear_mask
 									if (!(K.item_function_flags & IMMUNE_TO_ACID))
-										boutput(M, "<span class='alert'>Your [H.wear_mask] begins to melt away!</span>")
-										K.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
+										if(!K.hasStatus("acid"))
+											boutput(M, "<span class='alert'>Your [H.wear_mask] begins to melt away!</span>")
+											K.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
 									else
 										H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [K] harmlessly.</span>", "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
 									blocked = 1
@@ -844,7 +849,8 @@ datum
 				if (isitem(O) && volume > O:w_class)
 					var/obj/item/toMelt = O
 					if (!(toMelt.item_function_flags & IMMUNE_TO_ACID))
-						O.changeStatus("acid", 5 SECONDS, list("leave_cleanable" = 1))
+						if(!O.hasStatus("acid"))
+							O.changeStatus("acid", 5 SECONDS, list("leave_cleanable" = 1))
 					else
 						O.visible_message("The blueish acidic substance slides off \the [O] harmlessly.")
 
