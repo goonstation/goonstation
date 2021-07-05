@@ -1,5 +1,9 @@
 
 (t)mon jul 05 21
+(u)Lythine
+(p)5175
+(e)⚖|balance
+(*)Rathen's Secret no longer weakens. Magic Missile's weaken time slightly shortened.
 (u)Tarmunora
 (e)⚖|balance
 (*)Acid takes 5 seconds to melt stuff
