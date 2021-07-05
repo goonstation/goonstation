@@ -388,7 +388,7 @@
 			duration += 1 SECOND
 		return target
 
-	do_bunp()
+	do_bump()
 		return FALSE // no bunp
 
 	proc/unset_tablepass_callback(datum/thrown_thing/thr)
