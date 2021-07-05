@@ -8069,6 +8069,10 @@
 /obj/machinery/ai_status_display,
 /turf/space,
 /area/space)
+"bYk" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "bYn" = (
 /turf/simulated/floor/dojo/sand/circle,
 /area/station/crew_quarters/captain)
@@ -20087,6 +20091,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/southeast)
+"fCj" = (
+/obj/railing/orange/reinforced,
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/turf/simulated/floor/grasstodirt,
+/area/station/ranch)
 "fCl" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -48805,6 +48816,9 @@
 /obj/item/device/radio/intercom/security{
 	pixel_x = 1
 	},
+/obj/item/aiModule/reset{
+	pixel_y = 7
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "olB" = (
@@ -69303,6 +69317,15 @@
 /obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
+"ufw" = (
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/grasstodirt{
+	dir = 4
+	},
+/area/station/ranch)
 "ufx" = (
 /obj/machinery/camera{
 	dir = 4
@@ -130333,7 +130356,7 @@ jQH
 mBB
 oJP
 vzA
-wYJ
+fCj
 mBB
 mBB
 mfs
@@ -131236,11 +131259,11 @@ mfs
 mfs
 gYi
 mBB
-mBB
+bYk
 oJP
 vzA
 wYJ
-mBB
+bYk
 mBB
 mBB
 mBB
@@ -132446,11 +132469,11 @@ mBB
 mBB
 mBB
 mBB
-mBB
+bYk
 rLV
 tGj
 tGj
-tGj
+ufw
 tGj
 tGj
 tGj
@@ -133351,7 +133374,7 @@ mfs
 gYi
 mBB
 rmq
-mBB
+sJW
 mBB
 mBB
 mBB

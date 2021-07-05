@@ -431,7 +431,7 @@
 	icon_state = "tasers100"
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target. Now in a shotgun format."
 	item_state = "tasers"
-	cell_type = /obj/item/ammo/power_cell/high_power
+	cell_type = /obj/item/ammo/power_cell/med_power
 	force = 8.0
 	two_handed = 1
 	can_dual_wield = 0
@@ -545,7 +545,7 @@
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "wavegun100"
 	item_state = "wave"
-	cell_type = /obj/item/ammo/power_cell/high_power
+	cell_type = /obj/item/ammo/power_cell/med_power
 	uses_multiple_icon_states = 1
 	m_amt = 4000
 	force = 6.0
@@ -1639,7 +1639,7 @@
 	muzzle_flash = "muzzle_flash_elec"
 
 	New()
-		cell = new/obj/item/ammo/power_cell/high_power
+		cell = new/obj/item/ammo/power_cell/med_power
 		set_current_projectile(new/datum/projectile/energy_bolt/smgburst)
 
 		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/smgauto)

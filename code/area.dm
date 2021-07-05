@@ -1195,6 +1195,10 @@ ABSTRACT_TYPE(/area/prefab)
 	sound_loop = 'sound/ambience/music/shoptheme.ogg'
 	sound_environment = 2
 
+/area/prefab/ranch
+	name ="Space Ranch"
+	icon_state = "green"
+
 /area/prefab/shooting_range
 	name = "Shooting Range"
 	icon_state = "purple"
