@@ -1923,9 +1923,9 @@
 /datum/commodity/medical/paraspacesuit
 	comname = "Space Based Paramedic Clothing Backpack"
 	comtype = /obj/item/storage/backpack/medic/blue
-	desc = "Previous work clothing from the doctor who this unit replaced, all in a nice backpack. Comes with a paramedic spacesuit, an alternative medical jumpsuit, and a pair of light blue shoes."
-	price = 3000
-	baseprice = 3000
+	desc = "Previous work clothing from the doctor who this unit replaced, all in a nice blue medic backpack. Comes with a paramedic spacesuit, an alternative medical jumpsuit, and a pair of light blue shoes."
+	price = 5000
+	baseprice = 5000
 	upperfluc = 1000
 	lowerfluc = -1000
 
