@@ -716,7 +716,7 @@
 					shake_camera(M, 8, 24)
 
 				for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
-					animate_shake(T)
+					animate_shake(T,5,2,2,T.pixel_x,T.pixel_y)
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
@@ -764,7 +764,7 @@
 					shake_camera(M, 8, 24)
 
 				for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
-					animate_shake(T)
+					animate_shake(T,5,2,2,T.pixel_x,T.pixel_y)
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
