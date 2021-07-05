@@ -25,7 +25,7 @@
 /// How much disarming someone costs.
 #define STAMINA_DISARM_COST 30
 /// Stamina damage of disarming someone with bare hands.
-#define STAMINA_DISARM_DMG 10
+#define STAMINA_DISARM_DMG 15
 /// How much flipping / suplexing costs.
 #define STAMINA_FLIP_COST 25
 /// Base chance of landing a critical hit to stamina.

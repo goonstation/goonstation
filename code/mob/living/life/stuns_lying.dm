@@ -5,7 +5,7 @@
 	process()
 		//proc/handle_stuns_lying(datum/controller/process/mobs/parent)
 		var/lying_old = owner.lying
-		var/cant_lie = robot_owner || hivebot_owner || (human_owner && (human_owner.limbs && istype(human_owner.limbs.l_leg, /obj/item/parts/robot_parts/leg/left/treads) && istype(human_owner.limbs.r_leg, /obj/item/parts/robot_parts/leg/right/treads) && !locate(/obj/table, human_owner.loc) && !locate(/obj/machinery/optable, human_owner.loc)))
+		var/cant_lie = robot_owner || hivebot_owner || (human_owner && (human_owner.limbs && (istype(human_owner.limbs.l_leg, /obj/item/parts/robot_parts/leg/left/treads) || istype(human_owner.limbs.r_leg, /obj/item/parts/robot_parts/leg/right/treads)) && !locate(/obj/table, human_owner.loc) && !locate(/obj/machinery/optable, human_owner.loc)))
 
 		var/list/statusList = owner.getStatusList()
 
@@ -14,6 +14,10 @@
 		if (!owner.can_lie)
 			cant_lie = 1
 			must_lie = 0
+
+		if(cant_lie && statusList["resting"])
+			owner.delStatus("resting")
+			statusList -= "resting"
 
 		if (!isdead(owner)) //Alive.
 			var/changeling_fakedeath = 0

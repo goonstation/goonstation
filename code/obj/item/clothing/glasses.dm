@@ -337,24 +337,15 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if ((isscrewingtool(W) || istype(W, /obj/item/pen)) && !pinhole)
 			if( equipper && equipper.glasses == src )
-				var/obj/item/organ/eye/theEye = equipper.drop_organ((block_eye == "L") ? "left_eye" : "right_eye")
-				if(theEye)
+				var/obj/item/organ/eye/theEye = equipper.drop_organ((src.icon_state == "eyepatch-L") ? "left_eye" : "right_eye")
+				pinhole = 1
+				block_eye = null
+				appearance_flags |= RESET_COLOR
+				if(!theEye)
 					user.show_message("<span class='alert'>Um. Wow. Thats kinda grode.<span>")
 					return ..()
 				theEye.appearance_flags |= RESET_COLOR
-				appearance_flags |= RESET_COLOR
-				W.underlays += theEye
-				W.underlays += src
-				pinhole = 1
-				block_eye = null
-				equipper.u_equip(src)
-				theEye.set_loc(W)
-				src.set_loc(W)
-				equipper = null
-				user.show_message("<span class='alert'>You stab a hole in [src].  Unfortunately, you also stab a hole in your [theEye] and when you pull [W] away your eye comes with it!!</span>")
-
-				W.name_prefix("eye")
-				W.UpdateName()
+				user.show_message("<span class='alert'>You stab a hole in [src].  Unfortunately, you also stab a hole in your eye and when you pull [W] away your eye comes with it!!</span>")
 				return
 			else
 				pinhole = 1
@@ -367,7 +358,7 @@
 		return ..()
 	attack_self(mob/user)
 
-		if (src.block_eye == "R")
+		if (src.icon_state == "eyepatch-R")
 			src.block_eye = "L"
 		else
 			src.block_eye = "R"

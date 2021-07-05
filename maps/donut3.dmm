@@ -48816,6 +48816,9 @@
 /obj/item/device/radio/intercom/security{
 	pixel_x = 1
 	},
+/obj/item/aiModule/reset{
+	pixel_y = 7
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "olB" = (
