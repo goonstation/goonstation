@@ -218,7 +218,7 @@
 
 /obj/item/staff/monkey_staff
 	name = "staff of monke"
-	desc = "A dark staff infused with eldritch power. Trying to steal this is probably a bad idea."
+	desc = "A staff with a cute monkey head carved into the wood."
 	icon_state = "staffmonkey"
 	item_state = "staffmonkey"
 
