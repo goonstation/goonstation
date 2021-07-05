@@ -4,11 +4,11 @@
 	density = 1
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "Crusher_1"
-	layer = MOB_LAYER + 1
+	layer = MOB_LAYER - 1
 	anchored = 1.0
 	mats = 20
 	is_syndicate = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS | USE_HASENTERED
 	var/osha_prob = 40 //How likely it is anyone touching it is to get dragged in
 	var/list/poking_jerks = null //Will be a list if need be
 
@@ -17,55 +17,137 @@
 	var/last_sfx = 0
 
 /obj/machinery/crusher/Bumped(atom/AM)
-	var/tm_amt = 0
-	var/tg_amt = 0
-	var/tw_amt = 0
-	var/bblood = 0
-
-	if(istype(AM,/obj/item/scrap))
+	if(istype(AM,/obj/item/scrap) || istype(AM, /obj/fluid))
 		return
 
-	if(ismob(AM))
-		var/mob/M = AM
-		M.set_loc(src.loc)
-		for(var/obj/O in M.contents)
-			if(isobj(O))
-				tm_amt += O.m_amt
-				tg_amt += O.g_amt
-				tw_amt += O.w_amt
-				if(iscarbon(M))
-					tw_amt += 5000
-					bblood = 2
-				else if(issilicon(M))
-					tm_amt += 5000
-					tg_amt += 1000
-			qdel(O)
-		logTheThing("combat", M, null, "is ground up in a crusher at [log_loc(src)].")
-		M.gib()
-	else if(isobj(AM))
-		var/obj/B = AM
-		tm_amt += B.m_amt
-		tg_amt += B.g_amt
-		tw_amt += B.w_amt
-		for(var/obj/O in AM.contents)
-			if(isobj(O))
-				tm_amt += O.m_amt
-				tg_amt += O.g_amt
-				tw_amt += O.w_amt
-			qdel(O)
-	else
+	if(!(AM.temp_flags & BEING_CRUSHERED))
+		actions.start(new /datum/action/bar/crusher(AM), src)
+
+/obj/machinery/crusher/HasEntered(atom/movable/AM, atom/OldLoc)
+	. = ..()
+	if(istype(AM,/obj/item/scrap) || istype(AM, /obj/fluid) || istype(AM, /obj/decal) || isobserver(AM) || isintangible(AM) || istype(AM, /obj/machinery/conveyor))
 		return
 
-	if (world.time > last_sfx + 5)
-		playsound(src.loc, 'sound/items/mining_drill.ogg', 40, 1,0,0.8)
-		last_sfx = world.time
+	if(!(AM.temp_flags & BEING_CRUSHERED))
+		actions.start(new /datum/action/bar/crusher(AM), src)
 
-	var/obj/item/scrap/S = new(get_turf(src))
-	S.blood = bblood
-	S.set_components(tm_amt,tg_amt,tw_amt)
-	qdel(AM)
-//		step(S,2)
-	return
+/datum/action/bar/crusher
+	duration = 12 SECONDS
+	interrupt_flags = INTERRUPT_MOVE
+	var/atom/movable/target
+	var/classic
+
+	New(atom/movable/target)
+		. = ..()
+		var/turf/T = get_turf(target)
+		src.target = target
+		src.classic = isrestrictedz(T.z)
+		if(!ismob(target))
+			duration = rand(0, 20) DECI SECONDS
+			src.bar_icon_state = ""
+			src.border_icon_state = ""
+
+		if(src.classic)
+			duration = 0 SECONDS
+	onStart()
+		. = ..()
+		if (!ON_COOLDOWN(owner, "crusher_sound", 1 SECOND))
+			playsound(owner, 'sound/items/mining_drill.ogg', 40, 1,0,0.8)
+		target.temp_flags |= BEING_CRUSHERED
+		if(!src.classic)
+			target.set_loc(owner.loc)
+		walk(target, 0)
+		target.changeStatus("stunned", 5 SECONDS)
+
+
+	onUpdate()
+		. = ..()
+		if(!IN_RANGE(owner, target, 1))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (!ON_COOLDOWN(owner, "crusher_sound", rand(0.5, 2.5) SECONDS))
+			playsound(owner, 'sound/items/mining_drill.ogg', 40, 1,0,0.8)
+		if(!src.classic)
+			target.set_loc(owner.loc)
+
+		if(ismob(target))
+			var/mob/M = target
+			random_brute_damage(M, rand(5, 10), TRUE)
+			take_bleeding_damage(M, null, 10, DAMAGE_CRUSH)
+			playsound(M, pick("sound/impact_sounds/Flesh_Stab_1.ogg","sound/impact_sounds/Metal_Clang_1.ogg","sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Flesh_Tear_2.ogg","sound/impact_sounds/Slimy_Hit_3.ogg"), 66)
+			if(prob(10) && ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.limbs?.sever(pick("l_arm", "r_arm", "l_leg", "r_leg"))
+			if(!ON_COOLDOWN(M, "crusher_scream", 2 SECONDS))
+				M.emote("scream", FALSE)
+
+	onInterrupt(flag)
+		. = ..()
+		if(ismob(target) && target.temp_flags & BEING_CRUSHERED)
+			var/mob/M = target
+			random_brute_damage(M, rand(15, 45))
+			take_bleeding_damage(M, null, 10, DAMAGE_CRUSH)
+			playsound(M, pick("sound/impact_sounds/Flesh_Stab_1.ogg","sound/impact_sounds/Metal_Clang_1.ogg","sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Flesh_Tear_2.ogg","sound/impact_sounds/Slimy_Hit_3.ogg"), 100)
+			M.emote("scream", FALSE)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.limbs?.sever("both_legs")
+		target.temp_flags &= ~BEING_CRUSHERED
+
+
+	onEnd()
+		. = ..()
+		if(!IN_RANGE(owner, target, 1))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		var/tm_amt = 0
+		var/tg_amt = 0
+		var/tw_amt = 0
+		var/bblood = 0
+		var/atom/AM = target
+
+		if(ismob(AM))
+			var/mob/M = AM
+			M.set_loc(owner.loc)
+			for(var/obj/O in M.contents)
+				if(isobj(O))
+					tm_amt += O.m_amt
+					tg_amt += O.g_amt
+					tw_amt += O.w_amt
+					if(iscarbon(M))
+						tw_amt += 5000
+						bblood = 2
+					else if(issilicon(M))
+						tm_amt += 5000
+						tg_amt += 1000
+				qdel(O)
+			logTheThing("combat", M, null, "is ground up in a crusher at [log_loc(owner)].")
+			M.gib()
+		else if(istype(AM, /obj))
+			var/obj/B = AM
+			tm_amt += B.m_amt
+			tg_amt += B.g_amt
+			tw_amt += B.w_amt
+			for(var/obj/O in AM.contents)
+				if(isobj(O))
+					tm_amt += O.m_amt
+					tg_amt += O.g_amt
+					tw_amt += O.w_amt
+				qdel(O)
+		else
+			return
+
+		if (!ON_COOLDOWN(owner, "crusher_sound", 1 SECOND))
+			playsound(owner, 'sound/items/mining_drill.ogg', 40, 1,0,0.8)
+
+		var/obj/item/scrap/S = new(get_turf(owner))
+		S.blood = bblood
+		S.set_components(tm_amt,tg_amt,tw_amt)
+		qdel(AM)
+	//		step(S,2)
+		return
+
 
 /obj/machinery/crusher/attack_hand(mob/user)
 	if(!user || user.stat || get_dist(user,src)>1 || istype(user, /mob/dead/aieye)) //No unconscious / dead / distant users

@@ -102,7 +102,9 @@ toxic - poisons
 	power = 75
 	cost = 65
 	dissipation_delay = 5
-	dissipation_rate = 5
+	dissipation_rate = 0
+	max_range = 30
+	projectile_speed = 20
 	sname = "assault laser"
 	shot_sound = 'sound/weapons/Laser.ogg'
 	color_red = 0

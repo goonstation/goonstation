@@ -592,19 +592,19 @@
 		return 1
 
 	proc/spread(var/fluids_to_create) //spread in respect to members
-		.=0
-		var/created = 0
+		.= 0 //return created fluids
 		var/obj/fluid/F
 		src.waitforit = 1 //don't breathe in the gas on inital spread - causes runtimes with small volumes
-		for (var/i = 1, i <= length(src.members), i++)
+		var/membercount = length(src.members)
+		for (var/i = 1, i <= membercount, i++)
 			LAGCHECK(LAG_HIGH)
 			if (src.qdeled) return
-			if (i > length(src.members)) continue
+			if (i > membercount) continue
 			F = members[i]
 			if (!F || F.group != src) continue //This can happen if a fluid is deleted/caught with its pants down during an update loop.
 
 			if (F.blocked_dirs < 4) //skip that update if we were blocked (not an edge tile)
-				amt_per_tile = contained_amt / length(src.members)
+				amt_per_tile = contained_amt / (membercount + .)
 
 				for (var/obj/fluid/C as anything in F.update())
 					LAGCHECK(LAG_HIGH)
@@ -620,14 +620,13 @@
 					if (F.blood_type && !C.blood_type)
 						C.blood_type = F.blood_type
 
-					src.members += C
-					created++
-					. = 1
+					members += C
+					.++
 
-				if (length(members)<=0) //this can happen somehow
+				if ((membercount + .)<=0) //this can happen somehow
 					continue
 
-				amt_per_tile = contained_amt / length(members)
+				amt_per_tile = contained_amt / (membercount + .)
 
 			if (F.touched_other_group && src != F.touched_other_group)
 				if (src.join(F.touched_other_group))
@@ -635,7 +634,7 @@
 					break
 				F.touched_other_group = 0
 
-			if (created >= fluids_to_create)
+			if (. >= fluids_to_create)
 				break
 		src.waitforit = 0
 

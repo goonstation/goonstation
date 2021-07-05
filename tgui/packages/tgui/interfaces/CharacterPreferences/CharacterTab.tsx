@@ -24,6 +24,10 @@ export const CharacterTab = (_props, context) => {
         <LabeledList>
           <LabeledList.Item label="Skin Tone">
             <Button.Color color={data.skinTone} onClick={() => act('update-skinTone')} />
+            <Button icon="angle-double-left" onClick={() => act('decrease-skinTone', { alot: 1 })} />
+            <Button icon="chevron-left" onClick={() => act('decrease-skinTone')} />
+            <Button icon="chevron-right" onClick={() => act('increase-skinTone')} />
+            <Button icon="angle-double-right" onClick={() => act('increase-skinTone', { alot: 1 })} />
           </LabeledList.Item>
           <LabeledList.Divider />
           <LabeledList.Item label="Eye Color">

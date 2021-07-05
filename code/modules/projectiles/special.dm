@@ -868,7 +868,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spreader/tasershotgunspread //Used in Azungar's taser shotgun.
 	name = "energy bolt"
 	sname = "shotgun spread"
-	cost = 37.5
+	cost = 25
 	power = 45 //a chunky pointblank
 	ks_ratio = 0
 	damage_type = D_SPECIAL
