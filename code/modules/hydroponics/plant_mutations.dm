@@ -376,7 +376,7 @@
 	name_prefix = "Robust "
 	crop = /obj/item/plant/herb/asomna/robust
 	iconmod = "AsomnaRobust"
-	assoc_reagents = list("methamphetamine")
+	assoc_reagents = list("synaptizine")
 	chance = 10
 
 // Commol Mutations
@@ -403,7 +403,7 @@
 	name_prefix = "Invigorating "
 	iconmod = "IpecacuanhaInvigorating"
 	crop = /obj/item/plant/herb/ipecacuanha/invigorating
-	assoc_reagents = list("synaptizine")
+	assoc_reagents = list("methamphetamine")
 	chance = 10
 
 // Venne Mutations
