@@ -88,6 +88,7 @@
 	name_prefix = "green "
 	crop = /obj/item/reagent_containers/food/snacks/plant/grape/green
 	iconmod = "GrapeGreen"
+	assoc_reagents = list("insulin")
 
 /datum/plantmutation/grapes/fruit
 	name = "Grapefruit"
