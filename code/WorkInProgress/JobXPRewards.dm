@@ -629,7 +629,7 @@ mob/verb/checkrewards()
 	claimPerRound = 1
 
 	activate(var/client/C)
-		boutput(C, "You fumble about in your pokcets and managed to find your oven mitts.")
+		boutput(C, "You fumble about in your pockets and managed to find your oven mitts.")
 		var/obj/item/I = new/obj/item/clothing/gloves/black/ovenmitts()
 		I.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(I)
