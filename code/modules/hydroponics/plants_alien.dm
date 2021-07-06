@@ -167,12 +167,12 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	crop = /obj/item/reagent_containers/food/snacks/plant/glowfruit
 	unique_seed = /obj/item/seed/alien/litelotus
 	starthealth = 30
-	growtime = 280
-	harvtime = 300
-	cropsize = 2
-	harvests = 2
+	growtime = 300
+	harvtime = 400
+	cropsize = 1
+	harvests = 1
 	endurance = 20
-	assoc_reagents = list("omnizine")
+	assoc_reagents = list("lumen")
 
 /datum/plant/artifact/plasma
 	name = "Plasma"
