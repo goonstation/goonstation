@@ -1,5 +1,183 @@
 
+(t)mon jul 05 21
+(u)Emily
+(e)⚖🆕|balance, feature
+(*)New QGP Recipe and effect. Happy hunting. Nerds.
+(u)Arthur Holiday
+(p)5364
+(e)⚖🆕|balance, feature
+(+)You can now deconstruct multiple chairs at a time.
+(u)Lythine
+(p)5175
+(e)⚖|balance
+(*)Rathen's Secret no longer weakens. Magic Missile's weaken time slightly shortened.
+(u)Tarmunora
+(e)⚖|balance
+(*)Acid takes 5 seconds to melt stuff
+(t)sun jul 04 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Sec loadout weapons all start with 200u cells, and sec pouch contains a 200u cell. Power costs of wavegun, tasershotgun, taser SMG adjusted to compensate
+(u)Lythine
+(p)5172
+(e)🆕🗺🎨|feature, mapping, sprites
+(+)Adds a small ranch space prefab.
+(t)sat jul 03 21
+(u)Tarmunora
+(p)5368
+(e)⚖|balance
+(+)disarm stam cost 10 -> 30
+(+)base disarm chance 37% -> 40%
+(+)Disarm chance scaled down to 50% of current (20%) at targets with 200 or more stamina, and linerally scaled to current value (40%) on targets with 100 or less.  Blocking prevents disarm (not shovedown though), at the cost of (10) stamina if the disarm would have succeeded
+(+)Disarm targets all held items at once
+(u)DimWhat
+(p)5166
+(e)🎨|sprites
+(+)Made some sprite changes to the HoP uniform and dress as well as the HoS Dress.
+(u)TTerc
+(p)5362
+(e)🆕|feature
+(+)Added colorful backpacks and satchels to uniform manufacturer.
+(u)Kubius
+(p)5365
+(e)🆕🗺|feature, mapping
+(*)Atlas' mining department and main pod bay have received a significant overhaul, including the opening of the main pod bay, the arc smelter, and the merchant docks to public access.
+(u)Flappybat
+(p)5374
+(e)⚖|balance
+(+)Allow walking in clown shoes without slipping and added a cooldown to prevent chain slips.
+(u)zjdtmkhzt
+(p)5217
+(e)⚖🆕|balance, feature
+(+)Surgery type artifacts can now replace all kinds of organs.
+(u)zjdtmkhzt
+(p)5367
+(e)|
+(+)Buddies should be able to rack the riot shotgun now.
+(t)fri jul 02 21
+(u)UnfunnyPerson
+(p)5305
+(e)⚖|balance
+(+)Frog Flu progresses much slower
+(u)Tarmunora
+(e)⚖|balance
+(*)Single tread leg blocks lying too
+(t)thu jul 01 21
+(u)112358sam
+(p)5345
+(e)🐛|bug
+(+)Welding fuel tanks only refill welding tools if they contain welding fuel.
+(u)MarkNstein
+(p)2152
+(e)⚖🎨|balance, sprites
+(*)Entering chutes now has an animation and action bar. Chute-entry has been made faster.
+(u)BatElite
+(p)5293
+(e)⚖|balance
+(+)Miniature bibles are no longer visible in-hand, nor will they spare atheists.
+(u)Arthur Holiday
+(p)5311
+(e)⚖|balance
+(+)The Head of Security does not get a taser at roundstart anymore.
+(u)BatElite
+(p)5294
+(e)|
+(+)Emagging cyborgs no longer randomly fails.
+(t)wed jun 30 21
+(u)112358sam
+(p)5140
+(e)🆕🗺|feature, mapping
+(+)QM consoles and supply request consoles are now constructable.
+(+)Added QM console and supply request circuitboards to tech storage for current maps.
+(u)UnfunnyPerson
+(p)5318
+(e)⚖|balance
+(+)Laser Rifles now require more difficult materials.
+(u)Ryumi
+(p)5093
+(e)🗺|mapping
+(+)Significantly expanded Donut 3's Ranch
+(u)112358sam
+(p)5194
+(e)|
+(+)Borgs and AI can now see packet sniffer device output and set filters.
+(u)112358sam
+(p)5003
+(e)🆕🗺|feature, mapping
+(+)Makes the quantum telescope console constructable.
+(+)Adds the new quantum telescope circuit board to tech storage and the mining outpost.
+(u)DimWhat
+(p)5286
+(e)⚖🗺|balance, mapping
+(+)Removed the space proofness of the snow suit and altered its stats.
+(u)Walpvrgis and BatElite
+(p)5300
+(e)🎨|sprites
+(*)AI players now have 20 new faces to choose from, so you can more effectively simulate just how disappointed you are in the crew.
+(t)tue jun 29 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Smoke and foam reactions will only succeed when reacted from "open" containers (e.g.: beakers, drinkss, puddles, etc) and will fail from closed containers (pills, mobs, foam-tiles, etc)
+(u)Arthur Holiday
+(p)5307
+(e)⚖|balance
+(+)If your gloves have atleast 7% heat resistance, patting out people on fire won't damage you and you will be 2x more effective at it
+(t)mon jun 28 21
+(u)Flappybat
+(p)5245
+(e)🆕|feature
+(+)Scientists now start with a random pen or pencil. See if you get the rare red pen!
+(t)sat jun 26 21
+(u)Penny
+(u)Tarmunora
+(e)⚖|balance
+(+)Weldingtools now use 2 fuel each time you hit someone and have an improved special attack.
+(p)5168
+(e)🗺|mapping
+(*)Improves the layout of cog1 mechanic's lab and adds equipment and a data closet
+(t)fri jun 25 21
+(u)Arthur Holiday
+(p)5036
+(e)🆕🎨|feature, sprites
+(*)Added Customizable banners, use cloth on a wall to make one, color and draw on it with crayons.
+(u)Flourish
+(+)There are now buttons for adjusting skintone in character setup.
+(u)Flappybat
+(p)5267
+(e)⚖|balance
+(*)Made doors half as strong, you can now break them this century. Explosive/fire/projectile scaling is adjusted so it will still take the same number of bullets to destroy a door.
+(u)Azrun
+(p)5244
+(e)⚖🐛|balance, bug
+(+)Reduced power output from solar panels.
+(u)Arthur Holiday
+(p)5265
+(e)⚖🐛|balance, bug
+(+)The werewolf feast ability now gets interrupted if the target stands up.
+(u)Tarmunora
+(e)⚖|balance
+(+)pill bottles and patch boxes from chemmasters cannot fit more items than they spawn with
+(u)Kubius
+(p)5274
+(e)🐛🗺|bug, mapping
+(*)Kondaru detective's office front door is once again detective-only with remote open. Also made maintenance near the Foundry more construction-friendly and added a sink/drain to the Morgue.
+(u)Flappybat
+(p)5262
+(e)⚖|balance
+(+)Nuclear bomb is now EMP proof.
+(t)thu jun 24 21
+(u)zjdtmkhzt
+(p)5237
+(e)⚖🆕|balance, feature
+(+)Custom sandwiches now combine the healing and hunger restore of their ingredients.
+(u)Zonespace
+(p)5263
+(e)⚖⛔|balance, removal
+(*)Prison Loafers no longer have nugget mode.
 (t)wed jun 23 21
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Crusher now has an actionbar
 (u)Walpvrgis
 (p)5155
 (e)🆕🎨|feature, sprites

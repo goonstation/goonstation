@@ -1963,6 +1963,7 @@
 	},
 /obj/table/auto,
 /obj/decal/cleanable/cobweb2,
+/obj/item/circuitboard/telescope,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "afN" = (

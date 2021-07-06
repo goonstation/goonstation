@@ -485,10 +485,11 @@ RACK PARTS
 
 /datum/action/bar/icon/furniture_deconstruct
 	id = "furniture_deconstruct"
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	duration = 50
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
+	icon_on_target = FALSE
 
 	var/obj/the_furniture
 	var/obj/item/the_tool
@@ -497,6 +498,7 @@ RACK PARTS
 		..()
 		if (O)
 			the_furniture = O
+			place_to_put_bar = O
 		if (tool)
 			the_tool = tool
 			icon = the_tool.icon

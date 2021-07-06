@@ -16,7 +16,7 @@ var/datum/preMapLoad/preMapLoad = new
 // END_PREFERENCES
 
 // Compatibility Check
-#include "_std\compatibility.dm"
+#include "_std\compatibility.dme"
 // Compatibility START
 #ifdef BYOND_VERSION_OK
 
@@ -1145,7 +1145,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\transport\shuttle\shuttle_controller.dm"
 #include "code\modules\transport\shuttle\shuttle_misc.dm"
 #include "code\modules\transport\shuttle\shuttle_turfobjs.dm"
-#include "code\modules\tutorials\beginner.dm"
 #include "code\modules\tutorials\blob_tutorial.dm"
 #include "code\modules\tutorials\tutorial_base.dm"
 #include "code\modules\vending\clothingbooth.dm"

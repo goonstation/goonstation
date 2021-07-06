@@ -236,7 +236,7 @@
 
 	poly
 		name = "poly pride jumpsuit"
-		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the polysexual pride flag."
+		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the polysexual pride flag. Previously mistaken for polyamorous in uniform fabricators - the responsible employee was promptly terminated under all applicable versions of Space Law."
 		icon_state ="poly"
 		item_state = "poly"
 

@@ -2377,7 +2377,13 @@
 	/datum/manufacture/hat_orange,
 	/datum/manufacture/hat_tophat,
 	/datum/manufacture/backpack,
-	/datum/manufacture/satchel)
+	/datum/manufacture/backpack_red,
+	/datum/manufacture/backpack_green,
+	/datum/manufacture/backpack_blue,
+	/datum/manufacture/satchel,
+	/datum/manufacture/satchel_red,
+	/datum/manufacture/satchel_green,
+	/datum/manufacture/satchel_blue)
 
 	hidden = list(/datum/manufacture/breathmask,
 	/datum/manufacture/patch,

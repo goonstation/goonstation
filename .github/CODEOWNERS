@@ -6,7 +6,7 @@
 # to the same file or dir, add them to the end under Multiple Owners
 
 # Adharainspace
-/_std/ @Adharainspace
+#/_std/ @Adharainspace
 
 # Flourish
 /code/obj/item/toys.dm @flrsh
@@ -34,10 +34,10 @@
 /tools/ @ZeWaka
 
 # Pali
-/code/datums/components/ @pali6
-/code/obj/artifacts/ @pali6
-/code/datums/controllers/artifact_controls.dm @pali6
-/code/WorkInProgress/pali.dm @pali6
+#/code/datums/components/ @pali6
+#/code/obj/artifacts/ @pali6
+#/code/datums/controllers/artifact_controls.dm @pali6
+#/code/WorkInProgress/pali.dm @pali6
 
 # Multiple Owners
 /tgui/ @mordent-goonstation @ZeWaka
