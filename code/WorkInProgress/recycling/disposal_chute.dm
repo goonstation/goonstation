@@ -703,10 +703,21 @@
 
 	onDelete()
 		animate(target) //force-complete the current animation
+		//What I desire, but it's not working.
+		/*
 		target.pixel_x = target_old_pixel_x
 		target.pixel_y = target_old_pixel_y
 		target.transform = target_old_transform
 		target.alpha = target_old_alpha
+		*/
+		
+		target.pixel_x = 0
+		target.pixel_y = 0
+		target.transform = matrix()
+		target.alpha = 255
+
+
+
 		..()
 
 	proc/checkStillValid()
