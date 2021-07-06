@@ -400,14 +400,14 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(agent_b && temp > 500 && air.toxins > MINIMUM_REACT_QUANTITY )
 			var/datum/gas/oxygen_agent_b/trace_gas = payload.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
 			payload.temperature = T0C // Greatly reduce temperature to simulate an endothermic reaction
-			// Itr: 1.6 Agent B, 20 oxy, likely around two minutes for it to get below minimum amount in chamber. That means about 12 minutes per crystal.
+			// Itr: .18 Agent B, 20 oxy, 1.3 minutes per iteration, peak efficency is 7.8 minutes per crystal, more realisticly around 6 minutes per crystal.
 
 			animate_flash_color_fill_inherit(location,"#ff0000",4, 2 SECONDS)
 			if(!ON_COOLDOWN(location, "sound_cooldownB", 2 SECONDS)) // Prevents ear spam
 				playsound(location, "sound/effects/leakagentb.ogg", 50, 1, 8)
 			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, location))
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(location))
-			trace_gas.moles += 1.6
+			trace_gas.moles += 0.18
 			iterations -= 1
 			payload.oxygen = 20
 
