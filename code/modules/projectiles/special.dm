@@ -698,7 +698,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	max_speed = 2
 	goes_through_walls = 0 // It'll stop homing when it hits something, then go bouncy
 	var/max_bounce_count = 3 // putting the I in ICEE BEEYEM
-	var/weaken_length = 5 SECONDS
+	var/weaken_length = 4 SECONDS
 	var/slam_text = "The magic missile SLAMS into you!"
 	var/hit_sound = 'sound/effects/mag_magmisimpact_bounce.ogg'
 	var/cat_sound = 'sound/voice/animal/cat.ogg'
@@ -756,7 +756,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	min_speed = 2
 	max_speed = 2
 	max_bounce_count = 2 // putting the Y in ICEE BEEYEM
-	weaken_length = 3 SECONDS
+	weaken_length = 2 SECONDS
 	slam_text = "The magic missile bumps into you!"
 
 /datum/projectile/special/homing/orbiter

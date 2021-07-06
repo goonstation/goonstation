@@ -3186,14 +3186,17 @@ datum
 			viscosity = 0.7
 
 			pierces_outerwear = 1//shoo, biofool
-			reaction_turf(var/turf/T, var_volume)
-				T.ex_act(1)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if(istype(M, /mob/dead))
 					return
+				#ifdef SECRETS_ENABLED
+				one_with_everything(M)
+				#else
 				M.ex_act(1)
+				#endif
+
 
 			reaction_obj(var/obj/O, var/volume)
 				//if (!istype(O, /obj/effects/foam)
@@ -3203,8 +3206,13 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
+				#ifdef SECRETS_ENABLED
+				one_with_everything(M)
+				#else
 				M.ex_act(1)
 				M.gib()
+				#endif
+				M.reagents.del_reagent(src.id)
 
 		cyclopentanol
 			name = "cyclopentanol"

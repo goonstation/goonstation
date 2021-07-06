@@ -2579,8 +2579,12 @@ datum
 			name = "stable bose-einstein macro-condensate"
 			id = "big_bang_precursor"
 			result = "big_bang_precursor"
+			#ifdef SECRETS_ENABLED
+				// It's secret now bucko
+			#else
 			required_reagents = list("ldmatter" = 1, "voltagen" = 12, "something" = 3, "sorium" = 1)
 			result_amount = 1
+			#endif
 			mix_phrase = "The solution settles and congeals into a strange viscous fluid that seems to have the properties of both a liquid and a gas."
 			required_temperature = T0C - 277
 

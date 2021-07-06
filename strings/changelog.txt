@@ -1,4 +1,19 @@
 
+(t)mon jul 05 21
+(u)Emily
+(e)⚖🆕|balance, feature
+(*)New QGP Recipe and effect. Happy hunting. Nerds.
+(u)Arthur Holiday
+(p)5364
+(e)⚖🆕|balance, feature
+(+)You can now deconstruct multiple chairs at a time.
+(u)Lythine
+(p)5175
+(e)⚖|balance
+(*)Rathen's Secret no longer weakens. Magic Missile's weaken time slightly shortened.
+(u)Tarmunora
+(e)⚖|balance
+(*)Acid takes 5 seconds to melt stuff
 (t)sun jul 04 21
 (u)Tarmunora
 (e)⚖|balance
