@@ -23,6 +23,7 @@
 	var/obj/item/assembly/detonator/det = null
 	var/overlay_state = null
 	var/dialog_update_enabled = 1 //For preventing the DAMNABLE window taking focus when manually inputting pressure
+	// var/noholdtank = 0  For canisters that cant fit things like a tank holder, aka canisters that are half the size sprite wise. (Note this var is located in parent machinery/portable_atmospherics) set the var == 1 for canisters that are short
 
 	var/image/atmos_dmi
 	var/image/bomb_dmi
@@ -66,7 +67,7 @@
 	desc = "A container which holds a large amount of the labelled gas. It's possible to transfer the gas to a pipe system, or the air."
 	volume = 500
 	filled = 1/32
-
+	noholdtank = 1
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "Canister \[Plasma\]"
 	icon_state = "orange"
@@ -100,6 +101,8 @@
 	if (src.destroyed)
 		src.icon_state = "[src.casecolor]-1"
 		ClearAllOverlays()
+	if (noholdtank == 1)
+		return
 	else
 		icon_state = "[casecolor]"
 		if (overlay_state)
@@ -347,6 +350,9 @@
 
 /obj/machinery/portable_atmospherics/canister/attackby(var/obj/item/W as obj, var/mob/user as mob)
 	if (istype(W, /obj/item/assembly/detonator)) //Wire: canister bomb stuff
+		if (noholdtank == 1)
+			user.show_message("<span class='alert'>This tank doesn't appear to be the correct size.</span>")
+			return
 		if (holding)
 			user.show_message("<span class='alert'>You must remove the currently inserted tank from the slot first.</span>")
 		else
