@@ -191,7 +191,16 @@ var/global/list/bible_contents = list()
 	name = "O.C. Bible"
 	desc = "For when you don't want the good book to take up too much space in your life."
 	icon_state = "minibible"
+	item_state = null
 	w_class = W_CLASS_SMALL
+
+	farty_heresy(mob/user) //fuk u always die
+		if(!user || user.loc != src.loc)
+			return 0
+		user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
+		logTheThing("combat", user, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
+		user.gib()
+		return 0
 
 /obj/item/storage/bible/hungry
 	name = "hungry bible"

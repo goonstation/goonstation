@@ -726,7 +726,7 @@ PIPE BOMBS + CONSTRUCTION
 								W.layer = HUD_LAYER
 						else
 							qdel(W)
-				else
+				else if (!issilicon(user)) //borgs could drop all their tools/internal items trying to pull one
 					user.unequip_all()
 
 				for (var/mob/N in viewers(user, null))

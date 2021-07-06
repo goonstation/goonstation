@@ -6336,6 +6336,10 @@
 /obj/decal/tile_edge/stripe/corner/extra_big{
 	dir = 6
 	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/engine,
 /area/pod_wars/team2/power)
 "xF" = (

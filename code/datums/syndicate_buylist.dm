@@ -191,6 +191,12 @@ proc/build_syndi_buylist_cache()
 	not_in_crates = 1
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
+	run_on_spawn(obj/item/sword/stabby, mob/living/owner, in_surplus_crate=FALSE) //Nukies get red ones
+		if (isnukeop(owner))
+			stabby.light_c.set_color(255, 0, 0)
+			stabby.bladecolor = "R"
+		return
+
 /datum/syndicate_buylist/generic/katana
 	name = "Katana"
 	item = /obj/item/katana_sheath
@@ -1007,9 +1013,9 @@ This is basically useless for anyone but miners.
 // changed to sechuds cause why not - haine
 /datum/syndicate_buylist/surplus/cybereye_kit_sechud
 	name = "Ocular Prosthesis Kit (SecHUD)"
-	item = /obj/item/storage/box/prosthesis_kit/eye_sechud
+	item = /obj/item/device/ocular_implanter
 	cost = 1
-	desc = "A pair of surplus cybereyes that can access the Security HUD system. Operating table not included."
+	desc = "A pair of surplus cybereyes that can access the Security HUD system. Comes with a convenient but terrifying implanter."
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/surplus/holographic_disguiser
