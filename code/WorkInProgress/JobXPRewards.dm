@@ -547,7 +547,7 @@ mob/verb/checkrewards()
 /datum/jobXpReward/bartender/spectromonocle
 	name = "Spectroscopic Monocle"
 	desc = "Now you can look dapper and know which drinks you poisoned at the same time"
-	required_levels = list("Bartender"=5)
+	required_levels = list("Bartender"=0)
 	icon_state = "?"
 	claimable = 1
 	var/path_to_spawn = /obj/item/clothing/glasses/spectro/monocle
@@ -617,3 +617,42 @@ mob/verb/checkrewards()
 		I.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(I)
 		return
+
+/////////////Chef////////////////
+
+/datum/jobXpReward/chef/ovenmitts
+	name = "Chef's Oven Mitts"
+	desc = "Finally, after years of burning your fingers on baking trays, soup pots and deepfryers, you get your own pair of oven mitts! "
+	required_levels = list("Chef"=0)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		boutput(C, "You fumble about in your pokcets and managed to find your oven mitts.")
+		var/obj/item/I = new/obj/item/clothing/gloves/black/ovenmitts()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(I)
+		return
+
+/datum/jobXpReward/chef/kissthecook
+	name = "Tacky 'Kiss The Cook' apron"
+	desc = "It gets lonely in the kitchen and frankly, neither the bartender or the monkeys are particularly good snoggers"
+	required_levels = list("Chef"=0)
+	icon_state = "?"
+	claimable = 1
+	var/path_to_spawn = /obj/item/clothing/suit/apron/kissthecook
+
+	activate(var/client/C)
+		var/apron = C.mob.find_type_in_hand(/obj/item/clothing/suit/apron/)
+
+		if(!(apron))
+			boutput(C.mob, "You need to be in possession of an apron to claim this item")
+			return
+		C.mob.remove_item(apron)
+		qdel(apron)
+		var/obj/item/I = new path_to_spawn()
+		I.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand_or_drop(I)
+		boutput(C.mob, "A big red heart grows on your apron")
+

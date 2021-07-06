@@ -383,6 +383,12 @@
 	body_parts_covered = TORSO
 	permeability_coefficient = 0.70
 
+/obj/item/clothing/suit/apron/kissthecook
+	name = "tacky apron"
+	desc = "A cheap plastic apron, with a big red heart printed on the front, with written text saying 'Kiss The Cook'."
+	item_state = "kissthecook"
+	icon_state = "kissthecook"
+
 /obj/item/clothing/suit/apron/botanist
 	name = "blue apron"
 	desc = "This will keep you safe from tomato stains. Unless they're the exploding ones"

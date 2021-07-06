@@ -239,6 +239,15 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		qdel(src)
 		user.put_in_hand_or_drop(new /obj/item/clothing/gloves/fingerless)
 	else . = ..()
+
+/obj/item/clothing/gloves/black/ovenmitts
+	desc = "A pair of cushy mitts, designed to protect your delicate handsies in the kitchen."
+	name = "chef's oven mitts"
+	icon_state = "ovenmitts"
+	item_state = "ovenmitts"
+	protective_temperature = 1500
+	material_prints = "white cloth fibres" //ironic
+
 /obj/item/clothing/gloves/cyborg
 	desc = "beep boop borp"
 	name = "cyborg gloves"
