@@ -605,10 +605,10 @@
 	crop = /obj/item/raw_material/mauxite
 	chance = 10
 
-/datum/plantmutation/rocks/erebite
-	name_prefix = "Erebite "
+/datum/plantmutation/rocks/uqill
+	name_prefix = "Uqill "
 	dont_rename_crop = true
-	crop = /obj/item/raw_material/erebite
+	crop = /obj/item/raw_material/uqill
 	chance = 5
 
 // trees. :effort:
