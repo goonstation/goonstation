@@ -529,7 +529,10 @@
 	teleport_blocked = TRUE
 
 	artemis
+		name = "Artemis"
 	arjuna
+		name = "Arjuna"
 	manta
+		name = "Manta"
 
 #endif

@@ -6,10 +6,10 @@
 	layer = 2.5;
 	pixel_y = -12
 	},
+/obj/machinery/light/emergency{
+	dir = 4
+	},
 /turf/simulated/floor/black,
-/area/ship/artemis)
-"an" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction,
 /area/ship/artemis)
 "ao" = (
 /obj/decal/fakeobjects/shuttlethruster,
@@ -33,6 +33,13 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/bluegreen,
 /area/ship/artemis)
+"aP" = (
+/obj/storage/secure/closet/engineering,
+/obj/machinery/light/emergency{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/ship/artemis)
 "bc" = (
 /obj/stool/chair/couch/red{
 	dir = 8;
@@ -55,6 +62,9 @@
 /area/ship/artemis)
 "bm" = (
 /obj/storage/closet/biohazard,
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
 /turf/simulated/floor/engine,
 /area/ship/artemis)
 "bw" = (
@@ -73,6 +83,9 @@
 /area/ship/arjuna)
 "ca" = (
 /obj/storage/closet/fire,
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
 /turf/simulated/floor/engine,
 /area/ship/artemis)
 "cd" = (
@@ -85,12 +98,6 @@
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
-	},
-/area/ship/artemis)
-"cE" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 6;
-	icon_state = "leadwall"
 	},
 /area/ship/artemis)
 "cH" = (
@@ -112,12 +119,6 @@
 /obj/table/auto,
 /obj/machinery/chem_heater,
 /turf/simulated/floor/specialroom/medbay,
-/area/ship/artemis)
-"dj" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 10;
-	icon_state = "leadwall"
-	},
 /area/ship/artemis)
 "ds" = (
 /turf/simulated/floor/circuit/off,
@@ -151,6 +152,13 @@
 /obj/storage/secure/closet/engineering,
 /turf/simulated/floor/engine,
 /area/ship/arjuna)
+"ek" = (
+/obj/machinery/power/smes,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/engine,
+/area/ship/artemis)
 "en" = (
 /turf/simulated/floor/bluegreen,
 /area/ship/arjuna)
@@ -228,12 +236,6 @@
 "gK" = (
 /turf/simulated/floor/engine,
 /area/ship/artemis)
-"gP" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 8;
-	icon_state = "leadwall"
-	},
-/area/ship/artemis)
 "hb" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	dir = 1;
@@ -270,6 +272,13 @@
 /obj/item/circular_saw,
 /turf/simulated/floor/specialroom/medbay,
 /area/ship/artemis)
+"iv" = (
+/obj/machinery/power/apc/autoname_south,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/engine,
+/area/ship/arjuna)
 "iy" = (
 /turf/simulated/floor/circuit/off,
 /area/ship/arjuna)
@@ -451,12 +460,6 @@
 	},
 /turf/simulated/floor/black,
 /area/ship/artemis)
-"oE" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 4;
-	icon_state = "leadwall"
-	},
-/area/ship/artemis)
 "oJ" = (
 /obj/decal/fakeobjects/shuttlethruster,
 /obj/decal/fakeobjects/shuttlethruster,
@@ -498,12 +501,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/ship/arjuna)
-"pX" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 9;
-	icon_state = "leadwall"
-	},
-/area/ship/artemis)
 "qk" = (
 /obj/landmark/destination_landmark{
 	destination_name = "planet4"
@@ -563,6 +560,13 @@
 "tD" = (
 /turf/space,
 /area/space)
+"tO" = (
+/obj/machinery/power/apc/autoname_south,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/engine,
+/area/ship/artemis)
 "tV" = (
 /obj/machinery/vending/cola/red,
 /turf/simulated/floor/carpet{
@@ -583,6 +587,9 @@
 	id = "artemis";
 	layer = 2.5;
 	pixel_y = 32
+	},
+/obj/machinery/light/emergency{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/ship/artemis)
@@ -651,6 +658,9 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/ship/artemis)
 "wl" = (
+/obj/machinery/light/emergency{
+	dir = 8
+	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fblue2"
@@ -714,6 +724,10 @@
 	icon_state = "fblue2"
 	},
 /area/ship/arjuna)
+"zk" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/black,
+/area/ship/artemis)
 "Ae" = (
 /obj/table/auto,
 /obj/submachine/mixer,
@@ -838,6 +852,9 @@
 /turf/simulated/floor/black,
 /area/ship/artemis)
 "DC" = (
+/obj/machinery/light/emergency{
+	dir = 4
+	},
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fblue2"
@@ -865,6 +882,16 @@
 /obj/item/storage/box/syringes,
 /obj/item/remote/porter/port_a_nanomed,
 /turf/simulated/floor/specialroom/medbay,
+/area/ship/arjuna)
+"EG" = (
+/obj/machinery/power/terminal,
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/engine,
 /area/ship/arjuna)
 "EM" = (
 /obj/stool/chair/office/blue{
@@ -912,6 +939,12 @@
 /obj/item/circular_saw,
 /turf/simulated/floor/specialroom/medbay,
 /area/ship/arjuna)
+"Fe" = (
+/obj/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/engine,
+/area/ship/artemis)
 "FG" = (
 /obj/machinery/networked/mainframe,
 /obj/machinery/power/data_terminal,
@@ -943,6 +976,12 @@
 	dir = 6;
 	icon_state = "fblue2"
 	},
+/area/ship/arjuna)
+"GC" = (
+/obj/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/engine,
 /area/ship/arjuna)
 "GL" = (
 /obj/landmark/destination_landmark{
@@ -1057,6 +1096,12 @@
 "Ls" = (
 /turf/space,
 /area/map_gen/planet/alpha)
+"LC" = (
+/obj/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/engine,
+/area/ship/artemis)
 "Mj" = (
 /obj/storage/secure/closet/medical,
 /turf/simulated/floor/specialroom/medbay,
@@ -1073,9 +1118,25 @@
 /area/ship/arjuna)
 "Mx" = (
 /obj/machinery/power/smes,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/engine,
 /area/ship/arjuna)
 "Nl" = (
+/turf/simulated/floor/engine,
+/area/ship/arjuna)
+"NB" = (
+/obj/machinery/power/smes,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/engine,
+/area/ship/arjuna)
+"NK" = (
+/obj/cable/yellow{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/engine,
 /area/ship/arjuna)
 "NY" = (
@@ -1230,6 +1291,9 @@
 /area/ship/arjuna)
 "Sq" = (
 /obj/machinery/power/smes,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/engine,
 /area/ship/artemis)
 "SD" = (
@@ -1241,9 +1305,6 @@
 	dir = 9;
 	icon_state = "red2"
 	},
-/area/ship/artemis)
-"SE" = (
-/turf/unsimulated/wall/setpieces/leadwall,
 /area/ship/artemis)
 "SG" = (
 /obj/table/auto,
@@ -1259,6 +1320,16 @@
 	icon_state = "fblue3"
 	},
 /area/ship/arjuna)
+"SS" = (
+/obj/machinery/power/terminal,
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/engine,
+/area/ship/artemis)
 "SU" = (
 /obj/stool/chair/couch/green{
 	dir = 4;
@@ -1331,6 +1402,13 @@
 	icon_state = "green2"
 	},
 /area/ship/arjuna)
+"Wl" = (
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fblue2"
+	},
+/area/ship/arjuna)
 "Wo" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -1357,12 +1435,6 @@
 	},
 /turf/simulated/floor/purple,
 /area/ship/arjuna)
-"Xw" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 5;
-	icon_state = "leadwall"
-	},
-/area/ship/artemis)
 "Xx" = (
 /obj/machinery/clone_scanner,
 /obj/machinery/power/data_terminal,
@@ -1406,6 +1478,9 @@
 /area/ship/arjuna)
 "XT" = (
 /obj/storage/secure/closet/engineering,
+/obj/machinery/light/emergency{
+	dir = 8
+	},
 /turf/simulated/floor/engine,
 /area/ship/artemis)
 "Yf" = (
@@ -9935,7 +10010,7 @@ Tt
 Tt
 Tt
 Tt
-Tt
+zk
 Tt
 Tt
 Tt
@@ -10850,8 +10925,8 @@ po
 po
 bg
 PR
-pX
-cE
+po
+po
 RG
 RG
 RG
@@ -24425,23 +24500,23 @@ RG
 RG
 RG
 hb
-pX
-SE
-SE
-SE
-SE
-SE
-SE
-SE
-SE
-SE
-SE
-SE
-SE
-SE
-SE
-SE
-dj
+po
+po
+po
+po
+po
+po
+po
+po
+po
+po
+po
+po
+po
+po
+po
+po
+po
 RG
 RG
 RG
@@ -24727,23 +24802,23 @@ RG
 RG
 RG
 hb
-gP
+po
+Tt
+BY
+Tt
+Tt
+Tt
+Tt
+BY
 Tt
 Tt
 Tt
 Tt
 Tt
+BY
 Tt
 Tt
-Tt
-Tt
-Tt
-Tt
-Tt
-Tt
-Tt
-Tt
-gP
+po
 RG
 RG
 RG
@@ -25025,11 +25100,11 @@ RG
 RG
 RG
 RG
-pX
-SE
-SE
-SE
-cE
+po
+po
+po
+po
+po
 Tt
 Tt
 Tt
@@ -25045,10 +25120,10 @@ Tt
 Tt
 Tt
 iV
-an
-SE
-SE
-dj
+po
+po
+po
+po
 RG
 RG
 RG
@@ -25326,8 +25401,8 @@ RG
 RG
 RG
 RG
-pX
-cE
+po
+po
 Tt
 Tt
 Tt
@@ -25346,11 +25421,11 @@ Tt
 Tt
 Tt
 Tt
-pX
-cE
+po
+po
 ca
 XT
-gP
+po
 RG
 RG
 RG
@@ -25627,8 +25702,8 @@ RG
 RG
 RG
 RG
-pX
-cE
+po
+po
 Tt
 Tt
 Tt
@@ -25648,11 +25723,11 @@ Tt
 Tt
 Tt
 Tt
-oE
+po
 lg
-gK
-gK
-gP
+LC
+tO
+po
 RG
 RG
 RG
@@ -25929,7 +26004,7 @@ RG
 RG
 RG
 RG
-gP
+po
 Tt
 Tt
 Tt
@@ -25952,9 +26027,9 @@ Tt
 Tt
 Vt
 Jg
-gK
+SS
 Sq
-gP
+po
 RG
 RG
 RG
@@ -26231,32 +26306,32 @@ RG
 RG
 RG
 RG
-gP
-Tt
+po
+oA
 Tt
 Tt
 HM
 Tt
+zk
 Tt
 Tt
 Tt
 Tt
+zk
 Tt
 Tt
 Tt
 Tt
-Tt
-Tt
-Tt
+zk
 Tt
 Tt
 Tt
 Tt
 Vt
 Jg
-gK
+SS
 Sq
-gP
+po
 RG
 RG
 RG
@@ -26533,7 +26608,7 @@ RG
 RG
 RG
 RG
-gP
+po
 Tt
 Tt
 Tt
@@ -26556,9 +26631,9 @@ Tt
 Tt
 Vt
 Jg
-gK
-Sq
-gP
+SS
+ek
+po
 RG
 RG
 RG
@@ -26835,8 +26910,8 @@ RG
 RG
 RG
 RG
-Xw
-dj
+po
+po
 Tt
 Tt
 AJ
@@ -26856,11 +26931,11 @@ Tt
 Tt
 Tt
 Tt
-oE
+po
 lg
+Fe
 gK
-gK
-gP
+po
 RG
 RG
 RG
@@ -27138,8 +27213,8 @@ RG
 RG
 RG
 RG
-Xw
-dj
+po
+po
 Tt
 Tt
 Tt
@@ -27158,11 +27233,11 @@ Tt
 Tt
 Tt
 Tt
-Xw
-dj
+po
+po
 bm
-XT
-gP
+aP
+po
 RG
 RG
 RG
@@ -27441,11 +27516,11 @@ RG
 RG
 RG
 RG
-Xw
-SE
-SE
-SE
-dj
+po
+po
+po
+po
+po
 Tt
 Tt
 Tt
@@ -27461,10 +27536,10 @@ Tt
 Tt
 Tt
 iV
-an
-SE
-SE
-cE
+po
+po
+po
+po
 RG
 RG
 RG
@@ -27747,23 +27822,23 @@ RG
 RG
 RG
 hb
-gP
+po
 uc
+Fc
+Tt
+Tt
+Tt
+Tt
+Fc
 Tt
 Tt
 Tt
 Tt
 Tt
+Fc
 Tt
 Tt
-Tt
-Tt
-Tt
-Tt
-Tt
-Tt
-Tt
-gP
+po
 RG
 RG
 RG
@@ -28049,23 +28124,23 @@ RG
 RG
 RG
 hb
-Xw
-SE
-SE
-SE
-SE
-SE
-SE
-SE
-SE
-SE
-SE
-SE
-SE
-SE
-SE
-SE
-cE
+po
+po
+po
+po
+po
+po
+po
+po
+po
+po
+po
+po
+po
+po
+po
+po
+po
 RG
 RG
 RG
@@ -35634,16 +35709,16 @@ kA
 kA
 kA
 kA
-Ls
-Ls
-Ls
-Ls
-Ls
-Ls
-Ls
-Ls
-Ls
-Ls
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
 Ls
 Ls
@@ -35936,17 +36011,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -36238,17 +36313,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -36540,17 +36615,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -36842,17 +36917,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -37144,17 +37219,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -37446,17 +37521,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -37748,17 +37823,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -38050,17 +38125,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -38352,17 +38427,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -38654,17 +38729,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -38956,17 +39031,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -39258,17 +39333,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -39560,17 +39635,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -39862,17 +39937,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -40164,17 +40239,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -40466,17 +40541,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -40768,17 +40843,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -41070,17 +41145,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -41372,17 +41447,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -41674,17 +41749,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -41976,17 +42051,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -42278,17 +42353,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -42580,17 +42655,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -42864,8 +42939,8 @@ Om
 Om
 cd
 QJ
-Nl
-Nl
+NK
+iv
 cd
 yw
 RG
@@ -42882,17 +42957,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -43166,7 +43241,7 @@ Om
 Om
 fh
 hp
-Nl
+EG
 Mx
 cd
 yw
@@ -43184,17 +43259,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -43468,7 +43543,7 @@ Om
 Om
 fh
 hp
-Nl
+EG
 Mx
 cd
 yw
@@ -43486,17 +43561,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -43770,8 +43845,8 @@ Om
 Om
 fh
 hp
-Nl
-Mx
+EG
+NB
 cd
 yw
 RG
@@ -43788,17 +43863,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -44072,7 +44147,7 @@ Om
 Om
 cd
 QJ
-Nl
+GC
 Nl
 cd
 GP
@@ -44090,17 +44165,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -44355,7 +44430,7 @@ RG
 cd
 cd
 cd
-eU
+Wl
 PG
 cd
 Om
@@ -44392,17 +44467,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -44694,17 +44769,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -44996,17 +45071,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -45298,17 +45373,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -45600,17 +45675,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -45902,17 +45977,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -46204,17 +46279,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -46506,17 +46581,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -46808,17 +46883,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -47110,17 +47185,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -47412,17 +47487,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -47714,17 +47789,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -48016,17 +48091,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -48318,17 +48393,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -48620,17 +48695,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -48922,17 +48997,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -49224,17 +49299,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -49526,17 +49601,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -49828,17 +49903,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -50130,17 +50205,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -50432,17 +50507,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -50734,17 +50809,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -51036,17 +51111,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -51338,17 +51413,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -51640,17 +51715,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -51942,17 +52017,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -52244,17 +52319,17 @@ kA
 kA
 kA
 kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
-tD
 tD
 tD
 tD
@@ -52546,16 +52621,16 @@ kA
 kA
 kA
 kA
-Ls
-Ls
-Ls
-Ls
-Ls
-Ls
-Ls
-Ls
-Ls
-Ls
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
+kA
 Ls
 Ls
 Ls

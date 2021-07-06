@@ -187,6 +187,10 @@ var/global/datum/galaxy/GALAXY = new
 				src.my_ship_body.actual_x += ARTEMIS_MAP_SHIP_PIXEL_RATIO*x_diff
 				src.my_ship_body.actual_y += ARTEMIS_MAP_SHIP_PIXEL_RATIO*y_diff
 				src.my_ship_body.animate_stars()
+				if(squared_pixel_distance <= (1024 + 528 )) //1 tiles * 32, squared... plus slush
+					src.my_ship_body.alpha = 255
+				else
+					src.my_ship_body.alpha = 0
 
 		x_old = src.actual_x
 		y_old = src.actual_y
