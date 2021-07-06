@@ -2588,7 +2588,7 @@ datum
 			name = "quark-gluon plasma"
 			id = "big_bang"
 			result = "big_bang"
-			required_reagents = list("big_bang_precursor" = 11)
+			required_reagents = list("big_bang_precursor" = 1)
 			result_amount = 50
 			// This should really require a closed container and an extreme phase change... or some other pseudo-science thing
 			mix_phrase = "A tiny point of light blooms within the material, and quickly grows to envelop the entire container. Your life flashes before your eyes."
