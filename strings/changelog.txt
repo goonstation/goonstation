@@ -1,5 +1,9 @@
 
 (t)mon jul 05 21
+(u)Arthur Holiday
+(p)5364
+(e)⚖🆕|balance, feature
+(+)You can now deconstruct multiple chairs at a time.
 (u)Lythine
 (p)5175
 (e)⚖|balance
