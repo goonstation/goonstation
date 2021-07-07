@@ -1,4 +1,9 @@
 
+(t)wed jul 07 21
+(u)Ikea
+(p)4818
+(e)🗺🎨|mapping, sprites
+(*)Molitz B has more distinct indicators for if it's producing agent b and oxygen or just oxygen. Explosions near crystals leads to resonance, increasing the total amount of times Molitz can produce gas. Molitz B gas output has been overall buffed. Amount of Molitz B obtainable from mining has been nerfed.
 (t)tue jul 06 21
 (u)Tarmunora
 (e)⚖🆕|balance, feature
