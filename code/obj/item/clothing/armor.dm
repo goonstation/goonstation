@@ -457,7 +457,7 @@
 
 	setupProperties()
 		..()
-		setProperty("coldprot", 35)
-		setProperty("heatprot", 35)
-		setProperty("meleeprot", 4)
-		setProperty("rangedprot", 0.9)
+		setProperty("coldprot", 25)
+		setProperty("heatprot", 10)
+		setProperty("meleeprot", 2)
+		setProperty("rangedprot", 0.5)
