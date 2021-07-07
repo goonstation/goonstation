@@ -137,10 +137,6 @@ var/datum/action_controller/actions
 	var/color_active = "#4444FF"
 	var/color_success = "#00CC00"
 	var/color_failure = "#CC0000"
-	/// By default the bar is put on the owner, define this on the progress bar as the place you want to put it on.
-	var/atom/movable/place_to_put_bar = null
-	/// In case we want the owner to have no visible action bar but still want to make the bar.
-	var/bar_on_owner = TRUE
 
 	onStart()
 		..()
@@ -153,13 +149,8 @@ var/datum/action_controller/actions
 			bar.pixel_y = 5
 			bar.pixel_x = 0
 			border.pixel_y = 5
-			if (bar_on_owner)
-				A.vis_contents += bar
-				A.vis_contents += border
-			if (place_to_put_bar)
-				place_to_put_bar.vis_contents += bar
-				place_to_put_bar.vis_contents += border
-
+			A.vis_contents += bar
+			A.vis_contents += border
 			// this will absolutely obviously cause no problems.
 			bar.color = src.color_active
 			updateBar()
@@ -172,12 +163,9 @@ var/datum/action_controller/actions
 	onDelete()
 		..()
 		var/atom/movable/A = owner
-		if (owner && bar_on_owner)
+		if (owner != null)
 			A.vis_contents -= bar
 			A.vis_contents -= border
-		if (place_to_put_bar)
-			place_to_put_bar.vis_contents -= bar
-			place_to_put_bar.vis_contents -= border
 		SPAWN_DBG(0.5 SECONDS)
 			if (bar)
 				bar.set_loc(null)
@@ -190,12 +178,9 @@ var/datum/action_controller/actions
 
 	disposing()
 		var/atom/movable/A = owner
-		if (owner && bar_on_owner)
+		if (owner != null)
 			A.vis_contents -= bar
 			A.vis_contents -= border
-		if (place_to_put_bar)
-			place_to_put_bar.vis_contents -= bar
-			place_to_put_bar.vis_contents -= border
 		if (bar)
 			bar.set_loc(null)
 			pool(bar)
@@ -354,12 +339,10 @@ var/datum/action_controller/actions
 /datum/action/bar/icon //Visible to everyone and has an icon.
 	var/icon
 	var/icon_state
-	var/icon_y_off = 35
+	var/icon_y_off = 30
 	var/icon_x_off = 0
 	var/image/icon_image
-	var/icon_plane = PLANE_HUD + 2
-	/// Is the icon also on the target if we have one?
-	var/icon_on_target = TRUE
+	var/icon_plane = PLANE_HUD
 
 	onStart()
 		..()
@@ -369,15 +352,11 @@ var/datum/action_controller/actions
 			icon_image.pixel_x = icon_x_off
 			icon_image.plane = icon_plane
 			icon_image.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
-			owner.overlays += icon_image
-			if (icon_on_target && place_to_put_bar)
-				place_to_put_bar.overlays += icon_image
+			border.overlays += icon_image
 
 	onDelete()
-		if (owner)
-			owner.overlays -= icon_image
-		if (icon_on_target && place_to_put_bar)
-			place_to_put_bar.overlays -= icon_image
+		if (bar)
+			bar.overlays.Cut()
 		if (icon_image)
 			del(icon_image)
 		..()
