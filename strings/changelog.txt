@@ -3,7 +3,7 @@
 (u)Tarmunora
 (e)⚖🆕|balance, feature
 (+)Tweak botany mutations: add insulin to green grapes, swap synaptizine and methamphetamine mutations, replace erebite mutation with uqill
-(+)Change botany base reagents: Light lotus produces lumen instead of omnizine, melons produce watermelon juice instead of water
+(+)Change botany base reagents: Light lotus produces luminol instead of omnizine, melons produce watermelon juice instead of water
 (t)mon jul 05 21
 (u)Emily
 (e)⚖🆕|balance, feature

@@ -172,7 +172,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	cropsize = 1
 	harvests = 1
 	endurance = 20
-	assoc_reagents = list("lumen")
+	assoc_reagents = list("luminol")
 
 /datum/plant/artifact/plasma
 	name = "Plasma"
