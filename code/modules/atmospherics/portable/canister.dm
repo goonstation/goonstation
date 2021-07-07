@@ -124,7 +124,7 @@
 			atmos_dmi.icon_state = "can-o3"
 
 		UpdateOverlays(atmos_dmi, "pressure")
-		return
+	return
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(reagents) reagents.temperature_reagents(exposed_temperature, exposed_volume)
