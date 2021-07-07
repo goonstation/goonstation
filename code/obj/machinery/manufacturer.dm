@@ -2406,7 +2406,9 @@
 	/datum/manufacture/n2_can,
 	/datum/manufacture/plasma_can)
 
-/obj/machinery/manufacturer/mechanic // a blank manufacturer for mechanics
+// a blank manufacturer for mechanics
+
+/obj/machinery/manufacturer/mechanic
 	name = "Reverse-Engineering Fabricator"
 	desc = "A manufacturing unit designed to create new things from blueprints."
 	icon_state = "fab-hangar"
