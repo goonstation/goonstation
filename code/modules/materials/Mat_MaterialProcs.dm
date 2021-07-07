@@ -384,11 +384,16 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		owner.material.triggerTemp(locate(owner))
 
 /datum/materialProc/molitz_temp
+	var/unresonant = 1
 	var/iterations = 4 // big issue I had was that with the strat that Im designing this for (teleporting crystals in and out of engine) one crystal could last you for like, 50 minutes, I didnt want to keep on reducing total amount as itd nerf agent b collection hard. So instead I drastically reduced amount and drastically upped output. This would speed up farming agent b to 3 minutes per crystal, which Im fine with
 	execute(var/atom/location, var/temp, var/agent_b=FALSE)
-		if(iterations <= 0) return
 		var/turf/target = get_turf(location)
-		if(ON_COOLDOWN(location, "molitz_gas_generate", 3 SECONDS)) return // Reminder, swap this back to 30 when done playtesting
+		if(owner.hasProperty("resonance"))
+			if(unresonant >= 0)
+				iterations += 2
+				unresonant -= 1
+		if(iterations <= 0) return
+		if(ON_COOLDOWN(location, "molitz_gas_generate", 30 SECONDS)) return
 
 		var/datum/gas_mixture/air = target.return_air()
 		if(!air) return
@@ -400,11 +405,10 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(agent_b && temp > 500 && air.toxins > MINIMUM_REACT_QUANTITY )
 			var/datum/gas/oxygen_agent_b/trace_gas = payload.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
 			payload.temperature = T0C // Greatly reduce temperature to simulate an endothermic reaction
-			// Itr: .18 Agent B, 20 oxy, 1.3 minutes per iteration, peak efficency is 7.8 minutes per crystal, more realisticly around 6 minutes per crystal.
+			// Itr: .18 Agent B, 20 oxy, 1.3 minutes per iteration, realisticly around 7-8 minutes per crystal.
 
 			animate_flash_color_fill_inherit(location,"#ff0000",4, 2 SECONDS)
-			if(!ON_COOLDOWN(location, "sound_cooldownB", 2 SECONDS)) // Prevents ear spam
-				playsound(location, "sound/effects/leakagentb.ogg", 50, 1, 8)
+			playsound(location, "sound/effects/leakagentb.ogg", 50, 1, 8)
 			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, location))
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(location))
 			trace_gas.moles += 0.18
@@ -414,8 +418,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			target.assume_air(payload)
 		else
 			animate_flash_color_fill_inherit(location,"#0000FF",4, 2 SECONDS)
-			if(!ON_COOLDOWN(location, "sound_cooldown", 2 SECONDS)) //Prevents ear spam
-				playsound(location, "sound/effects/leakoxygen.ogg", 50, 1, 5)
+			playsound(location, "sound/effects/leakoxygen.ogg", 50, 1, 5)
 			payload.oxygen = 80
 			iterations -= 1
 
@@ -437,6 +440,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			payload.temperature = T20C
 			target.assume_air(payload)
 			maxexplode -= 1
+			if(owner)
+				owner.setProperty("resonance", 10)
+
 /datum/materialProc/molitz_on_hit
 	execute(var/atom/owner, var/obj/attackobj)
 		owner.material.triggerTemp(owner, 1500)
