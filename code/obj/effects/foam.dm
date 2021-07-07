@@ -187,12 +187,6 @@
 		var/mob/living/carbon/human/M = AM
 
 		if (M.slip())
-			if (src.reagents) //Wire note: Fix for Cannot read null.reagent_list
-				for(var/reagent_id in src.reagents.reagent_list)
-					var/amount = M.reagents.get_reagent_amount(reagent_id)
-					if(amount < 25)
-						M.reagents.add_reagent(reagent_id, 5)
-
 			logTheThing("combat", M, null, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
 			reagents.reaction(M, TOUCH, 5)
 
