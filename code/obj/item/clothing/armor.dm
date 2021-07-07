@@ -454,3 +454,10 @@
 			src.icon_state = "hopuniform4"
 		else
 			src.icon_state = "hopuniform1"
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 35)
+		setProperty("heatprot", 35)
+		setProperty("meleeprot", 4)
+		setProperty("rangedprot", 0.9)
