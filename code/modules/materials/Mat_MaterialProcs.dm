@@ -390,7 +390,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/turf/target = get_turf(location)
 		if(owner.hasProperty("resonance"))
 			if(unresonant == 1)
-				iterations += 2
+				iterations = max(iterations, 2)
 				unresonant -= 1
 		if(iterations <= 0) return
 		if(ON_COOLDOWN(location, "molitz_gas_generate", 30 SECONDS)) return
