@@ -436,8 +436,8 @@
 		setProperty("heatprot", 35)
 
 /obj/item/clothing/suit/armor/hopuniform
-	name = "burecratic jacket"
-	desc = "A jacket with a bands and stashes you can take on and off as you please"
+	name = "bureaucratic jacket"
+	desc = "A jacket with a band and sash you can take on and off as you please"
 	icon_state = "hopuniform1"
 	uses_multiple_icon_states = 1
 	item_state = "hopuniform1"
@@ -445,7 +445,7 @@
 	bloodoverlayimage = SUITBLOOD_ARMOR
 
 	attack_self(mob/user as mob)
-		user.show_text("You change out the bands and stashes.")
+		user.show_text("You change out the band and sash.")
 		if (src.icon_state == "hopuniform1")
 			src.icon_state = "hopuniform2"
 		else if (src.icon_state == "hopuniform2")
