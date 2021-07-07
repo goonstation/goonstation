@@ -222,15 +222,13 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		return
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/raw_material/telecrystal_pure))
-			if (!W || !W.material)
-				return
+		if (istype(W, /obj/item/uplink_telecrystal))
 			if (!src.locked)
 				var/crystal_amount = W.amount
 				uses = uses + crystal_amount
 				boutput(user, "You insert [crystal_amount] [syndicate_currency] into the [src].")
 				qdel(W)
-		if (istype(W, /obj/item/explosive_telecrystal))
+		if (istype(W, /obj/item/explosive_uplink_telecrystal))
 			if (!src.locked)
 				boutput(user, "<span class='alert'>The [W] explodes!</span>")
 				var/turf/T = get_turf(W.loc)

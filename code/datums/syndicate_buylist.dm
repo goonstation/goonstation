@@ -1044,7 +1044,7 @@ This is basically useless for anyone but miners.
 
 /datum/syndicate_buylist/generic/telecrystal
 	name = "Pure Telecrystal"
-	item = /obj/item/raw_material/telecrystal_pure
+	item = /obj/item/uplink_telecrystal
 	cost = 1
 	desc = "A pure Telecrystal, only able to be found miles deep underground, on Earth. Used as currency in Syndicate Uplinks."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft)
@@ -1053,12 +1053,12 @@ This is basically useless for anyone but miners.
 	New()
 		. = ..()
 		name = "[syndicate_currency]"
-	run_on_spawn(var/obj/item/raw_material/telecrystal_pure/tc, mob/living/owner, in_surplus_crate)
+	run_on_spawn(var/obj/item/uplink_telecrystal/tc, mob/living/owner, in_surplus_crate)
 		tc.name = "[syndicate_currency]"
 
 /datum/syndicate_buylist/generic/trick_telecrystal
 	name = "Trick Pure Telecrystal"
-	item = /obj/item/explosive_telecrystal
+	item = /obj/item/explosive_uplink_telecrystal
 	cost = 1
 	desc = "A small, highly volatile explosive designed to look like a pure Telecrystal."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/nuclear)
@@ -1068,7 +1068,7 @@ This is basically useless for anyone but miners.
 	New()
 		. = ..()
 		name = "Trick [syndicate_currency]"
-	run_on_spawn(var/obj/item/raw_material/telecrystal_pure/tc, mob/living/owner, in_surplus_crate=FALSE)
+	run_on_spawn(var/obj/item/uplink_telecrystal/tc, mob/living/owner, in_surplus_crate=FALSE)
 		tc.name = "[syndicate_currency]"
 
 /////////////////////////////////////////////// Disabled items /////////////////////////////////////////////////////

@@ -613,16 +613,14 @@
 				src.insert_id_card(ID, user)
 				boutput(user, "<span class='notice'>You insert [ID] into [src].</span>")
 
-	else if (istype(C, /obj/item/raw_material/telecrystal_pure))
-		if (!C || !C.material)
-			return
+	else if (istype(C, /obj/item/uplink_telecrystal))
 		if (src.uplink && src.uplink.active)
 			var/crystal_amount = C.amount
 			src.uplink.uses = src.uplink.uses + crystal_amount
 			boutput(user, "You insert [crystal_amount] [syndicate_currency] into the [src].")
 			qdel(C)
-	else if (istype(C, /obj/item/explosive_telecrystal))
-		if (!src.uplink && src.uplink.active)
+	else if (istype(C, /obj/item/explosive_uplink_telecrystal))
+		if (src.uplink && src.uplink.active)
 			boutput(user, "<span class='alert'>The [C] explodes!</span>")
 			var/turf/T = get_turf(C.loc)
 			if(T)

@@ -459,17 +459,6 @@
 		name = "Blue Telecrystal"
 		desc = "[desc] It's all shiny and blue now."
 
-/obj/item/raw_material/telecrystal_pure
-	name = "pure telecrystal"
-	desc = "A pure Telecrystal, useful for creating small, precise warps in space."
-	icon_state = "telecrystal_pure"
-	material_name = "Pure Telecrystal"
-	crystal = 2
-	powersource = 2
-
-	setup_material()
-		src.setMaterial(getMaterial("telecrystal_pure"), appearance = 0, setname = 0)
-		return ..()
 
 /obj/item/raw_material/miracle
 	name = "miracle matter"
@@ -739,11 +728,6 @@
 /obj/item/material_piece/telecrystal
 	desc = "A cut block of Telecrystal."
 	default_material = "telecrystal"
-	icon_state = "martian-bar"
-
-/obj/item/material_piece/telecrystal_pure
-	desc = "A cut block of Pure Telecrystal."
-	default_material = "telecrystal_pure"
 	icon_state = "martian-bar"
 
 /obj/item/material_piece/fibrilith
