@@ -109,6 +109,9 @@ datum/radio_frequency
 			signal.channels_passed += "[src.frequency];"
 
 			for(var/obj/device in devices)
+				if(!istype(device))
+					continue
+					
 				if(device != source)
 
 					//MBC : Do checks here and call check_for_jammer_bare instead. reduces proc calls.
@@ -132,7 +135,6 @@ datum/radio_frequency
 			else if (signal)
 				signal.wipe()
 				reusable_signals |= signal
-			LAGCHECK(LAG_MED)
 
 		//assumes that list radio_controller.active_jammers is not null or empty.
 		check_for_jammer(obj/source)
