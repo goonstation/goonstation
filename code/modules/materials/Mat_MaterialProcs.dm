@@ -389,7 +389,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/location, var/temp, var/agent_b=FALSE)
 		var/turf/target = get_turf(location)
 		if(owner.hasProperty("resonance"))
-			if(unresonant >= 0)
+			if(unresonant == 1)
 				iterations += 2
 				unresonant -= 1
 		if(iterations <= 0) return
