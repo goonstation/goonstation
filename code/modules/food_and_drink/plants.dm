@@ -228,6 +228,15 @@
 	force = 0
 	food_color = "#77AA77"
 
+/obj/item/reagent_containers/food/snacks/plant/peas/ammonia
+	name = "golden pea pod"
+	desc = "Golden peas. Like green peas, but not."
+	crop_prefix = "golden "
+	icon_state = "goldenpeapod"
+	food_color = "#bdbd35"
+	plant_reagent = "ammonia"
+	brew_result = "ammonia"
+
 /obj/item/reagent_containers/food/snacks/plant/soylent
 	name = "soylent chartreuse"
 	crop_suffix = " chartreuse"
