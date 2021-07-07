@@ -679,8 +679,7 @@
 		..()
 
 		src.visible_message("<span class='combat'><b>[src]</b> bursts into a puff of smoke!</span>")
-		var/datum/chemical_reaction/smoke/thesmoke = new
-		thesmoke.on_reaction(src.reagents, 12)
+		src.reagents.smoke_start(12)
 		invisibility = 100
 		SPAWN_DBG(5 SECONDS)
 			qdel(src)
