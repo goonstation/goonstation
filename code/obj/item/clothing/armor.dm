@@ -435,22 +435,22 @@
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 35)
 
-/obj/item/clothing/suit/armor/hop-uniform
+/obj/item/clothing/suit/armor/hopuniform
 	name = "burecratic jacket"
 	desc = "A jacket with a bands and stashes you can take on and off as you please"
-	icon_state = "hop-uniform-1"
+	icon_state = "hopuniform1"
 	uses_multiple_icon_states = 1
-	item_state = "hop-uniform-1"
+	item_state = "hopuniform1"
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
 
 	attack_self(mob/user as mob)
 		user.show_text("You change out the bands and stashes.")
-		if (src.icon_state == "hop-uniform-1")
-			src.icon_state = "hop-uniform-2"
-		else if (src.icon_state == "hop-uniform-2")
-			src.icon_state = "hop-uniform-3"
-		else if (src.icon_state == "hop-uniform-3")
-			src.icon_state = "hop-uniform-4"
+		if (src.icon_state == "hopuniform1")
+			src.icon_state = "hopuniform2"
+		else if (src.icon_state == "hopuniform2")
+			src.icon_state = "hopuniform3"
+		else if (src.icon_state == "hopuniform3")
+			src.icon_state = "hopuniform4"
 		else
-			src.icon_state = "hop-uniform-1"
+			src.icon_state = "hopuniform1"
