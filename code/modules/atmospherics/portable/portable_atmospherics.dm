@@ -7,7 +7,6 @@
 
 	var/volume = 0
 	var/destroyed = 0
-	var/noholdtank = 0 // Used for canisters to make them not be able to be made into canbombs, can be used for portable atmos that doesnt accept a tank as well.
 
 	var/maximum_pressure = 90*ONE_ATMOSPHERE
 
@@ -109,9 +108,7 @@
 
 /obj/machinery/portable_atmospherics/attackby(var/obj/item/W as obj, var/mob/user as mob)
 	if(istype(W, /obj/item/tank))
-		if(noholdtank == 1)
-			boutput(user, "<span class='alert'>You fail to attach the [W.name] to the [src.name]. There appears to be no area to put the tank into the canister</span>")
-		else if(!src.holding)
+		if(!src.holding)
 			boutput(user, "<span class='notice'>You attach the [W.name] to the the [src.name]</span>")
 			user.drop_item()
 			W.set_loc(src)
@@ -147,4 +144,5 @@
 			else
 				boutput(user, "<span class='notice'>Nothing happens.</span>")
 				return
+
 	return

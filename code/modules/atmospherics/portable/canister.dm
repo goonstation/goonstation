@@ -23,7 +23,6 @@
 	var/obj/item/assembly/detonator/det = null
 	var/overlay_state = null
 	var/dialog_update_enabled = 1 //For preventing the DAMNABLE window taking focus when manually inputting pressure
-	// var/noholdtank = 0  For canisters that cant fit things like a tank holder, aka canisters that are half the size sprite wise. (Note this var is located in parent machinery/portable_atmospherics) set the var == 1 for canisters that are short
 
 	var/image/atmos_dmi
 	var/image/bomb_dmi
@@ -59,15 +58,6 @@
 	name = "Canister: \[O2\]"
 	icon_state = "blue"
 	casecolor = "blue"
-
-/obj/machinery/portable_atmospherics/canister/agent_b
-	name = "Canister \[Oxygen Agent B\]"
-	icon_state = "bluish"
-	casecolor = "bluish"
-	desc = "A container which holds a large amount of the labelled gas. It's possible to transfer the gas to a pipe system, or the air."
-	volume = 500
-	filled = 1/32
-	noholdtank = 1
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "Canister \[Plasma\]"
 	icon_state = "orange"
@@ -101,8 +91,6 @@
 	if (src.destroyed)
 		src.icon_state = "[src.casecolor]-1"
 		ClearAllOverlays()
-	if (noholdtank == 1)
-		return
 	else
 		icon_state = "[casecolor]"
 		if (overlay_state)
@@ -137,12 +125,6 @@
 
 		UpdateOverlays(atmos_dmi, "pressure")
 		return
-
-/obj/machinery/portable_atmospherics/canister/agent_b/update_icon()
-	if (src.destroyed)
-		src.icon_state = "[src.casecolor]-1"
-		ClearAllOverlays()
-	return
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(reagents) reagents.temperature_reagents(exposed_temperature, exposed_volume)
@@ -350,9 +332,6 @@
 
 /obj/machinery/portable_atmospherics/canister/attackby(var/obj/item/W as obj, var/mob/user as mob)
 	if (istype(W, /obj/item/assembly/detonator)) //Wire: canister bomb stuff
-		if (noholdtank == 1)
-			user.show_message("<span class='alert'>This tank doesn't appear to be the correct size.</span>")
-			return
 		if (holding)
 			user.show_message("<span class='alert'>You must remove the currently inserted tank from the slot first.</span>")
 		else
@@ -395,12 +374,6 @@
 		logTheThing("combat", user, null, "attacked [src] [log_atmos(src)] with [W] at [log_loc(src)].")
 		src.health -= W.force
 		healthcheck()
-	..()
-
-/obj/machinery/portable_atmospherics/canister/agent_b/attackby(var/obj/item/W as obj, var/mob/user as mob)
-	if (istype(W, /obj/item/assembly/detonator))
-		user.show_message("<span class='alert'>This tank doesn't appear to be the correct size.</span>")
-		return
 	..()
 
 /obj/machinery/portable_atmospherics/canister/attack_ai(var/mob/user as mob)
@@ -738,16 +711,6 @@
 	..()
 
 	var/datum/gas/sleeping_agent/trace_gas = air_contents.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
-	trace_gas.moles = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
-	src.update_icon()
-	return 1
-
-/obj/machinery/portable_atmospherics/canister/agent_b/New()
-
-	..()
-
-	var/datum/gas/oxygen_agent_b/trace_gas = air_contents.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
 	trace_gas.moles = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
 	src.update_icon()

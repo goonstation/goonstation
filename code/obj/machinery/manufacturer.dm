@@ -2405,7 +2405,6 @@
 	/datum/manufacture/co2_can,
 	/datum/manufacture/n2_can,
 	/datum/manufacture/plasma_can)
-//	hidden = list(/datum/manufacture/agentb_can)
 
 /obj/machinery/manufacturer/mechanic // a blank manufacturer for mechanics
 	name = "Reverse-Engineering Fabricator"
