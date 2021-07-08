@@ -1,5 +1,9 @@
 
 (t)thu jul 08 21
+(u)TTerc
+(p)5420
+(e)🆕|feature
+(+)Frogpeople can now chairflip further distance.
 (u)AmazingDragons
 (p)5234
 (e)⚖|balance
