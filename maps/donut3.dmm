@@ -56947,9 +56947,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "qwT" = (
-/obj/blind_switch/area/west{
-	name = "Blind switch"
-	},
+/obj/blind_switch/area/west,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bathroom)
 "qxb" = (
@@ -62287,9 +62285,7 @@
 /area/station/medical/medbay/lobby)
 "rXe" = (
 /obj/machinery/light/incandescent/netural,
-/obj/blind_switch/area/west{
-	name = "Blind switch"
-	},
+/obj/blind_switch/area/west,
 /turf/simulated/floor/circuit/purple,
 /area/station/crew_quarters/hor)
 "rXg" = (
@@ -83507,9 +83503,7 @@
 "yid" = (
 /obj/machinery/manufacturer/uniform,
 /obj/disposalpipe/segment/mail,
-/obj/blind_switch/area/west{
-	name = "Blind switch"
-	},
+/obj/blind_switch/area/west,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/cloner)
 "yie" = (
