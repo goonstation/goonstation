@@ -8641,6 +8641,7 @@
 /area/station/security/brig/south_side)
 "chE" = (
 /obj/machinery/door/airlock/pyro/glass/security{
+	aiControlDisabled = 1;
 	req_access = null
 	},
 /obj/access_spawn/security,
@@ -9736,6 +9737,7 @@
 /area/station/hallway/primary/east)
 "czj" = (
 /obj/machinery/door/airlock/pyro/glass/security{
+	aiControlDisabled = 1;
 	req_access = null
 	},
 /obj/firedoor_spawn,
@@ -25474,6 +25476,7 @@
 /area/station/engine/engineering)
 "hjG" = (
 /obj/machinery/door/airlock/pyro/glass/security{
+	aiControlDisabled = 1;
 	req_access = null
 	},
 /obj/firedoor_spawn,
@@ -28757,6 +28760,7 @@
 /area/station/medical/medbay/cloner)
 "igr" = (
 /obj/machinery/door/airlock/pyro/glass/security{
+	aiControlDisabled = 1;
 	req_access = null
 	},
 /obj/firedoor_spawn,
@@ -45727,7 +45731,7 @@
 	},
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/black,
-/area/station/turret_protected/armory_outside)
+/area/station/ai_monitored/armory)
 "noC" = (
 /obj/machinery/light/incandescent/harsh,
 /obj/cable{
@@ -51351,7 +51355,7 @@
 	},
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/hos)
 "oXO" = (
 /turf/simulated/floor/red/side,
 /area/station/hallway/primary/west)
@@ -57017,9 +57021,12 @@
 /turf/simulated/floor/white,
 /area/station/crewquarters/fuq3)
 "qxk" = (
-/obj/machinery/door/airlock/pyro/security/alt,
-/obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/security/alt{
+	aiControlDisabled = 1;
+	req_access_txt = null
+	},
 /obj/access_spawn/hos,
+/obj/firedoor_spawn,
 /obj/machinery/secscanner,
 /obj/cable{
 	d1 = 1;
@@ -62280,6 +62287,7 @@
 /area/station/medical/medbay/lobby)
 "rXe" = (
 /obj/machinery/light/incandescent/netural,
+/obj/blind_switch/area/west,
 /turf/simulated/floor/circuit/purple,
 /area/station/crew_quarters/hor)
 "rXg" = (
