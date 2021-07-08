@@ -365,8 +365,8 @@
 	name = "medical reagent dispenser"
 	desc = "It dispenses chemicals. Mostly harmless ones, but who knows?"
 	dispensable_reagents = list("antihol", "charcoal", "epinephrine", "mutadone", "proconvertin", "atropine",\
-		"silver_sulfadiazine", "salbutamol", "anti_rad",\
-		"oculine", "mannitol", "styptic_powder", "saline",\
+		 "salbutamol", "anti_rad",\
+		"oculine", "mannitol", "saline",\
 		"salicylic_acid", "blood",\
 		"menthol", "antihistamine")
 
@@ -377,9 +377,9 @@
 
 /obj/machinery/chem_dispenser/medical/fortuna
 	dispensable_reagents = list("antihol", "charcoal", "epinephrine", "mutadone", "proconvertin", "filgrastim", "atropine",\
-	"silver_sulfadiazine", "salbutamol", "perfluorodecalin", "synaptizine", "anti_rad",\
-	"oculine", "mannitol", "penteticacid", "styptic_powder", "saline",\
-	"salicylic_acid", "blood", "synthflesh",\
+	"salbutamol", "perfluorodecalin", "synaptizine", "anti_rad",\
+	"oculine", "mannitol", "penteticacid", "saline",\
+	"salicylic_acid", "blood", \
 	"menthol", "antihistamine", "smelling_salt")
 
 /obj/machinery/manufacturer/general/pod_wars
