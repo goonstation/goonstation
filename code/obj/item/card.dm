@@ -326,7 +326,7 @@ GAUNTLET CARDS
 	return input
 
 /obj/item/card/id/syndicate/reusable
-	name = "agent card"
+	name = "reusable agent card"
 	reusable = TRUE
 
 /obj/item/card/id/syndicate/commander
