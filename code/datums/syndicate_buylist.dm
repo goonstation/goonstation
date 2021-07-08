@@ -107,9 +107,9 @@ proc/build_syndi_buylist_cache()
 
 /datum/syndicate_buylist/generic/syndicard
 	name = "Agent Card"
-	item = /obj/item/card/id/syndicate
-	cost = 1
-	desc = "A counterfeit identification card, designed to prevent tracking by the station's AI systems. It features a one-time programmable identification circuit, allowing the entry of a custom false identity. It is also capable of scanning other ID cards and replicating their access credentials."
+	item = /obj/item/card/id/syndicate/reusable
+	cost = 3
+	desc = "A counterfeit identification card, designed to prevent tracking by the station's AI systems. It features a custom programmable identification circuit, allowing the entry of a custom false identity. It is also capable of scanning other ID cards and replicating their access credentials."
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/generic/emag

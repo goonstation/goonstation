@@ -180,7 +180,7 @@ GAUNTLET CARDS
 		assignment = "NanoTrasen Pilot"
 		access = list(access_heads)
 		team = 1
-			
+
 		commander
 			name = "NanoTrasen Commander"
 			assignment = "NanoTrasen Commander"
@@ -272,11 +272,12 @@ GAUNTLET CARDS
 */
 
 /obj/item/card/id/syndicate
-	name = "agent card"
+	name = "single use agent card"
 	access = list(access_maint_tunnels, access_syndicate_shuttle)
+	var/reusable = FALSE
 
 /obj/item/card/id/syndicate/attack_self(mob/user as mob)
-	if(!src.registered)
+	if(!src.registered || src.reusable)
 		var/reg = copytext(src.sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)), 1, 100)
 		var/ass = copytext(src.sanitize_name(input(user, "What occupation would you like to put on this card?\n Note: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Staff Assistant"), 1), 1, 100)
 		var/color = input(user, "What color should the ID's color band be?\nClick cancel to abort the forging process.") as null|anything in list("clown","golden","blue","red","green","purple","yellow","No band")
@@ -323,6 +324,10 @@ GAUNTLET CARDS
 		namecheck[i] = capitalize(namecheck[i])
 	input = jointext(namecheck, " ")
 	return input
+
+/obj/item/card/id/syndicate/reusable
+	name = "agent card"
+	reusable = TRUE
 
 /obj/item/card/id/syndicate/commander
 	name = "commander card"
