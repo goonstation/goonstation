@@ -233,6 +233,14 @@
 	name = "NanoTrasen Mineral Accumulator"
 	item_outputs = list(/obj/machinery/oreaccumulator/pod_wars/nanotrasen)
 
+/datum/manufacture/pod_wars/medical_refill
+	name = "NanoMed Refill Cartridge"
+	item_outputs = list(/obj/item/vending/restock_cartridge/medical)
+	item_paths = list("MET-1","FAB-1","DEN-1")
+	item_amounts = list(25,25,20)
+	time = 60 SECONDS
+	category = "Ammo"
+
 /obj/machinery/manufacturer/mining/pod_wars/
 	New()
 		available -= /datum/manufacture/ore_accumulator
@@ -259,6 +267,7 @@
 /obj/machinery/manufacturer/medical/pod_wars
 	New()
 		available += /datum/manufacture/medical_backpack
+		available += /datum/manufacture/pod_wars/medical_refill
 		..()
 
 
