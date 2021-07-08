@@ -1064,7 +1064,7 @@
 				if (!isnum(data["time"]))
 					return ESIG_GENERIC
 
-				var/newtime = max(0, min(data["time"], MAX_NUKE_TIME))
+				var/newtime = clamp("time", 0, MAX_NUKE_TIME)
 
 				var/sessionid = "[world.timeofday%100][rand(0,9)]"
 				message_device("command=settime&time=[newtime]&session=[sessionid]")
