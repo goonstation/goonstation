@@ -485,6 +485,76 @@
 	category = "Jackets"
 	cost = PAY_UNTRAINED/3
 
+/datum/clothingbooth_item/darkbluehoodie
+	name = "Dark Blue Hoodie"
+	path = /obj/item/clothing/suit/hoodie/darkblue
+	slot = SLOT_WEAR_SUIT
+	category = "Jackets"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/whitehoodie
+	name = "White Hoodie"
+	path = /obj/item/clothing/suit/hoodie/white
+	slot = SLOT_WEAR_SUIT
+	category = "Jackets"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/pinkhoodie
+	name = "Pink Hoodie"
+	path = /obj/item/clothing/suit/hoodie/pink
+	slot = SLOT_WEAR_SUIT
+	category = "Jackets"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/blackhoodie
+	name = "Black Hoodie"
+	path = /obj/item/clothing/suit/hoodie/black
+	slot = SLOT_WEAR_SUIT
+	category = "Jackets"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/greyhoodie
+	name = "Grey Hoodie"
+	path = /obj/item/clothing/suit/hoodie/grey
+	slot = SLOT_WEAR_SUIT
+	category = "Jackets"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/dullgreyhoodie
+	name = "Dull Grey Hoodie"
+	path = /obj/item/clothing/suit/hoodie/dullgrey
+	slot = SLOT_WEAR_SUIT
+	category = "Jackets"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/magentahoodie
+	name = "Magenta Hoodie"
+	path = /obj/item/clothing/suit/hoodie/magenta
+	slot = SLOT_WEAR_SUIT
+	category = "Jackets"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/greenhoodie
+	name = "Green Hoodie"
+	path = /obj/item/clothing/suit/hoodie/green
+	slot = SLOT_WEAR_SUIT
+	category = "Jackets"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/yellowhoodie
+	name = "Yellow Hoodie"
+	path = /obj/item/clothing/suit/hoodie/yellow
+	slot = SLOT_WEAR_SUIT
+	category = "Jackets"
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/redhoodie
+	name = "Red Hoodie"
+	path = /obj/item/clothing/suit/hoodie/red
+	slot = SLOT_WEAR_SUIT
+	category = "Jackets"
+	cost = PAY_UNTRAINED/3
+
 /datum/clothingbooth_item/poncho
 	name = "Poncho"
 	path = /obj/item/clothing/suit/poncho
@@ -821,6 +891,19 @@
 	category = "Headwear"
 	cost = PAY_TRADESMAN
 
+/datum/clothingbooth_item/sockhat
+	name = "Sock Hat"
+	path = /obj/item/clothing/head/sockhat
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/link
+	name = "Hero Hat"
+	path = /obj/item/clothing/head/sockhat/link
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN
 //Sci-Fi
 
 /datum/clothingbooth_item/sfjumpsuitbp
@@ -1074,3 +1157,17 @@
 	slot = SLOT_HEAD
 	category = "Costumes"
 	cost = PAY_TRADESMAN/5
+
+/datum/clothingbooth_item/guybrush
+	name = "Wannabe Pirate Costume"
+	path = /obj/item/clothing/under/gimmick/guybrush
+	slot = SLOT_W_UNIFORM
+	category = "Costumes"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/dinosuar
+	name = "Dinosaur Pajamas"
+	path = /obj/item/clothing/suit/gimmick/dinosaur
+	slot = SLOT_WEAR_SUIT
+	category = "Costumes"
+	cost = PAY_TRADESMAN/2

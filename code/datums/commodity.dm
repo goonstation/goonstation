@@ -2187,6 +2187,24 @@
 	upperfluc = 150
 	lowerfluc = -100
 
+/datum/commodity/backpack/turtlebrown
+	comname = "Brown Turtle Shell Backpack"
+	comtype = /obj/item/storage/backpack/turtlebrown
+	desc = "All the hip teenage mutants have one of these turtle shell backpacks."
+	price = 650
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
+/datum/commodity/backpack/turtlegreen
+	comname = "Green Turtle Shell Backpack"
+	comtype = /obj/item/storage/backpack/turtlegreen
+	desc = "All the hip teenage mutants have one of these turtle shell backpacks."
+	price = 650
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
 /datum/commodity/balloons //no it ain't a costume kit but it's going in Geoff's wares so idgaf tOt fite me
 	comname = "box of balloons"
 	comtype = /obj/item/storage/box/balloonbox
