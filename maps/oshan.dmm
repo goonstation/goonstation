@@ -12953,10 +12953,6 @@
 	icon_state = "engine_caution_corners"
 	},
 /area/station/science/teleporter)
-"aEt" = (
-/obj/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/plating/random,
-/area/space)
 "aEu" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/clothing/gloves/latex,
@@ -88075,7 +88071,7 @@ clw
 clB
 aDr
 aDr
-ckw
+aDr
 aig
 aEV
 aqn
@@ -88681,7 +88677,7 @@ aig
 aEV
 aEV
 aEV
-aEt
+aEV
 aqn
 aqn
 aqn
@@ -88982,7 +88978,7 @@ cht
 aig
 aEV
 aqn
-aEt
+aqn
 aqn
 aqn
 aqn

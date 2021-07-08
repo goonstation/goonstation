@@ -1,5 +1,61 @@
 
+(t)wed jul 07 21
+(u)Ikea
+(p)4818
+(e)🗺🎨|mapping, sprites
+(*)Molitz B has more distinct indicators for if it's producing agent b and oxygen or just oxygen. Explosions near crystals leads to resonance, increasing the total amount of times Molitz can produce gas. Molitz B gas output has been overall buffed. Amount of Molitz B obtainable from mining has been nerfed.
+(t)tue jul 06 21
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(+)Tweak botany mutations: add insulin to green grapes, swap synaptizine and methamphetamine mutations, replace erebite mutation with uqill
+(+)Change botany base reagents: Light lotus produces luminol instead of omnizine, melons produce watermelon juice instead of water
+(t)mon jul 05 21
+(u)Emily
+(e)⚖🆕|balance, feature
+(*)New QGP Recipe and effect. Happy hunting. Nerds.
+(u)Arthur Holiday
+(p)5364
+(e)⚖🆕|balance, feature
+(+)You can now deconstruct multiple chairs at a time.
+(u)Lythine
+(p)5175
+(e)⚖|balance
+(*)Rathen's Secret no longer weakens. Magic Missile's weaken time slightly shortened.
+(u)Tarmunora
+(e)⚖|balance
+(*)Acid takes 5 seconds to melt stuff
+(t)sun jul 04 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Sec loadout weapons all start with 200u cells, and sec pouch contains a 200u cell. Power costs of wavegun, tasershotgun, taser SMG adjusted to compensate
+(u)Lythine
+(p)5172
+(e)🆕🗺🎨|feature, mapping, sprites
+(+)Adds a small ranch space prefab.
 (t)sat jul 03 21
+(u)Tarmunora
+(p)5368
+(e)⚖|balance
+(+)disarm stam cost 10 -> 30
+(+)base disarm chance 37% -> 40%
+(+)Disarm chance scaled down to 50% of current (20%) at targets with 200 or more stamina, and linerally scaled to current value (40%) on targets with 100 or less.  Blocking prevents disarm (not shovedown though), at the cost of (10) stamina if the disarm would have succeeded
+(+)Disarm targets all held items at once
+(u)DimWhat
+(p)5166
+(e)🎨|sprites
+(+)Made some sprite changes to the HoP uniform and dress as well as the HoS Dress.
+(u)TTerc
+(p)5362
+(e)🆕|feature
+(+)Added colorful backpacks and satchels to uniform manufacturer.
+(u)Kubius
+(p)5365
+(e)🆕🗺|feature, mapping
+(*)Atlas' mining department and main pod bay have received a significant overhaul, including the opening of the main pod bay, the arc smelter, and the merchant docks to public access.
+(u)Flappybat
+(p)5374
+(e)⚖|balance
+(+)Allow walking in clown shoes without slipping and added a cooldown to prevent chain slips.
 (u)zjdtmkhzt
 (p)5217
 (e)⚖🆕|balance, feature
@@ -108,9 +164,6 @@
 (p)5265
 (e)⚖🐛|balance, bug
 (+)The werewolf feast ability now gets interrupted if the target stands up.
-(u)Tarmunora
-(e)⚖|balance
-(+)pill bottles and patch boxes from chemmasters cannot fit more items than they spawn with
 (u)Kubius
 (p)5274
 (e)🐛🗺|bug, mapping

@@ -3138,9 +3138,9 @@ datum
 		fooddrink/juice_watermelon
 			name = "watermelon juice"
 			id = "juice_watermelon"
-			fluid_r = 238
-			fluid_g = 93
-			fluid_b = 121
+			fluid_r = 253
+			fluid_g = 70
+			fluid_b = 89
 			description = "A delicious summer drink!"
 			reagent_state = LIQUID
 			thirst_value = 2

@@ -23,6 +23,7 @@
 	desc = "Helps protect against vacuum."
 	seal_hair = 1
 	path_prot = 0
+	permeability_coefficient = 0.2
 
 	onMaterialChanged()
 		if(src.material)

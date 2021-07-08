@@ -24832,7 +24832,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/gannets/maintenance{
-	name = "airlock-'Crew Lounge'"
+	name = "airlock-'Janitor's Supply Closet'";
+	req_access_txt = "26"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/janitor/supply)
@@ -42578,11 +42579,12 @@
 /area/station/crew_quarters/arcade)
 "oEE" = (
 /obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/gannets{
-	name = "airlock-'Crew Lounge'"
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/gannets{
+	name = "airlock-'Janitor Supply Closet";
+	req_access_txt = "26"
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/bar)
