@@ -891,19 +891,13 @@
 	category = "Headwear"
 	cost = PAY_TRADESMAN
 
-/datum/clothingbooth_item/sockhat
-	name = "Sock Hat"
-	path = /obj/item/clothing/head/sockhat
-	slot = SLOT_HEAD
-	category = "Headwear"
-	cost = PAY_TRADESMAN/2
-
 /datum/clothingbooth_item/link
 	name = "Hero Hat"
-	path = /obj/item/clothing/head/sockhat/link
+	path = /obj/item/clothing/head/link
 	slot = SLOT_HEAD
 	category = "Headwear"
 	cost = PAY_TRADESMAN
+
 //Sci-Fi
 
 /datum/clothingbooth_item/sfjumpsuitbp

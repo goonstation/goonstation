@@ -1685,14 +1685,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 
 //sock hats
 
-/obj/item/clothing/head/sockhat
-	name = "sock hat"
-	desc = "A long hat with a little puffball at the end."
-	icon_state = "sock_hat"
-	item_state = "sock_hat"
-
-	link
-		name = "hero hat"
-		desc = "What kind of hero would wear this dumb thing?"
-		icon_state = "link"
-		item_state = "link"
+/obj/item/clothing/head/link
+	name = "hero hat"
+	desc = "What kind of hero would wear this dumb thing?"
+	icon_state = "link"
+	item_state = "link"
