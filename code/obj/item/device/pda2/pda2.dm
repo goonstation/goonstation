@@ -13,11 +13,11 @@
 	module_research_type = /obj/item/device/pda2
 	wear_layer = MOB_BELT_LAYER
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
+	var/obj/item/pen = null // slap a pen into that thang
 	var/registered = null // so we don't need to replace all the dang checks for ID cards
 	var/assignment = null
 	var/access = list()
 	var/image/ID_image = null
-
 	var/owner = null
 	var/ownerAssignment = null
 	var/obj/item/disk/data/cartridge/cartridge = null //current cartridge
@@ -619,6 +619,7 @@
 			src.uplink.uses = src.uplink.uses + crystal_amount
 			boutput(user, "You insert [crystal_amount] [syndicate_currency] into the [src].")
 			qdel(C)
+
 	else if (istype(C, /obj/item/explosive_uplink_telecrystal))
 		if (src.uplink && src.uplink.active)
 			boutput(user, "<span class='alert'>The [C] explodes!</span>")
@@ -629,11 +630,19 @@
 			C.set_loc(user.loc)
 			qdel(C)
 
+	else if (istype(C, /obj/item/pen) || istype(C, /obj/item/clothing/mask/cigarette))
+		if (!src.pen)
+			src.insert_pen(C, user)
+		else
+			boutput(user, "<span class='alert'>There is already something in [src]'s pen slot!</span>")
+
 /obj/item/device/pda2/examine()
 	. = ..()
 	. += "The back cover is [src.closed ? "closed" : "open"]."
 	if (src.ID_card)
 		. += "[ID_card] has been inserted into it."
+	if (src.pen)
+		. += "[pen] is sticking out of the pen slot."
 
 /obj/item/device/pda2/receive_signal(datum/signal/signal, rx_method, rx_freq)
 
@@ -767,6 +776,18 @@
 	eject_id_card(usr)
 	src.updateSelfDialog()
 
+/obj/item/device/pda2/verb/ejectPen()
+	set name = "Eject Pen"
+	set desc = "Eject the currently loaded writing utensil from this PDA."
+	set category = "Local"
+	set src in usr
+
+	if (is_incapacitated(usr))
+		return
+
+	eject_pen(usr)
+	src.updateSelfDialog()
+
 /obj/item/device/pda2
 
 	proc/update_colors(bg, linkbg)
@@ -859,6 +880,42 @@
 		src.underlays += src.ID_image
 		src.updateSelfDialog()
 		user.UpdateName()
+
+	proc/eject_pen(var/mob/user as mob)
+		if (src.pen)
+			if (istype(user))
+				user.put_in_hand_or_drop(src.pen)
+			else
+				var/turf/T = get_turf(src)
+				src.pen.set_loc(T)
+			src.pen = null
+			src.UpdateOverlays(null, "pen")
+			return
+
+	proc/insert_pen(obj/item/insertedPen, mob/user)
+		if (!istype(insertedPen))
+			return
+		if (user)
+			user.u_equip(insertedPen)
+			insertedPen.set_loc(src)
+			src.pen = insertedPen
+			if(istype(insertedPen, /obj/item/clothing/mask/cigarette))
+				src.UpdateOverlays(image(src.icon, "cig"), "pen")
+			else if(istype(insertedPen, /obj/item/pen/crayon))
+				var/image/pen_overlay = image(src.icon, "crayon")
+				pen_overlay.color = insertedPen.color
+				src.UpdateOverlays(pen_overlay, "pen")
+			else if(istype(insertedPen, /obj/item/pen/pencil))
+				src.UpdateOverlays(image(src.icon, "pencil"), "pen")
+			else
+				src.UpdateOverlays(image(src.icon, "pen"), "pen")
+			var/original_icon_state = src.icon_state
+			animate(src, time=0, icon_state="")
+			animate(time=2, icon_state=original_icon_state)
+			animate(time=2, transform=matrix(null, 0, -1, MATRIX_TRANSLATE))
+			animate(time=3, transform=null)
+			boutput(user, "<span class='notice'>You insert [insertedPen] into [src].</span>")
+
 /*
 	//Toggle the built-in flashlight
 	toggle_light()

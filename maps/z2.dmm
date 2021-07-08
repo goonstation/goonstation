@@ -76047,6 +76047,7 @@
 	pixel_x = -5;
 	pixel_y = 6
 	},
+/obj/item/mutation_orb/cat_orb,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
 "jPv" = (

@@ -1,4 +1,54 @@
 
+(t)thu jul 08 21
+(u)DisturbHerb
+(p)4739
+(e)🆕🎨|feature, sprites
+(+)PDAs can now hold pens. And cigarettes. Because it's funny.
+(u)Flappybat
+(p)5281
+(e)⚖|balance
+(+)Breaching charges now have an explosion effect and sound.
+(u)Walpvrgis
+(p)5384
+(e)🆕🎨|feature, sprites
+(*)Adds the following recipes for Chefs looking to do some baking; baguette, garlic bread, cheesy garlic bread, fairy bread, croissant, pain au chocolat, apple danish, cherry danish, blueberry danish and the cannadanish!
+(t)wed jul 07 21
+(u)Zonespace
+(p)5058
+(e)⛔|removal
+(+)Synth-O-Matic modules are no longer sold by merchants.
+(u)Ikea
+(p)4818
+(e)🗺🎨|mapping, sprites
+(*)Molitz B has more distinct indicators for if it's producing agent b and oxygen or just oxygen. Explosions near crystals leads to resonance, increasing the total amount of times Molitz can produce gas. Molitz B gas output has been overall buffed. Amount of Molitz B obtainable from mining has been nerfed.
+(t)tue jul 06 21
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(+)Tweak botany mutations: add insulin to green grapes, swap synaptizine and methamphetamine mutations, replace erebite mutation with uqill
+(+)Change botany base reagents: Light lotus produces luminol instead of omnizine, melons produce watermelon juice instead of water
+(t)mon jul 05 21
+(u)Emily
+(e)⚖🆕|balance, feature
+(*)New QGP Recipe and effect. Happy hunting. Nerds.
+(u)Arthur Holiday
+(p)5364
+(e)⚖🆕|balance, feature
+(+)You can now deconstruct multiple chairs at a time.
+(u)Lythine
+(p)5175
+(e)⚖|balance
+(*)Rathen's Secret no longer weakens. Magic Missile's weaken time slightly shortened.
+(u)Tarmunora
+(e)⚖|balance
+(*)Acid takes 5 seconds to melt stuff
+(t)sun jul 04 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Sec loadout weapons all start with 200u cells, and sec pouch contains a 200u cell. Power costs of wavegun, tasershotgun, taser SMG adjusted to compensate
+(u)Lythine
+(p)5172
+(e)🆕🗺🎨|feature, mapping, sprites
+(+)Adds a small ranch space prefab.
 (t)sat jul 03 21
 (u)Tarmunora
 (p)5368
@@ -131,9 +181,6 @@
 (p)5265
 (e)⚖🐛|balance, bug
 (+)The werewolf feast ability now gets interrupted if the target stands up.
-(u)Tarmunora
-(e)⚖|balance
-(+)pill bottles and patch boxes from chemmasters cannot fit more items than they spawn with
 (u)Kubius
 (p)5274
 (e)🐛🗺|bug, mapping

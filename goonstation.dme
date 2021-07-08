@@ -16,7 +16,7 @@ var/datum/preMapLoad/preMapLoad = new
 // END_PREFERENCES
 
 // Compatibility Check
-#include "_std\compatibility.dm"
+#include "_std\compatibility.dme"
 // Compatibility START
 #ifdef BYOND_VERSION_OK
 
