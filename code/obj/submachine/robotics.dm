@@ -77,7 +77,7 @@
 
 	get_desc()
 
-		. = {"It is currently set to [removing_toggled == TRUE ? "remove fittings" : "to dispense [setting] lamps"].<br>
+		. = {"It is currently set to [removing_toggled == TRUE ? "remove fittings" : "dispense [setting] lamps"].<br>
 		It will build new [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"] fittings."}
 
 	afterattack(atom/A, mob/user as mob, reach, params)
@@ -86,8 +86,8 @@
 				return
 			if (!check_ammo(user, cost_removal))
 				return
-			var/obj/machinery/light/lomp = A
-			if (lomp.removable_bulb == 0)
+			var/obj/machinery/light/lamp = A
+			if (lamp.removable_bulb == 0)
 				boutput(user, "This fitting isn't user-serviceable.")
 				return
 			boutput(user, "<span class='notice'>Removing fitting...</span>")
