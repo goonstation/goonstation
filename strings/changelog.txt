@@ -1,5 +1,8 @@
 
 (t)thu jul 08 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Mousetrap pies and graviton accelerators now use the person who sets them up as the owner of the item throw instead of the person who triggeres them.
 (u)TTerc
 (p)5420
 (e)🆕|feature
