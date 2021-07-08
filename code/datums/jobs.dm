@@ -1351,6 +1351,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_poc1 = list(/obj/item/pen/crayon/white)
 	slot_poc2 = list(/obj/item/paper)
+	items_in_backpack = list(/obj/item/baguette)
 	change_name_on_spawn = 1
 
 	New()
@@ -2534,6 +2535,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_poc1 = list(/obj/item/pen/crayon/white)
 	slot_poc2 = list(/obj/item/paper)
+	items_in_backpack = list(/obj/item/baguette)
 	change_name_on_spawn = 1
 
 	New()
