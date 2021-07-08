@@ -124,7 +124,7 @@
 				qdel(O)
 			logTheThing("combat", M, null, "is ground up in a crusher at [log_loc(owner)].")
 			M.gib()
-		else if(isobj(AM))
+		else if(istype(AM, /obj))
 			var/obj/B = AM
 			tm_amt += B.m_amt
 			tg_amt += B.g_amt

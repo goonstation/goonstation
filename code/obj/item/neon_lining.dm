@@ -172,22 +172,17 @@
 		return
 
 	else
-		var/dirn
-
-		if (user.loc == F)
-			dirn = user.dir			//If laying on the tile we're on, lay in the direction we're facing.
-		else
-			dirn = get_dir(F, user)
+		var/dirn = user.dir
 
 		var/obj/neon_lining/C = new /obj/neon_lining(F, src)
-		if (dirn == 2)
-			C.lining_rotation = 1
-		else if (dirn == 4)
-			C.lining_rotation = 2
-		else if (dirn == 8)
-			C.lining_rotation = 3
-		else
+		if (dirn == SOUTH)
 			C.lining_rotation = 0
+		else if (dirn == EAST)
+			C.lining_rotation = 3
+		else if (dirn == WEST)
+			C.lining_rotation = 1
+		else //NORTH
+			C.lining_rotation = 2
 		boutput(user, "You set some neon lining on the floor.")
 		C.lining_color = lining_item_color
 		C.add_fingerprint(user)

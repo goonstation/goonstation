@@ -270,6 +270,8 @@
 				if (prob(70) && HH.stat != 2)
 					HH.emote("scream")
 		if ("pounce")
+			if(isobserver(target) || isintangible(target))
+				return
 			wrestler_knockdown(M, target, 1)
 			M.visible_message("<span class='alert'><B>[M] barrels through the air, slashing [target]!</B></span>")
 			damage += rand(2,8)

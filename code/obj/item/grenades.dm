@@ -726,7 +726,7 @@ PIPE BOMBS + CONSTRUCTION
 								W.layer = HUD_LAYER
 						else
 							qdel(W)
-				else
+				else if (!issilicon(user)) //borgs could drop all their tools/internal items trying to pull one
 					user.unequip_all()
 
 				for (var/mob/N in viewers(user, null))
@@ -1190,8 +1190,22 @@ PIPE BOMBS + CONSTRUCTION
 
 			location.hotspot_expose(700, 125)
 
-			explosion(src, location, src.expl_devas, src.expl_heavy, src.expl_light, src.expl_flash)
+			//Explosive effect for breaching charges only
+			if (!(istype(src, /obj/item/breaching_charge/mining)))
+				// NT charge shake
+				if (expl_heavy)
+					for(var/client/C in clients)
+						if(C.mob && (C.mob.z == src.z))
+							shake_camera(C.mob, 8, 24) // remove if this is too laggy
+							playsound(C.mob, explosions.distant_sound, 100, 0)
+							new /obj/effects/explosion (src.loc)
+				else
+					playsound(src.loc, pick(sounds_explosion), 75, 1)
+					new/obj/effect/supplyexplosion(src.loc)
+			else
+				playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
 
+			explosion(src, location, src.expl_devas, src.expl_heavy, src.expl_light, src.expl_flash)
 			// Breaching charges should be, you know, actually be decent at breaching walls and windows (Convair880).
 			for (var/turf/simulated/wall/W in range(src.expl_range, location))
 				if (W && istype(W) && !location.loc:sanctuary)
@@ -1271,7 +1285,7 @@ PIPE BOMBS + CONSTRUCTION
 				qdel(src)
 				return
 
-			playsound(location, "sound/effects/bamf.ogg", 50, 1)
+			playsound(location, "sound/effects/bamf.ogg", 100, 0.5)
 			src.invisibility = 101
 
 			for (var/turf/T in range(src.expl_range, location))

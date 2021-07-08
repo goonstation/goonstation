@@ -194,6 +194,13 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 31
 		prefabSizeY = 23
 
+	ranch // A tiny little ranch in space
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_ranch.dmm"
+		prefabSizeX = 12
+		prefabSizeY = 12
+
 	shooting_range // Nef's shooting range with an experimental ray gun
 		maxNum = 1
 		probability = 15
