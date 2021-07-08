@@ -138,10 +138,6 @@
 		user.visible_message("<span class='notice'>[user] begins quickly filling [src]!</span>")
 		var/staystill = user.loc
 		for (var/obj/item/reagent_containers/pill/P in view(1,user))
-			if(src.pcount + length(src.contents) >= src.maxpills)
-				boutput(user, "<span class='notice'>[src] is full!</span>")
-				return
-
 			if (P in user)
 				continue
 			P.set_loc(src)
