@@ -1143,9 +1143,6 @@
 				src.detonate()
 				return
 			if(src.time == DISARM_CUTOFF)
-				src.icon_state = "net_nuke2"
-				boutput(world, "<span class='alert'><b>[src.time] seconds until nuclear charge detonation.</b></span>")
-			if(src.time == DISARM_CUTOFF)
 				world << sound('sound/misc/airraid_loop_short.ogg')
 			if(src.time <= DISARM_CUTOFF)
 				src.icon_state = "net_nuke2"
