@@ -164,9 +164,6 @@
 (p)5265
 (e)⚖🐛|balance, bug
 (+)The werewolf feast ability now gets interrupted if the target stands up.
-(u)Tarmunora
-(e)⚖|balance
-(+)pill bottles and patch boxes from chemmasters cannot fit more items than they spawn with
 (u)Kubius
 (p)5274
 (e)🐛🗺|bug, mapping

@@ -14,7 +14,6 @@
 	var/pcount
 	var/datum/reagents/reagents_internal
 	var/average
-	var/maxpills
 
 	// setup this pill bottle from some reagents
 	proc/create_from_reagents(var/datum/reagents/R, var/pillname, var/pillvol, var/pillcount)
@@ -32,7 +31,6 @@
 		src.pname = pillname
 		src.pvol = pillvol
 		src.pcount = pillcount
-		src.maxpills = pillcount
 
 	// spawn a pill, returns a pill or null if there aren't any left in the bottle
 	proc/create_pill()
@@ -83,14 +81,11 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/pill))
-			if(src.pcount + length(src.contents) < src.maxpills)
-				user.u_equip(W)
-				W.set_loc(src)
-				W.dropped()
-				boutput(user, "<span class='notice'>You put [W] in [src].</span>")
-				rebuild_desc()
-			else
-				boutput(user, "<span class='notice'>[src] is full!</span>")
+			user.u_equip(W)
+			W.set_loc(src)
+			W.dropped()
+			boutput(user, "<span class='notice'>You put [W] in [src].</span>")
+			rebuild_desc()
 		else ..()
 
 	attack_self(var/mob/user as mob)
