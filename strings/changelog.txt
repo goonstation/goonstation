@@ -1,5 +1,10 @@
 
 (t)thu jul 08 21
+(u)Zonespace
+(p)5385
+(e)⚖🆕🎨|balance, feature, sprites
+(*)You may now eject telecrystals from uplinks, to be put in any other unlocked uplink.
+(*)There is also an explosive version of these telecrystals, for when you want to be a little less cooperative.
 (u)DisturbHerb
 (p)4739
 (e)🆕🎨|feature, sprites
