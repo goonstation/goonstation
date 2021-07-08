@@ -1,5 +1,9 @@
 
 (t)thu jul 08 21
+(u)BatElite
+(p)3796
+(e)🆕🔄🎨|feature, rework, sprites
+(+)The lamp manufacturer can now make and remove fixtures!
 (u)Tarmunora
 (e)⚖|balance
 (+)Mousetrap pies and graviton accelerators now use the person who sets them up as the owner of the item throw instead of the person who triggeres them.
