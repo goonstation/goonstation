@@ -1,5 +1,9 @@
 
 (t)thu jul 08 21
+(u)Flappybat
+(p)5281
+(e)⚖|balance
+(+)Breaching charges now have an explosion effect and sound.
 (u)Walpvrgis
 (p)5384
 (e)🆕🎨|feature, sprites
