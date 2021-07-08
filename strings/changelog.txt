@@ -1,5 +1,9 @@
 
 (t)thu jul 08 21
+(u)AmazingDragons
+(p)5234
+(e)⚖|balance
+(+)Changes the minimum, maximum, and default times (in seconds) on the nuclear charge to 120, 600, and 180 respectively.
 (u)Zonespace
 (p)5385
 (e)⚖🆕🎨|balance, feature, sprites
