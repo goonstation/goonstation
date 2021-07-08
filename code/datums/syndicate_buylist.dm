@@ -1050,6 +1050,7 @@ This is basically useless for anyone but miners.
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft)
 	telecrystal = TRUE
 	vr_allowed = 0
+	not_in_crates = 1
 	New()
 		. = ..()
 		name = "[syndicate_currency]"
