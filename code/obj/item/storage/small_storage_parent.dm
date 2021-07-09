@@ -367,7 +367,7 @@
 	item_state = "rd-case"
 	max_wclass = 4 // parity with secure briefcase
 	desc = "A large briefcase for experimental toxins research."
-	spawn_contents = list(/obj/item/raw_material/molitz_beta = 6, /obj/item/paper/hellburn)
+	spawn_contents = list(/obj/item/raw_material/molitz_beta = 2, /obj/item/paper/hellburn)
 
 /obj/item/storage/desk_drawer
 	name = "desk drawer"
