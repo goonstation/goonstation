@@ -1001,9 +1001,12 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if(!istype(A))
 		return
 	if(stand)
-		animate(A, pixel_x = 0, pixel_y = 0, transform = A.transform.Turn(-90), time = 3, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+		animate(A, pixel_x = 0, pixel_y = 0, transform = A.transform.Turn(A.rest_mult * -90), time = 3, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+		A.rest_mult = 0
 	else
-		animate(A, pixel_x = 0, pixel_y = -4, transform = A.transform.Turn(90), time = 2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+		var/fall_left_or_right = pick(1,-1)
+		animate(A, pixel_x = 0, pixel_y = -4, transform = A.transform.Turn(fall_left_or_right * 90), time = 2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+		A.rest_mult = fall_left_or_right
 
 /proc/animate_flip(var/atom/A, var/T)
 	animate(A, transform = matrix(A.transform, 90, MATRIX_ROTATE), time = T, flags=ANIMATION_PARALLEL)
