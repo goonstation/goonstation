@@ -30,6 +30,10 @@
 	var/burn_type = 0 //0 = ash, 1 = melt
 	var/burning_last_process = 0
 	var/firesource = FALSE //TRUE or FALSE : dictates whether or not the item can be used as a valid source of fire
+	/// How many items on a given turf were hotboxed?
+	var/hotbox_count = null
+	/// Item used to hotbox
+	var/atom/hotbox_item = null
 
 	/*______*/
 	/*Combat*/
@@ -483,6 +487,16 @@
 		src.visible_message("<span class='alert'>[src] catches on fire!</span>")
 		src.burning = 1
 		src.firesource = TRUE
+		if (istype(src, /obj/item/plant))
+			if (!ON_COOLDOWN(global, "hotbox_adminlog", 30 SECONDS)) //blocks every instance of the plant logging
+				for (var/atom/movable/A in get_turf(src))
+					if (istype(A, /obj/item/plant))
+						hotbox_count = hotbox_count + 1
+						if (hotbox_count == 5) //number is up for debate, 5 seemed like a good starting place
+							if (hotbox_item)
+								message_admins("([src]) was set on fire along with multiple other plants at [log_loc(src)] by item ([hotbox_item]). Last touched by: [hotbox_item.fingerprintslast ? "[hotbox_item.fingerprintslast]" : "*null*"].")
+							else
+								message_admins("([src]) was set on fire along with multiple other plants at [log_loc(src)].")
 		if (src.burn_output >= 1000)
 			UpdateOverlays(image('icons/effects/fire.dmi', "2old"),"burn_overlay")
 		else
@@ -538,6 +552,10 @@
 /obj/item/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if (src.burn_possible && !src.burning)
 		if ((temperature > T0C + src.burn_point) && prob(5))
+			for (var/obj/item/I in get_turf(src))
+				if (I.firesource && !isnull(I))
+					for (var/obj/item/A in get_turf(src))
+						A.hotbox_item = I
 			src.combust()
 	if (src.material)
 		src.material.triggerTemp(src, temperature)
@@ -828,7 +846,9 @@
 		src.material.triggerTemp(src ,1500)
 	if (W.firesource)
 		if (src.burn_possible && src.burn_point <= 1500)
+			hotbox_item = W
 			src.combust()
+			hotbox_item = null
 		else
 			..(W, user)
 	else
