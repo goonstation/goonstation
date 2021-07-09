@@ -494,9 +494,9 @@
 						hotbox_count = hotbox_count + 1
 						if (hotbox_count == 5) //number is up for debate, 5 seemed like a good starting place
 							if (hotbox_item)
-								message_admins("([src]) was set on fire along with multiple other plants at [log_loc(src)] by item ([hotbox_item]). Last touched by: [hotbox_item.fingerprintslast ? "[hotbox_item.fingerprintslast]" : "*null*"].")
+								message_admins("([src]) was set on fire on the same turf as multiple other plants at [log_loc(src)] by item ([hotbox_item]). Last touched by: [hotbox_item.fingerprintslast ? "[hotbox_item.fingerprintslast]" : "*null*"].")
 							else
-								message_admins("([src]) was set on fire along with multiple other plants at [log_loc(src)].")
+								message_admins("([src]) was set on fire on the same turf as multiple other plants at [log_loc(src)].")
 		if (src.burn_output >= 1000)
 			UpdateOverlays(image('icons/effects/fire.dmi', "2old"),"burn_overlay")
 		else
