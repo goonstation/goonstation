@@ -16,78 +16,78 @@
 	icon_base = "slotsitem"
 
 	var/list/junktier = list( // junk tier, 68% chance
-		"/obj/item/a_gift/easter",
-		"/obj/item/raw_material/rock",
-		"/obj/item/balloon_animal",
-		"/obj/item/cigpacket",
-		"/obj/item/clothing/shoes/moon",
-		"/obj/item/fish/carp",
-		"/obj/item/instrument/bagpipe",
-		"/obj/item/clothing/under/gimmick/yay",
-		"/obj/item/scrap",
-		"/obj/item/paper_bin",
-		"/obj/item/item_box/gold_star",
-		"/obj/item/storage/box/costume/hotdog",
-		"/obj/critter/roach",
-		"/obj/item/device/light/flashlight",
-		"/obj/item/kitchen/utensil/knife",
-		"/obj/item/staple_gun",
-		"/obj/item/old_grenade/banana/cheese_sandwich",
-		"/obj/item/old_grenade/banana/banana_corndog",
-		"/obj/item/rubberduck"
+		/obj/item/a_gift/easter,
+		/obj/item/raw_material/rock,
+		/obj/item/balloon_animal,
+		/obj/item/cigpacket,
+		/obj/item/clothing/shoes/moon,
+		/obj/item/fish/carp,
+		/obj/item/instrument/bagpipe,
+		/obj/item/clothing/under/gimmick/yay,
+		/obj/item/scrap,
+		/obj/item/paper_bin,
+		/obj/item/item_box/gold_star,
+		/obj/item/storage/box/costume/hotdog,
+		/obj/critter/roach,
+		/obj/item/device/light/flashlight,
+		/obj/item/kitchen/utensil/knife,
+		/obj/item/staple_gun,
+		/obj/item/old_grenade/banana/cheese_sandwich,
+		/obj/item/old_grenade/banana/banana_corndog,
+		/obj/item/rubberduck
 	)
 
 	var/list/usefultier = list( // half decent tier, 30% chance
-		"/obj/item/clothing/gloves/yellow",
-		"/obj/item/bat",
-		"/obj/item/reagent_containers/food/snacks/donkpocket/warm",
-		"/obj/item/device/flash",
-		"/obj/item/clothing/glasses/sunglasses",
-		"/obj/vehicle/skateboard",
-		"/obj/item/storage/firstaid/regular",
-		"/obj/item/clothing/shoes/sandal",
-		"/obj/item/cigpacket/random",
-		"/obj/item/clothing/mask/gas",
-		"/obj/critter/domestic_bee",
-		"/obj/item/storage/firstaid/crit"
+		/obj/item/clothing/gloves/yellow,
+		/obj/item/bat,
+		/obj/item/reagent_containers/food/snacks/donkpocket/warm,
+		/obj/item/device/flash,
+		/obj/item/clothing/glasses/sunglasses,
+		/obj/vehicle/skateboard,
+		/obj/item/storage/firstaid/regular,
+		/obj/item/clothing/shoes/sandal,
+		/obj/item/cigpacket/random,
+		/obj/item/clothing/mask/gas,
+		/obj/critter/domestic_bee,
+		/obj/item/storage/firstaid/crit
 	)
 
 	var/list/raretier = list( // rare tier, 2% chance
-		"/obj/item/hand_tele",
-		"/obj/item/clothing/suit/armor/vest",
-		"/obj/item/gimmickbomb/hotdog",
-		"/obj/item/card/id/captains_spare",
-		"/obj/item/storage/banana_grenade_pouch",
-		"/obj/critter/wendigo", // have fun!
-		"/obj/item/artifact/teleport_wand",
-		"/obj/item/card/id/dabbing_license"
+		/obj/item/hand_tele,
+		/obj/item/clothing/suit/armor/vest,
+		/obj/item/gimmickbomb/hotdog,
+		/obj/item/card/id/captains_spare,
+		/obj/item/storage/banana_grenade_pouch,
+		/obj/critter/wendigo, // have fun!
+		/obj/item/artifact/teleport_wand,
+		/obj/item/card/id/dabbing_license
 	)
 
 	money_roll()
 		var/roll = rand(1,500)
 		var/exclamation = ""
 		var/win_sound = "sound/machines/ping.ogg"
-		var/obj/item/P = null
+		var/prize_type = null
 
 		if (prob(src.uses))
 			src.emag_act(null, null) // bye bye!
 			return
 
 		if (roll <= 10) // rare tier, 2% chance
-			P = text2path(pick(raretier))
+			prize_type = pick(raretier)
 			win_sound = "sound/misc/airraid_loop_short.ogg"
 			exclamation = "JACKPOT! "
 			src.uses += 20
 		else if (roll > 10 && roll <= 160) // half decent tier, 30% chance
-			P = text2path(pick(usefultier))
+			prize_type = pick(usefultier)
 			exclamation = "Big Winner! "
 		else // junk tier, 68% chance
-			P = text2path(pick(junktier))
+			prize_type = pick(junktier)
 			exclamation = "Winner! "
 
-		if (P == null)
-			P = /obj/item/raw_material/rock
-		var/obj/item/prize = new P
+		if (!prize_type)
+			prize_type = /obj/item/raw_material/rock
+		var/obj/item/prize = new prize_type
 		prize.loc = src.loc
 		prize.layer += 0.1
 		src.visible_message("<span class='subtle'><b>[src]</b> says, '[exclamation][src.scan.registered] has won \an [prize.name]!'</span>")

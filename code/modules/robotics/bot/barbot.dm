@@ -11,7 +11,7 @@
 	anchored = 0
 	bot_move_delay = BARBUDDY_MOVE_SPEED
 	var/hasDrink = 0
-	var/atom/home // Initialized early. Where the barbuddy should be serving. Barbuddy explodes if taken too far from here.
+	var/turf/home // Initialized early. Where the barbuddy should be serving. Barbuddy explodes if taken too far from here.
 	var/list/homeTables = list() // Initialized early. All nearby tables that the barbuddy should be checking for drinks.
 	var/list/targets = list() // Nearby tables that are in need of drinks.
 	var/atom/moveTowards // The object that should be moved towards.
@@ -56,8 +56,10 @@
 		..()
 		src.setEmotion("happy")
 		// Start by getting a few initial things
-		if (!src.home || !isturf(src.home))
-			src.home = get_turf(src)
+		home = get_turf(src)
+		if (!home)
+			qdel(src)
+			return
 		if (!length(src.homeTables))
 			for (var/obj/table/reinforced/bar/T in view(5, src.home))
 				src.homeTables += T
@@ -73,7 +75,7 @@
 		if (!length(src.homeTables))
 			for (var/obj/table/reinforced/bar/T in view(5, src.home))
 				src.homeTables += T
-			if (length(src.homeTables))
+			if (!length(src.homeTables))
 				explode()
 		for (var/obj/table/reinforced/bar/T in src.homeTables)
 			var/glasses = 0
@@ -89,7 +91,7 @@
 			if (!length(targets)) // No work to be done, let's go home.
 				if (get_turf(src) == home) return
 				src.navigate_to(home, BARBUDDY_MOVE_SPEED, max_dist = 60)
-				if (!src.path || !length(src.path))
+				if (!length(src.path))
 					KillPathAndGiveUp(1)
 				return
 		// Let's decide what to do.
@@ -116,9 +118,9 @@
 			src.setEmotion("happy")
 			return
 
-		if (!src.path || !length(src.path))
+		if (!length(src.path))
 			src.navigate_to(get_turf(moveTowards), BARBUDDY_MOVE_SPEED, max_dist = 60)
-			if (!src.path || !length(src.path))
+			if (!length(src.path))
 				KillPathAndGiveUp(1)
 				return
 
@@ -188,7 +190,6 @@
 		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 		elecflash(src, radius=1, power=3, exclude_center = 0)
 		qdel(src)
-		return
 
 /obj/decal/fakeobjects/barbuddy_dispenser
 	name = "BarBuddy Drink Dispenser"
