@@ -1299,11 +1299,14 @@
 					total = weights[mid]
 					max_id = mid
 		if (!total)
+			taking = 0
 			return 1
 		if (total < required_deposits)
+			taking = 0
 			boutput(usr, "<span class='alert'><b>You need more deposits on your screen! (Required: [required_deposits], have (of highest material '[max_id]'): [count])</b></span>")
 			return 1
 		if (!mats.len)
+			taking = 0
 			return 1
 		var/datum/material/to_merge = copyMaterial(mats[max_id])
 		owner.my_material = getInterpolatedMaterial(owner.my_material, to_merge, 0.17)
