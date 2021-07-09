@@ -172,17 +172,6 @@
 	flags = TABLEPASS
 	burn_possible = 0
 
-/obj/item/rubber_chicken
-	name = "Rubber Chicken"
-	desc = "A rubber chicken, isn't that hilarious?"
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "rubber_chicken"
-	item_state = "rubber_chicken"
-	w_class = W_CLASS_SMALL
-	stamina_damage = 10
-	stamina_cost = 5
-	stamina_crit_chance = 3
-
 /obj/item/module
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
