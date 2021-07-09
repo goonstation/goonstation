@@ -348,7 +348,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 				// Successful Goonhub API query
 				else
-					if (data["whitelisted"])
+					if (result == 2 || data["whitelisted"])
 						// User is explicitly whitelisted from VPN checks, ignore
 						global.vpn_ip_checks["[src.address]"] = false
 
