@@ -11,6 +11,7 @@
 	var/plays = 0
 	var/working = 0
 	var/obj/item/card/id/scan = null
+	var/icon_base = "slots"
 
 	New()
 		AddComponent(/datum/component/mechanics_holder)
@@ -65,7 +66,7 @@
 			src.scan.money -= 20
 			src.plays++
 			src.working = 1
-			src.icon_state = "slots-on"
+			src.icon_state = "[icon_base]-on"
 
 			playsound(src, "sound/machines/ding.ogg", 50, 1)
 			. = TRUE
@@ -73,7 +74,7 @@
 			SPAWN_DBG(2.5 SECONDS) // why was this at ten seconds, christ
 				money_roll()
 				src.working = 0
-				src.icon_state = "slots-off"
+				src.icon_state = "[icon_base]-off"
 
 		if("eject")
 			if(!src.scan)
@@ -81,7 +82,7 @@
 			usr.put_in_hand_or_eject(src.scan)
 			src.scan = null
 			src.working = FALSE
-			src.icon_state = "slots-off" // just in case, some fucker broke it earlier
+			src.icon_state = "[icon_base]-off" // just in case, some fucker broke it earlier
 			src.visible_message("<span class='subtle'><b>[src]</b> says, 'Thank you for playing!'</span>")
 			. = TRUE
 

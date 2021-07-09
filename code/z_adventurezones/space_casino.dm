@@ -13,6 +13,7 @@
 	icon_state = "slotsitem-off"
 	//mats = 50
 	var/uses = 0
+	icon_base = "slotsitem"
 
 	var/list/junktier = list( // junk tier, 68% chance
 		"/obj/item/a_gift/easter",
@@ -61,50 +62,6 @@
 		"/obj/item/artifact/teleport_wand",
 		"/obj/item/card/id/dabbing_license"
 	)
-
-	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-		switch(action)
-			if ("insert_card")
-				if (src.scan)
-					return TRUE
-				var/obj/O = usr.equipped()
-				if (istype(O, /obj/item/card/id))
-					boutput(usr, "<span class='notice'>You insert your ID card.</span>")
-					usr.drop_item()
-					O.set_loc(src)
-					src.scan = O
-					. = TRUE
-			if ("play")
-				if (src.working || !src.scan)
-					return TRUE
-				if (src.scan.money < 20)
-					src.visible_message("<span class='subtle'><b>[src]</b> says, 'Insufficient money to play!'</span>")
-					return TRUE
-				src.scan.money -= 20
-				src.plays++
-				src.working = 1
-				src.icon_state = "slotsitem-on"
-
-				playsound(get_turf(src), "sound/machines/ding.ogg", 50, 1)
-				. = TRUE
-				ui_interact(usr, ui)
-				SPAWN_DBG(2.5 SECONDS) // why was this at ten seconds, christ
-					money_roll()
-					src.working = 0
-					src.icon_state = "slotsitem-off"
-
-			if("eject")
-				if(!src.scan)
-					return TRUE // jerks doing that "hide in a chute to glitch auto-update windows out" exploit caused a wall of runtime errors
-				usr.put_in_hand_or_eject(src.scan)
-				src.scan = null
-				src.working = FALSE
-				src.icon_state = "slotsitem-off" // just in case, some fucker broke it earlier
-				src.visible_message("<span class='subtle'><b>[src]</b> says, 'Thank you for playing!'</span>")
-				. = TRUE
-
-		src.add_fingerprint(usr)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "machineUsed")
 
 	money_roll()
 		var/roll = rand(1,500)
