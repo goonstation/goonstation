@@ -12,8 +12,14 @@ var/global/datum/galaxy/GALAXY = new
 		src.bodies += new/datum/galactic_object/eyesenhower()
 		src.bodies += new/datum/galactic_object/station()
 
+		src.bodies += new/datum/galactic_object/bhole
+		src.bodies += new/datum/galactic_object/star
+
+		for(var/i in 1 to 3)
+			src.bodies += new/datum/galactic_object/star/random
+
 		for(var/i in 1 to 10)
-			src.bodies += new/datum/galactic_object/random(src)
+			src.bodies += new/datum/galactic_object/planet/random(src)
 
 /datum/galactic_object
 	var/name
@@ -187,7 +193,7 @@ var/global/datum/galaxy/GALAXY = new
 				src.my_ship_body.actual_x += ARTEMIS_MAP_SHIP_PIXEL_RATIO*x_diff
 				src.my_ship_body.actual_y += ARTEMIS_MAP_SHIP_PIXEL_RATIO*y_diff
 				src.my_ship_body.animate_stars()
-				if(squared_pixel_distance <= (1024 + 528 )) //1 tiles * 32, squared... plus slush
+				if(squared_pixel_distance <= (1024)) //1 tiles * 32, squared... plus slush
 					src.my_ship_body.alpha = 255
 				else
 					src.my_ship_body.alpha = 0
@@ -213,6 +219,10 @@ var/global/datum/galaxy/GALAXY = new
 	name = "TEST OBJECT LARGE"
 	icon = 'icons/misc/galactic_objects_large.dmi'
 	icon_state = "generic"
+
+	//re-center 528x528 icons
+	pixel_x = -248
+	pixel_y = -248
 
 /obj/landmark/destination_landmark
 	var/destination_name = null

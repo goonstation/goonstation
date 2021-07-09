@@ -76,8 +76,12 @@
 
 	var/control_lock = 0
 
+	var/engine_ok = TRUE
+	var/full_throttle = FALSE
+
 	var/buoy_count = 3
 
+	var/obj/machinery/sim/vr_bed/flight_chair/controls
 	var/datum/movement_controller/artemis/controller
 	var/controller_type = null
 
@@ -142,7 +146,7 @@
 			special_places.Add(src.name)
 
 	proc/engine_check()
-		return 1
+		return src.engine_ok
 
 	proc/gen_stars()
 		var/map_max_r = map_size*16*sqrt(2) // circle than inscribes the map view square

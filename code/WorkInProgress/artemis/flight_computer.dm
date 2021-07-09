@@ -18,6 +18,7 @@
 			for(var/obj/artemis/S in world)
 				if(S.stars_id == src.stars_id)
 					src.ship = S
+					src.ship.controls = src
 					break
 
 	attackby(obj/item/O as obj, mob/user as mob)

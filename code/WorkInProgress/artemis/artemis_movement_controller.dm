@@ -24,6 +24,23 @@
 
 		if (ship.engine_check()) // ENGINE CHECK HERE LATER
 
+			if( keys & KEY_THROW )
+				if(!ship.full_throttle)
+					ship.full_throttle = TRUE
+					ship.accel *= 2
+					src.ship.controls.myhud.throttle_stick.icon_state = "throttle_up"
+
+					animate(ship.back, transform=matrix().Scale(1.2), loop=-1, time=3)
+					animate(transform=matrix(), loop=-1, time=4)
+					ship.back.color = "#f0f"
+			else
+				if(ship.full_throttle)
+					ship.full_throttle = FALSE
+					ship.accel = initial(ship.accel)
+					src.ship.controls.myhud.throttle_stick.icon_state = "throttle_down"
+					animate(ship.back, transform=matrix(), loop=0, time=6)
+					ship.back.color = "#fff"
+
 			if((keys & KEY_FORWARD) && !(keys & KEY_BACKWARD))
 
 				if(!ship.accelerating)
@@ -71,6 +88,10 @@
 					ship.vel_mag = max(ship.vel_mag,0)
 					if(ship.vel_mag == 0)
 						ship.vel_angle = 0
+
+						if(keys & KEY_RUN)
+							ship.vel_mag += (ship.accel)
+							ship.vel_angle = ship.ship_angle + 180
 
 					ship.accelerating = 1
 
@@ -134,7 +155,7 @@
 						flick("[ship.icon_base]_thruster_back_r",ship.back_right)
 
 					spawn(ship.animation_speed)
-					ship.rotating = 0
+						ship.rotating = 0
 
 		return ship.animation_speed
 

@@ -1,8 +1,8 @@
 #ifdef ENABLE_ARTEMIS
-/datum/galactic_object/random
+/datum/galactic_object/planet/random
 	name = "Randomized Planet"
-	body_path_map = /obj/background_star/galactic_object/random
-	body_path_ship = /obj/background_star/galactic_object/large/random
+	body_path_map = /obj/background_star/galactic_object/planet/random
+	body_path_ship = /obj/background_star/galactic_object/planet/large/random
 	sector = "A"
 	navigable = 1
 	var/color = null
@@ -42,7 +42,7 @@
 
 		src.name = .
 
-/obj/background_star/galactic_object/random
+/obj/background_star/galactic_object/planet/random
 	name = "F1X-M3"
 	icon = 'icons/misc/artemis/galactic_object_map.dmi'
 	icon_state = "planet_1"
@@ -59,25 +59,27 @@
 		return
 
 	on_load()
-		var/datum/galactic_object/random/R = master
+		var/datum/galactic_object/planet/random/R = master
 		color = R.color
 		name = R.name
 		transform = src.transform.Scale(R.scale)
 		icon_state = R.icon_state
 
 
-/obj/background_star/galactic_object/large/random
+/obj/background_star/galactic_object/planet/large/random
 	name = "F1X-M3"
 	icon = 'icons/misc/artemis/galactic_object_ship.dmi'
 	icon_state = "generic"
 	destination_name = "3rr0r"
 
 	on_load()
-		var/datum/galactic_object/random/R = master
+		var/datum/galactic_object/planet/random/R = master
 		destination_name = R.destination_name
 		color = R.color
 		name = R.name
 		icon_state = R.icon_state
+
+// Space Station / Abzu
 
 /datum/galactic_object/station
 	name = "SS13"
@@ -120,9 +122,182 @@
 				return
 
 	on_load()
-		var/datum/galactic_object/random/R = master
+		var/datum/galactic_object/R = master
 		destination_name = R.name
 
+// Stars
+
+/datum/galactic_object/star
+	name = "Star"
+	body_path_map = /obj/background_star/galactic_object/star
+	body_path_ship = /obj/background_star/galactic_object/large/star
+	sector = "A"
+	navigable = 0
+	galactic_x = 0.2
+	galactic_y = 0.05
+
+	random
+		body_path_map = /obj/background_star/galactic_object/star/random
+		body_path_ship = /obj/background_star/galactic_object/large/star/random
+		var/color = null
+
+		New()
+			galactic_x = rand()*2-1 //19?
+			galactic_y = rand()*2-1 //19?
+			//scale = rand()*0.5+ 0.90
+			color = pick("#fffb00", "#FF5D06", "#009ae7", "#9b59b6", "#FF69B4", "#ffffff")
+			..()
+
+/obj/background_star/galactic_object/star
+	name = "Star"
+	icon = 'icons/misc/artemis/galactic_object_map.dmi'
+	icon_state = "star"
+
+	New()
+		..()
+		animate_wave(src, 1)
+		flags |= HAS_ARTEMIS_SCAN
+
+	proc/artemis_scan(var/mob/pilot, var/obj/artemis/ship)
+		var/dat = {"<span class='alert'><b>Hot Hot Hot Hot Hot Hot</b></span>"}
+
+		pilot << browse("<HEAD><TITLE>Star</TITLE></HEAD><TT>[dat]</TT>", "window=artemis_scan")
+
+		return
+
+	animate_stars()
+		..()
+		// This is where black hole shit should happen... suck 'em in... and SPIT 'em out
+		var/datum/galactic_object/G = master
+		if(src.has_ship_body && G)
+			var/squared_pixel_distance = ((src.actual_x)**2 + (src.actual_y)**2)
+			var/obj/artemis/ship = src.my_ship
+
+			if(squared_pixel_distance < 32)
+				if(!ON_COOLDOWN(src.my_ship, "hot_star", 5 SECONDS))
+					SPAWN_DBG(0)
+						var/area = get_area(src.my_ship.controls)
+						for(var/mob/M in area)
+							M.temperature_expose(null, 5778, CELL_VOLUME)
+							if(isliving(M))
+								var/mob/living/H = M
+								H.update_burning(5)
+			else if(squared_pixel_distance < 2600 )
+				var/theta = arctan(src.actual_y, src.actual_x)
+				theta += ship.ship_angle
+				var/gravity = lerp(0.75,0.25,squared_pixel_distance/2600)
+				var/new_mag = sqrt(ship.vel_mag**2 + gravity**2 + 2*ship.vel_mag*gravity*cos(theta-ship.vel_angle))
+				new_mag = min(ship.max_speed,new_mag)
+				var/arctan_result = (theta == ship.vel_angle) ? 0 : arctan(((gravity*sin(theta-ship.vel_angle))/(ship.vel_mag + gravity*cos(theta-ship.vel_angle))))
+				var/new_angle = ship.vel_angle + arctan_result
+				ship.vel_mag = new_mag
+				ship.vel_angle = new_angle
+				ship.update_my_stuff()
+
+	random
+		on_load()
+			var/datum/galactic_object/star/random/R = master
+			color = R.color
+			name = R.name
+
+/obj/background_star/galactic_object/large/star
+	name = "Star"
+	icon = 'icons/misc/artemis/galactic_object_ship.dmi'
+	icon_state = "star"
+
+	New()
+		..()
+		animate_wave(src, 2)
+
+	animate_stars()
+		..()
+		icon_state = "star"
+
+	Crossed(O)
+		. = ..()
+		if (isliving(O))
+			var/mob/living/M = O
+			if (!M.is_heat_resistant())
+				SPAWN_DBG(1 SECOND)
+					M.visible_message("<span class='alert'><b>[M]</b> burns away into ash! Stars are quite warm!</span>",\
+					"<span class='alert'><b>You burn away into ash! Stars are hot afterall!</b></span>")
+					M.firegib()
+
+	random
+		on_load()
+			var/datum/galactic_object/star/random/R = master
+			color = R.color
+			name = R.name
+
+// Black Hole
+
+/datum/galactic_object/bhole
+	name = "Star"
+	body_path_map = /obj/background_star/galactic_object/bhole
+	body_path_ship = /obj/background_star/galactic_object/large/bhole
+	sector = "A"
+	navigable = 1
+	galactic_x = -0.2
+	galactic_y = 0.2
+
+/obj/background_star/galactic_object/bhole
+	name = "Black Hole"
+	icon = 'icons/misc/artemis/galactic_object_map.dmi'
+	icon_state = "bhole"
+
+	New()
+		..()
+		flags |= HAS_ARTEMIS_SCAN
+
+	proc/artemis_scan(var/mob/pilot, var/obj/artemis/ship)
+		var/dat = {"<span class='alert'><b>Oh... look... a black hole.  Neat!</b></span>"}
+
+		pilot << browse("<HEAD><TITLE>Star</TITLE></HEAD><TT>[dat]</TT>", "window=artemis_scan")
+
+		return
+
+	animate_stars()
+		..()
+
+		// This is where black hole shit should happen... suck 'em in... and SPIT 'em out
+		var/datum/galactic_object/G = master
+		if(src.has_ship_body && G)
+			var/squared_pixel_distance = ((src.actual_x)**2 + (src.actual_y)**2)
+			var/obj/artemis/ship = src.my_ship
+
+			if(squared_pixel_distance < 32)
+				if(!ON_COOLDOWN(src.my_ship, "blackhole", 5 SECONDS))
+					SPAWN_DBG(0)
+						var/old_mag = ship.vel_mag
+						var/old_angle = ship.vel_angle
+						ship.engine_ok = FALSE
+						ship.vel_mag = 300
+						ship.vel_angle += rand()*90 - (45)
+						ship.accelerating = 1
+						ship.update_my_stuff()
+						sleep(5 SECONDS)
+						ship.vel_mag = old_mag * 2
+						ship.vel_angle = old_angle
+						ship.update_my_stuff()
+						sleep(2 SECONDS)
+						ship.accelerating = 0
+						ship.engine_ok = TRUE
+			else if(squared_pixel_distance < 2600 ) //1600
+				var/theta = arctan(src.actual_y, src.actual_x)
+				theta += ship.ship_angle
+				var/gravity = lerp(0.75,0.25,squared_pixel_distance/2600)
+				var/new_mag = sqrt(ship.vel_mag**2 + gravity**2 + 2*ship.vel_mag*gravity*cos(theta-ship.vel_angle))
+				new_mag = min(ship.max_speed,new_mag)
+				var/arctan_result = (theta == ship.vel_angle) ? 0 : arctan(((gravity*sin(theta-ship.vel_angle))/(ship.vel_mag + gravity*cos(theta-ship.vel_angle))))
+				var/new_angle = ship.vel_angle + arctan_result
+				ship.vel_mag = new_mag
+				ship.vel_angle = new_angle
+				ship.update_my_stuff()
+
+/obj/background_star/galactic_object/large/bhole
+	name = "Black Hole"
+	icon = 'icons/misc/artemis/galactic_object_ship.dmi'
+	icon_state = "bhole"
 
 /datum/galactic_object/test
 	name = "F1X-M3"

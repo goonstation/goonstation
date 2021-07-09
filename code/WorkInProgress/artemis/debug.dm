@@ -1,5 +1,5 @@
 // stuff for debugging Artemis, definitely don't use in real code lol
-#ifdef DEBUG_ARTEMUS
+#ifdef DEBUG_ARTEMIS
 /world/load_mode()
 	. = ..()
 	master_mode = "freeroam"
