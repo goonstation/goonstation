@@ -1296,15 +1296,18 @@
 					if(istype(I,/obj/item/seed/))
 						if(!satchelpick || satchelpick == "Seeds Only")
 							I.set_loc(SA)
+							I.add_fingerprint(user)
 					else
 						if(!satchelpick || satchelpick == "Produce Only")
 							I.set_loc(SA)
+							I.add_fingerprint(user)
 				SA.satchel_updateicon()
 
 			// if the satchel got filled up this will dump any unharvested items on the floor
 			// if we're harvesting by hand it'll just default to this anyway! truly magical~
 			for(var/obj/I in src.contents)
 				I.set_loc(user.loc)
+				I.add_fingerprint(user)
 
 		// Now we determine the harvests remaining or grant extra ones.
 		if(!HYPCheckCommut(DNA,/datum/plant_gene_strain/immortal))
