@@ -6,7 +6,6 @@
 	sector = "A"
 	navigable = 1
 	var/color = null
-	var/scale = 1
 	var/destination_name = null
 	var/icon_state = null
 
@@ -62,8 +61,9 @@
 		var/datum/galactic_object/planet/random/R = master
 		color = R.color
 		name = R.name
-		transform = src.transform.Scale(R.scale)
 		icon_state = R.icon_state
+		if(scale)
+			REMOVE_FLAG(appearance_flags, PIXEL_SCALE)
 
 
 /obj/background_star/galactic_object/planet/large/random
@@ -144,7 +144,7 @@
 		New()
 			galactic_x = rand()*2-1 //19?
 			galactic_y = rand()*2-1 //19?
-			//scale = rand()*0.5+ 0.90
+			scale = rand()*0.5+ 0.90
 			color = pick("#fffb00", "#FF5D06", "#009ae7", "#9b59b6", "#FF69B4", "#ffffff")
 			..()
 
@@ -155,7 +155,7 @@
 
 	New()
 		..()
-		animate_wave(src, 1)
+		//animate_wave(src, 1)
 		flags |= HAS_ARTEMIS_SCAN
 
 	proc/artemis_scan(var/mob/pilot, var/obj/artemis/ship)
@@ -199,6 +199,8 @@
 			var/datum/galactic_object/star/random/R = master
 			color = R.color
 			name = R.name
+			if(scale)
+				REMOVE_FLAG(appearance_flags, PIXEL_SCALE)
 
 /obj/background_star/galactic_object/large/star
 	name = "Star"
@@ -207,7 +209,7 @@
 
 	New()
 		..()
-		animate_wave(src, 2)
+		//animate_wave(src, 2)
 
 	animate_stars()
 		..()

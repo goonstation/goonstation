@@ -34,6 +34,7 @@ var/global/datum/galaxy/GALAXY = new
 	var/list/obj/artemis/nearby_ships = list() // holds references to generated map bodies
 	var/loud = 0
 	var/navigable = 0 // Can be detected on long distance nav
+	var/scale
 
 	proc/check_distance(var/ship_x,var/ship_y)
 		var/squared_distance = (ship_x-galactic_x)**2 + (ship_y-galactic_y)**2
@@ -73,6 +74,7 @@ var/global/datum/galaxy/GALAXY = new
 
 		map_body.master = src
 		map_body.my_ship = ship
+		map_body.scale = scale
 		map_body.set_vars(apparent_theta, dist)
 		map_body.loc = get_turf(ship)
 		nearby_ships += ship
@@ -103,6 +105,9 @@ var/global/datum/galaxy/GALAXY = new
 		ship_body.actual_x = G.actual_x*ARTEMIS_MAP_SHIP_PIXEL_RATIO
 		ship_body.actual_y = G.actual_y*ARTEMIS_MAP_SHIP_PIXEL_RATIO
 		var/matrix/M = GLOBAL_ANIMATION_MATRIX.Reset()
+		if(scale)
+			M = M.Scale(scale)
+			ship_body.scale = scale
 		M = M.Translate(ship_body.actual_x,ship_body.actual_y)
 		ship_body.transform = M
 
@@ -135,6 +140,7 @@ var/global/datum/galaxy/GALAXY = new
 	var/datum/galactic_object/master = null
 	var/x_old = null
 	var/y_old = null
+	var/scale
 
 	plane = -1
 
@@ -155,6 +161,8 @@ var/global/datum/galaxy/GALAXY = new
 		src.actual_y = 2*load_r*cos(theta)
 
 		var/matrix/M = GLOBAL_ANIMATION_MATRIX.Reset()
+		if(scale)
+			M = M.Scale(scale)
 		M = M.Translate(actual_x,actual_y)
 		src.transform = M
 
@@ -169,6 +177,8 @@ var/global/datum/galaxy/GALAXY = new
 			y_old = src.actual_y
 
 		var/matrix/M = GLOBAL_ANIMATION_MATRIX.Reset()
+		if(scale)
+			M = M.Scale(scale)
 		M = M.Translate(actual_x,actual_y)
 		animate(src, transform = M, time = animation_speed, loop = 0, flags = ANIMATION_PARALLEL)
 
