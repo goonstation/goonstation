@@ -477,4 +477,5 @@
 		boutput(user, "<span class='notice'>You tune the display to your core.</span>")
 		owner = A
 		is_on = TRUE
-		update()
+		if (!(status & NOPOWER))
+			update()
