@@ -1,5 +1,9 @@
 
 (t)sat jul 10 21
+(u)nefarious6th
+(p)5208
+(e)🗺🎨|mapping, sprites
+(*)Added numerous new headwear clothing options to the clothing booth, new clothing qm crate, general sprite fixes.
 (u)Lythine
 (p)4884
 (e)🆕🗺🎨|feature, mapping, sprites
