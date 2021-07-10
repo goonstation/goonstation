@@ -554,7 +554,6 @@
 					firesource = I
 					break
 			src.combust(firesource)
-			src.combust()
 	if (src.material)
 		src.material.triggerTemp(src, temperature)
 	..() // call your fucking parents
