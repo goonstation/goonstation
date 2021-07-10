@@ -30,10 +30,6 @@
 	var/burn_type = 0 //0 = ash, 1 = melt
 	var/burning_last_process = 0
 	var/firesource = FALSE //TRUE or FALSE : dictates whether or not the item can be used as a valid source of fire
-	/// How many items on a given turf were hotboxed?
-	var/hotbox_count = null
-	/// Item used to hotbox
-	var/atom/hotbox_item = null
 
 	/*______*/
 	/*Combat*/
@@ -479,7 +475,7 @@
 /obj/item/proc/equipment_click(atom/source, atom/target, params, location, control, origParams, slot) //Called through hand_range_attack on items the mob is wearing that have HAS_EQUIP_CLICK in flags.
 	return 0
 
-/obj/item/proc/combust() // cogwerks- flammable items project
+/obj/item/proc/combust(obj/item/W as obj) // cogwerks- flammable items project
 	if(processing_items.Find(src)) //processing items cant be lit on fire to avoid weird bugs
 		return
 	if (!src.burning)
@@ -489,14 +485,14 @@
 		src.firesource = TRUE
 		if (istype(src, /obj/item/plant))
 			if (!ON_COOLDOWN(global, "hotbox_adminlog", 30 SECONDS)) //blocks every instance of the plant logging
-				for (var/atom/movable/A in get_turf(src))
-					if (istype(A, /obj/item/plant))
-						hotbox_count = hotbox_count + 1
-						if (hotbox_count == 5) //number is up for debate, 5 seemed like a good starting place
-							if (hotbox_item)
-								message_admins("([src]) was set on fire on the same turf as multiple other plants at [log_loc(src)] by item ([hotbox_item]). Last touched by: [hotbox_item.fingerprintslast ? "[hotbox_item.fingerprintslast]" : "*null*"].")
-							else
-								message_admins("([src]) was set on fire on the same turf as multiple other plants at [log_loc(src)].")
+				var/list/hotbox_plants = list()
+				for (var/obj/item/plant/P in get_turf(src))
+					hotbox_plants += P
+					if (length(hotbox_plants) == 5) //number is up for debate, 5 seemed like a good starting place
+						if (W && W.firesource)
+							message_admins("([src]) was set on fire on the same turf as at least ([length(hotbox_plants)]) other plants at [log_loc(src)] by item ([W]). Last touched by: [W.fingerprintslast ? "[W.fingerprintslast]" : "*null*"].")
+						else
+							message_admins("([src]) was set on fire on the same turf as at least ([length(hotbox_plants)]) other plants at [log_loc(src)].")
 		if (src.burn_output >= 1000)
 			UpdateOverlays(image('icons/effects/fire.dmi', "2old"),"burn_overlay")
 		else
@@ -553,9 +549,9 @@
 	if (src.burn_possible && !src.burning)
 		if ((temperature > T0C + src.burn_point) && prob(5))
 			for (var/obj/item/I in get_turf(src))
-				if (I.firesource && !isnull(I))
-					for (var/obj/item/A in get_turf(src))
-						A.hotbox_item = I
+				if (I.firesource)
+					src.combust(I)
+					break
 			src.combust()
 	if (src.material)
 		src.material.triggerTemp(src, temperature)
@@ -846,9 +842,7 @@
 		src.material.triggerTemp(src ,1500)
 	if (W.firesource)
 		if (src.burn_possible && src.burn_point <= 1500)
-			hotbox_item = W
-			src.combust()
-			hotbox_item = null
+			src.combust(W)
 		else
 			..(W, user)
 	else
