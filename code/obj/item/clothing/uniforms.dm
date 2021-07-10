@@ -320,7 +320,6 @@
 
 	dress
 		icon_state = "hop-dress"
-		item_state = "hop-dress"
 
 /obj/item/clothing/under/rank/head_of_securityold
 	name = "head of security's uniform"
@@ -1127,7 +1126,6 @@
 
 	dress
 		icon_state = "suitT-dress"
-		item_state = "suitT-dress"
 
 /obj/item/clothing/under/suit/hos
 	name = "\improper Head of Security's suit"
