@@ -1,5 +1,9 @@
 
 (t)sat jul 10 21
+(u)Owari
+(p)5434
+(e)🎨|sprites
+(*)Added a new sprite for the magic mirror on the wizard shuttle.
 (u)Sovexe
 (p)5410
 (e)🆕🎨|feature, sprites
