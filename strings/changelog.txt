@@ -1,5 +1,9 @@
 
 (t)sat jul 10 21
+(u)TTerc
+(p)5413
+(e)|
+(+)You can now click a vending machine/manufactuer/seed fabricator with wirecutters/multitool to access the hacking menu, if the panel is open.
 (u)Owari
 (p)5434
 (e)🎨|sprites
