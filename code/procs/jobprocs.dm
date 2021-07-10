@@ -787,4 +787,4 @@ var/list/trinket_safelist = list(/obj/item/basketball,/obj/item/instrument/bikeh
 ////////////////////////////////////
 // hat blacklist for trinket hats //
 ////////////////////////////////////
-var/list/hat_blacklist = list((typesof(/obj/item/clothing/head/bighat)), (typesof(/obj/item/clothing/head/helmet/space/syndicate)), (typesof(/obj/item/clothing/head/barrette)))
+var/list/hat_blacklist = list(typesof(/obj/item/clothing/head/bighat, /obj/item/clothing/head/helmet/space/syndicate, /obj/item/clothing/head/barrette))
