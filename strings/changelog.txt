@@ -1,5 +1,17 @@
 
 (t)sat jul 10 21
+(u)TTerc
+(p)5413
+(e)|
+(+)You can now click a vending machine/manufactuer/seed fabricator with wirecutters/multitool to access the hacking menu, if the panel is open.
+(u)Owari
+(p)5434
+(e)🎨|sprites
+(*)Added a new sprite for the magic mirror on the wizard shuttle.
+(u)Sovexe
+(p)5410
+(e)🆕🎨|feature, sprites
+(*)Added golden peas plant mutation. Golden peas contain ammonia.
 (u)nefarious6th
 (p)5208
 (e)🗺🎨|mapping, sprites

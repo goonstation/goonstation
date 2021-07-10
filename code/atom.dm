@@ -25,6 +25,9 @@
 	/// Anything can speak... if it can speak
 	var/obj/chat_maptext_holder/chat_text
 
+	/// A multiplier that changes how an atom stands up from resting. Yes.
+	var/rest_mult = 0
+
 	/// Gets the atoms name with all the ugly prefixes things remove
 	proc/clean_name()
 		return strip_special(name)

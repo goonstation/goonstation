@@ -12,4 +12,4 @@ caseSensitive: false
 # Form of event type:group name or combined names (Explained lower in the README).
 # Optional, defaults to MEMBER for each.
 permissionMappings:
-  "rebuild-tgui": [MEMBER, CONTRIBUTOR, PRAUTHOR]
+  "rebuild-tgui": [MEMBER, COLLABORATOR, PRAUTHOR]
