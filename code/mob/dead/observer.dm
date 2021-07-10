@@ -394,31 +394,26 @@
 /mob/dead/observer/verb/show_health()
 	set category = "Ghost"
 	set name = "Toggle Health"
-	client.images.Remove(health_mon_icons)
 	if (!health_shown)
 		health_shown = 1
-		if(client?.images)
-			for(var/image/I in health_mon_icons)
-				if (I && src && I.loc != src.loc)
-					client.images.Add(I)
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(src)
+		boutput(src, "Health status toggled on.")
 	else
 		health_shown = 0
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(src)
+		boutput(src, "Health status toggled off.")
 
 /mob/dead/observer/verb/show_arrest()
 	set category = "Ghost"
 	set name = "Toggle Arrest Status"
 	if (!arrest_shown)
 		arrest_shown = 1
-		if(client?.images)
-			for(var/image/I in arrestIconsAll)
-				if(I && src && I.loc != src.loc)
-					client.images.Add(I)
+		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(src)
 		boutput(src, "Arrest status toggled on.")
 	else
 		arrest_shown = 0
-		client.images.Remove(arrestIconsAll)
+		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(src)
 		boutput(src, "Arrest status toggled off.")
-
 
 /mob/dead/observer/verb/ai_laws()
 	set name = "AI Laws"
@@ -441,11 +436,13 @@
 	..()
 
 	if(last_client)
-		health_shown = 0
-		last_client.images.Remove(health_mon_icons)
+		if(health_shown)
+			health_shown = 0
+			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(src)
 		if(arrest_shown)
 			arrest_shown = 0
-			last_client.images.Remove(arrestIconsAll)
+			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(src)
+
 
 	if(!src.key && delete_on_logout)
 		//qdel(src)

@@ -72,6 +72,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\callback.dm"
 #include "code\datums\changelog.dm"
 #include "code\datums\character_preview.dm"
+#include "code\datums\client_image_group.dm"
 #include "code\datums\commodity.dm"
 #include "code\datums\communications.dm"
 #include "code\datums\computerfiles.dm"
