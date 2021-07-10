@@ -56,15 +56,16 @@ export const Pressurizer = (props, context) => {
   };
 
   const getArmedState = () => {
-    if (pressure<maxPressure*0.2)
-    { return "Insufficient Pressure"; }
-    if (!airSafe)
-    { return "AIR UNSAFE - Locked"; }
-    if (blastArmed)
-    { return "Armed"; }
-    else
-    { return "Ready"; }
-
+    if (pressure < maxPressure * 0.2) {
+      return "Insufficient Pressure";
+    }
+    if (!airSafe) {
+      return "AIR UNSAFE - Locked";
+    }
+    if (blastArmed) {
+      return "Armed";
+    }
+    return "Ready";
   };
 
   const handleEjectContents = () => {
