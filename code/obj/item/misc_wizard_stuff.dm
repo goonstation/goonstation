@@ -232,7 +232,7 @@
 	desc = "An old mirror. A bit eeky and ooky."
 	name = "Magic Mirror"
 	icon = 'icons/obj/decals/misc.dmi'
-	icon_state = "rip"
+	icon_state = "wizard_mirror"
 	anchored = 1.0
 	opacity = 0
 	density = 0

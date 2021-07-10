@@ -11,6 +11,7 @@
 	var/plays = 0
 	var/working = 0
 	var/obj/item/card/id/scan = null
+	var/icon_base = "slots"
 	var/datum/data/record/accessed_record = null
 	var/available_funds = 0
 
@@ -64,7 +65,7 @@
 			src.available_funds -= 20
 			src.plays++
 			src.working = 1
-			src.icon_state = "slots-on"
+			src.icon_state = "[icon_base]-on"
 
 			playsound(src, "sound/machines/ding.ogg", 50, 1)
 			. = TRUE
@@ -72,7 +73,7 @@
 			SPAWN_DBG(2.5 SECONDS) // why was this at ten seconds, christ
 				money_roll()
 				src.working = 0
-				src.icon_state = "slots-off"
+				src.icon_state = "[icon_base]-off"
 
 		if("eject")
 			if(!src.accessed_record)
@@ -83,7 +84,7 @@
 			src.scan = null
 			src.accessed_record = null
 			src.working = FALSE
-			src.icon_state = "slots-off" // just in case, some fucker broke it earlier
+			src.icon_state = "[icon_base]-off" // just in case, some fucker broke it earlier
 			src.visible_message("<span class='subtle'><b>[src]</b> says, 'Winnings transferred, thank you for playing!'</span>")
 			. = TRUE
 
