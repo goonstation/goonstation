@@ -1,4 +1,3 @@
-import { Component } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Divider, Flex, Section, Button, LabeledList, NumberInput, ProgressBar } from '../components';
 import { Window } from '../layouts';
