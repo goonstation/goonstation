@@ -19,9 +19,6 @@
 	light_g = 0.3
 	light_b = 0.9
 
-/obj/machinery/computer/research/disease/attack_ai(user as mob)
-	return src.attack_hand(user)
-
 /obj/machinery/computer/research/disease/attack_hand(mob/user as mob)
 	if(..())
 		return

@@ -5,6 +5,7 @@
 	var/temp = null
 	var/obj/item/card/id/scan = null
 	var/console_location = null
+	circuit_type = /obj/item/circuitboard/qmorder
 
 	light_r =1
 	light_g = 0.7
@@ -25,9 +26,6 @@
 /obj/machinery/computer/ordercomp/console_lower
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "qmreq1"
-
-/obj/machinery/computer/ordercomp/attackby(I as obj, user as mob)
-	return src.attack_hand(user)
 
 /obj/machinery/computer/ordercomp/attack_ai(var/mob/user as mob)
 	boutput(user, "<span class='alert'>AI Interfacing with this computer has been disabled.</span>")
@@ -79,39 +77,8 @@
 		else
 			boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 			src.scan = null
-	else if (isscrewingtool(I))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if (do_after(user, 2 SECONDS))
-			if (src.status & BROKEN)
-				user.show_text("The broken glass falls out.", "blue")
-				var/obj/computerframe/A = new /obj/computerframe(src.loc)
-				if (src.material)
-					A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/qmorder/M = new /obj/item/circuitboard/qmorder(A)
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
-			else
-				user.show_text("You disconnect the monitor.", "blue")
-				var/obj/computerframe/A = new /obj/computerframe(src.loc)
-				if (src.material)
-					A.setMaterial(src.material)
-				var/obj/item/circuitboard/qmorder/M = new /obj/item/circuitboard/qmorder(A)
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				qdel(src)
-	else src.attack_hand(user)
-	return
+	else
+		..()
 
 /obj/machinery/computer/ordercomp/proc/view_requests()
 	. = "<B>Current Requests:</B><BR><BR>"
