@@ -1,35 +1,35 @@
 import { useBackend } from '../backend';
-import { Box, Divider, Flex, Section, Button, LabeledList, NumberInput, ProgressBar } from '../components';
+import { Button, Divider, Flex, LabeledList, NumberInput, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 import { PortableBasicInfo } from './common/PortableAtmos';
+
+const FanState = {
+  Off: 0,
+  In: 1,
+  Out: 2,
+};
 
 export const Pressurizer = (props, context) => {
   const { act, data } = useBackend(context);
 
   const {
-    pressure,
-    connected,
-    fanState,
-    maxPressure,
-    releasePressure,
+    airSafe,
     blastArmed,
     blastDelay,
+    connected,
+    emagged,
+    fanState,
     materialsCount,
     materialsProgress,
-    processRate,
-    minRelease,
+    maxArmDelay,
+    maxPressure,
     maxRelease,
     minArmDelay,
-    maxArmDelay,
-    emagged,
-    airSafe,
+    minRelease,
+    pressure,
+    processRate,
+    releasePressure,
   } = data;
-
-  const FanState = {
-    Off: 0,
-    In: 1,
-    Out: 2,
-  };
 
   const handleSetPressure = releasePressure => {
     act("set-pressure", {
@@ -80,7 +80,7 @@ export const Pressurizer = (props, context) => {
     <Window
       theme={emagged ? 'syndicate' : 'ntos'}
       width={390}
-      height={410}>
+      height={390}>
       <Window.Content>
         <Flex>
           <Flex.Item width="900px">
@@ -101,9 +101,9 @@ export const Pressurizer = (props, context) => {
                     onClick={() => handleArmPressurizer()} />
                 </LabeledList.Item>
                 <LabeledList.Item label="Delay">
-                  <Button
-                    onClick={() => handleSetBlastDelay(minArmDelay)}
-                    content="Min" />
+                  <Button onClick={() => handleSetBlastDelay(minArmDelay)}>
+                    Min
+                  </Button>
                   <NumberInput
                     animated
                     width="7em"
@@ -111,32 +111,31 @@ export const Pressurizer = (props, context) => {
                     minValue={minArmDelay}
                     maxValue={maxArmDelay}
                     onChange={(e, targetDelay) => handleSetBlastDelay(targetDelay)} />
-                  <Button
-                    onClick={() => handleSetBlastDelay(maxArmDelay)}
-                    content="Max" />
+                  <Button onClick={() => handleSetBlastDelay(maxArmDelay)}>
+                    Max
+                  </Button>
                 </LabeledList.Item>
               </LabeledList>
-
               <Divider />
               <LabeledList>
                 <LabeledList.Item label="Fan Status">
-                  <Button
-                    content="Off"
-                    color={fanState === FanState.Off ? 'bad' : 'default'}
-                    onClick={() => handleSetFan(FanState.Off)} />
-                  <Button
-                    content="In"
-                    color={fanState === FanState.In ? 'good' : 'default'}
-                    onClick={() => handleSetFan(FanState.In)} />
-                  <Button
-                    content="Out"
-                    color={fanState === FanState.Out ? 'good' : 'default'}
-                    onClick={() => handleSetFan(FanState.Out)} />
+                  <Button color={fanState === FanState.Off ? 'bad' : 'default'}
+                    onClick={() => handleSetFan(FanState.Off)}>
+                    Off
+                  </Button>
+                  <Button color={fanState === FanState.In ? 'good' : 'default'}
+                    onClick={() => handleSetFan(FanState.In)}>
+                    In
+                  </Button>
+                  <Button color={fanState === FanState.Out ? 'good' : 'default'}
+                    onClick={() => handleSetFan(FanState.Out)}>
+                    Out
+                  </Button>
                 </LabeledList.Item>
                 <LabeledList.Item label="Release pressure">
-                  <Button
-                    onClick={() => handleSetPressure(minRelease)}
-                    content="Min" />
+                  <Button onClick={() => handleSetPressure(minRelease)}>
+                    Min
+                  </Button>
                   <NumberInput
                     animated
                     width="7em"
@@ -144,9 +143,9 @@ export const Pressurizer = (props, context) => {
                     minValue={minRelease}
                     maxValue={maxRelease}
                     onChange={(e, targetPressure) => handleSetPressure(targetPressure)} />
-                  <Button
-                    onClick={() => handleSetPressure(maxRelease)}
-                    content="Max" />
+                  <Button onClick={() => handleSetPressure(maxRelease)}>
+                    Max
+                  </Button>
                 </LabeledList.Item>
               </LabeledList>
             </PortableBasicInfo>
@@ -156,43 +155,45 @@ export const Pressurizer = (props, context) => {
               buttons={(
                 <Button
                   icon="eject"
-                  content="Eject"
                   disabled={!materialsCount}
-                  onClick={() => handleEjectContents()} />
+                  onClick={() => handleEjectContents()}>
+                  Eject
+                </Button>
               )}>
-              <LabeledList.Item label="Speed">
-                <Button
-                  content="1"
-                  color={processRate === 1 ? 'good' : 'default'}
-                  onClick={() => handleSetProcessRate(1)} />
-                <Button
-                  content="2"
-                  color={processRate === 2 ? 'good' : 'default'}
-                  onClick={() => handleSetProcessRate(2)} />
-                <Button
-                  content="3"
-                  color={processRate === 3 ? 'good' : 'default'}
-                  onClick={() => handleSetProcessRate(3)} />
-                { !!emagged && (<Button
-                  content="4"
-                  color={processRate === 4 ? 'good' : 'default'}
-                  onClick={() => handleSetProcessRate(4)} />)}
-                { !!emagged && <Button
-                  content="5"
-                  color={processRate === 5 ? 'good' : 'default'}
-                  onClick={() => handleSetProcessRate(5)} /> }
-              </LabeledList.Item>
               <LabeledList>
-                <LabeledList.Item label="Progress" />
+                <LabeledList.Item label="Speed">
+                  <Button color={processRate === 1 ? 'good' : 'default'}
+                    onClick={() => handleSetProcessRate(1)}>
+                    1
+                  </Button>
+                  <Button color={processRate === 2 ? 'good' : 'default'}
+                    onClick={() => handleSetProcessRate(2)}>
+                    2
+                  </Button>
+                  <Button color={processRate === 3 ? 'good' : 'default'}
+                    onClick={() => handleSetProcessRate(3)}>
+                    3
+                  </Button>
+                  { !!emagged && (<Button
+                    content="4"
+                    color={processRate === 4 ? 'good' : 'default'}
+                    onClick={() => handleSetProcessRate(4)} />)}
+                  { !!emagged && <Button
+                    content="5"
+                    color={processRate === 5 ? 'good' : 'default'}
+                    onClick={() => handleSetProcessRate(5)} /> }
+                </LabeledList.Item>
+                <LabeledList.Item label="Progress">
+                  <ProgressBar
+                    mt="0.5em"
+                    ranges={{
+                      good: [1, Infinity],
+                      average: [0.75, 1],
+                      bad: [-Infinity, 0.75],
+                    }}
+                    value={materialsProgress/100} />
+                </LabeledList.Item>
               </LabeledList>
-              <ProgressBar
-                mt="0.5em"
-                ranges={{
-                  good: [1, Infinity],
-                  average: [0.75, 1],
-                  bad: [-Infinity, 0.75],
-                }}
-                value={materialsProgress/100} />
             </Section>
           </Flex.Item>
         </Flex>
