@@ -1,5 +1,9 @@
 
 (t)sat jul 10 21
+(u)Lythine
+(p)4884
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Adds a new Space Casino space prefab.
 (u)Emily
 (e)⛔|removal
 (+)Removed the incredibly laggy internals display from the status tab. Maybe someone will fix it eventually.
