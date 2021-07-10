@@ -1,4 +1,9 @@
 
+(t)sat jul 10 21
+(u)Penny
+(p)5055
+(e)🆕|feature
+(*)Mechanics can now set the access requirements of newly constructed airlocks- find the new Access Lite in your secure lockers to try it out!
 (t)fri jul 09 21
 (u)Gerhazo
 (p)5359
