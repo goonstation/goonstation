@@ -1,5 +1,9 @@
 
 (t)sat jul 10 21
+(u)Sovexe
+(p)5410
+(e)🆕🎨|feature, sprites
+(*)Added golden peas plant mutation. Golden peas contain ammonia.
 (u)nefarious6th
 (p)5208
 (e)🗺🎨|mapping, sprites
