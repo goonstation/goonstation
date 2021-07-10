@@ -198,33 +198,6 @@
 		jobs[rank] = C.wage
 */
 
-/obj/machinery/computer
-	var/can_reconnect = 0 //Set to 1 to make multitools call connection_scan. For consoles with associated equipment (cloner, genetek etc)
-	Topic(href, href_list)
-		if (..(href, href_list))
-			return 1
-		playsound(src.loc, 'sound/machines/keypress.ogg', 30, 1, -15)
-
-	attack_hand(var/mob/user)
-		..()
-		interact_particle(user,src)
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (can_reconnect)
-			if (istype(W, /obj/item/device/multitool) && !(status & (BROKEN|NOPOWER)))
-				boutput(user, "<span class='notice'>You pulse [src.name] to re-scan for equipment.</span>")
-				connection_scan()
-				return
-			else
-				src.attack_hand(user) //Previously the default behaviour for all affected computers
-		else
-			..()
-
-	proc/connection_scan()
-		//Placeholder so the multitool probing thing can go on this parent
-		//Put the code for finding the stuff your computer needs in this proc
-		return
-
 /obj/machinery/computer/ATM
 	name = "ATM"
 	icon_state = "atm"
@@ -279,7 +252,7 @@
 			user.client.add_to_bank(SB.amount)
 			boutput(user, "<span class='alert'>You deposit [SB.amount] spacebux into your account!</span>")
 			qdel(SB)
-		if(istype(I, /obj/item/spacecash/))
+		else if(istype(I, /obj/item/spacecash/))
 			if (src.accessed_record)
 				boutput(user, "<span class='notice'>You insert the cash into the ATM.</span>")
 
@@ -291,7 +264,7 @@
 				I.amount = 0
 				pool(I)
 			else boutput(user, "<span class='alert'>You need to log in before depositing cash!</span>")
-		if(istype(I, /obj/item/lotteryTicket))
+		else if(istype(I, /obj/item/lotteryTicket))
 			if (src.accessed_record)
 				boutput(user, "<span class='notice'>You insert the lottery ticket into the ATM.</span>")
 				if(I:winner)
@@ -309,7 +282,7 @@
 				qdel(I)
 			else boutput(user, "<span class='alert'>You need to log in before inserting a ticket!</span>")
 		else
-			src.attack_hand(user)
+			..()
 		return
 
 	attack_ai(var/mob/user as mob)

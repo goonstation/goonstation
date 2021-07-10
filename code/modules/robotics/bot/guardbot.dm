@@ -4783,9 +4783,6 @@
 		SPAWN_DBG(0.8 SECONDS)
 			linked_bot = locate() in orange(1, src)
 
-	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
-
 	attack_hand(mob/user as mob)
 		if (..() || (status & (NOPOWER|BROKEN)))
 			return
