@@ -624,8 +624,11 @@
 		/datum/commodity/junk,
 		/datum/commodity/diner,
 		/datum/commodity/bodyparts,
-		/datum/commodity/medical,
-		/datum/commodity/synthmodule)
+		/datum/commodity/medical)
+
+		#ifdef CREATE_PATHOGENS //Don't need this when there's no pathology
+		commercetypes += /datum/commodity/synthmodule
+		#endif
 
 		var/list/selltypes = typesof(pick(commercetypes))
 		var/list/buytypes = typesof(pick(commercetypes))
@@ -833,13 +836,13 @@
 				src.goods_sell += new /datum/commodity/medical/firstaidC(src)
 				src.goods_sell += new /datum/commodity/medical/injectorPent(src)
 				src.goods_sell += new /datum/commodity/medical/injectorPerf(src)
+				#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 				src.goods_sell += new /datum/commodity/synthmodule/bacteria(src)
 				src.goods_sell += new /datum/commodity/synthmodule/virii(src)
 				src.goods_sell += new /datum/commodity/synthmodule/fungi(src)
 				src.goods_sell += new /datum/commodity/synthmodule/parasite(src)
 				src.goods_sell += new /datum/commodity/synthmodule/gmcell(src)
 				src.goods_sell += new /datum/commodity/synthmodule/vaccine(src)
-				#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 				src.goods_sell += new /datum/commodity/pathogensample(src)
 				#endif
 
@@ -1063,10 +1066,14 @@
 		src.goods_sell += new /datum/commodity/costume/hotdog(src)
 		src.goods_sell += new /datum/commodity/costume/mime(src)
 		src.goods_sell += new /datum/commodity/costume/mime/alt(src) //suspenders and such
+		src.goods_sell += new /datum/commodity/backpack/breadpack(src)
+		src.goods_sell += new /datum/commodity/backpack/bearpack(src)
 		src.goods_sell += new /datum/commodity/balloons(src)
 		src.goods_sell += new /datum/commodity/crayons(src)
 		src.goods_sell += new /datum/commodity/sticker/googly_eyes(src)
 		src.goods_sell += new /datum/commodity/sticker/googly_eyes_angry(src)
+		src.goods_sell += new /datum/commodity/toygun(src)
+		src.goods_sell += new /datum/commodity/toygunammo(src)
 		src.goods_sell += new /datum/commodity/junk/circus_board(src)
 		src.goods_sell += new /datum/commodity/junk/pie_launcher(src)
 		src.goods_sell += new /datum/commodity/junk/laughbox(src)
@@ -1295,7 +1302,7 @@
 		pickupdialoguefailure = "<i>A hand sticking out from a toilet flails around for a bit.</i>"
 
 /obj/npc/trader/twins
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "twins"
 	picture = "twins.png"
 	name = "Carol and Lynn"

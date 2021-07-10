@@ -208,58 +208,9 @@ var/obj/manta_speed_lever/mantaLever = null
 		return ..()
 
 	Bumped(atom/AM) //This is stolen straight from the crusher, just making sure that the propellers are actually on.
-		var/tm_amt = 0
-		var/tg_amt = 0
-		var/tw_amt = 0
-		var/bblood = 0
 		if (mantaMoving == 1)
 			if (repairstate == 0)
-
-				if(istype(AM,/obj/item/scrap))
-					return
-
-				if(world.timeofday - AM.last_bumped <= 60)
-					return
-
-				if(ismob(AM))
-					var/mob/M = AM
-					for(var/obj/O in M.contents)
-						if(isobj(O))
-							tm_amt += O.m_amt
-							tg_amt += O.g_amt
-							tw_amt += O.w_amt
-							if(iscarbon(M))
-								tw_amt += 5000
-								bblood = 2
-							else if(issilicon(M))
-								tm_amt += 5000
-								tg_amt += 1000
-						qdel(O)
-					logTheThing("combat", M, null, "is ground up in one of Manta's propellers at[log_loc(src)].")
-					message_admins("[key_name(M)] is ground up in one of Manta's propellers at [log_loc(src)].")
-					M.gib()
-				else if(isobj(AM))
-					var/obj/B = AM
-					tm_amt += B.m_amt
-					tg_amt += B.g_amt
-					tw_amt += B.w_amt
-					for(var/obj/O in AM.contents)
-						if(isobj(O))
-							tm_amt += O.m_amt
-							tg_amt += O.g_amt
-							tw_amt += O.w_amt
-						qdel(O)
-				else
-					return
-				for(var/mob/M in oviewers())
-					if(M.client)
-						boutput(M, "<span class='alert'>You hear a grinding sound!</span>")
-				var/obj/item/scrap/S = new(get_turf(src))
-				S.blood = bblood
-				S.set_components(tm_amt,tg_amt,tw_amt)
-				qdel(AM)
-			//		step(S,2)
-				return
+				actions.start(new /datum/action/bar/crusher(AM), src)
 
 
 //REPAIRING:  wrench > screwdriver > crowbar > wires > welder > wrench > screwdriver > sheet > welder
@@ -355,7 +306,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 
 /obj/machinery/mantapropulsion/big
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "bigsea_propulsion"
 	important = 1
 	bound_height = 64
@@ -394,7 +345,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		icon_state = "seaheater"
 
 /obj/machinery/power/seaheater/big
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "bigheater"
 	var/lastpower = 0
 
@@ -546,7 +497,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	iconclosed = "junctionbox2"
 
 /obj/machinery/communicationstower
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	name = "Communications Tower"
 	icon_state = "commstower"
 	density = 0
@@ -588,7 +539,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			random_events.force_event("Communications Malfunction")
 
 /obj/machinery/magneticbeacon
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	name = "Magnetic Tether"
 	icon_state = "magbeacon"
 	desc = "A rather delicate magnetic tether array. It allows people to safely explore the ocean around NSS Manta while carrying a magnetic attachment point."
@@ -1603,7 +1554,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/vaultdoor
 	name = "vault door"
-	icon = 'icons/obj/96x32.dmi'
+	icon = 'icons/obj/large/96x32.dmi'
 	icon_state = "vaultdoor_closed"
 	density = 1
 	anchored = 2

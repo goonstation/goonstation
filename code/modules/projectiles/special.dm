@@ -338,7 +338,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/howitzer
 	name = "plasma howitzer"
 	sname = "plasma howitzer"
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "howitzer-shot"
 	shot_sound = 'sound/weapons/energy/howitzer_shot.ogg'
 	power = 10000 // blam = INF
@@ -348,7 +348,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_rate = 300
 	ks_ratio = 0.8
 	brightness = 2
-	projectile_speed = 28
+	projectile_speed = 32
 	impact_range = 32
 	caliber = 40
 	pierces = -1
@@ -398,7 +398,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	icon_state = "cat1"
 	dissipation_delay = 75
 	dissipation_rate = 300
-	projectile_speed = 20
+	projectile_speed = 26
 	cost = 1
 
 	var/explosive_hits = 1
@@ -691,14 +691,14 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_rate = 0
 	ks_ratio = 1
 	brightness = 2
-	projectile_speed = 1.5
+	projectile_speed = 2
 	is_magical = 1 // It passes right through them, but just for consistency
 	auto_find_targets = 0
 	min_speed = 2
 	max_speed = 2
 	goes_through_walls = 0 // It'll stop homing when it hits something, then go bouncy
 	var/max_bounce_count = 3 // putting the I in ICEE BEEYEM
-	var/weaken_length = 5 SECONDS
+	var/weaken_length = 4 SECONDS
 	var/slam_text = "The magic missile SLAMS into you!"
 	var/hit_sound = 'sound/effects/mag_magmisimpact_bounce.ogg'
 	var/cat_sound = 'sound/voice/animal/cat.ogg'
@@ -708,9 +708,13 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(istype(O) && !(hit in O.hitlist))
 			if(ismob(hit))
 				var/mob/M = hit
-				if(iswizard(M) || M.traitHolder?.hasTrait("training_chaplain") || ON_COOLDOWN(M, "magic_missiled", 1 SECOND))
+				if(iswizard(M) || M.traitHolder?.hasTrait("training_chaplain"))
 					boutput(M, "The magic missile passes right through you!")
 					. = TRUE
+				else if(ON_COOLDOWN(M, "magic_missiled", 1 SECOND))
+					boutput(M, "The magic missile passes right through you, not wishing to add insult to injury!")
+					. = TRUE
+					O.targets -= M //Stop tracking whoever we hit to prevent the projectiles orbiting them
 
 			if(isobj(hit) || (isturf(hit) && !hit.density))
 				. = TRUE
@@ -748,11 +752,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "magic minimissile"
 	sname = "magic minimissile"
 	power = 10
-	projectile_speed = 1
+	projectile_speed = 1.5
 	min_speed = 2
 	max_speed = 2
 	max_bounce_count = 2 // putting the Y in ICEE BEEYEM
-	weaken_length = 3 SECONDS
+	weaken_length = 2 SECONDS
 	slam_text = "The magic missile bumps into you!"
 
 /datum/projectile/special/homing/orbiter
@@ -864,7 +868,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spreader/tasershotgunspread //Used in Azungar's taser shotgun.
 	name = "energy bolt"
 	sname = "shotgun spread"
-	cost = 37.5
+	cost = 25
 	power = 45 //a chunky pointblank
 	ks_ratio = 0
 	damage_type = D_SPECIAL

@@ -79,7 +79,7 @@
 	name = "bio hood"
 	icon_state = "bio"
 	item_state = "bio_hood"
-	permeability_coefficient = 0.01
+	permeability_coefficient = 0.005
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "This hood protects you from harmful biological contaminants."
 	seal_hair = 1
@@ -129,7 +129,7 @@
 /obj/item/clothing/head/rad_hood
 	name = "Class II radiation hood"
 	icon_state = "radiation"
-	permeability_coefficient = 0.01
+	permeability_coefficient = 0.02
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Asbestos, right near your face. Perfect!"
 	seal_hair = 1
@@ -339,6 +339,10 @@
 						M.put_in_hand_or_drop(W) //Put it in their hand
 
 					M.visible_message("<span class='alert'><b>[M]</b>'s hat snaps open and puts \the [W] in [his_or_her(M)] [boop]!</span>")
+					var/obj/item/device/light/zippo/lighter = (locate(/obj/item/device/light/zippo) in src.contents)
+					if (lighter)
+						W.light(M, "<span class='alert'><b>[M]</b>'s hat proceeds to light \the [W] with \the [lighter], whoa.</span>")
+						lighter.firesource_interact()
 			else
 				M.show_text("Requested object missing or nonexistant!", "red")
 				return
@@ -479,6 +483,18 @@
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 2)
+
+	unequipped(mob/user)
+		..()
+		if(ON_COOLDOWN(src, "plunger_sound", 2 SECONDS)) return
+		playsound(src.loc, "sound/items/plunger_pop.ogg", 100, 1)
+		return
+
+
+	equipped(var/mob/user, var/slot)
+		..()
+		if(ON_COOLDOWN(src, "plunger_sound", 2 SECONDS)) return
+		playsound(src.loc, "sound/items/plunger_pop.ogg", 100, 1)
 
 /obj/item/clothing/head/hosberet
 	name = "HoS Beret"

@@ -9,7 +9,27 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	"Mad" = "ai_mad",\
 	"BSOD" = "ai_bsod",\
 	"Text" = "ai_text",\
-	"Blank" = "ai_blank")
+	"Blank" = "ai_blank",\
+	"Unimpressed" = "ai_unimpressed",\
+	"Baffled" = "ai_baffled",\
+	"Cheeky" = "ai_cheeky",\
+	"Silly" = "ai_silly",\
+	"Annoyed" = "ai_annoyed",\
+	"Pensive" = "ai_pensive",\
+	"Content" = "ai_content",\
+	"Tired" = "ai_tired",\
+	"Smug" = "ai_smug",\
+	"Wink" = "ai_wink",\
+	"Heart" = "ai_heart",\
+	"Triangle" = "ai_triangle",\
+	"Spooky" = "ai_spooky",\
+	"Suspicious" = "ai_eyesemoji",\
+	"Glitch" = "ai_glitch",\
+	"Eye" = "ai_eye",\
+	"Snoozing" = "ai_zzz",\
+	"Loading Bar" = "ai_loading",\
+	"Exclamation" = "ai_exclamation",\
+	"Question" = "ai_question")
 
 /mob/living/silicon/ai
 	name = "AI"
@@ -1218,7 +1238,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/process_locks()
 	if(weapon_lock)
-		src.setStatus("paralysis", 50)
+		src.setStatus("paralysis", 5 SECONDS)
 		weaponlock_time --
 		if(weaponlock_time <= 0)
 			if(src.client) boutput(src, "<span class='alert'><B>Hibernation Mode Timed Out!</B></span>")

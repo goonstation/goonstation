@@ -193,11 +193,12 @@
 			while(putamount > 0)
 				putamount--
 				new C.comtype(S)
-			invoice.info += "<br>Final Cost of Goods: [total_price] credits."
 
-			wagesystem.shipping_budget -= total_price
+		invoice.info += "<br>Final Cost of Goods: [total_price] credits."
 
-			src.wipe_cart(1) //This tells wipe_cart to not increase the amount in stock when clearing it out.
+		wagesystem.shipping_budget -= total_price
+
+		src.wipe_cart(1) //This tells wipe_cart to not increase the amount in stock when clearing it out.
 		src.currently_selling = 0 //At this point the shopping cart has been processed
 		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()

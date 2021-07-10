@@ -726,7 +726,7 @@ PIPE BOMBS + CONSTRUCTION
 								W.layer = HUD_LAYER
 						else
 							qdel(W)
-				else
+				else if (!issilicon(user)) //borgs could drop all their tools/internal items trying to pull one
 					user.unequip_all()
 
 				for (var/mob/N in viewers(user, null))
@@ -938,6 +938,9 @@ PIPE BOMBS + CONSTRUCTION
 		SPAWN_DBG(0)
 			src.beep(10)
 		return ..()
+
+//dummy type for compile
+/obj/item/gimmickbomb/grenyanda/inert
 
 /////////////////////////////// Fireworks ///////////////////////////////////////
 
@@ -1187,8 +1190,22 @@ PIPE BOMBS + CONSTRUCTION
 
 			location.hotspot_expose(700, 125)
 
-			explosion(src, location, src.expl_devas, src.expl_heavy, src.expl_light, src.expl_flash)
+			//Explosive effect for breaching charges only
+			if (!(istype(src, /obj/item/breaching_charge/mining)))
+				// NT charge shake
+				if (expl_heavy)
+					for(var/client/C in clients)
+						if(C.mob && (C.mob.z == src.z))
+							shake_camera(C.mob, 8, 24) // remove if this is too laggy
+							playsound(C.mob, explosions.distant_sound, 100, 0)
+							new /obj/effects/explosion (src.loc)
+				else
+					playsound(src.loc, pick(sounds_explosion), 75, 1)
+					new/obj/effect/supplyexplosion(src.loc)
+			else
+				playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
 
+			explosion(src, location, src.expl_devas, src.expl_heavy, src.expl_light, src.expl_flash)
 			// Breaching charges should be, you know, actually be decent at breaching walls and windows (Convair880).
 			for (var/turf/simulated/wall/W in range(src.expl_range, location))
 				if (W && istype(W) && !location.loc:sanctuary)
@@ -1268,7 +1285,7 @@ PIPE BOMBS + CONSTRUCTION
 				qdel(src)
 				return
 
-			playsound(location, "sound/effects/bamf.ogg", 50, 1)
+			playsound(location, "sound/effects/bamf.ogg", 100, 0.5)
 			src.invisibility = 101
 
 			for (var/turf/T in range(src.expl_range, location))
@@ -1409,15 +1426,15 @@ PIPE BOMBS + CONSTRUCTION
 			if (!ok)
 				//There is less room for explosive material when you use item mods
 				var/max_allowed = 20 - item_mods.len * 5
-				boutput(user, "<span class='notice'>You fill the pipe with [max_allowed] units of the reagents.</span>")
 				src.state = 3
 				var/avg_volatility = 0
 				src.reagents = new /datum/reagents(max_allowed)
 				src.reagents.my_atom = src
 				W.reagents.trans_to(src, max_allowed)
+				boutput(user, "<span class='notice'>You fill the pipe with [src.reagents.total_volume] units of the reagents.</span>")
 				for (var/id in src.reagents.reagent_list)
 					var/datum/reagent/R = src.reagents.reagent_list[id]
-					avg_volatility += R.volatility * R.volume / src.reagents.total_volume
+					avg_volatility += R.volatility * R.volume / src.reagents.maximum_volume
 
 				qdel(src.reagents)
 				src.reagents = null

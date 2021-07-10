@@ -678,6 +678,30 @@
 		..()
 		setMaterial(getMaterial("coral"))
 
+// lead wall resprite by skeletonman0.... hooray for smoothwalls!
+ABSTRACT_TYPE(turf/unsimulated/wall/auto/lead)
+/turf/unsimulated/wall/auto/lead
+	name = "lead wall"
+	icon = 'icons/turf/walls_lead.dmi'
+	light_mod = "wall-"
+	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	connect_overlay = 1
+	connect_diagonal = 1
+	connects_to = list(/turf/unsimulated/wall/auto/lead, /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/,
+	/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom)
+	connects_with_overlay = list(/obj/machinery/door, /obj/window)
+
+/turf/unsimulated/wall/auto/lead/blue
+	icon_state = "mapiconb"
+	mod = "leadb-"
+
+/turf/unsimulated/wall/auto/lead/gray
+	icon_state = "mapicong"
+	mod = "leadg-"
+
+/turf/unsimulated/wall/auto/lead/white
+	icon_state = "mapiconw"
+	mod = "leadw-"
 
 /datum/action/bar/icon/wall_tool_interact
 	id = "wall_tool_interact"
@@ -715,7 +739,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
-		if (istype(source) && (the_tool != source.equipped() || isrobot(source)))
+		if (istype(source) && (the_tool != source.equipped()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

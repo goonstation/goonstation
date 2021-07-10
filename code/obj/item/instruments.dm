@@ -116,6 +116,7 @@
 	note_time = 200
 	affect_fun = 15 // a little higher, why not?
 	module_research = list("audio" = 14) // I don't think this is even relevant without being able to pick up the thing and also the research thing isn't even enabled atm but well. why not?
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 
 	attack_hand(mob/user as mob)
 		src.add_fingerprint(user)
@@ -261,6 +262,11 @@
 				sounds_instrument += "sound/musical_instruments/guitar/guitar_[i].ogg"
 		..()
 
+	attack(mob/M as mob, mob/user as mob)
+		if(ismob(M))
+			playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
+		..()
+
 
 /* -------------------- Bike Horn -------------------- */
 
@@ -281,6 +287,11 @@
 
 	show_play_message(mob/user as mob)
 		return
+
+	attack(mob/M as mob, mob/user as mob)
+		if(ismob(M))
+			playsound(src, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
+		..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (!istype(W, /obj/item/parts/robot_parts/arm))
