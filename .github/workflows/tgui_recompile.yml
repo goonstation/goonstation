@@ -39,7 +39,7 @@ jobs:
       - name: Conflict Resolution
         if: ${{ github.event.client_payload.mergeable == false }}
         run: |
-          git remote add base https://github.com/${{ github.event.client_payload.pr_head_full_repo_name }}.git
+          git remote add base https://github.com/${{ github.repository }}.git
           git fetch base ${{ env.DEFAULT_BRANCH }}
           git merge -s ours --no-commit base/${{ env.DEFAULT_BRANCH }}
           git checkout base/${{ env.DEFAULT_BRANCH }} browserassets/tgui
