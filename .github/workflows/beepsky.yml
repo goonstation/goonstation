@@ -80,17 +80,17 @@ jobs:
         run: |
           tools/ci/dm.sh -DCIBUILD goonstation.dme
 
-      - name: Prepare Artifacts
-        run: |
-          mkdir artifacts
-          cp goonstation.dmb artifacts
-          cp goonstation.rsc artifacts
+      # - name: Prepare Artifacts
+      #   run: |
+      #     mkdir artifacts
+      #     cp goonstation.dmb artifacts
+      #     cp goonstation.rsc artifacts
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v1
-        with:
-          name: DMB + RSC
-          path: ${{github.workspace}}/artifacts
+      # - name: Upload Artifacts
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: DMB + RSC
+      #     path: ${{github.workspace}}/artifacts
 
 
   compile_ass:
