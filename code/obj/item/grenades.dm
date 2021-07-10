@@ -1426,15 +1426,15 @@ PIPE BOMBS + CONSTRUCTION
 			if (!ok)
 				//There is less room for explosive material when you use item mods
 				var/max_allowed = 20 - item_mods.len * 5
-				boutput(user, "<span class='notice'>You fill the pipe with [max_allowed] units of the reagents.</span>")
 				src.state = 3
 				var/avg_volatility = 0
 				src.reagents = new /datum/reagents(max_allowed)
 				src.reagents.my_atom = src
 				W.reagents.trans_to(src, max_allowed)
+				boutput(user, "<span class='notice'>You fill the pipe with [src.reagents.total_volume] units of the reagents.</span>")
 				for (var/id in src.reagents.reagent_list)
 					var/datum/reagent/R = src.reagents.reagent_list[id]
-					avg_volatility += R.volatility * R.volume / src.reagents.total_volume
+					avg_volatility += R.volatility * R.volume / src.reagents.maximum_volume
 
 				qdel(src.reagents)
 				src.reagents = null
