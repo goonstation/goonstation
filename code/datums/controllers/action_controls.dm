@@ -159,8 +159,13 @@ var/datum/action_controller/actions
 				A.vis_contents += bar
 				A.vis_contents += border
 			if (place_to_put_bar)
-				target_bar = SEMI_DEEP_COPY(bar)
-				target_border = SEMI_DEEP_COPY(border)
+				target_bar = unpool(/obj/actions/bar)
+				target_border = unpool(/obj/actions/border)
+				target_border.set_icon_state(src.border_icon_state)
+				target_bar.set_icon_state(src.bar_icon_state)
+				target_bar.pixel_y = 5
+				target_bar.pixel_x = 0
+				target_border.pixel_y = 5
 				place_to_put_bar.vis_contents += target_bar
 				place_to_put_bar.vis_contents += target_border
 
