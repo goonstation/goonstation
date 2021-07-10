@@ -715,6 +715,13 @@
 	/obj/item/spacecash/thousand,\
 	/obj/item/gun/kinetic/derringer/empty)
 
+/obj/item/storage/secure/ssafe/shooting_range //prefab safe
+	configure_mode = 0
+	random_code = 1
+	spawn_contents = list(/obj/item/spacecash/thousand,\
+	/obj/item/gun/energy/raygun,\
+	/obj/item/paper/shooting_range_note2)
+
 /obj/item/storage/secure/ssafe/marsvault
 	name = "secure vault"
 	configure_mode = 0

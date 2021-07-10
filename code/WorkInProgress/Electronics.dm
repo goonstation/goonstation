@@ -874,11 +874,14 @@
 		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<B>[user.name]</B> deconstructs [target].")
 
-
 		var/obj/item/electronics/frame/F = new(get_turf(target))
 		F.name = "[target.name] frame"
-		F.deconstructed_thing = target
-		O.set_loc(F)
+		if(O.deconstruct_flags & DECON_DESTRUCT)
+			F.store_type = O.type
+			qdel(O)
+		else
+			F.deconstructed_thing = target
+			O.set_loc(F)
 		F.viewstat = 2
 		F.secured = 2
 		F.icon_state = "dbox_big"
@@ -994,19 +997,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null)
+		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null || locate(/mob/living) in O)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null)
+		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null || locate(/mob/living) in O)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null)
+		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null || locate(/mob/living) in O)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (ismob(owner))

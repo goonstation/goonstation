@@ -369,7 +369,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	material_prints = "insulative fibers"
 	can_be_charged = 1
 	max_uses = 4
-	permeability_coefficient = 0.5
 
 	setupProperties()
 		..()

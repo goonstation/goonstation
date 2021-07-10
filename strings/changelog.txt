@@ -1,4 +1,291 @@
 
+(t)fri jul 09 21
+(u)Gerhazo
+(p)5359
+(e)|
+(+)Back-end overhaul to how sechuds and prodocs work. This shouldn't be noticeable from a player standpoint.
+(t)thu jul 08 21
+(u)BatElite
+(p)3796
+(e)🆕🔄🎨|feature, rework, sprites
+(+)The lamp manufacturer can now make and remove fixtures!
+(u)Tarmunora
+(e)⚖|balance
+(+)Mousetrap pies and graviton accelerators now use the person who sets them up as the owner of the item throw instead of the person who triggeres them.
+(u)TTerc
+(p)5420
+(e)🆕|feature
+(+)Frogpeople can now chairflip further distance.
+(u)AmazingDragons
+(p)5234
+(e)⚖|balance
+(+)Changes the minimum, maximum, and default times (in seconds) on the nuclear charge to 120, 600, and 180 respectively.
+(u)Zonespace
+(p)5385
+(e)⚖🆕🎨|balance, feature, sprites
+(*)You may now eject telecrystals from uplinks, to be put in any other unlocked uplink.
+(*)There is also an explosive version of these telecrystals, for when you want to be a little less cooperative.
+(u)DisturbHerb
+(p)4739
+(e)🆕🎨|feature, sprites
+(+)PDAs can now hold pens. And cigarettes. Because it's funny.
+(u)Flappybat
+(p)5281
+(e)⚖|balance
+(+)Breaching charges now have an explosion effect and sound.
+(u)Walpvrgis
+(p)5384
+(e)🆕🎨|feature, sprites
+(*)Adds the following recipes for Chefs looking to do some baking; baguette, garlic bread, cheesy garlic bread, fairy bread, croissant, pain au chocolat, apple danish, cherry danish, blueberry danish and the cannadanish!
+(t)wed jul 07 21
+(u)Zonespace
+(p)5058
+(e)⛔|removal
+(+)Synth-O-Matic modules are no longer sold by merchants.
+(u)Ikea
+(p)4818
+(e)🗺🎨|mapping, sprites
+(*)Molitz B has more distinct indicators for if it's producing agent b and oxygen or just oxygen. Explosions near crystals leads to resonance, increasing the total amount of times Molitz can produce gas. Molitz B gas output has been overall buffed. Amount of Molitz B obtainable from mining has been nerfed.
+(t)tue jul 06 21
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(+)Tweak botany mutations: add insulin to green grapes, swap synaptizine and methamphetamine mutations, replace erebite mutation with uqill
+(+)Change botany base reagents: Light lotus produces luminol instead of omnizine, melons produce watermelon juice instead of water
+(t)mon jul 05 21
+(u)Emily
+(e)⚖🆕|balance, feature
+(*)New QGP Recipe and effect. Happy hunting. Nerds.
+(u)Arthur Holiday
+(p)5364
+(e)⚖🆕|balance, feature
+(+)You can now deconstruct multiple chairs at a time.
+(u)Lythine
+(p)5175
+(e)⚖|balance
+(*)Rathen's Secret no longer weakens. Magic Missile's weaken time slightly shortened.
+(u)Tarmunora
+(e)⚖|balance
+(*)Acid takes 5 seconds to melt stuff
+(t)sun jul 04 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Sec loadout weapons all start with 200u cells, and sec pouch contains a 200u cell. Power costs of wavegun, tasershotgun, taser SMG adjusted to compensate
+(u)Lythine
+(p)5172
+(e)🆕🗺🎨|feature, mapping, sprites
+(+)Adds a small ranch space prefab.
+(t)sat jul 03 21
+(u)Tarmunora
+(p)5368
+(e)⚖|balance
+(+)disarm stam cost 10 -> 30
+(+)base disarm chance 37% -> 40%
+(+)Disarm chance scaled down to 50% of current (20%) at targets with 200 or more stamina, and linerally scaled to current value (40%) on targets with 100 or less.  Blocking prevents disarm (not shovedown though), at the cost of (10) stamina if the disarm would have succeeded
+(+)Disarm targets all held items at once
+(u)DimWhat
+(p)5166
+(e)🎨|sprites
+(+)Made some sprite changes to the HoP uniform and dress as well as the HoS Dress.
+(u)TTerc
+(p)5362
+(e)🆕|feature
+(+)Added colorful backpacks and satchels to uniform manufacturer.
+(u)Kubius
+(p)5365
+(e)🆕🗺|feature, mapping
+(*)Atlas' mining department and main pod bay have received a significant overhaul, including the opening of the main pod bay, the arc smelter, and the merchant docks to public access.
+(u)Flappybat
+(p)5374
+(e)⚖|balance
+(+)Allow walking in clown shoes without slipping and added a cooldown to prevent chain slips.
+(u)zjdtmkhzt
+(p)5217
+(e)⚖🆕|balance, feature
+(+)Surgery type artifacts can now replace all kinds of organs.
+(u)zjdtmkhzt
+(p)5367
+(e)|
+(+)Buddies should be able to rack the riot shotgun now.
+(t)fri jul 02 21
+(u)UnfunnyPerson
+(p)5305
+(e)⚖|balance
+(+)Frog Flu progresses much slower
+(u)Tarmunora
+(e)⚖|balance
+(*)Single tread leg blocks lying too
+(t)thu jul 01 21
+(u)112358sam
+(p)5345
+(e)🐛|bug
+(+)Welding fuel tanks only refill welding tools if they contain welding fuel.
+(u)MarkNstein
+(p)2152
+(e)⚖🎨|balance, sprites
+(*)Entering chutes now has an animation and action bar. Chute-entry has been made faster.
+(u)BatElite
+(p)5293
+(e)⚖|balance
+(+)Miniature bibles are no longer visible in-hand, nor will they spare atheists.
+(u)Arthur Holiday
+(p)5311
+(e)⚖|balance
+(+)The Head of Security does not get a taser at roundstart anymore.
+(u)BatElite
+(p)5294
+(e)|
+(+)Emagging cyborgs no longer randomly fails.
+(t)wed jun 30 21
+(u)112358sam
+(p)5140
+(e)🆕🗺|feature, mapping
+(+)QM consoles and supply request consoles are now constructable.
+(+)Added QM console and supply request circuitboards to tech storage for current maps.
+(u)UnfunnyPerson
+(p)5318
+(e)⚖|balance
+(+)Laser Rifles now require more difficult materials.
+(u)Ryumi
+(p)5093
+(e)🗺|mapping
+(+)Significantly expanded Donut 3's Ranch
+(u)112358sam
+(p)5194
+(e)|
+(+)Borgs and AI can now see packet sniffer device output and set filters.
+(u)112358sam
+(p)5003
+(e)🆕🗺|feature, mapping
+(+)Makes the quantum telescope console constructable.
+(+)Adds the new quantum telescope circuit board to tech storage and the mining outpost.
+(u)DimWhat
+(p)5286
+(e)⚖🗺|balance, mapping
+(+)Removed the space proofness of the snow suit and altered its stats.
+(u)Walpvrgis and BatElite
+(p)5300
+(e)🎨|sprites
+(*)AI players now have 20 new faces to choose from, so you can more effectively simulate just how disappointed you are in the crew.
+(t)tue jun 29 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Smoke and foam reactions will only succeed when reacted from "open" containers (e.g.: beakers, drinkss, puddles, etc) and will fail from closed containers (pills, mobs, foam-tiles, etc)
+(u)Arthur Holiday
+(p)5307
+(e)⚖|balance
+(+)If your gloves have atleast 7% heat resistance, patting out people on fire won't damage you and you will be 2x more effective at it
+(t)mon jun 28 21
+(u)Flappybat
+(p)5245
+(e)🆕|feature
+(+)Scientists now start with a random pen or pencil. See if you get the rare red pen!
+(t)sat jun 26 21
+(u)Penny
+(u)Tarmunora
+(e)⚖|balance
+(+)Weldingtools now use 2 fuel each time you hit someone and have an improved special attack.
+(p)5168
+(e)🗺|mapping
+(*)Improves the layout of cog1 mechanic's lab and adds equipment and a data closet
+(t)fri jun 25 21
+(u)Arthur Holiday
+(p)5036
+(e)🆕🎨|feature, sprites
+(*)Added Customizable banners, use cloth on a wall to make one, color and draw on it with crayons.
+(u)Flourish
+(+)There are now buttons for adjusting skintone in character setup.
+(u)Flappybat
+(p)5267
+(e)⚖|balance
+(*)Made doors half as strong, you can now break them this century. Explosive/fire/projectile scaling is adjusted so it will still take the same number of bullets to destroy a door.
+(u)Azrun
+(p)5244
+(e)⚖🐛|balance, bug
+(+)Reduced power output from solar panels.
+(u)Arthur Holiday
+(p)5265
+(e)⚖🐛|balance, bug
+(+)The werewolf feast ability now gets interrupted if the target stands up.
+(u)Kubius
+(p)5274
+(e)🐛🗺|bug, mapping
+(*)Kondaru detective's office front door is once again detective-only with remote open. Also made maintenance near the Foundry more construction-friendly and added a sink/drain to the Morgue.
+(u)Flappybat
+(p)5262
+(e)⚖|balance
+(+)Nuclear bomb is now EMP proof.
+(t)thu jun 24 21
+(u)zjdtmkhzt
+(p)5237
+(e)⚖🆕|balance, feature
+(+)Custom sandwiches now combine the healing and hunger restore of their ingredients.
+(u)Zonespace
+(p)5263
+(e)⚖⛔|balance, removal
+(*)Prison Loafers no longer have nugget mode.
+(t)wed jun 23 21
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Crusher now has an actionbar
+(u)Walpvrgis
+(p)5155
+(e)🆕🎨|feature, sprites
+(+)Two new backpacks are now able to be purchased from Geoff Honkington; one is a teddy bear and one is Bread.
+(t)tue jun 22 21
+(u)Sovexe
+(p)5246
+(e)🆕|feature
+(+)Repairing ruptured atmos pipes now only ever takes one successful weld, and has an action bar.
+(u)Sovexe
+(p)5231
+(e)🐛🆕|bug, feature
+(+)Made changes to pathfinding procs to resolve the chicken fence issues.
+(u)Zonespace
+(p)4933
+(e)🆕🗺|feature, mapping
+(*)Pod Wars team wins and deaths are now tracked, with a structure containing the stats being half-buried in an asteroid, near the Reliant.
+(u)BatElite
+(p)5089
+(e)🆕|feature
+(+)The backpacks and satchels in personal lockers now come in a small variety of random colours!
+(u)Penny
+(p)5218
+(e)🐛|bug
+(+)Networked equipment can finally now be re-deployed onto new data terminals
+(u)Flappybat
+(p)5082
+(e)|
+(+)Every scientist now starts with a pen.
+(u)Tarmunora
+(e)⚖🆕|balance, feature
+(*)Replaced 40mmPBR ammo from sec utility purchases with a 40mm Paint Marker round, which will paint the target orange and cause them to leave a trail of paint behind them. 5 rounds/box.
+(+)Ammotech has more 40mmPBR ammo (5 boxes of 5 rounds each)
+(+)Drinking space cleaner no longer washes off blood/etc (?????)
+(t)mon jun 21 21
+(u)Zonespace
+(p)5225
+(e)⚖🆕|balance, feature
+(+)NARCS can now be scanned by a Syndicate Device Analyzer.
+(u)Flappybat & Gannets
+(p)5125
+(e)🆕🎨|feature, sprites
+(*)Replaced the ocular prothesis (SecHUD) kit from surplus crates with a fully automatic implanter.
+(u)TTerc
+(p)5219
+(e)|
+(+)You can now examine the broken APC to learn how to fix it. Also added actionbars for all the APC fixing steps that require the player to stand still.
+(u)Flourish
+(e)🆕|feature, mapping
+(*)Rearranged Oshan a little, primarily the area surrounding the bar. Let me know what you think.
+(t)sun jun 20 21
+(u)eX.n0x, Sovexe, & ZeWaka
+(p)5141
+(e)🐛|bug
+(+)The rad blowout event no longer changes access levels on non-maintenance doors.
+(u)Sasskp
+(p)5214
+(e)🐛|bug
+(+)Added new layer for sheaths so they appear above overcoats
 (t)fri jun 18 21
 (u)DimWhat
 (p)5200
@@ -185,7 +472,7 @@
 (+)Onagadori; Japanese long-tailed chickens. Peanut feed. [Gen 1] [From White Chickens]
 (+)Shieldmaidhens; these armored chickens need a high-iron diet to maintain their natural armor. [Gen 2] [From Onagadori]
 (+)Phoenix; Love will set your heart on fire. Try breeding two appropriate chickens! [Gen 3]
-(+)Dreamsicle Chickens; Sweet ice cream. Try breeding two appropriate chickens! [Gen 3] 
+(+)Dreamsicle Chickens; Sweet ice cream. Try breeding two appropriate chickens! [Gen 3]
 (u)112358sam
 (p)5027
 (e)|

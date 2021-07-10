@@ -351,3 +351,84 @@
 		..()
 		src.pixel_x += rand(-3,3)
 		src.pixel_y += rand(-3,3)
+
+/obj/item/baguette
+	name = "baguette"
+	icon = 'icons/obj/foodNdrink/food_bread.dmi'
+	icon_state = "baguette"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	throwforce = 1
+	w_class = W_CLASS_NORMAL
+	throw_speed = 4
+	throw_range = 5
+	desc = "Hon hon hon, oui oui! Needs to be cut into slices before eating."
+	stamina_damage = 5
+	stamina_cost = 1
+	var/slicetype = /obj/item/reagent_containers/food/snacks/breadslice
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_SETUP(BLOCK_ROD)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/knife/butcher))
+			if(user.bioHolder.HasEffect("clumsy") && prob(50))
+				user.visible_message("<span class='alert'><b>[user]</b> fumbles and jabs \himself in the eye with [W].</span>")
+				user.change_eye_blurry(5)
+				user.changeStatus("weakened", 3 SECONDS)
+				JOB_XP(user, "Clown", 2)
+				return
+
+			var/turf/T = get_turf(src)
+			user.visible_message("[user] cuts [src] into slices. Magnifique!", "You cut [src] into slices. Magnifique!")
+			var/makeslices = 6
+			while (makeslices > 0)
+				new slicetype (T)
+				makeslices -= 1
+			qdel (src)
+		else ..()
+
+	custom_suicide = 1
+	suicide(var/mob/user as mob)
+		if (!src.user_can_suicide(user))
+			return 0
+		user.visible_message("<span class='alert'><b>[user] attempts to beat [him_or_her(user)]self to death with the baguette, oui oui, but fails! Hon hon hon!</b></span>")
+		user.suiciding = 0
+		return 1
+
+/obj/item/reagent_containers/food/snacks/garlicbread
+	name = "garlic bread"
+	desc = "Garlic, butter and bread. Usually seen alongside pasta and pizza."
+	icon = 'icons/obj/foodNdrink/food_bread.dmi'
+	icon_state = "garlicbread"
+	amount = 2
+	heal_amt = 4
+	food_color = "#ffe87a"
+	initial_volume = 20
+	initial_reagents = list("water_holy"=20)
+	food_effects = list("food_tox","food_hp_up_big","food_bad_breath")
+
+/obj/item/reagent_containers/food/snacks/garlicbread_ch
+	name = "cheesy garlic bread"
+	desc = "Garlic, butter, bread AND cheese. Usually seen alongside pasta and pizza."
+	icon = 'icons/obj/foodNdrink/food_bread.dmi'
+	icon_state = "garlicbread_ch"
+	amount = 2
+	heal_amt = 4
+	food_color = "#ffe87a"
+	initial_volume = 20
+	initial_reagents = list("water_holy"=10,"cheese"=10)
+	food_effects = list("food_tox","food_hp_up_big","food_bad_breath","food_energized")
+
+/obj/item/reagent_containers/food/snacks/fairybread
+	name = "fairy bread"
+	desc = "A traditional delicacy of Australian origin."
+	icon = 'icons/obj/foodNdrink/food_bread.dmi'
+	icon_state = "fairybread"
+	amount = 2
+	heal_amt = 2
+	food_color = "#ffcdfb"
+	initial_volume = 10
+	initial_reagents = list("bread"=5,"sugar"=5)
+	food_effects = list("food_refreshed_big")

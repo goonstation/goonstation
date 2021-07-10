@@ -21,6 +21,7 @@ proc/build_syndi_buylist_cache()
 	var/desc = null
 	var/list/job = null // For job-specific items.
 	var/datum/objective/objective = null // For objective-specific items. Needs to be a type e.g. /datum/objective/assassinate.
+	var/telecrystal = null //for the telecrystal-only category
 	var/list/blockedmode = null // For items that can't show up in certain modes (affects uplink and surplus crates). Defined by the game mode datum (checks for children too).
 	var/list/exclusivemode = null
 	var/vr_allowed = 1
@@ -190,6 +191,12 @@ proc/build_syndi_buylist_cache()
 	desc = "A powerful melee weapon, crafted using the latest in applied photonics! When inactive, it is small enough to fit in a pocket!"
 	not_in_crates = 1
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
+
+	run_on_spawn(obj/item/sword/stabby, mob/living/owner, in_surplus_crate=FALSE) //Nukies get red ones
+		if (isnukeop(owner))
+			stabby.light_c.set_color(255, 0, 0)
+			stabby.bladecolor = "R"
+		return
 
 /datum/syndicate_buylist/generic/katana
 	name = "Katana"
@@ -1007,9 +1014,9 @@ This is basically useless for anyone but miners.
 // changed to sechuds cause why not - haine
 /datum/syndicate_buylist/surplus/cybereye_kit_sechud
 	name = "Ocular Prosthesis Kit (SecHUD)"
-	item = /obj/item/storage/box/prosthesis_kit/eye_sechud
+	item = /obj/item/device/ocular_implanter
 	cost = 1
-	desc = "A pair of surplus cybereyes that can access the Security HUD system. Operating table not included."
+	desc = "A pair of surplus cybereyes that can access the Security HUD system. Comes with a convenient but terrifying implanter."
 	blockedmode = list(/datum/game_mode/revolution)
 
 /datum/syndicate_buylist/surplus/holographic_disguiser
@@ -1032,6 +1039,38 @@ This is basically useless for anyone but miners.
 	cost = 1
 	desc = "A terrifying grenade containing a potent nerve gas. Try not to get caught in the smoke."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+
+/////////////////////////////////////////// Telecrystals //////////////////////////////////////////////////
+
+/datum/syndicate_buylist/generic/telecrystal
+	name = "Pure Telecrystal"
+	item = /obj/item/uplink_telecrystal
+	cost = 1
+	desc = "A pure Telecrystal, only able to be found miles deep underground, on Earth. Used as currency in Syndicate Uplinks."
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft)
+	telecrystal = TRUE
+	vr_allowed = 0
+	not_in_crates = 1
+	New()
+		. = ..()
+		name = "[syndicate_currency]"
+	run_on_spawn(var/obj/item/uplink_telecrystal/tc, mob/living/owner, in_surplus_crate)
+		tc.name = "[syndicate_currency]"
+
+/datum/syndicate_buylist/generic/trick_telecrystal
+	name = "Trick Pure Telecrystal"
+	item = /obj/item/explosive_uplink_telecrystal
+	cost = 1
+	desc = "A small, highly volatile explosive designed to look like a pure Telecrystal."
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/nuclear)
+	telecrystal = TRUE
+	vr_allowed = 0
+	not_in_crates = 1
+	New()
+		. = ..()
+		name = "Trick [syndicate_currency]"
+	run_on_spawn(var/obj/item/uplink_telecrystal/tc, mob/living/owner, in_surplus_crate=FALSE)
+		tc.name = "[syndicate_currency]"
 
 /////////////////////////////////////////////// Disabled items /////////////////////////////////////////////////////
 

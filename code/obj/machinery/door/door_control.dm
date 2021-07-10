@@ -5,6 +5,8 @@
 	desc = "A remote control switch for a door."
 	var/id = null
 	var/timer = 0
+	var/cooldown = 0 SECONDS
+	var/inuse = FALSE
 	anchored = 1.0
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
@@ -399,7 +401,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/door_control/attack_hand(mob/user as mob)
-	if(status & (NOPOWER|BROKEN))
+	if((status & (NOPOWER|BROKEN)) || inuse)
 		return
 
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
@@ -446,6 +448,11 @@
 					SPAWN_DBG(src.timer)
 						M.operating = 0
 			M.setdir()
+
+	if(src.cooldown)
+		inuse = TRUE
+		sleep(src.cooldown)
+		inuse = FALSE
 
 	SPAWN_DBG(1.5 SECONDS)
 		if(!(status & NOPOWER))

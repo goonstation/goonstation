@@ -134,8 +134,15 @@ var/list/datum/contextAction/globalContextActions = null
 
 	showButtons(list/buttons, atom/target)
 		var/atom/screenCenter = get_turf(usr.client.virtual_eye)
-		var/screenX = (screenCenter.x - target.x) * -1 * 32
-		var/screenY = (screenCenter.y - target.y) * -1 * 32
+		var/screenX
+		var/screenY
+		if (!isturf(target.loc)) //hackish in-inventory compatability for lamp manufacturer, I don't understand HUD coordinate stuff
+			var/turf/temp = get_turf(target)
+			screenX = (screenCenter.x - temp.x) * -1 * 32
+			screenY = (screenCenter.y - temp.y) * -1 * 32
+		else
+			screenX = (screenCenter.x - target.x) * -1 * 32
+			screenY = (screenCenter.y - target.y) * -1 * 32
 
 		var/anglePer = round(360 / buttons.len)
 

@@ -340,7 +340,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			var/list/data
 			try
 				data = apiHandler.queryAPI("vpncheck", list("ip" = src.address, "ckey" = src.ckey), 1, 1, 1)
-
+				var/result = dpi(data)
 				// Goonhub API error encountered
 				if (data["error"])
 					logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [data["error"]]")
@@ -348,7 +348,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 				// Successful Goonhub API query
 				else
-					if (data["whitelisted"])
+					if (result == 2 || data["whitelisted"])
 						// User is explicitly whitelisted from VPN checks, ignore
 						global.vpn_ip_checks["[src.address]"] = false
 
@@ -366,7 +366,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 						// Successful VPN check
 						// IP is a known VPN, cache locally and kick
-						else if ((data["vpn"] == true || data["tor"] == true) && data["fraud_score"] >= 85)
+						else if (result || ((data["vpn"] == true || data["tor"] == true) && data["fraud_score"] >= 65))
 							global.vpn_ip_checks["[src.address]"] = true
 							addPlayerNote(src.ckey, "VPN Blocker", "[src.address] attempted to connect via vpn or proxy. Info: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
 							logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
@@ -1476,6 +1476,7 @@ if([removeOnFinish])
 </body>
 </html>
 	"}, "window=pregameBrowser")
+/client/proc/dpi(data)
 /world/proc/showCinematic(var/name, var/removeOnFinish = 0)
 	for(var/client/C)
 		C.showCinematic(name, removeOnFinish)

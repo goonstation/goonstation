@@ -217,6 +217,45 @@
 					M.HealDamage("All", heal_brute, heal_burn, heal_tox)
 			return
 
+
+	acided
+		id = "acid"
+		var/filter
+		var/leave_cleanable = 0
+		var/mob_owner = null
+
+		onAdd(optional=null)
+			. = ..()
+			var/list/statusargs = optional
+			owner.filters += filter(type="displace", icon=icon('icons/effects/distort.dmi', "acid"), size=0)
+			src.filter = owner.filters[length(owner.filters)]
+			if(length(statusargs))
+				src.leave_cleanable = statusargs["leave_cleanable"]
+				src.mob_owner = statusargs["mob_owner"]
+			owner.color = list(0.8, 0, 0,\
+								0, 0.8, 0,\
+								0, 0, 0.8,\
+								0.1, 0.4, 0.1)
+
+			animate(filter, size=8, time=duration, easing=SINE_EASING)
+
+		onRemove()
+			. = ..()
+			owner.filters -= filter
+			filter = null
+			if(src.leave_cleanable)
+				var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,get_turf(owner))
+				I.desc = "Looks like this was \an [owner] some time ago."
+
+			if(src.mob_owner && owner.loc == src.mob_owner)
+				var/obj/item/clothing/C = owner
+				var/mob/M = mob_owner
+				C.dropped(M)
+				M.u_equip(C)
+			for(var/mob/M in AIviewers(5, owner))
+				boutput(M, "<span class='alert'>\the [owner] melts.</span>")
+			qdel(owner)
+
 	simplehot/stimulants
 		id = "stimulants"
 		name = "Stimulants"
@@ -1587,3 +1626,47 @@
 				if(how_miasma > 4)
 					. += " You might get sick."
 				#endif
+
+/datum/statusEffect/dripping_paint
+	id = "marker_painted"
+	name = "Dripping with Paint"
+	desc = "You're leaving behind a trail of paint!"
+	icon_state = "painted"
+
+
+	onAdd(optional)
+		. = ..()
+		var/color2 = list(
+			0.5, 0, 0,
+			0, 0.5, 0,
+			0, 0, 0.5,
+			0.5, 0.25, 0.0625)
+		var/oldcol = owner.color
+		owner.color = color2
+		owner.onVarChanged("color", oldcol, color2)
+		if(istype(owner, /mob/living))
+			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/track_paint)
+
+	onRemove()
+		. = ..()
+		if(istype(owner, /mob/living))
+			UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+
+
+	proc/track_paint(mob/living/M, oldLoc, direct)
+		var/turf/T = get_turf(M)
+		var/obj/decal/cleanable/paint/P
+		if (T.messy > 0)
+			P = locate(/obj/decal/cleanable/paint) in T
+		if(!P)
+			P = make_cleanable(/obj/decal/cleanable/paint, T)
+
+		var/list/states = M.get_step_image_states()
+
+		if (states[1] || states[2])
+			if (states[1])
+				P.create_overlay(states[1], "#ff8820", direct, 'icons/effects/blood.dmi')
+			if (states[2])
+				P.create_overlay(states[2], "#ff8820", direct, 'icons/effects/blood.dmi')
+		else
+			P.create_overlay("smear2", "#ff8820", direct, 'icons/effects/blood.dmi')
