@@ -1,5 +1,10 @@
 
 (t)sat jul 10 21
+(u)112358sam
+(p)5193
+(e)📄|tgui
+(+)Slot machines use bank account funds.
+(+)ATMs no longer withdraw to and deposit from ID cards.
 (u)Penny
 (p)5055
 (e)🆕|feature
