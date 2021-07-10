@@ -1,5 +1,47 @@
 
+(t)fri jul 09 21
+(u)Gerhazo
+(p)5359
+(e)|
+(+)Back-end overhaul to how sechuds and prodocs work. This shouldn't be noticeable from a player standpoint.
+(t)thu jul 08 21
+(u)BatElite
+(p)3796
+(e)🆕🔄🎨|feature, rework, sprites
+(+)The lamp manufacturer can now make and remove fixtures!
+(u)Tarmunora
+(e)⚖|balance
+(+)Mousetrap pies and graviton accelerators now use the person who sets them up as the owner of the item throw instead of the person who triggeres them.
+(u)TTerc
+(p)5420
+(e)🆕|feature
+(+)Frogpeople can now chairflip further distance.
+(u)AmazingDragons
+(p)5234
+(e)⚖|balance
+(+)Changes the minimum, maximum, and default times (in seconds) on the nuclear charge to 120, 600, and 180 respectively.
+(u)Zonespace
+(p)5385
+(e)⚖🆕🎨|balance, feature, sprites
+(*)You may now eject telecrystals from uplinks, to be put in any other unlocked uplink.
+(*)There is also an explosive version of these telecrystals, for when you want to be a little less cooperative.
+(u)DisturbHerb
+(p)4739
+(e)🆕🎨|feature, sprites
+(+)PDAs can now hold pens. And cigarettes. Because it's funny.
+(u)Flappybat
+(p)5281
+(e)⚖|balance
+(+)Breaching charges now have an explosion effect and sound.
+(u)Walpvrgis
+(p)5384
+(e)🆕🎨|feature, sprites
+(*)Adds the following recipes for Chefs looking to do some baking; baguette, garlic bread, cheesy garlic bread, fairy bread, croissant, pain au chocolat, apple danish, cherry danish, blueberry danish and the cannadanish!
 (t)wed jul 07 21
+(u)Zonespace
+(p)5058
+(e)⛔|removal
+(+)Synth-O-Matic modules are no longer sold by merchants.
 (u)Ikea
 (p)4818
 (e)🗺🎨|mapping, sprites
