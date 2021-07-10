@@ -97,7 +97,7 @@
 
 
 /obj/machinery/conveyor/proc/move_thing(var/atom/movable/A)
-	if (A.anchored)
+	if (A.anchored || A.temp_flags & BEING_CRUSHERED)
 		return
 	if(isobserver(A))
 		return

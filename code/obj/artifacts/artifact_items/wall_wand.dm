@@ -9,7 +9,7 @@
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
-		if (A.activated)
+		if (A.activated && target.loc != user)
 			user.lastattacked = src
 			var/turf/T = get_turf(target)
 			A.effect_click_tile(src,user,T)

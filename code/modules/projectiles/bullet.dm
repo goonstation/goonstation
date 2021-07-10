@@ -961,6 +961,7 @@ toxic - poisons
 	caliber = 1.57 // 40mm grenade shell
 	icon_turf_hit = "bhole-large"
 	casing = /obj/item/casing/grenade
+	implanted = null
 
 	var/list/smokeLocs = list()
 	var/smokeLength = 100
@@ -1009,6 +1010,8 @@ toxic - poisons
 	hit_type = DAMAGE_BLUNT
 	hit_mob_sound = "sound/misc/splash_1.ogg"
 	hit_object_sound = "sound/misc/splash_1.ogg"
+	implanted = null
+
 
 	on_hit(atom/hit, dirflag, atom/projectile)
 		..()
@@ -1028,6 +1031,7 @@ toxic - poisons
 	caliber = 1.57
 	icon_turf_hit = "bhole-large"
 	casing = /obj/item/casing/grenade
+	implanted = null
 
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if (ishuman(hit))
@@ -1163,6 +1167,7 @@ toxic - poisons
 	caliber = 1.57 // 40mm grenade shell
 	icon_turf_hit = "bhole-large"
 	casing = /obj/item/casing/grenade
+	implanted = null
 
 	var/has_grenade = 0
 	var/obj/item/chem_grenade/CHEM = null

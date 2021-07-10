@@ -116,6 +116,7 @@
 	note_time = 200
 	affect_fun = 15 // a little higher, why not?
 	module_research = list("audio" = 14) // I don't think this is even relevant without being able to pick up the thing and also the research thing isn't even enabled atm but well. why not?
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 
 	attack_hand(mob/user as mob)
 		src.add_fingerprint(user)

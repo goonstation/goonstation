@@ -1832,19 +1832,19 @@ datum
 				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in all_viewers(null, location))
 					boutput(M, "<span class='alert'>The solution generates a strong vapor!</span>")
-
-				// A slightly less stupid way of smoking contents. Maybe.
-				var/datum/reagents/smokeContents = new/datum/reagents/
-				smokeContents.add_reagent("sarin", holder.reagent_list["sarin"].volume / 6)
-				//particleMaster.SpawnSystem(new /datum/particleSystem/chemSmoke(location, smokeContents, 10, 2))
-				smoke_reaction(smokeContents, 2, location)
-				/*
-				for(var/mob/living/carbon/human/H in range(location, 2)) // nurfed.
-					if(ishuman(H))
-						if(!H.wear_mask)
-							H.reagents.add_reagent("sarin",4) // griff
-				*/
-				return
+				if(holder?.my_atom?.is_open_container())
+					// A slightly less stupid way of smoking contents. Maybe.
+					var/datum/reagents/smokeContents = new/datum/reagents/
+					smokeContents.add_reagent("sarin", holder.reagent_list["sarin"].volume / 6)
+					//particleMaster.SpawnSystem(new /datum/particleSystem/chemSmoke(location, smokeContents, 10, 2))
+					smoke_reaction(smokeContents, 2, location)
+					/*
+					for(var/mob/living/carbon/human/H in range(location, 2)) // nurfed.
+						if(ishuman(H))
+							if(!H.wear_mask)
+								H.reagents.add_reagent("sarin",4) // griff
+					*/
+					return
 
 
 
@@ -2579,47 +2579,14 @@ datum
 			name = "stable bose-einstein macro-condensate"
 			id = "big_bang_precursor"
 			result = "big_bang_precursor"
+			#ifdef SECRETS_ENABLED
+				// It's secret now bucko
+			#else
 			required_reagents = list("ldmatter" = 1, "voltagen" = 12, "something" = 3, "sorium" = 1)
 			result_amount = 1
+			#endif
 			mix_phrase = "The solution settles and congeals into a strange viscous fluid that seems to have the properties of both a liquid and a gas."
 			required_temperature = T0C - 277
-
-		big_bang
-			name = "quark-gluon plasma"
-			id = "big_bang"
-			result = "big_bang"
-			required_reagents = list("big_bang_precursor" = 1)
-			result_amount = 50
-			// This should really require a closed container and an extreme phase change... or some other pseudo-science thing
-			mix_phrase = "A tiny point of light blooms within the material, and quickly grows to envelop the entire container. Your life flashes before your eyes."
-			required_temperature = T0C + 6344 // IMPOSSIBRUUUU
-#ifdef CHEM_REACTION_PRIORITY
-			priority = INFINITY // should hopefully be handled in blacklists now
-#endif
-
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-				..()
-				var/turf/location = 0
-				if (holder?.my_atom)
-					location = get_turf(holder.my_atom)
-					for(var/mob/M in AIviewers(5, location))
-						boutput(M, "<span class='alert'>You feel the air around you spark with electricity!</span>")
-
-					var/datum/effects/system/foam_spread/s = new()
-					s.set_up(created_volume, location, holder, 0)
-					s.start()
-					holder.clear_reagents()
-				else
-					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
-					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
-						location = pick(holder.covered_cache)
-						holder.covered_cache -= location
-						var/datum/effects/system/foam_spread/s = new()
-						s.set_up(created_volume/amt, location, holder, 0)
-						s.start()
-					holder.clear_reagents()
-
-				return
 
 
 		smokepowder
@@ -2652,11 +2619,17 @@ datum
 			priority = 9
 #endif
 			on_reaction(var/datum/reagents/holder, var/created_volume) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
+
 				if (holder)
-					holder.smoke_start(created_volume)
 					holder.del_reagent("potassium")
 					holder.del_reagent("sugar")
 					holder.del_reagent("phosphorus")
+					if(!holder?.my_atom?.is_open_container())
+						if(holder.my_atom)
+							for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
+								boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
+							return
+					holder.smoke_start(created_volume)
 
 		blackpowder // oh no
 			name = "Black Powder"
@@ -2915,6 +2888,11 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				if (holder.postfoam)
 					return
+				if(!holder?.my_atom?.is_open_container())
+					if(holder.my_atom)
+						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
+							boutput(M, "<span class='notice'>With nowhere to go, the bubbles settle.</span>")
+						return
 				var/turf/location = 0
 				if (holder.my_atom && holder.covered_cache.len <= 1)
 					location = get_turf(holder.my_atom)
@@ -2951,6 +2929,12 @@ datum
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = 0
+				if(!holder?.my_atom?.is_open_container())
+					if(holder.my_atom)
+						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
+							boutput(M, "<span class='notice'>With nowhere to go, the metal settles.</span>")
+						return
+
 				if (holder.my_atom && holder.covered_cache.len <= 1)
 					location = get_turf(holder.my_atom)
 					for(var/mob/M in AIviewers(5, location))
@@ -2980,6 +2964,12 @@ datum
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				var/turf/location = 0
+				if(!holder?.my_atom?.is_open_container())
+					if(holder.my_atom)
+						for(var/mob/M in AIviewers(5, location))
+							boutput(M, "<span class='notice'>With nowhere to go, the metal settles.</span>")
+						return
+
 				if (holder?.my_atom)
 					location = get_turf(holder.my_atom)
 					for(var/mob/M in AIviewers(5, location))

@@ -58,6 +58,8 @@
 	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
+		if (ON_COOLDOWN(src, "attack_self", 1 SECOND))
+			return
 		playsound(src.loc, "sound/items/coindrop.ogg", 100, 1)
 		if (prob(50))
 			user.visible_message("[src] shows Heads.")

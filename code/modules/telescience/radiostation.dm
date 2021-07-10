@@ -796,13 +796,19 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /obj/submachine/tape_deck/attack_hand(mob/user as mob)
 	if(has_tape)
 		if(!is_playing)
-			boutput(user, "You remove the tape from the tape deck.")
-			src.visible_message("<span class='notice'><b>[user] removes the tape from the tape deck.</b></span>")
-			user.put_in_hand_or_drop(src.tape_inside)
-			src.tape_inside = null
-			src.has_tape = 0
+			if(istype(src.tape_inside,/obj/item/radio_tape/advertisement))
+				src.visible_message("<span class='alert'><b>[src.tape_inside]'s copyright preserving self destruct feature activates!</b></span>")
+				qdel(src.tape_inside)
+				src.tape_inside = null
+				src.has_tape = 0
+			else
+				boutput(user, "You remove the tape from the tape deck.")
+				src.visible_message("<span class='notice'><b>[user] removes the tape from the tape deck.</b></span>")
+				user.put_in_hand_or_drop(src.tape_inside)
+				src.tape_inside = null
+				src.has_tape = 0
 		else
-			boutput(user, "It looks like the tape is still being rewinded. You should wait a bit more before taking it out.")
+			boutput(user, "It looks like the tape is still being rewound. You should wait a bit more before taking it out.")
 
 // Tapes
 /obj/item/radio_tape

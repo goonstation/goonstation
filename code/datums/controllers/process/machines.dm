@@ -10,7 +10,7 @@
 
 	setup()
 		name = "Machine"
-		schedule_interval = 0.4 SECONDS
+		schedule_interval = MACHINE_PROC_INTERVAL
 
 		Station_VNet = new /datum/v_space/v_space_network()
 
