@@ -2838,8 +2838,8 @@
 
 	fire(var/datum/mechanicsMessage/input)
 		if(charging || level == 2) return
-		if(!ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return ..()
-		return
+		if(ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
+		return ..()
 
 	updateIcon()
 		icon_state = charging ? "comp_gun2x" : "comp_gun2"
