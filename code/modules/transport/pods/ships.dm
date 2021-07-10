@@ -353,12 +353,33 @@ obj/machinery/vehicle/miniputt/pilot
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
+/*-----------------------------*/
+/* Minisub construction stuff */
+/*-----------------------------*/
+
+/obj/item/sub/boards
+	name = "Minisub Circuitry Kit"
+	desc = "A kit containing various circuit boards for use in a minisub."
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "dbox"
+
+/obj/item/sub/control
+	name = "Minisub Control System Kit"
+	desc = "A kit containing control interfaces and display screens for a minisub."
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "dbox"
+
+/obj/item/sub/engine
+	name = "Minisub Engine Manifold"
+	desc = "A standard engine housing for a minisub."
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "dbox"
 
 ABSTRACT_TYPE(/obj/structure/vehicleframe)
 
 /obj/structure/vehicleframe
 	var/stage = 0
-	var/obj/item/podskin/armor_type = null
+	var/obj/item/podarmor/armor_type = null
 	var/engine_type = null
 	var/control_type = null
 	var/boards_type = null
@@ -367,8 +388,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	var/glass_amt = null
 	var/cable_amt = null
 	var/vehicle_name = null
-	var/list/overlays
-	var/list/overlay_armor
+	var/vehicle_type = null
 	anchored = 1
 	density = 1
 
@@ -386,11 +406,25 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		O.fingerprintshidden = src.fingerprintshidden
 		qdel(src)
 
+/obj/item/sub/frame_box
+	name = "Minisib Frame Kit"
+	desc = "You can hear an awful lot of junk rattling around in this box."
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "dbox"
+
+	attack_self(mob/user as mob)
+		boutput(user, "<span class='notice'>You dump out the box of parts onto the floor.</span>")
+		var/obj/O = new /obj/structure/vehicleframe/subframe( get_turf(user) )
+		logTheThing("station", user, null, "builds [O] in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
+		O.fingerprints = src.fingerprints
+		O.fingerprintshidden = src.fingerprintshidden
+		qdel(src)
+
 /obj/structure/vehicleframe/puttframe
 	name = "MiniPutt Frame"
 	desc = "A MiniPutt ship under construction."
 	icon = 'icons/obj/ship.dmi'
-	icon_state = "putt_parts"
+	icon_state = "parts"
 	engine_type = /obj/item/putt/engine
 	control_type = /obj/item/putt/control
 	boards_type = /obj/item/putt/boards
@@ -403,8 +437,8 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 /obj/structure/vehicleframe/subframe
 	name = "Minisub Frame"
 	desc = "A minisub under construction."
-	icon = 'icons/obj/sub.dmi'
-	icon_state = "putt_parts"
+	icon = 'icons/obj/machines/8dirvehicles.dmi'
+	icon_state = "parts"
 	engine_type = /obj/item/sub/engine
 	control_type = /obj/item/sub/control
 	boards_type = /obj/item/sub/boards
@@ -418,7 +452,9 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	name = "Pod Frame"
 	desc = "A vehicle pod under construction."
 	icon = 'icons/effects/64x64.dmi'
-	icon_state = "pod_parts"
+	icon_state = "parts"
+	bound_width = 64
+	bound_height = 64
 	engine_type = /obj/item/pod/engine
 	control_type = /obj/item/pod/control
 	boards_type = /obj/item/pod/boards
@@ -462,7 +498,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		O = new src.armor_type( get_turf(src) )
 		O.fingerprints = src.fingerprints
 		O.fingerprintshidden = src.fingerprintshidden
-		if istype(O,/obj/item/podskin/armor_custom)
+		if (istype(O,/obj/item/podarmor/armor_custom))
 			O.setMaterial(src.material)
 			src.removeMaterial()
 		stage--
@@ -560,7 +596,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				boutput(user, "You're not gonna get very far without power cables. You should get at least [src.cable_amt] lengths of it.")
 
 		if(4)
-			if(istype(W, src.board_type))
+			if(istype(W, src.boards_type))
 				boutput(user, "You begin to install the circuit boards...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 				if (!do_after(user, 3 SECONDS))
@@ -610,7 +646,11 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				boutput(user, "Having an engine might be nice.")
 
 		if(7)
-			if(istype(W, /obj/item/podskin))
+			if(istype(W, /obj/item/podarmor))
+				var/obj/item/podarmor/armor = W
+				if(!armor.vehicle_types["[src.type]"])
+					boutput(user, "That type of armor is not compatible with this frame.")
+					return
 				boutput(user, "You begin to install the [W]...")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 				if (!do_after(user, 3 SECONDS))
@@ -619,13 +659,14 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				boutput(user, "You loosely attach the light armor plating.")
 				user.u_equip(W)
 				qdel(W)
-				src.overlays += image(src.icon, W.overlay_state)
+				src.overlays += image(src.icon, armor.overlay_state)
 				stage = 8
-				armor_type = type(W)
-				if(istype(W, /obj/item/podskin/custom))
+				armor_type = armor.type
+				src.vehicle_type = armor.vehicle_types["[src.type]"]
+				if(istype(W, /obj/item/podarmor/armor_custom))
 					src.setMaterial(W.material)
 			else
-				boutput(user, "You don't think you're going anywhere without a skin on this pod, do you? Get some armor!")
+				boutput(user, "You don't think you're going anywhere without a skin, do you? Get some armor!")
 
 		if(8)
 			if (isweldingtool(W))
@@ -647,7 +688,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				if (!do_after(user, 3 SECONDS))
 					boutput(user, "<span class='alert'>You were interrupted!</span>")
 					return
-				boutput(user, "You install the control system for the pod.")
+				boutput(user, "You install the control system.")
 				user.u_equip(W)
 				qdel(W)
 				src.overlays += image(src.icon,"control")
@@ -675,12 +716,11 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 					return
 				boutput(user, "With the cockpit and exterior indicators secured, the control system automatically starts up.")
 
-				var/vehicle_type = initial(src.armor_type.pod_type)
-				var/vehicle = new vehicle_type( src.loc )
-				if (src.armor_type == /obj/item/podskin/custom)
-					vehicle.name = src.vehicle_name
-					vehicle.setMaterial(src.material)
-				logTheThing("station", user, null, "finishes building a [vehicle] in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
+				var/obj/machinery/vehicle/V = new vehicle_type( src.loc )
+				if (src.armor_type == /obj/item/podarmor/armor_custom)
+					V.name = src.vehicle_name
+					V.setMaterial(src.material)
+				logTheThing("station", user, null, "finishes building a [V] in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 				qdel(src)
 
 			else
@@ -1151,89 +1191,116 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
-ABSTRACT_TYPE(/obj/item/podskin)
-
-/obj/item/podskin
+ABSTRACT_TYPE(/obj/item/podarmor)
+/obj/item/podarmor
 	var/overlay_state
+	var/list/vehicle_types
 
-/obj/item/podskin/armor_light
+/obj/item/podarmor/armor_light
 	name = "Light Pod Armor"
 	desc = "Standard exterior plating for vehicle pods."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 	overlay_state = "skin1"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/light,
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/civilian)
 
-/obj/item/podskin/armor_custom
+/obj/item/podarmor/armor_custom
 	name = "Pod Armor"
 	desc = "Plating for vehicle pods made from a custom compound."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 	overlay_state = "skin1"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/light,
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/civilian)
 
-/obj/item/podskin/armor_heavy
+/obj/item/podarmor/armor_heavy
 	name = "Heavy Pod Armor"
 	desc = "Reinforced exterior plating for vehicle pods."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 	overlay_state = "skin2"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/nanoputt,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/heavy,
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/heavy)
 
-/obj/item/podskin/nt_light
+/obj/item/podarmor/nt_light
 	name = "Light NT Pod Armor"
 	desc = "Standard exterior plating for vehicle pods."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 	overlay_state = "skinB"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/nt_light,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/nt_light)
 
-/obj/item/podskin/nt_robust
+/obj/item/podarmor/nt_robust
 	name = "Robust NT Pod Armor"
 	desc = "Standard exterior plating for vehicle pods."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 	overlay_state = "skinBF"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/nt_robust,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/nt_robust)
 
-/obj/item/podskin/sy_light
+/obj/item/podarmor/sy_light
 	name = "Light Syndicate Pod Armor"
 	desc = "Standard exterior plating for vehicle pods."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 	overlay_state = "skinR"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/sy_light,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/sy_light)
 
-/obj/item/podskin/sy_robust
+/obj/item/podarmor/sy_robust
 	name = "Robust Syndicate Pod Armor"
 	desc = "Standard exterior plating for vehicle pods."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 	overlay_state = "skinRF"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/sy_robust,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/sy_robust)
 
 
-/obj/item/podskin/armor_black
+/obj/item/podarmor/armor_black
 	name = "Strange Pod Armor"
 	desc = "The box is stamped with the Nanotrasen symbol and a lengthy list of classified warnings. Neat."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 	overlay_state = "skin3"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/black,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/black,
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/black)
 
-/obj/item/podskin/armor_red
+/obj/item/podarmor/armor_red
 	name = "Syndicate Pod Armor"
 	desc = "The box is stamped with the logos of various Syndicate affiliated corporations."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 	overlay_state = "skin2"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/syndiputt,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/syndicate,
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/syndisub)
 
-/obj/item/podskin/armor_industrial
+/obj/item/podarmor/armor_industrial
 	name = "Industrial Pod Armor"
 	desc = "A kit of bulky industrial armor plates for vehicle pods."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 	overlay_state = "skin3"
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/indyputt,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/industrial,
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/industrial)
 
-/obj/item/podskin/armor_gold
+/obj/item/podarmor/armor_gold
 	name = "Gold Pod Armor"
 	desc = "It's really only gold-plated."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 	overlay_state = "skin4"
-
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/gold,
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/gold)
 /obj/item/pod/frame_box
 	name = "Pod Frame Kit"
 	desc = "You can hear an awful lot of junk rattling around in this box."
@@ -1268,7 +1335,7 @@ ABSTRACT_TYPE(/obj/item/podskin)
 
 		if (canbuild)
 			boutput(user, "<span class='notice'>You dump out the box of parts onto the floor.</span>")
-			var/obj/O = new /obj/structure/podframe( get_turf(user) )
+			var/obj/O = new /obj/structure/vehicleframe/podframe( get_turf(user) )
 			logTheThing("station", user, null, "builds [O] in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 			O.fingerprints = src.fingerprints
 			O.fingerprintshidden = src.fingerprintshidden

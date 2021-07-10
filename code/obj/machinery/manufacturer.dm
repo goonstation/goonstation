@@ -2306,10 +2306,17 @@
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass)
 	available = list(
+#ifdef UNDERWATER_MAP
+		/datum/manufacture/sub/engine,
+		/datum/manufacture/sub/boards,
+		/datum/manufacture/sub/control,
+		/datum/manufacture/sub/parts,
+#else
 		/datum/manufacture/putt/engine,
 		/datum/manufacture/putt/boards,
 		/datum/manufacture/putt/control,
 		/datum/manufacture/putt/parts,
+#endif
 		/datum/manufacture/pod/engine,
 		/datum/manufacture/pod/boards,
 		/datum/manufacture/pod/armor_light,
