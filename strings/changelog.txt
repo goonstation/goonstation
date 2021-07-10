@@ -1,4 +1,9 @@
 
+(t)fri jul 09 21
+(u)Gerhazo
+(p)5359
+(e)|
+(+)Back-end overhaul to how sechuds and prodocs work. This shouldn't be noticeable from a player standpoint.
 (t)thu jul 08 21
 (u)BatElite
 (p)3796
