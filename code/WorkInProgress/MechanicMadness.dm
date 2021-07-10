@@ -11,6 +11,7 @@
 #define WIFI_NOISE_COOLDOWN 5 SECONDS
 #define WIFI_NOISE_VOLUME 30
 #define LIGHT_UP_HOUSING SPAWN_DBG(0) src.light_up_housing()
+#define SEND_COOLDOWN_ID "MechComp send cooldown"
 
 // mechanics containers for mechanics components (read: portable horn [read: vuvuzela] honkers! yaaaay!)
 //
@@ -497,15 +498,6 @@
 		updateIcon()
 		return
 
-	proc/isReady()
-		return src.when_next_ready <= world.time
-
-	proc/unReady(var/unReadyTime = null)
-		if(isnull(unReadyTime))
-			unReadyTime = src.cooldown_time
-		src.when_next_ready = world.time + unReadyTime
-		return
-
 	proc/updateIcon()
 		return
 
@@ -514,6 +506,7 @@
 	desc = ""
 	icon_state = "comp_money"
 	density = 0
+	cooldown_time = 1 SECOND
 	var/price = 100
 	var/code = null
 	var/collected = 0
@@ -596,9 +589,8 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..(W, user)) return 1
-		if (istype(W, /obj/item/spacecash) && isReady())
+		if (istype(W, /obj/item/spacecash) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			LIGHT_UP_HOUSING
-			unReady()
 			current_buffer += W.amount
 			if (src.price <= 0)
 				src.price = initial(src.price)
@@ -620,8 +612,6 @@
 
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
 				flick("comp_money1", src)
-
-				unReady(0)//Make it ready now.
 				return 1
 		return 0
 
@@ -675,8 +665,7 @@
 
 	proc/flushp(var/datum/mechanicsMessage/input)
 		if(level == 2) return
-		if(input?.signal && isReady() && trunk)
-			unReady()
+		if(input?.signal && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time) && trunk)
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.anchored || isAI(M)) continue
 				M.set_loc(src)
@@ -728,9 +717,8 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Paper Name","setPaperName")
 
 	proc/print(var/datum/mechanicsMessage/input)
-		if(level == 2 || !isReady()) return
+		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		if(input)
-			unReady()
 			LIGHT_UP_HOUSING
 			flick("comp_tprint1",src)
 			playsound(src.loc, "sound/machines/printer_thermal.ogg", 60, 0)
@@ -784,11 +772,10 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(..(W, user)) return 1
-		else if (istype(W, /obj/item/paper) && isReady())
+		else if (istype(W, /obj/item/paper) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			if(thermal_only && !istype(W, /obj/item/paper/thermal))
 				boutput(user, "<span class='alert'>This scanner only accepts thermal paper.</span>")
 				return 0
-			unReady()
 			LIGHT_UP_HOUSING
 			flick("comp_pscan1",src)
 			playsound(src.loc, "sound/machines/twobeep2.ogg", 90, 0)
@@ -915,9 +902,8 @@
 		return 1
 
 	attack_hand(mob/user as mob)
-		if(level != 2 && isReady())
+		if(level != 2 && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			if(ishuman(user) && user.bioHolder)
-				unReady()
 				LIGHT_UP_HOUSING
 				flick("comp_hscan1",src)
 				playsound(src.loc, "sound/machines/twobeep2.ogg", 90, 0)
@@ -1010,8 +996,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Power","setPower")
 
 	proc/eleczap(var/datum/mechanicsMessage/input)
-		if(level == 2 || !isReady()) return
-		unReady()
+		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
 		elecflash(src.loc, 0, power = zap_power, exclude_center = 0)
 
@@ -1682,9 +1667,8 @@
 		return 1
 
 	proc/relay(var/datum/mechanicsMessage/input)
-		if(level == 2 || !isReady()) return
+		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
-		unReady()
 		flick("[under_floor ? "u":""]comp_relay1", src)
 		var/transmissionStyle = changesig ? COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG : COMSIG_MECHCOMP_TRANSMIT_MSG
 		SPAWN_DBG(0) SEND_SIGNAL(src,transmissionStyle,input)
@@ -1818,9 +1802,7 @@
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		var/list/converted = params2list(input.signal)
-		if(!length(converted) || !isReady()) return
-
-		unReady()
+		if(!length(converted) || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 
 		var/datum/signal/sendsig = get_free_signal()
 
@@ -2304,8 +2286,7 @@
 		return
 
 	proc/activate(var/datum/mechanicsMessage/input)
-		if(level == 2 || !isReady()) return
-		unReady()
+		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
 		flick("[under_floor ? "u":""]comp_tele1", src)
 		particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc)))
@@ -2555,8 +2536,8 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input", "fire")
 
 	proc/fire(var/datum/mechanicsMessage/input)
-		if(level == 2 || !isReady() || !input) return
-		unReady()
+		if(level == 2 || !input) return
+		if(ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
 		componentSay("[input.signal]")
 		return
@@ -2856,9 +2837,9 @@
 		return
 
 	fire(var/datum/mechanicsMessage/input)
-		if(charging || !isReady() || level == 2) return
-		unReady()
-		return ..()
+		if(charging || level == 2) return
+		if(!ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return ..()
+		return
 
 	updateIcon()
 		icon_state = charging ? "comp_gun2x" : "comp_gun2"
@@ -2934,23 +2915,23 @@
 		return 0
 
 	proc/fire(var/datum/mechanicsMessage/input)
-		if (level == 2 || !isReady() || !instrument) return
+		if (level == 2 || GET_COOLDOWN(src, SEND_COOLDOWN_ID) || !instrument) return
 		LIGHT_UP_HOUSING
 		var/signum = text2num(input.signal)
 		var/index = round(signum)
 		if (length(sounds) > 1 && index > 0 && index <= length(sounds))
-			unReady(delay)
+			ON_COOLDOWN(src, SEND_COOLDOWN_ID, delay)
 			flick("comp_instrument1", src)
 			playsound(get_turf(src), sounds[index], volume, 0)
 		else if (signum &&((signum >= 0.1 && signum <= 2) || (signum <= -0.1 && signum >= -2) || pitchUnlocked))
 			var/mod_delay = delay
 			if(abs(signum) < 1)
 				mod_delay /= abs(signum)
-			unReady(mod_delay)
+			ON_COOLDOWN(src, SEND_COOLDOWN_ID, mod_delay)
 			flick("comp_instrument1", src)
 			playsound(src, sounds, volume, 0, 0, signum)
 		else
-			unReady(delay)
+			ON_COOLDOWN(src, SEND_COOLDOWN_ID, delay)
 			flick("comp_instrument1", src)
 			playsound(src, sounds, volume, 1)
 			return
