@@ -206,7 +206,7 @@
 			return
 
 		var/datum/reagents/R = beaker:reagents
-		R.temperature_reagents(target_temp, 10)
+		R.temperature_reagents(target_temp, 400)
 
 		src.power_usage = 1000
 

@@ -1,5 +1,30 @@
 
+(t)sat jul 10 21
+(u)Emily
+(e)⛔|removal
+(+)Removed the incredibly laggy internals display from the status tab. Maybe someone will fix it eventually.
+(u)112358sam
+(p)5193
+(e)📄|tgui
+(+)Slot machines use bank account funds.
+(+)ATMs no longer withdraw to and deposit from ID cards.
+(u)Penny
+(p)5055
+(e)🆕|feature
+(*)Mechanics can now set the access requirements of newly constructed airlocks- find the new Access Lite in your secure lockers to try it out!
+(t)fri jul 09 21
+(u)Gerhazo
+(p)5359
+(e)|
+(+)Back-end overhaul to how sechuds and prodocs work. This shouldn't be noticeable from a player standpoint.
 (t)thu jul 08 21
+(u)BatElite
+(p)3796
+(e)🆕🔄🎨|feature, rework, sprites
+(+)The lamp manufacturer can now make and remove fixtures!
+(u)Tarmunora
+(e)⚖|balance
+(+)Mousetrap pies and graviton accelerators now use the person who sets them up as the owner of the item throw instead of the person who triggeres them.
 (u)TTerc
 (p)5420
 (e)🆕|feature
