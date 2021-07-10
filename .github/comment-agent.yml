@@ -1,4 +1,4 @@
-# A mapping of keyword aliases to event type. Form of match:action name.
+# A mapping of keyword aliases to event type. Form of match:event type.
 # Required.
 aliasMappings:
   "/rebuild tgui": "rebuild-tgui"
@@ -8,7 +8,7 @@ aliasMappings:
 # Optional. Defaults to true.
 caseSensitive: false
 
-# A mapping of action names to user group permissions.
+# A mapping of event types to user group permissions.
 # Form of event type:group name or combined names (Explained lower in the README).
 # Optional, defaults to MEMBER for each.
 permissionMappings:
