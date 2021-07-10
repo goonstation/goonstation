@@ -997,19 +997,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null)
+		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null || locate(/mob/living) in O)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null)
+		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null || locate(/mob/living) in O)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null)
+		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null || locate(/mob/living) in O)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (ismob(owner))

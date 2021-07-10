@@ -88,6 +88,7 @@
 	name_prefix = "green "
 	crop = /obj/item/reagent_containers/food/snacks/plant/grape/green
 	iconmod = "GrapeGreen"
+	assoc_reagents = list("insulin")
 
 /datum/plantmutation/grapes/fruit
 	name = "Grapefruit"
@@ -376,7 +377,7 @@
 	name_prefix = "Robust "
 	crop = /obj/item/plant/herb/asomna/robust
 	iconmod = "AsomnaRobust"
-	assoc_reagents = list("methamphetamine")
+	assoc_reagents = list("synaptizine")
 	chance = 10
 
 // Commol Mutations
@@ -403,7 +404,7 @@
 	name_prefix = "Invigorating "
 	iconmod = "IpecacuanhaInvigorating"
 	crop = /obj/item/plant/herb/ipecacuanha/invigorating
-	assoc_reagents = list("synaptizine")
+	assoc_reagents = list("methamphetamine")
 	chance = 10
 
 // Venne Mutations
@@ -604,10 +605,10 @@
 	crop = /obj/item/raw_material/mauxite
 	chance = 10
 
-/datum/plantmutation/rocks/erebite
-	name_prefix = "Erebite "
+/datum/plantmutation/rocks/uqill
+	name_prefix = "Uqill "
 	dont_rename_crop = true
-	crop = /obj/item/raw_material/erebite
+	crop = /obj/item/raw_material/uqill
 	chance = 5
 
 // trees. :effort:
