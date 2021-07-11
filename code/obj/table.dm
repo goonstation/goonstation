@@ -442,6 +442,7 @@
 	mat_changename = 0
 	auto
 		auto = 1
+
 	New()
 		..()
 		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
@@ -454,6 +455,8 @@
 	has_storage = 1
 	mat_appearances_to_ignore = list("wood")
 	mat_changename = 0
+	auto
+		auto = 1
 
 	New()
 		..()
@@ -463,6 +466,8 @@
 	icon = 'icons/obj/furniture/table_wood_round.dmi'
 	auto_type = /obj/table/wood/round/auto
 	parts_type = /obj/item/furniture_parts/table/wood/round
+	mat_appearances_to_ignore = list("wood")
+	mat_changename = 0
 
 	auto
 		auto = 1
@@ -476,6 +481,8 @@
 	desc = "A table with a faux wood top designed for quick assembly and toolless disassembly."
 	icon = 'icons/obj/furniture/table_folding.dmi'
 	parts_type = /obj/item/furniture_parts/table/folding
+	mat_appearances_to_ignore = list("wood")
+	mat_changename = 0
 
 	New()
 		..()
@@ -542,6 +549,8 @@
 	icon = 'icons/obj/furniture/table_bar.dmi'
 	auto_type = /obj/table/reinforced/bar/auto
 	parts_type = /obj/item/furniture_parts/table/reinforced/bar
+	mat_appearances_to_ignore = list("wood")
+	mat_changename = 0
 
 	New()
 		..()
