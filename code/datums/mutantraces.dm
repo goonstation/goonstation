@@ -68,7 +68,7 @@
 	/// Should robots arrest these by default?
 	var/jerk = 0
 	/// Should stable mutagen apply this mutant?
-	var/dna_mutagen_ok = 0
+	var/dna_mutagen_ok = FALSE
 
 	/// This is used for static icons if the mutant isn't built from pieces
 	var/icon = 'icons/effects/genetics.dmi'
@@ -651,7 +651,7 @@
 	voice_override = "bloop"
 	firevuln = 1.5
 	typevulns = list("cut" = 1.25, "stab" = 0.5, "blunt" = 0.75)
-	dna_mutagen_ok = 1
+	dna_mutagen_ok = TRUE
 
 	say_verb()
 		return pick("burbles", "gurgles", "blurbs", "gloops")
@@ -714,7 +714,7 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/flashy/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/flashy/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/flashy/left
-	dna_mutagen_ok = 1
+	dna_mutagen_ok = TRUE
 
 
 /datum/mutantrace/virtual
@@ -816,7 +816,7 @@
 	race_mutation = /datum/bioEffect/mutantrace // Most mutants are just another form of lizard, didn't you know?
 	clothing_icon_override = 'icons/mob/lizard_clothes.dmi'
 	color_channel_names = list("Episcutus", "Ventral Aberration", "Sagittal Crest")
-	dna_mutagen_ok = 1
+	dna_mutagen_ok = TRUE
 
 	New(var/mob/living/carbon/human/H)
 		..()
@@ -1121,7 +1121,7 @@
 	special_head = HEAD_SKELETON
 	decomposes = FALSE
 	race_mutation = /datum/bioEffect/mutantrace/skeleton
-	dna_mutagen_ok = 1
+	dna_mutagen_ok = TRUE
 
 	New(var/mob/living/carbon/human/M)
 		..()
@@ -1416,7 +1416,7 @@
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/ithillid/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/ithillid/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HAS_SPECIAL_HAIR | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
-	dna_mutagen_ok = 1
+	dna_mutagen_ok = TRUE
 
 	say_verb()
 		return "glubs"
@@ -1451,7 +1451,7 @@
 	var/had_tablepass = 0
 	var/table_hide = 0
 	mutant_organs = list("tail" = /obj/item/organ/tail/monkey)
-	dna_mutagen_ok = 1
+	dna_mutagen_ok = TRUE
 
 	New(var/mob/living/carbon/human/M)
 		. = ..()
@@ -1698,7 +1698,7 @@
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | FIX_COLORS | HAS_SPECIAL_HAIR | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS)
 	eye_state = "eyes_roach"
 	typevulns = list("blunt" = 1.66, "crush" = 1.66)
-	dna_mutagen_ok = 1
+	dna_mutagen_ok = TRUE
 
 	New(mob/living/carbon/human/M)
 		. = ..()
@@ -1735,7 +1735,7 @@
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
-	dna_mutagen_ok = 1
+	dna_mutagen_ok = TRUE
 
 	New(mob/living/carbon/human/M)
 		. = ..()
@@ -1777,7 +1777,7 @@
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
-	dna_mutagen_ok = 1
+	dna_mutagen_ok = TRUE
 
 
 	say_verb()
@@ -2011,7 +2011,7 @@
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | HAS_OVERSUIT_DETAILS | HAS_SPECIAL_HAIR | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 	color_channel_names = list("Horn Detail", "Hoof Detail")
 	eye_state = "eyes-cow"
-	dna_mutagen_ok = 1
+	dna_mutagen_ok = TRUE
 
 	New(var/mob/living/carbon/human/H)
 		..()
@@ -2100,7 +2100,7 @@
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/chicken/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/chicken/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_PARTIAL_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS)
-	dna_mutagen_ok = 1
+	dna_mutagen_ok = TRUE
 
 	emote(var/act, var/voluntary)
 		switch(act)
