@@ -686,11 +686,13 @@ Code:
 				dat += "Alert Sent -- Please wait for a response.<br>Additional alerts will be available shortly."
 
 			else
-				dat += "<center>Please select alert type:<br>"
-				dat += "<a href='?src=\ref[src];alert=1'>Medical Alert</a><br>"
-				dat += "<a href='?src=\ref[src];alert=2'>Engineering Alert</a><br>"
-				dat += "<a href='?src=\ref[src];alert=3'>Security Alert</a><br>"
-				dat += "<a href='?src=\ref[src];alert=4'>Janitor Alert</a>"
+				dat += {"
+				<center>Please select alert type:<br>
+				<a href='?src=\ref[src];alert=1'>Medical Alert</a><br>
+				<a href='?src=\ref[src];alert=2'>Engineering Alert</a><br>
+				<a href='?src=\ref[src];alert=3'>Security Alert</a><br>
+				<a href='?src=\ref[src];alert=4'>Janitor Alert</a>
+				"}
 
 		else
 			dat += "<center><b>Please confirm: <a href='?src=\ref[src];confirm=y'>Y</a> / <a href='?src=\ref[src];confirm=n'>N</a></b></center>"
