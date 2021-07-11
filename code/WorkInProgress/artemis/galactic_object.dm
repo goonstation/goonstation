@@ -5,6 +5,9 @@ var/global/datum/galaxy/GALAXY = new
 /datum/galaxy
 	var/list/bodies = list()
 	var/list/available_planets = list("planet1", "planet2", "planet3", "planet4", "planet5", "planet6", "planet7")
+	var/list/available_asteroids = list("asteroid1", "asteroid2", "asteroid3", "asteroid4")
+
+	var/datum/asteroid_controller/asteroids = new
 
 	New()
 		..()
@@ -14,12 +17,69 @@ var/global/datum/galaxy/GALAXY = new
 
 		src.bodies += new/datum/galactic_object/bhole
 		src.bodies += new/datum/galactic_object/star
+		src.bodies += new/datum/galactic_object/asteroid
 
 		for(var/i in 1 to 3)
 			src.bodies += new/datum/galactic_object/star/random
 
 		for(var/i in 1 to 10)
 			src.bodies += new/datum/galactic_object/planet/random(src)
+
+	// TODO
+	proc/generate_solar_system()
+		//var/sector_x = rand() * 10
+		//var/sector_y = rand() * 10
+
+		if(prob(50))
+			src.bodies += new/datum/galactic_object/star/random()
+		else
+		//Binary System
+			src.bodies += new/datum/galactic_object/star/random()
+			src.bodies += new/datum/galactic_object/star/random()
+
+			//Trinary System!!!
+			if(prob(5))
+				src.bodies += new/datum/galactic_object/star/random()
+
+		//GENERATE N PLANETS
+		// at range and bearing from sector center
+
+			// Add moon(s) based on size of planet
+
+
+/datum/asteroid_controller
+	var/list/available_asteroids = list("asteroid1", "asteroid2", "asteroid3", "asteroid4")
+	var/list/used_asteroids = list()
+	var/list/obj/magnet_target_marker/asteroid/asteroid_markers = list()
+
+	proc/get_available_marker()
+		var/asteroid
+		var/obj/magnet_target_marker/asteroid/marker
+		var/list/possible_ast = list()
+		possible_ast += available_asteroids
+		for(var/i in 1 to length(possible_ast))
+			asteroid = pick(possible_ast)
+			possible_ast -= asteroid
+			marker = GALAXY.asteroids.asteroid_markers[asteroid]
+			if(istype(marker))
+				if(marker.check_for_unacceptable_content())
+					continue
+				marker.erase_area()
+				available_asteroids -= asteroid
+				used_asteroids |= asteroid
+				return marker
+
+	proc/return_marker(obj/magnet_target_marker/asteroid/marker)
+		if(marker.name in used_asteroids)
+			used_asteroids -= marker.name
+			available_asteroids |= marker.name
+
+/obj/magnet_target_marker/asteroid
+	New()
+		..()
+		GALAXY.asteroids.asteroid_markers[src.name] = src
+		SPAWN_DBG(1 SECOND)
+			construct()
 
 /datum/galactic_object
 	var/name
@@ -35,6 +95,8 @@ var/global/datum/galaxy/GALAXY = new
 	var/loud = 0
 	var/navigable = 0 // Can be detected on long distance nav
 	var/scale
+
+
 
 	proc/check_distance(var/ship_x,var/ship_y)
 		var/squared_distance = (ship_x-galactic_x)**2 + (ship_y-galactic_y)**2

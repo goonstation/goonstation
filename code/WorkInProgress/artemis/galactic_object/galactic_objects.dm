@@ -301,6 +301,92 @@
 	icon = 'icons/misc/artemis/galactic_object_ship.dmi'
 	icon_state = "bhole"
 
+// Asteroid
+
+/datum/galactic_object/asteroid
+	name = "Asteroid"
+	body_path_map = /obj/background_star/galactic_object/asteroid
+	body_path_ship = /obj/background_star/galactic_object/large/asteroid
+	galactic_x = 0.5
+	galactic_y = 0.5
+	sector = "A"
+	navigable = 1  // FALSE
+	var/datum/mining_encounter/MC
+	var/rarity_mod = 0
+	var/encounter_generated = FALSE
+	var/obj/magnet_target_marker/asteroid/marker
+	var/variant
+
+/obj/background_star/galactic_object/asteroid
+	name = "Asteroid"
+	icon = 'icons/misc/artemis/galactic_object_map.dmi'
+	icon_state = "ast_group_1"
+
+	New()
+		..()
+		flags |= HAS_ARTEMIS_SCAN
+
+	proc/artemis_scan(var/mob/pilot, var/obj/artemis/ship)
+		var/datum/galactic_object/asteroid/M = master
+		var/dat = {"<span class='alert'><b>Softest of Rocks</b></span>"}
+
+		// TODO Action-Bar for Mining Scan.... ???
+		if(!M.encounter_generated)
+			generate_mining_asteroid()
+
+		// Need to Install Mining Scanner..... ???
+		if(pilot && M.marker && M.encounter_generated)
+			mining_scan(M.marker.magnetic_center, pilot, M.marker.scan_range)
+
+		pilot << browse("<HEAD><TITLE>Asteroid</TITLE></HEAD><TT>[dat]</TT>", "window=fixme_planet")
+
+		return
+
+	proc/generate_mining_asteroid()
+		var/datum/galactic_object/asteroid/M = master
+
+		if(!M.MC)
+			M.MC = mining_controls.select_encounter(M.rarity_mod)
+
+		if(!M.marker)
+			M.marker = GALAXY.asteroids.get_available_marker()
+
+		if(M.MC && M.marker)
+			M.MC.generate(M.marker)
+			M.encounter_generated = TRUE
+			if(my_ship_body)
+				var/obj/background_star/galactic_object/large/asteroid/A = my_ship_body
+				A.set_destination()
+		else
+			boutput(usr, "Uh oh, something's gotten really fucked up with the asteroid system. Please report this to a coder! (ERROR: NO ENCOUNTER)")
+
+	on_unload()
+		var/datum/galactic_object/asteroid/M = master
+		if(M.marker && !M.marker.check_for_unacceptable_content())
+			GALAXY.asteroids.return_marker(M.marker)
+			M.MC = null
+			M.marker = null
+
+/obj/background_star/galactic_object/large/asteroid
+	name = "Asteroid"
+	icon = 'icons/misc/galactic_objects_large.dmi'
+	icon_state = "generic"
+	destination_name = "Asteroid"
+
+	on_load()
+		..()
+		set_destination()
+
+	proc/set_destination()
+		var/datum/galactic_object/asteroid/M = master
+		if(!M.marker) return
+		if(M.encounter_generated)
+			for(var/turf/T in landmarks[LANDMARK_PLANETS])
+				if(landmarks[LANDMARK_PLANETS][T] == M.marker.name)
+					src.landing_zone = T
+					T.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, FALSE, TRUE, FALSE, TRUE)
+
+
 /datum/galactic_object/test
 	name = "F1X-M3"
 	body_path_map = /obj/background_star/galactic_object/test
