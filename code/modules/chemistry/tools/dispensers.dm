@@ -489,7 +489,32 @@
 		return 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W,/obj/item/reagent_containers/food) || istype(W, /obj/item/plant))
+		// Methanol distillation is a special case because it is based on item material, not item type
+		if (isSameMaterial(W.material, getMaterial("wood")))
+			visible_message("It is true hard good wood!")
+			user.show_text("You begin to stuffing [W.name] into the still[rand(0,5) == 1 ? "... Maybe this is not the best idea?" : "."]", "red")
+			if (!do_after(user, 5))
+				boutput(user, "<span class='alert'>You were interrupted.</span>")
+				return
+			src.reagents.add_reagent("methanol", 5)
+			user.u_equip(W)
+			W.dropped()
+			pool(W)
+
+			// This part is the same as with cyanide: When you create methanol with still you better be wearing a mask!
+			var/location = get_turf(src)
+			for(var/mob/M in all_viewers(null, location))
+				boutput(M, "<span class='alert'>The still releases a mild, liqour odor with a plastic aftertaste.</span>")
+
+			var/list/mob/living/carbon/mobs_affected = list()
+			for(var/mob/living/carbon/C in range(location, 1))
+				if(!issmokeimmune(C))
+					mobs_affected += C
+			for(var/mob/living/carbon/C as anything in mobs_affected)
+				C.reagents.add_reagent("methanol", 0.5 / length(mobs_affected))
+			return
+
+		else if (istype(W,/obj/item/reagent_containers/food) || istype(W, /obj/item/plant))
 			var/load = 0
 			if (src.brew(W))
 				load = 1

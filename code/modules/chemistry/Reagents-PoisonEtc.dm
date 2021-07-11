@@ -748,6 +748,54 @@ datum
 				..()
 				return
 
+		harmful/methanol // ethanol/methanol to have same effects as ethanol?
+			name = "methanol"
+			id = "methanol"
+			description = "A simple yet toxic alcohol produced by fermenting wood, its harmful effects are suppressed by ethanol."
+			reagent_state = LIQUID
+			fluid_r = 254
+			fluid_g = 254
+			fluid_b = 255
+			transparency = 95
+			depletion_rate = 0.02
+			var/methanol_counter = 0
+
+			pooled()
+				..()
+				methanol_counter = 0
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				if(!M.reagents.has_reagent("ethanol")) // IRL methanol poisoning is often treated by ethanol IVs. Turns out liver prefers breaking ethanol over methanol!
+					methanol_counter += rand(0,2) * mult
+					M.visible_message("<span class='alert'><b>[M.name]'s</b> methanol counter:[methanol_counter]</span>")
+					if (methanol_counter > 40)
+						if (prob(50))
+							M.take_toxin_damage(2 * mult)
+						else
+							// This is trying to imitate acidosis, but we do not have formic acid
+							M.reagents.add_reagent("formaldehyde", (0.4 * mult)
+
+							M.take_oxygen_deprivation(3 * mult)
+						if (prob(30))
+							M.vomit(rand(3,5))
+							boutput(M, "<span class='alert'><b>You[pick(" feel like having the worst hangover ever",
+											" can't see much past your nose",
+											"r eyesight suddenly fails you for a moment",
+											" feel extremely confused",
+											" have a horrible headache")]!</b></span>")
+						M.change_misstep_chance(rand(1,5) * mult)
+						M.change_eye_blurry(2)
+						if (methanol_counter > 60)
+							M.take_eye_damage(4, 1)
+							M.bioHolder.AddEffect("blind", magical=1)
+							M.take_brain_damage(rand(1,3) * mult)
+
+				else
+					M.visible_message("<span class='alert'><b>[M.name]</b> has ethanol. Is safe from methanol.</span>")
+				..()
+
+
 		harmful/pacid // COGWERKS CHEM REVISION PROJECT.. Change this to Fluorosulfuric Acid
 			name = "fluorosulfuric acid"
 			id = "pacid"
