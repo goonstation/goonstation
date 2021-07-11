@@ -98,6 +98,37 @@ datum
 			thirst_value = 0.75
 			value = 3 // 1 2
 
+		fooddrink/milk/milk_punch
+			name = "milk punch"
+			id = "milk_punch"
+			fluid_r = 248
+			fluid_g = 200
+			fluid_b = 230
+			transparency = 255
+			taste = "like a mistake"
+			description = "Ugh! It's like a smoothie made of snow cone syrup!"
+			reagent_state = LIQUID
+			thirst_value = 0.3
+			value = 3
+
+			on_add(var/mob/M, var/mult = 1)
+				if(probmult(20))
+					var/mob/living/L = M
+					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
+
+		fooddrink/cocktail_fruit_punch
+			name = "fruit punch"
+			id = "fruit_punch"
+			fluid_r = 235
+			fluid_g = 64
+			fluid_b = 52
+			transparency = 190
+			taste = "sugary"
+			description = "A mix of fruit juices and sugar; tastes like being a kid again."
+			reagent_state = LIQUID
+			thirst_value = 2
+			value = 3
+
 		fooddrink/alcoholic
 			name = "alcoholic reagent parent"
 			id = "alcoholic_parent"
@@ -140,6 +171,27 @@ datum
 										S.fields["mi_crim"] = "Underage drinking."
 
 									break
+
+		fooddrink/alcoholic/hard_punch
+			name = "hard punch"
+			id = "hard_punch"
+			fluid_r = 255
+			fluid_g = 87
+			fluid_b = 75
+			transparency = 190
+			taste = "sugary"
+			description = "A mix of fruit juices and alcohol; tastes like being a kid again, but with wine."
+			reagent_state = LIQUID
+			thirst_value = 0.6
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if (method == INGEST)
+					boutput(M, "<em>What a kick!</em>")
+					if (prob(20))
+						M.do_disorient(stamina_damage = 7.5, weakened = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
+						M.throw_at(get_edge_target_turf(M, get_dir(get_step(M, M.dir), M)),(5)/2,1, throw_type = THROW_GUNIMPACT)
+						M.emote("twitch_v", "scream")
 
 		fooddrink/alcoholic/beer
 			name = "beer"
