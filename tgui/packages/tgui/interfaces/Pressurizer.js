@@ -168,26 +168,40 @@ export const Pressurizer = (props, context) => {
               )}>
               <LabeledList>
                 <LabeledList.Item label="Speed">
-                  <Button color={processRate === 1 ? 'good' : 'default'}
-                    onClick={() => handleSetProcessRate(1)}>
+                  <Button
+                    color={processRate === 1 ? 'good' : 'default'}
+                    onClick={() => handleSetProcessRate(1)}
+                  >
                     1
                   </Button>
-                  <Button color={processRate === 2 ? 'good' : 'default'}
-                    onClick={() => handleSetProcessRate(2)}>
+                  <Button
+                    color={processRate === 2 ? 'good' : 'default'}
+                    onClick={() => handleSetProcessRate(2)}
+                  >
                     2
                   </Button>
-                  <Button color={processRate === 3 ? 'good' : 'default'}
-                    onClick={() => handleSetProcessRate(3)}>
+                  <Button
+                    color={processRate === 3 ? 'good' : 'default'}
+                    onClick={() => handleSetProcessRate(3)}
+                  >
                     3
                   </Button>
-                  { !!emagged && (<Button
-                    content="4"
-                    color={processRate === 4 ? 'good' : 'default'}
-                    onClick={() => handleSetProcessRate(4)} />)}
-                  { !!emagged && <Button
-                    content="5"
-                    color={processRate === 5 ? 'good' : 'default'}
-                    onClick={() => handleSetProcessRate(5)} /> }
+                  {!!emagged && (
+                    <Button
+                      color={processRate === 4 ? 'good' : 'default'}
+                      onClick={() => handleSetProcessRate(4)}
+                    >
+                      4
+                    </Button>
+                  )}
+                  {!!emagged && (
+                    <Button
+                      color={processRate === 5 ? 'good' : 'default'}
+                      onClick={() => handleSetProcessRate(5)}
+                    >
+                      5
+                    </Button>
+                  )}
                 </LabeledList.Item>
                 <LabeledList.Item label="Progress">
                   <ProgressBar
