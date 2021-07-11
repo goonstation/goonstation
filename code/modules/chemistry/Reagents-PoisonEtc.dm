@@ -1560,7 +1560,7 @@ datum
 						boutput(M, "<span class='notice'>You feel a little [pick("unlike yourself", "out of it", "different", "strange")].</span>")
 					if (progress_timer > 10)
 						M.real_name = M.bioHolder.ownerName
-						if (M.bioHolder?.mobAppearance?.mutant_race)
+						if (M.bioHolder?.mobAppearance?.mutant_race?.dna_mutagen_ok)
 							M.set_mutantrace(M.bioHolder.mobAppearance.mutant_race.type)
 						M.UpdateName()
 					if(ishuman(M))
