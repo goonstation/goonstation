@@ -119,16 +119,22 @@ export const Pressurizer = (props, context) => {
               <Divider />
               <LabeledList>
                 <LabeledList.Item label="Fan Status">
-                  <Button color={fanState === FanState.Off ? 'bad' : 'default'}
-                    onClick={() => handleSetFan(FanState.Off)}>
+                  <Button
+                    color={fanState === FanState.Off ? 'bad' : 'default'}
+                    onClick={() => handleSetFan(FanState.Off)}
+                  >
                     Off
                   </Button>
-                  <Button color={fanState === FanState.In ? 'good' : 'default'}
-                    onClick={() => handleSetFan(FanState.In)}>
+                  <Button
+                    color={fanState === FanState.In ? 'good' : 'default'}
+                    onClick={() => handleSetFan(FanState.In)}
+                  >
                     In
                   </Button>
-                  <Button color={fanState === FanState.Out ? 'good' : 'default'}
-                    onClick={() => handleSetFan(FanState.Out)}>
+                  <Button
+                    color={fanState === FanState.Out ? 'good' : 'default'}
+                    onClick={() => handleSetFan(FanState.Out)}
+                  >
                     Out
                   </Button>
                 </LabeledList.Item>
