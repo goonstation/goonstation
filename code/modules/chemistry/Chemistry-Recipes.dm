@@ -2586,7 +2586,7 @@ datum
 			result_amount = 1
 			#endif
 			mix_phrase = "The solution settles and congeals into a strange viscous fluid that seems to have the properties of both a liquid and a gas."
-			required_temperature = T0C - 277
+			required_temperature = 0
 
 
 		smokepowder
@@ -3722,7 +3722,7 @@ datum
 			mix_phrase = "The mixture starts to rapidly fizzle and heat up."
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				holder.temperature_reagents(holder.total_temperature + created_volume*200)
+				holder.temperature_reagents(holder.total_temperature + created_volume*200, 400, change_min = 1)
 
 		cryostylane_cold
 			name = "cryostylane chilling"
@@ -3735,7 +3735,7 @@ datum
 			mix_phrase = "The mixture begins to rapidly freeze."
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				holder.temperature_reagents(holder.total_temperature - created_volume*200)
+				holder.temperature_reagents(holder.total_temperature - created_volume*200, 400, change_min = 1)
 
 		reversium
 			name = "Reversium"

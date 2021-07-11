@@ -1,4 +1,17 @@
 
+(t)sat jul 10 21
+(u)Emily
+(e)⛔|removal
+(+)Removed the incredibly laggy internals display from the status tab. Maybe someone will fix it eventually.
+(u)112358sam
+(p)5193
+(e)📄|tgui
+(+)Slot machines use bank account funds.
+(+)ATMs no longer withdraw to and deposit from ID cards.
+(u)Penny
+(p)5055
+(e)🆕|feature
+(*)Mechanics can now set the access requirements of newly constructed airlocks- find the new Access Lite in your secure lockers to try it out!
 (t)fri jul 09 21
 (u)Gerhazo
 (p)5359

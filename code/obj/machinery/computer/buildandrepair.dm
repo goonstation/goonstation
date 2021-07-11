@@ -12,6 +12,7 @@
 		qdel(src)
 //	weight = 1.0E8
 
+ABSTRACT_TYPE(/obj/item/circuitboard)
 /obj/item/circuitboard
 	density = 0
 	anchored = 0
@@ -223,11 +224,16 @@
 			if (isscrewingtool(P))
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				boutput(user, "<span class='notice'>You connect the monitor.</span>")
-				var/B = new src.circuit.computertype ( src.loc )
-				if (circuit.powernet) B:powernet = circuit.powernet
-				if (circuit.id) B:id = circuit.id
-				if (circuit.records) B:records = circuit.records
-				if (circuit.frequency) B:frequency = circuit.frequency
+				var/obj/machinery/computer/B = new src.circuit.computertype ( src.loc )
+				B.set_dir(src.dir)
+				if (circuit.powernet)
+					B.powernet = circuit.powernet
+				if (circuit.id)
+					B.id = circuit.id
+				if (circuit.records)
+					B.records = circuit.records
+				if (circuit.frequency)
+					B.frequency = circuit.frequency
 				logTheThing("station", user, null, "assembles [B] [log_loc(B)]")
 				qdel(src)
 
