@@ -83,7 +83,7 @@ export const Pressurizer = (props, context) => {
       height={390}>
       <Window.Content>
         <Flex>
-          <Flex.Item width="900px">
+          <Flex.Item>
             <PortableBasicInfo
               connected={connected}
               pressure={pressure}
