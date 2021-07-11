@@ -256,6 +256,10 @@ datum
 			value = 7 // 3 2 1 heat
 			var/counter = 1
 
+			pooled()
+				..()
+				counter = 1
+
 			on_mob_life(var/mob/M, var/mult = 1) // -cogwerks. previous version
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
