@@ -2089,7 +2089,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_foot = list(/obj/item/clothing/shoes/tourist)
 	slot_belt = list(/obj/item/storage/belt/utility/superhero)
 	slot_back = list()
-	slot_poc2 = list(/obj/item/device/pda2
+	slot_poc2 = list(/obj/item/device/pda2)
 
 	New()
 		..()
