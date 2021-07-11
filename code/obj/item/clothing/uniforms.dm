@@ -191,6 +191,7 @@
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_pride.dmi'
 	icon_state = "gay"
 	item_state = "gay"
+	burn_possible = 0
 
 	ace
 		name = "ace pride jumpsuit"
