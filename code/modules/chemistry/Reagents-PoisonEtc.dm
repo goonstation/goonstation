@@ -254,9 +254,11 @@ datum
 			penetrates_skin = 1
 			blob_damage = 5
 			value = 7 // 3 2 1 heat
+			var/counter = 1
 
 			on_mob_life(var/mob/M, var/mult = 1) // -cogwerks. previous version
 				if (!M) M = holder.my_atom
+				if (!counter) counter = 1
 				M.take_toxin_damage(1.5 * mult)
 				if (probmult(8))
 					M.emote("drool")
@@ -264,10 +266,21 @@ datum
 					boutput(M, "<span class='alert'>You cannot breathe!</span>")
 					M.losebreath += (1 * mult)
 					M.emote("gasp")
-				if (prob(8))
-					boutput(M, "<span class='alert'>You feel horribly weak.</span>")
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 30 * mult))
-					M.take_toxin_damage(2 * mult)
+				switch(counter+= (1 * mult))
+					if (20)
+						boutput(M, "<span class='alert'>You feel a bit weak.</span>")
+						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 15 * mult))
+						M.take_toxin_damage(1 * mult)
+					if (40)
+						boutput(M, "<span class='alert'>You feel very weak.</span>")
+						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 20 * mult))
+						M.take_toxin_damage(1.5 * mult)
+					if (55 to INFINITY)
+						boutput(M, "<span class='alert'>You feel horribly weak.</span>")
+						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 30 * mult))
+						M.take_toxin_damage(2 * mult)
+						counter = 42
+
 				..()
 				return
 
