@@ -113,7 +113,7 @@
 /obj/item/magnet_parts
 	name = "mineral magnet parts"
 	desc = "Used to construct a new magnet on a magnet chassis."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 	var/constructed_magnet = /obj/machinery/mining_magnet
 

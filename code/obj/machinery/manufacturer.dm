@@ -1891,7 +1891,7 @@
 	name = "Manufacturer Blueprint"
 	desc = "It's a blueprint to allow a manufacturing unit to build something."
 	info = "There's all manner of confusing diagrams and instructions on here. It's meant for a machine to read."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "blueprint"
 	item_state = "sheet"
 	var/datum/manufacture/blueprint = null
@@ -2009,7 +2009,7 @@
 /******************** Phaser Drone *******************/
 /obj/item/paper/manufacturer_blueprint/gunbot
 	name = "Security Robot blueprint"
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	info = "<h3>AP-Class Security Robot</h3><i>A schematic blueprint for a security robot, modified to fit a station-grade manufacturer.</i>"
 	icon_state = "blueprint"
 	item_state = "sheet"

@@ -1,7 +1,7 @@
 
 /obj/item/electronics/
 	name = "electronic thing"
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	force = 5
 	hit_type = DAMAGE_BLUNT
@@ -382,7 +382,7 @@
 ////////////////////////////////////////////////////////////////?
 /obj/item/electronics/soldering
 	name = "soldering iron"
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "solderingiron"
 	force = 10
 	hit_type = DAMAGE_BURN
@@ -453,7 +453,7 @@
 /obj/machinery/rkit
 	name = "ruckingenur kit"
 	desc = "Used for reverse engineering certain items."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "rkit"
 	anchored = 1
 	density = 1

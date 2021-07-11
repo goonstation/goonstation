@@ -338,68 +338,68 @@ obj/machinery/vehicle/miniputt/pilot
 /obj/item/putt/boards
 	name = "MiniPutt Circuitry Kit"
 	desc = "A kit containing various circuit boards for use in MiniPutt ships."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /obj/item/putt/control
 	name = "MiniPutt Control System Kit"
 	desc = "A kit containing control interfaces and display screens for MiniPutt ships."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /obj/item/putt/engine
 	name = "MiniPutt Engine Manifold"
 	desc = "A standard engine housing for MiniPutt ships."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /* miniputts can just use the standard pod armor idgaf
 /obj/item/putt/armor_light
 	name = "Light Pod Armor"
 	desc = "Standard exterior plating for MiniPutt ships."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /obj/item/putt/armor_custom
 	name = "MiniPutt Armor"
 	desc = "Plating for vehicle pods made from a custom compound."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /obj/item/putt/armor_heavy
 	name = "Heavy MiniPutt Armor"
 	desc = "Reinforced exterior plating for MiniPutt ships."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /obj/item/putt/armor_black
 	name = "Strange MiniPutt Armor"
 	desc = "The box is stamped with the Nanotrasen symbol and a lengthy list of classified warnings. Neat."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /obj/item/putt/armor_red
 	name = "Syndicate MiniPutt Armor"
 	desc = "The box is stamped with the logos of various Syndicate affiliated corporations."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /obj/item/putt/armor_industrial
 	name = "Industrial MiniPutt Armor"
 	desc = "A kit of bulky industrial armor plates for MiniPutt ships."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /obj/item/putt/armor_gold
 	name = "Gold MiniPutt Armor"
 	desc = "It's really only gold-plated."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 */
 /obj/item/putt/frame_box
 	name = "MiniPutt Frame Kit"
 	desc = "You can hear an awful lot of junk rattling around in this box."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 	attack_self(mob/user as mob)
@@ -1324,61 +1324,61 @@ obj/machinery/vehicle/miniputt/pilot
 /obj/item/pod/boards
 	name = "Pod Circuitry Kit"
 	desc = "A kit containing various circuit boards for use in  vehicle pods."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /obj/item/pod/control
 	name = "Control System Kit"
 	desc = "A kit containing control interfaces and display screens for vehicle pods."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /obj/item/pod/engine
 	name = "Engine Manifold"
 	desc = "A standard engine housing for vehicle pods."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /obj/item/pod/armor_light
 	name = "Light Pod Armor"
 	desc = "Standard exterior plating for vehicle pods."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /obj/item/pod/armor_custom
 	name = "Pod Armor"
 	desc = "Plating for vehicle pods made from a custom compound."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /obj/item/pod/armor_heavy
 	name = "Heavy Pod Armor"
 	desc = "Reinforced exterior plating for vehicle pods."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /obj/item/pod/nt_light
 	name = "Light NT Pod Armor"
 	desc = "Standard exterior plating for vehicle pods."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /obj/item/pod/nt_robust
 	name = "Robust NT Pod Armor"
 	desc = "Standard exterior plating for vehicle pods."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /obj/item/pod/sy_light
 	name = "Light Syndicate Pod Armor"
 	desc = "Standard exterior plating for vehicle pods."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /obj/item/pod/sy_robust
 	name = "Robust Syndicate Pod Armor"
 	desc = "Standard exterior plating for vehicle pods."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 
@@ -1386,31 +1386,31 @@ obj/machinery/vehicle/miniputt/pilot
 /obj/item/pod/armor_black
 	name = "Strange Pod Armor"
 	desc = "The box is stamped with the Nanotrasen symbol and a lengthy list of classified warnings. Neat."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /obj/item/pod/armor_red
 	name = "Syndicate Pod Armor"
 	desc = "The box is stamped with the logos of various Syndicate affiliated corporations."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /obj/item/pod/armor_industrial
 	name = "Industrial Pod Armor"
 	desc = "A kit of bulky industrial armor plates for vehicle pods."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /obj/item/pod/armor_gold
 	name = "Gold Pod Armor"
 	desc = "It's really only gold-plated."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 /obj/item/pod/frame_box
 	name = "Pod Frame Kit"
 	desc = "You can hear an awful lot of junk rattling around in this box."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 
 	attack_self(mob/user as mob)
@@ -1462,7 +1462,7 @@ obj/machinery/vehicle/miniputt/pilot
 /obj/item/pod/paintjob
 	name = "Pod Paint Job Kit"
 	desc = "A kit containing everything you need to bling out your pod."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
 	var/pod_skin = "pod_skin1"
 

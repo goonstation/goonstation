@@ -1647,7 +1647,7 @@
 /obj/item/machineboard
 	name = "machine module"
 	desc = "A circuit board assembly used in the construction of machinery."
-	icon = 'icons/obj/machinery/electronics.dmi'
+	icon = 'icons/obj/electronics.dmi'
 	icon_state = "board1"
 	mats = 2
 	var/machinepath = null

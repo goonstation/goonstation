@@ -19424,7 +19424,7 @@
 	},
 /obj/table/wood/auto,
 /obj/item/paper{
-	icon = 'icons/obj/machinery/electronics.dmi';
+	icon = 'icons/obj/electronics.dmi';
 	icon_state = "blueprint";
 	info = "<h3>Project IRIDIUM</h3><i>It depicts a gigantic automated drone. Many of the details have been blacked out by a marker.</i>";
 	item_state = "sheet";
@@ -19480,7 +19480,7 @@
 	},
 /obj/table/wood/auto,
 /obj/item/paper{
-	icon = 'icons/obj/machinery/electronics.dmi';
+	icon = 'icons/obj/electronics.dmi';
 	icon_state = "blueprint";
 	info = "<h3>AR-Class Automated Drone</h3><i>A schematic blueprint for a heavily-armed artillery drone.</i>";
 	item_state = "sheet";
@@ -20321,7 +20321,7 @@
 	},
 /obj/table/wood/auto,
 /obj/item/paper{
-	icon = 'icons/obj/machinery/electronics.dmi';
+	icon = 'icons/obj/electronics.dmi';
 	icon_state = "blueprint";
 	info = "<h3>X-Class Automated Drone</h3><i>A schematic blueprint for a railgun-equipped experimental automated drone.</i>";
 	item_state = "sheet";
@@ -20369,7 +20369,7 @@
 	},
 /obj/table/wood/auto,
 /obj/item/paper{
-	icon = 'icons/obj/machinery/electronics.dmi';
+	icon = 'icons/obj/electronics.dmi';
 	icon_state = "blueprint";
 	info = "<h3>SC-Class Automated Drone</h3><i>A schematic blueprint for a basic scout drone.</i>";
 	item_state = "sheet";
@@ -30417,7 +30417,7 @@
 "bKh" = (
 /obj/table/reinforced/auto,
 /obj/item/paper{
-	icon = 'icons/obj/machinery/electronics.dmi';
+	icon = 'icons/obj/electronics.dmi';
 	icon_state = "blueprint";
 	info = "<h3>Project HELIOS</h3><i>The blueprint depicts hundreds of ornately-designed cogs and gears, surrounded by completely unreadable script.</i>";
 	item_state = "sheet";
@@ -36569,7 +36569,7 @@
 "ccN" = (
 /obj/table/auto,
 /obj/item/paper{
-	icon = 'icons/obj/machinery/electronics.dmi';
+	icon = 'icons/obj/electronics.dmi';
 	icon_state = "blueprint";
 	info = "<h3>Project Apeiron Initial Design Specifications</h3><i>Most of the blueprint is faded or smeared, but it appears to describe an early version of the RCD.</i>";
 	item_state = "sheet";
