@@ -151,6 +151,9 @@
 	icon_state = "wstool"
 	desc = "Like a stool, but just made out of wood."
 	parts_type = /obj/item/furniture_parts/woodenstool
+	New()
+		..()
+		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
 /* ================================================= */
 /* -------------------- Benches -------------------- */
 /* ================================================= */
@@ -244,10 +247,16 @@
 /obj/stool/bench/wooden
 	icon = 'icons/obj/furniture/bench_wood.dmi'
 	parts_type = /obj/item/furniture_parts/bench/wooden
+	New()
+		..()
+		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
 
 /obj/stool/bench/wooden/auto
 	auto = 1
 	auto_path = /obj/stool/bench/wooden/auto
+	New()
+		..()
+		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
 
 /* ---------- Sauna ---------- */
 
@@ -1110,6 +1119,9 @@
 	anchored = 0
 	//deconstructable = 0
 	parts_type = /obj/item/furniture_parts/wood_chair
+	New()
+		..()
+		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
 
 /* ============================================== */
 /* -------------------- Pews -------------------- */

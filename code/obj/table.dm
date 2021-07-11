@@ -439,6 +439,9 @@
 	auto_type = /obj/table/wood/auto
 	parts_type = /obj/item/furniture_parts/table/wood
 
+	New()
+		..()
+		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
 	auto
 		auto = 1
 
@@ -449,6 +452,10 @@
 	parts_type = /obj/item/furniture_parts/table/wood/desk
 	has_storage = 1
 
+	New()
+		..()
+		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
+
 /obj/table/wood/round
 	icon = 'icons/obj/furniture/table_wood_round.dmi'
 	auto_type = /obj/table/wood/round/auto
@@ -457,11 +464,19 @@
 	auto
 		auto = 1
 
+	New()
+		..()
+		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
+
 /obj/table/folding
 	name = "folding table"
 	desc = "A table with a faux wood top designed for quick assembly and toolless disassembly."
 	icon = 'icons/obj/furniture/table_folding.dmi'
 	parts_type = /obj/item/furniture_parts/table/folding
+
+	New()
+		..()
+		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
 
 	attack_hand(mob/user as mob)
 		if (user.is_hulk())
@@ -525,6 +540,9 @@
 	auto_type = /obj/table/reinforced/bar/auto
 	parts_type = /obj/item/furniture_parts/table/reinforced/bar
 
+	New()
+		..()
+		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
 	auto
 		auto = 1
 
