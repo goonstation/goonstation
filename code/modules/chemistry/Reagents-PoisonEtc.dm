@@ -272,21 +272,20 @@ datum
 					M.emote("gasp")
 				switch(counter+= (mult))
 					if (20 to 30)
-						boutput(M, "<span class='alert'>You feel a bit weak.</span>")
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 1 SECOND * mult))
-						M.take_toxin_damage(mult)
-						counter = 31
-					if (50 to 60)
-						boutput(M, "<span class='alert'>You feel very weak.</span>")
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS * mult))
-						M.take_toxin_damage(1.5 * mult)
-						counter = 61
-					if (75 to INFINITY)
-						boutput(M, "<span class='alert'>You feel horribly weak.</span>")
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS * mult))
-						M.take_toxin_damage(2 * mult)
-						counter = 65
-
+						if (mult(15))
+							boutput(M, "<span class='alert'>You feel weak.</span>")
+							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 1 SECONDS * mult))
+							M.take_toxin_damage(0.5 * mult)
+					if (31 to 45)
+						if (mult(20))
+							boutput(M, "<span class='alert'>You feel very weak.</span>")
+							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS * mult))
+							M.take_toxin_damage(mult)
+					if (46 to INFINITY)
+						if (mult(25))
+							boutput(M, "<span class='alert'>You feel horribly weak.</span>")
+							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS * mult))
+							M.take_toxin_damage(1.5 * mult)
 				..()
 				return
 
