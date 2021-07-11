@@ -138,7 +138,7 @@ export const Pressurizer = (props, context) => {
                     Out
                   </Button>
                 </LabeledList.Item>
-                <LabeledList.Item label="Release pressure">
+                <LabeledList.Item label="Release Pressure">
                   <Button onClick={() => handleSetPressure(minRelease)}>
                     Min
                   </Button>
