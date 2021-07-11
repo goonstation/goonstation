@@ -38,6 +38,7 @@
 	var/process_materials = PROCESS_OFF
 	var/blast_delay = 5 SECONDS
 	var/blast_armed = FALSE
+	var/min_blast_pct = 0.2
 	var/material_progress = 0
 	/// Object actively being processed
 	var/obj/item/target_material = null
@@ -364,6 +365,7 @@
 		"releasePressure" = src.release_pressure,
 		"blastArmed" = src.blast_armed,
 		"blastDelay" = src.blast_delay/10,
+		"minBlastPercent" = src.min_blast_pct,
 		"materialsCount" = src.contents.len,
 		"materialsProgress" = src.material_progress,
 		"targetMaterial" = src.target_material,
@@ -391,6 +393,7 @@
 				. = set_release_pressure(target_pressure)
 
 		if("arm")
+			if(MIXTURE_PRESSURE(src.air_contents) < (maximum_pressure * min_blast_pct) || !is_air_safe()) return
 			src.arm_blast()
 			. = TRUE
 			src.update_icon()
