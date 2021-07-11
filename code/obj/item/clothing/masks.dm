@@ -336,6 +336,21 @@
 			if (prob(60))
 				src.victim.emote("laugh")
 
+	attack_hand(var/mob/user)
+		if (user.mind.assigned_role == "Clown" && istraitor(user))
+			return ..()
+		else
+			if (ishuman(user))
+				var/mob/living/carbon/human/U = user
+				if(!U.wear_mask)
+					U.equip_if_possible(src,U.slot_wear_mask)
+					message_admins("[key_name(U)] picked up a cursed clown mask ([src]).")
+					logTheThing("combat", U, null, "picked up a cursed clown mask ([src]) at [log_loc(U)].")
+				else
+					return ..()
+			else
+				return ..()
+
 	afterattack(atom/target, mob/user, reach, params)
 		if ( reach <= 1 && user.mind && user.mind.assigned_role == "Clown" && istraitor(user) && istype(user,/mob/living/carbon/human) && istype(target,/mob/living/carbon/human) )
 			var/mob/living/carbon/human/U = user
@@ -347,7 +362,6 @@
 
 				// If we don't empty out that slot first, it could blip the mask out of existence
 				T.drop_from_slot(T.wear_mask)
-
 				T.equip_if_possible(src,T.slot_wear_mask)
 
 
