@@ -634,7 +634,7 @@
 	duration = 0.2 SECONDS
 	interrupt_flags =  INTERRUPT_STUNNED | INTERRUPT_ACT
 	id = "shoveMobIntoChute"
-	icon = 'icons/obj/disposal.dmi'
+	icon = 'icons/obj/machinery/disposal.dmi'
 	icon_state = "shoveself-disposal" //varies, see below
 	var/obj/machinery/disposal/chute
 	var/mob/user

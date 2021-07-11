@@ -6724,7 +6724,7 @@
 /obj/decal/cleanable/dirt,
 /obj/computerframe{
 	desc = "It is highly unlikely that this still works.";
-	icon = 'icons/obj/computer.dmi';
+	icon = 'icons/obj/machinery/computer.dmi';
 	icon_state = "datamedb";
 	name = "smashed computer"
 	},
@@ -28422,7 +28422,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "dwaine";
 	name = "old mainframe"
 	},
@@ -28433,7 +28433,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "tapedrive-p";
 	name = "downed server"
 	},
@@ -30697,7 +30697,7 @@
 "bzu" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	pixel_y = 32;
 	starts_established = 1
 	},
@@ -30710,7 +30710,7 @@
 "bzy" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	pixel_y = 32
 	},
 /turf/simulated/floor/bot,
@@ -31515,7 +31515,7 @@
 "bBp" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	id = "ai2medbay";
 	pixel_x = 32;
 	starts_established = 1
@@ -34385,7 +34385,7 @@
 "bIV" = (
 /obj/decal/fakeobjects{
 	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "broken machine"
 	},
@@ -34421,7 +34421,7 @@
 "bIY" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	icon = 'icons/obj/airtunnel.dmi';
+	icon = 'icons/obj/machinery/airtunnel.dmi';
 	id = "ai2medbay";
 	pixel_x = 32
 	},
@@ -34966,7 +34966,7 @@
 /obj/decal/fakeobjects{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "Active Particle Phase Matrix"
 	},
@@ -52002,7 +52002,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "dwaine";
 	name = "old mainframe"
 	},
@@ -52054,7 +52054,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
-	icon = 'icons/obj/networked.dmi';
+	icon = 'icons/obj/machinery/networked.dmi';
 	icon_state = "server0";
 	name = "downed server"
 	},
@@ -52598,7 +52598,7 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "Yikes.";
-	icon = 'icons/obj/machines/nuclear64x32.dmi';
+	icon = 'icons/obj/machinery/nuclear64x32.dmi';
 	icon_state = "broken";
 	name = "damaged reactor"
 	},
@@ -52631,7 +52631,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "It is still kinda warm.";
-	icon = 'icons/obj/machines/nuclear.dmi';
+	icon = 'icons/obj/machinery/nuclear.dmi';
 	icon_state = "neutinj";
 	name = "busted machine"
 	},
