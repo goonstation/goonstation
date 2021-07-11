@@ -50,6 +50,30 @@
 
 	return candidates
 
+/proc/CanPlayerBeAssignedJob(var/mob/new_player/player, var/datum/job/JOB)
+	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
+		if(checktraitor(player) && (JOB.cant_spawn_as_rev || JOB.cant_spawn_as_con))
+			// Fixed AI, security etc spawning as rev heads. The special job picker doesn't care about that var yet,
+			// but I'm not gonna waste too much time tending to a basically abandoned game mode (Convair880).
+			return FALSE
+	if (!JOB || jobban_isbanned(player,JOB.name))
+		return FALSE
+	if (JOB.needs_college && !player.has_medal("Unlike the director, I went to college"))
+		return FALSE
+	if (JOB.requires_whitelist && !NT.Find(ckey(player.mind.key)))
+		return FALSE
+	if (!JOB.allow_traitors && player.mind.special_role ||  !JOB.allow_spy_theft && player.mind.special_role == "spy_thief")
+		return FALSE
+
+	return TRUE
+
+/proc/AssignJobToPlayer(var/mob/new_player/player, var/datum/job/JOB, var/assign_stage, list/unassigned)
+	logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [player] took [JOB.name] from [assign_stage]")
+	player.mind.assigned_role = JOB.name
+	logTheThing("debug", player, null, "assigned job: [player.mind.assigned_role]")
+	unassigned -= player
+	JOB.assigned++
+
 /proc/DivideOccupations()
 	set background = 1
 
@@ -70,13 +94,11 @@
 			player.mind.assigned_role = "Construction Worker"
 		return
 
-	var/list/pick1 = list()
-	var/list/pick2 = list()
-	var/list/pick3 = list()
+	var/list/favourite_candidates = list()
+	var/list/medium_priority_candidates = list()
+	var/list/low_priority_candidates = list()
 
-	// Stick all the available jobs into its own list so we can wiggle the fuck outta it
-	var/list/available_job_roles = list()
-	// Apart from ones in THIS list, which are jobs we want to assign before any others
+	// This is the list of jobs we want to assign before any others
 	var/list/high_priority_jobs = list()
 	// This list is for jobs like staff assistant which have no limits, or other special-case
 	// shit to hand out to people who didn't get one of the main limited slot jobs
@@ -86,29 +108,23 @@
 	var/list/engineering_staff = list()
 	var/list/research_staff = list()
 
-
 	for(var/datum/job/JOB in job_controls.staple_jobs)
-		// If it's hi-pri, add it to that list. Simple enough
 		if (JOB.high_priority_job)
 			high_priority_jobs.Add(JOB)
-		// If we've got a job with the low priority var set or no limit, chuck it in the
-		// low-pri list and move onto the next job - if we don't do this, the first time
-		// it hits a limitless job it'll get stuck on it and hand it out to everyone then
-		// boot the game up resulting in ~WEIRD SHIT~
-		else if (JOB.low_priority_job)
-			low_priority_jobs += JOB.name
-			continue
-		// otherwise it's a normal role so it goes in that list instead
-		else
-			available_job_roles.Add(JOB)
 
-	// Wiggle it like a pissy caterpillar
-	shuffle_list(available_job_roles)
+		if (JOB.low_priority_job)
+			low_priority_jobs += JOB.name
+
 	// Wiggle the players too so that priority isn't determined by key alphabetization
 	shuffle_list(unassigned)
 
-	// First we deal with high-priority jobs like Captain or AI which generally will always
-	// be present on the station - we want these assigned first just to be sure
+	///////////////////////////////
+	// ASSIGN HIGH PRIORITY JOBS //
+	///////////////////////////////
+
+	// Try and assign at least one person to each high-priority job like Captain
+	// or AI which generally will always be present on the station - we want these
+	// assigned first just to be sure
 	// Though we don't want to do this in sandbox mode where it won't matter anyway
 	if(master_mode != "sandbox")
 		for(var/datum/job/JOB in high_priority_jobs)
@@ -116,65 +132,54 @@
 
 			if (JOB.limit > 0 && JOB.assigned >= JOB.limit) continue
 
-			// get all possible candidates for it
-			pick1 = FindOccupationCandidates(unassigned,JOB.name,1)
-			pick2 = FindOccupationCandidates(unassigned,JOB.name,2)
-			pick3 = FindOccupationCandidates(unassigned,JOB.name,3)
+			// get candidates who have the job set as their favourite
+			favourite_candidates = FindOccupationCandidates(unassigned,JOB.name,1)
 
 			// now assign them - i'm not hardcoding limits on these because i don't think any
 			// of us are quite stupid enough to edit the AI's limit to -1 preround and have a
 			// horrible multicore PC station round.. (i HOPE anyway)
-			for(var/mob/new_player/candidate in pick1)
+			for(var/mob/new_player/candidate in favourite_candidates)
 				if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
-				logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv1")
-				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "assigned job: [candidate.mind.assigned_role]")
-				unassigned -= candidate
-				JOB.assigned++
-			for(var/mob/new_player/candidate in pick2)
-				if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
-				logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv2")
-				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "assigned job: [candidate.mind.assigned_role]")
-				unassigned -= candidate
-				JOB.assigned++
-			for(var/mob/new_player/candidate in pick3)
-				if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
-				logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv3")
-				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "assigned job: [candidate.mind.assigned_role]")
-				unassigned -= candidate
-				JOB.assigned++
-	else
-		// if we are in sandbox mode just roll the hi-pri jobs back into the regular list so
-		// people can still get them if they chose them
-		available_job_roles = available_job_roles | high_priority_jobs
+
+				AssignJobToPlayer(candidate, JOB, "High Priority Job Picker Lv1", unassigned)
+
+			// don't keep trying to assign this job to people if someone has filled at least one slot, and it's not their favourite job
+			if (JOB.assigned < 1)
+				// get candidates who have the job set as medium priority
+				medium_priority_candidates = FindOccupationCandidates(unassigned,JOB.name,2)
+
+				for(var/mob/new_player/candidate in medium_priority_candidates)
+					if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
+					AssignJobToPlayer(candidate, JOB, "High Priority Job Picker Lv2", unassigned)
+
+			// don't keep trying to assign this job to people if someone has filled at least one slot, and it's not their favourite job
+			if (JOB.assigned < 1)
+				// get candidates who have the job set as low priority
+				low_priority_candidates = FindOccupationCandidates(unassigned,JOB.name,3)
+
+				for(var/mob/new_player/candidate in low_priority_candidates)
+					if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
+					AssignJobToPlayer(candidate, JOB, "High Priority Job Picker Lv3", unassigned)
+
+	///////////////////////////
+	// ASSIGN FAVOURITE JOBS //
+	///////////////////////////
 
 	// Next we go through each player and see if we can get them into their favorite jobs
-	// If we don't do this loop then the main loop below might get to a job they have in their
-	// medium or low priority lists first and give them that one rather than their favorite
 	for (var/mob/new_player/player in unassigned)
-		// If they don't have a favorite, skip em
 		if (derelict_mode) // stop freaking out at the weird jobs
 			continue
+		// If they don't have a favorite, skip em
 		if (!player?.client?.preferences || player?.client?.preferences.job_favorite == null)
 			continue
+
 		// Now get the in-system job via the string
 		var/datum/job/JOB = find_job_in_controller_by_string(player.client.preferences.job_favorite)
-		// Do a few checks to make sure they're allowed to have this job
-		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			if(checktraitor(player) && (JOB.cant_spawn_as_rev || JOB.cant_spawn_as_con))
-				// Fixed AI, security etc spawning as rev heads. The special job picker doesn't care about that var yet,
-				// but I'm not gonna waste too much time tending to a basically abandoned game mode (Convair880).
-				continue
-		if (!JOB || jobban_isbanned(player,JOB.name))
+
+		// check if the player can be assigned the job
+		if (!CanPlayerBeAssignedJob(player, JOB))
 			continue
-		if (JOB.needs_college && !player.has_medal("Unlike the director, I went to college"))
-			continue
-		if (JOB.requires_whitelist && !NT.Find(ckey(player.mind.key)))
-			continue
-		if (!JOB.allow_traitors && player.mind.special_role ||  !JOB.allow_spy_theft && player.mind.special_role == "spy_thief")
-			continue
+
 		// If there's an open job slot for it, give the player the job and remove them from
 		// the list of unassigned players, hey presto everyone's happy (except clarks probly)
 		if (JOB.limit < 0 || !(JOB.assigned >= JOB.limit))
@@ -185,106 +190,96 @@
 			else if (istype(JOB, /datum/job/research/medical_doctor))
 				medical_staff += player
 
-			logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [player] took [JOB.name] from favorite selector")
-			player.mind.assigned_role = JOB.name
-			logTheThing("debug", player, null, "assigned job: [player.mind.assigned_role]")
-			unassigned -= player
-			JOB.assigned++
+			AssignJobToPlayer(player, JOB, "Favorite Job Picker", unassigned)
 
-	// Do this loop twice - once for med priority and once for low priority, because elsewise
-	// it was causing weird shit to happen where having something in low priority would
-	// sometimes cause you to get that instead of a higher prioritized job
-	for(var/datum/job/JOB in available_job_roles)
-		// If we've got everyone a job, then stop wasting cycles and get on with the show
-		if (unassigned.len == 0) break
-		// If there's no more slots for this job available, move onto the next one
-		if (JOB.limit > 0 && JOB.assigned >= JOB.limit) continue
-		// First, rebuild the lists of who wants to be this job
-		pick2 = FindOccupationCandidates(unassigned,JOB.name,2)
-		// Now loop through the candidates in order of priority, and elect them to the
-		// job position if possible - if at any point the job is filled, break the loops
-		for(var/mob/new_player/candidate in pick2)
-			if (istype(JOB, /datum/job/engineering/engineer))
-				engineering_staff += candidate
-			else if (istype(JOB, /datum/job/research/scientist))
-				research_staff += candidate
-			else if (istype(JOB, /datum/job/research/medical_doctor))
-				medical_staff += candidate
+	/////////////////////////////////
+	// ASSIGN MEDIUM PRIORITY JOBS //
+	/////////////////////////////////
 
-			if (JOB.assigned >= JOB.limit || unassigned.len == 0)
+	// Next go through each of the remaining players and see if we can assign them one of their medium priority jobs
+	for (var/mob/new_player/player in unassigned)
+		if (derelict_mode) // stop freaking out at the weird jobs
+			continue
+
+		// If they don't have any medium priority preferences, skip em
+		if (!player?.client?.preferences || player?.client?.preferences.jobs_med_priority.len == 0)
+			continue
+
+		var/list/medium_priority_preferences = player.client.preferences.jobs_med_priority
+		shuffle_list(medium_priority_preferences)
+
+		for (var/job_name in medium_priority_preferences)
+			// Get the in-system job via the string
+			var/datum/job/JOB = find_job_in_controller_by_string(job_name)
+
+			// check if the player can be assigned the job
+			if (!CanPlayerBeAssignedJob(player, JOB))
+				continue
+
+			// If there's an open job slot for it, give the player the job and remove them from
+			// the list of unassigned players, hey presto everyone's happy (except clarks probly)
+			if (JOB.limit < 0 || !(JOB.assigned >= JOB.limit))
+				if (istype(JOB, /datum/job/engineering/engineer))
+					engineering_staff += player
+				else if (istype(JOB, /datum/job/research/scientist))
+					research_staff += player
+				else if (istype(JOB, /datum/job/research/medical_doctor))
+					medical_staff += player
+
+				AssignJobToPlayer(player, JOB, "Level 2 Job Picker", unassigned)
+
+			// if they've had a role assigned, break out of the loop
+			if (player.mind.assigned_role)
 				break
-			logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 2 Job Picker")
-			candidate.mind.assigned_role = JOB.name
-			logTheThing("debug", candidate, null, "assigned job: [candidate.mind.assigned_role]")
-			unassigned -= candidate
-			JOB.assigned++
 
-	// And then again for low priority
-	for(var/datum/job/JOB in available_job_roles)
-		if (unassigned.len == 0)
-			break
+	//////////////////////////////
+	// ASSIGN LOW PRIORITY JOBS //
+	//////////////////////////////
 
-		if (JOB.limit == 0)
+	// Next go through each of the remaining players and see if we can assign them one of their low priority jobs
+	for (var/mob/new_player/player in unassigned)
+		if (derelict_mode) // stop freaking out at the weird jobs
 			continue
 
-		if (JOB.limit > 0 && JOB.assigned >= JOB.limit)
+		// If they don't have any low priority preferences, skip em
+		if (!player?.client?.preferences || player?.client?.preferences.jobs_low_priority.len == 0)
 			continue
 
-		pick3 = FindOccupationCandidates(unassigned,JOB.name,3)
-		for(var/mob/new_player/candidate in pick3)
-			if (istype(JOB, /datum/job/engineering/engineer))
-				engineering_staff += candidate
-			else if (istype(JOB, /datum/job/research/scientist))
-				research_staff += candidate
-			else if (istype(JOB, /datum/job/research/medical_doctor))
-				medical_staff += candidate
+		var/list/low_priority_preferences = player.client.preferences.jobs_low_priority
+		shuffle_list(low_priority_preferences)
 
-			if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
-			logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 3 Job Picker")
-			candidate.mind.assigned_role = JOB.name
-			logTheThing("debug", candidate, null, "assigned job: [candidate.mind.assigned_role]")
-			unassigned -= candidate
-			JOB.assigned++
+		for (var/job_name in low_priority_preferences)
+			// Get the in-system job via the string
+			var/datum/job/JOB = find_job_in_controller_by_string(job_name)
+
+			// check if the player can be assigned the job
+			if (!CanPlayerBeAssignedJob(player, JOB))
+				continue
+
+			// If there's an open job slot for it, give the player the job and remove them from
+			// the list of unassigned players, hey presto everyone's happy (except clarks probly)
+			if (JOB.limit < 0 || !(JOB.assigned >= JOB.limit))
+				if (istype(JOB, /datum/job/engineering/engineer))
+					engineering_staff += player
+				else if (istype(JOB, /datum/job/research/scientist))
+					research_staff += player
+				else if (istype(JOB, /datum/job/research/medical_doctor))
+					medical_staff += player
+
+				AssignJobToPlayer(player, JOB, "Level 3 Job Picker", unassigned)
+
+			// if they've had a role assigned, break out of the loop
+			if (player.mind.assigned_role)
+				break
 
 	/////////////////////////////////////////////////
 	///////////COMMAND PROMOTIONS////////////////////
 	/////////////////////////////////////////////////
 
 	//Find the command jobs, if they are unfilled, pick a random person from within that department to be that command officer
-	for(var/datum/job/JOB in available_job_roles)
-		//cheaper to discout this first than type check here *I think*
-		if (JOB.limit > 0 && JOB.assigned < JOB.limit)
-			//Promote Chief Engineer
-			if (istype(JOB, /datum/job/command/chief_engineer))
-				var/list/picks = FindPromotionCandidates(engineering_staff, JOB)
-				if (!picks || !length(picks))
-					continue
-				var/mob/new_player/candidate = pick(picks)
-				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
-				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "reassigned job: [candidate.mind.assigned_role]")
-				JOB.assigned++
-			//Promote Research Director
-			else if (istype(JOB, /datum/job/command/research_director))
-				var/list/picks = FindPromotionCandidates(research_staff, JOB)
-				if (!picks || !length(picks))
-					continue
-				var/mob/new_player/candidate = pick(picks)
-				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
-				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "reassigned job: [candidate.mind.assigned_role]")
-				JOB.assigned++
-			//Promote Medical Director
-			else if (istype(JOB, /datum/job/command/medical_director))
-				var/list/picks = FindPromotionCandidates(medical_staff, JOB)
-				if (!picks || !length(picks))
-					continue
-				var/mob/new_player/candidate = pick(picks)
-				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
-				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "reassigned job: [candidate.mind.assigned_role]")
-				JOB.assigned++
-
+	PromoteDepartmentHead("Chief Engineer", engineering_staff)
+	PromoteDepartmentHead("Research Director", research_staff)
+	PromoteDepartmentHead("Medical Director", medical_staff)
 
 	// If there's anyone left without a job after this, lump them with a randomly
 	// picked low priority role and be done with it
@@ -293,9 +288,8 @@
 		low_priority_jobs += "Staff Assistant"
 	for (var/mob/new_player/player in unassigned)
 		if(!player?.mind) continue
-		logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [player] given a low priority role")
-		player.mind.assigned_role = pick(low_priority_jobs)
-		logTheThing("debug", player, null, "assigned job: [player.mind.assigned_role]")
+		var/datum/job/JOB = find_job_in_controller_by_string(pick(low_priority_jobs))
+		AssignJobToPlayer(player, JOB, "Low Priority Job Picker", unassigned)
 
 	return 1
 
@@ -308,6 +302,19 @@
 	if (!picks.len)
 		picks = FindOccupationCandidates(staff,JOB.name,3)
 	return picks
+
+/proc/PromoteDepartmentHead(var/job_name, var/list/department_staff)
+	var/datum/job/JOB = find_job_in_controller_by_string(job_name)
+	if (JOB)
+		if (JOB.limit > 0 && JOB.assigned < JOB.limit)
+			var/list/picks = FindPromotionCandidates(department_staff, JOB)
+			if (!picks || !length(picks))
+				return
+			var/mob/new_player/candidate = pick(picks)
+			logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
+			candidate.mind.assigned_role = JOB.name
+			logTheThing("debug", candidate, null, "reassigned job: [candidate.mind.assigned_role]")
+			JOB.assigned++
 
 /proc/equip_job_items(var/datum/job/JOB, var/mob/living/carbon/human/H)
 	// Jumpsuit - Important! Must be equipped early to provide valid slots for other items
