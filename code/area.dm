@@ -5458,3 +5458,8 @@ MAJOR_AST(29)
 MAJOR_AST(30)
 
 #undef MAJOR_AST
+
+// unfunny's prefabs
+/area/prefab/dronearena
+	name = "Space Drone Arena"
+	icon_state = "orange"

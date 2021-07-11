@@ -1767,6 +1767,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\z_adventurezones\biodome.dm"
 #include "code\z_adventurezones\carcosa.dm"
 #include "code\z_adventurezones\debris.dm"
+#include "code\z_adventurezones\dronearena.dm"
 #include "code\z_adventurezones\earth.dm"
 #include "code\z_adventurezones\evilderelict.dm"
 #include "code\z_adventurezones\featherzone.dm"

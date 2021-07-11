@@ -208,6 +208,13 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 19
 		prefabSizeY = 22
 
+	drone_arena // old syndie base with a powerful drone and cool gun
+		maxNum = 1
+		probability = 100
+		prefabPath = "assets/maps/prefabs/prefab_drone_arena.dmm"
+		prefabSizeX = 30
+		prefabSizeY = 30
+
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit
