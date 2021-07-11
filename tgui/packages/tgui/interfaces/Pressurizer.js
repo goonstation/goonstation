@@ -90,7 +90,7 @@ export const Pressurizer = (props, context) => {
               maxPressure={maxPressure}>
               <Divider />
               <LabeledList>
-                <LabeledList.Item label="Emergency Blast Release" >
+                <LabeledList.Item label="Emergency Blast Release">
                   <Button
                     fluid
                     textAlign="center"
