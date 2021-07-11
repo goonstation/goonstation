@@ -768,31 +768,28 @@ datum
 				if (!M) M = holder.my_atom
 				if(!M.reagents.has_reagent("ethanol")) // IRL methanol poisoning is often treated by ethanol IVs. Turns out liver prefers breaking ethanol over methanol!
 					methanol_counter += rand(0,2) * mult
-					M.visible_message("<span class='alert'><b>[M.name]'s</b> methanol counter:[methanol_counter]</span>")
 					if (methanol_counter > 40)
 						if (prob(50))
 							M.take_toxin_damage(2 * mult)
 						else
 							// This is trying to imitate acidosis, but we do not have formic acid
-							M.reagents.add_reagent("formaldehyde", (0.4 * mult)
-
 							M.take_oxygen_deprivation(3 * mult)
-						if (prob(30))
+							if (prob(50))
+								M.reagents.add_reagent("formaldehyde", 0.6 * mult)
+
+						if (prob(20))
 							M.vomit(rand(3,5))
 							boutput(M, "<span class='alert'><b>You[pick(" feel like having the worst hangover ever",
 											" can't see much past your nose",
 											"r eyesight suddenly fails you for a moment",
 											" feel extremely confused",
 											" have a horrible headache")]!</b></span>")
-						M.change_misstep_chance(rand(1,5) * mult)
+							M.change_misstep_chance(rand(1,5) * mult)
 						M.change_eye_blurry(2)
-						if (methanol_counter > 60)
+						if (methanol_counter > 80)
 							M.take_eye_damage(4, 1)
 							M.bioHolder.AddEffect("blind", magical=1)
-							M.take_brain_damage(rand(1,3) * mult)
-
-				else
-					M.visible_message("<span class='alert'><b>[M.name]</b> has ethanol. Is safe from methanol.</span>")
+							M.take_brain_damage(rand(1,4) * mult)
 				..()
 
 
