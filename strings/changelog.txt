@@ -1,4 +1,9 @@
 
+(t)sun jul 11 21
+(u)Flappybat
+(p)5465
+(e)|
+(+)Changeling lesser form, monkey burger, jungle fever and admin monkey transformation no longer drops all your items.
 (t)sat jul 10 21
 (u)Asche, Charlietan, MomoBerry, Penny, and Unfunny
 (p)5213
