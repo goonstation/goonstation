@@ -143,45 +143,16 @@
 		setProperty("space_movespeed", 0.1)
 		setProperty("meleeprot_head", 1)
 
-	process()
-		if (assigned)
-			assigned.images.Remove(health_mon_icons)
-			src.addIcons()
-
-			if (loc != assigned.mob)
-				assigned.images.Remove(health_mon_icons)
-				assigned = null
-
-			//sleep(2 SECONDS)
-		else
-			processing_items.Remove(src)
-
-	proc/addIcons()
-		if (assigned)
-			for (var/image/I in health_mon_icons)
-				if (!I || !I.loc || !src)
-					continue
-				if (I.loc.invisibility && I.loc != src.loc)
-					continue
-				else
-					assigned.images.Add(I)
-
 	equipped(var/mob/user, var/slot)
 		..()
 		if (slot == SLOT_HEAD)
-			assigned = user.client
-			SPAWN_DBG(-1)
-				//updateIcons()
-				processing_items |= src
-		return
+			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(user)
 
 	unequipped(var/mob/user)
+		if(src.equipped_in_slot == SLOT_HEAD)
+			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
 		..()
-		if (assigned)
-			assigned.images.Remove(health_mon_icons)
-			assigned = null
-			processing_items.Remove(src)
-		return
+
 // Sealab helmets
 
 /obj/item/clothing/head/helmet/space/engineer/diving //hijacking engiehelms for the flashlight
