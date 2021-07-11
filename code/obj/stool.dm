@@ -151,6 +151,8 @@
 	icon_state = "wstool"
 	desc = "Like a stool, but just made out of wood."
 	parts_type = /obj/item/furniture_parts/woodenstool
+	mat_appearances_to_ignore = list("wood")
+	mat_changename = 0
 	New()
 		..()
 		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
@@ -247,6 +249,8 @@
 /obj/stool/bench/wooden
 	icon = 'icons/obj/furniture/bench_wood.dmi'
 	parts_type = /obj/item/furniture_parts/bench/wooden
+	mat_appearances_to_ignore = list("wood")
+	mat_changename = 0
 	New()
 		..()
 		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
@@ -254,6 +258,8 @@
 /obj/stool/bench/wooden/auto
 	auto = 1
 	auto_path = /obj/stool/bench/wooden/auto
+	mat_appearances_to_ignore = list("wood")
+	mat_changename = 0
 	New()
 		..()
 		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
@@ -1119,9 +1125,12 @@
 	anchored = 0
 	//deconstructable = 0
 	parts_type = /obj/item/furniture_parts/wood_chair
+	mat_appearances_to_ignore = list("wood")
+	mat_changename = 0
+
 	New()
 		..()
-		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("wood", appearance = 0, setname = 0)
 
 /* ============================================== */
 /* -------------------- Pews -------------------- */
@@ -1141,8 +1150,12 @@
 	var/image/arm_image = null
 	var/arm_icon_state = null
 
+	mat_appearances_to_ignore = list("wood")
+	mat_changename = 0
+
 	New()
 		..()
+		src.setMaterial(getMaterial("wood", appearance = 0, setname = 0)
 		if (arm_icon_state)
 			src.update_icon()
 

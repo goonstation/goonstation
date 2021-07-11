@@ -766,7 +766,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				if(!M.reagents.has_reagent("ethanol")) // IRL methanol poisoning is often treated by ethanol IVs. Turns out liver prefers breaking ethanol over methanol!
+				// IRL methanol poisoning is often treated by ethanol IVs. Turns out liver prefers breaking ethanol over methanol!
+				if(!M.reagents.has_reagent("ethanol"))
 					methanol_counter += rand(0,2) * mult
 					if (methanol_counter > 40)
 						if (prob(50))

@@ -438,12 +438,13 @@
 	icon = 'icons/obj/furniture/table_wood.dmi'
 	auto_type = /obj/table/wood/auto
 	parts_type = /obj/item/furniture_parts/table/wood
-
+	mat_appearances_to_ignore = list("wood")
+	mat_changename = 0
+	auto
+		auto = 1
 	New()
 		..()
 		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
-	auto
-		auto = 1
 
 /obj/table/wood/auto/desk
 	name = "wooden desk"
@@ -451,6 +452,8 @@
 	icon = 'icons/obj/furniture/table_wood_desk.dmi'
 	parts_type = /obj/item/furniture_parts/table/wood/desk
 	has_storage = 1
+	mat_appearances_to_ignore = list("wood")
+	mat_changename = 0
 
 	New()
 		..()
