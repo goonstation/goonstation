@@ -73,7 +73,7 @@
 				playsound(affected_mob.loc, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1)
 
 			if(prob(10))
-				if(!affected_mob:wear_mask || ((affected_mob:wear_mask != null) && !istype(affected_mob:wear_mask, /obj/item/clothing/mask/clown_hat)))
+				if(!affected_mob:wear_mask || (!istype(affected_mob:wear_mask, /obj/item/clothing/mask/clown_hat)) && (!istype(affected_mob:wear_mask, /obj/item/clothing/mask/gas/syndie_clown)))
 					var/c = affected_mob:wear_mask
 					if((affected_mob:wear_mask != null) && !istype(affected_mob:wear_mask, /obj/item/clothing/mask/clown_hat))
 						affected_mob.u_equip(c)
@@ -100,7 +100,7 @@
 					return
 #endif
 			if(prob(10))
-				if(!affected_mob:wear_mask || ((affected_mob:wear_mask != null) && !istype(affected_mob:wear_mask, /obj/item/clothing/mask/clown_hat)))
+				if(!affected_mob:wear_mask || (!istype(affected_mob:wear_mask, /obj/item/clothing/mask/clown_hat)) && (!istype(affected_mob:wear_mask, /obj/item/clothing/mask/gas/syndie_clown)))
 					var/c = affected_mob:wear_mask
 					if((affected_mob:wear_mask != null) && !istype(affected_mob:wear_mask, /obj/item/clothing/mask/clown_hat))
 						affected_mob.u_equip(c)

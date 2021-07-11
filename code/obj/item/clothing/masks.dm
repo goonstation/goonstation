@@ -308,6 +308,7 @@
 				src.victim.change_misstep_chance(25)
 				src.victim.emote("scream")
 				src.victim.TakeDamage("head",0,15,0,DAMAGE_BURN)
+				src.victim.reagents.add_reagent("rainbow fluid", 10)
 				src.victim.changeStatus("stunned", 2.5 SECONDS)
 				processing_items.Add(src)
 
