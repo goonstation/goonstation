@@ -31,6 +31,7 @@
 	desc = "Powerful assault rifle chambered in .24, HonkCo Weapons is etched into the barrel."
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "se13"
+	item_state = "se13"
 	force = 12
 	caliber = 0.24
 	max_ammo_capacity = 21
