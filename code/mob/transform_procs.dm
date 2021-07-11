@@ -70,8 +70,6 @@
 		src.visible_message("<span class='alert'><b>[src] magically resists being transformed!</b></span>")
 		return
 
-	src.unequip_all()
-
 	src.bioHolder.AddEffect("monkey")
 	return
 
