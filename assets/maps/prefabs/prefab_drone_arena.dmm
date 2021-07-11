@@ -36,7 +36,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/prefab/dronearena)
 "h" = (
-/obj/shieldgen,
+/obj/machinery/telejam/active,
 /turf/unsimulated/floor/airless/grime,
 /area/prefab/dronearena)
 "j" = (
@@ -49,11 +49,19 @@
 /obj/item/gun/kinetic/se13,
 /turf/unsimulated/floor/airless/grime,
 /area/prefab/dronearena)
-"q" = (
-/obj/lattice,
-/obj/lattice,
-/obj/decal/poster/wallsign/warning3,
-/turf/space,
+"m" = (
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 1
+	},
+/turf/unsimulated/floor/airless/plating/scorched,
+/area/prefab/dronearena)
+"p" = (
+/obj/item/device/light/glowstick/green_on,
+/turf/unsimulated/floor/airless/plating/damaged1,
+/area/prefab/dronearena)
+"r" = (
+/obj/item/device/light/glowstick/green_on,
+/turf/unsimulated/floor/airless/grime,
 /area/prefab/dronearena)
 "s" = (
 /obj/storage/crate/wooden,
@@ -62,10 +70,14 @@
 /obj/item/pen,
 /turf/unsimulated/floor/airless/grime,
 /area/prefab/dronearena)
+"t" = (
+/obj/item/device/light/glowstick/green_on,
+/turf/unsimulated/floor/airless/plating/scorched,
+/area/prefab/dronearena)
 "u" = (
-/obj/lattice,
 /obj/decal/poster/wallsign/warning3,
-/turf/space,
+/obj/map/light/brightwhite,
+/turf/unsimulated/floor/airless/solar,
 /area/prefab/dronearena)
 "v" = (
 /obj/decal/cleanable/blood/splatter,
@@ -113,6 +125,9 @@
 /area/prefab/dronearena)
 "M" = (
 /obj/table/reinforced/auto,
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 1
+	},
 /turf/unsimulated/floor/airless/grime,
 /area/prefab/dronearena)
 "N" = (
@@ -205,6 +220,8 @@ a
 (2,1,1) = {"
 a
 u
+b
+b
 H
 H
 H
@@ -213,11 +230,11 @@ H
 H
 H
 H
-H
-H
-H
-H
+b
+b
 u
+b
+b
 H
 H
 H
@@ -227,16 +244,14 @@ H
 H
 H
 H
-H
-H
-H
-H
+b
+b
 u
 a
 "}
 (3,1,1) = {"
 a
-H
+b
 a
 a
 a
@@ -263,12 +278,12 @@ a
 a
 a
 a
-H
+b
 a
 "}
 (4,1,1) = {"
 a
-H
+b
 a
 a
 a
@@ -295,7 +310,7 @@ a
 a
 a
 a
-H
+b
 a
 "}
 (5,1,1) = {"
@@ -501,7 +516,7 @@ a
 Q
 z
 R
-R
+t
 Q
 a
 a
@@ -541,7 +556,7 @@ H
 H
 H
 g
-R
+m
 S
 Z
 a
@@ -556,7 +571,7 @@ a
 "}
 (13,1,1) = {"
 a
-H
+b
 a
 a
 a
@@ -583,17 +598,17 @@ a
 a
 a
 a
-H
+b
 a
 "}
 (14,1,1) = {"
 a
-H
+b
 a
 a
-b
-b
-b
+a
+a
+a
 Q
 e
 F
@@ -609,13 +624,13 @@ v
 R
 P
 j
+a
+a
+a
+a
+a
+a
 b
-a
-a
-a
-a
-a
-H
 a
 "}
 (15,1,1) = {"
@@ -644,7 +659,7 @@ Q
 a
 a
 a
-b
+a
 a
 a
 u
@@ -652,16 +667,16 @@ a
 "}
 (16,1,1) = {"
 a
-H
+b
 a
 a
-b
-b
-b
+a
+a
+a
 Q
 Z
 E
-P
+p
 Q
 a
 a
@@ -671,27 +686,27 @@ a
 Q
 N
 P
-E
+r
 Q
+a
+a
+a
+a
+a
+a
 b
-b
-a
-a
-a
-a
-H
 a
 "}
 (17,1,1) = {"
 a
-H
+b
 a
 a
 a
 a
 a
 Q
-E
+r
 E
 s
 Q
@@ -711,7 +726,7 @@ a
 a
 a
 a
-H
+b
 a
 "}
 (18,1,1) = {"
@@ -1004,7 +1019,7 @@ a
 "}
 (27,1,1) = {"
 a
-H
+b
 a
 a
 a
@@ -1031,12 +1046,12 @@ a
 a
 a
 a
-H
+b
 a
 "}
 (28,1,1) = {"
 a
-H
+b
 a
 a
 a
@@ -1063,25 +1078,27 @@ a
 a
 a
 a
-u
+b
 a
 "}
 (29,1,1) = {"
 a
-q
-H
-H
-H
-H
-H
-H
-H
-H
-H
-H
-H
-H
 u
+b
+b
+H
+H
+H
+H
+H
+H
+H
+H
+b
+b
+u
+b
+b
 H
 H
 H
@@ -1091,10 +1108,8 @@ H
 H
 H
 H
-H
-H
-H
-H
+b
+b
 u
 a
 "}
