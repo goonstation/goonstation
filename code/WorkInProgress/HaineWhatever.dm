@@ -1091,8 +1091,8 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	item_state = "sailormoon"
 
 /obj/item/clothing/head/sailormoon
-	name = "hair clips"
-	desc = "Shiny red hair clips to keep your hair in a very specific style and are about useless for anything else."
+	name = "red hairclips"
+	desc = "Shiny red hairclips to keep your hair in a very specific style and are about useless for anything else."
 	icon_state = "sailormoon"
 
 /obj/item/clothing/glasses/sailormoon

@@ -489,7 +489,6 @@ RACK PARTS
 	duration = 50
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
-	icon_on_target = FALSE
 
 	var/obj/the_furniture
 	var/obj/item/the_tool

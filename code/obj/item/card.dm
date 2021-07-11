@@ -180,7 +180,7 @@ GAUNTLET CARDS
 		assignment = "NanoTrasen Pilot"
 		access = list(access_heads)
 		team = 1
-			
+
 		commander
 			name = "NanoTrasen Commander"
 			assignment = "NanoTrasen Commander"
