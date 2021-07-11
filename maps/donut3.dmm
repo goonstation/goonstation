@@ -28756,18 +28756,19 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "igr" = (
+/obj/access_spawn/hos,
 /obj/machinery/door/airlock/pyro/glass/security{
+	aiControlDisabled = 1;
 	req_access = null
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/hos,
 /obj/machinery/secscanner,
-/obj/decal/mule/dropoff,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/mule/dropoff,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -45712,6 +45713,7 @@
 /area/station/medical/asylum/kitchen)
 "noB" = (
 /obj/machinery/door/airlock/pyro/glass/security{
+	aiControlDisabled = 1;
 	dir = 4;
 	req_access = null
 	},
@@ -45724,7 +45726,7 @@
 	},
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/black,
-/area/station/turret_protected/armory_outside)
+/area/station/ai_monitored/armory)
 "noC" = (
 /obj/machinery/light/incandescent/harsh,
 /obj/cable{
@@ -48810,6 +48812,9 @@
 /obj/item/device/radio/intercom/security{
 	pixel_x = 1
 	},
+/obj/item/aiModule/reset{
+	pixel_y = 7
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "olB" = (
@@ -51342,7 +51347,7 @@
 	},
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/security/hos)
 "oXO" = (
 /turf/simulated/floor/red/side,
 /area/station/hallway/primary/west)
@@ -57006,17 +57011,20 @@
 /turf/simulated/floor/white,
 /area/station/crewquarters/fuq3)
 "qxk" = (
-/obj/machinery/door/airlock/pyro/security/alt,
-/obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/security/alt{
+	aiControlDisabled = 1;
+	req_access = null
+	},
 /obj/access_spawn/hos,
+/obj/firedoor_spawn,
 /obj/machinery/secscanner,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/decal/mule/dropoff,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
+/obj/decal/mule/dropoff,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "qxz" = (
@@ -62267,6 +62275,7 @@
 /area/station/medical/medbay/lobby)
 "rXe" = (
 /obj/machinery/light/incandescent/netural,
+/obj/blind_switch/area/west,
 /turf/simulated/floor/circuit/purple,
 /area/station/crew_quarters/hor)
 "rXg" = (

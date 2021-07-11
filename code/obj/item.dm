@@ -475,7 +475,7 @@
 /obj/item/proc/equipment_click(atom/source, atom/target, params, location, control, origParams, slot) //Called through hand_range_attack on items the mob is wearing that have HAS_EQUIP_CLICK in flags.
 	return 0
 
-/obj/item/proc/combust() // cogwerks- flammable items project
+/obj/item/proc/combust(obj/item/W) // cogwerks- flammable items project
 	if(processing_items.Find(src)) //processing items cant be lit on fire to avoid weird bugs
 		return
 	if (!src.burning)
@@ -483,6 +483,16 @@
 		src.visible_message("<span class='alert'>[src] catches on fire!</span>")
 		src.burning = 1
 		src.firesource = TRUE
+		if (istype(src, /obj/item/plant))
+			if (!ON_COOLDOWN(global, "hotbox_adminlog", 30 SECONDS)) //blocks every instance of the plant logging
+				var/list/hotbox_plants = list()
+				for (var/obj/item/plant/P in get_turf(src))
+					hotbox_plants += P
+				if (length(hotbox_plants) >= 5) //number is up for debate, 5 seemed like a good starting place
+					if (W?.firesource)
+						message_admins("([src]) was set on fire on the same turf as at least ([length(hotbox_plants)]) other plants at [log_loc(src)] by item ([W]). Last touched by: [W.fingerprintslast ? "[W.fingerprintslast]" : "*null*"].")
+					else
+						message_admins("([src]) was set on fire on the same turf as at least ([length(hotbox_plants)]) other plants at [log_loc(src)].")
 		if (src.burn_output >= 1000)
 			UpdateOverlays(image('icons/effects/fire.dmi', "2old"),"burn_overlay")
 		else
@@ -538,7 +548,12 @@
 /obj/item/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if (src.burn_possible && !src.burning)
 		if ((temperature > T0C + src.burn_point) && prob(5))
-			src.combust()
+			var/obj/item/firesource = null
+			for (var/obj/item/I in get_turf(src))
+				if (I.firesource)
+					firesource = I
+					break
+			src.combust(firesource)
 	if (src.material)
 		src.material.triggerTemp(src, temperature)
 	..() // call your fucking parents
@@ -828,7 +843,7 @@
 		src.material.triggerTemp(src ,1500)
 	if (W.firesource)
 		if (src.burn_possible && src.burn_point <= 1500)
-			src.combust()
+			src.combust(W)
 		else
 			..(W, user)
 	else

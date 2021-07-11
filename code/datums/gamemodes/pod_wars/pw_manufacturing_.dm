@@ -233,6 +233,14 @@
 	name = "NanoTrasen Mineral Accumulator"
 	item_outputs = list(/obj/machinery/oreaccumulator/pod_wars/nanotrasen)
 
+/datum/manufacture/pod_wars/medical_refill
+	name = "NanoMed Refill Cartridge"
+	item_outputs = list(/obj/item/vending/restock_cartridge/medical)
+	item_paths = list("MET-1","FAB-1","DEN-1")
+	item_amounts = list(25,25,20)
+	time = 60 SECONDS
+	category = "Ammo"
+
 /obj/machinery/manufacturer/mining/pod_wars/
 	New()
 		available -= /datum/manufacture/ore_accumulator
@@ -259,6 +267,7 @@
 /obj/machinery/manufacturer/medical/pod_wars
 	New()
 		available += /datum/manufacture/medical_backpack
+		available += /datum/manufacture/pod_wars/medical_refill
 		..()
 
 
@@ -365,8 +374,8 @@
 	name = "medical reagent dispenser"
 	desc = "It dispenses chemicals. Mostly harmless ones, but who knows?"
 	dispensable_reagents = list("antihol", "charcoal", "epinephrine", "mutadone", "proconvertin", "atropine",\
-		"silver_sulfadiazine", "salbutamol", "anti_rad",\
-		"oculine", "mannitol", "styptic_powder", "saline",\
+		 "salbutamol", "anti_rad",\
+		"oculine", "mannitol", "saline",\
 		"salicylic_acid", "blood",\
 		"menthol", "antihistamine")
 
@@ -377,9 +386,9 @@
 
 /obj/machinery/chem_dispenser/medical/fortuna
 	dispensable_reagents = list("antihol", "charcoal", "epinephrine", "mutadone", "proconvertin", "filgrastim", "atropine",\
-	"silver_sulfadiazine", "salbutamol", "perfluorodecalin", "synaptizine", "anti_rad",\
-	"oculine", "mannitol", "penteticacid", "styptic_powder", "saline",\
-	"salicylic_acid", "blood", "synthflesh",\
+	"salbutamol", "perfluorodecalin", "synaptizine", "anti_rad",\
+	"oculine", "mannitol", "penteticacid", "saline",\
+	"salicylic_acid", "blood", \
 	"menthol", "antihistamine", "smelling_salt")
 
 /obj/machinery/manufacturer/general/pod_wars

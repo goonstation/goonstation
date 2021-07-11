@@ -122,6 +122,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	req_access = list(access_supply_console)
 	object_flags = CAN_REPROGRAM_ACCESS
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
+	circuit_type = /obj/item/circuitboard/qmsupply
 	var/temp = null
 	var/last_cdc_message = null
 	var/hacked = 0
@@ -142,9 +143,6 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		radio_controller.remove_object(src, "1435")
 		..()
 
-/obj/machinery/computer/supplycomp/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
-
 /obj/machinery/computer/supplycomp/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(!hacked)
 		if(user)
@@ -162,41 +160,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	return 1
 
 /obj/machinery/computer/supplycomp/attackby(I as obj, mob/user as mob)
-	if(istype(I,/obj/item/card/emag))
+	if(!istype(I,/obj/item/card/emag))
 		//I guess you'll wanna put the emag away now instead of getting a massive popup
-	else if (isscrewingtool(I))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if (do_after(user, 2 SECONDS))
-			if (src.status & BROKEN)
-				user.show_text("The broken glass falls out.", "blue")
-				var/obj/computerframe/A = new /obj/computerframe(src.loc)
-				if (src.material)
-					A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/qmsupply/M = new /obj/item/circuitboard/qmsupply(A)
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
-			else
-				user.show_text("You disconnect the monitor.", "blue")
-				var/obj/computerframe/A = new /obj/computerframe(src.loc)
-				if (src.material)
-					A.setMaterial(src.material)
-				var/obj/item/circuitboard/qmsupply/M = new /obj/item/circuitboard/qmsupply(A)
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				qdel(src)
-	else
-		return src.attack_hand(user)
+		..()
 
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
 	if(!src.allowed(user))

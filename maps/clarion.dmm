@@ -590,6 +590,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/entry{
 	name = "Entry Hallway"
@@ -600,6 +603,10 @@
 	pixel_x = 10
 	},
 /obj/machinery/computer/stockexchange,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/entry{
 	name = "Entry Hallway"
@@ -2128,25 +2135,19 @@
 	pixel_y = 30
 	},
 /turf/simulated/floor/orangeblack,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "aeE" = (
 /obj/cryotron{
 	layer = 3.9
 	},
 /turf/simulated/floor/black,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "aeF" = (
 /obj/landmark{
 	name = "JoinLate"
 	},
 /turf/simulated/floor/black,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "aeG" = (
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/entry{
@@ -2156,9 +2157,7 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "aeK" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -2461,23 +2460,17 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "afg" = (
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "afi" = (
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "afj" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -2486,17 +2479,13 @@
 /turf/simulated/floor/caution/misc{
 	dir = 8
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "afk" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "afl" = (
 /obj/machinery/computer/airbr/emergency_shuttle{
 	density = 0;
@@ -2508,9 +2497,7 @@
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "afm" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -2519,9 +2506,7 @@
 /turf/simulated/floor/caution/misc{
 	dir = 4
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "afn" = (
 /obj/airbridge_controller{
 	id = "merchant_N";
@@ -2679,9 +2664,7 @@
 	})
 "afM" = (
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "afO" = (
 /obj/machinery/light{
 	dir = 4;
@@ -2690,9 +2673,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "afP" = (
 /obj/machinery/light_switch/south{
 	pixel_y = 28
@@ -2999,23 +2980,17 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "ago" = (
 /obj/stool/bench/yellow/auto,
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "agp" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "agq" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -3323,9 +3298,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "agI" = (
 /obj/machinery/disposal/mail/small{
 	dir = 8
@@ -3336,9 +3309,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "agJ" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -3522,44 +3493,34 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "agW" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "agX" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /obj/stool/bench/yellow/auto,
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "agY" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /obj/item/device/radio/beacon,
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "agZ" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "aha" = (
 /obj/machinery/disposal/small{
 	dir = 8
@@ -3570,9 +3531,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "ahb" = (
 /turf/space,
 /area/shuttle/merchant_shuttle/right_station/destiny)
@@ -3773,24 +3732,18 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "ahs" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "aht" = (
 /obj/table/auto,
 /obj/item/decoration/ashtray,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "ahu" = (
 /obj/machinery/light{
 	dir = 8;
@@ -4184,9 +4137,7 @@
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "ahT" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -4194,26 +4145,20 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "ahU" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "ahV" = (
 /obj/disposalpipe/segment/mail{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "ahW" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -4228,9 +4173,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "ahX" = (
 /obj/window/reinforced/north,
 /turf/simulated/floor/white/checker{
@@ -4414,9 +4357,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "aip" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -4425,9 +4366,7 @@
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "aiq" = (
 /obj/machinery/computer/airbr/emergency_shuttle{
 	density = 0;
@@ -4439,9 +4378,7 @@
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "air" = (
 /obj/airbridge_controller{
 	id = "merchant_S";
@@ -4807,42 +4744,30 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 10
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "aiR" = (
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor/orangeblack/side,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "aiS" = (
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/orangeblack/side,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "aiT" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/orangeblack/side,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "aiU" = (
 /obj/stool/bench/yellow/auto,
 /turf/simulated/floor/orangeblack/side,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "aiV" = (
 /obj/machinery/light/emergency,
 /obj/stool/bench/yellow/auto,
 /turf/simulated/floor/orangeblack/side{
 	dir = 6
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "aiW" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
@@ -5245,14 +5170,10 @@
 /obj/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/space,
 /turf/simulated/floor/plating,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "ajs" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "ajt" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -19096,9 +19017,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "aMs" = (
 /obj/disposalpipe/junction{
 	dir = 8
@@ -44482,6 +44401,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/main)
+"ciN" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/crewquarters/cryotron)
 "ciQ" = (
 /obj/noticeboard/persistent{
 	name = "Chapel persistent notice board";
@@ -45763,6 +45686,9 @@
 	},
 /turf/simulated/floor/black,
 /area/station/maintenance/central)
+"fNK" = (
+/turf/simulated/floor/black,
+/area/station/crewquarters/cryotron)
 "fNN" = (
 /obj/securearea{
 	desc = "Boxing ring and fitness equipment.";
@@ -45898,9 +45824,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "gdA" = (
 /obj/disposalpipe/segment/food,
 /obj/machinery/computer/riotgear{
@@ -46683,9 +46607,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 5
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "ipm" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -47550,9 +47472,7 @@
 /turf/simulated/floor/orangeblack/corner{
 	dir = 1
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "kAg" = (
 /obj/cable{
 	d1 = 4;
@@ -48282,9 +48202,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "mBl" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -49699,9 +49617,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "qSy" = (
 /turf/simulated/floor/caution/north,
 /area/station/security/main)
@@ -49928,9 +49844,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "rBs" = (
 /obj/machinery/light_switch/east{
 	dir = 4
@@ -50395,9 +50309,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "sOp" = (
 /obj/machinery/light{
 	dir = 8;
@@ -50425,9 +50337,7 @@
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "sVC" = (
 /obj/stool/chair/comfy/blue{
 	dir = 4
@@ -50711,9 +50621,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry{
-	name = "Entry Hallway"
-	})
+/area/station/crewquarters/cryotron)
 "tPW" = (
 /obj/item/device/radio/beacon,
 /obj/disposalpipe/segment,
@@ -51166,6 +51074,9 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
+"uTK" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crewquarters/cryotron)
 "uXZ" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
@@ -87984,16 +87895,16 @@ acw
 acc
 adK
 acc
-aCN
-aCN
+ciN
+ciN
 gar
-aCN
-aCN
-aCN
-aCN
+ciN
+ciN
+ciN
+ciN
 ahS
-aCN
-aCN
+ciN
+ciN
 ajs
 ajH
 akk
@@ -89012,7 +88923,7 @@ abF
 adg
 xzR
 acc
-aeG
+fNK
 afg
 tPK
 afM
@@ -89783,17 +89694,17 @@ aaI
 abH
 aaU
 abF
-abg
+uTK
 afj
-abg
-aCN
-aCN
-aCN
-aCN
-abg
+uTK
+ciN
+ciN
+ciN
+ciN
+uTK
 afj
 aMr
-abg
+uTK
 ajI
 ajI
 ajI
@@ -90042,12 +89953,12 @@ aaI
 abH
 aeJ
 afk
-aCN
+ciN
 aay
 aay
 aay
 aay
-aCN
+ciN
 aip
 aeJ
 abH
@@ -90297,14 +90208,14 @@ aaa
 aay
 aay
 aay
-aCN
+ciN
 afl
 ajr
 agq
 agJ
 agJ
 agq
-aCN
+ciN
 aiq
 ajr
 aay
@@ -90554,16 +90465,16 @@ aaa
 aaa
 aaa
 aay
-abg
+uTK
 afm
-abg
+uTK
 aay
 aaa
 aaa
 aay
-abg
+uTK
 afm
-abg
+uTK
 aay
 aaa
 aay

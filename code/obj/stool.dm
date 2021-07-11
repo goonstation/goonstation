@@ -1094,6 +1094,10 @@
 			REMOVE_MOVEMENT_MODIFIER(src.buckled_guy, /datum/movement_modifier/wheelchair, src.type)
 		return ..()
 
+	set_loc(newloc)
+		. = ..()
+		unbuckle()
+
 /* ======================================================= */
 /* -------------------- Wooden Chairs -------------------- */
 /* ======================================================= */

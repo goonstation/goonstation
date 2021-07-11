@@ -203,6 +203,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			var/area/station/A = get_area(src)
 			src.name = A.name
 		src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
+		if(deconstruct_flags & DECON_BUILT)
+			req_access = list()
 		START_TRACKING
 
 	disposing()
