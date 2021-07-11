@@ -98,7 +98,7 @@
 	icon_state = "coffin"
 	icon_closed = "coffin"
 	icon_opened = "coffin-open"
-	layer = 2.2
+	layer = 2.5
 	icon_welded = "welded-coffin-4dirs"
 
 	wood
