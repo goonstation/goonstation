@@ -690,6 +690,7 @@ function lineEnter (ev)
 			var/obj/computer3frame/A = new setup_frame_type( src.loc )
 			if(src.material) A.setMaterial(src.material)
 			A.created_icon_state = src.base_icon_state
+			A.set_dir(src.dir)
 			if (src.status & BROKEN)
 				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)

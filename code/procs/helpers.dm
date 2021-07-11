@@ -445,6 +445,25 @@ proc/get_angle(atom/a, atom/b)
 		. = findtext(text, suffix, start, null) //was findtextEx
 
 /**
+ * Given a message, returns a list containing the radio prefix and the message,
+ * so that the message can be manipulated seperately in various functions.
+ */
+/proc/separate_radio_prefix_and_message(var/message)
+	var/prefix = null
+
+	if (dd_hasprefix(message, ":lh") || dd_hasprefix(message, ":rh") || dd_hasprefix(message, ":in"))
+		prefix = copytext(message, 1, 4)
+		message = copytext(message, 4)
+	else if (dd_hasprefix(message, ":"))
+		prefix = copytext(message, 1, 3)
+		message = copytext(message, 3)
+	else if (dd_hasprefix(message, ";"))
+		prefix = ";"
+		message = copytext(message, 2)
+
+	return list(prefix, message)
+
+/**
 	* Given a list, returns a text string representation of the list's contents.
 	*/
 /proc/english_list(var/list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "," )
@@ -898,6 +917,42 @@ proc/get_angle(atom/a, atom/b)
 	var/x = min(world.maxx, max(1, A.x + dx))
 	var/y = min(world.maxy, max(1, A.y + dy))
 	return locate(x,y,A.z)
+
+
+/// Returns the turf facing the fab for cardinal directions (which should also be the user's turf),
+///		but for diagonals it returns a neighbouring turf depending on where you click
+/// Just in case you're attacking a corner diagonally. (made initially for lamp manufacturers, probably behaves funky above range 1)
+proc/get_adjacent_floor(atom/W, mob/user, px, py)
+	var/dir_temp = get_dir(user, W) //Our W is to the ___ of the user
+	//These two expressions divide a 32*32 turf into diagonal halves
+	var/diag1 = (px > py) //up-left vs down-right
+	var/diag2 = ((px + py) > 32) //up-right vs down-left
+	switch(dir_temp)
+		if (NORTH)
+			return get_turf(get_step(W,SOUTH))
+		if (NORTHEAST)
+			if (diag1)
+				return get_turf(get_step(W,SOUTH))
+			return get_turf(get_step(W,WEST))
+		if (EAST)
+			return get_turf(get_step(W,WEST))
+		if (SOUTHEAST)
+			if (diag2)
+				return get_turf(get_step(W,NORTH))
+			return get_turf(get_step(W,WEST))
+		if (SOUTH)
+			return get_turf(get_step(W,NORTH))
+		if (SOUTHWEST)
+			if (diag1)
+				return get_turf(get_step(W,EAST))
+			return get_turf(get_step(W,NORTH))
+		if (WEST)
+			return get_turf(get_step(W,EAST))
+		if (NORTHWEST)
+			if (diag2)
+				return get_turf(get_step(W,EAST))
+			return get_turf(get_step(W,SOUTH))
+
 
 // extends pick() to associated lists
 /proc/alist_pick(var/list/L)

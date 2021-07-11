@@ -1,3 +1,6 @@
+(t)fri jul 9 21
+(u)Zonespace
+(*)Hotboxes are now logged, showing the turf, the fire source, and the last person to touch it.
 (t)tue may 25 21
 (u)Virva, Yass, Sord, Kyle
 (*)Add a new admin gimmick game mode called Pod Wars. It's like NT vs Syndicate with two small bases on either side and control points to capture.

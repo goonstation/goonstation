@@ -96,6 +96,7 @@
 			return
 
 		if (!GET_COOLDOWN(M, "ww feast"))
+			M.werewolf_attack(HH, "feast")
 			ON_COOLDOWN(M, "ww feast", 2.5 SECONDS) // Enough time between attacks for them to happen 9 times
 			times_attacked += 1
 

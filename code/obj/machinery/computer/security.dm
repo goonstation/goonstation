@@ -1,6 +1,7 @@
 /obj/machinery/computer/security
 	name = "Security Cameras"
 	icon_state = "security"
+	circuit_type = /obj/item/circuitboard/security
 	var/obj/machinery/camera/current = null
 	var/list/obj/machinery/camera/favorites = list()
 	var/const/favorites_Max = 8
@@ -164,40 +165,6 @@
 			src.current = C
 			usr.set_eye(C)
 			use_power(50)
-
-/obj/machinery/computer/security/attackby(obj/item/I as obj, user as mob)
-	if (isscrewingtool(I))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 2 SECONDS))
-			if (src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/security/M = new /obj/item/circuitboard/security( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
-			else
-				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/circuitboard/security/M = new /obj/item/circuitboard/security( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				qdel(src)
-	else
-		src.attack_hand(user)
-	return
 
 proc/getr(col)
 	return hex2num( copytext(col, 2,4))

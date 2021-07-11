@@ -1236,6 +1236,9 @@
 			burst--
 			if (burst)
 				sleep(5)	// please dont fuck anything up
+			if(istype(budgun, /obj/item/gun/kinetic/riotgun))
+				var/obj/item/gun/kinetic/riotgun/RG = budgun
+				RG.rack(src)
 		ON_COOLDOWN(src, "buddy_refire_delay", src.gunfire_cooldown)
 		return 1
 
@@ -4779,9 +4782,6 @@
 		..()
 		SPAWN_DBG(0.8 SECONDS)
 			linked_bot = locate() in orange(1, src)
-
-	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
 
 	attack_hand(mob/user as mob)
 		if (..() || (status & (NOPOWER|BROKEN)))

@@ -689,7 +689,7 @@
 	desc = "Used to control a tanning bed."
 	icon = 'icons/obj/stationobjs.dmi'
 	mats = 20
-	var/id = 2
+	id = 2
 	icon_state = "tanconsole"
 	var/state_str = ""
 	var/obj/crematorium/tanning/linked = null //The linked tanning bed

@@ -8,6 +8,7 @@
 	name = "Security Records"
 	icon_state = "datasec"
 	req_access = list(access_security)
+	circuit_type = /obj/item/circuitboard/secure_data
 	var/obj/item/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
@@ -29,43 +30,6 @@
 	icon = 'icons/obj/machinery/computer.dmi'
 	icon_state = "messyfiles"
 	req_access = list(access_forensics_lockers)
-
-/obj/machinery/computer/secure_data/attackby(obj/item/I as obj, user as mob)
-	if (isscrewingtool(I))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if (do_after(user, 2 SECONDS))
-			if (src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if (src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/secure_data/M = new /obj/item/circuitboard/secure_data( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
-			else
-				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if (src.material) A.setMaterial(src.material)
-				var/obj/item/circuitboard/secure_data/M = new /obj/item/circuitboard/secure_data( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				qdel(src)
-	else
-		src.attack_hand(user)
-	return
-
-/obj/machinery/computer/secure_data/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
 
 /obj/machinery/computer/secure_data/attack_hand(mob/user as mob)
 	if (..())

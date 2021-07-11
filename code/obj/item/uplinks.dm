@@ -21,6 +21,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/list/datum/syndicate_buylist/items_general = list() // See setup().
 	var/list/datum/syndicate_buylist/items_job = list()
 	var/list/datum/syndicate_buylist/items_objective = list()
+	var/list/datum/syndicate_buylist/items_telecrystal = list()
 	var/is_VR_uplink = 0
 	var/lock_code = null
 	var/lock_code_autogenerate = 0
@@ -36,7 +37,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
-			if (src && istype(src) && (!src.items_general.len && !src.items_job.len && !length(src.items_objective)))
+			if (src && istype(src) && (!length(src.items_general) && !length(src.items_job) && !length(src.items_objective) && !length(src.items_telecrystal)))
 				src.setup()
 
 	proc/generate_code()
@@ -56,6 +57,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			src.items_job = list()
 		if (!islist(src.items_objective))
 			src.items_objective = list()
+		if (!islist(src.items_telecrystal))
+			src.items_telecrystal = list()
 
 		for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
 			if (src.is_VR_uplink)
@@ -90,7 +93,11 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					continue
 
 				if (istype(S, /datum/syndicate_buylist/generic) && !src.items_general.Find(S))
-					src.items_general.Add(S)
+					if (S.telecrystal)
+						src.items_telecrystal.Add(S)
+						src.items_general.Remove(S)
+					else
+						src.items_general.Add(S)
 
 				if (ownermind || istype(ownermind))
 					if (ownermind.special_role != "nukeop" && istype(S, /datum/syndicate_buylist/traitor))
@@ -115,7 +122,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		var/list/names = list()
 		var/list/namecounts = list()
 
-		if (src.items_general.len)
+		if (length(src.items_general))
 			var/list/sort1 = list()
 
 			for (var/datum/syndicate_buylist/S1 in src.items_general)
@@ -131,7 +138,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			src.items_general = sortList(sort1)
 
-		if (src.items_job.len)
+		if (length(src.items_job))
 			var/list/sort2 = list()
 
 			for (var/datum/syndicate_buylist/S2 in src.items_job)
@@ -147,7 +154,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			src.items_job = sortList(sort2)
 
-		if (src.items_objective.len)
+		if (length(src.items_objective))
 			var/list/sort3 = list()
 
 			for (var/datum/syndicate_buylist/S3 in src.items_objective)
@@ -162,6 +169,22 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				sort3[name] = S3
 
 			src.items_objective = sortList(sort3)
+
+		if (length(src.items_telecrystal))
+			var/list/sort4 = list()
+
+			for (var/datum/syndicate_buylist/S4 in src.items_telecrystal)
+				var/name = S4.name
+				if (name in names)
+					namecounts[name]++
+					name = text("[] ([])", name, namecounts[name])
+				else
+					names.Add(name)
+					namecounts[name] = 1
+
+				sort4[name] = S4
+
+			src.items_telecrystal = sortList(sort4)
 
 		return
 
@@ -198,6 +221,23 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			src.generate_menu()
 		return
 
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/uplink_telecrystal))
+			if (!src.locked)
+				var/crystal_amount = W.amount
+				uses = uses + crystal_amount
+				boutput(user, "You insert [crystal_amount] [syndicate_currency] into the [src].")
+				qdel(W)
+		if (istype(W, /obj/item/explosive_uplink_telecrystal))
+			if (!src.locked)
+				boutput(user, "<span class='alert'>The [W] explodes!</span>")
+				var/turf/T = get_turf(W.loc)
+				if(T)
+					T.hotspot_expose(700,125)
+					explosion(W, T, -1, -1, 2, 3) //about equal to a PDA bomb
+				W.set_loc(user.loc)
+				qdel(W)
+
 	proc/generate_menu()
 		if (src.uses < 0)
 			src.uses = 0
@@ -231,6 +271,11 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					dat += "<HR>"
 					dat += "<B>Request item:</B><BR>"
 					dat += "<I>Each item costs a number of [syndicate_currency] as indicated by the number following their name.</I><BR><table cellspacing=5>"
+				if (src.items_telecrystal && islist(src.items_telecrystal) && length(src.items_telecrystal))
+					dat += "</table><B>Telecrystals:</B><BR><table cellspacing=5>"
+					for (var/T in src.items_telecrystal)
+						var/datum/syndicate_buylist/I4 = src.items_telecrystal[T]
+						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_telecrystal[T]]'>[I4.name]</A> ([I4.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_telecrystal[T]]'>About</A></td>"
 				if (src.items_objective && islist(src.items_objective) && length(src.items_objective))
 					dat += "</table><B>Objective specific:</B><BR><table cellspacing=5>"
 					for (var/O in src.items_objective)
@@ -279,6 +324,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		for(var/S in items_objective)
 			if(SB == items_objective[S])
+				return 1
+
+		for(var/S in items_telecrystal)
+			if(SB == items_telecrystal[S])
 				return 1
 
 		return 0
@@ -514,6 +563,11 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			for (var/O in src.items_objective)
 				var/datum/syndicate_buylist/I3 = src.items_objective[O]
 				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_objective[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_objective[O]]'>About</A></td>"
+		if (src.items_telecrystal && islist(src.items_telecrystal) && length(src.items_telecrystal))
+			src.menu_message += "</table><B>Telecrystals:</B><BR><table cellspacing=5>"
+			for (var/O in src.items_telecrystal)
+				var/datum/syndicate_buylist/I3 = src.items_telecrystal[O]
+				src.menu_message += "<tr><td><A href='byond://?src=\ref[src];buy_item=\ref[src.items_telecrystal[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];abt_item=\ref[src.items_telecrystal[O]]'>About</A></td>"
 
 		src.menu_message += "</table><HR>"
 		return
@@ -595,7 +649,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			freq += 2
 			if ((freq % 2) == 0)
 				freq += 1
-		freq = freqlist[rand(1, freqlist.len)]
+		freq = freqlist[rand(1, length(freqlist))]
 		return freq
 
 	setup(var/datum/mind/ownermind, var/obj/item/device/master)

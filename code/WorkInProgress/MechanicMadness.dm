@@ -352,6 +352,7 @@
 	var/cooldown_time = 3 SECONDS
 	var/when_next_ready = 0
 	var/list/particle_list
+	var/mob/owner = null
 
 	New()
 		particle_list = new/list()
@@ -362,6 +363,7 @@
 
 	disposing()
 		processing_items.Remove(src)
+		clear_owner()
 		..()
 
 
@@ -378,6 +380,18 @@
 			if(istype(the_container,/obj/item/storage/mechanics)) // wew lad i hope this compiles
 				the_container.light_up()
 			return
+
+
+		clear_owner()
+			UnregisterSignal(owner, COMSIG_PARENT_PRE_DISPOSING)
+			owner = null
+
+		set_owner(mob/user)
+			RegisterSignal(user, COMSIG_PARENT_PRE_DISPOSING, .proc/clear_owner)
+			owner = user
+
+
+
 
 	process()
 		if(level == 2 || under_floor)
@@ -421,6 +435,7 @@
 					logTheThing("station", user, null, "detaches a <b>[src]</b> from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
 					level = 2
 					anchored = 0
+					clear_owner()
 					loosen()
 				if(2) //Level 2 = loose
 					if(!isturf(src.loc) && !(IN_CABINET)) // allow items to be deployed inside housings, but not in other stuff like toolboxes
@@ -438,6 +453,7 @@
 					logTheThing("station", user, null, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 					level = 1
 					anchored = 1
+					set_owner(user)
 					secure()
 
 			var/turf/T = src.loc
@@ -964,7 +980,8 @@
 		if(level == 2 || AM.anchored || AM == src) return
 		if(AM.throwing) return
 		var/atom/target = get_edge_target_turf(AM, src.dir)
-		AM.throw_at(target, 50, 1)
+		var/datum/thrown_thing/thr = AM.throw_at(target, 50, 1)
+		thr?.user = (owner || usr)
 		return
 
 	HasEntered(atom/movable/AM as mob|obj)

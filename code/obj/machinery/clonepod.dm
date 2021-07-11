@@ -671,6 +671,8 @@
 		set name = "Toggle Auto Mode"
 		set category = "Local"
 
+		if (!isalive(usr) && !isAIeye(usr))
+			return
 		src.auto_mode = 1 - src.auto_mode
 		boutput(usr, "<span class='notice'>\The [src] will [src.auto_mode ? "automatically" : "no longer"] automatically prepare new bodies for clones.</span>")
 		add_fingerprint(usr)

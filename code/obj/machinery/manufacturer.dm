@@ -1036,6 +1036,10 @@
 			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
 			src.load_item(W,user)
 
+		else if (src.panelopen && (issnippingtool(W) || ispulsingtool(W)))
+			src.attack_hand(user)
+			return
+
 		else if(scan_card(W))
 			return
 
@@ -2377,7 +2381,13 @@
 	/datum/manufacture/hat_orange,
 	/datum/manufacture/hat_tophat,
 	/datum/manufacture/backpack,
-	/datum/manufacture/satchel)
+	/datum/manufacture/backpack_red,
+	/datum/manufacture/backpack_green,
+	/datum/manufacture/backpack_blue,
+	/datum/manufacture/satchel,
+	/datum/manufacture/satchel_red,
+	/datum/manufacture/satchel_green,
+	/datum/manufacture/satchel_blue)
 
 	hidden = list(/datum/manufacture/breathmask,
 	/datum/manufacture/patch,
