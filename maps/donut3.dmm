@@ -16897,10 +16897,10 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/decal/mule/dropoff,
 /obj/firedoor_spawn,
-/obj/access_spawn/mining,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/access_spawn/mining,
 /turf/simulated/floor,
 /area/station/quartermaster/refinery)
 "eGV" = (
@@ -44386,7 +44386,7 @@
 	},
 /obj/decal/mule/dropoff,
 /obj/firedoor_spawn,
-/obj/access_spawn/mining,
+/obj/access_spawn,
 /turf/simulated/floor,
 /area/station/quartermaster/refinery)
 "mVJ" = (
