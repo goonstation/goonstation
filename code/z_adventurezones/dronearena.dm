@@ -28,7 +28,7 @@
 
 /obj/item/gun/kinetic/se13
 	name = "SE13 Assault Rifle"
-	desc = "Powerful assault rifle chambered in .24, HonkCo Weapons is etched into the barrel."
+	desc = "Close ranged assault rifle chambered in .24, HonkCo Weapons is etched into the barrel."
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "se13"
 	item_state = "se13"
@@ -42,7 +42,7 @@
 	New()
 		ammo = new/obj/item/ammo/bullets/bullet_22/se13
 		set_current_projectile(new/datum/projectile/bullet/bullet_22/se)
-		AddComponent(/datum/component/holdertargeting/fullauto, 0.35 SECONDS, 0.35 SECONDS, 1)
+		AddComponent(/datum/component/holdertargeting/fullauto, 0.25 SECONDS, 0.25 SECONDS, 1)
 		..()
 
 /obj/arenadroneanchor
