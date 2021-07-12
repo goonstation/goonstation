@@ -401,8 +401,8 @@
 		if("fan")
 			var/target_mode = params["fanState"]
 			src.fan_state = target_mode
-			. = TRUE
 			src.update_icon()
+			. = TRUE
 
 		if("eject-materials")
 			src.eject()
