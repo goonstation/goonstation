@@ -5,7 +5,7 @@ var/list/clothingbooth_items = list()
 
 /proc/clothingbooth_setup() //sends items to the interface far, far away from byond fuckery land
 	var/list/list/list/boothlist = list()
-	for(var/T in childrentypesof(/datum/clothingbooth_item))
+	for(var/T in concrete_typesof(/datum/clothingbooth_item))
 		var/datum/clothingbooth_item/I = new T
 		var/itemname = I.name
 		var/pathname = "[I.path]"
