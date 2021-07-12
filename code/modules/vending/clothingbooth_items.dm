@@ -612,6 +612,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/scifi)
 	slot = SLOT_W_UNIFORM
 	category = "Sci-Fi"
 	cost = PAY_DOCTORATE/3
+
 /datum/clothingbooth_item/scifi/sfjumpsuitbp
 	name = "Black and Purple Sci-Fi Jumpsuit"
 	path = /obj/item/clothing/under/misc/sfjumpsuitbp
