@@ -395,8 +395,8 @@
 		if("arm")
 			if(MIXTURE_PRESSURE(src.air_contents) < (maximum_pressure * min_blast_pct) || !is_air_safe()) return
 			src.arm_blast()
-			. = TRUE
 			src.update_icon()
+			. = TRUE
 
 		if("fan")
 			var/target_mode = params["fanState"]
