@@ -46,6 +46,90 @@
 	category = "Accessories"
 	cost = PAY_TRADESMAN/3
 
+/datum/clothingbooth_item/hbowmagenta
+	name = "Magenta Hair Bow"
+	path = /obj/item/clothing/head/hairbow/magenta
+	slot = SLOT_HEAD
+	category = "Accessories"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/hbowpink
+	name = "Pink Hair Bow"
+	path = /obj/item/clothing/head/hairbow/pink
+	slot = SLOT_HEAD
+	category = "Accessories"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/hbowred
+	name = "Red Hair Bow"
+	path = /obj/item/clothing/head/hairbow/red
+	slot = SLOT_HEAD
+	category = "Accessories"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/hbowgold
+	name = "Gold Hair Bow"
+	path = /obj/item/clothing/head/hairbow/gold
+	slot = SLOT_HEAD
+	category = "Accessories"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/hbowgreen
+	name = "Green Hair Bow"
+	path = /obj/item/clothing/head/hairbow/green
+	slot = SLOT_HEAD
+	category = "Accessories"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/hbowmint
+	name = "Mint Hair Bow"
+	path = /obj/item/clothing/head/hairbow/mint
+	slot = SLOT_HEAD
+	category = "Accessories"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/hbowblue
+	name = "Blue Hair Bow"
+	path = /obj/item/clothing/head/hairbow/blue
+	slot = SLOT_HEAD
+	category = "Accessories"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/hbownavy
+	name = "Navy Hair Bow"
+	path = /obj/item/clothing/head/hairbow/navy
+	slot = SLOT_HEAD
+	category = "Accessories"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/hbowshinyblack
+	name = "Shiny Black Hair Bow"
+	path = /obj/item/clothing/head/hairbow/shinyblack
+	slot = SLOT_HEAD
+	category = "Accessories"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/hbowmatteblack
+	name = "Matte Black Hair Bow"
+	path = /obj/item/clothing/head/hairbow/matteblack
+	slot = SLOT_HEAD
+	category = "Accessories"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/hbowwhite
+	name = "White Hair Bow"
+	path = /obj/item/clothing/head/hairbow/white
+	slot = SLOT_HEAD
+	category = "Accessories"
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/hbowrainbow
+	name = "Rainbow Hair Bow"
+	path = /obj/item/clothing/head/hairbow/rainbow
+	slot = SLOT_HEAD
+	category = "Accessories"
+	cost = PAY_TRADESMAN
+
 //Casual
 
 /datum/clothingbooth_item/casualjeanswb
