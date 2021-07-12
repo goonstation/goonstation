@@ -302,14 +302,14 @@
 
 		switch (user.a_intent)
 			if ("harm")
-				if (src.status == 0 || (src.status != 0 && src.can_stun() == 0))
+				if (!src.is_active || (src.is_active && src.can_stun() == 0))
 					playsound(src, "swing_hit", 50, 1, -1)
 					..()
 				else
 					src.do_stun(user, M, "failed_harm", 1)
 
 			else
-				if (src.status == 0 || (src.status != 0 && src.can_stun() == 0))
+				if (!src.is_active || (src.is_active && src.can_stun() == 0))
 					src.do_stun(user, M, "failed_stun", 1)
 				else
 					src.do_stun(user, M, "stun", 2)
