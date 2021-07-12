@@ -163,7 +163,7 @@ export const Pressurizer = (props, context) => {
           buttons={(
             <Button
               icon="eject"
-              disabled={!materialsCount}
+              disabled={materialsCount === 0}
               onClick={() => handleEjectContents()}>
               Eject
             </Button>
