@@ -181,7 +181,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	var/armored = 0
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.01
+	permeability_coefficient = 0.005
 	over_hair = 1
 
 	setupProperties()
@@ -304,7 +304,7 @@
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.005
+	permeability_coefficient = 0.02
 	over_hair = 1
 
 	New()
@@ -964,7 +964,7 @@
 	item_state = "s_suit"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.02
+	permeability_coefficient = 0.1
 	protective_temperature = 1000
 	over_hair = 1
 
@@ -1130,8 +1130,8 @@
 			icon_state = "syndie_specialist-medic"
 			item_state = "syndie_specialist-medic"
 
-		body_parts_covered = TORSO|LEGS|ARMS
-		permeability_coefficient = 0.01
+			body_parts_covered = TORSO|LEGS|ARMS
+			permeability_coefficient = 0.01
 
 		setupProperties()
 			..()
@@ -1382,7 +1382,7 @@
 	over_hair = TRUE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.01
+	permeability_coefficient = 0.50
 
 	setupProperties()
 		..()
@@ -1421,7 +1421,7 @@
 	wear_layer = MOB_OVERLAY_BASE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.01
+	permeability_coefficient = 0.50
 
 /obj/item/clothing/suit/wizrobe
 	name = "blue wizard robe"

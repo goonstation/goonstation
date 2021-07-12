@@ -74609,7 +74609,7 @@
 	},
 /obj/item/clothing/under/gimmick/maid,
 /obj/item/clothing/head/maid,
-/obj/item/clothing/head/nyan/red,
+/obj/item/clothing/head/headband/nyan/red,
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/zamujasa)
 "eTR" = (
@@ -76047,6 +76047,7 @@
 	pixel_x = -5;
 	pixel_y = 6
 	},
+/obj/item/mutation_orb/cat_orb,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
 "jPv" = (
@@ -76251,7 +76252,7 @@
 	},
 /obj/item/clothing/head/bigtex,
 /obj/item/clothing/head/crown,
-/obj/item/clothing/head/nyan/white,
+/obj/item/clothing/head/headband/nyan/white,
 /obj/item/clothing/head/wizard/witch,
 /obj/item/clothing/head/laurels/gold,
 /obj/item/clothing/under/gimmick/princess,
@@ -78858,7 +78859,7 @@
 	flipped = 1;
 	force = 15;
 	name = "\improper Harmbaton of Porter Starboard";
-	status = 0
+	is_active = 0
 	},
 /obj/machinery/light/incandescent/warm/very{
 	dir = 4
@@ -79458,7 +79459,7 @@
 	desc = "The remains of a human. How'd they get out there?";
 	name = "human's skeleton"
 	},
-/obj/item/clothing/head/nyan/random{
+/obj/item/clothing/head/headband/nyan/random{
 	desc = "Did these belong to that skeleton?";
 	pixel_x = 12;
 	pixel_y = -4

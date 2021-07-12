@@ -640,9 +640,10 @@
 	. = ..()
 	if(!src.ai_active)
 		return
-	if(src.ai_state == AI_FLEEING && ai_incapacitated())
-		src.ai_state = AI_PASSIVE
-		walk_away(src, null)
+	if(ai_incapacitated())
+		walk(src, null)
+		if(src.ai_state == AI_FLEEING)
+			src.ai_state = AI_PASSIVE
 
 
 /mob/living/carbon/human/proc/ai_pickupstuff()

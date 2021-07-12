@@ -176,7 +176,6 @@
 	desc = "Keeps the wearer firmly anchored to the ground. Provided the ground is metal, of course."
 	icon_state = "magboots"
 	// c_flags = NOSLIP
-	permeability_coefficient = 0.05
 	mats = 8
 	burn_possible = 0
 	module_research = list("efficiency" = 5, "engineering" = 5)
@@ -204,7 +203,7 @@
 	desc = "Sandals blessed by the all-powerful goddess of victory and footwear."
 	icon_state = "wizard" //TODO: replace with custom sprite, thinking winged sandals
 	c_flags = NOSLIP
-	permeability_coefficient = 0.05
+	permeability_coefficient = 1
 	mats = 0
 	magical = 1
 	burn_possible = 0
@@ -227,7 +226,6 @@
 	name = "mechanised boots"
 	desc = "Industrial-grade boots fitted with mechanised balancers and stabilisers to increase running speed under a heavy workload."
 #endif
-	permeability_coefficient = 0.05
 	mats = 12
 	burn_possible = 0
 	module_research = list("efficiency" = 5, "engineering" = 5, "mining" = 10)
@@ -574,7 +572,6 @@
 	name = "witchfinder general's boots"
 	desc = "You can almost hear the authority in each step."
 	icon_state = "witchfinder"
-	permeability_coefficient = 0.30
 	kick_bonus = 1
 	step_sound = "step_wood"
 	step_priority = STEP_PRIORITY_LOW

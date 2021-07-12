@@ -60,7 +60,7 @@
 					else if (T.name == "trench floor" || T.name == "\proper space")
 						turf_color = "empty"
 					else
-						if (T.loc && (T.loc.type == /area/shuttle/sea_elevator || T.loc.type == /area/shuttle/sea_elevator/lower))
+						if (T.loc && (T.loc.type == /area/shuttle/sea_elevator || T.loc.type == /area/shuttle/sea_elevator/lower || T.loc.type == /area/prefab/sea_mining))
 							turf_color = "station"
 						else
 							turf_color = "other"
