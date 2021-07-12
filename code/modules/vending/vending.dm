@@ -1158,7 +1158,6 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/aspirin, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/atropine, 3)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/synaptizine, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/eyedrops, 2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/heparin, 2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/proconvertin, 2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/filgrastim, 2)
