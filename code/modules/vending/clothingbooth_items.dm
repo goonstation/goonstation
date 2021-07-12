@@ -655,63 +655,63 @@
 
 /datum/clothingbooth_item/catears_white
 	name = "White Cat Ears"
-	path = /obj/item/clothing/head/nyan/white
+	path = /obj/item/clothing/head/headband/nyan/white
 	slot = SLOT_HEAD
 	category = "Headwear"
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_gray
 	name = "Gray Cat Ears"
-	path = /obj/item/clothing/head/nyan/gray
+	path = /obj/item/clothing/head/headband/nyan/gray
 	slot = SLOT_HEAD
 	category = "Headwear"
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_black
 	name = "Black Cat Ears"
-	path = /obj/item/clothing/head/nyan/black
+	path = /obj/item/clothing/head/headband/nyan/black
 	slot = SLOT_HEAD
 	category = "Headwear"
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_red
 	name = "Red Cat Ears"
-	path = /obj/item/clothing/head/nyan/red
+	path = /obj/item/clothing/head/headband/nyan/red
 	slot = SLOT_HEAD
 	category = "Headwear"
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_orange
 	name = "Orange Cat Ears"
-	path = /obj/item/clothing/head/nyan/orange
+	path = /obj/item/clothing/head/headband/nyan/orange
 	slot = SLOT_HEAD
 	category = "Headwear"
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_yellow
 	name = "Yellow Cat Ears"
-	path = /obj/item/clothing/head/nyan/yellow
+	path = /obj/item/clothing/head/headband/nyan/yellow
 	slot = SLOT_HEAD
 	category = "Headwear"
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_green
 	name = "Green Cat Ears"
-	path = /obj/item/clothing/head/nyan/green
+	path = /obj/item/clothing/head/headband/nyan/green
 	slot = SLOT_HEAD
 	category = "Headwear"
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_blue
 	name = "Blue Cat Ears"
-	path = /obj/item/clothing/head/nyan/blue
+	path = /obj/item/clothing/head/headband/nyan/blue
 	slot = SLOT_HEAD
 	category = "Headwear"
 	cost = PAY_TRADESMAN/2
 
 /datum/clothingbooth_item/catears_purple
 	name = "Purple Cat Ears"
-	path = /obj/item/clothing/head/nyan/purple
+	path = /obj/item/clothing/head/headband/nyan/purple
 	slot = SLOT_HEAD
 	category = "Headwear"
 	cost = PAY_TRADESMAN/2
@@ -786,16 +786,58 @@
 	category = "Headwear"
 	cost = PAY_TRADESMAN/5
 
-/datum/clothingbooth_item/antlers
-	name = "Antlers"
-	path = /obj/item/clothing/head/antlers
+/datum/clothingbooth_item/headsprout
+	name = "Leaf Hairclip"
+	path = /obj/item/clothing/head/headsprout
 	slot = SLOT_HEAD
 	category = "Headwear"
 	cost = PAY_TRADESMAN/2
 
-/datum/clothingbooth_item/headsprout
-	name = "Leaf Hairclip"
-	path = /obj/item/clothing/head/headsprout
+/datum/clothingbooth_item/redhairclips
+	name = "Red Hairclip"
+	path = /obj/item/clothing/head/sailormoon
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/butterflyclip_bl
+	name = "Blue Butterfly Hairclip"
+	path = /obj/item/clothing/head/barrette/butterflyblu
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/butterflyclip_o
+	name = "Orange Butterfly Hairclip"
+	path = /obj/item/clothing/head/barrette/butterflyorg
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/barrette_blue
+	name = "Blue Hairclips"
+	path = /obj/item/clothing/head/barrette/blue
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/barrette_green
+	name = "Green Hairclips"
+	path = /obj/item/clothing/head/barrette/green
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/barrette_pink
+	name = "Pink Hairclips"
+	path = /obj/item/clothing/head/barrette/pink
+	slot = SLOT_HEAD
+	category = "Headwear"
+	cost = PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/barrette_gold
+	name = "Gold Hairclips"
+	path = /obj/item/clothing/head/barrette/gold
 	slot = SLOT_HEAD
 	category = "Headwear"
 	cost = PAY_TRADESMAN/2

@@ -4374,7 +4374,7 @@
 /area/station/hallway/primary/central)
 "asc" = (
 /turf/simulated/floor/carpet/blue/standard/edge/west,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "asg" = (
 /obj/wingrille_spawn/reinforced,
 /obj/cable{
@@ -4534,7 +4534,7 @@
 	},
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/carpet/blue/standard/narrow/east,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "asF" = (
 /obj/wingrille_spawn/reinforced_crystal/full,
 /obj/cable{
@@ -7665,7 +7665,7 @@
 	},
 /obj/table/round/auto,
 /turf/simulated/floor/darkblue/checker,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "aFX" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line1"
@@ -10390,7 +10390,7 @@
 /area/station/hallway/primary/west)
 "aSR" = (
 /turf/simulated/floor/carpet/blue/standard,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "aSU" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/external,
@@ -11396,7 +11396,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/carpet/blue/standard/edge/sw,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "aXB" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
@@ -12552,7 +12552,7 @@
 "beT" = (
 /obj/forcefield/energyshield/perma,
 /turf/simulated/floor/stairs/medical/wide/other,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "beU" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -13027,7 +13027,7 @@
 	layer = 3.9
 	},
 /turf/simulated/floor/carpet/blue/standard/edge/nw,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "bhT" = (
 /obj/decal/tile_edge/line/black{
 	dir = 10;
@@ -15444,7 +15444,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/darkblue/checker,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "bvV" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
@@ -17211,7 +17211,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/darkblue/checker,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "bFn" = (
 /obj/decal/tile_edge/line/red{
 	dir = 4;
@@ -19912,7 +19912,7 @@
 /area/station/security/equipment)
 "cUy" = (
 /turf/simulated/floor/carpet/blue/standard/innercorner/east,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "cUC" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 4;
@@ -22906,7 +22906,7 @@
 /area/station/crew_quarters/lounge/starboard)
 "eql" = (
 /turf/simulated/floor/carpet/blue/standard/edge/se,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "equ" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -24288,7 +24288,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/darkblue/checker,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "eQz" = (
 /obj/storage/secure/closet/engineering/mechanic,
 /obj/decal/tile_edge/line/black{
@@ -27094,7 +27094,7 @@
 /area/station/crew_quarters/quartersC)
 "gfZ" = (
 /turf/simulated/floor/carpet/blue/standard/edge/south,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "ggS" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -35197,7 +35197,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "kDO" = (
 /obj/disposalpipe/trunk{
 	dir = 1
@@ -36889,7 +36889,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/random,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "lCc" = (
 /obj/table/auto,
 /obj/item/pen/crayon/rainbow,
@@ -39568,7 +39568,7 @@
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/gannets/glass,
 /turf/simulated/floor/wood,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "nbl" = (
 /obj/decal/tile_edge/line/blue{
 	color = "#485e81";
@@ -43610,7 +43610,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating/random,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "pim" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -44229,7 +44229,7 @@
 	name = "Station Intercom"
 	},
 /turf/simulated/floor/carpet/blue/standard/edge/ne,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "pCF" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -45947,7 +45947,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "qzc" = (
 /obj/wingrille_spawn/reinforced_crystal/full,
 /obj/cable{
@@ -49200,7 +49200,7 @@
 	explosion_resistance = 20;
 	name = "very reinforced wall"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "smP" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -51138,7 +51138,7 @@
 	explosion_resistance = 20;
 	name = "very reinforced wall"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "tnE" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4;
@@ -53352,7 +53352,7 @@
 "uyz" = (
 /obj/forcefield/energyshield/perma,
 /turf/simulated/floor/stairs/medical/wide,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "uyP" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -53785,7 +53785,7 @@
 "uIi" = (
 /obj/landmark/start/latejoin,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "uIs" = (
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
@@ -55821,7 +55821,7 @@
 	explosion_resistance = 20;
 	name = "very reinforced wall"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "vNb" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
 	dir = 5
@@ -57203,7 +57203,7 @@
 /area/station/maintenance/southwest)
 "wAa" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "wAi" = (
 /obj/lattice,
 /obj/warp_beacon{
@@ -60183,7 +60183,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/hallway/secondary/entry)
+/area/station/crewquarters/cryotron)
 "ybu" = (
 /obj/decal/tile_edge/line/black{
 	dir = 9;

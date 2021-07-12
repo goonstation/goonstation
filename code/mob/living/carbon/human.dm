@@ -196,13 +196,13 @@
 #endif
 
 	health_mon = image('icons/effects/healthgoggles.dmi',src,"100",10)
-	health_mon_icons.Add(health_mon)
+	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_mon)
 
 	health_implant = image('icons/effects/healthgoggles.dmi',src,"100",10)
-	health_mon_icons.Add(health_implant)
+	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_implant)
 
 	arrestIcon = image('icons/effects/sechud.dmi',src,null,10)
-	arrestIconsAll.Add(arrestIcon)
+	get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_image(arrestIcon)
 
 	src.organHolder = new(src)
 
@@ -511,17 +511,15 @@
 		imp.dispose()
 	src.implant = null
 
-	for(var/client/C)
-		C.images -= list(health_mon, health_implant, arrestIcon)
 	if(health_mon)
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_mon)
 		health_mon.dispose()
-		health_mon_icons -= health_mon
 	if(health_implant)
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_implant)
 		health_implant.dispose()
-		health_mon_icons -= health_implant
 	if(arrestIcon)
+		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_image(arrestIcon)
 		arrestIcon.dispose()
-		arrestIconsAll -= arrestIcon
 
 	src.chest_item = null
 
@@ -884,6 +882,10 @@
 					if (istype(O, /datum/objective/specialist/stealth))
 						stat("Stealth Points:", "[O:score] / [O:min_score]")
 
+		/*
+
+		//For some reason, this code was causing severe lag. Feel free to uncomment it if you want to figure out why - Emily
+
 		if (src.internal)
 			if (!src.internal.air_contents)
 				qdel(src.internal)
@@ -891,6 +893,7 @@
 				stat("Internal Atmosphere Info:", src.internal.name)
 				stat("Tank Pressure:", MIXTURE_PRESSURE(src.internal.air_contents))
 				stat("Distribution Pressure:", src.internal.distribute_pressure)
+		*/
 
 /mob/living/carbon/human/hotkey(name)
 	switch (name)
