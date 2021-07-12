@@ -1572,7 +1572,8 @@ datum
 				if (method == TOUCH)
 					. = 0 // for depleting fluid pools
 				boutput(M, "<span class='alert'><b>OH SHIT ANTS!!!!</b></span>")
-				M.emote("scream")
+				if(!ON_COOLDOWN(M, "ants_scream", 3 SECONDS))
+					M.emote("scream")
 				random_brute_damage(M, 4)
 				return
 
@@ -1602,7 +1603,8 @@ datum
 					. = 0 // for depleting fluid pools
 				if (method == INGEST)
 					boutput(M, "<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] SPIDERS[pick("", " IN MY BLOOD", " IN MY VEINS")]![pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
-				M.emote("scream")
+				if (!ON_COOLDOWN(M, "spiders_scream", 3 SECONDS))
+					M.emote("scream")
 				random_brute_damage(M, 2)
 				if (ishuman(M))
 					if (!M:spiders)
