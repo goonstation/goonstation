@@ -1159,6 +1159,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe, 12)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/epinephrine, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/morphine, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/antitoxin, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/aspirin, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/eyedrops, 2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/insulin, 6)
