@@ -40,26 +40,18 @@
 	var/cost_normal = 25 // Cost in PU. Doesn't apply to cyborgs.
 	var/cost_cyborg = 500 // Battery charge to drain when user is a cyborg.
 	var/uses_charges = 1 // Does it deduct charges when used? Distinct from...
-	var/uses_electricity = 1 // Does it use electricity? Certain interactions don't work with a wooden baton.
 	var/is_active = TRUE
 
 	var/stun_normal_weakened = 15
-	var/stun_normal_stuttering = 15
-	var/stun_harm_weakened = 8 // Only used when next flag is set to 1.
-	var/instant_harmbaton_stun = 0 // Legacy behaviour for harmbaton, that is an instant knockdown.
-#ifdef USE_STAMINA_DISORIENT
-	var/stamina_based_stun = 1
-#else
-	var/stamina_based_stun = 0 // Experimental. Centered around stamina instead of traditional stun.
-#endif
-	var/stamina_based_stun_amount = 130 // Amount of stamina drained.
+
+	var/disorient_stamina_damage = 130 // Amount of stamina drained.
 	var/can_swap_cell = 1
 	var/beepsky_held_this = 0 // Did a certain validhunter hold this?
 	var/flipped = false //is it currently rotated so that youre grabbing it by the head?
 
 	New()
 		..()
-		if (src.uses_electricity != 0 && (!isnull(src.cell_type) && ispath(src.cell_type, /obj/item/ammo/power_cell)) && (!src.cell || !istype(src.cell)))
+		if ((!isnull(src.cell_type) && ispath(src.cell_type, /obj/item/ammo/power_cell)) && (!src.cell || !istype(src.cell)))
 			src.cell = new src.cell_type(src)
 		processing_items |= src
 		src.update_icon()
@@ -76,14 +68,14 @@
 
 	examine()
 		. = ..()
-		if (src.uses_charges != 0 && src.uses_electricity != 0)
+		if (src.uses_charges != 0)
 			if (!src.cell || !istype(src.cell))
 				. += "<span class='alert'>No power cell installed.</span>"
 			else
 				. += "The baton is turned [src.is_active ? "on" : "off"]. There are [src.cell.charge]/[src.cell.max_charge] PUs left! Each stun will use [src.cost_normal] PUs."
 
 	emp_act()
-		if (src.uses_charges != 0 && src.uses_electricity != 0)
+		if (src.uses_charges != 0)
 			src.is_active = FALSE
 			src.process_charges(-INFINITY)
 		return
@@ -97,7 +89,7 @@
 			logTheThing("debug", null, null, "<b>Convair880</b>: Process() was called for a stun baton ([src.type]) that wasn't in the item loop. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
 			processing_items.Add(src)
 			return
-		if (!src.cell || !istype(src.cell) || src.uses_electricity == 0)
+		if (!src.cell || !istype(src.cell))
 			processing_items.Remove(src)
 			return
 		if (!istype(src.cell, /obj/item/ammo/power_cell/self_charging)) // Kick out batons with a plain cell.
@@ -121,14 +113,9 @@
 			src.item_state = "[src.item_off][src.flipped ? "-f" : ""]"
 			return
 
-	proc/can_stun(var/requires_electricity = 0, var/amount = 1, var/mob/user)
+	proc/can_stun(var/amount = 1, var/mob/user)
 		if (!src || !istype(src))
 			return 0
-		if (src.uses_electricity == 0)
-			if (requires_electricity == 0)
-				return 1
-			else
-				return 0
 		if (!(src.is_active))
 			return 0
 		if (amount <= 0)
@@ -170,9 +157,6 @@
 	proc/process_charges(var/amount = -1, var/mob/user)
 		if (!src || !istype(src) || amount == 0)
 			return
-		if (src.uses_electricity == 0)
-			return
-
 		if (user && isrobot(user))
 			var/mob/living/silicon/robot/R = user
 			if (amount < 0)
@@ -188,7 +172,6 @@
 							user.show_text("The [src.name] is now out of charge!", "red")
 							src.stamina_damage = initial(src.stamina_damage)
 							src.is_active = FALSE
-							use_stamina_stun() //set stam damage amount
 							if (istype(src, /obj/item/baton/ntso)) //since ntso batons have some extra stuff, we need to set their state var to the correct value to make this work
 								var/obj/item/baton/ntso/B = src
 								B.state = OPEN_AND_OFF
@@ -207,17 +190,6 @@
 			//No cell. Tell anything trying to charge it.
 			return -1
 
-	proc/use_stamina_stun()
-		if (!src || !istype(src))
-			return 0
-
-		if (src.stamina_based_stun != 0 && (src.cell || src.uses_electricity == 0) && can_stun())
-			src.stamina_damage = src.stamina_based_stun_amount
-			return 1
-		else
-			src.stamina_damage = initial(src.stamina_damage) // Doubles as reset fallback (var editing).
-			return 0
-
 	proc/do_stun(var/mob/user, var/mob/victim, var/type = "", var/stun_who = 2)
 		if (!src || !istype(src) || type == "")
 			return
@@ -228,22 +200,16 @@
 		switch (type)
 			if ("failed")
 				logTheThing("combat", user, null, "accidentally stuns [himself_or_herself(user)] with the [src.name] at [log_loc(user)].")
-
-				if (src.uses_electricity != 0)
-					user.visible_message("<span class='alert'><b>[user]</b> fumbles with the [src.name] and accidentally stuns [himself_or_herself(user)]!</span>")
-					flick(flick_baton_active, src)
-					playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 50, 1, -1)
-				else
-					user.visible_message("<span class='alert'><b>[user]</b> swings the [src.name] in the wrong way and accidentally hits [himself_or_herself(user)]!</span>")
-					playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1, -1)
-					random_brute_damage(user, 2 * src.force)
+				user.visible_message("<span class='alert'><b>[user]</b> fumbles with the [src.name] and accidentally stuns [himself_or_herself(user)]!</span>")
+				flick(flick_baton_active, src)
+				playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 50, 1, -1)
 
 			if ("failed_stun")
 				user.visible_message("<span class='alert'><B>[victim] has been prodded with the [src.name] by [user]! Luckily it was off.</B></span>")
 				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1, -1)
 				logTheThing("combat", user, victim, "unsuccessfully tries to stun [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 
-				if (src.uses_electricity && src.is_active && (src.cell && istype(src.cell) && (src.cell.charge < src.cost_normal)))
+				if (src.is_active && (src.cell && istype(src.cell) && (src.cell.charge < src.cost_normal)))
 					if (user && ismob(user))
 						user.show_text("The [src.name] is out of charge!", "red")
 				return
@@ -253,20 +219,13 @@
 				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1, -1)
 				logTheThing("combat", user, victim, "unsuccessfully tries to beat [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 
-			if ("stun", "stun_classic")
+			if ("stun")
 				user.visible_message("<span class='alert'><B>[victim] has been stunned with the [src.name] by [user]!</B></span>")
 				logTheThing("combat", user, victim, "stuns [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 				JOB_XP(victim, "Clown", 3)
-				if (type == "stun_classic")
-					playsound(src, "swing_hit", 50, 1, -1)
 				else
 					flick(flick_baton_active, src)
 					playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 50, 1, -1)
-
-			if ("harm_classic")
-				user.visible_message("<span class='alert'><B>[victim] has been beaten with the [src.name] by [user]!</B></span>")
-				playsound(src, "swing_hit", 50, 1, -1)
-				logTheThing("combat", user, victim, "beats [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 
 			else
 				logTheThing("debug", user, null, "<b>Convair880</b>: stun baton ([src.type]) do_stun() was called with an invalid argument ([type]), aborting. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
@@ -280,34 +239,17 @@
 			dude_to_stun = victim
 
 		// Stun the target mob.
-		if (type == "harm_classic")
-			dude_to_stun.changeStatus("weakened", src.stun_harm_weakened SECONDS)
-			dude_to_stun.force_laydown_standup()
-			random_brute_damage(dude_to_stun, src.force,1) // Necessary since the item/attack() parent wasn't called. Wait, was this armor-piercing? -Tarm
-			dude_to_stun.remove_stamina(src.stamina_damage)
-			if (user && ismob(user))
-				user.remove_stamina(src.stamina_cost)
-
+		if (dude_to_stun.bioHolder && dude_to_stun.bioHolder.HasEffect("resist_electric"))
+			boutput(dude_to_stun, "<span class='notice'>Thankfully, electricity doesn't do much to you in your current state.</span>")
 		else
-			if (dude_to_stun.bioHolder && dude_to_stun.bioHolder.HasEffect("resist_electric") && src.uses_electricity != 0)
-				boutput(dude_to_stun, "<span class='notice'>Thankfully, electricity doesn't do much to you in your current state.</span>")
-			else
-				if (!src.use_stamina_stun() || (src.use_stamina_stun() && ismob(dude_to_stun) && !hasvar(dude_to_stun, "stamina")))
-					dude_to_stun.changeStatus("weakened", src.stun_normal_weakened SECONDS)
-					dude_to_stun.force_laydown_standup()
-					if ((dude_to_stun.stuttering < src.stun_normal_stuttering))
-						dude_to_stun.stuttering = src.stun_normal_stuttering
-				else
-					dude_to_stun.do_disorient(src.stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 60)
-					//dude_to_stun.remove_stamina(src.stamina_damage)
-					//dude_to_stun.stamina_stun() // Must be called manually here to apply the stun instantly.
+			dude_to_stun.do_disorient(src.disorient_stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 60)
 
-				if (isliving(dude_to_stun) && src.uses_electricity != 0)
-					var/mob/living/L = dude_to_stun
-					L.Virus_ShockCure(33)
-					L.shock_cyberheart(33)
+			if (isliving(dude_to_stun))
+				var/mob/living/L = dude_to_stun
+				L.Virus_ShockCure(33)
+				L.shock_cyberheart(33)
 
-			src.process_charges(-1, user)
+		src.process_charges(-1, user)
 
 		// Some after attack stuff.
 		if (user && ismob(user))
@@ -320,9 +262,6 @@
 
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
-
-		if (src.uses_electricity == 0)
-			return
 
 		if (!src?.cell?.charge || src.cell.charge - src.cost_normal <= 0 && !(src.is_active))
 			boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
@@ -345,15 +284,12 @@
 
 		src.update_icon()
 		user.update_inhands()
-		use_stamina_stun() //set stam damage amount
 
 		return
 
 	attack(mob/M as mob, mob/user as mob)
 		src.add_fingerprint(user)
 		src.regulate_charge()
-
-		use_stamina_stun() //set stam damage amount
 
 		if(check_target_immunity( M ))
 			user.show_message("<span class='alert'>[M] seems to be warded from attacks!</span>")
@@ -366,30 +302,17 @@
 
 		switch (user.a_intent)
 			if ("harm")
-				if (src.uses_electricity == 0)
-					if (src.instant_harmbaton_stun != 0)
-						src.do_stun(user, M, "harm_classic", 2)
-					else
-						playsound(src, "swing_hit", 50, 1, -1)
-						..() // Parent handles attack log entry and stamina drain.
+				if (src.status == 0 || (src.status != 0 && src.can_stun() == 0))
+					playsound(src, "swing_hit", 50, 1, -1)
+					..()
 				else
-					if (!(src.is_active) || (src.is_active && src.can_stun() == 0))
-						if (src.instant_harmbaton_stun != 0)
-							src.do_stun(user, M, "harm_classic", 2)
-						else
-							playsound(src, "swing_hit", 50, 1, -1)
-							..()
-					else
-						src.do_stun(user, M, "failed_harm", 1)
+					src.do_stun(user, M, "failed_harm", 1)
 
 			else
-				if (src.uses_electricity == 0)
-					src.do_stun(user, M, "stun_classic", 2)
+				if (src.status == 0 || (src.status != 0 && src.can_stun() == 0))
+					src.do_stun(user, M, "failed_stun", 1)
 				else
-					if (!(src.is_active) || (src.is_active && src.can_stun() == 0))
-						src.do_stun(user, M, "failed_stun", 1)
-					else
-						src.do_stun(user, M, "stun", 2)
+					src.do_stun(user, M, "stun", 2)
 
 		return
 
@@ -431,8 +354,6 @@
 		..()
 
 	proc/do_flip_stuff(var/mob/user, var/intent)
-		if (src.uses_electricity == 0)
-			return
 		if (intent == INTENT_HARM)
 			if (src.flipped) //swapping hands triggers the intent switch too, so we dont wanna spam that
 				return
@@ -477,9 +398,6 @@
 	charge(var/amt)
 		return -1 //no
 
-/obj/item/baton/stamina
-	stamina_based_stun = 1
-
 /obj/item/baton/cane
 	name = "stun cane"
 	desc = "A stun baton built into the casing of a cane."
@@ -491,29 +409,6 @@
 	item_off = "cane"
 	cell_type = /obj/item/ammo/power_cell
 	mats = list("MET-3"=10, "CON-2"=10, "gem"=1, "gold"=1)
-
-/obj/item/baton/classic
-	name = "police baton"
-	desc = "A wooden truncheon for beating criminal scum."
-	icon_state = "baton"
-	item_state = "classic_baton"
-	force = 15
-	mats = 0
-	contraband = 6
-	icon_on = "baton"
-	icon_off = "baton"
-	uses_charges = 0
-	uses_electricity = 0
-	stamina_damage = 105
-	stamina_cost = 25
-	stun_normal_weakened = 8
-	stun_normal_stuttering = 8
-	stamina_based_stun_amount = 105
-	item_function_flags = 0
-
-	New()
-		..()
-		src.setItemSpecial(/datum/item_special/simple) //override spark of parent
 
 /obj/item/baton/ntso
 	name = "extendable stun baton"
@@ -552,8 +447,6 @@
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
 		//never should happen but w/e
-		if (src.uses_electricity == 0)
-			return
 
 		src.regulate_charge()
 		//make it harder for them clowns...
@@ -575,7 +468,6 @@
 					boutput(user, "<span class='notice'>The [src.name] is now open and unpowered.</span>")
 					src.update_icon()
 					user.update_inhands()
-					use_stamina_stun() //set stam damage amount
 					return
 
 				//this is the stuff that normally happens
@@ -603,7 +495,6 @@
 
 		src.update_icon()
 		user.update_inhands()
-		use_stamina_stun() //set stam damage amount
 
 		return
 
@@ -630,7 +521,7 @@
 		..()
 
 	emp_act()
-		if (src.uses_charges != 0 && src.uses_electricity != 0)
+		if (src.uses_charges != 0)
 			if (state == OPEN_AND_ON)
 				state = OPEN_AND_OFF
 			src.is_active = FALSE

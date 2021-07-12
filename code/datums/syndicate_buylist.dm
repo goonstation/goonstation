@@ -938,13 +938,6 @@ This is basically useless for anyone but miners.
 	desc = "An experimental laser design with a self-charging cerenkite battery."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
-/datum/syndicate_buylist/surplus/riotbaton
-	name = "Riot Baton"
-	item = /obj/item/baton/classic
-	cost = 5
-	desc = "An old riot baton."
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
-
 /datum/syndicate_buylist/surplus/breachingT
 	name = "Thermite Breaching Charge"
 	item = /obj/item/breaching_charge/thermite

@@ -408,8 +408,6 @@
 			qdel(src)
 		else if (istype(W, /obj/item/baton))
 			var/obj/item/baton/baton = W
-			if (!baton.uses_electricity)
-				..()
 			if (baton.is_active) //baton is on
 				if (user.a_intent != "harm")
 					if (user.traitHolder.hasTrait("training_security"))
