@@ -1,5 +1,9 @@
 
 (t)mon jul 12 21
+(u)TTerc
+(p)5473
+(e)|
+(+)You can now click the APC with wirecutters/multitool to open the hacking panel, if wires are exposed.
 (u)Tarmunora
 (p)5477
 (e)🐛🗺⛔|bug, mapping, removal
