@@ -27,7 +27,7 @@
 		name = "SE13 .24 Incendiary Magazine"
 
 /obj/item/gun/kinetic/se13
-	name = "SE13 Assault Rifle"
+	name = "SE13 Rifle"
 	desc = "Close ranged assault rifle chambered in .24, HonkCo Weapons is etched into the barrel."
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "se13"
