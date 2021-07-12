@@ -1569,6 +1569,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if (method == TOUCH)
+					. = 0 // for depleting fluid pools
 				boutput(M, "<span class='alert'><b>OH SHIT ANTS!!!!</b></span>")
 				M.emote("scream")
 				random_brute_damage(M, 4)
@@ -1597,6 +1599,7 @@ datum
 				. = ..()
 				if (method == TOUCH)
 					boutput(M, "<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] SPIDERS[pick("", " ON MY FACE", " EVERYWHERE")]![pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
+					. = 0 // for depleting fluid pools
 				if (method == INGEST)
 					boutput(M, "<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] SPIDERS[pick("", " IN MY BLOOD", " IN MY VEINS")]![pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
 				M.emote("scream")
