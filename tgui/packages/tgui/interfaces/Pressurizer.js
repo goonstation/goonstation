@@ -127,13 +127,13 @@ export const Pressurizer = (props, context) => {
                 Off
               </Button>
               <Button
-                color={fanState === FanState.In ? 'good' : 'default'}
+                selected={fanState === FanState.In}
                 onClick={() => handleSetFan(FanState.In)}
               >
                 In
               </Button>
               <Button
-                color={fanState === FanState.Out ? 'good' : 'default'}
+                selected={fanState === FanState.Out}
                 onClick={() => handleSetFan(FanState.Out)}
               >
                 Out
@@ -169,26 +169,26 @@ export const Pressurizer = (props, context) => {
           <LabeledList>
             <LabeledList.Item label="Speed">
               <Button
-                color={processRate === 1 ? 'good' : 'default'}
+                selected={processRate === 1}
                 onClick={() => handleSetProcessRate(1)}
               >
                 1
               </Button>
               <Button
-                color={processRate === 2 ? 'good' : 'default'}
+                selected={processRate === 2}
                 onClick={() => handleSetProcessRate(2)}
               >
                 2
               </Button>
               <Button
-                color={processRate === 3 ? 'good' : 'default'}
+                selected={processRate === 3}
                 onClick={() => handleSetProcessRate(3)}
               >
                 3
               </Button>
               {!!emagged && (
                 <Button
-                  color={processRate === 4 ? 'good' : 'default'}
+                  selected={processRate === 4}
                   onClick={() => handleSetProcessRate(4)}
                 >
                   4
@@ -196,7 +196,7 @@ export const Pressurizer = (props, context) => {
               )}
               {!!emagged && (
                 <Button
-                  color={processRate === 5 ? 'good' : 'default'}
+                  selected={processRate === 5}
                   onClick={() => handleSetProcessRate(5)}
                 >
                   5
