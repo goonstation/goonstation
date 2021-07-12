@@ -52,8 +52,8 @@
 /obj/critter/gunbot/drone/arenadrone
 	name = "Experimental Combat Drone SP332"
 	desc = "A very powerful drone designed to guard syndicate bases. This one seems modified."
-	icon_state = "droneMG"
-	dead_state = "droneMG-dead"
+	icon_state = "arenadrone"
+	dead_state = "arenadrone-dead"
 	health = 1250
 	maxhealth = 2000
 	attack_cooldown = 30
