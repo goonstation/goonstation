@@ -216,41 +216,24 @@
 			user.visible_message("<span class='alert'><B>[user] hits [src] with [I]!</B></span>")
 			return
 		if (istype(I,/obj/item/satchel/) && I.contents.len)
-			var/action = input(user, "What do you want to do with the satchel?") in list("Place it in the Chute","Empty it into the Chute","Never Mind")
-			if (!action || action == "Never Mind")
-				return
-			if (!in_interact_range(src, user))
-				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
-				return
-			if(action == "Empty it into the Chute")
-				var/obj/item/satchel/S = I
-				for(var/obj/item/O in S.contents) O.set_loc(src)
-				S.satchel_updateicon()
-				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
-				return
+			var/obj/item/satchel/S = I
+			for(var/obj/item/O in S.contents) O.set_loc(src)
+			S.satchel_updateicon()
+			user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
+			return
 		if (istype(I,/obj/item/storage/) && I.contents.len)
-			var/action = input(user, "What do you want to do with [I]?") as null|anything in list("Place it in the Chute","Empty it into the chute","Never Mind")
-			if (!action || action == "Never Mind")
-				return
-			if(!in_interact_range(src, user))
-				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
-				return
-			if(action == "Empty it into the chute")
-				var/obj/item/storage/S = I
-				for(var/obj/item/O in S)
-					O.set_loc(src)
-					S.hud.remove_object(O)
-				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
-				return
-			if(isnull(action)) return
+			var/obj/item/storage/S = I
+			for(var/obj/item/O in S)
+				O.set_loc(src)
+				S.hud.remove_object(O)
+			user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
+			return
 
 		var/obj/item/grab/G = I
 		if(istype(G))	// handle grabbed mob
 			if(ismob(G.affecting))
-				var/mob/GM = G.affecting
-				if(istype(src, /obj/machinery/disposal/mail) && !GM.canRideMailchutes())
-					boutput(user, "<span class='alert'>That won't fit!</span>")
-					return
+				boutput(user, "<span class='alert'>That won't fit!</span>")
+				return
 		else
 			if(!user.drop_item())
 				return
@@ -346,7 +329,7 @@
 		return TRUE
 
 	proc/set_process_rate(rate as num)
-		src.process_rate = clamp(rate, 1, 5)
+		src.process_rate = clamp(rate, 1, (src.emagged ? 5 : 3))
 		return TRUE
 
 

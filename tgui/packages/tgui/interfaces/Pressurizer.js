@@ -56,12 +56,10 @@ export const Pressurizer = (props, context) => {
     });
   };
 
-  const sufficientPressure = () => {
-    return (pressure < (maxPressure * minBlastPercent));
-  };
+  const hasSufficientPressure = pressure < maxPressure * minBlastPercent;
 
   const getArmedState = () => {
-    if (sufficientPressure()) {
+    if (hasSufficientPressure) {
       return "Insufficient Pressure";
     }
     if (!airSafe) {
@@ -85,7 +83,7 @@ export const Pressurizer = (props, context) => {
     <Window
       theme={emagged ? 'syndicate' : 'ntos'}
       width={390}
-      height={390}>
+      height={380}>
       <Window.Content>
         <PortableBasicInfo
           connected={connected}
@@ -99,7 +97,7 @@ export const Pressurizer = (props, context) => {
                 textAlign="center"
                 icon="circle"
                 content={getArmedState()}
-                disabled={sufficientPressure() || !airSafe}
+                disabled={hasSufficientPressure || !airSafe}
                 color={blastArmed ? 'bad' : 'average'}
                 onClick={() => handleArmPressurizer()} />
             </LabeledList.Item>
@@ -207,7 +205,6 @@ export const Pressurizer = (props, context) => {
             </LabeledList.Item>
             <LabeledList.Item label="Progress">
               <ProgressBar
-                mt="0.5em"
                 ranges={{
                   good: [1, Infinity],
                   average: [0.75, 1],
