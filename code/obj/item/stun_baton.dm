@@ -41,7 +41,7 @@
 	var/cost_cyborg = 500 // Battery charge to drain when user is a cyborg.
 	var/uses_charges = 1 // Does it deduct charges when used? Distinct from...
 	var/uses_electricity = 1 // Does it use electricity? Certain interactions don't work with a wooden baton.
-	var/status = 1 //1 is on, 0 is off
+	var/is_active = TRUE
 
 	var/stun_normal_weakened = 15
 	var/stun_normal_stuttering = 15
@@ -80,11 +80,11 @@
 			if (!src.cell || !istype(src.cell))
 				. += "<span class='alert'>No power cell installed.</span>"
 			else
-				. += "The baton is turned [src.status ? "on" : "off"]. There are [src.cell.charge]/[src.cell.max_charge] PUs left! Each stun will use [src.cost_normal] PUs."
+				. += "The baton is turned [src.is_active ? "on" : "off"]. There are [src.cell.charge]/[src.cell.max_charge] PUs left! Each stun will use [src.cost_normal] PUs."
 
 	emp_act()
 		if (src.uses_charges != 0 && src.uses_electricity != 0)
-			src.status = 0
+			src.is_active = FALSE
 			src.process_charges(-INFINITY)
 		return
 
@@ -113,7 +113,7 @@
 		if (!src || !istype(src))
 			return
 
-		if (src.status)
+		if (src.is_active)
 			src.set_icon_state("[src.icon_on][src.flipped ? "-f" : ""]") //if flipped is true, attach -f to the icon state. otherwise leave it as normal
 			src.item_state = "[src.item_on][src.flipped ? "-f" : ""]"
 		else
@@ -129,7 +129,7 @@
 				return 1
 			else
 				return 0
-		if (src.status == 0)
+		if (!(src.is_active))
 			return 0
 		if (amount <= 0)
 			return 0
@@ -187,7 +187,7 @@
 						else if (src.cell.charge <= 0)
 							user.show_text("The [src.name] is now out of charge!", "red")
 							src.stamina_damage = initial(src.stamina_damage)
-							src.status = 0
+							src.is_active = FALSE
 							use_stamina_stun() //set stam damage amount
 							if (istype(src, /obj/item/baton/ntso)) //since ntso batons have some extra stuff, we need to set their state var to the correct value to make this work
 								var/obj/item/baton/ntso/B = src
@@ -243,7 +243,7 @@
 				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1, -1)
 				logTheThing("combat", user, victim, "unsuccessfully tries to stun [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 
-				if (src.uses_electricity && src.status == 1 && (src.cell && istype(src.cell) && (src.cell.charge < src.cost_normal)))
+				if (src.uses_electricity && src.is_active && (src.cell && istype(src.cell) && (src.cell.charge < src.cost_normal)))
 					if (user && ismob(user))
 						user.show_text("The [src.name] is out of charge!", "red")
 				return
@@ -324,19 +324,19 @@
 		if (src.uses_electricity == 0)
 			return
 
-		if (!src?.cell?.charge || src.cell.charge - src.cost_normal <= 0)
+		if (!src?.cell?.charge || src.cell.charge - src.cost_normal <= 0 && !(src.is_active))
 			boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
 			return
 
 		src.regulate_charge()
-		src.status = !src.status
+		src.is_active = !src.is_active
 
 		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
 			src.do_stun(user, user, "failed", 1)
 			JOB_XP(user, "Clown", 2)
 			return
 
-		if (src.status)
+		if (src.is_active)
 			boutput(user, "<span class='notice'>The [src.name] is now on.</span>")
 			playsound(src, "sparks", 75, 1, -1)
 		else
@@ -373,7 +373,7 @@
 						playsound(src, "swing_hit", 50, 1, -1)
 						..() // Parent handles attack log entry and stamina drain.
 				else
-					if (src.status == 0 || (src.status != 0 && src.can_stun() == 0))
+					if (!(src.is_active) || (src.is_active && src.can_stun() == 0))
 						if (src.instant_harmbaton_stun != 0)
 							src.do_stun(user, M, "harm_classic", 2)
 						else
@@ -386,7 +386,7 @@
 				if (src.uses_electricity == 0)
 					src.do_stun(user, M, "stun_classic", 2)
 				else
-					if (src.status == 0 || (src.status != 0 && src.can_stun() == 0))
+					if (!(src.is_active) || (src.is_active && src.can_stun() == 0))
 						src.do_stun(user, M, "failed_stun", 1)
 					else
 						src.do_stun(user, M, "stun", 2)
@@ -443,7 +443,7 @@
 			src.transform = null //clear it before updating icon
 			src.update_icon()
 			user.update_inhands()
-			user.show_text("<B>You flip \the [src] and grab it by the head! [src.status ? "It seems pretty unsafe to hold it like this while it's on!" : "At least its off!"]</B>", "red")
+			user.show_text("<B>You flip \the [src] and grab it by the head! [src.is_active ? "It seems pretty unsafe to hold it like this while it's on!" : "At least its off!"]</B>", "red")
 		else //not already flipped
 			if (!src.flipped) //swapping hands triggers the intent switch too, so we dont wanna spam that
 				return
@@ -531,12 +531,12 @@
 	flick_baton_active = "ntso-baton-a-1"
 	w_class = W_CLASS_SMALL	//2 when closed, 4 when extended
 	can_swap_cell = 0
-	status = 0
+	is_active = FALSE
 	// stamina_based_stun_amount = 110
 	cost_normal = 25 // Cost in PU. Doesn't apply to cyborgs.
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_baton
 	item_function_flags = 0
-	//bascially overriding status, but it's kinda hacky in that they both are used jointly
+	//bascially overriding is_active, but it's kinda hacky in that they both are used jointly
 	var/state = CLOSED_AND_OFF
 
 	New()
@@ -568,7 +568,7 @@
 				if (!src.cell.charge || src.cell.charge - src.cost_normal <= 0) //ugly copy pasted code to move to next state if its depowered, cleanest solution i could think of
 					boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
 					src.state = OPEN_AND_OFF
-					src.status = 0
+					src.is_active = FALSE
 					src.w_class = W_CLASS_BULKY
 					src.force = 7
 					playsound(src, "sound/misc/lightswitch.ogg", 75, 1, -1)
@@ -580,14 +580,14 @@
 
 				//this is the stuff that normally happens
 				src.state = OPEN_AND_ON
-				src.status = 1
+				src.is_active = TRUE
 				boutput(user, "<span class='notice'>The [src.name] is now open and on.</span>")
 				src.w_class = W_CLASS_BULKY
 				src.force = 7
 				playsound(src, "sparks", 75, 1, -1)
 			if (OPEN_AND_ON)		//move to open/off state
 				src.state = OPEN_AND_OFF
-				src.status = 0
+				src.is_active = FALSE
 				src.w_class = W_CLASS_BULKY
 				src.force = 7
 				playsound(src, "sound/misc/lightswitch.ogg", 75, 1, -1)
@@ -595,7 +595,7 @@
 				// playsound(src, "sparks", 75, 1, -1)
 			if (OPEN_AND_OFF)		//move to closed/off state
 				src.state = CLOSED_AND_OFF
-				src.status = 0
+				src.is_active = FALSE
 				src.w_class = W_CLASS_SMALL
 				src.force = 1
 				boutput(user, "<span class='notice'>The [src.name] is now closed.</span>")
@@ -633,7 +633,7 @@
 		if (src.uses_charges != 0 && src.uses_electricity != 0)
 			if (state == OPEN_AND_ON)
 				state = OPEN_AND_OFF
-			src.status = 0
+			src.is_active = FALSE
 			usr.show_text("The [src.name] is now open and unpowered.", "blue")
 			src.process_charges(-INFINITY)
 
