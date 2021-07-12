@@ -769,14 +769,16 @@ datum
 				// IRL methanol poisoning is often treated by ethanol IVs. Turns out liver prefers breaking ethanol over methanol!
 				if(!M.reagents.has_reagent("ethanol"))
 					methanol_counter += rand(0,2) * mult
+					// Methanol by itself is not much more toxic than ethanol but it is broken in liver into nasty stuff, thus the delay
 					if (methanol_counter > 40)
-						if (prob(50))
-							M.take_toxin_damage(2 * mult)
-						else
-							// This is trying to imitate acidosis, but we do not have formic acid
-							M.take_oxygen_deprivation(3 * mult)
+						if (prob(methanol_counter))
 							if (prob(50))
-								M.reagents.add_reagent("formaldehyde", 0.6 * mult)
+								M.take_toxin_damage(2 * mult)
+							else
+								// This is trying to imitate acidosis, but we do not have formic acid
+								M.take_oxygen_deprivation(3 * mult)
+								if (prob(50))
+									M.reagents.add_reagent("formaldehyde", 0.6 * mult)
 
 						if (prob(20))
 							M.vomit(rand(3,5))
@@ -790,7 +792,7 @@ datum
 						if (methanol_counter > 80)
 							M.take_eye_damage(4, 1)
 							M.bioHolder.AddEffect("blind", magical=1)
-							M.take_brain_damage(rand(1,4) * mult)
+							M.take_brain_damage(rand(1,3) * mult)
 				..()
 
 
