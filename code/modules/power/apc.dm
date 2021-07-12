@@ -473,6 +473,9 @@ var/zapLimiter = 0
 			boutput(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 			updateicon()
 
+	else if (wiresexposed && (issnippingtool(W) || ispulsingtool(W)))
+		src.attack_hand(user)
+
 	else if (issilicon(user))
 		if (istype(W, /obj/item/robojumper))
 			var/mob/living/silicon/S = user
