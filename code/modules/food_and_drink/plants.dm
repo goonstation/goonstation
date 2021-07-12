@@ -294,6 +294,11 @@
 			pool (src)
 		..()
 
+/obj/item/reagent_containers/food/snacks/plant/orange/blood
+	name = "blood orange"
+	desc = "Juicy."
+	plant_reagent = "bloodc"
+
 /obj/item/reagent_containers/food/snacks/plant/orange/wedge
 	name = "orange wedge"
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
