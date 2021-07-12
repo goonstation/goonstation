@@ -22,28 +22,28 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/accessory)
 	category = "Accessories"
 	cost = PAY_TRADESMAN/3
 
-	gold
-		name = "Gold Ring"
-		path = /obj/item/clothing/gloves/ring/gold
-		slot = SLOT_GLOVES
-		cost = PAY_IMPORTANT
-		hidden = 1
+/datum/clothingbooth_item/accessory/gold
+	name = "Gold Ring"
+	path = /obj/item/clothing/gloves/ring/gold
+	slot = SLOT_GLOVES
+	cost = PAY_IMPORTANT
+	hidden = 1
 
-	monocle
-		name = "Monocle"
-		path = /obj/item/clothing/glasses/monocle
-		slot = SLOT_GLASSES
-		cost = PAY_IMPORTANT/3
+/datum/clothingbooth_item/accessory/monocle
+	name = "Monocle"
+	path = /obj/item/clothing/glasses/monocle
+	slot = SLOT_GLASSES
+	cost = PAY_IMPORTANT/3
 
-	scarf
-		name = "French Scarf"
-		path = /obj/item/clothing/suit/scarf
-		slot = SLOT_WEAR_SUIT
+/datum/clothingbooth_item/accessory/scarf
+	name = "French Scarf"
+	path = /obj/item/clothing/suit/scarf
+	slot = SLOT_WEAR_SUIT
 
-	suspenders
-		name = "Suspenders"
-		path = /obj/item/clothing/suit/suspenders
-		slot = SLOT_WEAR_SUIT
+/datum/clothingbooth_item/accessory/suspenders
+	name = "Suspenders"
+	path = /obj/item/clothing/suit/suspenders
+	slot = SLOT_WEAR_SUIT
 
 
 //Casual
@@ -55,69 +55,69 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/casual)
 	category = "Casual"
 	cost = PAY_UNTRAINED/3
 
-	casualjeanswb
-		name = "White Shirt and Jeans"
-		path = /obj/item/clothing/under/misc/casualjeanswb
+/datum/clothingbooth_item/casual/casualjeanswb
+	name = "White Shirt and Jeans"
+	path = /obj/item/clothing/under/misc/casualjeanswb
 
-	casualjeansskr
-		name = "Red Skull Shirt and Jeans"
-		path = /obj/item/clothing/under/misc/casualjeansskr
+/datum/clothingbooth_item/casual/casualjeansskr
+	name = "Red Skull Shirt and Jeans"
+	path = /obj/item/clothing/under/misc/casualjeansskr
 
-	casualjeansskb
-		name = "Black Skull Shirt and Jeans"
-		path = /obj/item/clothing/under/misc/casualjeansskb
+/datum/clothingbooth_item/casual/casualjeansskb
+	name = "Black Skull Shirt and Jeans"
+	path = /obj/item/clothing/under/misc/casualjeansskb
 
-	casualjeansyel
-		name = "Yellow Shirt and Jeans"
-		path = /obj/item/clothing/under/misc/casualjeansyel
+/datum/clothingbooth_item/casual/casualjeansyel
+	name = "Yellow Shirt and Jeans"
+	path = /obj/item/clothing/under/misc/casualjeansyel
 
-	casualjeansacid
-		name = "Skull Shirt and Acid Wash Jeans"
-		path = /obj/item/clothing/under/misc/casualjeansacid
+/datum/clothingbooth_item/casual/casualjeansacid
+	name = "Skull Shirt and Acid Wash Jeans"
+	path = /obj/item/clothing/under/misc/casualjeansacid
 
-	casualjeansgrey
-		name = "Grey Shirt and Jeans"
-		path = /obj/item/clothing/under/misc/casualjeansgrey
+/datum/clothingbooth_item/casual/casualjeansgrey
+	name = "Grey Shirt and Jeans"
+	path = /obj/item/clothing/under/misc/casualjeansgrey
 
-	casualjeanspurp
-		name = "Purple Shirt and White Jeans"
-		path = /obj/item/clothing/under/misc/casualjeanspurp
+/datum/clothingbooth_item/casual/casualjeanspurp
+	name = "Purple Shirt and White Jeans"
+	path = /obj/item/clothing/under/misc/casualjeanspurp
 
-	casualjeansblue
-		name = "Blue Shirt and Jeans"
-		path = /obj/item/clothing/under/misc/casualjeansblue
+/datum/clothingbooth_item/casual/casualjeansblue
+	name = "Blue Shirt and Jeans"
+	path = /obj/item/clothing/under/misc/casualjeansblue
 
-	casualjeanskhaki
-		name = "Khaki Shirt and Jeans"
-		path = /obj/item/clothing/under/misc/casualjeanskhaki
+/datum/clothingbooth_item/casual/casualjeanskhaki
+	name = "Khaki Shirt and Jeans"
+	path = /obj/item/clothing/under/misc/casualjeanskhaki
 
-	lshirt
-		name = "Long Sleeved Shirt"
-		path = /obj/item/clothing/suit/lshirt
+/datum/clothingbooth_item/casual/lshirt
+	name = "Long Sleeved Shirt"
+	path = /obj/item/clothing/suit/lshirt
 
-	yoga
-		name = "Yoga Outfit"
-		path = /obj/item/clothing/under/misc/yoga
-		cost = PAY_TRADESMAN/3
+/datum/clothingbooth_item/casual/yoga
+	name = "Yoga Outfit"
+	path = /obj/item/clothing/under/misc/yoga
+	cost = PAY_TRADESMAN/3
 
-	yogared
-		name = "Red Yoga Outfit"
-		path = /obj/item/clothing/under/misc/yoga/red
-		cost = PAY_TRADESMAN/3
+/datum/clothingbooth_item/casual/yogared
+	name = "Red Yoga Outfit"
+	path = /obj/item/clothing/under/misc/yoga/red
+	cost = PAY_TRADESMAN/3
 
-	yogacommunist
-		name = "VERY Red Yoga Outfit"
-		path = /obj/item/clothing/under/misc/yoga/communist
-		cost = PAY_TRADESMAN/3
-		hidden = 1
+/datum/clothingbooth_item/casual/yogacommunist
+	name = "VERY Red Yoga Outfit"
+	path = /obj/item/clothing/under/misc/yoga/communist
+	cost = PAY_TRADESMAN/3
+	hidden = 1
 
-	dirtyvest
-		name = "Dirty Tank Top Vest"
-		path = /obj/item/clothing/under/misc/head_of_security
+/datum/clothingbooth_item/casual/dirtyvest
+	name = "Dirty Tank Top Vest"
+	path = /obj/item/clothing/under/misc/head_of_security
 
-	bandshirt
-		name = "Band Shirt"
-		path = /obj/item/clothing/under/misc/bandshirt
+/datum/clothingbooth_item/casual/bandshirt
+	name = "Band Shirt"
+	path = /obj/item/clothing/under/misc/bandshirt
 
 
 //Dresses
@@ -128,70 +128,70 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/dress)
 	slot = SLOT_W_UNIFORM
 	category = "Dresses"
 	cost = PAY_UNTRAINED/3
-	hawaiian
-		name = "Hawaiian Dress"
-		path = /obj/item/clothing/under/misc/dress/hawaiian
-		cost = PAY_DOCTORATE/3
+/datum/clothingbooth_item/dress/hawaiian
+	name = "Hawaiian Dress"
+	path = /obj/item/clothing/under/misc/dress/hawaiian
+	cost = PAY_DOCTORATE/3
 
-	casdressblk
-		name = "Black Tshirt Dress"
-		path = /obj/item/clothing/under/misc/casdressblk
+/datum/clothingbooth_item/dress/casdressblk
+	name = "Black Tshirt Dress"
+	path = /obj/item/clothing/under/misc/casdressblk
 
-	casdressblu
-		name = "Blue Tshirt Dress"
-		path = /obj/item/clothing/under/misc/casdressblu
+/datum/clothingbooth_item/dress/casdressblu
+	name = "Blue Tshirt Dress"
+	path = /obj/item/clothing/under/misc/casdressblu
 
-	casdressgrn
-		name = "Green Tshirt Dress"
-		path = /obj/item/clothing/under/misc/casdressgrn
+/datum/clothingbooth_item/dress/casdressgrn
+	name = "Green Tshirt Dress"
+	path = /obj/item/clothing/under/misc/casdressgrn
 
-	casdresspnk
-		name = "Pink Tshirt Dress"
-		path = /obj/item/clothing/under/misc/casdresspnk
+/datum/clothingbooth_item/dress/casdresspnk
+	name = "Pink Tshirt Dress"
+	path = /obj/item/clothing/under/misc/casdresspnk
 
-	casdresswht
-		name = "White Tshirt Dress"
-		path = /obj/item/clothing/under/misc/casdresswht
+/datum/clothingbooth_item/dress/casdresswht
+	name = "White Tshirt Dress"
+	path = /obj/item/clothing/under/misc/casdresswht
 
-	casdressbolty
-		name = "Bolt Tshirt Dress"
-		path = /obj/item/clothing/under/misc/casdressbolty
-		cost = PAY_TRADESMAN/3
+/datum/clothingbooth_item/dress/casdressbolty
+	name = "Bolt Tshirt Dress"
+	path = /obj/item/clothing/under/misc/casdressbolty
+	cost = PAY_TRADESMAN/3
 
-	casdressboltp
-		name = "Purple Bolt Tshirt Dress"
-		path = /obj/item/clothing/under/misc/casdressboltp
-		cost = PAY_TRADESMAN/3
+/datum/clothingbooth_item/dress/casdressboltp
+	name = "Purple Bolt Tshirt Dress"
+	path = /obj/item/clothing/under/misc/casdressboltp
+	cost = PAY_TRADESMAN/3
 
-	casdressleoy
-		name = "Leopard Tshirt Dress"
-		path = /obj/item/clothing/under/misc/casdressleoy
-		cost = PAY_TRADESMAN/3
+/datum/clothingbooth_item/dress/casdressleoy
+	name = "Leopard Tshirt Dress"
+	path = /obj/item/clothing/under/misc/casdressleoy
+	cost = PAY_TRADESMAN/3
 
-	casdressleop
-		name = "Pink Leopard Tshirt Dress"
-		path = /obj/item/clothing/under/misc/casdressleop
-		cost = PAY_TRADESMAN/3
+/datum/clothingbooth_item/dress/casdressleop
+	name = "Pink Leopard Tshirt Dress"
+	path = /obj/item/clothing/under/misc/casdressleop
+	cost = PAY_TRADESMAN/3
 
-	sktdress_red
-		name = "Red and Black Skirt Dress"
-		path = /obj/item/clothing/under/misc/sktdress_red
-		cost = PAY_TRADESMAN/3
+/datum/clothingbooth_item/dress/sktdress_red
+	name = "Red and Black Skirt Dress"
+	path = /obj/item/clothing/under/misc/sktdress_red
+	cost = PAY_TRADESMAN/3
 
-	sktdress_purple
-		name = "Purple and Black Skirt Dress"
-		path = /obj/item/clothing/under/misc/sktdress_purple
-		cost = PAY_TRADESMAN/3
+/datum/clothingbooth_item/dress/sktdress_purple
+	name = "Purple and Black Skirt Dress"
+	path = /obj/item/clothing/under/misc/sktdress_purple
+	cost = PAY_TRADESMAN/3
 
-	sktdress_blue
-		name = "Blue and Black Skirt Dress"
-		path = /obj/item/clothing/under/misc/sktdress_blue
-		cost = PAY_TRADESMAN/3
+/datum/clothingbooth_item/dress/sktdress_blue
+	name = "Blue and Black Skirt Dress"
+	path = /obj/item/clothing/under/misc/sktdress_blue
+	cost = PAY_TRADESMAN/3
 
-	sktdress_gold
-		name = "Gold and Black Skirt Dress"
-		path = /obj/item/clothing/under/misc/sktdress_gold
-		cost = PAY_TRADESMAN/3
+/datum/clothingbooth_item/dress/sktdress_gold
+	name = "Gold and Black Skirt Dress"
+	path = /obj/item/clothing/under/misc/sktdress_gold
+	cost = PAY_TRADESMAN/3
 
 //Formalwear
 
@@ -202,103 +202,103 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/formal)
 	category = "Formal"
 	cost = PAY_TRADESMAN/3
 
-	shirtandpantsblack
-		name = "Shirt and Black Pants"
-		path = /obj/item/clothing/under/shirt_pants_b
-	shirtandpantsblack_redtie
-		name = "Shirt and Black Pants with Red Tie"
-		path = /obj/item/clothing/under/shirt_pants_b/redtie
+/datum/clothingbooth_item/formal/shirtandpantsblack
+	name = "Shirt and Black Pants"
+	path = /obj/item/clothing/under/shirt_pants_b
+/datum/clothingbooth_item/formal/shirtandpantsblack_redtie
+	name = "Shirt and Black Pants with Red Tie"
+	path = /obj/item/clothing/under/shirt_pants_b/redtie
 
-	shirtandpantsblack_blacktie
-		name = "Shirt and Black Pants with Black Tie"
-		path = /obj/item/clothing/under/shirt_pants_b/blacktie
+/datum/clothingbooth_item/formal/shirtandpantsblack_blacktie
+	name = "Shirt and Black Pants with Black Tie"
+	path = /obj/item/clothing/under/shirt_pants_b/blacktie
 
-	shirtandpantsblack_bluetie
-		name = "Shirt and Black Pants with Blue Tie"
-		path = /obj/item/clothing/under/shirt_pants_b/bluetie
+/datum/clothingbooth_item/formal/shirtandpantsblack_bluetie
+	name = "Shirt and Black Pants with Blue Tie"
+	path = /obj/item/clothing/under/shirt_pants_b/bluetie
 
-	shirtandpantsbrown
-		name = "Shirt and Brown Pants"
-		path = /obj/item/clothing/under/shirt_pants_br
+/datum/clothingbooth_item/formal/shirtandpantsbrown
+	name = "Shirt and Brown Pants"
+	path = /obj/item/clothing/under/shirt_pants_br
 
-	shirtandpantsbrown_redtie
-		name = "Shirt and Brown Pants with Red Tie"
-		path = /obj/item/clothing/under/shirt_pants_br/redtie
+/datum/clothingbooth_item/formal/shirtandpantsbrown_redtie
+	name = "Shirt and Brown Pants with Red Tie"
+	path = /obj/item/clothing/under/shirt_pants_br/redtie
 
-	shirtandpantsbrown_blacktie
-		name = "Shirt and Brown Pants with Black Tie"
-		path = /obj/item/clothing/under/shirt_pants_br/blacktie
+/datum/clothingbooth_item/formal/shirtandpantsbrown_blacktie
+	name = "Shirt and Brown Pants with Black Tie"
+	path = /obj/item/clothing/under/shirt_pants_br/blacktie
 
-	shirtandpantsbrown_bluetie
-		name = "Shirt and Brown Pants with Blue Tie"
-		path = /obj/item/clothing/under/shirt_pants_br/bluetie
+/datum/clothingbooth_item/formal/shirtandpantsbrown_bluetie
+	name = "Shirt and Brown Pants with Blue Tie"
+	path = /obj/item/clothing/under/shirt_pants_br/bluetie
 
-	shirtandpantswhite
-		name = "Shirt and White Pants"
-		path = /obj/item/clothing/under/shirt_pants_w
+/datum/clothingbooth_item/formal/shirtandpantswhite
+	name = "Shirt and White Pants"
+	path = /obj/item/clothing/under/shirt_pants_w
 
-	shirtandpantswhite_redtie
-		name = "Shirt and White Pants with Red Tie"
-		path = /obj/item/clothing/under/shirt_pants_w/redtie
+/datum/clothingbooth_item/formal/shirtandpantswhite_redtie
+	name = "Shirt and White Pants with Red Tie"
+	path = /obj/item/clothing/under/shirt_pants_w/redtie
 
-	shirtandpantswhite_blacktie
-		name = "Shirt and White Pants with Black Tie"
-		path = /obj/item/clothing/under/shirt_pants_w/blacktie
+/datum/clothingbooth_item/formal/shirtandpantswhite_blacktie
+	name = "Shirt and White Pants with Black Tie"
+	path = /obj/item/clothing/under/shirt_pants_w/blacktie
 
-	shirtandpantswhite_bluetie
-		name = "Shirt and White Pants with White Tie"
-		path = /obj/item/clothing/under/shirt_pants_w/bluetie
+/datum/clothingbooth_item/formal/shirtandpantswhite_bluetie
+	name = "Shirt and White Pants with White Tie"
+	path = /obj/item/clothing/under/shirt_pants_w/bluetie
 
-	redtie
-		name = "Shirt and Loose Red Tie"
-		path = /obj/item/clothing/under/redtie
+/datum/clothingbooth_item/formal/redtie
+	name = "Shirt and Loose Red Tie"
+	path = /obj/item/clothing/under/redtie
 
-	tux
-		name = "Tuxedo"
-		path = /obj/item/clothing/under/rank/bartender/tuxedo
-		cost = PAY_DOCTORATE/3
-		hidden = 1
+/datum/clothingbooth_item/formal/tux
+	name = "Tuxedo"
+	path = /obj/item/clothing/under/rank/bartender/tuxedo
+	cost = PAY_DOCTORATE/3
+	hidden = 1
 
-	waistcoat
-		name = "Waistcoat"
-		path = /obj/item/clothing/suit/wcoat
+/datum/clothingbooth_item/formal/waistcoat
+	name = "Waistcoat"
+	path = /obj/item/clothing/suit/wcoat
 
-	butler
-		name = "Butler's Suit"
-		path = /obj/item/clothing/under/gimmick/butler
-		cost = PAY_DOCTORATE/3
+/datum/clothingbooth_item/formal/butler
+	name = "Butler's Suit"
+	path = /obj/item/clothing/under/gimmick/butler
+	cost = PAY_DOCTORATE/3
 
-	maid
-		name = "Maid's Outfit"
-		path = /obj/item/clothing/under/gimmick/maid
+/datum/clothingbooth_item/formal/maid
+	name = "Maid's Outfit"
+	path = /obj/item/clothing/under/gimmick/maid
 
-	dress
-		name = "Little Black Dress"
-		path = /obj/item/clothing/under/misc/dress
-		cost = PAY_IMPORTANT/3
+/datum/clothingbooth_item/formal/dress
+	name = "Little Black Dress"
+	path = /obj/item/clothing/under/misc/dress
+	cost = PAY_IMPORTANT/3
 
-	dressred
-		name = "Little Red Dress"
-		path = /obj/item/clothing/under/misc/dress/red
-		cost = PAY_IMPORTANT/3
+/datum/clothingbooth_item/formal/dressred
+	name = "Little Red Dress"
+	path = /obj/item/clothing/under/misc/dress/red
+	cost = PAY_IMPORTANT/3
 
-	dressb
-		name = "Black Sun Dress"
-		path = /obj/item/clothing/suit/dressb
-		cost = PAY_DOCTORATE/3
+/datum/clothingbooth_item/formal/dressb
+	name = "Black Sun Dress"
+	path = /obj/item/clothing/suit/dressb
+	cost = PAY_DOCTORATE/3
 
-	weddingdress
-		name = "Wedding Dress"
-		path = /obj/item/clothing/under/gimmick/wedding_dress
-		cost = PAY_IMPORTANT*3
-		hidden = 1
+/datum/clothingbooth_item/formal/weddingdress
+	name = "Wedding Dress"
+	path = /obj/item/clothing/under/gimmick/wedding_dress
+	cost = PAY_IMPORTANT*3
+	hidden = 1
 
-	veil
-		name = "Lace Veil"
-		path = /obj/item/clothing/head/veil
-		slot = SLOT_HEAD
-		cost = PAY_IMPORTANT
-		hidden = 1
+/datum/clothingbooth_item/formal/veil
+	name = "Lace Veil"
+	path = /obj/item/clothing/head/veil
+	slot = SLOT_HEAD
+	cost = PAY_IMPORTANT
+	hidden = 1
 
 //Outerwear
 
@@ -309,69 +309,69 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/outerwear)
 	category = "Jackets"
 	cost = PAY_TRADESMAN/3
 
-	cerulean
-		name = "Cerulean Jacket"
-		path = /obj/item/clothing/suit/jacket/design/cerulean
+/datum/clothingbooth_item/outerwear/cerulean
+	name = "Cerulean Jacket"
+	path = /obj/item/clothing/suit/jacket/design/cerulean
 
-	grey
-		name = "Grey Jacket"
-		path = /obj/item/clothing/suit/jacket/design/grey
+/datum/clothingbooth_item/outerwear/grey
+	name = "Grey Jacket"
+	path = /obj/item/clothing/suit/jacket/design/grey
 
-	indigo
-		name = "Indigo Jacket"
-		path = /obj/item/clothing/suit/jacket/design/indigo
+/datum/clothingbooth_item/outerwear/indigo
+	name = "Indigo Jacket"
+	path = /obj/item/clothing/suit/jacket/design/indigo
 
-	magenta
-		name = "Magenta Jacket"
-		path = /obj/item/clothing/suit/jacket/design/magenta
+/datum/clothingbooth_item/outerwear/magenta
+	name = "Magenta Jacket"
+	path = /obj/item/clothing/suit/jacket/design/magenta
 
-	maroon
-		name = "Maroon Jacket"
-		path = /obj/item/clothing/suit/jacket/design/maroon
+/datum/clothingbooth_item/outerwear/maroon
+	name = "Maroon Jacket"
+	path = /obj/item/clothing/suit/jacket/design/maroon
 
-	mint
-		name = "Mint Jacket"
-		path = /obj/item/clothing/suit/jacket/design/mint
+/datum/clothingbooth_item/outerwear/mint
+	name = "Mint Jacket"
+	path = /obj/item/clothing/suit/jacket/design/mint
 
-	navy
-		name = "Navy Jacket"
-		path = /obj/item/clothing/suit/jacket/design/navy
+/datum/clothingbooth_item/outerwear/navy
+	name = "Navy Jacket"
+	path = /obj/item/clothing/suit/jacket/design/navy
 
-	tan
-		name = "Tan Jacket"
-		path = /obj/item/clothing/suit/jacket/design/tan
+/datum/clothingbooth_item/outerwear/tan
+	name = "Tan Jacket"
+	path = /obj/item/clothing/suit/jacket/design/tan
 
-	orangehoodie
-		name = "Orange Hoodie"
-		path = /obj/item/clothing/suit/hoodie
+/datum/clothingbooth_item/outerwear/orangehoodie
+	name = "Orange Hoodie"
+	path = /obj/item/clothing/suit/hoodie
 
-	bluehoodie
-		name = "Blue Hoodie"
-		path = /obj/item/clothing/suit/hoodie/blue
-		cost = PAY_UNTRAINED/3
+/datum/clothingbooth_item/outerwear/bluehoodie
+	name = "Blue Hoodie"
+	path = /obj/item/clothing/suit/hoodie/blue
+	cost = PAY_UNTRAINED/3
 
-	poncho
-		name = "Poncho"
-		path = /obj/item/clothing/suit/poncho
-		cost = PAY_UNTRAINED/3
+/datum/clothingbooth_item/outerwear/poncho
+	name = "Poncho"
+	path = /obj/item/clothing/suit/poncho
+	cost = PAY_UNTRAINED/3
 
-	loosejacket
-		name = "Loose Jacket"
-		path = /obj/item/clothing/suit/loosejacket
+/datum/clothingbooth_item/outerwear/loosejacket
+	name = "Loose Jacket"
+	path = /obj/item/clothing/suit/loosejacket
 
-	johhnycoat
-		name = "Overcoat and Scarf"
-		path = /obj/item/clothing/suit/johnny_coat
+/datum/clothingbooth_item/outerwear/johhnycoat
+	name = "Overcoat and Scarf"
+	path = /obj/item/clothing/suit/johnny_coat
 
-	merchantjacket
-		name = "Tacky Merchants Jacket"
-		path = /obj/item/clothing/suit/merchant
+/datum/clothingbooth_item/outerwear/merchantjacket
+	name = "Tacky Merchants Jacket"
+	path = /obj/item/clothing/suit/merchant
 
-	tuxedojacket
-		name = "Tuxedo Jacket"
-		path = /obj/item/clothing/suit/tuxedo_jacket
-		cost = PAY_DOCTORATE/3
-		hidden = 1
+/datum/clothingbooth_item/outerwear/tuxedojacket
+	name = "Tuxedo Jacket"
+	path = /obj/item/clothing/suit/tuxedo_jacket
+	cost = PAY_DOCTORATE/3
+	hidden = 1
 
 //Shoes
 
@@ -382,87 +382,87 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/shoes)
 	category = "Shoes"
 	cost = PAY_TRADESMAN/5
 
-	dress_shoes
-		name = "Dress Shoes"
-		path = /obj/item/clothing/shoes/dress_shoes
-		cost = PAY_DOCTORATE/5
-		hidden = 1
+/datum/clothingbooth_item/shoes/dress_shoes
+	name = "Dress Shoes"
+	path = /obj/item/clothing/shoes/dress_shoes
+	cost = PAY_DOCTORATE/5
+	hidden = 1
 
-	floppyboots
-		name = "Floppy Boots"
-		path = /obj/item/clothing/shoes/floppy
+/datum/clothingbooth_item/shoes/floppyboots
+	name = "Floppy Boots"
+	path = /obj/item/clothing/shoes/floppy
 
-	blackheels
-		name = "Black Heels"
-		path = /obj/item/clothing/shoes/heels/black
-		cost = PAY_DOCTORATE/5
+/datum/clothingbooth_item/shoes/blackheels
+	name = "Black Heels"
+	path = /obj/item/clothing/shoes/heels/black
+	cost = PAY_DOCTORATE/5
 
-	redheels
-		name = "Red Heels"
-		path = /obj/item/clothing/shoes/heels/red
-		cost = PAY_DOCTORATE/5
+/datum/clothingbooth_item/shoes/redheels
+	name = "Red Heels"
+	path = /obj/item/clothing/shoes/heels/red
+	cost = PAY_DOCTORATE/5
 
-	whiteheels
-		name = "White Heels"
-		path = /obj/item/clothing/shoes/heels
-		cost = PAY_DOCTORATE/5
-		hidden = 1
+/datum/clothingbooth_item/shoes/whiteheels
+	name = "White Heels"
+	path = /obj/item/clothing/shoes/heels
+	cost = PAY_DOCTORATE/5
+	hidden = 1
 
-	bootsblk
-		name = "Black Boots"
-		path = /obj/item/clothing/shoes/bootsblk
-		cost = PAY_DOCTORATE/5
+/datum/clothingbooth_item/shoes/bootsblk
+	name = "Black Boots"
+	path = /obj/item/clothing/shoes/bootsblk
+	cost = PAY_DOCTORATE/5
 
-	bootswht
-		name = "White Boots"
-		path = /obj/item/clothing/shoes/bootswht
-		cost = PAY_DOCTORATE/5
+/datum/clothingbooth_item/shoes/bootswht
+	name = "White Boots"
+	path = /obj/item/clothing/shoes/bootswht
+	cost = PAY_DOCTORATE/5
 
-	bootsbrn
-		name = "Brown Boots"
-		path = /obj/item/clothing/shoes/bootsbrn
-		cost = PAY_DOCTORATE/5
+/datum/clothingbooth_item/shoes/bootsbrn
+	name = "Brown Boots"
+	path = /obj/item/clothing/shoes/bootsbrn
+	cost = PAY_DOCTORATE/5
 
-	bootsblu
-		name = "Blue Boots"
-		path = /obj/item/clothing/shoes/bootsblu
-		cost = PAY_DOCTORATE/5
+/datum/clothingbooth_item/shoes/bootsblu
+	name = "Blue Boots"
+	path = /obj/item/clothing/shoes/bootsblu
+	cost = PAY_DOCTORATE/5
 
-	flatsblk
-		name = "Black Flats"
-		path = /obj/item/clothing/shoes/flatsblk
+/datum/clothingbooth_item/shoes/flatsblk
+	name = "Black Flats"
+	path = /obj/item/clothing/shoes/flatsblk
 
-	flatswht
-		name = "White Flats"
-		path = /obj/item/clothing/shoes/flatswht
+/datum/clothingbooth_item/shoes/flatswht
+	name = "White Flats"
+	path = /obj/item/clothing/shoes/flatswht
 
-	flatsbrn
-		name = "Brown Flats"
-		path = /obj/item/clothing/shoes/flatsbrn
+/datum/clothingbooth_item/shoes/flatsbrn
+	name = "Brown Flats"
+	path = /obj/item/clothing/shoes/flatsbrn
 
-	flatsblu
-		name = "Blue Flats"
-		path = /obj/item/clothing/shoes/flatsblu
+/datum/clothingbooth_item/shoes/flatsblu
+	name = "Blue Flats"
+	path = /obj/item/clothing/shoes/flatsblu
 
-	flatspnk
-		name = "Pink Flats"
-		path = /obj/item/clothing/shoes/flatspnk
+/datum/clothingbooth_item/shoes/flatspnk
+	name = "Pink Flats"
+	path = /obj/item/clothing/shoes/flatspnk
 
-	mjblack
-		name = "Black Mary Janes"
-		path = /obj/item/clothing/shoes/mjblack
+/datum/clothingbooth_item/shoes/mjblack
+	name = "Black Mary Janes"
+	path = /obj/item/clothing/shoes/mjblack
 
-	mjbrown
-		name = "Brown Mary Janes"
-		path = /obj/item/clothing/shoes/mjbrown
+/datum/clothingbooth_item/shoes/mjbrown
+	name = "Brown Mary Janes"
+	path = /obj/item/clothing/shoes/mjbrown
 
-	mjnavy
-		name = "Navy Mary Janes"
-		path = /obj/item/clothing/shoes/mjnavy
+/datum/clothingbooth_item/shoes/mjnavy
+	name = "Navy Mary Janes"
+	path = /obj/item/clothing/shoes/mjnavy
 
-	mjwhite
-		name = "White Mary Janes"
-		path = /obj/item/clothing/shoes/mjwhite
+/datum/clothingbooth_item/shoes/mjwhite
+	name = "White Mary Janes"
+	path = /obj/item/clothing/shoes/mjwhite
 
 //Headwear
 
@@ -473,136 +473,136 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head)
 	category = "Headwear"
 	cost = PAY_TRADESMAN/2
 
-	catears_white
-		name = "White Cat Ears"
-		path = /obj/item/clothing/head/headband/nyan/white
+catears_white
+	name = "White Cat Ears"
+	path = /obj/item/clothing/head/headband/nyan/white
 
-	catears_gray
-		name = "Gray Cat Ears"
-		path = /obj/item/clothing/head/headband/nyan/gray
+/datum/clothingbooth_item/head/catears_gray
+	name = "Gray Cat Ears"
+	path = /obj/item/clothing/head/headband/nyan/gray
 
-	catears_black
-		name = "Black Cat Ears"
-		path = /obj/item/clothing/head/headband/nyan/black
+/datum/clothingbooth_item/head/catears_black
+	name = "Black Cat Ears"
+	path = /obj/item/clothing/head/headband/nyan/black
 
-	catears_red
-		name = "Red Cat Ears"
-		path = /obj/item/clothing/head/headband/nyan/red
+/datum/clothingbooth_item/head/catears_red
+	name = "Red Cat Ears"
+	path = /obj/item/clothing/head/headband/nyan/red
 
-	catears_orange
-		name = "Orange Cat Ears"
-		path = /obj/item/clothing/head/headband/nyan/orange
+/datum/clothingbooth_item/head/catears_orange
+	name = "Orange Cat Ears"
+	path = /obj/item/clothing/head/headband/nyan/orange
 
-	catears_yellow
-		name = "Yellow Cat Ears"
-		path = /obj/item/clothing/head/headband/nyan/yellow
+/datum/clothingbooth_item/head/catears_yellow
+	name = "Yellow Cat Ears"
+	path = /obj/item/clothing/head/headband/nyan/yellow
 
-	catears_green
-		name = "Green Cat Ears"
-		path = /obj/item/clothing/head/headband/nyan/green
+/datum/clothingbooth_item/head/catears_green
+	name = "Green Cat Ears"
+	path = /obj/item/clothing/head/headband/nyan/green
 
-	catears_blue
-		name = "Blue Cat Ears"
-		path = /obj/item/clothing/head/headband/nyan/blue
+/datum/clothingbooth_item/head/catears_blue
+	name = "Blue Cat Ears"
+	path = /obj/item/clothing/head/headband/nyan/blue
 
-	catears_purple
-		name = "Purple Cat Ears"
-		path = /obj/item/clothing/head/headband/nyan/purple
+/datum/clothingbooth_item/head/catears_purple
+	name = "Purple Cat Ears"
+	path = /obj/item/clothing/head/headband/nyan/purple
 
-	maid_headwear
-		name = "Maid Headwear"
-		path = /obj/item/clothing/head/maid
-		cost = PAY_TRADESMAN/3
+/datum/clothingbooth_item/head/maid_headwear
+	name = "Maid Headwear"
+	path = /obj/item/clothing/head/maid
+	cost = PAY_TRADESMAN/3
 
-	tophat
-		name = "Top Hat"
-		path = /obj/item/clothing/head/that
+/datum/clothingbooth_item/head/tophat
+	name = "Top Hat"
+	path = /obj/item/clothing/head/that
 
-	whtophat
-		name = "White Top Hat"
-		path = /obj/item/clothing/head/that/white
+/datum/clothingbooth_item/head/whtophat
+	name = "White Top Hat"
+	path = /obj/item/clothing/head/that/white
 
-	blackfedora
-		name = "Black Fedora"
-		path = /obj/item/clothing/head/fedora
-		cost = PAY_TRADESMAN/5
+/datum/clothingbooth_item/head/blackfedora
+	name = "Black Fedora"
+	path = /obj/item/clothing/head/fedora
+	cost = PAY_TRADESMAN/5
 
-	brownfedora
-		name = "Brown Fedora"
-		path = /obj/item/clothing/head/det_hat
-		cost = PAY_TRADESMAN/5
+/datum/clothingbooth_item/head/brownfedora
+	name = "Brown Fedora"
+	path = /obj/item/clothing/head/det_hat
+	cost = PAY_TRADESMAN/5
 
-	whitefedora
-		name = "White Fedora"
-		path = /obj/item/clothing/head/mj_hat
-		cost = PAY_TRADESMAN/5
+/datum/clothingbooth_item/head/whitefedora
+	name = "White Fedora"
+	path = /obj/item/clothing/head/mj_hat
+	cost = PAY_TRADESMAN/5
 
-	bowler
-		name = "Bowler Hat"
-		path = /obj/item/clothing/head/mime_bowler
-		cost = PAY_TRADESMAN/5
+/datum/clothingbooth_item/head/bowler
+	name = "Bowler Hat"
+	path = /obj/item/clothing/head/mime_bowler
+	cost = PAY_TRADESMAN/5
 
-	beret
-		name = "Black Beret"
-		path = /obj/item/clothing/head/mime_beret
-		cost = PAY_TRADESMAN/5
+/datum/clothingbooth_item/head/beret
+	name = "Black Beret"
+	path = /obj/item/clothing/head/mime_beret
+	cost = PAY_TRADESMAN/5
 
-	cowboy
-		name = "Cowboy Hat"
-		path = /obj/item/clothing/head/cowboy
-		cost = PAY_TRADESMAN/5
+/datum/clothingbooth_item/head/cowboy
+	name = "Cowboy Hat"
+	path = /obj/item/clothing/head/cowboy
+	cost = PAY_TRADESMAN/5
 
-	pokervisor
-		name = "Green Visor"
-		path = /obj/item/clothing/head/pokervisor
-		cost = PAY_TRADESMAN/5
+/datum/clothingbooth_item/head/pokervisor
+	name = "Green Visor"
+	path = /obj/item/clothing/head/pokervisor
+	cost = PAY_TRADESMAN/5
 
-	headsprout
-		name = "Leaf Hairclip"
-		path = /obj/item/clothing/head/headsprout
+/datum/clothingbooth_item/head/headsprout
+	name = "Leaf Hairclip"
+	path = /obj/item/clothing/head/headsprout
 
-	redhairclips
-		name = "Red Hairclip"
-		path = /obj/item/clothing/head/sailormoon
+/datum/clothingbooth_item/head/redhairclips
+	name = "Red Hairclip"
+	path = /obj/item/clothing/head/sailormoon
 
-	butterflyclip_bl
-		name = "Blue Butterfly Hairclip"
-		path = /obj/item/clothing/head/barrette/butterflyblu
+/datum/clothingbooth_item/head/butterflyclip_bl
+	name = "Blue Butterfly Hairclip"
+	path = /obj/item/clothing/head/barrette/butterflyblu
 
-	butterflyclip_o
-		name = "Orange Butterfly Hairclip"
-		path = /obj/item/clothing/head/barrette/butterflyorg
+/datum/clothingbooth_item/head/butterflyclip_o
+	name = "Orange Butterfly Hairclip"
+	path = /obj/item/clothing/head/barrette/butterflyorg
 
-	barrette_blue
-		name = "Blue Hairclips"
-		path = /obj/item/clothing/head/barrette/blue
+/datum/clothingbooth_item/head/barrette_blue
+	name = "Blue Hairclips"
+	path = /obj/item/clothing/head/barrette/blue
 
-	barrette_green
-		name = "Green Hairclips"
-		path = /obj/item/clothing/head/barrette/green
+/datum/clothingbooth_item/head/barrette_green
+	name = "Green Hairclips"
+	path = /obj/item/clothing/head/barrette/green
 
-	barrette_pink
-		name = "Pink Hairclips"
-		path = /obj/item/clothing/head/barrette/pink
+/datum/clothingbooth_item/head/barrette_pink
+	name = "Pink Hairclips"
+	path = /obj/item/clothing/head/barrette/pink
 
-	barrette_gold
-		name = "Gold Hairclips"
-		path = /obj/item/clothing/head/barrette/gold
+/datum/clothingbooth_item/head/barrette_gold
+	name = "Gold Hairclips"
+	path = /obj/item/clothing/head/barrette/gold
 
-	ushanka
-		name = "Ushanka"
-		path = /obj/item/clothing/head/ushanka
-		cost = PAY_TRADESMAN
+/datum/clothingbooth_item/head/ushanka
+	name = "Ushanka"
+	path = /obj/item/clothing/head/ushanka
+	cost = PAY_TRADESMAN
 
-	pinwheel_hat
-		name = "Pinwheel Hat"
-		path = /obj/item/clothing/head/pinwheel_hat
-		cost = PAY_TRADESMAN
+/datum/clothingbooth_item/head/pinwheel_hat
+	name = "Pinwheel Hat"
+	path = /obj/item/clothing/head/pinwheel_hat
+	cost = PAY_TRADESMAN
 
-	frog_hat
-		name = "Frog Hat"
-		path = /obj/item/clothing/head/frog_hat
-		cost = PAY_TRADESMAN
+/datum/clothingbooth_item/head/frog_hat
+	name = "Frog Hat"
+	path = /obj/item/clothing/head/frog_hat
+	cost = PAY_TRADESMAN
 
 //Sci-Fi
 
@@ -612,76 +612,75 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/scifi)
 	slot = SLOT_W_UNIFORM
 	category = "Sci-Fi"
 	cost = PAY_DOCTORATE/3
+/datum/clothingbooth_item/scifi/sfjumpsuitbp
+	name = "Black and Purple Sci-Fi Jumpsuit"
+	path = /obj/item/clothing/under/misc/sfjumpsuitbp
 
-	sfjumpsuitbp
-		name = "Black and Purple Sci-Fi Jumpsuit"
-		path = /obj/item/clothing/under/misc/sfjumpsuitbp
+/datum/clothingbooth_item/scifi/sfjumpsuitrb
+	name = "Black and Red Sci-Fi Jumpsuit"
+	path = /obj/item/clothing/under/misc/sfjumpsuitrb
 
-	sfjumpsuitrb
-		name = "Black and Red Sci-Fi Jumpsuit"
-		path = /obj/item/clothing/under/misc/sfjumpsuitrb
+/datum/clothingbooth_item/scifi/sfjumpsuitpnk
+	name = "Pink and Blue Sci-Fi Jumpsuit"
+	path = /obj/item/clothing/under/misc/sfjumpsuitpnk
 
-	sfjumpsuitpnk
-		name = "Pink and Blue Sci-Fi Jumpsuit"
-		path = /obj/item/clothing/under/misc/sfjumpsuitpnk
+/datum/clothingbooth_item/scifi/sfjumpsuitbee
+	name = "Bee Sci-Fi Jumpsuit"
+	path = /obj/item/clothing/under/misc/sfjumpsuitbee
 
-	sfjumpsuitbee
-		name = "Bee Sci-Fi Jumpsuit"
-		path = /obj/item/clothing/under/misc/sfjumpsuitbee
+/datum/clothingbooth_item/scifi/racingsuitbee
+	name = "Bee Racing Jumpsuit"
+	path = /obj/item/clothing/under/misc/racingsuitbee
 
-	racingsuitbee
-		name = "Bee Racing Jumpsuit"
-		path = /obj/item/clothing/under/misc/racingsuitbee
+/datum/clothingbooth_item/scifi/racingsuitpnk
+	name = "Pink and Blue Racing Jumpsuit"
+	path = /obj/item/clothing/under/misc/racingsuitpnk
 
-	racingsuitpnk
-		name = "Pink and Blue Racing Jumpsuit"
-		path = /obj/item/clothing/under/misc/racingsuitpnk
+/datum/clothingbooth_item/scifi/racingsuitrbw
+	name = "Blue and White Racing Jumpsuit"
+	path = /obj/item/clothing/under/misc/racingsuitrbw
 
-	racingsuitrbw
-		name = "Blue and White Racing Jumpsuit"
-		path = /obj/item/clothing/under/misc/racingsuitrbw
+/datum/clothingbooth_item/scifi/racingsuitprp
+	name = "Purple and Black Racing Jumpsuit"
+	path = /obj/item/clothing/under/misc/racingsuitprp
 
-	racingsuitprp
-		name = "Purple and Black Racing Jumpsuit"
-		path = /obj/item/clothing/under/misc/racingsuitprp
+/datum/clothingbooth_item/scifi/cwhat
+	name = "Moebius-Brand Headwear"
+	path = /obj/item/clothing/head/cwhat
+	slot = SLOT_HEAD
 
-	cwhat
-		name = "Moebius-Brand Headwear"
-		path = /obj/item/clothing/head/cwhat
-		slot = SLOT_HEAD
+/datum/clothingbooth_item/scifi/fthat
+	name = "Trader's Headwear"
+	path = /obj/item/clothing/head/fthat
+	slot = SLOT_HEAD
+	cost = PAY_DOCTORATE/5
 
-	fthat
-		name = "Trader's Headwear"
-		path = /obj/item/clothing/head/fthat
-		slot = SLOT_HEAD
-		cost = PAY_DOCTORATE/5
+/datum/clothingbooth_item/scifi/ftscanplate
+	name = "FTX-480 Scanner Plate"
+	path = /obj/item/clothing/glasses/ftscanplate
+	slot = SLOT_GLASSES
+	cost = PAY_DOCTORATE/5
 
-	ftscanplate
-		name = "FTX-480 Scanner Plate"
-		path = /obj/item/clothing/glasses/ftscanplate
-		slot = SLOT_GLASSES
-		cost = PAY_DOCTORATE/5
+/datum/clothingbooth_item/scifi/cwfashion
+	name = "CW Fashionista's Outfit"
+	path = /obj/item/clothing/under/gimmick/cwfashion
+	cost = PAY_DOCTORATE/5
 
-	cwfashion
-		name = "CW Fashionista's Outfit"
-		path = /obj/item/clothing/under/gimmick/cwfashion
-		cost = PAY_DOCTORATE/5
+/datum/clothingbooth_item/scifi/ftuniform
+	name = "Free Trader's Outfit"
+	path = /obj/item/clothing/under/gimmick/ftuniform
 
-	ftuniform
-		name = "Free Trader's Outfit"
-		path = /obj/item/clothing/under/gimmick/ftuniform
+/datum/clothingbooth_item/scifi/handcomp
+	name = "Compudyne 0451 Handcomp"
+	path = /obj/item/clothing/gloves/handcomp
+	slot = SLOT_GLOVES
+	cost = PAY_DOCTORATE/5
 
-	handcomp
-		name = "Compudyne 0451 Handcomp"
-		path = /obj/item/clothing/gloves/handcomp
-		slot = SLOT_GLOVES
-		cost = PAY_DOCTORATE/5
-
-	cwboots
-		name = "Macando Boots"
-		path = /obj/item/clothing/shoes/cwboots
-		slot = SLOT_SHOES
-		cost = PAY_DOCTORATE/5
+/datum/clothingbooth_item/scifi/cwboots
+	name = "Macando Boots"
+	path = /obj/item/clothing/shoes/cwboots
+	slot = SLOT_SHOES
+	cost = PAY_DOCTORATE/5
 
 //Summer
 
@@ -692,70 +691,70 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/summer)
 	category = "Summer"
 	cost = PAY_TRADESMAN/3
 
-	collardressbl
-		name = "Black Collar Dress"
-		path = /obj/item/clothing/under/collardressbl
+/datum/clothingbooth_item/summer/collardressbl
+	name = "Black Collar Dress"
+	path = /obj/item/clothing/under/collardressbl
 
-	sunhatb
-		name = "Blue Sunhat"
-		path = /obj/item/clothing/head/sunhat
-		slot = SLOT_HEAD
-		cost = PAY_TRADESMAN/5
+/datum/clothingbooth_item/summer/sunhatb
+	name = "Blue Sunhat"
+	path = /obj/item/clothing/head/sunhat
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/5
 
-	collardressb
-		name = "Blue Collar Dress"
-		path = /obj/item/clothing/under/collardressb
+/datum/clothingbooth_item/summer/collardressb
+	name = "Blue Collar Dress"
+	path = /obj/item/clothing/under/collardressb
 
-	sunhatg
-		name = "Green Sunhat"
-		path = /obj/item/clothing/head/sunhat/sunhatg
-		slot = SLOT_HEAD
-		cost = PAY_TRADESMAN/5
+/datum/clothingbooth_item/summer/sunhatg
+	name = "Green Sunhat"
+	path = /obj/item/clothing/head/sunhat/sunhatg
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/5
 
-	collardressg
-		name = "Green Collar Dress"
-		path = /obj/item/clothing/under/collardressg
+/datum/clothingbooth_item/summer/collardressg
+	name = "Green Collar Dress"
+	path = /obj/item/clothing/under/collardressg
 
-	sunhatr
-		name = "Red Sunhat"
-		path = /obj/item/clothing/head/sunhat/sunhatr
-		slot = SLOT_HEAD
-		cost = PAY_TRADESMAN/5
+/datum/clothingbooth_item/summer/sunhatr
+	name = "Red Sunhat"
+	path = /obj/item/clothing/head/sunhat/sunhatr
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/5
 
-	collardressr
-		name = "Red Collar Dress"
-		path = /obj/item/clothing/under/collardressr
+/datum/clothingbooth_item/summer/collardressr
+	name = "Red Collar Dress"
+	path = /obj/item/clothing/under/collardressr
 
 //Masquerade
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/masquerade)
-/datum/clothingbooth_item/masquerade
+/datum/clothingbooth_item/masquerade/
 	name = "masquerade"
 	category = "Masquerade"
 
-	blossommask
-		name = "Cherryblossom Mask"
-		path = /obj/item/clothing/mask/blossommask
-		slot = SLOT_WEAR_MASK
-		cost = PAY_TRADESMAN/5
+/datum/clothingbooth_item/masquerade/blossommask
+	name = "Cherryblossom Mask"
+	path = /obj/item/clothing/mask/blossommask
+	slot = SLOT_WEAR_MASK
+	cost = PAY_TRADESMAN/5
 
-	blossomdress
-		name = "Cherryblossom Dress"
-		path = /obj/item/clothing/under/blossomdress
-		slot = SLOT_W_UNIFORM
-		cost = PAY_DOCTORATE/3
+/datum/clothingbooth_item/masquerade/blossomdress
+	name = "Cherryblossom Dress"
+	path = /obj/item/clothing/under/blossomdress
+	slot = SLOT_W_UNIFORM
+	cost = PAY_DOCTORATE/3
 
-	peacockmask
-		name = "Peacock Mask"
-		path = /obj/item/clothing/mask/peacockmask
-		slot = SLOT_WEAR_MASK
-		cost = PAY_TRADESMAN/5
+/datum/clothingbooth_item/masquerade/peacockmask
+	name = "Peacock Mask"
+	path = /obj/item/clothing/mask/peacockmask
+	slot = SLOT_WEAR_MASK
+	cost = PAY_TRADESMAN/5
 
-	peacockdress
-		name = "Peacock Dress"
-		path = /obj/item/clothing/under/peacockdress
-		slot = SLOT_W_UNIFORM
-		cost = PAY_DOCTORATE/3
+/datum/clothingbooth_item/masquerade/peacockdress
+	name = "Peacock Dress"
+	path = /obj/item/clothing/under/peacockdress
+	slot = SLOT_W_UNIFORM
+	cost = PAY_DOCTORATE/3
 
 //Costumes
 
@@ -766,48 +765,48 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 	category = "Costumes"
 	cost = PAY_TRADESMAN/3
 
-	rando
-		name = "Skull Mask and Cloak"
-		path = /obj/item/clothing/suit/rando
-		slot = SLOT_WEAR_SUIT
-		cost = PAY_TRADESMAN/2
-		hidden = 1
+/datum/clothingbooth_item/costume/rando
+	name = "Skull Mask and Cloak"
+	path = /obj/item/clothing/suit/rando
+	slot = SLOT_WEAR_SUIT
+	cost = PAY_TRADESMAN/2
+	hidden = 1
 
-	offbrandlabcoat
-		name = "Off-Brand Lab Coat"
-		path = /obj/item/clothing/suit/labcoatlong
-		slot = SLOT_WEAR_SUIT
-		cost = PAY_DOCTORATE/3
+/datum/clothingbooth_item/costume/offbrandlabcoat
+	name = "Off-Brand Lab Coat"
+	path = /obj/item/clothing/suit/labcoatlong
+	slot = SLOT_WEAR_SUIT
+	cost = PAY_DOCTORATE/3
 
-	russsianmob
-		name = "Russian Mobster Suit"
-		path = /obj/item/clothing/under/misc/rusmob
+/datum/clothingbooth_item/costume/russsianmob
+	name = "Russian Mobster Suit"
+	path = /obj/item/clothing/under/misc/rusmob
 
-	columbianmob
-		name = "Columbian Mobster Suit"
-		path = /obj/item/clothing/under/misc/colmob
+/datum/clothingbooth_item/costume/columbianmob
+	name = "Columbian Mobster Suit"
+	path = /obj/item/clothing/under/misc/colmob
 
-	mobilesuit
-		name = "Mobile Robot Suit"
-		path = /obj/item/clothing/under/gimmick/mobile_suit
-		cost = PAY_EXECUTIVE
+/datum/clothingbooth_item/costume/mobilesuit
+	name = "Mobile Robot Suit"
+	path = /obj/item/clothing/under/gimmick/mobile_suit
+	cost = PAY_EXECUTIVE
 
-	mobilesuithelmet
-		name = "Mobile Robot Helmet"
-		path = /obj/item/clothing/head/mobile_suit
-		slot = SLOT_HEAD
-		cost = PAY_EXECUTIVE/2
+/datum/clothingbooth_item/costume/mobilesuithelmet
+	name = "Mobile Robot Helmet"
+	path = /obj/item/clothing/head/mobile_suit
+	slot = SLOT_HEAD
+	cost = PAY_EXECUTIVE/2
 
-	dinerdress_mint
-		name = "Mint Diner Waitress's Dress"
-		path = /obj/item/clothing/under/gimmick/dinerdress_mint
+/datum/clothingbooth_item/costume/dinerdress_mint
+	name = "Mint Diner Waitress's Dress"
+	path = /obj/item/clothing/under/gimmick/dinerdress_mint
 
-	dinerdress_pink
-		name = "Pink Diner Waitress's Dress"
-		path = /obj/item/clothing/under/gimmick/dinerdress_pink
+/datum/clothingbooth_item/costume/dinerdress_pink
+	name = "Pink Diner Waitress's Dress"
+	path = /obj/item/clothing/under/gimmick/dinerdress_pink
 
-	waitresshat
-		name = "Diner Waitress's Hat"
-		path = /obj/item/clothing/head/waitresshat
-		slot = SLOT_HEAD
-		cost = PAY_TRADESMAN/5
+/datum/clothingbooth_item/costume/waitresshat
+	name = "Diner Waitress's Hat"
+	path = /obj/item/clothing/head/waitresshat
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/5
