@@ -1166,7 +1166,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/calomel, 3)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/mutadone, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/ipecac, 8)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ampoule/smelling_salts, 2, cost=50)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ampoule/smelling_salts, 2)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer, 5)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_upgrade, 5)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_organ_upgrade, 4)
