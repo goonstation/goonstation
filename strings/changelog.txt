@@ -1,5 +1,9 @@
 
 (t)mon jul 12 21
+(u)Tarmunora
+(p)5477
+(e)🐛🗺⛔|bug, mapping, removal
+(+)Removes police baton
 (u)KoboldCommando
 (p)5458
 (e)🐛|bug
