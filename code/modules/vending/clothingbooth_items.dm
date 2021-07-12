@@ -473,7 +473,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head)
 	category = "Headwear"
 	cost = PAY_TRADESMAN/2
 
-catears_white
+/datum/clothingbooth_item/head/catears_white
 	name = "White Cat Ears"
 	path = /obj/item/clothing/head/headband/nyan/white
 
