@@ -1130,7 +1130,7 @@
 
 	New()
 		..()
-		src.setMaterial(getMaterial("wood", appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
 
 /* ============================================== */
 /* -------------------- Pews -------------------- */
@@ -1155,7 +1155,7 @@
 
 	New()
 		..()
-		src.setMaterial(getMaterial("wood", appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
 		if (arm_icon_state)
 			src.update_icon()
 
