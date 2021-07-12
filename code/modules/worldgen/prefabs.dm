@@ -210,7 +210,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 
 	drone_arena // old syndie base with a powerful drone and cool gun
 		maxNum = 1
-		probability = 100
+		probability = 15
 		prefabPath = "assets/maps/prefabs/prefab_drone_arena.dmm"
 		prefabSizeX = 30
 		prefabSizeY = 30
