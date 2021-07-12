@@ -542,6 +542,7 @@ var/global/list/soundCache = list(
  	"sound/machines/door_locked.ogg" = 'sound/machines/door_locked.ogg',\
  	"sound/machines/door_open.ogg" = 'sound/machines/door_open.ogg',\
  	"sound/machines/driveclick.ogg" = 'sound/machines/driveclick.ogg',\
+	"sound/machines/elevator_move.ogg" = 'sound/machines/elevator_move.ogg',\
  	"sound/machines/engine_alert1.ogg" = 'sound/machines/engine_alert1.ogg',\
  	"sound/machines/engine_alert2.ogg" = 'sound/machines/engine_alert2.ogg',\
  	"sound/machines/engine_alert3.ogg" = 'sound/machines/engine_alert3.ogg',\
