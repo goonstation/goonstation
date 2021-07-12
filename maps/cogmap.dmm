@@ -21045,13 +21045,14 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/vehicle/segway,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "bbW" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/vehicle/segway,
+/obj/machinery/manufacturer/personnel,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "bbX" = (
@@ -21073,7 +21074,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/manufacturer/personnel,
+/obj/machinery/manufacturer/uniform,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
 "bbZ" = (
