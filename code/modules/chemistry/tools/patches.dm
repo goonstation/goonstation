@@ -648,7 +648,7 @@
 		M.apply_to(target,user, multiply, silent = (looped >= 1))
 
 	onEnd()
-		if(get_dist(user, target) > 1 || user == null || target == null || (!isrobot(user) && !user.is_in_hands(M)) || (isrobot(user) && !user.equipped(M)))
+		if(get_dist(user, target) > 1 || user == null || target == null || (!isrobot(user) && !user.is_in_hands(M)) || (isrobot(user) && !user.find_in_hand(M)))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return
