@@ -1,5 +1,9 @@
 
 (t)mon jul 12 21
+(u)TTerc
+(p)5268
+(e)⚖|balance
+(+)Increased the random antag event frequency on non-RP servers.
 (u)Carbadox
 (p)5426
 (e)⚖🆕|balance, feature
