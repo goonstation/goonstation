@@ -369,7 +369,7 @@
 /obj/item/paper/proc/build_fields(var/length)
 	var/pixel_width = (14 + (12 * (length-1)))
 	src.field_counter++
-	return {"\[<input type="text" style="font:'12x Georgia';color:'null';min-width:[pixel_width]px;max-width:[pixel_width]px;" id="paperfield_3" maxlength=[length] size=[length] />\]"}
+	return {"\[<input type="text" style="font:'12x Georgia';color:'null';min-width:[pixel_width]px;max-width:[pixel_width]px;" id="paperfield_[field_counter]" maxlength=[length] size=[length] />\]"}
 
 
 /obj/item/paper/thermal
