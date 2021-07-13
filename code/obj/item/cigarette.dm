@@ -339,6 +339,11 @@
 		else
 			logTheThing("bombing", src.fingerprintslast, null, "A trick cigarette explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
 
+		if (istype(src.loc,/obj/item/device/pda2))
+			var/obj/item/device/pda2/pda = src.loc
+			if (pda.ID_card) //let's not destroy IDs
+				pda.ID_card.set_loc(tlocation)
+			qdel(pda)//Destroy PDA if in one
 		qdel(src)
 
 
@@ -956,7 +961,7 @@
 		if (src.on > 0)
 			if (!ismob(target) && target.reagents)
 				user.show_text("You heat [target].", "blue")
-				target.reagents.temperature_reagents(1000,10)
+				target.reagents.temperature_reagents(4000,10)
 				return
 		else if (src.on == -1)
 			user.show_text("You [pick("fumble", "fuss", "mess", "faff")] around with [src] and try to get it to light, but it's no use.", "red")
@@ -1181,7 +1186,7 @@
 
 		else if (!ismob(O) && src.on && O.reagents)
 			user.show_text("You heat [O].", "blue")
-			O.reagents.temperature_reagents(1500,10)
+			O.reagents.temperature_reagents(4000,10)
 		else
 			return ..()
 

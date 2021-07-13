@@ -253,7 +253,7 @@
 /obj/machinery/computer/airbr
 	name = "Airbridge Computer"
 	desc = "Used to control the airbridge."
-	var/id = "noodles"
+	id = "noodles"
 	icon_state = "airbr0"
 
 	// set this var to 1 in the map editor if you want the airbridge to establish and pressurize when the round starts

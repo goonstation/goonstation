@@ -205,6 +205,11 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
 		START_TRACKING
 
+
+	was_built_from_frame(mob/user, newly_built)
+		. = ..()
+		req_access = list()
+
 	disposing()
 		. = ..()
 		STOP_TRACKING

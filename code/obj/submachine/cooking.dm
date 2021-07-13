@@ -918,7 +918,7 @@ table#cooktime a#start {
 				if (/obj/item/reagent_containers/food/snacks/condiment/cream)
 					new/obj/item/reagent_containers/food/snacks/ingredient/butter(src.loc)
 					qdel( P )
-				if (/obj/item/reagent_containers/food/snacks/candy)
+				if (/obj/item/reagent_containers/food/snacks/candy/regular)
 					new/obj/item/reagent_containers/food/snacks/condiment/chocchips(src.loc)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/corn)

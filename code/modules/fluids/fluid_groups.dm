@@ -64,7 +64,7 @@
 			if(my_group.last_depth_level == 4)
 				.= "very deep"
 
-	temperature_reagents()
+	temperature_reagents(exposed_temperature, exposed_volume = 100, divisor = 35, change_cap = 15, change_min = 0.0000001)
 		..()
 		src.update_total()
 

@@ -227,7 +227,7 @@
 	afterattack(atom/target, mob/user as mob)
 		if (src.on && !ismob(target) && target.reagents)
 			boutput(user, "<span class='notice'>You heat \the [target.name]</span>")
-			target.reagents.temperature_reagents(2500,10)
+			target.reagents.temperature_reagents(4000,10)
 		return
 
 /obj/item/clothing/head/caphat
@@ -1185,73 +1185,6 @@
 	item_state = "birthday-blue"
 	desc = "Happy birthday to you, happy birthday to you, in 200 years nobody will remember you."
 
-/obj/item/clothing/head/nyan
-	name = "gray cat ears"
-	desc = "Aww, cute and fuzzy."
-	icon = 'icons/obj/clothing/item_ears.dmi'
-	wear_image_icon = 'icons/mob/ears.dmi'
-	icon_state = "cat-gray"
-	item_state = "cat-gray"
-	w_class = W_CLASS_TINY
-	throwforce = 0
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		..()
-		if(istype(W,/obj/item/device/radio/headset))
-			user.show_message("You stuff the headset on the cat ears and tape it in place. Meow you should be able to hear the radio using these!")
-			var/obj/item/device/radio/headset/H = W
-			H.icon = src.icon
-			H.name = src.name
-			H.icon_state = src.icon_state
-			H.wear_image_icon = src.wear_image_icon
-			H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
-			qdel(src)
-
-	random
-		New()
-			..()
-			var/color = pick("white","gray","black","red","orange","yellow","green","blue","purple")
-			name = "[color] cat ears"
-			item_state = "cat-[color]"
-			icon_state = "cat-[color]"
-
-	white
-		name = "white cat ears"
-		icon_state = "cat-white"
-		item_state = "cat-white"
-	gray
-		name = "gray cat ears"
-		icon_state = "cat-gray"
-		item_state = "cat-gray"
-	black
-		name = "black cat ears"
-		icon_state = "cat-black"
-		item_state = "cat-black"
-	red
-		name = "red cat ears"
-		icon_state = "cat-red"
-		item_state = "cat-red"
-	orange
-		name = "orange cat ears"
-		icon_state = "cat-orange"
-		item_state = "cat-orange"
-	yellow
-		name = "yellow cat ears"
-		icon_state = "cat-yellow"
-		item_state = "cat-yellow"
-	green
-		name = "green cat ears"
-		icon_state = "cat-green"
-		item_state = "cat-green"
-	blue
-		name = "blue cat ears"
-		icon_state = "cat-blue"
-		item_state = "cat-blue"
-	purple
-		name = "purple cat ears"
-		icon_state = "cat-purple"
-		item_state = "cat-purple"
-
 /obj/item/clothing/head/pokervisor
 	name = "green visor"
 	desc = "Do both gambling and accounting with style."
@@ -1293,16 +1226,6 @@
 		boutput(user, "<span class='notice'>You unfold the beret into a hat.</span>")
 	return
 
-/obj/item/clothing/head/antlers
-	name = "antlers"
-	desc = "Be a deer and wear these, won't you?"
-	icon = 'icons/obj/clothing/item_ears.dmi'
-	wear_image_icon = 'icons/mob/bighat.dmi'
-	icon_state = "antlers"
-	item_state = "antlers"
-	w_class = W_CLASS_TINY
-	throwforce = 0
-
 /obj/item/clothing/head/pajama_cap
 	name = "nightcap"
 	desc = "Is it truly a good night without one?"
@@ -1323,7 +1246,6 @@
 	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "headsprout"
 	item_state = "headsprout"
-
 
 /obj/item/clothing/head/hos_hat
 	name = "HoS Hat"
@@ -1391,3 +1313,176 @@
 	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "waitresshat"
 	item_state = "waitresshat"
+
+// HEADBANDS
+
+ABSTRACT_TYPE(/obj/item/clothing/head/headband)
+/obj/item/clothing/head/headband
+	name = "headband"
+	desc = "A band. For your head."
+	icon = 'icons/obj/clothing/item_ears.dmi'
+	wear_image_icon = 'icons/mob/ears.dmi'
+	icon_state = "cat-gray"
+	item_state = "cat-gray"
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
+	item_state = "earsheadband"
+	w_class = W_CLASS_TINY
+	throwforce = 0
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		..()
+		if(istype(W,/obj/item/device/radio/headset))
+			user.show_message("You stuff the headset on the headband and tape it in place. Now you should be able to hear the radio using these!")
+			var/obj/item/device/radio/headset/H = W
+			H.icon = src.icon
+			H.name = src.name
+			H.icon_state = src.icon_state
+			H.wear_image_icon = src.wear_image_icon
+			H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
+			qdel(src)
+
+ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
+/obj/item/clothing/head/headband/nyan
+	name = "gray cat ears"
+	desc = "Aww, cute and fuzzy."
+	icon_state = "cat-gray"
+	item_state = "cat-gray"
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		..()
+		if(istype(W,/obj/item/device/radio/headset))
+			user.show_message("You stuff the headset on the headband and tape it in place. Meow you should be able to hear the radio using these!")
+			var/obj/item/device/radio/headset/H = W
+			H.icon = src.icon
+			H.name = src.name
+			H.icon_state = src.icon_state
+			H.wear_image_icon = src.wear_image_icon
+			H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
+			qdel(src)
+
+	random
+		New()
+			..()
+			var/color = pick("white","gray","black","red","orange","yellow","green","blue","purple")
+			name = "[color] cat ears"
+			item_state = "cat-[color]"
+			icon_state = "cat-[color]"
+
+	white
+		name = "white cat ears"
+		icon_state = "cat-white"
+		item_state = "cat-white"
+	gray
+		name = "gray cat ears"
+		icon_state = "cat-gray"
+		item_state = "cat-gray"
+	black
+		name = "black cat ears"
+		icon_state = "cat-black"
+		item_state = "cat-black"
+	red
+		name = "red cat ears"
+		icon_state = "cat-red"
+		item_state = "cat-red"
+	orange
+		name = "orange cat ears"
+		icon_state = "cat-orange"
+		item_state = "cat-orange"
+	yellow
+		name = "yellow cat ears"
+		icon_state = "cat-yellow"
+		item_state = "cat-yellow"
+	green
+		name = "green cat ears"
+		icon_state = "cat-green"
+		item_state = "cat-green"
+	blue
+		name = "blue cat ears"
+		icon_state = "cat-blue"
+		item_state = "cat-blue"
+	purple
+		name = "purple cat ears"
+		icon_state = "cat-purple"
+		item_state = "cat-purple"
+	leopard
+		name = "leopard ears"
+		icon_state = "cat-leopard"
+		item_state = "cat-leopard"
+	snowleopard
+		name = "snow leopard ears"
+		icon_state = "cat-leopardw"
+		item_state = "cat-leopardw"
+	tiger
+		name = "tiger ears"
+		icon_state = "cat-tiger"
+		item_state = "cat-tiger"
+
+/obj/item/clothing/head/headband/antlers
+	name = "antlers"
+	desc = "Be a deer and wear these, won't you?"
+	icon = 'icons/obj/clothing/item_ears.dmi'
+	wear_image_icon = 'icons/mob/bighat.dmi'
+	icon_state = "antlers"
+	item_state = "antlers"
+	w_class = W_CLASS_TINY
+	throwforce = 0
+
+/obj/item/clothing/head/headband/giraffe
+	name = "giraffe ears"
+	desc = "Wearing these will take your fashion to another level."
+	icon = 'icons/obj/clothing/item_ears.dmi'
+	wear_image_icon = 'icons/mob/bighat.dmi'
+	icon_state = "giraffe"
+	item_state = "giraffe"
+	w_class = W_CLASS_TINY
+	throwforce = 0
+
+/obj/item/clothing/head/headband/bee
+	name = "bee antennae"
+	desc = "These antennae will make you look BEE-autiful!"
+	icon = 'icons/obj/clothing/item_ears.dmi'
+	wear_image_icon = 'icons/mob/bighat.dmi'
+	icon_state = "antennae"
+	item_state = "antennae"
+	w_class = W_CLASS_TINY
+	throwforce = 0
+
+// BARRETTES
+
+ABSTRACT_TYPE(/obj/item/clothing/head/barrette)
+/obj/item/clothing/head/barrette
+	name = "barrettes"
+	desc = "Not to be confused with a beret."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/head.dmi'
+	icon_state = "barrette-blue"
+	item_state = "barrette-blue"
+	w_class = W_CLASS_TINY
+	throwforce = 0
+
+	butterflyblu
+		name = "blue butterfly hairclip"
+		desc = "A fashionable hair clip shaped like a butterfly to keep your hair from fly-ing all over the place."
+		icon_state = "barrette-butterflyblu"
+		item_state = "barrette-butterflyblu"
+	butterflyorg
+		name = "orange butterfly hairclip"
+		desc = "A fashionable hair clip shaped like a butterfly to keep your hair from fly-ing all over the place."
+		icon_state = "barrette-butterflyorg"
+		item_state = "barrette-butterflyorg"
+	blue
+		name = "blue barrettes"
+		icon_state = "barrette-blue"
+		item_state = "barrette-blue"
+	green
+		name = "green barrettes"
+		icon_state = "barrette-green"
+		item_state = "barrette-green"
+	pink
+		name = "pink barrettes"
+		icon_state = "barrette-pink"
+		item_state = "barrette-pink"
+	gold
+		name = "gold barrettes"
+		icon_state = "barrette-gold"
+		item_state = "barrette-gold"
