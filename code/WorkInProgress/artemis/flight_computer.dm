@@ -55,6 +55,8 @@
 		src.icon_state = "vrbed_1"
 		M.client.eye = src.ship
 
+		get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_MAP_ICONS).add_mob(M)
+
 		M.use_movement_controller = ship
 
 		if(ship.show_tracking)
@@ -97,6 +99,7 @@
 		ship.remove_thrusters(src.occupant)
 
 		src.occupant.client.eye = src.occupant
+		get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_MAP_ICONS).remove_mob(src.occupant)
 
 		if (occupant.client)
 			occupant.detach_hud(myhud)

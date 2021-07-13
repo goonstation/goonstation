@@ -96,8 +96,6 @@ var/global/datum/galaxy/GALAXY = new
 	var/navigable = 0 // Can be detected on long distance nav
 	var/scale
 
-
-
 	proc/check_distance(var/ship_x,var/ship_y)
 		var/squared_distance = (ship_x-galactic_x)**2 + (ship_y-galactic_y)**2
 		if(src.loud)
@@ -144,6 +142,10 @@ var/global/datum/galaxy/GALAXY = new
 
 		map_body.on_load()
 
+		map_body.galaxy_icon = image(map_body.icon,map_body,map_body.icon_state,10)
+		get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_MAP_ICONS).add_image(map_body.galaxy_icon)
+		map_body.icon_state = null
+
 		return map_body
 
 	proc/load_ship_body(var/obj/artemis/ship, var/obj/background_star/galactic_object/G)
@@ -178,7 +180,16 @@ var/global/datum/galaxy/GALAXY = new
 
 		ship_body.on_load()
 
+		ship_body.galaxy_icon = image(ship_body.icon,ship_body,ship_body.icon_state)
+		get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS).add_image(ship_body.galaxy_icon)
+		ship_body.icon_state = null
+
 	proc/unload(var/obj/background_star/galactic_object/G,var/obj/artemis/ship)
+		if(G.my_map_body)
+			get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS).remove_image(G.galaxy_icon)
+		else
+			get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_MAP_ICONS).remove_image(G.galaxy_icon)
+
 		if(G.my_ship_body)
 			G.my_ship_body.on_unload()
 			qdel(G.my_ship_body)
@@ -203,6 +214,7 @@ var/global/datum/galaxy/GALAXY = new
 	var/x_old = null
 	var/y_old = null
 	var/scale
+	var/image/galaxy_icon
 
 	plane = -1
 
@@ -286,6 +298,7 @@ var/global/datum/galaxy/GALAXY = new
 		my_map_body = null
 		master = null
 		my_ship = null
+		galaxy_icon = null
 
 /obj/background_star/galactic_object/large
 	name = "TEST OBJECT LARGE"

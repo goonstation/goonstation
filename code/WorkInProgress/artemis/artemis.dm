@@ -539,4 +539,14 @@
 	manta
 		name = "Manta"
 
+	Entered(atom/movable/A)
+		. = ..()
+		if(ismob(A))
+			get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS).add_mob(A)
+
+	Exited(atom/movable/A)
+		. = ..()
+		if(ismob(A))
+			get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS).remove_mob(A)
+
 #endif

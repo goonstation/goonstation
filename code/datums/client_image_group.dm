@@ -1,5 +1,7 @@
 #define CLIENT_IMAGE_GROUP_ARREST_ICONS "arrest_icons"
 #define CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS "health_mon_icons"
+#define CLIENT_IMAGE_GROUP_ARTEMIS_MAP_ICONS "artemis_map_icons"
+#define CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS "artemis_ship_icons"
 
 var/global/list/datum/client_image_group/client_image_groups
 
