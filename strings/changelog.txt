@@ -1,5 +1,9 @@
 
 (t)tue jul 13 21
+(u)Hans
+(p)5456
+(e)⚖|balance
+(+)Changed the behaviour of cyanide to be more consistent and less RNG based.
 (u)Carbadox
 (p)5361
 (e)|
