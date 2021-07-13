@@ -236,7 +236,7 @@ datum
 
 					T.reagents.add_reagent("thermite", volume, null)
 					if (T.active_hotspot)
-						T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 10, 300)
+						T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 10, 300, 1)
 				return
 
 

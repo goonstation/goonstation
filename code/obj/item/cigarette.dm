@@ -956,7 +956,7 @@
 		if (src.on > 0)
 			if (!ismob(target) && target.reagents)
 				user.show_text("You heat [target].", "blue")
-				target.reagents.temperature_reagents(1000,10)
+				target.reagents.temperature_reagents(4000,10)
 				return
 		else if (src.on == -1)
 			user.show_text("You [pick("fumble", "fuss", "mess", "faff")] around with [src] and try to get it to light, but it's no use.", "red")
@@ -1181,7 +1181,7 @@
 
 		else if (!ismob(O) && src.on && O.reagents)
 			user.show_text("You heat [O].", "blue")
-			O.reagents.temperature_reagents(1500,10)
+			O.reagents.temperature_reagents(4000,10)
 		else
 			return ..()
 
