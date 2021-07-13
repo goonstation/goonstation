@@ -708,7 +708,7 @@
 
 			if (href_list["ejectbeaker"])
 				var/obj/item/reagent_containers/glass/beaker/B = locate(href_list["ejectbeaker"])
-				if (!istype(B,/obj/item/reagent_containers/glass/beaker/))
+				if (!istype(B,/obj/item/reagent_containers/glass/))
 					return
 				src.beaker.set_loc(get_output_location(B,1))
 				src.beaker = null
