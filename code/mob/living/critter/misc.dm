@@ -53,7 +53,7 @@
 		else
 			if (istype(W, /obj/item/baton))
 				var/obj/item/baton/B = W
-				if (B.can_stun(1, 1, user) == 1)
+				if (B.can_stun(1, user) == 1)
 					user.visible_message("<span class='combat'><b>[user] shocks [src] with [B]!</b></span>", "<span class='combat'><b>While your baton passes through, [src] appears damaged!</b></span>")
 					B.process_charges(-1, user)
 

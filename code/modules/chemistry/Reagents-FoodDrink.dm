@@ -111,9 +111,9 @@ datum
 			thirst_value = 0.3
 			value = 3
 
-			on_add(var/mob/M, var/mult = 1)
-				if(probmult(20))
-					var/mob/living/L = M
+			on_add()
+				if(isliving(holder?.my_atom) && prob(20))
+					var/mob/living/L = holder.my_atom
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
 
 		fooddrink/cocktail_fruit_punch
