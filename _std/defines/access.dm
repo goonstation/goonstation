@@ -105,3 +105,6 @@
 
 //pathologist job
 #define access_pathology 84
+
+// drone arena prefab access thing
+#define access_dronearena 85

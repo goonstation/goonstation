@@ -60,7 +60,7 @@
 	projectile_type = /datum/projectile/bullet/bullet_22/se/burst
 	current_projectile = new/datum/projectile/bullet/bullet_22/se/burst
 	must_drop_loot = 1
-	droploot = /obj/item/card/id/syndicate
+	droploot = /obj/item/card/id/dronearena
 	mats = 120
 	score = 500
 	var/droneanchor
@@ -81,6 +81,14 @@
 		if(prob(3))
 			elecflash(src.loc,1,1)
 			playsound(src.loc, "sound/machines/glitch1.ogg", 50, 1)
+
+/obj/machinery/door/airlock/pyro/syndicate/dronearena
+	req_access_txt = "85"
+
+/obj/item/card/id/dronearena
+	name = "old id card"
+	desc = "A dusty old id card. Is this id even working right?!"
+	access = list(access_dronearena)
 
 /obj/item/paper/dronearenafail
 	name = "scribbled letter"

@@ -170,13 +170,13 @@
 /turf/unsimulated/floor/airless/grime,
 /area/prefab/dronearena)
 "X" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/syndicate/dronearena{
 	dir = 8
 	},
 /turf/unsimulated/floor/airless/plating,
 /area/prefab/dronearena)
 "Y" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/syndicate/dronearena{
 	dir = 4
 	},
 /turf/unsimulated/floor/airless/plating,
