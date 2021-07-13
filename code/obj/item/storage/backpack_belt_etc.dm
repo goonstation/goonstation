@@ -311,7 +311,10 @@
 	item_state = "funny"
 	spawn_contents = list(/obj/item/storage/box/starter,\
 	/obj/item/storage/box/balloonbox)
-	slots = 7
+
+	New()
+		..()
+		AddComponent(/datum/component/storage, slots = 7)
 
 /obj/item/storage/fanny/funny/mini
 	name = "mini funny pack"
@@ -326,7 +329,10 @@
 	desc = "It's different than a fanny pack. It's tactical and action-packed!"
 	icon_state = "syndie"
 	item_state = "syndie"
-	slots = 7
+
+	New()
+		..()
+		AddComponent(/datum/component/storage, slots = 7)
 
 /* -------------------- Belts -------------------- */
 

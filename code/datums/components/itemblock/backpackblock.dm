@@ -30,8 +30,9 @@
 
 /datum/component/itemblock/backpackblock/proc/append_to_tooltip(parent, list/tooltip)
 	if(showTooltip)
+		var/obj/item/storage/I = parent
 		var/list/cont = list()
-		SEND_SIGNAL(parent, COMSIG_STORAGE_GET_CONTENTS, cont)
+		SEND_SIGNAL(I, COMSIG_STORAGE_GET_CONTENTS, cont)
 		tooltip += itemblock_tooltip_entry("special.png", "Blocks more damage when filled (+[ceil(cont.len/3)])")
 		tooltip += itemblock_tooltip_entry("minus.png", "Contents ejected when attacked")
 

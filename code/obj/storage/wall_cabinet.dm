@@ -347,7 +347,6 @@ obj/item/storage/wall/clothingrack/hatrack
 	name = "mineral shelf"
 	icon = 'icons/obj/large/64x64.dmi'
 	density = 0
-	slots = 7
 	anchored = 1
 	icon_state = "mineralshelf"
 	spawn_contents = list(/obj/item/raw_material/mauxite = 4)

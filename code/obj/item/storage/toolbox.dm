@@ -101,7 +101,7 @@
 	/obj/item/device/t_scanner,\
 	/obj/item/crowbar)
 
-	make_my_stuff()
+	New()
 		var/picked = pick(/obj/item/cable_coil,\
 		/obj/item/cable_coil/yellow,\
 		/obj/item/cable_coil/orange,\
@@ -115,7 +115,7 @@
 		spawn_contents.Add(picked)
 		if (!istype(src, /obj/item/storage/toolbox/electrical/mechanic_spawn))
 			spawn_contents.Add(picked,picked)
-		. = ..()
+		..()
 
 
 	// The extra items (scanner and soldering iron) take up precious space in the backpack.

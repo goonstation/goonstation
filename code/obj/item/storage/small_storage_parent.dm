@@ -20,14 +20,6 @@
 	New()
 		..()
 		AddComponent(/datum/component/storage, spawn_contents = spawn_contents)
-
-	Entered(Obj, OldLoc)
-		. = ..()
-		src.hud?.add_item(Obj)
-
-	Exited(Obj, newloc)
-		. = ..()
-		src.hud?.remove_item(Obj)
 /obj/item/storage/box
 	name = "box"
 	icon_state = "box"
@@ -81,7 +73,6 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY
-	max_wclass = 3
 	desc = "A fancy synthetic leather-bound briefcase, capable of holding a number of small objects, with style."
 	stamina_damage = 40
 	stamina_cost = 17
@@ -93,16 +84,19 @@
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
-		AddComponent(/datum/component/storage, max_wclass = max_wclass)
+		AddComponent(/datum/component/storage, max_wclass = 3)
 
 /obj/item/storage/briefcase/toxins
 	name = "toxins research briefcase"
 	icon_state = "briefcase_rd"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "rd-case"
-	max_wclass = 4 // parity with secure briefcase
 	desc = "A large briefcase for experimental toxins research."
 	spawn_contents = list(/obj/item/raw_material/molitz_beta = 2, /obj/item/paper/hellburn)
+
+	New()
+		..()
+		AddComponent(/datum/component/storage, max_wclass = 4)
 
 /obj/item/storage/desk_drawer
 	name = "desk drawer"

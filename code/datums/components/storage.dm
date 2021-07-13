@@ -133,7 +133,7 @@
 						usr.u_equip(source)
 						usr.put_in_hand(source, 1)
 			return
-	if (over_object == usr && in_range(source, usr) && isliving(usr) && !usr.stat) // click drag storage to mob to open it
+	if (over_object == usr && IN_RANGE(source, usr , 1) && isliving(usr) && !usr.stat) // click drag storage to mob to open it
 		if (usr.s_active)
 			usr.detach_hud(usr.s_active)
 			usr.s_active = null

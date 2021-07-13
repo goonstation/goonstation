@@ -101,7 +101,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 	. = FALSE
 	if(bounds_dist(source, user) == 0 || IN_RANGE(source, user, 1)) // fucking byond
 		return TRUE
-	else if (source in bible_contents && locate(/obj/item/storage/bible) in range(1, user)) // whoever added the global bibles, fuck you
+	else if (source in bible_contents && locate(/obj/item/bible) in range(1, user)) // whoever added the global bibles, fuck you
 		return TRUE
 	else
 		if (iscarbon(user))
