@@ -227,6 +227,11 @@ var/global/datum/galaxy/GALAXY = new
 						src.landing_zone = T
 						return
 
+	proc/check_distance(max_distance)
+		var/squared_pixel_distance = ((src.actual_x)**2 + (src.actual_y)**2)
+		if(squared_pixel_distance <= max_distance)
+			.= TRUE
+
 	set_vars(var/theta, var/dist)
 
 		var/load_r = max_r*dist/sqrt(ARTEMIS_MAX_R_SQUARED_GALACTIC) // 35.328 = max_r_squared galactic

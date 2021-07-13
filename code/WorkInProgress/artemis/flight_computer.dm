@@ -145,7 +145,7 @@
 			user.a_intent = previous_user_intent
 			SPAWN_DBG(user.combat_click_delay + 2)
 				if (istype(user.equipped(), /obj/item/grab))
-					src.log_in(usr)
+					src.log_in(target)
 
 /datum/targetable/artemis_active_scanning
 	name = "Active Scanning"
@@ -164,18 +164,14 @@
 			return 1
 
 	handleCast(var/atom/target)
-
 		var/mob/M = usr
-
 		if (istype(M))
-
 			if(!(M in my_chair))
 				return
 
 			flick("radar_ping",my_hud.radar_ping)
 
 			if(target.flags & HAS_ARTEMIS_SCAN)
-				//target:artemis_scan(M,my_ship)
 				actions.start(new/datum/action/bar/icon/artemis_scan(my_ship, target, my_chair), my_ship)
 			else
 				M.show_message("<span class='alert'>Target shows no response to active scanning.</span>")
@@ -183,7 +179,7 @@
 			return 0
 
 /datum/action/bar/icon/artemis_scan
-	duration = 1 SECOND
+	duration = 5 SECOND
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 	id = "cleanbot_clean"
 	icon = 'icons/mob/hud_pod.dmi'
@@ -191,6 +187,7 @@
 	var/obj/artemis/my_ship
 	var/obj/background_star/galactic_object/target
 	var/obj/machinery/sim/vr_bed/flight_chair/helm
+	var/tick
 
 	New(obj/artemis/ship, obj/background_star/galactic_object/target, obj/machinery/sim/vr_bed/flight_chair/helm)
 		..()
@@ -200,6 +197,8 @@
 
 	onStart()
 		..()
+		bar.pixel_y = 15
+		border.pixel_y = 15
 		if (!my_ship || !target || !istype(target,/obj/background_star/galactic_object))
 			interrupt(INTERRUPT_ALWAYS)
 			return
@@ -207,14 +206,24 @@
 		// TODO Sensor Ping Sound?!?!?
 		//playsound(master, "sound/impact_sounds/Liquid_Slosh_2.ogg", 25, 1)
 
-
 	onUpdate()
 		..()
 		if (!my_ship || !target)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		if(!target.check_distance(my_ship.sensor_range))
+			interrupt(INTERRUPT_MOVE)
+			return
+
+		tick++
+		if(tick % 2 == 0)
+			if(helm.myhud)
+				flick("radar_ping",src.helm.myhud.radar_ping)
+
 	onInterrupt(flag)
+		if(HAS_FLAG(flag, INTERRUPT_MOVE))
+			helm.occupant?.show_message("<span class='alert'>Target is too far away!</span>")
 		. = ..()
 
 	onEnd()

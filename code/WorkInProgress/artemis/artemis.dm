@@ -59,6 +59,8 @@
 	var/image/nav_arrow = null
 	var/navigating = 0
 	var/datum/galactic_object/navigation_target = null
+	var/sensor_range = 4096
+	var/teleporter_range = 4096
 
 	var/do_process = 0
 

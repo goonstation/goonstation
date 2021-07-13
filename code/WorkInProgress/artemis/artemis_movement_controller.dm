@@ -53,10 +53,12 @@
 						new_angle = ship.ship_angle
 						new_mag = ship.accel
 					else
+						var/arctan_result
 						new_mag = sqrt(ship.vel_mag**2 + ship.accel**2 + 2*ship.vel_mag*ship.accel*cos(ship.ship_angle-ship.vel_angle))
 						new_mag = min(ship.max_speed,new_mag)
 
-						var/arctan_result = (ship.ship_angle == ship.vel_angle) ? 0 : arctan(((ship.accel*sin(ship.ship_angle-ship.vel_angle))/(ship.vel_mag + ship.accel*cos(ship.ship_angle-ship.vel_angle))))
+						if(new_mag) //check for div/0
+							arctan_result = (ship.ship_angle == ship.vel_angle) ? 0 : arctan(((ship.accel*sin(ship.ship_angle-ship.vel_angle))/(ship.vel_mag + ship.accel*cos(ship.ship_angle-ship.vel_angle))))
 
 						new_angle = ship.vel_angle + arctan_result
 
