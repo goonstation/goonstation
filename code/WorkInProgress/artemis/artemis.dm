@@ -527,8 +527,6 @@
 			return 1
 		return 0
 
-
-
 /area/ship
 	teleport_blocked = TRUE
 

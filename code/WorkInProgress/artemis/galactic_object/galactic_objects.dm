@@ -50,7 +50,7 @@
 		..()
 		flags |= HAS_ARTEMIS_SCAN
 
-	proc/artemis_scan(var/mob/pilot, var/obj/artemis/ship)
+	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
 		var/dat = {"<span class='alert'><b>DON'T <i>FUCKING</i> TOUCH ME.</b></span>"}
 
 		pilot << browse("<HEAD><TITLE>[name]</TITLE></HEAD><TT>[dat]</TT>", "window=artemis_scan")
@@ -103,7 +103,7 @@
 		..()
 		flags |= HAS_ARTEMIS_SCAN
 
-	proc/artemis_scan(var/mob/pilot, var/obj/artemis/ship)
+	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
 		var/dat = {"<span class='alert'><b>Home sweet home.  For some definition of sweet and some definition of home.</b></span>"}
 
 		pilot << browse("<HEAD><TITLE>[station_name()]</TITLE></HEAD><TT>[dat]</TT>", "window=artemis_scan")
@@ -158,7 +158,7 @@
 		//animate_wave(src, 1)
 		flags |= HAS_ARTEMIS_SCAN
 
-	proc/artemis_scan(var/mob/pilot, var/obj/artemis/ship)
+	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
 		var/dat = {"<span class='alert'><b>Hot Hot Hot Hot Hot Hot</b></span>"}
 
 		pilot << browse("<HEAD><TITLE>Star</TITLE></HEAD><TT>[dat]</TT>", "window=artemis_scan")
@@ -251,7 +251,7 @@
 		..()
 		flags |= HAS_ARTEMIS_SCAN
 
-	proc/artemis_scan(var/mob/pilot, var/obj/artemis/ship)
+	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
 		var/dat = {"<span class='alert'><b>Oh... look... a black hole.  Neat!</b></span>"}
 
 		pilot << browse("<HEAD><TITLE>Star</TITLE></HEAD><TT>[dat]</TT>", "window=artemis_scan")
@@ -326,7 +326,7 @@
 		..()
 		flags |= HAS_ARTEMIS_SCAN
 
-	proc/artemis_scan(var/mob/pilot, var/obj/artemis/ship)
+	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
 		var/datum/galactic_object/asteroid/M = master
 		var/dat = {"<span class='alert'><b>Softest of Rocks</b></span>"}
 
@@ -405,7 +405,7 @@
 		..()
 		flags |= HAS_ARTEMIS_SCAN
 
-	proc/artemis_scan(var/mob/pilot, var/obj/artemis/ship)
+	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
 		var/dat = {"<span class='alert'><b>DON'T <i>FUCKING</i> TOUCH ME.</b></span>"}
 
 		pilot << browse("<HEAD><TITLE>HEY FUCKWAD!</TITLE></HEAD><TT>[dat]</TT>", "window=fixme_planet")
@@ -452,7 +452,7 @@
 		else
 			src.icon_state = "eh_idle_closed"
 
-	proc/artemis_scan(var/mob/pilot, var/obj/artemis/ship)
+	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
 		boutput(pilot,"fuck")
 		flick("arjuna_thruster_back_l",ship)
 		return

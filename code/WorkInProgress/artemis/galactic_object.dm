@@ -291,6 +291,9 @@ var/global/datum/galaxy/GALAXY = new
 	proc/on_unload()
 		return
 
+	proc/artemis_scan(var/mob/pilot, var/obj/artemis/ship)
+		return
+
 	disposing()
 		..()
 		landing_zone = null
