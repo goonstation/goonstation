@@ -1004,13 +1004,12 @@
 						if (src.autoextract)
 							src.doExtract(I)
 							qdel(I)
-							loadcount++
-							break
 						else
 							I.set_loc(src)
 							src.ingredients += I
-							loadcount++
-							break
+						loadcount++
+						break
+
 			if (!loadcount)
 				boutput(user, "<span class='alert'>No items were loaded from the satchel!</span>")
 			else if (src.autoextract)
