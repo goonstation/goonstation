@@ -656,6 +656,7 @@ datum
 			transparency = 230
 			viscosity = 0.2
 			minimum_reaction_temperature = T0C + 200
+			depletion_rate = 0.6
 
 			var/max_radius = 7
 			var/min_radius = 0
@@ -720,10 +721,15 @@ datum
 				return 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
-
-				var/mob/living/L = M
-				if(istype(L) && L.getStatusDuration("burning"))
-					L.changeStatus("burning", 2 SECONDS * mult)
+				if (!M)
+					M = holder.my_atom
+				if(istype(M, /mob/living/) && M.getStatusDuration("burning"))
+					M.changeStatus("burning", 2 SECONDS * mult)
+				if((M.health > 20) && (prob(33)))
+					M.take_toxin_damage(1 * mult)
+				if(probmult(1))
+					M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+					M.vomit()
 				..()
 
 			on_plant_life(var/obj/machinery/plantpot/P)

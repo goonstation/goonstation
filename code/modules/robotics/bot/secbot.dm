@@ -208,25 +208,6 @@
 	desc = "A little security robot, apparently carved out of a pumpkin.  He looks...spooky?"
 	icon = 'icons/misc/halloween.dmi'
 
-/obj/machinery/bot/secbot/brute
-	name = "Komisarz Beepinarska"
-	desc = "This little security robot seems to have a particularly large chip on its... shoulder? ...head?"
-	our_baton_type = /obj/item/baton/classic
-	loot_baton_type = /obj/item/baton/classic
-	stun_type = "harm_classic"
-	emagged = 2
-	control_freq = 0
-
-	demag()
-		//Nope
-		return
-
-/obj/machinery/bot/secbot/stamina_test
-	name = "test secbot"
-	desc = "stamina test"
-	our_baton_type = /obj/item/baton/stamina
-	loot_baton_type = /obj/item/baton/stamina
-
 /obj/item/secbot_assembly
 	name = "helmet/signaler assembly"
 	desc = "Some sort of bizarre assembly."
@@ -534,7 +515,7 @@
 		// Not charged when dropped (ran on Beepsky's internal battery or whatever).
 		if (istype(loot_baton_type, /obj/item/baton)) // Now we can drop *any* baton!
 			var/obj/item/baton/B = new loot_baton_type(Tsec)
-			B.status = 0
+			B.is_active = FALSE
 			B.process_charges(-INFINITY)
 			if (src.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || src.is_beepsky == IS_NOT_BEEPSKY_BUT_HAS_HIS_SPECIAL_BATON)	// Holding Beepsky's baton doesnt make you him, but it does mean you're holding his baton
 				B.name = "Beepsky's stun baton"
@@ -566,8 +547,6 @@
 
 			// No need for unnecessary hassle, just make it ignore charges entirely for the time being.
 			if (src.our_baton && istype(src.our_baton))
-				if (src.our_baton.uses_electricity == 0)
-					src.our_baton.uses_electricity = 1
 				if (src.our_baton.uses_charges != 0)
 					src.our_baton.uses_charges = 0
 			else
@@ -1340,7 +1319,7 @@
 					master.KillPathAndGiveUp(KPAGU_RETURN_TO_GUARD)
 				else
 					master.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
-	
+
 	proc/failchecks()
 		if (!IN_RANGE(master, master.target, 1))
 			return 1

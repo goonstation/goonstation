@@ -441,9 +441,9 @@
 			else
 				boutput(user, "<span class='notice'>[bicon(W)] Regular electrical response received from access panel.</span>")
 		return
-	else if (ispulsingtool(W))
-		return src.attack_hand(user)
-
+	else if (src.panel_open && (issnippingtool(W) || ispulsingtool(W)))
+		src.attack_hand(user)
+		return
 	else if (ispryingtool(W))
 		if (src.status & BROKEN) //if the vendor is broken
 			//action bar is defined at the end of these procs
