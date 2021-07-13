@@ -366,13 +366,13 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 						// Successful VPN check
 						// IP is a known VPN, cache locally and kick
-						else if (result || ((data["vpn"] == true || data["tor"] == true) && data["fraud_score"] > 65))
+						else if (result || ((data["vpn"] == true || data["tor"] == true) && data["fraud_score"] >= 70))
 							global.vpn_ip_checks["[src.address]"] = true
 							addPlayerNote(src.ckey, "VPN Blocker", "[src.address] attempted to connect via vpn or proxy. Info: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
 							logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
 							logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]", "admin")
-							message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
-							ircbot.export("admin", list(key="VPN Blocker", name="[src.key]", msg="[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]"))
+							message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked! VPN info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]], fraud score: [data["fraud_score"]]")
+							ircbot.export("admin", list(key="VPN Blocker", name="[src.key]", msg="[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]], fraud score: [data["fraud_score"]]"))
 							if(do_compid_analysis)
 								do_computerid_test(src) //Will ban yonder fucker in case they are prix
 								check_compid_list(src) //Will analyze their computer ID usage patterns for aberrations
