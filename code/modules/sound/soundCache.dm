@@ -707,6 +707,7 @@ var/global/list/soundCache = list(
  	"sound/misc/android_scream.ogg" = 'sound/misc/android_scream.ogg',\
  	"sound/misc/android_throw.ogg" = 'sound/misc/android_throw.ogg',\
  	"sound/misc/announcement_1.ogg" = 'sound/misc/announcement_1.ogg',\
+ 	"sound/misc/announcement_chime.ogg" = 'sound/misc/announcement_chime.ogg',\
  	"sound/misc/automaton_ratchet.ogg" = 'sound/misc/automaton_ratchet.ogg',\
  	"sound/misc/automaton_scratch.ogg" = 'sound/misc/automaton_scratch.ogg',\
  	"sound/misc/automaton_tickhum.ogg" = 'sound/misc/automaton_tickhum.ogg',\
