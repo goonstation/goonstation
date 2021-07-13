@@ -989,18 +989,35 @@
 			var/obj/item/satchel/S = W
 
 			var/loadcount = 0
+			if (src.autoextract)
+				if (!src.extract_to)
+					boutput(user, "<span class='alert'>You must first select an extraction target if you want items to be automatically extracted.</span>")
+					return
+
 			for (var/obj/item/I in S.contents)
+				if (src.autoextract)
+					if (src.extract_to.reagents.total_volume >= src.extract_to.reagents.maximum_volume)
+						boutput(user, "<span class='alert'>The auto-extraction target is full.</span>")
+						break
 				for(var/check_path in src.allowed)
 					if(istype(I, check_path))
-						I.set_loc(src)
-						src.ingredients += I
-						loadcount++
-						break
-
-			if (loadcount)
-				boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
-			else
+						if (src.autoextract)
+							src.doExtract(I)
+							qdel(I)
+							loadcount++
+							break
+						else
+							I.set_loc(src)
+							src.ingredients += I
+							loadcount++
+							break
+			if (!loadcount)
 				boutput(user, "<span class='alert'>No items were loaded from the satchel!</span>")
+			else if (src.autoextract)
+				boutput(user, "<span class='notice'>[loadcount] items were automatically extracted from the satchel!</span>")
+			else
+				boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
+
 			S.satchel_updateicon()
 			src.update_icon()
 			src.updateUsrDialog()
@@ -1047,14 +1064,26 @@
 				break
 		if (!proceed) ..()
 		else
+			if (src.autoextract)
+				if (!src.extract_to)
+					boutput(user, "<span class='alert'>You must first select an extraction target if you want items to be automatically extracted.</span>")
+					return
 			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O.name] into [src]!</span>")
 			var/staystill = user.loc
 			for (var/obj/item/P in view(1,user))
-				sleep(0.2 SECONDS)
 				if (user.loc != staystill) break
 				if (P.type == O.type)
-					src.ingredients.Add(P)
-					P.set_loc(src)
+					if (src.autoextract)
+						if (src.extract_to.reagents.total_volume >= src.extract_to.reagents.maximum_volume)
+							boutput(user, "<span class='alert'>The auto-extraction target is full.</span>")
+							break
+						src.doExtract(P)
+						qdel(P)
+						sleep(0.2 SECONDS)
+					else
+						P.set_loc(src)
+						src.ingredients.Add(P)
+						sleep(0.2 SECONDS)
 				else continue
 			boutput(user, "<span class='notice'>You finish stuffing items into [src]!</span>")
 		src.update_icon()
