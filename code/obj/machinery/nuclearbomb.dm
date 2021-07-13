@@ -240,7 +240,7 @@
 				//	return
 
 		if (istype(W, /obj/item/wrench/battle) && src._health <= src._max_health)
-			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[usr] repairs the [src]!")
+			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[usr] repairs the [src]!", null)
 			return
 
 		if (W && !(istool(W, TOOL_SCREWING | TOOL_SNIPPING) || istype(W, /obj/item/disk/data/floppy/read_only/authentication)))
@@ -274,11 +274,6 @@
 		if (!isnum(power) || power < 1) power = 1
 		src.take_damage(power)
 		return
-
-	emp_act()
-		src.take_damage(rand(25,35))
-		if (armed && det_time)
-			det_time += rand(-300,600)
 
 	meteorhit()
 		src.take_damage(rand(30,60))

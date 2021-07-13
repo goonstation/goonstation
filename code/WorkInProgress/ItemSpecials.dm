@@ -658,6 +658,57 @@
 					overrideStaminaDamage = master.stamina_damage * 0.8
 				return
 
+	launch_projectile
+		cooldown = 3 SECONDS
+		staminaCost = 30
+		moveDelay = 0
+		requiresStaminaToFire = TRUE
+		staminaReqAmt = 30
+		/// projectile datum containing data for projectile objects
+		var/datum/projectile/projectile = null
+		/// type path of the special effect
+		var/special_effect_type = /obj/itemspecialeffect/simple
+
+		image = "simple"
+		name = "Cast"
+		desc = "Utilize the power of your wand to cast a bolt of magic."
+
+		pixelaction(atom/target, params, mob/user, reach)
+			. = ..()
+			if (!projectile) return
+			var/turf/T = get_turf(target)
+			if(!T) return
+			if(!usable(user)) return
+			if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+				preUse(user)
+				var/pox = text2num(params["icon-x"]) - 16
+				var/poy = text2num(params["icon-y"]) - 16
+				var/obj/itemspecialeffect/S = unpool(special_effect_type)
+				S.setup(get_step(user, get_dir(user, target)))
+				shoot_projectile_ST_pixel(user, projectile, target, pox, poy)
+				afterUse(user)
+
+		disposing()
+			projectile = null
+			. = ..()
+
+		fireball
+			projectile = new/datum/projectile/fireball
+
+		monkey_organ
+			projectile = new/datum/projectile/special/spawner
+			New()
+				. = ..()
+				var/datum/projectile/special/spawner/P = projectile
+				P.damage_type = D_KINETIC
+				P.power = 5
+				P.typetospawn = /obj/random_item_spawner/organs/bloody/one_to_three
+				P.icon = 'icons/mob/monkey.dmi'
+				P.icon_state = "monkey"
+				P.shot_sound = "sound/voice/screams/monkey_scream.ogg"
+				P.hit_sound = "sound/impact_sounds/Slimy_Splat_1.ogg"
+				P.name = "monkey"
+
 	slam
 		cooldown = 50
 		staminaCost = 30
@@ -688,7 +739,7 @@
 			if(!isturf(target.loc) && !isturf(target)) return
 			if(!usable(user)) return
 
-			if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+			if(params["left"] && (master || user) && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 				preUse(user)
 				var/direction = get_dir_pixel(user, target, params)
 				if(direction == NORTHEAST || direction == NORTHWEST || direction == SOUTHEAST || direction == SOUTHWEST)
@@ -696,7 +747,7 @@
 
 				var/list/attacked = list()
 
-				var/turf/one = get_step(master, direction)
+				var/turf/one = get_step((master || user), direction)
 
 				var/turf/two = get_step(one, direction)
 				var/turf/twoB = get_step(two, direction)
@@ -716,11 +767,14 @@
 					shake_camera(M, 8, 24)
 
 				for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
-					animate_shake(T)
+					animate_shake(T,5,2,2,T.pixel_x,T.pixel_y)
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							if(master)
+								A.attackby(master, user, params, 1)
+							else
+								A.attack_hand(user, params)
 							attacked += A
 							A.throw_at(get_edge_target_turf(A,direction), 5, 3)
 
@@ -761,7 +815,7 @@
 					shake_camera(M, 8, 24)
 
 				for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
-					animate_shake(T)
+					animate_shake(T,5,2,2,T.pixel_x,T.pixel_y)
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
@@ -1224,10 +1278,7 @@
 							continue
 						if(ismob(A))
 							var/mob/M = A
-							if (M.getStatusDuration("burning"))
-								M.changeStatus("burning", tiny_time)
-							else
-								M.changeStatus("burning", flame_succ ? time : tiny_time)
+							M.changeStatus("burning", flame_succ ? time : tiny_time)
 						else if(iscritter(A))
 							var/obj/critter/crit = A
 							crit.blob_act(8) //REMOVE WHEN WE ADD BURNING OBJCRITTERS

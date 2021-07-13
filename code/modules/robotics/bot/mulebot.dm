@@ -500,9 +500,9 @@
 			return
 		if(on)
 			SPAWN_DBG(0)
-				var/speed = ((wires & wire_motor1) ? 1:0) + ((wires & wire_motor2) ? 2:0)
-				//boutput(world, "speed: [speed]")
-
+				// speed varies between 1-4 depending on how many wires are cut (and which of the two)
+				var/speed = ((wires & wire_motor1) ? 1:0) + ((wires & wire_motor2) ? 2:0) + 1
+				// both wires results in no speed at all :(
 				var/n_steps = list(0, 12, 7, 6)[speed]
 
 				var/sleep_time = n_steps ? clamp(time_since_last / n_steps, 0.04 SECONDS, 1.5 SECONDS) : 0

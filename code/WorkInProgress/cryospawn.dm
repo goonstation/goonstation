@@ -16,7 +16,7 @@
 	desc = "The terminus of a large underfloor cryogenic storage complex."
 	anchored = 1
 	density = 1
-	icon = 'icons/obj/64x96.dmi'
+	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "cryotron_up"
 	bound_width = 96
 	bound_x = -32
@@ -145,6 +145,9 @@
 				if (L.client)
 					L.addOverlayComposition(/datum/overlayComposition/blinded)
 					L.updateOverlaysClient(L.client)
+				for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
+					if (!A.status && A.announces_arrivals)
+						A.announce_departure(L)
 				return 1
 
 		stored_mobs += L
@@ -157,6 +160,9 @@
 		if (L.client)
 			L.addOverlayComposition(/datum/overlayComposition/blinded)
 			L.updateOverlaysClient(L.client)
+		for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
+			if (!A.status && A.announces_arrivals)
+				A.announce_departure(L)
 		if (ishuman(L))
 			var/mob/living/carbon/human/H = L
 			if (H.sims)

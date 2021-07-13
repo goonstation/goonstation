@@ -103,9 +103,9 @@
 	if (!P.AH)
 		return
 
-	var/cust_one_state = customization_styles[P.AH.customization_first]
-	var/cust_two_state = customization_styles[P.AH.customization_second]
-	var/cust_three_state = customization_styles[P.AH.customization_third]
+	var/cust_one_state = P.AH.customization_first.id
+	var/cust_two_state = P.AH.customization_second.id
+	var/cust_three_state = P.AH.customization_third.id
 
 	var/image/hair = image('icons/mob/human_hair.dmi', cust_one_state)
 	hair.color = P.AH.customization_first_color
@@ -352,17 +352,17 @@
 		O.overlays += glass
 
 	if (src.bioHolder) //Not necessary for ghost appearance, but this will be useful if the ghost decides to respawn as critter.
-		var/image/hair = image('icons/mob/human_hair.dmi', cust_one_state)
+		var/image/hair = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_first.id)
 		hair.color = src.bioHolder.mobAppearance.customization_first_color
 		hair.alpha = 192
 		O.overlays += hair
 
-		var/image/beard = image('icons/mob/human_hair.dmi', src.cust_two_state)
+		var/image/beard = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_second.id)
 		beard.color = src.bioHolder.mobAppearance.customization_second_color
 		beard.alpha = 192
 		O.overlays += beard
 
-		var/image/detail = image('icons/mob/human_hair.dmi', src.cust_three_state)
+		var/image/detail = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_third.id)
 		detail.color = src.bioHolder.mobAppearance.customization_third_color
 		detail.alpha = 192
 		O.overlays += detail
@@ -374,7 +374,7 @@
 		O.wig.setMaterial(wigmat)
 		O.wig.name = "[O.name]'s hair"
 		O.wig.icon = 'icons/mob/human_hair.dmi'
-		O.wig.icon_state = cust_one_state
+		O.wig.icon_state = src.bioHolder.mobAppearance.customization_first.id
 		O.wig.color = src.bioHolder.mobAppearance.customization_first_color
 		O.wig.wear_image_icon = 'icons/mob/human_hair.dmi'
 		O.wig.wear_image = image(O.wig.wear_image_icon, O.wig.icon_state)
@@ -394,31 +394,26 @@
 /mob/dead/observer/verb/show_health()
 	set category = "Ghost"
 	set name = "Toggle Health"
-	client.images.Remove(health_mon_icons)
 	if (!health_shown)
 		health_shown = 1
-		if(client?.images)
-			for(var/image/I in health_mon_icons)
-				if (I && src && I.loc != src.loc)
-					client.images.Add(I)
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(src)
+		boutput(src, "Health status toggled on.")
 	else
 		health_shown = 0
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(src)
+		boutput(src, "Health status toggled off.")
 
 /mob/dead/observer/verb/show_arrest()
 	set category = "Ghost"
 	set name = "Toggle Arrest Status"
 	if (!arrest_shown)
 		arrest_shown = 1
-		if(client?.images)
-			for(var/image/I in arrestIconsAll)
-				if(I && src && I.loc != src.loc)
-					client.images.Add(I)
+		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(src)
 		boutput(src, "Arrest status toggled on.")
 	else
 		arrest_shown = 0
-		client.images.Remove(arrestIconsAll)
+		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(src)
 		boutput(src, "Arrest status toggled off.")
-
 
 /mob/dead/observer/verb/ai_laws()
 	set name = "AI Laws"
@@ -441,11 +436,13 @@
 	..()
 
 	if(last_client)
-		health_shown = 0
-		last_client.images.Remove(health_mon_icons)
+		if(health_shown)
+			health_shown = 0
+			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(src)
 		if(arrest_shown)
 			arrest_shown = 0
-			last_client.images.Remove(arrestIconsAll)
+			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(src)
+
 
 	if(!src.key && delete_on_logout)
 		//qdel(src)

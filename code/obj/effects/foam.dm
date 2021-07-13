@@ -18,7 +18,6 @@
 	animate_movement = 0
 	var/metal = 0
 	var/foam_id = null
-	var/transferred_contents = 0 //Did we transfer our contents to another foam?
 	var/repeated_applications = 0 //bandaid for foam being abuseable by spamming chem group... diminishing returns. only works if the repeated application is on the same tile (chem dispensers!!)
 
 /*
@@ -48,7 +47,6 @@
 	metal = 0
 	animate_movement = 0
 	foam_id = null
-	transferred_contents = 0
 	if(reagents)
 		reagents.clear_reagents()
 
@@ -93,7 +91,7 @@
 // on delete, transfer any reagents to the floor & surrounding tiles
 /obj/effects/foam/proc/die()
 	expand = 0
-	if(!metal && reagents && !transferred_contents) //We don't want a foam that's done the transfer to do it's own thing
+	if(!metal && reagents) //We don't want a foam that's done the transfer to do it's own thing
 		reagents.inert = 0 //It's go time!
 		reagents.postfoam = 1
 		reagents.handle_reactions()
@@ -139,15 +137,6 @@
 						break
 
 				if(no_merge) continue
-				//If we haven't, then transfer our reagents to the new one.
-				//But only if we aren't a metal foam and we haven't dumped our contents already... or the other one is.
-				if(!(F.transferred_contents || src.transferred_contents || F.metal || src.metal))
-
-					if (src.reagents) src.reagents.copy_to(F.reagents)
-					F.update_icon()
-
-					src.transferred_contents=1
-
 
 			F = unpool(/obj/effects/foam)
 			F.set_up(T, metal)
@@ -180,19 +169,13 @@
 
 
 /obj/effects/foam/HasEntered(var/atom/movable/AM)
-	if (metal || transferred_contents) //If we've transferred our contents then there's another foam tile that can do it thing.
+	if (metal) //If we've transferred our contents then there's another foam tile that can do it thing.
 		return
 
 	if (ishuman(AM))
 		var/mob/living/carbon/human/M = AM
 
 		if (M.slip())
-			if (src.reagents) //Wire note: Fix for Cannot read null.reagent_list
-				for(var/reagent_id in src.reagents.reagent_list)
-					var/amount = M.reagents.get_reagent_amount(reagent_id)
-					if(amount < 25)
-						M.reagents.add_reagent(reagent_id, 5)
-
 			logTheThing("combat", M, null, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
 			reagents.reaction(M, TOUCH, 5)
 

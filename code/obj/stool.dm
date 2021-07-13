@@ -902,10 +902,13 @@
 		return
 
 /obj/item/chair/folded/attack(atom/target, mob/user as mob)
+	var/oldcrit = src.stamina_crit_chance
+	if(iswrestler(user))
+		src.stamina_crit_chance = 100
 	if (ishuman(target))
-		//M.TakeDamage("chest", 5, 0) //what???? we have 'force' var
 		playsound(src.loc, pick(sounds_punch), 100, 1)
 	..()
+	src.stamina_crit_chance = oldcrit
 
 /* ====================================================== */
 /* -------------------- Comfy Chairs -------------------- */
@@ -1090,6 +1093,10 @@
 		if(src.buckled_guy)
 			REMOVE_MOVEMENT_MODIFIER(src.buckled_guy, /datum/movement_modifier/wheelchair, src.type)
 		return ..()
+
+	set_loc(newloc)
+		. = ..()
+		unbuckle()
 
 /* ======================================================= */
 /* -------------------- Wooden Chairs -------------------- */

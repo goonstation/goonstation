@@ -1195,6 +1195,18 @@ ABSTRACT_TYPE(/area/prefab)
 	sound_loop = 'sound/ambience/music/shoptheme.ogg'
 	sound_environment = 2
 
+/area/prefab/space_casino
+	name ="Space Casino"
+	icon_state = "blue"
+
+/area/prefab/ranch
+	name ="Space Ranch"
+	icon_state = "green"
+
+/area/prefab/shooting_range
+	name = "Shooting Range"
+	icon_state = "purple"
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room
@@ -1844,11 +1856,14 @@ ABSTRACT_TYPE(/area/station/hallway/secondary)
 	name = "Main Hallway"
 	icon_state = "entry"
 
+/area/station/hallway/secondary/oshan_arrivals
+	name = "Oshan Arrivals"
+	icon_state = "blue"
+	do_not_irradiate = 1
+
 /area/station/hallway/secondary/shuttle
 	name = "Shuttle Bay"
 	icon_state = "shuttle3"
-
-
 
 /area/station/mailroom
 	name = "Mailroom"
@@ -2224,6 +2239,7 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crewquarters/cryotron
 	name ="Cryogenic Crew Storage"
 	icon_state = "blue"
+	do_not_irradiate = 1
 
 ABSTRACT_TYPE(/area/station/com_dish)
 /area/station/com_dish

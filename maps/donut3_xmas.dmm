@@ -34561,7 +34561,7 @@
 /area/station/crew_quarters/quarters)
 "jUT" = (
 /obj/table/auto,
-/obj/item/paper/book/from_file/pocketguide/mining2,
+/obj/item/paper/book/from_file/pocketguide/mining,
 /obj/machinery/light/incandescent/warm,
 /obj/decal/tile_edge/line/yellow{
 	dir = 6;

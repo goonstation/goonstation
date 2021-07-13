@@ -82,7 +82,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (ispulsingtool(W))
 			user.visible_message("<span class='alert'><b>[user] begins to wipe [src.name]!</b></span>")
-			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/disk/data/proc/wipe_or_zap, list(user), src.icon, src.icon_state, null)
+			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/disk/data/proc/wipe_or_zap, list(user), src.icon, src.icon_state, null, null)
 
 /obj/item/disk/data/floppy
 	var/random_color = 1
@@ -319,3 +319,19 @@
 			newfolder.add_file( new /datum/computer/file/terminal_program/writewizard(src))
 		else
 			newfolder.add_file( new /datum/computer/file/terminal_program/file_transfer(src))
+
+//A computer disk with the hottest software, for nerds
+/obj/item/disk/data/fixed_disk/techcomputer3
+	New()
+		. = ..()
+		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
+		newfolder.name = "logs"
+		src.root.add_file( newfolder )
+		newfolder.add_file( new /datum/computer/file/record/c3help(src))
+		newfolder = new /datum/computer/folder
+		newfolder.name = "bin"
+		src.root.add_file( newfolder )
+		newfolder.add_file( new /datum/computer/file/terminal_program/sigpal(src))
+		newfolder.add_file( new /datum/computer/file/terminal_program/background/signal_catcher(src))
+		newfolder.add_file( new /datum/computer/file/terminal_program/writewizard(src))
+		newfolder.add_file( new /datum/computer/file/terminal_program/file_transfer(src))

@@ -274,6 +274,7 @@
 	var/obj/machinery/phone/parent = null
 	var/mob/holder = null //GC WOES (just dont use this var, get holder using loc)
 	flags = TALK_INTO_HAND
+	w_class = 1
 
 	New(var/obj/machinery/phone/parent_phone, var/mob/living/picker_upper)
 		if(!parent_phone)
@@ -322,7 +323,7 @@
 		holder = user
 
 /obj/machinery/phone/wall
-	name = "phone"
+	name = "wall phone"
 	icon = 'icons/obj/machines/phones.dmi'
 	desc = "A landline phone. In space. Where there is no land. Hmm."
 	icon_state = "wallphone"
@@ -350,7 +351,7 @@
 /var/global/list/radio_antennas = list()
 
 /obj/machinery/radio_antenna
-	icon='icons/obj/32x64.dmi'
+	icon='icons/obj/large/32x64.dmi'
 	icon_state = "commstower"
 	var/range = 10
 	var/active = 0

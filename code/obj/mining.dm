@@ -3,7 +3,7 @@
 /obj/machinery/magnet_chassis
 	name = "magnet chassis"
 	desc = "A strong metal rig designed to hold and link up magnet apparatus with other technology."
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "chassis"
 	opacity = 0
 	density = 1
@@ -31,11 +31,7 @@
 			if (istype(src.linked_magnet))
 				boutput(user, "<span class='alert'>There's already a magnet installed.</span>")
 				return
-			user.visible_message("<b>[user]</b> begins constructing a new magnet.")
-			if (do_after(user, 24 SECONDS) && user.equipped() == W)
-				var/obj/magnet = new W:constructed_magnet(get_turf(src))
-				magnet.set_dir(src.dir)
-				qdel(W)
+			actions.start(new/datum/action/bar/icon/magnet_build(W, src, user), user)
 		else
 			..()
 		#endif
@@ -61,6 +57,59 @@
 			src.bound_width = 64
 
 #ifndef UNDERWATER_MAP
+/datum/action/bar/icon/magnet_build
+	id = "magnet_build"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 24 SECONDS
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+	var/obj/item/magnet_parts/mag_parts = null
+	var/obj/machinery/magnet_chassis/chassis = null
+	var/mob/master = null
+
+	New(var/obj/item/magnet_parts/parts, var/obj/machinery/magnet_chassis/target, var/mob/user)
+		..()
+		mag_parts = parts
+		chassis = target
+		if (ismob(user))
+			master = user
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
+				duration = round(duration / 2)
+
+	onStart()
+		..()
+		if (!master || is_incapacitated(master) || !IN_RANGE(master, chassis, 2)) //range of 2 since its a 32x64 sprite
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if(istype(master.equipped(), /obj/item/magtractor))
+			var/obj/item/magtractor/magtractor = master.equipped()
+			if(mag_parts != magtractor.holding)
+				interrupt(INTERRUPT_ALWAYS)
+		else if (mag_parts != master.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+		owner.visible_message("<span class='notice'>[master] begins to assemble [mag_parts]!</span>")
+
+	onUpdate()
+		..()
+		if (!master || is_incapacitated(master) || !IN_RANGE(master, chassis, 2)) //range of 2 since its a 32x64 sprite
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if(istype(master.equipped(), /obj/item/magtractor))
+			var/obj/item/magtractor/magtractor = master.equipped()
+			if(mag_parts != magtractor.holding)
+				interrupt(INTERRUPT_ALWAYS)
+		else if (mag_parts != master.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+
+	onEnd()
+		..()
+		var/obj/machinery/mining_magnet/magnet = new mag_parts.constructed_magnet(get_turf(chassis))
+		magnet.set_dir(chassis.dir)
+		qdel(mag_parts)
+		owner.visible_message("<span class='notice'>[owner] constructs [magnet]!</span>")
+
 /obj/item/magnet_parts
 	name = "mineral magnet parts"
 	desc = "Used to construct a new magnet on a magnet chassis."
@@ -104,9 +153,9 @@
 			for (var/obj/O in T)
 				if (!(O.type in mining_controls.magnet_do_not_erase) && !istype(O, /obj/magnet_target_marker))
 					qdel(O)
-			T.overlays.len = 0
-			if (!istype(T, /turf/space))
-				T.ReplaceWithSpaceForce()
+			T.overlays.len = 0 //clear out the astroid edges and scan effects
+			T.ReplaceWithSpace()
+			T.overlays += /image/fullbright //reapply fullbright image
 
 	proc/generate_walls()
 		var/list/walls = list()
@@ -271,7 +320,7 @@
 /obj/machinery/mining_magnet
 	name = "mineral magnet"
 	desc = "A piece of machinery able to generate a strong magnetic field to attract mineral sources."
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "magnet"
 	opacity = 0
 	density = 0 // collision is dealt with by the chassis
@@ -346,7 +395,7 @@
 		proc/get_encounter(var/rarity_mod)
 			return mining_controls.select_encounter(rarity_mod)
 
-		pull_new_source()
+		pull_new_source(var/selectable_encounter_id = null)
 			if (!target)
 				return
 
@@ -378,8 +427,28 @@
 				do_malfunction()
 			sleep(sleep_time)
 
-			var/datum/mining_encounter/MC = get_encounter(rarity_mod)
-			MC.generate(target)
+			var/datum/mining_encounter/MC
+
+			if(selectable_encounter_id != null)
+				if(selectable_encounter_id in mining_controls.mining_encounters_selectable)
+					MC = mining_controls.mining_encounters_selectable[selectable_encounter_id]
+					mining_controls.remove_selectable_encounter(selectable_encounter_id)
+				else
+					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: INVALID ENCOUNTER)")
+					MC = get_encounter(rarity_mod)
+			else
+				MC = get_encounter(rarity_mod)
+
+			if(MC)
+				MC.generate(target)
+			else
+				for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
+					M.opacity = 0
+					M.set_density(0)
+					M.invisibility = 1
+				active = 0
+				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: NO ENCOUNTER)")
+				return
 
 			sleep(sleep_time)
 			if (malfunctioning && prob(20))
@@ -596,7 +665,7 @@
 		var/datum/mining_encounter/MC
 
 		if(selectable_encounter_id != null)
-			if(mining_controls.mining_encounters_selectable.Find(selectable_encounter_id))
+			if(selectable_encounter_id in mining_controls.mining_encounters_selectable)
 				MC = mining_controls.mining_encounters_selectable[selectable_encounter_id]
 				mining_controls.remove_selectable_encounter(selectable_encounter_id)
 			else
@@ -791,6 +860,7 @@
 	name = "mineral magnet controls"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "mmagnet"
+	circuit_type = /obj/item/circuitboard/mining_magnet
 	var/temp = null
 	var/list/linked_magnets = list()
 	var/obj/machinery/mining_magnet/linked_magnet = null
@@ -802,42 +872,6 @@
 		..()
 		SPAWN_DBG(0)
 			src.connection_scan()
-
-	attackby(obj/item/I as obj, mob/user as mob)
-		if (isscrewingtool(I))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if (do_after(user, 2 SECONDS))
-				if (src.status & BROKEN)
-					user.show_text("The broken glass falls out.", "blue")
-					var/obj/computerframe/A = new /obj/computerframe(src.loc)
-					if (src.material)
-						A.setMaterial(src.material)
-					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-					G.set_loc(src.loc)
-					var/obj/item/circuitboard/mining_magnet/M = new /obj/item/circuitboard/mining_magnet(A)
-					for (var/obj/C in src)
-						C.set_loc(src.loc)
-					A.circuit = M
-					A.state = 3
-					A.icon_state = "3"
-					A.anchored = 1
-					qdel(src)
-				else
-					user.show_text("You disconnect the monitor.", "blue")
-					var/obj/computerframe/A = new /obj/computerframe(src.loc)
-					if (src.material)
-						A.setMaterial(src.material)
-					var/obj/item/circuitboard/mining_magnet/M = new /obj/item/circuitboard/mining_magnet(A)
-					for (var/obj/C in src)
-						C.set_loc(src.loc)
-					A.circuit = M
-					A.state = 4
-					A.icon_state = "4"
-					A.anchored = 1
-					qdel(src)
-		else
-			..()
-		return
 
 	attack_hand(var/mob/user as mob)
 		if(..())

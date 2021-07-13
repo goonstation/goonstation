@@ -324,14 +324,15 @@
 					autoequip_slot(slot_head, head)
 					autoequip_slot(slot_back, back)
 
+					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt BEFORE trying storages, and only swap if its not a storage swap
+						autoequip_slot(slot_belt, belt)
+						if (master.equipped() != I)
+							return
 
 					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
 						S.master.attackby(I, user, params)
 						if (master.equipped() != I)
 							return
-
-					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt AFTER trying storages, and only swap if its not a storage swap
-						autoequip_slot(slot_belt, belt)
 
 					//ONLY do these if theyre actually empty, we dont want to pocket swap.
 					if (!master.l_store)
@@ -382,13 +383,15 @@
 					autoequip_slot(slot_head, head)
 					autoequip_slot(slot_back, back)
 
+					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt BEFORE trying storages, and only swap if its not a storage swap
+						autoequip_slot(slot_belt, belt)
+						if (master.equipped() != I)
+							return
+
 					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
 						S.master.attackby(I, user, params)
 						if (master.equipped() != I)
 							return
-
-					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt AFTER trying storages, and only swap if its not a storage swap
-						autoequip_slot(slot_belt, belt)
 
 					//ONLY do these if theyre actually empty, we dont want to pocket swap.
 					if (!master.l_store)

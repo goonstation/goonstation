@@ -984,6 +984,9 @@
 
 		//gun score
 		else if (istype(item, /obj/item/gun))
+			if(istype(item, /obj/item/gun/kinetic/foamdartgun))
+				boutput(user, "<span class='alert'><b>You cant stash toy guns in the locker<b></span>")
+				return 0
 			// var/obj/item/gun/gun = item
 			gang.score_gun += round(300)
 			gang.spendable_points += round(300)

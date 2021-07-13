@@ -89,6 +89,17 @@
 			"the artifact lab" = list(/area/station/science/artifact),
 			"the robotics lab" = list(/area/station/medical/robotics))
 
+		else if (ismap ("DONUT2"))
+			target_locations = list("the bridge" = list(/area/station/bridge),
+			"the chapel" = list(/area/station/chapel/sanctuary),
+			"the medbay" = list(/area/station/medical/medbay),
+			"the genetic lab" = list(/area/station/medical/research),
+			"the public tool storage" = list(/area/station/storage/tools),
+			"the brig" = list(/area/station/security/brig),
+			"the cargo bay(QM)" = list(/area/station/quartermaster/office),
+			"the hydroponics bay(Botany)" = list(/area/station/hydroponics/bay))
+
+
 		else // COG1
 			target_locations = list("the main security room" = list(/area/station/security/main),
 			"the central research sector hub" = list(/area/station/science/lobby),
@@ -438,7 +449,7 @@ var/syndicate_name = null
 
 /obj/cairngorm_stats/
 	name = "Mission Memorial"
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_mid"
 	anchored = 1.0
 	opacity = 0

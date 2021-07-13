@@ -77,8 +77,8 @@
 	on_pet()
 		if (..())
 			return 1
-		if (prob(33))
-			playsound(src, "sound/voice/babynoise.ogg", 50, 1)
+		if (prob(15) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
+			playsound(src, "sound/voice/babynoise.ogg", 30, 1)
 			src.visible_message("<span class='notice'><b>[src]</b> coos!</span>",\
 			"<span class='notice'>You coo!</span>")
 

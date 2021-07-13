@@ -163,6 +163,7 @@
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/rank/hydroponics, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/suit/apron/botanist, slot_wear_suit)
 
 /mob/living/carbon/human/npc/monkey/stirstir
 	name = "Monsieur Stirstir"
@@ -196,7 +197,7 @@
 		..()
 		START_TRACKING
 		if (!src.disposed)
-			src.cust_one_state = "None"
+			src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
 			src.bioHolder.AddEffect("monkey")
 			if (src.name == "monkey" || !src.name)
 				src.name = pick_string_autokey("names/monkey.txt")

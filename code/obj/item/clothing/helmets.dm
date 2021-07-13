@@ -23,6 +23,7 @@
 	desc = "Helps protect against vacuum."
 	seal_hair = 1
 	path_prot = 0
+	permeability_coefficient = 0.2
 
 	onMaterialChanged()
 		if(src.material)
@@ -211,6 +212,18 @@
 	item_state = "space_helmet_syndicate"
 	desc = "The standard space helmet of the dreaded Syndicate."
 	item_function_flags = IMMUNE_TO_ACID
+	team_num = TEAM_SYNDICATE
+	#ifdef MAP_OVERRIDE_POD_WARS
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team_num)
+			..()
+		else
+			boutput(user, "<span class='alert'>The space helmet <b>explodes</b> as you reach out to grab it!</span>")
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+	#endif
 
 	setupProperties()
 		..()
@@ -227,6 +240,18 @@
 		desc = "A terrifyingly tall, black & red cap, typically worn by a Syndicate Nuclear Operative Commander. Maybe they're trying to prove something to the Head of Security?"
 		seal_hair = 0
 		see_face = 1
+		team_num = TEAM_SYNDICATE
+		#ifdef MAP_OVERRIDE_POD_WARS
+		attack_hand(mob/user)
+			if (get_pod_wars_team_num(user) == team_num)
+				..()
+			else
+				boutput(user, "<span class='alert'>The cap <b>explodes</b> as you reach out to grab it!</span>")
+				make_fake_explosion(src)
+				user.u_equip(src)
+				src.dropped(user)
+				qdel(src)
+		#endif
 
 	specialist
 		name = "specialist combat helmet"
@@ -292,51 +317,20 @@
 			item_state = "syndie_specialist"
 			permeability_coefficient = 0.01
 			c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
-			var/client/assigned = null
 
 			setupProperties()
 				..()
 				setProperty("viralprot", 50)
 
-			process()
-				if (assigned)
-					assigned.images.Remove(health_mon_icons)
-					src.addIcons()
-
-					if (loc != assigned.mob)
-						assigned.images.Remove(health_mon_icons)
-						assigned = null
-
-					//sleep(2 SECONDS)
-				else
-					processing_items.Remove(src)
-
-			proc/addIcons()
-				if (assigned)
-					for (var/image/I in health_mon_icons)
-						if (!I || !I.loc || !src)
-							continue
-						if (I.loc.invisibility && I.loc != src.loc)
-							continue
-						else
-							assigned.images.Add(I)
-
 			equipped(var/mob/user, var/slot)
 				..()
 				if (slot == SLOT_HEAD)
-					assigned = user.client
-					SPAWN_DBG(-1)
-						//updateIcons()
-						processing_items |= src
-				return
+					get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(user)
 
 			unequipped(var/mob/user)
+				if(src.equipped_in_slot == SLOT_HEAD)
+					get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
 				..()
-				if (assigned)
-					assigned.images.Remove(health_mon_icons)
-					assigned = null
-					processing_items.Remove(src)
-				return
 
 		sniper
 			name = "specialist combat cover"
@@ -385,6 +379,18 @@
 	icon_state = "nanotrasen_pilot"
 	item_state = "nanotrasen_pilot"
 	desc = "A space helmet used by certain Nanotrasen pilots."
+	team_num = TEAM_NANOTRASEN
+	#ifdef MAP_OVERRIDE_POD_WARS
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team_num)
+			..()
+		else
+			boutput(user, "<span class='alert'>The space helmet <b>explodes</b> as you reach out to grab it!</span>")
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+	#endif
 
 	setupProperties()
 		..()
@@ -828,4 +834,3 @@
 		setProperty("heatprot", 15)
 		setProperty("disorient_resist_eye", 8)
 		setProperty("disorient_resist_ear", 8)
-

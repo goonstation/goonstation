@@ -102,7 +102,7 @@
 		..()
 		dropped += 1
 		if(src.assailant)
-			REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
+			REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src)
 			qdel(src)
 
 	process(var/mult = 1)
@@ -201,7 +201,7 @@
 						src.affecting.end_chair_flip_targeting()
 					src.affecting.buckled = null
 
-				else if (user.is_hulk() || prob(75))
+				else
 					logTheThing("combat", src.assailant, src.affecting, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 					for(var/mob/O in AIviewers(src.assailant, null))
 						O.show_message("<span class='alert'>[src.assailant] has grabbed [src.affecting] aggressively (now hands)!</span>", 1)
@@ -211,10 +211,6 @@
 						set_affected_loc()
 
 					user.next_click = world.time + user.combat_click_delay //+ rand(6,11) //this was utterly disgusting, leaving it here in memorial
-				else
-					for(var/mob/O in AIviewers(src.assailant, null))
-						O.show_message("<span class='alert'>[src.assailant] has failed to grab [src.affecting] aggressively!</span>", 1)
-					user.next_click = world.time + user.combat_click_delay
 			if (GRAB_AGGRESSIVE)
 				if (ishuman(src.affecting))
 					var/mob/living/carbon/human/H = src.affecting
@@ -265,7 +261,7 @@
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message("<span class='alert'>[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck!</span>", 1)
 		src.state = GRAB_KILL
-		REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src.type)
+		REMOVE_MOB_PROPERTY(src.assailant, PROP_CANTMOVE, src)
 		src.assailant.lastattacked = src.affecting
 		src.affecting.lastattacker = src.assailant
 		src.affecting.lastattackertime = world.time
@@ -304,7 +300,7 @@
 
 		if (ishuman(src.assailant))
 			var/mob/living/carbon/human/H = src.assailant
-			APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, src.type)
+			APPLY_MOB_PROPERTY(H, PROP_CANTMOVE, src)
 			H.update_canmove()
 
 		if (isliving(src.affecting))

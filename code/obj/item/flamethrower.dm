@@ -418,6 +418,7 @@ A Flamethrower in various states of assembly
 		var/turf/T = src.loc
 		if (ismob(T))
 			T = T.loc
+		user.show_message("<span class='notice'>You remove the rod from the welding tool.</span>", 1)
 		src.welder.set_loc(T)
 		src.rod.set_loc(T)
 		src.welder.master = null
@@ -434,6 +435,7 @@ A Flamethrower in various states of assembly
 		var/obj/item/device/igniter/I = W
 		if (!( I.status ))
 			return
+		user.show_message("<span class='notice'>You put the igniter in place, it still needs to be firmly attached.</span>", 1)
 		var/obj/item/assembly/weld_rod/S = src
 		var/obj/item/assembly/w_r_ignite/R = new /obj/item/assembly/w_r_ignite( user )
 		R.welder = S.welder
@@ -465,6 +467,7 @@ A Flamethrower in various states of assembly
 		var/turf/T = src.loc
 		if (ismob(T))
 			T = T.loc
+		user.show_message("<span class='notice'>You disassemble the [src.name]</span>", 1)
 		src.welder.set_loc(T)
 		src.rod.set_loc(T)
 		src.igniter.set_loc(T)
@@ -547,16 +550,11 @@ A Flamethrower in various states of assembly
 		src.gastank = F
 	else
 		src.fueltank = F
-	src.inventory_counter.update_percent(src.fueltank.reagents.total_volume, src.fueltank.reagents.maximum_volume)
 
-	var/fuel = "_no_fuel"
-	if(src.fueltank)
-		fuel = "_fuel"
-	src.icon_state = "flamethrower_oxy[fuel]"
-	var/oxy = "_no_oxy"
-	if(src.gastank)
-		oxy = "_oxy"
-	src.icon_state = "flamethrower[oxy]_fuel"
+	if (src.fueltank)
+		src.inventory_counter.update_percent(src.fueltank.reagents.total_volume, src.fueltank.reagents.maximum_volume)
+
+	src.icon_state = "flamethrower[src.gastank ? "_oxy" : "_no_oxy"][src.fueltank ? "_fuel" : "_no_fuel"]"
 
 	src.updateSelfDialog()
 	SPAWN_DBG(0.5 SECONDS)

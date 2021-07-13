@@ -746,7 +746,7 @@
 		landscape
 			desc = "A beautiful painting of a landscape that is engulfed by flames."
 			name = "painting"
-			icon = 'icons/obj/64x32.dmi'
+			icon = 'icons/obj/large/64x32.dmi'
 			icon_state = "landscape"
 
 		garbagegarbssign
@@ -979,3 +979,70 @@
 			return
 
 		C.Browse("<img src=\"[resource("images/pw_map.png")]\">","window=Map;size=[imgw]x[imgh];title=Map")
+
+/obj/decal/poster/banner
+	name = "banner"
+	desc = "An unfinished banner, try adding some color to it by using a crayon!"
+	icon = 'icons/obj/decals/banners.dmi'
+	icon_state = "banner_base"
+	popup_win = 0
+	var/colored = FALSE
+	var/chosen_overlay
+	var/static/list/choosable_overlays = list("Horizontal Stripes","Vertical Stripes","Diagonal Stripes","Cross","Diagonal Cross","Full","Full Gradient",
+	"Left Line","Middle Line","Right Line","Northwest Line","Northeast Line","Southwest Line","Southeast Line","Big Ball","Medium Ball","Small Ball",
+	"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","0","1","2","3","4","5","6","7","8","9","+","-","=")
+
+	proc/clear_banner()
+		if (src.material)
+			src.color = src.material.color
+		else
+			src.color = "#ffffff" // In case the material is null
+		src.overlays = null
+		src.colored = FALSE
+		usr.visible_message("<span class='alert'>[usr] clears the [src.name].</span>", "<span class='alert'>You clear the [src.name].</span>")
+
+	New()
+		. = ..()
+		var/static/image/banner_holder = image(src.icon, "banner_holder")
+		banner_holder.appearance_flags = RESET_COLOR
+		src.underlays.Add(banner_holder)
+
+	attackby(obj/item/W, mob/user)
+		if(istype(W,/obj/item/pen/crayon))
+			if(src.colored)
+				chosen_overlay = tgui_input_list(user, "What do you want to draw?", "Drawings Options", choosable_overlays)
+				if (!chosen_overlay) return
+				var/mutable_appearance/new_overlay = mutable_appearance(src.icon, chosen_overlay)
+				new_overlay.appearance_flags = RESET_COLOR
+				new_overlay.color = W.color
+				src.overlays.Add(new_overlay)
+				logTheThing("station", user, null, "Drew a [chosen_overlay] in the [src] with [W] at [log_loc(user)].")
+				desc = "A banner, colored and decorated"
+				if(istype(W,/obj/item/pen/crayon/rainbow))
+					var/obj/item/pen/crayon/rainbow/R = W
+					R.font_color = random_saturated_hex_color(1)
+					R.color_name = hex2color_name(R.font_color)
+					R.color = R.font_color
+
+			else
+				src.color = W.color
+				src.colored = TRUE
+				desc = "A colored banner, try adding some drawings to it with a crayon!"
+
+		if(istool(W,TOOL_SNIPPING | TOOL_CUTTING | TOOL_SAWING))
+			user.visible_message("<span class='alert'>[user] cuts off the [src.name] with [W].</span>", "<span class='alert'>You cut off the [src.name] with [W].</span>")
+			var/obj/item/material_piece/cloth/C = new(user.loc)
+			if (src.material) C.setMaterial(src.material)
+			else C.setMaterial(getMaterial("cotton")) // In case the material is null
+			qdel(src)
+
+	MouseDrop(atom/over_object, src_location, over_location)
+		..()
+		if (usr.stat || usr.restrained() || !can_reach(usr, src))
+			return
+
+		else
+			if(tgui_alert(usr, "Are you sure you want to clear the banner?", "Confirmation", list("Yes", "No")) == "Yes")
+				clear_banner()
+			else
+				return
