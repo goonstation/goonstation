@@ -1,5 +1,9 @@
 
 (t)tue jul 13 21
+(u)Carbadox
+(p)4352
+(e)|
+(+)Shitty grills can now be moved with screwdrivers/wrenches
 (u)Flappybat
 (p)5446
 (e)|
