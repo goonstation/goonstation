@@ -408,9 +408,7 @@
 			qdel(src)
 		else if (istype(W, /obj/item/baton))
 			var/obj/item/baton/baton = W
-			if (!baton.uses_electricity)
-				..()
-			if (baton.status == 1) //baton is on
+			if (baton.is_active) //baton is on
 				if (user.a_intent != "harm")
 					if (user.traitHolder.hasTrait("training_security"))
 						playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 30, 1, -1) //bit quieter than a baton hit

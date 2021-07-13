@@ -339,6 +339,11 @@
 		else
 			logTheThing("bombing", src.fingerprintslast, null, "A trick cigarette explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
 
+		if (istype(src.loc,/obj/item/device/pda2))
+			var/obj/item/device/pda2/pda = src.loc
+			if (pda.ID_card) //let's not destroy IDs
+				pda.ID_card.set_loc(tlocation)
+			qdel(pda)//Destroy PDA if in one
 		qdel(src)
 
 
