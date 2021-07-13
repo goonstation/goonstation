@@ -23,9 +23,9 @@
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/turf/T = get_turf(object)
-			if (pa.Find("ctrl"))
+			if ("ctrl" in pa)
 				finished = 1
 				target.overlays -= selection
 				target = null
@@ -40,8 +40,8 @@
 				P.proj_type = proj_type
 				P.trap_delay = trap_delay
 				P.invisibility = invisibility
-				P.dir = holder.dir
-		else if (pa.Find("right"))
+				P.set_dir(holder.dir)
+		else if ("right" in pa)
 			if (isturf(object))
 				if (target == object)
 					target.overlays -= selection

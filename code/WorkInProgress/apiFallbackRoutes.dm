@@ -232,7 +232,7 @@
 		var/list/row = q.GetRowData()
 		allRows += list(row)
 
-	var/totalBans = allRows.len
+	var/totalBans = length(allRows)
 
 	//Now we get the subset of the returned rows and format them correctly
 	var/list/requested = allRows.Copy(offset, limit)

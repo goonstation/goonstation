@@ -125,8 +125,8 @@
 					if (!HH.disease_resistance_check("/datum/ailment/disease/lycanthropy","Lycanthropy"))
 						HH.make_werewolf(1)
 						HH.full_heal()
-						HH.setStatus("weakened",150)
-						HH.werewolf_transform(0, 0) // Not really a fan of this. I wish werewolves all suffered from lycanthropy and that should be how you pass it on, but w/e
+						HH.setStatus("weakened", 15 SECONDS)
+						HH.werewolf_transform() // Not really a fan of this. I wish werewolves all suffered from lycanthropy and that should be how you pass it on, but w/e
 						remove_antag(M, null, 0, 1)
 						boutput(W, __red("You passed your terribly affliction onto [HH]! You are no longer a werewolf!"))
 						logTheThing("combat", M, target, "turns [constructTarget(target,"combat")] into a werewolf at [log_loc(M)].")

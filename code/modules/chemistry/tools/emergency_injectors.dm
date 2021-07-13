@@ -47,9 +47,9 @@
 					return ..()
 				logTheThing("combat", user, M, "injects [constructTarget(M,"combat")] with [src] [log_reagents(src)]")
 				src.reagents.trans_to(M, amount_per_transfer_from_this)
-				user.visible_message("<span class='alert'>[user] injects [M == user ? "[his_or_her(user)]self" : M] with [src]!</span>",\
+				user.visible_message("<span class='alert'>[user] injects [M == user ? himself_or_herself(user) : M] with [src]!</span>",\
 				"<span class='alert'>You inject [M == user ? "yourself" : M] with [src]!</span>")
-				playsound(get_turf(M), "sound/items/hypo.ogg", 40, 0)
+				playsound(M, "sound/items/hypo.ogg", 40, 0)
 				if(!src.reagents.total_volume)
 					src.empty = 1
 				return
@@ -67,9 +67,9 @@
 					return ..()
 				logTheThing("combat", user, null, "injects themself with [src] [log_reagents(src)]")
 				src.reagents.trans_to(user, amount_per_transfer_from_this)
-				user.visible_message("<span class='alert'>[user] injects [his_or_her(user)]self with [src]!</span>",\
+				user.visible_message("<span class='alert'>[user] injects [himself_or_herself(user)] with [src]!</span>",\
 				"<span class='alert'>You inject yourself with [src]!</span>")
-				playsound(get_turf(user), "sound/items/hypo.ogg", 40, 0)
+				playsound(user, "sound/items/hypo.ogg", 40, 0)
 				if(!src.reagents.total_volume)
 					src.empty = 1
 				return
@@ -103,7 +103,7 @@
 	name = "emergency auto-injector (potassium iodide)"
 	initial_reagents = "anti_rad"
 	label = "green"
-	
+
 /obj/item/reagent_containers/emergency_injector/pentetic_acid
 	name = "emergency auto-injector (pentetic acid)"
 	initial_reagents = list("penteticacid"=5)
@@ -138,7 +138,7 @@
 	name = "emergency auto-injector (salbutamol)"
 	initial_reagents = "salbutamol"
 	label = "blue"
-	
+
 /obj/item/reagent_containers/emergency_injector/perf
 	name = "emergency auto-injector (perfluorodecalin)"
 	initial_reagents = "perfluorodecalin"
@@ -193,7 +193,7 @@
 	name = "emergency auto-injector (???)"
 	label = "black"
 	New()
-		src.initial_reagents = pick("methamphetamine", "formaldehyde", "lipolicide", "pancuronium", "sulfonal", "morphine", "toxin", "bee", "LSD", "space_drugs", "THC", "mucus", "green_mucus", "crank", "bathsalts", "krokodil", "catdrugs", "jenkem", "psilocybin", "omnizine")
+		src.initial_reagents = pick("methamphetamine", "formaldehyde", "lipolicide", "pancuronium", "sulfonal", "morphine", "toxin", "bee", "LSD", "lsd_bee", "space_drugs", "THC", "mucus", "green_mucus", "crank", "bathsalts", "krokodil", "catdrugs", "jenkem", "psilocybin", "omnizine")
 		..()
 
 /obj/item/reagent_containers/emergency_injector/vr/epinephrine
@@ -257,3 +257,11 @@
 	label = "bigred"
 	initial_volume = 60
 	amount_per_transfer_from_this = 20
+
+/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector
+	name = "Donk injector"
+	desc = "A large syringe-like thing that automatically injects its contents into someone. This one contains a cocktail of chemicals intended to mimic the effect of eating a warm donk pocket."
+	initial_reagents = list("omnizine" = 15, "teporone" = 15, "synaptizine" = 15, "saline" = 15, "salbutamol" = 15, "methamphetamine" = 15)
+	label = "bigblue"
+	initial_volume = 90
+	amount_per_transfer_from_this = 15

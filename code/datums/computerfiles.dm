@@ -107,6 +107,8 @@
 
 
 	file
+		/// Prevent it from piracy via PDA filehosting?
+		var/dont_copy = 0
 		name = "File"
 		var/extension = "FILE" //Differentiate between types of files, why not
 

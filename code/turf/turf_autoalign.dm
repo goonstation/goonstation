@@ -14,6 +14,7 @@
 	var/list/connects_with_overlay_exceptions = list() // same as above comment
 	var/image/connect_image = null
 	var/tmp/connect_overlay_dir = 0
+	var/connect_diagonal = 0 // 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
 	var/d_state = 0
 
 	New()
@@ -76,6 +77,29 @@
 							if (!M.anchored)
 								continue
 						src.connect_overlay_dir |= dir
+		if (connect_diagonal)
+			for (var/j = 1 to 4)
+				if (connect_diagonal < 2 && ((builtdir & ordinal[j]) != ordinal[j]))
+					continue
+				var/turf/T = get_step(src, ordinal[j])
+				var/dir = 8 << j
+				if (T && (istype(T, src.type)))
+					builtdir |= dir
+				else if (connects_to)
+					for (var/i=1, i <= connects_to.len, i++)
+						// if the turf appears in our connection list AND isn't in our exceptions...
+						if (istype(T, connects_to[i]) && !(T.type in connects_to_exceptions))
+							builtdir |= dir
+							break
+						// Search for non-turf atoms we can connect to
+						var/atom/A = locate(connects_to[i]) in T
+						if (!isnull(A))
+							if (istype(A, /atom/movable))
+								var/atom/movable/M = A
+								if (!M.anchored)
+									continue
+							builtdir |= dir
+							break
 
 		var/the_state = "[mod][builtdir]"
 		if ( !(istype(src, /turf/simulated/wall/auto/jen)) && !(istype(src, /turf/simulated/wall/auto/reinforced/jen)) ) //please no more sprite, i drained my brain doing this
@@ -98,6 +122,8 @@
 	proc/update_neighbors()
 		for (var/turf/simulated/wall/auto/T in orange(1,src))
 			T.update_icon()
+		for (var/obj/grille/G in orange(1,src))
+			G.update_icon()
 
 /turf/simulated/wall/auto/reinforced
 	name = "reinforced wall"
@@ -135,92 +161,39 @@
 			return
 
 		/* ----- Deconstruction ----- */
-		if (issnippingtool(W))
-			if (src.d_state == 0)
-				playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
-				src.d_state = 1
-				boutput(user, "<span class='notice'>You remove some reinforcing rods.</span>")
-				var/atom/A = new /obj/item/rods(src)
-				if (src.material)
-					A.setMaterial(src.material)
-				else
-					A.setMaterial(getMaterial("steel"))
-				src.update_icon()
+		if (src.d_state == 0 && issnippingtool(W))
+			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_REMOVERERODS), user)
+			return
+
+		else if (src.d_state == 1 && isscrewingtool(W))
+			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_REMOVESUPPORTLINES), user)
+			return
+
+		else if (src.d_state == 2 && isweldingtool(W))
+			if(!W:try_weld(user,1,-1,1,1))
 				return
+			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_SLICECOVER), user)
+			return
 
-		else if (isscrewingtool(W))
-			if (src.d_state == 1)
-				var/turf/T = user.loc
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
-				boutput(user, "<span class='notice'>Removing support lines.</span>")
-				sleep(2.5 SECONDS)
-				if (user.loc == T && (user.equipped() == W || isrobot(user)))
-					src.d_state = 2
-					boutput(user, "<span class='notice'>You removed the support lines.</span>")
-					return
+		else if (src.d_state == 3 && ispryingtool(W))
+			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_PRYCOVER), user)
+			return
 
-		else if (isweldingtool(W))
-			var/turf/T = user.loc
-			if (!(istype(T, /turf)))
+		else if (src.d_state == 4 && iswrenchingtool(W))
+			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_DETATCHSUPPORTRODS), user)
+			return
+
+		else if (src.d_state == 5 && isweldingtool(W))
+			if(!W:try_weld(user,1,-1,1,1))
 				return
+			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_REMOVESUPPORTRODS), user)
+			return
 
-			if (src.d_state == 2)
-				if(!W:try_weld(user,1,-1,1,1))
-					return
-				boutput(user, "<span class='notice'>Slicing metal cover.</span>")
-				sleep(2.5 SECONDS)
-				if (user.loc == T && (user.equipped() == W || isrobot(user)))
-					src.d_state = 3
-					boutput(user, "<span class='notice'>You removed the metal cover.</span>")
-					return
+		else if (src.d_state == 6 && ispryingtool(W))
+			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_PRYSHEATH), user)
+			return
 
-			else if (src.d_state == 5)
-				if(!W:try_weld(user,1,-1,1,1))
-					return
-				boutput(user, "<span class='notice'>Removing support rods.</span>")
-				sleep(2.5 SECONDS)
-				if (user.loc == T && (user.equipped() == W || isrobot(user)))
-					src.d_state = 6
-					var/atom/A = new /obj/item/rods( src )
-					if (src.material)
-						A.setMaterial(src.material)
-					else
-						A.setMaterial(getMaterial("steel"))
-					boutput(user, "<span class='notice'>You removed the support rods.</span>")
-					return
 
-		else if (ispryingtool(W))
-			if (src.d_state == 3)
-				var/turf/T = user.loc
-				boutput(user, "<span class='notice'>Prying cover off.</span>")
-				playsound(src.loc, "sound/items/Crowbar.ogg", 100, 1)
-				sleep(2.5 SECONDS)
-				if (user.loc == T && (user.equipped() == W || isrobot(user)))
-					src.d_state = 4
-					boutput(user, "<span class='notice'>You removed the cover.</span>")
-					return
-
-			else if (src.d_state == 6)
-				var/turf/T = user.loc
-				boutput(user, "<span class='notice'>Prying outer sheath off.</span>")
-				playsound(src.loc, "sound/items/Crowbar.ogg", 100, 1)
-				sleep(2.5 SECONDS)
-				if (user.loc == T && (user.equipped() == W || isrobot(user)))
-					boutput(user, "<span class='notice'>You removed the outer sheath.</span>")
-					logTheThing("station", user, null, "dismantles a Reinforced Wall in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
-					dismantle_wall()
-					return
-
-		else if (iswrenchingtool(W))
-			if (src.d_state == 4)
-				var/turf/T = user.loc
-				boutput(user, "<span class='notice'>Detaching support rods.</span>")
-				playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
-				sleep(2.5 SECONDS)
-				if (user.loc == T && (user.equipped() == W || isrobot(user)))
-					src.d_state = 5
-					boutput(user, "<span class='notice'>You detach the support rods.</span>")
-					return
 	/* ----- End Deconstruction ----- */
 
 		else if (istype(W, /obj/item/device/key/haunted))
@@ -232,7 +205,7 @@
 			user.visible_message("<span class='alert'>[user] inserts [W] into [src]!</span>","<span class='alert'>The key seems to phase into the wall.</span>")
 			H.last_use = world.time
 			blink(src)
-			var/turf/simulated/wall/false_wall/temp/fakewall = new /turf/simulated/wall/false_wall/temp(src)
+			var/turf/simulated/wall/false_wall/temp/fakewall = src.ReplaceWith(/turf/simulated/wall/false_wall/temp, FALSE, TRUE, FALSE, TRUE)
 			fakewall.was_rwall = 1
 			fakewall.opacity = 0
 			fakewall.RL_SetOpacity(1) //Lighting rebuild.
@@ -240,10 +213,8 @@
 
 		else if (istype(W, /obj/item/sheet) && src.d_state)
 			var/obj/item/sheet/S = W
-			var/turf/T = user.loc
 			boutput(user, "<span class='notice'>Repairing wall.</span>")
-			sleep(2.5 SECONDS)
-			if (user.loc == T && user.equipped() == S)
+			if (do_after(user, 2.5 SECONDS) && S.change_stack_amount(-1))
 				src.d_state = 0
 				src.icon_state = initial(src.icon_state)
 				if (S.material)
@@ -252,22 +223,6 @@
 					var/datum/material/M = getMaterial("steel")
 					src.setMaterial(M)
 				boutput(user, "<span class='notice'>You repaired the wall.</span>")
-				if (S.amount > 1)
-					S.amount--
-				else
-					qdel(W)
-				return
-
-			else if (isrobot(user) && user.loc == T)
-				src.d_state = 0
-				src.icon_state = initial(src.icon_state)
-				if (W.material)
-					src.setMaterial(S.material)
-				boutput(user, "<span class='notice'>You repaired the wall.</span>")
-				if (S.amount > 1)
-					S.amount--
-				else
-					qdel(W)
 				return
 
 		else if (istype(W, /obj/item/grab))
@@ -406,17 +361,20 @@
 		color = "#87befd"
 
 /turf/simulated/wall/auto/supernorn
-	icon = 'icons/turf/walls_supernorn.dmi'
+	icon = 'icons/turf/walls_supernorn_smooth.dmi'
+	mod = "norn-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 1
+	connect_diagonal = 1
 	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
-	/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred,
+	/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
 	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen)
 
-	connects_with_overlay = list(/turf/simulated/wall/auto/reinforced/supernorn,
-	/turf/simulated/wall/false_wall/reinforced, /turf/simulated/wall/auto/shuttle, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred,
+	connects_with_overlay = list(/turf/simulated/wall/false_wall/reinforced, /turf/simulated/wall/auto/shuttle,
+	/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
 	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen)
+
 	the_tuff_stuff
 		explosion_resistance = 7
 
@@ -426,17 +384,24 @@
 			O.update_icon()
 
 /turf/simulated/wall/auto/reinforced/supernorn
-	icon = 'icons/turf/walls_supernorn.dmi'
+	icon = 'icons/turf/walls_supernorn_smooth.dmi'
+	mod = "norn-R-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 1
+	connect_diagonal = 1
 	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-	/turf/simulated/wall/false_wall/reinforced, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange)
+	/turf/simulated/wall/false_wall/reinforced, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
+	/obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
+	/turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange)
 
-	connects_with_overlay = list(/turf/simulated/wall/auto/supernorn,
-	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-	/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper,)
+	connects_with_overlay = list(/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
+	/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window,
+	/obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/paper)
+
+	connects_with_overlay_exceptions = list(/turf/simulated/wall/false_wall/reinforced)
+
 	the_tuff_stuff
 		explosion_resistance = 11
 
@@ -446,7 +411,11 @@
 			O.update_icon()
 
 /turf/simulated/wall/auto/reinforced/supernorn/yellow
-	icon = 'icons/turf/walls_azungar_yellow.dmi'
+	icon = 'icons/turf/walls_manta.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "mapwall_r-Y"
+#endif
+	mod = "norn-Y-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 1
@@ -454,12 +423,15 @@
 	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 	/turf/simulated/wall/false_wall/reinforced, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
 
-	connects_with_overlay = list(/turf/simulated/wall/auto/supernorn,
-	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
+	connects_with_overlay = list(/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 	/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
 
 /turf/simulated/wall/auto/reinforced/supernorn/orange
-	icon = 'icons/turf/walls_azungar_orange.dmi'
+	icon = 'icons/turf/walls_manta.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "mapwall_r-O"
+#endif
+	mod = "norn-O-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 1
@@ -468,12 +440,15 @@
 	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 	/turf/simulated/wall/false_wall/reinforced, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
 
-	connects_with_overlay = list(/turf/simulated/wall/auto/supernorn,
-	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
+	connects_with_overlay = list(/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 	/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
 
 /turf/simulated/wall/auto/reinforced/supernorn/blackred
-	icon = 'icons/turf/walls_azungar_blackred.dmi'
+	icon = 'icons/turf/walls_manta.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "mapwall_r-BR"
+#endif
+	mod = "norn-BR-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 1
@@ -482,8 +457,7 @@
 	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 	/turf/simulated/wall/false_wall/reinforced, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
 
-	connects_with_overlay = list(/turf/simulated/wall/auto/supernorn,
-	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
+	connects_with_overlay = list(/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 	/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
 
 
@@ -498,6 +472,7 @@
 			O.update_icon()
 /turf/simulated/wall/auto/supernorn/wood
 	icon = 'icons/turf/walls_wood.dmi'
+	connect_diagonal = 0
 	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 	/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
 	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen)
@@ -530,6 +505,16 @@
 	icon = 'icons/turf/walls_destiny.dmi'
 	connects_to = list(/turf/simulated/wall/auto/reinforced/gannets, /turf/simulated/wall/false_wall/reinforced)
 
+
+
+
+
+
+
+
+
+
+
 /* ===================================================== */
 /* -------------------- UNSIMULATED -------------------- */
 /* ===================================================== */
@@ -547,6 +532,7 @@
 	var/list/connects_with_overlay_exceptions = null
 	var/image/connect_image = null
 	var/d_state = 0
+	var/connect_diagonal = 0 // 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
 
 	New()
 		..()
@@ -600,6 +586,29 @@
 								if (!M.anchored)
 									continue
 							overlaydir |= dir
+		if (connect_diagonal)
+			for (var/j = 1 to 4)
+				if (connect_diagonal < 2 && ((builtdir & ordinal[j]) != ordinal[j]))
+					continue
+				var/turf/T = get_step(src, ordinal[j])
+				var/dir = 8 << j
+				if (T && (istype(T, src.type)))
+					builtdir |= dir
+				else if (connects_to)
+					for (var/i=1, i <= connects_to.len, i++)
+						// if the turf appears in our connection list AND isn't in our exceptions...
+						if (istype(T, connects_to[i]) && !(T.type in connects_to_exceptions))
+							builtdir |= dir
+							break
+						// Search for non-turf atoms we can connect to
+						var/atom/A = locate(connects_to[i]) in T
+						if (!isnull(A))
+							if (istype(A, /atom/movable))
+								var/atom/movable/M = A
+								if (!M.anchored)
+									continue
+							builtdir |= dir
+							break
 
 		src.icon_state = "[mod][builtdir][src.d_state ? "C" : null]"
 		if (light_mod)
@@ -618,6 +627,8 @@
 	proc/update_neighbors()
 		for (var/turf/unsimulated/wall/auto/T in orange(1,src))
 			T.update_icon()
+		for (var/obj/grille/G in orange(1,src))
+			G.update_icon()
 
 /turf/unsimulated/wall/auto/reinforced
 	name = "reinforced wall"
@@ -626,24 +637,26 @@
 	connects_to = list(/turf/unsimulated/wall/auto/reinforced)
 
 /turf/unsimulated/wall/auto/supernorn
-	icon = 'icons/turf/walls_supernorn.dmi'
+	icon = 'icons/turf/walls_supernorn_smooth.dmi'
 	light_mod = "wall-"
+	mod = "norn-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 1
+	connect_diagonal = 1
 	connects_to = list(/turf/unsimulated/wall/auto/supernorn, /turf/unsimulated/wall/auto/reinforced/supernorn, /obj/machinery/door,
 	/obj/window)
-	connects_with_overlay = list(/turf/unsimulated/wall/auto/reinforced/supernorn, /obj/machinery/door,
-	/obj/window)
+	connects_with_overlay = list(/obj/machinery/door, /obj/window)
 
 /turf/unsimulated/wall/auto/reinforced/supernorn
-	icon = 'icons/turf/walls_supernorn.dmi'
+	icon = 'icons/turf/walls_supernorn_smooth.dmi'
 	light_mod = "wall-"
+	mod = "norn-R-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 1
+	connect_diagonal = 1
 	connects_to = list(/turf/unsimulated/wall/auto/supernorn, /turf/unsimulated/wall/auto/reinforced/supernorn, /obj/machinery/door,
 	/obj/window)
-	connects_with_overlay = list(/turf/unsimulated/wall/auto/supernorn, /obj/machinery/door,
-	/obj/window)
+	connects_with_overlay = list(/obj/machinery/door, /obj/window)
 
 /turf/unsimulated/wall/auto/gannets
 	icon = 'icons/turf/walls_destiny.dmi'
@@ -664,3 +677,132 @@
 	New()
 		..()
 		setMaterial(getMaterial("coral"))
+
+// lead wall resprite by skeletonman0.... hooray for smoothwalls!
+ABSTRACT_TYPE(turf/unsimulated/wall/auto/lead)
+/turf/unsimulated/wall/auto/lead
+	name = "lead wall"
+	icon = 'icons/turf/walls_lead.dmi'
+	light_mod = "wall-"
+	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	connect_overlay = 1
+	connect_diagonal = 1
+	connects_to = list(/turf/unsimulated/wall/auto/lead, /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/,
+	/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom)
+	connects_with_overlay = list(/obj/machinery/door, /obj/window)
+
+/turf/unsimulated/wall/auto/lead/blue
+	icon_state = "mapiconb"
+	mod = "leadb-"
+
+/turf/unsimulated/wall/auto/lead/gray
+	icon_state = "mapicong"
+	mod = "leadg-"
+
+/turf/unsimulated/wall/auto/lead/white
+	icon_state = "mapiconw"
+	mod = "leadw-"
+
+/datum/action/bar/icon/wall_tool_interact
+	id = "wall_tool_interact"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 5 SECONDS
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+
+	var/turf/simulated/wall/auto/the_wall
+	var/obj/item/the_tool
+	var/interaction = WALL_REMOVERERODS
+
+	New(var/obj/table/wall, var/obj/item/tool, var/interact, var/duration_i)
+		..()
+		if (wall)
+			the_wall = wall
+		if (usr)
+			owner = usr
+		if (tool)
+			the_tool = tool
+			icon = the_tool.icon
+			icon_state = the_tool.icon_state
+		if (interact)
+			interaction = interact
+		if (duration_i)
+			duration = duration_i
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.traitHolder.hasTrait("training_engineer"))
+				duration = round(duration / 2)
+
+	onUpdate()
+		..()
+		if (the_wall == null || the_tool == null || owner == null || get_dist(owner, the_wall) > 1)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/source = owner
+		if (istype(source) && (the_tool != source.equipped()))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		var/message = ""
+		switch (interaction)
+			if (WALL_REMOVERERODS)
+				message = "Removing some reinforcing rods."
+				playsound(the_wall, "sound/items/Wirecutter.ogg", 100, 1)
+			if (WALL_REMOVESUPPORTLINES)
+				message = "Removing support lines."
+				playsound(the_wall, "sound/items/Screwdriver.ogg", 100, 1)
+			if (WALL_SLICECOVER)
+				message = "Slicing metal cover."
+			if (WALL_REMOVESUPPORTRODS)
+				message = "Removing support rods."
+			if (WALL_PRYCOVER)
+				message = "Prying cover off."
+				playsound(the_wall, "sound/items/Crowbar.ogg", 100, 1)
+			if (WALL_PRYSHEATH)
+				message = "Prying outer sheath off."
+				playsound(the_wall, "sound/items/Crowbar.ogg", 100, 1)
+			if (WALL_DETATCHSUPPORTRODS)
+				playsound(the_wall, "sound/items/Ratchet.ogg", 100, 1)
+				message = "Detaching support rods."
+		owner.visible_message("<span class='notice'>[message].</span>")
+
+	onEnd()
+		..()
+		var/message = ""
+		switch (interaction)
+			if (WALL_REMOVERERODS)
+				message = "You remove some reinforcing rods."
+				var/atom/A = new /obj/item/rods( the_wall )
+				if (the_wall.material)
+					A.setMaterial(the_wall.material)
+				else
+					A.setMaterial(getMaterial("steel"))
+				the_wall.d_state = 1
+				the_wall.update_icon()
+			if (WALL_REMOVESUPPORTLINES)
+				message = "You removed the support lines."
+				the_wall.d_state = 2
+			if (WALL_SLICECOVER)
+				message = "You removed the metal cover."
+				the_wall.d_state = 3
+			if (WALL_REMOVESUPPORTRODS)
+				message = "You removed the support rods."
+				the_wall.d_state = 6
+				var/atom/A = new /obj/item/rods( the_wall )
+				if (the_wall.material)
+					A.setMaterial(the_wall.material)
+				else
+					A.setMaterial(getMaterial("steel"))
+			if (WALL_PRYCOVER)
+				message = "You removed the cover."
+				the_wall.d_state = 4
+			if (WALL_PRYSHEATH)
+				message = "You removed the outer sheath."
+				logTheThing("station", owner, null, "dismantles a Reinforced Wall in [owner.loc.loc] ([showCoords(owner.x, owner.y, owner.z)])")
+				the_wall.dismantle_wall()
+			if (WALL_DETATCHSUPPORTRODS)
+				message = "You detach the support rods."
+				the_wall.d_state = 5
+		owner.visible_message("<span class='notice'>[message].</span>")

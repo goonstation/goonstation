@@ -147,10 +147,7 @@ Contents:
 
 	special_setup(mob/M, no_special_spawn)
 		. = ..()
-#if ASS_JAM
-		if(prob(50))
-			bad_traitorify(M, "Samurai")
-#endif
+
 
 // Objects
 
@@ -198,7 +195,7 @@ Contents:
 /obj/decal/fakeobjects/arch
 	name = "torii"
 	desc = "A great gate marking sacred grounds."
-	icon = 'icons/obj/160x128.dmi'
+	icon = 'icons/obj/large/160x128.dmi'
 	icon_state = "arch"
 
 /obj/sakura_tree
@@ -224,12 +221,14 @@ Contents:
 */
 
 /obj/decal/fakeobjects/kanji_1
+	plane = PLANE_FLOOR
 	name = "symbol"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "kanji_1"
 	anchored = 2
 
 /obj/decal/fakeobjects/kanji_2
+	plane = PLANE_FLOOR
 	name = "symbol"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "kanji_2"
@@ -284,7 +283,7 @@ Contents:
 	anchored = 1
 	opacity = 0
 	layer = 5
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "lamp1"
 
 /obj/decal/fakeobjects/bridge_rail
@@ -300,7 +299,7 @@ Contents:
 /obj/decal/fakeobjects/furnace
 	name = "tatara"
 	desc = "A large, traditional, swordsmithing furnace. It is lit and the flame is roaring."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "furnace"
 	density = 1
 	anchored = 2

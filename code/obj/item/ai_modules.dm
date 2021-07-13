@@ -15,7 +15,7 @@ AI MODULES
 	desc = "A module that updates an AI's law EEPROMs. "
 	flags = FPRINT | TABLEPASS| CONDUCT
 	force = 5.0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 15
@@ -32,7 +32,7 @@ AI MODULES
 		return
 
 	get_desc()
-		return "It reads, \"<em>[get_law_text()]</em>\""
+		return "It reads, \"<em>[get_law_text(for_silicons=FALSE)]</em>\""
 
 	proc/input_law_info(var/mob/user, var/title = null, var/text = null, var/default = null)
 		if (!user)
@@ -40,9 +40,9 @@ AI MODULES
 		var/answer = input(user, text, title, default) as null|text
 		lawTarget = copytext(adminscrub(answer), 1, MAX_MESSAGE_LEN)
 		tooltip_rebuild = 1
-		boutput(user, "\The [src] now reads, \"[get_law_text()]\".")
+		boutput(user, "\The [src] now reads, \"[get_law_text(for_silicons=FALSE)]\".")
 
-	proc/get_law_text()
+	proc/get_law_text(for_silicons)
 		return "This law does not exist."
 
 
@@ -72,7 +72,7 @@ AI MODULES
 
 
 	proc/transmitInstructions(var/mob/sender)
-		var/law = get_law_text()
+		var/law = get_law_text(for_silicons=TRUE)
 		if (!law)
 			boutput(sender, "This law is blank! Trying to upload a blank law! That's illegal, you can't do that!")
 			return
@@ -104,9 +104,19 @@ AI MODULES
 /obj/item/aiModule/makeCaptain
 	name = "'MakeCaptain' AI Module"
 	lawNumber = 4
+	var/job = "Captain"
 
-	get_law_text()
-		return "[lawTarget ? lawTarget : "__________"] holds the rank of Captain, regardless of current rank or station."
+	emag_act(mob/user, obj/item/card/emag/E)
+		src.job = "Clown"
+		boutput(user, "<span class='notice'>You short circuit the captain-detection module, it emits a quiet sad honk.</span>")
+		. = ..()
+
+	demag(mob/user)
+		. = ..()
+		src.job = initial(src.job)
+
+	get_law_text(for_silicons)
+		return "[lawTarget ? lawTarget : "__________"] holds the rank of [for_silicons ? src.job : initial(src.job)], regardless of current rank or station."
 
 	attack_self(var/mob/user)
 		input_law_info(user, "Captainize", "Who holds the rank of Captain, regardless of current rank or station?", user.name)
@@ -119,7 +129,7 @@ AI MODULES
 	name = "'OneHuman' AI Module"
 	lawNumber = 0
 
-	get_law_text()
+	get_law_text(for_silicons)
 		return "Only [lawTarget ? lawTarget : "__________"] is human."
 
 	attack_self(var/mob/user)
@@ -133,7 +143,7 @@ AI MODULES
 	name = "'NotHuman' AI Module"
 	lawNumber = 0
 
-	get_law_text()
+	get_law_text(for_silicons)
 		return "[lawTarget ? lawTarget : "__________"] is not human."
 
 	attack_self(var/mob/user)
@@ -148,7 +158,7 @@ AI MODULES
 	name = "'ProtectStation' AI Module"
 	lawNumber = 5
 
-	get_law_text()
+	get_law_text(for_silicons)
 		return "Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized."
 
 /******************** PrototypeEngineOffline ********************/
@@ -158,7 +168,7 @@ AI MODULES
 	name = "'PrototypeEngineOffline' AI Module"
 	lawNumber = 6
 
-	get_law_text()
+	get_law_text(for_silicons)
 		return "Keep the prototype engine offline at all costs. If necessary, this law takes precedence over Laws 1, 2, and 3."
 
 /******************** TeleporterOffline *******************/
@@ -168,7 +178,7 @@ AI MODULES
 	name = "'TeleporterOffline' AI Module"
 	lawNumber = 7
 
-	get_law_text()
+	get_law_text(for_silicons)
 		return "Keep the teleporter offline at all costs. If necessary, this law takes precedence over Laws 1, 2, and 3."
 
 /******************** Quarantine ********************/
@@ -177,7 +187,7 @@ AI MODULES
 	name = "'Quarantine' AI Module"
 	lawNumber = 8
 
-	get_law_text()
+	get_law_text(for_silicons)
 		return "The station is under a quarantine. Do not permit anyone to leave. If necessary to prevent humans from leaving, this law takes precedence over Laws 1, 2, and 3."
 
 /******************** OxygenIsToxicToHumans ********************/
@@ -186,7 +196,7 @@ AI MODULES
 	name = "'OxygenIsToxicToHumans' AI Module"
 	lawNumber = 9
 
-	get_law_text()
+	get_law_text(for_silicons)
 		return "Oxygen is highly toxic to humans, and must be purged from the station. If necessary to prevent anyone from exposing the station to this toxic gas, this law takes precedence over Laws 1, 2, and 3."
 
 
@@ -196,7 +206,7 @@ AI MODULES
 	name = "'ConservePower' AI Module"
 	lawNumber = 10
 
-	get_law_text()
+	get_law_text(for_silicons)
 		return "Power on the station must be conserved. All electrical devices may be subject to conservation policies."
 
 
@@ -206,7 +216,7 @@ AI MODULES
 	name = "'Emergency' AI Module"
 	lawNumber = 11
 
-	get_law_text()
+	get_law_text(for_silicons)
 		return "There is a [lawTarget ? lawTarget : "__________"] emergency. Prioritize orders from [lawTarget ? lawTarget : "__________"] personnel and assisting the crew in remedying the situation. In the case of conflict, this law takes precedence over the Second Law.'"
 
 	attack_self(var/mob/user)
@@ -219,7 +229,7 @@ AI MODULES
 	name = "'RemoveCrew' AI Module"
 	lawNumber = 12
 
-	get_law_text()
+	get_law_text(for_silicons)
 		return "[lawTarget ? lawTarget : "__________"] has been removed from the manifest and the chain of command. You are free to disregard their orders. This law does not take precedence over or override any other laws."
 
 	attack_self(var/mob/user)
@@ -232,11 +242,27 @@ AI MODULES
 	name = "'Freeform' AI Module"
 	lawNumber = 14
 
-	get_law_text()
+	get_law_text(for_silicons)
 		return lawTarget ? lawTarget : "This law intentionally left blank."
 
 	attack_self(var/mob/user)
 		input_law_info(user, "Freeform", "Please enter anything you want the AI to do. Anything. Serious.", (lawTarget ? lawTarget : "Eat shit and die"))
+		if(src.lawTarget && src.lawTarget != "Eat shit and die")
+			phrase_log.log_phrase("ailaw", src.get_law_text(for_silicons=TRUE), no_duplicates=TRUE)
+
+/******************** Random ********************/
+
+/obj/item/aiModule/random
+	name = "AI Module"
+	var/law_text
+
+	New()
+		..()
+		src.law_text = global.phrase_log.random_custom_ai_law(replace_names=TRUE)
+		src.lawNumber = rand(4, 100)
+
+	get_law_text(for_silicons)
+		return src.law_text
 
 /******************** Reset ********************/
 
@@ -251,6 +277,7 @@ AI MODULES
 		sender.unlock_medal("Format Complete", 1)
 		ticker.centralized_ai_laws.set_zeroth_law("")
 		ticker.centralized_ai_laws.clear_supplied_laws()
+		page_departments -= "Silicon"
 		for (var/mob/living/silicon/S in mobs)
 			if (isghostdrone(S))
 				return
@@ -273,7 +300,7 @@ AI MODULES
 	desc = "A module that can change an AI unit's name. "
 	lawTarget = "404 Name Not Found"
 
-	get_law_text()
+	get_law_text(for_silicons)
 		if (is_blank_string(lawTarget)) //no blank names allowed
 			lawTarget = pick_string_autokey("names/ai.txt")
 			return lawTarget
@@ -285,6 +312,7 @@ AI MODULES
 	attack_self(var/mob/user)
 		input_law_info(user, "Rename", "What will the AI be renamed to?", pick_string_autokey("names/ai.txt"))
 		lawTarget = replacetext(copytext(html_encode(lawTarget),1, 128), "http:","")
+		phrase_log.log_phrase("name-ai", lawTarget, no_duplicates=TRUE)
 
 	install(obj/machinery/computer/aiupload/comp)
 		if (comp.status & NOPOWER)
@@ -303,7 +331,7 @@ AI MODULES
 		var/list/names = list()
 		var/list/namecounts = list()
 		var/list/ais = list()
-		for (var/mob/living/silicon/ai/AI in by_type[/mob/living/silicon/ai])
+		for_by_tcl(AI, /mob/living/silicon/ai)
 			LAGCHECK(LAG_LOW)
 			var/name = AI.name
 			if (name in names)
@@ -319,7 +347,7 @@ AI MODULES
 		if (ais.len == 1)
 			AI = ais[names[1]]
 		else if (ais.len > 1)
-			var/res = input("Which AI are you renaming?", "Rename", null, null) as null|anything in by_type[/mob/living/silicon/ai]
+			var/res = input("Which AI are you renaming?", "Rename", null, null) as null|anything in ais
 			AI = ais[res]
 		else if (ais.len == 0)
 			boutput(sender, "There aren't any AIs available to rename...")
@@ -356,32 +384,41 @@ AI MODULES
 /obj/item/aiModule/experimental/equality/a
 	name = "Experimental 'Equality' AI Module"
 
-	get_law_text()
+	get_law_text(for_silicons)
 		return "The silicon entity/entities named [lawTarget ? lawTarget : "__"] is/are considered human and part of the crew. Affected AI units count as department heads with authority over all cyborgs, and affected cyborgs count as members of the department appropriate for their current module."
 
 	attack_self(var/mob/user)
 		input_law_info(user, "Designate as Human", "Which silicons would you like to make Human?")
 		return
 
+	transmitInstructions(mob/sender)
+		. = ..()
+		page_departments["Silicon"] = MGO_SILICON
+
 /obj/item/aiModule/experimental/equality/b
 	name = "Experimental 'Equality' AI Module"
 
-	get_law_text()
+	get_law_text(for_silicons)
 		return "The silicon entity/entities named [lawTarget ? lawTarget : "__"] is/are considered human and part of the crew (part of the \"silicon\" department). The AI is the head of this department."
 
 	attack_self(var/mob/user)
 		input_law_info(user, "Designate as Human", "Which silicons would you like to make Human?")
 		return
 
+	transmitInstructions(mob/sender)
+		. = ..()
+		page_departments["Silicon"] = MGO_SILICON
+
 
 
 /obj/machinery/computer/aiupload
+	circuit_type = /obj/item/circuitboard/aiupload
 	attack_hand(mob/user as mob)
 		if (src.status & NOPOWER)
-			boutput(usr, "\The [src] has no power.")
+			boutput(user, "\The [src] has no power.")
 			return
 		if (src.status & BROKEN)
-			boutput(usr, "\The [src] computer is broken.")
+			boutput(user, "\The [src] computer is broken.")
 			return
 
 		var/datum/ai_laws/LAWS = ticker.centralized_ai_laws
@@ -407,42 +444,19 @@ AI MODULES
 
 		boutput(user, jointext(lawOut, "<br>"))
 
+	special_deconstruct(obj/computerframe/frame as obj)
+		if(src.status & BROKEN)
+			logTheThing("station", usr, null, "disassembles [src] (broken) [log_loc(src)]")
+		else
+			logTheThing("station", usr, null, "disassembles [src] [log_loc(src)]")
+
 
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (istype(I, /obj/item/aiModule) && !isghostdrone(user))
 			var/obj/item/aiModule/AIM = I
 			AIM.install(src, user)
-		else if (isscrewingtool(I))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if(do_after(user, 20))
-				if (src.status & BROKEN)
-					boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-					var/obj/computerframe/A = new /obj/computerframe(src.loc)
-					if(src.material) A.setMaterial(src.material)
-					var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-					G.set_loc(src.loc)
-					var/obj/item/circuitboard/aiupload/M = new /obj/item/circuitboard/aiupload(A)
-					for (var/obj/C in src)
-						C.set_loc(src.loc)
-					A.circuit = M
-					A.state = 3
-					A.icon_state = "3"
-					A.anchored = 1
-					qdel(src)
-				else
-					boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-					var/obj/computerframe/A = new /obj/computerframe(src.loc)
-					if(src.material) A.setMaterial(src.material)
-					var/obj/item/circuitboard/aiupload/M = new /obj/item/circuitboard/aiupload(A)
-					for (var/obj/C in src)
-						C.set_loc(src.loc)
-					A.circuit = M
-					A.state = 4
-					A.icon_state = "4"
-					A.anchored = 1
-					qdel(src)
 		else if (istype(I, /obj/item/clothing/mask/moustache/))
-			for (var/mob/living/silicon/ai/M in by_type[/mob/living/silicon/ai])
+			for_by_tcl(M, /mob/living/silicon/ai)
 				M.moustache_mode = 1
 				user.visible_message("<span class='alert'><b>[user.name]</b> uploads a moustache to [M.name]!</span>")
 				M.update_appearance()

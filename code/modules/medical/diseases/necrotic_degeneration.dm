@@ -15,6 +15,7 @@
 	if (affected_mob.get_burn_damage() >= 80 && prob(60))
 		affected_mob.cure_disease(D)
 		return
+	affected_mob.is_zombie = 1
 	switch(D.stage)
 		if(1)
 			if (prob(5))
@@ -27,9 +28,19 @@
 				affected_mob.take_brain_damage(10)
 			if (prob(4))
 				boutput(affected_mob, "<span class='alert'>You pass out momentarily.</span>")
-				affected_mob.changeStatus("paralysis", 40)
+				affected_mob.changeStatus("paralysis", 4 SECONDS)
 			if (prob(5))
 				affected_mob.emote(pick("shiver","pale","drool"))
+
+			//spaceacillin stalls the infection...
+			var/amt = affected_mob.reagents?.get_reagent_amount("spaceacillin")
+			if (amt)
+				if (amt > 15)
+					affected_mob.reagents?.remove_reagent("spaceacillin", 1)
+				else
+					affected_mob.reagents?.remove_reagent("spaceacillin", 0.4)
+				D.stage--
+
 		if(3)
 			affected_mob.stuttering = 10
 			if (prob(10))
@@ -38,7 +49,8 @@
 				affected_mob.say(pick("Hungry...", "Must... kill...", "Brains..."))
 		if(4)
 			boutput(affected_mob, "<span class='alert'>Your heart seems to have stopped...</span>")
-			affected_mob.set_mutantrace(zombie_mutantrace)
+			if (zombie_mutantrace)
+				affected_mob.set_mutantrace(zombie_mutantrace)
 			if (ishuman(affected_mob))
 				affected_mob:update_face()
 				affected_mob:update_body()

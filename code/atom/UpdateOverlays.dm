@@ -136,16 +136,19 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 
 	var/index = prev_data[P_INDEX]
 	if(index > 0) //There is an existing overlay in place in this slot, remove it
-		src.overlays.Cut(index, index+1) //Fuck yoooou byond (this gotta be by index or it'll fail if the same thing's in overlays several times)
+		if(index <= src.overlays.len)
+			src.overlays.Cut(index, index+1) //Fuck yoooou byond (this gotta be by index or it'll fail if the same thing's in overlays several times)
+		else
+			stack_trace("Overlays on [src.type] were modified by non-UpdateOverlays method.")
 
 		prev_data[P_INDEX] = 0
 		for(var/ikey in overlay_refs) //Because we're storing the position of each overlay in the list we need to shift our indices down to stay synched
 			var/list/L = overlay_refs[ikey]
-			if(!isnull(L) && L.len > 0 && L[P_INDEX] >= index) L[P_INDEX]--
+			if(L?.len > 0 && L[P_INDEX] >= index) L[P_INDEX]--
 
 	if(I)
 		src.overlays += I
-		index = src.overlays.len
+		index = length(src.overlays)
 		prev_data[P_INDEX] = index
 
 		prev_data[P_IMAGE] = I

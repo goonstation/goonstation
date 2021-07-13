@@ -3,7 +3,7 @@
 	max_stages = 3
 	spread = "Non-Contagious"
 	cure = "Incurable"
-	associated_reagent = "fuzz"
+	associated_reagent = "rat_venom"
 	affected_species = list("Human")
 
 

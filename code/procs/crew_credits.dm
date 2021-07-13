@@ -24,7 +24,7 @@ var/global/crew_creds = null
 		for(var/datum/mind/M in ticker.minds)
 
 			// Antagonist?
-			if(M.special_role)
+			if(M.special_role && !("Faustian" in M.special_role))
 				round_antags.Add(M)
 				continue
 			if(!M.assigned_role)
@@ -36,27 +36,35 @@ var/global/crew_creds = null
 					continue
 
 				// Security?
-				if("Head of Security","Security Officer","Detective")
+				if("Head of Security","Security Officer","Detective","Vice Officer","Part-time Vice Officer","Security Assistant","Lawyer","Nanotrasen Security Operative","Nanotrasen Special Operative")
 					round_security.Add(M)
 					continue
 
 				// Medical?
-				if("Medical Director","Medical Doctor","Roboticist","Geneticist")
+				if("Medical Director","Medical Doctor","Roboticist","Geneticist","Pharmacist","Psychiatrist","Psychologist","Psychotherapist","Therapist","Counselor","Life Coach")
 					round_medical.Add(M)
 					continue
 
 				// Science?
-				if("Research Director","Scientist")
+				if("Research Director","Scientist","Test Subject")
 					round_science.Add(M)
 					continue
 
+				// Pathology?
+				if("Pathologist")
+					#ifdef SCIENCE_PATHO_MAP
+					round_science.Add(M)
+					#else
+					round_medical.Add(M)
+					#endif
+
 				// Engineering?
-				if("Chief Engineer","Engineer","Quartermaster","Miner","Mechanic")
+				if("Chief Engineer","Engineer","Quartermaster","Miner","Mechanic","Construction Worker")
 					round_engineering.Add(M)
 					continue
 
 				// Civilian?
-				if("Head of Personnel","Botanist","Barman","Chef","Janitor","Staff Assistant","Clown","Chaplain")
+				if("Head of Personnel","Communications Officer","Botanist","Apiculturist","Rancher","Bartender","Chef","Sous-Chef","Waiter","Clown","Mime","Chaplain","Mailman","Musician","Janitor","Coach","Boxer","Barber","Staff Assistant")
 					round_civilian.Add(M)
 					continue
 

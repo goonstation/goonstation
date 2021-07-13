@@ -155,6 +155,7 @@ const InputControls = (props, context) => {
 const OutputControls = (props, context) => {
   const { act, data } = useBackend(context);
   const {
+    isEmagged,
     isFiring,
     isLaserEnabled,
     outputLevel,
@@ -183,7 +184,8 @@ const OutputControls = (props, context) => {
           </Box>
         </LabeledList.Item>
         <LabeledList.Item label="Output Level">
-          {formatPower(outputLevel)}
+          {outputNumber < 0 ? '-' + formatPower(Math.abs(outputLevel))
+            : formatPower(outputLevel)}
         </LabeledList.Item>
       </LabeledList>
       <Box mt="0.5em">
@@ -191,11 +193,13 @@ const OutputControls = (props, context) => {
           mr="0.5em"
           size={1.25}
           animated
+          bipolar={isEmagged}
           inline
           step={5}
           stepPixelSize={2}
-          minValue={0}
+          minValue={isEmagged ? -999 : 0}
           maxValue={999}
+          ranges={{ bad: [-Infinity, -1] }}
           value={outputNumber}
           onDrag={(e, setOutput) => act('setOutput', { setOutput })} />
         <Button

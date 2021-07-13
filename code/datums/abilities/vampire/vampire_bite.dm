@@ -47,12 +47,8 @@
 			boutput(M, __red("You are already draining someone's blood!"))
 			return 0
 
-	if (is_pointblank && target.head && target.head.body_parts_covered & HEAD)
+	if (is_pointblank && target.head && target.head.c_flags & (BLOCKCHOKE))
 		boutput(M, __red("You need to remove their headgear first."))
-		return 0
-
-	if (is_pointblank && target.wear_mask && target.wear_mask.body_parts_covered & HEAD)
-		boutput(M, __red("You need to remove their facemask first."))
 		return 0
 
 	if (check_target_immunity(target) == 1)
@@ -63,7 +59,7 @@
 		boutput(M, __red("You can't drink the blood of your own thralls!"))
 		return 0
 
-	if (ismonkey(target) || (target.bioHolder && target.bioHolder.HasEffect("monkey")))
+	if (isnpcmonkey(target))
 		boutput(M, __red("Drink monkey blood?! That's disgusting!"))
 		return 0
 
@@ -142,7 +138,7 @@
 					if (HH.blood_volume < 300 && prob(15))
 						if (!HH.getStatusDuration("paralysis"))
 							boutput(HH, __red("Your vision fades to blackness."))
-						HH.changeStatus("paralysis", 100)
+						HH.changeStatus("paralysis", 10 SECONDS)
 					else
 						if (prob(65))
 							HH.changeStatus("weakened", 1 SECOND)
@@ -208,12 +204,8 @@
 			boutput(M, __red("You are already draining someone's blood!"))
 			return 0
 
-	if (is_pointblank && target.head && target.head.body_parts_covered & HEAD)
+	if (is_pointblank && target.head && target.head.c_flags & (BLOCKCHOKE))
 		boutput(M, __red("You need to remove their headgear first."))
-		return 0
-
-	if (is_pointblank && target.wear_mask && target.wear_mask.body_parts_covered & HEAD)
-		boutput(M, __red("You need to remove their facemask first."))
 		return 0
 
 	if (check_target_immunity(target) == 1)
@@ -227,7 +219,7 @@
 		boutput(M, __red("You can't drink the blood of your master's thralls!"))
 		return 0
 
-	if (ismonkey(target) || (target.bioHolder && target.bioHolder.HasEffect("monkey")))
+	if (isnpcmonkey(target))
 		boutput(M, __red("Drink monkey blood?! That's disgusting!"))
 		return 0
 
@@ -304,7 +296,7 @@
 					if (HH.blood_volume < 300 && prob(15))
 						if (!HH.getStatusDuration("paralysis"))
 							boutput(HH, __red("Your vision fades to blackness."))
-						HH.changeStatus("paralysis", 100)
+						HH.changeStatus("paralysis", 10 SECONDS)
 					else
 						if (prob(65))
 							HH.changeStatus("weakened", 1 SECOND)
@@ -352,6 +344,11 @@
 	id = "vamp_blood_suck_ranged"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "blood"
+	bar_icon_state = "bar-vampire"
+	border_icon_state = "border-vampire"
+	color_active = "#d73715"
+	color_success = "#f21b1b"
+	color_failure = "#8d1422"
 	var/mob/living/carbon/human/M
 	var/datum/abilityHolder/vampire/H
 	var/mob/living/carbon/human/HH
@@ -366,7 +363,7 @@
 
 	onUpdate()
 		..()
-		if(get_dist(M, HH) > 7 || M == null || HH == null)
+		if(get_dist(M, HH) > 7 || M == null || HH == null || HH.blood_volume <= 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -390,7 +387,7 @@
 		HH.vamp_beingbitten = 1
 
 		src.loopStart()
-	
+
 	loopStart()
 		..()
 		var/obj/projectile/proj = initialize_projectile_ST(HH, new/datum/projectile/special/homing/vamp_blood, M)
@@ -421,7 +418,7 @@
 
 	onInterrupt() //Called when the action fails / is interrupted.
 		if (state == ACTIONSTATE_RUNNING)
-			if (HH.blood_volume < 0)
+			if (HH.blood_volume <= 0)
 				boutput(M, __red("[HH] doesn't have enough blood left to drink."))
 			else if (!H.can_take_blood_from(H, HH))
 				boutput(M, __red("You have drank your fill [HH]'s blood. It tastes all bland and gross now."))
@@ -495,6 +492,11 @@
 	id = "vamp_blood_suck"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "blood"
+	bar_icon_state = "bar-vampire"
+	border_icon_state = "border-vampire"
+	color_active = "#d73715"
+	color_success = "#f21b1b"
+	color_failure = "#8d1422"
 	var/mob/living/carbon/human/M
 	var/datum/abilityHolder/vampire/H
 	var/mob/living/carbon/human/HH

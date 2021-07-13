@@ -10,7 +10,7 @@ var/global/list/bible_contents = list()
 	item_state ="bible"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 	var/mob/affecting = null
@@ -23,31 +23,34 @@ var/global/list/bible_contents = list()
 		ritualComponent = new/datum/ritualComponent/sanctus(src)
 		ritualComponent.autoActive = 1
 		#endif
-		BLOCK_BOOK
-		AddComponent(/datum/component/storage/bible)
+		AddComponent(/datum/component/storage/bible, max_wclass = 2)
+		BLOCK_SETUP(BLOCK_BOOK)
 
 	disposing()
 		..()
 		STOP_TRACKING
 
-	proc/bless(mob/M as mob)
+	proc/bless(mob/M as mob, var/mob/user)
 		if (isvampire(M) || iswraith(M) || M.bioHolder.HasEffect("revenant"))
 			M.visible_message("<span class='alert'><B>[M] burns!</span>", 1)
 			var/zone = "chest"
-			if (usr.zone_sel)
-				zone = usr.zone_sel.selecting
+			if (user.zone_sel)
+				zone = user.zone_sel.selecting
 			M.TakeDamage(zone, 0, heal_amt)
+			JOB_XP(user, "Chaplain", 2)
 		else
 			var/mob/living/H = M
 			if( istype(H) )
 				if( prob(25) )
 					H.delStatus("bloodcurse")
 					H.cure_disease_by_path(/datum/ailment/disease/cluwneing_around/cluwne)
-				if( prob(25) )
+				if(prob(25))
 					H.cure_disease_by_path(/datum/ailment/disability/clumsy/cluwne)
 			M.HealDamage("All", heal_amt, heal_amt)
+			if(prob(40))
+				JOB_XP(user, "Chaplain", 1)
 
-	attackby(var/obj/item/W, var/mob/user)
+	attackby(var/obj/item/W, var/mob/user, obj/item/storage/T)
 		if (istype(W, /obj/item/bible))
 			user.show_text("You try to put \the [W] in \the [src]. It doesn't work. You feel dumber.", "red")
 		else
@@ -73,7 +76,7 @@ var/global/list/bible_contents = list()
 
 		if (iswraith(M) || (M.bioHolder && M.bioHolder.HasEffect("revenant")))
 			M.visible_message("<span class='alert'><B>[user] smites [M] with the [src]!</B></span>")
-			bless(M)
+			bless(M, user)
 			boutput(M, "<span_class='alert'><B>IT BURNS!</B></span>")
 			if (narrator_mode)
 				playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
@@ -84,8 +87,8 @@ var/global/list/bible_contents = list()
 		else if (!isdead(M))
 			var/mob/H = M
 			// ******* Check
-			if ((ishuman(H) && prob(60)))
-				bless(M)
+			if ((ishuman(H) && prob(60) && !(M.traitHolder?.hasTrait("atheist"))))
+				bless(M, user)
 				M.visible_message("<span class='alert'><B>[user] heals [M] with the power of Christ!</B></span>")
 				boutput(M, "<span class='alert'>May the power of Christ compel you to be healed!</span>")
 				if (narrator_mode)
@@ -95,7 +98,10 @@ var/global/list/bible_contents = list()
 				logTheThing("combat", user, M, "biblically healed [constructTarget(M,"combat")]")
 			else
 				if (ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))
-					M.take_brain_damage(10)
+					if (M.traitHolder?.hasTrait("atheist"))
+						M.take_brain_damage(5)
+					else
+						M.take_brain_damage(10)
 					boutput(M, "<span class='alert'>You feel dazed from the blow to the head.</span>")
 				logTheThing("combat", user, M, "biblically injured [constructTarget(M,"combat")]")
 				M.visible_message("<span class='alert'><B>[user] beats [M] over the head with [src]!</B></span>")
@@ -115,8 +121,8 @@ var/global/list/bible_contents = list()
 		if (isvampire(user) || user.bioHolder.HasEffect("revenant"))
 			user.visible_message("<span class='alert'><B>[user] tries to take the [src], but their hand bursts into flames!</B></span>", "<span class='alert'><b>Your hand bursts into flames as you try to take the [src]! It burns!</b></span>")
 			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 25)
-			user.changeStatus("stunned", 150)
-			user.changeStatus("weakened", 150)
+			user.changeStatus("stunned", 15 SECONDS)
+			user.changeStatus("weakened", 15 SECONDS)
 			return
 		return ..()
 
@@ -141,13 +147,18 @@ var/global/list/bible_contents = list()
 			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>The gods seem to approve.</b></span>")
 			return 0
 
-		user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
-		user.gib()
-		return 0
+		if (user.traitHolder?.hasTrait("atheist"))
+			user.visible_message("<span class='alert'>[user] farts on the bible with particular vindication.<br><b>Against all odds, [user] remains unharmed!</b></span>")
+			return 0
+		else
+			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
+			logTheThing("combat", user, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
+			user.gib()
+			return 0
 
 /obj/item/bible/evil
 	name = "frayed bible"
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | IS_FARTABLE
 
 	HasEntered(atom/movable/AM as mob)
 		..()
@@ -160,7 +171,16 @@ var/global/list/bible_contents = list()
 	name = "O.C. Bible"
 	desc = "For when you don't want the good book to take up too much space in your life."
 	icon_state = "minibible"
-	w_class = 2
+	item_state = null
+	w_class = W_CLASS_SMALL
+
+	farty_heresy(mob/user) //fuk u always die
+		if(!user || user.loc != src.loc)
+			return 0
+		user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
+		logTheThing("combat", user, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
+		user.gib()
+		return 0
 
 /obj/item/bible/hungry
 	name = "hungry bible"
@@ -224,8 +244,8 @@ var/global/list/bible_contents = list()
 		if(src.contents.len > 0)
 			. += " It feels a bit heavier than it should."
 
-	attack_hand(var/mob/user as mob)
-		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
+	attack_hand(mob/user as mob)
+		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain") && user.is_in_hands(src))
 			var/obj/item/gun/kinetic/faith/F = locate() in src.contents
 			if(F)
 				user.put_in_hand_or_drop(F)

@@ -1,0 +1,23 @@
+@use '../colors.scss';
+@use '../components/Button.scss';
+@use '../base.scss';
+
+.AccessPanel-wires-btn {
+  &.Button--selected {
+    background-color: colors.bg(colors.$average) !important;
+  }
+}
+
+.Airlock-hack-button {
+  font-family: monospace;
+  border-width: base.em(2px);
+  border-style: outset;
+  border-color: #00AA00;
+  outline: base.em(1px) solid rgb(0, 122, 0);
+  &.Button--disabled {
+    background-color: #4A6A4A;
+  }
+  &.Button--color--default {
+    background-color: #00FF00;
+  }
+}

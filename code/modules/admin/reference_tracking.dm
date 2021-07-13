@@ -37,8 +37,7 @@
 	dat += "<h3>Back references - these things hold references to this object.</h3>"
 	dat += "<table>"
 	dat += "<tr><th>Ref</th><th>Name</th><th>Type</th><th>Variable Name</th><th>Follow</th>"
-	for(var/ref in backrefs)
-		var/datum/R = ref
+	for (var/datum/R as anything in backrefs)
 		dat += "<tr><td><a href='?src=\ref[src];Refresh=\ref[R]'>[ref(R)]</td><td>[R]</td><td>[R.type]</td><td>[backrefs[R]]</td><td><a href='?src=\ref[src];ViewReferences=\ref[R];window_name=[window_name]'>\[Follow\]</a></td></tr>"
 	dat += "</table><hr>"
 	dat += "<h3>Forward references - this object is referencing those things.</h3>"

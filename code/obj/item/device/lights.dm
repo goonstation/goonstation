@@ -45,7 +45,7 @@
 	item_state = "flight"
 	icon_on = "flight1"
 	icon_off = "flight0"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
 	m_amt = 50
 	g_amt = 20
@@ -71,7 +71,7 @@
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged)
 			if (user)
-				usr.show_text("You short out the voltage regulator in the lighting circuit.", "blue")
+				user.show_text("You short out the voltage regulator in the lighting circuit.", "blue")
 			src.emagged = 1
 		else
 			if (user)
@@ -95,7 +95,7 @@
 			return
 
 		src.on = !src.on
-		playsound(get_turf(src), "sound/items/penclick.ogg", 30, 1)
+		playsound(src, "sound/items/penclick.ogg", 30, 1)
 		if (src.on)
 			set_icon_state(src.icon_on)
 			if (src.emagged) // Burn them all!
@@ -126,7 +126,7 @@
 	var/base_state = "glowstick-green"
 	name = "emergency glowstick"
 	desc = "For emergency use only. Not for use in illegal lightswitch raves."
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	flags = ONBELT | TABLEPASS
 	var/heated = 0
 	col_r = 0.0
@@ -326,8 +326,18 @@
 
 			else if (W.burning)
 				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+
+			else if (W.firesource)
+				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W].</span>")
+				W.firesource_interact()
 		else
 			return ..()
+
+	temperature_expose(datum/gas_mixture/air, temperature, volume)
+		if (src.on == 0)
+			if (temperature > (T0C + 430))
+				src.visible_message("<span class='alert'> [src] ignites!</span>", group = "candle_ignite")
+				src.light()
 
 	process()
 		if (src.on)
@@ -344,6 +354,7 @@
 		if (!src) return
 		if (!src.on)
 			src.on = 1
+			src.firesource = TRUE
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
 			src.icon_state = src.icon_on
@@ -355,6 +366,7 @@
 		if (!src) return
 		if (src.on)
 			src.on = 0
+			src.firesource = FALSE
 			src.hit_type = DAMAGE_BLUNT
 			src.force = 0
 			src.icon_state = src.icon_off
@@ -406,7 +418,7 @@
 		if(src.on && !src.did_thing)
 			src.did_thing = 1
 			//what should it do, other than this sound?? i tried a particle system but it didn't work :{
-			playsound(get_turf(src), pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg'), 65, 0)
+			playsound(src, pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg'), 65, 0)
 
 		return
 
@@ -426,7 +438,7 @@
 	icon_state = "lava_lamp0"
 	icon_on = "lava_lamp1"
 	icon_off = "lava_lamp0"
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	desc = "An ancient relic from a simpler, more funky time."
 	col_r = 0.85
 	col_g = 0.45
@@ -434,7 +446,7 @@
 	brightness = 0.8
 
 	attack_self(mob/user as mob)
-		playsound(get_turf(src), "sound/items/penclick.ogg", 30, 1)
+		playsound(src, "sound/items/penclick.ogg", 30, 1)
 		src.on = !src.on
 		user.visible_message("<b>[user]</b> flicks [src.on ? "on" : "off"] the [src].")
 		if (src.on)
@@ -443,3 +455,10 @@
 		else
 			set_icon_state(src.icon_off)
 			src.light.disable()
+
+/obj/item/device/light/lava_lamp/activated
+	New()
+		..()
+		on = 1
+		set_icon_state(src.icon_on)
+		src.light.enable()

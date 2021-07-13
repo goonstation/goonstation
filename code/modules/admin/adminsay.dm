@@ -22,7 +22,7 @@
 
 	var/ircmsg[] = new()
 	ircmsg["key"] = src.key
-	ircmsg["name"] = src.mob.real_name
+	ircmsg["name"] = stripTextMacros(src.mob.real_name)
 	ircmsg["msg"] = html_decode(msg)
 	ircbot.export("asay", ircmsg)
 
@@ -136,3 +136,28 @@
 	logTheThing("admin", usr, null, "forced Bradbury II to beep: [msg]")
 	logTheThing("diary", usr, null, "forced Bradbury II to beep: [msg]", "admin")
 	message_admins("<span class='internal'>[key_name(usr)] forced Bradbury II to beep: [msg]</span>")
+
+// surely Beepsky's too much of an upstanding character to copy and steal intellectual property!
+/client/proc/cmd_admin_beepsay(msg as text)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "beepsay"
+	set hidden = 1
+
+	admin_only
+
+	if (src.ismuted())
+		return
+
+	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+
+	if (!msg)
+		return
+
+	for (var/obj/machinery/bot/secbot/beepsky/maybeBeepsky in machine_registry[MACHINES_BOTS])
+		maybeBeepsky.speak(msg)
+		break
+
+	logTheThing("admin", usr, null, "forced Beepsky to beep: [msg]")
+	logTheThing("diary", usr, null, "forced Beepsky to beep: [msg]", "admin")
+	message_admins("<span class='internal'>[key_name(usr)] forced Beepsky to beep: [msg]</span>")
+

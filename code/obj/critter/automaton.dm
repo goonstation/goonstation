@@ -32,7 +32,7 @@ var/global/the_automaton = null
 
 	New()
 		..()
-		SPAWN_DBG (10)
+		SPAWN_DBG(1 SECOND)
 			if (!the_automaton)
 				the_automaton = src
 
@@ -123,7 +123,7 @@ var/global/the_automaton = null
 				switch (current_loc.type)
 					if (/area/solarium)
 
-						src.dir = 4
+						src.set_dir(4)
 						if (!src.muted)
 							src.visible_message("<span class='alert'><b>[src]</b> stares into the sun.</span>")
 					if (/area/station/engine/core)
@@ -133,14 +133,14 @@ var/global/the_automaton = null
 								break
 						var/obj/machinery/power/generatorTemp/G = admiring_target
 						if (istype(G) && G.lastgenlev >= 26)
-							src.dir = get_dir(src, G)
+							src.set_dir(get_dir(src, G))
 							src.visible_message("<span class='alert'><b>[src]</b> [pick("stares","gazes","glares","looks")] [pick("alluringly", "enticingly", "lovingly", "fanatically", "zealously", "warmly", "obediently", "calmly")] at the [G.name].</span>")
 
 
 	proc/spin()
 		if (!src.muted)
 			src.visible_message("<span class='alert'><b>[src]</b> [pick("turns", "pivots", "twitches", "spins")].</span>")
-		src.dir = pick(alldirs)
+		src.set_dir(pick(alldirs))
 
 	proc/inserted_key()
 		switch (keycount)
@@ -169,7 +169,7 @@ var/global/the_automaton = null
 				//Oh, you've done it now.
 				src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a while, then <B>forcefully grabs [user]!</B>.</span>")
 				playsound(src.loc, "sound/misc/automaton_scratch.ogg", 60, 1)
-				user.changeStatus("stunned", 50)
+				user.changeStatus("stunned", 5 SECONDS)
 				user.canmove = 0
 				user.anchored = 1
 				user.set_loc(src.loc)

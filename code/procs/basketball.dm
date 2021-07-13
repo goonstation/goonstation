@@ -92,7 +92,7 @@
 				N.changeStatus("weakened", 5 SECONDS)
 				random_brute_damage(N, 10)
 		if(N.client)
-			shake_camera(N, 6, 5)
+			shake_camera(N, 6, 32)
 			N.show_message("<span class='alert'>[M] showboat slams [target] to the ground!</span>", 1)
 	random_brute_damage(target, 40)
 
@@ -143,7 +143,7 @@
 				if(ishuman(N) && istype(N:mutantrace, /datum/mutantrace/zombie))
 					N.gib()
 		if(N.client)
-			shake_camera(N, 6, 4)
+			shake_camera(N, 6, 16)
 			N.show_message("<span class='alert'>[M]'s basketball unleashes a brilliant flash of light!</span>", 1)
 
 	playsound(M.loc, "sound/weapons/flashbang.ogg", 50, 1)
@@ -183,7 +183,7 @@
 /mob/proc/clown_jam(mob/living/target as mob in oview(6))
 	set category = "Spells"
 	set name = "Clown Jam"
-	set desc = "Jams the target into a fat cursed clown"
+	set desc = "Jams the target into a cursed clown"
 
 	var/mob/M = src
 
@@ -224,7 +224,7 @@
 			if(N != M)
 				N.changeStatus("weakened", 5 SECONDS)
 		if(N.client)
-			shake_camera(N, 6, 4)
+			shake_camera(N, 6, 16)
 			N.show_message("<span class='alert'>[M] clown jams [target]!</span>", 1)
 
 	for(var/obj/item/basketball/B in M.contents)
@@ -338,7 +338,7 @@
 
 	for(var/i = 0, i < 50, i++)
 		M.pixel_y += 6
-		M.dir = turn(M.dir, 90)
+		M.set_dir(turn(M.dir, 90))
 		sleep(0.1 SECONDS)
 	M.layer = 0
 	var/sound/siren = sound('sound/misc/airraid_loop_short.ogg')
@@ -351,8 +351,7 @@
 		A.updateicon()
 		LAGCHECK(LAG_LOW)
 	for(var/mob/N in mobs)
-		SPAWN_DBG(0)
-			shake_camera(N, 120, 2)
+		shake_camera(N, 120, 8)
 	SPAWN_DBG(0)
 		var/thunder = 70
 		while(thunder > 0)
@@ -367,7 +366,7 @@
 	M.layer = EFFECTS_LAYER_BASE
 	for(var/i = 0, i < 20, i++)
 		M.pixel_y -= 12
-		M.dir = turn(M.dir, 90)
+		M.set_dir(turn(M.dir, 90))
 		sleep(0.1 SECONDS)
 	sleep(0.1 SECONDS)
 	siren.repeat = 0
@@ -406,13 +405,13 @@
 			if(N != M)
 				N.changeStatus("stunned", 2 SECONDS)
 
-	M.dir = NORTH
+	M.set_dir(NORTH)
 	sleep(0.1 SECONDS)
-	M.dir = EAST
+	M.set_dir(EAST)
 	sleep(0.1 SECONDS)
-	M.dir = SOUTH
+	M.set_dir(SOUTH)
 	sleep(0.1 SECONDS)
-	M.dir = WEST
+	M.set_dir(WEST)
 
 	M.transforming = 0
 
@@ -432,7 +431,7 @@
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	item_state = "radio"
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 100
@@ -484,7 +483,7 @@
 	var/mob/living/carbon/human/H = usr
 	if (!( ishuman(H)))
 		return 1
-	if ((usr.contents.Find(src) || (in_range(src,usr) && istype(src.loc, /turf))))
+	if ((usr.contents.Find(src) || (in_interact_range(src,usr) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 		if (href_list["spell_nova"])
 			if (src.uses >= 1)
@@ -510,7 +509,7 @@
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /mob/proc/clown_jam
-				src.temp = "This unspoken jam bamboozles your target to the extent that they will become an obese, idiotic, horrible, and useless clown."
+				src.temp = "This unspoken jam bamboozles your target to the extent that they will become an idiotic, horrible, and useless clown."
 		if (href_list["spell_spin"])
 			usr.verbs += /mob/proc/spin
 			src.temp = "This spell lets you do a 360 spin, knocking down any fools tailing you."
@@ -540,7 +539,7 @@
 			src.temp = "<A href='byond://?src=\ref[src];selfdestruct2=1'>Self-Destruct</A>"
 		else if (href_list["selfdestruct2"])
 			src.selfdestruct = 1
-			SPAWN_DBG (100)
+			SPAWN_DBG(10 SECONDS)
 				explode()
 				return
 		else

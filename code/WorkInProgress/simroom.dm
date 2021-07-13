@@ -110,7 +110,7 @@
 /obj/machinery/sim/transmitter/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 		if (href_list["setup"])
 			if(active)
@@ -140,11 +140,11 @@
 	if (!ticker)
 		boutput(user, "You can't buckle anyone in before the game starts.")
 		return
-	if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat))
+	if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || user.stat))
 		return
 	if (M.buckled)	return
 
-	if (M == usr)
+	if (M == user)
 		user.visible_message("<span class='notice'>[user] buckles in!</span>")
 	else
 		M.visible_message("<span class='notice'>[M] is buckled in by [user]!</span>")
@@ -202,6 +202,11 @@
 	..()
 	src.update_icon()
 
+/obj/machinery/sim/vr_bed/disposing()
+	go_out()
+	. = ..()
+
+
 /obj/machinery/sim/vr_bed/proc/update_icon()
 	ENSURE_IMAGE(src.image_lid, src.icon, "lid[!isnull(occupant)]")
 	src.UpdateOverlays(src.image_lid, "lid")
@@ -247,7 +252,7 @@
 		boutput(M, "<span class='notice'><B>You cannot possibly fit into that!</B></span>")
 		return
 
-	if (!isobserver(M))
+	if (!isobserver(M) || isAIeye(M))
 		M.set_loc(src)
 		M.network_device = src
 		//M.verbs += /mob/proc/jack_in
@@ -271,7 +276,7 @@
 
 /obj/machinery/sim/vr_bed/Click(location,control,params)
 	var/lpm = params2list(params)
-	if(isobserver(usr) && !lpm["ctrl"] && !lpm["shift"] && !lpm["alt"])
+	if(isobserver(usr) && !lpm["ctrl"] && !lpm["shift"] && !lpm["alt"] && alert("Are you sure you want to enter VR?","Are you sure?","Yes","No") == "Yes")
 		src.move_inside()
 	else return ..()
 
@@ -284,7 +289,7 @@
 	//	Station_VNet.Enter_Vspace(usr, src, src:network)
 	//	return
 
-	if ((usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis")) && !isobserver(usr))
+	if (is_incapacitated(usr) && !isobserver(usr))
 		return
 	src.log_in(usr)
 	src.add_fingerprint(usr)
@@ -330,19 +335,22 @@
 	return
 
 /obj/machinery/sim/vr_bed/proc/go_out()
-	if (!src.occupant)
-		return
 	for(var/obj/O in src)
-		O.set_loc(src.loc)
+		O.set_loc(get_turf(src.loc))
 //	src.verbs -= /mob/proc/jack_in
-	src.occupant.set_loc(src.loc)
-	src.occupant.changeStatus("weakened", 2 SECONDS)
-	src.occupant.network_device = null
+	src.occupant?.set_loc(get_turf(src.loc))
+	src.occupant?.changeStatus("weakened", 2 SECONDS)
+	src.occupant?.network_device = null
 	src.occupant = null
 	src.active = 0
 	src.con_user = null
 	src.update_icon()
 	return
+
+/obj/machinery/sim/vr_bed/Exited(atom/movable/thing, newloc)
+	. = ..()
+	if(thing == src.occupant && (!isobserver(thing) || isAIeye(thing)))
+		src.go_out()
 
 /obj/machinery/sim/vr_bed/process()
 	..()
@@ -375,7 +383,7 @@
 /obj/machinery/sim/vr_bed/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 		if (href_list["time"])
 			if(src.allowed(usr))
@@ -409,11 +417,10 @@
 
 
 /obj/machinery/sim/programcomp/proc/interacted(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
-		if (!issilicon(user))
-			src.remove_dialog(user)
-			user.Browse(null, "window=mm")
-			return
+	if ( (!in_interact_range(src,user)) || (status & (BROKEN|NOPOWER)) )
+		src.remove_dialog(user)
+		user.Browse(null, "window=mm")
+		return
 
 	src.add_dialog(user)
 	var/dat = "<HEAD><TITLE>V-space Computer</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"
@@ -444,7 +451,7 @@
 /obj/machinery/sim/programcomp/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 		switch(href_list["set"])
 			if("grass")

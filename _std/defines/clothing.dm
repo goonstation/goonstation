@@ -25,23 +25,42 @@
 #define ARMS			8
 
 // other clothing-specific bitflags, applied via the c_flags var
-#define SPACEWEAR					1		// combined HEADSPACE and SUITSPACE into this because seriously??
-#define MASKINTERNALS				2		// mask allows internals
-#define COVERSEYES					4		// combined COVERSEYES, COVERSEYES and COVERSEYES into this
-#define COVERSMOUTH					8		// combined COVERSMOUTH and COVERSMOUTH into this.
-#define ONESIZEFITSALL				16		// can be worn by fatties (or children? ugh)
-#define NOSLIP						32		// for galoshes/magic sandals/etc that prevent slipping on things
-#define SLEEVELESS					64		// ain't got no sleeeeeves
-#define BLOCKSMOKE					128		//block smoke inhalations (gas mask)
+
+/// protects you from the dangers of space
+#define SPACEWEAR					1
+/// mask allows internals to be used
+#define MASKINTERNALS				2
+/// covers the person's eyes
+#define COVERSEYES					4
+// covers the person's mouth
+#define COVERSMOUTH					8
+/// for galoshes/magic sandals/etc that prevent slipping on things
+#define NOSLIP						16
+/// ain't got no sleeeeeves
+#define SLEEVELESS					32
+/// block smoke inhalations (gas mask)
+#define BLOCKSMOKE					64
+/// blocks choking, also a very silly flag name
+#define BLOCKCHOKE					128
+/// is this clothing a jetpack
 #define IS_JETPACK					256
-#define EQUIPPED_WHILE_HELD			512		//doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
-#define NOT_EQUIPPED_WHEN_WORN		1024	//return early out of equipped/unequipped, unless in SLOT_L_HAND or SLOT_R_HAND (i.e.: if EQUIPPED_WHILE_HELD)
-#define HAS_GRAB_EQUIP				2048 	//if we currently have a grab (or by extention, a block) attached to us
-#define BLOCK_TOOLTIP				4096	//whether or not we should show extra tooltip info about blocking with this item
-#define BLOCK_CUT					8192	//block an extra point of cut damage when used to block
-#define BLOCK_STAB					16384	//block an extra point of stab damage when used to block
-#define BLOCK_BURN					32768	//block an extra point of burn damage when used to block
-#define BLOCK_BLUNT					65536	//block an extra point of blunt damage when used to block
+/// doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
+#define EQUIPPED_WHILE_HELD			512
+/// return early out of equipped/unequipped, unless in SLOT_L_HAND or SLOT_R_HAND (i.e.: if EQUIPPED_WHILE_HELD)
+#define NOT_EQUIPPED_WHEN_WORN		1024
+/// if we currently have a grab (or by extention, a block) attached to us
+#define HAS_GRAB_EQUIP				2048
+/// whether or not we should show extra tooltip info about blocking with this item
+#define BLOCK_TOOLTIP				4096
+/// block an extra point of cut damage when used to block
+#define BLOCK_CUT					8192
+/// block an extra point of stab damage when used to block
+#define BLOCK_STAB					16384
+/// block an extra point of burn damage when used to block
+#define BLOCK_BURN					32768
+/// block an extra point of blunt damage when used to block
+#define BLOCK_BLUNT					65536
+
 
 //Suit blood flags
 #define SUITBLOOD_ARMOR 1

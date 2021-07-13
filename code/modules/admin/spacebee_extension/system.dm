@@ -34,6 +34,26 @@ var/global/datum/spacebee_extension_system/spacebee_extension_system = new
 	logTheThing("admin", user, null, "Spacebee command: [msg]")
 	return src.process_raw_command(copytext(msg, 2), user)
 
+/// paginates a message in a way that fits into Discord messages
+/datum/spacebee_extension_system/proc/paginated_send(message)
+	var/msg_length = 1900 // 2000 - some reserve for the initial spacebee stuff
+	if(length(message) < msg_length)
+		return ircbot.export("admin", list("msg" = message))
+	var/list/lines = splittext(message, "\n")
+	var/list/current_message = list()
+	var/current_length = 0
+	for(var/line in lines)
+		if(length(line) + 1 + current_length >= msg_length)
+			. = ircbot.export("admin", list("msg" = jointext(current_message, "\n")))
+			if(!.)
+				return
+			current_message.Cut()
+			current_length = 0
+		current_message += line
+		current_length += 1 + length(line)
+	if(length(current_message))
+		return ircbot.export("admin", list("msg" = jointext(current_message, "\n")))
+
 /// replies to a given user on Discord
 /datum/spacebee_extension_system/proc/reply(msg, user)
 	ENSURE_USER
@@ -41,7 +61,7 @@ var/global/datum/spacebee_extension_system/spacebee_extension_system = new
 	if(config.env == "dev")
 		message_admins("Spacebee command reply to [user]: [replacetext(msg, "\n", "<br>")]")
 		return 1
-	return ircbot.export("admin", list("msg" = msg))
+	return paginated_send(msg)
 
 /// processes and runs a string that's supposed to be a command (with arguments and such)
 /datum/spacebee_extension_system/proc/process_raw_command(msg, user)
@@ -94,7 +114,8 @@ var/global/datum/spacebee_extension_system/spacebee_extension_system = new
 	// parse arguments
 	var/list/arguments = src.parse_arguments(arg_string, command.argument_instances)
 	if(isnull(arguments))
-		src.reply("Invalid arguments.", user)
+		var/datum/spacebee_extension_command/help/help_command = src.commands["help"]
+		src.reply("Invalid arguments.\n" + help_command?.help_for_command(command), user)
 		return
 
 	// create a new instance for multi-stage commands and such
@@ -106,13 +127,13 @@ var/global/datum/spacebee_extension_system/spacebee_extension_system = new
 
 /// parses the name and the server key of the command (if any), returns list(name, server_key, the_rest)
 /datum/spacebee_extension_system/proc/parse_command_head(msg)
-	whitespace_regex.Find(msg)
+	var/whitespace_index = whitespace_regex.Find(msg)
 	var/command_part = msg
-	if(whitespace_regex.index)
-		command_part = copytext(msg, 1, whitespace_regex.index)
+	if(whitespace_index)
+		command_part = copytext(msg, 1, whitespace_index)
 	var/rest = ""
-	if(whitespace_regex.index)
-		rest = copytext(msg, whitespace_regex.index + length(whitespace_regex.match))
+	if(whitespace_index)
+		rest = copytext(msg, whitespace_index + length(whitespace_regex.match))
 	if(!command_head_regex.Find(command_part))
 		return null
 	var/command = command_head_regex.group[1]

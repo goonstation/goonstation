@@ -8,13 +8,33 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "backpack"
 	flags = ONBACK | FPRINT | TABLEPASS | NOSPLASH
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	wear_image_icon = 'icons/mob/back.dmi'
 	spawn_contents = list(/obj/item/storage/box/starter)
 
+	blue
+		icon_state = "backpackb"
+		item_state = "backpackb"
+		desc = "A thick, wearable container made of synthetic fibers. The blue variation is similar in shade to Abzu's ocean."
+
+	red
+		icon_state = "backpackr"
+		item_state = "backpackr"
+		desc = "A thick, wearable container made of synthetic fibers. The red variation is striking and slightly suspicious."
+
+	brown
+		icon_state = "backpackbr"
+		item_state = "backpackbr"
+		desc = "A thick, wearable container made of synthetic fibers. The brown variation is both rustic and adventurous!"
+
+	green
+		icon_state = "backpackg"
+		item_state = "backpackg"
+		desc = "A thick, wearable container made of synthetic fibers. The green variation reminds you of a botanist's garden..."
+
 	New()
 		..()
-		BLOCK_LARGE
+		BLOCK_SETUP(BLOCK_LARGE)
 		AddComponent(/datum/component/itemblock/backpackblock)
 		AddComponent(/datum/component/storage, max_wclass = 3, does_not_open_in_pocket = FALSE)
 
@@ -25,12 +45,14 @@
 	name = "\improper NT backpack"
 	desc = "A stylish blue, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
 	icon_state = "NTbackpack"
+	item_state = "NTbackpack"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
 /obj/item/storage/backpack/syndie
 	name = "\improper Syndicate backpack"
 	desc = "A stylish red, evil, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on an operative's back."
 	icon_state = "Syndiebackpack"
+	item_state = "Syndiebackpack"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
 /obj/item/storage/backpack/captain
@@ -61,24 +83,119 @@
 
 /obj/item/storage/backpack/medic
 	name = "medic's backpack"
+	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a Medical Doctor's back."
 	icon_state = "bp_medic" //im doing inhands, im not getting baited into refactoring every icon state to use hyphens instead of underscores right now
 	item_state = "bp-medic"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
-#if ASS_JAM
-	New()
-		..()
-		ADD_MORTY(12, 7, 8, 8)
-#endif
+
+/obj/item/storage/backpack/randoseru
+	name = "randoseru"
+	desc = "Inconspicuous, nostalgic and quintessentially Space Japanese."
+	icon_state = "bp_randoseru"
+	item_state = "bp_randoseru"
+
+/obj/item/storage/backpack/fjallravenred
+	name = "rucksack"
+	desc = "A thick, wearable container made of synthetic fibers, perfectly suited for outdoorsy, adventure-loving staff."
+	icon_state = "bp_fjallraven_red"
+	item_state = "bp_fjallraven_red"
+
+/obj/item/storage/backpack/fjallravenyel
+	name = "rucksack"
+	desc = "A thick, wearable container made of synthetic fibers, perfectly suited for outdoorsy, adventure-loving staff."
+	icon_state = "bp_fjallraven_yellow"
+	item_state = "bp_fjallraven_yellow"
+
+/obj/item/storage/backpack/anello
+	name = "travel pack"
+	desc = "A thick, wearable container made of synthetic fibers, often seen carried by tourists and travelers."
+	icon_state = "bp_anello"
+	item_state = "bp_anello"
+
+/obj/item/storage/backpack/studdedblack
+	name = "studded backpack"
+	desc = "Made of sturdy synthleather and covered in metal studs. Much edgier than the standard issue bag."
+	icon_state = "bp_studded"
+	item_state = "bp_studded"
+
+/obj/item/storage/backpack/itabag
+	name = "pink itabag"
+	desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of Heisenbee!"
+	icon_state = "bp_itabag_pink"
+	item_state = "bp_itabag_pink"
+
+	blue
+		desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of Dr. Acula!"
+		icon_state = "bp_itabag_blue"
+		item_state = "bp_itabag_blue"
+
+	purple
+		desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of a Bombini!"
+		icon_state = "bp_itabag_purple"
+		item_state = "bp_itabag_purple"
+
+	mint
+		desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of Sylvester!"
+		icon_state = "bp_itabag_mint"
+		item_state = "bp_itabag_mint"
+
+	black
+		desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of Morty!"
+		icon_state = "bp_itabag_black"
+		item_state = "bp_itabag_black"
+
+/obj/item/storage/backpack/studdedwhite
+	name = "white studded backpack"
+	desc = "Made of sturdy white synthleather and covered in metal studs. Much edgier than the standard issue bag."
+	icon_state = "bp_studdedw"
+	item_state = "bp_studdedw"
+
+/obj/item/storage/backpack/breadpack
+	name = "bag-uette"
+	desc = "It kind of smells like bread too! Unfortunately inedible."
+	icon_state = "bp_breadpack"
+	item_state = "bp_breadpack"
+
+/obj/item/storage/backpack/bearpack
+	name = "bearpack"
+	desc = "An adorable friend that is perfect for hugs AND carries your gear for you, how helpful!"
+	icon_state = "bp_bear"
+	item_state = "bp_bear"
 
 /obj/item/storage/backpack/satchel
 	name = "satchel"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder."
 	icon_state = "satchel"
+	wear_layer = MOB_BACK_LAYER_SATCHEL // satchels show over the tail of lizards normally, they should be BEHIND the tail
+
+	blue
+		icon_state = "satchelb"
+		item_state = "satchelb"
+
+	red
+		icon_state = "satchelr"
+		item_state = "satchelr"
+
+	brown
+		icon_state = "satchelbr"
+		item_state = "satchelbr"
+
+	green
+		icon_state = "satchelg"
+		item_state = "satchelg"
 
 /obj/item/storage/backpack/satchel/syndie
 	name = "\improper Syndicate Satchel"
-	desc = "A stylish red, evil, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on an operative's back."
+	desc = "A stylish red, evil, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on an operative's shoulder."
 	icon_state = "Syndiesatchel"
+	item_state = "Syndiesatchel"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+
+/obj/item/storage/backpack/satchel/NT
+	name = "\improper NT Satchel"
+	desc = "A stylish blue, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder."
+	icon_state = "NTsatchel"
+	item_state = "NTsatchel"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
 /obj/item/storage/backpack/satchel/captain
@@ -96,34 +213,76 @@
 
 /obj/item/storage/backpack/satchel/medic
 	name = "medic's satchel"
+	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a Medical Doctor's shoulder."
 	icon_state = "satchel_medic"
-#if ASS_JAM
-	New()
-		..()
-		ADD_MORTY(8, 11, 7, 7)
-#endif
 
 /obj/item/storage/backpack/satchel/randoseru
-	name = "randoseru"
-	icon_state = "bp_randoseru"
-	item_state = "bp_randoseru"
+	name = "randoseru satchel"
+	desc = "Inconspicuous, nostalgic and quintessentially Space Japanese"
+	icon_state = "sat_randoseru"
+	item_state = "sat_randoseru"
 
 /obj/item/storage/backpack/satchel/fjallraven
-	name = "rucksack"
-	icon_state = "bp_fjallraven_red"
-	item_state = "bp_fjallraven_red"
-
-	New()
-		..()
-		if (prob(50))
-			icon_state = "bp_fjallraven_yellow"
-			item_state = "bp_fjallraven_yellow"
-
+	name = "rucksack satchel"
+	desc = "A thick, wearable container made of synthetic fibers, perfectly suited for outdoorsy, adventure-loving staff."
+	icon_state = "sat_fjallraven_red"
+	item_state = "sat_fjallraven_red"
 
 /obj/item/storage/backpack/satchel/anello
-	name = "travel pack"
-	icon_state = "bp_anello"
-	item_state = "bp_anello"
+	name = "travel satchel"
+	desc = "A thick, wearable container made of synthetic fibers, often seen carried by tourists and travelers."
+	icon_state = "sat_anello"
+	item_state = "sat_anello"
+
+/obj/item/storage/backpack/satchel/itabag
+	name = "pink itabag satchel"
+	desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of Heisenbee!"
+	icon_state = "sat_itabag_pink"
+	item_state = "sat_itabag_pink"
+
+	blue
+		desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of Dr. Acula!"
+		icon_state = "sat_itabag_blue"
+		item_state = "sat_itabag_blue"
+
+	purple
+		desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of a bumblespider!"
+		icon_state = "sat_itabag_purple"
+		item_state = "sat_itabag_purple"
+
+	mint
+		desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of Bombini!"
+		icon_state = "sat_itabag_mint"
+		item_state = "sat_itabag_mint"
+
+	black
+		desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of Morty!"
+		icon_state = "sat_itabag_black"
+		item_state = "sat_itabag_black"
+
+/obj/item/storage/backpack/satchel/studdedblack
+	name = "studded satchel"
+	desc = "Made of sturdy synthleather and covered in metal studs. Much edgier than the standard issue bag."
+	icon_state = "sat_studded"
+	item_state = "sat_studded"
+
+/obj/item/storage/backpack/satchel/studdedwhite
+	name = "white studded satchel"
+	desc = "Made of sturdy white synthleather and covered in metal studs. Much edgier than the standard issue bag."
+	icon_state = "sat_studdedw"
+	item_state = "sat_studdedw"
+
+/obj/item/storage/backpack/satchel/breadpack
+	name = "bag-uette satchel"
+	desc = "It kind of smells like bread too! Unfortunately inedible."
+	icon_state = "sat_breadpack"
+	item_state = "sat_breadpack"
+
+/obj/item/storage/backpack/satchel/bearpack
+	name = "bear-satchel"
+	desc = "An adorable friend that is perfect for hugs AND carries your gear for you, how helpful!"
+	icon_state = "sat_bear"
+	item_state = "sat_bear"
 
 /* -------------------- Fanny Packs -------------------- */
 
@@ -134,7 +293,7 @@
 	icon_state = "fanny"
 	item_state = "fanny"
 	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 5
@@ -142,8 +301,8 @@
 
 	New()
 		..()
-		BLOCK_ROPE
-		AddComponent(/datum/component/storage, max_wclass = 3, does_not_open_in_pocket = FALSE)
+		AddComponent(/datum/component/storage, max_wclass = 3, does_not_open_in_pocket = FALSE, slots = 5)
+		BLOCK_SETUP(BLOCK_ROPE)
 
 /obj/item/storage/fanny/funny
 	name = "funny pack"
@@ -152,6 +311,7 @@
 	item_state = "funny"
 	spawn_contents = list(/obj/item/storage/box/starter,\
 	/obj/item/storage/box/balloonbox)
+	slots = 7
 
 /obj/item/storage/fanny/funny/mini
 	name = "mini funny pack"
@@ -166,6 +326,7 @@
 	desc = "It's different than a fanny pack. It's tactical and action-packed!"
 	icon_state = "syndie"
 	item_state = "syndie"
+	slots = 7
 
 /* -------------------- Belts -------------------- */
 
@@ -178,12 +339,12 @@
 	stamina_damage = 10
 	stamina_cost = 5
 	stamina_crit_chance = 5
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 
 	New()
 		..()
-		BLOCK_ROPE
 		AddComponent(/datum/component/storage, max_wclass = 2, does_not_open_in_pocket = FALSE)
+		BLOCK_SETUP(BLOCK_ROPE)
 
 	proc/can_use()
 		.= 1
@@ -207,7 +368,7 @@
 			return
 		return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
 		if(!can_use())
 			boutput(user, "<span class='alert'>You need to wear [src] for that.</span>")
 			return
@@ -235,7 +396,7 @@
 	name = "aurora MKII utility belt"
 	desc = "An utility belt for usage in high-risk salvage operations. Contains a personal shield generator. Can be activated to overcharge the shields temporarily."
 	icon_state = "cebelt"
-	item_state = "utility"
+	item_state = "cebelt"
 	rarity = 4
 	abilities = list(/obj/ability_button/cebelt_toggle)
 	var/active = 0
@@ -345,13 +506,17 @@
 		lastTooltipContent = .
 
 /obj/item/storage/belt/utility/prepared
-	spawn_contents = list(/obj/item/crowbar,
+	spawn_contents = list(/obj/item/crowbar/yellow,
 	/obj/item/weldingtool,
-	/obj/item/wirecutters,
-	/obj/item/screwdriver,
-	/obj/item/wrench,
+	/obj/item/wirecutters/yellow,
+	/obj/item/screwdriver/yellow,
+	/obj/item/wrench/yellow,
 	/obj/item/device/multitool,
 	/obj/item/deconstructor)
+
+/obj/item/storage/belt/utility/superhero
+	name = "superhero utility belt"
+	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen)
 
 /obj/item/storage/belt/medical
 	name = "medical belt"
@@ -390,9 +555,24 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, can_hold = list(/obj/item/baton, /obj/item/gun/energy/taser_gun, /obj/item/gun/energy/phaser_gun, /obj/item/gun/energy/laser_gun,\
-		/obj/item/gun/energy/egun, /obj/item/gun/energy/lawbringer, /obj/item/gun/energy/lawbringer/old, /obj/item/gun/energy/wavegun, /obj/item/gun/kinetic/revolver, /obj/item/gun/kinetic/zipgun),\
+		var/can_hold = list(/obj/item/baton, // not included in this list are guns that are already small enough to fit (like the detective's gun)
+		/obj/item/gun/energy/taser_gun,
+		/obj/item/gun/energy/phaser_gun,
+		/obj/item/gun/energy/laser_gun,
+		/obj/item/gun/energy/egun,
+		/obj/item/gun/energy/lawbringer,
+		/obj/item/gun/energy/lawbringer/old,
+		/obj/item/gun/energy/wavegun,
+		/obj/item/gun/kinetic/revolver,
+		/obj/item/gun/kinetic/zipgun,
+		/obj/item/clothing/mask/gas/NTSO,
+		/obj/item/gun/energy/tasersmg,
+		/obj/item/gun/energy/signifer2, //added so the NTSO mask can be clipped to the belt, maybe good to do with all gas masks?
+		/obj/item/device/prisoner_scanner)
+
+		AddComponent(/datum/component/storage, can_hold = can_hold,\
 		in_list_or_max = TRUE, max_wclass = 2, does_not_open_in_pocket = FALSE)
+	
 
 // kiki's detective shoulder (holster)
 // get it? like kiki's delivery service? ah, i'll show myself out.
@@ -408,19 +588,30 @@
 
 
 	standard
-		spawn_contents = list(/obj/item/gun/energy/taser_gun, /obj/item/baton)
+		spawn_contents = list(/obj/item/gun/energy/taser_gun, /obj/item/baton, /obj/item/barrier)
 
 	offense
-		spawn_contents = list(/obj/item/gun/energy/wavegun, /obj/item/baton)
+		spawn_contents = list(/obj/item/gun/energy/wavegun, /obj/item/baton, /obj/item/barrier)
 
 	support
-		spawn_contents = list(/obj/item/baton, /obj/item/reagent_containers/food/snacks/donut/robust = 2,  /obj/item/reagent_containers/emergency_injector/morphine = 4)
+		spawn_contents = list(/obj/item/baton, /obj/item/reagent_containers/food/snacks/donut/custom/robust = 2,  /obj/item/reagent_containers/emergency_injector/morphine = 4)
 
 	control
-		spawn_contents = list(/obj/item/gun/energy/tasershotgun, /obj/item/chem_grenade/pepper = 4, /obj/item/baton)
+		spawn_contents = list(/obj/item/gun/energy/tasershotgun, /obj/item/baton, /obj/item/barrier)
 		New()
 			..()
 			AddComponent(/datum/component/storage, can_also_hold = list(/obj/item/gun/energy/tasershotgun))
+	assistant
+		spawn_contents = list(/obj/item/barrier, /obj/item/device/detective_scanner, /obj/item/device/ticket_writer)
+
+	ntso
+		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/gun/kinetic/clock_188, /obj/item/baton/ntso, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntso_pouch, /obj/item/barrier) //secbelt subtype that only spawns on NTSO, not in vendor
+
+	baton
+		spawn_contents = list(/obj/item/baton, /obj/item/barrier)
+
+	tasersmg
+		spawn_contents = list(/obj/item/gun/energy/tasersmg, /obj/item/baton, /obj/item/barrier)
 
 //////////////////////////////
 // ~Nuke Ops Class Storage~ //
@@ -459,7 +650,16 @@
 	New()
 		..()
 		AddComponent(/datum/component/storage, can_hold = list(/obj/item/gun/kinetic/pistol, /obj/item/ammo/bullets/bullet_9mm), in_list_or_max = FALSE, slots = 5)
+/obj/item/storage/belt/smartgun
+	name = "smartpistol belt"
+	desc = "A rugged belt fitted with a smart pistol holster and some magazine pouches."
+	icon_state = "smartgun_belt"
+	item_state = "smartgun_belt"
+	spawn_contents = list(/obj/item/gun/kinetic/pistol/smart/mkII, /obj/item/ammo/bullets/bullet_9mm/smartgun = 4)
 
+	New()
+		..()
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/gun/kinetic/pistol/smart/mkII, /obj/item/ammo/bullets/bullet_9mm/smartgun), in_list_or_max = FALSE, slots = 5)
 
 // fancy shoulder sling for grenades
 
@@ -476,18 +676,17 @@
 // combat medic storage 7 slot
 
 /obj/item/storage/belt/syndicate_medic_belt
-	name = "medical lifesaver bag"
+	name = "injector bag"
 	icon = 'icons/obj/items/belts.dmi'
-	desc = "A canvas duffel bag full of medicines."
+	desc = "A canvas duffel bag full of medical autoinjectors."
 	icon_state = "medic_belt"
 	item_state = "medic_belt"
 	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/high_capacity/epinephrine,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/salbutamol,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/salicylic_acid,
 	/obj/item/reagent_containers/emergency_injector/high_capacity/saline,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/atropine,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/pentetic,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/mannitol)
+	/obj/item/reagent_containers/emergency_injector/high_capacity/salbutamol,
+	/obj/item/reagent_containers/emergency_injector/high_capacity/mannitol,
+	/obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut,
+	/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector)
 
 /obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel
 	name = "medical shoulder pack"
@@ -495,11 +694,7 @@
 	icon_state = "Syndiesatchel"
 	item_state = "backpack"
 	spawn_contents = list(/obj/item/robodefibrillator,
-	/obj/item/extinguisher,
-	/obj/item/reagent_containers/iv_drip/blood,
-	/obj/item/reagent_containers/mender/brute,
-	/obj/item/reagent_containers/mender/burn,
-	/obj/item/reagent_containers/hypospray)
+	/obj/item/extinguisher)
 
 
 /* -------------------- Wrestling Belt -------------------- */
@@ -511,6 +706,7 @@
 	item_state = "machobelt"
 	contraband = 8
 	is_syndicate = 1
+	item_function_flags = IMMUNE_TO_ACID
 	mats = 18 //SPACE IS THE PLACE FOR WRESTLESTATION 13
 	var/fake = 0		//So the moves are all fake.
 
@@ -537,7 +733,7 @@
 	icon_state = "pool_ring"
 	item_state = "pool_ring"
 	flags = FPRINT | TABLEPASS | ONBELT
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	mats = 5 // I dunno???
 
 	New()

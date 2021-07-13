@@ -18,7 +18,7 @@
 	var/blood = 0		// 0=none, 1=blood-stained, 2=bloody
 	throw_speed = 1
 	throw_range = 4
-	w_class = 1
+	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS | CONDUCT
 
 #define MAX_SCRAP	15000	// maximum content amount of a scrap pile

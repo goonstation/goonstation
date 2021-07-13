@@ -27,8 +27,6 @@
 		critter_vars[target] = input(usr, "Value for [target]", "Value", 0) as num
 
 	var/static/list/critters = list(
-		"Alien" = /obj/critter/alien,
-		"Alien larva" = /obj/critter/alien/larva,
 		"Angry Bat" = /obj/critter/bat/buff,
 		"Bear" = /obj/critter/bear,
 		"Bee" = /obj/critter/domestic_bee,

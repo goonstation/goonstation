@@ -12,13 +12,13 @@
 		if (!..())
 			return 0
 		if(!emagged) //emagged pancreas doesn't regulate sugar for you anymore.
-			if (donor.reagents && donor.reagents.get_reagent_amount("sugar") > 80)	
+			if (donor.reagents && donor.reagents.get_reagent_amount("sugar") > 80)
 				if (prob(50))
 					donor.reagents.add_reagent("insulin", 1 * mult)
 					if(!robotic) //don't kill a cyberpancreas
 						src.take_damage(0, 0, 10)
 				else if (prob(50))
-					if (donor.reagents.get_reagent_amount("sugar") > 200)	
+					if (donor.reagents.get_reagent_amount("sugar") > 200)
 						donor.reagents.add_reagent("insulin", 2 * mult)
 						if(!robotic)
 							src.take_damage(0, 0, 40)
@@ -26,19 +26,31 @@
 			if (src.get_damage() >= 65 && prob(src.get_damage() * 0.2))
 				donor.contract_disease(failure_disease,null,null,1)
 		return 1
-		
+
 	disposing()
 		if (holder)
 			if (holder.pancreas == src)
 				holder.pancreas = null
 		..()
 
+/obj/item/organ/pancreas/synth
+	name = "synthpancreas"
+	organ_name = "synthpancreas"
+	icon_state = "plant"
+	desc = "A plant-based alternative to the normal pancreas..."
+	synthetic = 1
+	New()
+		..()
+		src.icon_state = pick("plant_pancreas", "plant_pancreas_bloom")
+
 /obj/item/organ/pancreas/cyber
 	name = "cyberpancreas"
 	desc = "A fancy robotic pancreas to replace one that someone's lost!"
 	icon_state = "cyber-pancreas"
 	// item_state = "heart_robo1"
+	made_from = "pharosium"
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	mats = 6
 

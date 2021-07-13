@@ -28,8 +28,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			if(IN_RANGE(F, T, F.range))
 				return 0
 
-	for (var/X in by_type[/obj/blob/nucleus])
-		var/obj/blob/nucleus/N = X
+	for_by_tcl(N, /obj/blob/nucleus)
 		if(IN_RANGE(N, T, 3))
 			return 0
 
@@ -56,6 +55,7 @@ proc/is_teleportation_allowed(var/turf/T)
 	timeout = 10
 	desc = "Stand on this to have your wildest dreams come true!"
 	device_tag = "PNET_S_TELEPAD"
+	plane = PLANE_NOSHADOW_BELOW
 	var/recharging = 0
 	var/realx = 0
 	var/realy = 0
@@ -603,7 +603,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		else //MAJOR EFFECTS
 			effect = pick("mutatearea","areascatter","majorsummon")
 		logTheThing("station", usr, null, "receives the telepad at [log_loc(src)] on invalid coords, causing the [effect] effect.")
-		processbadeffect(effect)
+		INVOKE_ASYNC(src, /obj/machinery/networked/telepad.proc/processbadeffect, effect)
 
 	proc/processbadeffect(var/effect)
 		switch(effect)
@@ -611,12 +611,12 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 			if("flash")
 				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>A bright flash emnates from the [src]!</span>", 1)
-				playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
+				playsound(src.loc, "sound/weapons/flashbang.ogg", 35, 1)
 				for (var/mob/N in viewers(src, null))
 					if (get_dist(N, src) <= 6)
 						N.apply_flash(30, 5)
 					if (N.client)
-						shake_camera(N, 6, 4)
+						shake_camera(N, 6, 32)
 				return
 			if("buzz")
 				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>You hear a loud buzz coming from the [src]!</span>", 1)
@@ -630,7 +630,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					if(T.y>world.maxy-4 || T.y<4)	continue
 					if (is_teleportation_allowed(T))
 						turfs += T
-				if(turfs && turfs.len)
+				if(length(turfs))
 					for(var/atom/movable/O as obj|mob in src.loc)
 						if(O.anchored) continue
 						target = pick(turfs)
@@ -661,7 +661,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				var/myturf = src.loc
 				for(var/atom/movable/M in view(4, myturf))
 					if(M.anchored) continue
-					if(ismob(M)) if(hasvar(M,"weakened")) M:changeStatus("weakened", 80)
+					if(ismob(M)) if(hasvar(M,"weakened")) M:changeStatus("weakened", 8 SECONDS)
 					if(ismob(M)) random_brute_damage(M, 20)
 					var/dir_away = get_dir(myturf,M)
 					var/turf/target = get_step(myturf,dir_away)
@@ -686,7 +686,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					if(T.y>world.maxy-4 || T.y<4)	continue
 					if (is_teleportation_allowed(T))
 						turfs += T
-				if(turfs && turfs.len)
+				if(length(turfs))
 					for(var/atom/movable/O as obj|mob in src.loc)
 						if(O.anchored) continue
 						target = pick(turfs)
@@ -727,7 +727,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					if(T.y>world.maxy-4 || T.y<4)	continue
 					if (is_teleportation_allowed(T))
 						turfs += T
-				if(turfs && turfs.len)
+				if(length(turfs))
 					for(var/atom/movable/O as obj|mob in src.loc)
 						if(O.anchored) continue
 						target = pick(turfs)
@@ -738,47 +738,25 @@ proc/is_teleportation_allowed(var/turf/T)
 				var/summon = pick("pig","mouse","roach","rockworm")
 				switch(summon)
 					if("pig")
-						var/obj/critter/pig/P = new /obj/critter/pig
-						P.set_loc(src.loc)
+						new /obj/critter/pig(src.loc)
 					if("mouse")
-						for(var/i=1,i<rand(1,3),i++)
-							var/obj/critter/mouse/M = new /obj/critter/mouse
-							M.set_loc(src.loc)
-							i ++
+						for(var/i = 1 to rand(3,8))
+							new/obj/critter/mouse(src.loc)
 					if("roach")
-						for(var/i=1,i<rand(3,8),i++)
-							var/obj/critter/roach/R = new /obj/critter/roach
-							R.set_loc(src.loc)
-							i ++
+						for(var/i = 1 to rand(3,8))
+							new/obj/critter/roach(src.loc)
+					if("rockworm")
+						for(var/i = 1 to rand(3,8))
+							new/obj/critter/rockworm(src.loc)
 				return
 			if("tinyfire")
 				fireflash(src.loc, 3)
-				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
+				for(var/mob/O in AIviewers(src, null))
+					O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
 				return
 			if("mediumsummon")
-				var/summon = pick("maneater","killertomato","bee","golem","magiczombie","mimic")
-				switch(summon)
-					if("maneater")
-						var/obj/critter/maneater/P = new /obj/critter/maneater
-						P.set_loc(src.loc)
-					if("killertomato")
-						var/obj/critter/killertomato/P = new /obj/critter/killertomato
-						P.set_loc(src.loc)
-					if("bee")
-						var/obj/critter/spacebee/P = new /obj/critter/spacebee
-						P.set_loc(src.loc)
-					if("golem")
-						var/obj/critter/golem/P = new /obj/critter/golem
-						P.set_loc(src.loc)
-					if("magiczombie")
-						var/obj/critter/magiczombie/P = new /obj/critter/magiczombie
-						P.set_loc(src.loc)
-					if("mimic")
-						var/obj/critter/mimic/P = new /obj/critter/mimic
-						P.set_loc(src.loc)
-					//if("mimic2") // Not much of a mimic. Doesn't use the current toolbox sprite (Convair880).
-					//	var/obj/critter/mimic2/P = new /obj/critter/mimic2
-					//	P.set_loc(src.loc)
+				var/summon = pick(/obj/critter/maneater,/obj/critter/killertomato,/obj/critter/spacebee,/obj/critter/golem,/obj/critter/magiczombie,/obj/critter/mimic)
+				new summon(src.loc)
 				return
 			if("getrandom")
 				var/turfs = list()
@@ -799,7 +777,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					if(T.y>world.maxy-4 || T.y<4)	continue
 					if (is_teleportation_allowed(T))
 						turfs += T
-				if (turfs && turfs.len)
+				if (length(turfs))
 					for(var/atom/movable/O as obj|mob in oview(src,5))
 						if(O.anchored) continue
 						target = pick(turfs)
@@ -807,32 +785,16 @@ proc/is_teleportation_allowed(var/turf/T)
 				qdel(turfs)
 				return
 			if("majorsummon")
-				var/summon = pick("zombie","bear","syndicate","martian","lion","yeti","drone","ancient")
-				switch(summon)
-					if("maneater")
-						var/obj/critter/zombie/P = new /obj/critter/zombie
-						P.set_loc(src.loc)
-					if("bear")
-						var/obj/critter/bear/P = new /obj/critter/bear
-						P.set_loc(src.loc)
-					if("syndicate")
-						var/mob/living/carbon/human/npc/syndicate/P = new /mob/living/carbon/human/npc/syndicate
-						P.set_loc(src.loc)
-					if("martian")
-						var/obj/critter/martian/soldier/P = new /obj/critter/martian/soldier
-						P.set_loc(src.loc)
-					if("lion")
-						var/obj/critter/lion/P = new /obj/critter/lion
-						P.set_loc(src.loc)
-					if("yeti")
-						var/obj/critter/yeti/P = new /obj/critter/yeti
-						P.set_loc(src.loc)
-					if("drone")
-						var/obj/critter/gunbot/drone/P = new /obj/critter/gunbot/drone
-						P.set_loc(src.loc)
-					if("ancient")
-						var/obj/critter/ancient_thing/P = new /obj/critter/ancient_thing
-						P.set_loc(src.loc)
+				var/summon = pick(
+					/obj/critter/zombie,
+					/obj/critter/bear,
+					/mob/living/carbon/human/npc/syndicate,
+					/obj/critter/martian/soldier,
+					/obj/critter/lion,
+					/obj/critter/yeti,
+					/obj/critter/gunbot/drone,
+					/obj/critter/ancient_thing)
+				new summon(src.loc)
 				return
 
 
@@ -1003,7 +965,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		if(allow_bookmarks)
 			dat += "<br><A href='?src=\ref[src];addbookmark=1'>Add Bookmark</A>"
 
-		if(allow_bookmarks && bookmarks.len)
+		if(allow_bookmarks && length(bookmarks))
 			dat += "<br><br><br>Bookmarks:"
 			for (var/datum/teleporter_bookmark/b in bookmarks)
 				dat += "<br>[b.name] ([b.x]/[b.y]/[b.z]) <A href='?src=\ref[src];restorebookmark=\ref[b]'>Restore</A> <A href='?src=\ref[src];deletebookmark=\ref[b]'>Delete</A>"

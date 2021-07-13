@@ -1,5 +1,6 @@
 # Goonstation Spriting Guidelines
 
+{%hackmd @ZeWaka/dark-theme %}
 
 ## Basic Style :sunglasses: 
 

@@ -99,7 +99,7 @@ export const formatMoney = (value, precision = 0) => {
  */
 export const formatDb = value => {
   const db = 20 * Math.log(value) / Math.log(10);
-  const sign = db >= 0 ? '+' : db < 0 ? '–' : '';
+  const sign = db >= 0 ? '+' : '–';
   let formatted = Math.abs(db);
   if (formatted === Infinity) {
     formatted = 'Inf';
@@ -135,8 +135,29 @@ export const formatTime = (time, msg = "") => {
   return `${minutes}:${seconds}`;
 };
 /**
+ * Formats pressure in terms of kPa, or scientific Pa if very large.
+ */
+export const formatPressure = value => {
+  if (value < 10000) {
+    return toFixed(value) + ' kPa';
+  }
+  return formatSiUnit(value * 1000, 1, 'Pa');
+};
+
+/**
  * Truncates a string with an ellipsis after n characters. Default is 25.
  */
 export const truncate = (str, n = 25) => {
   return (str.length > n) ? str.substr(0, n-1) + '…' : str;
+};
+
+/**
+ * Formats radio frequencies.
+ *
+ * @param {number} f
+ * @returns {string}
+ */
+export const formatFrequency = f => {
+  f = Math.round(f);
+  return Math.floor(f / 10) + "." + (f % 10);
 };

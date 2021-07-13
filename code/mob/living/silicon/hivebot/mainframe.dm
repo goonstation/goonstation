@@ -33,6 +33,7 @@
 		if(!src.mind)
 			if(src.client)
 				src.mind = new
+				src.mind.ckey = ckey
 				src.mind.key = src.key
 				src.mind.current = src
 				ticker.minds += src.mind
@@ -52,8 +53,7 @@
 	src.lying = 1
 	src.icon_state = "hive_main-crash"
 
-	if(src.mind)
-		src.mind.register_death()
+	src.mind?.register_death()
 
 	return ..(gibbed)
 

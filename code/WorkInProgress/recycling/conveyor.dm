@@ -46,6 +46,11 @@
 	..()
 	basedir = dir
 	setdir()
+	UnsubscribeProcess()
+
+/obj/machinery/conveyor/initialize()
+	..()
+	setdir()
 
 /obj/machinery/conveyor/disposing()
 	for(var/obj/machinery/conveyor/C in range(1,src))
@@ -61,9 +66,9 @@
 
 /obj/machinery/conveyor/proc/setdir()
 	if(operating == -1)
-		dir = turn(basedir,180)
+		set_dir(turn(basedir,180))
 	else
-		dir = basedir
+		set_dir(basedir)
 	next_conveyor = locate(/obj/machinery/conveyor) in get_step(src,dir)
 	update()
 
@@ -77,30 +82,18 @@
 
 	if(!operable)
 		operating = 0
-	if(!operating)
-		for(var/atom/A in loc.contents)
+	if(!operating || (status & NOPOWER))
+		for(var/atom/movable/A in loc.contents)
 			walk(A, 0)
+	else
+		for(var/atom/movable/A in loc.contents)
+			move_thing(A)
 
 	icon_state = "conveyor[(operating != 0) && !(status & NOPOWER)]"
 
 
-	// machine process
-	// move items to the target location
-/obj/machinery/conveyor/process()
-	if(status & (BROKEN | NOPOWER))
-		return
-	if(!operating)
-		return
-	if(!loc)
-		return
-
-	..()
-
-	for(var/atom/A in loc.contents)
-		move_thing(A)
-
 /obj/machinery/conveyor/proc/move_thing(var/atom/movable/A)
-	if (A.anchored)
+	if (A.anchored || A.temp_flags & BEING_CRUSHERED)
 		return
 	if(isobserver(A))
 		return
@@ -109,12 +102,9 @@
 	if(istype(A, /obj/critter) && A:flying)		//They are flying above it, ok.
 		return
 	var/movedir = dir	// base movement dir
-	if(divert && dir==divdir)	// update if diverter present
+	if(divert && dir == divdir)	// update if diverter present
 		movedir = divert
 
-	/* if (A.l_move_time == world.timeofday)
-		continue // already moved by another conveyor
-		*/
 	var/mob/M = A
 	if(istype(M) && M.buckled == src)
 		M.glide_size = (32 / move_lag) * world.tick_lag
@@ -139,7 +129,6 @@
 		return
 	if(!loc)
 		return
-	//DEBUG_MESSAGE("[AM] entered conveyor at [showCoords(src.x, src.y, src.z)] and is being moved.")
 	move_thing(AM)
 
 /obj/machinery/conveyor/HasExited(var/atom/movable/AM, var/atom/newloc)
@@ -151,9 +140,8 @@
 	if(!loc)
 		return
 
-	if(next_conveyor && next_conveyor.loc == newloc)
+	if(src.next_conveyor && src.next_conveyor.loc == newloc)
 		//Ok, they will soon walk() according to the new conveyor
-		//DEBUG_MESSAGE("[AM] exited conveyor at [showCoords(src.x, src.y, src.z)] onto another conveyor! Wow!.")
 		var/mob/M = AM
 		if(istype(M) && M.buckled == src) //Transfer the buckle
 			M.buckled = next_conveyor
@@ -163,7 +151,6 @@
 
 	else
 		//Stop walking, we left the belt
-		//DEBUG_MESSAGE("[AM] exited conveyor at [showCoords(src.x, src.y, src.z)] onto the cold, hard floor.")
 		var/mob/M = AM
 		if(istype(M) && M.buckled == src) //Unbuckle
 			M.buckled = null
@@ -181,7 +168,7 @@
 		var/mob/M = locate() in src.loc
 		if(M)
 			if (M == user)
-				src.visible_message("<span class='notice'>[M] ties \himself to the conveyor.</span>")
+				src.visible_message("<span class='notice'>[M] ties [himself_or_herself(M)] to the conveyor.</span>")
 				// note don't check for lying if self-tying
 			else
 				if(M.lying)
@@ -190,7 +177,7 @@
 					boutput(user, "<span class='hint'>[M] must be lying down to be tied to the converyor!</span>")
 					return
 
-			M.buckled = src.loc
+			M.buckled = src //behold the most mobile of stools
 			src.add_fingerprint(user)
 			I:use(1)
 			M.lying = 1
@@ -205,7 +192,7 @@
 			M.buckled = null
 			src.add_fingerprint(user)
 			if (M == user)
-				src.visible_message("<span class='notice'>[M] cuts \himself free from the conveyor.</span>")
+				src.visible_message("<span class='notice'>[M] cuts [himself_or_herself(M)] free from the conveyor.</span>")
 			else
 				src.visible_message("<span class='notice'>[M] had been cut free from the conveyor by [user].</span>")
 			return
@@ -237,8 +224,7 @@
 	update()
 
 	var/obj/machinery/conveyor/C = locate() in get_step(src, basedir)
-	if(C)
-		C.set_operable(basedir, id, 0)
+	C?.set_operable(basedir, id, 0)
 
 	C = locate() in get_step(src, turn(basedir,180))
 	if(C)
@@ -418,7 +404,7 @@
 
 	SPAWN_DBG(0.5 SECONDS)		// allow map load
 		conveyors = list()
-		for(var/obj/machinery/conveyor/C in machine_registry[MACHINES_CONVEYORS])
+		for(var/obj/machinery/conveyor/C as anything in machine_registry[MACHINES_CONVEYORS])
 			if(C.id == id)
 				conveyors += C
 				C.owner = src
@@ -478,7 +464,7 @@
 	update()
 
 	// find any switches with same id as this one, and set their positions to match us
-	for(var/obj/machinery/conveyor_switch/S in by_type[/obj/machinery/conveyor_switch])
+	for_by_tcl(S, /obj/machinery/conveyor_switch)
 		if(S.id == src.id)
 			S.position = position
 			S.update()
@@ -509,9 +495,9 @@
 
 	setdir()
 		if(operating == -1)
-			dir = altdir
+			set_dir(altdir)
 		else
-			dir = startdir
+			set_dir(startdir)
 		next_conveyor = locate(/obj/machinery/conveyor) in get_step(src,dir)
 		update()
 
@@ -610,12 +596,12 @@
 			update_icon()
 
 	proc/update_belts()
-		for(var/obj/machinery/conveyor_switch/S in by_type[/obj/machinery/conveyor_switch])
+		for_by_tcl(S, /obj/machinery/conveyor_switch)
 			if(S.id == "carousel")
 				for(var/obj/machinery/conveyor/C in S.conveyors)
 					C.move_lag = max(initial(C.move_lag) - speedup, 0.1)
 				break
 
 	proc/update_icon()
-		var/ico = (speedup / speedup_max) * icon_levels
+		var/ico = clamp(((speedup / speedup_max) * icon_levels), 0, 6)
 		icon_state = "[icon_base][round(ico)]"

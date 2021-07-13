@@ -16,7 +16,8 @@
 			boutput(holder.owner, "<span class='alert'>You already have a Spell Shield active!</span>")
 			return
 
-		holder.owner.say("XYZZYX")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("XYZZYX")
 		..()
 
 		var/image/shield_overlay = null

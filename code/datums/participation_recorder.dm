@@ -54,11 +54,11 @@ var/global/datum/participationRecorder/participationRecorder
 
 	//Release hold, disabling queuing and sending a BIG OL BLOB of data to the API
 	proc/releaseHold()
-		if (!src.holding || !src.queue.len) return
+		if (!src.holding || !length(src.queue)) return
 		src.holding = 0
 
 		if (src.debug)
-			src.debugLog("(participationRecorder) Release hold called. round_name: [ticker.mode.name]. queue: [json_encode(src.queue)]")		
+			src.debugLog("(participationRecorder) Release hold called. round_name: [ticker.mode.name]. queue: [json_encode(src.queue)]")
 
 		var/list/payload = list(
 			"round_mode" = ticker.mode.name

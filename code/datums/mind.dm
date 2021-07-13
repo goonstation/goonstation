@@ -102,6 +102,9 @@ datum/mind
 			if(current.client)
 				current.removeOverlaysClient(current.client)
 				tgui_process.on_transfer(current, new_character)
+				new_character.lastKnownIP = current.client.address
+				if(isghostdrone(src.current)) //clear the static overlays on death, qdel, being cloned, etc.
+					current.client.images.Remove(mob_static_icons)
 			current.mind = null
 
 		new_character.mind = src
@@ -179,7 +182,7 @@ datum/mind
 		output += memory
 
 		if (objectives.len>0)
-			output += "<HR><B>Objectives:</B>"
+			output += "<HR><B>Objectives:</B><br>"
 
 			var/obj_count = 1
 			for (var/datum/objective/objective in objectives)
@@ -216,3 +219,4 @@ datum/mind
 
 /datum/mind/proc/add_karma(how_much)
 	src.karma += how_much
+	src.karma = clamp(src.karma, karma_min, karma_max)

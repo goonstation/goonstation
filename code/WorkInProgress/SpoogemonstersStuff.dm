@@ -254,6 +254,9 @@
 		return
 
 	attack_hand(mob/user as mob)
+		if(!isadmin(user) && current_state < GAME_STATE_FINISHED)
+			boutput(user, "<span class='alert'>This dispenser is too powerful for you!</span>")
+			return
 		panel()
 
 	proc/panel()
@@ -288,7 +291,7 @@
 		span.addChildElement(chemSelect)
 		chemSelect.setId("chemselect")
 		chemSelect.setName("chemselect")
-		for(var/rtype in global.reagents_cache)
+		for(var/rtype in all_functional_reagent_ids)
 			chemSelect.addOption(rtype,rtype)
 
 		span = new

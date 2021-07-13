@@ -65,16 +65,14 @@ var/sound/mutecache
 			recalcClient(c)
 /*/client/Move()
 	.=..()
-	for(var/snd in allAttachedSounds)
-		var/sound/S = snd
+	for (var/sound/S as anything in allAttachedSounds)
 		world << "[S]"
 		if(S.listeners.Find( src ))
 			S.recalcClient(src)*/
 /atom/movable/proc/update_sounds()
 	.=..()
-	if(attachedSounds && attachedSounds.len)
-		for(var/snd in attachedSounds)
-			var/sound/S = snd
+	if(length(attachedSounds))
+		for (var/sound/S as anything in attachedSounds)
 			S.recalculate()
 			//world << "Recalc due to move!"
 

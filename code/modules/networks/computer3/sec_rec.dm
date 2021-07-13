@@ -180,7 +180,7 @@
 						message_server("command=print&args=index")
 						sleep(0.8 SECONDS)
 						var/dat = "Known Printers:"
-						if (!src.known_printers || !src.known_printers.len)
+						if (!src.known_printers || !length(src.known_printers))
 							dat += "<br> \[__] No printers known."
 
 						else
@@ -595,7 +595,7 @@
 						return
 
 					var/list/commandList = splittext(data["command"], "|n")
-					if (!commandList || !commandList.len)
+					if (!commandList || !length(commandList))
 						return
 
 					switch (commandList[1])
@@ -680,7 +680,7 @@
 		print_index()
 			src.master.temp = null
 			var/dat = ""
-			if(!src.record_list || !src.record_list.len)
+			if(!src.record_list || !length(src.record_list))
 				src.print_text("<b>Error:</b> No records found in database.")
 				dat += "<br><b>\[99]</b> Create New Record.<br>"
 
@@ -740,7 +740,7 @@
 			//Create a PDA mass-message string.
 			signal.data["command"] = "text_message"
 			signal.data["sender_name"] = "SEC-MAILBOT"
-			signal.data["group"] = src.setup_mailgroup //Only security PDAs should be informed.
+			signal.data["group"] = list(src.setup_mailgroup, MGA_ARREST) //Only security PDAs should be informed.
 			signal.data["message"] = "Alert! Crewman \"[perp_name]\" has been flagged for arrest by [src.authenticated]!"
 
 			src.log_string += "<br>Arrest notification sent."

@@ -78,10 +78,10 @@
 	for (var/obj/item/implant/I in C) //Still preserving implants
 		implants += I
 
-	C.reagents.remove_any(10 * mult)
 
 	if (!C.getStatusDuration("burning") && !isdead(C) && (C.health < 100 || !C.limbs.l_arm || !C.limbs.r_arm || !C.limbs.l_leg || !C.limbs.r_leg || C.organHolder.get_missing_organs().len > 0))
-		if (C.health < 100)
+		C.reagents.remove_any(10 * mult)
+		if (C.health < C.max_health)
 			C.HealDamage("All", 10 * mult, 1 * mult)
 			C.take_toxin_damage(-10 * mult)
 			C.take_oxygen_deprivation(-10 * mult)
@@ -139,6 +139,11 @@
 				C.set_body_icon_dirty()
 
 		C.organHolder.create_organs()
+		C.organHolder.heal_organs(10 * mult, 10 * mult, 10 * mult, list("brain", "left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail"))
+		for (var/organ_slot in C.organHolder.organ_list)
+			var/obj/item/organ/O = C.organHolder.organ_list[organ_slot]
+			if(istype(O))
+				O.unbreakme()
 
 		if (prob(25))
 			if (changer)

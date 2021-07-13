@@ -2,7 +2,7 @@
 	name = "janky assembly"
 	desc = "What the fuck is this!?"
 	icon_state = "tb-blue"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 
 
 	var/mob/living/intangible/brainmob/controller = null
@@ -36,13 +36,11 @@
 		update_icon()
 
 	disposing()
-		if(controller)
-			controller.ghostize()
+		controller?.ghostize()
 		..()
 
 	disposing()
-		if(controller)
-			controller.ghostize()
+		controller?.ghostize()
 		..()
 
 	complete
@@ -232,10 +230,10 @@
 			update_controller_verbs()
 		if ("pulse")
 			controller.say("[pick("BZ", "FZ", "GZ")][pick("A", "U", "O")][pick("P", "T", "ZZ")]")
-			playsound(get_turf(src), 'sound/voice/screams/robot_scream.ogg', 10, 1)
+			playsound(src, 'sound/voice/screams/robot_scream.ogg', 10, 1)
 		if ("cut")
 			controller.show_text("You no longer feel connected to the [det]!", "red")
-			playsound(get_turf(src), 'sound/voice/screams/robot_scream.ogg', 70, 1)
+			playsound(src, 'sound/voice/screams/robot_scream.ogg', 70, 1)
 			detonator_part = null
 			update_controller_verbs()
 

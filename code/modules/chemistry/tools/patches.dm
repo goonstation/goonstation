@@ -2,7 +2,7 @@
 
 
 /mob/living/proc/handle_skin(var/mult = 1)
-	if (src.skin_process && src.skin_process.len)
+	if (src.skin_process && length(src.skin_process))
 		for(var/obj/item/reagent_containers/patch/P in skin_process)
 			//P.process_skin(src, XXX * mult)
 			continue
@@ -69,6 +69,8 @@
 				icon_state = "[src.style]_med1"
 			if (reagents.has_reagent("LSD",1))
 				icon_state = "[src.style]_LSD"
+			if (reagents.has_reagent("lsd_bee"))
+				icon_state = "[src.style]_LSBee"
 
 			if (!src.fluid_image)
 				src.fluid_image = image('icons/obj/chemical.dmi', "[src.style]-fluid", -1)
@@ -107,7 +109,7 @@
 
 		if (iscarbon(user) || ismobcritter(user))
 			src.in_use = 1
-			user.visible_message("[user] applies [src] to [his_or_her(user)]self.",\
+			user.visible_message("[user] applies [src] to [himself_or_herself(user)].",\
 			"<span class='notice'>You apply [src] to yourself.</span>")
 			logTheThing("combat", user, null, "applies a patch to themself [log_reagents(src)] at [log_loc(user)].")
 			apply_to(user,0,user=user)
@@ -139,7 +141,7 @@
 			src.in_use = 1
 			if (M == user)
 				//M.show_text("You put [src] on your arm.", "blue")
-				M.visible_message("[user] applies [src] to [his_or_her(user)]self.",\
+				M.visible_message("[user] applies [src] to [himself_or_herself(user)].",\
 				"<span class='notice'>You apply [src] to yourself.</span>")
 			else
 				if (medical == 0)
@@ -186,9 +188,9 @@
 		repair_bleeding_damage(M, 25, 1)
 		active = 1
 
-		if (reagents && reagents.total_volume)
+		if (reagents?.total_volume)
 			if (!borg)
-				user.drop_item(src)
+				user?.drop_item(src)
 				//user.u_equip(src)
 				//qdel(src)
 				src.set_loc(M)
@@ -203,7 +205,7 @@
 				R.trans_to(M, reagents.total_volume/2)
 				src.in_use = 0
 
-			playsound(get_turf(src), 'sound/items/sticker.ogg', 50, 1)
+			playsound(src, 'sound/items/sticker.ogg', 50, 1)
 
 		else
 			if (!borg)
@@ -316,6 +318,13 @@
 	cyborg
 		borg = 1
 
+/obj/item/reagent_containers/patch/lsd_bee
+	name = "bluzzer"
+	desc = "A highly potent hallucinogenic substance. It smells like honey."
+	icon_state = "patch_LSBee"
+	initial_reagents = list("lsd_bee"=20)
+	module_research = list("vice" = 10)
+
 /obj/item/reagent_containers/patch/vr
 	icon = 'icons/effects/VR.dmi'
 	icon_state = "patch_med"
@@ -380,7 +389,8 @@
 	var/tampered = 0
 	var/borg = 0
 	initial_volume = 200
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH | ATTACK_SELF_DELAY
+	click_delay = 0.7 SECONDS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	module_research = list("medicine" = 4, "science" = 4)
 	module_research_type = /obj/item/reagent_containers/patch
@@ -393,7 +403,7 @@
 
 	New()
 		..()
-		if (!tampered && islist(chem_whitelist) && chem_whitelist.len)
+		if (!tampered && islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist
 		if (src.reagents)
 			src.reagents.temperature_cap = 330
@@ -415,13 +425,14 @@
 		.= (iscarbon(A) || ismobcritter(A))
 
 	proc/update_icon()
-		src.overlays = null
 		if (reagents.total_volume)
 			if (!src.fluid_image)
 				src.fluid_image = image('icons/obj/chemical.dmi', "mender-fluid", -1)
 			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
-			src.overlays += src.fluid_image
+			src.UpdateOverlays(src.fluid_image, "fluid")
+		else
+			src.UpdateOverlays(null, "fluid")
 		signal_event("icon_updated")
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -448,7 +459,7 @@
 
 		if (can_operate_on(M) && !actions.hasAction(user,"automender_apply"))
 			if (M == user)
-				M.visible_message("[user] begins mending [his_or_her(user)]self with [src].",\
+				M.visible_message("[user] begins mending [himself_or_herself(user)] with [src].",\
 					"<span class='notice'>You begin mending yourself with [src].</span>")
 			else
 				user.visible_message("<span class='alert'><b>[user]</b> begins mending [M] with [src].</span>",\
@@ -470,7 +481,7 @@
 		//repair_bleeding_damage(M, 66, 1)
 		var/use_volume_adjusted = use_volume * mult
 
-		if (reagents && reagents.total_volume)
+		if (reagents?.total_volume)
 			var/list/params = list("nopenetrate")
 			if (silent)
 				params.Add("silent")
@@ -485,7 +496,7 @@
 				R.trans_to(M, use_volume_adjusted/2)
 			logTheThing("combat", user, M, " automends [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
 
-			playsound(get_turf(src), pick(sfx), 50, 1)
+			playsound(src, pick(sfx), 50, 1)
 
 
 
@@ -496,12 +507,18 @@
 		name = "brute auto-mender"
 		borg = 1
 
+	high_capacity
+		initial_volume = 500
+
 /obj/item/reagent_containers/mender/burn
 	initial_reagents = "silver_sulfadiazine"
 
 	medbot
 		name = "burn auto-mender"
 		borg = 1
+
+	high_capacity
+		initial_volume = 500
 
 /obj/item/reagent_containers/mender/both
 	initial_reagents = "synthflesh"
@@ -558,7 +575,7 @@
 		M.apply_to(target,user, multiply, silent = (looped >= 1))
 
 	onEnd()
-		if(get_dist(user, target) > 1 || user == null || target == null)
+		if(get_dist(user, target) > 1 || user == null || target == null || !user.find_in_hand(M))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return

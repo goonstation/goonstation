@@ -13,7 +13,7 @@ datum/pipeline
 			network.member_disposing(src)
 		network = null
 
-		if(air && air.volume)
+		if(air?.volume)
 			temporarily_store_air()
 			pool(air)
 		air = null
@@ -34,9 +34,9 @@ datum/pipeline
 		if (!air) // null air? oh god!
 			/*
 			var/obj/machinery/atmospherics/member = null
-			if (members && members.len > 0)
+			if (length(members))
 				member = members[0]
-			else if (edges && edges.len > 0)
+			else if (length(edges))
 				member = edges[0]
 			*/
 			//logTheThing("debug", null, null, "null air in pipeline([member ? "([showCoords(member.x, member.y, member.z)])" : "detached" ])")
@@ -62,7 +62,7 @@ datum/pipeline
 			if (!member.air_temporary)
 				member.air_temporary = new
 			else
-				member.air_temporary.trace_gases = null
+				member.air_temporary.clear_trace_gases()
 			member.air_temporary.volume = member.volume
 
 			#define _TEMPORARILY_STORE_GAS(GAS, ...) member.air_temporary.GAS = air.GAS * member.volume / air.volume;
@@ -72,12 +72,8 @@ datum/pipeline
 			member.air_temporary.temperature = air.temperature
 
 			if(length(air.trace_gases))
-				for(var/datum/gas/trace_gas in air.trace_gases)
-					var/datum/gas/corresponding = new trace_gas.type()
-					if(!member.air_temporary.trace_gases)
-						member.air_temporary.trace_gases = list()
-					member.air_temporary.trace_gases += corresponding
-
+				for(var/datum/gas/trace_gas as anything in air.trace_gases)
+					var/datum/gas/corresponding = member.air_temporary.get_or_add_trace_gas_by_type(trace_gas.type)
 					corresponding.moles = trace_gas.moles*member.volume/air.volume
 
 	proc/build_pipeline(obj/machinery/atmospherics/pipe/base)
@@ -108,11 +104,11 @@ datum/pipeline
 			for(var/obj/machinery/atmospherics/pipe/borderline in possible_expansions)
 
 				var/list/result = borderline.pipeline_expansion()
-				var/edge_check = result.len
+				var/edge_check = length(result)
 
 				if(result.len>0)
 					for(var/obj/machinery/atmospherics/pipe/item in result)
-						if(!members.Find(item))
+						if(!(item in members))
 							members += item
 							possible_expansions += item
 
@@ -133,12 +129,10 @@ datum/pipeline
 		air.volume = volume
 
 	proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-
-		if(new_network.line_members.Find(src))
+		if(src in new_network.line_members)
 			return 0
 
 		new_network.line_members += src
-
 		network = new_network
 
 		for(var/obj/machinery/atmospherics/pipe/edge in edges)
@@ -204,52 +198,57 @@ datum/pipeline
 			network.update = 1
 
 	proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
-		var/total_heat_capacity = HEAT_CAPACITY(air)
-		var/partial_heat_capacity = total_heat_capacity*(share_volume/air.volume)
+		if(!thermal_conductivity) return // noop if no transfer of heat possible
+
+		var/total_heat_capacity = HEAT_CAPACITY(src.air)
+		var/partial_heat_capacity = total_heat_capacity*(share_volume/src.air.volume)
+		var/heat = 0
+		var/delta_temperature = 0
 
 		if(istype(target, /turf/simulated))
 			var/turf/simulated/modeled_location = target
 
+			// Turf with walls or without air
 			if(modeled_location.blocks_air || !modeled_location.air)
-
 				if((modeled_location.heat_capacity>0) && (partial_heat_capacity>0))
-					var/delta_temperature = air.temperature - modeled_location.temperature
+					delta_temperature = src.air.temperature - modeled_location.temperature
 
-					var/heat = thermal_conductivity*delta_temperature* \
-						(partial_heat_capacity*modeled_location.heat_capacity/(partial_heat_capacity+modeled_location.heat_capacity))
+					heat = thermal_conductivity * delta_temperature * \
+						(partial_heat_capacity * modeled_location.heat_capacity/(partial_heat_capacity + modeled_location.heat_capacity))
 
-					air.temperature -= heat/total_heat_capacity
+					src.air.temperature -= heat/total_heat_capacity
 					modeled_location.temperature += heat/modeled_location.heat_capacity
 
+			// Normal simulated turfs
 			else
-				var/delta_temperature = 0
 				var/sharer_heat_capacity = 0
 
 				if(modeled_location.parent && modeled_location.parent.group_processing)
-					delta_temperature = (air.temperature - modeled_location.parent.air.temperature)
+					delta_temperature = (src.air.temperature - modeled_location.parent.air.temperature)
 					sharer_heat_capacity = HEAT_CAPACITY(modeled_location.parent.air)
 				else
-					delta_temperature = (air.temperature - modeled_location.air.temperature)
+					delta_temperature = (src.air.temperature - modeled_location.air.temperature)
 					sharer_heat_capacity = HEAT_CAPACITY(modeled_location.air)
 
 				var/self_temperature_delta = 0
 				var/sharer_temperature_delta = 0
 
 				if((sharer_heat_capacity>0) && (partial_heat_capacity>0))
-					var/heat = thermal_conductivity*delta_temperature* \
-						(partial_heat_capacity*sharer_heat_capacity/(partial_heat_capacity+sharer_heat_capacity))
+					heat = thermal_conductivity * delta_temperature * \
+						(partial_heat_capacity * sharer_heat_capacity/(partial_heat_capacity + sharer_heat_capacity))
 
 					self_temperature_delta = -heat/total_heat_capacity
 					sharer_temperature_delta = heat/sharer_heat_capacity
 				else
 					return 1
 
-				air.temperature += self_temperature_delta
+				src.air.temperature += self_temperature_delta
 
 				if(modeled_location.parent && modeled_location.parent.group_processing)
+
+					// Check if change sufficient to suspend group processing to limit change to target turf
 					if((abs(sharer_temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) && (abs(sharer_temperature_delta) > MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND*modeled_location.parent.air.temperature))
 						modeled_location.parent.suspend_group_processing()
-
 						modeled_location.air.temperature += sharer_temperature_delta
 
 					else
@@ -257,13 +256,13 @@ datum/pipeline
 				else
 					modeled_location.air.temperature += sharer_temperature_delta
 
-
+		// Process unsimulated turf
 		else
 			if((target.heat_capacity>0) && (partial_heat_capacity>0))
-				var/delta_temperature = air.temperature - target.temperature
+				delta_temperature = src.air.temperature - target.temperature
 
-				var/heat = thermal_conductivity*delta_temperature* \
-					(partial_heat_capacity*target.heat_capacity/(partial_heat_capacity+target.heat_capacity))
+				heat = thermal_conductivity * delta_temperature * \
+					(partial_heat_capacity * target.heat_capacity/(partial_heat_capacity + target.heat_capacity))
 
 				air.temperature -= heat/total_heat_capacity
 

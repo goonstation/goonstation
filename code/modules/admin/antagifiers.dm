@@ -18,7 +18,7 @@
 			boutput(M, "Don't be greedy.")
 			return
 		*/
-		if (M && M.mind && !M.mind.special_role)
+		if (M?.mind && !M.mind.special_role)
 			makeAntag(M)
 			var/datum/objective/newObj = new /datum/objective(attachedObjective)
 			newObj.owner = M.mind
@@ -158,6 +158,13 @@
 	desc = "Self-extracting archive containing some sweet Syndicate stuff!"
 	var/in_use = 0
 
+	//People keep blowing up the murderbox
+	ex_act(severity)
+		return
+
+	meteorhit(obj/meteor)
+		return
+
 	attack_hand(mob/M as mob)
 
 		if (!istype(M, /mob/living/carbon/human))
@@ -178,7 +185,7 @@
 	makeAntag(mob/living/carbon/human/M as mob)
 		var/uplink = new /obj/item/uplink/syndicate/virtual(get_turf(M))
 		M.put_in_hand_or_eject(uplink) // try to eject it into the users hand, if we can
-		boutput(M, "<span class='combat'>You can spawn fancy Syndicate gear with the virual uplink! Go hog wild.</span>")
+		boutput(M, "<span class='combat'>You can spawn fancy Syndicate gear with the virtual uplink! Go hog wild.</span>")
 
 	werewolf
 		name = "WEREWOLF.EXE"
@@ -210,3 +217,14 @@
 		makeAntag(mob/living/carbon/human/M as mob)
 			boutput(M, "<span class='combat'>You're a wizard, <s>Harry</s> [M]! Don't forget to pick your spells.</span>")
 			equip_wizard(M, 1, 1)
+
+	nuclear
+		name = "NUKE_TKN.EXE"
+		desc = "A syndicoin mining rig. Get some sweet syndicate requistion tokens"
+		icon = 'icons/obj/items/items.dmi'
+		icon_state = "req-token"
+
+		makeAntag(mob/living/carbon/human/M as mob)
+			var/token = new /obj/item/requisition_token/syndicate/vr(get_turf(M))
+			M.put_in_hand_or_eject(token) // try to eject it into the users hand, if we can
+			boutput(M, "<span class='combat'>Redeem your freshly mined syndicoin in the nearby weapon vendor.</span>")

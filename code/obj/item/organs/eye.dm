@@ -30,18 +30,17 @@
 	proc/update_icon()
 		if (!src.change_iris)
 			return
-		src.overlays = null
-		var/image/iris_image = image(src.icon, src, "eye-iris")
+		var/image/iris_image = image(src.icon, src, "[icon_state]-iris")
 		iris_image.color = "#0D84A8"
 		if (src.donor && src.donor.bioHolder && src.donor.bioHolder.mobAppearance) // good lord
 			var/datum/appearanceHolder/AH = src.donor.bioHolder.mobAppearance // I ain't gunna type that a billion times thanks
-			if ((src.body_side == L_ORGAN && AH.customization_second == "Heterochromia Left") || (src.body_side == R_ORGAN && AH.customization_second == "Heterochromia Right")) // dfhsgfhdgdapeiffert
+			if ((src.body_side == L_ORGAN && AH.customization_second.id == "hetrcoL") || (src.body_side == R_ORGAN && AH.customization_second.id == "hetcroR")) // dfhsgfhdgdapeiffert
 				iris_image.color = AH.customization_second_color
-			else if ((src.body_side == L_ORGAN && AH.customization_third == "Heterochromia Left") || (src.body_side == R_ORGAN && AH.customization_third == "Heterochromia Right")) // gbhjdghgfdbldf
+			else if ((src.body_side == L_ORGAN && AH.customization_third.id == "hetcroL") || (src.body_side == R_ORGAN && AH.customization_third == "hetcroR")) // gbhjdghgfdbldf
 				iris_image.color = AH.customization_third_color
 			else
 				iris_image.color = AH.e_color
-		src.overlays += iris_image
+		src.UpdateOverlays(iris_image, "iris")
 
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Overrides parent function to handle special case for attaching eyes.
@@ -106,7 +105,6 @@
 	icon_state = "eye-synth"
 	item_state = "plant"
 	synthetic = 1
-	made_from = "pharosium"
 
 /obj/item/organ/eye/cyber
 	name = "cybereye"
@@ -115,6 +113,7 @@
 	icon_state = "eye-cyber"
 	item_state = "heart_robo1"
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	mats = 6
 	made_from = "pharosium"
@@ -149,7 +148,6 @@
 	desc = "A fancy electronic eye. It has a Security HUD system installed."
 	icon_state = "eye-sec"
 	mats = 7
-	var/client/assigned = null
 	made_from = "pharosium"
 	color_r = 0.975 // darken a little, kinda red
 	color_g = 0.95
@@ -157,46 +155,21 @@
 	change_iris = 0
 
 	process()
-		if (assigned)
-			assigned.images.Remove(arrestIconsAll)
-			if (src.broken)
-				processing_items.Remove(src)
-				return
-			addIcons()
-
-			if (loc != assigned.mob)
-				assigned.images.Remove(arrestIconsAll)
-				assigned = null
-		else
+		if (src.broken)
 			processing_items.Remove(src)
-
-	proc/addIcons()
-		if (assigned)
-			for (var/image/I in arrestIconsAll)
-				if (!I || !I.loc || !src)
-					continue
-				if (I.loc.invisibility && I.loc != src.loc)
-					continue
-				else
-					assigned.images.Add(I)
+			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(donor)
 
 	on_transplant(var/mob/M as mob)
 		..()
 		if (src.broken)
 			return
-		if (M.client)
-			src.assigned = M.client
-			SPAWN_DBG(-1)
-				processing_items |= src
-		return
+		processing_items |= src
+		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(donor)
 
 	on_removal()
 		..()
-		if (assigned)
-			assigned.images.Remove(arrestIconsAll)
-			assigned = null
-			processing_items.Remove(src)
-		return
+		processing_items.Remove(src)
+		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(donor)
 
 /obj/item/organ/eye/cyber/thermal
 	name = "thermal imager cybereye"
@@ -209,6 +182,14 @@
 	color_g = 0.9 // red tint
 	color_b = 0.9
 	change_iris = 0
+
+	on_transplant(mob/M)
+		. = ..()
+		APPLY_MOB_PROPERTY(M, PROP_THERMALSIGHT, src)
+
+	on_removal()
+		REMOVE_MOB_PROPERTY(donor, PROP_THERMALSIGHT, src)
+		. = ..()
 
 /obj/item/organ/eye/cyber/meson
 	name = "mesonic imager cybereye"
@@ -275,7 +256,6 @@
 	desc = "A fancy electronic eye. It's fitted with an advanced miniature sensor array that allows you to quickly determine the physical condition of others."
 	icon_state = "eye-prodoc"
 	mats = 7
-	var/client/assigned = null
 	made_from = "pharosium"
 	color_r = 0.925
 	color_g = 1
@@ -284,45 +264,22 @@
 
 	// stolen from original prodocs
 	process()
-		if (assigned)
-			assigned.images.Remove(health_mon_icons)
-			if (src.broken)
-				processing_items.Remove(src)
-				return
-			addIcons()
-
-			if (loc != assigned.mob)
-				assigned.images.Remove(health_mon_icons)
-				assigned = null
-		else
+		if (src.broken)
 			processing_items.Remove(src)
-
-	proc/addIcons()
-		if (assigned)
-			for (var/image/I in health_mon_icons)
-				if (!I || !I.loc || !src)
-					continue
-				if (I.loc.invisibility && I.loc != src.loc)
-					continue
-				else
-					assigned.images.Add(I)
+			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(donor)
 
 	on_transplant(var/mob/M as mob)
 		..()
 		if (src.broken)
 			return
-		if (M.client)
-			src.assigned = M.client
-			SPAWN_DBG(-1)
-				processing_items |= src
+		processing_items |= src
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(M)
 		return
 
 	on_removal()
 		..()
-		if (assigned)
-			assigned.images.Remove(health_mon_icons)
-			assigned = null
-			processing_items.Remove(src)
+		processing_items.Remove(src)
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(donor)
 		return
 
 /obj/item/organ/eye/cyber/ecto
@@ -351,10 +308,9 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
-			src.camera = new /obj/machinery/camera(src)
-			src.camera.c_tag = src.camera_tag
-			src.camera.network = src.camera_network
+		src.camera = new /obj/machinery/camera(src)
+		src.camera.c_tag = src.camera_tag
+		src.camera.network = src.camera_network
 
 	on_transplant(var/mob/M as mob)
 		..()
@@ -431,3 +387,22 @@
 				OA.eye_proj = /datum/projectile/laser/eyebeams/left
 		else // just us!
 			aholder.removeAbility(abil)
+
+/obj/item/organ/eye/lizard
+	name = "slit eye"
+	desc = "I guess its owner is just a lzard now. Ugh that pun was terrible. Not worth losing an eye over."
+	icon_state = "eye-lizard"
+
+obj/item/organ/eye/skeleton
+	name = "boney eye"
+	desc = "Yes it also has eye sockets. How this works is unknown."
+	icon_state = "eye-bone"
+	made_from = "bone" //duh
+	blood_reagent = "calcium"
+	change_iris = 0
+
+/obj/item/organ/eye/cow
+	name = "cow eye"
+	desc = "This takes 'hitting the bullseye' to another level."
+	icon_state = "eye-cow"
+	blood_reagent = "milk"

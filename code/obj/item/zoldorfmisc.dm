@@ -15,15 +15,18 @@
 			src.desc = "This is one WEIRD burrito..."
 
 	attackby(obj/item/weapon as obj,mob/user as mob)
-		if((istype(weapon, /obj/item/pen))&&(src.icon_state=="scrollopen"))
-			user.visible_message("<span class='alert'><b>[user.name] stabs themself with the [weapon] and sign the contract in blood!</b></span>","<span class='alert'><b>You stab yourself with the [weapon] and sign the contract in blood!</b></span>")
+		if(istype(weapon, /obj/item/pen) && src.icon_state=="scrollopen")
+			user.visible_message("<span class='alert'><b>[user.name] stabs themself with the [weapon] and starts signing the contract in blood!</b></span>","<span class='alert'><b>You stab yourself with the [weapon] and start signing the contract in blood!</b></span>")
 			playsound(user, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
 			take_bleeding_damage(user, null, 10, DAMAGE_STAB)
 			src.icon_state = "signing"
-			sleep(4.6 SECONDS)
-			src.signer = user.real_name
-			src.name = "[user.real_name]'s signed demonic contract"
-			src.icon_state = "signed"
+			if (do_after(user, 4.6 SECONDS))
+				user.visible_message("<span class='alert'><b>[user.name] finishes signing the contract in blood!</b></span>","<span class='alert'><b>You finish signing the contract in blood!</b></span>")
+				src.signer = user.real_name
+				src.name = "[user.real_name]'s signed demonic contract"
+				src.icon_state = "signed"
+			else
+				src.icon_state = "scrollopen"
 
 	attack(mob/user as mob,mob/target as mob)
 		if((user == target)&&(src.icon_state == "scrollclosed"))
@@ -61,7 +64,7 @@
 	desc = "Wow. These look creepy..."
 	icon = 'icons/obj/zoldorf.dmi'
 	icon_state = "deck1"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/inuse = 0
 	var/nextcard
 	var/can_move = 1
@@ -134,7 +137,7 @@
 		if(cardnumber < 0)
 			cardnumber = 0
 		else if(cardnumber > cards.len)
-			cardnumber = cards.len
+			cardnumber = length(cards)
 		carddraw(user, cardnumber)
 		src.inuse = 0
 
@@ -151,7 +154,7 @@
 	dropped(mob/user as mob) //volatility 100
 		..()
 
-		SPAWN_DBG(1)
+		SPAWN_DBG(0.1 SECONDS)
 			if(src.loc != user)
 				if(src.inuse)
 					src.inuse = 0
@@ -160,7 +163,7 @@
 	relaymove(var/mob/user, direction)
 		if(can_move&&(!istype(src.loc,/obj)&&(!istype(src.loc,/mob))))
 			can_move = 0
-			SPAWN_DBG (10)
+			SPAWN_DBG(1 SECOND)
 				can_move = 1
 			step(src,direction)
 		return
@@ -212,7 +215,7 @@
 					deck.inuse = 0
 					user.u_equip(deck)
 					deck.set_loc(get_turf(user))
-					h.become_ice_statue()
+					h.become_statue_ice()
 				else
 					user.reagents.add_reagent("cryostylane", 50)
 			if("Security")
@@ -440,7 +443,7 @@
 	afterattack(atom/target as obj, mob/user as mob)
 		if(src.hat && istype(target,/obj/item) && (!istype(target,/obj/item/device/radio/intercom)) && (!src.used))
 			var/obj/item/titem = target
-			if(titem.w_class <= 2)
+			if(titem.w_class <= W_CLASS_SMALL)
 				src.used = 1
 				src.health = 5
 				if(titem.loc == user)

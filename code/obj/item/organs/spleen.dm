@@ -32,11 +32,23 @@
 				holder.spleen = null
 		..()
 
+/obj/item/organ/spleen/synth
+	name = "synthspleen"
+	organ_name = "synthspleen"
+	icon_state = "plant"
+	desc = "I guess you could say, the person missing this has spleen better days!"
+	synthetic = 1
+	New()
+		..()
+		src.icon_state = pick("plant_spleen", "plant_spleen_bloom")
+
 /obj/item/organ/spleen/cyber
 	name = "cyberspleen"
 	desc = "A fancy robotic spleen to replace one that someone's lost!"
 	icon_state = "cyber-spleen"
+	made_from = "pharosium"
 	// item_state = "heart_robo1"
 	robotic = 1
 	edible = 0
 	mats = 6
+	created_decal = /obj/decal/cleanable/oil

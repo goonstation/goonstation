@@ -63,6 +63,11 @@
 	id = "vamp_hypno"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "hypno"
+	bar_icon_state = "bar-vampire"
+	border_icon_state = "border-vampire"
+	color_active = "#b320c3"
+	color_success = "#3fb54f"
+	color_failure = "#8d1422"
 	var/mob/living/carbon/human/M
 	var/mob/living/carbon/human/target
 	var/datum/targetable/vampire/hypnotize/hypno
@@ -91,14 +96,15 @@
 		..()
 		if (target.bioHolder && target.traitHolder.hasTrait("training_chaplain"))
 			boutput(target, __blue("Your faith protects you from [M]'s dark designs!"))
+			JOB_XP(target, "Chaplain", 2)
 			target.visible_message("<span class='alert'><b>[target] just stares right back at [M]!</b></span>")
 
 		else if (target.sight_check(1)) // Can't stare through a blindfold very well, no?
 			boutput(target, __red("Your consciousness is overwhelmed by [M]'s dark glare!"))
 			boutput(M, __blue("Your piercing gaze knocks out [target]."))
-			target.changeStatus("stunned", 300)
-			target.changeStatus("weakened", 300)
-			target.changeStatus("paralysis", 300)
+			target.changeStatus("stunned", 30 SECONDS)
+			target.changeStatus("weakened", 30 SECONDS)
+			target.changeStatus("paralysis", 30 SECONDS)
 			target.remove_stamina(300)
 			target.force_laydown_standup()
 

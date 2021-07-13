@@ -6,6 +6,7 @@
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_COMMSCONSOLES
+	circuit_type = /obj/item/circuitboard/communications
 	var/prints_intercept = 1
 	var/authenticated = 0
 	var/list/messagetitle = list()
@@ -28,13 +29,20 @@
 	var/stat_msg2
 	desc = "A computer that allows one to call and recall the emergency shuttle, as well as recieve messages from Centcom."
 
-	lr = 0.6
-	lg = 1
-	lb = 0.1
+	light_r =0.6
+	light_g = 1
+	light_b = 0.1
 
 	disposing()
 		radio_controller.remove_object(src, status_display_freq)
 		..()
+
+/obj/machinery/computer/communications/special_deconstruct(obj/computerframe/frame as obj)
+	if(src.status & BROKEN)
+		logTheThing("station", usr, null, "disassembles [src] (broken) [log_loc(src)]")
+	else
+		logTheThing("station", usr, null, "disassembles [src] [log_loc(src)]")
+
 
 /obj/machinery/computer/communications/process()
 	..()
@@ -170,56 +178,16 @@
 /proc/disablelockdown(var/mob/usr)
 	boutput(world, "<span class='alert'>Lockdown cancelled by [usr.name]!</span>")
 
-	for(var/obj/machinery/firealarm/FA in machine_registry[MACHINES_FIREALARMS]) //deactivate firealarms
-		SPAWN_DBG( 0 )
+	for(var/obj/machinery/firealarm/FA as anything in machine_registry[MACHINES_FIREALARMS]) //deactivate firealarms
+		SPAWN_DBG(0)
 			if(FA.lockdownbyai == 1)
 				FA.lockdownbyai = 0
 				FA.reset()
-	for(var/obj/machinery/door/airlock/AL in by_type[/obj/machinery/door]) //open airlocks
-		SPAWN_DBG ( 0 )
+	for_by_tcl(AL, /obj/machinery/door/airlock) //open airlocks
+		SPAWN_DBG(0)
 			if(AL.canAIControl() && AL.lockdownbyai == 1)
 				AL.open()
 				AL.lockdownbyai = 0
-
-/obj/machinery/computer/communications/attackby(var/obj/item/I as obj, user as mob)
-	if (isscrewingtool(I))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 20))
-			if (src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/communications/M = new /obj/item/circuitboard/communications( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				logTheThing("station", user, null, "disassembles [src] (broken) [log_loc(src)]")
-				qdel(src)
-			else
-				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/circuitboard/communications/M = new /obj/item/circuitboard/communications( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				logTheThing("station", user, null, "disassembles [src] [log_loc(src)]")
-				qdel(src)
-
-	else
-		src.attack_hand(user)
-	return
-
-/obj/machinery/computer/communications/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
 
 /obj/machinery/computer/communications/attack_hand(var/mob/user as mob)
 	if(..())
@@ -231,7 +199,7 @@
 		var/timeleft = emergency_shuttle.timeleft()
 		dat += "<B>Emergency shuttle</B><br><BR><br>ETA: [timeleft / 60 % 60]:[add_zero(num2text(timeleft % 60), 2)]<BR>"
 
-	if (issilicon(user) || isAI(usr))
+	if (issilicon(user) || isAI(user))
 		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat +=  dat2
@@ -364,11 +332,9 @@
 
 	// hack to display shuttle timer
 	if(emergency_shuttle.online)
-		var/obj/machinery/computer/communications/C = locate() in machine_registry[MACHINES_COMMSCONSOLES]//world
+		var/obj/machinery/computer/communications/C = locate() in machine_registry[MACHINES_COMMSCONSOLES]
 		if(C)
 			C.post_status("shuttle")
-
-	return
 
 /proc/call_prison_shuttle(var/mob/usr)
 	if ((!(ticker && ticker.mode) || emergency_shuttle.location == SHUTTLE_LOC_STATION))
@@ -384,6 +350,7 @@
 
 /proc/enable_prison_shuttle(var/mob/user)
 	return
+
 /proc/call_shuttle_proc(var/mob/user, var/call_reason)
 	if ((!( ticker ) || emergency_shuttle.location))
 		return 1
@@ -424,7 +391,6 @@
 		return 1
 
 	boutput(world, "<span class='notice'><B>Alert: The shuttle is going back!</B></span>") //marker4
-	world << csound("sound/misc/shuttle_recalled.ogg")
 
 	emergency_shuttle.recall()
 

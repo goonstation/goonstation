@@ -32,14 +32,6 @@
 				src.setup_lists(P)
 				break
 
-/*
-	proc/build_composite_icon(var/atom/C)
-		var/icon/composite = icon(C.icon, C.icon_state, C.dir, 1)
-		for(var/O in C.overlays)
-			var/image/I = O
-			composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
-		return composite
-*/
 	proc/make_icon_with_turf(var/turf/the_turf as turf)
 
 		var/icon/I = icon('icons/misc/old_or_unused.dmi',"blank")
@@ -157,8 +149,7 @@ This works
 
 	proc/build_composite_icon(var/atom/C)
 		var/icon/composite = icon(C.icon, C.icon_state, C.dir, 1)
-		for(var/O in C.overlays)
-			var/image/I = O
+		for(var/image/I as anything in C.overlays)
 			composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 		return composite
 

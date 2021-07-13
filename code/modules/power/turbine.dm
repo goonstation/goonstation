@@ -34,9 +34,10 @@
 	icon_state = "airtunnel0e"
 	anchored = 1
 	density = 1
+	circuit_type = /obj/item/circuitboard/turbine_control
+	id = 0
 	var/obj/machinery/compressor/compressor
 	var/list/obj/machinery/door/poddoor/doors
-	var/id = 0
 	var/door_status = 0
 
 // the inlet stage of the gas turbine electricity generator
@@ -229,42 +230,6 @@
 			if(P.id == id)
 				doors += P
 
-/obj/machinery/computer/turbine_computer/attackby(obj/item/I as obj, user as mob)
-	if (isscrewingtool(I))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 20))
-			if (src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/turbine_control/M = new /obj/item/circuitboard/turbine_control( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				M.id = src.id
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
-			else
-				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/circuitboard/turbine_control/M = new /obj/item/circuitboard/turbine_control( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				M.id = src.id
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				qdel(src)
-	else
-		src.attack_hand(user)
-	return
-
 /obj/machinery/computer/turbine_computer/attack_hand(var/mob/user as mob)
 	src.add_dialog(user)
 	var/dat
@@ -287,12 +252,17 @@
 	onclose(user, "computer")
 	return
 
+/obj/machinery/computer/robotics/special_deconstruct(obj/computerframe/frame as obj)
+	frame.circuit.id = src.id
 
+/obj/machinery/computer/turbine_computer/attack_ai(mob/user as mob)
+	// overridden to prevent AI from accessing
+	return
 
 /obj/machinery/computer/turbine_computer/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 		if( href_list["view"] )

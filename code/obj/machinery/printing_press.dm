@@ -1,7 +1,7 @@
 /obj/machinery/printing_press //this makes books
 	name = "printing press"
 	desc = "Some machinery that's supposed to be able to write on a lot of pages super quickly. It looks pretty old."
-	icon = 'icons/obj/64x32.dmi' //lets immortalise =atamusvaleo= in the code forever, i miss him
+	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "printing_press" //proper icon is set in update_icon
 	anchored = 1
 	density = 1
@@ -120,7 +120,7 @@
 				new/obj/effect/supplyexplosion(src.loc)
 				playsound(src.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
 				for(var/mob/M in view(7, src.loc))
-					shake_camera(M, 20, 1)
+					shake_camera(M, 20, 16)
 
 				sleep(2 SECONDS)
 				new /obj/item/electronics/frame/press_frame(src.loc)
@@ -281,7 +281,7 @@
 						if ("bible")
 							book_cover = "bible"
 						if ("old")
-							book_cover = "bookkiy"
+							book_cover = "oldbook"
 						else
 							book_cover = "book0"
 				boutput(user, "Book cover set.")

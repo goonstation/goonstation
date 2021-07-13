@@ -12,12 +12,10 @@
 	New()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
-			if (kit_styles && kit_styles.len)
+			if (length(kit_styles))
 				icon_state = pick(kit_styles)
 				item_state = icon_state
-#if ASS_JAM
-		ADD_MORTY(13, 11, 5, 5)
-#endif
+
 
 /obj/item/storage/firstaid/regular
 	icon_state = "firstaid1"
@@ -39,6 +37,9 @@
 		/obj/item/reagent_containers/pill/salicylic_acid,\
 		/obj/item/device/analyzer/healthanalyzer/borg,\
 		/obj/item/reagent_containers/emergency_injector/epinephrine)
+
+	empty
+		spawn_contents = list()
 
 
 /obj/item/storage/firstaid/brute
@@ -258,11 +259,7 @@
 	icon_state = "health_upgr"
 	desc = "A box containing health analyzer reagent scan upgrade cards."
 	spawn_contents = list(/obj/item/device/analyzer/healthanalyzer_upgrade = 7)
-#if ASS_JAM
-	New()
-		..()
-		ADD_MORTY(13, 9, 7, 7)
-#endif
+
 
 /obj/item/storage/box/iv_box
 	name = "\improper IV drip box"
@@ -371,9 +368,6 @@
 
 	New()
 		..()
-#if ASS_JAM
-		ADD_MORTY(10, 7, 12, 12)
-#endif
 		new /obj/item/bandage(src)
 		new /obj/item/storage/pill_bottle/salicylic_acid(src)
 		new /obj/item/storage/pill_bottle/menthol(src)
@@ -383,7 +377,7 @@
 		if (prob(40))
 			new /obj/item/reagent_containers/glass/bottle/ethanol(src)
 
-		switch (pickweight(list("gloves" = 20, "mask" = 20, "autoinjector" = 10, "both" = 10)))
+		switch (weighted_pick(list("gloves" = 20, "mask" = 20, "autoinjector" = 10, "both" = 10)))
 			if ("gloves")
 				new /obj/item/clothing/gloves/latex(src)
 			if ("mask")

@@ -102,7 +102,9 @@ toxic - poisons
 	power = 75
 	cost = 65
 	dissipation_delay = 5
-	dissipation_rate = 10
+	dissipation_rate = 0
+	max_range = 30
+	projectile_speed = 20
 	sname = "assault laser"
 	shot_sound = 'sound/weapons/Laser.ogg'
 	color_red = 0
@@ -110,15 +112,11 @@ toxic - poisons
 	color_blue = 1
 
 	on_hit(atom/hit)
-		if (isliving(hit))
-			fireflash(get_turf(hit), 0)
-		else if (isturf(hit))
-			fireflash(hit, 0)
-			SPAWN_DBG(1 DECI SECOND)
-				if(prob(40) && istype(hit, /turf/simulated))
-					hit.meteorhit(src)
+		fireflash(get_turf(hit), 0)
+		if((istype(hit, /turf/simulated) || istype(hit, /obj/structure/girder)))
+			hit.ex_act(2)
 		else
-			fireflash(get_turf(hit), 0)
+			hit.ex_act(3)
 
 /datum/projectile/laser/light // for the drones
 	name = "phaser bolt"
@@ -246,7 +244,7 @@ toxic - poisons
 /datum/projectile/laser/glitter // for the russian pod
 	name = "prismatic laser"
 	icon_state = "eyebeam"
-	power = 35
+	power = 25
 	cost = 35
 	sname = "phaser bolt"
 	dissipation_delay = 10
@@ -255,6 +253,7 @@ toxic - poisons
 	color_green = 0
 	color_blue = 1
 	icon_turf_hit = "burn2"
+	projectile_speed = 42
 
 /datum/projectile/laser/precursor // for precursor traps
 	name = "energy bolt"
@@ -335,7 +334,6 @@ toxic - poisons
 	icon_state = "modproj"
 	name = "blaster bolt"
 	sname = "blaster"
-	damage_type = D_BURNING
 	shot_sound = 'sound/weapons/laser_a.ogg'
 	dissipation_delay = 6
 	dissipation_rate = 5
@@ -361,7 +359,55 @@ toxic - poisons
 		icon_state = "crescent"
 		shot_number = 1
 
+/datum/projectile/laser/blaster/pod_pilot
+	cost = 20
+	power = 33
+	color_red = 0
+	color_green = 0
+	color_blue = 0
+	override_color = 0
+	icon_state = "bolt"
+	damage_type = D_ENERGY
+	var/turret = 0		//have turret shots do less damage, but slow mobs it hits...
+	var/team_num = 0	//1 for NT, 2 for SY
 
+	on_hit(atom/hit)
+		..()
+		//have turret shots slow mobs it hits...
+		if (turret && isliving(hit))
+			var/mob/living/L = hit
+			L.changeStatus("slowed", 2 SECONDS)
+
+	//lower power when they hit vehicles by half
+	get_power(obj/projectile/P, atom/A)
+		var/mult = 1
+		if (!turret && istype(A, /obj/machinery/vehicle))
+			mult = 0.5
+		return ..(P, A) * mult
+
+/datum/projectile/laser/blaster/pod_pilot/blue_NT
+	name = "blue blaster bolt"
+	color_icon = "#3d9cff"
+	color_red = 0.05
+	color_green = 0.28
+	color_blue = 0.51
+	team_num = 1
+
+	turret
+		turret = 1
+		power = 15
+
+/datum/projectile/laser/blaster/pod_pilot/red_SY
+	name = "red blaster bolt"
+	color_icon = "#ff4043"
+	color_red = 0.51
+	color_green = 0.05
+	color_blue = 0.28
+	team_num = 2
+
+	turret
+		turret = 1
+		power = 15
 
 
 // cogwerks- mining laser, first attempt
@@ -377,7 +423,8 @@ toxic - poisons
 	dissipation_delay = 1
 	dissipation_rate = 8
 	sname = "mining laser"
-	shot_sound = 'sound/weapons/rocket.ogg'
+	shot_sound = 'sound/weapons/cutter.ogg'
+	shot_volume = 30
 	damage_type = D_BURNING
 	brightness = 0.8
 	window_pass = 0
@@ -397,12 +444,12 @@ toxic - poisons
 	window_pass = 0
 	icon_state = ""
 	damage_type = D_SLASHING
-	power = 35
+	power = 45
 	cost = 1
 	brightness = 0
 	sname = "drill bit"
-	shot_sound = 'sound/machines/engine_grump1.ogg'
-	shot_volume = 45
+	shot_sound = 'sound/machines/rock_drill.ogg'
+	shot_volume = 20
 	dissipation_delay = 1
 	dissipation_rate = 35
 	icon_turf_hit = null
@@ -415,7 +462,7 @@ toxic - poisons
 			var/turf/simulated/wall/asteroid/T = hit
 			if (power <= 0)
 				return
-			T.damage_asteroid(round(power / 10),1)
+			T.damage_asteroid(round(power / 7),1)
 			//if(prob(60)) // raised again
 			//	T.destroy_asteroid(1)
 			//else
@@ -461,7 +508,49 @@ toxic - poisons
 
 	on_hit(atom/hit)
 		var/mob/living/L = hit
-		if(istype(L) && L.getStatusDuration("burning"))
-			L.changeStatus("burning", 70)
+		if (!istype(L))
+			return
+		if(L.getStatusDuration("burning"))
+			L.changeStatus("burning", 7 SECONDS)
 		else
-			L.changeStatus("burning", 35)
+			L.changeStatus("burning", 3.5 SECONDS)
+
+/datum/projectile/laser/signifer_lethal
+	name = "signifer bolt"
+	icon = 'icons/obj/projectiles.dmi'
+	power = 15
+	cost = 50
+	sname = "lethal"
+	shot_sound = 'sound/weapons/SigLethal.ogg'
+	hit_ground_chance = 30
+	brightness = 1
+	icon_state = "signifer2_burn"
+	damage_type = D_ENERGY
+	color_red = 0.1
+	color_green = 0.1
+	color_blue = 0.8
+
+	disruption = 8
+
+	shot_number = 2
+	ie_type = "E"
+	hit_mob_sound = 'sound/effects/sparks6.ogg'
+
+
+	on_hit(atom/hit, angle, var/obj/projectile/O)
+		hit.setStatus("signified")
+		..()
+
+	brute
+		icon_state = "signifer2_brute"
+		damage_type = D_KINETIC
+		color_red = 0.8
+		color_green = 0.1
+		color_blue = 0.1
+
+		on_hit(var/atom/hit)
+			if(hit.hasStatus("signified"))
+				elecflash(get_turf(hit),radius=0, power=4, exclude_center = 0)
+				random_brute_damage(hit, rand(5,10), 0)
+				hit.delStatus("signified")
+			..()

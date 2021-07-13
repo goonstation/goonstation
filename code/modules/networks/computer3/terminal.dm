@@ -13,6 +13,7 @@
 	var/tmp/ping_wait = 0 //Are we waiting for a ping reply?
 	var/tmp/datum/computer/file/temp_file = null //Temp folder from our server
 	var/auto_accept = 1 //Do we automatically accept connection attempts?
+	var/ping_filter = null
 	//var/tmp/service_mode = 0
 
 	input_text(text)
@@ -37,7 +38,7 @@
 term_status - View current status of terminal.<br>
 term_accept - Toggle connection auto-accept.<br>
 term_login - Transmit login file (ID Required)<br>
-term_ping - Scan network for terminal devices.<br>
+term_ping \[Device ID] - Scan network for devices.<br>
 term_break - Send break signal to host.<br>
 <b>Connection Commands:</b><br>
 connect \[Net ID] - Connect to a specified device.<br>
@@ -95,6 +96,10 @@ file_save - Save file to local disk."}
 							src.net_number = new_net_number
 
 					src.peripheral_command("subnet[src.net_number]", null, "\ref[src.netcard]")
+				if (length(command_list))
+					src.ping_filter = lowertext(command_list[1])
+				else
+					src.ping_filter = null
 
 				src.ping_wait = 4
 
@@ -119,7 +124,7 @@ file_save - Save file to local disk."}
 					newsig.data["assignment"] = "AI"
 					newsig.data["access"] = "34"
 
-					SPAWN_DBG (4)
+					SPAWN_DBG(0.4 SECONDS)
 						switch( src.receive_command(src.master, "card_authed", newsig) )
 							if ("nocard")
 								src.print_text("Please insert a card first.")
@@ -490,7 +495,8 @@ file_save - Save file to local disk."}
 				var/reply_device = signal.data["device"]
 				var/reply_id = signal.data["netid"]
 
-				src.print_text("<b>P:</b> \[[reply_id]]-TYPE: [reply_device]")
+				if(src.ping_filter == null || findtext(lowertext(reply_device), src.ping_filter))
+					src.print_text("<b>P:</b> \[[reply_id]]-TYPE: [reply_device]")
 
 			//oh, somebody trying to connect!
 			else if(signal.data["command"] == "term_connect" && !src.serv_id)

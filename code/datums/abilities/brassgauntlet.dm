@@ -178,7 +178,7 @@
 						if(prob(50))
 							random_brute_damage(M, rand(1,5))
 							M.flash(10)
-						M.changeStatus("weakened", 5)
+						M.changeStatus("weakened", 0.5 SECONDS)
 						sleep(rand(1,5))
 						hooting++
 
@@ -202,42 +202,42 @@
 	execute_ability()
 		SPAWN_DBG(0)
 			boutput(usr, "<span class='alert'><B>You spread a feeling of sickness.</B></span>") //Gross
-			for(var/mob/living/carbon/human/M in mobs)
+			for(var/mob/living/carbon/human/M in range(5, usr))
 				boutput(M,"<span class='alert'><B>Your insides feel like they're fighting to escape your body.</B></span>")
 				SPAWN_DBG(rand(30,50)) //Let's stagger out the vomitting a bit
 					M.visible_message("<span class='alert'><B>[M] is violently sick everywhere!</B></span>")
 					random_brute_damage(M, rand(5,30))
-					M.changeStatus("weakened", 5)
-					for(var/turf/T in range(M, 3))
-						playsound(T, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
-						if(prob(1)) //Oh no you rolled poorly. Welcome to the *instant death raffle!!*
-							var/list/organ_list = list("left_eye", "right_eye", "chest", "heart", "left_lung", "right_lung", "butt") //1/7 chance you might die! Spooky!
-							var/obj/item/organ/O = pick(organ_list)
-							M.organHolder.drop_organ(O, T)
+					M.changeStatus("weakened", 0.5 SECONDS)
+					var/turf/T = get_turf(M)
+					playsound(T, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
+					if(prob(1)) //Oh no you rolled poorly. Welcome to the *instant death raffle!!*
+						var/list/organ_list = list("left_eye", "right_eye", "chest", "heart", "left_lung", "right_lung", "butt") //1/7 chance you might die! Spooky!
+						var/obj/item/organ/O = pick(organ_list)
+						M.organHolder.drop_organ(O, T)
 
-							//Warcrimes you better clean this code up or so help me!
-							if(O == "left_eye" || "right_eye")
-								O = "eye"
-							else if(O == "left_lung" || "right_lung")
-								O = "lung"
+						//Warcrimes you better clean this code up or so help me!
+						if(O == "left_eye" || "right_eye")
+							O = "eye"
+						else if(O == "left_lung" || "right_lung")
+							O = "lung"
 
-							M.visible_message("<span class='alert'><B>[M] vomits out their [O]. [pick("Holy shit!", "Holy fuck!", "What the hell!", "What the fuck!", "Jesus Christ!", "Yikes!", "Oof...")]</B></span>")
-						else if(prob(1)) //Lucky guy! Now you're only going to lose a less vital organ (and your heart maybe :X)
-							var/list/organ_list = list("left_eye", "right_eye", "heart", "left_lung", "right_lung", "butt")
-							var/obj/item/organ/O = pick(organ_list)
-							M.organHolder.drop_organ(O, T)
+						M.visible_message("<span class='alert'><B>[M] vomits out their [O]. [pick("Holy shit!", "Holy fuck!", "What the hell!", "What the fuck!", "Jesus Christ!", "Yikes!", "Oof...")]</B></span>")
+					else if(prob(10)) //Lucky guy! Now you're only going to lose a less vital organ (and your heart maybe :X)
+						var/list/organ_list = list("left_eye", "right_eye", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+						var/obj/item/organ/O = pick(organ_list)
+						M.organHolder.drop_organ(O, T)
 
-							//Warcrimes you better clean this code up or so help me!
-							if(O == "left_eye" || "right_eye")
-								O = "eye"
-							if(O == "left_lung" || "right_lung")
-								O = "lung"
+						//Warcrimes you better clean this code up or so help me!
+						if(O == "left_eye" || "right_eye")
+							O = "eye"
+						if(O == "left_lung" || "right_lung")
+							O = "lung"
 
-							M.visible_message("<span class='alert'><B>[M] vomits out their [O]. [pick("Holy shit!", "Holy fuck!", "What the hell!", "What the fuck!", "Jesus Christ!", "Yikes!", "Oof...")]</B></span>")
-						else if(prob(20))
-							make_cleanable( /obj/decal/cleanable/blood/gibs,T)
-						else
-							make_cleanable( /obj/decal/cleanable/vomit,T) //Oh geez the janitor will not be happy
+						M.visible_message("<span class='alert'><B>[M] vomits out their [O]. [pick("Holy shit!", "Holy fuck!", "What the hell!", "What the fuck!", "Jesus Christ!", "Yikes!", "Oof...")]</B></span>")
+					else if(prob(20))
+						make_cleanable( /obj/decal/cleanable/blood/gibs,T)
+					else
+						make_cleanable( /obj/decal/cleanable/vomit,T) //Oh geez the janitor will not be happy
 		..()
 		return 1
 
@@ -253,24 +253,24 @@ proc/badstone(var/mob/user, var/obj/item/W, var/obj/item/clothing/B)
 	W.set_loc(null) //<-- this sets the location to null
 	sleep(5 SECONDS)
 
-	playsound(get_turf(user), 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
+	playsound(user, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 	boutput(user,"<span class='alert'><B>The [B] cracks slightly around the stone.</B></span>")
 	sleep(20 SECONDS)
 	boutput(user,"<span class='alert'><B>The [B] feels really tight on your arm all of a sudden.</B></span>")
 	sleep(10 SECONDS)
-	playsound(get_turf(user), 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
+	playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 	boutput(user,"<span class='alert'><B>Like really tight!</B></span>")
 	sleep(10 SECONDS)
-	playsound(get_turf(user), 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
+	playsound(user, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 	user.emote("scream")
 	sleep(5 SECONDS)
-	playsound(get_turf(user), 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
+	playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 	sleep(10 SECONDS)
-	playsound(get_turf(user), 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
+	playsound(user, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 	user.visible_message("<span class='alert'><B>The [B] begins to glow!</B></span>")
 	sleep(2 SECONDS)
 	boutput(user, "<span class='alert'><B>The [B] tightens hard around your hand and begins to move on its own!</B></span>")
-	playsound(get_turf(user), 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, 1)
+	playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, 1)
 	sleep(5 SECONDS)
 
 	//Everything turns to gold
@@ -279,8 +279,8 @@ proc/goldsnap(var/mob/user)
 	sleep(1 SECOND)
 	boutput(user, "<span class='alert'><B>Everything around you turns to gold!</B></span>")
 	var/turf/T = get_turf(user)
-	user.dir = SOUTH
-	user:become_gold_statue()
+	user.set_dir(SOUTH)
+	user.become_statue(getMaterial("gold"))
 	for(var/turf/G in range(10, T))
 		G.setMaterial(getMaterial("gold"))
 	sleep(2 SECONDS)

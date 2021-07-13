@@ -1,3 +1,4 @@
+#define CHEFBOT_MOVE_SPEED 8
 /obj/machinery/bot/chefbot
 	name = "Dramatic Chef"
 	desc = "(icon, name, concept, and any kind of consistency or sense is currently pending)"
@@ -11,37 +12,29 @@
 	var/raging = 0
 	var/list/calledout = list()
 	no_camera = 1
-
-/obj/machinery/bot/chefbot/proc/do_step()
-	var/turf/moveto = locate(src.x + rand(-1,1),src.y + rand(-1, 1),src.z)
-	if(isturf(moveto) && !moveto.density) step_towards(src, moveto)
+	/// Doesn't feel right to have this guy *constantly* flipping its lid like a methed up graytider
+	dynamic_processing = 0
 
 /obj/machinery/bot/chefbot/process()
+	. = ..()
 	if (raging)
 		return
 	if(prob(60) && src.on == 1)
+		src.navigate_to(get_step_rand(src))
+
 		SPAWN_DBG(0)
-			do_step()
 			if(prob(src.emagged * 20))
 				drama()
 			if(prob(30 + src.emagged * 30))
 				yell()
 
-/obj/machinery/bot/chefbot/proc/point(var/target)
-	visible_message("<b>[src]</b> points at [target].")
-	if (istype(target, /atom))
-		var/D = new /obj/decal/point(get_turf(target))
-		SPAWN_DBG(2.5 SECONDS)
-			qdel(D)
-
 /obj/machinery/bot/chefbot/proc/drama()
-	for (var/mob/M in hearers(7, src))
-		M << sound('sound/effects/dramatic.ogg', volume = 100) // F U C K temporary measure
+	playsound(src,'sound/effects/dramatic.ogg', vol = 100) // F U C K temporary measure
 
 /obj/machinery/bot/chefbot/speak(var/message)
 	if (message)
 		message = uppertext(message)
-		..(message)
+	. = ..()
 
 /obj/machinery/bot/chefbot/proc/why_is_it_bad()
 	return pick("IS FUCKING [pick("RAW", "BLAND", "UNDERCOOKED", "OVERCOOKED", "INEDIBLE", "RANCID", "DISGUSTING")]", "LOOKS LIKE [pick("BABY VOMIT", "A MUSHY PIG'S ASS", "REGURGITATED DONKEY SHIT", "A PILE OF ROTTING FLIES", "REFINED CAT PISS")]")
@@ -61,7 +54,9 @@
 		if (shitfood)
 			raging = 1
 			icon_state = "chefbot-mad"
-			for (var/mob/living/carbon/human/M in view(7, src))
+			for_by_tcl(M, /mob/living/carbon/human)
+				if(!IN_RANGE(M, src, 7))
+					continue
 				if (M.mind)
 					if (M.mind.assigned_role == "Chef")
 						thechef = M
@@ -80,7 +75,7 @@
 							dork = M
 			if (thechef)
 				point(shitfood)
-				walk_to(src, shitfood, 1, 5)
+				src.navigate_to(shitfood, CHEFBOT_MOVE_SPEED / (1+src.emagged), 1, 60) // Shit food can't hide!
 				if (prob(50))
 					speak(pick("ALRIGHT, EVERYBODY STOP!" , "THAT'S ENOUGH!"))
 				sleep(1 SECOND)
@@ -188,8 +183,8 @@
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 	var/turf/Tsec = get_turf(src)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 	new /obj/item/clothing/head/dramachefhat(Tsec)

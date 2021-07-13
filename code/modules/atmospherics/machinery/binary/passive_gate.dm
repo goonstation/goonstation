@@ -53,8 +53,7 @@ obj/machinery/atmospherics/binary/passive_gate
 			var/datum/gas_mixture/removed = air1.remove(transfer_moles)
 			air2.merge(removed)
 
-			if(network1)
-				network1.update = 1
+			network1?.update = 1
 
 			if(network2)
 				network2.update = 1

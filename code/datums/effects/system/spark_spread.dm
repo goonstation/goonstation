@@ -16,8 +16,7 @@
 	location = null
 	holder = null
 	total_sparks = initial(total_sparks)
-	if(livesparks)
-		livesparks.len = 0
+	livesparks?.len = 0
 	livesparks = new
 	..()
 

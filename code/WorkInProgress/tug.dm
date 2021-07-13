@@ -10,7 +10,7 @@
 	mats = 10
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
-		if (!in_range(user, src) || !in_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
 
 		if (!istype(C)|| C.anchored || get_dist(user, src) > 1 || get_dist(src,C) > 1 )
@@ -20,8 +20,24 @@
 			user.show_text("\The [C] is too heavy for \the [src]!", "red")
 			return
 
-		if (istype(C, /obj/tug_cart) && in_range(C, src))
+		if (istype(C, /obj/tug_cart) && in_interact_range(C, src))
 			var/obj/tug_cart/connecting = C
+			if (src == connecting) //Wire: Fix for mass recursion runtime (carts connected to themselves)
+				return
+			else if (!src.next_cart && !connecting.next_cart)
+				src.next_cart = connecting
+				user.visible_message("[user] connects [connecting] to [src].", "You connect [connecting] to [src].")
+				return
+			else if (src.next_cart == connecting)
+				src.next_cart = null
+				user.visible_message("[user] disconnects [connecting] from [src].", "You disconnect [connecting] from [src].")
+				return
+			else
+				user.show_text("\The [src] already has a cart connected to it!", "red")
+				return
+
+		if (istype(C, /obj/storage/cart) && in_interact_range(C, src))
+			var/obj/storage/cart/connecting = C
 			if (src == connecting) //Wire: Fix for mass recursion runtime (carts connected to themselves)
 				return
 			else if (!src.next_cart && !connecting.next_cart)
@@ -46,7 +62,7 @@
 		..()
 		var/turf/T = get_turf(over_location)
 		var/mob/user = usr
-		if (!user || !(in_range(user, src) || user.loc == src) || !in_range(src, over_object) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!user || !(in_interact_range(user, src) || user.loc == src) || !in_interact_range(src, over_object) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
 		if (!load)
 			return
@@ -69,7 +85,7 @@
 			return		// if not emagged, only allow crates to be loaded // cogwerks - turning this off for now to make the mule more versatile + funny
 			*/
 
-		if (istype(C, /obj/screen) || C.anchored)
+		if (istype(C, /atom/movable/screen) || C.anchored)
 			return
 
 		if (get_dist(C, src) > 1 || load)
@@ -116,7 +132,7 @@
 
 	Move()
 		var/oldloc = src.loc
-		..()
+		. = ..()
 		if (src.loc == oldloc)
 			return
 		if (next_cart)
@@ -137,14 +153,15 @@
 	mats = 10
 	var/obj/tug_cart/cart = null
 	throw_dropped_items_overboard = 1
+	ability_buttons_to_initialize = list(/obj/ability_button/vehicle_speed)
 	var/start_with_cart = 1
-	var/speed = 4
+	delay = 4
 
 	security
 		name = "security wagon"
 		icon_state = "tractor-sec"
 		var/weeoo_in_progress = 0
-		speed = 2
+		delay = 2
 
 
 		/*
@@ -162,7 +179,7 @@
 				return
 
 			weeoo_in_progress = 10
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				playsound(src.loc, "sound/machines/siren_police.ogg", 60, 1)
 				light.enable()
 				src.icon_state = "tractor-sec2"
@@ -183,12 +200,10 @@
 		..()
 		if (start_with_cart)
 			cart = new/obj/tug_cart/(get_turf(src))
-		if (!islist(src.ability_buttons))
-			ability_buttons = list()
-		ability_buttons += new /obj/ability_button/vehicle_speed
 
 	eject_rider(var/crashed, var/selfdismount)
-		rider.set_loc(src.loc)
+		var/mob/living/rider = src.rider
+		..()
 		rider.pixel_y = 0
 		walk(src, 0)
 		if (rider.client)
@@ -198,7 +213,7 @@
 			if (crashed == 2)
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 			boutput(rider, "<span class='alert'><B>You are flung off of [src]!</B></span>")
-			rider.changeStatus("stunned", 80)
+			rider.changeStatus("stunned", 8 SECONDS)
 			rider.changeStatus("weakened", 5 SECONDS)
 			for (var/mob/C in AIviewers(src))
 				if (C == rider)
@@ -222,28 +237,11 @@
 		overlays = null
 		return
 
-	relaymove(mob/user as mob, dir) // only triggers when user hits a movement key
-		if (rider)
-			if (istype(src.loc, /turf/space))
-				return
-			src.glide_size = (32 / speed) * world.tick_lag
-			for (var/mob/M in src)
-				M.glide_size = src.glide_size
-				M.animate_movement = SYNC_STEPS
-			walk(src, dir, speed)
-			src.glide_size = (32 / speed) * world.tick_lag
-			for (var/mob/M in src)
-				M.glide_size = src.glide_size
-				M.animate_movement = SYNC_STEPS
-		else
-			for (var/mob/M in src.contents)
-				M.set_loc(src.loc)
-
 	MouseDrop_T(var/atom/movable/C, mob/user)
-		if (!in_range(user, src) || !in_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
 
-		if (istype(C, /obj/tug_cart) && in_range(C, src))
+		if (istype(C, /obj/tug_cart) && in_interact_range(C, src))
 			if (src == C) //Wire: Fix for mass recursion runtime (carts connected to themselves)
 				return
 			else if (!src.cart)
@@ -304,7 +302,7 @@
 		if (usr != rider)
 			..()
 			return
-		if (!(usr.getStatusDuration("paralysis") || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat))
+		if (!is_incapacitated(usr))
 			eject_rider(0, 1)
 		return
 
@@ -324,18 +322,6 @@
 					src.visible_message("<span class='alert'><B>[M] has attempted to shove [rider] off of [src]!</B></span>")
 		return
 
-	bullet_act(flag, A as obj)
-		if (rider)
-			rider.bullet_act(flag, A)
-			eject_rider()
-		return
-
-	meteorhit()
-		if (rider)
-			rider.meteorhit()
-			eject_rider()
-		return
-
 	disposing()
 		if (rider)
 			boutput(rider, "<span class='alert'><B>[src] is destroyed!</B></span>")
@@ -346,7 +332,7 @@
 
 	Move()
 		var/oldloc = src.loc
-		..()
+		. = ..()
 		if (src.loc == oldloc)
 			return
 		if (cart)
@@ -361,11 +347,11 @@
 			return
 		if (istype(the_mob.loc, /obj/vehicle/tug))
 			var/obj/vehicle/tug/T = the_mob.loc
-			if (T.speed == 2)
+			if (T.delay == 2)
 				src.icon_state = "lo"
-				T.speed = 4
+				T.delay = 4
 			else
-				T.speed = 2
+				T.delay = 2
 				src.icon_state = "hi"
 			T.relaymove(the_mob, T.dir)
 

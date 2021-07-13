@@ -339,6 +339,7 @@
 	maximum_stock = 1
 	supply_packs = list(/datum/supply_packs/complex/electronics_kit)
 
+#ifndef UNDERWATER_MAP
 /datum/supply_control/mini_magnet_kit
 	maximum_stock = 2
 	replenishment_time = 9000
@@ -349,6 +350,7 @@
 	replenishment_time = 36000
 	supply_packs = list(/datum/supply_packs/complex/magnet_kit)
 	workstation_grade = 2
+#endif
 
 /datum/supply_control/medkits
 	maximum_stock = 1

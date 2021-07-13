@@ -65,7 +65,7 @@
 		else if (istype(W, /obj/item/screwdriver)) //unanchoring piano
 			if (anchored)
 				user.visible_message("[user] starts loosening the piano's castors...", "You start loosening the piano's castors...")
-				if (!do_after(user, 30) || anchored != 1)
+				if (!do_after(user, 3 SECONDS) || anchored != 1)
 					return
 				playsound(user, "sound/items/Screwdriver2.ogg", 65, 1)
 				src.anchored = 0
@@ -73,7 +73,7 @@
 				return
 			else
 				user.visible_message("[user] starts tightening the piano's castors...", "You start tightening the piano's castors...")
-				if (!do_after(user, 30) || anchored != 0)
+				if (!do_after(user, 3 SECONDS) || anchored != 0)
 					return
 				playsound(user, "sound/items/Screwdriver2.ogg", 65, 1)
 				src.anchored = 1
@@ -86,7 +86,7 @@
 				return
 			if (panel_exposed == 0)
 				user.visible_message("[user] starts prying off the piano's maintenance panel...", "You begin to pry off the maintenance panel...")
-				if (!do_after(user, 30) || panel_exposed != 0)
+				if (!do_after(user, 3 SECONDS) || panel_exposed != 0)
 					return
 				playsound(user, "sound/items/Crowbar.ogg", 65, 1)
 				user.visible_message("[user] prys off the piano's maintenance panel.","You pry off the maintenance panel.")
@@ -101,7 +101,7 @@
 		else if (istype(W, /obj/item/plank)) //replacing panel
 			if (panel_exposed == 1 && W.name != "wooden plank" && !is_busy)
 				user.visible_message("[user] starts replacing the piano's maintenance panel...", "You start replacing the piano's maintenance panel...")
-				if (!do_after(user, 30) || panel_exposed != 1)
+				if (!do_after(user, 3 SECONDS) || panel_exposed != 1)
 					return
 				playsound(user, "sound/items/Deconstruct.ogg", 65, 1)
 				user.visible_message("[user] replaces the maintenance panel!", "You replace the maintenance panel!")
@@ -114,7 +114,7 @@
 				boutput(user, "There's no wires to snip!")
 				return
 			user.visible_message("<span class='alert'>[user] looks for the looping control wire...</span>", "You look for the looping control wire...")
-			if (!do_after(user, 70) || is_looping == 2)
+			if (!do_after(user, 7 SECONDS) || is_looping == 2)
 				return
 			is_looping = 2
 			playsound(user, "sound/items/Wirecutter.ogg", 65, 1)
@@ -125,7 +125,7 @@
 				..()
 				return
 			user.visible_message("<span class='alert'>[user] starts pulsing random wires in the piano.</span>", "You start pulsing random wires in the piano.")
-			if (!do_after(user, 30))
+			if (!do_after(user, 3 SECONDS))
 				return
 			user.visible_message("<span class='alert'>[user] pulsed a bunch of wires in the piano!</span>", "You pulsed some wires in the piano!")
 			reset_piano()
@@ -236,7 +236,7 @@
 			src.visible_message("<span class='alert'>\The [src] makes a grumpy ratchetting noise and shuts down!</span>")
 			is_busy = 0
 			update_icon(0)
-		song_length = note_names.len
+		song_length = length(note_names)
 		compiled_notes = list()
 		for (var/i = 1, i <= note_names.len, i++)
 			var/string = lowertext("[note_names[i]][note_accidentals[i]][note_octaves[i]]")
@@ -321,7 +321,7 @@
 			src.visible_message("\The [src] has nothing in its item box to take! Drat!")
 			return
 		new /obj/item/piano_key(get_turf(src))
-		new /obj/item/paper/book/player_piano(get_turf(src))
+		new /obj/item/paper/book/from_file/player_piano(get_turf(src))
 		items_claimed = 1
 		src.visible_message("\The [src] spills out a key and a booklet! Nifty!")
 		src.desc = "A piano that can take raw text and turn it into music! The future is now! The free user essentials box has been raided!" //jaaaaaaaank

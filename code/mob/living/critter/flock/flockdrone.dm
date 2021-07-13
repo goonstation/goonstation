@@ -74,8 +74,7 @@
 
 /mob/living/critter/flock/drone/Login()
 	..()
-	if(src.client)
-		src.client.color = null
+	src.client?.color = null
 	if(isnull(controller)) // finally i can just use swap bodies again
 		// make a new controller
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
@@ -101,19 +100,18 @@
 			var/key = pilot.client.key
 			pilot.client.mob = src
 			src.mind = new /datum/mind()
+			src.mind.ckey = ckey
 			src.mind.key = key
 			src.mind.current = src
 			ticker.minds += src.mind
 	// move controller into ourselves
 	pilot.set_loc(src)
 	controller = pilot
-	if(src.client)
-		src.client.color = null // stop being all fucked up and weird aaaagh
+	src.client?.color = null // stop being all fucked up and weird aaaagh
 	boutput(src, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] established.\]</b></span>")
 
 /mob/living/critter/flock/drone/proc/release_control()
-	if(src.flock)
-		src.flock.hideAnnotations(src)
+	src.flock?.hideAnnotations(src)
 	src.is_npc = 1
 	emote("beep")
 	say(pick_string("flockmind.txt", "flockdrone_player_kicked"))
@@ -132,6 +130,7 @@
 				var/key = src.client.key
 				src.client.mob = controller
 				controller.mind = new /datum/mind()
+				controller.mind.ckey = ckey
 				controller.mind.key = key
 				controller.mind.current = controller
 				ticker.minds += controller.mind
@@ -167,26 +166,26 @@
 	if(isflock(user))
 		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
 		if(src.controller)
-			special_desc += "<br><span class='bold'>ID:</span> <b>[src.controller.real_name]</b> controlling [src.real_name])"
+			special_desc += "<br><span class='bold'>ID:</span> <b>[src.controller.real_name]</b> (controlling [src.real_name])"
 		else
 			special_desc += "<br><span class='bold'>ID:</span> [src.real_name]"
-		special_desc += "<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]"
-		special_desc += "<br><span class='bold'>Resources:</span> [src.resources]"
-		special_desc += "<br><span class='bold'>System Integrity:</span> [round(src.get_health_percentage()*100)]%"
-		special_desc += "<br><span class='bold'>Cognition:</span> [src.is_npc ? "TORPID" : "SAPIENT"]"
+		special_desc += {"<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]
+		<br><span class='bold'>Resources:</span> [src.resources]
+		<br><span class='bold'>System Integrity:</span> [round(src.get_health_percentage()*100)]%
+		<br><span class='bold'>Cognition:</span> [isalive(src) && !dormant ? src.is_npc ? "TORPID" : "SAPIENT" : "ABSENT"]"}
+		if (src.is_npc && istype(src.ai.current_task))
+			special_desc += "<br><span class='bold'>Task:</span> [uppertext(src.ai.current_task.name)]"
 		special_desc += "<br><span class='bold'>###=-</span></span>"
 		return special_desc
 	else
 		return null // give the standard description
 
 /mob/living/critter/flock/drone/proc/changeFlock(var/flockName)
-	if(src.flock)
-		src.flock.removeDrone(src)
+	src.flock?.removeDrone(src)
 	if(flocks[flockName])
 		src.flock = flocks[flockName]
 		src.flock.registerUnit(src) // for the sake of the flockmind
-	if(controller)
-		controller.flock = flocks[flockName]
+	controller?.flock = flocks[flockName]
 	boutput(src, "<span class='notice'>You are now part of the <span class='bold'>[src.flock.name]</span> flock.</span>")
 
 /mob/living/critter/flock/drone/Login()
@@ -214,7 +213,8 @@
 		return
 	if(target == user)
 		// only allow people to jump into flockdrones if they're doing it themselves
-		if(istype(user, /mob/living/intangible/flock))
+		var/mob/living/intangible/flock/F = user
+		if(istype(F) && F.flock && F.flock == src.flock)
 			// jump on in there!
 			src.take_control(user)
 		else
@@ -280,17 +280,20 @@
 	switch (act)
 		if ("whistle", "beep", "burp")
 			if (src.emote_check(voluntary, 50))
-				playsound(get_turf(src), "sound/misc/flockmind/flockdrone_beep[pick("1","2","3","4")].ogg", 60, 1)
+				playsound(src, "sound/misc/flockmind/flockdrone_beep[pick("1","2","3","4")].ogg", 60, 1)
 				return "<b>[src]</b> beeps."
 		if ("scream", "growl", "abeep", "grump")
 			if (src.emote_check(voluntary, 50))
-				playsound(get_turf(src), "sound/misc/flockmind/flockdrone_grump[pick("1","2","3")].ogg", 60, 1)
+				playsound(src, "sound/misc/flockmind/flockdrone_grump[pick("1","2","3")].ogg", 60, 1)
 				return "<b>[src]</b> beeps grumpily!"
 		if ("fart") // i cannot ignore my heritage any longer
 			if (src.emote_check(voluntary, 50))
 				var/fart_message = pick_string("flockmind.txt", "flockdrone_fart")
-				playsound(get_turf(src), "sound/misc/flockmind/flockdrone_fart.ogg", 60, 1)
+				playsound(src, "sound/misc/flockmind/flockdrone_fart.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 				return "<b>[src]</b> [fart_message]"
+		if ("laugh") //no good sound for it - moon
+			if (src.emote_check(voluntary, 50))
+				return "<b>[src]</b> caws heartily!"
 	return null
 
 /mob/living/critter/flock/drone/specific_emote_type(var/act)
@@ -308,9 +311,9 @@
 		var/absorb = min(src.absorb_rate, max(0, I.health))
 		I.health -= absorb
 		src.resources += src.absorb_per_health * absorb
-		playsound(get_turf(src), "sound/effects/sparks[rand(1,6)].ogg", 50, 1)
+		playsound(src, "sound/effects/sparks[rand(1,6)].ogg", 50, 1)
 		if(I && I.health <= 0) // fix runtime Cannot read null.health
-			playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_1.ogg", 50, 1)
+			playsound(src, "sound/impact_sounds/Energy_Hit_1.ogg", 50, 1)
 			I.dropped(src)
 			if(I.contents.len > 0)
 				var/anything_tumbled = 0
@@ -341,11 +344,11 @@
 	// AI ticks are handled in mob_ai.dm, as they ought to be
 
 /mob/living/critter/flock/drone/process_move(keys)
-	if(src.grabbed_by.len)
+	if(keys && length(src.grabbed_by))
 		// someone is grabbing us, and we want to move
 		++src.antigrab_counter
 		if(src.antigrab_counter >= src.antigrab_fires_at)
-			playsound(get_turf(src), "sound/effects/electric_shock.ogg", 40, 1, -3)
+			playsound(src, "sound/effects/electric_shock.ogg", 40, 1, -3)
 			boutput(src, "<span class='flocksay'><b>\[SYSTEM: Anti-grapple countermeasures deployed.\]</b></span>")
 			for(var/obj/item/grab/G in src.grabbed_by)
 				var/mob/living/L = G.assailant
@@ -360,14 +363,14 @@
 				if(!floor.on)
 					floor.on()
 			src.start_floorrunning()
-	else if(src.floorrunning)
+	else if(keys && src.floorrunning)
 		src.end_floorrunning()
-	return ..()
+	. = ..()
 
 /mob/living/critter/flock/drone/proc/start_floorrunning()
 	if(src.floorrunning)
 		return
-	playsound(get_turf(src), "sound/misc/flockmind/flockdrone_floorrun.ogg", 50, 1, -3)
+	playsound(src, "sound/misc/flockmind/flockdrone_floorrun.ogg", 50, 1, -3)
 	src.floorrunning = 1
 	src.set_density(0)
 	animate_flock_floorrun_start(src)
@@ -375,7 +378,7 @@
 /mob/living/critter/flock/drone/proc/end_floorrunning()
 	if(!src.floorrunning)
 		return
-	playsound(get_turf(src), "sound/misc/flockmind/flockdrone_floorrun.ogg", 50, 1, -3)
+	playsound(src, "sound/misc/flockmind/flockdrone_floorrun.ogg", 50, 1, -3)
 	src.floorrunning = 0
 	src.set_density(1)
 	animate_flock_floorrun_end(src)
@@ -398,7 +401,7 @@
 	if(floorrunning)
 		// do our custom MOVE THROUGH ANYTHING stuff
 		// copypasted from intangible.dm
-		src.dir = get_dir(src, NewLoc)
+		src.set_dir(get_dir(src, NewLoc))
 		if(!isturf(src.loc))
 			src.set_loc(get_turf(src))
 		if(NewLoc)
@@ -466,7 +469,7 @@
 		src.harmedBy(M)
 
 // also maybe we've just had environmental damage, who knows
-/mob/living/critter/flock/drone/TakeDamage(zone, brute, burn)
+/mob/living/critter/flock/drone/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()
 	var/prev_damaged = src.damaged
 	src.check_health()
@@ -527,11 +530,10 @@
 		src.resources = 0 // just in case any weirdness happens let's pre-empt the dupe bug
 	if(src.controller)
 		src.release_control()
-	if(src.flock)
-		src.flock.removeDrone(src)
+	src.flock?.removeDrone(src)
 	..()
 	src.icon_state = "drone-dead"
-	playsound(get_turf(src), "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
+	playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
 	src.set_density(0)
 	desc = "[initial(desc)]<br><span class='alert'>\The [src] is a dead, broken heap.</span>"
 
@@ -559,7 +561,7 @@
 			if(91 to 100)
 				B = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock(my_turf)
 
-	playsound(get_turf(src), "sound/impact_sounds/Glass_Shatter_2.ogg", 50, 1)
+	playsound(src, "sound/impact_sounds/Glass_Shatter_2.ogg", 50, 1)
 	if (src.organHolder)
 		src.organHolder.drop_organ("brain",src.loc)
 		src.organHolder.drop_organ("heart",src.loc)
@@ -573,14 +575,12 @@
 	walk(src, 0)
 	if(src.floorrunning)
 		src.end_floorrunning()
-	if(src.ai)
-		src.ai.die()
+	src.ai?.die()
 	emote("scream")
 	say("\[System notification: drone diffracting.\]")
 	if(src.controller)
 		src.release_control()
-	if(src.flock)
-		src.flock.removeDrone(src)
+	src.flock?.removeDrone(src)
 	// create the flockbits
 	animate_flock_drone_split(src)
 	var/mob/living/critter/flock/bit/B
@@ -589,14 +589,13 @@
 	var/list/candidate_turfs = getNeighbors(T, alldirs)
 	for(var/i=1 to num_bits)
 		B = new(get_turf(src), F = src.flock)
-		if(src.flock)
-			src.flock.registerUnit(B)
+		src.flock?.registerUnit(B)
 		SPAWN_DBG(0.2 SECONDS)
 			B.set_loc(pick(candidate_turfs))
-	sleep(0.1 SECONDS) // make sure the animation finishes
-	// finally, away with us
-	src.ghostize()
-	qdel(src)
+	SPAWN_DBG(0.1 SECONDS) // make sure the animation finishes
+		// finally, away with us
+		src.ghostize()
+		qdel(src)
 
 
 /mob/living/critter/flock/drone/update_inhands()
@@ -623,7 +622,7 @@
 			. += B // always drop brain
 	// handle our contents, such as whatever item we're trying to eat or what we're holding
 	for(var/atom/movable/O in src.contents)
-		if(istype(O, /obj/screen))
+		if(istype(O, /atom/movable/screen))
 			continue // no UI elements please
 		. += O
 
@@ -691,7 +690,7 @@
 	else
 		if (!target.melee_attack_test(user))
 			return
-		if (prob(src.attack_hit_prob) || target.getStatusDuration("stunned") || target.getStatusDuration("weakened") || target.getStatusDuration("paralysis") || target.stat || target.restrained())
+		if (prob(src.attack_hit_prob) || is_incapacitated(target)|| target.restrained())
 			var/obj/item/affecting = target.get_affecting(user)
 			var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, dam_low, dam_high, 0)
 			user.attack_effects(target, affecting)
@@ -717,7 +716,7 @@
 	if (user.floorrunning)
 		return // you'll need to be out of the floor to do anything
 	// CONVERT TURF
-	if(!isturf(target) && !(istype(target, /obj/storage/closet/flock) || istype(target, /obj/table/flock) || istype(target, /obj/structure/girder) || istype(target, /obj/machinery/door/feather)))
+	if(!isturf(target) && !(istype(target, /obj/storage/closet/flock) || istype(target, /obj/table/flock) || istype(target, /obj/structure/girder) || istype(target, /obj/machinery/door/feather) || istype(target, /obj/flock_structure/ghost)))
 		target = get_turf(target)
 
 	if(istype(target, /turf) && !istype(target, /turf/simulated) && !istype(target, /turf/space))
@@ -765,14 +764,16 @@
 				..()
 //help intent actions
 	else if(user.a_intent == INTENT_HELP)
-		if(istype(target, /obj/machinery/door/feather))
-			var/obj/machinery/door/feather/F = target
-			if(F.broken || (F.health > F.health_max))
-				if(user.resources < 10)
-					boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
-				else
-					actions.start(new/datum/action/bar/flock_repair(F), user)
-
+		switch(target.type)//making this into switches for easy of expansion later
+			if(/obj/machinery/door/feather)
+				var/obj/machinery/door/feather/F = target
+				if(F.broken || (F.health < F.health_max))
+					if(user.resources < 10)
+						boutput(user, "<span class='alert'>Not enough resources to repair (you need 10).</span>")
+					else
+						actions.start(new/datum/action/bar/flock_repair(F), user)
+			if(/obj/flock_structure/ghost)
+				actions.start(new /datum/action/bar/flock_deposit(target), user)
 
 /datum/limb/flock_converter/help(mob/target, var/mob/living/critter/flock/drone/user)
 	if(!target || !user)

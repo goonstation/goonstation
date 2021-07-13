@@ -52,11 +52,11 @@
 				qdel(G)
 
 			return
-	if ((!( shielded ) || !( W.flags ) & NOSHIELD))
+	if (!shielded || !(W.flags & NOSHIELD))
 		SPAWN_DBG( 0 )
 		// drsingh Cannot read null.force
 #ifdef DATALOGGER
-			if (!isnull(W) && W.force)
+			if (W?.force)
 				game_stats.Increment("violence")
 #endif
 			if (!isnull(W))
@@ -69,7 +69,7 @@
 						attack_twitch(user)
 
 
-				if (W && W.force) //Wire: Fix for Cannot read null.force
+				if (W?.force) //Wire: Fix for Cannot read null.force
 					message_admin_on_attack(user, "uses \a [W.name] on")
 			return
 	return

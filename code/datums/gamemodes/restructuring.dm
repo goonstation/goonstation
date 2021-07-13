@@ -13,7 +13,7 @@
 	while (mobs.len == 0)
 		sleep 30
 		mobs = get_mob_list()
-	SPAWN_DBG (120)
+	SPAWN_DBG(12 SECONDS)
 		pick_target()
 
 /datum/game_mode/restructuring/proc/pick_target(who)
@@ -32,7 +32,7 @@
 
 	target.store_memory("Head office has ordered your downsizing. Ruh roh", 0)
 
-	for(var/mob/living/silicon/ai/M in by_type[/mob/living/silicon/ai])
+	for_by_tcl(M, /mob/living/silicon/ai)
 		boutput(M, "These are your laws now:")
 		M.set_zeroth_law("[target_desc] is not human.")
 		M.show_laws()

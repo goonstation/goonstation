@@ -20,7 +20,7 @@
 
 	RawClick(location,control,params)
 		var/mob/user = usr
-		if (ismobcritter(user))
+		if (ismobcritter(user) || issilicon(user) || isobserver(user))
 			return
 		if(can_act(user) && can_reach(user, src))
 			var/list/paramList = params2list(params)
@@ -86,6 +86,10 @@
 		return
 
 	proc/canHold(var/obj/item/I)
+		if(isnull(I))
+			return null
+		if(I.cant_drop)
+			return 0
 		for(var/X in deniedTypes)
 			if(istype(I, X))
 				return 0
@@ -240,5 +244,38 @@
 		slots["4"] = new/obj/item/reagent_containers/mender/burn(src)
 		slots["5"] = new/obj/item/reagent_containers/mender/burn(src)
 		slots["6"] = new/obj/item/reagent_containers/mender/burn(src)
+		rebuildOverlays()
+		return ..()
+
+/obj/cabinet/psychiatry
+
+	New()
+		slots["1"] = new /obj/item/device/audio_log(src)
+		slots["2"] = new /obj/item/paper_bin(src)
+		slots["3"] = new /obj/item/storage/box/crayon(src)
+		slots["4"] = new /obj/item/storage/box/cookie_tin/sugar(src)
+		slots["5"] = new /obj/item/item_box/gold_star(src)
+		slots["6"] = new /obj/item/toy/plush/small/stress_ball(src)
+		rebuildOverlays()
+		return ..()
+
+/obj/cabinet/taffy // for psychiatrists to prescribe
+
+	New()
+		slots["1"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/cherry(src)
+		slots["2"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/watermelon(src)
+		slots["3"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/blueraspberry(src)
+		slots["4"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/cherry(src)
+		slots["5"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/watermelon(src)
+		slots["6"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/blueraspberry(src)
+		rebuildOverlays()
+		return ..()
+
+/obj/cabinet/ammo // for the shooting range prefab
+	New()
+		slots["1"] = new /obj/item/ammo/bullets/foamdarts(src)
+		slots["2"] = new /obj/item/ammo/bullets/foamdarts(src)
+		slots["3"] = new /obj/item/ammo/bullets/foamdarts(src)
+		slots["4"] = new /obj/item/ammo/bullets/bullet_22(src)
 		rebuildOverlays()
 		return ..()

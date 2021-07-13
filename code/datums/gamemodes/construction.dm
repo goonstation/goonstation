@@ -117,7 +117,7 @@
 					new /obj/machinery/door/airlock/external(T)
 			new /area/station/hallway/secondary/construction(T)
 			if (holds_items)
-				if (cx == manx && manufacturers.len)
+				if (cx == manx && length(manufacturers))
 					var/object = pick(manufacturers)
 					manufacturers -= object
 					new object(T)

@@ -8,33 +8,36 @@
         Mainframe lore tape
         and lore entries
 */
-	
-/area/sequesterd_cloner_puzzle
-	name = "Engine Puzzle"
-	icon_state = "orange"
-
 
 //Quickly turns everything back on as soon as there's a little bit of power
 /obj/machinery/power/apc/puzzle_apc
-    name = "Puzzle APC"
-    dir = WEST
-    autoname_on_spawn = 1
-    noalerts = 1
-    aidisabled = 1
+	name = "Puzzle APC"
+	dir = WEST
+	autoname_on_spawn = 1
+	noalerts = 1
+	aidisabled = 1
 
-    // set channels depending on how much charge we have left
-    check_channel_thresholds()
-        if(cell.charge <= 0)					// zero charge, turn all off
-            equipment = autoset(equipment, 0)
-            lighting = autoset(lighting, 0)
-            environ = autoset(environ, 0)
-            if (!noalerts) area.poweralert(0, src)
-        else									// otherwise all can be on
-            equipment = autoset(equipment, 1)
-            lighting = autoset(lighting, 1)
-            environ = autoset(environ, 1)
-            if(cell.percent() > 75)
-                if (!noalerts) area.poweralert(1, src)
+	initialize()
+		. = ..()
+		for(var/obj/cable/C in src.loc)
+			C.update_network()
+			break
+
+	// set channels depending on how much charge we have left
+	check_channel_thresholds()
+		if(cell.charge <= 0) // zero charge, turn all off
+			equipment = autoset(equipment, 0)
+			lighting = autoset(lighting, 0)
+			environ = autoset(environ, 0)
+			if (!noalerts)
+				area.poweralert(0, src)
+		else // otherwise all can be on
+			equipment = autoset(equipment, 1)
+			lighting = autoset(lighting, 1)
+			environ = autoset(environ, 1)
+			if(cell.percent() > 75)
+				if (!noalerts)
+					area.poweralert(1, src)
 
 
 

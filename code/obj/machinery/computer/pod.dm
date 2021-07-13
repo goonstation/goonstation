@@ -1,27 +1,31 @@
 /obj/machinery/computer/pod
 	name = "Pod Launch Control"
 	icon_state = "computer_generic"
-	var/id = 1.0
+	circuit_type = /obj/item/circuitboard/pod
+	id = 1
 	var/obj/machinery/mass_driver/connected = null
-	var/timing = 0.0
-	var/time = 30.0
+	var/timing = 0
+	var/time = 30
 	//var/TPR = 0
 
-	lr = 0.6
-	lg = 1
-	lb = 0.1
+	light_r =0.6
+	light_g = 1
+	light_b = 0.1
 
 /obj/machinery/computer/pod/old
 	icon_state = "old"
 	name = "DoorMex Control Computer"
+	circuit_type = /obj/item/circuitboard/olddoor
 
 /obj/machinery/computer/pod/old/syndicate
 	name = "ProComp Executive IIc"
 	desc = "The Syndicate operate on a tight budget. Operates external airlocks."
+	circuit_type = /obj/item/circuitboard/syndicatedoor
 
 /obj/machinery/computer/pod/old/swf
 	name = "Magix System IV"
 	desc = "An arcane artifact that holds much magic. Running E-Knock 2.2: Sorceror's Edition"
+	circuit_type = /obj/item/circuitboard/swfdoor
 
 	attack_hand(var/mob/user as mob)
 		if (!iswizard(user))
@@ -45,7 +49,7 @@
 	sleep(2 SECONDS)
 
 	//src.connected.drive()		*****RM from 40.93.3S
-	for(var/obj/machinery/mass_driver/M in machine_registry[MACHINES_MASSDRIVERS])
+	for(var/obj/machinery/mass_driver/M as anything in machine_registry[MACHINES_MASSDRIVERS])
 		if(M.id == src.id)
 			M.power = src.connected.power
 			M.drive()
@@ -61,72 +65,12 @@
 /obj/machinery/computer/pod/New()
 	..()
 	SPAWN_DBG( 5 )
-		for(var/obj/machinery/mass_driver/M in machine_registry[MACHINES_MASSDRIVERS])
+		for(var/obj/machinery/mass_driver/M as anything in machine_registry[MACHINES_MASSDRIVERS])
 			if (M.id == src.id)
 				src.connected = M
 			else
 		return
 	return
-
-/obj/machinery/computer/pod/attackby(obj/item/I as obj, user as mob)
-	if (isscrewingtool(I))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 20))
-			if (src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-
-				//generate appropriate circuitboard. Accounts for /pod/old computer types
-				var/obj/item/circuitboard/pod/M = null
-				if(istype(src, /obj/machinery/computer/pod/old))
-					M = new /obj/item/circuitboard/olddoor( A )
-					if(istype(src, /obj/machinery/computer/pod/old/syndicate))
-						M = new /obj/item/circuitboard/syndicatedoor( A )
-					if(istype(src, /obj/machinery/computer/pod/old/swf))
-						M = new /obj/item/circuitboard/swfdoor( A )
-				else //it's not an old computer. Generate standard pod circuitboard.
-					M = new /obj/item/circuitboard/pod( A )
-
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				M.id = src.id
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
-			else
-				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				//generate appropriate circuitboard. Accounts for /pod/old computer types
-				var/obj/item/circuitboard/pod/M = null
-				if(istype(src, /obj/machinery/computer/pod/old))
-					M = new /obj/item/circuitboard/olddoor( A )
-					if(istype(src, /obj/machinery/computer/pod/old/syndicate))
-						M = new /obj/item/circuitboard/syndicatedoor( A )
-					if(istype(src, /obj/machinery/computer/pod/old/swf))
-						M = new /obj/item/circuitboard/swfdoor( A )
-				else //it's not an old computer. Generate standard pod circuitboard.
-					M = new /obj/item/circuitboard/pod( A )
-
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				M.id = src.id
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				qdel(src)
-	else
-		src.attack_hand(user)
-	return
-
-/obj/machinery/computer/pod/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
 
 /obj/machinery/computer/pod/attack_hand(var/mob/user as mob)
 	if(..())
@@ -185,7 +129,7 @@
 /obj/machinery/computer/pod/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 		if (href_list["spell_teleport"])
 			//src.TPR = 1

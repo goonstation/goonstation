@@ -36,11 +36,13 @@
 	var/area/station/turret_protected/TP = get_area(src)
 	if(istype(TP))
 		TP.turret_list += src
+	START_TRACKING
 
 /obj/machinery/turret/disposing()
 	var/area/station/turret_protected/TP = get_area(src)
 	if(istype(TP))
 		TP.turret_list -= src
+	STOP_TRACKING
 	..()
 
 /obj/machinery/turret/proc/isPopping()
@@ -93,13 +95,13 @@
 					T.target_list = src.target_list
 
 
-		if (target_list && target_list.len)
+		if (length(target_list))
 			if (!isPopping())
 				if (isDown())
 					popUp()
 				else
 					var/atom/target = pick(target_list)
-					src.dir = get_dir(src, target)
+					src.set_dir(get_dir(src, target))
 					lastfired = world.time //Setting this here to prevent immediate firing when enabled
 					if (src.enabled)
 						//if (isliving(target))
@@ -114,7 +116,6 @@
 	.= list()
 
 	for(var/mob/living/C in mobs)
-		LAGCHECK(LAG_HIGH)
 		if (!C)
 			continue
 		if (!iscarbon(C) && !ismobcritter(C))
@@ -125,13 +126,14 @@
 			continue
 		if (!istype(C.loc.loc,A))
 			continue
+		if ((src.req_access || src.req_access_txt) && src.allowed(C))
+			continue //optional access whitelist
 		. += C
 
 	if (istype(A, /area/station/turret_protected))
 		var/area/station/turret_protected/T = A
 		if (T.blob_list.len)
 			for(var/obj/blob/B in T.blob_list)
-				LAGCHECK(LAG_HIGH)
 				if (!B)
 					continue
 				if (!istype(B.loc,/turf))
@@ -299,7 +301,7 @@
 						src.post_status(sender, "command", "device_reply", status_string)
 				if("setmode")
 					var/list/L = params2list(signal.data["data"])
-					if(!L || !L.len) return
+					if(!L || !length(L)) return
 					var/new_lethal_state = text2num(L["lethal"])
 					var/new_enabled_state = text2num(L["active"])
 					if(!isnull(new_lethal_state))
@@ -345,17 +347,23 @@
 	var/lethal = 0
 	var/locked = 1
 	var/emagged = 0
-	var/turretsExist = 1
+	var/turretArea = null
 
 	req_access = list(access_ai_upload)
 	object_flags = CAN_REPROGRAM_ACCESS
+
+	New()
+		..()
+		if (!src.turretArea)
+			var/area/A = get_area(src)
+			src.turretArea = A.type
 
 /obj/machinery/turretid/attackby(obj/item/W, mob/user)
 	if(status & BROKEN) return
 	if (issilicon(user) || isAI(user))
 		return src.attack_hand(user)
 	else // trying to unlock the interface
-		if (src.allowed(usr))
+		if (src.allowed(user))
 			locked = !locked
 			boutput(user, "You [ locked ? "lock" : "unlock"] the panel.")
 			if (locked)
@@ -364,7 +372,7 @@
 					user.Browse(null, "window=turretid")
 			else
 				if (user.using_dialog_of(src))
-					src.attack_hand(usr)
+					src.attack_hand(user)
 		else
 			boutput(user, "<span class='alert'>Access denied.</span>")
 
@@ -375,12 +383,11 @@
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
 		return
 
-	if ( (get_dist(src, user) > 1 ))
-		if (!issilicon(user) && !isAI(user) && !isAIeye(user))
-			boutput(user, text("Too far away."))
-			src.remove_dialog(user)
-			user.Browse(null, "window=turretid")
-			return
+	if(!in_interact_range(src, user))
+		boutput(user, text("Too far away."))
+		src.remove_dialog(user)
+		user.Browse(null, "window=turretid")
+		return
 
 	src.add_dialog(user)
 	var/area/area = get_area(src)
@@ -389,7 +396,7 @@
 		return
 	var/t = "<TT><B>Turret Control Panel</B> ([area.name])<HR>"
 
-	if(!src.emagged && turretsExist)
+	if(!src.emagged)
 		if(src.locked && (!issilicon(user) && !isAI(user)))
 			t += "<I>(Swipe ID card to unlock control panel.)</I><BR>"
 		else
@@ -451,39 +458,36 @@
 		. = 1
 		src.enabled = !src.enabled
 		boutput(user, "You have <B>[src.enabled ? "en" : "dis"]abled</B> the turrets.")
-		logTheThing("combat", usr, null, "turned [enabled ? "ON" : "OFF"] turrets from control \[[showCoords(src.x, src.y, src.z)]].")
+		logTheThing("combat", user, null, "turned [enabled ? "ON" : "OFF"] turrets from control \[[showCoords(src.x, src.y, src.z)]].")
 		src.updateTurrets()
 	else if(user.client.check_key(KEY_BOLT))
 		. = 1
 		src.lethal = !src.lethal
 		boutput(user, "You have set the turrets to <B>[src.lethal ? "laser" : "stun"]</B> mode.")
 		if(src.lethal)
-			logTheThing("combat", usr, null, "set turrets to LETHAL from control \[[showCoords(src.x, src.y, src.z)]].")
-			message_admins("[key_name(usr)] set turrets to LETHAL from control \[[showCoords(src.x, src.y, src.z)]].")
+			logTheThing("combat", user, null, "set turrets to LETHAL from control \[[showCoords(src.x, src.y, src.z)]].")
+			message_admins("[key_name(user)] set turrets to LETHAL from control \[[showCoords(src.x, src.y, src.z)]].")
 		else
-			logTheThing("combat", usr, null, "set turrets to STUN from control \[[showCoords(src.x, src.y, src.z)]].")
-			message_admins("[key_name(usr)] set turrets to STUN from control \[[showCoords(src.x, src.y, src.z)]].")
+			logTheThing("combat", user, null, "set turrets to STUN from control \[[showCoords(src.x, src.y, src.z)]].")
+			message_admins("[key_name(user)] set turrets to STUN from control \[[showCoords(src.x, src.y, src.z)]].")
 		src.updateTurrets()
 
 
 /obj/machinery/turretid/proc/updateTurrets()
-	if(turretsExist) //Let's not waste a lot of time here.
-		if (src.enabled)
-			if (src.lethal)
-				icon_state = "ai1"
-			else
-				icon_state = "ai3"
-		else
-			icon_state = "ai0"
+	for_by_tcl(turret, /obj/machinery/turret)
+		var/area/A = get_area(turret)
+		if (A.type == src.turretArea)
+			turret.setState(enabled, lethal)
+			src.updateicon()
 
-		var/area/area = get_area(src)
-		if (!istype(area))
-			logTheThing("debug", null, null, "Turret badly positioned.")
-			return
-		turretsExist = 0
-		for (var/obj/machinery/turret/aTurret in get_area_all_atoms(area))
-			aTurret.setState(enabled, lethal)
-			turretsExist = 1
+/obj/machinery/turretid/proc/updateicon()
+	if (src.enabled)
+		if (src.lethal)
+			icon_state = "ai1"
+		else
+			icon_state = "ai3"
+	else
+		icon_state = "ai0"
 
 /obj/machinery/turretid/emag_act(var/mob/user)
 	if(!emagged)
@@ -519,4 +523,4 @@
 		updateTurrets()
 
 		sleep(rand(1, 10) * 10)
-	while(emagged && turretsExist)
+	while(emagged)

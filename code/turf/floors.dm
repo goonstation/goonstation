@@ -1,6 +1,6 @@
 /*
  * Hey! You!
- * Remember to mirror your changes!
+ * Remember to mirror your changes (unless you use the [DEFINE_FLOORS] macro)
  * floors_unsimulated.dm & floors_airless.dm
  */
 
@@ -15,12 +15,21 @@
 
 	var/broken = 0
 	var/burnt = 0
+	var/has_material = TRUE
 	var/plate_mat = null
+	var/reinforced = FALSE
+	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
+	var/roundstart_icon_state
+	var/roundstart_dir
 
 	New()
 		..()
-		plate_mat = getMaterial("steel")
-		setMaterial(getMaterial("steel"))
+		if (has_material)
+			if (isnull(plate_mat))
+				plate_mat = getMaterial("steel")
+			setMaterial(plate_mat)
+		roundstart_icon_state = icon_state
+		roundstart_dir = dir
 		var/obj/plan_marker/floor/P = locate() in src
 		if (P)
 			src.icon = P.icon
@@ -29,7 +38,7 @@
 			allows_vehicles = P.allows_vehicles
 			var/pdir = P.dir
 			SPAWN_DBG(0.5 SECONDS)
-				src.dir = pdir
+				src.set_dir(pdir)
 			qdel(P)
 
 
@@ -120,6 +129,7 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = 0
+	layer = PLATING_LAYER
 
 /turf/simulated/floor/plating/jen
 	icon_state = "plating_jen"
@@ -642,6 +652,7 @@
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
 
+	reinforced = TRUE
 	allows_vehicles = 1
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
@@ -920,6 +931,11 @@
 		desc = "Yuck."
 		icon_state = "bloodfloor_1"
 
+	hivefloor
+		name = "hive floor"
+		icon = 'icons/turf/floors.dmi'
+		icon_state = "hive"
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/snow
@@ -937,7 +953,7 @@
 			icon_state = "snow3"
 		else if (prob(5))
 			icon_state = "snow4"
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /turf/simulated/floor/snow/snowball
 	var/last_gather_time
@@ -972,7 +988,7 @@
 
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /////////////////////////////////////////
 
@@ -1010,7 +1026,7 @@
 	if(prob(30))
 		src.icon_state += pick("_p", "_w", "_b", "_y", "_r", "_a")
 	src.name = "grass"
-	src.dir = pick(cardinal)
+	src.set_dir(pick(cardinal))
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 
@@ -1020,7 +1036,7 @@
 	if(prob(30))
 		src.icon_state += pick("_p", "_w", "_b", "_y", "_r", "_a")
 	src.name = "grass"
-	src.dir = pick(cardinal)
+	src.set_dir(pick(cardinal))
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 
@@ -1030,10 +1046,26 @@
 /turf/simulated/floor/grass/random
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /turf/simulated/floor/grass/random/alt
 	icon_state = "grass_eh"
+
+/turf/simulated/floor/grasstodirt
+	name = "grass"
+	icon = 'icons/misc/worlds.dmi'
+	icon_state = "grasstodirt"
+	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_changename = 0
+	mat_changedesc = 0
+
+/turf/simulated/floor/dirt
+	name = "dirt"
+	icon = 'icons/misc/worlds.dmi'
+	icon_state = "dirt"
+	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_changename = 0
+	mat_changedesc = 0
 
 /////////////////////////////////////////
 
@@ -1058,6 +1090,7 @@
 	name = "shuttle bay plating"
 	icon_state = "engine"
 	allows_vehicles = 1
+	reinforced = TRUE
 
 /turf/simulated/floor/shuttlebay
 	name = "shuttle bay plating"
@@ -1065,6 +1098,7 @@
 	allows_vehicles = 1
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+	reinforced = TRUE
 
 /turf/simulated/floor/metalfoam
 	icon = 'icons/turf/floors.dmi'
@@ -1074,6 +1108,7 @@
 	nitrogen = 0.01
 	temperature = TCMB
 	intact = 0
+	layer = PLATING_LAYER
 	allows_vehicles = 1 // let the constructor pods move around on these
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
@@ -1133,12 +1168,6 @@
 		if (T.amount >= 1)
 			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			T.build(src)
-			if(T.material) src.setMaterial(T.material)
-
-		if (T.amount < 1 && !issilicon(user))
-			user.u_equip(T)
-			qdel(T)
-			return
 		return
 
 	if(prob(75 - metal * 25))
@@ -1245,39 +1274,9 @@
 		step(user.pulling, get_dir(fuck_u, src))
 	return
 
-/turf/simulated/floor/engine/attackby(obj/item/C as obj, mob/user as mob, params)
-	if (!C)
-		return
-	if (!user)
-		return
-	if (ispryingtool(C))
-		boutput(user, "<span class='alert'>You can't pry apart reinforced flooring! You'll have to loosen it with a welder or wrench instead.</span>")
-		return
-	if (istype(C, /obj/item/pen))
-		var/obj/item/pen/P = C
-		P.write_on_turf(src, user, params)
-		return
-	else if ((isweldingtool(C) && C:try_weld(user,0,-1,0,1)) || iswrenchingtool(C))
-		boutput(user, "<span class='notice'>Loosening rods...</span>")
-		if(iswrenchingtool(C))
-			playsound(src, "sound/items/Ratchet.ogg", 80, 1)
-		if(do_after(user, 30))
-			var/obj/R1 = new /obj/item/rods(src)
-			var/obj/R2 = new /obj/item/rods(src)
-			if (material)
-				R1.setMaterial(material)
-				R2.setMaterial(material)
-			else
-				R1.setMaterial(getMaterial("steel"))
-				R2.setMaterial(getMaterial("steel"))
-			ReplaceWithFloor()
-			var/turf/simulated/floor/F = src
-			F.to_plating()
-			return
-
 /turf/simulated/floor/proc/to_plating(var/force_break)
 	if(!force_break)
-		if(istype(src,/turf/simulated/floor/engine)) return
+		if(src.reinforced) return
 	if(!intact) return
 	if (!icon_old)
 		icon_old = icon_state
@@ -1285,7 +1284,7 @@
 		name_old = name
 	src.name = "plating"
 	src.icon_state = "plating"
-	intact = 0
+	setIntact(FALSE)
 	broken = 0
 	burnt = 0
 	if(plate_mat)
@@ -1297,14 +1296,16 @@
 /turf/simulated/floor/proc/dismantle_wall()//can get called due to people spamming weldingtools on walls
 	return
 
+/turf/simulated/floor/proc/take_hit()// can get called due to people crumpling cardboard walls
+	return
+
 /turf/simulated/floor/proc/break_tile_to_plating()
 	if(intact) to_plating()
 	break_tile()
 
 /turf/simulated/floor/proc/break_tile(var/force_break)
 	if(!force_break)
-		if(istype(src,/turf/simulated/floor/engine)) return
-		if(istype(src,/turf/simulated/floor/shuttlebay)) return
+		if(src.reinforced) return
 
 	if(broken) return
 	if (!icon_old)
@@ -1317,7 +1318,7 @@
 		broken = 1
 
 /turf/simulated/floor/proc/burn_tile()
-	if(broken || burnt) return
+	if(broken || burnt || reinforced) return
 	if (!icon_old)
 		icon_old = icon_state
 	if(intact)
@@ -1326,18 +1327,12 @@
 		src.icon_state = "panelscorched"
 	burnt = 1
 
-/turf/simulated/floor/engine/burn_tile()
-	return
-
-/turf/simulated/floor/shuttlebay/burn_tile()
-	return
-
 /turf/simulated/floor/shuttle/burn_tile()
 	return
 
 /turf/simulated/floor/proc/restore_tile()
 	if(intact) return
-	intact = 1
+	setIntact(TRUE)
 	broken = 0
 	burnt = 0
 	icon = initial(icon)
@@ -1352,7 +1347,7 @@
 /turf/simulated/floor/var/global/girder_egg = 0
 
 //basically the same as walls.dm sans the
-/turf/simulated/floor/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W)
+/turf/simulated/floor/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W, var/instantly)
 	if (!user || !istype(W, /obj/item/light_parts/floor))
 		return
 
@@ -1360,19 +1355,20 @@
 	var/obj/item/light_parts/parts = W
 	var/turf/target = src
 
+	if(!instantly)
+		playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
+		boutput(user, "You begin to attach the light fixture to [src]...")
 
-	playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
-	boutput(user, "You begin to attach the light fixture to [src]...")
 
-	if (!do_after(user, 40))
-		user.show_text("You were interrupted!", "red")
-		return
+		if (!do_after(user, 4 SECONDS))
+			user.show_text("You were interrupted!", "red")
+			return
 
-	if (!parts) //ZeWaka: Fix for null.fixture_type
-		return
+		if (!parts) //ZeWaka: Fix for null.fixture_type
+			return
 
-	// if they didn't move, put it up
-	boutput(user, "You attach the light fixture to [src].")
+		// if they didn't move, put it up
+		boutput(user, "You attach the light fixture to [src].")
 
 	var/obj/machinery/light/newlight = new parts.fixture_type(target)
 	newlight.icon_state = parts.installed_icon_state
@@ -1390,11 +1386,12 @@
 /turf/simulated/floor/proc/pry_tile(obj/item/C as obj, mob/user as mob, params)
 	if (!intact)
 		return
+	if(src.reinforced)
+		boutput(user, "<span class='alert'>You can't pry apart reinforced flooring! You'll have to loosen it with a welder or wrench instead.</span>")
+		return
 
 	if(broken || burnt)
 		boutput(user, "<span class='alert'>You remove the broken plating.</span>")
-	else if (istype(src,/turf/simulated/floor/engine))
-		boutput(user, "<span class='alert'>You can't pry apart reinforced flooring!</span>")
 	else
 		var/atom/A = new /obj/item/tile(src)
 		if(src.material)
@@ -1425,15 +1422,34 @@
 		src.attach_light_fixture_parts(user, C) // Made this a proc to avoid duplicate code (Convair880).
 		return
 
+	if (src.reinforced && ((isweldingtool(C) && C:try_weld(user,0,-1,0,1)) || iswrenchingtool(C)))
+		boutput(user, "<span class='notice'>Loosening rods...</span>")
+		if(iswrenchingtool(C))
+			playsound(src, "sound/items/Ratchet.ogg", 80, 1)
+		if(do_after(user, 3 SECONDS))
+			if(!src.reinforced)
+				return
+			var/obj/R1 = new /obj/item/rods(src)
+			var/obj/R2 = new /obj/item/rods(src)
+			if (material)
+				R1.setMaterial(material)
+				R2.setMaterial(material)
+			else
+				R1.setMaterial(getMaterial("steel"))
+				R2.setMaterial(getMaterial("steel"))
+			ReplaceWithFloor()
+			src.to_plating()
+			return
+
 	if(istype(C, /obj/item/rods))
 		if (!src.intact)
 			if (C:amount >= 2)
 				boutput(user, "<span class='notice'>Reinforcing the floor...</span>")
-				if(do_after(user, 30))
+				if(do_after(user, 3 SECONDS))
 					ReplaceWithEngineFloor()
 
 					if (C)
-						C:amount -= 2
+						C.change_stack_amount(-2)
 						if (C:amount <= 0)
 							qdel(C) //wtf
 
@@ -1449,11 +1465,14 @@
 
 	if(istype(C, /obj/item/tile))
 		var/obj/item/tile/T = C
-		if (T.amount < 1)
-			if(!issilicon(user))
-				user.u_equip(T)
-				qdel(T)
-			return
+		if(intact)
+			var/obj/P = user.find_tool_in_hand(TOOL_PRYING)
+			if (!P)
+				return
+			// Call ourselves w/ the tool, then continue
+			src.attackby(P, user)
+
+		// Don't replace with an [else]! If a prying tool is found above [intact] might become 0 and this runs too, which is how floor swapping works now! - BatElite
 		if (!intact)
 			restore_tile()
 			src.plate_mat = src.material
@@ -1469,20 +1488,10 @@
 			//	qdel(T)
 			//	return
 
-		else
-			var/obj/P = user.find_tool_in_hand(TOOL_PRYING)
-
-			if (!P)
-				return
-
-			// Call ourselves w/ the tool, then the tile
-			src.attackby(P, user)
-			src.attackby(C, user)
-
 
 	if(istype(C, /obj/item/sheet))
 		if (!(C?.material?.material_flags & (MATERIAL_METAL | MATERIAL_CRYSTAL))) return
-		if (!C:amount_check(2,usr)) return
+		if (!C:amount_check(2,user)) return
 
 		var/msg = "a girder"
 
@@ -1601,6 +1610,8 @@
 		if (K)
 			K.attackby(C, user, params)
 
+	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1)) // this seemed like the neatest way to make attack_hand still trigger when needed
+		src?.material.triggerOnHit(src, C, user, 1)
 	else
 		return attack_hand(user)
 
@@ -1616,7 +1627,17 @@
 					C.move_callback(user, F, src)
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////
+DEFINE_FLOORS_SIMMED_UNSIMMED(racing,
+	icon = 'icons/misc/racing.dmi';\
+	icon_state = "track_1")
 
+DEFINE_FLOORS_SIMMED_UNSIMMED(racing/edge,
+	icon = 'icons/misc/racing.dmi';\
+	icon_state = "track_2")
+
+DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
+	icon = 'icons/misc/racing.dmi';\
+	icon_state = "rainbow_road")
 
 //////////////////////////////////////////////UNSIMULATED//////////////////////////////////////
 
@@ -1637,6 +1658,15 @@
 		desc = "Seems pretty sturdy."
 		icon_state = "leadwall"
 
+		junction
+			icon_state = "leadjunction"
+
+		junction_four
+			icon_state = "leadjunction_4way"
+
+		cap
+			icon_state = "leadcap"
+
 		gray
 			icon_state = "leadwall_gray"
 
@@ -1645,14 +1675,34 @@
 			desc = "The outer shell of some large microwave array thing."
 			icon_state = "leadwall_white"
 
+		white_2
+			icon_state = "leadwall_white"
+
+			junction
+				name = "shielded wall"
+				desc
+				icon_state = "leadjunction_white"
+
+			junction_four
+				icon_state = "leadjunction_white_4way"
+
 	leadwindow
 		name = "shielded window"
 		desc = "Seems pretty sturdy."
 		icon_state = "leadwindow_1"
 		opacity = 0
 
+		full
+			icon_state = "leadwindow_2"
+
 		gray
 			icon_state = "leadwindow_gray_1"
+
+		white
+			icon_state = "leadwindow_white_1"
+
+			full
+				icon_state = "leadwindow_white_2"
 
 	rootwall
 		name = "overgrown wall"
@@ -1683,6 +1733,13 @@
 		icon = 'icons/turf/walls.dmi'
 		icon_state = "hive"
 
+	stranger
+		name = "stranger wall"
+		desc = "A weird jet black metal wall indented with strange grooves and lines."
+		icon = 'icons/turf/walls.dmi'
+		icon_state = "ancient"
+
+
 // -------------------- VR --------------------
 /turf/unsimulated/floor/setpieces/gauntlet
 	name = "Gauntlet Floor"
@@ -1706,10 +1763,10 @@
 			var/mob/M = A
 			if(!M.stat && ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if(H.gender == MALE) playsound(H.loc, "sound/voice/screams/male_scream.ogg", 100, 0, 0, H.get_age_pitch())
-				else playsound(H.loc, "sound/voice/screams/female_scream.ogg", 100, 0, 0, H.get_age_pitch())
+				if(H.gender == MALE) playsound(H.loc, "sound/voice/screams/male_scream.ogg", 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+				else playsound(H.loc, "sound/voice/screams/female_scream.ogg", 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			random_brute_damage(M, 50)
-			M.changeStatus("paralysis", 70)
+			M.changeStatus("paralysis", 7 SECONDS)
 			SPAWN_DBG(0)
 				playsound(M.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Flesh_Break_1.ogg'), 75, 1)
 		A.set_loc(T)
@@ -1743,6 +1800,19 @@
 				if (istype(A, /mob) && !istype(A, /mob/dead))
 					bioele_accident()
 				return ..()
+
+		hole_xy
+			name = "deep pit"
+			target_landmark = LANDMARK_FALL_DEBUG
+			Entered(atom/A as mob|obj)
+				if (isobserver(A) || (istype(A, /obj/critter) && A:flying))
+					return ..()
+
+				if(warptarget)
+					fall_to(warptarget, A)
+					return
+				else ..()
+
 
 	bloodfloor
 		name = "bloody floor"
@@ -1793,7 +1863,7 @@
 
 		New()
 			..()
-			dir = pick(1,2,4,8)
+			set_dir(pick(1,2,4,8))
 			return
 
 	swampgrass_edging

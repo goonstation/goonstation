@@ -1,0 +1,108 @@
+<span style="color:null;font-family:'Georgia';"><h1 id="elective-prosthetics-for-dummies">Elective Prosthetics for Dummies</h1>
+<p><h2>By Samwel D. Eagle, PhD.</h2></p>
+<h3 id="introduction">Introduction</h3>
+<p>So, you want to learn more about elective prosthetics, otherwise known as taking another step towards silicon apotheosis, but you don’t know a cyberkidney from a cyber spleen?
+Well this is the book for you!</p>
+<p>The author is obligated to state that under NT Space Law, informed consent is necessary for all elective procedures mentioned below. Please ensure that your patient is aware
+of any downsides associated with the given cyberorgan replacements, specifically their vulnerability to Electromagnetic Pulses (EMPs), which can cause substantial damage to cyberorgans.
+Singularity engine workers may encounter EMPs more frequently than others on the station.</p>
+<p>At the time of publishing there are rumours circulating about built-in limiters for many cyberorgans being disabled by electro-magnetic cards to unlock overclocking for enhanced
+performance and special abilities. It should be noted that these limiters could also reduce the lifespan of the hardware they are used on, and are technically illegal. As such this
+text will not go into detail on built-in limiters.</p>
+<h3 id="cyberorgan-descriptions">Cyberorgan Descriptions</h3>
+<p>With that out of the way, let’s first look at <i>what</i> you can replace! We live in an exciting time for cyberprosthetics and the following parts are regularly available from
+your local robotics fabricator:</p>
+<ul>
+<li>Arms        1.1</li>
+<li>Legs        1.1</li>
+<li>Butt        1.2</li>
+<li>Eyes        1.3</li>
+<li>Heart        1.4    </li>
+<li>Lungs    1.5        </li>
+<li>Liver        1.6</li>
+<li>Stomach    1.7</li>
+<li>Intestines    1.8</li>
+<li>Pancreas    1.9</li>
+<li>Kidneys    1.10    </li>
+<li>Spleen    1.11</li>
+<li>Appendix    1.12</li>
+</ul>
+<p>We will first explore what each of these cyberprostheses do. If you would like to skip to guidance on organ removal and replacement,  please refer to Section 2, below using
+the appropriate reference code.</p>
+<p><u>Arms</u></p>
+<p>Cyborg arms come in two varieties - light and standard. Due to the widespread development of light cyborg arms for use on amputees, you will find that many people live with
+light cyborg arms already. These are functional and have no special abilities other than acting as a normal arm. Standard cyborg arms are comparatively more industrial grade and
+have the ability to instantly destroy any restraints they are put in, including handcuffs or zipties.</p>
+<p><u>Legs</u><br>There are three types of leg prostheses available - light, standard, and treads. Light cyborg legs function like normal human legs; however, they also negate the
+speed penalties that original fleshy legs take if the owner is injured. They also render the user immune to glass shards when not wearing shoes. Standard Cyborg legs provide these
+same bonuses as well as the ability to immediately destroy any leg restraints that may be applied. Cyborg treads are generally very preferred as they have the additional ability
+to provide increased speed of movement and enhanced balance, protecting the user from tumbling over even if they are stunned while stuck upright!</p>
+<p><u>Butt</u><br>A surprisingly common selection. In today’s cutting edge industrial environment people seem to be losing their literal butts more than ever. A cyberbutt can help
+restore someone’s social status by allowing cyborg-like farts. Others may elect to replace their organic butts to convert as much of themselves as possible to silicon immortality.</p>
+<p><u>Eyes</u><br>One of the most common elective upgrades is that of the cybereye. There are many varieties available for the intrepid roboticist, including but not limited to:
+basic, meson, prodoc, spectroscopic and more. It’s also rumoured that advanced black-market eye-cybertech may be available if you know the right people.</p>
+<p><u>Heart</u><br>When people speak of silicon immortality, the cyberheart is one of the most persuasive weapons mankind has against the great enemy - death. This powerful tool
+will attempt to automatically normalize heart rhythm if it detects cardiac failure or arrest. It will additionally provide significant boost to cardiopulmonary efficiency,
+resulting in a net improvement in stamina, endurance, and recovery.</p>
+<p><u>Lungs</u><br>Another step towards immortality, cyberlungs provide an improvement to stamina, endurance, and recovery along with the ability to survive in lower oxygen
+environments and resist environmental atmospheric hazards. Also, because they are immune to cancer they are a go-to for smokers!</p>
+<p><u>Liver</u><br>Where would we be without the cyberliver? Studies have shown that over 69% of NT captains and 42.0% of detectives suffer from moderate to severe cirrhosis
+(scarring) of the liver, usually caused by the overconsumption of alcohol. Thank technology for the cyberliver! The cyberliver provides an ongoing filtering system for ethanol
+in the blood and will not be damaged by overindulging.</p>
+<p><u>Stomach</u><br>Cyberstomachs come with one specific benefit - the ability to indulge in even more delicious food! With enhanced enzyme production you can eat and enjoy more
+than ever before, while also enjoying more of the nutritional benefits of the food you consume.</p>
+<p><u>Intestines</u><br>Cyberintestines - the choice of the daring chef—or chemist—or chemist-chef! The cyberintestines provide the ability to regulate how efficient the digestion
+of chemical reagents in food will be. They can be configured in-hand using a multitool to range from absorbing no reagents from food (0%) to doubling the usual absorption amount (200%)!</p>
+<p><u>Pancreas</u><br>The cyberpancreas automatically produces insulin if the user’s blood sugar is too high, and glycogen if the user’s blood sugar is too low. This is especially
+useful for diabetic patients.</p>
+<p><u>Kidneys</u><br>Cyberkidneys can provide additional control over the rate that chemicals in the user’s body are processed and absorbed. Similar to cyberintestines, while the
+cyberorgan is in-hand a multitool can be used to adjust the setting to a range between 75% to 150%. The lower the setting, the weaker the effect of the chemicals and the slower
+they will be processed. The higher setting increases the effects of any chemicals and purges them faster.</p>
+<p><u>Spleen</u><br>The spleen is what regenerates blood in the body. A cyberspleen simply regenerates blood at a much faster rate than does an organic spleen.</p>
+<p><u>Appendix</u><br>The cyberappendix turns an otherwise useless and potentially dangerous organ into something that could save your life. It will produce a small amount of
+healing chemicals in the user’s body should they be injured. Special note: the cyberappendix has been shown to have some issues with continual usage and should be proactively
+checked occasionally by a trained warranty specialist to ensure that no problems manifest.</p>
+<h3 id="so-youre-ready-to-upgrade">So You’re Ready to Upgrade</h3>
+<p>Here you are, ready to defile God’s “imperfect” creation with a new and improved man-made one. What a time to be alive! (Just make sure your patient stays that way too!) </p>
+<p>This guide will not help you with tracking or treating your patient’s injuries. It is broadly suggested that you continue to check your patient’s health with an analyzer and provide
+ treatment as and when necessary.</p>
+<p>As we begin, please take note of this brief explanation of the surgery notations used in this guide. This guide addresses the overall replacement process, and does not focus solely
+ on organ removal. Pay close attention to the results of each surgical step you take, and if you make a mistake redo the last step that was attempted. If you still cannot seem to
+ progress successfully, suture and heal the patient and try again from the beginning.</p>
+<h3 id="replacement">Replacement</h3>
+<p><strong>Legend:</strong><br>Scalpel = Sc<br>Saw = Sa<br>Enucleation Spoon = En<br>Surgical Scissors = SuS<br>Staple Gun = StG<br>Suture = Sut<br>Insert/Attach Organ = Ins</p>
+<p><em>As an example, to remove and replace an arm or a leg, the instructions would be:</em></p>
+<p><em>Target the limb to be replaced - Sc,Sa,Sc,Ins,Sut OR StG</em></p>
+<p><em>Scalpel, Saw, Scalpel, Insert, Suture OR Staple Gun</em></p>
+<p><strong>1.1 Limb</strong> - Target the limb to be replaced - Sc,Sa,Sc,Ins,Sut OR StG</p>
+<p><strong>1.2 Butt</strong> - Target the chest and use HARM intent - Sc,Sa,Sc,Sa,Ins,Sut</p>
+<p><strong>1.3 Eyes - Important</strong> While targeting the head, the eye you will remove depends on which hand you are using for surgery. Left hand is left eye, right hand is right
+eye. Ensure that you only use one hand a time during surgery, and swap the tool you need into the active hand to ensure success.</p>
+<p>Target Head  - En,Sc,En,Ins,Sut</p>
+<p><strong>1.4 Heart - Important</strong> When removing the heart it will immediately flush all existing chems out of the system. Be prepared to dose the patient with any needed healing
+chemicals immediately upon removal.</p>
+<p>Target the chest with HELP intent  - Sc,Sa,Sc,Sa,Ins,Sut</p>
+<p><strong>1.5 Lungs - Important</strong> In the third step, the lung you remove (left or right) is based on which of your hands is holding the scissors. Once you have completed
+the insertion step for one lung, switch the scissors to your other hand to cut out the other lung, insert the second lung, and then suture both up at once. For maximum cyberbenefits,
+both inserted lungs must be cyberorgans. </p>
+<p>Target the chest with HELP intent  - SuS,Sa,SuS,Ins,Sut</p>
+<p><strong>1.6 Liver</strong> - Target the chest with HELP intent   - SuS,SuS,Sc,Ins,Sut</p>
+<p><strong>1.7 Stomach</strong> - Target the chest with HELP intent  - SuS,Sc,SuS,Ins,Sut</p>
+<p><strong>1.8 Intestines</strong> - Target the chest with HELP intent  - SuS,Sc,Sc,Ins,Sut</p>
+<p><strong>1.9 Pancreas</strong> - Target the chest with HELP intent  - Sc,SuS,SuS,Ins,Sut</p>
+<p><strong>1.10 Kidneys - Important</strong> In the third step, whether you remove the right or left kidney depends on which hand holds the scissors. As with the cyberlungs,
+once you have inserted the first kidney, switch the scissors to your other hand to cut out other organic kidney, insert the second cyberkidney, and then suture both up simultaneously.
+For maximum cyberbenefits, both inserted kidneys must be cyberorgans.  </p>
+<p>Target the chest with HELP intent - Sc,Sc,SuS,Ins,Sut</p>
+<p><strong>1.11 Spleen</strong> - Target the chest with HELP intent - Sc,SuS,Sc,Ins,Sut</p>
+<p><strong>1.12 Appendix</strong> - Target the chest with HELP intent - SuS,SuS,Sus,Ins,Sut</p>
+<p>I hope that you found this guide helpful and that your patient survived the procedure(s). </p>
+<p>If so, congratulations! </p>
+<p>If not, better luck next time. </p>
+<p>You can either take their corpse to cloning (which is likely the ethical and kind thing to do), or you can borg them (though they and the rest of the crew will likely be mad at
+you if you do this!).. </p>
+<p>Best of luck in your continued work, Roboticist!</p>
+<br>
+<h4>Additonal documentation is available at:</h4>
+<ul><li><a href="https://wiki.ss13.co/Doctoring" target="Goonstation Wiki: Doctoring">https://wiki.ss13.co/Doctoring</a></li></ul>
+</span>
