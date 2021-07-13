@@ -707,16 +707,14 @@
 					return
 
 			if (href_list["ejectbeaker"])
-				var/obj/item/reagent_containers/glass/beaker/B = locate(href_list["ejectbeaker"])
-				if (!istype(B,/obj/item/reagent_containers/glass/))
-					return
-				src.beaker.set_loc(get_output_location(B,1))
+				if (src.beaker)
+					src.beaker.set_loc(get_output_location(beaker,1))
 				src.beaker = null
 
 			if (href_list["transto"])
 				// reagents are going into beaker
-				var/obj/item/reagent_containers/glass/beaker/B = locate(href_list["transto"])
-				if (!istype(B,/obj/item/reagent_containers/glass/beaker/))
+				var/obj/item/reagent_containers/glass/B = locate(href_list["transto"])
+				if (!istype(B,/obj/item/reagent_containers/glass/))
 					return
 				var/howmuch = input("Transfer how much to [B]?","[src.name]",B.reagents.maximum_volume - B.reagents.total_volume) as null|num
 				if (!howmuch || !B || B != src.beaker )
@@ -725,8 +723,8 @@
 
 			if (href_list["transfrom"])
 				// reagents are being drawn from beaker
-				var/obj/item/reagent_containers/glass/beaker/B = locate(href_list["transfrom"])
-				if (!istype(B,/obj/item/reagent_containers/glass/beaker/))
+				var/obj/item/reagent_containers/glass/B = locate(href_list["transfrom"])
+				if (!istype(B,/obj/item/reagent_containers/glass/))
 					return
 				var/howmuch = input("Transfer how much from [B]?","[src.name]",B.reagents.total_volume) as null|num
 				if (!howmuch)
