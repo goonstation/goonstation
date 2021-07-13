@@ -637,7 +637,7 @@ mob/verb/checkrewards()
 
 /datum/jobXpReward/chef/kissthecook
 	name = "Tacky 'Kiss The Cook' apron"
-	desc = "It gets lonely in the kitchen and frankly, neither the bartender or the monkeys are particularly good snoggers"
+	desc = "It gets lonely in the kitchen and, frankly, neither the bartender or the monkeys are particularly good snoggers"
 	required_levels = list("Chef"=0)
 	icon_state = "?"
 	claimable = 1
@@ -655,4 +655,3 @@ mob/verb/checkrewards()
 		I.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand_or_drop(I)
 		boutput(C.mob, "A big red heart grows on your apron")
-
