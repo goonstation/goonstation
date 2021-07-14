@@ -51,28 +51,31 @@ var/list/planetModifiersUsed = list()//Assoc list, type:times used
 	//planetZ = D.generate(planetZ)
 
 	// // remove temporary areas
-	for (var/turf/T in get_area_turfs(/area/noGenerate))
+	var/area/A
+	var/turf/T
+	var/turf/west_turf
+	for (T in get_area_turfs(/area/noGenerate))
 		if(T.z != planetZLevel) continue
 		if(!istype(T, /turf/space)) continue
-		var/turf/west_turf = get_step(T, WEST)
+		west_turf = get_step(T, WEST)
 		while(west_turf.x > 0)
 			if(istype(west_turf.loc, /area/map_gen/planet))
 				break
 
 			west_turf = get_step(west_turf, WEST)
-		var/area/A = get_area(west_turf)
+		A = get_area(west_turf)
 		new A.type(T)
 
-	for (var/turf/T in get_area_turfs(/area/allowGenerate))
+	for (T in get_area_turfs(/area/allowGenerate))
 		if(T.z != planetZLevel) continue
 		if(!istype(T, /turf/space)) continue
-		var/turf/west_turf = get_step(T, WEST)
+		west_turf = get_step(T, WEST)
 		while(west_turf.x > 0)
 			if(istype(west_turf.loc, /area/map_gen/planet))
 				break
 
 			west_turf = get_step(west_turf, WEST)
-		var/area/A = get_area(west_turf)
+		A = get_area(west_turf)
 		new A.type(T)
 
 	boutput(world, "<span class='alert'>Generated Planet Level in [((world.timeofday - startTime)/10)] seconds!")

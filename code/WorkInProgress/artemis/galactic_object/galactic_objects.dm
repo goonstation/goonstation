@@ -186,9 +186,11 @@
 				var/theta = arctan(src.actual_y, src.actual_x)
 				theta += ship.ship_angle
 				var/gravity = lerp(0.75,0.25,squared_pixel_distance/2600)
-				var/new_mag = sqrt(ship.vel_mag**2 + gravity**2 + 2*ship.vel_mag*gravity*cos(theta-ship.vel_angle))
+				var/new_mag = sqrt(max(ship.vel_mag**2 + gravity**2 + 2*ship.vel_mag*gravity*cos(theta-ship.vel_angle),1)) // avoid sqrt(0)
 				new_mag = min(ship.max_speed,new_mag)
-				var/arctan_result = (theta == ship.vel_angle) ? 0 : arctan(((gravity*sin(theta-ship.vel_angle))/(ship.vel_mag + gravity*cos(theta-ship.vel_angle))))
+				var/arctan_result
+				if(new_mag) //check for div/0
+					arctan_result = (theta == ship.vel_angle) ? 0 : arctan(((gravity*sin(theta-ship.vel_angle))/(ship.vel_mag + gravity*cos(theta-ship.vel_angle))))
 				var/new_angle = ship.vel_angle + arctan_result
 				ship.vel_mag = new_mag
 				ship.vel_angle = new_angle
@@ -213,7 +215,6 @@
 
 	animate_stars()
 		..()
-		icon_state = "star"
 
 	Crossed(O)
 		. = ..()
@@ -290,7 +291,9 @@
 				var/gravity = lerp(0.75,0.25,squared_pixel_distance/2600)
 				var/new_mag = sqrt(ship.vel_mag**2 + gravity**2 + 2*ship.vel_mag*gravity*cos(theta-ship.vel_angle))
 				new_mag = min(ship.max_speed,new_mag)
-				var/arctan_result = (theta == ship.vel_angle) ? 0 : arctan(((gravity*sin(theta-ship.vel_angle))/(ship.vel_mag + gravity*cos(theta-ship.vel_angle))))
+				var/arctan_result
+				if(new_mag) //check for div/0
+					arctan_result = (theta == ship.vel_angle) ? 0 : arctan(((gravity*sin(theta-ship.vel_angle))/(ship.vel_mag + gravity*cos(theta-ship.vel_angle))))
 				var/new_angle = ship.vel_angle + arctan_result
 				ship.vel_mag = new_mag
 				ship.vel_angle = new_angle

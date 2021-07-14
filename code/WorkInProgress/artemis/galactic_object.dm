@@ -256,7 +256,7 @@ var/global/datum/galaxy/GALAXY = new
 		var/matrix/M = GLOBAL_ANIMATION_MATRIX.Reset()
 		if(scale)
 			M = M.Scale(scale)
-		M = M.Translate(actual_x,actual_y)
+		M = M.Translate(actual_x, actual_y)
 		animate(src, transform = M, time = animation_speed, loop = 0, flags = ANIMATION_PARALLEL)
 
 		var/x_diff = src.actual_x - x_old
@@ -268,7 +268,7 @@ var/global/datum/galaxy/GALAXY = new
 
 			if(squared_pixel_distance <= 4096) //2 tiles * 32, squared
 				if(!src.my_ship_body)
-					G.load_ship_body(my_ship,src)
+					G.load_ship_body(my_ship, src)
 			else
 				if(src.my_ship_body)
 					var/temp = my_ship_body
@@ -280,10 +280,6 @@ var/global/datum/galaxy/GALAXY = new
 				src.my_ship_body.actual_x += ARTEMIS_MAP_SHIP_PIXEL_RATIO*x_diff
 				src.my_ship_body.actual_y += ARTEMIS_MAP_SHIP_PIXEL_RATIO*y_diff
 				src.my_ship_body.animate_stars()
-				if(squared_pixel_distance <= (1024)) //1 tiles * 32, squared... plus slush
-					src.my_ship_body.alpha = 255
-				else
-					src.my_ship_body.alpha = 0
 
 		x_old = src.actual_x
 		y_old = src.actual_y

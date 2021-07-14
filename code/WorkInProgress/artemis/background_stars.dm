@@ -132,15 +132,8 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 			return
 
 		if((actual_y**2 + actual_x**2) > max_r_squared)
-
-			var/matrix/M = GLOBAL_ANIMATION_MATRIX.Reset()
-			M = M.Translate(actual_x,actual_y)
-			animate(src, transform = M, time = animation_speed, loop = 0, flags = ANIMATION_PARALLEL)
-
-			spawn(animation_speed-1)
-
+			SPAWN_DBG(animation_speed-1)
 				var/apparent_angle = vel_angle - ship_angle
-
 				var/theta = apparent_angle + (90*((rand()*2)-1))
 
 				actual_x = max_r*sin(theta)
@@ -148,14 +141,12 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 
 				animate(src,flags=ANIMATION_END_NOW)
 				var/matrix/N = GLOBAL_ANIMATION_MATRIX.Reset()
-				N = N.Translate(actual_x,actual_y)
+				N = N.Translate(actual_x, actual_y)
 				src.transform = N
 				src.set_state()
-
 		else
-
 			var/matrix/M = GLOBAL_ANIMATION_MATRIX.Reset()
-			M = M.Translate(actual_x,actual_y)
+			M = M.Translate(actual_x, actual_y)
 			animate(src, transform = M, time = animation_speed, loop = 0, flags = ANIMATION_PARALLEL)
 
 
