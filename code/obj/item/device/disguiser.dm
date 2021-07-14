@@ -54,7 +54,6 @@
 			user.show_text("This device is only designed to work on humans!", "red")
 			return
 		if (src.active)
-			user.show_text("The [src.name] is now inactive.", "blue")
 			src.deactivate(user, TRUE)
 		else
 			switch (src.activate(user))
@@ -75,7 +74,6 @@
 		RegisterSignal(user, COMSIG_DISGUISER_DEACTIVATE, .proc/deactivate)
 		src.active = 1
 		src.icon_state = "enshield1"
-		user.show_text("You active the [src.name]", "blue")
 		src.change_appearance(user, 0)
 		src.anti_spam = world.time
 		var/obj/overlay/T = new/obj/overlay(get_turf(src))
@@ -83,6 +81,7 @@
 		flick("emppulse",T)
 		SPAWN_DBG(0.8 SECONDS)
 			if (T) qdel(T)
+		return 1
 
 	proc/deactivate(mob/user as mob, var/voluntary)
 		UnregisterSignal(user, COMSIG_DISGUISER_DEACTIVATE)
