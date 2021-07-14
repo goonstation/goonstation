@@ -142,7 +142,7 @@ var/global/datum/galaxy/GALAXY = new
 
 		map_body.on_load()
 
-		map_body.galaxy_icon = image(map_body.icon,map_body,map_body.icon_state,10)
+		map_body.galaxy_icon = image(map_body.icon, map_body, map_body.icon_state, map_body.layer)
 		get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_MAP_ICONS).add_image(map_body.galaxy_icon)
 		map_body.icon_state = null
 
@@ -180,7 +180,7 @@ var/global/datum/galaxy/GALAXY = new
 
 		ship_body.on_load()
 
-		ship_body.galaxy_icon = image(ship_body.icon,ship_body,ship_body.icon_state)
+		ship_body.galaxy_icon = image(ship_body.icon, ship_body, ship_body.icon_state, ship_body.layer)
 		get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS).add_image(ship_body.galaxy_icon)
 		ship_body.icon_state = null
 
@@ -214,8 +214,6 @@ var/global/datum/galaxy/GALAXY = new
 	var/x_old = null
 	var/y_old = null
 	var/scale
-	var/image/galaxy_icon
-
 	plane = -1
 
 	New()

@@ -9,6 +9,7 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 	icon = 'icons/misc/background_stars.dmi'
 	icon_state = "1"
 
+	var/image/galaxy_icon
 	var/actual_x = 0
 	var/actual_y = 0
 
@@ -56,6 +57,8 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 	proc/set_state()
 		var/state = rand(1,9)
 		icon_state = "[state]"
+		if(galaxy_icon)
+			galaxy_icon.icon_state = icon_state
 
 		if(state<7)
 			parallax_multi = 2 + (0.5*((rand()*2)-1))
@@ -178,6 +181,9 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 			S = new/obj/background_star()
 			S.loc = get_turf(src)
 			S.ships_id =  src.ship_id
+			S.galaxy_icon = image(S.icon, S, S.icon_state, S.layer)
+			get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS).add_image(S.galaxy_icon)
+			S.icon = null
 		..()
 
 /obj/background_star/manta
@@ -187,6 +193,8 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 	set_state()
 		var/state = rand(1,4)
 		icon_state = "M-[state]"
+		if(galaxy_icon)
+			galaxy_icon.icon_state = icon_state
 
 		if(state<7)
 			parallax_multi = 2 + (0.5*((rand()*2)-1))

@@ -52,7 +52,6 @@
 		src.active = 1
 		for(var/obj/O in src)
 			O.set_loc(src.loc)
-		src.icon_state = "vrbed_1"
 		M.client.eye = src.ship
 
 		get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_MAP_ICONS).add_mob(M)
@@ -70,6 +69,7 @@
 				src.stored_huds += hud
 				M.detach_hud(hud)
 			M.attach_hud(myhud)
+		update_icon()
 		return
 
 	/*
@@ -86,7 +86,6 @@
 	go_out(var/do_set_loc = 1)
 		if (!src.occupant)
 			return
-		src.icon_state = "vrbed_0"
 		for(var/obj/O in src)
 			O.set_loc(src.loc)
 
@@ -114,6 +113,7 @@
 		src.active = 0
 		src.con_user = null
 		ship.my_pilot = null
+		update_icon()
 		return
 
 	process()

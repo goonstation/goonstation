@@ -160,6 +160,9 @@
 			S.ships_id =  src.stars_id
 			S.max_r = map_max_r
 			S.max_r_squared = map_max_r_squared
+			S.galaxy_icon = image(S.icon, S, S.icon_state, S.layer)
+			get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_MAP_ICONS).add_image(S.galaxy_icon)
+			S.icon = null
 
 	proc/link_stars()
 		for(var/obj/background_star/S in world)
@@ -498,6 +501,9 @@
 			S.ships_id =  src.stars_id
 			S.max_r = map_max_r
 			S.max_r_squared = map_max_r_squared
+			S.galaxy_icon = image(S.icon, S, S.icon_state, S.layer)
+			get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_MAP_ICONS).add_image(S.galaxy_icon)
+			S.icon = null
 
 	handle_rotate()
 		if(!src.rot_loop_on)
@@ -538,6 +544,8 @@
 		name = "Arjuna"
 	manta
 		name = "Manta"
+	space_canvas
+		name = "Space Canvas"
 
 	Entered(atom/movable/A)
 		. = ..()

@@ -699,9 +699,17 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/lead)
 	icon_state = "mapicong"
 	mod = "leadg-"
 
+	New()
+		..()
+		connects_to += /turf/unsimulated/wall/setpieces/leadwindow/gray
+
 /turf/unsimulated/wall/auto/lead/white
 	icon_state = "mapiconw"
 	mod = "leadw-"
+
+	New()
+		..()
+		connects_to += /turf/unsimulated/wall/setpieces/leadwindow/white
 
 /datum/action/bar/icon/wall_tool_interact
 	id = "wall_tool_interact"
