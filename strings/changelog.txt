@@ -1,5 +1,9 @@
 
 (t)wed jul 14 21
+(u)Superlagg
+(p)5463
+(e)|
+(*)Stable mutagen now only copies over "normal" mutants, like lizards and skeletons.
 (u)Jan.antilles
 (p)5472
 (e)🆕🎨|feature, sprites
