@@ -1,5 +1,9 @@
 
 (t)wed jul 14 21
+(u)Jan.antilles
+(p)5472
+(e)🆕🎨|feature, sprites
+(*)Added hairbows! Find them in the Clothing Booth!
 (u)Ikea
 (p)5467
 (e)🗺🎨|mapping, sprites
