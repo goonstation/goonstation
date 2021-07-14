@@ -1,5 +1,9 @@
 
 (t)wed jul 14 21
+(u)Zonespace
+(p)5248
+(e)🆕🗺|feature, mapping
+(*)Pod Wars team wins and deaths are now tracked, with a structure containing the stats being half-buried in an asteroid, near the Reliant.
 (u)Superlagg
 (p)5463
 (e)|

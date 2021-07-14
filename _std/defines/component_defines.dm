@@ -112,6 +112,10 @@
 /// Make cloaking devices turn off
 #define COMSIG_CLOAKING_DEVICE_DEACTIVATE "cloak_deactivate"
 
+// ---- disguiser device signal ----
+/// Make disguiser devices turn off
+#define COMSIG_DISGUISER_DEACTIVATE "disguiser_deactivate"
+
 // ---- implant signals ----
 /// When implanted
 #define COMSIG_IMPLANT_IMPLANTED "implant_implanted"
