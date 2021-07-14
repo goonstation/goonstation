@@ -887,7 +887,7 @@
 		glow.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(glow, "glow")
 		command_announcement("<br><b><span class='alert'>An unidentified long-range beacon has been detected near the station. Await further instructions.</span></b>", "Alert", "sound/vox/alert.ogg")
-		SPAWN_DBG(5 SECONDS)
+		SPAWN_DBG(2 MINUTES)
 			command_announcement("<br><b><span class='alert'>The station is under siege by the Syndicate-made object detected earlier. Survive any way possible.</span></b>", "Alert", "sound/vox/alert.ogg")
 			transformation(0)
 
