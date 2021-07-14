@@ -213,6 +213,15 @@
 				do_tracking()
 			if(navigating)
 				update_nav_arrow()
+
+			for(var/obj/background_star/S in src.my_stars)
+				if(S.start)
+					S.process()
+
+			for(var/obj/background_star/galactic_object/G in src.my_galactic_objects)
+				if(G.start)
+					G.process()
+
 			sleep(animation_speed)
 
 

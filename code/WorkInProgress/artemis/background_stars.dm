@@ -67,25 +67,25 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 
 	proc/process()
 		var/animate = 0
-		while(start)
-			if(!rot_mag && !vel_mag)
-				src.start = 0
-			if(rot_mag)
-				animate = 1
-				src.stars_rotate(rot_mag)
-			if(vel_mag)
-				animate = 1
-				src.stars_pan(vel_mag,vel_angle)
-			if(animate)
-				animate_stars()
-				animate = 0
-			sleep(animation_speed)
+		//while(start)
+		if(!rot_mag && !vel_mag)
+			src.start = 0
+		if(rot_mag)
+			animate = 1
+			src.stars_rotate(rot_mag)
+		if(vel_mag)
+			animate = 1
+			src.stars_pan(vel_mag,vel_angle)
+		if(animate)
+			animate_stars()
+			animate = 0
+			//sleep(animation_speed)
 		return
 
 	proc/stars_start()
 		src.start = 1
-		spawn(0)
-			src.process()
+		// spawn(0)
+		// 	src.process()
 		return
 
 	proc/stars_update(mag_pan,mag_rot,angle,ship_ang)
