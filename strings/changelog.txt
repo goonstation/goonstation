@@ -1,5 +1,8 @@
 
 (t)tue jul 13 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Monkeys are now sold by traders at QM instead of an always-active crate.
 (u)Hans
 (p)5456
 (e)⚖|balance
