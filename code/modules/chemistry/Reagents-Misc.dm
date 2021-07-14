@@ -158,7 +158,7 @@ datum
 				var/datum/reagents/silver_fulminate_holder = holder
 				var/silver_fulminate_volume = volume
 				silver_fulminate_holder.del_reagent("silver_fulminate")
-				silver_fulminate_holder.temperature_reagents(silver_fulminate_holder.total_temperature + silver_fulminate_volume*20,10,1,500)
+				silver_fulminate_holder.temperature_reagents(silver_fulminate_holder.total_temperature + silver_fulminate_volume*20,10,1,500, 1)
 
 			reaction_temperature(var/exposed_temperature, var/exposed_volume)
 				if (exposed_temperature >= T0C + 30)
@@ -2840,6 +2840,10 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1) // cogwerks note. making atrazine toxic
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(2 * mult)
+				if(holder.has_reagent("THC"))
+					holder.remove_reagent("THC", 1)
+				if(holder.has_reagent("CBD"))
+					holder.remove_reagent("CBD", 1)
 				..()
 				return
 

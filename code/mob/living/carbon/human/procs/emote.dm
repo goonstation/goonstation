@@ -674,21 +674,15 @@
 
 			if ("tip")
 				if (!src.restrained() && !src.stat)
+					if (istype(src.head, /obj/item/clothing/head/mj_hat || /obj/item/clothing/head/det_hat/))
+						src.say (pick("M'lady", "M'lord", "M'liege")) //male, female and non-binary variants with alliteration
+						//maptext_out = "<I>tips their fedora</I>"
 					if (istype(src.head, /obj/item/clothing/head/fedora))
-						var/obj/item/clothing/head/fedora/hat = src.head
-						message = "<B>[src]</B> tips [his_or_her(src)] [hat] and [pick("winks", "smiles", "grins", "smirks")].<br><B>[src]</B> [pick("says", "states", "articulates", "implies", "proclaims", "proclamates", "promulgates", "exclaims", "exclamates", "extols", "predicates")], &quot;M'lady.&quot;"
+						src.visible_message("[src] tips [his_or_her(src)] fedora and smirks.")
+						src.say ("M'lady")
 						SPAWN_DBG(1 SECOND)
-							hat.set_loc(src.loc)
-							src.head = null
 							src.add_karma(-10)
 							src.gib()
-					else if (istype(src.head, /obj/item/clothing/head) && !istype(src.head, /obj/item/clothing/head/fedora))
-						src.show_text("This hat just isn't [pick("fancy", "suave", "manly", "sexerific", "majestic", "euphoric")] enough for that!", "red")
-						//maptext_out = "<I>tips hat</I>"
-						return
-					else
-						src.show_text("You can't tip a hat you don't have!", "red")
-						return
 
 			if ("hatstomp", "stomphat")
 				if (!src.restrained())
