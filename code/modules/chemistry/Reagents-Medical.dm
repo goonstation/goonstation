@@ -368,9 +368,9 @@ datum
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(15 * mult))
 				else if(M.bodytemperature > M.base_body_temp)
 					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(15 * mult))
+				var/oxyloss = M.get_oxygen_deprivation()
 				M.take_oxygen_deprivation(-INFINITY)
-				if(prob(20))
-					M.take_brain_damage(1 * mult)
+				M.take_brain_damage(oxyloss * 0.025)
 				..()
 				return
 
