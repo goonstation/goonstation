@@ -11,7 +11,7 @@
 	name = "Item Slot Machine"
 	desc = "A slot machine that produces items rather than money. Somehow."
 	icon_state = "slotsitem-off"
-	//mats = 50
+	mats = null
 	var/uses = 0
 	icon_base = "slotsitem"
 
