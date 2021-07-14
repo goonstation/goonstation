@@ -112,7 +112,7 @@ datum
 			value = 3
 
 			on_add(var/mob/M, var/mult = 1)
-				if(probmult(20))
+				if(isliving(M) && prob(20))
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
 

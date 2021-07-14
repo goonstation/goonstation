@@ -1569,8 +1569,11 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				boutput(M, "<span class='alert'><b>OH SHIT ANTS!!!!</b></span>")
-				M.emote("scream")
+				if (method == TOUCH)
+					. = 0 // for depleting fluid pools
+				if(!ON_COOLDOWN(M, "ants_scream", 3 SECONDS))
+					boutput(M, "<span class='alert'><b>OH SHIT ANTS!!!!</b></span>")
+					M.emote("scream")
 				random_brute_damage(M, 4)
 				return
 
@@ -1595,11 +1598,14 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				if (method == TOUCH)
-					boutput(M, "<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] SPIDERS[pick("", " ON MY FACE", " EVERYWHERE")]![pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
-				if (method == INGEST)
-					boutput(M, "<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] SPIDERS[pick("", " IN MY BLOOD", " IN MY VEINS")]![pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
-				M.emote("scream")
+				if(method == TOUCH)
+					. = 0 // for depleting fluid pools
+				if (!ON_COOLDOWN(M, "spiders_scream", 3 SECONDS))
+					M.emote("scream")
+					if (method == INGEST || method == INJECT)
+						boutput(M, "<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] SPIDERS[pick("", " IN MY BLOOD", " IN MY VEINS")]![pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
+					else
+						boutput(M, "<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] SPIDERS[pick("", " ON MY FACE", " EVERYWHERE")]![pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
 				random_brute_damage(M, 2)
 				if (ishuman(M))
 					if (!M:spiders)

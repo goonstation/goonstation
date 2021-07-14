@@ -1,4 +1,34 @@
 
+(t)mon jul 12 21
+(u)TTerc
+(p)5268
+(e)⚖|balance
+(+)Increased the random antag event frequency on non-RP servers.
+(u)Carbadox
+(p)5426
+(e)⚖🆕|balance, feature
+(+)Lowered the cost of the midslave cloning module and the mindslav cloning module kit from from 7 to 6 and 11 to 10 respectively.
+(u)DimWhat
+(p)5455
+(e)🎨|sprites
+(+)Resprited the HoP uniform and suit as well as their in-hands.
+(u)TTerc
+(p)5473
+(e)|
+(+)You can now click the APC with wirecutters/multitool to open the hacking panel, if wires are exposed.
+(u)Tarmunora
+(p)5477
+(e)🐛🗺⛔|bug, mapping, removal
+(+)Removes police baton
+(u)KoboldCommando
+(p)5458
+(e)🐛|bug
+(+)Fixed incorrect lizard skin colors in preview windows
+(t)sun jul 11 21
+(u)Flappybat
+(p)5465
+(e)|
+(+)Changeling lesser form, monkey burger, jungle fever and admin monkey transformation no longer drops all your items.
 (t)sat jul 10 21
 (u)Asche, Charlietan, MomoBerry, Penny, and Unfunny
 (p)5213

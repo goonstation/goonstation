@@ -484,15 +484,17 @@
 		src.burning = 1
 		src.firesource = TRUE
 		if (istype(src, /obj/item/plant))
-			if (!ON_COOLDOWN(global, "hotbox_adminlog", 30 SECONDS)) //blocks every instance of the plant logging
+			if (!GET_COOLDOWN(global, "hotbox_adminlog"))
 				var/list/hotbox_plants = list()
 				for (var/obj/item/plant/P in get_turf(src))
 					hotbox_plants += P
 				if (length(hotbox_plants) >= 5) //number is up for debate, 5 seemed like a good starting place
+					ON_COOLDOWN(global, "hotbox_adminlog", 30 SECONDS)
+					var/msg = "([src]) was set on fire on the same turf as at least ([length(hotbox_plants)]) other plants at [log_loc(src)]"
 					if (W?.firesource)
-						message_admins("([src]) was set on fire on the same turf as at least ([length(hotbox_plants)]) other plants at [log_loc(src)] by item ([W]). Last touched by: [W.fingerprintslast ? "[W.fingerprintslast]" : "*null*"].")
-					else
-						message_admins("([src]) was set on fire on the same turf as at least ([length(hotbox_plants)]) other plants at [log_loc(src)].")
+						msg += " by item ([W]). Last touched by: [W.fingerprintslast ? "[key_name(W.fingerprintslast)]" : "*null*"].)"
+					message_admins(msg)
+					logTheThing("bombing", W?.fingerprintslast, null, msg)
 		if (src.burn_output >= 1000)
 			UpdateOverlays(image('icons/effects/fire.dmi', "2old"),"burn_overlay")
 		else
