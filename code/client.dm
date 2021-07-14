@@ -1476,7 +1476,7 @@ if([removeOnFinish])
 </body>
 </html>
 	"}, "window=pregameBrowser")
-/client/proc/dpi(data)
+/client/proc/dpi(list/data)
 /world/proc/showCinematic(var/name, var/removeOnFinish = 0)
 	for(var/client/C)
 		C.showCinematic(name, removeOnFinish)
