@@ -546,9 +546,7 @@
 /area/prefab/war_engine)
 "Ln" = (
 /obj/decal/poster/wallsign/warning3,
-/turf/simulated/wall/auto/reinforced/supernorn/yellow{
-	explosion_resistance = 150
-	},
+/turf/unsimulated/wall/auto/reinforced/supernorn/yellow,
 /area/prefab/war_engine)
 "MW" = (
 /obj/machinery/light/emergency{
