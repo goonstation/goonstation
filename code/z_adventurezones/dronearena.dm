@@ -86,8 +86,8 @@
 	req_access_txt = "85"
 
 /obj/item/card/id/dronearena
-	name = "old id card"
-	desc = "A dusty old id card. Is this id even working right?!"
+	name = "old ID card"
+	desc = "A dusty old ID card. Is this ID even working right?!"
 	access = list(access_dronearena)
 
 /obj/item/paper/dronearenafail
