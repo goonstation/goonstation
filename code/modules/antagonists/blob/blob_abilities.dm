@@ -347,6 +347,7 @@
 			if(nucleus.overmind == owner)
 				mindist = min(mindist, get_dist(T, get_turf(nucleus)))
 
+		cooldown_time += max((length(owner.blobs) * 0.1) - 40, 0)
 		cooldown_time = max(cooldown_time + max(mindist * 0.5 - 10, 0) - owner.spread_upgrade * 5 - owner.spread_mitigation * 0.5, 6)
 		owner.total_placed++
 

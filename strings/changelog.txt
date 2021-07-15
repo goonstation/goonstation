@@ -12,6 +12,7 @@
 (+)Spread speed upgrade effect halved (1s reduction -> 0.5s reduction), cost scaling reduced (+4/buy-> +3/buy)
 (+)Nucleus distance spread penalty increased to 1s/20tiles distance (from 25)
 (+)Nucleus distance spread penalty grace zone fixed
+(+)Blob spread cooldown increased linerally at very high blob sizes (+0.1s cooldown/10 size after 400)
 (u)Zonespace
 (p)5248
 (e)🆕🗺|feature, mapping
