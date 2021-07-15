@@ -707,11 +707,9 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head)
 	path = /obj/item/clothing/head/frog_hat
 	cost = PAY_TRADESMAN
 
-/datum/clothingbooth_item/link
+/datum/clothingbooth_item/head/link
 	name = "Hero Hat"
 	path = /obj/item/clothing/head/link
-	slot = SLOT_HEAD
-	category = "Headwear"
 	cost = PAY_TRADESMAN
 
 //Sci-Fi
@@ -922,16 +920,12 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 	slot = SLOT_HEAD
 	cost = PAY_TRADESMAN/5
 
-/datum/clothingbooth_item/guybrush
+/datum/clothingbooth_item/costume/guybrush
 	name = "Wannabe Pirate Costume"
 	path = /obj/item/clothing/under/gimmick/guybrush
-	slot = SLOT_W_UNIFORM
-	category = "Costumes"
-	cost = PAY_TRADESMAN/3
 
-/datum/clothingbooth_item/dinosuar
+/datum/clothingbooth_item/costume/dinosuar
 	name = "Dinosaur Pajamas"
 	path = /obj/item/clothing/suit/gimmick/dinosaur
 	slot = SLOT_WEAR_SUIT
-	category = "Costumes"
 	cost = PAY_TRADESMAN/2
