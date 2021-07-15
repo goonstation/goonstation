@@ -114,7 +114,7 @@ See `_stdlib/_types.dm` for details.
 
 # Whack BYOND shit
 
-### Startup/Runtime trade-offs with lists and the "hidden" init() proc
+## Startup/Runtime trade-offs with lists and the "hidden" init() proc
 
 First, read the comments in [this BYOND thread](http://www.byond.com/forum/post/2086980?page=2#comment19776775).
 
