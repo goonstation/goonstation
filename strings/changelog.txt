@@ -2,6 +2,8 @@
 (t)wed jul 14 21
 (u)Tarmunora
 (e)⚖|balance
+(*)Misc blob balance (see minor changes)
+(e)⚖|balance
 (+)Blob tiles and obj critters cost 2 fuel when attacked by weldingtools (same as attacking mobs)
 (+)Ectothermids have a passive 0.5 biopoint drain instead of an active cost when absorbing damage
 (+)Blobs gain evo points every 25 size (was 20)
