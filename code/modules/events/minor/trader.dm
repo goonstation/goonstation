@@ -22,7 +22,7 @@
 		command_alert("A merchant shuttle has docked with the [docked_where].", "Commerce and Customs Alert")
 		for(var/client/C in clients)
 			if(C.mob && (C.mob.z == Z_LEVEL_STATION))
-				C.mob.playsound_local(C.mob, 'sound/misc/announcement_chime.ogg', 50, 1)
+				C.mob.playsound_local(C.mob, 'sound/misc/announcement_chime.ogg', 30, 0)
 		var/area/start_location = null
 		var/area/end_location = null
 		if(shuttle == "diner")
