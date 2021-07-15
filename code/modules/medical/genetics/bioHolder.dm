@@ -656,6 +656,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 				newEffect.can_scramble = 0
 				newEffect.can_reclaim = 0
 				newEffect.degrade_to = null
+				newEffect.can_copy = 0
 
 			effects[newEffect.id] = newEffect
 			newEffect.owner = owner
