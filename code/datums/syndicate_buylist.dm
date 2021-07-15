@@ -486,7 +486,7 @@ This is basically useless for anyone but miners.
 	cost = 12
 	vr_allowed = 0
 	desc = "These big red boots have an explosive step sound. The entire station is sure to want to show you their appreciation."
-	job = list("Clown")
+	job = list("Clown", "Captain")
 	not_in_crates = 1
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft)
 
