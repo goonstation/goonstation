@@ -18107,7 +18107,13 @@
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters/market)
 "fch" = (
-/obj/machinery/power/solar,
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "A solar electrical generator.";
+	icon = 'icons/obj/power.dmi';
+	icon_state = "solar_panel";
+	name = "solar panel"
+	},
 /turf/simulated/floor/airless/solar,
 /area/ghostdrone_factory)
 "fcl" = (
@@ -31768,7 +31774,13 @@
 /turf/simulated/floor,
 /area/station/security/equipment)
 "iJi" = (
-/obj/machinery/power/tracker,
+/obj/decal/fakeobjects{
+	density = 1;
+	desc = "A strange solar tracker. You can't tell if it's operating.";
+	icon = 'icons/obj/power.dmi';
+	icon_state = "tracker";
+	name = "solar tracker"
+	},
 /turf/simulated/floor/airless/solar,
 /area/ghostdrone_factory)
 "iJo" = (
