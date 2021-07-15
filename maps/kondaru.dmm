@@ -38193,7 +38193,6 @@
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/indigo_rye)
 "cjg" = (
-/obj/creepy_sound_trigger,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;

@@ -3936,7 +3936,6 @@
 /area/station/hallway/primary/west)
 "aOO" = (
 /obj/decal/cleanable/dirt,
-/obj/creepy_sound_trigger,
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/asylum/bathroom)
 "aOR" = (
@@ -23067,7 +23066,6 @@
 	desc = "What the fuck is blocking this thing up, and more importantly why does it have so much water?!";
 	name = "ungodly clogged toilet"
 	},
-/obj/creepy_sound_trigger,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "gwX" = (
@@ -72287,10 +72285,6 @@
 	},
 /turf/simulated/floor/wood/six,
 /area/station/library)
-"uXr" = (
-/obj/creepy_sound_trigger,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/inner/north)
 "uXw" = (
 /obj/railing/orange,
 /obj/decal/cleanable/dirt/jen,
@@ -78557,7 +78551,6 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bathroom)
 "wNq" = (
-/obj/creepy_sound_trigger,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "wNv" = (
@@ -127077,7 +127070,7 @@ cWr
 brv
 xvR
 cWr
-uXr
+jnB
 jnB
 ixW
 tOJ
