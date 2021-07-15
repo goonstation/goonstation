@@ -10,6 +10,8 @@
 (+)Blobs gain one evo point for every 100 new blob tiles placed (allowing blobs under assault to slowly gain in power if not killed decisively)
 (+)Base blob spread cooldown reduced by 0.4 seconds
 (+)Spread speed upgrade effect halved (1s reduction -> 0.5s reduction), cost scaling reduced (+4/buy-> +3/buy)
+(+)Nucleus distance spread penalty increased to 1s/20tiles distance (from 25)
+(+)Nucleus distance spread penalty grace zone fixed
 (u)Zonespace
 (p)5248
 (e)🆕🗺|feature, mapping
