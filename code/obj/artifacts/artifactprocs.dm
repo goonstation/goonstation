@@ -280,7 +280,7 @@
 
 	if(istype(W,/obj/item/baton))
 		var/obj/item/baton/BAT = W
-		if (BAT.can_stun(1, 1, user) == 1)
+		if (BAT.can_stun(1, user) == 1)
 			src.ArtifactStimulus("force", BAT.force)
 			src.ArtifactStimulus("elec", 1500)
 			playsound(src.loc, "sound/impact_sounds/Energy_Hit_3.ogg", 100, 1)

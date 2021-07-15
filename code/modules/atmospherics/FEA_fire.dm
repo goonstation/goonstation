@@ -1,6 +1,6 @@
 /atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if (reagents)
-		reagents.temperature_reagents(exposed_temperature, exposed_volume)
+		reagents.temperature_reagents(exposed_temperature, exposed_volume, 10, 300, 1)
 	if (src.material)
 		src.material.triggerTemp(src, exposed_temperature)
 	return null
@@ -10,7 +10,7 @@
 	if (src.material)
 		src.material.triggerTemp(src, exposed_temperature)
 	if (reagents)
-		reagents.temperature_reagents(exposed_temperature, 10, 10, 300)
+		reagents.temperature_reagents(exposed_temperature, exposed_volume, 10, 300, 1)
 	if(!ON_COOLDOWN(src, "hotspot_expose_to_atoms__1", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__2", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__3", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__4", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__5", 1 SECOND))
 		if (electric) //mbc : i'm putting electric zaps on here because eleczaps ALWAYS happen alongside hotspot expose and i dont want to loop all atoms twice
 			for (var/atom/item in src) //I hate having to add this here too but too many things use hotspot_expose. This might cause lag on large fires.

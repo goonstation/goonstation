@@ -69,6 +69,7 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if (method == TOUCH)
+					. = 0
 					if (volume > 25)
 						if (ishuman(M))
 							var/mob/living/carbon/human/H = M
@@ -149,6 +150,7 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
 				if (method == TOUCH)
+					. = 9
 					if (volume >= 50 && prob(75))
 						M.TakeDamage("head", 5, 15, 0, DAMAGE_BURN)
 						M.emote("scream")
@@ -251,20 +253,39 @@ datum
 			penetrates_skin = 1
 			blob_damage = 5
 			value = 7 // 3 2 1 heat
+			var/counter = 1
+
+			pooled()
+				..()
+				counter = 1
 
 			on_mob_life(var/mob/M, var/mult = 1) // -cogwerks. previous version
 				if (!M) M = holder.my_atom
+				if (!counter) counter = 1
 				M.take_toxin_damage(1.5 * mult)
 				if (probmult(8))
 					M.emote("drool")
-				if (prob(10))
+				if (prob(15))
 					boutput(M, "<span class='alert'>You cannot breathe!</span>")
 					M.losebreath += (1 * mult)
 					M.emote("gasp")
-				if (prob(8))
-					boutput(M, "<span class='alert'>You feel horribly weak.</span>")
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS * mult))
-					M.take_toxin_damage(2 * mult)
+				switch(counter += (1 * mult))
+					if (20 to 30)
+						if (prob(15))
+							boutput(M, "<span class='alert'>You feel weak.</span>")
+							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 0.5 SECONDS * mult))
+							M.take_toxin_damage(0.5 * mult)
+					if (30 to 45)
+						if (prob(20))
+							boutput(M, "<span class='alert'>You feel very weak.</span>")
+							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 1 SECONDS * mult))
+							M.take_toxin_damage(1 * mult)
+					if (45 to INFINITY)
+						if (prob(25))
+							boutput(M, "<span class='alert'>You feel horribly weak.</span>")
+							M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS * mult))
+							M.take_toxin_damage(1.5 * mult)
+
 				..()
 				return
 
@@ -769,6 +790,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if(method == TOUCH)
+					. = 0
 				if (method == TOUCH && volume >= 10)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -1554,7 +1577,10 @@ datum
 							src.data = cheating.data
 
 				if (src.data && M.bioHolder && progress_timer <= 10)
-
+					if(istype(src.data, /datum/bioHolder))
+						var/datum/bioHolder/tocopy = data
+						if(tocopy?.mobAppearance?.mutant_race?.dna_mutagen_banned)
+							return ..()
 					M.bioHolder.StaggeredCopyOther(data, progress_timer+=(1 * mult))
 					if (probmult(50) && progress_timer > 7)
 						boutput(M, "<span class='notice'>You feel a little [pick("unlike yourself", "out of it", "different", "strange")].</span>")

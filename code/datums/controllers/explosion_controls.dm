@@ -173,7 +173,7 @@ var/datum/explosion_controller/explosions
 			if(C.mob && (C.mob.z == epicenter.z) && power > 15)
 				shake_camera(C.mob, 8, 24) // remove if this is too laggy
 
-				C << sound(explosions.distant_sound)
+				playsound(C.mob, explosions.distant_sound, 100, 0)
 
 		playsound(epicenter.loc, "explosion", 100, 1, round(power, 1) )
 		if(power > 10)

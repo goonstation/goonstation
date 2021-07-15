@@ -311,14 +311,8 @@
 		src.TakeDamage("head", 0, 5)
 
 	if (prob(max(0, min(uncloak_prob, 100))))
-		for (var/obj/item/cloaking_device/C in src)
-			if (C.active)
-				C.deactivate(src)
-				src.visible_message("<span class='notice'><b>[src]'s cloak is disrupted!</b></span>")
-		for (var/obj/item/device/disguiser/D in src)
-			if (D.on)
-				D.disrupt(src)
-				src.visible_message("<span class='notice'><b>[src]'s disguiser is disrupted!</b></span>")
+		SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+		SEND_SIGNAL(src, COMSIG_DISGUISER_DEACTIVATE)
 
 	if (safety)
 		return 0

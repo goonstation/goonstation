@@ -792,7 +792,7 @@
 
 			var/prop = DAMAGE_TYPE_TO_STRING(hit_type)
 			if(real_hit && prop == "burn" && I?.reagents)
-				I.reagents.temperature_reagents(2000,10)
+				I.reagents.temperature_reagents(4000,10)
 			.= src.getProperty("I_block_[prop]")
 		if(real_hit)
 			SEND_SIGNAL(src, COMSIG_BLOCK_BLOCKED)

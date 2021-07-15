@@ -51,8 +51,5 @@
 				pod1.attackby(W,user)
 				src.add_fingerprint(user)
 
-	attack_ai(mob/user as mob)
-		return attack_hand(user)
-
 	attack_hand(mob/user as mob)
 		return computer.attack_hand(user)

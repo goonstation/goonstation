@@ -1,4 +1,141 @@
 
+(t)thu jul 15 21
+(u)112358sam
+(p)5516
+(e)⚖|balance
+(*)Triples the increase of the hunger motive from eating food on the RP servers.
+(t)wed jul 14 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Misc blob balance (see minor changes)
+(e)⚖|balance
+(+)Blob tiles and obj critters cost 2 fuel when attacked by weldingtools (same as attacking mobs)
+(+)Ectothermids have a passive 0.5 biopoint drain instead of an active cost when absorbing damage
+(+)Blobs gain evo points every 25 size (was 20)
+(+)Blobs gain one evo point for every 100 new blob tiles placed (allowing blobs under assault to slowly gain in power if not killed decisively)
+(+)Base blob spread cooldown reduced by 0.4 seconds
+(+)Spread speed upgrade effect halved (1s reduction -> 0.5s reduction), cost scaling reduced (+4/buy-> +3/buy)
+(+)Nucleus distance spread penalty increased to 1s/20tiles distance (from 25)
+(+)Nucleus distance spread penalty grace zone fixed
+(+)Blob spread cooldown increased linerally at very high blob sizes (+0.1s cooldown/10 size after 400)
+(u)Zonespace
+(p)5248
+(e)🆕🗺|feature, mapping
+(*)Pod Wars team wins and deaths are now tracked, with a structure containing the stats being half-buried in an asteroid, near the Reliant.
+(u)Superlagg
+(p)5463
+(e)|
+(*)Stable mutagen now only copies over "normal" mutants, like lizards and skeletons.
+(u)Jan.antilles
+(p)5472
+(e)🆕🎨|feature, sprites
+(*)Added hairbows! Find them in the Clothing Booth!
+(u)Ikea
+(p)5467
+(e)🗺🎨|mapping, sprites
+(+)The refinery on Manta is now public access
+(t)tue jul 13 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Monkeys are now sold by traders at QM instead of an always-active crate.
+(u)Hans
+(p)5456
+(e)⚖|balance
+(+)Changed the behaviour of cyanide to be more consistent and less RNG based.
+(u)Carbadox
+(p)5361
+(e)|
+(+)White and brown fedoras can now be tipped without the risk of death.
+(u)Carbadox
+(p)4352
+(e)|
+(+)Shitty grills can now be moved with screwdrivers/wrenches
+(u)Flappybat
+(p)5446
+(e)|
+(+)Added crisis alert for janitors to the PDA, let them know of a big mess!
+(t)mon jul 12 21
+(u)Flappybat
+(p)5382
+(e)⚖|balance
+(+)Welding fuel is now slightly toxic.
+(u)Ikea
+(p)5468
+(e)🗺|mapping
+(+)Donut3 is now public access.
+(u)TTerc
+(p)5268
+(e)⚖|balance
+(+)Increased the random antag event frequency on non-RP servers.
+(u)Carbadox
+(p)5426
+(e)⚖🆕|balance, feature
+(+)Lowered the cost of the midslave cloning module and the mindslav cloning module kit from from 7 to 6 and 11 to 10 respectively.
+(u)DimWhat
+(p)5455
+(e)🎨|sprites
+(+)Resprited the HoP uniform and suit as well as their in-hands.
+(u)TTerc
+(p)5473
+(e)|
+(+)You can now click the APC with wirecutters/multitool to open the hacking panel, if wires are exposed.
+(u)Tarmunora
+(p)5477
+(e)🐛🗺⛔|bug, mapping, removal
+(+)Removes police baton
+(u)KoboldCommando
+(p)5458
+(e)🐛|bug
+(+)Fixed incorrect lizard skin colors in preview windows
+(t)sun jul 11 21
+(u)Flappybat
+(p)5465
+(e)|
+(+)Changeling lesser form, monkey burger, jungle fever and admin monkey transformation no longer drops all your items.
+(t)sat jul 10 21
+(u)Asche, Charlietan, MomoBerry, Penny, and Unfunny
+(p)5213
+(e)🆕|feature
+(+)Added three new drinks!
+(+)Fruit punch = apple juice + lime juice + simple syrup + ginger ale + pineapple juice
+(+)Milk punch = fruit punch + milk (probably will make you sick)
+(+)Hard punch = apple juice + sangria + simple syrup + ginger ale + pineapple juice (knocks you back when consumed)
+(u)Flappybat
+(p)5299
+(e)⚖|balance
+(*)C.A.R.L at the listening post now restricts his best contraband to syndicate agents.
+(u)TTerc
+(p)5413
+(e)|
+(+)You can now click a vending machine/manufactuer/seed fabricator with wirecutters/multitool to access the hacking menu, if the panel is open.
+(u)Owari
+(p)5434
+(e)🎨|sprites
+(*)Added a new sprite for the magic mirror on the wizard shuttle.
+(u)Sovexe
+(p)5410
+(e)🆕🎨|feature, sprites
+(*)Added golden peas plant mutation. Golden peas contain ammonia.
+(u)nefarious6th
+(p)5208
+(e)🗺🎨|mapping, sprites
+(*)Added numerous new headwear clothing options to the clothing booth, new clothing qm crate, general sprite fixes.
+(u)Lythine
+(p)4884
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Adds a new Space Casino space prefab.
+(u)Emily
+(e)⛔|removal
+(+)Removed the incredibly laggy internals display from the status tab. Maybe someone will fix it eventually.
+(u)112358sam
+(p)5193
+(e)📄|tgui
+(+)Slot machines use bank account funds.
+(+)ATMs no longer withdraw to and deposit from ID cards.
+(u)Penny
+(p)5055
+(e)🆕|feature
+(*)Mechanics can now set the access requirements of newly constructed airlocks- find the new Access Lite in your secure lockers to try it out!
 (t)fri jul 09 21
 (u)Gerhazo
 (p)5359

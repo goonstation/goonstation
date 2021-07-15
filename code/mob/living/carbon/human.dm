@@ -882,6 +882,10 @@
 					if (istype(O, /datum/objective/specialist/stealth))
 						stat("Stealth Points:", "[O:score] / [O:min_score]")
 
+		/*
+
+		//For some reason, this code was causing severe lag. Feel free to uncomment it if you want to figure out why - Emily
+
 		if (src.internal)
 			if (!src.internal.air_contents)
 				qdel(src.internal)
@@ -889,6 +893,7 @@
 				stat("Internal Atmosphere Info:", src.internal.name)
 				stat("Tank Pressure:", MIXTURE_PRESSURE(src.internal.air_contents))
 				stat("Distribution Pressure:", src.internal.distribute_pressure)
+		*/
 
 /mob/living/carbon/human/hotkey(name)
 	switch (name)

@@ -124,6 +124,7 @@
 			var/mob/living/M = hit_atom
 
 			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+			SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 			if (prob(25))
 				M.emote("scream")
 
