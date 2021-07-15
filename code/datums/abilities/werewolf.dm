@@ -122,7 +122,7 @@
 
 			M.remove_stun_resist_mod("wolf_stun_resist")
 			if (src.bioHolder)
-				src.bioHolder.RemoveEffect("regenerator")
+				src.bioHolder.RemoveEffect("regenerator_wolf")
 				boutput(src, "<span class='alert'>You will no longer heal over time!</span>")
 
 			boutput(M, "<span class='notice'><h3>You transform back into your original form.</span></h3>")
