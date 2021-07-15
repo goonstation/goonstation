@@ -340,7 +340,7 @@
 		var/obj/blob/B2 = new /obj/blob(T)
 		B2.setOvermind(owner)
 
-		cooldown_time = 15
+		cooldown_time = 10
 		var/mindist = 127
 		for_by_tcl(nucleus, /obj/blob/nucleus)
 			if(nucleus.overmind == owner)
