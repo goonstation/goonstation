@@ -55,8 +55,6 @@
 	var/max_amount = 1000
 	var/unusualCell
 	ammo_type = new/datum/projectile/bullet
-	module_research = list("weapons" = 2, "miniaturization" = 5)
-	module_research_type = /obj/item/ammo/bullets
 
 	var/icon_dynamic = 0 // For dynamic desc and/or icon updates (Convair880).
 	var/icon_short = null // If dynamic = 1, the short icon_state has to be specified as well.
@@ -896,8 +894,6 @@
 	g_amt = 20000
 	var/charge = 100.0
 	var/max_charge = 100.0
-	module_research = list("weapons" = 1, "energy" = 5, "miniaturization" = 5)
-	module_research_type = /obj/item/ammo/power_cell
 	var/sound_load = 'sound/weapons/gunload_click.ogg'
 	var/unusualCell = 0
 

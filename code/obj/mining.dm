@@ -1522,7 +1522,6 @@
 	var/image/powered_overlay = null
 	var/sound/hitsound_charged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 	var/sound/hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
-	module_research = list("tools" = 3, "engineering" = 1, "mining" = 1)
 
 	New()
 		..()
@@ -1617,7 +1616,6 @@ obj/item/clothing/gloves/concussive
 	cell = new/obj/item/ammo/power_cell
 	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
-	module_research = list("tools" = 5, "engineering" = 2, "mining" = 3)
 
 	New()
 		..()
@@ -1678,7 +1676,6 @@ obj/item/clothing/gloves/concussive
 	dig_strength = 2
 	hitsound_charged = 'sound/items/Welder.ogg'
 	hitsound_uncharged = 'sound/items/Welder.ogg'
-	module_research = list("tools" = 5, "engineering" = 3, "mining" = 5)
 
 /obj/item/mining_tool/powerhammer
 	name = "power hammer"
@@ -1693,7 +1690,6 @@ obj/item/clothing/gloves/concussive
 	digcost = 3
 	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
-	module_research = list("tools" = 5, "engineering" = 1, "mining" = 5)
 
 	New()
 		..()
@@ -1756,7 +1752,6 @@ obj/item/clothing/gloves/concussive
 	cell = new/obj/item/ammo/power_cell
 	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
-	module_research = list("tools" = 5, "engineering" = 2, "mining" = 3)
 
 	New()
 		..()

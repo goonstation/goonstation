@@ -89,8 +89,6 @@
 	festivity = 0
 	rc_flags = 0
 	edible = 1
-	module_research = list("cuisine" = 6)
-	module_research_type = /obj/item/reagent_containers/food/snacks
 	rand_pos = 1
 	var/has_cigs = 0
 
@@ -398,8 +396,6 @@
 	festivity = 0
 	rc_flags = 0
 	edible = 1
-	module_research = list("cuisine" = 6)
-	module_research_type = /obj/item/reagent_containers/food/snacks
 	rand_pos = 1
 	var/did_react = 0
 
