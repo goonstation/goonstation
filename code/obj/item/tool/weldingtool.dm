@@ -142,6 +142,7 @@
 			F.rod = R
 			src.add_fingerprint(user)
 
+
 	afterattack(obj/O as obj, mob/user as mob)
 		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && get_dist(src,O) <= 1)
 			if  (!O.reagents.total_volume)
@@ -154,7 +155,7 @@
 				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
 				return
 		if (src.welding)
-			use_fuel(ismob(O) ? 2 : 0.2)
+			use_fuel((ismob(O) || istype(O, /obj/blob) || istype(O, /obj/critter)) ? 2 : 0.2)
 			if (get_fuel() <= 0)
 				boutput(user, "<span class='notice'>Need more fuel!</span>")
 				src.welding = 0
