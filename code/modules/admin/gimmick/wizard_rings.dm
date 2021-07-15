@@ -58,7 +58,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 
 		unequipped(var/mob/user)
 			..()
-			if (user && user.bioHolder.HasEffect("hulk") && HAS_MOB_PROPERTY(user, PROP_PASSIVE_WRESTLE) && (HAS_MOB_PROPERTY(user, PROP_STAMINA_REGEN_BONUS)))
+			if (user && user.bioHolder.HasEffect("hulk") && HAS_MOB_PROPERTY(user, PROP_PASSIVE_WRESTLE) && HAS_MOB_PROPERTY(user, PROP_STAMINA_REGEN_BONUS))
 				REMOVE_MOB_PROPERTY(user, PROP_PASSIVE_WRESTLE, "empower")
 				REMOVE_MOB_PROPERTY(user, PROP_STAMINA_REGEN_BONUS, "empower")
 				user.bioHolder.RemoveEffect("hulk")
