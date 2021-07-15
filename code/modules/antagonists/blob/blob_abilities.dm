@@ -105,7 +105,7 @@
 						B = new /obj/blob/firewall(T)
 					else
 						B = new /obj/blob(T)
-
+					owner.total_placed++
 					B.setOvermind(src.owner)
 					currentTurfs++
 
@@ -227,6 +227,7 @@
 		var/turf/startTurf = get_turf(owner)
 		var/obj/blob/nucleus/C = new /obj/blob/nucleus(startTurf)
 		C.layer++
+		owner.total_placed++
 		C.setOvermind(owner)
 		C.Life()
 		owner.started = 1
@@ -347,6 +348,7 @@
 				mindist = min(mindist, get_dist(T, get_turf(nucleus)))
 
 		cooldown_time = max(cooldown_time + max(mindist * 0.4 - 1, 0) - owner.spread_upgrade * 10 - owner.spread_mitigation * 0.5, 6)
+		owner.total_placed++
 
 		var/extra_spreads = round(owner.multi_spread / 100) + (prob(owner.multi_spread % 100) ? 1 : 0)
 		if (extra_spreads)
@@ -362,6 +364,7 @@
 			for (var/i = 1, i <= extra_spreads && spreadability.len, i++)
 				var/turf/R = pick(spreadability)
 				var/obj/blob/B3 = new /obj/blob(R)
+				owner.total_placed++
 				B3.setOvermind(owner)
 				spreadability -= R
 
