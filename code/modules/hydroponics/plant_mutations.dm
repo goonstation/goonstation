@@ -699,3 +699,11 @@
 	crop = /obj/item/plant/herb/tobacco/twobacco
 	assoc_reagents = list("nicotine2")
 	chance = 50
+
+//Dripper mutations
+/datum/plantmutation/dripper/leaker
+	name = "Leaker"
+	iconmod = "Leaker"
+	crop = /obj/item/reagent_containers/food/snacks/plant/purplegoop/orangegoop
+	assoc_reagents = list("oil")
+	chance = 25

@@ -1,4 +1,23 @@
 
+(t)fri jul 16 21
+(u)Sovexe
+(p)5522
+(e)🆕🎨|feature, sprites
+(*)Added a new dripper plant mutation, the Leaker. Leakers produce orange goop containing oil and yuck.
+(u)BatElite
+(p)5484
+(e)🎨|sprites
+(+)Capsule machines can now be restocked, cartridges available in the necessities restock crate. The empty capsules can also be crushed into oblivion now.
+(t)thu jul 15 21
+(u)112358sam
+(p)5451
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Made minisubs constructable on underwater maps
+(+)Added the heavy, industrial, and strange minisubs
+(u)112358sam
+(p)5516
+(e)⚖|balance
+(*)Triples the increase of the hunger motive from eating food on the RP servers.
 (t)wed jul 14 21
 (u)Tarmunora
 (e)⚖|balance
@@ -10,6 +29,9 @@
 (+)Blobs gain one evo point for every 100 new blob tiles placed (allowing blobs under assault to slowly gain in power if not killed decisively)
 (+)Base blob spread cooldown reduced by 0.4 seconds
 (+)Spread speed upgrade effect halved (1s reduction -> 0.5s reduction), cost scaling reduced (+4/buy-> +3/buy)
+(+)Nucleus distance spread penalty increased to 1s/20tiles distance (from 25)
+(+)Nucleus distance spread penalty grace zone fixed
+(+)Blob spread cooldown increased linerally at very high blob sizes (+0.1s cooldown/10 size after 400)
 (u)Zonespace
 (p)5248
 (e)🆕🗺|feature, mapping

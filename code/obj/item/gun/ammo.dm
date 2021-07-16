@@ -271,7 +271,7 @@
 		if (src.amount_left < 0)
 			src.amount_left = 0
 		inventory_counter.update_number(src.amount_left)
-
+		src.tooltip_rebuild = 1
 		if (src.amount_left > 0)
 			if (src.icon_dynamic && src.icon_short)
 				src.icon_state = text("[src.icon_short]-[src.amount_left]")
@@ -286,7 +286,7 @@
 		return
 
 	get_desc()
-		return . += "There are [src.amount_left][ammo_type.material && istype(ammo_type.material, /datum/material/metal/silver) ? " silver " : " "]bullet\s left!"
+		return . += "There [src.amount_left == 1 ? "is" : "are"] [src.amount_left][ammo_type.material && istype(ammo_type.material, /datum/material/metal/silver) ? " silver " : " "]bullet\s left!"
 
 /obj/item/ammo/bullets/derringer
 	sname = ".41 RF"

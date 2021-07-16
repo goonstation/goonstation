@@ -42,7 +42,7 @@
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.sims)
-				H.sims.affectMotive("Hunger", heal_amt * 2)
+				H.sims.affectMotive("Hunger", heal_amt * 6)
 				H.sims.affectMotive("Bladder", -heal_amt * 0.2)
 
 		if (quality >= 5)

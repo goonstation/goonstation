@@ -665,7 +665,7 @@
 
 	proc/scare_some_people()
 		src.spooky_shake()
-		playsound(src, src.trigger_sound, 100, 0)
+		playsound(src, src.trigger_sound, 40, 0)
 		src.visible_message("<span class='alert'><b>\The [src] comes to life and starts making an unearthly, haunting wail!</b></span>")
 		for (var/mob/M in viewers(src))
 			if (prob(66))

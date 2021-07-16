@@ -145,6 +145,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	cropsize = 3
 	harvests = 6
 	endurance = 0
+	mutations = list(/datum/plantmutation/dripper/leaker)
 	assoc_reagents = list("plasma")
 
 /datum/plant/artifact/rocks
