@@ -50,6 +50,8 @@
 
 	if (src.occupant)
 		src.process_occupant(mult)
+
+	use_power(power_usage)
 	return 1
 
 /obj/machinery/recharge_station/allow_drop()
