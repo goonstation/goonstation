@@ -199,7 +199,7 @@
 
 	New()
 		..()
-		src.setMaterial(getMaterial("plasmaglass"))
+		src.setMaterial(getMaterial("plasmaresonate"))
 
 /////////////////////////////////////////////////EXPLODEY FLOOR
 
@@ -498,6 +498,21 @@
 /obj/machinery/door/poddoor/blast/puzzle
 	ex_act(severity, last_touched, power)
 		return
+
+// Prefab Materials
+
+/datum/material/crystal/plasmaresonate
+	mat_id = "plasmaresonate"
+	name = "plasma polycrystalline"
+	desc = "Polycrystallized plasma that has been rendered inert. Treated to have an intricate lattice pattern.  It lets out a soft hum in response to sound."
+	color = "#c710ff"
+	alpha = 210
+
+	New()
+		setProperty("density", 30)
+		setProperty("hard", 75)
+		setProperty("resonance", 80)
+		return ..()
 
 // Prefab Turfs
 
