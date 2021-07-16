@@ -25,8 +25,6 @@
 	event_handler_flags = HANDLE_STICKER | USE_FLUID_ENTER
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | EXTRADELAY
 	rc_flags = RC_SPECTRO		// only spectroscopic analysis
-	module_research = list("medicine" = 1, "science" = 1)
-	module_research_type = /obj/item/reagent_containers/patch
 	var/in_use = 0
 	var/good_throw = 0
 
@@ -312,7 +310,6 @@
 	desc = "What is this?"
 	icon_state = "patch_LSD"
 	initial_reagents = list("LSD"=20)
-	module_research = list("vice" = 10)
 
 	cyborg
 		borg = 1
@@ -322,7 +319,6 @@
 	desc = "A highly potent hallucinogenic substance. It smells like honey."
 	icon_state = "patch_LSBee"
 	initial_reagents = list("lsd_bee"=20)
-	module_research = list("vice" = 10)
 
 /obj/item/reagent_containers/patch/vr
 	icon = 'icons/effects/VR.dmi'
@@ -464,8 +460,6 @@
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH | ATTACK_SELF_DELAY
 	click_delay = 0.7 SECONDS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
-	module_research = list("medicine" = 4, "science" = 4)
-	module_research_type = /obj/item/reagent_containers/patch
 
 	var/list/whitelist = list()
 	var/use_volume = 8

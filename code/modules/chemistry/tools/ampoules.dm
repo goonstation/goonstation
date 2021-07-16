@@ -6,8 +6,6 @@
 	initial_volume = 5
 	flags = FPRINT | TABLEPASS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
-	module_research = list("medicine" = 1, "science" = 1)
-	module_research_type = /obj/item/reagent_containers/ampoule
 	var/expended = FALSE //Whether or not the ampoule has been used.
 	var/color_id = "1"
 

@@ -10,7 +10,6 @@
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	item_state = "electronic"
 	mats = 2
-	module_research = list("energy" = 1, "devices" = 3)
 
 	var/status = 1 // Bulb still functional?
 	var/secure = 1 // Access panel still secured?

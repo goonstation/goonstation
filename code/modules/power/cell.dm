@@ -23,8 +23,6 @@
 	stamina_damage = 10
 	stamina_cost = 10
 	stamina_crit_chance = 10
-	module_research = list("energy" = 8, "engineering" = 1, "miniaturization" = 3)
-	module_research_type = /obj/item/cell
 
 	disposing()
 		if (istype(src.loc,/obj/machinery/power/apc))

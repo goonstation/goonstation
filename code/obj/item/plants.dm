@@ -86,8 +86,6 @@
 	icon_state = "cannabisleaf"
 	brewable = 1
 	brew_result = list("THC", "CBD")
-	module_research = list("vice" = 10)
-	module_research_type = /obj/item/plant/herb/cannabis
 	contraband = 1
 	w_class = W_CLASS_TINY
 
@@ -328,23 +326,18 @@
 	icon_state = "catnip"
 	brewable = 1
 	brew_result = "catdrugs"
-	module_research = list("vice" = 3)
-	module_research_type = /obj/item/plant/herb/cannabis
 
 /obj/item/plant/herb/poppy
 	name = "poppy"
 	crop_suffix	= ""
 	desc = "A distinctive red flower."
 	icon_state = "poppy"
-	module_research = list("vice" = 4)
-	module_research_type = /obj/item/plant/herb/cannabis
 
 /obj/item/plant/herb/aconite
 	name = "aconite"
 	crop_suffix	= ""
 	desc = "A professor once asked, \"What is the difference, Mr. Potter, between monkshood and wolfsbane?\"\n  \"Aconite\", answered Hermione. And all was well."
 	icon_state = "aconite"
-	module_research = list("vice" = 3)
 	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 	// module_research_type = /obj/item/plant/herb/cannabis
 	attack_hand(var/mob/user as mob)

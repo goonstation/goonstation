@@ -349,9 +349,6 @@ var/global
 	bioele_shifts_since_accident = 0
 
 	// Controllers
-	datum/research/disease/disease_research = new()
-	datum/research/artifact/artifact_research = new()
-	datum/research/robotics/robotics_research = new()
 	datum/wage_system/wagesystem
 	datum/shipping_market/shippingmarket
 

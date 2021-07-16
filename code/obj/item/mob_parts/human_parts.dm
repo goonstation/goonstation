@@ -11,8 +11,6 @@
 	stamina_cost = 23
 	stamina_crit_chance = 5
 	skintoned = 1
-	module_research = list("medicine" = 1)
-	module_research_type = /obj/item/parts/human_parts
 	var/original_DNA = null
 	var/original_fprints = null
 	var/show_on_examine = 0

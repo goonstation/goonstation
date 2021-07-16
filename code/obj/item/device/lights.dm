@@ -55,7 +55,6 @@
 	col_r = 0.9
 	col_g = 0.8
 	col_b = 0.7
-	module_research = list("science" = 1, "devices" = 1)
 	light_type = null
 	brightness = 4.6
 
