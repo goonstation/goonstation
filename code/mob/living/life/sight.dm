@@ -94,7 +94,7 @@
 		if (owner.traitHolder && owner.traitHolder.hasTrait("infravision"))
 			if (owner.see_invisible < 1)
 				owner.see_invisible = 1
-////Reagents
+
 		if (HAS_MOB_PROPERTY(owner, PROP_GHOSTVISION) && (T && !isrestrictedz(T.z)))
 			if (owner.see_in_dark != 1)
 				owner.see_in_dark = 1
@@ -137,7 +137,6 @@
 
 		if (HAS_MOB_PROPERTY(owner, PROP_NIGHTVISION))
 			owner.render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
-
 
 		if (human_owner)////Glasses handled separately because i dont have a fast way to get glasses on any mob type
 			if (istype(human_owner.glasses, /obj/item/clothing/glasses/construction) && (T && !isrestrictedz(T.z)))
