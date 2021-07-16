@@ -1,5 +1,4 @@
 #define SWORD_ATTACKING_RANGE 4
-#define IS_ARRIVALS(x) (istype(x, /area/shuttle/arrival/station) || istype(x, /area/station/crewquarters/cryotron) || istype(x, /area/station/hallway/secondary/oshan_arrivals))
 /* ================================================== */
 /* --- Syndicate Weapon: Orion Retribution Device --- */
 /* ================================================== */
@@ -909,4 +908,3 @@
 		return
 
 #undef SWORD_ATTACKING_RANGE
-#undef IS_ARRIVALS
