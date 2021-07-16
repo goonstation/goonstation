@@ -27,7 +27,7 @@
 //SUPPLY PACKS
 //NOTE: only secure crate types use the access var (and are lockable)
 //NOTE: hidden packs only show up when the computer has been hacked.
-
+ABSTRACT_TYPE(/datum/supply_packs)
 /datum/supply_packs
 	var/name = null
 	var/desc = null
@@ -398,6 +398,7 @@
 	cost = 2500
 	containertype = /obj/storage/secure/crate/medical/monkey
 	containername = "Lab Monkey Crate"
+	hidden = 1
 
 /datum/supply_packs/bee
 	name = "Honey Production Kit"
@@ -1259,7 +1260,7 @@
 /* ================================================= */
 /* -------------------- Complex -------------------- */
 /* ================================================= */
-
+ABSTRACT_TYPE(/datum/supply_packs/complex)
 /datum/supply_packs/complex
 	hidden = 0
 	var/list/blueprints = list()

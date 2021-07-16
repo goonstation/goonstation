@@ -1,5 +1,43 @@
 
+(t)thu jul 15 21
+(u)112358sam
+(p)5516
+(e)⚖|balance
+(*)Triples the increase of the hunger motive from eating food on the RP servers.
+(t)wed jul 14 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Misc blob balance (see minor changes)
+(e)⚖|balance
+(+)Blob tiles and obj critters cost 2 fuel when attacked by weldingtools (same as attacking mobs)
+(+)Ectothermids have a passive 0.5 biopoint drain instead of an active cost when absorbing damage
+(+)Blobs gain evo points every 25 size (was 20)
+(+)Blobs gain one evo point for every 100 new blob tiles placed (allowing blobs under assault to slowly gain in power if not killed decisively)
+(+)Base blob spread cooldown reduced by 0.4 seconds
+(+)Spread speed upgrade effect halved (1s reduction -> 0.5s reduction), cost scaling reduced (+4/buy-> +3/buy)
+(+)Nucleus distance spread penalty increased to 1s/20tiles distance (from 25)
+(+)Nucleus distance spread penalty grace zone fixed
+(+)Blob spread cooldown increased linerally at very high blob sizes (+0.1s cooldown/10 size after 400)
+(u)Zonespace
+(p)5248
+(e)🆕🗺|feature, mapping
+(*)Pod Wars team wins and deaths are now tracked, with a structure containing the stats being half-buried in an asteroid, near the Reliant.
+(u)Superlagg
+(p)5463
+(e)|
+(*)Stable mutagen now only copies over "normal" mutants, like lizards and skeletons.
+(u)Jan.antilles
+(p)5472
+(e)🆕🎨|feature, sprites
+(*)Added hairbows! Find them in the Clothing Booth!
+(u)Ikea
+(p)5467
+(e)🗺🎨|mapping, sprites
+(+)The refinery on Manta is now public access
 (t)tue jul 13 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Monkeys are now sold by traders at QM instead of an always-active crate.
 (u)Hans
 (p)5456
 (e)⚖|balance

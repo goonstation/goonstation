@@ -336,7 +336,7 @@
 				if (amount)
 					for (var/obj/blob/ectothermid/T in range(3, src))
 						if (T && amount > 0)
-							amount -= T.consume(amount)
+							amount = 0
 			if ("laser")
 				ignore_armor = 1
 			if ("poison","self_poison")
@@ -1078,51 +1078,32 @@
 	can_absorb = 0
 	runOnLife = 1
 	var/protect_range = 3
-	var/damage_per_biopoint = 50
-	var/max_biopoints_per_tick = 40
-	var/damage_credit = 0
-	var/points_used = 0
-
-	proc/consume(var/amt)
-		if (amt <= 0)
-			return 0
-		while (amt)
-			if (damage_credit >= amt)
-				damage_credit -= amt
-				return amt
-			else
-				if (points_used < max_biopoints_per_tick)
-					if (!overmind.hasPoints(1))
-						var/turf/T = get_turf(src)
-						set_loc(null)
-						var/obj/blob/B = new /obj/blob(T)
-						B.overmind = overmind
-						overmind.blobs += B
-						B.color = overmind.color
-						qdel(src)
-					damage_credit += damage_per_biopoint
-					points_used++
-					overmind.usePoints(1)
-				else
-					var/ret = damage_credit
-					damage_credit = 0
-					return ret
-		return 0
+	var/removed = 0
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (temperature > T20C)
-			temperature -= consume(temperature - T20C)
+			temperature = T20C
 		..(air, temperature, volume)
+
+	onAttach(var/mob/living/intangible/blob_overmind/O)
+		..()
+		O.gen_rate_bonus -= 0.5
+		removed = 0.5
+
+	disposing()
+		..()
+		if (overmind)
+			overmind.gen_rate_bonus += removed
+			removed = 0
 
 	Life()
 		if (..())
 			return 1
-		points_used = 0
-		damage_credit = 0
 		for (var/turf/simulated/floor/T in range(protect_range,src))
 			var/datum/gas_mixture/air = T.air
 			if (air.temperature > T20C)
-				air.temperature -= 200
+				air.temperature /= 2
+				air.temperature -= 100
 
 /obj/blob/plasmaphyll
 	name = "plasmaphyll"

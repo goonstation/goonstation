@@ -340,7 +340,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			var/list/data
 			try
 				data = apiHandler.queryAPI("vpncheck", list("ip" = src.address, "ckey" = src.ckey), 1, 1, 1)
-				var/result = dpi(data)
 				// Goonhub API error encountered
 				if (data["error"])
 					logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [data["error"]]")
@@ -348,6 +347,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 				// Successful Goonhub API query
 				else
+					var/result = dpi(data)
 					if (result == 2 || data["whitelisted"])
 						// User is explicitly whitelisted from VPN checks, ignore
 						global.vpn_ip_checks["[src.address]"] = false
@@ -1476,7 +1476,12 @@ if([removeOnFinish])
 </body>
 </html>
 	"}, "window=pregameBrowser")
-/client/proc/dpi(data)
+
+#ifndef SECRETS_ENABLED
+/client/proc/dpi(list/data)
+	return
+#endif
+
 /world/proc/showCinematic(var/name, var/removeOnFinish = 0)
 	for(var/client/C)
 		C.showCinematic(name, removeOnFinish)

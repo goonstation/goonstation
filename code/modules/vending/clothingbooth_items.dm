@@ -45,6 +45,58 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/accessory)
 	path = /obj/item/clothing/suit/suspenders
 	slot = SLOT_WEAR_SUIT
 
+ABSTRACT_TYPE(/datum/clothingbooth_item/accessory/hbow)
+/datum/clothingbooth_item/accessory/hbow
+	name = "Hair Bow"
+	slot = SLOT_HEAD
+
+	magenta
+		name = "Magenta Hair Bow"
+		path = /obj/item/clothing/head/hairbow/magenta
+
+	pink
+		name = "Pink Hair Bow"
+		path = /obj/item/clothing/head/hairbow/pink
+
+	red
+		name = "Red Hair Bow"
+		path = /obj/item/clothing/head/hairbow/red
+
+	gold
+		name = "Gold Hair Bow"
+		path = /obj/item/clothing/head/hairbow/gold
+
+	green
+		name = "Green Hair Bow"
+		path = /obj/item/clothing/head/hairbow/green
+
+	mint
+		name = "Mint Hair Bow"
+		path = /obj/item/clothing/head/hairbow/mint
+
+	blue
+		name = "Blue Hair Bow"
+		path = /obj/item/clothing/head/hairbow/blue
+
+	navy
+		name = "Navy Hair Bow"
+		path = /obj/item/clothing/head/hairbow/navy
+
+	shinyblack
+		name = "Shiny Black Hair Bow"
+		path = /obj/item/clothing/head/hairbow/shinyblack
+
+	matteblack
+		name = "Matte Black Hair Bow"
+		path = /obj/item/clothing/head/hairbow/matteblack
+
+	white
+		name = "White Hair Bow"
+		path = /obj/item/clothing/head/hairbow/white
+
+	rainbow
+		name = "Rainbow Hair Bow"
+		path = /obj/item/clothing/head/hairbow/rainbow
 
 //Casual
 
