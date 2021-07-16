@@ -145,4 +145,4 @@
   return ..()
 
 /mob/living/critter/singularity/setup_healths()
-  add_hh_robot(-150, 150, 1.15)
+  add_hh_robot(150, 1.15)
