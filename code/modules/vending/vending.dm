@@ -2161,9 +2161,10 @@
 	icon_panel = "standard-panel"
 	// monkey vendor has slightly special broken/etc sprites so it doesn't just inherit the standard set  :)
 	acceptcard = 0
-	mats = 0 // >:I
+	mats = list("MET-1"=5, "CON-1"=5, "viscerite"=20)
 	slogan_list = list("My monkeys are too strong for you, traveler!")
 	slogan_chance = 1
+	is_syndicate = 1
 
 	light_r =1
 	light_g = 0.88
