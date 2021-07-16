@@ -933,6 +933,13 @@
 	icon_state = "sneakmans"
 	item_state = "sneakmans"
 
+/obj/item/clothing/suit/armor/sneaking_suit/costume
+	desc = "On closer inspection this is a cheap cosplay outfit with an obvious zipper."
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 2)
+
 /obj/item/clothing/suit/bio_suit/beekeeper
 	name = "apiculturist's suit"
 	desc = "A suit that protects against bees. Not space bees, but like the tiny, regular kind. This thing doesn't do <i>shit</i> to protect you from space bees."
