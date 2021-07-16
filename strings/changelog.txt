@@ -1,5 +1,9 @@
 
 (t)fri jul 16 21
+(u)Sovexe
+(p)5522
+(e)🆕🎨|feature, sprites
+(*)Added a new dripper plant mutation, the Leaker. Leakers produce orange goop containing oil and yuck.
 (u)BatElite
 (p)5484
 (e)🎨|sprites
