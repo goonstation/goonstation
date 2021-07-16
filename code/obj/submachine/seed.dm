@@ -988,9 +988,6 @@
 		else if (istype(W,/obj/item/satchel/hydro))
 			var/obj/item/satchel/S = W
 			var/loadcount = 0
-			if (src.autoextract && !src.extract_to)
-				boutput(user, "<span class='alert'>You must first select an extraction target if you want items to be automatically extracted.</span>")
-				return
 			for (var/obj/item/I in S.contents)
 				if (src.canExtract(I) && (src.tryLoading(I, user)))
 					loadcount++
@@ -1025,16 +1022,12 @@
 			return src.attackby(O, user)
 		if (!src.canExtract(O)) ..()
 		else
-			if (src.autoextract && !src.extract_to)
-				boutput(user, "<span class='alert'>You must first select an extraction target if you want items to be automatically extracted.</span>")
-				return
 			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O.name] into [src]!</span>")
 			var/staystill = user.loc
 			for (var/obj/item/P in view(1,user))
 				if (user.loc != staystill) break
 				if (P.type == O.type)
-					if (!src.tryLoading(P, user))
-						break
+					if (!src.tryLoading(P, user)) break
 					sleep(0.2 SECONDS)
 				else continue
 			boutput(user, "<span class='notice'>You finish stuffing items into [src]!</span>")
