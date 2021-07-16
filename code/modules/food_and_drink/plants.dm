@@ -1386,22 +1386,15 @@
 		..()
 		reagents.add_reagent("yuck", 20)
 
-/obj/item/reagent_containers/food/snacks/plant/orangegoop
+/obj/item/reagent_containers/food/snacks/plant/purplegoop/orangegoop
 	name = "orange goop"
 	desc = "Some sort of pulsating orange goop...."
-	crop_prefix = "wad of "
-	crop_suffix = " goop"
 	icon_state = "yuckorange"
-	planttype = /datum/plant/artifact/leaker
-	amount = 1
-	heal_amt = 0
 	food_color = "#ff9900"
-	initial_volume = 25
-	food_effects = list("food_sweaty","food_bad_breath")
+	initial_volume = 30
 
 	make_reagents()
 		..()
-		reagents.add_reagent("yuck", 10)
 		reagents.add_reagent("oil", 10)
 
 /obj/item/reagent_containers/food/snacks/plant/glowfruit

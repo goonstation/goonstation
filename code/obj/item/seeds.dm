@@ -194,11 +194,6 @@
 		..()
 		src.planttype = HY_get_species_from_path(/datum/plant/artifact/dripper, src)
 
-/obj/item/seed/alien/leaker
-	gen_plant_type()
-		..()
-		src.planttype = HY_get_species_from_path(/datum/plant/artifact/leaker, src)
-
 /obj/item/seed/alien/rocks
 	gen_plant_type()
 		..()
