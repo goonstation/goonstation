@@ -23,6 +23,7 @@
 	var/style = "patch"
 	initial_volume = 30
 	event_handler_flags = HANDLE_STICKER | USE_FLUID_ENTER
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | EXTRADELAY
 	rc_flags = RC_SPECTRO		// only spectroscopic analysis
 	module_research = list("medicine" = 1, "science" = 1)
 	module_research_type = /obj/item/reagent_containers/patch
@@ -100,7 +101,7 @@
 		return
 
 	attack_self(mob/user as mob)
-		if (src.in_use)
+		if (ON_COOLDOWN(user, "self-patch", user.combat_click_delay))
 			return
 
 		if (src.borg == 1 && !issilicon(user))
@@ -108,12 +109,10 @@
 			return
 
 		if (iscarbon(user) || ismobcritter(user))
-			src.in_use = 1
 			user.visible_message("[user] applies [src] to [himself_or_herself(user)].",\
 			"<span class='notice'>You apply [src] to yourself.</span>")
 			logTheThing("combat", user, null, "applies a patch to themself [log_reagents(src)] at [log_loc(user)].")
-			apply_to(user,0,user=user)
-			attach_sticker_manual(user)
+			user.attackby(src, user)
 		return
 
 	throw_impact(atom/M, datum/thrown_thing/thr)

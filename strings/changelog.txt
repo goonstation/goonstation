@@ -1,5 +1,8 @@
 
 (t)fri jul 16 21
+(u)Tarmunora
+(e)⚖|balance
+(+)add combat click delay to using patches on self
 (u)Sovexe
 (p)5522
 (e)🆕🎨|feature, sprites
