@@ -214,6 +214,7 @@
 			src.assigned = M
 			if (src.on)
 				src.assigned.vision.set_scan(1)
+				APPLY_MOB_PROPERTY(M, PROP_MESONVISION, src)
 
 	on_removal()
 		..()
