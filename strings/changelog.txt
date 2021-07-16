@@ -1,5 +1,9 @@
 
 (t)fri jul 16 21
+(u)Flappybat
+(p)5526
+(e)⚖|balance
+(+)Remove Syndicate hat from revhead uplink
 (u)Tarmunora
 (e)⚖|balance
 (+)add combat click delay to using patches on self
