@@ -1,5 +1,10 @@
 
 (t)fri jul 16 21
+(u)Azrun
+(p)5250
+(e)⚖|balance
+(*)UV Lamps now requires power.  Plantpots display will only update when power is available.
+(+)Updated passive power usage for various machinery.
 (u)Flappybat
 (p)5526
 (e)⚖|balance
