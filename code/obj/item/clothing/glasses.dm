@@ -82,8 +82,10 @@
 			if (istype(H.glasses, /obj/item/clothing/glasses/meson)) //hamdling of the rest is done in life.dm
 				if (src.on)
 					H.vision.set_scan(1)
+					APPLY_MOB_PROPERTY(toggler, PROP_MESONVISION, src)
 				else
 					H.vision.set_scan(0)
+					REMOVE_MOB_PROPERTY(toggler, PROP_MESONVISION, src)
 
 	equipped(var/mob/living/user, var/slot)
 		..()
@@ -91,12 +93,14 @@
 			return
 		if (slot == SLOT_GLASSES && on)
 			user.vision.set_scan(1)
+			APPLY_MOB_PROPERTY(user, PROP_MESONVISION, src)
 
 	unequipped(var/mob/living/user)
 		..()
 		if(!isliving(user))
 			return
 		user.vision.set_scan(0)
+		REMOVE_MOB_PROPERTY(user, PROP_MESONVISION, src)
 
 /obj/item/clothing/glasses/meson/abilities = list(/obj/ability_button/meson_toggle)
 
