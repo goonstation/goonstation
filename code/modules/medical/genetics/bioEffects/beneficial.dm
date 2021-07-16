@@ -632,6 +632,7 @@ var/list/radio_brains = list()
 	can_research = 0
 	can_make_injector = 0
 	can_copy = 0
+	acceptable_in_mutini = 0
 	icon_state  = "tk"
 
 	OnAdd()
