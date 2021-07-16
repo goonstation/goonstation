@@ -636,7 +636,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	icon_state = "vamp_travel"
 	auto_find_targets = 0
 	max_speed = 6
-	start_speed = 0.5
+	start_speed = 0.1
 
 
 	shot_sound = "sound/effects/mag_phase.ogg"
