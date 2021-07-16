@@ -1,4 +1,9 @@
 
+(t)fri jul 16 21
+(u)BatElite
+(p)5484
+(e)🎨|sprites
+(+)Capsule machines can now be restocked, cartridges available in the necessities restock crate. The empty capsules can also be crushed into oblivion now.
 (t)thu jul 15 21
 (u)112358sam
 (p)5451
