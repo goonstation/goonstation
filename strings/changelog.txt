@@ -3,6 +3,8 @@
 (u)Tarmunora
 (e)⚖|balance
 (+)add combat click delay to using patches on self
+(+)Increase base patch rate (0.35 -> 0.5)
+(+)Diminishing returns on multi-patch scaling: multi-patch rate scaling changed to only affect the rate at which the patch contents are used/transferred, while not affecting the rate at which it applies touch effects (i.e.: 2 patches will heal a total of 2x faster, but will use more than a total of 2x reagents/cycle to do so)
 (u)Sovexe
 (p)5522
 (e)🆕🎨|feature, sprites
