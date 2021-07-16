@@ -131,12 +131,12 @@
 		if (HAS_MOB_PROPERTY(owner, PROP_MESONVISION) && (T && !isrestrictedz(T.z)))
 			owner.sight |= SEE_TURFS
 			owner.sight &= ~SEE_BLACKNESS
-			if (owner.see_in_dark < initial(human_owner.see_in_dark) + 1)
+			if (owner.see_in_dark < initial(owner.see_in_dark) + 1)
 				owner.see_in_dark++
-			owner.render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (human_owner.client?.widescreen))
+			owner.render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (owner.client?.widescreen))
 
 		if (HAS_MOB_PROPERTY(owner, PROP_NIGHTVISION))
-			human_owner.render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
+			owner.render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
 
 		if (human_owner)////Glasses handled separately because i dont have a fast way to get glasses on any mob type
