@@ -1,6 +1,11 @@
 
 (t)thu jul 15 21
 (u)112358sam
+(p)5451
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Made minisubs constructable on underwater maps
+(+)Added the heavy, industrial, and strange minisubs
+(u)112358sam
 (p)5516
 (e)⚖|balance
 (*)Triples the increase of the hunger motive from eating food on the RP servers.
