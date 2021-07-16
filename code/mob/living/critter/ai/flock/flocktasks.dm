@@ -428,7 +428,7 @@
 				// we've opened a HUD
 				// do a fake HUD click, because i am dedicated to this whole puppetry schtick
 				var/datum/component/storage/SC = container_target.GetComponent(/datum/component/storage)
-				SC?.hud.clicked("boxes", F, dummy_params)
+				SC?.hud.relay_click("boxes", F, dummy_params)
 				sleep(0.3 SECONDS)
 				if(isitem(F.equipped()))
 					// we got an item from the thing, THROW IT

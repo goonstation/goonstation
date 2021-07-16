@@ -176,7 +176,8 @@ THROWING DARTS
 					Imp.imp = src
 					Imp.update()
 					user.u_equip(src)
-					store?.hud.remove_item(src)
+					if(store)
+						SEND_SIGNAL(store, COMSIG_STORAGE_TRANSFER_ITEM, src)
 					user.show_text("You insert [src] into [Imp].")
 				return
 			else if (istype(I, /obj/item/implantcase))

@@ -334,9 +334,7 @@
 		if(I.equipped_in_slot && I.cant_self_remove)
 			return
 		if(istype(O.loc, /obj/item/storage))
-			var/obj/item/storage/storage = O.loc
-			I.set_loc(get_turf(O))
-			storage.hud.remove_item(O)
+			SEND_SIGNAL(O.loc, COMSIG_STORAGE_TRANSFER_ITEM, O, get_turf(O))
 		if (istype(I,/obj/item/satchel))
 			var/obj/item/satchel/S = I
 			if (S.contents.len < 1)

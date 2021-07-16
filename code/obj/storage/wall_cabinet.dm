@@ -20,6 +20,10 @@
 	proc/update_icon()
 		return
 
+	New()
+		..()
+		AddComponent(/datum/component/storage, slots = 13, max_wclass = 4)
+
 /obj/item/storage/wall/emergency
 	name = "emergency supplies"
 	desc = "A wall-mounted storage container that has a few emergency supplies in it."

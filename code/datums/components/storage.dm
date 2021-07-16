@@ -119,7 +119,7 @@
 
 // source click dragged to over_object (can be HUD, usr, or turf)
 /datum/component/storage/proc/mouse_drop(atom/source, atom/over_object)
-	var/obj/screen/hud/S = over_object
+	var/atom/movable/screen/hud/S = over_object
 	if (istype(S)) // click drag storage from one HUD slot to another
 		playsound(source.loc, "rustle", 50, 1, -5)
 		if (!usr.restrained() && !usr.stat && source.loc == usr)

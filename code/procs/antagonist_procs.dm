@@ -226,36 +226,13 @@
 			R = foo
 			loc = "in the [traitor_mob.back.name] in your backpack"
 			break
-		loc = "in your left pocket"
-	else
-		if (istype(traitor_mob.l_hand, /obj/item/storage))
-			var/obj/item/storage/S = traitor_mob.l_hand
-			var/list/L = S.get_contents()
-			for (var/obj/item/device/pda2/foo in L)
-				R = foo
-				loc = "in the [S.name] in your left hand"
-				break
-		if (istype(traitor_mob.r_hand, /obj/item/storage))
-			var/obj/item/storage/S = traitor_mob.r_hand
-			var/list/L = S.get_contents()
-			for (var/obj/item/device/pda2/foo in L)
-				R = foo
-				loc = "in the [S.name] in your right hand"
-				break
-		if (istype(traitor_mob.back, /obj/item/storage))
-			var/obj/item/storage/S = traitor_mob.back
-			var/list/L = S.get_contents()
-			for (var/obj/item/device/pda2/foo in L)
-				R = foo
-				loc = "in the [S.name] on your back"
-				break
-		if (istype(traitor_mob.belt, /obj/item/storage))
-			var/obj/item/storage/S = traitor_mob.belt
-			var/list/L = S.get_contents()
-			for (var/obj/item/device/pda2/foo in L)
-				R = foo
-				loc = "in the [S.name] on your belt"
-				break
+	else if (!R && istype(traitor_mob.belt, /obj/item/storage))
+		var/list/cont = list()
+		SEND_SIGNAL(traitor_mob.belt, COMSIG_STORAGE_GET_CONTENTS, cont)
+		for (var/obj/item/device/pda2/foo in cont)
+			R = foo
+			loc = "in the [traitor_mob.belt.name] on your belt"
+			break
 
 	if (!R) //They have no PDA. Make one!
 		R = new /obj/item/device/pda2(traitor_mob)

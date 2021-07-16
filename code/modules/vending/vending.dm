@@ -1910,8 +1910,10 @@
 		else if (cantuse || !action)
 			return
 		user.visible_message("<b>[user.name]</b> dumps out [targetContainer] into [src].")
-		for (var/obj/item/R in targetContainer)
-			targetContainer.hud.remove_object(R)
+		var/list/cont = list()
+		SEND_SIGNAL(targetContainer, COMSIG_STORAGE_GET_CONTENTS, cont)
+		for (var/obj/item/R in cont)
+			SEND_SIGNAL(targetContainer, COMSIG_STORAGE_TRANSFER_ITEM, R)
 			productListUpdater(R, user)
 		generate_HTML(1, 0)
 

@@ -904,12 +904,13 @@
 			var/obj/item/satchel/B = W
 			var/items = W
 			if(istype(S))
-				items = S.get_contents()
+				var/list/cont = list()
+				SEND_SIGNAL(S, COMSIG_STORAGE_GET_CONTENTS, cont)
+				items = cont
 			for(var/obj/item/O in items)
 				if (load_reclaim(O))
 					. = TRUE
-					if (istype(S))
-						S.hud.remove_object(O)
+					SEND_SIGNAL(W, COMSIG_STORAGE_TRANSFER_ITEM, O)
 			if (istype(B) && .)
 				B.satchel_updateicon()
 			//Users loading individual items would make an annoying amount of messages
