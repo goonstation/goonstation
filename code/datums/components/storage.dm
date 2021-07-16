@@ -241,8 +241,9 @@
 		for (var/atom/A in source.contents)
 			if (isitem(A))
 				var/obj/item/I = A
+				if (SEND_SIGNAL(I, COMSIG_MOVABLE_EMP_ACT) & RETURN_EARLY)
+					continue
 				I.emp_act()
-				SEND_SIGNAL(I, COMSIG_MOVABLE_EMP_ACT)
 	return
 
 // convenience function

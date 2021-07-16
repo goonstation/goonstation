@@ -140,7 +140,7 @@
 	New()
 		..()
 		src.setItemSpecial(null)
-		AddComponent(/datum/component/storage, can_hold = list(/obj/item/reagent_containers/pill), max_wclass = 3)
+		AddComponent(/datum/component/storage, max_wclass = 3)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (target == loc)

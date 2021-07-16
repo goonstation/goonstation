@@ -543,8 +543,9 @@ PIPE BOMBS + CONSTRUCTION
 				for (var/atom/O in tile.contents)
 					var/area/t = get_area(O)
 					if(t?.sanctuary) continue
+					if (SEND_SIGNAL(O, COMSIG_MOVABLE_EMP_ACT) & RETURN_EARLY)
+						continue
 					O.emp_act()
-					SEND_SIGNAL(O, COMSIG_MOVABLE_EMP_ACT)
 			qdel(grenade)
 		else
 			qdel(src)
