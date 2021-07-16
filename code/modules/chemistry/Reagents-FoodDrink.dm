@@ -112,7 +112,8 @@ datum
 			value = 3
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
-				if(isliving(M) && method = INGEST && prob(20))
+				. = ..()
+				if(isliving(M) && method == INGEST && prob(20))
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
 
