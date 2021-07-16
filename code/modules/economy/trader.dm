@@ -322,10 +322,9 @@
 					doing_a_thing = 1
 					src.temp = pick(src.successful_sale_dialogue) + "<BR>"
 					src.temp += "<BR><A href='?src=\ref[src];sell=1'>OK</A>"
-					var/price = tradetype.price * src.sellitem.amount
+					account.fields["current_money"] += tradetype.price * src.sellitem.amount
 					qdel (src.sellitem)
 					src.sellitem = null
-					account.fields["current_money"] += price
 					src.add_fingerprint(usr)
 					src.updateUsrDialog()
 					doing_a_thing = 0
