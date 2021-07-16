@@ -855,13 +855,13 @@
 		src.last_tick_duration = (ticker.round_elapsed_ticks - src.last_processing_tick) / (2.9 SECONDS)
 	src.last_processing_tick = ticker.round_elapsed_ticks
 	if (src.burning)
-		if (src.material)
+		if (src.material && !(src.item_function_flags & COLD_BURN))
 			src.material.triggerTemp(src, src.burn_output + rand(1,200))
 		var/turf/T = get_turf(src.loc)
-		if (T) // runtime error fix
+		if (T && !(src.item_function_flags & COLD_BURN)) // runtime error fix
 			T.hotspot_expose((src.burn_output + rand(1,200)),5)
 
-		if (prob(7))
+		if (prob(7) && !(src.item_function_flags & COLD_BURN))
 			elecflash(src)
 		if (prob(7))
 			if(!(src.item_function_flags & SMOKELESS))// maybe a better way to make this if no?
@@ -869,7 +869,7 @@
 				smoke.set_up(1, 0, src.loc)
 				smoke.attach(src)
 				smoke.start()
-		if (prob(7))
+		if (prob(7) && !(src.item_function_flags & COLD_BURN))
 			fireflash(src, 0)
 
 		if (prob(40))

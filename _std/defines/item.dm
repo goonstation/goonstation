@@ -58,6 +58,8 @@
 #define SMOKELESS 4
 /// makes items immune to acid
 #define IMMUNE_TO_ACID 8
+/// prevents items from heating anything up while burning
+#define COLD_BURN 16
 
 //tool flags
 #define TOOL_CLAMPING 1

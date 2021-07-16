@@ -33,8 +33,9 @@
 /obj/item/plant/herb
 	name = "herb base"
 	burn_point = 330
-	burn_output = 9
+	burn_output = 800
 	burn_possible = 2
+	item_function_flags = COLD_BURN
 	crop_suffix	= " leaf"
 
 	attackby(obj/item/W as obj, mob/user as mob)
