@@ -635,8 +635,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "mysterious mystery mist"
 	icon_state = "vamp_travel"
 	auto_find_targets = 0
-	max_speed = 5
-	start_speed = 0.1
+	max_speed = 6
+	start_speed = 0.5
 
 
 	shot_sound = "sound/effects/mag_phase.ogg"
