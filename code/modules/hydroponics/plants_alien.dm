@@ -158,7 +158,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	cropsize = 3
 	harvests = 4
 	endurance = 10
-	assoc_reagents = list("oil")
+	assoc_reagents = list("yuck", "oil")
 
 /datum/plant/artifact/rocks
 	name = "Rock"
