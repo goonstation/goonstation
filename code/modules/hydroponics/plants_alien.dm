@@ -147,6 +147,19 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	endurance = 0
 	assoc_reagents = list("plasma")
 
+/datum/plant/artifact/leaker
+	name = "Leaker"
+	override_icon_state = "Leaker"
+	crop = /obj/item/reagent_containers/food/snacks/plant/orangegoop
+	unique_seed = /obj/item/seed/alien/leaker
+	starthealth = 25
+	growtime = 65
+	harvtime = 150
+	cropsize = 3
+	harvests = 4
+	endurance = 10
+	assoc_reagents = list("oil")
+
 /datum/plant/artifact/rocks
 	name = "Rock"
 	override_icon_state = "Rocks"
