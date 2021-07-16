@@ -119,6 +119,14 @@
 		..()
 		setProperty("disorient_resist_eye", 15)
 
+	equipped(mob/user, slot)
+		. = ..()
+		APPLY_MOB_PROPERTY(user, PROP_GHOSTVISION, src)
+
+	unequipped(mob/user)
+		. = ..()
+		REMOVE_MOB_PROPERTY(user, PROP_GHOSTVISION, src)
+
 /obj/item/clothing/glasses/regular/ecto/goggles
 	name = "ectoplasmoleic imager"
 	desc = "A pair of goggles with a dumb name."
@@ -212,16 +220,16 @@
 	equipped(mob/user, slot)
 		. = ..()
 		if(upgraded)
-			APPLY_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+			APPLY_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 		else
-			APPLY_MOB_PROPERTY(user, PROP_THERMALSIGHT, src)
+			APPLY_MOB_PROPERTY(user, PROP_THERMALVISION, src)
 
 	unequipped(mob/user)
 		. = ..()
 		if(upgraded)
-			REMOVE_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+			REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 		else
-			REMOVE_MOB_PROPERTY(user, PROP_THERMALSIGHT, src)
+			REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION, src)
 
 	emp_act()
 		if (ishuman(src.loc))
@@ -232,16 +240,16 @@
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
 				if(upgraded)
-					REMOVE_MOB_PROPERTY(H, PROP_THERMALSIGHT_MK2, src)
+					REMOVE_MOB_PROPERTY(H, PROP_THERMALVISION_MK2, src)
 				else
-					REMOVE_MOB_PROPERTY(H, PROP_THERMALSIGHT, src)
+					REMOVE_MOB_PROPERTY(H, PROP_THERMALVISION, src)
 
 				SPAWN_DBG(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 					if(upgraded)
-						APPLY_MOB_PROPERTY(H, PROP_THERMALSIGHT_MK2, src)
+						APPLY_MOB_PROPERTY(H, PROP_THERMALVISION_MK2, src)
 					else
-						APPLY_MOB_PROPERTY(H, PROP_THERMALSIGHT, src)
+						APPLY_MOB_PROPERTY(H, PROP_THERMALVISION, src)
 		return
 
 /obj/item/clothing/glasses/thermal/traitor //sees people through walls
@@ -555,6 +563,14 @@
 	color_r = 0.5
 	color_g = 1
 	color_b = 0.5
+
+	equipped(mob/user, slot)
+		. = ..()
+		APPLY_MOB_PROPERTY(user, PROP_NIGHTVISION, src)
+
+	unequipped(mob/user)
+		. = ..()
+		REMOVE_MOB_PROPERTY(user, PROP_NIGHTVISION, src)
 
 	emp_act()
 		if (ishuman(src.loc))

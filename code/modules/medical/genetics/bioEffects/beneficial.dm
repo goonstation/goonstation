@@ -546,6 +546,12 @@ var/list/radio_brains = list()
 	degrade_to = "bad_eyesight"
 	icon_state  = "eye"
 
+	OnAdd()
+		APPLY_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
+
+	OnRemove()
+		REMOVE_MOB_PROPERTY(owner, PROP_NIGHTVISION, src)
+
 /datum/bioEffect/toxic_farts
 	name = "High Decay Digestion"
 	desc = "Causes the subject's digestion to create a significant amount of noxious gas."

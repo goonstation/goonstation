@@ -185,10 +185,10 @@
 
 	on_transplant(mob/M)
 		. = ..()
-		APPLY_MOB_PROPERTY(M, PROP_THERMALSIGHT, src)
+		APPLY_MOB_PROPERTY(M, PROP_THERMALVISION, src)
 
 	on_removal()
-		REMOVE_MOB_PROPERTY(donor, PROP_THERMALSIGHT, src)
+		REMOVE_MOB_PROPERTY(donor, PROP_THERMALVISION, src)
 		. = ..()
 
 /obj/item/organ/eye/cyber/meson
@@ -217,6 +217,7 @@
 
 	on_removal()
 		..()
+		REMOVE_MOB_PROPERTY(donor, PROP_MESONVISION, src)
 		if (istype(assigned.glasses, /obj/item/clothing/glasses/visor))
 			return
 		else
@@ -227,8 +228,10 @@
 		playsound(assigned, "sound/items/mesonactivate.ogg", 30, 1)
 		if (src.on)
 			assigned.vision.set_scan(1)
+			APPLY_MOB_PROPERTY(donor, PROP_MESONVISION, src)
 		else
 			assigned.vision.set_scan(0)
+			REMOVE_MOB_PROPERTY(donor, PROP_MESONVISION, src)
 
 /obj/item/organ/eye/cyber/spectro
 	name = "spectroscopic imager cybereye"
@@ -294,6 +297,14 @@
 	color_b = 0.925
 	change_iris = 0
 
+	on_transplant(mob/M)
+		. = ..()
+		APPLY_MOB_PROPERTY(M, PROP_GHOSTVISION, src)
+
+	on_removal()
+		REMOVE_MOB_PROPERTY(donor, PROP_GHOSTVISION, src)
+		. = ..()
+
 /obj/item/organ/eye/cyber/camera
 	name = "camera cybereye"
 	organ_name = "camera cybereye"
@@ -328,6 +339,14 @@
 	color_g = 1
 	color_b = 0.7
 	change_iris = 0
+
+	on_transplant(mob/M)
+		. = ..()
+		APPLY_MOB_PROPERTY(M, PROP_NIGHTVISION, src)
+
+	on_removal()
+		REMOVE_MOB_PROPERTY(donor, PROP_NIGHTVISION, src)
+		. = ..()
 
 /obj/item/organ/eye/cyber/laser
 	name = "laser cybereye"
