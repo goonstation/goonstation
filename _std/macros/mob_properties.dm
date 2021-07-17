@@ -164,10 +164,10 @@ To remove:
 #define PROP_UPDATE_SIGHT(target, prop, old_val) do {\
 	if(!isliving(target)) return; \
 	var/mob/living/_living_mob = target; \
-	var/datum/lifeprocess/sight/_sightprocess = _living_mob.lifeprocesses[/datum/lifeprocess/sight]; \
-	var/datum/lifeprocess/hud/_hudprocess = _living_mob.lifeprocesses[/datum/lifeprocess/hud]; \
-	_sightprocess.process(); \
-	_hudprocess.process(); \
+	var/datum/lifeprocess/sight/_sightprocess = _living_mob?.lifeprocesses[/datum/lifeprocess/sight]; \
+	var/datum/lifeprocess/hud/_hudprocess = _living_mob?.lifeprocesses[/datum/lifeprocess/hud]; \
+	_sightprocess?.process(); \
+	_hudprocess?.process(); \
 } while(0)
 
 // Property defines
