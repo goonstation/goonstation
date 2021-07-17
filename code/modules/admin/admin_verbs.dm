@@ -373,7 +373,6 @@ var/list/admin_verbs = list(
 		/client/proc/BK_finance_debug,
 		/client/proc/BK_alter_funds,
 		/client/proc/debug_pools,
-		/client/proc/cmd_claim_rs_verbs,
 		/client/proc/debug_variables,
 		/client/proc/debug_global_variable,
 		/client/proc/get_admin_state,
@@ -433,6 +432,7 @@ var/list/admin_verbs = list(
 
 #ifdef MACHINE_PROCESSING_DEBUG
 		/client/proc/cmd_display_detailed_machine_stats,
+		/client/proc/cmd_display_detailed_power_stats,
 #endif
 #ifdef QUEUE_STAT_DEBUG
 		/client/proc/cmd_display_queue_stats,
@@ -447,7 +447,6 @@ var/list/admin_verbs = list(
 
 	8 = list(
 		// LEVEL_HOST, host
-		/client/proc/cmd_claim_rs_verbs,
 		/datum/admins/proc/toggle_soundpref_override
 		),
 	)

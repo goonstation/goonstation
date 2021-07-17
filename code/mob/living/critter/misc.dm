@@ -15,8 +15,8 @@
 	add_abilities = list(/datum/targetable/critter/envelope)
 
 	setup_healths()
-		add_hh_flesh(-8, 8, 0.25)
-		add_hh_flesh_burn(-8, 8, 0.01)
+		add_hh_flesh(8, 0.25)
+		add_hh_flesh_burn(8, 0.01)
 
 	death(var/gibbed)
 		..(0) // go through the normal death stuff but don't gib them

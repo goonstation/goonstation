@@ -274,6 +274,18 @@
 	if(!A || !isarea(A))
 		return
 
+#ifdef MACHINE_PROCESSING_DEBUG
+	var/list/machines = detailed_machine_power[A]
+	if(!machines)
+		detailed_machine_power[A] = list()
+		machines = detailed_machine_power[A]
+	var/list/machine = machines[src]
+	if(!machine)
+		machines[src] = list()
+		machine = machines[src]
+	machine += -amount
+#endif
+
 	A.use_power(amount, chan)
 
 

@@ -165,7 +165,6 @@
 	throwforce = 5
 	var/spam_flag = 0
 	var/pitch = 0
-	module_research = list("audio" = 20, "precursor" = 3)
 
 /////////////////////////////////////////////////////////////
 
