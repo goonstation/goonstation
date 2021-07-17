@@ -37,6 +37,7 @@
 				if (T && isrestrictedz(T.z))
 					src.show_text("You can't seem to turn incorporeal here.", "red")
 					return
+				src.setStatus("incorporeal", duration = INFINITE_STATUS)
 				src.set_density(0)
 				src.visible_message("<span class='alert'>[src] disappears!</span>")
 				APPLY_MOB_PROPERTY(src, PROP_NEVER_DENSE, src)
@@ -49,12 +50,16 @@
 
 		corporealize()
 			if(!src.density)
+				var/turf/T = get_turf(src)
+				src.delStatus("incorporeal")
 				src.set_density(1)
 				REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
 				REMOVE_MOB_PROPERTY(src, PROP_NEVER_DENSE, src)
 				REMOVE_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS, src)
 				src.alpha = 254
 				src.see_invisible = 0
+				new /obj/overlay/darkness_field(T, 3, radius = 2, max_alpha = 200)
+				new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 3, radius = 2, max_alpha = 200)
 				src.visible_message("<span class='alert'>[src] appears out of the shadows!</span>")
 				src.client.flying = 0
 
@@ -125,7 +130,7 @@
 						boutput(M, __red("You are unable to summon your knife."))
 						return 0
 					if (M.getStatusDuration("stunned") > 0 || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") > 0 || !isalive(M) || M.restrained())
-						boutput(M, __red("Not when you're incapacitated or restrained."))
+						boutput(M, __red("Not when you're incapacitated, restrained, or incorporeal."))
 						return 0
 					if (M.mind.key != K2.welder_key)
 						boutput(M, __red("You are unable to summon your knife."))
@@ -307,7 +312,7 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 	desc = "Summon your knife to your active hand."
 	icon_state = "template"
 	targeted = 0
-	cooldown = 30 SECONDS
+	cooldown = 15 SECONDS
 
 	cast()
 		if(..())
@@ -348,7 +353,7 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 
 /datum/targetable/welder/regenerate
 	name = "Regenerate"
-	desc = "Regenerate your body while incorporeal."
+	desc = "Regenerate your body, and remove all restraints."
 	icon_state = "template"
 	targeted = 0
 	cooldown = 90 SECONDS

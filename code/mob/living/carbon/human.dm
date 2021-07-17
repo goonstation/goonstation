@@ -1271,6 +1271,8 @@
 /mob/living/carbon/human/restrained()
 	if (src.hasStatus("handcuffed"))
 		return 1
+	if (src.hasStatus("incorporeal"))
+		return 1
 	if (src.wear_suit && src.wear_suit.restrain_wearer)
 		return 1
 	if (src.limbs && (src.hand ? !src.limbs.l_arm : !src.limbs.r_arm))

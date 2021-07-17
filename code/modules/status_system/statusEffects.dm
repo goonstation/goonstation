@@ -1063,6 +1063,21 @@
 		clicked(list/params)
 			H.resist()
 
+	incorporeal
+		id = "incorporeal"
+		name = "Incorporeal"
+		desc = "You are incorporeal.<br>You cannot use your hands. Become corporeal again to interact with the world."
+		icon_state = "handcuffed" //change when i find something
+		unique = 1
+		duration = INFINITE_STATUS
+		maxDuration = null
+		var/mob/living/carbon/human/H
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+
 	buckled
 		id = "buckled"
 		name = "Buckled"

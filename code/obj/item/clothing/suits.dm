@@ -396,6 +396,7 @@
 	item_state = "apron-welder"
 	cant_self_remove = 1
 	cant_other_remove = 1
+	item_function_flags = IMMUNE_TO_ACID
 
 	setupProperties()
 		..()

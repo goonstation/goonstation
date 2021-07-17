@@ -187,6 +187,7 @@ TRAYS
 	desc = "An old machete, clearly showing signs of wear and tear due to its age. The word 'DeFoe' is carved into the handle."
 	force = 20.0
 	throwforce = 25
+	item_function_flags = IMMUNE_TO_ACID
 	var/welder_key = ""
 	New()
 		. = ..()

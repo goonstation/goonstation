@@ -603,6 +603,7 @@
 		abilities = null
 		icon_state = "the_welder"
 		item_state = "the_welder"
+		item_function_flags = IMMUNE_TO_ACID
 		setupProperties()
 			..()
 			setProperty("meleeprot_head", 8)

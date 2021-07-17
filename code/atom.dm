@@ -1001,7 +1001,7 @@
 	if (isdead(user) || (!iscarbon(user) && !ismobcritter(user) && !issilicon(user)))
 		return
 
-	if (!isturf(src) && !istype(src.loc, /turf) || is_incapacitated(user) || user.restrained())
+	if (!isturf(src) && !istype(src.loc, /turf) || is_incapacitated(user) || user.restrained() || user.hasStatus("incorporeal"))
 		return
 
 	if (!can_reach(user, src))
