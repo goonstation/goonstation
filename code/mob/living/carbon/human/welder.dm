@@ -8,6 +8,10 @@
 		src.abilityHolder = new /datum/abilityHolder/welder(src)
 		src.addAllAbilities()
 
+		var/obj/item/implant/stunreduce/S = new /obj/item/implant/stunreduce(src)
+		src.implant.Add(S)
+		S.implanted = 1
+		S.implanted(src)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/black, slot_shoes)
 		src.equip_new_if_possible(/obj/item/clothing/under/color, slot_w_uniform)
 		src.equip_new_if_possible(/obj/item/clothing/suit/apron/welder, slot_wear_suit)
@@ -17,6 +21,9 @@
 		src.see_in_dark = SEE_DARK_FULL
 		src.sight |= SEE_SELF
 		src.see_invisible = 16
+		src.bioHolder.AddEffect("breathless", 0, 0, 0, 1)
+		src.bioHolder.AddEffect("food_rad_resist", 0, 0, 0, 1)
+		src.bioHolder.AddEffect("detox", 0, 0, 0, 1)
 
 	Life()
 		var/turf/T = get_turf(src)
@@ -37,6 +44,9 @@
 				if (T && isrestrictedz(T.z))
 					src.show_text("You can't seem to turn incorporeal here.", "red")
 					return
+				new /obj/overlay/darkness_field(T, 4 SECONDS, radius = 4, max_alpha = 250)
+				new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 4 SECONDS, radius = 4, max_alpha = 250)
+				sleep(15 DECI SECONDS)
 				src.setStatus("incorporeal", duration = INFINITE_STATUS)
 				src.set_density(0)
 				src.visible_message("<span class='alert'>[src] disappears!</span>")
@@ -51,6 +61,9 @@
 		corporealize()
 			if(!src.density)
 				var/turf/T = get_turf(src)
+				new /obj/overlay/darkness_field(T, 4 SECONDS, radius = 4, max_alpha = 250)
+				new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 4 SECONDS, radius = 4, max_alpha = 250)
+				sleep(15 DECI SECONDS)
 				src.delStatus("incorporeal")
 				src.set_density(1)
 				REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
@@ -58,8 +71,6 @@
 				REMOVE_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS, src)
 				src.alpha = 254
 				src.see_invisible = 0
-				new /obj/overlay/darkness_field(T, 3, radius = 2, max_alpha = 200)
-				new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 3, radius = 2, max_alpha = 200)
 				src.visible_message("<span class='alert'>[src] appears out of the shadows!</span>")
 				src.client.flying = 0
 
@@ -81,7 +92,7 @@
 				return 1
 
 			if (M.getStatusDuration("stunned") > 0 || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") > 0 || !isalive(M) || M.restrained())
-				boutput(M, __red("Not when you're incapacitated or restrained."))
+				boutput(M, __red("Not when you're incapacitated, restrained, or incorporeal."))
 				return 1
 
 			for_by_tcl(K, /obj/item/kitchen/utensil/knife/welder)
@@ -145,7 +156,7 @@
 				return
 
 			src.visible_message("<span class='alert'><b>The [I.name] is suddenly warped away!</b></span>")
-			//put some effect here
+			elecflash(src)
 
 			if(ismob(locate(src)))
 				src.u_equip(I)
