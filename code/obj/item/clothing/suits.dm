@@ -389,6 +389,35 @@
 	icon_state = "apron-botany"
 	item_state = "apron-botany"
 
+/obj/item/clothing/suit/apron/welder
+	name = "welding apron"
+	desc = "A brown welder's apron, you can feel an aura of something dark radiating off of it."
+	icon_state = "apron-welder"
+	item_state = "apron-welder"
+	cant_self_remove = 1
+	cant_other_remove = 1
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 9)
+		setProperty("rangedprot", 2.5)
+		setProperty("coldprot", 90)
+		setProperty("heatprot", 90)
+
+
+	postpossession
+		cant_self_remove = 0
+		cant_other_remove = 0
+		name = "worn apron"
+		desc = "A brown, faded welder's apron, it looks as though it's over a hundred years old."
+
+		setupProperties()
+			..()
+			setProperty("meleeprot", 1)
+			setProperty("rangedprot", 0)
+			setProperty("coldprot", 10)
+			setProperty("heatprot", 10)
+
 /obj/item/clothing/suit/labcoat
 	name = "labcoat"
 	desc = "A suit that protects against minor chemical spills and biohazards."

@@ -2647,6 +2647,21 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	name = "Battler"
 	limit = -1
 
+/datum/job/welder
+	name = "Welder"
+	linkcolor = "#02020d"
+	limit = 0
+	slot_ears = list()
+	slot_card = null
+	slot_back = list()
+	items_in_backpack = list()
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.welderize()
+
 ABSTRACT_TYPE(/datum/job/special/pod_wars)
 /datum/job/special/pod_wars
 	name = "Pod_Wars"

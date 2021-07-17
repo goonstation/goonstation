@@ -2353,6 +2353,15 @@
 
 	return ..()
 
+/mob/proc/addAbility(var/abilityType)
+	abilityHolder.addAbility(abilityType)
+
+/mob/proc/removeAbility(var/abilityType)
+	abilityHolder.removeAbility(abilityType)
+
+/mob/proc/getAbility(var/abilityType)
+	return abilityHolder.getAbility(abilityType)
+
 /mob/proc/full_heal()
 	src.HealDamage("All", 100000, 100000)
 	src.drowsyness = 0

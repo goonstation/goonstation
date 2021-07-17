@@ -573,17 +573,6 @@
 			src.removeAbility(/datum/targetable/wraithAbility/blood_writing)
 			src.removeAbility(/datum/targetable/wraithAbility/make_poltergeist)
 
-		addAbility(var/abilityType)
-			abilityHolder.addAbility(abilityType)
-
-
-		removeAbility(var/abilityType)
-			abilityHolder.removeAbility(abilityType)
-
-
-		getAbility(var/abilityType)
-			return abilityHolder.getAbility(abilityType)
-
 
 		updateButtons()
 			abilityHolder.updateButtons()

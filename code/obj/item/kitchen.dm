@@ -182,6 +182,54 @@ TRAYS
 		user.TakeDamage("head", 150, 0)
 		return 1
 
+/obj/item/kitchen/utensil/knife/welder //placeholder
+	name = "welder's machete"
+	desc = "An old machete, clearly showing signs of wear and tear due to its age. The word 'DeFoe' is carved into the handle."
+	force = 20.0
+	throwforce = 25
+	var/welder_key = ""
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
+
+	attack_hand(var/mob/user as mob)
+		if (user.mind)
+			if (iswelder(user) || check_target_immunity(user))
+				if (user.mind.key != src.welder_key && !check_target_immunity(user))
+					boutput(user, "<span class='alert'>The [src.name] is attuned to another Welder! You may use it, but it may get recalled at any time!</span>")
+				..()
+				return
+			else
+				random_brute_damage(user, 2*src.force)
+				boutput(user,"<span style=\"color:red\">You feel immense pain!</span>")
+				user.changeStatus("weakened", 80)
+				return
+		else ..()
+
+	pull(var/mob/user)
+		if(check_target_immunity(user))
+			return ..()
+
+		if (!istype(user))
+			return
+
+		if (iswelder(user))
+			return ..()
+		else
+			random_brute_damage(user, 2*src.force)
+			boutput(user,"<span style=\"color:red\">You feel immense pain!</span>")
+			user.changeStatus("weakened", 80)
+			return
+
+	possessed
+		cant_self_remove = 1
+		cant_other_remove = 1
+		cant_drop = 1
+
 /obj/item/kitchen/utensil/spoon/plastic
 	name = "plastic spoon"
 	icon_state = "spoon_plastic"

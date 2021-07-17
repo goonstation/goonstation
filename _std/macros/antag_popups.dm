@@ -76,6 +76,9 @@
 // soulsteel posession
 #define SHOW_SOULSTEEL_TIPS(M) M.Browse(grabResource("html/soulsteel.html"), SOULSTEEL_TIPS_WINDOW)
 
+// welder possession
+#define SHOW_WELDER_POSSESSION_TIPS(M) M.Browse(grabResource("html/welder_possession.html"), SOULSTEEL_TIPS_WINDOW)
+
 // mindwipe from cloner zap chance
 #define SHOW_MINDWIPE_TIPS(M) M.Browse(grabResource("html/mindwipe.html"), MINDWIPE_TIPS_WINDOW)
 
@@ -148,6 +151,7 @@
 	<a href='?src=\ref[src];action=rogueborgremoved'>Rogue Borg Removed</a> |
 	<a href='?src=\ref[src];action=antagremoved'>Antag Removed</a> |
 	<a href='?src=\ref[src];action=soulsteel'>Soulsteel Posession</a> |
+	<a href='?src=\ref[src];action=welder_possession'>Welder Possession</a> |
 	<a href='?src=\ref[src];action=mindwipe'>Cloner Mindwipe</a>
 </div>
 "}
@@ -267,6 +271,8 @@
 				SHOW_ANTAG_REMOVED_TIPS(M)
 			if ("soulsteel")
 				SHOW_SOULSTEEL_TIPS(M)
+			if ("welder_possession")
+				SHOW_WELDER_POSSESSION_TIPS(M)
 			if ("mindwipe")
 				SHOW_MINDWIPE_TIPS(M)
 
