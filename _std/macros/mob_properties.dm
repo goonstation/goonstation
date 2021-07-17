@@ -164,7 +164,7 @@ To remove:
 #define PROP_UPDATE_SIGHT(target, prop, old_val) do {\
 	if(!isliving(target)) return; \
 	var/mob/living/_living_mob = target; \
-	var/datum/lifeprocess/sight/_sightprocess = _living_mob?.lifeprocesses[/datum/lifeprocess/sight]; \
+	var/datum/lifeprocess/sight/_sightprocess = _living_mob.lifeprocesses?[/datum/lifeprocess/sight]; \
 	_sightprocess?.process(); \
 } while(0)
 
