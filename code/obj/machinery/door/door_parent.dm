@@ -290,7 +290,7 @@
 		return ..() // handled in grab.dm + Bumped
 
 	if (src.isblocked() == 1)
-		if (src.density && !src.operating && I)
+		if (src.density && src.operating != 1 && I)
 			if (I.tool_flags & TOOL_CHOPPING)
 				src.take_damage(I.force*4, user)
 			else
