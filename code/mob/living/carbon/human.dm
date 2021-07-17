@@ -1762,8 +1762,8 @@
 				W.dropped(src)
 				W.layer = initial(W.layer)
 		src.w_uniform = null
-		src.update_clothing()
 		W.after_unequip(src)
+		src.update_clothing()
 	else if (W == src.gloves)
 		W.unequipped(src)
 		src.gloves = null
