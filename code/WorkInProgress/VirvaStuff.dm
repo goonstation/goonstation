@@ -33,10 +33,10 @@
 
 	equipped(mob/user)
 		. = ..()
-		APPLY_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+		APPLY_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 
 	unequipped(mob/user)
-		REMOVE_MOB_PROPERTY(user, PROP_THERMALSIGHT_MK2, src)
+		REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 		. = ..()
 
 /mob/living/carbon/human/repo
