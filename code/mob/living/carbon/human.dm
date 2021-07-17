@@ -1733,6 +1733,8 @@
 		W.after_unequip(src)
 	else if (W == src.w_uniform)
 		W.unequipped(src)
+		src.w_uniform = null
+		W.after_unequip(src)
 		W = src.r_store
 		if (W)
 			u_equip(W)
@@ -1761,8 +1763,6 @@
 				W.set_loc(src.loc)
 				W.dropped(src)
 				W.layer = initial(W.layer)
-		src.w_uniform = null
-		W.after_unequip(src)
 		src.update_clothing()
 	else if (W == src.gloves)
 		W.unequipped(src)
