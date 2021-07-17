@@ -1,4 +1,9 @@
 
+(t)sat jul 17 21
+(u)Asche
+(p)5523
+(e)⚖|balance
+(+)Made the vampire "Retreat to Coffin" ability a lot speedier
 (t)fri jul 16 21
 (u)Azrun
 (p)5250
