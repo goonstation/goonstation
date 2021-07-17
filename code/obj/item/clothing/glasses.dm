@@ -100,6 +100,9 @@
 		if(!isliving(user))
 			return
 		user.vision.set_scan(0)
+
+	after_unequip(mob/user)
+		. = ..()
 		REMOVE_MOB_PROPERTY(user, PROP_MESONVISION, src)
 
 /obj/item/clothing/glasses/meson/abilities = list(/obj/ability_button/meson_toggle)
@@ -127,7 +130,7 @@
 		. = ..()
 		APPLY_MOB_PROPERTY(user, PROP_GHOSTVISION, src)
 
-	unequipped(mob/user)
+	after_unequip(mob/user)
 		. = ..()
 		REMOVE_MOB_PROPERTY(user, PROP_GHOSTVISION, src)
 
@@ -228,7 +231,7 @@
 		else
 			APPLY_MOB_PROPERTY(user, PROP_THERMALVISION, src)
 
-	unequipped(mob/user)
+	after_unequip(mob/user)
 		. = ..()
 		if(upgraded)
 			REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
@@ -482,7 +485,7 @@
 		. = ..()
 		APPLY_MOB_PROPERTY(user, PROP_SPECTRO, src)
 
-	unequipped(mob/user)
+	after_unequip(mob/user)
 		. = ..()
 		REMOVE_MOB_PROPERTY(user, PROP_SPECTRO, src)
 
@@ -572,7 +575,7 @@
 		. = ..()
 		APPLY_MOB_PROPERTY(user, PROP_NIGHTVISION, src)
 
-	unequipped(mob/user)
+	after_unequip(mob/user)
 		. = ..()
 		REMOVE_MOB_PROPERTY(user, PROP_NIGHTVISION, src)
 

@@ -83,6 +83,8 @@
 #define COMSIG_ITEM_EQUIPPED "itm_equip"
 /// When an item is unequipped (user)
 #define COMSIG_ITEM_UNEQUIPPED "itm_unequip"
+/// After an item has been unequipped and is no longer in the slot
+#define COMSIG_ITEM_AFTER_UNEQUIP "itm_after_unequip"
 /// When an item is picked up (user)
 #define COMSIG_ITEM_PICKUP "itm_pickup"
 /// When an item is picked dropped (user)

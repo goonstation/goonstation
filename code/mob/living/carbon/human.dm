@@ -1730,6 +1730,7 @@
 		W.unequipped(src)
 		src.update_clothing()
 		src.update_hair_layer()
+		W.after_unequip(src)
 	else if (W == src.w_uniform)
 		W.unequipped(src)
 		W = src.r_store
@@ -1762,31 +1763,38 @@
 				W.layer = initial(W.layer)
 		src.w_uniform = null
 		src.update_clothing()
+		W.after_unequip(src)
 	else if (W == src.gloves)
 		W.unequipped(src)
 		src.gloves = null
 		src.update_clothing()
+		W.after_unequip(src)
 	else if (W == src.glasses)
 		W.unequipped(src)
 		src.glasses = null
 		src.update_clothing()
+		W.after_unequip(src)
 	else if (W == src.head)
 		W.unequipped(src)
 		src.head = null
 		src.update_clothing()
 		src.update_hair_layer()
+		W.after_unequip(src)
 	else if (W == src.ears)
 		W.unequipped(src)
 		src.ears = null
 		src.update_clothing()
+		W.after_unequip(src)
 	else if (W == src.shoes)
 		W.unequipped(src)
 		src.shoes = null
 		src.update_clothing()
+		W.after_unequip(src)
 	else if (W == src.belt)
 		W.unequipped(src)
 		src.belt = null
 		src.update_clothing()
+		W.after_unequip(src)
 	else if (W == src.wear_mask)
 		W.unequipped(src)
 		if (internal)
@@ -1797,10 +1805,12 @@
 			internal = null
 		src.wear_mask = null
 		src.update_clothing()
+		W.after_unequip(src)
 	else if (W == src.wear_id)
 		W.unequipped(src)
 		src.wear_id = null
 		src.update_clothing()
+		W.after_unequip(src)
 	else if (W == src.r_store)
 		src.r_store = null
 	else if (W == src.l_store)
@@ -1809,6 +1819,7 @@
 		W.unequipped(src)
 		src.back = null
 		src.update_clothing()
+		W.after_unequip(src)
 	else if (W == src.handcuffs)
 		src.handcuffs = null
 		src.delStatus("handcuffed")
