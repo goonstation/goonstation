@@ -829,10 +829,15 @@
 	var/max_temp_change = abs(R.total_temperature - temp)
 	var/next_temp_change = min(max((abs(R.total_temperature - element_temp) / h_divisor), 1), h_change_cap)	// Formula used by temperature_reagents() to determine how much to change the temp
 	if(next_temp_change >= max_temp_change)																	// Check if this tick will cause the temperature to overshoot if heated/cooled at full power. Use >= to prevent reheating in the case the values line up perfectly
-		var/element_temp_offset = max_temp_change * h_divisor												// Compute the exact exposure temperature to reach the target
-		element_temp = R.total_temperature + element_temp_offset * (temp > R.total_temperature ? 1 : -1)
+		element_temp = (((R.total_temperature - (R.total_temperature-temp)*h_divisor) * (R.total_volume+h_exposed_volume)) - (R.total_temperature*R.total_volume))/h_exposed_volume
 		heating_in_progress = 0
 
+	var/exposed_temp = max(element_temp,0)
+	var/target_temp = ((R.total_volume*R.total_temperature)+(h_exposed_volume*exposed_temp))/(R.total_volume+h_exposed_volume)
+	var/difference = abs(R.total_temperature - target_temp)
+	var/change = clamp((difference / h_divisor), 0.0000001, h_change_cap)
+	if(change >= 
+	
 	R.temperature_reagents(element_temp, h_exposed_volume, h_divisor, h_change_cap)
 
 	return heating_in_progress
