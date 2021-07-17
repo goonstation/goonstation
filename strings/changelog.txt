@@ -1,5 +1,9 @@
 
 (t)sat jul 17 21
+(u)vocalpocal
+(p)5486
+(e)🐛🆕|bug, feature
+(+)Regent extractor auto-extract now works with produce satchels and drag and drop
 (u)Asche
 (p)5523
 (e)⚖|balance
