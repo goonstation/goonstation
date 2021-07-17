@@ -980,12 +980,6 @@
 		equipment_proxy.additive_slowdown -= spacemove
 		equipment_proxy.space_movement -= spacemove
 
-/obj/item/proc/after_unequip(var/mob/user)
-	SHOULD_CALL_PARENT(TRUE)
-	#ifdef COMSIG_ITEM_AFTER_UNEQUIP
-	SEND_SIGNAL(src, COMSIG_ITEM_AFTER_UNEQUIP, user)
-	#endif
-
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
 	return
 

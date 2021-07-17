@@ -101,7 +101,7 @@
 			return
 		user.vision.set_scan(0)
 
-	after_unequip(mob/user)
+	unequipped(mob/user)
 		. = ..()
 		REMOVE_MOB_PROPERTY(user, PROP_MESONVISION, src)
 
@@ -130,7 +130,7 @@
 		. = ..()
 		APPLY_MOB_PROPERTY(user, PROP_GHOSTVISION, src)
 
-	after_unequip(mob/user)
+	unequipped(mob/user)
 		. = ..()
 		REMOVE_MOB_PROPERTY(user, PROP_GHOSTVISION, src)
 
@@ -231,7 +231,7 @@
 		else
 			APPLY_MOB_PROPERTY(user, PROP_THERMALVISION, src)
 
-	after_unequip(mob/user)
+	unequipped(mob/user)
 		. = ..()
 		if(upgraded)
 			REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
@@ -485,7 +485,7 @@
 		. = ..()
 		APPLY_MOB_PROPERTY(user, PROP_SPECTRO, src)
 
-	after_unequip(mob/user)
+	unequipped(mob/user)
 		. = ..()
 		REMOVE_MOB_PROPERTY(user, PROP_SPECTRO, src)
 
@@ -575,7 +575,7 @@
 		. = ..()
 		APPLY_MOB_PROPERTY(user, PROP_NIGHTVISION, src)
 
-	after_unequip(mob/user)
+	unequipped(mob/user)
 		. = ..()
 		REMOVE_MOB_PROPERTY(user, PROP_NIGHTVISION, src)
 
