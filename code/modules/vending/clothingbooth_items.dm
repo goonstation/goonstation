@@ -81,7 +81,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/accessory/hbow)
 	navy
 		name = "Navy Hair Bow"
 		path = /obj/item/clothing/head/hairbow/navy
-	
+
 	purple
 		name = "Purple Hair Bow"
 		path = /obj/item/clothing/head/hairbow/purple
@@ -101,6 +101,10 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/accessory/hbow)
 	rainbow
 		name = "Rainbow Hair Bow"
 		path = /obj/item/clothing/head/hairbow/rainbow
+
+	yellowpolkadot
+		name = "Yellow Polka-Dot Hair Bow"
+		path = /obj/item/clothing/head/hairbow/yellowpolkadot
 
 //Casual
 
