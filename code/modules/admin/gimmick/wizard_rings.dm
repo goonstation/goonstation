@@ -59,10 +59,10 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 		unequipped(var/mob/user)
 			..()
 			if (user?.bioHolder.HasEffect("hulk"))
-				REMOVE_MOB_PROPERTY(user, PROP_PASSIVE_WRESTLE, "empower")
-				REMOVE_MOB_PROPERTY(user, PROP_STAMINA_REGEN_BONUS, "empower")
 				user.bioHolder.RemoveEffect("hulk")
 				boutput(user, "<span class='alert'><b>Removing [src] removes its powers with it!</b></span>")
+			REMOVE_MOB_PROPERTY(user, PROP_PASSIVE_WRESTLE, "empower")
+			REMOVE_MOB_PROPERTY(user, PROP_STAMINA_REGEN_BONUS, "empower")
 
 	staff
 		name = "ring of cthulhu"
