@@ -161,6 +161,11 @@ To remove:
 	SEND_SIGNAL(target, COMSIG_MOB_PROP_INVISIBILITY, old_val); \
 	} while(0)
 
+#define PROP_UPDATE_SIGHT(target, prop, old_val) do {\
+	if(!istype(target, /mob/living)) return; \
+	var/mob/living/_M = target; \
+	_M.lifeprocesses[/datum/lifeprocess/sight].process(); \
+} while(0)
 
 // Property defines
 //
@@ -174,12 +179,12 @@ To remove:
 */
 
 // Vision properties
-#define PROP_NIGHTVISION(x) x("nightvision", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
-#define PROP_MESONVISION(x) x("mesonvision", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
-#define PROP_GHOSTVISION(x) x("ghostvision", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
-#define PROP_THERMALVISION(x) x("thermalvision", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
-#define PROP_THERMALVISION_MK2(x) x("thermalvisionmk2", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE) // regular thermal sight + see mobs through walls
-#define PROP_SPECTRO(x) x("spectrovision", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
+#define PROP_NIGHTVISION(x) x("nightvision", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
+#define PROP_MESONVISION(x) x("mesonvision", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
+#define PROP_GHOSTVISION(x) x("ghostvision", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
+#define PROP_THERMALVISION(x) x("thermalvision", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
+#define PROP_THERMALVISION_MK2(x) x("thermalvisionmk2", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT) // regular thermal sight + see mobs through walls
+#define PROP_SPECTRO(x) x("spectrovision", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
 
 #define PROP_CANTMOVE(x) x("cantmove", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
 #define PROP_CANTSPRINT(x) x("cantsprint", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
