@@ -23,8 +23,21 @@
 			destination_name = pick(G.available_planets)
 			G.available_planets -= destination_name
 
+			SPAWN_DBG(1 SECOND)
+				for(var/turf/T in landmarks[LANDMARK_PLANETS])
+					if(landmarks[LANDMARK_PLANETS][T] == src.destination_name)
+						var/area/map_gen/planet/A = get_area(T)
+						var/r = hex2num(copytext(color, 2, 4))
+						var/g = hex2num(copytext(color, 4, 6))
+						var/b = hex2num(copytext(color, 6))
+						var/hsv = rgb2hsv(r,g,b)
+						var/value = clamp((log(rand())*0.675)+0.997,0,1)
+						A.colorize_planet(hsv2rgb( hsv[1], hsv[2], value*100 ))
+						break
+
 		generate_name()
 		..()
+
 
 	proc/generate_name()
 		. = ""
@@ -53,7 +66,51 @@
 	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
 		var/dat = {"<span class='alert'><b>DON'T <i>FUCKING</i> TOUCH ME.</b></span>"}
 
-		pilot << browse("<HEAD><TITLE>[name]</TITLE></HEAD><TT>[dat]</TT>", "window=artemis_scan")
+		var/turf_total = 0
+		var/list/biome_distro = list("Jungle"=0, "Grassland"=0, "Desert"=0, "Mountains"=0, "Water"=0, "Other"=0)
+		var/key
+		if(src.my_ship_body?.landing_zone)
+			var/area/map_gen/planet/A = get_area(src.my_ship_body.landing_zone)
+			var/biome_name
+			for(key in A.biome_turfs)
+				turf_total += length(A.biome_turfs[key])
+				biome_name = "Other"
+				switch(key)
+					if(/datum/biome/jungle)
+						biome_name="Jungle"
+					if(/datum/biome/jungle/deep)
+						biome_name="Jungle"
+					if(/datum/biome/wasteland)
+						biome_name="Desert"
+					if(/datum/biome/mountain)
+						biome_name="Mountains"
+					if(/datum/biome/water)
+						biome_name="Water"
+					if(/datum/biome/plains)
+						biome_name="Grassland"
+				biome_distro[biome_name] += length(A.biome_turfs[key])
+		else
+			//PsuedoRandom Generation Based on Galactic X/Y so reproducable
+			for(var/i in 1 to 15)
+				if(round(src.master.galactic_y) % i == 0) continue
+				key = biome_distro[round((src.master.galactic_x * i) % length(biome_distro))+ 1]
+				biome_distro[key] += abs(src.master.galactic_x)
+				turf_total += abs(src.master.galactic_x)
+			for(var/i in 1 to 15)
+				if(round(src.master.galactic_x) % i == 0) continue
+				key = biome_distro[round((src.master.galactic_y * i) % length(biome_distro))+ 1]
+				biome_distro[key] += abs(src.master.galactic_y)
+				turf_total += abs(src.master.galactic_y)
+
+		for(key in biome_distro)
+			biome_distro[key] = round(biome_distro[key]/turf_total*100)
+			. += "<BR/>"
+			if(biome_distro[key] >= 5)
+				. += "[key]: [biome_distro[key]]%"
+			else
+				. += "[key]: <5%"
+
+		pilot << browse("<HEAD><TITLE>[name]</TITLE></HEAD><TT>[dat][.]</TT>", "window=artemis_scan")
 
 		return
 

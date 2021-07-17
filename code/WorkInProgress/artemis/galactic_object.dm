@@ -5,7 +5,6 @@ var/global/datum/galaxy/GALAXY = new
 /datum/galaxy
 	var/list/bodies = list()
 	var/list/available_planets = list("planet1", "planet2", "planet3", "planet4", "planet5", "planet6", "planet7")
-	var/list/available_asteroids = list("asteroid1", "asteroid2", "asteroid3", "asteroid4")
 
 	var/datum/asteroid_controller/asteroids = new
 
@@ -48,9 +47,14 @@ var/global/datum/galaxy/GALAXY = new
 
 
 /datum/asteroid_controller
-	var/list/available_asteroids = list("asteroid1", "asteroid2", "asteroid3", "asteroid4")
+	var/list/available_asteroids = list()
 	var/list/used_asteroids = list()
 	var/list/obj/magnet_target_marker/asteroid/asteroid_markers = list()
+
+	New()
+		..()
+		for(var/i in 1 to ASTEROID_BASIC_COUNT)
+			available_asteroids += "asteroid[i]"
 
 	proc/get_available_marker()
 		var/asteroid

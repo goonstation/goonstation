@@ -422,6 +422,9 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 		if(area_space_nopower(src))
 			power_equip = power_light = power_environ = 0
 
+	proc/store_biome(turf/T, datum/biome/B)
+		return
+
 /area/space // the base area you SHOULD be using for space/ocean/etc.
 
 // zewaka - adventure/technical/admin areas below //

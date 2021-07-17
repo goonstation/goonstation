@@ -5,7 +5,7 @@ var/list/planetModifiers = list()
 var/list/planetModifiersUsed = list()//Assoc list, type:times used
 
 /proc/makePlanetLevel()
-	var/list/planetZ = list()
+	var/list/turf/planetZ = list()
 	var/startTime = world.timeofday
 	if(!planetZLevel)
 		boutput(world, "<span class='alert'>Skipping Planet Generation!</span>")
@@ -52,31 +52,31 @@ var/list/planetModifiersUsed = list()//Assoc list, type:times used
 
 	// // remove temporary areas
 	var/area/A
-	var/turf/T
+	var/turf/AT
 	var/turf/west_turf
-	for (T in get_area_turfs(/area/noGenerate))
-		if(T.z != planetZLevel) continue
-		if(!istype(T, /turf/space)) continue
-		west_turf = get_step(T, WEST)
+	for (AT in get_area_turfs(/area/noGenerate))
+		if(AT.z != planetZLevel) continue
+		if(!istype(AT, /turf/space)) continue
+		west_turf = get_step(AT, WEST)
 		while(west_turf.x > 0)
 			if(istype(west_turf.loc, /area/map_gen/planet))
 				break
 
 			west_turf = get_step(west_turf, WEST)
 		A = get_area(west_turf)
-		new A.type(T)
+		new A.type(AT)
 
-	for (T in get_area_turfs(/area/allowGenerate))
-		if(T.z != planetZLevel) continue
-		if(!istype(T, /turf/space)) continue
-		west_turf = get_step(T, WEST)
+	for (AT in get_area_turfs(/area/allowGenerate))
+		if(AT.z != planetZLevel) continue
+		if(!istype(AT, /turf/space) && !istype(AT, /turf/map_gen)) continue
+		west_turf = get_step(AT, WEST)
 		while(west_turf.x > 0)
 			if(istype(west_turf.loc, /area/map_gen/planet))
 				break
 
 			west_turf = get_step(west_turf, WEST)
 		A = get_area(west_turf)
-		new A.type(T)
+		new A.type(AT)
 
 	boutput(world, "<span class='alert'>Generated Planet Level in [((world.timeofday - startTime)/10)] seconds!")
 
@@ -119,31 +119,56 @@ var/list/planetModifiersUsed = list()//Assoc list, type:times used
 
 /area/map_gen/planet
 	name = "planet generation area"
-	map_generator = /datum/map_generator/jungle_generator
+	var/map_generator_path = /datum/map_generator/jungle_generator
+	var/list/biome_turfs = list()
 
 	generate_perlin_noise_terrain()
-		if(src.map_generator)
-			map_generator = new map_generator()
-			// Azrun TODO This is where we seed BIOME
-			map_generator.generate_terrain(get_area_turfs(src))
+		if(src.map_generator_path)
+			map_generator = new map_generator_path()
+		// Azrun TODO This is where we seed BIOME
+		map_generator.generate_terrain(get_area_turfs(src))
+
+	proc/colorize_planet(color)
+		src.ambient_light = color
+		if(src.ambient_light)
+			var/image/I = new /image/ambient
+			I.color = src.ambient_light
+			overlays += I
+
+	store_biome(turf/T, datum/biome/B)
+		if(!biome_turfs[B])
+			biome_turfs[B] = list()
+		biome_turfs[B] |= T
+
+	proc/clear_biomes()
+		biome_turfs = list()
 
 	alpha
+		name = "Planet Alpha"
 
 	beta
+		name = "Planet Beta"
 
 	charlie
+		name = "Planet Charlie"
 
 	delta
+		name = "Planet Delta"
 
 	echo
+		name = "Planet Echo"
 
 	foxtrot
+		name = "Planet Foxtrot"
 
 	gamma
+		name = "Planet Gamma"
 
 	hotel
+		name = "Planet Hotel"
 
 	indigo
+		name = "Planet Indigo"
 
 
 
@@ -174,7 +199,7 @@ ABSTRACT_TYPE(/datum/generatorPlanetPrefab)
 		for(var/x=0, x<prefabSizeX; x++)
 			for(var/y=0, y<prefabSizeY; y++)
 				var/turf/L = locate(T.x+x, T.y+y, T.z)
-				if(L?.loc && ((L.loc.type != /area/space) && !istype(L.loc , /area/allowGenerate))) // istype(L.loc, /area/noGenerate)
+				if(L?.loc && (!istype(L.loc , /area/allowGenerate))) // (L.loc.type != /area/space) istype(L.loc, /area/noGenerate)
 					return 0
 
 		var/loaded = file2text(prefabPath)
@@ -208,6 +233,21 @@ ABSTRACT_TYPE(/datum/generatorPlanetPrefab)
 		prefabPath = "assets/maps/prefabs/prefab_vault.dmm"
 		prefabSizeX = 7
 		prefabSizeY = 7
+
+	bear_trap
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_planet_bear_den.dmm"
+		prefabSizeX = 15
+		prefabSizeY = 15
+
+	tomato_den
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_planet_tomato_den.dmm"
+		prefabSizeX = 13
+		prefabSizeY = 10
+
 
 /obj/landmark/artemis_planets
 	name = "zlevel"

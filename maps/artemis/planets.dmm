@@ -767,7 +767,7 @@
 /turf/simulated/floor/purple,
 /area/ship/arjuna)
 "vP" = (
-/turf/space,
+/turf/map_gen,
 /area/allowGenerate)
 "vV" = (
 /turf/simulated/floor/carpet{
