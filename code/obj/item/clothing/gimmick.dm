@@ -30,7 +30,7 @@
 		. = ..()
 		APPLY_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 
-	unequipped(mob/user)
+	after_unequip(mob/user)
 		REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 		. = ..()
 
