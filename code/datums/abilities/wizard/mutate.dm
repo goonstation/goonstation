@@ -1,6 +1,6 @@
 /datum/targetable/spell/mutate
 	name = "Empower"
-	desc = "Temporarily superpowers your body and mind."
+	desc = "Temporarily superpowers your body."
 	icon_state = "mutate"
 	targeted = 0
 	cooldown = 400
@@ -17,7 +17,7 @@
 			holder.owner.say("BIRUZ BENNAR")
 		..()
 
-		boutput(holder.owner, "<span class='notice'>Your mind and muscles are magically empowered!</span>")
+		boutput(holder.owner, "<span class='notice'>Your muscles are magically empowered and you feel very athletic!</span>")
 		holder.owner.visible_message("<span class='alert'>[holder.owner] glows with a POWERFUL aura!</span>")
 
 		if (!holder.owner.bioHolder.HasEffect("hulk"))
