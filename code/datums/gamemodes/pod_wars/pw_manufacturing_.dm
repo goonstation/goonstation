@@ -158,35 +158,35 @@
 	name = "Light NT Pod Armor"
 	item_paths = list("MET-3","CON-1")
 	item_amounts = list(50,50)
-	item_outputs = list(/obj/item/pod/armor_light)
+	item_outputs = list(/obj/item/podarmor/armor_light)
 	time = 20 SECONDS
 	create = 1
 	category = "Component"
 
 /datum/manufacture/pod_wars/pod/armor_light/nt
 	name = "Light NT Pod Armor"
-	item_outputs = list(/obj/item/pod/nt_light)
+	item_outputs = list(/obj/item/podarmor/nt_light)
 
 /datum/manufacture/pod_wars/pod/armor_light/sy
 	name = "Light Syndicate Pod Armor"
-	item_outputs = list(/obj/item/pod/sy_light)
+	item_outputs = list(/obj/item/podarmor/sy_light)
 
 /datum/manufacture/pod_wars/pod/armor_robust
 	name = "Heavy Pod Armor"
 	item_paths = list("MET-3","CON-2", "DEN-3")
 	item_amounts = list(50,30, 10)
-	item_outputs = list(/obj/item/pod/armor_heavy)
+	item_outputs = list(/obj/item/podarmor/armor_heavy)
 	time = 30 SECONDS
 	create = 1
 	category = "Component"
 
 /datum/manufacture/pod_wars/pod/armor_robust/nt
 	name = "Robust NT Pod Armor"
-	item_outputs = list(/obj/item/pod/nt_robust)
+	item_outputs = list(/obj/item/podarmor/nt_robust)
 
 /datum/manufacture/pod_wars/pod/armor_robust/sy
 	name = "Robust Syndicate Pod Armor"
-	item_outputs = list(/obj/item/pod/sy_robust)
+	item_outputs = list(/obj/item/podarmor/sy_robust)
 
 //costs a good bit more than the standard jetpack. for balance reasons here. to make jetpacks a commodity.
 /datum/manufacture/pod_wars/jetpack

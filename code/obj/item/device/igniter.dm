@@ -11,7 +11,6 @@
 	throw_speed = 3
 	throw_range = 10
 	mats = 2
-	module_research = list("science" = 1, "miniaturization" = 5, "devices" = 3)
 	firesource = TRUE
 
 	//blcok spamming shit because inventory uncaps click speed and kinda makes this an exploit

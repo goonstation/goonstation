@@ -73,6 +73,6 @@
 			..()
 
 	setup_healths()
-		add_hh_flesh(-25, 25, 1)
-		add_hh_flesh_burn(-25, 25, 1.25)
+		add_hh_flesh(25, 1)
+		add_hh_flesh_burn(25, 1.25)
 		add_health_holder(/datum/healthHolder/toxin)

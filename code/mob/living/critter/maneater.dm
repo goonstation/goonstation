@@ -77,6 +77,6 @@
 		abilityHolder.addAbility(/datum/targetable/critter/devour)
 
 	setup_healths()
-		add_hh_flesh(-50, 50, 1)
-		add_hh_flesh_burn(-50, 50, 1.25)
+		add_hh_flesh(50, 1)
+		add_hh_flesh_burn(50, 1.25)
 		add_health_holder(/datum/healthHolder/toxin)

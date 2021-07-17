@@ -11,7 +11,6 @@
 	m_amt = 300
 	mats = 2
 	desc = "A device which transmits a signal when it detects movement nearby."
-	module_research = list("science" = 2, "devices" = 1, "miniaturization" = 4)
 
 /obj/item/device/prox_sensor/dropped()
 	..()

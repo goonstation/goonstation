@@ -205,7 +205,6 @@
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = list("coffee"=30)
-	module_research = list("vice" = 5)
 
 /obj/item/reagent_containers/food/drinks/eggnog
 	name = "Egg Nog"
@@ -216,8 +215,6 @@
 	rc_flags = RC_FULLNESS
 	initial_volume = 50
 	initial_reagents = list("eggnog"=40)
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/reagent_containers/food/drinks/bottle/beer
 
 /obj/item/reagent_containers/food/drinks/chickensoup
 	name = "Chicken Soup"

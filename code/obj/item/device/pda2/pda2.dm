@@ -9,8 +9,6 @@
 	w_class = W_CLASS_SMALL
 	rand_pos = 0
 	flags = FPRINT | TABLEPASS | ONBELT
-	module_research = list("science" = 1, "miniaturization" = 5, "devices" = 5, "efficiency" = 3)
-	module_research_type = /obj/item/device/pda2
 	wear_layer = MOB_BELT_LAYER
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
 	var/obj/item/pen = null // slap a pen into that thang

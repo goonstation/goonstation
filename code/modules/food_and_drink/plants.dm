@@ -1386,6 +1386,17 @@
 		..()
 		reagents.add_reagent("yuck", 20)
 
+/obj/item/reagent_containers/food/snacks/plant/purplegoop/orangegoop
+	name = "orange goop"
+	desc = "Some sort of pulsating orange goop...."
+	icon_state = "yuckorange"
+	food_color = "#ff9900"
+	initial_volume = 30
+
+	make_reagents()
+		..()
+		reagents.add_reagent("oil", 10)
+
 /obj/item/reagent_containers/food/snacks/plant/glowfruit
 	name = "glowing fruit"
 	desc = "This is not a handy light source."

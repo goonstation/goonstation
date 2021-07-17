@@ -384,7 +384,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	proc/pickAmbience()
 		switch(src.name)
 			if ("Chapel") sound_fx_1 = pick('sound/ambience/station/Chapel_FemaleChoir.ogg','sound/ambience/station/Chapel_ChoirTwoNote1.ogg','sound/ambience/station/Chapel_ChoirTwoNote2.ogg','sound/ambience/station/Chapel_HighFemaleSolo.ogg')
-			if ("Morgue") sound_fx_1 = pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg')
+			//if ("Morgue") sound_fx_1 = pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg') // spooky shouldn't mean overly loud wailing, replace with something lowkey
 			if ("Jazz Lounge") sound_fx_1 = 'sound/ambience/station/JazzLounge1.ogg'
 			if ("Zen Garden") sound_fx_1 = pick('sound/ambience/station/ZenGarden1.ogg','sound/ambience/station/ZenGarden2.ogg')
 			//if ("Engine Control") sound_fx_1 = pick(ambience_engine)
@@ -396,7 +396,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			if ("Biodome South") sound_fx_1 = pick('sound/ambience/nature/Biodome_Bugs.ogg', 'sound/ambience/nature/Biodome_Birds1.ogg', 'sound/ambience/nature/Biodome_Birds2.ogg', 'sound/ambience/nature/Biodome_Monkeys.ogg')
 			if ("Caves") sound_fx_1 = pick('sound/ambience/nature/Cave_Bugs.ogg', 'sound/ambience/nature/Cave_Rumbling.ogg', 'sound/ambience/nature/Cave_Wind1.ogg', 'sound/ambience/nature/Cave_Wind2.ogg', 'sound/ambience/nature/Cave_Drips.ogg')
 			if ("Glacial Abyss") sound_fx_1 = pick('sound/ambience/nature/Glacier_DeepRumbling1.ogg','sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/ambience/nature/Glacier_IceCracking.ogg', 'sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/ambience/nature/Glacier_Scuttling.ogg')
-			if ("AI Satellite Core") sound_fx_1 = pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg')
+			//if ("AI Satellite Core") sound_fx_1 = pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg') // same as above
 			if ("The Blind Pig") sound_fx_1 = pick('sound/ambience/spooky/TheBlindPig.ogg','sound/ambience/spooky/TheBlindPig2.ogg')
 			if ("M. Fortuna's House of Fortune") sound_fx_1 = 'sound/ambience/spooky/MFortuna.ogg'
 			#ifdef SUBMARINE_MAP
@@ -5313,6 +5313,10 @@ area/station/security/visitation
 
 /area/pod_wars/spacejunk/dorgun
 	name = "DORGUN'S GREAT SHIP 10/10"
+	icon_state = "yellow"
+
+/area/pod_wars/spacejunk/memorial_stats
+	name = "Mission Memorial Ruins"
 	icon_state = "yellow"
 
 /area/pod_wars/spacejunk/brightwell

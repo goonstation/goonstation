@@ -67,6 +67,8 @@
 	var/voice_name = "human"
 	/// Should robots arrest these by default?
 	var/jerk = 0
+	/// Should stable mutagen not copy from this mutant?
+	var/dna_mutagen_banned = TRUE
 
 	/// This is used for static icons if the mutant isn't built from pieces
 	var/icon = 'icons/effects/genetics.dmi'
@@ -711,6 +713,7 @@
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/flashy/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/flashy/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/flashy/left
+	dna_mutagen_banned = FALSE
 
 
 /datum/mutantrace/virtual
@@ -812,6 +815,7 @@
 	race_mutation = /datum/bioEffect/mutantrace // Most mutants are just another form of lizard, didn't you know?
 	clothing_icon_override = 'icons/mob/lizard_clothes.dmi'
 	color_channel_names = list("Episcutus", "Ventral Aberration", "Sagittal Crest")
+	dna_mutagen_banned = FALSE
 
 	New(var/mob/living/carbon/human/H)
 		..()
@@ -1116,6 +1120,7 @@
 	special_head = HEAD_SKELETON
 	decomposes = FALSE
 	race_mutation = /datum/bioEffect/mutantrace/skeleton
+	dna_mutagen_banned = FALSE
 
 	New(var/mob/living/carbon/human/M)
 		..()
@@ -1410,6 +1415,7 @@
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/ithillid/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/ithillid/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HAS_SPECIAL_HAIR | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
+	dna_mutagen_banned = FALSE
 
 	say_verb()
 		return "glubs"
@@ -1444,6 +1450,7 @@
 	var/had_tablepass = 0
 	var/table_hide = 0
 	mutant_organs = list("tail" = /obj/item/organ/tail/monkey)
+	dna_mutagen_banned = FALSE
 
 	New(var/mob/living/carbon/human/M)
 		. = ..()
@@ -1619,6 +1626,7 @@
 	human_compatible = 1
 	uses_human_clothes = 1
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
+	dna_mutagen_banned = FALSE
 
 
 	New()
@@ -1690,6 +1698,7 @@
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | FIX_COLORS | HAS_SPECIAL_HAIR | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS)
 	eye_state = "eyes_roach"
 	typevulns = list("blunt" = 1.66, "crush" = 1.66)
+	dna_mutagen_banned = FALSE
 
 	New(mob/living/carbon/human/M)
 		. = ..()
@@ -2000,6 +2009,7 @@
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | HAS_OVERSUIT_DETAILS | HAS_SPECIAL_HAIR | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 	color_channel_names = list("Horn Detail", "Hoof Detail")
 	eye_state = "eyes-cow"
+	dna_mutagen_banned = FALSE
 
 	New(var/mob/living/carbon/human/H)
 		..()
