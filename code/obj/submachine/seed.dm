@@ -1071,10 +1071,10 @@
 	src.update_icon()
 
 /obj/submachine/chem_extractor/proc/canExtract(O)
+	. = FALSE
 	for(var/check_path in src.allowed)
 		if(istype(O, check_path))
 			return TRUE
-	return FALSE
 
 /obj/submachine/chem_extractor/proc/tryLoading(var/obj/item/O, var/mob/user as mob)
 	// Pre: make sure that the item type can be extracted
