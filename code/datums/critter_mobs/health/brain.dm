@@ -13,4 +13,4 @@
 		if (holder.reagents.has_reagent("mannitol"))
 			HealDamage(3)
 
-			
+

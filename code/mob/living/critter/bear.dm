@@ -53,8 +53,8 @@
 		HH.limb_name = "right bear arm"
 
 	setup_healths()
-		add_hh_flesh(-75, 75, 0.85)
-		add_hh_flesh_burn(-75, 75, 1.25)
+		add_hh_flesh(75, 0.85)
+		add_hh_flesh_burn(75, 1.25)
 		add_health_holder(/datum/healthHolder/toxin)
 		add_health_holder(/datum/healthHolder/suffocation)
 		add_health_holder(/datum/healthHolder/brain)

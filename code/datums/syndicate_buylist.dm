@@ -232,7 +232,7 @@ proc/build_syndi_buylist_cache()
 	cost = 12
 	desc = "Think you're tough shit buddy?"
 	not_in_crates = 1 //see /datum/syndicate_buylist/surplus/bighat
-	blockedmode = list(/datum/game_mode/spy_theft)
+	blockedmode = list(/datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 //////////////////////////////////////////////////// Standard items (traitor uplink) ///////////////////////////////////
 

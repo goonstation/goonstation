@@ -14,7 +14,6 @@
 	m_amt = 50
 	g_amt = 100
 	mats = 2
-	module_research = list("science" = 1, "devices" = 1, "miniaturization" = 8)
 	var/frequency = "1453"
 	var/net_id
 	var/datum/radio_frequency/radio_control
