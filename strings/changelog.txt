@@ -1,5 +1,9 @@
 
 (t)sat jul 17 21
+(u)112358sam
+(p)5195
+(e)|
+(+)Adds custom job save slots to the ID card computer.
 (u)Tarmunora
 (e)⚖|balance
 (+)Emagging a welded door deals damage to the door equal to 80% of the door's current health (also fixes issue where emagged doors could not be attacked)
