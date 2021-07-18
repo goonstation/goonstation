@@ -1549,3 +1549,57 @@ obj/item/whetstone
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
+
+//Machete for the Welder
+/obj/item/kitchen/utensil/knife/welder
+	name = "welder's machete"
+	desc = "An old machete, clearly showing signs of wear and tear due to its age. The word 'DeFoe' is carved into the handle."
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "welder_machete"
+	item_state = "welder_machete"
+	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi' //i'll change this once i get an inhand that isn't ass
+	force = 20.0
+	throwforce = 25
+	item_function_flags = IMMUNE_TO_ACID
+	var/welder_key = ""
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
+
+	attack_hand(var/mob/user as mob)
+		if (user.mind)
+			if (iswelder(user) || check_target_immunity(user))
+				if (user.mind.key != src.welder_key && !check_target_immunity(user))
+					boutput(user, "<span class='alert'>The [src.name] is attuned to another Welder! You may use it, but it may get recalled at any time!</span>")
+				..()
+				return
+			else
+				random_brute_damage(user, 2*src.force)
+				boutput(user,"<span style=\"color:red\">You feel immense pain!</span>")
+				user.changeStatus("weakened", 80)
+				return
+		else ..()
+
+	pull(var/mob/user)
+		if(check_target_immunity(user))
+			return ..()
+
+		if (!istype(user))
+			return
+
+		if (iswelder(user))
+			return ..()
+		else
+			random_brute_damage(user, 2*src.force)
+			boutput(user,"<span style=\"color:red\">You feel immense pain!</span>")
+			user.changeStatus("weakened", 80)
+			return
+
+	possessed
+		cant_self_remove = 1
+		cant_other_remove = 1
+		cant_drop = 1

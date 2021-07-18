@@ -2,7 +2,7 @@
 	real_name = "The Welder"
 	var/trailing_blood = FALSE
 
-	New()
+	New(loc)
 		..()
 		src.gender = NEUTER
 		src.abilityHolder = new /datum/abilityHolder/welder(src)
@@ -107,7 +107,7 @@
 				if (-INFINITY to 0)
 					if (we_hold_it != 0)
 						boutput(M, __red("You're already holding your knife."))
-						return 1 // No cooldown.
+						return 1
 					else
 						boutput(M, __red("You summon a new knife to your hands."))
 						var/obj/item/kitchen/utensil/knife/welder/N = new /obj/item/kitchen/utensil/knife/welder(get_turf(M))
@@ -254,7 +254,6 @@
 
 		updateButtons()
 			abilityHolder.updateButtons()
-
 
 /datum/abilityHolder/welder
 	usesPoints = 0

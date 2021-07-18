@@ -396,7 +396,7 @@
 
 /mob/proc/welderize()
 	if(src.mind || src.client)
-		var/mob/living/carbon/human/welder/W = new/mob/living/carbon/human/welder()
+		var/mob/living/carbon/human/welder/W = new/mob/living/carbon/human/welder(src)
 		var/turf/T = get_turf(src)
 		if(!(T && isturf(T)) || (isrestrictedz(T.z) && !(src.client && src.client.holder)))
 			var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)

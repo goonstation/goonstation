@@ -117,7 +117,10 @@
 		var/obj/item/clothing/head/helmet/welding/W = the_item
 		if(W.up)
 			W.up = !W.up
-			W.icon_state = "welding"
+			if(istype(W, /obj/item/clothing/head/helmet/welding/postpossession))
+				W.icon_state = "the_welder"
+			else
+				W.icon_state = "welding"
 			boutput(the_mob, "You flip the mask down. The mask is now protecting you from eye damage.")
 			if (!W.nodarken) //Used for The Welder
 				W.see_face = !W.see_face
@@ -131,7 +134,10 @@
 		else
 			W.up = !W.up
 			W.see_face = !W.see_face
-			W.icon_state = "welding-up"
+			if(istype(W, /obj/item/clothing/head/helmet/welding/postpossession))
+				W.icon_state = "the_welder_up"
+			else
+				W.icon_state = "welding-up"
 			boutput(the_mob, "You flip the mask up. The mask is now providing greater armor to your head.")
 			W.color_r = 1 // default
 			W.color_g = 1

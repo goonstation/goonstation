@@ -613,6 +613,8 @@
 		name = "worn welding mask"
 		desc = "A worn-out welding mask, from the looks of it, it's well over a hundred years old."
 		icon_state = "the_welder"
+		item_state = "the_welder"
+		abilities = null
 
 /obj/item/clothing/head/helmet/welding/abilities = list(/obj/ability_button/mask_toggle)
 
