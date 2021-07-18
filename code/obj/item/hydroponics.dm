@@ -349,7 +349,6 @@
 	w_class = W_CLASS_TINY
 	flags = ONBELT
 	mats = 4
-	module_research = list("analysis" = 4, "devices" = 4, "hydroponics" = 2)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (get_dist(A, user) > 1)
@@ -428,7 +427,6 @@
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 
-	module_research = list("tools" = 4, "metals" = 1)
 	rand_pos = 1
 	var/image/plantyboi
 
@@ -465,7 +463,6 @@
 	amount_per_transfer_from_this = 60
 	w_class = W_CLASS_NORMAL
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
-	module_research = list("tools" = 2, "hydroponics" = 4)
 	initial_volume = 120
 	can_recycle = FALSE
 
@@ -507,7 +504,6 @@
 	amount_per_transfer_from_this = 10
 	w_class = W_CLASS_NORMAL
 	rc_flags = 0
-	module_research = list("tools" = 1, "hydroponics" = 1)
 	initial_volume = 60
 
 	New()
@@ -522,8 +518,6 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle1"
 	amount_per_transfer_from_this = 10
-	module_research = list("tools" = 1, "hydroponics" = 1, "science" = 1)
-	module_research_type = /obj/item/reagent_containers/glass/bottle/weedkiller
 	initial_volume = 40
 
 	New()

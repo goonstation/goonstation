@@ -232,7 +232,7 @@ proc/build_syndi_buylist_cache()
 	cost = 12
 	desc = "Think you're tough shit buddy?"
 	not_in_crates = 1 //see /datum/syndicate_buylist/surplus/bighat
-	blockedmode = list(/datum/game_mode/spy_theft)
+	blockedmode = list(/datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 //////////////////////////////////////////////////// Standard items (traitor uplink) ///////////////////////////////////
 
@@ -880,7 +880,7 @@ This is basically useless for anyone but miners.
 /datum/syndicate_buylist/traitor/mindslave_module
 	name = "Mindslave Cloning Module"
 	item = /obj/item/cloneModule/mindslave_module
-	cost = 7
+	cost = 6
 	vr_allowed = 0
 	desc = "An add on to the genetics cloning pod that make anyone cloned loyal to whoever installed it."
 	job = list("Geneticist", "Medical Doctor", "Medical Director")
@@ -889,7 +889,7 @@ This is basically useless for anyone but miners.
 /datum/syndicate_buylist/traitor/deluxe_mindslave_module
 	name = "Deluxe Mindslave Cloning Module Kit"
 	item = /obj/item/storage/box/mindslave_module_kit
-	cost = 11 //  Always leave them 1tc so they can buy the moustache. Style is key.
+	cost = 10 //  Always leave them 1tc so they can buy the moustache. Style is key.
 	vr_allowed = 0
 	desc = "A Deluxe Mindslave Cloning Kit. Contains a mindslave cloning module and a cloning lab in a box!"
 	job = list("Geneticist", "Medical Doctor", "Medical Director")
@@ -937,13 +937,6 @@ This is basically useless for anyone but miners.
 	item = /obj/item/gun/energy/laser_gun/pred
 	cost = 6
 	desc = "An experimental laser design with a self-charging cerenkite battery."
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
-
-/datum/syndicate_buylist/surplus/riotbaton
-	name = "Riot Baton"
-	item = /obj/item/baton/classic
-	cost = 5
-	desc = "An old riot baton."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/surplus/breachingT

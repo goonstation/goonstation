@@ -22,7 +22,6 @@
 	stamina_damage = 25
 	stamina_cost = 20
 	stamina_crit_chance = 35
-	module_research = list("tools" = 5, "science" = 1)
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	move_triggered = 1

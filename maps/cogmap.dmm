@@ -2025,7 +2025,6 @@
 /area/station/crew_quarters/clown)
 "age" = (
 /obj/decal/cleanable/dirt,
-/obj/creepy_sound_trigger,
 /obj/item/bananapeel,
 /obj/cable{
 	icon_state = "1-2"
@@ -5316,7 +5315,6 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/creepy_sound_trigger,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -19272,13 +19270,6 @@
 "aXE" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/east)
-"aXF" = (
-/obj/creepy_sound_trigger,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aXG" = (
 /obj/disposalpipe/trunk{
@@ -122557,7 +122548,7 @@ aTN
 aVb
 bcg
 aXN
-aXF
+bbH
 aYP
 baE
 bbG

@@ -311,8 +311,8 @@
 		else
 			user.visible_message("<b>[user]</b> loads a glowstick into [src].")
 			loaded_glowstick = W
-			user.u_equip(W)
 			W.set_loc(src)
+			user.u_equip(W)
 			var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
 			switch(src.loaded_glowstick.color_name)
 				if("red")

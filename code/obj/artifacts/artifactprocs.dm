@@ -280,7 +280,7 @@
 
 	if(istype(W,/obj/item/baton))
 		var/obj/item/baton/BAT = W
-		if (BAT.can_stun(1, 1, user) == 1)
+		if (BAT.can_stun(1, user) == 1)
 			src.ArtifactStimulus("force", BAT.force)
 			src.ArtifactStimulus("elec", 1500)
 			playsound(src.loc, "sound/impact_sounds/Energy_Hit_3.ogg", 100, 1)
@@ -561,6 +561,6 @@
 		logTheThing(type_of_action == "detonated" ? "bombing" : "station", user, target, "an artifact ([A.type]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]" : ""]")
 
 	if (trigger_alert)
-		message_admins("An artifact ([A.type]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]")
+		message_admins("An artifact ([A.type]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [key_name(O.fingerprintslast)]")
 
 	return

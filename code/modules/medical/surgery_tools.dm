@@ -40,7 +40,6 @@ CONTAINS:
 	stamina_cost = 5
 	stamina_crit_chance = 35
 	var/mob/Poisoner = null
-	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
 	move_triggered = 1
 
 	New()
@@ -112,7 +111,6 @@ CONTAINS:
 	stamina_cost = 5
 	stamina_crit_chance = 35
 	var/mob/Poisoner = null
-	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
 	move_triggered = 1
 
 	New()
@@ -181,7 +179,6 @@ CONTAINS:
 	stamina_cost = 5
 	stamina_crit_chance = 35
 	var/mob/Poisoner = null
-	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
 	move_triggered = 1
 
 	New()
@@ -241,7 +238,6 @@ CONTAINS:
 	stamina_damage = 15
 	stamina_cost = 7
 	stamina_crit_chance = 15
-	module_research = list("tools" = 1, "medicine" = 1, "weapons" = 1)
 
 	// Every bit of usability helps (Convair880).
 	examine()
@@ -1238,7 +1234,6 @@ CONTAINS:
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 15
-	module_research = list("tools" = 2, "medicine" = 3, "weapons" = 0.1)
 	hide_attack = 2
 
 	attack(mob/M as mob, mob/user as mob)
@@ -1349,7 +1344,6 @@ CONTAINS:
 	stamina_damage = 1
 	stamina_cost = 1
 	stamina_crit_chance = 1
-	module_research = list("tools" = 2, "medicine" = 2, "weapons" = 0.1)
 
 	New()
 		..()
@@ -1377,7 +1371,6 @@ CONTAINS:
 	col_g = 0.8
 	col_b = 0.7
 	brightness = 2
-	module_research = list("science" = 1, "devices" = 1, "medicine" = 2)
 	var/anim_duration = 10 // testing var so I can adjust in-game to see what looks nice
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
@@ -1677,7 +1670,6 @@ keeping this here because I want to make something else with it eventually
 	throw_speed = 3
 	throw_range = 5
 	var/mob/Poisoner = null
-	module_research = list("tools" = 3, "medicine" = 3, "weapons" = 0.25)
 	move_triggered = 1
 	var/image/handle = null
 

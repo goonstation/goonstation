@@ -557,7 +557,7 @@
 
 /datum/commodity/podparts/blackarmor
 	comname = "Strange Armor Plating"
-	comtype = /obj/item/pod/armor_black
+	comtype = /obj/item/podarmor/armor_black
 	desc = "NT Special Ops vehicular armor plating, almost certainly stolen."
 	price = 50000
 	baseprice = 50000
@@ -566,7 +566,7 @@
 
 /datum/commodity/podparts/redarmor
 	comname = "Syndicate Pod Armor"
-	comtype = /obj/item/pod/armor_red
+	comtype = /obj/item/podarmor/armor_red
 	desc = "A kit of Syndicate pod armor plating."
 	price = 25000
 	baseprice = 25000
@@ -575,7 +575,7 @@
 
 /datum/commodity/podparts/goldarmor
 	comname = "Gold Pod Armor"
-	comtype = /obj/item/pod/armor_gold
+	comtype = /obj/item/podarmor/armor_gold
 	desc = "A kit of gold-plated pod armor plating."
 	price = 32500
 	baseprice = 32500
