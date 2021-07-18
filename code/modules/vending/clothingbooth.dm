@@ -173,6 +173,10 @@ var/list/clothingbooth_items = list()
 		return
 	if(!(user in range(1,src)))
 		return
+	if((src.open == 0) && !(locate(/mob) in src))//Booth is closed but no one is inside
+		src.set_open(1)
+		user.visible_message("<span class='alert'>You pull back the curtain to find... the booth empty. How strange.</span>")
+		return
 	if((src.open == 1)&&(!user.stat))
 		user.set_loc(src.loc)
 		src.set_open(0)
