@@ -117,8 +117,6 @@
 		if(istype(P, /obj/item/phone_handset))
 			var/obj/item/phone_handset/PH = P
 			if(PH.parent == src)
-				if(src.linked && src.linked.handset && src.linked.handset.holder)
-					src.linked.handset.holder.playsound_local(src.linked.handset.holder,"sound/machines/phones/remote_answer.ogg",50,0)
 				user.drop_item(PH)
 				qdel(PH)
 				hang_up()
