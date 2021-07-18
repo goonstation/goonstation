@@ -98,4 +98,9 @@
 		src.opacity = 0
 		src.levelupdate()
 
+		for (var/turf/T in orange(src,1))
+			if (istype(T, /turf/unsimulated/floor/auto))
+				var/turf/unsimulated/floor/auto/TA = T
+				TA.edge_overlays(src)
+
 		return src

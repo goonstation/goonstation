@@ -10,6 +10,7 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 	icon_state = "1"
 
 	var/image/galaxy_icon
+	var/image/duplicate_galaxy_icon
 	var/actual_x = 0
 	var/actual_y = 0
 
@@ -30,7 +31,6 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 	var/max_r_squared = ARTEMIS_MAX_R_SQUARED //951^2 - sqrt(2)*672; radius of circle with the boundary box inscribed in it
 
 	//layer = TURF_LAYER-0.01
-
 	//plane = -2
 
 	New()
@@ -59,6 +59,8 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 		icon_state = "[state]"
 		if(galaxy_icon)
 			galaxy_icon.icon_state = icon_state
+		if(duplicate_galaxy_icon)
+			duplicate_galaxy_icon.icon_state = icon_state
 
 		if(state<7)
 			parallax_multi = 2 + (0.5*((rand()*2)-1))
@@ -153,8 +155,7 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 /turf/background_canvas
 	icon = 'icons/misc/background_stars.dmi'
 	icon_state = "canvas"
-	//layer = TURF_LAYER-0.02
-	//plane = -3
+	plane = PLANE_SPACE
 	fullbright = 1
 
 	New()
@@ -174,6 +175,11 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 			S.ships_id =  src.ship_id
 			S.galaxy_icon = image(S.icon, S, S.icon_state, S.layer)
 			get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS).add_image(S.galaxy_icon)
+			if(ship_id=="artemis")
+				S.duplicate_galaxy_icon = image(S.icon, S, S.icon_state, S.layer)
+				S.duplicate_galaxy_icon.plane = PLANE_SPACE
+				S.duplicate_galaxy_icon.pixel_x += (57 * 32)
+				get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS).add_image(S.duplicate_galaxy_icon)
 			S.icon = null
 		..()
 
@@ -186,6 +192,8 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 		icon_state = "M-[state]"
 		if(galaxy_icon)
 			galaxy_icon.icon_state = icon_state
+		if(duplicate_galaxy_icon)
+			duplicate_galaxy_icon.icon_state = icon_state
 
 		if(state<7)
 			parallax_multi = 2 + (0.5*((rand()*2)-1))

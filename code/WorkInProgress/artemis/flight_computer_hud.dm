@@ -106,7 +106,7 @@
 	proc/update()
 		var/tele_locked = FALSE
 		for(var/obj/background_star/galactic_object/G in src.master.ship.my_galactic_objects)
-			if(G.has_ship_body && G.my_ship_body?.landing_zone)
+			if(G.has_ship_body && G.my_ship_body?.landing_zones)
 				tele_locked = TRUE
 		src.tele_ok.icon_state = "lrt-[tele_locked ? "ok" : "nok"]"
 		src.buoy_counter.icon_state = "buoy-[master.ship.buoy_count]"

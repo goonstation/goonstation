@@ -83,6 +83,8 @@
 
 	var/buoy_count = 3
 
+	var/bottom_x_offset = 57 // tile offset for duplicated bottom
+
 	var/obj/machinery/sim/vr_bed/flight_chair/controls
 	var/datum/movement_controller/artemis/controller
 	var/controller_type = null
@@ -464,6 +466,7 @@
 	galactic_y = 30
 	vel_angle = 180
 	has_back = 0
+	bottom_x_offset = null
 	is_syndicate = TRUE
 
 /obj/artemis/manta
@@ -485,7 +488,6 @@
 	var/drag_coefficient = 0.01
 	var/engine_working_temp = 1
 	var/r_curvature = 50
-
 	controller_type = "manta"
 
 

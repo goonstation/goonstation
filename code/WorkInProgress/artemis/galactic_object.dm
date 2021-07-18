@@ -186,11 +186,18 @@ var/global/datum/galaxy/GALAXY = new
 
 		ship_body.galaxy_icon = image(ship_body.icon, ship_body, ship_body.icon_state, ship_body.layer)
 		get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS).add_image(ship_body.galaxy_icon)
+		if(ship.bottom_x_offset)
+			ship_body.duplicate_galaxy_icon = image(ship_body.icon, ship_body, ship_body.icon_state, ship_body.layer)
+			ship_body.duplicate_galaxy_icon.plane = PLANE_SPACE
+			ship_body.duplicate_galaxy_icon.pixel_x += (ship.bottom_x_offset * 32)
+			get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS).add_image(ship_body.duplicate_galaxy_icon)
 		ship_body.icon_state = null
 
 	proc/unload(var/obj/background_star/galactic_object/G,var/obj/artemis/ship)
 		if(G.my_map_body)
 			get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS).remove_image(G.galaxy_icon)
+			if(G.duplicate_galaxy_icon)
+				get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS).remove_image(G.duplicate_galaxy_icon)
 		else
 			get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_MAP_ICONS).remove_image(G.galaxy_icon)
 
@@ -209,7 +216,7 @@ var/global/datum/galaxy/GALAXY = new
 	name = "TEST OBJECT"
 	icon = 'icons/misc/galactic_objects.dmi'
 	icon_state = "generic"
-	var/turf/landing_zone = null
+	var/list/turf/landing_zones = null
 	var/destination_name = null
 	var/has_ship_body = 0
 	var/obj/background_star/galactic_object/my_ship_body = null
@@ -226,7 +233,8 @@ var/global/datum/galaxy/GALAXY = new
 			SPAWN_DBG(1 SECOND)
 				for(var/turf/T in landmarks[LANDMARK_PLANETS])
 					if(landmarks[LANDMARK_PLANETS][T] == src.destination_name)
-						src.landing_zone = T
+						if(!src.landing_zones) src.landing_zones = list()
+						src.landing_zones[name] = T
 						return
 
 	proc/check_distance(max_distance)
@@ -299,7 +307,7 @@ var/global/datum/galaxy/GALAXY = new
 
 	disposing()
 		..()
-		landing_zone = null
+		landing_zones = null
 		my_ship_body = null
 		my_map_body = null
 		master = null

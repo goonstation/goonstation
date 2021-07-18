@@ -69,8 +69,8 @@
 		var/turf_total = 0
 		var/list/biome_distro = list("Jungle"=0, "Grassland"=0, "Desert"=0, "Mountains"=0, "Water"=0, "Other"=0)
 		var/key
-		if(src.my_ship_body?.landing_zone)
-			var/area/map_gen/planet/A = get_area(src.my_ship_body.landing_zone)
+		if(src.my_ship_body?.landing_zones)
+			var/area/map_gen/planet/A = get_area(src.my_ship_body.landing_zones[1])
 			var/biome_name
 			for(key in A.biome_turfs)
 				turf_total += length(A.biome_turfs[key])
@@ -175,7 +175,8 @@
 		..()
 		for_by_tcl(L, /obj/lrteleporter)
 			if(L.z == Z_LEVEL_STATION)
-				src.landing_zone = get_turf(L)
+				if(!src.landing_zones) src.landing_zones = list()
+				src.landing_zones["SS13"] = get_turf(L)
 				return
 
 	on_load()
@@ -443,7 +444,8 @@
 		if(M.encounter_generated)
 			for(var/turf/T in landmarks[LANDMARK_PLANETS])
 				if(landmarks[LANDMARK_PLANETS][T] == M.marker.name)
-					src.landing_zone = T
+					if(!landing_zones) landing_zones = list()
+					src.landing_zones["Asteroid"] = T
 					T.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, FALSE, TRUE, FALSE, TRUE)
 
 

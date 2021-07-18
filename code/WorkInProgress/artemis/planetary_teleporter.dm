@@ -22,12 +22,11 @@
 			for(var/obj/background_star/galactic_object/G in src.my_ship.my_galactic_objects)
 				if(G.has_ship_body)
 					if(G.my_ship_body)
-						if(G.my_ship_body.landing_zone)
+						if(G.my_ship_body.landing_zones)
 							found = 1
-							var/destination = G.my_ship_body.destination_name
-							if( findtext(G.my_ship_body.destination_name, "planet") )
-								destination = G.my_ship_body.name
-							link_html += {"[destination] <a href='?src=\ref[src];send=\ref[G.my_ship_body.landing_zone]'><small>(Send)</small></a> <a href='?src=\ref[src];recieve=\ref[G.my_ship_body.landing_zone]'><small>(Recieve)</small></a><br>"}
+							for(var/destination in G.my_ship_body.landing_zones )
+								var/turf/T = G.my_ship_body.landing_zones[destination]
+								link_html += {"[destination] <a href='?src=\ref[src];send=\ref[T]'><small>(Send)</small></a> <a href='?src=\ref[src];receive=\ref[T]'><small>(Receive)</small></a><br>"}
 		if(!found)
 			link_html = "<br>No co-ordinates available.<br>"
 
@@ -59,6 +58,11 @@
 				flick("lrport1", src)
 				playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
 				playsound(target, 'sound/machines/lrteleport.ogg', 60, 1)
+
+				if(istype(target, /turf/simulated/wall))
+					var/turf/simulated/wall/W = target
+					W.dismantle_wall()
+
 				for(var/atom/movable/M in src.loc)
 					if(M.anchored) continue
 					animate_teleport(M)
@@ -69,8 +73,8 @@
 					busy = 0
 					qdel(S)
 
-		if(href_list["recieve"])
-			var/turf/target = locate(href_list["recieve"])
+		if(href_list["receive"])
+			var/turf/target = locate(href_list["receive"])
 			if(target)
 				busy = 1
 				flick("lrport1", src)
@@ -115,12 +119,11 @@
 			for(var/obj/background_star/galactic_object/G in my_teleporter.my_ship.my_galactic_objects)
 				if(G.has_ship_body)
 					if(G.my_ship_body)
-						if(G.my_ship_body.landing_zone)
+						if(G.my_ship_body.landing_zones)
 							found = 1
-							var/destination = G.my_ship_body.destination_name
-							if( findtext(G.my_ship_body.destination_name, "planet") )
-								destination = G.my_ship_body.name
-							link_html += {"[destination] <a href='?src=\ref[src];recieve=\ref[G.my_ship_body.landing_zone]'><small>(Receive)</small></a><br>"}
+							for(var/destination in G.my_ship_body.landing_zones )
+								var/turf/T = G.my_ship_body.landing_zones[destination]
+								link_html += {"[destination] <a href='?src=\ref[src];receive=\ref[T]'><small>(Receive)</small></a><br>"}
 		if(!found)
 			link_html = "<br>No co-ordinates available.<br>"
 
@@ -145,8 +148,8 @@
 		if(busy) return
 		if(get_dist(usr, src) != 0) return
 
-		if(href_list["recieve"])
-			var/turf/target = locate(href_list["recieve"])
+		if(href_list["receive"])
+			var/turf/target = locate(href_list["receive"])
 			if(target)
 				busy = 1
 				flick("lrport1", my_teleporter)
