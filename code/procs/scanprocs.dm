@@ -323,6 +323,19 @@
 					I.bump_up(chat_text.measured_height)
 			chat_text.show_to(C.client)
 
+/proc/scan_medrecord(var/mob/M as mob, var/visible = 0)
+	if (!M)
+		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
+
+	if (!ishuman(M))
+		return "<span class='alert'>ERROR: INVALID DATA FROM SUBJECT</span>"
+
+	if(visible)
+		animate_scanning(M, "#acacac")
+
+	var/mob/living/carbon/human/H = M
+	var/datum/data/record/R = data_core.general
+
 /proc/scan_reagents(var/atom/A as turf|obj|mob, var/show_temp = 1, var/single_line = 0, var/visible = 0, var/medical = 0)
 	if (!A)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
