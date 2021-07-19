@@ -216,7 +216,7 @@
 "fi" = (
 /obj/lrteleporter/planetary_teleporter,
 /obj/landmark/lrt{
-	name = "Artemis-"
+	name = "Artemis"
 	},
 /turf/simulated/floor/engine,
 /area/ship/artemis)
@@ -548,6 +548,14 @@
 /obj/decal/fakeobjects/shuttlethruster,
 /turf/space,
 /area/ship/artemis)
+"oZ" = (
+/obj/table/wood/auto,
+/obj/item/clothing/gloves/concussive,
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fblue3"
+	},
+/area/ship/artemis)
 "pe" = (
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/carpet{
@@ -830,6 +838,7 @@
 /area/ship/arjuna)
 "ya" = (
 /obj/table/wood/auto,
+/obj/item/card/id/captains_spare,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fblue3"
@@ -9374,7 +9383,7 @@ Di
 PW
 EM
 fV
-ol
+oZ
 kK
 mb
 Tt

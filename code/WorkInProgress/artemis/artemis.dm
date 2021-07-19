@@ -8,7 +8,7 @@
 #define ARTEIMS_MAP_VIEW_SIZE 31 // 31x31 tiles
 
 /obj/artemis
-	name = "Artemis-"
+	name = "Artemis"
 	desc = "Artemis"
 	icon = 'icons/misc/artemis.dmi'
 	icon_state = "artemis"
@@ -146,8 +146,10 @@
 			if(landmarks[LANDMARK_SHIPS][T] == src.stars_id)
 				src.ship_marker = T
 
+#ifdef ARTEMIS_LINK_AT_ROUNDSTART
 		if(!is_syndicate && !special_places.Find(src.name))
-			special_places.Add(src.name)
+		 	special_places.Add(src.name)
+#endif
 
 	proc/engine_check()
 		return src.engine_ok
@@ -208,7 +210,7 @@
 		return 0
 
 	proc/fast_process()
-#if DEBUG_ARTEMIS
+#ifdef DEBUG_ARTEMIS
 		var/tick = TIME
 		var/list/timing = list()
 		timing.len = 2
@@ -231,7 +233,7 @@
 				if(G.start)
 					G.process()
 
-#if DEBUG_ARTEMIS
+#ifdef DEBUG_ARTEMIS
 			var/delta = TIME - tick
 			if(timing[2] > 120)
 				boutput(world,"[src] fast_process() running at [timing[1]/timing[2]] avg with [animation_speed] sleep delay")
@@ -584,5 +586,25 @@
 		. = ..()
 		if(ismob(A))
 			get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS).remove_mob(A)
+
+
+// Azrun TODO Move to Event File
+/datum/random_event/minor/artemis_transponder
+	name = "Artemis Transponder"
+	disabled = 1
+	weight = 10
+	var/list/event_transmissions
+
+	event_effect()
+		..()
+		var/command_report = "Transponder data has been detected from the NSS Artemis.  Encryption key uploaded to Quantum telescope to allow for asset recovery."
+		tele_man.addManualEvent(eventType=/datum/telescope_event/artemis, active=TRUE)
+
+		var/sound_to_play = "sound/misc/announcement_1.ogg"
+		command_announcement(replacetext(command_report, "\n", "<br>"), "Priority Broadcast Received", sound_to_play, do_sanitize=0);
+		return
+
+	is_event_available(var/ignore_time_lock = 0)
+		return 0
 
 #endif

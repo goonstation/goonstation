@@ -44,8 +44,8 @@
 
 		src.add_dialog(user)
 		add_fingerprint(user)
-		user << browse(html, "window=lrporter;size=250x380;can_resize=0;can_minimize=0;can_close=1")
-		onclose(user, "lrporter", src)
+		user << browse(html, "window=planetporter;size=250x380;can_resize=0;can_minimize=0;can_close=1")
+		onclose(user, "planetporter", src)
 
 	Topic(href, href_list)
 		if(busy) return
@@ -69,6 +69,7 @@
 					SPAWN_DBG(0.6 SECONDS)
 						M.set_loc(target)
 				var/obj/decal/teleport_swirl/S = new/obj/decal/teleport_swirl(target)
+				new/obj/decal/teleport_mark(target)
 				SPAWN_DBG(1 SECOND)
 					busy = 0
 					qdel(S)
@@ -141,8 +142,8 @@
 
 		my_teleporter.add_dialog(user)
 		add_fingerprint(user)
-		user << browse(html, "window=lrporter;size=250x380;can_resize=0;can_minimize=0;can_close=1")
-		onclose(user, "lrporter", my_teleporter)
+		user << browse(html, "window=rmt_planet_porter;size=250x380;can_resize=0;can_minimize=0;can_close=1")
+		onclose(user, "rmt_planet_porter", my_teleporter)
 
 	Topic(href, href_list)
 		if(busy) return
@@ -165,5 +166,22 @@
 				SPAWN_DBG(1 SECOND)
 					busy = 0
 					qdel(S)
+
+
+obj/decal/teleport_mark
+	icon = 'icons/misc/artemis/temps.dmi'
+	icon_state = "decal_tele"
+	name = "teleport mark"
+	anchored = 1
+	layer = FLOOR_EQUIP_LAYER1
+	alpha = 180
+
+	New(var/atom/location)
+		..()
+		for(var/obj/O in location)
+			if(O == src) continue
+			if(istype(O, /obj/decal/teleport_mark) || istype(O,/obj/lrteleporter) || istype(O,/obj/decal/fakeobjects/teleport_pad) )
+				qdel(src)
+				return
 
 #endif

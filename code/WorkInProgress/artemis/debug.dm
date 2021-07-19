@@ -1,9 +1,11 @@
 // stuff for debugging Artemis, definitely don't use in real code lol
-#ifdef DEBUG_ARTEMIS
+#if defined(DEBUG_ARTEMIS) || defined(FORCE_ARTEMIS_MODE)
 /world/load_mode()
 	. = ..()
 	master_mode = "freeroam"
+#endif
 
+#if defined(DEBUG_ARTEMIS)
 /mob/living/carbon/human/New()
 	. = ..()
 	SPAWN_DBG(4 SECONDS)

@@ -94,6 +94,18 @@
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopeDojo(src)
 
+/datum/telescope_event/artemis
+	name = "Artemis"
+	name_undiscovered = "Encrypted NT signal"
+	id = "at"
+	size = 10
+	manual = 1
+	tags = TAG_TELEPORT_LOC
+
+	New()
+		..()
+		telescopeDialogue = new/datum/dialogueMaster/telescopeArtemis(src)
+
 //MINING STUFF BELOW
 /datum/telescope_event/ore_miraclium
 	name = "Miraclium asteroid"

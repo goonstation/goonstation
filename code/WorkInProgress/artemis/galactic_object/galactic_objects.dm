@@ -70,7 +70,7 @@
 		var/list/biome_distro = list("Jungle"=0, "Grassland"=0, "Desert"=0, "Mountains"=0, "Water"=0, "Other"=0)
 		var/key
 		if(src.my_ship_body?.landing_zones)
-			var/area/map_gen/planet/A = get_area(src.my_ship_body.landing_zones[1])
+			var/area/map_gen/planet/A = get_area(src.my_ship_body.landing_zones[src.my_ship_body.landing_zones[1]])
 			var/biome_name
 			for(key in A.biome_turfs)
 				turf_total += length(A.biome_turfs[key])
