@@ -349,7 +349,7 @@
 		"blastArmed" = src.blast_armed,
 		"blastDelay" = src.blast_delay/10,
 		"minBlastPercent" = src.min_blast_ratio,
-		"materialsCount" = src.contents.len,
+		"materialsCount" = length(src.contents),
 		"materialsProgress" = src.material_progress,
 		"targetMaterial" = src.target_material,
 		"processRate" = src.process_rate,
