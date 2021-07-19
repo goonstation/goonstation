@@ -7425,7 +7425,7 @@
 "BL" = (
 /obj/wingrille_spawn/crystal/full,
 /turf/unsimulated/floor/plating,
-/area/space)
+/area/pod_wars/team2/bar)
 "BM" = (
 /obj/machinery/r_door_control/podbay/t2d1/new_walls/west,
 /turf/unsimulated/floor/shuttlebay,
@@ -12333,9 +12333,6 @@
 	},
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/fstation/computercore)
-"Vd" = (
-/turf/unsimulated/wall/auto/reinforced/supernorn,
-/area/space)
 "Ve" = (
 /obj/table/auto,
 /obj/machinery/recharger{
@@ -182244,7 +182241,7 @@ JW
 JW
 JW
 JW
-JW
+Fh
 Fh
 Fh
 Fh
@@ -182743,8 +182740,8 @@ JW
 JW
 JW
 JW
-JW
-JW
+Fh
+Fh
 Fh
 Fh
 Fh
@@ -183243,10 +183240,10 @@ JW
 JW
 JW
 JW
-JW
-JW
-JW
-JW
+Fh
+Fh
+Fh
+Fh
 Fh
 Fh
 Fh
@@ -183745,10 +183742,10 @@ JW
 JW
 JW
 JW
-JW
-JW
-JW
-JW
+Fh
+Fh
+Fh
+Fh
 Fh
 Fh
 Fh
@@ -242487,7 +242484,7 @@ zX
 fN
 UX
 zX
-tt
+xT
 xT
 xT
 Dh
@@ -246506,7 +246503,7 @@ mm
 nG
 hA
 oo
-Vd
+oo
 JW
 JW
 JW
