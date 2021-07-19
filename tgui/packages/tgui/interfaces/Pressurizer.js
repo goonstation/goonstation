@@ -187,20 +187,20 @@ export const Pressurizer = (props, context) => {
                 3
               </Button>
               {!!emagged && (
-                <Button
-                  selected={processRate === 4}
-                  onClick={() => handleSetProcessRate(4)}
-                >
-                  4
-                </Button>
-              )}
-              {!!emagged && (
-                <Button
-                  selected={processRate === 5}
-                  onClick={() => handleSetProcessRate(5)}
-                >
-                  5
-                </Button>
+                <>
+                  <Button
+                    selected={processRate === 4}
+                    onClick={() => handleSetProcessRate(4)}
+                  >
+                    4
+                  </Button>
+                  <Button
+                    selected={processRate === 5}
+                    onClick={() => handleSetProcessRate(5)}
+                  >
+                    5
+                  </Button>
+                </>
               )}
             </LabeledList.Item>
             <LabeledList.Item label="Progress">
