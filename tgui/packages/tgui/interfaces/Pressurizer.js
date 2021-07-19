@@ -9,6 +9,12 @@ const FanState = {
   Out: 2,
 };
 
+const GaugeRanges = {
+  good: [1, Infinity],
+  average: [0.75, 1],
+  bad: [-Infinity, 0.75],
+};
+
 export const Pressurizer = (props, context) => {
   const { act, data } = useBackend(context);
 
@@ -205,11 +211,7 @@ export const Pressurizer = (props, context) => {
             </LabeledList.Item>
             <LabeledList.Item label="Progress">
               <ProgressBar
-                ranges={{
-                  good: [1, Infinity],
-                  average: [0.75, 1],
-                  bad: [-Infinity, 0.75],
-                }}
+                ranges={GaugeRanges}
                 value={materialsProgress / 100} />
             </LabeledList.Item>
           </LabeledList>
