@@ -210,7 +210,7 @@ export const Pressurizer = (props, context) => {
                   average: [0.75, 1],
                   bad: [-Infinity, 0.75],
                 }}
-                value={materialsProgress/100} />
+                value={materialsProgress / 100} />
             </LabeledList.Item>
           </LabeledList>
         </Section>
