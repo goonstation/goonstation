@@ -376,7 +376,8 @@
 				. = set_release_pressure(target_pressure)
 
 		if("arm")
-			if(MIXTURE_PRESSURE(src.air_contents) < (maximum_pressure * min_blast_ratio) || !is_air_safe()) return
+			if(MIXTURE_PRESSURE(src.air_contents) < (maximum_pressure * min_blast_ratio) || !is_air_safe())
+				return
 			src.arm_blast()
 			src.update_icon()
 			. = TRUE
