@@ -108,7 +108,6 @@
 			src.root.add_file( new /datum/computer/file/pda_program/records/security(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/medical(src))
 			src.root.add_file( new /datum/computer/file/pda_program/security_ticket(src))
-			src.root.add_file( new /datum/computer/file/pda_program/scan/medrecord_scan(src))
 			// src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
 			// src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/bot_control/secbot(src))
