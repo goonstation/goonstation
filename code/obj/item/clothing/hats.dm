@@ -13,12 +13,17 @@
 	block_vision = 0
 	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 	var/team_num
+	var/blocked_from_petasusaphilic = FALSE //Replacing the global blacklist
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 10)
 		setProperty("heatprot", 5)
 		setProperty("meleeprot_head", 1)
+
+proc/filter_trait_hats(var/type)
+	var/obj/item/clothing/head/coolhat = type
+	return !initial(coolhat.blocked_from_petasusaphilic)
 
 /obj/item/clothing/head/red
 	desc = "A knit cap in red."
@@ -891,6 +896,7 @@
 	wear_image_icon = 'icons/mob/bighat.dmi'
 	icon_state = "tophat"
 	w_class = W_CLASS_BULKY
+	blocked_from_petasusaphilic = TRUE
 
 /obj/item/clothing/head/bighat/syndicate
 	name = "syndicate hat"
@@ -1338,6 +1344,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 			H.name = src.name
 			H.icon_state = src.icon_state
 			H.wear_image_icon = src.wear_image_icon
+			H.wear_image = src.wear_image
 			H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
 			qdel(src)
 
@@ -1457,6 +1464,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/barrette)
 	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "barrette-blue"
 	item_state = "barrette-blue"
+	blocked_from_petasusaphilic = TRUE
 	w_class = W_CLASS_TINY
 	throwforce = 0
 

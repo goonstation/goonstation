@@ -14,8 +14,6 @@
 	uses_multiple_icon_states = 1
 	initial_volume = 15
 	amount_per_transfer_from_this = 5
-	module_research = list("science" = 1, "medicine" = 1)
-	module_research_type = /obj/item/reagent_containers/syringe
 	var/mode = S_DRAW
 	var/image/fluid_image
 	var/image/image_inj_dr

@@ -24,7 +24,6 @@
 	stamina_damage = 10
 	stamina_cost = 18
 	stamina_crit_chance = 0
-	module_research = list("tools" = 4, "metals" = 1, "fuels" = 5)
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	var/capacity = 20

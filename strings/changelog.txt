@@ -1,5 +1,54 @@
 
+(t)sun jul 18 21
+(u)TTerc
+(p)5483
+(e)⚖|balance
+(+)Added latejoin traitor and sleeper agent spawn events to spy thief gamemode.
+(t)sat jul 17 21
+(u)112358sam
+(p)5195
+(e)|
+(+)Adds custom job save slots to the ID card computer.
+(u)Tarmunora
+(e)⚖|balance
+(+)Emagging a welded door deals damage to the door equal to 80% of the door's current health (also fixes issue where emagged doors could not be attacked)
+(u)vocalpocal
+(p)5486
+(e)🐛🆕|bug, feature
+(+)Regent extractor auto-extract now works with produce satchels and drag and drop
+(u)Asche
+(p)5523
+(e)⚖|balance
+(+)Made the vampire "Retreat to Coffin" ability a lot speedier
+(t)fri jul 16 21
+(u)Azrun
+(p)5250
+(e)⚖|balance
+(*)UV Lamps now requires power.  Plantpots display will only update when power is available.
+(+)Updated passive power usage for various machinery.
+(u)Flappybat
+(p)5526
+(e)⚖|balance
+(+)Remove Syndicate hat from revhead uplink
+(u)Tarmunora
+(e)⚖|balance
+(+)add combat click delay to using patches on self
+(+)Increase base patch rate (0.35 -> 0.5)
+(+)Diminishing returns on multi-patch scaling: multi-patch rate scaling changed to only affect the rate at which the patch contents are used/transferred, while not affecting the rate at which it applies touch effects (i.e.: 2 patches will heal a total of 2x faster, but will use more than a total of 2x reagents/cycle to do so)
+(u)Sovexe
+(p)5522
+(e)🆕🎨|feature, sprites
+(*)Added a new dripper plant mutation, the Leaker. Leakers produce orange goop containing oil and yuck.
+(u)BatElite
+(p)5484
+(e)🎨|sprites
+(+)Capsule machines can now be restocked, cartridges available in the necessities restock crate. The empty capsules can also be crushed into oblivion now.
 (t)thu jul 15 21
+(u)112358sam
+(p)5451
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)Made minisubs constructable on underwater maps
+(+)Added the heavy, industrial, and strange minisubs
 (u)112358sam
 (p)5516
 (e)⚖|balance

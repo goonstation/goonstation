@@ -37,7 +37,6 @@ var/list/dangerousVerbs = list(\
 /client/proc/BK_finance_debug,\
 /client/proc/BK_alter_funds,\
 /client/proc/debug_pools,\
-/client/proc/cmd_claim_rs_verbs,\
 /client/proc/debug_variables,\
 /client/proc/debug_global_variable,\
 /client/proc/call_proc,\

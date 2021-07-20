@@ -159,6 +159,9 @@
 
 #define COMSIG_MOB_DROPPED "mob_drop"
 
+/// sent when a mob throws something (target, params)
+#define COMSIG_MOB_THROW_ITEM "throw_item"
+
 /// sent when radiation status ticks on mob (stage)
 #define COMSIG_MOB_GEIGER_TICK "mob_geiger"
 /// on mouseup

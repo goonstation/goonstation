@@ -53589,7 +53589,6 @@
 "uDz" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/decal/cleanable/dirt,
-/obj/creepy_sound_trigger,
 /obj/item/bananapeel,
 /obj/machinery/door/airlock/gannets/maintenance,
 /obj/cable{

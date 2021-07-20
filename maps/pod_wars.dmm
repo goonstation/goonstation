@@ -2037,6 +2037,12 @@
 "hz" = (
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/secdock)
+"hA" = (
+/obj/machinery/vending/kitchen{
+	req_access_txt = null
+	},
+/turf/unsimulated/floor/specialroom/bar,
+/area/pod_wars/team2/power)
 "hB" = (
 /turf/unsimulated/floor/red/side{
 	dir = 10
@@ -2402,6 +2408,13 @@
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
+"jc" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 1;
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/specialroom/bar,
+/area/pod_wars/team1/bar)
 "jf" = (
 /obj/machinery/computer/announcement{
 	name = "Nanotrasen Announcement Computer";
@@ -3187,6 +3200,10 @@
 	dir = 10
 	},
 /area/pod_wars/team2/mining)
+"mm" = (
+/obj/machinery/chem_dispenser/soda,
+/turf/unsimulated/floor/specialroom/bar,
+/area/pod_wars/team2/power)
 "mo" = (
 /obj/storage/crate,
 /obj/random_item_spawner/desk_stuff/maybe_few,
@@ -3565,6 +3582,11 @@
 	dir = 4
 	},
 /area/pod_wars/team1/bridge)
+"nG" = (
+/obj/machinery/chem_dispenser/alcohol,
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/turf/unsimulated/floor/specialroom/bar,
+/area/pod_wars/team2/power)
 "nH" = (
 /obj/grille/catwalk{
 	dir = 1
@@ -4773,6 +4795,11 @@
 	},
 /turf/space,
 /area/pod_wars/team2/power)
+"rR" = (
+/obj/table/reinforced/bar/auto,
+/obj/submachine/mixer,
+/turf/unsimulated/floor/specialroom/bar,
+/area/pod_wars/team1/bar)
 "rS" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 8;
@@ -5665,10 +5692,6 @@
 	dir = 10
 	},
 /area/pod_wars/spacejunk/restaurant)
-"vn" = (
-/obj/machinery/chem_dispenser/soda,
-/turf/unsimulated/floor/specialroom/bar,
-/area/pod_wars/team2/bar)
 "vo" = (
 /turf/simulated/wall/asteroid/pod_wars,
 /area/pod_wars/asteroid/major/maj_28)
@@ -5696,6 +5719,12 @@
 	dir = 4
 	},
 /area/pod_wars/team2/central_hallway)
+"vt" = (
+/obj/submachine/foodprocessor{
+	dir = 1
+	},
+/turf/unsimulated/floor/specialroom/bar,
+/area/pod_wars/team2/bar)
 "vu" = (
 /obj/grille/catwalk{
 	dir = 5;
@@ -6349,6 +6378,8 @@
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
 "xy" = (
+/obj/submachine/mixer,
+/obj/table/auto,
 /turf/simulated/floor/green/side{
 	dir = 10
 	},
@@ -7454,6 +7485,10 @@
 	dir = 6
 	},
 /area/pod_wars/spacejunk/fstation/mess)
+"BL" = (
+/obj/wingrille_spawn/crystal/full,
+/turf/unsimulated/floor/plating,
+/area/pod_wars/team2/bar)
 "BM" = (
 /obj/machinery/r_door_control/podbay/t2d1/new_walls/west,
 /turf/unsimulated/floor/shuttlebay,
@@ -10295,8 +10330,9 @@
 	},
 /area/pod_wars/spacejunk/miningoutpost)
 "MT" = (
-/obj/wingrille_spawn/crystal/full,
-/turf/unsimulated/floor/plating,
+/obj/table/reinforced/bar/auto,
+/obj/submachine/mixer,
+/turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "MU" = (
 /turf/simulated/floor/green/side{
@@ -11974,6 +12010,7 @@
 	},
 /area/pod_wars/team2/central_hallway)
 "Tt" = (
+/obj/submachine/foodprocessor,
 /turf/simulated/floor/green/side,
 /area/pod_wars/spacejunk/fstation/mess)
 "Tu" = (
@@ -12796,6 +12833,11 @@
 	dir = 1
 	},
 /area/pod_wars/spacejunk/uvb67/central)
+"WC" = (
+/obj/machinery/light/incandescent/netural,
+/obj/submachine/foodprocessor,
+/turf/unsimulated/floor/specialroom/bar,
+/area/pod_wars/team1/bar)
 "WG" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -13064,12 +13106,6 @@
 /obj/machinery/manufacturer/medical/pod_wars,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
-"XI" = (
-/obj/machinery/vending/kitchen{
-	req_access_txt = null
-	},
-/turf/unsimulated/floor/specialroom/bar,
-/area/pod_wars/team2/bar)
 "XJ" = (
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/dorgun)
@@ -13136,11 +13172,6 @@
 /obj/landmark/start/latejoin,
 /turf/simulated/floor/purple,
 /area/pod_wars/spacejunk/fstation/crewquarters)
-"XZ" = (
-/obj/machinery/chem_dispenser/alcohol,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
-/turf/unsimulated/floor/specialroom/bar,
-/area/pod_wars/team2/bar)
 "Ya" = (
 /obj/storage/secure/closet/fridge,
 /obj/item/reagent_containers/food/snacks/ingredient/cheese,
@@ -53422,7 +53453,7 @@ no
 wB
 Xt
 yx
-yx
+jc
 Tc
 wX
 mB
@@ -53917,7 +53948,7 @@ JW
 kn
 Mt
 Fk
-dX
+WC
 yx
 IC
 eV
@@ -55424,7 +55455,7 @@ JW
 JW
 Fk
 Fk
-yx
+rR
 hT
 dt
 yx
@@ -182334,7 +182365,7 @@ JW
 JW
 JW
 JW
-JW
+Fh
 Fh
 Fh
 Fh
@@ -182833,8 +182864,8 @@ JW
 JW
 JW
 JW
-JW
-JW
+Fh
+Fh
 Fh
 Fh
 Fh
@@ -183333,10 +183364,10 @@ JW
 JW
 JW
 JW
-JW
-JW
-JW
-JW
+Fh
+Fh
+Fh
+Fh
 Fh
 Fh
 Fh
@@ -183835,10 +183866,10 @@ JW
 JW
 JW
 JW
-JW
-JW
-JW
-JW
+Fh
+Fh
+Fh
+Fh
 Fh
 Fh
 Fh
@@ -245088,9 +245119,9 @@ Jy
 Zl
 tt
 tt
-od
+tt
 MT
-JW
+BL
 JW
 ge
 ug
@@ -245591,8 +245622,8 @@ RW
 tt
 tt
 tt
-MT
-JW
+vt
+BL
 JW
 Jn
 Va
@@ -246090,11 +246121,11 @@ bl
 tt
 DP
 ua
-vn
-XZ
-XI
-MT
-JW
+tt
+tt
+tt
+od
+BL
 JW
 JW
 JW
@@ -246592,11 +246623,11 @@ va
 oo
 oo
 oo
+mm
+nG
+hA
 oo
 oo
-oo
-oo
-JW
 JW
 JW
 JW
@@ -247093,8 +247124,8 @@ BQ
 PB
 kt
 LM
-AA
-AA
+oo
+oo
 oo
 oo
 oo

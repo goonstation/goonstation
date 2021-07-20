@@ -56,8 +56,6 @@ Broken RCD + Effects
 	stamina_damage = 15
 	stamina_cost = 15
 	stamina_crit_chance = 5
-	module_research = list("tools" = 8, "engineering" = 8, "devices" = 3, "efficiency" = 5)
-	module_research_type = /obj/item/rcd
 	inventory_counter_enabled = 1
 
 	// Borgs/drones can't really use matter units.

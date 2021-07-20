@@ -1124,7 +1124,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/vending/restock_cartridge/cola,
 					/obj/item/vending/restock_cartridge/kitchen,
 					/obj/item/vending/restock_cartridge/monkey,
-					/obj/item/vending/restock_cartridge/standard)
+					/obj/item/vending/restock_cartridge/standard,
+					/obj/item/vending/restock_cartridge/capsule)
 	cost = 3000
 	containertype = /obj/storage/crate
 	containername = "Necessities Vending Machine Restocking Pack"

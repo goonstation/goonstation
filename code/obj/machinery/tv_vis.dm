@@ -52,6 +52,7 @@
 		// 	turn_off()
 		// 	return
 
+		use_power(power_usage)
 		return
 
 	attack_hand(mob/user as mob)
