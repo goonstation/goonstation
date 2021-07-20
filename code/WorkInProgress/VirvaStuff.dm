@@ -1,4 +1,4 @@
-//gimme your guts
+// gimme your guts
 /obj/item/clothing/suit/space/repo
 	name = "leather overcoat"
 	desc = "Dark and mysterious..."
@@ -40,12 +40,8 @@
 		. = ..()
 
 /mob/living/carbon/human/repo
-	gender = "female"
 	New()
 		..()
-
-		real_name = "Organ Repossession Agent"
-
 		src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, slot_w_uniform)
 		src.equip_new_if_possible(/obj/item/clothing/suit/space/repo, slot_wear_suit)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/swat, slot_shoes)
@@ -58,10 +54,53 @@
 
 	initializeBioholder()
 		. = ..()
+		src.real_name = "Repossession Agent"
 		bioHolder.age = 25
+		bioHolder.bloodType = "AB"
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/short/short
+		bioHolder.mobAppearance.customization_first_color = "#53402a"
+		bioHolder.mobAppearance.gender = "male"
+
+// Komentaja
+/mob/living/carbon/human/mari
+
+	New()
+		..()
+		src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/swat, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
+		src.equip_new_if_possible(/obj/item/clothing/head/beret/syndie, slot_head)
+		src.equip_new_if_possible(/obj/item/storage/backpack/satchel/syndie, slot_back)
+		src.equip_new_if_possible(/obj/item/device/radio/headset/syndicate/leader, slot_ears)
+		src.equip_new_if_possible(/obj/item/card/id/syndicate/commander, slot_wear_id)
+		src.equip_new_if_possible(/obj/item/storage/belt/security/shoulder_holster/inspector, slot_belt)
+		src.equip_new_if_possible(/obj/item/uplink/syndicate/alternate, slot_r_store)
+
+	initializeBioholder()
+		. = ..()
+		src.real_name = "Mari Toivola"
+		src.sound_list_laugh = list('sound/voice/felaugh1.ogg', 'sound/voice/felaugh2.ogg')
+		src.sound_list_scream = list('sound/voice/screams/female_scream.ogg')
+
+		bioHolder.age = 34
 		bioHolder.bloodType = "O-"
-		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/short/floof
-		bioHolder.mobAppearance.customization_first_color = "#9b6927"
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/hairup/bun
+		bioHolder.mobAppearance.customization_first_color = "#DDB64E"
+		bioHolder.mobAppearance.s_tone = "#E4B6A7"
+		bioHolder.mobAppearance.e_color = "#0a5834"
+		bioHolder.mobAppearance.underwear = "braboy"
+		bioHolder.mobAppearance.u_color = "#3d0808"
+		bioHolder.mobAppearance.gender = "female"
+
+
+/obj/item/clothing/head/beret/syndie
+	name = "syndicate beret"
+	desc = "A Syndicate officer's beret."
+	icon_state = "beret_base"
+
+	New()
+		..()
+		src.color = "#890000"
 
 // pew pew
 /obj/item/implant/projectile/bullet_flechette
@@ -90,7 +129,7 @@ obj/item/ammo/bullets/flechette_mag
 	name = "flechette"
 	shot_sound = 'sound/weapons/fleshot.ogg'
 	shot_volume = 70
-	power = 12
+	power = 20
 	cost = 2
 	ks_ratio = 1.0
 	hit_ground_chance = 100
@@ -99,14 +138,15 @@ obj/item/ammo/bullets/flechette_mag
 	shot_number = 2
 	shot_delay = 0.7
 	caliber = 0.065
-	dissipation_delay = 11
+	dissipation_delay = 10
 	dissipation_rate = 3
+	projectile_speed = 56
 	icon_turf_hit = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_flechette
 	casing = /obj/item/casing/polymer
 
 /obj/item/gun/kinetic/flechette_rifle
-	name = "Sylkyri flechette rifle"
+	name = "Tikari flechette rifle"
 	desc = "A bullpup assault rifle chambered in a proprietary flechette cartridge. Issued to Syndicate counter-boarding teams and outpost security."
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "flech"
@@ -120,10 +160,8 @@ obj/item/ammo/bullets/flechette_mag
 	can_dual_wield = 0
 	two_handed = 1
 	auto_eject = 1
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
 	object_flags = NO_ARM_ATTACH
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
-	w_class = W_CLASS_BULKY
+	w_class = W_CLASS_NORMAL
 	spread_angle = 3
 
 	New()
