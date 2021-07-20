@@ -481,6 +481,41 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "office_carpet2"
 
+/turf/unsimulated/floor/carpet/regalcarpet
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "regal_carpet"
+
+/turf/unsimulated/floor/carpet/regalcarpet/border
+	icon_state = "regal_carpet_border"
+
+/turf/unsimulated/floor/carpet/regalcarpet/innercorner
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "regal_carpet_corner"
+
+/turf/unsimulated/floor/carpet/darkcarpet
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "dark_carpet"
+
+/turf/unsimulated/floor/carpet/darkcarpet/border
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "dark_carpet_border"
+
+/turf/unsimulated/floor/carpet/darkcarpet/innercorner
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "dark_carpet_corner"
+
+/turf/unsimulated/floor/carpet/clowncarpet
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "clown_carpet"
+
+/turf/unsimulated/floor/carpet/clowncarpet/border
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "clown_carpet_border"
+
+/turf/unsimulated/floor/carpet/clowncarpet/innercorner
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "clown_carpet_corner"
+
 /////////////////////////////////////////
 
 /turf/unsimulated/floor/shiny
@@ -501,6 +536,35 @@
 	icon_state = "freezerfloor3"
 
 ////////////////////////////////////////
+
+/turf/unsimulated/floor/terrazzo
+	name = "terrazzo tiling"
+	icon_state = "terrazzo_beige"
+	step_material = "step_wood"
+
+/turf/unsimulated/floor/terrazzo/black
+	icon_state = "terrazzo_black"
+
+/turf/unsimulated/floor/terrazzo/white
+	icon_state = "terrazzo_white"
+
+/////////////////////////////////////////
+
+/turf/unsimulated/floor/marble
+	name = "marble tiling"
+	icon_state = "marble_white"
+	step_material = "step_wood"
+
+/turf/unsimulated/floor/marble/black
+	icon_state = "marble_black"
+
+/turf/unsimulated/floor/marble/border_bw
+	icon_state = "marble_border_bw"
+
+/turf/unsimulated/floor/marble/border_wb
+	icon_state = "marble_border_wb"
+
+/////////////////////////////////////////
 
 /turf/unsimulated/floor/specialroom
 
@@ -871,6 +935,25 @@
 	name = "snow-covered floor"
 	icon_state = "snowgreencorner"
 
+
+/turf/unsimulated/floor/snowcalm
+	name = "snow-covered floor"
+	icon_state = "snow_calm"
+	step_material = "step_outdoors"
+
+/turf/unsimulated/floor/snowcalm/border
+	name = "snow-covered floor"
+	icon_state = "snow_calm_border"
+
+/turf/unsimulated/floor/snowrough
+	name = "snow-covered floor"
+	icon_state = "snow_rough"
+	step_material = "step_outdoors"
+
+/turf/unsimulated/floor/snowrough/border
+	name = "snow-covered floor"
+	icon_state = "snow_rough_border"
+
 /////////////////////////////////////////
 
 /turf/unsimulated/floor/sand
@@ -923,6 +1006,26 @@
 	allows_vehicles = 1
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+
+/////////////////////////////////////////
+
+/turf/unsimulated/floor/techlight
+	name = "data flooring"
+	icon_state = "techfloor_blue"
+	step_material = "step_plating"
+	step_priority = STEP_PRIORITY_MED
+
+/turf/unsimulated/floor/techlight/red
+	icon_state = "techfloor_red"
+
+/turf/unsimulated/floor/techlight/purple
+	icon_state = "techfloor_purple"
+
+/turf/unsimulated/floor/techlight/yellow
+	icon_state = "techfloor_yellow"
+
+/turf/unsimulated/floor/techlight/green
+	icon_state = "techfloor_green"
 
 /////////////////////////////////////////
 
