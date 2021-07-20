@@ -830,22 +830,22 @@
 
 /////////////////////////////////////////
 
-/turf/simulated/floor/airless/techlight
-	name = "data flooring"
+/turf/simulated/floor/airless/techfloor
+	name = "data tech flooring"
 	icon_state = "techfloor_blue"
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
 
-/turf/simulated/floor/airless/techlight/red
+/turf/simulated/floor/airless/techfloor/red
 	icon_state = "techfloor_red"
 
-/turf/simulated/floor/airless/techlight/purple
+/turf/simulated/floor/airless/techfloor/purple
 	icon_state = "techfloor_purple"
 
-/turf/simulated/floor/airless/techlight/yellow
+/turf/simulated/floor/airless/techfloor/yellow
 	icon_state = "techfloor_yellow"
 
-/turf/simulated/floor/airless/techlight/green
+/turf/simulated/floor/airless/techfloor/green
 	icon_state = "techfloor_green"
 
 /////////////////////////////////////////
