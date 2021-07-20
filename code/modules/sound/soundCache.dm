@@ -1696,6 +1696,7 @@ var/global/list/soundCache = list(
  	"sound/weapons/SigLethal.ogg" = 'sound/weapons/SigLethal.ogg',\
  	"sound/weapons/SigTase.ogg" = 'sound/weapons/SigTase.ogg',\
  	"sound/weapons/smallcaliber.ogg" = 'sound/weapons/smallcaliber.ogg',\
+ 	"sound/weapons/smartgun.ogg" = 'sound/weapons/smartgun.ogg',\
  	"sound/weapons/smg_shot.ogg" = 'sound/weapons/smg_shot.ogg',\
  	"sound/weapons/snipershot.ogg" = 'sound/weapons/snipershot.ogg',\
  	"sound/weapons/Taser.ogg" = 'sound/weapons/Taser.ogg',\
