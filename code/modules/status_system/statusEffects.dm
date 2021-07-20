@@ -357,8 +357,6 @@
 			else
 				src.visible = 0
 
-			damage_tox = (sqrt(duration/20 + 5) - 1) * prot
-
 			var/mob/M = null
 			if(ismob(owner))
 				M = owner
@@ -367,6 +365,8 @@
 			if(istype(owner, /mob/living))
 				var/mob/living/L = owner
 				prot = (1 - (L.get_rad_protection() / 100))
+
+			damage_tox = (sqrt(duration/20 + 5) - 1) * prot
 
 			switch(duration/(1 SECOND))
 				if(0 to 10)
