@@ -309,7 +309,7 @@
 	disposing()
 		for(var/mob/living/M in src)
 			if(M.mind && M.key)
-				if(old_bodies?[M.key] && !(old_bodies[M.key].disposed) && !(old_bodies[M.key].key))
+				if(old_bodies[M.key] && !(old_bodies[M.key].disposed) && !(old_bodies[M.key].key))
 					M.mind.transfer_to(old_bodies[M.key])
 				else
 					M.ghostize()
