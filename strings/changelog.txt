@@ -1,4 +1,9 @@
 
+(t)tue jul 20 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Adjust radiation statuseffect to deal damage based on remaining duration.
+(+)🤏radbow buff
 (t)sun jul 18 21
 (u)TTerc
 (p)5483
