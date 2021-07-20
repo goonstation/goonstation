@@ -17,6 +17,7 @@
 /area/ship/artemis)
 "ap" = (
 /obj/machinery/door/airlock/gannets/glass/medical,
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/ship/artemis)
 "ay" = (
@@ -118,6 +119,7 @@
 /area/ship/artemis)
 "cR" = (
 /obj/machinery/door/airlock/gannets/command/alt,
+/obj/access_spawn/syndie_shuttle,
 /turf/simulated/floor/black,
 /area/ship/arjuna)
 "da" = (
@@ -211,6 +213,7 @@
 /area/ship/artemis)
 "fh" = (
 /obj/machinery/door/airlock/gannets/engineering/alt,
+/obj/access_spawn/syndie_shuttle,
 /turf/simulated/floor/black,
 /area/ship/arjuna)
 "fi" = (
@@ -225,6 +228,7 @@
 /area/ship/arjuna)
 "fw" = (
 /obj/machinery/door/airlock/gannets/glass/medical,
+/obj/access_spawn/public,
 /turf/simulated/floor/black,
 /area/ship/arjuna)
 "fI" = (
@@ -287,6 +291,7 @@
 /area/ship/arjuna)
 "hm" = (
 /obj/machinery/door/airlock/gannets/chemistry,
+/obj/access_spawn/public,
 /turf/simulated/floor/black,
 /area/ship/arjuna)
 "hp" = (
@@ -350,7 +355,10 @@
 	},
 /area/ship/arjuna)
 "jm" = (
-/obj/machinery/door/airlock/gannets/glass/toxins,
+/obj/machinery/door/airlock/gannets/glass/toxins{
+	name = "glass airlock"
+	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/engine,
 /area/ship/artemis)
 "jz" = (
@@ -467,7 +475,10 @@
 	},
 /area/ship/artemis)
 "mb" = (
-/obj/machinery/door/airlock/gannets/glass/command/alt,
+/obj/machinery/door/airlock/gannets/glass/command/alt{
+	name = "bridge airlock"
+	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue4"
@@ -618,6 +629,7 @@
 /area/map_gen/planet/delta)
 "qI" = (
 /obj/machinery/door/airlock/gannets/chemistry,
+/obj/access_spawn/public,
 /turf/simulated/floor/purple,
 /area/ship/arjuna)
 "qW" = (
@@ -785,6 +797,7 @@
 /area/ship/artemis)
 "wd" = (
 /obj/machinery/door/airlock/gannets/glass,
+/obj/access_spawn/public,
 /turf/simulated/floor/blue/checker,
 /area/ship/arjuna)
 "wh" = (
@@ -802,6 +815,7 @@
 /area/ship/artemis)
 "wo" = (
 /obj/machinery/door/airlock/gannets/glass/security,
+/obj/access_spawn/public,
 /turf/simulated/floor/black,
 /area/ship/arjuna)
 "wI" = (
@@ -1027,7 +1041,10 @@
 /turf/space,
 /area/map_gen/planet/charlie)
 "Dm" = (
-/obj/machinery/door/airlock/gannets/glass/security,
+/obj/machinery/door/airlock/gannets/glass/security{
+	name = "glass airlock"
+	},
+/obj/access_spawn/public,
 /turf/simulated/floor/black,
 /area/ship/artemis)
 "DC" = (
@@ -1195,6 +1212,7 @@
 /area/ship/artemis)
 "GY" = (
 /obj/machinery/door/airlock/gannets/glass,
+/obj/access_spawn/public,
 /turf/simulated/floor/black,
 /area/ship/artemis)
 "HL" = (
@@ -1260,6 +1278,7 @@
 /area/ship/artemis)
 "Jr" = (
 /obj/machinery/door/airlock/gannets/glass/medical,
+/obj/access_spawn/maint,
 /turf/simulated/floor/bluegreen,
 /area/ship/artemis)
 "JB" = (
@@ -1288,7 +1307,10 @@
 	},
 /area/ship/arjuna)
 "KI" = (
-/obj/machinery/door/airlock/gannets/chemistry,
+/obj/machinery/door/airlock/gannets/chemistry{
+	name = "glass airlock"
+	},
+/obj/access_spawn/public,
 /turf/simulated/floor/purple,
 /area/ship/artemis)
 "Ln" = (
@@ -1319,6 +1341,7 @@
 /area/ship/artemis)
 "Mu" = (
 /obj/machinery/door/airlock/gannets/glass/toxins,
+/obj/access_spawn/syndie_shuttle,
 /turf/simulated/floor/engine,
 /area/ship/arjuna)
 "Mx" = (
@@ -1368,7 +1391,10 @@
 /turf/simulated/floor/blue/checker,
 /area/ship/artemis)
 "Oh" = (
-/obj/machinery/door/airlock/gannets/chemistry,
+/obj/machinery/door/airlock/gannets/chemistry{
+	name = "glass airlock"
+	},
+/obj/access_spawn/public,
 /turf/simulated/floor/black,
 /area/ship/artemis)
 "Ol" = (
@@ -1401,6 +1427,7 @@
 /area/ship/arjuna)
 "OR" = (
 /obj/machinery/door/airlock/gannets/glass/command/alt,
+/obj/access_spawn/syndie_shuttle,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue4"
@@ -1422,7 +1449,10 @@
 	},
 /area/ship/arjuna)
 "PJ" = (
-/obj/machinery/door/airlock/gannets/glass/command/alt,
+/obj/machinery/door/airlock/gannets/glass/command/alt{
+	name = "bridge airlock"
+	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue4"
@@ -1466,6 +1496,7 @@
 /area/ship/arjuna)
 "QQ" = (
 /obj/machinery/door/airlock/gannets/glass,
+/obj/access_spawn/public,
 /turf/simulated/floor/blue/checker,
 /area/ship/artemis)
 "Rb" = (
@@ -1522,6 +1553,7 @@
 /area/ship/artemis)
 "Sj" = (
 /obj/machinery/door/airlock/gannets/glass,
+/obj/access_spawn/public,
 /turf/simulated/floor/black,
 /area/ship/arjuna)
 "So" = (
@@ -1611,6 +1643,7 @@
 /area/ship/artemis)
 "TB" = (
 /obj/machinery/door/airlock/gannets/glass/command/alt,
+/obj/access_spawn/syndie_shuttle,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue4"
@@ -1666,6 +1699,7 @@
 /area/ship/artemis)
 "Vt" = (
 /obj/machinery/door/airlock/gannets/engineering/alt,
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/ship/artemis)
 "VY" = (
@@ -1777,6 +1811,7 @@
 /area/ship/artemis)
 "Yl" = (
 /obj/machinery/door/airlock/gannets/glass/medical,
+/obj/access_spawn/public,
 /turf/simulated/floor/bluegreen,
 /area/ship/arjuna)
 "YC" = (

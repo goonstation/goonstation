@@ -8,15 +8,21 @@
 	var/color = null
 	var/destination_name = null
 	var/icon_state = null
+	var/light_value
+	var/list/biome_seed = list()
 
 	New(datum/galaxy/G)
-		galactic_x = rand()*2+1 //19?
-		galactic_y = rand()*2+1 //19?
-		scale = rand()*0.5+ 0.75
+		galactic_x = G.xor_rand(1,3) //19?
+		galactic_y = G.xor_rand(1,3) //19?
+		scale =  G.xor_rand(0.75,1.25) //rand()*0.5+ 0.75
 		color = pick("#fffb00", "#FF5D06", "#009ae7", "#03c53d", "#9b59b6", "#272e30", "#FF69B4", "#633221", "#ffffff")
 		icon_state = weighted_pick(list("planet_1"=10,"planet_2"=3,"planet_3"=2))
+		light_value = clamp((log(G.xor_rand())*0.675)+0.997,0,1)
+		biome_seed += G.xor_rand()*50000
+		biome_seed += G.xor_rand()*50000
+		biome_seed += G.xor_rand()*50000
 
-		if(prob(10))
+		if(G.xor_rand() < 0.10)
 			navigable = 0
 
 		if(G && length(G.available_planets))
@@ -31,26 +37,25 @@
 						var/g = hex2num(copytext(color, 4, 6))
 						var/b = hex2num(copytext(color, 6))
 						var/hsv = rgb2hsv(r,g,b)
-						var/value = clamp((log(rand())*0.675)+0.997,0,1)
-						A.colorize_planet(hsv2rgb( hsv[1], hsv[2], value*100 ))
+						A.colorize_planet(hsv2rgb( hsv[1], hsv[2], light_value*100 ))
 						break
 
-		generate_name()
+		generate_name(G)
 		..()
 
 
-	proc/generate_name()
+	proc/generate_name(datum/galaxy/G)
 		. = ""
-		if (prob(50))
+		if (G.xor_rand() < 0.50)
 			. += pick_string("station_name.txt", "greek")
 		else
 			. += pick_string("station_name.txt", "militaryLetters")
 		. += " "
 
-		if (prob(30))
+		if (G.xor_rand() < 0.30)
 			. += pick_string("station_name.txt", "romanNum")
 		else
-			. += "[rand(2, 99)]"
+			. += "[G.xor_rand(2, 99)]"
 
 		src.name = .
 
@@ -91,16 +96,17 @@
 				biome_distro[biome_name] += length(A.biome_turfs[key])
 		else
 			//PsuedoRandom Generation Based on Galactic X/Y so reproducable
+			var/datum/galactic_object/planet/random/R = master
 			for(var/i in 1 to 15)
-				if(round(src.master.galactic_y) % i == 0) continue
-				key = biome_distro[round((src.master.galactic_x * i) % length(biome_distro))+ 1]
-				biome_distro[key] += abs(src.master.galactic_x)
-				turf_total += abs(src.master.galactic_x)
+				if(round(R.biome_seed[2]) % i == 0) continue
+				key = biome_distro[round((R.biome_seed[1] * i) % length(biome_distro))+ 1]
+				biome_distro[key] += abs(R.biome_seed[1])
+				turf_total += abs(R.biome_seed[1])
 			for(var/i in 1 to 15)
-				if(round(src.master.galactic_x) % i == 0) continue
-				key = biome_distro[round((src.master.galactic_y * i) % length(biome_distro))+ 1]
-				biome_distro[key] += abs(src.master.galactic_y)
-				turf_total += abs(src.master.galactic_y)
+				if(round(R.biome_seed[1] ) % i == 0) continue
+				key = biome_distro[round((R.biome_seed[2] * i) % length(biome_distro))+ 1]
+				biome_distro[key] += abs(R.biome_seed[2])
+				turf_total += abs(R.biome_seed[2])
 
 		for(key in biome_distro)
 			biome_distro[key] = round(biome_distro[key]/turf_total*100)
@@ -199,10 +205,10 @@
 		body_path_ship = /obj/background_star/galactic_object/large/star/random
 		var/color = null
 
-		New()
-			galactic_x = rand()*2-1 //19?
-			galactic_y = rand()*2-1 //19?
-			scale = rand()*0.5+ 0.90
+		New(datum/galaxy/G)
+			galactic_x = G.xor_rand(-1,1) //19?
+			galactic_y = G.xor_rand(-1,1) //19?
+			scale = G.xor_rand(0.90,1.4)
 			color = pick("#fffb00", "#FF5D06", "#009ae7", "#9b59b6", "#FF69B4", "#ffffff")
 			..()
 
@@ -371,12 +377,18 @@
 	galactic_x = 0.5
 	galactic_y = 0.5
 	sector = "A"
-	navigable = 1  // FALSE
+	navigable = FALSE
 	var/datum/mining_encounter/MC
 	var/rarity_mod = 0
 	var/encounter_generated = FALSE
 	var/obj/magnet_target_marker/asteroid/marker
 	var/variant
+
+	random
+		New(datum/galaxy/G)
+			..()
+			galactic_x = 1
+			galactic_y = 1
 
 /obj/background_star/galactic_object/asteroid
 	name = "Asteroid"

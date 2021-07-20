@@ -5,11 +5,14 @@ var/global/datum/galaxy/GALAXY = new
 /datum/galaxy
 	var/list/bodies = list()
 	var/list/available_planets = list("planet1", "planet2", "planet3", "planet4", "planet5", "planet6", "planet7")
-
 	var/datum/asteroid_controller/asteroids = new
+	var/seed
+	var/mangled_rand
 
 	New()
 		..()
+		seed = 513//rand(3, 50000)
+
 		src.bodies += new/datum/galactic_object/test()
 		src.bodies += new/datum/galactic_object/eyesenhower()
 		src.bodies += new/datum/galactic_object/station()
@@ -19,10 +22,21 @@ var/global/datum/galaxy/GALAXY = new
 		src.bodies += new/datum/galactic_object/asteroid
 
 		for(var/i in 1 to 3)
-			src.bodies += new/datum/galactic_object/star/random
+			src.bodies += new/datum/galactic_object/star/random(src)
 
 		for(var/i in 1 to 10)
 			src.bodies += new/datum/galactic_object/planet/random(src)
+
+	proc/xor_rand(L, H)
+		if(!src.mangled_rand)
+			mangled_rand = seed
+		mangled_rand ^= mangled_rand << 13
+		mangled_rand ^= mangled_rand >> 7
+		mangled_rand ^= mangled_rand << 17
+
+		. = mangled_rand / 0xFFFFFF
+		if(L && H)
+			. = L + ( (H-L) * (.) )
 
 	// TODO
 	proc/generate_solar_system()
