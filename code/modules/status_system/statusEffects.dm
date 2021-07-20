@@ -392,8 +392,8 @@
 				else
 					src.visible = 0
 				if (prob((stage - 2 - !!(M.traitHolder?.hasTrait("stablegenes"))) * prot) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-						boutput(M, "<span class='alert'>You mutate!</span>")
-						M.bioHolder.RandomEffect("either")
+					boutput(M, "<span class='alert'>You mutate!</span>")
+					M.bioHolder.RandomEffect("either")
 				if(prob((stage - 1) * prot) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
 					M.changeStatus("weakened", 3 SECONDS)
 					boutput(M, "<span class='alert'>You feel weak.</span>")
@@ -485,8 +485,8 @@
 				else
 					src.visible = 0
 				if (prob((stage - !!(M.traitHolder?.hasTrait("stablegenes"))) * prot) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-						boutput(M, "<span class='alert'>You mutate!</span>")
-						M.bioHolder.RandomEffect("either")
+					boutput(M, "<span class='alert'>You mutate!</span>")
+					M.bioHolder.RandomEffect("either")
 				if(prob((stage-1) * prot) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
 					M.changeStatus("weakened", 5 SECONDS)
 					boutput(M, "<span class='alert'>You feel weak.</span>")
