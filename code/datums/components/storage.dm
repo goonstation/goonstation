@@ -16,9 +16,9 @@
 	var/max_wclass = 2
 	var/slots = 7
 	var/sneaky = FALSE // does it play a sound when used?
-	var/does_not_open_in_pocket = TRUE
+	var/opens_in_pocket = FALSE
 
-/datum/component/storage/Initialize(var/list/spawn_contents, var/list/can_hold, var/in_list_or_max = FALSE, var/max_wclass = 2, var/slots = 7, var/sneaky = FALSE, var/does_not_open_in_pocket = TRUE)
+/datum/component/storage/Initialize(var/list/spawn_contents, var/list/can_hold, var/in_list_or_max = FALSE, var/max_wclass = 2, var/slots = 7, var/sneaky = FALSE, var/opens_in_pocket = FALSE)
 	if (!isobj(parent)) // future: allow all movable atoms
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, list(COMSIG_ATOM_ATTACKBY), .proc/attack_by)
@@ -42,13 +42,13 @@
 	src.max_wclass = max_wclass
 	src.slots = slots
 	src.sneaky = sneaky
-	src.does_not_open_in_pocket = does_not_open_in_pocket
+	src.opens_in_pocket = opens_in_pocket
 	if (spawn_contents)
 		make_my_stuff(spawn_contents)
 
 // since we have COMPONENT_DUPE_UNIQUE_PASSARGS, which means the old component gets passed the new component's initialization args, we should always get SC = null, original = TRUE (since new component doesn't get passed)
 // we should only get passed the other args (the new component's initialization args), if applicable
-/datum/component/storage/InheritComponent(datum/component/storage/SC, original, var/list/spawn_contents, var/list/can_hold, var/list/can_also_hold, var/in_list_or_max, var/max_wclass, var/slots, var/sneaky, var/does_not_open_in_pocket)
+/datum/component/storage/InheritComponent(datum/component/storage/SC, original, var/list/spawn_contents, var/list/can_hold, var/list/can_also_hold, var/in_list_or_max, var/max_wclass, var/slots, var/sneaky, var/opens_in_pocket)
 	if (spawn_contents)
 		make_my_stuff(spawn_contents)
 	if (can_hold)
@@ -63,8 +63,8 @@
 		src.slots = slots
 	if (!isnull(sneaky))
 		src.sneaky = sneaky
-	if (!isnull(does_not_open_in_pocket))
-		src.does_not_open_in_pocket = does_not_open_in_pocket
+	if (!isnull(opens_in_pocket))
+		src.opens_in_pocket = opens_in_pocket
 
 /datum/component/storage/disposing()
 	if (hud)
@@ -267,7 +267,7 @@
 	var/atom/A = src.parent
 	if (!src.sneaky)
 		playsound(A.loc, "rustle", 50, 1, -2)
-	if (A.loc == user && (!src.does_not_open_in_pocket || A == user.l_hand || A == user.r_hand))
+	if (A.loc == user && (!src.opens_in_pocket || A == user.l_hand || A == user.r_hand))
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.limbs)

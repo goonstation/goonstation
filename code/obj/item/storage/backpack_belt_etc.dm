@@ -36,7 +36,7 @@
 		..()
 		BLOCK_SETUP(BLOCK_LARGE)
 		AddComponent(/datum/component/itemblock/backpackblock)
-		AddComponent(/datum/component/storage, max_wclass = 3, does_not_open_in_pocket = FALSE)
+		AddComponent(/datum/component/storage, max_wclass = 3, opens_in_pocket = TRUE)
 
 /obj/item/storage/backpack/withO2
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
@@ -301,7 +301,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, max_wclass = 3, does_not_open_in_pocket = FALSE, slots = 5)
+		AddComponent(/datum/component/storage, max_wclass = 3, opens_in_pocket = TRUE, slots = 5)
 		BLOCK_SETUP(BLOCK_ROPE)
 
 /obj/item/storage/fanny/funny
@@ -349,7 +349,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, max_wclass = 2, does_not_open_in_pocket = FALSE)
+		AddComponent(/datum/component/storage, max_wclass = 2, opens_in_pocket = TRUE)
 		BLOCK_SETUP(BLOCK_ROPE)
 
 	proc/can_use()
@@ -415,7 +415,7 @@
 	New()
 		..()
 		processing_items.Add(src)
-		AddComponent(/datum/component/storage, can_hold = list(/obj/item/rcd, /obj/item/deconstructor, /obj/item/rcd_ammo), in_list_or_max = TRUE, max_wclass = 2, does_not_open_in_pocket = FALSE)
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/rcd, /obj/item/deconstructor, /obj/item/rcd_ammo), in_list_or_max = TRUE, max_wclass = 2, opens_in_pocket = TRUE)
 
 	proc/toggle()
 		if(active)
@@ -531,7 +531,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, can_hold = list(/obj/item/robodefibrillator), in_list_or_max = TRUE, max_wclass = 2, does_not_open_in_pocket = FALSE)
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/robodefibrillator), in_list_or_max = TRUE, max_wclass = 2, opens_in_pocket = TRUE)
 
 /obj/item/storage/belt/mining
 	name = "miner's belt"
@@ -541,7 +541,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, can_hold = list(/obj/item/mining_tool, /obj/item/mining_tools), in_list_or_max = TRUE, max_wclass = 2, does_not_open_in_pocket = FALSE)
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/mining_tool, /obj/item/mining_tools), in_list_or_max = TRUE, max_wclass = 2, opens_in_pocket = TRUE)
 
 /obj/item/storage/belt/hunter
 	name = "trophy belt"
@@ -551,7 +551,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, max_wclass = 3, does_not_open_in_pocket = FALSE)
+		AddComponent(/datum/component/storage, max_wclass = 3, opens_in_pocket = TRUE)
 
 /obj/item/storage/belt/security
 	name = "security toolbelt"
@@ -577,7 +577,7 @@
 		/obj/item/device/prisoner_scanner)
 
 		AddComponent(/datum/component/storage, can_hold = can_hold,\
-		in_list_or_max = TRUE, max_wclass = 2, does_not_open_in_pocket = FALSE)
+		in_list_or_max = TRUE, max_wclass = 2, opens_in_pocket = TRUE)
 	
 
 // kiki's detective shoulder (holster)
@@ -633,7 +633,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, can_hold = list(/obj/item/ammo/bullets), max_wclass = 2, does_not_open_in_pocket = FALSE)
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/ammo/bullets), max_wclass = 2, opens_in_pocket = TRUE)
 
 /obj/item/storage/belt/revolver
 	name = "revolver belt"
@@ -677,7 +677,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, can_hold = list(/obj/item/old_grenade, /obj/item/chem_grenade, /obj/item/storage/grenade_pouch, /obj/item/ammo/bullets/grenade_round), max_wclass = 2, does_not_open_in_pocket = FALSE)
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/old_grenade, /obj/item/chem_grenade, /obj/item/storage/grenade_pouch, /obj/item/ammo/bullets/grenade_round), max_wclass = 2, opens_in_pocket = TRUE)
 
 // combat medic storage 7 slot
 

@@ -11,7 +11,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, can_hold = list(/obj/item/ammo), max_wclass = 1, slots = 5, does_not_open_in_pocket = FALSE)
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/ammo), max_wclass = 1, slots = 5, opens_in_pocket = TRUE)
 
 	assault_rifle
 		name = "rifle magazine pouch"
@@ -98,7 +98,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, can_hold = list(/obj/item/old_grenade, /obj/item/chem_grenade), slots = 6, does_not_open_in_pocket = FALSE)
+		AddComponent(/datum/component/storage, can_hold = list(/obj/item/old_grenade, /obj/item/chem_grenade), slots = 6, opens_in_pocket = TRUE)
 
 	frag
 		name = "frag grenade pouch"
@@ -145,7 +145,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, slots = 4, does_not_open_in_pocket = FALSE)
+		AddComponent(/datum/component/storage, slots = 4, opens_in_pocket = TRUE)
 
 /obj/item/storage/security_pouch
 	name = "security pouch"
@@ -159,7 +159,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, slots = 6, does_not_open_in_pocket = FALSE)
+		AddComponent(/datum/component/storage, slots = 6, opens_in_pocket = TRUE)
 
 /obj/item/storage/security_pouch/assistant
 	spawn_contents = list(/obj/item/handcuffs = 2,\
@@ -179,7 +179,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, slots = 5, does_not_open_in_pocket = FALSE)
+		AddComponent(/datum/component/storage, slots = 5, opens_in_pocket = TRUE)
 
 /obj/item/storage/emp_grenade_pouch
 	name = "EMP grenade pouch"
@@ -190,7 +190,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, slots = 5, does_not_open_in_pocket = FALSE)
+		AddComponent(/datum/component/storage, slots = 5, opens_in_pocket = TRUE)
 
 /obj/item/storage/tactical_grenade_pouch
 	name = "tactical grenade pouch"
@@ -206,7 +206,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, slots = 7, does_not_open_in_pocket = FALSE)
+		AddComponent(/datum/component/storage, slots = 7, opens_in_pocket = TRUE)
 
 /obj/item/storage/sonic_grenade_pouch
 	name = "sonic grenade pouch"
@@ -218,7 +218,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, slots = 6, does_not_open_in_pocket = FALSE)
+		AddComponent(/datum/component/storage, slots = 6, opens_in_pocket = TRUE)
 
 /obj/item/storage/banana_grenade_pouch
 	name = "banana grenade pouch"
@@ -229,4 +229,4 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/storage, slots = 7, does_not_open_in_pocket = FALSE)
+		AddComponent(/datum/component/storage, slots = 7, opens_in_pocket = TRUE)
