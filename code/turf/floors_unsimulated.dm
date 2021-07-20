@@ -983,6 +983,46 @@
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT
 	icon_state_edge = "dirtedge"
 
+/turf/unsimulated/floor/auto/sand
+	name = "sand"
+	desc = "finest earth."
+	icon = 'icons/turf/outdoors.dmi'
+	icon_state = "sand_other"
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT
+	icon_state_edge = "sand_edge"
+
+	New()
+		..()
+		switch(rand(1,3))
+			if(1)
+				icon_state = "sand_other_texture"
+				src.set_dir(pick(alldirs))
+			if(2)
+				icon_state = "sand_other_texture2"
+				src.set_dir(pick(alldirs))
+			if(3)
+				icon_state = "sand_other_texture3"
+				src.set_dir(pick(cardinal))
+
+
+/turf/unsimulated/floor/auto/water
+	name = "water"
+	desc = "Who knows what could be hiding in there."
+	icon = 'icons/turf/water.dmi'
+	icon_state = "swamp0"
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_WATER
+	icon_state_edge = "swampedge"
+
+/turf/unsimulated/floor/auto/water/ice
+	name = "ice"
+	desc = "Frozen water."
+	icon = 'icons/turf/water.dmi'
+	icon_state = "ice"
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_WATER
+	icon_state_edge = "ice_edge"
+	turf_flags = MOB_SLIP
+	wet = 1
+
 /turf/unsimulated/floor/auto/swamp
 	name = "swamp"
 	desc = "Who knows what could be hiding in there."
@@ -997,6 +1037,34 @@
 			src.icon_state = "swamp_decor[rand(1, 10)]"
 		else
 			src.icon_state = "swamp0"
+
+/turf/unsimulated/floor/auto/snow
+	name = "snow"
+	desc = "Snow. Soft and fluffy."
+	icon = 'icons/turf/snow.dmi'
+	icon_state = "snow1"
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS + 1
+	icon_state_edge = "snow_edge"
+	step_material = "step_outdoors"
+	step_priority = STEP_PRIORITY_MED
+
+	New()
+		. = ..()
+		if(src.type == /turf/unsimulated/floor/auto/snow && prob(10))
+			src.icon_state = "snow[rand(1,5)]"
+
+/turf/unsimulated/floor/auto/snow/rough
+	name = "snow"
+	desc = "some piled snow."
+	icon =  'icons/turf/snow.dmi'
+	icon_state = "snow_rough1"
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS + 2
+	icon_state_edge = "snow_r_edge"
+
+	New()
+		. = ..()
+		if(prob(10))
+			src.icon_state = "snow_rough[rand(1,3)]"
 
 #undef FLOOR_AUTO_EDGE_PRIORITY_DIRT
 #undef FLOOR_AUTO_EDGE_PRIORITY_GRASS

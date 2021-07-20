@@ -222,6 +222,10 @@
 			. = ..()
 			src.dir = pick(alldirs)
 
+	snow
+		icon = 'icons/turf/snow.dmi'
+		icon_state = "snowshrub"
+
 
 //It'll show up on multitools
 /obj/shrub/syndicateplant
