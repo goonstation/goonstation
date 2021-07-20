@@ -323,7 +323,7 @@
 					I.bump_up(chat_text.measured_height)
 			chat_text.show_to(C.client)
 
-/proc/scan_medrecord(var/mob/M as mob, var/visible = 0)
+/proc/scan_medrecord(var/obj/item/device/pda2/pda, var/mob/M as mob, var/visible = 0)
 	if (!M)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
 
@@ -331,10 +331,26 @@
 		return "<span class='alert'>ERROR: INVALID DATA FROM SUBJECT</span>"
 
 	if(visible)
-		animate_scanning(M, "#acacac")
+		animate_scanning(M, "#0AEFEF")
 
 	var/mob/living/carbon/human/H = M
-	var/datum/data/record/R = data_core.general
+	var/datum/data/record/GR = FindRecordByFieldValue(data_core.general, "name", H.real_name)
+	var/datum/data/record/MR = FindRecordByFieldValue(data_core.medical, "name", H.real_name)
+	if (!MR)
+		return "<span class='alert'>ERROR: NO RECORD FOUND</span>"
+
+	//Find medical records program
+	var/list/programs = null
+	for (var/obj/item/disk/data/mod in pda.contents)
+		programs += mod.root.contents.Copy()
+	var/datum/computer/file/pda_program/records/medical/record_prog = locate(/datum/computer/file/pda_program/records/medical) in programs
+	if (!record_prog)
+		return "<span class='alert'>ERROR: NO MEDICAL RECORD FILE</span>"
+	pda.active_program = record_prog
+	record_prog.active1 = GR
+	record_prog.active2 = MR
+	record_prog.mode = 1
+	pda.attack_self(usr)
 
 /proc/scan_reagents(var/atom/A as turf|obj|mob, var/show_temp = 1, var/single_line = 0, var/visible = 0, var/medical = 0)
 	if (!A)

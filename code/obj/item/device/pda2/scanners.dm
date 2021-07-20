@@ -116,7 +116,7 @@
 			post_signal(signal, 1467)
 
 	medrecord_scan
-		name = "Medical Record Scan"
+		name = "MedTrak Scanner"
 		size = 2
 
 		scan_atom(atom/A as mob|obj|turf|area)
@@ -126,14 +126,14 @@
 			if (istype(A, /obj/machinery/clonepod))
 				var/obj/machinery/clonepod/P = A
 				if(P.occupant)
-					scan_medrecord(P.occupant)
+					scan_medrecord(src.master, P.occupant)
 					update_medical_record(P.occupant)
 
 			if (!iscarbon(A))
 				return
 			var/mob/living/carbon/C = A
 
-			. = scan_medrecord(C, visible = 1)
+			. = scan_medrecord(src.master, C, visible = 1)
 			update_medical_record(C)
 
 /datum/computer/file/electronics_scan
