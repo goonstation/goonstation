@@ -334,8 +334,8 @@
 		animate_scanning(M, "#0AEFEF")
 
 	var/mob/living/carbon/human/H = M
-	var/datum/data/record/GR = FindRecordByFieldValue(data_core.general, "name", H.real_name)
-	var/datum/data/record/MR = FindRecordByFieldValue(data_core.medical, "name", H.real_name)
+	var/datum/data/record/GR = FindRecordByFieldValue(data_core.general, "name", H.name)
+	var/datum/data/record/MR = FindRecordByFieldValue(data_core.medical, "name", H.name)
 	if (!MR)
 		return "<span class='alert'>ERROR: NO RECORD FOUND</span>"
 
