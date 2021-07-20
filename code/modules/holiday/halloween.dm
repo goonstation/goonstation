@@ -276,6 +276,11 @@
 		//src.root.add_file( new /datum/computer/file/text/hjam_rlog_3(src))
 
 //Haunted camera. It's also broken.
+/obj/item/camera/haunted
+	name = "rusty camera"
+	pictures_left = -1 // halloween magic doesn't need photos
+	steals_souls = TRUE
+
 /*
 /obj/item/camera/haunted
 	name = "rusty camera"
@@ -437,29 +442,33 @@
 			return pick("gurgles.","shivers.","twitches.","shakes.","squirms.", "cries.")
 
 /obj/item/photo/haunted
+	var/list/mob/old_bodies = list()
+
 	attack_self(mob/user as mob)
 		user.visible_message("<span class='combat'>[user] tears the photo to shreds!</span>","<span class='combat'>You tear the photo to shreds!</span>")
 		qdel(src)
 		return
 
 	disposing()
-		for(var/mob/living/carbon/wall/halloween/W in src)
-			if(W.oldbody && !W.oldbody.key)
-				if(W.mind)
-					W.mind.transfer_to(W.oldbody)
+		for(var/mob/living/M in src)
+			if(M.mind && M.key)
+				if(old_bodies?[M.key] && !(old_bodies[M.key].key))
+					M.mind.transfer_to(old_bodies[M.key])
 				else
-					W.oldbody.key = W.key
+					M.ghostize()
+			qdel(M)
+		. = ..()
 
-				var/obj/overlay/shell = W.oldbody.loc
-				if(istype(shell))
-					W.oldbody.set_loc(get_turf(W.oldbody))
-					qdel(shell)
+	proc/add_soul(var/mob/victim)
+		if(!(victim.mind) || !(victim.key))
+			return
 
-
-			W.gib()
-
-		..()
-		return
+		old_bodies[victim.key] = victim
+		var/mob/living/holder = new
+		holder.set_loc(src)
+		victim.mind.transfer_to(holder)
+		holder.name = victim.name
+		holder.real_name = victim.real_name
 
 //Haunted television
 /obj/haunted_television
