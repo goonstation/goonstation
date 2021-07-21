@@ -24,14 +24,14 @@
 		BIOME_HIGH_HUMIDITY = /datum/biome/snow/forest/thick
 		),
 	BIOME_HIGH_HEAT = list(
-		BIOME_LOW_HUMIDITY = /datum/biome/desert,
+		BIOME_LOW_HUMIDITY = /datum/biome/plains,
 		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/snow,
 		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/snow/forest,
 		BIOME_HIGH_HUMIDITY = /datum/biome/water/clear
 		)
 	)
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
-	var/perlin_zoom = 65
+	var/perlin_zoom = 85
 
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/snow_generator/generate_terrain(var/list/turfs)

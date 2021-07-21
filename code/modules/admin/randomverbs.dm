@@ -2752,9 +2752,9 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 		boutput(src, "You must be at least an Administrator to use this command.")
 #endif
 
-/client/proc/cmd_winterize_station()
+/client/proc/cmd_winterify_station()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	set name = "Winterize"
+	set name = "Winterify"
 	set desc = "Turns space into a colder snowy place"
 	admin_only
 	var/const/ambient_light = "#222"

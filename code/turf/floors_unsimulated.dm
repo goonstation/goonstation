@@ -1018,10 +1018,14 @@
 	desc = "Frozen water."
 	icon = 'icons/turf/water.dmi'
 	icon_state = "ice"
-	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_WATER
-	icon_state_edge = "ice_edge"
+	edge_priority_level = 0 //FLOOR_AUTO_EDGE_PRIORITY_WATER
+	icon_state_edge = null//"ice_edge"
 	turf_flags = MOB_SLIP
 	wet = 1
+
+	New()
+		. = ..()
+		src.icon_state = "ice[rand(1, 6)]"
 
 /turf/unsimulated/floor/auto/swamp
 	name = "swamp"
