@@ -78,11 +78,6 @@
 /obj/map/light/dimred,
 /turf/unsimulated/floor/circuit/red,
 /area/shuttle/escape/centcom/donut3)
-"jE" = (
-/obj/wingrille_spawn/auto/crystal,
-/obj/machinery/light/small/floor,
-/turf/unsimulated/floor/circuit/red,
-/area/shuttle/escape/centcom/donut3)
 "mo" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 4
@@ -494,7 +489,6 @@
 	dir = 6;
 	icon_state = "delivery2"
 	},
-/obj/machinery/light/small/floor,
 /turf/unsimulated/floor/black,
 /area/shuttle/escape/centcom/donut3)
 "Zi" = (
@@ -615,7 +609,7 @@ zx
 he
 "}
 (6,1,1) = {"
-jE
+nJ
 XE
 Kc
 WU
@@ -678,7 +672,7 @@ Wb
 Wb
 "}
 (9,1,1) = {"
-jE
+nJ
 XE
 Kc
 mG
