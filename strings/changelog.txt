@@ -1,5 +1,8 @@
 
 (t)wed jul 21 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Flashes always get 5 uses before burnout scaling begins; flash burnout scaling is much more agressive.
 (u)Kobold Commando & DimWhat
 (p)5424
 (e)🎨|sprites
