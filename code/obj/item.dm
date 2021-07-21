@@ -488,7 +488,7 @@
 					ON_COOLDOWN(global, "hotbox_adminlog", 30 SECONDS)
 					var/msg = "([src]) was set on fire on the same turf as at least ([length(hotbox_plants)]) other plants at [log_loc(src)]"
 					if (W?.firesource)
-						msg += " by item ([W]). Last touched by: [W.fingerprintslast ? "[key_name(W.fingerprintslast)]" : "*null*"].)"
+						msg += " by item ([W]). Last touched by: [key_name(W.fingerprintslast)]"
 					message_admins(msg)
 					logTheThing("bombing", W?.fingerprintslast, null, msg)
 		if (src.burn_output >= 1000)

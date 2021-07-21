@@ -204,3 +204,6 @@ var/list/clothingbooth_items = list()
 
 		else
 			boutput(user, "<span class='alert'>Someone is already working up the nerve to pull the ouccupant out.</span>")
+
+/obj/machinery/clothingbooth/Exited()
+	src.set_open(1)

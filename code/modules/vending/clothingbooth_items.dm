@@ -81,6 +81,10 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/accessory/hbow)
 	navy
 		name = "Navy Hair Bow"
 		path = /obj/item/clothing/head/hairbow/navy
+	
+	purple
+		name = "Purple Hair Bow"
+		path = /obj/item/clothing/head/hairbow/purple
 
 	purple
 		name = "Purple Hair Bow"

@@ -514,8 +514,10 @@
 		if(get_dist(source, target) > 1 || target == null || source == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-
 		var/obj/item/I = target.get_slot(slot)
+		if(!I)
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
 		if(I.handle_other_remove(source, target))
 			logTheThing("combat", source, target, "successfully pickpockets \an [I] from [constructTarget(target,"combat")]!")

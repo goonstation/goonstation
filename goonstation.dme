@@ -1728,6 +1728,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\torpedoes.dm"
 #include "code\WorkInProgress\tug.dm"
 #include "code\WorkInProgress\UrsStuff.dm"
+#include "code\WorkInProgress\VirvaStuff.dm"
 #include "code\WorkInProgress\warcrimes.dm"
 #include "code\WorkInProgress\WiresStuff.dm"
 #include "code\WorkInProgress\wizardset.dm"

@@ -341,32 +341,15 @@
 		damage_type = DAMAGE_BURN
 
 		var/howMuch = ""
-		var/stage = 0
-		var/counter = 0
-		var/stageTime = 10 SECONDS
+		var/stage = 1
 
 		getTooltip()
-			. = "You are [howMuch]irradiated.<br>Taking [damage_tox] toxin damage every [tickSpacing/(1 SECOND)] sec.<br>Damage reduced by radiation resistance on gear."
+			. = "You are [howMuch]irradiated.<br>Taking [round(damage_tox, 0.1)] toxin damage every [tickSpacing/(1 SECOND)] sec.<br>Damage reduced by radiation resistance on gear."
 
 		preCheck(var/atom/A)
 			. = 1
 			if(issilicon(A) || isobserver(A) || isintangible(A))
 				. = 0
-
-		onAdd(optional=null)
-			. = ..()
-			if(!isnull(optional) && optional >= stage)
-				stage = optional
-			else
-				stage = 5
-			icon_state = "radiation[stage]"
-
-		onChange(optional=null)
-			if(!isnull(optional) && optional >= stage)
-				stage = optional
-			else
-				stage = 5
-			icon_state = "radiation[stage]"
 
 		onUpdate(timePassed)
 			if(locate(/obj/item/implant/health) in owner)
@@ -374,78 +357,47 @@
 			else
 				src.visible = 0
 
-			counter += timePassed
-			if(counter >= stageTime)
-				counter -= stageTime
-				stage = max(stage-1, 1)
 
 			var/mob/M = null
 			if(ismob(owner))
 				M = owner
-				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, stage)
-				if(locate(/obj/item/implant/health) in M)
-					src.visible = 1
-				else
-					src.visible = 0
 
 			var/prot = 1
 			if(istype(owner, /mob/living))
 				var/mob/living/L = owner
 				prot = (1 - (L.get_rad_protection() / 100))
 
-			switch(stage)
-				if(1)
-					damage_tox = (1 * prot)
+			damage_tox = (sqrt(duration/20 + 5) - 1) * prot
+			switch(duration/(1 SECOND))
+				if(0 to 10)
 					howMuch = ""
-
-				if(2)
-					damage_tox = (2 * prot)
+					stage = 1
+				if(10 to 20)
 					howMuch = "significantly "
-					var/chance = (2 * prot)
-					if(prob(chance) && M)
-						if (M.bioHolder && !M.bioHolder.HasEffect("revenant"))
-							M.changeStatus("weakened", 3 SECONDS)
-							boutput(M, "<span class='alert'>You feel weak.</span>")
-							M.emote("collapse")
-				if(3)
-					damage_tox = (3 * prot)
+					stage = 2
+				if(20 to 45)
 					howMuch = "very much "
-					if (M)
-						var/mutChance = (1 * prot)
-
-						if (M.traitHolder?.hasTrait("stablegenes"))
-							mutChance = 0
-						if (mutChance < 1) mutChance = 0
-
-						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span class='alert'>You mutate!</span>")
-							M.bioHolder.RandomEffect("either")
-				if(4)
-					damage_tox = (4 * prot)
+					stage = 3
+				if(45 to 90)
 					howMuch = "extremely "
-					if (M)
-						var/mutChance = (2 * prot)
-
-						if (M.traitHolder?.hasTrait("stablegenes"))
-							mutChance = (1 * prot)
-						if (mutChance < 1) mutChance = 0
-
-						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span class='alert'>You mutate!</span>")
-							M.bioHolder.RandomEffect("either")
-				if(5)
-					damage_tox = (4.5 * prot)
+					stage = 4
+				if(90 to INFINITY)
 					howMuch = "horribly "
-					if (M)
-						var/mutChance = (3 * prot)
+					stage = 5
 
-						if (M.traitHolder?.hasTrait("stablegenes"))
-							mutChance = (2 * prot)
-						if (mutChance < 1) mutChance = 0
-
-						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span class='alert'>You mutate!</span>")
-							M.bioHolder.RandomEffect("either")
+			if(M)
+				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, stage)
+				if(locate(/obj/item/implant/health) in M)
+					src.visible = 1
+				else
+					src.visible = 0
+				if (prob((stage - 2 - !!(M.traitHolder?.hasTrait("stablegenes"))) * prot) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+					boutput(M, "<span class='alert'>You mutate!</span>")
+					M.bioHolder.RandomEffect("either")
+				if(prob((stage - 1) * prot) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
+					M.changeStatus("weakened", 3 SECONDS)
+					boutput(M, "<span class='alert'>You feel weak.</span>")
+					M.emote("collapse")
 
 			icon_state = "radiation[stage]"
 
@@ -466,12 +418,10 @@
 		damage_type = DAMAGE_STAB | DAMAGE_BURN
 
 		var/howMuch = ""
-		var/stage = 0
-		var/counter = 0
-		var/stageTime = 20 SECONDS
+		var/stage = 1
 
 		getTooltip()
-			. = "You are [howMuch]irradiated by neutrons.<br>Taking [damage_tox] toxin damage every [tickSpacing/(1 SECOND)] sec and [damage_brute] brute damage every [tickSpacing/(1 SECOND)] sec.<br>Damage reduced by radiation resistance on gear."
+			. = "You are [howMuch]irradiated by neutrons.<br>Taking [round(damage_tox, 0.1)] toxin damage every [tickSpacing/(1 SECOND)] sec and [round(damage_brute, 0.1)] brute damage every [tickSpacing/(1 SECOND)] sec.<br>Damage reduced by radiation resistance on gear."
 
 		preCheck(var/atom/A)
 			. = 1
@@ -487,13 +437,8 @@
 				else
 					owner.add_medium_light("neutron_rad", list(4, 62, 155, stage * 50))
 
-
 		onAdd(optional=null)
 			. = ..()
-			if(!isnull(optional) && optional >= stage)
-				stage = optional
-			else
-				stage = 5
 			update_lights()
 
 		onRemove()
@@ -501,80 +446,52 @@
 			. = ..()
 
 		onChange(optional=null)
-			if(!isnull(optional) && optional >= stage)
-				stage = optional
-			else
-				stage = 5
-			icon_state = "nradiation[stage]"
+			. = ..()
 			update_lights()
 
 		onUpdate(timePassed)
-			counter += timePassed
-
-			if(counter >= stageTime)
-				counter -= stageTime
-				stage = max(stage-1, 1)
-				update_lights()
 
 			var/mob/M = null
-			if(ismob(owner))
-				M = owner
-				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, stage)
-				if(locate(/obj/item/implant/health) in M)
-					src.visible = 1
-				else
-					src.visible = 0
 
 			var/prot = 1
 			if(istype(owner, /mob/living))
 				var/mob/living/L = owner
 				prot = (1 - (L.get_rad_protection() / 100))
 
-			damage_tox = (stage * prot)
-			damage_brute = ((stage/2) * prot)
+			damage_tox = (sqrt(duration/20 + 5) - 0.5) * prot
+			damage_brute = damage_tox/2
 
-			switch(stage)
-				if(1)
+			switch(duration/(1 SECOND))
+				if(0 to 10)
 					howMuch = ""
-				if(2)
+					stage = 1
+				if(10 to 20)
 					howMuch = "significantly "
-					var/chance = (2 * prot)
-					if(prob(chance) && M)
-						if (M.bioHolder && !M.bioHolder.HasEffect("revenant"))
-							M.changeStatus("weakened", 5 SECONDS)
-							boutput(M, "<span class='alert'>You feel weak.</span>")
-							M.emote("collapse")
-				if(3)
+					stage = 2
+				if(20 to 30)
 					howMuch = "very much "
-					if (M)
-						var/mutChance = (3 * prot)
-						if (M.traitHolder?.hasTrait("stablegenes"))
-							mutChance = 0
-						if (mutChance < 1) mutChance = 0
-						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span class='alert'>You mutate!</span>")
-							M.bioHolder.RandomEffect("either")
-				if(4)
+					stage = 3
+				if(30 to 60)
 					howMuch = "extremely "
-					if (M)
-						var/mutChance = (4 * prot)
-						if (M.traitHolder?.hasTrait("stablegenes"))
-							mutChance = (3 * prot)
-						if (mutChance < 1) mutChance = 0
-						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span class='alert'>You mutate!</span>")
-							M.bioHolder.RandomEffect("either")
-				if(5)
+					stage = 4
+				if(60 to INFINITY)
 					howMuch = "horribly "
-					if (M)
-						var/mutChance = (5 * prot)
-						if (M.traitHolder?.hasTrait("stablegenes"))
-							mutChance = (4 * prot)
-						if (mutChance < 1) mutChance = 0
-						if (prob(mutChance) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-							boutput(M, "<span class='alert'>You mutate!</span>")
-							M.bioHolder.RandomEffect("either")
+					stage = 5
 
+			if(M)
+				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, stage)
+				if(locate(/obj/item/implant/health) in M)
+					src.visible = 1
+				else
+					src.visible = 0
+				if (prob((stage - !!(M.traitHolder?.hasTrait("stablegenes"))) * prot) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+					boutput(M, "<span class='alert'>You mutate!</span>")
+					M.bioHolder.RandomEffect("either")
+				if(prob((stage-1) * prot) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
+					M.changeStatus("weakened", 5 SECONDS)
+					boutput(M, "<span class='alert'>You feel weak.</span>")
+					M.emote("collapse")
+			update_lights()
 			icon_state = "nradiation[stage]"
 
 			return ..(timePassed)
