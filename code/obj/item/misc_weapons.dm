@@ -1557,18 +1557,20 @@ obj/item/whetstone
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "welder_machete"
 	item_state = "welder_machete"
-	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi' //i'll change this once i get an inhand that isn't ass
-	force = 20.0
-	throwforce = 25
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi' //i'll change this once i get an inhand that isn't ass
+	force = 10.0
+	throwforce = 10
 	item_function_flags = IMMUNE_TO_ACID
 	var/welder_key = ""
 	New()
 		. = ..()
 		START_TRACKING
+		START_TRACKING_CAT(TR_CAT_DEATH_TRACKING_ITEMS)
 
 	disposing()
 		. = ..()
 		STOP_TRACKING
+		STOP_TRACKING_CAT(TR_CAT_DEATH_TRACKING_ITEMS)
 
 	attack_hand(var/mob/user as mob)
 		if (user.mind)

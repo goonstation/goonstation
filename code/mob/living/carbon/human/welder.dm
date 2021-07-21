@@ -53,9 +53,11 @@
 				APPLY_MOB_PROPERTY(src, PROP_NEVER_DENSE, src)
 				APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 				APPLY_MOB_PROPERTY(src, PROP_NO_MOVEMENT_PUFFS, src)
+				src.nodamage = TRUE
 				src.alpha = 160
 				src.see_invisible = 16
 				src.client.flying = 1
+				update_machete_damage()
 
 
 		corporealize()
@@ -72,7 +74,9 @@
 				src.alpha = 254
 				src.see_invisible = 0
 				src.visible_message("<span class='alert'>[src] appears out of the shadows!</span>")
+				src.nodamage = FALSE
 				src.client.flying = 0
+				update_machete_damage()
 
 		blood_trail()
 			if(src.trailing_blood == FALSE)
@@ -198,10 +202,13 @@
 			boutput(M, "<span class='notice'>Oh god...</span>")
 			M.emote("scream")
 			M.emote("faint")
-			M.setStatus("weakened", max(M.getStatusDuration("weakened"), 10 SECONDS))
-			M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 10 SECONDS))
+			M.setStatus("weakened", max(M.getStatusDuration("weakened"), 8 SECONDS))
+			M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 8 SECONDS))
 			sleep(8 SECONDS)
 
+			var/turf/T = get_turf(M)
+			new /obj/overlay/darkness_field(T, 3 SECONDS, radius = 3, max_alpha = 220)
+			new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 3 SECONDS, radius = 3, max_alpha = 220)
 			M.visible_message("<span class='alert'>A brown apron and welding mask form out of the shadows on [M]!</span>")
 			M.drop_from_slot(M.slot_head)
 			M.drop_from_slot(M.slot_wear_suit)
@@ -211,6 +218,8 @@
 			M.equip_new_if_possible(/obj/item/clothing/under/color/unremovable, M.slot_w_uniform) //maybe replace with a boiler suit or something
 			M.equip_new_if_possible(/obj/item/kitchen/utensil/knife/welder/possessed, M.slot_r_hand)
 			M.equip_new_if_possible(/obj/item/clothing/gloves/black/welder, slot_gloves)
+			src.setStatus("incorporeal", duration = INFINITE_STATUS)
+			src.nodamage = TRUE
 			src.set_density(0)
 			APPLY_MOB_PROPERTY(src, PROP_NEVER_DENSE, src)
 			APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
@@ -218,7 +227,7 @@
 			src.alpha = 160
 
 			var/mob/dead/O = M.ghostize()
-			boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span><br><b>Humans, Cyborgs, and other living beings will appear only as static silhouettes, and you should avoid interacting with them.</b><br><br>You can speak to your fellow Ghostdrones by talking normally (default: push T). You can talk over deadchat with other ghosts by starting your message with ';'.")
+			boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
 			if (O.mind)
 				O.Browse(grabResource("html/welder_possession.html"),"window=welder_possession;size=600x440;title=Welder Possession")
 			usr.mind.swap_with(M)
@@ -243,6 +252,16 @@
 
 		regenerate()
 			src.full_heal() //this won't turn out badly
+			src.visible_message("<span class='alert'>[src] appears to partially dissolve into the shadows, but then reforms!</span>")
+
+		update_machete_damage()
+			var/obj/item/I
+			var/D = game_stats.GetStat("playerdeaths")
+			if (length(by_cat[TR_CAT_DEATH_TRACKING_ITEMS]))
+				for (I as anything in by_cat[TR_CAT_DEATH_TRACKING_ITEMS])
+					I.force = (initial(I.force) + (D * 2))
+					I.throwforce = (initial(I.throwforce) + (D * 2.5))
+					I.tooltip_rebuild = 1
 
 		addAllAbilities()
 			src.addAbility(/datum/targetable/welder/incorporeal)
@@ -327,7 +346,6 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 	cast()
 		if(..())
 			return 1
-
 		var/mob/living/carbon/human/welder/W = src.holder.owner
 		return W.summon_knife()
 
