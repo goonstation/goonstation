@@ -44,7 +44,7 @@
 	var/linkbg_color = "#565D4B"
 	var/graphic_mode = 0
 
-	var/setup_default_pen = pick(/obj/item/pen,/obj/item/pen/pencil,/obj/item/pen/marker/random) //PDAs contain writing implements by default
+	var/setup_default_pen = /obj/item/pen //PDAs can contain writing implements by default
 	var/setup_default_cartridge = null //Cartridge contains job-specific programs
 	var/setup_drive_size = 32 //PDAs don't have much work room at all, really.
 	// 2020 zamu update: 24 -> 32
@@ -912,10 +912,9 @@
 				src.pen.set_loc(T)
 			src.pen = null
 			src.UpdateOverlays(null, "pen")
-			boutput(user, "<span class='notice'>You eject [insertedPen] from [src].</span>")
 			return
 
-	proc/insert_pen(obj/item/insertedPen, mob/user)
+	proc/insert_pen(var/obj/item/insertedPen, mob/user)
 		if (!istype(insertedPen))
 			return
 		if (user)
