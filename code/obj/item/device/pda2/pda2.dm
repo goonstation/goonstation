@@ -914,7 +914,7 @@
 			src.UpdateOverlays(null, "pen")
 			return
 
-	proc/insert_pen(var/obj/item/insertedPen, mob/user)
+	proc/insert_pen(obj/item/insertedPen, mob/user)
 		if (!istype(insertedPen))
 			return
 		if (user)
