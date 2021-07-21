@@ -1927,9 +1927,10 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	wages = PAY_UNTRAINED
 	limit = 1
 	change_name_on_spawn = 1
-	slot_head = list(/obj/item/clothing/head/green)
+	slot_head = list(/obj/item/clothing/head/biglizard)
 	slot_ears = list(/obj/item/device/radio/headset)
 	slot_jump = list(/obj/item/clothing/under/color/green)
+	slot_suit = list(/obj/item/clothing/suit/gimmick/dinosaur)
 	slot_belt = list(/obj/item/device/pda2)
 	slot_poc1 = list(/obj/item/toy/figure)
 	slot_poc2 = list(/obj/item/toy/figure)

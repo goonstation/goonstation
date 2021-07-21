@@ -355,7 +355,8 @@
 		src.update_cursor()
 		hud.update_throwing()
 
-	proc/throw_item(atom/target, list/params)
+	throw_item(atom/target, list/params)
+		..()
 		if (!can_throw)
 			return
 		src.throw_mode_off()
