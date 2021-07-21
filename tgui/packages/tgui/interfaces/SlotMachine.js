@@ -49,7 +49,7 @@ const InsertCard = (props, context) => {
 
 const SlotWindow = (props, context) => {
   const { act, data } = useBackend(context);
-  const { scannedCard, money, plays } = data;
+  const { scannedCard, money, account_funds, plays } = data;
 
   return (
     <Box>
@@ -61,9 +61,25 @@ const SlotWindow = (props, context) => {
         <Button
           icon="eject"
           content={scannedCard}
-          tooltip="Eject Card"
+          tooltip="Pull Funds and Eject Card"
           tooltipPosition="bottom-right"
           onClick={() => act('eject')} />
+      </Box>
+      <Box>
+        <strong>Account Balance:</strong>
+        <Icon name="dollar-sign" /> { account_funds }
+        {' '}
+        <Button
+          content="Cash In"
+          tooltip="Add Funds"
+          tooltipPosition="right"
+          onClick={() => act('cashin')} />
+        {' '}
+        <Button
+          content="Cash Out"
+          tooltip="Pull Funds"
+          tooltipPosition="right"
+          onClick={() => act('cashout')} />
       </Box>
       <Box mb="0.75em">
         <strong>Credits Remaining:</strong>

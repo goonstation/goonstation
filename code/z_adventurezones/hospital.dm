@@ -282,8 +282,6 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	heal_amt = 1
 	g_amt = 60
 	initial_volume = 250
-	module_research = list("vice" = 10)
-	initial_reagents = list("porktonium"=30,"ethanol"=30)
 
 /*	New()
 		..()

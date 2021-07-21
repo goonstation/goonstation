@@ -1510,7 +1510,7 @@
 	},
 /area/radiostation/podbay)
 "aes" = (
-/obj/structure/puttframe,
+/obj/structure/vehicleframe/puttframe,
 /obj/item/shipcomponent/life_support,
 /obj/decal/cleanable/oil/streak,
 /obj/machinery/light_switch/north{

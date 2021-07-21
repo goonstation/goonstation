@@ -99,10 +99,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 					return
 				if(4)
 					user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>There wasn't enough ammo left in [b.name] to fully reload [src]. It only has [src.ammo.amount_left] rounds remaining.</span>")
+					src.tooltip_rebuild = 1
 					src.logme_temp(user, src, b) // Might be useful (Convair880).
 					return
 				if(5)
 					user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You fully reload [src] with ammo from [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
+					src.tooltip_rebuild = 1
 					src.logme_temp(user, src, b)
 					return
 				if(6)
@@ -687,13 +689,17 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.update_icon()
 			src.casings_to_eject = 0
 
-
-
 	attack_self(mob/user as mob)
 		..()
+		src.rack(user)
+
+	proc/rack(var/atom/movable/user)
+		var/mob/mob_user = null
+		if(ismob(user))
+			mob_user = user
 		if (!src.racked_slide) //Are we racked?
 			if (src.ammo.amount_left == 0)
-				boutput(user, "<span class ='notice'>You are out of shells!</span>")
+				boutput(mob_user, "<span class ='notice'>You are out of shells!</span>")
 				update_icon()
 			else
 				src.racked_slide = TRUE
@@ -703,7 +709,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 					animate(icon_state = "shotty[gilded ? "-golden" : ""]")
 				else
 					update_icon() // Slide already open? Just close the slide
-				boutput(user, "<span class='notice'>You rack the slide of the shotgun!</span>")
+				boutput(mob_user, "<span class='notice'>You rack the slide of the shotgun!</span>")
 				playsound(user.loc, "sound/weapons/shotgunpump.ogg", 50, 1)
 				src.casings_to_eject = 0
 				if (src.ammo.amount_left < 8) // Do not eject shells if you're racking a full "clip"

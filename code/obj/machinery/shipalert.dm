@@ -135,4 +135,3 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 	stamina_damage = 33
 	stamina_cost = 18
 	stamina_crit_chance = 10
-	module_research = list("tools" = 4, "metals" = 2)

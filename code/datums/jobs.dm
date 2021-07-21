@@ -1351,6 +1351,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_poc1 = list(/obj/item/pen/crayon/white)
 	slot_poc2 = list(/obj/item/paper)
+	items_in_backpack = list(/obj/item/baguette)
 	change_name_on_spawn = 1
 
 	New()
@@ -1809,13 +1810,15 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	name = "WannaBEE"
 	wages = PAY_UNTRAINED
 	limit = 1
-	slot_suit = list(/obj/item/clothing/suit/bee)
-	slot_ears = list(/obj/item/device/radio/headset)
-	slot_jump = list(/obj/item/clothing/under/rank/beekeeper)
-	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_belt = list(/obj/item/device/pda2)
-	slot_poc1 = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/bee)
-	slot_poc2 = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy)
+
+	slot_head = /obj/item/clothing/head/headband/bee
+	slot_suit = /obj/item/clothing/suit/bee
+	slot_ears = /obj/item/device/radio/headset
+	slot_jump = /obj/item/clothing/under/rank/beekeeper
+	slot_foot = /obj/item/clothing/shoes/black
+	slot_belt = /obj/item/device/pda2
+	slot_poc1 = /obj/item/reagent_containers/food/snacks/ingredient/egg/bee
+	slot_poc2 = /obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy
 	items_in_backpack = list(/obj/item/reagent_containers/food/snacks/b_cupcake, /obj/item/reagent_containers/food/snacks/ingredient/royal_jelly)
 
 	New()
@@ -1924,9 +1927,10 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	wages = PAY_UNTRAINED
 	limit = 1
 	change_name_on_spawn = 1
-	slot_head = list(/obj/item/clothing/head/green)
+	slot_head = list(/obj/item/clothing/head/biglizard)
 	slot_ears = list(/obj/item/device/radio/headset)
 	slot_jump = list(/obj/item/clothing/under/color/green)
+	slot_suit = list(/obj/item/clothing/suit/gimmick/dinosaur)
 	slot_belt = list(/obj/item/device/pda2)
 	slot_poc1 = list(/obj/item/toy/figure)
 	slot_poc2 = list(/obj/item/toy/figure)
@@ -2086,7 +2090,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_foot = list(/obj/item/clothing/shoes/tourist)
 	slot_belt = list(/obj/item/storage/belt/utility/superhero)
 	slot_back = list()
-	slot_poc2 = list(/obj/item/device/pda2
+	slot_poc2 = list(/obj/item/device/pda2)
 
 	New()
 		..()
@@ -2533,6 +2537,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_poc1 = list(/obj/item/pen/crayon/white)
 	slot_poc2 = list(/obj/item/paper)
+	items_in_backpack = list(/obj/item/baguette)
 	change_name_on_spawn = 1
 
 	New()

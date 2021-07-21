@@ -15,8 +15,6 @@
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	amount_per_transfer_from_this = 10
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
-	module_research = list("science" = 0.5, "medicine" = 0.5)
-	module_research_type = /obj/item/reagent_containers/glass/bottle
 
 	New()
 		if (!src.bottle_style)

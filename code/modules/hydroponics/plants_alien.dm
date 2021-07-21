@@ -145,6 +145,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	cropsize = 3
 	harvests = 6
 	endurance = 0
+	mutations = list(/datum/plantmutation/dripper/leaker)
 	assoc_reagents = list("plasma")
 
 /datum/plant/artifact/rocks
@@ -159,7 +160,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	harvests = 8
 	endurance = 40
 	force_seed_on_harvest = 1
-	mutations = list(/datum/plantmutation/rocks/syreline,/datum/plantmutation/rocks/bohrum,/datum/plantmutation/rocks/mauxite,/datum/plantmutation/rocks/erebite)
+	mutations = list(/datum/plantmutation/rocks/syreline,/datum/plantmutation/rocks/bohrum,/datum/plantmutation/rocks/mauxite,/datum/plantmutation/rocks/uqill)
 
 /datum/plant/artifact/litelotus
 	name = "Light Lotus"
@@ -167,12 +168,12 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	crop = /obj/item/reagent_containers/food/snacks/plant/glowfruit
 	unique_seed = /obj/item/seed/alien/litelotus
 	starthealth = 30
-	growtime = 280
-	harvtime = 300
-	cropsize = 2
-	harvests = 2
+	growtime = 300
+	harvtime = 400
+	cropsize = 1
+	harvests = 1
 	endurance = 20
-	assoc_reagents = list("omnizine")
+	assoc_reagents = list("luminol")
 
 /datum/plant/artifact/plasma
 	name = "Plasma"

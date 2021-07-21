@@ -112,6 +112,10 @@
 /// Make cloaking devices turn off
 #define COMSIG_CLOAKING_DEVICE_DEACTIVATE "cloak_deactivate"
 
+// ---- disguiser device signal ----
+/// Make disguiser devices turn off
+#define COMSIG_DISGUISER_DEACTIVATE "disguiser_deactivate"
+
 // ---- implant signals ----
 /// When implanted
 #define COMSIG_IMPLANT_IMPLANTED "implant_implanted"
@@ -154,6 +158,9 @@
 #define COMSIG_MOB_PICKUP "mob_pickup"
 
 #define COMSIG_MOB_DROPPED "mob_drop"
+
+/// sent when a mob throws something (target, params)
+#define COMSIG_MOB_THROW_ITEM "throw_item"
 
 /// sent when radiation status ticks on mob (stage)
 #define COMSIG_MOB_GEIGER_TICK "mob_geiger"

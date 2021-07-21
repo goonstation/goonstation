@@ -6,7 +6,6 @@
 	force = 5.0
 	artifact = 1
 	is_syndicate = 1
-	module_research_no_diminish = 1
 	mat_changename = 0
 	mat_changedesc = 0
 
@@ -119,8 +118,6 @@
 	react_xray = list(10,75,100,11,"CAVITY")
 	var/list/datum/projectile/artifact/bullets = list()
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
-	module_research = list("weapons" = 8, "energy" = 8)
-	module_research_insight = 3
 
 	New()
 		..()
