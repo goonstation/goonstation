@@ -1,4 +1,10 @@
 
+(t)wed jul 21 21
+(u)Kobold Commando & DimWhat
+(p)5424
+(e)🎨|sprites
+(*)Added several new clothing items to the clothing booth and two backpacks to Geoff Honkington.
+(+)Changed the clothing of a certain lizardy halloween role
 (t)tue jul 20 21
 (u)Tarmunora
 (e)⚖|balance
