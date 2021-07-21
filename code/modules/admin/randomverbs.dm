@@ -2772,7 +2772,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 					space += S
 				map_generator.generate_terrain(space)
-				for (var/turf/S in space)
+				for (var/turf/S as anything in space)
 					I.color = ambient_light
 					S.UpdateOverlays(I, "ambient")
 				logTheThing("admin", src, null, "turned space into a snowscape.")
