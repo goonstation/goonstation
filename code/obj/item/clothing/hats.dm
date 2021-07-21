@@ -1578,3 +1578,9 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
 		desc = "A huge bow that goes on your head. This one is flashing all kinds of colors! Whoa."
 		icon_state = "hbow-flashy"
 		item_state = "hbow-flashy"
+
+	yellowpolkadot
+		name = "yellow polka-dot hairbow"
+		desc = "A huge bow that goes on your head. This one is yellow and has polka dots. Not itsy bitsy or teeny weeny."
+		icon_state = "hbow-yellowpolkadot"
+		item_state = "hbow-yellowpolkadot"
