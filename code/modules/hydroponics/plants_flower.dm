@@ -47,7 +47,7 @@ ABSTRACT_TYPE(/datum/plant/flower)
 		var/spray_prob = max(30,(30 + DNA.endurance / 10))
 	
 		if (POT.growth > (P.growtime - DNA.growtime) && prob(spray_prob))
-			POT.reagents.clear_reagents()
+			POT.reagents.clear_reagents() // Prevents smoking anything you spill into the pot,  that and pottasium water explosions.
 			for(var/REAG in assoc_reagents)
 				POT.reagents.add_reagent(REAG, max(1,(1 + DNA.potency / 5)))
 			POT.reagents.add_reagent("sugar", max(1,(1 + DNA.potency / 5)))
