@@ -199,6 +199,7 @@
 
 	forensic
 		icon_state = "pda-s"
+		setup_default_pen = /obj/item/clothing/mask/cigarette
 		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
