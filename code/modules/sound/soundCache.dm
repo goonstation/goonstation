@@ -653,6 +653,7 @@ var/global/list/soundCache = list(
  	"sound/machines/phones/phone_busy.ogg" = 'sound/machines/phones/phone_busy.ogg',\
  	"sound/machines/phones/pick_up.ogg" = 'sound/machines/phones/pick_up.ogg',\
  	"sound/machines/phones/remote_answer.ogg" = 'sound/machines/phones/remote_answer.ogg',\
+ 	"sound/machines/phones/remote_hangup.ogg" = 'sound/machines/phones/remote_hangup.ogg',\
  	"sound/machines/phones/ring_incoming.ogg" = 'sound/machines/phones/ring_incoming.ogg',\
  	"sound/machines/phones/ring_outgoing.ogg" = 'sound/machines/phones/ring_outgoing.ogg',\
  	"sound/machines/phones/ringtones/bananaring1.ogg" = 'sound/machines/phones/ringtones/bananaring1.ogg',\
