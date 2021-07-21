@@ -160,6 +160,16 @@
 	icon_state = "bp_bear"
 	item_state = "bp_bear"
 
+/obj/item/storage/backpack/turtlebrown
+	name = "brown turtle shell backpack"
+	desc = "A backpack that looks like a brown turtleshell. How childish!"
+	icon_state = "bp_turtle_brown"
+
+/obj/item/storage/backpack/turtlegreen
+	name = "green turtle shell backpack"
+	desc = "A backpack that looks like a green turtleshell. Cowabunga!"
+	icon_state = "bp_turtle_green"
+
 /obj/item/storage/backpack/satchel
 	name = "satchel"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder."
@@ -281,6 +291,18 @@
 	desc = "An adorable friend that is perfect for hugs AND carries your gear for you, how helpful!"
 	icon_state = "sat_bear"
 	item_state = "sat_bear"
+
+/obj/item/storage/backpack/satchel/turtlebrown
+	name = "brown turtle shell satchel"
+	desc = "A satchel that looks like a brown turtleshell. How childish!"
+	icon_state = "sat_turtle_brown"
+	item_state = "sat_turtle_brown"
+
+/obj/item/storage/backpack/satchel/turtlegreen
+	name = "green turtle shell satchel"
+	desc = "A satchel that looks like a green turtleshell. Cowabunga!"
+	icon_state = "sat_turtle_green"
+	item_state = "sat_turtle_green"
 
 /* -------------------- Fanny Packs -------------------- */
 

@@ -2340,6 +2340,10 @@
 /mob/onVarChanged(variable, oldval, newval)
 	update_clothing()
 
+/mob/proc/throw_item(atom/target, list/params)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_THROW_ITEM, target, params)
+
 /mob/throw_impact(atom/hit, datum/thrown_thing/thr)
 	if(!isturf(hit) || hit.density)
 		if (thr?.get_throw_travelled() <= 410)
