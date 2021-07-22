@@ -46,7 +46,7 @@ ABSTRACT_TYPE(/datum/plant/flower)
 		var/datum/plantgenes/DNA = POT.plantgenes	
 		var/spray_prob = max(30,(30 + DNA.endurance / 10))
 		var/reagents_temp = new/datum/reagents(100) // Creating a temporary chem holder
-		var/reagents_temp.my_atom = src
+		reagents_temp.my_atom = src
 	
 		if (POT.growth > (P.harvtime - DNA.growtime) && prob(spray_prob))
 			for(var/REAG in assoc_reagents)
