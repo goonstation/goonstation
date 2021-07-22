@@ -918,6 +918,15 @@ This is basically useless for anyone but miners.
 	desc = "A roll of duct tape for makeshift handcuffs. Lets you restrain someone 10 times before being used up."
 	blockedmode = list(/datum/game_mode/revolution)
 
+/datum/syndicate_buylist/traitor/dablicense
+	name = "Syndicate Dabbing License"
+	item = /obj/item/card/id/dabbing_license/syndie
+	cost = 4
+	desc = "Using all new ID tech this dab license steals the access of anyone you dab on! Also prevents dabbing your arms off."
+	job = list("Staff Assistant")
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+	vr_allowed = 0
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 /datum/syndicate_buylist/surplus

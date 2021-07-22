@@ -206,6 +206,7 @@ GAUNTLET CARDS
 	var/dabbed_on_count = 0
 	var/arm_count = 0
 	var/brain_damage_count = 0
+	var/stealsaccess = 0
 	New()
 		access = list()
 		..()
@@ -222,6 +223,11 @@ GAUNTLET CARDS
 
 	src.add_fingerprint(user)
 	return
+
+/obj/item/card/id/dabbing_license/syndie // why did I code this
+	desc = "This card authorizes the person wearing it to perform sick dabs. It seems extra illegal"
+	assignment = "Expert Dabber"
+	stealsaccess = 1
 
 /obj/item/card/id/captains_spare/explosive
 	pickup(mob/user)

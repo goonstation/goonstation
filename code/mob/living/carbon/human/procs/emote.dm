@@ -2106,7 +2106,7 @@
 					if(src.reagents) src.reagents.add_reagent("dabs",5)
 
 
-					if(prob(92) && (!src.reagents.has_reagent("extremedabs")))
+					if(prob(92) && (!src.reagents.has_reagent("extremedabs")) || istype(dab_id, /obj/item/card/id/dabbing_license/syndie))
 						dabbify()
 						var/get_dabbed_on = 0
 						if(locate(/mob/living) in range(1, src))
@@ -2120,7 +2120,19 @@
 										M.emote("cry") //You should be ashamed
 									if(dab_id)
 										dab_id.dabbed_on_count++
-
+									if(dab_id.stealsaccess == 1) //takes access and makes the victim a staffie
+										var/obj/item/D = M.wear_id
+										if(istype(D,/obj/item/device/pda2))
+											var/obj/item/device/pda2/P = D
+											if(P.ID_card)
+												D = P.ID_card
+										if(istype(D,/obj/item/card/id))
+											var/obj/item/card/id/their_id = D
+											dab_id.access |= their_id.access
+											their_id.access = get_access("Staff Assistant") // you are now staffie
+											their_id.assignment = "Staff Assistant"
+											their_id.icon_state = "id_civ"
+											boutput(M, "<span class='alert'>You feel empty inside</span>")
 						if(get_dabbed_on == 0)
 							if (src.mind && src.mind.assigned_role == "Clown")
 								message = "<B>[src]</B> [pick("performs a sick dab", "dabs on the haters", "shows everybody [his_or_her(src)] dope dab skills", "performs a wicked dab", "dabs like nobody has dabbed before", "shows everyone how they dab in the circus")]!!!"
