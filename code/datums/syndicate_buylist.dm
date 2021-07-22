@@ -921,7 +921,7 @@ This is basically useless for anyone but miners.
 /datum/syndicate_buylist/traitor/dablicense
 	name = "Syndicate Dabbing License"
 	item = /obj/item/card/id/dabbing_license/syndie
-	cost = 4
+	cost = 3
 	desc = "Using all new ID tech this dab license steals the access of anyone you dab on! Also prevents dabbing your arms off."
 	job = list("Staff Assistant")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
