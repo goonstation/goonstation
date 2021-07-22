@@ -50,6 +50,4 @@ ABSTRACT_TYPE(/datum/plant/flower)
 			POT.reagents.clear_reagents() // Prevents smoking anything you spill into the pot,  that and pottasium water explosions.
 			for(var/REAG in assoc_reagents)
 				POT.reagents.add_reagent(REAG, max(1,(1 + DNA.potency / 5)))
-			POT.reagents.add_reagent("sugar", max(1,(1 + DNA.potency / 5)))
-			POT.reagents.add_reagent("phosphorus", max(1,(1 + DNA.potency / 5)))
-			POT.reagents.add_reagent("potassium", max(1,(1 + DNA.potency / 5)))
+			POT.reagents.smoke_start
