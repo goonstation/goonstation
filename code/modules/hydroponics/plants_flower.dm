@@ -44,13 +44,13 @@ ABSTRACT_TYPE(/datum/plant/flower)
 		if (.) return
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes	
-		var/spray_prob = max(30,(30 + DNA.endurance / 10))
+		var/spray_prob = max(33,(33 + DNA.endurance / 5))
 		var/datum/reagents/reagents_temp = new/datum/reagents(max(1,(50 + DNA.cropsize))) // Creating a temporary chem holder
 		reagents_temp.my_atom = POT
 	
 		if (POT.growth > (P.harvtime - DNA.growtime) && prob(spray_prob))
 			for(var/num in range(round(max(1,(1 + DNA.potency / 10)))))
 				for(var/REAG in assoc_reagents)
-					reagents_temp.add_reagent(REAG, 2)
+					reagents_temp.add_reagent(REAG, 3)
 			reagents_temp.smoke_start()
 			qdel(reagents_temp)
