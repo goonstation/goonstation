@@ -696,7 +696,7 @@
 			reservoirs[resId] = null
 		else
 			var/obj/item/reagent_containers/glass/B = reservoirs[resId]
-			B.attackby(usr.equipped(), usr)
+			B.Attackby(usr.equipped(), usr)
 
 	else
 		// Putting SOMETHING in

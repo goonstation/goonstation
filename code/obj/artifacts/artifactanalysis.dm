@@ -82,7 +82,7 @@
 		else
 			var/obj/attachedobj = src.attached
 			if(istype(attachedobj) && attachedobj.artifact) // hit artifact we are attached to
-				src.attached.attackby(W, user)
+				src.attached.Attackby(W, user)
 				user.lastattacked = user
 			else // just sticker things
 				..()

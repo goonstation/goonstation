@@ -253,7 +253,7 @@
 		if(W.material && !istype(W, /obj/item/material_piece))
 			quickload(user, W)
 		else
-			attackby(W, user)
+			src.Attackby(W, user)
 			return
 
 

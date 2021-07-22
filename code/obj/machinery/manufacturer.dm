@@ -1148,7 +1148,7 @@
 
 
 		if (istype(O, /obj/item/paper/manufacturer_blueprint))
-			src.attackby(O, user)
+			src.Attackby(O, user)
 
 		if (istype(O, /obj/storage/crate/) || istype(O, /obj/storage/cart/) && src.accept_loading(user,1))
 			if (O:welded || O:locked)

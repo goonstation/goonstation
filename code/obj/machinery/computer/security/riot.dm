@@ -166,7 +166,7 @@
 
 /obj/machinery/computer/riotgear/attack_hand(mob/user as mob)
 	if (ishuman(user))
-		return src.attackby(user:wear_id, user)
+		return src.Attackby(user:wear_id, user)
 	..()
 
 //kinda copy paste from shuttle auth :)

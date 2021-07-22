@@ -84,7 +84,7 @@
 
 	attackby(obj/b as obj, mob/user as mob)
 		if(istype(b, /obj/item/gun/kinetic) && b:allowReverseReload)
-			b.attackby(src, user)
+			b.Attackby(src, user)
 		else if(b.type == src.type)
 			var/obj/item/ammo/bullets/A = b
 			if(A.amount_left<1)
@@ -952,7 +952,7 @@
 	attackby(obj/attacking_item as obj, mob/attacker as mob)
 		if(istype(attacking_item, /obj/item/gun/energy))
 			var/obj/item/ammo/power_cell/pcell = src
-			attacking_item.attackby(pcell, attacker)
+			attacking_item.Attackby(pcell, attacker)
 		else return ..()
 
 	swap(var/obj/item/gun/energy/E, var/mob/living/user)

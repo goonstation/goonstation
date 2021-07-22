@@ -289,7 +289,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (enchant_power && world.time > src.enchant_delay && cursed_dude && istype(cursed_dude, /mob))
-			cursed_dude.attackby(W,user)
+			cursed_dude.Attackby(W,user)
 			src.enchant_delay = world.time + COMBAT_CLICK_DELAY
 			if(enchant_power > 0) enchant_power--
 		else

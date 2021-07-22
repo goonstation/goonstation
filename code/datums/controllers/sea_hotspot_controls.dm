@@ -785,7 +785,7 @@
 				return
 		else
 			if (istype(W,/obj/item/cable_coil))
-				src.loc.attackby(W,user)
+				src.loc.Attackby(W,user)
 				return
 		..()
 

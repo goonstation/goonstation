@@ -79,7 +79,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (istype(O, /obj/item/ammo/bullets) && allowDropReload)
-			attackby(O, user)
+			src.Attackby(O, user)
 		return ..()
 
 	attackby(obj/item/ammo/bullets/b as obj, mob/user as mob)
@@ -906,8 +906,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	proc/convert_grenade(obj/item/nade, mob/user)
 		var/obj/item/ammo/bullets/grenade_shell/TO_LOAD = new /obj/item/ammo/bullets/grenade_shell
-		TO_LOAD.attackby(nade, user)
-		src.attackby(TO_LOAD, user)
+		TO_LOAD.Attackby(nade, user)
+		src.Attackby(TO_LOAD, user)
 
 
 // Ported from old, non-gun RPG-7 object class (Convair880).
@@ -1279,8 +1279,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	proc/convert_grenade(obj/item/nade, mob/user)
 		var/obj/item/ammo/bullets/grenade_shell/TO_LOAD = new /obj/item/ammo/bullets/grenade_shell/rigil
-		TO_LOAD.attackby(nade, user)
-		src.attackby(TO_LOAD, user)
+		TO_LOAD.Attackby(nade, user)
+		src.Attackby(TO_LOAD, user)
 
 // slamgun
 /obj/item/gun/kinetic/slamgun
