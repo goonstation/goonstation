@@ -25,12 +25,12 @@ ABSTRACT_TYPE(/datum/plant/flower)
 	name = "Rafflesia"
 	seedcolor = "#A4000F"
 	crop = /obj/item/clothing/head/rafflesia
+	growthmode = "weed"
 	starthealth = 40
 	growtime = 50
 	harvtime = 90
 	cropsize = 1
 	harvests = 1
-	isgrass = 1
 	endurance = 5
 	genome = 9
 	force_seed_on_harvest = 1
