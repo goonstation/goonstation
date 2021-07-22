@@ -27,7 +27,15 @@ var/global/datum/galaxy/GALAXY = new
 		for(var/i in 1 to 10)
 			src.bodies += new/datum/galactic_object/planet/random(src)
 
+	/// Random Integer from (L,H) otherwise 0-1
 	proc/xor_rand(L, H)
+		if(!isnull(L) && !isnull(H))
+			. = round(xor_randf(L, H+0.99))
+		else
+			. = xor_randf()
+
+	/// Random float from (L,H)
+	proc/xor_randf(L, H)
 		if(!src.mangled_rand)
 			mangled_rand = seed
 		mangled_rand ^= mangled_rand << 13
@@ -35,15 +43,36 @@ var/global/datum/galaxy/GALAXY = new
 		mangled_rand ^= mangled_rand << 17
 
 		. = mangled_rand / 0xFFFFFF
-		if(L && H)
+		if(!isnull(L) && !isnull(H))
 			. = L + ( (H-L) * (.) )
+
+	proc/xor_prob(P)
+		. = xor_rand() < (P/100)
+
+	proc/xor_pick(list/L)
+		var/index = round( xor_rand() * length(L) ) + 1
+		return L[index]
+
+	proc/xor_weighted_pick(list/L)
+		var/total = 0
+		var/item
+		for(item in L)
+			if(isnull(L[item]))
+				stack_trace("weighted_pick given null weight: [json_encode(L)]")
+			total += L[item]
+		total = xor_rand() * total
+		for(item in L)
+			total -= L[item]
+			if(total <= 0)
+				return item
+		return null
 
 	// TODO
 	proc/generate_solar_system()
 		//var/sector_x = rand() * 10
 		//var/sector_y = rand() * 10
 
-		if(prob(50))
+		if(xor_prob(50))
 			src.bodies += new/datum/galactic_object/star/random()
 		else
 		//Binary System
@@ -114,7 +143,14 @@ var/global/datum/galaxy/GALAXY = new
 	var/navigable = 0 // Can be detected on long distance nav
 	var/scale
 
-	proc/check_distance(var/ship_x,var/ship_y)
+
+	New(datum/galaxy/G, datum/galactic_object/ref_obj)
+		..()
+		if(ref_obj)
+			src.galactic_x += ref_obj.galactic_x
+			src.galactic_y += ref_obj.galactic_y
+
+	proc/check_distance(ship_x, ship_y)
 		var/squared_distance = (ship_x-galactic_x)**2 + (ship_y-galactic_y)**2
 		if(src.loud)
 			boutput(world,"[name]: x distance is [(ship_x-galactic_x)], y offset is [(ship_y-galactic_y)], squared distance is [squared_distance], canvas squared check radius is [(max_r_squared_galactic)]")
@@ -122,7 +158,7 @@ var/global/datum/galaxy/GALAXY = new
 			return 1
 		return 0
 
-	proc/load_map_body(var/obj/artemis/ship)
+	proc/load_map_body(obj/artemis/ship)
 
 		if(!body_path_map)
 			return
@@ -166,7 +202,7 @@ var/global/datum/galaxy/GALAXY = new
 
 		return map_body
 
-	proc/load_ship_body(var/obj/artemis/ship, var/obj/background_star/galactic_object/G)
+	proc/load_ship_body(obj/artemis/ship, obj/background_star/galactic_object/G)
 
 		if(!body_path_ship)
 			return
@@ -256,7 +292,7 @@ var/global/datum/galaxy/GALAXY = new
 		if(squared_pixel_distance <= max_distance)
 			.= TRUE
 
-	set_vars(var/theta, var/dist)
+	set_vars(theta, dist)
 
 		var/load_r = max_r*dist/sqrt(ARTEMIS_MAX_R_SQUARED_GALACTIC) // 35.328 = max_r_squared galactic
 

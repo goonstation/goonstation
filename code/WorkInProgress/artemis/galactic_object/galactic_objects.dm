@@ -12,21 +12,21 @@
 	var/list/biome_seed = list()
 
 	New(datum/galaxy/G)
-		galactic_x = G.xor_rand(1,3) //19?
-		galactic_y = G.xor_rand(1,3) //19?
-		scale =  G.xor_rand(0.75,1.25) //rand()*0.5+ 0.75
-		color = pick("#fffb00", "#FF5D06", "#009ae7", "#03c53d", "#9b59b6", "#272e30", "#FF69B4", "#633221", "#ffffff")
-		icon_state = weighted_pick(list("planet_1"=10,"planet_2"=3,"planet_3"=2))
+		galactic_x = G.xor_randf(1,3) //19?
+		galactic_y = G.xor_randf(1,3) //19?
+		scale =  G.xor_randf(0.75,1.25) //rand()*0.5+ 0.75
+		color = G.xor_weighted_pick(list("#fffb00"=1, "#FF5D06"=1, "#009ae7"=1, "#03c53d"=1, "#9b59b6"=1, "#272e30"=1, "#FF69B4"=1, "#633221"=1, "#ffffff"=4))
+		icon_state = G.xor_weighted_pick(list("planet_1"=10,"planet_2"=3,"planet_3"=2))
 		light_value = clamp((log(G.xor_rand())*0.675)+0.997,0,1)
 		biome_seed += G.xor_rand()*50000
 		biome_seed += G.xor_rand()*50000
 		biome_seed += G.xor_rand()*50000
 
-		if(G.xor_rand() < 0.10)
+		if(G.xor_prob(10))
 			navigable = 0
 
 		if(G && length(G.available_planets))
-			destination_name = pick(G.available_planets)
+			destination_name = G.xor_pick(G.available_planets)
 			G.available_planets -= destination_name
 
 			SPAWN_DBG(1 SECOND)
@@ -46,13 +46,13 @@
 
 	proc/generate_name(datum/galaxy/G)
 		. = ""
-		if (G.xor_rand() < 0.50)
+		if (G.xor_prob(50))
 			. += pick_string("station_name.txt", "greek")
 		else
 			. += pick_string("station_name.txt", "militaryLetters")
 		. += " "
 
-		if (G.xor_rand() < 0.30)
+		if (G.xor_prob(30))
 			. += pick_string("station_name.txt", "romanNum")
 		else
 			. += "[G.xor_rand(2, 99)]"
@@ -206,10 +206,10 @@
 		var/color = null
 
 		New(datum/galaxy/G)
-			galactic_x = G.xor_rand(-1,1) //19?
-			galactic_y = G.xor_rand(-1,1) //19?
-			scale = G.xor_rand(0.90,1.4)
-			color = pick("#fffb00", "#FF5D06", "#009ae7", "#9b59b6", "#FF69B4", "#ffffff")
+			galactic_x = G.xor_randf(-1,1) //19?
+			galactic_y = G.xor_randf(-1,1) //19?
+			scale = G.xor_randf(0.90,1.4)
+			color = G.xor_pick(list("#fffb00", "#FF5D06", "#009ae7", "#9b59b6", "#FF69B4", "#ffffff"))
 			..()
 
 /obj/background_star/galactic_object/star

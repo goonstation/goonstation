@@ -17,7 +17,7 @@ var/list/planetModifiersUsed = list()//Assoc list, type:times used
 		if(T.z == planetZLevel)
 			planetZ.Add(T)
 
-	var/num_to_place = PLANET_NUMPREFABS + rand(0, PLANET_NUMPREFABSEXTRA)
+	var/num_to_place = PLANET_NUMPREFABS + GALAXY.xor_rand(0, PLANET_NUMPREFABSEXTRA)
 	for (var/n = 1, n <= num_to_place, n++)
 		game_start_countdown?.update_status("Setting up mining level...\n(Prefab [n]/[num_to_place])")
 		var/datum/generatorPlanetPrefab/M = pickPlanetPrefab()
@@ -28,13 +28,17 @@ var/list/planetModifiersUsed = list()//Assoc list, type:times used
 			var/count= 0
 			var/maxTries = (M.required ? 200:33)
 			while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
-				var/turf/target = locate(rand(1+PLANET_MAPBORDER, maxX), rand(1+PLANET_MAPBORDER,maxY), planetZLevel)
+				var/turf/target = locate(GALAXY.xor_rand(1+PLANET_MAPBORDER, maxX), GALAXY.xor_rand(1+PLANET_MAPBORDER,maxY), planetZLevel)
+				var/area/A = get_area(target)
 				var/ret = M.applyTo(target)
 				if (ret == 0)
 					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [showCoords(target.x, target.y, target.z)]")
 				else
 					logTheThing("debug", null, null, "Prefab placement #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [showCoords(target.x, target.y, target.z)]")
 					stop = 1
+					if(istype(A,/area/map_gen/planet))
+						var/area/map_gen/planet/P = A
+						P.prefabs |= M
 				count++
 				if (count >= 33)
 					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [showCoords(target.x, target.y, target.z)]")
@@ -120,13 +124,17 @@ var/list/planetModifiersUsed = list()//Assoc list, type:times used
 /area/map_gen/planet
 	name = "planet generation area"
 	var/map_generator_path = /datum/map_generator/jungle_generator
-	var/list/biome_turfs = list()
+	var/list/turf/biome_turfs = list()
+	var/list/datum/generatorPlanetPrefab/prefabs = list()
 
 	generate_perlin_noise_terrain()
 		if(src.map_generator_path)
 			map_generator = new map_generator_path()
-		// Azrun TODO This is where we seed BIOME
-		map_generator.generate_terrain(get_area_turfs(src))
+
+		var/height_seed = GALAXY.xor_rand(0, 50000)
+		var/humidity_seed = GALAXY.xor_rand(0, 50000)
+		var/heat_seed = GALAXY.xor_rand(0, 50000)
+		map_generator.generate_terrain(get_area_turfs(src), height_seed, humidity_seed, heat_seed)
 
 	proc/colorize_planet(color)
 		src.ambient_light = color
