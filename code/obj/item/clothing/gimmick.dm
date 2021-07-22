@@ -939,6 +939,7 @@
 	setupProperties()
 		..()
 		setProperty("meleeprot", 2)
+		setProperty("rangedprot", 0)
 
 /obj/item/clothing/suit/bio_suit/beekeeper
 	name = "apiculturist's suit"
