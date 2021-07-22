@@ -49,7 +49,7 @@ ABSTRACT_TYPE(/datum/plant/flower)
 		reagents_temp.my_atom = POT
 	
 		if (POT.growth > (P.harvtime - DNA.growtime) && prob(spray_prob))
-			for(range(round(max(1,(1 + DNA.potency / 10)))))
+			for(var/num in range(round(max(1,(1 + DNA.potency / 10)))))
 				for(var/REAG in assoc_reagents)
 					reagents_temp.add_reagent(REAG, 2)
 			reagents_temp.smoke_start()
