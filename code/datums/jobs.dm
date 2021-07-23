@@ -2221,7 +2221,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		else
 			M.real_name = "Syndicate Agent"
 
-		bad_traitorify(M, "Syndicate Agent")
+		antagify(M, "Syndicate Agent", 0)
 
 		equip_syndicate(M)
 		return
@@ -2247,7 +2247,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
-		bad_traitorify(M, "Syndicate Agent")
+		antagify(M, "Syndicate Agent", 0)
 
 /datum/job/special/syndicate_weak/no_ammo
 	name = "Poorly Equipped Junior Syndicate Operative"
@@ -2299,7 +2299,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		..()
 		if (!M)
 			return
-		bad_traitorify(M, "Syndicate Agent")
+		antagify(M, "Syndicate Agent", 0)
 		M.show_text("<b>The assault has begun! Head over to the station and kill any and all Nanotrasen personnel you encounter!</b>", "red")
 
 /datum/job/special/juicer_specialist

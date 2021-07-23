@@ -730,24 +730,30 @@
 
 	return
 
-// this proc is shit, make a better one 2day
-proc/bad_traitorify(mob/H, traitor_role="hard-mode traitor")
-	var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
-	var/num_objectives = rand(1,3)
-	var/datum/objective/new_objective = null
-	for(var/i = 0, i < num_objectives, i++)
-		var/select_objective = pick(eligible_objectives)
-		new_objective = new select_objective
-		new_objective.owner = H.mind
-		new_objective.set_up()
-		H.mind.objectives += new_objective
-
-	H.mind.special_role = traitor_role
-	H << browse(grabResource("html/traitorTips/traitorhardTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
-	if(!(H.mind in ticker.mode.traitors))
-		ticker.mode.traitors += H.mind
+// Convert mob to generic hard mode traitor or alternatively agimmick
+proc/antagify(mob/H, var/traitor_role, var/agimmick)
+	if (!agimmick)
+		var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
+		var/num_objectives = rand(1,3)
+		var/datum/objective/new_objective = null
+		for(var/i = 0, i < num_objectives, i++)
+			var/select_objective = pick(eligible_objectives)
+			new_objective = new select_objective
+			new_objective.owner = H.mind
+			new_objective.set_up()
+			H.mind.objectives += new_objective
+			H << browse(grabResource("html/traitorTips/traitorhardTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+		if(!(H.mind in ticker.mode.traitors))
+			ticker.mode.traitors += H.mind
+	else
+		if (!(H.mind in ticker.mode.Agimmicks))
+			ticker.mode.Agimmicks += H.mind
+		if (!H.mind.former_antagonist_roles.Find(H.mind.special_role))
+			H.mind.former_antagonist_roles.Add(H.mind.special_role)
+		H << browse(grabResource("html/traitorTips/traitorgenericTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
 	if (H.mind.current)
 		H.mind.current.antagonist_overlay_refresh(1, 0)
+	H.mind.special_role = traitor_role
 
 //////////////////////////////////////////////
 // cogwerks - personalized trinkets project //
