@@ -189,7 +189,6 @@
 				var/datum/mind/M = pick(candidates)
 				if (M.current)
 					var/picked_critter = pick(select)
-					antagify(M, picked_critter, 1)
 					if (istype(picked_critter, /datum/eventSpawnedCritter)) // datum provided
 						var/datum/eventSpawnedCritter/picked_critter_datum = picked_critter
 						M.current.make_critter(pick(picked_critter_datum.critter_types), pestlandmark)
@@ -201,6 +200,7 @@
 					var/obj/item/implant/access/infinite/assistant/O = new /obj/item/implant/access/infinite/assistant(M.current)
 					O.owner = M.current
 					O.implanted = 1
+					antagify(M.current, null, 1)
 				candidates -= M
 
 			command_alert("Our sensors have detected a hostile nonhuman lifeform in the vicinity of the station.", "Hostile Critter")

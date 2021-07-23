@@ -732,6 +732,10 @@
 
 // Convert mob to generic hard mode traitor or alternatively agimmick
 proc/antagify(mob/H, var/traitor_role, var/agimmick)
+	if (!(H.mind))
+		message_admins("Attempted to antagify [H] but could not find mind")
+		logTheThing("debug", src, null, "Attempted to antagify [H] but could not find mind.")
+		return
 	if (!agimmick)
 		var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
 		var/num_objectives = rand(1,3)
@@ -751,9 +755,12 @@ proc/antagify(mob/H, var/traitor_role, var/agimmick)
 		if (!H.mind.former_antagonist_roles.Find(H.mind.special_role))
 			H.mind.former_antagonist_roles.Add(H.mind.special_role)
 		H << browse(grabResource("html/traitorTips/traitorgenericTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+	if (traitor_role)
+		H.mind.special_role = traitor_role
+	else
+		H.mind.special_role = H.name
 	if (H.mind.current)
 		H.mind.current.antagonist_overlay_refresh(1, 0)
-	H.mind.special_role = traitor_role
 
 //////////////////////////////////////////////
 // cogwerks - personalized trinkets project //
