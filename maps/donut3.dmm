@@ -30082,11 +30082,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/quartermaster/office)
-"iCB" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/machinery/recharge_station,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/se)
 "iCK" = (
 /obj/item/reagent_containers/glass/wateringcan{
 	pixel_x = -1;
@@ -58556,6 +58551,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/southeast)
+"qUa" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/plating/jen,
+/area/station/storage/tech)
 "qUg" = (
 /obj/lattice{
 	dir = 5;
@@ -137118,7 +137117,7 @@ kOm
 wWv
 hqD
 wFv
-xRb
+qUa
 xGu
 ujy
 rdj
@@ -144954,7 +144953,7 @@ nxQ
 wPF
 vfx
 vTC
-iCB
+wZR
 gDk
 rdj
 rdj
