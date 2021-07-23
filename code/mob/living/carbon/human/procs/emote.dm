@@ -2120,7 +2120,7 @@
 										M.emote("cry") //You should be ashamed
 									if(dab_id)
 										dab_id.dabbed_on_count++
-									if(dab_id.stealsaccess == 1) //takes access and makes the victim a staffie
+									if(dab_id.stealsaccess) //takes access and makes the victim a staffie
 										var/obj/item/D = M.wear_id
 										if(istype(D,/obj/item/device/pda2))
 											var/obj/item/device/pda2/P = D
