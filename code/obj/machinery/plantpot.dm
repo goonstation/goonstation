@@ -84,6 +84,112 @@
 				return ..()
 		..()
 
+/obj/machinery/plantpot/bareplant
+	name = "arable soil"
+	desc = "A small mound of arable soil for planting and plant based activities."
+	anchored = 1
+	mats = 0
+	deconstruct_flags = 0
+	icon_state = null
+	power_usage = 0
+	growth_rate = 1
+	/// plant to grow
+	var/datum/plant/spawn_plant = null
+	/// growth level to spawn with
+	var/spawn_growth = null
+	/// list of commuts to apply to plant
+	var/list/datum/plant_gene_strain/spawn_commuts = list()
+	/// apply seedless plant gene strain
+	var/seedless = null
+	/// apply terminator plant gene strain
+	var/terminator = null
+	/// apply toxic plant gene strain
+	var/toxic = null
+
+	New()
+		var/datum/plant/P
+		//Adjust processing tier to slow down server burden unless necessary
+		if(spawn_plant)
+			P = new spawn_plant()
+			if(!P.special_proc)
+				processing_tier = PROCESSING_32TH
+		..()
+		status |= BROKEN
+
+		if(P)
+			var/obj/item/seed/S = unpool(/obj/item/seed)
+
+			S.generic_seed_setup(P)
+			src.HYPnewplant(S)
+
+			if(seedless)
+				HYPaddCommut(src.current, src.plantgenes, /datum/plant_gene_strain/seedless)
+			if(terminator)
+				HYPaddCommut(src.current, src.plantgenes, /datum/plant_gene_strain/terminator)
+			if(toxic)
+				HYPaddCommut(src.current, src.plantgenes, /datum/plant_gene_strain/reagent_adder/toxic)
+
+			for(var/commutes in spawn_commuts)
+				HYPaddCommut(src.current, src.plantgenes, commutes)
+
+			if(spawn_growth)
+				src.grow_level = spawn_growth
+			else
+				src.grow_level = pick(3,4,4)
+			switch(grow_level)
+				if(2)
+					src.growth = (src.current.growtime - src.plantgenes.growtime) / 2
+				if(3)
+					src.growth = src.current.growtime - src.plantgenes.growtime
+				if(4)
+					src.growth = src.current.harvtime - src.plantgenes.harvtime
+			update_icon()
+		else
+			qdel(src)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		// Filter out the following item interactions
+		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
+			boutput(user, "<span class='alert'>[W] does not seem like the right tool for the job.</span>")
+		else if(istype(W, /obj/item/seed/))
+			boutput(user, "<span class='alert'>Something is already growing there.</span>")
+		else
+			..()
+
+	attack_hand(var/mob/user as mob)
+
+		if(isAI(user) || isobserver(user)) return // naughty AIs used to be able to harvest plants
+		src.add_fingerprint(user)
+		if(src.current)
+			var/datum/plant/growing = src.current
+
+			if(src.dead)
+				boutput(user, "<span class='notice'>You clear the dead plant.</span>")
+				HYPdestroyplant()
+				return
+
+			if(HYPcheck_if_harvestable())
+				if(!growing.harvest_tools) //if the plant needs a specific tool or set of tools to harvest
+					HYPharvesting(user,null)
+				else
+					if(!growing.harvest_tool_fail_message)
+						boutput(user, "<span><b>You don't have the right tool to harvest this plant!</b></span>")
+					else
+						boutput(user,growing.harvest_tool_fail_message)
+
+	HYPdestroyplant()
+		..()
+		qdel(src)
+
+	update_water_icon()
+		return
+
+	process()
+		..()
+		if(!src.reagents.has_reagent("water", 50))
+			src.reagents.add_reagent("water", 200)
+
+
 /obj/machinery/plantpot
 	// The central object for Hydroponics. All plant growing and most of everything goes on in
 	// this object - that said you don't want to have too many of them on the map because they
