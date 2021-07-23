@@ -78,6 +78,9 @@
 			selected_biome = /datum/biome/mountain
 		selected_biome = biomes[selected_biome]
 		selected_biome.generate_turf(gen_turf)
+
+		gen_turf.temperature = 200
+
 		if (current_state >= GAME_STATE_PLAYING)
 			LAGCHECK(LAG_LOW)
 		else
