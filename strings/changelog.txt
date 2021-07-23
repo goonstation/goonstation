@@ -1,4 +1,10 @@
 
+(t)fri jul 23 21
+(u)Emily
+(p)5591
+(e)⚖🆕|balance, feature
+(*)Implements heat capacity for reagents. This changes basically all reagent temperature exposures.
+(+)Heat capacity water 4x, heat capacity weldingful 0.05x, heat capacity cryostylane 6x
 (t)wed jul 21 21
 (u)Tarmunora
 (e)⚖|balance
