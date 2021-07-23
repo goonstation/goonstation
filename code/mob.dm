@@ -3001,7 +3001,9 @@
 /mob/living/verb/interact_verb(atom/A as mob|obj|turf in view(1))
 	set name = "Pick Up / Left Click"
 	set category = "Local"
-	A.interact(src)
+
+	if(src.client)
+		src.client.Click(A, get_turf(A))
 
 /mob/living/verb/pickup_verb()
 	set name = "Pick Up"
