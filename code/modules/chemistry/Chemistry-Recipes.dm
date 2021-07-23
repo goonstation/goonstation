@@ -3769,6 +3769,9 @@ datum
 			mix_phrase = "The mixture begins to rapidly freeze."
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
+				boutput(world,"total temp: [holder.total_temperature]")
+				boutput(world,"created_volume: [created_volume]")
+				boutput(world,"temperature_reagents([holder.total_temperature - created_volume*200],400")
 				holder.temperature_reagents(holder.total_temperature - created_volume*200, 400, change_min = 1)
 
 		reversium

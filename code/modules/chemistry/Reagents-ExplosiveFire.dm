@@ -236,7 +236,7 @@ datum
 
 					T.reagents.add_reagent("thermite", volume, null)
 					if (T.active_hotspot)
-						T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 10, 300, 1)
+						T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 350, 300, 1)
 				return
 
 
@@ -657,6 +657,7 @@ datum
 			viscosity = 0.2
 			minimum_reaction_temperature = T0C + 200
 			depletion_rate = 0.6
+			heat_capacity = 5
 
 			var/max_radius = 7
 			var/min_radius = 0

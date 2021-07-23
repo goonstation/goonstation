@@ -168,7 +168,7 @@
 				location.hotspot_expose(700, 50, 1)
 			if (O && !ismob(O) && O.reagents)
 				boutput(user, "<span class='notice'>You heat \the [O.name]</span>")
-				O.reagents.temperature_reagents(4000,50, 35, 100, 1)
+				O.reagents.temperature_reagents(4000,50, 100, 100, 1)
 		return
 
 	attack_self(mob/user as mob)
