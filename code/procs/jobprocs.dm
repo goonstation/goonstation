@@ -734,7 +734,7 @@
 proc/antagify(mob/H, var/traitor_role, var/agimmick)
 	if (!(H.mind))
 		message_admins("Attempted to antagify [H] but could not find mind")
-		logTheThing("debug", src, null, "Attempted to antagify [H] but could not find mind.")
+		logTheThing("debug", H, null, "Attempted to antagify [H] but could not find mind.")
 		return
 	if (!agimmick)
 		var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
