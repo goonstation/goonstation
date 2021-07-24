@@ -1486,6 +1486,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\storage\toolbox.dm"
 #include "code\obj\item\storage\weapon_security.dm"
 #include "code\obj\item\tool\crowbar.dm"
+#include "code\obj\item\tool\engivac.dm"
 #include "code\obj\item\tool\multitool.dm"
 #include "code\obj\item\tool\omnitool.dm"
 #include "code\obj\item\tool\screwdriver.dm"
