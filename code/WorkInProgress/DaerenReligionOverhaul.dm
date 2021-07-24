@@ -154,7 +154,7 @@
 				religiousHolder.addAbility(/datum/targetable/chaplain/fortifySeed)
 				assemble_name(religiousHolder)
 
-			religiousHolder.removeAbility(/datum/targetable/chaplain/chooseReligion)
+		religiousHolder.removeAbility(/datum/targetable/chaplain/chooseReligion)
 
 //*************** ATHEISM *****************
 
