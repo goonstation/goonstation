@@ -105,6 +105,7 @@
 	var/terminator = null
 	/// apply toxic plant gene strain
 	var/toxic = null
+	var/auto_water = TRUE
 
 	New()
 		var/datum/plant/P
@@ -145,7 +146,9 @@
 					src.growth = src.current.harvtime - src.plantgenes.harvtime
 			update_icon()
 		else
-			qdel(src)
+			SPAWN_DBG(1 SECOND)
+				if(!src.current)
+					qdel(src)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		// Filter out the following item interactions
@@ -186,8 +189,29 @@
 
 	process()
 		..()
-		if(!src.reagents.has_reagent("water", 50))
-			src.reagents.add_reagent("water", 200)
+		if(auto_water)
+			if(!src.reagents.has_reagent("water", 50))
+				src.reagents.add_reagent("water", 200)
+
+	flower
+		New()
+			spawn_plant = pick(/datum/plant/flower/rose)
+			..()
+
+	crop
+		New()
+			spawn_plant = pick(/datum/plant/crop/cotton, /datum/plant/crop/oat, /datum/plant/crop/peanut, /datum/plant/crop/soy)
+			..()
+
+	tree
+		New()
+			spawn_plant = pick(/datum/plant/crop/tree, /datum/plant/fruit/cherry, /datum/plant/fruit/apple, /datum/plant/fruit/peach)
+			..()
+
+	weed
+		New()
+			spawn_plant = pick(/datum/plant/weed/creeper, /datum/plant/weed/lasher, /datum/plant/weed/slurrypod, /datum/plant/artifact/pukeplant)
+			..()
 
 
 /obj/machinery/plantpot

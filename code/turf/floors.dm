@@ -1609,7 +1609,8 @@
 		var/obj/spacevine/K = locate(/obj/spacevine) in src.contents
 		if (K)
 			K.attackby(C, user, params)
-
+	else if(SEND_SIGNAL(src, COMSIG_ATTACKBY, C, user))
+		return
 	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1)) // this seemed like the neatest way to make attack_hand still trigger when needed
 		src?.material.triggerOnHit(src, C, user, 1)
 	else
