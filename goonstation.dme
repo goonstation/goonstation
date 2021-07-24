@@ -1678,6 +1678,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\chess.dm"
 #include "code\WorkInProgress\cryospawn.dm"
 #include "code\WorkInProgress\customcritter.dm"
+#include "code\WorkInProgress\DaerenReligionOverhaul.dm"
 #include "code\WorkInProgress\DiscountDans.dm"
 #include "code\WorkInProgress\DrMelonsStuff.dm"
 #include "code\WorkInProgress\Electronics.dm"
