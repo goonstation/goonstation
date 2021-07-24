@@ -1,5 +1,9 @@
 
 (t)fri jul 23 21
+(u)Azrun
+(p)4861
+(e)⚖🆕🎨📄|balance, feature, sprites, tgui
+(*)Extreme-Pressure Pressurization Device™: the latest in emergency pressurization equipment can now be ordered from cargo.
 (u)Emily
 (p)5591
 (e)⚖🆕|balance, feature
