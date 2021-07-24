@@ -121,16 +121,19 @@ obj/item/engivac/attack_self(mob/user)
 	switch(input)
 		if ("Toggle collecting building materials")
 			collect_buildmats = !collect_buildmats
+			boutput(user, "<span class='notice'>\The [name] will now [collect_buildmats ? "collect" : "leave"] building materials.</span>")
 			rebuild_collection_list()
 			tooltip_rebuild = 1
 
 		if ("Toggle collecting debris")
 			collect_debris = !collect_debris
+			boutput(user, "<span class='notice'>\The [name] will now [collect_debris ? "collect" : "leave"] debris.</span>")
 			rebuild_collection_list()
 			tooltip_rebuild = 1
 
 		if ("Toggle floor tile auto-placement")
 			placing_tiles = !placing_tiles
+			boutput(user, "<span class='notice'>\The [name]'s tile auto-placement has been [placing_tiles ? "enabled" : "disabled"].</span>")
 			tooltip_rebuild = 1
 
 		if ("Remove Toolbox")
@@ -141,19 +144,19 @@ obj/item/engivac/attack_self(mob/user)
 			toolbox_col = ""
 			update_icon()
 
-
+/*
 obj/item/engivac/dropped(mob/living/user)
 	..()
 	if (islist(user.move_laying))
 		user.move_laying -= src
 	else
 		user.move_laying = null
-
+*/
 
 obj/item/engivac/move_callback(mob/M, turf/source, turf/target)
 	. = ..()
 	//I'm here to collect stuff
-	find_crud_on_turf()
+	find_crud_on_turf(target)
 
 	//and place tiles,
 	if (!placing_tiles)
@@ -162,6 +165,9 @@ obj/item/engivac/move_callback(mob/M, turf/source, turf/target)
 	if (!current_stack)
 		if (!scan_for_floortiles()) //...and I'm all out of tiles
 			placing_tiles = FALSE
+			tooltip_rebuild = 1
+			playsound(get_turf(src), "sound/machines/buzz-sigh.ogg", 50, 0)
+			boutput(M, "<span class='alert'>\The [name] does not have any floor tiles left, and deactivates the auto-placing.</span>")
 			return
 	if (istype(target, /turf/simulated/floor))
 		var/turf/simulated/floor/tile_target = target
@@ -192,10 +198,14 @@ obj/item/engivac/proc/find_crud_on_turf(turf/target_turf)
 		return 0
 	var/did_something = FALSE
 	for (var/obj/item/floor_item in target_turf)
-		if (!(floor_item in currently_collecting))
-			continue
-		if (attempt_fill(floor_item))
-			did_something = TRUE //congratulations
+		for(var/sometype in currently_collecting)
+			if(istype(floor_item, sometype))
+				if (attempt_fill(floor_item))
+					did_something = TRUE //congratulations
+				break
+		//if (!(floor_item.type in currently_collecting))
+		//	continue
+
 	return did_something
 
 
@@ -230,10 +240,12 @@ obj/item/engivac/proc/scan_for_floortiles()
 	var/list/toolbox_contents = held_toolbox.get_contents()
 	for (var/i=1, i <= toolbox_contents.len, i++)
 		if (!istype(toolbox_contents[i], /obj/item/tile))
-			if (i >= toolbox_contents.len)
+			if (i = toolbox_contents.len)
 				current_stack = null
 			continue
 		current_stack = toolbox_contents[i]
+		return 1
+	return 0
 
 
 obj/item/engivac/proc/rebuild_collection_list()

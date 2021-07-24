@@ -1147,6 +1147,15 @@
 	. = ..()
 	if (isturf(oldloc) && isturf(loc) && move_laying)
 		var/list/equippedlist = src.equipped_list()
+
+		//This is terrible but "refactor all the move_laying garbage in my item PR" is worse
+		if(ishuman(src))
+			var/mob/living/carbon/human/my = src
+			if (istype(my.back, /obj/item/engivac))
+				equippedlist.Add(my.back)
+			if (istype(my.belt, /obj/item/engivac))
+				equippedlist.Add(my.belt)
+
 		if (length(equippedlist))
 			var/move_callback_happened = 0
 			for (var/I in equippedlist)
