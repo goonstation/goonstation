@@ -315,9 +315,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 								<h1>Warning: VPN or proxy connection detected</h1>
 
                                 Please disable your VPN or proxy, close the game, and rejoin.<br>
-                                <br>
-                                <b>Not using a VPN or proxy / Having trouble connecting?</b>
-                                <br>
+                                <h2>Not using a VPN or proxy / Having trouble connecting?</h2>
 								If you are not using a VPN or proxy please join <a href="https://discord.com/invite/zd8t6pY">our Discord server</a> and request an admins assistance with  whitelisting your account.
                                  <br> <br>
                                  If an admin is not immediately available you may also use the <b><u>/report</u></b> command in our discord server to submit a ticket to the administration. Please be sure to include your byond ckey (aka your username), and the name of your ISP in your ticket to avoid delays.
