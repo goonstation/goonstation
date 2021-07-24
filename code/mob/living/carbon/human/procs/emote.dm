@@ -2129,8 +2129,8 @@
 										if(istype(D,/obj/item/card/id))
 											var/obj/item/card/id/their_id = D
 											dab_id.access |= their_id.access
-											their_id.access = get_access("Staff Assistant") // you are now staffie
-											their_id.assignment = "Staff Assistant"
+											their_id.access = list()
+											their_id.assignment = "Staff Assistant"  // you are now staffie
 											their_id.icon_state = "id_civ"
 											boutput(M, "<span class='alert'>You feel empty inside.</span>")
 						if(get_dabbed_on == 0)
