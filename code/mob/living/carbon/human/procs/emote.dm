@@ -2132,7 +2132,7 @@
 											their_id.access = get_access("Staff Assistant") // you are now staffie
 											their_id.assignment = "Staff Assistant"
 											their_id.icon_state = "id_civ"
-											boutput(M, "<span class='alert'>You feel empty inside</span>")
+											boutput(M, "<span class='alert'>You feel empty inside.</span>")
 						if(get_dabbed_on == 0)
 							if (src.mind && src.mind.assigned_role == "Clown")
 								message = "<B>[src]</B> [pick("performs a sick dab", "dabs on the haters", "shows everybody [his_or_her(src)] dope dab skills", "performs a wicked dab", "dabs like nobody has dabbed before", "shows everyone how they dab in the circus")]!!!"

@@ -225,7 +225,7 @@ GAUNTLET CARDS
 	return
 
 /obj/item/card/id/dabbing_license/syndie // why did I code this
-	desc = "This card authorizes the person wearing it to perform sick dabs. It seems extra illegal"
+	desc = "This card authorizes the person wearing it to perform sick dabs. It seems extra illegal."
 	assignment = "Expert Dabber"
 	stealsaccess = TRUE
 
