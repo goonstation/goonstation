@@ -209,6 +209,7 @@
 				return
 			G.affecting.set_loc(src.loc)
 			if (user.a_intent == "harm")
+				logTheThing("combat", user, G.affecting, "slams [constructTarget(G.affecting,"combat")] onto a table")
 				if (istype(src, /obj/table/folding))
 					if (!G.affecting.hasStatus("weakened"))
 						G.affecting.changeStatus("weakened", 4 SECONDS)
@@ -757,6 +758,7 @@
 				boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 				return
 			if (user.a_intent == "harm")
+				logTheThing("combat", user, G.affecting, "slams [constructTarget(G.affecting,"combat")] onto a glass table")
 				G.affecting.set_loc(src.loc)
 				G.affecting.changeStatus("weakened", 4 SECONDS)
 				src.visible_message("<span class='alert'><b>[G.assailant] slams [G.affecting] onto \the [src]!</b></span>")
@@ -826,6 +828,7 @@
 		if (ismob(AM))
 			var/mob/M = AM
 			if ((prob(src.reinforced ? 60 : 80)))
+				logTheThing("combat", thr.user, M, "throws [constructTarget(M,"combat")] into a glass table, breaking it")
 				src.visible_message("<span class='alert'>[M] smashes through [src]!</span>")
 				playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 				src.smash()

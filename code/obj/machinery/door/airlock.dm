@@ -1789,6 +1789,14 @@ obj/machinery/door/airlock
 				src.secondsElectrified = 0
 	return
 
+/obj/machinery/door/airlock/emag_act(mob/user, obj/item/card/emag/E)
+	. = ..()
+	if(src.welded && !src.locked)
+		audible_message("<span class='alert'>[src] lets out a loud whirring and grinding noise!</span>")
+		animate_shake(src, 5, 2, 2, src.pixel_x, src.pixel_y)
+		playsound(src, 'sound/items/mining_drill.ogg', 25, 1, 0, 0.8)
+		src.take_damage(src.health * 0.8)
+
 /obj/machinery/door/airlock/receive_silicon_hotkey(var/mob/user)
 	..()
 
