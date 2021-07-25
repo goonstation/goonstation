@@ -6,6 +6,8 @@
 	var/cycle = 0
 
 /datum/component/power_cell/Initialize(max = 200, start_charge = 200, recharge = 0)
+	if(!ismovable(parent))
+		return COMPONENT_INCOMPATIBLE
 	. = ..()
 	src.max_charge = max
 	src.charge = start_charge

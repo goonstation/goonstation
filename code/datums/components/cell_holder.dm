@@ -1,15 +1,15 @@
 /datum/component/cell_holder
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	var/obj/item/ammo/power_cell/cell
+	var/atom/movable/cell
 	var/can_be_recharged = TRUE
 	var/max_cell_size = INFINITY
 	var/swappable_cell = TRUE
 
-/datum/component/cell_holder/Initialize(obj/item/ammo/power_cell/new_cell, chargable = TRUE, max_cell = INFINITY, swappable = TRUE)
+/datum/component/cell_holder/Initialize(atom/movable/new_cell, chargable = TRUE, max_cell = INFINITY, swappable = TRUE)
 	if(!isitem(parent) || SEND_SIGNAL(parent, COMSIG_IS_CELL))
 		return COMPONENT_INCOMPATIBLE
 	. = ..()
-	if(istype(new_cell))
+	if(SEND_SIGNAL(new_cell, COMSIG_IS_CELL))
 		src.cell = new_cell
 		new_cell.set_loc(parent)
 		RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/update_icon)
@@ -64,12 +64,12 @@
 		src.begin_swap(user, W)
 		return 1
 
-/datum/component/cell_holder/proc/begin_swap(mob/user, obj/item/ammo/power_cell/P)
+/datum/component/cell_holder/proc/begin_swap(mob/user, atom/movable/P)
 	if(src.swappable_cell)
 		actions.start(new /datum/action/bar/icon/cellswap(user, P, parent), user)
 
-/datum/component/cell_holder/proc/do_swap(source, obj/item/ammo/power_cell/P, mob/user)
-	var/obj/item/ammo/power_cell/old_cell = src.cell
+/datum/component/cell_holder/proc/do_swap(source, atom/movable/P, mob/user)
+	var/atom/movable/old_cell = src.cell
 	var/atom/old_loc = get_turf(parent)
 	if(P)
 		old_loc = P.loc
@@ -79,11 +79,11 @@
 		src.cell = P
 		RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/update_icon)
 		P.set_loc(src.parent)
-		P.update_icon()
+		SEND_SIGNAL(P, COMSIG_UPDATE_ICON)
 
 	if(old_cell)
 		old_cell.set_loc(old_loc)
-		old_cell.update_icon()
+		SEND_SIGNAL(old_cell, COMSIG_UPDATE_ICON)
 		UnregisterSignal(old_cell, COMSIG_UPDATE_ICON)
 		if(!P)
 			src.cell = null
@@ -130,7 +130,7 @@
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "power_cell"
 	var/mob/living/user
-	var/obj/item/ammo/power_cell/cell
+	var/atom/movable/cell
 	var/obj/item/cell_holder
 
 	New(User, Cell, Cell_holder)
