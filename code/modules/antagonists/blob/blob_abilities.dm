@@ -341,13 +341,14 @@
 		var/obj/blob/B2 = new /obj/blob(T)
 		B2.setOvermind(owner)
 
-		cooldown_time = 11
+		cooldown_time = 16
 		var/mindist = 127
 		for_by_tcl(nucleus, /obj/blob/nucleus)
 			if(nucleus.overmind == owner)
 				mindist = min(mindist, get_dist(T, get_turf(nucleus)))
 
-		cooldown_time += max((length(owner.blobs) * 0.1) - 40, 0)
+		mindist *= max((length(owner.blobs) * 0.005) - 2, 1)
+
 		cooldown_time = max(cooldown_time + max(mindist * 0.5 - 10, 0) - owner.spread_upgrade * 5 - owner.spread_mitigation * 0.5, 6)
 		owner.total_placed++
 

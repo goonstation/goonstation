@@ -39,6 +39,7 @@ datum
 		var/last_temp = T20C
 		var/total_temperature = T20C
 		var/total_volume = 0
+		var/composite_heat_capacity = 0
 
 		var/defer_reactions = 0 //Set internally to prevent reactions inside reactions.
 		var/deferred_reaction_checks = 0
@@ -113,24 +114,48 @@ datum
 				if(current_reagent && src.total_temperature >= current_reagent.minimum_reaction_temperature)
 					current_reagent.reaction_temperature(src.total_temperature, 100)
 
-		proc/temperature_reagents(exposed_temperature, exposed_volume = 100, divisor = 35, change_cap = 15, change_min = 0.0000001)
+		proc/temperature_reagents(exposed_temperature, exposed_volume = 100, exposed_heat_capacity = 100, change_cap = 15, change_min = 0.0000001,loud = 0)
 			///This is what you use to change the temp of a reagent holder.
 			///Do not manually change the reagent unless you know what youre doing.
 			if (!src.can_be_heated)
 				return
 			last_temp = total_temperature
 			var/exposed_temp = max(exposed_temperature,0)
-			var/target_temp = ((total_volume*total_temperature)+(exposed_volume*exposed_temp))/(total_volume+exposed_volume)
-			var/difference = abs(total_temperature - target_temp)
-			if (!difference)
-				return
-			var/change = clamp((difference / divisor), change_min, change_cap)
-			if(target_temp > total_temperature)
-				total_temperature += change
-			else if (target_temp < total_temperature)
-				total_temperature -= change
+			if(loud)
+				boutput(world,"exposed_temp: [exposed_temp]")
+			exposed_volume = exposed_volume/100 //abitrary but w/e, it makes the new values similar to old ones
+			if(loud)
+				boutput(world,"exposed_volume: [exposed_volume]")
+
+			if(loud)
+				boutput(world,"total_volume: [total_volume]")
+			if(loud)
+				boutput(world,"composite_heat_capacity: [composite_heat_capacity]")
+
+			var/new_temperature = (total_temperature*total_volume*composite_heat_capacity + exposed_temp*exposed_volume*exposed_heat_capacity)/(total_volume*composite_heat_capacity + exposed_volume*exposed_heat_capacity)
+
+			if(loud)
+				boutput(world,"new_temperature = ([total_temperature]*[total_volume]*[composite_heat_capacity] + [exposed_temp]*[exposed_volume]*[exposed_heat_capacity])/([total_volume]*[composite_heat_capacity] + [exposed_volume]*[exposed_heat_capacity])")
+
+			if(loud)
+				boutput(world,"new_temperature: [new_temperature]")
+
+			var/change = new_temperature - total_temperature
+
+			if(change < 0)
+				change = -clamp(abs(change),change_min,change_cap)
+			else
+				change = clamp(abs(change),change_min,change_cap)
+
+			if(loud)
+				boutput(world,"change: [change]")
+
+			total_temperature += change
 
 			total_temperature = clamp(total_temperature, temperature_min, temperature_cap) //Cap for the moment.
+
+			update_total()
+
 			temperature_react()
 
 			handle_reactions()
@@ -574,6 +599,7 @@ datum
 						del_reagent(current_id)
 					else
 						current_reagent.volume = max(round(current_reagent.volume, 0.001), 0.001)
+						composite_heat_capacity = total_volume/(total_volume+current_reagent.volume)*composite_heat_capacity + current_reagent.volume/(total_volume+current_reagent.volume)*current_reagent.heat_capacity
 						total_volume += current_reagent.volume
 			if(isitem(my_atom))
 				var/obj/item/I = my_atom
@@ -761,11 +787,11 @@ datum
 			if(!current_reagent.data) current_reagent.data = sdata
 
 			src.last_temp = src.total_temperature
-			src.total_temperature = src.total_temperature * src.total_volume + temp_new*new_amount
+			var/temp_temperature = src.total_temperature*src.total_volume*src.composite_heat_capacity + temp_new*new_amount*current_reagent.heat_capacity
 
-			var/divison_amount = src.total_volume + new_amount
+			var/divison_amount = src.total_volume*src.composite_heat_capacity + new_amount*current_reagent.heat_capacity
 			if (divison_amount > 0)
-				src.total_temperature = src.total_temperature / divison_amount
+				src.total_temperature = temp_temperature / divison_amount
 
 			if (!donotupdate)
 				update_total()

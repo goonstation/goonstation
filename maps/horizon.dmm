@@ -9496,7 +9496,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/white,
@@ -9514,9 +9514,6 @@
 	},
 /obj/cable{
 	icon_state = "1-8"
-	},
-/obj/machinery/sleep_console{
-	dir = 8
 	},
 /turf/simulated/floor/white/grime,
 /area/station/medical/breakroom{
@@ -11094,13 +11091,7 @@
 	},
 /area/station/mining/staff_room)
 "aDG" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
-/turf/simulated/floor/shuttle,
-/area/shuttle/arrival/station)
-"aDH" = (
-/obj/machinery/sleep_console{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/shuttle,
@@ -11628,7 +11619,7 @@
 /area/space)
 "aEI" = (
 /obj/machinery/light,
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/shuttle,
@@ -14129,7 +14120,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/hallway/secondary/exit)
 "aKU" = (
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/simulated/floor/shuttle{
@@ -14154,13 +14145,13 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/sleeper/compact{
+	dir = 8
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -14169,9 +14160,6 @@
 "aKX" = (
 /obj/machinery/alarm{
 	pixel_y = 20
-	},
-/obj/machinery/sleep_console{
-	dir = 8
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -15000,9 +14988,6 @@
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "aMW" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 8;
@@ -15011,14 +14996,8 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/blue/checker,
-/area/station/medical/medbay)
-"aMX" = (
-/obj/machinery/sleep_console{
+/obj/machinery/sleeper/compact{
 	dir = 8
-	},
-/obj/disposalpipe/segment{
-	dir = 4
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
@@ -16165,10 +16144,10 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
 "aPB" = (
-/obj/machinery/sleeper{
+/obj/decal/cleanable/dirt/dirt5,
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
-/obj/decal/cleanable/dirt/dirt5,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -23106,14 +23085,8 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/disposalpipe/segment,
-/turf/simulated/floor/white,
-/area/station/medical/medbooth)
-"bfc" = (
-/obj/machinery/sleep_console{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/white,
@@ -25246,28 +25219,16 @@
 /area/station/medical/medbay/lobby)
 "bjO" = (
 /obj/machinery/light,
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/blueblack,
-/area/station/medical/medbay/lobby)
-"bjP" = (
-/obj/machinery/sleep_console{
+/obj/machinery/sleeper/compact{
 	dir = 8
-	},
-/obj/disposalpipe/segment{
-	dir = 4
 	},
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay/lobby)
 "bjQ" = (
-/obj/machinery/sleep_console{
-	dir = 4
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -25275,10 +25236,10 @@
 /area/station/medical/medbay/lobby)
 "bjR" = (
 /obj/machinery/light,
-/obj/machinery/sleeper{
+/obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/disposalpipe/segment{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/simulated/floor/blueblack,
@@ -88179,7 +88140,7 @@ tHt
 aVW
 aZg
 bch
-bfc
+bfe
 bie
 bkW
 bvS
@@ -98433,9 +98394,9 @@ aBm
 aBT
 aCz
 aDe
-aDH
 aBS
-aDH
+aBS
+aBS
 aAA
 aai
 aai
@@ -122910,7 +122871,7 @@ aXx
 baQ
 bdG
 bdG
-bjP
+bjQ
 aXx
 trF
 bsi
@@ -125922,7 +125883,7 @@ ljA
 aHJ
 aIO
 aKX
-aMX
+dhV
 aPg
 aRN
 aUT
