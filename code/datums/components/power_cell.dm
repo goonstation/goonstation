@@ -19,7 +19,7 @@
 	RegisterSignal(parent, COMSIG_CELL_CAN_CHARGE, .proc/can_charge)
 	RegisterSignal(parent, COMSIG_CELL_USE, .proc/use)
 	RegisterSignal(parent, COMSIG_CELL_CHECK_CHARGE, .proc/check_charge)
-	RegisterSignal(parent, COMSIG_IS_CELL, .proc/is_cell)
+	RegisterSignal(parent, COMSIG_CELL_IS_CELL, .proc/is_cell)
 	RegisterSignal(parent, COMSIG_ITEM_PROCESS, .proc/process)
 
 
@@ -40,7 +40,7 @@
 
 
 /datum/component/power_cell/proc/attackby(source, obj/item/I, mob/user)
-	SEND_SIGNAL(I, COMSIG_TRY_CELL_SWAP, parent, user)
+	SEND_SIGNAL(I, COMSIG_CELL_TRY_SWAP, parent, user)
 
 /datum/component/power_cell/proc/can_charge()
 	. = CELL_CHARGEABLE

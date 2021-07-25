@@ -105,7 +105,7 @@
 
 	attack_hand(mob/user as mob)
 		if ((user.r_hand == src || user.l_hand == src) && src.contents && length(src.contents))
-			SEND_SIGNAL(src, COMSIG_SWAP_CELL, null, user)
+			SEND_SIGNAL(src, COMSIG_CELL_SWAP, null, user)
 		else
 			return ..()
 		return

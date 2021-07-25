@@ -1015,6 +1015,7 @@
 				recharge_rate += ((src.material.getProperty("n_radioactive") / 10) / 2)
 
 		charge = max_charge
+		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate)
 		return
 
 /obj/item/ammo/power_cell/self_charging/slowcharge

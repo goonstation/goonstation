@@ -246,9 +246,9 @@
 
 // ---- small cell component signals ----
 ///When the cell in a uses_cell component should be swapped out (cell, user)
-#define COMSIG_SWAP_CELL "swap_cell"
+#define COMSIG_CELL_SWAP "cell_swap"
 ///When a cell is attacked, try to initiate a cellswap on the attacking obj (cell, user)
-#define COMSIG_TRY_CELL_SWAP "try_cell_swap"
+#define COMSIG_CELL_TRY_SWAP "cell_try_swap"
 /// If an item can be charged
 #define COMSIG_CELL_CAN_CHARGE "cell_can_charge"
 /// Charge a small-cell (amount)
@@ -256,7 +256,7 @@
 /// Use some charge from a small-cell (amount, bypass)
 #define COMSIG_CELL_USE "cell_use"
 /// Check if thing is a power cell
-#define COMSIG_IS_CELL "is_cell"
+#define COMSIG_CELL_IS_CELL "cell_is_cell"
 /// Get the current charge and max charge of a power cell (list(charge)), or check if charge is higher than an amount (charge), or just check if there is a cell at all (null)
 #define COMSIG_CELL_CHECK_CHARGE "cell_check_charge"
 /// Force an update to the cellholder's cell. Takes an atom/movable that is a powercell, a powercell component, or a list of args for the powercell to inherit

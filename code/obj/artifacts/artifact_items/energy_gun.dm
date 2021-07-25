@@ -85,7 +85,7 @@
 		return
 
 	ArtifactDestroyed()
-		SEND_SIGNAL(src, COMSIG_SWAP_CELL, null, null) //swap cell with nothing (drop cell on flooor)
+		SEND_SIGNAL(src, COMSIG_CELL_SWAP, null, null) //swap cell with nothing (drop cell on flooor)
 		. = ..()
 
 

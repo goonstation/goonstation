@@ -6,10 +6,10 @@
 	var/swappable_cell = TRUE
 
 /datum/component/cell_holder/Initialize(atom/movable/new_cell, chargable = TRUE, max_cell = INFINITY, swappable = TRUE)
-	if(!isitem(parent) || SEND_SIGNAL(parent, COMSIG_IS_CELL))
+	if(!isitem(parent) || SEND_SIGNAL(parent, COMSIG_CELL_IS_CELL))
 		return COMPONENT_INCOMPATIBLE
 	. = ..()
-	if(SEND_SIGNAL(new_cell, COMSIG_IS_CELL))
+	if(SEND_SIGNAL(new_cell, COMSIG_CELL_IS_CELL))
 		src.cell = new_cell
 		new_cell.set_loc(parent)
 		RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/update_icon)
@@ -18,8 +18,8 @@
 	swappable_cell = swappable
 
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/attackby)
-	RegisterSignal(parent, COMSIG_SWAP_CELL, .proc/do_swap)
-	RegisterSignal(parent, COMSIG_TRY_CELL_SWAP, .proc/try_swap)
+	RegisterSignal(parent, COMSIG_CELL_SWAP, .proc/do_swap)
+	RegisterSignal(parent, COMSIG_CELL_TRY_SWAP, .proc/try_swap)
 	RegisterSignal(parent, COMSIG_CELL_CHARGE, .proc/do_charge)
 	RegisterSignal(parent, COMSIG_CELL_CAN_CHARGE, .proc/can_charge)
 	RegisterSignal(parent, COMSIG_CELL_USE, .proc/use)
@@ -37,7 +37,7 @@
 	else //grab non-null args and use them
 		if(ismovable(new_cell))
 			var/atom/movable/maybecell = new_cell
-			if(SEND_SIGNAL(maybecell, COMSIG_IS_CELL))
+			if(SEND_SIGNAL(maybecell, COMSIG_CELL_IS_CELL))
 				qdel(src.cell)
 				src.cell = new_cell
 				src.cell.set_loc(parent)
@@ -60,7 +60,7 @@
 	. = ..()
 
 /datum/component/cell_holder/proc/attackby(source, obj/item/W, mob/user)
-	if(SEND_SIGNAL(W, COMSIG_IS_CELL))
+	if(SEND_SIGNAL(W, COMSIG_CELL_IS_CELL))
 		src.begin_swap(user, W)
 		return 1
 
@@ -157,4 +157,4 @@
 		if(get_dist(user, cell_holder) > 1 || QDELETED(user) || QDELETED(cell) || QDELETED(cell_holder) || get_turf(cell_holder) != get_turf(cell) )
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		SEND_SIGNAL(cell_holder, COMSIG_SWAP_CELL, cell, user)
+		SEND_SIGNAL(cell_holder, COMSIG_CELL_SWAP, cell, user)
