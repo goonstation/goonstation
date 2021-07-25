@@ -731,10 +731,13 @@
 			playsound(src, (has_butt.sound_fart ? has_butt.sound_fart : 'sound/voice/farts/fart1.ogg'), 50, 1)
 		else
 			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+		RegisterSignal(to_buckle, COMSIG_MOVABLE_SET_LOC, .proc/unbuckle)
 
-
-	unbuckle()
+	unbuckle(source)
 		..()
+		if(istype(source, /datum))
+			var/datum/signalguy = source
+			UnregisterSignal(signalguy, COMSIG_MOVABLE_SET_LOC)
 		if(!src.buckled_guy) return
 
 		var/mob/living/M = src.buckled_guy
