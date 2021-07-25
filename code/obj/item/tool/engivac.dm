@@ -10,8 +10,10 @@
 obj/item/engivac
 	name = "engineering materiel vacuum"
 	desc = "A tool that sucks up debris and building materials into an inserted toolbox. It is also capable of automatically laying floor tiles on plating."
-	icon = 'icons/obj/items/device.dmi' //haha temporary sprotes
+	icon = 'icons/obj/items/device.dmi'
 	icon_state = "engivac"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "engivac_"
 	flags = ONBELT | ONBACK //engis & mechs will want to keep their toolbelts on with this, most other crew their backpacks. Hope this doesn't break stuff.
 	w_class = W_CLASS_BULKY
 
@@ -29,7 +31,7 @@ obj/item/engivac
 	var/collect_buildmats = TRUE
 	var/collect_debris = TRUE
 	var/placing_tiles = FALSE
-	//IDK if we want these to make fixing broken tiles as easy as walking around with a crowbar out so here's a var for it
+	//IDK if we want these to make fixing broken tiles as easy as walking around wearing one of these holding a crowbar out so here's a var for it
 	var/also_replace_broken = TRUE
 
 	//The stack of tiles within the toolbox that we're currently drawing from wrt auto-placing
@@ -40,16 +42,30 @@ obj/item/engivac
 ///				SPRITE-ALTERING PROCS
 ///
 
-obj/item/engivac/proc/update_icon()
+obj/item/engivac/proc/update_icon(mob/M = null)
+	item_state = "engivac_" + (held_toolbox ? held_toolbox.icon_state : "")
+	wear_state = item_state
+	//toolbox_col = held_toolbox ? held_toolbox.icon_state : ""
 	underlays = null
 	toolbox_img.icon_state = held_toolbox ? held_toolbox.icon_state : null
 	underlays += toolbox_img
-	//UpdateOverlays(toolbox_img, "box")
+	if (M)
+		M.update_inhands()
+		M.update_clothing()
 
 
 ///Change worn sprite depending on slot
 obj/item/engivac/equipped(var/mob/user, var/slot)
 	..()
+	if (slot == SLOT_BACK)
+		wear_image_icon = 'icons/mob/back.dmi'
+	if (slot == SLOT_BELT)
+		wear_image_icon = 'icons/mob/belt.dmi'
+	update_icon(user)
+
+//obj/item/engivac/unequipped(mob/user)
+//	..()
+
 
 ///
 ///				OVERRIDES FOR COMMON PROCS
@@ -57,10 +73,9 @@ obj/item/engivac/equipped(var/mob/user, var/slot)
 
 obj/item/engivac/New(var/spawnbox = null)
 	..()
-	toolbox_img = image('icons/obj/items/storage.dmi', "",layer = (src.layer - 0.1)) //where the toolbox sprites are
+	toolbox_img = image('icons/obj/items/storage.dmi', "") //where the toolbox sprites are
 	if (ispath(spawnbox, /obj/item/storage/toolbox))
 		held_toolbox = new spawnbox
-		toolbox_col = held_toolbox.icon_state
 		update_icon()
 	rebuild_collection_list()
 
@@ -88,8 +103,7 @@ obj/item/engivac/attackby(obj/item/I as obj, mob/user as mob)
 		user.u_equip(I)
 		held_toolbox = I
 		I.set_loc(src)
-		toolbox_col = held_toolbox.icon_state
-		update_icon()
+		update_icon(user)
 		return
 	..()
 
@@ -101,7 +115,7 @@ obj/item/engivac/attack_hand(mob/living/user as mob)
 			placing_tiles = FALSE
 			current_stack = null
 			toolbox_col = ""
-			update_icon()
+			update_icon(user)
 			return
 	..()
 	//copy-pasted from mounted defibs ewww
@@ -142,7 +156,7 @@ obj/item/engivac/attack_self(mob/user)
 			placing_tiles = FALSE
 			current_stack = null
 			toolbox_col = ""
-			update_icon()
+			update_icon(user)
 
 /*
 obj/item/engivac/dropped(mob/living/user)
@@ -240,7 +254,7 @@ obj/item/engivac/proc/scan_for_floortiles()
 	var/list/toolbox_contents = held_toolbox.get_contents()
 	for (var/i=1, i <= toolbox_contents.len, i++)
 		if (!istype(toolbox_contents[i], /obj/item/tile))
-			if (i = toolbox_contents.len)
+			if (i == toolbox_contents.len)
 				current_stack = null
 			continue
 		current_stack = toolbox_contents[i]
