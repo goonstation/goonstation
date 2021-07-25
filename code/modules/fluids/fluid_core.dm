@@ -297,7 +297,7 @@ var/mutable_appearance/fluid_ma
 		if (!src.group || !src.group.reagents || !length(src.group.members)) return
 		src.group.last_temp_change = world.time
 		//reduce exposed temperature by amt of members in the group
-		src.group.reagents.temperature_reagents(exposed_temperature, exposed_volume, (70 - (35 / (src.group.members.len))), 15, 1)
+		src.group.reagents.temperature_reagents(exposed_temperature, exposed_volume, 100, 15, 1)
 
 	ex_act()
 		src.removed()

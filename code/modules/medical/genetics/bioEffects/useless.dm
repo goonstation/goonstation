@@ -29,6 +29,8 @@
 	OnAdd()
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "horns", layer = MOB_LAYER)
+			if (ismonkey(owner))
+				overlay_image.pixel_y = -6
 		..()
 
 /datum/bioEffect/horns/evil //this is just for /proc/soulcheck

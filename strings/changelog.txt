@@ -1,4 +1,18 @@
 
+(t)fri jul 23 21
+(u)DisturbHerb
+(p)5574
+(e)|
+(+)(Most) PDAs will start with writing utensils in them by default.
+(u)Azrun
+(p)4861
+(e)⚖🆕🎨📄|balance, feature, sprites, tgui
+(*)Extreme-Pressure Pressurization Device™: the latest in emergency pressurization equipment can now be ordered from cargo.
+(u)Emily
+(p)5591
+(e)⚖🆕|balance, feature
+(*)Implements heat capacity for reagents. This changes basically all reagent temperature exposures.
+(+)Heat capacity water 4x, heat capacity weldingful 0.05x, heat capacity cryostylane 6x
 (t)wed jul 21 21
 (u)Tarmunora
 (e)⚖|balance

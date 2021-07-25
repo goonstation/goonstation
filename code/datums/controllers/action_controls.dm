@@ -999,6 +999,8 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		logTheThing("combat", owner, target, "attempts to handcuff [constructTarget(target,"combat")] with [cuffs] at [log_loc(owner)].")
+
 		duration *= cuffs.apply_multiplier
 
 		if(ishuman(owner))
