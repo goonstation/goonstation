@@ -36,10 +36,8 @@
 	var/wait_cycle = 0 // Update sprite periodically if we're using a self-charging cell.
 
 	var/cell_type = /obj/item/ammo/power_cell/med_power // Type of cell to spawn by default.
-	var/obj/item/ammo/power_cell/cell = null // Ignored for cyborgs and when used_electricity is false.
 	var/cost_normal = 25 // Cost in PU. Doesn't apply to cyborgs.
 	var/cost_cyborg = 500 // Battery charge to drain when user is a cyborg.
-	var/uses_charges = 1 // Does it deduct charges when used? Distinct from...
 	var/is_active = TRUE
 
 	var/stun_normal_weakened = 15
@@ -51,8 +49,9 @@
 
 	New()
 		..()
-		if ((!isnull(src.cell_type) && ispath(src.cell_type, /obj/item/ammo/power_cell)) && (!src.cell || !istype(src.cell)))
-			src.cell = new src.cell_type(src)
+		var/cell = new cell_type
+		AddComponent(/datum/component/cell_holder, cell, TRUE, INFINITY, can_swap_cell)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, .proc/update_icon)
 		processing_items |= src
 		src.update_icon()
 		src.setItemSpecial(/datum/item_special/spark)
@@ -61,44 +60,19 @@
 
 	disposing()
 		processing_items -= src
-		if(cell)
-			cell.dispose()
-			cell = null
 		..()
 
 	examine()
 		. = ..()
-		if (src.uses_charges != 0)
-			if (!src.cell || !istype(src.cell))
-				. += "<span class='alert'>No power cell installed.</span>"
-			else
-				. += "The baton is turned [src.is_active ? "on" : "off"]. There are [src.cell.charge]/[src.cell.max_charge] PUs left! Each stun will use [src.cost_normal] PUs."
+		var/ret = list()
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST))
+			. += "<span class='alert'>No power cell installed.</span>"
+		else
+			. += "The baton is turned [src.is_active ? "on" : "off"]. There are [ret["charge"]]/[ret["max_charge"]] PUs left! Each stun will use [src.cost_normal] PUs."
 
 	emp_act()
-		if (src.uses_charges != 0)
-			src.is_active = FALSE
-			src.process_charges(-INFINITY)
-		return
-
-	process()
-		src.wait_cycle = !src.wait_cycle
-		if (src.wait_cycle)
-			return
-
-		if (!(src in processing_items))
-			logTheThing("debug", null, null, "<b>Convair880</b>: Process() was called for a stun baton ([src.type]) that wasn't in the item loop. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
-			processing_items.Add(src)
-			return
-		if (!src.cell || !istype(src.cell))
-			processing_items.Remove(src)
-			return
-		if (!istype(src.cell, /obj/item/ammo/power_cell/self_charging)) // Kick out batons with a plain cell.
-			processing_items.Remove(src)
-			return
-		if (src.cell.charge == src.cell.max_charge) // Keep self-charging cells in the loop, though.
-			return
-
-		src.update_icon()
+		src.is_active = FALSE
+		src.process_charges(-INFINITY)
 		return
 
 	proc/update_icon()
@@ -121,38 +95,24 @@
 		if (amount <= 0)
 			return 0
 
-		src.regulate_charge()
 		if (user && isrobot(user))
 			var/mob/living/silicon/robot/R = user
 			if (R.cell && R.cell.charge >= (src.cost_cyborg * amount))
 				return 1
 			else
 				return 0
-		if (!src.cell || !istype(src.cell))
+
+		var/ret = SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, src.cost_normal * amount)
+		if (!ret)
 			if (user && ismob(user))
 				user.show_text("The [src.name] doesn't have a power cell!", "red")
 			return 0
-		if (src.cell.charge < (src.cost_normal * amount))
+		if (ret & CELL_INSUFFICIENT_CHARGE)
 			if (user && ismob(user))
 				user.show_text("The [src.name] is out of charge!", "red")
 			return 0
 		else
 			return 1
-
-	proc/regulate_charge()
-		if (!src || !istype(src))
-			return
-
-		if (src.cell && istype(src.cell))
-			if (src.cell.charge < 0)
-				src.cell.charge = 0
-			if (src.cell.charge > src.cell.max_charge)
-				src.cell.charge = src.cell.max_charge
-
-			src.cell.update_icon()
-			src.update_icon()
-
-		return
 
 	proc/process_charges(var/amount = -1, var/mob/user)
 		if (!src || !istype(src) || amount == 0)
@@ -161,34 +121,25 @@
 			var/mob/living/silicon/robot/R = user
 			if (amount < 0)
 				R.cell.use(src.cost_cyborg * -(amount))
-		else
-			if (src.uses_charges != 0 && (src.cell && istype(src.cell)))
-				if (amount < 0)
-					src.cell.use(src.cost_normal * -(amount))
-					if (user && ismob(user))
-						if (src.cell.charge > 0)
-							user.show_text("The [src.name] now has [src.cell.charge]/[src.cell.max_charge] PUs remaining.", "blue")
-						else if (src.cell.charge <= 0)
-							user.show_text("The [src.name] is now out of charge!", "red")
-							src.stamina_damage = initial(src.stamina_damage)
-							src.is_active = FALSE
-							if (istype(src, /obj/item/baton/ntso)) //since ntso batons have some extra stuff, we need to set their state var to the correct value to make this work
-								var/obj/item/baton/ntso/B = src
-								B.state = OPEN_AND_OFF
-				else if (amount > 0)
-					src.cell.charge(src.cost_normal * amount)
+		else if (amount < 0)
+			SEND_SIGNAL(src, COMSIG_CELL_USE, src.cost_normal * -(amount))
+			if (user && ismob(user))
+				var/list/ret = list()
+				if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+					if (ret["charge"] > 0)
+						user.show_text("The [src.name] now has [ret["charge"]]/[ret["max_charge"]] PUs remaining.", "blue")
+					else if (ret["charge"] <= 0)
+						user.show_text("The [src.name] is now out of charge!", "red")
+						src.is_active = FALSE
+						if (istype(src, /obj/item/baton/ntso)) //since ntso batons have some extra stuff, we need to set their state var to the correct value to make this work
+							var/obj/item/baton/ntso/B = src
+							B.state = OPEN_AND_OFF
+		else if (amount > 0)
+			SEND_SIGNAL(src, COMSIG_CELL_CHARGE, src.cost_normal * amount)
 
-		src.update_icon()
 		if(istype(user)) // user can be a Securitron sometims, scream
 			user.update_inhands()
 		return
-
-	proc/charge(var/amt)
-		if(src.cell)
-			return src.cell.charge(amt)
-		else
-			//No cell. Tell anything trying to charge it.
-			return -1
 
 	proc/do_stun(var/mob/user, var/mob/victim, var/type = "", var/stun_who = 2)
 		if (!src || !istype(src) || type == "")
@@ -209,7 +160,7 @@
 				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1, -1)
 				logTheThing("combat", user, victim, "unsuccessfully tries to stun [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
 
-				if (src.is_active && (src.cell && istype(src.cell) && (src.cell.charge < src.cost_normal)))
+				if (src.is_active && !(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, src.cost_normal) & CELL_SUFFICIENT_CHARGE))
 					if (user && ismob(user))
 						user.show_text("The [src.name] is out of charge!", "red")
 				return
@@ -263,11 +214,10 @@
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
 
-		if (!src?.cell?.charge || src.cell.charge - src.cost_normal <= 0 && !(src.is_active))
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, cost_normal) & CELL_SUFFICIENT_CHARGE) && !(src.is_active))
 			boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
 			return
 
-		src.regulate_charge()
 		src.is_active = !src.is_active
 
 		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
@@ -289,7 +239,6 @@
 
 	attack(mob/M as mob, mob/user as mob)
 		src.add_fingerprint(user)
-		src.regulate_charge()
 
 		if(check_target_immunity( M ))
 			user.show_message("<span class='alert'>[M] seems to be warded from attacks!</span>")
@@ -314,30 +263,6 @@
 				else
 					src.do_stun(user, M, "stun", 2)
 
-		return
-
-	attackby(obj/item/b as obj, mob/user as mob)
-		if (can_swap_cell && istype(b, /obj/item/ammo/power_cell/))
-			var/obj/item/ammo/power_cell/pcell = b
-			src.log_cellswap(user, pcell) //if (!src.rechargeable)
-			if (istype(pcell, /obj/item/ammo/power_cell/self_charging) && !(src in processing_items)) // Again, we want dynamic updates here (Convair880).
-				processing_items.Add(src)
-			if (src.cell)
-				if (pcell.swap(src))
-					user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
-			else
-				src.cell = pcell
-				user.drop_item()
-				pcell.set_loc(src)
-				user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
-		else
-			..()
-
-	proc/log_cellswap(var/mob/user as mob, var/obj/item/ammo/power_cell/C)
-		if (!user || !src || !istype(src) || !C || !istype(C))
-			return
-
-		logTheThing("combat", user, null, "swaps the power cell (<b>Cell type:</b> <i>[C.type]</i>) of [src] at [log_loc(user)].")
 		return
 
 	intent_switch_trigger(var/mob/user)
@@ -387,16 +312,16 @@
 /////////////////////////////////////////////// Subtypes //////////////////////////////////////////////////////
 
 /obj/item/baton/secbot
-	uses_charges = 0
+	cost_normal = 0
 
 /obj/item/baton/beepsky
 	name = "securitron stun baton"
 	desc = "A stun baton that's been modified to be used more effectively by security robots. There's a small parallel port on the bottom of the handle."
 	can_swap_cell = 0
 	cell_type = /obj/item/ammo/power_cell
-
-	charge(var/amt)
-		return -1 //no
+	New()
+		. = ..()
+		AddComponent(/datum/component/cell_holder, FALSE)
 
 /obj/item/baton/cane
 	name = "stun cane"
@@ -448,7 +373,6 @@
 		src.add_fingerprint(user)
 		//never should happen but w/e
 
-		src.regulate_charge()
 		//make it harder for them clowns...
 		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
 			src.do_stun(user, user, "failed", 1)
@@ -458,7 +382,7 @@
 		//move to next state
 		switch (src.state)
 			if (CLOSED_AND_OFF)		//move to open/on state
-				if (!src.cell.charge || src.cell.charge - src.cost_normal <= 0) //ugly copy pasted code to move to next state if its depowered, cleanest solution i could think of
+				if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, cost_normal) & CELL_SUFFICIENT_CHARGE)) //ugly copy pasted code to move to next state if its depowered, cleanest solution i could think of
 					boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
 					src.state = OPEN_AND_OFF
 					src.is_active = FALSE
@@ -521,12 +445,11 @@
 		..()
 
 	emp_act()
-		if (src.uses_charges != 0)
-			if (state == OPEN_AND_ON)
-				state = OPEN_AND_OFF
-			src.is_active = FALSE
-			usr.show_text("The [src.name] is now open and unpowered.", "blue")
-			src.process_charges(-INFINITY)
+		if (state == OPEN_AND_ON)
+			state = OPEN_AND_OFF
+		src.is_active = FALSE
+		usr.show_text("The [src.name] is now open and unpowered.", "blue")
+		src.process_charges(-INFINITY)
 
 		return
 
