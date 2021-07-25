@@ -642,6 +642,7 @@
 //mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
 ///internal proc for when an atom is attacked by an item. Override this, but do not call it,
 /atom/proc/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+	PROTECTED_PROC(TRUE)
 	src.material?.triggerOnHit(src, W, user, 1)
 	if (user && W && !(W.flags & SUPPRESSATTACK))  //!( istype(W, /obj/item/grab)  || istype(W, /obj/item/spraybottle) || istype(W, /obj/item/card/emag)))
 		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")
