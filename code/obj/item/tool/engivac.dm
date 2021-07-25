@@ -10,8 +10,8 @@
 obj/item/engivac
 	name = "engineering materiel vacuum"
 	desc = "A tool that sucks up debris and building materials into an inserted toolbox. It is also capable of automatically laying floor tiles on plating."
-	icon = 'icons/obj/janitor.dmi' //haha temporary sprotes
-	icon_state = "handvac"
+	icon = 'icons/obj/items/device.dmi' //haha temporary sprotes
+	icon_state = "engivac"
 	flags = ONBELT | ONBACK //engis & mechs will want to keep their toolbelts on with this, most other crew their backpacks. Hope this doesn't break stuff.
 	w_class = W_CLASS_BULKY
 
