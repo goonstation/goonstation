@@ -24082,7 +24082,7 @@
 	},
 /area/station/science/teleporter)
 "aXa" = (
-/obj/lrteleporter{
+/obj/machinery/lrteleporter{
 	layer = 3
 	},
 /turf/simulated/floor/white,

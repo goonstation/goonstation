@@ -3,7 +3,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 
 var/list/magnet_locations = list()
 
-/obj/lrteleporter
+/obj/machinery/lrteleporter
 	name = "Experimental long-range teleporter"
 	desc = "Well this looks somewhat unsafe."
 	icon = 'icons/misc/32x64.dmi'
@@ -141,14 +141,14 @@ var/list/magnet_locations = list()
 			var/place = href_list["recieve"]
 			src.lrtrecieve(place)
 
-/obj/lrteleporter/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/lrteleporter/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "LongRangeTeleporter", name)
 		ui.open()
 	return ui
 
-/obj/lrteleporter/ui_data(mob/user)
+/obj/machinery/lrteleporter/ui_data(mob/user)
 	var/list/destinations = list()
 	for(var/A in special_places)
 		destinations += list(list(
@@ -159,14 +159,14 @@ var/list/magnet_locations = list()
 		"destinations" = destinations
 	)
 
-/obj/lrteleporter/ui_static_data(mob/user)
+/obj/machinery/lrteleporter/ui_static_data(mob/user)
 	. = list(
 		"send_allowed" = TRUE,
 		"receive_allowed" = TRUE,
 		"syndicate" = FALSE
 	)
 
-/obj/lrteleporter/ui_act(action, params)
+/obj/machinery/lrteleporter/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
