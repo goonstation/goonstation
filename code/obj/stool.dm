@@ -731,14 +731,17 @@
 			playsound(src, (has_butt.sound_fart ? has_butt.sound_fart : 'sound/voice/farts/fart1.ogg'), 50, 1)
 		else
 			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
-		RegisterSignal(to_buckle, COMSIG_MOVABLE_SET_LOC, .proc/unbuckle)
+		RegisterSignal(to_buckle, COMSIG_MOVABLE_SET_LOC, .proc/maybe_unbuckle)
 
-	unbuckle(source)
+	proc/maybe_unbuckle(source, turf/oldloc)
+		if(!isturf(buckled_guy.loc) || !IN_RANGE(src, oldloc, 1))
+			UnregisterSignal(buckled_guy, COMSIG_MOVABLE_SET_LOC)
+			unbuckle()
+
+	unbuckle()
 		..()
-		if(istype(source, /datum))
-			var/datum/signalguy = source
-			UnregisterSignal(signalguy, COMSIG_MOVABLE_SET_LOC)
 		if(!src.buckled_guy) return
+		UnregisterSignal(buckled_guy, COMSIG_MOVABLE_SET_LOC)
 
 		var/mob/living/M = src.buckled_guy
 		var/mob/living/carbon/human/H = src.buckled_guy
