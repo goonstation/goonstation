@@ -1,5 +1,37 @@
 
+(t)sun jul 25 21
+(u)DimWhat
+(p)5597
+(e)🎨|sprites
+(*)Added several more monkey clothing sprites. Go bananas!
+(+)Made sprite edits for many monkey jumpsuit sprites.
+(u)Flappybat
+(p)5530
+(e)⚖|balance
+(+)Gifts and duck eggs now give a costume version of the sneaking suit.
+(t)fri jul 23 21
+(u)DisturbHerb
+(p)5574
+(e)|
+(+)(Most) PDAs will start with writing utensils in them by default.
+(u)Azrun
+(p)4861
+(e)⚖🆕🎨📄|balance, feature, sprites, tgui
+(*)Extreme-Pressure Pressurization Device™: the latest in emergency pressurization equipment can now be ordered from cargo.
+(u)Emily
+(p)5591
+(e)⚖🆕|balance, feature
+(*)Implements heat capacity for reagents. This changes basically all reagent temperature exposures.
+(+)Heat capacity water 4x, heat capacity weldingful 0.05x, heat capacity cryostylane 6x
 (t)wed jul 21 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Adjust blob spread cooldown stuff again.
+(+)Revert buff to base spread cooldown (1.1s -> 1.6s base)
+(+)Change size-based cooldown increase to instead act as as multiplier to distance from nearest nucleus (1x penalty up to 400 tiles, +1x penalty for each 200 tiles past 400 [i.e.: if you try to spread 50 tiles away from nearest nucleus while at size 600, the cooldown penalty is as if you tried to spread 100 tiles from nearest nucleus at size 400])
+(u)Tarmunora
+(e)⚖|balance
+(+)Flashes always get 5 uses before burnout scaling begins; flash burnout scaling is much more agressive.
 (u)Kobold Commando & DimWhat
 (p)5424
 (e)🎨|sprites
@@ -9,7 +41,7 @@
 (u)Tarmunora
 (e)⚖|balance
 (+)Adjust radiation statuseffect to deal damage based on remaining duration.
-(+)🤏radbow buff
+(+)~~🤏radbow buff~~ reverted
 (t)sun jul 18 21
 (u)TTerc
 (p)5483

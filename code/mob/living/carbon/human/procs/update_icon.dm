@@ -690,6 +690,8 @@
 		UpdateOverlays(null, "hair_special_two", 1, 1)
 		UpdateOverlays(null, "hair_special_three", 1, 1)
 
+		UpdateOverlays(null, "eyes", 1, 1)
+
 
 /mob/living/carbon/human/update_burning_icon(var/force_remove=0, var/datum/statusEffect/simpledot/burning/B = 0)
 	if (!B)
