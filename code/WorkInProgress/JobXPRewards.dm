@@ -358,7 +358,7 @@ mob/verb/checkrewards()
 				src.claimedNumbers[usr.key] --
 				return
 			var/list/ret = list()
-			if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			if(SEND_SIGNAL(O, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 				var/ratio = min(1, ret["charge"] / ret["max_charge"])
 				if (ratio < 0.9)
 					boutput(C.mob, "The [sacrifice_name] is depleted, you'll need to charge it up first!")
