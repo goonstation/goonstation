@@ -1,5 +1,10 @@
 
 (t)sun jul 25 21
+(u)DimWhat
+(p)5597
+(e)🎨|sprites
+(*)Added several more monkey clothing sprites. Go bananas!
+(+)Made sprite edits for many monkey jumpsuit sprites.
 (u)Flappybat
 (p)5530
 (e)⚖|balance
