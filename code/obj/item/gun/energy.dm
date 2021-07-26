@@ -103,13 +103,6 @@
 			return 0
 
 
-	attack_hand(mob/user as mob)
-		if ((user.r_hand == src || user.l_hand == src) && src.contents && length(src.contents))
-			SEND_SIGNAL(src, COMSIG_CELL_SWAP, null, user)
-		else
-			return ..()
-		return
-
 /obj/item/gun/energy/heavyion
 	name = "heavy ion blaster"
 	icon_state = "heavyion"
