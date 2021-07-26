@@ -10,6 +10,7 @@ var/list/magnet_locations = list()
 	icon_state = "lrport"
 	density = 0
 	anchored = 1
+	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
 	var/busy = 0
 	layer = 2
 
@@ -23,6 +24,9 @@ var/list/magnet_locations = list()
 		return attack_hand(user)
 
 	attack_hand(mob/user as mob)
+		if(ui_interact(user))
+			return
+
 		var/link_html = "<br>"
 
 		if(special_places.len)
@@ -126,7 +130,7 @@ var/list/magnet_locations = list()
 		if (src.busy)
 			return
 
-		if (get_dist(usr, src) > 1 || usr.z != src.z)
+		if (!in_interact_range(src, usr) || usr.z != src.z)
 			return
 
 		if (href_list["send"])
@@ -135,6 +139,47 @@ var/list/magnet_locations = list()
 
 		if (href_list["recieve"])
 			var/place = href_list["recieve"]
+			src.lrtrecieve(place)
+
+/obj/lrteleporter/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "LongRangeTeleporter", name)
+		ui.open()
+	return ui
+
+/obj/lrteleporter/ui_data(mob/user)
+	var/list/destinations = list()
+	for(var/A in special_places)
+		destinations += list(list(
+			"destination" = "[A]",
+			"ref" = null))
+
+	. = list(
+		"destinations" = destinations
+	)
+
+/obj/lrteleporter/ui_static_data(mob/user)
+	. = list(
+		"send_allowed" = TRUE,
+		"receive_allowed" = TRUE,
+		"syndicate" = FALSE
+	)
+
+/obj/lrteleporter/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	if(busy) return
+	if(!in_interact_range(src, usr) || usr.z != src.z) return
+
+	switch(action)
+		if("send")
+			var/place = params["name"]
+			src.lrtsend(place)
+
+		if("receive")
+			var/place = params["name"]
 			src.lrtrecieve(place)
 
 //////////////////////////////////////////////////
