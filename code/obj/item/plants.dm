@@ -75,7 +75,7 @@
 			JOB_XP(user, "Botanist", 2)
 
 	combust_ended()
-		smoke_reaction(src.reagents, 1, get_turf(src), do_sfx = 0)
+		smoke_reaction(src.reagents.remove_any_to(7), 1, get_turf(src), do_sfx = 0)
 		..()
 
 	proc/build_name(obj/item/W)
