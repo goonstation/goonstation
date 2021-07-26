@@ -754,7 +754,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		if (istype(W, /obj/item/sponge) || istype(W, /obj/item/mop))
 			..()
 		else
-			src.loc.attackby(user.equipped(), user)
+			src.loc.Attackby(user.equipped(), user)
 
 /obj/decal/cleanable/balloon
 	name = "balloon"
@@ -1219,7 +1219,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			if (istype(W, /obj/item/sponge) || istype(W, /obj/item/mop))
 				..()
 			else
-				src.loc.attackby(user.equipped(), user)
+				src.loc.Attackby(user.equipped(), user)
 
 /obj/decal/cleanable/cobweb
 	name = "cobweb"

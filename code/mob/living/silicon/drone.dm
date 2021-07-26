@@ -192,7 +192,7 @@
 			if (use_delay)
 				src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 
-			target.attackby(equipped, src)
+			target.Attackby(equipped, src)
 			if (equipped)
 				equipped.afterattack(target, src, reach)
 

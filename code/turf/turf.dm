@@ -805,7 +805,7 @@
 			if (src.temp_flags & HAS_KUDZU)
 				var/obj/spacevine/K = locate(/obj/spacevine) in src.contents
 				if (K)
-					K.attackby(W, user, params)
+					K.Attackby(W, user, params)
 			return ..()
 
 /turf/simulated/aprilfools/grass

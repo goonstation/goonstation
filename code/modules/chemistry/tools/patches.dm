@@ -110,7 +110,7 @@
 			user.visible_message("[user] applies [src] to [himself_or_herself(user)].",\
 			"<span class='notice'>You apply [src] to yourself.</span>")
 			logTheThing("combat", user, null, "applies a patch to themself [log_reagents(src)] at [log_loc(user)].")
-			user.attackby(src, user)
+			user.Attackby(src, user)
 		return
 
 	throw_impact(atom/M, datum/thrown_thing/thr)
@@ -405,7 +405,7 @@
 	attackby(var/obj/item/W, var/mob/user)
 		if (patches.len)
 			var/obj/item/reagent_containers/patch/P = patches[patches.len]
-			P.attackby(W, user)
+			P.Attackby(W, user)
 
 	attack_self(var/mob/user)
 		if (patches.len)

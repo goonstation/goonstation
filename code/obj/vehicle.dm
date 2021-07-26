@@ -489,7 +489,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 					hat.throw_at(get_edge_target_turf(T, S.dir), 50, 1)
 
 			else if (istype(joustingTool, /obj/item/experimental/melee/spear)) // don't need custom attackResults here, just use the spear attack, that's deadly enough
-				T.attackby(joustingTool, R)
+				T.Attackby(joustingTool, R)
 				R.visible_message("[R] lances [T] with a spear!", "You stab at [T] in passing!")
 				if (prob(33))
 					R.drop_item(joustingTool)
