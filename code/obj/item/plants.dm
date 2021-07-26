@@ -1,4 +1,4 @@
-
+#define HERB_SMOKE_TRANSFER_HARDCAP 15
 /// Inedible Produce
 /obj/item/plant/
 	name = "plant"
@@ -75,7 +75,7 @@
 			JOB_XP(user, "Botanist", 2)
 
 	combust_ended()
-		smoke_reaction(src.reagents.remove_any_to(7), 1, get_turf(src), do_sfx = 0)
+		smoke_reaction(src.reagents.remove_any_to(HERB_SMOKE_TRANSFER_HARDCAP), 1, get_turf(src), do_sfx = 0)
 		..()
 
 	proc/build_name(obj/item/W)
@@ -446,3 +446,5 @@
 	name = "houttuynia cordata"
 	desc = "Also known as fish mint or heart leaf, used in cuisine for its distinct fishy flavor."
 	icon_state = "hcordata"
+
+#undef HERB_SMOKE_TRANSFER_HARDCAP
