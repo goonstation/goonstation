@@ -1101,29 +1101,37 @@
 				if (!reagents.get_reagent_amount("fuel"))
 					user.show_text("Out of fuel.", "red")
 					return
-				src.on = 1
-				src.firesource = TRUE
-				set_icon_state(src.icon_on)
-				src.item_state = "zippoon"
-				user.visible_message("<span class='alert'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
-				playsound(user, 'sound/items/zippo_open.ogg', 30, 1)
-				light.enable()
-
-				processing_items |= src
+				src.activate(user)
 			else
-				src.on = 0
-				src.firesource = FALSE
-				set_icon_state(src.icon_off)
-				src.item_state = "zippo"
-				user.visible_message("<span class='alert'>You hear a quiet click, as [user] shuts off [src] without even looking what they're doing. Wow.</span>")
-				playsound(user, 'sound/items/zippo_close.ogg', 30, 1)
-				light.disable()
-
-				processing_items.Remove(src)
+				src.deactivate(user)
 			user.update_inhands()
 		else
 			return ..()
 		return
+
+	proc/activate(mob/user as mob)
+		src.on = 1
+		src.firesource = TRUE
+		set_icon_state(src.icon_on)
+		src.item_state = "zippoon"
+		light.enable()
+		processing_items |= src
+		if (user != null)
+			user.visible_message("<span class='alert'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
+			playsound(user, 'sound/items/zippo_open.ogg', 30, 1)
+			user.update_inhands()
+
+	proc/deactivate(mob/user as mob)
+		src.on = 0
+		src.firesource = FALSE
+		set_icon_state(src.icon_off)
+		src.item_state = "zippo"
+		light.disable()
+		processing_items.Remove(src)
+		if (user != null)
+			user.visible_message("<span class='alert'>You hear a quiet click, as [user] shuts off [src] without even looking what they're doing. Wow.</span>")
+			playsound(user, 'sound/items/zippo_close.ogg', 30, 1)
+			user.update_inhands()
 
 	attack(mob/target, mob/user as mob)
 		if (ishuman(target))
@@ -1193,6 +1201,10 @@
 	process()
 		if (src.on)
 			if (!reagents)
+				if (ismob(src.loc))
+					src.deactivate(src.loc)
+				else
+					src.deactivate(null)
 				return
 			if (!infinite_fuel && reagents.get_reagent_amount("fuel"))
 				reagents.remove_reagent("fuel", 1)
@@ -1205,12 +1217,10 @@
 			if (T)
 				T.hotspot_expose(700,5)
 			if (!reagents.get_reagent_amount("fuel"))
-				src.on = 0
-				set_icon_state(src.icon_off)
-				src.item_state = "zippo"
-				light.disable()
-
-				processing_items -= src
+				if (ismob(src.loc))
+					src.deactivate(src.loc)
+				else
+					src.deactivate(null)
 				return
 			//sleep(1 SECOND)
 
