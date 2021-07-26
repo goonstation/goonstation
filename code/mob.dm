@@ -3028,7 +3028,13 @@
 		..(newdensity)
 
 // to check if someone is abusing cameras with stuff like artifacts, power gloves, etc
-#define FALLBACK_VIEW_RANGE 10
 /mob/proc/in_real_view_range(var/turf/T)
-	return src.client && IN_RANGE(T, src, (istext(src.client.view) ? FALLBACK_VIEW_RANGE : src.client.view))
-#undef FALLBACK_VIEW_RANGE
+	var/view_range = 10
+	if (src.client)
+		if(istext(src.client.view))
+			var/list/ranges = splittext(src.client.view, "x")
+			// need to divide by two, since is the entire length/width of the screen
+			view_range = text2num(max(ranges)) / 2
+		else
+			view_range = src.client.view
+	return src.client && IN_RANGE(T, src, view_range)
