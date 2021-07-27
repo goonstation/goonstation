@@ -1276,3 +1276,25 @@
 
 /obj/item/device/light/zippo/borg
 	infinite_fuel = 1
+
+/obj/item/device/light/zippo/syndicate
+	icon_state = "syndie_zippo"
+	icon_off = "syndie_zippo"
+	icon_on = "syndie_zippoon"
+	infinite_fuel = 1
+	col_r = 0.298
+	col_g = 0.658
+	col_b = 0
+
+	New()
+		. = ..()
+		RegisterSignal(src, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), .proc/update_hotbox_flag)
+
+	proc/update_hotbox_flag(thing, previous_loc)
+		if (!firesource) return
+		if (isturf(src.loc))
+			var/turf/T = src.loc
+			T.allow_unrestricted_hotbox++
+		if (isturf(previous_loc))
+			var/turf/T = previous_loc
+			T.allow_unrestricted_hotbox = max(0, T.allow_unrestricted_hotbox - 1)

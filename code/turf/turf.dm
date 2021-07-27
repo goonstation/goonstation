@@ -45,6 +45,8 @@
 	var/tmp/checkinghasproximity = 0
 	/// directions of this turf being blocked by directional blocking objects. So we don't need to loop through the entire contents
 	var/tmp/blocked_dirs = 0
+	/// this turf is allowing unrestricted hotbox reactions
+	var/tmp/allow_unrestricted_hotbox = 0
 	var/wet = 0
 	throw_unlimited = 0 //throws cannot stop on this tile if true (also makes space drift)
 
