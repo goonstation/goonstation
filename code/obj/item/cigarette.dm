@@ -1278,6 +1278,7 @@
 	infinite_fuel = 1
 
 /obj/item/device/light/zippo/syndicate
+	desc = "A sleek black lighter with a red stripe."
 	icon_state = "syndie_zippo"
 	icon_off = "syndie_zippo"
 	icon_on = "syndie_zippoon"
