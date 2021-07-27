@@ -184,3 +184,8 @@ var/list/observers = list()
 			pool(src)
 
 
+/mob/dead/target_observer/welder_ghost
+	name = "spooky not-quite ghost"
+
+	stop_observing()
+		return

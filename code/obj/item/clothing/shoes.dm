@@ -677,3 +677,15 @@
 	icon_state = "mjwhite"
 	desc = "Dainty and formal. This pair is white."
 	step_sound = "footstep"
+
+/obj/item/clothing/shoes/welder_shoes
+	name = "Industrial Boots"
+	icon_state = "boots"
+	desc = "Bulky boots with thick soles, protecting your feet."
+	step_sound = "step_plating"
+
+	noslip
+		magnetic = 1
+		c_flags = NOSLIP
+		cant_self_remove = 1
+		cant_other_remove = 1

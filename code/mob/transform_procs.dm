@@ -406,7 +406,7 @@
 				W.set_loc(locate(1, 1, 1))
 		else
 			W.set_loc(T)
-
+		SHOW_WELDER_TIPS(src)
 		if(src.mind)
 			src.mind.transfer_to(W)
 			src.mind.special_role = "welder"

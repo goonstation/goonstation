@@ -450,10 +450,10 @@
 
 	setupProperties()
 		..()
-		setProperty("meleeprot", 9)
-		setProperty("rangedprot", 2.5)
-		setProperty("coldprot", 90)
-		setProperty("heatprot", 90)
+		setProperty("meleeprot", 7)
+		setProperty("rangedprot", 2)
+		setProperty("coldprot", 75)
+		setProperty("heatprot", 75)
 
 
 	postpossession

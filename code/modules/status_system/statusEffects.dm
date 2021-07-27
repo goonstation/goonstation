@@ -984,7 +984,7 @@
 		id = "incorporeal"
 		name = "Incorporeal"
 		desc = "You are incorporeal.<br>You cannot use your hands. Become corporeal again to interact with the world."
-		icon_state = "handcuffed" //change when i find something
+		icon_state = "incorporeal"
 		unique = 1
 		duration = INFINITE_STATUS
 		maxDuration = null

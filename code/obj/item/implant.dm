@@ -374,19 +374,6 @@ THROWING DARTS
 		source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
 		boutput(source, "The implanted freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.")
 
-/obj/item/implant/stunreduce
-	name = "nerve reinforcer implant"
-	icon_state = "implant-r"
-	impcolor = "r"
-
-	implanted(mob/source as mob)
-		..()
-		source.add_stun_resist_mod("stun_reduce_implant", 75)
-
-	on_remove(var/mob/M)
-		M.remove_stun_resist_mod("stun_reduce_implant")
-		..()
-
 /obj/item/implant/tracking
 	name = "tracking implant"
 	//life_tick_energy = 0.1

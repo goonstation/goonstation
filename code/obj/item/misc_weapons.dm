@@ -1550,27 +1550,32 @@ obj/item/whetstone
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
-//Machete for the Welder
-/obj/item/kitchen/utensil/knife/welder
+//Machete for The Welder
+/obj/item/welder_machete
 	name = "welder's machete"
 	desc = "An old machete, clearly showing signs of wear and tear due to its age. The word 'DeFoe' is carved into the handle."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "welder_machete"
 	item_state = "welder_machete"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi' //i'll change this once i get an inhand that isn't ass
-	force = 10.0
-	throwforce = 10
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
+	force = 15.0 //damage increases by 2.5 for every soul they take
+	throwforce = 15 //damage goes up by 2.5 for every soul they take
+	flags = FPRINT | CONDUCT | TABLEPASS | ONBELT
 	item_function_flags = IMMUNE_TO_ACID
+	hit_type = DAMAGE_CUT
+	tool_flags = TOOL_CUTTING
+	w_class = W_CLASS_NORMAL
 	var/welder_key = ""
+
 	New()
 		. = ..()
 		START_TRACKING
-		START_TRACKING_CAT(TR_CAT_DEATH_TRACKING_ITEMS)
+		src.setItemSpecial(/datum/item_special/swipe)
 
 	disposing()
 		. = ..()
 		STOP_TRACKING
-		STOP_TRACKING_CAT(TR_CAT_DEATH_TRACKING_ITEMS)
 
 	attack_hand(var/mob/user as mob)
 		if (user.mind)
@@ -1601,7 +1606,21 @@ obj/item/whetstone
 			user.changeStatus("weakened", 80)
 			return
 
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		if(iscarbon(A))
+			var/mob/living/carbon/C = A
+			if (ismob(usr))
+				A:lastattacker = usr
+				A:lastattackertime = world.time
+			C.changeStatus("weakened", 3 SECONDS)
+			C.force_laydown_standup()
+			take_bleeding_damage(C, null, src.force / 2	, DAMAGE_CUT)
+
+			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
+
 	possessed
 		cant_self_remove = 1
 		cant_other_remove = 1
 		cant_drop = 1
+		throwforce = 20 //higher base damage, lower once the welder starts scaling up their machete
+		force = 20
