@@ -80,6 +80,7 @@
 
 	var/engine_ok = TRUE
 	var/full_throttle = FALSE
+	var/list/engine_health = list(1,1,1,1,1,1,1,1)
 
 	var/buoy_count = 3
 

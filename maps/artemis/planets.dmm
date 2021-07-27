@@ -12,7 +12,9 @@
 /turf/simulated/floor/black,
 /area/ship/artemis)
 "ao" = (
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-L"
+	},
 /turf/space,
 /area/ship/artemis)
 "ap" = (
@@ -131,6 +133,12 @@
 "dg" = (
 /obj/machinery/chem_heater,
 /turf/simulated/floor/specialroom/medbay,
+/area/ship/artemis)
+"dl" = (
+/obj/machinery/shuttle/engine/propulsion{
+	icon_state = "alt_propulsion"
+	},
+/turf/background_canvas,
 /area/ship/artemis)
 "ds" = (
 /turf/simulated/floor/circuit/off,
@@ -275,9 +283,9 @@
 /turf/simulated/floor/engine,
 /area/ship/artemis)
 "hb" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/machinery/shuttle/engine/heater{
 	dir = 1;
-	icon_state = "propulsion"
+	icon_state = "alt_heater-L"
 	},
 /turf/background_canvas,
 /area/ship/artemis)
@@ -360,6 +368,13 @@
 	},
 /obj/access_spawn/maint,
 /turf/simulated/floor/engine,
+/area/ship/artemis)
+"ju" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 9;
+	icon_state = "alt_propulsion"
+	},
+/turf/background_canvas,
 /area/ship/artemis)
 "jz" = (
 /turf/simulated/floor/carpet{
@@ -554,11 +569,6 @@
 	},
 /turf/simulated/floor/black,
 /area/ship/artemis)
-"oJ" = (
-/obj/decal/fakeobjects/shuttlethruster,
-/obj/decal/fakeobjects/shuttlethruster,
-/turf/space,
-/area/ship/artemis)
 "oZ" = (
 /obj/table/wood/auto,
 /obj/item/clothing/gloves/concussive,
@@ -679,6 +689,12 @@
 "sU" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/purple,
+/area/ship/artemis)
+"to" = (
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-R"
+	},
+/turf/space,
 /area/ship/artemis)
 "tq" = (
 /obj/machinery/light/incandescent,
@@ -905,6 +921,12 @@
 	icon_state = "red2"
 	},
 /area/ship/artemis)
+"Ar" = (
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-M"
+	},
+/turf/space,
+/area/ship/artemis)
 "AE" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/carpet{
@@ -926,6 +948,13 @@
 	},
 /turf/simulated/floor/bluegreen,
 /area/ship/arjuna)
+"Bh" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 5;
+	icon_state = "alt_propulsion"
+	},
+/turf/background_canvas,
+/area/ship/artemis)
 "Bl" = (
 /obj/magnet_target_marker/asteroid{
 	height = 13;
@@ -1293,6 +1322,13 @@
 	icon_state = "oven_off"
 	},
 /turf/simulated/floor/blue/checker,
+/area/ship/artemis)
+"Ki" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 1;
+	icon_state = "alt_heater-R"
+	},
+/turf/background_canvas,
 /area/ship/artemis)
 "Kn" = (
 /turf/simulated/floor/carpet{
@@ -5812,7 +5848,7 @@ uv
 GV
 po
 ao
-Sz
+dl
 Sz
 Sz
 Sz
@@ -6113,8 +6149,8 @@ Oh
 st
 sU
 po
-ao
-Sz
+Ar
+dl
 Sz
 Sz
 Sz
@@ -6415,8 +6451,8 @@ po
 CR
 st
 po
-ao
-Sz
+to
+dl
 Sz
 Sz
 Sz
@@ -8535,7 +8571,7 @@ Tt
 BY
 po
 ao
-Sz
+dl
 Sz
 Sz
 Sz
@@ -8836,8 +8872,8 @@ Tt
 Tt
 Tt
 po
-ao
-Sz
+Ar
+dl
 Sz
 Sz
 Sz
@@ -9138,8 +9174,8 @@ Tt
 Tt
 Tt
 po
-ao
-Sz
+Ar
+dl
 Sz
 Sz
 Sz
@@ -9440,8 +9476,8 @@ Tt
 Tt
 Tt
 po
-ao
-Sz
+Ar
+dl
 Sz
 Sz
 Sz
@@ -9742,8 +9778,8 @@ Tt
 Tt
 Tt
 po
-ao
-Sz
+Ar
+dl
 Sz
 Sz
 Sz
@@ -10044,8 +10080,8 @@ Tt
 Tt
 Tt
 po
-oJ
-Sz
+Ar
+dl
 Sz
 Sz
 Sz
@@ -10346,8 +10382,8 @@ po
 Tt
 Fc
 po
-ao
-Sz
+to
+dl
 Sz
 Sz
 Sz
@@ -12456,7 +12492,7 @@ CB
 CB
 po
 ao
-Sz
+dl
 Sz
 Sz
 Sz
@@ -12757,8 +12793,8 @@ UG
 CB
 sL
 po
-ao
-Sz
+Ar
+dl
 Sz
 Sz
 Sz
@@ -13059,8 +13095,8 @@ po
 nz
 uZ
 po
-ao
-Sz
+to
+dl
 Sz
 Sz
 Sz
@@ -24820,7 +24856,7 @@ Sz
 Sz
 Sz
 Sz
-Sz
+ju
 hb
 po
 po
@@ -25122,8 +25158,8 @@ Sz
 Sz
 Sz
 Sz
-Sz
-hb
+Bh
+Ki
 po
 Tt
 BY
@@ -28142,7 +28178,7 @@ Sz
 Sz
 Sz
 Sz
-Sz
+ju
 hb
 po
 uc
@@ -28444,8 +28480,8 @@ Sz
 Sz
 Sz
 Sz
-Sz
-hb
+Bh
+Ki
 po
 po
 po
