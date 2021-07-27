@@ -1018,10 +1018,14 @@
 	desc = "Frozen water."
 	icon = 'icons/turf/water.dmi'
 	icon_state = "ice"
-	edge_priority_level = 0 //FLOOR_AUTO_EDGE_PRIORITY_WATER
-	icon_state_edge = null//"ice_edge"
-	turf_flags = MOB_SLIP
-	wet = 1
+	edge_priority_level = 0
+	icon_state_edge = null
+	mat_appearances_to_ignore = list("ice")
+
+	New()
+		..()
+		setMaterial(getMaterial("ice"))
+		name = initial(name)
 
 	New()
 		. = ..()
