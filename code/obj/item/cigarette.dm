@@ -1069,6 +1069,7 @@
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "zippo"
 	item_state = "zippo"
+	var/item_state_base = "zippo"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	w_class = W_CLASS_TINY
 	throwforce = 4
@@ -1113,7 +1114,7 @@
 		src.on = 1
 		src.firesource = TRUE
 		set_icon_state(src.icon_on)
-		src.item_state = "zippoon"
+		src.item_state = "[item_state_base]on"
 		light.enable()
 		processing_items |= src
 		if (user != null)
@@ -1125,7 +1126,7 @@
 		src.on = 0
 		src.firesource = FALSE
 		set_icon_state(src.icon_off)
-		src.item_state = "zippo"
+		src.item_state = "[item_state_base]"
 		light.disable()
 		processing_items.Remove(src)
 		if (user != null)
@@ -1282,6 +1283,8 @@
 	icon_state = "syndie_zippo"
 	icon_off = "syndie_zippo"
 	icon_on = "syndie_zippoon"
+	item_state = "syndi-zippo"
+	item_state_base = "syndi-zippo"
 	infinite_fuel = 1
 	col_r = 0.298
 	col_g = 0.658
