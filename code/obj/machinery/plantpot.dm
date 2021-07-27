@@ -894,7 +894,7 @@
 			if(get_dist(user, over_object) > 1)
 				boutput(user, "<span class='alert'>[over_object] is too far away!</span>")
 				return
-			src.attackby(over_object, user)  // Activates the same command as would be used with a seed in hand on the tray.
+			src.Attackby(over_object, user)  // Activates the same command as would be used with a seed in hand on the tray.
 			return
 		else // if it's not a seed...
 			return ..() // call our parents and ask what to do.

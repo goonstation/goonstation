@@ -327,7 +327,7 @@
 			if (get_dist(src.loc, M.loc) > 1)
 				return
 			src.visible_message("<strong class='combat'>[A] shoves [M] against \the [src]!</strong>")
-			logTheThing("combat", A, M, "forces [constructTarget(M,"combat")] to touch \an ([A.type]) artifact at [log_loc(src)].")
+			logTheThing("combat", A, M, "forces [constructTarget(M,"combat")] to touch \an ([src.type]) artifact at [log_loc(src)].")
 			src.ArtifactTouched(M)
 			return 0
 

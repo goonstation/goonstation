@@ -1470,7 +1470,7 @@
 			if (!P)
 				return
 			// Call ourselves w/ the tool, then continue
-			src.attackby(P, user)
+			src.Attackby(P, user)
 
 		// Don't replace with an [else]! If a prying tool is found above [intact] might become 0 and this runs too, which is how floor swapping works now! - BatElite
 		if (!intact)
@@ -1608,7 +1608,7 @@
 	else if (src.temp_flags & HAS_KUDZU)
 		var/obj/spacevine/K = locate(/obj/spacevine) in src.contents
 		if (K)
-			K.attackby(C, user, params)
+			K.Attackby(C, user, params)
 
 	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1)) // this seemed like the neatest way to make attack_hand still trigger when needed
 		src?.material.triggerOnHit(src, C, user, 1)

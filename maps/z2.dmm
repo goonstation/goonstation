@@ -78854,7 +78854,6 @@
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
 /obj/item/baton{
-	cell_type = null;
 	desc = "This was one of the first batons to be turned off and grabbed by the head to enable more robust beatings. It is certainly the most imposing baton you've ever seen.";
 	flipped = 1;
 	force = 15;

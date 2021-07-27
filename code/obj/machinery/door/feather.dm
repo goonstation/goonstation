@@ -86,7 +86,7 @@
 	return
 
 /obj/machinery/door/feather/attack_hand(mob/user as mob)
-	return src.attackby(null, user)
+	return src.Attackby(null, user)
 
 /obj/machinery/door/feather/allowed(mob/M)
 	return isflock(M) // haha fuck you everyone else

@@ -1514,8 +1514,8 @@
 	w_class = W_CLASS_NORMAL
 	flags = ONBELT
 	force = 7
+	var/cell_type = null
 	var/dig_strength = 1
-	var/obj/item/ammo/power_cell/cell = null
 	var/status = 0
 	var/digcost = 0
 	var/weakener = 0
@@ -1525,24 +1525,27 @@
 
 	New()
 		..()
+		if(cell_type)
+			var/cell = new cell_type
+			AddComponent(/datum/component/cell_holder, cell)
 		BLOCK_SETUP(BLOCK_ROD)
 
 	// Seems like a basic bit of user feedback to me (Convair880).
 	examine(mob/user)
 		. = ..()
-		if (!src.cell)
-			return
 		if (isrobot(user))
 			return // Drains battery instead.
-		. += "The [src.name] is turned [src.status ? "on" : "off"]. There are [src.cell.charge]/[src.cell.max_charge] PUs left!"
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			. += "The [src.name] is turned [src.status ? "on" : "off"]. There are [ret["charge"]]/[ret["max_charge"]] PUs left!"
 
 	proc/process_charges(var/use)
 		if (!isnum(use) || use < 0)
 			return 0
-		if (cell.charge < 1)
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
 			return 0
-		src.cell.use(use)
-		if (src.cell.charge == 0)
+
+		if (SEND_SIGNAL(src, COMSIG_CELL_USE, use) & CELL_INSUFFICIENT_CHARGE)
 			src.power_down()
 			var/turf/T = get_turf(src)
 			T.visible_message("<span class='alert'>[src] runs out of charge and powers down!</span>")
@@ -1552,13 +1555,6 @@
 		..()
 		if (src.status && !isturf(target))
 			src.process_charges(digcost*5)
-
-	proc/charge(var/amount)
-		//Support for recharge stations. Increment uses by one until we reach max.
-		if(src.cell)
-			return src.cell.charge(amount)
-		else//No cell, or not rechargeable. Tell anything trying to charge it.
-			return -1
 
 	proc/power_up()
 		src.status = 1
@@ -1574,14 +1570,6 @@
 			signal_event("icon_updated")
 		return
 
-	attackby(obj/item/b as obj, mob/user as mob)
-		if (istype(b, /obj/item/ammo/power_cell/))
-			var/obj/item/ammo/power_cell/pcell = b
-			if (src.cell)
-				if (pcell.swap(src))
-					user.visible_message("<span class='alert'>[user] swaps [src]'s power cell.</span>")
-		else
-			..()
 
 	proc/update_icon()
 		return
@@ -1613,7 +1601,7 @@ obj/item/clothing/gloves/concussive
 	flags = ONBELT
 	dig_strength = 2
 	digcost = 2
-	cell = new/obj/item/ammo/power_cell
+	cell_type = /obj/item/ammo/power_cell
 	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 
@@ -1684,7 +1672,7 @@ obj/item/clothing/gloves/concussive
 	icon_state = "powerhammer"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "phammer1"
-	cell = new/obj/item/ammo/power_cell
+	cell_type = /obj/item/ammo/power_cell
 	force = 9
 	dig_strength = 3
 	digcost = 3
@@ -1749,7 +1737,7 @@ obj/item/clothing/gloves/concussive
 	flags = ONBELT
 	dig_strength = 0
 	digcost = 2
-	cell = new/obj/item/ammo/power_cell
+	cell_type = /obj/item/ammo/power_cell
 	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 
