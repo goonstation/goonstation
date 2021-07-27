@@ -1,4 +1,10 @@
 
+(t)tue jul 27 21
+(u)Sovexe
+(p)5606
+(e)⚖🆕🎨|balance, feature, sprites
+(*)There is now a per herb hardcap on the reagents transferred into smoke when burning herbs.
+(*)Traitor botanists can now purchase a hotbox lighter for 1 credit. This lighter has unlimited fuel, bypasses the herb hardcap, and gives a bonus multiplier to the reagent volume of the smoke. Sprite by DimWhat.
 (t)sun jul 25 21
 (u)DimWhat
 (p)5597
