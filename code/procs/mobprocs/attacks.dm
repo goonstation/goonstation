@@ -59,9 +59,7 @@
 			if (W?.force)
 				game_stats.Increment("violence")
 #endif
-			if(SEND_SIGNAL(src, COMSIG_ATTACKBY, W, user))
-				return
-			else if (!isnull(W))
+			if (!isnull(W))
 				W.attack(src, user, (user.zone_sel && user.zone_sel.selecting ? user.zone_sel.selecting : null), is_special) // def_zone var was apparently useless because the only thing that ever passed def_zone anything was shitty bill when he attacked people
 				if (W && user != src) //ZeWaka: Fix for cannot read null.hide_attack
 					if (!W.hide_attack)
