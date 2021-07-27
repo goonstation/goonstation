@@ -90,7 +90,7 @@
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
-			return src.attackby(W, user)
+			return src.Attackby(W, user)
 		return ..()
 
 	onVarChanged(variable, oldval, newval)

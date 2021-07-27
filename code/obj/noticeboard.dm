@@ -68,11 +68,11 @@
 		if((P && P.loc == src)) //if the paper's on the board
 			if (istype(usr.r_hand, /obj/item/pen)) //and you're holding a pen
 				src.add_fingerprint(usr)
-				P.attackby(usr.r_hand, usr) //then do ittttt
+				P.Attackby(usr.r_hand, usr) //then do ittttt
 			else
 				if (istype(usr.l_hand, /obj/item/pen)) //check other hand for pen
 					src.add_fingerprint(usr)
-					P.attackby(usr.l_hand, usr)
+					P.Attackby(usr.l_hand, usr)
 				else
 					boutput(usr, "<span class='alert'>You'll need something to write with!</span>")
 

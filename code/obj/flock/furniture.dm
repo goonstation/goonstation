@@ -159,7 +159,7 @@
 
 	if(isflock(user))
 		if (!src.toggle())
-			return src.attackby(null, user)
+			return src.Attackby(null, user)
 	else
 		boutput(user, "<span class='alert'>Nothing you can do can persuade this thing to either open or close. Bummer.</span>")
 

@@ -330,7 +330,7 @@
 							return
 
 					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
-						S.master.attackby(I, user, params)
+						S.master.Attackby(I, user, params)
 						if (master.equipped() != I)
 							return
 
@@ -389,7 +389,7 @@
 							return
 
 					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
-						S.master.attackby(I, user, params)
+						S.master.Attackby(I, user, params)
 						if (master.equipped() != I)
 							return
 

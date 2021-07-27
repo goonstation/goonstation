@@ -4,25 +4,26 @@
 	artifact = 1
 	charge = 400.0
 	max_charge = 400.0
-	var/chargeCap = 400.0
 	recharge_rate = 0.0
 	mat_changename = 0
 	mat_changedesc = 0
 
-	New(var/loc, var/forceartiorigin)
+	New(var/loc, var/forceartiorigin, var/min_charge)
 		//src.artifact = new /datum/artifact/energyammo(src)
+		src.max_charge = rand(5,100)
+		src.max_charge *= 10
+		src.max_charge = max(min_charge, max_charge)
+		src.recharge_rate = rand(5,60)
+
+
 		var/datum/artifact/energyammo/A = new /datum/artifact/energyammo(src)
 		if (forceartiorigin)
 			A.validtypes = list("[forceartiorigin]")
 		src.artifact = A
 		SPAWN_DBG(0)
 			src.ArtifactSetup()
-
-			src.max_charge = rand(5,100)
-			src.max_charge *= 10
-			src.chargeCap = src.max_charge
 			A.react_elec[2] = src.max_charge
-			src.recharge_rate = rand(5,60)
+
 		..()
 
 	examine()
@@ -42,13 +43,12 @@
 
 	ArtifactActivated()
 		. = ..()
-		src.max_charge = src.chargeCap
 		processing_items |= src
+		AddComponent(/datum/component/power_cell, max_charge, null, recharge_rate)
 
 	ArtifactDeactivated()
 		. = ..()
-		src.max_charge = 1 // no divide by 0 pls
-		src.charge = 1
+		AddComponent(/datum/component/power_cell, 1, 1, 0)
 
 	reagent_act(reagent_id,volume)
 		if (..())

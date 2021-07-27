@@ -547,8 +547,7 @@
 
 			// No need for unnecessary hassle, just make it ignore charges entirely for the time being.
 			if (src.our_baton && istype(src.our_baton))
-				if (src.our_baton.uses_charges != 0)
-					src.our_baton.uses_charges = 0
+				src.our_baton.cost_normal = 0
 			else
 				src.our_baton = new src.our_baton_type(src)
 

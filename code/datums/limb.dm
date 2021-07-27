@@ -371,7 +371,7 @@
 /datum/limb/item
 	attack_hand(atom/target, var/mob/user, var/reach, params, location, control)
 		if (holder?.remove_object && istype(holder.remove_object))
-			target.attackby(holder.remove_object, user, params, location, control)
+			target.Attackby(holder.remove_object, user, params, location, control)
 			if (target)
 				holder.remove_object.afterattack(target, src, reach)
 
