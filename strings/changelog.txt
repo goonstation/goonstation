@@ -1,5 +1,9 @@
 
 (t)tue jul 27 21
+(u)Flappybat
+(p)5609
+(e)|
+(+)Supply requests are now shown with their price.
 (u)Sovexe
 (p)5606
 (e)⚖🆕🎨|balance, feature, sprites
