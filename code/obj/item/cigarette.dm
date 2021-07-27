@@ -1295,7 +1295,7 @@
 		. = ..()
 		RegisterSignal(src, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), .proc/update_hotbox_flag)
 
-	proc/update_hotbox_flag(thing, previous_loc)
+	proc/update_hotbox_flag(thing, previous_loc, direction)
 		if (!firesource) return
 		if (isturf(src.loc))
 			var/turf/T = src.loc
