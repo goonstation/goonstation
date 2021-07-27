@@ -170,7 +170,8 @@
 			if (src && !src.disposed)
 				a = get_area(src)
 				if(a.sanctuary) return
-				user.u_equip(src)
+				if(user && user.equipped() == src)
+					user.u_equip(src)
 				explode()
 
 	proc/explode()
