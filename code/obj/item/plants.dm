@@ -81,7 +81,6 @@
 			var/datum/reagents/R = new()
 			for (var/reagent_id in reagents.reagent_list)
 				R.add_reagent(reagent_id, (src.reagents.get_reagent_amount(reagent_id) * HERB_HOTBOX_MULTIPLIER))
-				message_admins("[src.reagents.get_reagent_amount(reagent_id)]")
 			smoke_reaction(R, 1, get_turf(src), do_sfx = 0)
 		else
 			smoke_reaction(src.reagents.remove_any_to(HERB_SMOKE_TRANSFER_HARDCAP), 1, get_turf(src), do_sfx = 0)
