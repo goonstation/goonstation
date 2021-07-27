@@ -189,7 +189,7 @@
 			return
 
 		if (src.attached)
-			src.attached.attackby(W, user)
+			src.attached.Attackby(W, user)
 			user.lastattacked = user
 		else
 			..()

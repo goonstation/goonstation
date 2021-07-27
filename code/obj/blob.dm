@@ -1260,7 +1260,7 @@
 		if (!B)
 			qdel(src)
 			return
-		B.attackby(W, user)
+		B.Attackby(W, user)
 
 /////////////////////////
 /// BLOB RELATED PROCS //

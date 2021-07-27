@@ -270,7 +270,7 @@
 		var/obj/item/I = equipped()
 		var/obj/item/W = EH.item
 		if (I && W)
-			W.attackby(I, src) // fix runtime for null.find_type_in_hand - cirr
+			W.Attackby(I, src) // fix runtime for null.find_type_in_hand - cirr
 		else if (I)
 			if (EH.can_equip(I))
 				u_equip(I)

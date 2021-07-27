@@ -170,7 +170,7 @@
 			user.show_text("It won't open!", "red")
 			return
 		else if (!src.toggle(user))
-			return src.attackby(null, user)
+			return src.Attackby(null, user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/cargotele))
