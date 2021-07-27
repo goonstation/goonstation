@@ -78,7 +78,7 @@
 #define SHOW_SOULSTEEL_TIPS(M) M.Browse(grabResource("html/soulsteel.html"), SOULSTEEL_TIPS_WINDOW)
 
 // welder possession
-#define SHOW_WELDER_POSSESSION_TIPS(M) M.Browse(grabResource("html/welder_possession.html"), SOULSTEEL_TIPS_WINDOW)
+#define SHOW_WELDER_POSSESSION_TIPS(M) M.Browse(grabResource("html/welder_possession.html"), ANTAG_TIPS_WINDOW)
 
 // mindwipe from cloner zap chance
 #define SHOW_MINDWIPE_TIPS(M) M.Browse(grabResource("html/mindwipe.html"), MINDWIPE_TIPS_WINDOW)
@@ -145,15 +145,16 @@
 	<a href='?src=\ref[src];action=wrestler'>Wrestler</a> |
 	<a href='?src=\ref[src];action=battle'>Battle Royale</a> |
 	<a href='?src=\ref[src];action=martian'>Martian</a> |
-	<a href='?src=\ref[src];action=kudzu'>Kudzu Person</a>
+	<a href='?src=\ref[src];action=kudzu'>Kudzu Person</a> |
+	<a href='?src=\ref[src];action=welder'>The Welder</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Misc</b>
 	<a href='?src=\ref[src];action=emaggedborg'>Borg Emagged</a> |
 	<a href='?src=\ref[src];action=rogueborgremoved'>Rogue Borg Removed</a> |
 	<a href='?src=\ref[src];action=antagremoved'>Antag Removed</a> |
 	<a href='?src=\ref[src];action=soulsteel'>Soulsteel Posession</a> |
-	<a href='?src=\ref[src];action=welder_possession'>Welder Possession</a> |
-	<a href='?src=\ref[src];action=mindwipe'>Cloner Mindwipe</a>
+	<a href='?src=\ref[src];action=mindwipe'>Cloner Mindwipe</a> |
+	<a href='?src=\ref[src];action=welder_possession'>Welder Possession</a>
 </div>
 "}
 
@@ -261,6 +262,8 @@
 				SHOW_MARTIAN_TIPS(M)
 			if ("kudzu")
 				SHOW_KUDZU_TIPS(M)
+			if ("welder")
+				SHOW_WELDER_TIPS(M)
 
 			// misc
 			if ("emaggedborg")

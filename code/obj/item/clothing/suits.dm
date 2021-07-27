@@ -454,6 +454,7 @@
 		setProperty("rangedprot", 2)
 		setProperty("coldprot", 75)
 		setProperty("heatprot", 75)
+		setProperty("movespeed", 0.2)
 
 
 	postpossession
@@ -468,6 +469,7 @@
 			setProperty("rangedprot", 0)
 			setProperty("coldprot", 10)
 			setProperty("heatprot", 10)
+			setProperty("movespeed", 0.2)
 
 /obj/item/clothing/suit/labcoat
 	name = "labcoat"

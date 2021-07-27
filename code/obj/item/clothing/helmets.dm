@@ -614,6 +614,7 @@
 			..()
 			setProperty("meleeprot_head", 6)
 			setProperty("disorient_resist_eye", 100)
+			setProperty("movespeed", 0.2)
 
 	postpossession
 		name = "worn welding mask"
@@ -622,6 +623,9 @@
 		item_state = "the_welder"
 		abilities = null
 		see_face = 1.0
+		setupProperties()
+			..()
+			setProperty("movespeed", 0.2)
 
 /obj/item/clothing/head/helmet/welding/abilities = list(/obj/ability_button/mask_toggle)
 
