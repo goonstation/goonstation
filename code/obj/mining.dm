@@ -1917,22 +1917,30 @@ obj/item/clothing/gloves/concussive
 	desc = "A device for teleporting crated goods."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "cargotele"
-	var/charges = 8
-	var/maximum_charges = 8
-	var/robocharge = 250
+	var/cost = 25
 	var/target = null
+	var/cell_type = /obj/item/ammo/power_cell/med_power
 	w_class = W_CLASS_SMALL
 	flags = ONBELT
 	mats = 4
+
+	New()
+		. = ..()
+		var/cell = new cell_type
+		AddComponent(/datum/component/cell_holder, cell, swappable = FALSE)
 
 	examine(mob/user)
 		. = ..()
 		if (isrobot(user))
 			return // Drains battery instead.
-		. += "There are [src.charges]/[src.maximum_charges] charges left!"
+		var/list/ret = list()
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST))
+			. += "<span class='alert'>No power cell installed.</span>"
+		else
+			. += "There are [ret["charge"]]/[ret["max_charge"]] PUs left! Each use will consume [cost]PU."
 
 	attack_self() // Fixed --melon
-		if (src.charges < 1)
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
 			boutput(usr, "<span class='alert'>The transporter is out of charge.</span>")
 			return
 		if (!cargopads.len) boutput(usr, "<span class='alert'>No receivers available.</span>")
@@ -1951,23 +1959,16 @@ obj/item/clothing/gloves/concussive
 			//blammo! works!
 			src.target = T
 
-	proc/charge(var/amount)
-		//Support for recharge stations. Increment uses by one until we reach max.
-		src.charges = src.charges + 1 > src.maximum_charges ? src.maximum_charges : src.charges + 1
-
-		//Return if we are finished charging or not to the recharger
-		return src.charges < src.maximum_charges
-
 	proc/cargoteleport(var/obj/T, var/mob/user)
 		if (!src.target)
 			boutput(user, "<span class='alert'>You need to set a target first!</span>")
 			return
-		if (src.charges < 1)
-			boutput(user, "<span class='alert'>The transporter is out of charge.</span>")
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
+			boutput(usr, "<span class='alert'>The transporter is out of charge.</span>")
 			return
 		if (isrobot(user))
 			var/mob/living/silicon/robot/R = user
-			if (R.cell.charge < src.robocharge)
+			if (R.cell.charge < src.cost * 10)
 				boutput(user, "<span class='alert'>There is not enough charge left in your cell to use this.</span>")
 				return
 
@@ -2004,20 +2005,18 @@ obj/item/clothing/gloves/concussive
 			elecflash(src)
 			if (isrobot(user))
 				var/mob/living/silicon/robot/R = user
-				R.cell.charge -= src.robocharge
+				R.cell.charge -= cost * 10
 			else
-				src.charges -= 1
-				if (src.charges < 0)
-					src.charges = 0
-				if (src.charges == 0)
+				var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost, TRUE)
+				if (ret & CELL_INSUFFICIENT_CHARGE)
 					boutput(user, "<span class='alert'>Transfer successful. The transporter is now out of charge.</span>")
 				else
-					boutput(user, "<span class='notice'>Transfer successful. [src.charges] charges remain.</span>")
+					boutput(user, "<span class='notice'>Transfer successful.</span>")
 		return
 
 /obj/item/cargotele/traitor
-	charges = 14
-	maximum_charges = 14
+	cost = 15
+	cell_type = /obj/item/ammo/power_cell/med_power
 	var/list/possible_targets = list()
 
 	New()
@@ -2035,8 +2034,8 @@ obj/item/clothing/gloves/concussive
 		if (!src.target)
 			boutput(user, "<span class='alert'>No target found!</span>")
 			return
-		if (src.charges < 1)
-			boutput(user, "<span class='alert'>The transporter is out of charge.</span>")
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
+			boutput(usr, "<span class='alert'>The transporter is out of charge.</span>")
 			return
 		boutput(user, "<span class='notice'>Teleporting [T]...</span>")
 		playsound(user.loc, "sound/machines/click.ogg", 50, 1)
@@ -2051,13 +2050,11 @@ obj/item/clothing/gloves/concussive
 			T.set_loc(src.target)
 			if(hasvar(T, "welded")) T:welded = 1
 			elecflash(src)
-			src.charges -= 1
-			if (src.charges < 0)
-				src.charges = 0
-			if (src.charges == 0)
+			var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost, TRUE)
+			if (ret & CELL_INSUFFICIENT_CHARGE)
 				boutput(user, "<span class='alert'>Transfer successful. The transporter is now out of charge.</span>")
 			else
-				boutput(user, "<span class='notice'>Transfer successful. [src.charges] charges remain.</span>")
+				boutput(user, "<span class='notice'>Transfer successful.</span>")
 		return
 
 /obj/item/oreprospector

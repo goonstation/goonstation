@@ -95,8 +95,7 @@
 
 /obj/item/device/pocketbuddy/New()
   ..()
-  if (!SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, list()))
-    AddComponent(src, /datum/component/cell_holder, new/obj/item/ammo/power_cell) // TODO: a more buddy-specific cell (maybe even a new power cell type?)
+  AddComponent(src, /datum/component/cell_holder, new/obj/item/ammo/power_cell) // TODO: a more buddy-specific cell (maybe even a new power cell type?)
   // TODO: subscribe to global event system/child system thereof for pocketbuddies?
   src.prev_area = get_area(src)
 
@@ -118,7 +117,7 @@
 
 /obj/item/device/pocketbuddy/attack_self(mob/user as mob)
   if(!src.on)
-    if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, 1) & CELL_SUFFICIENT_CHARGE)
+    if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE)
       boutput(user, "<span class='notice'>You turn the pocketbuddy on!</span>")
       turn_on()
     else
@@ -161,7 +160,7 @@
 /obj/item/device/pocketbuddy/proc/manage_power()
   if(!on) return 1
 
-  if(!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, 1)))
+  if(!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
     turn_off()
     return 1
 
