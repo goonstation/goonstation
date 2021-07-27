@@ -997,6 +997,16 @@
 		arm_icon_state = "arm-purple"
 		parts_type = /obj/item/furniture_parts/comfy_chair/purple
 
+/obj/stool/chair/comfy/throne_gold
+	name = "golden throne"
+	desc = "This throne commands authority and respect. Everyone is super envious of whoever sits in this chair."
+	icon_state = "thronegold"
+	arm_icon_state = "thronegold-arm"
+	comfort_value = 7
+	anchored = 0
+	deconstructable = 1
+	parts_type = /obj/item/furniture_parts/throne_gold
+
 /* ======================================================== */
 /* -------------------- Shuttle Chairs -------------------- */
 /* ======================================================== */
@@ -1116,6 +1126,13 @@
 	anchored = 0
 	//deconstructable = 0
 	parts_type = /obj/item/furniture_parts/wood_chair
+
+	regal
+		name = "regal chair"
+		desc = "Much more comfortable than the average dining chair, and much more expensive."
+		icon_state = "regalchair"
+		comfort_value = 7
+		parts_type = /obj/item/furniture_parts/wood_chair/regal
 
 /* ============================================== */
 /* -------------------- Pews -------------------- */

@@ -458,6 +458,26 @@
 	auto
 		auto = 1
 
+/obj/table/regal
+	name = "regal table"
+	desc = "Fancy."
+	icon = 'icons/obj/furniture/table_regal.dmi'
+	auto_type = /obj/table/regal/auto
+	parts_type = /obj/item/furniture_parts/table/regal
+
+	auto
+		auto = 1
+
+/obj/table/clothred
+	name = "red event table"
+	desc = "A regular table in disguise."
+	icon = 'icons/obj/furniture/table_clothred.dmi'
+	auto_type = /obj/table/clothred/auto
+	parts_type = /obj/item/furniture_parts/table/clothred
+
+	auto
+		auto = 1
+
 /obj/table/folding
 	name = "folding table"
 	desc = "A table with a faux wood top designed for quick assembly and toolless disassembly."
