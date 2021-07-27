@@ -770,7 +770,7 @@
 		if (succ)
 			SPAWN_DBG(1 DECI SECOND)
 				if (user.is_in_hands(src))
-					storage.attackby(src, user)
+					storage.Attackby(src, user)
 			return
 
 	if (istype(S))

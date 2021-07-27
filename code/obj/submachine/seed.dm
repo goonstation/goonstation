@@ -668,7 +668,7 @@
 		if (!isitem(O))
 			return
 		if (istype(O, /obj/item/reagent_containers/glass/) || istype(O, /obj/item/reagent_containers/food/drinks/) || istype(O,/obj/item/satchel/hydro))
-			return src.attackby(O, user)
+			return src.Attackby(O, user)
 		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) || istype(O, /obj/item/seed/))
 			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O.name] into [src]!</span>")
 			var/staystill = user.loc
@@ -1019,7 +1019,7 @@
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (istype(O, /obj/item/reagent_containers/glass/) || istype(O, /obj/item/reagent_containers/food/drinks/) || istype(O, /obj/item/satchel/hydro))
-			return src.attackby(O, user)
+			return src.Attackby(O, user)
 		if (!src.canExtract(O)) ..()
 		else
 			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O.name] into [src]!</span>")

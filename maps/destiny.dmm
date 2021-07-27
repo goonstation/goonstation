@@ -4064,9 +4064,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "aqP" = (
-/obj/machinery/sleep_console{
-	dir = 4
-	},
 /obj/decal/tile_edge/line/white{
 	icon_state = "line3"
 	},
@@ -30452,9 +30449,6 @@
 /turf/simulated/wall/auto/gannets,
 /area/station/medical/medbay)
 "hQz" = (
-/obj/machinery/sleep_console{
-	dir = 8
-	},
 /obj/decal/tile_edge/line/white{
 	icon_state = "line3"
 	},
@@ -33068,9 +33062,6 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "jtm" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /obj/decal/tile_edge/line/white{
 	icon_state = "line3"
 	},
@@ -33080,6 +33071,9 @@
 	},
 /obj/machinery/light_switch/north{
 	pixel_y = 28
+	},
+/obj/machinery/sleeper/compact{
+	dir = 8
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
@@ -48584,9 +48578,6 @@
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
 "rTo" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/decal/tile_edge/line/white{
 	icon_state = "line3"
 	},
@@ -48596,6 +48587,9 @@
 	},
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/sleeper/compact{
+	dir = 4
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)

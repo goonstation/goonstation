@@ -338,7 +338,7 @@
 			usingInner = 1
 
 	if (reach)
-		target.attackby(W, src, params)
+		target.Attackby(W, src, params)
 	if (W && (equipped() == W || usingInner))
 		var/pixelable = isturf(target)
 		if (!pixelable)

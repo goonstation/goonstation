@@ -203,6 +203,14 @@
 		..()
 		return
 
+	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+		if (iswizard(usr) || check_target_immunity(usr))
+			. = ..()
+		else if(isliving(usr))
+			src.do_brainmelt(usr, 1)
+		else
+			return
+
 	pull(var/mob/user)
 		if(check_target_immunity(user))
 			return ..()

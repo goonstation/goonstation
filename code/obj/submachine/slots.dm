@@ -55,7 +55,7 @@
 				return TRUE
 			var/obj/O = usr.equipped()
 			if (istype(O, /obj/item/card/id))
-				. = attackby(O, usr)
+				. = src.Attackby(O, usr)
 		if ("play")
 			if (src.working || !src.accessed_record)
 				return TRUE

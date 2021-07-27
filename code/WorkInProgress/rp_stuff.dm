@@ -108,7 +108,7 @@
 
 	attackby(obj/item/W, mob/M)
 		if (src.door)
-			src.door.attackby(W, M)
+			src.door.Attackby(W, M)
 
 	attack_hand(mob/M)
 		if (src.door)

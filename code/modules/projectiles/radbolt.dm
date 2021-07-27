@@ -3,7 +3,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "cbbolt" // changed from radbolt - cogwerks
 //How much of a punch this has, tends to be seconds/damage before any resist
-	power = 120
+	power = 100
 //How much ammo this costs
 	cost = 40
 //How fast the power goes away

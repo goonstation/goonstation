@@ -274,7 +274,7 @@
 			return
 
 		else if (istype(W, /obj/item/device/key/filing_cabinet) && src.desk_drawer)
-			src.desk_drawer.attackby(W, user)
+			src.desk_drawer.Attackby(W, user)
 			return
 
 		else if (istype(W) && src.place_on(W, user, params))

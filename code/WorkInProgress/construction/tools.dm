@@ -517,7 +517,7 @@
 				old = K
 				break
 		if (old)
-			old.attackby(src, user)
+			old.Attackby(src, user)
 		else
 			var/class = marker_class[mode]
 			old = new class(T, selected)
@@ -554,7 +554,7 @@
 			return
 		var/turf/T = get_turf(src)
 		if (T)
-			T.attackby(W, user)
+			T.Attackby(W, user)
 			W.afterattack(T, user)
 
 /obj/plan_marker/glass_shaper

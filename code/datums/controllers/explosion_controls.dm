@@ -160,11 +160,15 @@ var/datum/explosion_controller/explosions
 		//I do not give a flying FUCK about what goes on in the colosseum. =I
 		if(!istype(get_area(epicenter), /area/colosseum))
 			// Cannot read null.name
-			var/logmsg = "Explosion with power [power] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [source?.fingerprintslast ? "[source.fingerprintslast]" : "*null*"] (usr: [ismob(user) ? key_name(user) : user])"
+			var/logmsg = "Explosion with power [power] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [key_name(source?.fingerprintslast)] (usr: [ismob(user) ? key_name(user) : user])"
 			if(power > 10)
 				message_admins(logmsg)
-			logTheThing("bombing", null, null, logmsg)
-			logTheThing("diary", null, null, logmsg, "combat")
+			if (source?.fingerprintslast)
+				logTheThing("bombing", source.fingerprintslast, null, logmsg)
+				logTheThing("diary", source.fingerprintslast, null, logmsg, "combat")
+			else
+				logTheThing("bombing", user, null, logmsg)
+				logTheThing("diary", user, null, logmsg, "combat")
 
 	proc/explode()
 		logMe(power)

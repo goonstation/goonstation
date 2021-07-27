@@ -1162,40 +1162,38 @@
 				return 0 // huh
 
 		else if (istype(src.budgun, /obj/item/gun/energy))
-			var/obj/item/gun/energy/pewgun = src.budgun
-			if(pewgun.cell) // did we remember to load our energygun?
-				if (pewgun.cell.charge >= pewgun.current_projectile.cost) // okay cool we can shoot!
-					return 1
-				else if(!pewgun.rechargeable) // oh no we cant, but can we recharge it?
-					if(istype(src.budgun, /obj/item/gun/energy/lawbringer)) // is it one of those funky guns with multiple settings?
-						BeTheLaw(src.emagged, 1, src.lawbringer_alwaysbigshot) // see if we can change modes and try again
-						return 0 // then try again later
-					else
-						return 0 // ditto
-				else // oh no we cant!
-					return 0
-			else
-				return 0 // maybe try putting batteries in it next time
+			if(SEND_SIGNAL(budgun, COMSIG_CELL_CHECK_CHARGE, budgun.current_projectile.cost) & CELL_SUFFICIENT_CHARGE) // did we remember to load our energygun?
+				return 1
+			else if(SEND_SIGNAL(budgun, COMSIG_CELL_CAN_CHARGE) & CELL_UNCHARGEABLE) // oh no we cant, but can we recharge it?
+				if(istype(src.budgun, /obj/item/gun/energy/lawbringer)) // is it one of those funky guns with multiple settings?
+					BeTheLaw(src.emagged, 1, src.lawbringer_alwaysbigshot) // see if we can change modes and try again
+					return 0 // then try again later
+				else
+					return 0 // ditto
+			else // oh no we cant!
+				return 0
 
 	proc/ChargeUrLaser()
 		if(!src.budgun || !src.cell || !istype(src.budgun, /obj/item/gun/energy))
 			return 0 // keep your fingers out of the charger
 
 		if (istype(src.budgun, /obj/item/gun/energy))
-			var/obj/item/gun/energy/charge_me = src.budgun
-			if(istype(charge_me.cell, /obj/item/ammo/power_cell/self_charging)) // Oh a self-charger?
+			if(!(SEND_SIGNAL(budgun, COMSIG_CELL_CAN_CHARGE) & CELL_CHARGEABLE)) // Oh a non-rechargable gun? Or no cell at all?
 				return 0 // cant touch that, sorry
-			else if (charge_me.cell.charge < charge_me.cell.max_charge) // is our gun not full?
-				if (src.cell.charge > (GUARDBOT_LOWPOWER_ALERT_LEVEL - 10 + (charge_me.cell.max_charge - charge_me.cell.charge))) // Can we charge it without tanking our battery?
-					src.cell.charge -= (charge_me.cell.max_charge - charge_me.cell.charge) // discharge us
-					charge_me.cell.charge = charge_me.cell.max_charge // recharge it
-					return 1 // and we're good2shoot
-				else if (CheckMagCellWhatever()) // is there enough charge left in the gun?
-					return 0 // cool, but we're not gonna charge it
-				else // welp
-					return DischargeAndTakeANap()
-			else // gun's full or something?
-				return 1 // cool beans
+			else
+				var/list/ret = list()
+				SEND_SIGNAL(budgun, COMSIG_CELL_CHECK_CHARGE, ret)
+				if (ret["charge"] < ret["max_charge"]) // is our gun not full?
+					if (src.cell.charge > (GUARDBOT_LOWPOWER_ALERT_LEVEL - 10 + (ret["max_charge"] - ret["charge"]))) // Can we charge it without tanking our battery?
+						src.cell.charge -= (ret["max_charge"] - ret["charge"]) // discharge us
+						SEND_SIGNAL(budgun, COMSIG_CELL_CHARGE, ret["max_charge"])
+						return 1 // and we're good2shoot
+					else if (CheckMagCellWhatever()) // is there enough charge left in the gun?
+						return 0 // cool, but we're not gonna charge it
+					else // welp
+						return DischargeAndTakeANap()
+				else // gun's full or something?
+					return 1 // cool beans
 
 	proc/DischargeAndTakeANap()
 		if(!src.budgun || !src.cell)
