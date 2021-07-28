@@ -408,7 +408,7 @@
 		var/mob/hostage = null
 		if(src.affecting && src.state >= 2 && P.shooter != src.affecting) //If you grab someone they can still shoot you
 			hostage = src.affecting
-		if (hostage && (!hostage.lying || prob(P.proj_data?.hit_ground_chance)))
+		if (hostage && (!hostage.lying || GET_COOLDOWN(hostage, "lying_bullet_dodge_cheese") || prob(P.proj_data?.hit_ground_chance)))
 			P.collide(hostage)
 			//moved here so that it displays after the bullet hit message
 			if(prob(25)) //This should probably not be bulletproof, har har
