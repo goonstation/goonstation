@@ -108,6 +108,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Special Ops Crate"
 	syndicate = 1
 
+/datum/supply_packs/offbranddarts
+	name = "Offbrand Foam Darts"
+	desc = "A couple boxes of some cheap, offbrand foam darts, with some pretty heavy looking tips."
+	contains = list(/obj/item/ammo/bullets/foamdarts/offbrand = 2)
+	cost = 5000
+	containertype = /obj/storage/crate
+	containername = "Foam Dart Crate"
+	syndicate = 1
+
 /datum/supply_packs/paint
 	name = "Paint Cans"
 	desc = "A selection of random paints."

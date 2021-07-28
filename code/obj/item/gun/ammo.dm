@@ -1245,6 +1245,17 @@
 	amount_left = 10
 	max_amount = 10
 
+/obj/item/ammo/bullets/foamdarts/offbrand
+	sname = "offbrand foam darts"
+	name = "ofbrand foam dart box"
+	icon_state = "foamdarts-heavy"
+	icon_empty = "foamdarts-heavy-0"
+	ammo_type = new/datum/projectile/bullet/foamdart/offbrand
+
+	ten
+		amount_left = 10
+		max_amount = 10
+
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ATTACKED

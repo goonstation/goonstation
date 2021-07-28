@@ -1405,3 +1405,17 @@ toxic - poisons
 	max_range = 15
 	dissipation_rate = 0
 	ie_type = null
+
+	offbrand
+		name = "offbrand foam dart"
+		sname = "offbrand foam dart"
+		power = 25
+		projectile_speed = 30
+		ks_ratio = 0.0
+		icon_state = "foamdart_heavy"
+
+		on_hit(atom/hit) //purposefully not getting falloff, so it's not just a worse taser
+			if (isliving(hit))
+				var/mob/living/L = hit
+				L.remove_stamina(power)
+			return
