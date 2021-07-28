@@ -18475,9 +18475,6 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "aZq" = (
-/obj/machinery/sleep_console{
-	dir = 4
-	},
 /obj/decal/xmas_lights/ephemeral{
 	pixel_y = 32
 	},
@@ -21625,15 +21622,12 @@
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /obj/machinery/light,
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 8
 	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/lobby)
 "bjV" = (
-/obj/machinery/sleep_console{
-	dir = 8
-	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/lobby)
 "bjW" = (
@@ -26710,9 +26704,6 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/sleep_console{
-	dir = 4
-	},
 /turf/simulated/floor/blue/side{
 	dir = 1
 	},
@@ -26725,7 +26716,7 @@
 /obj/decal/xmas_lights/ephemeral{
 	pixel_y = 32
 	},
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/simulated/floor/blue/side{
@@ -27348,6 +27339,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "bDe" = (
@@ -46553,11 +46545,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "hVu" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/machinery/sleeper/compact{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "hVQ" = (
@@ -57879,9 +57871,6 @@
 /turf/simulated/floor/carpet/blue/fancy/junction/se_n,
 /area/station/storage/warehouse)
 "udL" = (
-/obj/machinery/sleep_console{
-	dir = 4
-	},
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -58927,7 +58916,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/sleeper{
+/obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/simulated/floor/bluewhite{

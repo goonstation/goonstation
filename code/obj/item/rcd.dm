@@ -871,7 +871,7 @@ Broken RCD + Effects
 
 	attackby(obj/item/W, mob/user, params)
 		if(istype(W, /obj/item/rcd))
-			W.attackby(src, user, params)
+			W.Attackby(src, user, params)
 			return
 		. = ..()
 

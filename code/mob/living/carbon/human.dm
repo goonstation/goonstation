@@ -985,7 +985,8 @@
 	src.update_cursor()
 	hud.update_throwing()
 
-/mob/living/carbon/human/proc/throw_item(atom/target, list/params)
+/mob/living/carbon/human/throw_item(atom/target, list/params)
+	..()
 	var/turf/thrown_from = get_turf(src)
 	src.throw_mode_off()
 	if (src.stat)

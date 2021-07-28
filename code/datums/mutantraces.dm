@@ -71,6 +71,7 @@
 	var/dna_mutagen_banned = TRUE
 
 	/// This is used for static icons if the mutant isn't built from pieces
+	/// For chunked mutantraces this must still point to a valid full-body image to generate a staticky sprite for ghostdrones.
 	var/icon = 'icons/effects/genetics.dmi'
 	var/icon_state = "blank_c"
 	/// The icon used to render their eyes
@@ -704,7 +705,8 @@
 
 /datum/mutantrace/flashy
 	name = "flashy"
-	icon_state = "psyche"
+	icon = "icons/mob/flashy.dmi"
+	icon_state = "body_m"
 	mutant_appearance_flags = (HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HEAD_HAS_OWN_COLORS | HAS_HUMAN_EYES | WEARS_UNDERPANTS | BUILT_FROM_PIECES)
 	override_attack = 0
 	mutant_folder = 'icons/mob/flashy.dmi'
@@ -718,7 +720,8 @@
 
 /datum/mutantrace/virtual
 	name = "virtual"
-	icon_state = "virtual"
+	icon = "icons/mob/virtual.dmi"
+	icon_state = "body_m"
 	override_attack = 0
 	mutant_folder = 'icons/mob/virtual.dmi'
 	special_head = HEAD_VIRTUAL
@@ -789,7 +792,8 @@
 
 /datum/mutantrace/lizard
 	name = "lizard"
-	icon_state = "lizard"
+	icon = "icons/mob/lizard.dmi"
+	icon_state = "body_m"
 	override_attack = 0
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | FIX_COLORS | SKINTONE_USES_PREF_COLOR_1 | HAS_SPECIAL_HAIR | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS)
 	voice_override = "lizard"
@@ -1033,7 +1037,8 @@
 
 /datum/mutantrace/vamp_zombie
 	name = "vampiric zombie"
-	icon_state = "vamp_zombie"
+	icon = "icons/mob/vamp_zombie.dmi"
+	icon_state = "body_m"
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vamp_zombie/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/vamp_zombie/left
@@ -1244,7 +1249,8 @@
 
 /datum/mutantrace/werewolf
 	name = "werewolf"
-	icon_state = "werewolf"
+	icon = "icons/mob/werewolf.dmi"
+	icon_state = "body_m"
 	human_compatible = 0
 	uses_human_clothes = 0
 	var/original_name
@@ -1280,19 +1286,9 @@
 			src.original_name = mob.real_name
 			mob.real_name = "werewolf"
 
-			var/duration = 3000
-			var/datum/ailment_data/disease/D = mob.find_ailment_by_type(/datum/ailment/disease/lycanthropy/)
-
 			mob.bioHolder.AddEffect("protanopia", null, null, 0, 1)
 			mob.bioHolder.AddEffect("accent_scoob_nerf", null, null, 0, 1)
-
-			if(D)
-				D.cycles++
-				duration = rand(2000, 4000) * D.cycles
-				SPAWN_DBG(duration)
-					if(src)
-						if (mob) mob.show_text("<b>You suddenly transform back into a human!</b>", "red")
-						qdel(src)
+			mob.bioHolder.AddEffect("regenerator_wolf", null, null, 0, 1)
 
 	disposing()
 		if (ishuman(mob))
@@ -1303,11 +1299,11 @@
 			mob.remove_stam_mod_max("werewolf")
 			REMOVE_MOB_PROPERTY(mob, PROP_STAMINA_REGEN_BONUS, "werewolf")
 			mob.remove_stun_resist_mod("werewolf")
-			mob.max_health -= 30
+			mob.max_health -= 50
 			health_update_queue |= mob
 			mob.bioHolder.RemoveEffect("protanopia")
-			mob.bioHolder.RemoveEffect("accent_scoob")
 			mob.bioHolder.RemoveEffect("accent_scoob_nerf")
+			mob.bioHolder.RemoveEffect("regenerator_wolf")
 
 			if (!isnull(src.original_name))
 				mob.real_name = src.original_name
@@ -1361,7 +1357,8 @@
 
 /datum/mutantrace/hunter
 	name = "hunter"
-	icon_state = "hunter"
+	icon = "icons/mob/hunter.dmi"
+	icon_state = "full"
 	human_compatible = 0
 	jerk = 1
 	override_attack = 0
@@ -1397,7 +1394,8 @@
 
 /datum/mutantrace/ithillid
 	name = "ithillid"
-	icon_state = "squid"
+	icon = "icons/mob/ithillid.dmi"
+	icon_state = "body_m"
 	jerk = 0
 	override_attack = 0
 	aquatic = 1
@@ -1684,7 +1682,8 @@
 
 /datum/mutantrace/roach
 	name = "roach"
-	icon_state = "roach"
+	icon = "icons/mob/roach.dmi"
+	icon_state = "body_m"
 	override_attack = 0
 	voice_override = "roach"
 	race_mutation = /datum/bioEffect/mutantrace/roach
@@ -1722,7 +1721,8 @@
 
 /datum/mutantrace/cat // we have the sprites so ~why not add them~? (I fully expect to get shit for this)
 	name = "cat"
-	icon_state = "cat"
+	icon = "icons/mob/cat.dmi"
+	icon_state = "body_m"
 	jerk = 1
 	override_attack = 0
 	firevuln = 1.5 // very flammable catthings
@@ -1756,7 +1756,8 @@
 
 /datum/mutantrace/amphibian
 	name = "amphibian"
-	icon_state = "amphibian"
+	icon = "icons/mob/amphibian.dmi"
+	icon_state = "body_m"
 	firevuln = 1.3
 	brutevuln = 0.7
 	human_compatible = 0
@@ -1831,7 +1832,8 @@
 
 /datum/mutantrace/amphibian/shelter
 	name = "Shelter Amphibian"
-	// icon_state = "shelter"
+	icon = "icons/mob/shelterfrog.dmi"
+	icon_state = "body_m"
 	human_compatible = 1
 	jerk = 0
 	var/permanent = 0
@@ -1859,6 +1861,7 @@
 
 /datum/mutantrace/kudzu
 	name = "kudzu"
+	icon = "icons/mob/kudzu.dmi"
 	icon_state = "kudzu-w"
 	human_compatible = 0
 	uses_human_clothes = 0
@@ -1983,7 +1986,8 @@
 
 /datum/mutantrace/cow
 	name = "cow"
-	icon_state = "cow"
+	icon = "icons/mob/cow.dmi"
+	icon_state = "body_m"
 	human_compatible = TRUE
 	uses_human_clothes = FALSE
 	override_attack = 0

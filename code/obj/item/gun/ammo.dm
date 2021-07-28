@@ -84,7 +84,7 @@
 
 	attackby(obj/b as obj, mob/user as mob)
 		if(istype(b, /obj/item/gun/kinetic) && b:allowReverseReload)
-			b.attackby(src, user)
+			b.Attackby(src, user)
 		else if(b.type == src.type)
 			var/obj/item/ammo/bullets/A = b
 			if(A.amount_left<1)
@@ -894,40 +894,45 @@
 	g_amt = 20000
 	var/charge = 100.0
 	var/max_charge = 100.0
+	var/recharge_rate = 0
 	var/sound_load = 'sound/weapons/gunload_click.ogg'
 	var/unusualCell = 0
 
 	New()
 		..()
-		update_icon()
+		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, .proc/update_icon)
 		desc = "A power cell that holds a max of [src.max_charge]PU. Can be inserted into any energy gun, even tasers!"
+		update_icon()
 
 	disposing()
 		processing_items -= src
 		..()
 
 	emp_act()
-		src.use(INFINITY)
+		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY, TRUE)
 		return
 
 	update_icon()
-		inventory_counter.update_percent(src.charge, src.max_charge)
 		if (src.artifact || src.unusualCell) return
 		overlays = null
-		var/ratio = src.charge / src.max_charge
-		ratio = round(ratio, 0.20) * 100
-		switch(ratio)
-			if(20)
-				overlays += "cell_1/5"
-			if(40)
-				overlays += "cell_2/5"
-			if(60)
-				overlays += "cell_3/5"
-			if(80)
-				overlays += "cell_4/5"
-			if(100)
-				overlays += "cell_5/5"
-		return
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
+			ratio = round(ratio, 0.20) * 100
+			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
+			switch(ratio)
+				if(20)
+					overlays += "cell_1/5"
+				if(40)
+					overlays += "cell_2/5"
+				if(60)
+					overlays += "cell_3/5"
+				if(80)
+					overlays += "cell_4/5"
+				if(100)
+					overlays += "cell_5/5"
+			return
 
 	examine()
 		if (src.artifact)
@@ -935,69 +940,10 @@
 		. = ..()
 		if (src.unusualCell)
 			return
-		. += "There are [src.charge]/[src.max_charge] PU left!"
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			. += "There are [ret["charge"]]/[ret["max_charge"]] PU left!"
 
-	use(var/amt = 0)
-		if (src.charge <= 0)
-			src.charge = 0
-			return 0
-		else
-			if (amt > 0)
-				src.charge = max(0, src.charge - amt)
-				src.update_icon()
-				return 1
-			else
-				return 0
-
-	attackby(obj/attacking_item as obj, mob/attacker as mob)
-		if(istype(attacking_item, /obj/item/gun/energy))
-			var/obj/item/ammo/power_cell/pcell = src
-			attacking_item.attackby(pcell, attacker)
-		else return ..()
-
-	swap(var/obj/item/gun/energy/E, var/mob/living/user)
-		if(!istype(E.cell,/obj/item/ammo/power_cell))
-			return 0
-		var/obj/item/ammo/power_cell/swapped_cell = E.cell
-		var/mob/living/M = src.loc
-		if (!ismob(M))
-			M = user
-		var/atom/old_loc = src.loc
-
-		if(istype(M) && (src in M.get_all_items_on_mob()))
-			M.u_equip(src)
-
-		src.set_loc(E)
-		E.cell = src
-
-		if(istype(old_loc, /obj/item/storage))
-			swapped_cell.set_loc(old_loc)
-			var/obj/item/storage/cell_container = old_loc
-			cell_container.hud.remove_item(src)
-			cell_container.hud.update(user)
-		else
-			M.put_in_hand_or_drop(swapped_cell)
-
-		src.add_fingerprint(usr)
-
-		E.update_icon()
-		swapped_cell.update_icon()
-		src.update_icon()
-
-		playsound(src, sound_load, 50, 1)
-		return 1
-
-	proc/charge(var/amt = 0)
-		if (src.charge >= src.max_charge)
-			src.charge = src.max_charge
-			return 0
-		else
-			if (amt > 0)
-				src.charge = min(src.charge + amt, src.max_charge)
-				src.update_icon()
-				return src.charge < src.max_charge //if we're fully charged, let other things know immediately
-			else
-				return 0
 
 /obj/item/ammo/power_cell/med_power
 	name = "Power Cell - 200"
@@ -1038,28 +984,9 @@
 	g_amt = 38000
 	charge = 40.0
 	max_charge = 40.0
-	var/cycle = 0 //Recharge every other tick.
-	var/recharge_rate = 5.0
-
-	New()
-		processing_items |= src
-		..()
-		return
-
-	charge(var/amt = 0)
-		if (src.charge < src.max_charge)
-			processing_items |= src
-		return ..()
-
-	use(var/amt = 0)
-		processing_items |= src
-		return ..()
+	recharge_rate = 5.0
 
 	process()
-		src.cycle = !src.cycle // Charge every four seconds.
-		if (src.cycle)
-			return
-
 		if(src.material)
 			if(src.material.hasProperty("stability"))
 				if(src.material.getProperty("stability") <= 50)
@@ -1068,11 +995,6 @@
 						explosion_new(src, T, 1)
 						src.visible_message("<span class='alert'>\the [src] detonates.</span>")
 
-		src.charge = min(charge + recharge_rate, max_charge)
-		src.update_icon()
-		if (src.charge >= src.max_charge)
-			processing_items.Remove(src)
-		return
 
 /obj/item/ammo/power_cell/self_charging/custom
 	name = "Power Cell"
@@ -1093,6 +1015,7 @@
 				recharge_rate += ((src.material.getProperty("n_radioactive") / 10) / 2)
 
 		charge = max_charge
+		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate)
 		return
 
 /obj/item/ammo/power_cell/self_charging/slowcharge
@@ -1109,7 +1032,6 @@
 	g_amt = 38000
 	charge = 100.0
 	max_charge = 100.0
-	cycle = 0
 	recharge_rate = 7.5
 
 /obj/item/ammo/power_cell/self_charging/ntso_baton
@@ -1119,7 +1041,6 @@
 	icon_state = "recharger_cell"
 	charge = 150.0
 	max_charge = 150.0
-	cycle = 0
 	recharge_rate = 7.5
 
 /obj/item/ammo/power_cell/self_charging/ntso_signifer
@@ -1129,8 +1050,16 @@
 	icon_state = "recharger_cell"
 	charge = 250.0
 	max_charge = 250.0
-	cycle = 0
 	recharge_rate = 6
+
+/obj/item/ammo/power_cell/self_charging/medium
+	name = "Power Cell - Hicap RTG"
+	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 100PU."
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "recharger_cell"
+	charge = 200
+	max_charge = 200
+	recharge_rate = 7.5
 
 /obj/item/ammo/power_cell/self_charging/big
 	name = "Power Cell - Fusion"
@@ -1141,7 +1070,6 @@
 	g_amt = 38000
 	charge = 400.0
 	max_charge = 400.0
-	cycle = 0
 	recharge_rate = 40.0
 
 /obj/item/ammo/power_cell/self_charging/lawbringer
@@ -1153,7 +1081,6 @@
 	g_amt = 38000
 	charge = 300.0
 	max_charge = 300.0
-	cycle = 0
 	recharge_rate = 10.0
 
 /obj/item/ammo/power_cell/self_charging/howitzer

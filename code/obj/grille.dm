@@ -112,7 +112,7 @@
 				if (issnippingtool(W))
 					..()
 				else
-					src.loc.attackby(user.equipped(), user)
+					src.loc.Attackby(user.equipped(), user)
 
 			reagent_act(var/reagent_id,var/volume)
 				..()

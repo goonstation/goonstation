@@ -58,15 +58,11 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 
 		unequipped(var/mob/user)
 			..()
-			var/show_message = 0
-			if (user?.bioHolder.HasEffect("telekinesis"))
-				user.bioHolder.RemoveEffect("telekinesis")
-				show_message = 1
-			if (user?.bioHolder.HasEffect("hulk"))
-				user.bioHolder.RemoveEffect("hulk")
-				show_message = 1
-			if (show_message)
+			if (user?.bioHolder.RemoveEffect("hulk"))
 				boutput(user, "<span class='alert'><b>Removing [src] removes its powers with it!</b></span>")
+			REMOVE_MOB_PROPERTY(user, PROP_PASSIVE_WRESTLE, "empower")
+			REMOVE_MOB_PROPERTY(user, PROP_STAMINA_REGEN_BONUS, "empower")
+
 	staff
 		name = "ring of cthulhu"
 		desc = "Looking at this ring makes your head hurt."

@@ -8,9 +8,8 @@
 	name = "spy_thief"
 	config_tag = "spy_theft"
 
-	//maybe not??
-	//latejoin_antag_compatible = 1
-	//latejoin_antag_roles = list("spy_thief")
+	latejoin_antag_compatible = 1
+	latejoin_antag_roles = list("traitor")
 	var/const/waittime_l = 600	// Minimum after round start to send threat information to printer
 	var/const/waittime_h = 1800	// Maximum after round start to send threat information to printer
 

@@ -2,7 +2,7 @@
 /// The datum hosting the signal is automaticaly added as the first argument
 /// Returns a bitfield gathered from all registered procs
 /// Arguments given here are packaged in a list and given to _SendSignal
-#define SEND_SIGNAL(target, sigtype, arguments...) ( !target.comp_lookup || !target.comp_lookup[sigtype] ? 0 : target._SendSignal(sigtype, list(target, ##arguments)) )
+#define SEND_SIGNAL(target, sigtype, arguments...) ( !target?.comp_lookup || !target.comp_lookup[sigtype] ? 0 : target._SendSignal(sigtype, list(target, ##arguments)) )
 
 #define GLOBAL_SIGNAL preMapLoad // guaranteed to exist and that's all that matters
 
@@ -67,6 +67,8 @@
 #define COMSIG_ATOM_HITBY_THROWN "atom_hitby_thrown"
 /// when an atom is examined (/mob/examiner, /list/lines), append to lines for more description
 #define COMSIG_ATOM_EXAMINE "atom_examine"
+/// when something happens that should trigger an icon update. Or something.
+#define COMSIG_UPDATE_ICON "atom_update_icon"
 
 // ---- atom/movable signals ----
 
@@ -107,6 +109,8 @@
 #define COMSIG_ITEM_SWAP_AWAY "itm_swap_away"
 /// After an item's itemspecial is used (user)
 #define COMSIG_ITEM_SPECIAL_POST "itm_special_post"
+/// When items process ticks on an item
+#define COMSIG_ITEM_PROCESS "itm_process"
 
 // ---- cloaking device signal ----
 /// Make cloaking devices turn off
@@ -158,6 +162,9 @@
 #define COMSIG_MOB_PICKUP "mob_pickup"
 
 #define COMSIG_MOB_DROPPED "mob_drop"
+
+/// sent when a mob throws something (target, params)
+#define COMSIG_MOB_THROW_ITEM "throw_item"
 
 /// sent when radiation status ticks on mob (stage)
 #define COMSIG_MOB_GEIGER_TICK "mob_geiger"
@@ -237,6 +244,30 @@
 #define COMSIG_FULLAUTO_MOUSEDRAG "fullauto_mousedrag"
 #define COMSIG_GUN_PROJECTILE_CHANGED "gun_proj_changed"
 
+// ---- small cell component signals ----
+///When the cell in a uses_cell component should be swapped out (cell, user)
+#define COMSIG_CELL_SWAP "cell_swap"
+///When a cell is attacked, try to initiate a cellswap on the attacking obj (cell, user)
+#define COMSIG_CELL_TRY_SWAP "cell_try_swap"
+/// If an item can be charged
+#define COMSIG_CELL_CAN_CHARGE "cell_can_charge"
+/// Charge a small-cell (amount)
+#define COMSIG_CELL_CHARGE "cell_charge"
+/// Use some charge from a small-cell (amount, bypass)
+#define COMSIG_CELL_USE "cell_use"
+/// Check if thing is a power cell
+#define COMSIG_CELL_IS_CELL "cell_is_cell"
+/// Get the current charge and max charge of a power cell (list(charge)), or check if charge is higher than an amount (charge), or just check if there is a cell at all (null)
+#define COMSIG_CELL_CHECK_CHARGE "cell_check_charge"
+/// Force an update to the cellholder's cell. Takes an atom/movable that is a powercell, a powercell component, or a list of args for the powercell to inherit
+#define COMSIG_CELL_FORCE_NEW_CELL "cell_force_new"
+
+#define CELL_CHARGEABLE 1
+#define CELL_UNCHARGEABLE 2
+#define CELL_INSUFFICIENT_CHARGE 4
+#define CELL_SUFFICIENT_CHARGE 8
+#define CELL_RETURNED_LIST 16
+#define CELL_FULL 32
 
 // ---- area signals ----
 /// area's active var set to true (when a client enters)

@@ -911,7 +911,7 @@ var/list/fun_images = list()
 	for(var/i in O.fingerprintshidden)
 		boutput(src, i)
 
-	boutput(src, "<b>Last touched by:</b> [O.fingerprintslast].")
+	boutput(src, "<b>Last touched by:</b> [key_name(O.fingerprintslast)].")
 	return
 
 /client/proc/respawn_heavenly()

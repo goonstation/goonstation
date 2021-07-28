@@ -1,4 +1,78 @@
 
+(t)tue jul 27 21
+(u)Flappybat
+(p)5609
+(e)|
+(+)Supply requests are now shown with their price.
+(u)Sovexe
+(p)5606
+(e)⚖🆕🎨|balance, feature, sprites
+(*)There is now a per herb hardcap on the reagents transferred into smoke when burning herbs.
+(*)Traitor botanists can now purchase a hotbox lighter for 1 credit. This lighter has unlimited fuel, bypasses the herb hardcap, and gives a bonus multiplier to the reagent volume of the smoke. Sprite by DimWhat.
+(t)sun jul 25 21
+(u)DimWhat
+(p)5597
+(e)🎨|sprites
+(*)Added several more monkey clothing sprites. Go bananas!
+(+)Made sprite edits for many monkey jumpsuit sprites.
+(u)Flappybat
+(p)5530
+(e)⚖|balance
+(+)Gifts and duck eggs now give a costume version of the sneaking suit.
+(t)fri jul 23 21
+(u)DisturbHerb
+(p)5574
+(e)|
+(+)(Most) PDAs will start with writing utensils in them by default.
+(u)Azrun
+(p)4861
+(e)⚖🆕🎨📄|balance, feature, sprites, tgui
+(*)Extreme-Pressure Pressurization Device™: the latest in emergency pressurization equipment can now be ordered from cargo.
+(u)Emily
+(p)5591
+(e)⚖🆕|balance, feature
+(*)Implements heat capacity for reagents. This changes basically all reagent temperature exposures.
+(+)Heat capacity water 4x, heat capacity weldingful 0.05x, heat capacity cryostylane 6x
+(t)wed jul 21 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Adjust blob spread cooldown stuff again.
+(+)Revert buff to base spread cooldown (1.1s -> 1.6s base)
+(+)Change size-based cooldown increase to instead act as as multiplier to distance from nearest nucleus (1x penalty up to 400 tiles, +1x penalty for each 200 tiles past 400 [i.e.: if you try to spread 50 tiles away from nearest nucleus while at size 600, the cooldown penalty is as if you tried to spread 100 tiles from nearest nucleus at size 400])
+(u)Tarmunora
+(e)⚖|balance
+(+)Flashes always get 5 uses before burnout scaling begins; flash burnout scaling is much more agressive.
+(u)Kobold Commando & DimWhat
+(p)5424
+(e)🎨|sprites
+(*)Added several new clothing items to the clothing booth and two backpacks to Geoff Honkington.
+(+)Changed the clothing of a certain lizardy halloween role
+(t)tue jul 20 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Adjust radiation statuseffect to deal damage based on remaining duration.
+(+)~~🤏radbow buff~~ reverted
+(t)sun jul 18 21
+(u)TTerc
+(p)5483
+(e)⚖|balance
+(+)Added latejoin traitor and sleeper agent spawn events to spy thief gamemode.
+(t)sat jul 17 21
+(u)112358sam
+(p)5195
+(e)|
+(+)Adds custom job save slots to the ID card computer.
+(u)Tarmunora
+(e)⚖|balance
+(+)Emagging a welded door deals damage to the door equal to 80% of the door's current health (also fixes issue where emagged doors could not be attacked)
+(u)vocalpocal
+(p)5486
+(e)🐛🆕|bug, feature
+(+)Regent extractor auto-extract now works with produce satchels and drag and drop
+(u)Asche
+(p)5523
+(e)⚖|balance
+(+)Made the vampire "Retreat to Coffin" ability a lot speedier
 (t)fri jul 16 21
 (u)Azrun
 (p)5250

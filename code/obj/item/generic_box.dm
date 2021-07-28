@@ -411,6 +411,8 @@
 				continue
 			if (thing in user)
 				continue
+			if (thing in src)
+				continue
 			src.add_to(thing, user, 0)
 			sleep(0.2 SECONDS)
 			if (user.loc != staystill)

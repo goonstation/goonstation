@@ -466,7 +466,7 @@
 		changeIcon()
 
 	attackby(var/obj/item/I as obj, var/mob/user as mob)
-		if(loaded) return loaded.attackby(I, user)
+		if(loaded) return loaded.Attackby(I, user)
 		else return ..()
 
 	proc/add(var/obj/torpedo/T)

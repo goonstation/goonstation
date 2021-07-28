@@ -62,7 +62,7 @@ toxic - poisons
 /datum/projectile/bullet/bullet_22
 	name = "bullet"
 	power = 22
-	shot_sound = "sound/weapons/smallcaliber.ogg" //quieter when fired from a silenced weapon!
+	shot_sound = 'sound/weapons/smallcaliber.ogg' //quieter when fired from a silenced weapon!
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_22
@@ -92,6 +92,8 @@ toxic - poisons
 		dissipation_delay = 6
 		dissipation_rate = 3
 		power = 15
+		shot_sound = 'sound/weapons/smartgun.ogg'
+		shot_volume = 70
 
 	smg
 		power = 15
