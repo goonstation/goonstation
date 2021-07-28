@@ -689,3 +689,4 @@
 		c_flags = NOSLIP
 		cant_self_remove = 1
 		cant_other_remove = 1
+		step_sound = "step_lattice"

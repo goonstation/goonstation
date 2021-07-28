@@ -1,7 +1,6 @@
 /mob/living/carbon/human/welder
 	real_name = "The Welder"
 	var/trailing_blood = FALSE
-	var/highest_machete_damage = 15
 
 	New(loc)
 		..()
@@ -47,8 +46,6 @@
 				if((T && T.z == 3) || (T && T.z == 5))
 					boutput(src, __red("You seem unable to become incorporeal here."))
 					return
-			//	src.addAbility(/datum/targetable/welder/corporeal)
-			//	src.removeAbility(/datum/targetable/welder/incorporeal)
 				new /obj/overlay/darkness_field(T, 4 SECONDS, radius = 4, max_alpha = 250)
 				new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 4 SECONDS, radius = 4, max_alpha = 250)
 				sleep(15 DECI SECONDS)
@@ -66,8 +63,6 @@
 
 		corporealize()
 			if(!src.density)
-			//	src.addAbility(/datum/targetable/welder/incorporeal)
-			//	src.removeAbility(/datum/targetable/welder/corporeal)
 				var/turf/T = get_turf(src)
 				new /obj/overlay/darkness_field(T, 4 SECONDS, radius = 4, max_alpha = 250)
 				new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 4 SECONDS, radius = 4, max_alpha = 250)
@@ -136,7 +131,7 @@
 
 					src.send_machete_to_target(W)
 
-				// There could be multiple, I suppose.
+				// There could be multiple, i guess
 				if (2 to INFINITY)
 					var/t1 = input("Please select a machete to summon", "Target Selection", null, null) as null|anything in machetes
 					if (!t1)
@@ -191,24 +186,27 @@
 			if(!src || !istype(src) || !M || !istype(M))
 				return
 
-			boutput(M, "<span class='notice'>You get a splitting headache!</span>")
-			M.change_misstep_chance(20)
-			if(prob(33))
-				M.emote("faint")
-				M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS))
-			else
-				M.emote("tremble")
+			boutput(M, __red"<span class='notice'>You notice that your legs are feeling a bit stiff.</span>")
+				M.change_misstep_chance(30)
+				if(prob(33))
+					M.emote("faint")
+					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS))
+				else
+					M.emote("tremble")
 			sleep(20 SECONDS)
-			boutput(M, "<span class='notice'>The headache is getting worse, you should probably lay down!</span>")
+			boutput(M, __red"<span class='notice'>You feel like you can't control your legs!</span>")
 			if(prob(50))
 				M.emote("shudder")
+				M.setStatus("weakened", max(M.getStatusDuration("weakened"), 1 SECONDS))
+				M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 1 SECONDS))
+				M.force_laydown_standup()
 			else
 				M.emote("faint")
 				M.setStatus("weakened", max(M.getStatusDuration("weakened"), 8 SECONDS))
-			M.change_misstep_chance(30)
+			M.change_misstep_chance(40)
 			sleep(10 SECONDS)
-			M.change_misstep_chance(-50)
-			boutput(M, "<span class='notice'>Oh god...</span>")
+			M.change_misstep_chance(-70)
+			boutput(M, __red"<span class='notice'>You collapse!</span>")
 			M.emote("scream")
 			M.emote("faint")
 			M.setStatus("weakened", max(M.getStatusDuration("weakened"), 8 SECONDS))
@@ -345,11 +343,15 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 			return 1
 
 		var/mob/living/carbon/human/welder/W = src.holder.owner
-		if(usr.client)
-			for (var/mob/living/L in view(usr.client.view, usr))
-				if (isalive(L) && L.sight_check(1) && L.ckey != usr.ckey)
-					usr.show_text("You can only use that when nobody can see you!", "red")
-					return 1
+		if(!W.density)
+			boutput(usr, __red"<span class='alert'>You must be corporeal to use this ability.</span>")
+			return 1
+		else
+			if(usr.client)
+				for (var/mob/living/L in view(usr.client.view, usr))
+					if (isalive(L) && L.sight_check(1) && L.ckey != usr.ckey)
+						boutput(usr, __red"<span class='alert'>You can only use that when nobody can see you!</span>")
+						return 1
 		return W.incorporealize()
 
 /datum/targetable/welder/corporeal
@@ -364,16 +366,15 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 			return 1
 
 		var/mob/living/carbon/human/welder/W = src.holder.owner
-		/*if(usr.client)
-			for (var/mob/living/L in view(usr.client.view, usr))
-				if (isalive(L) && L.sight_check(1) && L.ckey != usr.ckey)
-					usr.show_text("You can only use that when nobody can see you!", "red")
-					return 1*/
-		return W.corporealize()
+		if(W.density)
+			boutput(usr, __red"<span class='alert'>You must be incorporeal to use this ability.</span>")
+			return 1
+		else
+			return W.corporealize()
 
 /datum/targetable/welder/blood_trail
 	name = "Blood Trail"
-	desc = "Begin trailing blood behind you, for the spook value."
+	desc = "Begin trailing blood behind you, to spook those who reside on station."
 	icon_state = "trail_blood"
 	targeted = 0
 	cooldown = 5 SECONDS
@@ -416,14 +417,14 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 			if(isdead(H))
 				boutput(usr, "<span class='alert'>You cannot possess a corpse.</span>")
 				return 1
-			//if(H.client) //undo once done showing it off
-			boutput(usr, "<b>You begin to possess [H].</b>")
-			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
-			H.playsound_local(H.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
-			return W.take_control(H)
-		/*	else
+			if(H.client)
+				boutput(usr, "<b>You begin to possess [H].</b>")
+				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
+				H.playsound_local(H.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
+				return W.take_control(H)
+			else
 				boutput(usr, "<b>The target must have a consciousness to be possessed.</b>")
-				return 1*/
+				return 1
 		else
 			boutput(usr, "<span class='alert'>You cannot possess a non-human.</span>")
 			return 1
