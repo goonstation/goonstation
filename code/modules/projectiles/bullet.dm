@@ -1416,7 +1416,7 @@ toxic - poisons
 		ks_ratio = 0.0
 		icon_state = "foamdart_heavy"
 
-		on_hit(atom/hit) //purposefully not getting falloff, so it's not just a worse taser
+		on_hit(atom/hit)
 			if (isliving(hit))
 				var/mob/living/L = hit
 				L.remove_stamina(power)

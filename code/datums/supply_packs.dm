@@ -110,7 +110,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/offbranddarts
 	name = "Offbrand Foam Darts"
-	desc = "A couple boxes of some cheap, offbrand foam darts, with some pretty heavy looking tips."
+	desc = "A couple boxes of some cheap, offbrand foam darts, shipped straight from Space China."
 	contains = list(/obj/item/ammo/bullets/foamdarts/offbrand = 2)
 	cost = 5000
 	containertype = /obj/storage/crate
