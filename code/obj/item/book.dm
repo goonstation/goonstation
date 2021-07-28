@@ -272,8 +272,7 @@ Custom Books
 				var/hos = (istype(user.head, /obj/item/clothing/head/hosberet) || istype(user.head, /obj/item/clothing/head/hos_hat))
 				if(hos)
 					var/mob/living/carbon/human/H = hit_atom
-					H.say("[pick("Alright, fine, ", "I confess that I ")][pick("nabbed ", "stole ", "klepped ", "grabbed ")]the [pick("Head of Security's ", "Captain's ", "Head of Personnel's ", "Chief Engineer's ", "Research Director's ", "Heisenbee's ")] [pick("hair brush!", "shoes!", "stuffed animal!", "spare uniform!", "bedsheets!", "hat!", "trophy!", "glasses!", "fizzy lifting drink!", "ID card!")]")
-					playsound(H.loc, "swing_hit", 50, 1)
+					H.say("[pick("Alright, fine, I ", "I confess that I ", "I confess! I ", "Okay, okay, I admit that I ")][pick("nabbed ", "stole ", "klepped ", "grabbed ", "thieved ", "pilfered ")]the [pick("Head of Security's ", "Captain's ", "Head of Personnel's ", "Chief Engineer's ", "Research Director's ", "Heisenbee's ", "Science Department's ", "Mining Team's ", "Quartermaster's ")] [pick("hair brush!", "shoes!", "stuffed animal!", "spare uniform!", "bedsheets!", "hat!", "trophy!", "glasses!", "fizzy lifting drink!", "ID card!")]")
 				prob_clonk = min(prob_clonk + 5, 40)
 				SPAWN_DBG(2 SECONDS)
 					prob_clonk = max(prob_clonk - 5, 0)
