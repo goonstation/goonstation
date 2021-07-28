@@ -1140,9 +1140,6 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 /datum/objective/conspiracy/technology
 	explanation_text = "Rid the station of any sort of advanced technology and promote an austere and simple lifestyle."
 
-/datum/objective/conspiracy/cluwne
-	explanation_text = "Floor cluwnes are real."
-
 /datum/objective/conspiracy/curfew
 	explanation_text = "Establish a curfew for the station. Those wandering outside of crew quarters after curfew must be harassed and detained."
 
