@@ -234,7 +234,7 @@ Custom Books
 
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = 0
 
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "lawbook"
@@ -272,12 +272,8 @@ Custom Books
 				var/hos = (istype(user.head, /obj/item/clothing/head/hosberet) || istype(user.head, /obj/item/clothing/head/hos_hat))
 				if(hos)
 					var/mob/living/carbon/human/H = hit_atom
-					H.changeStatus("stunned", 2 SECONDS)
-					H.changeStatus("weakened", 2 SECONDS)
-					H.force_laydown_standup()
-					//H.paralysis++
+					H.say("[pick("Alright, fine, ", "I confess that I ")][pick("nabbed ", "stole ", "klepped ", "grabbed ")]the [pick("Head of Security's ", "Captain's ", "Head of Personnel's ", "Chief Engineer's ", "Research Director's ", "Heisenbee's ")] [pick("hair brush!", "shoes!", "stuffed animal!", "spare uniform!", "bedsheets!", "hat!", "trophy!", "glasses!", "fizzy lifting drink!", "ID card!")]")
 					playsound(H.loc, "swing_hit", 50, 1)
-					usr.say("I AM THE LAW!")
 				prob_clonk = min(prob_clonk + 5, 40)
 				SPAWN_DBG(2 SECONDS)
 					prob_clonk = max(prob_clonk - 5, 0)
