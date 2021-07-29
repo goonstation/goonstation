@@ -5,7 +5,7 @@
 	required_elapsed_round_time = 40 MINUTES
 	weight = 88
 
- 	disabled = 1
+	disabled = 1
 
 	event_effect(var/source,var/turf/T,var/delay,var/duration)
 		..()
