@@ -5,9 +5,7 @@
 	required_elapsed_round_time = 40 MINUTES
 	weight = 88
 
-#ifdef RP_MODE
-	disabled = 1
-#endif
+ 	disabled = 1
 
 	event_effect(var/source,var/turf/T,var/delay,var/duration)
 		..()
