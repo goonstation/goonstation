@@ -1,5 +1,13 @@
 
+(t)wed jul 28 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Projectiles bypass ground hit/miss rolls when passing over a mob within the first half-second of resting (other sources of resting (stunned/etc) not affected). i.e.: frame-perfect rest-dodging tasers will be less/not possible, while not affecting ground-hit system much outside of that case
 (t)tue jul 27 21
+(u)Flappybat
+(p)5609
+(e)|
+(+)Supply requests are now shown with their price.
 (u)Sovexe
 (p)5606
 (e)⚖🆕🎨|balance, feature, sprites
