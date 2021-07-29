@@ -40,7 +40,7 @@ ABSTRACT_TYPE(/datum/plant/flower)
 	assoc_reagents = list("miasma")
 	
 	HYPspecial_proc(var/obj/machinery/plantpot/POT) // Smokes miasma and whatever chemicals have been spliced into the plant
-		..()
+		. - ..()
 		if (.) return
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes	
