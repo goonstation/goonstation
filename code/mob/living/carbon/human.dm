@@ -681,6 +681,8 @@
 				HS.changeling.transferOwnership(HS)
 				HS.changeling.owner = HS
 				HS.changeling.reassign_hivemind_target_mob()
+				var/obj/head = src.organHolder.drop_organ("head")
+				qdel(head)
 
 				//HS.process() //A little kickstart to get you out into the big world (and some chump), li'l guy! O7
 
