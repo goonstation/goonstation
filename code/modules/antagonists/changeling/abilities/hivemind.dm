@@ -90,8 +90,6 @@
 				spider.mind.special_role = "handspider"
 			if (!(spider.mind in ticker.mode.Agimmicks))
 				ticker.mode.Agimmicks += spider.mind
-			if (!spider.mind.former_antagonist_roles.Find(spider.mind.special_role))
-				spider.mind.former_antagonist_roles.Add(spider.mind.special_role)
 			spider.mind.master = owner.ckey
 
 		if (owner.mind && owner.mind.current && spider.client)
@@ -184,8 +182,6 @@
 				spider.mind.special_role = "eyespider"
 			if (!(spider.mind in ticker.mode.Agimmicks))
 				ticker.mode.Agimmicks += spider.mind
-			if (!spider.mind.former_antagonist_roles.Find(spider.mind.special_role))
-				spider.mind.former_antagonist_roles.Add(spider.mind.special_role)
 			spider.mind.master = owner.ckey
 
 		if (owner.mind && owner.mind.current && spider.client)
@@ -279,8 +275,6 @@
 				spider.mind.special_role = "legworm"
 			if (!(spider.mind in ticker.mode.Agimmicks))
 				ticker.mode.Agimmicks += spider.mind
-			if (!spider.mind.former_antagonist_roles.Find(spider.mind.special_role))
-				spider.mind.former_antagonist_roles.Add(spider.mind.special_role)
 			spider.mind.master = owner.ckey
 
 		if (owner.mind && owner.mind.current && spider.client)
@@ -365,8 +359,6 @@
 				crab.mind.special_role = "buttcrab"
 			if (!(crab.mind in ticker.mode.Agimmicks))
 				ticker.mode.Agimmicks += crab.mind
-			if (!crab.mind.former_antagonist_roles.Find(crab.mind.special_role))
-				crab.mind.former_antagonist_roles.Add(crab.mind.special_role)
 			crab.mind.master = owner.ckey
 
 		if (owner.mind && owner.mind.current && crab.client)

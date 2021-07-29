@@ -752,8 +752,6 @@ proc/antagify(mob/H, var/traitor_role, var/agimmick)
 	else
 		if (!(H.mind in ticker.mode.Agimmicks))
 			ticker.mode.Agimmicks += H.mind
-		if (!H.mind.former_antagonist_roles.Find(H.mind.special_role))
-			H.mind.former_antagonist_roles.Add(H.mind.special_role)
 		H << browse(grabResource("html/traitorTips/traitorgenericTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
 	if (traitor_role)
 		H.mind.special_role = traitor_role
