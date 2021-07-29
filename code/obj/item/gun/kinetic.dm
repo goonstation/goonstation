@@ -1753,3 +1753,20 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		ammo = new/obj/item/ammo/bullets/foamdarts/ten
 		set_current_projectile(new/datum/projectile/bullet/foamdart)
 		..()
+
+/obj/item/gun/kinetic/offbrand_foamdartgun
+	name = "Offbrand Foam Dart Gun"
+	icon_state = "offbrand_foamdartgun"
+	desc = "A cheap toy gun built to fire slightly larger darts. Keep out of reach of revolutionaries, syndies, and the clown."
+	w_class = W_CLASS_SMALL
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "offbrand_toygun"
+	contraband = 4
+	force = 1
+	caliber = 0.413
+	max_ammo_capacity = 10
+
+	New()
+		ammo = new/obj/item/ammo/bullets/foamdarts/offbrand/ten
+		set_current_projectile(new/datum/projectile/bullet/foamdart/offbrand)
+		..()

@@ -1177,6 +1177,7 @@
 	name = "ofbrand foam dart box"
 	icon_state = "foamdarts-heavy"
 	icon_empty = "foamdarts-heavy-0"
+	caliber = 0.413
 	ammo_type = new/datum/projectile/bullet/foamdart/offbrand
 
 	ten
