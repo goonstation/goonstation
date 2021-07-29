@@ -866,6 +866,7 @@ WET FLOOR SIGN
 			boutput(user, "<span class='notice'>You remove \the [removed_things[1]] from \the [src]</span>")
 		else
 			boutput(user, "<span class='notice'>You remove \the [removed_things[1]] and \the [removed_things[2]] from \the [src]</span>")
+		src.tooltip_rebuild = 1
 
 	attack_hand(mob/user)
 		if(!(src.loc == user && user.find_in_hand(src)))
@@ -894,6 +895,7 @@ WET FLOOR SIGN
 				I.set_loc(storage)
 			src.trashbag.calc_w_class(null)
 			boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
+			src.tooltip_rebuild = 1
 			return
 		else if(istype(target, /obj/machinery/disposal))
 			var/obj/machinery/disposal/disposal = target
@@ -902,12 +904,14 @@ WET FLOOR SIGN
 					I.set_loc(disposal)
 				src.trashbag.calc_w_class(null)
 				boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
+				src.tooltip_rebuild = 1
 				disposal.update()
 				return
 		else if(istype(target, /obj/submachine/chef_sink))
 			if(src.bucket.reagents.total_volume > 0)
 				boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
 				src.bucket.reagents.clear_reagents()
+				src.tooltip_rebuild = 1
 			else
 				boutput(user, "<span class='notice'>[src]'s bucket is empty.</span>")
 			return
@@ -915,6 +919,7 @@ WET FLOOR SIGN
 			if(src.bucket.reagents.total_volume > 0)
 				boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
 				src.bucket.transfer_all_reagents(target, user)
+				src.tooltip_rebuild = 1
 			else
 				boutput(user, "<span class='notice'>[src]'s bucket is empty.</span>")
 			return
@@ -985,6 +990,7 @@ WET FLOOR SIGN
 					if(src.trashbag.current_stuff >= src.trashbag.max_stuff)
 						boutput(user, "<span class='notice'>[src]'s [src.trashbag] is now full.</span>")
 
+		src.tooltip_rebuild = 1
 		. |= success
 
 	attackby(obj/item/W, mob/user, params, is_special=0)
@@ -1002,6 +1008,7 @@ WET FLOOR SIGN
 				user.put_in_hand_or_drop(old_trashbag)
 			user.u_equip(W)
 			W.dropped()
+			src.tooltip_rebuild = 1
 		else if(istype(W, /obj/item/reagent_containers/glass/bucket))
 			if(isnull(src.bucket))
 				boutput(user, "<span class='notice'>You insert \the [W] into \the [src].")
@@ -1016,6 +1023,7 @@ WET FLOOR SIGN
 				user.put_in_hand_or_drop(old_bucket)
 			user.u_equip(W)
 			W.dropped()
+			src.tooltip_rebuild = 1
 		else
 			. = ..()
 
