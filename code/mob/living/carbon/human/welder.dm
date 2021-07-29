@@ -186,7 +186,7 @@
 			if(!src || !istype(src) || !M || !istype(M))
 				return
 
-			boutput(M, __red"<span class='notice'>You notice that your legs are feeling a bit stiff.</span>")
+			boutput(M, __red("<span class='notice'>You notice that your legs are feeling a bit stiff.</span>"))
 				M.change_misstep_chance(30)
 				if(prob(33))
 					M.emote("faint")
@@ -194,7 +194,7 @@
 				else
 					M.emote("tremble")
 			sleep(20 SECONDS)
-			boutput(M, __red"<span class='notice'>You feel like you can't control your legs!</span>")
+			boutput(M, __red("<span class='notice'>You feel like you can't control your legs!</span>"))
 			if(prob(50))
 				M.emote("shudder")
 				M.setStatus("weakened", max(M.getStatusDuration("weakened"), 1 SECONDS))
@@ -206,7 +206,7 @@
 			M.change_misstep_chance(40)
 			sleep(10 SECONDS)
 			M.change_misstep_chance(-70)
-			boutput(M, __red"<span class='notice'>You collapse!</span>")
+			boutput(M, __red("<span class='notice'>You collapse!</span>"))
 			M.emote("scream")
 			M.emote("faint")
 			M.setStatus("weakened", max(M.getStatusDuration("weakened"), 8 SECONDS))
