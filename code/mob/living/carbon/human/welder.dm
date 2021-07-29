@@ -187,12 +187,12 @@
 				return
 
 			boutput(M, __red("<span class='notice'>You notice that your legs are feeling a bit stiff.</span>"))
-				M.change_misstep_chance(30)
-				if(prob(33))
-					M.emote("faint")
-					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS))
-				else
-					M.emote("tremble")
+			M.change_misstep_chance(30)
+			if(prob(33))
+				M.emote("faint")
+				M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS))
+			else
+				M.emote("tremble")
 			sleep(20 SECONDS)
 			boutput(M, __red("<span class='notice'>You feel like you can't control your legs!</span>"))
 			if(prob(50))
@@ -344,13 +344,13 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 
 		var/mob/living/carbon/human/welder/W = src.holder.owner
 		if(!W.density)
-			boutput(usr, __red"<span class='alert'>You must be corporeal to use this ability.</span>")
+			boutput(usr, __red("<span class='alert'>You must be corporeal to use this ability.</span>"))
 			return 1
 		else
 			if(usr.client)
 				for (var/mob/living/L in view(usr.client.view, usr))
 					if (isalive(L) && L.sight_check(1) && L.ckey != usr.ckey)
-						boutput(usr, __red"<span class='alert'>You can only use that when nobody can see you!</span>")
+						boutput(usr, __red("<span class='alert'>You can only use that when nobody can see you!</span>"))
 						return 1
 		return W.incorporealize()
 
@@ -367,7 +367,7 @@ ABSTRACT_TYPE(/datum/targetable/welder)
 
 		var/mob/living/carbon/human/welder/W = src.holder.owner
 		if(W.density)
-			boutput(usr, __red"<span class='alert'>You must be incorporeal to use this ability.</span>")
+			boutput(usr, __red("<span class='alert'>You must be incorporeal to use this ability.</span>"))
 			return 1
 		else
 			return W.corporealize()
