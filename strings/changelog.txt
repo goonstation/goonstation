@@ -1,4 +1,9 @@
 
+(t)fri jul 30 21
+(u)Sovexe
+(p)5631
+(e)⚖|balance
+(*)Roaches are now a little more durable to crushing and blunt damage. Roach vulnerability to crush / blunt reduced from 166% to 150%.
 (t)thu jul 29 21
 (u)Janonas + jigjagboi45
 (p)5580
