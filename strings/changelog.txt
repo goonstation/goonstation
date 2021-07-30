@@ -1,4 +1,19 @@
 
+(t)fri jul 30 21
+(u)Sovexe
+(p)5631
+(e)⚖|balance
+(*)Roaches are now a little more durable to crushing and blunt damage. Roach vulnerability to crush / blunt reduced from 166% to 150%.
+(t)thu jul 29 21
+(u)Janonas + jigjagboi45
+(p)5580
+(e)⚖🆕🎨|balance, feature, sprites
+(*)Added Rafflesias (corpseflowers) to the game. - Admire how pretty they look! Make them stink up the place! Wear them on your head like a silly person!
+(+)The hydroponic trays are now open containers, as they should be.
+(t)wed jul 28 21
+(u)Tarmunora
+(e)⚖|balance
+(*)Projectiles bypass ground hit/miss rolls when passing over a mob within the first half-second of resting (other sources of resting (stunned/etc) not affected). i.e.: frame-perfect rest-dodging tasers will be less/not possible, while not affecting ground-hit system much outside of that case
 (t)tue jul 27 21
 (u)Flappybat
 (p)5609

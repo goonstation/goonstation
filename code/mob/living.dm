@@ -313,7 +313,7 @@
 
 /mob/living/projCanHit(datum/projectile/P)
 	if (!P) return 0
-	if (!src.lying || (src:lying && prob(P.hit_ground_chance))) return 1
+	if (!src.lying || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || (src:lying && prob(P.hit_ground_chance))) return 1
 	return 0
 
 /mob/living/proc/hand_attack(atom/target, params, location, control, origParams)
