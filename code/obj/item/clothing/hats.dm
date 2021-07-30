@@ -146,7 +146,7 @@ proc/filter_trait_hats(var/type)
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 12)
 		setProperty("disorient_resist_ear", 8)
-		setProperty("movespeed", 0.2)
+		setProperty("movespeed", 0.15)
 
 /obj/item/clothing/head/cakehat
 	name = "cakehat"
