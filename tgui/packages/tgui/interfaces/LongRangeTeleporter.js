@@ -33,7 +33,7 @@ export const LongRangeTeleporter = (props, context) => {
                   <Button
                     icon="sign-in-alt"
                     onClick={() => act("receive", { target: d["ref"], name: d["destination"] })} >
-                    {"Receive"}
+                    Receive
                   </Button>
                 )}
               </LabeledList.Item>
