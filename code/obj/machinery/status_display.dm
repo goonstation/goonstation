@@ -82,10 +82,6 @@ var/list/status_display_text_images = list()
 	// timed process
 
 	process()
-		//Wire: Breaking status displays intentionally because holy fuck do they cause a lot of lag.
-		//qdel(src)
-		//return
-
 		if(status & NOPOWER)
 			ClearAllOverlays()
 			return
@@ -117,40 +113,50 @@ var/list/status_display_text_images = list()
 					if(length(displaytime) > MAX_LEN)
 						displaytime = "**~**"
 
-					ClearAllOverlays()
 					update_display_lines(displayloc, displaytime)
+
+					if(!repeat_update)
+						var/delay = src.base_tick_spacing * PROCESSING_TIER_MULTI(src)
+						SPAWN_DBG(0) //0.5 SECONDS
+							repeat_update = 1
+							for(var/i in 1 to (delay/5)-1)
+								sleep(0.5 SECONDS)
+								update()		// set to update again in 5 ticks
+							repeat_update = 0
 					return
 				else
 					ClearAllOverlays()
 					set_picture("default")
 
+
 			if(2)
 				var/line1
 				var/line2
+				var/line_len = use_maptext ? 4 : 5
 
 				if(!index1)
 					line1 = message1
 				else
-					line1 = copytext(message1+message1, index1, index1+5)
+					line1 = copytext(message1+message1, index1, index1+line_len)
 					if(index1++ > (length(message1)))
 						index1 = 1
 
 				if(!index2)
 					line2 = message2
 				else
-					line2 = copytext(message2+message2, index2, index2+5)
+					line2 = copytext(message2+message2, index2, index2+line_len)
 					if(index2++ > (length(message2)))
 						index2 = 1
-
-				//update_display_lines(line1, line2) // Azrun I don't think this is
 
 				// the following allows 2 updates per process, giving faster scrolling
 				if((index1 || index2) && repeat_update)	// if either line is scrolling
 														// and we haven't forced an update yet
-					var/delay = src.base_tick_spacing * PROCESSING_TIER_MULTI(src) / 2
-					SPAWN_DBG(delay) //0.5 SECONDS
+					var/delay = src.base_tick_spacing * PROCESSING_TIER_MULTI(src)
+					SPAWN_DBG(0) //0.5 SECONDS
 						repeat_update = 0
-						update()		// set to update again in 5 ticks
+						for(var/i in 1 to delay/5)
+							sleep(0.5 SECONDS)
+							update()		// set to update again in 5 ticks
 						repeat_update = 1
 
 				if(use_maptext)
@@ -280,10 +286,12 @@ var/list/status_display_text_images = list()
 			src.maptext = {"<span class='ol vm c' style="font-family: StatusDisp; font-size: 6px;  color: #09f">[line1]<BR/>[line2]</span>"}
 
 	proc/set_picture(var/state)
+		src.maptext = ""
 		picture_state = state
 		UpdateOverlays(image('icons/obj/status_display.dmi', icon_state=picture_state), "picture")
 
 	proc/set_picture_overlay(var/state, var/overlay)
+		src.maptext = ""
 		picture_state = state+overlay
 		UpdateOverlays(image('icons/obj/status_display.dmi', icon_state=state), "state_image")
 		UpdateOverlays(image('icons/obj/status_display.dmi', icon_state=overlay), "overlay_image")
@@ -302,6 +310,11 @@ var/list/status_display_text_images = list()
 		lastdisplayline2 = line2
 
 		if(use_maptext)
+			UpdateOverlays(null, "picture")
+			UpdateOverlays(null, "state_image")
+			UpdateOverlays(null, "overlay_image")
+			UpdateOverlays(null, "text")
+
 			set_maptext(line1, line2)
 			UpdateOverlays(crt_image, "crt")
 		else
