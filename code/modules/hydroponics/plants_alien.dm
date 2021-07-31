@@ -28,7 +28,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 
 		if (POT.growth > (P.harvtime + DNA.harvtime) && prob(20))
 			POT.visible_message("<span class='alert'><b>[POT.name]</b> vomits profusely!</span>")
-			playsound(POT), "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			playsound(POT, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 			if(!locate(/obj/decal/cleanable/vomit) in get_turf(POT)) make_cleanable( /obj/decal/cleanable/vomit,get_turf(POT))
 
 /datum/plant/artifact/peeker
