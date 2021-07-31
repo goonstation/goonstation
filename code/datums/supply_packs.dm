@@ -1036,6 +1036,32 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate/wooden
 	containername = "Furnishings Crate"
 
+/datum/supply_packs/furniture_eventtablered
+	name = "Red Event Table Crate"
+	desc = "A flat-packed set of tables, each with a fancy red tablecloth."
+	contains = list(/obj/item/furniture_parts/table/clothred = 5)
+	cost = 25000
+	containertype = /obj/storage/crate/wooden
+	containername = "Red Event Table Crate"
+
+/datum/supply_packs/furniture_regal
+	name = "Regal Furnishings Crate"
+	desc = "A set of very fancy flat-packed, regal furniture."
+	contains = list(/obj/item/furniture_parts/wood_chair/regal = 4,
+					/obj/item/furniture_parts/table/regal = 4,
+					/obj/item/furniture_parts/decor/regallamp = 2)
+	cost = 80000
+	containertype = /obj/storage/crate/wooden
+	containername = "Regal Furnishings Crate"
+
+/datum/supply_packs/furniture_throne
+	name = "Golden Throne"
+	desc = "A flat-packed throne. It can't be real gold for that price..."
+	contains = list(/obj/item/furniture_parts/throne_gold)
+	cost = 150000
+	containertype = /obj/storage/crate/wooden
+	containername = "Throne Crate"
+
 /datum/supply_packs/hat
 	name = "Haberdasher's Crate"
 	desc = "A veritable smörgåsbord of head ornaments."
