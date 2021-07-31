@@ -99,12 +99,6 @@
 	var/spawn_growth = null
 	/// list of commuts to apply to plant
 	var/list/datum/plant_gene_strain/spawn_commuts = list()
-	/// apply seedless plant gene strain
-	var/seedless = null
-	/// apply terminator plant gene strain
-	var/terminator = null
-	/// apply toxic plant gene strain
-	var/toxic = null
 	var/auto_water = TRUE
 
 	New()
@@ -122,13 +116,6 @@
 
 			S.generic_seed_setup(P)
 			src.HYPnewplant(S)
-
-			if(seedless)
-				HYPaddCommut(src.current, src.plantgenes, /datum/plant_gene_strain/seedless)
-			if(terminator)
-				HYPaddCommut(src.current, src.plantgenes, /datum/plant_gene_strain/terminator)
-			if(toxic)
-				HYPaddCommut(src.current, src.plantgenes, /datum/plant_gene_strain/reagent_adder/toxic)
 
 			for(var/commutes in spawn_commuts)
 				HYPaddCommut(src.current, src.plantgenes, commutes)
@@ -154,7 +141,7 @@
 		// Filter out the following item interactions
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			boutput(user, "<span class='alert'>[W] does not seem like the right tool for the job.</span>")
-		else if(istype(W, /obj/item/seed/))
+		else if(istype(W, /obj/item/seed/) || istype(W, /obj/item/seedplanter/))
 			boutput(user, "<span class='alert'>Something is already growing there.</span>")
 		else
 			..()
