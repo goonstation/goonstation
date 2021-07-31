@@ -1,5 +1,9 @@
 
 (t)sat jul 31 21
+(u)Walpvrgis
+(p)5567
+(e)🎨|sprites
+(*)The Floor and Wall Planner now has a few new flooring designs to choose from. Check the PR link above for preview images.
 (u)Arthur Holiday
 (p)5635
 (e)⚖🗺|balance, mapping
