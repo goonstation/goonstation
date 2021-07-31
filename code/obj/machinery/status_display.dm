@@ -1,5 +1,5 @@
 //Contains:
-//-Status display (shelved until someone replaces the texticon proc with maptext)
+//-Status display
 //-AI status display
 
 // // Status display
@@ -23,7 +23,6 @@ var/list/status_display_text_images = list()
 
 	maptext = {"<span class='ol vm c' style="font-family: StatusDisp; font-size: 6px;  color: #09f">AB12<BR/>21BA</span>"}
 
-//
 	var/mode = 1	// 0 = Blank
 					// 1 = Shuttle timer
 					// 2 = Arbitrary message(s)
@@ -52,10 +51,6 @@ var/list/status_display_text_images = list()
 	var/image/temp_image = null
 	var/image/crt_image = null
 
-	var/list/image/text_ticker = list()
-	var/list/maptext_ticker = list()
-	var/ticker_index = 1
-
 	// new display
 	// register for radio system
 	New()
@@ -73,14 +68,12 @@ var/list/status_display_text_images = list()
 		SPAWN_DBG(0.5 SECONDS)	// must wait for map loading to finish
 			if(radio_controller)
 				radio_controller.add_object(src, "[frequency]")
-			//del(src) //lol
 
 	disposing()
 		radio_controller.remove_object(src, "[frequency]")
 		..()
 
 	// timed process
-
 	process()
 		if(status & NOPOWER)
 			ClearAllOverlays()
@@ -92,15 +85,12 @@ var/list/status_display_text_images = list()
 
 
 	// set what is displayed
-
 	proc/update()
-
 		switch(mode)
 			if(0)
 				ClearAllOverlays()
 				return
 
-			// drsingh commented these for now because they lag
 			if(1)	// shuttle timer
 				if(emergency_shuttle.online)
 					var/displayloc
@@ -159,14 +149,7 @@ var/list/status_display_text_images = list()
 							update()		// set to update again in 5 ticks
 						repeat_update = 1
 
-				if(use_maptext)
-					update_display_lines(line1,line2)
-					DEBUG_MESSAGE("Updating text display index: [ticker_index], len: [text_ticker.len]")
-				else
-					if(text_ticker.len)
-						DEBUG_MESSAGE("Updating text display index: [ticker_index], len: [text_ticker.len]")
-						update_display_lines(,,text_ticker[ticker_index])
-						ticker_index = ((ticker_index) % text_ticker.len) + 1
+				update_display_lines(line1,line2)
 
 			if(4)		// supply shuttle timer
 				var/disp1
@@ -209,74 +192,6 @@ var/list/status_display_text_images = list()
 		repeat_update = 1
 		desc = "[message1] [message2]"
 
-		if(!use_maptext)
-			calculate_message_images()
-
-
-
-
-	proc/calculate_message_images()
-		text_ticker.len = 0
-		maptext_ticker.len = 0
-
-		var/target = max(length(message1), length(message2))
-
-		//No sense repeatedly concatenating the message
-		var/dmessage1 = ""
-		if(length(message1)>MAX_LEN)
-			dmessage1 = message1+message1
-
-		var/dmessage2 = ""
-		if(length(message2)>MAX_LEN)
-			dmessage2 = message2+message2
-
-		for(var/I = 1; I <= target; I++)
-			var/line1
-			var/line2
-
-			if(dmessage1)	//If there is a double message then line1 > MAX_LEN
-				var/len = length(message1)
-				line1 = copytext(dmessage1, (I % len)+1 , ((I % len) + MAX_LEN ) + 1)
-			else
-				line1 = message1
-
-			if(dmessage2) //If there is a double message then line1 > MAX_LEN
-				var/len = length(message2)
-				line2 = copytext(dmessage2, (I % len)+1 , ((I + MAX_LEN) % len) + 1)
-			else //Otherwise show entire message
-				line2 = message2
-
-			if(use_maptext)
-				maptext_ticker += list(list(line1,line2))
-			else
-				var/image/temp = image('icons/obj/status_display.dmi')
-				if(!line2)		// single line display
-					temp.overlays += texticon(line1, 23, -13)
-				else					// dual line display
-					temp.overlays += texticon(line1, 23, -9)
-					temp.overlays += texticon(line2, 23, -17)
-				text_ticker += temp
-
-			DEBUG_MESSAGE("Line 1: [line1], Line 2: [line2]")
-
-			if(!dmessage1 && !dmessage2) //Both lines are static, do not calculate scroll
-				return
-/*
-		if(!index1)
-			line1 = message1
-		else
-			line1 = copytext(message1+message1, index1, index1+5)
-			if(index1++ > (length(message1)))
-				index1 = 1
-
-		if(!index2)
-			line2 = message2
-		else
-			line2 = copytext(message2+message2, index2, index2+5)
-			if(index2++ > (length(message2)))
-				index2 = 1
-				*/
-
 #undef MAX_LEN
 
 	proc/set_maptext(var/line1, var/line2)
@@ -309,30 +224,15 @@ var/list/status_display_text_images = list()
 		lastdisplayline1 = line1
 		lastdisplayline2 = line2
 
-		if(use_maptext)
-			UpdateOverlays(null, "picture")
-			UpdateOverlays(null, "state_image")
-			UpdateOverlays(null, "overlay_image")
-			UpdateOverlays(null, "text")
+		UpdateOverlays(null, "picture")
+		UpdateOverlays(null, "state_image")
+		UpdateOverlays(null, "overlay_image")
+		UpdateOverlays(null, "text")
 
-			set_maptext(line1, line2)
-			UpdateOverlays(crt_image, "crt")
-		else
-			if(!text_image)
-				text_image = image('icons/obj/status_display.dmi')
-
-			text_image.overlays.Cut()
-			if(line2 == null)		// single line display
-				text_image.overlays += texticon(line1, 23, -13)
-			else					// dual line display
-				text_image.overlays += texticon(line1, 23, -9)
-				text_image.overlays += texticon(line2, 23, -17)
-			UpdateOverlays(text_image, "text", 1) //Force this update
-			UpdateOverlays(null, "crt")
-
+		set_maptext(line1, line2)
+		UpdateOverlays(crt_image, "crt")
 
 	// return shuttle timer as text
-
 	proc/get_shuttle_timer()
 		var/timeleft = emergency_shuttle.timeleft()
 		if(timeleft)
