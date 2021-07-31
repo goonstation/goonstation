@@ -21,7 +21,7 @@ export const LongRangeTeleporter = (props, context) => {
         <Section title="Destinations">
           <LabeledList>
             {destinations.length ? destinations.map((d) => (
-              <LabeledList.Item label={d["destination"]} key={d["ref"]}>
+              <LabeledList.Item label={d["destination"]} key={d["destination"]+d["ref"]}>
                 {send_allowed && (
                   <Button
                     icon="sign-out-alt"

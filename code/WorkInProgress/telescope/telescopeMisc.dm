@@ -24,33 +24,8 @@ var/list/magnet_locations = list()
 		return attack_hand(user)
 
 	attack_hand(mob/user as mob)
-		if(ui_interact(user))
-			return
-
-		var/link_html = "<br>"
-
-		if(special_places.len)
-			for(var/A in special_places)
-				link_html += {"[A] <a href='?src=\ref[src];send=[A]'><small>(Send)</small></a> <a href='?src=\ref[src];recieve=[A]'><small>(Recieve)</small></a><br>"}
-		else
-			link_html = "<br>No co-ordinates available.<br>"
-
-		var/html = {"<!doctype html>
-			<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-			<html>
-			<head>
-			<title>Long-range teleporter</title>
-			</head>
-			<body style="overflow:auto;background-color: #eeeeee;">
-			<p>Long-range destinations:</p><br>
-			[link_html]
-			</body>
-			"}
-
-		src.add_dialog(user)
+		ui_interact(user)
 		add_fingerprint(user)
-		user.Browse(html, "window=lrporter;size=250x380;can_resize=0;can_minimize=0;can_close=1;override_setting=1")
-		onclose(user, "lrporter", src)
 
 	proc/mechcompsend(var/datum/mechanicsMessage/input)
 		if(!input)
@@ -126,27 +101,11 @@ var/list/magnet_locations = list()
 			return 1
 		return 0
 
-	Topic(href, href_list)
-		if (src.busy)
-			return
-
-		if (!in_interact_range(src, usr) || usr.z != src.z)
-			return
-
-		if (href_list["send"])
-			var/place = href_list["send"]
-			src.lrtsend(place)
-
-		if (href_list["recieve"])
-			var/place = href_list["recieve"]
-			src.lrtrecieve(place)
-
 /obj/machinery/lrteleporter/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "LongRangeTeleporter", name)
 		ui.open()
-	return ui
 
 /obj/machinery/lrteleporter/ui_data(mob/user)
 	var/list/destinations = list()
