@@ -32745,7 +32745,7 @@
 /area/station/turret_protected/Zeta)
 "jlF" = (
 /obj/machinery/vending/medical,
-/obj/item_dispenser/perscription_glasses,
+/obj/item_dispenser/prescription_glasses,
 /obj/decal/tile_edge/line/red{
 	icon_state = "line3"
 	},

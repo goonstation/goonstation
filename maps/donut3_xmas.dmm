@@ -55859,7 +55859,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
 "qjn" = (
-/obj/item_dispenser/perscription_glasses{
+/obj/item_dispenser/prescription_glasses{
 	pixel_x = 1;
 	pixel_y = 29
 	},
