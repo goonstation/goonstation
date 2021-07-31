@@ -541,6 +541,45 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "office_carpet2"
 
+DEFINE_FLOORS(carpet/regalcarpet,
+	name = "regal carpet";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "regal_carpet";\
+	step_material = "step_carpet";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(carpet/regalcarpet/border,
+	icon_state = "regal_carpet_border")
+
+DEFINE_FLOORS(carpet/regalcarpet/innercorner,
+	icon_state = "regal_carpet_corner")
+
+DEFINE_FLOORS(carpet/darkcarpet,
+	name = "dark carpet";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "dark_carpet";\
+	step_material = "step_carpet";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(carpet/darkcarpet/border,
+	icon_state = "dark_carpet_border")
+
+DEFINE_FLOORS(carpet/darkcarpet/innercorner,
+	icon_state = "dark_carpet_corner")
+
+DEFINE_FLOORS(carpet/clowncarpet,
+	name = "clown carpet";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "clown_carpet";\
+	step_material = "step_carpet";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(carpet/clowncarpet/border,
+	icon_state = "clown_carpet_border")
+
+DEFINE_FLOORS(carpet/clowncarpet/innercorner,
+	icon_state = "clown_carpet_corner")
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/shiny
@@ -561,6 +600,39 @@
 	icon_state = "freezerfloor3"
 
 ////////////////////////////////////////
+
+DEFINE_FLOORS(terrazzo,
+	name = "terrazzo tiling";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "terrazzo_beige";\
+	step_material = "step_wood";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(terrazzo/black,
+	icon_state = "terrazzo_black")
+
+DEFINE_FLOORS(terrazzo/white,
+	icon_state = "terrazzo_white")
+
+/////////////////////////////////////////
+
+DEFINE_FLOORS(marble,
+	name = "marble tiling";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "marble_white";\
+	step_material = "step_wood";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(marble/black,
+	icon_state = "marble_black")
+
+DEFINE_FLOORS(marble/border_bw,
+	icon_state = "marble_border_bw")
+
+DEFINE_FLOORS(marble/border_wb,
+	icon_state = "marble_border_wb")
+
+/////////////////////////////////////////
 
 /turf/simulated/floor/specialroom
 
@@ -977,6 +1049,26 @@
 	name = "snow-covered floor"
 	icon_state = "snowgreencorner"
 
+DEFINE_FLOORS(snowcalm,
+	name = "snow";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "snow_calm";\
+	step_material = "step_outdoors";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(snowcalm/border,
+	icon_state = "snow_calm_border")
+
+DEFINE_FLOORS(snowrough,
+	name = "snow";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "snow_rough";\
+	step_material = "step_outdoors";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(snowrough/border,
+	icon_state = "snow_rough_border")
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/sand
@@ -1003,6 +1095,45 @@
 	step_priority = STEP_PRIORITY_MED
 
 /////////////////////////////////////////
+
+/* Animated turf - Walp */
+
+DEFINE_FLOORS(techfloor,
+	name = "data tech flooring";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "techfloor_blue";\
+	step_material = "step_plating";\
+	step_priority = STEP_PRIORITY_MED;\
+	RL_LumR = 0;\
+	RL_LumG = 0;\
+	RL_LumB = 0.3)
+
+DEFINE_FLOORS(techfloor/red,
+	icon_state = "techfloor_red";\
+	RL_LumR = 0.3;\
+	RL_LumG = 0;\
+	RL_LumB = 0)
+
+DEFINE_FLOORS(techfloor/purple,
+	icon_state = "techfloor_purple";\
+	RL_LumR = 0.1;\
+	RL_LumG = 0;\
+	RL_LumB = 0.2)
+
+DEFINE_FLOORS(techfloor/yellow,
+	icon_state = "techfloor_yellow";\
+	RL_LumR = 0.2;\
+	RL_LumG = 0.1;\
+	RL_LumB = 0)
+
+DEFINE_FLOORS(techfloor/green,
+	icon_state = "techfloor_green";\
+	RL_LumR = 0;\
+	RL_LumG = 0.3;\
+	RL_LumB = 0)
+
+/////////////////////////////////////////
+
 /turf/simulated/floor/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'

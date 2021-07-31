@@ -790,7 +790,7 @@ table#cooktime a#start {
 		src.updateUsrDialog()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
+		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && W.w_class <= W_CLASS_HUGE && !W.anchored)
 			return src.Attackby(W, user)
 		return ..()
 

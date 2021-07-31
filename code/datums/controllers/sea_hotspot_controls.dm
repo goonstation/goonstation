@@ -372,7 +372,7 @@
 			fireflash(phenomena_point,1)
 
 		if (phenomena_flags & PH_EX)
-			explosion(0, phenomena_point, -1, -1, 2, 3)
+			explosion(src, phenomena_point, -1, -1, 2, 3)
 
 		if ((phenomena_flags & PH_EX) || (phenomena_flags & PH_FIRE_WEAK) || (phenomena_flags & PH_FIRE))
 			playsound(phenomena_point, 'sound/misc/ground_rumble_big.ogg', 65, 1, 0.1, 0.7)

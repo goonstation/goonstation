@@ -1069,6 +1069,7 @@
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "zippo"
 	item_state = "zippo"
+	var/item_state_base = "zippo"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	w_class = W_CLASS_TINY
 	throwforce = 4
@@ -1113,7 +1114,7 @@
 		src.on = 1
 		src.firesource = TRUE
 		set_icon_state(src.icon_on)
-		src.item_state = "zippoon"
+		src.item_state = "[item_state_base]on"
 		light.enable()
 		processing_items |= src
 		if (user != null)
@@ -1125,7 +1126,7 @@
 		src.on = 0
 		src.firesource = FALSE
 		set_icon_state(src.icon_off)
-		src.item_state = "zippo"
+		src.item_state = "[item_state_base]"
 		light.disable()
 		processing_items.Remove(src)
 		if (user != null)
@@ -1276,3 +1277,29 @@
 
 /obj/item/device/light/zippo/borg
 	infinite_fuel = 1
+
+/obj/item/device/light/zippo/syndicate
+	desc = "A sleek black lighter with a red stripe."
+	icon_state = "syndie_zippo"
+	icon_off = "syndie_zippo"
+	icon_on = "syndie_zippoon"
+	item_state = "syndi-zippo"
+	item_state_base = "syndi-zippo"
+	infinite_fuel = 1
+	col_r = 0.298
+	col_g = 0.658
+	col_b = 0
+	is_syndicate = 1
+
+	New()
+		. = ..()
+		RegisterSignal(src, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), .proc/update_hotbox_flag)
+
+	proc/update_hotbox_flag(thing, previous_loc, direction)
+		if (!firesource) return
+		if (isturf(src.loc))
+			var/turf/T = src.loc
+			T.allow_unrestricted_hotbox++
+		if (isturf(previous_loc))
+			var/turf/T = previous_loc
+			T.allow_unrestricted_hotbox = max(0, T.allow_unrestricted_hotbox - 1)
