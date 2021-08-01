@@ -28,7 +28,7 @@
 
 	OnAdd()
 		if (ishuman(owner))
-			var/hstyle = pick("horns","horns_ram","horns_dark","horns_sml","horns_unicorn")
+			var/hstyle = pick("horns","horns_ram","horns_ramblk","horns_dark","horns_beige","horns_light","horns_sml","horns_unicorn")
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[hstyle]", layer = MOB_LAYER)
 			if (ismonkey(owner))
 				overlay_image.pixel_y = -6
