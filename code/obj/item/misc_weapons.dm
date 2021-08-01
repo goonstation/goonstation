@@ -117,8 +117,8 @@
 			var/mob/living/carbon/human/H = user
 			age_modifier = 30 - H.bioHolder.age
 
-		if(user.gender == MALE) playsound(get_turf(user), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 5, 0, max(0.7, min(1.2, 1.0 + age_modifier/60)))
-		else playsound(get_turf(user), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 5, 0, max(0.7, min(1.4, 1.0 + age_modifier/50)))
+		if(user.gender == MALE) playsound(user, pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 5, 0, max(0.7, min(1.2, 1.0 + age_modifier/60)))
+		else playsound(user, pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 5, 0, max(0.7, min(1.4, 1.0 + age_modifier/50)))
 		..()
 	else
 		if (user.a_intent == INTENT_HELP)
@@ -175,8 +175,8 @@
 			S = H.find_type_in_hand(/obj/item/sword, "left")
 		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus("stunned", "weakened", "paralysis")))
 			var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
-			if(target.gender == MALE) playsound(get_turf(target), pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - H.bioHolder.age)/60)))
-			else playsound(get_turf(target), pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
+			if(target.gender == MALE) playsound(target, pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - H.bioHolder.age)/60)))
+			else playsound(target, pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
 			C.setup(H.loc)
 			var/matrix/m = matrix()
 			m.Turn(rand(0,360))
@@ -202,12 +202,12 @@
 
 		if (!loaded_glowstick)
 			boutput(user, "<span class='alert'>The sword emits a brief flash of light and turns off! The blade-focus glowstick seems to be missing.</span>")
-			playsound(get_turf(user), "sound/items/zippo_close.ogg", 60, 1)
+			playsound(user, "sound/items/zippo_close.ogg", 60, 1)
 			return
 
 		if (!loaded_glowstick.on)
 			boutput(user, "<span class='alert'>The sword emits a brief flash of light and turns off! The blade-focus glowstick hasn't been cracked!</span>")
-			playsound(get_turf(user), "sound/items/zippo_close.ogg", 60, 1)
+			playsound(user, "sound/items/zippo_close.ogg", 60, 1)
 			return
 
 	if (user.bioHolder.HasEffect("clumsy") && prob(50))
@@ -226,8 +226,8 @@
 		stamina_damage = active_stamina_dmg
 		if(ishuman(user) && !ON_COOLDOWN(src, "playsound_on", 2 SECONDS))
 			var/mob/living/carbon/human/U = user
-			if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordstart.ogg", 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
-			else playsound(get_turf(U),"sound/weapons/female_cswordturnon.ogg" , 100, 0, 5, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
+			if(U.gender == MALE) playsound(U,"sound/weapons/male_cswordstart.ogg", 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
+			else playsound(U,"sound/weapons/female_cswordturnon.ogg" , 100, 0, 5, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
 		src.force = active_force
 		src.stamina_cost = active_stamina_cost
 		if (src.bladecolor)
@@ -246,8 +246,8 @@
 		stamina_damage = inactive_stamina_dmg
 		if(ishuman(user) && !ON_COOLDOWN(src, "playsound_off", 2 SECONDS))
 			var/mob/living/carbon/human/U = user
-			if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordturnoff.ogg", 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
-			else playsound(get_turf(U),"sound/weapons/female_cswordturnoff.ogg", 100, 0, 5, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
+			if(U.gender == MALE) playsound(U,"sound/weapons/male_cswordturnoff.ogg", 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
+			else playsound(U,"sound/weapons/female_cswordturnoff.ogg", 100, 0, 5, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
 		src.force = inactive_force
 		src.stamina_cost = inactive_stamina_cost
 		src.icon_state = "[state_name]0"
@@ -287,7 +287,7 @@
 				return
 
 			user.visible_message("<b>[user]</b> unscrews and opens [src].")
-			playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
 			src.open = 1
 			if (loaded_glowstick)
 				src.icon_state = "[state_name]-open-[bladecolor]"
@@ -296,12 +296,12 @@
 			return
 		else if (src.open && src.bladecolor)
 			user.visible_message("<b>[user]</b> closes and screws [src] shut.")
-			playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
 			src.open = 0
 			src.icon_state = "[state_name]0"
 		else
 			boutput(user, "<span class='alert'>The screw spins freely in place without a blade to screw into.</span>")
-			playsound(get_turf(src), "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
 			return
 
 	if (istype(W, /obj/item/device/light/glowstick) && !loaded_glowstick && open)
@@ -454,8 +454,8 @@
 			hit_type = DAMAGE_BLUNT
 			if(ishuman(user))
 				var/mob/living/carbon/human/U = user
-				if(U.gender == MALE) playsound(get_turf(U),"sound/weapons/male_cswordturnoff.ogg", 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
-				else playsound(get_turf(U),"sound/weapons/female_cswordturnoff.ogg", 100, 0, 0, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
+				if(U.gender == MALE) playsound(U,"sound/weapons/male_cswordturnoff.ogg", 70, 0, 0, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
+				else playsound(U,"sound/weapons/female_cswordturnoff.ogg", 100, 0, 0, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
 			active = 0
 			force = inactive_force
 			icon_state = "[state_name]0"
@@ -660,7 +660,7 @@
 
 		if (!use_two_handed || setTwoHanded(!src.status))
 			src.status = !src.status
-			// playsound(get_turf(src), "sparks", 75, 1, -1)
+			// playsound(src, "sparks", 75, 1, -1)
 			if (src.status)
 				setProperty("meleeprot", 3)
 				setProperty("movespeed", 0.1)
@@ -1068,7 +1068,7 @@
 		var/mob/living/carbon/human/H = target
 		if (H.find_type_in_hand(/obj/item/katana, "right") || H.find_type_in_hand(/obj/item/katana, "left"))
 			var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
-			playsound(get_turf(target), pick("sound/effects/sword_clash1.ogg","sound/effects/sword_clash2.ogg","sound/effects/sword_clash3.ogg"), 70, 0, 0)
+			playsound(target, pick("sound/effects/sword_clash1.ogg","sound/effects/sword_clash2.ogg","sound/effects/sword_clash3.ogg"), 70, 0, 0)
 			C.setup(H.loc)
 			var/matrix/m = matrix()
 			m.Turn(rand(0,360))
@@ -1240,7 +1240,7 @@
 			user.update_clothing()
 			src.sword_inside = W //katana SHOULD be in the sheath now.
 			boutput(user, "<span class='notice'>You sheathe [W] in [src].</span>")
-			playsound(get_turf(user), "sound/effects/sword_sheath.ogg", 50, 0, 0)
+			playsound(user, "sound/effects/sword_sheath.ogg", 50, 0, 0)
 		else
 			..()
 			if(W.cant_drop == 1)
@@ -1251,7 +1251,7 @@
 		if (!user.r_hand || !user.l_hand)
 			sword_inside.clean_forensic()
 			boutput(user, "You draw [sword_inside] from your sheath.")
-			playsound(get_turf(user), pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 50, 0, 0)
+			playsound(user, pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 50, 0, 0)
 			icon_state = sheath_state
 			item_state = ih_sheath_state
 			user.put_in_hand_or_drop(sword_inside)
@@ -1313,7 +1313,7 @@
 		ih_sheath_state = "blue_scabbard-cap0"
 		sword_path = /obj/item/katana/captain/blue
 
-	red //not used yet but should be used if a medal is ever made for the red cap stuff
+	red //for brown pants medal reward
 		icon_state = "red_cap_sword_scabbard"
 		item_state = "red_scabbard-cap1"
 

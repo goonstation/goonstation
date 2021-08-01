@@ -620,12 +620,17 @@
 		. += "[ID_card] has been inserted into it."
 
 /obj/item/device/pda2/receive_signal(datum/signal/signal, rx_method, rx_freq)
-	if(!signal || signal.encryption || !src.owner) return
+
+	//let programs receive encrypted signals
+	if(!signal || !src.owner) return
 
 	src.host_program?.network_hook(signal, rx_method, rx_freq)
 
 	if(src.active_program && (src.active_program != src.host_program))
 		src.active_program.network_hook(signal, rx_method, rx_freq)
+
+	if(signal.encryption) return
+
 
 
 	if(signal.data["address_1"] && signal.data["address_1"] != src.net_id)
@@ -933,7 +938,7 @@
 
 	proc/bust_speaker()
 		src.visible_message("<span class='alert'>[src]'s tiny speaker explodes!</span>")
-		playsound(get_turf(src), "sound/impact_sounds/Machinery_Break_1.ogg", 20, 1)
+		playsound(src, "sound/impact_sounds/Machinery_Break_1.ogg", 20, 1)
 		elecflash(src, radius=1, power=1, exclude_center = 0)
 		src.speaker_busted = 1
 

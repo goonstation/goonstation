@@ -2183,7 +2183,7 @@ Returns:
 		var/turf/trg_loc = get_turf(target)
 		var/list/sounds = list('sound/effects/elec_bigzap.ogg','sound/effects/elec_bzzz.ogg','sound/effects/electric_shock.ogg')
 		while(current != trg_loc)
-			playsound(get_turf(user), pick(sounds), 15, 1)
+			playsound(user, pick(sounds), 15, 1)
 			current = get_step(current, get_dir(current, trg_loc))
 			user.set_dir(get_dir(user, current))
 			var/obj/beam_dummy/B = showLine(get_turf(user), current, "lght", 5)

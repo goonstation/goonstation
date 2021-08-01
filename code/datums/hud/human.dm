@@ -305,7 +305,7 @@
 
 			master?.update_equipment_screen_loc()
 
-	clicked(id, mob/user, list/params)
+	relay_click(id, mob/user, list/params)
 		switch (id)
 			if ("invtoggle")
 				var/obj/item/I = master.equipped()
@@ -844,7 +844,7 @@
 			var/datum/bioEffect/power/P
 			for(var/ID in master.bioHolder.effects)
 				P = master.bioHolder.GetEffect(ID)
-				if (!istype(P, /datum/bioEffect/power/) || !istype(P.ability) || !istype(P.ability.object))
+				if (!istype(P, /datum/bioEffect/power/) || !istype(P.ability) || !istype(P.ability.object) || P.removed)
 					continue
 				var/datum/targetable/geneticsAbility/POWER = P.ability
 				var/atom/movable/screen/ability/topBar/genetics/BUTTON = POWER.object

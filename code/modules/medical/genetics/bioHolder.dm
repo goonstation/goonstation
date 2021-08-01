@@ -43,7 +43,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	/// The color that was set by the player's preferences
 	var/customization_first_color_original = "#101010"
 	/// The hair style / detail thing that gets displayed on your spaceperson
-	var/customization_first = "Trimmed"
+	var/datum/customization_style/customization_first = new /datum/customization_style/hair/short/short
 	/// The hair style / detail thing that was set by the player in their settings
 	var/customization_first_original = "None"
 	/// The Y offset to display this image
@@ -51,13 +51,13 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	var/customization_second_color = "#101010"
 	var/customization_second_color_original = "#101010"
-	var/customization_second = "None"
+	var/datum/customization_style/customization_second =  new /datum/customization_style/none
 	var/customization_second_original = "None"
 	var/customization_second_offset_y = 0
 
 	var/customization_third_color = "#101010"
 	var/customization_third_color_original = "#101010"
-	var/customization_third = "None"
+	var/datum/customization_style/customization_third = new /datum/customization_style/none
 	var/customization_third_original = "None"
 	var/customization_third_offset_y = 0
 

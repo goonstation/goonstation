@@ -44,7 +44,7 @@
 		master = null
 		..()
 
-	clicked(id, mob/user, list/params)
+	relay_click(id, mob/user, list/params)
 		if (!id || id == "background" || id == "selection")
 			return
 		src.select_zone(id)

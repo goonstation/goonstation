@@ -10,6 +10,7 @@
 	var/obj/spookMarker/marker = null
 	haunt_duration = 150
 	death_icon_state = "derangedghost"
+	weak_tk = TRUE
 	var/max_dist_marker = 15
 	var/max_dist_master = 12
 	var/following_master = 0

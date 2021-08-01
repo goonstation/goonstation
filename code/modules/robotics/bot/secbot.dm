@@ -126,7 +126,12 @@
 	var/cuff_threat_threshold = 5
 	/// Obey the threat threshold. Otherwise, just cuff em
 	var/warn_minor_crime = 0
-
+	/// How long has the bot been sitting in the time-out locker? (process cycles spent inside a locked/welded storage object)
+	var/container_cool_off_counter = 0
+	/// When the bot's been stuck in a locker this long, they'll forget who they were mad at
+	/// Note, this is in process() calls, not seconds, so it could vary quite a bit
+	var/container_cool_off_max = 30
+	var/added_to_records = FALSE
 	/// Set a bot to guard an area, and they'll go there and mill around
 	var/area/guard_area
 	/// Arrest anyone who arent security / heads if they're in this area?
@@ -740,6 +745,26 @@
 		if(src.moving || src.cuffing || src.baton_charging)
 			return
 
+		/// We inside something?
+		if(istype(src.loc, /obj/storage))
+			var/obj/storage/C = src.loc
+			if(C.locked || C.welded)
+				src.weeoo()
+				if(prob(50 + (src.emagged * 15)))
+					for(var/mob/M in hearers(C, null))
+						M.show_text("<font size=[max(0, 5 - get_dist(get_turf(src), M))]>THUD, thud!</font>")
+					playsound(C, "sound/impact_sounds/Wood_Hit_1.ogg", 15, 1, -3)
+					animate_storage_thump(C)
+				src.container_cool_off_counter++
+				if(src.container_cool_off_counter >= src.container_cool_off_max) // Give him some time to cool off
+					src.KillPathAndGiveUp(kpagu)
+					src.container_cool_off_counter = 0
+				return // please stop zapping people from inside lockers
+			else
+				C.open() // just nudge it open, you goof
+
+		src.container_cool_off_counter = 0
+
 		/// Tango!
 		if(src.target)
 			/// Tango in batonning distance?
@@ -843,9 +868,9 @@
 		process()	// ensure bot quickly responds to a perp
 
 	proc/YellAtPerp()
+		var/saything = pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg')
 		src.point(src.target, 1)
 		src.speak("Level [src.threatlevel] infraction alert!")
-		var/saything = pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg')
 		switch(saything)
 			if('sound/voice/bcriminal.ogg')
 				src.speak("CRIMINAL DETECTED.")
@@ -853,7 +878,7 @@
 				src.speak("PREPARE FOR JUSTICE.")
 			if('sound/voice/bfreeze.ogg')
 				src.speak("FREEZE. SCUMBAG.")
-		playsound(src.loc, saything, 50, 0)
+		playsound(src, saything, 50, 0)
 
 	proc/weeoo()
 		if(weeooing)
@@ -861,7 +886,7 @@
 		SPAWN_DBG(0)
 			weeooing = 1
 			var/weeoo = 10
-			playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
+			playsound(src, "sound/machines/siren_police.ogg", 50, 1)
 			while (weeoo)
 				add_simple_light("secbot", list(255 * 0.9, 255 * 0.1, 255 * 0.1, 0.8 * 255))
 				sleep(0.3 SECONDS)
@@ -1216,7 +1241,7 @@
 				for(var/j in 1 to rand(2,5))
 					qbert += "[pick("!","?")]"
 				src.speak("[qbert]")
-		playsound(get_turf(src), say_thing, 50, 0, 0, 1)
+		playsound(src, say_thing, 50, 0, 0, 1)
 		ON_COOLDOWN(src, "[SECBOT_LASTTARGET_COOLDOWN]-[src.target?.name]", src.last_target_cooldown)
 
 //secbot handcuff bar thing
@@ -1234,7 +1259,7 @@
 
 	onUpdate()
 		..()
-		if (!IN_RANGE(master, master.target, 1) || !master.target || master.target.hasStatus("handcuffed") || master.moving)
+		if (src.failchecks())
 			master.weeoo()
 			interrupt(INTERRUPT_ALWAYS)
 			return
@@ -1242,7 +1267,7 @@
 	onStart()
 		..()
 		master.cuffing = 1
-		if (!IN_RANGE(master, master.target, 1) || !master.target || master.target.hasStatus("handcuffed") || master.moving)
+		if (src.failchecks())
 			master.weeoo()
 			interrupt(INTERRUPT_ALWAYS)
 			return
@@ -1315,6 +1340,14 @@
 					master.KillPathAndGiveUp(KPAGU_RETURN_TO_GUARD)
 				else
 					master.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
+	
+	proc/failchecks()
+		if (!IN_RANGE(master, master.target, 1))
+			return 1
+		if (!master.target || master.target.hasStatus("handcuffed") || master.moving)
+			return 1
+		if (!isturf(master.loc) || !isturf(master.target?.loc)) // Most often, inside a locker
+			return 1 // cant cuff people through lockers... and not enough room to cuff if both are in that locker
 
 //secbot stunner bar thing
 /datum/action/bar/icon/secbot_stun

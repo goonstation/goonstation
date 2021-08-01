@@ -135,7 +135,7 @@
 
 /obj/item/device/pocketbuddy/proc/turn_on()
   src.on = 1
-  playsound(get_turf(src), "sound/machines/twobeep.ogg", 50, 1)
+  playsound(src, "sound/machines/twobeep.ogg", 50, 1)
   //speak("Pocketbuddy v0.9 - Copyright 2051-2053 Thinktronic Data Systems, LTD.")
   src.speak("System message. Pocketbuddy v0.9 initializing.")
   sleep(2 SECONDS)
@@ -144,7 +144,7 @@
 
 /obj/item/device/pocketbuddy/proc/turn_off()
   src.speak("Pocketbuddy shutting down.")
-  playsound(get_turf(src), "sound/machines/twobeep.ogg", 50, 1)
+  playsound(src, "sound/machines/twobeep.ogg", 50, 1)
   src.on = 0
   processing_items -= src
 

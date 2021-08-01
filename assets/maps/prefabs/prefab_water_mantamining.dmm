@@ -14,7 +14,7 @@
 "an" = (/turf/variableTurf/clear,/area/space)
 "ao" = (/obj/table/reinforced/auto,/obj/machinery/recharger,/turf/simulated/floor,/area/prefab/tunnelsnake)
 "ap" = (/obj/machinery/computer/announcement{name = "Communications Office Announcement Computer"; req_access_txt = ""},/turf/simulated/floor,/area/prefab/tunnelsnake)
-"aq" = (/obj/table/reinforced/auto,/obj/item/paper/book/pocketguide/mining1,/obj/item/paper/book/pocketguide/mining2,/obj/item/paper/book/minerals{pixel_x = 0; pixel_y = 0},/turf/simulated/floor,/area/prefab/tunnelsnake)
+"aq" = (/obj/table/reinforced/auto,/obj/item/paper/book/from_file/pocketguide/mining,/obj/item/paper/book/from_file/minerals{pixel_x = 0; pixel_y = 0},/turf/simulated/floor,/area/prefab/tunnelsnake)
 "ar" = (/obj/stool/chair/yellow{dir = 1},/turf/simulated/floor,/area/prefab/tunnelsnake)
 "as" = (/turf/simulated/floor,/area/prefab/tunnelsnake)
 "at" = (/obj/stool/chair/yellow{dir = 1},/obj/machinery/light/incandescent/netural{dir = 4; nostick = 1},/turf/simulated/floor,/area/prefab/tunnelsnake)

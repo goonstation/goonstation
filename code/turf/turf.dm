@@ -993,6 +993,17 @@
 			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			T.build(src)
 
+#if defined(MAP_OVERRIDE_POD_WARS)
+/turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
+	
+	//testing pali's solution for getting the direction opposite of the map edge you are nearest to.
+	// A.set_loc(A.loc)
+	var/atom/target = get_edge_target_turf(A, (A.x + A.y > world.maxx ? SOUTH | WEST : NORTH | EAST) & (A.x - A.y > 0 ? NORTH | WEST : SOUTH | EAST))
+	if (!istype(A, /obj/machinery/vehicle) && target)	//Throw everything but vehicles(pods)
+		A.throw_at(target, 1, 1)
+
+	return
+#else
 /turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
 	var/zlevel = 3 //((A.z=3)?5:3)//(3,4)
 
@@ -1023,7 +1034,7 @@
 	SPAWN_DBG(0)
 		if ((A?.loc))
 			A.loc.Entered(A)
-
+#endif
 //Vr turf is a jerk and pretends to be broken.
 /turf/unsimulated/bombvr/ex_act(severity)
 	switch(severity)

@@ -1,31 +1,32 @@
-<span style="color:null;font-family:'Georgia';"><center>## Dear Diary</center>
+<span style="color:null;font-family:'Georgia';"><center><h2>Dear Diary</h2></center>
 
-<center>### Day 1</center>
+<center><h3>Day 1</h3></center>
 <center>-------------</center>
-                Getting sick of Katana’s stupid pranks. Not that I was thrilled before when he recorded me in my room and then blasted it out over the airwaves *AFTER I CONFISCATED THE TAPE*, but gaslighting is a new low. Thankfully no one seems to want to play along with this one. Probably because he’s the only one that thinks making up some story about “samurai” and a dojo is funny. Or maybe because he clearly still has his original arm with no stitching, despite his ridiculous nonsense tale about getting it cut off. I swear, when we get back from this mission, I’m filing a complaint and getting that stupid cartoon channel expunged so he stops watching that crap.
-
-<center>### Day 2</center>
+                <code>Getting sick of Katana’s stupid pranks. Not that I was thrilled before when he recorded me in my room and then blasted it out over the airwaves *AFTER I CONFISCATED THE TAPE*, but gaslighting is a new low. Thankfully no one seems to want to play along with this one. Probably because he’s the only one that thinks making up some story about “samurai” and a dojo is funny. Or maybe because he clearly still has his original arm with no stitching, despite his ridiculous nonsense tale about getting it cut off. I swear, when we get back from this mission, I’m filing a complaint and getting that stupid cartoon channel expunged so he stops watching that crap.
+</code><br>
+<center><h3>Day 2</h3></center>
 <center>-------------</center>
-                Back at it again with this nonsense. I’m really tired of putting up with this. It would be one thing if *LITERALLY ANYONE* was playing along, but no. We’ve never assaulted any clown station. He knows we’ve never assaulted any clown station. The whole crew knows:
-
-<p><strong>We.</strong><br><strong>Have never.</strong><br><strong>Assaulted a clown station.</strong></p>
+                <code>Back at it again with this nonsense. I’m really tired of putting up with this. It would be one thing if *LITERALLY ANYONE* was playing along, but no. We’ve never assaulted any clown station. He knows we’ve never assaulted any clown station. The whole crew knows:
+</code><br>
+<p><code><strong>We.</strong><br><strong>Have never.</strong><br><strong>Assaulted a clown station.</strong></p></code>
 <pre><code>            Yet here he is, back at it, insisting he once watched the Head of Security on a remote outpost handcuff himself by mistake while on a cargo belt and get blasted into an asteroid by the mass driver. I think I’d remember something like that. I think we’d *ALL* remember something like that. I don’t know what the hell he’s been watching since I cancelled his cartoons but it’s obvious now that wasn’t the right solution. I’m having him psyche evaluated before he’s allowed to go near the gear booth again.
 </code></pre>
-<center>### Day 3?</center>
+<center><h3>Day 3?</h3></center>
 <center>-------------</center>
-                Fucking what? I swear I’m losing my mind. Katana will not shut up with this story. Writing to calm myself down seemed like an obvious first step, but what the hell is this? I don’t remember writing those other entries. If I was sure it was just me, I’d put that down to stress, but just like the pages already said, none of my other operatives seem to know what he’s on about. We’ve never taken a break to play Football. We’ve never planted a bomb shaped like a championship trophy. Everyone else agrees with me here, but he can go into such detail about it that you’d almost feel like you were there.
-
+                <code>Fucking what? I swear I’m losing my mind. Katana will not shut up with this story. Writing to calm myself down seemed like an obvious first step, but what the hell is this? I don’t remember writing those other entries. If I was sure it was just me, I’d put that down to stress, but just like the pages already said, none of my other operatives seem to know what he’s on about. We’ve never taken a break to play Football. We’ve never planted a bomb shaped like a championship trophy. Everyone else agrees with me here, but he can go into such detail about it that you’d almost feel like you were there.
+</code><br>
 <pre><code>            There’s no way this goddamn idiocy is real. I bet his memory is just blending with whatever he watched on the boob tube before they frosted us over and thawed us out. It would at least explain why he’s not coming up with any more of those weeb tales. But damn, if going into cryo is really fucking with our memories that bad, I should probably get checked too. I shouldn’t be forgetting my own diary entries for Christ’s sake.
-</code></pre>
-<center>### Day ???</center>
+</code></pre><br>
+<center><h3>Day ???</h3></center>
 <center>-------------</center>
-                Fuck. I should have known. This was all a big joke. Not even the funny kind of prank joke. This is a cosmic fucking circus and we’re the clowns. Holy shit, where do I even start? How did we not notice something so obvious in the first place?
-
+                <code>Fuck. I should have known. This was all a big joke. Not even the funny kind of prank joke. This is a cosmic fucking circus and we’re the clowns. Holy shit, where do I even start? How did we not notice something so obvious in the first place?
+</code><br>
 <pre><code>            Javelin pointed out the big monument near the back. And by pointed out, I mean he pointed out what was actually *ON* that stupid thing. I’m not sure we’ve ever paid it a proper ounce of attention in our lives. That’s plural lives for all of us, I suppose. All the boys are really apprehensive after taking a close look at it, but I don’t think any of them have pieced it together.
 
             We’ve apparently had 192 failed missions. That’s weird, because we’re not exactly contracted plumbers. Getting shot the fuck up usually doesn’t give you a whole lot of room to try again, and we have a general consensus that this isn’t our first rodeo. Now here’s the interesting bit:
 </code></pre>
-<p>It’s not just our codenames up on that monument. We’re only every fourth or fifth entry on either side of it. But if we’ve fucked up so much, how do we keep finding ourselves back in cold storage waiting for the next mission? It gets better, by the way! Oh, damn, does it get better. Our success numbers are fucking dismal. 57 successful missions. Fifty. Seven. Shrugged ALL of this off and told my crew we’re probably using recycled codenames to cut down on confusion up top, but I knew that was probably a load of bullshit when I said it, and I know it’s <em>DEFINITELY</em> a load of bullshit now that I’ve read my other entries.</p>
+<p><code>It’s not just our codenames up on that monument. We’re only every fourth or fifth entry on either side of it. But if we’ve fucked up so much, how do we keep finding ourselves back in cold storage waiting for the next mission? It gets better, by the way! Oh, damn, does it get better. Our success numbers are fucking dismal. 57 successful missions. Fifty. Seven. Shrugged ALL of this off and told my crew we’re probably using recycled codenames to cut down on confusion up top, but I knew that was probably a load of bullshit when I said it, and I know it’s <em>DEFINITELY</em> a load of bullshit now that I’ve read my other entries.</p>
+</code><br>
 <pre><code>            We’ve got a 1:4 success ratio for missions, in the profession of arms. Twelve or so success stories between my team, when failure means you don’t come back, and I know I’ve sat more than twelve missions in my life. Sorry, let’s dial that back to where we landed earlier: Lives. See, I put this together after reading my journal. That horseshit they fed us pre-departure about the one-time cloning scan? Just that: Horseshit. We must be getting cloned between every mission. That’s why I can’t remember the last thing I wrote in this damn journal. That’s why none of us can remember a goddamn thing Katana is blathering about.
 
             But hold on, this is where things get *GALAXY LEVEL FUCKED*. They’re trying to feed us the same shit about the mission itself that they did about the cloning. One time only. Prime a nuclear device, and come rain or shine, we’ll pop you back out of this cloning vat when everything’s said and done. Problem. I already know the fucking one-time cloning is a load of shit. Stands to reason the nuke is as well. I’m betting every mission we’ve ever been on has been *EXACTLY THE FUCKING SAME*! But hold on! It gets better! Fifty-seven success stories, remember? Fifty-seven! **I CHECKED THE FUCKING RECORDS**! NanoTrasen doesn’t even *HAVE* fifty-seven separate outposts! Period! Even when you pierce the veil of this shit, none of it makes any goddamn sense!

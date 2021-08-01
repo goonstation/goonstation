@@ -666,7 +666,7 @@
 				if (!G.affecting.hasStatus("weakened"))
 					G.affecting.changeStatus("weakened", 4 SECONDS)
 				src.visible_message("<span class='alert'><b>[G.assailant] slams [G.affecting] onto \the [src]!</b></span>")
-				playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+				playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 				if (src.material)
 					src.material.triggerOnAttacked(src, G.assailant, G.affecting, src)
 			else
@@ -1305,7 +1305,7 @@
 
 	onStart()
 		..()
-		playsound(get_turf(thecrate), "sound/machines/click.ogg", 60, 1)
+		playsound(thecrate, "sound/machines/click.ogg", 60, 1)
 		owner.visible_message("<span class='notice'>[owner] starts to calibrate the cargo teleporter in a suspicious manner.</span>")
 	onEnd()
 		..()
@@ -1314,4 +1314,4 @@
 		qdel(thecrate)
 		message_admins("One of the NT supply crates has been succesfully teleported!")
 		boutput(owner, "<span class='notice'>You have successfully teleported one of the supply crates to the Syndicate.</span>")
-		playsound(get_turf(thecrate), "sound/machines/click.ogg", 60, 1)
+		playsound(thecrate, "sound/machines/click.ogg", 60, 1)

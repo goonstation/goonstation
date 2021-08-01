@@ -40,6 +40,7 @@
 	//probably will change these around, but these might be alright to start. -kyle
 	var/holy_water_tol = 0		//unused presently
 	var/formaldehyde_tol = 25
+	var/weak_tk = FALSE			//if their click-drag TK is strong or not. Poltergeists prolly should not have strong tk, mebe one day.
 
 	var/datum/movement_controller/movement_controller
 

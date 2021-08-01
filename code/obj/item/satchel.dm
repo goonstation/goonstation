@@ -245,13 +245,13 @@
 		// clicky open close
 		proc/open_it_up(var/open)
 			if (open && icon_state == "figurinecase")
-				playsound(get_turf(src), "sound/misc/lightswitch.ogg", 50, pitch = 1.2)
+				playsound(src, "sound/misc/lightswitch.ogg", 50, pitch = 1.2)
 				icon_state = "figurinecase-open"
 				sleep(0.4 SECONDS)
 
 			else if (!open && icon_state == "figurinecase-open")
 				sleep(0.5 SECONDS)
-				playsound(get_turf(src), "sound/misc/lightswitch.ogg", 50, pitch = 0.9)
+				playsound(src, "sound/misc/lightswitch.ogg", 50, pitch = 0.9)
 				icon_state = "figurinecase"
 
 /obj/item/satchel/figurines/full

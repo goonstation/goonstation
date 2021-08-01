@@ -59,9 +59,9 @@
 
 
 		if (!src.master)
-			src.updateDialog()
+			src.updateSelfDialog()
 		else
-			src.master.updateDialog()
+			src.master.updateSelfDialog()
 
 	else
 		processing_items.Remove(src)
@@ -98,7 +98,10 @@
 	if (user.stat || user.restrained() || user.lying)
 		return
 	if ((src in user) || (src.master && (src.master in user)) || get_dist(src, user) <= 1 && istype(src.loc, /turf))
-		src.add_dialog(user)
+		if (!src.master)
+			src.add_dialog(user)
+		else
+			src.master.add_dialog(user)
 		var/second = src.time % 60
 		var/minute = (src.time - second) / 60
 		var/dat = text("<TT><B>Proximity Sensor</B><br>[] []:[]<br><A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A><br></TT>", (src.timing ? text("<A href='?src=\ref[];time=0'>Timing</A>", src) : text("<A href='?src=\ref[];time=1'>Not Timing</A>", src)), minute, second, src, src, src, src)
@@ -108,7 +111,10 @@
 		onclose(user, "prox")
 	else
 		user.Browse(null, "window=prox")
-		src.remove_dialog(user)
+		if (!src.master)
+			src.remove_dialog(user)
+		else
+			src.master.remove_dialog(user)
 		return
 
 /obj/item/device/prox_sensor/Topic(href, href_list)
@@ -116,7 +122,10 @@
 	if (usr.stat || usr.restrained() || usr.lying)
 		return
 	if ((src in usr) || (src.master && (src.master in usr)) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
-		src.add_dialog(usr)
+		if (!src.master)
+			src.add_dialog(usr)
+		else
+			src.master.add_dialog(usr)
 		if (href_list["arm"])
 			src.armed = !src.armed
 			src.update_icon()
@@ -158,7 +167,10 @@
 
 		if (href_list["close"])
 			usr.Browse(null, "window=prox")
-			src.remove_dialog(usr)
+			if (!src.master)
+				src.remove_dialog(usr)
+			else
+				src.master.remove_dialog(usr)
 			return
 
 		if (!src.master)
