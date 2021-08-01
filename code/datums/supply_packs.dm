@@ -27,7 +27,7 @@
 //SUPPLY PACKS
 //NOTE: only secure crate types use the access var (and are lockable)
 //NOTE: hidden packs only show up when the computer has been hacked.
-
+ABSTRACT_TYPE(/datum/supply_packs)
 /datum/supply_packs
 	var/name = null
 	var/desc = null
@@ -398,6 +398,7 @@
 	cost = 2500
 	containertype = /obj/storage/secure/crate/medical/monkey
 	containername = "Lab Monkey Crate"
+	hidden = 1
 
 /datum/supply_packs/bee
 	name = "Honey Production Kit"
@@ -1043,6 +1044,18 @@
 	containertype = /obj/storage/crate/packing
 	containername = "Haberdasher's Crate"
 
+/datum/supply_packs/headbands
+	name = "Bargain Bows and Bands Box"
+	desc = "Headbands for all occasions."
+	cost = 2000
+	contains = list(/obj/item/clothing/head/headband/giraffe = 1,
+					/obj/item/clothing/head/headband/antlers = 1,
+					/obj/item/clothing/head/headband/nyan/tiger = 1,
+					/obj/item/clothing/head/headband/nyan/leopard = 1,
+					/obj/item/clothing/head/headband/nyan/snowleopard = 1,
+					/obj/item/clothing/head/headband/bee = 2,
+					/obj/item/clothing/head/headband/nyan/random = 1)
+
 /datum/supply_packs/mask
 	name = "Masquerade Crate"
 	desc = "For hosting a masked ball in the bar."
@@ -1111,7 +1124,8 @@
 					/obj/item/vending/restock_cartridge/cola,
 					/obj/item/vending/restock_cartridge/kitchen,
 					/obj/item/vending/restock_cartridge/monkey,
-					/obj/item/vending/restock_cartridge/standard)
+					/obj/item/vending/restock_cartridge/standard,
+					/obj/item/vending/restock_cartridge/capsule)
 	cost = 3000
 	containertype = /obj/storage/crate
 	containername = "Necessities Vending Machine Restocking Pack"
@@ -1247,7 +1261,7 @@
 /* ================================================= */
 /* -------------------- Complex -------------------- */
 /* ================================================= */
-
+ABSTRACT_TYPE(/datum/supply_packs/complex)
 /datum/supply_packs/complex
 	hidden = 0
 	var/list/blueprints = list()
@@ -1397,6 +1411,15 @@
 	hidden = 1
 	containertype = /obj/storage/crate
 	containername = "AI Kit"
+
+/datum/supply_packs/complex/eppd_kit
+	name = "Emergency Pressurzation Kit"
+	desc = "Frames: 1x Extreme-Pressure Pressurization Device"
+	category = "Engineering Department"
+	frames = list(/obj/machinery/portable_atmospherics/pressurizer)
+	cost = 5000
+	containertype = /obj/storage/crate
+	containername = "Prototype EPPD Kit"
 
 /datum/supply_packs/complex/basic_power_kit
 	name = "Basic Power Kit"

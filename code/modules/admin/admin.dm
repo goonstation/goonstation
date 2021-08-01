@@ -1835,8 +1835,7 @@ var/global/noir = 0
 			if (length(matches) == 1)
 				CT = matches[1]
 			else
-				CT = input("Select a match", "matches for pattern", null) as null|anything in matches
-
+				CT = tgui_input_list(owner, "Select a match", "matches for pattern", matches)
 			if (CT && M)
 				M.critterize(CT)
 			return
@@ -2622,7 +2621,7 @@ var/global/noir = 0
 						if (src.level >= LEVEL_PA)
 
 							var/adding = href_list["type"] == "add_ability_one"
-							var/mob/M = input("Which player?","[adding ? "Give" : "Remove"] Abilities") as null|mob in world
+							var/mob/M = tgui_input_list(owner, "Which player?","[adding ? "Give" : "Remove"] Abilities", sortNames(mobs))
 
 							if (!istype(M))
 								return
@@ -2631,7 +2630,7 @@ var/global/noir = 0
 								alert("No ability holder detected. Create a holder first!")
 								return
 
-							var/ab_to_do = input("Which ability?", "[adding ? "Give" : "Remove"] Ability", null) as anything in childrentypesof(/datum/targetable)
+							var/ab_to_do = tgui_input_list(owner, "Which ability?", "[adding ? "Give" : "Remove"] Ability", childrentypesof(/datum/targetable))
 							if (adding)
 								M.abilityHolder.addAbility(ab_to_do)
 							else
@@ -2725,7 +2724,7 @@ var/global/noir = 0
 						if (src.level >= LEVEL_PA)
 							var/adding = href_list["type"] == "add_ability_all"
 
-							var/ab_to_do = input("Which ability?", "[adding ? "Give" : "Remove"] ability [adding ? "to" : "from"] every human.", null) as null|anything in childrentypesof(/datum/targetable)
+							var/ab_to_do = tgui_input_list(owner, "Which ability?", "[adding ? "Give" : "Remove"] ability [adding ? "to" : "from"] every human.", childrentypesof(/datum/targetable))
 							if (!ab_to_do)
 								return
 							// var/humans = input("[adding ? "Add" : "Remove"] ability [adding ? "to" : "from"] Humans or mob/living?", "Humans or Living?", "Humans") as null|anything in list("Humans", "Living")

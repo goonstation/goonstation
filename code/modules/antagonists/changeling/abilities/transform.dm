@@ -60,6 +60,8 @@
 			if (alert("Are we sure?","Assume lesser form?","Yes","No") != "Yes")
 				return 1
 			last_used_name = H.real_name
+			if (H.hasStatus("handcuffed"))
+				H.handcuffs.drop_handcuffs(H)
 			H.monkeyize()
 			H.abilityHolder.updateButtons()
 			logTheThing("combat", H, null, "enters lesser form as a changeling, [log_loc(H)].")

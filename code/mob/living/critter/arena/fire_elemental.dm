@@ -46,7 +46,7 @@
 		HH.can_range_attack = 1
 
 	setup_healths()
-		add_hh_flesh(-150, 150, 1.15)
+		add_hh_flesh(150, 1.15)
 		add_health_holder(/datum/healthHolder/brain)
 
 	New()

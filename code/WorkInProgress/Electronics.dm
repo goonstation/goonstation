@@ -23,7 +23,6 @@
 /obj/item/electronics/battery
 	name = "battery"
 	icon_state = "batt1"
-	module_research = list("electronics" = 2)
 
 /obj/item/electronics/battery/New()
 	src.icon_state = pick("batt1", "batt2", "batt3")
@@ -33,7 +32,6 @@
 /obj/item/electronics/board
 	name = "board"
 	icon_state = "board1"
-	module_research = list("electronics" = 2)
 
 /obj/item/electronics/board/New()
 	src.icon_state = pick("board1", "board2", "board3")
@@ -43,7 +41,6 @@
 /obj/item/electronics/fuse
 	name = "fuse"
 	icon_state = "fuse1"
-	module_research = list("electronics" = 2)
 
 /obj/item/electronics/fuse/New()
 	src.icon_state = pick("fuse1", "fuse2", "fuse3")
@@ -53,7 +50,6 @@
 /obj/item/electronics/switc
 	name = "switch"
 	icon_state = "switch1"
-	module_research = list("electronics" = 2)
 
 /obj/item/electronics/switc/New()
 	src.icon_state = pick("switch1", "switch2", "switch3")
@@ -63,7 +59,6 @@
 /obj/item/electronics/keypad
 	name = "keypad"
 	icon_state = "keypad1"
-	module_research = list("electronics" = 2)
 /obj/item/electronics/keypad/New()
 	src.icon_state = pick("keypad1", "keypad2", "keypad3")
 	randompix()
@@ -72,7 +67,6 @@
 /obj/item/electronics/screen
 	name = "screen"
 	icon_state = "screen1"
-	module_research = list("electronics" = 2)
 /obj/item/electronics/screen/New()
 	src.icon_state = pick("screen1", "screen2", "screen3")
 	randompix()
@@ -81,7 +75,6 @@
 /obj/item/electronics/capacitor
 	name = "capacitor"
 	icon_state = "capacitor1"
-	module_research = list("electronics" = 2)
 /obj/item/electronics/capacitor/New()
 	src.icon_state = pick("capacitor1", "capacitor2", "capacitor3")
 	randompix()
@@ -90,7 +83,6 @@
 /obj/item/electronics/buzzer
 	name = "buzzer"
 	icon_state = "buzzer"
-	module_research = list("electronics" = 2)
 /obj/item/electronics/buzzer/New()
 	randompix()
 	..()
@@ -98,7 +90,6 @@
 /obj/item/electronics/resistor
 	name = "resistor"
 	icon_state = "resistor1"
-	module_research = list("electronics" = 2)
 /obj/item/electronics/resistor/New()
 	src.icon_state = pick("resistor1", "resistor2")
 	randompix()
@@ -107,7 +98,6 @@
 /obj/item/electronics/bulb
 	name = "bulb"
 	icon_state = "bulb1"
-	module_research = list("electronics" = 2)
 /obj/item/electronics/bulb/New()
 	src.icon_state = pick("bulb1", "bulb2")
 	randompix()
@@ -116,7 +106,6 @@
 /obj/item/electronics/relay
 	name = "relay"
 	icon_state = "relay1"
-	module_research = list("electronics" = 2)
 /obj/item/electronics/bulb/New()
 	src.icon_state = pick("relay1", "relay2")
 	randompix()
@@ -131,7 +120,6 @@
 	var/dir_needed = 0
 	//var/list/parts = new/list()
 	var/list/needed_parts = new/list()
-	module_research = list("electronics" = 3, "engineering" = 1)
 	var/obj/deconstructed_thing = null
 
 
@@ -389,7 +377,6 @@
 	throwforce = 5
 	w_class = W_CLASS_SMALL
 	pressure_resistance = 40
-	module_research = list("electronics" = 3, "engineering" = 1)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (!isobj(target))
@@ -421,7 +408,6 @@
 	pressure_resistance = 50
 	var/list/scanned = list()
 	var/viewstat = 0
-	module_research = list("electronics" = 3, "engineering" = 3, "analysis" = 2)
 
 	syndicate
 		is_syndicate = 1
@@ -864,7 +850,6 @@
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_SAWING
 	w_class = W_CLASS_NORMAL
-	module_research = list("electronics" = 3, "engineering" = 1)
 
 	proc/finish_decon(atom/target,mob/user)
 		if (!isobj(target))
@@ -874,11 +859,14 @@
 		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<B>[user.name]</B> deconstructs [target].")
 
-
 		var/obj/item/electronics/frame/F = new(get_turf(target))
 		F.name = "[target.name] frame"
-		F.deconstructed_thing = target
-		O.set_loc(F)
+		if(O.deconstruct_flags & DECON_DESTRUCT)
+			F.store_type = O.type
+			qdel(O)
+		else
+			F.deconstructed_thing = target
+			O.set_loc(F)
 		F.viewstat = 2
 		F.secured = 2
 		F.icon_state = "dbox_big"
@@ -994,19 +982,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null)
+		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null || locate(/mob/living) in O)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null)
+		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null || locate(/mob/living) in O)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null)
+		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null || locate(/mob/living) in O)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (ismob(owner))

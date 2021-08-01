@@ -353,7 +353,7 @@
 	electric_expose(var/power = 1) //lets throw in ANOTHER hack to the temp expose one above
 		if (reagents)
 			for (var/i = 0, i < 3, i++)
-				reagents.temperature_reagents(power*500, power*125)
+				reagents.temperature_reagents(power*500, power*400, 1000, 1000, 1)
 
 /obj/reagent_dispensers/heliumtank
 	name = "heliumtank"
@@ -474,10 +474,6 @@
 
 		if (!W:brewable || !W:brew_result)
 			return 0
-
-		if (istype(W,/obj/item/reagent_containers/food/snacks/snack_cake) || istype(W,/obj/item/reagent_containers/food/snacks/burrito))
-			if (islist(W:brew_result) && W:brew_result:len)
-				W:brew_result += W.reagents.reagent_list
 
 		//var/brewed_name = null
 		if (islist(W:brew_result) && W:brew_result:len)

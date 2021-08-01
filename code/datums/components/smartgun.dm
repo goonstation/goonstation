@@ -144,7 +144,7 @@
 						targeting_images[M].maptext_y = 3
 					targeting_images[M].maptext = "<span class='pixel c ol'>[tracked_targets[M]]</span>"
 
-		sleep(0.8 SECONDS)
+		sleep(0.6 SECONDS)
 
 	stopping = 0
 	tracking = 0
@@ -189,11 +189,11 @@
 	return M != user && !isdead(M)
 
 /datum/component/holdertargeting/smartgun/proc/checkshots(obj/item/gun/G)
+	var/list/ret = list()
 	if(istype(G, /obj/item/gun/kinetic))
 		var/obj/item/gun/kinetic/K = G
 		return round(K.ammo.amount_left * K.current_projectile.cost)
-	else if(istype(G, /obj/item/gun/energy))
-		var/obj/item/gun/energy/E = G
-		return round(E.cell.charge * E.current_projectile.cost)
+	else if(SEND_SIGNAL(G, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+		return round(ret["charge"] / G.current_projectile.cost)
 	else return G.canshoot() * INFINITY //idk, just let it happen
 

@@ -30,8 +30,8 @@
 	var/has_crush = 1 //flagged to true when the door has a secret admirer. also if the var == 1 then the door doesn't have the ability to crush items.
 	var/close_trys = 0
 
-	var/health = 600
-	var/health_max = 600
+	var/health = 400
+	var/health_max = 400
 	var/hitsound = "sound/impact_sounds/Generic_Hit_Heavy_1.ogg"
 	var/knocksound = 'sound/impact_sounds/Door_Metal_Knock_1.ogg' //knock knock
 
@@ -191,15 +191,15 @@
 
 /obj/machinery/door/attack_hand(mob/user as mob)
 	interact_particle(user,src)
-	return src.attackby(null, user)
+	return src.Attackby(null, user)
 
 /obj/machinery/door/proc/tear_apart(mob/user as mob)
 	if (!src.density)
-		return src.attackby(null, user)
+		return src.Attackby(null, user)
 
 	if (istype(src, /obj/machinery/door/airlock) || istype(src, /obj/machinery/door/window))
 		if (src.allowed(user)) // Don't override ID cards.
-			return src.attackby(null, user)
+			return src.Attackby(null, user)
 
 	src.visible_message("<span class='alert'>[user] is attempting to pry open [src].</span>")
 	user.show_text("You have to stand still...", "red")
@@ -290,16 +290,14 @@
 		return ..() // handled in grab.dm + Bumped
 
 	if (src.isblocked() == 1)
-		if (src.density && !src.operating && I)
+		if (src.density && src.operating != 1 && I)
+			if (I.tool_flags & TOOL_CHOPPING)
+				src.take_damage(I.force*4, user)
+			else
+				src.take_damage(I.force, user)
 			user.lastattacked = src
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
-			src.take_damage(I.force, user)
-			if (I.tool_flags & TOOL_CHOPPING)
-				user.lastattacked = src
-				attack_particle(user,src)
-				playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
-				src.take_damage(I.force*4, user)
 			..()
 
 		return
@@ -454,15 +452,15 @@
 
 	switch(P.proj_data.damage_type)
 		if(D_KINETIC)
-			take_damage(damage * 3)
+			take_damage(round(damage * 1.5))
 		if(D_PIERCING)
-			take_damage(damage * 4)
-		if(D_ENERGY)
 			take_damage(damage * 2)
-		if(D_BURNING)
+		if(D_ENERGY)
 			take_damage(damage)
-		if(D_RADIOACTIVE)
+		if(D_BURNING)
 			take_damage(damage/2)
+		if(D_RADIOACTIVE)
+			take_damage(damage/4)
 	return
 
 /obj/machinery/door/proc/update_icon(var/toggling = 0)
@@ -646,7 +644,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/door/unpowered/attack_hand(mob/user as mob)
-	return src.attackby(null, user)
+	return src.Attackby(null, user)
 
 /obj/machinery/door/unpowered/attackby(obj/item/I as obj, mob/user as mob)
 	if (src.operating)

@@ -20,8 +20,6 @@
 	var/s_tone = "#FAD7D0"
 	var/stapled = 0
 	var/allow_staple = 1
-	module_research = list("medical" = 1)
-	module_research_type = /obj/item/clothing/head/butt
 	var/op_stage = 0.0
 	rand_pos = 1
 	var/mob/living/carbon/human/donor = null

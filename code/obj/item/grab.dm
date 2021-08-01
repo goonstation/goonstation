@@ -201,7 +201,7 @@
 						src.affecting.end_chair_flip_targeting()
 					src.affecting.buckled = null
 
-				else if (user.is_hulk() || prob(75))
+				else
 					logTheThing("combat", src.assailant, src.affecting, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 					for(var/mob/O in AIviewers(src.assailant, null))
 						O.show_message("<span class='alert'>[src.assailant] has grabbed [src.affecting] aggressively (now hands)!</span>", 1)
@@ -211,10 +211,6 @@
 						set_affected_loc()
 
 					user.next_click = world.time + user.combat_click_delay //+ rand(6,11) //this was utterly disgusting, leaving it here in memorial
-				else
-					for(var/mob/O in AIviewers(src.assailant, null))
-						O.show_message("<span class='alert'>[src.assailant] has failed to grab [src.affecting] aggressively!</span>", 1)
-					user.next_click = world.time + user.combat_click_delay
 			if (GRAB_AGGRESSIVE)
 				if (ishuman(src.affecting))
 					var/mob/living/carbon/human/H = src.affecting
@@ -412,7 +408,7 @@
 		var/mob/hostage = null
 		if(src.affecting && src.state >= 2 && P.shooter != src.affecting) //If you grab someone they can still shoot you
 			hostage = src.affecting
-		if (hostage && (!hostage.lying || prob(P.proj_data?.hit_ground_chance)))
+		if (hostage && (!hostage.lying || GET_COOLDOWN(hostage, "lying_bullet_dodge_cheese") || prob(P.proj_data?.hit_ground_chance)))
 			P.collide(hostage)
 			//moved here so that it displays after the bullet hit message
 			if(prob(25)) //This should probably not be bulletproof, har har
@@ -796,7 +792,7 @@
 
 			var/prop = DAMAGE_TYPE_TO_STRING(hit_type)
 			if(real_hit && prop == "burn" && I?.reagents)
-				I.reagents.temperature_reagents(2000,10)
+				I.reagents.temperature_reagents(4000,10)
 			.= src.getProperty("I_block_[prop]")
 		if(real_hit)
 			SEND_SIGNAL(src, COMSIG_BLOCK_BLOCKED)
@@ -818,7 +814,7 @@
 	handle_throw(var/mob/living/user,var/atom/target)
 		if (isturf(user.loc) && target)
 			var/turf/T = user.loc
-			if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying))
+			if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying) && can_act(user))
 				user.changeStatus("weakened", max(user.movement_delay()*2, 0.5 SECONDS))
 				user.force_laydown_standup()
 

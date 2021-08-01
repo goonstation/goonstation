@@ -60,11 +60,15 @@
 	if(!src.altdir)
 		src.altdir = turn(src.dir, 180)
 	setdir()
-	UnsubscribeProcess()
 
 /obj/machinery/conveyor/initialize()
 	..()
 	setdir()
+
+/obj/machinery/conveyor/process()
+	if(status & NOPOWER || !operating)
+		return
+	use_power(power_usage)
 
 /obj/machinery/conveyor/disposing()
 	for(var/obj/machinery/conveyor/C in range(1,src))
@@ -194,7 +198,7 @@
 
 
 /obj/machinery/conveyor/proc/move_thing(var/atom/movable/A)
-	if (A.anchored)
+	if (A.anchored || A.temp_flags & BEING_CRUSHERED)
 		return
 	if(isobserver(A))
 		return

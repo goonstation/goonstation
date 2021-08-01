@@ -188,6 +188,9 @@
 
 		return ai_think()
 
+	filter_target(var/mob/living/M)
+		return is_valid_target(M)
+
 	ai_think()
 		if(mode)
 			switch(task)
@@ -199,10 +202,8 @@
 					seek_target()
 					if (!src.target) src.task = "wandering"
 				if("chasing")
-					if (src.frustration >= rand(16,32))
-						src.target = null
-						src.last_found = TIME
-						src.frustration = 0
+					if (src.frustration >= rand(16,32) || !is_valid_target(src.target))
+						clear_target()
 						src.task = "thinking"
 						walk_to(src,0)
 					if (src.target)
@@ -227,6 +228,7 @@
 											tile_purge(OV.loc.x,OV.loc.y,3)
 
 							for (var/turf/simulated/wall/WT in range(2,get_center()))
+								if(IS_ARRIVALS(WT.loc)) continue
 								leavescan(WT, 1)
 								new /obj/item/raw_material/scrap_metal(WT)
 								if(prob(50))
@@ -248,17 +250,18 @@
 
 					else src.task = "thinking"
 				if("attacking")
-					if (!IN_RANGE(get_center(), src.target, SWORD_ATTACKING_RANGE) || (src.target:loc != src.target_lastloc))
+					if(!is_valid_target(src.target))
+						src.task = "thinking"
+						src.attacking = 0
+					else if (!IN_RANGE(get_center(), src.target, SWORD_ATTACKING_RANGE) || (src.target:loc != src.target_lastloc))
 						src.task = "chasing"
 					else if (IN_RANGE(get_center(), src.target, SWORD_ATTACKING_RANGE))
 						var/mob/living/carbon/M = src.target
 						if (!src.attacking) CritterAttack(src.target)
 						if(M != null)
 							if (M.health <= 0)
+								clear_target()
 								src.task = "thinking"
-								src.target = null
-								src.last_found = TIME
-								src.frustration = 0
 								src.attacking = 0
 							else
 								ability_selection()
@@ -420,12 +423,12 @@
 				if (1)	//N
 					var/turf/T = locate(src.loc.x + 1,src.loc.y + 3,src.loc.z)
 					for (var/mob/living/M in T)
-						if (isintangible(M)) continue
+						if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 						M.changeStatus("stunned", 2 SECONDS)
 						M.changeStatus("weakened", 4 SECONDS)
 					for(increment = -1; increment <= 1; increment++)
 						for(var/mob/living/M in locate(src.loc.x + 1 + increment,src.loc.y + 4,src.loc.z))
-							if (isintangible(M)) continue
+							if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 							M.changeStatus("stunned", 2 SECONDS)
 							M.changeStatus("weakened", 4 SECONDS)
 							M.throw_at(T, 3, 1)
@@ -433,12 +436,12 @@
 				if (4)	//E
 					var/turf/T = locate(src.loc.x + 3,src.loc.y + 1,src.loc.z)
 					for (var/mob/living/M in T)
-						if (isintangible(M)) continue
+						if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 						M.changeStatus("stunned", 2 SECONDS)
 						M.changeStatus("weakened", 4 SECONDS)
 					for(increment = -1; increment <= 1; increment++)
 						for(var/mob/living/M in locate(src.loc.x + 4,src.loc.y + 1 + increment,src.loc.z))
-							if (isintangible(M)) continue
+							if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 							M.changeStatus("stunned", 2 SECONDS)
 							M.changeStatus("weakened", 4 SECONDS)
 							M.throw_at(T, 3, 1)
@@ -446,12 +449,12 @@
 				if (2)	//S
 					var/turf/T = locate(src.loc.x + 1,src.loc.y - 1,src.loc.z)
 					for (var/mob/living/M in T)
-						if (isintangible(M)) continue
+						if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 						M.changeStatus("stunned", 2 SECONDS)
 						M.changeStatus("weakened", 4 SECONDS)
 					for(increment = -1; increment <= 1; increment++)
 						for(var/mob/living/M in locate(src.loc.x + 1 + increment,src.loc.y - 2,src.loc.z))
-							if (isintangible(M)) continue
+							if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 							M.changeStatus("stunned", 2 SECONDS)
 							M.changeStatus("weakened", 4 SECONDS)
 							M.throw_at(T, 3, 1)
@@ -459,12 +462,12 @@
 				if (8)	//W
 					var/turf/T = locate(src.loc.x - 1,src.loc.y + 1,src.loc.z)
 					for (var/mob/living/M in T)
-						if (isintangible(M)) continue
+						if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 						M.changeStatus("stunned", 2 SECONDS)
 						M.changeStatus("weakened", 4 SECONDS)
 					for(increment = -1; increment <= 1; increment++)
 						for(var/mob/living/M in locate(src.loc.x - 2,src.loc.y + 1 + increment,src.loc.z))
-							if (isintangible(M)) continue
+							if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 							M.changeStatus("stunned", 2 SECONDS)
 							M.changeStatus("weakened", 4 SECONDS)
 							M.throw_at(T, 3, 1)
@@ -564,7 +567,7 @@
 
 		SPAWN_DBG(1 SECOND)
 			for (var/mob/living/M in range(5,get_center()))
-				if (isintangible(M)) continue
+				if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 				random_brute_damage(M, 16)
 				random_burn_damage(M, 16)
 
@@ -609,11 +612,11 @@
 					src.pixel_y -= 4
 				sleep(5)
 			for (var/mob/living/M in range(3,get_center()))
-				if (isintangible(M)) continue
+				if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 				random_brute_damage(M, 60)
 			tile_purge(src.loc.x + 1,src.loc.y + 1,1)
 			for (var/mob/living/M in get_center())
-				if (isintangible(M)) continue
+				if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 				if(prob(69))								//Nice.
 					M.gib()
 				else
@@ -649,19 +652,19 @@
 
 		SPAWN_DBG(0.2 SECONDS)
 			for (var/mob/living/M in range(3,get_center()))
-				if(isintangible(M)) continue
+				if(isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 				random_burn_damage(M, (current_heat_level / 5))
 				M.changeStatus("burning", 4 SECONDS)
 
 		SPAWN_DBG(0.4 SECONDS)
 			for (var/mob/living/M in range(3,get_center()))
-				if(isintangible(M)) continue
+				if(isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 				random_burn_damage(M, (current_heat_level / 4))
 				M.changeStatus("burning", 6 SECONDS)
 
 		SPAWN_DBG(0.6 SECONDS)
 			for (var/mob/living/M in range(3,get_center()))
-				if(isintangible(M)) continue
+				if(isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 				random_burn_damage(M, (current_heat_level / 3))
 				M.changeStatus("burning", 8 SECONDS)
 
@@ -712,6 +715,7 @@
 		walk_towards(src, src.target)
 		walk(src,0)
 		for (var/mob/B in range(3,get_center()))
+			if(IS_ARRIVALS(get_area(B))) continue
 			random_burn_damage(B, 30)
 		icon = 'icons/misc/retribution/SWORD/abilities.dmi'
 		icon_state = "destructiveFlight"
@@ -763,7 +767,7 @@
 				step(src, src.dir)
 				sleep(0.1 SECONDS)
 			for (var/mob/living/M in range(3,get_center()))
-				if(isintangible(M)) continue
+				if(isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 				random_brute_damage(M, 60)
 			past_destructive_rotation = src.dir
 
@@ -823,6 +827,8 @@
 //-MISCELLANEOUS-//
 
 	proc/tile_purge(var/point_x, var/point_y, var/dam_type)	//A helper proc for Linear Purge, Destructive Leap and Destructive Flight.
+		if(IS_ARRIVALS(get_area(locate(point_x,point_y,src.z)))) return
+
 		for (var/mob/living/M in locate(point_x,point_y,src.z))
 			if(isintangible(M)) continue
 			if(!dam_type)
@@ -888,5 +894,17 @@
 	proc/get_center()										//Returns the central turf.
 		var/turf/center_tile = get_step(get_turf(src), NORTHEAST)
 		return center_tile
+
+	proc/is_valid_target(var/target)
+		var/mob/living/M = target
+		if(!istype(M) || IS_ARRIVALS(get_area(M)))
+			return FALSE
+		return TRUE
+
+	proc/clear_target()
+		src.target = null
+		src.last_found = TIME
+		src.frustration = 0
+		return
 
 #undef SWORD_ATTACKING_RANGE

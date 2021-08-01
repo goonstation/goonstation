@@ -142,6 +142,34 @@
 		icon_state = "bp_itabag_black"
 		item_state = "bp_itabag_black"
 
+/obj/item/storage/backpack/studdedwhite
+	name = "white studded backpack"
+	desc = "Made of sturdy white synthleather and covered in metal studs. Much edgier than the standard issue bag."
+	icon_state = "bp_studdedw"
+	item_state = "bp_studdedw"
+
+/obj/item/storage/backpack/breadpack
+	name = "bag-uette"
+	desc = "It kind of smells like bread too! Unfortunately inedible."
+	icon_state = "bp_breadpack"
+	item_state = "bp_breadpack"
+
+/obj/item/storage/backpack/bearpack
+	name = "bearpack"
+	desc = "An adorable friend that is perfect for hugs AND carries your gear for you, how helpful!"
+	icon_state = "bp_bear"
+	item_state = "bp_bear"
+
+/obj/item/storage/backpack/turtlebrown
+	name = "brown turtle shell backpack"
+	desc = "A backpack that looks like a brown turtleshell. How childish!"
+	icon_state = "bp_turtle_brown"
+
+/obj/item/storage/backpack/turtlegreen
+	name = "green turtle shell backpack"
+	desc = "A backpack that looks like a green turtleshell. Cowabunga!"
+	icon_state = "bp_turtle_green"
+
 /obj/item/storage/backpack/satchel
 	name = "satchel"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder."
@@ -214,12 +242,6 @@
 	icon_state = "sat_anello"
 	item_state = "sat_anello"
 
-/obj/item/storage/backpack/satchel/studdedblack
-	name = "studded satchel"
-	desc = "Made of sturdy synthleather and covered in metal studs. Much edgier than the standard issue bag."
-	icon_state = "sat_studded"
-	item_state = "sat_studded"
-
 /obj/item/storage/backpack/satchel/itabag
 	name = "pink itabag satchel"
 	desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of Heisenbee!"
@@ -245,6 +267,42 @@
 		desc = "Comes in cute pastel shades. Within the heart-shaped window, you can see buttons and stickers of Morty!"
 		icon_state = "sat_itabag_black"
 		item_state = "sat_itabag_black"
+
+/obj/item/storage/backpack/satchel/studdedblack
+	name = "studded satchel"
+	desc = "Made of sturdy synthleather and covered in metal studs. Much edgier than the standard issue bag."
+	icon_state = "sat_studded"
+	item_state = "sat_studded"
+
+/obj/item/storage/backpack/satchel/studdedwhite
+	name = "white studded satchel"
+	desc = "Made of sturdy white synthleather and covered in metal studs. Much edgier than the standard issue bag."
+	icon_state = "sat_studdedw"
+	item_state = "sat_studdedw"
+
+/obj/item/storage/backpack/satchel/breadpack
+	name = "bag-uette satchel"
+	desc = "It kind of smells like bread too! Unfortunately inedible."
+	icon_state = "sat_breadpack"
+	item_state = "sat_breadpack"
+
+/obj/item/storage/backpack/satchel/bearpack
+	name = "bear-satchel"
+	desc = "An adorable friend that is perfect for hugs AND carries your gear for you, how helpful!"
+	icon_state = "sat_bear"
+	item_state = "sat_bear"
+
+/obj/item/storage/backpack/satchel/turtlebrown
+	name = "brown turtle shell satchel"
+	desc = "A satchel that looks like a brown turtleshell. How childish!"
+	icon_state = "sat_turtle_brown"
+	item_state = "sat_turtle_brown"
+
+/obj/item/storage/backpack/satchel/turtlegreen
+	name = "green turtle shell satchel"
+	desc = "A satchel that looks like a green turtleshell. Cowabunga!"
+	icon_state = "sat_turtle_green"
+	item_state = "sat_turtle_green"
 
 /* -------------------- Fanny Packs -------------------- */
 

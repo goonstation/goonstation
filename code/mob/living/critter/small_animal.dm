@@ -84,8 +84,8 @@ todo: add more small animals!
 		..()
 
 	setup_healths()
-		add_hh_flesh(-(src.health_brute), src.health_brute, src.health_brute_vuln)
-		add_hh_flesh_burn(-(src.health_burn), src.health_burn, src.health_burn_vuln)
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 		add_health_holder(/datum/healthHolder/toxin)
 		add_health_holder(/datum/healthHolder/brain)
 

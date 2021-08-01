@@ -50,8 +50,8 @@
 	..()
 
 /mob/living/critter/aquatic/setup_healths()
-	add_hh_flesh(-(src.health_brute), src.health_brute, src.health_brute_vuln)
-	add_hh_flesh_burn(-(src.health_burn), src.health_burn, src.health_burn_vuln)
+	add_hh_flesh(src.health_brute, src.health_brute_vuln)
+	add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
 /mob/living/critter/aquatic/Login()
 	..()
@@ -374,7 +374,7 @@
 	name = "king crab"
 	real_name = "king crab"
 	desc = "This doesn't look tasty at all. It probably has spectacular levels of mercury and lead and who knows what else."
-	icon = 'icons/obj/64x96.dmi'
+	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "king_crab"
 	base_move_delay = 1
 	density = 1

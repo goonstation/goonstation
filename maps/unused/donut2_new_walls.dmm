@@ -1237,6 +1237,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/camera{
+	c_tag = "Telescience";
+	dir = 1;
+	name = "Outpost Camera";
+	network = "Zeta"
+	},
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/science/teleporter)
 "adh" = (
@@ -1875,6 +1881,12 @@
 /area/station/science/lobby)
 "afd" = (
 /obj/stool/bench/green/auto,
+/obj/machinery/camera{
+	c_tag = "Science Lobby";
+	dir = 8;
+	name = "Outpost Camera";
+	network = "Zeta"
+	},
 /turf/simulated/floor/greenwhite/other{
 	dir = 4
 	},
@@ -2593,6 +2605,12 @@
 /obj/machinery/networked/printer{
 	print_id = "Control"
 	},
+/obj/machinery/camera{
+	c_tag = "Security Post";
+	dir = 8;
+	name = "Outpost Camera";
+	network = "Zeta"
+	},
 /turf/simulated/floor/blueblack/corner{
 	dir = 8
 	},
@@ -2645,6 +2663,10 @@
 	dir = 8
 	},
 /obj/decal/tile_edge/line/red,
+/obj/machinery/light{
+	dir = 1;
+	pixel_x = -1
+	},
 /turf/simulated/floor,
 /area/station/science/lab)
 "ahe" = (
@@ -2656,10 +2678,6 @@
 	name = "Chamber 2 Exhaust";
 	pixel_x = 23;
 	pixel_y = -9
-	},
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
 	},
 /turf/simulated/floor/grime{
 	dir = 8
@@ -2841,6 +2859,12 @@
 	},
 /obj/machinery/networked/storage/bomb_tester{
 	bank_id = "Mixer"
+	},
+/obj/machinery/camera{
+	c_tag = "Toxins";
+	dir = 4;
+	name = "Outpost Camera";
+	network = "Zeta"
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
@@ -3311,9 +3335,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+/obj/machinery/ignition_switch{
+	id = "tox_ignition2";
+	pixel_x = 24;
+	pixel_y = 8
 	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
@@ -3474,6 +3499,10 @@
 	id = "tox_mix";
 	name = "Mixing Vent Control";
 	pixel_x = 24
+	},
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
 	},
 /turf/simulated/floor,
 /area/station/science/lab)
@@ -3675,6 +3704,11 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/ignition_switch{
+	id = "tox_ignition1";
+	pixel_x = 24;
+	pixel_y = -8
 	},
 /turf/simulated/floor,
 /area/station/science/lab)
@@ -5033,6 +5067,9 @@
 "alQ" = (
 /obj/machinery/power/smes{
 	charge = 5e+006
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
@@ -7503,11 +7540,6 @@
 /area/station/hangar/arrivals)
 "arR" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -7600,11 +7632,6 @@
 /area/station/chapel/office)
 "asb" = (
 /obj/stool/chair/yellow,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -8311,6 +8338,12 @@
 	name = "E light switch";
 	pixel_x = 24;
 	pixel_y = 0
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	tag = ""
 	},
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
@@ -10169,8 +10202,10 @@
 /area/space)
 "ayH" = (
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -10525,6 +10560,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/cable,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "azA" = (
@@ -11105,14 +11141,6 @@
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
 /obj/decal/cleanable/cobweb2,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	icon_state = "camera";
-	name = "autoname  - SS13";
-	network = "SS13";
-	tag = ""
-	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "aAN" = (
@@ -13160,6 +13188,14 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	icon_state = "camera";
+	name = "autoname - SS13";
+	network = "SS13";
+	tag = ""
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "aFx" = (
@@ -13678,6 +13714,9 @@
 	output = 2500;
 	tag = ""
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor,
 /area/station/engine/substation/north)
 "aGA" = (
@@ -13854,10 +13893,6 @@
 "aHa" = (
 /obj/stool/chair{
 	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Crew Quarters South";
-	dir = 10
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
@@ -14925,6 +14960,14 @@
 	},
 /obj/machinery/computer3/generic/med_data{
 	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	icon_state = "camera";
+	name = "autoname - SS13";
+	network = "SS13";
+	tag = ""
 	},
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
@@ -16659,18 +16702,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aMU" = (
+/obj/wingrille_spawn/auto,
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
+/area/station/hangar/arrivals)
 "aMW" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
@@ -17993,11 +18030,12 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aQb" = (
-/obj/machinery/camera{
-	c_tag = "Inner Maintenance";
-	dir = 4
-	},
 /obj/storage/closet/fire,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aQc" = (
@@ -18286,6 +18324,7 @@
 	pixel_y = 0
 	},
 /obj/table/reinforced/auto,
+/obj/item/paper/Cloning,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "aQJ" = (
@@ -22091,6 +22130,9 @@
 	output = 2500;
 	tag = ""
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor,
 /area/station/engine/substation/east)
 "aYM" = (
@@ -22537,6 +22579,14 @@
 /area/station/maintenance/west)
 "aZz" = (
 /obj/machinery/vending/coffee,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	icon_state = "camera";
+	name = "autoname - SS13";
+	network = "SS13";
+	tag = ""
+	},
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
@@ -22745,6 +22795,9 @@
 	online = 1;
 	output = 2500;
 	tag = ""
+	},
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor,
 /area/station/engine/substation/west)
@@ -23018,6 +23071,9 @@
 /obj/health_scanner/floor{
 	find_in_range = 0;
 	id = "lobby"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -23547,6 +23603,12 @@
 "bbo" = (
 /obj/machinery/sleep_console{
 	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
@@ -25201,6 +25263,11 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
+	},
 /turf/simulated/floor/greenwhite{
 	dir = 1
 	},
@@ -26434,6 +26501,11 @@
 	},
 /area/station/security/hos)
 "bhI" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -29966,25 +30038,13 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "bpX" = (
-/obj/disposalpipe/segment/mail,
 /obj/wingrille_spawn/auto,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/market)
+/area/station/hangar/arrivals)
 "bpY" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/storage)
-"bpZ" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/camera{
-	c_tag = "Engineering Pylon South";
-	dir = 4
-	},
-/turf/simulated/floor/grime,
-/area/station/engine/engineering)
 "bqa" = (
 /obj/cable{
 	d1 = 1;
@@ -30414,6 +30474,11 @@
 	dir = 1;
 	icon_state = "shrub"
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
+	},
 /turf/simulated/floor/blue/side{
 	dir = 1
 	},
@@ -30551,6 +30616,14 @@
 /area/station/security/brig)
 "brl" = (
 /obj/machinery/door_timer/solitary/new_walls/east,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	icon_state = "camera";
+	name = "autoname  - SS13";
+	network = "SS13";
+	tag = ""
+	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "brm" = (
@@ -31087,6 +31160,12 @@
 	dir = 8;
 	icon_state = "tube1"
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/green/side,
 /area/station/hallway/primary/south)
 "bsD" = (
@@ -31103,18 +31182,16 @@
 	},
 /area/station/hallway/primary/south)
 "bsG" = (
-/obj/cable,
 /obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable{
+	d1 = 4;
 	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/engine/storage)
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/lobby)
 "bsH" = (
 /obj/table/auto,
 /obj/item/clothing/glasses/meson,
@@ -32021,6 +32098,9 @@
 	online = 1;
 	output = 2500;
 	tag = ""
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
@@ -33102,6 +33182,9 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "bwZ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -36354,6 +36437,9 @@
 	output = 2500;
 	tag = ""
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "bFm" = (
@@ -36603,10 +36689,6 @@
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
 	},
 /obj/grille/catwalk/cross{
 	dir = 6
@@ -36956,11 +37038,10 @@
 /obj/machinery/power/smes{
 	charge = 5e+006
 	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
 /obj/machinery/light,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "bGs" = (
@@ -37029,6 +37110,12 @@
 /area/station/maintenance/east)
 "bGy" = (
 /obj/machinery/vending/standard,
+/obj/machinery/camera{
+	c_tag = "Toxins";
+	dir = 4;
+	name = "Outpost Camera";
+	network = "Zeta"
+	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "bGz" = (
@@ -38037,14 +38124,6 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	icon_state = "camera";
-	name = "autoname - SS13";
-	network = "SS13";
-	tag = ""
-	},
 /turf/space,
 /area/station/quartermaster/refinery)
 "bIi" = (
@@ -38758,6 +38837,15 @@
 	layer = 2
 	},
 /area/station/solar/east)
+"cNh" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor,
+/area/station/mining/staff_room)
 "cOs" = (
 /obj/table/auto,
 /obj/item/paper_bin,
@@ -38993,6 +39081,17 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/science)
+"dRq" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/yellow,
+/area/station/engine/engineering)
 "dRU" = (
 /obj/cable{
 	d1 = 4;
@@ -39064,6 +39163,17 @@
 /obj/machinery/light,
 /turf/simulated/floor/shuttlebay,
 /area/station/quartermaster/refinery)
+"ebn" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/hallway/primary/south)
 "ecY" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/AIsat)
@@ -39204,6 +39314,15 @@
 /obj/window_blinds/cog2,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
+"ewc" = (
+/obj/machinery/camera{
+	c_tag = "Central Hallway North";
+	dir = 4;
+	name = "Outpost Camera";
+	network = "Zeta"
+	},
+/turf/simulated/floor,
+/area/station/science/lobby)
 "eAb" = (
 /obj/machinery/light_switch{
 	name = "E light switch";
@@ -39494,6 +39613,15 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
+"frP" = (
+/obj/disposalpipe/segment/mail,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "fvM" = (
 /obj/cable{
 	d1 = 1;
@@ -39559,6 +39687,12 @@
 /obj/machinery/light_switch{
 	name = "S light switch";
 	pixel_y = -24
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
 	},
 /turf/simulated/floor/greenwhite{
 	dir = 6
@@ -39875,6 +40009,14 @@
 /obj/machinery/light{
 	dir = 8;
 	icon_state = "tube1"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	icon_state = "camera";
+	name = "autoname - SS13";
+	network = "SS13";
+	tag = ""
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 10
@@ -40663,9 +40805,6 @@
 /obj/item/extinguisher{
 	pixel_y = 8
 	},
-/obj/machinery/camera{
-	c_tag = "Inner Maintenance"
-	},
 /obj/machinery/light_switch{
 	name = "E light switch";
 	pixel_x = 24;
@@ -41075,14 +41214,13 @@
 	},
 /area/station/maintenance/inner/central)
 "koc" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/access_spawn/engineering_power,
 /obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/turret_protected/ai_upload{
-	name = "AI Module Storage"
-	})
+/turf/simulated/floor/delivery,
+/area/station/engine/inner)
 "kpr" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -41537,6 +41675,28 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"lIT" = (
+/obj/wingrille_spawn/auto,
+/obj/disposalpipe/segment/morgue{
+	dir = 4;
+	name = "crematorium pipe"
+	},
+/turf/simulated/floor/plating,
+/area/station/chapel/sanctuary)
+"lJo" = (
+/obj/disposalpipe/segment/mail,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	icon_state = "camera";
+	name = "autoname  - SS13";
+	network = "SS13";
+	tag = ""
+	},
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/hallway/primary/east)
 "lKq" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail,
@@ -41910,6 +42070,10 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "mZV" = (
@@ -42162,6 +42326,11 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"odr" = (
+/obj/cable,
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/market)
 "ogh" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -42857,10 +43026,10 @@
 /area/station/quartermaster/refinery)
 "qgJ" = (
 /obj/machinery/sparker{
+	dir = 1;
 	id = "tox_ignition1";
-	layer = 7;
-	name = "Mounted Igniter";
-	pixel_y = -22
+	pixel_x = -8;
+	pixel_y = -10
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
@@ -42889,6 +43058,20 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/airless,
 /area/station/security/armory)
+"qmQ" = (
+/obj/machinery/conveyor{
+	id = "cargo"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	icon_state = "camera";
+	name = "autoname - SS13";
+	network = "SS13";
+	tag = ""
+	},
+/turf/simulated/floor/caution/westeast,
+/area/station/quartermaster/office)
 "qoa" = (
 /obj/machinery/teleport/portal_generator,
 /obj/cable{
@@ -43178,18 +43361,12 @@
 /area/station/science/lobby)
 "rfR" = (
 /obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/turret_protected/ai_upload{
-	name = "AI Module Storage"
-	})
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/security/brig)
 "rhi" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -43421,6 +43598,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"seM" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	icon_state = "camera";
+	name = "autoname - SS13";
+	network = "SS13";
+	tag = ""
+	},
+/turf/simulated/floor/blue/side{
+	dir = 8
+	},
+/area/station/hallway/primary/west)
 "sfE" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/arrivals)
@@ -43455,6 +43645,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "sih" = (
@@ -43467,6 +43661,19 @@
 	dir = 1
 	},
 /area/station/mining/staff_room)
+"sjf" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/market)
 "skk" = (
 /turf/simulated/floor,
 /area/station/mining/staff_room)
@@ -43746,6 +43953,17 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"sMh" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/detectives_office)
 "sMr" = (
 /obj/cable,
 /obj/cable{
@@ -44200,6 +44418,21 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"udT" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail,
+/obj/machinery/camera{
+	c_tag = "Telescience Hallway";
+	dir = 4;
+	name = "Outpost Camera";
+	network = "Zeta"
+	},
+/turf/simulated/floor/white,
+/area/station/science/teleporter)
 "ugu" = (
 /obj/cable{
 	d1 = 1;
@@ -44396,6 +44629,12 @@
 	dir = 4
 	},
 /obj/machinery/light,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	intact = 0
@@ -44665,6 +44904,12 @@
 	o2tanks = 10;
 	pltanks = 10
 	},
+/obj/machinery/camera{
+	c_tag = "Toxins";
+	dir = 4;
+	name = "Outpost Camera";
+	network = "Zeta"
+	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "vFV" = (
@@ -44724,6 +44969,14 @@
 /area/station/turret_protected/ai_upload{
 	name = "AI Module Storage"
 	})
+"vOB" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "vSU" = (
 /obj/cable{
 	d1 = 4;
@@ -44771,10 +45024,31 @@
 /area/station/security/brig)
 "wgM" = (
 /obj/disposalpipe/segment/mail,
+/obj/machinery/camera{
+	c_tag = "Science Lobby";
+	dir = 8;
+	name = "Outpost Camera";
+	network = "Zeta"
+	},
 /turf/simulated/floor/greenwhite/other{
 	dir = 6
 	},
 /area/station/science/lobby)
+"wkR" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	intact = 0
+	},
+/area/station/quartermaster/refinery)
 "wkZ" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left,
@@ -44821,6 +45095,15 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/armory)
+"wqj" = (
+/obj/machinery/camera{
+	c_tag = "Science Hangar";
+	dir = 8;
+	name = "Outpost Camera";
+	network = "Zeta"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/science)
 "wql" = (
 /obj/machinery/light{
 	dir = 4;
@@ -44866,6 +45149,15 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/AIsat)
+"wwi" = (
+/obj/machinery/camera{
+	c_tag = "Telescience Pad";
+	dir = 4;
+	name = "Outpost Camera";
+	network = "Zeta"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
 "wzk" = (
 /obj/table/auto,
 /obj/machinery/recharger,
@@ -45047,6 +45339,19 @@
 	dir = 9
 	},
 /area/station/mining/staff_room)
+"wTt" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	icon_state = "camera";
+	name = "autoname - SS13";
+	network = "SS13";
+	tag = ""
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/hallway/primary/south)
 "wUy" = (
 /obj/grille/catwalk{
 	dir = 10;
@@ -45060,6 +45365,19 @@
 	dir = 10
 	},
 /area/station/quartermaster/refinery)
+"wXs" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	icon_state = "camera";
+	name = "autoname  - SS13";
+	network = "SS13";
+	tag = ""
+	},
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/hallway/primary/east)
 "wYe" = (
 /obj/shrub{
 	dir = 1
@@ -45325,13 +45643,13 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "xRw" = (
-/obj/machinery/sparker{
-	id = "tox_ignition2";
-	layer = 7;
-	name = "Mounted Igniter";
-	pixel_y = 22
-	},
 /obj/machinery/atmospherics/pipe/simple/junction,
+/obj/machinery/sparker{
+	dir = 2;
+	id = "tox_ignition2";
+	pixel_x = -8;
+	pixel_y = 10
+	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "xUC" = (
@@ -61975,7 +62293,7 @@ aYr
 aZf
 aZM
 bao
-bbB
+bsG
 bbo
 bbM
 asx
@@ -63749,7 +64067,7 @@ aaa
 aaa
 awR
 axG
-arN
+asv
 azz
 aQv
 aBt
@@ -65002,7 +65320,7 @@ bci
 aLX
 aLX
 bdH
-aTw
+seM
 aTw
 aTw
 bfE
@@ -66784,7 +67102,7 @@ azA
 aIG
 aJo
 ayR
-awm
+vOB
 awm
 axi
 ayR
@@ -67378,10 +67696,10 @@ azB
 bda
 aBy
 aCm
-awe
+aFD
 awe
 aEH
-aFD
+awe
 awe
 aCm
 aAP
@@ -68028,7 +68346,7 @@ aGx
 bfG
 bgi
 bgG
-bhn
+frP
 bhn
 tVj
 bjo
@@ -70453,7 +70771,7 @@ mVs
 bki
 bki
 bki
-boB
+sjf
 bpo
 bkj
 bhm
@@ -71361,7 +71679,7 @@ bki
 bki
 boC
 bpo
-bpX
+bkj
 bqK
 bhm
 bhm
@@ -72266,11 +72584,11 @@ blu
 blu
 bnU
 boD
-boD
+odr
 bpY
 bqL
 brO
-bsG
+btD
 btD
 btD
 bvJ
@@ -72588,7 +72906,7 @@ eWy
 bsT
 bsT
 bsT
-bsT
+wTt
 bsT
 sRd
 eWy
@@ -72884,7 +73202,7 @@ qsJ
 oRN
 kvZ
 byq
-bsF
+ebn
 bsF
 bDa
 bsF
@@ -73099,7 +73417,7 @@ apE
 aql
 aqj
 aaa
-mNB
+aMU
 sMr
 arP
 asC
@@ -73502,7 +73820,7 @@ bAP
 bCV
 fVw
 xMY
-skk
+cNh
 fVw
 aaa
 aaa
@@ -74617,7 +74935,7 @@ ath
 atK
 aur
 auV
-mNB
+bpX
 awo
 axX
 axT
@@ -74992,7 +75310,7 @@ bmY
 bmY
 bmY
 bvP
-bxa
+dRq
 bxM
 byt
 bzi
@@ -75287,7 +75605,7 @@ bmZ
 bnW
 boG
 boG
-bpZ
+boG
 bnW
 brS
 bsM
@@ -75820,7 +76138,7 @@ aaA
 acG
 aoN
 arV
-asG
+qmQ
 atj
 asG
 auv
@@ -76776,7 +77094,7 @@ aWv
 aXR
 aXR
 aXR
-bcp
+koc
 bcL
 bdj
 bdT
@@ -76834,7 +77152,7 @@ bGV
 bGV
 bGU
 bHO
-bHO
+wkR
 bGU
 bGU
 bGU
@@ -82175,7 +82493,7 @@ awN
 awN
 awN
 awN
-aFi
+lIT
 aDs
 aEm
 aFi
@@ -85814,7 +86132,7 @@ aLt
 aMi
 tGI
 aNv
-eAZ
+sMh
 aNv
 aNv
 eAZ
@@ -86425,7 +86743,7 @@ aPY
 aQN
 aRF
 aSs
-aTc
+wXs
 aTc
 aUr
 aUR
@@ -86442,7 +86760,7 @@ aVK
 bbZ
 aQf
 aQM
-aQM
+lJo
 bea
 bes
 beN
@@ -88531,7 +88849,7 @@ aJf
 aLx
 aJf
 aIx
-koc
+aNB
 pRC
 aOV
 aPG
@@ -88832,8 +89150,8 @@ aDG
 aJf
 aLz
 aJf
-aMU
-rfR
+aIx
+aNB
 hcT
 gId
 aPH
@@ -90684,7 +91002,7 @@ bgN
 bgN
 bkH
 blT
-bmO
+rfR
 bkQ
 bkP
 bkP
@@ -111433,7 +111751,7 @@ akQ
 aiU
 dXg
 aly
-aUz
+wqj
 aUz
 nJk
 aPs
@@ -113227,7 +113545,7 @@ adq
 adB
 adO
 aed
-adq
+ewc
 adq
 adq
 afG
@@ -118192,7 +118510,7 @@ gSV
 iWB
 ydk
 bBk
-bCN
+lNU
 bGB
 cjG
 bGL
@@ -119559,7 +119877,7 @@ aaa
 aaa
 aca
 ach
-ach
+wwi
 ach
 acH
 acL
@@ -120778,7 +121096,7 @@ adH
 adT
 aej
 adT
-adT
+udT
 adT
 afR
 adT

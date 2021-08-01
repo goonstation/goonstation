@@ -1235,15 +1235,17 @@
 			actions.stopId("magpickerhold", src)
 
 //throw the dropped item
-/mob/proc/drop_item_throw()
-	var/obj/item/W = src.equipped()
-	if (src.drop_item())
+/mob/proc/drop_item_throw(obj/item/W)
+	if(!W)
+		W = src.equipped()
+	if (src.drop_item(W))
 		var/turf/T = get_edge_target_turf(src, pick(alldirs))
 		W.throw_at(T,rand(0,5),1)
 
-/mob/proc/drop_item_throw_dir(dir)
-	var/obj/item/W = src.equipped()
-	if (src.drop_item())
+/mob/proc/drop_item_throw_dir(dir, obj/item/W)
+	if(!W)
+		W = src.equipped()
+	if (src.drop_item(W))
 		var/turf/T = get_edge_target_turf(src, dir)
 		W.throw_at(T,7,1)
 
@@ -2337,6 +2339,10 @@
 
 /mob/onVarChanged(variable, oldval, newval)
 	update_clothing()
+
+/mob/proc/throw_item(atom/target, list/params)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_THROW_ITEM, target, params)
 
 /mob/throw_impact(atom/hit, datum/thrown_thing/thr)
 	if(!isturf(hit) || hit.density)

@@ -5,6 +5,16 @@
 "aab" = (
 /turf/space/no_replace,
 /area/space)
+"aaX" = (
+/obj/item/clothing/under/pride/ace,
+/obj/storage/closet{
+	name = "typical wardrobe"
+	},
+/obj/item/clothing/under/gimmick/maid,
+/obj/item/clothing/head/maid,
+/obj/item/clothing/head/headband/nyan/red,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices/zamujasa)
 "aaZ" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/outside)
@@ -3332,6 +3342,12 @@
 /obj/item/device/key/filing_cabinet,
 /turf/unsimulated/floor/grime,
 /area/moon/museum)
+"aon" = (
+/obj/machinery/conveyor/west{
+	id = "ddan"
+	},
+/turf/unsimulated/floor,
+/area/drone/office)
 "aoo" = (
 /obj/table/wood/round,
 /turf/unsimulated/floor/white,
@@ -3699,20 +3715,6 @@
 "apl" = (
 /obj/trigger/spooky_emote,
 /turf/unsimulated/floor/specialroom/bar,
-/area/hospital)
-"apm" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
-	dir = 1;
-	icon = 'icons/obj/64x96.dmi';
-	icon_state = "air_gizmo";
-	name = "industrial atmospheric processor"
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
 /area/hospital)
 "apn" = (
 /turf/unsimulated/floor/caution/east,
@@ -4524,19 +4526,6 @@
 	name = "security door"
 	},
 /turf/unsimulated/floor/white/grime,
-/area/hospital)
-"arS" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
-	icon = 'icons/obj/64x96.dmi';
-	icon_state = "air_gizmo";
-	name = "industrial atmospheric processor"
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
 /area/hospital)
 "arT" = (
 /obj/machinery/light/small/iomoon{
@@ -15105,24 +15094,6 @@
 	},
 /turf/unsimulated/floor/white,
 /area/upper_arctic/pod1)
-"aYk" = (
-/obj/rack,
-/obj/machinery/light_switch{
-	name = "W light switch";
-	on = 0;
-	pixel_x = -24
-	},
-/obj/item/clothing/suit/space/emerg/snow,
-/obj/item/clothing/suit/space/emerg/snow,
-/obj/item/clothing/suit/space/emerg/snow,
-/obj/item/tank/air,
-/obj/item/tank/air,
-/obj/item/tank/air,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/turf/unsimulated/floor/delivery,
-/area/upper_arctic/pod1)
 "aYl" = (
 /obj/rack,
 /obj/item/storage/toolbox/mechanical,
@@ -20733,14 +20704,6 @@
 	icon_state = "floor4"
 	},
 /area/drone)
-"bmq" = (
-/obj/table/reinforced/auto,
-/obj/item/electronics/scanner/syndicate,
-/obj/item/electronics/soldering,
-/turf/unsimulated/floor/red/side{
-	dir = 8
-	},
-/area/drone/office)
 "bmr" = (
 /obj/machinery/rkit{
 	olde = 1
@@ -20959,12 +20922,6 @@
 	name = "indoor garden"
 	},
 /area/afterlife/heaven/hydroponics/inside)
-"bmY" = (
-/obj/machinery/conveyor/west{
-	id = "ddan"
-	},
-/turf/unsimulated/floor/caution/north,
-/area/drone/office)
 "bmZ" = (
 /turf/unsimulated/wall{
 	desc = "It won't budge.";
@@ -21409,12 +21366,6 @@
 	icon = 'icons/obj/recycling.dmi';
 	icon_state = "separator-AO1";
 	name = "assembly machine"
-	},
-/turf/unsimulated/floor,
-/area/drone/office)
-"bnO" = (
-/obj/machinery/conveyor/west{
-	id = "ddan"
 	},
 /turf/unsimulated/floor,
 /area/drone/office)
@@ -32059,32 +32010,6 @@
 	dir = 8
 	},
 /area/crunch)
-"bPp" = (
-/obj/machinery/conveyor/west{
-	id = "ddan"
-	},
-/turf/unsimulated/floor/orangeblack,
-/area/crunch)
-"bPq" = (
-/obj/machinery/conveyor/west{
-	id = "ddan"
-	},
-/obj/overlay{
-	density = 1;
-	desc = "It would not be surprising if this was rusty when it WAS in operation, as well.";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "neutinj";
-	name = "rusty industrial oven"
-	},
-/turf/unsimulated/floor/orangeblack,
-/area/crunch)
-"bPr" = (
-/obj/machinery/conveyor/west{
-	id = "ddan"
-	},
-/obj/item/reagent_containers/food/snacks/snack_cake,
-/turf/unsimulated/floor/orangeblack,
-/area/crunch)
 "bPs" = (
 /obj/map/light/graveyard,
 /turf/unsimulated/floor/grass/leafy,
@@ -32172,12 +32097,6 @@
 	location = "tour2"
 	},
 /turf/unsimulated/floor,
-/area/crunch)
-"bPF" = (
-/obj/machinery/conveyor/north{
-	id = "ddan"
-	},
-/turf/unsimulated/floor/orangeblack,
 /area/crunch)
 "bPG" = (
 /obj/map/light/graveyard,
@@ -32409,13 +32328,6 @@
 /obj/item/reagent_containers/food/snacks/snack_cake,
 /obj/item/reagent_containers/food/snacks/snack_cake,
 /turf/unsimulated/floor/bot,
-/area/crunch)
-"bQp" = (
-/obj/machinery/conveyor/north{
-	id = "ddan"
-	},
-/obj/item/reagent_containers/food/snacks/snack_cake,
-/turf/unsimulated/floor/orangeblack,
 /area/crunch)
 "bQq" = (
 /obj/rack,
@@ -43641,22 +43553,6 @@
 	},
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/battlecruiser)
-"cvT" = (
-/obj/machinery/conveyor/west{
-	id = "ddan"
-	},
-/obj/overlay{
-	density = 1;
-	desc = "Part of a drone chassis.";
-	dir = 8;
-	icon = 'icons/obj/ship.dmi';
-	icon_state = "drone_construction";
-	name = "drone parts"
-	},
-/obj/item/cell/cerenkite,
-/obj/item/shipcomponent/mainweapon/disruptor,
-/turf/unsimulated/floor/caution/north,
-/area/drone/office)
 "cvU" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/royal,
@@ -45716,30 +45612,6 @@
 	tag = "icon-fblue2"
 	},
 /area/owlery/staffhall)
-"cAY" = (
-/obj/storage/crate{
-	name = "Pod N a Box"
-	},
-/obj/item/shipcomponent/mainweapon/foamer,
-/obj/item/shipcomponent/secondary_system/tractor_beam,
-/obj/item/shipcomponent/sensor/mining,
-/obj/item/electronics/relay,
-/obj/item/electronics/bulb,
-/obj/item/electronics/capacitor,
-/obj/item/pod/armor_industrial,
-/obj/item/pod/engine,
-/obj/item/putt/frame_box,
-/obj/item/putt/engine,
-/obj/item/putt/control,
-/obj/item/putt/boards,
-/obj/machinery/light/emergency{
-	dir = 1;
-	pixel_y = 16
-	},
-/turf/unsimulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/owlery/staffhall)
 "cAZ" = (
 /obj/stool/chair/couch{
 	dir = 5
@@ -46105,17 +45977,6 @@
 	},
 /obj/disposalpipe/segment,
 /turf/unsimulated/floor/grime,
-/area/owlery/Owlmait)
-"cBW" = (
-/obj/decal/fakeobjects/pipe,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/rack,
-/obj/item/storage/box/trash_bags,
-/obj/item/storage/toolbox/mechanical,
-/turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cBX" = (
 /obj/item/cable_coil/cut{
@@ -57103,13 +56964,6 @@
 	temperature = 313.15
 	},
 /area/iomoon/caves)
-"dam" = (
-/obj/machinery/conveyor/west{
-	id = "ddan"
-	},
-/obj/item/shipcomponent/engine/hermes,
-/turf/unsimulated/floor,
-/area/drone/office)
 "dan" = (
 /obj/decal/boxingropeenter{
 	name = "Boxing ropes"
@@ -74192,6 +74046,19 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/sealab)
+"efD" = (
+/obj/machinery/conveyor/west{
+	id = "ddan"
+	},
+/obj/item/reagent_containers/food/snacks/snack_cake,
+/turf/unsimulated/floor/orangeblack,
+/area/crunch)
+"egt" = (
+/obj/machinery/conveyor/west{
+	id = "ddan"
+	},
+/turf/unsimulated/floor/orangeblack,
+/area/crunch)
 "eih" = (
 /obj/kudzu_marker{
 	icon_state = "kudzu-benign-3"
@@ -74235,6 +74102,23 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/maint)
+"erm" = (
+/obj/window/crystal/reinforced/west,
+/obj/window/crystal/reinforced/north,
+/obj/item/baton{
+	desc = "This was one of the first batons to be turned off and grabbed by the head to enable more robust beatings. It is certainly the most imposing baton you've ever seen.";
+	flipped = 1;
+	force = 15;
+	name = "\improper Harmbaton of Porter Starboard";
+	is_active = 0
+	},
+/obj/machinery/light/incandescent/warm/very{
+	dir = 4
+	},
+/turf/unsimulated/floor/wood/eight{
+	dir = 4
+	},
+/area/centcom/offices/adhara)
 "eso" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-33"
@@ -74460,16 +74344,6 @@
 	icon_state = "diagonalWall"
 	},
 /area/hospital/samostrel)
-"eTm" = (
-/obj/item/clothing/under/pride/ace,
-/obj/storage/closet{
-	name = "typical wardrobe"
-	},
-/obj/item/clothing/under/gimmick/maid,
-/obj/item/clothing/head/maid,
-/obj/item/clothing/head/nyan/red,
-/turf/unsimulated/floor/wood/six,
-/area/centcom/offices/zamujasa)
 "eTR" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle,
@@ -74685,6 +74559,24 @@
 	icon_state = "shore-11"
 	},
 /area/titlescreen)
+"fIP" = (
+/obj/rack,
+/obj/machinery/light_switch{
+	name = "W light switch";
+	on = 0;
+	pixel_x = -24
+	},
+/obj/item/clothing/suit/snow,
+/obj/item/clothing/suit/snow,
+/obj/item/clothing/suit/snow,
+/obj/item/tank/air,
+/obj/item/tank/air,
+/obj/item/tank/air,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/turf/unsimulated/floor/delivery,
+/area/upper_arctic/pod1)
 "fKf" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -74897,6 +74789,19 @@
 "gor" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/racing_track)
+"grO" = (
+/obj/machinery/conveyor/west{
+	id = "ddan"
+	},
+/obj/overlay{
+	density = 1;
+	desc = "It would not be surprising if this was rusty when it WAS in operation, as well.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "neutinj";
+	name = "rusty industrial oven"
+	},
+/turf/unsimulated/floor/orangeblack,
+/area/crunch)
 "gtU" = (
 /obj/machinery/light{
 	dir = 1
@@ -74987,6 +74892,12 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/mining)
+"gNr" = (
+/obj/machinery/conveyor/west{
+	id = "ddan"
+	},
+/turf/unsimulated/floor/caution/north,
+/area/drone/office)
 "gOG" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -75365,6 +75276,20 @@
 	icon_state = "corner_east"
 	},
 /area/hospital/samostrel)
+"hSY" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
+	dir = 1;
+	icon = 'icons/obj/large/64x96.dmi';
+	icon_state = "air_gizmo";
+	name = "industrial atmospheric processor"
+	},
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/hospital)
 "hTS" = (
 /obj/decal/fakeobjects/firealarm_broken{
 	dir = 8;
@@ -75625,6 +75550,15 @@
 /turf/space,
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
+"iSl" = (
+/obj/table/wood/auto,
+/obj/item/clothing/head/sunhat/stunhatr{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/mutation_orb/cat_orb,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/tarmunora)
 "iSs" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -75743,6 +75677,13 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"jod" = (
+/obj/decal/fakeobjects/pipe,
+/obj/rack,
+/obj/item/storage/box/trash_bags,
+/obj/item/storage/toolbox/mechanical,
+/turf/unsimulated/floor/plating,
+/area/owlery/Owlmait)
 "jru" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-34"
@@ -75907,14 +75848,6 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
-"jNl" = (
-/obj/table/wood/auto,
-/obj/item/clothing/head/sunhat/stunhatr{
-	pixel_x = -5;
-	pixel_y = 6
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/tarmunora)
 "jNI" = (
 /obj/securearea,
 /obj/map/light/graveyard,
@@ -76113,33 +76046,6 @@
 	opacity = 1
 	},
 /area/adventure/channel)
-"koi" = (
-/obj/item/clothing/under/gimmick/princess{
-	color = "#8c0b0b"
-	},
-/obj/item/clothing/head/bigtex,
-/obj/item/clothing/head/crown,
-/obj/item/clothing/head/nyan/white,
-/obj/item/clothing/head/wizard/witch,
-/obj/item/clothing/head/laurels/gold,
-/obj/item/clothing/under/gimmick/princess,
-/obj/item/clothing/under/gimmick/chiefofficer,
-/obj/item/clothing/suit/armor/hopcoat,
-/obj/item/clothing/suit/jacket/plastic/random_color,
-/obj/item/clothing/head/sunhat/sunhatr,
-/obj/storage/closet/dresser{
-	desc = "A curated selection of the highest-grade couture";
-	name = "dresser of many things"
-	},
-/obj/item/clothing/head/sailormoon,
-/obj/item/clothing/under/gimmick/sailormoon,
-/obj/item/clothing/under/gimmick/birdman,
-/obj/item/clothing/under/misc/syndicate,
-/obj/item/card_box/clow{
-	name = "Clow Book"
-	},
-/turf/simulated/floor/wood/six,
-/area/centcom/offices/rodney)
 "koF" = (
 /obj/item/sticker/gold_star{
 	pixel_x = -10;
@@ -76703,6 +76609,12 @@
 	},
 /turf/unsimulated/grass,
 /area/centcom/lounge)
+"lUb" = (
+/obj/machinery/conveyor/north{
+	id = "ddan"
+	},
+/turf/unsimulated/floor/orangeblack,
+/area/crunch)
 "lUK" = (
 /obj/decal/fakeobjects/dreambeach/seashells,
 /turf/unsimulated/floor/dream/beach{
@@ -77123,6 +77035,19 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"nkG" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
+	icon = 'icons/obj/large/64x96.dmi';
+	icon_state = "air_gizmo";
+	name = "industrial atmospheric processor"
+	},
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/hospital)
 "nlG" = (
 /obj/admin_plaque{
 	name = "Mordent's Office"
@@ -77827,6 +77752,14 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"oUW" = (
+/obj/admin_plaque{
+	name = "Varshie's Office"
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "oWW" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -77866,6 +77799,22 @@
 	name = "plating"
 	},
 /area/hospital/samostrel)
+"oZF" = (
+/obj/machinery/conveyor/west{
+	id = "ddan"
+	},
+/obj/overlay{
+	density = 1;
+	desc = "Part of a drone chassis.";
+	dir = 8;
+	icon = 'icons/obj/ship.dmi';
+	icon_state = "drone_construction";
+	name = "drone parts"
+	},
+/obj/item/cell/cerenkite,
+/obj/item/shipcomponent/mainweapon/disruptor,
+/turf/unsimulated/floor/caution/north,
+/area/drone/office)
 "oZS" = (
 /obj/machinery/light,
 /obj/table/wood/auto/desk,
@@ -78050,6 +77999,15 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"pIi" = (
+/obj/table/reinforced/auto,
+/obj/item/electronics/scanner,
+/obj/item/electronics/soldering,
+/obj/item/paper/manufacturer_blueprint/gunbot,
+/turf/unsimulated/floor/red/side{
+	dir = 8
+	},
+/area/drone/office)
 "pIq" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'Fire Hazard'";
@@ -78671,12 +78629,6 @@
 /obj/submachine/claw_machine,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
-"rmG" = (
-/obj/admin_plaque{
-	name = "Varshie's Office"
-	},
-/turf/unsimulated/wall/auto/lead/blue,
-/area/space)
 "rnz" = (
 /obj/cable{
 	d1 = 1;
@@ -78759,24 +78711,11 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
-"rAl" = (
-/obj/window/crystal/reinforced/west,
-/obj/window/crystal/reinforced/north,
-/obj/item/baton{
-	cell_type = null;
-	desc = "This was one of the first batons to be turned off and grabbed by the head to enable more robust beatings. It is certainly the most imposing baton you've ever seen.";
-	flipped = 1;
-	force = 15;
-	name = "\improper Harmbaton of Porter Starboard";
-	status = 0
-	},
-/obj/machinery/light/incandescent/warm/very{
-	dir = 4
-	},
-/turf/unsimulated/floor/wood/eight{
-	dir = 4
-	},
-/area/centcom/offices/adhara)
+"rwy" = (
+/obj/machinery/door/airlock/pyro/glass/command,
+/obj/access_spawn/owlcommand,
+/turf/unsimulated/floor/black,
+/area/owlery/office)
 "rAu" = (
 /obj/stool/chair/comfy/shuttle,
 /obj/machinery/light{
@@ -78814,6 +78753,30 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"rCt" = (
+/obj/storage/crate{
+	name = "Pod N a Box"
+	},
+/obj/item/shipcomponent/mainweapon/foamer,
+/obj/item/shipcomponent/secondary_system/tractor_beam,
+/obj/item/shipcomponent/sensor/mining,
+/obj/item/electronics/relay,
+/obj/item/electronics/bulb,
+/obj/item/electronics/capacitor,
+/obj/item/podarmor/armor_industrial,
+/obj/item/pod/engine,
+/obj/item/putt/frame_box,
+/obj/item/putt/engine,
+/obj/item/putt/control,
+/obj/item/putt/boards,
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/owlery/staffhall)
 "rEt" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
@@ -79389,25 +79352,6 @@
 /obj/item/paper/book/from_file/the_trial,
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
-"tiD" = (
-/obj/decal/skeleton{
-	desc = "The remains of a human. How'd they get out there?";
-	name = "human's skeleton"
-	},
-/obj/item/clothing/head/nyan/random{
-	desc = "Did these belong to that skeleton?";
-	pixel_x = 12;
-	pixel_y = -4
-	},
-/obj/item/clothing/suit/lshirt{
-	desc = "A cute long-sleeved shirt. Too bad it's all crungy and bloodstained. And covered in..... cat hair?.";
-	name = "dirty old shirt";
-	pixel_x = 1;
-	pixel_y = -6
-	},
-/obj/map/light/graveyard,
-/turf/unsimulated/outdoors/grass,
-/area/centcom/outside)
 "tjY" = (
 /obj/decal/poster/wallsign/poster_ptoe,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -80368,6 +80312,33 @@
 	opacity = 0
 	},
 /area/titlescreen)
+"wDT" = (
+/obj/item/clothing/under/gimmick/princess{
+	color = "#8c0b0b"
+	},
+/obj/item/clothing/head/bigtex,
+/obj/item/clothing/head/crown,
+/obj/item/clothing/head/headband/nyan/white,
+/obj/item/clothing/head/wizard/witch,
+/obj/item/clothing/head/laurels/gold,
+/obj/item/clothing/under/gimmick/princess,
+/obj/item/clothing/under/gimmick/chiefofficer,
+/obj/item/clothing/suit/armor/hopcoat,
+/obj/item/clothing/suit/jacket/plastic/random_color,
+/obj/item/clothing/head/sunhat/sunhatr,
+/obj/storage/closet/dresser{
+	desc = "A curated selection of the highest-grade couture";
+	name = "dresser of many things"
+	},
+/obj/item/clothing/head/sailormoon,
+/obj/item/clothing/under/gimmick/sailormoon,
+/obj/item/clothing/under/gimmick/birdman,
+/obj/item/clothing/under/misc/syndicate,
+/obj/item/card_box/clow{
+	name = "Clow Book"
+	},
+/turf/simulated/floor/wood/six,
+/area/centcom/offices/rodney)
 "wEA" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -80393,6 +80364,13 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"wIb" = (
+/obj/machinery/conveyor/north{
+	id = "ddan"
+	},
+/obj/item/reagent_containers/food/snacks/snack_cake,
+/turf/unsimulated/floor/orangeblack,
+/area/crunch)
 "wIA" = (
 /turf/space,
 /turf/unsimulated/floor/engine,
@@ -80469,6 +80447,13 @@
 	icon_state = "fblue3"
 	},
 /area/centcom/lobby)
+"wZb" = (
+/obj/machinery/conveyor/west{
+	id = "ddan"
+	},
+/obj/item/shipcomponent/engine/hermes,
+/turf/unsimulated/floor,
+/area/drone/office)
 "xac" = (
 /obj/machinery/light/small/iomoon{
 	dir = 8
@@ -80529,6 +80514,25 @@
 /turf/space,
 /turf/unsimulated/floor/caution/east,
 /area/hospital/samostrel)
+"xeE" = (
+/obj/decal/skeleton{
+	desc = "The remains of a human. How'd they get out there?";
+	name = "human's skeleton"
+	},
+/obj/item/clothing/head/headband/nyan/random{
+	desc = "Did these belong to that skeleton?";
+	pixel_x = 12;
+	pixel_y = -4
+	},
+/obj/item/clothing/suit/lshirt{
+	desc = "A cute long-sleeved shirt. Too bad it's all crungy and bloodstained. And covered in..... cat hair?.";
+	name = "dirty old shirt";
+	pixel_x = 1;
+	pixel_y = -6
+	},
+/obj/map/light/graveyard,
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
 "xgE" = (
 /turf/unsimulated/floor/carpet/red/fancy/narrow/east,
 /area/titlescreen)
@@ -80701,9 +80705,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
-"xMm" = (
-/turf/unsimulated/wall/auto/lead/blue,
-/area/space)
 "xNL" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-7"
@@ -87389,7 +87390,7 @@ aKX
 aKX
 aLq
 oaT
-aYk
+fIP
 aZg
 aZP
 baq
@@ -90903,7 +90904,7 @@ bxW
 czg
 czB
 aBY
-cBW
+jod
 cBb
 cBE
 cBE
@@ -94739,7 +94740,7 @@ bLn
 bLn
 bLn
 bLn
-bPp
+egt
 bLn
 bLn
 bLn
@@ -94842,7 +94843,7 @@ cAD
 cFV
 cHm
 cBh
-cIv
+rwy
 cJl
 cBj
 cKD
@@ -95041,7 +95042,7 @@ bLn
 bNX
 bNY
 bNY
-bPq
+grO
 bLn
 bPQ
 bLn
@@ -95343,7 +95344,7 @@ bLn
 bLn
 bLn
 bOv
-bPr
+efD
 bLn
 bLn
 bLn
@@ -95645,12 +95646,12 @@ bNy
 bNY
 bOw
 bNY
-bPp
-bPF
-bPF
-bQp
-bPF
-bPF
+egt
+lUb
+lUb
+wIb
+lUb
+lUb
 bRg
 bRv
 bLl
@@ -101769,7 +101770,7 @@ cnA
 cnA
 cCw
 aBY
-cAY
+rCt
 cyf
 cCx
 aBY
@@ -118529,11 +118530,11 @@ bjg
 bjU
 biJ
 bmg
-bmq
+pIi
 bmH
 bmH
 biJ
-bnO
+aon
 bod
 boi
 bor
@@ -118835,7 +118836,7 @@ bmh
 bmh
 bmW
 bnr
-dam
+wZb
 boe
 boj
 bos
@@ -119135,7 +119136,7 @@ blV
 bmh
 bmh
 bmh
-cvT
+oZF
 bns
 bnL
 bof
@@ -119437,7 +119438,7 @@ blW
 bmh
 bmh
 bmI
-bmY
+gNr
 bnt
 bnM
 bog
@@ -119739,7 +119740,7 @@ biJ
 bmi
 bmr
 bmJ
-bmY
+gNr
 biJ
 bnN
 boh
@@ -122323,10 +122324,10 @@ ajm
 ajm
 abw
 afb
-apm
+hSY
 aqq
 afb
-arS
+nkG
 abw
 adQ
 acb
@@ -151392,7 +151393,7 @@ dQz
 dvy
 dEd
 aES
-tiD
+xeE
 aES
 aES
 aES
@@ -153205,7 +153206,7 @@ dvy
 iFD
 sbi
 wky
-rAl
+erm
 iFD
 dAZ
 dBI
@@ -153513,9 +153514,9 @@ gbR
 dBJ
 sKt
 iFD
-rmG
+oUW
 dzS
-xMm
+iFD
 iFD
 noN
 dwz
@@ -154727,7 +154728,7 @@ dyV
 iFD
 dRO
 dCF
-eTm
+aaX
 iFD
 pkO
 rJI
@@ -154737,7 +154738,7 @@ wvy
 hnB
 ulB
 iFD
-koi
+wDT
 pPX
 eih
 iFD
@@ -156853,7 +156854,7 @@ dzA
 iFD
 ecr
 fQJ
-jNl
+iSl
 iFD
 dRJ
 dEQ

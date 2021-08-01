@@ -58,11 +58,61 @@
 			src.icon_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 			src.item_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 
-/obj/item/clothing/suit/hoodie/blue
-	desc = "Would fit well on a skeleton."
-	icon_state = "hoodie-blue"
-	item_state = "hoodie-blue"
-	hcolor = "blue"
+	blue
+		desc = "Would fit well on a skeleton."
+		icon_state = "hoodie-blue"
+		item_state = "hoodie-blue"
+		hcolor = "blue"
+
+	darkblue
+		icon_state = "hoodie-darkblue"
+		item_state = "hoodie-darkblue"
+		hcolor = "darkblue"
+
+	white
+		icon_state = "hoodie-white"
+		item_state = "hoodie-white"
+		hcolor = "white"
+
+	pink
+		icon_state = "hoodie-pink"
+		item_state = "hoodie-pink"
+		hcolor = "pink"
+
+	black
+		icon_state = "hoodie-black"
+		item_state = "hoodie-black"
+		hcolor = "black"
+
+	grey
+		icon_state = "hoodie-grey"
+		item_state = "hoodie-grey"
+		hcolor = "grey"
+
+	dullgrey
+		icon_state = "hoodie-dullgrey"
+		item_state = "hoodie-dullgrey"
+		hcolor = "dullgrey"
+
+	magenta
+		icon_state = "hoodie-magenta"
+		item_state = "hoodie-magenta"
+		hcolor = "magenta"
+
+	green
+		icon_state = "hoodie-green"
+		item_state = "hoodie-green"
+		hcolor = "green"
+
+	yellow
+		icon_state = "hoodie-yellow"
+		item_state = "hoodie-yellow"
+		hcolor = "yellow"
+
+	red
+		icon_state = "hoodie-red"
+		item_state = "hoodie-red"
+		hcolor = "red"
 
 /obj/item/clothing/suit/hoodie/random
 	New()
@@ -181,7 +231,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	var/armored = 0
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.01
+	permeability_coefficient = 0.005
 	over_hair = 1
 
 	setupProperties()
@@ -304,7 +354,7 @@
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.005
+	permeability_coefficient = 0.02
 	over_hair = 1
 
 	New()
@@ -313,7 +363,7 @@
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.6)
+		setProperty("movespeed", 0.45)
 		setProperty("radprot", 50)
 		setProperty("coldprot", 15)
 		setProperty("heatprot", 15)
@@ -964,7 +1014,7 @@
 	item_state = "s_suit"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.02
+	permeability_coefficient = 0.1
 	protective_temperature = 1000
 	over_hair = 1
 
@@ -1021,13 +1071,6 @@
 	setupProperties()
 		..()
 		setProperty("space_movespeed", 1.5)
-
-	snow // bleh whatever!!!
-		name = "snow suit"
-		desc = "A thick padded suit that protects against extreme cold temperatures."
-		icon_state = "snowcoat"
-		item_state = "snowcoat"
-		rip = -1
 
 /obj/item/clothing/suit/space/emerg/proc/ripcheck(var/mob/user)
 	if(rip >= 36 && rip != -1 && prob(10))  //upped from rip >= 14 by Buttes
@@ -1137,8 +1180,8 @@
 			icon_state = "syndie_specialist-medic"
 			item_state = "syndie_specialist-medic"
 
-		body_parts_covered = TORSO|LEGS|ARMS
-		permeability_coefficient = 0.01
+			body_parts_covered = TORSO|LEGS|ARMS
+			permeability_coefficient = 0.01
 
 		setupProperties()
 			..()
@@ -1389,7 +1432,7 @@
 	over_hair = TRUE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.01
+	permeability_coefficient = 0.50
 
 	setupProperties()
 		..()
@@ -1428,7 +1471,7 @@
 	wear_layer = MOB_OVERLAY_BASE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.01
+	permeability_coefficient = 0.50
 
 /obj/item/clothing/suit/wizrobe
 	name = "blue wizard robe"
@@ -1626,3 +1669,22 @@
 			. = "It's your war medal, you remember when you got this for saving a man's life during the war."
 		else
 			. = "It's the HoS's old war medal, you heard they got it for their acts of heroism in the war."
+
+/obj/item/clothing/suit/snow
+	name = "snow suit"
+	desc = "A thick padded suit that protects against extreme cold temperatures."
+	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
+	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
+	icon_state = "snowcoat"
+	item_state = "snowcoat"
+	body_parts_covered = TORSO|LEGS|ARMS
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 50)
+		setProperty("heatprot", 10)
+		setProperty("meleeprot", 3)
+		setProperty("rangedprot", 0.5)
+		setProperty("movespeed", 0.5)
+		setProperty("disorient_resist", 15)

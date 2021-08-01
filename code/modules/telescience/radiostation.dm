@@ -16,8 +16,8 @@
 	code/WorkInProgress/radioship.dm
 	maps/radiostation2.dmm
 	icon/obj/radiostation.dmi
-	icon/obj/64x64.dmi
-	icon/obj/32x64.dmi
+	icon/obj/large/64x64.dmi
+	icon/obj/large/32x64.dmi
 	icon/obj/decoration.dmi
 	strings/radioship/radioship_records.txt */
 
@@ -796,13 +796,19 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /obj/submachine/tape_deck/attack_hand(mob/user as mob)
 	if(has_tape)
 		if(!is_playing)
-			boutput(user, "You remove the tape from the tape deck.")
-			src.visible_message("<span class='notice'><b>[user] removes the tape from the tape deck.</b></span>")
-			user.put_in_hand_or_drop(src.tape_inside)
-			src.tape_inside = null
-			src.has_tape = 0
+			if(istype(src.tape_inside,/obj/item/radio_tape/advertisement))
+				src.visible_message("<span class='alert'><b>[src.tape_inside]'s copyright preserving self destruct feature activates!</b></span>")
+				qdel(src.tape_inside)
+				src.tape_inside = null
+				src.has_tape = 0
+			else
+				boutput(user, "You remove the tape from the tape deck.")
+				src.visible_message("<span class='notice'><b>[user] removes the tape from the tape deck.</b></span>")
+				user.put_in_hand_or_drop(src.tape_inside)
+				src.tape_inside = null
+				src.has_tape = 0
 		else
-			boutput(user, "It looks like the tape is still being rewinded. You should wait a bit more before taking it out.")
+			boutput(user, "It looks like the tape is still being rewound. You should wait a bit more before taking it out.")
 
 // Tapes
 /obj/item/radio_tape
@@ -963,7 +969,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /obj/decal/fakeobjects/cpucontroller
 	name = "central processing unit"
 	desc = "The computing core of the mainframe."
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "gannets_machine1"
 	bound_width = 64
 	bound_height = 64
@@ -973,7 +979,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /obj/decal/fakeobjects/vacuumtape
 	name = "vacuum column tape drive"
 	desc = "A large 9 track magnetic tape storage unit."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "gannets_machine2"
 	bound_width = 32
 	bound_height = 64
@@ -983,7 +989,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /obj/decal/fakeobjects/operatorconsole
 	name = "operator's console"
 	desc = "The computer operating console, covered in fancy toggle swtiches and register value lamps."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "gannets_machine1"
 	bound_width = 32
 	bound_height = 64

@@ -731,11 +731,17 @@
 			playsound(src, (has_butt.sound_fart ? has_butt.sound_fart : 'sound/voice/farts/fart1.ogg'), 50, 1)
 		else
 			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+		RegisterSignal(to_buckle, COMSIG_MOVABLE_SET_LOC, .proc/maybe_unbuckle)
 
+	proc/maybe_unbuckle(source, turf/oldloc)
+		if(!isturf(buckled_guy.loc) || !IN_RANGE(src, oldloc, 1))
+			UnregisterSignal(buckled_guy, COMSIG_MOVABLE_SET_LOC)
+			unbuckle()
 
 	unbuckle()
 		..()
 		if(!src.buckled_guy) return
+		UnregisterSignal(buckled_guy, COMSIG_MOVABLE_SET_LOC)
 
 		var/mob/living/M = src.buckled_guy
 		var/mob/living/carbon/human/H = src.buckled_guy
@@ -902,10 +908,13 @@
 		return
 
 /obj/item/chair/folded/attack(atom/target, mob/user as mob)
+	var/oldcrit = src.stamina_crit_chance
+	if(iswrestler(user))
+		src.stamina_crit_chance = 100
 	if (ishuman(target))
-		//M.TakeDamage("chest", 5, 0) //what???? we have 'force' var
 		playsound(src.loc, pick(sounds_punch), 100, 1)
 	..()
+	src.stamina_crit_chance = oldcrit
 
 /* ====================================================== */
 /* -------------------- Comfy Chairs -------------------- */
@@ -1090,6 +1099,10 @@
 		if(src.buckled_guy)
 			REMOVE_MOVEMENT_MODIFIER(src.buckled_guy, /datum/movement_modifier/wheelchair, src.type)
 		return ..()
+
+	set_loc(newloc)
+		. = ..()
+		unbuckle()
 
 /* ======================================================= */
 /* -------------------- Wooden Chairs -------------------- */

@@ -32,11 +32,20 @@
 		. += "<br>Holding [length(L)]/[slots] objects"
 		lastTooltipContent = .
 
+	// TODO: initalize
 	New()
 		hud = new(src)
 		..()
 		SPAWN_DBG(1 DECI SECOND)
 			src.make_my_stuff()
+
+	Entered(Obj, OldLoc)
+		. = ..()
+		src.hud?.add_item(Obj)
+
+	Exited(Obj, newloc)
+		. = ..()
+		src.hud?.remove_item(Obj)
 
 	disposing()
 		if (hud)
@@ -98,7 +107,7 @@
 			if(user.equipped() == null)
 				O.attack_hand(user)
 				if(O in user.equipped_list())
-					src.attackby(O, user, O.loc)
+					src.Attackby(O, user, O.loc)
 			else
 				boutput(user, __blue("Your hands are full!"))
 			user.swap_hand()
@@ -139,7 +148,7 @@
 				var/obj/item/storage/S = W
 				for (var/obj/item/I in S.get_contents())
 					if(src.check_can_hold(I) > 0)
-						src.attackby(I, user, S)
+						src.Attackby(I, user, S)
 				return
 			switch (canhold)
 				if(0)
@@ -161,11 +170,11 @@
 
 		if (T && istype(T, /obj/item/storage))
 			src.add_contents(W)
-			T.hud.remove_item(W)
+//			T.hud.remove_item(W)
 		else
-			src.add_contents(W)
 			user.u_equip(W)
-		hud.add_item(W, user)
+			src.add_contents(W)
+//		hud.add_item(W, user)
 		update_icon()
 		add_fingerprint(user)
 		animate_storage_rustle(src)
@@ -366,7 +375,7 @@
 	item_state = "rd-case"
 	max_wclass = 4 // parity with secure briefcase
 	desc = "A large briefcase for experimental toxins research."
-	spawn_contents = list(/obj/item/raw_material/molitz_beta = 6, /obj/item/paper/hellburn)
+	spawn_contents = list(/obj/item/raw_material/molitz_beta = 2, /obj/item/paper/hellburn)
 
 /obj/item/storage/desk_drawer
 	name = "desk drawer"
