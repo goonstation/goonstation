@@ -445,7 +445,7 @@
 /obj/item/conveyor_parts/after_stack(atom/movable/O as obj, mob/user as mob, var/added)
 	boutput(user, "<span class='notice'>You finish stacking the conveyor parts.</span>")
 
-// converyor diverter
+// conveyor diverter
 // extendable arm that can be switched so items on the conveyer are diverted sideways
 // situate in same turf as conveyor
 // only works if belts is running proper direction
