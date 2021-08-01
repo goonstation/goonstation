@@ -427,11 +427,11 @@
 		if (src.move_laying)
 			src.move_laying = FALSE
 			UnregisterSignal(M, COMSIG_MOVABLE_MOVED)
-			boutput(M, "<span class='notice'>No longer laying the cable while moving.</span>")
+			boutput(M, "<span class='notice'>No longer laying conveyors while moving.</span>")
 		else
 			src.move_laying = TRUE
 			RegisterSignal(M, COMSIG_MOVABLE_MOVED, .proc/walkConveyors)
-			boutput(M, "<span class='notice'>Now laying cable while moving.</span>")
+			boutput(M, "<span class='notice'>Now laying conveyors while moving.</span>")
 
 /obj/item/conveyor_parts/afterattack(atom/target, mob/M, reach, params)
 	if(istype(target, /obj/machinery/conveyor_switch))
